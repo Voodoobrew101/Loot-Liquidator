@@ -179,3 +179,7 @@ Current Retail cast records with zero-inclusive per-output histograms for four M
 - Independently reviewed four worker CSV submissions, 14 historical observation objects, original TWW/DF/Legacy sources; 1036 in-memory JS assertions passed. 150 new unique first-pass accepted, 478/1737 cumulative, 1259 unexamined, zero all-field >=90.
 - Verified 100 ore vs 20 five-ore equivalents, R3-vs-R1 Dragonflight rank mismatch, PTR Osmenite 8000-cast means and Felslate 5 vs 20 recipe distinction; no current-Retail numerical correction.
 - Numeric track: 0 verified, 0 empirical approved, 4 blocked for compile; one explicit Legacy hypothesis reviewed. Assigned next 150 nonoverlapping item keys. Production unchanged. Node and WoW client tests not run.
+
+### 2026-10-28 — Master QA batch004
+- Read head 0438d8858d376dcf69360a50a95195f73cfac573 and original worker evidence; accepted 150 unique first-pass keys, 628/1737 cumulative. No current Retail corrections or >=90 promotions. Four numeric rules blocked.
+- 864 source/coverage/assignment assertions and 372 static schema/histogram checks passed; Node and WoW tests not run. Queue revision 7 next 150 disjoint keys. Review research/coordination/reviews/2026-10-28-master-worker-batch004-verdict.md. No main/production/schedule changes.
