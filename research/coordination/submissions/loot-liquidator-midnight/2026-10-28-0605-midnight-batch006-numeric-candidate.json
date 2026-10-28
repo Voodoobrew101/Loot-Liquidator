@@ -1,0 +1,113 @@
+{
+  "hypothesisID": "midnight-gem-hotfix-2026-03-31-quantification",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 11,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      1231127
+    ],
+    "inputItemIDs": [
+      237361
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      2
+    ],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "period": "before 2026-03-31",
+    "claimID": "midnight-pre-20260326-forum-40casts-8unmappedgems",
+    "actualCompletedOperations": 40,
+    "reportedGemUnitsAllUnmapped": 8,
+    "perCastHistogram": null,
+    "outputItemIDs": [],
+    "inputOreRank": null,
+    "actualBuild": null,
+    "professionSkill": null,
+    "gear": null,
+    "specialization": null,
+    "characterMatch": null
+  },
+  "targetContext": {
+    "period": "after 2026-03-31",
+    "claimID": "midnight-post-20260402-forum-100ore-17unmappedgems",
+    "actualCompletedOperations": null,
+    "derivedFiveOreEquivalentOperations": 20,
+    "reportedGemUnitsAllUnmapped": 17,
+    "perCastHistogram": null,
+    "outputItemIDs": [],
+    "inputOreRank": null,
+    "actualBuild": null,
+    "professionSkill": null,
+    "gear": null,
+    "specialization": null,
+    "characterMatch": null
+  },
+  "requiredLiveContext": [
+    "recipeSpellID",
+    "inputItemID",
+    "inputQualityRank",
+    "outputItemID",
+    "outputQualityRank",
+    "clientBuild",
+    "hotfixWindow",
+    "childSkillLineID",
+    "baseSkill",
+    "effectiveSkill",
+    "specializationRanks",
+    "professionGear",
+    "recipeBonusStats",
+    "actualCompletedOperations",
+    "perCastOutputsIncludingZeros",
+    "actualConsumedInputs",
+    "actualSavedInputs"
+  ],
+  "sources": [
+    {
+      "claimID": "blizzard-midnight-gems-20260331",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "midnight-pre-20260326-forum-40casts-8unmappedgems",
+      "url": "https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": 40
+    },
+    {
+      "claimID": "midnight-post-20260402-forum-100ore-17unmappedgems",
+      "url": "https://us.forums.blizzard.com/en/wow/t/is-jc-prospectingcrushing-broken/2284616",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Pre and post are different authors with no matching ore identity or quality rank",
+    "Post author reports 100 ore, not completed cast count; 20 is only five-ore-equivalent, Resourcefulness/refunds unknown",
+    "Both sources omit gem output IDs and ranks, cast-level zeros, exact skill/spec/gear and client build",
+    "Blizzard confirms qualitative increase but publishes no numeric coefficient",
+    "No independent same-context pre/post replication"
+  ],
+  "notes": "Exact recipe and input IDs in scope are unverified experiment leads inherited from previous candidate, not established for either new forum cohort. Empty output IDs mean unresolved, NOT wildcard. 8/40=0.2 is aggregate gem units per reported pre-hotfix attempt, not a gem-specific P. Do not divide post 17 gems by 20 derived equivalents or infer a 4.25x hotfix factor. Remains blocked for master QA."
+}
