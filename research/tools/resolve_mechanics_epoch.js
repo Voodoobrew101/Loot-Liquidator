@@ -8,6 +8,7 @@
  * is not assumed to be its effective timestamp.
  */
 const fs=require("node:fs");
+const {resolveSampleWindow}=require("./resolve_sample_time");
 
 function validDate(s) {
   if(typeof s!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;
@@ -43,14 +44,17 @@ function classify(c,e) {
   if(scope!=="IN_SCOPE")return scope;
   const first=e.firstAffectedDate;
   if(!validDate(first))return "UNKNOWN_EVENT_BOUNDARY";
-  const begin=c.sampleStartDate??c.observationDate;
-  const end=c.sampleEndDate??c.observationDate;
-  if(!validDate(begin)||!validDate(end)||begin>end)return "UNKNOWN_SAMPLE_DATE";
-  if(end<first)return "BEFORE";
-  if(begin>first)return "AFTER";
-  // Effective clock time within official hotfix date is not known.
+  const timing=resolveSampleWindow(c);
+  if(timing.kind==="INVALID_OBSERVATION_INTERVAL"||timing.kind==="CONTRADICTORY_TIME_EVIDENCE")return "INVALID_SAMPLE_TIME";
+  if(timing.kind==="TIME_UNKNOWN")return "UNKNOWN_SAMPLE_DATE";
+  const {startDate:begin,endDate:end}=timing;
+  if(end&&end<first)return "BEFORE";
+  if(begin&&begin>first)return "AFTER";
+  if(timing.kind==="PUBLICATION_UPPER_BOUND"||timing.kind==="OBSERVATION_LOWER_BOUND")return "UNKNOWN_PUBLICATION_BOUND";
+  // Unknown deployment clock within officially dated hotfix.
   return "CROSSES_OR_TOUCHES_EVENT_DAY";
 }
+
 function compare(a,b,chrono) {
   const decisions=[];
   for(const e of chrono.events||[]) {
