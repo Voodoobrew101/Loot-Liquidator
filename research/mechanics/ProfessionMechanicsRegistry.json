@@ -5,7 +5,7 @@
   "authority": "Research-only versioned mechanics/provenance contract. Existing released main/GameData.lua remains untouched until approved migration; future SINGLE bundled authoritative item/conversion database filename is exactly itemdb.lua.",
   "purpose": "Catalog expansion/recipe scoped mechanics, provenance, exact live API availability, historical patches and numerical correction evidence for selecting one current-Retail condition-labelled reference baseline. Unknown effects BLOCK normalization; no executable formulas are verified.",
   "baselinePolicy": {
-    "definition": "ONE selected source-backed and explicitly context-labelled baseline per input/output recipe and target Retail patch; baseline is not necessarily low skill or maximum skill",
+    "definition": "ONE provisional or measured baseline per eligible input/output/recipe/rank/current Retail patch at minimum recipe-eligible skill with no optional specialization, profession gear or temporary bonuses; do not substitute an arbitrary observed high-skill reference.",
     "storedMaterialFields": [
       "dropChance",
       "yieldMin",
@@ -32,7 +32,14 @@
     "statisticalDistribution": "Four summary fields suffice for baseline tooltip/EV but cannot infer arbitrary nonlinear context transformations. Retain zero-inclusive per-cast histograms or full records in the evidence archive whenever available.",
     "zeroAndUnknown": "A proven impossible output or measured zero has value 0; unavailable context or unobserved output is null (unknown), never silently coerce nil to 0.",
     "normalizationRequired": "Only verified patch/recipe/output-specific transforms may create a current Retail or simulated baseline from mismatched samples; do not treat missing rules as identity transforms.",
-    "separateOutputAndInputEffects": "Changes to output occurrence/expected quantity, input refunds, crafting quality, eligibility and time must be modeled in separate dimensions; never multiply a cost adjustment into material drop quantity."
+    "separateOutputAndInputEffects": "Changes to output occurrence/expected quantity, input refunds, crafting quality, eligibility and time must be modeled in separate dimensions; never multiply a cost adjustment into material drop quantity.",
+    "targetProfile": "MINIMUM_RECIPE_ELIGIBLE_UNSKILLED_NO_OPTIONAL_BONUSES",
+    "minimumSkillPolicy": "Minimum skill at which the exact recipe is legal; literal skill zero is not assumed eligible.",
+    "reconstructionFromSkilledStudies": "Keep skilled observations in research archive; derive unskilled cells by explicit supported inverse of recipe/output/patch scoped mechanic model, or clearly labelled provisional model inference; otherwise retain unknown. Never reclassify original high-skill sample as unskilled.",
+    "runtimeForwardAdjustment": "ConversionEngine applies supported forward, output-specific, stat/skill/quality/patch-aware rules to neutral itemdb baseline; registry defines mechanics, it does not itself execute interpolation.",
+    "inverseTransformConstraints": "For multiplicative E, require proven positive finite factor and use E_baseline=E_observed/factor_observed; additive/nonlinear/quality/eligibility effects need their own identifiable inverse; no invented zero unlocks or baseline transform.",
+    "confidencePolicy": "Confidence is per derived database field and separate per transformation; source prestige is not a confidence ceiling, observations remain authentic absent specific quality defects.",
+    "currentCapability": "Research-only; v0.2 has no verified executable numeric rules yet."
   },
   "expansionIndex": [
     {
