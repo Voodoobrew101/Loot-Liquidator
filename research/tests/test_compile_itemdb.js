@@ -22,11 +22,11 @@ const a=compile(input),b=compile(input);
 assert.equal(a.lua,b.lua,"deterministic Lua");
 assert.deepEqual(a.report,b.report);
 assert.deepEqual(validate(a.records),[]);
-assert.equal(a.report.sourceMappingCandidates,984);
-assert.equal(a.report.curatedAdded,1);
+assert.equal(a.report.sourceMappingCandidates,994);
+assert.equal(a.report.curatedAdded,11);
 assert.equal(a.report.rankSpecificProxyRecordsQuarantined,31);
 assert.equal(a.report.diamondSpecializationGated,7);
-assert.equal(a.report.fullyNumericFourFields,799);
+assert.equal(a.report.fullyNumericFourFields,801);
 assert.equal(a.report.batch013RankQuarantined,50);
 assert.equal(a.report.fishInputRankCorrected,12);
 assert.equal(a.report.invalidSourceChanceQuarantined,0);
@@ -37,8 +37,8 @@ assert.equal(a.report.verifiedSourceLineIdentities,1202);
 assert.equal(a.report.legacyArithmeticContradictionsReviewed,8);
 assert.equal(a.records.filter(r=>r.inputItemID===200061&&r.outputQualityRank!==null&&r.inputQualityRank===null).length,12);
 assert.equal(a.records.filter(r=>r.conditions.eligibilityStatus==="REQUIRES_ORE_SPECIFIC_PROFICIENT_PROCESSOR_SPECIALIZATION").length,7);
-assert.equal(a.report.fieldSlots,3936);
-assert.deepEqual(a.report.missingFieldCounts,{"dropChance":172,"yieldMin":68,"yieldMax":68,"expectedQuantity":95});
+assert.equal(a.report.fieldSlots,3976);
+assert.deepEqual(a.report.missingFieldCounts,{"dropChance":180,"yieldMin":76,"yieldMax":76,"expectedQuantity":103});
 assert.equal(a.report.quarantineBreakdown.MULTI_REAGENT_SCHEMA_GAP||0,0);
 const powder=a.records.find(r=>r.method==="Prospect"&&r.inputItemID===36910&&r.outputItemID===46849);
 assert.ok(powder);
@@ -72,4 +72,7 @@ assert.equal(a.lua,read("research/proposed/itemdb.lua"),"generated candidate rea
 assert.equal(a.gapCSV,read("research/ledger/itemdb-missing-fields.csv"),"gap ledger readback");
 assert.deepEqual(a.report,JSON.parse(read("research/proposed/itemdb-build-report.json")));
 assert.deepEqual(csv('"a","b"\n"1","two,three"\n')[0],{a:"1",b:"two,three"});
-console.log("PASS research compiler v0.4.0 static regression; no Lua interpreter or WoW client test");
+const refines=a.records.filter(r=>r.method==="Refine");assert.equal(refines.length,2);assert.deepEqual(refines.map(r=>[r.inputItemID,r.outputItemID,r.inputCountPerOperation]),[[242786,242787,10],[242788,242789,18]]);for(const r of refines){assert.equal(r.conditions.requiresBench,true);assert.equal(r.conditions.minimumRecipeSkill,50);assert.equal(r.expectedQuantity.value,1);}
+const conditional=a.records.filter(r=>r.recordID.startsWith("candidate:conditional:"));assert.equal(conditional.length,8);for(const r of conditional){assert.ok(r.conditions.specialization?.gem);assert.ok(r.conditions.baselineStatus.includes("NOT_UNSKILLED"));for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"])assert.equal(r[f].value,null);}
+assert.ok(a.lua.includes("requiresBench=opt(x[35])"));assert.ok(a.lua.includes("specialization=opt(x[36])"));assert.ok(a.lua.includes('"Refine"'));
+console.log("PASS research compiler v0.5.0 static regression; Lua interpreter and WoW client not run");
