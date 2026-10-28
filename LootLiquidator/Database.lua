@@ -3,6 +3,8 @@ local _, LL = ...
 local defaults={itemdb={true,100},personal={true,60},tsm={true,30},legacy={false,10}}
 LL.SourceDefaults=defaults
 local order={'itemdb','personal','tsm','legacy'}
+local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true}
+local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
 local function finite(n) return type(n)=='number' and n==n and n>=0 and n<math.huge end
 local function copy(t) local out={} for k,v in pairs(t or {}) do out[k]=v end return out end
@@ -15,7 +17,17 @@ local function same(a,b)
 end
 function LL:MigrateEvidenceSettings()
     if not self.db then return end
-    -- Additive migration: retain every old preference, mode and observation.
+    -- Materialize the old global policy once, so later per-method changes work
+    -- without a hidden legacy selector overriding the visible weighted choice.
+    if not self.db.evidenceSchemaVersion then
+        local old=self.db.processingFallbackMode
+        for _,name in ipairs({'disenchantDataMode','millingDataMode','prospectingDataMode','otherConversionDataMode'}) do
+            if self.db[name]==nil or self.db[name]==1 then
+                if old==2 then self.db[name]=3 elseif old==3 then self.db[name]=2 end
+            end
+        end
+    end
+    -- Additive migration: retain old preferences and all observations.
     for key,d in pairs(defaults) do
         local enabled,weight='source_'..key..'_enabled','source_'..key..'_weight'
         if self.db[enabled]==nil then self.db[enabled]=d[1] end
@@ -30,7 +42,7 @@ function LL:SetEvidenceSource(key,enabled,weight)
         if not finite(weight) then return false end
         self.db['source_'..key..'_weight']=math.max(0,math.min(100,weight))
     end
-    if self.Invalidate then self:Invalidate() end
+    if self.Invalidate then self:Invalidate("evidence") end
     return true
 end
 function LL:ResetEvidenceSources()
@@ -42,9 +54,14 @@ function LL:ValidateItemDB(db)
     end
     local ids={}
     for _,r in ipairs(db.processing) do
-        if type(r)~='table' or type(r.recordID)~='string' or ids[r.recordID]
-            or not defaults[r.sourceKey] or not finite(r.inputCount) or r.inputCount<=0
-            or (not (finite(r.inputItemID) and r.inputItemID>0) and type(r.gearKey)~='string')
+        if type(r)~='table' or type(r.recordID)~='string' or r.recordID=='' or ids[r.recordID] or not methods[r.method]
+            or not defaults[r.sourceKey] or not finite(r.inputCount) or r.inputCount<=0 or r.inputCount%1~=0
+            or (not (finite(r.inputItemID) and r.inputItemID>0 and r.inputItemID%1==0)
+                and not (r.method=='Disenchant' and type(r.gearKey)=='string' and
+                    (r.gearKey:match('^gear:%d+:%d+:armor$') or r.gearKey:match('^gear:%d+:%d+:weapon$'))))
+            or (r.recipeID~=nil and (not finite(r.recipeID) or r.recipeID<1 or r.recipeID%1~=0))
+            or (r.referenceConditions~=nil and type(r.referenceConditions)~='table')
+            or (r.samples~=nil and not finite(r.samples))
             or type(r.studyID)~='string' or type(r.source)~='string'
             or type(r.materials)~='table' then return false,'Invalid or duplicate record identity' end
         ids[r.recordID]=true
@@ -54,7 +71,7 @@ function LL:ValidateItemDB(db)
             outputs[m.id]=true
             for _,name in ipairs({'expectedQuantity','dropChance','minQuantity','maxQuantity'}) do
                 local f=m[name]
-                if type(f)~='table' or not finite(f.confidence) or f.confidence>100
+                if type(f)~='table' or not statuses[f.status] or not finite(f.confidence) or f.confidence>100
                     or (f.value~=nil and not finite(f.value)) then return false,'Invalid field '..name end
             end
             local p,e,lo,hi=m.dropChance.value,m.expectedQuantity.value,m.minQuantity.value,m.maxQuantity.value
@@ -151,9 +168,13 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     local records=self._evidenceIndex and self._evidenceIndex[option.name..':'..tostring(input)] or {}
     local eligible,transformed={},{}
     for _,r in ipairs(records) do
+        local hasMean=false
+        for _,material in ipairs(r.materials) do
+            if self:EvidenceReliability(material.expectedQuantity,r)>0 then hasMean=true;break end
+        end
         local model=sourceModel(self,f,option,r)
         transformed[r]=model
-        if userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
+        if hasMean and userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
             and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
             and (not r.expansionID or r.expansionID==f.expansionID)
             and contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules) then eligible[#eligible+1]=r end
@@ -169,7 +190,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                 expectedQuantity={value=m.expectedQuantity,confidence=85,status='observed'},
                 dropChance={value=m.chance,confidence=85,status='observed'},
                 minQuantity={value=m.minQuantity,confidence=85,status='observed'},
-                maxQuantity={value=m.maxQuantity,confidence=85,status='observed'}}
+                maxQuantity={value=m.maxQuantity,confidence=85,status='observed'},
+                personalHistogram=m.quantityCounts,personalSamples=m.samples}
         end
         if #r.materials>0 then eligible[#eligible+1]=r end
     end
@@ -221,6 +243,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                         local v=m[modelField]
                         if field=='expectedQuantity' then v=v*batch/r.inputCount end
                         local acc=b.fields[field] or {sum=0,weight=0};b.fields[field]=acc
+                        acc.minimum=math.min(acc.minimum or v,v);acc.maximum=math.max(acc.maximum or v,v)
                         acc.sum=acc.sum+v*weight;acc.weight=acc.weight+weight
                         if field=='expectedQuantity' then acc.confidence=(acc.confidence or 0)+(metadata.confidence or 0)*weight end
                         if field=='expectedQuantity' then
@@ -229,6 +252,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                             if mode==2 and r.sourceKey=='personal' and r.provisional then result.insufficientSamples=true end
                         end
                     end
+                end
+                if original.personalHistogram then
+                    b.personalHistogram=original.personalHistogram;b.personalSamples=original.personalSamples
                 end
                 -- Conditional bounds belong to one named source, never an average.
                 local lo,hi=m.minQuantity,m.maxQuantity
@@ -244,6 +270,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     for _,b in pairs(bins) do
         local e,p=b.fields.expectedQuantity,b.fields.dropChance
         b.expectedQuantity=e and e.sum/e.weight
+        if e and e.maximum>math.max(1e-9,e.minimum*2) then
+            b.conflictingMeans=true;result.conflictingMeans=true
+        end
         -- Batch normalization rescales means, not occurrence distributions.
         b.chance=p and p.sum/p.weight
         if b.chance and b.expectedQuantity and b.minQuantity and b.maxQuantity
@@ -266,6 +295,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     if totalContribution==0 then return nil,'Insufficient Data: expected quantities unknown' end
     -- Conservative score of the actual contributing field evidence, not slider values.
     result.confidence=math.min(100,math.floor(confidenceTotal/math.max(1,totalContribution)+.5))
+    if result.conflictingMeans then
+        result.confidence=math.floor(result.confidence*.5)
+        result.warning='Compatible sources disagree by more than 2x; confidence discounted'
+    end
     if result.unknownOutputs then result.warning='Insufficient Data: some output quantities unknown' end
     return result
 end
@@ -279,13 +312,13 @@ local function fingerprint(value)
 end
 function LL:ResolveEvidenceModel(f,option,personal,mode)
     local ctx=self.ProcessingPlayerConditions and self:ProcessingPlayerConditions(f,option.name,option.recipeID,option.character) or {}
-    local prefs={}
-    for _,source in ipairs(order) do prefs[source]=userWeight(self,source,mode) end
     local build=GetBuildInfo and select(2,GetBuildInfo())
-    local key=fingerprint({item=f.id,rarity=f.quality,class=f.classID,expansion=f.expansionID,
-        option=option,context=ctx,preferences=prefs,build=build,
-        database=self.ItemDB and self.ItemDB.version,mode=mode,
-        personalSamples=personal and personal.effectiveSamples})
+    local key=table.concat({tostring(f.id),tostring(f.quality),tostring(f.classID),tostring(f.expansionID),
+        tostring(option.name),tostring(option.inputCount),tostring(option.recipeID),tostring(option.character),
+        tostring(ctx._cacheIdentity or fingerprint(ctx)),tostring(build),tostring(self.ItemDB and self.ItemDB.version),
+        tostring(mode),tostring(personal and personal.effectiveSamples),
+        tostring(userWeight(self,'itemdb',mode)),tostring(userWeight(self,'personal',mode)),
+        tostring(userWeight(self,'tsm',mode)),tostring(userWeight(self,'legacy',mode))},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
     local cached=self._processingModelCache[key]
     if cached then return cached.model,cached.reason end

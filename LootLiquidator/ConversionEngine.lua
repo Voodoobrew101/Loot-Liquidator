@@ -40,6 +40,14 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local current=self.CharacterKey and self:CharacterKey()
     local key=(character and character~="Current character") and character or current
     local record=self.db and self.db.characters and self.db.characters[key]
+    local modeKey=({Mill="M",Prospect="P",Smelt="S",Disenchant="D"})[method]
+    local modeValue=modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)
+    local contextKey=table.concat({tostring(key),tostring(profession),tostring(f and f.id),
+        tostring(f and f.expansionID),tostring(f and f.reagentQuality),tostring(recipeID),tostring(modeValue)},":")
+    local now=GetTime and GetTime() or 0
+    self._processingContextCache=self._processingContextCache or {}
+    local cached=self._processingContextCache[contextKey]
+    if cached and now-cached.at<5 then return cached.context end
     local skill,spec,lineID
     if key==current and profession and self.GetResearchProfessionSnapshot then
         skill,spec,lineID=self:GetResearchProfessionSnapshot(f,profession)
@@ -67,7 +75,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     end
     local ctx={skill=skill,specialization=spec,skillLineID=lineID,
         inputID=f and f.id,inputQuality=f and f.reagentQuality,recipeID=recipeID,
-        character=key,assumedMinimum=false}
+        character=key,profession=profession,expansionID=f and f.expansionID,assumedMinimum=false}
     -- Blizzard operation information is specific to the CURRENT character.
     -- Never use current gear/skill when pricing an offline alt.
     if key==current and self.GetCachedOperationInfo then
@@ -95,8 +103,8 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     end
     ctx.profileKind=key==current and "live" or "offline-snapshot"
     ctx.observed=saved and saved.observed or (record and record.observed)
-    local now=time and time()
-    ctx.stale=ctx.profileKind=="offline-snapshot" and (not ctx.observed or (now and now-ctx.observed>7*86400)) or false
+    local snapshotNow=time and time()
+    ctx.stale=ctx.profileKind=="offline-snapshot" and (not ctx.observed or (snapshotNow and snapshotNow-ctx.observed>7*86400)) or false
     ctx.incomplete=not validNumber(ctx.effectiveSkill) or not ctx.specialization
     local simulated=manual and self.GetManualProfessionProfile and
         self:GetManualProfessionProfile(key,profession,f and f.expansionID)
@@ -104,13 +112,18 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
         ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
         ctx.specialization=simulated.specialization
         ctx.baseSkill=nil;ctx.bonusSkill=nil;ctx.operationStats=nil;ctx.craftingQuality=nil;ctx.equipment=nil
-        ctx.qualityFromBlizzard=false;ctx.simulated=true;ctx.profileKind="manual-simulation"
+        ctx.qualityFromBlizzard=false;ctx.simulated=true;ctx.stale=false;ctx.profileKind="manual-simulation"
         ctx.incomplete=not validNumber(ctx.skill) or not ctx.specialization
     end
     ctx.skillKnown=validNumber(ctx.skill) and not ctx.simulated
     ctx.skillSource=ctx.simulated and "manual-simulation"
         or (ctx.qualityFromBlizzard and "blizzard-operation"
         or (ctx.skillKnown and "scanned-profession" or "unknown"))
+    self._processingContextGeneration=(self._processingContextGeneration or 0)+1
+    ctx._cacheIdentity=self._processingContextGeneration
+    if (self._processingContextCache.count or 0)>=256 then self._processingContextCache={} end
+    self._processingContextCache[contextKey]={at=now,context=ctx}
+    self._processingContextCache.count=(self._processingContextCache.count or 0)+1
     return ctx
 end
 -- Compiled mechanics v0.2 adapter. Research JSON is NEVER loaded directly in WoW.
@@ -357,10 +370,6 @@ function LL:ConversionOptions(f)
             why=("Need %d inputs for one %s operation"):format(inputCount,c.method)
         end
         local dataMode=self.ProcessingDataMode and self:ProcessingDataMode(c.method) or 1
-        -- Global research preference applies only when per-method choice is Automatic.
-        local globalMode=self.db and self.db.processingFallbackMode or 1
-        if dataMode==1 and globalMode==2 then dataMode=3 end
-        if dataMode==1 and globalMode==3 then dataMode=2 end
         -- Direct item-use and vendor exchanges are fixed-ratio, not
         -- sampled random professions; they retain their documented returns.
         if c.method=="Exchange" or c.method=="Combine" or c.method=="Split" then

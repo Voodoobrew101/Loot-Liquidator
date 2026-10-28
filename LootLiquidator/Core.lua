@@ -724,10 +724,13 @@ function LA:Evaluate(link, context)
     return result
 end
 
-function LA:Invalidate()
+function LA:Invalidate(reason)
     wipe(cache)
     self._processingModelCache=nil
-    self._professionOperationCache=nil
+    if reason~="evidence" then
+        self._processingContextCache=nil
+        self._professionOperationCache=nil
+    end
     if self.ClearBadgeDecisionCache then self:ClearBadgeDecisionCache() end
     self._deRestrictionCache = nil
     self._enchantCache = nil

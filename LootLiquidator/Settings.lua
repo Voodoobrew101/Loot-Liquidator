@@ -452,7 +452,7 @@ function LL:CreateEvidenceSettingsPanel(category)
         end
         for _,setting in ipairs({checked,weighted}) do
             setting:SetValueChangedCallback(function()
-                if LL.Invalidate then LL:Invalidate() end
+                if LL.Invalidate then LL:Invalidate("evidence") end
                 refresh()
             end)
         end

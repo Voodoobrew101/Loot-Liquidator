@@ -615,6 +615,18 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local net=m.netExpectedValue
                     local amount=net~=nil and LA:Money(net/batch) or "Insufficient Data"
                     two(left,amount,option.letter or "D")
+                    if LA.db.showResearchDetails==true then
+                        if m.boundsSource then tooltip:AddLine("    Conditional bounds: "..m.boundsSource,.65,.68,.76,true) end
+                        if m.personalHistogram and m.personalSamples and m.personalSamples>0 then
+                            local bins={} for quantity,n in pairs(m.personalHistogram) do bins[#bins+1]={quantity=quantity,n=n} end
+                            table.sort(bins,function(a,b) return tonumber(a.quantity)<tonumber(b.quantity) end)
+                            for j=1,math.min(#bins,12) do
+                                local bin=bins[j]
+                                tooltip:AddLine(("    Personal x%s: %.1f%% (%g/%g casts)"):format(tostring(bin.quantity),
+                                    bin.n*100/m.personalSamples,bin.n,m.personalSamples),.62,.72,.83,true)
+                            end
+                        end
+                    end
                 end
                 if model.sources then
                     for _,source in ipairs(LA.SourceOrder or {}) do
@@ -626,8 +638,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 end
                 if model.context then
                     local ctx=model.context
-                    tooltip:AddLine(("  %s — skill %s (%s)"):format(ctx.character or "Unknown character",
-                        tostring(ctx.effectiveSkill or "?"),ctx.profileKind or "unknown context"),.70,.75,.82,true)
+                    local era=LA.DisenchantTables and LA.DisenchantTables[ctx.expansionID]
+                    tooltip:AddLine(("  %s %s — skill %s"):format(era and era.name or "Unknown expansion",
+                        ctx.profession or option.profession or "Profession",tostring(ctx.effectiveSkill or "?")),.70,.75,.82,true)
+                    tooltip:AddLine(("  %s (%s)"):format(ctx.character or "Unknown character",ctx.profileKind or "unknown context"),.70,.75,.82,true)
                     if ctx.stale or ctx.incomplete then tooltip:AddLine("  Profession snapshot stale or incomplete",1,.68,.3,true) end
                 end
                 tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
