@@ -226,3 +226,9 @@ Accepted 150 exact disjoint first-pass keys, with 50 candidate output records an
 - QA commit 088da1197840f28bc3454666b5506258ce324545: 150 unique source profiles accepted, 0 new material measurements; 36721 false milling input corrected by independent item-ID evidence. First-pass 1643/1737; 94 remaining profiles.
 - Queue/snapshot commit 2496134e5ed2412eb2e3eee54ba33cd0771f8c80: revision 14 assigns 35 Midnight, 35 TWW+overflow, 40 Dragonflight, 40 Legacy distinct material field/recipe keys. Source-memory incremental replay commit f1b767e91587d854afb78fdca94e9c255e7bc956: 4 observations, 22 reviews, 5 QA events; no full Node execution.
 - Static V8 build and GitHub readback passed; repository Node tests, Lua interpreter and live WoW client were not run. No production files, PR merge, or schedules changed. Full Retail universe audit remains unverified; source-derived numeric completeness is not independently measured unskilled accuracy.
+
+## 2026-10-28 — Master QA batch013
+- Reviewed four worker batch013 submissions (35/35/40/40). 0 new mappings, 0 current Retail neutral numeric measurements, 0 new first-pass records.
+- Executed research-only deterministic compiler v0.3.0 twice against pinned source files; wrote candidate Lua/build report/missing-fields ledger; GitHub readback verified. 976 records; 791 numeric complete; 294 unknown cells; 159 inputs; 1194 source-line identities.
+- Quarantined 50 quality-rank P/E pairs and 2 P>E source probabilities; corrected 12 fish input ranks; fixed generated Lua eligibility/baseline decoder preserving 7 diamond gates.
+- Reassigned 150 disjoint material/recipe follow-ups in queue rev16. No Node CLI, Lua interpreter, WoW client or full source-memory rebuild; no production edits, PR merge or schedule changes.
