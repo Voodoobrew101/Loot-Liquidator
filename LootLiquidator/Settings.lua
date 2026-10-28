@@ -420,6 +420,131 @@ function LootLiquidator_InitTooltipPreview(panel)
     panel.llPreview=preview
 end
 
+-- Shared compact source rows use the same native Settings canvas controls as
+-- the roster. Preferences are separate from TSM's market-price selection.
+function LL:CreateEvidenceSettingsPanel(category)
+    local panel=CreateFrame("Frame")
+    local rows={}
+    local labels={itemdb="itemdb.lua research database",personal="Personal observations",
+        tsm="TSM conversion reference data",legacy="Legacy fallback estimates"}
+    local descriptions={itemdb="Compiled research, including provisional records; unknown fields remain unknown.",
+        personal="Your recorded completed operations. Personal-only modes exclude all external evidence.",
+        tsm="Historical conversion quantities, not current auction prices. Unknown patch/skill contexts are not pooled.",
+        legacy="Optional historical scenarios. Never treated as verified skill coefficients."}
+    for index,key in ipairs(LL.SourceOrder) do
+        local source=key
+        local d=LL.SourceDefaults[source]
+        local enabledKey,weightKey="source_"..source.."_enabled","source_"..source.."_weight"
+        local checked=Settings.RegisterAddOnSetting(category,"LootLiquidator_"..enabledKey,enabledKey,LL.db,"boolean",labels[source],d[1])
+        local weighted=Settings.RegisterAddOnSetting(category,"LootLiquidator_"..weightKey,weightKey,LL.db,"number",labels[source].." weight",d[2])
+        local check=LL:CreateSettingsCheckbox(panel)
+        check:SetPoint("TOPLEFT",panel,"TOPLEFT",12,-30-(index-1)*78)
+        local text=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
+        text:SetPoint("LEFT",check,"RIGHT",6,0);text:SetWidth(230);text:SetJustifyH("LEFT");text:SetText(labels[source])
+        local slider=LL:CreateSettingsCanvasSlider(panel,0,100,1,LL.db[weightKey],function(value)
+            if LL.db[weightKey]~=value then weighted:SetValue(value) end
+        end)
+        slider:SetPoint("TOPLEFT",panel,"TOPLEFT",285,-26-(index-1)*78)
+        slider.slider:SetWidth(230)
+        check:SetScript("OnClick",function(self) checked:SetValue(self:GetChecked()) end)
+        local function refresh()
+            check:SetChecked(LL.db[enabledKey]);slider:SetValue(LL.db[weightKey])
+        end
+        for _,setting in ipairs({checked,weighted}) do
+            setting:SetValueChangedCallback(function()
+                if LL.Invalidate then LL:Invalidate() end
+                refresh()
+            end)
+        end
+        local note=panel:CreateFontString(nil,"ARTWORK","GameFontHighlightSmall")
+        note:SetPoint("TOPLEFT",panel,"TOPLEFT",40,-58-(index-1)*78)
+        note:SetWidth(550);note:SetJustifyH("LEFT");note:SetText(descriptions[source])
+        rows[#rows+1]=refresh
+    end
+    local reset=LL:CreateSettingsButton(panel)
+    reset:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-360);reset:SetSize(230,26);reset:SetText("Reset source weights")
+    reset:SetScript("OnClick",function()
+        for source,d in pairs(LL.SourceDefaults) do
+            Settings.GetSetting("LootLiquidator_source_"..source.."_enabled"):SetValue(d[1])
+            Settings.GetSetting("LootLiquidator_source_"..source.."_weight"):SetValue(d[2])
+        end
+    end)
+    panel:SetScript("OnShow",function() for _,refresh in ipairs(rows) do refresh() end end)
+    return panel
+end
+function LL:CreateProfessionProfilePanel(profession)
+    local panel=CreateFrame("Frame")
+    local selected=LL.CharacterKey and LL:CharacterKey() or "Current character"
+    local expansion=11
+    local function label(text,y)
+        local t=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
+        t:SetPoint("TOPLEFT",panel,"TOPLEFT",16,y);t:SetWidth(590);t:SetJustifyH("LEFT");t:SetText(text)
+        return t
+    end
+    label(profession.." character context",-16)
+    label("Measured snapshots stay separate from these explicit simulations. Use the roster's Manual mode and participation checkbox to activate a simulation.",-52)
+    local status=label("",-165)
+    local character=CreateFrame("DropdownButton",nil,panel,"WowStyle1DropdownTemplate")
+    character:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-104);character:SetWidth(290)
+    local era=CreateFrame("DropdownButton",nil,panel,"WowStyle1DropdownTemplate")
+    era:SetPoint("TOPLEFT",panel,"TOPLEFT",330,-104);era:SetWidth(210)
+    local enabled=LL:CreateSettingsCheckbox(panel)
+    enabled:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-240)
+    local enabledLabel=label("Use simulated values for this character / expansion",-243)
+    enabledLabel:ClearAllPoints();enabledLabel:SetPoint("LEFT",enabled,"RIGHT",6,0)
+    local skill=LL:CreateSettingsEditBox(panel)
+    skill:SetPoint("TOPLEFT",panel,"TOPLEFT",220,-285)
+    label("Simulated effective skill",-290)
+    local spec=LL:CreateSettingsEditBox(panel)
+    spec:SetPoint("TOPLEFT",panel,"TOPLEFT",220,-325);spec:SetWidth(360)
+    label("Specialization node ranks",-330)
+    label("Enter nodeID=rank,nodeID=rank, or none. Empty fields mean unknown; equipment and stats are never borrowed from another character.",-370)
+    local errorText=label("",-420)
+    local function refresh()
+        character:SetText(selected);era:SetText("Expansion ID "..expansion)
+        local p=LL:GetManualProfessionProfile(selected,profession,expansion) or {}
+        enabled:SetChecked(p.enabled==true);skill:SetText(p.skill and tostring(p.skill) or "")
+        spec:SetText(p.specialization or "")
+        local record=LL.db.characters and LL.db.characters[selected]
+        local snapshot=record and record.researchProfiles and record.researchProfiles[profession..":"..expansion]
+        status:SetText(snapshot and ("Saved snapshot: skill "..tostring(snapshot.skill or "?").."; observed "..tostring(snapshot.observed or "unknown")..". Offline snapshots may be stale.")
+            or "Snapshot incomplete: open this expansion's profession on the character to scan it.")
+    end
+    local function save()
+        local text=skill:GetText()
+        local specialization=spec:GetText()
+        local numeric=text~="" and tonumber(text) or nil
+        if text~="" and not numeric then errorText:SetText("Enter a numeric skill or leave it unknown.");return end
+        local ok=LL:SetManualProfessionProfile(selected,profession,expansion,{enabled=enabled:GetChecked(),
+            skill=numeric,specialization=specialization~="" and specialization or nil})
+        errorText:SetText(ok and "Simulation saved; scanned snapshot unchanged." or "Invalid skill or specialization node ranks.")
+    end
+    enabled:SetScript("OnClick",save)
+    skill:SetScript("OnEnterPressed",function(self) save();self:ClearFocus() end)
+    spec:SetScript("OnEnterPressed",function(self) save();self:ClearFocus() end)
+    local saveButton=LL:CreateSettingsButton(panel)
+    saveButton:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-460);saveButton:SetSize(210,26)
+    saveButton:SetText("Save simulation");saveButton:SetScript("OnClick",save)
+    character:SetupMenu(function(_,root)
+        local keys={} for key in pairs(LL.db.characters or {}) do keys[#keys+1]=key end
+        if #keys==0 then keys[1]=selected end
+        table.sort(keys)
+        for _,key in ipairs(keys) do
+            local k=key
+            root:CreateRadio(k,function() return selected==k end,function() selected=k;refresh() end)
+        end
+    end)
+    era:SetupMenu(function(_,root)
+        for id=0,11 do
+            local e=id
+            local family=LL.DisenchantTables and LL.DisenchantTables[e]
+            root:CreateRadio(family and family.name or ("Expansion "..e),function() return expansion==e end,function() expansion=e;refresh() end)
+        end
+    end)
+    panel:SetScript("OnShow",refresh)
+    return panel
+end
+
 -- Settings are grouped by user intent, not by the Lua module providing them.
 -- Crucially each SavedVariables key is registered exactly once so existing
 -- profiles and preferences survive moving a control to another page.
@@ -516,6 +641,27 @@ function LL:RegisterNativeSettings()
         "Extra net gold over vendoring equipment required before an auction recommendation.",0,100,.05,0)
 
     local chars=self.RegisterNativeRosterTable and self:RegisterNativeRosterTable(general)
+    if chars then
+        for _,profession in ipairs({"Alchemy","Blacksmithing","Enchanting","Engineering","Herbalism",
+            "Inscription","Jewelcrafting","Leatherworking","Mining","Skinning","Tailoring","Cooking","Fishing"}) do
+            local page=Settings.RegisterCanvasLayoutSubcategory(chars,self:CreateProfessionProfilePanel(profession),profession)
+            Settings.RegisterAddOnCategory(page)
+        end
+    end
+    local accuracyPanel=CreateFrame("Frame")
+    local accuracy=Settings.RegisterCanvasLayoutSubcategory(general,accuracyPanel,"Database & Accuracy")
+    Settings.RegisterAddOnCategory(accuracy)
+    local sources=self:CreateEvidenceSettingsPanel(accuracy)
+    sources:SetParent(accuracyPanel);sources:SetAllPoints(accuracyPanel)
+    local modes,modeLayout=Settings.RegisterVerticalLayoutSubcategory(accuracy,"Observation policy")
+    Settings.RegisterAddOnCategory(modes)
+    for _,record in ipairs({{"Disenchanting","disenchantDataMode"},{"Milling","millingDataMode"},
+        {"Prospecting","prospectingDataMode"},{"Other processing","otherConversionDataMode"}}) do
+        Dropdown(modes,record[2],record[1],"Weighted uses enabled compatible sources. Personal-only strictly excludes external evidence.",
+            {{1,"Weighted evidence"},{2,"Personal observations only"},{3,"External references only"}},1)
+    end
+    Section(modeLayout,"Existing per-method policies and source preferences survive migration. Preference sliders are not confidence scores.")
+
 
     local research,researchLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Processing Research")
     Settings.RegisterAddOnCategory(research)
@@ -526,72 +672,8 @@ function LL:RegisterNativeSettings()
         "Record reliably matched milling, prospecting and supported single-input craft results.",true)
     Checkbox(research,"showProcessingSamples","Show sample counts in tooltips",
         "Show how many personal observations are available. Full distributions also require Detailed tooltips.",true)
-    Section(researchLayout,"Which yield data to use for valuations")
-    Dropdown(research,"disenchantDataMode","Disenchant yields",
-        "Automatic favors personal results once reliable; Personal Only excludes external yield estimates; Reference Only ignores personal results for prices.",
-        {{1,"Automatic"},{2,"Personal observations only"},{3,"Reference / TSM only"}},1)
-    Dropdown(research,"millingDataMode","Milling yields",
-        "Controls whether Milling prices use personal observations or reference estimates.",
-        {{1,"Automatic"},{2,"Personal observations only"},{3,"Reference / TSM only"}},1)
-    Dropdown(research,"prospectingDataMode","Prospecting yields",
-        "Controls whether Prospecting prices use personal observations or reference estimates.",
-        {{1,"Automatic"},{2,"Personal observations only"},{3,"Reference / TSM only"}},1)
-    Dropdown(research,"otherConversionDataMode","Other processing yields",
-        "Applies to one-input recipes. Vendor exchanges and on-use combine/split actions remain documented exchanges.",
-        {{1,"Automatic"},{2,"Personal observations only"},{3,"Reference / recipe only"}},1)
-    Section(researchLayout,"Skill-aware processing estimates")
-    Checkbox(research,"skillAwareProcessing","Use character-specific processing research",
-        "Use observed profession skill and equipment where available. A manually checked character with unknown skill uses the documented minimum recipe skill, with no assumed specialization or gear bonuses. Without a compatible research model, retain the selected fallback.",true)
-    Dropdown(research,"processingFallbackMode","Processing Research Model",
-        "Automatic blends matching built-in yields with compatible personal results. The influence of personal observations grows with effective sample count. Built-in Only excludes personal results; Personal Only requires observations. Per-method selection overrides this setting.",
-        {{1,"Automatic (Recommended)"},
-         {2,"Built-in Research Only"},
-         {3,"Personal Research Only"}},1)
-    Section(researchLayout,"Midnight prospecting: low/high estimate")
-    Slider(research,"midnightProspectingUpgradePct","Midnight prospecting upgrade (%)",
-        "0% uses the basic/low research values. 100% uses best-available upgraded yield estimates for each ore and material. Intermediate positions are APPROXIMATE, not Blizzard's skill formula. Diamond unlocks are separate.",0,100,5,0)
-    Checkbox(research,"midnightDiamondCopper","Copper Consumer: diamond unlocked",
-        "Enable only if your selected Jewelcrafter has the Refulgent Copper diamond specialization.",false)
-    Checkbox(research,"midnightDiamondTin","Tin-vestigator: diamond unlocked",
-        "Enable only if your selected Jewelcrafter has the Umbral Tin diamond specialization.",false)
-    Checkbox(research,"midnightDiamondSilver","Silver Scrapper: diamond unlocked",
-        "Enable only if your selected Jewelcrafter has the Brilliant Silver diamond specialization.",false)
-    Checkbox(research,"midnightDiamondThorium","Thorium Thresher: diamond unlocked",
-        "Enable only if your selected Jewelcrafter has the Dazzling Thorium diamond specialization.",false)
-    Section(researchLayout,"Dragonflight prospecting: estimated low/high")
-    Slider(research,"dragonflightProspectingUpgradePct","Dragonflight yield upgrade (%)",
-        "0% uses historical TSM low estimates; 100% uses observed R3 Serevite and transferred ratios for other ores. Not Blizzard's exact formula.",0,100,5,0)
-    Dropdown(research,"dragonflightProspectingOutputRank","Dragonflight output gem quality",
-        "Automatic uses live Blizzard craft quality if known, otherwise conservative Rank 1. Ore quality is NOT automatically the resulting gem rank. Higher output ranks require actual effective skill or Inspiration.",
-        {{0,"Automatic / conservative"},{1,"Gem Rank 1"},{2,"Gem Rank 2"},{3,"Gem Rank 3"}},0)
-    Slider(research,"dragonflightProspectingInspirationPct","Dragonflight Inspiration chance (%)",
-        "Only redistributes gem yield between ranks IF the following threshold toggle is enabled. Inspiration does not create extra gems.",0,60,1,0)
-    Checkbox(research,"dragonflightProspectingInspirationCrossesThreshold","Inspiration raises gem rank",
-        "Check ONLY if effective Inspiration pushes the recipe into the next quality rank; otherwise the Inspiration chance has no output-quality effect.",false)
-    Slider(research,"dragonflightProspectingResourcefulnessPct","Dragonflight Resourcefulness chance (%)",
-        "Rough input savings: each Resourcefulness proc assumed to save 30% of 5 ore, separate from gem quantity. Set to 0% for unupgraded fallback.",0,50,1,0)
-    Checkbox(research,"dragonflightProspectingPrismaticUnlocked","Prospecting talent: Prismatic Ore unlocked",
-        "Only with the Prospecting specialization. Soulbound Prismatic Ore is converted to modeled downstream materials, never valued at AH prices directly.",false)
-    Section(researchLayout,"The War Within prospecting: low / high")
-    Slider(research,"warWithinProspectingUpgradePct","TWW prospecting upgrade (%)",
-        "0% = Q2 published-player reference/proxy low; 100% = ore-specific modeled higher yields. Changes both material EV and tooltip occurrence/ranges. No diamond unlocks are inferred.",0,100,5,0)
-    Section(researchLayout,"Milling: expansion-specific low / high")
-    Slider(research,"dragonflightMillingUpgradePct","Dragonflight milling upgrade (%)",
-        "0% = original TSM per-herb output expectation; 100% = estimated improved yield. Tooltip probability and ranges follow the same setting.",0,100,5,0)
-    Slider(research,"warWithinMillingUpgradePct","The War Within milling upgrade (%)",
-        "A 2024 player reference reports ~12 pigments per 10 herbs; the low 10 and high 12 expected quantities are modeled scenarios. Display ranges are tooltip-only. Output quality is chosen conservatively.",0,100,5,0)
-    Dropdown(research,"warWithinMillingOutputRank","TWW pigment output quality",
-        "Auto conservatively prices the pigment rank matching the herb rank. Override only when profession skill supports the selected rank.",
-        {{0,"Auto / input quality"},{1,"Pigment Rank 1"},{2,"Pigment Rank 2"},{3,"Pigment Rank 3"}},0)
-    Slider(research,"midnightMillingUpgradePct","Midnight milling upgrade (%)",
-        "Low/high expected pigment counts are provisional; only researched herb -> pigment mappings are used. Zero is the same low fallback used for pricing.",0,100,5,0)
-    Section(researchLayout,"Disenchanting: expansion-specific low / high")
-    Slider(research,"dragonflightDisenchantUpgradePct","Dragonflight disenchant upgrade (%)",
-        "0% = the existing source-specific reference or conservative missing-data profile; higher settings gradually increase modeled quantities, occurrence proxies and yield ranges.",0,100,5,0)
-    Slider(research,"warWithinDisenchantUpgradePct","The War Within disenchant upgrade (%)",
-        "0% = the same source-specific low reference; increasing skill upgrades changes expected quantity and tooltip probability/yield estimates together.",0,100,5,0)
-    Slider(research,"midnightDisenchantUpgradePct","Midnight disenchant upgrade (%)",
-        "0% = original observed reference with a conservative missing-data substitute where necessary; high scenario is modeled, not a guaranteed skill formula.",0,100,5,0)
+    Section(researchLayout,"Evidence collection")
+    Section(researchLayout,"Source preferences live in Database & Accuracy. Profession contexts live below Professions & Alts.")
     Section(researchLayout,"Confidence thresholds")
     Slider(research,"researchSkillTolerance","Skill matching tolerance (+/-)",
         "Borrow compatible observations from nearby profession skill levels. Zero means exact skill only.",0,40,1,10)
