@@ -243,16 +243,16 @@
           "additionalProperties": true
         },
         "dropChance": {
-          "$ref": "#/$defs/field"
+          "$ref": "#/$defs/probabilityField"
         },
         "yieldMin": {
-          "$ref": "#/$defs/field"
+          "$ref": "#/$defs/integerYieldField"
         },
         "yieldMax": {
-          "$ref": "#/$defs/field"
+          "$ref": "#/$defs/integerYieldField"
         },
         "expectedQuantity": {
-          "$ref": "#/$defs/field"
+          "$ref": "#/$defs/nonnegativeExpectationField"
         },
         "mappingConfidence": {
           "$ref": "#/$defs/confidence"
@@ -277,6 +277,61 @@
           "const": "PROVISIONAL_CANDIDATE"
         }
       }
+    },
+    "probabilityField": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/field"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      ]
+    },
+    "integerYieldField": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/field"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            }
+          }
+        }
+      ]
+    },
+    "nonnegativeExpectationField": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/field"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            }
+          }
+        }
+      ]
     }
   }
 }
