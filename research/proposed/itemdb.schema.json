@@ -39,6 +39,10 @@
           "items": {
             "type": "string"
           }
+        },
+        "mechanicsRegistrySha": {
+          "type": "string",
+          "description": "SHA of reviewed ProfessionMechanicsRegistry at generation time"
         }
       },
       "additionalProperties": true
@@ -53,6 +57,14 @@
       "type": "array",
       "items": {
         "type": "string"
+      }
+    },
+    "mechanicRules": {
+      "type": "array",
+      "default": [],
+      "description": "Only independently reviewed and numerically verified rules approved for future itemdb.lua generation; empty until the compile gate is met.",
+      "items": {
+        "$ref": "#/$defs/compiledMechanicRule"
       }
     }
   },
@@ -332,6 +344,246 @@
           }
         }
       ]
+    },
+    "compiledMechanicRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ruleID",
+        "profession",
+        "expansionID",
+        "method",
+        "effectTarget",
+        "formulaID",
+        "parameters",
+        "parameterUnits",
+        "scope",
+        "referenceContext",
+        "targetContext",
+        "requiredLiveContext",
+        "sources",
+        "independentReview",
+        "confidence0to100",
+        "evidenceStatus",
+        "applyPolicy",
+        "numericTransformValidated"
+      ],
+      "properties": {
+        "ruleID": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profession": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expansionID": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "method": {
+          "enum": [
+            "Prospect",
+            "Mill",
+            "Disenchant",
+            "Smelt",
+            "Crush",
+            "Shatter",
+            "Recycle",
+            "Other"
+          ]
+        },
+        "effectTarget": {
+          "enum": [
+            "OUTPUT_OCCURRENCE",
+            "OUTPUT_UNCONDITIONAL_EXPECTATION",
+            "OUTPUT_QUALITY",
+            "OUTPUT_ELIGIBILITY",
+            "EXPECTED_INPUT_CONSUMPTION",
+            "OPERATION_DURATION"
+          ]
+        },
+        "formulaID": {
+          "enum": [
+            "RATIO_ADJUSTMENT",
+            "ADDITIVE_EXPECTATION",
+            "RATIO_ADJUSTMENT_OCCURRENCE",
+            "QUALITY_TRANSITION_MATRIX",
+            "EXPECTED_INPUT_SAVINGS",
+            "VERIFIED_ELIGIBILITY",
+            "DURATION_ADJUSTMENT"
+          ]
+        },
+        "parameters": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "parameterUnits": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "scope": {
+          "type": "object",
+          "required": [
+            "gameMode",
+            "recipeSpellIDs",
+            "inputItemIDs",
+            "outputItemIDs",
+            "nominalInputCount",
+            "patchStartBuild",
+            "patchEndBuild"
+          ],
+          "properties": {
+            "gameMode": {
+              "const": "RETAIL"
+            },
+            "recipeSpellIDs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "inputItemIDs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "outputItemIDs": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "nominalInputCount": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "inputQualityRanks": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "outputQualityRanks": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "patchStartBuild": {
+              "type": "string",
+              "minLength": 1
+            },
+            "patchEndBuild": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "referenceContext": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "targetContext": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "requiredLiveContext": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "claimID",
+              "url",
+              "evidenceKind"
+            ],
+            "properties": {
+              "claimID": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidenceKind": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "independentReview": {
+          "type": "object",
+          "required": [
+            "reviewer",
+            "reviewedAt",
+            "passedTestIDs"
+          ],
+          "properties": {
+            "reviewer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reviewedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "passedTestIDs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        "confidence0to100": {
+          "type": "integer",
+          "minimum": 90,
+          "maximum": 100
+        },
+        "evidenceStatus": {
+          "const": "VERIFIED_NUMERIC"
+        },
+        "applyPolicy": {
+          "const": "VERIFIED_FOR_COMPILE"
+        },
+        "numericTransformValidated": {
+          "const": true
+        },
+        "blockers": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
     }
   }
 }
