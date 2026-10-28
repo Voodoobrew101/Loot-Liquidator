@@ -508,7 +508,7 @@
     "passedProductionReadiness": false,
     "knownNumericTransformationCount": 0,
     "needsHumanMechanicReview": true,
-    "notes": "This prototype enumerates data requirements; it is not a validated numerical mechanics registry or executable model. Chronological mechanics revision and event-day ambiguity tracked; no numeric coefficients added."
+    "notes": "This prototype enumerates data requirements; it is not a validated numerical mechanics registry or executable model. Chronological mechanics revision and event-day ambiguity tracked; no numeric coefficients added. Added out-of-sample four-field forward validation plan and synthetic diagnostic tool; no verified numeric formulas or production promotion."
   },
   "runtimeApiManifestPath": "research/mechanics/WoWRuntimeAPIRegistry.json",
   "mechanicsChronology": {
@@ -520,5 +520,39 @@
     "temporalBoundaryPolicy": "Official calendar-date headings and actual deployment clock differ; event-day samples remain unassigned unless timestamp/build evidence resolves timing. Publication date of cumulative notes is not effective date.",
     "sourceScopePolicy": "Unknown item-family/recipe/quality context is unresolved, not an implicit match or proof of no effect.",
     "unskilledBaselinePolicy": "Use minimum recipe-eligible no-optional-bonus profile per input/output/patch; reconstruct by audited inverse mechanics where feasible, preserve skilled raw samples and unknown fields."
+  },
+  "baselineForwardValidation": {
+    "protocolPath": "research/mechanics/BASELINE_FORWARD_VALIDATION.md",
+    "diagnosticTool": "research/tools/validate_forward_predictions.js",
+    "syntheticTest": "research/tests/test_forward_validation.js",
+    "verificationTarget": "Project MINIMUM_RECIPE_ELIGIBLE_UNSKILLED_NO_OPTIONAL_BONUSES candidate back through HISTORICAL source-context mechanics into disjoint original study outcomes.",
+    "validationCoverage": [
+      "dropChance",
+      "yieldMin",
+      "yieldMax",
+      "expectedQuantity"
+    ],
+    "outOfSampleRequired": true,
+    "independentUnit": "ORIGINAL_PRIMARY_DATASET_OR_NON_OVERLAPPING_STUDY_COHORT",
+    "historicalPatchApplicableOnly": true,
+    "dateAttributionPolicy": "Actual cast timestamp/build first, then independently reviewed event-relative source context; publication is an upper bound only.",
+    "fittingMethods": [
+      "CONTEXTUAL_GROUPING",
+      "HIERARCHICAL_PARTIAL_POOLING",
+      "MODEL_FAMILY_COMPARISON",
+      "REGRESSION",
+      "BAYESIAN_PRIOR_POSTERIOR_PREDICTIVE_CHECKS"
+    ],
+    "inferenceStatus": "PROPOSAL_NOT_AUTOMATED_FITTING",
+    "availableDiagnostics": "Supplied forward predictions vs. independent casts, raw histogram variance, optional disjoint-training beta-binomial predictive occurrence diagnostics.",
+    "hardConstraints": [
+      "No verification on the data used to fit a candidate",
+      "Unknown output is not zero; observed zero hits do not prove structural impossibility",
+      "No unsupported rule coefficient or numerical patch bridge",
+      "Positive min/max extrema are not guaranteed mechanical hard bounds",
+      "No double multiplication by chance of unconditional expectedQuantity",
+      "Input costs and resource refunds are not material output boosts"
+    ],
+    "disposition": "RESEARCH_ONLY_NOT_PRODUCTION_QUALITY_VERIFIED"
   }
 }
