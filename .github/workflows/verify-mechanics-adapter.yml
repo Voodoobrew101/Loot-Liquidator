@@ -1,0 +1,23 @@
+name: Verify mechanics adapter
+on:
+  push:
+    branches:
+      - feature/verified-mechanics-adapter
+  pull_request:
+    paths:
+      - ConversionEngine.lua
+      - research/tests/test_verified_mechanics_adapter.lua
+      - .github/workflows/verify-mechanics-adapter.yml
+jobs:
+  lua51:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lua 5.1
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.1
+      - name: Check Lua syntax and execute regression fixtures
+        run: |
+          luac5.1 -p ConversionEngine.lua
+          lua5.1 research/tests/test_verified_mechanics_adapter.lua
