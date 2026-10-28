@@ -19,6 +19,7 @@
     "scope",
     "referenceContext",
     "targetContext",
+    "requiredLiveContext",
     "sources",
     "independentReview",
     "confidence0to100",
@@ -289,6 +290,14 @@
       "items": {
         "type": "object"
       }
+    },
+    "requiredLiveContext": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Actual current-character, simulated, or timestamped alt snapshot fields needed before application; must be nonempty for compilation"
     }
   }
 }
