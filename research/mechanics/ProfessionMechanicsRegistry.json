@@ -2,7 +2,7 @@
   "schemaVersion": "0.2.0",
   "lastReviewedUTCDate": "2026-10-28",
   "status": "RESEARCH_ONLY_INCOMPLETE_NOT_A_NUMERIC_NORMALIZER",
-  "authority": "Research-only versioned mechanism and provenance contract; the only shipped static processing conversion database is GameData.lua",
+  "authority": "Research-only versioned mechanics/provenance contract. Existing released main/GameData.lua remains untouched until approved migration; future SINGLE bundled authoritative item/conversion database filename is exactly itemdb.lua.",
   "purpose": "Catalog expansion/recipe scoped mechanics, provenance, exact live API availability, historical patches and numerical correction evidence for selecting one current-Retail condition-labelled reference baseline. Unknown effects BLOCK normalization; no executable formulas are verified.",
   "baselinePolicy": {
     "definition": "ONE selected source-backed and explicitly context-labelled baseline per input/output recipe and target Retail patch; baseline is not necessarily low skill or maximum skill",
@@ -1253,7 +1253,8 @@
     ],
     "nil": "UNKNOWN_NOT_ZERO",
     "clientVersion": "GetBuildInfo is client patch/build only; unknown server-side hotfix coefficient requires an external dated event and observed bridge",
-    "resultEventCoverage": "TRADE_SKILL_ITEM_CRAFTED_RESULT exists but per-method complete output coverage for prospect/mill/disenchant is NOT live-validated; spellcast/bag deltas need cross-check."
+    "resultEventCoverage": "TRADE_SKILL_ITEM_CRAFTED_RESULT exists but per-method complete output coverage for prospect/mill/disenchant is NOT live-validated; spellcast/bag deltas need cross-check.",
+    "futureBundledDatabase": "itemdb.lua; never alter current production GameData.lua without approval"
   },
   "patchEventVerifiedModels": [
     {
@@ -1394,6 +1395,11 @@
       "research/run-log.md",
       "research/evidence/README.md"
     ],
-    "builtShippedDatabase": "main/GameData.lua (currently released); research must propose generated changes, never automatically merge into main"
-  }
+    "builtShippedDatabase": "FUTURE itemdb.lua (exact lowercase); CURRENT main/GameData.lua is legacy released source; research branch stages proposed itemdb.lua only, with user-approved TOC/source migration.",
+    "creationPrompt": "research/prompts/ITEMDB_CREATION_PROMPT.md",
+    "hourlyResearchPrompt": "research/prompts/HOURLY_ITEMDB_RESEARCH_TASK.md"
+  },
+  "futureBundledDatabase": "itemdb.lua",
+  "existingReleasedBundledDatabase": "GameData.lua",
+  "futureFilenameExactCase": true
 }
