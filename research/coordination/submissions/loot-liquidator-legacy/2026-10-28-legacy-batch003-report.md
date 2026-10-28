@@ -1,0 +1,41 @@
+# Loot Liquidator Legacy — batch 003 original-source audit (2026-10-28)
+
+**Assignment:** 2026-10-28-batch003-legacy (queue revision 5); research-only branch `research/processing-confidence`. **40 distinct assigned NEVER_EXAMINED keys**, all audited against original `GameData.lua` blob `1d47c4a961c5dc5af626e659f7d96d1490d3cf9e` and central ledger blob `de00b99312ba376b6a8db0b8c4c9c4f28a5fa957`. Branch head before commit: `4092f89fc9af407fa6122a2a3d353b9401f3553d`. No changes to main, addon, master queue, or central ledgers.
+
+## Results and first-pass accounting
+- **40/40 assigned**: 7 Battle for Azeroth Osmenite output rows, 30 Shadowlands ore-output rows, 2 Shadowlands milling profiles (Nightshade 171315, First Flower 187699), 1 Classic TSM milling row (Silverleaf 765→Alabaster Pigment 39151).
+- **Nine original-source observation cohorts** archived: 1 Osmenite PTR, 6 separate Shadowlands Osulivan ore cohorts, 1 independent 10,000-Laestrite cohort, and 1 **unmapped-index-only** Legion Felslate mass-prospecting cohort. The Felslate source is mechanics evidence ONLY and earns no additional first-pass output credit.
+- **7/7 Osmenite historical E rows exactly match** the original source. 7 of the 30 assigned Shadowlands output E values differ from the independently published Osulivan/Laestrite cohorts, 23 match; differences are **historical cross-study contrasts, not approved corrections**.
+- **0 newly >=90 all-field records**, **0 current-Retail numerical corrections**, **0 in-game tests**. Every mapped output lacks independent zero-inclusive hit/positive-yield histograms, and current patch bridge is unverified. Per-field scores in CSV; weakest field 0.
+
+## Significant finding A — Osmenite 8,000 actual five-ore casts (PTR)
+Wowhead commenter **Snurp** reported **40,000 Osmenite ore = 8,000 standard prospects**, PTR build **30329**, Jewelcrafting **150/175**, no tool of the trade, and inability to test mass prospecting. Original totals: Sage Agate 467, Dark Opal 1771, Lava Lazuli 1718, Sea Currant 1829, Sand Spinel 1769, Azsharine 446, Leviathan's Eye 1166. The six non-Eye colored gems sum to **8,000 exactly**. Each assigned `GameData.lua` expectedQuantity equals its reported total / 8000 to floating tolerance. **This source is PTR and cannot be automatically applied to live 8.2 or current 2026 Retail.** The player's qualitative statement about one colored gem per cast is recorded, but output-specific hit counts and histograms were not supplied: no manufactured measured P or hard yield bounds.
+
+Source: https://www.wowhead.com/item=168185/osmenite-ore. Item IDs cross-checked against the public 2024 WoW item-name dictionary and game-data identity references; the exact source cohort's names and counts match the seven assigned IDs. Mass Osmenite spell 300619 consumes 20 ore, but this PTR study explicitly could not test it: https://www.wowdb.com/spells/300619-mass-prospect-osmenite .
+
+## Significant finding B — Shadowlands independent per-ore cohorts
+Wowhead commenter **Osulivan** provides **1,000 ore each** for Solenium, Sinvyr, Phaedrum, Oxxein and Laestrite, plus **500 Elethium**. Ratios are reported per ore (three decimal places), so reconstructed totals may reflect rounding; **they are not guaranteed exact inventory counts**. For comparisons only, `E_per_5 = reported_per_ore_ratio * 5`. Recipe variant, exact cast count, skill, patch, and zero-output counts are unknown. All 30 assigned Shadowlands output rows were independently compared to these historical ratios or the 10,000-ore study. Source: https://www.wowhead.com/spell=311949/mass-prospect-solenium.
+
+A separate **December 4, 2020** Reddit report lists 10,000 Laestrite and exact material totals: 994 Oriblase, 1,014 Umbryl, 999 Angerseye, 99 Torment, 82 Rebirth, 76 Servitude, 55 Valor. Its five-ore equivalent means are 0.497, 0.507, 0.4995, 0.0495, 0.041, 0.038, 0.0275 respectively. These are **independent of the 1,000-ore Osulivan cohort**, not a single pooled experiment. Source: https://www.reddit.com/r/woweconomy/comments/k6fuik.
+
+Original Shadowlands mass recipes use **20 ore** (e.g. https://www.wowhead.com/spell=311949/mass-prospect-solenium); standard prospecting uses five. All assigned `GameData.lua` rows are five-ore reference equivalents. Never interpret an ore-equivalent denominator as actual completed mass casts.
+
+## Profile audits and TSM ambiguity
+- **Nightshade 171315:** original historical 2020 milling cohort in prior immutable observation archive (https://www.reddit.com/r/woweconomy/comments/k12a5o), 1,640 herbs, not actual confirmed mass-cast count. Existing `GameData.lua` 5-herb reference profile remains historical and context-incomplete. Exact 2026 recipe eligibility not live-tested.
+- **First Flower 187699:** independent March 7, 2022 4,000-herb source (https://www.reddit.com/r/woweconomy/comments/t8lubc) previously archived; 972 Umbral, 1,031 Luminous, 1,984 Tranquil; original reference E matches. Do not duplicate old cohort or re-award its output rows. Mass Mill First Flower recipe https://www.wowhead.com/spell=359490/mass-mill-first-flower uses 20 herbs.
+- **Silverleaf 765 → Alabaster Pigment 39151**: TSM historical `matRate=1, amountOfMats=0.578, minAmount=2,maxAmount=4`. Interpreting `amountOfMats` as **per five-herb cast** would violate `E>=P*min` (0.578 < 2); interpreting it as **per herb** yields 2.89 per five and is arithmetically possible. This is a **unit ambiguity**, not proof TSM is wrong. Do not promote 0.578 as a per-cast E until native TSM field semantics are verified. Existing `gd.mill[765]` is an empty candidate profile; no source-backed measured distribution.
+
+## Assigned mechanics hypothesis: legacy-felslate-standard-mass-compare
+- **Verified recipe distinction:** Standard prospecting consumes 5 Felslate; `Mass Prospect Felslate` spell **225904** consumes 20. Warcraft Wiki recipe documentation https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate and https://warcraft.wiki.gg/wiki/Prospect .
+- Wowhead's spell comment gives **113 mass Felslate casts** with 13 unlabeled output totals: `[452,42,62,91,131,114,99,20,5,22,28,2,4]`. Archived as `unmappedReportedOutputs` with **null item IDs** and zero first-pass output credit. Source https://www.wowhead.com/spell=225904/mass-prospect-felslate.
+- A Sept 8, 2016 Reddit report discusses a suspected Felslate prospecting nerf and possible standard/mass differences; other commenters disagreed. https://www.reddit.com/r/woweconomy/comments/51ovfk/possible_prospecting_nerf/ . **No matched same-patch standard-versus-mass cast series with output IDs and skill controls** was located. Numeric transformation hypothesis remains `BLOCKED_RULE_UNKNOWN`, not a verified 4x output multiplier. Input batch scaling (5 versus 20) is a recipe fact, not proof of identical output distribution.
+- **Required experiment:** In the same Retail build with one character/skill/gear, perform at least 200 standard 5-ore Felslate casts and 200 mass 20-ore casts, capture every output by exact item ID and per-cast zero-inclusive histogram, then compare E per ore, occurrence and conditional yields separately. If historical patch mechanics differ, do not infer a 2026 bridge.
+
+## Quantitative QA
+- Assigned keys unique and all marked NEVER_EXAMINED in current central ledger.
+- Seven Osmenite E values reproduce the 8000-cast published totals; colored gem totals conserve 8000; all 40 source line identities checked.
+- Nine observations pass canonical required-field/enum, nonempty mapped-or-unmapped and nonnegative-total checks. Output totals / input ore * 5 verified. No fabricated occurrence or conditional extrema. **Full external JSON Schema validation and WoW-client tests not performed.**
+- No output is >=90 in all four fields. All submitted keys are **first-pass candidates pending independent master acceptance**; do not subtract 40 from global remaining until accepted.
+
+## Exact next targets
+Master QA: accept/reject these 40 stable keys; resolve TSM Silverleaf amountOfMats units; verify PTR-to-Retail Osmenite applicability; verify Shadowlands recipe version, current 2026 client behavior, and source output identities. Next queue preview starts `output-main:tsm:mill:785:39334:L1594` and `output-main:tsm:mill:785:43103:L1595`. No self-assigned overflow.
