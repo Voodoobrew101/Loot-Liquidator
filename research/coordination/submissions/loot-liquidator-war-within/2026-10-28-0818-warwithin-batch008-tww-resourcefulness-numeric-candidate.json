@@ -1,0 +1,137 @@
+{
+  "hypothesisID": "tww-prospect-resourcefulness-savings",
+  "evidenceStatus": "UNVERIFIED",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 10,
+  "method": "Prospect",
+  "effectTarget": "EXPECTED_INPUT_CONSUMPTION",
+  "effectKind": "INPUT_SAVINGS",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      434018
+    ],
+    "inputItemIDs": [
+      210933,
+      210934,
+      210935
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      1,
+      2,
+      3
+    ],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "TWW2024Aqirite": {
+      "reportedClicks": 1040,
+      "initialOre": 5200,
+      "nominalOreFor1040At5": 5200,
+      "actualSavedOre": null,
+      "endingInventory": null,
+      "resourcefulnessPercent": null,
+      "statRating": null,
+      "perCastRefunds": null
+    },
+    "TWW2024RankComparison": {
+      "rank1OreReported": 11000,
+      "rank2OreReported": 10000,
+      "reportedReprospectedRefunds": false,
+      "actualSavedOre": null,
+      "resourcefulnessPercent": null,
+      "characterKPReported": 130,
+      "notes": "October 14 original study explicitly did not re-prospect Resourcefulness refunds; no refund counts or cast-level logs."
+    },
+    "TWW2024QueueRefunds": {
+      "source": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
+      "nominalStack": 1000,
+      "nominalFiveOreCasts": 200,
+      "reportedLeftoverOre": null,
+      "reportedSavedOre": null,
+      "actualCompletedCasts": null,
+      "resourcefulnessPercent": null,
+      "interpretation": "Original discussion says Resourcefulness may leave leftover ore after a nominal 200-cast queue, but gives no measured refund count."
+    }
+  },
+  "targetContext": {
+    "currentRetail2026": {
+      "recipeSpellID": 434018,
+      "inputOreRank": null,
+      "professionSkill": null,
+      "resourcefulnessPercent": null,
+      "resourcefulnessRating": null,
+      "specializations": null,
+      "gear": null,
+      "clientBuild": null
+    }
+  },
+  "requiredLiveContext": [
+    "Exact Algari Prospecting recipe 434018 and Aqirite item/quality rank",
+    "Same client build and recorded server-side patch window",
+    "Character Jewelcrafting skill, specialization nodes, profession gear and Resourcefulness rating/percent",
+    "Actual completed cast count and zero-inclusive saved ore per cast",
+    "Starting and ending inventory, purchases, reprocessed refunds and independent replication"
+  ],
+  "sources": [
+    {
+      "claimID": "TWW2024_AQIRITE_1040",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "notes": "1040 clicks and 5200 purchased ore; no refunds count; equality 1040*5=5200 cannot identify actual savings."
+    },
+    {
+      "claimID": "TWW2024_AQIRITE_21000",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "notes": "11000 R1 and 10000 R2 Aqirite, original poster explicitly excludes prospecting saved ore; outputs only rounded per-1000 averages, no refund histogram."
+    },
+    {
+      "claimID": "TWW2024_QUEUE_BEHAVIOR",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "notes": "Resourcefulness returns may remain in bags after the initially queued 1000 ore; queue completion not equal total consumed."
+    },
+    {
+      "claimID": "DF2023_SEREVITE_8000_NONPORTABLE",
+      "url": "https://www.reddit.com/r/woweconomy/comments/108782r",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": 8000,
+      "notes": "Dragonflight only: 2650 ore saved / 8000 casts at 22% Resourcefulness; not a TWW coefficient."
+    },
+    {
+      "claimID": "TWW2024_QUEUE_REFUNDS_NOT_QUANTIFIED",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "notes": "Original players distinguish nominal 200 queued five-ore casts from remaining saved ore. No original refund totals, no stat/gear, no per-cast observations."
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No TWW per-cast zero-inclusive ore-savings counts for a known recipe, input rank and stat",
+    "No matching TWW same-build Resourcefulness cohorts, exact specialization/gear, or inventory reconciliation",
+    "Historical Dragonflight Resourcefulness savings cannot be transported to TWW",
+    "A 1040-click 5200-ore report has no independently identifiable saved ore denominator",
+    "Current 2026 Retail patch/build applicability unverified",
+    "No valid source-matched, zero-inclusive input-savings histogram or independent TWW prospecting comparison, despite 2024 queue anecdote."
+  ],
+  "notes": "Batch008: Falsifiable TWW-only same-recipe experiment still needed. Collect >=500 actual five-ore Aqirite R2 casts at each of two independently recorded Resourcefulness settings, with same build, skill/spec/gear, all refunded ore integers including zeros, before/after inventory reconciliation and saved-ore reprocessing separately accounted. Do not substitute historical Dragonflight 0.33125 saved ore/cast or generic 30% proc folklore. Evidence synthesis of BfA/Shadowlands outputs is a separate first-pass track and cannot approve a TWW input-consumption coefficient."
+}
