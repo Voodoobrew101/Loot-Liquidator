@@ -754,10 +754,16 @@ function LL:ConversionOptions(f)
         -- GetOutputPrice includes the AH fee once.
         local yieldModel
         if c.method=="Mill" or c.method=="Prospect" then
-            yieldModel=self:ProcessingYieldDisplayModel(f,
-                {name=c.method,inputCount=inputCount,recipeID=c.recipeID or c.requiredSpell,character=character})
+            local displayOption={name=c.method,inputCount=inputCount,
+                recipeID=c.recipeID or c.requiredSpell,character=character}
+            yieldModel=self:ProcessingYieldDisplayModel(f,displayOption)
             if yieldModel and self.CompleteYieldAnnotations then
                 yieldModel=self:CompleteYieldAnnotations(yieldModel)
+            end
+            -- Scale the same model used for tooltip fields AND EV pricing.
+            -- Personal-only observations remain unmodified downstream.
+            if yieldModel and self.ApplyVerifiedMechanics then
+                yieldModel=self:ApplyVerifiedMechanics(f,displayOption,yieldModel)
             end
         end
         local minSamples=self.ProcessingMinimum and self:ProcessingMinimum() or 1
