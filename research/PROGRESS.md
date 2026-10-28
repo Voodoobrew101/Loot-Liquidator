@@ -1,5 +1,25 @@
 # Loot Liquidator — processing research and confidence ledger
 
+## Architecture update — 2026-10-28: single baseline and evidence storage (supersedes prior Low/High design)
+
+**AUTHORITATIVE OVERRIDE FOR RESEARCH AGENTS AND ADDON DEVELOPMENT:** The old requirement in this file to maintain mandatory separate Low and High processing tables is **superseded**. Use ONE best-supported reference baseline per input/output/method/condition, with independently supported `dropChance`, conditional whole-number `yieldMin`/`yieldMax`, and unconditional decimal `expectedQuantity` per exact processing operation. Retain additional low/high and patch-stratified historical studies in the research **evidence archive**, not as redundant shipped material tables. The chosen baseline is not necessarily zero skill; label the measured character context.
+
+**New canonical research files:**
+- [Profession mechanics v0.2](mechanics/ProfessionMechanicsRegistry.json) — active, research-only, additive 0.1 migration; names all 12 expansion eras and details fail-closed rules. Still no verified numerical transformation formulas.
+- [WoW addon runtime API coverage](mechanics/WoWRuntimeAPIRegistry.json) — 26 documented API capabilities, UI/open-recipe/current-character/offline-alt boundaries and in-game test requirements.
+- [Raw research evidence archive](evidence/README.md) — explains existing source/TSM/confidence ledgers and a stable `observations/*.jsonl` location.
+- [Raw observation schema](evidence/observation.schema.json) — includes sample source, game build/hotfix window, exact cast denominator, profession conditions, per-output raw totals, occurrence/histograms when known, and separate field evidence.
+- [First migrated example study](evidence/observations/midnight-refulgent-copper-r2-50ore-community.jsonl) — source-reported aggregates, NOT current-Retail-verified probabilities or post-hotfix rates.
+
+**Evidence pipeline:** Immutable source experiments and cited patch notes → verified sample context/API support → recipe-specific mechanics/patch registry → audited derived per-field confidence ledger → proposed baseline → explicitly approved `GameData.lua` update. The installed addon has ONLY ONE authoritative shipped conversion database, `GameData.lua`; JSONL/CSV/registry files live only in the research branch, not in the addon package. Personal SavedVariables remain a separate optional measured source.
+
+**Normalization gate:** Never promote mismatched patch or profession contexts to current Retail unless every material contextual adjustment (and its coefficients) is supported. An unknown effect is **BLOCKED**, never silently treated as factor 1.0. No API reveals hidden drop percentages or numeric unpublished hotfix effect; collect real cast counts. `TRADE_SKILL_ITEM_CRAFTED_RESULT` is a promising event but prospect/mill/disenchant coverage must be live-tested. Client `GetBuildInfo` does not reveal the server's exact hotfix multiplier.
+
+**Mandatory next research:** Fill precise profession/expansion skill-line IDs, specialization node/perk IDs and ranks, recipe eligibility, equipment/operation stats, hotfix effective windows, and numerical effect evidence. Prioritize current Retail measurements that bridge skill/spec or patch conditions. Keep all existing evidence; mark the older Low/High entries as historical/provisional until migrated rather than deleting them. The 90/100 confidence target remains aspirational and must NEVER be met by invented probabilities, output yields or adjustments.
+
+---
+
+
 ## Canonical project
 - Repository: https://github.com/Voodoobrew101/Loot-Liquidator
 - Original baseline was `LootLiquidator-v0.9.70-Unified-Low-High-Processing.zip`; **that ZIP is not at the former main path now** (404 on 2026-10-27).
