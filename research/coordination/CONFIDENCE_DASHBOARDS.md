@@ -1,5 +1,8 @@
 # Research confidence dashboards (mandatory for audits and progress; 2026-10-28)
 
+**Coverage-first reporting addition (2026-10-28):** Include a database-readiness chart/metric showing (1) known legitimate input/recipe/output mappings represented in the generated candidate, (2) eligible output rows with all four numeric fields, (3) provisional field estimates below 90, (4) missing/unknown field count, and (5) separately marked completeness of independent exhaustive Retail-universe audit. Plot only grounded values; if the compiler or numerator is absent explicitly state NOT IMPLEMENTED or UNKNOWN. Preserve the existing confidence charts below as secondary QA visuals, not the primary progress milestone.
+
+
 When returning an audit/progress report to the user, include **visual charts** in the ChatGPT response, not just tables. Use the available native chart visualization when supported; if a tool/report cannot embed one, provide a legible Mermaid bar/line chart in its markdown report and a small machine-readable chart-data JSON alongside the report. Do not pretend a chart was rendered when only data was generated.
 
 ## Charts required
