@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/research/evidence/observation.schema.json",
   "title": "Loot Liquidator independent research observation",
-  "description": "Historical/modern raw study evidence (JSONL one object per line). Research-only; not a second GameData.lua.",
+  "description": "Historical/modern raw study evidence (JSONL one object per line). Research-only; not a second GameData.lua. Additive 2026-10-28 extension: aggregate-only mass prospecting studies may have unknown actual operation count; keep null, preserve raw ore denominator and separately label derived 5-ore-equivalent operations.",
   "type": "object",
   "required": [
     "observationID",
@@ -178,8 +178,12 @@
           "minimum": 1
         },
         "completedOperations": {
-          "type": "integer",
-          "minimum": 1
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "description": "Actual number of completed recipe operations, NULL when source only reports aggregate consumed inputs. Never substitute five-resource-equivalent casts for unreported mass-operation count."
         },
         "reportedInputsConsumed": {
           "type": [
@@ -190,6 +194,18 @@
         },
         "batchCountDenominatorVerified": {
           "type": "boolean"
+        },
+        "fiveOreEquivalentOperations": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Derived comparable five-ore prospecting equivalents = reportedInputsConsumed/5; not a measured cast count or per-cast occurrence histogram."
+        },
+        "actualOperationCountKnown": {
+          "type": "boolean",
+          "description": "Explicit whether source reported actual recipe operations. If false, completedOperations must be null."
         }
       },
       "additionalProperties": true
