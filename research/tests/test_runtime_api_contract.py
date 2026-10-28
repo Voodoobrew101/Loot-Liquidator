@@ -46,7 +46,7 @@ class RuntimeApiManifestTests(unittest.TestCase):
         self.assertIn("not implemented", self.entries["quality_rank"]["status"])
         self.assertIn("partial", self.entries["operation_info"]["status"])
         self.assertIn("not implemented", self.entries["profession_equipment"]["status"])
-        self.assertIn("no confirmed LL usage", self.entries["processing_result_event"]["currentAddon"])
+        self.assertIn("requires event audit", self.entries["processing_result_event"]["currentAddon"])
 
     def test_live_validations_not_claimed(self):
         self.assertEqual(self.api["liveValidation"]["status"], "NOT_TESTED_IN_WOW")
@@ -65,7 +65,7 @@ class RuntimeApiManifestTests(unittest.TestCase):
     def test_event_coverage_remains_unverified(self):
         row = self.entries["processing_result_event"]
         self.assertIn("unverified", row["scope"].lower())
-        self.assertIn("Unknown".lower(), row["caveat"].lower())
+        self.assertIn("test Prospect, Mill, Disenchant", row["caveat"])
 
 if __name__ == "__main__":
     unittest.main()
