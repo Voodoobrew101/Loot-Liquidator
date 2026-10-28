@@ -30,11 +30,11 @@ function run(){
  check("unverified/blocked rule excluded",compileVerifiedMechanics(candidate,testRegistry,"blocked").mechanicRules.length===0);
  const bad=clone(syntheticFixtureForTests);bad.confidence0to100=45;
  testRegistry.numericRuleCandidates=[bad];
- check("invalid claimed approval must abort staged build",assert.throws(()=>compileVerifiedMechanics(candidate,testRegistry,"invalid"),/Reject claimed approved/)!==undefined);
+ assert.throws(()=>compileVerifiedMechanics(candidate,testRegistry,"invalid"),/Reject claimed approved/);checks++;
  testRegistry.numericRuleCandidates=[clone(syntheticFixtureForTests),clone(syntheticFixtureForTests)];
- check("duplicate IDs rejected",assert.throws(()=>compileVerifiedMechanics(candidate,testRegistry,"dupe"),/Duplicate approved rule/)!==undefined);
+ assert.throws(()=>compileVerifiedMechanics(candidate,testRegistry,"dupe"),/Duplicate approved rule/);checks++;
  const noArray=clone(registry);delete noArray.numericRuleCandidates;
- check("missing approved-rule source fails closed",assert.throws(()=>compileVerifiedMechanics(candidate,noArray,"missing"),/Missing master-reviewed/)!==undefined);
+ assert.throws(()=>compileVerifiedMechanics(candidate,noArray,"missing"),/Missing master-reviewed/);checks++;
  console.log(JSON.stringify({passed:checks,failed:0,compiledRealMechanicRules:base.mechanicRules.length,liveWoWTested:false},null,2));
 }
 if(require.main===module)run();
