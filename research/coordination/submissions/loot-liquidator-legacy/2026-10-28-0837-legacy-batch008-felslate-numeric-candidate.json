@@ -1,0 +1,108 @@
+{
+  "hypothesisID": "legacy-felslate-standard-mass-compare",
+  "evidenceStatus": "EMPIRICAL_ESTIMATE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 6,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      31252,
+      225904
+    ],
+    "inputItemIDs": [
+      123919
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": null,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "recipeSpellID": 31252,
+    "nominalInputCount": 5,
+    "reportedOre": 10000,
+    "actualCompletedOperations": null,
+    "derivedFiveOreEquivalents": 2000,
+    "uncommonUnits": 2063,
+    "rareUnits": 341,
+    "uncommonUnitsPerFiveOreEquivalent": 1.0315,
+    "rareUnitsPerFiveOreEquivalent": 0.1705,
+    "characterSkill": null,
+    "gear": null,
+    "build": null
+  },
+  "targetContext": {
+    "recipeSpellID": 225904,
+    "nominalInputCount": 20,
+    "reportedOre": 10000,
+    "actualCompletedOperations": null,
+    "derivedFiveOreEquivalents": 2000,
+    "uncommonUnits": 2070,
+    "rareUnits": 334,
+    "uncommonUnitsPerFiveOreEquivalent": 1.035,
+    "rareUnitsPerFiveOreEquivalent": 0.167,
+    "characterSkill": null,
+    "gear": null,
+    "build": null
+  },
+  "requiredLiveContext": [
+    "Same live Retail build/hotfix for both recipes",
+    "Felslate 123919, standard 31252 consumes 5 and mass 225904 consumes 20",
+    ">=200 actual casts EACH, matched character, skill, specialization, gear",
+    "Per-cast zero-inclusive output item IDs and integer counts",
+    "Actual ore consumed and refunded and independent replication"
+  ],
+  "sources": [
+    {
+      "claimID": "scribd-legion-worksheet-2017-felslate-two-methods",
+      "url": "https://www.scribd.com/document/359130779/Full-Legion-Worksheet",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null,
+      "notes": "10,000 ore per arm; aggregate totals; original casts not provided; source mirror provenance incomplete"
+    },
+    {
+      "claimID": "wiki-felslate-mass-recipe-20",
+      "url": "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "wiki-prospect-5-vs-20",
+      "url": "https://warcraft.wiki.gg/wiki/Prospect",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 48,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Worksheet provides historical ore totals and named outputs, not original completed-cast logs, zeros or actual operation counts",
+    "Exact source-linked output IDs and same-character skill/gear/build unknown",
+    "Price update Aug 2017 is not proof of experiment patch/build; no verified current-Retail bridge",
+    "Single worksheet is not independent replication; no per-output occurrence or conditional yields",
+    "Qualitatively distinct 5 and 20 input recipes do not establish equal distributions",
+    "Independent 113-mass-cast archive lacks verified output mapping and same-build reference standard casts; cannot provide holdout comparison"
+  ],
+  "notes": "NEW historical same-ore two-arm source: 10k Felslate mass: 2070 uncommon + 334 rare; 10k standard: 2063 uncommon + 341 rare. Descriptive five-ore-equivalent means: mass common 1.035, rare 0.167; standard common 1.0315, rare 0.1705. Mass/standard rare ratio 334/341=0.97947 is NOT an approved mechanic coefficient; observed aggregate can be compatible with sampling variability and context confounding. No per-output ID inference or current Retail application. Batch008: source-memory reuse avoided repeat worksheet retrieval. A separate archived 113 mass-cast report cannot be pooled with 2017 worksheet: output vector lacks mapped IDs, build and skill matching; no independently supported standard-vs-mass coefficient.",
+  "statusHistory": [
+    {
+      "date": "2026-10-28",
+      "status": "BLOCKED",
+      "reason": "Batch008 rechecked archived 2017 worksheet and 113-mass historical cohort; no matched patch/cast/output ID conditions; no new numeric parameter."
+    }
+  ]
+}
