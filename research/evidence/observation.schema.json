@@ -1,0 +1,474 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/research/evidence/observation.schema.json",
+  "title": "Loot Liquidator independent research observation",
+  "description": "Historical/modern raw study evidence (JSONL one object per line). Research-only; not a second GameData.lua.",
+  "type": "object",
+  "required": [
+    "observationID",
+    "studyID",
+    "evidenceStatus",
+    "source",
+    "game",
+    "processing",
+    "characterContext",
+    "outputs",
+    "normalization"
+  ],
+  "properties": {
+    "observationID": {
+      "type": "string",
+      "minLength": 3
+    },
+    "studyID": {
+      "type": "string",
+      "minLength": 3
+    },
+    "evidenceStatus": {
+      "enum": [
+        "RAW_PUBLISHED",
+        "RAW_IN_GAME",
+        "VERIFIED_AGGREGATE",
+        "MODEL_ESTIMATE",
+        "UNVERIFIED_LEAD"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "url",
+        "sourceType",
+        "retrievedDate",
+        "reportedObservationDate",
+        "sampleClaim"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "sourceType": {
+          "enum": [
+            "OFFICIAL",
+            "PLAYER_STUDY",
+            "FORUM_COMMENT",
+            "TSM_HISTORICAL",
+            "LOCAL_LIVE_CONSENTED",
+            "OTHER"
+          ]
+        },
+        "retrievedDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "reportedObservationDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "sampleClaim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalDocumentRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourceLineOrComment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "game": {
+      "type": "object",
+      "required": [
+        "gameMode",
+        "expansionID",
+        "clientBuild",
+        "hotfixWindow",
+        "patchDateKnown"
+      ],
+      "properties": {
+        "gameMode": {
+          "enum": [
+            "RETAIL",
+            "CLASSIC",
+            "PTR",
+            "UNKNOWN"
+          ]
+        },
+        "expansionID": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "clientBuild": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hotfixWindow": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "patchDateKnown": {
+          "type": "boolean"
+        },
+        "serverPatchKnown": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "processing": {
+      "type": "object",
+      "required": [
+        "method",
+        "recipeID",
+        "inputItemID",
+        "inputQualityRank",
+        "batchInputsPerOperation",
+        "completedOperations"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "Prospect",
+            "Mill",
+            "Disenchant",
+            "Smelt",
+            "Recycle",
+            "Other"
+          ]
+        },
+        "recipeID": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "inputItemID": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "inputQualityRank": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "batchInputsPerOperation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "completedOperations": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reportedInputsConsumed": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "batchCountDenominatorVerified": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "characterContext": {
+      "type": "object",
+      "required": [
+        "contextSource",
+        "profession",
+        "childSkillLineID",
+        "baseSkill",
+        "effectiveSkill",
+        "specializations",
+        "professionGear",
+        "stats",
+        "concentrationUsed",
+        "unknownReasons"
+      ],
+      "properties": {
+        "contextSource": {
+          "enum": [
+            "REAL_CAPTURED",
+            "PLAYER_REPORTED",
+            "MANUAL_SIMULATION",
+            "UNKNOWN"
+          ]
+        },
+        "profession": {
+          "type": "string",
+          "minLength": 1
+        },
+        "childSkillLineID": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "baseSkill": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "effectiveSkill": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "specializations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object"
+          }
+        },
+        "professionGear": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object"
+          }
+        },
+        "stats": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "concentrationUsed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unknownReasons": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "outputItemID",
+          "outputQualityRank",
+          "totalUnits",
+          "hitOperations",
+          "zeroOperations",
+          "perOperationHistogram",
+          "observedConditionalMin",
+          "observedConditionalMax",
+          "fieldEvidence"
+        ],
+        "properties": {
+          "outputItemID": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "outputQualityRank": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "totalUnits": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "hitOperations": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "zeroOperations": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "perOperationHistogram": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "propertyNames": {
+              "pattern": "^(0|[1-9][0-9]*)$"
+            },
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "observedConditionalMin": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "observedConditionalMax": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "fieldEvidence": {
+            "type": "object",
+            "required": [
+              "dropChance",
+              "yieldMin",
+              "yieldMax",
+              "expectedQuantity"
+            ],
+            "properties": {
+              "dropChance": {
+                "$ref": "#/$defs/fieldEvidence"
+              },
+              "yieldMin": {
+                "$ref": "#/$defs/fieldEvidence"
+              },
+              "yieldMax": {
+                "$ref": "#/$defs/fieldEvidence"
+              },
+              "expectedQuantity": {
+                "$ref": "#/$defs/fieldEvidence"
+              }
+            },
+            "additionalProperties": false
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "normalization": {
+      "type": "object",
+      "required": [
+        "targetCurrentRetail",
+        "status",
+        "blockers",
+        "appliedRules"
+      ],
+      "properties": {
+        "targetCurrentRetail": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "SOURCE_ONLY_UNCONVERTED",
+            "EXACT_CONTEXT_MATCH",
+            "SUPPORTED_NUMERIC_TRANSFORM",
+            "BLOCKED_PATCH_UNKNOWN",
+            "BLOCKED_CONTEXT_UNKNOWN",
+            "BLOCKED_RULE_UNKNOWN"
+          ]
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "appliedRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "derivedEvidenceConfidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "fieldEvidence": {
+      "type": "object",
+      "required": [
+        "confidence",
+        "basis",
+        "sourceClaimID"
+      ],
+      "properties": {
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "basis": {
+          "enum": [
+            "MEASURED",
+            "ESTIMATED",
+            "REPORTED",
+            "NOT_OBSERVED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "sourceClaimID": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
