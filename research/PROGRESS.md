@@ -1,3 +1,7 @@
+## Master batch007 accepted — 2026-10-28
+
+150 unique disjoint worker first-pass source-output records accepted (35/35/40/40). **1078/1737** examined, **659** never; 1065 insufficient, 13 previously blocked. Four-field scored 994 outputs/3976 fields: >=90 0, 70–89 17, <70 3959. No current-Retail numerical correction or complete >=90 output. Independently reviewed original 2022 DF beta six 5000-ore cohorts, MoP/Cataclysm Classic rate conflicts, BfA 1130 claimed operations, and 2017 Felslate standard/mass two 10000-ore arms. 4 numeric hypotheses BLOCKED, zero verified/approved coefficients. 619 static checks passed, no Node suite or WoW client test. Queue rev10 next 150 disjoint keys. [Master verdict](coordination/reviews/2026-10-28-master-worker-batch007-verdict.md).
+
 ## Master batch006 accepted — 2026-10-28
 
 150 distinct worker keys accepted (35/35/40/40), now **928/1737** first-pass examined and **809** never. 915 insufficient, 13 previously blocked; 844 output records/3376 independently scored fields: >=90 0, 70–89 17, <70 3359. Original Titanium 1000-ore study independently cross-checked (104 gems; derived 0.520 units/5 ore versus historical TSM proxy 0.516); Cobalt and Pyrite guide discrepancies confirmed. **12 adjacent Northrend contradictions already BLOCKED in central ledger; do not count again.** Four numeric hypotheses remain BLOCKED, zero numeric promotions, zero current Retail corrections. Next 150 disjoint stable keys in queue rev9; all production unchanged. [QA verdict](coordination/reviews/2026-10-28-master-worker-batch006-verdict.md).

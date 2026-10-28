@@ -196,3 +196,7 @@ Current Retail cast records with zero-inclusive per-output histograms for four M
 - Original 1000-Titanium-ore study: 104 gem units, 0.520 per derived 5-ore equivalent; TSM aggregate proxy 0.516. Cobalt rare six 1.5% vs guide 1.3%; Pyrite common six 16.5% vs guide 17%. Historical source disagreement only.
 - Numeric hypotheses 0 VERIFIED, 0 EMPIRICAL approved, 4 BLOCKED; no coefficients. Queue rev9 assigns 150 distinct next keys (Dragonflight 45, Legacy 105). No repository Node suite or WoW client execution. No main, addon or schedule changes.
 - research/coordination/reviews/2026-10-28-master-worker-batch006-verdict.md
+
+## 2026-10-28 — master batch007
+
+Independent review of 150 exact disjoint worker batch007 source-output keys; original GameData blob 1d47c4a961c5dc5af626e659f7d96d1490d3cf9e unchanged. Coverage 1078/1737, 659 never, 1065 insufficient, 13 blocked. 994 output records /3976 fields: 0 >=90, 17 moderate, 3959 low. 15 original source observations in five immutable JSONL files, including 222 unmapped DF beta output cells, two Felslate historical arms, three BfA and three Kyparite cohorts. Static QA 619 assertions passed (150 source ID, 150 assignment, 150 arithmetic, 165 observation, four blocked candidate). Four numeric hypotheses remain blocked. Node suites and WoW client not run. Queue rev10 next 150 disjoint keys, known first-pass ETA ~5 hourly cycles; 90-gate ETA unknown. No production/schedule edits.
