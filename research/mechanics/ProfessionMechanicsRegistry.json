@@ -1,11 +1,11 @@
 {
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "lastReviewedUTCDate": "2026-10-28",
-  "status": "INITIAL_SCAFFOLD_INCOMPLETE_RESEARCH_REQUIRED",
-  "authority": "research-only; NOT a shipped addon data file; compiled eligible processing baselines belong exclusively in GameData.lua",
-  "purpose": "Register expansion/patch/profession context and verified transforms needed to compare historical processing observations with target Retail. Never claim normalization without verified mechanisms and coefficients.",
+  "status": "RESEARCH_ONLY_INCOMPLETE_NOT_A_NUMERIC_NORMALIZER",
+  "authority": "Research-only versioned mechanism and provenance contract; the only shipped static processing conversion database is GameData.lua",
+  "purpose": "Catalog expansion/recipe scoped mechanics, provenance, exact live API availability, historical patches and numerical correction evidence for selecting one current-Retail condition-labelled reference baseline. Unknown effects BLOCK normalization; no executable formulas are verified.",
   "baselinePolicy": {
-    "definition": "One best-supported per-input/output/condition reference for the selected Retail patch; not necessarily an untrained or max-skill character",
+    "definition": "ONE selected source-backed and explicitly context-labelled baseline per input/output recipe and target Retail patch; baseline is not necessarily low skill or maximum skill",
     "storedMaterialFields": [
       "dropChance",
       "yieldMin",
@@ -27,7 +27,12 @@
       "use one output's multipliers for another output without evidence",
       "invent unobtainable outputs"
     ],
-    "personalObservations": "SavedVariables observations are independent empirical evidence, not a second shipped built-in yield table"
+    "personalObservations": "SavedVariables observations are independent empirical evidence, not a second shipped built-in yield table",
+    "additionalMeasuredCohorts": "Preserve any number of condition-stratified raw samples separately under research/evidence; do not require duplicated LOW/HIGH output tables in GameData.lua",
+    "statisticalDistribution": "Four summary fields suffice for baseline tooltip/EV but cannot infer arbitrary nonlinear context transformations. Retain zero-inclusive per-cast histograms or full records in the evidence archive whenever available.",
+    "zeroAndUnknown": "A proven impossible output or measured zero has value 0; unavailable context or unobserved output is null (unknown), never silently coerce nil to 0.",
+    "normalizationRequired": "Only verified patch/recipe/output-specific transforms may create a current Retail or simulated baseline from mismatched samples; do not treat missing rules as identity transforms.",
+    "separateOutputAndInputEffects": "Changes to output occurrence/expected quantity, input refunds, crafting quality, eligibility and time must be modeled in separate dimensions; never multiply a cost adjustment into material drop quantity."
   },
   "expansionIndex": [
     {
@@ -170,7 +175,14 @@
       ],
       "status": "DOCUMENTED_CONTEXT",
       "effect": "Potential quality threshold / recipe eligibility; no proven universal output count multiplier",
-      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529",
+      "runtimeApiRefs": [
+        "profession_skill_by_id",
+        "operation_info"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "DOCUMENTED_CONTEXT",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "inspiration",
@@ -180,7 +192,13 @@
       "status": "DOCUMENTED_HISTORICAL",
       "effect": "Chance of extra crafting skill; quality outcome if applicable, NOT a generic gem drop chance multiplier",
       "supersededBy": "concentration_and_ingenuity",
-      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529",
+      "runtimeApiRefs": [
+        "operation_info"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "DOCUMENTED_HISTORICAL",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "concentration",
@@ -190,7 +208,14 @@
       ],
       "status": "DOCUMENTED_MECHANIC",
       "effect": "Spendable crafting resource to reach next quality tier on eligible recipes; output count/proc-rate effect UNVERIFIED",
-      "source": "https://warcraft.wiki.gg/wiki/Concentration"
+      "source": "https://warcraft.wiki.gg/wiki/Concentration",
+      "runtimeApiRefs": [
+        "concentration",
+        "operation_info"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "DOCUMENTED_MECHANIC",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "ingenuity",
@@ -200,7 +225,14 @@
       ],
       "status": "DOCUMENTED_MECHANIC",
       "effect": "Chance to refund spent concentration under applicable crafting rules; not a direct unverified increase to processing drop probabilities",
-      "source": "https://www.icy-veins.com/wow/professions-stats-and-gear"
+      "source": "https://www.icy-veins.com/wow/professions-stats-and-gear",
+      "runtimeApiRefs": [
+        "operation_info",
+        "processing_result_event"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "DOCUMENTED_MECHANIC",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "resourcefulness",
@@ -212,7 +244,14 @@
       "status": "DOCUMENTED_MECHANIC",
       "effect": "May reduce reagent consumption on eligible crafts, affects input cost/expected consumption and not automatically output expected units",
       "numericFormula": "unknown_recipe_specific",
-      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529",
+      "runtimeApiRefs": [
+        "operation_info",
+        "processing_result_event"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "DOCUMENTED_MECHANIC",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "multicraft",
@@ -224,7 +263,14 @@
       "status": "DOCUMENTED_MECHANIC",
       "effect": "Additional units for eligible stackable-output recipes; eligibility and magnitude must be proved per processing method",
       "numericFormula": "unknown_recipe_specific",
-      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529",
+      "runtimeApiRefs": [
+        "operation_info",
+        "processing_result_event"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "DOCUMENTED_MECHANIC",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "craftingSpeed",
@@ -235,7 +281,13 @@
       ],
       "status": "DOCUMENTED_MECHANIC",
       "effect": "Time per crafting operation; does not automatically alter yield per operation",
-      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529",
+      "runtimeApiRefs": [
+        "operation_info"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "DOCUMENTED_MECHANIC",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "perception",
@@ -246,7 +298,13 @@
       ],
       "status": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
       "effect": "Gathering-related rare finds; never apply generically to prospect/mill/disenchant",
-      "source": "https://warcraft.wiki.gg/wiki/Attribute"
+      "source": "https://warcraft.wiki.gg/wiki/Attribute",
+      "runtimeApiRefs": [
+        "operation_info"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "finesse",
@@ -257,7 +315,13 @@
       ],
       "status": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
       "effect": "Gathering reagent yield; never apply generically to processing",
-      "source": "https://warcraft.wiki.gg/wiki/Attribute"
+      "source": "https://warcraft.wiki.gg/wiki/Attribute",
+      "runtimeApiRefs": [
+        "operation_info"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "deftness",
@@ -268,7 +332,13 @@
       ],
       "status": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
       "effect": "Gathering speed; never apply to per-operation processing yield without evidence",
-      "source": "https://warcraft.wiki.gg/wiki/Attribute"
+      "source": "https://warcraft.wiki.gg/wiki/Attribute",
+      "runtimeApiRefs": [
+        "operation_info"
+      ],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     },
     {
       "key": "focus",
@@ -277,7 +347,11 @@
       ],
       "status": "UNRESOLVED_TERM",
       "effect": "Do not invent a universal Focus profession stat; investigate any named expansion-specific specialization/focus mechanic and map exact spell/node IDs",
-      "numericFormula": null
+      "numericFormula": null,
+      "runtimeApiRefs": [],
+      "executionPolicy": "NO_NUMERIC_TRANSFORM_UNTIL_RECIPE_SCOPED_RULE_VERIFIED",
+      "gameplayStatus": "UNRESOLVED_TERM",
+      "recipeEligibility": "UNKNOWN_UNTIL_RECIPE_VERIFIED"
     }
   ],
   "equipmentRules": [
@@ -289,7 +363,13 @@
         "profession equipment secondary stats"
       ],
       "note": "Midnight content notes say secondary stats on profession tools/accessories apply to prior expansions but not higher expansions. This is not proof every legacy processing recipe benefits or that skill bonuses work identically.",
-      "source": "https://worldofwarcraft.blizzard.com/en-us/news/24244646"
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
+      "runtimeApiRefs": [
+        "profession_equipment",
+        "equipment_stats",
+        "operation_info"
+      ],
+      "numericAdjustment": "NOT_VERIFIED"
     },
     {
       "id": "gear_exact_values_and_effective_skill",
@@ -304,7 +384,13 @@
         "expansion",
         "patch"
       ],
-      "note": "Never assume higher expansion equipment supplies the same effective modifiers or applies to all recipe types."
+      "note": "Never assume higher expansion equipment supplies the same effective modifiers or applies to all recipe types.",
+      "runtimeApiRefs": [
+        "profession_equipment",
+        "equipment_stats",
+        "operation_info"
+      ],
+      "numericAdjustment": "NOT_VERIFIED"
     }
   ],
   "specializationRules": [
@@ -317,7 +403,14 @@
       "status": "DOCUMENTED_QUALITATIVE",
       "effect": "Raises relevant skill and profession stats; exact numeric contribution and conversion to material yields requires point-specific research",
       "normalizedFormula": null,
-      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
+      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
+      "runtimeApiRefs": [
+        "specialization_ranks",
+        "specialization_perks",
+        "recipe_skillline"
+      ],
+      "numericAdjustment": "NOT_VERIFIED",
+      "eligibility": "UNKNOWN_UNLESS_PROVEN"
     },
     {
       "id": "midnight_prospecting_pro",
@@ -328,7 +421,14 @@
       "status": "DOCUMENTED_QUALITATIVE",
       "effect": "At maximum node investment, increased gem output is reported; numeric multiplier unknown and must not be invented",
       "normalizedFormula": null,
-      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
+      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
+      "runtimeApiRefs": [
+        "specialization_ranks",
+        "specialization_perks",
+        "recipe_skillline"
+      ],
+      "numericAdjustment": "NOT_VERIFIED",
+      "eligibility": "UNKNOWN_UNLESS_PROVEN"
     },
     {
       "id": "midnight_ore_specific_diamond_nodes",
@@ -339,7 +439,15 @@
       "status": "DOCUMENTED_QUALITATIVE",
       "effect": "Each ore-specific node gives better chance to obtain Eversong Diamond according to Wowhead; whether it grants strict eligibility versus increases nonzero chance is UNVERIFIED. Do not assume a binary zero-to-eligible gate solely from this source.",
       "normalizedFormula": null,
-      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
+      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
+      "runtimeApiRefs": [
+        "specialization_ranks",
+        "specialization_perks",
+        "recipe_skillline"
+      ],
+      "numericAdjustment": "NOT_VERIFIED",
+      "eligibility": "UNKNOWN_UNLESS_PROVEN",
+      "importantCaveat": "Guide says better Eversong Diamond chance, not proven strict zero-to-unlock; never set baseline diamond rate zero based solely on this description"
     },
     {
       "id": "all_other_expansion_specializations",
@@ -348,7 +456,14 @@
       "method": "all",
       "name": "AUDIT_BACKLOG",
       "status": "NOT_INVENTORIED",
-      "effect": "Agent must inventory named talents, ranks, spell/node IDs, applicability and numeric effects per expansion/profession"
+      "effect": "Agent must inventory named talents, ranks, spell/node IDs, applicability and numeric effects per expansion/profession",
+      "runtimeApiRefs": [
+        "specialization_ranks",
+        "specialization_perks",
+        "recipe_skillline"
+      ],
+      "numericAdjustment": "NOT_VERIFIED",
+      "eligibility": "UNKNOWN_UNLESS_PROVEN"
     }
   ],
   "patchEvents": [
@@ -366,7 +481,11 @@
       "numericEffect": null,
       "normalization": "CONTEXT_SEGMENT_ONLY",
       "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529",
-      "datePrecision": "approximate patch era; exact profession activation and version should be confirmed"
+      "datePrecision": "approximate patch era; exact profession activation and version should be confirmed",
+      "firstAffectedBuild": null,
+      "numericTransformValidated": false,
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "patchScopeReview": "Needs precise recipe and output family audit; previous entries preserved as research leads"
     },
     {
       "id": "war_within_inspiration_replacement",
@@ -386,7 +505,11 @@
       "numericEffect": null,
       "normalization": "CONTEXT_SEGMENT_ONLY",
       "source": "https://warcraft.wiki.gg/wiki/Concentration",
-      "datePrecision": "11.0.x patch window; needs exact verification"
+      "datePrecision": "11.0.x patch window; needs exact verification",
+      "firstAffectedBuild": null,
+      "numericTransformValidated": false,
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "patchScopeReview": "Needs precise recipe and output family audit; previous entries preserved as research leads"
     },
     {
       "id": "midnight_profession_equipment_backward_secondary",
@@ -415,7 +538,11 @@
       "numericEffect": null,
       "normalization": "CONTEXT_SEGMENT_ONLY",
       "source": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
-      "datePrecision": "effective date must be verified"
+      "datePrecision": "effective date must be verified",
+      "firstAffectedBuild": null,
+      "numericTransformValidated": false,
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "patchScopeReview": "Needs precise recipe and output family audit; previous entries preserved as research leads"
     },
     {
       "id": "midnight_two_quality_stackables",
@@ -431,7 +558,11 @@
       "numericEffect": null,
       "normalization": "OUTPUT_QUALITY_VERSION_GATE",
       "source": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
-      "datePrecision": "effective date must be verified"
+      "datePrecision": "effective date must be verified",
+      "firstAffectedBuild": null,
+      "numericTransformValidated": false,
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "patchScopeReview": "Needs precise recipe and output family audit; previous entries preserved as research leads"
     },
     {
       "id": "midnight_apr_1_prospecting_gem_increase",
@@ -448,7 +579,11 @@
       "numericEffect": null,
       "normalization": "BLOCKED_NUMERIC_UNKNOWN",
       "source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
-      "datePrecision": "hotfix subsection date verified from research branch and Blizzard cumulative notes; quantitative magnitude unpublished"
+      "datePrecision": "hotfix subsection date verified from research branch and Blizzard cumulative notes; quantitative magnitude unpublished",
+      "firstAffectedBuild": null,
+      "numericTransformValidated": false,
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "patchScopeReview": "Needs precise recipe and output family audit; previous entries preserved as research leads"
     }
   ],
   "observationContextSchema": {
@@ -493,7 +628,74 @@
       "notes",
       "patchEventIDs"
     ],
-    "note": "Raw total / actual eligible operations establishes an empirical unconditional mean only; without per-cast hit counts it cannot establish P(drop) or conditional yield limits."
+    "note": "Raw total / actual eligible operations establishes an empirical unconditional mean only; without per-cast hit counts it cannot establish P(drop) or conditional yield limits.",
+    "requiredValuesMayBeNull": true,
+    "requiredDoesNotMeanKnown": "These fields must be present as schema keys, but may explicitly contain null with an unknown reason; missing is not equivalent to zero skill or no specialization.",
+    "additionalFields": [
+      "referenceContextID",
+      "sourceClaimIDs",
+      "actualGameMode",
+      "clientBuild",
+      "serverHotfixWindow",
+      "baseSkill",
+      "bonusSkill",
+      "skillModifier",
+      "parentProfessionID",
+      "childSkillLineID",
+      "specializationNodeIDs",
+      "committedSpecializationRanks",
+      "professionGearItemLinks",
+      "gearStats",
+      "operationBonusStats",
+      "recipeReagentAllocations",
+      "observedOutputHitCount",
+      "zeroCount",
+      "positiveYieldHistogram",
+      "jointOutputHistogram",
+      "craftResultEventCompleteness",
+      "apiDataCapturedAt",
+      "apiSourceVersion",
+      "apiAvailabilityFlags",
+      "explicitUnknownReasons",
+      "fieldConfidence"
+    ],
+    "runtimeApiRefs": [
+      {
+        "field": "expansionSpecificSkill",
+        "apiKey": "profession_skill_by_id",
+        "unknownOnNil": true
+      },
+      {
+        "field": "childSkillLineID",
+        "apiKey": "recipe_skillline",
+        "unknownOnNil": true
+      },
+      {
+        "field": "specializationRanks",
+        "apiKey": "specialization_ranks",
+        "unknownOnNil": true
+      },
+      {
+        "field": "reagentQuality",
+        "apiKey": "quality_rank",
+        "unknownOnNil": true
+      },
+      {
+        "field": "operationBonusStats",
+        "apiKey": "operation_info",
+        "unknownOnNil": true
+      },
+      {
+        "field": "actualResourceReturns",
+        "apiKey": "processing_result_event",
+        "unknownOnNil": true
+      },
+      {
+        "field": "clientBuild",
+        "apiKey": "client_patch",
+        "unknownOnNil": true
+      }
+    ]
   },
   "normalizationProtocol": {
     "target": "Current Retail 2026 with a precise target patch and target real/simulated profession context",
@@ -577,6 +779,621 @@
   "registryAudit": {
     "fieldConfidenceTarget": 90,
     "notes": "This file is a research index with confirmed qualitative mechanics and incomplete quantitative functions, NOT evidence that all expansions are exhaustively cataloged. 90/100 refers to evidence strength per supported field, not statistical accuracy.",
-    "unverifiedNumberOfTransformCoefficients": true
+    "unverifiedNumberOfTransformCoefficients": true,
+    "verifiedNumericAdjustmentRules": 0,
+    "unverifiedHistoricalPatchNumericEffects": true,
+    "apiManifestEntries": 26,
+    "apiInGameValidation": false,
+    "activeRegistryV02Review": "mechanic catalogs are incomplete and NOT production-ready; exact recipe applicability/ranks/gear/patch and coefficient research required",
+    "confidenceTargetMeaning": "Evidence strength, not 90% statistical accuracy"
+  },
+  "schemaCompatibility": "additive-v0.1; original expansion, stat, equipment, specialization and patch entries preserved",
+  "runtimeApiManifestPath": "research/mechanics/WoWRuntimeAPIRegistry.json",
+  "reviewPackage": {
+    "source": "https://github.com/Voodoobrew101/Loot-Liquidator/pull/3",
+    "audit": "research/reviews/2026-10-28-mechanics-registry-audit.md",
+    "liveApiAudit": "research/reviews/2026-10-28-retail-api-coverage-audit.md",
+    "status": "not in-client-validated; reviewer-proposed schema has been adopted additively"
+  },
+  "ruleSchema": {
+    "enums": {
+      "evidenceStatus": [
+        "VERIFIED_NUMERIC",
+        "VERIFIED_QUALITATIVE",
+        "EMPIRICAL_ESTIMATE",
+        "UNVERIFIED",
+        "CONTRADICTED"
+      ],
+      "transformDecision": [
+        "APPLY",
+        "NO_EFFECT_VERIFIED",
+        "BLOCKED_NO_RULE",
+        "BLOCKED_UNKNOWN_PATCH_EFFECT",
+        "BLOCKED_MISSING_CONTEXT",
+        "BLOCKED_INAPPLICABLE",
+        "BLOCKED_DIFFERENT_STAT"
+      ],
+      "effectTarget": [
+        "OUTPUT_OCCURRENCE",
+        "OUTPUT_POSITIVE_QUANTITY",
+        "OUTPUT_UNCONDITIONAL_EXPECTATION",
+        "OUTPUT_QUALITY",
+        "OUTPUT_ELIGIBILITY",
+        "EXPECTED_INPUT_CONSUMPTION",
+        "OPERATION_DURATION",
+        "STAT_RATING_TO_PERCENT"
+      ],
+      "effectKind": [
+        "MULTIPLY",
+        "ADDITIVE",
+        "DISCRETE_ELIGIBILITY",
+        "QUALITY_TRANSITION",
+        "INPUT_SAVINGS",
+        "COST_ONLY",
+        "INFORMATIONAL",
+        "UNKNOWN"
+      ],
+      "unit": [
+        "PER_OPERATION",
+        "PER_INPUT_UNIT",
+        "COUNT_POSITIVE",
+        "PROBABILITY_FRACTION",
+        "PERCENT",
+        "STAT_RATING",
+        "SKILL_POINT",
+        "SECONDS"
+      ],
+      "gameMode": [
+        "RETAIL",
+        "CLASSIC",
+        "PTR"
+      ],
+      "sampleKind": [
+        "RAW_CAST_LOG",
+        "AGGREGATE_TOTALS",
+        "DOCUMENTED_RATE",
+        "MODEL_ESTIMATE",
+        "INELIGIBLE"
+      ],
+      "applicability": [
+        "VERIFIED_APPLIES",
+        "VERIFIED_DOES_NOT_APPLY",
+        "UNKNOWN"
+      ]
+    },
+    "recordTypes": {
+      "mechanicRule": [
+        "ruleID",
+        "profession",
+        "expansionIDs",
+        "methods",
+        "recipeIDs",
+        "inputItemIDs",
+        "outputItemIDs",
+        "referencePatch",
+        "effectivePatchBounds",
+        "specializationID",
+        "nodeRankMin",
+        "gearItemIDs",
+        "applies",
+        "evidenceStatus",
+        "effectTarget",
+        "effectKind",
+        "formulaID",
+        "parameters",
+        "parameterUnits",
+        "sourceClaimIDs",
+        "confidence0to100",
+        "notes",
+        "runtimeApiRefs",
+        "runtimeApplicability",
+        "requiredLiveContext",
+        "offlineSnapshotPolicy"
+      ],
+      "observedCohort": [
+        "cohortID",
+        "gameMode",
+        "sampleStart",
+        "sampleEnd",
+        "clientBuild",
+        "expansionID",
+        "method",
+        "recipeID",
+        "inputItemID",
+        "inputQualityRank",
+        "batchInputs",
+        "completedOperations",
+        "outputItemID",
+        "outputQualityRank",
+        "sourceClaimIDs",
+        "rawOutputTotals",
+        "operationHitCount",
+        "positiveCountsHistogram",
+        "professionSkill",
+        "equipment",
+        "statRatings",
+        "statPercentages",
+        "specializationRanks",
+        "concentrationSpent",
+        "unknownContextFields",
+        "fieldEvidence",
+        "zeroCount",
+        "jointPerCastOutputHistogram",
+        "triggeredBonusProcCounts",
+        "observedViaApiRefs",
+        "clientBuild",
+        "sourceValueClass",
+        "fieldsNotExposed",
+        "eventCaptureCompleteness",
+        "statSourceIsRecipeSpecific",
+        "gearLinksFromEquipment",
+        "savedAltLastSeenBuild",
+        "savedAltLastSeenAt",
+        "recipeReagentAllocations",
+        "concentrationCurrencyID",
+        "concentrationAvailable",
+        "bonusStatsByRecipe",
+        "operationId"
+      ],
+      "patchEvent": [
+        "eventID",
+        "effectiveDate",
+        "firstAffectedBuild",
+        "gameMode",
+        "expansionIDs",
+        "methods",
+        "recipeIDs",
+        "outputCategories",
+        "affectedFields",
+        "evidenceStatus",
+        "numericTransformID",
+        "sourceClaimIDs",
+        "intervalConfidence",
+        "notes"
+      ],
+      "sourceClaim": [
+        "claimID",
+        "url",
+        "publishedDate",
+        "retrievedDate",
+        "versionScope",
+        "evidenceClass",
+        "specificClaim",
+        "numericalSupport",
+        "sampleN",
+        "independentCorroboration",
+        "confidence0to100",
+        "apiDocumentationURL",
+        "verifiedLiveBuild"
+      ]
+    },
+    "ruleDecisionStates": [
+      "APPLY",
+      "NO_EFFECT_VERIFIED",
+      "BLOCKED_NO_RULE",
+      "BLOCKED_UNKNOWN_PATCH_EFFECT",
+      "BLOCKED_MISSING_CONTEXT",
+      "BLOCKED_INAPPLICABLE",
+      "BLOCKED_DIFFERENT_STAT"
+    ],
+    "executionPolicy": "Only if evidenceStatus=VERIFIED_NUMERIC, applicability=VERIFIED_APPLIES, source claims documented, target build and context match, exact formula/units/scope defined and tests pass. Qualitative/estimated rules remain NO_NUMERIC_TRANSFORM unless explicit reviewed modeled output path is approved.",
+    "requiredIdentity": [
+      "gameMode",
+      "expansionID",
+      "method",
+      "recipeID",
+      "inputItemID",
+      "inputQualityRank",
+      "outputItemID",
+      "outputQualityRank",
+      "patchBuild",
+      "referenceContextID"
+    ],
+    "perRuleFields": [
+      "ruleID",
+      "profession",
+      "expansionIDs",
+      "methods",
+      "recipeIDs",
+      "inputItemIDs",
+      "outputItemIDs",
+      "referencePatch",
+      "effectivePatchBounds",
+      "specializationID",
+      "nodeRankMin",
+      "gearItemIDs",
+      "applies",
+      "evidenceStatus",
+      "effectTarget",
+      "effectKind",
+      "formulaID",
+      "parameters",
+      "parameterUnits",
+      "sourceClaimIDs",
+      "confidence0to100",
+      "notes",
+      "runtimeApiRefs",
+      "runtimeApplicability",
+      "requiredLiveContext",
+      "offlineSnapshotPolicy"
+    ],
+    "perPatchFields": [
+      "eventID",
+      "effectiveDate",
+      "firstAffectedBuild",
+      "gameMode",
+      "expansionIDs",
+      "methods",
+      "recipeIDs",
+      "outputCategories",
+      "affectedFields",
+      "evidenceStatus",
+      "numericTransformID",
+      "sourceClaimIDs",
+      "intervalConfidence",
+      "notes"
+    ],
+    "perSourceClaimFields": [
+      "claimID",
+      "url",
+      "publishedDate",
+      "retrievedDate",
+      "versionScope",
+      "evidenceClass",
+      "specificClaim",
+      "numericalSupport",
+      "sampleN",
+      "independentCorroboration",
+      "confidence0to100",
+      "apiDocumentationURL",
+      "verifiedLiveBuild"
+    ]
+  },
+  "sourceClaims": [
+    {
+      "claimID": "blizzard-2026-04-01-midnight-gems",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight live after 2026-04-01",
+      "evidenceClass": "OFFICIAL_HOTFIX",
+      "specificClaim": "Gems found more regularly when prospecting Midnight ore",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null
+    },
+    {
+      "claimID": "wowhead-2026-midnight-jc-prospecting-nodes",
+      "url": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight (guide as updated)",
+      "evidenceClass": "GUIDE_QUALITATIVE",
+      "specificClaim": "Ore-specific nodes improve chance for Eversong Diamond; does not prove base chance zero",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null,
+      "note": "Exact page update date not independently verified"
+    },
+    {
+      "claimID": "blizzard-2026-midnight-gear-retroactivity",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight content update",
+      "evidenceClass": "OFFICIAL_PATCH_NOTE",
+      "specificClaim": "Profession equipment secondary stats apply to prior-expansion version of same profession; no primary-skill claim",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null
+    }
+  ],
+  "quantifiedMechanicRules": [
+    {
+      "ruleID": "midnight-ore-node-diamond",
+      "profession": "Jewelcrafting",
+      "expansionIDs": [
+        11
+      ],
+      "methods": [
+        "Prospect"
+      ],
+      "recipeIDs": [],
+      "inputItemIDs": [],
+      "outputItemIDs": [
+        242608
+      ],
+      "referencePatch": null,
+      "effectivePatchBounds": null,
+      "specializationID": null,
+      "nodeRankMin": 1,
+      "gearItemIDs": [],
+      "applies": "UNKNOWN",
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "effectTarget": "OUTPUT_OCCURRENCE",
+      "effectKind": "UNKNOWN",
+      "formulaID": null,
+      "parameters": null,
+      "parameterUnits": null,
+      "sourceClaimIDs": [
+        "wowhead-2026-midnight-jc-prospecting-nodes"
+      ],
+      "confidence0to100": null,
+      "notes": "Needs exact ore-specific node IDs and recipe IDs; effect is chance increase, not a proven zero-to-unlocked eligibility gate.",
+      "runtimeApiRefs": [
+        "specialization_ranks",
+        "specialization_perks",
+        "recipe_skillline"
+      ],
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "numericTransformValidated": false
+    },
+    {
+      "ruleID": "midnight-secondary-gear-previous-expansions",
+      "profession": "ALL_PROFESSIONS",
+      "expansionIDs": [
+        9,
+        10,
+        11
+      ],
+      "methods": [],
+      "recipeIDs": [],
+      "inputItemIDs": [],
+      "outputItemIDs": [],
+      "referencePatch": null,
+      "effectivePatchBounds": null,
+      "specializationID": null,
+      "nodeRankMin": null,
+      "gearItemIDs": [],
+      "applies": "UNKNOWN",
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "effectTarget": "STAT_RATING_TO_PERCENT",
+      "effectKind": "INFORMATIONAL",
+      "formulaID": null,
+      "parameters": null,
+      "parameterUnits": null,
+      "sourceClaimIDs": [
+        "blizzard-2026-midnight-gear-retroactivity"
+      ],
+      "confidence0to100": null,
+      "notes": "Previous expansion secondary-stat application is confirmed in principle; item-specific stats and applicable recipes still unknown. No inferred primary-skill retroactivity.",
+      "runtimeApiRefs": [
+        "profession_equipment",
+        "operation_info"
+      ],
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "numericTransformValidated": false
+    }
+  ],
+  "normalizationGate": {
+    "targetGameMode": "RETAIL",
+    "targetBuild": null,
+    "targetBuildMustBeSupplied": true,
+    "unknownCoefficient": "BLOCKED_NO_RULE",
+    "unknownPatchEffect": "BLOCKED_UNKNOWN_PATCH_EFFECT",
+    "missingRelevantContext": "BLOCKED_MISSING_CONTEXT",
+    "neverCoerceUnknownToZero": true,
+    "sourceObservationImmutable": true,
+    "apiProvidedNumericModel": "NO_PUBLIC_API_FOR_HIDDEN_DROP_RATES",
+    "recipeScopedContextRequired": true,
+    "offlineAltCannotQueryLive": true,
+    "sourceProvenanceRequired": true,
+    "liveFieldCollection": [
+      {
+        "field": "expansionSpecificSkill",
+        "apiKey": "profession_skill_by_id",
+        "unknownOnNil": true
+      },
+      {
+        "field": "childSkillLineID",
+        "apiKey": "recipe_skillline",
+        "unknownOnNil": true
+      },
+      {
+        "field": "specializationRanks",
+        "apiKey": "specialization_ranks",
+        "unknownOnNil": true
+      },
+      {
+        "field": "reagentQuality",
+        "apiKey": "quality_rank",
+        "unknownOnNil": true
+      },
+      {
+        "field": "operationBonusStats",
+        "apiKey": "operation_info",
+        "unknownOnNil": true
+      },
+      {
+        "field": "actualResourceReturns",
+        "apiKey": "processing_result_event",
+        "unknownOnNil": true
+      },
+      {
+        "field": "clientBuild",
+        "apiKey": "client_patch",
+        "unknownOnNil": true
+      }
+    ],
+    "transformConfidenceMustBeIndependent": true,
+    "noAutomaticCrossPatchInference": true,
+    "noAutomaticUntrainedZeroSkillAssumption": true,
+    "standaloneNoNumericTransformUnlessVerified": true,
+    "refuseOnMissingRelevantCondition": true,
+    "observedVsCraftedDistribution": "When hit counts or zero-inclusive per-cast histograms are unavailable, do not infer P(drop) or conditional yieldMin/yieldMax from material totals.",
+    "sourceFieldSemantics": "Always preserve each original source value and declared unit before normalization; transform outputs are separate provenance-linked derived records.",
+    "runtimeSelectionPolicy": "verified live current character context > explicit simulated context > best applicable context-matched research reference with limitation label. Actual/provisional and matched/unmatched contexts must be distinct."
+  },
+  "statCaptureSourceOrder": [
+    "valid recipe-scoped live operation data if supported",
+    "live current-player active profession skill/specialization/equipment snapshot",
+    "same-character explicitly configured simulated profession inputs",
+    "timestamped and version-checked SavedVariables for offline alt",
+    "research baseline, labelled fallback"
+  ],
+  "dataAvailabilityRules": {
+    "sourceTypes": [
+      "live_api",
+      "saved_alt",
+      "manual_simulation",
+      "research_study",
+      "official_patch",
+      "verified_formula"
+    ],
+    "prohibited": [
+      "live offline-alts by cross-character API",
+      "current effective profession stats from item links without verifying operation applicability",
+      "assume GetCraftingOperationInfo succeeds with empty reagent allocation",
+      "infer ingredient quality from item rarity",
+      "infer fixed random outputs from GetRecipeOutputItemData",
+      "assert drop probability from documented recipe output or craft quality"
+    ],
+    "nil": "UNKNOWN_NOT_ZERO",
+    "clientVersion": "GetBuildInfo is client patch/build only; unknown server-side hotfix coefficient requires an external dated event and observed bridge",
+    "resultEventCoverage": "TRADE_SKILL_ITEM_CRAFTED_RESULT exists but per-method complete output coverage for prospect/mill/disenchant is NOT live-validated; spellcast/bag deltas need cross-check."
+  },
+  "patchEventVerifiedModels": [
+    {
+      "eventID": "midnight-gem-hotfix-2026-04-01",
+      "effectiveDate": "2026-04-01",
+      "firstAffectedBuild": null,
+      "gameMode": "RETAIL",
+      "expansionIDs": [
+        11
+      ],
+      "methods": [
+        "Prospect"
+      ],
+      "recipeIDs": [],
+      "outputCategories": [
+        "gem"
+      ],
+      "affectedFields": [
+        "OUTPUT_OCCURRENCE",
+        "OUTPUT_UNCONDITIONAL_EXPECTATION"
+      ],
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "numericTransformID": null,
+      "sourceClaimIDs": [
+        "blizzard-2026-04-01-midnight-gems"
+      ],
+      "intervalConfidence": null,
+      "notes": "Do not apply numerical patch normalization without posthotfix bridging evidence; no blanket modifier for byproducts.",
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "numericTransformValidated": false
+    }
+  ],
+  "regressionFixtures": [
+    {
+      "test": "midnight-pre-apr1-to-post-hotfix-gem",
+      "sourcePatchDate": "2026-03-31",
+      "targetPatchDate": "2026-04-02",
+      "eventID": "midnight-gem-hotfix-2026-04-01",
+      "expectedDecision": "BLOCKED_UNKNOWN_PATCH_EFFECT"
+    },
+    {
+      "test": "ore-node-binary-diamond-gate",
+      "ruleID": "midnight-ore-node-diamond",
+      "expectedDecision": "BLOCKED_NO_RULE",
+      "assertion": "Never force reference diamond chance to zero using this qualitative guide"
+    },
+    {
+      "test": "only-aggregate-totals",
+      "completedOperations": 10,
+      "rawOutputTotals": 7,
+      "operationHitCount": null,
+      "expectedQuantity": 0.7,
+      "expectedDropChance": null,
+      "expectedYieldMin": null,
+      "expectedYieldMax": null
+    },
+    {
+      "test": "ten-herb-milling",
+      "batchInputs": 10,
+      "completedOperations": 10,
+      "rawOutputTotals": 100,
+      "expectedQuantityPerOperation": 10,
+      "expectedQuantityPerHerb": 1
+    },
+    {
+      "test": "missing-gear-context",
+      "sourceEquipment": null,
+      "unknownContextFields": [
+        "equipment"
+      ],
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT"
+    },
+    {
+      "test": "unknown-stat-recipe",
+      "stat": "resourcefulness",
+      "recipeVerified": false,
+      "expectedDecision": "BLOCKED_INAPPLICABLE"
+    },
+    {
+      "test": "known-evidence-high-transform-low",
+      "baselineConfidence": 95,
+      "transformConfidence": 20,
+      "maxDerivedConfidence": 20
+    },
+    {
+      "test": "same-p-min-max-E-different-histograms",
+      "expectedDecision": "BLOCKED_NO_RULE",
+      "assertion": "Do not claim to derive arbitrary nonlinear/quality transition from the four summary statistics; require full distribution or justified direct model"
+    },
+    {
+      "test": "parent-profession-vs-expansion-child-id",
+      "input": {
+        "parentProfessionID": 755,
+        "childSkillLineID": null,
+        "professionName": "Jewelcrafting"
+      },
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT",
+      "assertion": "Generic name or parent ID cannot identify Midnight skill line; obtain exact child ID via GetProfessionChildSkillLineID or GetTradeSkillLineForRecipe"
+    },
+    {
+      "test": "api-operation-result-nil",
+      "recipeID": 1231127,
+      "reagents": [],
+      "operationInfo": null,
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT",
+      "assertion": "No bonus stat or quality claim can be derived from a nil operation result"
+    },
+    {
+      "test": "item-rarity-not-reagent-quality",
+      "itemQualityRarity": 2,
+      "explicitReagentQuality": null,
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT",
+      "assertion": "Do not assign reagent rank 2 from item rarity 2"
+    },
+    {
+      "test": "offline-alt-current-gear",
+      "isAltOnline": false,
+      "lastKnownBuild": "12.0.0",
+      "targetBuild": "12.1.5",
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT",
+      "assertion": "No live profession/gear access for offline alt; snapshot should be marked stale"
+    }
+  ],
+  "researchStorage": {
+    "location": "research/processing-confidence branch only; research/evidence for immutable source observations; research/ledger for field-level audited indexes",
+    "rawEvidence": "research/evidence/observations/*.jsonl (new schema path, not yet populated with complete independent per-cast logs)",
+    "fieldLedgers": [
+      "research/ledger/processing-output-fields.csv",
+      "research/ledger/supplemental-output-fields.csv",
+      "research/ledger/source-inventory.csv",
+      "research/ledger/tsm-invariant-anomalies.csv",
+      "research/ledger/runtime-overlay-map.csv",
+      "research/ledger/titanium-observed-yields.csv"
+    ],
+    "documentation": [
+      "research/PROGRESS.md",
+      "research/research-sources.md",
+      "research/run-log.md",
+      "research/evidence/README.md"
+    ],
+    "builtShippedDatabase": "main/GameData.lua (currently released); research must propose generated changes, never automatically merge into main"
   }
 }
