@@ -1,3 +1,7 @@
+### Source memory follow-up — batch008
+
+Built and GitHub-verified research/coordination/source-memory.json from **153 original observation JSONL records**, four worker source-review events and eight independent master QA-feedback events: **51 canonical source entries** (47 DISCOVERED, 4 PARTIAL, 0 FULLY_ANALYZED), zero parser warnings. Six in-memory builder-behavior assertions passed. This was a deterministic JavaScript port of the checked-in builder, **not** execution of the repository Node command; Node test_source_memory.js and full Node regression suites remain outstanding. Staging projections were removed. No rewards were applied to confidence.
+
 ## Master batch008 accepted — 2026-10-28
 
 115 unique records accepted (TWW35, DF40, Legacy40, Midnight0 numeric-only). **1193/1737** examined, **544** never; 1180 insufficient, 13 blocked. Four-field scored 1109 outputs/4436 fields: >=90 0, 70–89 17, <70 4419. Independently corrected 26 historical Tontons BfA input associations; 0 current-Retail corrections. Four numeric hypotheses BLOCKED. Queue rev11: Midnight retained 35, others new 35/40/40. Node/source-memory builder and WoW client tests not executed. [QA verdict](coordination/reviews/2026-10-28-master-worker-batch008-verdict.md).

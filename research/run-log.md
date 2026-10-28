@@ -204,3 +204,7 @@ Independent review of 150 exact disjoint worker batch007 source-output keys; ori
 ## 2026-10-28 — Master batch008
 
 Accepted 115 new disjoint first-pass keys; Midnight numeric-only 0. Corrected 26 historical BfA source associations from Tontons original; confirmed Snurp PTR 8000-cast partition. 1193/1737 reviewed, 544 never; 4436 scored fields, 0 >=90, 17 moderate, 4419 low. Numeric verified 0/4. Queue rev11 new disjoint 35/40/40 and retained Midnight 35. Node tests and source-memory full rebuild pending checkout, no WoW client tests. No production/schedule changes.
+
+### Batch008 source-memory cache follow-up
+
+Committed deterministic JS-port source-memory rebuild: 153 archived observation rows, 4 worker source reviews, 8 master QA feedback events, 51 unique canonical sources (47 discovered, 4 partial, 0 fully analyzed). 6 in-memory builder tests passed; Node test suite not executed, WoW client not executed. Source memory and feedback are research-only; no confidence promotions.
