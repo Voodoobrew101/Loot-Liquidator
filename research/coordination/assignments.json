@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "queueRevision": 1,
+  "queueRevision": 2,
   "updatedUTCDate": "2026-10-28",
   "branch": "research/processing-confidence",
   "masterOwned": true,
@@ -32,7 +32,9 @@
     "noMainChanges": true,
     "confidenceGate": "all verifiable material fields >=90; not met",
     "overflow": "Only master may reassign completed worker to other expansion after independent QA; no self-claim or cross-scope duplication",
-    "workersMustReadLatestQueue": true
+    "workersMustReadLatestQueue": true,
+    "unmappedSourceOutputs": "Worker must preserve unlabeled output vectors without assigning item IDs or awarding first-pass coverage; only independently verified mapping can promote to candidate output records.",
+    "schemaGate": "Observation JSONL must pass status and mapped-or-unmapped nonempty evidence checks before central acceptance."
   },
   "workers": {
     "midnight": {
@@ -273,11 +275,18 @@
     }
   },
   "masterReview": {
-    "reviewFile": "research/coordination/reviews/2026-10-28-master-initial-qa.md",
+    "reviewFile": "research/coordination/reviews/2026-10-28-master-qa-schema-and-legion-recipe.md",
     "workerSubmissionsPresent": 0,
     "reviewedPriorSourceRecords": 34,
     "firstPassPromotionsThisRun": 0,
     "independentNumericalChecks": "12 source-reported Felslate output totals verified, five-ore equivalent means recomputed, source/coverage key uniqueness and score minima checked",
-    "approvedCurrentRetailRateTransformations": 0
+    "approvedCurrentRetailRateTransformations": 0,
+    "lastReviewedBranchHead": "cbf79b86cb8200e85cec865dfde200a3b1e11f60",
+    "newMasterFirstPass": 0,
+    "recipeSpecificBatchMetadataVerified": 1,
+    "unmappedIndexedHistoricalOutputsArchived": 13,
+    "schemaDefectsRepaired": 1,
+    "currentRetailRatePromotions": 0,
+    "staticQATest": "research/tests/test_master_qa_schema_and_queue.js"
   }
 }

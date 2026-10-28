@@ -30,7 +30,8 @@
         "RAW_IN_GAME",
         "VERIFIED_AGGREGATE",
         "MODEL_ESTIMATE",
-        "UNVERIFIED_LEAD"
+        "UNVERIFIED_LEAD",
+        "HISTORICAL_COMMUNITY_REPORTED_AGGREGATE"
       ]
     },
     "source": {
@@ -299,7 +300,7 @@
     },
     "outputs": {
       "type": "array",
-      "minItems": 1,
+      "minItems": 0,
       "items": {
         "type": "object",
         "required": [
@@ -448,6 +449,58 @@
         }
       },
       "additionalProperties": true
+    },
+    "unmappedReportedOutputs": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Original aggregate totals whose item/quality IDs cannot be assigned without independent evidence; never promote index-only values to itemdb output rows.",
+      "items": {
+        "type": "object",
+        "required": [
+          "outputItemID",
+          "reportedTotalUnits"
+        ],
+        "properties": {
+          "outputItemID": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "reportedTotalUnits": {
+            "type": "number",
+            "minimum": 0
+          },
+          "reportedIndex": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "perReportedMassCastMean": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "mappingStatus": {
+            "type": "string"
+          },
+          "sourceClaimID": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "materialFamily": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
     }
   },
   "$defs": {
@@ -486,5 +539,28 @@
       "additionalProperties": true
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "anyOf": [
+    {
+      "properties": {
+        "outputs": {
+          "minItems": 1
+        }
+      },
+      "required": [
+        "outputs"
+      ]
+    },
+    {
+      "properties": {
+        "unmappedReportedOutputs": {
+          "minItems": 1
+        }
+      },
+      "required": [
+        "unmappedReportedOutputs"
+      ]
+    }
+  ],
+  "$comment": "Master QA 2026-10-28: preserve historical community aggregate status and allow exclusively unmapped indexed study totals without fabricating item IDs; at least one mapped or unmapped output required."
 }

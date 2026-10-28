@@ -1089,6 +1089,32 @@
       "sampleN": null,
       "independentCorroboration": null,
       "confidence0to100": null
+    },
+    {
+      "claimID": "warcraftwiki-legion-mass-prospect-felslate-20",
+      "url": "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Legion recipe introduced patch 7.0.3; 2026 client execution untested",
+      "evidenceClass": "RECIPE_DOCUMENTATION",
+      "specificClaim": "Mass Prospect Felslate consumes 20 Felslate Ore per recipe execution; separate from standard 5-ore prospecting",
+      "numericalSupport": true,
+      "sampleN": null,
+      "independentCorroboration": "https://www.wowhead.com/de/spell=225904/massensondierung-von-teufelsschiefer",
+      "confidence0to100": 88
+    },
+    {
+      "claimID": "wowhead-spell-225904-felslate-20",
+      "url": "https://www.wowhead.com/de/spell=225904/massensondierung-von-teufelsschiefer",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Legion mass prospecting recipe, current page; no live Retail test",
+      "evidenceClass": "RECIPE_DOCUMENTATION",
+      "specificClaim": "Spell 225904 Mass Prospect Felslate lists Felslate reagent quantity 20",
+      "numericalSupport": true,
+      "sampleN": null,
+      "independentCorroboration": "https://warcraft.wiki.gg/wiki/Legion_jewelcrafting_designs",
+      "confidence0to100": 88
     }
   ],
   "quantifiedMechanicRules": [
@@ -1401,5 +1427,29 @@
   },
   "futureBundledDatabase": "itemdb.lua",
   "existingReleasedBundledDatabase": "GameData.lua",
-  "futureFilenameExactCase": true
+  "futureFilenameExactCase": true,
+  "verifiedRecipeBatches": [
+    {
+      "recipeEvidenceID": "legion-felslate-mass-prospect-225904",
+      "expansionID": 6,
+      "profession": "Jewelcrafting",
+      "method": "Prospect",
+      "recipeSpellID": 225904,
+      "inputItemID": 123919,
+      "inputCountPerOperation": 20,
+      "sourceClaimIDs": [
+        "warcraftwiki-legion-mass-prospect-felslate-20",
+        "wowhead-spell-225904-felslate-20"
+      ],
+      "recipeCountEvidenceConfidence0to100": 88,
+      "firstIntroducedPatch": "7.0.3",
+      "gameMode": "RETAIL",
+      "currentRetailRecipeExecutionVerified": false,
+      "outputProbabilityEvidence": null,
+      "outputYieldTransform": null,
+      "applyPolicy": "RECIPE_BATCH_METADATA_ONLY_NO_RATE_TRANSFORM",
+      "note": "Do not relabel the 3,200-ore Deckven study as 160 observed casts; 160 is a conditional 20-ore-equivalent denominator. Standard prospecting is a separate five-ore operation."
+    }
+  ],
+  "recipeBatchEvidenceRevision": "2026-10-28-master-qa-2"
 }
