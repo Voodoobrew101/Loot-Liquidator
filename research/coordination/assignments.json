@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "queueRevision": 4,
+  "queueRevision": 5,
   "updatedUTCDate": "2026-10-28",
   "branch": "research/processing-confidence",
   "masterOwned": true,
@@ -37,7 +37,8 @@
     "schemaGate": "Observation JSONL must pass status and mapped-or-unmapped nonempty evidence checks before central acceptance.",
     "workerUnmappedIndexPolicy": "Keep unmapped output vectors raw; no invented IDs or first-pass credit for unassigned index values",
     "rawEvidenceGate": "Raw JSONL must match observation.schema.json; derived ore-equivalent operations are NOT completedOperations. Worker batch001 immutable originals may be quarantined while first-pass coverage is accepted.",
-    "orderedOverflow": "Complete home-expansion phase before overflow; all 150 keys disjoint and never-examined at assignment"
+    "orderedOverflow": "Complete home-expansion phase before overflow; all 150 keys disjoint and never-examined at assignment",
+    "numericMechanicsHypotheses": "Workers handle one explicitly assigned mechanism from mechanicsTrack and do not count hypothesis examination as newly covered item/output record. Master QA approves promotion only after independent source and test review."
   },
   "workers": {
     "midnight": {
@@ -566,5 +567,65 @@
     "rawEvidencePreserved": true,
     "staticChecks": 128,
     "clientTests": 0
+  },
+  "mechanicsTrack": {
+    "version": "1.0.0",
+    "protocolPath": "research/mechanics/NUMERIC_MODEL_RESEARCH_PROTOCOL.md",
+    "separateFromFirstPassOutputCoverage": true,
+    "researchTargetsPerWorkerPerRun": "Investigate assigned single hypothesis alongside assigned 25-50 record first-pass target; evidence-first, never fake formula or output counts",
+    "masterOwner": "Master QA is sole owner of promotions and reassignment. Workers write immutable original evidence; no master queue overwrite.",
+    "masterReviewRequirements": [
+      "original sources",
+      "same-context comparisons",
+      "units/actual operations",
+      "patch applicability",
+      "independent reproduction",
+      "numeric field uncertainty",
+      "recipe and output scope",
+      "negative regression tests",
+      "approved rules only in generated future itemdb.lua"
+    ],
+    "status": "RESEARCH_ONLY_0_APPROVED_NUMERIC_RULES",
+    "hypotheses": {
+      "midnight": {
+        "id": "midnight-gem-hotfix-2026-03-31-quantification",
+        "expansionID": 11,
+        "worker": "loot-liquidator-midnight",
+        "state": "ASSIGNED_UNVERIFIED",
+        "question": "Find matched pre/post 2026-03-31 exact gem output studies; confirm whether a numeric patch-specific bridge can be estimated.",
+        "linkedItemKeys": "Use already-assigned Midnight outputs; do not reassign a separate first-pass record"
+      },
+      "war_within": {
+        "id": "tww-prospect-resourcefulness-savings",
+        "expansionID": 10,
+        "worker": "loot-liquidator-war-within",
+        "state": "ASSIGNED_UNVERIFIED",
+        "question": "Quantify actual eligible prospect input savings per operation (not output bonus) with known stat/proc and reagent counts.",
+        "linkedItemKeys": "Use already-assigned TWW outputs"
+      },
+      "dragonflight": {
+        "id": "dragonflight-inspiration-quality-transition",
+        "expansionID": 9,
+        "worker": "loot-liquidator-dragonflight",
+        "state": "ASSIGNED_UNVERIFIED",
+        "question": "Separate Inspiration-driven rank transition counts, skill threshold, original input/output quality for specific prospect recipes.",
+        "linkedItemKeys": "Use already-assigned Dragonflight outputs"
+      },
+      "legacy": {
+        "id": "legacy-felslate-standard-mass-compare",
+        "expansionID": 6,
+        "worker": "loot-liquidator-legacy",
+        "state": "ASSIGNED_UNVERIFIED",
+        "question": "Verify 5-ore versus 20-ore distinct recipe denominators, expected outputs, patch and availability without assuming same yields.",
+        "linkedItemKeys": "Use already-assigned Legacy outputs"
+      }
+    },
+    "nextMasterActions": [
+      "Review worker mechanic submissions separately from output evidence",
+      "Keep hypotheses disjoint and preserve prior assigned record IDs",
+      "Promote only independently VERIFIED_NUMERIC and >=90 with real verified source context and tests",
+      "Assign new hypotheses after resolution; blocked hypotheses retain blocker and next required experiment",
+      "Track numeric verified, blocked and tested count separately from item first-pass coverage"
+    ]
   }
 }
