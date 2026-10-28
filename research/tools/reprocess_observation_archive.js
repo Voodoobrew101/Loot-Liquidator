@@ -6,7 +6,7 @@
  *   research/evidence/observations \
  *   research/mechanics/mechanics-chronology.json \
  *   research/proposed/reprocessed-observations.json \
- *   [verified-family-map.json]
+ *   [verified-family-map.json] [registry-v0.2.json]
  *
  * If no source observation timestamp is known, documented publication date is
  * only an upper bound, never assumed to be when actual casts were performed.
@@ -92,7 +92,7 @@ function processObservation(o,chrono,familyMap={}) {
     outputs
   };
 }
-function reprocess(samples,chrono,{familyMap={},files=[]}={}) {
+function reprocess(samples,chrono,{familyMap={},files=[],registrySnapshot=null}={}) {
   validateChronology(chrono);
   const ids=new Set();
   const records=samples.map(({record,file,line})=>{
@@ -103,19 +103,23 @@ function reprocess(samples,chrono,{familyMap={},files=[]}={}) {
   return {
     schemaVersion:"1.0",purpose:"REPROCESSED_EVIDENCE_FOR_ITEMDB_MODELING_NOT_A_RELEASE",
     timelineSHA256:hash(JSON.stringify(chrono)),chronologyVersion:chrono.schemaVersion,
+    registrySnapshotSHA256:registrySnapshot?hash(JSON.stringify(registrySnapshot)):null,
+    registrySchemaVersion:registrySnapshot?.schemaVersion??null,
+    policy:"REPROCESS_ORIGINAL_STUDY_TIME_THEN_APPLY_VERSIONED_REGISTRY_RULES_WHEN_VERIFIED",
     sourceFileFingerprints:files,rawObservationsChanged:false,
     compiledNumericMechanics:0,productionPromotions:0,observationCount:records.length,
     records
   };
 }
 function main(argv) {
-  if(argv.length<3)throw Error("Usage: node reprocess_observation_archive.js <raw-data-directory> <chronology.json> <output.json> [family-map.json]");
-  const [dir,chronologyFile,outputFile,familyFile]=argv;
+  if(argv.length<3)throw Error("Usage: node reprocess_observation_archive.js <raw-data-directory> <chronology.json> <output.json> [family-map.json] [registry-v0.2.json]");
+  const [dir,chronologyFile,outputFile,familyFile,registryFile]=argv;
   const c=JSON.parse(fs.readFileSync(chronologyFile,"utf8"));
   const familyMap=familyFile?JSON.parse(fs.readFileSync(familyFile,"utf8")):{};
+  const registrySnapshot=registryFile?JSON.parse(fs.readFileSync(registryFile,"utf8")):null;
   const files=fs.readdirSync(dir).filter(f=>f.endsWith(".jsonl")).map(f=>path.join(dir,f));
   const evidence=loadEvidence(files);
-  const result=reprocess(evidence.samples,c,{familyMap,files:evidence.inputs});
+  const result=reprocess(evidence.samples,c,{familyMap,files:evidence.inputs,registrySnapshot});
   fs.mkdirSync(path.dirname(outputFile),{recursive:true});
   fs.writeFileSync(outputFile,JSON.stringify(result,null,2)+"\n","utf8");
   process.stdout.write(JSON.stringify({outputs:outputFile,observations:result.observationCount,
