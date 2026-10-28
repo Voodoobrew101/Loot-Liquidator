@@ -27,7 +27,7 @@ function auditOther28(gameData, rowsCsv, coverageCsv, evidenceJsonl, schemaJson,
  check("coverage new uncommon batch 6 unique records",cover.filter(x=>x.includes("2026-10-28-FELSLATE_UNCOMMON_6")).length===6);
  check("coverage 1683 still never examined",cover.filter(x=>x.includes(",NEVER_EXAMINED,")).length===1683);
  check("no invented gem chip ID for 742 mixed chips",e.unmappedReportedOutputs.length===1&&e.unmappedReportedOutputs[0].reportedTotalUnits===742&&e.unmappedReportedOutputs[0].outputItemID===null);
- check("additional uncommon audit six independently keyed rows",uncommonCsv.trim().split("\\n").slice(1).length===6);
+ check("additional uncommon audit six independently keyed rows",uncommonCsv.trim().split("\n").slice(1).length===6);
  check("coverage previous 12 and 8 retained",cover.filter(x=>x.includes("BATCH_PREVIOUS_NORTHREND_12")).length===12&&cover.filter(x=>x.includes("BATCH_PREVIOUS_MIDNIGHT_MILL_8")).length===8);
  check("known unresolved target remains",cover.some(x=>x.includes("tsm:mill:200061:190322")&&x.includes("BLOCKED")));
  check("legacy inputs unchanged by test",true);
