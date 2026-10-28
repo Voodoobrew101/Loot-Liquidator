@@ -28,7 +28,7 @@
 - Lowest score: **0** (missing field); **304** output rows currently have record confidence 0.
 - Confidence improvements versus a prior scored baseline: **not measurable; this is the first ledger**. No fabricated claim of upgraded numerical accuracy.
 - Source corrections proposed: **1 dated mechanic annotation**; **12 pricing-risk records** and 28 additional inconsistencies flagged. **0** production source rows overwritten.
-- Evidence source register: 11 external links plus six inspected repository source files.
+- Evidence source register: 13 external links (including two measured Titanium cohorts) plus six inspected repository source files.
 - No in-game validation. Source-scoped invariant checks and GitHub read-back passed. No numerical skill-to-yield formula verified.
 - **ALL RECORDS >=90 gate: NOT MET.**
 
