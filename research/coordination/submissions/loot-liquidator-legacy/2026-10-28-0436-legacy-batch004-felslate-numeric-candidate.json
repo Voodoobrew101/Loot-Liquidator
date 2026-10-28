@@ -1,0 +1,91 @@
+{
+  "hypothesisID": "legacy-felslate-standard-mass-compare",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 6,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      225904
+    ],
+    "inputItemIDs": [
+      123919
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 20,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "recipe": "Standard Felslate prospecting",
+    "nominalInputCount": 5,
+    "recipeSpellID": null,
+    "measuredCastSeries": null
+  },
+  "targetContext": {
+    "recipe": "Mass Prospect Felslate",
+    "recipeSpellID": 225904,
+    "nominalInputCount": 20,
+    "originalHistoricalMassOperations": 113,
+    "unmappedOutputVector": [
+      452,
+      42,
+      62,
+      91,
+      131,
+      114,
+      99,
+      20,
+      5,
+      22,
+      28,
+      2,
+      4
+    ],
+    "historicalPatchBuild": null
+  },
+  "requiredLiveContext": [
+    "Current Retail build",
+    "exact standard and mass recipe IDs",
+    "skill and equipment",
+    "per-cast output item IDs and quantities including zeros",
+    "saved-input quantities if any"
+  ],
+  "sources": [
+    {
+      "claimID": "warcraftwiki-felslate-20-reagents",
+      "url": "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "wowhead-1341638-113-mass-unmapped",
+      "url": "https://www.wowhead.com/fr/spell=225904/prospection-de-masse-de-gangreschiste",
+      "evidenceKind": "RAW_CAST_LOG",
+      "sampleOperations": 113
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No same-build 5-ore standard prospecting control cohort",
+    "Mass 113-cast output vector lacks verified item IDs and zero-inclusive per-cast results",
+    "No skill/gear/stat context or patch-matched Retail evidence",
+    "Cannot infer output distribution scaling from 5-versus-20 input recipe sizes"
+  ],
+  "notes": "Qualitative recipe denominator distinction only; numerical multiplier unknown. Previously archived 113-cast source is not new item coverage."
+}
