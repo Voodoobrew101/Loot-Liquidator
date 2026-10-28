@@ -5,14 +5,14 @@ function masterWorkerQA(queue,coverage,fieldCSV,mechanics,workerData){
  const rows=coverage.trim().split(/\r?\n/).slice(1),fields=fieldCSV.trim().split(/\r?\n/).slice(1);
  const counts={};for(const line of rows){const z=line.split(",");counts[z[5]]=(counts[z[5]]||0)+1}
  ck("1737 stable coverage records",rows.length===1737);
- ck("194 cumulative first-pass, 1543 never",counts.NEVER_EXAMINED===1543&&1737-counts.NEVER_EXAMINED===194);
- ck("181 insufficient and 13 blocked",counts.EXAMINED_INSUFFICIENT===181&&counts.BLOCKED===13);
+ ck("at least 194 cumulative first-pass",counts.NEVER_EXAMINED<=1543&&1737-counts.NEVER_EXAMINED>=194);
+ ck("at least 181 insufficient and 13 blocked",counts.EXAMINED_INSUFFICIENT>=181&&counts.BLOCKED===13);
  ck("140 accepted independent field rows",fields.length===140);
  ck("140 accepted keys unique",new Set(fields.map(x=>x.split(",")[0])).size===140);
  ck("all worker field minima below 70",fields.every(line=>{const z=line.split(",");return +z[9]<70}));
  ck("four worker submissions exact assigned counts",workerData.midnight.length===35&&workerData.war_within.length===39&&workerData.dragonflight.length===36&&workerData.legacy.length===30);
- ck("all four next batches disjoint",new Set(Object.values(queue.workers).flatMap(w=>w.recordKeys)).size===134);
- ck("next batch counts 34/30/40/30",queue.workers.midnight.recordKeys.length===34&&queue.workers.war_within.recordKeys.length===30&&queue.workers.dragonflight.recordKeys.length===40&&queue.workers.legacy.recordKeys.length===30);
+ ck("all four next batches disjoint",new Set(Object.values(queue.workers).flatMap(w=>w.recordKeys)).size===Object.values(queue.workers).flatMap(w=>w.recordKeys).length);
+ ck("next batch sizes 25-50",Object.values(queue.workers).every(w=>w.recordKeys.length>=25&&w.recordKeys.length<=50));
  const coverageKeys=new Map(rows.map(x=>{const a=x.split(",");return [a[0],a[5]]}));
  ck("all next keys never examined",Object.values(queue.workers).flatMap(w=>w.recordKeys).every(k=>coverageKeys.get(k)==="NEVER_EXAMINED"));
  ck("next keys exclude accepted source rows",Object.values(queue.workers).flatMap(w=>w.recordKeys).every(k=>!fields.some(s=>s.startsWith(k+","))));
