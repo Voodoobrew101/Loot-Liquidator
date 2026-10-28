@@ -106,10 +106,10 @@ function infer(input){
     const excluded=admissibility(obs,c);
     const overlappingTraining=Array.isArray(c.trainingStudyIDs)&&
       typeof obs.studyID==="string"&&c.trainingStudyIDs.includes(obs.studyID);
-    const modelKnown=c.modelStatus==="VERIFIED_NUMERIC";
+    const modelDeclaredVerified=c.modelStatus==="VERIFIED_NUMERIC";
     rows.push({profileID:c.profileID,epochID:c.epochID??null,
       inferredContext:c.context??null,mechanicRuleVersion:c.mechanicRuleVersion??null,
-      trainingOverlap:overlappingTraining,modelKnown,
+      trainingOverlap:overlappingTraining,modelDeclaredVerified,
       priorWeight:c.priorWeight,excluded,distribution:dist,
       logLikelihood:excluded?null:likelihood(data,dist)});
   }
@@ -135,12 +135,13 @@ function infer(input){
     const keys=new Set([...Object.keys(first),...Object.keys(second)]);
     return [...keys].every(k=>Math.abs((first[k]??0)-(second[k]??0))<=1e-12);
   });
-  const couldVerify=active.every(x=>x.modelKnown&&!x.trainingOverlap);
+  const allCandidateModelsClaimVerifiedAndDisjoint=active.every(x=>x.modelDeclaredVerified&&!x.trainingOverlap);
   const warnings=[
     "PROFILE_POSTERIORS_CONDITIONAL_ON_ENUMERATED_CANDIDATES_PRIORS_AND_PREDICTED_DISTRIBUTIONS",
     "NOT_PROOF_OF_EXACT_SKILL_BONUS_OR_CALENDAR_DATE"
   ];
-  if(!couldVerify)warnings.push("UNVERIFIED_MODEL_OR_TRAINING_DATA_LEAKAGE");
+  if(!allCandidateModelsClaimVerifiedAndDisjoint)warnings.push("UNVERIFIED_MODEL_OR_TRAINING_DATA_LEAKAGE");
+  warnings.push("DECLARED_MODEL_STATUS_NOT_INDEPENDENTLY_CHECKED_AGAINST_REGISTRY");
   if(!obs.observedDate)warnings.push("NO_DIRECT_CAST_DATE");
   if(spread)warnings.push("CANDIDATE_PROFILES_OBSERVATIONALLY_INDISTINGUISHABLE");
   const {distribution:_,...best}=ordered[0];
@@ -148,7 +149,8 @@ function infer(input){
     status:spread?"UNIDENTIFIABLE_SAME_DISTRIBUTION":"RANKED_CONTEXT_HYPOTHESES",
     observationID:obs.observationID??null,studyID:obs.studyID??null,
     availableCastEvidence:data.kind,numberOfCasts:data.n,
-    modelCalibrationVerified:couldVerify,
+    candidateModelsClaimVerifiedAndDisjoint:allCandidateModelsClaimVerifiedAndDisjoint,
+    modelCalibrationIndependentlyVerified:false,
     bestHypothesis:best,credibleSet95:credibleSet,
     candidates:rows.map(({distribution,...rest})=>rest).sort((a,b)=>
       (b.posteriorProbability??-1)-(a.posteriorProbability??-1)),warnings};
