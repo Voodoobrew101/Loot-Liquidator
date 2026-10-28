@@ -134,8 +134,8 @@ function score(e) {
     if(p.expectedQuantity+1e-9<p.dropChance*p.yieldMin||
        p.expectedQuantity-1e-9>p.dropChance*p.yieldMax)notes.push("P_E_CONDITIONAL_BOUNDS_INCONSISTENT");
   }
-  const blocking=notes.some(n=>/CONTRADICTION|INCONSISTENT|UNRESOLVED|NOT_ESTABLISHED|NOT_HELD_OUT|UNVERIFIED|INVERTED|LARGE_RESIDUAL|POSTERIOR_PREDICTIVE_DISCREPANCY/.test(n));
   if(Object.values(fields).every(f=>f.predicted===null))notes.push("NO_TESTABLE_PREDICTION");
+  const blocking=notes.some(n=>/CONTRADICTION|INCONSISTENT|UNRESOLVED|NOT_ESTABLISHED|NOT_HELD_OUT|UNVERIFIED|INVERTED|LARGE_RESIDUAL|POSTERIOR_PREDICTIVE_DISCREPANCY|NO_TESTABLE_PREDICTION/.test(n));
   return {observationID:e.observationID??null,targetKey:e.targetKey??null,
     eligibleForManualValidationReview:!blocking,
     status:blocking?"NOT_VERIFIED":"HOLDOUT_CONSISTENT_NOT_PROOF",
