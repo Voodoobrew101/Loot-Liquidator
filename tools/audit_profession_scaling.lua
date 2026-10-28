@@ -68,7 +68,7 @@ check('Transformed distributions keep zero occurrence consistent with EV',
     'dropChance='..tostring(inconsistent.chance)..', expectedQuantity='..tostring(inconsistent.expectedQuantity))
 -- Equipment rarity is not a reagent quality rank. A gear-scoped rule has no rank.
 r=rule('OUTPUT_UNCONDITIONAL_EXPECTATION',{multiplier=1.5})
-r.method='Disenchant';r.recipeID=13262;r.inputQualityRank=nil
+r.method='Disenchant';r.recipeID=13262;r.inputQualityRank=nil;r.inputRarity=3;r.inputClassID=4
 LL.GameData.verifiedMechanicsRules={r}
 local gear={id=10,quality=3,classID=4,expansionID=11}
 local de=LL:ApplyVerifiedMechanics(gear,{name='Disenchant',recipeID=13262,character='Tester - Realm'},base())
@@ -92,5 +92,5 @@ check('Fresh base skill does not reuse an old equipment bonus',context.bonusSkil
     'live skill=70, live modifier=0, cached bonus=10 => effectiveSkill='..tostring(context.effectiveSkill))
 check('Unavailable current trait data is labeled stale or unverified',context.specialization~='999=3' or context.stale or context.incomplete,
     'old specialization is reused while profileKind='..tostring(context.profileKind)..' and stale='..tostring(context.stale))
-print(('SCALING AUDIT: %d passed, %d failed; failures remain recommendations, no live-client testing'):format(passed,failed))
+print(('SCALING AUDIT: %d passed, %d failed; no live-client testing'):format(passed,failed))
 os.exit(failed==0 and 0 or 1)

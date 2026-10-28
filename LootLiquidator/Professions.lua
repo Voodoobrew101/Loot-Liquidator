@@ -218,9 +218,13 @@ function LL:GetResearchProfessionSnapshot(f,profession)
     if spec then
         char.researchProfiles[profileKey]={skill=skill,specialization=spec,
             bonusSkill=detail.skillModifier,equipment=char.professionEquipment,
-            lineID=chosenID,observed=Now()}
-    elseif cached and cached.lineID==chosenID then
-        spec=cached.specialization
+            lineID=chosenID,observed=Now(),specializationVerified=true}
+    else
+        -- Historical values remain exportable, but are not a live trait read.
+        char.researchProfiles[profileKey]={skill=skill,bonusSkill=detail.skillModifier,
+            equipment=char.professionEquipment,lineID=chosenID,observed=Now(),
+            specializationVerified=false,previousSnapshot=cached and {
+                specialization=cached.specialization,observed=cached.observed} or nil}
     end
     self._activeResearchProfileCache[cacheKey]={at=now,skill=skill,
         spec=spec,lineID=chosenID}

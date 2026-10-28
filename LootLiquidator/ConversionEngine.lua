@@ -155,12 +155,13 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
     for _,rule in ipairs(rules) do
         if type(rule)=="table" and rule.evidenceStatus=="VERIFIED_NUMERIC"
             and rule.applyPolicy=="EXECUTE" and rule.applies=="VERIFIED_APPLIES"
-            and type(rule.confidence0to100)=="number" and rule.confidence0to100>=80
+            and type(rule.confidence0to100)=="number" and rule.confidence0to100>=80 and rule.confidence0to100<=100
             and type(rule.sourceClaimIDs)=="table" and #rule.sourceClaimIDs>0
             and rule.method==option.name and rule.recipeID==option.recipeID
             and rule.recipeID~=nil and rule.inputItemID==f.id
             and rule.expansionID==f.expansionID
-            and rule.inputQualityRank==f.reagentQuality and rule.inputQualityRank~=nil
+            and ((option.name=="Disenchant" and rule.inputRarity==f.quality and rule.inputClassID==f.classID)
+                or (option.name~="Disenchant" and rule.inputQualityRank==f.reagentQuality and rule.inputQualityRank~=nil))
             and tostring(rule.sourceBuild)==tostring(baseline.patchBuild)
             and tostring(rule.targetBuild)==tostring(build)
             and rule.sourceReferenceContextID==baseline.referenceContextID
@@ -239,6 +240,9 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
             local p=original.chance*probability.parameters.multiplier
             if p<=1 then
                 material.chance=p;material.probabilityVerified=true
+                if not material.appliedExpectationRule and p~=original.chance then
+                    material.expectedQuantity=nil -- new mean needs independent supporting evidence
+                end
                 material.probabilityBasis="verified numeric occurrence transform"
                 material.appliedProbabilityRule=probability.ruleID
                 changed=changed+1
@@ -251,6 +255,8 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
             material.appliedRangeRule=bounds.ruleID
             changed=changed+1
         end
+        local e,p,lo,hi=material.expectedQuantity,material.chance,material.minQuantity,material.maxQuantity
+        if e and p and ((p==0 and e>0) or (lo and e+1e-9<p*lo) or (hi and e>p*hi+1e-9)) then return baseline end
         materials[#materials+1]=material
     end
     local inputRule=not duplicates.EXPECTED_INPUT_CONSUMPTION and eligible.EXPECTED_INPUT_CONSUMPTION
