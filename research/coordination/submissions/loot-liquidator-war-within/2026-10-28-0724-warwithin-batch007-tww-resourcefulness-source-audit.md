@@ -1,0 +1,10 @@
+# TWW Resourcefulness — Batch 007 original-source audit
+
+**State: BLOCKED; no verified numeric coefficient.** This is separate from the 35 assigned Mists of Pandaria item/output first-pass keys.
+
+- [September 3, 2024 Aqirite experiment](https://www.reddit.com/r/woweconomy/comments/1f83cnd): 1,040 reported clicks and 5,200 initially purchased ore, with saved ore subsequently processed. The equality 1,040 × 5 = 5,200 **does not reveal any saved ore**. No final inventory, per-cast refund counts, Resourcefulness percentage or comparable control cohort is supplied.
+- [October 14, 2024 Aqirite rank comparison](https://www.reddit.com/r/woweconomy/comments/1g350pq): reports 11,000 R1 and 10,000 R2 ore, with original author stating saved ore was **not re-prospected**. Rounded output averages are not exact per-cast logs. An unrelated commenter reports 21% Resourcefulness but provides no saved-ore count; do not merge that commenter's stat into the original author's cohort.
+- [October 21, 2024 queue discussion](https://www.reddit.com/r/woweconomy/comments/1g8kbaq): queued prospect counts need not include subsequently saved ore. A completed queue is not an inventory reconciliation.
+- [January 10, 2023 Dragonflight 8,000-operation experiment](https://www.reddit.com/r/woweconomy/comments/108782r): historical 2,650 ore saved at 22% Resourcefulness, or 0.33125 saved ore per reported Dragonflight operation. Different expansion, recipe and character context; **not transferable to TWW**.
+
+**Required falsification:** Algari Prospecting spell 434018, Aqirite R2 item 210934, five-ore batch; two matched >=500-actual-cast cohorts with Resourcefulness percent/rating, exact specialization/gear, skill and client build, integer ore saved after EACH cast including zeros, starting and ending inventory, and independent replication. Compute E[saved ore per cast] from observed integer refunds; effective ore cost = 5 - observed E[saved] only after matching evidence and master review. Do not infer the refund chance from the percent stat or treat it as an output gem modifier.
