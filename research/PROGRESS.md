@@ -1,5 +1,20 @@
 # Loot Liquidator — processing research and confidence ledger
 
+## Future output filename and hourly research prompt — 2026-10-28
+
+**USER DECISION (supersedes older output filenames):** Future generated single shipped item/conversion database file is **`itemdb.lua`** (exact lowercase). `main/GameData.lua` is the CURRENT production file and its `LootLiquidator.toc` entry must stay unchanged until a reviewed migration is approved and tested. All compiled research candidates, schemas, examples and migration plans use `itemdb.lua` under `research/proposed/`; do not create a competing addon runtime table.
+
+**Prompts committed for the hourly Research QA assistant:**
+- [Full database generator and research specification](prompts/ITEMDB_CREATION_PROMPT.md), whose first research milestone is an independent rewrite/review into an executable and validated proposed schema.
+- [Canonical concise hourly task prompt](prompts/HOURLY_ITEMDB_RESEARCH_TASK.md), preserving the existing hourly cadence and ongoing research/field-confidence QA.
+- Read [ProfessionMechanicsRegistry.json](mechanics/ProfessionMechanicsRegistry.json) and [WoWRuntimeAPIRegistry.json](mechanics/WoWRuntimeAPIRegistry.json), all original observations, confidence ledgers, patch notes and integration issue before rewriting or compiling.
+- Per output record exactly four independently supported confidence-scored fields: `dropChance`, `yieldMin`, `yieldMax`, `expectedQuantity` with source/conditions/patch, samples and blockers. Worst-field confidence caps a record. No fabricated numbers or unverified patch coefficients.
+
+**Research next action:** Reconcile existing data generator assumptions and working v0.9.70/v0.9.71 runtime interfaces with the user-approved single-baseline model; rewrite the generator prompt where warranted, propose itemdb schema/build steps and maintain progress in separate research commits. Continue substantive research and review in each run; never claim a prompt rewrite is an implementation.
+
+---
+
+
 ## Architecture update — 2026-10-28: single baseline and evidence storage (supersedes prior Low/High design)
 
 **AUTHORITATIVE OVERRIDE FOR RESEARCH AGENTS AND ADDON DEVELOPMENT:** The old requirement in this file to maintain mandatory separate Low and High processing tables is **superseded**. Use ONE best-supported reference baseline per input/output/method/condition, with independently supported `dropChance`, conditional whole-number `yieldMin`/`yieldMax`, and unconditional decimal `expectedQuantity` per exact processing operation. Retain additional low/high and patch-stratified historical studies in the research **evidence archive**, not as redundant shipped material tables. The chosen baseline is not necessarily zero skill; label the measured character context.
