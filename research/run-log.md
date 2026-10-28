@@ -238,3 +238,7 @@ Accepted 150 exact disjoint first-pass keys, with 50 candidate output records an
 - Executed research-only compiler v0.4.0 twice with pinned GameData and worker sources; 984 mappings / 165 inputs; 799 complete tuples; 403 unknown cells; 1,202 source-line checks; full direct reagent vectors for 8 fixed smelts; 7 unsafe Dragonflight E values quarantined. All source alternatives preserved.
 - Added recipe vector schema and regression assertions, exact recipe eligibility gap ledger, revised master queue rev17, QA feedback, lessons and confidence snapshot. No Node CLI/Lua interpreter/WoW client or full source-memory rebuild; cache stale at previous 112-source snapshot.
 - No production main/TOC/PR/schedule changes.
+
+## 2026-10-28 — Master batch015
+
+Compiled itemdb v0.5.0 994 mappings, 801 complete, 435 unknown; 150 worker keys and 126 source lines reviewed; queue18 150 disjoint. Production unchanged.

@@ -61,3 +61,7 @@ Original cast histograms (Carnelian Spikes 50) establish historical P and uncond
 - **RANK_AND_DENOMINATOR_GUARD:** Seven retained DF exact-rank/gross-input E references were unsafe to value; quarantine even when this reduces numeric completeness. Preserve two existing P>E source conflicts after E becomes unknown, or compiler order can resurrect invalid probabilities.
 - **SOURCE_REUSE:** Reusing JD3K, PeaEsk, Deckven and TSM is efficient for contradiction detection but does not add independent cohorts. Traziz is a separate author/cohort but not a matched historical numeric transformation. Worker source-memory remains stale until full Node rebuild; no invented freshness or reward effects.
 - **NEXT STRATEGY:** 16 Crushing + two refining recipe-ID audits, full 2026 smelt eligibility, and 49 previously unassigned Dragonflight missing-value rows take priority over repeating the same 150 source-only references. Keep disjoint assignments and direct gold-impact evidence questions.
+
+## 2026-10-28 — Master batch015 material-first strategy
+
+Ten provisional mappings per 150 reviewed keys (6.7%), zero new current-Retail measured cast cohorts. Eight TWW Gem Finding outputs and two fixed recipes are not ten independent studies. Method guide secondary; Oct 2024 Aqirite and Jan 2023 Draenei original historical cohorts, forum mirror derivative. Do not double count old smelts. Prioritize exact Gem Finding node thresholds, zero-inclusive output-rank histograms and Midnight Crushing salvage whitelist; preserve full refining reagent costs.
