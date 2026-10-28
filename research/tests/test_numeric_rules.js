@@ -31,9 +31,24 @@ function canCompileNumericRule(r) {
  fail(typeof sc.patchEndBuild==="string"&&sc.patchEndBuild.length>0,"unverified ending client build");
  if(r&&["OUTPUT_UNCONDITIONAL_EXPECTATION","OUTPUT_OCCURRENCE","OUTPUT_QUALITY","OUTPUT_ELIGIBILITY"].includes(r.effectTarget))
    fail(Array.isArray(sc.outputItemIDs)&&sc.outputItemIDs.length>0&&sc.outputItemIDs.every(Number.isSafeInteger),"missing exact affected output IDs");
- fail(r&&r.parameters&&typeof r.parameters==="object"&&Object.keys(r.parameters).length>0
-      &&Object.values(r.parameters).every(v=>typeof v==="number"&&Number.isFinite(v)),
-      "missing/nonfinite formula parameters");
+ const params=r&&r.parameters;
+ const isMatrix=r&&r.formulaID==="QUALITY_TRANSITION_MATRIX";
+ const matrix=isMatrix&&params&&params.transitionMatrix;
+ const ranks=sc.outputQualityRanks||[];
+ const matrixOK=isMatrix&&Array.isArray(matrix)&&Array.isArray(ranks)&&ranks.length>=2
+      &&matrix.length===ranks.length
+      &&matrix.every(row=>Array.isArray(row)&&row.length===ranks.length
+         &&row.every(v=>typeof v==="number"&&Number.isFinite(v)&&v>=0&&v<=1)
+         &&Math.abs(row.reduce((a,b)=>a+b,0)-1)<1e-8);
+ const scalarOK=params&&typeof params==="object"&&Object.keys(params).length>0
+      &&Object.values(params).every(v=>typeof v==="number"&&Number.isFinite(v));
+ fail(isMatrix?matrixOK:scalarOK,"missing/invalid formula parameters or probability transition matrix");
+ if(r&&r.formulaID==="EXPECTED_INPUT_SAVINGS")
+   fail(params&&Number.isFinite(params.expectedSavedInputs)&&params.expectedSavedInputs>=0
+     &&params.expectedSavedInputs<sc.nominalInputCount,"invalid expected saved reagents");
+ if(r&&r.formulaID==="RATIO_ADJUSTMENT")
+   fail(params&&Number.isFinite(params.referenceFactor)&&params.referenceFactor>0
+     &&Number.isFinite(params.targetFactor)&&params.targetFactor>=0,"invalid ratio factors");
  fail(r&&r.parameterUnits&&typeof r.parameterUnits==="object"
       &&Object.keys(r.parameters||{}).every(k=>typeof r.parameterUnits[k]==="string"&&r.parameterUnits[k].length>0),
       "units missing for formula parameters");
@@ -95,6 +110,25 @@ function test(){
    mutation(copy);
    check("reject "+name,!canCompileNumericRule(copy).eligible);
  }
+ const matrixFixture=JSON.parse(JSON.stringify(fixture));
+ matrixFixture.effectTarget="OUTPUT_QUALITY";
+ matrixFixture.formulaID="QUALITY_TRANSITION_MATRIX";
+ matrixFixture.scope.outputQualityRanks=[1,2];
+ matrixFixture.scope.outputItemIDs=[345678,345679];
+ matrixFixture.parameters={transitionMatrix:[[0.8,0.2],[0.1,0.9]]};
+ matrixFixture.parameterUnits={transitionMatrix:"probability_fraction"};
+ check("valid synthetic two-rank transition matrix",canCompileNumericRule(matrixFixture).eligible);
+ matrixFixture.parameters.transitionMatrix[0][1]=0.3;
+ check("reject transition matrix with nonconserving row",!canCompileNumericRule(matrixFixture).eligible);
+ const inputFixture=JSON.parse(JSON.stringify(fixture));
+ inputFixture.effectTarget="EXPECTED_INPUT_CONSUMPTION";
+ inputFixture.formulaID="EXPECTED_INPUT_SAVINGS";
+ inputFixture.scope.outputItemIDs=[];
+ inputFixture.parameters={expectedSavedInputs:0.75};
+ inputFixture.parameterUnits={expectedSavedInputs:"reagent_units_per_operation"};
+ check("valid synthetic reagent savings independent of output",canCompileNumericRule(inputFixture).eligible);
+ inputFixture.parameters.expectedSavedInputs=6;
+ check("reject reagent savings greater than batch",!canCompileNumericRule(inputFixture).eligible);
  const reg=JSON.parse(fs.readFileSync("research/mechanics/ProfessionMechanicsRegistry.json","utf8"));
  const itemdb=JSON.parse(fs.readFileSync("research/proposed/itemdb.schema.json","utf8"));
  const candidateSchema=JSON.parse(fs.readFileSync("research/mechanics/numeric-rule-candidate.schema.json","utf8"));
