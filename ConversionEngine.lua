@@ -245,6 +245,132 @@ function LL:ReferenceProcessingModel(f,method,recipeID,baseline,character)
         self:SelectProcessingConditionModel(f,method,recipeID,character,baseline)
     return matched or baseline
 end
+-- Compiled mechanics v0.2 adapter. Research JSON is NEVER loaded directly in WoW.
+-- A build step may populate GameData.verifiedMechanicsRules only after a rule
+-- has passed recipe-specific numerical validation. Unknown means no transform.
+-- This lives in the existing conversion engine to avoid another runtime module.
+function LL:ApplyVerifiedMechanics(f,option,baseline)
+    local gd=self.GameData
+    local rules=gd and gd.verifiedMechanicsRules
+    if type(rules)~="table" or #rules==0 or type(f)~="table"
+        or type(option)~="table" or type(baseline)~="table"
+        or type(baseline.materials)~="table" then return baseline end
+    -- The active client's gear and skill cannot be imputed to an offline alt.
+    local current=self.CharacterKey and self:CharacterKey()
+    if option.character and option.character~="Current character"
+        and option.character~=current then return baseline end
+    local build=GetBuildInfo and select(2,GetBuildInfo())
+    if not build or not baseline.patchBuild or not baseline.referenceContextID then
+        return baseline
+    end
+    local ctx
+    local eligible={}
+    local duplicates={}
+    for _,rule in ipairs(rules) do
+        if type(rule)=="table" and rule.evidenceStatus=="VERIFIED_NUMERIC"
+            and rule.applyPolicy=="EXECUTE" and rule.applies=="VERIFIED_APPLIES"
+            and type(rule.confidence0to100)=="number" and rule.confidence0to100>=80
+            and type(rule.sourceClaimIDs)=="table" and #rule.sourceClaimIDs>0
+            and rule.method==option.name and rule.recipeID==option.recipeID
+            and rule.recipeID~=nil and rule.inputItemID==f.id
+            and rule.expansionID==f.expansionID
+            and rule.inputQualityRank==f.quality and rule.inputQualityRank~=nil
+            and tostring(rule.sourceBuild)==tostring(baseline.patchBuild)
+            and tostring(rule.targetBuild)==tostring(build)
+            and rule.sourceReferenceContextID==baseline.referenceContextID
+            and type(rule.targetConditions)=="table" then
+            local conditionsOK=true
+            for name,expected in pairs(rule.targetConditions) do
+                if not ctx then
+                    ctx=self.ProcessingPlayerConditions and
+                        self:ProcessingPlayerConditions(f,option.name,option.recipeID,option.character)
+                end
+                -- Never coerce an absent stat, skill, or specialization to zero.
+                if not ctx or ctx[name]==nil or ctx[name]~=expected then
+                    conditionsOK=false;break
+                end
+            end
+            local params=rule.parameters
+            local target=rule.effectTarget
+            local formulaOK=type(params)=="table" and (
+                (rule.formulaID=="MULTIPLY" and type(params.multiplier)=="number"
+                    and params.multiplier==params.multiplier
+                    and params.multiplier>=0 and params.multiplier<=10)
+                or (rule.formulaID=="SET_VERIFIED_RANGE"
+                    and target=="OUTPUT_POSITIVE_QUANTITY"
+                    and type(params.minQuantity)=="number"
+                    and type(params.maxQuantity)=="number"
+                    and params.minQuantity>=1 and params.minQuantity%1==0
+                    and params.maxQuantity>=params.minQuantity
+                    and params.maxQuantity%1==0))
+            if conditionsOK and formulaOK and
+                (target=="OUTPUT_UNCONDITIONAL_EXPECTATION"
+                 or target=="OUTPUT_OCCURRENCE"
+                 or target=="OUTPUT_POSITIVE_QUANTITY") then
+                for _,material in ipairs(baseline.materials) do
+                    if rule.outputItemID==material.id then
+                        local key=tostring(material.id)..":"..target
+                        if eligible[key] then duplicates[key]=true
+                        else eligible[key]=rule end
+                    end
+                end
+            end
+        end
+    end
+    local changed,materials=0,{}
+    for _,original in ipairs(baseline.materials) do
+        local material={}
+        for k,v in pairs(original) do material[k]=v end
+        local prefix=tostring(original.id)..":"
+        local expectation=eligible[prefix.."OUTPUT_UNCONDITIONAL_EXPECTATION"]
+        local probability=eligible[prefix.."OUTPUT_OCCURRENCE"]
+        local bounds=eligible[prefix.."OUTPUT_POSITIVE_QUANTITY"]
+        if duplicates[prefix.."OUTPUT_UNCONDITIONAL_EXPECTATION"] then expectation=nil end
+        if duplicates[prefix.."OUTPUT_OCCURRENCE"] then probability=nil end
+        if duplicates[prefix.."OUTPUT_POSITIVE_QUANTITY"] then bounds=nil end
+        -- No inferred probability from expected units, nor inferred range
+        -- from a scaled mean. These are independent measurements.
+        if expectation and expectation.formulaID=="MULTIPLY"
+            and validNumber(original.expectedQuantity) then
+            material.expectedQuantity=original.expectedQuantity*expectation.parameters.multiplier
+            material.quantityBasis="verified build/context-specific numeric transform"
+            material.provisional=false
+            material.appliedExpectationRule=expectation.ruleID
+            -- Old occurrence/ranges may not hold under a yield-changing rule.
+            material.chance=nil;material.minQuantity=nil;material.maxQuantity=nil
+            material.probabilityBasis="unknown after yield adjustment"
+            changed=changed+1
+        end
+        if probability and probability.formulaID=="MULTIPLY"
+            and original.probabilityVerified==true and validNumber(original.chance)
+            and original.chance<=1 then
+            local p=original.chance*probability.parameters.multiplier
+            if p<=1 then
+                material.chance=p;material.probabilityVerified=true
+                material.probabilityBasis="verified numeric occurrence transform"
+                material.appliedProbabilityRule=probability.ruleID
+                changed=changed+1
+            end
+        end
+        if bounds and bounds.formulaID=="SET_VERIFIED_RANGE" then
+            material.minQuantity=bounds.parameters.minQuantity
+            material.maxQuantity=bounds.parameters.maxQuantity
+            material.yieldBasis="verified conditional bounds at current build"
+            material.appliedRangeRule=bounds.ruleID
+            changed=changed+1
+        end
+        materials[#materials+1]=material
+    end
+    if changed==0 then return baseline end
+    local result={}
+    for k,v in pairs(baseline) do result[k]=v end
+    result.materials=materials
+    result.mechanicsRuleCount=changed
+    result.mechanicsApplied=true
+    result.source=(baseline.source or "compiled reference").." + verified mechanics"
+    return result
+end
+
 -- Automatic combines independent, compatible observations at the MATERIAL
 -- level. A published reference counts as a conservative prior of 100 effective
 -- samples; increasing personal evidence progressively takes precedence.
