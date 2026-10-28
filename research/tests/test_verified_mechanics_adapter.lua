@@ -1,13 +1,13 @@
 -- Run from repository root: lua5.1 research/tests/test_verified_mechanics_adapter.lua
 -- These tests run without WoW and do not require a character profile.
 local LL={GameData={verifiedMechanicsRules={}}}
-assert(loadfile("ConversionEngine.lua"))("LootLiquidator",LL)
+assert(loadfile("LootLiquidator/ConversionEngine.lua"))("LootLiquidator",LL)
 GetBuildInfo=function() return "12.1.5","123456","",120105 end
 LL.CharacterKey=function() return "Tester-Realm" end
 LL.ProcessingPlayerConditions=function()
     return {skill=100,skillLineID=1234,expectedStat=20}
 end
-local input={id=10,quality=2,expansionID=11}
+local input={id=10,quality=2,reagentQuality=2,expansionID=11}
 local opt={name="Prospect",recipeID=444,character="Tester-Realm"}
 local function base()
     return {patchBuild="123450",referenceContextID="cohort-a",
