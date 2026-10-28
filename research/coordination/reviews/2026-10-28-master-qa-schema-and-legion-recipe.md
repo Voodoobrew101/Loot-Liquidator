@@ -1,5 +1,7 @@
 # Master independent QA — schema repair, Legion recipe batch, and worker queue (2026-10-28)
 
+> **Historical snapshot superseded:** Four worker submissions arrived while this initial review was being prepared. See [subsequent independent master acceptance of 140 records](2026-10-28-master-worker-batch001-verdict.md) and queue revision 3. The "no worker submissions" statements below describe the earlier read only; current authoritative coverage is 194/1,737. Also the Midnight hotfix section date is **March 31**, corrected in the later review.
+
 ## Snapshot and disposition
 - Live research head before write: `cbf79b86cb8200e85cec865dfde200a3b1e11f60`; main and research addon source blobs unchanged: GameData `1d47c4a961c5dc5af626e659f7d96d1490d3cf9e`, TOC `8ebf045cf0c5c2acb9e19f9c9a19ac2826e7025e`, ConversionEngine `8720fb4867d552114501f5a1ac8f3ead34bcee66`, StatYieldProfiles `1d80df8304acaa75a5b507089ef163696381b2ff`, Professions `442c84c4e2cc287de9ccc0aaf6f55f82c641a107`.
 - Four workers still have no committed submissions; no worker success, correction, or first-pass examination is credited. Master queue revision 2 preserves the original 35/39/36/30 disjoint assignments and their exact next-batch previews.

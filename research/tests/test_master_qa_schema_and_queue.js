@@ -6,13 +6,14 @@ function auditMasterQA(q,csv,sch,reg,oldObs,newStudy,candidate,scoreCsv){
  const map=new Map(rows.map(x=>[x.key,x])),keys=Object.values(q.workers).flatMap(w=>w.recordKeys),previews=Object.values(q.workers).flatMap(w=>w.nextBatchPreview);
  const counts={};for(const r of rows)counts[r.status]=(counts[r.status]||0)+1;
  check("1737 stable source/overlay/profile keys",rows.length===1737&&map.size===1737);
- check("coverage exact 1683 never, 41 insufficient, 13 blocked",counts.NEVER_EXAMINED===1683&&counts.EXAMINED_INSUFFICIENT===41&&counts.BLOCKED===13);
- check("140 assigned keys disjoint",keys.length===140&&new Set(keys).size===140);
+ const expected=q.current?.coverageStatuses||q.baseline.coverageStatuses;
+ check("coverage matches master-owned current scorecard",counts.NEVER_EXAMINED===expected.NEVER_EXAMINED&&counts.EXAMINED_INSUFFICIENT===expected.EXAMINED_INSUFFICIENT&&counts.BLOCKED===expected.BLOCKED);
+ check("active assigned keys disjoint",keys.length>=25&&new Set(keys).size===keys.length);
  check("all assigned keys exist and never examined",keys.every(k=>map.get(k)?.status==="NEVER_EXAMINED"));
- check("worker target counts 35/39/36/30",q.workers.midnight.recordKeys.length===35&&q.workers.war_within.recordKeys.length===39&&q.workers.dragonflight.recordKeys.length===36&&q.workers.legacy.recordKeys.length===30);
- check("32 next-preview keys unexamined and not assigned",previews.length===32&&previews.every(k=>map.get(k)?.status==="NEVER_EXAMINED"&&!keys.includes(k)));
+ check("worker batch sizes within target 25–50",Object.values(q.workers).every(w=>w.recordKeys.length>=25&&w.recordKeys.length<=50));
+ check("next-preview keys unexamined, unique and not assigned",new Set(previews).size===previews.length&&previews.every(k=>map.get(k)?.status==="NEVER_EXAMINED"&&!keys.includes(k)));
  check("queue remains research-only and master-owned",q.branch==="research/processing-confidence"&&q.masterOwned===true&&q.rules.noMainChanges===true);
- check("no unreviewed worker success claimed",Object.values(q.workers).every(w=>w.lastSuccessfulRunUTC===null&&w.acceptedFirstPassRecords===0));
+ check("worker success metadata matches current or initial queue",Object.values(q.workers).every(w=>q.current?(w.lastSuccessfulRunUTC!==null&&w.acceptedFirstPassRecords>0):(w.lastSuccessfulRunUTC===null&&w.acceptedFirstPassRecords===0)));
  check("historical aggregate enum recognized",sch.properties.evidenceStatus.enum.includes("HISTORICAL_COMMUNITY_REPORTED_AGGREGATE"));
  check("unmapped-only observation permitted with nonempty guard",sch.properties.outputs.minItems===0&&sch.anyOf?.length===2&&sch.properties.unmappedReportedOutputs.minItems===1);
  check("all 9 previous observations use recognized statuses",oldObs.length===9&&oldObs.every(o=>sch.properties.evidenceStatus.enum.includes(o.evidenceStatus)));
@@ -39,7 +40,7 @@ function auditMasterQA(q,csv,sch,reg,oldObs,newStudy,candidate,scoreCsv){
 module.exports={auditMasterQA};
 if(require.main===module){
  const fs=require("fs"),j=p=>JSON.parse(fs.readFileSync(p,"utf8"));
- const old=["research/evidence/observations/legion-felslate-3200ore-community.jsonl","research/evidence/observations/midnight-refulgent-copper-r2-50ore-community.jsonl","research/evidence/observations/tsm-anomaly-source-audit-2026-10-28.jsonl"].flatMap(p=>fs.readFileSync(p,"utf8").trim().split(/\\r?\\n/).map(JSON.parse));
+ const old=["research/evidence/observations/legion-felslate-3200ore-community.jsonl","research/evidence/observations/midnight-refulgent-copper-r2-50ore-community.jsonl","research/evidence/observations/tsm-anomaly-source-audit-2026-10-28.jsonl"].flatMap(p=>fs.readFileSync(p,"utf8").trim().split(/\r?\n/).map(JSON.parse));
  const r=auditMasterQA(j("research/coordination/assignments.json"),fs.readFileSync("research/ledger/first-pass-coverage-2026-10-28.csv","utf8"),j("research/evidence/observation.schema.json"),j("research/mechanics/ProfessionMechanicsRegistry.json"),old,j("research/evidence/observations/legion-felslate-113mass-unmapped-community.jsonl"),j("research/proposed/itemdb-midnight-milling-candidate.json"),fs.readFileSync("research/ledger/first-pass-34-critical-field-scores-2026-10-28.csv","utf8"));
  console.log(JSON.stringify(r,null,2));if(r.failed.length)process.exitCode=1;
 }

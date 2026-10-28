@@ -6,16 +6,17 @@ Checked: 2026-10-27. Canonical main source: `GameData.lua` blob `1d47c4a961c5dc5
 
 **Existing:** `gd.mechanicVersionNotes.midnightProspectingGemHotfix="2026-04-17"` at GameData.lua line 715.
 
-**Proposed:** `"2026-04-01"` (date of the *specific profession hotfix*; the cumulative Blizzard article was updated April 17).
+**Corrected proposed value (master-reviewed 2026-10-28):** `"2026-03-31"` (date of the *specific profession hotfix subsection*; the cumulative Blizzard article was updated April 17). The earlier April 1 proposal was incorrect.
 
-Evidence: Blizzard's cumulative hotfix article, under **April 1, 2026 > Professions**, states that gems would be found more frequently from Midnight ore. The article title reflects its latest April 17 update, not the gem change. Independently corroborated by April 8 community discussion and April 1 hotfix coverage.
+Evidence: Blizzard's cumulative hotfix article and the archived official Blizzard Blue Tracker copy place the gem-frequency note under **March 31, 2026 > Professions**. The April 1 subsection appears above the March 31 subsection and does not contain this change. The article title reflects its latest April 17 update, not the gem change.
 
 - https://worldofwarcraft.blizzard.com/en-us/news/24266320
+- https://www.bluetracker.gg/wow/topic/us-en/2260898-world-of-warcraft-midnight-hotfixes-april-17/
 - https://us.forums.blizzard.com/en/wow/t/world-of-warcraft-midnight-hotfixes-april-17/2260898
 - https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/
 - https://www.buffed.de/World-of-Warcraft-Spiel-42971/News/wow-midnight-hotfixes-1524190/
 
-The change's **numerical gem-rate multiplier remains unknown**. Do not assume it was a uniform factor for every ore/gem. Confidence in event/date attribution: 94/100. Confidence in numeric effect: 0 (not quantified). This research correction has NOT been applied to main.
+The change's **numerical gem-rate multiplier remains unknown**. Do not assume it was a uniform factor for every ore/gem. Confidence in event/date attribution: 94/100 (March 31 subsection verified). Confidence in numeric effect: 0 (not quantified). This research correction has NOT been applied to main.
 
 ## 2. Cobalt Ore (36909) and Titanium Ore (36910): 12 economically dangerous expected-value conflicts
 

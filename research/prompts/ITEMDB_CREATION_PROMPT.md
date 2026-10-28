@@ -1,4 +1,4 @@
-# Loot Liquidator — ItemDB creation, research, and integration prompt (v1.1 independently reviewed draft)
+# Loot Liquidator — ItemDB creation, research, and integration prompt (v1.2 independently reviewed research contract)
 **Status:** Canonical *proposed* generator/research contract. Research assistant must independently review, challenge, revise, and maintain it. Not an approved production release.
 **Target file (EXACT case):** `itemdb.lua`
 **Legacy released file:** `GameData.lua` is still referenced in `main/LootLiquidator.toc`. NEVER rename/delete/update it on main without a reviewed, tested addon migration and user approval.
@@ -32,6 +32,7 @@
 ### Review change log
 - v1.0 (2026-10-28): comprehensive draft research and generator contract.
 - v1.1 (2026-10-28): grounded in actual source and initial eight-record QA; adds executable data/schema/test links, strict no-loss migration gates, source ambiguities, numeric-field independence, and unambiguous confidence/scope requirements.
+- v1.2 (2026-10-28): corrected the Midnight gem prospecting hotfix section date to March 31, 2026 after independent source/Blue Tracker comparison; numeric coefficient remains unknown. No other model or generator requirements changed.
 
 ## Mission and priority order
 
@@ -80,7 +81,7 @@ Use `ProfessionMechanicsRegistry.json` to determine patch windows, eligibility, 
 
 Handle separately: output chance, conditional yield distribution, unconditional E, output rank/quality transition, material eligibility, input reagent savings, operation time, and Concentration/Ingenuity expenditure. Resourcefulness input savings must not be multiplied into drop counts. Inspiration cannot be substituted for Ingenuity. Treat ore-specific Eversong Diamond nodes as *increased chance* unless strict zero-without-node eligibility is independently proven.
 
-Critical historical event: **2026-04-01 Midnight prospecting gem frequency hotfix**, with an unknown numerical magnitude; do not numerically convert unbridged prehotfix gem-rate studies to posthotfix. Client build from `GetBuildInfo()` does NOT reveal an unpublished hotfix ratio.
+Critical historical event: **2026-03-31 Midnight prospecting gem frequency hotfix**, with an unknown numerical magnitude; do not numerically convert unbridged prehotfix gem-rate studies to posthotfix. Client build from `GetBuildInfo()` does NOT reveal an unpublished hotfix ratio.
 
 WoW API provides player/current-recipe context when accessible: child profession skill-line IDs, recipe requirements, specialization ranks, equipped gear, optional crafting operation stats, quality and observable outcomes. It **does not provide hidden output drop probabilities**. Operation APIs may require real reagent allocations and open own-profession UI; do not assume all outputs/events are complete for prospect/mill/DE. An offline alt has only a timestamped cached snapshot; never read current character stats as though they belong to an alt. Unknown is null, not zero. No in-game verification claim without real client results.
 
