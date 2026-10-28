@@ -6,7 +6,7 @@
  *   research/evidence/observations \
  *   research/mechanics/mechanics-chronology.json \
  *   research/proposed/reprocessed-observations.json \
- *   [verified-family-map.json] undefined [temporal-attributions-directory]
+ *   [verified-family-map.json] [registry-v0.2.json] [temporal-attributions-directory]
  *
  * If no source observation timestamp is known, documented publication date is
  * only an upper bound, never assumed to be when actual casts were performed.
@@ -145,7 +145,7 @@ function reprocess(samples,chrono,{familyMap={},files=[],registrySnapshot=null,t
   };
 }
 function main(argv) {
-  if(argv.length<3)throw Error("Usage: node reprocess_observation_archive.js <raw-data-directory> <chronology.json> <output.json> [family-map.json] [registry-v0.2.json]");
+  if(argv.length<3)throw Error("Usage: node reprocess_observation_archive.js <raw-data-directory> <chronology.json> <output.json> [family-map.json] [registry-v0.2.json] [temporal-attributions-directory]");
   const [dir,chronologyFile,outputFile,familyFile,registryFile,attributionDir]=argv;
   const c=JSON.parse(fs.readFileSync(chronologyFile,"utf8"));
   const familyMap=familyFile?JSON.parse(fs.readFileSync(familyFile,"utf8")):{};
