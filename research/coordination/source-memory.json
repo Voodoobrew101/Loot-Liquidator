@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "researchOnly": true,
-  "sourcesCount": 91,
-  "reviewEvents": 66,
-  "qaEvents": 27,
-  "approvedQaEvents": 26,
+  "sourcesCount": 103,
+  "reviewEvents": 88,
+  "qaEvents": 32,
+  "approvedQaEvents": 31,
   "warnings": [],
   "strategies": {
     "ORIGINAL_DATASET": {
@@ -14,16 +14,16 @@
       "points": 41
     },
     "DENOMINATOR_GUARD": {
-      "reviewedClaims": 5,
-      "accepted": 5,
+      "reviewedClaims": 6,
+      "accepted": 6,
       "rejected": 0,
-      "points": 16
+      "points": 19
     },
     "NUMERIC_INVARIANT": {
-      "reviewedClaims": 5,
-      "accepted": 5,
+      "reviewedClaims": 6,
+      "accepted": 6,
       "rejected": 0,
-      "points": 14
+      "points": 16
     },
     "WOWHEAD_COMMENT": {
       "reviewedClaims": 1,
@@ -32,16 +32,22 @@
       "points": 0
     },
     "SOURCE_REUSE": {
-      "reviewedClaims": 3,
-      "accepted": 3,
+      "reviewedClaims": 5,
+      "accepted": 5,
       "rejected": 0,
-      "points": 9
+      "points": 14
     },
     "PATCH_MATCHING": {
       "reviewedClaims": 5,
       "accepted": 5,
       "rejected": 0,
       "points": 10
+    },
+    "ORIGINAL_ITEM_ID_CHECK": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 4
     }
   },
   "sources": [
@@ -154,27 +160,31 @@
       ],
       "datasetIDs": [
         "DF-six-cohorts",
-        "six-beta-cohorts"
+        "six-beta-cohorts",
+        "six-beta-cohorts-one-study"
       ],
       "reviewedRecordKeys": [
         "profile:compiled:prospect:190394",
-        "profile:compiled:prospect:190311"
+        "profile:compiled:prospect:190311",
+        "profile:dragonflight:190394",
+        "profile:dragonflight:190311"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "per-cast Inspiration flags",
-        "gem-rank cast histogram",
-        "2026 bridge"
+        "actual casts",
+        "proc flags",
+        "output rank IDs"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing"
       ],
       "changeTriggers": [],
       "revisitReasons": [
         "Reuse archived primary source, no independent re-count",
-        "Reused archived original source; no duplicate fetch"
+        "Reused archived original source; no duplicate fetch",
+        "Reused original sheet as one study, avoided repeat fetch"
       ]
     },
     {
@@ -188,15 +198,31 @@
       "studyIDs": [
         "wow-eu-forums-616811-2026-04-22"
       ],
-      "datasetIDs": [],
-      "reviewedRecordKeys": [],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
-      "originalStudyUrls": [],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "datasetIDs": [
+        "honeybone-200-refulgent-copper-unknown-rank"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:midnight:237365:242608:L?"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "ore quality rank",
+        "actual cast date",
+        "output IDs and ranks",
+        "skill/gear",
+        "zero-inclusive per-cast data"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811"
+      ],
+      "changeTriggers": [
+        "QUEUE_REV13_FIELD_TRIAGE_RECHECK"
+      ],
+      "revisitReasons": [
+        "Revisit original April 22 post for explicit 200 casts/10 diamonds and observation-time ambiguity; do not double-count prior archive"
+      ]
     },
     {
       "canonicalUrl": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling",
@@ -329,6 +355,105 @@
       ]
     },
     {
+      "canonicalUrl": "https://us.forums.blizzard.com/en/wow/t/concentration-and-prospecting/1901868",
+      "urls": [
+        "https://us.forums.blizzard.com/en/wow/t/concentration-and-prospecting/1901868"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "df-2024-prismatic-concentration-2"
+      ],
+      "datasetIDs": [
+        "two-cast-forum"
+      ],
+      "reviewedRecordKeys": [
+        "profile:dragonflight:194545"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "exact output IDs",
+        "controls",
+        "build",
+        "per-cast zeros"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://us.forums.blizzard.com/en/wow/t/concentration-and-prospecting/1901868"
+      ],
+      "changeTriggers": [
+        "New post-removal forum lead"
+      ],
+      "revisitReasons": [
+        "New original low-resolution post-Inspiration lead; no numeric rule"
+      ]
+    },
+    {
+      "canonicalUrl": "https://us.forums.blizzard.com/en/wow/t/disenchanting-df-gear-giving-classic-crafting-reagent/1463991",
+      "urls": [
+        "https://us.forums.blizzard.com/en/wow/t/disenchanting-df-gear-giving-classic-crafting-reagent/1463991"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "df-2022-dec-rare-staff-classic-material"
+      ],
+      "datasetIDs": [
+        "df-2022-rare-staff-single-report"
+      ],
+      "reviewedRecordKeys": [
+        "overlay:DE conditional fallback:exp9/q3/armor:depends on existing DE table or fallback"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "item ID",
+        "build",
+        "cast distribution",
+        "current Retail match"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://us.forums.blizzard.com/en/wow/t/disenchanting-df-gear-giving-classic-crafting-reagent/1463991"
+      ],
+      "changeTriggers": [],
+      "revisitReasons": [
+        "New independent historical source context for rare gear output mismatch"
+      ]
+    },
+    {
+      "canonicalUrl": "https://us.forums.blizzard.com/en/wow/t/disenchanting-dragonflight-gear-and-recieving-shadowlands-materials/1440624",
+      "urls": [
+        "https://us.forums.blizzard.com/en/wow/t/disenchanting-dragonflight-gear-and-recieving-shadowlands-materials/1440624"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "df-2022-dec-wind-generating-band-bug-report"
+      ],
+      "datasetIDs": [
+        "df-2022-rare-ring-multiple-player-reports"
+      ],
+      "reviewedRecordKeys": [
+        "overlay:DE conditional fallback:exp9/q3/armor:depends on existing DE table or fallback"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "exact item ID",
+        "actual game build",
+        "skill/spec",
+        "current Retail replication",
+        "per-cast histogram"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://us.forums.blizzard.com/en/wow/t/disenchanting-dragonflight-gear-and-recieving-shadowlands-materials/1440624"
+      ],
+      "changeTriggers": [],
+      "revisitReasons": [
+        "New original historical negative evidence for generic q3 DE eligibility"
+      ]
+    },
+    {
       "canonicalUrl": "https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780",
       "urls": [
         "https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780"
@@ -358,6 +483,65 @@
       ],
       "revisitReasons": [
         "40 attempts/8 unspecified gems, insufficient for mapped mechanic coefficient"
+      ]
+    },
+    {
+      "canonicalUrl": "https://us.forums.blizzard.com/en/wow/t/unable-to-prospect-prismatic-ore/1480672",
+      "urls": [
+        "https://us.forums.blizzard.com/en/wow/t/unable-to-prospect-prismatic-ore/1480672"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "df-2023-prismatic-five-ore"
+      ],
+      "datasetIDs": [
+        "five-ore-correction"
+      ],
+      "reviewedRecordKeys": [
+        "profile:tsm:prospect:194545"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "current 2026 recipe eligibility"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://us.forums.blizzard.com/en/wow/t/unable-to-prospect-prismatic-ore/1480672"
+      ],
+      "changeTriggers": [],
+      "revisitReasons": [
+        "New historical bug report; original poster resolved missing five-ore batch"
+      ]
+    },
+    {
+      "canonicalUrl": "https://warcraft.wiki.gg/wiki/cobalt_ore",
+      "urls": [
+        "https://warcraft.wiki.gg/wiki/Cobalt_Ore"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "historical-cobalt-prospect-guide"
+      ],
+      "datasetIDs": [
+        "cobalt-1to2-historical"
+      ],
+      "reviewedRecordKeys": [
+        "profile:compiled:prospect:36909"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "original cohort denominator",
+        "2026 Retail patch"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://warcraft.wiki.gg/wiki/Cobalt_Ore"
+      ],
+      "changeTriggers": [],
+      "revisitReasons": [
+        "Historical 1–2 Bloodstone and ~24% occurrence; TSM mixed-unit contradiction"
       ]
     },
     {
@@ -477,17 +661,18 @@
       "reviewedRecordKeys": [],
       "status": "PARTIAL",
       "missingFields": [
-        "numeric historic Inspiration coefficient",
-        "current recipe quality transform"
+        "historical numeric coefficient",
+        "current quality rule"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://worldofwarcraft.blizzard.com/en-gb/news/24119590"
       ],
       "changeTriggers": [],
       "revisitReasons": [
-        "Official qualitative removal rechecked; no numeric rule"
+        "Official qualitative removal rechecked; no numeric rule",
+        "Reused official removal notice, no formula"
       ]
     },
     {
@@ -518,6 +703,38 @@
       ],
       "revisitReasons": [
         "REUSE official qualitative March 31 note for blocked numeric hypothesis; no new numerical patch evidence"
+      ]
+    },
+    {
+      "canonicalUrl": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "urls": [
+        "https://worldofwarcraft.blizzard.com/en-us/news/24266320"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "blizzard-midnight-2026-03-31-gem-hotfix"
+      ],
+      "datasetIDs": [
+        "official-2026-03-31-qualitative"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:midnight:237365:242608:L?"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "numeric per-gem effect",
+        "matched pre/post casts"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://worldofwarcraft.blizzard.com/en-us/news/24266320"
+      ],
+      "changeTriggers": [
+        "REUSE_QUALITATIVE_HOTFIX"
+      ],
+      "revisitReasons": [
+        "Reused official patch direction; no redundant source-count credit"
       ]
     },
     {
@@ -650,6 +867,37 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/10s9ol9",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/10s9ol9"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "df-2023-feb-serevite-resourcefulness-10000ore"
+      ],
+      "datasetIDs": [
+        "df-2023-serevite-resourcefulness-aggregate"
+      ],
+      "reviewedRecordKeys": [],
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual completed cast count",
+        "per-cast saved ore histogram",
+        "input rank",
+        "exact build",
+        "inventory reconciliation"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/10s9ol9"
+      ],
+      "changeTriggers": [],
+      "revisitReasons": [
+        "New original historical quantitative aggregate, different expansion and not transferable"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
       "urls": [
         "https://www.reddit.com/r/woweconomy/comments/1f83cnd"
@@ -662,16 +910,17 @@
         "tww-aqirite-2024-1040clicks"
       ],
       "datasetIDs": [
-        "tww-aqirite-2024-1040clicks"
+        "tww-aqirite-2024-1040clicks",
+        "tww-aqirite-1040clicks"
       ],
       "reviewedRecordKeys": [],
       "status": "PARTIAL",
       "missingFields": [
-        "Actual saved ore per cast including zeros",
-        "Resourcefulness stat and patch"
+        "saved ore counts",
+        "Resourcefulness percent"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/1f83cnd"
       ],
@@ -681,7 +930,8 @@
       ],
       "revisitReasons": [
         "Unresolved historical source denominators and output means",
-        "Assigned numeric hypothesis; reuse source, avoid duplicate fetch"
+        "Assigned numeric hypothesis; reuse source, avoid duplicate fetch",
+        "REUSE_ONLY; existing cached original report adequate; avoided repeated fetch"
       ]
     },
     {
@@ -726,7 +976,9 @@
       "studyIDs": [
         "reddit-2024-10-14-aqirite"
       ],
-      "datasetIDs": [],
+      "datasetIDs": [
+        "tww-aqirite-rank1-rank2-output-aggregate"
+      ],
       "reviewedRecordKeys": [
         "210933:Prospect:212511",
         "210933:Prospect:212495",
@@ -741,13 +993,21 @@
         "210934:Prospect:213399",
         "210934:Prospect:213398"
       ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
-      "originalStudyUrls": [],
+      "status": "PARTIAL",
+      "missingFields": [
+        "saved ore per cast",
+        "Resourcefulness stat",
+        "refund histogram"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/1g350pq"
+      ],
       "changeTriggers": [],
-      "revisitReasons": []
+      "revisitReasons": [
+        "Revisited previously discovered original source to clarify explicit exclusion of refunded ore"
+      ]
     },
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
@@ -1725,13 +1985,16 @@
         "BFA-KIDNEPH-1000-RIVERBUD",
         "bfa-jiyao-2018-seven-herb-massmill",
         "bfa-baadkitty-2018-seven-herb-200each",
-        "bfa-kidneph-2018-six-herb-1000each"
+        "bfa-kidneph-2018-six-herb-1000each",
+        "bfa-1917247-150skill-before-after-share"
       ],
       "datasetIDs": [
         "152505",
         "bfa-jiyao-2018-seven-herb-massmill",
         "bfa-baadkitty-2018-seven-herb-200each",
-        "bfa-kidneph-2018-six-herb-1000each"
+        "bfa-kidneph-2018-six-herb-1000each",
+        "bfa-1917247-approx50k-100k-herb-strata",
+        "bfa-jiyao-694-mass-casts"
       ],
       "reviewedRecordKeys": [
         "output-main:tsm:mill:152505:153635:L1862",
@@ -1779,26 +2042,30 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual completed casts",
+        "exact raw integer totals",
         "skill",
-        "patch",
-        "hits"
+        "actual cast date",
+        "per-cast zero-inclusive histogram"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 4,
+      "reviewEvents": 6,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=153669/viridescent-pigment"
       ],
       "changeTriggers": [
         "Assigned new BfA output keys; source table updated to 694 total mass casts; 39-cast Riverbud snapshot overlaps 44-cast update",
         "New original author aggregate, distinct from Kidneph and Jiyao",
-        "REUSE prior archived 2026-10-28-legacy-milling-batch01.jsonl; avoid duplicate re-fetch/observation"
+        "REUSE prior archived 2026-10-28-legacy-milling-batch01.jsonl; avoid duplicate re-fetch/observation",
+        "QUEUE_REV13_BFA_SKILL_150_TRIAGE",
+        "REUSE_EXISTING_ARCHIVED_STUDY"
       ],
       "revisitReasons": [
         "Reuse archived primary source, no independent re-count",
         "Assigned new BfA output keys; source table updated to 694 total mass casts; 39-cast Riverbud snapshot overlaps 44-cast update",
         "New original author aggregate, distinct from Kidneph and Jiyao",
-        "REUSE prior archived 2026-10-28-legacy-milling-batch01.jsonl; avoid duplicate re-fetch/observation"
+        "REUSE prior archived 2026-10-28-legacy-milling-batch01.jsonl; avoid duplicate re-fetch/observation",
+        "New original author within previously analyzed Wowhead page; distinct cohort ancestry from Jiyao, Baadkitty, Kidneph",
+        "Use existing Jiyao 177 Star Moss 20-herb mass casts without rearchiving/recounting"
       ]
     },
     {
@@ -1995,7 +2262,8 @@
         "df-superbondez-prismatic-400ore-80casts"
       ],
       "datasetIDs": [
-        "df-superbondez-prismatic-400ore-80casts"
+        "df-superbondez-prismatic-400ore-80casts",
+        "80-cast-prismatic"
       ],
       "reviewedRecordKeys": [
         "194545:Prospect:192837",
@@ -2046,17 +2314,18 @@
         "output-supp:dragonflight:194545:192866:9",
         "output-supp:dragonflight:194545:192869:10",
         "output-supp:dragonflight:194545:192872:11",
-        "output-supp:dragonflight:194545:192880:12"
+        "output-supp:dragonflight:194545:192880:12",
+        "profile:tsm:prospect:194545",
+        "profile:dragonflight:194545"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "exact build",
-        "skill/spec",
-        "cast-level hits",
-        "corrupted Eternity Amber ranks"
+        "2026 eligibility",
+        "patch",
+        "per-cast hit/zero histogram"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=194545/prismatic-ore"
       ],
@@ -2064,7 +2333,8 @@
         "New original 80-cast rank-specific experiment for assigned 194545 outputs"
       ],
       "revisitReasons": [
-        "New original 80-cast rank-specific experiment for assigned 194545 outputs"
+        "New original 80-cast rank-specific experiment for assigned 194545 outputs",
+        "Reused archived 80-cast primary source; no duplicate study"
       ]
     },
     {
@@ -2121,6 +2391,135 @@
       ],
       "changeTriggers": [],
       "revisitReasons": []
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=200942/vibrant-emulsion",
+      "urls": [
+        "https://www.wowhead.com/item=200942/vibrant-emulsion"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "df-mystic-vibrant-emulsion-2023-comment"
+      ],
+      "datasetIDs": [
+        "df-mystic-emulsion-qualitative"
+      ],
+      "reviewedRecordKeys": [],
+      "status": "PARTIAL",
+      "missingFields": [
+        "original cast count",
+        "build",
+        "normal armor/weapon applicability"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=200942/vibrant-emulsion"
+      ],
+      "changeTriggers": [],
+      "revisitReasons": [
+        "Check false generalization from special Mystic disenchant item to generic q3 armor"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=237364/brilliant-silver-ore",
+      "urls": [
+        "https://www.wowhead.com/item=237364/brilliant-silver-ore"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "midnight-cardinalai-brilliant-silver-800-prospects"
+      ],
+      "datasetIDs": [
+        "cardinalai-800-4000gross-3285net-715saved"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:midnight:237365:242608:L?"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "input quality rank",
+        "actual observation date",
+        "original comment publication date",
+        "exact recipe/build",
+        "per-cast hit counts and zeros",
+        "skill/gear context",
+        "independent reproduction"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=237364/brilliant-silver-ore"
+      ],
+      "changeTriggers": [
+        "NEW_ORIGINAL_800_CAST_STUDY"
+      ],
+      "revisitReasons": [
+        "New independent source found for gem family and saved-input denominator"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=36721/dragons-teeth",
+      "urls": [
+        "https://www.wowhead.com/item=36721/dragons-teeth"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "item-id-collision-36721-thrown-weapon"
+      ],
+      "datasetIDs": [
+        "wowhead-current-retail-item-36721"
+      ],
+      "reviewedRecordKeys": [
+        "profile:compiled:mill:36721"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "in-game current Retail eligibility probe"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=36721/dragons-teeth"
+      ],
+      "changeTriggers": [
+        "P0 source profile contains thrown weapon ID under milling"
+      ],
+      "revisitReasons": [
+        "Distinguish same-name Dragon's Teeth thrown item 36721 from herb 3819"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=3819/dragons-teeth",
+      "urls": [
+        "https://www.wowhead.com/item=3819/dragons-teeth"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "item-id-collision-3819-herb"
+      ],
+      "datasetIDs": [
+        "wowhead-current-retail-item-3819"
+      ],
+      "reviewedRecordKeys": [
+        "profile:compiled:mill:3819",
+        "profile:compiled:mill:36721"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "in-game current Retail milling eligibility probe"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=3819/dragons-teeth"
+      ],
+      "changeTriggers": [
+        "disambiguate two identical English item names"
+      ],
+      "revisitReasons": [
+        "Confirm 3819 herb is the legitimate Dragon's Teeth milling input"
+      ]
     },
     {
       "canonicalUrl": "https://www.wowhead.com/item=39343/azure-pigment",
@@ -2504,27 +2903,29 @@
         "profile:tsm:mill:36901",
         "profile:tsm:mill:36903",
         "profile:tsm:mill:36904",
-        "profile:tsm:mill:36905"
+        "profile:tsm:mill:36905",
+        "profile:compiled:mill:2449"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "exact PTR build",
-        "skill/gear",
-        "2026 Retail patch bridge",
-        "Earthroot missing 19 operations or stack claim"
+        "Earthroot 29 enumerated outcomes versus 12 full stacks",
+        "original cast dates/build",
+        "current Retail bridge"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://www.wowhead.com/mop-classic/item=39151/alabaster-pigment"
       ],
       "changeTriggers": [
         "Exact master queue revision 12 or assigned numeric hypothesis",
-        "assigned 16 matching TSM profiles plus arithmetic contradiction"
+        "assigned 16 matching TSM profiles plus arithmetic contradiction",
+        "No new source revision; existing partial unresolved"
       ],
       "revisitReasons": [
         "Profile 765 newly assigned; revisit original archive to recover known histogram",
-        "Recalculate original histogram denominators and identify Earthroot inconsistency"
+        "Recalculate original histogram denominators and identify Earthroot inconsistency",
+        "REUSE existing source notes without refetch or duplicate observations"
       ]
     },
     {
@@ -2882,7 +3283,9 @@
       "studyIDs": [
         "wowhead-1231127-jd3k-50ore-quality2"
       ],
-      "datasetIDs": [],
+      "datasetIDs": [
+        "jd3k-three-50ore-q2"
+      ],
       "reviewedRecordKeys": [
         "237361:Prospect:242553",
         "237361:Prospect:242554",
@@ -2900,15 +3303,28 @@
         "237365:Prospect:242612",
         "237365:Prospect:242613",
         "237365:Prospect:242786",
-        "237365:Prospect:242788"
+        "237365:Prospect:242788",
+        "output-supp:midnight:237365:242608:L?"
       ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
-      "originalStudyUrls": [],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual cast date",
+        "per-cast histogram",
+        "explicit zero diamond count",
+        "build",
+        "full skill value"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=1231127/midnight-prospecting"
+      ],
+      "changeTriggers": [
+        "QUEUE_REV13_INPUT_IDENTITY_CORRECTION"
+      ],
+      "revisitReasons": [
+        "Reused previously indexed source to correct R2 Brilliant Silver vs R2 Refulgent Copper identity; no duplicate source family"
+      ]
     },
     {
       "canonicalUrl": "https://www.wowhead.com/spell=190385/mass-mill-nagrand-arrowbloom",
@@ -3441,6 +3857,57 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+      "urls": [
+        "https://www.wowhead.com/wotlk/item=39343/azure-pigment"
+      ],
+      "observationIDs": [
+        "legacy-b011-killerpet-2009-36901",
+        "legacy-b011-killerpet-2009-36904",
+        "legacy-b011-killerpet-2009-36903",
+        "legacy-b011-killerpet-2009-36905"
+      ],
+      "studyIDs": [
+        "killerpet-wotlk-2009-revised-northrend-milling"
+      ],
+      "datasetIDs": [
+        "killerpet-original-revised-category-a-b-table"
+      ],
+      "reviewedRecordKeys": [
+        "36901:Mill:39343",
+        "36901:Mill:43109",
+        "36904:Mill:39343",
+        "36904:Mill:43109",
+        "36903:Mill:39343",
+        "36903:Mill:43109",
+        "36905:Mill:39343",
+        "36905:Mill:43109",
+        "profile:compiled:mill:36901",
+        "profile:compiled:mill:36904",
+        "profile:compiled:mill:36903",
+        "profile:compiled:mill:36905"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "exact observation dates and build",
+        "original unrounded total units",
+        "zero-inclusive hit counts and conditional ranges",
+        "profession skill/gear",
+        "current Retail bridge"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/wotlk/item=39343/azure-pigment"
+      ],
+      "changeTriggers": [
+        "new primary revised table found, not in source-memory"
+      ],
+      "revisitReasons": [
+        "Revised original study supersedes older copied 1473/399/255/540 cast table; preserve ancestry"
+      ]
+    },
+    {
       "canonicalUrl": "main/gamedata.lua @ 1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
       "urls": [
         "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua"
@@ -3785,5 +4252,13 @@
       "changeTriggers": [],
       "revisitReasons": []
     }
-  ]
+  ],
+  "replayNote": {
+    "method": "DETERMINISTIC_INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD",
+    "baseSourceMemoryBlobSHA": "6b55d7f9fa57ba847b03fc3bcc6053c63aff225a",
+    "addedOriginalObservations": 4,
+    "addedSourceReviews": 22,
+    "addedMasterQAEvents": 5,
+    "reviewedDate": "2026-10-28"
+  }
 }
