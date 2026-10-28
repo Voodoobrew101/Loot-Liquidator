@@ -1,0 +1,582 @@
+{
+  "schemaVersion": "0.1.0",
+  "lastReviewedUTCDate": "2026-10-28",
+  "status": "INITIAL_SCAFFOLD_INCOMPLETE_RESEARCH_REQUIRED",
+  "authority": "research-only; NOT a shipped addon data file; compiled eligible processing baselines belong exclusively in GameData.lua",
+  "purpose": "Register expansion/patch/profession context and verified transforms needed to compare historical processing observations with target Retail. Never claim normalization without verified mechanisms and coefficients.",
+  "baselinePolicy": {
+    "definition": "One best-supported per-input/output/condition reference for the selected Retail patch; not necessarily an untrained or max-skill character",
+    "storedMaterialFields": [
+      "dropChance",
+      "yieldMin",
+      "yieldMax",
+      "expectedQuantity"
+    ],
+    "fieldDefinitions": {
+      "dropChance": "P(at least one output unit in one operation), fraction 0..1",
+      "yieldMin": "minimum whole-number output units CONDITIONED on output occurring; observed sample limit is not proven game minimum",
+      "yieldMax": "maximum whole-number output units CONDITIONED on output occurring; observed sample limit is not proven game maximum",
+      "expectedQuantity": "UNCONDITIONAL decimal average units per operation including zero; ONLY this output quantity is used in pricing"
+    },
+    "independentEvidence": "Separate evidence/confidence/source per field, and separate numeric formula confidence for any transformation",
+    "prohibited": [
+      "double-multiply expectedQuantity by dropChance",
+      "infer expectedQuantity from min/max midpoint",
+      "assume global skill-to-yield linear law",
+      "silently pool pre- and post-hotfix samples",
+      "use one output's multipliers for another output without evidence",
+      "invent unobtainable outputs"
+    ],
+    "personalObservations": "SavedVariables observations are independent empirical evidence, not a second shipped built-in yield table"
+  },
+  "expansionIndex": [
+    {
+      "id": 0,
+      "key": "classic",
+      "name": "Classic / Vanilla",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 1,
+      "key": "outland",
+      "name": "The Burning Crusade / Outland",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 2,
+      "key": "northrend",
+      "name": "Wrath of the Lich King / Northrend",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 3,
+      "key": "cataclysm",
+      "name": "Cataclysm",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 4,
+      "key": "pandaria",
+      "name": "Mists of Pandaria",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 5,
+      "key": "draenor",
+      "name": "Warlords of Draenor",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 6,
+      "key": "legion",
+      "name": "Legion",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 7,
+      "key": "kul_tiras_zandalar",
+      "name": "Battle for Azeroth",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 8,
+      "key": "shadowlands",
+      "name": "Shadowlands",
+      "audit": "NOT_REVIEWED",
+      "skillLine": "era-specific, research required"
+    },
+    {
+      "id": 9,
+      "key": "dragonflight",
+      "name": "Dragonflight",
+      "audit": "PARTIAL",
+      "skillLine": "Dragon Isles profession-specific skill",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+    },
+    {
+      "id": 10,
+      "key": "war_within",
+      "name": "The War Within",
+      "audit": "PARTIAL",
+      "skillLine": "Khaz Algar profession-specific skill",
+      "source": "https://warcraft.wiki.gg/wiki/Concentration"
+    },
+    {
+      "id": 11,
+      "key": "midnight",
+      "name": "Midnight",
+      "audit": "PARTIAL",
+      "skillLine": "Midnight profession-specific skill",
+      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
+    }
+  ],
+  "processingProfessionIndex": [
+    {
+      "profession": "Jewelcrafting",
+      "methods": [
+        "Prospect",
+        "Crush"
+      ],
+      "applicability": "Expansion-specific skill/recipes and modern specializations; verify per recipe",
+      "audit": "PARTIAL"
+    },
+    {
+      "profession": "Inscription",
+      "methods": [
+        "Mill"
+      ],
+      "applicability": "Expansion-specific skill/recipes and modern specializations; verify per recipe",
+      "audit": "NOT_REVIEWED"
+    },
+    {
+      "profession": "Enchanting",
+      "methods": [
+        "Disenchant"
+      ],
+      "applicability": "Check item and skill eligibility, catch-up/disenchant bonuses separately",
+      "audit": "NOT_REVIEWED"
+    },
+    {
+      "profession": "Mining",
+      "methods": [
+        "Smelt"
+      ],
+      "applicability": "Recipes and batch sizes can differ; not equivalent to randomized prospecting",
+      "audit": "NOT_REVIEWED"
+    },
+    {
+      "profession": "Engineering",
+      "methods": [
+        "Recycle",
+        "Scrap"
+      ],
+      "applicability": "Only verified eligible recipes; names here are research categories, not assumed API methods",
+      "audit": "NOT_REVIEWED"
+    }
+  ],
+  "stats": [
+    {
+      "key": "effectiveProfessionSkill",
+      "eras": [
+        "all"
+      ],
+      "status": "DOCUMENTED_CONTEXT",
+      "effect": "Potential quality threshold / recipe eligibility; no proven universal output count multiplier",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+    },
+    {
+      "key": "inspiration",
+      "eras": [
+        "dragonflight_historical"
+      ],
+      "status": "DOCUMENTED_HISTORICAL",
+      "effect": "Chance of extra crafting skill; quality outcome if applicable, NOT a generic gem drop chance multiplier",
+      "supersededBy": "concentration_and_ingenuity",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+    },
+    {
+      "key": "concentration",
+      "eras": [
+        "war_within",
+        "midnight"
+      ],
+      "status": "DOCUMENTED_MECHANIC",
+      "effect": "Spendable crafting resource to reach next quality tier on eligible recipes; output count/proc-rate effect UNVERIFIED",
+      "source": "https://warcraft.wiki.gg/wiki/Concentration"
+    },
+    {
+      "key": "ingenuity",
+      "eras": [
+        "war_within",
+        "midnight"
+      ],
+      "status": "DOCUMENTED_MECHANIC",
+      "effect": "Chance to refund spent concentration under applicable crafting rules; not a direct unverified increase to processing drop probabilities",
+      "source": "https://www.icy-veins.com/wow/professions-stats-and-gear"
+    },
+    {
+      "key": "resourcefulness",
+      "eras": [
+        "dragonflight",
+        "war_within",
+        "midnight"
+      ],
+      "status": "DOCUMENTED_MECHANIC",
+      "effect": "May reduce reagent consumption on eligible crafts, affects input cost/expected consumption and not automatically output expected units",
+      "numericFormula": "unknown_recipe_specific",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+    },
+    {
+      "key": "multicraft",
+      "eras": [
+        "dragonflight",
+        "war_within",
+        "midnight"
+      ],
+      "status": "DOCUMENTED_MECHANIC",
+      "effect": "Additional units for eligible stackable-output recipes; eligibility and magnitude must be proved per processing method",
+      "numericFormula": "unknown_recipe_specific",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+    },
+    {
+      "key": "craftingSpeed",
+      "eras": [
+        "dragonflight",
+        "war_within",
+        "midnight"
+      ],
+      "status": "DOCUMENTED_MECHANIC",
+      "effect": "Time per crafting operation; does not automatically alter yield per operation",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+    },
+    {
+      "key": "perception",
+      "eras": [
+        "dragonflight",
+        "war_within",
+        "midnight"
+      ],
+      "status": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
+      "effect": "Gathering-related rare finds; never apply generically to prospect/mill/disenchant",
+      "source": "https://warcraft.wiki.gg/wiki/Attribute"
+    },
+    {
+      "key": "finesse",
+      "eras": [
+        "dragonflight",
+        "war_within",
+        "midnight"
+      ],
+      "status": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
+      "effect": "Gathering reagent yield; never apply generically to processing",
+      "source": "https://warcraft.wiki.gg/wiki/Attribute"
+    },
+    {
+      "key": "deftness",
+      "eras": [
+        "dragonflight",
+        "war_within",
+        "midnight"
+      ],
+      "status": "GATHERING_STAT_NOT_AUTOMATIC_PROCESSING_MODIFIER",
+      "effect": "Gathering speed; never apply to per-operation processing yield without evidence",
+      "source": "https://warcraft.wiki.gg/wiki/Attribute"
+    },
+    {
+      "key": "focus",
+      "eras": [
+        "all"
+      ],
+      "status": "UNRESOLVED_TERM",
+      "effect": "Do not invent a universal Focus profession stat; investigate any named expansion-specific specialization/focus mechanic and map exact spell/node IDs",
+      "numericFormula": null
+    }
+  ],
+  "equipmentRules": [
+    {
+      "id": "midnight_equipment_secondary_stats_backward",
+      "patchEventID": "midnight_profession_equipment_backward_secondary",
+      "status": "OFFICIAL_QUALITATIVE",
+      "affects": [
+        "profession equipment secondary stats"
+      ],
+      "note": "Midnight content notes say secondary stats on profession tools/accessories apply to prior expansions but not higher expansions. This is not proof every legacy processing recipe benefits or that skill bonuses work identically.",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/24244646"
+    },
+    {
+      "id": "gear_exact_values_and_effective_skill",
+      "status": "REQUIRES_AUDIT",
+      "requiredFields": [
+        "gearItemID",
+        "gearQuality",
+        "statRating",
+        "effectivePercentage",
+        "skillBonus",
+        "equippedDuringSample",
+        "expansion",
+        "patch"
+      ],
+      "note": "Never assume higher expansion equipment supplies the same effective modifiers or applies to all recipe types."
+    }
+  ],
+  "specializationRules": [
+    {
+      "id": "midnight_proficient_processor",
+      "expansion": 11,
+      "profession": "Jewelcrafting",
+      "method": "Prospect",
+      "name": "Proficient Processor",
+      "status": "DOCUMENTED_QUALITATIVE",
+      "effect": "Raises relevant skill and profession stats; exact numeric contribution and conversion to material yields requires point-specific research",
+      "normalizedFormula": null,
+      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
+    },
+    {
+      "id": "midnight_prospecting_pro",
+      "expansion": 11,
+      "profession": "Jewelcrafting",
+      "method": "Prospect",
+      "name": "Prospecting Pro",
+      "status": "DOCUMENTED_QUALITATIVE",
+      "effect": "At maximum node investment, increased gem output is reported; numeric multiplier unknown and must not be invented",
+      "normalizedFormula": null,
+      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
+    },
+    {
+      "id": "midnight_ore_specific_diamond_nodes",
+      "expansion": 11,
+      "profession": "Jewelcrafting",
+      "method": "Prospect",
+      "name": "Copper Consumer / Tin-vestigator / Silver Scrapper / Thorium Thresher",
+      "status": "DOCUMENTED_QUALITATIVE",
+      "effect": "Each ore-specific node gives better chance to obtain Eversong Diamond according to Wowhead; whether it grants strict eligibility versus increases nonzero chance is UNVERIFIED. Do not assume a binary zero-to-eligible gate solely from this source.",
+      "normalizedFormula": null,
+      "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
+    },
+    {
+      "id": "all_other_expansion_specializations",
+      "expansion": "all",
+      "profession": "all",
+      "method": "all",
+      "name": "AUDIT_BACKLOG",
+      "status": "NOT_INVENTORIED",
+      "effect": "Agent must inventory named talents, ranks, spell/node IDs, applicability and numeric effects per expansion/profession"
+    }
+  ],
+  "patchEvents": [
+    {
+      "id": "dragonflight_profession_stat_system",
+      "effectiveDate": "2022-11-15",
+      "patch": "10.0.x",
+      "scope": {
+        "expansion": 9,
+        "professions": [
+          "all modern crafting"
+        ]
+      },
+      "documentedEffect": "Introduced reworked profession skill, crafting stats including Inspiration, Resourcefulness, Multicraft; effects vary by recipe",
+      "numericEffect": null,
+      "normalization": "CONTEXT_SEGMENT_ONLY",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/23876529",
+      "datePrecision": "approximate patch era; exact profession activation and version should be confirmed"
+    },
+    {
+      "id": "war_within_inspiration_replacement",
+      "effectiveDate": "2024-07-23",
+      "patch": "11.0.x",
+      "scope": {
+        "expansions": [
+          9,
+          10,
+          11
+        ],
+        "professions": [
+          "modern crafting"
+        ]
+      },
+      "documentedEffect": "Inspiration replaced by a Concentration/Ingenuity model; source descriptions differ on exact 11.0.0 versus 11.0.2 activation, so do not infer exact applicability solely from listed date",
+      "numericEffect": null,
+      "normalization": "CONTEXT_SEGMENT_ONLY",
+      "source": "https://warcraft.wiki.gg/wiki/Concentration",
+      "datePrecision": "11.0.x patch window; needs exact verification"
+    },
+    {
+      "id": "midnight_profession_equipment_backward_secondary",
+      "effectiveDate": null,
+      "patch": "12.0 Midnight content update",
+      "scope": {
+        "expansions": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "professions": [
+          "relevant crafting"
+        ]
+      },
+      "documentedEffect": "Profession tool/accessory secondary stats apply to previous expansions, not to higher-expansion profession skills. Applicability must be checked per recipe and gear item.",
+      "numericEffect": null,
+      "normalization": "CONTEXT_SEGMENT_ONLY",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
+      "datePrecision": "effective date must be verified"
+    },
+    {
+      "id": "midnight_two_quality_stackables",
+      "effectiveDate": null,
+      "patch": "12.0 Midnight content update",
+      "scope": {
+        "expansion": 11,
+        "professions": [
+          "relevant crafting"
+        ]
+      },
+      "documentedEffect": "Reduced qualities for stackable reagents and consumables from three to two; this does NOT establish a universal prospecting output-rank transition",
+      "numericEffect": null,
+      "normalization": "OUTPUT_QUALITY_VERSION_GATE",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
+      "datePrecision": "effective date must be verified"
+    },
+    {
+      "id": "midnight_apr_1_prospecting_gem_increase",
+      "effectiveDate": "2026-04-01",
+      "patch": "Midnight live hotfix",
+      "scope": {
+        "expansion": 11,
+        "profession": "Jewelcrafting",
+        "method": "Prospect",
+        "inputSet": "Midnight ore",
+        "outputCategory": "gems"
+      },
+      "documentedEffect": "Gems are now found more frequently from Midnight ore",
+      "numericEffect": null,
+      "normalization": "BLOCKED_NUMERIC_UNKNOWN",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "datePrecision": "hotfix subsection date verified from research branch and Blizzard cumulative notes; quantitative magnitude unpublished"
+    }
+  ],
+  "observationContextSchema": {
+    "required": [
+      "sourceStudyID",
+      "sampleStartDate",
+      "sampleEndDate",
+      "clientPatch",
+      "gameMode",
+      "expansionID",
+      "profession",
+      "operationMethod",
+      "recipeID",
+      "inputItemID",
+      "inputQuality",
+      "inputCountPerOperation",
+      "completedOperations",
+      "outputItemID",
+      "unitsObservedTotal",
+      "professionSkill",
+      "specializationRanks",
+      "professionGear",
+      "professionStats",
+      "relevantBuffs",
+      "concentrationUsed",
+      "dataBasis"
+    ],
+    "unknownValue": "Use null, not zero, when a sample does not disclose the condition",
+    "dataBasisAllowed": [
+      "raw_per_cast_outcomes",
+      "aggregate_total_per_n_casts",
+      "per_input_resource",
+      "per_operation",
+      "estimated_proxy"
+    ],
+    "optionals": [
+      "operationQuality",
+      "observedDropCount",
+      "conditionalObservedMin",
+      "conditionalObservedMax",
+      "goldPricesAtObservation",
+      "notes",
+      "patchEventIDs"
+    ],
+    "note": "Raw total / actual eligible operations establishes an empirical unconditional mean only; without per-cast hit counts it cannot establish P(drop) or conditional yield limits."
+  },
+  "normalizationProtocol": {
+    "target": "Current Retail 2026 with a precise target patch and target real/simulated profession context",
+    "steps": [
+      "Verify input/output identity, operation/batch normalization, eligible recipe and expansion.",
+      "Record original study's date, patch, skill, gear, specialization, stats, input/output quality, and game mode; never substitute missing facts with zero.",
+      "Locate all patch events between sample and target; if one affecting output has unknown numeric effect, mark output adjustment unconvertible.",
+      "Match each documented specialization or stat against its recipe and output. Transform ONLY fields whose causal changes and numerical coefficients are supported.",
+      "Maintain per-field confidence and transform confidence separately; never upgrade sample evidence confidence just because a formula runs.",
+      "If transformation is unavailable, preserve the original context-specific observation; select a current-version measurement or explicitly labeled reference fallback without claiming mathematically normalized current rates."
+    ],
+    "allowedMethods": [
+      {
+        "kind": "unit_normalize",
+        "formula": "E_per_operation = units_observed_total / completed_operations OR E_per_input * verified_batch_size",
+        "requires": "known exact input batch/operation denominator"
+      },
+      {
+        "kind": "ratio_adjustment",
+        "formula": "E_target = E_observed * factor_target / factor_observed",
+        "requires": "validated strictly positive multiplicative factors for this specific output and conditions; cannot use if the effect changes eligibility, quality bins or distribution nonmultiplicatively"
+      },
+      {
+        "kind": "quality_transition",
+        "formula": "output-vector_target = validated_transition_model(output-vector_observed, context_observed, context_target)",
+        "requires": "independently measured recipe-specific rank/quality mapping; never sum competing output ranks"
+      },
+      {
+        "kind": "expected_input_savings",
+        "formula": "expected_input_consumed = recipe_nominal_input - independently supported expected_reagent_savings",
+        "requires": "documented recipe eligibility, stat probability and saving count; output expected quantity remains separate"
+      },
+      {
+        "kind": "patch_shift",
+        "formula": null,
+        "requires": "verified patch-specific per-output transformation. Otherwise BLOCKED_NUMERIC_UNKNOWN"
+      }
+    ],
+    "noActionWhenUnknown": "Do not normalize using an arbitrary patch multiplier, low/high midpoint, universal 0-100 skill slope or unrelated profession stat.",
+    "separateFieldReview": "P(drop), conditional min, conditional max and unconditional E each require their own transformation evidence."
+  },
+  "roadmapCoverage": [
+    {
+      "era": "Classic through Shadowlands",
+      "status": "BACKLOG",
+      "tasks": [
+        "enumerate eligible recipes and expansion-specific skill controls",
+        "check whether modern gear/stat mechanics truly apply in current Retail",
+        "research patch-specific output changes and version-matched experiments"
+      ]
+    },
+    {
+      "era": "Dragonflight",
+      "status": "BACKLOG",
+      "tasks": [
+        "inspiration and quality thresholds for prospecting/milling recipes",
+        "explicit recipe eligibility for resourcefulness/multicraft",
+        "skill/knowledge/gear contributions and live Midnight behavior"
+      ]
+    },
+    {
+      "era": "The War Within",
+      "status": "BACKLOG",
+      "tasks": [
+        "concentration and ingenuity applicability to processing",
+        "10-herb milling exact per-operation yields",
+        "specialization and equipment bonus effects"
+      ]
+    },
+    {
+      "era": "Midnight",
+      "status": "BACKLOG",
+      "tasks": [
+        "prospecting unlocks and incremental node ranks",
+        "separate pre-/post-April-1 data",
+        "post-hotfix controlled gem means and hit-counts",
+        "milling and disenchanting modern specialization mechanics"
+      ]
+    }
+  ],
+  "registryAudit": {
+    "fieldConfidenceTarget": 90,
+    "notes": "This file is a research index with confirmed qualitative mechanics and incomplete quantitative functions, NOT evidence that all expansions are exhaustively cataloged. 90/100 refers to evidence strength per supported field, not statistical accuracy.",
+    "unverifiedNumberOfTransformCoefficients": true
+  }
+}
