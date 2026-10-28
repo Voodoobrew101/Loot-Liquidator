@@ -1,5 +1,7 @@
 # Database and profession modernization
 
+Development update: the compiled runtime artifact described below is now `LootLiquidator/ItemDBRuntime.lua`. The newest research artifact is copied unchanged to `LootLiquidator/itemdb.lua` and is not TOC-loaded. Multiple development databases are intentional. See [current copy provenance and scaling audit](profession-scaling-audit.md).
+
 ## Baseline audit (2026-10-28)
 
 Implementation starts at `feature/verified-mechanics-adapter` 4053640 (PR #4), based on main 051f582 / 0.9.70. PRs #1, #3 and #4 are visible; #4 is a draft. The existing adapter tests pass on Lua 5.1. GitHub GraphQL access is unavailable, so PR metadata was inspected using the GitHub web endpoint and Git refs.

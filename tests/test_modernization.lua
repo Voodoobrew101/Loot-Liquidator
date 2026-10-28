@@ -238,7 +238,7 @@ check(evaluated and evaluated.guild and evaluated.count==5 and evaluated._LLFast
 check(painted and painted.action=='V')
 
 -- Compile/load artifact has no runtime source-file or internet requirement.
-local shipped={};assert(loadfile(root..'itemdb.lua'))('LootLiquidator',shipped)
+local shipped={};assert(loadfile(root..'ItemDBRuntime.lua'))('LootLiquidator',shipped)
 check(#shipped.ItemDB.processing>100);check(LL:ValidateItemDB(shipped.ItemDB))
 local originalSettings={source_itemdb_enabled=LL.db.source_itemdb_enabled}
 LL.ItemDB=shipped.ItemDB;LL:InitializeItemDB();LL:MigrateEvidenceSettings()

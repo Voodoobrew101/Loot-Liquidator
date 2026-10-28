@@ -10,7 +10,7 @@ for _,name in ipairs({'ResearchDB.lua','GameData.lua','StatYieldProfiles.lua','C
     assert(loadfile(baselinePath..'/'..name))('LootLiquidator',before)
 end
 local after={db={characters={}}}
-for _,name in ipairs({'itemdb.lua','Database.lua','ConversionEngine.lua'}) do
+for _,name in ipairs({'ItemDBRuntime.lua','Database.lua','ConversionEngine.lua'}) do
     assert(loadfile('LootLiquidator/'..name))('LootLiquidator',after)
 end
 after:MigrateEvidenceSettings()

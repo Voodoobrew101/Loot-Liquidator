@@ -14,7 +14,7 @@ done
 compiled=$(mktemp)
 trap 'rm -f "$compiled"' EXIT
 "$lua_bin" tools/compile_itemdb.lua "$compiled"
-cmp "$compiled" LootLiquidator/itemdb.lua
+cmp "$compiled" LootLiquidator/ItemDBRuntime.lua
 python3 tests/validate_package.py
 "$lua_bin" research/tests/test_verified_mechanics_adapter.lua
 "$lua_bin" tests/test_modernization.lua

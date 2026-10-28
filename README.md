@@ -4,6 +4,8 @@ World of Warcraft Retail addon for liquidation advice, profession processing, ap
 
 Copy the **`LootLiquidator/` directory** into your WoW Retail `Interface/AddOns/` directory. That directory contains all runtime files and `LootLiquidator.toc`; the repository root is not the addon directory. Development sources and tests are not needed in the game installation.
 
+During development, multiple databases are retained. `LootLiquidator/itemdb.lua` is the latest byte-for-byte **research-only** snapshot (976 records, schema 0.1.0). It is intentionally absent from the TOC because it returns a table rather than assigning the runtime namespace. The compatible active database remains `LootLiquidator/ItemDBRuntime.lua` (267 records, schema 1). The compiler targets the active database and does not overwrite the research snapshot. See [copy provenance and scaling audit](docs/profession-scaling-audit.md).
+
 This branch is **0.10.0-alpha1**. In-game validation is pending. Back up `LootLiquidatorDB` before testing.
 
 * `/ll settings`: source controls in **Database & Accuracy**; per-profession profiles below **Professions & Alts**. The compact roster retains its method dropdowns and character checkboxes.
