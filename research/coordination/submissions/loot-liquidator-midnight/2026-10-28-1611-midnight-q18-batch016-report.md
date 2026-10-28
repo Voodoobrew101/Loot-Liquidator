@@ -1,0 +1,17 @@
+# Midnight queue18 batch016 — research-only master handoff
+
+Date 2026-10-28. Assignment 2026-10-28-batch016-midnight; queue revision 18. Exactly 35 assigned Midnight material source keys reviewed against main GameData.lua lines 727–799 and master batch015 QA. No edits to production, master ledgers, assignments, canonical registry or source memory.
+
+**Core result:** 35/35 assigned source output IDs and line identities match. Seven Eversong Diamond expected quantities remain UNKNOWN (not zero), 28 non-Diamond low estimates remain provisional, all 35 positive min and max remain unknown. One pre-existing player-reported Thorium Diamond approximate occurrence chance is 0.20 over 200 reported crafts; this is **P(at least one)**, NOT E=0.20. Zero new legitimate mappings, zero independent new studies, zero new current-Retail unskilled baseline.
+
+**Reused 800-cast Silver original:** Cardinalai reports 800 actual prospecting operations, 3,285 consumed ore, 715 saved ore, and 43 Diamonds. 800×5=3,285+715=4,000. Diamond E=43/800=0.05375 per reported cast; GameData historical Silver high proxy is 0.01, a 5.375× discrepancy, but source never identifies input rank 237364 versus 237365 or actual patch/build. Thus do NOT assign the 0.05375 to either rank-specific mapping. Resourcefulness saved inputs are not outputs. Other original totals: 111 Flawless Garnet, 114 Flawless Lapis, 153 Garnet, 145 Lapis, 671 Glass, 874 Stone. Original source https://www.wowhead.com/item=237364/brilliant-silver-ore ; already archived in batch002; do not count as a new cohort.
+
+**Reused Thorium 200-craft original:** https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/ reports about 20% Diamond occurrence per craft. Actual hit count, positive yield histogram, profession stats and exact sample date/build are absent. GameData L799 high=0.2 must not be used as measured unconditional E; the master already quarantines Diamond E. Preserve P as a contextual approximate 55/100 claim only.
+
+**Reused JD3K original:** https://www.wowhead.com/spell=1231127/midnight-prospecting has 50 rank-two ore per family, but 10 derived five-ore equivalents are not independently verified completed casts. Rank-one proxies remain unverified. Blizzard official https://worldofwarcraft.blizzard.com/en-us/news/24266320 documents increased gem rates without a numeric multiplier. All 35 source rows have patch/skill uncertainty. No current TSM exact-rank, patch-matched reference or AH prices checked, so no actual liquidation action flip asserted.
+
+**Gold decision risk:** missing specialization-gated Diamond E can materially understate prospect value; historic Silver Diamond high=0.01 differs from rank-unassigned 800-cast source 0.05375. Never substitute historical skill cohorts or convert P to E. GameData low/high are alternative context estimates, not positive yield min/max.
+
+**Next IDs:** 237366→242608 with zero-inclusive cast histograms; 237364/237365→242608 and 242553/242554/242612/242613/242786/242788 with confirmed input rank and specialization; 237359/237361→242553/242554/242606/242607/242786/242788. 16 Crushing gem families remain blocked on exact salvage eligibility; two refining recipes were already admitted by master, do not duplicate.
+
+Master pre-review v0.5.0: 994 provisional mappings, 801 numeric-complete, 435 unknown cells, no verified unskilled current-Retail baseline; exhaustive Retail coverage not established. No Node/Lua/in-game tests performed.
