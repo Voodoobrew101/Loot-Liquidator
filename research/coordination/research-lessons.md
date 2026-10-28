@@ -34,3 +34,8 @@ Original cast histograms (Carnelian Spikes 50) establish historical P and uncond
 - Current StatYieldProfiles.lua q3 Dragonflight disenchant fallback synthesizes a 100% Vibrant Shard chance without compiled source. Flag as a production migration regression target, not evidence of actual output.
 - Existing prospect chance=1-exp(-E) is a Poisson proxy, not observed P(hit); historical TSM P/E contradictions must not be "fixed" by widening tooltip ranges.
 - Smelting fixed recipe outputs may have moderately supported four-field values while record-wide current-Retail eligibility remains weak. Evidence confidence is not a measured percent accuracy.
+
+## 2026-10-28 — Master batch011 P0 compiler and source-identity correction
+- The first working compiler stages 975 source-backed **provisional** item/output mappings, but 871/975 numeric-complete source tuples are not 871 verified unskilled baselines. Maintain separate denominators and fail closed on patch/skill/eligibility.
+- Legacy worker's 76 historical TSM mappings were exact source reuse, not 76 new measurements. The invalid `36721` milling input is a thrown weapon; the actual Dragon's Teeth herb is `3819`. Require item ID/class verification before promoting namesake mappings.
+- All 150 batch011 first-pass records were profiles, zero newly measured material output rows. Next queue should prioritize exact candidate output cells, multi-reagent smelt schema and rank-exclusive output QA instead of profile-only throughput.
