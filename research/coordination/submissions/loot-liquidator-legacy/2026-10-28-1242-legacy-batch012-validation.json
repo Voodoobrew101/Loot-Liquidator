@@ -1,0 +1,97 @@
+{
+  "tag": "2026-10-28-1242-legacy-batch012",
+  "branch": "research/processing-confidence",
+  "queueRevision": 14,
+  "queueBlob": "3e957fb2fdb8bf8fdc2fb4c5f928ba3b28d690f6",
+  "ledgerBlob": "3e2bb784dc832d90584eebd8620148caf2133fbd",
+  "branchHeadBeforeWrite": "84aad4d37a13ccea17d88675b41aa99f113c5aab",
+  "stats": {
+    "assigned": 40,
+    "contradictory": 30,
+    "bfa": 7,
+    "tsmMill": 3,
+    "historicalTitaniumE": 6,
+    "newCurrentRetailVerified": 0,
+    "newUnassignedMapping": 1
+  },
+  "powderCandidate": {
+    "candidateId": "legacy:prospect:36910:46849:retail-12.0.5-provisional",
+    "inputItemID": 36910,
+    "outputItemID": 46849,
+    "method": "Prospect",
+    "nominalInputBatch": 5,
+    "actualOperations": null,
+    "recipeSpellID": null,
+    "fields": {
+      "dropChance": null,
+      "yieldMin": null,
+      "yieldMax": null,
+      "expectedQuantity": 0.715
+    },
+    "fieldEvidence": {
+      "dropChance": {
+        "status": "UNKNOWN",
+        "confidence": 0
+      },
+      "yieldMin": {
+        "status": "UNKNOWN",
+        "confidence": 0
+      },
+      "yieldMax": {
+        "status": "UNKNOWN",
+        "confidence": 0
+      },
+      "expectedQuantity": {
+        "status": "REPORTED_AGGREGATE_PER_NOMINAL_FIVE_ORE",
+        "confidence": 62,
+        "sourceIds": [
+          "https://www.wowhead.com/item=46849/titanium-powder"
+        ],
+        "reportedRetailPatch": "12.0.5",
+        "rawInputOre": 1000,
+        "rawOutputUnits": 143,
+        "derivedNominalFiveOreEquivalents": 200
+      }
+    },
+    "identityConfidence": 82,
+    "patchApplicability": "Reported Retail 12.0.5, no verified 12.1/current bridge",
+    "status": "PROVISIONAL_MISSING_MAPPING_UNASSIGNED_MASTER_REVIEW",
+    "blockedFields": [
+      "P(hit)",
+      "positive min/max",
+      "actual completed cast count",
+      "skill/gear and exact observation date",
+      "2026-10-28 patch match"
+    ],
+    "sourceLineage": "globalmenace 12.0.5 comment; independent codiferous87 10.1, Ssateneth 8.1.5, reddit 2022. Do not pool across patches.",
+    "sourceUrl": "https://www.wowhead.com/item=46849/titanium-powder"
+  },
+  "powderMath": {
+    "nominalOre": 1000,
+    "reportedPowder": 143,
+    "reportedPowderUnitPrice": 494.92,
+    "reportedGemValue": 4303.95,
+    "reportedOreCost": 51591,
+    "ahCut": 0.05,
+    "gemOnlyNet": -47502.2475,
+    "withPowderNet": 19732.634499999986,
+    "incrementalPerFive": 336.17440999999997
+  },
+  "sourceReviewEvents": 6,
+  "checks": {
+    "assignedExactKeys": true,
+    "allSourceRowsMatched": true,
+    "distinctStableKeys": true,
+    "noInventedUnknownZeros": true,
+    "allCompleteTuplesPass": true,
+    "unassignedPowderNotClaimedFirstPass": true,
+    "sourceLineageKept": true,
+    "productionWrites": false
+  },
+  "testsNotRun": [
+    "full repository Node suite",
+    "Lua interpreter",
+    "WoW client",
+    "current AH live quote"
+  ]
+}
