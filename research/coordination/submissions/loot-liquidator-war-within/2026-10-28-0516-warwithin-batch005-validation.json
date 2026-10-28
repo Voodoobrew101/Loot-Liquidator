@@ -1,0 +1,53 @@
+{
+  "worker": "loot-liquidator-war-within",
+  "assignmentId": "2026-10-28-batch005-war_within",
+  "queueRevision": 7,
+  "branchHeadAtRead": "f17e1389f76ec3addca60bba9f045b50f8176282",
+  "GameDataBlobSHA": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
+  "coverageLedgerBlobSHA": "3581deee9d71efaebbeada5f117d304e8d6ad51b",
+  "recordCount": 35,
+  "uniqueKeys": 35,
+  "neverExaminedAtRead": 35,
+  "sourceLineMatches": 35,
+  "sourceRankMatchesOrUnspecified": 35,
+  "TSM_normalizedNecessaryBoundsPass": 35,
+  "TSM_normalizedNecessaryBoundsFail": 0,
+  "completeRankTriplets": 10,
+  "bugyFractionalTotalsIf100Ore": [
+    11,
+    12
+  ],
+  "bugyFractionalTotalsIf500Ore": [
+    0,
+    0
+  ],
+  "allFieldsGE90": 0,
+  "proposedCurrentRetailCorrections": 0,
+  "numericHypothesesExamined": 1,
+  "numericRulesApproved": 0,
+  "numericHypothesesBlocked": 1,
+  "checks": [
+    "all 35 stable keys match GameData line and output ID",
+    "all 35 NEVER_EXAMINED in current ledger",
+    "per-input ore quality correct and absent output ranks preserved as null",
+    "E=5*amountOfMats normalized once",
+    "Pproxy*min<=E<=Pproxy*max in 35 cases",
+    "10 complete quality-rank triplets must not be summed",
+    "Bugy 100-ore denominator impossible as literal totals for 11/14 and 12/14 rates",
+    "500-ore interpretation integral but casts not proven",
+    "Resourcefulness affects input cost, not output quantities",
+    "numeric candidate BLOCKED with null formula and parameters"
+  ],
+  "notRun": [
+    "external JSON Schema validator",
+    "repository Node suites",
+    "WoW client tests"
+  ],
+  "files": [
+    "research/coordination/submissions/loot-liquidator-war-within/2026-10-28-0516-warwithin-batch005-35key-audit.csv",
+    "research/coordination/submissions/loot-liquidator-war-within/2026-10-28-0516-warwithin-batch005-report.md",
+    "research/coordination/submissions/loot-liquidator-war-within/2026-10-28-0516-warwithin-batch005-numeric-candidate.json",
+    "research/coordination/submissions/loot-liquidator-war-within/2026-10-28-0516-warwithin-batch005-validation.json",
+    "research/evidence/observations/2026-10-28-0516-warwithin-batch005-resourcefulness-queue-source-only.json"
+  ]
+}
