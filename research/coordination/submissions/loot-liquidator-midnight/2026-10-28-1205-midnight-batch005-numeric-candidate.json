@@ -1,0 +1,108 @@
+{
+  "hypothesisID": "midnight-gem-hotfix-2026-03-31-quantification",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 11,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      1231127
+    ],
+    "inputItemIDs": [
+      237361
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      2
+    ],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "period": "pre 2026-03-31",
+    "actualBuild": null,
+    "completedOperations": null,
+    "skill": null,
+    "specialization": null,
+    "gear": null,
+    "perCastHistogram": null
+  },
+  "targetContext": {
+    "period": "post 2026-03-31",
+    "actualBuild": null,
+    "completedOperations": null,
+    "skill": null,
+    "specialization": null,
+    "gear": null,
+    "perCastHistogram": null,
+    "informalGemRatePre": 0.125,
+    "informalGemRatePostApprox": 0.15,
+    "naiveRatioRejected": 1.2
+  },
+  "requiredLiveContext": [
+    "recipeSpellID",
+    "inputItemID",
+    "inputQualityRank",
+    "outputItemID",
+    "outputQualityRank",
+    "clientBuild",
+    "hotfixWindow",
+    "childSkillLineID",
+    "baseSkill",
+    "effectiveSkill",
+    "specializationRanks",
+    "professionGear",
+    "recipeBonusStats",
+    "actualCompletedOperations",
+    "perCastOutputsIncludingZeros",
+    "actualConsumedInputs",
+    "actualSavedInputs"
+  ],
+  "sources": [
+    {
+      "claimID": "blizzard-march31-2026-gem-hotfix",
+      "url": "https://us.forums.blizzard.com/en/wow/t/world-of-warcraft-midnight-hotfixes-april-17/2260898",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "More frequent Midnight gems; no numeric rate"
+    },
+    {
+      "claimID": "reddit-april08-2026-unmatched-rate-estimates",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "Informal 12.5% old and about 15% new per gem; exact ore, outputs and denominator absent"
+    },
+    {
+      "claimID": "eu-forum-april22-2026-copper-aggregate",
+      "url": "https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "Post-hotfix ore aggregate lacks verified matched pre-hotfix context"
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No same-context pre/post patch logs with original actual cast denominators",
+    "No exact output IDs/ranks and zero-inclusive histograms for informal percentages",
+    "No matched skill/specialization/gear or exact server build",
+    "Blizzard publishes no numeric factor",
+    "No independent controlled replication"
+  ],
+  "notes": "Empty output arrays are unresolved, not wildcard. Input 237361 rank2 is an example experimental stratum only. Never compile 1.2x. Previous inferred 10 casts from 50 ore explicitly rejected by master."
+}
