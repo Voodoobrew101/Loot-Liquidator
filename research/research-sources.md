@@ -32,3 +32,8 @@
 - `E[units]`: **decimal unconditional expected units per operation** including zero outcomes; for gold use this directly once.
 - Source study conditions include expansion, live patch/hotfix era, input rank, output rank, effective skill, profession specializations, gear, resourcefulness, concentration/inspiration when applicable, batch size, and actual input consumed vs original ore purchased.
 - The evidence-strength score (0–100) is NOT a statistical accuracy guarantee.
+
+## Additional measured Titanium cohorts (added same run)
+- **2022-01-17 Retail, 1,000 Titanium Ore / 200 prospect casts:** https://www.reddit.com/r/woweconomy/comments/s6bfrl/ — six uncommon gem material totals; normalize by 200 for unconditional units per cast. Profession skill and other conditions not specified; historical 2022 Retail, not verified current 2026.
+- **2023-05-18 WotLK Classic PTR, 5,000 Titanium Ore / 1,000 casts:** https://www.wowhead.com/wotlk/item=36910/titanium-ore — Strath's player comment with six uncommon totals; normalize by 1,000. This is **Classic PTR**, not Retail.
+- These two sources agree on approximate scale but are not patch-equivalent; **do not combine numerators and denominators into a single current Retail rate**. They report output unit counts, **not hit-count probability** or conditional integer histograms.
