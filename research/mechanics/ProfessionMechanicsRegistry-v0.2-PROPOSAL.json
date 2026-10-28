@@ -123,7 +123,8 @@
       "observedOrModeled",
       "effectivePatchBuild"
     ],
-    "transformationConfidence": "separate confidence0to100 per applied adjustment; downstream confidence not above weakest material input+transform"
+    "transformationConfidence": "separate confidence0to100 per applied adjustment; downstream confidence not above weakest material input+transform",
+    "rawDistribution": "Preserve per-cast output-count histogram including zero and (where relevant) joint output/proc conditions. Four summary fields cannot fully reconstruct a distribution for arbitrary stat transformations."
   },
   "types": {
     "mechanicRule": [
@@ -176,7 +177,10 @@
       "specializationRanks",
       "concentrationSpent",
       "unknownContextFields",
-      "fieldEvidence"
+      "fieldEvidence",
+      "zeroCount",
+      "jointPerCastOutputHistogram",
+      "triggeredBonusProcCounts"
     ],
     "patchEvent": [
       "eventID",
@@ -266,7 +270,8 @@
         "gem"
       ],
       "affectedFields": [
-        "OUTPUT_OCCURRENCE"
+        "OUTPUT_OCCURRENCE",
+        "OUTPUT_UNCONDITIONAL_EXPECTATION"
       ],
       "evidenceStatus": "VERIFIED_QUALITATIVE",
       "numericTransformID": null,
@@ -392,6 +397,11 @@
       "baselineConfidence": 95,
       "transformConfidence": 20,
       "maxDerivedConfidence": 20
+    },
+    {
+      "test": "same-p-min-max-E-different-histograms",
+      "expectedDecision": "BLOCKED_NO_RULE",
+      "assertion": "Do not claim to derive arbitrary nonlinear/quality transition from the four summary statistics; require full distribution or justified direct model"
     }
   ],
   "reviewStatus": {
