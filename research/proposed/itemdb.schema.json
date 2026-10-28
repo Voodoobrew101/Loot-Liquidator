@@ -419,8 +419,26 @@
           "type": "object",
           "minProperties": 1,
           "additionalProperties": {
-            "type": "number"
-          }
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                }
+              }
+            ]
+          },
+          "description": "Reviewed scalar formula parameters or, for QUALITY_TRANSITION_MATRIX only, rows of conditional output quality probabilities; validator checks all rows sum to 1."
         },
         "parameterUnits": {
           "type": "object",
