@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/research/proposed/itemdb.schema.json",
+  "title": "Loot Liquidator future itemdb.lua source-record research schema v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "artifactStatus",
+    "sourceManifest",
+    "processing"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.1.0"
+    },
+    "artifactStatus": {
+      "const": "RESEARCH_ONLY_NOT_SHIPPED"
+    },
+    "sourceManifest": {
+      "type": "object",
+      "required": [
+        "gameDataSha",
+        "statYieldProfilesSha",
+        "reviewDate"
+      ],
+      "properties": {
+        "gameDataSha": {
+          "type": "string"
+        },
+        "statYieldProfilesSha": {
+          "type": "string"
+        },
+        "reviewDate": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "processing": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/processingRecord"
+      }
+    },
+    "unmigratedLegacy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "confidence": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "status",
+        "confidence",
+        "sourceClaimIDs",
+        "blockers"
+      ],
+      "properties": {
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "official",
+            "measured",
+            "community-reported",
+            "modeled",
+            "proxy",
+            "unknown",
+            "contradictory"
+          ]
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "sourceClaimIDs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sampleOperations": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "processingRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recordID",
+        "method",
+        "expansionID",
+        "inputItemID",
+        "outputItemID",
+        "recipeSpellID",
+        "inputCountPerOperation",
+        "inputQualityRank",
+        "outputQualityRank",
+        "conditions",
+        "dropChance",
+        "yieldMin",
+        "yieldMax",
+        "expectedQuantity",
+        "mappingConfidence",
+        "conditionsConfidence",
+        "recordConfidence",
+        "sources",
+        "verifiedDate",
+        "status"
+      ],
+      "properties": {
+        "recordID": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "enum": [
+            "Mill",
+            "Prospect",
+            "Disenchant",
+            "Smelt",
+            "Recycle",
+            "Exchange",
+            "Other"
+          ]
+        },
+        "expansionID": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inputItemID": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "outputItemID": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "recipeSpellID": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "inputCountPerOperation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "inputQualityRank": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "outputQualityRank": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "conditions": {
+          "type": "object",
+          "properties": {
+            "gameMode": {
+              "type": "string"
+            },
+            "patchWindow": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "characterContext": {
+              "enum": [
+                "REAL",
+                "SIMULATED",
+                "CACHED_ALT",
+                "REFERENCE_UNKNOWN"
+              ]
+            },
+            "skillLineID": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "effectiveSkill": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "specialization": {
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "operationStats": {
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "dropChance": {
+          "$ref": "#/$defs/field"
+        },
+        "yieldMin": {
+          "$ref": "#/$defs/field"
+        },
+        "yieldMax": {
+          "$ref": "#/$defs/field"
+        },
+        "expectedQuantity": {
+          "$ref": "#/$defs/field"
+        },
+        "mappingConfidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "conditionsConfidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "recordConfidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "verifiedDate": {
+          "type": "string"
+        },
+        "status": {
+          "const": "PROVISIONAL_CANDIDATE"
+        }
+      }
+    }
+  }
+}
