@@ -11,16 +11,12 @@ local floor=math.floor
 local function validNumber(n)
     return type(n)=="number" and n==n and n>=0 and n<math.huge
 end
-local function compatible(a,b)
-    if a==nil or b==nil then return false end
-    return tostring(a)==tostring(b)
-end
-local function listFor(gd,id)
-    local models=gd.processingConditionModels or gd.conditionModels
-    local found=models and models[id]
-    if type(found)~="table" then return nil end
-    if found[1] then return found end
-    return {found}
+local function sameCondition(a,b)
+    if type(a)~=type(b) then return false end
+    if type(a)~="table" then return a==b end
+    for key,value in pairs(a) do if not sameCondition(value,b[key]) then return false end end
+    for key in pairs(b) do if a[key]==nil then return false end end
+    return true
 end
 -- Only use a documented minimum when present in compiled input/recipe data.
 -- Recipe difficulty is NOT the same thing as the minimum learn/use skill.
@@ -70,18 +66,18 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
         end
     end
     local ctx={skill=skill,specialization=spec,skillLineID=lineID,
-        inputID=f and f.id,inputQuality=f and f.quality,recipeID=recipeID,
+        inputID=f and f.id,inputQuality=f and f.reagentQuality,recipeID=recipeID,
         character=key,assumedMinimum=false}
     -- Blizzard operation information is specific to the CURRENT character.
     -- Never use current gear/skill when pricing an offline alt.
-    local api=C_TradeSkillUI and C_TradeSkillUI.GetCraftingOperationInfo
-    if key==current and type(api)=="function" and type(recipeID)=="number" and recipeID>0 then
-        local ok,info=pcall(api,recipeID,{},nil,false)
-        if ok and type(info)=="table" then
-            local base,bonus=info.baseSkill,info.bonusSkill
-            if validNumber(base) and validNumber(bonus) then
-                ctx.effectiveSkill=base+bonus
+    if key==current and self.GetCachedOperationInfo then
+        local info=self:GetCachedOperationInfo(recipeID)
+        if info then
+            ctx.baseSkill=info.baseSkill;ctx.bonusSkill=info.bonusSkill
+            if validNumber(info.baseSkill) and validNumber(info.bonusSkill) then
+                ctx.effectiveSkill=info.baseSkill+info.bonusSkill
             end
+            ctx.operationStats=info.bonusStats -- Preserve typed API data; no rating-to-% guesses.
             ctx.craftingQuality=info.craftingQuality
             ctx.qualityFromBlizzard=type(info.craftingQuality)=="number"
         end
@@ -90,166 +86,39 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local manual=mode and self.ProcessingMethodMode and self:ProcessingMethodMode(mode)==4
         and self.AltMethodEnabled and self:AltMethodEnabled(key,mode)
         and record and record.altMethods and record.altMethods[mode]==true
-    -- Actual verified skill wins even if this column is in Manual mode.
-    if not validNumber(ctx.effectiveSkill) and validNumber(skill) then
-        ctx.effectiveSkill=skill
+    if not validNumber(ctx.effectiveSkill) and validNumber(skill) then ctx.effectiveSkill=skill end
+    local saved=record and record.researchProfiles and record.researchProfiles[tostring(profession)..":"..tostring(f and f.expansionID)]
+    ctx.equipment=key==current and record and record.professionEquipment or (saved and saved.equipment)
+    if saved and validNumber(saved.bonusSkill) and not ctx.qualityFromBlizzard then
+        ctx.baseSkill=skill;ctx.bonusSkill=saved.bonusSkill
+        if validNumber(skill) then ctx.effectiveSkill=skill+saved.bonusSkill end
     end
-    -- A checked Manual row enables a hypothetical MINIMUM configuration.
-    -- Unknown gear and knowledge grant no bonuses; never silently borrow
-    -- this logged-in character's bonuses for a different character.
-    if manual and not validNumber(ctx.effectiveSkill) then
-        local required=self.MinimumProcessingSkill and self:MinimumProcessingSkill(f,method,recipeID)
-        ctx.assumedMinimum=true
-        ctx.specialization="none_assumed"
-        ctx.equipmentAssumed=false
-        ctx.skillAssumption="minimum"
-        if validNumber(required) then
-            ctx.effectiveSkill=required
-            ctx.skill=required
-        end
-        -- If the recipe minimum is undocumented, skill remains UNKNOWN.
-        -- Do not describe a guessed zero as a real profession skill.
+    ctx.profileKind=key==current and "live" or "offline-snapshot"
+    ctx.observed=saved and saved.observed or (record and record.observed)
+    local now=time and time()
+    ctx.stale=ctx.profileKind=="offline-snapshot" and (not ctx.observed or (now and now-ctx.observed>7*86400)) or false
+    ctx.incomplete=not validNumber(ctx.effectiveSkill) or not ctx.specialization
+    local simulated=manual and self.GetManualProfessionProfile and
+        self:GetManualProfessionProfile(key,profession,f and f.expansionID)
+    if simulated and simulated.enabled then
+        ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
+        ctx.specialization=simulated.specialization
+        ctx.baseSkill=nil;ctx.bonusSkill=nil;ctx.operationStats=nil;ctx.craftingQuality=nil;ctx.equipment=nil
+        ctx.qualityFromBlizzard=false;ctx.simulated=true;ctx.profileKind="manual-simulation"
+        ctx.incomplete=not validNumber(ctx.skill) or not ctx.specialization
     end
-    ctx.skillKnown=validNumber(skill) and not ctx.assumedMinimum
-    ctx.skillSource=ctx.assumedMinimum and "manual-minimum"
+    ctx.skillKnown=validNumber(ctx.skill) and not ctx.simulated
+    ctx.skillSource=ctx.simulated and "manual-simulation"
         or (ctx.qualityFromBlizzard and "blizzard-operation"
         or (ctx.skillKnown and "scanned-profession" or "unknown"))
     return ctx
-end
--- Return a single research-adjusted model. Partial observations update only
--- their measured materials; unknown outputs preserve the compiled estimate.
--- An absent yield does NOT imply 1, 0, or a measured occurrence chance.
-function LL:SelectProcessingConditionModel(f,method,recipeID,character,baseline)
-    local db=self.db or {}
-    if db.skillAwareProcessing==false then return nil end
-    local gd=self.GameData
-    local list=gd and f and listFor(gd,f.id)
-    if not list or not baseline or type(baseline.materials)~="table" then
-        local d=self.processingDebug
-        if d and d.armed and not d.done and not d.target then
-            d.target=f and f.id;d.done=true;d.armed=false
-            d.lines={"LIVE processing diagnostic: no condition cohorts for item="..tostring(f and f.id),
-              "Method="..tostring(method).." recipe="..tostring(recipeID),
-              "Compiled reference fallback (conditionModels entry absent or invalid)"}
-        end
-        return nil
-    end
-    local ctx=self:ProcessingPlayerConditions(f,method,recipeID,character)
-    local best,score
-    local debug=self.processingDebug
-    local capturing=debug and debug.armed and not debug.done and not debug.target
-    if capturing then
-        debug.target=f.id
-        debug.lines={"Loot Liquidator LIVE processing diagnostic",
-          "Input item="..tostring(f.id).." method="..tostring(method).." recipe="..tostring(recipeID),
-          "Character="..tostring(ctx.character).." skill="..tostring(ctx.skill).." effective="..tostring(ctx.effectiveSkill),
-          "Skill source="..tostring(ctx.skillSource).." assumed minimum="..tostring(ctx.assumedMinimum),
-          "Input quality="..tostring(ctx.inputQuality).." specialization="..tostring(ctx.specialization),
-          "Reference batch="..tostring(baseline.inputCount).." reference materials="..tostring(#baseline.materials),
-          "Condition cohorts="..tostring(#list)}
-    end
-    local function log(line)
-        if capturing and #debug.lines<80 then debug.lines[#debug.lines+1]=line end
-    end
-    for index,model in ipairs(list) do
-        -- Unknown input quality must NOT be interpreted as a match to rank 2.
-        -- Unknown experimental specialization also cannot be assumed learned.
-        local valid=(model.method==nil or model.method==method)
-          and (model.recipeID==nil or recipeID==nil or compatible(model.recipeID,recipeID))
-          and (model.inputQuality==nil or (ctx.inputQuality~=nil and compatible(model.inputQuality,ctx.inputQuality)))
-          and (model.specialization==nil or compatible(model.specialization,ctx.specialization))
-          and (not validNumber(model.effectiveSkill) or (validNumber(ctx.effectiveSkill)
-               and math.abs(model.effectiveSkill-ctx.effectiveSkill)<= (db.skillMatchingTolerance or 40)))
-          and type(model.outputs)=="table" and #model.outputs>0
-          and validNumber(model.operations) and model.operations>0
-          and validNumber(model.batch) and model.batch>0
-          and model.batch==baseline.inputCount
-        if capturing then
-            local reasons={}
-            local function need(ok,reason) if not ok then reasons[#reasons+1]=reason end end
-            need(model.method==nil or model.method==method,"method mismatch")
-            need(model.recipeID==nil or recipeID==nil or compatible(model.recipeID,recipeID),"recipe mismatch")
-            need(model.inputQuality==nil or (ctx.inputQuality~=nil and compatible(model.inputQuality,ctx.inputQuality)),"input quality mismatch or unknown")
-            need(model.specialization==nil or compatible(model.specialization,ctx.specialization),"specialization mismatch or unknown")
-            need(not validNumber(model.effectiveSkill) or (validNumber(ctx.effectiveSkill) and math.abs(model.effectiveSkill-ctx.effectiveSkill)<=(db.skillMatchingTolerance or 40)),"skill outside tolerance or unknown")
-            need(type(model.outputs)=="table" and #model.outputs>0,"no outputs")
-            need(validNumber(model.operations) and model.operations>0,"operation count missing")
-            need(validNumber(model.batch) and model.batch>0 and model.batch==baseline.inputCount,"batch missing or mismatch")
-            log("Cohort #"..index.." study="..tostring(model.study).." batch="..tostring(model.batch).." samples="..tostring(model.operations).." => "..(#reasons==0 and "CONDITIONS PASS" or table.concat(reasons,"; ")))
-        end
-        if valid then
-            local outputFound=false
-            local original={}
-            for _,m in ipairs(baseline.materials) do original[m.id]=true end
-            for _,m in ipairs(model.outputs) do
-                if original[m.id] and validNumber(m.expectedQuantity) then outputFound=true end
-            end
-            if capturing then log("Cohort #"..index.." matching measured outputs="..tostring(outputFound)) end
-            if outputFound then
-                -- Source era is unverified: permit LOW-WEIGHT partial evidence,
-                -- not an unconditional full replacement.
-                local s=model.operations
-                if model.patchVerifiedCurrent==true then s=s+100000 end
-                if validNumber(model.effectiveSkill) and validNumber(ctx.effectiveSkill) then
-                    s=s-math.abs(model.effectiveSkill-ctx.effectiveSkill)
-                end
-                if not score or s>score then best=model;score=s end
-            end
-        end
-    end
-    if not best then
-        log("SELECTED: no eligible cohort; compiled reference fallback")
-        if capturing then debug.done=true;debug.armed=false end
-        return nil
-    end
-    log("SELECTED cohort: "..tostring(best.study).." operations="..tostring(best.operations))
-    -- Experimental samples with unknown patch applicability are discounted.
-    -- Full verified cohort: n/(n+50); unresolved patch: n/(n+200).
-    local prior=best.patchVerifiedCurrent==true and 50 or 200
-    local weight=best.operations/(best.operations+prior)
-    local measured={}
-    for _,m in ipairs(best.outputs) do
-        if validNumber(m.id) and validNumber(m.expectedQuantity) then measured[m.id]=m end
-    end
-    local materials={}
-    local improvements=0
-    for _,original in ipairs(baseline.materials) do
-        local updated={}
-        for k,v in pairs(original) do updated[k]=v end
-        local m=measured[original.id]
-        if m then
-            updated.expectedQuantity=original.expectedQuantity*(1-weight)+m.expectedQuantity*weight
-            updated.quantityBasis="partial observed mean + provisional reference"
-            updated.provisional=true
-            -- No per-operation hit histogram; retain chance as a PROXY.
-            updated.probabilityBasis="reference probability proxy; occurrence unmeasured in cohort"
-            updated.observationWeight=weight
-            improvements=improvements+1
-        end
-        materials[#materials+1]=updated
-    end
-    if improvements==0 then
-        log("FALLBACK: selected cohort has no matching output IDs with expected quantities")
-        if capturing then debug.done=true;debug.armed=false end
-        return nil
-    end
-    log("ACTIVE research: improved output IDs="..tostring(improvements).." observation weight="..string.format("%.4f",weight))
-    if capturing then debug.done=true;debug.armed=false end
-    return {kind="partially-observed",materials=materials,inputCount=best.batch,
-        samples=best.operations,source=best.source,evidence="partial observed cohort; unresolved patch discounted",
-        conditionStudy=best.study,confidenceCap=baseline.confidenceCap,
-        measuredOutputs=improvements,observationWeight=weight}
-end
-function LL:ReferenceProcessingModel(f,method,recipeID,baseline,character)
-    local matched=self.SelectProcessingConditionModel and
-        self:SelectProcessingConditionModel(f,method,recipeID,character,baseline)
-    return matched or baseline
 end
 -- Compiled mechanics v0.2 adapter. Research JSON is NEVER loaded directly in WoW.
 -- A build step may populate GameData.verifiedMechanicsRules only after a rule
 -- has passed recipe-specific numerical validation. Unknown means no transform.
 -- This lives in the existing conversion engine to avoid another runtime module.
 function LL:ApplyVerifiedMechanics(f,option,baseline)
+    if baseline and baseline.mechanicsApplied then return baseline end
     local gd=self.GameData
     local rules=gd and gd.verifiedMechanicsRules
     if type(rules)~="table" or #rules==0 or type(f)~="table"
@@ -257,13 +126,17 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
         or type(baseline.materials)~="table" then return baseline end
     -- The active client's gear and skill cannot be imputed to an offline alt.
     local current=self.CharacterKey and self:CharacterKey()
+    local ctx
     if option.character and option.character~="Current character"
-        and option.character~=current then return baseline end
+        and option.character~=current then
+        ctx=self.ProcessingPlayerConditions and self:ProcessingPlayerConditions(f,option.name,option.recipeID,option.character)
+        if not ctx or ctx.stale or ctx.incomplete or
+            (ctx.profileKind~="offline-snapshot" and ctx.profileKind~="manual-simulation") then return baseline end
+    end
     local build=GetBuildInfo and select(2,GetBuildInfo())
     if not build or not baseline.patchBuild or not baseline.referenceContextID then
         return baseline
     end
-    local ctx
     local eligible={}
     local duplicates={}
     for _,rule in ipairs(rules) do
@@ -274,7 +147,7 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
             and rule.method==option.name and rule.recipeID==option.recipeID
             and rule.recipeID~=nil and rule.inputItemID==f.id
             and rule.expansionID==f.expansionID
-            and rule.inputQualityRank==f.quality and rule.inputQualityRank~=nil
+            and rule.inputQualityRank==f.reagentQuality and rule.inputQualityRank~=nil
             and tostring(rule.sourceBuild)==tostring(baseline.patchBuild)
             and tostring(rule.targetBuild)==tostring(build)
             and rule.sourceReferenceContextID==baseline.referenceContextID
@@ -286,7 +159,7 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
                         self:ProcessingPlayerConditions(f,option.name,option.recipeID,option.character)
                 end
                 -- Never coerce an absent stat, skill, or specialization to zero.
-                if not ctx or ctx[name]==nil or ctx[name]~=expected then
+                if not ctx or ctx[name]==nil or not sameCondition(ctx[name],expected) then
                     conditionsOK=false;break
                 end
             end
@@ -306,7 +179,13 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
             if conditionsOK and formulaOK and
                 (target=="OUTPUT_UNCONDITIONAL_EXPECTATION"
                  or target=="OUTPUT_OCCURRENCE"
-                 or target=="OUTPUT_POSITIVE_QUANTITY") then
+                 or target=="OUTPUT_POSITIVE_QUANTITY"
+                 or target=="EXPECTED_INPUT_CONSUMPTION" or target=="OPERATION_DURATION") then
+                if target=="EXPECTED_INPUT_CONSUMPTION" or target=="OPERATION_DURATION" then
+                    if rule.formulaID=="MULTIPLY" and (target~="EXPECTED_INPUT_CONSUMPTION" or params.multiplier<=1) then
+                        if eligible[target] then duplicates[target]=true else eligible[target]=rule end
+                    end
+                end
                 for _,material in ipairs(baseline.materials) do
                     if rule.outputItemID==material.id then
                         local key=tostring(material.id)..":"..target
@@ -334,7 +213,7 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
             and validNumber(original.expectedQuantity) then
             material.expectedQuantity=original.expectedQuantity*expectation.parameters.multiplier
             material.quantityBasis="verified build/context-specific numeric transform"
-            material.provisional=false
+            material.transformConfidence=expectation.confidence0to100
             material.appliedExpectationRule=expectation.ruleID
             -- Old occurrence/ranges may not hold under a yield-changing rule.
             material.chance=nil;material.minQuantity=nil;material.maxQuantity=nil
@@ -361,306 +240,73 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
         end
         materials[#materials+1]=material
     end
+    local inputRule=not duplicates.EXPECTED_INPUT_CONSUMPTION and eligible.EXPECTED_INPUT_CONSUMPTION
+    local timeRule=not duplicates.OPERATION_DURATION and eligible.OPERATION_DURATION
+    local inputCount=inputRule and baseline.inputCount and baseline.inputCount*inputRule.parameters.multiplier
+    local duration=timeRule and baseline.duration and baseline.duration*timeRule.parameters.multiplier
+    if inputCount then changed=changed+1 end
+    if duration then changed=changed+1 end
     if changed==0 then return baseline end
     local result={}
     for k,v in pairs(baseline) do result[k]=v end
     result.materials=materials
+    result.expectedInputCount=inputCount or baseline.expectedInputCount
+    result.duration=duration or baseline.duration
     result.mechanicsRuleCount=changed
     result.mechanicsApplied=true
     result.source=(baseline.source or "compiled reference").." + verified mechanics"
     return result
 end
 
--- Automatic combines independent, compatible observations at the MATERIAL
--- level. A published reference counts as a conservative prior of 100 effective
--- samples; increasing personal evidence progressively takes precedence.
--- Never borrow material counts for a different recipe, input or batch.
-function LL:BlendProcessingYields(reference,personal,batch)
-    if not reference or type(reference.materials)~="table" then return reference end
-    if not personal or type(personal.materials)~="table" or #personal.materials==0 then return reference end
-    if personal.inputCount~=batch or reference.inputCount~=batch then return reference end
-    local n=tonumber(personal.effectiveSamples) or 0
-    if n<=0 then return reference end
-    local prior=100
-    local w=n/(n+prior)
-    local byID,out,seen={}, {}, {}
-    for _,m in ipairs(personal.materials) do byID[m.id]=m end
-    local function add(base,id)
-        local pm=byID[id]
-        local old=base and tonumber(base.expectedQuantity) or nil
-        local observed=pm and tonumber(pm.expectedQuantity) or 0
-        local result={}
-        for k,v in pairs(base or pm or {}) do result[k]=v end
-        result.id=id
-        if old then
-            result.expectedQuantity=(1-w)*old+w*observed
-        elseif pm then
-            -- Previously unknown output: conservative prior of zero units.
-            result.expectedQuantity=w*observed
-        end
-        if base and type(base.chance)=="number" and pm and type(pm.chance)=="number" then
-            result.chance=(1-w)*base.chance+w*pm.chance
-        elseif base and type(base.chance)=="number" then
-            result.chance=(1-w)*base.chance+w*(pm and pm.chance or 0)
-        elseif pm and type(pm.chance)=="number" then
-            result.chance=w*pm.chance
-        end
-        result.quantityBasis="weighted reference + personal observations"
-        result.probabilityBasis="weighted estimate (not independently verified)"
-        result.provisional=true
-        out[#out+1]=result
-        seen[id]=true
-    end
-    for _,m in ipairs(reference.materials) do add(m,m.id) end
-    for _,m in ipairs(personal.materials) do
-        if not seen[m.id] then add(nil,m.id) end
-    end
-    return {kind="blended",materials=out,inputCount=batch,
-        source="Built-in + compatible personal observations",personalWeight=w,
-        samples=n,evidence="Weighted per-output expectations; reference prior 100 effective samples",
-        confidenceCap=reference.confidenceCap}
-end
-
--- Midnight basic yields are the FALLBACK, not the output of a universal
--- skill multiplier. Optional upgrade slider interpolates ore/material-specific
--- research anchors. A diamond is controlled by a separate ore-specific unlock.
--- No false claims of exact specialization skill or item-quality thresholds.
-function LL:MidnightProspectingModel(f,option)
-    local profile=self.GameData and self.GameData.midnightProspectingProfiles
-        and f and self.GameData.midnightProspectingProfiles[f.id]
-    if not profile or not option or option.name~="Prospect" then return nil end
-    local db=self.db or {}
-    local pct=tonumber(db.midnightProspectingUpgradePct) or 0
-    pct=math.max(0,math.min(100,pct))/100
-    local diamondUnlocked=db[profile.diamondFlag]==true
-    local outputs={}
-    for _,m in ipairs(profile.materials) do
-        local lo=tonumber(m.low) or 0
-        local hi=tonumber(m.high) or lo
-        local expected
-        if m.category=="diamond" then
-            -- Unlocked diamond expected yield is ore-specific. This research
-            -- does not establish a separate bonus curve after the unlock.
-            expected=diamondUnlocked and math.max(0,hi) or 0
-        else
-            -- Separate incompatible high/low studies sometimes have high<low.
-            -- Never interpret sampling noise as a negative upgrade benefit.
-            expected=lo+pct*(math.max(lo,hi)-lo)
-        end
-        if expected>0 then
-            outputs[#outputs+1]={id=m.id,expectedQuantity=expected,
-                quantityBasis="midnight estimated units per five ore",
-                probabilityBasis="expected-count not measured drop chance",
-                provisional=true,source=(pct>0 and m.highBasis or m.lowBasis)}
-        end
-    end
-    local result={kind="midnight-estimate",materials=outputs,inputCount=5,
-        evidence=profile.evidence,confidenceCap=profile.confidenceCap,
-        source="Midnight prospecting: low fallback + ore-specific upgrade estimates",
-        upgradePct=pct*100,diamondUnlocked=diamondUnlocked,
-        qualityAssumption="quality-1 output prices; thresholds unverified",
-        inputRank=profile.inputRank}
-    -- Assign changing, tooltip-only occurrence/range estimates from the SAME
-    -- low/high anchors used in pricing; never multiply them into EV twice.
-    for _,m in ipairs(result.materials) do
-        for _,r in ipairs(profile.materials) do
-            if r.id==m.id and self.CompleteYieldAnnotations then
-                local lo=tonumber(r.low) or 0; local hi=tonumber(r.high) or lo
-                local x=max(0,lo+pct*(max(lo,hi)-lo))
-                local prob=math.min(1,math.max(.025,x/(x>=1 and math.ceil(x) or 1)))
-                m.chance=prob;m.minQuantity=1;m.maxQuantity=math.max(1,math.ceil(x/math.max(.025,prob)))
-                m.probabilityBasis="estimated from research output mean; not measured occurrence"
-                break
-            end
-        end
-    end
-    return self.CompleteYieldAnnotations and self:CompleteYieldAnnotations(result) or result
-end
-
--- Dragonflight is a separate, evidence-limited processing estimator.
--- Default low comes from unmodified historical TSM amountOfMats per ore.
--- Individual material upgrade effects are applied to expected quantities;
--- probabilities (TSM matRate) are NOT multiplied a second time.
--- Output rank and Inspiration model quality separately from quantity.
-local function DFClamp(x,lo,hi)
-    x=tonumber(x) or lo
-    return math.max(lo,math.min(hi,x))
-end
-function LL:DragonflightProspectingModel(f,option)
-    local profiles=self.GameData and self.GameData.dragonflightProspectingProfiles
-    local p=profiles and f and profiles[f.id]
-    if not p or not option or option.name~="Prospect" then return nil end
-    local db=self.db or {}
-    local upgrade=DFClamp(db.dragonflightProspectingUpgradePct,0,100)/100
-    local quality=DFClamp(db.dragonflightProspectingOutputRank,0,3)
-    local ctx
-    if quality==0 then
-        ctx=self.ProcessingPlayerConditions and
-            self:ProcessingPlayerConditions(f,"Prospect",option.recipeID,option.character)
-        -- Only Blizzard's actual operation quality qualifies for an automatic
-        -- quality determination. Scanned base skill alone cannot prove rank.
-        if ctx and ctx.qualityFromBlizzard and tonumber(ctx.craftingQuality) then
-            quality=DFClamp(ctx.craftingQuality,1,3)
-        else
-            quality=1 -- conservative fallback: NEVER assume rank 3 from ore rank
-        end
-    end
-    quality=math.floor(quality)
-    local inspiration=DFClamp(db.dragonflightProspectingInspirationPct,0,60)/100
-    local inspiredRank=quality
-    if db.dragonflightProspectingInspirationCrossesThreshold==true and quality<3 then
-        inspiredRank=quality+1
-    else
-        inspiration=0 -- chance alone cannot prove a rank threshold is crossed
-    end
-    local materialOrder,byID={},{}
-    local function emit(id,expected,basis)
-        if not id or expected<=0 then return end
-        local m=byID[id]
-        if m then m.expectedQuantity=m.expectedQuantity+expected
-        else
-            m={id=id,expectedQuantity=expected,
-                provisional=true,quantityBasis="estimated Dragonflight units per five inputs",
-                probabilityBasis="expected count, NOT item drop chance",
-                source=basis}
-            byID[id]=m
-            materialOrder[#materialOrder+1]=m
-        end
-    end
-    local function appendProfile(target,multiplier)
-        for _,m in ipairs(target.materials or {}) do
-            if m.category~="special" then
-                local lo=tonumber(m.low) or 0
-                local high=tonumber(m.high) or lo
-                -- Heterogeneous samples can conflict; the compiled high
-                -- endpoint is monotone only as a pragmatic scenario guard.
-                local units=math.max(0,lo+upgrade*(math.max(lo,high)-lo))*multiplier
-                if units>0 then
-                    if type(m.rankIDs)=="table" then
-                        local baseID=m.rankIDs[quality] or m.id
-                        emit(baseID,units*(1-inspiration),m.lowBasis)
-                        if inspiration>0 then
-                            emit(m.rankIDs[inspiredRank] or baseID,units*inspiration,m.highBasis)
-                        end
-                    else
-                        emit(m.id,units,m.lowBasis)
-                    end
-                end
-            end
-        end
-    end
-    appendProfile(p,1)
-    local prismaticRate=0
-    -- Prismatic Ore is soulbound; never value it as auctionable loot.
-    -- Optionally prospect it virtually using TSM's downstream gem table.
-    if f.id~=194545 and f.id~=192880 and db.dragonflightProspectingPrismaticUnlocked==true then
-        for _,m in ipairs(p.materials) do
-            if m.category=="special" and m.id==194545 then
-                prismaticRate=(tonumber(m.low) or 0)+upgrade*((tonumber(m.high) or 0)-(tonumber(m.low) or 0))
-                break
-            end
-        end
-        if prismaticRate>0 and profiles[194545] then
-            -- prismaticRate units gained from five normal ore, divided by
-            -- five for the Prismatic processing yield's five-item batch.
-            appendProfile(profiles[194545],prismaticRate/5)
-        end
-    end
-    local resourceChance=DFClamp(db.dragonflightProspectingResourcefulnessPct,0,50)/100
-    -- Approximation from player saved-ore reports: 30% of a 5-ore batch
-    -- returned on proc. No direct per-craft distribution was recovered.
-    local oreSavedFraction=resourceChance*0.30
-    if self.CompleteYieldAnnotations then
-        -- Use the researched per-gem occurrence proxies when available.
-        for _,m in ipairs(materialOrder) do
-            for _,r in ipairs(p.materials) do
-                if r.id==m.id or (r.rankIDs and (r.rankIDs[1]==m.id or r.rankIDs[2]==m.id or r.rankIDs[3]==m.id)) then
-                    local a=tonumber(r.lowOccurrenceProxy)
-                    local b=tonumber(r.highOccurrenceProxy) or a
-                    if a and b then
-                        m.chance=math.max(0,math.min(1,a+upgrade*(b-a)))
-                        m.probabilityBasis="TSM/research occurrence proxy, not EV multiplier"
-                    end
-                    break
-                end
-            end
-        end
-    end
-    return {kind="dragonflight-estimate",materials=materialOrder,
-        inputCount=5*(1-oreSavedFraction),nominalInputCount=5,
-        source="Dragonflight: TSM historical low + research-derived high",
-        evidence=p.evidence,confidenceCap=p.confidenceCap,
-        upgradePct=upgrade*100,outputQuality=quality,
-        inspirationQualitySplitPct=inspiration*100,
-        resourcefulnessChancePct=resourceChance*100,
-        expectedOreSavedPct=oreSavedFraction*100,
-        prismaticYieldPerBatch=prismaticRate,
-        inputRank=p.inputRank}
-end
-
+-- All display callers must use the already evaluated model; this compatibility
+-- entry point resolves evidence without constructing a separate scenario.
 function LL:ProcessingYieldDisplayModel(f,option)
- local gd=self.GameData
- if type(f)~="table" or type(option)~="table" or option.name=="Disenchant" then return nil end
- if type(option.outputID)=="number" and type(option.outputCount)=="number" and option.outputCount>0 and type(option.inputCount)=="number" and option.inputCount>0 then
-  return {kind="fixed",materials={{id=option.outputID,chance=1,expectedQuantity=option.outputCount,minQuantity=option.outputCount,maxQuantity=option.outputCount}},inputCount=option.inputCount,source=option.dataSource or "Verified fixed recipe"}
- end
- -- Midnight fallback takes precedence over unrelated legacy candidate/TSM
- -- entries; the other expansion processing paths remain unchanged.
- local midnight=self.MidnightProspectingModel and self:MidnightProspectingModel(f,option)
- if midnight then return midnight end
- -- Independent Dragonflight estimate, before legacy TSM and candidate paths.
- local dragonflight=self.DragonflightProspectingModel and self:DragonflightProspectingModel(f,option)
- if dragonflight then return self:CompleteYieldAnnotations(dragonflight) end
- -- TWW prospect and modern milling: one source drives EV and tooltip.
- local stat=self.StatProfiledYieldModel and self:StatProfiledYieldModel(f,option)
- if stat then return self:CompleteYieldAnnotations(stat) end
- -- TSM first: preserve original rate per input item. No midpoint or extra matRate multiplier.
- local methodKey=option.name=="Prospect" and "prospect" or option.name=="Mill" and "mill" or nil
- local tsm=methodKey and gd.tsmRetail and gd.tsmRetail[methodKey] and gd.tsmRetail[methodKey][f.id]
- if tsm and #tsm>0 then
-  local ctx=self.ProcessingPlayerConditions and self:ProcessingPlayerConditions(f,option.name,option.recipeID,option.character)
-  local inputQuality=(ctx and tonumber(ctx.inputQuality)) or nil
-  local outputQuality=(ctx and ctx.qualityFromBlizzard and tonumber(ctx.craftingQuality)) or nil
-  -- With unknown output-quality skill, choose the lowest available quality per gem family.
-  -- Never sum rank-1, rank-2, and rank-3 copies of the same material as simultaneous drops.
-  local groupMap={}; local result={}
-  -- The TSM table has separate item IDs for each pigment/gem quality.
-  -- Select the output rank before summing, not one entry per quality ID.
-  local rank=outputQuality or 1
-  for _,m in ipairs(tsm) do
-   if (not m.sourceQuality or not inputQuality or m.sourceQuality==inputQuality)
-       and (not m.targetQuality or m.targetQuality==rank) then
-    groupMap[m.id]=m
-   end
-  end
-  for _,m in pairs(groupMap) do
-   result[#result+1]={id=m.id,matRate=m.matRate,amountOfMats=m.amountOfMats,
-     chance=m.matRate,expectedQuantity=m.amountOfMats,
-     minQuantity=m.minAmount,maxQuantity=m.maxAmount,
-     sourceQuality=m.sourceQuality,targetQuality=m.targetQuality,
-     requiredSkill=m.requiredSkill,quantityBasis="TSM amountOfMats per input",source="TSM Retail"}
-  end
-  table.sort(result,function(a,b) return a.id<b.id end)
-  if #result>0 then
-   return {kind="tsm-retail",materials=result,inputCount=1,
-     processingBatchSize=(option.inputCount and option.inputCount>1) and option.inputCount or 5,
-     source="TradeSkillMaster Retail: original per-input conversion rates",confidenceCap=80,
-     tsmNativeRate=true}
-  end
- end
- local r=gd.prospect[f.id] or gd.mill[f.id]
- if not r or r.method~=option.name or not r.materials or #r.materials==0 then
-  if self.processingDebug and self.processingDebug.armed and not self.processingDebug.done then
-   local d=self.processingDebug;d.target=f.id;d.armed=false;d.done=true
-   d.lines={"LIVE processing diagnostic: No compiled processing model for item "..tostring(f.id).." method="..tostring(option.name)}
-  end
-  return nil
- end
- local baseline={kind=r.kind,materials=r.materials,inputCount=r.batch or option.inputCount or 1,evidence=r.evidence,confidenceCap=r.confidenceCap,samples=r.samples,referenceURL=r.source,source=r.source}
- if LL.ReferenceProcessingModel then
-  return LL:ReferenceProcessingModel(f,option.name,option.recipeID,baseline,option.character)
- end
- return baseline
+    return self:ResolveEvidenceModel(f,option,nil,3)
+end
+function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
+    if not model or suppliesKnown==false then return nil,'Insufficient Data' end
+    local total,missing=0,0
+    for _,m in ipairs(model.materials or {}) do
+        local quote=self:GetOutputPrice(m.id)
+        m.netUnitPrice=quote
+        m.netExpectedValue=nil
+        if m.expectedQuantity==0 then
+            m.netExpectedValue=0
+        elseif quote and validNumber(m.expectedQuantity) then
+            m.netExpectedValue=quote*m.expectedQuantity
+            total=total+m.netExpectedValue
+        else missing=missing+1 end
+    end
+    local savings=0
+    if model.expectedInputCount and model.expectedInputCount<model.inputCount then
+        local quote=f and self:GetOutputPrice(f.id)
+        if quote then savings=(model.inputCount-model.expectedInputCount)*quote else missing=missing+1 end
+    end
+    model.partialPrice=missing>0 or model.unknownOutputs or model.insufficientSamples
+    model.partialValue=(total+savings-(suppliesCost or 0))/model.inputCount
+    -- A partial lower bound is useful diagnostics, never a complete recommendation.
+    model.value=not model.partialPrice and model.partialValue or nil
+    return model.value,model.source
+end
+function LL:EvaluateDisenchant(f,character)
+    if not self:EligibleDisenchant(f) then return nil,'Disenchanting not eligible' end
+    local exp,issue=self:DisenchantExpansion(f)
+    if exp==nil then return nil,issue end
+    local family=self.DisenchantTables and self.DisenchantTables[exp]
+    local mode=self.ProcessingDataMode and self:ProcessingDataMode('Disenchant') or 1
+    local current=self.CharacterKey and self:CharacterKey()
+    local personal
+    if (not character or character=='Current character' or character==current) and self.GetLearnedDisenchantEstimate then
+        personal=self:GetLearnedDisenchantEstimate(f,family)
+    end
+    local model,reason=self:ResolveEvidenceModel(f,{name='Disenchant',inputCount=1,
+        recipeID=13262,character=character},personal,mode)
+    local value=self:ValueProcessingModel(model,0,true)
+    return {name='Disenchant',value=value,materials=model and model.materials,
+        yieldModel=model,expansion=exp,expansionName=family and family.name,
+        samples=personal and personal.samples,confidence=model and model.confidence or 'unknown',
+        source=model and model.source,method=model and model.source,
+        note=reason or (model and model.warning),incompletePrices=model and model.partialPrice},reason
 end
 local function number(n) return type(n)=="number" and n>0 and n<math.huge and n or nil end
 local function Allowed(db,method)
@@ -700,6 +346,11 @@ function LL:ConversionOptions(f)
         local price,source
         local defaultBatch=(c.method=="Mill" and (f.expansionID==10 or f.expansionID==11)) and 10 or 5
         local inputCount=c.inputCount or ((c.method=="Mill" or c.method=="Prospect") and defaultBatch or 1)
+        local processingRecipe=c.recipeID or c.requiredSpell
+        if not processingRecipe then
+            if c.method=="Mill" then processingRecipe=({[9]=382981,[10]=444181,[11]=1269575})[f.expansionID] or 51005
+            elseif c.method=="Prospect" then processingRecipe=({[9]=374627,[10]=434018,[11]=1231127})[f.expansionID] or 31252 end
+        end
         local insufficientCount=type(f.count)=="number" and f.count<inputCount
         if insufficientCount then
             available=false
@@ -716,7 +367,7 @@ function LL:ConversionOptions(f)
             dataMode=3
         end
         local research=(self.GetLearnedProcessingEstimate and
-            self:GetLearnedProcessingEstimate(f,c.method,inputCount,c.recipeID or c.requiredSpell)) or nil
+            self:GetLearnedProcessingEstimate(f,c.method,inputCount,processingRecipe)) or nil
         if c.outputID and c.outputCount and c.inputCount then
             price,source=self:GetOutputPrice(c.outputID)
         end
@@ -752,51 +403,14 @@ function LL:ConversionOptions(f)
         -- expectedQuantity is a scenario per processing batch, not a measured
         -- drop rate. Do not multiply by chance again (already included).
         -- GetOutputPrice includes the AH fee once.
-        local yieldModel
-        if c.method=="Mill" or c.method=="Prospect" then
+        local yieldModel,modelIssue
+        if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" then
             local displayOption={name=c.method,inputCount=inputCount,
-                recipeID=c.recipeID or c.requiredSpell,character=character}
-            yieldModel=self:ProcessingYieldDisplayModel(f,displayOption)
-            if yieldModel and self.CompleteYieldAnnotations then
-                yieldModel=self:CompleteYieldAnnotations(yieldModel)
-            end
-            -- Scale the same model used for tooltip fields AND EV pricing.
-            -- Personal-only observations remain unmodified downstream.
-            if yieldModel and self.ApplyVerifiedMechanics then
-                yieldModel=self:ApplyVerifiedMechanics(f,displayOption,yieldModel)
-            end
-        end
-        local minSamples=self.ProcessingMinimum and self:ProcessingMinimum() or 1
-        if (c.method=="Mill" or c.method=="Prospect") and dataMode==1
-            and research and (research.effectiveSamples or 0)>0 then
-            yieldModel=self:BlendProcessingYields(yieldModel,research,inputCount)
-        elseif (c.method=="Mill" or c.method=="Prospect") and dataMode==2 then
-            yieldModel=(research and (research.effectiveSamples or 0)>=minSamples
-                and research.materials and #research.materials>0)
-                and {kind="observed",materials=research.materials,
-                    inputCount=inputCount,source="Personal recorded results"} or nil
-        end
-        if yieldModel and (c.method=="Mill" or c.method=="Prospect") then
-            local total,priced,unpriced=0,0,0
-            for _,material in ipairs(yieldModel.materials) do
-                local quote=self:GetOutputPrice(material.id)
-                local expected=tonumber(material.expectedQuantity)
-                if quote and expected and expected>=0 then
-                    total=total+quote*expected
-                    priced=priced+1
-                else
-                    unpriced=unpriced+1
-                end
-            end
-            -- Missing material prices must not suppress ALL useful gold data.
-            -- An incomplete sum is a conservative lower bound; never assign a
-            -- made-up market price or treat it as a fully-priced estimate.
-            yieldModel.partialPrice=unpriced>0
-            yieldModel.pricedOutputs=priced
-            yieldModel.missingPrices=unpriced
-            value=priced>0 and total>0 and total/(yieldModel.inputCount or inputCount) or nil
-            source=(yieldModel.source or "Compiled processing research")..
-                (unpriced>0 and " (partial priced outputs)" or "")
+                recipeID=processingRecipe,character=character}
+            local current=self.CharacterKey and self:CharacterKey()
+            if character and character~="Current character" and character~=current then research=nil end
+            yieldModel,modelIssue=self:ResolveEvidenceModel(f,displayOption,research,dataMode)
+            value,source=self:ValueProcessingModel(yieldModel,suppliesCost,suppliesKnown,f)
         end
         if value and value<=0 then value=nil end
         if missingExtra then
@@ -806,7 +420,7 @@ function LL:ConversionOptions(f)
         local isFixed = c.outputID and c.outputCount and c.inputCount
             and (c.confidence=="documented" or c.confidence=="verified" or
                  c.method=="Exchange" or c.method=="Combine" or c.method=="Split")
-        if c.method~="Mill" and c.method~="Prospect" then
+        if c.method~="Mill" and c.method~="Prospect" and c.method~="Smelt" then
             if dataMode==2 and not isFixed then
                 value=research and research.value or nil
                 source="Personal results only"
@@ -816,7 +430,7 @@ function LL:ConversionOptions(f)
             end
         end
         local v={name=c.method,letter=MethodLetter(c.method),available=available,
-            why=why,character=character,profession=c.profession,
+            why=why or modelIssue,character=character,profession=c.profession,
             value=value,source=source,inputShort=insufficientCount,
             confidence=(research and research.value and dataMode~=3)
                 and research.confidence or c.confidence or "verified-recipe",
@@ -824,10 +438,10 @@ function LL:ConversionOptions(f)
             estimate=(dataMode~=3 and research) or nil,
             samples=research and research.samples or 0,
             dataMode=dataMode,
-            note=(dataMode==2 and (research and research.note or
+            note=modelIssue or (dataMode==2 and (research and research.note or
                 "Personal results only: no matching observations yet")) or c.requirement,
             outputID=c.outputID,outputCount=c.outputCount,inputCount=c.inputCount,
-            recipeID=c.recipeID,expansion=c.expansion,
+            recipeID=processingRecipe,expansion=c.expansion,
             dataSource=c.source,category=kind,
             vendorSupplyCost=suppliesKnown and suppliesCost or nil,
             yieldModel=yieldModel}
@@ -879,7 +493,7 @@ function LL:ConversionOptions(f)
     if eligible and Allowed(self.db,"Disenchant") then
         local c={method="Disenchant",profession="Enchanting"}
         local available,why,character=self:CanUseConversion(f,c)
-        local estimate,issue=self:DisenchantEstimate(f)
+        local estimate,issue=self:DisenchantEstimate(f,character)
         f.currentCanDisenchant=self:CurrentHasEnchanting()
         f.disenchantIssue=issue
         f.disenchantEstimate=estimate
@@ -897,7 +511,7 @@ function LL:ConversionOptions(f)
             amount=estimate and estimate.amount,note=estimate and estimate.note or issue,
             expansion=estimate and estimate.expansion or nil,
             expansionName=estimate and estimate.expansionName or nil,
-            category="disenchant",estimate=estimate,
+            category="disenchant",estimate=estimate,yieldModel=estimate and estimate.yieldModel,
             personalResearch=(research and research~=estimate) and research or nil}
     end
     table.sort(out,function(a,b)

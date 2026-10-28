@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.9.70"
+LA.version = "0.10.0-alpha1"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -140,6 +140,11 @@ function LA:GetItemFacts(link, context)
             f.count=n
             f.countScope="bags"
         end
+    end
+    local qualityAPI=C_TradeSkillUI and C_TradeSkillUI.GetItemReagentQualityByItemInfo
+    if qualityAPI then
+        local ok,rank=pcall(qualityAPI,link)
+        if ok and type(rank)=="number" and rank>0 then f.reagentQuality=rank end
     end
     f.tsmString = self:TSMString(link, itemID)
     return f
@@ -368,69 +373,8 @@ end
 -- A cached once-per-item-priced-material estimate. It does not modify TSM.
 -- For modern gear, unverified reference outputs are NEVER treated as
 -- guaranteed 1x gold values. Prefer current local observations, then Game Data.
-function LA:DisenchantEstimate(f)
-    if not self:EligibleDisenchant(f) then
-        local token = f and self.DisenchantTokenExceptions and self.DisenchantTokenExceptions[f.id]
-        return nil, token and token.note or nil
-    end
-    local exp, problem = self:DisenchantExpansion(f)
-    if exp == nil then return nil, problem end
-    local family = self.DisenchantTables and self.DisenchantTables[exp]
-    -- 1=automatic (use enough matching personal observations, else Game Data),
-    -- 2=personal-only (do not use compiled research estimates),
-    -- 3=reference-only (keep collecting, but ignore personal results for value).
-    local mode=(self.db and self.db.disenchantDataMode) or 1
-    local learned
-    if mode~=3 and self.GetLearnedDisenchantEstimate then
-        learned=self:GetLearnedDisenchantEstimate(f,family)
-        if learned and learned.value then return learned end
-    end
-    if mode==2 then
-        local issue=(learned and ("Personal results: "..learned.samples..
-            " matching observations, "..(self.ProcessingMinimum and self:ProcessingMinimum() or 30)..
-            " needed before pricing") or "No matching personal disenchant observations yet")
-        -- A provisional observation has probabilities, but no actionable D price.
-        return learned,issue
-    end
-    -- Generated Game Data supplies probabilities/expected quantities; TSM is
-    -- used ONLY for the prices of the resulting individual auctionable items.
-    local yields=(self.StatDisenchantYields and self:StatDisenchantYields(f))
-        or (self.GameDisenchantYields and self:GameDisenchantYields(f))
-    if yields and #yields.outputs>0 then
-        local mats,gross,priced,missing={},0,0,0
-        for _,m in ipairs(yields.outputs) do
-            -- Store GROSS material price here. Tooltip and final estimate each
-            -- apply AH fees exactly once; we never infer drop rates from TSM.
-            local itemString=self:TSMString(nil,m.id)
-            local quote=itemString and (self:Price("dbminbuyout",itemString)
-                or self:Price("dbmarket",itemString)
-                or self:Price("dbregionmarketavg",itemString))
-            if not quote then missing=missing+1 else
-                priced=priced+1
-                gross=gross+quote*m.expectedQuantity
-            end
-            mats[#mats+1]={id=m.id,chance=m.chance,
-                expectedQuantity=m.expectedQuantity,minQuantity=m.minQuantity,
-                maxQuantity=m.maxQuantity,unitPrice=quote,
-                expectedValue=quote and quote*m.expectedQuantity or nil,
-                samples=yields.samples}
-        end
-        -- TSM returns GROSS AH quote: subtract auction fees once for the
-        -- actual comparison; each material tooltip line also shows net.
-        return {name="Disenchant",value=(priced>0 and gross>0) and gross*(1-self:AHFeeRate()) or nil,
-            materials=mats,samples=yields.samples,inputTypes=yields.inputTypes,
-            sourceCount=yields.sourceCount,expansion=exp,
-            expansionName=family and family.name,method="Game Data observed yields",
-            confidence=yields.evidence,modelKind="research-estimate",
-            incompletePrices=missing>0,
-            note=missing>0 and "Partial lower-bound valuation: unpriced materials excluded" or
-                "Estimated from research; profession and patch conditions may differ"}
-    end
-    local rule=family and family.quality and family.quality[f.quality]
-    return {name="Disenchant",expansion=exp,expansionName=family and family.name,
-        confidence="unknown",materialCandidates=rule and rule.candidates or nil},
-        "No researched probability/quantity profile for this tier"
-
+function LA:DisenchantEstimate(f,character)
+    return self:EvaluateDisenchant(f,character)
 end
 
 function LA:HasProfessionAccess(method)
@@ -782,6 +726,8 @@ end
 
 function LA:Invalidate()
     wipe(cache)
+    self._processingModelCache=nil
+    self._professionOperationCache=nil
     if self.ClearBadgeDecisionCache then self:ClearBadgeDecisionCache() end
     self._deRestrictionCache = nil
     self._enchantCache = nil
@@ -1038,6 +984,7 @@ boot:SetScript("OnEvent", function(_, event, name)
             if LootLiquidatorDB[k] == nil then LootLiquidatorDB[k] = v end
         end
         LA.db = LootLiquidatorDB
+        if LA.MigrateEvidenceSettings then LA:MigrateEvidenceSettings() end
         LA.db.appearance = LA.db.appearance or {position="TOPRIGHT",fontSize=14,colors={}}
         LA.db.appearance.colors = LA.db.appearance.colors or {}
         LA.db.characters = LA.db.characters or {}
@@ -1060,3 +1007,66 @@ boot:SetScript("OnEvent", function(_, event, name)
         Say("Loaded. /ll settings for options; /ll report to copy unknown conversions. No automatic selling.")
     end
 end)
+
+do -- Item decision filters and DB2 restrictions
+-- Item decision filters. Saved in the existing account-wide LootLiquidatorDB.
+-- Static DB2 data is stored separately and NEVER copied into SavedVariables.
+local LL=LA
+LL.ItemRestrictions = LL.ItemRestrictions or {}
+local function State(self)
+    if not self.db then return nil end
+    self.db.ignoredItems = self.db.ignoredItems or {}
+    return self.db.ignoredItems
+end
+local function Id(item)
+    if type(item)=="number" then return item end
+    if type(item)~="string" then return nil end
+    return tonumber(item:match("item:(%d+)")) or tonumber(item)
+end
+function LL:IgnoreEntry(item)
+    local id=Id(item)
+    local s=State(self)
+    return id and s and (s[id] or s[tostring(id)]) or nil
+end
+function LL:IsIgnoredAction(item, method)
+    local entry=self:IgnoreEntry(item)
+    if not entry then return false end
+    if entry.all == true then return true end
+    if (method=="T" or method=="Transmog") and entry.T==nil
+        and entry.A==true and entry.D==true and entry.V==true and entry.P==true then
+        return true
+    end
+    local normalized=({Auction="A",Disenchant="D",Vendor="V",Transmog="T",Mill="P",Prospect="P",
+        Smelt="P",Recycle="P",Research="P",Combine="P",Split="P",Exchange="P",Craft="P"})[method] or method
+    return entry[normalized] == true
+end
+function LL:SetIgnoreEntry(item, flags, name)
+    local id=Id(item)
+    if not id or id<=0 or id~=math.floor(id) then return false end
+    local s=State(self)
+    if not s then return false end
+    if flags==nil then s[id]=nil;s[tostring(id)]=nil
+    else
+        local entry=s[id] or s[tostring(id)] or {}
+        s[tostring(id)]=nil
+        entry.A = flags.A == true; entry.D= flags.D == true
+        entry.V = flags.V == true; entry.P = flags.P == true; entry.T = flags.T == true or (flags.T == nil
+            and flags.A == true and flags.D == true and flags.V == true and flags.P == true)
+        entry.all=nil
+        if type(name)=="string" and name~="" then entry.name=name end
+        s[id]=entry
+    end
+    if self.Invalidate then self:Invalidate() end
+    return true
+end
+-- DB2 no-disenchant flags take priority over estimates, regardless of price.
+function LL:ExternalDisenchantRestriction(item)
+    local id=Id(item)
+    if not id then return nil end
+    if self.ItemRestrictions and self.ItemRestrictions[id] then
+        return "Item database: Cannot be disenchanted"
+    end
+    return nil
+end
+
+end

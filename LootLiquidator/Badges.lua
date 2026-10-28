@@ -592,39 +592,6 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             if detail<3 or LA.db.showMaterialBreakdown==false then return end
             local list=model and model.materials
             if type(list)=="table" and #list>0 then
-                -- Collapse display-name duplicates for speculative pools only;
-                -- never merge their item IDs/prices in the underlying model.
-                if model.kind=="assumed" then
-                    local combined,order={},{}
-                    local getInfo=C_Item and C_Item.GetItemInfo or GetItemInfo
-                    for _,m in ipairs(list) do
-                        local name
-                        if type(getInfo)=="function" then
-                            local ok,n=pcall(getInfo,m.id)
-                            if ok and type(n)=="string" then name=n end
-                        end
-                        local rank=LA.MaterialReagentRanks
-                            and LA.MaterialReagentRanks[m.id] or 0
-                        local key=(name or ("#"..m.id))..":"..rank
-                        local found=combined[key]
-                        if not found then
-                            found={id=m.id,chance=0,expectedQuantity=0,
-                                variantCount=0,groupExpectedValue=0,groupMissing=false}
-                            combined[key]=found;order[#order+1]=found
-                        end
-                        found.variantCount=found.variantCount+1
-                        found.chance=found.chance+(m.chance or 0)
-                        found.expectedQuantity=found.expectedQuantity+(m.expectedQuantity or 0)
-                        local keyTSM=LA.TSMString and LA:TSMString(nil,m.id)
-                        local price=keyTSM and LA.Price and
-                            (LA:Price("dbminbuyout",keyTSM) or LA:Price("dbmarket",keyTSM)
-                                or LA:Price("dbregionmarketavg",keyTSM))
-                        if price and m.expectedQuantity then
-                            found.groupExpectedValue=found.groupExpectedValue+price*m.expectedQuantity
-                        else found.groupMissing=true end
-                    end
-                    list=order
-                end
                 local batch=math.max(1,tonumber(model.inputCount) or tonumber(option.inputCount) or 1)
                 local limit=LA.db.showResearchDetails==true and #list or math.min(#list,12)
                 for i=1,limit do
@@ -637,153 +604,47 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                             and (m.probabilityBasis:find("estimated",1,true) or
                                  m.probabilityBasis:find("proxy",1,true)))) and "~" or ""
                         left=left..prefix..("%.1f"):format(m.chance*100):gsub("%.0$","").."% "
-                    end
+                    else left=left.."? " end
                     left=left..MaterialDisplay(m.id)
                     if m.minQuantity and m.maxQuantity then
                         left=left..(m.minQuantity==m.maxQuantity
                             and (" [x%d]"):format(m.minQuantity)
                             or (" [x%d-%d]"):format(m.minQuantity,m.maxQuantity))
                     end
-                    local key=LA.TSMString and LA:TSMString(nil,m.id)
-                    local unit=key and LA.Price and (LA:Price("dbminbuyout",key)
-                        or LA:Price("dbmarket",key) or LA:Price("dbregionmarketavg",key))
-                    local gross=m.expectedValue
-                    if not gross and m.groupMissing==false and m.variantCount then
-                        gross=m.groupExpectedValue
-                    end
-                    if gross==nil and unit and m.expectedQuantity then
-                        gross=unit*m.expectedQuantity
-                    end
-                    local amount=gross and MaterialPriceText({unitPrice=unit,
-                        expectedValue=gross/batch},1)
-                        or (type(m.expectedQuantity)=="number" and "Price unavailable"
-                            or "Yield unmeasured")
+                    left=left..(type(m.expectedQuantity)=="number" and ("  EV %.3f"):format(m.expectedQuantity) or "  EV ?")
+                    local net=m.netExpectedValue
+                    local amount=net~=nil and LA:Money(net/batch) or "Insufficient Data"
                     two(left,amount,option.letter or "D")
                 end
+                if model.sources then
+                    for _,source in ipairs(LA.SourceOrder or {}) do
+                        local contribution=model.sources[source]
+                        if contribution and contribution>0 then
+                            tooltip:AddLine(("  %s: %.1f%% effective contribution"):format(source,contribution*100),.65,.72,.80,true)
+                        end
+                    end
+                end
+                if model.context then
+                    local ctx=model.context
+                    tooltip:AddLine(("  %s — skill %s (%s)"):format(ctx.character or "Unknown character",
+                        tostring(ctx.effectiveSkill or "?"),ctx.profileKind or "unknown context"),.70,.75,.82,true)
+                    if ctx.stale or ctx.incomplete then tooltip:AddLine("  Profession snapshot stale or incomplete",1,.68,.3,true) end
+                end
+                tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
+                    (model.provisional and " — provisional" or ""),.72,.70,.80,true)
+                if model.warning then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
+                if model.partialPrice then tooltip:AddLine("  Insufficient Data: incomplete output valuation",1,.68,.3,true) end
                 if #list>limit then
                     tooltip:AddLine(("  +%d more materials"):format(#list-limit),.70,.72,.78,true)
                 end
                 if LA.db.showResearchDetails==true then
-                    if model.kind=="candidates" then
-                        tooltip:AddLine("  Provisional estimates; probabilities not measured",.72,.67,.79,true)
-                    elseif model.kind=="dragonflight-estimate" then
-                        tooltip:AddLine("  Dragonflight: expected units / 5 ore; NOT drop chances",.72,.67,.79,true)
-                        tooltip:AddLine(("  Upgrade %d%%, gem quality R%d, Inspiration split %.0f%%"):format(
-                            model.upgradePct or 0,model.outputQuality or 1,
-                            model.inspirationQualitySplitPct or 0),.72,.67,.79,true)
-                        if model.inputRank and model.inputRank~=3 and model.inputRank>0 then
-                            tooltip:AddLine("  High yields for this ore rank transferred from R3 data",.72,.67,.79,true)
-                        end
-                        if (model.expectedOreSavedPct or 0)>0 then
-                            tooltip:AddLine(("  Modeled ore saving: %.1f%% (separate from gem yield)"):format(
-                                model.expectedOreSavedPct),.72,.67,.79,true)
-                        end
-                    elseif model.kind=="midnight-estimate" then
-                        tooltip:AddLine("  Midnight estimates: per-5 yield percentages, NOT drop chances",.72,.67,.79,true)
-                        tooltip:AddLine(("  Upgrade %d%%; diamonds %s; quality-1 pricing assumed"):format(
-                            model.upgradePct or 0,model.diamondUnlocked and "unlocked" or "locked"),.72,.67,.79,true)
-                        if model.inputRank==1 then
-                            tooltip:AddLine("  Rank 1 ore yields are proxies from Rank 2 research",.72,.67,.79,true)
-                        elseif model.inputRank==0 then
-                            tooltip:AddLine("  Thorium rates are guide proxies; no basic measured cohort",.72,.67,.79,true)
-                        end
-                    end
                     if model.samples then
                         tooltip:AddLine(("  Research: %d casts"):format(model.samples),.62,.79,.98,true)
                     end
                 end
                 return
             end
-            -- Enchanting observations sometimes contain their own material
-            -- records rather than a generic ProcessingYieldDisplayModel.
-            local est=option.estimate or option.personalResearch
-            if est and type(est.materials)=="table"
-                and #est.materials>0 then
-                if type(est.inputCount)=="number" and est.inputCount>1 then
-                    tooltip:AddLine(("  Material yields per %d inputs:"):format(est.inputCount),
-                        .77,.76,.71,true)
-                end
-                for i=1,math.min(#est.materials,12) do
-                    local m=est.materials[i]
-                    local text="  "
-                    if type(m.chance)=="number" then
-                        text=text..("%.1f"):format(m.chance*100):gsub("%.0$","").."% "
-                    end
-                    text=text..MaterialDisplay(m.id)
-                    if m.minQuantity and m.maxQuantity
-                        and m.minQuantity==m.maxQuantity then
-                        text=text..(" [x%d]"):format(m.minQuantity)
-                    else
-                        if m.expectedQuantity then
-                            text=text..(" (avg %.2f)"):format(m.expectedQuantity)
-                        end
-                        if m.minQuantity and m.maxQuantity then
-                            text=text..(" [x%d-%d]"):format(m.minQuantity,m.maxQuantity)
-                        end
-                    end
-                    local amount=MaterialPriceText(m,1)
-                    if amount=="" and not m.expectedQuantity then amount="yield unknown" end
-                    two(text,amount,"D")
-                    if LA.db.showResearchDetails==true then
-                        if m.chance and m.samples then
-                            tooltip:AddLine(("    x0: %.1f%% (%d casts)"):format(
-                                (1-math.max(0,math.min(1,m.chance)))*100,m.samples),.62,.72,.83,true)
-                        end
-                        if m.minQuantity and m.maxQuantity then
-                            tooltip:AddLine(("    Observed drop quantity: %d-%d"):format(
-                                m.minQuantity,m.maxQuantity),.65,.68,.76,true)
-                        end
-                        if m.quantityCounts then
-                            local bins={}
-                            for qty,n in pairs(m.quantityCounts) do
-                                bins[#bins+1]={qty=tonumber(qty),n=n}
-                            end
-                            table.sort(bins,function(a,b)return a.qty<b.qty end)
-                            for j=1,math.min(#bins,12) do
-                                local bin=bins[j]
-                                if m.samples and m.samples>0 then
-                                    tooltip:AddLine(("    x%d: %.1f%% (%d/%d casts)"):format(
-                                        bin.qty,bin.n*100/m.samples,bin.n,m.samples),.62,.72,.83,true)
-                                end
-                            end
-                        end
-                    end
-                end
-                if LA.db.showResearchDetails==true then
-                    if est.samples then
-                        tooltip:AddLine(("  Research: %d casts"):format(est.samples),.62,.79,.98,true)
-                    end
-                    if est.note then tooltip:AddLine("  "..est.note,.72,.67,.79,true) end
-                end
-                return
-            end
-            -- Identified DE candidates have NO established per-output chance:
-            -- render their names without inventing a distribution or quote.
-            if option.name=="Disenchant" and est and type(est.materialCandidates)=="table"
-                and #est.materialCandidates>0 then
-                tooltip:AddLine("  Possible materials; drop rates unverified:",.83,.72,.59,true)
-                for i=1,math.min(#est.materialCandidates,12) do
-                    tooltip:AddLine("    "..MaterialDisplay(est.materialCandidates[i]),.75,.72,.83,true)
-                end
-                return
-            end
-            -- Published DE material families are evidence of possible outputs,
-            -- NOT a license to invent unknown sample rates or a 0g quote.
-            if option.name=="Disenchant" then
-                local refs=(est and est.referenceRates) or (modelRule and modelRule.referenceRates)
-                if type(refs)=="table" then
-                    for i=1,math.min(#refs,12) do
-                        local m=refs[i]
-                        local text="  "
-                        if type(m.chance)=="number" then
-                            text=text..("~%.1f%% "):format(m.chance*100)
-                        end
-                        text=text..MaterialDisplay(m.id)
-                        if m.quantityHint then text=text.." ["..tostring(m.quantityHint).."]" end
-                        two(text,"","D")
-                    end
-                end
-            end
+            tooltip:AddLine("  Insufficient Data: no compatible final processing model",.83,.72,.59,true)
         end
         for _,methodName in ipairs(methodOrder) do
             local option=choices[methodName]
@@ -793,29 +654,21 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             if option and (not isGear or methodName=="Disenchant")
                 and (option.available or LA.db.showUnavailableConversions~=false) then
                 -- Reuse the exact evaluated material model used to price this option.
-                local model=option.yieldModel or (LA.ProcessingYieldDisplayModel and f
-                    and LA:ProcessingYieldDisplayModel(f,option)) or nil
+                local model=option.yieldModel
                 local hasMaterials=(model and model.materials and #model.materials>0)
-                    or (option.estimate and option.estimate.materials and #option.estimate.materials>0)
-                    or (methodName=="Disenchant" and
-                        ((option.estimate and option.estimate.materials
-                            and #option.estimate.materials>0)
-                          or (modelRule and modelRule.referenceRates
-                            and #modelRule.referenceRates>0)))
                 if option.value or hasMaterials
                     or (option.category=="destroy" and
                         (methodName=="Mill" or methodName=="Prospect"))
                     or (methodName=="Disenchant"
                     and decision.disenchantEligible) then
-                    local confidence=LA.ProcessingConfidenceScore and
-                        LA:ProcessingConfidenceScore(f,option,model) or nil
+                    local confidence=model and model.confidence
                     local label=names[methodName] or methodName
-                    if confidence then label=label..(" (Confidence %d%%)"):format(confidence)
+                    if confidence then label=label..(" (Confidence %d/100)"):format(confidence)
                     elseif option.available==false then label=label.." (estimate)" end
                     if option.value then
                         valued(label,option.value,option.letter,methodName=="Disenchant" and count or 1)
                     else
-                        two(label,"Value unavailable",option.letter or "D")
+                        two(label,"Insufficient Data",option.letter or "D")
                     end
                     ShowMaterials(option,model)
                     if not hasMaterials and not option.value
