@@ -51,3 +51,25 @@ A contradiction is **not automatically proof that the unconditional mean is wron
 ## Safety / verification
 
 No production Lua files or releases were modified. No in-game tests performed. The source snapshot and all numeric anomalies are independently traceable to GitHub main and the source line numbers. This is a research proposal, not a tested addon patch.
+
+## 5. New source-backed Titanium expected yields (research evidence; not released)
+
+Found two independent ore-to-gem material-total studies and normalized them correctly **per five-ore prospect**, without multiplying by tooltip probability:
+
+- **Retail player report, 2022-01-17:** 1,000 Titanium Ore / 5 = **200 operations**. Six uncommon gem totals: Bloodstone 53, Sun Crystal 44, Chalcedony 49, Shadow Crystal 53, Huge Citrine 47, Dark Jade 59. Source: https://www.reddit.com/r/woweconomy/comments/s6bfrl/
+- **WotLK Classic PTR player report, 2023-05-18:** 5,000 Titanium Ore / 5 = **1,000 operations**. Totals: Bloodstone 250, Sun Crystal 263, Chalcedony 253, Shadow Crystal 255, Huge Citrine 227, Dark Jade 250. Source: https://www.wowhead.com/wotlk/item=36910/titanium-ore (comment by Strath).
+
+| Material | Item ID | 2022 Retail E[units]/5 ore | 2023 Classic E[units]/5 ore | Bad stored TSM E[units]/5 ore |
+|---|---:|---:|---:|---:|
+| Bloodstone | 36917 | 0.265 | 0.250 | 2.500 |
+| Sun Crystal | 36920 | 0.220 | 0.263 | 2.500 |
+| Chalcedony | 36923 | 0.245 | 0.253 | 2.500 |
+| Shadow Crystal | 36926 | 0.265 | 0.255 | 2.500 |
+| Huge Citrine | 36929 | 0.235 | 0.227 | 2.500 |
+| Dark Jade | 36932 | 0.295 | 0.250 | 2.500 |
+
+These are **observed unconditional decimal means**, not occurrence probabilities. Neither source reports per-cast hit counts, so probability remains independently estimated/historical; conditional integer bounds still require separate evidence. The 2022 study is Retail but predates Midnight by four years; the 2023 study is Classic PTR. **Do not pool them as though they were same-version cohorts.**
+
+The original TSM 2.5-per-cast values are about 8–11× the measured per-cast means. This is substantial evidence of a conversion-rate unit/data problem. Suggested research fallback for the six Titanium entries is the **separate 2022 Retail per-cast mean** (score 60/100 for expected quantity because patch and skill conditions are not verified), with explicit historical/provisional status. Do not promote to 90 or silently alter main.
+
+Full 12 evidence rows with exact numerator/denominator, source and caveats: `research/ledger/titanium-observed-yields.csv`.
