@@ -1,0 +1,104 @@
+{
+  "hypothesisID": "dragonflight-inspiration-quality-transition",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Dragon Isles Jewelcrafting",
+  "expansionID": 9,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_QUALITY",
+  "effectKind": "QUALITY_TRANSITION",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [],
+    "inputItemIDs": [
+      189143,
+      190311,
+      190312
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      1,
+      3
+    ],
+    "outputQualityRanks": [
+      1,
+      2,
+      3
+    ],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "reportedAsOf": "2022-10-12 beta",
+    "oreQuality": 3,
+    "cohortSkills": [
+      68,
+      113,
+      228
+    ],
+    "inputOreQuantityEach": 5000,
+    "actualCasts": null,
+    "reportedRank2Threshold": 150,
+    "reportedRank3Threshold": 250,
+    "reportedInspirationSkillBonus": 83
+  },
+  "targetContext": {
+    "target": "2026 Retail Midnight client",
+    "recipeSpellID": null,
+    "actualSkill": null,
+    "Inspiration": null,
+    "outputRankTransitionVector": null,
+    "matchedStudy": false
+  },
+  "requiredLiveContext": [
+    "client build",
+    "recipe spell ID",
+    "exact input ore rank",
+    "profession child skillline",
+    "effective recipe skill",
+    "specialization ranks",
+    "profession gear",
+    "Inspiration chance and actual proc per cast",
+    "output item ID and quality per cast including zeros",
+    "Resourcefulness refunds and actual casts"
+  ],
+  "sources": [
+    {
+      "claimID": "jallfo-beta-20221012-spreadsheet",
+      "url": "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "jallfo-20221016-analysis",
+      "url": "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "serevite-r2-1000-20221212",
+      "url": "https://www.reddit.com/r/woweconomy/comments/zkay8v",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": 1000
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 55,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Beta rank thresholds and +83 Inspiration not independently validated on current Retail build",
+    "No per-cast Inspiration proc/output-rank joint histogram",
+    "Different skill/talent/gear cohorts confound numerical comparison",
+    "5000 input ore per cohort not verified completed cast denominator",
+    "No exact current recipeSpellID, patch bridge or live stat/specialization snapshot"
+  ],
+  "notes": "Beta reported 68+83=151, 113+83=196, 228+83=311; no current Retail coefficient, universal threshold or rank transition inferred. Required controlled experiment: same build/recipe/ore rank, >=1000 zero-inclusive casts per condition, record actual procs, output IDs/ranks, saved ore and character stats."
+}
