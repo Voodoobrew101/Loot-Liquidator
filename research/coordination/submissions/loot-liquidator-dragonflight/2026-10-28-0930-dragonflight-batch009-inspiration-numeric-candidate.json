@@ -1,0 +1,107 @@
+{
+  "hypothesisID": "dragonflight-inspiration-quality-transition",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Dragon Isles Jewelcrafting",
+  "expansionID": 9,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_QUALITY",
+  "effectKind": "QUALITY_TRANSITION",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      374627
+    ],
+    "inputItemIDs": [
+      190394,
+      190311
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      3
+    ],
+    "outputQualityRanks": [
+      1,
+      2,
+      3
+    ],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "historicalBeta": "2022 six 5000-ore cohorts, differing skill and specializations; actual casts and Inspiration proc counts unavailable",
+    "newHistoricalAnalogue": "2022-10-22 milling beta report gives skill breakpoints 125/250 and claimed +83.3 Inspiration skill; different profession and recipe, NOT a prospecting coefficient",
+    "new2023HochenEvidence": "1500 R1 + 9000 R2 herbs, output rank totals with 18.3% Inspiration and 35% Resourcefulness, but no per-cast flags or cast denominator",
+    "sourceDependence": "Deleted original Reddit post transcribed in Wowhead is ONE study",
+    "batch009Review": "Historical beta 5000-ore cohorts cannot isolate Inspiration effect because skill, specialization and unobserved proc flags are confounded. No independent matched cast-level control found; historical hypothesis remains falsifiable but BLOCKED."
+  },
+  "targetContext": {
+    "period": "2026 Retail",
+    "inspirationRemovedIn2024": true,
+    "proposedNumericTransform": null,
+    "currentOutputQualityRuleUnknown": true,
+    "batch009Status": "No current Retail Inspiration mechanic; 2024 official removal. No numeric quality-transition transform approved."
+  },
+  "requiredLiveContext": [
+    "Exact client build",
+    "Prospect recipe spell and actual availability",
+    "Ore ID and input rank",
+    "Gem ID/rank per cast including zeros",
+    "Inspiration proc flags for historical matched pre-removal build",
+    "Character skill, specialization nodes, profession gear and stats",
+    "Resourcefulness refund amounts",
+    "Independent held-out same-context cohort"
+  ],
+  "sources": [
+    {
+      "claimID": "DF-2022-BETA-MILL-ORIGINAL-REPOST",
+      "url": "https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "originalEvidenceKind": "SECONDARY_TRANSCRIPTION_OF_ONE_PRIMARY"
+    },
+    {
+      "claimID": "DF-HOCH-10500-2023-PRIMARY",
+      "url": "https://www.reddit.com/r/woweconomy/comments/10me1e7",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "originalEvidenceKind": "HISTORICAL_AGGREGATE_NO_CAST_DENOMINATOR"
+    },
+    {
+      "claimID": "DF-2022-BETA-PROSPECT-SHEET",
+      "url": "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "originalEvidenceKind": "HISTORICAL_AGGREGATE"
+    },
+    {
+      "claimID": "BLIZZARD-2024-INSPIRATION-REMOVAL",
+      "url": "https://worldofwarcraft.blizzard.com/en-gb/news/24119590",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "originalEvidenceKind": "OFFICIAL_PATCH"
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 65,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Inspiration removed in 2024; historical coefficient cannot be applied to 2026 Retail",
+    "Milling beta reported thresholds are a different profession/recipe, not prospecting evidence",
+    "No matched prospecting cohorts isolating Inspiration with per-cast gem rank and proc flags",
+    "2022 beta prospecting cohort skills/specs confounded and original completed cast counts unknown",
+    "2023 Hochenblume aggregate counts have Resourcefulness but no actual cast count or proc flags",
+    "No exact current patch/build and recipe-specific replacement quality-selection rule",
+    "No matched same-build/same-recipe Dragonflight prospecting experiment with controlled skill/spec/gear and per-cast Inspiration flags and rank IDs",
+    "Historical milling cohorts in this batch cannot be used to estimate Dragonflight Jewelcrafting Inspiration coefficients"
+  ],
+  "notes": "Batch009 independent hypothesis revisit: 2022 six beta prospecting cohorts differ in skill/spec; no per-cast Inspiration proc or gem-rank transitions. 2024 Inspiration removal prevents current Retail coefficient. New Legacy milling experiments are NOT evidence for Dragonflight prospect quality transitions. No formula, no current Retail rule, no master promotion."
+}
