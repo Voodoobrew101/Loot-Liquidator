@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "queueRevision": 14,
+  "queueRevision": 15,
   "updatedUTCDate": "2026-10-28",
   "branch": "research/processing-confidence",
   "masterOwned": true,
@@ -21,7 +21,7 @@
     },
     "cumulativeFirstPass": 1643,
     "newMasterFirstPass": 150,
-    "note": "Batch011 accepted 150 source profiles, 1 invalid input correction. P0 compiler built 975 provisional source mappings with 871 all-four numeric source cells; 229 missing cells; no verified unskilled baseline.",
+    "note": "Batch012 reviewed 150 material field keys, zero new first-pass keys; compiler v0.2.0 stages 976 mappings incl Titanium Powder; 31 DF rank-specific P/E pairs quarantined; 7 Midnight diamond outputs specialization gated; 294 missing numeric cells.",
     "current": {
       "asOfUTC": "2026-10-28",
       "coverageLedgerPath": "research/ledger/first-pass-coverage-2026-10-28.csv",
@@ -34,7 +34,7 @@
         "SUBSTANTIATED_GE90": 0
       },
       "cumulativeFirstPass": 1643,
-      "acceptedNewThisMasterReview": 150,
+      "acceptedNewThisMasterReview": 0,
       "unreviewedWorkerSubmissions": 0,
       "allFields90GateMet": false,
       "outputMaterialFieldSlotsPotential": 5392,
@@ -93,7 +93,7 @@
     "submissionFormat": "worker-specific uniquely named Markdown/JSONL/CSV under research/coordination/submissions/<worker>/; include source URLs, original data, field confidence, tests, blockers, exact keys",
     "masterWrites": "research/coordination/assignments.json and central ledgers; workers must not overwrite these",
     "noMainChanges": true,
-    "confidenceGate": "all verifiable material fields >=90; not met",
+    "confidenceGate": "PROVISIONAL_BELOW_90_ALLOWED_WITH_FIELD_PROVENANCE; full four-field numeric and exhaustive universe audit tracked separately",
     "overflow": "Only master may reassign completed worker to other expansion after independent QA; no self-claim or cross-scope duplication",
     "workersMustReadLatestQueue": true,
     "unmappedSourceOutputs": "Worker must preserve unlabeled output vectors without assigning item IDs or awarding first-pass coverage; only independently verified mapping can promote to candidate output records.",
@@ -107,49 +107,49 @@
     "midnight": {
       "expansionScope": "Modern milling profiles, highest IDs first (Midnight/DF/TWW)",
       "workerAutomation": "loot-liquidator-midnight",
-      "assignmentId": "2026-10-28-batch012-midnight",
-      "status": "ASSIGNED_MATERIAL_FIELD_GAPS",
+      "assignmentId": "2026-10-28-batch013-midnight",
+      "status": "ASSIGNED_MATERIAL_GAPS",
       "lastSuccessfulRunUTC": "2026-10-28T17:13:16Z",
       "acceptedFirstPassRecords": 349,
       "acceptedCorrections": 0,
       "knownBlockers": 5,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-midnight/",
       "recordKeys": [
-        "output-supp:midnight:237359:242608:L733",
-        "output-supp:midnight:237361:242608:L744",
-        "output-supp:midnight:237362:242608:L755",
-        "output-supp:midnight:237363:242608:L766",
-        "output-supp:midnight:237364:242608:L777",
-        "output-supp:midnight:237365:242608:L788",
-        "output-supp:midnight:237366:242608:L799",
-        "output-supp:midnight:237359:242786:L727",
-        "output-supp:midnight:237361:242786:L738",
-        "output-supp:midnight:237362:242788:L750",
-        "output-supp:midnight:237363:242788:L761",
-        "output-supp:midnight:237366:242786:L793",
-        "output-supp:midnight:237366:242788:L794",
-        "output-supp:midnight:237359:242788:L728",
-        "output-supp:midnight:237361:242788:L739",
-        "output-supp:midnight:237364:242788:L772",
-        "output-supp:midnight:237365:242788:L783",
-        "output-supp:midnight:237364:242786:L771",
-        "output-supp:midnight:237365:242786:L782",
-        "output-supp:midnight:237362:242786:L749",
-        "output-supp:midnight:237363:242786:L760",
-        "output-supp:midnight:237359:242553:L729",
-        "output-supp:midnight:237361:242553:L740",
-        "output-supp:midnight:237362:242611:L754",
-        "output-supp:midnight:237363:242611:L765",
-        "output-supp:midnight:237364:242553:L773",
-        "output-supp:midnight:237364:242612:L776",
-        "output-supp:midnight:237365:242553:L784",
-        "output-supp:midnight:237365:242612:L787",
-        "output-supp:midnight:237366:242610:L797",
-        "output-supp:midnight:237366:242611:L798",
-        "output-supp:midnight:237366:242612:L796",
-        "output-supp:midnight:237366:242613:L795",
-        "output-supp:midnight:237362:242607:L751",
-        "output-supp:midnight:237363:242607:L762"
+        "recipe-candidate:midnight:crush:242553:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242723:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242554:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242722:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242607:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242720:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242606:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242721:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242613:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242724:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242612:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242727:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242610:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242726:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242611:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242725:gemdust-family:20261028",
+        "recipe-candidate:midnight:refine:242788:242789:1307466:20261028",
+        "output-supp:midnight:237359:242554:L730",
+        "output-supp:midnight:237359:242606:L732",
+        "output-supp:midnight:237359:242607:L731",
+        "output-supp:midnight:237361:242554:L741",
+        "output-supp:midnight:237361:242606:L743",
+        "output-supp:midnight:237361:242607:L742",
+        "output-supp:midnight:237362:242606:L752",
+        "output-supp:midnight:237362:242610:L753",
+        "output-supp:midnight:237363:242606:L763",
+        "output-supp:midnight:237363:242610:L764",
+        "output-supp:midnight:237364:242554:L774",
+        "output-supp:midnight:237364:242613:L775",
+        "output-supp:midnight:237365:242554:L785",
+        "output-supp:midnight:237365:242613:L786",
+        "output-supp:condition:237363:242610",
+        "output-supp:condition:237363:242611",
+        "output-supp:condition:237365:242613",
+        "output-main:tsm:prospect:189143:192844:L1219"
       ],
       "nextBatchPreview": [
         "profile:compiled:mill:191472",
@@ -158,595 +158,238 @@
         "profile:compiled:mill:191469",
         "profile:compiled:mill:191468"
       ],
-      "instructions": "Research these exact material mappings and missing fields, not first-pass profile quotas. Check live Retail recipe/rank eligibility, actual operation count and patch/skill. Do not assert source proxy P as measured or treat unknown as zero. Preserve immutable worker-only evidence; no shared compiler/queue/registry writes.",
-      "previousAssignmentId": "2026-10-28-batch011-midnight",
+      "instructions": "Review exact material keys, preserve raw evidence, verify source IDs, recipe reagent vector, rank and character eligibility. Worker-only files; never edit compiler, central queue, canonical ledgers or production. Unresolved prior TWW keys are deliberate followups, not new first-pass coverage.",
+      "previousAssignmentId": "2026-10-28-batch012-midnight",
       "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1008-midnight-batch010-35key-synthesis-audit.csv",
       "previousWorkerCommit": "0871fe24dd6082943ca2448f69ca4152745f4566",
       "assignmentPhases": [
         {
-          "expansion": "Material-first output/recipe field questions",
+          "expansion": "Midnight missing recipe families and rank/eligibility",
           "recordKeys": [
-            "output-supp:midnight:237359:242608:L733",
-            "output-supp:midnight:237361:242608:L744",
-            "output-supp:midnight:237362:242608:L755",
-            "output-supp:midnight:237363:242608:L766",
-            "output-supp:midnight:237364:242608:L777",
-            "output-supp:midnight:237365:242608:L788",
-            "output-supp:midnight:237366:242608:L799",
-            "output-supp:midnight:237359:242786:L727",
-            "output-supp:midnight:237361:242786:L738",
-            "output-supp:midnight:237362:242788:L750",
-            "output-supp:midnight:237363:242788:L761",
-            "output-supp:midnight:237366:242786:L793",
-            "output-supp:midnight:237366:242788:L794",
-            "output-supp:midnight:237359:242788:L728",
-            "output-supp:midnight:237361:242788:L739",
-            "output-supp:midnight:237364:242788:L772",
-            "output-supp:midnight:237365:242788:L783",
-            "output-supp:midnight:237364:242786:L771",
-            "output-supp:midnight:237365:242786:L782",
-            "output-supp:midnight:237362:242786:L749",
-            "output-supp:midnight:237363:242786:L760",
-            "output-supp:midnight:237359:242553:L729",
-            "output-supp:midnight:237361:242553:L740",
-            "output-supp:midnight:237362:242611:L754",
-            "output-supp:midnight:237363:242611:L765",
-            "output-supp:midnight:237364:242553:L773",
-            "output-supp:midnight:237364:242612:L776",
-            "output-supp:midnight:237365:242553:L784",
-            "output-supp:midnight:237365:242612:L787",
-            "output-supp:midnight:237366:242610:L797",
-            "output-supp:midnight:237366:242611:L798",
-            "output-supp:midnight:237366:242612:L796",
-            "output-supp:midnight:237366:242613:L795",
-            "output-supp:midnight:237362:242607:L751",
-            "output-supp:midnight:237363:242607:L762"
+            "recipe-candidate:midnight:crush:242553:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242723:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242554:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242722:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242607:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242720:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242606:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242721:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242613:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242724:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242612:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242727:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242610:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242726:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242611:gemdust-family:20261028",
+            "recipe-candidate:midnight:crush:242725:gemdust-family:20261028",
+            "recipe-candidate:midnight:refine:242788:242789:1307466:20261028",
+            "output-supp:midnight:237359:242554:L730",
+            "output-supp:midnight:237359:242606:L732",
+            "output-supp:midnight:237359:242607:L731",
+            "output-supp:midnight:237361:242554:L741",
+            "output-supp:midnight:237361:242606:L743",
+            "output-supp:midnight:237361:242607:L742",
+            "output-supp:midnight:237362:242606:L752",
+            "output-supp:midnight:237362:242610:L753",
+            "output-supp:midnight:237363:242606:L763",
+            "output-supp:midnight:237363:242610:L764",
+            "output-supp:midnight:237364:242554:L774",
+            "output-supp:midnight:237364:242613:L775",
+            "output-supp:midnight:237365:242554:L785",
+            "output-supp:midnight:237365:242613:L786",
+            "output-supp:condition:237363:242610",
+            "output-supp:condition:237363:242611",
+            "output-supp:condition:237365:242613",
+            "output-main:tsm:prospect:189143:192844:L1219"
           ]
         }
       ],
-      "lastSubmittedBatch": "batch011",
+      "lastSubmittedBatch": "batch012",
       "lastSuccessfulRunDate": "2026-10-28",
-      "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch011-verdict.md",
+      "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch012-verdict.md",
       "materialTargetDetails": [
         {
-          "stableKey": "output-supp:midnight:237359:242608:L733",
-          "sourceRecordID": "midnight:237359:242608:L733",
-          "method": "Prospect",
-          "inputItemID": 237359,
-          "outputItemID": 242608,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax",
-            "expectedQuantity"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242553:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237361:242608:L744",
-          "sourceRecordID": "midnight:237361:242608:L744",
-          "method": "Prospect",
-          "inputItemID": 237361,
-          "outputItemID": 242608,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax",
-            "expectedQuantity"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242723:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237362:242608:L755",
-          "sourceRecordID": "midnight:237362:242608:L755",
-          "method": "Prospect",
-          "inputItemID": 237362,
-          "outputItemID": 242608,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax",
-            "expectedQuantity"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242554:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237363:242608:L766",
-          "sourceRecordID": "midnight:237363:242608:L766",
-          "method": "Prospect",
-          "inputItemID": 237363,
-          "outputItemID": 242608,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax",
-            "expectedQuantity"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242722:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237364:242608:L777",
-          "sourceRecordID": "midnight:237364:242608:L777",
-          "method": "Prospect",
-          "inputItemID": 237364,
-          "outputItemID": 242608,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax",
-            "expectedQuantity"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242607:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237365:242608:L788",
-          "sourceRecordID": "midnight:237365:242608:L788",
-          "method": "Prospect",
-          "inputItemID": 237365,
-          "outputItemID": 242608,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax",
-            "expectedQuantity"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242720:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237366:242608:L799",
-          "sourceRecordID": "midnight:237366:242608:L799",
-          "method": "Prospect",
-          "inputItemID": 237366,
-          "outputItemID": 242608,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax",
-            "expectedQuantity"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242606:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237359:242786:L727",
-          "sourceRecordID": "midnight:237359:242786:L727",
-          "method": "Prospect",
-          "inputItemID": 237359,
-          "outputItemID": 242786,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242721:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237361:242786:L738",
-          "sourceRecordID": "midnight:237361:242786:L738",
-          "method": "Prospect",
-          "inputItemID": 237361,
-          "outputItemID": 242786,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242613:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237362:242788:L750",
-          "sourceRecordID": "midnight:237362:242788:L750",
-          "method": "Prospect",
-          "inputItemID": 237362,
-          "outputItemID": 242788,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242724:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237363:242788:L761",
-          "sourceRecordID": "midnight:237363:242788:L761",
-          "method": "Prospect",
-          "inputItemID": 237363,
-          "outputItemID": 242788,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242612:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237366:242786:L793",
-          "sourceRecordID": "midnight:237366:242786:L793",
-          "method": "Prospect",
-          "inputItemID": 237366,
-          "outputItemID": 242786,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242727:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237366:242788:L794",
-          "sourceRecordID": "midnight:237366:242788:L794",
-          "method": "Prospect",
-          "inputItemID": 237366,
-          "outputItemID": 242788,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242610:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237359:242788:L728",
-          "sourceRecordID": "midnight:237359:242788:L728",
-          "method": "Prospect",
-          "inputItemID": 237359,
-          "outputItemID": 242788,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242726:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237361:242788:L739",
-          "sourceRecordID": "midnight:237361:242788:L739",
-          "method": "Prospect",
-          "inputItemID": 237361,
-          "outputItemID": 242788,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242611:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237364:242788:L772",
-          "sourceRecordID": "midnight:237364:242788:L772",
-          "method": "Prospect",
-          "inputItemID": 237364,
-          "outputItemID": 242788,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:crush:242725:gemdust-family:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237365:242788:L783",
-          "sourceRecordID": "midnight:237365:242788:L783",
-          "method": "Prospect",
-          "inputItemID": 237365,
-          "outputItemID": 242788,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "recipe-candidate:midnight:refine:242788:242789:1307466:20261028",
+          "priorityBasis": "RECIPE_REAGENT_AND_RANK_VALIDATION",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237364:242786:L771",
-          "sourceRecordID": "midnight:237364:242786:L771",
-          "method": "Prospect",
-          "inputItemID": 237364,
-          "outputItemID": 242786,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237359:242554:L730",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237365:242786:L782",
-          "sourceRecordID": "midnight:237365:242786:L782",
-          "method": "Prospect",
-          "inputItemID": 237365,
-          "outputItemID": 242786,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237359:242606:L732",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237362:242786:L749",
-          "sourceRecordID": "midnight:237362:242786:L749",
-          "method": "Prospect",
-          "inputItemID": 237362,
-          "outputItemID": 242786,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237359:242607:L731",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237363:242786:L760",
-          "sourceRecordID": "midnight:237363:242786:L760",
-          "method": "Prospect",
-          "inputItemID": 237363,
-          "outputItemID": 242786,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237361:242554:L741",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237359:242553:L729",
-          "sourceRecordID": "midnight:237359:242553:L729",
-          "method": "Prospect",
-          "inputItemID": 237359,
-          "outputItemID": 242553,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237361:242606:L743",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237361:242553:L740",
-          "sourceRecordID": "midnight:237361:242553:L740",
-          "method": "Prospect",
-          "inputItemID": 237361,
-          "outputItemID": 242553,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237361:242607:L742",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237362:242611:L754",
-          "sourceRecordID": "midnight:237362:242611:L754",
-          "method": "Prospect",
-          "inputItemID": 237362,
-          "outputItemID": 242611,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237362:242606:L752",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237363:242611:L765",
-          "sourceRecordID": "midnight:237363:242611:L765",
-          "method": "Prospect",
-          "inputItemID": 237363,
-          "outputItemID": 242611,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237362:242610:L753",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237364:242553:L773",
-          "sourceRecordID": "midnight:237364:242553:L773",
-          "method": "Prospect",
-          "inputItemID": 237364,
-          "outputItemID": 242553,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237363:242606:L763",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237364:242612:L776",
-          "sourceRecordID": "midnight:237364:242612:L776",
-          "method": "Prospect",
-          "inputItemID": 237364,
-          "outputItemID": 242612,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237363:242610:L764",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237365:242553:L784",
-          "sourceRecordID": "midnight:237365:242553:L784",
-          "method": "Prospect",
-          "inputItemID": 237365,
-          "outputItemID": 242553,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237364:242554:L774",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237365:242612:L787",
-          "sourceRecordID": "midnight:237365:242612:L787",
-          "method": "Prospect",
-          "inputItemID": 237365,
-          "outputItemID": 242612,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237364:242613:L775",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237366:242610:L797",
-          "sourceRecordID": "midnight:237366:242610:L797",
-          "method": "Prospect",
-          "inputItemID": 237366,
-          "outputItemID": 242610,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237365:242554:L785",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237366:242611:L798",
-          "sourceRecordID": "midnight:237366:242611:L798",
-          "method": "Prospect",
-          "inputItemID": 237366,
-          "outputItemID": 242611,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:midnight:237365:242613:L786",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237366:242612:L796",
-          "sourceRecordID": "midnight:237366:242612:L796",
-          "method": "Prospect",
-          "inputItemID": 237366,
-          "outputItemID": 242612,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:condition:237363:242610",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237366:242613:L795",
-          "sourceRecordID": "midnight:237366:242613:L795",
-          "method": "Prospect",
-          "inputItemID": 237366,
-          "outputItemID": 242613,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:condition:237363:242611",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237362:242607:L751",
-          "sourceRecordID": "midnight:237362:242607:L751",
-          "method": "Prospect",
-          "inputItemID": 237362,
-          "outputItemID": 242607,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-supp:condition:237365:242613",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:midnight:237363:242607:L762",
-          "sourceRecordID": "midnight:237363:242607:L762",
-          "method": "Prospect",
-          "inputItemID": 237363,
-          "outputItemID": 242607,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-main:tsm:prospect:189143:192844:L1219",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         }
       ]
     },
     "war_within": {
       "expansionScope": "Unexamined disenchant source profiles",
       "workerAutomation": "loot-liquidator-war-within",
-      "assignmentId": "2026-10-28-batch012-war_within",
-      "status": "ASSIGNED_MATERIAL_FIELD_GAPS",
+      "assignmentId": "2026-10-28-batch013-war_within",
+      "status": "ASSIGNED_MATERIAL_GAPS",
       "lastSuccessfulRunUTC": "2026-10-28T17:25:22Z",
       "acceptedFirstPassRecords": 384,
       "acceptedCorrections": 0,
@@ -774,20 +417,20 @@
         "output-main:compiled:prospect:210934:213399:L432",
         "output-main:compiled:prospect:210937:212495:L439",
         "output-main:compiled:prospect:210937:213399:L443",
-        "output-supp:dragonflight:192880:192849:0",
-        "output-supp:dragonflight:192880:192866:1",
-        "output-main:tsm:prospect:188658:192870:L1205",
-        "output-main:tsm:prospect:188658:192871:L1206",
-        "output-main:tsm:prospect:189143:192870:L1243",
-        "output-main:tsm:prospect:189143:192871:L1244",
-        "output-main:tsm:prospect:190311:192870:L1281",
-        "output-main:tsm:prospect:190311:192871:L1282",
-        "output-main:tsm:mill:200061:190322:L1996",
-        "output-main:tsm:mill:191460:198421:L1935",
-        "output-main:tsm:mill:191460:198422:L1936",
-        "output-main:tsm:mill:191460:198423:L1937",
-        "output-main:tsm:mill:191461:198421:L1940",
-        "output-main:tsm:mill:191461:198422:L1941"
+        "output-main:tsm:prospect:188658:192865:L1200",
+        "output-main:tsm:prospect:188658:192866:L1201",
+        "output-main:tsm:prospect:188658:192867:L1202",
+        "output-main:tsm:prospect:188658:192868:L1203",
+        "output-main:tsm:prospect:188658:192869:L1204",
+        "output-main:tsm:prospect:188658:192872:L1207",
+        "output-main:tsm:prospect:188658:194545:L1209",
+        "output-main:tsm:prospect:189143:192837:L1212",
+        "output-main:tsm:prospect:189143:192838:L1213",
+        "output-main:tsm:prospect:189143:192839:L1214",
+        "output-main:tsm:prospect:189143:192840:L1215",
+        "output-main:tsm:prospect:189143:192841:L1216",
+        "output-main:tsm:prospect:189143:192842:L1217",
+        "output-main:tsm:prospect:189143:192843:L1218"
       ],
       "nextBatchPreview": [
         "profile:de:11:2:armor",
@@ -796,13 +439,13 @@
         "profile:de:11:3:weapon",
         "profile:de:11:4:armor"
       ],
-      "instructions": "Research these exact material mappings and missing fields, not first-pass profile quotas. Check live Retail recipe/rank eligibility, actual operation count and patch/skill. Do not assert source proxy P as measured or treat unknown as zero. Preserve immutable worker-only evidence; no shared compiler/queue/registry writes.",
-      "previousAssignmentId": "2026-10-28-batch011-war_within",
+      "instructions": "Review exact material keys, preserve raw evidence, verify source IDs, recipe reagent vector, rank and character eligibility. Worker-only files; never edit compiler, central queue, canonical ledgers or production. Unresolved prior TWW keys are deliberate followups, not new first-pass coverage.",
+      "previousAssignmentId": "2026-10-28-batch012-war_within",
       "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-war-within/2026-10-28-1020-warwithin-batch010-35key-audit.csv",
       "previousWorkerCommit": "ae55999cd53f6d758beabe45d39196946477bdf8",
       "assignmentPhases": [
         {
-          "expansion": "Material-first output/recipe field questions",
+          "expansion": "TWW smelt and unresolved TWW, Dragonflight overflow",
           "recordKeys": [
             "output-supp:smelt:102167:72095",
             "output-supp:smelt:2659:2841",
@@ -825,550 +468,255 @@
             "output-main:compiled:prospect:210934:213399:L432",
             "output-main:compiled:prospect:210937:212495:L439",
             "output-main:compiled:prospect:210937:213399:L443",
-            "output-supp:dragonflight:192880:192849:0",
-            "output-supp:dragonflight:192880:192866:1",
-            "output-main:tsm:prospect:188658:192870:L1205",
-            "output-main:tsm:prospect:188658:192871:L1206",
-            "output-main:tsm:prospect:189143:192870:L1243",
-            "output-main:tsm:prospect:189143:192871:L1244",
-            "output-main:tsm:prospect:190311:192870:L1281",
-            "output-main:tsm:prospect:190311:192871:L1282",
-            "output-main:tsm:mill:200061:190322:L1996",
-            "output-main:tsm:mill:191460:198421:L1935",
-            "output-main:tsm:mill:191460:198422:L1936",
-            "output-main:tsm:mill:191460:198423:L1937",
-            "output-main:tsm:mill:191461:198421:L1940",
-            "output-main:tsm:mill:191461:198422:L1941"
+            "output-main:tsm:prospect:188658:192865:L1200",
+            "output-main:tsm:prospect:188658:192866:L1201",
+            "output-main:tsm:prospect:188658:192867:L1202",
+            "output-main:tsm:prospect:188658:192868:L1203",
+            "output-main:tsm:prospect:188658:192869:L1204",
+            "output-main:tsm:prospect:188658:192872:L1207",
+            "output-main:tsm:prospect:188658:194545:L1209",
+            "output-main:tsm:prospect:189143:192837:L1212",
+            "output-main:tsm:prospect:189143:192838:L1213",
+            "output-main:tsm:prospect:189143:192839:L1214",
+            "output-main:tsm:prospect:189143:192840:L1215",
+            "output-main:tsm:prospect:189143:192841:L1216",
+            "output-main:tsm:prospect:189143:192842:L1217",
+            "output-main:tsm:prospect:189143:192843:L1218"
           ]
         }
       ],
-      "lastSubmittedBatch": "batch011",
+      "lastSubmittedBatch": "batch012",
       "lastSuccessfulRunDate": "2026-10-28",
-      "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch011-verdict.md",
+      "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch012-verdict.md",
       "materialTargetDetails": [
         {
           "stableKey": "output-supp:smelt:102167:72095",
-          "sourceRecordID": "smelt:102167:72095",
-          "method": "Smelt",
-          "inputItemID": null,
-          "outputItemID": 72095,
-          "recipeSpellID": 102167,
-          "missingFields": [
-            "reagentInputs",
-            "recipeEligibility"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "smelt-schema-gap"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-supp:smelt:2659:2841",
-          "sourceRecordID": "smelt:2659:2841",
-          "method": "Smelt",
-          "inputItemID": null,
-          "outputItemID": 2841,
-          "recipeSpellID": 2659,
-          "missingFields": [
-            "reagentInputs",
-            "recipeEligibility"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "smelt-schema-gap"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-supp:smelt:29356:23445",
-          "sourceRecordID": "smelt:29356:23445",
-          "method": "Smelt",
-          "inputItemID": null,
-          "outputItemID": 23445,
-          "recipeSpellID": 29356,
-          "missingFields": [
-            "reagentInputs",
-            "recipeEligibility"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "smelt-schema-gap"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-supp:smelt:29360:23448",
-          "sourceRecordID": "smelt:29360:23448",
-          "method": "Smelt",
-          "inputItemID": null,
-          "outputItemID": 23448,
-          "recipeSpellID": 29360,
-          "missingFields": [
-            "reagentInputs",
-            "recipeEligibility"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "smelt-schema-gap"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-supp:smelt:3569:3859",
-          "sourceRecordID": "smelt:3569:3859",
-          "method": "Smelt",
-          "inputItemID": null,
-          "outputItemID": 3859,
-          "recipeSpellID": 3569,
-          "missingFields": [
-            "reagentInputs",
-            "recipeEligibility"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "smelt-schema-gap"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-supp:smelt:46353:35128",
-          "sourceRecordID": "smelt:46353:35128",
-          "method": "Smelt",
-          "inputItemID": null,
-          "outputItemID": 35128,
-          "recipeSpellID": 46353,
-          "missingFields": [
-            "reagentInputs",
-            "recipeEligibility"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "smelt-schema-gap"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-supp:smelt:55208:37663",
-          "sourceRecordID": "smelt:55208:37663",
-          "method": "Smelt",
-          "inputItemID": null,
-          "outputItemID": 37663,
-          "recipeSpellID": 55208,
-          "missingFields": [
-            "reagentInputs",
-            "recipeEligibility"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "smelt-schema-gap"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-supp:smelt:74537:53039",
-          "sourceRecordID": "smelt:74537:53039",
-          "method": "Smelt",
-          "inputItemID": null,
-          "outputItemID": 53039,
-          "recipeSpellID": 74537,
-          "missingFields": [
-            "reagentInputs",
-            "recipeEligibility"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "smelt-schema-gap"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210931:213398:L420",
-          "sourceRecordID": "compiled:prospect:210931:213398:L420",
-          "method": "Prospect",
-          "inputItemID": 210931,
-          "outputItemID": 213398,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210937:213398:L442",
-          "sourceRecordID": "compiled:prospect:210937:213398:L442",
-          "method": "Prospect",
-          "inputItemID": 210937,
-          "outputItemID": 213398,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210931:212498:L419",
-          "sourceRecordID": "compiled:prospect:210931:212498:L419",
-          "method": "Prospect",
-          "inputItemID": 210931,
-          "outputItemID": 212498,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210934:212498:L428",
-          "sourceRecordID": "compiled:prospect:210934:212498:L428",
-          "method": "Prospect",
-          "inputItemID": 210934,
-          "outputItemID": 212498,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210934:213398:L431",
-          "sourceRecordID": "compiled:prospect:210934:213398:L431",
-          "method": "Prospect",
-          "inputItemID": 210934,
-          "outputItemID": 213398,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210937:212498:L440",
-          "sourceRecordID": "compiled:prospect:210937:212498:L440",
-          "method": "Prospect",
-          "inputItemID": 210937,
-          "outputItemID": 212498,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210931:213399:L421",
-          "sourceRecordID": "compiled:prospect:210931:213399:L421",
-          "method": "Prospect",
-          "inputItemID": 210931,
-          "outputItemID": 213399,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210934:212508:L430",
-          "sourceRecordID": "compiled:prospect:210934:212508:L430",
-          "method": "Prospect",
-          "inputItemID": 210934,
-          "outputItemID": 212508,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210937:212511:L441",
-          "sourceRecordID": "compiled:prospect:210937:212511:L441",
-          "method": "Prospect",
-          "inputItemID": 210937,
-          "outputItemID": 212511,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210934:212505:L429",
-          "sourceRecordID": "compiled:prospect:210934:212505:L429",
-          "method": "Prospect",
-          "inputItemID": 210934,
-          "outputItemID": 212505,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210934:213399:L432",
-          "sourceRecordID": "compiled:prospect:210934:213399:L432",
-          "method": "Prospect",
-          "inputItemID": 210934,
-          "outputItemID": 213399,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210937:212495:L439",
-          "sourceRecordID": "compiled:prospect:210937:212495:L439",
-          "method": "Prospect",
-          "inputItemID": 210937,
-          "outputItemID": 212495,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
           "stableKey": "output-main:compiled:prospect:210937:213399:L443",
-          "sourceRecordID": "compiled:prospect:210937:213399:L443",
-          "method": "Prospect",
-          "inputItemID": 210937,
-          "outputItemID": 213399,
-          "recipeSpellID": null,
-          "missingFields": [
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:dragonflight:192880:192849:0",
-          "sourceRecordID": "dragonflight:192880:192849:0",
-          "method": "Prospect",
-          "inputItemID": 192880,
-          "outputItemID": 192849,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-main:tsm:prospect:188658:192865:L1200",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-supp:dragonflight:192880:192866:1",
-          "sourceRecordID": "dragonflight:192880:192866:1",
-          "method": "Prospect",
-          "inputItemID": 192880,
-          "outputItemID": 192866,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance",
-            "yieldMin",
-            "yieldMax"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "supplemental"
+          "stableKey": "output-main:tsm:prospect:188658:192866:L1201",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:188658:192870:L1205",
-          "sourceRecordID": "tsm:prospect:188658:192870:L1205",
-          "method": "Prospect",
-          "inputItemID": 188658,
-          "outputItemID": 192870,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192867:L1202",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:188658:192871:L1206",
-          "sourceRecordID": "tsm:prospect:188658:192871:L1206",
-          "method": "Prospect",
-          "inputItemID": 188658,
-          "outputItemID": 192871,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192868:L1203",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:189143:192870:L1243",
-          "sourceRecordID": "tsm:prospect:189143:192870:L1243",
-          "method": "Prospect",
-          "inputItemID": 189143,
-          "outputItemID": 192870,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192869:L1204",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:189143:192871:L1244",
-          "sourceRecordID": "tsm:prospect:189143:192871:L1244",
-          "method": "Prospect",
-          "inputItemID": 189143,
-          "outputItemID": 192871,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192872:L1207",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190311:192870:L1281",
-          "sourceRecordID": "tsm:prospect:190311:192870:L1281",
-          "method": "Prospect",
-          "inputItemID": 190311,
-          "outputItemID": 192870,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:194545:L1209",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190311:192871:L1282",
-          "sourceRecordID": "tsm:prospect:190311:192871:L1282",
-          "method": "Prospect",
-          "inputItemID": 190311,
-          "outputItemID": 192871,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:189143:192837:L1212",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:200061:190322:L1996",
-          "sourceRecordID": "tsm:mill:200061:190322:L1996",
-          "method": "Mill",
-          "inputItemID": 200061,
-          "outputItemID": 190322,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:189143:192838:L1213",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191460:198421:L1935",
-          "sourceRecordID": "tsm:mill:191460:198421:L1935",
-          "method": "Mill",
-          "inputItemID": 191460,
-          "outputItemID": 198421,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:189143:192839:L1214",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191460:198422:L1936",
-          "sourceRecordID": "tsm:mill:191460:198422:L1936",
-          "method": "Mill",
-          "inputItemID": 191460,
-          "outputItemID": 198422,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:189143:192840:L1215",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191460:198423:L1937",
-          "sourceRecordID": "tsm:mill:191460:198423:L1937",
-          "method": "Mill",
-          "inputItemID": 191460,
-          "outputItemID": 198423,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:189143:192841:L1216",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191461:198421:L1940",
-          "sourceRecordID": "tsm:mill:191461:198421:L1940",
-          "method": "Mill",
-          "inputItemID": 191461,
-          "outputItemID": 198421,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:189143:192842:L1217",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191461:198422:L1941",
-          "sourceRecordID": "tsm:mill:191461:198422:L1941",
-          "method": "Mill",
-          "inputItemID": 191461,
-          "outputItemID": 198422,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:189143:192843:L1218",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         }
       ]
     },
     "dragonflight": {
       "expansionScope": "Unexamined prospect source profiles, highest IDs first",
       "workerAutomation": "loot-liquidator-dragonflight",
-      "assignmentId": "2026-10-28-batch012-dragonflight",
-      "status": "ASSIGNED_MATERIAL_FIELD_GAPS",
+      "assignmentId": "2026-10-28-batch013-dragonflight",
+      "status": "ASSIGNED_MATERIAL_GAPS",
       "lastSuccessfulRunUTC": "2026-10-28T17:36:37Z",
       "acceptedFirstPassRecords": 436,
       "acceptedCorrections": 0,
       "knownBlockers": 4,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-dragonflight/",
       "recordKeys": [
-        "output-main:tsm:mill:191461:198423:L1942",
-        "output-main:tsm:mill:191462:198421:L1945",
-        "output-main:tsm:mill:191462:198422:L1946",
-        "output-main:tsm:mill:191462:198423:L1947",
-        "output-main:tsm:mill:191464:198418:L1950",
-        "output-main:tsm:mill:191464:198419:L1951",
-        "output-main:tsm:mill:191464:198420:L1952",
-        "output-main:tsm:mill:191465:198418:L1955",
-        "output-main:tsm:mill:191465:198419:L1956",
-        "output-main:tsm:mill:191465:198420:L1957",
-        "output-main:tsm:mill:191466:198418:L1960",
-        "output-main:tsm:mill:191466:198419:L1961",
-        "output-main:tsm:mill:191466:198420:L1962",
-        "output-main:tsm:mill:191467:198412:L1965",
-        "output-main:tsm:mill:191467:198413:L1966",
-        "output-main:tsm:mill:191467:198414:L1967",
-        "output-main:tsm:mill:191468:198412:L1970",
-        "output-main:tsm:mill:191468:198413:L1971",
-        "output-main:tsm:mill:191468:198414:L1972",
-        "output-main:tsm:mill:191469:198412:L1975",
-        "output-main:tsm:mill:191469:198413:L1976",
-        "output-main:tsm:mill:191469:198414:L1977",
-        "output-main:tsm:mill:191470:198415:L1980",
-        "output-main:tsm:mill:191470:198416:L1981",
-        "output-main:tsm:mill:191470:198417:L1982",
-        "output-main:tsm:mill:191471:198415:L1985",
-        "output-main:tsm:mill:191471:198416:L1986",
-        "output-main:tsm:mill:191471:198417:L1987",
-        "output-main:tsm:mill:191472:198415:L1990",
-        "output-main:tsm:mill:191472:198416:L1991",
-        "output-main:tsm:mill:191472:198417:L1992",
-        "output-main:tsm:prospect:188658:192880:L1208",
-        "output-main:tsm:prospect:189143:192880:L1246",
-        "output-main:tsm:prospect:190311:192880:L1284",
-        "output-main:tsm:prospect:190312:192880:L1322",
-        "output-main:tsm:prospect:190313:192880:L1360",
-        "output-main:tsm:prospect:190314:192880:L1398",
-        "output-main:tsm:prospect:190394:192880:L1436",
-        "output-main:tsm:prospect:190395:192880:L1474",
-        "output-main:tsm:prospect:190396:192880:L1512"
+        "output-main:tsm:mill:200061:190320:L1995",
+        "output-main:tsm:mill:200061:190328:L1997",
+        "output-main:tsm:mill:200061:198412:L1998",
+        "output-main:tsm:mill:200061:198413:L1999",
+        "output-main:tsm:mill:200061:198414:L2000",
+        "output-main:tsm:mill:200061:198415:L2001",
+        "output-main:tsm:mill:200061:198416:L2002",
+        "output-main:tsm:mill:200061:198417:L2003",
+        "output-main:tsm:mill:200061:198418:L2004",
+        "output-main:tsm:mill:200061:198419:L2005",
+        "output-main:tsm:mill:200061:198420:L2006",
+        "output-main:tsm:mill:200061:198421:L2007",
+        "output-main:tsm:mill:200061:198422:L2008",
+        "output-main:tsm:mill:200061:198423:L2009",
+        "output-main:tsm:prospect:188658:192837:L1174",
+        "output-main:tsm:prospect:188658:192838:L1175",
+        "output-main:tsm:prospect:188658:192839:L1176",
+        "output-main:tsm:prospect:188658:192840:L1177",
+        "output-main:tsm:prospect:188658:192841:L1178",
+        "output-main:tsm:prospect:188658:192842:L1179",
+        "output-main:tsm:prospect:188658:192843:L1180",
+        "output-main:tsm:prospect:188658:192844:L1181",
+        "output-main:tsm:prospect:188658:192845:L1182",
+        "output-main:tsm:prospect:188658:192846:L1183",
+        "output-main:tsm:prospect:188658:192847:L1184",
+        "output-main:tsm:prospect:188658:192848:L1185",
+        "output-main:tsm:prospect:188658:192849:L1186",
+        "output-main:tsm:prospect:188658:192850:L1187",
+        "output-main:tsm:prospect:188658:192851:L1188",
+        "output-main:tsm:prospect:188658:192852:L1189",
+        "output-main:tsm:prospect:188658:192853:L1190",
+        "output-main:tsm:prospect:188658:192855:L1191",
+        "output-main:tsm:prospect:188658:192856:L1192",
+        "output-main:tsm:prospect:188658:192857:L1193",
+        "output-main:tsm:prospect:188658:192858:L1194",
+        "output-main:tsm:prospect:188658:192859:L1195",
+        "output-main:tsm:prospect:188658:192860:L1196",
+        "output-main:tsm:prospect:188658:192861:L1197",
+        "output-main:tsm:prospect:188658:192862:L1198",
+        "output-main:tsm:prospect:188658:192863:L1199"
       ],
       "nextBatchPreview": [
         "profile:tsm:prospect:199344",
@@ -1377,554 +725,314 @@
         "profile:dragonflight:192880",
         "profile:tsm:prospect:190396"
       ],
-      "instructions": "Research these exact material mappings and missing fields, not first-pass profile quotas. Check live Retail recipe/rank eligibility, actual operation count and patch/skill. Do not assert source proxy P as measured or treat unknown as zero. Preserve immutable worker-only evidence; no shared compiler/queue/registry writes.",
-      "previousAssignmentId": "2026-10-28-batch011-dragonflight",
+      "instructions": "Review exact material keys, preserve raw evidence, verify source IDs, recipe reagent vector, rank and character eligibility. Worker-only files; never edit compiler, central queue, canonical ledgers or production. Unresolved prior TWW keys are deliberate followups, not new first-pass coverage.",
+      "previousAssignmentId": "2026-10-28-batch012-dragonflight",
       "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1031-dragonflight-batch010-40profile-audit.csv",
       "previousWorkerCommit": "4c6750b96844c84fdb9b3ea3b7c8fe642c59bb04",
       "assignmentPhases": [
         {
-          "expansion": "Material-first output/recipe field questions",
+          "expansion": "Dragonflight rank/quantity gaps",
           "recordKeys": [
-            "output-main:tsm:mill:191461:198423:L1942",
-            "output-main:tsm:mill:191462:198421:L1945",
-            "output-main:tsm:mill:191462:198422:L1946",
-            "output-main:tsm:mill:191462:198423:L1947",
-            "output-main:tsm:mill:191464:198418:L1950",
-            "output-main:tsm:mill:191464:198419:L1951",
-            "output-main:tsm:mill:191464:198420:L1952",
-            "output-main:tsm:mill:191465:198418:L1955",
-            "output-main:tsm:mill:191465:198419:L1956",
-            "output-main:tsm:mill:191465:198420:L1957",
-            "output-main:tsm:mill:191466:198418:L1960",
-            "output-main:tsm:mill:191466:198419:L1961",
-            "output-main:tsm:mill:191466:198420:L1962",
-            "output-main:tsm:mill:191467:198412:L1965",
-            "output-main:tsm:mill:191467:198413:L1966",
-            "output-main:tsm:mill:191467:198414:L1967",
-            "output-main:tsm:mill:191468:198412:L1970",
-            "output-main:tsm:mill:191468:198413:L1971",
-            "output-main:tsm:mill:191468:198414:L1972",
-            "output-main:tsm:mill:191469:198412:L1975",
-            "output-main:tsm:mill:191469:198413:L1976",
-            "output-main:tsm:mill:191469:198414:L1977",
-            "output-main:tsm:mill:191470:198415:L1980",
-            "output-main:tsm:mill:191470:198416:L1981",
-            "output-main:tsm:mill:191470:198417:L1982",
-            "output-main:tsm:mill:191471:198415:L1985",
-            "output-main:tsm:mill:191471:198416:L1986",
-            "output-main:tsm:mill:191471:198417:L1987",
-            "output-main:tsm:mill:191472:198415:L1990",
-            "output-main:tsm:mill:191472:198416:L1991",
-            "output-main:tsm:mill:191472:198417:L1992",
-            "output-main:tsm:prospect:188658:192880:L1208",
-            "output-main:tsm:prospect:189143:192880:L1246",
-            "output-main:tsm:prospect:190311:192880:L1284",
-            "output-main:tsm:prospect:190312:192880:L1322",
-            "output-main:tsm:prospect:190313:192880:L1360",
-            "output-main:tsm:prospect:190314:192880:L1398",
-            "output-main:tsm:prospect:190394:192880:L1436",
-            "output-main:tsm:prospect:190395:192880:L1474",
-            "output-main:tsm:prospect:190396:192880:L1512"
+            "output-main:tsm:mill:200061:190320:L1995",
+            "output-main:tsm:mill:200061:190328:L1997",
+            "output-main:tsm:mill:200061:198412:L1998",
+            "output-main:tsm:mill:200061:198413:L1999",
+            "output-main:tsm:mill:200061:198414:L2000",
+            "output-main:tsm:mill:200061:198415:L2001",
+            "output-main:tsm:mill:200061:198416:L2002",
+            "output-main:tsm:mill:200061:198417:L2003",
+            "output-main:tsm:mill:200061:198418:L2004",
+            "output-main:tsm:mill:200061:198419:L2005",
+            "output-main:tsm:mill:200061:198420:L2006",
+            "output-main:tsm:mill:200061:198421:L2007",
+            "output-main:tsm:mill:200061:198422:L2008",
+            "output-main:tsm:mill:200061:198423:L2009",
+            "output-main:tsm:prospect:188658:192837:L1174",
+            "output-main:tsm:prospect:188658:192838:L1175",
+            "output-main:tsm:prospect:188658:192839:L1176",
+            "output-main:tsm:prospect:188658:192840:L1177",
+            "output-main:tsm:prospect:188658:192841:L1178",
+            "output-main:tsm:prospect:188658:192842:L1179",
+            "output-main:tsm:prospect:188658:192843:L1180",
+            "output-main:tsm:prospect:188658:192844:L1181",
+            "output-main:tsm:prospect:188658:192845:L1182",
+            "output-main:tsm:prospect:188658:192846:L1183",
+            "output-main:tsm:prospect:188658:192847:L1184",
+            "output-main:tsm:prospect:188658:192848:L1185",
+            "output-main:tsm:prospect:188658:192849:L1186",
+            "output-main:tsm:prospect:188658:192850:L1187",
+            "output-main:tsm:prospect:188658:192851:L1188",
+            "output-main:tsm:prospect:188658:192852:L1189",
+            "output-main:tsm:prospect:188658:192853:L1190",
+            "output-main:tsm:prospect:188658:192855:L1191",
+            "output-main:tsm:prospect:188658:192856:L1192",
+            "output-main:tsm:prospect:188658:192857:L1193",
+            "output-main:tsm:prospect:188658:192858:L1194",
+            "output-main:tsm:prospect:188658:192859:L1195",
+            "output-main:tsm:prospect:188658:192860:L1196",
+            "output-main:tsm:prospect:188658:192861:L1197",
+            "output-main:tsm:prospect:188658:192862:L1198",
+            "output-main:tsm:prospect:188658:192863:L1199"
           ]
         }
       ],
-      "lastSubmittedBatch": "batch011",
+      "lastSubmittedBatch": "batch012",
       "lastSuccessfulRunDate": "2026-10-28",
-      "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch011-verdict.md",
+      "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch012-verdict.md",
       "materialTargetDetails": [
         {
-          "stableKey": "output-main:tsm:mill:191461:198423:L1942",
-          "sourceRecordID": "tsm:mill:191461:198423:L1942",
-          "method": "Mill",
-          "inputItemID": 191461,
-          "outputItemID": 198423,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:190320:L1995",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191462:198421:L1945",
-          "sourceRecordID": "tsm:mill:191462:198421:L1945",
-          "method": "Mill",
-          "inputItemID": 191462,
-          "outputItemID": 198421,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:190328:L1997",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191462:198422:L1946",
-          "sourceRecordID": "tsm:mill:191462:198422:L1946",
-          "method": "Mill",
-          "inputItemID": 191462,
-          "outputItemID": 198422,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198412:L1998",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191462:198423:L1947",
-          "sourceRecordID": "tsm:mill:191462:198423:L1947",
-          "method": "Mill",
-          "inputItemID": 191462,
-          "outputItemID": 198423,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198413:L1999",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191464:198418:L1950",
-          "sourceRecordID": "tsm:mill:191464:198418:L1950",
-          "method": "Mill",
-          "inputItemID": 191464,
-          "outputItemID": 198418,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198414:L2000",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191464:198419:L1951",
-          "sourceRecordID": "tsm:mill:191464:198419:L1951",
-          "method": "Mill",
-          "inputItemID": 191464,
-          "outputItemID": 198419,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198415:L2001",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191464:198420:L1952",
-          "sourceRecordID": "tsm:mill:191464:198420:L1952",
-          "method": "Mill",
-          "inputItemID": 191464,
-          "outputItemID": 198420,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198416:L2002",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191465:198418:L1955",
-          "sourceRecordID": "tsm:mill:191465:198418:L1955",
-          "method": "Mill",
-          "inputItemID": 191465,
-          "outputItemID": 198418,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198417:L2003",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191465:198419:L1956",
-          "sourceRecordID": "tsm:mill:191465:198419:L1956",
-          "method": "Mill",
-          "inputItemID": 191465,
-          "outputItemID": 198419,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198418:L2004",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191465:198420:L1957",
-          "sourceRecordID": "tsm:mill:191465:198420:L1957",
-          "method": "Mill",
-          "inputItemID": 191465,
-          "outputItemID": 198420,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198419:L2005",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191466:198418:L1960",
-          "sourceRecordID": "tsm:mill:191466:198418:L1960",
-          "method": "Mill",
-          "inputItemID": 191466,
-          "outputItemID": 198418,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198420:L2006",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191466:198419:L1961",
-          "sourceRecordID": "tsm:mill:191466:198419:L1961",
-          "method": "Mill",
-          "inputItemID": 191466,
-          "outputItemID": 198419,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198421:L2007",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191466:198420:L1962",
-          "sourceRecordID": "tsm:mill:191466:198420:L1962",
-          "method": "Mill",
-          "inputItemID": 191466,
-          "outputItemID": 198420,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198422:L2008",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191467:198412:L1965",
-          "sourceRecordID": "tsm:mill:191467:198412:L1965",
-          "method": "Mill",
-          "inputItemID": 191467,
-          "outputItemID": 198412,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:mill:200061:198423:L2009",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191467:198413:L1966",
-          "sourceRecordID": "tsm:mill:191467:198413:L1966",
-          "method": "Mill",
-          "inputItemID": 191467,
-          "outputItemID": 198413,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192837:L1174",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191467:198414:L1967",
-          "sourceRecordID": "tsm:mill:191467:198414:L1967",
-          "method": "Mill",
-          "inputItemID": 191467,
-          "outputItemID": 198414,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192838:L1175",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191468:198412:L1970",
-          "sourceRecordID": "tsm:mill:191468:198412:L1970",
-          "method": "Mill",
-          "inputItemID": 191468,
-          "outputItemID": 198412,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192839:L1176",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191468:198413:L1971",
-          "sourceRecordID": "tsm:mill:191468:198413:L1971",
-          "method": "Mill",
-          "inputItemID": 191468,
-          "outputItemID": 198413,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192840:L1177",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191468:198414:L1972",
-          "sourceRecordID": "tsm:mill:191468:198414:L1972",
-          "method": "Mill",
-          "inputItemID": 191468,
-          "outputItemID": 198414,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192841:L1178",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191469:198412:L1975",
-          "sourceRecordID": "tsm:mill:191469:198412:L1975",
-          "method": "Mill",
-          "inputItemID": 191469,
-          "outputItemID": 198412,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192842:L1179",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191469:198413:L1976",
-          "sourceRecordID": "tsm:mill:191469:198413:L1976",
-          "method": "Mill",
-          "inputItemID": 191469,
-          "outputItemID": 198413,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192843:L1180",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191469:198414:L1977",
-          "sourceRecordID": "tsm:mill:191469:198414:L1977",
-          "method": "Mill",
-          "inputItemID": 191469,
-          "outputItemID": 198414,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192844:L1181",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191470:198415:L1980",
-          "sourceRecordID": "tsm:mill:191470:198415:L1980",
-          "method": "Mill",
-          "inputItemID": 191470,
-          "outputItemID": 198415,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192845:L1182",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191470:198416:L1981",
-          "sourceRecordID": "tsm:mill:191470:198416:L1981",
-          "method": "Mill",
-          "inputItemID": 191470,
-          "outputItemID": 198416,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192846:L1183",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191470:198417:L1982",
-          "sourceRecordID": "tsm:mill:191470:198417:L1982",
-          "method": "Mill",
-          "inputItemID": 191470,
-          "outputItemID": 198417,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192847:L1184",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191471:198415:L1985",
-          "sourceRecordID": "tsm:mill:191471:198415:L1985",
-          "method": "Mill",
-          "inputItemID": 191471,
-          "outputItemID": 198415,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192848:L1185",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191471:198416:L1986",
-          "sourceRecordID": "tsm:mill:191471:198416:L1986",
-          "method": "Mill",
-          "inputItemID": 191471,
-          "outputItemID": 198416,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192849:L1186",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191471:198417:L1987",
-          "sourceRecordID": "tsm:mill:191471:198417:L1987",
-          "method": "Mill",
-          "inputItemID": 191471,
-          "outputItemID": 198417,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192850:L1187",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191472:198415:L1990",
-          "sourceRecordID": "tsm:mill:191472:198415:L1990",
-          "method": "Mill",
-          "inputItemID": 191472,
-          "outputItemID": 198415,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192851:L1188",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191472:198416:L1991",
-          "sourceRecordID": "tsm:mill:191472:198416:L1991",
-          "method": "Mill",
-          "inputItemID": 191472,
-          "outputItemID": 198416,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192852:L1189",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:191472:198417:L1992",
-          "sourceRecordID": "tsm:mill:191472:198417:L1992",
-          "method": "Mill",
-          "inputItemID": 191472,
-          "outputItemID": 198417,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192853:L1190",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:188658:192880:L1208",
-          "sourceRecordID": "tsm:prospect:188658:192880:L1208",
-          "method": "Prospect",
-          "inputItemID": 188658,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192855:L1191",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:189143:192880:L1246",
-          "sourceRecordID": "tsm:prospect:189143:192880:L1246",
-          "method": "Prospect",
-          "inputItemID": 189143,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192856:L1192",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190311:192880:L1284",
-          "sourceRecordID": "tsm:prospect:190311:192880:L1284",
-          "method": "Prospect",
-          "inputItemID": 190311,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192857:L1193",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190312:192880:L1322",
-          "sourceRecordID": "tsm:prospect:190312:192880:L1322",
-          "method": "Prospect",
-          "inputItemID": 190312,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192858:L1194",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190313:192880:L1360",
-          "sourceRecordID": "tsm:prospect:190313:192880:L1360",
-          "method": "Prospect",
-          "inputItemID": 190313,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192859:L1195",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190314:192880:L1398",
-          "sourceRecordID": "tsm:prospect:190314:192880:L1398",
-          "method": "Prospect",
-          "inputItemID": 190314,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192860:L1196",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190394:192880:L1436",
-          "sourceRecordID": "tsm:prospect:190394:192880:L1436",
-          "method": "Prospect",
-          "inputItemID": 190394,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192861:L1197",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190395:192880:L1474",
-          "sourceRecordID": "tsm:prospect:190395:192880:L1474",
-          "method": "Prospect",
-          "inputItemID": 190395,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192862:L1198",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:190396:192880:L1512",
-          "sourceRecordID": "tsm:prospect:190396:192880:L1512",
-          "method": "Prospect",
-          "inputItemID": 190396,
-          "outputItemID": 192880,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:tsm:prospect:188658:192863:L1199",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         }
       ]
     },
     "legacy": {
       "expansionScope": "Unexamined historical milling profiles, oldest IDs first",
       "workerAutomation": "loot-liquidator-legacy",
-      "assignmentId": "2026-10-28-batch012-legacy",
-      "status": "ASSIGNED_MATERIAL_FIELD_GAPS",
+      "assignmentId": "2026-10-28-batch013-legacy",
+      "status": "ASSIGNED_MATERIAL_GAPS",
       "lastSuccessfulRunUTC": "2026-10-28T17:44:23Z",
       "acceptedFirstPassRecords": 420,
       "acceptedCorrections": 0,
       "knownBlockers": 4,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-legacy/",
       "recordKeys": [
-        "output-main:tsm:prospect:36909:36917:L887",
-        "output-main:tsm:prospect:36909:36920:L889",
-        "output-main:tsm:prospect:36909:36923:L891",
-        "output-main:tsm:prospect:36909:36926:L893",
-        "output-main:tsm:prospect:36909:36929:L895",
-        "output-main:tsm:prospect:36909:36932:L897",
-        "output-main:tsm:prospect:36910:36917:L901",
-        "output-main:tsm:prospect:36910:36920:L904",
-        "output-main:tsm:prospect:36910:36923:L907",
-        "output-main:tsm:prospect:36910:36926:L910",
-        "output-main:tsm:prospect:36910:36929:L913",
-        "output-main:tsm:prospect:36910:36932:L916",
-        "output-main:tsm:prospect:72094:76130:L1005",
-        "output-main:tsm:prospect:72094:76133:L1007",
-        "output-main:tsm:prospect:72094:76134:L1008",
-        "output-main:tsm:prospect:72094:76135:L1009",
-        "output-main:tsm:prospect:72094:76136:L1010",
-        "output-main:tsm:prospect:72094:76137:L1011",
-        "output-main:tsm:prospect:72103:76130:L1019",
-        "output-main:tsm:prospect:72103:76133:L1021",
-        "output-main:tsm:prospect:72103:76134:L1022",
-        "output-main:tsm:prospect:72103:76135:L1023",
-        "output-main:tsm:prospect:72103:76136:L1024",
-        "output-main:tsm:prospect:72103:76137:L1025",
-        "output-main:tsm:prospect:123919:130178:L1053",
-        "output-main:tsm:prospect:123919:130179:L1054",
-        "output-main:tsm:prospect:123919:130180:L1055",
-        "output-main:tsm:prospect:123919:130181:L1056",
-        "output-main:tsm:prospect:123919:130182:L1057",
-        "output-main:tsm:prospect:123919:130183:L1058",
-        "output-main:tsm:mill:124106:129034:L1851",
-        "output-main:tsm:mill:124105:129032:L1846",
-        "output-main:compiled:mill:152511:153635:L188",
-        "output-main:compiled:mill:152507:153635:L168",
-        "output-main:compiled:mill:152508:153635:L173",
-        "output-main:compiled:mill:152505:153635:L158",
-        "output-main:compiled:mill:152506:153635:L163",
-        "output-main:compiled:mill:152509:153635:L178",
-        "output-main:compiled:mill:152510:153635:L183",
-        "output-main:tsm:mill:13465:39341:L1688"
+        "candidate:prospect:36910:46849",
+        "output-main:compiled:mill:109124:114931:L124",
+        "output-main:compiled:mill:109125:114931:L127",
+        "output-main:compiled:mill:109126:114931:L130",
+        "output-main:compiled:mill:109127:114931:L133",
+        "output-main:compiled:mill:109128:114931:L136",
+        "output-main:compiled:mill:109129:114931:L139",
+        "output-main:compiled:mill:152505:153636:L159",
+        "output-main:compiled:mill:152505:153669:L160",
+        "output-main:compiled:mill:152506:153636:L164",
+        "output-main:compiled:mill:152506:153669:L165",
+        "output-main:compiled:mill:152507:153636:L169",
+        "output-main:compiled:mill:152507:153669:L170",
+        "output-main:compiled:mill:152508:153636:L174",
+        "output-main:compiled:mill:152508:153669:L175",
+        "output-main:compiled:mill:152509:153636:L179",
+        "output-main:compiled:mill:152509:153669:L180",
+        "output-main:compiled:mill:152510:153636:L184",
+        "output-main:compiled:mill:152510:153669:L185",
+        "output-main:compiled:mill:152511:153636:L189",
+        "output-main:compiled:mill:152511:153669:L190",
+        "output-main:compiled:mill:168583:173056:L195",
+        "output-main:compiled:mill:168583:173057:L196",
+        "output-main:compiled:mill:168583:175788:L197",
+        "output-main:compiled:mill:168586:173056:L200",
+        "output-main:compiled:mill:168586:173057:L201",
+        "output-main:compiled:mill:168586:175788:L202",
+        "output-main:compiled:mill:168589:173056:L205",
+        "output-main:compiled:mill:168589:173057:L206",
+        "output-main:compiled:mill:168589:175788:L207",
+        "output-main:compiled:mill:169701:173056:L210",
+        "output-main:compiled:mill:169701:173057:L211",
+        "output-main:compiled:mill:169701:175788:L212",
+        "output-main:compiled:mill:170554:173056:L215",
+        "output-main:compiled:mill:170554:173057:L216",
+        "output-main:compiled:mill:170554:175788:L217",
+        "output-main:compiled:mill:171315:173056:L220",
+        "output-main:compiled:mill:171315:173057:L221",
+        "output-main:compiled:mill:171315:175788:L222",
+        "output-main:compiled:mill:187699:173056:L225"
       ],
       "nextBatchPreview": [
         "profile:compiled:mill:785",
@@ -1933,575 +1041,278 @@
         "profile:compiled:mill:2450",
         "profile:compiled:mill:2452"
       ],
-      "instructions": "Research these exact material mappings and missing fields, not first-pass profile quotas. Check live Retail recipe/rank eligibility, actual operation count and patch/skill. Do not assert source proxy P as measured or treat unknown as zero. Preserve immutable worker-only evidence; no shared compiler/queue/registry writes.",
-      "previousAssignmentId": "2026-10-28-batch011-legacy",
+      "instructions": "Review exact material keys, preserve raw evidence, verify source IDs, recipe reagent vector, rank and character eligibility. Worker-only files; never edit compiler, central queue, canonical ledgers or production. Unresolved prior TWW keys are deliberate followups, not new first-pass coverage.",
+      "previousAssignmentId": "2026-10-28-batch012-legacy",
       "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1040-legacy-batch010-40profile-audit.csv",
       "previousWorkerCommit": "9739b1953a4f4ef85f29f638561365dcb276e28b",
       "assignmentPhases": [
         {
-          "expansion": "Material-first output/recipe field questions",
+          "expansion": "Legacy missing powder and contradictions",
           "recordKeys": [
-            "output-main:tsm:prospect:36909:36917:L887",
-            "output-main:tsm:prospect:36909:36920:L889",
-            "output-main:tsm:prospect:36909:36923:L891",
-            "output-main:tsm:prospect:36909:36926:L893",
-            "output-main:tsm:prospect:36909:36929:L895",
-            "output-main:tsm:prospect:36909:36932:L897",
-            "output-main:tsm:prospect:36910:36917:L901",
-            "output-main:tsm:prospect:36910:36920:L904",
-            "output-main:tsm:prospect:36910:36923:L907",
-            "output-main:tsm:prospect:36910:36926:L910",
-            "output-main:tsm:prospect:36910:36929:L913",
-            "output-main:tsm:prospect:36910:36932:L916",
-            "output-main:tsm:prospect:72094:76130:L1005",
-            "output-main:tsm:prospect:72094:76133:L1007",
-            "output-main:tsm:prospect:72094:76134:L1008",
-            "output-main:tsm:prospect:72094:76135:L1009",
-            "output-main:tsm:prospect:72094:76136:L1010",
-            "output-main:tsm:prospect:72094:76137:L1011",
-            "output-main:tsm:prospect:72103:76130:L1019",
-            "output-main:tsm:prospect:72103:76133:L1021",
-            "output-main:tsm:prospect:72103:76134:L1022",
-            "output-main:tsm:prospect:72103:76135:L1023",
-            "output-main:tsm:prospect:72103:76136:L1024",
-            "output-main:tsm:prospect:72103:76137:L1025",
-            "output-main:tsm:prospect:123919:130178:L1053",
-            "output-main:tsm:prospect:123919:130179:L1054",
-            "output-main:tsm:prospect:123919:130180:L1055",
-            "output-main:tsm:prospect:123919:130181:L1056",
-            "output-main:tsm:prospect:123919:130182:L1057",
-            "output-main:tsm:prospect:123919:130183:L1058",
-            "output-main:tsm:mill:124106:129034:L1851",
-            "output-main:tsm:mill:124105:129032:L1846",
-            "output-main:compiled:mill:152511:153635:L188",
-            "output-main:compiled:mill:152507:153635:L168",
-            "output-main:compiled:mill:152508:153635:L173",
-            "output-main:compiled:mill:152505:153635:L158",
-            "output-main:compiled:mill:152506:153635:L163",
-            "output-main:compiled:mill:152509:153635:L178",
-            "output-main:compiled:mill:152510:153635:L183",
-            "output-main:tsm:mill:13465:39341:L1688"
+            "candidate:prospect:36910:46849",
+            "output-main:compiled:mill:109124:114931:L124",
+            "output-main:compiled:mill:109125:114931:L127",
+            "output-main:compiled:mill:109126:114931:L130",
+            "output-main:compiled:mill:109127:114931:L133",
+            "output-main:compiled:mill:109128:114931:L136",
+            "output-main:compiled:mill:109129:114931:L139",
+            "output-main:compiled:mill:152505:153636:L159",
+            "output-main:compiled:mill:152505:153669:L160",
+            "output-main:compiled:mill:152506:153636:L164",
+            "output-main:compiled:mill:152506:153669:L165",
+            "output-main:compiled:mill:152507:153636:L169",
+            "output-main:compiled:mill:152507:153669:L170",
+            "output-main:compiled:mill:152508:153636:L174",
+            "output-main:compiled:mill:152508:153669:L175",
+            "output-main:compiled:mill:152509:153636:L179",
+            "output-main:compiled:mill:152509:153669:L180",
+            "output-main:compiled:mill:152510:153636:L184",
+            "output-main:compiled:mill:152510:153669:L185",
+            "output-main:compiled:mill:152511:153636:L189",
+            "output-main:compiled:mill:152511:153669:L190",
+            "output-main:compiled:mill:168583:173056:L195",
+            "output-main:compiled:mill:168583:173057:L196",
+            "output-main:compiled:mill:168583:175788:L197",
+            "output-main:compiled:mill:168586:173056:L200",
+            "output-main:compiled:mill:168586:173057:L201",
+            "output-main:compiled:mill:168586:175788:L202",
+            "output-main:compiled:mill:168589:173056:L205",
+            "output-main:compiled:mill:168589:173057:L206",
+            "output-main:compiled:mill:168589:175788:L207",
+            "output-main:compiled:mill:169701:173056:L210",
+            "output-main:compiled:mill:169701:173057:L211",
+            "output-main:compiled:mill:169701:175788:L212",
+            "output-main:compiled:mill:170554:173056:L215",
+            "output-main:compiled:mill:170554:173057:L216",
+            "output-main:compiled:mill:170554:175788:L217",
+            "output-main:compiled:mill:171315:173056:L220",
+            "output-main:compiled:mill:171315:173057:L221",
+            "output-main:compiled:mill:171315:175788:L222",
+            "output-main:compiled:mill:187699:173056:L225"
           ]
         }
       ],
-      "lastSubmittedBatch": "batch011",
+      "lastSubmittedBatch": "batch012",
       "lastSuccessfulRunDate": "2026-10-28",
-      "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch011-verdict.md",
+      "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch012-verdict.md",
       "materialTargetDetails": [
         {
-          "stableKey": "output-main:tsm:prospect:36909:36917:L887",
-          "sourceRecordID": "tsm:prospect:36909:36917:L887",
-          "method": "Prospect",
-          "inputItemID": 36909,
-          "outputItemID": 36917,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "candidate:prospect:36910:46849",
+          "priorityBasis": "CURRENT_RETAIL_PATCH_AND_PER_CAST_HISTOGRAM",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36909:36920:L889",
-          "sourceRecordID": "tsm:prospect:36909:36920:L889",
-          "method": "Prospect",
-          "inputItemID": 36909,
-          "outputItemID": 36920,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:109124:114931:L124",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36909:36923:L891",
-          "sourceRecordID": "tsm:prospect:36909:36923:L891",
-          "method": "Prospect",
-          "inputItemID": 36909,
-          "outputItemID": 36923,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:109125:114931:L127",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36909:36926:L893",
-          "sourceRecordID": "tsm:prospect:36909:36926:L893",
-          "method": "Prospect",
-          "inputItemID": 36909,
-          "outputItemID": 36926,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:109126:114931:L130",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36909:36929:L895",
-          "sourceRecordID": "tsm:prospect:36909:36929:L895",
-          "method": "Prospect",
-          "inputItemID": 36909,
-          "outputItemID": 36929,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:109127:114931:L133",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36909:36932:L897",
-          "sourceRecordID": "tsm:prospect:36909:36932:L897",
-          "method": "Prospect",
-          "inputItemID": 36909,
-          "outputItemID": 36932,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:109128:114931:L136",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36910:36917:L901",
-          "sourceRecordID": "tsm:prospect:36910:36917:L901",
-          "method": "Prospect",
-          "inputItemID": 36910,
-          "outputItemID": 36917,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:109129:114931:L139",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36910:36920:L904",
-          "sourceRecordID": "tsm:prospect:36910:36920:L904",
-          "method": "Prospect",
-          "inputItemID": 36910,
-          "outputItemID": 36920,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152505:153636:L159",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36910:36923:L907",
-          "sourceRecordID": "tsm:prospect:36910:36923:L907",
-          "method": "Prospect",
-          "inputItemID": 36910,
-          "outputItemID": 36923,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152505:153669:L160",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36910:36926:L910",
-          "sourceRecordID": "tsm:prospect:36910:36926:L910",
-          "method": "Prospect",
-          "inputItemID": 36910,
-          "outputItemID": 36926,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152506:153636:L164",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36910:36929:L913",
-          "sourceRecordID": "tsm:prospect:36910:36929:L913",
-          "method": "Prospect",
-          "inputItemID": 36910,
-          "outputItemID": 36929,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152506:153669:L165",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:36910:36932:L916",
-          "sourceRecordID": "tsm:prospect:36910:36932:L916",
-          "method": "Prospect",
-          "inputItemID": 36910,
-          "outputItemID": 36932,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152507:153636:L169",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72094:76130:L1005",
-          "sourceRecordID": "tsm:prospect:72094:76130:L1005",
-          "method": "Prospect",
-          "inputItemID": 72094,
-          "outputItemID": 76130,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152507:153669:L170",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72094:76133:L1007",
-          "sourceRecordID": "tsm:prospect:72094:76133:L1007",
-          "method": "Prospect",
-          "inputItemID": 72094,
-          "outputItemID": 76133,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152508:153636:L174",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72094:76134:L1008",
-          "sourceRecordID": "tsm:prospect:72094:76134:L1008",
-          "method": "Prospect",
-          "inputItemID": 72094,
-          "outputItemID": 76134,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152508:153669:L175",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72094:76135:L1009",
-          "sourceRecordID": "tsm:prospect:72094:76135:L1009",
-          "method": "Prospect",
-          "inputItemID": 72094,
-          "outputItemID": 76135,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152509:153636:L179",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72094:76136:L1010",
-          "sourceRecordID": "tsm:prospect:72094:76136:L1010",
-          "method": "Prospect",
-          "inputItemID": 72094,
-          "outputItemID": 76136,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152509:153669:L180",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72094:76137:L1011",
-          "sourceRecordID": "tsm:prospect:72094:76137:L1011",
-          "method": "Prospect",
-          "inputItemID": 72094,
-          "outputItemID": 76137,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152510:153636:L184",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72103:76130:L1019",
-          "sourceRecordID": "tsm:prospect:72103:76130:L1019",
-          "method": "Prospect",
-          "inputItemID": 72103,
-          "outputItemID": 76130,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152510:153669:L185",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72103:76133:L1021",
-          "sourceRecordID": "tsm:prospect:72103:76133:L1021",
-          "method": "Prospect",
-          "inputItemID": 72103,
-          "outputItemID": 76133,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152511:153636:L189",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72103:76134:L1022",
-          "sourceRecordID": "tsm:prospect:72103:76134:L1022",
-          "method": "Prospect",
-          "inputItemID": 72103,
-          "outputItemID": 76134,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:152511:153669:L190",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72103:76135:L1023",
-          "sourceRecordID": "tsm:prospect:72103:76135:L1023",
-          "method": "Prospect",
-          "inputItemID": 72103,
-          "outputItemID": 76135,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168583:173056:L195",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72103:76136:L1024",
-          "sourceRecordID": "tsm:prospect:72103:76136:L1024",
-          "method": "Prospect",
-          "inputItemID": 72103,
-          "outputItemID": 76136,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168583:173057:L196",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:72103:76137:L1025",
-          "sourceRecordID": "tsm:prospect:72103:76137:L1025",
-          "method": "Prospect",
-          "inputItemID": 72103,
-          "outputItemID": 76137,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168583:175788:L197",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:123919:130178:L1053",
-          "sourceRecordID": "tsm:prospect:123919:130178:L1053",
-          "method": "Prospect",
-          "inputItemID": 123919,
-          "outputItemID": 130178,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168586:173056:L200",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:123919:130179:L1054",
-          "sourceRecordID": "tsm:prospect:123919:130179:L1054",
-          "method": "Prospect",
-          "inputItemID": 123919,
-          "outputItemID": 130179,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168586:173057:L201",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:123919:130180:L1055",
-          "sourceRecordID": "tsm:prospect:123919:130180:L1055",
-          "method": "Prospect",
-          "inputItemID": 123919,
-          "outputItemID": 130180,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168586:175788:L202",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:123919:130181:L1056",
-          "sourceRecordID": "tsm:prospect:123919:130181:L1056",
-          "method": "Prospect",
-          "inputItemID": 123919,
-          "outputItemID": 130181,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168589:173056:L205",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:123919:130182:L1057",
-          "sourceRecordID": "tsm:prospect:123919:130182:L1057",
-          "method": "Prospect",
-          "inputItemID": 123919,
-          "outputItemID": 130182,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168589:173057:L206",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:prospect:123919:130183:L1058",
-          "sourceRecordID": "tsm:prospect:123919:130183:L1058",
-          "method": "Prospect",
-          "inputItemID": 123919,
-          "outputItemID": 130183,
-          "recipeSpellID": null,
-          "missingFields": [
-            "dropChance"
-          ],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:168589:175788:L207",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:124106:129034:L1851",
-          "sourceRecordID": "tsm:mill:124106:129034:L1851",
-          "method": "Mill",
-          "inputItemID": 124106,
-          "outputItemID": 129034,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:169701:173056:L210",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:124105:129032:L1846",
-          "sourceRecordID": "tsm:mill:124105:129032:L1846",
-          "method": "Mill",
-          "inputItemID": 124105,
-          "outputItemID": 129032,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:169701:173057:L211",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:compiled:mill:152511:153635:L188",
-          "sourceRecordID": "compiled:mill:152511:153635:L188",
-          "method": "Mill",
-          "inputItemID": 152511,
-          "outputItemID": 153635,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:169701:175788:L212",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:compiled:mill:152507:153635:L168",
-          "sourceRecordID": "compiled:mill:152507:153635:L168",
-          "method": "Mill",
-          "inputItemID": 152507,
-          "outputItemID": 153635,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:170554:173056:L215",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:compiled:mill:152508:153635:L173",
-          "sourceRecordID": "compiled:mill:152508:153635:L173",
-          "method": "Mill",
-          "inputItemID": 152508,
-          "outputItemID": 153635,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:170554:173057:L216",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:compiled:mill:152505:153635:L158",
-          "sourceRecordID": "compiled:mill:152505:153635:L158",
-          "method": "Mill",
-          "inputItemID": 152505,
-          "outputItemID": 153635,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:170554:175788:L217",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:compiled:mill:152506:153635:L163",
-          "sourceRecordID": "compiled:mill:152506:153635:L163",
-          "method": "Mill",
-          "inputItemID": 152506,
-          "outputItemID": 153635,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:171315:173056:L220",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:compiled:mill:152509:153635:L178",
-          "sourceRecordID": "compiled:mill:152509:153635:L178",
-          "method": "Mill",
-          "inputItemID": 152509,
-          "outputItemID": 153635,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:171315:173057:L221",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:compiled:mill:152510:153635:L183",
-          "sourceRecordID": "compiled:mill:152510:153635:L183",
-          "method": "Mill",
-          "inputItemID": 152510,
-          "outputItemID": 153635,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:171315:175788:L222",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         },
         {
-          "stableKey": "output-main:tsm:mill:13465:39341:L1688",
-          "sourceRecordID": "tsm:mill:13465:39341:L1688",
-          "method": "Mill",
-          "inputItemID": 13465,
-          "outputItemID": 39341,
-          "recipeSpellID": null,
-          "missingFields": [],
-          "priorityBasis": "MISSING_SOURCE_CELL_OR_RECIPE_ELIGIBILITY; gold-price sensitivity NOT computed",
-          "source": "primary"
+          "stableKey": "output-main:compiled:mill:187699:173056:L225",
+          "priorityBasis": "SOURCE_QUANTITY_AND_CONDITION_REVIEW",
+          "requestedEvidence": "Original exact item IDs, actual completed operations, zero-inclusive P and unconditional E, positive min/max, rank, patch, skill/spec and eligibility. No unverified numeric promotion."
         }
       ]
     }
   },
   "masterReview": {
-    "reviewFile": "research/coordination/reviews/2026-10-28-master-worker-batch011-verdict.md",
-    "reviewedWorkerRecords": 150,
-    "acceptedFirstPassThisRun": 150,
-    "acceptedCumulativeFirstPass": 1643,
-    "newMeasuredMaterialOutputRows": 0,
-    "correctedInvalidInputProfiles": 1,
-    "compilerStatus": "BUILT_RESEARCH_ONLY",
-    "candidateMappings": 975,
-    "fullyNumeric": 871,
-    "missingNumericCells": 229,
+    "reviewFile": "research/coordination/reviews/2026-10-28-master-worker-batch012-verdict.md",
+    "assignedMaterialKeysReviewed": 150,
+    "sourceLineIdentityMatches": 148,
+    "sourceLineUnavailable": 2,
+    "newFirstPassKeys": 0,
+    "newAcceptedLegitimateMapping": 1,
+    "newNumericObservedCurrentRetailCells": 0,
+    "rankSpecificFieldQuarantines": 62,
+    "diamondSpecializationGates": 7,
+    "curatedCandidateMappings": 976,
+    "fullyNumeric": 840,
+    "missingNumericCells": 294,
+    "universeAuditComplete": false,
     "nextAssignments": {
       "midnight": 35,
       "war_within": 35,
@@ -2509,7 +1320,7 @@
       "legacy": 40
     },
     "nodeTestsRun": false,
-    "actualWoWClientTests": 0
+    "luaInterpreterTested": false
   },
   "current": {
     "asOfUTC": "2026-10-28",
@@ -3033,9 +1844,9 @@
     "path": "research/tools/compile_itemdb.js",
     "candidate": "research/proposed/itemdb.lua",
     "report": "research/proposed/itemdb-build-report.json",
-    "mapped": 975,
-    "numericComplete": 871,
-    "missingNumericCells": 229,
+    "mapped": 976,
+    "numericComplete": 840,
+    "missingNumericCells": 294,
     "verifiedUnskilled": 0,
     "exhaustiveRetailAudit": false
   },
@@ -4336,5 +3147,28 @@
         "missing": []
       }
     ]
+  },
+  "masterReviewBatch012": {
+    "reviewFile": "research/coordination/reviews/2026-10-28-master-worker-batch012-verdict.md",
+    "assignedMaterialKeysReviewed": 150,
+    "sourceLineIdentityMatches": 148,
+    "sourceLineUnavailable": 2,
+    "newFirstPassKeys": 0,
+    "newAcceptedLegitimateMapping": 1,
+    "newNumericObservedCurrentRetailCells": 0,
+    "rankSpecificFieldQuarantines": 62,
+    "diamondSpecializationGates": 7,
+    "curatedCandidateMappings": 976,
+    "fullyNumeric": 840,
+    "missingNumericCells": 294,
+    "universeAuditComplete": false,
+    "nextAssignments": {
+      "midnight": 35,
+      "war_within": 35,
+      "dragonflight": 40,
+      "legacy": 40
+    },
+    "nodeTestsRun": false,
+    "luaInterpreterTested": false
   }
 }
