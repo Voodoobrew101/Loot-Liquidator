@@ -229,6 +229,6 @@ Accepted 150 exact disjoint first-pass keys, with 50 candidate output records an
 
 ## 2026-10-28 — Master QA batch013
 - Reviewed four worker batch013 submissions (35/35/40/40). 0 new mappings, 0 current Retail neutral numeric measurements, 0 new first-pass records.
-- Executed research-only deterministic compiler v0.3.0 twice against pinned source files; wrote candidate Lua/build report/missing-fields ledger; GitHub readback verified. 976 records; 791 numeric complete; 294 unknown cells; 159 inputs; 1194 source-line identities.
+- Executed research-only deterministic compiler v0.3.0 twice against pinned source files; wrote candidate Lua/build report/missing-fields ledger; GitHub readback verified. 976 records; 791 numeric complete; 396 unknown cells; 159 inputs; 1194 source-line identities.
 - Quarantined 50 quality-rank P/E pairs and 2 P>E source probabilities; corrected 12 fish input ranks; fixed generated Lua eligibility/baseline decoder preserving 7 diamond gates.
 - Reassigned 150 disjoint material/recipe follow-ups in queue rev16. No Node CLI, Lua interpreter, WoW client or full source-memory rebuild; no production edits, PR merge or schedule changes.
