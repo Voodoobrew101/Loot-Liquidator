@@ -166,6 +166,15 @@ f.classID=7;f.count=5
 local options=LL:ConversionOptions(f)
 eq(#options,1);near(options[1].value,40)
 near(options[1].yieldModel.materials[1].netExpectedValue,200)
+local integrationRecord=LL.ItemDB.processing[1]
+local savedMaterial=clone(integrationRecord.materials[1])
+integrationRecord.materials[1].expectedQuantity=field(0)
+integrationRecord.materials[1].dropChance=field(0)
+integrationRecord.materials[1].minQuantity=field(nil,'unknown',0)
+integrationRecord.materials[1].maxQuantity=field(nil,'unknown',0)
+LL:Invalidate();eq(LL:ConversionOptions(f)[1].value,0,'known zero is not insufficient data')
+integrationRecord.materials[1]=savedMaterial;LL:Invalidate()
+
 LL.db.tooltipDetail=3;LL.db.showTooltips=true;LL.db.showMaterialBreakdown=true
 LL.ProfessionProgression=function() return {} end
 local tooltip={lines={}}

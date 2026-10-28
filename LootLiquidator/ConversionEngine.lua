@@ -421,7 +421,7 @@ function LL:ConversionOptions(f)
             yieldModel,modelIssue=self:ResolveEvidenceModel(f,displayOption,research,dataMode)
             value,source=self:ValueProcessingModel(yieldModel,suppliesCost,suppliesKnown,f)
         end
-        if value and value<=0 then value=nil end
+        if value and value<0 then value=nil end
         if missingExtra then
             available=false
             why="Additional recipe reagents required"
