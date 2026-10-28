@@ -1,10 +1,21 @@
-# Loot Liquidator — ItemDB creation, research, and integration prompt (v1.3 independently reviewed research contract)
+# Loot Liquidator — ItemDB creation, research, and integration prompt (v1.4 sample-first research contract)
 **Status:** Canonical *proposed* generator/research contract. Research assistant must independently review, challenge, revise, and maintain it. Not an approved production release.
 **Target file (EXACT case):** `itemdb.lua`
 **Legacy released file:** `GameData.lua` is still referenced in `main/LootLiquidator.toc`. NEVER rename/delete/update it on main without a reviewed, tested addon migration and user approval.
 **Repository:** https://github.com/Voodoobrew101/Loot-Liquidator
 **Research branch:** `research/processing-confidence`
 **Release branch:** `main` (DO NOT automatically overwrite).
+
+## v1.4 sample-first policy (2026-10-28 user decision)
+
+This policy supplements all previous versions and the mandatory [evidence synthesis protocol](EVIDENCE_SYNTHESIS_PROTOCOL.md) v1.1:
+
+- A primary observation begins as **unchallenged observational evidence**, not as a low-confidence or suspicious source because of community origin. Keep specific, documented quality objections (incorrect arithmetic, unknown denominators, duplicate cohorts, ambiguous IDs, conflicting game versions) separate from the source's reputation.
+- **Confidence 0–100 describes each output field in the proposed `itemdb.lua`, not a prestige rating for the webpage, commenter, or whole dataset.** Missing skill, bonus, specialization or patch context limits the *applicability* of observed yields to a target profile, not whether the historical observed sample deserves to be kept.
+- Use the magnitude of **actual completed operations** and agreement of non-overlapping independent cohorts to estimate baseline yields and uncertainty. For matched comparable samples, use sample-size weighting or measured sampling precision. Preserve source-reported means when raw totals are absent; don't manufacture cast totals, probabilities or ranges.
+- Prioritize exact-match sample contexts when modelling a character's skill, specialization, knowledge nodes, gear, profession stats and recipe/rank/patch conditions. Large unknown-context samples can reveal a population pattern but do not automatically outweigh smaller exact-matched studies in the character-specific estimate. Modelled cross-context adjustments must be explicit, testable, and kept distinct from direct observations.
+- Propose **below-90 provisional baseline records immediately** when legitimate mappings and defensible reference expected quantities exist. Do not block economic coverage merely because a distinct occurrence probability or observed min/max is unavailable. Score and label each field independently; null is allowed when not even a defensible inference exists. Exhaustive game-wide eligibility remains a separate catalog problem.
+- The all-fields >=90 gate is for an **evidence-complete verification claim**, not for compiling or evaluating an explicitly provisional database. Full release still requires lossless migration, formula safety and regression/in-client testing; no unverified patch/skill transform becomes a verified runtime coefficient.
 
 ## v1.1 independent review: implementation-ready first milestone (2026-10-28)
 
