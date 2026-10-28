@@ -200,3 +200,7 @@ Current Retail cast records with zero-inclusive per-output histograms for four M
 ## 2026-10-28 — master batch007
 
 Independent review of 150 exact disjoint worker batch007 source-output keys; original GameData blob 1d47c4a961c5dc5af626e659f7d96d1490d3cf9e unchanged. Coverage 1078/1737, 659 never, 1065 insufficient, 13 blocked. 994 output records /3976 fields: 0 >=90, 17 moderate, 3959 low. 15 original source observations in five immutable JSONL files, including 222 unmapped DF beta output cells, two Felslate historical arms, three BfA and three Kyparite cohorts. Static QA 619 assertions passed (150 source ID, 150 assignment, 150 arithmetic, 165 observation, four blocked candidate). Four numeric hypotheses remain blocked. Node suites and WoW client not run. Queue rev10 next 150 disjoint keys, known first-pass ETA ~5 hourly cycles; 90-gate ETA unknown. No production/schedule edits.
+
+## 2026-10-28 — Master batch008
+
+Accepted 115 new disjoint first-pass keys; Midnight numeric-only 0. Corrected 26 historical BfA source associations from Tontons original; confirmed Snurp PTR 8000-cast partition. 1193/1737 reviewed, 544 never; 4436 scored fields, 0 >=90, 17 moderate, 4419 low. Numeric verified 0/4. Queue rev11 new disjoint 35/40/40 and retained Midnight 35. Node tests and source-memory full rebuild pending checkout, no WoW client tests. No production/schedule changes.

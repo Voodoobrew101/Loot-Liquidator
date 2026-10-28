@@ -1,3 +1,7 @@
+## Master batch008 accepted — 2026-10-28
+
+115 unique records accepted (TWW35, DF40, Legacy40, Midnight0 numeric-only). **1193/1737** examined, **544** never; 1180 insufficient, 13 blocked. Four-field scored 1109 outputs/4436 fields: >=90 0, 70–89 17, <70 4419. Independently corrected 26 historical Tontons BfA input associations; 0 current-Retail corrections. Four numeric hypotheses BLOCKED. Queue rev11: Midnight retained 35, others new 35/40/40. Node/source-memory builder and WoW client tests not executed. [QA verdict](coordination/reviews/2026-10-28-master-worker-batch008-verdict.md).
+
 ## Master batch007 accepted — 2026-10-28
 
 150 unique disjoint worker first-pass source-output records accepted (35/35/40/40). **1078/1737** examined, **659** never; 1065 insufficient, 13 previously blocked. Four-field scored 994 outputs/3976 fields: >=90 0, 70–89 17, <70 3959. No current-Retail numerical correction or complete >=90 output. Independently reviewed original 2022 DF beta six 5000-ore cohorts, MoP/Cataclysm Classic rate conflicts, BfA 1130 claimed operations, and 2017 Felslate standard/mass two 10000-ore arms. 4 numeric hypotheses BLOCKED, zero verified/approved coefficients. 619 static checks passed, no Node suite or WoW client test. Queue rev10 next 150 disjoint keys. [Master verdict](coordination/reviews/2026-10-28-master-worker-batch007-verdict.md).
