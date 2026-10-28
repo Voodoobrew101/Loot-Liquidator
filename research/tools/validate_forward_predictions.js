@@ -46,6 +46,20 @@ function checkObservation(o){
   }
   return {n,hits:o.hitOperations??hist?.hits??null,units:o.totalUnits??hist?.units??null,histogram:hist};
 }
+// Optional Bayesian posterior-predictive discrepancy for a binomial event.
+// Alpha/beta must be derived solely from disjoint TRAINING cohorts, never
+// updated using this holdout before calculating the predictive diagnostic.
+function betaBinomialPredictiveZ(alpha,beta,n,k){
+  if(!(finite(alpha)&&alpha>0&&finite(beta)&&beta>0))throw Error("Invalid training posterior shape");
+  if(!Number.isSafeInteger(n)||n<1||!Number.isSafeInteger(k)||k<0||k>n)throw Error("Invalid holdout binomial counts");
+  const ab=alpha+beta,mean=alpha/ab;
+  const varianceFraction=(alpha*beta*(ab+n))/(n*ab*ab*(ab+1));
+  return {trainingPosteriorAlpha:alpha,trainingPosteriorBeta:beta,
+    expectedHoldoutFraction:mean,predictiveStdDev:Math.sqrt(varianceFraction),
+    zPredictive:varianceFraction>0?(k/n-mean)/Math.sqrt(varianceFraction):null,
+    predictiveAssumption:"BETA_BINOMIAL_TRAINING_POSTERIOR_ONLY",
+    note:"Predictive z is a diagnostic, not a Bayesian model posterior or verified mechanic."};
+}
 function score(e) {
   const p=e.prediction||{},obs=checkObservation(e.observed),notes=[],fields={};
   const provenance=e.provenance||{};
@@ -75,6 +89,12 @@ function score(e) {
       fields.dropChance={predicted:q,observed:hitP,actualOperations:obs.n,
         probabilityZ:z,deterministicViolation,logLikelihood,
         observationalModel:"BINOMIAL_HOLDOUT_DIAGNOSTIC_ONLY"};
+      if(p.trainingPosteriorForDropChance!==undefined&&p.trainingPosteriorForDropChance!==null) {
+        const post=p.trainingPosteriorForDropChance;
+        fields.dropChance.bayesianPredictive=betaBinomialPredictiveZ(post.alpha,post.beta,obs.n,obs.hits);
+        if(Math.abs(fields.dropChance.bayesianPredictive.zPredictive)>2.576)
+          notes.push("BAYESIAN_POSTERIOR_PREDICTIVE_DISCREPANCY_RESEARCH");
+      }
       if(deterministicViolation)notes.push("PROBABILITY_SUPPORT_CONTRADICTION");
       else if(z!==null&&Math.abs(z)>2.576)notes.push("PROBABILITY_LARGE_RESIDUAL_RESEARCH");
     }else{fields.dropChance={predicted:p.dropChance,observed:null,reason:"HIT_COUNTS_NOT_REPORTED"};}
@@ -114,9 +134,10 @@ function score(e) {
     if(p.expectedQuantity+1e-9<p.dropChance*p.yieldMin||
        p.expectedQuantity-1e-9>p.dropChance*p.yieldMax)notes.push("P_E_CONDITIONAL_BOUNDS_INCONSISTENT");
   }
-  const blocking=notes.some(n=>/CONTRADICTION|INCONSISTENT|UNRESOLVED|NOT_ESTABLISHED|NOT_HELD_OUT|UNVERIFIED|INVERTED/.test(n));
+  const blocking=notes.some(n=>/CONTRADICTION|INCONSISTENT|UNRESOLVED|NOT_ESTABLISHED|NOT_HELD_OUT|UNVERIFIED|INVERTED|LARGE_RESIDUAL|POSTERIOR_PREDICTIVE_DISCREPANCY/.test(n));
+  if(Object.values(fields).every(f=>f.predicted===null))notes.push("NO_TESTABLE_PREDICTION");
   return {observationID:e.observationID??null,targetKey:e.targetKey??null,
-    verifiedPrediction:!blocking,
+    eligibleForManualValidationReview:!blocking,
     status:blocking?"NOT_VERIFIED":"HOLDOUT_CONSISTENT_NOT_PROOF",
     evaluatedFields:fields,diagnostics:unique(notes)};
 }
@@ -134,4 +155,4 @@ if(require.main===module){
   const input=JSON.parse(fs.readFileSync(process.argv[2],"utf8"));
   process.stdout.write(JSON.stringify(validate(input),null,2)+"\n");
 }
-module.exports={histogramStats,checkObservation,score,validate};
+module.exports={histogramStats,checkObservation,betaBinomialPredictiveZ,score,validate};
