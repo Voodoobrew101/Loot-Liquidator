@@ -4,7 +4,7 @@
 
 ## Summary
 - **18 Shadowlands source-output records + 12 source profiles** examined, 30 first-pass candidate reviews pending master acceptance.
-- **8 canonical JSONL cohorts** preserved: 6 original 2020 Shadowlands herb studies, 2022 First Flower, and 2019 Zin'anthid. 24 distinct mapped output totals (6×3 + 3 + 1 + 2? Correction: 6×3+3+1=22). Actual mapped output rows = **22**. None contain per-cast hit/zero histograms.
+- **8 canonical JSONL cohorts** preserved: 6 original 2020 Shadowlands herb studies, 2022 First Flower, and 2019 Zin'anthid, totaling **22 mapped output totals** (6×3 + 3 + 1). None contain per-cast hit/zero histograms.
 - The November 25 2020 Reddit post is titled "20k" but its six listed denominators sum to **23,720 herbs** (8360+3200+5900+2220+2400+1640), not 20,000. Normalize each herb independently; do NOT divide pooled totals by 20,000.
 - **Zin'anthid (168487) is an empty `gd.mill` candidate profile** despite a 2019 player report of **30,356 herbs → 18,171 Maroon Pigment (168662)**; independently corroborated output identity from Wowhead and Icy Veins. Historical E per five herbs = **2.992983265**, per twenty = **11.971933061**. This is a NEW research candidate only; do not silently populate production.
 - The 2022 **4,000 First Flower** study gives 972 Umbral, 1,031 Luminous, 1,984 Tranquil; the existing three five-herb EV rows match exactly.
