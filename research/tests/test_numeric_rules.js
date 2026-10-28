@@ -105,5 +105,5 @@ function test(){
  check("itemdb staging remains not shipped",itemdb.properties.artifactStatus.const==="RESEARCH_ONLY_NOT_SHIPPED");
  console.log(JSON.stringify({passed:pass,failed:0,actualRulesCompileEligible:reg.quantifiedMechanicRules.filter(r=>canCompileNumericRule(r).eligible).length,gameClientTested:false},null,2));
 }
-if(typeof module!=="undefined") module.exports={canCompileNumericRule};
+if(typeof module!=="undefined") module.exports={canCompileNumericRule,syntheticFixtureForTests:fixture};
 if(typeof require==="function" && require.main===module) test();
