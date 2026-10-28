@@ -189,3 +189,10 @@ Current Retail cast records with zero-inclusive per-output histograms for four M
 - Classic/TBC 19 guide/TSM rate differences; 14 invalid hybrid P/E inequalities, five Thorium cases. Independent 2016 Felslate raw batches sum 560 first15 and **97** last10, correcting worker's 101. No current Retail coefficient.
 - Numeric 0 verified, 0 empirical approved, 4 blocked. Modern four-field 694 records / 2776 fields, 0 >=90. Coverage 778/1737, remaining 959. Next 150 disjoint keys. Static JS checks only, no Node or WoW client.
 - research/coordination/reviews/2026-10-28-master-worker-batch005-verdict.md; research/evidence/observations/2026-10-28-master-legacy-thorium-felslate-source-audit.jsonl; research/ledger/master-worker-batch005-four-field-scores-2026-10-28.csv.
+
+## 2026-10-28 — master batch006 independent review
+- Live branch 49821faacb512d50837d6ebbb42a5ae4851ab731, production GameData blob 1d47c4a961c5dc5af626e659f7d96d1490d3cf9e. Independently accepted 150 disjoint exact source output keys; 2649 in-memory structural, tuple, necessary-bound, four-field, numeric schema and next-assignment checks passed.
+- Coverage 928/1737 examined, 809 unexamined, 915 insufficient, 13 blocked; modern field scores 0/17/3359 (>=90/70–89/<70) across 3376 fields. 12 worker-rediscovered Northrend anomalies already blocked; no new blocked or current-Retail corrections.
+- Original 1000-Titanium-ore study: 104 gem units, 0.520 per derived 5-ore equivalent; TSM aggregate proxy 0.516. Cobalt rare six 1.5% vs guide 1.3%; Pyrite common six 16.5% vs guide 17%. Historical source disagreement only.
+- Numeric hypotheses 0 VERIFIED, 0 EMPIRICAL approved, 4 BLOCKED; no coefficients. Queue rev9 assigns 150 distinct next keys (Dragonflight 45, Legacy 105). No repository Node suite or WoW client execution. No main, addon or schedule changes.
+- research/coordination/reviews/2026-10-28-master-worker-batch006-verdict.md

@@ -1,3 +1,7 @@
+## Master batch006 accepted — 2026-10-28
+
+150 distinct worker keys accepted (35/35/40/40), now **928/1737** first-pass examined and **809** never. 915 insufficient, 13 previously blocked; 844 output records/3376 independently scored fields: >=90 0, 70–89 17, <70 3359. Original Titanium 1000-ore study independently cross-checked (104 gems; derived 0.520 units/5 ore versus historical TSM proxy 0.516); Cobalt and Pyrite guide discrepancies confirmed. **12 adjacent Northrend contradictions already BLOCKED in central ledger; do not count again.** Four numeric hypotheses remain BLOCKED, zero numeric promotions, zero current Retail corrections. Next 150 disjoint stable keys in queue rev9; all production unchanged. [QA verdict](coordination/reviews/2026-10-28-master-worker-batch006-verdict.md).
+
 ## Master batch005 accepted — 2026-10-28
 
 150 new disjoint first-pass outputs accepted (35/35/40/40), now 778/1737 examined, 959 never, 765 insufficient, 13 blocked. Four-field scored 694 outputs/2776 fields: >=90 0, 70–89 17, <70 2759. **Independent source arithmetic correction:** original 2016 Felslate last ten 1000-ore batches total **97**, not worker-reported 101; historical five-ore-equivalent E=0.0485, not 0.0505; no approved patch coefficient. Classic/TBC Thorium 5 severe source conflicts; 14 hybrid P/E inequalities invalid. Four numeric hypotheses BLOCKED, zero VERIFIED/EMPIRICAL rules. Next 150 exact keys queue rev8. No production changes. [Master verdict](research/coordination/reviews/2026-10-28-master-worker-batch005-verdict.md).
