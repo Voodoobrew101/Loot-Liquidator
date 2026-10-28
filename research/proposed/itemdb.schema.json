@@ -287,8 +287,50 @@
         },
         "status": {
           "const": "PROVISIONAL_CANDIDATE"
+        },
+        "reagents": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Exact direct reagent vector. inputItemID/inputCountPerOperation are a lookup anchor, not full Smelt cost.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "itemID",
+              "quantity"
+            ],
+            "properties": {
+              "itemID": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "quantity": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "method": {
+                "const": "Smelt"
+              }
+            },
+            "required": [
+              "method"
+            ]
+          },
+          "then": {
+            "required": [
+              "reagents"
+            ]
+          }
+        }
+      ]
     },
     "probabilityField": {
       "allOf": [

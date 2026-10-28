@@ -232,3 +232,9 @@ Accepted 150 exact disjoint first-pass keys, with 50 candidate output records an
 - Executed research-only deterministic compiler v0.3.0 twice against pinned source files; wrote candidate Lua/build report/missing-fields ledger; GitHub readback verified. 976 records; 791 numeric complete; 396 unknown cells; 159 inputs; 1194 source-line identities.
 - Quarantined 50 quality-rank P/E pairs and 2 P>E source probabilities; corrected 12 fish input ranks; fixed generated Lua eligibility/baseline decoder preserving 7 diamond gates.
 - Reassigned 150 disjoint material/recipe follow-ups in queue rev16. No Node CLI, Lua interpreter, WoW client or full source-memory rebuild; no production edits, PR merge or schedule changes.
+
+## 2026-10-28 — Master batch014
+- Reviewed 35 Midnight, 35 TWW, 40 Dragonflight, 40 Legacy exact assigned keys; no new measured current Retail cast cohort. New uncompiled 1307462 glass-refine recipe lead; live/PTR reagent rendering contradiction.
+- Executed research-only compiler v0.4.0 twice with pinned GameData and worker sources; 984 mappings / 165 inputs; 799 complete tuples; 403 unknown cells; 1,202 source-line checks; full direct reagent vectors for 8 fixed smelts; 7 unsafe Dragonflight E values quarantined. All source alternatives preserved.
+- Added recipe vector schema and regression assertions, exact recipe eligibility gap ledger, revised master queue rev17, QA feedback, lessons and confidence snapshot. No Node CLI/Lua interpreter/WoW client or full source-memory rebuild; cache stale at previous 112-source snapshot.
+- No production main/TOC/PR/schedule changes.
