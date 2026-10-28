@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/research/mechanics/numeric-rule-candidate.schema.json",
+  "title": "Loot Liquidator research-only numeric profession mechanic hypothesis v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "hypothesisID",
+    "evidenceStatus",
+    "applyPolicy",
+    "profession",
+    "expansionID",
+    "method",
+    "effectTarget",
+    "effectKind",
+    "formulaID",
+    "parameters",
+    "parameterUnits",
+    "scope",
+    "referenceContext",
+    "targetContext",
+    "sources",
+    "independentReview",
+    "confidence0to100",
+    "numericTransformValidated",
+    "blockers"
+  ],
+  "properties": {
+    "hypothesisID": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidenceStatus": {
+      "enum": [
+        "UNVERIFIED",
+        "VERIFIED_QUALITATIVE",
+        "EMPIRICAL_ESTIMATE",
+        "VERIFIED_NUMERIC",
+        "CONTRADICTED"
+      ]
+    },
+    "applyPolicy": {
+      "enum": [
+        "NO_NUMERIC_TRANSFORM",
+        "BLOCKED",
+        "VERIFIED_FOR_COMPILE"
+      ]
+    },
+    "profession": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expansionID": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 11
+    },
+    "method": {
+      "enum": [
+        "Prospect",
+        "Mill",
+        "Disenchant",
+        "Smelt",
+        "Crush",
+        "Shatter",
+        "Recycle",
+        "Other"
+      ]
+    },
+    "effectTarget": {
+      "enum": [
+        "OUTPUT_OCCURRENCE",
+        "OUTPUT_POSITIVE_QUANTITY",
+        "OUTPUT_UNCONDITIONAL_EXPECTATION",
+        "OUTPUT_QUALITY",
+        "OUTPUT_ELIGIBILITY",
+        "EXPECTED_INPUT_CONSUMPTION",
+        "OPERATION_DURATION",
+        "STAT_RATING_TO_PERCENT"
+      ]
+    },
+    "effectKind": {
+      "enum": [
+        "MULTIPLY",
+        "ADDITIVE",
+        "QUALITY_TRANSITION",
+        "INPUT_SAVINGS",
+        "DISCRETE_ELIGIBILITY",
+        "INFORMATIONAL",
+        "UNKNOWN"
+      ]
+    },
+    "formulaID": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parameters": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "parameterUnits": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gameMode",
+        "recipeSpellIDs",
+        "inputItemIDs",
+        "outputItemIDs",
+        "nominalInputCount",
+        "inputQualityRanks",
+        "outputQualityRanks",
+        "patchStartBuild",
+        "patchEndBuild"
+      ],
+      "properties": {
+        "gameMode": {
+          "enum": [
+            "RETAIL",
+            "CLASSIC",
+            "PTR"
+          ]
+        },
+        "recipeSpellIDs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "inputItemIDs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "outputItemIDs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "nominalInputCount": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "inputQualityRanks": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "outputQualityRanks": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "patchStartBuild": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "patchEndBuild": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "referenceContext": {
+      "type": "object"
+    },
+    "targetContext": {
+      "type": "object"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claimID",
+          "url",
+          "evidenceKind",
+          "sampleOperations"
+        ],
+        "properties": {
+          "claimID": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "evidenceKind": {
+            "enum": [
+              "OFFICIAL_NUMERIC",
+              "RAW_CAST_LOG",
+              "INDEPENDENT_REPLICATION",
+              "DOCUMENTED_RATE",
+              "QUALITATIVE",
+              "MODEL_ESTIMATE"
+            ]
+          },
+          "sampleOperations": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "independentReview": {
+      "type": "object",
+      "required": [
+        "reviewer",
+        "reviewedAt",
+        "passedTestIDs"
+      ],
+      "properties": {
+        "reviewer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "passedTestIDs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "confidence0to100": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "numericTransformValidated": {
+      "type": "boolean"
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "statusHistory": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}
