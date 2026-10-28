@@ -13,7 +13,7 @@ The latest `research/proposed/itemdb.lua` found on the fetched research branch w
 
 Multiple item databases are intentionally retained during development. The previously working schema-1 compiled database is preserved as `LootLiquidator/ItemDBRuntime.lua`; the TOC loads that file before Database.lua. It contains 267 grouped source records and zero executable rules. The new research file is not TOC-loaded: its single-output records and returned table are incompatible with the current grouped-record/namespace API. Copying it over the active file without separation would leave `LL.ItemDB` unset and break database initialization. No research branch was modified and no research coefficients were promoted.
 
-`database/research-itemdb-source.json` records provenance. Package checks verify the copied file's hash. The runtime compiler, reproducibility tests and benchmark target ItemDBRuntime.lua, preventing regeneration from silently replacing the copied research file. There are 16 TOC-loaded Lua files plus one unloaded development database snapshot.
+`database/research-itemdb-source.json` records provenance. Package checks verify the copied file's hash. The runtime compiler, reproducibility tests and benchmark target ItemDBRuntime.lua, preventing regeneration from silently replacing the copied research file. There are now 17 TOC-loaded Lua files plus one unloaded development database snapshot.
 
 ## Scaling verdict
 
@@ -21,7 +21,13 @@ Multiple item databases are intentionally retained during development. The previ
 
 Actual skill-20 versus skill-100 baseline equality, scoped synthetic scaling, reference immutability, missing-coefficient rejection and preventing duplicate application were verified. Economic valuation uses unconditional expected quantities without multiplying occurrence again. Current/manual/offline profile support and source weights exist, but those controls must not be advertised as verified gameplay yield scaling.
 
-## Reproduced findings and recommendations
+## Follow-up implementation
+
+Version 0.10.0-alpha2 fixes all five defects below: fresh bonus/specialization handling, probability/expectation consistency, method-specific equipment applicability and bounded rule confidence. The focused audit now passes **13/13 checks**. The descriptions below preserve the original reproductions against `670ef53`; they are historical findings, not unresolved failures.
+
+The new [measured craft recorder](craft-recording.md) captures current context, exact operation inputs/outputs, explicit operator-confirmed zeros and independent raw provenance. Baselines remain empirical and unapproved; both databases still ship zero executable numeric rules. The research-schema translation and independent coefficient review recommendations remain outstanding.
+
+## Original reproduced findings and recommendations
 
 ### P1 — Fresh base skill can be combined with an obsolete gear bonus
 
@@ -73,9 +79,9 @@ Recommendation: validate all mechanics rules on import and before execution: fin
 
 ## Checks performed
 
-- `bash tests/run.sh`: **passed**, including deterministic active-database regeneration, Lua 5.1 syntax for both database files, copy checksum, TOC separation, XML/load order, preserved PR #4 fixtures, **2,603 modernization assertions**, and native settings interaction fixtures.
-- `lua5.1 tools/audit_profession_scaling.lua`: **8 passed, 5 failed; exit 1**. The five failures above are intentionally exposed by the focused audit and remain unresolved recommendations. A passing baseline suite does not erase them. Synthetic numeric values in this audit are test fixtures, not claimed WoW mechanics.
+- `bash tests/run.sh`: **passed**, including deterministic active-database regeneration, Lua 5.1 syntax for both database files, copy checksum, TOC separation, XML/load order, preserved PR #4 fixtures, **2,604 modernization assertions**, and native settings interaction fixtures.
+- `lua5.1 tools/audit_profession_scaling.lua`: **13 passed, 0 failed; exit 0** after the alpha2 fixes. The original audit at `670ef53` exposed eight passes and the five failures described above. Synthetic numeric values in this audit are test fixtures, not claimed WoW mechanics.
 - Checked API signatures and data fields against generated Retail UI documentation at public mirror `Gethe/wow-ui-source`, live revision `15881d522c44cd106d3d8660106ec9f9d2f44167`: `TradeSkillUIDocumentation.lua`, `TradeSkillUITypesDocumentation.lua`, `ProfessionSpecUIDocumentation.lua`. The existing four-argument operation call and zero-argument inventory-slot call match these definitions. Those signatures do not prove in-game availability or hidden yield behavior.
 - **Not performed:** live WoW gameplay, actual equipment/respec transitions, drop-rate experiments or in-client UI QA.
 
-This change copies the latest database, preserves the working runtime path, and adds audit evidence. It does not silently repair the five scaling defects or promote incomplete research into gameplay calculations.
+The follow-up preserves both database artifacts, resolves the five reproduced defects and adds provisional measured-capture/export support. It does not approve new coefficients or promote incomplete research into either database.

@@ -133,6 +133,9 @@ local refundEstimate=assert(LL:GetRecordedProcessingEstimate(facts[11],'Craft',2
 local resolved=assert(LL:ResolveEvidenceModel(facts[11],{name='Craft',inputCount=2,recipeID=1000},refundEstimate,2))
 LL.GetOutputPrice=function(_,id) return id==20 and 100 or id==11 and 50 end
 eq(LL:ValueProcessingModel(resolved,0,true,facts[11]),175,'value includes observed saved input / original nominal batch')
+LL.AuctionEligible=function() return false end;facts[11].vendor=7
+eq(LL:ValueProcessingModel(resolved,0,true,facts[11]),153.5,'bound input savings use the available vendor value')
+LL.AuctionEligible=nil
 local refundFile=assert(io.open('/tmp/loot-craft-refund-export.json','w'));refundFile:write(LL:ExportCraftResearch());refundFile:close()
 -- Recrafts and customer orders cannot be mistaken for bag-output crafts.
 LL:ObserveCraftRequest(1001,1,{},nil,99,false);bags=bag({[10]=2});check(not LL:BeginCraftCapture('order',1001))
