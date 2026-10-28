@@ -6,7 +6,7 @@
  *   research/evidence/observations \
  *   research/mechanics/mechanics-chronology.json \
  *   research/proposed/reprocessed-observations.json \
- *   [verified-family-map.json] [registry-v0.2.json]
+ *   [verified-family-map.json] undefined [temporal-attributions-directory]
  *
  * If no source observation timestamp is known, documented publication date is
  * only an upper bound, never assumed to be when actual casts were performed.
@@ -16,6 +16,7 @@
 const fs=require("node:fs"),path=require("node:path"),crypto=require("node:crypto");
 const {resolveSampleWindow}=require("./resolve_sample_time");
 const {classify,validateChronology}=require("./resolve_mechanics_epoch");
+const {classifyWithContext,validateAttribution}=require("./classify_study_context");
 const hash=s=>crypto.createHash("sha256").update(s).digest("hex");
 const norm=x=>x===undefined?null:x;
 function loadEvidence(files) {
@@ -32,6 +33,28 @@ function loadEvidence(files) {
   }
   return {samples,inputs};
 }
+function resolveAttributionIndex(rows) {
+  const map=new Map();
+  for(const a of rows) {
+    if(!a?.observationID||!a?.eventID||!validateAttribution(a,a.eventID))
+      throw Error("Invalid contextual temporal attribution");
+    const revision=a.revision??1;
+    if(!Number.isSafeInteger(revision)||revision<1)
+      throw Error("Invalid attribution revision");
+    const key=a.observationID+"|"+a.eventID;
+    const current=map.get(key);
+    if(!current||revision>current.revision)map.set(key,{...a,revision});
+    else if(revision===current.revision)throw Error("Duplicate temporal attribution revision: "+key);
+  }
+  return map;
+}
+function loadAttributions(dir) {
+  if(!dir)return {rows:[],files:[]};
+  const result=loadEvidence(fs.readdirSync(dir).filter(f=>f.endsWith(".jsonl"))
+    .map(f=>path.join(dir,f)));
+  // The source-loader expects observationID but keeps all other fields.
+  return {rows:result.samples.map(e=>e.record),files:result.inputs};
+}
 function observedMean(o,item) {
   const n=o.processing?.completedOperations;
   if(o.processing?.actualOperationCountKnown===true&&Number.isSafeInteger(n)&&n>0
@@ -47,7 +70,7 @@ function observedMean(o,item) {
   }
   return {value:null,status:"NO_ACTUAL_CAST_MEAN",actualOperations:null,reportedTotal:null};
 }
-function processObservation(o,chrono,familyMap={}) {
+function processObservation(o,chrono,familyMap={},attributionIndex=new Map()) {
   const src=o.source||{},g=o.game||{},p=o.processing||{},ctx=o.characterContext||{};
   const time=resolveSampleWindow(o);
   const inputFamily=norm(o.inputFamily??o.processing?.inputFamily??familyMap.inputs?.[String(p.inputItemID)]);
@@ -56,10 +79,17 @@ function processObservation(o,chrono,familyMap={}) {
     const current={...o,gameMode:g.gameMode,expansionID:g.expansionID,method:p.method,
       recipeID:p.recipeID,inputItemID:p.inputItemID,outputItemID:item.outputItemID,
       inputFamily,outputFamily,observationTiming:o.observationTiming,source:src,game:g};
-    const epochEvents=(chrono.events||[]).filter(e=>e.status==="ACTIVE").map(e=>({
-      eventID:e.eventID,revision:e.revision,asOf:classify(current,e),
-      numericBridgeAvailable:e.numericallyBridgeable===true
-    }));
+    const epochEvents=(chrono.events||[]).filter(e=>e.status==="ACTIVE").map(e=>{
+      const directEra=classify(current,e);
+      const attribution=attributionIndex.get(o.observationID+"|"+e.eventID)||null;
+      const interpreted=classifyWithContext(directEra,attribution,e.eventID);
+      return {eventID:e.eventID,revision:e.revision,asOf:interpreted.era,
+        rawDateEra:directEra,dateBasis:interpreted.temporalBasis,
+        contextualAttributionID:interpreted.attributionID,
+        provisionalAlternateEra:interpreted.proposedEra,
+        contextualWarnings:interpreted.notes,
+        numericBridgeAvailable:e.numericallyBridgeable===true};
+    });
     const mean=observedMean(o,item),n=p.completedOperations;
     const hitProbability=(p.actualOperationCountKnown===true&&Number.isSafeInteger(n)&&n>0
       &&Number.isSafeInteger(item.hitOperations)&&item.hitOperations>=0&&item.hitOperations<=n)
@@ -92,13 +122,14 @@ function processObservation(o,chrono,familyMap={}) {
     outputs
   };
 }
-function reprocess(samples,chrono,{familyMap={},files=[],registrySnapshot=null}={}) {
+function reprocess(samples,chrono,{familyMap={},files=[],registrySnapshot=null,temporalAttributions=[],attributionFiles=[]}={}) {
   validateChronology(chrono);
   const ids=new Set();
+  const attributionIndex=resolveAttributionIndex(temporalAttributions);
   const records=samples.map(({record,file,line})=>{
     if(ids.has(record.observationID))throw Error("Duplicate observationID: "+record.observationID);
     ids.add(record.observationID);
-    return {rawLocation:{file,line},...processObservation(record,chrono,familyMap)};
+    return {rawLocation:{file,line},...processObservation(record,chrono,familyMap,attributionIndex)};
   });
   return {
     schemaVersion:"1.0",purpose:"REPROCESSED_EVIDENCE_FOR_ITEMDB_MODELING_NOT_A_RELEASE",
@@ -106,20 +137,24 @@ function reprocess(samples,chrono,{familyMap={},files=[],registrySnapshot=null}=
     registrySnapshotSHA256:registrySnapshot?hash(JSON.stringify(registrySnapshot)):null,
     registrySchemaVersion:registrySnapshot?.schemaVersion??null,
     policy:"REPROCESS_ORIGINAL_STUDY_TIME_THEN_APPLY_VERSIONED_REGISTRY_RULES_WHEN_VERIFIED",
-    sourceFileFingerprints:files,rawObservationsChanged:false,
+    sourceFileFingerprints:files,temporalAttributionFingerprints:attributionFiles,
+    reviewedTemporalAttributions:temporalAttributions.filter(a=>a.reviewStatus==="MASTER_REVIEWED").length,
+    rawObservationsChanged:false,
     compiledNumericMechanics:0,productionPromotions:0,observationCount:records.length,
     records
   };
 }
 function main(argv) {
   if(argv.length<3)throw Error("Usage: node reprocess_observation_archive.js <raw-data-directory> <chronology.json> <output.json> [family-map.json] [registry-v0.2.json]");
-  const [dir,chronologyFile,outputFile,familyFile,registryFile]=argv;
+  const [dir,chronologyFile,outputFile,familyFile,registryFile,attributionDir]=argv;
   const c=JSON.parse(fs.readFileSync(chronologyFile,"utf8"));
   const familyMap=familyFile?JSON.parse(fs.readFileSync(familyFile,"utf8")):{};
   const registrySnapshot=registryFile?JSON.parse(fs.readFileSync(registryFile,"utf8")):null;
   const files=fs.readdirSync(dir).filter(f=>f.endsWith(".jsonl")).map(f=>path.join(dir,f));
   const evidence=loadEvidence(files);
-  const result=reprocess(evidence.samples,c,{familyMap,files:evidence.inputs,registrySnapshot});
+  const timing=loadAttributions(attributionDir);
+  const result=reprocess(evidence.samples,c,{familyMap,files:evidence.inputs,registrySnapshot,
+    temporalAttributions:timing.rows,attributionFiles:timing.files});
   fs.mkdirSync(path.dirname(outputFile),{recursive:true});
   fs.writeFileSync(outputFile,JSON.stringify(result,null,2)+"\n","utf8");
   process.stdout.write(JSON.stringify({outputs:outputFile,observations:result.observationCount,
@@ -128,4 +163,4 @@ function main(argv) {
     modelValuesPromoted:result.productionPromotions})+"\n");
 }
 if(require.main===module)main(process.argv.slice(2));
-module.exports={hash,loadEvidence,observedMean,processObservation,reprocess};
+module.exports={hash,loadEvidence,loadAttributions,resolveAttributionIndex,observedMean,processObservation,reprocess};
