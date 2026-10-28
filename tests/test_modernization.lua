@@ -30,7 +30,7 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,16,'runtime source count')
+eq(#manifest,17,'runtime source count')
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',
@@ -186,6 +186,10 @@ check(rendered:find('EV 2.000',1,true),'tooltip expected units')
 check(rendered:find('50%',1,true),'tooltip probability')
 check(rendered:find('itemdb: 100.0%',1,true),'tooltip actual source contributions')
 near(options[1].yieldModel.materials[1].expectedQuantity,2,'tooltip must not recalculate')
+options[1].yieldModel.confidenceUnscored=true;tooltip.lines={}
+LL:AppendRecommendationTooltip(tooltip,{action='P',facts=f,conversionOptions=options,count=1,method='Prospect'})
+check(table.concat(tooltip.lines,'\n'):find('Confidence unscored',1,true),'unreviewed captures do not display a numeric confidence claim')
+options[1].yieldModel.confidenceUnscored=nil
 -- Method off and insufficient batch remain eligibility gates.
 LL.db.processingModes.P=3;eq(#LL:ConversionOptions(f),0)
 LL.db.processingModes.P=2;f.count=1;eq(LL:ConversionOptions(f)[1].available,false)
@@ -248,4 +252,4 @@ for _,r in ipairs(LL.ItemDB.processing) do
         if r.method~='Smelt' then eq(material.dropChance.value,nil);eq(material.minQuantity.value,nil);eq(material.maxQuantity.value,nil) end
     end
 end
-print('PASS: '..count..' modernization assertions; 16 modules loaded; in-game QA pending')
+print('PASS: '..count..' modernization assertions; 17 modules loaded; in-game QA pending')

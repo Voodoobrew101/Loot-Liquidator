@@ -153,7 +153,7 @@ local function userWeight(self,key,mode)
 end
 local function sourceModel(self,f,option,r)
     local model={inputCount=r.inputCount,patchBuild=r.patchBuild,referenceContextID=r.referenceContextID,
-        duration=r.duration,materials={},source=r.source}
+        duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source}
     for _,m in ipairs(r.materials) do
         model.materials[#model.materials+1]={id=m.id,expectedQuantity=m.expectedQuantity.value,
             chance=m.dropChance.value,probabilityVerified=m.dropChance.status=='verified' or m.dropChance.status=='measured',
@@ -179,14 +179,17 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
             and (not r.expansionID or r.expansionID==f.expansionID)
             and contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules) then eligible[#eligible+1]=r end
     end
+    if personal and personal.observationContext and (ctx.simulated or ctx.character~=personal.observationContext.character) then
+        personal=nil -- measured current-character samples cannot stand in for a simulation or alt
+    end
     if personal and userWeight(self,'personal',mode)>0 and (personal.effectiveSamples or 0)>0 then
-        local r={recordID='personal',sourceKey='personal',studyID='personal:'..tostring(ctx.character),
+        local r={recordID='personal',sourceKey='personal',studyID=personal.studyID or ('personal:'..tostring(ctx.character)),
             source='Personal recorded results',inputCount=personal.inputCount or option.inputCount or 1,
             samples=personal.effectiveSamples,referenceConditions=copy(ctx),
-            referenceContextID=personal.referenceContextID,patchBuild=personal.patchBuild,
+            referenceContextID=personal.referenceContextID,patchBuild=personal.patchBuild,expectedInputCount=personal.expectedInputCount,
             materials={},provisional=(personal.effectiveSamples or 0)<(self.ProcessingMinimum and self:ProcessingMinimum() or 30)}
         for _,m in ipairs(personal.materials or {}) do
-            r.materials[#r.materials+1]={id=m.id,
+            r.materials[#r.materials+1]={id=m.id,quality=m.quality,rarity=m.rarity,
                 expectedQuantity={value=m.expectedQuantity,confidence=85,status='observed'},
                 dropChance={value=m.chance,confidence=85,status='observed'},
                 minQuantity={value=m.minQuantity,confidence=85,status='observed'},
@@ -208,6 +211,12 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     local result={kind='weighted-evidence',inputCount=batch,materials={},sources={},
         source='Weighted evidence',context=ctx,adjustment='baseline / unadjusted',
         provisional=false,confidence=0,excludedSources={},unknownOutputs=false}
+    if anchor.sourceKey=='personal' and personal and personal.observationContext then
+        result.context=copy(personal.observationContext)
+        result.provisional=true
+        result.confidenceUnscored=true -- capture quality weights are not scientific review
+        result.adjustment='measured character context / unadjusted'
+    end
     local bins,studySeen={},{}
     local function sameContext(r)
         if r==anchor then return true end
@@ -220,6 +229,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         else
             -- Build a model, then apply the preserved PR #4 adapter exactly once.
             local model=transformed[r] or sourceModel(self,f,option,r)
+            if r==anchor and model.expectedInputCount~=nil then
+                result.expectedInputCount=model.expectedInputCount*batch/r.inputCount
+            end
             if model.mechanicsApplied then
                 result.adjustment='character-adjusted';result.mechanicsApplied=true
                 if r==anchor then
@@ -317,6 +329,8 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(option.name),tostring(option.inputCount),tostring(option.recipeID),tostring(option.character),
         tostring(ctx._cacheIdentity or fingerprint(ctx)),tostring(build),tostring(self.ItemDB and self.ItemDB.version),
         tostring(mode),tostring(personal and personal.effectiveSamples),
+        tostring(personal and personal.studyID),tostring(personal and personal.observationContextID),
+        tostring(personal and personal.expectedInputCount),
         tostring(userWeight(self,'itemdb',mode)),tostring(userWeight(self,'personal',mode)),
         tostring(userWeight(self,'tsm',mode)),tostring(userWeight(self,'legacy',mode))},'|')
     self._processingModelCache=self._processingModelCache or {count=0}

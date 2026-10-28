@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+export PYTHONDONTWRITEBYTECODE=1
 cd "$(dirname "$0")/.."
 if command -v lua5.1 >/dev/null 2>&1; then
     lua_bin=$(command -v lua5.1)
@@ -19,3 +20,6 @@ python3 tests/validate_package.py
 "$lua_bin" research/tests/test_verified_mechanics_adapter.lua
 "$lua_bin" tests/test_modernization.lua
 "$lua_bin" tests/test_settings.lua
+
+"$lua_bin" tests/test_craft_recording.lua
+"$lua_bin" tools/audit_profession_scaling.lua

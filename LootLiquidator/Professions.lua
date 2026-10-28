@@ -231,6 +231,55 @@ function LL:GetResearchProfessionSnapshot(f,profession)
     return skill,spec,chosenID
 end
 
+-- A recorder context is always measured for the logged-in character. It never
+-- reads Manual profiles and never substitutes an offline or cached trait value.
+function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration)
+    local function read(fn,...)
+        if type(fn)~="function" then return nil end
+        local ok,value=pcall(fn,...)
+        return ok and type(value)=="table" and value or nil
+    end
+    local ui=C_TradeSkillUI
+    local info=OwnTradeSkillWindow() and read(ui and ui.GetProfessionInfoByRecipeID,recipeID)
+    local line=info and info.professionID
+    local spec=line and ReadSpec(line)
+    local context={character=self:CharacterKey(),recipeID=recipeID,method=method,
+        profession=info and (info.parentProfessionName or info.professionName) or self:ProfessionForMethod(method),
+        skillLineID=line,parentProfessionID=info and info.parentProfessionID,expansionName=info and info.expansionName,
+        baseSkill=info and info.skillLevel,maxSkill=info and info.maxSkillLevel,bonusSkill=info and info.skillModifier,
+        specialization=spec,equipment={},fieldStatus={},observed=Now(),profileKind="measured",
+        inputExpansionID=f and f.expansionID,allocationKnown=type(allocation)=="table"}
+    if type(context.baseSkill)=="number" and type(context.bonusSkill)=="number" then
+        context.effectiveSkill=context.baseSkill+context.bonusSkill
+    end
+    local slots=read(ui and ui.GetProfessionInventorySlots)
+    if slots and GetInventoryItemLink then
+        for _,slot in ipairs(slots) do
+            local ok,link=pcall(GetInventoryItemLink,"player",slot)
+            if ok and type(link)=="string" then context.equipment[tostring(slot)]=link end
+        end
+        context.fieldStatus.equipment="measured"
+    else context.fieldStatus.equipment="unknown" end
+    if OwnTradeSkillWindow() and allocation and type(applyConcentration)=="boolean" then
+        local operation=read(ui and ui.GetCraftingOperationInfo,recipeID,allocation,nil,applyConcentration)
+        if operation then
+            context.operationStats=operation.bonusStats
+            context.operationBaseSkill=operation.baseSkill;context.operationBonusSkill=operation.bonusSkill
+            context.craftingQuality=operation.craftingQuality
+            if type(operation.baseSkill)=="number" and type(operation.bonusSkill)=="number" then
+                context.effectiveSkill=operation.baseSkill+operation.bonusSkill
+                context.skillBasis="recipe-operation"
+            end
+        end
+    end
+    for _,name in ipairs({"baseSkill","bonusSkill","effectiveSkill","specialization","skillLineID","operationStats"}) do
+        context.fieldStatus[name]=context[name]~=nil and "measured" or "unknown"
+    end
+    context.applyConcentration=applyConcentration
+    context.simulated=false
+    return context
+end
+
 function LL:ProfessionForMethod(method) return PROF[method] end
 function LL:SetManualProfessionProfile(character,profession,expansion,values)
     if not self.db or type(character)~='string' or type(profession)~='string'

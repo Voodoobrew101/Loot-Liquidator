@@ -668,8 +668,8 @@ function LL:RegisterNativeSettings()
     Section(researchLayout,"Record actual results")
     Checkbox(research,"recordDisenchants","Record disenchant results",
         "Record reliably matched disenchant yields to account-wide SavedVariables.",true)
-    Checkbox(research,"recordConversions","Record other processing results",
-        "Record reliably matched milling, prospecting and supported single-input craft results.",true)
+    Checkbox(research,"recordConversions","Record crafting and processing results",
+        "Record isolated completed crafts with measured inputs, outputs and profession context. Unresolved results never become zero samples. Export with /ll craftexport; no automatic database or mechanics approval.",true)
     Checkbox(research,"showProcessingSamples","Show sample counts in tooltips",
         "Show how many personal observations are available. Full distributions also require Detailed tooltips.",true)
     Section(researchLayout,"Evidence collection")

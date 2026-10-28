@@ -299,6 +299,9 @@ function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
     local savings=0
     if model.expectedInputCount and model.expectedInputCount<model.inputCount then
         local quote=f and self:GetOutputPrice(f.id)
+        if f and self.AuctionEligible and not self:AuctionEligible(f) then
+            quote=validNumber(f.vendor) and f.vendor or nil
+        end
         if quote then savings=(model.inputCount-model.expectedInputCount)*quote else missing=missing+1 end
     end
     model.partialPrice=missing>0 or model.unknownOutputs or model.insufficientSamples
@@ -419,7 +422,7 @@ function LL:ConversionOptions(f)
         -- drop rate. Do not multiply by chance again (already included).
         -- GetOutputPrice includes the AH fee once.
         local yieldModel,modelIssue
-        if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" then
+        if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or (research and dataMode~=3) then
             local displayOption={name=c.method,inputCount=inputCount,
                 recipeID=processingRecipe,character=character}
             local current=self.CharacterKey and self:CharacterKey()
@@ -435,7 +438,7 @@ function LL:ConversionOptions(f)
         local isFixed = c.outputID and c.outputCount and c.inputCount
             and (c.confidence=="documented" or c.confidence=="verified" or
                  c.method=="Exchange" or c.method=="Combine" or c.method=="Split")
-        if c.method~="Mill" and c.method~="Prospect" and c.method~="Smelt" then
+        if c.method~="Mill" and c.method~="Prospect" and c.method~="Smelt" and not yieldModel then
             if dataMode==2 and not isFixed then
                 value=research and research.value or nil
                 source="Personal results only"

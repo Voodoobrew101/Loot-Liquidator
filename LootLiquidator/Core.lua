@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.10.0-alpha1"
+LA.version = "0.10.0-alpha2"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -950,6 +950,17 @@ local function Command(msg)
         if LA.ShowProcessingStats then LA:ShowCopy("Processing Research",LA:ShowProcessingStats()) end
     elseif command == "processexport" then
         if LA.ExportProcessingData then LA:ShowCopy("Processing Research CSV",LA:ExportProcessingData()) end
+    elseif command == "craftstats" then
+        LA:ShowCopy("Craft recording",LA:CraftRecordingReport())
+    elseif command == "craftexport" then
+        LA:ShowCopy("Craft research JSON",LA:ExportCraftResearch(tonumber(arg)))
+    elseif command == "craftbaseline" then
+        LA:ShowCopy("Measured craft baselines JSON",LA:ExportCraftBaselines())
+    elseif command == "craftstudy" then
+        local study,reason=LA:StartCraftStudy(msg:match("^%S+%s+(.+)$"))
+        Say(study and ("Started research study: "..study) or reason or "Unable to start a study")
+    elseif command == "craftzero" then
+        local _,message=LA:ConfirmEmptyCraft();Say(message)
     elseif command == "scanstatus" then
         local candidates,consumers,recipes=0,0,0
         for _,list in pairs(LA.db.recipeCandidates or {}) do
@@ -967,7 +978,7 @@ local function Command(msg)
         Say("/ll settings - appearance, colors, and optional profession hints")
         Say("Disenchanting requires a verified current character or eligible alt; /ll enchanting no longer overrides eligibility")
         Say("/ll milling on|off, /ll prospecting on|off, /ll smelting on|off")
-        Say("/ll exchanges on|off, /ll inspect ITEMID, /ll inspectbags, /ll destats, /ll detrack, /ll deexport, /ll processstats, /ll processexport, /ll processingdebug start|show|clear, /ll report, /ll scanstatus, /ll clearreport, /ll refresh, /ll tsmops, /ll attdiag ITEMID, /ll attcache, /ll attcache status, /ll dbstatus, /ll ignore ITEMID, /ll unignore ITEMID, /ll status")
+        Say("/ll craftstats, /ll craftexport [page], /ll craftbaseline, /ll craftstudy LABEL, /ll craftzero, /ll exchanges on|off, /ll inspect ITEMID, /ll inspectbags, /ll destats, /ll detrack, /ll deexport, /ll processstats, /ll processexport, /ll processingdebug start|show|clear, /ll report, /ll scanstatus, /ll clearreport, /ll refresh, /ll tsmops, /ll attdiag ITEMID, /ll attcache, /ll attcache status, /ll dbstatus, /ll ignore ITEMID, /ll unignore ITEMID, /ll status")
         Say("Uses TSM prices; item processing recommendations are estimates, never automatic sells.")
     end
 end

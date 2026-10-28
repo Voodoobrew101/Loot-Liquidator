@@ -677,7 +677,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     and decision.disenchantEligible) then
                     local confidence=model and model.confidence
                     local label=names[methodName] or methodName
-                    if confidence then label=label..(" (Confidence %d/100)"):format(confidence)
+                    if model and model.confidenceUnscored then label=label.." (Confidence unscored)"
+                    elseif confidence then label=label..(" (Confidence %d/100)"):format(confidence)
                     elseif option.available==false then label=label.." (estimate)" end
                     if option.value then
                         valued(label,option.value,option.letter,methodName=="Disenchant" and count or 1)
