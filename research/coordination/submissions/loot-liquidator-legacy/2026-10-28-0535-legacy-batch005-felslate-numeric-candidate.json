@@ -1,0 +1,101 @@
+{
+  "hypothesisID": "legacy-felslate-standard-mass-compare",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 6,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      225904
+    ],
+    "inputItemIDs": [
+      123919
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 20,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "standardOreCount": 5,
+    "standardRecipeSpellID": null,
+    "matchedCasts": null,
+    "build": null,
+    "skill": null,
+    "gear": null
+  },
+  "targetContext": {
+    "massOreCount": 20,
+    "massRecipeSpellID": 225904,
+    "historicalMassCasts": 113,
+    "unmappedOutputTotals": [
+      452,
+      42,
+      62,
+      91,
+      131,
+      114,
+      99,
+      20,
+      5,
+      22,
+      28,
+      2,
+      4
+    ],
+    "build": null,
+    "skill": null,
+    "gear": null
+  },
+  "requiredLiveContext": [
+    "same-build standard and mass recipes",
+    ">=200 casts per recipe with zero-inclusive per-item outputs",
+    "input item and output item IDs/ranks",
+    "skill/specialization/gear/stats",
+    "actual consumed/saved ore",
+    "independent replication"
+  ],
+  "sources": [
+    {
+      "claimID": "wiki-mass-felslate-20",
+      "url": "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "wowhead-113mass-unmapped",
+      "url": "https://www.wowhead.com/de/spell=225904/massensondierung-von-teufelsschiefer",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": 113
+    },
+    {
+      "claimID": "reddit-2016-felslate-25k-ore",
+      "url": "https://www.reddit.com/r/woweconomy/comments/51ovfk/possible_prospecting_nerf/",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No same-build standard-vs-mass control cohorts",
+    "113 mass cast output vector unmapped to item IDs; no per-cast zero/hit counts",
+    "2016 25k-ore experiment compares alleged patch windows, NOT standard versus mass",
+    "No current Retail build/skill/gear/rank/recipe context"
+  ],
+  "notes": "2016 original player source reports 560 rare gems/15000 ore before, 101/10000 ore after an alleged hotfix; per-five-ore-equivalent means 0.18666666666666668 vs 0.0505. Neither is a verified 2026 patch multiplier or mass-vs-standard effect."
+}
