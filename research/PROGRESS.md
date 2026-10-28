@@ -1,5 +1,10 @@
 # Loot Liquidator — processing research and confidence ledger
 
+## 2026-10-28 — Independent numerical profession-mechanics track implemented (research-only)
+
+The user-approved parallel mechanics study/QA program is now committed, with four disjoint expansion hypotheses in assignments.json#mechanicsTrack, a strict experimental evidence protocol, numerical candidate schema, master approval gate, proposed itemdb mechanicRules extension, and deterministic research-only staging compiler. **No numeric profession formulas approved yet; production GameData.lua/TOC unchanged.** All five hourly assistant prompts updated without changing schedules. Isolated JS validation harness: 28 numeric-rule + 13 compiler + 16 existing itemdb static checks passed (57 total, zero failures); this is **not live WoW testing**. See [implementation review](reviews/2026-10-28-numeric-mechanics-program-implementation.md), [protocol](mechanics/NUMERIC_MODEL_RESEARCH_PROTOCOL.md), [compiler](tools/compile_verified_mechanics.js), and [tests](tests/test_numeric_rules.js).
+
+
 ## Future output filename and hourly research prompt — 2026-10-28
 
 **USER DECISION (supersedes older output filenames):** Future generated single shipped item/conversion database file is **`itemdb.lua`** (exact lowercase). `main/GameData.lua` is the CURRENT production file and its `LootLiquidator.toc` entry must stay unchanged until a reviewed migration is approved and tested. All compiled research candidates, schemas, examples and migration plans use `itemdb.lua` under `research/proposed/`; do not create a competing addon runtime table.
