@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.2.0-PROPOSAL",
+  "schemaVersion": "0.2.1-PROPOSAL",
   "role": "RESEARCH_NORMALIZATION_CONTRACT_NOT_SHIPPED_DATABASE",
   "sourceRegistry": "research/mechanics/ProfessionMechanicsRegistry.json",
   "enums": {
@@ -275,17 +275,19 @@
   },
   "sourceClaims": [
     {
-      "claimID": "blizzard-2026-04-01-midnight-gems",
+      "claimID": "blizzard-2026-03-31-midnight-gems",
       "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
       "publishedDate": null,
       "retrievedDate": "2026-10-28",
-      "versionScope": "Midnight live after 2026-04-01",
+      "versionScope": "Midnight live hotfix dated 2026-03-31 in official cumulative notes; deployment clock/build unknown",
       "evidenceClass": "OFFICIAL_HOTFIX",
       "specificClaim": "Gems found more regularly when prospecting Midnight ore",
       "numericalSupport": false,
       "sampleN": null,
       "independentCorroboration": null,
-      "confidence0to100": null
+      "confidence0to100": null,
+      "chronologyRevision": 1,
+      "previousClaimID": "blizzard-2026-04-01-midnight-gems"
     },
     {
       "claimID": "wowhead-2026-midnight-jc-prospecting-nodes",
@@ -316,8 +318,8 @@
   ],
   "patchEvents": [
     {
-      "eventID": "midnight-gem-hotfix-2026-04-01",
-      "effectiveDate": "2026-04-01",
+      "eventID": "midnight-gem-hotfix-2026-03-31",
+      "effectiveDate": "2026-03-31",
       "firstAffectedBuild": null,
       "gameMode": "RETAIL",
       "expansionIDs": [
@@ -337,10 +339,14 @@
       "evidenceStatus": "VERIFIED_QUALITATIVE",
       "numericTransformID": null,
       "sourceClaimIDs": [
-        "blizzard-2026-04-01-midnight-gems"
+        "blizzard-2026-03-31-midnight-gems"
       ],
       "intervalConfidence": null,
-      "notes": "Do not apply numerical patch normalization without posthotfix bridging evidence; no blanket modifier for byproducts."
+      "notes": "Do not apply numerical patch normalization without posthotfix bridging evidence; no blanket modifier for byproducts. Official date corrected from April 1 to March 31; publication date is not event date. Raw cohorts on March 31 require time/build resolution.",
+      "effectiveTimeUTC": null,
+      "datePrecision": "DAY",
+      "previousEventID": "midnight-gem-hotfix-2026-04-01",
+      "chronologyID": "midnight-gem-prospecting-frequency-2026-03-31"
     }
   ],
   "mechanicRules": [
@@ -409,10 +415,10 @@
   ],
   "negativeFixtures": [
     {
-      "test": "midnight-pre-apr1-to-post-hotfix-gem",
-      "sourcePatchDate": "2026-03-31",
-      "targetPatchDate": "2026-04-02",
-      "eventID": "midnight-gem-hotfix-2026-04-01",
+      "test": "midnight-pre-mar31-to-post-hotfix-gem",
+      "sourcePatchDate": "2026-03-30",
+      "targetPatchDate": "2026-04-01",
+      "eventID": "midnight-gem-hotfix-2026-03-31",
       "expectedDecision": "BLOCKED_UNKNOWN_PATCH_EFFECT"
     },
     {
@@ -502,7 +508,17 @@
     "passedProductionReadiness": false,
     "knownNumericTransformationCount": 0,
     "needsHumanMechanicReview": true,
-    "notes": "This prototype enumerates data requirements; it is not a validated numerical mechanics registry or executable model."
+    "notes": "This prototype enumerates data requirements; it is not a validated numerical mechanics registry or executable model. Chronological mechanics revision and event-day ambiguity tracked; no numeric coefficients added."
   },
-  "runtimeApiManifestPath": "research/mechanics/WoWRuntimeAPIRegistry.json"
+  "runtimeApiManifestPath": "research/mechanics/WoWRuntimeAPIRegistry.json",
+  "mechanicsChronology": {
+    "path": "research/mechanics/mechanics-chronology.json",
+    "resolver": "research/tools/resolve_mechanics_epoch.js",
+    "tests": "research/tests/test_mechanics_chronology.js",
+    "releasePolicy": "Chronology and raw sample records are research evidence; do not execute an unverified numeric transform",
+    "refinementPolicy": "Append independently sourced, date/build-scoped event revisions; preserve previous event labels/date corrections and original samples. Master QA reviews each refinement, reassigns sampled cohort epochs, reruns affected synthesis and confidence estimates, and stages versioned new model candidates. Do not overwrite history or silently carry coefficients across an affected patch.",
+    "temporalBoundaryPolicy": "Official calendar-date headings and actual deployment clock differ; event-day samples remain unassigned unless timestamp/build evidence resolves timing. Publication date of cumulative notes is not effective date.",
+    "sourceScopePolicy": "Unknown item-family/recipe/quality context is unresolved, not an implicit match or proof of no effect.",
+    "unskilledBaselinePolicy": "Use minimum recipe-eligible no-optional-bonus profile per input/output/patch; reconstruct by audited inverse mechanics where feasible, preserve skilled raw samples and unknown fields."
+  }
 }
