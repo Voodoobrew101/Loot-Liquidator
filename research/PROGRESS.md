@@ -15,6 +15,7 @@ Independently research and verify all applicable fields and processing relations
 - **389 source profiles** and **1,256 source output rows** catalogued in research ledgers; 92 additional runtime overlay mappings tracked separately. Source rows overlap; not all unique live item-output pairs.
 - **0/1,256 output source rows** have every applicable material field independently scored >=90; 0 scored 70–89; 1,256 scored <70. Lowest 0, including 304 zero-score rows where evidence is missing. This is a conservative first scoring baseline, not a statement that all item IDs were independently checked.
 - **40 TSM source consistency flags**; 12 severe Cobalt/Titanium rows cross-checked against historical/wiki sources and flagged as potentially unsafe for valuation.
+- **12 newly sourced historical Titanium yield observations** across six uncommon gems (2022 Retail 200 casts; 2023 Classic PTR 1,000 casts), providing decimal unconditional means around 0.22–0.295 gems per five-ore cast, rather than contradictory TSM 2.5. Not promoted to current Retail rates or production.
 - **1 verified mechanic-date correction proposed:** Midnight prospecting gem buff is in Blizzard's **2026-04-01** hotfix section, not April 17 (cumulative article title).
 - **ALL-records >=90 completion gate: NOT MET.** No production Lua changed; no in-game tests.
 - Latest detailed run notes: `research/run-log.md`. Source citations: `research/research-sources.md`.
@@ -47,6 +48,7 @@ Read the existing ledger and `research/run-log.md`, fetch fresh `main/GameData.l
 - `research/ledger/supplemental-output-fields.csv` — 255 DE, low/high, fixed, token and cohort output rows
 - `research/ledger/runtime-overlay-map.csv` — 92 runtime-generated scenario mappings
 - `research/ledger/tsm-invariant-anomalies.csv` — 40 flagged contradictions
+- `research/ledger/titanium-observed-yields.csv` — 12 historical source-backed Titanium expected-quantity observations
 - `research/proposed/2026-10-27-corrections.md` — verified date correction and unsafe Northrend EV investigation
 - `research/tests/QA_PROTOCOL.md` — executed QA checks and confidence rubric
 - `research/research-sources.md` — external/internal provenance
