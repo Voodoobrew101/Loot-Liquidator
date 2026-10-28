@@ -1,0 +1,23 @@
+# Dragonflight Batch 004 — 2026-10-28 04:34 PDT
+**Worker:** loot-liquidator-dragonflight · **Assignment:** 2026-10-28-batch004-dragonflight · **Queue revision:** 6 · **Pre-write research branch SHA:** `b7d337619943fbb993b6136d44bd4dc70226b8d4` · **GameData.lua blob:** `1d47c4a961c5dc5af626e659f7d96d1490d3cf9e`.
+
+## Assigned first-pass output records
+**40/40** exact assigned keys independently reviewed: **18 Draconium R1 (189143)** and **22 Khaz'gorite R1 (190312)**. All 40/40 historical TSM rows pass necessary `P*min <= E <= P*max` checks with `E=5*amountOfMats`. Source `matRate` is a historical proxy, not independently observed per-cast P(at least one). `minAmount/maxAmount` lack per-cast proof. No sample counts or source skill/patch/gear conditions are recorded.
+
+**12 complete output-rank triplets (36 assigned rows)** repeat identical family rates at output ranks 1, 2 and 3; never sum all ranks as simultaneous outputs. The other 4 rows comprise three byproducts and one partial rank family. The rank transition must be conditioned on actual profession skill/Inspiration, not simply input ore rank.
+
+Per-field historical provenance confidence on each row: **P 25, positive min 30, positive max 30, unconditional E 30; record 25**. No new >=90 record, no approved current Retail correction. Output identity and actual 2026 eligibility remain to be verified per item. External input identity references: [Draconium R1 189143](https://thewowdb.com/item/draconium-ore-189143/), [Khaz'gorite R1 190312](https://thewowdb.com/item/khaz-gorite-ore-190312/). Spot-check outputs [Alexstraszite 192852](https://www.wowhead.com/item=192852), [Fractured Glass 192872](https://www.wowhead.com/item=192872), [Crumbled Stone 192880](https://www.wowhead.com/item=192880). Other IDs remain historical GameData associations.
+
+## Parallel numeric mechanics — Inspiration quality transition
+A **newly archived original Dragonflight beta study** contains six distinct 5,000-ore input cohorts: three R3 Draconium and three R3 Serevite at reported skill **68, 113, 228**. Original [spreadsheet](https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing), [contemporaneous Wowhead analysis dated October 16, 2022](https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385). Historical beta author reports quality thresholds **150/250** and an Inspiration bonus of **+83 skill**; 68+83=151, 113+83=196, 228+83=311. These are **beta observations/claims, not current Retail verified coefficients**.
+
+Source-reported Draconium R3 byproduct totals across the three cohorts: Crumbled Stone **1036 / 947 / 986**, Fractured Glass **769 / 1079 / 1225**, Prismatic Ore **0 / 0 / 29**; Illimited Diamond ranks R1/R2/R3: **11/0/1**, **8/0/1**, **0/1/17**. Serevite R3 totals: Stone **980/1025/1016**, Glass **790/1106/1162**, Prismatic **0/28/30**. Source spreadsheet rows 19,20,42,53–55. Separate [December 12, 2022 1000-cast R2 Serevite study](https://www.reddit.com/r/woweconomy/comments/zkay8v) confirms historical mixed output ranks but has no Inspiration proc-to-rank joint histogram.
+
+**BLOCKED numerical effect:** source says 5,000 input ore per cohort but does not identify actual completed casts or Resourcefulness savings. Per-cast proc flags, zeros, matched gear/talents and current build are absent. No P(drop), conditional yield, unconditional E/cast, quality-transition vector, coefficient, universal curve or patch bridge inferred. Three canonical-format Draconium beta observations preserve six mapped byproduct totals; the separate source-only archive retains all six cohorts. Mechanics findings **are not additional first-pass item records**.
+
+Required experiment: same current build and recipe, fixed ore quality, matched skill/specialization/gear except controlled Inspiration, >=1000 casts per cohort with every cast including zeros, Inspiration event, output item ID/rank and saved input count. Candidate status **VERIFIED_QUALITATIVE / BLOCKED**, numeric confidence 55, no executable formula.
+
+## QA and master handoff
+40/40 arithmetic PASS; 12 rank-triplet checks; 6 beta source cohorts; 0 numeric promotions. Full external JSON Schema validation and WoW-client tests **not performed**. Master should independently accept/reject 40 first-pass audits, validate observation schema, and assign the next disjoint keys. Next potential IDs only if master explicitly assigns: `output-main:tsm:prospect:190312:192860:L1310` through `...:192871:L1320`.
+
+No changes to production Lua, main, TOC, shared ledgers, master PROGRESS, queue or mechanic registry.
