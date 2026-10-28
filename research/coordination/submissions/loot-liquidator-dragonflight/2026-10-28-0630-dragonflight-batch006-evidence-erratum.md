@@ -1,0 +1,7 @@
+# Dragonflight batch006 evidence schema erratum — 2026-10-28
+
+The initial immutable source-only file `research/evidence/observations/2026-10-28-0630-dragonflight-batch006-serevite-2022-source-only.jsonl` in commit `6276b6cb1a6947d29902131c408ea2c7684ac3de` **must be quarantined**: its mapped output expectedQuantity evidence used a non-enumerated basis `SOURCE_REPORTED_AGGREGATE`, and its second observation had empty `outputs` without a required nonempty `unmappedReportedOutputs` array.
+
+The additive corrected evidence file is `research/evidence/observations/2026-10-28-0630-dragonflight-batch006-serevite-2022-SCHEMA-CORRECTED.jsonl`. It uses the schema-approved `REPORTED` evidence basis, preserves every source-named rank-2/rank-3 output as an explicit **unmapped** record with `outputItemID:null`, and keeps unknown completed cast count null for the 50,000-ore cohort. No source material ID was guessed.
+
+Both corrected JSONL observations passed an in-memory recursive check of the repository observation schema's required fields, enum, types, ranges, nested fields, and `anyOf` mapped-or-unmapped gate. An external standards-compliant JSON Schema validator and in-game tests remain NOT RUN. The original audit, blocked numeric candidate and item first-pass counts are unchanged. Master should accept only the corrected evidence file and leave the initial source-only file as an immutable rejected artifact.
