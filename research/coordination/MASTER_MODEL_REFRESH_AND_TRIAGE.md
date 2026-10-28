@@ -1,5 +1,8 @@
 # Master-owned research model refresh, mechanics refinement and active-learning queue
 
+**ACTIVE MASTER PRIORITY (2026-10-28):** Compiler and 100%-known-universe itemdb mapping coverage FIRST, below-90 provisional estimates allowed with provenance. Then numeric field fill and source/TSM discrepancies that could change liquidation recommendations. Mechanics chronology, regression, Bayesian reconstruction, reverse-to-baseline and historical replay remain nonblocking supporting research; no mandatory numeric-model task may displace missing output rows or a compiler blocker. Reallocate workers to disjoint missing material outputs instead of endless profile-only first-pass audits. Report source-inventory mapping coverage, all-four-field numeric completeness and independent exhaustive Retail audit separately; unknown is not zero. A 90 confidence gate applies only to a verified evidence-quality claim, not to building an explicitly provisional candidate. Current task automation instructions take precedence over older conflicting sequencing below. No production writes.
+
+
 **Status:** Research-only coordination protocol, updated 2026-10-28 for user instructions. Do not modify production `main` or release the addon. Existing hourly schedules remain unchanged. Master owns the only research-candidate compilation and canonical registry/assignment promotion; four expansion workers own independent immutable evidence and worker submissions.
 
 ## Continuous master cycle: CLOSE THE LOOP
