@@ -1,0 +1,148 @@
+{
+  "hypothesisID": "dragonflight-inspiration-quality-transition",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 9,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_QUALITY",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [],
+    "inputItemIDs": [
+      190314,
+      190394
+    ],
+    "outputItemIDs": [
+      192858,
+      192859,
+      192860,
+      192861,
+      192862,
+      192863,
+      192865,
+      192866,
+      192867,
+      192868,
+      192869,
+      192870,
+      192871,
+      192872,
+      192880,
+      194545,
+      192837,
+      192838,
+      192839,
+      192840,
+      192841,
+      192842,
+      192843,
+      192844,
+      192845,
+      192846,
+      192847,
+      192848,
+      192849,
+      192850,
+      192851,
+      192852,
+      192853,
+      192855,
+      192856,
+      192857
+    ],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      3
+    ],
+    "outputQualityRanks": [
+      1,
+      2,
+      3
+    ],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "era": "2022 Dragonflight beta",
+    "skillLevelsReported": [
+      68,
+      113,
+      228
+    ],
+    "inputOreRank": 3,
+    "sourceClaimOrePerCohort": 5000,
+    "completedOperations": null,
+    "inspirationProcs": null,
+    "gear": null,
+    "professionChildSkilllineID": null,
+    "recipeSpellID": null,
+    "contradictoryR3OreSkillBonus": [
+      63,
+      83
+    ]
+  },
+  "targetContext": {
+    "era": "Retail 2026 Midnight",
+    "patch": "12.x",
+    "mechanic": "Inspiration removed from profession system in 2024 prepatch",
+    "liveDragonflightRecipeProbe": null,
+    "alternativeQualityTransition": null
+  },
+  "requiredLiveContext": [
+    "clientBuild",
+    "exactRecipeSpellID",
+    "inputItemID",
+    "inputQualityRank",
+    "effectiveSkill",
+    "professionSpecializationRanks",
+    "professionGear",
+    "craftingOperationInfo",
+    "outputItemIDsAndRanks",
+    "perCastOutputsIncludingZeros",
+    "concentrationAvailabilityIfApplicable"
+  ],
+  "sources": [
+    {
+      "claimID": "blizzard-2024-prepatch-inspiration-removed",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24119590/the-war-within-pre-expansion-content-update-notes",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "Official prepatch professions notes explicitly remove Inspiration and introduce Concentration and Ingenuity."
+    },
+    {
+      "claimID": "jallfo-2022-beta-prospecting-skill-qualitative",
+      "url": "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "Historical beta R3 ore cohorts, claimed 5000 ore each and skill 68/113/228; actual casts, proc counts and current validity not reported."
+    },
+    {
+      "claimID": "original-2022-reddit-analysis",
+      "url": "https://www.reddit.com/r/woweconomy/comments/y3e8ek",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "Historical 2022 original discussion; does not establish 2026 applicability."
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 25,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Blizzard officially removed Inspiration in the 2024 pre-expansion update: no active Inspiration-driven 2026 coefficient can be assumed.",
+    "No current-Retail Dragonflight prospecting recipe-specific live test of skill/quality and replacement mechanics.",
+    "2022 beta experiment has no verified actual cast denominator, per-cast Inspiration flags, zero-inclusive output quality histograms or matching independent control.",
+    "2022 article internally states both +63 and +83 skill for rank-3 ore; unresolved beta-era source inconsistency.",
+    "Recipe spell ID, output eligibility and client build not established for exact rows.",
+    "Identical historical TSM rates repeated across output quality IDs do not constitute a verified mutually exclusive rank transition matrix."
+  ],
+  "notes": "Research-only, historical Inspiration hypothesis is nonportable to Retail 2026. Do not apply historical rank multipliers or force numeric no-effect. 40 assigned output rows are audited separately, not counted as mechanics observations."
+}
