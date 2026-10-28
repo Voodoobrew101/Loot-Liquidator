@@ -183,3 +183,9 @@ Current Retail cast records with zero-inclusive per-output histograms for four M
 ### 2026-10-28 — Master QA batch004
 - Read head 0438d8858d376dcf69360a50a95195f73cfac573 and original worker evidence; accepted 150 unique first-pass keys, 628/1737 cumulative. No current Retail corrections or >=90 promotions. Four numeric rules blocked.
 - 864 source/coverage/assignment assertions and 372 static schema/histogram checks passed; Node and WoW tests not run. Queue revision 7 next 150 disjoint keys. Review research/coordination/reviews/2026-10-28-master-worker-batch004-verdict.md. No main/production/schedule changes.
+
+## 2026-10-28 — master batch005 independent review
+- Source branch head dac3740773d7822275782f8a61df8df3ddaeb94a, GameData blob 1d47c4a961c5dc5af626e659f7d96d1490d3cf9e; 150 exact first-pass source output keys accepted; 150 source ID/input/rate/E/bound checks and score gates.
+- Classic/TBC 19 guide/TSM rate differences; 14 invalid hybrid P/E inequalities, five Thorium cases. Independent 2016 Felslate raw batches sum 560 first15 and **97** last10, correcting worker's 101. No current Retail coefficient.
+- Numeric 0 verified, 0 empirical approved, 4 blocked. Modern four-field 694 records / 2776 fields, 0 >=90. Coverage 778/1737, remaining 959. Next 150 disjoint keys. Static JS checks only, no Node or WoW client.
+- research/coordination/reviews/2026-10-28-master-worker-batch005-verdict.md; research/evidence/observations/2026-10-28-master-legacy-thorium-felslate-source-audit.jsonl; research/ledger/master-worker-batch005-four-field-scores-2026-10-28.csv.

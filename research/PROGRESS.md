@@ -1,3 +1,7 @@
+## Master batch005 accepted — 2026-10-28
+
+150 new disjoint first-pass outputs accepted (35/35/40/40), now 778/1737 examined, 959 never, 765 insufficient, 13 blocked. Four-field scored 694 outputs/2776 fields: >=90 0, 70–89 17, <70 2759. **Independent source arithmetic correction:** original 2016 Felslate last ten 1000-ore batches total **97**, not worker-reported 101; historical five-ore-equivalent E=0.0485, not 0.0505; no approved patch coefficient. Classic/TBC Thorium 5 severe source conflicts; 14 hybrid P/E inequalities invalid. Four numeric hypotheses BLOCKED, zero VERIFIED/EMPIRICAL rules. Next 150 exact keys queue rev8. No production changes. [Master verdict](research/coordination/reviews/2026-10-28-master-worker-batch005-verdict.md).
+
 ## Master batch003 accepted — 2026-10-28
 
 150 unique worker first-pass records accepted (35/35/40/40), 130 material outputs. 478/1737 examined, 1259 never examined, 465 insufficient, 13 blocked, zero all-field >=90. Four-field scored 394 outputs (1576 fields: >=90 0, 70–89 17, <70 1559). Zero Retail numerical corrections. One qualitative Felslate 5-vs-20 recipe distinction confirmed; four numeric hypotheses remain blocked for compilation, zero verified coefficients. 150 disjoint batch004 keys assigned; 1036 in-memory JS assertions passed, Node and WoW client not run. [Independent QA report](coordination/reviews/2026-10-28-master-worker-batch003-verdict.md). Rolling cycles 140/134/150 imply ~9 more hourly cycles for known first-pass only, not all-field >=90.
