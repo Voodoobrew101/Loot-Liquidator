@@ -174,3 +174,8 @@ Current Retail cast records with zero-inclusive per-output histograms for four M
 - Accepted 134 unique first-pass keys (34/30/40/30); 90 material output records plus 44 identity profiles; no >=90 promotion. Coverage 328/1737, 1409 never, 315 insufficient, 13 blocked. Modern scored 264 output records/1056 fields, 0 >=90, 3 historical E 70–89, 1053 <70.
 - Rechecked original Silver 800-cast ore cost/output math, Null Stone source mismatch, DF R3 20k cohort and clamp, Legacy 23720 herb denominator. 18 Legacy E and 9 DF tuple checks passed. 128 named QA gates PASS; no in-client WoW or external JSON Schema run.
 - Queue revision 4 with 150 disjoint keys, home first then Dragonflight overflow. Rolling 0/140/134, mean 137 per complete worker cycle; optimistic 11 hourly cycles for partial first-pass only. No production changes, no approved current-Retail numeric transforms, all-fields >=90 gate NOT MET.
+
+### 2026-10-28 — Master QA batch003
+- Independently reviewed four worker CSV submissions, 14 historical observation objects, original TWW/DF/Legacy sources; 1036 in-memory JS assertions passed. 150 new unique first-pass accepted, 478/1737 cumulative, 1259 unexamined, zero all-field >=90.
+- Verified 100 ore vs 20 five-ore equivalents, R3-vs-R1 Dragonflight rank mismatch, PTR Osmenite 8000-cast means and Felslate 5 vs 20 recipe distinction; no current-Retail numerical correction.
+- Numeric track: 0 verified, 0 empirical approved, 4 blocked for compile; one explicit Legacy hypothesis reviewed. Assigned next 150 nonoverlapping item keys. Production unchanged. Node and WoW client tests not run.
