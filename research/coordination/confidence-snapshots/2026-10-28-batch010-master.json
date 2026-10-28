@@ -84,7 +84,26 @@
     "Batch010 100 profile/overlay/token first-pass keys do not create four-field scores",
     "Documented smelt per-field 80 does not mean full record confidence 80; eligibility caps record at 55",
     "Historical and current-Retail applicability are distinct",
-    "Node source-memory/test suites and actual WoW client tests not run",
+    "Source memory incrementally rebuilt in V8; full Node builder/tests and actual WoW client tests not run",
     "Future unskilled itemdb.lua compiler absent"
-  ]
+  ],
+  "sourceMemory": {
+    "sources": 91,
+    "reviewEvents": 66,
+    "qaEvents": 27,
+    "states": {
+      "DISCOVERED": 40,
+      "PARTIAL": 49,
+      "DUPLICATE": 1,
+      "NEEDS_RECHECK": 1
+    },
+    "rebuild": "DETERMINISTIC_INCREMENTAL_V8_REPLAY_NOT_FULL_NODE"
+  },
+  "forwardValidation": {
+    "status": "BLOCKED",
+    "verifiedNumericRules": 0,
+    "approvedIndependentHoldoutPredictions": 0,
+    "unmergedPR3HasSuppliedPredictionChecker": true,
+    "activeBranchForwardValidator": false
+  }
 }

@@ -994,7 +994,7 @@
     "verifiedNumeric": 0,
     "empiricalApproved": 0,
     "blockedForCompile": 4,
-    "sourceMemoryRebuildStatus": "PENDING_NODE_TEST_OR_VERIFIED_EQUIVALENT",
+    "sourceMemoryRebuildStatus": "COMPLETED_DETERMINISTIC_INCREMENTAL_V8_REPLAY_NOT_FULL_NODE_BUILD",
     "compilerStatus": "NOT_IMPLEMENTED_FOR_FOUR_FIELD_UNSKILLED_ITEMDB",
     "pr3Status": "OPEN_UNMERGED_REVIEW_ONLY",
     "nextAssignments": {
@@ -1003,6 +1003,59 @@
       "dragonflight": 40,
       "legacy": 40
     },
-    "tests": "connector-source deterministic QA; Node and WoW client NOT run"
+    "tests": "connector-source deterministic QA; Node and WoW client NOT run",
+    "sourceMemory": {
+      "sources": 91,
+      "reviewEvents": 66,
+      "qaEvents": 27,
+      "newObservationRows": 18,
+      "states": {
+        "DISCOVERED": 40,
+        "PARTIAL": 49,
+        "DUPLICATE": 1,
+        "NEEDS_RECHECK": 1
+      },
+      "warnings": 0
+    }
+  },
+  "forwardValidationTrack": {
+    "status": "BLOCKED_MISSING_REVIEWED_MECHANICS_AND_BASELINE_COMPILER",
+    "reviewBranch": "review/profession-mechanics-registry-v0.2",
+    "reviewPR": 3,
+    "reviewOnlyTools": [
+      "research/tools/validate_forward_predictions.js",
+      "research/tests/test_forward_validation.js"
+    ],
+    "activeBranchToolsAvailable": false,
+    "verifiedNumericRules": 0,
+    "independentHoldoutPredictionsApproved": 0,
+    "requiredBeforePromotion": [
+      "Pin original study and dataset ancestry for holdout exclusion",
+      "Resolve historical cast epoch and recipe/skill/gear/rank",
+      "Estimate neutral minimum-eligible baseline without using holdout",
+      "Forward predict all supported four fields through independently verified historical rules",
+      "Compare residuals/uncertainty and classify discrepancies",
+      "Reject circular in-sample fit and any zero->positive multiplicative unlock"
+    ],
+    "assignedDiscrepancies": {
+      "midnight": [
+        "BfA 152506→153669: Jiyao/Baadkitty/Kidneph study-family holdout and 20-vs-5-herb denominator; no unverified skill-150 coefficient",
+        "Midnight post-2026-03-31 ore/gem same-context cast chronology and no coefficient"
+      ],
+      "war_within": [
+        "Dragonflight q3 DE 194124: synthetic 100% source vs independent cast-level heldout data",
+        "Crumbled Stone input-refund vs material-output identity"
+      ],
+      "dragonflight": [
+        "Prismatic Ore 194545 Illimited Diamond rank-family heldout context and current recipe availability",
+        "Cobalt 36909→36917 inconsistent historical P/E/positive range"
+      ],
+      "legacy": [
+        "Earthroot 2449 missing positive cast denominator and holdout invalidation",
+        "Felslate standard/mass original 2017 source-context separation"
+      ]
+    },
+    "lastMasterReview": "2026-10-28",
+    "noNumericPromotion": true
   }
 }

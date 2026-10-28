@@ -61,5 +61,15 @@
     "lossless regression against GameData and runtime overlays",
     "runtime in-client tests"
   ],
-  "noProductionWrites": true
+  "noProductionWrites": true,
+  "forwardValidation": {
+    "status": "NOT_IMPLEMENTED_ON_ACTIVE_BRANCH",
+    "proposalPR": 3,
+    "proposalTool": "research/tools/validate_forward_predictions.js",
+    "proposalIsOnlyDiagnostic": true,
+    "trainedMechanicsCoefficients": 0,
+    "holdoutStudyFamilyLeakageGuardRequired": true,
+    "approvedIndependentPredictions": 0,
+    "reason": "No verified historical numeric mechanic to forward-predict skilled observations; source-level holdouts cannot be scored without a genuine model."
+  }
 }
