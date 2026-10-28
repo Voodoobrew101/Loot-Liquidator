@@ -34,6 +34,7 @@ function validate(rows){let seen=new Set(),bad=[];for(let r of rows){let k=key(r
  for(let f of F){let x=r[f];if(!x||!Array.isArray(x.sourceClaimIDs)||!x.sourceClaimIDs.length||!Number.isInteger(x.confidence)||x.confidence<0||x.confidence>100||!Array.isArray(x.blockers))bad.push("FIELD:"+k+":"+f);}
  let p=r.dropChance.value,e=r.expectedQuantity.value,a=r.yieldMin.value,b=r.yieldMax.value;
  if(p!==null&&(p<0||p>1)||e!==null&&e<0||a!==null&&(!Number.isInteger(a)||a<1)||b!==null&&(!Number.isInteger(b)||b<1)||a!==null&&b!==null&&a>b)bad.push("DOMAIN:"+k);
+ if(p!==null&&e!==null&&p>e+1e-9)bad.push("P_GT_E:"+k);
  if(p!==null&&e!==null&&a!==null&&b!==null&&(e+1e-9<p*a||e>p*b+1e-9))bad.push("P_E_RANGE:"+k);
  }return bad;}
 function encode(v){if(v===null||v===undefined)return "false";if(typeof v==="number"){if(!Number.isFinite(v))throw Error("Nonfinite");return String(v);}if(typeof v==="string")return JSON.stringify(v);if(typeof v==="boolean")return v?"true":"false";if(Array.isArray(v))return "{"+v.map(encode).join(",")+"}";throw Error("Unsupported value");}
@@ -85,24 +86,67 @@ function compile(i){
   r.recordConfidence=Math.min(r.mappingConfidence,r.conditionsConfidence,...F.map(f=>r[f].confidence));diamondGated++;
  }
  if(diamondGated!==7)throw Error("Expected 7 diamond gates got "+diamondGated);
+ let batch013RankQuarantined=0,fishInputRankCorrected=0,invalidSourceChanceQuarantined=0;
+ const df13=(i.batch013DragonflightJSONL||"").trim().split("\n").filter(Boolean).map(JSON.parse);
+ const tww13=(i.batch013TWWJSONL||"").trim().split("\n").filter(Boolean).map(JSON.parse);
+ const legacy13=(i.batch013LegacyJSONL||"").trim().split("\n").filter(Boolean).map(JSON.parse);
+ function auditRecord(a){
+  const r=map.get([a.method,a.inputItemID,a.outputItemID].join(":"));
+  if(!r)throw Error("Batch013 missing candidate "+a.stableKey);
+  if(a.sourceLine && !sourceOK(lines[a.sourceLine-1],a.outputItemID))throw Error("Batch013 GameData identity "+a.stableKey);
+  return r;
+ }
+ for(const a of df13){
+  const r=auditRecord(a);
+  if(a.inputItemID===200061&&a.sourceQualityCorrection==="REMOVE_FICTITIOUS_INPUT_RANK_1_FISH"){
+   if(r.inputQualityRank!==1)throw Error("Fish input rank mismatch "+a.stableKey);
+   r.inputQualityRank=null;fishInputRankCorrected++;
+  }
+ }
+ for(const a of [...df13,...tww13]){
+  const isRank=a.decisionRisk==="RANK_ALTERNATIVES_NOT_INDEPENDENT_TSM_MEASUREMENTS" ||
+   (a.method==="Prospect"&&[188658,189143].includes(a.inputItemID)&&a.outputQualityRank!=null&&a.fields?.dropChance?.value===null&&a.fields?.expectedQuantity?.value===null);
+  if(!isRank)continue;
+  const r=auditRecord(a);
+  if(a.outputQualityRank!=null&&r.outputQualityRank!==null&&r.outputQualityRank!==a.outputQualityRank)throw Error("Batch013 output rank mismatch "+a.stableKey);
+  if(r.outputQualityRank===null&&a.outputQualityRank!=null)r.conditions.sourceContext="RANK_IDENTITY_UNRESOLVED_SOURCE_ALTERNATE";
+  for(const f of ["dropChance","expectedQuantity"]){
+   r[f].value=null;r[f].status="unknown";r[f].confidence=0;
+   r[f].blockers=[...new Set([...r[f].blockers,"RANK_SPECIFIC_TSM_FAMILY_RATE_NOT_MEASURED"])];
+   r[f].sourceClaimIDs=[...new Set([...r[f].sourceClaimIDs,"batch013-rank-audit:"+a.stableKey])];
+  }
+  if(r.outputQualityRank!==null)r.conditions.sourceContext="BATCH013_RANK_EXCLUSIVE_HISTORICAL_PROXY_QUARANTINED";
+  r.recordConfidence=Math.min(r.mappingConfidence,r.conditionsConfidence,...F.map(f=>r[f].confidence));
+  batch013RankQuarantined++;
+ }
+ if(batch013RankQuarantined!==50||fishInputRankCorrected!==12||legacy13.filter(a=>a.arithmeticConflict).length!==8)
+  throw Error("Batch013 audit count mismatch "+batch013RankQuarantined+"/"+fishInputRankCorrected);
+ for(const r of map.values()){
+  if(r.dropChance.value!==null&&r.expectedQuantity.value!==null&&r.dropChance.value>r.expectedQuantity.value+1e-9){
+   r.dropChance.value=null;r.dropChance.status="contradictory";r.dropChance.confidence=0;
+   r.dropChance.blockers=[...new Set([...r.dropChance.blockers,"SOURCE_P_GT_UNCONDITIONAL_E"])];
+   r.recordConfidence=Math.min(r.mappingConfidence,r.conditionsConfidence,...F.map(f=>r[f].confidence));
+   invalidSourceChanceQuarantined++;
+  }
+ }
  let records=[...map.values()].sort((a,b)=>key(a).localeCompare(key(b))),bad=validate(records);if(bad.length)throw Error("Validation "+bad.slice(0,8).join(","));
  let missing=Object.fromEntries(F.map(f=>[f,0])),gaps=[],complete=0,knownE=0,fullHigh=0;
  for(let r of records){let all=true;for(let f of F)if(r[f].value===null){missing[f]++;all=false;gaps.push([r.recordID,r.method,r.inputItemID,r.outputItemID,f,r[f].status,r[f].blockers.join("|")]);}
  if(all)complete++;if(r.expectedQuantity.value!==null)knownE++;if(r.recordConfidence>=90)fullHigh++;
  }
- let manifest={schemaVersion:"0.1.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:i.sha.gameData,statYieldProfilesSha:i.sha.statYield,mechanicsRegistrySha:i.sha.mechanics,reviewDate:"2026-10-28",compilerVersion:"0.2.0",ledgerSHAs:{primary:i.sha.primary,supplemental:i.sha.supplemental,midnightCandidate:i.sha.midnightCandidate,curatedAdditions:i.sha.curatedAdditions,rankAudit:i.sha.rankAudit,midnightAudit:i.sha.midnightAudit},targetBaseline:"MINIMUM_RECIPE_ELIGIBLE_UNSKILLED_UNVERIFIED"},mechanicRules:[],unmigratedLegacy:quarantine.map(x=>x.join(":"))};
+ let manifest={schemaVersion:"0.1.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:i.sha.gameData,statYieldProfilesSha:i.sha.statYield,mechanicsRegistrySha:i.sha.mechanics,reviewDate:"2026-10-28",compilerVersion:"0.3.0",ledgerSHAs:{primary:i.sha.primary,supplemental:i.sha.supplemental,midnightCandidate:i.sha.midnightCandidate,curatedAdditions:i.sha.curatedAdditions,rankAudit:i.sha.rankAudit,midnightAudit:i.sha.midnightAudit},targetBaseline:"MINIMUM_RECIPE_ELIGIBLE_UNSKILLED_UNVERIFIED"},mechanicRules:[],unmigratedLegacy:quarantine.map(x=>x.join(":"))};
  let statuses=["unknown","proxy","modeled","measured","community-reported","official","contradictory"],methods=["Mill","Prospect","Disenchant","Smelt"];
  let raw=records.map(r=>[r.recordID,methods.indexOf(r.method)+1,r.expansionID,r.inputItemID,r.outputItemID,r.recipeSpellID,r.inputCountPerOperation,r.inputQualityRank,r.outputQualityRank,
  ...F.map(f=>[r[f].value,statuses.indexOf(r[f].status)+1,r[f].confidence,r[f].blockers.join("|")||null,r[f].sampleOperations,r[f].sourceClaimIDs]),
  r.mappingConfidence,r.conditionsConfidence,r.recordConfidence,r.sources[0],r.sources[1],r.sources[2],r.verifiedDate,r.conditions.sourceContext||null,r.conditions.quantityBasis||null,r.conditions.expansionIDKnown!==false,r.conditions.patchWindow||null,r.conditions.eligibilityStatus||"UNVERIFIED_CURRENT_RETAIL",r.conditions.baselineStatus||"MINIMUM_RECIPE_ELIGIBLE_UNSKILLED_NOT_ESTABLISHED"]);
- let pre="-- Research-only provisional candidate. NOT shipped. No skill/patch normalization is asserted.\n-- Generated by research/tools/compile_itemdb.js v0.2.0. Unknown=false in compact source, nil in decoded fields.\n";
+ let pre="-- Research-only provisional candidate. NOT shipped. No skill/patch normalization is asserted.\n-- Generated by research/tools/compile_itemdb.js v0.3.0. Unknown=false in compact source, nil in decoded fields.\n";
  pre+="local raw="+encode(raw)+"\nlocal statuses="+encode(statuses)+"\nlocal methods="+encode(methods)+"\n";
  pre+="local function opt(v) if v==false then return nil end return v end\n";
  pre+="local function field(x,claim) local b={} if x[4]~=false then b[1]=x[4] end return {value=opt(x[1]),status=statuses[x[2]],confidence=x[3],sourceClaimIDs=opt(x[6]) or {claim},sampleOperations=opt(x[5]),blockers=b} end\n";
- pre+="local processing={}\nfor i=1,#raw do local x=raw[i]; local r={recordID=x[1],method=methods[x[2]],expansionID=x[3],inputItemID=x[4],outputItemID=x[5],recipeSpellID=opt(x[6]),inputCountPerOperation=x[7],inputQualityRank=opt(x[8]),outputQualityRank=opt(x[9]),dropChance=field(x[10],x[1]),yieldMin=field(x[11],x[1]),yieldMax=field(x[12],x[1]),expectedQuantity=field(x[13],x[1]),mappingConfidence=x[14],conditionsConfidence=x[15],recordConfidence=x[16],sources={x[17],x[18],x[19]},verifiedDate=x[20],status=\"PROVISIONAL_CANDIDATE\",conditions={gameMode=\"Retail\",patchWindow=opt(x[24]),characterContext=\"REFERENCE_UNKNOWN\",skillLineID=nil,effectiveSkill=nil,specialization=nil,operationStats=nil,eligibilityStatus=\"UNVERIFIED_CURRENT_RETAIL\",baselineStatus=\"MINIMUM_RECIPE_ELIGIBLE_UNSKILLED_NOT_ESTABLISHED\",sourceContext=opt(x[21]),quantityBasis=opt(x[22]),expansionIDKnown=x[23]}};processing[#processing+1]=r end\n";
+ pre+="local processing={}\nfor i=1,#raw do local x=raw[i]; local r={recordID=x[1],method=methods[x[2]],expansionID=x[3],inputItemID=x[4],outputItemID=x[5],recipeSpellID=opt(x[6]),inputCountPerOperation=x[7],inputQualityRank=opt(x[8]),outputQualityRank=opt(x[9]),dropChance=field(x[10],x[1]),yieldMin=field(x[11],x[1]),yieldMax=field(x[12],x[1]),expectedQuantity=field(x[13],x[1]),mappingConfidence=x[14],conditionsConfidence=x[15],recordConfidence=x[16],sources={x[17],x[18],x[19]},verifiedDate=x[20],status=\"PROVISIONAL_CANDIDATE\",conditions={gameMode=\"Retail\",patchWindow=opt(x[24]),characterContext=\"REFERENCE_UNKNOWN\",skillLineID=nil,effectiveSkill=nil,specialization=nil,operationStats=nil,eligibilityStatus=opt(x[25]),baselineStatus=opt(x[26]),sourceContext=opt(x[21]),quantityBasis=opt(x[22]),expansionIDKnown=x[23]}};processing[#processing+1]=r end\n";
  const small=v=>{if(v===null||v===undefined)return "nil";if(typeof v==="number")return String(v);if(typeof v==="string")return JSON.stringify(v);if(typeof v==="boolean")return v?"true":"false";if(Array.isArray(v))return "{"+v.map(small).join(",")+"}";return "{"+Object.keys(v).sort().map(k=>"["+JSON.stringify(k)+"]="+small(v[k])).join(",")+"}";};
  let lua=pre+"return {schemaVersion=\"0.1.0\",artifactStatus=\"RESEARCH_ONLY_NOT_SHIPPED\",sourceManifest="+small(manifest.sourceManifest)+",processing=processing,unmigratedLegacy="+small(manifest.unmigratedLegacy)+",mechanicRules={}}\n";
- let report={compilerVersion:"0.2.0",status:"BUILT_RESEARCH_ONLY",sourceSHA:i.sha,primarySourceRows:primary.length,supplementalSourceRows:supp.length,verifiedSourceLineIdentities:checked,sourceMappingCandidates:records.length,uniqueInputIDs:new Set(records.map(r=>r.inputItemID)).size,sourceAlternates:alternates.length,fullyNumericFourFields:complete,expectedQuantityPresent:knownE,fieldSlots:records.length*4,missingFieldCounts:missing,completeRecordConfidenceGE90:fullHigh,quarantined:quarantine.length,curatedAdded,rankSpecificProxyRecordsQuarantined:rankQuarantined,diamondSpecializationGated:diamondGated,quarantineBreakdown:Object.fromEntries([...new Set(quarantine.map(x=>x[1]))].map(k=>[k,quarantine.filter(x=>x[1]===k).length])),independentRetailUniverseAudit:"NOT_COMPLETE",baselineMinimumSkillVerified:0,provisionalRecords:records.length,luaBytes:lua.length,productionWrites:0};
+ let report={compilerVersion:"0.3.0",status:"BUILT_RESEARCH_ONLY",sourceSHA:i.sha,primarySourceRows:primary.length,supplementalSourceRows:supp.length,verifiedSourceLineIdentities:checked,sourceMappingCandidates:records.length,uniqueInputIDs:new Set(records.map(r=>r.inputItemID)).size,sourceAlternates:alternates.length,fullyNumericFourFields:complete,expectedQuantityPresent:knownE,fieldSlots:records.length*4,missingFieldCounts:missing,completeRecordConfidenceGE90:fullHigh,quarantined:quarantine.length,curatedAdded,rankSpecificProxyRecordsQuarantined:rankQuarantined,batch013RankQuarantined,fishInputRankCorrected,invalidSourceChanceQuarantined,legacyArithmeticContradictionsReviewed:8,diamondSpecializationGated:diamondGated,quarantineBreakdown:Object.fromEntries([...new Set(quarantine.map(x=>x[1]))].map(k=>[k,quarantine.filter(x=>x[1]===k).length])),independentRetailUniverseAudit:"NOT_COMPLETE",baselineMinimumSkillVerified:0,provisionalRecords:records.length,luaBytes:lua.length,productionWrites:0};
  const esc=v=>'"'+String(v===null?"":v).replace(/"/g,'""')+'"';
  let gapCSV="record_id,method,input_id,output_id,missing_field,status,reason\n"+gaps.map(row=>row.map(esc).join(",")).join("\n")+"\n";
  return {lua,report,gapCSV,records,alternates,quarantine};
@@ -110,6 +154,6 @@ function compile(i){
 module.exports={csv,compile,validate};
 if(require.main===module){
  const fs=require("fs"),path=require("path"),root=process.argv[2]||".",get=p=>fs.readFileSync(path.join(root,p),"utf8");
- let i={curatedJSON:get("research/proposed/itemdb-curated-additions.json"),rankAuditJSONL:get("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1231-dragonflight-batch012-40key-field-audit.jsonl"),midnightAuditCSV:get("research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1211-midnight-batch012-35key-field-audit.csv"),primaryCSV:get("research/ledger/processing-output-fields.csv"),supplementalCSV:get("research/ledger/supplemental-output-fields.csv"),midnightCandidateJSON:get("research/proposed/itemdb-midnight-milling-candidate.json"),gameDataSource:get("GameData.lua"),statYieldSource:get("StatYieldProfiles.lua"),sha:JSON.parse(get("research/proposed/itemdb-compiler-source-shas.json"))};
+ let i={curatedJSON:get("research/proposed/itemdb-curated-additions.json"),rankAuditJSONL:get("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1231-dragonflight-batch012-40key-field-audit.jsonl"),midnightAuditCSV:get("research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1211-midnight-batch012-35key-field-audit.csv"),batch013DragonflightJSONL:get("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1328-dragonflight-batch013-40key-field-audit.jsonl"),batch013TWWJSONL:get("research/coordination/submissions/loot-liquidator-war-within/2026-10-28-1321-warwithin-batch013-35key-field-audit.jsonl"),batch013LegacyJSONL:get("research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1340-legacy-batch013-40key-field-audit.jsonl"),primaryCSV:get("research/ledger/processing-output-fields.csv"),supplementalCSV:get("research/ledger/supplemental-output-fields.csv"),midnightCandidateJSON:get("research/proposed/itemdb-midnight-milling-candidate.json"),gameDataSource:get("GameData.lua"),statYieldSource:get("StatYieldProfiles.lua"),sha:JSON.parse(get("research/proposed/itemdb-compiler-source-shas.json"))};
  let x=compile(i);fs.writeFileSync(path.join(root,"research/proposed/itemdb.lua"),x.lua);fs.writeFileSync(path.join(root,"research/proposed/itemdb-build-report.json"),JSON.stringify(x.report,null,2)+"\n");fs.writeFileSync(path.join(root,"research/ledger/itemdb-missing-fields.csv"),x.gapCSV);fs.writeFileSync(path.join(root,"research/ledger/itemdb-source-alternates.csv"),"method_input_output,selected_source_key,not_selected_source_key\n"+x.alternates.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n")+"\n");console.log(x.report);
 }
