@@ -1,0 +1,52 @@
+name: Validate Loot Liquidator source
+
+on:
+  push:
+    branches: [main, "maintenance/**"]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out addon
+        uses: actions/checkout@v4
+
+      - name: Check addon TOC and referenced files
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          toc = Path("LootLiquidator.toc")
+          if not toc.is_file():
+              raise SystemExit("Missing LootLiquidator.toc in repository root")
+          contents = toc.read_text(encoding="utf-8-sig")
+          files = [line.strip().replace("\\", "/") for line in contents.splitlines()
+                   if line.strip() and not line.lstrip().startswith("#")]
+          if not files:
+              raise SystemExit("LootLiquidator.toc does not reference any source files")
+          missing = [path for path in files if not Path(path).is_file()]
+          if missing:
+              raise SystemExit("TOC references missing files: " + ", ".join(missing))
+          if len(files) != len(set(files)):
+              raise SystemExit("TOC contains duplicate file references")
+          if not any(line.startswith("## Version: ") for line in contents.splitlines()):
+              raise SystemExit("TOC missing version declaration")
+          print(f"Validated {len(files)} TOC entries and version metadata")
+          PY
+
+      - name: Install Lua 5.1 syntax checker
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.1
+
+      - name: Syntax-check addon Lua
+        shell: bash
+        run: |
+          find . -maxdepth 1 -type f -name '*.lua' -print0 |
+            xargs -0 -r -n 1 luac5.1 -p
+          echo "Top-level addon Lua files compile with Lua 5.1"
