@@ -74,3 +74,31 @@
 - Static code QA found rangeFor adjusts chance/conditional bounds to fit expected values; these are inferred display fields, not independently measured evidence.
 - Detailed report: research/proposed/2026-10-28-batch9-one-database-migration-audit.md, verified commit 57488d5b4e7b135fc6fc5f6b1c9f2146fbb932b7. No main changes; no live tests or field promotions. Gate remains 0/1256 >=90; this is processing output-row scope, not yet every non-processing gameplay field.
 - Next: proposed GameData-only migration schema, static invariant tests, independent milling eligibility and yield source verification.
+
+
+## 2026-10-28 — itemdb v1.1 milestone; eight-row Midnight Milling review; static QA
+
+### Input provenance
+Live fetch of research/PROGRESS.md, run-log, both source confidence ledgers (1,001 + 255), TSM 40-row anomaly ledger, 92-row overlay ledger, mechanics/API registries, user prompts, evidence observations, current Issue #2, and main GameData/StatYieldProfiles/TOC. Original main ZIP name 404; extracted source SHA `1d47c4a961c5dc5af626e659f7d96d1490d3cf9e` unchanged.
+
+### Original source research (not repeated Titanium Batch 5–8)
+Four Midnight herb families with 8 input variant IDs mapped to independently corroborated pigment item IDs (Tranquility Bloom 236761/236767 -> Powder 245807; Argentleaf 236776/236777 -> Argentleaf 245804; Mana Lily 236778/236779 -> Mana Lily 245866; Sanguithorn 236770/236771 -> Sanguithorn 245864). Verified ten-herb batch by Warcraft Wiki and Method guide. Cross-checked Icy Veins and pigment item pages. Patch/current skill/spec/gear effects remain unknown for numeric scaling. Old 4.5 units/cast is a modeled scenario; approx occurrence 1.0 and conditional [3–6] are modelled display proxies, not measured. Review includes dates/sources and distinct scores. Azeroot 236775 unresolved; reported Arathor's Spear 210808-210810 exclusion documented with 2024-2025 forum evidence. No new measured operations.
+
+### New research branch files / actual writes
+- `research/proposed/itemdb.schema.json` — commit b32ca9e28ede195fa8dd1be92e91f97a683c7b25, field-type audit fix b2c253606f7e2f9a11d2ac9b112b1d1c062734dd
+- `research/proposed/itemdb-midnight-milling-candidate.json` — commit 4bd9b2cf1c696f950a9a806c44fc41c3efc1bedb
+- `research/tests/test_itemdb_candidate.js` — commit f056fd6dd1a10df7eae1eb1a3e287e86c61351e5
+- `research/ledger/midnight-milling-field-review-2026-10-28.csv` — commit 15ec0fbf3418290f2c94a06669ae108befe8f557
+- `research/reviews/2026-10-28-midnight-milling-source-qa.md` — commit c98162f078e45a999cde4746374a089d75807277
+- `research/prompts/ITEMDB_CREATION_PROMPT.md` v1.1 review — commit c4a8fbb538dcb023b1020c810b391ea0ab8b0338
+- `research/ledger/gamedata-lexical-key-census-2026-10-28.csv` — commit a918acc17327717c2585e5b6af589ebb7533628d
+All created/updated paths fetched back and content verified.
+
+### Independent end QA
+Re-read all artifacts and exact main source. Executed stored JS test against live-fetched GameData and StatYieldProfiles: 16 passed / 0 failed. Checked 8 candidate records, 8 CSV rows, distinct numeric-field JSON schema refs, 10-herb normalization, conservative record score 12, duplicate/synthetic anomaly, and current TOC legacy name. **Known second-database runtime mutation remains an architectural defect.** No WoW client tests, no complete Lua AST coverage, no production edits, no unsupported confidence promotions.
+
+### Field-confidence scorecard
+Existing research source output rows 1256 (1001 processing + 255 supplementary), >=90 0, 70-89 0, <70 1256, minimum 0. Eight runtime-overlay candidate rows separately reviewed: 8/8 record score 12, 0 >=90. Existing 92 overlays not fully field-scored. All-record >=90 condition NOT MET.
+
+### Exact continuation targets
+Current Retail cast records with zero-inclusive per-output histograms for four Midnight milling families, plus rank/stat/skill matching; 2026 client eligibility of Azeroot and Arathor's Spear; remaining Cobalt/Titanium severe TSM denominator contradictions; all-field AST parser inventory with nonprocessing values; tested one-file itemdb generation and reversible migration. No automatic main changes.
