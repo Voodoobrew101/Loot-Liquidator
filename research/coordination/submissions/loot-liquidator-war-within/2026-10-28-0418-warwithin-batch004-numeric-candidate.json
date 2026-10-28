@@ -1,0 +1,107 @@
+{
+  "hypothesisID": "tww-prospect-resourcefulness-savings",
+  "evidenceStatus": "UNVERIFIED",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 10,
+  "method": "Prospect",
+  "effectTarget": "EXPECTED_INPUT_CONSUMPTION",
+  "effectKind": "INPUT_SAVINGS",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      434018
+    ],
+    "inputItemIDs": [
+      210934
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      2
+    ],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "condition": "proposed same-build rank2 Aqirite low Resourcefulness",
+    "actualResourcefulnessPercent": null,
+    "actualResourcefulnessRating": null,
+    "professionSkill": null,
+    "specializationNodes": null,
+    "gear": null,
+    "clientBuild": null,
+    "completedOperations": null,
+    "savedOreHistogram": null
+  },
+  "targetContext": {
+    "condition": "proposed matched rank2 Aqirite high Resourcefulness",
+    "actualResourcefulnessPercent": null,
+    "actualResourcefulnessRating": null,
+    "professionSkill": null,
+    "specializationNodes": null,
+    "gear": null,
+    "clientBuild": null,
+    "completedOperations": null,
+    "savedOreHistogram": null
+  },
+  "requiredLiveContext": [
+    "exact spell 434018 and input item 210934 quality 2",
+    "patch and build",
+    "profession child skillline and base/effective skill",
+    "specialization node IDs/ranks and gear",
+    "recipe-specific Resourcefulness percentage and rating",
+    "actual casts and zero-inclusive saved-ore histogram",
+    "ore inventory before and after every operation",
+    "separate output and refund tracking"
+  ],
+  "sources": [
+    {
+      "claimID": "tww-2024-09-03-aqirite-1040-clicks",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": 1040,
+      "note": "5200 ore initially purchased; saved ore reprocessed; no actual saved ore total or stat"
+    },
+    {
+      "claimID": "tww-2024-10-14-ranked-aqirite",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "note": "11000 R1 and 10000 R2 ore processed; saved ore explicitly not reprocessed but not counted"
+    },
+    {
+      "claimID": "tww-2024-09-11-resourcefulness-explanation",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fdvkmy",
+      "evidenceKind": "MODEL_ESTIMATE",
+      "sampleOperations": null,
+      "note": "Community 30% base-return model not measured for exact prospect recipe"
+    },
+    {
+      "claimID": "tww-spell-434018",
+      "url": "https://www.wowhead.com/spell=434018/algari-prospecting",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "note": "Five ore nominal recipe verified"
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No exact per-cast saved ore, including zero-save crafts",
+    "No recipe-specific Resourcefulness percent/rating for observed cohort",
+    "No matched build, skill, gear, knowledge nodes or independent replication",
+    "Integer refund/rounding distribution unknown for five-ore input",
+    "Community 30% explanation not experimentally established for this spell"
+  ],
+  "notes": "No numeric adjustment. Proposed controlled test: >=500 actual casts each in matched low/high Resourcefulness cohorts on same build with rank2 Aqirite; log each saved-ore integer, proc/zero, inventory changes and output separately, with independent replication. Estimate expected saved ore per cast directly and use net expected input=5-observed saved; do not change output probabilities or multiply E by P."
+}
