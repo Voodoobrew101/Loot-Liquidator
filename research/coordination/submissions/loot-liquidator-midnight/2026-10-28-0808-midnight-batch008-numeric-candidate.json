@@ -1,0 +1,114 @@
+{
+  "hypothesisID": "midnight-gem-hotfix-2026-03-31-quantification",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 11,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [],
+    "inputItemIDs": [],
+    "outputItemIDs": [],
+    "nominalInputCount": null,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "reportDate": "2026-03-22",
+    "author": "Jacara-3179955",
+    "reportedOreUnits": 400,
+    "reportedGemUnits": 6,
+    "gemCategory": "unspecified gems",
+    "reportedOreRank": null,
+    "oreItemID": null,
+    "recipeSpellID": null,
+    "actualOperations": null,
+    "skill": null,
+    "specializations": "maxed prospecting, crushing and main nodes claimed",
+    "gear": "all blue profession gear rank 5 claimed",
+    "statValues": null,
+    "normalizedUnitsPerFiveOreEquivalent": 0.075
+  },
+  "targetContext": {
+    "reportDate": "2026-04-10",
+    "author": "Jacara-3179955",
+    "reportedRateGemUnitsPer100OreRange": [
+      15,
+      20
+    ],
+    "reportedOreRank": null,
+    "oreItemID": null,
+    "recipeSpellID": null,
+    "actualOperations": null,
+    "skill": null,
+    "specializations": "both nodes maxed claimed, precise nodes/ranks unknown",
+    "gear": "not explicitly tied to this prospecting report",
+    "statValues": null,
+    "normalizedUnitsPerFiveOreEquivalentRange": [
+      0.75,
+      1
+    ]
+  },
+  "requiredLiveContext": [
+    "recipeSpellID",
+    "inputItemID",
+    "inputQualityRank",
+    "outputItemIDAndQualityRank",
+    "professionChildSkillLineID",
+    "effectiveSkill",
+    "specializationNodeRanks",
+    "professionGear",
+    "perCastOutputAndZeroCounts",
+    "actualCompletedOperations",
+    "clientBuild",
+    "serverHotfixWindow",
+    "resourcefulnessSavedInputs"
+  ],
+  "sources": [
+    {
+      "claimID": "forum-2274222-jacara-march22-2026",
+      "url": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "March 22 same-author player reports six unspecified gems from 400 unspecified ore, maxed nodes and blue rank-5 gear; no operation log"
+    },
+    {
+      "claimID": "forum-2272506-jacara-april10-2026",
+      "url": "https://us.forums.blizzard.com/en/wow/t/jc-glimmering-gemdust-is-disgusting/2272506",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "April 10 same-author player estimates 15–20 unspecified gems per 100 unspecified ore with two nodes maxed; not a cast series"
+    },
+    {
+      "claimID": "blizzard-2026-03-31-gem-frequency",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "Official March 31 change direction only; no numerical factor"
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 20,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Same forum author does not establish same ore ID/rank, recipe, skill, gear, stats, or build",
+    "April 10 is a self-described approximate rate, not a fixed-count cast sample; no sample size",
+    "Neither post identifies output gem item IDs, quality ranks, hit operations or zero-inclusive histogram",
+    "400 ore and per-100 ore are ore denominators, not verified completed operation counts or actual consumption after refunds",
+    "March 31 hotfix lacks a numeric coefficient; unknown 12.0.5 and other intervening changes",
+    "No matched contemporaneous controlled pre/post cohort; no numeric patch bridge"
+  ],
+  "notes": "Source-only same-author longitudinal lead. Arithmetic 6/400*5=0.075 vs (15..20)/100*5=0.75..1.00 gem units per five-ore equivalent, descriptive ratio 10..13.333 only. NOT verified per-cast E, occurrence P, conditional min/max, item ID, current-Retail multiplier or rate. No compilation."
+}
