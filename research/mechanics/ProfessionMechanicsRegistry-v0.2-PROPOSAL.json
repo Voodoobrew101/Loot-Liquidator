@@ -1,0 +1,403 @@
+{
+  "schemaVersion": "0.2.0-PROPOSAL",
+  "role": "RESEARCH_NORMALIZATION_CONTRACT_NOT_SHIPPED_DATABASE",
+  "sourceRegistry": "research/mechanics/ProfessionMechanicsRegistry.json",
+  "enums": {
+    "evidenceStatus": [
+      "VERIFIED_NUMERIC",
+      "VERIFIED_QUALITATIVE",
+      "EMPIRICAL_ESTIMATE",
+      "UNVERIFIED",
+      "CONTRADICTED"
+    ],
+    "transformDecision": [
+      "APPLY",
+      "NO_EFFECT_VERIFIED",
+      "BLOCKED_NO_RULE",
+      "BLOCKED_UNKNOWN_PATCH_EFFECT",
+      "BLOCKED_MISSING_CONTEXT",
+      "BLOCKED_INAPPLICABLE",
+      "BLOCKED_DIFFERENT_STAT"
+    ],
+    "effectTarget": [
+      "OUTPUT_OCCURRENCE",
+      "OUTPUT_POSITIVE_QUANTITY",
+      "OUTPUT_UNCONDITIONAL_EXPECTATION",
+      "OUTPUT_QUALITY",
+      "OUTPUT_ELIGIBILITY",
+      "EXPECTED_INPUT_CONSUMPTION",
+      "OPERATION_DURATION",
+      "STAT_RATING_TO_PERCENT"
+    ],
+    "effectKind": [
+      "MULTIPLY",
+      "ADDITIVE",
+      "DISCRETE_ELIGIBILITY",
+      "QUALITY_TRANSITION",
+      "INPUT_SAVINGS",
+      "COST_ONLY",
+      "INFORMATIONAL",
+      "UNKNOWN"
+    ],
+    "unit": [
+      "PER_OPERATION",
+      "PER_INPUT_UNIT",
+      "COUNT_POSITIVE",
+      "PROBABILITY_FRACTION",
+      "PERCENT",
+      "STAT_RATING",
+      "SKILL_POINT",
+      "SECONDS"
+    ],
+    "gameMode": [
+      "RETAIL",
+      "CLASSIC",
+      "PTR"
+    ],
+    "sampleKind": [
+      "RAW_CAST_LOG",
+      "AGGREGATE_TOTALS",
+      "DOCUMENTED_RATE",
+      "MODEL_ESTIMATE",
+      "INELIGIBLE"
+    ],
+    "applicability": [
+      "VERIFIED_APPLIES",
+      "VERIFIED_DOES_NOT_APPLY",
+      "UNKNOWN"
+    ]
+  },
+  "normalization": {
+    "targetGameMode": "RETAIL",
+    "targetBuild": null,
+    "targetBuildMustBeSupplied": true,
+    "unknownCoefficient": "BLOCKED_NO_RULE",
+    "unknownPatchEffect": "BLOCKED_UNKNOWN_PATCH_EFFECT",
+    "missingRelevantContext": "BLOCKED_MISSING_CONTEXT",
+    "neverCoerceUnknownToZero": true,
+    "sourceObservationImmutable": true
+  },
+  "dataDefinitions": {
+    "referenceBaseline": "ONE chosen source-backed input/output/recipe/reference-context per exact target build, with selected observation keys and no implicit cross-conditions conversion",
+    "evidenceArchive": "MANY raw historical and modern cohorts in research branch; not shipped bundled duplicate yield mapping",
+    "recordIdentity": [
+      "gameMode",
+      "expansionID",
+      "method",
+      "recipeID",
+      "inputItemID",
+      "inputQualityRank",
+      "outputItemID",
+      "outputQualityRank",
+      "patchBuild",
+      "referenceContextID"
+    ],
+    "outputQuantities": [
+      {
+        "field": "dropChance",
+        "unit": "PROBABILITY_FRACTION",
+        "meaning": "per-eligible-operation probability of >=1 output; from per-cast hits only if measured"
+      },
+      {
+        "field": "yieldMin",
+        "unit": "COUNT_POSITIVE",
+        "meaning": "positive integer when output occurs; observed bound never automatically proven true game limit"
+      },
+      {
+        "field": "yieldMax",
+        "unit": "COUNT_POSITIVE",
+        "meaning": "positive integer when output occurs; observed bound never automatically proven true game limit"
+      },
+      {
+        "field": "expectedQuantity",
+        "unit": "PER_OPERATION",
+        "meaning": "decimal unconditional expected units per cast; monetary quantity; never chance-multiply again"
+      }
+    ],
+    "individualFieldEvidence": [
+      "sourceClaimID",
+      "evidenceStatus",
+      "confidence0to100",
+      "sampleN",
+      "samplingUncertainty",
+      "observedOrModeled",
+      "effectivePatchBuild"
+    ],
+    "transformationConfidence": "separate confidence0to100 per applied adjustment; downstream confidence not above weakest material input+transform"
+  },
+  "types": {
+    "mechanicRule": [
+      "ruleID",
+      "profession",
+      "expansionIDs",
+      "methods",
+      "recipeIDs",
+      "inputItemIDs",
+      "outputItemIDs",
+      "referencePatch",
+      "effectivePatchBounds",
+      "specializationID",
+      "nodeRankMin",
+      "gearItemIDs",
+      "applies",
+      "evidenceStatus",
+      "effectTarget",
+      "effectKind",
+      "formulaID",
+      "parameters",
+      "parameterUnits",
+      "sourceClaimIDs",
+      "confidence0to100",
+      "notes"
+    ],
+    "observedCohort": [
+      "cohortID",
+      "gameMode",
+      "sampleStart",
+      "sampleEnd",
+      "clientBuild",
+      "expansionID",
+      "method",
+      "recipeID",
+      "inputItemID",
+      "inputQualityRank",
+      "batchInputs",
+      "completedOperations",
+      "outputItemID",
+      "outputQualityRank",
+      "sourceClaimIDs",
+      "rawOutputTotals",
+      "operationHitCount",
+      "positiveCountsHistogram",
+      "professionSkill",
+      "equipment",
+      "statRatings",
+      "statPercentages",
+      "specializationRanks",
+      "concentrationSpent",
+      "unknownContextFields",
+      "fieldEvidence"
+    ],
+    "patchEvent": [
+      "eventID",
+      "effectiveDate",
+      "firstAffectedBuild",
+      "gameMode",
+      "expansionIDs",
+      "methods",
+      "recipeIDs",
+      "outputCategories",
+      "affectedFields",
+      "evidenceStatus",
+      "numericTransformID",
+      "sourceClaimIDs",
+      "intervalConfidence",
+      "notes"
+    ],
+    "sourceClaim": [
+      "claimID",
+      "url",
+      "publishedDate",
+      "retrievedDate",
+      "versionScope",
+      "evidenceClass",
+      "specificClaim",
+      "numericalSupport",
+      "sampleN",
+      "independentCorroboration",
+      "confidence0to100"
+    ]
+  },
+  "sourceClaims": [
+    {
+      "claimID": "blizzard-2026-04-01-midnight-gems",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight live after 2026-04-01",
+      "evidenceClass": "OFFICIAL_HOTFIX",
+      "specificClaim": "Gems found more regularly when prospecting Midnight ore",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null
+    },
+    {
+      "claimID": "wowhead-2026-midnight-jc-prospecting-nodes",
+      "url": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
+      "publishedDate": "2026-02-21",
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight (guide as updated)",
+      "evidenceClass": "GUIDE_QUALITATIVE",
+      "specificClaim": "Ore-specific nodes improve chance for Eversong Diamond; does not prove base chance zero",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null
+    },
+    {
+      "claimID": "blizzard-2026-midnight-gear-retroactivity",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight content update",
+      "evidenceClass": "OFFICIAL_PATCH_NOTE",
+      "specificClaim": "Profession equipment secondary stats apply to prior-expansion version of same profession; no primary-skill claim",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null
+    }
+  ],
+  "patchEvents": [
+    {
+      "eventID": "midnight-gem-hotfix-2026-04-01",
+      "effectiveDate": "2026-04-01",
+      "firstAffectedBuild": null,
+      "gameMode": "RETAIL",
+      "expansionIDs": [
+        11
+      ],
+      "methods": [
+        "Prospect"
+      ],
+      "recipeIDs": [],
+      "outputCategories": [
+        "gem"
+      ],
+      "affectedFields": [
+        "OUTPUT_OCCURRENCE"
+      ],
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "numericTransformID": null,
+      "sourceClaimIDs": [
+        "blizzard-2026-04-01-midnight-gems"
+      ],
+      "intervalConfidence": null,
+      "notes": "Do not apply numerical patch normalization without posthotfix bridging evidence; no blanket modifier for byproducts."
+    }
+  ],
+  "mechanicRules": [
+    {
+      "ruleID": "midnight-ore-node-diamond",
+      "profession": "Jewelcrafting",
+      "expansionIDs": [
+        11
+      ],
+      "methods": [
+        "Prospect"
+      ],
+      "recipeIDs": [],
+      "inputItemIDs": [],
+      "outputItemIDs": [
+        242608
+      ],
+      "referencePatch": null,
+      "effectivePatchBounds": null,
+      "specializationID": null,
+      "nodeRankMin": 1,
+      "gearItemIDs": [],
+      "applies": "UNKNOWN",
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "effectTarget": "OUTPUT_OCCURRENCE",
+      "effectKind": "UNKNOWN",
+      "formulaID": null,
+      "parameters": null,
+      "parameterUnits": null,
+      "sourceClaimIDs": [
+        "wowhead-2026-midnight-jc-prospecting-nodes"
+      ],
+      "confidence0to100": null,
+      "notes": "Needs exact ore-specific node IDs and recipe IDs; effect is chance increase, not a proven zero-to-unlocked eligibility gate."
+    },
+    {
+      "ruleID": "midnight-secondary-gear-previous-expansions",
+      "profession": "ALL_PROFESSIONS",
+      "expansionIDs": [
+        9,
+        10,
+        11
+      ],
+      "methods": [],
+      "recipeIDs": [],
+      "inputItemIDs": [],
+      "outputItemIDs": [],
+      "referencePatch": null,
+      "effectivePatchBounds": null,
+      "specializationID": null,
+      "nodeRankMin": null,
+      "gearItemIDs": [],
+      "applies": "UNKNOWN",
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "effectTarget": "STAT_RATING_TO_PERCENT",
+      "effectKind": "INFORMATIONAL",
+      "formulaID": null,
+      "parameters": null,
+      "parameterUnits": null,
+      "sourceClaimIDs": [
+        "blizzard-2026-midnight-gear-retroactivity"
+      ],
+      "confidence0to100": null,
+      "notes": "Previous expansion secondary-stat application is confirmed in principle; item-specific stats and applicable recipes still unknown. No inferred primary-skill retroactivity."
+    }
+  ],
+  "negativeFixtures": [
+    {
+      "test": "midnight-pre-apr1-to-post-hotfix-gem",
+      "sourcePatchDate": "2026-03-31",
+      "targetPatchDate": "2026-04-02",
+      "eventID": "midnight-gem-hotfix-2026-04-01",
+      "expectedDecision": "BLOCKED_UNKNOWN_PATCH_EFFECT"
+    },
+    {
+      "test": "ore-node-binary-diamond-gate",
+      "ruleID": "midnight-ore-node-diamond",
+      "expectedDecision": "BLOCKED_NO_RULE",
+      "assertion": "Never force reference diamond chance to zero using this qualitative guide"
+    },
+    {
+      "test": "only-aggregate-totals",
+      "completedOperations": 10,
+      "rawOutputTotals": 7,
+      "operationHitCount": null,
+      "expectedQuantity": 0.7,
+      "expectedDropChance": null,
+      "expectedYieldMin": null,
+      "expectedYieldMax": null
+    },
+    {
+      "test": "ten-herb-milling",
+      "batchInputs": 10,
+      "completedOperations": 10,
+      "rawOutputTotals": 100,
+      "expectedQuantityPerOperation": 10,
+      "expectedQuantityPerHerb": 1
+    },
+    {
+      "test": "missing-gear-context",
+      "sourceEquipment": null,
+      "unknownContextFields": [
+        "equipment"
+      ],
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT"
+    },
+    {
+      "test": "unknown-stat-recipe",
+      "stat": "resourcefulness",
+      "recipeVerified": false,
+      "expectedDecision": "BLOCKED_INAPPLICABLE"
+    },
+    {
+      "test": "known-evidence-high-transform-low",
+      "baselineConfidence": 95,
+      "transformConfidence": 20,
+      "maxDerivedConfidence": 20
+    }
+  ],
+  "reviewStatus": {
+    "passedProductionReadiness": false,
+    "knownNumericTransformationCount": 0,
+    "needsHumanMechanicReview": true,
+    "notes": "This prototype enumerates data requirements; it is not a validated numerical mechanics registry or executable model."
+  }
+}
