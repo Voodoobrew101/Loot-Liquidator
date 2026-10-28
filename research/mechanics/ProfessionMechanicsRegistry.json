@@ -565,8 +565,8 @@
       "patchScopeReview": "Needs precise recipe and output family audit; previous entries preserved as research leads"
     },
     {
-      "id": "midnight_apr_1_prospecting_gem_increase",
-      "effectiveDate": "2026-04-01",
+      "id": "midnight_mar_31_prospecting_gem_increase",
+      "effectiveDate": "2026-03-31",
       "patch": "Midnight live hotfix",
       "scope": {
         "expansion": 11,
@@ -579,11 +579,12 @@
       "numericEffect": null,
       "normalization": "BLOCKED_NUMERIC_UNKNOWN",
       "source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
-      "datePrecision": "hotfix subsection date verified from research branch and Blizzard cumulative notes; quantitative magnitude unpublished",
+      "datePrecision": "March 31 subsection verified against Blizzard official cumulative hotfix and Blue Tracker preserved post; April 1 was a prior research date error. Exact deployment clock/build unknown.",
       "firstAffectedBuild": null,
       "numericTransformValidated": false,
       "applyPolicy": "NO_NUMERIC_TRANSFORM",
-      "patchScopeReview": "Needs precise recipe and output family audit; previous entries preserved as research leads"
+      "patchScopeReview": "Confirmed section date March 31; no numeric coefficient published; pre/post samples cannot be bridged without matched evidence.",
+      "previousIncorrectID": "midnight_apr_1_prospecting_gem_increase"
     }
   ],
   "observationContextSchema": {
@@ -1055,13 +1056,15 @@
       "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
       "publishedDate": null,
       "retrievedDate": "2026-10-28",
-      "versionScope": "Midnight live after 2026-04-01",
+      "versionScope": "DEPRECATED incorrect April 1 section assignment; do not use as canonical effective date",
       "evidenceClass": "OFFICIAL_HOTFIX",
       "specificClaim": "Gems found more regularly when prospecting Midnight ore",
       "numericalSupport": false,
       "sampleN": null,
       "independentCorroboration": null,
-      "confidence0to100": null
+      "confidence0to100": null,
+      "deprecatedDateAlias": true,
+      "supersededBy": "blizzard-2026-03-31-midnight-gems"
     },
     {
       "claimID": "wowhead-2026-midnight-jc-prospecting-nodes",
@@ -1115,6 +1118,19 @@
       "sampleN": null,
       "independentCorroboration": "https://warcraft.wiki.gg/wiki/Legion_jewelcrafting_designs",
       "confidence0to100": 88
+    },
+    {
+      "claimID": "blizzard-2026-03-31-midnight-gems",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight Retail gem prospecting hotfix section dated March 31, 2026",
+      "evidenceClass": "OFFICIAL_HOTFIX",
+      "specificClaim": "Gems found more regularly when prospecting Midnight ore under March 31 hotfix section; numerical factor not disclosed",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": "https://www.bluetracker.gg/wow/topic/us-en/2260898-world-of-warcraft-midnight-hotfixes-april-17/",
+      "confidence0to100": 92
     }
   ],
   "quantifiedMechanicRules": [
@@ -1284,8 +1300,8 @@
   },
   "patchEventVerifiedModels": [
     {
-      "eventID": "midnight-gem-hotfix-2026-04-01",
-      "effectiveDate": "2026-04-01",
+      "eventID": "midnight-gem-hotfix-2026-03-31",
+      "effectiveDate": "2026-03-31",
       "firstAffectedBuild": null,
       "gameMode": "RETAIL",
       "expansionIDs": [
@@ -1305,12 +1321,13 @@
       "evidenceStatus": "VERIFIED_QUALITATIVE",
       "numericTransformID": null,
       "sourceClaimIDs": [
-        "blizzard-2026-04-01-midnight-gems"
+        "blizzard-2026-03-31-midnight-gems"
       ],
       "intervalConfidence": null,
-      "notes": "Do not apply numerical patch normalization without posthotfix bridging evidence; no blanket modifier for byproducts.",
+      "notes": "Do not apply numerical patch normalization without posthotfix bridging evidence; no blanket modifier for byproducts. Corrected effective subsection date to March 31, 2026 from prior April 1 assumption; first affected build remains unknown.",
       "applyPolicy": "NO_NUMERIC_TRANSFORM",
-      "numericTransformValidated": false
+      "numericTransformValidated": false,
+      "previousIncorrectEventID": "midnight-gem-hotfix-2026-04-01"
     }
   ],
   "regressionFixtures": [
