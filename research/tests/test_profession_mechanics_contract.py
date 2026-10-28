@@ -39,13 +39,23 @@ class RegistryContractTests(unittest.TestCase):
 
     def test_unknown_hotfix_cannot_be_normalized(self):
         event = next(x for x in self.data["patchEvents"]
-                     if x["eventID"] == "midnight-gem-hotfix-2026-04-01")
+                     if x["eventID"] == "midnight-gem-hotfix-2026-03-31")
         self.assertIsNone(event["numericTransformID"])
         self.assertIn("OUTPUT_OCCURRENCE", event["affectedFields"])
         self.assertIn("OUTPUT_UNCONDITIONAL_EXPECTATION", event["affectedFields"])
         fixture = next(x for x in self.data["negativeFixtures"]
-                       if x["test"] == "midnight-pre-apr1-to-post-hotfix-gem")
+                       if x["test"] == "midnight-pre-mar31-to-post-hotfix-gem")
         self.assertEqual(fixture["expectedDecision"], "BLOCKED_UNKNOWN_PATCH_EFFECT")
+
+    def test_versioned_chronology_contract(self):
+        self.assertEqual(self.data["patchEvents"][0]["effectiveDate"], "2026-03-31")
+        contract = self.data["mechanicsChronology"]
+        self.assertEqual(contract["path"], "research/mechanics/mechanics-chronology.json")
+        chrono = json.loads((ROOT / contract["path"]).read_text(encoding="utf-8"))
+        self.assertEqual(chrono["events"][0]["firstAffectedDate"], "2026-03-31")
+        self.assertIsNone(chrono["events"][0]["numericParameters"])
+        self.assertFalse(chrono["events"][0]["numericallyBridgeable"])
+        self.assertEqual(chrono["revisionHistory"][0]["previousDate"], "2026-04-01")
 
     def test_independent_material_fields(self):
         fields = self.data["dataDefinitions"]["outputQuantities"]
