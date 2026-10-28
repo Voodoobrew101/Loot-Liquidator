@@ -38,7 +38,8 @@ const weak=infer({...base,observation:{...base.observation,completedOperations:1
   outputCountHistogram:{"0":0,"1":1},hitOperations:1,totalUnits:1}});
 assert.ok(weak.bestHypothesis.posteriorProbability<.9);
 const notVerified=infer({...base,candidates:base.candidates.map(x=>({...x,modelStatus:"EMPIRICAL_ESTIMATE"}))});
-assert.equal(notVerified.modelCalibrationVerified,false);
+assert.equal(notVerified.candidateModelsClaimVerifiedAndDisjoint,false);
+assert.equal(notVerified.modelCalibrationIndependentlyVerified,false);
 const trainingOverlap=infer({...base,candidates:base.candidates.map(x=>({...x,
  trainingStudyIDs:["unique-holdout"]}))});
 assert.ok(trainingOverlap.warnings.includes("UNVERIFIED_MODEL_OR_TRAINING_DATA_LEAKAGE"));
