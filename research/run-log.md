@@ -58,3 +58,11 @@
 - Source line numbers and counts are tied to the exact GameData blob SHA; next run must compare SHA before reuse.
 - Conservative confidence scores are provisional *evidence assessments*; individual item IDs have not all been independently researched, and no field is automatically 90 because it appears in TSM.
 - Original main Lua remains unchanged; do not merge the research branch automatically.
+
+### Additional source-backed correction batch (same run)
+- Recovered **two independently reported Titanium prospecting cohorts**, one from **Retail 2022** (1,000 ore = 200 casts) and one from **WotLK Classic PTR 2023-05-18** (5,000 ore = 1,000 casts). Both report raw output totals for the same six uncommon gems.
+- Calculated **12 source-backed decimal expected yields** (six per cohort) and preserved sample counts, item IDs, provenance, game versions and limitations in `research/ledger/titanium-observed-yields.csv`.
+- Six 2022 Retail per-cast means range **0.220–0.295** gems per five ore; six 2023 Classic means **0.227–0.263**. Existing TSM source values of **2.500** each per five ore are approximately 8–11 times these observed means.
+- This **improves the evidence available for six economically risky output relationships**, but does NOT establish 2026 Retail matching conditions, occurrence probabilities, conditional integer distributions, or a 90/100 confidence score. The original 1,256 GameData source rows retain their baseline scores until a reviewed model selection is made.
+- Original 2022 Retail source: https://www.reddit.com/r/woweconomy/comments/s6bfrl/ ; 2023 Classic source: https://www.wowhead.com/wotlk/item=36910/titanium-ore (Strath).
+- Updated proposed corrections document with per-gem values. No production changes.
