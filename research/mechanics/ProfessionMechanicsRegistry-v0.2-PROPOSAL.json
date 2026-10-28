@@ -554,5 +554,51 @@
       "Input costs and resource refunds are not material output boosts"
     ],
     "disposition": "RESEARCH_ONLY_NOT_PRODUCTION_QUALITY_VERIFIED"
+  },
+  "latentStudyContextInference": {
+    "status": "RESEARCH_PROTOTYPE_NOT_CALIBRATED_NOT_PRODUCTION",
+    "protocolPath": "research/mechanics/LATENT_STUDY_CONTEXT_INFERENCE.md",
+    "inverseTool": "research/tools/infer_latent_study_context.js",
+    "syntheticTest": "research/tests/test_latent_study_context.js",
+    "inferredVariables": [
+      "effectiveProfessionSkill",
+      "specializationRanks",
+      "applicableProfessionGearBonuses",
+      "professionStatValues",
+      "historicalMechanicsEpoch"
+    ],
+    "inferAs": "POSTERIOR_OVER_PLAUSIBLE_PROFILES_NOT_EXACT_CHARACTER_FACTS",
+    "inputRequirements": [
+      "sameItemRecipeRankGameMode",
+      "actualCompletedCastCount",
+      "perCastHistogramIncludingZero_OR_hitOperations",
+      "candidateProfilesCalibratedIndependently",
+      "historicalEpochCompatibility",
+      "candidatePriorProvenance",
+      "modelAndSourceAncestry"
+    ],
+    "historicalTimeRule": "Date of original publication upper bounds possible cast time; post-event publication alone cannot assign post-event mechanics. Coarse epoch range possible, not exact time without direct logs/build.",
+    "statisticalMethods": [
+      "MULTINOMIAL_LIKELIHOOD",
+      "BINOMIAL_HIT_ONLY_LIKELIHOOD",
+      "EXPLICIT_PRIOR_CANDIDATE_RANKING",
+      "HIERARCHICAL_BAYESIAN_AND_REGRESSION_FUTURE_MODEL"
+    ],
+    "diagnostics": [
+      "candidateProbability",
+      "credibleProfileSet",
+      "observationalEquivalence",
+      "trainingStudyOverlap",
+      "knownDateConstraints",
+      "missingModelCalibration"
+    ],
+    "independentValidationRule": "Same study may inform historical profile inference but cannot independently validate the mechanic model used to infer that profile; entire study-family holdout required.",
+    "guardrails": [
+      "Unlisted candidate profiles invalidate any absolute certainty claim",
+      "Observed samples with only totals cannot yield exact binomial/multinomial likelihood without model",
+      "One output's rates may not identify skill and equipment bonuses separately",
+      "No numeric rule is promoted by a high posterior on a model built from that study",
+      "Do not treat candidate assumed verification tag as independently verified"
+    ]
   }
 }
