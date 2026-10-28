@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "run": "master-batch010",
+  "role": "RESEARCH_ONLY_TRIAGE_NOT_COMPILED_ITEMDB",
+  "targetFileExact": "itemdb.lua",
+  "baselineDefinition": "minimum recipe-eligible skill, zero optional bonuses; do not assume skill 0 eligible",
+  "currentProduction": "main/GameData.lua",
+  "compilerStatus": "NOT_IMPLEMENTED",
+  "compilerPathAttempted": "research/tools/compile_itemdb.js",
+  "compilerPathFound": false,
+  "existingMechanicsCompiler": "research/tools/compile_verified_mechanics.js",
+  "existingMechanicsCompilerDoesNotCompileFourFieldItemdb": true,
+  "chronologyProposal": "review/profession-mechanics-registry-v0.2 PR #3 OPEN UNMERGED",
+  "activeChronology": null,
+  "approvedNumericRules": 0,
+  "approvedHistoricalPatchBridges": 0,
+  "reviewedEvidenceDelta": {
+    "newOriginalCohortRows": 18,
+    "firstPassKeys": 150,
+    "fourFieldOutputRows": 50
+  },
+  "provisionalCells": [
+    {
+      "stableKey": "output-main:tsm:mill:152506:153669:L1869",
+      "field": "expectedQuantity",
+      "value": 0.7175,
+      "unit": "PER_DERIVED_FIVE_HERB_EQUIVALENT",
+      "context": "2018 Jiyao 20-herb mass milling; skill/patch ambiguous",
+      "confidence": 60,
+      "source": "https://www.wowhead.com/item=153669/viridescent-pigment",
+      "currentRetailUnskilledApplicable": false,
+      "compilerAction": "RETAIN_HISTORICAL_NOT_CURRENT_BASELINE"
+    },
+    {
+      "stableKey": "output-supp:dragonflight:194545:192869:10",
+      "field": "expectedQuantity",
+      "value": 0.075,
+      "unit": "PER_ACTUAL_FIVE_ORE_CAST_ALL_DIAMOND_RANKS",
+      "context": "Original superbondez 80 casts; historical rank family, NOT this single rank ID",
+      "confidence": null,
+      "source": "https://www.wowhead.com/item=194545/prismatic-ore",
+      "currentRetailUnskilledApplicable": false,
+      "compilerAction": "DO_NOT_MAP_ALL_RANK_MEAN_TO_SINGLE_RANK"
+    },
+    {
+      "stableKey": "output-supp:dragonflight:192880:192880:2",
+      "field": "expectedQuantity",
+      "value": null,
+      "unit": "UNKNOWN_OUTPUT_VS_INPUT_REFUND",
+      "context": "Mgnta 160/3125 five-stone equivalents not actual cast count; Resourcefulness 16%",
+      "confidence": 0,
+      "source": "https://www.wowhead.com/item=192880/crumbled-stone",
+      "currentRetailUnskilledApplicable": false,
+      "compilerAction": "BLOCK_MATERIAL_OUTPUT_UNTIL_REFUND_SEPARATED"
+    }
+  ],
+  "notImplementedGates": [
+    "versioned four-field neutral baseline compiler",
+    "verified per-recipe minimum skill eligibility",
+    "historical chronology integration after PR review",
+    "lossless regression against GameData and runtime overlays",
+    "runtime in-client tests"
+  ],
+  "noProductionWrites": true
+}

@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
   "researchOnly": true,
-  "sourcesCount": 72,
-  "reviewEvents": 33,
-  "qaEvents": 17,
-  "approvedQaEvents": 16,
+  "sourcesCount": 91,
+  "reviewEvents": 66,
+  "qaEvents": 27,
+  "approvedQaEvents": 26,
   "warnings": [],
   "strategies": {
     "ORIGINAL_DATASET": {
+      "reviewedClaims": 8,
+      "accepted": 8,
+      "rejected": 0,
+      "points": 41
+    },
+    "DENOMINATOR_GUARD": {
       "reviewedClaims": 5,
       "accepted": 5,
       "rejected": 0,
-      "points": 25
-    },
-    "DENOMINATOR_GUARD": {
-      "reviewedClaims": 3,
-      "accepted": 3,
-      "rejected": 0,
-      "points": 8
+      "points": 16
     },
     "NUMERIC_INVARIANT": {
-      "reviewedClaims": 2,
-      "accepted": 2,
+      "reviewedClaims": 5,
+      "accepted": 5,
       "rejected": 0,
-      "points": 6
+      "points": 14
     },
     "WOWHEAD_COMMENT": {
       "reviewedClaims": 1,
@@ -32,10 +32,10 @@
       "points": 0
     },
     "SOURCE_REUSE": {
-      "reviewedClaims": 1,
-      "accepted": 1,
+      "reviewedClaims": 3,
+      "accepted": 3,
       "rejected": 0,
-      "points": 3
+      "points": 9
     },
     "PATCH_MATCHING": {
       "reviewedClaims": 5,
@@ -146,29 +146,35 @@
       "urls": [
         "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing"
       ],
-      "observationIDs": [],
+      "observationIDs": [
+        "DF-BETA-20221012-JALLFO-SEREVITE-COHORT1"
+      ],
       "studyIDs": [
         "DF-2022-BETA-PROSPECT-SHEET"
       ],
       "datasetIDs": [
-        "DF-six-cohorts"
+        "DF-six-cohorts",
+        "six-beta-cohorts"
       ],
-      "reviewedRecordKeys": [],
+      "reviewedRecordKeys": [
+        "profile:compiled:prospect:190394",
+        "profile:compiled:prospect:190311"
+      ],
       "status": "PARTIAL",
       "missingFields": [
-        "Exact patch/build",
-        "Skill/spec/gear",
-        "Per-cast output histogram",
-        "2026 Retail applicability"
+        "per-cast Inspiration flags",
+        "gem-rank cast histogram",
+        "2026 bridge"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing"
       ],
       "changeTriggers": [],
       "revisitReasons": [
-        "Reuse archived primary source, no independent re-count"
+        "Reuse archived primary source, no independent re-count",
+        "Reused archived original source; no duplicate fetch"
       ]
     },
     {
@@ -191,6 +197,79 @@
       "originalStudyUrls": [],
       "changeTriggers": [],
       "revisitReasons": []
+    },
+    {
+      "canonicalUrl": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling",
+      "urls": [
+        "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "kaliope-2008-five-herb-milling"
+      ],
+      "datasetIDs": [
+        "kaliope-2008-original-table"
+      ],
+      "reviewedRecordKeys": [
+        "profile:tsm:mill:765",
+        "profile:tsm:mill:785",
+        "profile:tsm:mill:2447",
+        "profile:tsm:mill:2449",
+        "profile:tsm:mill:2450",
+        "profile:tsm:mill:2452",
+        "profile:tsm:mill:2453",
+        "profile:tsm:mill:3355",
+        "profile:tsm:mill:3356",
+        "profile:tsm:mill:3357",
+        "profile:tsm:mill:3358",
+        "profile:tsm:mill:3369",
+        "profile:tsm:mill:3818",
+        "profile:tsm:mill:3819",
+        "profile:tsm:mill:3820",
+        "profile:tsm:mill:3821",
+        "profile:tsm:mill:4625",
+        "profile:tsm:mill:8831",
+        "profile:tsm:mill:8836",
+        "profile:tsm:mill:8838",
+        "profile:tsm:mill:8839",
+        "profile:tsm:mill:8845",
+        "profile:tsm:mill:8846",
+        "profile:tsm:mill:13463",
+        "profile:tsm:mill:13464",
+        "profile:tsm:mill:13465",
+        "profile:tsm:mill:13466",
+        "profile:tsm:mill:13467",
+        "profile:tsm:mill:22785",
+        "profile:tsm:mill:22786",
+        "profile:tsm:mill:22787",
+        "profile:tsm:mill:22789",
+        "profile:tsm:mill:22790",
+        "profile:tsm:mill:22791",
+        "profile:tsm:mill:22792",
+        "profile:tsm:mill:22793",
+        "profile:tsm:mill:36901",
+        "profile:tsm:mill:36903",
+        "profile:tsm:mill:36904",
+        "profile:tsm:mill:36905"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual operation counts",
+        "patch/build",
+        "per-cast hit/zero",
+        "skill/gear"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
+      ],
+      "changeTriggers": [
+        "assigned five Outland TSM profiles"
+      ],
+      "revisitReasons": [
+        "Reuse original reported herb/pigment totals; compare only per five-herb equivalents"
+      ]
     },
     {
       "canonicalUrl": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/",
@@ -279,6 +358,166 @@
       ],
       "revisitReasons": [
         "40 attempts/8 unspecified gems, insufficient for mapped mechanic coefficient"
+      ]
+    },
+    {
+      "canonicalUrl": "https://warcraft.wiki.gg/wiki/conqueror%27s_terrorblade_breastplate",
+      "urls": [
+        "https://warcraft.wiki.gg/wiki/Conqueror%27s_Terrorblade_Breastplate"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "ulduar-vanquisher-45634-46123"
+      ],
+      "datasetIDs": [
+        "ulduar-vanquisher-45634-46123"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:token:45634:46123"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Live 2026 Retail vendor and class eligibility"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://warcraft.wiki.gg/wiki/Conqueror%27s_Terrorblade_Breastplate"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "New assigned token relationship"
+      ]
+    },
+    {
+      "canonicalUrl": "https://warcraft.wiki.gg/wiki/design:_mass_prospect_felslate",
+      "urls": [
+        "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "warcraft-wiki-felslate-mass-recipe"
+      ],
+      "datasetIDs": [
+        "recipe-225904"
+      ],
+      "reviewedRecordKeys": [
+        "profile:tsm:mill:765",
+        "profile:tsm:mill:785",
+        "profile:tsm:mill:2447",
+        "profile:tsm:mill:2449",
+        "profile:tsm:mill:2450",
+        "profile:tsm:mill:2452",
+        "profile:tsm:mill:2453",
+        "profile:tsm:mill:3355",
+        "profile:tsm:mill:3356",
+        "profile:tsm:mill:3357",
+        "profile:tsm:mill:3358",
+        "profile:tsm:mill:3369",
+        "profile:tsm:mill:3818",
+        "profile:tsm:mill:3819",
+        "profile:tsm:mill:3820",
+        "profile:tsm:mill:3821",
+        "profile:tsm:mill:4625",
+        "profile:tsm:mill:8831",
+        "profile:tsm:mill:8836",
+        "profile:tsm:mill:8838",
+        "profile:tsm:mill:8839",
+        "profile:tsm:mill:8845",
+        "profile:tsm:mill:8846",
+        "profile:tsm:mill:13463",
+        "profile:tsm:mill:13464",
+        "profile:tsm:mill:13465",
+        "profile:tsm:mill:13466",
+        "profile:tsm:mill:13467",
+        "profile:tsm:mill:22785",
+        "profile:tsm:mill:22786",
+        "profile:tsm:mill:22787",
+        "profile:tsm:mill:22789",
+        "profile:tsm:mill:22790",
+        "profile:tsm:mill:22791",
+        "profile:tsm:mill:22792",
+        "profile:tsm:mill:22793",
+        "profile:tsm:mill:36901",
+        "profile:tsm:mill:36903",
+        "profile:tsm:mill:36904",
+        "profile:tsm:mill:36905"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "current in-game recipe probe",
+        "quantitative gem distribution"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate"
+      ],
+      "changeTriggers": [
+        "recipe batch denominator cross-check"
+      ],
+      "revisitReasons": [
+        "Verify 20-ore recipe requirement; no output formula implied"
+      ]
+    },
+    {
+      "canonicalUrl": "https://worldofwarcraft.blizzard.com/en-gb/news/24119590",
+      "urls": [
+        "https://worldofwarcraft.blizzard.com/en-gb/news/24119590"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "blizzard-2024-inspiration-removal"
+      ],
+      "datasetIDs": [
+        "official-patch"
+      ],
+      "reviewedRecordKeys": [],
+      "status": "PARTIAL",
+      "missingFields": [
+        "numeric historic Inspiration coefficient",
+        "current recipe quality transform"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://worldofwarcraft.blizzard.com/en-gb/news/24119590"
+      ],
+      "changeTriggers": [],
+      "revisitReasons": [
+        "Official qualitative removal rechecked; no numeric rule"
+      ]
+    },
+    {
+      "canonicalUrl": "https://worldofwarcraft.blizzard.com/en-gb/news/24266320",
+      "urls": [
+        "https://worldofwarcraft.blizzard.com/en-gb/news/24266320/"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "blizzard-midnight-2026-03-31-gem-hotfix"
+      ],
+      "datasetIDs": [
+        "blizzard-midnight-2026-03-31-gem-hotfix"
+      ],
+      "reviewedRecordKeys": [],
+      "status": "PARTIAL",
+      "missingFields": [
+        "per-gem quantified hotfix effect",
+        "matched pre/post cast logs"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://worldofwarcraft.blizzard.com/en-gb/news/24266320/"
+      ],
+      "changeTriggers": [
+        "REUSE official qualitative March 31 note for blocked numeric hypothesis; no new numerical patch evidence"
+      ],
+      "revisitReasons": [
+        "REUSE official qualitative March 31 note for blocked numeric hypothesis; no new numerical patch evidence"
       ]
     },
     {
@@ -428,21 +667,51 @@
       "reviewedRecordKeys": [],
       "status": "PARTIAL",
       "missingFields": [
-        "actual saved ore",
-        "resourcefulness stat",
-        "per-cast refunds",
-        "patch-matched control"
+        "Actual saved ore per cast including zeros",
+        "Resourcefulness stat and patch"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/1f83cnd"
       ],
       "changeTriggers": [
-        "First worker review of original source for rev11 exact assigned keys"
+        "First worker review of original source for rev11 exact assigned keys",
+        "Exact master queue revision 12 or assigned numeric hypothesis"
       ],
       "revisitReasons": [
-        "Unresolved historical source denominators and output means"
+        "Unresolved historical source denominators and output means",
+        "Assigned numeric hypothesis; reuse source, avoid duplicate fetch"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1fdvkmy",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/1fdvkmy"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "tww-resourcefulness-30pct-qualitative-2024"
+      ],
+      "datasetIDs": [
+        "tww-resourcefulness-30pct-qualitative-2024"
+      ],
+      "reviewedRecordKeys": [],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Controlled TWW prospect 5-ore cast refund histogram",
+        "Exact stat/build"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/1fdvkmy"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Explicit gap for input-savings numeric hypothesis"
       ]
     },
     {
@@ -479,6 +748,35 @@
       "originalStudyUrls": [],
       "changeTriggers": [],
       "revisitReasons": []
+    },
+    {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/1g8kbaq"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "tww-prospect-stack-queue-2024"
+      ],
+      "datasetIDs": [
+        "tww-prospect-stack-queue-2024"
+      ],
+      "reviewedRecordKeys": [],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Matched actual ore refunds and consumption"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/1g8kbaq"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Reused original stack-queue source for denominator audit"
+      ]
     },
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change",
@@ -943,7 +1241,8 @@
     {
       "canonicalUrl": "https://www.scribd.com/document/359130779/full-legion-worksheet",
       "urls": [
-        "https://www.scribd.com/document/359130779/Full-Legion-Worksheet"
+        "https://www.scribd.com/document/359130779/Full-Legion-Worksheet",
+        "https://www.scribd.com/document/359130779/full-legion-worksheet"
       ],
       "observationIDs": [
         "legacy-b007-felslate-2017-mass-20261028",
@@ -954,25 +1253,72 @@
         "scribd-full-legion-worksheet-2017-felslate-standard-mass"
       ],
       "datasetIDs": [
-        "felslate-two-10000ore-arms"
+        "felslate-two-10000ore-arms",
+        "felslate-2017-two-10000-ore-arms"
       ],
-      "reviewedRecordKeys": [],
+      "reviewedRecordKeys": [
+        "profile:tsm:mill:765",
+        "profile:tsm:mill:785",
+        "profile:tsm:mill:2447",
+        "profile:tsm:mill:2449",
+        "profile:tsm:mill:2450",
+        "profile:tsm:mill:2452",
+        "profile:tsm:mill:2453",
+        "profile:tsm:mill:3355",
+        "profile:tsm:mill:3356",
+        "profile:tsm:mill:3357",
+        "profile:tsm:mill:3358",
+        "profile:tsm:mill:3369",
+        "profile:tsm:mill:3818",
+        "profile:tsm:mill:3819",
+        "profile:tsm:mill:3820",
+        "profile:tsm:mill:3821",
+        "profile:tsm:mill:4625",
+        "profile:tsm:mill:8831",
+        "profile:tsm:mill:8836",
+        "profile:tsm:mill:8838",
+        "profile:tsm:mill:8839",
+        "profile:tsm:mill:8845",
+        "profile:tsm:mill:8846",
+        "profile:tsm:mill:13463",
+        "profile:tsm:mill:13464",
+        "profile:tsm:mill:13465",
+        "profile:tsm:mill:13466",
+        "profile:tsm:mill:13467",
+        "profile:tsm:mill:22785",
+        "profile:tsm:mill:22786",
+        "profile:tsm:mill:22787",
+        "profile:tsm:mill:22789",
+        "profile:tsm:mill:22790",
+        "profile:tsm:mill:22791",
+        "profile:tsm:mill:22792",
+        "profile:tsm:mill:22793",
+        "profile:tsm:mill:36901",
+        "profile:tsm:mill:36903",
+        "profile:tsm:mill:36904",
+        "profile:tsm:mill:36905"
+      ],
       "status": "PARTIAL",
       "missingFields": [
         "actual casts",
-        "output ID matched arms",
-        "same-character patch/skill/gear",
-        "independent replication"
+        "matched output IDs",
+        "patch/build",
+        "skill/gear",
+        "per-cast zeros"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
-        "https://www.scribd.com/document/359130779/Full-Legion-Worksheet"
+        "https://www.scribd.com/document/359130779/Full-Legion-Worksheet",
+        "https://www.scribd.com/document/359130779/full-legion-worksheet"
       ],
-      "changeTriggers": [],
+      "changeTriggers": [
+        "required assigned numeric hypothesis"
+      ],
       "revisitReasons": [
         "Reused prior archived worksheet without external refetch",
-        "Reused archived source-memory and batch008 numeric candidate; no repeat external fetch"
+        "Reused archived source-memory and batch008 numeric candidate; no repeat external fetch",
+        "Reuse previously archived 2017 worksheet without external refetch; compare normalized source totals only"
       ]
     },
     {
@@ -1156,6 +1502,40 @@
       "revisitReasons": []
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/cn/spell=31252/prospecting",
+      "urls": [
+        "https://www.wowhead.com/cn/spell=31252/prospecting"
+      ],
+      "observationIDs": [
+        "ww-b008-tontons-corrected-152513",
+        "ww-b008-tontons-corrected-152579"
+      ],
+      "studyIDs": [
+        "tontons-2018-original"
+      ],
+      "datasetIDs": [
+        "three-ore-table"
+      ],
+      "reviewedRecordKeys": [
+        "profile:compiled:prospect:152513",
+        "profile:compiled:prospect:152579"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "2026 Retail bridge",
+        "per-cast hit counts"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/cn/spell=31252/prospecting"
+      ],
+      "changeTriggers": [],
+      "revisitReasons": [
+        "Reused accepted source correction, avoided duplicate fetch"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/de/spell=225904/massensondierung-von-teufelsschiefer",
       "urls": [
         "https://www.wowhead.com/de/spell=225904/massensondierung-von-teufelsschiefer"
@@ -1211,6 +1591,79 @@
       "revisitReasons": []
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/item=123919/felslate",
+      "urls": [
+        "https://www.wowhead.com/item=123919/felslate"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "felslate-2017-mixed-880-leystone-240-felslate"
+      ],
+      "datasetIDs": [
+        "wowhead-fredshg-mixed-ore-2017"
+      ],
+      "reviewedRecordKeys": [
+        "profile:tsm:mill:765",
+        "profile:tsm:mill:785",
+        "profile:tsm:mill:2447",
+        "profile:tsm:mill:2449",
+        "profile:tsm:mill:2450",
+        "profile:tsm:mill:2452",
+        "profile:tsm:mill:2453",
+        "profile:tsm:mill:3355",
+        "profile:tsm:mill:3356",
+        "profile:tsm:mill:3357",
+        "profile:tsm:mill:3358",
+        "profile:tsm:mill:3369",
+        "profile:tsm:mill:3818",
+        "profile:tsm:mill:3819",
+        "profile:tsm:mill:3820",
+        "profile:tsm:mill:3821",
+        "profile:tsm:mill:4625",
+        "profile:tsm:mill:8831",
+        "profile:tsm:mill:8836",
+        "profile:tsm:mill:8838",
+        "profile:tsm:mill:8839",
+        "profile:tsm:mill:8845",
+        "profile:tsm:mill:8846",
+        "profile:tsm:mill:13463",
+        "profile:tsm:mill:13464",
+        "profile:tsm:mill:13465",
+        "profile:tsm:mill:13466",
+        "profile:tsm:mill:13467",
+        "profile:tsm:mill:22785",
+        "profile:tsm:mill:22786",
+        "profile:tsm:mill:22787",
+        "profile:tsm:mill:22789",
+        "profile:tsm:mill:22790",
+        "profile:tsm:mill:22791",
+        "profile:tsm:mill:22792",
+        "profile:tsm:mill:22793",
+        "profile:tsm:mill:36901",
+        "profile:tsm:mill:36903",
+        "profile:tsm:mill:36904",
+        "profile:tsm:mill:36905"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Felslate-specific output totals",
+        "actual casts",
+        "recipe split",
+        "skill/gear"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=123919/felslate"
+      ],
+      "changeTriggers": [
+        "new original player mixed-ore source found"
+      ],
+      "revisitReasons": [
+        "Assess whether outputs can isolate Felslate; cannot, preserve as lead only"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/item=151565/astral-glory",
       "urls": [
         "https://www.wowhead.com/item=151565/astral-glory"
@@ -1252,32 +1705,100 @@
       "urls": [
         "https://www.wowhead.com/item=153669/viridescent-pigment"
       ],
-      "observationIDs": [],
+      "observationIDs": [
+        "midnight-b010-bfa-jiyao-152507-694cast-study-revision",
+        "midnight-b010-bfa-baadkitty-152507-200herbs",
+        "midnight-b010-bfa-jiyao-152510-694cast-study-revision",
+        "midnight-b010-bfa-baadkitty-152510-200herbs",
+        "midnight-b010-bfa-jiyao-152505-694cast-study-revision",
+        "midnight-b010-bfa-baadkitty-152505-200herbs",
+        "midnight-b010-bfa-jiyao-152511-694cast-study-revision",
+        "midnight-b010-bfa-baadkitty-152511-200herbs",
+        "midnight-b010-bfa-jiyao-152509-694cast-study-revision",
+        "midnight-b010-bfa-baadkitty-152509-200herbs",
+        "midnight-b010-bfa-jiyao-152506-694cast-study-revision",
+        "midnight-b010-bfa-baadkitty-152506-200herbs",
+        "midnight-b010-bfa-jiyao-152508-694cast-study-revision",
+        "midnight-b010-bfa-baadkitty-152508-200herbs"
+      ],
       "studyIDs": [
-        "BFA-KIDNEPH-1000-RIVERBUD"
+        "BFA-KIDNEPH-1000-RIVERBUD",
+        "bfa-jiyao-2018-seven-herb-massmill",
+        "bfa-baadkitty-2018-seven-herb-200each",
+        "bfa-kidneph-2018-six-herb-1000each"
       ],
       "datasetIDs": [
-        "152505"
+        "152505",
+        "bfa-jiyao-2018-seven-herb-massmill",
+        "bfa-baadkitty-2018-seven-herb-200each",
+        "bfa-kidneph-2018-six-herb-1000each"
       ],
       "reviewedRecordKeys": [
         "output-main:tsm:mill:152505:153635:L1862",
-        "output-main:tsm:mill:152505:153636:L1863"
+        "output-main:tsm:mill:152505:153636:L1863",
+        "152507:Mill:153635",
+        "152507:Mill:153636",
+        "152507:Mill:153669",
+        "152510:Mill:153635",
+        "152510:Mill:153636",
+        "152510:Mill:153669",
+        "152505:Mill:153635",
+        "152505:Mill:153636",
+        "152505:Mill:153669",
+        "152511:Mill:153635",
+        "152511:Mill:153636",
+        "152511:Mill:153669",
+        "152509:Mill:153635",
+        "152509:Mill:153636",
+        "152509:Mill:153669",
+        "152506:Mill:153635",
+        "152506:Mill:153636",
+        "152506:Mill:153669",
+        "152508:Mill:153635",
+        "152508:Mill:153636",
+        "152508:Mill:153669",
+        "output-main:tsm:mill:152505:153669:L1864",
+        "output-main:tsm:mill:152506:153635:L1867",
+        "output-main:tsm:mill:152506:153636:L1868",
+        "output-main:tsm:mill:152506:153669:L1869",
+        "output-main:tsm:mill:152507:153635:L1872",
+        "output-main:tsm:mill:152507:153636:L1873",
+        "output-main:tsm:mill:152507:153669:L1874",
+        "output-main:tsm:mill:152508:153635:L1877",
+        "output-main:tsm:mill:152508:153636:L1878",
+        "output-main:tsm:mill:152508:153669:L1879",
+        "output-main:tsm:mill:152509:153635:L1882",
+        "output-main:tsm:mill:152509:153636:L1883",
+        "output-main:tsm:mill:152509:153669:L1884",
+        "output-main:tsm:mill:152510:153635:L1887",
+        "output-main:tsm:mill:152510:153636:L1888",
+        "output-main:tsm:mill:152510:153669:L1889",
+        "output-main:tsm:mill:152511:153635:L1892",
+        "output-main:tsm:mill:152511:153636:L1893",
+        "output-main:tsm:mill:152511:153669:L1894"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "Exact patch/build",
-        "Skill/spec/gear",
-        "Per-cast output histogram",
-        "2026 Retail applicability"
+        "actual completed casts",
+        "skill",
+        "patch",
+        "hits"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 4,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=153669/viridescent-pigment"
       ],
-      "changeTriggers": [],
+      "changeTriggers": [
+        "Assigned new BfA output keys; source table updated to 694 total mass casts; 39-cast Riverbud snapshot overlaps 44-cast update",
+        "New original author aggregate, distinct from Kidneph and Jiyao",
+        "REUSE prior archived 2026-10-28-legacy-milling-batch01.jsonl; avoid duplicate re-fetch/observation"
+      ],
       "revisitReasons": [
-        "Reuse archived primary source, no independent re-count"
+        "Reuse archived primary source, no independent re-count",
+        "Assigned new BfA output keys; source table updated to 694 total mass casts; 39-cast Riverbud snapshot overlaps 44-cast update",
+        "New original author aggregate, distinct from Kidneph and Jiyao",
+        "REUSE prior archived 2026-10-28-legacy-milling-batch01.jsonl; avoid duplicate re-fetch/observation"
       ]
     },
     {
@@ -1293,9 +1814,14 @@
       "studyIDs": [
         "ww-b008-osmenite-ptr-30329",
         "ww-b008-osmenite-live-mass-200casts",
-        "wowhead-snurp-osmenite-ptr30329"
+        "wowhead-snurp-osmenite-ptr30329",
+        "snurp-ptr30329",
+        "close0ne-live-200mass"
       ],
-      "datasetIDs": [],
+      "datasetIDs": [
+        "osmenite-8000-standard",
+        "osmenite-200-mass"
+      ],
       "reviewedRecordKeys": [
         "168185:Prospect:168188",
         "168185:Prospect:168189",
@@ -1303,17 +1829,28 @@
         "168185:Prospect:168191",
         "168185:Prospect:168192",
         "168185:Prospect:168193",
-        "168185:Prospect:168635"
+        "168185:Prospect:168635",
+        "profile:compiled:prospect:168185"
       ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
+      "status": "PARTIAL",
+      "missingFields": [
+        "same-build standard control",
+        "per-cast hits",
+        "2026 patch bridge"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=168185/osmenite-ore"
       ],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "changeTriggers": [
+        "Profile audit found PTR baseline",
+        "New profile context comparison"
+      ],
+      "revisitReasons": [
+        "Original source rechecked; two archive copies are one experiment",
+        "Meaningful revisit: mass/standard and tool/skill confounding"
+      ]
     },
     {
       "canonicalUrl": "https://www.wowhead.com/item=175788/tranquil-pigment",
@@ -1390,6 +1927,144 @@
       ],
       "revisitReasons": [
         "Assigned 18 Shadowlands rows; recovered original per-mass-cast means with reported denominators"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=192880/crumbled-stone",
+      "urls": [
+        "https://www.wowhead.com/item=192880/crumbled-stone"
+      ],
+      "observationIDs": [
+        "midnight-b010-df-lavingrunatic-60-crumbledstone",
+        "midnight-b010-df-mgnta-3125-crumbledstone",
+        "midnight-b010-df-lavingrunatic-60-crumbledstone-QUALITY-UNMAPPED-CORRECTED"
+      ],
+      "studyIDs": [
+        "df-lavingrunatic-crumbledstone-60prospects",
+        "df-mgnta-crumbledstone-3125inputs",
+        "wowhead-crumbled-mgnta-and-laving-distinct-authors"
+      ],
+      "datasetIDs": [
+        "df-lavingrunatic-crumbledstone-60prospects",
+        "df-mgnta-crumbledstone-3125inputs",
+        "wowhead-crumbled-mgnta-and-laving-distinct-authors"
+      ],
+      "reviewedRecordKeys": [
+        "192880:Prospect:192849",
+        "192880:Prospect:192866",
+        "192880:Prospect:192880",
+        "192880:Prospect:192850",
+        "192880:Prospect:192867",
+        "output-supp:dragonflight:192880:192849:0",
+        "output-supp:dragonflight:192880:192866:1",
+        "output-supp:dragonflight:192880:192880:2"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Mgnta actual casts and Resourcefulness refunds",
+        "Gem quality IDs",
+        "Matched patch and stats"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 4,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=192880/crumbled-stone"
+      ],
+      "changeTriggers": [
+        "New original 60-cast Crumbled Stone source",
+        "New original aggregate with explicit rank 2, 16% Resourcefulness; no actual cast count",
+        "Worker QA identified unsupported rank-1 mapping in original batch010 archive",
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "New original 60-cast Crumbled Stone source",
+        "New original aggregate with explicit rank 2, 16% Resourcefulness; no actual cast count",
+        "Correct to null unmapped output family, preserve original totals and prevent source identity inflation",
+        "Assigned self-return key; explicit original-denominator gap"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=194545/prismatic-ore",
+      "urls": [
+        "https://www.wowhead.com/item=194545/prismatic-ore"
+      ],
+      "observationIDs": [
+        "midnight-b010-df-superbondez-prismatic-80casts"
+      ],
+      "studyIDs": [
+        "df-superbondez-prismatic-400ore-80casts"
+      ],
+      "datasetIDs": [
+        "df-superbondez-prismatic-400ore-80casts"
+      ],
+      "reviewedRecordKeys": [
+        "194545:Prospect:192837",
+        "194545:Prospect:192838",
+        "194545:Prospect:192839",
+        "194545:Prospect:192840",
+        "194545:Prospect:192841",
+        "194545:Prospect:192842",
+        "194545:Prospect:192843",
+        "194545:Prospect:192844",
+        "194545:Prospect:192845",
+        "194545:Prospect:192846",
+        "194545:Prospect:192847",
+        "194545:Prospect:192848",
+        "194545:Prospect:192852",
+        "194545:Prospect:192853",
+        "194545:Prospect:192855",
+        "194545:Prospect:192856",
+        "194545:Prospect:192857",
+        "194545:Prospect:192858",
+        "194545:Prospect:192859",
+        "194545:Prospect:192860",
+        "194545:Prospect:192861",
+        "194545:Prospect:192862",
+        "194545:Prospect:192863",
+        "194545:Prospect:192865",
+        "194545:Prospect:192866",
+        "194545:Prospect:192867",
+        "194545:Prospect:192868",
+        "194545:Prospect:192869",
+        "194545:Prospect:192870",
+        "194545:Prospect:192871",
+        "194545:Prospect:192872",
+        "194545:Prospect:192880",
+        "194545:Prospect:194545",
+        "194545:Prospect:190312",
+        "194545:Prospect:190313",
+        "194545:Prospect:193368",
+        "output-supp:dragonflight:194545:192837:0",
+        "output-supp:dragonflight:194545:192840:1",
+        "output-supp:dragonflight:194545:192843:2",
+        "output-supp:dragonflight:194545:192846:3",
+        "output-supp:dragonflight:194545:192849:4",
+        "output-supp:dragonflight:194545:192852:5",
+        "output-supp:dragonflight:194545:192856:6",
+        "output-supp:dragonflight:194545:192859:7",
+        "output-supp:dragonflight:194545:192862:8",
+        "output-supp:dragonflight:194545:192866:9",
+        "output-supp:dragonflight:194545:192869:10",
+        "output-supp:dragonflight:194545:192872:11",
+        "output-supp:dragonflight:194545:192880:12"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "exact build",
+        "skill/spec",
+        "cast-level hits",
+        "corrupted Eternity Amber ranks"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=194545/prismatic-ore"
+      ],
+      "changeTriggers": [
+        "New original 80-cast rank-specific experiment for assigned 194545 outputs"
+      ],
+      "revisitReasons": [
+        "New original 80-cast rank-specific experiment for assigned 194545 outputs"
       ]
     },
     {
@@ -1781,21 +2456,76 @@
       "studyIDs": [
         "wowhead-180977-2008-ptr-milling-histograms"
       ],
-      "datasetIDs": [],
+      "datasetIDs": [
+        "wowhead-180977-2008-ptr-milling-histograms",
+        "wowhead-180977-2008-ptr-16herb-reconciliation"
+      ],
       "reviewedRecordKeys": [
         "2447:Mill:39151",
         "765:Mill:39151",
-        "2449:Mill:39151"
+        "2449:Mill:39151",
+        "profile:compiled:mill:765",
+        "profile:tsm:mill:765",
+        "profile:tsm:mill:785",
+        "profile:tsm:mill:2447",
+        "profile:tsm:mill:2449",
+        "profile:tsm:mill:2450",
+        "profile:tsm:mill:2452",
+        "profile:tsm:mill:2453",
+        "profile:tsm:mill:3355",
+        "profile:tsm:mill:3356",
+        "profile:tsm:mill:3357",
+        "profile:tsm:mill:3358",
+        "profile:tsm:mill:3369",
+        "profile:tsm:mill:3818",
+        "profile:tsm:mill:3819",
+        "profile:tsm:mill:3820",
+        "profile:tsm:mill:3821",
+        "profile:tsm:mill:4625",
+        "profile:tsm:mill:8831",
+        "profile:tsm:mill:8836",
+        "profile:tsm:mill:8838",
+        "profile:tsm:mill:8839",
+        "profile:tsm:mill:8845",
+        "profile:tsm:mill:8846",
+        "profile:tsm:mill:13463",
+        "profile:tsm:mill:13464",
+        "profile:tsm:mill:13465",
+        "profile:tsm:mill:13466",
+        "profile:tsm:mill:13467",
+        "profile:tsm:mill:22785",
+        "profile:tsm:mill:22786",
+        "profile:tsm:mill:22787",
+        "profile:tsm:mill:22789",
+        "profile:tsm:mill:22790",
+        "profile:tsm:mill:22791",
+        "profile:tsm:mill:22792",
+        "profile:tsm:mill:22793",
+        "profile:tsm:mill:36901",
+        "profile:tsm:mill:36903",
+        "profile:tsm:mill:36904",
+        "profile:tsm:mill:36905"
       ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
+      "status": "PARTIAL",
+      "missingFields": [
+        "exact PTR build",
+        "skill/gear",
+        "2026 Retail patch bridge",
+        "Earthroot missing 19 operations or stack claim"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.wowhead.com/mop-classic/item=39151/alabaster-pigment"
       ],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis",
+        "assigned 16 matching TSM profiles plus arithmetic contradiction"
+      ],
+      "revisitReasons": [
+        "Profile 765 newly assigned; revisit original archive to recover known histogram",
+        "Recalculate original histogram denominators and identify Earthroot inconsistency"
+      ]
     },
     {
       "canonicalUrl": "https://www.wowhead.com/mop-classic/item=39334/dusky-pigment",
@@ -2106,6 +2836,37 @@
       "revisitReasons": []
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/spell=102167/smelt-trillium",
+      "urls": [
+        "https://www.wowhead.com/spell=102167/smelt-trillium"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-smelt-spell-102167"
+      ],
+      "datasetIDs": [
+        "retail-smelt-spell-102167"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:smelt:102167:72095"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Exact 2026 Retail in-game learned flag, forge requirement and result not tested"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=102167/smelt-trillium"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Assigned exact spell recipe source verification"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/spell=1231127/midnight-prospecting",
       "urls": [
         "https://www.wowhead.com/spell=1231127/midnight-prospecting"
@@ -2285,6 +3046,99 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/spell=2659/smelt-bronze",
+      "urls": [
+        "https://www.wowhead.com/spell=2659/smelt-bronze"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-smelt-spell-2659"
+      ],
+      "datasetIDs": [
+        "retail-smelt-spell-2659"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:smelt:2659:2841"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Exact 2026 Retail in-game learned flag, forge requirement and result not tested"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=2659/smelt-bronze"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Assigned exact spell recipe source verification"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=29356/smelt-fel-iron",
+      "urls": [
+        "https://www.wowhead.com/spell=29356/smelt-fel-iron"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-smelt-spell-29356"
+      ],
+      "datasetIDs": [
+        "retail-smelt-spell-29356"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:smelt:29356:23445"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Exact 2026 Retail in-game learned flag, forge requirement and result not tested"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=29356/smelt-fel-iron"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Assigned exact spell recipe source verification"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=29360/smelt-felsteel",
+      "urls": [
+        "https://www.wowhead.com/spell=29360/smelt-felsteel"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-smelt-spell-29360"
+      ],
+      "datasetIDs": [
+        "retail-smelt-spell-29360"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:smelt:29360:23448"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Exact 2026 Retail in-game learned flag, forge requirement and result not tested"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=29360/smelt-felsteel"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Assigned exact spell recipe source verification"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/spell=311949/mass-prospect-solenium",
       "urls": [
         "https://www.wowhead.com/spell=311949/mass-prospect-solenium"
@@ -2302,10 +3156,12 @@
       "studyIDs": [
         "ww-b008-laestrite-1000-osulivan",
         "ww-b008-solenium-1000-osulivan",
-        "wowhead-osulivan-six-shadowlands-ore-cohorts"
+        "wowhead-osulivan-six-shadowlands-ore-cohorts",
+        "osulivan-six-ore-table"
       ],
       "datasetIDs": [
-        "osulivan-2020-six-ore-aggregate-table"
+        "osulivan-2020-six-ore-aggregate-table",
+        "one-author-six-cohorts"
       ],
       "reviewedRecordKeys": [
         "171828:Prospect:173108",
@@ -2357,19 +3213,17 @@
         "output-main:tsm:prospect:171833:173170:L1159",
         "output-main:tsm:prospect:171833:173171:L1160",
         "output-main:tsm:prospect:171833:173172:L1161",
-        "output-main:tsm:prospect:171833:173173:L1162"
+        "output-main:tsm:prospect:171833:173173:L1162",
+        "profile:compiled:prospect:171828"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual completed casts",
-        "per-cast zeros/hits",
-        "recipe used for each ore",
-        "patch/build",
-        "profession skill/gear",
-        "2026 Retail applicability"
+        "actual casts",
+        "recipe and patch",
+        "per-cast outputs"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.wowhead.com/spell=311949/mass-prospect-solenium"
       ],
@@ -2377,7 +3231,39 @@
         "Original spell page explicitly says 20 Solenium ore per mass cast, but older archive assigns batch=5 to all six ore cohorts"
       ],
       "revisitReasons": [
-        "Resolve recipe/batch ambiguity; source values explicitly per ore and cannot be called 5-ore cast means"
+        "Resolve recipe/batch ambiguity; source values explicitly per ore and cannot be called 5-ore cast means",
+        "Reused archive; original page recheck anti-bot blocked"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=3569/smelt-steel",
+      "urls": [
+        "https://www.wowhead.com/spell=3569/smelt-steel"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-smelt-spell-3569"
+      ],
+      "datasetIDs": [
+        "retail-smelt-spell-3569"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:smelt:3569:3859"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Exact 2026 Retail in-game learned flag, forge requirement and result not tested"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=3569/smelt-steel"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Assigned exact spell recipe source verification"
       ]
     },
     {
@@ -2426,6 +3312,99 @@
       "originalStudyUrls": [],
       "changeTriggers": [],
       "revisitReasons": []
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=46353/smelt-hardened-khorium",
+      "urls": [
+        "https://www.wowhead.com/spell=46353/smelt-hardened-khorium"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-smelt-spell-46353"
+      ],
+      "datasetIDs": [
+        "retail-smelt-spell-46353"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:smelt:46353:35128"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Exact 2026 Retail in-game learned flag, forge requirement and result not tested"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=46353/smelt-hardened-khorium"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Assigned exact spell recipe source verification"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=55208/smelt-titansteel",
+      "urls": [
+        "https://www.wowhead.com/spell=55208/smelt-titansteel"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-smelt-spell-55208"
+      ],
+      "datasetIDs": [
+        "retail-smelt-spell-55208"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:smelt:55208:37663"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Exact 2026 Retail in-game learned flag, forge requirement and result not tested"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=55208/smelt-titansteel"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Assigned exact spell recipe source verification"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=74537/smelt-hardened-elementium",
+      "urls": [
+        "https://www.wowhead.com/spell=74537/smelt-hardened-elementium"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-smelt-spell-74537"
+      ],
+      "datasetIDs": [
+        "retail-smelt-spell-74537"
+      ],
+      "reviewedRecordKeys": [
+        "output-supp:smelt:74537:53039"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Exact 2026 Retail in-game learned flag, forge requirement and result not tested"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=74537/smelt-hardened-elementium"
+      ],
+      "changeTriggers": [
+        "Exact master queue revision 12 or assigned numeric hypothesis"
+      ],
+      "revisitReasons": [
+        "Assigned exact spell recipe source verification"
+      ]
     },
     {
       "canonicalUrl": "https://www.wowhead.com/tw/item=52984",
