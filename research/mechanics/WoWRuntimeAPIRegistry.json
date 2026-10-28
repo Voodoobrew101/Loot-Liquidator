@@ -1,0 +1,354 @@
+{
+  "schemaVersion": "0.1.0",
+  "role": "Research API coverage contract; NOT a shipped conversion database",
+  "auditDate": "2026-10-28",
+  "target": "Retail Midnight 12.x",
+  "coverageRule": "Documented API existence is NOT proof it succeeds for a particular processing recipe; require in-game recipe-specific probes",
+  "availabilityStates": [
+    "documented",
+    "implemented",
+    "partial",
+    "not-implemented",
+    "needs-live-probe",
+    "unsupported"
+  ],
+  "contextKinds": [
+    "current-player",
+    "profession-window",
+    "recipe-context",
+    "inventory",
+    "event-only",
+    "saved-alt",
+    "external-research"
+  ],
+  "fields": [
+    "key",
+    "api",
+    "call",
+    "data",
+    "scope",
+    "status",
+    "currentAddon",
+    "caveat",
+    "source"
+  ],
+  "entries": [
+    {
+      "key": "client_patch",
+      "api": "GetBuildInfo",
+      "call": "GetBuildInfo()",
+      "data": "buildVersion, buildNumber, interfaceVersion",
+      "scope": "always-current-client",
+      "status": "documented; not live-tested",
+      "currentAddon": "not used by existing profession scanner",
+      "caveat": "Record build and sample time; client build alone does not reveal hidden server-side hotfix multipliers",
+      "source": "https://warcraft.wiki.gg/wiki/API_GetBuildInfo"
+    },
+    {
+      "key": "base_professions",
+      "api": "GetProfessions / GetProfessionInfo",
+      "call": "GetProfessions(); GetProfessionInfo(index)",
+      "data": "profession name, parent skillLine, base skill, modifier, skillLineName",
+      "scope": "current-player",
+      "status": "documented; implemented",
+      "currentAddon": "Professions.lua RecordProfessions",
+      "caveat": "Does not replace child-expansion skill scan; profession slot is not a full specialization inventory",
+      "source": "https://warcraft.wiki.gg/wiki/API_GetProfessionInfo"
+    },
+    {
+      "key": "expansion_skillline_window",
+      "api": "C_TradeSkillUI.GetProfessionChildSkillLineID",
+      "call": "C_TradeSkillUI.GetProfessionChildSkillLineID()",
+      "data": "selected expansion-specific skillLineID",
+      "scope": "own-profession-window",
+      "status": "documented; not implemented",
+      "currentAddon": "Professions.lua DisplayedSkillLine does not call",
+      "caveat": "Prefer over treating info.professionID or localized names as a verified child ID",
+      "source": "https://warcraft.wiki.gg/wiki/API"
+    },
+    {
+      "key": "recipe_skillline",
+      "api": "C_TradeSkillUI.GetTradeSkillLineForRecipe",
+      "call": "C_TradeSkillUI.GetTradeSkillLineForRecipe(recipeID)",
+      "data": "variant tradeSkillID, skillLineName, parentTradeSkillID",
+      "scope": "recipe-context",
+      "status": "documented; not implemented",
+      "currentAddon": "Professions.lua recipe scan lacks exact variant verification",
+      "caveat": "Preferred recipe-to-expansion identity; verify returned child id with IsRecipeInSkillLine",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetTradeSkillLineForRecipe"
+    },
+    {
+      "key": "displayed_skillline",
+      "api": "C_TradeSkillUI.GetTradeSkillLine",
+      "call": "C_TradeSkillUI.GetTradeSkillLine()",
+      "data": "expansion skillLineID, displayName, rank, max, modifier, parentID",
+      "scope": "own-profession-window",
+      "status": "documented; partial fallback",
+      "currentAddon": "Professions.lua DisplayedSkillLine fallback",
+      "caveat": "Code currently executes GetChildProfessionInfo first; wiki ProfessionInfo field meanings may be ambiguous—verify live before trust",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetTradeSkillLine"
+    },
+    {
+      "key": "children_professions",
+      "api": "C_TradeSkillUI.GetChildProfessionInfos",
+      "call": "C_TradeSkillUI.GetChildProfessionInfos()",
+      "data": "all child ProfessionInfo skill levels when available",
+      "scope": "current-player-profession-window",
+      "status": "documented; not implemented",
+      "currentAddon": "no usage in Professions.lua",
+      "caveat": "Can enumerate expansion variants; exact numeric skillline identity must be crosschecked by recipe/window API rather than name-only",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetChildProfessionInfos"
+    },
+    {
+      "key": "profession_skill_by_id",
+      "api": "C_TradeSkillUI.GetProfessionInfoBySkillLineID",
+      "call": "C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)",
+      "data": "skillLevel, maxSkillLevel, skillModifier",
+      "scope": "current-character-valid-skillline",
+      "status": "documented; partially implemented",
+      "currentAddon": "Professions.lua RefreshResearchSkillLines",
+      "caveat": "Requires verified expansion skillLineID, not blindly info.professionID; null is UNKNOWN",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetProfessionInfoBySkillLineID"
+    },
+    {
+      "key": "specialization_tabs",
+      "api": "C_ProfSpecs.GetConfigIDForSkillLine / GetSpecTabIDsForSkillLine",
+      "call": "C_ProfSpecs.GetConfigIDForSkillLine(id); GetSpecTabIDsForSkillLine(id)",
+      "data": "configID, relevant profession specializations",
+      "scope": "current-player-learned-profession",
+      "status": "documented; implemented",
+      "currentAddon": "Professions.lua ReadSpec",
+      "caveat": "Validate exact skillline ID and don't infer points from unknown/unavailable nodes",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_ProfSpecs.GetConfigIDForSkillLine"
+    },
+    {
+      "key": "specialization_ranks",
+      "api": "C_ProfSpecs.GetChildrenForPath / C_Traits.GetNodeInfo / C_ProfSpecs.GetStateForPath",
+      "call": "GetRootPathForTab(tab); GetChildrenForPath(path); C_Traits.GetNodeInfo(config,path)",
+      "data": "nodeID, currentRank, ranksPurchased, active/committed entries, state",
+      "scope": "current-character-config",
+      "status": "documented; partial implementation",
+      "currentAddon": "Professions.lua ReadSpec reads currentRank",
+      "caveat": "CurrentRank can reflect preview/granted ranks; inspect committed entry IDs and state; no assumed numeric drop changes",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_Traits.GetNodeInfo"
+    },
+    {
+      "key": "specialization_perks",
+      "api": "C_ProfSpecs.GetPerksForPath / GetStateForPerk",
+      "call": "C_ProfSpecs.GetPerksForPath(pathID); GetStateForPerk(perkID,configID)",
+      "data": "perk identities; earned/pending status; descriptions via GetDescriptionForPerk",
+      "scope": "current-player",
+      "status": "documented; not implemented",
+      "currentAddon": "Professions.lua does not enumerate perks",
+      "caveat": "Use as eligibility/active-perk evidence; a text description is not a measured drop-rate coefficient",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_ProfSpecs.GetStateForPerk"
+    },
+    {
+      "key": "recipe_info",
+      "api": "C_TradeSkillUI.GetRecipeInfo",
+      "call": "C_TradeSkillUI.GetRecipeInfo(recipeID)",
+      "data": "learned, craftable, disabled, supportsCraftingStats, isSalvageRecipe, quality IDs",
+      "scope": "current-character-own-profession-context",
+      "status": "documented; partially implemented",
+      "currentAddon": "Professions.lua ScanProfessionRecipes",
+      "caveat": "Learned vs usable vs currently craftable are separate; linked/guild recipe windows cannot establish player unlocks",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetRecipeInfo"
+    },
+    {
+      "key": "recipe_schematic",
+      "api": "C_TradeSkillUI.GetRecipeSchematic",
+      "call": "C_TradeSkillUI.GetRecipeSchematic(recipeID,false)",
+      "data": "reagentSlotSchematics, quantityRequired, variableQuantities, outputItemID, quality and recipe type",
+      "scope": "recipe-context",
+      "status": "documented; partially implemented",
+      "currentAddon": "Professions.lua ScanProfessionRecipes",
+      "caveat": "12.0 variableQuantities and 12.0 CraftingReagent shape; outputItemID may be absent for random salvage drops",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetRecipeSchematic"
+    },
+    {
+      "key": "recipe_eligibility",
+      "api": "C_TradeSkillUI.IsRecipeInSkillLine / GetRecipeRequirements / GetSalvagableItemIDs",
+      "call": "IsRecipeInSkillLine(recipeID,id); GetRecipeRequirements(recipeID); GetSalvagableItemIDs(recipeID)",
+      "data": "skillline membership, environmental requirements, enumerated salvage input candidates",
+      "scope": "current-recipe-context",
+      "status": "documented; not implemented",
+      "currentAddon": "ConversionEngine MinimumProcessingSkill reads only stored requirements",
+      "caveat": "Neither craftable nor salvage eligible implies known randomized outputs or actual player permissions for every item",
+      "source": "https://warcraft.wiki.gg/wiki/API"
+    },
+    {
+      "key": "operation_info",
+      "api": "C_TradeSkillUI.GetCraftingOperationInfo",
+      "call": "C_TradeSkillUI.GetCraftingOperationInfo(recipeID,craftingReagents,nil,applyConcentration)",
+      "data": "baseSkill, bonusSkill, baseDifficulty, bonusStats ratingPct, quality thresholds, concentrationCost, ingenuityRefund",
+      "scope": "current-character-valid-recipe-reagents",
+      "status": "documented; partial and suspect call",
+      "currentAddon": "ConversionEngine.lua passes empty {} reagent allocation",
+      "caveat": "Create actual allocated reagents with 12.0 `reagent={itemID=...}`; no output probability provided; nil is UNKNOWN, not zero",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetCraftingOperationInfo"
+    },
+    {
+      "key": "quality_rank",
+      "api": "C_TradeSkillUI.GetItemReagentQualityByItemInfo / GetItemCraftedQualityByItemInfo",
+      "call": "GetItemReagentQualityByItemInfo(itemLink)",
+      "data": "recipe reagent rank and crafted item quality",
+      "scope": "item-valid-link",
+      "status": "documented; not implemented",
+      "currentAddon": "ConversionEngine uses f.quality which can be item rarity",
+      "caveat": "Reagent quality separate from item rarity and result craftingQuality; preserve item variant ID",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetItemReagentQualityByItemInfo"
+    },
+    {
+      "key": "recipe_output_quality",
+      "api": "C_TradeSkillUI.GetRecipeOutputItemData / GetRecipeQualityItemIDs",
+      "call": "GetRecipeOutputItemData(recipeID,reagents); GetRecipeQualityItemIDs(recipeID)",
+      "data": "expected defined output ID and quality variants",
+      "scope": "supported-known-output-recipe",
+      "status": "documented; not implemented",
+      "currentAddon": "No direct read in ConversionEngine model selection",
+      "caveat": "Does not enumerate every random prospecting/disenchant byproduct or probabilities",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetRecipeOutputItemData"
+    },
+    {
+      "key": "concentration",
+      "api": "C_TradeSkillUI.GetConcentrationCurrencyID / C_CurrencyInfo.GetCurrencyInfo",
+      "call": "local id=C_TradeSkillUI.GetConcentrationCurrencyID(skillLineID); C_CurrencyInfo.GetCurrencyInfo(id)",
+      "data": "current available Concentration currency quantity",
+      "scope": "current-player-relevant-profession",
+      "status": "documented; not implemented",
+      "currentAddon": "ConversionEngine lacks currency read",
+      "caveat": "Compare to operation concentrationCost only on eligible operations; avoid treating as a yield proc stat",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetConcentrationCurrencyID"
+    },
+    {
+      "key": "profession_equipment",
+      "api": "C_TradeSkillUI.GetProfessionInventorySlots / GetInventoryItemLink / GetSkillLineForGear",
+      "call": "GetProfessionInventorySlots(); GetInventoryItemLink('player',slot)",
+      "data": "actual equipment links in profession slots, item IDs, variants, possible skill/stat lines",
+      "scope": "current-player-equipped-gear",
+      "status": "documented; not implemented",
+      "currentAddon": "Professions.lua does not scan equipped tool/accessory slots",
+      "caveat": "Profession inventory slots 20–25; API slot-index conventions require testing. Gear link alone does not prove actual operation bonuses",
+      "source": "https://warcraft.wiki.gg/wiki/InventorySlotID"
+    },
+    {
+      "key": "equipment_stats",
+      "api": "C_Item.GetItemStats / C_TooltipInfo.GetInventoryItem",
+      "call": "C_Item.GetItemStats(link); C_TooltipInfo.GetInventoryItem('player',slot)",
+      "data": "item stat lines and tooltip details including enchant-like effects",
+      "scope": "cached-item-link/current-player",
+      "status": "documented; not implemented",
+      "currentAddon": "No profession gear stat scan",
+      "caveat": "Prefer validated GetCraftingOperationInfo.bonusStats for recipe effective values; gear stats may be localized/missing",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_Item.GetItemStats"
+    },
+    {
+      "key": "active_buffs",
+      "api": "C_UnitAuras.GetPlayerAuraBySpellID",
+      "call": "C_UnitAuras.GetPlayerAuraBySpellID(spellID)",
+      "data": "active known buff, stacks, duration, charges",
+      "scope": "current-character-known-aura-spell",
+      "status": "documented; not implemented",
+      "currentAddon": "No processing specific aura snapshot",
+      "caveat": "12.0 secret/taint restricted; whitelist relevant spellIDs and never assume missing means not active",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_UnitAuras.GetPlayerAuraBySpellID"
+    },
+    {
+      "key": "inventory",
+      "api": "C_Container.GetContainerItemInfo / GetItemCount",
+      "call": "C_Container.GetContainerItemInfo(bag,slot)",
+      "data": "itemID, item link, count, bound, bags/bank when accessible",
+      "scope": "visible-owned-inventory",
+      "status": "documented; partial usage",
+      "currentAddon": "ConversionEngine GetItemCount, other bag modules",
+      "caveat": "Needed for processing pre/post deltas; inventory changes require attribution and batch locking",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_Container.GetContainerItemInfo"
+    },
+    {
+      "key": "item_identity",
+      "api": "C_Item.GetItemInfoInstant / GetItemInfo",
+      "call": "C_Item.GetItemInfoInstant(item); C_Item.GetItemInfo(item)",
+      "data": "itemID, item rarity, inventory type, expansion, sell, binding; may be uncached",
+      "scope": "valid item/cached info",
+      "status": "documented; partial usage",
+      "currentAddon": "ConversionEngine GetOutputPrice/CanUseConversion",
+      "caveat": "Keep item rarity distinct from reagent rank; delayed cache must not be silently interpreted as invalid item",
+      "source": "https://warcraft.wiki.gg/wiki/API_C_Item.GetItemInfoInstant"
+    },
+    {
+      "key": "processing_result_event",
+      "api": "TRADE_SKILL_ITEM_CRAFTED_RESULT",
+      "call": "RegisterEvent('TRADE_SKILL_ITEM_CRAFTED_RESULT')",
+      "data": "itemID, quantity, operationID, multicraft, resourcesReturned, quality, concentrationSpent, ingenuityRefund",
+      "scope": "crafting-result-event; coverage-per-method-unverified",
+      "status": "documented; no confirmed LL usage",
+      "currentAddon": "ProcessingTracking.lua requires event audit",
+      "caveat": "Important candidate for real per-cast outcomes; test Prospect, Mill, Disenchant, Salvage individually; some output records may be separate events",
+      "source": "https://warcraft.wiki.gg/wiki/Event:TRADE_SKILL_ITEM_CRAFTED_RESULT"
+    },
+    {
+      "key": "processing_fallback_events",
+      "api": "UNIT_SPELLCAST_SUCCEEDED / BAG_UPDATE_DELAYED / CHAT_MSG_LOOT",
+      "call": "RegisterEvent(eventName)",
+      "data": "cast timing, inventory change and loot lines",
+      "scope": "current-character-activity",
+      "status": "documented general events; usage needs audit",
+      "currentAddon": "ProcessingTracking.lua logs experiments; inspect exact hook logic",
+      "caveat": "Need correlate by castGUID/item/recipe with pre/post inventory; never count other simultaneous loot as processing output",
+      "source": "https://warcraft.wiki.gg/wiki/Events"
+    },
+    {
+      "key": "offline_alt_snapshots",
+      "api": "SavedVariables roster cache",
+      "call": "addon.db.characters[key].researchProfiles",
+      "data": "previously recorded profession, specialization and recipe state + timestamps",
+      "scope": "cached-offline-only",
+      "status": "documented architecture; partially implemented",
+      "currentAddon": "AltRoster.lua & Professions.lua",
+      "caveat": "No arbitrary live inspection of offline alts; mark observation age and build, invalidate after patches/gear changes; require eligible alt permission",
+      "source": "https://warcraft.wiki.gg/wiki/API_GetProfessionInfo"
+    },
+    {
+      "key": "undocumented_rates",
+      "api": "No addon API for hidden output distributions or historical hotfix rates",
+      "call": "N/A",
+      "data": "P(drop), conditional yield distribution, current retail patch effect coefficients",
+      "scope": "external-research-only",
+      "status": "not exposed by listed APIs",
+      "currentAddon": "GameData.lua/Research branch",
+      "caveat": "Preserve independent measured per-cast histograms and external evidence, do not infer from crafting quality or average output",
+      "source": "https://warcraft.wiki.gg/wiki/API"
+    }
+  ],
+  "normalizationRules": [
+    "API output probabilities are NOT exposed; API craftingQuality cannot stand in for output occurrence.",
+    "A valid call with nil does not mean zero skill/proc or unavailable character.",
+    "Each research observation must store API-derived fields with source=live, build, char/session, recipe, reagent allocations, timestamps, and known missing fields.",
+    "Equipped item links are evidence of identity; operation.bonusStats is preferred when it exists for a specific eligible recipe.",
+    "Offline alts have SavedVariables last-seen snapshots ONLY.",
+    "For 12.0 CraftingReagentInfo, check `reagent={itemID=...}` and allocation dataSlotIndex; passing {} can yield missing operation context.",
+    "Record actual committed vs preview specialization ranks.",
+    "TRADE_SKILL_ITEM_CRAFTED_RESULT event applicability per method must be tested; don't claim DE/milling/prospecting coverage based on event existence.",
+    "All numeric transformation formulas require independent gameplay research; client APIs do not expose legacy hotfix coefficient."
+  ],
+  "liveValidation": {
+    "status": "NOT_TESTED_IN_WOW",
+    "recipeScenarios": [
+      "Midnight prospect R1/R2 each ore, baseline and invested JC",
+      "Midnight herb milling with 10 herbs each, modifiers on/off",
+      "DF prospecting output quality with legacy stat system active in 12.x",
+      "TWW prospect + milling with current gear",
+      "Midnight/TWW/DF disenchant green/blue gear including resource event coverage",
+      "offline alt with cached profession ranks and aged snapshots"
+    ],
+    "mustCompare": [
+      "API availability",
+      "exact payload",
+      "recipe supported",
+      "reagent allocation",
+      "effect of profession window",
+      "actual output event coverage",
+      "equipped gear and operation bonusStats agreement"
+    ]
+  }
+}
