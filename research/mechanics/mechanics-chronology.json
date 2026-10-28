@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "researchOnly": true,
   "purpose": "Versioned chronology of mechanics that can alter processing outputs, recipe eligibility, output quality, reagent consumption, and profession statistics. Chronological study assignment is distinct from verified numeric interpolation.",
   "temporalPolicy": {
@@ -8,7 +8,19 @@
     "buildUnknownPolicy": "UNKNOWN_DO_NOT_INFER_BY_BUILD",
     "missingDatePolicy": "UNKNOWN",
     "crossVersionUnverifiedNumericEffect": "BLOCKED_CROSSES_UNQUANTIFIED_CHANGE",
-    "sourcePublicationDateIsNotEffectiveDate": true
+    "sourcePublicationDateIsNotEffectiveDate": true,
+    "dateSelectionPriority": [
+      "ACTUAL_OBSERVATION_INTERVAL_OR_TIMESTAMP",
+      "SOURCE_REPORTED_OBSERVATION_DATE",
+      "SOURCE_PUBLICATION_DATE_AS_UPPER_BOUND_ONLY",
+      "UNKNOWN"
+    ],
+    "sourceRetrievedDateNeverObservation": true,
+    "publicationAfterHotfixDoesNotProvePostHotfixSample": true,
+    "datePrecisionMustBeTracked": true,
+    "asOfRegistryReevaluation": true,
+    "eventDateVsRegistryRevisionDate": "A mechanic's effective game date is independent of the date it was entered into the registry.",
+    "sampleBuildIdentityCanOverrideDateOnlyWhenCrossBuildApplicabilityExplicitlyEstablished": true
   },
   "sourceContext": {
     "tracked": [
@@ -30,7 +42,11 @@
       "specializations",
       "gear",
       "stats",
-      "sourceClaimIDs"
+      "sourceClaimIDs",
+      "observationTiming",
+      "source.publishedDate",
+      "source.reportedObservationDate",
+      "source.retrievedDate"
     ],
     "unobservedValue": null,
     "zeroIsNotUnknown": true
@@ -102,6 +118,17 @@
     "VALIDATE chronology invariants and no unverified numerical model, including as-of event-day ambiguity",
     "RECLASSIFY historical source cohorts by relevant mechanics epochs; never rewrite their original observation records",
     "RECALCULATE only affected baseline/model candidates and confidence estimates with revision provenance",
-    "PUBLISH versioned research snapshots only after independent QA; production transformation requires separate validated formula and integration tests"
-  ]
+    "PUBLISH versioned research snapshots only after independent QA; production transformation requires separate validated formula and integration tests",
+    "ON EACH ITEMDB UPDATE read unchanged raw observation JSONL; resolve observed date/time or publication upper bound, select historically applicable rule revision, calculate per-output candidates and confidence with explicit provenance, then QA against target patch and unskilled profile"
+  ],
+  "sampleReprocessing": {
+    "adapter": "research/tools/resolve_sample_time.js",
+    "epochResolver": "research/tools/resolve_mechanics_epoch.js",
+    "archiveReprocessor": "research/tools/reprocess_observation_archive.js",
+    "validation": "research/tests/test_observation_reprocessing.js",
+    "rawEvidencePolicy": "IMMMUTABLE_SOURCE_OBSERVATIONS_SAVED_IN_JSONL (append-only corrections by derived revision/reference; never rewrite reported totals or source dates in place)",
+    "publicationFallbackMeaning": "Known upper bound only; cannot place sample AFTER a patch merely because publication is after the patch.",
+    "buildPolicy": "Recompute source cohort mechanics epochs from latest audited chronology on every itemdb model build; record input file hashes and registry/chronology version; re-run affected outputs when mechanic rules gain supporting evidence.",
+    "candidatePolicy": "Staging classifications and candidate estimates may be refreshed. Do not claim production-ready numeric rules until independently verified and tested."
+  }
 }
