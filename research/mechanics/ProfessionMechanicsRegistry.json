@@ -1468,5 +1468,70 @@
       "note": "Do not relabel the 3,200-ore Deckven study as 160 observed casts; 160 is a conditional 20-ore-equivalent denominator. Standard prospecting is a separate five-ore operation."
     }
   ],
-  "recipeBatchEvidenceRevision": "2026-10-28-master-qa-2"
+  "recipeBatchEvidenceRevision": "2026-10-28-master-qa-2",
+  "numericModelResearchProgram": {
+    "version": "1.0.0",
+    "createdUTCDate": "2026-10-28",
+    "protocol": "research/mechanics/NUMERIC_MODEL_RESEARCH_PROTOCOL.md",
+    "candidateSchema": "research/mechanics/numeric-rule-candidate.schema.json",
+    "staticGate": "research/tests/test_numeric_rules.js",
+    "outputSchema": "research/proposed/itemdb.schema.json#/$defs/compiledMechanicRule",
+    "workflow": [
+      "WORKER_HYPOTHESIS",
+      "SOURCE_ORIGINAL_CONTEXT",
+      "MATCHED_COHORT_ESTIMATION",
+      "REPRODUCIBLE_TESTS",
+      "MASTER_INDEPENDENT_REVIEW",
+      "VERIFIED_NUMERIC_REGISTRY",
+      "REVIEWED_ITEMDB_GENERATION",
+      "USER_APPROVED_PRODUCTION_MIGRATION"
+    ],
+    "state": "RESEARCH_ONLY_0_EXECUTABLE_RULES_VERIFIED",
+    "numberOfCompiledApprovedRules": 0,
+    "scopePolicy": "Exact Retail patch/build, recipeSpellID, input/output item IDs/rank sets, batch size and character context; no wildcard inheritance across recipes, patches, expansions or material family.",
+    "approvalPolicy": "Promote only VERIFIED_NUMERIC with independently checked original numeric sources, >=90 evidence confidence, exact applicability, numerically validated formula, all dependent runtime context, master approval and passing test; do not upgrade output baseline confidence.",
+    "formulaRuntimePolicy": "Formula implementation remains in ConversionEngine.lua; rules/parameters may be generated in single future itemdb.lua after review. Registry and raw studies are NOT shipped. Missing context must fail closed.",
+    "patchPolicy": "Never normalize an unknown numeric hotfix, including 2026-03-31 Midnight gems. Unknown ratio is BLOCKED, not x1.",
+    "inputCosts": "Resourcefulness adjusts expected input consumption after verified recipe and reagent-savings statistics, not material output expected quantity.",
+    "releaseBoundary": "No addon Lua, main branch, or TOC change without separate user approval and regression/in-client tests.",
+    "hypothesisAssignmentsSource": "research/coordination/assignments.json#mechanicsTrack",
+    "hypothesisResearchPriorities": [
+      {
+        "hypothesisID": "midnight-gem-hotfix-2026-03-31-quantification",
+        "worker": "midnight",
+        "status": "UNVERIFIED",
+        "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+        "question": "Can same-recipe, same-ore, same-quality, same-skill pre/post March 31 observations establish each affected gem-specific change without extrapolating byproducts?"
+      },
+      {
+        "hypothesisID": "tww-prospect-resourcefulness-savings",
+        "worker": "war_within",
+        "status": "UNVERIFIED",
+        "effectTarget": "EXPECTED_INPUT_CONSUMPTION",
+        "question": "For exact eligible TWW prospect recipe, which observed proc chance and saved reagent counts determine effective ore consumption?"
+      },
+      {
+        "hypothesisID": "dragonflight-inspiration-quality-transition",
+        "worker": "dragonflight",
+        "status": "UNVERIFIED",
+        "effectTarget": "OUTPUT_QUALITY",
+        "question": "Which Dragonflight prospect recipes and skill thresholds did Inspiration actually change, with observed output-rank transition counts?"
+      },
+      {
+        "hypothesisID": "legacy-felslate-standard-mass-compare",
+        "worker": "legacy",
+        "status": "UNVERIFIED",
+        "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+        "question": "Are five-ore standard and twenty-ore mass Felslate prospecting separate operations with matching or different output distribution after strict denominator normalization?"
+      }
+    ],
+    "numericNonPromotionInvariants": [
+      "Never ship a rule solely because a JSON field says VERIFIED_NUMERIC; the compiler MUST independently validate scope, sources, evidence and test provenance.",
+      "Never take range midpoints or multiply unconditional expectedQuantity by dropChance.",
+      "Never map inferred quality/unlock to an output not verified for that exact recipe.",
+      "Never equate no measured difference with verified no-effect without powered controlled evidence.",
+      "A numerical mechanism cannot make an unverified baseline output record >=90 confidence.",
+      "A rule concerning pricing/input savings is not a material drop-quantity adjustment."
+    ]
+  }
 }
