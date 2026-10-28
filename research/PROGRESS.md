@@ -1,3 +1,7 @@
+## Master batch009 accepted — 2026-10-28
+
+150 new source-output keys accepted; **1343/1737** examined, **394** never. 1330 insufficient, 13 blocked; 1259 output records/5036 fields: >=90 0, 70–89 17, below70 5019. Historical Carnelian conditional mean correction (2 numbers), Stormvine denominator contradiction (1), 0 current Retail corrections. 4 numeric hypotheses BLOCKED, 0 approved. Queue rev12 disjoint next 150 keys, including profile audit keys not scored as output fields. [Full QA](coordination/reviews/2026-10-28-master-worker-batch009-verdict.md). No Node or WoW client tests; no production changes.
+
 ### Source memory follow-up — batch008
 
 Built and GitHub-verified research/coordination/source-memory.json from **153 original observation JSONL records**, four worker source-review events and eight independent master QA-feedback events: **51 canonical source entries** (47 DISCOVERED, 4 PARTIAL, 0 FULLY_ANALYZED), zero parser warnings. Six in-memory builder-behavior assertions passed. This was a deterministic JavaScript port of the checked-in builder, **not** execution of the repository Node command; Node test_source_memory.js and full Node regression suites remain outstanding. Staging projections were removed. No rewards were applied to confidence.

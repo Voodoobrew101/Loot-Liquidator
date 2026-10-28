@@ -208,3 +208,7 @@ Accepted 115 new disjoint first-pass keys; Midnight numeric-only 0. Corrected 26
 ### Batch008 source-memory cache follow-up
 
 Committed deterministic JS-port source-memory rebuild: 153 archived observation rows, 4 worker source reviews, 8 master QA feedback events, 51 unique canonical sources (47 discovered, 4 partial, 0 fully analyzed). 6 in-memory builder tests passed; Node test suite not executed, WoW client not executed. Source memory and feedback are research-only; no confidence promotions.
+
+## 2026-10-28 — Master batch009
+
+Accepted 150 unique worker first-pass output keys, independently checked original Jiyao, Stormvine, Whiptail and Carnelian comments. Historical correction of two nubi conditional means, one Stormvine denominator contradiction; no current Retail numerical rule. 1343/1737 first-pass, 394 never. 0/17/5019 field bands; 4 mechanics BLOCKED. Source memory rebuild pending. No production changes; no repository Node or live WoW tests.

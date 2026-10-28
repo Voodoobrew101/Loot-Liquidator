@@ -22,3 +22,7 @@ Add date, reviewed claim IDs, accepted/rejected outcome examples, sampling cavea
 - SOURCE_REUSE: Osulivan six ore table is one experiment; no independent-source inflation (b008-osulivan-reuse).
 - PATCH_MATCHING: same-author hotfix anecdotes and historical Felslate recipe comparisons are not current Retail coefficients (b008-midnight-no-credit, b008-felslate-coefficient).
 - Source-memory reward feedback never changes numerical confidence; full deterministic Node cache rebuild pending.
+
+## 2026-10-28 — Master batch009 source-strategy findings
+
+Original cast histograms (Carnelian Spikes 50) establish historical P and unconditional E for an exact item, while unknown patch/skill prevents generic current Retail promotion. Historical nubi 288-cast conditional means were internally wrong: recompute from hit counts and totals. Stormvine 21 stacks versus 96 mills requires a source NEEDS_RECHECK state; do not pick the derived 84 as observed. Do not equate mass milling with normal five-herb operations or count multiple herbs from one author as independent studies. Original Jiyao 310 mass casts and two distinct Whiptail commenters are useful field-level evidence, not 2026 patch bridges. Reward validated corrections and negative conclusions without modifying confidence scores.
