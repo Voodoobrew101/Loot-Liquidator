@@ -66,3 +66,11 @@
 - This **improves the evidence available for six economically risky output relationships**, but does NOT establish 2026 Retail matching conditions, occurrence probabilities, conditional integer distributions, or a 90/100 confidence score. The original 1,256 GameData source rows retain their baseline scores until a reviewed model selection is made.
 - Original 2022 Retail source: https://www.reddit.com/r/woweconomy/comments/s6bfrl/ ; 2023 Classic source: https://www.wowhead.com/wotlk/item=36910/titanium-ore (Strath).
 - Updated proposed corrections document with per-gem values. No production changes.
+
+
+## 2026-10-28 — Batch 9 one-database audit
+- Verified main/GameData.lua SHA 1d47c4a961c5dc5af626e659f7d96d1490d3cf9e; original v0.9.70 ZIP path still unavailable (404); extracted Lua inspected.
+- Read Issue #2 integration contract. Reviewed StatYieldProfiles.lua mappings and mutations; documented 9 TWW ore quality profiles, 20 TWW/Midnight milling profiles, 3 Null Stone outputs, 9 DE fallback anchors, 5 runtime input deletions, plus dynamic Dragonflight TSM profiles.
+- Static code QA found rangeFor adjusts chance/conditional bounds to fit expected values; these are inferred display fields, not independently measured evidence.
+- Detailed report: research/proposed/2026-10-28-batch9-one-database-migration-audit.md, verified commit 57488d5b4e7b135fc6fc5f6b1c9f2146fbb932b7. No main changes; no live tests or field promotions. Gate remains 0/1256 >=90; this is processing output-row scope, not yet every non-processing gameplay field.
+- Next: proposed GameData-only migration schema, static invariant tests, independent milling eligibility and yield source verification.
