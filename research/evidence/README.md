@@ -1,5 +1,10 @@
 # Research evidence archive — source observations, NOT a second addon database
 
+## Filename policy — user decision 2026-10-28
+
+**Future generated and installed static item/conversion database: `itemdb.lua` (EXACT lowercase).** The existing `main/GameData.lua` and TOC reference remain current production and must not be changed except through a separately reviewed and tested migration. Paths under `research/evidence/`, `research/ledger/` and `research/mechanics/` remain research-only. See [creation prompt](../prompts/ITEMDB_CREATION_PROMPT.md) and [hourly task prompt](../prompts/HOURLY_ITEMDB_RESEARCH_TASK.md). Any preexisting `GameData.lua` references below describe the released legacy baseline, NOT a future file target.
+
+
 **Canonical branch:** `research/processing-confidence` in Voodoobrew101/Loot-Liquidator.  
 **Live addon database:** `GameData.lua` only. This archive is **research-only** and must never be loaded as a competing static database by the addon.
 
