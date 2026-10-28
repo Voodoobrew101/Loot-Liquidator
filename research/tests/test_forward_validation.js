@@ -1,6 +1,6 @@
 "use strict";
 const assert=require("node:assert/strict");
-const {validate,histogramStats,score}=require("../tools/validate_forward_predictions");
+const {validate,histogramStats,score,betaBinomialPredictiveZ}=require("../tools/validate_forward_predictions");
 const good={
  observationID:"holdout-gem",targetKey:"ore:Prospect:gem",set:"HOLDOUT",
  numericMechanicStatus:"VERIFIED_NUMERIC",
@@ -37,7 +37,18 @@ const adj=score({...good,prediction:{dropChance:.1,expectedQuantity:.2,yieldMin:
   observed:{completedOperations:40,totalUnits:8,hitOperations:4,outputCountHistogram:{"0":36,"2":4}}});
 assert.equal(adj.status,"HOLDOUT_CONSISTENT_NOT_PROOF","positive bonus from zero should be representable");
 assert.ok(score({...good,prediction:{...good.prediction,expectedQuantity:0}}).diagnostics.includes("INCONSISTENT_P_POSITIVE_BUT_E_ZERO"));
+const bayes=betaBinomialPredictiveZ(10,30,40,10);
+assert.equal(bayes.expectedHoldoutFraction,.25);
+assert.equal(bayes.zPredictive,0);
+assert.ok(score({...good,prediction:{...good.prediction,
+  trainingPosteriorForDropChance:{alpha:10,beta:30}}}).evaluatedFields.dropChance.bayesianPredictive);
+assert.ok(score({...good,prediction:{...good.prediction,
+  trainingPosteriorForDropChance:{alpha:500,beta:1500}},
+  observed:{completedOperations:40,totalUnits:80,hitOperations:40,outputCountHistogram:{"2":40}}})
+  .diagnostics.includes("BAYESIAN_POSTERIOR_PREDICTIVE_DISCREPANCY_RESEARCH"));
+assert.equal(score({...good,prediction:{dropChance:null,expectedQuantity:null,yieldMin:null,yieldMax:null}}).status,
+  "NOT_VERIFIED","Empty models must not pass a holdout check");
 const report=validate({researchOnly:true,modelRevision:"1",registryRevision:"v0.2",evaluations:[good]});
 assert.equal(report.counts.consistent,1);
 assert.equal(report.productionPromotions,0);
-console.log("forward prediction static tests passed (18 checks); synthetic data only, no real mechanics coefficients verified");
+console.log("forward prediction static tests passed (23 checks); synthetic data only, no real mechanics coefficients verified");
