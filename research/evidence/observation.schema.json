@@ -87,6 +87,30 @@
             "string",
             "null"
           ]
+        },
+        "publishedDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date",
+          "description": "Original page/post publication date, NOT sampling date and NOT retrieval date"
+        },
+        "publicationDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date",
+          "description": "Alternative author-reported publication date; do not conflate with retrievedDate"
+        },
+        "originalPublishedDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date",
+          "description": "Original primary publication date if source is a repost; do not use a reprint date as original sample time"
         }
       },
       "additionalProperties": true
@@ -131,6 +155,13 @@
         },
         "serverPatchKnown": {
           "type": "boolean"
+        },
+        "observationTimeMechanicsPolicy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Optional recorded mechanics epoch assumption as published; derived epoch should always be recomputed at itemdb build time"
         }
       },
       "additionalProperties": true
@@ -501,6 +532,111 @@
         },
         "additionalProperties": true
       }
+    },
+    "observationTiming": {
+      "type": "object",
+      "description": "Temporal provenance for immutable source observations. Collect the actual measurement interval where known. A publication date is ONLY an upper bound on when a sample could have been recorded; retrieval date is never a fallback measurement date. Append-only schema addition to support versioned mechanics replay at itemdb build time.",
+      "properties": {
+        "observedStartDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date",
+          "description": "First actual sample date if reported, not page publication date"
+        },
+        "observedEndDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date",
+          "description": "Last actual sample date if reported"
+        },
+        "observedDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date",
+          "description": "Single sample day only if actual observation timing is reported"
+        },
+        "sourcePublicationDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date",
+          "description": "First publish/post date with evidence; used as an upper bound if no observed date is available"
+        },
+        "earliestPossibleObservationDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date",
+          "description": "Justified earliest collection date such as release of this recipe; never guessed"
+        },
+        "originalObservedDateText": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Original unparsed sample timing claim, including year/month-only ranges"
+        },
+        "originalPublicationDateText": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Original unparsed source publication timing text"
+        },
+        "datePrecision": {
+          "enum": [
+            "TIMESTAMP",
+            "DAY",
+            "MONTH",
+            "YEAR",
+            "RANGE",
+            "UNKNOWN"
+          ],
+          "description": "Actual sample-time precision; when only year known do not invent an exact day"
+        },
+        "observedDateSource": {
+          "enum": [
+            "RAW_CAST_LOG",
+            "PLAYER_REPORTED",
+            "SOURCE_REPORTED",
+            "OTHER_DOCUMENTED",
+            "UNKNOWN"
+          ],
+          "description": "How actual sample timing was established"
+        },
+        "publicationDateIsUpperBoundOnly": {
+          "type": "boolean",
+          "description": "Must be true when publication substitutes for unknown sample time; never implies collected on published day"
+        },
+        "timezone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "publicationSourceRef": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Exact source URL or archive page establishing publication timing"
+        },
+        "revisionEvidenceClaimIDs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
     }
   },
   "$defs": {
