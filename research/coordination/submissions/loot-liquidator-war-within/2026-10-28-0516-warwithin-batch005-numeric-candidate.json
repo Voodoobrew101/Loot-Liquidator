@@ -1,0 +1,100 @@
+{
+  "hypothesisID": "tww-prospect-resourcefulness-savings",
+  "evidenceStatus": "UNVERIFIED",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 10,
+  "method": "Prospect",
+  "effectTarget": "EXPECTED_INPUT_CONSUMPTION",
+  "effectKind": "INPUT_SAVINGS",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      434018
+    ],
+    "inputItemIDs": [
+      210934
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      2
+    ],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "kind": "PROPOSED_CONTROL_NOT_OBSERVED",
+    "inputItemID": 210934,
+    "inputRank": 2,
+    "resourcefulnessPercent": null,
+    "skill": null,
+    "gear": null,
+    "specializations": null,
+    "patch": null,
+    "perCastRefundHistogram": null
+  },
+  "targetContext": {
+    "kind": "PROPOSED_MATCHED_TEST_NOT_OBSERVED",
+    "inputItemID": 210934,
+    "inputRank": 2,
+    "resourcefulnessPercent": null,
+    "skill": null,
+    "gear": null,
+    "specializations": null,
+    "patch": null,
+    "perCastRefundHistogram": null
+  },
+  "requiredLiveContext": [
+    "exact recipe and input rank",
+    "client build and hotfix window",
+    "character profession child skillline and skill",
+    "specialization node IDs/ranks",
+    "profession gear and buffs",
+    "Resourcefulness rating and percent separately",
+    "per-cast refunded ore including zeros",
+    "actual completed operations and reconciled inventory"
+  ],
+  "sources": [
+    {
+      "claimID": "wowhead-434018",
+      "url": "https://www.wowhead.com/spell=434018/algari-prospecting",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null,
+      "claim": "Nominal five ore; not a measured refund rate"
+    },
+    {
+      "claimID": "reddit-1g8kbaq",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "Prospect All queue behavior; no saved-ore distribution"
+    },
+    {
+      "claimID": "reddit-1f83cnd",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "1040 clicks, 5200 purchased ore; actual refunds and ending inventory unreported"
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No measured ore refunded per cast including zeroes",
+    "No final inventory or refund total for 1040-click source",
+    "No same-build matched resourcefulness-stat cohorts",
+    "Unknown source input rank, specialization, gear, and exact patch",
+    "No independent numeric replication"
+  ],
+  "notes": "R2 Aqirite ID 210934 is proposed FUTURE controlled-test scope, not asserted as source study input. Compare >=500 actual casts per matched stat cohort, zero-inclusive integer refund histograms and inventory; input cost only, never multiply gem outputs. No numeric formula approved."
+}
