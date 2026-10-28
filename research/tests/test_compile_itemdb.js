@@ -1,8 +1,49 @@
 "use strict";
-const assert=require("assert"),fs=require("fs"),path=require("path");
-const root=path.resolve(__dirname,"../.."),get=p=>fs.readFileSync(path.join(root,p),"utf8");
+// Run from repository root: node research/tests/test_compile_itemdb.js
+const fs=require("node:fs"),assert=require("node:assert/strict"),path=require("node:path");
+const root=path.resolve(__dirname,"../.."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
 const {compile,validate,csv}=require("../tools/compile_itemdb.js");
-const i={primaryCSV:get("research/ledger/processing-output-fields.csv"),supplementalCSV:get("research/ledger/supplemental-output-fields.csv"),midnightCandidateJSON:get("research/proposed/itemdb-midnight-milling-candidate.json"),gameDataSource:get("GameData.lua"),statYieldSource:get("StatYieldProfiles.lua"),sha:JSON.parse(get("research/proposed/itemdb-compiler-source-shas.json"))};
-const x=compile(i);assert.equal(validate(x.records).length,0);assert(x.records.length>0);assert(x.report.expectedQuantityPresent<=x.records.length);assert(x.report.fullyNumericFourFields<=x.report.expectedQuantityPresent);assert(x.report.quarantineBreakdown.MULTI_REAGENT_SCHEMA_GAP===8);assert(x.report.quarantineBreakdown.SELF_RETURN_INPUT_SAVING_UNRESOLVED===1);assert(x.lua.startsWith("-- Research-only"));assert(x.lua.includes("return {schemaVersion="));assert(x.records.every(r=>r.status==="PROVISIONAL_CANDIDATE"));assert(x.records.every(r=>r.expectedQuantity.value!==0));assert(x.records.every(r=>r.recordConfidence<90));assert(x.records.every(r=>r.conditions.eligibilityStatus==="UNVERIFIED_CURRENT_RETAIL"));assert(x.records.every(r=>r.dropChance.value===null||r.dropChance.value<=1));assert(x.records.every(r=>r.outputQualityRank===null||r.outputQualityRank<=3));assert(x.records.filter(r=>r.recordID.startsWith("dragonflight:")).every(r=>r.outputQualityRank===null));
-assert.deepStrictEqual(csv('"a","b"\n"1","two,three"\n')[0],{a:"1",b:"two,three"});
-console.log("PASS research compiler static validation",x.report);
+const input={
+ primaryCSV:read("research/ledger/processing-output-fields.csv"),
+ supplementalCSV:read("research/ledger/supplemental-output-fields.csv"),
+ midnightCandidateJSON:read("research/proposed/itemdb-midnight-milling-candidate.json"),
+ curatedJSON:read("research/proposed/itemdb-curated-additions.json"),
+ rankAuditJSONL:read("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1231-dragonflight-batch012-40key-field-audit.jsonl"),
+ midnightAuditCSV:read("research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1211-midnight-batch012-35key-field-audit.csv"),
+ gameDataSource:read("GameData.lua"),statYieldSource:read("StatYieldProfiles.lua"),
+ sha:JSON.parse(read("research/proposed/itemdb-compiler-source-shas.json"))
+};
+const a=compile(input),b=compile(input);
+assert.equal(a.lua,b.lua,"deterministic Lua");
+assert.deepEqual(a.report,b.report);
+assert.deepEqual(validate(a.records),[]);
+assert.equal(a.report.sourceMappingCandidates,976);
+assert.equal(a.report.curatedAdded,1);
+assert.equal(a.report.rankSpecificProxyRecordsQuarantined,31);
+assert.equal(a.report.diamondSpecializationGated,7);
+assert.equal(a.report.fullyNumericFourFields,840);
+assert.equal(a.report.fieldSlots,3904);
+assert.deepEqual(a.report.missingFieldCounts,{dropChance:120,yieldMin:68,yieldMax:68,expectedQuantity:38});
+assert.equal(a.report.quarantineBreakdown.MULTI_REAGENT_SCHEMA_GAP,8);
+const powder=a.records.find(r=>r.method==="Prospect"&&r.inputItemID===36910&&r.outputItemID===46849);
+assert.ok(powder);
+assert.equal(powder.expectedQuantity.value,143/1000*5);
+assert.equal(powder.expectedQuantity.status,"community-reported");
+assert.equal(powder.expectedQuantity.confidence,62);
+for(const f of ["dropChance","yieldMin","yieldMax"])assert.equal(powder[f].value,null);
+assert.equal(powder.conditions.patchWindow,"REPORTED_12.0.5_CAST_DATE_UNSPECIFIED");
+assert.equal(powder.recordConfidence,0);
+const rankRows=a.records.filter(r=>r.conditions.sourceContext==="DRAGONFLIGHT_RANK_EXCLUSIVE_TSM_FAMILY_PROXY_QUARANTINED");
+assert.equal(rankRows.length,31);
+for(const r of rankRows){assert.equal(r.dropChance.value,null);assert.equal(r.expectedQuantity.value,null);assert.ok(r.dropChance.blockers.includes("RANK_SPECIFIC_TSM_FAMILY_RATE_NOT_MEASURED"));assert.ok(r.expectedQuantity.sourceClaimIDs.length>=2);}
+const gated=a.records.filter(r=>r.conditions.eligibilityStatus==="REQUIRES_ORE_SPECIFIC_PROFICIENT_PROCESSOR_SPECIALIZATION");
+assert.equal(gated.length,7);
+assert.ok(gated.every(r=>r.outputItemID===242608&&r.conditions.baselineStatus.includes("NOT_MEASURED_ZERO")));
+assert.ok(a.lua.includes("sourceClaimIDs=opt(x[6])"));
+assert.ok(a.lua.includes("patchWindow=opt(x[24])"));
+assert.ok(a.lua.includes("eligibilityStatus=x[25]"));
+assert.equal(a.lua,read("research/proposed/itemdb.lua"),"generated candidate readback");
+assert.equal(a.gapCSV,read("research/ledger/itemdb-missing-fields.csv"),"gap ledger readback");
+assert.deepEqual(a.report,JSON.parse(read("research/proposed/itemdb-build-report.json")));
+assert.deepEqual(csv('"a","b"\n"1","two,three"\n')[0],{a:"1",b:"two,three"});
+console.log("PASS research compiler v0.2.0 static regression; no Lua interpreter or WoW client test");
