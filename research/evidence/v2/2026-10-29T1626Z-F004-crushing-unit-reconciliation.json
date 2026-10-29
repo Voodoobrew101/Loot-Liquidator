@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_QUEUE30_MIDNIGHT_CRUSHING_ELIGIBILITY",
+  "runUTC": "2026-10-29T16:26:45Z",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 5,
+  "gameMode": "RETAIL",
+  "expansion": "MIDNIGHT",
+  "recipeSpellID": 1231132,
+  "targets": [
+    "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+    "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
+  ],
+  "disposition": "UNIT_DENOMINATOR_RECONCILIATION_AND_NEW_FIRSTPERSON_NEGATIVE_SELECTOR_CONTEXT; EXACT_RANK_MAPPING_UNADMITTED",
+  "questionResolved": "Can 0.67 Glimmering Gemdust 'per crush' from secondary guides be compared directly to Cardinalai's 480-gem/330-dust original report without normalizing the three-gem operation denominator?",
+  "answer": "NO. 330/480=0.6875 per listed gem and 330/(480/3)=2.0625 per nominal three-gem equivalent. A 0.67-per-gem reading would be 2.01 per nominal operation, 2.6% below the original aggregate; a literal 0.67-per-operation reading differs by 3.08x. These are dimensional scenarios, NOT measured current-Retail per-cast E. Original cast count, refunds, dust ranks and individual-gem attribution remain unknown.",
+  "originalExistingCohort": {
+    "lineageID": "CARDINALAI-MIXED-480-GEMS",
+    "sourceStatus": "REUSED_ORIGINAL_COHORT_NOT_NEW_INDEPENDENT_SAMPLE",
+    "url": "https://www.wowhead.com/item=242620/glimmering-gemdust",
+    "author": "Cardinalai",
+    "sourceType": "FIRST_PERSON_CUMULATIVE_REPORT",
+    "reportedObservationDate": null,
+    "observationPatch": null,
+    "reportedInputs": {
+      "qualityText": "silver quality",
+      "itemIDsPerColor": null,
+      "gemCounts": [
+        {
+          "name": "Tenebrous Amethyst",
+          "reportedCount": 180
+        },
+        {
+          "name": "Harandar Peridot",
+          "reportedCount": 150
+        },
+        {
+          "name": "Amani Lapis",
+          "reportedCount": 87
+        },
+        {
+          "name": "Sanguine Garnet",
+          "reportedCount": 63
+        }
+      ],
+      "gemCountTotal": 480,
+      "duskShroudedStoneCount": 160,
+      "stoneConsumptionMeaning": "NOT_EXPLICITLY_CONFIRMED"
+    },
+    "reportedOutputs": {
+      "itemName": "Glimmering Gemdust",
+      "outputItemID": null,
+      "qualityRank": null,
+      "combinedUnits": 330
+    },
+    "reportedProfessionContext": {
+      "resourcefulnessPercent": 40.7,
+      "knowledge": "max",
+      "skill": null,
+      "gear": null
+    },
+    "actualCompletedCasts": null,
+    "refundsOrSavedInputs": null,
+    "dimensionalDiagnostics": {
+      "gemSum": 480,
+      "nominalThreeGemOperationEquivalents": 160,
+      "gemdustPerReportedGem": 0.6875,
+      "gemdustPerNominalThreeGemEquivalent": 2.0625,
+      "nominalThreeGemEquivalentsAreMeasuredCasts": false,
+      "originalCastDenominatorVerified": false
+    }
+  },
+  "reusedSecondaryClaim": {
+    "url": "https://www.wow-professions.com/midnight/jewelcrafting-guide",
+    "sourceStatus": "REUSED_SECONDARY_NOT_INDEPENDENT",
+    "reportedApproximateValue": 0.67,
+    "sourceWordingUnit": "per crush",
+    "unitStatus": "AMBIGUOUS",
+    "possibleInterpretations": [
+      {
+        "assumption": "PER_THREE_GEM_OPERATION",
+        "impliedDustPerNominalOperation": 0.67,
+        "ratioOriginalNominalToGuide": 3.0783582089552235
+      },
+      {
+        "assumption": "PER_INDIVIDUAL_GEM",
+        "impliedDustPerNominalOperation": 2.0100000000000002,
+        "relativeDifferenceVsOriginalNominal": 0.02545454545454534
+      }
+    ],
+    "conclusion": "Plausible per-gem/per-operation unit ambiguity, not verified source correction or a new economic E. Do not silently multiply by 3."
+  },
+  "newPrimaryContext": {
+    "lineageID": "BLIZZARD-FORUM-2281743-JOE-20260328",
+    "sourceStatus": "NEW_FIRSTPERSON_NEGATIVE_CONTEXT_NOT_YIELD_COHORT",
+    "url": "https://us.forums.blizzard.com/en/wow/t/getting-into-jewelcrafting-in-midnight/2281743",
+    "author": "Joe-1080357",
+    "publishedDate": "2026-03-28",
+    "observationEpoch": null,
+    "gameBuild": null,
+    "reportedProspectingGrossOre": 100,
+    "oreName": "Refulgent Copper Ore (poster says copper)",
+    "reportedGemCounts": [
+      {
+        "name": "Sanguine Garnet",
+        "count": 2
+      },
+      {
+        "name": "Harandar Peridot",
+        "count": 2
+      },
+      {
+        "name": "Tenebrous Amethyst",
+        "count": 1
+      },
+      {
+        "name": "Eversong Diamond",
+        "count": 1
+      }
+    ],
+    "reportedOutcome": "Player could not crush anything for Gemdust with these holdings",
+    "interpretation": "Consistent with three-of-one-gem requirement because no reported ordinary color has three units; not a controlled negative selector test and does not establish exact item ID/rank, skill eligibility, or reason for failure",
+    "actualProspectingCasts": null,
+    "actualCrushingCasts": null,
+    "stoneRank": null,
+    "gemRanks": null,
+    "confidenceEvidenceStrength": 46,
+    "usableForEconomicExpectedQuantity": false
+  },
+  "recipeFacts": {
+    "url": "https://www.wowhead.com/spell=1231132/midnight-crushing",
+    "salvageItemCount": 3,
+    "additionalDirectReagent": "Dusk-Shrouded Stone x1",
+    "gemIDsUnderReview": [
+      242553,
+      242723
+    ],
+    "possibleDustRankIDs": [
+      242620,
+      242621
+    ],
+    "stoneRankIDsToVerify": [
+      242788,
+      242789
+    ],
+    "sourceStatus": "REUSED_RECIPE_FACT"
+  },
+  "perTargetNumericEvidence": [
+    {
+      "stableKey": "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+      "dropChance": null,
+      "yieldMin": null,
+      "yieldMax": null,
+      "expectedQuantity": null,
+      "exactSelectorEligibility": "UNVERIFIED",
+      "exactDustRankEligibility": "UNVERIFIED",
+      "confidence": 0,
+      "economicUse": "PREVIEW_ONLY",
+      "normalizedVerified": false
+    },
+    {
+      "stableKey": "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility",
+      "dropChance": null,
+      "yieldMin": null,
+      "yieldMax": null,
+      "expectedQuantity": null,
+      "exactSelectorEligibility": "UNVERIFIED",
+      "exactDustRankEligibility": "UNVERIFIED",
+      "confidence": 0,
+      "economicUse": "PREVIEW_ONLY",
+      "normalizedVerified": false
+    }
+  ],
+  "economics": {
+    "sourceAggregateMayNotBeUsedAsRankSpecificE": true,
+    "tooltipOnlyBoundsUsedForEV": false,
+    "workingPreviewChanged": false,
+    "liveEVChanged": false
+  },
+  "nextMeasurement": "Capture in current Retail a selector screenshot or profession-craft API selection for Sanguine Garnet item 242553 and 242723 separately, including 3 identical gem units and Dusk-Shrouded Stone exact item/rank, followed by completed-cast count and dust 242620/242621 per-cast rank-specific zero-inclusive output histogram, skill/spec/gear, refunds and patch build.",
+  "limitations": [
+    "No 2026 client selector capture for either rank",
+    "Original Cardinalai source has mixed input colors and no original completed-cast denominator",
+    "160 stones are listed but actual stone consumption, refunds and cast count are unverified",
+    "Neither 0.67 interpretation is established by its secondary guide",
+    "No current Retail economic expectedQuantity or occurrence chance promotion"
+  ]
+}

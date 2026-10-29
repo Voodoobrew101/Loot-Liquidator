@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_QUEUE30_MIDNIGHT_CRUSHING_ELIGIBILITY",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 5,
+  "runUTC": "2026-10-29T16:26:45Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "8ed363741c049477e8deac36ec974e21bcfebc82",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "targetKeys": [
+    "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+    "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
+  ],
+  "filesChanged": [
+    "research/evidence/v2/2026-10-29T1626Z-F004-crushing-unit-reconciliation.json",
+    "research/evidence/v2/source-reviews/2026-10-29T1626Z-F004-crushing-unit-reconciliation-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1626Z-F004-crushing-unit-reconciliation-submission.json"
+  ],
+  "finding": "REUSED ORIGINAL 480 GEM/330 DUST COHORT EXPOSES 0.67 PER-CRUSH DENOMINATOR AMBIGUITY; NEW 2026 FIRSTPERSON TWO-GARNET CANNOT-CRUSH REPORT SUPPORTS 3-OF-A-KIND NEGATIVE CONTEXT WITHOUT EXACT RANK ELIGIBILITY",
+  "deltas": {
+    "newIndependentFirstPersonQualitativeSources": 1,
+    "newIndependentCompletedCastYieldCohorts": 0,
+    "newOriginalCohortsWithVerifiedCastDenominator": 0,
+    "newDenominatorNormalizationFindings": 1,
+    "newMappingAdmissions": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "sourceReviewEvents": 4
+  },
+  "numericScenariosOnly": {
+    "reportedGems": 480,
+    "reportedGemdust": 330,
+    "nominalOperationsIfThreeGemsEach": 160,
+    "dustPerReportedGem": 0.6875,
+    "dustPerNominalThreeGemEquivalent": 2.0625,
+    "referenceGuideValue": 0.67,
+    "guideUnitVerified": false
+  },
+  "testsActuallyRun": {
+    "type": "IN_PROCESS_JS_ARITHMETIC_AND_POLICY_ASSERTIONS",
+    "passed": 12,
+    "failed": 0,
+    "cases": [
+      "reported four-gem breakdown totals 480",
+      "three identical gems per operation yields nominal 160 equivalents",
+      "ratio 330/480 exact",
+      "ratio 330/160 exact",
+      "reinterpreted guide ratio 0.67 per gem is 2.01 per three-gem operation",
+      "unit interpretations differ by factor over three",
+      "no completed-cast count claimed",
+      "exact input IDs are the assigned Sanguine Garnet ranks",
+      "no per-rank measured Gemdust outputs",
+      "all economic evidence fields null",
+      "source cohort reused rather than independent",
+      "new forum URL absent from prior source-memory"
+    ]
+  },
+  "testsNotRun": [
+    "Native Node completion pipeline --check",
+    "Lua5.1 generated candidate decoder",
+    "WoW Retail client selector and completed casts",
+    "Independent matched current-Retail holdout"
+  ],
+  "blockers": [
+    "Neither 242553 nor 242723 confirmed selectable by exact in-game selector ID/rank",
+    "No dust rank-specific output histogram",
+    "Cardinalai mixed input/unknown completed casts/refunds and guide 0.67 unit ambiguity",
+    "No current-Retail 2026 cast denominator or minimum eligible baseline"
+  ],
+  "economicPolicy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionFilesChanged": 0,
+    "legacyAssignmentsChanged": false,
+    "frozenTSMChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false
+  },
+  "nextTask": {
+    "id": "F004_MIDNIGHT_CRUSH_EXACT_SELECTOR_RANK",
+    "inputItemIDs": [
+      242553,
+      242723
+    ],
+    "spellID": 1231132,
+    "stoneIDs": [
+      242788,
+      242789
+    ],
+    "outputItemIDs": [
+      242620,
+      242621
+    ],
+    "acceptance": "Exact current-Retail input selector/stone rank and actual completed-cast per-rank dust results; otherwise source-triggered pivot to new model-risk family."
+  }
+}
