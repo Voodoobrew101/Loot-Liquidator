@@ -72,10 +72,36 @@ function writeOrCheck(root, relative, contents, check) {
 
 function run(root, options={}) {
   const {compile,loadInputs,validate} = require(path.join(root,"research/tools/compile_itemdb.js"));
-  const {validateWorkingEstimates} = require(path.join(root,"research/tools/working_estimates.js"));
+  const {validateWorkingEstimates,createWorkingAttestation,validateSerializedWorkingEstimates} = require(path.join(root,"research/tools/working_estimates.js"));
   const result = compile(loadInputs(root));
   const errors = [...validate(result.records), ...validateWorkingEstimates(result.records)];
   if (errors.length) throw Error(errors.join("\n"));
+  // Exercise the detached v1 source/context/value seal across a JSON reload.
+  // A production verifier must obtain the expected digest from a separately
+  // pinned coordinator acceptance, never trust the candidate to supply it.
+  const {attestation,sha256:pin} = createWorkingAttestation(result.records);
+  const reload = value => JSON.parse(JSON.stringify(value));
+  const checkSerialized = rows => validateSerializedWorkingEstimates(rows,reload(attestation),pin);
+  const reloaded = reload(result.records);
+  const serializedErrors = checkSerialized(reloaded);
+  if (serializedErrors.length) throw Error("Serialized attestation roundtrip failed: "+serializedErrors.slice(0,8).join(","));
+  const sourceMutation = reload(reloaded);
+  sourceMutation[0].expectedQuantity.status = "TAMPERED_SOURCE_STATUS";
+  if (!checkSerialized(sourceMutation).some(x=>x.startsWith("SERIALIZED_SOURCE_IDENTITY_STALE_OR_TAMPERED:")))
+    throw Error("Serialized source-status tamper escaped attestation");
+  const contextMutation = reload(reloaded);
+  contextMutation[0].conditions.gameMode = "TAMPERED_GAME_MODE";
+  if (!checkSerialized(contextMutation).some(x=>x.startsWith("SERIALIZED_SOURCE_IDENTITY_STALE_OR_TAMPERED:")))
+    throw Error("Serialized source-context tamper escaped attestation");
+  const previewMutation = reload(reloaded);
+  previewMutation[0].workingEstimate.expectedQuantity += 1;
+  if (!checkSerialized(previewMutation).some(x=>x.startsWith("SERIALIZED_WORKING_PREVIEW_STALE_OR_TAMPERED:")))
+    throw Error("Serialized working-value tamper escaped attestation");
+  const forgedSeal = reload(attestation);
+  forgedSeal.entries[0].sourceSHA256 = "0".repeat(64);
+  if (!validateSerializedWorkingEstimates(reloaded,forgedSeal,pin).includes("SERIALIZED_ATTESTATION_UNPINNED_OR_TAMPERED"))
+    throw Error("Forged serialized seal escaped external digest pin");
+  console.log("PASS: versioned serialized source/context/value attestation, 4 adversarial cases");
   const {snapshot,priorities} = summarize(result.records,result.report);
   if (!snapshot.mappingCount || snapshot.workingNumericCells !== snapshot.fieldSlots) throw Error("Working estimate completeness gate failed");
   const check = options.check === true;
@@ -156,6 +182,14 @@ function run(root, options={}) {
     if(castBasisChild.status!==0)
       throw Error("F005 cast-basis quarantine regression failed\\n"+castBasisChild.stdout+castBasisChild.stderr);
     process.stdout.write(castBasisChild.stdout);
+    // F005 independently authored 476-case F003 numerical fixture runs on
+    // native Node, not just the independent validator V8 harness.
+    const binomialTest=path.join(root,"research/tests/v2/test_f005_f003_independent_binomial_numerics.js");
+    if(!fs.existsSync(binomialTest)) throw Error("Required F005/F003 binomial check missing");
+    const binomialChild=spawnSync(process.execPath,[binomialTest],{cwd:root,encoding:"utf8",timeout:120000});
+    if(binomialChild.status!==0)
+      throw Error("F005/F003 independent binomial numerics failed\n"+binomialChild.stdout+binomialChild.stderr);
+    process.stdout.write(binomialChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
