@@ -5,7 +5,7 @@
  * CLI: node research/tools/models_v2/tww_milling_context_sensitivity_v1.js --self-test
  *      node research/tools/models_v2/tww_milling_context_sensitivity_v1.js --emit
  */
-const VERSION = "tww-milling-context-sensitivity-v1.0.0";
+const VERSION = "tww-milling-context-sensitivity-v1.0.1";
 const KEYS = [
   ["historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",210796,222619,1.15,1,2,444181],
   ["historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",210797,222619,1.35,2,2,444181],
@@ -95,9 +95,14 @@ function forward({hitProbability,positiveYieldPMF}) {
     requireValid(Number.isSafeInteger(row.quantity)&&row.quantity>0 &&
       isFiniteNumber(row.probability)&&row.probability>=0&&row.probability<=1,"PMF_DOMAIN");
     sum+=row.probability;mean+=row.quantity*row.probability;
-    min=Math.min(min,row.quantity);max=Math.max(max,row.quantity);
+    // Only strictly positive probability belongs to conditional positive support.
+    // Zero-mass PMF entries are valid bookkeeping but cannot widen yield bounds.
+    if(row.probability>0){
+      min=Math.min(min,row.quantity);max=Math.max(max,row.quantity);
+    }
   }
   requireValid(Math.abs(sum-1)<1e-9,"PMF_NOT_NORMALIZED");
+  requireValid(Number.isFinite(min)&&Number.isFinite(max),"PMF_NO_POSITIVE_SUPPORT");
   const e=hitProbability*mean;
   requireValid(e+1e-9>=hitProbability*min&&e<=hitProbability*max+1e-9,"PE_RANGE");
   return {dropChance:hitProbability,yieldMin:min,yieldMax:max,expectedQuantity:e,
@@ -212,7 +217,20 @@ function selfTest(){
     f.conditionalYieldApplicable===true,"NONZERO_CONDITIONAL_SUPPORT");
   requireValid(zero.economicUse==="PREVIEW_ONLY"&&zero.normalizedVerified===false&&
     zero.confidence===0,"ZERO_PREVIEW_ISOLATION");
-  return {passed:13,targets:12,sourceAnchoredTargets:2,unanchoredTargets:10,
+  const upper=forward({hitProbability:0.6,positiveYieldPMF:[
+    {quantity:2,probability:1},{quantity:99,probability:0}]});
+  requireValid(upper.yieldMin===2&&upper.yieldMax===2&&
+    Math.abs(upper.expectedQuantity-1.2)<1e-9,"ZERO_MASS_UPPER_EXCLUDED");
+  const lower=forward({hitProbability:0.6,positiveYieldPMF:[
+    {quantity:1,probability:0},{quantity:2,probability:1}]});
+  requireValid(lower.yieldMin===2&&lower.yieldMax===2,
+    "ZERO_MASS_LOWER_EXCLUDED");
+  const padded=forward({hitProbability:0.6,positiveYieldPMF:[
+    {quantity:1,probability:0},{quantity:2,probability:1},
+    {quantity:99,probability:0}]});
+  requireValid(["dropChance","yieldMin","yieldMax","expectedQuantity"]
+    .every(k=>padded[k]===upper[k]),"ZERO_MASS_PADDING_INVARIANT");
+  return {passed:16,targets:12,sourceAnchoredTargets:2,unanchoredTargets:10,
     currentRetailNumericPromotions:0,previewScenarios:12};
 }
 module.exports={VERSION,KEYS,SOURCE,contextFor,validateContext,forward,inverseHistogram,
