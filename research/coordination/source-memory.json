@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "researchOnly": true,
-  "sourcesCount": 169,
+  "sourcesCount": 168,
   "reviewEvents": 285,
   "qaEvents": 75,
   "approvedQaEvents": 73,
@@ -42,7 +42,8 @@
     "invalid review: warwithin-q22-25-source-lines|gamedata-tsm-q22-source-line-audit|https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/GameData.lua|https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/GameData.lua",
     "invalid feedback: b019-tww-glass",
     "invalid feedback: b019-df-draconium",
-    "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: master batch020; q21/q22 9 source-review files, 2 original observation files, master batch019/batch020 QA; full directory scan still outstanding"
+    "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: master batch020; q21/q22 9 source-review files, 2 original observation files, master batch019/batch020 QA; full directory scan still outstanding",
+    "MASTER_BATCH020_URL_CANONICALIZATION_REPAIR: 1 trailing slash/tracker duplicate aliases merged after V8 incremental replay; full Node directory rebuild still pending."
   ],
   "strategies": {
     "ORIGINAL_DATASET": {
@@ -2397,63 +2398,26 @@
         "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
       ],
       "observationIDs": [
-        "midnight-20261028-thorium-200craft-apr8-community"
-      ],
-      "studyIDs": [
-        "reddit-woweconomy-1sfds1u-thorium-200craft",
-        "headtripvee-prehotfix-21000ore-six-ranks"
-      ],
-      "datasetIDs": [
-        "headtripvee-prehotfix-21000ore-six-ranks",
-        "reddit-woweconomy-1sfds1u-thorium-200craft"
-      ],
-      "reviewedRecordKeys": [
-        "237366:Prospect:242608",
-        "midnight:237366:242608:L799"
-      ],
-      "status": "PARTIAL",
-      "missingFields": [
-        "current-client patch/build and actual observation date",
-        "exact input rank and output quality where relevant",
-        "per-cast zero-inclusive output histogram",
-        "positive conditional min/max",
-        "effective skill and specialization context"
-      ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
-      "originalStudyUrls": [
-        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
-      ],
-      "changeTriggers": [
-        "newly inspected original prehotfix multi-ore table, previously memory only indexed separate thorium comment",
-        "QUEUE18_SOURCE_RECONCILIATION"
-      ],
-      "revisitReasons": [
-        "Separate numeric mechanics track; preserve six cohorts as one study, source-only note",
-        "Approximate P(hit)=.20 over 200 Thorium crafts, not E; no integer hit count or skill details"
-      ],
-      "unverifiedPossibleMappings": [],
-      "attributionCorrections": []
-    },
-    {
-      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
-      "urls": [
-        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
-      ],
-      "observationIDs": [
+        "midnight-20261028-thorium-200craft-apr8-community",
         "midnight-headtripvee-q20-reconciliation-237359-2026-10-28-1811-midnight-q20-batch018",
         "midnight-headtripvee-q20-reconciliation-237361-2026-10-28-1811-midnight-q20-batch018",
         "midnight-headtripvee-q20-reconciliation-237364-2026-10-28-1811-midnight-q20-batch018",
         "midnight-headtripvee-q20-reconciliation-237365-2026-10-28-1811-midnight-q20-batch018"
       ],
       "studyIDs": [
+        "reddit-woweconomy-1sfds1u-thorium-200craft",
+        "headtripvee-prehotfix-21000ore-six-ranks",
         "headtripvee-apr2026-original-rank-separated-ore-percentage-table"
       ],
       "datasetIDs": [
+        "headtripvee-prehotfix-21000ore-six-ranks",
+        "reddit-woweconomy-1sfds1u-thorium-200craft",
         "q20-batch018-raw-source-out-of-scope-2cells",
         "four-q20-ore-rank-cohorts-3000-3500-4500-2000"
       ],
       "reviewedRecordKeys": [
+        "237366:Prospect:242608",
+        "midnight:237366:242608:L799",
         "237359:Prospect:242553",
         "237359:Prospect:242554",
         "237359:Prospect:242606",
@@ -2505,24 +2469,31 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual completed casts",
-        "zero-inclusive per-output cast histogram",
-        "ore consumption versus initial stock",
-        "Resourcefulness",
-        "skill/knowledge/gear",
-        "actual patch dates"
+        "current-client patch/build and actual observation date",
+        "exact input rank and output quality where relevant",
+        "per-cast zero-inclusive output histogram",
+        "positive conditional min/max",
+        "effective skill and specialization context"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
-      "originalStudyUrls": [],
+      "reviewEvents": 4,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
+      ],
       "changeTriggers": [
+        "newly inspected original prehotfix multi-ore table, previously memory only indexed separate thorium comment",
+        "QUEUE18_SOURCE_RECONCILIATION",
         "IMMUTABLE_READBACK_SCOPE_CLARIFICATION",
         "QUEUE20_EXACT_RANK_AUDIT"
       ],
       "revisitReasons": [
+        "Separate numeric mechanics track; preserve six cohorts as one study, source-only note",
+        "Approximate P(hit)=.20 over 200 Thorium crafts, not E; no integer hit count or skill details",
         "Two original Copper R2 byproduct percentages were preserved as unassigned source context, not claimed assignment or promoted numeric fields",
         "23 rank-specific gross-input references compare against GameData, without promotion"
-      ]
+      ],
+      "unverifiedPossibleMappings": [],
+      "attributionCorrections": []
     },
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1v5esk0/midnight_jc",
@@ -2575,7 +2546,7 @@
       ]
     },
     {
-      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1wwd0w0/should_i_use_my_1_time_swap_for_jc_to_go_from_gem/",
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1wwd0w0/should_i_use_my_1_time_swap_for_jc_to_go_from_gem",
       "urls": [
         "https://www.reddit.com/r/woweconomy/comments/1wwd0w0/should_i_use_my_1_time_swap_for_jc_to_go_from_gem/"
       ],
@@ -3095,7 +3066,7 @@
       ]
     },
     {
-      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/yaxw94/a_look_at_dragonflight_milling/",
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/yaxw94/a_look_at_dragonflight_milling",
       "urls": [
         "https://www.reddit.com/r/woweconomy/comments/yaxw94/a_look_at_dragonflight_milling/"
       ],
@@ -7939,7 +7910,8 @@
     "newValidQAEvents": 8,
     "invalidReviews": 23,
     "invalidFeedback": 2,
-    "fullDirectoryRebuild": false
+    "fullDirectoryRebuild": false,
+    "urlCanonicalizationMerged": 1
   },
   "appliedAttributionCorrectionIDs": [
     "primer-serene-r2-20261028-b016"
