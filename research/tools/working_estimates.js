@@ -18,11 +18,31 @@ function score(v) { return Number.isInteger(v) && v >= 0 && v <= 100 ? v : 0; }
 const ADMISSIBLE_EVIDENCE_STATUSES = new Set([
   "official", "measured", "community-reported", "modeled", "proxy"
 ]);
+// A number reported per gross input, unresolved output rank, or an unverified
+// cast denominator is not per-completed-operation P/E evidence. Preserve the
+// original source field unchanged; only its working-preview eligibility changes.
+// Unknown basis alone remains unknown, not a fabricated zero or normalization.
+const INAPPLICABLE_CAST_FIELD_BLOCKER =
+  /GROSS[_ -]?INPUT|NOT[_ -]?ACTUAL[_ -]?CAST|NO[_ -]?ACTUAL[_ -]?CAST|RANK[_ -]?(?:SPECIFIC|OR[_ -]?GROSS[_ -]?INPUT|ALLOCATION)|PER[_ -]?(?:ORE|INPUT)/i;
+const INAPPLICABLE_QUANTITY_BASIS =
+  /GROSS[_ -]?INPUT|NOT[_ -]?ACTUAL[_ -]?CAST|NO[_ -]?ACTUAL[_ -]?CAST|PER[_ -]?(?:ORE|INPUT)|INPUT[_ -]?EQUIVALENT/i;
+function castBasisApplicable(r, f) {
+  if (f !== "dropChance" && f !== "expectedQuantity") return true;
+  const source = r[f];
+  if (Array.isArray(source?.blockers) &&
+      source.blockers.some(b => typeof b === "string" &&
+        INAPPLICABLE_CAST_FIELD_BLOCKER.test(b))) return false;
+  const basis = r.conditions?.quantityBasis;
+  if (typeof basis === "string" && INAPPLICABLE_QUANTITY_BASIS.test(basis))
+    return false;
+  return true;
+}
 function evidenceValue(r, f) {
   // A finite source number is not automatically admissible evidence.
   // Unknown, contradictory or unrecognized statuses and untraceable claims
   // must remain separate from the preview, even with high source confidence.
   const source = r[f];
+  if (!castBasisApplicable(r, f)) return null;
   if (!source || !ADMISSIBLE_EVIDENCE_STATUSES.has(source.status) ||
       !Array.isArray(source.sourceClaimIDs) ||
       source.sourceClaimIDs.length === 0 ||
@@ -204,9 +224,9 @@ function applyWorkingEstimates(records, options = {}) {
   for (const r of records) {
     assertAdmitted(r);
     const e = evidenceValue(r, "expectedQuantity");
-    const forbidden = (r.expectedQuantity?.blockers || []).some(b =>
-      /GROSS_INPUT|NOT_ACTUAL_CAST|RANK_SPECIFIC|RANK_OR_GROSS_INPUT/.test(b));
-    if (e !== null && !forbidden && r.expectedQuantity.status !== "contradictory") {
+    // evidenceValue already applies the same cast-basis and rank contract
+    // used by target copying, unresolved pools, and donor validation.
+    if (e !== null && r.expectedQuantity.status !== "contradictory") {
       const k = donorKey(r);
       if (k !== null && !donors.has(k)) donors.set(k, []);
       if (k !== null) donors.get(k).push({ recordID: r.recordID, value: e });
@@ -444,10 +464,8 @@ function validateWorkingEstimates(records, options = {}) {
           continue;
         }
         const donorE = evidenceValue(donor, "expectedQuantity");
-        const forbidden = (donor.expectedQuantity?.blockers || []).some(b =>
-          /GROSS_INPUT|NOT_ACTUAL_CAST|RANK_SPECIFIC|RANK_OR_GROSS_INPUT/.test(b));
         if (donor === r || targetKey === null || donorKey(donor) !== targetKey ||
-            donorE === null || forbidden) {
+            donorE === null) {
           errors.push("WORKING_DONOR_CONTEXT_OR_EVIDENCE_MISMATCH:" + id + ":" + donorID);
         } else donorValues.push(donorE);
       }
