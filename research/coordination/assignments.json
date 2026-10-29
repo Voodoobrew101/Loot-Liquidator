@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "queueRevision": 29,
+  "queueRevision": 30,
   "updatedUTCDate": "2026-10-29",
   "branch": "research/processing-confidence",
   "masterOwned": true,
@@ -21,7 +21,7 @@
     },
     "cumulativeFirstPass": 1643,
     "newMasterFirstPass": 0,
-    "note": "Master batch026 q28 80/80 exact keys audited, 69/69 applicable GameData output lines matched, 320/320 current-context fields unknown; 12 Titanium denominator labels corrected. Queue29 assigns 36 remaining missing-E keys. Last-known-good compiler v0.7.1, no new compiler execution this batch.",
+    "note": "Master batch027 q29 36/36 worker exact keys audited, 24/24 applicable GameData TSM output lines and 6/6 TWW input blocks matched; 144/144 current-context numeric fields unknown. Deterministic v0.7.1 V8 compiler rebuilt twice with static invariants and readback; no new data promoted. Queue30 assigns 24 unique lead keys / 40 distinct unadmitted exact output tuples, source-triggered, no first-pass credit.",
     "current": {
       "asOfUTC": "2026-10-28",
       "coverageLedgerPath": "research/ledger/first-pass-coverage-2026-10-28.csv",
@@ -60,6 +60,38 @@
         "tooltipOnlyActiveRecords": 1,
         "tooltipYieldFields": 2,
         "tooltipProbabilityUnverifiedBlocked": 19
+      },
+      "masterReviewBatch027": {
+        "reviewFile": "research/coordination/reviews/2026-10-29-master-worker-batch027-verdict.md",
+        "queueAudited": 29,
+        "reviewedWorkerKeys": 36,
+        "distinctKeys": 36,
+        "applicableTSMOutputLinesMatched": 24,
+        "applicableTWWInputBlocksMatched": 6,
+        "exactCurrentNumericFieldsUnknown": 144,
+        "newMappings": 0,
+        "newCurrentRetailNumericFields": 0,
+        "newTooltipNumericFields": 0,
+        "workerSourceReviewEventsPendingRebuild": 19,
+        "sourceMemoryFullRebuild": false,
+        "nextQueueRevision": 30,
+        "nextAssignments": {
+          "midnight": 8,
+          "war_within": 8,
+          "dragonflight": 4,
+          "legacy": 4
+        },
+        "nextExactOutputTuples": 40,
+        "compilerRebuiltThisRun": true,
+        "compilerVersion": "0.7.1",
+        "compilerLuaCharacters": 748411,
+        "compilerDeterministicV8": true,
+        "compilerStaticValidationErrors": 0,
+        "compilerSourceLineIdentities": 1202,
+        "tooltipEconomicIsolation": true,
+        "nativeNodeCliTestsRun": false,
+        "independentLuaInterpreterRun": false,
+        "wowClientTestsRun": false
       }
     },
     "masterReviewBatch007": {
@@ -207,8 +239,8 @@
   },
   "rules": {
     "disjointStableKeys": true,
-    "firstPassStatusRequired": "QUEUE28_NUMERIC_GAP_REVISIT_NO_FIRST_PASS_CREDIT; ONLY_NEVER_EXAMINED_SOURCE_KEYS_EARN_FIRST_PASS_CREDIT",
-    "targetPerWorker": "25-50; evidence-first, not a fabricated quota",
+    "firstPassStatusRequired": "QUEUE30_UNADMITTED_LEAD_REVISIT_NO_FIRST_PASS_CREDIT; 24 unique stable lead keys represent 40 distinct candidate tuples; exhaustive universe audit not complete",
+    "targetPerWorker": "SOURCE_TRIGGERED_EVIDENCE_FIRST; 24 distinct input/lead keys, 40 output tuples, no fabricated quota",
     "immutableWorkerEvidence": true,
     "submissionFormat": "worker-specific uniquely named Markdown/JSONL/CSV under research/coordination/submissions/<worker>/; include source URLs, original data, field confidence, tests, blockers, exact keys",
     "masterWrites": "research/coordination/assignments.json and central ledgers; workers must not overwrite these",
@@ -227,49 +259,55 @@
   },
   "workers": {
     "midnight": {
-      "expansionScope": "The War Within overflow: 6 unassigned milling E gaps",
+      "expansionScope": "Midnight Crushing gemdust selector universe overflow, master assigned",
       "workerAutomation": "loot-liquidator-midnight",
-      "assignmentId": "2026-10-29-batch027-midnight",
-      "status": "ASSIGNED_Q29_UNTOUCHED_MISSING_EXPECTED_QUANTITY",
+      "assignmentId": "2026-10-29-batch028-midnight",
+      "status": "ASSIGNED_Q30_UNADMITTED_UNIVERSE_TRIGGERED_EVIDENCE_ONLY",
       "lastSuccessfulRunUTC": "2026-10-29T02:14:00Z",
       "acceptedFirstPassRecords": 349,
       "acceptedCorrections": 0,
       "knownBlockers": 5,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-midnight/",
       "recordKeys": [
-        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
-        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
-        "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
-        "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
-        "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
-        "candidate:tww:mill:210801:222614:runtime-method-family:20261028"
+        "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242554:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242722:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242607:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242720:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242606:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242721:gemdust-rank-and-eligibility"
       ],
       "nextBatchPreview": [
-        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
-        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
-        "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
-        "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
-        "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
-        "candidate:tww:mill:210801:222614:runtime-method-family:20261028"
+        "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242554:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242722:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242607:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242720:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242606:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242721:gemdust-rank-and-eligibility"
       ],
-      "instructions": "Queue29: investigate ONLY assigned exact keys not in q28; seek new original 2026 Retail zero-inclusive actual completed-cast studies, rank, skill/spec, patch and Resourcefulness. Check source-memory before reusing sources; do not count a new link to an old cohort as independent. Historical TSM, per-gross-input and rank-alternative rates are not current economic E. Tooltip-only P/range must remain isolated and source-backed. Report blockers honestly; no manufactured zeros, probabilities, ranges or mappings. Write unique worker-owned submissions only; master owns compiler and queue.",
-      "previousAssignmentId": "2026-10-29-batch026-midnight",
+      "instructions": "Queue30: 8 distinct input/lead stable keys, 16 disjoint exact input/output tuples. PRIORITIZE new original 2026 Retail source evidence and eligibility, not re-fetching old q27 pages or claiming first-pass novelty. For Crushing, test exact gem input whitelist, 3-gem+1-stone recipe and 242620/242621 output ranks; Cardinalai's 480 gems/160 stones/330 dust is gross-input source-only, not verified casts or exact-rank E. For Milling, test exact Midnight input/output-rank eligibility and actual ten-herb casts. Record zero-inclusive actual casts, patch, skill, stat, resource refunds, output ranks. If no new study, report blocker once and recommend source-triggered pause, not invented fields. Tooltip-only P/min/max never affect gold. Write unique worker-owned files only; master owns queue and compiler.",
+      "previousAssignmentId": "2026-10-29-batch027-midnight",
       "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-midnight/2026-10-29-0206-midnight-q28-batch026-15key-fourfield-economic-gap-audit.jsonl",
       "previousWorkerCommit": null,
       "assignmentPhases": [
         {
-          "expansion": "the-war-within",
+          "expansion": "midnight",
           "recordKeys": [
-            "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
-            "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
-            "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
-            "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
-            "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
-            "candidate:tww:mill:210801:222614:runtime-method-family:20261028"
+            "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242554:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242722:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242607:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242720:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242606:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242721:gemdust-rank-and-eligibility"
           ]
         }
       ],
-      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-midnight/2026-10-29-0206-midnight-q28-batch026-15key-fourfield-economic-gap-audit.jsonl",
+      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-midnight/2026-10-29-0308-midnight-q29-batch027-sixkey-fourfield-audit.jsonl",
       "lastSuccessfulRunDate": "2026-10-28",
       "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch022-verdict.md",
       "materialTargetDetails": [
@@ -351,52 +389,228 @@
             "tooltip-only P and positive range if separately evidenced"
           ]
         }
+      ],
+      "previousRecordKeys": [
+        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+        "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+        "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+        "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+        "candidate:tww:mill:210801:222614:runtime-method-family:20261028"
+      ],
+      "exactTargetTuples": [
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242553,
+          "outputItemID": 242620,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242553,
+          "outputItemID": 242621,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242723,
+          "outputItemID": 242620,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242723,
+          "outputItemID": 242621,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242554:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242554,
+          "outputItemID": 242620,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242554:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242554,
+          "outputItemID": 242621,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242722:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242722,
+          "outputItemID": 242620,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242722:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242722,
+          "outputItemID": 242621,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242607:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242607,
+          "outputItemID": 242620,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242607:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242607,
+          "outputItemID": 242621,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242720:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242720,
+          "outputItemID": 242620,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242720:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242720,
+          "outputItemID": 242621,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242606:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242606,
+          "outputItemID": 242620,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242606:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242606,
+          "outputItemID": 242621,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242721:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242721,
+          "outputItemID": 242620,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242721:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242721,
+          "outputItemID": 242621,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        }
       ]
     },
     "war_within": {
-      "expansionScope": "The War Within: 6 unassigned milling E gaps",
+      "expansionScope": "Midnight milling output-rank universe overflow, master assigned",
       "workerAutomation": "loot-liquidator-war-within",
-      "assignmentId": "2026-10-29-batch027-war_within",
-      "status": "ASSIGNED_Q29_UNTOUCHED_MISSING_EXPECTED_QUANTITY",
+      "assignmentId": "2026-10-29-batch028-war_within",
+      "status": "ASSIGNED_Q30_UNADMITTED_UNIVERSE_TRIGGERED_EVIDENCE_ONLY",
       "lastSuccessfulRunUTC": "2026-10-29T02:22:00Z",
       "acceptedFirstPassRecords": 384,
       "acceptedCorrections": 0,
       "knownBlockers": 5,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-war-within/",
       "recordKeys": [
-        "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
-        "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
-        "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
-        "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
-        "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
-        "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+        "universe-audit:midnight:mill:236761:245808:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236767:245808:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236776:245803:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236777:245803:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236778:245867:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236779:245867:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236770:245865:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility"
       ],
       "nextBatchPreview": [
-        "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
-        "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
-        "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
-        "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
-        "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
-        "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+        "universe-audit:midnight:mill:236761:245808:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236767:245808:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236776:245803:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236777:245803:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236778:245867:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236779:245867:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236770:245865:alternate-pigment-rank-eligibility",
+        "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility"
       ],
-      "instructions": "Queue29: investigate ONLY assigned exact keys not in q28; seek new original 2026 Retail zero-inclusive actual completed-cast studies, rank, skill/spec, patch and Resourcefulness. Check source-memory before reusing sources; do not count a new link to an old cohort as independent. Historical TSM, per-gross-input and rank-alternative rates are not current economic E. Tooltip-only P/range must remain isolated and source-backed. Report blockers honestly; no manufactured zeros, probabilities, ranges or mappings. Write unique worker-owned submissions only; master owns compiler and queue.",
-      "previousAssignmentId": "2026-10-29-batch026-war_within",
+      "instructions": "Queue30: 8 distinct input/lead stable keys, 8 disjoint exact input/output tuples. PRIORITIZE new original 2026 Retail source evidence and eligibility, not re-fetching old q27 pages or claiming first-pass novelty. For Crushing, test exact gem input whitelist, 3-gem+1-stone recipe and 242620/242621 output ranks; Cardinalai's 480 gems/160 stones/330 dust is gross-input source-only, not verified casts or exact-rank E. For Milling, test exact Midnight input/output-rank eligibility and actual ten-herb casts. Record zero-inclusive actual casts, patch, skill, stat, resource refunds, output ranks. If no new study, report blocker once and recommend source-triggered pause, not invented fields. Tooltip-only P/min/max never affect gold. Write unique worker-owned files only; master owns queue and compiler.",
+      "previousAssignmentId": "2026-10-29-batch027-war_within",
       "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-war-within/2026-10-29-0217-warwithin-q28-batch026-20key-fourfield-audit.jsonl",
       "previousWorkerCommit": null,
       "assignmentPhases": [
         {
-          "expansion": "the-war-within",
+          "expansion": "midnight",
           "recordKeys": [
-            "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
-            "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
-            "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
-            "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
-            "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
-            "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+            "universe-audit:midnight:mill:236761:245808:alternate-pigment-rank-eligibility",
+            "universe-audit:midnight:mill:236767:245808:alternate-pigment-rank-eligibility",
+            "universe-audit:midnight:mill:236776:245803:alternate-pigment-rank-eligibility",
+            "universe-audit:midnight:mill:236777:245803:alternate-pigment-rank-eligibility",
+            "universe-audit:midnight:mill:236778:245867:alternate-pigment-rank-eligibility",
+            "universe-audit:midnight:mill:236779:245867:alternate-pigment-rank-eligibility",
+            "universe-audit:midnight:mill:236770:245865:alternate-pigment-rank-eligibility",
+            "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility"
           ]
         }
       ],
-      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-war-within/2026-10-29-0217-warwithin-q28-batch026-20key-fourfield-audit.jsonl",
+      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-war-within/2026-10-29-0318-warwithin-q29-batch027-6key-fourfield-audit.jsonl",
       "lastSuccessfulRunDate": "2026-10-28",
       "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch022-verdict.md",
       "materialTargetDetails": [
@@ -478,66 +692,136 @@
             "tooltip-only P and positive range if separately evidenced"
           ]
         }
+      ],
+      "previousRecordKeys": [
+        "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+        "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+        "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+        "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+        "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+        "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+      ],
+      "exactTargetTuples": [
+        {
+          "stableKey": "universe-audit:midnight:mill:236761:245808:alternate-pigment-rank-eligibility",
+          "method": "Mill",
+          "recipeSpellID": 1269575,
+          "inputItemID": 236761,
+          "outputItemID": 245808,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:mill:236767:245808:alternate-pigment-rank-eligibility",
+          "method": "Mill",
+          "recipeSpellID": 1269575,
+          "inputItemID": 236767,
+          "outputItemID": 245808,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:mill:236776:245803:alternate-pigment-rank-eligibility",
+          "method": "Mill",
+          "recipeSpellID": 1269575,
+          "inputItemID": 236776,
+          "outputItemID": 245803,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:mill:236777:245803:alternate-pigment-rank-eligibility",
+          "method": "Mill",
+          "recipeSpellID": 1269575,
+          "inputItemID": 236777,
+          "outputItemID": 245803,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:mill:236778:245867:alternate-pigment-rank-eligibility",
+          "method": "Mill",
+          "recipeSpellID": 1269575,
+          "inputItemID": 236778,
+          "outputItemID": 245867,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:mill:236779:245867:alternate-pigment-rank-eligibility",
+          "method": "Mill",
+          "recipeSpellID": 1269575,
+          "inputItemID": 236779,
+          "outputItemID": 245867,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:mill:236770:245865:alternate-pigment-rank-eligibility",
+          "method": "Mill",
+          "recipeSpellID": 1269575,
+          "inputItemID": 236770,
+          "outputItemID": 245865,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility",
+          "method": "Mill",
+          "recipeSpellID": 1269575,
+          "inputItemID": 236771,
+          "outputItemID": 245865,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        }
       ]
     },
     "dragonflight": {
-      "expansionScope": "Dragonflight: 12 unassigned herb milling E gaps",
+      "expansionScope": "Midnight Crushing gemdust selector universe overflow, master assigned",
       "workerAutomation": "loot-liquidator-dragonflight",
-      "assignmentId": "2026-10-29-batch027-dragonflight",
-      "status": "ASSIGNED_Q29_UNTOUCHED_MISSING_EXPECTED_QUANTITY",
+      "assignmentId": "2026-10-29-batch028-dragonflight",
+      "status": "ASSIGNED_Q30_UNADMITTED_UNIVERSE_TRIGGERED_EVIDENCE_ONLY",
       "lastSuccessfulRunUTC": "2026-10-29T02:31:00Z",
       "acceptedFirstPassRecords": 436,
       "acceptedCorrections": 0,
       "knownBlockers": 4,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-dragonflight/",
       "recordKeys": [
-        "tsm:mill:191469:198412:L1975",
-        "tsm:mill:191469:198413:L1976",
-        "tsm:mill:191469:198414:L1977",
-        "tsm:mill:191470:198415:L1980",
-        "tsm:mill:191470:198416:L1981",
-        "tsm:mill:191470:198417:L1982",
-        "tsm:mill:191471:198415:L1985",
-        "tsm:mill:191471:198416:L1986",
-        "tsm:mill:191471:198417:L1987",
-        "tsm:mill:191472:198415:L1990",
-        "tsm:mill:191472:198416:L1991",
-        "tsm:mill:191472:198417:L1992"
+        "universe-audit:midnight:crush:spell1231132:input242613:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242724:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242612:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242727:gemdust-rank-and-eligibility"
       ],
       "nextBatchPreview": [
-        "tsm:mill:191469:198412:L1975",
-        "tsm:mill:191469:198413:L1976",
-        "tsm:mill:191469:198414:L1977",
-        "tsm:mill:191470:198415:L1980",
-        "tsm:mill:191470:198416:L1981",
-        "tsm:mill:191470:198417:L1982",
-        "tsm:mill:191471:198415:L1985",
-        "tsm:mill:191471:198416:L1986"
+        "universe-audit:midnight:crush:spell1231132:input242613:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242724:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242612:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242727:gemdust-rank-and-eligibility"
       ],
-      "instructions": "Queue29: investigate ONLY assigned exact keys not in q28; seek new original 2026 Retail zero-inclusive actual completed-cast studies, rank, skill/spec, patch and Resourcefulness. Check source-memory before reusing sources; do not count a new link to an old cohort as independent. Historical TSM, per-gross-input and rank-alternative rates are not current economic E. Tooltip-only P/range must remain isolated and source-backed. Report blockers honestly; no manufactured zeros, probabilities, ranges or mappings. Write unique worker-owned submissions only; master owns compiler and queue.",
-      "previousAssignmentId": "2026-10-29-batch026-dragonflight",
+      "instructions": "Queue30: 4 distinct input/lead stable keys, 8 disjoint exact input/output tuples. PRIORITIZE new original 2026 Retail source evidence and eligibility, not re-fetching old q27 pages or claiming first-pass novelty. For Crushing, test exact gem input whitelist, 3-gem+1-stone recipe and 242620/242621 output ranks; Cardinalai's 480 gems/160 stones/330 dust is gross-input source-only, not verified casts or exact-rank E. For Milling, test exact Midnight input/output-rank eligibility and actual ten-herb casts. Record zero-inclusive actual casts, patch, skill, stat, resource refunds, output ranks. If no new study, report blocker once and recommend source-triggered pause, not invented fields. Tooltip-only P/min/max never affect gold. Write unique worker-owned files only; master owns queue and compiler.",
+      "previousAssignmentId": "2026-10-29-batch027-dragonflight",
       "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0230-dragonflight-q28-batch026-24key-fourfield-audit.jsonl",
       "previousWorkerCommit": null,
       "assignmentPhases": [
         {
-          "expansion": "dragonflight",
+          "expansion": "midnight",
           "recordKeys": [
-            "tsm:mill:191469:198412:L1975",
-            "tsm:mill:191469:198413:L1976",
-            "tsm:mill:191469:198414:L1977",
-            "tsm:mill:191470:198415:L1980",
-            "tsm:mill:191470:198416:L1981",
-            "tsm:mill:191470:198417:L1982",
-            "tsm:mill:191471:198415:L1985",
-            "tsm:mill:191471:198416:L1986",
-            "tsm:mill:191471:198417:L1987",
-            "tsm:mill:191472:198415:L1990",
-            "tsm:mill:191472:198416:L1991",
-            "tsm:mill:191472:198417:L1992"
+            "universe-audit:midnight:crush:spell1231132:input242613:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242724:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242612:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242727:gemdust-rank-and-eligibility"
           ]
         }
       ],
-      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0230-dragonflight-q28-batch026-24key-fourfield-audit.jsonl",
+      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0330-dragonflight-q29-batch027-12key-fourfield-audit.jsonl",
       "lastSuccessfulRunDate": "2026-10-28",
       "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch022-verdict.md",
       "materialTargetDetails": [
@@ -697,66 +981,142 @@
             "tooltip-only P and positive range if separately evidenced"
           ]
         }
+      ],
+      "previousRecordKeys": [
+        "tsm:mill:191469:198412:L1975",
+        "tsm:mill:191469:198413:L1976",
+        "tsm:mill:191469:198414:L1977",
+        "tsm:mill:191470:198415:L1980",
+        "tsm:mill:191470:198416:L1981",
+        "tsm:mill:191470:198417:L1982",
+        "tsm:mill:191471:198415:L1985",
+        "tsm:mill:191471:198416:L1986",
+        "tsm:mill:191471:198417:L1987",
+        "tsm:mill:191472:198415:L1990",
+        "tsm:mill:191472:198416:L1991",
+        "tsm:mill:191472:198417:L1992"
+      ],
+      "exactTargetTuples": [
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242613:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242613,
+          "outputItemID": 242620,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242613:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242613,
+          "outputItemID": 242621,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242724:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242724,
+          "outputItemID": 242620,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242724:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242724,
+          "outputItemID": 242621,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242612:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242612,
+          "outputItemID": 242620,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242612:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242612,
+          "outputItemID": 242621,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242727:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242727,
+          "outputItemID": 242620,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242727:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242727,
+          "outputItemID": 242621,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        }
       ]
     },
     "legacy": {
-      "expansionScope": "Dragonflight overflow: 12 unassigned fish milling E gaps",
+      "expansionScope": "Midnight Crushing gemdust selector universe overflow, master assigned",
       "workerAutomation": "loot-liquidator-legacy",
-      "assignmentId": "2026-10-29-batch027-legacy",
-      "status": "ASSIGNED_Q29_UNTOUCHED_MISSING_EXPECTED_QUANTITY",
+      "assignmentId": "2026-10-29-batch028-legacy",
+      "status": "ASSIGNED_Q30_UNADMITTED_UNIVERSE_TRIGGERED_EVIDENCE_ONLY",
       "lastSuccessfulRunUTC": "2026-10-29T02:44:00Z",
       "acceptedFirstPassRecords": 420,
       "acceptedCorrections": 0,
       "knownBlockers": 4,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-legacy/",
       "recordKeys": [
-        "tsm:mill:200061:198412:L1998",
-        "tsm:mill:200061:198413:L1999",
-        "tsm:mill:200061:198414:L2000",
-        "tsm:mill:200061:198415:L2001",
-        "tsm:mill:200061:198416:L2002",
-        "tsm:mill:200061:198417:L2003",
-        "tsm:mill:200061:198418:L2004",
-        "tsm:mill:200061:198419:L2005",
-        "tsm:mill:200061:198420:L2006",
-        "tsm:mill:200061:198421:L2007",
-        "tsm:mill:200061:198422:L2008",
-        "tsm:mill:200061:198423:L2009"
+        "universe-audit:midnight:crush:spell1231132:input242610:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242726:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242611:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242725:gemdust-rank-and-eligibility"
       ],
       "nextBatchPreview": [
-        "tsm:mill:200061:198412:L1998",
-        "tsm:mill:200061:198413:L1999",
-        "tsm:mill:200061:198414:L2000",
-        "tsm:mill:200061:198415:L2001",
-        "tsm:mill:200061:198416:L2002",
-        "tsm:mill:200061:198417:L2003",
-        "tsm:mill:200061:198418:L2004",
-        "tsm:mill:200061:198419:L2005"
+        "universe-audit:midnight:crush:spell1231132:input242610:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242726:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242611:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242725:gemdust-rank-and-eligibility"
       ],
-      "instructions": "Queue29: investigate ONLY assigned exact keys not in q28; seek new original 2026 Retail zero-inclusive actual completed-cast studies, rank, skill/spec, patch and Resourcefulness. Check source-memory before reusing sources; do not count a new link to an old cohort as independent. Historical TSM, per-gross-input and rank-alternative rates are not current economic E. Tooltip-only P/range must remain isolated and source-backed. Report blockers honestly; no manufactured zeros, probabilities, ranges or mappings. Write unique worker-owned submissions only; master owns compiler and queue.",
-      "previousAssignmentId": "2026-10-29-batch026-legacy",
+      "instructions": "Queue30: 4 distinct input/lead stable keys, 8 disjoint exact input/output tuples. PRIORITIZE new original 2026 Retail source evidence and eligibility, not re-fetching old q27 pages or claiming first-pass novelty. For Crushing, test exact gem input whitelist, 3-gem+1-stone recipe and 242620/242621 output ranks; Cardinalai's 480 gems/160 stones/330 dust is gross-input source-only, not verified casts or exact-rank E. For Milling, test exact Midnight input/output-rank eligibility and actual ten-herb casts. Record zero-inclusive actual casts, patch, skill, stat, resource refunds, output ranks. If no new study, report blocker once and recommend source-triggered pause, not invented fields. Tooltip-only P/min/max never affect gold. Write unique worker-owned files only; master owns queue and compiler.",
+      "previousAssignmentId": "2026-10-29-batch027-legacy",
       "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-legacy/2026-10-29-0240-legacy-q28-batch026-21key-fourfield-audit.jsonl",
       "previousWorkerCommit": null,
       "assignmentPhases": [
         {
-          "expansion": "dragonflight",
+          "expansion": "midnight",
           "recordKeys": [
-            "tsm:mill:200061:198412:L1998",
-            "tsm:mill:200061:198413:L1999",
-            "tsm:mill:200061:198414:L2000",
-            "tsm:mill:200061:198415:L2001",
-            "tsm:mill:200061:198416:L2002",
-            "tsm:mill:200061:198417:L2003",
-            "tsm:mill:200061:198418:L2004",
-            "tsm:mill:200061:198419:L2005",
-            "tsm:mill:200061:198420:L2006",
-            "tsm:mill:200061:198421:L2007",
-            "tsm:mill:200061:198422:L2008",
-            "tsm:mill:200061:198423:L2009"
+            "universe-audit:midnight:crush:spell1231132:input242610:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242726:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242611:gemdust-rank-and-eligibility",
+            "universe-audit:midnight:crush:spell1231132:input242725:gemdust-rank-and-eligibility"
           ]
         }
       ],
-      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-legacy/2026-10-29-0240-legacy-q28-batch026-21key-fourfield-audit.jsonl",
+      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-legacy/2026-10-29-0340-legacy-q29-batch027-12key-fourfield-audit.jsonl",
       "lastSuccessfulRunDate": "2026-10-28",
       "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch022-verdict.md",
       "materialTargetDetails": [
@@ -915,6 +1275,102 @@
             "Resourcefulness",
             "tooltip-only P and positive range if separately evidenced"
           ]
+        }
+      ],
+      "previousRecordKeys": [
+        "tsm:mill:200061:198412:L1998",
+        "tsm:mill:200061:198413:L1999",
+        "tsm:mill:200061:198414:L2000",
+        "tsm:mill:200061:198415:L2001",
+        "tsm:mill:200061:198416:L2002",
+        "tsm:mill:200061:198417:L2003",
+        "tsm:mill:200061:198418:L2004",
+        "tsm:mill:200061:198419:L2005",
+        "tsm:mill:200061:198420:L2006",
+        "tsm:mill:200061:198421:L2007",
+        "tsm:mill:200061:198422:L2008",
+        "tsm:mill:200061:198423:L2009"
+      ],
+      "exactTargetTuples": [
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242610:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242610,
+          "outputItemID": 242620,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242610:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242610,
+          "outputItemID": 242621,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242726:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242726,
+          "outputItemID": 242620,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242726:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242726,
+          "outputItemID": 242621,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242611:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242611,
+          "outputItemID": 242620,
+          "inputQualityRank": 1,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242611:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242611,
+          "outputItemID": 242621,
+          "inputQualityRank": 1,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242725:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242725,
+          "outputItemID": 242620,
+          "inputQualityRank": 2,
+          "outputQualityRank": 1,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
+        },
+        {
+          "stableKey": "universe-audit:midnight:crush:spell1231132:input242725:gemdust-rank-and-eligibility",
+          "method": "Crush",
+          "recipeSpellID": 1231132,
+          "inputItemID": 242725,
+          "outputItemID": 242621,
+          "inputQualityRank": 2,
+          "outputQualityRank": 2,
+          "admissionStatus": "UNVERIFIED_DO_NOT_COMPILE"
         }
       ]
     }
