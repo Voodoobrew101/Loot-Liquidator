@@ -27,3 +27,12 @@ The new master-owned `research/ledger/itemdb-uncompiled-output-leads.csv` record
 
 ## Provenance, limitations, and safety
 All 22 q24 source-review events use valid statuses (Midnight 6, War Within 4, Dragonflight 6, Legacy 6). Source-memory replay must count kyzenbka as one author, retain immutable raw observations, and avoid reclassifying source-only data as measurements. Full Node directory rebuild remains outstanding unless separately executed. No model weights or production files changed; PR #3 remains open/unmerged; main and research GameData blobs both `1d47c4a961c5dc5af626e659f7d96d1490d3cf9e`. Hourly schedules unchanged.
+
+## Final master addendum — queue25, source-memory replay and readback
+The master created `research/ledger/itemdb-uncompiled-output-leads.csv` with **40** exact unadmitted candidate input/output/rank pairs (32 Crushing, eight alternate pigments), and appended eight pigment-rank candidates to the canonical `itemdb-mapping-gaps.csv` (now 89 entries). None is asserted to be a verified eligible conversion.
+
+Committed **queue revision 25**: 150 unique compiler missing-field record IDs, no q23/q24 exact-key overlap and no semantic output tuple collision; 25 Midnight, 35 War Within (21 TWW +14 DF overflow), 45 Dragonflight, 45 Legacy (40 legacy +5 DF overflow). **80/150 targets have missing unconditional expectedQuantity**. These are numeric gap follow-ups, not first-pass credit; 51 eligible unique incomplete records remain unassigned in this round.
+
+Existing source-memory builder validated four original kyzenbka source-only observations, **22/22 valid worker source reviews** and six master QA feedback records without warnings. Idempotence check on batch marker applied before merge; incremental GitHub-readback replay updated source-memory to **190 canonical sources, 330 review events and 88 valid QA events**, adding nine canonical source URLs. This is NOT a full Node directory rebuild. Source-memory strategy reward tallies are not evidence-confidence scores and no model weights changed. The compiler candidate remains unchanged because no source-backed current-Retail numeric promotion was justified.
+
+The actual master-owned research files were committed to `research/processing-confidence`; final GitHub readback and main GameData SHA comparison remain the safety gate. PR #3 and hourly schedules were not modified.
