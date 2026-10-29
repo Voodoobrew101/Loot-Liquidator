@@ -83,3 +83,11 @@ Ten provisional mappings per 150 reviewed keys (6.7%), zero new current-Retail m
 - Dragonflight beta skill 250 **guarantees** R3, not prohibits R3 below 250. Preserve immutable interpretation erratum and reject unverified universal skill coefficients.
 - Never divide 20-herb mass yields by four and call them observed standard five-herb E. Keep actual completed casts, nominal input normalization and Resourcefulness savings distinct.
 - Full source-memory rebuild needs 95 JSONL files and hit connector tool-call ceiling. Incremental q19 replay is labelled, not presented as a full Node rebuild. Reward points remain separate from evidence confidence.
+
+## 2026-10-28 — Master batch018: source-unit and original-wording correction
+
+- Actual compiler replay generated **byte-identical** v0.6.0 Lua from live inputs; zero new source-backed current-Retail fields justified changing the staged candidate. This is useful QA, not a version increment.
+- **Original-source wording matters:** Dragonflight original Reddit commenter wrote “3.8 herbs per mill,” not pigments. Reject a pigment-E promotion; corrected worker erratum accepted. Likewise 0.19 < 0.2005, not greater.
+- **Two independent Osmenite authors, not two casts:** 16,760 and 6,800 gross ore yield Sage 265 and Azsharine 264; normalized five-ore equivalents 0.0562394 and 0.0560272, respectively. TSM 0.165 raw matRate is a source-semantic mismatch candidate, not a current Retail measured E. Reused studies yield no new verified current fields.
+- **Throughput:** 150/150 unique exact material/recipe keys audited; 136/136 original GameData lines matched; 224 historical numeric references and 376 unknown cells; zero newly verified current fields. Reward useful negative conclusions but move queue21 toward **unassigned E/P gaps and exact Crushing eligibility**. Nine BfA mass-cast outputs were already compiled in batch017, not nine new q20 records.
+- Keep no invented rank transfer, five-to-twenty-herb operation equivalence, hidden profession coefficient or gross-ore-as-cast denominator. Full Node source-memory rebuild remains outstanding.
