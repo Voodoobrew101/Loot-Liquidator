@@ -125,6 +125,13 @@ function run(root, options={}) {
     if(policyChild.status!==0)
       throw Error("F005 pool-policy/target-context regression failed\\n"+policyChild.stdout+policyChild.stderr);
     process.stdout.write(policyChild.stdout);
+    // Execute the validator-owned full source-identity mutation suite on native Node.
+    const identityTest=path.join(root,"research/tests/v2/test_f005_target_identity_staleness.js");
+    if(!fs.existsSync(identityTest)) throw Error("Required F005 target-identity check missing");
+    const identityChild=spawnSync(process.execPath,[identityTest],{cwd:root,encoding:"utf8"});
+    if(identityChild.status!==0)
+      throw Error("F005 target-identity regression failed\\n"+identityChild.stdout+identityChild.stderr);
+    process.stdout.write(identityChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");

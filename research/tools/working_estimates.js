@@ -5,6 +5,9 @@
 const FIELDS = ["dropChance", "yieldMin", "yieldMax", "expectedQuantity"];
 const POLICY_VERSION = "working-estimate-policy-v1";
 const EPS = 1e-9;
+// Same-process source-identity lease. Deliberately non-serialized: a reloaded
+// preview must be recompiled before this validation can certify source identity.
+const sourceIdentityAtBuild = new WeakMap();
 
 function finite(v) { return typeof v === "number" && Number.isFinite(v); }
 function positiveInteger(v) { return Number.isSafeInteger(v) && v >= 1; }
@@ -60,6 +63,22 @@ function canonicalDirectReagents(r) {
     Number.isSafeInteger(x.quantity) && x.quantity > 0 ? {...x} : null);
   if (rows.includes(null)) return ["INVALID_DIRECT_REAGENT_VECTOR", r.recordID];
   return rows.sort((a,b) => stableDonorContext(a).localeCompare(stableDonorContext(b)));
+}
+// Capture full source identity independently of the smaller, historical
+// serialized targetContext. This catches post-build recipe/reagent/skill/stat
+// mutation without rewriting research candidate artifacts during the transition.
+function sourceIdentity(r) {
+  return stableDonorContext({
+    recordID: r.recordID, method: r.method, expansionID: r.expansionID,
+    inputItemID: r.inputItemID, outputItemID: r.outputItemID,
+    inputQualityRank: r.inputQualityRank ?? null,
+    outputQualityRank: r.outputQualityRank ?? null,
+    recipeSpellID: r.recipeSpellID ?? null,
+    inputCountPerOperation: r.inputCountPerOperation,
+    outputFamilyID: r.outputFamilyID ?? null,
+    directReagents: canonicalDirectReagents(r),
+    conditions: r.conditions ?? null
+  });
 }
 // Group by strict identity, then retain the old ID only if unambiguous.
 // Colliding legacy IDs get distinct strict-context suffixes. This preserves
@@ -311,6 +330,7 @@ function applyWorkingEstimates(records, options = {}) {
     report.fullyNumericRecords++;
     report.previewOnlyRecords++;
     r.workingEstimate = w;
+    sourceIdentityAtBuild.set(w, sourceIdentity(r));
   }
   const errors = validateWorkingEstimates(records, options);
   if (errors.length) throw Error("Working estimate validation: " + errors.slice(0, 8).join(","));
@@ -332,6 +352,9 @@ function validateWorkingEstimates(records, options = {}) {
   for (const r of records) {
     const w = r.workingEstimate, id = r.recordID;
     if (!w) { errors.push("MISSING_WORKING_ESTIMATE:" + id); continue; }
+    if (!sourceIdentityAtBuild.has(w) ||
+        sourceIdentityAtBuild.get(w) !== sourceIdentity(r))
+      errors.push("WORKING_SOURCE_IDENTITY_STALE_OR_UNVERIFIABLE:" + id);
     if (!w.targetContext ||
         stableDonorContext(w.targetContext) !== stableDonorContext(workingTargetContext(r)))
       errors.push("WORKING_TARGET_CONTEXT_STALE:" + id);
