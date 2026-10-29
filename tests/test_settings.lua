@@ -25,7 +25,15 @@ local function widget(kind,parent,template)
     function w:CreateTexture() return widget('Texture',self) end
     function w:SetMinMaxValues(a,b) self.minimum=a;self.maximum=b end
     function w:SetValueStep(v) self.step=v end
-    function w:SetValue(v) self.value=v;if self.scripts.OnValueChanged then self.scripts.OnValueChanged(self,v) end end
+    function w:SetValue(v)
+        if kind=='Slider' then
+            v=math.max(self.minimum,math.min(self.maximum,v))
+            v=self.minimum+math.floor((v-self.minimum)/self.step+.5)*self.step
+        end
+        local changed=self.value~=v
+        self.value=v
+        if changed and self.scripts.OnValueChanged then self.scripts.OnValueChanged(self,v) end
+    end
     function w:Init(initializer)
         self.initializer=initializer
         local s=initializer.setting
@@ -38,11 +46,24 @@ local function widget(kind,parent,template)
             slider.minimum=initializer.options.minValue;slider.maximum=initializer.options.maxValue;slider.step=initializer.options.step
             slider.value=s:GetValue()
             slider:SetScript('OnValueChanged',function(_,v) s:SetValue(v) end)
+            -- Blizzard SettingsControlMixin.OnSettingValueChanged calls the
+            -- control's SetValue, which must update the widget, not the setting.
+            function self.SliderWithSteppers:SetValue(v) slider:SetValue(v) end
+            function self:SetValue(v) self.SliderWithSteppers:SetValue(v) end
+            self.nativeSetValue=self.SetValue
+            s.observers[#s.observers+1]=function(v) self:SetValue(v) end
         elseif template=='SettingsDropdownControlTemplate' then
             self.Control=widget('Frame',self)
-            self.Control.HideSteppers=function() end
+            self.Control.HideSteppers=function(control) control.steppersShown=false end
             self.Control.Dropdown=widget('DropdownButton',self.Control)
             self.Control.Dropdown.GenerateMenu=function() self.menu=initializer.options() end
+            function self:InitDropdown()
+                self.Control.steppersShown=not self.forceSteppersHidden
+                self.menu=initializer.options()
+            end
+            function self:SetValue() self:InitDropdown() end
+            s.observers[#s.observers+1]=function(v) self:SetValue(v) end
+            self:InitDropdown()
         elseif template=='SettingButtonControlTemplate' then
             self.Button=widget('Button',self,'UIPanelButtonTemplate')
             self.Button:SetScript('OnClick',initializer.click)
@@ -57,11 +78,18 @@ GetRealmName=function() return 'Realm' end
 Settings={}
 function Settings.RegisterVerticalLayoutCategory() return {} end
 function Settings.RegisterProxySetting(_,name,kind,label,default,get,set)
-    local setting={}
+    local setting={observers={},notifications=0,depth=0}
     function setting:GetValue() return get() end
     function setting:SetValue(value)
-        if get()==value then return end
-        set(value);if self.callback then self.callback(self,value) end
+        -- SettingMixin.ApplyValue notifies even when the value is unchanged.
+        -- The previous stub's early return concealed alpha4's recursion.
+        self.depth=self.depth+1
+        assert(self.depth<30,'recursive Settings setting -> control:SetValue -> setting')
+        if get()~=value then set(value) end
+        self.notifications=self.notifications+1
+        for _,observer in ipairs(self.observers) do observer(value) end
+        if self.callback then self.callback(self,value) end
+        self.depth=self.depth-1
     end
     function setting:SetValueChangedCallback(fn) self.callback=fn end
     settings[name]=setting;return setting
@@ -113,6 +141,24 @@ assert(unrelated.graphics==7 and unrelated.bindings=='custom')
 for _,w in ipairs(all) do
     if w.template and w.template:match('ControlTemplate$') then assert(w.initializer and w.initializer.factory) end
 end
+-- Slider notifications use the native rendering setter. Same-value events,
+-- refreshes, clamping and user drags must settle without a callback cycle.
+local changes=0
+local slider=LL:CreateSettingsCanvasSlider(panel,9,22,1,12,function() changes=changes+1 end)
+assert(slider.SetValue==slider.nativeSetValue,'native Settings SetValue must never be replaced')
+slider:SetPreferenceValue(15)
+assert(slider:GetPreferenceValue()==15 and slider.slider.value==15 and changes==1)
+for i=1,100 do
+    slider:SetPreferenceValue(15)
+    slider.initializer.setting:SetValue(15) -- Blizzard emits this even if unchanged
+end
+assert(changes==1 and slider.initializer.setting.depth==0)
+slider.slider:SetValue(17)
+assert(slider:GetPreferenceValue()==17 and changes==2)
+slider:SetPreferenceValue(99)
+assert(slider:GetPreferenceValue()==22 and slider.slider.value==22 and changes==3)
+slider:SetPreferenceValue(8.7)
+assert(slider:GetPreferenceValue()==9 and slider.slider.value==9 and changes==4)
 -- Shared Defaults must never open the game-wide reset dialog from our pages,
 -- even if Blizzard search or another skin shows the header again.
 local game,root,child,grandchild={},{},{},{}
@@ -159,6 +205,11 @@ for i=start+1,#all do
     if w.kind=='Slider' then skillSlider=w end
 end
 assert(#checks==3 and #dropdowns==5 and skillSlider)
+for _,dropdown in ipairs(dropdowns) do
+    assert(not dropdown.Control.steppersShown)
+    dropdown:InitDropdown();dropdown:Refresh()
+    assert(not dropdown.Control.steppersShown,'menu rebuild restored dropdown arrows')
+end
 local function click(w,value) w.Checkbox:SetChecked(value);w.Checkbox.scripts.OnClick(w.Checkbox) end
 click(checks[1],true);click(checks[2],true);skillSlider:SetValue(95)
 dropdowns[3].initializer.setting:SetValue(1) -- choose Blizzard specialization
@@ -171,4 +222,21 @@ assert(char.researchProfiles==nil,'UI must not overwrite scanned snapshots')
 dropdowns[2].initializer.setting:SetValue(10)
 assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',10)==nil,'browsing must not create a simulation')
 assert(LL:ProfessionExpansionName(11)=='Midnight')
-print('PASS: native Settings factories, scoped weight reset, Defaults guard, named profession selections and preserved snapshots')
+-- Pooled vertical controls must hide arrows for our settings after every
+-- rebuild, then restore normal behavior when reused by another category.
+hooksecurefunc=function(frame,method,callback)
+    local original=frame[method]
+    frame[method]=function(self,...) original(self,...);callback(self,...) end
+end
+local variable='LootLiquidator_disenchantDataMode'
+local pooled={Control={HideSteppers=function(self)self.steppersShown=false end},
+    GetSetting=function()return {GetVariable=function()return variable end}end}
+function pooled:InitDropdown() self.Control.steppersShown=true end
+local initializer=LL:WithoutDropdownSteppers({InitFrame=function(_,frame)frame:InitDropdown()end})
+initializer:InitFrame(pooled);assert(not pooled.Control.steppersShown)
+pooled:InitDropdown();assert(not pooled.Control.steppersShown)
+variable='OtherAddon_option'
+initializer:InitFrame(pooled);assert(pooled.Control.steppersShown,'pooled frame changed other addon dropdowns')
+variable='LootLiquidator_tsmFallbackOperation'
+pooled:InitDropdown();assert(not pooled.Control.steppersShown)
+print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')

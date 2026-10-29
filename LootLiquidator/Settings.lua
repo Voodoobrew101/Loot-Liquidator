@@ -55,7 +55,7 @@ local function Dropdown(category,key,title,description,options,default)
         for _,o in ipairs(options) do out:Add(o[1],o[2],o[3] or "") end
         return out:GetData()
     end
-    Settings.CreateDropdown(category,setting,Values,description or "")
+    LL:WithoutDropdownSteppers(Settings.CreateDropdown(category,setting,Values,description or ""))
 end
 -- This is a live list, read afresh when Blizzard displays the dropdown.
 -- All choices are read-only in TSM. Selecting an operation here affects
@@ -80,8 +80,8 @@ local function TSMDropdown(category,key,title)
         end
         return out:GetData()
     end
-    Settings.CreateDropdown(category,setting,Values,
-        "Read-only price simulation. To actually post with this operation, assign it to the item in TSM.")
+    LL:WithoutDropdownSteppers(Settings.CreateDropdown(category,setting,Values,
+        "Read-only price simulation. To actually post with this operation, assign it to the item in TSM."))
 end
 local function Slider(category,key,title,description,lower,upper,step,default)
     local setting=Settings.RegisterAddOnSetting(category,"LootLiquidator_"..key,
@@ -199,7 +199,7 @@ local function AppearancePanel()
     ExplainOnHover(slider,"Badge font size","DISPLAY ONLY: The shared badge font size (9 to 22) for every supported bag interface.")
     ExplainOnHover(slider.slider,"Badge font size","DISPLAY ONLY: The shared badge font size (9 to 22) for every supported bag interface.")
     panel:HookScript("OnShow",function()
-        slider:SetValue(LL.db.appearance.fontSize or 14)
+        slider:SetPreferenceValue(LL.db.appearance.fontSize or 14)
     end)
     title("Colors (click to customize each action)",20,-320)
     for i,letter in ipairs(ORDER) do
@@ -448,7 +448,7 @@ function LL:CreateEvidenceSettingsPanel(category)
         slider.slider:SetWidth(230)
         check:SetScript("OnClick",function(self) checked:SetValue(self:GetChecked()) end)
         local function refresh()
-            check:SetChecked(LL.db[enabledKey]);slider:SetValue(LL.db[weightKey])
+            check:SetChecked(LL.db[enabledKey]);slider:SetPreferenceValue(LL.db[weightKey])
         end
         for _,setting in ipairs({checked,weighted}) do
             setting:SetValueChangedCallback(function()
@@ -533,7 +533,7 @@ function LL:CreateProfessionProfilePanel(profession)
     end)
     skill:SetPoint("TOPLEFT",panel,"TOPLEFT",270,-232)
     known:SetScript("OnClick",function(self)
-        update(function(p) p.skill=self:GetChecked() and skill:GetValue() or nil end)
+        update(function(p) p.skill=self:GetChecked() and skill:GetPreferenceValue() or nil end)
     end)
     label("Specialization (Blizzard names, grouped by tree)",-282)
     local node=LL:CreateSettingsDropdown(panel,function()
@@ -590,7 +590,7 @@ function LL:CreateProfessionProfilePanel(profession)
         if reload then options=LL:GetProfessionUIOptions(selected,profession,expansion) end
         local p=profile()
         enabled:SetChecked(p.enabled==true);known:SetChecked(p.skill~=nil)
-        skill:SetValue(p.skill or 0)
+        skill:SetPreferenceValue(p.skill or 0)
         local record=LL.db.characters and LL.db.characters[selected]
         local snapshot=record and record.researchProfiles and record.researchProfiles[profession..":"..expansion]
         status:SetText(snapshot and (LL:ProfessionExpansionName(expansion).." snapshot: skill "..tostring(snapshot.skill or "unknown")..". Open the profession on that character to refresh it.")

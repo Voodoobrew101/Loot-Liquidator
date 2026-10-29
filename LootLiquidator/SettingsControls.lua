@@ -53,6 +53,7 @@ local function Proxy(kind,default)
 end
 function LL:CreateSettingsControl(parent,template,initializer,kind)
     local frame=CreateFrame("Frame",nil,parent,template)
+    if kind=="drop" then frame.forceSteppersHidden=true end
     if frame.SetElementData then frame:SetElementData(initializer) end
     frame.GetElementData=function() return initializer end
     frame:Init(initializer)
@@ -60,6 +61,26 @@ function LL:CreateSettingsControl(parent,template,initializer,kind)
     if frame.Tooltip then frame.Tooltip:Hide() end
     if self.SkinSettingsCanvasControl then self:SkinSettingsCanvasControl(frame,kind) end
     return frame
+end
+-- Vertical Settings rows are pooled by Blizzard. Hide arrows after each native
+-- menu rebuild only while the row is bound to one of our settings; other
+-- categories reusing that row retain their normal dropdown behavior.
+function LL:WithoutDropdownSteppers(initializer)
+    local initFrame=initializer.InitFrame
+    initializer.InitFrame=function(self,frame,...)
+        if not frame.llDropdownSteppersHooked then
+            frame.llDropdownSteppersHooked=true
+            hooksecurefunc(frame,"InitDropdown",function(control)
+                local setting=control:GetSetting()
+                local variable=setting and setting:GetVariable()
+                if type(variable)=="string" and variable:match('^LootLiquidator_') then
+                    control.Control:HideSteppers()
+                end
+            end)
+        end
+        return initFrame(self,frame,...)
+    end
+    return initializer
 end
 function LL:CreateSettingsButton(parent)
     local initializer=CreateSettingsButtonInitializer("","",function() end,"",false)
@@ -124,9 +145,21 @@ function LL:CreateSettingsCanvasSlider(parent,minValue,maxValue,step,initial,onC
     control:SetSize(382,30)
     local native=control.SliderWithSteppers
     native:ClearAllPoints();native:SetPoint("LEFT",control,"LEFT",4,0);native:SetWidth(302)
-    setting:SetValueChangedCallback(function(_,value) if onChange then onChange(value) end end)
-    function control:SetValue(value) setting:SetValue(math.max(minValue,math.min(maxValue,value))) end
-    function control:GetValue() return setting:GetValue() end
+    local reported=initial
+    setting:SetValueChangedCallback(function(_,value)
+        if value==reported then return end
+        reported=value
+        if onChange then onChange(value) end
+    end)
+    -- Keep SettingsSliderControlMixin:SetValue intact. Blizzard calls it when
+    -- a setting changes; writing the setting from that method loops forever,
+    -- because SettingMixin also notifies for unchanged values.
+    function control:SetPreferenceValue(value)
+        value=minValue+math.floor((value-minValue)/step+.5)*step
+        value=math.max(minValue,math.min(maxValue,value))
+        if setting:GetValue()~=value then setting:SetValue(value) end
+    end
+    function control:GetPreferenceValue() return setting:GetValue() end
     control.slider=native.Slider
     return control
 end
