@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "tww-gem-finding-anytime-marginal-bounds-v1.0.0",
+  "taskID": "F003_TWW_GEM_ANYTIME_BOUNDS",
+  "scope": "RESEARCH_ONLY_PROSPECTIVE_AND_SYNTHETIC",
+  "modelSource": "research/tools/models_v2/tww_gem_finding_anytime_marginal_bounds_v1.js",
+  "modelSourceBlobSHA": "d7118b79802ebfb047f59220d5c0d99892a423c2",
+  "dependsOn": [
+    {
+      "path": "research/tools/models_v2/tww_gem_finding_conditional_cohorts_v1.js",
+      "sha": "4baa24233b31761bd1aa5167cd7936442e867e4c"
+    },
+    {
+      "path": "research/tools/models_v2/tww_gem_finding_exact_marginal_bounds_v1.js",
+      "sha": "28f22970ef4e0307a69bff624844917fa80fca26"
+    }
+  ],
+  "targetKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "sourceAncestry": "NO_NEW_PRIMARY_STUDY",
+  "confidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "evidenceFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "derivation": {
+    "alpha": 0.05,
+    "predeclaredMarginals": 8,
+    "perLookPerOutputAlpha": "alpha/(m*n*(n+1))",
+    "interval": "TWO_SIDED_CLOPPER_PEARSON_AT_EACH_COMPLETED_CAST_COUNT",
+    "proof": "Sum_{n=1..infinity} 1/(n(n+1)) = 1. Each fixed-n marginal interval fails with probability at most alpha/(m*n*(n+1)); union bound over m outputs and all n gives familywise failure probability at most alpha.",
+    "property": "ANYTIME_VALID_AT_ARBITRARY_STOPPING_TIMES_UNDER_STATED_IID_AND_FIXED_CONTEXT_ASSUMPTIONS",
+    "coOutputsMayCooccur": true,
+    "independenceAcrossOutputsRequired": false,
+    "assumptions": [
+      "Zero-inclusive actual completed casts, not gross ore",
+      "Fixed patch, input rank, recipe, skill, unlocks and profession stats within cohort",
+      "IID Bernoulli occurrence indicators for each predeclared output",
+      "No adaptive selection of outputs or mixing incompatible cohorts",
+      "Explicit refunds and aborted requests excluded from cast denominator"
+    ],
+    "numericalDomain": {
+      "minCompletedCasts": 1,
+      "maxCompletedCasts": 10000,
+      "reason": "Imported exact binomial CDF limit"
+    },
+    "whatItDoesNotProve": [
+      "Actual current-Retail gem probabilities",
+      "Unconditional output expected quantity",
+      "Minimum eligible baseline",
+      "Correctness of unknown Gem Finding unlock or rank",
+      "Independence of co-outputs"
+    ]
+  },
+  "zeroHitOnePercentUpperBound": {
+    "fixedSampleOnly": {
+      "casts": 574,
+      "nominalOre": 2870,
+      "upper": 0.009999013821329556
+    },
+    "anytimeSafe": {
+      "casts": 2096,
+      "nominalOre": 10480,
+      "upper": 0.009999464437815839
+    },
+    "atFixedSample574UnderAnytimeRule": 0.03167448208355618,
+    "note": "Targets are hypothetical sampling requirements for zero successes in an eligible, fixed-context cohort, not measured yields."
+  },
+  "tests": {
+    "nativeNodeSyntax": "PASS",
+    "javascriptV8ActualGitHubModules": {
+      "cohort": 25,
+      "exact": 31,
+      "anytime": 28,
+      "failed": 0
+    },
+    "independentPythonSciPyOracle": "PASS_HIGH_N_AND_ZERO_BOUNDARIES",
+    "actualRetailCasts": 0,
+    "independentValidator": "PENDING",
+    "nativeNodeFullGithubModule": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN"
+  },
+  "independentHoldout": "PENDING_NEW_CURRENT_RETAIL_COHORT",
+  "evidenceRequest": "Capture complete zero-inclusive output vectors, actual completed casts, exact input ranks, profession skill, unlock state, stat units, patch and refunds; preserve study-family identity. Predeclare eight output tests before monitoring.",
+  "validatorRequest": "Independently prove alpha-spending union bound and compare high-n CP intervals against a separate beta-quantile oracle; check optional stopping, aborted requests, locked/unknown unlocks, co-output isolation and max n=10000.",
+  "economicIsolation": {
+    "goldRecommendationEligible": false,
+    "tooltipFallbackEligible": false,
+    "workingCoverageMutation": false
+  }
+}
