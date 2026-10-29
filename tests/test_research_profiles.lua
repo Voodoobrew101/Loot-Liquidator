@@ -104,6 +104,29 @@ research.processing[2].conditions.effectiveSkill=100
 check(compile());LL=runtime()
 check(LL.ItemDB.processing[1].referenceContextID~=LL.ItemDB.processing[2].referenceContextID)
 m=assert(model(LL));check(#m.materials==1 and m.materials[1].id==20)
+-- Reviewed registry-format rules must reach the actual runtime adjustment path.
+research.schemaVersion='0.2.0';research.processing={record('fixture:a',20),record('fixture:b',21)}
+local approved={ruleID='synthetic-registry',profession='Jewelcrafting',method='Prospect',expansionID=11,
+ effectTarget='OUTPUT_UNCONDITIONAL_EXPECTATION',formulaID='RATIO_ADJUSTMENT',parameters={referenceFactor=1,targetFactor=2},
+ scope={gameMode='RETAIL',recipeSpellIDs={444},inputItemIDs={10},outputItemIDs={20,21},inputQualityRanks={2},nominalInputCount=5},
+ referenceContext={build='200',effectiveSkill=50},targetContext={build='200',effectiveSkill=100},requiredLiveContext={'effectiveSkill'},
+ evidenceStatus='VERIFIED_NUMERIC',applyPolicy='VERIFIED_FOR_COMPILE',numericTransformValidated=true,confidence0to100=94,
+ sources={{claimID='synthetic-independent-a'},{claimID='synthetic-independent-b'}},
+ independentReview={reviewer='synthetic-reviewer',passedTestIDs={'synthetic-only'}}}
+research.mechanicRules={approved};check(compile(),'reviewed registry contract compiles')
+LL=runtime();assert(originalLoadfile('LootLiquidator/ConversionEngine.lua'))('LootLiquidator',LL)
+local adjusted=clone(ctx);adjusted.effectiveSkill=100
+LL.ProcessingPlayerConditions=function()return adjusted end
+m=assert(model(LL,adjusted));check(m.mechanicsApplied,'registry rule executes at runtime')
+near(m.materials[1].expectedQuantity,2);near(m.materials[2].expectedQuantity,2)
+near(research.processing[1].expectedQuantity.value,1)
+check(#LL.ItemDB.mechanicRules==2,'scoped rule expands to both concrete output profiles')
+approved.formulaID='UNSUPPORTED';check(not compile(),'unsupported approved rule fails build')
+approved.formulaID='RATIO_ADJUSTMENT';approved.referenceContext.effectiveSkill=999
+check(not compile(),'unmatched source baseline fails build')
+approved.referenceContext.effectiveSkill=50;approved.applyPolicy='NO_NUMERIC_TRANSFORM'
+check(not compile(),'unapproved exported rule rejected')
+research.mechanicRules={}
 -- Also check a genuine accepted multi-output profile from the shipped research
 -- snapshot after compilation. This guards the production artifact, not just fixtures.
 local actual={db={}}

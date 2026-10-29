@@ -140,6 +140,7 @@ local function gearKey(f)
         (f.classID==2 and 'weapon' or 'armor')
 end
 local function contextEligible(record,ctx,build,model,rules)
+    if record.mechanicsSourceBuild and tostring(record.mechanicsSourceBuild)~=tostring(build) and not (model and model.mechanicsApplied) then return false end
     if record.targetBuild and tostring(record.targetBuild)~=tostring(build) then return false end
     if record.patchEndBuild and (not tonumber(build) or tonumber(build)>record.patchEndBuild) then return false end
     if record.patchStartBuild and (not tonumber(build) or tonumber(build)<record.patchStartBuild) then return false end
