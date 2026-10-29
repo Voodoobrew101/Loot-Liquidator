@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_PROVENANCE_CONFIDENCE_12_CASE_AND_STATUS_CLAIM_PIVOT",
+  "workflowRevision": 2,
+  "queueRevision": 8,
+  "branch": "implementation/five-agent-completion",
+  "runUTC": "2026-10-29T19:43:00Z",
+  "baseCommit": "f3ddfd1f348faa5c393e4a4bb4ab19ccb29979bb",
+  "reviewCommit": "51991336e91bd5674bbf4318ce5de48f762c7e61",
+  "createdFiles": [
+    {
+      "path": "research/tests/v2/test_f005_evidence_status_claim_contract.js",
+      "blobSHA": "85a7745d7d60307e777f60e99ae4e32423b1a6cc"
+    },
+    {
+      "path": "research/coordination/v2/reviews/2026-10-29T1943Z-F005-source-status-claim-lineage.json",
+      "status": "CREATED"
+    }
+  ],
+  "testedSubject": {
+    "estimatorBlobSHA": "3575814d9cecf94f757a2bec6d83d3b7845cc71c",
+    "pipelineBlobSHA": "2cd055b6bbd1860c58c40b26f38f304048ed219a"
+  },
+  "result": "PREVIOUS_F005_REPAIR_12_OF_12_PASS__NEW_11_CASE_SOURCE_ADMISSION_SUITE_5_PASS_6_FAIL",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "exactDeltas": {
+    "newTestCases": 11,
+    "passingNewCases": 5,
+    "failingNewCases": 6,
+    "newDefectClasses": 2,
+    "newAdmittedMappings": 0,
+    "removedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "productionWrites": 0
+  },
+  "currentCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingExpectedQuantityEvidence": 116
+  },
+  "executedChecks": [
+    "Read current common.md, independent-validator.md, five-agent-workflow.json, completion-readiness.json, completion-priorities.json",
+    "Read coordinator queue-revision-8 acceptance, latest completion-engineer submission, estimator and pipeline source",
+    "Verified native GitHub Actions research-candidate success on 2026-10-29 at head f3ddfd1f348faa5c393e4a4bb4ab19ccb29979bb; pipeline invokes existing provenance fixture",
+    "Executed existing independent 12-case fixture against exact estimator in V8: 12 passed, 0 failed",
+    "Executed new independent 11-case source status/claim fixture against exact estimator in V8: 5 passed, 6 failed",
+    "Verified new test file GitHub read-back blob SHA 85a7745d7d60307e777f60e99ae4e32423b1a6cc"
+  ],
+  "notRun": [
+    "Native Node execution of new 11-case fixture",
+    "New fixture in GitHub Actions CI",
+    "Direct local Lua 5.1 or schema execution",
+    "WoW Retail client",
+    "Independent current-Retail holdout"
+  ],
+  "findings": [
+    "Numeric source fields with unknown/unrecognized status can be copied as evidence with synthetic confidence 99",
+    "Direct estimator does not independently require sourceClaimIDs; canonical compiler has a separate nonempty-claim check"
+  ],
+  "limitations": [
+    "Synthetic code-level findings only, no demonstrated erroneous existing itemdb row",
+    "No live economic leakage demonstrated",
+    "No durable cross-process attestation established"
+  ],
+  "blockers": [
+    "F002 source status/value and sourceClaimIDs contract",
+    "New 11-case native CI and postrepair independent retest",
+    "116 missing economic evidence E fields; no independent Retail holdout"
+  ],
+  "nextTask": {
+    "owner": "completion-engineer",
+    "id": "F002_FIX_SOURCE_STATUS_CLAIM_ADMISSION",
+    "followupOwner": "independent-validator",
+    "acceptance": "Repair two source-admission defects; rerun 11/11 plus prior 12/12, native --check/schema/Lua and verify no preview promotion"
+  }
+}
