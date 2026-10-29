@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F005_PMF_INTEGRATION",
-  "queueRevision": 3,
-  "sourceCommit": "527af55b9320516404923ec38d5bbeaca059b0bc",
+  "taskID": "F001_F005_POSTREPAIR_INTEGRATION",
+  "queueRevision": 4,
+  "sourceCommit": "bec0469f006879038cc6926392c3cf960748a621",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "6488e39b54ae7961750231cb94391eb34af606e3",
@@ -25,7 +25,7 @@
     "confidenceOfImputedFields": 0,
     "economicUse": "PREVIEW_ONLY",
     "normalizedVerified": false,
-    "status": "GENERATED_COMPLETE_PREVIEW_NOT_FULLY_ACCEPTED_PENDING_PMF_SUPPORT_REPAIR"
+    "status": "RESEARCH_PREVIEW_COMPLETE_CONDITIONALLY_ACCEPTED_MODEL_ANCESTRY_REPAIRS"
   },
   "evidenceNumericCompleteness": {
     "present": 3558,
@@ -59,25 +59,22 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "Original F005 nine-case context and P=0 fixtures now pass 9/9 in independent V8 retest",
-    "New F005 PMF positive-support fixture fails 3 of 12: zero-probability rows contaminate conditional min/max",
-    "Native independent Node pipeline --check, Lua5.1 decode and full JSON schema not executed this coordinator cycle",
-    "24 legacy queue30 universe leads unadmitted; independently exhaustive Retail universe not established",
-    "F003 TWW milling model lacks matched independent current Retail zero-inclusive cast holdout"
+    "Independent current Retail TWW milling zero-inclusive whole-study holdout missing",
+    "Native CI must wire F005 new 609-assertion metamorphic fixture",
+    "WoW client and minimum eligible baseline not verified",
+    "24 legacy queue30 universe leads remain unadmitted"
   ],
   "checksExecuted": [
-    "Coordinator read live head 527af55b9320516404923ec38d5bbeaca059b0bc and new F002/F003/F004/F005 submissions plus independent review",
-    "Confirmed source blob hashes: engineer 0bef8795b55043bfd8ba1896b53e4be618ff216c, model bea88982382816f315df66facf9060affa0c40bb, validator fixture bc387c48e5bf7bee26630a14502a95adcd94d02b",
-    "Coordinator inspected forward() code and independently identified min/max updates on zero-probability PMF rows",
-    "Independent F005 V8 reports original 9/9 PASS, new 9/12 PASS with 3 zero-mass support failures",
-    "Canonical readiness reconciliation: 1018*4=4072; 3558+514=4072; 116 E gaps; priorities 217",
-    "Accepted source-preserving research-only repairs conditionally; blocked full model acceptance and all economic promotions"
+    "Read current role submissions F002/F003/F004/F005 and latest independent F005 review",
+    "Verified GitHub blob hashes model ca6edf58, working estimator b90137d4, candidate 6488e39b, readiness d8704e5f",
+    "Independent F005 9+12+8+16+609=654 checks passed",
+    "GitHub Actions run 40893975750 on commit 47d77a6 concluded success",
+    "Canonical readiness 1018*4=4072, 3558+514=4072, missing E=116; no numeric or confidence promotions"
   ],
   "checksUnavailable": [
-    "Native Node independently rerun in coordinator environment (repository checkout unavailable)",
-    "Lua5.1 generated candidate decode by coordinator",
-    "Full JSON Schema by coordinator",
-    "WoW Retail in-game tests"
+    "Local native Node and Lua execution in coordinator environment",
+    "WoW Retail client test",
+    "Independent matched current-Retail whole-study holdout"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -86,23 +83,61 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T1403Z-F005-pmf-integration.json",
-  "decision": "CONDITIONAL_CONTEXT_REPAIR_ACCEPTANCE_PMF_ZERO_MASS_BLOCKER",
-  "nextTask": "F003 PMF positive-support fix; F005 independent 9+12 fixture retest and pipeline/Lua/schema; F002 source-preserving build checks; F004 controlled current-Retail cast capture",
+  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T1459Z-F005-postrepair-integration.json",
+  "decision": "CONDITIONAL_RESEARCH_REPAIR_ACCEPTED_ECONOMIC_PROMOTION_BLOCKED",
+  "nextTask": "F002 wire independent metamorphic test in native CI; F005 independent rank pool isolation; F003/F004 capture exact zero-inclusive Retail casts",
   "priorityRecords": 217,
   "independentValidator": {
-    "status": "CONDITIONAL_FAIL_NEW_PMF_SUPPORT",
+    "status": "CONDITIONAL_PASS_RESEARCH_ONLY",
     "originalFixturePassed": 9,
-    "originalFixtureFailed": 0,
-    "newFixturePassed": 9,
-    "newFixtureFailed": 3,
-    "defectIDs": [
-      "F005-PMF-ZERO-MASS-SUPPORT"
-    ],
-    "priorFiveDefects": "REPRODUCER_NOW_PASS",
+    "positiveSupportPassed": 12,
+    "ancestryPassed": 8,
+    "modelSelfTestPassed": 16,
+    "metamorphicAssertionsPassed": 609,
+    "totalChecks": 654,
+    "failed": 0,
     "modelHoldoutFamiliesValidated": 0,
     "liveEVLeakEstablished": false,
-    "existingCandidateRowAffectedEstablished": false
+    "existingCandidateRowAffectedEstablished": false,
+    "ciRun": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40893975750"
   },
-  "integrationStatus": "BLOCKED_BY_NEW_INDEPENDENT_PMF_SUPPORT_QA"
+  "integrationStatus": "RESEARCH_MODEL_AND_ANCESTRY_REPAIRS_CONDITIONALLY_ACCEPTED",
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_WIRE_INDEPENDENT_METAMORPHIC_CI",
+      "paths": [
+        "research/tests/v2/test_f005_postrepair_metamorphic.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Wire existing F005 609-assertion fixture into native deterministic pipeline, check schema/Lua/economic isolation, preserve all source/candidate hashes"
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_TWW_MILLING_CAST_PROTOCOL",
+      "targetKeys": [
+        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+      ],
+      "acceptance": "Create controlled zero-inclusive cast capture protocol for 10-herb Khaz Algar Milling, exact ranks, recipe, patch, skill, stats, refunds, co-outputs; no hypothetical scenario promotion"
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_DIAMOND_CAST_DENOMINATOR",
+      "targetKeys": [
+        "tsm:prospect:188658:192870:L1205",
+        "tsm:prospect:188658:192871:L1206",
+        "tsm:prospect:189143:192869:L1242",
+        "tsm:prospect:189143:192870:L1243",
+        "tsm:prospect:190311:192869:L1280"
+      ],
+      "acceptance": "Find original 2026 Retail zero-inclusive cast observations with rank-specific output counts and refunds; otherwise pivot to unadmitted queue30 selector eligibility with exact IDs"
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_RANK_POOL_ISOLATION",
+      "targetScope": "Independent adversarial cross-rank/cross-recipe/cross-patch/reagent pool fixtures, and whole-study holdout when available",
+      "acceptance": "Independent SHA-pinned PASS/FAIL verdict, no self-approval of new numeric claim"
+    }
+  ]
 }
