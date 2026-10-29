@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelVersion": "tww-milling-cast-protocol-v1.0.0",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "targetKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+  ],
+  "sourceStatus": "No new player data; synthetic example only; original 2024 Reddit report lacks actual completed-cast denominator",
+  "modelSource": "research/tools/models_v2/tww_milling_cast_protocol_v1.js",
+  "parentModel": "research/tools/models_v2/tww_milling_context_sensitivity_v1.js",
+  "coordinatorAssignment": "F003_TWW_MILLING_CONTROLLED_CAST_PROTOCOL (queue revision 5)",
+  "collectionInstructions": [
+    "Capture the actual Retail build/patch, observation UTC time, input rank, exact spell, profession skill, specialization/unlocks, profession tool/gear, and relevant stats with units. Keep unknown as null, not zero.",
+    "Start a new snapshot whenever skill, gear, spec, unlocks, patch or input rank changes; never pool different snapshots.",
+    "Use Mycobloom rank 1 (210796) and rank 2 (210797) in separate cohorts, each with ten nominal herbs per Khaz Algar Milling operation (spell 444181 if confirmed).",
+    "Record one unique event for every attempted operation. Count COMPLETED only after actual successful completion. Aborted/failed Create All operations and requestedBulkCasts never count as zero-result casts.",
+    "For every completed cast, record full output item-ID quantities, including explicit target 222619 count zero when no Nacreous Pigment R2 appears. Preserve co-outputs and item ranks.",
+    "If any completed cast has incomplete output capture, set countsByItemID=null, complete=false and block the snapshot's P and E; never silently omit it.",
+    "Record gross required ten input herbs separately from actual Resourcefulness refunds and net spent. Refunds are input cost, not produced output; do not adjust per-cast E by net-input denominators.",
+    "Preserve player/study-family/session ancestry. Derivative exports are not independent samples. Independent validator must hold out an unrelated whole author/study family.",
+    "Begin with a pilot sample and expand for rare outcomes; do not assert fixed sample sufficiency or hypothetical maximum yields.",
+    "Do not promote raw descriptive P/E or observed positive support to current-Retail economic or tooltip fields without independent QA and applicable context validation."
+  ],
+  "statusSemantics": {
+    "COMPLETED": "Confirmed completed cast; eligible denominator only if complete output capture",
+    "ABORTED": "Not a zero-output completed cast",
+    "FAILED_BEFORE_COMPLETION": "Not a zero-output completed cast",
+    "UNRESOLVED": "Completion unverified; not denominator"
+  },
+  "formulas": {
+    "P": "positive completed casts / all completed casts, if every completed cast has complete output",
+    "E": "sum output units including zero casts / all completed casts, same completeness gate",
+    "yieldMin": "minimum observed positive yield, null if no positive results",
+    "yieldMax": "maximum observed positive yield, null if no positive results"
+  },
+  "denominatorPolicy": "requestedBulkCasts is metadata, never the denominator. Missing output from even one confirmed completed cast blocks P/E for the cohort.",
+  "uncertainty": "No current Retail sample or independent holdout; descriptive sample bounds are not guaranteed game bounds. No generic stat coefficient.",
+  "exampleStatus": "SYNTHETIC_NOT_EVIDENCE",
+  "syntheticExample": {
+    "schemaVersion": "1.0.0",
+    "sourceType": "DIRECT_CAST_LOG",
+    "studyFamilyID": "SYNTHETIC_NOT_EVIDENCE",
+    "sessionID": "SYNTHETIC_SESSION",
+    "requestedBulkCasts": 99,
+    "snapshots": [
+      {
+        "snapshotID": "S1",
+        "targetKey": "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "gameMode": "RETAIL",
+        "expansionID": 10,
+        "method": "Mill",
+        "recipeSpellID": 444181,
+        "patchBuild": null,
+        "inputItemID": 210796,
+        "inputQualityRank": 1,
+        "outputItemID": 222619,
+        "outputQualityRank": 2,
+        "nominalInputCountPerOperation": 10,
+        "reagentVector": [
+          {
+            "itemID": 210796,
+            "unitsPerOperation": 10
+          }
+        ],
+        "minimumRecipeEligibleSkill": null,
+        "observedProfessionSkill": null,
+        "professionStatsWithUnits": null,
+        "optionalBonuses": null,
+        "unlocks": null
+      }
+    ],
+    "events": [
+      {
+        "eventID": "C1",
+        "snapshotID": "S1",
+        "status": "COMPLETED",
+        "outputCapture": {
+          "complete": true,
+          "countsByItemID": {
+            "222619": 0
+          }
+        },
+        "inputAccounting": {
+          "grossRequiredUnits": 10,
+          "refundedInputUnits": 2,
+          "netSpentInputUnits": 8
+        }
+      },
+      {
+        "eventID": "C2",
+        "snapshotID": "S1",
+        "status": "COMPLETED",
+        "outputCapture": {
+          "complete": true,
+          "countsByItemID": {
+            "222618": 1,
+            "222619": 2
+          }
+        },
+        "inputAccounting": {
+          "grossRequiredUnits": 10,
+          "refundedInputUnits": 0,
+          "netSpentInputUnits": 10
+        }
+      },
+      {
+        "eventID": "A1",
+        "snapshotID": "S1",
+        "status": "ABORTED",
+        "outputCapture": null,
+        "inputAccounting": null
+      }
+    ]
+  },
+  "syntheticExpected": {
+    "targetKey": "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "snapshotID": "S1",
+    "studyFamilyID": "SYNTHETIC_NOT_EVIDENCE",
+    "sessionID": "SYNTHETIC_SESSION",
+    "attempts": {
+      "requestedBulkCasts": 99,
+      "completedCasts": 2,
+      "aborted": 1,
+      "failedBeforeCompletion": 0,
+      "unresolved": 0,
+      "incompleteCompletedCasts": 0
+    },
+    "rawObserved": {
+      "dropChance": 0.5,
+      "yieldMin": 2,
+      "yieldMax": 2,
+      "expectedQuantity": 1,
+      "successCasts": 1,
+      "zeroCasts": 1,
+      "totalOutputUnits": 2,
+      "histogram": {
+        "0": 1,
+        "2": 1
+      },
+      "basis": "ZERO_INCLUSIVE_ACTUAL_COMPLETED_CASTS",
+      "yieldBounds": "OBSERVED_POSITIVE_SUPPORT_NOT_HARD_GAME_BOUNDS"
+    },
+    "inputAccounting": {
+      "grossRequiredUnits": 20,
+      "refundedInputUnits": 2,
+      "netSpentInputUnits": 18,
+      "status": "PER_CAST_OBSERVED"
+    },
+    "status": "RAW_DESCRIPTIVE_ONLY",
+    "contextGaps": [
+      "PATCH_UNKNOWN",
+      "SKILL_UNKNOWN",
+      "STATS_UNKNOWN",
+      "MIN_ELIGIBLE_SKILL_UNKNOWN",
+      "UNLOCKS_UNKNOWN"
+    ],
+    "independentHoldout": "NONE",
+    "currentRetailEconomicFields": {
+      "dropChance": null,
+      "yieldMin": null,
+      "yieldMax": null,
+      "expectedQuantity": null
+    },
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "confidence": 0,
+    "evidencePromotion": false,
+    "tooltipPromotion": false
+  },
+  "gates": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEV": false,
+    "tooltipOnly": false
+  },
+  "tests": {
+    "V8Assertions": 26,
+    "failed": 0
+  },
+  "blockers": [
+    "Current Retail completed-cast log absent",
+    "Minimum recipe-eligible skill unverified",
+    "Independent matched holdout absent",
+    "Historical bulk aborts cannot supply zero-output denominators"
+  ]
+}
