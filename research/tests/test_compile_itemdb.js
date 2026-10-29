@@ -38,13 +38,16 @@ assert.equal(a.report.legacyArithmeticContradictionsReviewed,8);
 assert.equal(a.records.filter(r=>r.inputItemID===200061&&r.outputQualityRank!==null&&r.inputQualityRank===null).length,12);
 assert.equal(a.records.filter(r=>r.conditions.eligibilityStatus==="REQUIRES_ORE_SPECIFIC_PROFICIENT_PROCESSOR_SPECIALIZATION").length,7);
 assert.equal(a.report.fieldSlots,4012);
-assert.deepEqual(a.report.missingFieldCounts,{"dropChance":189,"yieldMin":85,"yieldMax":85,"expectedQuantity":103});
+assert.deepEqual(a.report.missingFieldCounts,{"dropChance":189,"yieldMin":85,"yieldMax":85,"expectedQuantity":104});
 assert.equal(a.report.quarantineBreakdown.MULTI_REAGENT_SCHEMA_GAP||0,0);
 const powder=a.records.find(r=>r.method==="Prospect"&&r.inputItemID===36910&&r.outputItemID===46849);
 assert.ok(powder);
-assert.equal(powder.expectedQuantity.value,143/1000*5);
-assert.equal(powder.expectedQuantity.status,"community-reported");
-assert.equal(powder.expectedQuantity.confidence,62);
+assert.equal(powder.expectedQuantity.value,null);
+assert.equal(powder.expectedQuantity.status,"unknown");
+assert.equal(powder.expectedQuantity.confidence,0);
+assert.ok(powder.expectedQuantity.blockers.includes("GROSS_INPUT_PROXY_NOT_COMPLETED_CAST_E"));
+const unsafePowder=JSON.parse(JSON.stringify(powder));unsafePowder.expectedQuantity.value=0.715;unsafePowder.expectedQuantity.status="proxy";unsafePowder.expectedQuantity.confidence=62;
+assert.ok(validate([unsafePowder]).some(x=>x.startsWith("GROSS_INPUT_PROXY_NOT_CAST_E")));
 for(const f of ["dropChance","yieldMin","yieldMax"])assert.equal(powder[f].value,null);
 assert.equal(powder.conditions.patchWindow,"REPORTED_12.0.5_CAST_DATE_UNSPECIFIED");
 assert.equal(powder.recordConfidence,0);
@@ -75,7 +78,7 @@ assert.deepEqual(csv('"a","b"\n"1","two,three"\n')[0],{a:"1",b:"two,three"});
 const refines=a.records.filter(r=>r.method==="Refine");assert.equal(refines.length,2);assert.deepEqual(refines.map(r=>[r.inputItemID,r.outputItemID,r.inputCountPerOperation]),[[242786,242787,10],[242788,242789,18]]);for(const r of refines){assert.equal(r.conditions.requiresBench,true);assert.equal(r.conditions.minimumRecipeSkill,50);assert.equal(r.expectedQuantity.value,1);}
 const conditional=a.records.filter(r=>r.recordID.startsWith("candidate:conditional:"));assert.equal(conditional.length,8);for(const r of conditional){assert.ok(r.conditions.specialization?.gem);assert.ok(r.conditions.baselineStatus.includes("NOT_UNSKILLED"));for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"])assert.equal(r[f].value,null);}
 assert.ok(a.lua.includes("requiresBench=opt(x[35])"));assert.ok(a.lua.includes("specialization=opt(x[36])"));assert.ok(a.lua.includes('"Refine"'));
-const mass=a.records.filter(r=>r.conditions.operationVariant==="MASS_20_HERB");assert.equal(mass.length,9);assert.equal(a.report.expectedQuantityPresent,900);assert.equal(a.records.filter(r=>r.inputItemID===152506&&r.outputItemID===153635).length,2);
+const mass=a.records.filter(r=>r.conditions.operationVariant==="MASS_20_HERB");assert.equal(mass.length,9);assert.equal(a.report.expectedQuantityPresent,899);assert.equal(a.records.filter(r=>r.inputItemID===152506&&r.outputItemID===153635).length,2);
 for(const [input,spell,casts,means] of [[152506,256218,177,[15.48,5.89,2.87]],[152507,256223,106,[16.39,5.96,2.57]],[152508,256221,103,[15.89,5.85,2.12]]]){for(let i=0;i<3;i++){const r=mass.find(x=>x.inputItemID===input&&x.outputItemID===[153635,153636,153669][i]);assert.ok(r);assert.equal(r.recipeSpellID,spell);assert.equal(r.inputCountPerOperation,20);assert.deepEqual(r.reagents,[{itemID:input,quantity:20}]);assert.equal(r.expectedQuantity.value,means[i]);assert.equal(r.expectedQuantity.sampleOperations,casts);assert.ok(r.expectedQuantity.uncertainty.includes("rounded mean"));for(const f of ["dropChance","yieldMin","yieldMax"])assert.equal(r[f].value,null);}}
 assert.ok(a.lua.includes("operationVariant=opt(x[37])"));assert.ok(a.lua.includes("uncertainty=opt(x[7])"));const invalid=structuredClone(mass[0]);invalid.reagents[0].quantity=5;assert.ok(validate([invalid]).some(x=>x.startsWith("MASS_RECIPE:")));
-console.log("PASS research compiler v0.6.0 static regression; Lua interpreter and WoW client not run");
+console.log("PASS research compiler v0.6.1 static regression; Lua interpreter and WoW client not run");
