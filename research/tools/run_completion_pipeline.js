@@ -96,6 +96,11 @@ function run(root, options={}) {
       if(child.status!==0) throw Error(file+" failed\n"+child.stdout+child.stderr);
       process.stdout.write(child.stdout);
     }
+    const ancestryTest=path.join(root,"research/tools/working_estimates_ancestry_selftest.js");
+    const ancestryChild=spawnSync(process.execPath,[ancestryTest],{cwd:root,encoding:"utf8"});
+    if(ancestryChild.status!==0)
+      throw Error("working_estimates_ancestry_selftest.js failed\\n"+ancestryChild.stdout+ancestryChild.stderr);
+    process.stdout.write(ancestryChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");

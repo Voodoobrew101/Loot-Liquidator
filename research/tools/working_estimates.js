@@ -269,7 +269,12 @@ function applyWorkingEstimates(records, options = {}) {
 }
 
 function validateWorkingEstimates(records) {
-  const errors = [], allocations = new Map();
+  const errors = [], allocations = new Map(), byRecordID = new Map();
+  // A donor ID must resolve to one unambiguous original evidence record.
+  for (const r of records) {
+    if (byRecordID.has(r.recordID)) errors.push("DUPLICATE_WORKING_RECORD_ID:" + r.recordID);
+    else byRecordID.set(r.recordID, r);
+  }
   for (const r of records) {
     const w = r.workingEstimate, id = r.recordID;
     if (!w) { errors.push("MISSING_WORKING_ESTIMATE:" + id); continue; }
@@ -295,6 +300,42 @@ function validateWorkingEstimates(records) {
         if ((raw === null || w[f] !== raw) && w.fieldConfidence[f] !== 0)
           errors.push("IMPUTED_FIELD_CONFIDENCE:" + id + ":" + f);
       }
+    }
+    // Donor ancestry is a contract, not a decorative source label. Reject
+    // missing, duplicated, context-incompatible or non-evidentiary donors.
+    if (!Array.isArray(w.sourceRecordIDs)) {
+      errors.push("WORKING_DONOR_ANCESTRY_MISSING:" + id);
+    } else if (w.sourceRecordIDs.length) {
+      const targetKey = donorKey(r), donorValues = [], seen = new Set();
+      if (w.allocation || evidenceValue(r, "expectedQuantity") !== null ||
+          targetKey === null) errors.push("WORKING_DONOR_TARGET_INELIGIBLE:" + id);
+      for (const donorID of w.sourceRecordIDs) {
+        if (typeof donorID !== "string" || seen.has(donorID)) {
+          errors.push("WORKING_DONOR_ID_DUPLICATE_OR_INVALID:" + id);
+          continue;
+        }
+        seen.add(donorID);
+        const donor = byRecordID.get(donorID);
+        if (!donor) {
+          errors.push("WORKING_DONOR_ID_UNRESOLVED:" + id + ":" + donorID);
+          continue;
+        }
+        const donorE = evidenceValue(donor, "expectedQuantity");
+        const forbidden = (donor.expectedQuantity?.blockers || []).some(b =>
+          /GROSS_INPUT|NOT_ACTUAL_CAST|RANK_SPECIFIC|RANK_OR_GROSS_INPUT/.test(b));
+        if (donor === r || targetKey === null || donorKey(donor) !== targetKey ||
+            donorE === null || forbidden) {
+          errors.push("WORKING_DONOR_CONTEXT_OR_EVIDENCE_MISMATCH:" + id + ":" + donorID);
+        } else donorValues.push(donorE);
+      }
+      if (donorValues.length === w.sourceRecordIDs.length &&
+          Math.abs(w.expectedQuantity - median(donorValues)) >
+            EPS * Math.max(1, Math.abs(w.expectedQuantity))) {
+        errors.push("WORKING_DONOR_MEDIAN_MISMATCH:" + id);
+      }
+      if (JSON.stringify(w.sourceRecordIDs) !==
+          JSON.stringify(w.sourceRecordIDs.slice().sort()))
+        errors.push("WORKING_DONOR_ORDER_NONDETERMINISTIC:" + id);
     }
     if (w.allocation) {
       const x = w.allocation;
