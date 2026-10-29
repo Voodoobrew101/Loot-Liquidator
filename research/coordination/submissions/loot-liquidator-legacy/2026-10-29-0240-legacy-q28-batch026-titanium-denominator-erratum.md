@@ -1,0 +1,9 @@
+# Legacy q28 immutable denominator erratum — Titanium Ore
+
+**2026-10-29 | 2026-10-29-0240-legacy-q28-batch026 | research-only; master action required**
+
+The existing shared `research/ledger/titanium-observed-yields.csv` calls its arithmetic `1000 gross ore / 5 = 200` and `5000 gross ore / 5 = 1000` columns **`prospect_operations`**, even though the cited 2022 Retail Reddit and 2023 WotLK Classic PTR sources report gross ore totals, not verified completed casts. The derived `unconditional_expected_units_per_5` is therefore a **historical per-five-gross-ore-equivalent reference**, NOT verified unconditional expected output per completed operation. The older `research/proposed/2026-10-27-batch5-titanium-comparison.md` also uses the unverified operations wording. This is a provenance/label correction, not a claim the historical per-ore arithmetic is wrong.
+
+The assigned `retail12.0.5:prospect:36910:46849:globalmenace` source reports **1,000 gross Titanium Ore and 143 Titanium Powder** (2026-era comment labeled 12.0.5), but no actual completed-cast count or zero-inclusive per-cast histogram. The independent 2022 Reddit author reports **1,000 gross ore and 152 powder**. The classic PTR cohort is not a current Retail bridge. Never silently substitute 200 casts, use gross ore as a completed-cast denominator, or infer P(hit) from pooled quantities. Preserve historical data and all source URLs.
+
+**Requested master correction:** Rename/re-document derived counts as `fiveOreEquivalentOperations`, and historical rates as `powderUnitsPerFiveGrossOreEquivalent`; set `completedOperations=null` and `economicExpectedQuantity=null` for unverified cast cohorts. Keep compiler's existing conservative display-only positive cap 1–2 separate from raw positive observed maximum 5, and preserve the gold-side unknown. No shared file changed by this worker.
