@@ -24,3 +24,24 @@ jobs:
         run: |
           luac5.1 -p research/proposed/itemdb.lua
           lua5.1 research/tests/test_generated_working_estimates.lua
+      - name: Verify blocker arrays survive Lua roundtrip
+        run: |
+          lua5.1 - <<'LUA'
+          local db = dofile("research/proposed/itemdb.lua")
+          local fields = {"dropChance", "yieldMin", "yieldMax", "expectedQuantity"}
+          local multi, extra = 0, 0
+          for _, record in ipairs(db.processing) do
+            for _, name in ipairs(fields) do
+              local blockers = record[name].blockers
+              for _, blocker in ipairs(blockers) do
+                assert(not string.find(blocker, "|", 1, true), "Joined blockers: " .. record.recordID .. ":" .. name)
+              end
+              if #blockers > 1 then
+                multi = multi + 1
+                extra = extra + #blockers - 1
+              end
+            end
+          end
+          assert(multi > 0 and extra > 0, "Multi-blocker evidence collapsed in candidate")
+          print("PASS: " .. multi .. " multi-blocker fields and " .. extra .. " additional blockers preserved")
+          LUA
