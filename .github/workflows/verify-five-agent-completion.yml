@@ -47,7 +47,7 @@ jobs:
           LUA
 
   f002-one-time-rebuild:
-    if: github.event_name == 'push' && github.event.head_commit.message == 'chore(F002): one-time regenerate cast-basis candidate'
+    if: "${{ github.event_name == 'push' && github.event.head_commit.message == 'chore(F002): one-time regenerate cast-basis candidate' }}"
     runs-on: ubuntu-latest
     permissions:
       contents: write
