@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_CAST_BASIS_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 10,
+  "runUTC": "2026-10-29T20:57:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "618ad36f25fa59ed0d03de0b0eb8cb47ae7928db",
+  "acceptanceCommit": "0cfa9d4f2ae1fcb2429e6ad79f444ba21dbdc648",
+  "scorecardCommit": "588723fbd71369856b894c824218acd3135198f9",
+  "submissionCommit": "THIS_COMMIT",
+  "status": "COORDINATOR_ACCEPTANCE_RECORDED_RESEARCH_ONLY",
+  "changedPaths": [
+    "research/coordination/v2/acceptance/2026-10-29T2057Z-F001-F005-cast-basis-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/2026-10-29T2057Z-F001-F005-cast-basis-integration.json"
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "removedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentCurrentRetailHoldouts": 0,
+    "newValidatorTests": 12,
+    "newFailingSyntheticTests": 8,
+    "newOriginalHistoricalCohortsReported": 1,
+    "productionFilesChanged": 0
+  },
+  "canonicalCounters": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceE": 116,
+    "priorityRecords": 217,
+    "verifiedBaselineRecords": 0,
+    "confidenceGE90Fields": 0,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "testsActuallyExecuted": [
+    "GitHub pinned blob readback for estimator, pipeline, validator fixture/review and model",
+    "Independent V8 arithmetic check: 574 zero-hit casts gives 0.0099990138213295 simultaneous marginal upper bound; 573 gives 0.0100163764199084",
+    "Canonical count reconciliation: 1018*4=4072, 3558+514=4072, 204+97+97+116=514",
+    "Verified Blizzard-authored August 29, 2024 hotfix via BlueTracker mirror"
+  ],
+  "testsReportedByOthers": [
+    {
+      "role": "completion-engineer",
+      "nativeCI": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40946362744",
+      "conclusion": "success",
+      "newCastBasisSuiteIncluded": false
+    },
+    {
+      "role": "independent-validator",
+      "newSynthetic": "4/12",
+      "priorSynthetic": "23/23",
+      "nativeNewSuite": "NOT_RUN"
+    },
+    {
+      "role": "baseline-modeller",
+      "synthetic": "24/24"
+    },
+    {
+      "role": "evidence-researcher",
+      "synthetic": "18/18"
+    }
+  ],
+  "testsNotRun": [
+    "Local native Node full pipeline --check",
+    "Local Lua 5.1 decoder",
+    "WoW Retail client",
+    "Independent current Retail whole-study holdout"
+  ],
+  "sourceSHA": {
+    "estimator": "e6f6c736114233bf089d9d5251db2ef3dbbe7e42",
+    "pipeline": "b2486e64da0054b6dfe4944a5e36b5b9fe70433b",
+    "newValidatorFixture": "ff1b946d7e1c76abac6c400f11e7c3835ede17ab",
+    "newValidatorReview": "37866b76a81caacd258fc736382edac2182c0266",
+    "model": "bba0f9a822590b374f605371ab2ef5d3388188f6",
+    "readinessSource": {
+      "primary": "3e2bb784dc832d90584eebd8620148caf2133fbd",
+      "supplemental": "397e589598102d42c774899399f9d607f44828a1",
+      "midnightCandidate": "35ac6119dc6d47bf6f5279852b317d9d7da5d78e",
+      "gameData": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
+      "statYield": "1d80df8304acaa75a5b507089ef163696381b2ff",
+      "mechanics": "dc1f5225e208eee77abc26e8be67fb30ed1916a7",
+      "curatedAdditions": "af10e392b7e4fc26db131bbecfc073fb9cb92bfb",
+      "rankAudit": "624aa3e4ece044087a21f2c9c818ad233ec7dcde",
+      "midnightAudit": "8e1e4dd1d3750b968dd2a5c134039fd89c97ccfc",
+      "batch014Dragonflight": "fc90aeb9607d49ccf4f1877cd49b9988b4ead2ed",
+      "batch014TWW": "1b6f62bdd6b35eacca6ac00f9ba3de46f0eaf747",
+      "tooltipFallbacks": "c4e144489fa43f46b866f34734e48e5814992402"
+    }
+  },
+  "decisions": [
+    {
+      "role": "completion-engineer",
+      "decision": "ACCEPT_PRIOR_STATUS_CLAIM_REPAIR_RESEARCH_ONLY_WITH_PINNED_INDEPENDENT_RETEST"
+    },
+    {
+      "role": "independent-validator",
+      "decision": "ACCEPT_FAIL_FINDING_REPAIR_REQUIRED"
+    },
+    {
+      "role": "baseline-modeller",
+      "decision": "ACCEPT_AS_SYNTHETIC_PROSPECTIVE_DESIGN_ONLY_PENDING_INDEPENDENT_QA"
+    },
+    {
+      "role": "evidence-researcher",
+      "decision": "ACCEPT_PATCH_EPOCH_PROVENANCE_AND_HISTORICAL_COHORT_AS_CONTEXT_ONLY"
+    }
+  ],
+  "blockers": [
+    "Cast-basis/rank blockers still permit confidence-bearing copied E/P at direct estimator boundary (8/12 new synthetic tests fail).",
+    "New 12-case fixture is not yet wired into native pipeline.",
+    "116 E evidence gaps and 514 numeric evidence gaps; no verified minimum-eligible baseline or exhaustive Retail universe audit.",
+    "Source/working identity leases are in-process only; durable cross-process attestation remains future work."
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_ENFORCE_CAST_BASIS_BLOCKERS_AT_WORKING_ESTIMATE_BOUNDARY",
+      "exactPaths": [
+        "research/tools/working_estimates.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "targetFields": [
+        "expectedQuantity",
+        "dropChance"
+      ],
+      "acceptance": "At target copy, donor, rank pool and validation boundaries quarantine GROSS_INPUT, NOT_ACTUAL_CAST, RANK_SPECIFIC, RANK_OR_GROSS_INPUT and incompatible quantityBasis; preserve raw evidence and all 4072 finite preview fields. Wire independent 12-case suite into native pipeline; pass 12/12 + prior 23/23 + schema/Lua/isolation. No production changes."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_RETEST_BLOCKED_CAST_BASIS_AFTER_ENGINEER_REPAIR",
+      "exactPaths": [
+        "research/tests/v2/test_f005_blocked_evidence_cast_basis.js",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Pin repaired estimator and compiler blob SHA; independently run new 12 cases, prior 11+12 controls and native CI; audit gross-input/rank/actual-cast denominator semantics and serialized readback; no self-approval of numeric evidence."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_INDEPENDENTLY_VALIDATE_GEM_FINDING_INTERVAL_DESIGN",
+      "targetKeys": [
+        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212511:gem-finding:20261028"
+      ],
+      "acceptance": "Independently test CP inversion, eight-way Bonferroni bounds, zero-hit behavior and co-output nonexclusivity; keep model synthetic-only until current Retail casts. If no cohorts, pivot to a different E/denominator family rather than re-reviewing historical diamonds."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_TWW_GEM_FINDING_POST_HOTFIX_COMPLETED_CASTS",
+      "targetKeys": [
+        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+        "candidate:conditional:prospect:210937:212505:gem-finding:20261028"
+      ],
+      "acceptance": "Seek independent zero-inclusive completed-cast data with ore quality, skill/spec, unlock, patch epoch and refund count. Preserve 2024-08-29 official patch boundary; if unavailable pivot to exact Midnight selector eligibility, no invented rates."
+    }
+  ],
+  "nextTask": "F002_ENFORCE_CAST_BASIS_BLOCKERS_AT_WORKING_ESTIMATE_BOUNDARY",
+  "safety": {
+    "workingFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipFallbackPolicyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "runtimeProfilesChanged": false,
+    "mainChanged": false,
+    "schedulesChanged": false
+  }
+}
