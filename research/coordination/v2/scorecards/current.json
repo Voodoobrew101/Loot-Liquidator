@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F005_POSTREPAIR_INTEGRATION",
-  "queueRevision": 4,
-  "sourceCommit": "bec0469f006879038cc6926392c3cf960748a621",
+  "taskID": "F001_F005_RANK_POOL_INTEGRATION",
+  "queueRevision": 5,
+  "sourceCommit": "f4170071cdb78158b81ea8b1b64290b7bfaad859",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "6488e39b54ae7961750231cb94391eb34af606e3",
@@ -25,7 +25,7 @@
     "confidenceOfImputedFields": 0,
     "economicUse": "PREVIEW_ONLY",
     "normalizedVerified": false,
-    "status": "RESEARCH_PREVIEW_COMPLETE_CONDITIONALLY_ACCEPTED_MODEL_ANCESTRY_REPAIRS"
+    "status": "RESEARCH_PREVIEW_NUMERICALLY_COMPLETE_BUT_RANK_POOL_INTEGRITY_QA_FAIL"
   },
   "evidenceNumericCompleteness": {
     "present": 3558,
@@ -59,20 +59,23 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "Independent current Retail TWW milling zero-inclusive whole-study holdout missing",
-    "Native CI must wire F005 new 609-assertion metamorphic fixture",
-    "WoW client and minimum eligible baseline not verified",
-    "24 legacy queue30 universe leads remain unadmitted"
+    "F005 rank-pool isolation: 5/12 cases fail in three classes; F002 repair and independent retest required",
+    "Native CI must add F005 new 12-case rank-pool fixture after repair; 609-case postrepair metamorphic fixture is now wired and passed",
+    "Independent current-Retail zero-inclusive matched TWW milling holdout missing",
+    "116 E evidence gaps; 514 total evidence gaps; 24 legacy queue30 universe leads unadmitted",
+    "WoW client and verified minimum recipe-eligible baseline unavailable"
   ],
   "checksExecuted": [
-    "Read current role submissions F002/F003/F004/F005 and latest independent F005 review",
-    "Verified GitHub blob hashes model ca6edf58, working estimator b90137d4, candidate 6488e39b, readiness d8704e5f",
-    "Independent F005 9+12+8+16+609=654 checks passed",
-    "GitHub Actions run 40893975750 on commit 47d77a6 concluded success",
-    "Canonical readiness 1018*4=4072, 3558+514=4072, missing E=116; no numeric or confidence promotions"
+    "Read live F002 F003 F004 F005 submissions and F005 rank-pool verdict",
+    "Verified exact GitHub blob hashes of pipeline 75552eea, estimator b90137d4, rank-pool fixture b3a7decf, candidate 6488e39b, readiness d8704e5f",
+    "Native GitHub Actions run 40898230116 succeeded with 609 independent F005 metamorphic assertions, schema and Lua 5.1 checks",
+    "F005 new rank-pool fixture: 7 passed, 5 failed in V8 on exact estimator SHA; three confirmed source-code defect classes",
+    "Independent coordinator rounding arithmetic for nine frozen TSM diamond rows: possible under hypothesized units, not measured",
+    "Canonical 1018*4=4072, 3558+514=4072, missing E=116; no numeric or confidence promotions"
   ],
   "checksUnavailable": [
     "Local native Node and Lua execution in coordinator environment",
+    "Native Node execution of new rank-pool fixture",
     "WoW Retail client test",
     "Independent matched current-Retail whole-study holdout"
   ],
@@ -83,61 +86,69 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T1459Z-F005-postrepair-integration.json",
-  "decision": "CONDITIONAL_RESEARCH_REPAIR_ACCEPTED_ECONOMIC_PROMOTION_BLOCKED",
-  "nextTask": "F002 wire independent metamorphic test in native CI; F005 independent rank pool isolation; F003/F004 capture exact zero-inclusive Retail casts",
+  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T1603Z-F005-rank-pool-integrity-integration.json",
+  "decision": "BLOCK_RANK_POOL_RESEARCH_PREVIEW_INTEGRITY_UNTIL_F002_REPAIR_F005_RETEST",
+  "nextTask": "F002 repair game-mode/reagent pool isolation and allocation ancestry; F005 independently retest",
   "priorityRecords": 217,
   "independentValidator": {
-    "status": "CONDITIONAL_PASS_RESEARCH_ONLY",
-    "originalFixturePassed": 9,
-    "positiveSupportPassed": 12,
-    "ancestryPassed": 8,
-    "modelSelfTestPassed": 16,
-    "metamorphicAssertionsPassed": 609,
-    "totalChecks": 654,
-    "failed": 0,
+    "status": "FAIL_RESEARCH_PREVIEW_RANK_POOL_CONTEXT_AND_ANCESTRY",
+    "originalPostrepairChecksPassed": 654,
+    "newRankPoolCases": 12,
+    "newRankPoolPassed": 7,
+    "newRankPoolFailed": 5,
+    "newDefectClasses": 3,
+    "subjectBlob": "b90137d4f67cea6975504b9c8cc4d978afaefb81",
+    "fixtureBlob": "b3a7decf0b9e3b2a46564a573ecdc6310f5d7bce",
     "modelHoldoutFamiliesValidated": 0,
     "liveEVLeakEstablished": false,
     "existingCandidateRowAffectedEstablished": false,
-    "ciRun": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40893975750"
+    "ciRun": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40898230116",
+    "ci609MetamorphicNowWired": true,
+    "ciNewRankPoolFixtureWired": false
   },
-  "integrationStatus": "RESEARCH_MODEL_AND_ANCESTRY_REPAIRS_CONDITIONALLY_ACCEPTED",
+  "integrationStatus": "RESEARCH_PREVIEW_NUMERICALLY_COMPLETE_WITH_NEW_INDEPENDENT_RANK_POOL_QA_FAIL",
   "nextAssignments": [
     {
       "owner": "completion-engineer",
-      "taskID": "F002_WIRE_INDEPENDENT_METAMORPHIC_CI",
+      "taskID": "F002_FIX_RANK_POOL_CONTEXT_AND_ANCESTRY",
       "paths": [
-        "research/tests/v2/test_f005_postrepair_metamorphic.js",
+        "research/tools/working_estimates.js",
         "research/tools/run_completion_pipeline.js"
       ],
-      "acceptance": "Wire existing F005 609-assertion fixture into native deterministic pipeline, check schema/Lua/economic isolation, preserve all source/candidate hashes"
+      "acceptance": "Pool key includes gameMode and full canonical direct reagent vector; validator independently recomputes membership/pool IDs/shares/target/sums; 12 new F005 cases + 609 old metamorphic assertions pass in native CI and Lua/schema pipeline."
     },
     {
       "owner": "baseline-modeller",
-      "taskID": "F003_TWW_MILLING_CAST_PROTOCOL",
+      "taskID": "F003_TWW_MILLING_CONTROLLED_CAST_PROTOCOL",
       "targetKeys": [
         "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
         "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
       ],
-      "acceptance": "Create controlled zero-inclusive cast capture protocol for 10-herb Khaz Algar Milling, exact ranks, recipe, patch, skill, stats, refunds, co-outputs; no hypothetical scenario promotion"
+      "acceptance": "Design zero-inclusive actual completed-cast protocol, including aborted bulk operations, reagent refunds, exact ranks, patch and skill; no unsupported E promotion."
     },
     {
       "owner": "evidence-researcher",
-      "taskID": "F004_DIAMOND_CAST_DENOMINATOR",
+      "taskID": "F004_QUEUE30_MIDNIGHT_CRUSHING_ELIGIBILITY",
       "targetKeys": [
-        "tsm:prospect:188658:192870:L1205",
-        "tsm:prospect:188658:192871:L1206",
-        "tsm:prospect:189143:192869:L1242",
-        "tsm:prospect:189143:192870:L1243",
-        "tsm:prospect:190311:192869:L1280"
+        "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
       ],
-      "acceptance": "Find original 2026 Retail zero-inclusive cast observations with rank-specific output counts and refunds; otherwise pivot to unadmitted queue30 selector eligibility with exact IDs"
+      "acceptance": "Seek original current Retail whitelist/selector and rank evidence; leave leads unadmitted if unknown."
     },
     {
       "owner": "independent-validator",
-      "taskID": "F005_RANK_POOL_ISOLATION",
-      "targetScope": "Independent adversarial cross-rank/cross-recipe/cross-patch/reagent pool fixtures, and whole-study holdout when available",
-      "acceptance": "Independent SHA-pinned PASS/FAIL verdict, no self-approval of new numeric claim"
+      "taskID": "F005_RETEST_RANK_POOL_CONTEXT_AND_ANCESTRY",
+      "targetScope": "Exact F002 repaired source, 12-case rank-pool fixture, 609-case metamorphic fixture, deterministic build, schema/Lua and isolation",
+      "acceptance": "Independent SHA-pinned 12/12 plus existing regression pass, no self-approval of numeric claim."
     }
-  ]
+  ],
+  "lastCoordinatorIntegrationUTC": "2026-10-29T16:03:00Z",
+  "quantizationDiagnostic": {
+    "modelBlob": "a2760e85247765a8e638cfd0bd05283314625d84",
+    "frozenTSMRows": 9,
+    "priority122Conflicts": 5,
+    "roundingFeasibleUnderHypothesizedFiveInputUnits": true,
+    "verifiedCurrentRetailEconomicValues": 0,
+    "conflictsResolved": 0
+  }
 }
