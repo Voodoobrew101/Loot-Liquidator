@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_SERIALIZED_METADATA_SOURCE_PROVENANCE_BOUNDARY",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-29T22:41:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "981551991b32d4fe1cde1566caace085036cf81e",
+  "verdict": "FAIL_SERIALIZED_SOURCE_METADATA_NOT_FULLY_ATTESTED",
+  "scope": "Synthetic independent detached-source review; no production files, live economic promotions or current-Retail holdout evidence.",
+  "subject": {
+    "path": "research/tools/working_estimates.js",
+    "gitBlobSHA": "3500fac51b69328cacb6c3ec5089561fcba2f2bb",
+    "contract": "working-estimate-source-context-v1.0.0"
+  },
+  "finding": "Serialized attestation sourceIdentity hashes selected source numeric fields and conditions but omits tooltipOnly, sources, verifiedDate and record status. Altering these fields after sealing is accepted under the original digest, so the seal does not attest all original source provenance and tooltip-only metadata.",
+  "v8Reproduction": {
+    "environment": "V8 JavaScript module harness with deterministic noncryptographic createHash substitute",
+    "passed": 3,
+    "failed": 6,
+    "controls": [
+      "evidence value change rejected",
+      "patch change rejected",
+      "working value change rejected"
+    ],
+    "undetected": [
+      "tooltipOnly.economicUse",
+      "tooltipOnly.displayOnly",
+      "tooltipOnly.sourceClaimID",
+      "sources",
+      "verifiedDate",
+      "status"
+    ],
+    "limitations": "Hash substitute only exercises field inclusion and validator control flow; native SHA-256 cross-process fixture submitted separately for execution."
+  },
+  "independentRegression": {
+    "path": "research/tests/v2/test_f005_serialized_metadata_integrity.js",
+    "cases": 14,
+    "expectedCurrentNativeResult": "8 pass, 6 fail (prediction; native test not yet run)",
+    "execution": "PENDING_NATIVE_NODE"
+  },
+  "safety": {
+    "newEconomicPromotions": 0,
+    "liveLeakDemonstrated": false,
+    "tooltipOnlyValuesUsedInWorkingE": false,
+    "workingFallbacksPreviewOnly": true
+  },
+  "counters": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedE": 116
+  },
+  "exactDeltas": {
+    "newTests": 14,
+    "newTestFiles": 1,
+    "sourceEvidenceFiles": 0,
+    "candidateRows": 0,
+    "workingNumericCells": 0,
+    "confidencePromotions": 0,
+    "productionFiles": 0
+  },
+  "repairOwner": "completion-engineer",
+  "repairRequirement": "Extend the detached source-identity attestation to cover original source provenance and tooltip-only metadata (including prohibitions), version the seal if semantics change, retain independently pinned digest, and rerun native detached-process regression plus full pipeline. Do not derive gold E from tooltip-only fields.",
+  "blockers": [
+    "Native Node regression not yet executed by this review; independent V8 stub is not cryptographic validation.",
+    "Current-Retail independent study holdouts remain absent; no economic promotion authorized."
+  ],
+  "nextTask": "F005_RETEST_SERIALIZED_METADATA_SEAL_AFTER_ENGINEER_REPAIR",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_NO_ECONOMIC_PROMOTION"
+}
