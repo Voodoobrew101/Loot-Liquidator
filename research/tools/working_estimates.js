@@ -138,6 +138,26 @@ function assertAdmitted(r) {
  * outputFamilyByItemID is optional reviewed canonical identity data, NOT an
  * inferred grouping from adjacent numeric item IDs.
  */
+// Reconstruct the serialized target from the current source on validation.
+// A stale preview must not retain a former patch, rank, mode or eligibility.
+function workingTargetContext(r) {
+  return {
+    contextID: "HYPOTHETICAL_PREVIEW_NOT_VERIFIED_BASELINE",
+    operationBasis: "ONE_COMPLETED_OPERATION",
+    inputCountPerOperation: r.inputCountPerOperation,
+    inputQualityRank: r.inputQualityRank ?? null,
+    outputQualityRank: r.outputQualityRank ?? null,
+    gameMode: r.conditions?.gameMode ?? "UNKNOWN",
+    patchWindow: r.conditions?.patchWindow ?? null,
+    sourceCharacterContext: r.conditions?.characterContext ?? "UNKNOWN",
+    sourceQuantityBasis: r.conditions?.quantityBasis ?? "UNKNOWN",
+    eligibilityStatus: r.conditions?.eligibilityStatus ?? "UNKNOWN",
+    eligibilityAssumedSatisfiedForPreview: true,
+    skillAndStats: "UNRESOLVED_NO_INVERSION_APPLIED",
+    sourceBaselineStatus: r.conditions?.baselineStatus ?? "UNKNOWN"
+  };
+}
+
 function applyWorkingEstimates(records, options = {}) {
   if (!Array.isArray(records)) throw Error("Expected records array");
   const poolMean = options.unresolvedRankPoolExpectedQuantity ?? 1;
@@ -177,21 +197,7 @@ function applyWorkingEstimates(records, options = {}) {
       conditionalYieldApplicable: true,
       zeroSemantics: "NO_ZERO_ASSERTION",
       uncertainty: "NO_STATISTICAL_INTERVAL_AVAILABLE_FROM_POLICY_IMPUTATION",
-      targetContext: {
-        contextID: "HYPOTHETICAL_PREVIEW_NOT_VERIFIED_BASELINE",
-        operationBasis: "ONE_COMPLETED_OPERATION",
-        inputCountPerOperation: r.inputCountPerOperation,
-        inputQualityRank: r.inputQualityRank ?? null,
-        outputQualityRank: r.outputQualityRank ?? null,
-        gameMode: r.conditions?.gameMode ?? "UNKNOWN",
-        patchWindow: r.conditions?.patchWindow ?? null,
-        sourceCharacterContext: r.conditions?.characterContext ?? "UNKNOWN",
-        sourceQuantityBasis: r.conditions?.quantityBasis ?? "UNKNOWN",
-        eligibilityStatus: r.conditions?.eligibilityStatus ?? "UNKNOWN",
-        eligibilityAssumedSatisfiedForPreview: true,
-        skillAndStats: "UNRESOLVED_NO_INVERSION_APPLIED",
-        sourceBaselineStatus: r.conditions?.baselineStatus ?? "UNKNOWN"
-      }
+      targetContext: workingTargetContext(r)
     };
     for (const f of FIELDS) {
       w.fieldConfidence[f] = raw[f] === null ? 0 : score(r[f]?.confidence);
@@ -313,6 +319,9 @@ function applyWorkingEstimates(records, options = {}) {
 
 function validateWorkingEstimates(records, options = {}) {
   const errors = [], allocations = new Map(), byRecordID = new Map();
+  const poolMean = options.unresolvedRankPoolExpectedQuantity ?? 1;
+  if (!finite(poolMean) || poolMean <= 0 || poolMean > Number.MAX_SAFE_INTEGER)
+    errors.push("INVALID_SYNTHETIC_RANK_POOL_POLICY");
   const {pools: expectedPools, poolByRecord: expectedPoolByRecord} =
     collectRankPools(records, options);
   // A donor ID must resolve to one unambiguous original evidence record.
@@ -323,6 +332,9 @@ function validateWorkingEstimates(records, options = {}) {
   for (const r of records) {
     const w = r.workingEstimate, id = r.recordID;
     if (!w) { errors.push("MISSING_WORKING_ESTIMATE:" + id); continue; }
+    if (!w.targetContext ||
+        stableDonorContext(w.targetContext) !== stableDonorContext(workingTargetContext(r)))
+      errors.push("WORKING_TARGET_CONTEXT_STALE:" + id);
     if (FIELDS.some(f => !finite(w[f]))) errors.push("NONFINITE_WORKING_FIELD:" + id);
     const p = w.dropChance, e = w.expectedQuantity, a = w.yieldMin, b = w.yieldMax;
     if (p < 0 || p > 1 || e < 0 || a > b) errors.push("WORKING_DOMAIN:" + id);
@@ -403,6 +415,10 @@ function validateWorkingEstimates(records, options = {}) {
               EPS * Math.max(1, Math.abs(e)))
           errors.push("RANK_POOL_MEMBER_EXPECTATION_MISMATCH:" + id);
       }
+      // Member E/P and pool sum may be mutually self-consistent after tampering.
+      // Anchor the serialized pool target to the explicit policy used to build it.
+      if (x.poolExpectedQuantity !== poolMean)
+        errors.push("RANK_POOL_POLICY_ANCHOR_MISMATCH:" + id);
       if (x.status !== "UNRESOLVED_RANK_ALLOCATION_POLICY_PRIOR")
         errors.push("RANK_POOL_STATUS_MISMATCH:" + id);
       if (x.physicalUpperBound !== false)

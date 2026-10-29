@@ -117,6 +117,14 @@ function run(root, options={}) {
     if(rankPoolChild.status!==0)
       throw Error("F005 rank-pool isolation failed\\n"+rankPoolChild.stdout+rankPoolChild.stderr);
     process.stdout.write(rankPoolChild.stdout);
+    // F005 policy-anchor and stale-context adversarial suite; retain validator
+    // ownership of its fixture and run it without editing the fixture.
+    const policyTest=path.join(root,"research/tests/v2/test_f005_pool_policy_anchor_and_target_context.js");
+    if(!fs.existsSync(policyTest)) throw Error("Required independent pool-policy check missing");
+    const policyChild=spawnSync(process.execPath,[policyTest],{cwd:root,encoding:"utf8"});
+    if(policyChild.status!==0)
+      throw Error("F005 pool-policy/target-context regression failed\\n"+policyChild.stdout+policyChild.stderr);
+    process.stdout.write(policyChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
