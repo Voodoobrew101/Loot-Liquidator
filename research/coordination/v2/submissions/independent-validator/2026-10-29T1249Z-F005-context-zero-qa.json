@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_PREVIEW_ISOLATION",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 1,
+  "status": "PROPOSED_FAIL_FOR_COORDINATOR_REVIEW",
+  "decision": "FAIL_INDEPENDENT_CONTEXT_AND_ZERO_SUPPORT_GATES",
+  "baseCommit": "640c0303f46de7001d9e96397ec02b81f97c8de5",
+  "resultCommit": "5591eae78c779c83be56bf2d9d1fc97ec5a770f4",
+  "resultCommitMeaning": "Substantive test+review artifact head; this submission is appended in a separate commit to avoid self-referential hashes",
+  "exactFilesChanged": [
+    "research/tests/v2/test_f005_context_and_zero_semantics.js",
+    "research/coordination/v2/reviews/2026-10-29T1248Z-F005-context-and-zero-boundary.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-29T1249Z-F005-context-zero-qa.json"
+  ],
+  "exactMappingKeysChanged": [],
+  "testedSyntheticCases": [
+    "F005-DONOR-RECIPE",
+    "F005-DONOR-SKILL",
+    "F005-DONOR-REAGENTS",
+    "F005-DONOR-OUTPUT-RANK",
+    "F005-ZERO-FORWARD",
+    "same-context donor positive control",
+    "contradictory donor exclusion",
+    "all-zero histogram inverse",
+    "single-family no-holdout provenance"
+  ],
+  "deltas": {
+    "newValidationTestFiles": 1,
+    "newIndependentReviewFiles": 1,
+    "newRoleSubmissionFiles": 1,
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "evidenceNumericCellsFilled": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "newlyReproducedBlockingContractFailures": 5,
+    "passingControls": 4
+  },
+  "hashes": {
+    "workingEstimatorBlobSHA": "928ef018e728ca0535947b83ecd63c0189def03c",
+    "modelBlobSHA": "76756fce7ae82cb601fb12c279d05f01b9df3eef",
+    "generatedCandidateBlobSHA": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "independentTestBlobSHA": "fe49f116c3b89e4633b47717c7b1586624db2745",
+    "reviewBlobSHA": "8637383278ad6f9844673ec446a90c78937801a3"
+  },
+  "testsActuallyRun": [
+    {
+      "name": "V8 execution of exact GitHub-fetched working-estimator/model/test blobs with strict-equivalence assertion shim",
+      "status": "FAIL",
+      "passed": 4,
+      "failed": 5,
+      "notes": "Reproduced four cross-context E transfers and P=0 positive support inconsistency; not a native Node run"
+    },
+    {
+      "name": "Five original source Git blob SHA comparisons against pinned manifest",
+      "status": "PASS",
+      "count": 5
+    },
+    {
+      "name": "GitHub test and review read-back",
+      "status": "PASS",
+      "testSHA": "fe49f116c3b89e4633b47717c7b1586624db2745",
+      "reviewSHA": "8637383278ad6f9844673ec446a90c78937801a3"
+    },
+    {
+      "name": "Readiness cross-artifact metadata",
+      "status": "PASS_METADATA_ONLY",
+      "workingNumericCells": 4072,
+      "admittedMappings": 1018,
+      "evidenceMissingCells": 514
+    }
+  ],
+  "testsNotRun": [
+    "native Node acceptance test on full repository checkout",
+    "node research/tools/run_completion_pipeline.js --check in this validator environment",
+    "Lua 5.1 candidate decoding and byte-for-byte compiler output comparison in this validator environment",
+    "full candidate JSON Schema validation in this validator environment",
+    "WoW Retail in-game API and client tests",
+    "independent whole-study current Retail matched holdout"
+  ],
+  "blockers": [
+    "working_estimates.js donorKey omits recipeSpellID, outputQualityRank, full reagent vector, effectiveSkill and other relevant context; four synthetic negative controls fail",
+    "TWW model forward() returns positive yield bounds when P=0, unlike inverseHistogram zero support",
+    "F003 has one 2024 study family and zero independent current-Retail holdout cohorts",
+    "Full generated Lua too large for direct connector file read; no native Node/Lua runtime checkout available here",
+    "Do not infer any existing candidate row is wrong from synthetic reproductions alone"
+  ],
+  "safeExistingState": {
+    "reportedWorkingCoverage": "4072/4072 preview-only",
+    "reportedRawEvidenceGaps": 514,
+    "reportedMissingEconomicE": 116,
+    "newLiveEVAuthorization": false,
+    "tooltipOnlyPromotion": false,
+    "modelBaselinePromotion": false,
+    "rawEvidenceAndFrozenTSMChanged": false,
+    "productionChanged": false,
+    "schedulesChanged": false
+  },
+  "nextTask": {
+    "id": "F005_CONTEXT_RETEST_AFTER_REPAIR",
+    "owner": "independent-validator",
+    "trigger": "New F002/F003 code blob SHA or a new independent holdout cohort",
+    "actions": [
+      "Run node research/tests/v2/test_f005_context_and_zero_semantics.js and require all 9 checks PASS",
+      "Run pipeline --check, Lua5.1 decode and JSON Schema; verify candidate and tooltip-only economic isolation",
+      "Check independent whole-author/session holdout before considering any model confidence promotion",
+      "If subjects remain byte-identical, pivot to another ready validation risk rather than repeat this fixture audit"
+    ]
+  }
+}
