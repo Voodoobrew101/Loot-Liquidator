@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "researchOnly": true,
-  "sourcesCount": 152,
-  "reviewEvents": 183,
-  "qaEvents": 58,
-  "approvedQaEvents": 57,
+  "sourcesCount": 157,
+  "reviewEvents": 208,
+  "qaEvents": 67,
+  "approvedQaEvents": 66,
   "warnings": [
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl dragonflight-serevite-r2-2022-dec-original",
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl ww-b006-2023-q3-8000",
@@ -15,26 +15,31 @@
     "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: batch012; original DF 5 source-cohort reconciliation JSONL rows are not canonical observation.schema.json records",
     "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: q17/q18 source reviews and three source-only observations; full original-directory replay still pending",
     "URL_CANONICALIZATION_REPAIR: merged 2 duplicate slash/URL variants after incremental V8 replay; global review and QA event counts unchanged.",
-    "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: batch017; full 95 JSONL-file replay blocked by tool-call ceiling; q19 reviews and master feedback incrementally replayed"
+    "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: batch017; full 95 JSONL-file replay blocked by tool-call ceiling; q19 reviews and master feedback incrementally replayed",
+    "invalid review: bullDozzer-200-20herb-mass-mills|sl-first-flower-4000herb-200mass-mills||https://www.reddit.com/r/woweconomy/comments/t8lubc",
+    "invalid review: gamedata-v0970-source-1d47c4a9|ll-v0970-tsm-import-unknown-original-cohort||https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua",
+    "invalid review: original-50-ore-R2-per-type|JD3K-MIDNIGHT-50-ORE-R2-THREE-TYPES||https://www.wowhead.com/spell=1231127/midnight-prospecting",
+    "invalid review: 800-casts-43-diamonds-3285-ore-used-715-saved|midnight-cardinalai-brilliant-silver-800-prospects||https://www.wowhead.com/item=237364/brilliant-silver-ore",
+    "invalid review: salvage-3-gems-plus-one-stone|midnight-crushing-spell-1231132||https://www.wowhead.com/spell=1231132/midnight-crushing"
   ],
   "strategies": {
     "ORIGINAL_DATASET": {
-      "reviewedClaims": 10,
-      "accepted": 10,
+      "reviewedClaims": 11,
+      "accepted": 11,
       "rejected": 0,
-      "points": 46
+      "points": 49
     },
     "DENOMINATOR_GUARD": {
-      "reviewedClaims": 10,
-      "accepted": 10,
+      "reviewedClaims": 11,
+      "accepted": 11,
       "rejected": 0,
-      "points": 28
+      "points": 30
     },
     "NUMERIC_INVARIANT": {
-      "reviewedClaims": 7,
-      "accepted": 7,
+      "reviewedClaims": 8,
+      "accepted": 8,
       "rejected": 0,
-      "points": 20
+      "points": 24
     },
     "WOWHEAD_COMMENT": {
       "reviewedClaims": 1,
@@ -85,10 +90,10 @@
       "points": 3
     },
     "SOURCE_DENOMINATOR_GUARD": {
-      "reviewedClaims": 1,
-      "accepted": 1,
+      "reviewedClaims": 2,
+      "accepted": 2,
       "rejected": 0,
-      "points": 6
+      "points": 8
     },
     "MASS_VS_STANDARD_NORMALIZATION": {
       "reviewedClaims": 2,
@@ -97,10 +102,10 @@
       "points": 5
     },
     "RECIPE_VECTOR": {
-      "reviewedClaims": 1,
-      "accepted": 1,
+      "reviewedClaims": 2,
+      "accepted": 2,
       "rejected": 0,
-      "points": 3
+      "points": 5
     },
     "SOURCE_SAMPLE_AMBIGUITY": {
       "reviewedClaims": 1,
@@ -109,10 +114,10 @@
       "points": 2
     },
     "SOURCE_INTERPRETATION_CORRECTION": {
-      "reviewedClaims": 1,
-      "accepted": 1,
+      "reviewedClaims": 2,
+      "accepted": 2,
       "rejected": 0,
-      "points": 4
+      "points": 8
     },
     "RECIPE_OPERATION_IDENTITY": {
       "reviewedClaims": 1,
@@ -121,6 +126,24 @@
       "points": 6
     },
     "SOURCE_LINEAGE_DEDUP": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 3
+    },
+    "TSM_SOURCE_SEMANTICS": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 2
+    },
+    "RANK_EXCLUSIVITY": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 2
+    },
+    "INDEPENDENT_COHORT_COMPARE": {
       "reviewedClaims": 1,
       "accepted": 1,
       "rejected": 0,
@@ -297,29 +320,35 @@
         "profile:dragonflight:190394",
         "profile:dragonflight:190311",
         "tsm:prospect:190311:192870:L1281",
-        "tsm:prospect:190311:192871:L1282"
+        "tsm:prospect:190311:192871:L1282",
+        "tsm:prospect:190394:192837:L1402",
+        "tsm:prospect:190394:192840:L1405",
+        "tsm:prospect:190394:192843:L1408",
+        "tsm:prospect:190394:192846:L1411",
+        "tsm:prospect:190394:192849:L1414",
+        "tsm:prospect:190394:192852:L1417"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual cast denominator",
-        "per-cast rank hit histogram",
-        "explicit output item IDs",
-        "current-Retail patch bridge",
-        "skill 250 threshold contradiction"
+        "current Retail patch bridge",
+        "actual completed-cast counts",
+        "matched output rank histograms"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 4,
+      "reviewEvents": 5,
       "originalStudyUrls": [
         "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing"
       ],
       "changeTriggers": [
-        "Q19_BETA_SOURCE_INTERNAL_CONTRADICTION"
+        "Q19_BETA_SOURCE_INTERNAL_CONTRADICTION",
+        "Q20_BETA_CONTEXT_REUSE"
       ],
       "revisitReasons": [
         "Reuse archived primary source, no independent re-count",
         "Reused archived original source; no duplicate fetch",
         "Reused original sheet as one study, avoided repeat fetch",
-        "Original already archived; R3 diamond at reported skill 68/113 contradicts author's R3 threshold; no new cohort"
+        "Original already archived; R3 diamond at reported skill 68/113 contradicts author's R3 threshold; no new cohort",
+        "REUSED historical beta study, no universal rank coefficient"
       ]
     },
     {
@@ -401,16 +430,85 @@
       ]
     },
     {
+      "canonicalUrl": "https://github.com/voodoobrew101/loot-liquidator/blob/2ad202077f9b5b11c22f014bc7b5c9d1776f6b1c/gamedata.lua",
+      "urls": [
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/2ad202077f9b5b11c22f014bc7b5c9d1776f6b1c/GameData.lua"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "gamedata-tsm-derived-source-rows-20261028"
+      ],
+      "datasetIDs": [
+        "q20-35-source-alternative-rows"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:mill:187699:175788:L1932",
+        "tsm:prospect:190395:192837:L1440",
+        "tsm:prospect:190395:192840:L1443",
+        "tsm:prospect:190395:192843:L1446",
+        "tsm:prospect:190395:192846:L1449",
+        "tsm:prospect:190395:192849:L1452",
+        "tsm:prospect:190395:192852:L1455",
+        "tsm:prospect:190395:192856:L1458",
+        "tsm:prospect:190395:192859:L1461",
+        "tsm:prospect:190395:192862:L1464",
+        "tsm:prospect:190395:192866:L1467",
+        "tsm:prospect:190395:192869:L1470",
+        "tsm:prospect:190395:192872:L1473",
+        "tsm:prospect:190395:192880:L1474",
+        "tsm:prospect:190395:194545:L1475",
+        "tsm:prospect:190396:192837:L1478",
+        "tsm:prospect:190396:192840:L1481",
+        "tsm:prospect:190396:192843:L1484",
+        "tsm:prospect:190396:192846:L1487",
+        "tsm:prospect:190396:192849:L1490",
+        "tsm:prospect:190396:192852:L1493",
+        "tsm:prospect:190396:192856:L1496",
+        "tsm:prospect:190396:192859:L1499",
+        "tsm:prospect:190396:192862:L1502",
+        "tsm:prospect:190396:192866:L1505",
+        "tsm:prospect:190396:192869:L1508",
+        "tsm:prospect:190396:192872:L1511",
+        "tsm:prospect:190396:192880:L1512",
+        "tsm:prospect:190396:194545:L1513",
+        "tsm:prospect:190394:192837:L1402",
+        "tsm:prospect:190394:192840:L1405",
+        "tsm:prospect:190394:192843:L1408",
+        "tsm:prospect:190394:192846:L1411",
+        "tsm:prospect:190394:192849:L1414",
+        "tsm:prospect:190394:192852:L1417"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "original TSM transform and units",
+        "2026 measured per-cast P and E",
+        "exact rank conditional yields"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/2ad202077f9b5b11c22f014bc7b5c9d1776f6b1c/GameData.lua"
+      ],
+      "changeTriggers": [
+        "Q20_ALL_35_SOURCE_FIELD_SEMANTIC_CONFLICT"
+      ],
+      "revisitReasons": [
+        "REUSED pinned source; all 35 matRate>amountOfMats, 28 rank-one alternatives duplicated across output ranks"
+      ]
+    },
+    {
       "canonicalUrl": "https://github.com/voodoobrew101/loot-liquidator/blob/main/gamedata.lua",
       "urls": [
         "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua"
       ],
       "observationIDs": [],
       "studyIDs": [
-        "ll-v0970-tsm-import-unknown-original-cohort"
+        "ll-v0970-tsm-import-unknown-original-cohort",
+        "ll-gamedata-tsmretail-legacy-31-rows"
       ],
       "datasetIDs": [
-        "gamedata-v0970-source-1d47c4a9"
+        "gamedata-v0970-source-1d47c4a9",
+        "legacy-q20-b018-reused-3"
       ],
       "reviewedRecordKeys": [
         "tsm:prospect:188658:192837:L1174",
@@ -494,27 +592,70 @@
         "tsm:prospect:189143:192870:L1243",
         "tsm:prospect:189143:192871:L1244",
         "tsm:prospect:190311:192870:L1281",
-        "tsm:prospect:190311:192871:L1282"
+        "tsm:prospect:190311:192871:L1282",
+        "tsm:mill:200061:190322:L1996",
+        "tsm:mill:200061:198412:L1998",
+        "tsm:mill:200061:198413:L1999",
+        "tsm:mill:200061:198414:L2000",
+        "tsm:mill:200061:198415:L2001",
+        "tsm:mill:187699:173056:L1930",
+        "tsm:mill:187699:173057:L1931",
+        "tsm:prospect:168185:168188:L1114",
+        "tsm:prospect:168185:168189:L1115",
+        "tsm:prospect:168185:168190:L1116",
+        "tsm:prospect:168185:168191:L1117",
+        "tsm:prospect:168185:168192:L1118",
+        "tsm:prospect:168185:168193:L1119",
+        "tsm:prospect:168185:168635:L1120",
+        "tsm:prospect:171828:173108:L1123",
+        "tsm:prospect:171828:173109:L1124",
+        "tsm:prospect:171828:173110:L1125",
+        "tsm:prospect:171828:173170:L1126",
+        "tsm:prospect:171828:173171:L1127",
+        "tsm:prospect:171828:173172:L1128",
+        "tsm:prospect:171828:173173:L1129",
+        "tsm:prospect:171829:173108:L1132",
+        "tsm:prospect:171829:173109:L1133",
+        "tsm:prospect:171829:173110:L1134",
+        "tsm:prospect:171829:173173:L1135",
+        "tsm:prospect:171830:173108:L1138",
+        "tsm:prospect:171830:173109:L1139",
+        "tsm:prospect:171830:173110:L1140",
+        "tsm:prospect:171830:173172:L1141",
+        "tsm:prospect:171831:173108:L1144",
+        "tsm:prospect:171831:173109:L1145",
+        "tsm:prospect:171831:173110:L1146",
+        "tsm:prospect:171831:173170:L1147",
+        "tsm:prospect:171832:173108:L1150",
+        "tsm:prospect:171832:173109:L1151",
+        "tsm:prospect:171832:173110:L1152",
+        "tsm:prospect:171832:173171:L1153",
+        "tsm:prospect:171833:173108:L1156"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "exact-rank hit probability",
-        "exact-rank expected quantity",
-        "current Retail patch and skill",
-        "actual cast counts"
+        "2026 Retail cast histograms",
+        "operation semantics",
+        "patch/skill"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 3,
-      "originalStudyUrls": [],
+      "reviewEvents": 5,
+      "originalStudyUrls": [
+        "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua"
+      ],
       "changeTriggers": [
         "REV17_EXACT_DRACONIUM_RANK_AUDIT",
         "REV18_39_EXACT_MILLING_LINES",
-        "Q19_39_SOURCE_LINE_RANK_AUDIT"
+        "Q19_39_SOURCE_LINE_RANK_AUDIT",
+        "Q20_IMMUTABLE_SOURCE_STATUS_ENUM_CORRECTION",
+        "REUSED_SOURCE_CONTEXT_RECONCILIATION"
       ],
       "revisitReasons": [
         "37 source rows checked; rank-family P/E duplicates must remain unknown for exact ranks",
         "39 pinned GameData rows independently matched to input/output/source line; no new original TSM study",
-        "Reused TSM historical derivative; all source IDs and input groups matched; no new measurements"
+        "Reused TSM historical derivative; all source IDs and input groups matched; no new measurements",
+        "Reused historical TSM derivative; prior REUSED status not an accepted source-memory enum",
+        "TSM matRate and amountOfMats operation units differ by input family; no universal coefficient"
       ]
     },
     {
@@ -2036,6 +2177,95 @@
       "attributionCorrections": []
     },
     {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
+      ],
+      "observationIDs": [
+        "midnight-headtripvee-q20-reconciliation-237359-2026-10-28-1811-midnight-q20-batch018",
+        "midnight-headtripvee-q20-reconciliation-237361-2026-10-28-1811-midnight-q20-batch018",
+        "midnight-headtripvee-q20-reconciliation-237364-2026-10-28-1811-midnight-q20-batch018",
+        "midnight-headtripvee-q20-reconciliation-237365-2026-10-28-1811-midnight-q20-batch018"
+      ],
+      "studyIDs": [
+        "headtripvee-apr2026-original-rank-separated-ore-percentage-table"
+      ],
+      "datasetIDs": [
+        "q20-batch018-raw-source-out-of-scope-2cells",
+        "four-q20-ore-rank-cohorts-3000-3500-4500-2000"
+      ],
+      "reviewedRecordKeys": [
+        "237359:Prospect:242553",
+        "237359:Prospect:242554",
+        "237359:Prospect:242606",
+        "237359:Prospect:242607",
+        "237359:Prospect:242786",
+        "237359:Prospect:242788",
+        "237361:Prospect:242553",
+        "237361:Prospect:242554",
+        "237361:Prospect:242606",
+        "237361:Prospect:242607",
+        "237361:Prospect:242786",
+        "237361:Prospect:242788",
+        "237364:Prospect:242553",
+        "237364:Prospect:242554",
+        "237364:Prospect:242612",
+        "237364:Prospect:242613",
+        "237364:Prospect:242786",
+        "237364:Prospect:242788",
+        "237365:Prospect:242553",
+        "237365:Prospect:242554",
+        "237365:Prospect:242608",
+        "237365:Prospect:242612",
+        "237365:Prospect:242613",
+        "237365:Prospect:242786",
+        "237365:Prospect:242788",
+        "midnight:237359:242553:L729",
+        "midnight:237359:242554:L730",
+        "midnight:237359:242606:L732",
+        "midnight:237359:242607:L731",
+        "midnight:237359:242786:L727",
+        "midnight:237359:242788:L728",
+        "midnight:237361:242553:L740",
+        "midnight:237361:242554:L741",
+        "midnight:237361:242606:L743",
+        "midnight:237361:242607:L742",
+        "midnight:237364:242553:L773",
+        "midnight:237364:242554:L774",
+        "midnight:237364:242612:L776",
+        "midnight:237364:242613:L775",
+        "midnight:237364:242786:L771",
+        "midnight:237364:242788:L772",
+        "midnight:237365:242553:L784",
+        "midnight:237365:242554:L785",
+        "midnight:237365:242608:L788",
+        "midnight:237365:242612:L787",
+        "midnight:237365:242613:L786",
+        "midnight:237365:242786:L782",
+        "midnight:237365:242788:L783"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual completed casts",
+        "zero-inclusive per-output cast histogram",
+        "ore consumption versus initial stock",
+        "Resourcefulness",
+        "skill/knowledge/gear",
+        "actual patch dates"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 2,
+      "originalStudyUrls": [],
+      "changeTriggers": [
+        "IMMUTABLE_READBACK_SCOPE_CLARIFICATION",
+        "QUEUE20_EXACT_RANK_AUDIT"
+      ],
+      "revisitReasons": [
+        "Two original Copper R2 byproduct percentages were preserved as unassigned source context, not claimed assignment or promoted numeric fields",
+        "23 rank-specific gross-input references compare against GameData, without promotion"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1v5esk0/midnight_jc",
       "urls": [
         "https://www.reddit.com/r/woweconomy/comments/1v5esk0/midnight_jc/"
@@ -2113,12 +2343,15 @@
         "https://www.reddit.com/r/woweconomy/comments/c8lcye"
       ],
       "observationIDs": [
-        "ww-b008-osmenite-live-mass-16760"
+        "ww-b008-osmenite-live-mass-16760",
+        "legacy-q20-b018-osmenite-2019-original-cohort-1-source-reconciliation"
       ],
       "studyIDs": [
         "ww-b008-osmenite-live-mass-16760"
       ],
-      "datasetIDs": [],
+      "datasetIDs": [
+        "legacy-q20-b018-osmenite-16760-reused"
+      ],
       "reviewedRecordKeys": [
         "168185:Prospect:168188",
         "168185:Prospect:168189",
@@ -2126,17 +2359,32 @@
         "168185:Prospect:168191",
         "168185:Prospect:168192",
         "168185:Prospect:168193",
-        "168185:Prospect:168635"
+        "168185:Prospect:168635",
+        "tsm:prospect:168185:168188:L1114",
+        "tsm:prospect:168185:168189:L1115",
+        "tsm:prospect:168185:168190:L1116",
+        "tsm:prospect:168185:168191:L1117",
+        "tsm:prospect:168185:168192:L1118",
+        "tsm:prospect:168185:168193:L1119",
+        "tsm:prospect:168185:168635:L1120"
       ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual cast count",
+        "histograms",
+        "2026 patch"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/c8lcye"
       ],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "changeTriggers": [
+        "REUSED_ORIGINAL"
+      ],
+      "revisitReasons": [
+        "16760 ore and seven original output totals; no actual cast count"
+      ]
     },
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/cj6ju4",
@@ -2144,12 +2392,15 @@
         "https://www.reddit.com/r/woweconomy/comments/cj6ju4"
       ],
       "observationIDs": [
-        "ww-b008-osmenite-live-mass-6800"
+        "ww-b008-osmenite-live-mass-6800",
+        "legacy-q20-b018-osmenite-2019-original-cohort-2-source-reconciliation"
       ],
       "studyIDs": [
         "ww-b008-osmenite-live-mass-6800"
       ],
-      "datasetIDs": [],
+      "datasetIDs": [
+        "legacy-q20-b018-osmenite-6800-reused"
+      ],
       "reviewedRecordKeys": [
         "168185:Prospect:168188",
         "168185:Prospect:168189",
@@ -2157,17 +2408,32 @@
         "168185:Prospect:168191",
         "168185:Prospect:168192",
         "168185:Prospect:168193",
-        "168185:Prospect:168635"
+        "168185:Prospect:168635",
+        "tsm:prospect:168185:168188:L1114",
+        "tsm:prospect:168185:168189:L1115",
+        "tsm:prospect:168185:168190:L1116",
+        "tsm:prospect:168185:168191:L1117",
+        "tsm:prospect:168185:168192:L1118",
+        "tsm:prospect:168185:168193:L1119",
+        "tsm:prospect:168185:168635:L1120"
       ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual cast count",
+        "histograms",
+        "2026 patch"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/cj6ju4"
       ],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "changeTriggers": [
+        "REUSED_ORIGINAL"
+      ],
+      "revisitReasons": [
+        "6800 ore and seven original output totals; no actual cast count"
+      ]
     },
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/k12a5o",
@@ -2256,6 +2522,45 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/k6d0qk",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/k6d0qk"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "laestrite-chart-3300-lead"
+      ],
+      "datasetIDs": [
+        "legacy-q20-b018-unparsed-chart"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:171828:173108:L1123",
+        "tsm:prospect:171828:173109:L1124",
+        "tsm:prospect:171828:173110:L1125",
+        "tsm:prospect:171828:173170:L1126",
+        "tsm:prospect:171828:173171:L1127",
+        "tsm:prospect:171828:173172:L1128",
+        "tsm:prospect:171828:173173:L1129"
+      ],
+      "status": "NEEDS_RECHECK",
+      "missingFields": [
+        "original chart outputs",
+        "denominator interpretation",
+        "patch bridge"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/k6d0qk"
+      ],
+      "changeTriggers": [
+        "NEW_SOURCE_LEAD"
+      ],
+      "revisitReasons": [
+        "3300 mass-prospect chart mentioned but numerical data unverified"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/k6fuik",
       "urls": [
         "https://www.reddit.com/r/woweconomy/comments/k6fuik"
@@ -2270,7 +2575,9 @@
         "ww-b008-laestrite-10000-commenter",
         "reddit-k6fuik-laestrite-10000"
       ],
-      "datasetIDs": [],
+      "datasetIDs": [
+        "legacy-q20-b018-reused-1"
+      ],
       "reviewedRecordKeys": [
         "171828:Prospect:173108",
         "171828:Prospect:173109",
@@ -2278,17 +2585,32 @@
         "171828:Prospect:173170",
         "171828:Prospect:173171",
         "171828:Prospect:173172",
-        "171828:Prospect:173173"
+        "171828:Prospect:173173",
+        "tsm:prospect:171828:173108:L1123",
+        "tsm:prospect:171828:173109:L1124",
+        "tsm:prospect:171828:173110:L1125",
+        "tsm:prospect:171828:173170:L1126",
+        "tsm:prospect:171828:173171:L1127",
+        "tsm:prospect:171828:173172:L1128",
+        "tsm:prospect:171828:173173:L1129"
       ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
+      "status": "PARTIAL",
+      "missingFields": [
+        "2026 Retail cast histograms",
+        "operation semantics",
+        "patch/skill"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/k6fuik"
       ],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "changeTriggers": [
+        "REUSED_SOURCE_CONTEXT_RECONCILIATION"
+      ],
+      "revisitReasons": [
+        "10000 ore source totals; gross normalized means not cast E"
+      ]
     },
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/r80lkp",
@@ -2394,32 +2716,92 @@
         "legacy-batch002-187699-aggregate-20261028"
       ],
       "studyIDs": [
-        "reddit-t8lubc-firstflower-4000"
+        "reddit-t8lubc-firstflower-4000",
+        "sl-first-flower-4000herb-200mass-mills",
+        "firstflower-2022-03-07-bulldozzer-200-mass-casts"
       ],
       "datasetIDs": [
-        "reddit-t8lubc-firstflower-4000"
+        "reddit-t8lubc-firstflower-4000",
+        "bullDozzer-200-20herb-mass-mills",
+        "firstflower-4000-herbs-200-mass-operations"
       ],
       "reviewedRecordKeys": [
         "output-main:tsm:mill:187699:173056:L1930",
         "output-main:tsm:mill:187699:173057:L1931",
-        "output-main:tsm:mill:187699:175788:L1932"
+        "output-main:tsm:mill:187699:175788:L1932",
+        "tsm:mill:187699:173056:L1930",
+        "tsm:mill:187699:173057:L1931",
+        "tsm:mill:187699:175788:L1932"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "zero-inclusive per-cast output distribution",
-        "skill/gear",
-        "2026 patch bridge"
+        "2026 standard five-herb cast histogram",
+        "mass versus standard recipe equivalence",
+        "current patch eligibility",
+        "per-cast occurrence and positive bounds"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/t8lubc"
       ],
       "changeTriggers": [
-        "new assigned First Flower TSM rows"
+        "new assigned First Flower TSM rows",
+        "Q20_IMMUTABLE_SOURCE_STATUS_ENUM_CORRECTION",
+        "Q20_DIFFERENT_OPERATION_DENOMINATOR_GUARD"
       ],
       "revisitReasons": [
-        "Reused existing 4000-herb/200 mass-cast original; no duplicate source archive"
+        "Reused existing 4000-herb/200 mass-cast original; no duplicate source archive",
+        "Reused historical 20-herb mass cohort; prior REUSED status not an accepted source-memory enum",
+        "REUSED original; 200 actual 20-herb mass operations not the five-herb TSM row"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/yaxw94/a_look_at_dragonflight_milling/",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/yaxw94/a_look_at_dragonflight_milling/"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "df-prismatic-fish-tired-fed-up-2022-comment"
+      ],
+      "datasetIDs": [
+        "fish-approx-2000-ambiguous-units-3p8-unverified-output",
+        "fish-approx-2000-ambiguous-units-3p8-pigment-mean"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:mill:200061:190322:L1996",
+        "tsm:mill:200061:198412:L1998",
+        "tsm:mill:200061:198413:L1999",
+        "tsm:mill:200061:198414:L2000",
+        "tsm:mill:200061:198415:L2001",
+        "tsm:mill:200061:198416:L2002",
+        "tsm:mill:200061:198417:L2003",
+        "tsm:mill:200061:198418:L2004",
+        "tsm:mill:200061:198419:L2005",
+        "tsm:mill:200061:198420:L2006",
+        "tsm:mill:200061:198421:L2007",
+        "tsm:mill:200061:198422:L2008",
+        "tsm:mill:200061:198423:L2009"
+      ],
+      "status": "DISCOVERED",
+      "missingFields": [
+        "whether 2k refers to fish or completed casts",
+        "per-cast rank-specific counts",
+        "profession skill",
+        "observed patch",
+        "exact Rousing output item IDs"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 2,
+      "originalStudyUrls": [],
+      "changeTriggers": [
+        "Q20_IMMUTABLE_VERBATIM_UNIT_ERRATUM",
+        "Q20_NEW_SEPARATE_AUTHOR_HISTORICAL_FISH_COMMENT"
+      ],
+      "revisitReasons": [
+        "Correct batch018 overinterpretation of original comment; no numerical field promotion",
+        "Previously unindexed separate author; descriptive mean only, not eligible for exact output numeric promotion"
       ]
     },
     {
@@ -2492,18 +2874,44 @@
       "studyIDs": [
         "dragonflight-serevite-r2-2022-dec-original"
       ],
-      "datasetIDs": [],
+      "datasetIDs": [
+        "dragonflight-r2-serevite-1000-casts"
+      ],
       "reviewedRecordKeys": [
         "190396:Prospect:192872",
-        "190396:Prospect:192880"
+        "190396:Prospect:192880",
+        "tsm:prospect:190396:192837:L1478",
+        "tsm:prospect:190396:192840:L1481",
+        "tsm:prospect:190396:192843:L1484",
+        "tsm:prospect:190396:192846:L1487",
+        "tsm:prospect:190396:192849:L1490",
+        "tsm:prospect:190396:192852:L1493",
+        "tsm:prospect:190396:192856:L1496",
+        "tsm:prospect:190396:192859:L1499",
+        "tsm:prospect:190396:192862:L1502",
+        "tsm:prospect:190396:192866:L1505",
+        "tsm:prospect:190396:192869:L1508",
+        "tsm:prospect:190396:192872:L1511",
+        "tsm:prospect:190396:192880:L1512",
+        "tsm:prospect:190396:194545:L1513"
       ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
-      "originalStudyUrls": [],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "status": "PARTIAL",
+      "missingFields": [
+        "2026 patch bridge",
+        "same-character rank-one output histogram",
+        "current skill/spec match"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/zkay8v"
+      ],
+      "changeTriggers": [
+        "Q20_HISTORICAL_R2_COHORT_REUSE"
+      ],
+      "revisitReasons": [
+        "REUSED original; do not transpose R2 sample to R1 output or 2026"
+      ]
     },
     {
       "canonicalUrl": "https://www.scribd.com/document/359130779/full-legion-worksheet",
@@ -2993,6 +3401,38 @@
       "revisitReasons": []
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
+      "urls": [
+        "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-midnight-jewelcrafting-specialization-guide"
+      ],
+      "datasetIDs": [
+        "ore-specific-knowledge-node-diamond-eligibility"
+      ],
+      "reviewedRecordKeys": [
+        "midnight:237365:242608:L788",
+        "midnight:237366:242608:L799"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "current in-client node-state test",
+        "exact diamond drop chance",
+        "skill/rank-matched histograms"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [],
+      "changeTriggers": [
+        "QUEUE20_ELIGIBILITY_GATING_CHECK"
+      ],
+      "revisitReasons": [
+        "Ore-specific nodes are necessary conditional context, not universal Diamond coefficients"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/item=123919/felslate",
       "urls": [
         "https://www.wowhead.com/item=123919/felslate"
@@ -3179,7 +3619,8 @@
         "bfa-jiyao-riverbud-44-mass-revised",
         "legacy-q19-b017-bfa-jiyao-2018-seven-herb-massmill",
         "legacy-q19-b017-bfa-baadkitty-2018-seven-herb-200each",
-        "legacy-q19-b017-bfa-kidneph-2018-six-herb-1000each"
+        "legacy-q19-b017-bfa-kidneph-2018-six-herb-1000each",
+        "legacy-q20-b018-reused-0"
       ],
       "reviewedRecordKeys": [
         "output-main:tsm:mill:152505:153635:L1862",
@@ -3242,16 +3683,25 @@
         "compiled:mill:152507:153669:L170",
         "compiled:mill:152508:153635:L173",
         "compiled:mill:152508:153636:L174",
-        "compiled:mill:152508:153669:L175"
+        "compiled:mill:152508:153669:L175",
+        "historical:bfa:mass-mill:152506:153635:256218:jiyao",
+        "historical:bfa:mass-mill:152506:153636:256218:jiyao",
+        "historical:bfa:mass-mill:152506:153669:256218:jiyao",
+        "historical:bfa:mass-mill:152507:153635:256223:jiyao",
+        "historical:bfa:mass-mill:152507:153636:256223:jiyao",
+        "historical:bfa:mass-mill:152507:153669:256223:jiyao",
+        "historical:bfa:mass-mill:152508:153635:256221:jiyao",
+        "historical:bfa:mass-mill:152508:153636:256221:jiyao",
+        "historical:bfa:mass-mill:152508:153669:256221:jiyao"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual completed casts",
-        "skill/patch",
-        "per-cast zeros"
+        "2026 Retail cast histograms",
+        "operation semantics",
+        "patch/skill"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 11,
+      "reviewEvents": 12,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=153669/viridescent-pigment"
       ],
@@ -3264,7 +3714,8 @@
         "exact seven assigned Ultramarine E rows",
         "REUSED_PRIMARY_UPDATED_JIYAO_TABLE_WITH_NUMERIC_DISCREPANCY",
         "REUSED_ORIGINAL_REVISED_MASS_CAST_MEANS_3_HERBS",
-        "REUSED_INDEPENDENT_ORIGINAL_COHORT"
+        "REUSED_INDEPENDENT_ORIGINAL_COHORT",
+        "REUSED_SOURCE_CONTEXT_RECONCILIATION"
       ],
       "revisitReasons": [
         "Reuse archived primary source, no independent re-count",
@@ -3277,7 +3728,8 @@
         "44 Riverbud mass casts latest means 16.16/6.91/2.05 per 20 vs compiled nominal five 4.020833/1.508333/0.65; do not double-count 39-cast earlier snapshot",
         "Reconciled 177 Star Moss, 106 Sea Stalk, 103 Siren's Pollen actual mass casts; means per 20 herbs. One author, not three independent studies.",
         "200 initial herbs per type; independent from Jiyao, do not infer 10 actual mass casts.",
-        "1000 initial herbs per type; independent from Jiyao/Baadkitty, not new source."
+        "1000 initial herbs per type; independent from Jiyao/Baadkitty, not new source.",
+        "Nine already-admitted mass-20 output means; no new mapping credit"
       ]
     },
     {
@@ -3640,28 +4092,29 @@
         "tsm:mill:200061:198421:L2007",
         "tsm:mill:200061:198422:L2008",
         "tsm:mill:200061:198423:L2009",
-        "200061:Mill:198413"
+        "200061:Mill:198413",
+        "tsm:mill:200061:198413:L1999"
       ],
       "status": "PARTIAL",
       "missingFields": [
         "per-cast hit histogram",
-        "positive yield min/max",
-        "skill and specialization",
-        "exact cast date and 2026 Retail bridge",
-        "unreported fish output eligibility"
+        "exact patch and skill",
+        "2026 Retail eligibility"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=200061/prismatic-leaper"
       ],
       "changeTriggers": [
         "QUEUE_REV14_FISH_ID",
-        "REV18_ORIGINAL_ID_RECONCILIATION"
+        "REV18_ORIGINAL_ID_RECONCILIATION",
+        "Q20_SERENE_R2_NOW_ASSIGNED"
       ],
       "revisitReasons": [
         "Assigned fish input identity; 3-cast primary comment confirms milling but not target output",
-        "Reused existing original 3-cast report; two assigned historical E reconstructed; corrected mistaken Serene R2 source-memory key 198419 to 198413; no independent new study"
+        "Reused existing original 3-cast report; two assigned historical E reconstructed; corrected mistaken Serene R2 source-memory key 198419 to 198413; no independent new study",
+        "Reuse previously indexed original; newly in-scope historical E=3/3 for 198413, not a new cohort"
       ],
       "attributionCorrections": [
         {
@@ -5854,7 +6307,8 @@
       ],
       "datasetIDs": [
         "osulivan-2020-six-ore-aggregate-table",
-        "one-author-six-cohorts"
+        "one-author-six-cohorts",
+        "legacy-q20-b018-reused-2"
       ],
       "reviewedRecordKeys": [
         "171828:Prospect:173108",
@@ -5907,25 +6361,44 @@
         "output-main:tsm:prospect:171833:173171:L1160",
         "output-main:tsm:prospect:171833:173172:L1161",
         "output-main:tsm:prospect:171833:173173:L1162",
-        "profile:compiled:prospect:171828"
+        "profile:compiled:prospect:171828",
+        "tsm:prospect:171829:173108:L1132",
+        "tsm:prospect:171829:173109:L1133",
+        "tsm:prospect:171829:173110:L1134",
+        "tsm:prospect:171829:173173:L1135",
+        "tsm:prospect:171830:173108:L1138",
+        "tsm:prospect:171830:173109:L1139",
+        "tsm:prospect:171830:173110:L1140",
+        "tsm:prospect:171830:173172:L1141",
+        "tsm:prospect:171831:173108:L1144",
+        "tsm:prospect:171831:173109:L1145",
+        "tsm:prospect:171831:173110:L1146",
+        "tsm:prospect:171831:173170:L1147",
+        "tsm:prospect:171832:173108:L1150",
+        "tsm:prospect:171832:173109:L1151",
+        "tsm:prospect:171832:173110:L1152",
+        "tsm:prospect:171832:173171:L1153",
+        "tsm:prospect:171833:173108:L1156"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual casts",
-        "recipe and patch",
-        "per-cast outputs"
+        "2026 Retail cast histograms",
+        "operation semantics",
+        "patch/skill"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://www.wowhead.com/spell=311949/mass-prospect-solenium"
       ],
       "changeTriggers": [
-        "Original spell page explicitly says 20 Solenium ore per mass cast, but older archive assigns batch=5 to all six ore cohorts"
+        "Original spell page explicitly says 20 Solenium ore per mass cast, but older archive assigns batch=5 to all six ore cohorts",
+        "REUSED_SOURCE_CONTEXT_RECONCILIATION"
       ],
       "revisitReasons": [
         "Resolve recipe/batch ambiguity; source values explicitly per ore and cannot be called 5-ore cast means",
-        "Reused archive; original page recheck anti-bot blocked"
+        "Reused archive; original page recheck anti-bot blocked",
+        "Six ore cohorts from one author; per-ore not per-cast E"
       ]
     },
     {
@@ -5966,10 +6439,12 @@
       ],
       "observationIDs": [],
       "studyIDs": [
-        "wowhead-dragon-isles-prospecting-bugy-two-draconium-cohorts"
+        "wowhead-dragon-isles-prospecting-bugy-two-draconium-cohorts",
+        "dragon-isles-prospecting-spell-374627"
       ],
       "datasetIDs": [
-        "bugy-draconium-2x2000ore-quality-unassigned"
+        "bugy-draconium-2x2000ore-quality-unassigned",
+        "spell-reagent-five-ore"
       ],
       "reviewedRecordKeys": [
         "tsm:prospect:188658:192837:L1174",
@@ -6001,22 +6476,60 @@
         "tsm:prospect:188658:192865:L1200",
         "tsm:prospect:188658:192866:L1201",
         "tsm:prospect:188658:192867:L1202",
-        "tsm:prospect:188658:192868:L1203"
+        "tsm:prospect:188658:192868:L1203",
+        "tsm:prospect:190395:192837:L1440",
+        "tsm:prospect:190395:192840:L1443",
+        "tsm:prospect:190395:192843:L1446",
+        "tsm:prospect:190395:192846:L1449",
+        "tsm:prospect:190395:192849:L1452",
+        "tsm:prospect:190395:192852:L1455",
+        "tsm:prospect:190395:192856:L1458",
+        "tsm:prospect:190395:192859:L1461",
+        "tsm:prospect:190395:192862:L1464",
+        "tsm:prospect:190395:192866:L1467",
+        "tsm:prospect:190395:192869:L1470",
+        "tsm:prospect:190395:192872:L1473",
+        "tsm:prospect:190395:192880:L1474",
+        "tsm:prospect:190395:194545:L1475",
+        "tsm:prospect:190396:192837:L1478",
+        "tsm:prospect:190396:192840:L1481",
+        "tsm:prospect:190396:192843:L1484",
+        "tsm:prospect:190396:192846:L1487",
+        "tsm:prospect:190396:192849:L1490",
+        "tsm:prospect:190396:192852:L1493",
+        "tsm:prospect:190396:192856:L1496",
+        "tsm:prospect:190396:192859:L1499",
+        "tsm:prospect:190396:192862:L1502",
+        "tsm:prospect:190396:192866:L1505",
+        "tsm:prospect:190396:192869:L1508",
+        "tsm:prospect:190396:192872:L1511",
+        "tsm:prospect:190396:192880:L1512",
+        "tsm:prospect:190396:194545:L1513",
+        "tsm:prospect:190394:192837:L1402",
+        "tsm:prospect:190394:192840:L1405",
+        "tsm:prospect:190394:192843:L1408",
+        "tsm:prospect:190394:192846:L1411",
+        "tsm:prospect:190394:192849:L1414",
+        "tsm:prospect:190394:192852:L1417"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "input quality rank per cohort",
-        "output rank IDs",
-        "actual completed casts"
+        "2026 cast histograms",
+        "skill/rank output eligibility",
+        "actual TSM source semantics"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
-      "originalStudyUrls": [],
+      "reviewEvents": 2,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=374627/dragon-isles-prospecting"
+      ],
       "changeTriggers": [
-        "REV17_SOURCE_REUSE_AVOID_DUPLICATE"
+        "REV17_SOURCE_REUSE_AVOID_DUPLICATE",
+        "Q20_RECIPE_REAGENT_CONFIRMATION"
       ],
       "revisitReasons": [
-        "Reused prior batch013 archive; two 2k-ore cohorts are not rank-specific 188658 measurements"
+        "Reused prior batch013 archive; two 2k-ore cohorts are not rank-specific 188658 measurements",
+        "REUSED spell context for five-ore input; not a cast dataset"
       ]
     },
     {
@@ -6669,64 +7182,12 @@
     "reviewedDate": "2026-10-28"
   },
   "incrementalReplay": {
-    "basis": "PREVIOUS_VERIFIED_CACHE_PLUS_EXACT_NEW_FILES_NOT_FULL_REBUILD",
-    "baseSourceMemoryBlobSHA": "1a75d13ca3424bf013dea823198fa80bcfbbdec9",
-    "reviewFiles": [
-      {
-        "path": "research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1530-dragonflight-q17-batch015.jsonl",
-        "sha": "76463ceeaa684e8e9c5931ecf080064635b702a3"
-      },
-      {
-        "path": "research/coordination/source-reviews/loot-liquidator-legacy-2026-10-28-1540-legacy-q17-batch015.jsonl",
-        "sha": "5e6c21092d86c5099c4c83309291881910a70057"
-      },
-      {
-        "path": "research/coordination/source-reviews/loot-liquidator-midnight-2026-10-28-1511-midnight-q17-batch015.jsonl",
-        "sha": "34f15d05c5abb623eff3cd0d5a3ee006e54076d8"
-      },
-      {
-        "path": "research/coordination/source-reviews/loot-liquidator-war-within-2026-10-28-1520-warwithin-q17-batch015.jsonl",
-        "sha": "22fead1d7fc92d4dd83640d8af3b791af8fc2982"
-      },
-      {
-        "path": "research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1627-dragonflight-q18-batch016.jsonl",
-        "sha": "9a913f88bc3ca4c5fcd8c811b7dc69e24c356be5"
-      },
-      {
-        "path": "research/coordination/source-reviews/loot-liquidator-legacy-2026-10-28-1635-legacy-q18-batch016.jsonl",
-        "sha": "ee3f9a895ccd16269db12721f2c4c81ebccefeeb"
-      },
-      {
-        "path": "research/coordination/source-reviews/loot-liquidator-midnight-2026-10-28-1611-midnight-q18-batch016.jsonl",
-        "sha": "4d1000f3a84505a390071ee21c53c4c8275bd6f2"
-      },
-      {
-        "path": "research/coordination/source-reviews/loot-liquidator-war-within-2026-10-28-1624-warwithin-q18-batch016.jsonl",
-        "sha": "c63039192aab4a1b378c2145255a1eae8f91e8b0"
-      }
-    ],
-    "observationFiles": [
-      {
-        "path": "research/evidence/observations/2026-10-28-1624-warwithin-q18-batch016-two-historical-cohorts.jsonl",
-        "sha": "1da86417462b81caf7c069098b0367caf6cc9f52"
-      },
-      {
-        "path": "research/evidence/observations/2026-10-28-1635-legacy-q18-batch016-almar-source-only.jsonl",
-        "sha": "a26b41a511f5a5188264f32586e0034c1d415ad0"
-      }
-    ],
-    "qaFiles": [
-      {
-        "path": "research/coordination/qa-feedback/master-batch015-2026-10-28.jsonl",
-        "sha": "9dce4309f1def3d70d0ba6d27143b5b2419e549a"
-      },
-      {
-        "path": "research/coordination/qa-feedback/master-batch016-2026-10-28.jsonl",
-        "sha": "55e934bf1228d41e8774df85dad8f882484b5688"
-      }
-    ],
-    "appliedOn": "2026-10-28",
-    "urlCanonicalization": "NODE_EQUIVALENT_URL_SHIM_REPAIRED_DUPLICATES"
+    "batch": "2026-10-28-batch018",
+    "newObservations": 6,
+    "newReviewEvents": 25,
+    "newQaEvents": 9,
+    "fullNodeDirectoryRebuild": false,
+    "reason": "Connector-only repository read; full observation/review file tree unavailable for Node directory traversal; master applied deterministic checked-in builder to all new q20 events and merged with previous verified snapshot"
   },
   "appliedAttributionCorrectionIDs": [
     "primer-serene-r2-20261028-b016"
