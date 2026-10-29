@@ -15,11 +15,20 @@ const workingIdentityAtBuild = new WeakMap();
 function finite(v) { return typeof v === "number" && Number.isFinite(v); }
 function positiveInteger(v) { return Number.isSafeInteger(v) && v >= 1; }
 function score(v) { return Number.isInteger(v) && v >= 0 && v <= 100 ? v : 0; }
+const ADMISSIBLE_EVIDENCE_STATUSES = new Set([
+  "official", "measured", "community-reported", "modeled", "proxy"
+]);
 function evidenceValue(r, f) {
-  // A retained source number can be contradictory evidence. Numeric validity
-  // alone must never promote it into the working layer or a donor prior.
-  if (r[f]?.status === "contradictory") return null;
-  const v = r[f]?.value;
+  // A finite source number is not automatically admissible evidence.
+  // Unknown, contradictory or unrecognized statuses and untraceable claims
+  // must remain separate from the preview, even with high source confidence.
+  const source = r[f];
+  if (!source || !ADMISSIBLE_EVIDENCE_STATUSES.has(source.status) ||
+      !Array.isArray(source.sourceClaimIDs) ||
+      source.sourceClaimIDs.length === 0 ||
+      !source.sourceClaimIDs.every(id => typeof id === "string" && id.trim().length > 0))
+    return null;
+  const v = source.value;
   if (!finite(v)) return null;
   if (f === "dropChance") return v >= 0 && v <= 1 ? v : null;
   if (f === "expectedQuantity") return v >= 0 ? v : null;
@@ -240,9 +249,12 @@ function applyWorkingEstimates(records, options = {}) {
       }
       w[f] = v;
     }
-    for (const f of FIELDS)
+    for (const f of FIELDS) {
       if (r[f]?.status === "contradictory")
         assumption("CONTRADICTORY_SOURCE_FIELD_EXCLUDED_FROM_WORKING_ESTIMATE:" + f);
+      else if (finite(r[f]?.value) && raw[f] === null)
+        assumption("UNQUALIFIED_SOURCE_FIELD_EXCLUDED_FROM_WORKING_ESTIMATE:" + f);
+    }
     let p = raw.dropChance, a = raw.yieldMin, b = raw.yieldMax, e = raw.expectedQuantity;
     if (a !== null && b !== null && a > b) {
       [a, b] = [b, a];
