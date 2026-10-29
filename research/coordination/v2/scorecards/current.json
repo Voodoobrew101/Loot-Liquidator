@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001",
-  "queueRevision": 1,
-  "sourceCommit": "eea3c1d4d81b8adbda09f93aae430ec96131c9cc",
+  "taskID": "F001_F005_INTEGRATION",
+  "queueRevision": 2,
+  "sourceCommit": "5f199405b801d026d3785d3d75a96a50fa06e495",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
-  "candidateHash": "1711cba5e7ede13f361649d07c4e97c6552ec142",
+  "candidateHash": "6488e39b54ae7961750231cb94391eb34af606e3",
   "candidateHashType": "GIT_BLOB_SHA1",
   "contextVersion": "1.0.0 CONTRACT; generated schema 0.2.0",
   "compilerVersion": "0.8.0",
@@ -24,7 +24,8 @@
     "completeRecords": 1018,
     "confidenceOfImputedFields": 0,
     "economicUse": "PREVIEW_ONLY",
-    "normalizedVerified": false
+    "normalizedVerified": false,
+    "status": "GENERATED_REPORTED_COMPLETE_NOT_INDEPENDENTLY_CONTEXT_SAFE"
   },
   "evidenceNumericCompleteness": {
     "present": 3558,
@@ -49,7 +50,7 @@
   },
   "independentStudyFamilyHoldouts": {
     "validated": 0,
-    "reported": "NO_INDEPENDENT_VALIDATOR_HOLDOUT_VERDICT_YET"
+    "reported": "F005: zero independently matched current Retail whole-study families; model promotion prohibited"
   },
   "economicEligibleFields": {
     "newlyPromoted": 0,
@@ -58,20 +59,23 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "F005 independent generated-preview/channel-isolation verdict",
-    "Native Node/Lua/schema checks in coordinator environment",
-    "24 legacy queue30 universe leads require exact mapping eligibility review"
+    "F005 independently reproduced 5/9 failing context/zero-support fixtures; repair and independent PASS required",
+    "Independent native Node pipeline --check, Lua 5.1 decoder, JSON Schema and WoW client tests not run by coordinator",
+    "24 legacy queue30 universe leads remain unadmitted",
+    "F003 TWW sensitivity has no independent current Retail whole-study holdout"
   ],
   "checksExecuted": [
-    "11 arithmetic and uniqueness/cross-artifact consistency checks passed",
-    "Five pinned Git blob source SHA comparisons passed",
-    "GitHub readback of source manifest, compiler report, readiness, priority queue and candidate blob SHA"
+    "Coordinator re-read current branch head 450e511481233bd567dd3bd9078eab8a067ba9a2 and five role artifacts",
+    "Coordinator statically inspected exact GitHub blobs 928ef018e728ca0535947b83ecd63c0189def03c and 76756fce7ae82cb601fb12c279d05f01b9df3eef; donorKey lacks recipe, rank, skill and reagent context; forward P=0 returns positive conditional bounds",
+    "Accepted F005 independent validator report: V8 fixture 4 passed, 5 failed; five original source SHA checks passed in validator cycle",
+    "Reconciled canonical readiness 1018*4=4072, 3558+514=4072 and E missing 116",
+    "Coordinator-owned F005 blocking acceptance committed; no numeric or production changes"
   ],
   "checksUnavailable": [
-    "Native Node pipeline --check",
-    "Lua 5.1 loadfile",
-    "Full JSON Schema validation in this coordinator run",
-    "WoW client test"
+    "Native Node independent acceptance and pipeline --check",
+    "Lua 5.1 generated candidate decode",
+    "Full JSON Schema validation",
+    "WoW Retail in-game tests"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -80,8 +84,24 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T1201Z-F001-bootstrap-review.json",
-  "decision": "CONDITIONAL_ACCEPT_BOOTSTRAP_PREVIEW_PENDING_F005",
-  "nextTask": "F001_CLOSE_AFTER_F005; pivot to top E/model conflict families rather than repeat first-pass audits",
-  "priorityRecords": 217
+  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T1259Z-F005-context-fail-integration.json",
+  "decision": "INDEPENDENT_F005_FAIL_CONTEXT_SAFETY; RESEARCH_PREVIEW_QUARANTINED_FROM_ACCEPTANCE",
+  "nextTask": "F002 donor-context repair + F003 P=0 forward repair; F005 independent retest on changed blobs; evidence researcher pivots to current Retail cast/eligibility evidence",
+  "priorityRecords": 217,
+  "independentValidator": {
+    "status": "FAIL",
+    "fixturePassed": 4,
+    "fixtureFailed": 5,
+    "defectIDs": [
+      "F005-DONOR-RECIPE",
+      "F005-DONOR-SKILL",
+      "F005-DONOR-REAGENTS",
+      "F005-DONOR-OUTPUT-RANK",
+      "F005-ZERO-FORWARD"
+    ],
+    "modelHoldoutFamiliesValidated": 0,
+    "liveEVLeakEstablished": false,
+    "existingCandidateRowAffectedEstablished": false
+  },
+  "integrationStatus": "BLOCKED_BY_INDEPENDENT_CONTEXT_QA"
 }
