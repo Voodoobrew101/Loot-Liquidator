@@ -140,6 +140,14 @@ function run(root, options={}) {
     if(provenanceChild.status!==0)
       throw Error("F005 provenance/confidence regression failed\\n"+provenanceChild.stdout+provenanceChild.stderr);
     process.stdout.write(provenanceChild.stdout);
+    // Independently authored F005 status/claim admission regression. This
+    // guards the direct estimator, not just canonical compiler validation.
+    const admissionTest=path.join(root,"research/tests/v2/test_f005_evidence_status_claim_contract.js");
+    if(!fs.existsSync(admissionTest)) throw Error("Required F005 source-admission check missing");
+    const admissionChild=spawnSync(process.execPath,[admissionTest],{cwd:root,encoding:"utf8"});
+    if(admissionChild.status!==0)
+      throw Error("F005 source-status/claim admission failed\\n"+admissionChild.stdout+admissionChild.stderr);
+    process.stdout.write(admissionChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
