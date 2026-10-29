@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "researchOnly": true,
-  "sourcesCount": 190,
-  "reviewEvents": 330,
-  "qaEvents": 88,
-  "approvedQaEvents": 86,
+  "sourcesCount": 213,
+  "reviewEvents": 372,
+  "qaEvents": 99,
+  "approvedQaEvents": 97,
   "warnings": [
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl dragonflight-serevite-r2-2022-dec-original",
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl ww-b006-2023-q3-8000",
@@ -45,7 +45,8 @@
     "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: master batch020; q21/q22 9 source-review files, 2 original observation files, master batch019/batch020 QA; full directory scan still outstanding",
     "MASTER_BATCH020_URL_CANONICALIZATION_REPAIR: 1 trailing slash/tracker duplicate aliases merged after V8 incremental replay; full Node directory rebuild still pending.",
     "INCREMENTAL_V8_REPLAY_NOT_FULL_NODE_DIRECTORY_REBUILD: master batch021; 4 original observations, 23 q23 worker source reviews, 7 master QA feedback; 8 immutable Midnight false-observation ancestry corrections applied. Full 127-JSONL-file Node directory rebuild remains outstanding.",
-    "INCREMENTAL_V8_REPLAY_NOT_FULL_NODE_DIRECTORY_REBUILD: master batch022; four kyzenbka source-only family observations, 22 valid q24 worker source reviews, six master QA events; original author one lineage, no current Retail cast values."
+    "INCREMENTAL_V8_REPLAY_NOT_FULL_NODE_DIRECTORY_REBUILD: master batch022; four kyzenbka source-only family observations, 22 valid q24 worker source reviews, six master QA events; original author one lineage, no current Retail cast values.",
+    "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: q25/q26 2026-10-29, 42 valid reviews and 11 master QA events; full historical JSONL replay not possible through current repository interface."
   ],
   "strategies": {
     "ORIGINAL_DATASET": {
@@ -91,10 +92,10 @@
       "points": 36
     },
     "SOURCE_LINEAGE": {
-      "reviewedClaims": 2,
-      "accepted": 2,
+      "reviewedClaims": 3,
+      "accepted": 3,
       "rejected": 0,
-      "points": 6
+      "points": 12
     },
     "ORIGINAL_COHORT_LINEAGE": {
       "reviewedClaims": 1,
@@ -163,16 +164,58 @@
       "points": 4
     },
     "RANK_EXCLUSIVITY": {
-      "reviewedClaims": 1,
-      "accepted": 1,
+      "reviewedClaims": 2,
+      "accepted": 2,
       "rejected": 0,
-      "points": 2
+      "points": 5
     },
     "INDEPENDENT_COHORT_COMPARE": {
       "reviewedClaims": 1,
       "accepted": 1,
       "rejected": 0,
       "points": 3
+    },
+    "TOOLTIP_ECONOMIC_ISOLATION": {
+      "reviewedClaims": 2,
+      "accepted": 2,
+      "rejected": 0,
+      "points": 10
+    },
+    "RETAIL_VARIANT_CHECK": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 2
+    },
+    "DERIVATIVE_FORMULA_AUDIT": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 2
+    },
+    "ORIGINAL_VS_DERIVATIVE": {
+      "reviewedClaims": 2,
+      "accepted": 2,
+      "rejected": 0,
+      "points": 6
+    },
+    "ITEM_IDENTITY_PRIMARY_SOURCE": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 4
+    },
+    "SOURCE_SCOPE_AND_RANK_GUARD": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 6
+    },
+    "SOURCE_NEGATIVE_AVAILABILITY": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 2
     }
   },
   "sources": [
@@ -406,6 +449,125 @@
       ]
     },
     {
+      "canonicalUrl": "https://docs.google.com/spreadsheets/d/1jbmgiccvpqiezjo_dtbpmida7utq8qtopp1jpvvonn0/edit",
+      "urls": [
+        "https://docs.google.com/spreadsheets/d/1jBMgICcVpqIezJo_dtBPmIdA7UTq8QToPp1JpVVONn0/edit"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "2026-midnight-april-15-derivative-prospecting-calculator"
+      ],
+      "datasetIDs": [
+        "hardcoded-wow-professions-guide-rates-plus-flat-resourcefulness-addend"
+      ],
+      "reviewedRecordKeys": [
+        "midnight:237359:242608:L733",
+        "midnight:237361:242608:L744",
+        "midnight:237362:242608:L755",
+        "midnight:237363:242608:L766",
+        "midnight:237364:242608:L777",
+        "midnight:237365:242608:L788",
+        "midnight:237366:242608:L799",
+        "midnight:237359:242553:L729",
+        "midnight:237359:242554:L730",
+        "midnight:237359:242606:L732",
+        "midnight:237359:242607:L731",
+        "midnight:237359:242786:L727",
+        "midnight:237359:242788:L728",
+        "midnight:237361:242553:L740",
+        "midnight:237361:242554:L741",
+        "midnight:237361:242606:L743",
+        "midnight:237361:242607:L742",
+        "midnight:237361:242786:L738",
+        "midnight:237361:242788:L739",
+        "midnight:237362:242606:L752",
+        "midnight:237362:242607:L751",
+        "midnight:237362:242610:L753",
+        "midnight:237362:242611:L754",
+        "midnight:237362:242786:L749",
+        "midnight:237362:242788:L750"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual completed-cast denominator",
+        "raw zero-inclusive cast histograms",
+        "original study and patch",
+        "input/output item IDs",
+        "skill/specialization cohort",
+        "valid Resourcefulness savings model"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://docs.google.com/spreadsheets/d/1jBMgICcVpqIezJo_dtBPmIdA7UTq8QToPp1JpVVONn0/edit"
+      ],
+      "changeTriggers": [
+        "Q25_NEW_CALCULATOR_FORMULA_AUDIT"
+      ],
+      "revisitReasons": [
+        "New source not in 190-entry source-memory; actual workbook formula inspection found material valuation bug"
+      ]
+    },
+    {
+      "canonicalUrl": "https://docs.google.com/spreadsheets/d/1jw-vz25mha9gzece6qx9viulyfsgdf2m/edit",
+      "urls": [
+        "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit"
+      ],
+      "observationIDs": [
+        "df-q25-xenastro-draconium-q2-log-row-28",
+        "df-q25-xenastro-draconium-q2-log-row-52",
+        "df-q25-xenastro-draconium-q2-log-row-54",
+        "df-q25-xenastro-draconium-q2-log-row-55",
+        "df-q25-xenastro-draconium-q2-log-row-62"
+      ],
+      "studyIDs": [
+        "xenastro-dragonflight-prospecting-log-2023"
+      ],
+      "datasetIDs": [
+        "df-q25-xenastro-original-xlsx"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:188658:192846:L1183",
+        "tsm:prospect:188658:192847:L1184",
+        "tsm:prospect:188658:192848:L1185",
+        "tsm:prospect:188658:192849:L1186",
+        "tsm:prospect:188658:192850:L1187",
+        "tsm:prospect:188658:192851:L1188",
+        "tsm:prospect:188658:192852:L1189",
+        "tsm:prospect:188658:192853:L1190",
+        "tsm:prospect:188658:192855:L1191",
+        "tsm:prospect:188658:192856:L1192",
+        "tsm:prospect:188658:192857:L1193",
+        "tsm:prospect:188658:192858:L1194",
+        "tsm:prospect:188658:192859:L1195",
+        "tsm:prospect:188658:192860:L1196",
+        "tsm:prospect:188658:192861:L1197",
+        "tsm:prospect:188658:192862:L1198",
+        "tsm:prospect:188658:192863:L1199",
+        "tsm:prospect:188658:192865:L1200",
+        "tsm:prospect:188658:192866:L1201",
+        "tsm:prospect:188658:192867:L1202",
+        "tsm:prospect:188658:192868:L1203",
+        "tsm:prospect:188658:192870:L1205",
+        "tsm:prospect:188658:192871:L1206"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual consumed ore",
+        "per-item gem IDs",
+        "per-cast counts"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [],
+      "changeTriggers": [
+        "ORIGINAL_XLSX_READ"
+      ],
+      "revisitReasons": [
+        "Direct inspection of Prospecting Log sheet, row 28,52,54,55,62"
+      ]
+    },
+    {
       "canonicalUrl": "https://docs.google.com/spreadsheets/d/1kx2qpigxgqs5_zla1ssn69yxrylgdevtzr4bypp8yju/edit",
       "urls": [
         "https://docs.google.com/spreadsheets/d/1Kx2qPiGXGqS5_zla1sSN69yxrYlGdEVTzR4bypP8yJU/edit"
@@ -457,6 +619,58 @@
       ],
       "revisitReasons": [
         "New public BfA calculator shows estimated quantities but not measured casts; inspect formula provenance before promoting"
+      ]
+    },
+    {
+      "canonicalUrl": "https://drive.google.com/file/d/1nm7sjgugycz7kel72xm7vorkh_gnrrll",
+      "urls": [
+        "https://drive.google.com/file/d/1nM7SJGUGyCz7KeL72xm7vorkH_gNrrLl"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "tww-kalimdor-hold-em-2024-11-02-historical-model"
+      ],
+      "datasetIDs": [
+        "tww-shuffles-prospecting-hardcoded-talents-2024"
+      ],
+      "reviewedRecordKeys": [
+        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+        "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+        "candidate:conditional:prospect:210937:212508:gem-finding:20261028",
+        "compiled:prospect:210931:212498:L419",
+        "compiled:prospect:210931:213398:L420",
+        "compiled:prospect:210931:213399:L421",
+        "compiled:prospect:210934:212498:L428",
+        "compiled:prospect:210934:212505:L429",
+        "compiled:prospect:210934:212508:L430",
+        "compiled:prospect:210934:213398:L431",
+        "compiled:prospect:210934:213399:L432",
+        "compiled:prospect:210937:212495:L439",
+        "compiled:prospect:210937:212498:L440",
+        "compiled:prospect:210937:212511:L441",
+        "compiled:prospect:210937:213398:L442",
+        "compiled:prospect:210937:213399:L443"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "original cast denominators",
+        "zero-inclusive histograms",
+        "current Retail patch bridge",
+        "rank-specific source measurement"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [],
+      "changeTriggers": [
+        "NEW_ORIGINAL_CALCULATOR_FORMULA_INSPECTION"
+      ],
+      "revisitReasons": [
+        "new unindexed author spreadsheet found, directly inspected formulas and talent controls"
       ]
     },
     {
@@ -623,7 +837,9 @@
         "legacy-q22-b020-30-source-lines-reused",
         "2026-10-28-2144-legacy-q23-batch021-40-lines",
         "warwithin-q24-35-gamedata-source-lines",
-        "df-q24-45-source-lines"
+        "df-q24-45-source-lines",
+        "df-q25-45-exact-source-rows",
+        "warwithin-q25-35-numeric-gap-source-review"
       ],
       "reviewedRecordKeys": [
         "tsm:prospect:188658:192837:L1174",
@@ -937,17 +1153,40 @@
         "tsm:prospect:194545:192844:L1523",
         "tsm:prospect:194545:192845:L1524",
         "tsm:prospect:199344:192844:L1560",
-        "tsm:prospect:199344:192845:L1561"
+        "tsm:prospect:199344:192845:L1561",
+        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+        "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+        "candidate:conditional:prospect:210937:212508:gem-finding:20261028",
+        "compiled:prospect:210931:212498:L419",
+        "compiled:prospect:210931:213398:L420",
+        "compiled:prospect:210931:213399:L421",
+        "compiled:prospect:210934:212498:L428",
+        "compiled:prospect:210934:212505:L429",
+        "compiled:prospect:210934:212508:L430",
+        "compiled:prospect:210934:213398:L431",
+        "compiled:prospect:210934:213399:L432",
+        "compiled:prospect:210937:212495:L439",
+        "compiled:prospect:210937:212498:L440",
+        "compiled:prospect:210937:212511:L441",
+        "compiled:prospect:210937:213398:L442",
+        "compiled:prospect:210937:213399:L443",
+        "dragonflight:192880:192849:0",
+        "dragonflight:192880:192866:1"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "current Retail rank-specific P/E",
-        "original TSM field semantics",
-        "cast denominators",
-        "skill and patch matched observations"
+        "TSM matRate and amountOfMats original units",
+        "actual cast denominator",
+        "rank alternatives",
+        "measured P(hit) vs Poisson proxy"
       ],
-      "lastReviewedAt": "2026-10-28T20:59:00-07:00",
-      "reviewEvents": 14,
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 16,
       "originalStudyUrls": [
         "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua"
       ],
@@ -965,7 +1204,9 @@
         "Q23_40_NEW_EXACT_SOURCE_LINE_KEYS",
         "REUSED_PINNED_LOCAL_SOURCE_QA",
         "Q24_35_NEW_DISJOINT_SOURCE_LINE_AUDITS",
-        "Q24_DISJOINT_SPECIAL_INPUT_IDENTITY_AUDIT"
+        "Q24_DISJOINT_SPECIAL_INPUT_IDENTITY_AUDIT",
+        "Q25_NUMERIC_FIELD_AUDIT",
+        "Q25_EXACT_COMPILER_NUMERIC_GAP_AUDIT"
       ],
       "revisitReasons": [
         "37 source rows checked; rank-family P/E duplicates must remain unknown for exact ranks",
@@ -981,7 +1222,9 @@
         "All 40 distinct assigned lines reconciled; raw rates cannot be interpreted as same-unit P/E",
         "40/40 source lines match pinned SHA; 37 compiled Poisson P proxies not independent measurements; 3 TSM source ranges provisional",
         "35 exact source lines reconciled; all 35 satisfy hypothetical E=5*amountOfMats versus P=matRate and positive-yield bounds; semantics remain unverified",
-        "Separate original item identity, special selector, and derivative TSM source cohort"
+        "Separate original item identity, special selector, and derivative TSM source cohort",
+        "All 45 exact assigned source lines independently verified against pinned GameData SHA",
+        "35 assigned q25 gaps examined, source lines reconciled, no new measured fields"
       ]
     },
     {
@@ -994,13 +1237,15 @@
         "gamedata-tsm-q21-source-audit",
         "gamedata-tsm-q22-source-line-audit",
         "ll-v0970-tsm-import-unknown-original-cohort",
-        "gamedata-v0970-tsm-import-unknown-original-cohort"
+        "gamedata-v0970-tsm-import-unknown-original-cohort",
+        "ll-tsm-retail-source-reuse"
       ],
       "datasetIDs": [
         "warwithin-q21-22-pinned-lines",
         "warwithin-q22-25-source-lines",
         "warwithin-q23-45-gamedata-source-lines",
-        "q24-legacy-45-source-lines"
+        "q24-legacy-45-source-lines",
+        "legacy-q25-35-source-lines"
       ],
       "reviewedRecordKeys": [
         "compiled:prospect:210931:212498:L419",
@@ -1089,16 +1334,50 @@
         "tsm:prospect:152512:153703:L1072",
         "tsm:prospect:152513:153700:L1084",
         "tsm:prospect:152513:153701:L1085",
-        "tsm:prospect:152513:153702:L1086"
+        "tsm:prospect:152513:153702:L1086",
+        "tsm:prospect:36909:36917:L887",
+        "tsm:prospect:36909:36920:L889",
+        "tsm:prospect:36909:36923:L891",
+        "tsm:prospect:36909:36926:L893",
+        "tsm:prospect:36909:36929:L895",
+        "tsm:prospect:36909:36932:L897",
+        "tsm:prospect:36910:36917:L901",
+        "tsm:prospect:36910:36920:L904",
+        "tsm:prospect:36910:36923:L907",
+        "tsm:prospect:36910:36926:L910",
+        "tsm:prospect:36910:36929:L913",
+        "tsm:prospect:36910:36932:L916",
+        "tsm:prospect:72094:76130:L1005",
+        "tsm:prospect:72094:76133:L1007",
+        "tsm:prospect:72094:76134:L1008",
+        "tsm:prospect:72094:76135:L1009",
+        "tsm:prospect:72094:76136:L1010",
+        "tsm:prospect:72094:76137:L1011",
+        "tsm:prospect:72103:76130:L1019",
+        "tsm:prospect:72103:76133:L1021",
+        "tsm:prospect:72103:76134:L1022",
+        "tsm:prospect:72103:76135:L1023",
+        "tsm:prospect:72103:76136:L1024",
+        "tsm:prospect:72103:76137:L1025",
+        "tsm:prospect:123919:130178:L1053",
+        "tsm:prospect:123919:130179:L1054",
+        "tsm:prospect:123919:130180:L1055",
+        "tsm:prospect:123919:130181:L1056",
+        "tsm:prospect:123919:130182:L1057",
+        "tsm:prospect:123919:130183:L1058",
+        "tsm:mill:191467:198413:L1966",
+        "tsm:mill:191467:198414:L1967",
+        "tsm:mill:191468:198412:L1970",
+        "tsm:mill:191468:198413:L1971",
+        "tsm:mill:191468:198414:L1972"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "rank-specific histograms",
-        "TSM raw source semantics",
-        "actual patch"
+        "original TSM matRate/amountOfMats unit semantics",
+        "2026 current Retail patch-matched E"
       ],
-      "lastReviewedAt": "2026-10-28T20:59:00-07:00",
-      "reviewEvents": 4,
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 5,
       "originalStudyUrls": [
         "https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/GameData.lua"
       ],
@@ -1106,13 +1385,15 @@
         "Q21_LINE_AND_RANK_COPY_AUDIT",
         "MASTER_BATCH020_SCHEMA_STATUS_NORMALIZATION",
         "Q23_45_NEW_DISJOINT_SOURCE_LINE_AUDITS",
-        "Q24_EXACT_SOURCE_LINE_AUDIT"
+        "Q24_EXACT_SOURCE_LINE_AUDIT",
+        "Q25_EXACT_SOURCE_LINE_READBACK"
       ],
       "revisitReasons": [
         "22 source line matches, 9 TSM rank copies",
         "Original worker REUSED status is not in canonical enum; historical source reused but material evidence remains incomplete. No new independent cohort.",
         "45/45 lines verified; all matRate>amountOfMats require P/E semantic guard",
-        "17/17 hypothetical five-input P/E positive-bound invariants pass; this is not proof of TSM field semantics"
+        "17/17 hypothetical five-input P/E positive-bound invariants pass; this is not proof of TSM field semantics",
+        "35/35 assigned source lines match pinned GameData; derivative numeric references are not current Retail measured fields"
       ]
     },
     {
@@ -1959,33 +2240,42 @@
       ],
       "observationIDs": [],
       "studyIDs": [
-        "warcraft-wiki-prismatic-leaper-eligibility"
+        "warcraft-wiki-prismatic-leaper-eligibility",
+        "secondary-prismatic-leaper-two-family-summary"
       ],
       "datasetIDs": [
-        "warcraft-wiki-fish-pigment-family-summary"
+        "warcraft-wiki-fish-pigment-family-summary",
+        "legacy-q26-secondary-wiki-omission"
       ],
       "reviewedRecordKeys": [
         "tsm:mill:200061:198412:L1998",
         "tsm:mill:200061:198413:L1999",
         "tsm:mill:200061:198414:L2000",
-        "tsm:mill:200061:198415:L2001"
+        "tsm:mill:200061:198415:L2001",
+        "tsm:mill:200061:198418:L2004",
+        "tsm:mill:200061:198419:L2005",
+        "tsm:mill:200061:198420:L2006",
+        "tsm:mill:200061:198421:L2007",
+        "tsm:mill:200061:198422:L2008",
+        "tsm:mill:200061:198423:L2009"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "exact rank-specific drop IDs",
-        "per-cast rates",
-        "current patch verification"
+        "exhaustive fish pigment family whitelist",
+        "current Retail client eligibility"
       ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://warcraft.wiki.gg/wiki/Prismatic_Leaper"
       ],
       "changeTriggers": [
-        "REUSED_SECONDARY_ELIGIBILITY_COMPARISON"
+        "REUSED_SECONDARY_ELIGIBILITY_COMPARISON",
+        "Q26_SOURCE_CONFLICT"
       ],
       "revisitReasons": [
-        "Compare wiki's Serene/Flourishing listing with original player's additional Blazing claim; do not silently drop or add output ID"
+        "Compare wiki's Serene/Flourishing listing with original player's additional Blazing claim; do not silently drop or add output ID",
+        "Secondary Wiki names only two pigment families; 2023 player source names all four"
       ]
     },
     {
@@ -2045,6 +2335,49 @@
       ],
       "revisitReasons": [
         "REUSE official qualitative March 31 note for blocked numeric hypothesis; no new numerical patch evidence"
+      ]
+    },
+    {
+      "canonicalUrl": "https://worldofwarcraft.blizzard.com/en-us/news/23876529",
+      "urls": [
+        "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "blizzard-2022-dragonflight-random-skill-mechanics"
+      ],
+      "datasetIDs": [
+        "df-2022-official-random-skill-inspiration"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:mill:191469:198412:L1975",
+        "tsm:mill:191469:198413:L1976",
+        "tsm:mill:191469:198414:L1977",
+        "tsm:mill:191470:198415:L1980",
+        "tsm:mill:191470:198416:L1981",
+        "tsm:mill:191470:198417:L1982",
+        "tsm:mill:191471:198415:L1985",
+        "tsm:mill:191471:198416:L1986",
+        "tsm:mill:191471:198417:L1987",
+        "tsm:mill:191472:198415:L1990",
+        "tsm:mill:191472:198416:L1991",
+        "tsm:mill:191472:198417:L1992"
+      ],
+      "status": "DISCOVERED",
+      "missingFields": [
+        "milling-specific random skill law",
+        "2026 old-expansion mechanic match"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://worldofwarcraft.blizzard.com/en-us/news/23876529"
+      ],
+      "changeTriggers": [
+        "NEW_PRIMARY_MECHANICS_SOURCE"
+      ],
+      "revisitReasons": [
+        "Blizzard confirms positive random skill and Inspiration, invalidating hard deterministic P at beta thresholds"
       ]
     },
     {
@@ -2144,24 +2477,23 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "current-client patch/build and actual observation date",
-        "exact input rank and output quality where relevant",
-        "per-cast zero-inclusive output histogram",
-        "positive conditional min/max",
-        "effective skill and specialization context"
+        "numerical hotfix multiplier",
+        "matched pre/post zero-inclusive casts"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://worldofwarcraft.blizzard.com/en-us/news/24266320"
       ],
       "changeTriggers": [
         "REUSE_QUALITATIVE_HOTFIX",
-        "QUEUE18_SOURCE_RECONCILIATION"
+        "QUEUE18_SOURCE_RECONCILIATION",
+        "Q25_REUSED_ARCHIVED_SOURCE"
       ],
       "revisitReasons": [
         "Reused official patch direction; no redundant source-count credit",
-        "More frequent gem drops announced without numerical coefficient"
+        "More frequent gem drops announced without numerical coefficient",
+        "Already indexed; retained as patch stratification only; not independent numerical evidence"
       ]
     },
     {
@@ -2228,26 +2560,37 @@
         "universe-audit:midnight:mill:236778:245867:alternate-pigment-rank-eligibility",
         "universe-audit:midnight:mill:236779:245867:alternate-pigment-rank-eligibility",
         "universe-audit:midnight:mill:236770:245865:alternate-pigment-rank-eligibility",
-        "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility"
+        "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility",
+        "lead:midnight:mill:236761:245808:rank1-2",
+        "lead:midnight:mill:236767:245808:rank2-2",
+        "lead:midnight:mill:236776:245803:rank1-1",
+        "lead:midnight:mill:236777:245803:rank2-1",
+        "lead:midnight:mill:236778:245867:rank1-1",
+        "lead:midnight:mill:236779:245867:rank2-1",
+        "lead:midnight:mill:236770:245865:rank1-2",
+        "lead:midnight:mill:236771:245865:rank2-2"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual skill threshold for each pigment rank",
-        "rank-specific completed casts",
-        "client patch match"
+        "rank-specific output IDs",
+        "actual completed casts",
+        "zero-inclusive histogram",
+        "patch and skill"
       ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://www.method.gg/guides/midnight-inscription-profession-guide"
       ],
       "changeTriggers": [
         "Q23_NEW_FAMILY_IDENTITY",
-        "Q24_SKILL_GATING_CONTEXT"
+        "Q24_SKILL_GATING_CONTEXT",
+        "Q26_REUSE_ARCHIVED_Q24"
       ],
       "revisitReasons": [
         "Exact queue23 P0 missing material/selector and rank source review; avoid repeated aggregate-rate lookups.",
-        "Exact q24 alternate rank eligibility; guide already cached, re-read targeted skill paragraph only"
+        "Exact q24 alternate rank eligibility; guide already cached, re-read targeted skill paragraph only",
+        "Check source ancestry before new web fetches and avoid duplicated original studies"
       ],
       "lineageCorrections": [
         {
@@ -2373,7 +2716,8 @@
         "method-2024-08-12-tww-prospecting-specializations"
       ],
       "datasetIDs": [
-        "method-2024-08-12-tww-prospecting-specializations"
+        "method-2024-08-12-tww-prospecting-specializations",
+        "tww-ore-gem-family-and-gem-finding-eligibility"
       ],
       "reviewedRecordKeys": [
         "compiled:prospect:210931:212498:L419",
@@ -2400,24 +2744,26 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "exact node threshold",
-        "2026 client eligibility",
-        "output rank and histogram"
+        "specific output rank chance",
+        "zero-inclusive casts",
+        "2026 selector verification"
       ],
-      "lastReviewedAt": "2026-10-28T20:59:00-07:00",
-      "reviewEvents": 3,
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 4,
       "originalStudyUrls": [
         "https://www.method.gg/guides/the-war-within-ore-prospecting-guide"
       ],
       "changeTriggers": [
         "Q17_P0_CONDITIONAL_CROSS_ORE_MAPPING_RECONCILIATION",
         "Q18_P0_GEM_FINDING_HISTORICAL_COHORT_RECONCILIATION",
-        "MASTER_BATCH020_SCHEMA_STATUS_NORMALIZATION"
+        "MASTER_BATCH020_SCHEMA_STATUS_NORMALIZATION",
+        "Q25_CONDITIONAL_ELIGIBILITY_REVIEW"
       ],
       "revisitReasons": [
         "New source identity; document mechanics or direct qualitative observation without claiming a new numeric cohort",
         "Source reused for assignment-context reconciliation; do not count again",
-        "Original worker REUSED status is not in canonical enum; historical source reused but material evidence remains incomplete. No new independent cohort."
+        "Original worker REUSED status is not in canonical enum; historical source reused but material evidence remains incomplete. No new independent cohort.",
+        "existing source reused, not independent new experiment"
       ]
     },
     {
@@ -2427,34 +2773,45 @@
       ],
       "observationIDs": [],
       "studyIDs": [
-        "reddit-2023-prismatic-leaper-fish-milling-discussion"
+        "reddit-2023-prismatic-leaper-fish-milling-discussion",
+        "2023-prismatic-leaper-four-family-comment"
       ],
       "datasetIDs": [
-        "reddit-2023-fish-milling-qualitative-comments"
+        "reddit-2023-fish-milling-qualitative-comments",
+        "legacy-q26-fish-four-family-qualitative"
       ],
       "reviewedRecordKeys": [
         "tsm:mill:200061:198412:L1998",
         "tsm:mill:200061:198413:L1999",
         "tsm:mill:200061:198414:L2000",
-        "tsm:mill:200061:198415:L2001"
+        "tsm:mill:200061:198415:L2001",
+        "tsm:mill:200061:198416:L2002",
+        "tsm:mill:200061:198417:L2003",
+        "tsm:mill:200061:198418:L2004",
+        "tsm:mill:200061:198419:L2005",
+        "tsm:mill:200061:198420:L2006",
+        "tsm:mill:200061:198421:L2007",
+        "tsm:mill:200061:198422:L2008",
+        "tsm:mill:200061:198423:L2009"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual per-output rank IDs",
-        "per-cast output histogram",
-        "patch and skill",
-        "2026 Retail eligibility"
+        "original completed-cast denominator",
+        "exact output item/rank per cast",
+        "2026 Retail skill/stat/patch"
       ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/100anp2"
       ],
       "changeTriggers": [
-        "NEW_PRIMARY_QUALITATIVE_FISH_INPUT_AND_FAMILY_OUTPUT_CROSSCHECK"
+        "NEW_PRIMARY_QUALITATIVE_FISH_INPUT_AND_FAMILY_OUTPUT_CROSSCHECK",
+        "Q26_FOUR_FAMILY_ELIGIBILITY_CONFLICT"
       ],
       "revisitReasons": [
-        "Assigned fish quality-rank P/E unknown; comments confirm 5 fish/mill and Flourishing/Serene/Blazing families but no rank-specific data"
+        "Assigned fish quality-rank P/E unknown; comments confirm 5 fish/mill and Flourishing/Serene/Blazing families but no rank-specific data",
+        "Original 2023 participant describes four pigment families, resolving secondary Wiki omission at family level only"
       ]
     },
     {
@@ -2718,6 +3075,110 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/"
+      ],
+      "observationIDs": [
+        "df-q25-xenastro-draconium-q2-log-row-28",
+        "df-q25-xenastro-draconium-q2-log-row-52",
+        "df-q25-xenastro-draconium-q2-log-row-54",
+        "df-q25-xenastro-draconium-q2-log-row-55",
+        "df-q25-xenastro-draconium-q2-log-row-62"
+      ],
+      "studyIDs": [
+        "xenastro-dragonflight-prospecting-log-2023"
+      ],
+      "datasetIDs": [
+        "df-q25-xenastro-draconium-q2-five-original-rows"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:188658:192846:L1183",
+        "tsm:prospect:188658:192847:L1184",
+        "tsm:prospect:188658:192848:L1185",
+        "tsm:prospect:188658:192849:L1186",
+        "tsm:prospect:188658:192850:L1187",
+        "tsm:prospect:188658:192851:L1188",
+        "tsm:prospect:188658:192852:L1189",
+        "tsm:prospect:188658:192853:L1190",
+        "tsm:prospect:188658:192855:L1191",
+        "tsm:prospect:188658:192856:L1192",
+        "tsm:prospect:188658:192857:L1193",
+        "tsm:prospect:188658:192858:L1194",
+        "tsm:prospect:188658:192859:L1195",
+        "tsm:prospect:188658:192860:L1196",
+        "tsm:prospect:188658:192861:L1197",
+        "tsm:prospect:188658:192862:L1198",
+        "tsm:prospect:188658:192863:L1199",
+        "tsm:prospect:188658:192865:L1200",
+        "tsm:prospect:188658:192866:L1201",
+        "tsm:prospect:188658:192867:L1202",
+        "tsm:prospect:188658:192868:L1203",
+        "tsm:prospect:188658:192870:L1205",
+        "tsm:prospect:188658:192871:L1206"
+      ],
+      "status": "DISCOVERED",
+      "missingFields": [
+        "individual output IDs",
+        "completed operations",
+        "zero-inclusive histograms",
+        "2026 patch-match",
+        "exact specialization per row"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [],
+      "changeTriggers": [
+        "Q25_ORIGINAL_WORKBOOK_FORMULA_AND_LOG_INSPECTION"
+      ],
+      "revisitReasons": [
+        "New first-hand workbook not indexed in source-memory; five Draconium Q2 historical log rows"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1f5rby5",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/1f5rby5"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "tww-2024-improved-milling-community-yield-discussion"
+      ],
+      "datasetIDs": [
+        "tww-2024-11to15-mixed-skill-anecdotes"
+      ],
+      "reviewedRecordKeys": [
+        "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+        "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+        "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+        "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+        "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+        "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+        "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+        "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+        "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+        "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "matched skill and specialization",
+        "output rank-specific sample",
+        "completed-cast histogram",
+        "2026 patch bridge"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/1f5rby5"
+      ],
+      "changeTriggers": [
+        "SOURCE_CONTEXT_DISAGREEMENT"
+      ],
+      "revisitReasons": [
+        "Cross-check conservative Wowhead yield claim against independently authored historical higher-yield anecdotes"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
       "urls": [
         "https://www.reddit.com/r/woweconomy/comments/1f83cnd"
@@ -2863,22 +3324,22 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual cast count",
-        "patch build",
-        "per-cast histogram",
-        "output ranks",
-        "resource refunds"
+        "exact completed casts",
+        "zero-inclusive output counts",
+        "2026 mechanics bridge"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/1fisfkn"
       ],
       "changeTriggers": [
-        "Q18_P0_GEM_FINDING_HISTORICAL_COHORT_RECONCILIATION"
+        "Q18_P0_GEM_FINDING_HISTORICAL_COHORT_RECONCILIATION",
+        "SOURCE_MEMORY_DEDUP_Q25"
       ],
       "revisitReasons": [
-        "New original historical source with explicit raw output totals or historical mechanic report"
+        "New original historical source with explicit raw output totals or historical mechanic report",
+        "source already indexed, avoided duplicate author and dataset credit"
       ]
     },
     {
@@ -3144,7 +3605,8 @@
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change",
       "urls": [
-        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
+        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
+        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change"
       ],
       "observationIDs": [
         "midnight-20261028-thorium-200craft-apr8-community",
@@ -3214,32 +3676,47 @@
         "midnight:237365:242612:L787",
         "midnight:237365:242613:L786",
         "midnight:237365:242786:L782",
-        "midnight:237365:242788:L783"
+        "midnight:237365:242788:L783",
+        "midnight:237359:242608:L733",
+        "midnight:237361:242608:L744",
+        "midnight:237362:242608:L755",
+        "midnight:237363:242608:L766",
+        "midnight:237364:242608:L777",
+        "midnight:237361:242786:L738",
+        "midnight:237361:242788:L739",
+        "midnight:237362:242606:L752",
+        "midnight:237362:242607:L751",
+        "midnight:237362:242610:L753",
+        "midnight:237362:242611:L754",
+        "midnight:237362:242786:L749",
+        "midnight:237362:242788:L750"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "current-client patch/build and actual observation date",
-        "exact input rank and output quality where relevant",
-        "per-cast zero-inclusive output histogram",
-        "positive conditional min/max",
-        "effective skill and specialization context"
+        "actual completed-cast counts",
+        "post-hotfix cohort",
+        "skill and specialization",
+        "exact current-Retail output rank"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 4,
+      "reviewEvents": 5,
       "originalStudyUrls": [
-        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
+        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
+        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change"
       ],
       "changeTriggers": [
         "newly inspected original prehotfix multi-ore table, previously memory only indexed separate thorium comment",
         "QUEUE18_SOURCE_RECONCILIATION",
         "IMMUTABLE_READBACK_SCOPE_CLARIFICATION",
-        "QUEUE20_EXACT_RANK_AUDIT"
+        "QUEUE20_EXACT_RANK_AUDIT",
+        "Q25_REUSED_ARCHIVED_ORIGINAL_SOURCE"
       ],
       "revisitReasons": [
         "Separate numeric mechanics track; preserve six cohorts as one study, source-only note",
         "Approximate P(hit)=.20 over 200 Thorium crafts, not E; no integer hit count or skill details",
         "Two original Copper R2 byproduct percentages were preserved as unassigned source context, not claimed assignment or promoted numeric fields",
-        "23 rank-specific gross-input references compare against GameData, without promotion"
+        "23 rank-specific gross-input references compare against GameData, without promotion",
+        "Previously indexed one original author; not a new independent study"
       ],
       "unverifiedPossibleMappings": [],
       "attributionCorrections": []
@@ -3735,13 +4212,15 @@
       "studyIDs": [
         "reddit-t8lubc-firstflower-4000",
         "sl-first-flower-4000herb-200mass-mills",
-        "firstflower-2022-03-07-bulldozzer-200-mass-casts"
+        "firstflower-2022-03-07-bulldozzer-200-mass-casts",
+        "historical-bfa-jiyao-mass-milling-existing-archive"
       ],
       "datasetIDs": [
         "reddit-t8lubc-firstflower-4000",
         "bullDozzer-200-20herb-mass-mills",
         "firstflower-4000-herbs-200-mass-operations",
-        "firstflower-2022-03-07-bulldozzer-original"
+        "firstflower-2022-03-07-bulldozzer-original",
+        "legacy-q25-nine-historical-bfa-mass-mill-keys"
       ],
       "reviewedRecordKeys": [
         "output-main:tsm:mill:187699:173056:L1930",
@@ -3752,16 +4231,24 @@
         "tsm:mill:187699:175788:L1932",
         "compiled:mill:187699:173056:L225",
         "compiled:mill:187699:173057:L226",
-        "compiled:mill:187699:175788:L227"
+        "compiled:mill:187699:175788:L227",
+        "historical:bfa:mass-mill:152506:153635:256218:jiyao",
+        "historical:bfa:mass-mill:152506:153636:256218:jiyao",
+        "historical:bfa:mass-mill:152506:153669:256218:jiyao",
+        "historical:bfa:mass-mill:152507:153635:256223:jiyao",
+        "historical:bfa:mass-mill:152507:153636:256223:jiyao",
+        "historical:bfa:mass-mill:152507:153669:256223:jiyao",
+        "historical:bfa:mass-mill:152508:153635:256221:jiyao",
+        "historical:bfa:mass-mill:152508:153636:256221:jiyao",
+        "historical:bfa:mass-mill:152508:153669:256221:jiyao"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual completed operations explicitly logged",
-        "standard five-herb cast histogram",
-        "current Retail patch/skill bridge"
+        "actual completed cast zero-inclusive histograms",
+        "current Retail patch and skill"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 5,
+      "reviewEvents": 6,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/t8lubc"
       ],
@@ -3770,14 +4257,16 @@
         "Q20_IMMUTABLE_SOURCE_STATUS_ENUM_CORRECTION",
         "Q20_DIFFERENT_OPERATION_DENOMINATOR_GUARD",
         "Q20_MASTER_SHADOWLANDS_OVERFLOW",
-        "NEW_ASSIGNED_COMPILED_FIRST_FLOWER_SOURCE_LINES"
+        "NEW_ASSIGNED_COMPILED_FIRST_FLOWER_SOURCE_LINES",
+        "Q25_ASSIGNED_NUMERIC_GAPS"
       ],
       "revisitReasons": [
         "Reused existing 4000-herb/200 mass-cast original; no duplicate source archive",
         "Reused historical 20-herb mass cohort; prior REUSED status not an accepted source-memory enum",
         "REUSED original; 200 actual 20-herb mass operations not the five-herb TSM row",
         "Historical 20-herb mass study reused; no equivalence to assigned standard five-herb TSM rows; master normalized invalid REUSED descriptor to PARTIAL while retaining original immutable worker event",
-        "q24 three source rows have per-consumed-input label inconsistent with five-herb-equivalent values; compare without new cohort credit"
+        "q24 three source rows have per-consumed-input label inconsistent with five-herb-equivalent values; compare without new cohort credit",
+        "Preserve source without duplicate fetching; historical mass-20 operation is not standard-5 cast"
       ]
     },
     {
@@ -4072,7 +4561,8 @@
         "df-inscription-milling-secondary-guide"
       ],
       "datasetIDs": [
-        "df-5-herb-2-to-5-family-pigment-guide"
+        "df-5-herb-2-to-5-family-pigment-guide",
+        "df-5herb-2to5-pigment-secondary-guide"
       ],
       "reviewedRecordKeys": [
         "tsm:mill:191467:198414:L1967",
@@ -4094,18 +4584,21 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "rank-specific outcomes",
-        "actual cast histogram",
-        "skill and patch conditions"
+        "original denominator",
+        "rank-specific skill context"
       ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
-      "originalStudyUrls": [],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 2,
+      "originalStudyUrls": [
+        "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight"
+      ],
       "changeTriggers": [
-        "Q22_SECONDARY_RECIPE_FAMILY_CORROBORATION"
+        "Q22_SECONDARY_RECIPE_FAMILY_CORROBORATION",
+        "Q26_SOURCE_BOUND_CORROBORATION"
       ],
       "revisitReasons": [
-        "Secondary guide confirms five-herb input and pigment families but not exact rank numerical fields"
+        "Secondary guide confirms five-herb input and pigment families but not exact rank numerical fields",
+        "Reused 2–5 family range, not a second original experiment"
       ]
     },
     {
@@ -4604,10 +5097,12 @@
       ],
       "observationIDs": [],
       "studyIDs": [
-        "felslate-2017-mixed-880-leystone-240-felslate"
+        "felslate-2017-mixed-880-leystone-240-felslate",
+        "wowhead-retail-felslate-prospecting-pooled-tab"
       ],
       "datasetIDs": [
-        "wowhead-fredshg-mixed-ore-2017"
+        "wowhead-fredshg-mixed-ore-2017",
+        "legacy-q25-raw-wowhead-prospecting-tab-123919"
       ],
       "reviewedRecordKeys": [
         "profile:tsm:mill:765",
@@ -4649,25 +5144,32 @@
         "profile:tsm:mill:36901",
         "profile:tsm:mill:36903",
         "profile:tsm:mill:36904",
-        "profile:tsm:mill:36905"
+        "profile:tsm:mill:36905",
+        "tsm:prospect:123919:130178:L1053",
+        "tsm:prospect:123919:130179:L1054",
+        "tsm:prospect:123919:130180:L1055",
+        "tsm:prospect:123919:130181:L1056",
+        "tsm:prospect:123919:130182:L1057",
+        "tsm:prospect:123919:130183:L1058"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "Felslate-specific output totals",
-        "actual casts",
-        "recipe split",
-        "skill/gear"
+        "color selector/recipe context",
+        "current 2026 patch and skill",
+        "original completed cast logs"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=123919/felslate"
       ],
       "changeTriggers": [
-        "new original player mixed-ore source found"
+        "new original player mixed-ore source found",
+        "Q25_NEW_RAW_WOWHEAD_PROSPECTING_TAB_EXTRACTION"
       ],
       "revisitReasons": [
-        "Assess whether outputs can isolate Felslate; cannot, preserve as lead only"
+        "Assess whether outputs can isolate Felslate; cannot, preserve as lead only",
+        "Previously indexed mixed 2017 community report, new raw pooled loot tab: 2194 observations, 14-22 hits per assigned rare output; not a new independent original cohort"
       ]
     },
     {
@@ -4789,7 +5291,8 @@
         "legacy-q20-b018-reused-0",
         "legacy-q21-b019-jiyao-2-reused",
         "legacy-q22-b020-jiyao-nine-reused",
-        "bfa-original-authors-existing-source-memory"
+        "bfa-original-authors-existing-source-memory",
+        "legacy-q25-jiyao-source-url-erratum"
       ],
       "reviewedRecordKeys": [
         "output-main:tsm:mill:152505:153635:L1862",
@@ -4874,12 +5377,11 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "matching standard-five per-cast denominator",
-        "2026 Retail patch bridge",
-        "skill-conditioned zero-inclusive histograms"
+        "per-cast hit histogram",
+        "2026 Retail patch/skill"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 15,
+      "reviewEvents": 16,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=153669/viridescent-pigment"
       ],
@@ -4895,7 +5397,8 @@
         "REUSED_INDEPENDENT_ORIGINAL_COHORT",
         "REUSED_SOURCE_CONTEXT_RECONCILIATION",
         "REUSED_ARCHIVED_ORIGINAL",
-        "NEW_ASSIGNED_BFA_COMPILED_OUTPUT_LINES"
+        "NEW_ASSIGNED_BFA_COMPILED_OUTPUT_LINES",
+        "QA_PROVENANCE_MISATTRIBUTION_CORRECTION"
       ],
       "revisitReasons": [
         "Reuse archived primary source, no independent re-count",
@@ -4912,7 +5415,8 @@
         "Nine already-admitted mass-20 output means; no new mapping credit",
         "Two already compiled 20-herb mass-cast means, no standard-five equivalence",
         "Nine historical 20-herb per-cast means already staged; no new original cohort",
-        "Do not promote old mass-20 original author results to five-herb casts or count spreadsheet as replication"
+        "Do not promote old mass-20 original author results to five-herb casts or count spreadsheet as replication",
+        "Correct q25 source-review event wrongly attributed BfA Jiyao to unrelated Shadowlands First Flower Reddit post"
       ]
     },
     {
@@ -5159,6 +5663,71 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/item=189143/draconium-ore",
+      "urls": [
+        "https://www.wowhead.com/item=189143/draconium-ore"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-draconium-r1-no-prospecting-tab-q26"
+      ],
+      "datasetIDs": [
+        "legacy-q26-wowhead-no-loot-tab-189143"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:189143:192871:L1244"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "source rank-specific Prospecting count/outof",
+        "2026 original cast histogram"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=189143/draconium-ore"
+      ],
+      "changeTriggers": [
+        "Q26_SOURCE_TAB_AVAILABILITY_CHECK"
+      ],
+      "revisitReasons": [
+        "Retail raw HTML does not expose Prospecting loot-tab table for rank-specific diamonds"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=190311/draconium-ore",
+      "urls": [
+        "https://www.wowhead.com/item=190311/draconium-ore"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "retail-draconium-r3-no-prospecting-tab-q26"
+      ],
+      "datasetIDs": [
+        "legacy-q26-wowhead-no-loot-tab-190311"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:190311:192870:L1281",
+        "tsm:prospect:190311:192871:L1282"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "source rank-specific Prospecting count/outof",
+        "2026 original cast histogram"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=190311/draconium-ore"
+      ],
+      "changeTriggers": [
+        "Q26_SOURCE_TAB_AVAILABILITY_CHECK"
+      ],
+      "revisitReasons": [
+        "Retail raw HTML does not expose Prospecting loot-tab table for rank-specific diamonds"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/item=190312/khazgorite-ore",
       "urls": [
         "https://www.wowhead.com/item=190312/khazgorite-ore"
@@ -5206,6 +5775,43 @@
       ],
       "revisitReasons": [
         "Khaz'gorite R1 input identity corroborated, output-rate evidence absent"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=191467/bubble-poppy",
+      "urls": [
+        "https://www.wowhead.com/item=191467/bubble-poppy"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-dragonflight-bubble-poppy-no-milling-tab"
+      ],
+      "datasetIDs": [
+        "legacy-q25-df-overflow-five-rank-rows"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:mill:191467:198413:L1966",
+        "tsm:mill:191467:198414:L1967",
+        "tsm:mill:191468:198412:L1970",
+        "tsm:mill:191468:198413:L1971",
+        "tsm:mill:191468:198414:L1972"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "per-rank P(hit)",
+        "per-rank E",
+        "Retail milling loot-tab source"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=191467/bubble-poppy"
+      ],
+      "changeTriggers": [
+        "Q25_MILLING_TAB_NEGATIVE_CHECK"
+      ],
+      "revisitReasons": [
+        "Retail item page lacked milling loot-tab Listview; preserve five assigned quality-rank numeric unknowns"
       ]
     },
     {
@@ -5567,11 +6173,14 @@
       "studyIDs": [
         "DF-PRISMATIC-LEAPER-3-CASTS-PRIMARY",
         "prismatic-leaper-primer-three-mills",
-        "df-prismatic-leaper-item-identity"
+        "df-prismatic-leaper-item-identity",
+        "primer-three-fish-mills-2022-2023"
       ],
       "datasetIDs": [
         "primer-15fish-3mills",
-        "df-q24-200061-fish-mill"
+        "df-q24-200061-fish-mill",
+        "df-b008-fish-3-casts-wowhead-comment-primer",
+        "legacy-q26-reused-primer-3cast"
       ],
       "reviewedRecordKeys": [
         "200061:Mill:198416",
@@ -5589,16 +6198,17 @@
         "tsm:mill:200061:198413:L1999",
         "tsm:mill:200061:190320:L1995",
         "tsm:mill:200061:190322:L1996",
-        "tsm:mill:200061:190328:L1997"
+        "tsm:mill:200061:190328:L1997",
+        "tsm:mill:200061:198412:L1998"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "2026 selector acceptance",
-        "fish input units",
-        "zero-inclusive output histogram"
+        "per-cast zero/hit histogram",
+        "profession skill and Inspiration",
+        "current 2026 patch"
       ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 4,
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 6,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=200061/prismatic-leaper"
       ],
@@ -5606,13 +6216,17 @@
         "QUEUE_REV14_FISH_ID",
         "REV18_ORIGINAL_ID_RECONCILIATION",
         "Q20_SERENE_R2_NOW_ASSIGNED",
-        "Q24_DISJOINT_SPECIAL_INPUT_IDENTITY_AUDIT"
+        "Q24_DISJOINT_SPECIAL_INPUT_IDENTITY_AUDIT",
+        "Q26_FISH_SOURCE_RECHECK",
+        "Q26_PLOT_GROUPING_SOURCE_REUSE"
       ],
       "revisitReasons": [
         "Assigned fish input identity; 3-cast primary comment confirms milling but not target output",
         "Reused existing original 3-cast report; two assigned historical E reconstructed; corrected mistaken Serene R2 source-memory key 198419 to 198413; no independent new study",
         "Reuse previously indexed original; newly in-scope historical E=3/3 for 198413, not a new cohort",
-        "Separate original item identity, special selector, and derivative TSM source cohort"
+        "Separate original item identity, special selector, and derivative TSM source cohort",
+        "Reused existing original 3-cast comment; assigned output ranks not observed",
+        "Historical 3 completed five-fish casts, 10 total pigments; compare against rank-collapsed TSM without promoting"
       ],
       "attributionCorrections": [
         {
@@ -5792,6 +6406,192 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/item=222616/apricate-ink",
+      "urls": [
+        "https://www.wowhead.com/item=222616/apricate-ink"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "tww-apricate-ink-rank2-item-identity"
+      ],
+      "datasetIDs": [
+        "tww-false-mycobloom-output-222616"
+      ],
+      "reviewedRecordKeys": [
+        "candidate:tww:mill:210796:222616:runtime-method-family:20261028"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "correct per-skill Nacreous output eligibility"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=222616/apricate-ink"
+      ],
+      "changeTriggers": [
+        "P0_INVALID_MATERIAL_IDENTITY"
+      ],
+      "revisitReasons": [
+        "Source StatYieldProfiles.lua falsely treats Apricate Ink R2 as milled pigment"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=222617/apricate-ink",
+      "urls": [
+        "https://www.wowhead.com/item=222617/apricate-ink"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "tww-apricate-ink-rank3-item-identity"
+      ],
+      "datasetIDs": [
+        "tww-false-mycobloom-output-222617"
+      ],
+      "reviewedRecordKeys": [
+        "candidate:tww:mill:210797:222617:runtime-method-family:20261028"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "correct per-skill Nacreous output eligibility"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=222617/apricate-ink"
+      ],
+      "changeTriggers": [
+        "P0_INVALID_MATERIAL_IDENTITY"
+      ],
+      "revisitReasons": [
+        "Source StatYieldProfiles.lua falsely treats Apricate Ink R3 as milled pigment"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=224802/orbinid-pigment",
+      "urls": [
+        "https://www.wowhead.com/item=224802/orbinid-pigment"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "tww-lotzboi-2024-milling-quality-skill-yield-comment"
+      ],
+      "datasetIDs": [
+        "tww-2024-lotzboi-one-author-family-skill-bands"
+      ],
+      "reviewedRecordKeys": [
+        "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+        "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+        "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+        "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+        "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+        "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+        "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+        "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+        "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+        "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "original completed-cast denominator",
+        "output rank-specific positive yield",
+        "P(hit) zero-inclusive",
+        "unconditional E",
+        "2026 patch match"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=224802/orbinid-pigment"
+      ],
+      "changeTriggers": [
+        "NEW_UNINDEXED_ORIGINAL_WOWHEAD_COMMENT"
+      ],
+      "revisitReasons": [
+        "Assigned q26 milling skill/quality fallback gap; new original author skill-aware positive range leads"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=237363",
+      "urls": [
+        "https://www.wowhead.com/item=237363"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-midnight-ore-237363-tab-check"
+      ],
+      "datasetIDs": [
+        "retail-237363-no-prospecting-listview-20261029"
+      ],
+      "reviewedRecordKeys": [
+        "midnight:237363:242606:L763",
+        "midnight:237363:242607:L762",
+        "midnight:237363:242610:L764",
+        "midnight:237363:242611:L765",
+        "midnight:237363:242786:L760",
+        "midnight:237363:242788:L761"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Prospecting tab",
+        "per-output count/outof",
+        "positive stack distribution",
+        "completed-cast histogram",
+        "skill/patch"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=237363"
+      ],
+      "changeTriggers": [
+        "Q26_WOWHEAD_TAB_CHECK"
+      ],
+      "revisitReasons": [
+        "Master queue26 requires source-anchored tooltip P and yield"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=237364",
+      "urls": [
+        "https://www.wowhead.com/item=237364"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-midnight-ore-237364-tab-check"
+      ],
+      "datasetIDs": [
+        "retail-237364-no-prospecting-listview-20261029"
+      ],
+      "reviewedRecordKeys": [
+        "midnight:237364:242553:L773",
+        "midnight:237364:242554:L774",
+        "midnight:237364:242612:L776",
+        "midnight:237364:242613:L775",
+        "midnight:237364:242786:L771",
+        "midnight:237364:242788:L772"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Prospecting tab",
+        "per-output count/outof",
+        "positive stack distribution",
+        "completed-cast histogram",
+        "skill/patch"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=237364"
+      ],
+      "changeTriggers": [
+        "Q26_WOWHEAD_TAB_CHECK"
+      ],
+      "revisitReasons": [
+        "Master queue26 requires source-anchored tooltip P and yield"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/item=237364/brilliant-silver-ore",
       "urls": [
         "https://www.wowhead.com/item=237364/brilliant-silver-ore"
@@ -5844,6 +6644,86 @@
         "New independent source found for gem family and saved-input denominator",
         "800 actual casts and seven output totals archived batch002; input rank unknown; new comparison E Diamond 0.05375 vs historical high .01",
         "43/800=0.05375 historical mean; 3285+715=800*5; cannot assign to Silver R2; master normalized invalid REUSED descriptor to PARTIAL while retaining original immutable worker event"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=237365",
+      "urls": [
+        "https://www.wowhead.com/item=237365"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-midnight-ore-237365-tab-check"
+      ],
+      "datasetIDs": [
+        "retail-237365-no-prospecting-listview-20261029"
+      ],
+      "reviewedRecordKeys": [
+        "midnight:237365:242553:L784",
+        "midnight:237365:242554:L785",
+        "midnight:237365:242612:L787",
+        "midnight:237365:242613:L786",
+        "midnight:237365:242786:L782",
+        "midnight:237365:242788:L783"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Prospecting tab",
+        "per-output count/outof",
+        "positive stack distribution",
+        "completed-cast histogram",
+        "skill/patch"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=237365"
+      ],
+      "changeTriggers": [
+        "Q26_WOWHEAD_TAB_CHECK"
+      ],
+      "revisitReasons": [
+        "Master queue26 requires source-anchored tooltip P and yield"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=237366",
+      "urls": [
+        "https://www.wowhead.com/item=237366"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-midnight-ore-237366-tab-check"
+      ],
+      "datasetIDs": [
+        "retail-237366-no-prospecting-listview-20261029"
+      ],
+      "reviewedRecordKeys": [
+        "midnight:237366:242610:L797",
+        "midnight:237366:242611:L798",
+        "midnight:237366:242612:L796",
+        "midnight:237366:242613:L795",
+        "midnight:237366:242786:L793",
+        "midnight:237366:242788:L794"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "Prospecting tab",
+        "per-output count/outof",
+        "positive stack distribution",
+        "completed-cast histogram",
+        "skill/patch"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=237366"
+      ],
+      "changeTriggers": [
+        "Q26_WOWHEAD_TAB_CHECK"
+      ],
+      "revisitReasons": [
+        "Master queue26 requires source-anchored tooltip P and yield"
       ]
     },
     {
@@ -6584,6 +7464,146 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/item=245803",
+      "urls": [
+        "https://www.wowhead.com/item=245803"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-midnight-pigment-245803-rank-check"
+      ],
+      "datasetIDs": [
+        "retail-245803-no-milled-from-listview-20261029"
+      ],
+      "reviewedRecordKeys": [
+        "lead:midnight:mill:236776:245803:rank1-1",
+        "lead:midnight:mill:236777:245803:rank2-1"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "milled-from loot tab",
+        "input rank eligibility",
+        "Perfect Milling skill threshold",
+        "per-rank output histogram"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=245803"
+      ],
+      "changeTriggers": [
+        "Q26_PIGMENT_RANK_CHECK"
+      ],
+      "revisitReasons": [
+        "Eight master-assigned unadmitted pigment-rank leads"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=245808",
+      "urls": [
+        "https://www.wowhead.com/item=245808"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-midnight-pigment-245808-rank-check"
+      ],
+      "datasetIDs": [
+        "retail-245808-no-milled-from-listview-20261029"
+      ],
+      "reviewedRecordKeys": [
+        "lead:midnight:mill:236761:245808:rank1-2",
+        "lead:midnight:mill:236767:245808:rank2-2"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "milled-from loot tab",
+        "input rank eligibility",
+        "Perfect Milling skill threshold",
+        "per-rank output histogram"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=245808"
+      ],
+      "changeTriggers": [
+        "Q26_PIGMENT_RANK_CHECK"
+      ],
+      "revisitReasons": [
+        "Eight master-assigned unadmitted pigment-rank leads"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=245865",
+      "urls": [
+        "https://www.wowhead.com/item=245865"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-midnight-pigment-245865-rank-check"
+      ],
+      "datasetIDs": [
+        "retail-245865-no-milled-from-listview-20261029"
+      ],
+      "reviewedRecordKeys": [
+        "lead:midnight:mill:236770:245865:rank1-2",
+        "lead:midnight:mill:236771:245865:rank2-2"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "milled-from loot tab",
+        "input rank eligibility",
+        "Perfect Milling skill threshold",
+        "per-rank output histogram"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=245865"
+      ],
+      "changeTriggers": [
+        "Q26_PIGMENT_RANK_CHECK"
+      ],
+      "revisitReasons": [
+        "Eight master-assigned unadmitted pigment-rank leads"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/item=245867",
+      "urls": [
+        "https://www.wowhead.com/item=245867"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-midnight-pigment-245867-rank-check"
+      ],
+      "datasetIDs": [
+        "retail-245867-no-milled-from-listview-20261029"
+      ],
+      "reviewedRecordKeys": [
+        "lead:midnight:mill:236778:245867:rank1-1",
+        "lead:midnight:mill:236779:245867:rank2-1"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "milled-from loot tab",
+        "input rank eligibility",
+        "Perfect Milling skill threshold",
+        "per-rank output histogram"
+      ],
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=245867"
+      ],
+      "changeTriggers": [
+        "Q26_PIGMENT_RANK_CHECK"
+      ],
+      "revisitReasons": [
+        "Eight master-assigned unadmitted pigment-rank leads"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/item=36721/dragons-teeth",
       "urls": [
         "https://www.wowhead.com/item=36721/dragons-teeth"
@@ -6615,16 +7635,56 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/item=36909/cobalt-ore",
+      "urls": [
+        "https://www.wowhead.com/item=36909/cobalt-ore"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-retail-cobalt-prospecting-pooled-tab"
+      ],
+      "datasetIDs": [
+        "legacy-q25-raw-wowhead-prospecting-tab-36909"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:36909:36917:L887",
+        "tsm:prospect:36909:36920:L889",
+        "tsm:prospect:36909:36923:L891",
+        "tsm:prospect:36909:36926:L893",
+        "tsm:prospect:36909:36929:L895",
+        "tsm:prospect:36909:36932:L897"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "current 2026 patch and profession skill",
+        "original independent completed-cast histogram",
+        "output quality/stat context"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/item=36909/cobalt-ore"
+      ],
+      "changeTriggers": [
+        "Q25_NEW_RAW_WOWHEAD_PROSPECTING_TAB_EXTRACTION"
+      ],
+      "revisitReasons": [
+        "New raw Retail loot-tab extraction; 91628 pooled observations, six assigned outputs; no patch/skill stratification"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/item=36910/titanium-ore",
       "urls": [
         "https://www.wowhead.com/item=36910/titanium-ore"
       ],
       "observationIDs": [],
       "studyIDs": [
-        "kuraiummei-wrath-3.2-ptr-720ore-144casts"
+        "kuraiummei-wrath-3.2-ptr-720ore-144casts",
+        "wowhead-retail-titanium-prospecting-pooled-tab"
       ],
       "datasetIDs": [
-        "legacy-q22-b020-kuraiummei-144casts"
+        "legacy-q22-b020-kuraiummei-144casts",
+        "legacy-q25-raw-wowhead-prospecting-tab-36910"
       ],
       "reviewedRecordKeys": [
         "retail12.0.5:prospect:36910:46849:globalmenace",
@@ -6637,21 +7697,22 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "2026 Retail patch validation",
-        "profession skill and specialization",
-        "per-gem occurrence histograms",
-        "independently accessible original comment page"
+        "current 2026 patch and profession skill",
+        "individual cast logs",
+        "source-client upload mixture"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=36910/titanium-ore"
       ],
       "changeTriggers": [
-        "NEW_INDEPENDENT_ORIGINAL_AUTHOR_HISTORICAL_CAST_COUNTS"
+        "NEW_INDEPENDENT_ORIGINAL_AUTHOR_HISTORICAL_CAST_COUNTS",
+        "Q25_NEW_RAW_WOWHEAD_PROSPECTING_TAB_EXTRACTION"
       ],
       "revisitReasons": [
-        "144 explicitly completed prospects; 94 powder and 12 double events; six exact gem totals; historical only"
+        "144 explicitly completed prospects; 94 powder and 12 double events; six exact gem totals; historical only",
+        "Previously indexed original PTR comment, now independently extracted different pooled tab data: 58769 aggregate observations, seven assigned outputs; not an independent original study"
       ]
     },
     {
@@ -7393,6 +8454,82 @@
       "revisitReasons": []
     },
     {
+      "canonicalUrl": "https://www.wowhead.com/mop-classic/item=72094/black-trillium-ore",
+      "urls": [
+        "https://www.wowhead.com/mop-classic/item=72094/black-trillium-ore"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-mop-classic-black-trillium-prospecting-tab"
+      ],
+      "datasetIDs": [
+        "legacy-q25-raw-wowhead-prospecting-tab-72094"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:72094:76130:L1005",
+        "tsm:prospect:72094:76133:L1007",
+        "tsm:prospect:72094:76134:L1008",
+        "tsm:prospect:72094:76135:L1009",
+        "tsm:prospect:72094:76136:L1010",
+        "tsm:prospect:72094:76137:L1011"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "independent Retail page",
+        "current Retail eligibility",
+        "current Retail probability and yield"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/mop-classic/item=72094/black-trillium-ore"
+      ],
+      "changeTriggers": [
+        "Q25_NEW_RAW_WOWHEAD_PROSPECTING_TAB_EXTRACTION"
+      ],
+      "revisitReasons": [
+        "Requested Retail URL redirects to MoP Classic; 4586 Classic observations; quarantined from Retail numeric promotion"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/mop-classic/item=72103/white-trillium-ore",
+      "urls": [
+        "https://www.wowhead.com/mop-classic/item=72103/white-trillium-ore"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "wowhead-mop-classic-white-trillium-prospecting-tab"
+      ],
+      "datasetIDs": [
+        "legacy-q25-raw-wowhead-prospecting-tab-72103"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:72103:76130:L1019",
+        "tsm:prospect:72103:76133:L1021",
+        "tsm:prospect:72103:76134:L1022",
+        "tsm:prospect:72103:76135:L1023",
+        "tsm:prospect:72103:76136:L1024",
+        "tsm:prospect:72103:76137:L1025"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "independent Retail page",
+        "current Retail eligibility",
+        "current Retail probability and yield"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/mop-classic/item=72103/white-trillium-ore"
+      ],
+      "changeTriggers": [
+        "Q25_NEW_RAW_WOWHEAD_PROSPECTING_TAB_EXTRACTION"
+      ],
+      "revisitReasons": [
+        "Requested Retail URL redirects to MoP Classic; 4851 Classic observations; quarantined from Retail numeric promotion"
+      ]
+    },
+    {
       "canonicalUrl": "https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620",
       "urls": [
         "https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620"
@@ -7402,7 +8539,8 @@
         "liqourice5-2022-beta-milling-original-reddit-deleted"
       ],
       "datasetIDs": [
-        "liqourice5-2022-beta-milling-original-reddit-deleted"
+        "liqourice5-2022-beta-milling-original-reddit-deleted",
+        "df-q26-historical-rank-grouping-revisit"
       ],
       "reviewedRecordKeys": [
         "output-main:tsm:mill:191460:198421:L1935",
@@ -7418,24 +8556,39 @@
         "output-main:tsm:mill:191464:198419:L1951",
         "output-main:tsm:mill:191464:198420:L1952",
         "output-main:tsm:mill:191465:198418:L1955",
-        "output-main:tsm:mill:191465:198419:L1956"
+        "output-main:tsm:mill:191465:198419:L1956",
+        "tsm:mill:191469:198412:L1975",
+        "tsm:mill:191469:198413:L1976",
+        "tsm:mill:191469:198414:L1977",
+        "tsm:mill:191470:198415:L1980",
+        "tsm:mill:191470:198416:L1981",
+        "tsm:mill:191470:198417:L1982",
+        "tsm:mill:191471:198415:L1985",
+        "tsm:mill:191471:198416:L1986",
+        "tsm:mill:191471:198417:L1987",
+        "tsm:mill:191472:198415:L1990",
+        "tsm:mill:191472:198416:L1991",
+        "tsm:mill:191472:198417:L1992"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "original deleted Reddit study",
-        "cast-level output quality counts",
-        "current patch applicability"
+        "exact 2026 patch rank cast histogram",
+        "zero-inclusive P",
+        "current Retail E"
       ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 2,
       "originalStudyUrls": [
-        "https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620"
+        "https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620",
+        "https://www.reddit.com/r/woweconomy/comments/yaxw94/a_look_at_dragonflight_milling/"
       ],
       "changeTriggers": [
-        "explicit 2022 beta source used for quality alternative test"
+        "explicit 2022 beta source used for quality alternative test",
+        "Q26_RANK_GROUPING"
       ],
       "revisitReasons": [
-        "Derivative Wowhead preserves beta 2-5 per cast, 250 skill difficulty; original Reddit deleted, count one source only"
+        "Derivative Wowhead preserves beta 2-5 per cast, 250 skill difficulty; original Reddit deleted, count one source only",
+        "Historical model used to test rank exclusivity, not to promote gold E"
       ]
     },
     {
@@ -7534,27 +8687,35 @@
         "universe-audit:midnight:mill:236778:245867:alternate-pigment-rank-eligibility",
         "universe-audit:midnight:mill:236779:245867:alternate-pigment-rank-eligibility",
         "universe-audit:midnight:mill:236770:245865:alternate-pigment-rank-eligibility",
-        "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility"
+        "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility",
+        "lead:midnight:mill:236761:245808:rank1-2",
+        "lead:midnight:mill:236767:245808:rank2-2",
+        "lead:midnight:mill:236776:245803:rank1-1",
+        "lead:midnight:mill:236777:245803:rank2-1",
+        "lead:midnight:mill:236778:245867:rank1-1",
+        "lead:midnight:mill:236779:245867:rank2-1",
+        "lead:midnight:mill:236770:245865:rank1-2",
+        "lead:midnight:mill:236771:245865:rank2-2"
       ],
       "status": "PARTIAL",
       "missingFields": [
+        "rank-specific output IDs",
         "actual completed casts",
-        "input quality rank",
-        "output quality item ID",
-        "zero-inclusive histograms",
-        "sample date/client build",
-        "explicit denominator for Mana Lily and Argentleaf"
+        "zero-inclusive histogram",
+        "patch and skill"
       ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "lastReviewedAt": "2026-10-29",
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.wowhead.com/ru/item=245807/powder-pigment"
       ],
       "changeTriggers": [
-        "Q24_NEW_ORIGINAL_FOUR_FAMILY_AGGREGATE"
+        "Q24_NEW_ORIGINAL_FOUR_FAMILY_AGGREGATE",
+        "Q26_REUSE_ARCHIVED_Q24"
       ],
       "revisitReasons": [
-        "Original first-hand source absent from cached source-memory; exact assigned alternate pigment rank questions"
+        "Original first-hand source absent from cached source-memory; exact assigned alternate pigment rank questions",
+        "Check source ancestry before new web fetches and avoid duplicated original studies"
       ]
     },
     {
@@ -9402,11 +10563,11 @@
   ],
   "replayNote": {
     "method": "DETERMINISTIC_INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD",
-    "baseSourceMemoryBlobSHA": "6b55d7f9fa57ba847b03fc3bcc6053c63aff225a",
-    "addedOriginalObservations": 4,
-    "addedSourceReviews": 22,
-    "addedMasterQAEvents": 5,
-    "reviewedDate": "2026-10-28"
+    "baseSourceMemoryBlobSHA": "b5408148d77cc03c07a8c3456aa582b0328024bf",
+    "addedSourceReviews": 42,
+    "addedMasterQAEvents": 11,
+    "reviewedDate": "2026-10-29",
+    "originalWorkerSourceReviewsPreserved": true
   },
   "incrementalReplay": {
     "batch": "2026-10-28-master-batch020",
@@ -9469,11 +10630,11 @@
     "midnight-q23-genyachris-unrelated-source-08"
   ],
   "lastIncrementalReplay": {
-    "batch": "2026-10-28-master-batch022",
-    "observationRecords": 4,
-    "reviewRecords": 22,
-    "qaRecords": 6,
-    "newCanonicalSources": 9,
-    "fullNodeDirectoryRebuild": false
+    "batch": "2026-10-29-master-batch024",
+    "reviewRecords": 42,
+    "qaRecords": 11,
+    "newCanonicalSources": 23,
+    "fullNodeDirectoryRebuild": false,
+    "workerOriginalObservationJSONL": 0
   }
 }
