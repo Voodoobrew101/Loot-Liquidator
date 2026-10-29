@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RANK_POOL_ISOLATION",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 4,
+  "dateUTC": "2026-10-29T15:44:00Z",
+  "verdict": "FAIL_RESEARCH_PREVIEW_RANK_POOL_CONTEXT_AND_ANCESTRY",
+  "subjectBranch": "implementation/five-agent-completion",
+  "headAtTest": "d9ab04e66a652037fd7a0557ef88a2a0d4b034ef",
+  "subjectBlobSHA": "b90137d4f67cea6975504b9c8cc4d978afaefb81",
+  "independentFixture": {
+    "path": "research/tests/v2/test_f005_rank_pool_isolation.js",
+    "blobSHA": "b3a7decf0b9e3b2a46564a573ecdc6310f5d7bce",
+    "cases": 12,
+    "passed": 7,
+    "failed": 5,
+    "execution": "ACTUAL_REPOSITORY_MODULE_EVALUATED_IN_V8_WITH_NODE_ASSERT_SHIM",
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "wowClient": "NOT_RUN"
+  },
+  "findings": [
+    {
+      "id": "POOL_GAME_MODE_COLLISION",
+      "severity": "RESEARCH_PREVIEW_INTEGRITY",
+      "reproduced": true,
+      "mechanism": "operationKey() omits conditions.gameMode; Retail and Classic rows with same other fields share one unresolved-rank pool; each gets half the synthetic E rather than independent preview pools.",
+      "test": "different game modes MUST split pools",
+      "repairOwner": "completion-engineer"
+    },
+    {
+      "id": "POOL_REAGENT_VECTOR_COLLISION",
+      "severity": "RESEARCH_PREVIEW_INTEGRITY",
+      "reproduced": true,
+      "mechanism": "operationKey() omits full direct reagents; same primary item and recipe with an additional required reagent are pooled together.",
+      "test": "different direct reagent vectors MUST split pools",
+      "repairOwner": "completion-engineer"
+    },
+    {
+      "id": "POOL_ANCESTRY_VALIDATOR_GAP",
+      "severity": "RESEARCH_PREVIEW_PROVENANCE",
+      "reproduced": true,
+      "mechanism": "validateWorkingEstimates() checks only sum E and physicalUpperBound; changing gameMode/reagents after allocation or forging memberRecordIDs is accepted.",
+      "tests": [
+        "stale game mode change MUST invalidate pool ancestry",
+        "stale reagent change MUST invalidate pool ancestry",
+        "tampered pool member IDs MUST be rejected"
+      ],
+      "repairOwner": "completion-engineer"
+    }
+  ],
+  "passingBoundaries": [
+    "same-family ranks share one preview pool",
+    "distinct canonical output families split pools",
+    "different recipe spells split pools",
+    "different patch epochs split pools",
+    "different input ranks split pools",
+    "different optional profession stats split pools",
+    "all provisional rank allocations remain economically isolated"
+  ],
+  "additionalRiskNotAsserted": "When canonical output family is unknown, current policy pools unrelated output IDs into one CANONICAL_FAMILY_UNKNOWN group. This is explicitly synthetic policy, not evidence of shared output family. Review before claiming physical rank-pool semantics; do not invent mapping family.",
+  "repairAcceptance": [
+    "Include gameMode and canonicalized full direct reagent vector in operationKey, along with any other typed operation eligibility/context discriminator needed for pool identity.",
+    "Independently recompute pool membership and expected member IDs in validateWorkingEstimates; reject stale/forged membership and mismatched poolID, shares, target and per-pool sum.",
+    "Preserve deterministic order, rank-splitting within genuinely reviewed canonical family, confidence 0, economicUse PREVIEW_ONLY and normalizedVerified false.",
+    "Rerun this 12-case fixture, existing F005 609-assertion fixture, completion pipeline --check, schema and Lua checks."
+  ],
+  "sourceIntegrity": {
+    "gameDataBlobSHA": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "workingEstimatorBlobSHA": "b90137d4f67cea6975504b9c8cc4d978afaefb81",
+    "candidateBuildReportBlobSHA": "0f3ef7bc4bb16db2c6d4fa49755302e25386e811",
+    "frozenTSMInvariantLedgerBlobSHA": "93769e96b670962abcac61181e227993b048c67e"
+  },
+  "economicDisposition": {
+    "observedLiveLeakage": false,
+    "previewOnlyPreservedInTest": true,
+    "confidencePromotions": 0,
+    "independentRetailHoldoutStudies": 0,
+    "modelEconomicAcceptance": "WITHHELD"
+  },
+  "exactDeltas": {
+    "newMappingRecords": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "verifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "regressionCasesAdded": 12,
+    "newDefectClasses": 3,
+    "failedCases": 5
+  },
+  "canonicalCountsAtRead": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "limitations": [
+    "Synthetic adversarial fixtures show real source-code pooling/validation behavior, not proof that an existing admitted record is currently affected.",
+    "No native Node/Lua/WoW client execution; V8 evaluated exact current source with an assert shim.",
+    "No independently matched current-Retail whole-study holdout."
+  ],
+  "nextTask": "F005_RETEST_RANK_POOL_CONTEXT_AND_ANCESTRY_AFTER_ENGINEER_FIX_OR_PIVOT_TO_CHANGED_DF_DIAMOND_MODEL"
+}
