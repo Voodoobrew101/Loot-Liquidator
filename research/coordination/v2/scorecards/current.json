@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F005_CAST_BASIS_INTEGRATION",
-  "queueRevision": 10,
-  "sourceCommit": "618ad36f25fa59ed0d03de0b0eb8cb47ae7928db",
+  "taskID": "F001_F005_CAST_BASIS_REPAIR_AND_BINOMIAL_INTEGRATION",
+  "queueRevision": 11,
+  "sourceCommit": "a36db2df9303a5c87fd1a5ef4503c8e227b894dc",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
-  "candidateHash": "6488e39b54ae7961750231cb94391eb34af606e3",
+  "candidateHash": "940431ecd0cefe1e65701d2cc9f53ae619350b38",
   "candidateHashType": "GIT_BLOB_SHA1",
   "contextVersion": "1.0.0 CONTRACT; generated schema 0.2.0",
   "compilerVersion": "0.8.0",
@@ -29,7 +29,15 @@
     "confidenceOfImputedFields": 0,
     "economicUse": "PREVIEW_ONLY",
     "normalizedVerified": false,
-    "status": "NUMERICALLY_COMPLETE_RESEARCH_ONLY_F005_CAST_BASIS_QA_FAILED"
+    "status": "NUMERICALLY_COMPLETE_RESEARCH_ONLY_CAST_BASIS_QA_PASS_SERIALIZED_ATTESTATION_PENDING",
+    "imputedFieldCounts": {
+      "dropChance": 987,
+      "yieldMin": 97,
+      "yieldMax": 97,
+      "expectedQuantity": 933
+    },
+    "recordsWithAssumptions": 1000,
+    "workingConsistencyAdjustments": 0
   },
   "evidenceNumericCompleteness": {
     "present": 3558,
@@ -54,7 +62,7 @@
   },
   "independentStudyFamilyHoldouts": {
     "validated": 0,
-    "reported": "F005: zero independently matched current Retail whole-study families; model promotion prohibited"
+    "reported": "No independently held-out current Retail completed-cast families. Historical two-axis context source leads are not matched current cohorts."
   },
   "economicEligibleFields": {
     "newlyPromoted": 0,
@@ -63,26 +71,27 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "F005 new cast-basis 12-case synthetic fixture: 4 pass, 8 fail; 3 defect classes (blocked E, blocked P, gross-equivalent quantity basis). New suite not yet in native CI; direct estimator copies inapplicable numeric source fields at positive confidence.",
-    "F002 source-status/claim repair: independent prior 11/11 plus 12/12 provenance controls pass; native CI 40946362744 success on cf9bb92bd9daee0726a280bed6059f8b8ef6a847. Accepted research-only; new cast-basis blocker unresolved.",
-    "F003 TWW Gem Finding exact marginal CP/Bonferroni design: 574 completed zero-hit casts imply <=1% simultaneous upper marginal bound under IID/stable context; synthetic 24/24 reported, independent whole-study holdout missing.",
-    "F004 August 29 2024 official hotfix improves TWW Bismuth, Ironclaw and Aqirite prospecting rates; Raven11 Ironclaw 100 gross ore original cohort has unknown actual casts and epoch; no E/P promotion.",
-    "116 missing evidence E fields and 514 numeric evidence gaps; no independently exhaustive Retail audit, current-Retail holdout, verified baseline or in-game verification."
+    "Cross-process serialized source/context attestation is not independently tested.",
+    "New F003 independent 476-case fixture not wired into native CI.",
+    "116 missing evidence E fields and 514 evidence numeric gaps remain.",
+    "No independent current-Retail completed-cast cohort or verified minimum eligible skill baseline.",
+    "Retail mapping universe not independently exhaustive; 24 legacy queue30 leads and 2 Housing Dye input leads remain unadmitted.",
+    "No WoW client verification."
   ],
   "checksExecuted": [
-    "Read live common/coordinator prompts, v2 workflow, canonical readiness, 217-priority backlog and prior scorecard",
-    "Read four latest specialist submissions and pinned F005 cast-basis review",
-    "Verified exact GitHub blobs for estimator e6f6c736, pipeline b2486e64, new F005 fixture ff1b946d and model bba0f9a8",
-    "Static inspected estimator target-copy logic and donor exclusion discrepancy",
-    "Independently checked zero-hit 574/573-cast Bonferroni bound arithmetic",
-    "Verified Blizzard-authored 2024-08-29 prospecting hotfix in BlueTracker mirror",
-    "Reconciled 1018*4=4072 and 3558+514=4072"
+    "Read current branch head, common/coordinator contracts, v2 workflow, canonical readiness/priorities and four latest specialist submissions plus independent review",
+    "Verified current blobs of estimator, pipeline, regenerated candidate/report, model, independent numeric fixture and two historical evidence records",
+    "Reconciled generated 1018*4=4072; 3558+514=4072; imputed P=987 and E=933 are prior classifications, not new evidence",
+    "Verified native CI 40959813084 at exact head a36db2df9303a5c87fd1a5ef4503c8e227b894dc passed Node pipeline, Lua5.1 decoding/roundtrip and schema",
+    "Reviewed F005 independent V8 12/12 cast-basis, 11/11 source status, 12/12 provenance and 476/476 high-n binomial checks",
+    "Independently computed high-n CDF using SciPy (0.491578960734732 vs model 0.4915789606543559)"
   ],
   "checksUnavailable": [
-    "Local native Node execution of new 12-case suite and full pipeline",
-    "Local Lua 5.1 direct execution",
+    "Native Node of newly authored independent 476-case F003 fixture (not wired into CI)",
     "WoW Retail client",
-    "Independent current Retail whole-study holdout"
+    "Cross-process serialized source/context attestation",
+    "Current Retail independent whole-study holdout",
+    "Direct verification of the two original Reddit reports in this run"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -91,73 +100,65 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T2057Z-F001-F005-cast-basis-integration.json",
-  "decision": "PRIOR_F002_STATUS_CLAIM_REPAIR_ACCEPTED_RESEARCH_ONLY; F005_CAST_BASIS_8_OF_12_FAIL_BLOCKS_FULL_INTEGRITY",
-  "nextTask": "F002_ENFORCE_CAST_BASIS_BLOCKERS_AT_WORKING_ESTIMATE_BOUNDARY_THEN_F005_12_CASE_INDEPENDENT_RETEST",
+  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T2158Z-F001-F005-cast-basis-and-binomial-integration.json",
+  "decision": "F002_CAST_BASIS_AND_F005_INDEPENDENT_QA_ACCEPTED_RESEARCH_ONLY; F003_NUMERIC_STABILITY_ACCEPTED_SYNTHETIC_ONLY; F004_HISTORICAL_CONTEXT_ONLY; FULL_ECONOMIC_VALIDATION_BLOCKED",
+  "nextTask": "F002_SERIALIZED_SOURCE_CONTEXT_ATTESTATION_AND_F003_NATIVE_CI_THEN_F005_INDEPENDENT_RETEST",
   "priorityRecords": 217,
   "independentValidator": {
-    "status": "FAIL_NEW_CAST_BASIS_SYNTHETIC",
-    "newCastBasisCases": 12,
-    "newCastBasisPassed": 4,
-    "newCastBasisFailed": 8,
-    "defectClasses": 3,
-    "priorSourceStatusClaimCases": 11,
+    "status": "PASS_CAST_BASIS_REPAIR_CONDITIONAL_SYNTHETIC_NUMERICS",
+    "castBasisCases": 12,
+    "castBasisPassed": 12,
+    "castBasisFailed": 0,
     "priorSourceStatusClaimPassed": 11,
-    "priorProvenanceCases": 12,
     "priorProvenancePassed": 12,
-    "syntheticOnly": true,
-    "nativeNewSuiteExecuted": false,
-    "subjectBlob": "e6f6c736114233bf089d9d5251db2ef3dbbe7e42",
-    "fixtureBlob": "ff1b946d7e1c76abac6c400f11e7c3835ede17ab",
+    "independentBinomialNumericalPassed": 476,
+    "independentBinomialNumericalFailed": 0,
+    "nativeIndependentNumericalFixtureExecuted": false,
+    "subjectBlob": "1a100b304bd26fa5a0840ade7d8cf4437803aa6f",
+    "modelBlob": "28f22970ef4e0307a69bff624844917fa80fca26",
     "liveEVLeakEstablished": false,
     "existingCandidateRowAffectedEstablished": false,
     "modelHoldoutFamiliesValidated": 0
   },
-  "integrationStatus": "BLOCKED_NEW_F005_CAST_BASIS_APPLICABILITY",
+  "integrationStatus": "RESEARCH_PREVIEW_CAST_BASIS_PASS_SERIALIZED_ATTESTATION_AND_EVIDENCE_HOLDOUT_PENDING",
   "nextAssignments": [
     {
       "owner": "completion-engineer",
-      "taskID": "F002_ENFORCE_CAST_BASIS_BLOCKERS_AT_WORKING_ESTIMATE_BOUNDARY",
-      "exactPaths": [
+      "taskID": "F002_SERIALIZED_SOURCE_CONTEXT_ATTESTATION_AND_F003_NATIVE_CI",
+      "scope": [
         "research/tools/working_estimates.js",
         "research/tools/run_completion_pipeline.js"
       ],
-      "targetFields": [
-        "expectedQuantity",
-        "dropChance"
-      ],
-      "acceptance": "At target copy, donor, rank pool and validation boundaries quarantine GROSS_INPUT, NOT_ACTUAL_CAST, RANK_SPECIFIC, RANK_OR_GROSS_INPUT and incompatible quantityBasis; preserve raw evidence and all 4072 finite preview fields. Wire independent 12-case suite into native pipeline; pass 12/12 + prior 23/23 + schema/Lua/isolation. No production changes."
+      "acceptance": "Version and verify source/context/value lineage on serialized reload, reject stale/tampered source and status; integrate independent 476-case fixture into native CI. Preserve 4072 preview numeric fields, confidence-zero fallbacks and unchanged evidence."
     },
     {
       "owner": "independent-validator",
-      "taskID": "F005_RETEST_BLOCKED_CAST_BASIS_AFTER_ENGINEER_REPAIR",
-      "exactPaths": [
-        "research/tests/v2/test_f005_blocked_evidence_cast_basis.js",
+      "taskID": "F005_CROSS_PROCESS_ATTESTATION_ADVERSARIAL_QA",
+      "scope": [
+        "research/tests/v2/",
         "research/coordination/v2/reviews/"
       ],
-      "acceptance": "Pin repaired estimator and compiler blob SHA; independently run new 12 cases, prior 11+12 controls and native CI; audit gross-input/rank/actual-cast denominator semantics and serialized readback; no self-approval of numeric evidence."
+      "acceptance": "Independently test serialized reload and mutated source/context/field provenance, 12 cast-basis + 23 prior controls + 476 numerical checks, inspect native CI and Lua/schema. Do not self-approve evidence."
     },
     {
       "owner": "baseline-modeller",
-      "taskID": "F003_INDEPENDENTLY_VALIDATE_GEM_FINDING_INTERVAL_DESIGN",
-      "targetKeys": [
-        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
-        "candidate:conditional:prospect:210934:212511:gem-finding:20261028"
+      "taskID": "F003_GEM_FINDING_OPTIONAL_STOPPING_DESIGN_OR_NEW_COHORT",
+      "scope": [
+        "research/models/v2/",
+        "research/tools/models_v2/"
       ],
-      "acceptance": "Independently test CP inversion, eight-way Bonferroni bounds, zero-hit behavior and co-output nonexclusivity; keep model synthetic-only until current Retail casts. If no cohorts, pivot to a different E/denominator family rather than re-reviewing historical diamonds."
+      "acceptance": "If interim looks planned, design independently testable anytime-valid intervals without relabeling fixed-sample CP. Otherwise pivot to a different E/denominator family; no synthetic-to-economic promotion."
     },
     {
       "owner": "evidence-researcher",
-      "taskID": "F004_TWW_GEM_FINDING_POST_HOTFIX_COMPLETED_CASTS",
-      "targetKeys": [
-        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
-        "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
-        "candidate:conditional:prospect:210937:212505:gem-finding:20261028"
+      "taskID": "F004_TWW_MILLING_MATCHED_RANK_CASTS_OR_MIDNIGHT_SELECTOR_PIVOT",
+      "scope": [
+        "research/evidence/v2/"
       ],
-      "acceptance": "Seek independent zero-inclusive completed-cast data with ore quality, skill/spec, unlock, patch epoch and refund count. Preserve 2024-08-29 official patch boundary; if unavailable pivot to exact Midnight selector eligibility, no invented rates."
+      "acceptance": "Seek exact herb/output IDs, input/output ranks, 200+ zero-inclusive completed casts per matched cohort, patch, skill, refunds; if unavailable pivot to unadmitted Midnight selector eligibility, no recycled source audit."
     }
   ],
-  "lastCoordinatorIntegrationUTC": "2026-10-29T20:57:00Z",
+  "lastCoordinatorIntegrationUTC": "2026-10-29T21:58:00Z",
   "quantizationDiagnostic": {
     "modelBlob": "a2760e85247765a8e638cfd0bd05283314625d84",
     "frozenTSMRows": 9,
@@ -167,7 +168,7 @@
     "conflictsResolved": 0
   },
   "newUniverseLeadsThisCycle": 0,
-  "newSyntheticModelFamiliesThisCycle": 1,
+  "newSyntheticModelFamiliesThisCycle": 0,
   "newDyeOutputSpellIdentitiesThisCycle": 0,
   "prospectiveDesignVerification": {
     "modelID": "df-diamond-exact-binomial-sampling-power-v1.0.0",
@@ -196,5 +197,20 @@
     "actualCastObservations": 0,
     "independentHoldout": false,
     "economicUse": "PREVIEW_ONLY"
+  },
+  "newHistoricalSourceFamiliesThisCycle": 2,
+  "newCurrentRetailCastCohortsThisCycle": 0,
+  "workingPriorClassificationDelta": {
+    "dropChance": 783,
+    "expectedQuantity": 817,
+    "recordsWithAssumptions": 778,
+    "interpretation": "Previously copied inapplicable source P/E reclassified as confidence-zero provisional working priors; not new evidence or economic estimates."
+  },
+  "nativeCI": {
+    "runID": 40959813084,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40959813084",
+    "headCommit": "a36db2df9303a5c87fd1a5ef4503c8e227b894dc",
+    "conclusion": "success",
+    "newF003IndependentFixtureIncluded": false
   }
 }
