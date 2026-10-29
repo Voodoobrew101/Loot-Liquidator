@@ -38,10 +38,32 @@ function ambiguousRank(r) {
     /RANK_SPECIFIC|RANK_OR_GROSS_INPUT|RANK_ALLOCATION/.test(b))) ||
     /RANK.*(?:UNRESOLVED|QUARANTINED)/.test(r.conditions?.sourceContext || "");
 }
-function donorKey(r) {
-  return JSON.stringify([r.method, r.expansionID, r.inputCountPerOperation,
-    r.outputItemID, r.inputQualityRank ?? null,
-    r.conditions?.operationVariant ?? null, r.conditions?.patchWindow ?? null]);
+function stableDonorContext(v){if(v===null||v===undefined||typeof v!=="object")return JSON.stringify(v??null);if(Array.isArray(v))return "["+v.map(stableDonorContext).join(",")+"]";return "{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+stableDonorContext(v[k])).join(",")+"}";}
+function donorKey(r){
+  const c=r.conditions||{};
+  // Unknown recipe/rank/skill or an incomplete reagent vector is not a
+  // transferable context. The independent F005 fixture supplies all of these.
+  if(!Number.isSafeInteger(r.recipeSpellID)||r.recipeSpellID<1||
+     !Number.isSafeInteger(r.inputQualityRank)||!Number.isSafeInteger(r.outputQualityRank)||
+     !Array.isArray(r.reagents)||!r.reagents.length||
+     !r.reagents.some(v=>v&&v.itemID===r.inputItemID&&v.quantity===r.inputCountPerOperation)||
+     typeof c.gameMode!=="string"||!c.gameMode||c.gameMode==="UNKNOWN"||
+     typeof c.patchWindow!=="string"||!c.patchWindow||c.patchWindow==="UNKNOWN"||
+     typeof c.effectiveSkill!=="number"||!Number.isFinite(c.effectiveSkill)||
+     typeof c.operationVariant!=="string"||!c.operationVariant||
+     typeof c.eligibilityStatus!=="string"||!c.eligibilityStatus||
+     typeof c.baselineStatus!=="string"||!c.baselineStatus)return null;
+  const reagents=r.reagents.map(v=>
+    v&&Number.isSafeInteger(v.itemID)&&Number.isSafeInteger(v.quantity)&&v.quantity>0?
+    {...v,itemID:v.itemID===r.inputItemID?"PRIMARY_INPUT":v.itemID}:null);
+  if(reagents.includes(null))return null;
+  reagents.sort((a,b)=>stableDonorContext(a).localeCompare(stableDonorContext(b)));
+  // The primary input ID may vary within a proposed family prior, but its
+  // quantity and every other direct reagent/quality property must match.
+  // This remains confidence-zero preview, never evidence or economic use.
+  return stableDonorContext([r.method,r.expansionID,r.recipeSpellID,
+    r.inputCountPerOperation,r.inputQualityRank,r.outputItemID,
+    r.outputQualityRank,reagents,c]);
 }
 function median(values) {
   const a = values.slice().sort((x, y) => x - y);
@@ -77,8 +99,8 @@ function applyWorkingEstimates(records, options = {}) {
       /GROSS_INPUT|NOT_ACTUAL_CAST|RANK_SPECIFIC|RANK_OR_GROSS_INPUT/.test(b));
     if (e !== null && !forbidden && r.expectedQuantity.status !== "contradictory") {
       const k = donorKey(r);
-      if (!donors.has(k)) donors.set(k, []);
-      donors.get(k).push({ recordID: r.recordID, value: e });
+      if (k !== null && !donors.has(k)) donors.set(k, []);
+      if (k !== null) donors.get(k).push({ recordID: r.recordID, value: e });
     }
     if (ambiguousRank(r) && e === null) {
       const family = canonicalFamily(r, options);
@@ -169,11 +191,12 @@ function applyWorkingEstimates(records, options = {}) {
       if (pool.familyID === null) assumption("CANONICAL_FAMILY_UNKNOWN_SHARED_OPERATION_PREVIEW_POOL");
     }
     if (e === null && p === null) {
-      const familyDonors = donors.get(donorKey(r)) || [];
+      const key = donorKey(r);
+      const familyDonors = key === null ? [] : (donors.get(key) || []);
       if (familyDonors.length) {
         e = median(familyDonors.map(d => d.value));
         w.sourceRecordIDs = familyDonors.map(d => d.recordID).sort();
-        assumption("COMPARABLE_OUTPUT_MEDIAN_TRANSFER_UNVALIDATED_FOR_THIS_INPUT");
+        assumption("CONTEXT_MATCHED_PRIMARY_INPUT_NORMALIZED_MEDIAN_TRANSFER_PREVIEW_ONLY");
       } else {
         const conditionalMean = a !== null && b !== null ? (a + b) / 2 : a ?? b ?? 1;
         e = 0.5 * conditionalMean;
