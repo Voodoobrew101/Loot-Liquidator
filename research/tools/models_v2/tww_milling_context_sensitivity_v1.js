@@ -7,18 +7,18 @@
  */
 const VERSION = "tww-milling-context-sensitivity-v1.0.0";
 const KEYS = [
-  ["historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",210796,222619,1.15],
-  ["historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",210797,222619,1.35],
-  ["candidate:tww:mill:210798:222618:runtime-method-family:20261028",210798,222618,null],
-  ["candidate:tww:mill:210799:222612:runtime-method-family:20261028",210799,222612,null],
-  ["candidate:tww:mill:210800:222613:runtime-method-family:20261028",210800,222613,null],
-  ["candidate:tww:mill:210801:222614:runtime-method-family:20261028",210801,222614,null],
-  ["candidate:tww:mill:210802:224800:runtime-method-family:20261028",210802,224800,null],
-  ["candidate:tww:mill:210803:224801:runtime-method-family:20261028",210803,224801,null],
-  ["candidate:tww:mill:210804:224802:runtime-method-family:20261028",210804,224802,null],
-  ["candidate:tww:mill:210805:224803:runtime-method-family:20261028",210805,224803,null],
-  ["candidate:tww:mill:210806:224804:runtime-method-family:20261028",210806,224804,null],
-  ["candidate:tww:mill:210807:224805:runtime-method-family:20261028",210807,224805,null]
+  ["historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",210796,222619,1.15,1,2,444181],
+  ["historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",210797,222619,1.35,2,2,444181],
+  ["candidate:tww:mill:210798:222618:runtime-method-family:20261028",210798,222618,null,3,1,null],
+  ["candidate:tww:mill:210799:222612:runtime-method-family:20261028",210799,222612,null,1,1,null],
+  ["candidate:tww:mill:210800:222613:runtime-method-family:20261028",210800,222613,null,2,2,null],
+  ["candidate:tww:mill:210801:222614:runtime-method-family:20261028",210801,222614,null,3,3,null],
+  ["candidate:tww:mill:210802:224800:runtime-method-family:20261028",210802,224800,null,1,1,null],
+  ["candidate:tww:mill:210803:224801:runtime-method-family:20261028",210803,224801,null,2,2,null],
+  ["candidate:tww:mill:210804:224802:runtime-method-family:20261028",210804,224802,null,3,3,null],
+  ["candidate:tww:mill:210805:224803:runtime-method-family:20261028",210805,224803,null,1,1,null],
+  ["candidate:tww:mill:210806:224804:runtime-method-family:20261028",210806,224804,null,2,2,null],
+  ["candidate:tww:mill:210807:224805:runtime-method-family:20261028",210807,224805,null,3,3,null]
 ];
 const SOURCE = {
   studyFamilyID:"reddit-1fdmzwy-2024-original-author",
@@ -35,13 +35,13 @@ const SOURCE = {
 const isFiniteNumber = x => typeof x === "number" && Number.isFinite(x);
 function requireValid(ok, code) { if (!ok) throw new Error(code); }
 function contextFor(keyRow) {
-  const [recordID,inputItemID,outputItemID] = keyRow;
+  const [recordID,inputItemID,outputItemID,_,inputQualityRank,outputQualityRank,recipeSpellID] = keyRow;
   const context = {
     contextVersion:"1.0.0", recordID, gameMode:"RETAIL",
     targetBuildOrPatchEpoch:null, expansionID:10, method:"Mill",
     recipeOrOperationVariant:"Khaz Algar Milling",
-    recipeSpellID:444181, inputItemID, outputItemID,
-    inputQualityRank:null, outputQualityRank:null,
+    recipeSpellID, operationFamilySpellID:444181, inputItemID, outputItemID,
+    inputQualityRank, outputQualityRank,
     nominalInputCountPerOperation:10,
     reagentVector:[{itemID:inputItemID,unitsPerOperation:10}],
     minimumRecipeEligibleSkill:null,
@@ -64,6 +64,7 @@ function validateContext(c) {
     c.reagentVector.length===1 &&
     c.reagentVector[0].itemID===c.inputItemID &&
     c.reagentVector[0].unitsPerOperation===10, "CONTEXT_REAGENT_VECTOR");
+  requireValid([1,2,3].includes(c.inputQualityRank) && [1,2,3].includes(c.outputQualityRank), "CONTEXT_QUALITY_RANK");
   requireValid(c.minimumRecipeEligibleSkill===null ||
     (Number.isInteger(c.minimumRecipeEligibleSkill)&&c.minimumRecipeEligibleSkill>=0),
     "CONTEXT_MIN_ELIGIBLE_SKILL");
@@ -168,6 +169,7 @@ function selfTest(){
   const proposal=buildProposal();
   requireValid(proposal.records.length===12&&new Set(proposal.targetKeys).size===12,"TARGET_KEYS");
   requireValid(proposal.records.every(r=>r.context.nominalInputCountPerOperation===10 &&
+    r.context.inputQualityRank!==null && r.context.outputQualityRank!==null &&
     r.economicUse==="PREVIEW_ONLY" && r.confidence===0 &&
     Object.values(r.currentRetailEconomicFields).every(v=>v===null)),"ISOLATION");
   requireValid(proposal.records.filter(r=>r.historicalScenarios.length===6).length===2,"SCENARIO_SCOPE");
