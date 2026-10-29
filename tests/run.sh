@@ -26,6 +26,8 @@ python3 tests/validate_package.py
 
 "$lua_bin" tests/test_frozen_tsm.lua
 "$lua_bin" tests/test_profession_projection.lua
+"$lua_bin" tests/test_research_profiles.lua "$compiled_dir"
 "$lua_bin" tests/test_craft_recording.lua
 python3 tests/test_craft_export.py
 "$lua_bin" tools/audit_profession_scaling.lua
+

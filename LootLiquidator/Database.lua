@@ -67,6 +67,10 @@ function LL:ValidateItemDB(db)
                     (r.gearKey:match('^gear:%d+:%d+:armor$') or r.gearKey:match('^gear:%d+:%d+:weapon$'))))
             or (r.recipeID~=nil and (not finite(r.recipeID) or r.recipeID<1 or r.recipeID%1~=0))
             or (r.referenceConditions~=nil and type(r.referenceConditions)~='table')
+            or (r.referenceContextID~=nil and type(r.referenceContextID)~='string')
+            or (r.patchStartBuild~=nil and not finite(r.patchStartBuild))
+            or (r.patchEndBuild~=nil and not finite(r.patchEndBuild))
+            or (r.minimumRecipeSkill~=nil and not finite(r.minimumRecipeSkill))
             or (r.samples~=nil and not finite(r.samples))
             or type(r.studyID)~='string' or type(r.source)~='string'
             or type(r.materials)~='table' then return false,'Invalid or duplicate record identity' end
@@ -140,14 +144,20 @@ local function contextEligible(record,ctx,build,model,rules)
     if record.patchEndBuild and (not tonumber(build) or tonumber(build)>record.patchEndBuild) then return false end
     if record.patchStartBuild and (not tonumber(build) or tonumber(build)<record.patchStartBuild) then return false end
     if record.obsolete or record.hotfixBlocked then return false end
+    if record.minimumRecipeSkill~=nil then
+        local skill=ctx.skill or ctx.baseSkill or ctx.effectiveSkill
+        if not finite(skill) or skill<record.minimumRecipeSkill then return false end
+    end
     for key,v in pairs(record.referenceConditions or {}) do
         if not same(ctx[key],v) then
             if not model or not model.mechanicsApplied then return false end
             for _,material in ipairs(model.materials) do
                 if material.expectedQuantity~=nil then
-                    local covered=false
+                    local covered=model.professionProjected and material.appliedProfessionRule
+                        and model.projectedContext and same(model.projectedContext[key],ctx[key]) or false
                     for _,rule in ipairs(rules or {}) do
-                        if rule.ruleID==material.appliedExpectationRule and same(rule.targetConditions[key],ctx[key]) then covered=true end
+                        if rule.ruleID==material.appliedExpectationRule and type(rule.targetConditions)=='table'
+                            and same(rule.targetConditions[key],ctx[key]) then covered=true end
                     end
                     if not covered then return false end
                 end
@@ -171,7 +181,9 @@ local function sourceModel(self,f,option,r)
     local model={inputCount=r.inputCount,patchBuild=r.patchBuild,referenceContextID=r.referenceContextID,
         sourceKey=r.sourceKey,baselineProfile=r.baselineProfile,baselineStatus=r.baselineStatus,
         duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source,
-        adjustment=r.baselineStatus and 'provisional source estimate / baseline not normalized' or nil}
+        referenceApplicability=r.referenceApplicability,
+        adjustment=(r.baselineStatus or r.referenceApplicability=='unverified-reference')
+            and 'provisional source estimate / baseline not normalized' or nil}
     for _,m in ipairs(r.materials) do
         model.materials[#model.materials+1]={id=m.id,expectedQuantity=m.expectedQuantity.value,
             chance=m.dropChance.value,probabilityVerified=m.dropChance.status=='verified' or m.dropChance.status=='measured',
@@ -188,7 +200,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     local build=GetBuildInfo and select(2,GetBuildInfo())
     local input=option.name=='Disenchant' and gearKey(f) or f.id
     local records=self._evidenceIndex and self._evidenceIndex[option.name..':'..tostring(input)] or {}
-    local eligible,transformed={},{}
+    local eligible,transformed,hasExpected={},{},{}
     for _,r in ipairs(records) do
         local hasMean=false
         for _,material in ipairs(r.materials) do
@@ -196,7 +208,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         end
         local model=sourceModel(self,f,option,r)
         transformed[r]=model
-        if hasMean and userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
+        hasExpected[r]=hasMean
+        -- Applicability defines the output universe. An unknown expectation must
+        -- remain an unknown cooutput rather than disappear as if impossible.
+        if userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
             and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
             and (not r.expansionID or r.expansionID==f.expansionID)
             and contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules) then eligible[#eligible+1]=r end
@@ -225,6 +240,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         end
         if #r.materials>0 then
             eligible[#eligible+1]=r
+            for _,material in ipairs(r.materials) do
+                if self:EvidenceReliability(material.expectedQuantity,r)>0 then hasExpected[r]=true;break end
+            end
             if personal.professionProjected then
                 transformed[r]={inputCount=r.inputCount,materials=personal.materials,sourceKey='personal',
                     mechanicsApplied=true,adjustment=personal.adjustment,projectionRules=personal.projectionRules}
@@ -238,7 +256,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         if rank[a.sourceKey]~=rank[b.sourceKey] then return rank[a.sourceKey]<rank[b.sourceKey] end
         return a.recordID<b.recordID
     end)
-    local anchor=eligible[1]
+    local anchor
+    for _,r in ipairs(eligible) do if hasExpected[r] then anchor=r;break end end
     if not anchor then return nil,'Insufficient Data: no enabled compatible source' end
     local batch=option.inputCount or anchor.inputCount
     local result={kind='weighted-evidence',inputCount=batch,materials={},sources={},
@@ -263,6 +282,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
             -- Build a model, then apply the preserved PR #4 adapter exactly once.
             local model=transformed[r] or sourceModel(self,f,option,r)
             if r==anchor and model.adjustment then result.adjustment=model.adjustment end
+            if model.referenceApplicability=='unverified-reference' then result.unverifiedReference=true end
             if r==anchor and model.expectedInputCount~=nil then
                 result.expectedInputCount=model.expectedInputCount*batch/r.inputCount
             end
@@ -393,3 +413,4 @@ function LL:EvidenceDatabaseStatus()
         counts.itemtsm,counts.legacy,#(self.ItemDB and self.ItemDB.professionRules or {}),#(self.ItemDB and self.ItemDB.personalPatchRules or {}))
 end
 LL:InitializeItemDB()
+

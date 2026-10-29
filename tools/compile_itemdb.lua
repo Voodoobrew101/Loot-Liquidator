@@ -5,7 +5,7 @@ for _,file in ipairs({'ResearchDB.lua','GameData.lua','StatYieldProfiles.lua'}) 
     assert(loadfile('database/sources/'..file))('LootLiquidator',LL)
 end
 local gd=LL.GameData
-local db={schemaVersion=1,version='1.1.0',processing={},mechanicRules={},
+local db={schemaVersion=1,version='1.1.1',processing={},mechanicRules={},
     provenance='main 051f582 / v0.9.70; schema-validated provisional migration',
     compat={Conversions=LL.Conversions,DisenchantTables=LL.DisenchantTables,
         ResearchTokenCandidates=LL.ResearchTokenCandidates,ResearchProcessingInputs=LL.ResearchProcessingInputs}}
@@ -148,9 +148,66 @@ end
 -- Translate the pinned research schema without interpreting a low scenario as
 -- a normalized current baseline. Preserve the complete source record/lineage.
 local research=assert(loadfile('database/research/itemdb.lua'))()
-assert(research.schemaVersion=='0.1.0' and type(research.processing)=='table','Unsupported research schema')
+assert((research.schemaVersion=='0.1.0' or research.schemaVersion=='0.2.0')
+    and type(research.processing)=='table','Unsupported research schema')
 db.researchManifest=research.sourceManifest
-db.buildReport={adapted=0,tsmDuplicates=0,rejected={},researchMappings=#research.processing}
+db.buildReport={adapted=0,tsmDuplicates=0,rejected={},researchMappings=#research.processing,
+    researchSchemaVersion=research.schemaVersion,previewEstimatesPreserved=0}
+-- Identity is typed and deterministic. Output identity/source URLs are deliberately
+-- absent: cooutputs with the same input, operation and observed conditions belong
+-- to one reference profile, even though the research ledger stores them as rows.
+local function contextIdentity(v)
+    local kind=type(v)
+    if kind=='nil' then return 'nil' end
+    if kind=='number' then return 'number:'..string.format('%.17g',v) end
+    if kind=='string' then return 'string:'..string.format('%q',v) end
+    if kind=='boolean' then return 'boolean:'..tostring(v) end
+    assert(kind=='table','Unsupported research context type')
+    local keys={} for key in pairs(v) do keys[#keys+1]=key end
+    table.sort(keys,function(a,b) return contextIdentity(a)<contextIdentity(b) end)
+    local out={'table:{'}
+    for _,key in ipairs(keys) do out[#out+1]=contextIdentity(key)..'='..contextIdentity(v[key])..';' end
+    out[#out+1]='}';return table.concat(out)
+end
+local function known(v)
+    if v==nil then return false end
+    if type(v)=='string' then
+        local text=v:upper()
+        return text~='UNKNOWN' and text~='REFERENCE_UNKNOWN' and not text:find('UNVERIFIED',1,true)
+            and not text:find('NOT_ESTABLISHED',1,true)
+    end
+    return true
+end
+local function referenceConditions(c)
+    local out,unresolved={},{}
+    for _,key in ipairs({'skillLineID','skill','baseSkill','effectiveSkill','bonusSkill',
+        'operationStats','equipment','equipmentKey','specializationRanks'}) do
+        if known(c[key]) then out[key]=c[key] end
+    end
+    if known(c.specialization) then
+        -- Named tree/gem hints without ranks are source limitations, not exact
+        -- runtime specialization snapshots. Never invent a rank from such a hint.
+        if type(c.specialization)=='string' or (type(c.specialization)=='table' and c.specialization.requiredPoints~=nil) then
+            out.specialization=c.specialization
+        else unresolved[#unresolved+1]='specialization' end
+    end
+    return out,unresolved
+end
+local function validatePreview(r)
+    local w=r.workingEstimate
+    if w==nil then return end
+    assert(research.schemaVersion=='0.2.0' and type(w)=='table'
+        and w.economicUse=='PREVIEW_ONLY' and w.normalizedVerified==false
+        and w.evidenceFieldsPreserved==true,'Unsupported working estimate contract: '..r.recordID)
+    for _,key in ipairs({'dropChance','yieldMin','yieldMax','expectedQuantity'}) do
+        local v=w[key]
+        assert(type(v)=='number' and v==v and v>=0 and v<math.huge,
+            'Invalid preview field: '..r.recordID..':'..key)
+    end
+    assert(w.dropChance<=1 and w.yieldMin%1==0 and w.yieldMax%1==0
+        and w.yieldMin<=w.yieldMax,'Invalid preview probability/bounds: '..r.recordID)
+    db.buildReport.previewEstimatesPreserved=db.buildReport.previewEstimatesPreserved+1
+end
 local function adaptField(f)
     assert(type(f)=='table' and type(f.confidence)=='number','Invalid research field')
     local n=clone(f)
@@ -160,6 +217,7 @@ local function adaptField(f)
     return n
 end
 for _,r in ipairs(research.processing) do
+    validatePreview(r) -- retained only under researchRecord; NEVER an economic fallback
     local provenance=table.concat(r.sources or {},' ')..' '..tostring(r.conditions and r.conditions.sourceContext)
     local isTSM=r.recordID:match('^tsm:') or provenance:lower():find('tsm',1,true)
     if isTSM then
@@ -171,15 +229,27 @@ for _,r in ipairs(research.processing) do
     else
         local c=r.conditions or {}
         local patch=c.patchWindow
+        local conditions,unresolved=referenceConditions(c)
+        local contextID='research-context-v1:'..contextIdentity({method=r.method,inputItemID=r.inputItemID,
+            inputCount=r.inputCountPerOperation,inputQualityRank=r.inputQualityRank,
+            recipeID=r.recipeSpellID,expansionID=r.expansionID,conditions=c})
         local n={recordID='research:'..r.recordID,sourceKey='itemdb',studyID=r.recordID,
             method=r.method,profession=methods[r.method],inputItemID=r.inputItemID,inputCount=r.inputCountPerOperation,
             inputQualityRank=r.inputQualityRank,recipeID=r.recipeSpellID,expansionID=r.expansionID,
+            minimumRecipeSkill=c.minimumRecipeSkill,
             source=table.concat(r.sources or {},'; '),samples=r.expectedQuantity.sampleOperations,
-            referenceConditions={},researchConditions=c,researchRecord=r,provisional=true,
+            referenceContextID=contextID,referenceConditions=conditions,researchConditions=c,
+            unresolvedResearchConditions=unresolved,researchRecord=r,provisional=true,
+            referenceApplicability=next(conditions) and 'condition-matched' or 'unverified-reference',
             baselineStatus=c.baselineStatus,materials={{id=r.outputItemID,quality=r.outputQualityRank,
                 expectedQuantity=adaptField(r.expectedQuantity),dropChance=adaptField(r.dropChance),
                 minQuantity=adaptField(r.yieldMin),maxQuantity=adaptField(r.yieldMax)}}}
-        if type(patch)=='table' then n.patchStartBuild=patch.startBuild;n.patchEndBuild=patch.endBuild end
+        if type(patch)=='table' then
+            n.patchStartBuild=patch.startBuild;n.patchEndBuild=patch.endBuild
+            n.targetBuild=patch.targetBuild or patch.build
+        end
+        n.targetBuild=c.targetBuild or c.patchBuild or n.targetBuild
+        n.hotfixBlocked=c.hotfixBlocked==true or c.normalizationBlocked==true or nil
         -- Only an explicit normalized export can opt into forward profession rules.
         if c.baselineProfile and c.targetBuild then n.baselineProfile=c.baselineProfile;n.patchBuild=c.targetBuild end
         db.processing[#db.processing+1]=n
@@ -267,3 +337,4 @@ local file=assert(io.open(output,'w'))
 file:write('-- Generated by tools/compile_itemdb.lua. Unknown fields are absent, not zero.\nlocal _, LL = ...\nLL.ItemDB=',(encode(db):gsub('},%[','},\n[')),'\n')
 file:close()
 print('Compiled '..total..' source records (provisional and documented recipes) to '..output)
+
