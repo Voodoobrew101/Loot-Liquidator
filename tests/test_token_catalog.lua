@@ -1,7 +1,7 @@
 -- Synthetic reviewed relationships test routing only; no real approval is invented.
 local outdir=assert(arg[1])
 local function clone(t) if type(t)~='table' then return t end local n={}for k,v in pairs(t)do n[k]=clone(v)end return n end
-GetBuildInfo=function()return 'synthetic','150' end
+GetBuildInfo=function()return 'synthetic','150','Oct 29 2026',120105 end
 WOW_PROJECT_ID=1;WOW_PROJECT_MAINLINE=1
 GetTime=function()return 100 end
 time=function()return 1000 end
@@ -36,13 +36,23 @@ local collected=false
 C_TransmogCollection={GetItemInfo=function()return 1,2 end,GetAppearanceSourceInfo=function()return {isCollected=collected}end}
 local f={id=900001,classID=15,equipLoc='',link='item:900001'}
 local token=assert(LL:ATTTokenInfo(f));assert(token.standalone and token.possibleMissingAppearance and calls==0)
+assert(LL:StandaloneTokenInfo({id=279576,classID=12,equipLoc='INVTYPE_NON_EQUIP_IGNORE'})==nil)
+assert(LL:ATTResearchStatus():find('1 current-build tokens',1,true))
+local realSignature=GetBuildInfo
+GetBuildInfo=function()return 'synthetic','unknown','Oct 29 2026',120105 end
+assert(LL:StandaloneTokenInfo(f)==nil,'unparseable build must not admit a catalog record')
+assert(LL:ATTResearchStatus():find('0 current-build tokens',1,true))
+GetBuildInfo=nil
+assert(LL:StandaloneTokenInfo(f)==nil)
+assert(LL:ATTResearchStatus():find('0 current-build tokens',1,true))
+GetBuildInfo=realSignature
 WOW_PROJECT_ID=2;assert(LL:ATTTokenInfo(f)==nil);WOW_PROJECT_ID=1
 collected=true;LL:InvalidateATTCache();token=LL:ATTTokenInfo(f);assert(not token.possibleMissingAppearance)
 assert(LL:ATTTokenInfo({id=900001,classID=7,equipLoc=''})==nil)
 assert(LL:ATTTokenInfo({id=900001,classID=15,equipLoc='INVTYPE_HEAD'})==nil)
-GetBuildInfo=function()return 'synthetic','201' end
+GetBuildInfo=function()return 'synthetic','201','Oct 29 2026',120105 end
 assert(LL:ATTTokenInfo(f)==nil)
-GetBuildInfo=function()return 'synthetic','150' end
+GetBuildInfo=function()return 'synthetic','150','Oct 29 2026',120105 end
 LL.ItemDB.tokenRewards[1].independentReview='PENDING';assert(LL:ATTTokenInfo(f)==nil)
 LL.ItemDB.tokenRewards[1].independentReview='APPROVED'
 -- Unreviewed legacy cache remains explicitly labelled, and works with ATT

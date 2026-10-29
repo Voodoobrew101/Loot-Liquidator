@@ -1,6 +1,6 @@
 # Loot Liquidator
 
-This is the consolidated **0.10.0-alpha6 test candidate**, not an approved production release. It retains PR #10's mechanics integration. In-game QA is still required; back up LootLiquidatorDB before installation.
+This is the consolidated **0.10.0-alpha7 test candidate**, not an approved production release. It retains PR #10's mechanics integration. In-game QA is still required; back up LootLiquidatorDB before installation.
 
 Install only the `LootLiquidator/` folder into the Retail client's `Interface/AddOns/`. Do not copy the repository root or developer files into the addon folder. CI produces a manifest-only test ZIP.
 

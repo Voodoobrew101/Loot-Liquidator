@@ -115,7 +115,9 @@ local function RefreshMissing(data,now)
 end
 function LL:StandaloneTokenInfo(f)
     if not f or not SafeNumber(f.id) or not NonEquippableSlot(f.equipLoc) then return nil end
-    local build=GetBuildInfo and tonumber(select(2,GetBuildInfo()))
+    -- Parentheses keep only the build result; otherwise select also forwards
+    -- the date string into tonumber's optional numeric-base argument.
+    local build=GetBuildInfo and tonumber((select(2,GetBuildInfo())))
     for _,r in ipairs(self._tokenRewardIndex and self._tokenRewardIndex[f.id] or {}) do
         if WOW_PROJECT_ID~=nil and WOW_PROJECT_ID==WOW_PROJECT_MAINLINE
             and build and build>=r.patchStartBuild and build<=r.patchEndBuild and f.classID==r.inputClassID
@@ -807,7 +809,7 @@ function LL:ATTResearchStatus()
             (r.limitations.rewardLimitReached or r.limitations.depthLimitReached or r.limitations.metadataTruncated)) then capped=capped+1 end
     end
     for _ in pairs(self.db and self.db.attItemResearch or {}) do metadata=metadata+1 end
-    local build=GetBuildInfo and tonumber(select(2,GetBuildInfo()))
+    local build=GetBuildInfo and tonumber((select(2,GetBuildInfo())))
     for _,list in pairs(self._tokenRewardIndex or {}) do
         for _,r in ipairs(list) do if build and build>=r.patchStartBuild and build<=r.patchEndBuild then reviewed=reviewed+1 end end
     end
