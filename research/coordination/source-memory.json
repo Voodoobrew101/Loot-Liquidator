@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "researchOnly": true,
   "sourcesCount": 157,
-  "reviewEvents": 208,
+  "reviewEvents": 213,
   "qaEvents": 67,
   "approvedQaEvents": 66,
   "warnings": [
@@ -634,12 +634,13 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "2026 Retail cast histograms",
-        "operation semantics",
-        "patch/skill"
+        "exact output-rank hit histograms",
+        "exact output-rank E",
+        "current Retail client and skill",
+        "original TSM cast denominator"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 5,
+      "reviewEvents": 6,
       "originalStudyUrls": [
         "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua"
       ],
@@ -648,14 +649,16 @@
         "REV18_39_EXACT_MILLING_LINES",
         "Q19_39_SOURCE_LINE_RANK_AUDIT",
         "Q20_IMMUTABLE_SOURCE_STATUS_ENUM_CORRECTION",
-        "REUSED_SOURCE_CONTEXT_RECONCILIATION"
+        "REUSED_SOURCE_CONTEXT_RECONCILIATION",
+        "Q20_40_ASSIGNED_SOURCE_LINES"
       ],
       "revisitReasons": [
         "37 source rows checked; rank-family P/E duplicates must remain unknown for exact ranks",
         "39 pinned GameData rows independently matched to input/output/source line; no new original TSM study",
         "Reused TSM historical derivative; all source IDs and input groups matched; no new measurements",
         "Reused historical TSM derivative; prior REUSED status not an accepted source-memory enum",
-        "TSM matRate and amountOfMats operation units differ by input family; no universal coefficient"
+        "TSM matRate and amountOfMats operation units differ by input family; no universal coefficient",
+        "40/40 exact source lines and parent input groups verified; source family references not independent experiments; master normalized invalid REUSED descriptor to PARTIAL while retaining original immutable worker event"
       ]
     },
     {
@@ -2735,25 +2738,25 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "2026 standard five-herb cast histogram",
-        "mass versus standard recipe equivalence",
-        "current patch eligibility",
-        "per-cast occurrence and positive bounds"
+        "standard five-herb actual-cast outcome histogram",
+        "2026 Retail skill/patch bridge"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 3,
+      "reviewEvents": 4,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/t8lubc"
       ],
       "changeTriggers": [
         "new assigned First Flower TSM rows",
         "Q20_IMMUTABLE_SOURCE_STATUS_ENUM_CORRECTION",
-        "Q20_DIFFERENT_OPERATION_DENOMINATOR_GUARD"
+        "Q20_DIFFERENT_OPERATION_DENOMINATOR_GUARD",
+        "Q20_MASTER_SHADOWLANDS_OVERFLOW"
       ],
       "revisitReasons": [
         "Reused existing 4000-herb/200 mass-cast original; no duplicate source archive",
         "Reused historical 20-herb mass cohort; prior REUSED status not an accepted source-memory enum",
-        "REUSED original; 200 actual 20-herb mass operations not the five-herb TSM row"
+        "REUSED original; 200 actual 20-herb mass operations not the five-herb TSM row",
+        "Historical 20-herb mass study reused; no equivalence to assigned standard five-herb TSM rows; master normalized invalid REUSED descriptor to PARTIAL while retaining original immutable worker event"
       ]
     },
     {
@@ -4226,7 +4229,8 @@
       ],
       "datasetIDs": [
         "cardinalai-800-4000gross-3285net-715saved",
-        "wowhead-237364-cardinalai-800-prospects"
+        "wowhead-237364-cardinalai-800-prospects",
+        "800-casts-43-diamonds-3285-ore-used-715-saved"
       ],
       "reviewedRecordKeys": [
         "output-supp:midnight:237365:242608:L?",
@@ -4247,24 +4251,25 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "current-client patch/build and actual observation date",
-        "exact input rank and output quality where relevant",
-        "per-cast zero-inclusive output histogram",
-        "positive conditional min/max",
-        "effective skill and specialization context"
+        "exact ore input rank",
+        "per-cast Diamond hit histogram",
+        "actual sampling date/build",
+        "skill and knowledge nodes"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=237364/brilliant-silver-ore"
       ],
       "changeTriggers": [
         "NEW_ORIGINAL_800_CAST_STUDY",
-        "QUEUE18_SOURCE_RECONCILIATION"
+        "QUEUE18_SOURCE_RECONCILIATION",
+        "QUEUE20_DIAMOND_VALUATION_RECONCILIATION"
       ],
       "revisitReasons": [
         "New independent source found for gem family and saved-input denominator",
-        "800 actual casts and seven output totals archived batch002; input rank unknown; new comparison E Diamond 0.05375 vs historical high .01"
+        "800 actual casts and seven output totals archived batch002; input rank unknown; new comparison E Diamond 0.05375 vs historical high .01",
+        "43/800=0.05375 historical mean; 3285+715=800*5; cannot assign to Silver R2; master normalized invalid REUSED descriptor to PARTIAL while retaining original immutable worker event"
       ]
     },
     {
@@ -5741,12 +5746,14 @@
       "studyIDs": [
         "wowhead-1231127-jd3k-50ore-quality2",
         "jd3k-midnight-r2-50ore",
-        "JD3K-R2-50ORE"
+        "JD3K-R2-50ORE",
+        "JD3K-MIDNIGHT-50-ORE-R2-THREE-TYPES"
       ],
       "datasetIDs": [
         "jd3k-three-50ore-q2",
         "jd3k-r2-50ore-20261028",
-        "wowhead-1231127-jd3k-50ore-quality2"
+        "wowhead-1231127-jd3k-50ore-quality2",
+        "original-50-ore-R2-per-type"
       ],
       "reviewedRecordKeys": [
         "237361:Prospect:242553",
@@ -5799,27 +5806,28 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "current-client patch/build and actual observation date",
-        "exact input rank and output quality where relevant",
-        "per-cast zero-inclusive output histogram",
-        "positive conditional min/max",
-        "effective skill and specialization context"
+        "explicit actual completed casts",
+        "zero-inclusive histogram",
+        "full patch/build",
+        "independent large sample"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 4,
+      "reviewEvents": 5,
       "originalStudyUrls": [
         "https://www.wowhead.com/spell=1231127/midnight-prospecting"
       ],
       "changeTriggers": [
         "QUEUE_REV13_INPUT_IDENTITY_CORRECTION",
         "QUEUE17_EVIDENCE_REVIEW",
-        "QUEUE18_SOURCE_RECONCILIATION"
+        "QUEUE18_SOURCE_RECONCILIATION",
+        "QUEUE20_SOURCE_PROVENANCE_CHECK"
       ],
       "revisitReasons": [
         "Reused previously indexed source to correct R2 Brilliant Silver vs R2 Refulgent Copper identity; no duplicate source family",
         "Queue rev14 exact 35 output-field audit; reuses original source without duplicating cohort",
         "Reused same original 50-gross-ore study family; no new independent cast cohort",
-        "50 rank-two ore per family, not documented actual cast count; rank-one transfer unverified"
+        "50 rank-two ore per family, not documented actual cast count; rank-one transfer unverified",
+        "Rank-one profiles must not inherit rank-two observation confidence; master normalized invalid REUSED descriptor to PARTIAL while retaining original immutable worker event"
       ]
     },
     {
@@ -5830,10 +5838,12 @@
       "observationIDs": [],
       "studyIDs": [
         "midnight-crushing-recipe-record",
-        "WOWHEAD-CRUSH-1231132"
+        "WOWHEAD-CRUSH-1231132",
+        "midnight-crushing-spell-1231132"
       ],
       "datasetIDs": [
-        "wowhead-crush-1231132-20261028"
+        "wowhead-crush-1231132-20261028",
+        "salvage-3-gems-plus-one-stone"
       ],
       "reviewedRecordKeys": [
         "recipe-candidate:midnight:crush:242553:gemdust-family:20261028",
@@ -5855,23 +5865,25 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "exact item-ID salvage whitelist",
-        "exact stone rank accepted",
-        "dust output rank probability and yield"
+        "exact selectable gem item whitelist",
+        "stone quality rank",
+        "Gemdust output rank histogram"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 3,
+      "reviewEvents": 4,
       "originalStudyUrls": [
         "https://www.wowhead.com/spell=1231132/midnight-crushing"
       ],
       "changeTriggers": [
         "QUEUE17_EVIDENCE_REVIEW",
-        "QUEUE19_REUSED_GAME_RECORD"
+        "QUEUE19_REUSED_GAME_RECORD",
+        "QUEUE20_EXACT_ELIGIBILITY_CHECK"
       ],
       "revisitReasons": [
         "P0 previously omitted recipe family, 3 gems plus 1 stone",
         "Direct additional reagent 1 Dusk-Shrouded Stone visible on spell; salvage three gems",
-        "Three selected gems + one stone family recipe confirmed, not per-ID whitelist"
+        "Three selected gems + one stone family recipe confirmed, not per-ID whitelist",
+        "Spell-level salvage family does not prove any exact item is eligible; master normalized invalid REUSED descriptor to PARTIAL while retaining original immutable worker event"
       ]
     },
     {
@@ -7187,9 +7199,48 @@
     "newReviewEvents": 25,
     "newQaEvents": 9,
     "fullNodeDirectoryRebuild": false,
-    "reason": "Connector-only repository read; full observation/review file tree unavailable for Node directory traversal; master applied deterministic checked-in builder to all new q20 events and merged with previous verified snapshot"
+    "reason": "Connector-only repository read; full observation/review file tree unavailable for Node directory traversal; master applied deterministic checked-in builder to all new q20 events and merged with previous verified snapshot",
+    "normalizedReviewEvents": 5,
+    "normalizationFile": "research/coordination/source-reviews/master-batch018-2026-10-28-invalid-status-normalizations.jsonl"
   },
   "appliedAttributionCorrectionIDs": [
     "primer-serene-r2-20261028-b016"
+  ],
+  "resolvedReviewWarnings": [
+    {
+      "correctionID": "master-b018-review-status-1",
+      "sourceUrl": "https://www.reddit.com/r/woweconomy/comments/t8lubc",
+      "originalStatus": "REUSED",
+      "normalizedStatus": "PARTIAL",
+      "originalPath": "research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1830-dragonflight-q20-batch018.jsonl"
+    },
+    {
+      "correctionID": "master-b018-review-status-2",
+      "sourceUrl": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua",
+      "originalStatus": "REUSED",
+      "normalizedStatus": "PARTIAL",
+      "originalPath": "research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1830-dragonflight-q20-batch018.jsonl"
+    },
+    {
+      "correctionID": "master-b018-review-status-3",
+      "sourceUrl": "https://www.wowhead.com/spell=1231127/midnight-prospecting",
+      "originalStatus": "REUSED",
+      "normalizedStatus": "PARTIAL",
+      "originalPath": "research/coordination/source-reviews/loot-liquidator-midnight-2026-10-28-1811-midnight-q20-batch018.jsonl"
+    },
+    {
+      "correctionID": "master-b018-review-status-4",
+      "sourceUrl": "https://www.wowhead.com/item=237364/brilliant-silver-ore",
+      "originalStatus": "REUSED",
+      "normalizedStatus": "PARTIAL",
+      "originalPath": "research/coordination/source-reviews/loot-liquidator-midnight-2026-10-28-1811-midnight-q20-batch018.jsonl"
+    },
+    {
+      "correctionID": "master-b018-review-status-5",
+      "sourceUrl": "https://www.wowhead.com/spell=1231132/midnight-crushing",
+      "originalStatus": "REUSED",
+      "normalizedStatus": "PARTIAL",
+      "originalPath": "research/coordination/source-reviews/loot-liquidator-midnight-2026-10-28-1811-midnight-q20-batch018.jsonl"
+    }
   ]
 }
