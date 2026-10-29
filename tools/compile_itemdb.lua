@@ -5,7 +5,7 @@ for _,file in ipairs({'ResearchDB.lua','GameData.lua','StatYieldProfiles.lua'}) 
     assert(loadfile('database/sources/'..file))('LootLiquidator',LL)
 end
 local gd=LL.GameData
-local db={schemaVersion=1,version='1.0.0',processing={},mechanicRules={},
+local db={schemaVersion=1,version='1.1.0',processing={},mechanicRules={},
     provenance='main 051f582 / v0.9.70; schema-validated provisional migration',
     compat={Conversions=LL.Conversions,DisenchantTables=LL.DisenchantTables,
         ResearchTokenCandidates=LL.ResearchTokenCandidates,ResearchProcessingInputs=LL.ResearchProcessingInputs}}
@@ -33,6 +33,19 @@ local function add(method,input,batch,materials,meta,sourceKey,study)
                 dropChance=field(measured and m.chance or nil,measured and r.fieldConfidence or 0,measured and 'verified' or 'unknown'),
                 minQuantity=field(bounds and m.minQuantity or nil,bounds and r.fieldConfidence or 0,bounds and 'verified' or 'unknown'),
                 maxQuantity=field(bounds and m.maxQuantity or nil,bounds and r.fieldConfidence or 0,bounds and 'verified' or 'unknown')}
+        end
+    end
+    if sourceKey=='itemtsm' then
+        for i,m in ipairs(materials or {}) do
+            local target=r.materials[i]
+            if target then
+                target.originalTSM=m.originalTSM
+                target.dropChance=field(m.chance,40,m.chance~=nil and 'historical' or 'unknown')
+                target.minQuantity=field(m.minQuantity,40,m.minQuantity~=nil and 'historical' or 'unknown')
+                target.maxQuantity=field(m.maxQuantity,40,m.maxQuantity~=nil and 'historical' or 'unknown')
+                local p,e,lo,hi=m.chance,m.expectedQuantity,m.minQuantity,m.maxQuantity
+                target.sourceConflict=p and e and lo and hi and (e+1e-9<p*lo or e>p*hi+1e-9) or nil
+            end
         end
     end
     if #r.materials>0 then db.processing[#db.processing+1]=r end
@@ -80,12 +93,13 @@ for method,dict in pairs({Mill=gd.tsmRetail.mill,Prospect=gd.tsmRetail.prospect}
                 -- Unknown reagent/output rank is never summed across rank variants.
                 if (not m.sourceQuality or m.sourceQuality==1) and (not m.targetQuality or m.targetQuality==1) then
                     rows[#rows+1]={id=m.id,expectedQuantity=m.amountOfMats and m.amountOfMats*inputs[input].batch,
-                        targetQuality=m.targetQuality}
+                        targetQuality=m.targetQuality,chance=m.matRate,minQuantity=m.minAmount,maxQuantity=m.maxAmount,originalTSM=clone(m)}
                 end
             end
             add(method,input,inputs[input].batch,rows,{source='TradeSkillMaster historical conversion data',
                 expansion=inputs[input].expansion,confidenceCap=40,inputRank=mats[1] and mats[1].sourceQuality},
-                'tsm','tsm:'..method..':'..input)
+                'itemtsm','tsm:'..method..':'..input)
+            db.processing[#db.processing].fixedReference=true
         end
     end
 end
@@ -126,6 +140,56 @@ for input,list in pairs(LL.Conversions or {}) do
         end
     end
 end
+-- Preserve old numeric references as fixed legacy fallback records.
+for _,r in ipairs(db.processing) do
+    if r.sourceKey=='itemdb' then r.sourceKey='legacy';r.recordID=r.recordID..':fallback' end
+    if r.sourceKey=='legacy' then r.fixedReference=true end
+end
+-- Translate the pinned research schema without interpreting a low scenario as
+-- a normalized current baseline. Preserve the complete source record/lineage.
+local research=assert(loadfile('database/research/itemdb.lua'))()
+assert(research.schemaVersion=='0.1.0' and type(research.processing)=='table','Unsupported research schema')
+db.researchManifest=research.sourceManifest
+db.buildReport={adapted=0,tsmDuplicates=0,rejected={},researchMappings=#research.processing}
+local function adaptField(f)
+    assert(type(f)=='table' and type(f.confidence)=='number','Invalid research field')
+    local n=clone(f)
+    n.status=({proxy='historical',['community-reported']='provisional',modeled='modeled',
+        measured='measured',verified='verified',unknown='unknown'})[f.status] or 'provisional'
+    if n.value==nil then n.status='unknown' end
+    return n
+end
+for _,r in ipairs(research.processing) do
+    local provenance=table.concat(r.sources or {},' ')..' '..tostring(r.conditions and r.conditions.sourceContext)
+    local isTSM=r.recordID:match('^tsm:') or provenance:lower():find('tsm',1,true)
+    if isTSM then
+        db.buildReport.tsmDuplicates=db.buildReport.tsmDuplicates+1
+    elseif not methods[r.method] then
+        db.buildReport.rejected[#db.buildReport.rejected+1]={recordID=r.recordID,reason='Unsupported method'}
+    elseif r.reagents and #r.reagents>1 then
+        db.buildReport.rejected[#db.buildReport.rejected+1]={recordID=r.recordID,reason='Multi-reagent costing not supported'}
+    else
+        local c=r.conditions or {}
+        local patch=c.patchWindow
+        local n={recordID='research:'..r.recordID,sourceKey='itemdb',studyID=r.recordID,
+            method=r.method,profession=methods[r.method],inputItemID=r.inputItemID,inputCount=r.inputCountPerOperation,
+            inputQualityRank=r.inputQualityRank,recipeID=r.recipeSpellID,expansionID=r.expansionID,
+            source=table.concat(r.sources or {},'; '),samples=r.expectedQuantity.sampleOperations,
+            referenceConditions={},researchConditions=c,researchRecord=r,provisional=true,
+            baselineStatus=c.baselineStatus,materials={{id=r.outputItemID,quality=r.outputQualityRank,
+                expectedQuantity=adaptField(r.expectedQuantity),dropChance=adaptField(r.dropChance),
+                minQuantity=adaptField(r.yieldMin),maxQuantity=adaptField(r.yieldMax)}}}
+        if type(patch)=='table' then n.patchStartBuild=patch.startBuild;n.patchEndBuild=patch.endBuild end
+        -- Only an explicit normalized export can opt into forward profession rules.
+        if c.baselineProfile and c.targetBuild then n.baselineProfile=c.baselineProfile;n.patchBuild=c.targetBuild end
+        db.processing[#db.processing+1]=n
+        db.buildReport.adapted=db.buildReport.adapted+1
+        inputs[r.inputItemID]=inputs[r.inputItemID] or {method=r.method,batch=r.inputCountPerOperation,expansion=r.expansionID}
+    end
+end
+local models=assert(loadfile('database/profession-models.lua'))()
+assert(models.schemaVersion==1,'Unsupported profession model schema')
+db.professionRules=models.professionRules;db.personalPatchRules=models.personalPatchRules;db.modelRevision=models.revision
 -- Reviewed additions use the same versioned interface, independent of engine code.
 local additions=assert(loadfile('database/records.lua'))()
 for _,r in ipairs(additions.processing or {}) do db.processing[#db.processing+1]=r end
@@ -171,10 +235,35 @@ local function encode(v)
     out[#out+1]='}';return table.concat(out)
 end
 LL.ItemDB=db
+assert(loadfile('LootLiquidator/ProfessionModels.lua'))('LootLiquidator',LL)
+local validModels,modelError=LL:ValidateProfessionRules(db)
+assert(validModels,modelError)
 assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',LL)
 assert(not LL.itemDBError,LL.itemDBError)
+local frozen={schemaVersion=1,version='tsm-v0.9.70-frozen/1',sourceRevision='1d47c4a961c5dc5af626e659f7d96d1490d3cf9e',
+    source='Pinned main/GameData.lua TSM conversion tables; not live TSM prices',
+    originalUnitBasis='amountOfMats per input; matRate and positive bounds per operation',
+    rawTables=gd.tsmRetail,processing={}}
+local legacy={schemaVersion=1,version='legacy-v0.9.70/1',processing={}}
+local primary={}
+for _,r in ipairs(db.processing) do
+    if r.sourceKey=='itemtsm' then frozen.processing[#frozen.processing+1]=r
+    elseif r.sourceKey=='legacy' then legacy.processing[#legacy.processing+1]=r
+    else primary[#primary+1]=r end
+end
+local total=#db.processing
+db.processing=primary
 local output=arg[1] or 'LootLiquidator/ItemDBRuntime.lua'
+-- Test builds can write all artifacts to a temporary directory.
+local outdir=output:match('^(.*)/[^/]+$') or '.'
+local function writeSource(name,key,data)
+    local f=assert(io.open(outdir..'/'..name,'w'))
+    f:write('-- Generated immutable reference; rebuild intentionally to update.\nlocal _, LL = ...\nLL.',key,'=',encode(data),'\n')
+    f:close()
+end
+writeSource('itemTSM.lua','FrozenTSM',frozen)
+writeSource('GameData.lua','LegacyDB',legacy)
 local file=assert(io.open(output,'w'))
 file:write('-- Generated by tools/compile_itemdb.lua. Unknown fields are absent, not zero.\nlocal _, LL = ...\nLL.ItemDB=',(encode(db):gsub('},%[','},\n[')),'\n')
 file:close()
-print('Compiled '..#db.processing..' source records (provisional and documented recipes) to '..output)
+print('Compiled '..total..' source records (provisional and documented recipes) to '..output)

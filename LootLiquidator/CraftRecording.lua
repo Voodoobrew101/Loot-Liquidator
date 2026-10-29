@@ -415,6 +415,8 @@ function LL:CraftBaseline(studyID,contextRef,recipeID)
     local base={schemaVersion=SCHEMA,sampleKind="RAW_CAST_LOG",referenceContextID=contextRef,recipeID=recipeID,
         studyID=studyID,materials={},operations=0,sourceRecordIDs={},status="EMPIRICAL_ESTIMATE",
         numericTransformValidated=false,applyPolicy="NO_NUMERIC_TRANSFORM"}
+    base.patchBuild=study.build
+    base.observationContext=copy(d.contexts[contextRef])
     local totals,inputTotals,signature={},{},nil
     for _,r in ipairs(d.records) do if r.studyID==studyID and r.contextID==contextRef and r.recipeID==recipeID then
         if r.outputCoverage~="complete" then return nil,"Unresolved output coverage" end
@@ -448,12 +450,14 @@ function LL:CraftBaseline(studyID,contextRef,recipeID)
 end
 function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
     local d=self.db and self.db.craftResearch;if not d or not self.CaptureCraftContext then return nil end
+    d=ledger(self) -- classify an interrupted prior session before valuation
     local checked,queries={},{}
     for i=#d.records,1,-1 do
         local r=d.records[i];local id=r.contextID;local inputs=r.nominalInputs or r.inputs
-        if r.studyID==d.activeStudy and r.recipeID==recipeID and r.method==method and not checked[id]
+        local queryID=tostring(r.studyID)..':'..tostring(id)
+        if r.recipeID==recipeID and r.method==method and not checked[queryID]
             and #inputs==1 and inputs[1].itemID==f.id and inputs[1].quantity==batch then
-            checked[id]=true
+            checked[queryID]=true
             -- Re-query the recorded allocation instead of substituting an empty
             -- allocation. This only reads operation data; it never crafts.
             local query=json({allocation=r.allocation,concentration=r.applyConcentration})
@@ -467,13 +471,14 @@ function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
             end
             local context=d.contexts[id]
             -- Incomplete measurements remain exportable, never priced as matched.
-            if current.effectiveSkill and current.specialization and current.skillLineID
-                and current.fieldStatus.equipment=="measured" and identity(context)==identity(current) then
-                local baseline=self:CraftBaseline(d.activeStudy,id,recipeID)
+            local exact=current.effectiveSkill and current.specialization and current.skillLineID
+                and current.fieldStatus.equipment=="measured" and identity(context)==identity(current) and r.build==build()
+            if exact or self.ProjectPersonalEstimate then
+                local baseline=self:CraftBaseline(r.studyID,id,recipeID)
                 if baseline and baseline.method==method and #baseline.inputs==1
                     and baseline.inputs[1].itemID==f.id and baseline.inputs[1].quantity==batch then
                     baseline.inputCount=batch;baseline.expectedInputCount=baseline.expectedInputsConsumed[1].expectedQuantity
-                    baseline.patchBuild=build();baseline.effectiveSamples=baseline.operations;baseline.samples=baseline.operations
+                    baseline.patchBuild=r.build;baseline.effectiveSamples=baseline.operations;baseline.samples=baseline.operations
                     baseline.source="Measured personal cast log";baseline.observationContext=copy(context)
                     baseline.observationContextID=id
                     baseline.observationContext.expansionID=f.expansionID
@@ -483,7 +488,10 @@ function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
                     baseline.provisional=true
                     -- This is not an unskilled or universal profession baseline.
                     baseline.referenceContextID=nil
-                    return baseline
+                    if exact then return baseline end
+                    local projected,reason=self:ProjectPersonalEstimate(f,{name=method,recipeID=recipeID,inputCount=batch},baseline,current,build())
+                    self.personalProjectionStatus=reason or (projected and projected.adjustment)
+                    if projected then return projected end
                 end
             end
         end

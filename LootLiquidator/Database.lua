@@ -1,8 +1,8 @@
 -- Versioned evidence interface. No prices or live scans are cached here.
 local _, LL = ...
-local defaults={itemdb={true,100},personal={true,60},tsm={true,30},legacy={false,10}}
+local defaults={itemdb={true,100},personal={true,60},itemtsm={true,30},legacy={false,10}}
 LL.SourceDefaults=defaults
-local order={'itemdb','personal','tsm','legacy'}
+local order={'itemdb','personal','itemtsm','legacy'}
 local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true}
 local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
@@ -17,6 +17,11 @@ local function same(a,b)
 end
 function LL:MigrateEvidenceSettings()
     if not self.db then return end
+    if not self.db.frozenTSMMigrated then
+        if self.db.source_itemtsm_enabled==nil then self.db.source_itemtsm_enabled=self.db.source_tsm_enabled end
+        if self.db.source_itemtsm_weight==nil then self.db.source_itemtsm_weight=self.db.source_tsm_weight end
+        self.db.frozenTSMMigrated=true
+    end
     -- Materialize the old global policy once, so later per-method changes work
     -- without a hidden legacy selector overriding the visible weighted choice.
     if not self.db.evidenceSchemaVersion then
@@ -36,6 +41,7 @@ function LL:MigrateEvidenceSettings()
     self.db.evidenceSchemaVersion=1
 end
 function LL:SetEvidenceSource(key,enabled,weight)
+    if key=='tsm' then key='itemtsm' end -- old callers retain effective preference
     if not defaults[key] or not self.db then return false end
     if enabled~=nil then self.db['source_'..key..'_enabled']=enabled==true end
     if weight~=nil then
@@ -55,7 +61,7 @@ function LL:ValidateItemDB(db)
     local ids={}
     for _,r in ipairs(db.processing) do
         if type(r)~='table' or type(r.recordID)~='string' or r.recordID=='' or ids[r.recordID] or not methods[r.method]
-            or not defaults[r.sourceKey] or not finite(r.inputCount) or r.inputCount<=0 or r.inputCount%1~=0
+            or not (defaults[r.sourceKey] or r.sourceKey=='tsm') or not finite(r.inputCount) or r.inputCount<=0 or r.inputCount%1~=0
             or (not (finite(r.inputItemID) and r.inputItemID>0 and r.inputItemID%1==0)
                 and not (r.method=='Disenchant' and type(r.gearKey)=='string' and
                     (r.gearKey:match('^gear:%d+:%d+:armor$') or r.gearKey:match('^gear:%d+:%d+:weapon$'))))
@@ -77,7 +83,7 @@ function LL:ValidateItemDB(db)
             local p,e,lo,hi=m.dropChance.value,m.expectedQuantity.value,m.minQuantity.value,m.maxQuantity.value
             if (p and p>1) or (lo and (lo<1 or lo%1~=0)) or (hi and (hi<1 or hi%1~=0))
                 or (lo and hi and lo>hi) or (e==0 and p and p>0)
-                or (e and p and lo and hi and (e+1e-9<p*lo or e>p*hi+1e-9)) then
+                or (r.sourceKey~='itemtsm' and e and p and lo and hi and (e+1e-9<p*lo or e>p*hi+1e-9)) then
                 return false,'Contradictory probability/quantity fields'
             end
         end
@@ -87,10 +93,19 @@ end
 function LL:InitializeItemDB()
     self._processingModelCache=nil
     local ok,reason=self:ValidateItemDB(self.ItemDB)
+    if ok and self.ValidateProfessionRules then ok,reason=self:ValidateProfessionRules(self.ItemDB) end
     self.itemDBError=not ok and reason or nil
     self._evidenceIndex={}
     if not ok then return false end
-    for _,r in ipairs(self.ItemDB.processing) do
+    local all={}
+    for _,dataset in ipairs({self.ItemDB,self.FrozenTSM or {},self.LegacyDB or {}}) do
+        if dataset~=self.ItemDB and dataset.processing then
+            local valid,why=self:ValidateItemDB(dataset)
+            if not valid then self.itemDBError=why;return false end
+        end
+        for _,r in ipairs(dataset.processing or {}) do all[#all+1]=r end
+    end
+    for _,r in ipairs(all) do
         local key=r.method..':'..tostring(r.inputItemID or r.gearKey)
         local list=self._evidenceIndex[key] or {};self._evidenceIndex[key]=list
         list[#list+1]=r
@@ -142,6 +157,7 @@ local function contextEligible(record,ctx,build,model,rules)
     return true
 end
 local function userWeight(self,key,mode)
+    if key=='tsm' then key='itemtsm' end
     local d=defaults[key]
     if (mode==2 and key~='personal') or (mode==3 and key=='personal') then return 0 end
     local enabled=self.db and self.db['source_'..key..'_enabled']
@@ -153,16 +169,22 @@ local function userWeight(self,key,mode)
 end
 local function sourceModel(self,f,option,r)
     local model={inputCount=r.inputCount,patchBuild=r.patchBuild,referenceContextID=r.referenceContextID,
-        duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source}
+        sourceKey=r.sourceKey,baselineProfile=r.baselineProfile,baselineStatus=r.baselineStatus,
+        duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source,
+        adjustment=r.baselineStatus and 'provisional source estimate / baseline not normalized' or nil}
     for _,m in ipairs(r.materials) do
         model.materials[#model.materials+1]={id=m.id,expectedQuantity=m.expectedQuantity.value,
             chance=m.dropChance.value,probabilityVerified=m.dropChance.status=='verified' or m.dropChance.status=='measured',
             minQuantity=m.minQuantity.value,maxQuantity=m.maxQuantity.value}
     end
-    return self.ApplyVerifiedMechanics and self:ApplyVerifiedMechanics(f,option,model) or model
+    if r.sourceKey~='itemdb' then return model end
+    if self.ApplyProfessionModel then model=self:ApplyProfessionModel(f,option,model) end
+    if model.professionProjected then return model end
+    local verified=self.ApplyVerifiedMechanics and self:ApplyVerifiedMechanics(f,option,model) or model
+    if verified~=model and verified.mechanicsApplied then verified.adjustment='character-adjusted' end
+    return verified
 end
 function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
-    if ctx.simulated then personal=nil end
     local build=GetBuildInfo and select(2,GetBuildInfo())
     local input=option.name=='Disenchant' and gearKey(f) or f.id
     local records=self._evidenceIndex and self._evidenceIndex[option.name..':'..tostring(input)] or {}
@@ -179,15 +201,20 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
             and (not r.expansionID or r.expansionID==f.expansionID)
             and contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules) then eligible[#eligible+1]=r end
     end
-    if personal and personal.observationContext and (ctx.simulated or ctx.character~=personal.observationContext.character) then
-        personal=nil -- measured current-character samples cannot stand in for a simulation or alt
+    if personal and personal.observationContext and ctx.simulated and self.ProjectPersonalEstimate then
+        personal=self:ProjectPersonalEstimate(f,option,personal,ctx,build)
+    end
+    if personal and personal.observationContext and ((ctx.simulated and not personal.professionProjected)
+        or ctx.character~=personal.observationContext.character) then
+        personal=nil
     end
     if personal and userWeight(self,'personal',mode)>0 and (personal.effectiveSamples or 0)>0 then
         local r={recordID='personal',sourceKey='personal',studyID=personal.studyID or ('personal:'..tostring(ctx.character)),
             source='Personal recorded results',inputCount=personal.inputCount or option.inputCount or 1,
             samples=personal.effectiveSamples,referenceConditions=copy(ctx),
             referenceContextID=personal.referenceContextID,patchBuild=personal.patchBuild,expectedInputCount=personal.expectedInputCount,
-            materials={},provisional=(personal.effectiveSamples or 0)<(self.ProcessingMinimum and self:ProcessingMinimum() or 30)}
+            materials={},fixedReference=personal.professionProjected,
+            provisional=personal.professionProjected or (personal.effectiveSamples or 0)<(self.ProcessingMinimum and self:ProcessingMinimum() or 30)}
         for _,m in ipairs(personal.materials or {}) do
             r.materials[#r.materials+1]={id=m.id,quality=m.quality,rarity=m.rarity,
                 expectedQuantity={value=m.expectedQuantity,confidence=85,status='observed'},
@@ -196,12 +223,18 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                 maxQuantity={value=m.maxQuantity,confidence=85,status='observed'},
                 personalHistogram=m.quantityCounts,personalSamples=m.samples}
         end
-        if #r.materials>0 then eligible[#eligible+1]=r end
+        if #r.materials>0 then
+            eligible[#eligible+1]=r
+            if personal.professionProjected then
+                transformed[r]={inputCount=r.inputCount,materials=personal.materials,sourceKey='personal',
+                    mechanicsApplied=true,adjustment=personal.adjustment,projectionRules=personal.projectionRules}
+            end
+        end
     end
     -- Primary database first, then an independent measured personal context.
     -- Incompatible/unknown historical contexts are never silently pooled.
     table.sort(eligible,function(a,b)
-        local rank={itemdb=1,personal=2,tsm=3,legacy=4}
+        local rank={itemdb=1,personal=2,itemtsm=3,tsm=3,legacy=4}
         if rank[a.sourceKey]~=rank[b.sourceKey] then return rank[a.sourceKey]<rank[b.sourceKey] end
         return a.recordID<b.recordID
     end)
@@ -224,16 +257,17 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
             and r.patchBuild==anchor.patchBuild and same(r.referenceConditions,anchor.referenceConditions)
     end
     for _,r in ipairs(eligible) do
-        if not sameContext(r) then
+        if not sameContext(r) and not r.fixedReference then
             result.excludedSources[#result.excludedSources+1]=r.sourceKey..': reference context cannot be normalized'
         else
             -- Build a model, then apply the preserved PR #4 adapter exactly once.
             local model=transformed[r] or sourceModel(self,f,option,r)
+            if r==anchor and model.adjustment then result.adjustment=model.adjustment end
             if r==anchor and model.expectedInputCount~=nil then
                 result.expectedInputCount=model.expectedInputCount*batch/r.inputCount
             end
             if model.mechanicsApplied then
-                result.adjustment='character-adjusted';result.mechanicsApplied=true
+                result.adjustment=model.adjustment or 'character-adjusted';result.mechanicsApplied=true
                 if r==anchor then
                     result.expectedInputCount=model.expectedInputCount and model.expectedInputCount*batch/r.inputCount
                     result.duration=model.duration
@@ -243,12 +277,16 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                 local original=r.materials[i]
                 local id=m.id
                 local b=bins[id] or {id=id,quality=original.quality,rarity=original.rarity,
-                    fields={},contributions={}};bins[id]=b
+                    fields={},contributions={},sourceEstimates={}};bins[id]=b
+                b.sourceEstimates[r.sourceKey]={expectedQuantity=m.expectedQuantity,dropChance=m.chance,
+                    minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,sourceConflict=original.sourceConflict,
+                    originalTSM=original.originalTSM,appliedRule=m.appliedProfessionRule or m.appliedExpectationRule}
                 for field,modelField in pairs({expectedQuantity='expectedQuantity',dropChance='chance'}) do
                     local key=r.studyID..':'..id..':'..field
                     local metadata=copy(original[field]);metadata.value=m[modelField]
                     if m.transformConfidence then metadata.confidence=math.min(metadata.confidence,m.transformConfidence) end
                     local weight=userWeight(self,r.sourceKey,mode)*self:EvidenceReliability(metadata,r)
+                    if r.sourceKey=='legacy' and b.fields[field] then weight=0 end -- gap-only fallback
                     if field=='dropChance' and r.inputCount~=batch then weight=0 end
                     if weight>0 and not studySeen[key] then
                         studySeen[key]=true
@@ -332,7 +370,9 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(personal and personal.studyID),tostring(personal and personal.observationContextID),
         tostring(personal and personal.expectedInputCount),
         tostring(userWeight(self,'itemdb',mode)),tostring(userWeight(self,'personal',mode)),
-        tostring(userWeight(self,'tsm',mode)),tostring(userWeight(self,'legacy',mode))},'|')
+        tostring(userWeight(self,'itemtsm',mode)),tostring(userWeight(self,'legacy',mode)),
+        tostring(self.ItemDB and self.ItemDB.modelRevision),fingerprint(personal and personal.materials),
+        fingerprint(personal and personal.projectionRules)},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
     local cached=self._processingModelCache[key]
     if cached then return cached.model,cached.reason end
@@ -341,5 +381,15 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
     self._processingModelCache[key]={model=model,reason=reason}
     self._processingModelCache.count=self._processingModelCache.count+1
     return model,reason
+end
+function LL:EvidenceDatabaseStatus()
+    local counts={itemdb=0,itemtsm=0,legacy=0}
+    for _,records in pairs(self._evidenceIndex or {}) do
+        for _,r in ipairs(records) do counts[r.sourceKey]=(counts[r.sourceKey] or 0)+1 end
+    end
+    local manifest=self.ItemDB and self.ItemDB.researchManifest or {}
+    return ('ItemDB compiler %s: %d mappings (provisional unless normalized); frozen itemTSM %s: %d references; legacy: %d; profession rules: %d; personal patch rules: %d'):format(
+        tostring(manifest.compilerVersion or 'unknown'),counts.itemdb,tostring(self.FrozenTSM and self.FrozenTSM.version or 'missing'),
+        counts.itemtsm,counts.legacy,#(self.ItemDB and self.ItemDB.professionRules or {}),#(self.ItemDB and self.ItemDB.personalPatchRules or {}))
 end
 LL:InitializeItemDB()

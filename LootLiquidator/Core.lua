@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.10.0-alpha2"
+LA.version = "0.10.0-alpha3"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -972,6 +972,8 @@ local function Command(msg)
         end
         Say(("Scanned %d learned recipes; %d single-input recipe candidates; %d reagent IDs observed in profession recipes. Coverage is partial until you open professions on your characters."):format(recipes,candidates,consumers))
     elseif command == "status" then
+        if LA.EvidenceDatabaseStatus then Say(LA:EvidenceDatabaseStatus()) end
+        if LA.personalProjectionStatus then Say("Personal history: "..LA.personalProjectionStatus) end
         Say("Version "..LA.version.." (interface " .. LA.targetInterface .. "); Game Data: " .. tostring(LA.GameDataVersion or "missing") .. "; TSM API: " .. tostring(type(TSM_API) == "table") ..
             ", BetterBags: " .. tostring(LibStub and LibStub("AceAddon-3.0", true) ~= nil))
     else

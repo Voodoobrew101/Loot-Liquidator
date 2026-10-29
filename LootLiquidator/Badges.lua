@@ -616,6 +616,17 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local amount=net~=nil and LA:Money(net/batch) or "Insufficient Data"
                     two(left,amount,option.letter or "D")
                     if LA.db.showResearchDetails==true then
+                        for _,source in ipairs(LA.SourceOrder or {}) do
+                            local estimate=m.sourceEstimates and m.sourceEstimates[source]
+                            if estimate then
+                                local p=type(estimate.dropChance)=='number' and ('%.1f%%'):format(estimate.dropChance*100) or '?'
+                                tooltip:AddLine(('    %s: P %s; range %s–%s; E %s'):format(source,p,
+                                    tostring(estimate.minQuantity or '?'),tostring(estimate.maxQuantity or '?'),
+                                    type(estimate.expectedQuantity)=='number' and ('%.3f'):format(estimate.expectedQuantity) or '?'),.65,.68,.76,true)
+                                if estimate.sourceConflict then tooltip:AddLine('    Source fields disagree; original values preserved',1,.68,.3,true) end
+                                if estimate.appliedRule then tooltip:AddLine('    Profession rule: '..estimate.appliedRule,.65,.68,.76,true) end
+                            end
+                        end
                         if m.boundsSource then tooltip:AddLine("    Conditional bounds: "..m.boundsSource,.65,.68,.76,true) end
                         if m.personalHistogram and m.personalSamples and m.personalSamples>0 then
                             local bins={} for quantity,n in pairs(m.personalHistogram) do bins[#bins+1]={quantity=quantity,n=n} end

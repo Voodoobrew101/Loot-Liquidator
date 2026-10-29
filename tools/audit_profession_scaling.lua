@@ -7,7 +7,7 @@ local function check(name,ok,detail)
 end
 local function load(namespace,file) assert(loadfile('LootLiquidator/'..file))('LootLiquidator',namespace) end
 local runtime={};load(runtime,'ItemDBRuntime.lua')
-local research=assert(loadfile('LootLiquidator/itemdb.lua'))()
+local research=assert(loadfile('database/research/itemdb.lua'))()
 check('Runtime database ships no unverified scaling coefficients',#runtime.ItemDB.mechanicRules==0)
 check('Latest research database ships no approved coefficients',#research.mechanicRules==0)
 check('Copied research schema is distinguished from the runtime schema',research.schemaVersion~=runtime.ItemDB.schemaVersion)
@@ -15,7 +15,10 @@ local A={ItemDB=runtime.ItemDB,db={}}
 load(A,'Database.lua');load(A,'ConversionEngine.lua');A:MigrateEvidenceSettings()
 local sample
 for _,r in ipairs(A.ItemDB.processing) do
-    if r.sourceKey=='itemdb' and r.inputItemID and r.method~='Smelt' then sample=r;break end
+    if r.sourceKey=='itemdb' and r.inputItemID and r.method~='Smelt' then
+        for _,m in ipairs(r.materials) do if m.expectedQuantity.value~=nil then sample=r;break end end
+        if sample then break end
+    end
 end
 assert(sample,'Missing baseline record for skill comparison')
 local selectedSkill=20

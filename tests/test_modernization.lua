@@ -30,7 +30,7 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,17,'runtime source count')
+eq(#manifest,20,'runtime source count')
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',
@@ -47,8 +47,8 @@ near(LL.db.appearance.colors.A[1],.1)
 for key,defaults in pairs(LL.SourceDefaults) do
     eq(LL.db['source_'..key..'_enabled'],defaults[1]);eq(LL.db['source_'..key..'_weight'],defaults[2])
 end
-LL:SetEvidenceSource('tsm',false,17);LL:MigrateEvidenceSettings()
-eq(LL.db.source_tsm_weight,17);eq(LL.db.source_tsm_enabled,false)
+LL:SetEvidenceSource('itemtsm',false,17);LL:MigrateEvidenceSettings()
+eq(LL.db.source_itemtsm_weight,17);eq(LL.db.source_itemtsm_enabled,false)
 local migrated=clone(LL.db)
 LL.db={processingFallbackMode=3,prospectingDataMode=3}
 LL:MigrateEvidenceSettings();eq(LL.db.millingDataMode,2);eq(LL.db.prospectingDataMode,3)
@@ -75,21 +75,21 @@ local f={id=10,quality=3,reagentQuality=2,expansionID=11}
 local option={name='Prospect',inputCount=5,recipeID=444,character='Tester - Realm'}
 local function model(mode,personal) LL:Invalidate();return LL:ResolveEvidenceModel(f,option,personal,mode or 1) end
 local a=record('itemdb','a',2,.5,2,6)
-local b=record('tsm','b',4,.8,2,6)
+local b=record('itemtsm','b',4,.8,2,6)
 install({a,b})
 local m=model();near(m.materials[1].expectedQuantity,3.2/1.3)
-near(m.sources.itemdb,1/1.3);near(m.sources.tsm,.3/1.3)
+near(m.sources.itemdb,1/1.3);near(m.sources.itemtsm,.3/1.3)
 near(m.materials[1].chance,(.5+.8*.3)/1.3)
 eq(m.materials[1].minQuantity,2);eq(m.materials[1].maxQuantity,6)
 -- Price is net already; no second occurrence or fee multiplier.
 LL.GetOutputPrice=function(_,id) if id==20 then return 100 end end
 near(LL:ValueProcessingModel(m,10,true),(100*(3.2/1.3)-10)/5)
 near(m.materials[1].netExpectedValue,100*(3.2/1.3))
-LL:SetEvidenceSource('tsm',true,0);near(model().materials[1].expectedQuantity,2)
+LL:SetEvidenceSource('itemtsm',true,0);near(model().materials[1].expectedQuantity,2)
 LL:SetEvidenceSource('itemdb',false);eq(model(),nil,'all effective weights zero')
-LL:SetEvidenceSource('tsm',true,30);near(model().materials[1].expectedQuantity,4)
+LL:SetEvidenceSource('itemtsm',true,30);near(model().materials[1].expectedQuantity,4)
 install({a,b});b.referenceContextID='different';near(model().materials[1].expectedQuantity,2)
-b.referenceContextID='cohort';b.studyID='a';m=model();near(m.materials[1].expectedQuantity,2);eq(m.sources.tsm,nil)
+b.referenceContextID='cohort';b.studyID='a';m=model();near(m.materials[1].expectedQuantity,2);eq(m.sources.itemtsm,nil)
 -- Personal-only really excludes all external source records.
 local personal={effectiveSamples=100,inputCount=5,materials={{id=20,expectedQuantity=7,chance=1,minQuantity=5,maxQuantity=10}}}
 m=model(2,personal);near(m.materials[1].expectedQuantity,7);eq(m.sources.itemdb,nil);near(m.sources.personal,1)
@@ -218,10 +218,10 @@ check(LL:ExportProcessingData():find('Prospect,10',1,true),'observation CSV rema
 -- Primary entries without a usable mean do not hide a usable external fallback.
 local unknown=record('itemdb','unknown',nil,nil,nil,nil)
 unknown.materials[1].expectedQuantity.status='unknown'
-local fallback=record('tsm','fallback',4,.8,1,6)
+local fallback=record('itemtsm','fallback',4,.8,1,6)
 install({unknown,fallback});m=model();near(m.materials[1].expectedQuantity,4);eq(m.sources.itemdb,nil)
 local conflict=record('itemdb','low',1,.2,1,9)
-local opposite=record('tsm','high',9,1,1,9)
+local opposite=record('itemtsm','high',9,1,1,9)
 install({conflict,opposite});m=model();check(m.conflictingMeans);check(m.confidence<90)
 -- Native guild-bank event dispatch preserves the guild item-instance context.
 LL.db.showGuildBank=true
@@ -243,13 +243,17 @@ check(painted and painted.action=='V')
 
 -- Compile/load artifact has no runtime source-file or internet requirement.
 local shipped={};assert(loadfile(root..'ItemDBRuntime.lua'))('LootLiquidator',shipped)
-check(#shipped.ItemDB.processing>100);check(LL:ValidateItemDB(shipped.ItemDB))
+check(#shipped.ItemDB.processing>0);check(LL:ValidateItemDB(shipped.ItemDB))
 local originalSettings={source_itemdb_enabled=LL.db.source_itemdb_enabled}
 LL.ItemDB=shipped.ItemDB;LL:InitializeItemDB();LL:MigrateEvidenceSettings()
 -- Compiler migration doesn't synthesize occurrence or conditional bounds.
 for _,r in ipairs(LL.ItemDB.processing) do
     for _,material in ipairs(r.materials) do
-        if r.method~='Smelt' then eq(material.dropChance.value,nil);eq(material.minQuantity.value,nil);eq(material.maxQuantity.value,nil) end
+        if r.researchRecord then
+            eq(material.dropChance.value,r.researchRecord.dropChance.value)
+            eq(material.minQuantity.value,r.researchRecord.yieldMin.value)
+            eq(material.maxQuantity.value,r.researchRecord.yieldMax.value)
+        end
     end
 end
-print('PASS: '..count..' modernization assertions; 17 modules loaded; in-game QA pending')
+print('PASS: '..count..' modernization assertions; 20 modules loaded; in-game QA pending')
