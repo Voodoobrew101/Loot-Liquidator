@@ -89,7 +89,7 @@ function run(root, options={}) {
   };
   for (const [relative,contents] of Object.entries(outputs)) writeOrCheck(root,relative,contents,check);
   if (options.test !== false) {
-    for (const file of ["test_working_estimates.js","test_compile_itemdb.js","test_itemdb_candidate.js","test_completion_pipeline.js","test_five_agent_workflow.js"]) {
+    for (const file of ["test_mechanics_compiler.js","test_working_estimates.js","test_compile_itemdb.js","test_itemdb_candidate.js","test_completion_pipeline.js","test_five_agent_workflow.js"]) {
       const testPath=path.join(root,"research/tests",file);
       if (!fs.existsSync(testPath)) throw Error("Required check missing: "+file);
       const child=spawnSync(process.execPath,[testPath],{cwd:root,encoding:"utf8"});

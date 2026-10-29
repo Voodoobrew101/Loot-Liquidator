@@ -4,6 +4,7 @@ const fs=require("node:fs"),assert=require("node:assert/strict"),path=require("n
 const root=path.resolve(__dirname,"../.."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
 const {compile,validate,csv}=require("../tools/compile_itemdb.js");
 const input={
+ mechanicsRegistryJSON:read("research/mechanics/ProfessionMechanicsRegistry.json"),
  primaryCSV:read("research/ledger/processing-output-fields.csv"),
  supplementalCSV:read("research/ledger/supplemental-output-fields.csv"),
  midnightCandidateJSON:read("research/proposed/itemdb-midnight-milling-candidate.json"),
@@ -146,4 +147,3 @@ try{
 }finally{fs.rmSync(temp,{recursive:true,force:true});}
 
 console.log("PASS research compiler v0.8.0 regression and real Lua 5.1 context roundtrip; evidence gaps preserved, complete isolated working estimates; WoW client not run");
-
