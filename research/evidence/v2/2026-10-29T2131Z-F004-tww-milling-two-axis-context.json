@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_MILLING_INPUT_OUTPUT_RANK_CONTEXT",
+  "runUTC": "2026-10-29T21:31:00Z",
+  "branch": "implementation/five-agent-completion",
+  "workflowRevision": 2,
+  "researchQuestion": "Can apparently conflicting TWW milling yield claims be explained by separately conditioning on input herb quality and output pigment quality, without inventing economic E or current Retail yields?",
+  "sourceAncestry": [
+    {
+      "sourceID": "TWW-2024-08-21-BETA-RANK-CONTRAST",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1ey4dkl",
+      "sourceType": "FIRSTHAND_BETA_TEST_REPORT",
+      "sourceStatus": "NEW_URL_NOT_IN_CANONICAL_SOURCE_MEMORY",
+      "authorIdentity": "REDDIT_ORIGINAL_POST_AUTHOR_UNVERIFIED",
+      "publicationDate": "2024-08-21",
+      "castEpoch": "2024-08-21_BETA_SELF_REPORTED",
+      "gameMode": "TWW_BETA_NOT_LIVE",
+      "independentStudyFamily": "tww-2024-aug-beta-milling-rank-observation",
+      "nominalInputUnitsPerOperation": 10,
+      "actualCompletedCasts": null,
+      "studyTotalInputHerbs": null,
+      "refunds": null,
+      "herbSpecies": null,
+      "baseSkill": null,
+      "statContext": null,
+      "observations": [
+        {
+          "inputHerbRank": 1,
+          "outputPigmentRank": 1,
+          "reportedPositiveYieldMin": 11,
+          "reportedPositiveYieldMax": 15,
+          "reportedMeanPigmentsPerHerb": 1.3,
+          "reportedMeanPigmentsPerNominal10HerbOperation": 13
+        },
+        {
+          "inputHerbRank": 1,
+          "outputPigmentRank": 2,
+          "reportedPositiveYieldMin": 9,
+          "reportedPositiveYieldMax": 13,
+          "reportedMeanPigmentsPerHerb": 1.1,
+          "reportedMeanPigmentsPerNominal10HerbOperation": 11
+        }
+      ],
+      "caveat": "Ranges and means are author's beta claims; no cast-level histogram, actual completed-cast count, exact herb/output IDs or live-patch transfer evidence. Mean values reported by author, NOT inferred from bounds."
+    },
+    {
+      "sourceID": "TWW-2024-11-02-LIVE-R2-PIGMENT-INPUT-RANK-CONTRAST",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1gi024f",
+      "sourceType": "FIRSTHAND_STYLE_COMMUNITY_ANECDOTE_NO_RAW_LOG",
+      "sourceStatus": "NEW_URL_NOT_IN_CANONICAL_SOURCE_MEMORY",
+      "authorIdentity": "REDDIT_COMMENTER_UNVERIFIED",
+      "publicationDate": "2024-11-02",
+      "castEpoch": "UNKNOWN_ON_OR_BEFORE_PUBLICATION",
+      "gameMode": "RETAIL_TWW_CONTEXT_INFERRED_NOT_BUILD_VERIFIED",
+      "independentStudyFamily": "tww-2024-nov-r2-pigment-herb-rank-comment",
+      "nominalInputUnitsPerOperation": 10,
+      "actualCompletedCasts": null,
+      "studyTotalInputHerbs": null,
+      "refunds": null,
+      "herbSpecies": null,
+      "baseSkill": null,
+      "statContext": null,
+      "observations": [
+        {
+          "inputHerbRank": 1,
+          "outputPigmentRank": 2,
+          "reportedApproximatePigmentsPerNominal10Herbs": 11
+        },
+        {
+          "inputHerbRank": 2,
+          "outputPigmentRank": 2,
+          "reportedApproximatePigmentsPerNominal10Herbs": 13
+        }
+      ],
+      "caveat": "Approximate 11 vs 13 from one comment; no original casts or outputs, no exact pigment ID, no rank-specific 2026 applicability."
+    },
+    {
+      "sourceID": "TWW-METHOD-GUIDE-RANK-QUANTITY",
+      "url": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+      "sourceType": "DERIVATIVE_GUIDE",
+      "sourceStatus": "REUSED_CONTEXTUAL_REFERENCE",
+      "publicationDate": "2024-08",
+      "claim": "Herb quality does not increase pigment amount, only quality",
+      "independentStudyFamily": null,
+      "weightAsIndependentCohort": 0
+    }
+  ],
+  "twoAxisContextCorrection": {
+    "betaHoldingInputRank1": {
+      "outputRank1MeanPer10": 13,
+      "outputRank2MeanPer10": 11,
+      "deltaPigmentsPerNominal10": -2,
+      "ratio": 0.8461538461538461
+    },
+    "liveHoldingOutputRank2": {
+      "inputRank1ApproxPer10": 11,
+      "inputRank2ApproxPer10": 13,
+      "deltaPigmentsPerNominal10": 2,
+      "ratio": 1.1818181818181819
+    },
+    "interpretation": "Different contrasts, not directly contradictory: one changes OUTPUT pigment quality while holding INPUT herb quality fixed, the other changes INPUT herb quality while holding OUTPUT pigment quality fixed. A single skill multiplier or one-dimensional herb-rank adjustment is unsupported.",
+    "importantConflict": "Method's generic no-quantity-effect guide conflicts with the November 2024 approximate input-rank contrast at fixed R2 output; source context/patch and actual cast logs must be checked.",
+    "application": "Keep separate inputRank and outputRank/context axes; do not copy beta or 2024 anecdotes into current Retail E, P or positive range, and do not assume additive 2-pigment coefficients without paired casts."
+  },
+  "mappingApplicability": {
+    "targetFamily": "Khaz Algar Milling",
+    "targetLegacyKeys": [
+      "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+      "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+      "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+      "candidate:tww:mill:210799:222612:runtime-method-family:20261028"
+    ],
+    "exactInputOutputRankIDAdmission": "NONE; sources do not identify exact herb species, output item IDs or recipe variant.",
+    "proposedDisposition": "CONTEXT_SPLIT_ONLY_PENDING_PRIMARY_CURRENT_RETAIL_VALIDATION"
+  },
+  "fourEconomicFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "fieldConfidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "tooltipOnlyPromotions": 0,
+  "measurementRequest": {
+    "question": "For the same exact herb ID and output pigment ID at R2, do R1 versus R2 herbs produce different zero-inclusive pigment totals per completed 10-herb operation at identical profession skill/spec/gear?",
+    "design": "Paired R1/R2 herb cohorts, same profession build, exact recipe spell and pigment rank; capture 200+ completed casts each when feasible, cast-by-cast pigment quantity including zeros, actual herb consumption, Resourcefulness refunds, rejected/aborted operations and build timestamp; record each output item ID and rank. Do not infer P from a yield range.",
+    "requiredFields": [
+      "inputItemID",
+      "inputRank",
+      "outputItemID",
+      "outputRank",
+      "recipeSpellID",
+      "patchBuild",
+      "skillSpecGear",
+      "completedCasts",
+      "perCastZeroInclusiveOutputs",
+      "grossHerbs",
+      "savedHerbs",
+      "abortedCasts"
+    ]
+  },
+  "conclusion": "New two-axis rank-conditioning lead; no measured current Retail expectedQuantity and no numeric economic promotion."
+}
