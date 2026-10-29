@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_PATCH121_DYE_STATION_UNIVERSE_PIVOT",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 2,
+  "runUTC": "2026-10-29T17:30:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "8e95400a82dfe64638efff07de448cf7370925bd",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "filesChanged": [
+    "research/evidence/v2/2026-10-29T1730Z-F004-housing-dye-patch121.json",
+    "research/evidence/v2/source-reviews/2026-10-29T1730Z-F004-housing-dye-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1730Z-F004-housing-dye-universe.json"
+  ],
+  "targetKeys": [
+    "universe:retail12.1+:dye-station:3818:274464:1306642",
+    "universe:retail12.1+:dye-station:765:274468:1306796"
+  ],
+  "inspectedExistingCandidateFiles": [
+    "research/proposed/itemdb-curated-additions.json",
+    "research/proposed/itemdb-midnight-milling-candidate.json",
+    "research/ledger/itemdb-uncompiled-output-leads.csv"
+  ],
+  "candidateSearchFinding": "No 274464, 274468, 1306642, 1306796 or Housing Dye in these three files; whole universe not yet exhaustively checked.",
+  "deltas": {
+    "newPatchScopedConversionFamilyLeads": 1,
+    "newExactCandidatePairs": 2,
+    "newAdmittedMappings": 0,
+    "newNumericEvidenceCells": 0,
+    "newExpectedQuantityCells": 0,
+    "newWorkingPreviewCells": 0,
+    "confidencePromotions": 0,
+    "invalidMappingsRemoved": 0,
+    "independentCompletedCastStudies": 0,
+    "sourceReviewEvents": 7
+  },
+  "testsActuallyRun": {
+    "type": "JS_PRECOMMIT_ASSERTIONS",
+    "passed": 12,
+    "failed": 0
+  },
+  "testsNotRun": [
+    "Native Node pipeline --check",
+    "Lua5.1 decoder",
+    "In-game Retail dye station selector/casts",
+    "Independent QA"
+  ],
+  "blockers": [
+    "Exact current client dye-station herb selector and ranks not captured",
+    "Seven additional dye colors need exact output IDs/spell IDs",
+    "Minimum profession eligibility and saved reagents not observed",
+    "Nominal one dye per operation is a spell description, not a completed-cast histogram"
+  ],
+  "economicSafety": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "productionFilesChanged": 0,
+  "sharedLedgersChanged": false,
+  "schedulesChanged": false,
+  "nextTask": "Confirm nine dye item/spell IDs, station selector whitelist, rank, skill and reagent units in 12.1.5; coordinator decides mapping admissions."
+}
