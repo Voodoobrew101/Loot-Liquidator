@@ -568,7 +568,7 @@ function createWorkingAttestation(records) {
       throw Error("Cannot attest incomplete working record");
     return {recordID:r.recordID,sourceSHA256:sha256(sourceIdentity(r)),
       workingSHA256:sha256(stableDonorContext(r.workingEstimate))};
-  }).sort((a,b) => a.recordID.localeCompare(b.recordID));
+  }).sort((a,b) => a.recordID < b.recordID ? -1 : a.recordID > b.recordID ? 1 : 0);
   for (let i=1;i<entries.length;i++)
     if (entries[i-1].recordID === entries[i].recordID)
       throw Error("Duplicate attestation record ID: " + entries[i].recordID);
