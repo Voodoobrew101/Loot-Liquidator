@@ -102,6 +102,9 @@ function run(root, options={}) {
   if (!validateSerializedWorkingEstimates(reloaded,forgedSeal,pin).includes("SERIALIZED_ATTESTATION_UNPINNED_OR_TAMPERED"))
     throw Error("Forged serialized seal escaped external digest pin");
   console.log("PASS: versioned serialized source/context/value attestation, 4 adversarial cases");
+  // Proposal only: the coordinator must persist this digest separately from the
+  // candidate and independently approve it before it is a trusted pin.
+  console.log("PROPOSED_DETACHED_ATTESTATION_SHA256 (NOT EXTERNALLY PINNED): "+pin);
   const {snapshot,priorities} = summarize(result.records,result.report);
   if (!snapshot.mappingCount || snapshot.workingNumericCells !== snapshot.fieldSlots) throw Error("Working estimate completeness gate failed");
   const check = options.check === true;
@@ -190,6 +193,14 @@ function run(root, options={}) {
     if(binomialChild.status!==0)
       throw Error("F005/F003 independent binomial numerics failed\n"+binomialChild.stdout+binomialChild.stderr);
     process.stdout.write(binomialChild.stdout);
+    // F005 independently authored 14-case detached-process source-metadata
+    // suite. Exercise native SHA-256 and prohibit post-seal provenance edits.
+    const metadataTest=path.join(root,"research/tests/v2/test_f005_serialized_metadata_integrity.js");
+    if(!fs.existsSync(metadataTest)) throw Error("Required F005 detached metadata check missing");
+    const metadataChild=spawnSync(process.execPath,[metadataTest],{cwd:root,encoding:"utf8",timeout:120000});
+    if(metadataChild.status!==0)
+      throw Error("F005 detached source-metadata integrity failed\\n"+metadataChild.stdout+metadataChild.stderr);
+    process.stdout.write(metadataChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
