@@ -101,6 +101,15 @@ function run(root, options={}) {
     if(ancestryChild.status!==0)
       throw Error("working_estimates_ancestry_selftest.js failed\\n"+ancestryChild.stdout+ancestryChild.stderr);
     process.stdout.write(ancestryChild.stdout);
+    // Independent validator F005: exercise PMF zero-mass support and stale
+    // donor ancestry on native Node, not only in the validator's V8 shim.
+    // Keep the validator-owned fixture immutable; CI only invokes it.
+    const independentTest=path.join(root,"research/tests/v2/test_f005_postrepair_metamorphic.js");
+    if(!fs.existsSync(independentTest)) throw Error("Required independent F005 check missing");
+    const independentChild=spawnSync(process.execPath,[independentTest],{cwd:root,encoding:"utf8"});
+    if(independentChild.status!==0)
+      throw Error("F005 postrepair metamorphic regression failed\\n"+independentChild.stdout+independentChild.stderr);
+    process.stdout.write(independentChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
