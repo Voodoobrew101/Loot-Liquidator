@@ -24,6 +24,25 @@ function build(observations,reviews,feedback){
  const sources=[...map.values()].sort((a,b)=>a.canonicalUrl.localeCompare(b.canonicalUrl));
  return {schemaVersion:1,researchOnly:true,sourcesCount:sources.length,reviewEvents:sorted.length,qaEvents:seen.size,approvedQaEvents:approved,warnings,strategies:strats,sources};
 }
-function main(){const result=build(rows("evidence/observations"),rows("coordination/source-reviews"),rows("coordination/qa-feedback"));process.stdout.write(JSON.stringify(result,null,2)+"\n")}
+function applyCorrections(result,manifest){
+ const seen=new Set();
+ for(const c of manifest?.corrections||[]){
+  if(c.status!=="MASTER_QA_APPROVED")continue;
+  if(!c.correctionID||seen.has(c.correctionID))throw Error("Duplicate or missing attribution correction ID");
+  seen.add(c.correctionID);
+  const x=result.sources.find(z=>z.canonicalUrl===normalize(c.sourceUrl));
+  if(!x||!x.observationIDs.includes(c.observationID))throw Error("Attribution source/observation not found: "+c.correctionID);
+  const hadWrong=x.reviewedRecordKeys.includes(c.incorrectRecordKey);
+  const already=(x.attributionCorrections||[]).some(z=>z.correctionID===c.correctionID);
+  if(!hadWrong&&!already)throw Error("Attribution original key not found: "+c.correctionID);
+  if(hadWrong)x.reviewedRecordKeys=x.reviewedRecordKeys.filter(k=>k!==c.incorrectRecordKey);
+  if(!x.reviewedRecordKeys.includes(c.correctedRecordKey))x.reviewedRecordKeys.push(c.correctedRecordKey);
+  if(!already)(x.attributionCorrections||(x.attributionCorrections=[])).push({correctionID:c.correctionID,observationID:c.observationID,from:c.incorrectRecordKey,to:c.correctedRecordKey,evidenceUrls:c.evidenceUrls||[]});
+  if(c.retainAsUnverifiedPossibleMapping)x.unverifiedPossibleMappings=[...new Set([...(x.unverifiedPossibleMappings||[]),c.incorrectRecordKey])];
+ }
+ result.appliedAttributionCorrectionIDs=[...new Set([...(result.appliedAttributionCorrectionIDs||[]),...seen])].sort();
+ return result;
+}
+function main(){const p=root("coordination/source-attribution-corrections.json");const manifest=fs.existsSync(p)?JSON.parse(fs.readFileSync(p,"utf8")):{corrections:[]};const result=applyCorrections(build(rows("evidence/observations"),rows("coordination/source-reviews"),rows("coordination/qa-feedback")),manifest);process.stdout.write(JSON.stringify(result,null,2)+"\n")}
 if(require.main===module)main();
-module.exports={normalize,build,outcomes};
+module.exports={normalize,build,outcomes,applyCorrections};
