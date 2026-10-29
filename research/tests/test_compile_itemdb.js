@@ -22,7 +22,7 @@ const a=compile(input),b=compile(input);
 assert.equal(a.lua,b.lua,"deterministic Lua");
 assert.deepEqual(a.report,b.report);
 assert.deepEqual(validate(a.records),[]);
-assert.equal(a.report.sourceMappingCandidates,1015);
+assert.equal(a.report.sourceMappingCandidates,1018,"retain three distinct recipe-conditioned Midnight cohorts");
 assert.equal(a.report.curatedAdded,32);
 assert.equal(a.report.rankSpecificProxyRecordsQuarantined,31);
 assert.equal(a.report.diamondSpecializationGated,7);
@@ -30,15 +30,15 @@ assert.equal(a.report.fullyNumericFourFields,801);
 assert.equal(a.report.batch013RankQuarantined,50);
 assert.equal(a.report.fishInputRankCorrected,12);
 assert.equal(a.report.invalidSourceChanceQuarantined,0);
-assert.equal(a.report.batch014SourceProbabilityQuarantined,2);
+assert.equal(a.report.batch014SourceProbabilityQuarantined,0,"stronger source selected before numeric completeness; unsafe alternative retained in lineage");
 assert.equal(a.report.batch014UnsafeExpectedQuantityQuarantined,7);
 assert.equal(a.report.fixedSmeltRecipeVectorsCompiled,8);
 assert.equal(a.report.verifiedSourceLineIdentities,1202);
 assert.equal(a.report.legacyArithmeticContradictionsReviewed,8);
 assert.equal(a.records.filter(r=>r.inputItemID===200061&&r.outputQualityRank!==null&&r.inputQualityRank===null).length,12);
 assert.equal(a.records.filter(r=>r.conditions.eligibilityStatus==="REQUIRES_ORE_SPECIFIC_PROFICIENT_PROCESSOR_SPECIALIZATION").length,7);
-assert.equal(a.report.fieldSlots,4060);
-assert.deepEqual(a.report.missingFieldCounts,{"dropChance":201,"yieldMin":97,"yieldMax":97,"expectedQuantity":116});
+assert.equal(a.report.fieldSlots,4072);
+assert.deepEqual(a.report.missingFieldCounts,{"dropChance":204,"yieldMin":97,"yieldMax":97,"expectedQuantity":116});
 assert.equal(a.report.quarantineBreakdown.MULTI_REAGENT_SCHEMA_GAP||0,0);
 const powder=a.records.find(r=>r.method==="Prospect"&&r.inputItemID===36910&&r.outputItemID===46849);
 assert.ok(powder);
@@ -78,7 +78,7 @@ assert.deepEqual(csv('"a","b"\n"1","two,three"\n')[0],{a:"1",b:"two,three"});
 const refines=a.records.filter(r=>r.method==="Refine");assert.equal(refines.length,2);assert.deepEqual(refines.map(r=>[r.inputItemID,r.outputItemID,r.inputCountPerOperation]),[[242786,242787,10],[242788,242789,18]]);for(const r of refines){assert.equal(r.conditions.requiresBench,true);assert.equal(r.conditions.minimumRecipeSkill,50);assert.equal(r.expectedQuantity.value,1);}
 const conditional=a.records.filter(r=>r.recordID.startsWith("candidate:conditional:"));assert.equal(conditional.length,8);for(const r of conditional){assert.ok(r.conditions.specialization?.gem);assert.ok(r.conditions.baselineStatus.includes("NOT_UNSKILLED"));for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"])assert.equal(r[f].value,null);}
 assert.ok(a.lua.includes("requiresBench=opt(x[35])"));assert.ok(a.lua.includes("specialization=opt(x[36])"));assert.ok(a.lua.includes('"Refine"'));
-const mass=a.records.filter(r=>r.conditions.operationVariant==="MASS_20_HERB");assert.equal(mass.length,9);assert.equal(a.report.expectedQuantityPresent,899);assert.equal(a.records.filter(r=>r.inputItemID===152506&&r.outputItemID===153635).length,2);
+const mass=a.records.filter(r=>r.conditions.operationVariant==="MASS_20_HERB");assert.equal(mass.length,9);assert.equal(a.report.expectedQuantityPresent,902);assert.equal(a.records.filter(r=>r.inputItemID===152506&&r.outputItemID===153635).length,2);
 for(const [input,spell,casts,means] of [[152506,256218,177,[15.48,5.89,2.87]],[152507,256223,106,[16.39,5.96,2.57]],[152508,256221,103,[15.89,5.85,2.12]]]){for(let i=0;i<3;i++){const r=mass.find(x=>x.inputItemID===input&&x.outputItemID===[153635,153636,153669][i]);assert.ok(r);assert.equal(r.recipeSpellID,spell);assert.equal(r.inputCountPerOperation,20);assert.deepEqual(r.reagents,[{itemID:input,quantity:20}]);assert.equal(r.expectedQuantity.value,means[i]);assert.equal(r.expectedQuantity.sampleOperations,casts);assert.ok(r.expectedQuantity.uncertainty.includes("rounded mean"));for(const f of ["dropChance","yieldMin","yieldMax"])assert.equal(r[f].value,null);}}
 assert.ok(a.lua.includes("operationVariant=opt(x[37])"));assert.ok(a.lua.includes("uncertainty=opt(x[7])"));const invalid=structuredClone(mass[0]);invalid.reagents[0].quantity=5;assert.ok(validate([invalid]).some(x=>x.startsWith("MASS_RECIPE:")));
 const twwMills=a.records.filter(r=>r.recordID.startsWith("candidate:tww:mill:"));
@@ -86,7 +86,14 @@ assert.equal(twwMills.length,10,"two false Mycobloom-to-Apricate-Ink mappings qu
 assert.equal(new Set(twwMills.map(r=>r.inputItemID)).size,10);
 for(const r of twwMills){assert.equal(r.inputCountPerOperation,10);assert.equal(r.expansionID,10);assert.ok(r.inputQualityRank>=1&&r.outputQualityRank>=1,"exact rank identity preserved without assuming same-rank eligibility");assert.equal(r.conditions.eligibilityStatus,"FAMILY_SUPPORTED_EXACT_RANK_PAIR_SKILL_NOT_VERIFIED");for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"]){assert.equal(r[f].value,null);assert.equal(r[f].confidence,0);}}
 
-assert.equal(a.report.compilerVersion,"0.7.1");
+assert.equal(a.report.compilerVersion,"0.8.0");
+assert.equal(a.manifest.schemaVersion,"0.2.0");
+assert.equal(a.report.workingEstimates.fullyNumericRecords,a.records.length);
+assert.equal(a.report.workingEstimates.previewOnlyRecords,a.records.length);
+assert.equal(a.report.workingEstimates.evidenceFieldsChanged,0);
+assert.equal(a.report.baselineMinimumSkillVerified,0);
+assert.equal(a.report.completeRecordConfidenceGE90,0);
+for(const r of a.records){assert.equal(r.workingEstimate.economicUse,"PREVIEW_ONLY");assert.equal(r.workingEstimate.normalizedVerified,false);assert.equal(r.sourceSelection.policyVersion,"context-evidence-first-v1");}
 const historicalMycobloom=a.records.filter(r=>r.recordID.startsWith("historical:tww:mill:")&&r.recordID.includes("reddit-1fdmzwy"));
 assert.equal(historicalMycobloom.length,2);
 assert.deepEqual(historicalMycobloom.map(r=>r.inputItemID).sort(),[210796,210797]);
@@ -120,4 +127,23 @@ const staged=JSON.parse(read("research/proposed/itemdb-tooltip-fallbacks-q25.jso
 staged.tooltipFallbacks[0].economicFields.expectedQuantity=0.7;
 assert.throws(()=>compile({...input,tooltipFallbacksJSON:JSON.stringify(staged)}),/Tooltip staging rejected/);
 
-console.log("PASS research compiler v0.7.1 static regression; Lua interpreter and WoW client not run");
+// Exercise the emitted Lua, not only the richer JavaScript manifest. Explicit
+// skill/stat/specialization context must survive generation for future rules.
+const curatedContext=JSON.parse(input.curatedJSON),fixture=curatedContext.processing[0];
+fixture.conditions.effectiveSkill=73;fixture.conditions.skillLineID=12345;
+fixture.conditions.operationStats={resourcefulness:7,multicraft:11};
+fixture.conditions.specialization={tree:"roundtrip-fixture",requiredPoints:12};
+fixture.conditions.patchWindow="ROUNDTRIP_PATCH";
+const contextual=compile({...input,curatedJSON:JSON.stringify(curatedContext)});
+const os=require("node:os"),cp=require("node:child_process"),temp=fs.mkdtempSync(path.join(os.tmpdir(),"itemdb-roundtrip-"));
+try{
+ const luaPath=path.join(temp,"itemdb.lua");fs.writeFileSync(luaPath,contextual.lua);
+ const script="local d=dofile(arg[1]);for _,r in ipairs(d.processing)do if r.recordID==arg[2]then assert(r.conditions.effectiveSkill==73);assert(r.conditions.skillLineID==12345);assert(r.conditions.operationStats.resourcefulness==7);assert(r.conditions.operationStats.multicraft==11);assert(r.conditions.specialization.tree=='roundtrip-fixture');assert(r.conditions.specialization.requiredPoints==12);assert(r.conditions.patchWindow=='ROUNDTRIP_PATCH');assert(r.workingEstimate.economicUse=='PREVIEW_ONLY');print('PASS full condition Lua roundtrip');return end end;error('missing fixture')";
+ const scriptPath=path.join(temp,"check.lua");fs.writeFileSync(scriptPath,script);
+ const bins=[process.env.LUA_BIN,"lua5.1","/workspace/.loot-liquidator-tools/lua/usr/bin/lua5.1"].filter(Boolean);let result;
+ for(const bin of bins){result=cp.spawnSync(bin,[scriptPath,luaPath,fixture.recordID],{encoding:"utf8"});if(result.error?.code!=="ENOENT")break;}
+ assert.equal(result?.status,0,"Lua 5.1 condition roundtrip required: "+(result?.stderr||result?.error||"no interpreter"));
+}finally{fs.rmSync(temp,{recursive:true,force:true});}
+
+console.log("PASS research compiler v0.8.0 regression and real Lua 5.1 context roundtrip; evidence gaps preserved, complete isolated working estimates; WoW client not run");
+

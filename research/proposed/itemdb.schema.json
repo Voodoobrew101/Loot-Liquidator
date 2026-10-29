@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/research/proposed/itemdb.schema.json",
-  "title": "Loot Liquidator future itemdb.lua source-record research schema v0.1",
+  "title": "Loot Liquidator itemdb research evidence and isolated working estimates v0.2",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -12,7 +12,7 @@
   ],
   "properties": {
     "schemaVersion": {
-      "const": "0.1.0"
+      "const": "0.2.0"
     },
     "artifactStatus": {
       "const": "RESEARCH_ONLY_NOT_SHIPPED"
@@ -69,6 +69,99 @@
     }
   },
   "$defs": {
+    "sourceSelection": {
+      "type": "object", "additionalProperties": false,
+      "required": ["policyVersion", "sourceProfileKey", "selectedRecordID", "selectionReason", "targetContextSupplied", "normalizedVerified", "conflictFlags", "alternateProfiles"],
+      "properties": {
+        "policyVersion": {"const": "context-evidence-first-v1"},
+        "sourceProfileKey": {"type": "string", "minLength": 1},
+        "selectedRecordID": {"type": "string", "minLength": 1},
+        "selectionReason": {"const": "APPLICABLE_CONTEXT_THEN_EVIDENCE_STRENGTH_THEN_COMPLETENESS"},
+        "targetContextSupplied": {"type": "boolean"},
+        "normalizedVerified": {"const": false},
+        "conflictFlags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "alternateProfiles": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["recordID", "sourceProfileKey", "selectionReason"],
+          "properties": {
+            "recordID": {"type": "string", "minLength": 1},
+            "sourceProfileKey": {"type": "string", "minLength": 1},
+            "selectionReason": {"enum": ["LOWER_CONTEXT_EVIDENCE_PRIORITY", "KNOWN_CONTEXT_MISMATCH"]}
+          }
+        }}
+      }
+    },
+    "workingEstimate": {
+      "type": "object", "additionalProperties": false,
+      "description": "Complete numerical preview only. Policy assumptions never replace evidence, establish baseline normalization, or authorize economic use.",
+      "required": ["dropChance", "yieldMin", "yieldMax", "expectedQuantity", "policyVersion", "status", "economicUse", "modelID", "normalizedVerified", "evidenceFieldsPreserved", "fieldConfidence", "fieldStatus", "assumptions", "sourceRecordIDs", "conditionalYieldApplicable", "zeroSemantics", "uncertainty", "targetContext", "confidence"],
+      "properties": {
+        "dropChance": {"type": "number", "minimum": 0, "maximum": 1},
+        "yieldMin": {"type": "integer", "minimum": 0},
+        "yieldMax": {"type": "integer", "minimum": 0},
+        "expectedQuantity": {"type": "number", "minimum": 0},
+        "policyVersion": {"const": "working-estimate-policy-v1"},
+        "status": {"enum": ["COPIED_EVIDENCE_PREVIEW", "PROVISIONAL_WORKING_ESTIMATE"]},
+        "economicUse": {"const": "PREVIEW_ONLY"},
+        "modelID": {"type": "string", "minLength": 1},
+        "normalizedVerified": {"const": false},
+        "evidenceFieldsPreserved": {"const": true},
+        "confidence": {"type": "integer", "minimum": 0, "maximum": 100},
+        "fieldConfidence": {
+          "type": "object", "additionalProperties": false,
+          "required": ["dropChance", "yieldMin", "yieldMax", "expectedQuantity"],
+          "properties": {
+            "dropChance": {"type": "integer", "minimum": 0, "maximum": 100},
+            "yieldMin": {"type": "integer", "minimum": 0, "maximum": 100},
+            "yieldMax": {"type": "integer", "minimum": 0, "maximum": 100},
+            "expectedQuantity": {"type": "integer", "minimum": 0, "maximum": 100}
+          }
+        },
+        "fieldStatus": {
+          "type": "object", "additionalProperties": false,
+          "required": ["dropChance", "yieldMin", "yieldMax", "expectedQuantity"],
+          "properties": {
+            "dropChance": {"enum": ["COPIED_EVIDENCE", "POLICY_PRIOR", "WORKING_CONSISTENCY_ADJUSTMENT"]},
+            "yieldMin": {"enum": ["COPIED_EVIDENCE", "POLICY_PRIOR", "WORKING_CONSISTENCY_ADJUSTMENT"]},
+            "yieldMax": {"enum": ["COPIED_EVIDENCE", "POLICY_PRIOR", "WORKING_CONSISTENCY_ADJUSTMENT"]},
+            "expectedQuantity": {"enum": ["COPIED_EVIDENCE", "POLICY_PRIOR", "WORKING_CONSISTENCY_ADJUSTMENT"]}
+          }
+        },
+        "assumptions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "sourceRecordIDs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "conditionalYieldApplicable": {"type": "boolean"},
+        "zeroSemantics": {"enum": ["NO_ZERO_ASSERTION", "WORKING_ZERO_EXPECTATION_NOT_PROVEN_IMPOSSIBLE"]},
+        "uncertainty": {"type": "string", "minLength": 1},
+        "targetContext": {
+          "type": "object", "additionalProperties": true,
+          "required": ["contextID", "operationBasis", "skillAndStats", "eligibilityAssumedSatisfiedForPreview"],
+          "properties": {
+            "contextID": {"const": "HYPOTHETICAL_PREVIEW_NOT_VERIFIED_BASELINE"},
+            "operationBasis": {"const": "ONE_COMPLETED_OPERATION"},
+            "skillAndStats": {"const": "UNRESOLVED_NO_INVERSION_APPLIED"},
+            "eligibilityAssumedSatisfiedForPreview": {"const": true}
+          }
+        },
+        "allocation": {
+          "type": "object", "additionalProperties": false,
+          "required": ["poolID", "canonicalFamilyID", "status", "poolExpectedQuantity", "allocationShare", "memberRecordIDs", "physicalUpperBound"],
+          "properties": {
+            "poolID": {"type": "string", "minLength": 1},
+            "canonicalFamilyID": {"type": ["string", "integer", "null"]},
+            "status": {"const": "UNRESOLVED_RANK_ALLOCATION_POLICY_PRIOR"},
+            "poolExpectedQuantity": {"type": "number", "exclusiveMinimum": 0},
+            "allocationShare": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+            "memberRecordIDs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+            "physicalUpperBound": {"const": false}
+          }
+        }
+      },
+      "allOf": [
+        {"if": {"properties": {"conditionalYieldApplicable": {"const": true}}}, "then": {"properties": {"yieldMin": {"minimum": 1}, "yieldMax": {"minimum": 1}, "dropChance": {"exclusiveMinimum": 0}, "expectedQuantity": {"exclusiveMinimum": 0}}}},
+        {"if": {"properties": {"conditionalYieldApplicable": {"const": false}}}, "then": {"properties": {"yieldMin": {"const": 0}, "yieldMax": {"const": 0}, "dropChance": {"const": 0}, "expectedQuantity": {"const": 0}, "zeroSemantics": {"const": "WORKING_ZERO_EXPECTATION_NOT_PROVEN_IMPOSSIBLE"}}}},
+        {"if": {"properties": {"assumptions": {"minItems": 1}}}, "then": {"properties": {"confidence": {"const": 0}}}}
+      ]
+    },
     "confidence": {
       "type": [
         "integer",
@@ -141,6 +234,8 @@
       "additionalProperties": false,
       "required": [
         "recordID",
+        "workingEstimate",
+        "sourceSelection",
         "method",
         "expansionID",
         "inputItemID",
@@ -162,6 +257,8 @@
         "status"
       ],
       "properties": {
+        "workingEstimate": {"$ref": "#/$defs/workingEstimate"},
+        "sourceSelection": {"$ref": "#/$defs/sourceSelection"},
         "recordID": {
           "type": "string",
           "minLength": 1
@@ -775,3 +872,4 @@
     }
   }
 }
+
