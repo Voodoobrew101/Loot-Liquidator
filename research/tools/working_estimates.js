@@ -563,7 +563,10 @@ function validateWorkingEstimates(records, options = {}) {
 // acceptance record). A self-reported digest is not an independent trust root.
 function createWorkingAttestation(records) {
   if (!Array.isArray(records)) throw Error("Expected records array");
-  const entries = records.map(r => {
+  // Attest the exact JSON representation that survives a process boundary;
+  // optional undefined source properties are omitted by JSON serialization.
+  const serialized = JSON.parse(JSON.stringify(records));
+  const entries = serialized.map(r => {
     if (!r.workingEstimate || typeof r.recordID !== "string")
       throw Error("Cannot attest incomplete working record");
     return {recordID:r.recordID,sourceSHA256:sha256(sourceIdentity(r)),
