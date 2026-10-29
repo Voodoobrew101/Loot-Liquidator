@@ -110,6 +110,13 @@ function run(root, options={}) {
     if(independentChild.status!==0)
       throw Error("F005 postrepair metamorphic regression failed\\n"+independentChild.stdout+independentChild.stderr);
     process.stdout.write(independentChild.stdout);
+    // Independent F005 rank-pool isolation must run on native Node in CI.
+    const rankPoolTest=path.join(root,"research/tests/v2/test_f005_rank_pool_isolation.js");
+    if(!fs.existsSync(rankPoolTest)) throw Error("Required independent rank-pool check missing");
+    const rankPoolChild=spawnSync(process.execPath,[rankPoolTest],{cwd:root,encoding:"utf8"});
+    if(rankPoolChild.status!==0)
+      throw Error("F005 rank-pool isolation failed\\n"+rankPoolChild.stdout+rankPoolChild.stderr);
+    process.stdout.write(rankPoolChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");

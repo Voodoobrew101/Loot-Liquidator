@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_FIX_RANK_POOL_CONTEXT_AND_ANCESTRY",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 5,
+  "dateUTC": "2026-10-29T16:14:00Z",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_RETEST",
+  "baseCommit": "496944ef58b516b5e1e7a515e8beb49bb7fa6aea",
+  "resultCommit": "SAME_ATOMIC_COMMIT_AS_THIS_SUBMISSION",
+  "changedFiles": [
+    "research/tools/working_estimates.js",
+    "research/tools/run_completion_pipeline.js",
+    "research/coordination/v2/submissions/completion-engineer/2026-10-29T1614Z-F002-rank-pool-context-and-ancestry.json"
+  ],
+  "confirmedDefectsAddressed": [
+    "POOL_GAME_MODE_COLLISION",
+    "POOL_REAGENT_VECTOR_COLLISION",
+    "POOL_ANCESTRY_VALIDATOR_GAP"
+  ],
+  "design": [
+    "Strict pool grouping now includes game mode, canonicalized full available direct reagent vector and additional eligibility discriminators",
+    "Legacy serialized pool IDs retained only for unambiguous non-colliding contexts; collisions get distinct strict IDs",
+    "Validator independently reconstructs pool membership from source rows, checks exact member IDs, context, family, shares, E, target, status and preview-only semantics",
+    "Missing direct reagent vector explicitly remains UNKNOWN; no claim of physical exclusivity or complete recipe evidence",
+    "Native pipeline now invokes independent 12-case F005 rank-pool fixture in addition to 609-assertion metamorphic fixture"
+  ],
+  "deltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "productionFilesChanged": 0,
+    "regressionCasesAddedToNativeCI": 12
+  },
+  "baselineCounters": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "checks": {
+    "codePatchAnchors": "PASS",
+    "independentFixtureSourceRead": "PASS",
+    "nativeNode": "PENDING_GITHUB_CI",
+    "lua51": "PENDING_GITHUB_CI",
+    "schema": "PENDING_GITHUB_CI",
+    "deterministicCandidate": "PENDING_GITHUB_CI"
+  },
+  "economicSafety": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false
+  },
+  "blockers": [
+    "Independent F005 acceptance required",
+    "Current-Retail completed-cast whole-family holdout unavailable",
+    "116 E evidence gaps and 514 total numeric evidence gaps remain",
+    "Unknown reagent vectors are explicitly synthetic and not proof of exact physical recipe"
+  ],
+  "nextTask": "If CI reports stale candidate, rebuild research-only generated artifacts from changed grouping; otherwise hand exact source SHA to independent F005 for retest",
+  "zeroDeltaPivot": "Repaired three independently reproduced integrity defects rather than re-auditing unchanged numeric rows"
+}

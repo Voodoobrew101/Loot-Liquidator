@@ -19,7 +19,9 @@ function evidenceValue(r, f) {
   if (f === "expectedQuantity") return v >= 0 ? v : null;
   return positiveInteger(v) ? v : null;
 }
-function operationKey(r) {
+// Legacy identifier is retained only for unchanged, non-colliding preview
+// pools. Its stable serialized value avoids rewriting unrelated candidate rows.
+function legacyOperationKey(r) {
   const c = r.conditions || {};
   return JSON.stringify([r.method, r.expansionID, r.inputItemID,
     r.inputQualityRank ?? null, r.recipeSpellID ?? null,
@@ -28,6 +30,17 @@ function operationKey(r) {
     c.effectiveSkill ?? null, c.specialization ?? null, c.operationStats ?? null,
     c.sourceContext ?? null, c.quantityBasis ?? null,
     c.eligibilityStatus ?? null, c.baselineStatus ?? null]);
+}
+// Strict grouping includes game mode, the complete available direct reagent
+// vector and eligibility discriminators; missing vectors remain UNKNOWN, not
+// proof of any physical reagent recipe.
+function operationKey(r) {
+  const c = r.conditions || {};
+  return stableDonorContext([legacyOperationKey(r), c.gameMode ?? null,
+    canonicalDirectReagents(r), c.skillLineID ?? null,
+    c.minimumRecipeSkill ?? null, c.requiredProfession ?? null,
+    c.requiresLearnedRecipe ?? null, c.requiresForge ?? null,
+    c.requiresBench ?? null, c.unlocks ?? null]);
 }
 function canonicalFamily(r, options) {
   return r.outputFamilyID ?? r.conditions?.outputFamilyID ??
@@ -39,6 +52,45 @@ function ambiguousRank(r) {
     /RANK.*(?:UNRESOLVED|QUARANTINED)/.test(r.conditions?.sourceContext || "");
 }
 function stableDonorContext(v){if(v===null||v===undefined||typeof v!=="object")return JSON.stringify(v??null);if(Array.isArray(v))return "["+v.map(stableDonorContext).join(",")+"]";return "{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+stableDonorContext(v[k])).join(",")+"}";}
+function canonicalDirectReagents(r) {
+  if (!Array.isArray(r.reagents) || !r.reagents.length)
+    return ["UNKNOWN_DIRECT_REAGENT_VECTOR"];
+  const rows = r.reagents.map(x =>
+    x && Number.isSafeInteger(x.itemID) && x.itemID > 0 &&
+    Number.isSafeInteger(x.quantity) && x.quantity > 0 ? {...x} : null);
+  if (rows.includes(null)) return ["INVALID_DIRECT_REAGENT_VECTOR", r.recordID];
+  return rows.sort((a,b) => stableDonorContext(a).localeCompare(stableDonorContext(b)));
+}
+// Group by strict identity, then retain the old ID only if unambiguous.
+// Colliding legacy IDs get distinct strict-context suffixes. This preserves
+// byte-identical preview output when no real context collision exists.
+function collectRankPools(records, options = {}) {
+  const strictGroups = new Map(), legacyCounts = new Map();
+  for (const r of records) {
+    if (!ambiguousRank(r) || evidenceValue(r, "expectedQuantity") !== null) continue;
+    const familyID = canonicalFamily(r, options);
+    const suffix = ":family:" + (familyID ?? "CANONICAL_FAMILY_UNKNOWN");
+    const strictID = operationKey(r) + suffix;
+    const legacyID = legacyOperationKey(r) + suffix;
+    if (!strictGroups.has(strictID))
+      strictGroups.set(strictID, {strictID, legacyID, familyID, records: [], rows: []});
+    const pool = strictGroups.get(strictID);
+    pool.records.push(r.recordID);
+    pool.rows.push(r);
+  }
+  for (const pool of strictGroups.values())
+    legacyCounts.set(pool.legacyID, (legacyCounts.get(pool.legacyID) || 0) + 1);
+  const pools = new Map(), poolByRecord = new Map();
+  for (const pool of strictGroups.values()) {
+    pool.records.sort();
+    pool.id = legacyCounts.get(pool.legacyID) === 1 ? pool.legacyID :
+      pool.legacyID + ":strict-context:" + pool.strictID;
+    pools.set(pool.id, pool);
+    for (const row of pool.rows) poolByRecord.set(row, pool.id);
+  }
+  return {pools, poolByRecord};
+}
+
 function donorKey(r){
   const c=r.conditions||{};
   // Unknown recipe/rank/skill or an incomplete reagent vector is not a
@@ -91,7 +143,8 @@ function applyWorkingEstimates(records, options = {}) {
   const poolMean = options.unresolvedRankPoolExpectedQuantity ?? 1;
   if (!finite(poolMean) || poolMean <= 0 || poolMean > Number.MAX_SAFE_INTEGER)
     throw Error("Invalid synthetic rank pool expectation");
-  const donors = new Map(), pools = new Map(), poolByRecord = new Map();
+  const donors = new Map();
+  const {pools, poolByRecord} = collectRankPools(records, options);
   for (const r of records) {
     assertAdmitted(r);
     const e = evidenceValue(r, "expectedQuantity");
@@ -102,17 +155,7 @@ function applyWorkingEstimates(records, options = {}) {
       if (k !== null && !donors.has(k)) donors.set(k, []);
       if (k !== null) donors.get(k).push({ recordID: r.recordID, value: e });
     }
-    if (ambiguousRank(r) && e === null) {
-      const family = canonicalFamily(r, options);
-      // Without canonical identity, use ONE explicitly synthetic operation pool
-      // instead of treating every rank as an independent full-family yield.
-      const id = operationKey(r) + ":family:" + (family ?? "CANONICAL_FAMILY_UNKNOWN");
-      if (!pools.has(id)) pools.set(id, { id, familyID: family, records: [] });
-      pools.get(id).records.push(r.recordID);
-      poolByRecord.set(r, id);
-    }
   }
-  for (const pool of pools.values()) pool.records.sort();
 
   const report = {
     policyVersion: POLICY_VERSION, records: records.length,
@@ -263,13 +306,15 @@ function applyWorkingEstimates(records, options = {}) {
     report.previewOnlyRecords++;
     r.workingEstimate = w;
   }
-  const errors = validateWorkingEstimates(records);
+  const errors = validateWorkingEstimates(records, options);
   if (errors.length) throw Error("Working estimate validation: " + errors.slice(0, 8).join(","));
   return report;
 }
 
-function validateWorkingEstimates(records) {
+function validateWorkingEstimates(records, options = {}) {
   const errors = [], allocations = new Map(), byRecordID = new Map();
+  const {pools: expectedPools, poolByRecord: expectedPoolByRecord} =
+    collectRankPools(records, options);
   // A donor ID must resolve to one unambiguous original evidence record.
   for (const r of records) {
     if (byRecordID.has(r.recordID)) errors.push("DUPLICATE_WORKING_RECORD_ID:" + r.recordID);
@@ -337,15 +382,44 @@ function validateWorkingEstimates(records) {
           JSON.stringify(w.sourceRecordIDs.slice().sort()))
         errors.push("WORKING_DONOR_ORDER_NONDETERMINISTIC:" + id);
     }
+    const expectedPoolID = expectedPoolByRecord.get(r);
+    if (expectedPoolID && !w.allocation)
+      errors.push("RANK_POOL_ALLOCATION_MISSING:" + id);
     if (w.allocation) {
-      const x = w.allocation;
-      if (!allocations.has(x.poolID)) allocations.set(x.poolID, { sum: 0, target: x.poolExpectedQuantity });
-      allocations.get(x.poolID).sum += e;
-      if (x.physicalUpperBound !== false) errors.push("RANK_POOL_ASSERTED_PHYSICAL_BOUND:" + id);
+      const x = w.allocation, expectedPool = expectedPools.get(expectedPoolID);
+      if (!expectedPool || x.poolID !== expectedPoolID)
+        errors.push("RANK_POOL_CONTEXT_OR_ID_MISMATCH:" + id);
+      if (expectedPool) {
+        if (x.canonicalFamilyID !== expectedPool.familyID)
+          errors.push("RANK_POOL_FAMILY_MISMATCH:" + id);
+        if (!Array.isArray(x.memberRecordIDs) ||
+            JSON.stringify(x.memberRecordIDs) !== JSON.stringify(expectedPool.records))
+          errors.push("RANK_POOL_MEMBER_ANCESTRY_MISMATCH:" + id);
+        const share = 1 / expectedPool.records.length;
+        if (!finite(x.allocationShare) || Math.abs(x.allocationShare - share) > EPS)
+          errors.push("RANK_POOL_ALLOCATION_SHARE_MISMATCH:" + id);
+        if (!finite(x.poolExpectedQuantity) || x.poolExpectedQuantity <= 0 ||
+            Math.abs(e - x.poolExpectedQuantity * share) >
+              EPS * Math.max(1, Math.abs(e)))
+          errors.push("RANK_POOL_MEMBER_EXPECTATION_MISMATCH:" + id);
+      }
+      if (x.status !== "UNRESOLVED_RANK_ALLOCATION_POLICY_PRIOR")
+        errors.push("RANK_POOL_STATUS_MISMATCH:" + id);
+      if (x.physicalUpperBound !== false)
+        errors.push("RANK_POOL_ASSERTED_PHYSICAL_BOUND:" + id);
+      if (!allocations.has(x.poolID))
+        allocations.set(x.poolID, {sum: 0, target: x.poolExpectedQuantity});
+      const acc = allocations.get(x.poolID);
+      if (!finite(x.poolExpectedQuantity) || x.poolExpectedQuantity <= 0 ||
+          x.poolExpectedQuantity !== acc.target)
+        errors.push("RANK_POOL_TARGET_MISMATCH:" + id);
+      acc.sum += e;
     }
   }
   for (const [id, x] of allocations)
-    if (Math.abs(x.sum - x.target) > EPS * Math.max(1, x.target)) errors.push("RANK_POOL_DUPLICATED_E:" + id);
+    if (!finite(x.target) ||
+        Math.abs(x.sum - x.target) > EPS * Math.max(1, x.target))
+      errors.push("RANK_POOL_DUPLICATED_E:" + id);
   return errors;
 }
 
