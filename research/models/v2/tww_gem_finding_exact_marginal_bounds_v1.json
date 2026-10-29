@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "modelID": "tww-gem-finding-exact-marginal-bounds-v1.0.0",
+  "modelID": "tww-gem-finding-exact-marginal-bounds-v1.0.1",
   "scope": "RESEARCH_ONLY_PROSPECTIVE_AND_SYNTHETIC",
   "targetKeys": [
     "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
@@ -40,7 +40,7 @@
     "assumptions": "IID_BINOMIAL_PER_OUTPUT"
   },
   "test": {
-    "passed": 24,
+    "passed": 31,
     "failed": 0,
     "syntheticOnly": true,
     "actualRetailCasts": 0,
@@ -51,6 +51,24 @@
       "nominalOre": 2870,
       "zeroHitUpper": 0.009999013821329556,
       "condition": "ZERO_HITS_ONLY"
+    },
+    "nativeNodeIsolatedNumericalPreflight": {
+      "passed": 9,
+      "failed": 0,
+      "nodeVersion": "v22.16.0",
+      "fullModule": false
     }
+  },
+  "numericalStabilityFix": {
+    "issue": "Previous CDF started at P(X=0), which underflowed for n=10000 and p=0.9 or 0.5; corrupted large-cohort Clopper-Pearson intervals.",
+    "beforeCDFAt10000_8999_0_9": 0,
+    "afterCDFAt10000_8999_0_9": 0.4915789606543559,
+    "exampleCPAt10000_9000_95pct": {
+      "lower": 0.8939531000966177,
+      "upper": 0.9058127882660145
+    },
+    "method": "LOG_FACTORIAL_BOUNDARY_ANCHORED_BINOMIAL_TAIL_SUM",
+    "maxCompletedCasts": 10000,
+    "independentValidation": "PENDING"
   }
 }
