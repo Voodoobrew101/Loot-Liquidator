@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "2026-10-29T1228Z-F004_DIAMOND_CONFLICT-controlled-capture",
+  "role": "evidence-researcher",
+  "status": "PROPOSED_FOR_MODELLER_AND_VALIDATOR_NOT_AN_OBSERVED_DATASET",
+  "sourceKeyScope": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "question": "For an exact Retail 2026 Dragon Isles Prospecting cast, which Illimited Diamond rank(s) occur, and how often, conditional on input rank and recorded effective skill?",
+  "targetPriority": [
+    {
+      "inputItemID": 188658,
+      "inputRank": 2,
+      "outputItemIDs": [
+        192869,
+        192870,
+        192871
+      ],
+      "reason": "Two assigned rank keys and existing 2023 historical rank-separated aggregate"
+    },
+    {
+      "inputItemID": 189143,
+      "inputRank": 1,
+      "outputItemIDs": [
+        192869,
+        192870,
+        192871
+      ],
+      "reason": "No comparable rank1 historical completed-cast study found"
+    },
+    {
+      "inputItemID": 190311,
+      "inputRank": 3,
+      "outputItemIDs": [
+        192869,
+        192870,
+        192871
+      ],
+      "reason": "R3 ore rank1 output eligibility unresolved"
+    }
+  ],
+  "recipeSpellFamily": 374627,
+  "nominalOrePerOperation": 5,
+  "perCastRequiredFields": [
+    "sessionID",
+    "castSequence",
+    "clientBuild",
+    "observedAtUTC",
+    "gameMode",
+    "inputItemID",
+    "inputQualityRank",
+    "recipeSpellID",
+    "operationVariant",
+    "nominalReagentVector",
+    "actualReagentUnitsRemoved",
+    "resourcefulnessRefundItemIDAndQuantity",
+    "effectiveProfessionSkill",
+    "baseProfessionSkill",
+    "specializationPoints",
+    "professionGearBonuses",
+    "inspirationOrApplicableStatsWithUnits",
+    "inputInventoryBeforeAfter",
+    "allOutputItemIDsAndQuantitiesIncludingZeros",
+    "outputInventoryBeforeAfter",
+    "eventCorrelationConfidence",
+    "collectorVersion"
+  ],
+  "aggregationRules": [
+    "Group by exact input item/rank, recipe, patch, effective skill/spec/gear and stat context; do not pool contexts without justified transform",
+    "Completed casts = count of successfully resolved cast events, not gross ore divided by five",
+    "For each output ID, P=number of completed casts with >=1 / all completed casts including zero; E=total units / all completed casts including zeros",
+    "Positive yield min/max from successful casts only, not aggregate 10k-ore batches",
+    "Track actual input cost and resourcefulness refunds separately; do not count refunds as produced gems",
+    "Capture co-output vectors; never force marginal rank probabilities to sum to one without exclusive exhaustive proof",
+    "No manual zero-fill for missing/failed inventory events; flag and exclude unresolved casts with audit counts",
+    "Patch or skill changes create separate cohorts and require an explicit linkage model"
+  ],
+  "pilot": {
+    "targetCompletedCastsPerRank": 1000,
+    "expansionRule": "Increase to 10000 or more per rank if hit counts and context consistency permit; report binomial intervals from actual hit casts, not historical TSM P",
+    "expectedPrecisionExample": "At hypothetical P=0.0142, n=10000 yields approximate 95% normal half-width 0.00232 absolute; planning illustration only, not a measured Retail rate"
+  },
+  "requiredReview": [
+    "Independently verify 5-ore operation and all reagent vector variants",
+    "Confirm per-cast output identity by itemID and rank",
+    "Validate cast correlation, zero-inclusive logs, refund accounting and 2026 build",
+    "Require independent author/session holdout before baseline promotion"
+  ],
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "confidence": 0,
+  "notARequestForUserAction": true
+}
