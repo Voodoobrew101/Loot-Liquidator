@@ -3,6 +3,9 @@
 // A research preview layer. Nothing in this module promotes evidence, normalizes
 // a character, reads tooltip data, or authorizes economic/runtime decisions.
 const FIELDS = ["dropChance", "yieldMin", "yieldMax", "expectedQuantity"];
+const {createHash} = require("node:crypto");
+const SERIALIZED_ATTESTATION_VERSION = "working-estimate-source-context-v1.0.0";
+const sha256 = text => createHash("sha256").update(text, "utf8").digest("hex");
 const POLICY_VERSION = "working-estimate-policy-v1";
 const EPS = 1e-9;
 // Same-process source-identity lease. Deliberately non-serialized: a reloaded
@@ -380,6 +383,30 @@ function applyWorkingEstimates(records, options = {}) {
 
 function validateWorkingEstimates(records, options = {}) {
   const errors = [], allocations = new Map(), byRecordID = new Map();
+  const seal = options.serializedAttestation || null, sealedEntries = new Map();
+  if (seal) {
+    if (seal.contractVersion !== SERIALIZED_ATTESTATION_VERSION ||
+        seal.hashAlgorithm !== "sha256" || seal.recordCount !== records.length ||
+        !Array.isArray(seal.entries) || seal.entries.length !== records.length)
+      errors.push("SERIALIZED_ATTESTATION_CONTRACT_OR_COUNT_MISMATCH");
+    if (typeof options.expectedAttestationSHA256 !== "string" ||
+        !/^[0-9a-f]{64}$/.test(options.expectedAttestationSHA256) ||
+        sha256(stableDonorContext(seal)) !== options.expectedAttestationSHA256)
+      errors.push("SERIALIZED_ATTESTATION_UNPINNED_OR_TAMPERED");
+    if (Array.isArray(seal.entries)) {
+      let lastID = null;
+      for (const entry of seal.entries) {
+        if (!entry || typeof entry.recordID !== "string" ||
+            (lastID !== null && entry.recordID <= lastID) ||
+            !/^[0-9a-f]{64}$/.test(entry.sourceSHA256 || "") ||
+            !/^[0-9a-f]{64}$/.test(entry.workingSHA256 || ""))
+          errors.push("SERIALIZED_ATTESTATION_ENTRY_INVALID_OR_UNSORTED");
+        if (entry && typeof entry.recordID === "string")
+          sealedEntries.set(entry.recordID, entry);
+        lastID = entry?.recordID ?? lastID;
+      }
+    }
+  }
   const poolMean = options.unresolvedRankPoolExpectedQuantity ?? 1;
   if (!finite(poolMean) || poolMean <= 0 || poolMean > Number.MAX_SAFE_INTEGER)
     errors.push("INVALID_SYNTHETIC_RANK_POOL_POLICY");
@@ -393,12 +420,20 @@ function validateWorkingEstimates(records, options = {}) {
   for (const r of records) {
     const w = r.workingEstimate, id = r.recordID;
     if (!w) { errors.push("MISSING_WORKING_ESTIMATE:" + id); continue; }
-    if (!sourceIdentityAtBuild.has(w) ||
-        sourceIdentityAtBuild.get(w) !== sourceIdentity(r))
-      errors.push("WORKING_SOURCE_IDENTITY_STALE_OR_UNVERIFIABLE:" + id);
-    if (!workingIdentityAtBuild.has(w) ||
-        workingIdentityAtBuild.get(w) !== stableDonorContext(w))
-      errors.push("WORKING_PREVIEW_ATTESTATION_STALE_OR_TAMPERED:" + id);
+    if (seal) {
+      const entry = sealedEntries.get(id);
+      if (!entry || entry.sourceSHA256 !== sha256(sourceIdentity(r)))
+        errors.push("SERIALIZED_SOURCE_IDENTITY_STALE_OR_TAMPERED:" + id);
+      if (!entry || entry.workingSHA256 !== sha256(stableDonorContext(w)))
+        errors.push("SERIALIZED_WORKING_PREVIEW_STALE_OR_TAMPERED:" + id);
+    } else {
+      if (!sourceIdentityAtBuild.has(w) ||
+          sourceIdentityAtBuild.get(w) !== sourceIdentity(r))
+        errors.push("WORKING_SOURCE_IDENTITY_STALE_OR_UNVERIFIABLE:" + id);
+      if (!workingIdentityAtBuild.has(w) ||
+          workingIdentityAtBuild.get(w) !== stableDonorContext(w))
+        errors.push("WORKING_PREVIEW_ATTESTATION_STALE_OR_TAMPERED:" + id);
+    }
     if (!w.targetContext ||
         stableDonorContext(w.targetContext) !== stableDonorContext(workingTargetContext(r)))
       errors.push("WORKING_TARGET_CONTEXT_STALE:" + id);
@@ -523,4 +558,28 @@ function validateWorkingEstimates(records, options = {}) {
   return errors;
 }
 
-module.exports = { applyWorkingEstimates, validateWorkingEstimates, POLICY_VERSION, FIELDS };
+// Detached, versioned attestation for JSON-serialized research candidates.
+// The expected SHA-256 must be pinned outside the artifact (e.g. coordinator
+// acceptance record). A self-reported digest is not an independent trust root.
+function createWorkingAttestation(records) {
+  if (!Array.isArray(records)) throw Error("Expected records array");
+  const entries = records.map(r => {
+    if (!r.workingEstimate || typeof r.recordID !== "string")
+      throw Error("Cannot attest incomplete working record");
+    return {recordID:r.recordID,sourceSHA256:sha256(sourceIdentity(r)),
+      workingSHA256:sha256(stableDonorContext(r.workingEstimate))};
+  }).sort((a,b) => a.recordID.localeCompare(b.recordID));
+  for (let i=1;i<entries.length;i++)
+    if (entries[i-1].recordID === entries[i].recordID)
+      throw Error("Duplicate attestation record ID: " + entries[i].recordID);
+  const attestation = {contractVersion:SERIALIZED_ATTESTATION_VERSION,
+    hashAlgorithm:"sha256",recordCount:entries.length,entries};
+  return {attestation,sha256:sha256(stableDonorContext(attestation))};
+}
+function validateSerializedWorkingEstimates(records, attestation, expectedAttestationSHA256, options={}) {
+  return validateWorkingEstimates(records, {...options,serializedAttestation:attestation,
+    expectedAttestationSHA256});
+}
+module.exports = { applyWorkingEstimates, validateWorkingEstimates,
+  createWorkingAttestation, validateSerializedWorkingEstimates,
+  SERIALIZED_ATTESTATION_VERSION, POLICY_VERSION, FIELDS };
