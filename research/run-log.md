@@ -242,3 +242,7 @@ Accepted 150 exact disjoint first-pass keys, with 50 candidate output records an
 ## 2026-10-28 — Master batch015
 
 Compiled itemdb v0.5.0 994 mappings, 801 complete, 435 unknown; 150 worker keys and 126 source lines reviewed; queue18 150 disjoint. Production unchanged.
+
+## 2026-10-28 — Master batch016
+
+Rebuilt existing research candidate in V8 from live branch source ledgers: exact match to committed itemdb.lua v0.5.0 (994 mappings, 801 complete, 435 unknown), 1,202 source lines checked. Full compiler regression and source-memory unit tests passed in V8 with read-only fixtures and Node/URL shims; independent Node CLI, Lua interpreter and WoW client tests not executed. Audited 150 q18 worker keys and 140 GameData source lines. Accepted source-only Almar and two historical TWW author cohorts, corrected Primer Serene R2 source attribution 198419→198413, 0 new current Retail numeric promotions. Source-memory incremental replay 146 sources/166 reviews/51 QA; repaired two URL duplicates, full Node rebuild pending. Queue19 assigns 150 disjoint material/Crushing keys. Two refining gap rows corrected to staged provisional. [Full verdict](coordination/reviews/2026-10-28-master-worker-batch016-verdict.md). Production main and schedules unchanged.
