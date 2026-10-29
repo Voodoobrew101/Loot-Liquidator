@@ -318,6 +318,10 @@
               }
             }
           }
+        },
+        "tooltipOnly": {
+          "$ref": "#/$defs/tooltipOnly",
+          "description": "Optional source-anchored display-only fallback; never used for gold, P/E, skill or economic confidence."
         }
       },
       "allOf": [
@@ -650,6 +654,122 @@
         "blockers": {
           "type": "array",
           "maxItems": 0
+        }
+      }
+    },
+    "tooltipOnly": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dropChance",
+        "yieldMin",
+        "yieldMax",
+        "confidence",
+        "source",
+        "status",
+        "uncertainty",
+        "economicUse",
+        "displayOnly",
+        "profileIsMeasured",
+        "denominatorVerifiedCompletedCasts"
+      ],
+      "properties": {
+        "dropChance": {
+          "type": "null",
+          "description": "No P(>=1) can be compiled from crowdsourced event counts without verified zero-inclusive completed casts."
+        },
+        "yieldMin": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "yieldMax": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "url",
+            "sourceType",
+            "extractedOn",
+            "profileLabel",
+            "sourceObservedMax",
+            "rawEventRatio",
+            "rawCount",
+            "rawOutOf",
+            "denominatorUnit",
+            "claimID",
+            "positiveYieldUnit"
+          ],
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "sourceType": {
+              "type": "string"
+            },
+            "extractedOn": {
+              "type": "string"
+            },
+            "profileLabel": {
+              "type": "string"
+            },
+            "sourceObservedMax": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "rawEventRatio": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Crowdsourced event ratio, explicitly NOT P per completed operation"
+            },
+            "rawCount": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "rawOutOf": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "denominatorUnit": {
+              "type": "string"
+            },
+            "claimID": {
+              "type": "string"
+            },
+            "positiveYieldUnit": {
+              "type": "string"
+            }
+          }
+        },
+        "status": {
+          "const": "PROVISIONAL_TOOLTIP_ONLY_NOT_ECONOMIC"
+        },
+        "uncertainty": {
+          "type": "string"
+        },
+        "economicUse": {
+          "const": "PROHIBITED"
+        },
+        "displayOnly": {
+          "const": true
+        },
+        "profileIsMeasured": {
+          "const": false
+        },
+        "denominatorVerifiedCompletedCasts": {
+          "const": false
         }
       }
     }
