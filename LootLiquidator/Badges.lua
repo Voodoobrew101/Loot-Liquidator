@@ -588,11 +588,25 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             Exchange="Exchange",Combine="Combine",Split="Split"}
         local methodOrder={"Disenchant","Mill","Prospect","Smelt","Craft",
             "Recycle","Research","Combine","Split","Exchange"}
+        local function ChanceText(chance)
+            if type(chance)~='number' then return '?' end
+            if chance==0 then return '0%' end
+            if chance==1 then return '100%' end
+            if chance<.001 then return '<0.1%' end
+            if chance>.999 then return '>99.9%' end
+            return ('%.1f'):format(chance*100):gsub('%.0$','')..'%'
+        end
+        local function UnitsText(units)
+            if type(units)~='number' then return '?' end
+            if units>0 and units<.001 then return '<0.001' end
+            return ('%.3f'):format(units)
+        end
         local function ShowMaterials(option,model)
             if detail<3 or LA.db.showMaterialBreakdown==false then return end
             local list=model and model.materials
             if type(list)=="table" and #list>0 then
                 local batch=math.max(1,tonumber(model.inputCount) or tonumber(option.inputCount) or 1)
+                tooltip:AddLine(("  Per %d input(s); range when a material drops; EV = average units including zeros"):format(batch),.70,.75,.82,true)
                 local limit=LA.db.showResearchDetails==true and #list or math.min(#list,12)
                 for i=1,limit do
                     local m=list[i]
@@ -600,18 +614,18 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if type(m.chance)=="number" then
                         -- Occurrence probability is separate from unconditional
                         -- expected units. Approximate values are marked ~.
-                        local prefix=(m.provisional or (type(m.probabilityBasis)=="string"
+                        local prefix=(m.chanceProvisional or m.provisional or (type(m.probabilityBasis)=="string"
                             and (m.probabilityBasis:find("estimated",1,true) or
                                  m.probabilityBasis:find("proxy",1,true)))) and "~" or ""
-                        left=left..prefix..("%.1f"):format(m.chance*100):gsub("%.0$","").."% "
+                        left=left..prefix..ChanceText(m.chance).." "
                     else left=left.."? " end
                     left=left..MaterialDisplay(m.id)
                     if m.minQuantity and m.maxQuantity then
                         left=left..(m.minQuantity==m.maxQuantity
                             and (" [x%d]"):format(m.minQuantity)
                             or (" [x%d-%d]"):format(m.minQuantity,m.maxQuantity))
-                    end
-                    left=left..(type(m.expectedQuantity)=="number" and ("  EV %.3f"):format(m.expectedQuantity) or "  EV ?")
+                    else left=left.." [range ?]" end
+                    left=left.."  EV "..UnitsText(m.expectedQuantity)
                     local net=m.netExpectedValue
                     local amount=net~=nil and LA:Money(net/batch) or "Insufficient Data"
                     two(left,amount,option.letter or "D")
@@ -619,10 +633,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         for _,source in ipairs(LA.SourceOrder or {}) do
                             local estimate=m.sourceEstimates and m.sourceEstimates[source]
                             if estimate then
-                                local p=type(estimate.dropChance)=='number' and ('%.1f%%'):format(estimate.dropChance*100) or '?'
-                                tooltip:AddLine(('    %s: P %s; range %s–%s; E %s'):format(source,p,
+                                local p=ChanceText(estimate.dropChance)
+                                tooltip:AddLine(('    %s (per %d inputs): P %s; range %s–%s; E %s'):format(source,estimate.inputCount or batch,p,
                                     tostring(estimate.minQuantity or '?'),tostring(estimate.maxQuantity or '?'),
-                                    type(estimate.expectedQuantity)=='number' and ('%.3f'):format(estimate.expectedQuantity) or '?'),.65,.68,.76,true)
+                                    UnitsText(estimate.expectedQuantity)),.65,.68,.76,true)
                                 if estimate.sourceConflict then tooltip:AddLine('    Source fields disagree; original values preserved',1,.68,.3,true) end
                                 if estimate.appliedRule then tooltip:AddLine('    Profession rule: '..estimate.appliedRule,.65,.68,.76,true) end
                             end
@@ -682,7 +696,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 local model=option.yieldModel
                 local hasMaterials=(model and model.materials and #model.materials>0)
                 if option.value or hasMaterials
-                    or (option.category=="destroy" and
+                    or ((option.category=="destroy" or option.category=="research-operation") and
                         (methodName=="Mill" or methodName=="Prospect"))
                     or (methodName=="Disenchant"
                     and decision.disenchantEligible)

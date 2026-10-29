@@ -1,6 +1,6 @@
 # Loot Liquidator
 
-This is the consolidated **0.10.0-alpha7 test candidate**, not an approved production release. It retains PR #10's mechanics integration. In-game QA is still required; back up LootLiquidatorDB before installation.
+This is the consolidated **0.10.0-alpha8 test candidate**, not an approved production release. It retains PR #10's mechanics integration. In-game QA is still required; back up LootLiquidatorDB before installation.
 
 Install only the `LootLiquidator/` folder into the Retail client's `Interface/AddOns/`. Do not copy the repository root or developer files into the addon folder. CI produces a manifest-only test ZIP.
 
@@ -9,6 +9,8 @@ The build-time research snapshot is `database/research/itemdb.lua` (schema 0.2.0
 The addon loads the generated `LootLiquidator/ItemDBRuntime.lua`, plus immutable frozen TSM and optional legacy references. Source weights are preferences, not scientific confidence. Unknown or assumed working values cannot supply live economic estimates. The reviewed registry currently supplies zero real numeric mechanics; no skill/bonus scaling is invented.
 
 Executable profession and personal patch rules require verified numeric status, explicit execution approval, independent review, distinct source claims, evidence confidence of at least 90, and existing identity/build/context checks. Partial output adjustments cannot qualify as a complete character valuation.
+
+Processing metrics are per the displayed recipe operation: probability means at least one of that material, min/max are positive quantities when it drops, and EV is average material units including zero-result casts. Gold comparisons divide the expected total by the operation's input count and use EV once. Alpha8 selects explicit ItemDB recipes/batches (including 20-herb mass milling), labels those units, preserves unknown ranges and marks provisional probabilities. Filled working estimates remain research previews; selecting ItemDB alone does not make missing evidence known or enable disabled legacy/TSM sources.
 
 Commands: `/ll settings`, `/ll status`; recording: `/ll craftstats`, `/ll craftstudy LABEL`, `/ll craftexport`, `/ll craftbaseline`. See docs/craft-recording.md before capturing studies.
 

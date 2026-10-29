@@ -369,7 +369,7 @@ function LL:GetOutputPrice(itemID)
     end
 end
 function LL:ConversionOptions(f)
-    local out={}
+    local out,knownOperations={},{}
     local function add(c,kind)
         if not c or not c.method or not Allowed(self.db,c.method) then return end
         if self.IsIgnoredAction and self:IsIgnoredAction(f.id,c.method) then return end
@@ -387,6 +387,9 @@ function LL:ConversionOptions(f)
             if c.method=="Mill" then processingRecipe=({[9]=382981,[10]=444181,[11]=1269575})[f.expansionID] or 51005
             elseif c.method=="Prospect" then processingRecipe=({[9]=374627,[10]=434018,[11]=1231127})[f.expansionID] or 31252 end
         end
+        local identity=table.concat({c.method,tostring(processingRecipe),tostring(inputCount)},':')
+        if kind=='research-operation' and knownOperations[identity] then return true end
+        knownOperations[identity]=true
         local insufficientCount=type(f.count)=="number" and f.count<inputCount
         if insufficientCount then
             available=false
@@ -472,12 +475,13 @@ function LL:ConversionOptions(f)
             dataMode=dataMode,
             note=modelIssue or (dataMode==2 and (research and research.note or
                 "Personal results only: no matching observations yet")) or c.requirement,
-            outputID=c.outputID,outputCount=c.outputCount,inputCount=c.inputCount,
+            outputID=c.outputID,outputCount=c.outputCount,inputCount=inputCount,
             recipeID=processingRecipe,expansion=c.expansion,
             dataSource=c.source,category=kind,
             vendorSupplyCost=suppliesKnown and suppliesCost or nil,
             yieldModel=yieldModel}
         out[#out+1]=v
+        return true
     end
     for _,c in ipairs((self.Conversions and self.Conversions[f.id]) or {}) do
         -- Explicit verified conversion recipes / vendor exchanges.
@@ -500,6 +504,10 @@ function LL:ConversionOptions(f)
             if infoID==7 then add(c,"discovered") end
         end
     end
+    local researchMethods={}
+    for _,operation in ipairs(self.ResearchProcessingOperations and self:ResearchProcessingOperations(f) or {}) do
+        if add(operation,'research-operation') then researchMethods[operation.method]=true end
+    end
     local modern=self.ResearchProcessingInput and self:ResearchProcessingInput(f.id)
     local destroy=(modern and modern.method) or
         (self.DB2Processable and self.DB2Processable[f.id]) or
@@ -507,15 +515,15 @@ function LL:ConversionOptions(f)
          self.db.processingLearning.inputs[f.id])
     local dataRecord=self.ResearchProcessingOutputs and self.ResearchProcessingOutputs[f.id]
     if not destroy and dataRecord then destroy=dataRecord.method end
-    if destroy and Allowed(self.db,destroy) and not (self.IsIgnoredAction and self:IsIgnoredAction(f.id,destroy)) then add({method=destroy,profession=self:ProfessionForMethod(destroy),
+    if destroy and destroy~='Disenchant' and not researchMethods[destroy] and Allowed(self.db,destroy) and not (self.IsIgnoredAction and self:IsIgnoredAction(f.id,destroy)) then add({method=destroy,profession=self:ProfessionForMethod(destroy),
         inputCount=(modern and modern.method==destroy and modern.batch)
             or (dataRecord and dataRecord.batch)
             or (destroy=="Mill" and (f.expansionID==10 or f.expansionID==11) and 10 or 5),
-        requiredSpell=modern and ({Mill={[10]=444181,[11]=1269575},
-            Prospect={[10]=434018,[11]=1231127}})[destroy][modern.expansion],
+        requiredSpell=modern and (({Mill={[10]=444181,[11]=1269575},
+            Prospect={[10]=434018,[11]=1231127}})[destroy] or {})[modern.expansion],
         confidence=(dataRecord and dataRecord.evidence) or "source-candidate",source=modern and "Research input candidate (client metadata)"
             or "Blizzard processing flag (possible input; yields unknown)"},"destroy") end
-    if dataRecord and dataRecord.method~=destroy and Allowed(self.db,dataRecord.method)
+    if dataRecord and dataRecord.method~='Disenchant' and not researchMethods[dataRecord.method] and dataRecord.method~=destroy and Allowed(self.db,dataRecord.method)
         and not (self.IsIgnoredAction and self:IsIgnoredAction(f.id,dataRecord.method)) then
         add({method=dataRecord.method,profession=self:ProfessionForMethod(dataRecord.method),
              inputCount=dataRecord.batch,confidence=dataRecord.evidence,

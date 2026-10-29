@@ -193,6 +193,31 @@ end
 function LL:ResearchProcessingInput(id)
     return self.ItemDB and self.ItemDB.inputs and self.ItemDB.inputs[id]
 end
+-- Operation identities are metadata, independent of source weights. A single
+-- herb/ore can have several recipes with different batch sizes; do not replace
+-- a recorded mass-processing recipe with a generic five-input spell.
+function LL:ResearchProcessingOperations(f)
+    local operations,seen={},{}
+    for _,method in ipairs({'Mill','Prospect','Smelt'}) do
+        for _,r in ipairs(self._evidenceIndex and self._evidenceIndex[method..':'..tostring(f.id)] or {}) do
+            if r.sourceKey=='itemdb' and r.recipeID and (not r.expansionID or r.expansionID==f.expansionID)
+                and (not r.inputQualityRank or r.inputQualityRank==f.reagentQuality) then
+                local key=method..':'..r.recipeID..':'..r.inputCount
+                if not seen[key] then
+                    seen[key]=true
+                    operations[#operations+1]={method=method,recipeID=r.recipeID,requiredSpell=r.recipeID,
+                        inputCount=r.inputCount,profession=r.profession,source=r.source}
+                end
+            end
+        end
+    end
+    table.sort(operations,function(a,b)
+        if a.method~=b.method then return a.method<b.method end
+        if a.recipeID~=b.recipeID then return a.recipeID<b.recipeID end
+        return a.inputCount<b.inputCount
+    end)
+    return operations
+end
 -- A confidence score is an ordinal evidence-quality score, not a posterior.
 -- Sample saturation and provenance class are independent conservative discounts.
 function LL:EvidenceReliability(field,record)
@@ -384,7 +409,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                     fields={},contributions={},sourceEstimates={}};bins[id]=b
                 b.sourceEstimates[r.sourceKey]={expectedQuantity=m.expectedQuantity,dropChance=m.chance,
                     minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,sourceConflict=original.sourceConflict,
-                    originalTSM=original.originalTSM,appliedRule=m.appliedProfessionRule or m.appliedExpectationRule}
+                    inputCount=r.inputCount,originalTSM=original.originalTSM,
+                    appliedRule=m.appliedProfessionRule or m.appliedExpectationRule}
                 for field,modelField in pairs({expectedQuantity='expectedQuantity',dropChance='chance'}) do
                     local key=r.studyID..':'..id..':'..field
                     local metadata=copy(original[field]);metadata.value=m[modelField]
@@ -404,6 +430,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                             b.contributions[r.sourceKey]=(b.contributions[r.sourceKey] or 0)+weight
                             result.provisional=result.provisional or r.provisional==true
                             if mode==2 and r.sourceKey=='personal' and r.provisional then result.insufficientSamples=true end
+                        elseif field=='dropChance' then
+                            b.chanceProvisional=b.chanceProvisional or metadata.status=='provisional'
+                                or metadata.status=='modeled' or metadata.status=='historical'
                         end
                     end
                 end

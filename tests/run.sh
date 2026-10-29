@@ -24,6 +24,7 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_modernization.lua
 "$lua_bin" tests/test_settings.lua
 "$lua_bin" tests/test_client_regressions.lua
+"$lua_bin" tests/test_itemdb_metrics.lua
 "$lua_bin" tests/test_token_catalog.lua "$compiled_dir"
 python3 tests/test_token_import.py "$compiled_dir"
 
