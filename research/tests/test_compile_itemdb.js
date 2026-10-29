@@ -102,7 +102,7 @@ assert.equal(powder.tooltipOnly.denominatorVerifiedCompletedCasts,false);
 assert.equal(powder.expectedQuantity.value,null);
 assert.equal(a.records.filter(r=>[210796,210797].includes(r.inputItemID)&&[222616,222617].includes(r.outputItemID)).length,0);
 assert.ok(a.lua.includes("tooltipOnly=tooltip(x[38])"));
-assert.ok(a.lua.includes('economicUse=\\"PROHIBITED\\"'));
+assert.ok(a.lua.includes('economicUse="PROHIBITED"'));
 const {validateTooltipIsolation}=require("../tools/itemdb_tooltip_channel.js");
 assert.deepEqual(validateTooltipIsolation(a.records),[]);
 const malicious=structuredClone(powder);malicious.tooltipOnly.dropChance=0.56;
