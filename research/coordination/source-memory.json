@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "researchOnly": true,
-  "sourcesCount": 148,
+  "sourcesCount": 146,
   "reviewEvents": 166,
   "qaEvents": 51,
   "approvedQaEvents": 50,
@@ -13,7 +13,8 @@
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl liqourice5-2022-beta-milling-original-reddit-deleted",
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl df-lavingrunatic-crumbledstone-60prospects",
     "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: batch012; original DF 5 source-cohort reconciliation JSONL rows are not canonical observation.schema.json records",
-    "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: q17/q18 source reviews and three source-only observations; full original-directory replay still pending"
+    "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: q17/q18 source reviews and three source-only observations; full original-directory replay still pending",
+    "URL_CANONICALIZATION_REPAIR: merged 2 duplicate slash/URL variants after incremental V8 replay; global review and QA event counts unchanged."
   ],
   "strategies": {
     "ORIGINAL_DATASET": {
@@ -193,7 +194,7 @@
       "revisitReasons": []
     },
     {
-      "canonicalUrl": "https://almarsguides.com/wow/farming/wotlk/otherlocations/prospecting/",
+      "canonicalUrl": "https://almarsguides.com/wow/farming/wotlk/otherlocations/prospecting",
       "urls": [
         "https://almarsguides.com/wow/farming/wotlk/otherlocations/Prospecting/"
       ],
@@ -472,12 +473,18 @@
       "urls": [
         "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
       ],
-      "observationIDs": [],
+      "observationIDs": [
+        "ww-b009-kaliope-2008-ragveil",
+        "ww-b009-kaliope-2008-ancient-lichen",
+        "ww-b009-kaliope-2008-netherbloom",
+        "ww-b009-kaliope-2008-nightmare-vine"
+      ],
       "studyIDs": [
         "kaliope-2008-five-herb-milling"
       ],
       "datasetIDs": [
-        "kaliope-2008-original-table"
+        "kaliope-2008-original-table",
+        "kaliope-2008-five-herb-milling"
       ],
       "reviewedRecordKeys": [
         "profile:tsm:mill:765",
@@ -519,45 +526,7 @@
         "profile:tsm:mill:36901",
         "profile:tsm:mill:36903",
         "profile:tsm:mill:36904",
-        "profile:tsm:mill:36905"
-      ],
-      "status": "PARTIAL",
-      "missingFields": [
-        "actual operation counts",
-        "patch/build",
-        "per-cast hit/zero",
-        "skill/gear"
-      ],
-      "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
-      "originalStudyUrls": [
-        "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
-      ],
-      "changeTriggers": [
-        "assigned five Outland TSM profiles"
-      ],
-      "revisitReasons": [
-        "Reuse original reported herb/pigment totals; compare only per five-herb equivalents"
-      ]
-    },
-    {
-      "canonicalUrl": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/",
-      "urls": [
-        "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
-      ],
-      "observationIDs": [
-        "ww-b009-kaliope-2008-ragveil",
-        "ww-b009-kaliope-2008-ancient-lichen",
-        "ww-b009-kaliope-2008-netherbloom",
-        "ww-b009-kaliope-2008-nightmare-vine"
-      ],
-      "studyIDs": [
-        "kaliope-2008-five-herb-milling"
-      ],
-      "datasetIDs": [
-        "kaliope-2008-five-herb-milling"
-      ],
-      "reviewedRecordKeys": [
+        "profile:tsm:mill:36905",
         "22787:Mill:39342",
         "22787:Mill:43108",
         "22790:Mill:39342",
@@ -580,22 +549,26 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual cast logs",
+        "actual operation counts",
         "patch/build",
-        "profession stats",
-        "zero-inclusive output histograms"
+        "per-cast hit/zero",
+        "skill/gear"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
       ],
       "changeTriggers": [
+        "assigned five Outland TSM profiles",
         "First worker review of original source for rev11 exact assigned keys"
       ],
       "revisitReasons": [
+        "Reuse original reported herb/pigment totals; compare only per five-herb equivalents",
         "Unresolved historical source denominators and output means"
-      ]
+      ],
+      "unverifiedPossibleMappings": [],
+      "attributionCorrections": []
     },
     {
       "canonicalUrl": "https://ptr.wowdb.com/spells/1307462-refine-crystalline-glass-a-professions-chaticon",
@@ -1398,7 +1371,7 @@
       "revisitReasons": []
     },
     {
-      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/109bytz/prospecting_useless_hold_my_beer_said_the_draenei/",
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/109bytz/prospecting_useless_hold_my_beer_said_the_draenei",
       "urls": [
         "https://www.reddit.com/r/woweconomy/comments/109bytz/prospecting_useless_hold_my_beer_said_the_draenei/"
       ],
@@ -1839,35 +1812,15 @@
         "midnight-20261028-thorium-200craft-apr8-community"
       ],
       "studyIDs": [
-        "reddit-woweconomy-1sfds1u-thorium-200craft"
-      ],
-      "datasetIDs": [],
-      "reviewedRecordKeys": [
-        "237366:Prospect:242608"
-      ],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
-      "originalStudyUrls": [],
-      "changeTriggers": [],
-      "revisitReasons": []
-    },
-    {
-      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
-      "urls": [
-        "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/"
-      ],
-      "observationIDs": [],
-      "studyIDs": [
-        "headtripvee-prehotfix-21000ore-six-ranks",
-        "reddit-woweconomy-1sfds1u-thorium-200craft"
+        "reddit-woweconomy-1sfds1u-thorium-200craft",
+        "headtripvee-prehotfix-21000ore-six-ranks"
       ],
       "datasetIDs": [
         "headtripvee-prehotfix-21000ore-six-ranks",
         "reddit-woweconomy-1sfds1u-thorium-200craft"
       ],
       "reviewedRecordKeys": [
+        "237366:Prospect:242608",
         "midnight:237366:242608:L799"
       ],
       "status": "PARTIAL",
@@ -1890,7 +1843,9 @@
       "revisitReasons": [
         "Separate numeric mechanics track; preserve six cohorts as one study, source-only note",
         "Approximate P(hit)=.20 over 200 Thorium crafts, not E; no integer hit count or skill details"
-      ]
+      ],
+      "unverifiedPossibleMappings": [],
+      "attributionCorrections": []
     },
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/51ovfk/possible_prospecting_nerf",
@@ -6395,7 +6350,8 @@
         "sha": "55e934bf1228d41e8774df85dad8f882484b5688"
       }
     ],
-    "appliedOn": "2026-10-28"
+    "appliedOn": "2026-10-28",
+    "urlCanonicalization": "NODE_EQUIVALENT_URL_SHIM_REPAIRED_DUPLICATES"
   },
   "appliedAttributionCorrectionIDs": [
     "primer-serene-r2-20261028-b016"
