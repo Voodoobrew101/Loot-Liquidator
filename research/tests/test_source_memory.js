@@ -29,4 +29,14 @@ assert.equal(corrected.sources[0].attributionCorrections.length,1,"idempotent re
 assert.throws(()=>applyCorrections(build([primer],[],[]),{corrections:[{...correction.corrections[0],observationID:"wrong"}]}),/not found/);
 const descriptive=build([{observationID:"almar",source:{url:"https://almarsguides.com/wow/farming/wotlk/otherlocations/Prospecting/",originalDocumentRef:"page section My Prospecting Titanium Video"}}],[],[]);
 assert.ok(descriptive.sources[0].canonicalUrl.startsWith("https://almarsguides.com/"),"descriptive originalDocumentRef must not become a fake URL");
+const trueNullStone={observationID:"genyachris-nullstone",source:{url:"https://www.wowhead.com/item=210939/null-stone"}};
+const wrongLineageReview={workerID:"midnight",sourceUrl:"https://www.method.gg/guides/midnight-inscription-profession-guide",status:"PARTIAL",reviewedAt:"2026-10-28",observationIDs:["genyachris-nullstone"]};
+const lineageManifest={lineageCorrections:[{correctionID:"midnight-q23-wrong-observation-lineage",status:"MASTER_QA_APPROVED",sourceUrl:wrongLineageReview.sourceUrl,observationID:"genyachris-nullstone",reason:"Unrelated source review copied Null Stone observation ID"}]};
+let lineageFixed=applyCorrections(build([trueNullStone],[wrongLineageReview],[]),lineageManifest);
+assert.deepEqual(lineageFixed.sources.find(x=>x.canonicalUrl===normalize(wrongLineageReview.sourceUrl)).observationIDs,[]);
+assert.deepEqual(lineageFixed.sources.find(x=>x.canonicalUrl===normalize(trueNullStone.source.url)).observationIDs,["genyachris-nullstone"]);
+assert.equal(lineageFixed.appliedLineageCorrectionIDs.length,1);
+lineageFixed=applyCorrections(lineageFixed,lineageManifest);
+assert.equal(lineageFixed.sources.find(x=>x.canonicalUrl===normalize(wrongLineageReview.sourceUrl)).lineageCorrections.length,1,"idempotent lineage correction");
+assert.throws(()=>applyCorrections(build([trueNullStone],[wrongLineageReview],[]),{lineageCorrections:[{...lineageManifest.lineageCorrections[0],observationID:"not-present"}]}),/Lineage observation not found/);
 console.log("source memory tests passed: URL normalization, archive import, partial/full, feedback deduplication and invalid event guard");
