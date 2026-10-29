@@ -1,6 +1,6 @@
 # Loot Liquidator
 
-This is the consolidated **0.10.0-alpha5 test candidate**, not an approved production release. It retains PR #10's mechanics integration. In-game QA is still required; back up LootLiquidatorDB before installation.
+This is the consolidated **0.10.0-alpha6 test candidate**, not an approved production release. It retains PR #10's mechanics integration. In-game QA is still required; back up LootLiquidatorDB before installation.
 
 Install only the `LootLiquidator/` folder into the Retail client's `Interface/AddOns/`. Do not copy the repository root or developer files into the addon folder. CI produces a manifest-only test ZIP.
 
@@ -31,3 +31,5 @@ python3 tools/package_addon.py dist/LootLiquidator-test.zip
 Research continues on its own branch. Its accepted estimator repairs and the reviewed registry export are reconciled into a pinned snapshot before the addon is rebuilt. Research data and test tools remain outside the distributed package.
 
 See RELEASE-STATUS.md for the integration sources and remaining client checks.
+
+ATT retirement is staged in alpha6: reviewed standalone token relationships compile into ItemDB, legacy cached relationships work without ATT installed, and manual ATT exports now retain reward/source metadata and coverage limitations. Run `/ll attcache`, `/ll tokenmigration`, then `/ll attexport PAGE`; direct observations remain `/ll tokenexport PAGE`. See [the migration workflow](docs/att-migration.md). ATT remains optional until reviewed coverage and real-client equivalence are complete.

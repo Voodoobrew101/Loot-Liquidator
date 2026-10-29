@@ -4385,4 +4385,5 @@ LL.ItemDB={["buildReport"]={["adapted"]=106,["previewEstimatesPreserved"]=1018,[
 ["professionRules"]={},
 ["provenance"]="main 051f582 / v0.9.70; schema-validated provisional migration",["researchManifest"]={["compilerVersion"]="0.8.0",["gameDataSha"]="1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",["ledgerSHAs"]={["curatedAdditions"]="af10e392b7e4fc26db131bbecfc073fb9cb92bfb",["midnightAudit"]="8e1e4dd1d3750b968dd2a5c134039fd89c97ccfc",["midnightCandidate"]="35ac6119dc6d47bf6f5279852b317d9d7da5d78e",["primary"]="3e2bb784dc832d90584eebd8620148caf2133fbd",["rankAudit"]="624aa3e4ece044087a21f2c9c818ad233ec7dcde",["supplemental"]="397e589598102d42c774899399f9d607f44828a1",},
 ["mechanicsRegistrySha"]="dc1f5225e208eee77abc26e8be67fb30ed1916a7",["mechanicsRegistrySha256"]="2ddc5782c4f26b4433251184c330ab7e976778c8bd241aa4e8828d38a6445c95",["mechanicsRuleCount"]=0,["reviewDate"]="2026-10-28",["sourceSelectionPolicy"]="context-evidence-first-v1",["statYieldProfilesSha"]="1d80df8304acaa75a5b507089ef163696381b2ff",["targetBaseline"]="HYPOTHETICAL_MINIMUM_ELIGIBLE_NO_OPTIONAL_BONUSES_NOT_VERIFIED",},
-["schemaVersion"]=1,["version"]="1.1.1",}
+["schemaVersion"]=1,["tokenRewards"]={},
+["version"]="1.1.1",}

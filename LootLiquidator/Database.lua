@@ -94,13 +94,81 @@ function LL:ValidateItemDB(db)
     end
     return true
 end
+-- Token relationships have their own evidence contract. They describe possible
+-- rewards, never drop probabilities or crafting/profession yield coefficients.
+function LL:ValidateTokenCatalog(records)
+    if records==nil then return true end
+    if type(records)~='table' then return false,'Invalid token catalog' end
+    local seen,windows={},{}
+    local function positive(n) return finite(n) and n>0 and n%1==0 end
+    local function array(t)
+        if type(t)~='table' then return false end
+        for key in pairs(t) do if not positive(key) or key>#t then return false end end
+        return true
+    end
+    if not array(records) then return false,'Token catalog must be an array' end
+    for _,r in ipairs(records) do
+        if type(r)~='table' or type(r.recordID)~='string' or r.recordID=='' or seen[r.recordID]
+            or not positive(r.tokenID) or (r.kind~='open' and r.kind~='exchange') or r.gameMode~='Retail'
+            or not finite(r.inputClassID) or r.inputClassID>20 or r.inputClassID%1~=0 or r.inputClassID==7
+            or r.evidenceStatus~='VERIFIED_RELATIONSHIP' or r.independentReview~='APPROVED'
+            or type(r.reviewedBy)~='string' or r.reviewedBy=='' or r.listComplete~=true
+            or r.requirementsReviewed~=true or type(r.requirements)~='table' or next(r.requirements)
+            or not finite(r.confidence0to100) or r.confidence0to100<90 or r.confidence0to100>100
+            or not positive(r.patchStartBuild) or not positive(r.patchEndBuild) or r.patchStartBuild>r.patchEndBuild
+            or type(r.sourceRevision)~='string' or r.sourceRevision==''
+            or not array(r.sourceURLs) or #r.sourceURLs<2 or not array(r.rewards) or #r.rewards==0 or #r.rewards>500
+            or r.expectedQuantity~=nil or r.dropChance~=nil or r.probability~=nil then
+            return false,'Token catalog requires complete reviewed relationships, explicit scope and provenance'
+        end
+        seen[r.recordID]=true
+        local urls={}
+        for _,url in ipairs(r.sourceURLs) do
+            if type(url)~='string' or not url:match('^https://%S+$') or urls[url] then return false,'Invalid token evidence sources' end
+            urls[url]=true
+        end
+        if r.sourceOrigin=='ATT' and (r.licenseSPDX~='MIT' or type(r.licenseText)~='string'
+            or not r.licenseText:find('Permission is hereby granted',1,true)
+            or not r.licenseText:find('AllTheThings',1,true)) then return false,'ATT-derived catalog requires its license attribution' end
+        local prior=windows[r.tokenID] or {}
+        for _,window in ipairs(prior) do
+            if r.patchStartBuild<=window[2] and r.patchEndBuild>=window[1] then return false,'Overlapping token catalog scope' end
+        end
+        prior[#prior+1]={r.patchStartBuild,r.patchEndBuild};windows[r.tokenID]=prior
+        local rewards={}
+        for _,id in ipairs(r.rewards) do
+            if not positive(id) or id==r.tokenID or rewards[id] then return false,'Invalid token reward identity' end
+            rewards[id]=true
+            if r.kind=='exchange' then
+                local costs=type(r.costs)=='table' and r.costs[tostring(id)]
+                if not array(costs) or #costs==0 then return false,'Exchange reward requires complete costs' end
+                local hasToken=false
+                for _,cost in ipairs(costs) do
+                    if type(cost)~='table' or not positive(cost.quantity)
+                        or (cost.kind~='money' and ((cost.kind~='item' and cost.kind~='currency') or not positive(cost.id))) then
+                        return false,'Unsupported token exchange cost'
+                    end
+                    if cost.kind=='item' and cost.id==r.tokenID then hasToken=true end
+                end
+                if not hasToken then return false,'Exchange cost does not contain its token' end
+            end
+        end
+    end
+    return true
+end
 function LL:InitializeItemDB()
     self._processingModelCache=nil
+    self._tokenRewardIndex={}
     local ok,reason=self:ValidateItemDB(self.ItemDB)
     if ok and self.ValidateProfessionRules then ok,reason=self:ValidateProfessionRules(self.ItemDB) end
+    if ok then ok,reason=self:ValidateTokenCatalog(self.ItemDB.tokenRewards) end
     self.itemDBError=not ok and reason or nil
     self._evidenceIndex={}
     if not ok then return false end
+    for _,r in ipairs(self.ItemDB.tokenRewards or {}) do
+        local list=self._tokenRewardIndex[r.tokenID] or {}
+        list[#list+1]=r;self._tokenRewardIndex[r.tokenID]=list
+    end
     local all={}
     for _,dataset in ipairs({self.ItemDB,self.FrozenTSM or {},self.LegacyDB or {}}) do
         if dataset~=self.ItemDB and dataset.processing then

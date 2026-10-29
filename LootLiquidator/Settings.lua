@@ -747,8 +747,8 @@ function LL:RegisterNativeSettings()
     Section(integrationsLayout,"Connected addons")
     Checkbox(integrations,"enableTSMIntegration","TradeSkillMaster pricing",
         "Read TSM auction pricing and operations without changing your TSM profile.",true)
-    Checkbox(integrations,"enableATTIntegration","Legacy ATT token lookup (temporary)",
-        "Fallback while direct token data is researched. ATT relationships never supply crafting yields.",true)
+    Checkbox(integrations,"enableATTIntegration","ATT research fallback (temporary)",
+        "Use unreviewed cached/live ATT token relationships while migration is incomplete. Reviewed ItemDB token records work independently. ATT never supplies crafting yields.",true)
     Section(integrationsLayout,"Independent token research")
     Checkbox(integrations,"collectTokenResearch","Record direct token rewards and exchanges",
         "Passively record item-token vendor offers and directly opened equipment rewards as research candidates. No crafting outputs, no ATT dependency, and no automatic changes to valuations.",true)
@@ -772,6 +772,12 @@ function LL:RegisterNativeSettings()
             end,"Reads stored ATT records only. Excludes crafting reagents and non-equipment rewards. Copy via token research export for verification.",false))
     end
     Section(integrationsLayout,"ATT reward cache")
+    if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
+        integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "ATT migration research","Copy relationships and coverage",function()
+                LL:ShowCopy("ATT relationship research - page 1",LL:ATTResearchExport(1))
+            end,"Export candidates, metadata and collection limits. Additional pages: /ll attexport 2. Status: /ll tokenmigration. No automatic approval.",false))
+    end
     if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
         integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Update ATT cache","Update ATT Cache",function()

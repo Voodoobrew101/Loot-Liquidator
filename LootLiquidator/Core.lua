@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.10.0-alpha5"
+LA.version = "0.10.0-alpha6"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -487,9 +487,10 @@ function LA:Evaluate(link, context)
         return {action=nil,itemID=f.id,facts=f,ignoredAll=true,conversionOptions={}}
     end
     local deAllowed,deReason=self:DisenchantEligibility(f)
+    local tokenInfo=self.ATTTokenInfo and self:ATTTokenInfo(f)
     -- Blizzard classifies quest items (12); they are not vendor trash by default.
     -- A missing external token cache must never create a question-mark badge.
-    if f.classID==12 or f.bindType==4 or (f.context and f.context.isQuest==true) then
+    if not tokenInfo and (f.classID==12 or f.bindType==4 or (f.context and f.context.isQuest==true)) then
         return {action=nil,itemID=f.id,facts=f,conversionOptions={},questItem=true}
     end
     -- Resolve appearance ownership before caching a decision. Two otherwise
@@ -502,7 +503,6 @@ function LA:Evaluate(link, context)
     -- ATT's exchange index/item cache may become available after the bag's
     -- first paint. Include its verified token recognition state in the
     -- decision cache key, so an early Vendor choice cannot hide later T rows.
-    local tokenInfo=self.ATTTokenInfo and self:ATTTokenInfo(f)
     -- The bag item tooltip may know this INSTANCE is Warbound before the
     -- player hovers it.  Read only the passive Blizzard tooltip data for
     -- positively identified equipment tokens. Otherwise a recipient on a
@@ -557,10 +557,8 @@ function LA:Evaluate(link, context)
     local cached = cache[signature]
     if cached and (now - cached.at) < 30 then return cached.result end
 
-    local conversion = tokenInfo and nil or self:BestConversion(f)
-    if tokenInfo then
-        conversion = nil
-    end
+    local conversion
+    if not tokenInfo then conversion=self:BestConversion(f) end
     local vendor = (Ignored(self,f.id,"V") and 0) or (f.vendor or 0)
     local action, fallback, reason = nil, nil, nil
     local isToken = tokenInfo~=nil
@@ -848,6 +846,11 @@ local function Command(msg)
             local ok,msg=LA:StartATTCacheUpdate()
             if not ok then Say(msg or "ATT cache update not started") end
         else Say("ATT cache module unavailable") end
+    elseif command == "attexport" then
+        local page=math.max(1,math.floor(tonumber(arg) or 1))
+        LA:ShowCopy("ATT relationship research - page "..page,LA:ATTResearchExport(page))
+    elseif command == "tokenmigration" then
+        Say(LA:ATTResearchStatus())
     elseif command == "perf" then
         if LA.BadgePerfReport then
             local result=LA:BadgePerfReport(arg=="reset")
@@ -973,6 +976,7 @@ local function Command(msg)
         Say(("Scanned %d learned recipes; %d single-input recipe candidates; %d reagent IDs observed in profession recipes. Coverage is partial until you open professions on your characters."):format(recipes,candidates,consumers))
     elseif command == "status" then
         if LA.EvidenceDatabaseStatus then Say(LA:EvidenceDatabaseStatus()) end
+        if LA.ATTResearchStatus then Say(LA:ATTResearchStatus()) end
         if LA.personalProjectionStatus then Say("Personal history: "..LA.personalProjectionStatus) end
         Say("Version "..LA.version.." (interface " .. LA.targetInterface .. "); Game Data: " .. tostring(LA.GameDataVersion or "missing") .. "; TSM API: " .. tostring(type(TSM_API) == "table") ..
             ", BetterBags: " .. tostring(LibStub and LibStub("AceAddon-3.0", true) ~= nil))
@@ -980,7 +984,7 @@ local function Command(msg)
         Say("/ll settings - appearance, colors, and optional profession hints")
         Say("Disenchanting requires a verified current character or eligible alt; /ll enchanting no longer overrides eligibility")
         Say("/ll milling on|off, /ll prospecting on|off, /ll smelting on|off")
-        Say("/ll craftstats, /ll craftexport [page], /ll craftbaseline, /ll craftstudy LABEL, /ll craftzero, /ll exchanges on|off, /ll inspect ITEMID, /ll inspectbags, /ll destats, /ll detrack, /ll deexport, /ll processstats, /ll processexport, /ll processingdebug start|show|clear, /ll report, /ll scanstatus, /ll clearreport, /ll refresh, /ll tsmops, /ll attdiag ITEMID, /ll attcache, /ll attcache status, /ll dbstatus, /ll ignore ITEMID, /ll unignore ITEMID, /ll status")
+        Say("/ll craftstats, /ll craftexport [page], /ll craftbaseline, /ll craftstudy LABEL, /ll craftzero, /ll exchanges on|off, /ll inspect ITEMID, /ll inspectbags, /ll destats, /ll detrack, /ll deexport, /ll processstats, /ll processexport, /ll processingdebug start|show|clear, /ll report, /ll scanstatus, /ll clearreport, /ll refresh, /ll tsmops, /ll attdiag ITEMID, /ll attcache, /ll attcache status, /ll attexport PAGE, /ll tokenmigration, /ll dbstatus, /ll ignore ITEMID, /ll unignore ITEMID, /ll status")
         Say("Uses TSM prices; item processing recommendations are estimates, never automatic sells.")
     end
 end

@@ -174,7 +174,7 @@ function LL:TokenResearchExport(page)
     if page>pages then return ("No page %d. Available pages: 1-%d."):format(page,pages) end
     local lines={"# Loot Liquidator DIRECT token research v1",
         "# Research candidate only; not validated reward table or drop probability",
-        "# NO ATT; NO reverse ingredient/crafting relationships; no market prices",
+        "# Direct client observations plus explicitly marked att_* legacy candidates; no reverse crafting links or market prices",
         "# Separator: | ; observations are repeated merchant sightings, NOT successful purchases or drop samples",
         "# otherCosts lists the COMPLETE merchant cost display (may include the input token itself)",
         ("# Page %d of %d; total links %d"):format(page,pages,#keys),

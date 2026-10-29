@@ -314,6 +314,7 @@ assert(models.schemaVersion==1,'Unsupported profession model schema')
 db.professionRules=models.professionRules;db.personalPatchRules=models.personalPatchRules;db.modelRevision=models.revision
 -- Reviewed additions use the same versioned interface, independent of engine code.
 local additions=assert(loadfile('database/records.lua'))()
+db.tokenRewards=additions.tokenRewards or {}
 for _,r in ipairs(additions.processing or {}) do db.processing[#db.processing+1]=r end
 for _,r in ipairs(additions.mechanicRules or {}) do
     assert(r.evidenceStatus=='VERIFIED_NUMERIC' and r.applyPolicy=='EXECUTE' and r.numericTransformValidated==true
