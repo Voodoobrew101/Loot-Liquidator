@@ -78,6 +78,17 @@ function validateContext(c) {
  */
 function forward({hitProbability,positiveYieldPMF}) {
   requireValid(isFiniteNumber(hitProbability)&&hitProbability>=0&&hitProbability<=1,"P_DOMAIN");
+  // A zero-hit model has no positive conditional outcome, even if a caller
+  // supplied a hypothetical PMF. Suppress support instead of leaking bounds.
+  if(hitProbability===0){
+    requireValid(positiveYieldPMF===undefined || positiveYieldPMF===null ||
+      Array.isArray(positiveYieldPMF),"PMF_DOMAIN");
+    return {dropChance:0,yieldMin:null,yieldMax:null,expectedQuantity:0,
+      conditionalYieldApplicable:false,
+      zeroSemantics:"MODEL_ZERO_HIT_NOT_PROOF_OF_IMPOSSIBILITY",
+      economicUse:"PREVIEW_ONLY",normalizedVerified:false,confidence:0,
+      status:"HYPOTHETICAL_ZERO_HIT_SUPPORT_INAPPLICABLE"};
+  }
   requireValid(Array.isArray(positiveYieldPMF)&&positiveYieldPMF.length>0,"PMF_MISSING");
   let sum=0,mean=0,min=Infinity,max=-Infinity;
   for(const row of positiveYieldPMF) {
@@ -90,6 +101,7 @@ function forward({hitProbability,positiveYieldPMF}) {
   const e=hitProbability*mean;
   requireValid(e+1e-9>=hitProbability*min&&e<=hitProbability*max+1e-9,"PE_RANGE");
   return {dropChance:hitProbability,yieldMin:min,yieldMax:max,expectedQuantity:e,
+    conditionalYieldApplicable:true,zeroSemantics:null,
     economicUse:"PREVIEW_ONLY",normalizedVerified:false,confidence:0,
     status:"HYPOTHETICAL_MODEL_NOT_MEASURED"};
 }
@@ -110,6 +122,8 @@ function inverseHistogram({completedCasts,histogram}) {
   requireValid(casts===completedCasts,"HISTOGRAM_DENOMINATOR_MISMATCH");
   return {identifiable:true,dropChance:hits/casts,
     yieldMin:hits?min:null,yieldMax:hits?max:null,expectedQuantity:total/casts,
+    conditionalYieldApplicable:hits>0,
+    zeroSemantics:hits?null:"OBSERVED_ZERO_HITS_NOT_PROOF_OF_IMPOSSIBILITY",
     completedCasts:casts,successCasts:hits,
     observationBasis:"ZERO_INCLUSIVE_ACTUAL_COMPLETED_CASTS",
     baselineNormalized:false};
@@ -183,7 +197,22 @@ function selfTest(){
   requireValid(f.expectedQuantity===11.5&&f.dropChance===1&&f.confidence===0,"FORWARD");
   let rejected=false;try{inverseHistogram({completedCasts:4,histogram:{"0":3}})}catch(_){rejected=true;}
   requireValid(rejected,"DENOMINATOR_GUARD");
-  return {passed:8,targets:12,sourceAnchoredTargets:2,unanchoredTargets:10,
+  const zero=forward({hitProbability:0,positiveYieldPMF:[{quantity:3,probability:1}]});
+  requireValid(zero.dropChance===0&&zero.expectedQuantity===0&&
+    zero.yieldMin===null&&zero.yieldMax===null&&
+    zero.conditionalYieldApplicable===false,"ZERO_FORWARD_SUPPORT_SUPPRESSED");
+  const zeroNoPMF=forward({hitProbability:0});
+  requireValid(zeroNoPMF.expectedQuantity===0&&zeroNoPMF.yieldMin===null&&
+    zeroNoPMF.yieldMax===null,"ZERO_FORWARD_NO_PMF");
+  const allZero=inverseHistogram({completedCasts:3,histogram:{"0":3}});
+  requireValid(allZero.dropChance===0&&allZero.expectedQuantity===0&&
+    allZero.yieldMin===null&&allZero.yieldMax===null&&
+    allZero.conditionalYieldApplicable===false,"ZERO_INVERSE_SUPPORT");
+  requireValid(observed.conditionalYieldApplicable===true&&
+    f.conditionalYieldApplicable===true,"NONZERO_CONDITIONAL_SUPPORT");
+  requireValid(zero.economicUse==="PREVIEW_ONLY"&&zero.normalizedVerified===false&&
+    zero.confidence===0,"ZERO_PREVIEW_ISOLATION");
+  return {passed:13,targets:12,sourceAnchoredTargets:2,unanchoredTargets:10,
     currentRetailNumericPromotions:0,previewScenarios:12};
 }
 module.exports={VERSION,KEYS,SOURCE,contextFor,validateContext,forward,inverseHistogram,
