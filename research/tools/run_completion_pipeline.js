@@ -148,6 +148,14 @@ function run(root, options={}) {
     if(admissionChild.status!==0)
       throw Error("F005 source-status/claim admission failed\\n"+admissionChild.stdout+admissionChild.stderr);
     process.stdout.write(admissionChild.stdout);
+    // F005 independently authored cast-basis/denominator quarantine regression.
+    // A source gross-input or rank proxy must not be copied as completed-cast P/E.
+    const castBasisTest=path.join(root,"research/tests/v2/test_f005_blocked_evidence_cast_basis.js");
+    if(!fs.existsSync(castBasisTest)) throw Error("Required F005 cast-basis check missing");
+    const castBasisChild=spawnSync(process.execPath,[castBasisTest],{cwd:root,encoding:"utf8"});
+    if(castBasisChild.status!==0)
+      throw Error("F005 cast-basis quarantine regression failed\\n"+castBasisChild.stdout+castBasisChild.stderr);
+    process.stdout.write(castBasisChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
