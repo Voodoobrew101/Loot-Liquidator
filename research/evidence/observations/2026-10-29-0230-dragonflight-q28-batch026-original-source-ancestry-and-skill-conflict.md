@@ -1,0 +1,18 @@
+# Dragonflight q28: original-source ancestry and rank/quantity caution (2026-10-29)
+
+**Research only.** Assigned 24 exact keys; no current-Retail per-output numerical promotion.
+
+## Distinct historical sources
+
+1. **Original Xenastro prospecting workbook**, [Prospecting Calculator V1.xlsx](https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit), `Prospecting Log` rows **28, 52, 54, 55, 62**. Five R2 Draconium batches contain **70,543 gross ore**, recorded at **237–250 Jewelcrafting skill**, Inspiration **33.9–36.8%**, Resourcefulness **5.1–13.3%**. Workbook timestamps span approximately **2023-01-03 to 2023-02-01**. The sheet has **gem color-group and quality totals**, NOT separate item-ID counts for assigned gem IDs 192837–192857. The refund column is blank in one of five batches, and gross ore is not verified actual consumed ore. Do not treat gross ore/5 as observed completed casts; do not divide color-group totals equally among five gems; do not infer P(hit), per-output E or current Retail skill scaling. This is the same original author/cohort already indexed by Master QA q25, **not a new independent study**.
+2. **Method guide, 2023-09-26**, [What Dragonflight herbs mill into each pigment](https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment), by Paul. The guide independently confirms **Bubble Poppy -> Serene Pigment** family and explicitly says skill/specialization can affect **pigment rank and amount**. It does not supply cast counts, per-output-rank rates, exact yields, or current Retail measurements. **New source-lineage/qualitative claim, zero new numeric fields.**
+3. **Liqourice5 historical beta study**, [Wowhead Economy Weekly Wrap-Up 251](https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620), original **2022-10-22 beta**: reports 2–5 pigments/mill and asserts quantity independent of skill. This conflicts in wording with the later 2023 Method guide. Without matched patch/cast cohorts, do not pick one universal coefficient or label beta range as current-Retail guaranteed maximum. Keep existing 2–5 historical tooltip range as provisional **display only** when not superseded by stronger source.
+4. **GameData.lua** [exact pinned source lines](https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua#L1173-L1193) and [Bubble Poppy lines](https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/GameData.lua#L1964-L1972): inherited TSM-derived `matRate` and `amountOfMats` have unverified denominator/quality-rank semantics. Three pigment ranks all have `matRate=1` for a single herb rank, which must not be interpreted as three simultaneous guaranteed pigment outputs.
+
+## New useful negative finding
+
+The September 2023 guide's explicit **quantity-vs-skill claim** contradicts the October 2022 beta's **quantity-invariant** claim. This is a historical source/patch conflict, **not proof** of a mechanic change or current Retail yield. Master QA should retain both claims with distinct dates and original lineage, and avoid promoting beta quantity claims into current gold E or a current skill coefficient. Original workbook q25 review is reused, not counted as new source/cast evidence.
+
+## Source and field isolation
+
+For all 24 assigned keys, exact current Retail `dropChance=P(>=1)`, positive `yieldMin/yieldMax`, and unconditional `expectedQuantity` remain unknown. Historical GameData bounds already exist; no new tooltip-only fallback proposed. Economic use of this note, the beta range, or color-group totals: **PROHIBITED**. Resourcefulness affects input cost; never add it as produced output. No original completed-cast denominator established.
