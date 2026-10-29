@@ -10,6 +10,14 @@ Generated as a human-readable, master-maintained summary of verified research ou
 - Existing observations should be read before repeated web fetches; recheck sources when an actual update, unresolved gap or contradiction justifies it.
 - Never infer occurrence probability from aggregate yield totals, use midpoint of min/max for EV, or let aggregate reward points change evidence confidence.
 
+## 2026-10-28 — Master batch020: source-backed mapping gains and repeat-audit cost
+
+- **12 new provisional TWW milling input/rank/output candidates** came from combining an already present runtime `StatYieldProfiles.lua` 10-herb mapping with the independently read 2024 Method herb-to-pigment family guide. This advances mapping coverage, **not** numerical completeness: all 48 new field slots remain unknown, and same-rank output availability at a particular skill is not proven. Search missing source families before re-auditing identical TSM lines.
+- **q22 repeated work had near-zero marginal yield:** War Within audited 32/35 keys already examined by that worker and 3/35 previously examined by Dragonflight, producing 0 new current Retail fields. Queue23 excludes q21/q22 keys and reassigns 45 distinct DF material rows to War Within; Midnight handles 8 milling universe gaps, 2 recipe-selector audits and 15 TWW overflow questions. Avoid source-line churn unless a new study/patch trigger is documented.
+- **ORIGINAL_DATASET + DENOMINATOR_GUARD succeeded for historical research:** independently read kuraiummei's 2009 Titanium PTR comment with 720 ore / 144 explicitly completed casts; six uncommon gem E fields can be computed from actual denominators. **One author, six historical fields, zero current-Retail promotions.** 94 powder/144 supports historical E, but 12 double events do not prove an exhaustive 0/1/2 histogram.
+- **RECIPE_VECTOR negative findings:** Midnight Crushing requires 3 selected gems plus 1 stone; the spell alone does not expose the exact gem whitelist. A 50-ore test's byproduct counts below ten challenge a generic guarantee only if ten actual casts and matching patch are independently confirmed.
+- **SOURCE_MEMORY_SCHEMA:** 23 worker review events used invalid `REUSED` status; immutable originals retained and master-owned PARTIAL corrections added. Incremental replay now 168 canonical URLs / 285 reviews / 75 valid QA events, but full Node directory rebuild remains outstanding. Reward strategy points never modify field confidence.
+
 ## Future updates by Master QA
 
 Add date, reviewed claim IDs, accepted/rejected outcome examples, sampling caveats, and specific strategy changes. No self-awarded agent rankings.
