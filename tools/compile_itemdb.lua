@@ -257,6 +257,58 @@ for _,r in ipairs(research.processing) do
         inputs[r.inputItemID]=inputs[r.inputItemID] or {method=r.method,batch=r.inputCountPerOperation,expansion=r.expansionID}
     end
 end
+-- Reviewed registry rules arrive exclusively through the pinned ItemDB export.
+local function contextMatches(actual, expected)
+    for key,value in pairs(expected) do
+        if key~='build' and contextIdentity(actual[key])~=contextIdentity(value) then return false end
+    end
+    return true
+end
+local function contains(list,value) for _,v in ipairs(list or {}) do if v==value then return true end end return false end
+local approvedIDs={}
+for _,rule in ipairs(research.mechanicRules or {}) do
+    local label=tostring(rule.ruleID)
+    assert(not approvedIDs[label],'Duplicate approved mechanic '..label);approvedIDs[label]=true
+    assert(rule.applyPolicy=='VERIFIED_FOR_COMPILE' and rule.evidenceStatus=='VERIFIED_NUMERIC'
+        and rule.numericTransformValidated==true and (rule.confidence0to100 or 0)>=90
+        and type(rule.sources)=='table' and #rule.sources>=2
+        and type(rule.independentReview)=='table' and rule.independentReview.reviewer
+        and type(rule.independentReview.passedTestIDs)=='table' and #rule.independentReview.passedTestIDs>0,
+        'Unapproved ItemDB mechanic '..label)
+    local expectedFormula=({OUTPUT_UNCONDITIONAL_EXPECTATION='RATIO_ADJUSTMENT',OUTPUT_OCCURRENCE='RATIO_ADJUSTMENT_OCCURRENCE'})[rule.effectTarget]
+    assert(expectedFormula and rule.formulaID==expectedFormula,'Unsupported approved mechanic '..label)
+    local scope,reference,target=rule.scope,rule.referenceContext,rule.targetContext
+    assert(scope and scope.gameMode=='RETAIL' and reference and reference.build and target and target.build,'Missing explicit build/context '..label)
+    local factor=rule.parameters and rule.parameters.targetFactor/rule.parameters.referenceFactor
+    assert(type(factor)=='number' and factor==factor and factor>=0 and factor<=10,'Invalid mechanic ratio '..label)
+    local targetConditions=clone(target);targetConditions.build=nil
+    for _,key in ipairs(rule.requiredLiveContext or {}) do assert(targetConditions[key]~=nil,'Missing target field '..label..':'..key) end
+    assert(next(targetConditions),'Empty target conditions '..label)
+    local matched=0
+    for _,record in ipairs(db.processing) do
+        local original=record.researchRecord
+        if original and record.sourceKey=='itemdb' and record.method==rule.method
+            and record.expansionID==rule.expansionID and contains(scope.recipeSpellIDs,record.recipeID)
+            and contains(scope.inputItemIDs,record.inputItemID) and contains(scope.outputItemIDs,original.outputItemID)
+            and record.inputCount==scope.nominalInputCount and contains(scope.inputQualityRanks,record.inputQualityRank)
+            and (not scope.outputQualityRanks or #scope.outputQualityRanks==0 or contains(scope.outputQualityRanks,original.outputQualityRank))
+            and contextMatches(original.conditions.baselineProfile or original.conditions,reference) then
+            assert(not record.patchBuild or tostring(record.patchBuild)==tostring(reference.build),'Baseline build conflict '..label)
+            record.patchBuild=reference.build;record.mechanicsSourceBuild=reference.build
+            record.targetBuild=nil;record.patchStartBuild=nil;record.patchEndBuild=nil
+            local translated={ruleID=label..':'..original.recordID,method=rule.method,recipeID=record.recipeID,
+                inputItemID=record.inputItemID,outputItemID=original.outputItemID,expansionID=record.expansionID,
+                inputQualityRank=record.inputQualityRank,sourceBuild=reference.build,targetBuild=target.build,
+                sourceReferenceContextID=record.referenceContextID,targetConditions=targetConditions,
+                effectTarget=rule.effectTarget,formulaID='MULTIPLY',parameters={multiplier=factor},
+                evidenceStatus='VERIFIED_NUMERIC',applyPolicy='EXECUTE',applies='VERIFIED_APPLIES',
+                confidence0to100=rule.confidence0to100,numericTransformValidated=true,independentReview='APPROVED',sourceClaimIDs={}}
+            for _,source in ipairs(rule.sources) do translated.sourceClaimIDs[#translated.sourceClaimIDs+1]=assert(source.claimID) end
+            db.mechanicRules[#db.mechanicRules+1]=translated;matched=matched+1
+        end
+    end
+    assert(matched>0,'Approved mechanic has no compatible baseline mapping: '..label)
+end
 local models=assert(loadfile('database/profession-models.lua'))()
 assert(models.schemaVersion==1,'Unsupported profession model schema')
 db.professionRules=models.professionRules;db.personalPatchRules=models.personalPatchRules;db.modelRevision=models.revision
