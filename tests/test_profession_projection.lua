@@ -14,10 +14,10 @@ local profile={effectiveSkill=0,specialization='none',character='Tester',inputQu
 local function rule(build)
     return {ruleID='synthetic-skill-'..build,method='Prospect',recipeID=444,inputItemID=10,outputItemID=20,
         expansionID=11,inputQualityRank=2,build=build,referenceProfile=clone(profile),
-        skillFactors={{skill=0,factor=1},{skill=100,factor=2}},status='provisional'}
+        skillFactors={{skill=0,factor=1},{skill=100,factor=2}},status='synthetic',evidenceStatus='VERIFIED_NUMERIC',applyPolicy='EXECUTE',numericTransformValidated=true,independentReview='APPROVED',confidence0to100=94,sourceClaimIDs={'synthetic-a','synthetic-b'}}
 end
 local patch={ruleID='synthetic-patch',method='Prospect',recipeID=444,inputItemID=10,outputItemID=20,
-    expansionID=11,inputQualityRank=2,fromBuild='100',toBuild='200',basis='baseline',expectedMultiplier=1.5}
+    expansionID=11,inputQualityRank=2,fromBuild='100',toBuild='200',basis='baseline',expectedMultiplier=1.5,evidenceStatus='VERIFIED_NUMERIC',applyPolicy='EXECUTE',numericTransformValidated=true,independentReview='APPROVED',confidence0to100=94,sourceClaimIDs={'synthetic-a','synthetic-b'}}
 LL.ItemDB={schemaVersion=1,version='test',processing={},professionRules={rule('100'),rule('200')},
     personalPatchRules={patch},modelRevision='synthetic/1',mechanicRules={}}
 check(LL:InitializeItemDB());LL:MigrateEvidenceSettings()
@@ -107,4 +107,20 @@ near(assert(P:GetRecordedProcessingEstimate(f,'Prospect',5,444)).materials[1].ex
 P.ItemDB.personalPatchRules={}
 check(P:GetRecordedProcessingEstimate(f,'Prospect',5,444)==nil)
 check(P.personalProjectionStatus:find('unknown'))
+-- Admission and execution must reject structurally valid unreviewed rules.
+local good=rule('200');local rejected=clone(good);rejected.independentReview=nil
+check(not LL:ValidateProfessionRules({professionRules={rejected}}),'missing approval rejected')
+rejected=clone(good);rejected.sourceClaimIDs={'same','same'}
+check(not LL:ValidateProfessionRules({professionRules={rejected}}),'duplicate evidence rejected')
+rejected=clone(good);rejected.applyPolicy='PREVIEW_ONLY'
+check(not LL:ValidateProfessionRules({professionRules={rejected}}),'preview excluded from executable collection')
+LL.ItemDB.professionRules={rejected};near(LL:ApplyProfessionModel(f,option,base,target).materials[1].expectedQuantity,3)
+local unreviewedPatch=clone(patch);unreviewedPatch.evidenceStatus=nil
+check(not LL:ValidateProfessionRules({personalPatchRules={unreviewedPatch}}),'patch gate enforced')
+LL.ItemDB.professionRules={good};LL.ItemDB.personalPatchRules={unreviewedPatch}
+check(LL:ProjectPersonalEstimate(f,option,raw,target,'200')==nil,'unreviewed patch cannot execute directly')
+local multiple=clone(base);multiple.materials[2]={id=21,expectedQuantity=1}
+local partial=LL:ApplyProfessionModel(f,option,multiple,target)
+check(partial.projectionIncomplete and not partial.mechanicsApplied,'partial adjustment is not whole-model success')
+near(partial.materials[1].expectedQuantity,3);near(multiple.materials[1].expectedQuantity,3)
 print('PASS: '..count..' profession/personal projection assertions; synthetic coefficients only')

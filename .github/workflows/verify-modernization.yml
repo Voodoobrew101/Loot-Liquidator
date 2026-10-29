@@ -1,21 +1,23 @@
-name: Verify database and addon
+name: Validate consolidated addon
 on:
   push:
-    branches: [implementation/database-profession-modernization]
+    branches: [main, integration/current-addon]
   pull_request:
-    paths:
-      - 'LootLiquidator/**'
-      - 'database/**'
-      - 'tools/**'
-      - 'tests/**'
-      - 'research/tests/test_verified_mechanics_adapter.lua'
-      - '.github/workflows/**'
+    branches: [main]
+permissions:
+  contents: read
 jobs:
   lua51:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install Lua 5.1
-        run: sudo apt-get update && sudo apt-get install -y lua5.1
-      - name: Compile, validate package and run fixtures
+        run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
+      - name: Validate generated databases, package and regression fixtures
         run: bash tests/run.sh
+      - name: Build isolated test addon ZIP
+        run: python3 tools/package_addon.py dist/LootLiquidator-test.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LootLiquidator-test
+          path: dist/LootLiquidator-test.zip
