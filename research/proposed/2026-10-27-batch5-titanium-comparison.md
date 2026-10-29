@@ -1,7 +1,9 @@
-# Batch 5 Titanium comparison
+# Batch 5 Titanium comparison — denominator-corrected 2026-10-29
 
-Retail 2022 200 operations; WotLK Classic PTR 2023 1000 operations. Source research/ledger/titanium-observed-yields.csv.
+Historical **gross-input-equivalent comparison only**. The Retail 2022 author reported 1,000 gross Titanium Ore and the WotLK Classic PTR 2023 author reported 5,000 gross Titanium Ore. Dividing by five yields **200** and **1,000 nominal five-ore equivalents**, respectively, **not observed completed prospecting operations**. Actual completed-cast denominators, input refunds/Resourcefulness, and zero-inclusive per-cast histograms are unknown. See `research/ledger/titanium-observed-yields.csv` and the immutable q28 Legacy denominator erratum.
 
-Output IDs 36917,36920,36923,36926,36929,36932. Retail observed means 0.265,0.220,0.245,0.265,0.235,0.295. Classic PTR means 0.250,0.263,0.253,0.255,0.227,0.250. Totals 1.525 and 1.498 units per five ore. TSM-derived 2.5 each and total 15, about ten times larger. Different game versions and dates; cannot promote to current Retail values. Occurrence probabilities and conditional ranges unmeasured. Research only; no Lua edits.
+Output IDs: 36917, 36920, 36923, 36926, 36929, 36932. Retail 2022 historical units per five gross-ore equivalent: 0.265, 0.220, 0.245, 0.265, 0.235, 0.295. WotLK Classic PTR 2023 historical values: 0.250, 0.263, 0.253, 0.255, 0.227, 0.250. Totals: 1.525 and 1.498 units per nominal five-ore equivalent. A historical TSM-derived comparison yielded 2.5 each and total 15, but its denominator and patch/skill context are not matched. Do not interpret the apparent ~10x difference as a measured current-Retail error.
 
-Next: investigate TSM denominator semantics, Cobalt independent cohorts, Midnight current-patch prospecting samples. Confidence gate remains unmet.
+**Economic expectedQuantity per completed cast: unknown.** **Occurrence P(>=1): unknown.** Positive-outcome conditional ranges and current skill/stat applicability: unverified. These historical ratios are not gold/EV inputs; they cannot justify multiplying by P, imputing P, or deriving tooltip probability. Historical values and source lineages remain preserved without numerical promotion.
+
+Research only; no production Lua changes. Follow-up: obtain original zero-inclusive completed-cast logs with item/output ranks, effective skill, specialization, patch, Resourcefulness, and actual consumed inputs. Provisional confidence below 90 is permitted when labeled; no numeric field should be invented.
