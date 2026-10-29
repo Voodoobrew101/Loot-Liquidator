@@ -4,6 +4,7 @@ const fs=require("node:fs"),assert=require("node:assert/strict"),path=require("n
 const root=path.resolve(__dirname,"../.."),read=p=>fs.readFileSync(path.join(root,p),"utf8");
 const {compile,validate,csv}=require("../tools/compile_itemdb.js");
 const input={
+ mechanicsRegistryJSON:read("research/mechanics/ProfessionMechanicsRegistry.json"),
  primaryCSV:read("research/ledger/processing-output-fields.csv"),
  supplementalCSV:read("research/ledger/supplemental-output-fields.csv"),
  midnightCandidateJSON:read("research/proposed/itemdb-midnight-milling-candidate.json"),
@@ -147,3 +148,9 @@ try{
 
 console.log("PASS research compiler v0.8.0 regression and real Lua 5.1 context roundtrip; evidence gaps preserved, complete isolated working estimates; WoW client not run");
 
+
+const registryFixture=JSON.parse(input.mechanicsRegistryJSON);registryFixture.numericRuleCandidates=[structuredClone(require('./test_numeric_rules.js').syntheticFixtureForTests)];
+const withRule=compile({...input,mechanicsRegistryJSON:JSON.stringify(registryFixture)});
+assert.equal(withRule.manifest.mechanicRules.length,1);assert.ok(withRule.lua.includes('SYNTHETIC_ONLY_NOT_REAL_GAME_EVIDENCE'));
+assert.notEqual(withRule.manifest.sourceManifest.mechanicsRegistrySha256,a.manifest.sourceManifest.mechanicsRegistrySha256);
+assert.throws(()=>compile({...input,mechanicsRegistryJSON:null}),/Missing reviewed/);
