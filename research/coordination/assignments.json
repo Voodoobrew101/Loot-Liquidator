@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "queueRevision": 28,
+  "queueRevision": 29,
   "updatedUTCDate": "2026-10-29",
   "branch": "research/processing-confidence",
   "masterOwned": true,
@@ -21,7 +21,7 @@
     },
     "cumulativeFirstPass": 1643,
     "newMasterFirstPass": 0,
-    "note": "Master batch025: q27 72/72 independently audited, 28/28 applicable GameData source lines matched; 2 historical Mycobloom R1/R2 -> Nacreous R2 mappings admitted with all numeric unknown, 1 output-rank metadata corrected. Compiler v0.7.1 built 1015 mappings; queue28 targets 80 missing-E records not assigned q27, no duplicate keys.",
+    "note": "Master batch026 q28 80/80 exact keys audited, 69/69 applicable GameData output lines matched, 320/320 current-context fields unknown; 12 Titanium denominator labels corrected. Queue29 assigns 36 remaining missing-E keys. Last-known-good compiler v0.7.1, no new compiler execution this batch.",
     "current": {
       "asOfUTC": "2026-10-28",
       "coverageLedgerPath": "research/ledger/first-pass-coverage-2026-10-28.csv",
@@ -180,6 +180,29 @@
         "dragonflight": 24,
         "legacy": 21
       }
+    },
+    "masterReviewBatch026": {
+      "reviewFile": "research/coordination/reviews/2026-10-29-master-worker-batch026-verdict.md",
+      "queueAudited": 28,
+      "reviewedWorkerKeys": 80,
+      "distinctKeys": 80,
+      "matchedApplicableGameDataOutputLines": 69,
+      "exactCurrentNumericFieldsUnknown": 320,
+      "newMappings": 0,
+      "newCurrentRetailNumericFields": 0,
+      "correctedTitaniumGrossEquivalentRows": 12,
+      "sourceReviewEventsPendingRebuild": 17,
+      "sourceMemoryFullRebuild": false,
+      "nextQueueRevision": 29,
+      "nextAssignments": {
+        "midnight": 6,
+        "war_within": 6,
+        "dragonflight": 12,
+        "legacy": 12
+      },
+      "compilerRebuiltThisRun": false,
+      "compilerExecutionBlocker": "CONNECTOR_MAX_TOOL_CALLS",
+      "candidateLastKnownGood": "0.7.1"
     }
   },
   "rules": {
@@ -204,1130 +227,693 @@
   },
   "workers": {
     "midnight": {
-      "expansionScope": "TWW overflow: 15 distinct missing unconditional E pairs",
+      "expansionScope": "The War Within overflow: 6 unassigned milling E gaps",
       "workerAutomation": "loot-liquidator-midnight",
-      "assignmentId": "2026-10-29-batch026-midnight",
-      "status": "ASSIGNED_DISJOINT_MISSING_EXPECTED_QUANTITY_Q28",
+      "assignmentId": "2026-10-29-batch027-midnight",
+      "status": "ASSIGNED_Q29_UNTOUCHED_MISSING_EXPECTED_QUANTITY",
       "lastSuccessfulRunUTC": "2026-10-29T02:14:00Z",
       "acceptedFirstPassRecords": 349,
       "acceptedCorrections": 0,
       "knownBlockers": 5,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-midnight/",
       "recordKeys": [
-        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
-        "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
-        "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
-        "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
-        "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
-        "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
-        "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
-        "candidate:conditional:prospect:210937:212508:gem-finding:20261028",
-        "midnight:237359:242608:L733",
-        "midnight:237361:242608:L744",
-        "midnight:237362:242608:L755",
-        "midnight:237363:242608:L766",
-        "midnight:237364:242608:L777",
-        "midnight:237365:242608:L788",
-        "midnight:237366:242608:L799"
+        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+        "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+        "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+        "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+        "candidate:tww:mill:210801:222614:runtime-method-family:20261028"
       ],
       "nextBatchPreview": [
-        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
-        "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
-        "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
-        "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
-        "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
-        "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
-        "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
-        "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+        "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+        "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+        "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+        "candidate:tww:mill:210801:222614:runtime-method-family:20261028"
       ],
-      "instructions": "Queue28: exact 15 unique missing unconditional expectedQuantity material records; prioritize current Retail original zero-inclusive completed-cast studies, actual cast denominator, item and output rank, effective skill/spec, Resourcefulness, patch and source lineage. Do NOT reuse historical TSM/proxy E as current gold input. Source-anchored conservative tooltip P or positive range only in isolated display channel with exact matching context; never derive P/E from gross herbs, ore/5, range midpoint or rank sum. Do not revisit unchanged sources without new evidence; record negative findings and propose new search route. Submit unique worker-owned evidence; master alone compiles.",
-      "previousAssignmentId": "2026-10-29-batch025-midnight",
-      "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-midnight/2026-10-29-0114-midnight-q27-batch025-32key-crushing-fourfield-audit.jsonl",
+      "instructions": "Queue29: investigate ONLY assigned exact keys not in q28; seek new original 2026 Retail zero-inclusive actual completed-cast studies, rank, skill/spec, patch and Resourcefulness. Check source-memory before reusing sources; do not count a new link to an old cohort as independent. Historical TSM, per-gross-input and rank-alternative rates are not current economic E. Tooltip-only P/range must remain isolated and source-backed. Report blockers honestly; no manufactured zeros, probabilities, ranges or mappings. Write unique worker-owned submissions only; master owns compiler and queue.",
+      "previousAssignmentId": "2026-10-29-batch026-midnight",
+      "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-midnight/2026-10-29-0206-midnight-q28-batch026-15key-fourfield-economic-gap-audit.jsonl",
       "previousWorkerCommit": null,
       "assignmentPhases": [
         {
           "expansion": "the-war-within",
           "recordKeys": [
-            "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
-            "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
-            "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
-            "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
-            "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
-            "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
-            "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
-            "candidate:conditional:prospect:210937:212508:gem-finding:20261028",
-            "midnight:237359:242608:L733",
-            "midnight:237361:242608:L744",
-            "midnight:237362:242608:L755",
-            "midnight:237363:242608:L766",
-            "midnight:237364:242608:L777",
-            "midnight:237365:242608:L788",
-            "midnight:237366:242608:L799"
+            "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+            "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+            "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+            "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+            "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+            "candidate:tww:mill:210801:222614:runtime-method-family:20261028"
           ]
         }
       ],
-      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-midnight/2026-10-29-0012-midnight-q26-batch024-32key-fourfield-tooltip-audit.jsonl",
+      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-midnight/2026-10-29-0206-midnight-q28-batch026-15key-fourfield-economic-gap-audit.jsonl",
       "lastSuccessfulRunDate": "2026-10-28",
       "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch022-verdict.md",
       "materialTargetDetails": [
         {
-          "key": "lead:midnight:crush:spell1231132:input242553:output242620",
-          "input": 242553,
-          "output": 242620,
-          "spell": 1231132,
+          "key": "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+          "input": 210796,
+          "output": 222619,
+          "method": "Mill",
           "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
-          "key": "lead:midnight:crush:spell1231132:input242553:output242621",
-          "input": 242553,
-          "output": 242621,
-          "spell": 1231132,
+          "key": "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+          "input": 210797,
+          "output": 222619,
+          "method": "Mill",
           "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
-          "key": "lead:midnight:crush:spell1231132:input242723:output242620",
-          "input": 242723,
-          "output": 242620,
-          "spell": 1231132,
+          "key": "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+          "input": 210798,
+          "output": 222618,
+          "method": "Mill",
           "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
-          "key": "lead:midnight:crush:spell1231132:input242723:output242621",
-          "input": 242723,
-          "output": 242621,
-          "spell": 1231132,
+          "key": "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+          "input": 210799,
+          "output": 222612,
+          "method": "Mill",
           "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
-          "key": "lead:midnight:crush:spell1231132:input242554:output242620",
-          "input": 242554,
-          "output": 242620,
-          "spell": 1231132,
+          "key": "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+          "input": 210800,
+          "output": 222613,
+          "method": "Mill",
           "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
-          "key": "lead:midnight:crush:spell1231132:input242554:output242621",
-          "input": 242554,
-          "output": 242621,
-          "spell": 1231132,
+          "key": "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+          "input": 210801,
+          "output": 222614,
+          "method": "Mill",
           "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242722:output242620",
-          "input": 242722,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242722:output242621",
-          "input": 242722,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242607:output242620",
-          "input": 242607,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242607:output242621",
-          "input": 242607,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242720:output242620",
-          "input": 242720,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242720:output242621",
-          "input": 242720,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242606:output242620",
-          "input": 242606,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242606:output242621",
-          "input": 242606,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242721:output242620",
-          "input": 242721,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242721:output242621",
-          "input": 242721,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242613:output242620",
-          "input": 242613,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242613:output242621",
-          "input": 242613,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242724:output242620",
-          "input": 242724,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242724:output242621",
-          "input": 242724,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242612:output242620",
-          "input": 242612,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242612:output242621",
-          "input": 242612,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242727:output242620",
-          "input": 242727,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242727:output242621",
-          "input": 242727,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242610:output242620",
-          "input": 242610,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242610:output242621",
-          "input": 242610,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242726:output242620",
-          "input": 242726,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242726:output242621",
-          "input": 242726,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242611:output242620",
-          "input": 242611,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242611:output242621",
-          "input": 242611,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242725:output242620",
-          "input": 242725,
-          "output": 242620,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
-          ]
-        },
-        {
-          "key": "lead:midnight:crush:spell1231132:input242725:output242621",
-          "input": 242725,
-          "output": 242621,
-          "spell": 1231132,
-          "missing": [
-            "eligibility",
-            "output rank",
-            "full reagent vector",
-            "tooltip P",
-            "tooltip positive yield",
-            "economic E"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         }
       ]
     },
     "war_within": {
-      "expansionScope": "Dragonflight overflow: 20 distinct missing unconditional E pairs",
+      "expansionScope": "The War Within: 6 unassigned milling E gaps",
       "workerAutomation": "loot-liquidator-war-within",
-      "assignmentId": "2026-10-29-batch026-war_within",
-      "status": "ASSIGNED_DISJOINT_MISSING_EXPECTED_QUANTITY_Q28",
+      "assignmentId": "2026-10-29-batch027-war_within",
+      "status": "ASSIGNED_Q29_UNTOUCHED_MISSING_EXPECTED_QUANTITY",
       "lastSuccessfulRunUTC": "2026-10-29T02:22:00Z",
       "acceptedFirstPassRecords": 384,
       "acceptedCorrections": 0,
       "knownBlockers": 5,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-war-within/",
       "recordKeys": [
-        "dragonflight:188658:192869:10",
-        "dragonflight:189143:192869:10",
-        "dragonflight:190311:192869:10",
-        "dragonflight:192880:192849:0",
-        "dragonflight:192880:192866:1",
-        "tsm:mill:191461:198423:L1942",
-        "tsm:mill:191462:198421:L1945",
-        "tsm:mill:191462:198422:L1946",
-        "tsm:mill:191462:198423:L1947",
-        "tsm:mill:191464:198418:L1950",
-        "tsm:mill:191464:198419:L1951",
-        "tsm:mill:191464:198420:L1952",
-        "tsm:mill:191465:198418:L1955",
-        "tsm:mill:191465:198419:L1956",
-        "tsm:mill:191465:198420:L1957",
-        "tsm:mill:191466:198418:L1960",
-        "tsm:mill:191466:198419:L1961",
-        "tsm:mill:191466:198420:L1962",
-        "tsm:mill:191467:198412:L1965",
-        "tsm:mill:191467:198413:L1966"
+        "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+        "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+        "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+        "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+        "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+        "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
       ],
       "nextBatchPreview": [
-        "dragonflight:188658:192869:10",
-        "dragonflight:189143:192869:10",
-        "dragonflight:190311:192869:10",
-        "dragonflight:192880:192849:0",
-        "dragonflight:192880:192866:1",
-        "tsm:mill:191461:198423:L1942",
-        "tsm:mill:191462:198421:L1945",
-        "tsm:mill:191462:198422:L1946"
+        "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+        "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+        "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+        "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+        "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+        "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
       ],
-      "instructions": "Queue28: exact 20 unique missing unconditional expectedQuantity material records; prioritize current Retail original zero-inclusive completed-cast studies, actual cast denominator, item and output rank, effective skill/spec, Resourcefulness, patch and source lineage. Do NOT reuse historical TSM/proxy E as current gold input. Source-anchored conservative tooltip P or positive range only in isolated display channel with exact matching context; never derive P/E from gross herbs, ore/5, range midpoint or rank sum. Do not revisit unchanged sources without new evidence; record negative findings and propose new search route. Submit unique worker-owned evidence; master alone compiles.",
-      "previousAssignmentId": "2026-10-29-batch025-war_within",
-      "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-war-within/2026-10-29-0120-warwithin-q27-batch025-12key-fourfield-audit.jsonl",
+      "instructions": "Queue29: investigate ONLY assigned exact keys not in q28; seek new original 2026 Retail zero-inclusive actual completed-cast studies, rank, skill/spec, patch and Resourcefulness. Check source-memory before reusing sources; do not count a new link to an old cohort as independent. Historical TSM, per-gross-input and rank-alternative rates are not current economic E. Tooltip-only P/range must remain isolated and source-backed. Report blockers honestly; no manufactured zeros, probabilities, ranges or mappings. Write unique worker-owned submissions only; master owns compiler and queue.",
+      "previousAssignmentId": "2026-10-29-batch026-war_within",
+      "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-war-within/2026-10-29-0217-warwithin-q28-batch026-20key-fourfield-audit.jsonl",
       "previousWorkerCommit": null,
       "assignmentPhases": [
         {
-          "expansion": "dragonflight",
+          "expansion": "the-war-within",
           "recordKeys": [
-            "dragonflight:188658:192869:10",
-            "dragonflight:189143:192869:10",
-            "dragonflight:190311:192869:10",
-            "dragonflight:192880:192849:0",
-            "dragonflight:192880:192866:1",
-            "tsm:mill:191461:198423:L1942",
-            "tsm:mill:191462:198421:L1945",
-            "tsm:mill:191462:198422:L1946",
-            "tsm:mill:191462:198423:L1947",
-            "tsm:mill:191464:198418:L1950",
-            "tsm:mill:191464:198419:L1951",
-            "tsm:mill:191464:198420:L1952",
-            "tsm:mill:191465:198418:L1955",
-            "tsm:mill:191465:198419:L1956",
-            "tsm:mill:191465:198420:L1957",
-            "tsm:mill:191466:198418:L1960",
-            "tsm:mill:191466:198419:L1961",
-            "tsm:mill:191466:198420:L1962",
-            "tsm:mill:191467:198412:L1965",
-            "tsm:mill:191467:198413:L1966"
+            "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+            "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+            "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+            "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+            "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+            "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
           ]
         }
       ],
-      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-war-within/2026-10-29-0020-warwithin-q26-batch024-12key-fourfield-tooltip-audit.jsonl",
+      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-war-within/2026-10-29-0217-warwithin-q28-batch026-20key-fourfield-audit.jsonl",
       "lastSuccessfulRunDate": "2026-10-28",
       "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch022-verdict.md",
       "materialTargetDetails": [
         {
-          "key": "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
           "key": "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+          "input": 210802,
+          "output": 224800,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+          "input": 210803,
+          "output": 224801,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+          "input": 210804,
+          "output": 224802,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+          "input": 210805,
+          "output": 224803,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+          "input": 210806,
+          "output": 224804,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "candidate:tww:mill:210807:224805:runtime-method-family:20261028",
+          "input": 210807,
+          "output": 224805,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "lead:tww:mill:210796:222618:rank-eligibility-unverified",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "lead:tww:mill:210797:222619:rank-eligibility-unverified",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         }
       ]
     },
     "dragonflight": {
-      "expansionScope": "Dragonflight: 24 distinct missing unconditional E pairs",
+      "expansionScope": "Dragonflight: 12 unassigned herb milling E gaps",
       "workerAutomation": "loot-liquidator-dragonflight",
-      "assignmentId": "2026-10-29-batch026-dragonflight",
-      "status": "ASSIGNED_DISJOINT_MISSING_EXPECTED_QUANTITY_Q28",
+      "assignmentId": "2026-10-29-batch027-dragonflight",
+      "status": "ASSIGNED_Q29_UNTOUCHED_MISSING_EXPECTED_QUANTITY",
       "lastSuccessfulRunUTC": "2026-10-29T02:31:00Z",
       "acceptedFirstPassRecords": 436,
       "acceptedCorrections": 0,
       "knownBlockers": 4,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-dragonflight/",
       "recordKeys": [
-        "tsm:mill:191467:198414:L1967",
-        "tsm:mill:191468:198412:L1970",
-        "tsm:mill:191468:198413:L1971",
-        "tsm:mill:191468:198414:L1972",
-        "tsm:prospect:188658:192837:L1174",
-        "tsm:prospect:188658:192838:L1175",
-        "tsm:prospect:188658:192839:L1176",
-        "tsm:prospect:188658:192840:L1177",
-        "tsm:prospect:188658:192841:L1178",
-        "tsm:prospect:188658:192842:L1179",
-        "tsm:prospect:188658:192843:L1180",
-        "tsm:prospect:188658:192844:L1181",
-        "tsm:prospect:188658:192845:L1182",
-        "tsm:prospect:188658:192846:L1183",
-        "tsm:prospect:188658:192847:L1184",
-        "tsm:prospect:188658:192848:L1185",
-        "tsm:prospect:188658:192849:L1186",
-        "tsm:prospect:188658:192850:L1187",
-        "tsm:prospect:188658:192851:L1188",
-        "tsm:prospect:188658:192852:L1189",
-        "tsm:prospect:188658:192853:L1190",
-        "tsm:prospect:188658:192855:L1191",
-        "tsm:prospect:188658:192856:L1192",
-        "tsm:prospect:188658:192857:L1193"
+        "tsm:mill:191469:198412:L1975",
+        "tsm:mill:191469:198413:L1976",
+        "tsm:mill:191469:198414:L1977",
+        "tsm:mill:191470:198415:L1980",
+        "tsm:mill:191470:198416:L1981",
+        "tsm:mill:191470:198417:L1982",
+        "tsm:mill:191471:198415:L1985",
+        "tsm:mill:191471:198416:L1986",
+        "tsm:mill:191471:198417:L1987",
+        "tsm:mill:191472:198415:L1990",
+        "tsm:mill:191472:198416:L1991",
+        "tsm:mill:191472:198417:L1992"
       ],
       "nextBatchPreview": [
-        "tsm:mill:191467:198414:L1967",
-        "tsm:mill:191468:198412:L1970",
-        "tsm:mill:191468:198413:L1971",
-        "tsm:mill:191468:198414:L1972",
-        "tsm:prospect:188658:192837:L1174",
-        "tsm:prospect:188658:192838:L1175",
-        "tsm:prospect:188658:192839:L1176",
-        "tsm:prospect:188658:192840:L1177"
+        "tsm:mill:191469:198412:L1975",
+        "tsm:mill:191469:198413:L1976",
+        "tsm:mill:191469:198414:L1977",
+        "tsm:mill:191470:198415:L1980",
+        "tsm:mill:191470:198416:L1981",
+        "tsm:mill:191470:198417:L1982",
+        "tsm:mill:191471:198415:L1985",
+        "tsm:mill:191471:198416:L1986"
       ],
-      "instructions": "Queue28: exact 24 unique missing unconditional expectedQuantity material records; prioritize current Retail original zero-inclusive completed-cast studies, actual cast denominator, item and output rank, effective skill/spec, Resourcefulness, patch and source lineage. Do NOT reuse historical TSM/proxy E as current gold input. Source-anchored conservative tooltip P or positive range only in isolated display channel with exact matching context; never derive P/E from gross herbs, ore/5, range midpoint or rank sum. Do not revisit unchanged sources without new evidence; record negative findings and propose new search route. Submit unique worker-owned evidence; master alone compiles.",
-      "previousAssignmentId": "2026-10-29-batch025-dragonflight",
-      "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0130-dragonflight-q27-batch025-14key-fourfield-audit.jsonl",
+      "instructions": "Queue29: investigate ONLY assigned exact keys not in q28; seek new original 2026 Retail zero-inclusive actual completed-cast studies, rank, skill/spec, patch and Resourcefulness. Check source-memory before reusing sources; do not count a new link to an old cohort as independent. Historical TSM, per-gross-input and rank-alternative rates are not current economic E. Tooltip-only P/range must remain isolated and source-backed. Report blockers honestly; no manufactured zeros, probabilities, ranges or mappings. Write unique worker-owned submissions only; master owns compiler and queue.",
+      "previousAssignmentId": "2026-10-29-batch026-dragonflight",
+      "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0230-dragonflight-q28-batch026-24key-fourfield-audit.jsonl",
       "previousWorkerCommit": null,
       "assignmentPhases": [
         {
           "expansion": "dragonflight",
           "recordKeys": [
-            "tsm:mill:191467:198414:L1967",
-            "tsm:mill:191468:198412:L1970",
-            "tsm:mill:191468:198413:L1971",
-            "tsm:mill:191468:198414:L1972",
-            "tsm:prospect:188658:192837:L1174",
-            "tsm:prospect:188658:192838:L1175",
-            "tsm:prospect:188658:192839:L1176",
-            "tsm:prospect:188658:192840:L1177",
-            "tsm:prospect:188658:192841:L1178",
-            "tsm:prospect:188658:192842:L1179",
-            "tsm:prospect:188658:192843:L1180",
-            "tsm:prospect:188658:192844:L1181",
-            "tsm:prospect:188658:192845:L1182",
-            "tsm:prospect:188658:192846:L1183",
-            "tsm:prospect:188658:192847:L1184",
-            "tsm:prospect:188658:192848:L1185",
-            "tsm:prospect:188658:192849:L1186",
-            "tsm:prospect:188658:192850:L1187",
-            "tsm:prospect:188658:192851:L1188",
-            "tsm:prospect:188658:192852:L1189",
-            "tsm:prospect:188658:192853:L1190",
-            "tsm:prospect:188658:192855:L1191",
-            "tsm:prospect:188658:192856:L1192",
-            "tsm:prospect:188658:192857:L1193"
+            "tsm:mill:191469:198412:L1975",
+            "tsm:mill:191469:198413:L1976",
+            "tsm:mill:191469:198414:L1977",
+            "tsm:mill:191470:198415:L1980",
+            "tsm:mill:191470:198416:L1981",
+            "tsm:mill:191470:198417:L1982",
+            "tsm:mill:191471:198415:L1985",
+            "tsm:mill:191471:198416:L1986",
+            "tsm:mill:191471:198417:L1987",
+            "tsm:mill:191472:198415:L1990",
+            "tsm:mill:191472:198416:L1991",
+            "tsm:mill:191472:198417:L1992"
           ]
         }
       ],
-      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0033-dragonflight-q26-batch024-14key-fourfield-audit.jsonl",
+      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0230-dragonflight-q28-batch026-24key-fourfield-audit.jsonl",
       "lastSuccessfulRunDate": "2026-10-28",
       "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch022-verdict.md",
       "materialTargetDetails": [
         {
           "key": "tsm:mill:191469:198412:L1975",
+          "input": 191469,
+          "output": 198412,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191469:198413:L1976",
+          "input": 191469,
+          "output": 198413,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191469:198414:L1977",
+          "input": 191469,
+          "output": 198414,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191470:198415:L1980",
+          "input": 191470,
+          "output": 198415,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191470:198416:L1981",
+          "input": 191470,
+          "output": 198416,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191470:198417:L1982",
+          "input": 191470,
+          "output": 198417,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191471:198415:L1985",
+          "input": 191471,
+          "output": 198415,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191471:198416:L1986",
+          "input": 191471,
+          "output": 198416,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191471:198417:L1987",
+          "input": 191471,
+          "output": 198417,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191472:198415:L1990",
+          "input": 191472,
+          "output": 198415,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191472:198416:L1991",
+          "input": 191472,
+          "output": 198416,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:191472:198417:L1992",
+          "input": 191472,
+          "output": 198417,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "tsm:mill:200061:190322:L1996",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "tsm:mill:200061:198412:L1998",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         }
       ]
     },
     "legacy": {
-      "expansionScope": "Legacy 1 + Dragonflight overflow 20 distinct missing unconditional E pairs",
+      "expansionScope": "Dragonflight overflow: 12 unassigned fish milling E gaps",
       "workerAutomation": "loot-liquidator-legacy",
-      "assignmentId": "2026-10-29-batch026-legacy",
-      "status": "ASSIGNED_DISJOINT_MISSING_EXPECTED_QUANTITY_Q28",
+      "assignmentId": "2026-10-29-batch027-legacy",
+      "status": "ASSIGNED_Q29_UNTOUCHED_MISSING_EXPECTED_QUANTITY",
       "lastSuccessfulRunUTC": "2026-10-29T02:44:00Z",
       "acceptedFirstPassRecords": 420,
       "acceptedCorrections": 0,
       "knownBlockers": 4,
       "submissionDirectory": "research/coordination/submissions/loot-liquidator-legacy/",
       "recordKeys": [
-        "retail12.0.5:prospect:36910:46849:globalmenace",
-        "tsm:prospect:188658:192858:L1194",
-        "tsm:prospect:188658:192859:L1195",
-        "tsm:prospect:188658:192860:L1196",
-        "tsm:prospect:188658:192861:L1197",
-        "tsm:prospect:188658:192862:L1198",
-        "tsm:prospect:188658:192863:L1199",
-        "tsm:prospect:188658:192865:L1200",
-        "tsm:prospect:188658:192866:L1201",
-        "tsm:prospect:188658:192867:L1202",
-        "tsm:prospect:188658:192868:L1203",
-        "tsm:prospect:188658:192870:L1205",
-        "tsm:prospect:188658:192871:L1206",
-        "tsm:prospect:189143:192837:L1212",
-        "tsm:prospect:189143:192838:L1213",
-        "tsm:prospect:189143:192839:L1214",
-        "tsm:prospect:189143:192840:L1215",
-        "tsm:prospect:189143:192841:L1216",
-        "tsm:prospect:189143:192842:L1217",
-        "tsm:prospect:189143:192843:L1218",
-        "tsm:prospect:189143:192870:L1243"
+        "tsm:mill:200061:198412:L1998",
+        "tsm:mill:200061:198413:L1999",
+        "tsm:mill:200061:198414:L2000",
+        "tsm:mill:200061:198415:L2001",
+        "tsm:mill:200061:198416:L2002",
+        "tsm:mill:200061:198417:L2003",
+        "tsm:mill:200061:198418:L2004",
+        "tsm:mill:200061:198419:L2005",
+        "tsm:mill:200061:198420:L2006",
+        "tsm:mill:200061:198421:L2007",
+        "tsm:mill:200061:198422:L2008",
+        "tsm:mill:200061:198423:L2009"
       ],
       "nextBatchPreview": [
-        "retail12.0.5:prospect:36910:46849:globalmenace",
-        "tsm:prospect:188658:192858:L1194",
-        "tsm:prospect:188658:192859:L1195",
-        "tsm:prospect:188658:192860:L1196",
-        "tsm:prospect:188658:192861:L1197",
-        "tsm:prospect:188658:192862:L1198",
-        "tsm:prospect:188658:192863:L1199",
-        "tsm:prospect:188658:192865:L1200"
+        "tsm:mill:200061:198412:L1998",
+        "tsm:mill:200061:198413:L1999",
+        "tsm:mill:200061:198414:L2000",
+        "tsm:mill:200061:198415:L2001",
+        "tsm:mill:200061:198416:L2002",
+        "tsm:mill:200061:198417:L2003",
+        "tsm:mill:200061:198418:L2004",
+        "tsm:mill:200061:198419:L2005"
       ],
-      "instructions": "Queue28: exact 21 unique missing unconditional expectedQuantity material records; prioritize current Retail original zero-inclusive completed-cast studies, actual cast denominator, item and output rank, effective skill/spec, Resourcefulness, patch and source lineage. Do NOT reuse historical TSM/proxy E as current gold input. Source-anchored conservative tooltip P or positive range only in isolated display channel with exact matching context; never derive P/E from gross herbs, ore/5, range midpoint or rank sum. Do not revisit unchanged sources without new evidence; record negative findings and propose new search route. Submit unique worker-owned evidence; master alone compiles.",
-      "previousAssignmentId": "2026-10-29-batch025-legacy",
-      "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-legacy/2026-10-29-0140-legacy-q27-batch025-14key-fourfield-audit.jsonl",
+      "instructions": "Queue29: investigate ONLY assigned exact keys not in q28; seek new original 2026 Retail zero-inclusive actual completed-cast studies, rank, skill/spec, patch and Resourcefulness. Check source-memory before reusing sources; do not count a new link to an old cohort as independent. Historical TSM, per-gross-input and rank-alternative rates are not current economic E. Tooltip-only P/range must remain isolated and source-backed. Report blockers honestly; no manufactured zeros, probabilities, ranges or mappings. Write unique worker-owned submissions only; master owns compiler and queue.",
+      "previousAssignmentId": "2026-10-29-batch026-legacy",
+      "previousSubmissionSource": "research/coordination/submissions/loot-liquidator-legacy/2026-10-29-0240-legacy-q28-batch026-21key-fourfield-audit.jsonl",
       "previousWorkerCommit": null,
       "assignmentPhases": [
         {
-          "expansion": "legacy",
-          "recordKeys": [
-            "retail12.0.5:prospect:36910:46849:globalmenace"
-          ]
-        },
-        {
           "expansion": "dragonflight",
           "recordKeys": [
-            "tsm:prospect:188658:192858:L1194",
-            "tsm:prospect:188658:192859:L1195",
-            "tsm:prospect:188658:192860:L1196",
-            "tsm:prospect:188658:192861:L1197",
-            "tsm:prospect:188658:192862:L1198",
-            "tsm:prospect:188658:192863:L1199",
-            "tsm:prospect:188658:192865:L1200",
-            "tsm:prospect:188658:192866:L1201",
-            "tsm:prospect:188658:192867:L1202",
-            "tsm:prospect:188658:192868:L1203",
-            "tsm:prospect:188658:192870:L1205",
-            "tsm:prospect:188658:192871:L1206",
-            "tsm:prospect:189143:192837:L1212",
-            "tsm:prospect:189143:192838:L1213",
-            "tsm:prospect:189143:192839:L1214",
-            "tsm:prospect:189143:192840:L1215",
-            "tsm:prospect:189143:192841:L1216",
-            "tsm:prospect:189143:192842:L1217",
-            "tsm:prospect:189143:192843:L1218",
-            "tsm:prospect:189143:192870:L1243"
+            "tsm:mill:200061:198412:L1998",
+            "tsm:mill:200061:198413:L1999",
+            "tsm:mill:200061:198414:L2000",
+            "tsm:mill:200061:198415:L2001",
+            "tsm:mill:200061:198416:L2002",
+            "tsm:mill:200061:198417:L2003",
+            "tsm:mill:200061:198418:L2004",
+            "tsm:mill:200061:198419:L2005",
+            "tsm:mill:200061:198420:L2006",
+            "tsm:mill:200061:198421:L2007",
+            "tsm:mill:200061:198422:L2008",
+            "tsm:mill:200061:198423:L2009"
           ]
         }
       ],
-      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-legacy/2026-10-29-0041-legacy-q26-batch024-14key-fourfield-audit-corrected-v2.jsonl",
+      "lastSubmittedBatch": "research/coordination/submissions/loot-liquidator-legacy/2026-10-29-0240-legacy-q28-batch026-21key-fourfield-audit.jsonl",
       "lastSuccessfulRunDate": "2026-10-28",
       "lastAcceptedReview": "research/coordination/reviews/2026-10-28-master-worker-batch022-verdict.md",
       "materialTargetDetails": [
         {
-          "key": "tsm:mill:200061:198413:L1999",
+          "key": "tsm:mill:200061:198412:L1998",
+          "input": 200061,
+          "output": 198412,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
+          ]
+        },
+        {
+          "key": "tsm:mill:200061:198413:L1999",
+          "input": 200061,
+          "output": 198413,
+          "method": "Mill",
+          "missing": [
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198414:L2000",
+          "input": 200061,
+          "output": 198414,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198415:L2001",
+          "input": 200061,
+          "output": 198415,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198416:L2002",
+          "input": 200061,
+          "output": 198416,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198417:L2003",
+          "input": 200061,
+          "output": 198417,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198418:L2004",
+          "input": 200061,
+          "output": 198418,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198419:L2005",
+          "input": 200061,
+          "output": 198419,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198420:L2006",
+          "input": 200061,
+          "output": 198420,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198421:L2007",
+          "input": 200061,
+          "output": 198421,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198422:L2008",
+          "input": 200061,
+          "output": 198422,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         },
         {
           "key": "tsm:mill:200061:198423:L2009",
+          "input": 200061,
+          "output": 198423,
+          "method": "Mill",
           "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "tsm:prospect:189143:192871:L1244",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "tsm:prospect:190311:192870:L1281",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
-          ]
-        },
-        {
-          "key": "tsm:prospect:190311:192871:L1282",
-          "missing": [
-            "exact current Retail P",
-            "conditional positive yield bounds",
-            "unconditional E",
-            "skill/rank eligibility"
+            "current patch exact-rank zero-inclusive completed-cast E",
+            "actual cast count",
+            "skill/spec",
+            "Resourcefulness",
+            "tooltip-only P and positive range if separately evidenced"
           ]
         }
       ]
@@ -3271,7 +2857,7 @@
     "luaInterpreterTested": false,
     "clientTests": 0
   },
-  "latestMasterReview": "research/coordination/reviews/2026-10-29-master-worker-batch024-verdict.md",
+  "latestMasterReview": "research/coordination/reviews/2026-10-29-master-worker-batch026-verdict.md",
   "masterReviewBatch016": {
     "reviewFile": "research/coordination/reviews/2026-10-28-master-worker-batch016-verdict.md",
     "reviewedWorkerKeys": 150,
@@ -3312,7 +2898,7 @@
       "legacy": 40
     }
   },
-  "nextQueueRationale": "q27: 32 distinct Midnight Crushing input/output-rank leads (not yet admitted); 10 valid TWW milling candidates + 2 new unadmitted Nacreous rank leads, not false Apricate Ink; 28 DF/Legacy exact rank/denominator follow-ups. Worker scopes disjoint; research tasks require NEW evidence not repeat TSM source audits.",
+  "nextQueueRationale": "q28 80/80 audited; 320/320 exact-context fields still unknown. q29 selects exactly 36 previously unassigned missing-E records (12 TWW milling, 12 Dragonflight herb milling, 12 Dragonflight fish milling), no q28 key repetition. Six TWW overflow assigned to Midnight; completed workers help high-impact uncovered exact pairs. Seek new original completed-cast evidence, not recycled TSM rows.",
   "masterReviewBatch018": {
     "reviewFile": "research/coordination/reviews/2026-10-28-master-worker-batch018-verdict.md",
     "reviewedWorkerRecords": 150,
@@ -3375,5 +2961,28 @@
       "legacy": 14
     },
     "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "masterReviewBatch026": {
+    "reviewFile": "research/coordination/reviews/2026-10-29-master-worker-batch026-verdict.md",
+    "queueAudited": 28,
+    "reviewedWorkerKeys": 80,
+    "distinctKeys": 80,
+    "matchedApplicableGameDataOutputLines": 69,
+    "exactCurrentNumericFieldsUnknown": 320,
+    "newMappings": 0,
+    "newCurrentRetailNumericFields": 0,
+    "correctedTitaniumGrossEquivalentRows": 12,
+    "sourceReviewEventsPendingRebuild": 17,
+    "sourceMemoryFullRebuild": false,
+    "nextQueueRevision": 29,
+    "nextAssignments": {
+      "midnight": 6,
+      "war_within": 6,
+      "dragonflight": 12,
+      "legacy": 12
+    },
+    "compilerRebuiltThisRun": false,
+    "compilerExecutionBlocker": "CONNECTOR_MAX_TOOL_CALLS",
+    "candidateLastKnownGood": "0.7.1"
   }
 }
