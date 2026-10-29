@@ -8,6 +8,9 @@ const EPS = 1e-9;
 // Same-process source-identity lease. Deliberately non-serialized: a reloaded
 // preview must be recompiled before this validation can certify source identity.
 const sourceIdentityAtBuild = new WeakMap();
+// Pin the generated working preview independently of its source evidence.
+// This in-process lease cannot attest a separately loaded serialized artifact.
+const workingIdentityAtBuild = new WeakMap();
 
 function finite(v) { return typeof v === "number" && Number.isFinite(v); }
 function positiveInteger(v) { return Number.isSafeInteger(v) && v >= 1; }
@@ -77,7 +80,12 @@ function sourceIdentity(r) {
     inputCountPerOperation: r.inputCountPerOperation,
     outputFamilyID: r.outputFamilyID ?? null,
     directReagents: canonicalDirectReagents(r),
-    conditions: r.conditions ?? null
+    conditions: r.conditions ?? null,
+    mappingConfidence: r.mappingConfidence ?? null,
+    conditionsConfidence: r.conditionsConfidence ?? null,
+    // A source change to value, status, confidence, claims or blockers
+    // invalidates the preview, even if the displayed number stays unchanged.
+    evidenceFields: Object.fromEntries(FIELDS.map(f => [f, r[f] ?? null]))
   });
 }
 // Group by strict identity, then retain the old ID only if unambiguous.
@@ -331,6 +339,7 @@ function applyWorkingEstimates(records, options = {}) {
     report.previewOnlyRecords++;
     r.workingEstimate = w;
     sourceIdentityAtBuild.set(w, sourceIdentity(r));
+    workingIdentityAtBuild.set(w, stableDonorContext(w));
   }
   const errors = validateWorkingEstimates(records, options);
   if (errors.length) throw Error("Working estimate validation: " + errors.slice(0, 8).join(","));
@@ -355,6 +364,9 @@ function validateWorkingEstimates(records, options = {}) {
     if (!sourceIdentityAtBuild.has(w) ||
         sourceIdentityAtBuild.get(w) !== sourceIdentity(r))
       errors.push("WORKING_SOURCE_IDENTITY_STALE_OR_UNVERIFIABLE:" + id);
+    if (!workingIdentityAtBuild.has(w) ||
+        workingIdentityAtBuild.get(w) !== stableDonorContext(w))
+      errors.push("WORKING_PREVIEW_ATTESTATION_STALE_OR_TAMPERED:" + id);
     if (!w.targetContext ||
         stableDonorContext(w.targetContext) !== stableDonorContext(workingTargetContext(r)))
       errors.push("WORKING_TARGET_CONTEXT_STALE:" + id);
@@ -374,11 +386,30 @@ function validateWorkingEstimates(records, options = {}) {
     if (!Array.isArray(w.assumptions) || !w.fieldConfidence || !w.fieldStatus)
       errors.push("WORKING_METADATA:" + id);
     else {
-      if (w.assumptions.length && w.confidence !== 0) errors.push("ASSUMED_WORKING_CONFIDENCE:" + id);
+      const ceiling = Math.min(score(r.mappingConfidence), score(r.conditionsConfidence),
+        ...FIELDS.map(f => score(w.fieldConfidence[f])));
+      if (!Number.isInteger(w.confidence) || w.confidence < 0 ||
+          w.confidence > ceiling)
+        errors.push("WORKING_CONFIDENCE_EXCEEDS_EVIDENCE_CEILING:" + id);
+      if (w.assumptions.length && w.confidence !== 0)
+        errors.push("ASSUMED_WORKING_CONFIDENCE:" + id);
+      if (w.status !== (w.assumptions.length ?
+          "PROVISIONAL_WORKING_ESTIMATE" : "COPIED_EVIDENCE_PREVIEW"))
+        errors.push("WORKING_STATUS_PROVENANCE_MISMATCH:" + id);
       for (const f of FIELDS) {
         const raw = evidenceValue(r, f);
-        if ((raw === null || w[f] !== raw) && w.fieldConfidence[f] !== 0)
+        const fieldStatus = w.fieldStatus[f];
+        const copied = fieldStatus === "COPIED_EVIDENCE";
+        if (copied && (raw === null || w[f] !== raw ||
+            w.fieldConfidence[f] !== score(r[f]?.confidence)))
+          errors.push("WORKING_FALSE_COPIED_EVIDENCE:" + id + ":" + f);
+        if (!copied && fieldStatus !== "POLICY_PRIOR" &&
+            fieldStatus !== "WORKING_CONSISTENCY_ADJUSTMENT")
+          errors.push("WORKING_UNKNOWN_FIELD_PROVENANCE:" + id + ":" + f);
+        if (!copied && w.fieldConfidence[f] !== 0)
           errors.push("IMPUTED_FIELD_CONFIDENCE:" + id + ":" + f);
+        if (raw === null && copied)
+          errors.push("WORKING_MISSING_SOURCE_MISLABELED:" + id + ":" + f);
       }
     }
     // Donor ancestry is a contract, not a decorative source label. Reject
