@@ -102,6 +102,12 @@ Settings.GetSetting=function(name) return settings[name] end
 Settings.CreateCheckboxInitializer=function(setting) return {setting=setting,factory='checkbox'} end
 Settings.CreateSliderOptions=function(lo,hi,step) return {minValue=lo,maxValue=hi,step=step} end
 Settings.CreateSliderInitializer=function(setting,options) return {setting=setting,options=options,factory='slider'} end
+Settings.CreateSlider=function(category,setting,options)
+    assert(category,'native slider must have a Settings layout host')
+    local initializer=Settings.CreateSliderInitializer(setting,options)
+    initializer.createdBySettingsSlider=true
+    return initializer
+end
 Settings.CreateDropdownInitializer=function(setting,options) return {setting=setting,options=options,factory='dropdown'} end
 Settings.CreateControlTextContainer=function()
     local c={};function c:Add(value,label,tooltip) self[#self+1]={value=value,label=label,tooltip=tooltip} end
@@ -146,6 +152,7 @@ end
 local changes=0
 local slider=LL:CreateSettingsCanvasSlider(panel,9,22,1,12,function() changes=changes+1 end)
 assert(slider.SetValue==slider.nativeSetValue,'native Settings SetValue must never be replaced')
+assert(slider.initializer.createdBySettingsSlider,'canvas slider must use Settings.CreateSlider')
 slider:SetPreferenceValue(15)
 assert(slider:GetPreferenceValue()==15 and slider.slider.value==15 and changes==1)
 for i=1,100 do
@@ -239,4 +246,16 @@ variable='OtherAddon_option'
 initializer:InitFrame(pooled);assert(pooled.Control.steppersShown,'pooled frame changed other addon dropdowns')
 variable='LootLiquidator_tsmFallbackOperation'
 pooled:InitDropdown();assert(not pooled.Control.steppersShown)
+-- Canvas sliders must take the same modern ElvUI skin path as native Settings
+-- list sliders, passing the complete step-slider container.
+assert(loadfile('LootLiquidator/AltRosterUI.lua'))('LootLiquidator',LL)
+local skinned=0
+local stepSlider={Slider={}}
+local fakeSkin={HandleStepSlider=function(_,native)
+    assert(native==stepSlider);skinned=skinned+1
+end,HandleSliderFrame=function()error('legacy inner-slider skin must not be used')end}
+ElvUI={{GetModule=function()return fakeSkin end}}
+LL:SkinSettingsCanvasControl({SliderWithSteppers=stepSlider},'slider')
+assert(skinned==1)
+ElvUI=nil
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')

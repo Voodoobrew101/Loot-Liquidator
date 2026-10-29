@@ -14,7 +14,7 @@ Commands: `/ll settings`, `/ll status`; recording: `/ll craftstats`, `/ll crafts
 
 LootLiquidator pages hide and block Blizzard's shared Defaults button because its dialog offers a game-wide reset. The separate **Reset source weights** action changes only LootLiquidator's four evidence-source preferences. Game Settings and other addons retain their own Defaults behavior.
 
-Alpha5 fixes the alpha4 Settings slider callback recursion. Dropdowns open their normal menus without left/right cycling arrows, including after page and selection refreshes. Existing preferences are preserved.
+Alpha5 fixes the alpha4 Settings slider callback recursion. Every slider uses Settings.CreateSlider, standard Blizzard step-slider dimensions, and the same optional ElvUI HandleStepSlider path as native Settings pages. Dropdowns open their normal menus without left/right cycling arrows, including after page and selection refreshes. Existing preferences are preserved.
 
 Settings canvas controls use Blizzard Settings initializers and native widgets, with the existing optional ElvUI skin integration. **Show ?** sits beside **Show V on soulbound gear** below the color table. Profession pages use named expansion selectors, an effective-skill slider, Blizzard specialization/rank choices and captured character buff choices. Log into each character and open the relevant expansion's profession to cache its names; offline alts use only their own saved catalog. Buff choices are explicit simulations of captured helpful auras, not a complete profession-buff database. They do not cast spells or supply unverified yield bonuses. Simulations still require Manual participation to affect character context.
 

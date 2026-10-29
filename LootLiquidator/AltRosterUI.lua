@@ -114,8 +114,10 @@ local function ApplyElvUISettingsSkin(frame,record)
         if not pcall(skin.HandleButton,skin,frame.Button) then return end
     elseif record.kind=="slider" then
         local slider=frame.SliderWithSteppers
-        if not slider or type(skin.HandleSliderFrame)~="function" then return end
-        if not pcall(skin.HandleSliderFrame,skin,slider.Slider) then return end
+        -- Match ElvUI's SettingsList handler: it skins the complete step
+        -- slider, not the inner Slider as a standalone legacy control.
+        if not slider or type(skin.HandleStepSlider)~="function" then return end
+        if not pcall(skin.HandleStepSlider,skin,slider) then return end
     else
         local checkbox=frame.Checkbox or frame.CheckBox
         if not checkbox or type(checkbox.CreateBackdrop)~="function" then return end

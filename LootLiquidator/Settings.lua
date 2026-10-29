@@ -445,7 +445,6 @@ function LL:CreateEvidenceSettingsPanel(category)
             if LL.db[weightKey]~=value then weighted:SetValue(value) end
         end)
         slider:SetPoint("TOPLEFT",panel,"TOPLEFT",285,-26-(index-1)*78)
-        slider.slider:SetWidth(230)
         check:SetScript("OnClick",function(self) checked:SetValue(self:GetChecked()) end)
         local function refresh()
             check:SetChecked(LL.db[enabledKey]);slider:SetPreferenceValue(LL.db[weightKey])

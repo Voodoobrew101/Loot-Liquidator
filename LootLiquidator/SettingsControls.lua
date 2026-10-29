@@ -141,10 +141,12 @@ function LL:CreateSettingsCanvasSlider(parent,minValue,maxValue,step,initial,onC
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
     end
     local control=self:CreateSettingsControl(parent,"SettingsSliderControlTemplate",
-        Settings.CreateSliderInitializer(setting,options,""),"slider")
-    control:SetSize(382,30)
+        Settings.CreateSlider(self.canvasSettingsCategory,setting,options,""),"slider")
+    control:SetSize(320,30)
     local native=control.SliderWithSteppers
-    native:ClearAllPoints();native:SetPoint("LEFT",control,"LEFT",4,0);native:SetWidth(302)
+    -- Preserve the standard Settings slider dimensions, artwork, steppers and
+    -- value label. Only position the whole native widget within this canvas.
+    native:ClearAllPoints();native:SetPoint("LEFT",control,"LEFT",16,0)
     local reported=initial
     setting:SetValueChangedCallback(function(_,value)
         if value==reported then return end
