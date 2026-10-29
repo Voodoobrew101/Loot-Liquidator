@@ -15,10 +15,12 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install 'jsonschema==4.26.0'
-      - run: node research/tools/run_completion_pipeline.js --check
-      - name: Verify Lua 5.1 syntax and decoded working/evidence isolation
+      - name: Install Lua 5.1 for compiler roundtrip checks
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y lua5.1
+      - run: node research/tools/run_completion_pipeline.js --check
+      - name: Verify Lua 5.1 syntax and decoded working/evidence isolation
+        run: |
           luac5.1 -p research/proposed/itemdb.lua
           lua5.1 research/tests/test_generated_working_estimates.lua
