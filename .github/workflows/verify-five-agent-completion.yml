@@ -45,25 +45,3 @@ jobs:
           assert(multi > 0 and extra > 0, "Multi-blocker evidence collapsed in candidate")
           print("PASS: " .. multi .. " multi-blocker fields and " .. extra .. " additional blockers preserved")
           LUA
-
-  f002-one-time-rebuild:
-    if: "${{ github.event_name == 'push' && github.event.head_commit.message == 'chore(F002): one-time regenerate cast-basis candidate' }}"
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-      - name: Regenerate only research candidate outputs
-        run: |
-          node -e 'require("./research/tools/run_completion_pipeline.js").run(process.cwd(),{test:false})'
-          git add research/proposed/itemdb.lua research/proposed/itemdb-build-report.json research/ledger/itemdb-missing-fields.csv research/ledger/itemdb-source-alternates.csv research/coordination/completion-readiness.json research/coordination/completion-priorities.json
-          if git diff --cached --quiet; then echo "No generated changes"; exit 0; fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'build(F002): regenerate cast-basis-safe research preview'
-          git push origin HEAD:implementation/five-agent-completion
