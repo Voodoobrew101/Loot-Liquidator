@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_PATCH121_DYE_STATION_UNIVERSE_PIVOT",
+  "runUTC": "2026-10-29T17:30:00Z",
+  "baseCommit": "8e95400a82dfe64638efff07de448cf7370925bd",
+  "branch": "implementation/five-agent-completion",
+  "gameMode": "RETAIL",
+  "patchEpoch": "12.1.0+ (August 11, 2026 onward)",
+  "status": "UNADMITTED_UNIVERSE_LEAD",
+  "questionResolved": "Does patch 12.1 replace old pigment conversion with a direct herb-to-housing-dye conversion family?",
+  "answer": "Yes. Developer statement: nine dye items, alchemist/scribe uses dye station and herbs directly, old pigment step and personal recipe-book dye recipes removed.",
+  "proposedMethod": "DYE_STATION_SALVAGE_NOT_MILL",
+  "pairs": [
+    {
+      "inputItemID": 3818,
+      "input": "Fadeleaf",
+      "outputItemID": 274464,
+      "output": "Black Housing Dye",
+      "spellID": 1306642,
+      "nominalReagents": [
+        {
+          "itemID": 3818,
+          "quantity": 10
+        }
+      ],
+      "nominalOutputQuantity": 1,
+      "method": "DYE_STATION_SALVAGE",
+      "patchEpoch": "12.1.0+",
+      "professions": [
+        "Alchemy",
+        "Inscription"
+      ],
+      "stationRequired": true,
+      "minimumEligibleSkill": null,
+      "selectorEligibility": "DERIVATIVE_LEAD_NOT_VERIFIED",
+      "admitted": false,
+      "economicEvidence": {
+        "dropChance": null,
+        "yieldMin": null,
+        "yieldMax": null,
+        "expectedQuantity": null,
+        "confidence": 0,
+        "economicUse": "PREVIEW_ONLY",
+        "normalizedVerified": false
+      }
+    },
+    {
+      "inputItemID": 765,
+      "input": "Silverleaf",
+      "outputItemID": 274468,
+      "output": "Blue Housing Dye",
+      "spellID": 1306796,
+      "nominalReagents": [
+        {
+          "itemID": 765,
+          "quantity": 10
+        }
+      ],
+      "nominalOutputQuantity": 1,
+      "method": "DYE_STATION_SALVAGE",
+      "patchEpoch": "12.1.0+",
+      "professions": [
+        "Alchemy",
+        "Inscription"
+      ],
+      "stationRequired": true,
+      "minimumEligibleSkill": null,
+      "selectorEligibility": "DERIVATIVE_LEAD_NOT_VERIFIED",
+      "admitted": false,
+      "economicEvidence": {
+        "dropChance": null,
+        "yieldMin": null,
+        "yieldMax": null,
+        "expectedQuantity": null,
+        "confidence": 0,
+        "economicUse": "PREVIEW_ONLY",
+        "normalizedVerified": false
+      }
+    }
+  ],
+  "sourceRefs": [
+    {
+      "kind": "PRIMARY_DEVELOPER_STATEMENT",
+      "url": "https://www.wowhead.com/news/i-bet-you-re-dyeing-to-hear-about-this-decor-dye-updates-in-patch-12-1-381939",
+      "finding": "Blizzard developer post: nine dyes, pigment intermediary removed, dye station direct herb salvage"
+    },
+    {
+      "kind": "GAME_SPELL_BLACK",
+      "url": "https://www.wowhead.com/spell=1306642/black-housing-dye",
+      "finding": "Create one black dye; Salvage Item effect value 10"
+    },
+    {
+      "kind": "GAME_SPELL_BLUE",
+      "url": "https://www.wowhead.com/spell=1306796/blue-housing-dye",
+      "finding": "Create one blue dye; Salvage Item effect value 10"
+    },
+    {
+      "kind": "ITEM_BLACK_AND_CROWDSOURCED_SELECTOR",
+      "url": "https://www.wowhead.com/ptr/item=274464/black-housing-dye",
+      "finding": "Black dye item ID and Fadeleaf eligibility from Tequima comment, not direct selector"
+    },
+    {
+      "kind": "ITEM_BLUE_AND_CROWDSOURCED_SELECTOR",
+      "url": "https://www.wowhead.com/ptr/item=274468/blue-housing-dye",
+      "finding": "Blue dye item ID and Silverleaf eligibility from same author table"
+    },
+    {
+      "kind": "DERIVATIVE_RETIRED_ITEM",
+      "url": "https://warcraft.wiki.gg/wiki/Black_Dye_Pigment",
+      "finding": "Old pigment item 262639 removed patch 12.1.0"
+    },
+    {
+      "kind": "PATCH_DATE",
+      "url": "https://blizzardwatch.com/2026/07/28/wow-12-1-release-date/",
+      "finding": "Patch 12.1 released August 11 2026"
+    }
+  ],
+  "retiredHistoricalExample": {
+    "oldPigmentItemID": 262639,
+    "oldSpellID": 1268662,
+    "validThrough": "pre-12.1",
+    "currentStatus": "RETIRED_NOT_CURRENT_LIVE"
+  },
+  "economicSafety": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "blockers": [
+    "Exact current client dye-station herb selector and ranks not captured",
+    "Seven additional dye colors need exact output IDs/spell IDs",
+    "Minimum profession eligibility and saved reagents not observed",
+    "Nominal one dye per operation is a spell description, not a completed-cast histogram"
+  ],
+  "disposition": "Two ID-specific candidate leads only; no numeric EV or mapping admission."
+}
