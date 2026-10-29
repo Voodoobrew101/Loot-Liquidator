@@ -4,7 +4,7 @@
 const F=["dropChance","yieldMin","yieldMax","expectedQuantity"];
 const {applyTooltipFallbacks,validateTooltipIsolation}=require("./itemdb_tooltip_channel.js");
 const {applyWorkingEstimates,validateWorkingEstimates}=require("./working_estimates.js");
-const COMPILER_VERSION="0.8.1",SCHEMA_VERSION="0.2.0",SELECTION_POLICY="context-evidence-first-v1";
+const COMPILER_VERSION="0.8.0",SCHEMA_VERSION="0.2.0",SELECTION_POLICY="context-evidence-first-v1";
 function stable(v){if(v===null||typeof v!=="object")return JSON.stringify(v);if(Array.isArray(v))return "["+v.map(stable).join(",")+"]";return "{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+stable(v[k])).join(",")+"}";}
 function logicalKey(r){return [r.method,r.inputItemID,r.outputItemID].join(":");}
 // Operation identity includes the recipe and nominal batch. A historical mass
