@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F005_CAST_BASIS_REPAIR_AND_BINOMIAL_INTEGRATION",
-  "queueRevision": 11,
-  "sourceCommit": "a36db2df9303a5c87fd1a5ef4503c8e227b894dc",
+  "taskID": "F001_F005_DETACHED_METADATA_INTEGRATION",
+  "queueRevision": 12,
+  "sourceCommit": "24d94c28b49283c9ac7396cba11e68d311835e92",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "940431ecd0cefe1e65701d2cc9f53ae619350b38",
@@ -29,7 +29,7 @@
     "confidenceOfImputedFields": 0,
     "economicUse": "PREVIEW_ONLY",
     "normalizedVerified": false,
-    "status": "NUMERICALLY_COMPLETE_RESEARCH_ONLY_CAST_BASIS_QA_PASS_SERIALIZED_ATTESTATION_PENDING",
+    "status": "NUMERICALLY_COMPLETE_RESEARCH_ONLY_NATIVE_CI_PASS_DETACHED_METADATA_SEAL_BLOCKED",
     "imputedFieldCounts": {
       "dropChance": 987,
       "yieldMin": 97,
@@ -71,27 +71,28 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "Cross-process serialized source/context attestation is not independently tested.",
-    "New F003 independent 476-case fixture not wired into native CI.",
-    "116 missing evidence E fields and 514 evidence numeric gaps remain.",
-    "No independent current-Retail completed-cast cohort or verified minimum eligible skill baseline.",
-    "Retail mapping universe not independently exhaustive; 24 legacy queue30 leads and 2 Housing Dye input leads remain unadmitted.",
-    "No WoW client verification."
+    "Independent F005 V8 harness reproduced six unsealed source metadata mutations: tooltipOnly.economicUse, tooltipOnly.displayOnly, tooltipOnly.sourceClaimID, sources, verifiedDate, status. Current sourceIdentity omits them.",
+    "Validator-owned 14-case detached native Node suite is not yet invoked by the pipeline; V8 used a deterministic noncryptographic hash stub, not native SHA-256.",
+    "Detached attestation has no separately persisted and independently pinned candidate digest; the in-process pin check is not a durable deployment guarantee.",
+    "Anytime-valid F003 Gem Finding model awaits independent validator review and has no measured current-Retail cast cohort.",
+    "116 evidence-backed expectedQuantity gaps and 514 total evidence numeric gaps; no >=90 evidence fields or independently verified minimum eligible baseline.",
+    "Retail universe not independently exhaustive; 24 legacy queue30 leads and 2 Housing Dye input leads remain unadmitted.",
+    "No WoW Retail in-game verification."
   ],
   "checksExecuted": [
-    "Read current branch head, common/coordinator contracts, v2 workflow, canonical readiness/priorities and four latest specialist submissions plus independent review",
-    "Verified current blobs of estimator, pipeline, regenerated candidate/report, model, independent numeric fixture and two historical evidence records",
-    "Reconciled generated 1018*4=4072; 3558+514=4072; imputed P=987 and E=933 are prior classifications, not new evidence",
-    "Verified native CI 40959813084 at exact head a36db2df9303a5c87fd1a5ef4503c8e227b894dc passed Node pipeline, Lua5.1 decoding/roundtrip and schema",
-    "Reviewed F005 independent V8 12/12 cast-basis, 11/11 source status, 12/12 provenance and 476/476 high-n binomial checks",
-    "Independently computed high-n CDF using SciPy (0.491578960734732 vs model 0.4915789606543559)"
+    "Read latest head and all five mandatory coordinator contracts/readiness/priorities plus four role submissions and F005 review",
+    "Verified exact blobs for working_estimates.js, pipeline, validator fixture, F003 model, F004 evidence, candidate and canonical generated counters",
+    "Independently inspected sourceIdentity field coverage; confirmed omission of tooltipOnly, sources, verifiedDate and status",
+    "Verified native CI 40968063368 at exact head 24d94c28b49283c9ac7396cba11e68d311835e92 succeeded with Node --check, independent 476-case binomial fixture, Lua5.1, schema and blocker preservation",
+    "Verified F005 V8 three positive controls and six undetected metadata mutations were reported; native 14-case test is pending",
+    "Independently recomputed anytime alpha-spending zero-hit upper bounds at n=574,2095,2096 and F004 reported gross-unit arithmetic"
   ],
   "checksUnavailable": [
-    "Native Node of newly authored independent 476-case F003 fixture (not wired into CI)",
+    "Native Node execution of F005 new 14-case detached metadata suite (not wired to CI)",
+    "Independent F005 model review of F003 anytime bounds",
     "WoW Retail client",
-    "Cross-process serialized source/context attestation",
-    "Current Retail independent whole-study holdout",
-    "Direct verification of the two original Reddit reports in this run"
+    "Independent current-Retail whole-study holdout",
+    "Independent direct verification of original forum post in this run"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -100,65 +101,60 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T2158Z-F001-F005-cast-basis-and-binomial-integration.json",
-  "decision": "F002_CAST_BASIS_AND_F005_INDEPENDENT_QA_ACCEPTED_RESEARCH_ONLY; F003_NUMERIC_STABILITY_ACCEPTED_SYNTHETIC_ONLY; F004_HISTORICAL_CONTEXT_ONLY; FULL_ECONOMIC_VALIDATION_BLOCKED",
-  "nextTask": "F002_SERIALIZED_SOURCE_CONTEXT_ATTESTATION_AND_F003_NATIVE_CI_THEN_F005_INDEPENDENT_RETEST",
+  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T2257Z-F001-F005-detached-metadata-integration.json",
+  "decision": "F002_NATIVE_CI_ACCEPTED_BUT_DETACHED_PROVENANCE_SEAL_BLOCKED_BY_F005; F003_ANYTIME_MATH_CONDITIONAL; F004_CONTEXT_ONLY; NO_ECONOMIC_PROMOTIONS",
+  "nextTask": "F002_FIX_SIX_METADATA_SEAL_FIELDS_AND_F005_NATIVE_14_CASE_RETEST",
   "priorityRecords": 217,
   "independentValidator": {
-    "status": "PASS_CAST_BASIS_REPAIR_CONDITIONAL_SYNTHETIC_NUMERICS",
-    "castBasisCases": 12,
-    "castBasisPassed": 12,
-    "castBasisFailed": 0,
-    "priorSourceStatusClaimPassed": 11,
-    "priorProvenancePassed": 12,
-    "independentBinomialNumericalPassed": 476,
-    "independentBinomialNumericalFailed": 0,
-    "nativeIndependentNumericalFixtureExecuted": false,
-    "subjectBlob": "1a100b304bd26fa5a0840ade7d8cf4437803aa6f",
-    "modelBlob": "28f22970ef4e0307a69bff624844917fa80fca26",
+    "status": "FAIL_SERIALIZED_METADATA_SOURCE_PROVENANCE_V8_3_PASS_6_FAIL_NATIVE_PENDING",
+    "sourceBlob": "3500fac51b69328cacb6c3ec5089561fcba2f2bb",
+    "controlsPassed": 3,
+    "metadataMutationsUndetected": 6,
+    "native14CasesAuthored": 14,
+    "native14Executed": false,
     "liveEVLeakEstablished": false,
     "existingCandidateRowAffectedEstablished": false,
     "modelHoldoutFamiliesValidated": 0
   },
-  "integrationStatus": "RESEARCH_PREVIEW_CAST_BASIS_PASS_SERIALIZED_ATTESTATION_AND_EVIDENCE_HOLDOUT_PENDING",
+  "integrationStatus": "RESEARCH_PREVIEW_NUMERICALLY_COMPLETE_NATIVE_CI_PASS_SERIALIZED_PROVENANCE_BLOCKED",
   "nextAssignments": [
     {
       "owner": "completion-engineer",
-      "taskID": "F002_SERIALIZED_SOURCE_CONTEXT_ATTESTATION_AND_F003_NATIVE_CI",
+      "taskID": "F002_ATTEST_FULL_SOURCE_METADATA_AND_WIRE_F005_NATIVE_14",
       "scope": [
         "research/tools/working_estimates.js",
         "research/tools/run_completion_pipeline.js"
       ],
-      "acceptance": "Version and verify source/context/value lineage on serialized reload, reject stale/tampered source and status; integrate independent 476-case fixture into native CI. Preserve 4072 preview numeric fields, confidence-zero fallbacks and unchanged evidence."
+      "acceptance": "Extend versioned detached source identity to original provenance and tooltipOnly prohibitions, reject six F005 mutations with native SHA-256, run 14/14 independent suite in CI; preserve 4072 numeric preview fields and do not change evidence or live EV. Publish an externally pinned digest proposal without treating in-memory pin as durable."
     },
     {
       "owner": "independent-validator",
-      "taskID": "F005_CROSS_PROCESS_ATTESTATION_ADVERSARIAL_QA",
+      "taskID": "F005_NATIVE_DETACHED_METADATA_RETEST_AND_F003_ANYTIME_REVIEW",
       "scope": [
         "research/tests/v2/",
         "research/coordination/v2/reviews/"
       ],
-      "acceptance": "Independently test serialized reload and mutated source/context/field provenance, 12 cast-basis + 23 prior controls + 476 numerical checks, inspect native CI and Lua/schema. Do not self-approve evidence."
+      "acceptance": "Run 14-case detached native Node suite before and after repair, inspect independent SHA-256 and CI logs, challenge status/provenance/tooltip-only drift, separately verify anytime alpha-spending proof and 2096 zero-hit threshold; do not self-approve numeric claims."
     },
     {
       "owner": "baseline-modeller",
-      "taskID": "F003_GEM_FINDING_OPTIONAL_STOPPING_DESIGN_OR_NEW_COHORT",
+      "taskID": "F003_INDEPENDENT_GEM_ANYTIME_QA_OR_PRIORITY_E_PIVOT",
       "scope": [
         "research/models/v2/",
         "research/tools/models_v2/"
       ],
-      "acceptance": "If interim looks planned, design independently testable anytime-valid intervals without relabeling fixed-sample CP. Otherwise pivot to a different E/denominator family; no synthetic-to-economic promotion."
+      "acceptance": "Provide independent oracle/assumption challenge for eight-output optional stopping model without copying fixed-sample thresholds; if no new actual cohort or reduced uncertainty, pivot to another priority expectedQuantity denominator family; no synthetic economic promotion."
     },
     {
       "owner": "evidence-researcher",
-      "taskID": "F004_TWW_MILLING_MATCHED_RANK_CASTS_OR_MIDNIGHT_SELECTOR_PIVOT",
+      "taskID": "F004_MIDNIGHT_CRUSHING_SELECTOR_MATCHED_CAST_CAPTURE",
       "scope": [
         "research/evidence/v2/"
       ],
-      "acceptance": "Seek exact herb/output IDs, input/output ranks, 200+ zero-inclusive completed casts per matched cohort, patch, skill, refunds; if unavailable pivot to unadmitted Midnight selector eligibility, no recycled source audit."
+      "acceptance": "Verify exact spell 1231132 selector, input gem and dust rank IDs, and matched low/high specialization zero-inclusive completed crushing casts with refunds and patch; keep 200-ore/43-prospect aggregate contextual and do not convert gross gems into actual crushing casts."
     }
   ],
-  "lastCoordinatorIntegrationUTC": "2026-10-29T21:58:00Z",
+  "lastCoordinatorIntegrationUTC": "2026-10-29T22:57:15Z",
   "quantizationDiagnostic": {
     "modelBlob": "a2760e85247765a8e638cfd0bd05283314625d84",
     "frozenTSMRows": 9,
@@ -189,13 +185,12 @@
     "currentRetailEconomicPromotions": 0
   },
   "modelDesignVerification": {
-    "modelID": "tww-gem-finding-exact-marginal-bounds-v1.0.0",
+    "modelID": "tww-gem-finding-anytime-marginal-bounds-v1.0.0",
     "targetKeys": 8,
-    "zeroHitCasts": 574,
-    "zeroHitUpper": 0.009999013821329505,
-    "previousCastUpper": 0.01001637641990838,
+    "anytimeZeroHitCasts": 2096,
+    "anytimeZeroHitUpper": 0.009999464437815853,
     "actualCastObservations": 0,
-    "independentHoldout": false,
+    "independentValidatorAccepted": false,
     "economicUse": "PREVIEW_ONLY"
   },
   "newHistoricalSourceFamiliesThisCycle": 2,
@@ -207,10 +202,13 @@
     "interpretation": "Previously copied inapplicable source P/E reclassified as confidence-zero provisional working priors; not new evidence or economic estimates."
   },
   "nativeCI": {
-    "runID": 40959813084,
-    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40959813084",
-    "headCommit": "a36db2df9303a5c87fd1a5ef4503c8e227b894dc",
+    "runID": 40968063368,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40968063368",
+    "headCommit": "24d94c28b49283c9ac7396cba11e68d311835e92",
     "conclusion": "success",
-    "newF003IndependentFixtureIncluded": false
-  }
+    "newF003IndependentFixtureIncluded": true,
+    "newF005DetachedMetadataFixtureIncluded": false
+  },
+  "newOriginalAggregateLineagesThisCycle": 1,
+  "newQualitativeContextLeadsThisCycle": 2
 }
