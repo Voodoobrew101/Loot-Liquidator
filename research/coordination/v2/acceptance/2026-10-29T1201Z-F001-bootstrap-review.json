@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001",
+  "queueRevision": 1,
+  "decision": "CONDITIONAL_ACCEPT_BOOTSTRAP_PREVIEW_PENDING_INDEPENDENT_VALIDATOR",
+  "baseCommit": "17a650dea79375836987dc9c244826779b137076",
+  "reviewedCandidate": {
+    "path": "research/proposed/itemdb.lua",
+    "gitBlobSHA": "1711cba5e7ede13f361649d07c4e97c6552ec142",
+    "compilerVersion": "0.8.0",
+    "buildReportBlobSHA": "3d9a6667b80aec6c6d889bd555201186e769d7db",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "decisions": [
+    {
+      "claim": "1018 admitted mapping records and 4072/4072 working numeric fields",
+      "status": "ACCEPT_AS_REPORTED_AND_CROSS_ARTIFACT_RECONCILED",
+      "reason": "readiness and compiler report counts agree; direct full generated Lua decode not independently executed this coordinator cycle"
+    },
+    {
+      "claim": "514 raw evidence gaps, 116 missing economic E fields",
+      "status": "ACCEPT_AS_GAP_COUNTS",
+      "reason": "per-field sums and 116 unique E-priority records agree; no evidence promotions"
+    },
+    {
+      "claim": "working estimates safe for live EV",
+      "status": "REJECT",
+      "reason": "All 1018 working records PREVIEW_ONLY, normalizedVerified false, confidence 0 for imputation; no live valuation authorization"
+    },
+    {
+      "claim": "full compiler and Lua validation independently accepted",
+      "status": "PENDING_F005_INDEPENDENT_VALIDATION",
+      "reason": "bootstrap reports Node/Lua/schema checks, but this coordinator run independently checked metadata and Git blobs only; no native Node, Lua, or WoW execution"
+    },
+    {
+      "claim": "pending legacy queue30 leads are confirmed mappings",
+      "status": "REJECT",
+      "reason": "24 disjoint unverified universe lead keys retained as research-only; do not admit until exact eligibility and rank evidence"
+    },
+    {
+      "claim": ">=90 evidence or exhaustive Retail universe complete",
+      "status": "REJECT",
+      "reason": "zero >=90 evidence cells; independent Retail universe audit NOT_COMPLETE"
+    }
+  ],
+  "verifiedChecks": [
+    "1018*4=4072",
+    "3558+514=4072",
+    "all four per-field counts reconcile to 3558 numeric and 514 missing",
+    "116 unique E-gap priority records out of 217 unique gap records",
+    "36 legacy queue29 keys unique; 24 queue30 universe keys unique",
+    "compiler report matches readiness for mappings/slots/working rows and reports zero changed evidence fields, zero normalizedVerified, economicFieldsUnchanged=true",
+    "five original Git blob SHAs match pinned source manifest (primary, supplemental, Midnight candidate, GameData.lua, StatYieldProfiles.lua)",
+    "bootstrap commit changes research paths and workflow/CI only; production and frozen source files unchanged"
+  ],
+  "notExecuted": [
+    "native Node pipeline --check this cycle",
+    "independent Lua5.1 generated-file decode this cycle",
+    "full candidate JSON Schema validation this cycle",
+    "in-game WoW client QA",
+    "independent exhaustive Retail universe audit"
+  ],
+  "nextDisjointWork": [
+    {
+      "owner": "completion-engineer",
+      "task": "F002_VERIFY",
+      "scope": "Re-run pipeline --check, Lua decode, schema, and verify zero economic leakage; resolve any failing generated hash; do not alter raw evidence or live runtime",
+      "exactKeys": []
+    },
+    {
+      "owner": "baseline-modeller",
+      "task": "F003_TWW_MILL",
+      "scope": "TWW milling baseline/context identifiability and per-completed-cast E; do not infer actual casts from gross herbs",
+      "exactKeys": [
+        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+        "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+        "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+        "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+        "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+        "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+        "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+        "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+        "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+        "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+        "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+      ]
+    },
+    {
+      "owner": "evidence-researcher",
+      "task": "F004_DIAMOND_CONFLICT",
+      "scope": "Investigate original source context/denominator for five high-priority TSM diamond probability conflicts; do not infer P from E or share-of-gems",
+      "exactKeys": [
+        "tsm:prospect:188658:192870:L1205",
+        "tsm:prospect:188658:192871:L1206",
+        "tsm:prospect:189143:192869:L1242",
+        "tsm:prospect:189143:192870:L1243",
+        "tsm:prospect:190311:192869:L1280"
+      ]
+    },
+    {
+      "owner": "independent-validator",
+      "task": "F005_PREVIEW_ISOLATION",
+      "scope": "Independently test F002 preview against pinned hashes, raw preservation, contradictory fields, quality-rank and recipe vectors, tooltip and EV isolation; review whole-study holdouts",
+      "exactKeys": []
+    }
+  ],
+  "legacyQueue30Disposition": {
+    "totalUniqueLeads": 24,
+    "status": "BACKLOG_UNADMITTED",
+    "next": "Evidence researcher triages exact selector and rank eligibility after priority diamond conflict; do not add speculative outputs."
+  },
+  "promotionGate": "No production promotion or economic eligibility until F005 independent PASS and separate authorization."
+}
