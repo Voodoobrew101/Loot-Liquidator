@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "df-draconium-gross-ore-partial-identification-v1.0.0",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "source": {
+    "path": "research/evidence/observations/2026-10-29-0217-warwithin-q28-batch026-user-workbook-draconium-gross-ore-log.md",
+    "workbookSHA256": "847caa75c43c1227a29eb0939c80cc0d077c997c3321d3bd76dc640a519bb4ca",
+    "sheet": "Prospecting Log",
+    "epoch": "2023-01-03/2023-02-06",
+    "lineage": "ONE_WORKBOOK_FAMILY_INDEPENDENCE_FROM_2022_REDDIT_UNRESOLVED",
+    "sourceMeaning": "Quantity is reported gross ore; completed casts and refunded units not recorded"
+  },
+  "sourceRows": 14,
+  "studyFamilyCount": 1,
+  "sourceIndependence": "UNRESOLVED_WITH_2022_REDDIT",
+  "targetOutputIDs": [
+    192869,
+    192870,
+    192871
+  ],
+  "targetPriorityRecords": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "targetAssociation": "POTENTIAL_FAMILY_COMPARISON_ONLY_INPUT_RANK_ITEM_ID_NOT_ATTESTED_BY_WORKBOOK",
+  "assumptions": {
+    "nominalInputUnits": 5,
+    "oreQuantityInterpretation": "NET_CONSUMED_HYPOTHESIS_NOT_FACT",
+    "maxRefundUnitsPerCast": 1,
+    "outputCaptureComplete": "HYPOTHESIS",
+    "skillAndStats": "HISTORICAL_MIXED_NOT_BASELINE"
+  },
+  "groups": [
+    {
+      "inputRank": 2,
+      "rows": 5,
+      "reportedOre": 70543,
+      "outputs": {
+        "192869": 4,
+        "192870": 138,
+        "192871": 80
+      },
+      "castInterval": {
+        "min": 14109,
+        "max": 17635
+      },
+      "conditionalQ1E": {
+        "infimum": 0.00022682166146867025,
+        "supremum": 0.000283506981359416
+      }
+    },
+    {
+      "inputRank": 3,
+      "rows": 9,
+      "reportedOre": 170000,
+      "outputs": {
+        "192869": 4,
+        "192870": 10,
+        "192871": 650
+      },
+      "castInterval": {
+        "min": 34000,
+        "max": 42500
+      },
+      "conditionalQ1E": {
+        "infimum": 0.00009411764705882353,
+        "supremum": 0.00011764705882352942
+      }
+    }
+  ],
+  "alternatives": [
+    "NOMINAL_REQUIRED rejects nonmultiple 8543",
+    "INITIAL_INVENTORY leaves completed casts unidentifiable",
+    "NET_CONSUMED with unknown refund cap has unbounded cast maximum"
+  ],
+  "economicEvidence": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "confidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "holdout": "WHOLE_INDEPENDENT_CURRENT_RETAIL_STUDY_FAMILY_REQUIRED",
+  "tests": {
+    "passed": 32,
+    "failed": 0,
+    "sourceRows": 14,
+    "realCompletedCastHistograms": 0,
+    "newVerifiedE": 0,
+    "workingCellsChanged": 0,
+    "syntheticAssumptionsOnly": true
+  },
+  "interpretation": "Conditional intervals are NOT estimated game rates or eligible live EV inputs. 2023 workbook counts alone cannot identify 2026 per-cast expected quantity."
+}
