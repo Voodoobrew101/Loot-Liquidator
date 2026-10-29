@@ -40,6 +40,20 @@ function applyCorrections(result,manifest){
   if(!already)(x.attributionCorrections||(x.attributionCorrections=[])).push({correctionID:c.correctionID,observationID:c.observationID,from:c.incorrectRecordKey,to:c.correctedRecordKey,evidenceUrls:c.evidenceUrls||[]});
   if(c.retainAsUnverifiedPossibleMapping)x.unverifiedPossibleMappings=[...new Set([...(x.unverifiedPossibleMappings||[]),c.incorrectRecordKey])];
  }
+ const lineageSeen=new Set();
+ for(const c of manifest?.lineageCorrections||[]){
+  if(c.status!=="MASTER_QA_APPROVED")continue;
+  if(!c.correctionID||lineageSeen.has(c.correctionID))throw Error("Duplicate or missing lineage correction ID");
+  lineageSeen.add(c.correctionID);
+  if(!c.sourceUrl||!c.observationID)throw Error("Incomplete lineage correction: "+c.correctionID);
+  const x=result.sources.find(z=>z.canonicalUrl===normalize(c.sourceUrl));
+  if(!x)throw Error("Lineage source not found: "+c.correctionID);
+  const already=(x.lineageCorrections||[]).some(z=>z.correctionID===c.correctionID);
+  if(!x.observationIDs.includes(c.observationID)&&!already)throw Error("Lineage observation not found: "+c.correctionID);
+  x.observationIDs=x.observationIDs.filter(z=>z!==c.observationID);
+  if(!already)(x.lineageCorrections||(x.lineageCorrections=[])).push({correctionID:c.correctionID,removedObservationID:c.observationID,reason:c.reason||"MASTER_QA_SOURCE_LINEAGE_ERRATUM",evidenceUrls:c.evidenceUrls||[]});
+ }
+ result.appliedLineageCorrectionIDs=[...new Set([...(result.appliedLineageCorrectionIDs||[]),...lineageSeen])].sort();
  result.appliedAttributionCorrectionIDs=[...new Set([...(result.appliedAttributionCorrectionIDs||[]),...seen])].sort();
  return result;
 }
