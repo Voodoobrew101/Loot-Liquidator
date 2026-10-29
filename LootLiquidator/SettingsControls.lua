@@ -1,182 +1,152 @@
--- Shared Settings canvas controls and compact editors. No calculation logic.
-do -- SettingsButtons
--- Shared canvas-settings button style for the native Options > AddOns panels.
--- UIPanelButtonTemplate renders classic red button art; these canvas buttons
--- use neutral dark surfaces and gold accents to sit alongside Settings widgets.
--- This is purely UI presentation; it does not affect badge appearance settings.
+-- Canvas controls are initialized by Blizzard Settings factories. Decorative
+-- containers and labels are not replacement interactive widgets.
+do
 local _, LL = ...
-
-function LL:CreateSettingsButton(parent)
-    local btn = CreateFrame("Button", nil, parent)
-    local label = btn:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    label:SetPoint("CENTER", btn, "CENTER", 0, 0)
-    label:SetWidth(470) -- constrained to the actual button width on size change
-    label:SetJustifyH("CENTER")
-    if btn.SetFontString then btn:SetFontString(label) end
-    btn.llLabel = label
-
-    local bg = btn:CreateTexture(nil, "BACKGROUND")
-    bg:SetAllPoints(btn)
-    bg:SetColorTexture(.055, .055, .058, .94)
-
-    local lines={}
-    -- A four-sided one-pixel border, using simple textures rather than the
-    -- red UIPanelButtonTemplate art. Selected buttons get stronger gold edges.
-    local top=btn:CreateTexture(nil,"BORDER")
-    top:SetColorTexture(.29,.265,.19,.85)
-    top:SetPoint("TOPLEFT",btn,"TOPLEFT",0,0)
-    top:SetPoint("TOPRIGHT",btn,"TOPRIGHT",0,0)
-    top:SetHeight(1)
-    lines[#lines+1]=top
-    local bottom=btn:CreateTexture(nil,"BORDER")
-    bottom:SetColorTexture(.29,.265,.19,.85)
-    bottom:SetPoint("BOTTOMLEFT",btn,"BOTTOMLEFT",0,0)
-    bottom:SetPoint("BOTTOMRIGHT",btn,"BOTTOMRIGHT",0,0)
-    bottom:SetHeight(1); lines[#lines+1]=bottom
-    local left=btn:CreateTexture(nil,"BORDER")
-    left:SetColorTexture(.29,.265,.19,.85)
-    left:SetPoint("TOPLEFT",btn,"TOPLEFT",0,0)
-    left:SetPoint("BOTTOMLEFT",btn,"BOTTOMLEFT",0,0)
-    left:SetWidth(1); lines[#lines+1]=left
-    local right=btn:CreateTexture(nil,"BORDER")
-    right:SetColorTexture(.29,.265,.19,.85)
-    right:SetPoint("TOPRIGHT",btn,"TOPRIGHT",0,0)
-    right:SetPoint("BOTTOMRIGHT",btn,"BOTTOMRIGHT",0,0)
-    right:SetWidth(1); lines[#lines+1]=right
-
-    local highlight=btn:CreateTexture(nil,"HIGHLIGHT")
-    highlight:SetAllPoints(btn)
-    highlight:SetColorTexture(.34,.26,.07,.22)
-    btn:SetHighlightTexture(highlight)
-    btn:HookScript("OnSizeChanged",function(self,w)
-        label:SetWidth(math.max(5,w-12))
+local serial=0
+function LL:IsLootLiquidatorSettingsCategory(category)
+    local seen={}
+    while category and not seen[category] do
+        if category==self.settingsCategory then return true end
+        seen[category]=true
+        category=category.GetParentCategory and category:GetParentCategory()
+    end
+    return false
+end
+function LL:ProtectSettingsDefaults()
+    local panel=SettingsPanel
+    local list=panel and panel.GetSettingsList and panel:GetSettingsList()
+    local button=list and list.Header and list.Header.DefaultsButton
+    if not button or button.llDefaultsGuard then return end
+    button.llDefaultsGuard=true
+    local function OwnPage()
+        return LL:IsLootLiquidatorSettingsCategory(panel:GetCurrentCategory())
+    end
+    local original=button:GetScript("OnClick")
+    -- The shared Blizzard button opens GAME_SETTINGS_APPLY_DEFAULTS, including
+    -- its 'all settings' action. Never enter that dialog from our categories.
+    button:SetScript("OnClick",function(...)
+        if OwnPage() then return end
+        if original then return original(...) end
     end)
-    function btn:SetSelected(selected)
-        bg:SetColorTexture(selected and .15 or .055, selected and .125 or .055,
-            selected and .057 or .058, .94)
-        for _,t in ipairs(lines) do
-            if selected then t:SetColorTexture(.76,.56,.11,.95)
-            else t:SetColorTexture(.29,.265,.19,.85) end
+    local function Refresh()
+        if OwnPage() then
+            button:Disable();button:Hide()
+            if StaticPopup_Hide then StaticPopup_Hide("GAME_SETTINGS_APPLY_DEFAULTS") end
+        else
+            button:Enable()
+            if not panel.SearchBox or not panel.SearchBox:HasText() then button:Show() end
         end
     end
-    return btn
+    button:HookScript("OnShow",function() if OwnPage() then button:Hide() end end)
+    if EventRegistry then EventRegistry:RegisterCallback("Settings.CategoryChanged",Refresh,LL) end
+    Refresh()
 end
-
-
--- Standard options pages use Settings.Create* directly. Compact custom canvases
--- use Blizzard's CURRENT Settings checkbox control and Blizzard_Menu dropdown;
--- no duplicate checked artwork or fake dropdown overlays are drawn by us.
--- The wrapper delegates state and mouse scripts to the template's real check box.
-function LL:CreateSettingsCheckbox(parent)
-    local holder=CreateFrame("Frame",nil,parent,"SettingsCheckboxControlTemplate")
-    -- Blizzard exposes the live child as `Checkbox` (lowercase b) on
-    -- current Retail. Support the alternate capitalization for older builds.
-    local native=holder.Checkbox or holder.CheckBox
-    if not native then
-        error("Loot Liquidator requires Blizzard SettingsCheckboxControlTemplate")
+local function Proxy(kind,default)
+    if not LL.canvasSettingsCategory then
+        -- Initializer host only; it is never registered in AddOns navigation.
+        LL.canvasSettingsCategory=Settings.RegisterVerticalLayoutCategory("LootLiquidator Canvas Controls")
     end
+    serial=serial+1
+    local value=default
+    return Settings.RegisterProxySetting(LL.canvasSettingsCategory,"LootLiquidatorCanvas_"..serial,
+        kind,"",default,function() return value end,function(v) value=v end)
+end
+function LL:CreateSettingsControl(parent,template,initializer,kind)
+    local frame=CreateFrame("Frame",nil,parent,template)
+    if frame.SetElementData then frame:SetElementData(initializer) end
+    frame.GetElementData=function() return initializer end
+    frame:Init(initializer)
+    if frame.Text then frame.Text:Hide() end
+    if frame.Tooltip then frame.Tooltip:Hide() end
+    if self.SkinSettingsCanvasControl then self:SkinSettingsCanvasControl(frame,kind) end
+    return frame
+end
+function LL:CreateSettingsButton(parent)
+    local initializer=CreateSettingsButtonInitializer("","",function() end,"",false)
+    local row=self:CreateSettingsControl(parent,"SettingButtonControlTemplate",initializer,"button")
+    row:SetSize(1,1);row:SetPoint("TOPLEFT",parent,"TOPLEFT",0,0)
+    local button=row.Button
+    button:ClearAllPoints()
+    function button:SetSelected(selected)
+        self:SetButtonState(selected and "PUSHED" or "NORMAL",selected==true)
+    end
+    return button
+end
+function LL:CreateSettingsCheckbox(parent)
+    local setting=Proxy("boolean",false)
+    local holder=self:CreateSettingsControl(parent,"SettingsCheckboxControlTemplate",
+        Settings.CreateCheckboxInitializer(setting,nil,""),"check")
+    local native=holder.Checkbox or holder.CheckBox
     holder:SetSize(22,22)
-    if holder.Text then holder.Text:SetText("") end
-    native:ClearAllPoints()
-    native:SetPoint("CENTER",holder,"CENTER",0,0)
+    native:ClearAllPoints();native:SetPoint("CENTER",holder,"CENTER",0,0)
     native:SetSize(22,22)
-    -- The outward API is intentionally compatible with our existing rows.
-    -- A wrapper is needed because this Settings template has its own CheckBox.
-    function holder:SetChecked(value) native:SetChecked(value==true) end
+    function holder:SetChecked(v) setting:SetValue(v==true);native:SetChecked(v==true) end
     function holder:GetChecked() return native:GetChecked() end
     function holder:Enable() native:Enable() end
     function holder:Disable() native:Disable() end
-    function holder:SetEnabled(value)
-        if value then native:Enable() else native:Disable() end
-    end
-    local baseSetScript=holder.SetScript
+    function holder:SetEnabled(v) native:SetEnabled(v) end
+    local baseSetScript,baseHookScript=holder.SetScript,holder.HookScript
     function holder:SetScript(event,callback)
         if event=="OnClick" or event=="OnEnter" or event=="OnLeave" then
-            native:SetScript(event, callback and function(_,...) return callback(self,...) end or nil)
-        else
-            baseSetScript(self,event,callback)
-        end
+            native:SetScript(event,callback and function(_, ...)
+                if event=="OnClick" then setting:SetValue(native:GetChecked()==true) end
+                return callback(self,...)
+            end or nil)
+        else baseSetScript(self,event,callback) end
     end
-    local baseHookScript=holder.HookScript
     function holder:HookScript(event,callback)
         if event=="OnClick" or event=="OnEnter" or event=="OnLeave" then
             native:HookScript(event,function(_,...) return callback(self,...) end)
-        else
-            baseHookScript(self,event,callback)
-        end
+        else baseHookScript(self,event,callback) end
     end
     holder.llNativeCheckbox=native
-    if LL.SkinSettingsCanvasControl then LL:SkinSettingsCanvasControl(holder,"check") end
     return holder
 end
-
--- Compact canvas controls are allowed only where vertical settings cannot
--- express the layout (item link entry, per-character grid, color buttons).
 function LL:CreateSettingsEditBox(parent)
-    local edit=CreateFrame("EditBox",nil,parent)
-    edit:SetSize(205,24)
-    edit:SetAutoFocus(false)
-    edit:SetFontObject(GameFontHighlight)
-    if edit.SetTextInsets then edit:SetTextInsets(7,7,0,0) end
-    local bg=edit:CreateTexture(nil,"BACKGROUND")
-    bg:SetAllPoints(edit)
-    bg:SetColorTexture(.045,.045,.05,.97)
-    local function Edge(a,b,isHorizontal)
-        local line=edit:CreateTexture(nil,"BORDER")
-        line:SetColorTexture(.36,.31,.19,.95)
-        line:SetPoint(a,edit,a,0,0)
-        line:SetPoint(b,edit,b,0,0)
-        if isHorizontal then line:SetHeight(1) else line:SetWidth(1) end
-    end
-    Edge("TOPLEFT","TOPRIGHT",true)
-    Edge("BOTTOMLEFT","BOTTOMRIGHT",true)
-    Edge("TOPLEFT","BOTTOMLEFT",false)
-    Edge("TOPRIGHT","BOTTOMRIGHT",false)
+    -- Retail Settings has no text-entry factory. Keep text entry only for item
+    -- links and copy/export utilities, using Blizzard's input template.
+    local edit=CreateFrame("EditBox",nil,parent,"InputBoxTemplate")
+    edit:SetSize(205,24);edit:SetAutoFocus(false)
     edit:SetScript("OnEscapePressed",function(self)self:ClearFocus()end)
+    local E=type(_G.ElvUI)=="table" and _G.ElvUI[1]
+    local skin=E and E.GetModule and E:GetModule("Skins",true)
+    if skin and skin.HandleEditBox then skin:HandleEditBox(edit) end
     return edit
 end
-
--- The badge-size control uses Blizzard's modern slider template, rather
--- than a plain Slider with recreated tracks, thumbs or +/- buttons.
 function LL:CreateSettingsCanvasSlider(parent,minValue,maxValue,step,initial,onChange)
-    local control=CreateFrame("Frame",nil,parent)
+    local setting=Proxy("number",initial)
+    local options=Settings.CreateSliderOptions(minValue,maxValue,step)
+    if options.SetLabelFormatter and MinimalSliderWithSteppersMixin then
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
+    end
+    local control=self:CreateSettingsControl(parent,"SettingsSliderControlTemplate",
+        Settings.CreateSliderInitializer(setting,options,""),"slider")
     control:SetSize(382,30)
-    local slider=CreateFrame("Slider",nil,control,"MinimalSliderTemplate")
-    slider:SetPoint("LEFT",control,"LEFT",4,0)
-    slider:SetSize(302,25)
-    slider:SetMinMaxValues(minValue,maxValue)
-    slider:SetValueStep(step)
-    if slider.SetObeyStepOnDrag then slider:SetObeyStepOnDrag(true) end
-    local number=control:CreateFontString(nil,"OVERLAY","GameFontNormal")
-    number:SetPoint("LEFT",slider,"RIGHT",12,0)
-    number:SetWidth(48)
-    number:SetJustifyH("LEFT")
-    local current=nil
-    local function Clamp(value)
-        value=tonumber(value) or minValue
-        value=math.floor((value-minValue)/step+0.5)*step+minValue
-        return math.max(minValue,math.min(maxValue,value))
-    end
-    local function Update(value)
-        local rounded=Clamp(value)
-        number:SetText(tostring(rounded))
-        if rounded~=current then
-            current=rounded
-            if onChange then onChange(rounded) end
-        end
-    end
-    slider:SetScript("OnValueChanged",function(_,value) Update(value) end)
-    function control:SetValue(value)
-        value=Clamp(value)
-        slider:SetValue(value)
-        Update(value)
-    end
-    function control:GetValue() return current or minValue end
-    control.slider=slider
-    control:SetValue(initial)
+    local native=control.SliderWithSteppers
+    native:ClearAllPoints();native:SetPoint("LEFT",control,"LEFT",4,0);native:SetWidth(302)
+    setting:SetValueChangedCallback(function(_,value) if onChange then onChange(value) end end)
+    function control:SetValue(value) setting:SetValue(math.max(minValue,math.min(maxValue,value))) end
+    function control:GetValue() return setting:GetValue() end
+    control.slider=native.Slider
     return control
 end
-
+function LL:CreateSettingsDropdown(parent,options,getValue,setValue)
+    local setting=Proxy("number",getValue())
+    local initializer=Settings.CreateDropdownInitializer(setting,options,"")
+    local row=self:CreateSettingsControl(parent,"SettingsDropdownControlTemplate",initializer,"drop")
+    row:SetSize(300,26)
+    local control=row.Control
+    if control.HideSteppers then control:HideSteppers() end
+    control:ClearAllPoints();control:SetPoint("TOPLEFT",row,"TOPLEFT",0,0)
+    control:SetWidth(290);control.Dropdown:SetWidth(290)
+    local refreshing=false
+    setting:SetValueChangedCallback(function(_,v) if not refreshing then setValue(v) end end)
+    function row:Refresh()
+        refreshing=true;setting:SetValue(getValue());refreshing=false
+        if control.Dropdown.GenerateMenu then control.Dropdown:GenerateMenu() end
+    end
+    return row
+end
 end
 do -- TSMRecommendedUI
 -- Optional recommended TSM setup. TSM owns profile/group/operation imports.

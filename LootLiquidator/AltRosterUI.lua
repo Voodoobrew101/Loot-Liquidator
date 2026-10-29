@@ -109,6 +109,13 @@ local function ApplyElvUISettingsSkin(frame,record)
             if c.IncrementButton then skin:HandleButton(c.IncrementButton) end
         end)
         if not good then return end
+    elseif record.kind=="button" then
+        if not frame.Button or type(skin.HandleButton)~="function" then return end
+        if not pcall(skin.HandleButton,skin,frame.Button) then return end
+    elseif record.kind=="slider" then
+        local slider=frame.SliderWithSteppers
+        if not slider or type(skin.HandleSliderFrame)~="function" then return end
+        if not pcall(skin.HandleSliderFrame,skin,slider.Slider) then return end
     else
         local checkbox=frame.Checkbox or frame.CheckBox
         if not checkbox or type(checkbox.CreateBackdrop)~="function" then return end

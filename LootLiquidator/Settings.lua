@@ -234,7 +234,7 @@ local function AppearancePanel()
         update()
     end
     local hideUnknown=LL:CreateSettingsCheckbox(panel)
-    hideUnknown:SetPoint("TOPLEFT",panel,"TOPLEFT",402,-435)
+    hideUnknown:SetPoint("TOPLEFT",panel,"TOPLEFT",330,-473)
     hideUnknown:SetSize(25,25)
     hideUnknown:SetChecked(LL.db.showUnknownBadge~=false)
     local unknownLabel=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
@@ -355,7 +355,7 @@ PreviewPanel=function()
     local caption=panel:CreateFontString(nil,"ARTWORK","GameFontHighlightSmall")
     caption:SetPoint("TOPLEFT",panel,"TOPLEFT",20,-7)
     caption:SetText("Sample item — hover over the icon for a tooltip preview")
-    local icon=CreateFrame("Button",nil,panel)
+    local icon=LL:CreateSettingsButton(panel)
     icon:SetSize(46,46); icon:SetPoint("TOPLEFT",panel,"TOPLEFT",20,-28)
     local texture=icon:CreateTexture(nil,"BACKGROUND")
     texture:SetAllPoints(icon)
@@ -474,74 +474,134 @@ function LL:CreateEvidenceSettingsPanel(category)
 end
 function LL:CreateProfessionProfilePanel(profession)
     local panel=CreateFrame("Frame")
-    local selected=LL.CharacterKey and LL:CharacterKey() or "Current character"
-    local expansion=11
+    local selected=LL:CharacterKey() or "Current character"
+    local expansion=(GetExpansionLevel and GetExpansionLevel()) or 11
+    local nodeIndex,buffIndex=0,0
+    local options={nodes={},buffs={}}
+    local refreshing=false
+    local refresh
     local function label(text,y)
         local t=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
         t:SetPoint("TOPLEFT",panel,"TOPLEFT",16,y);t:SetWidth(590);t:SetJustifyH("LEFT");t:SetText(text)
         return t
     end
-    label(profession.." character context",-16)
-    label("Measured snapshots stay separate from these explicit simulations. Use the roster's Manual mode and participation checkbox to activate a simulation.",-52)
-    local status=label("",-165)
-    local character=CreateFrame("DropdownButton",nil,panel,"WowStyle1DropdownTemplate")
-    character:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-104);character:SetWidth(290)
-    local era=CreateFrame("DropdownButton",nil,panel,"WowStyle1DropdownTemplate")
-    era:SetPoint("TOPLEFT",panel,"TOPLEFT",330,-104);era:SetWidth(210)
+    local function choices(rows)
+        local container=Settings.CreateControlTextContainer()
+        for _,row in ipairs(rows) do container:Add(row[1],row[2],row[3] or "") end
+        return container:GetData()
+    end
+    local function profile() return LL:GetManualProfessionProfile(selected,profession,expansion) or {} end
+    local message=label("",-535)
+    local function update(change)
+        if refreshing then return end
+        local p={} for k,v in pairs(profile()) do p[k]=v end
+        p.buffs={} for k,v in pairs(profile().buffs or {}) do p.buffs[k]=v end
+        change(p)
+        local ok=LL:SetManualProfessionProfile(selected,profession,expansion,p)
+        message:SetText(ok and "Simulation saved. Scanned skills and talents are unchanged." or "Could not save this selection.")
+        if refresh then refresh(false) end
+    end
+    label(profession.." — character and expansion",-16)
+    label("Choose the expansion whose recipes you want to inspect. Log into an alt and open that profession to capture its skills and specialization names.",-44)
+    local character=LL:CreateSettingsDropdown(panel,function()
+        local keys={} for k in pairs(LL.db.characters or {}) do keys[#keys+1]=k end
+        table.sort(keys);panel.characterKeys=keys
+        local rows={} for i,k in ipairs(keys) do rows[#rows+1]={i,k} end
+        return choices(rows)
+    end,function()
+        for i,k in ipairs(panel.characterKeys or {}) do if k==selected then return i end end
+        return 1
+    end,function(i) selected=(panel.characterKeys or {})[i] or selected;nodeIndex=0;buffIndex=0;refresh(true) end)
+    character:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-90)
+    local era=LL:CreateSettingsDropdown(panel,function()
+        local rows={} for id=0,11 do rows[#rows+1]={id,LL:ProfessionExpansionName(id)} end
+        return choices(rows)
+    end,function() return expansion end,function(id) expansion=id;nodeIndex=0;buffIndex=0;refresh(true) end)
+    era:SetPoint("TOPLEFT",panel,"TOPLEFT",326,-90)
+    local status=label("",-132)
     local enabled=LL:CreateSettingsCheckbox(panel)
-    enabled:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-240)
-    local enabledLabel=label("Use simulated values for this character / expansion",-243)
+    enabled:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-192)
+    local enabledLabel=label("Use this simulation (requires Manual mode in Professions & Alts)",-194)
     enabledLabel:ClearAllPoints();enabledLabel:SetPoint("LEFT",enabled,"RIGHT",6,0)
-    local skill=LL:CreateSettingsEditBox(panel)
-    skill:SetPoint("TOPLEFT",panel,"TOPLEFT",220,-285)
-    label("Simulated effective skill",-290)
-    local spec=LL:CreateSettingsEditBox(panel)
-    spec:SetPoint("TOPLEFT",panel,"TOPLEFT",220,-325);spec:SetWidth(360)
-    label("Specialization node ranks",-330)
-    label("Enter nodeID=rank,nodeID=rank, or none. Empty fields mean unknown; equipment and stats are never borrowed from another character.",-370)
-    local errorText=label("",-420)
-    local function refresh()
-        character:SetText(selected);era:SetText("Expansion ID "..expansion)
-        local p=LL:GetManualProfessionProfile(selected,profession,expansion) or {}
-        enabled:SetChecked(p.enabled==true);skill:SetText(p.skill and tostring(p.skill) or "")
-        spec:SetText(p.specialization or "")
+    enabled:SetScript("OnClick",function(self) update(function(p) p.enabled=self:GetChecked()==true end) end)
+    local known=LL:CreateSettingsCheckbox(panel)
+    known:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-235)
+    local skillLabel=label("Set simulated effective skill",-238)
+    skillLabel:ClearAllPoints();skillLabel:SetPoint("LEFT",known,"RIGHT",6,0)
+    local skill=LL:CreateSettingsCanvasSlider(panel,0,1000,1,0,function(v)
+        if not refreshing and known:GetChecked() then update(function(p) p.skill=v end) end
+    end)
+    skill:SetPoint("TOPLEFT",panel,"TOPLEFT",270,-232)
+    known:SetScript("OnClick",function(self)
+        update(function(p) p.skill=self:GetChecked() and skill:GetValue() or nil end)
+    end)
+    label("Specialization (Blizzard names, grouped by tree)",-282)
+    local node=LL:CreateSettingsDropdown(panel,function()
+        local rows={{0,#options.nodes>0 and "Choose a specialization" or "Scan this profession to load specializations"}}
+        for i,n in ipairs(options.nodes) do rows[#rows+1]={i,n.tab.." — "..n.name,n.description} end
+        return choices(rows)
+    end,function() return nodeIndex end,function(i) nodeIndex=i;refresh(false) end)
+    node:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-308)
+    local function ranks()
+        local out={} for id,rank in (profile().specialization or ''):gmatch('(%d+)=(%d+)') do out[id]=tonumber(rank) end
+        return out
+    end
+    local rank=LL:CreateSettingsDropdown(panel,function()
+        local rows={{-1,"Rank unknown"}}
+        local n=options.nodes[nodeIndex]
+        if n then for v=0,n.maxRank do rows[#rows+1]={v,tostring(v).." / "..n.maxRank.." points"} end end
+        return choices(rows)
+    end,function()
+        local n=options.nodes[nodeIndex];return n and ranks()[tostring(n.id)] or -1
+    end,function(v)
+        local n=options.nodes[nodeIndex];if not n then return end
+        local all=ranks();all[tostring(n.id)]=v>=0 and v or nil
+        local parts={} for id,value in pairs(all) do parts[#parts+1]=id..'='..value end
+        table.sort(parts)
+        update(function(p) p.specialization=#parts>0 and table.concat(parts,',') or nil end)
+    end)
+    rank:SetPoint("TOPLEFT",panel,"TOPLEFT",326,-308)
+    label("Captured character buffs (simulation only; may not affect this profession)",-356)
+    local buff=LL:CreateSettingsDropdown(panel,function()
+        local rows={{0,#options.buffs>0 and "Choose a captured buff" or "No buffs captured on this character"}}
+        for i,b in ipairs(options.buffs) do rows[#rows+1]={i,b.name} end
+        return choices(rows)
+    end,function() return buffIndex end,function(i) buffIndex=i;refresh(false) end)
+    buff:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-382)
+    local buffEnabled=LL:CreateSettingsCheckbox(panel)
+    buffEnabled:SetPoint("TOPLEFT",panel,"TOPLEFT",334,-385)
+    local buffLabel=label("Include selected buff",-388)
+    buffLabel:ClearAllPoints();buffLabel:SetPoint("LEFT",buffEnabled,"RIGHT",6,0)
+    buffEnabled:SetScript("OnClick",function(self)
+        local b=options.buffs[buffIndex];if not b then return end
+        update(function(p) p.buffs[tostring(b.id)]=self:GetChecked() and true or nil end)
+    end)
+    label("Selections do not spend knowledge or cast buffs. Unknown ranks stay unknown. Yield adjustments require a compatible approved mechanic; a selection alone supplies no bonus.",-433)
+    local scan=LL:CreateSettingsButton(panel)
+    scan:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-492);scan:SetSize(260,26)
+    scan:SetText("Refresh from current profession")
+    scan:SetScript("OnClick",function()
+        if selected~=LL:CharacterKey() then message:SetText("Log into the selected character to scan its profession.");return end
+        LL:GetResearchProfessionSnapshot({expansionID=expansion},profession)
+        refresh(true)
+    end)
+    refresh=function(reload)
+        refreshing=true
+        if reload then options=LL:GetProfessionUIOptions(selected,profession,expansion) end
+        local p=profile()
+        enabled:SetChecked(p.enabled==true);known:SetChecked(p.skill~=nil)
+        skill:SetValue(p.skill or 0)
         local record=LL.db.characters and LL.db.characters[selected]
         local snapshot=record and record.researchProfiles and record.researchProfiles[profession..":"..expansion]
-        status:SetText(snapshot and ("Saved snapshot: skill "..tostring(snapshot.skill or "?").."; observed "..tostring(snapshot.observed or "unknown")..". Offline snapshots may be stale.")
-            or "Snapshot incomplete: open this expansion's profession on the character to scan it.")
+        status:SetText(snapshot and (LL:ProfessionExpansionName(expansion).." snapshot: skill "..tostring(snapshot.skill or "unknown")..". Open the profession on that character to refresh it.")
+            or ("No saved "..LL:ProfessionExpansionName(expansion).." "..profession.." scan for this character. This does not disable reference tooltips."))
+        local b=options.buffs[buffIndex]
+        buffEnabled:SetChecked(b and p.buffs and p.buffs[tostring(b.id)]==true or false)
+        if b then buffEnabled:Enable() else buffEnabled:Disable() end
+        character:Refresh();era:Refresh();node:Refresh();rank:Refresh();buff:Refresh()
+        refreshing=false
     end
-    local function save()
-        local text=skill:GetText()
-        local specialization=spec:GetText()
-        local numeric=text~="" and tonumber(text) or nil
-        if text~="" and not numeric then errorText:SetText("Enter a numeric skill or leave it unknown.");return end
-        local ok=LL:SetManualProfessionProfile(selected,profession,expansion,{enabled=enabled:GetChecked(),
-            skill=numeric,specialization=specialization~="" and specialization or nil})
-        errorText:SetText(ok and "Simulation saved; scanned snapshot unchanged." or "Invalid skill or specialization node ranks.")
-    end
-    enabled:SetScript("OnClick",save)
-    skill:SetScript("OnEnterPressed",function(self) save();self:ClearFocus() end)
-    spec:SetScript("OnEnterPressed",function(self) save();self:ClearFocus() end)
-    local saveButton=LL:CreateSettingsButton(panel)
-    saveButton:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-460);saveButton:SetSize(210,26)
-    saveButton:SetText("Save simulation");saveButton:SetScript("OnClick",save)
-    character:SetupMenu(function(_,root)
-        local keys={} for key in pairs(LL.db.characters or {}) do keys[#keys+1]=key end
-        if #keys==0 then keys[1]=selected end
-        table.sort(keys)
-        for _,key in ipairs(keys) do
-            local k=key
-            root:CreateRadio(k,function() return selected==k end,function() selected=k;refresh() end)
-        end
-    end)
-    era:SetupMenu(function(_,root)
-        for id=0,11 do
-            local e=id
-            local family=LL.DisenchantTables and LL.DisenchantTables[e]
-            root:CreateRadio(family and family.name or ("Expansion "..e),function() return expansion==e end,function() expansion=e;refresh() end)
-        end
-    end)
-    panel:SetScript("OnShow",refresh)
+    panel:SetScript("OnShow",function() refresh(true) end)
     return panel
 end
 
@@ -555,6 +615,7 @@ function LL:RegisterNativeSettings()
     local general, generalLayout=Settings.RegisterVerticalLayoutCategory("Loot Liquidator  v"..tostring(self.version or "?"))
     Settings.RegisterAddOnCategory(general)
     self.settingsCategory=general
+    self:ProtectSettingsDefaults()
     Section(generalLayout,"General")
     Checkbox(general,"enabled","Enable Loot Liquidator",
         "Analyze items and recommend the most valuable available action.",true)
@@ -749,6 +810,8 @@ function LL:OpenSettings()
 end
 local init=CreateFrame("Frame")
 init:RegisterEvent("PLAYER_LOGIN")
+init:RegisterEvent("ADDON_LOADED")
 init:SetScript("OnEvent",function()
     if LL.db then LL:RegisterNativeSettings() end
+    if LL.settingsCategory then LL:ProtectSettingsDefaults() end
 end)

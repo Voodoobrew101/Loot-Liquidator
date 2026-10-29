@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.10.0-alpha3"
+LA.version = "0.10.0-alpha4"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -763,7 +763,7 @@ function LA:ShowCopy(title, contents)
         f:SetScript("OnDragStop", f.StopMovingOrSizing)
         local sf = CreateFrame("ScrollFrame", nil, f, "ScrollFrameTemplate")
         sf:SetPoint("TOPLEFT", 12, -32); sf:SetPoint("BOTTOMRIGHT", -30, 12)
-        local edit = CreateFrame("EditBox", nil, sf)
+        local edit = self:CreateSettingsEditBox(sf)
         edit:SetMultiLine(true); edit:SetAutoFocus(false); edit:SetFontObject(ChatFontNormal)
         edit:SetWidth(650); edit:SetHeight(400)
         edit:SetScript("OnEscapePressed", function() f:Hide() end)

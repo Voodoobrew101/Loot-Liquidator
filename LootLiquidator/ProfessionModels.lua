@@ -90,8 +90,9 @@ function LL:ProfessionFactor(rule,context)
     end
     -- Other stats are usable only at the explicitly modeled reference value.
     if not equal(context.operationStats,rule.referenceProfile and rule.referenceProfile.operationStats)
-        or not equal(context.equipment,rule.referenceProfile and rule.referenceProfile.equipment) then
-        return nil,'Unmodeled gear or operation stats'
+        or not equal(context.equipment,rule.referenceProfile and rule.referenceProfile.equipment)
+        or not equal(context.buffs,rule.referenceProfile and rule.referenceProfile.buffs) then
+        return nil,'Unmodeled gear, buffs or operation stats'
     end
     return finite(factor) and factor>0 and factor or nil
 end

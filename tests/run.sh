@@ -23,6 +23,7 @@ python3 tests/validate_package.py
 "$lua_bin" research/tests/test_verified_mechanics_adapter.lua
 "$lua_bin" tests/test_modernization.lua
 "$lua_bin" tests/test_settings.lua
+"$lua_bin" tests/test_client_regressions.lua
 
 "$lua_bin" tests/test_frozen_tsm.lua
 "$lua_bin" tests/test_profession_projection.lua

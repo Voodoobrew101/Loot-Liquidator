@@ -669,7 +669,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 end
                 return
             end
-            tooltip:AddLine("  Insufficient Data: no compatible final processing model",.83,.72,.59,true)
+            tooltip:AddLine("  "..(option.note or "Insufficient Data: no researched yield model"),.83,.72,.59,true)
         end
         for _,methodName in ipairs(methodOrder) do
             local option=choices[methodName]
@@ -685,7 +685,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     or (option.category=="destroy" and
                         (methodName=="Mill" or methodName=="Prospect"))
                     or (methodName=="Disenchant"
-                    and decision.disenchantEligible) then
+                    and decision.disenchantEligible)
+                    or methodName=="Smelt" then
                     local confidence=model and model.confidence
                     local label=names[methodName] or methodName
                     if model and model.confidenceUnscored then label=label.." (Confidence unscored)"
@@ -697,6 +698,13 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         two(label,"Insufficient Data",option.letter or "D")
                     end
                     ShowMaterials(option,model)
+                    if not option.value and (detail<3 or LA.db.showMaterialBreakdown==false) then
+                        local note=(model and model.warning) or option.note
+                        if note then tooltip:AddLine("  "..note,.83,.72,.59,true) end
+                    end
+                    if option.available==false and option.why then
+                        tooltip:AddLine("  "..option.why,1,.68,.3,true)
+                    end
                     if not hasMaterials and not option.value
                         and (methodName=="Mill" or methodName=="Prospect") then
                         tooltip:AddLine("  Output yields not researched yet",.73,.69,.61,true)

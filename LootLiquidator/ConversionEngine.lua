@@ -110,6 +110,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
         self:GetManualProfessionProfile(key,profession,f and f.expansionID)
     if simulated and simulated.enabled then
         ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
+        ctx.buffs=simulated.buffs
         ctx.specialization=simulated.specialization
         ctx.baseSkill=nil;ctx.bonusSkill=nil;ctx.operationStats=nil;ctx.craftingQuality=nil;ctx.equipment=nil
         ctx.qualityFromBlizzard=false;ctx.simulated=true;ctx.stale=false;ctx.profileKind="manual-simulation"
@@ -324,6 +325,18 @@ function LL:EvaluateDisenchant(f,character)
     end
     local model,reason=self:ResolveEvidenceModel(f,{name='Disenchant',inputCount=1,
         recipeID=13262,character=character},personal,mode)
+    if not model then
+        -- Possible output identities are useful to non-enchanters too. They
+        -- provide no quantities, probabilities or economic fallback.
+        local tier=family and family.quality and family.quality[f.quality]
+        local candidates=tier and tier.candidates
+        if candidates and #candidates>0 then
+            model={inputCount=1,materials={},unknownOutputs=true,confidence=0,
+                source='Possible disenchant materials (unverified)',
+                adjustment='Possible outputs only; quantities unknown',warning=reason}
+            for _,id in ipairs(candidates) do model.materials[#model.materials+1]={id=id} end
+        end
+    end
     local value=self:ValueProcessingModel(model,0,true)
     return {name='Disenchant',value=value,materials=model and model.materials,
         yieldModel=model,expansion=exp,expansionName=family and family.name,

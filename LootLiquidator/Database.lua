@@ -200,8 +200,14 @@ local function sourceModel(self,f,option,r)
 end
 function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     local build=GetBuildInfo and select(2,GetBuildInfo())
-    local input=option.name=='Disenchant' and gearKey(f) or f.id
-    local records=self._evidenceIndex and self._evidenceIndex[option.name..':'..tostring(input)] or {}
+    local records={}
+    local function include(input)
+        for _,record in ipairs(self._evidenceIndex and self._evidenceIndex[option.name..':'..tostring(input)] or {}) do
+            records[#records+1]=record
+        end
+    end
+    include(f.id) -- reviewed research may identify a specific gear item
+    if option.name=='Disenchant' then include(gearKey(f)) end
     local eligible,transformed,hasExpected={},{},{}
     for _,r in ipairs(records) do
         local hasMean=false
@@ -260,7 +266,15 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     end)
     local anchor
     for _,r in ipairs(eligible) do if hasExpected[r] then anchor=r;break end end
-    if not anchor then return nil,'Insufficient Data: no enabled compatible source' end
+    if not anchor then
+        local enabled=false
+        for _,r in ipairs(records) do if userWeight(self,r.sourceKey,mode)>0 then enabled=true end end
+        local why=#records==0 and 'No researched yield record for this item'
+            or not enabled and 'Matching yield sources are disabled by Database & Accuracy / Observation policy'
+            or #eligible==0 and 'Yield records do not match this recipe, patch or character context'
+            or 'Matching yield records have no usable expected quantities'
+        return nil,'Insufficient Data: '..why
+    end
     local batch=option.inputCount or anchor.inputCount
     local result={kind='weighted-evidence',inputCount=batch,materials={},sources={},
         source='Weighted evidence',context=ctx,adjustment='baseline / unadjusted',

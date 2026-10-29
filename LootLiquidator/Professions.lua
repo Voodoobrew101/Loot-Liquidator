@@ -115,6 +115,14 @@ function LL:RecordDisplayedSkillLine()
     character.details[id]={name=label,skill=rank,maxSkill=maxRank,parentID=parentID,
         parentName=parentName,observed=Now()}
     self:RefreshResearchSkillLines()
+    if type(parentName)~='string' then return end
+    for expansion=0,11 do
+        if self:ProfessionDetailMatchesExpansion(character.details[id],expansion) then
+            self:GetResearchProfessionSnapshot({expansionID=expansion},parentName)
+            self:GetProfessionUIOptions(key,parentName,expansion)
+            break
+        end
+    end
 end
 
 -- Research-specific profession snapshots. Unlike GetChildProfessionInfo,
@@ -202,8 +210,7 @@ function LL:GetResearchProfessionSnapshot(f,profession)
         local parent=rec.parentName or ""
         if (parent==profession or (parent=="" and char.professions
             and char.professions[profession]))
-           and expName and (name:find(expName,1,true)
-           or (exp==10 and name:find("Khaz Algar",1,true))) then
+           and self:ProfessionDetailMatchesExpansion(rec,exp) then
             chosenID,detail=id,rec
             break
         end
@@ -281,6 +288,94 @@ function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration)
 end
 
 function LL:ProfessionForMethod(method) return PROF[method] end
+-- Blizzard's UI catalog supplies labels and rank bounds, never yield factors.
+function LL:ProfessionExpansionName(expansion)
+    return _G['EXPANSION_NAME'..tostring(expansion)]
+        or (self.DisenchantTables and self.DisenchantTables[expansion] and self.DisenchantTables[expansion].name)
+        or ({[0]='Classic','The Burning Crusade','Wrath of the Lich King','Cataclysm',
+            'Mists of Pandaria','Warlords of Draenor','Legion','Battle for Azeroth',
+            'Shadowlands','Dragonflight','The War Within','Midnight'})[expansion]
+        or 'Unknown expansion'
+end
+function LL:ProfessionDetailMatchesExpansion(detail,expansion)
+    if type(detail)~='table' or type(detail.name)~='string' then return false end
+    local alias=({[9]='Dragon Isles',[10]='Khaz Algar'})[expansion]
+    return detail.name:find(self:ProfessionExpansionName(expansion),1,true)~=nil
+        or (alias and detail.name:find(alias,1,true)~=nil)
+        or (expansion==0 and detail.name==detail.parentName)
+end
+function LL:GetProfessionUIOptions(character,profession,expansion)
+    local char=self.db.characters and self.db.characters[character]
+    if not char then return {nodes={},buffs={}} end
+    local key=profession..':'..expansion
+    char.professionOptions=char.professionOptions or {}
+    local previous=char.professionOptions[key] or {nodes={},buffs={}}
+    if character~=self:CharacterKey() or not OwnTradeSkillWindow() then return previous end
+    local line
+    local snapshot=char.researchProfiles and char.researchProfiles[key]
+    if snapshot then line=snapshot.lineID end
+    for id,detail in pairs(char.details or {}) do
+        if detail.parentName==profession and self:ProfessionDetailMatchesExpansion(detail,expansion) then
+            line=tonumber(id) or id;break
+        end
+    end
+    if not line then return previous end
+    local function read(fn,...)
+        if type(fn)~='function' then return nil end
+        local ok,value=pcall(fn,...);if ok then return value end
+    end
+    local api,traits=C_ProfSpecs,C_Traits
+    local config=read(api and api.GetConfigIDForSkillLine,line)
+    local tabs=read(api and api.GetSpecTabIDsForSkillLine,line)
+    local options={nodes={},buffs=previous.buffs or {},lineID=line,observed=Now()}
+    local seen={}
+    local function Visit(path,tab)
+        if type(path)~='number' or seen[path] then return end
+        seen[path]=true
+        local node=read(traits and traits.GetNodeInfo,config,path)
+        local entryID=read(api and api.GetSpendEntryForPath,path)
+        local entry=entryID and read(traits and traits.GetEntryInfo,config,entryID)
+        local definition=entry and read(traits and traits.GetDefinitionInfo,entry.definitionID)
+        local name=definition and definition.overrideName
+        if (not name or name=='') and definition and definition.spellID then
+            name=read(C_Spell and C_Spell.GetSpellName,definition.spellID)
+        end
+        if node and type(name)=='string' and name~='' and type(node.maxRanks)=='number' then
+            options.nodes[#options.nodes+1]={id=path,name=name,tab=tab,maxRank=node.maxRanks,
+                rank=node.currentRank,description=read(api.GetDescriptionForPath,path)}
+        end
+        local children=read(api and api.GetChildrenForPath,path)
+        for _,child in ipairs(type(children)=='table' and children or {}) do
+            Visit(type(child)=='table' and (child.pathID or child.id) or child,tab)
+        end
+    end
+    if config and type(tabs)=='table' then
+        for _,tabID in ipairs(tabs) do
+            local info=read(api.GetTabInfo,tabID)
+            Visit(read(api.GetRootPathForTab,tabID),info and info.name or profession)
+        end
+        if #tabs>0 and #options.nodes==0 then options.nodes=previous.nodes or {} end
+    else options.nodes=previous.nodes or {} end
+    table.sort(options.nodes,function(a,b) return a.tab==b.tab and a.name<b.name or a.tab<b.tab end)
+    -- Retain actual helpful aura identities for explicit simulations. No
+    -- profession relevance, rating conversion or yield bonus is inferred.
+    local buffs={}
+    for _,buff in ipairs(options.buffs) do buffs[buff.id]=buff end
+    if C_UnitAuras and C_UnitAuras.GetAuraDataByIndex then
+        for i=1,255 do
+            local aura=read(C_UnitAuras.GetAuraDataByIndex,'player',i,'HELPFUL')
+            if not aura then break end
+            if type(aura.spellId)=='number' and type(aura.name)=='string'
+                and not (issecretvalue and (issecretvalue(aura.spellId) or issecretvalue(aura.name))) then
+                buffs[aura.spellId]={id=aura.spellId,name=aura.name}
+            end
+        end
+    end
+    options.buffs={} for _,buff in pairs(buffs) do options.buffs[#options.buffs+1]=buff end
+    table.sort(options.buffs,function(a,b) return a.name<b.name end)
+    char.professionOptions[key]=options
+    return options
+end
 function LL:SetManualProfessionProfile(character,profession,expansion,values)
     if not self.db or type(character)~='string' or type(profession)~='string'
         or type(expansion)~='number' or type(values)~='table' then return false end
@@ -301,7 +396,14 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
     self.db.manualProfessionProfiles=self.db.manualProfessionProfiles or {}
     local chars=self.db.manualProfessionProfiles
     chars[character]=chars[character] or {}
+    if values.buffs~=nil then
+        if type(values.buffs)~='table' then return false end
+        for id,enabled in pairs(values.buffs) do
+            if not tonumber(id) or tonumber(id)<=0 or tonumber(id)%1~=0 or enabled~=true then return false end
+        end
+    end
     local profile={enabled=values.enabled==true,skill=values.skill,specialization=values.specialization,
+        buffs=values.buffs and next(values.buffs) and values.buffs or nil,
         character=character,profession=profession,expansionID=expansion,simulated=true}
     chars[character][profession..':'..expansion]=profile
     if self.Invalidate then self:Invalidate() end
