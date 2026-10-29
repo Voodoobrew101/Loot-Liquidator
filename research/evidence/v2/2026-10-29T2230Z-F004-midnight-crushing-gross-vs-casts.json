@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_CRUSHING_DENOMINATOR_AND_QUALITY",
+  "runUTC": "2026-10-29T22:30:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "069833856fb70f88c17446a775b15cb1af9d4813",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 11,
+  "disposition": "NEW_ORIGINAL_AGGREGATE_AND_QUALITATIVE_CONTEXT_NO_SELECTOR_ADMISSION_OR_ECONOMIC_PROMOTION",
+  "question": "Can a new 2026 player cohort constrain Midnight crushing denominator and does specialization increase dust quantity or rank?",
+  "newOriginalCohort": {
+    "lineageID": "MIDNIGHT-2026-05-05-DIFFRACTED-200-SILVER-43-PROSPECTS",
+    "author": "Diffracted-3169329",
+    "post": 1,
+    "url": "https://us.forums.blizzard.com/en/wow/t/gemdust-is-still-miserable/2302827",
+    "published": "2026-05-05",
+    "castEpoch": "ON_OR_BEFORE_PUBLICATION_UNVERIFIED",
+    "type": "FIRSTHAND_SELF_REPORTED_AGGREGATE_NOT_RAW_LOG",
+    "reported": {
+      "oreDescription": "silver",
+      "oreUnits": 200,
+      "prospectOperations": 43,
+      "diamondUnits": 0,
+      "gemUnits": 34,
+      "gemdustUnits": 24
+    },
+    "unknown": {
+      "oreItemID": null,
+      "oreRank": null,
+      "gemIDsAndRanks": null,
+      "gemdustIDAndRank": null,
+      "completedCrushingCasts": null,
+      "resourcefulnessRefunds": null,
+      "skillSpecGear": null,
+      "exactPatch": null,
+      "otherPurchasedInputs": null
+    },
+    "derived": {
+      "nominalOreAtFivePerProspect": 215,
+      "nominalOreLessReported": 15,
+      "gemsPerReportedProspect": 0.7906976744186046,
+      "dustPerReportedGem": 0.7058823529411765,
+      "dustPerNominalThreeGemEquivalent": 2.1176470588235294,
+      "nominalThreeGemEquivalentIsActualCasts": false
+    },
+    "caution": "43 prospect operations self-reported, not log-verified. 34 gems and 24 dust are aggregate units; 34/3 is not an actual crushing cast count. 15 ore difference does not prove refunds without an inventory ledger. 0 diamonds is not a zero true probability. Do not assign ore/rank IDs."
+  },
+  "newIndependentQualitativeReports": [
+    {
+      "lineageID": "MIDNIGHT-2026-05-05-ARAGION-QUALITY-NOT-QUANTITY",
+      "author": "Aragion-3117702",
+      "post": 8,
+      "url": "https://us.forums.blizzard.com/en/wow/t/gemdust-is-still-miserable/2302827",
+      "published": "2026-05-05",
+      "claim": "Crushing skill increases dust rank R1 to R2, not dust count; mentions 1-3 per crush",
+      "completedCasts": null,
+      "exactIDs": null,
+      "confidenceStatus": "QUALITATIVE_UNCONTROLLED"
+    },
+    {
+      "lineageID": "MIDNIGHT-2026-05-06-GREENTEA-QUALITY-NOT-QUANTITY",
+      "author": "Greentea-3273980",
+      "post": 20,
+      "url": "https://us.forums.blizzard.com/en/wow/t/gemdust-is-still-miserable/2302827",
+      "published": "2026-05-06",
+      "claim": "Crushing specialization impacts dust quality rather than amount",
+      "completedCasts": null,
+      "exactIDs": null,
+      "confidenceStatus": "QUALITATIVE_UNCONTROLLED"
+    }
+  ],
+  "comparisonToPrior": {
+    "lineageID": "CARDINALAI-MIXED-480-GEMS",
+    "evidencePath": "research/evidence/v2/2026-10-29T1626Z-F004-crushing-unit-reconciliation.json",
+    "priorGemUnits": 480,
+    "priorDustUnits": 330,
+    "priorNominalDustPerThreeGemEquivalent": 2.0625,
+    "newNominalDustPerThreeGemEquivalent": 2.1176470588235294,
+    "relativeDifference": 0.02673796791443861,
+    "independentAuthors": true,
+    "matchedSkillOrPatch": false,
+    "measuredPerCast": false
+  },
+  "modelProposal": {
+    "status": "HYPOTHESIS_UNVERIFIED",
+    "suggestion": "Separate dust-rank skill/concentration model from dust-quantity model. Do not apply generic crushing-skill quantity multiplier until controlled matched cohorts verify it.",
+    "notPermitted": [
+      "Do not promote 2.117647 as expectedQuantity",
+      "Do not infer crushing casts as 34/3",
+      "Do not assign 'silver' exact ore ID or quality rank",
+      "Do not infer exactly 15 refunded ore",
+      "Do not turn 0/43 diamonds into true P=0",
+      "Do not use tooltip 1-3 as economic E"
+    ]
+  },
+  "targets": [
+    "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+    "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
+  ],
+  "mappingDisposition": "UNRESOLVED_EXACT_SELECTOR_RANK",
+  "economicFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "numericWorkingCellsAdded": 0,
+  "mappingsAdmitted": 0,
+  "measurementRequest": {
+    "question": "Does Crushing Connoisseur affect dust units per cast or only dust rank for a fixed gem item ID/rank?",
+    "protocol": "Matched low/high specialization at identical input gem ID/rank, spell 1231132 and patch. Capture 200+ completed casts per arm when feasible, including zeros, dust output item IDs/ranks, 3-gem and stone consumption/refunds, skill/gear/concentration and aborts. Verify selector separately."
+  },
+  "blockers": [
+    "No exact selector client capture",
+    "No completed crushing cast histogram",
+    "No rank-specific gem/dust IDs",
+    "No matched profession context"
+  ]
+}
