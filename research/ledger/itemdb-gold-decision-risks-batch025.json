@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0.0",
+  "batch": "025",
+  "date": "2026-10-29",
+  "researchOnly": true,
+  "scope": "candidate gold-decision risks; no measured live AH flips",
+  "rules": {
+    "goldQuantity": "Unconditional expectedQuantity per actual completed operation only",
+    "tooltip": "tooltipOnly probability and positive range forbidden in economic EV",
+    "rank": "quality-rank outputs may be mutually exclusive; do not sum full rank proxies",
+    "cost": "include all recipe reagents and measured savings separately"
+  },
+  "risks": [
+    {
+      "id": "GOLD-025-001",
+      "method": "Mill",
+      "inputItemID": 200061,
+      "outputItemID": 190322,
+      "issue": "Historical TSM proxy E=0.005 lacks current Retail completed-cast denominator and matched skill; not gold-eligible",
+      "severity": "HIGH",
+      "economicUse": "BLOCK_UNTIL_VERIFIED",
+      "source": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0130-dragonflight-q27-batch025-report.md"
+    },
+    {
+      "id": "GOLD-025-002",
+      "method": "Prospect",
+      "inputItemID": 190311,
+      "outputItemIDs": [
+        192870,
+        192871
+      ],
+      "issue": "Original 35 gross ore -> two R2 diamonds supports historical rank eligibility only; gross ore/5 not observed completed casts; TSM P/E unit inconsistency",
+      "severity": "HIGH",
+      "economicUse": "BLOCK_UNTIL_VERIFIED",
+      "source": "https://www.wowhead.com/item=192869/illimited-diamond"
+    },
+    {
+      "id": "GOLD-025-003",
+      "method": "Mill",
+      "inputItemIDs": [
+        191469,
+        191470,
+        191471,
+        191472,
+        200061
+      ],
+      "issue": "Do not sum three output-quality alternatives as simultaneous; historical family rates lack current rank-separated casts",
+      "severity": "HIGH",
+      "economicUse": "REQUIRE_RANK_EXCLUSIVITY_AND_CURRENT_E",
+      "source": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-29-0130-dragonflight-q27-batch025-report.md"
+    },
+    {
+      "id": "GOLD-025-004",
+      "method": "Crush",
+      "recipeSpellID": 1231132,
+      "inputItemIDs": [
+        242553,
+        242723,
+        242554,
+        242722,
+        242607,
+        242720,
+        242606,
+        242721,
+        242613,
+        242724,
+        242612,
+        242727,
+        242610,
+        242726,
+        242611,
+        242725
+      ],
+      "outputItemIDs": [
+        242620,
+        242621
+      ],
+      "issue": "Exact whitelist and rank gating unknown; cost vector 3 selected gems plus 1 Dusk-Shrouded Stone; no zero-inclusive output-rank cast data",
+      "severity": "HIGH",
+      "economicUse": "BLOCK_UNTIL_VERIFIED",
+      "source": "https://www.wowhead.com/spell=1231132/midnight-crushing"
+    },
+    {
+      "id": "GOLD-025-005",
+      "method": "Mill",
+      "inputItemIDs": [
+        210796,
+        210797
+      ],
+      "outputItemID": 222619,
+      "issue": "Historical 2024 specialized rank-2 pigment mappings admitted with four null numeric fields; 1.15/1.35 pigment-per-herb aggregates not current E",
+      "severity": "MEDIUM",
+      "economicUse": "UNKNOWN_NOT_ZERO",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy"
+    }
+  ]
+}
