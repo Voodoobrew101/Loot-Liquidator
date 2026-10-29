@@ -22,8 +22,8 @@ const a=compile(input),b=compile(input);
 assert.equal(a.lua,b.lua,"deterministic Lua");
 assert.deepEqual(a.report,b.report);
 assert.deepEqual(validate(a.records),[]);
-assert.equal(a.report.sourceMappingCandidates,1013);
-assert.equal(a.report.curatedAdded,30);
+assert.equal(a.report.sourceMappingCandidates,1015);
+assert.equal(a.report.curatedAdded,32);
 assert.equal(a.report.rankSpecificProxyRecordsQuarantined,31);
 assert.equal(a.report.diamondSpecializationGated,7);
 assert.equal(a.report.fullyNumericFourFields,801);
@@ -37,8 +37,8 @@ assert.equal(a.report.verifiedSourceLineIdentities,1202);
 assert.equal(a.report.legacyArithmeticContradictionsReviewed,8);
 assert.equal(a.records.filter(r=>r.inputItemID===200061&&r.outputQualityRank!==null&&r.inputQualityRank===null).length,12);
 assert.equal(a.records.filter(r=>r.conditions.eligibilityStatus==="REQUIRES_ORE_SPECIFIC_PROFICIENT_PROCESSOR_SPECIALIZATION").length,7);
-assert.equal(a.report.fieldSlots,4052);
-assert.deepEqual(a.report.missingFieldCounts,{"dropChance":199,"yieldMin":95,"yieldMax":95,"expectedQuantity":114});
+assert.equal(a.report.fieldSlots,4060);
+assert.deepEqual(a.report.missingFieldCounts,{"dropChance":201,"yieldMin":97,"yieldMax":97,"expectedQuantity":116});
 assert.equal(a.report.quarantineBreakdown.MULTI_REAGENT_SCHEMA_GAP||0,0);
 const powder=a.records.find(r=>r.method==="Prospect"&&r.inputItemID===36910&&r.outputItemID===46849);
 assert.ok(powder);
@@ -86,6 +86,15 @@ assert.equal(twwMills.length,10,"two false Mycobloom-to-Apricate-Ink mappings qu
 assert.equal(new Set(twwMills.map(r=>r.inputItemID)).size,10);
 for(const r of twwMills){assert.equal(r.inputCountPerOperation,10);assert.equal(r.expansionID,10);assert.ok(r.inputQualityRank>=1&&r.outputQualityRank>=1,"exact rank identity preserved without assuming same-rank eligibility");assert.equal(r.conditions.eligibilityStatus,"FAMILY_SUPPORTED_EXACT_RANK_PAIR_SKILL_NOT_VERIFIED");for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"]){assert.equal(r[f].value,null);assert.equal(r[f].confidence,0);}}
 
+assert.equal(a.report.compilerVersion,"0.7.1");
+const historicalMycobloom=a.records.filter(r=>r.recordID.startsWith("historical:tww:mill:")&&r.recordID.includes("reddit-1fdmzwy"));
+assert.equal(historicalMycobloom.length,2);
+assert.deepEqual(historicalMycobloom.map(r=>r.inputItemID).sort(),[210796,210797]);
+for(const r of historicalMycobloom){assert.equal(r.outputItemID,222619);assert.equal(r.outputQualityRank,2);assert.equal(r.inputCountPerOperation,10);assert.equal(r.conditions.eligibilityStatus,"HISTORICAL_PLAYER_REPORTED_SPECIALIZED_MILLING_R2_PIGMENT_CURRENT_UNVERIFIED");for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"]){assert.equal(r[f].value,null);assert.equal(r[f].confidence,0);}}
+const mycobloomR3=a.records.find(r=>r.recordID==="candidate:tww:mill:210798:222618:runtime-method-family:20261028");
+assert.ok(mycobloomR3);assert.equal(mycobloomR3.inputQualityRank,3);assert.equal(mycobloomR3.outputQualityRank,1);
+const wrongRank=structuredClone(historicalMycobloom[0]);wrongRank.outputQualityRank=3;
+assert.ok(validate([wrongRank]).some(x=>x.startsWith("OUTPUT_ID_RANK_MISMATCH:")));
 assert.equal(a.report.tooltipFallbacks.reviewed,19);
 assert.equal(a.report.tooltipFallbacks.activeRecords,1);
 assert.equal(a.report.tooltipFallbacks.appliedYieldFields,2);
@@ -111,4 +120,4 @@ const staged=JSON.parse(read("research/proposed/itemdb-tooltip-fallbacks-q25.jso
 staged.tooltipFallbacks[0].economicFields.expectedQuantity=0.7;
 assert.throws(()=>compile({...input,tooltipFallbacksJSON:JSON.stringify(staged)}),/Tooltip staging rejected/);
 
-console.log("PASS research compiler v0.7.0 static regression; Lua interpreter and WoW client not run");
+console.log("PASS research compiler v0.7.1 static regression; Lua interpreter and WoW client not run");
