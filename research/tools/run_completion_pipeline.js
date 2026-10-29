@@ -132,6 +132,14 @@ function run(root, options={}) {
     if(identityChild.status!==0)
       throw Error("F005 target-identity regression failed\\n"+identityChild.stdout+identityChild.stderr);
     process.stdout.write(identityChild.stdout);
+    // Validator-owned provenance/confidence suite must run in native CI.
+    // This rejects stale evidence lineage and self-consistent preview edits.
+    const provenanceTest=path.join(root,"research/tests/v2/test_f005_provenance_confidence_integrity.js");
+    if(!fs.existsSync(provenanceTest)) throw Error("Required F005 provenance check missing");
+    const provenanceChild=spawnSync(process.execPath,[provenanceTest],{cwd:root,encoding:"utf8"});
+    if(provenanceChild.status!==0)
+      throw Error("F005 provenance/confidence regression failed\\n"+provenanceChild.stdout+provenanceChild.stderr);
+    process.stdout.write(provenanceChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
