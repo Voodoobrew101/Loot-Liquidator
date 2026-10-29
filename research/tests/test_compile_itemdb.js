@@ -22,8 +22,8 @@ const a=compile(input),b=compile(input);
 assert.equal(a.lua,b.lua,"deterministic Lua");
 assert.deepEqual(a.report,b.report);
 assert.deepEqual(validate(a.records),[]);
-assert.equal(a.report.sourceMappingCandidates,1003);
-assert.equal(a.report.curatedAdded,20);
+assert.equal(a.report.sourceMappingCandidates,1015);
+assert.equal(a.report.curatedAdded,32);
 assert.equal(a.report.rankSpecificProxyRecordsQuarantined,31);
 assert.equal(a.report.diamondSpecializationGated,7);
 assert.equal(a.report.fullyNumericFourFields,801);
@@ -37,8 +37,8 @@ assert.equal(a.report.verifiedSourceLineIdentities,1202);
 assert.equal(a.report.legacyArithmeticContradictionsReviewed,8);
 assert.equal(a.records.filter(r=>r.inputItemID===200061&&r.outputQualityRank!==null&&r.inputQualityRank===null).length,12);
 assert.equal(a.records.filter(r=>r.conditions.eligibilityStatus==="REQUIRES_ORE_SPECIFIC_PROFICIENT_PROCESSOR_SPECIALIZATION").length,7);
-assert.equal(a.report.fieldSlots,4012);
-assert.deepEqual(a.report.missingFieldCounts,{"dropChance":189,"yieldMin":85,"yieldMax":85,"expectedQuantity":104});
+assert.equal(a.report.fieldSlots,4060);
+assert.deepEqual(a.report.missingFieldCounts,{"dropChance":201,"yieldMin":97,"yieldMax":97,"expectedQuantity":116});
 assert.equal(a.report.quarantineBreakdown.MULTI_REAGENT_SCHEMA_GAP||0,0);
 const powder=a.records.find(r=>r.method==="Prospect"&&r.inputItemID===36910&&r.outputItemID===46849);
 assert.ok(powder);
@@ -81,4 +81,8 @@ assert.ok(a.lua.includes("requiresBench=opt(x[35])"));assert.ok(a.lua.includes("
 const mass=a.records.filter(r=>r.conditions.operationVariant==="MASS_20_HERB");assert.equal(mass.length,9);assert.equal(a.report.expectedQuantityPresent,899);assert.equal(a.records.filter(r=>r.inputItemID===152506&&r.outputItemID===153635).length,2);
 for(const [input,spell,casts,means] of [[152506,256218,177,[15.48,5.89,2.87]],[152507,256223,106,[16.39,5.96,2.57]],[152508,256221,103,[15.89,5.85,2.12]]]){for(let i=0;i<3;i++){const r=mass.find(x=>x.inputItemID===input&&x.outputItemID===[153635,153636,153669][i]);assert.ok(r);assert.equal(r.recipeSpellID,spell);assert.equal(r.inputCountPerOperation,20);assert.deepEqual(r.reagents,[{itemID:input,quantity:20}]);assert.equal(r.expectedQuantity.value,means[i]);assert.equal(r.expectedQuantity.sampleOperations,casts);assert.ok(r.expectedQuantity.uncertainty.includes("rounded mean"));for(const f of ["dropChance","yieldMin","yieldMax"])assert.equal(r[f].value,null);}}
 assert.ok(a.lua.includes("operationVariant=opt(x[37])"));assert.ok(a.lua.includes("uncertainty=opt(x[7])"));const invalid=structuredClone(mass[0]);invalid.reagents[0].quantity=5;assert.ok(validate([invalid]).some(x=>x.startsWith("MASS_RECIPE:")));
+const twwMills=a.records.filter(r=>r.recordID.startsWith("candidate:tww:mill:"));
+assert.equal(twwMills.length,12,"12 source-backed TWW herb/rank mapping candidates");
+assert.equal(new Set(twwMills.map(r=>r.inputItemID)).size,12);
+for(const r of twwMills){assert.equal(r.inputCountPerOperation,10);assert.equal(r.expansionID,10);assert.equal(r.inputQualityRank,r.outputQualityRank);assert.equal(r.conditions.eligibilityStatus,"FAMILY_SUPPORTED_EXACT_RANK_PAIR_SKILL_NOT_VERIFIED");for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"]){assert.equal(r[f].value,null);assert.equal(r[f].confidence,0);}}
 console.log("PASS research compiler v0.6.1 static regression; Lua interpreter and WoW client not run");
