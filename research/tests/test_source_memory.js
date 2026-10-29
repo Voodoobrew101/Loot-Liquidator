@@ -27,4 +27,6 @@ assert.equal(corrected.appliedAttributionCorrectionIDs.length,1);
 corrected=applyCorrections(corrected,correction);
 assert.equal(corrected.sources[0].attributionCorrections.length,1,"idempotent replay");
 assert.throws(()=>applyCorrections(build([primer],[],[]),{corrections:[{...correction.corrections[0],observationID:"wrong"}]}),/not found/);
+const descriptive=build([{observationID:"almar",source:{url:"https://almarsguides.com/wow/farming/wotlk/otherlocations/Prospecting/",originalDocumentRef:"page section My Prospecting Titanium Video"}}],[],[]);
+assert.ok(descriptive.sources[0].canonicalUrl.startsWith("https://almarsguides.com/"),"descriptive originalDocumentRef must not become a fake URL");
 console.log("source memory tests passed: URL normalization, archive import, partial/full, feedback deduplication and invalid event guard");
