@@ -75,3 +75,11 @@ Ten provisional mappings per 150 reviewed keys (6.7%), zero new current-Retail m
 - **Tooling reliability:** source-memory replay must canonicalize URLs consistently; descriptive originalDocumentRef labels are not URLs. Replaying q17/q18 sources exposed two duplicate slash variants and required a deterministic merge. Full Node directory rebuild remains preferable when a complete repository checkout is available.
 - **Mapping-gap bookkeeping:** a compiled provisional refining recipe should not remain labelled CANDIDATE_NOT_COMPILED. Distinguish staged mapping coverage from in-client recipe eligibility verification. Do not inflate 100%-known-admitted coverage into an exhaustive Retail-universe claim.
 - **Next allocation:** Midnight 16 Crushing + 19 numeric; TWW 21 native + 14 DF overflow; DF 40 rank-specific; Legacy 31 historical + 9 BfA/WoD milling. Prioritize records where a missing E or omitted reagent could change the liquidation decision.
+
+## 2026-10-28 — Master batch017: recipe identity and denominator QA
+
+- Jiyao's original revised BfA study gives 177/106/103 completed **20-herb mass** operations, not five-herb standard operations. Nine historical recipe/output rows from one study were compiled separately; rounded means retain ±0.005 reporting uncertainty and current-Retail eligibility remains unverified.
+- Queue19 workers independently reviewed 150 exact keys and 120 GameData output-line IDs, but supported **zero new current-Retail numeric fields**. Queue20 prioritizes 68 previously unassigned gaps, 9 new mass recipe rows, and source conflicts rather than repeating source-only profiles.
+- Dragonflight beta skill 250 **guarantees** R3, not prohibits R3 below 250. Preserve immutable interpretation erratum and reject unverified universal skill coefficients.
+- Never divide 20-herb mass yields by four and call them observed standard five-herb E. Keep actual completed casts, nominal input normalization and Resourcefulness savings distinct.
+- Full source-memory rebuild needs 95 JSONL files and hit connector tool-call ceiling. Incremental q19 replay is labelled, not presented as a full Node rebuild. Reward points remain separate from evidence confidence.

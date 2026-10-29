@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "researchOnly": true,
-  "sourcesCount": 146,
-  "reviewEvents": 166,
-  "qaEvents": 51,
-  "approvedQaEvents": 50,
+  "sourcesCount": 152,
+  "reviewEvents": 183,
+  "qaEvents": 58,
+  "approvedQaEvents": 57,
   "warnings": [
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl dragonflight-serevite-r2-2022-dec-original",
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl ww-b006-2023-q3-8000",
@@ -14,7 +14,8 @@
     "invalid review: research/coordination/source-reviews/loot-liquidator-dragonflight-2026-10-28-1231-batch012.jsonl df-lavingrunatic-crumbledstone-60prospects",
     "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: batch012; original DF 5 source-cohort reconciliation JSONL rows are not canonical observation.schema.json records",
     "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: q17/q18 source reviews and three source-only observations; full original-directory replay still pending",
-    "URL_CANONICALIZATION_REPAIR: merged 2 duplicate slash/URL variants after incremental V8 replay; global review and QA event counts unchanged."
+    "URL_CANONICALIZATION_REPAIR: merged 2 duplicate slash/URL variants after incremental V8 replay; global review and QA event counts unchanged.",
+    "INCREMENTAL_REPLAY_NOT_FULL_NODE_REBUILD: batch017; full 95 JSONL-file replay blocked by tool-call ceiling; q19 reviews and master feedback incrementally replayed"
   ],
   "strategies": {
     "ORIGINAL_DATASET": {
@@ -24,10 +25,10 @@
       "points": 46
     },
     "DENOMINATOR_GUARD": {
-      "reviewedClaims": 9,
-      "accepted": 9,
+      "reviewedClaims": 10,
+      "accepted": 10,
       "rejected": 0,
-      "points": 26
+      "points": 28
     },
     "NUMERIC_INVARIANT": {
       "reviewedClaims": 7,
@@ -90,6 +91,36 @@
       "points": 6
     },
     "MASS_VS_STANDARD_NORMALIZATION": {
+      "reviewedClaims": 2,
+      "accepted": 2,
+      "rejected": 0,
+      "points": 5
+    },
+    "RECIPE_VECTOR": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 3
+    },
+    "SOURCE_SAMPLE_AMBIGUITY": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 2
+    },
+    "SOURCE_INTERPRETATION_CORRECTION": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 4
+    },
+    "RECIPE_OPERATION_IDENTITY": {
+      "reviewedClaims": 1,
+      "accepted": 1,
+      "rejected": 0,
+      "points": 6
+    },
+    "SOURCE_LINEAGE_DEDUP": {
       "reviewedClaims": 1,
       "accepted": 1,
       "rejected": 0,
@@ -251,35 +282,44 @@
         "DF-BETA-20221012-JALLFO-SEREVITE-COHORT1"
       ],
       "studyIDs": [
-        "DF-2022-BETA-PROSPECT-SHEET"
+        "DF-2022-BETA-PROSPECT-SHEET",
+        "DF-BETA-20221012-JALLFO-5000ORE-6COHORT"
       ],
       "datasetIDs": [
         "DF-six-cohorts",
         "six-beta-cohorts",
-        "six-beta-cohorts-one-study"
+        "six-beta-cohorts-one-study",
+        "jallfo-six-beta-cohorts-one-study"
       ],
       "reviewedRecordKeys": [
         "profile:compiled:prospect:190394",
         "profile:compiled:prospect:190311",
         "profile:dragonflight:190394",
-        "profile:dragonflight:190311"
+        "profile:dragonflight:190311",
+        "tsm:prospect:190311:192870:L1281",
+        "tsm:prospect:190311:192871:L1282"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "actual casts",
-        "proc flags",
-        "output rank IDs"
+        "actual cast denominator",
+        "per-cast rank hit histogram",
+        "explicit output item IDs",
+        "current-Retail patch bridge",
+        "skill 250 threshold contradiction"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 3,
+      "reviewEvents": 4,
       "originalStudyUrls": [
         "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing"
       ],
-      "changeTriggers": [],
+      "changeTriggers": [
+        "Q19_BETA_SOURCE_INTERNAL_CONTRADICTION"
+      ],
       "revisitReasons": [
         "Reuse archived primary source, no independent re-count",
         "Reused archived original source; no duplicate fetch",
-        "Reused original sheet as one study, avoided repeat fetch"
+        "Reused original sheet as one study, avoided repeat fetch",
+        "Original already archived; R3 diamond at reported skill 68/113 contradicts author's R3 threshold; no new cohort"
       ]
     },
     {
@@ -448,24 +488,33 @@
         "tsm:mill:200061:198420:L2006",
         "tsm:mill:200061:198421:L2007",
         "tsm:mill:200061:198422:L2008",
-        "tsm:mill:200061:198423:L2009"
+        "tsm:mill:200061:198423:L2009",
+        "tsm:prospect:188658:192870:L1205",
+        "tsm:prospect:188658:192871:L1206",
+        "tsm:prospect:189143:192870:L1243",
+        "tsm:prospect:189143:192871:L1244",
+        "tsm:prospect:190311:192870:L1281",
+        "tsm:prospect:190311:192871:L1282"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "original TSM source cohort",
-        "exact output-rank P and E",
-        "current Retail skill/patch applicability"
+        "exact-rank hit probability",
+        "exact-rank expected quantity",
+        "current Retail patch and skill",
+        "actual cast counts"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [],
       "changeTriggers": [
         "REV17_EXACT_DRACONIUM_RANK_AUDIT",
-        "REV18_39_EXACT_MILLING_LINES"
+        "REV18_39_EXACT_MILLING_LINES",
+        "Q19_39_SOURCE_LINE_RANK_AUDIT"
       ],
       "revisitReasons": [
         "37 source rows checked; rank-family P/E duplicates must remain unknown for exact ranks",
-        "39 pinned GameData rows independently matched to input/output/source line; no new original TSM study"
+        "39 pinned GameData rows independently matched to input/output/source line; no new original TSM study",
+        "Reused TSM historical derivative; all source IDs and input groups matched; no new measurements"
       ]
     },
     {
@@ -1119,23 +1168,26 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "numeric post/pre bridge",
-        "individual per-output P"
+        "posthotfix per-output P",
+        "posthotfix exact rank E",
+        "per-cast yield histogram"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 3,
+      "reviewEvents": 4,
       "originalStudyUrls": [
         "https://worldofwarcraft.blizzard.com/en-us/news/24148555/hotfixes-october-25-2024"
       ],
       "changeTriggers": [
         "QUEUE_REV14_PATCH",
         "Q17_P0_CONDITIONAL_CROSS_ORE_MAPPING_RECONCILIATION",
-        "Q18_P0_GEM_FINDING_HISTORICAL_COHORT_RECONCILIATION"
+        "Q18_P0_GEM_FINDING_HISTORICAL_COHORT_RECONCILIATION",
+        "Q19_PATCH_EPOCH_GUARD"
       ],
       "revisitReasons": [
         "Patch scope check: every action has byproducts, not proof both outputs always occur",
         "Previously archived source reused for a new exact missing-output and hotfix-era reconciliation; no repeat source credit",
-        "Source reused for assignment-context reconciliation; do not count again"
+        "Source reused for assignment-context reconciliation; do not count again",
+        "Previously indexed official mechanic boundary reused, not a new study"
       ]
     },
     {
@@ -1228,19 +1280,45 @@
       "studyIDs": [
         "midnight-jc-method-crushing-guide"
       ],
-      "datasetIDs": [],
-      "reviewedRecordKeys": [],
+      "datasetIDs": [
+        "method-guide-march2026-qualitative-crushing"
+      ],
+      "reviewedRecordKeys": [
+        "recipe-candidate:midnight:crush:242553:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242723:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242554:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242722:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242607:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242720:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242606:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242721:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242613:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242724:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242612:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242727:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242610:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242726:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242611:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242725:gemdust-family:20261028"
+      ],
       "status": "PARTIAL",
       "missingFields": [
-        "separate spell for single-gem-to-stone claim",
-        "input/output quality distribution"
+        "independent 1-3 output histogram",
+        "rank-specific output quantities",
+        "separate single-gem stone spell ID",
+        "exact salvage eligibility"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 1,
-      "originalStudyUrls": [],
-      "changeTriggers": [],
+      "reviewEvents": 2,
+      "originalStudyUrls": [
+        "https://www.method.gg/guides/midnight-jewelcrafting-profession-guide"
+      ],
+      "changeTriggers": [
+        "QUEUE19_REUSED_SECONDARY_CONTEXT"
+      ],
       "revisitReasons": [
-        "P0 crushing input eligibility and 1-gem claim needs game-record validation"
+        "P0 crushing input eligibility and 1-gem claim needs game-record validation",
+        "Family-level 1-3 range and gem variety claim are not exact rank-specific numeric fields"
       ]
     },
     {
@@ -1708,12 +1786,14 @@
         "tww-2026-10-28-reddit-aqirite-r2-oct14"
       ],
       "studyIDs": [
-        "reddit-2024-10-14-aqirite"
+        "reddit-2024-10-14-aqirite",
+        "tww-2024-10-14-aqirite-rank-comparison"
       ],
       "datasetIDs": [
         "tww-aqirite-rank1-rank2-output-aggregate",
         "aqirite-r2-10000ore",
-        "reddit-2024-10-14-aqirite"
+        "reddit-2024-10-14-aqirite",
+        "tww-2024-10-14-aqirite-original"
       ],
       "reviewedRecordKeys": [
         "210933:Prospect:212511",
@@ -1754,24 +1834,26 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "specialization points",
-        "actual cast count",
-        "refunds",
-        "2026 applicability"
+        "2026 patch match",
+        "actual completed operations",
+        "per-cast zero-inclusive histogram",
+        "exact output quality ranks"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 3,
+      "reviewEvents": 4,
       "originalStudyUrls": [
         "https://www.reddit.com/r/woweconomy/comments/1g350pq"
       ],
       "changeTriggers": [
         "QUEUE_REV14_GOLD_RISK",
-        "Q17_P0_CONDITIONAL_CROSS_ORE_MAPPING_RECONCILIATION"
+        "Q17_P0_CONDITIONAL_CROSS_ORE_MAPPING_RECONCILIATION",
+        "Q19_HISTORICAL_GOLD_SCOPE_COMPARISON"
       ],
       "revisitReasons": [
         "Revisited previously discovered original source to clarify explicit exclusion of refunded ore",
         "P2 four-to-fivefold byproduct discrepancy against PeaEsk; not valid pooling",
-        "Previously archived source reused for a new exact missing-output and hotfix-era reconciliation; no repeat source credit"
+        "Previously archived source reused for a new exact missing-output and hotfix-era reconciliation; no repeat source credit",
+        "Reused archived original only to distinguish gross total valuation from gems-only 2025 claim"
       ]
     },
     {
@@ -1801,6 +1883,112 @@
       ],
       "revisitReasons": [
         "Reused original stack-queue source for denominator audit"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1k78h4v",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/1k78h4v"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "tww-2025-04-25-posthotfix-rank-value-player-claim"
+      ],
+      "datasetIDs": [
+        "tww-2025-04-25-qualitative-no-cast-data"
+      ],
+      "reviewedRecordKeys": [
+        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+        "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+        "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+        "candidate:conditional:prospect:210937:212508:gem-finding:20261028",
+        "compiled:prospect:210931:212498:L419",
+        "compiled:prospect:210931:213398:L420",
+        "compiled:prospect:210931:213399:L421",
+        "compiled:prospect:210934:212498:L428",
+        "compiled:prospect:210934:212505:L429",
+        "compiled:prospect:210934:212508:L430",
+        "compiled:prospect:210934:213398:L431",
+        "compiled:prospect:210934:213399:L432",
+        "compiled:prospect:210937:212495:L439",
+        "compiled:prospect:210937:212498:L440",
+        "compiled:prospect:210937:212511:L441",
+        "compiled:prospect:210937:213398:L442",
+        "compiled:prospect:210937:213399:L443"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "completed operations",
+        "raw output totals",
+        "per-output item/rank",
+        "patch/build",
+        "price snapshot",
+        "per-cast histogram"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/1k78h4v"
+      ],
+      "changeTriggers": [
+        "Q19_POST_HOTFIX_SOURCE_SEARCH"
+      ],
+      "revisitReasons": [
+        "New post-hotfix player qualitative claim but no denominator; direct Reddit retrieval blocked"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "reddit-woweconomy-1rrn6of-march2026-resourcefulness-report"
+      ],
+      "datasetIDs": [
+        "march2026-resourcefulness-small-sample-no-denominator"
+      ],
+      "reviewedRecordKeys": [
+        "recipe-candidate:midnight:crush:242553:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242723:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242554:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242722:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242607:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242720:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242606:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242721:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242613:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242724:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242612:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242727:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242610:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242726:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242611:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242725:gemdust-family:20261028"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "actual cast count",
+        "exact gem and stone refunds",
+        "displayed vs actual proc mechanism",
+        "skill/gear/spec",
+        "patch"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/"
+      ],
+      "changeTriggers": [
+        "QUEUE19_NEW_ORIGINAL_SOURCE"
+      ],
+      "revisitReasons": [
+        "First-hand March 2026 small-sample savings report; input refunds are not produced Gemdust"
       ]
     },
     {
@@ -1846,6 +2034,56 @@
       ],
       "unverifiedPossibleMappings": [],
       "attributionCorrections": []
+    },
+    {
+      "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/1v5esk0/midnight_jc",
+      "urls": [
+        "https://www.reddit.com/r/woweconomy/comments/1v5esk0/midnight_jc/"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "reddit-woweconomy-1v5esk0-july2026-player-gemdust-ratio"
+      ],
+      "datasetIDs": [
+        "july2026-self-report-0.83925-no-cast-denominator"
+      ],
+      "reviewedRecordKeys": [
+        "recipe-candidate:midnight:crush:242553:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242723:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242554:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242722:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242607:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242720:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242606:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242721:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242613:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242724:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242612:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242727:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242610:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242726:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242611:gemdust-family:20261028",
+        "recipe-candidate:midnight:crush:242725:gemdust-family:20261028"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "exact gem input IDs/ranks",
+        "actual completed Crushing operations",
+        "output rank IDs/histogram",
+        "actual observation date/client patch",
+        "gross input/refund totals"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.reddit.com/r/woweconomy/comments/1v5esk0/midnight_jc/"
+      ],
+      "changeTriggers": [
+        "QUEUE19_NEW_ORIGINAL_SOURCE"
+      ],
+      "revisitReasons": [
+        "New original July 2026 max-spec player estimate 0.83925 dust per gem; not cast-level E"
+      ]
     },
     {
       "canonicalUrl": "https://www.reddit.com/r/woweconomy/comments/51ovfk/possible_prospecting_nerf",
@@ -2938,7 +3176,10 @@
         "bfa-1917247-approx50k-100k-herb-strata",
         "bfa-jiyao-694-mass-casts",
         "bfa-baadkitty-200each-and-kidneph-1000each",
-        "bfa-jiyao-riverbud-44-mass-revised"
+        "bfa-jiyao-riverbud-44-mass-revised",
+        "legacy-q19-b017-bfa-jiyao-2018-seven-herb-massmill",
+        "legacy-q19-b017-bfa-baadkitty-2018-seven-herb-200each",
+        "legacy-q19-b017-bfa-kidneph-2018-six-herb-1000each"
       ],
       "reviewedRecordKeys": [
         "output-main:tsm:mill:152505:153635:L1862",
@@ -2992,16 +3233,25 @@
         "output-main:compiled:mill:152510:153635:L183",
         "compiled:mill:152505:153635:L158",
         "compiled:mill:152505:153636:L159",
-        "compiled:mill:152505:153669:L160"
+        "compiled:mill:152505:153669:L160",
+        "compiled:mill:152506:153635:L163",
+        "compiled:mill:152506:153636:L164",
+        "compiled:mill:152506:153669:L165",
+        "compiled:mill:152507:153635:L168",
+        "compiled:mill:152507:153636:L169",
+        "compiled:mill:152507:153669:L170",
+        "compiled:mill:152508:153635:L173",
+        "compiled:mill:152508:153636:L174",
+        "compiled:mill:152508:153669:L175"
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "zero-inclusive per-output histogram",
-        "matched 2026 patch/skill",
-        "standard five-herb bridge"
+        "actual completed casts",
+        "skill/patch",
+        "per-cast zeros"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 8,
+      "reviewEvents": 11,
       "originalStudyUrls": [
         "https://www.wowhead.com/item=153669/viridescent-pigment"
       ],
@@ -3012,7 +3262,9 @@
         "QUEUE_REV13_BFA_SKILL_150_TRIAGE",
         "REUSE_EXISTING_ARCHIVED_STUDY",
         "exact seven assigned Ultramarine E rows",
-        "REUSED_PRIMARY_UPDATED_JIYAO_TABLE_WITH_NUMERIC_DISCREPANCY"
+        "REUSED_PRIMARY_UPDATED_JIYAO_TABLE_WITH_NUMERIC_DISCREPANCY",
+        "REUSED_ORIGINAL_REVISED_MASS_CAST_MEANS_3_HERBS",
+        "REUSED_INDEPENDENT_ORIGINAL_COHORT"
       ],
       "revisitReasons": [
         "Reuse archived primary source, no independent re-count",
@@ -3022,7 +3274,10 @@
         "New original author within previously analyzed Wowhead page; distinct cohort ancestry from Jiyao, Baadkitty, Kidneph",
         "Use existing Jiyao 177 Star Moss 20-herb mass casts without rearchiving/recounting",
         "source reuse and denominator guard",
-        "44 Riverbud mass casts latest means 16.16/6.91/2.05 per 20 vs compiled nominal five 4.020833/1.508333/0.65; do not double-count 39-cast earlier snapshot"
+        "44 Riverbud mass casts latest means 16.16/6.91/2.05 per 20 vs compiled nominal five 4.020833/1.508333/0.65; do not double-count 39-cast earlier snapshot",
+        "Reconciled 177 Star Moss, 106 Sea Stalk, 103 Siren's Pollen actual mass casts; means per 20 herbs. One author, not three independent studies.",
+        "200 initial herbs per type; independent from Jiyao, do not infer 10 actual mass casts.",
+        "1000 initial herbs per type; independent from Jiyao/Baadkitty, not new source."
       ]
     },
     {
@@ -4880,7 +5135,8 @@
     {
       "canonicalUrl": "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385",
       "urls": [
-        "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing"
+        "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit?usp=sharing",
+        "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385"
       ],
       "observationIDs": [
         "DF-BETA-20221012-JALLFO-SEREVITE-COHORT1",
@@ -4893,17 +5149,32 @@
       "studyIDs": [
         "DF-BETA-20221012-JALLFO-5000ORE-6COHORT"
       ],
-      "datasetIDs": [],
-      "reviewedRecordKeys": [],
-      "status": "DISCOVERED",
-      "missingFields": [],
-      "lastReviewedAt": null,
-      "reviewEvents": 0,
+      "datasetIDs": [
+        "jallfo-derivative-author-narrative"
+      ],
+      "reviewedRecordKeys": [
+        "tsm:prospect:190311:192870:L1281",
+        "tsm:prospect:190311:192871:L1282"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "exact low-skill R3 production mechanism",
+        "completed-cast denominator",
+        "2026 Retail bridge"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 2,
       "originalStudyUrls": [
         "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385"
       ],
-      "changeTriggers": [],
-      "revisitReasons": []
+      "changeTriggers": [
+        "Q19_DERIVATIVE_CONTEXT_RECHECK",
+        "Q19_IMMUTABLE_GUARANTEE_THRESHOLD_ERRATUM"
+      ],
+      "revisitReasons": [
+        "Article is derivative of Jallfo spreadsheet, not second experiment",
+        "Corrected worker overstatement: 250 skill guarantees R3, not proves R3 impossible below 250; therefore reported low-skill R3 is not formal source contradiction"
+      ]
     },
     {
       "canonicalUrl": "https://www.wowhead.com/ru/spell=31252/prospecting",
@@ -5131,21 +5402,23 @@
       ],
       "status": "PARTIAL",
       "missingFields": [
-        "per-item eligibility",
-        "stone reagent numeric rank ID",
-        "output Gemdust quality histogram"
+        "exact item-ID salvage whitelist",
+        "exact stone rank accepted",
+        "dust output rank probability and yield"
       ],
       "lastReviewedAt": "2026-10-28",
-      "reviewEvents": 2,
+      "reviewEvents": 3,
       "originalStudyUrls": [
         "https://www.wowhead.com/spell=1231132/midnight-crushing"
       ],
       "changeTriggers": [
-        "QUEUE17_EVIDENCE_REVIEW"
+        "QUEUE17_EVIDENCE_REVIEW",
+        "QUEUE19_REUSED_GAME_RECORD"
       ],
       "revisitReasons": [
         "P0 previously omitted recipe family, 3 gems plus 1 stone",
-        "Direct additional reagent 1 Dusk-Shrouded Stone visible on spell; salvage three gems"
+        "Direct additional reagent 1 Dusk-Shrouded Stone visible on spell; salvage three gems",
+        "Three selected gems + one stone family recipe confirmed, not per-ID whitelist"
       ]
     },
     {
@@ -5361,6 +5634,108 @@
       "revisitReasons": [
         "New original per-input cohort extraction",
         "Original BfA Mass Mill Riverbud consumes 20 Riverbud and requires BfA Inscription 50; do not price as a five-herb operation"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=256218",
+      "urls": [
+        "https://www.wowhead.com/spell=256218"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "bfa-mass-mill-152506-spell-256218"
+      ],
+      "datasetIDs": [
+        "legacy-q19-b017-bfa-mass-mill-152506-spell-256218"
+      ],
+      "reviewedRecordKeys": [
+        "compiled:mill:152506:153635:L163",
+        "compiled:mill:152506:153636:L164",
+        "compiled:mill:152506:153669:L165"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "2026 Retail learned-state",
+        "standard five-herb operation equivalence"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=256218"
+      ],
+      "changeTriggers": [
+        "DIRECT_RECIPE_REAGENT_VECTOR_RECHECK"
+      ],
+      "revisitReasons": [
+        "Recipe 256218 consumes 20 Star Moss; BfA Inscription 50. Not a 5-herb standard cast."
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=256221",
+      "urls": [
+        "https://www.wowhead.com/spell=256221"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "bfa-mass-mill-152508-spell-256221"
+      ],
+      "datasetIDs": [
+        "legacy-q19-b017-bfa-mass-mill-152508-spell-256221"
+      ],
+      "reviewedRecordKeys": [
+        "compiled:mill:152508:153635:L173",
+        "compiled:mill:152508:153636:L174",
+        "compiled:mill:152508:153669:L175"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "2026 Retail learned-state",
+        "standard five-herb operation equivalence"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=256221"
+      ],
+      "changeTriggers": [
+        "DIRECT_RECIPE_REAGENT_VECTOR_RECHECK"
+      ],
+      "revisitReasons": [
+        "Recipe 256221 consumes 20 Siren's Pollen; BfA Inscription 50. Not a 5-herb standard cast."
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.wowhead.com/spell=256223",
+      "urls": [
+        "https://www.wowhead.com/spell=256223"
+      ],
+      "observationIDs": [],
+      "studyIDs": [
+        "bfa-mass-mill-152507-spell-256223"
+      ],
+      "datasetIDs": [
+        "legacy-q19-b017-bfa-mass-mill-152507-spell-256223"
+      ],
+      "reviewedRecordKeys": [
+        "compiled:mill:152507:153635:L168",
+        "compiled:mill:152507:153636:L169",
+        "compiled:mill:152507:153669:L170"
+      ],
+      "status": "PARTIAL",
+      "missingFields": [
+        "2026 Retail learned-state",
+        "standard five-herb operation equivalence"
+      ],
+      "lastReviewedAt": "2026-10-28",
+      "reviewEvents": 1,
+      "originalStudyUrls": [
+        "https://www.wowhead.com/spell=256223"
+      ],
+      "changeTriggers": [
+        "DIRECT_RECIPE_REAGENT_VECTOR_RECHECK"
+      ],
+      "revisitReasons": [
+        "Recipe 256223 consumes 20 Sea Stalk; BfA Inscription 50. Not a 5-herb standard cast."
       ]
     },
     {
