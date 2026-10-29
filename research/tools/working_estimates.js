@@ -4,7 +4,7 @@
 // a character, reads tooltip data, or authorizes economic/runtime decisions.
 const FIELDS = ["dropChance", "yieldMin", "yieldMax", "expectedQuantity"];
 const {createHash} = require("node:crypto");
-const SERIALIZED_ATTESTATION_VERSION = "working-estimate-source-context-v1.0.0";
+const SERIALIZED_ATTESTATION_VERSION = "working-estimate-source-context-v1.1.0";
 const sha256 = text => createHash("sha256").update(text, "utf8").digest("hex");
 const POLICY_VERSION = "working-estimate-policy-v1";
 const EPS = 1e-9;
@@ -99,26 +99,18 @@ function canonicalDirectReagents(r) {
   if (rows.includes(null)) return ["INVALID_DIRECT_REAGENT_VECTOR", r.recordID];
   return rows.sort((a,b) => stableDonorContext(a).localeCompare(stableDonorContext(b)));
 }
-// Capture full source identity independently of the smaller, historical
-// serialized targetContext. This catches post-build recipe/reagent/skill/stat
-// mutation without rewriting research candidate artifacts during the transition.
+// Seal the complete serialized source record, excluding only the generated
+// working preview, so future provenance or tooltip-only metadata cannot be
+// silently omitted from the detached contract. The source/evidence channel
+// remains independent of working estimates and live economic decisions.
+// Keep original reagent order and all unknown/nullable context as serialized;
+// changing them after sealing invalidates the externally pinned digest.
 function sourceIdentity(r) {
-  return stableDonorContext({
-    recordID: r.recordID, method: r.method, expansionID: r.expansionID,
-    inputItemID: r.inputItemID, outputItemID: r.outputItemID,
-    inputQualityRank: r.inputQualityRank ?? null,
-    outputQualityRank: r.outputQualityRank ?? null,
-    recipeSpellID: r.recipeSpellID ?? null,
-    inputCountPerOperation: r.inputCountPerOperation,
-    outputFamilyID: r.outputFamilyID ?? null,
-    directReagents: canonicalDirectReagents(r),
-    conditions: r.conditions ?? null,
-    mappingConfidence: r.mappingConfidence ?? null,
-    conditionsConfidence: r.conditionsConfidence ?? null,
-    // A source change to value, status, confidence, claims or blockers
-    // invalidates the preview, even if the displayed number stays unchanged.
-    evidenceFields: Object.fromEntries(FIELDS.map(f => [f, r[f] ?? null]))
-  });
+  const source = {};
+  for (const key of Object.keys(r)) {
+    if (key !== "workingEstimate") source[key] = r[key];
+  }
+  return stableDonorContext(source);
 }
 // Group by strict identity, then retain the old ID only if unambiguous.
 // Colliding legacy IDs get distinct strict-context suffixes. This preserves
