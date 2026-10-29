@@ -16,14 +16,14 @@ const input={
  batch014DragonflightJSONL:read("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1432-dragonflight-q16-batch014-40key-fourfield-audit.jsonl"),
  batch014TWWJSONL:read("research/coordination/submissions/loot-liquidator-war-within/2026-10-28-2116-warwithin-batch014-q16-35key-fourfield-audit.jsonl"),
  gameDataSource:read("GameData.lua"),statYieldSource:read("StatYieldProfiles.lua"),
- sha:JSON.parse(read("research/proposed/itemdb-compiler-source-shas.json"))
+ tooltipFallbacksJSON:read("research/proposed/itemdb-tooltip-fallbacks-q25.json"),sha:JSON.parse(read("research/proposed/itemdb-compiler-source-shas.json"))
 };
 const a=compile(input),b=compile(input);
 assert.equal(a.lua,b.lua,"deterministic Lua");
 assert.deepEqual(a.report,b.report);
 assert.deepEqual(validate(a.records),[]);
-assert.equal(a.report.sourceMappingCandidates,1015);
-assert.equal(a.report.curatedAdded,32);
+assert.equal(a.report.sourceMappingCandidates,1013);
+assert.equal(a.report.curatedAdded,30);
 assert.equal(a.report.rankSpecificProxyRecordsQuarantined,31);
 assert.equal(a.report.diamondSpecializationGated,7);
 assert.equal(a.report.fullyNumericFourFields,801);
@@ -37,8 +37,8 @@ assert.equal(a.report.verifiedSourceLineIdentities,1202);
 assert.equal(a.report.legacyArithmeticContradictionsReviewed,8);
 assert.equal(a.records.filter(r=>r.inputItemID===200061&&r.outputQualityRank!==null&&r.inputQualityRank===null).length,12);
 assert.equal(a.records.filter(r=>r.conditions.eligibilityStatus==="REQUIRES_ORE_SPECIFIC_PROFICIENT_PROCESSOR_SPECIALIZATION").length,7);
-assert.equal(a.report.fieldSlots,4060);
-assert.deepEqual(a.report.missingFieldCounts,{"dropChance":201,"yieldMin":97,"yieldMax":97,"expectedQuantity":116});
+assert.equal(a.report.fieldSlots,4052);
+assert.deepEqual(a.report.missingFieldCounts,{"dropChance":199,"yieldMin":95,"yieldMax":95,"expectedQuantity":114});
 assert.equal(a.report.quarantineBreakdown.MULTI_REAGENT_SCHEMA_GAP||0,0);
 const powder=a.records.find(r=>r.method==="Prospect"&&r.inputItemID===36910&&r.outputItemID===46849);
 assert.ok(powder);
@@ -82,7 +82,33 @@ const mass=a.records.filter(r=>r.conditions.operationVariant==="MASS_20_HERB");a
 for(const [input,spell,casts,means] of [[152506,256218,177,[15.48,5.89,2.87]],[152507,256223,106,[16.39,5.96,2.57]],[152508,256221,103,[15.89,5.85,2.12]]]){for(let i=0;i<3;i++){const r=mass.find(x=>x.inputItemID===input&&x.outputItemID===[153635,153636,153669][i]);assert.ok(r);assert.equal(r.recipeSpellID,spell);assert.equal(r.inputCountPerOperation,20);assert.deepEqual(r.reagents,[{itemID:input,quantity:20}]);assert.equal(r.expectedQuantity.value,means[i]);assert.equal(r.expectedQuantity.sampleOperations,casts);assert.ok(r.expectedQuantity.uncertainty.includes("rounded mean"));for(const f of ["dropChance","yieldMin","yieldMax"])assert.equal(r[f].value,null);}}
 assert.ok(a.lua.includes("operationVariant=opt(x[37])"));assert.ok(a.lua.includes("uncertainty=opt(x[7])"));const invalid=structuredClone(mass[0]);invalid.reagents[0].quantity=5;assert.ok(validate([invalid]).some(x=>x.startsWith("MASS_RECIPE:")));
 const twwMills=a.records.filter(r=>r.recordID.startsWith("candidate:tww:mill:"));
-assert.equal(twwMills.length,12,"12 source-backed TWW herb/rank mapping candidates");
-assert.equal(new Set(twwMills.map(r=>r.inputItemID)).size,12);
-for(const r of twwMills){assert.equal(r.inputCountPerOperation,10);assert.equal(r.expansionID,10);assert.equal(r.inputQualityRank,r.outputQualityRank);assert.equal(r.conditions.eligibilityStatus,"FAMILY_SUPPORTED_EXACT_RANK_PAIR_SKILL_NOT_VERIFIED");for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"]){assert.equal(r[f].value,null);assert.equal(r[f].confidence,0);}}
-console.log("PASS research compiler v0.6.1 static regression; Lua interpreter and WoW client not run");
+assert.equal(twwMills.length,10,"two false Mycobloom-to-Apricate-Ink mappings quarantined");
+assert.equal(new Set(twwMills.map(r=>r.inputItemID)).size,10);
+for(const r of twwMills){assert.equal(r.inputCountPerOperation,10);assert.equal(r.expansionID,10);assert.ok(r.inputQualityRank>=1&&r.outputQualityRank>=1,"exact rank identity preserved without assuming same-rank eligibility");assert.equal(r.conditions.eligibilityStatus,"FAMILY_SUPPORTED_EXACT_RANK_PAIR_SKILL_NOT_VERIFIED");for(const f of ["dropChance","yieldMin","yieldMax","expectedQuantity"]){assert.equal(r[f].value,null);assert.equal(r[f].confidence,0);}}
+
+assert.equal(a.report.tooltipFallbacks.reviewed,19);
+assert.equal(a.report.tooltipFallbacks.activeRecords,1);
+assert.equal(a.report.tooltipFallbacks.appliedYieldFields,2);
+assert.equal(a.report.tooltipFallbacks.blockedProbabilityUnverifiedCasts,19);
+assert.equal(a.report.tooltipFallbacks.existingYieldFieldsProtected,36);
+assert.equal(a.report.tooltipFallbacks.economicFieldsUnchanged,true);
+assert.equal(a.records.filter(r=>r.tooltipOnly).length,1);
+assert.equal(powder.tooltipOnly.yieldMin,1);
+assert.equal(powder.tooltipOnly.yieldMax,2);
+assert.equal(powder.tooltipOnly.dropChance,null);
+assert.equal(powder.tooltipOnly.sourceObservedMax,5);
+assert.equal(powder.tooltipOnly.economicUse,"PROHIBITED");
+assert.equal(powder.tooltipOnly.denominatorVerifiedCompletedCasts,false);
+assert.equal(powder.expectedQuantity.value,null);
+assert.equal(a.records.filter(r=>[210796,210797].includes(r.inputItemID)&&[222616,222617].includes(r.outputItemID)).length,0);
+assert.ok(a.lua.includes("tooltipOnly=tooltip(x[38])"));
+assert.ok(a.lua.includes('economicUse=\\"PROHIBITED\\"'));
+const {validateTooltipIsolation}=require("../tools/itemdb_tooltip_channel.js");
+assert.deepEqual(validateTooltipIsolation(a.records),[]);
+const malicious=structuredClone(powder);malicious.tooltipOnly.dropChance=0.56;
+assert.ok(validateTooltipIsolation([malicious]).some(x=>x.startsWith("ECONOMIC_LEAK:")));
+const staged=JSON.parse(read("research/proposed/itemdb-tooltip-fallbacks-q25.json"));
+staged.tooltipFallbacks[0].economicFields.expectedQuantity=0.7;
+assert.throws(()=>compile({...input,tooltipFallbacksJSON:JSON.stringify(staged)}),/Tooltip staging rejected/);
+
+console.log("PASS research compiler v0.7.0 static regression; Lua interpreter and WoW client not run");
