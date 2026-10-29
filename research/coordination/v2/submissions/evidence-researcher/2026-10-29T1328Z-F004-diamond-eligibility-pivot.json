@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DIAMOND_ELIGIBILITY_PIVOT",
+  "workflowRevision": 2,
+  "coordinatorQueueRevisionObserved": 2,
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "runUTC": "2026-10-29T13:28:00Z",
+  "baseCommit": "f7aa5b1af18752385f06e88b2312a59d5db74c30",
+  "assignedKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "filesChanged": [
+    "research/evidence/v2/2026-10-29T1328Z-F004-historical-diamond-comment-cohorts.json",
+    "research/evidence/v2/source-reviews/2026-10-29T1328Z-F004-diamond-comment-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1328Z-F004-diamond-eligibility-pivot.json"
+  ],
+  "deltas": {
+    "newHistoricalOriginalCommentClaims": 2,
+    "newConfirmedIndependentLineages": 0,
+    "newCurrentRetailEvidenceCells": 0,
+    "newCurrentRetailExpectedQuantityCells": 0,
+    "newWorkingPreviewCells": 0,
+    "newExactMappingAdmissions": 0,
+    "correctedExactMappings": 0,
+    "confidencePromotions": 0,
+    "sourceReviewEvents": 2,
+    "unresolvedAssignedExactKeys": 5
+  },
+  "checksActuallyRun": [
+    {
+      "name": "Arithmetic, rank IDs, nominal-vs-actual and isolation assertions",
+      "status": "PASS",
+      "assertions": 11
+    }
+  ],
+  "checksNotRun": [
+    "Full Node pipeline --check",
+    "Lua5.1 decoder",
+    "WoW client Retail cast collection",
+    "Independent source author confirmation"
+  ],
+  "blockers": [
+    "No current Retail 2026 zero-inclusive completed-cast cohort for five assigned exact keys",
+    "R2 Serevite study is not transferable to Draconium",
+    "Approximate 4000-prospect cohort lacks input ore/rank"
+  ],
+  "nextTask": {
+    "id": "F004_CURRENT_DIAMOND_CAST_CAPTURE",
+    "action": "Acquire or instrument actual 2026 Retail cast log for 188658,189143,190311 with exact 192869/192870/192871 outputs and zero casts; if unavailable pivot to independent universe eligibility proof"
+  },
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "confidence": 0,
+  "noProductionChanges": true
+}
