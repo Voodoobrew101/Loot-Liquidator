@@ -5,7 +5,7 @@ local raw={{"tsm:mill:109124:114931:L1812",1,0,109124,114931,false,5,false,false
 local statuses={"unknown","proxy","modeled","measured","community-reported","official","contradictory"}
 local methods={"Mill","Prospect","Disenchant","Smelt","Refine"}
 local function opt(v) if v==false then return nil end return v end
-local function field(x,claim) local b={} if x[4]~=false then b[1]=x[4] end return {value=opt(x[1]),status=statuses[x[2]],confidence=x[3],sourceClaimIDs=opt(x[6]) or {claim},sampleOperations=opt(x[5]),uncertainty=opt(x[7]),blockers=b} end
+local function field(x,claim) local b={} if x[4]~=false then for token in string.gmatch(x[4],"[^|]+") do b[#b+1]=token end end return {value=opt(x[1]),status=statuses[x[2]],confidence=x[3],sourceClaimIDs=opt(x[6]) or {claim},sampleOperations=opt(x[5]),uncertainty=opt(x[7]),blockers=b} end
 local function recipeReagents(v) if v==false then return nil end local t={} for i=1,#v do local a=v[i];t[i]={itemID=a[1],quantity=a[2]} end return t end
 local function tooltip(v) if v==false then return nil end return {dropChance=opt(v[1]),yieldMin=opt(v[2]),yieldMax=opt(v[3]),confidence=v[4],source={url=v[5],sourceType=v[6],extractedOn=v[7],profileLabel=v[8],sourceObservedMax=v[9],rawEventRatio=v[10],rawCount=v[11],rawOutOf=v[12],denominatorUnit=v[13],claimID=v[16],positiveYieldUnit=v[17]},status=v[14],uncertainty=v[15],economicUse="PROHIBITED",displayOnly=true,profileIsMeasured=false,denominatorVerifiedCompletedCasts=false} end
 local processing={}
