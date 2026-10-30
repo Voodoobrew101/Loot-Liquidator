@@ -52,6 +52,14 @@ jobs:
           old_lua="$RUNNER_TEMP/loot-liquidator-v02-original.lua"
           git show FETCH_HEAD:LootLiquidator/itemdb.lua > "$old_lua"
           node research/tools/working_native_direct_lua_reparse.js "$old_lua"
+      - name: F002 emitted working-Lua native preflight self-test
+        run: node research/tools/working_native_emitted_lua_preflight.js --self-test
+      - name: Research-only F005 emitted working-Lua isolation replay (informational)
+        # F005 accepted source-pinned V8 results; native replay is pending its
+        # independent acceptance. Any changed fixture/candidate fails closed.
+        # Do not use this research preview for EV, recommendations or release.
+        continue-on-error: true
+        run: node research/tools/working_native_emitted_lua_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: Rebuild and expose only validated stale research outputs for F002 handoff
         if: ${{ failure() }}
