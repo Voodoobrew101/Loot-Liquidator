@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "modelID": "df-prospect-decision-frontier-v1.0.0",
-  "status": "PROPOSED_NOT_ACCEPTED",
+  "status": "PROPOSED_REPAIRED_PENDING_INDEPENDENT_QA",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "role": "baseline-modeller",
   "taskID": "F003_DF_PROSPECT_DECISION_FRONTIER",
@@ -9,7 +9,7 @@
   "queueRevision": 30,
   "priority": 102,
   "modelCode": "research/tools/models_v2/df_prospect_decision_frontier_v1.js",
-  "modelCodeBlobSHA": "7fb36b9d6c25f6a0bff02dfe5ab1b6855e6a4f42",
+  "modelCodeBlobSHA": "483842ab580808cbd9d9c130d26781b59d2e6ee4",
   "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "targetKeys": [
@@ -66,7 +66,7 @@
     "breakEven": "For each output, required unconditional E is computed holding every other output at its own supplied lower or upper bound; no midpoint or min/max tooltip quantity is used as gold EV.",
     "sensitivity": "Width of hypothetical net-value interval for an output equals (E_upper-E_lower)*net output price; unknown upper yields null sensitivity.",
     "priceContext": "Caller must supply date, scenario source, ore cost, alternative net, fee, deposit and prices. No current AH/TSM values are claimed.",
-    "contextGates": "Exact stable keys, ore input family, explicit nominal batch size, gross-versus-refund-adjusted cost basis, no selected-output double counting, no unknown-as-zero conversion."
+    "contextGates": "Exact stable keys, DF 5 ore per completed cast, immutable validated snapshot for all economic/provenance/output fields, ordered net revenue bounds, explicit gross/refund-adjusted cost basis, selected-output double-count guard."
   },
   "applicability": {
     "status": "SCENARIO_ONLY",
@@ -100,7 +100,16 @@
     "failed": 0,
     "nativeNode": "NOT_RUN",
     "lua51": "NOT_RUN",
-    "ingame": "NOT_RUN"
+    "ingame": "NOT_RUN",
+    "repairIndependentV8": {
+      "passed": 27,
+      "failed": 0,
+      "scope": "Exact F005 27-case suite replayed against patched source in JavaScript V8; native Node and F005 approval pending"
+    },
+    "committedSourceV8SelfTests": {
+      "passed": 4039,
+      "failed": 0
+    }
   },
   "deltas": {
     "workingNumericCellsFilled": 0,
@@ -110,5 +119,7 @@
     "economicPromotions": 0,
     "independentStudyLineagesAdded": 0
   },
-  "nextTask": "F003_NEXT: independent QA of source-pinned scenario frontier; then pivot to new evidence-driven coefficient calibration or source-specific 2026 Retail observations instead of another hypothetical arithmetic audit."
+  "nextTask": "F003_NEXT: independent QA of source-pinned scenario frontier; then pivot to new evidence-driven coefficient calibration or source-specific 2026 Retail observations instead of another hypothetical arithmetic audit.",
+  "repairDateUTC": "2026-10-30",
+  "repairTaskID": "F003_REPAIR_FRONTIER_AND_PRISMATIC"
 }
