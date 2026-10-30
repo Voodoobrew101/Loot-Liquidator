@@ -42,11 +42,31 @@ function analyze(root,records) {
   const results = [];
   for(const id of TARGETS) {
     const source = primary.get(id), record = byID.get(id);
-    // Two batch014 reviews use a supplemental family key rather than the
-    // exact primary-ledger key. Match their input/output only for diagnostic
-    // corroboration; never re-label the family audit as a rank measurement.
-    const audit = audits.get(id) || auditRows.find(x=>source && x.inputItemID===Number(source.input_id) && x.outputItemID===Number(source.output_id));
-    assert(source && audit && record, "Missing priority-122 source/audit/candidate: "+id);
+    assert(source && record, "Missing priority-122 source/candidate: "+id);
+    // A supplemental batch014 family audit is not automatically a rank-specific
+    // audit. Reject every explicitly conflicting rank before attaching its
+    // source claim. An absent rank stays unknown; it is never inferred.
+    const rankCompatible = (actual, expected) =>
+      actual === null || actual === undefined ||
+      (Number.isInteger(Number(actual)) && Number(actual) === Number(expected));
+    const identityCompatible = a =>
+      a.inputItemID === Number(source.input_id) &&
+      a.outputItemID === Number(source.output_id) &&
+      rankCompatible(a.inputQualityRank, source.input_quality) &&
+      rankCompatible(a.outputQualityRank, source.output_quality) &&
+      (a.method == null || String(a.method).toLowerCase() === "prospect") &&
+      (a.inputCountPerOperation == null || a.inputCountPerOperation === Number(source.batch_inputs)) &&
+      (a.conditions?.gameMode == null || String(a.conditions.gameMode).toUpperCase() === "RETAIL") &&
+      (a.conditions?.patch == null || a.conditions.patch === "HISTORICAL_OR_UNKNOWN");
+    const direct = audits.get(id);
+    const candidates = direct ? [direct] : auditRows.filter(a =>
+      a.inputItemID === Number(source.input_id) &&
+      a.outputItemID === Number(source.output_id));
+    const compatible = candidates.filter(identityCompatible);
+    // Ambiguous audit ancestry must not be resolved by arbitrary file order.
+    assert.equal(compatible.length, 1, "Missing, ambiguous, or rank-incompatible priority-122 audit: "+id);
+    const audit = compatible[0];
+    const auditRankSpecific = audit.inputQualityRank != null && audit.outputQualityRank != null;
     assert.equal(source.method,"prospect");
     assert.equal(record.method,"Prospect");
     assert.equal(Number(source.batch_inputs),5);
@@ -103,6 +123,8 @@ function analyze(root,records) {
       recordID:id,inputItemID:record.inputItemID,outputItemID:record.outputItemID,
       inputQualityRank:record.inputQualityRank,outputQualityRank:record.outputQualityRank,
       sourceLine:Number(source.source_line),sourceClaimIDs:[source.record_key,audit.stableKey],
+      auditRankScope:auditRankSpecific?"EXPLICIT_RANK_MATCHED":"FAMILY_CONTEXT_ONLY_UNRANKED",
+      auditRankSpecificCorroboration:auditRankSpecific,
       sourceLineage:"HISTORICAL_TSM_SAME_LINEAGE_NOT_INDEPENDENT",
       nominalInputBatch:nominalBatch,actualCompletedCasts:null,patchEpoch:null,
       raw:{matRate:Number(raw.matRate),amountOfMatsPerInput:Number(raw.amountOfMats),
