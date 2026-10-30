@@ -85,7 +85,7 @@ function checkSourcePolicy(){
  if(!oldCohort||oldCohort.inputItemID!==192880||
     c.priorValue!==192880||c.proposedValue!==194545||
     c.priorImmutableEvidencePath!==OLD||manifest.sourceEvidence!==OLD||
-    qa.verdict!=='FAIL'||qa.executed.passed!==40||qa.executed.failed!==3)
+    qa.status!=='FAIL_MODEL_IDENTITY_REPAIR_REQUIRED'||qa.executed.passed!==40||qa.executed.failed!==3)
   throw Error('SOURCE_CORRECTION_OR_F005_VERDICT_DRIFT');
  return {modelSelfTestsPassed:27,sourceCorrectionProposed:192880,
    correctPrismaticOreItemID:194545,reviewVerdict:'FAIL',economicPromotion:false};
