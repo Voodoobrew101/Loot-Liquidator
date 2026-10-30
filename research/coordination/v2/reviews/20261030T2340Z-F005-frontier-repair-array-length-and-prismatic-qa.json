@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_FRONTIER_REPAIR_ARRAY_LENGTH_AND_PRISMATIC_STAGE_QA",
+  "runID": "20261030T2340Z-F005-frontier-array-length",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 30,
+  "branch": "implementation/five-agent-completion",
+  "status": "FAIL_F003_FRONTIER_ARRAY_SNAPSHOT__CONDITIONAL_PASS_PRISMATIC_IDENTITY",
+  "acceptance": "PROPOSED_COORDINATOR_REVIEW_REQUIRED",
+  "sourcePins": {
+    "frontierModel": "483842ab580808cbd9d9c130d26781b59d2e6ee4",
+    "stageModel": "2c9005e1d7be6df68d5631a418fbae95a144f6e7",
+    "stageManifest": "8ed83117c738ed83ff418de4a677c31505d0e028",
+    "newIndependentSuite": "14ad7d0693ee9e1bda43b7352854188972a8fb8d",
+    "priorFrontierSuite": "bbb4c309a98e5a14dd8f15ae5225703a828cbad8",
+    "priorStageSuite": "4f546a33559a9e8202c1c846d7bbfe91c9f8503c",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "sourceReviewed": [
+    "research/tools/models_v2/df_prospect_decision_frontier_v1.js",
+    "research/tools/models_v2/df_historical_diamond_denominator_stage_guard_v1.js",
+    "research/models/v2/df_historical_diamond_denominator_stage_guard_v1.json",
+    "research/coordination/completion-readiness.json",
+    "research/coordination/completion-priorities.json",
+    "research/evidence/v2/2026-10-30T2028Z-F004-df-two-stage-diamond-denominators.json",
+    "research/evidence/v2/2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts.json"
+  ],
+  "positiveRepairFindings": [
+    "F003 frontier now snapshots scalar fields and output rows and requires exactly five nominal ore per cast; the eight previously identified source-level failure surfaces have direct guards, but the new full 21-assertion suite has not yet executed.",
+    "F003 historical stage SOURCE.secondStage.inputItemID and emitted analyze() now use 194545 Prismatic Ore; manifest distinguishes 192880 Crumbled Stone.",
+    "9 direct exact-source static invariants passed, including complete 4072/4072 numeric working preview, no verified baselines, no live valuation.",
+    "Independent BigInt integer-interval/brute-force enumeration matched for 3000 synthetic denominator/rate combinations; no current Retail rates inferred."
+  ],
+  "newFailure": {
+    "id": "F005-DF-FRONTIER-ARRAY-LENGTH-01",
+    "owner": "baseline-modeller",
+    "severity": "MODEL_INPUT_ATTESTATION_HIGH",
+    "scope": "research/tools/models_v2/df_prospect_decision_frontier_v1.js snapshotOutputs/dense",
+    "mechanism": "dense(a) checks a.length and property descriptors, but snapshotOutputs(a) rereads a.length in its copy loop. A Proxy array with changing length can pass dense() and then shorten the copied output set; all other validated fields remain stable.",
+    "caseA": {
+      "realOutputCount": 1,
+      "reportedLengthDuringDense": 1,
+      "reportedLengthDuringCopy": 0,
+      "acceptedSnapshotLength": 0,
+      "reproduced": true
+    },
+    "caseB": {
+      "realOutputCount": 2,
+      "reportedLengthDuringDense": 2,
+      "reportedLengthDuringCopy": 1,
+      "acceptedSnapshotLength": 1,
+      "reproduced": true
+    },
+    "reproduction": "Native Node v22.16.0 ran a minimal exact-function extraction of record(), snapshotRecord(), dense() and snapshotOutputs(): 1->0 accepted with captured length 0, 2->1 accepted with captured length 1. This is NOT execution of the full committed model.",
+    "consequence": "A nonempty selected-output scenario can become a zero-output scenario, or omit a valuable selected output, while bypassing the original dense/nonempty validation. No live EV exposure demonstrated.",
+    "requiredRepair": "Capture array length once from an attested plain array, reject Proxy/dynamic length or compare length/keys/indices against a single canonical frozen snapshot. Reject zero copied outputs and changed length before and after copying. Do not change economic policy.",
+    "newTestCases": [
+      "reject output array length shrink 1 to 0 after dense validation",
+      "reject output array length shrink 2 to 1 after dense validation"
+    ]
+  },
+  "executed": {
+    "sourceFetchAndReadback": true,
+    "exactSourceStaticChecks": {
+      "passed": 9,
+      "failed": 0
+    },
+    "independentBigIntSyntheticChecks": {
+      "passed": 3000,
+      "failed": 0
+    },
+    "nativeNodeExtractedFunctions": {
+      "runtime": "Node v22.16.0",
+      "reproducedCases": 2,
+      "fullModel": false
+    },
+    "newFullSourceSuite": {
+      "path": "research/tests/v2/test_f005_df_frontier_v101_array_snapshot_repair_20261030.js",
+      "assertions": 21,
+      "executed": false,
+      "reason": "Exact full repository files not locally mountable; committed for native CI execution"
+    },
+    "nativeNodeFullModel": "NOT_RUN",
+    "lua51": "NOT_RUN_UNAVAILABLE_LOCAL",
+    "wowClient": "NOT_RUN",
+    "completionPipeline": "NOT_RUN_NO_ACCEPTED_COMPILER_INPUT_CHANGE",
+    "independentRetailHoldouts": 0
+  },
+  "safeguards": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "liveEVChanged": false,
+    "mainEdited": false,
+    "runtimeBranchEdited": false,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipOnlyEdited": false,
+    "schedulesEdited": false
+  },
+  "exactDeltas": {
+    "newRegressionFiles": 1,
+    "newRegressionAssertions": 21,
+    "newFailureFamilies": 1,
+    "newAdversarialReproductions": 2,
+    "sourceOrModelChanges": 0,
+    "admittedMappings": 0,
+    "workingCellsFilled": 0,
+    "verifiedECellsFilled": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0
+  },
+  "blockers": [
+    "Full 21-case native Node suite is committed but not executed in this environment; require completion-engineer to add source-pinned informational runner without changing mandatory economic gates.",
+    "No independent matched current-Retail complete-cast holdouts, exact ranks, profession skill/stat profiles, or refund logs; no confidence or E promotion.",
+    "Prismatic original historical evidence intentionally retains wrong recorded ID 192880; immutable correction remains proposed and model is repaired."
+  ],
+  "nextTask": "F003 repair dynamic array-length snapshot boundary, then F005 execute the 21-case full-source suite and 27+43 earlier suites under native Node and review any changed F004 cohorts; otherwise pivot to unresolved TWW milling accounting model."
+}
