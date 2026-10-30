@@ -79,6 +79,16 @@ jobs:
         # No confidence, expected-quantity or economic promotion.
         continue-on-error: true
         run: node research/tools/working_native_df_milling_attestation_preflight.js
+      - name: F002 Dragonflight Prismatic stage-identity negative-QA self-test
+        # Self-test is mandatory but does not pin the model: F003 can repair it
+        # without blocking the main research pipeline on a stale F002 pin.
+        run: node research/tools/working_native_df_prismatic_identity_preflight.js --self-test
+      - name: Research-only F005 Prismatic stage-identity native negative QA (informational)
+        # Exact F005 finding: 40/43 pass, three incorrect 192880 references.
+        # The runner rejects unexpected failures and model/source changes;
+        # detecting the known defect is NOT independent model acceptance.
+        continue-on-error: true
+        run: node research/tools/working_native_df_prismatic_identity_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: Rebuild and expose only validated stale research outputs for F002 handoff
         if: ${{ failure() }}
