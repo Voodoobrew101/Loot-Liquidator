@@ -15,6 +15,26 @@ function record(x,allowed,required){
  for(const k of required)check(Object.prototype.hasOwnProperty.call(x,k),"REQUIRED_FIELD_"+k);
 }
 
+function snapshotRecord(x,allowed,required){
+ record(x,allowed,required);
+ const out={};
+ for(const k of Reflect.ownKeys(x)){
+  const d=Object.getOwnPropertyDescriptor(x,k);
+  for(let i=0;i<3;i++)check(Object.is(x[k],d.value),"UNSTABLE_FIELD_"+k);
+  out[k]=d.value;
+ }
+ return Object.freeze(out);
+}
+function snapshotOutputs(a){
+ dense(a);
+ const out=[];
+ for(let i=0;i<a.length;i++){
+  const d=Object.getOwnPropertyDescriptor(a,String(i));
+  for(let j=0;j<3;j++)check(Object.is(a[i],d.value),"UNSTABLE_OUTPUT_ARRAY");
+  out.push(snapshotRecord(d.value,["stableKey","priceGold","eLower","eUpper"],["stableKey","priceGold","eLower","eUpper"]));
+ }
+ return Object.freeze(out);
+}
 function dense(a){
  check(Array.isArray(a)&&Object.getPrototypeOf(a)===Array.prototype&&a.length>0,"DENSE_ARRAY");
  const keys=Reflect.ownKeys(a);check(keys.length===a.length+1&&keys.includes("length"),"ARRAY_EXTRA_OR_HOLE");
@@ -32,19 +52,19 @@ function sumSafe(values){
 }
 
 function evaluateScenario(s){
- record(s,["inputItemID","snapshotDate","scenarioSourceID","policy","nominalInputPerCast","costGoldPerCast","depositGoldPerCast","alternativeNetGoldPerCast","feeRate","otherRevenueGoldPerCast","otherRevenueBasis","costBasis","refundSourceID","outputs"],["inputItemID","snapshotDate","scenarioSourceID","policy","nominalInputPerCast","costGoldPerCast","depositGoldPerCast","alternativeNetGoldPerCast","feeRate","otherRevenueGoldPerCast","otherRevenueBasis","costBasis","outputs"]);
+ s=snapshotRecord(s,["inputItemID","snapshotDate","scenarioSourceID","policy","nominalInputPerCast","costGoldPerCast","depositGoldPerCast","alternativeNetGoldPerCast","feeRate","otherRevenueGoldPerCast","otherRevenueBasis","costBasis","refundSourceID","outputs"],["inputItemID","snapshotDate","scenarioSourceID","policy","nominalInputPerCast","costGoldPerCast","depositGoldPerCast","alternativeNetGoldPerCast","feeRate","otherRevenueGoldPerCast","otherRevenueBasis","costBasis","outputs"]);
  check(s.policy==="SCENARIO_ONLY","SCENARIO_POLICY");
  check(s.inputItemID===188658||s.inputItemID===189143,"INPUT_FAMILY");
  dateOnly(s.snapshotDate);
  check(typeof s.scenarioSourceID==="string"&&s.scenarioSourceID.trim().length>0&&s.scenarioSourceID.length<=256,"SOURCE_ID");
- check(Number.isSafeInteger(s.nominalInputPerCast)&&s.nominalInputPerCast>0,"NOMINAL_INPUT");
+ check(s.nominalInputPerCast===5,"NOMINAL_DF_FIVE_ORE");
  for(const k of ["costGoldPerCast","depositGoldPerCast","alternativeNetGoldPerCast","feeRate","otherRevenueGoldPerCast"])check(finiteNonnegative(s[k]),"SCENARIO_NUMBER_"+k);
  check(s.feeRate<1,"FEE_RATE");
  check(s.otherRevenueBasis==="EXCLUDES_SELECTED_OUTPUTS","OTHER_REVENUE_OVERLAP_GUARD");
  check(s.costBasis==="GROSS_NO_REFUNDS"||s.costBasis==="NET_WITH_ATTESTED_REFUNDS","COST_BASIS");
  if(s.costBasis==="NET_WITH_ATTESTED_REFUNDS")check(typeof s.refundSourceID==="string"&&s.refundSourceID.trim().length>0,"REFUND_PROVENANCE");
  else check(!Object.prototype.hasOwnProperty.call(s,"refundSourceID"),"UNSUPPORTED_REFUND_FIELD");
- dense(s.outputs);
+ s=Object.freeze({...s,outputs:snapshotOutputs(s.outputs)});
  const seen=new Set(),rows=[];
  for(const o of s.outputs){
   record(o,["stableKey","priceGold","eLower","eUpper"],["stableKey","priceGold","eLower","eUpper"]);
@@ -57,12 +77,14 @@ function evaluateScenario(s){
   check(Number.isFinite(netPrice),"NET_PRICE_OVERFLOW");
   const low=netPrice*o.eLower,high=o.eUpper===null?null:netPrice*o.eUpper;
   check(Number.isFinite(low)&&(high===null||Number.isFinite(high)),"REVENUE_OVERFLOW");
+  check(high===null||high>=low,"ORDERED_OUTPUT_REVENUE");
   rows.push({stableKey:o.stableKey,outputItemID:target.outputItemID,netPrice,eLower:o.eLower,eUpper:o.eUpper,low,high});
  }
  const offset=s.otherRevenueGoldPerCast-s.costGoldPerCast-s.depositGoldPerCast;
  check(Number.isFinite(offset),"OFFSET_OVERFLOW");
  const lowerNet=sumSafe([offset,...rows.map(r=>r.low)]);
  const upperNet=rows.every(r=>r.high!==null)?sumSafe([offset,...rows.map(r=>r.high)]):null;
+ check(upperNet===null||upperNet>=lowerNet,"ORDERED_NET_BOUNDS");
  const alternative=s.alternativeNetGoldPerCast;
  const status=lowerNet>alternative?"PROSPECT_WINS_IN_SCENARIO":upperNet!==null&&upperNet<alternative?"ALTERNATIVE_WINS_IN_SCENARIO":"INDETERMINATE";
  const sensitivity=rows.map(r=>{
