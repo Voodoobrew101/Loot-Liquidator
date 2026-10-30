@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F005_DF_FRONTIER_CONTEXT_AND_ARCHIVE_DEDUP",
+  "taskID": "F001_F005_FRONTIER_ARRAY_CROSSPOST_GAP_GATE",
   "queueRevision": 30,
-  "sourceCommit": "9dfa710d633d89e48dff456053042966da923356",
+  "sourceCommit": "519d04b66c445fd2b8814cdb38752b7397ad389a",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "560b885a0039045419c340716e263ae33ddf827a",
@@ -75,22 +75,25 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "BLOCKING: DF prospect frontier v1 independent V8 19/27 pass, 8 fail across 5 context groups (invalid 1/6 nominal ore batch, mutable E/fees/costs/provenance/output array).",
-    "ACCEPTED DEDUP: Reddit zzcnjw Oct 29 and Oct 30 archives describe ONE original Dec 2022 cohort; no canonical lineage decrement because later +1 was not accepted.",
-    "CONDITIONAL: F005 49/49 archive lineage tests and 18 adversarial mutations rejected in V8; native Node pending.",
-    "BLOCKING: Prismatic Ore 194545 vs Crumbled Stone 192880 stage identity, F002 native 40/43 negative QA is not model acceptance.",
-    "BLOCKING: TWW milling 5 and Gem Finding 14 context defects; 116 evidence E gaps; no independent current-Retail cast holdouts.",
-    "INFORMATIONAL: 52-case DF milling native CI passed previously; independent mandatory acceptance pending."
+    "BLOCKING: F003 DF frontier dynamic Proxy array length 1->0 and 2->1 after dense() allows dropping selected outputs; new F005 21-case full suite not run native. Earlier eight defects were source-level repaired, but frontier still REJECTED.",
+    "CONDITIONAL: Prismatic Ore second-stage 194545 model/manifest identity corrected; original 192880 historical report retained, 43-case independent native suite and F002 source-pin update pending.",
+    "CONDITIONAL ACCEPT: F002 514-gap/217-priority exact identity gate native Node24 CI 41143357976 PASS, 13 adversarial mutations rejected, blank reason valid unknown; independent F005 acceptance pending.",
+    "ACCEPT HISTORICAL CONTEXT ONLY: three comment leads; Jan 9/10 54137 R2 Serevite and 10827 reported prospects with 38 R2/23 R3 diamonds is ONE crosspost lineage; two-ore discrepancy unresolved; no independently verified author, actual casts or current Retail E.",
+    "BLOCKING: TWW milling 5 and Gem Finding 14 context defects, 3 DF identity replacements and fish 200061 rank eligibility, 116 evidence E gaps and zero independent current Retail holdouts.",
+    "INFORMATIONAL: latest branch-head CI 41146150899 PASS but did not execute new F005 full frontier/crosspost suites; stale Prismatic source-pin step continue-on-error cannot count as repaired model acceptance."
   ],
   "checksExecuted": [
-    "22/22 coordinator source-pin, build arithmetic and archive ancestry assertions",
-    "F005 independent V8 frontier 19/27 and archive 49/49 (18 adversarial mutants rejected)",
-    "F002 prior native Prismatic 40/43 negative-QA, model remains rejected"
+    "26/26 coordinator canonical arithmetic/source-pin/lineage/safety checks",
+    "F002 native Node24 13 adversarial mutations and 514-gap/217-priority exact contract PASS (CI 41143357976)",
+    "F005 9 source static and 3000 synthetic BigInt checks; extracted Node v22.16.0 reproduced 2 dynamic array-length failures",
+    "F005 crosspost 26 V8 checks PASS, 10 adversarial mutations rejected; full suite not native",
+    "Latest existing branch CI 41146150899 PASS (informational source-pin mismatch remains)"
   ],
   "checksUnavailable": [
     "Coordinator native Node/Lua",
-    "Repaired frontier 27-case and Prismatic 43-case native suites",
-    "Current-Retail cast holdout"
+    "New 21-case frontier and 26-case crosspost full-source native suites",
+    "Corrected Prismatic 43-case strict native suite",
+    "Current Retail cast holdout"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -99,9 +102,9 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T2258Z-F001-F005-frontier-context-and-lineage-dedup.json",
-  "decision": "ARCHIVE_DEDUP_ACCEPTED_FRONTIER_REJECTED",
-  "nextTask": "F003_REPAIR_FRONTIER_AND_PRISMATIC",
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T2356Z-F001-F005-frontier-array-crosspost-and-gap-gate.json",
+  "decision": "GAP_GATE_CONDITIONAL_ACCEPT_HISTORICAL_CROSSPOST_ACCEPT_FRONTIER_REJECT",
+  "nextTask": "F003_FRONTIER_DYNAMIC_ARRAY_LENGTH_REPAIR",
   "priorityRecords": 217,
   "independentValidator": {
     "status": "F003_V8_72_SELF_18_PAIR_26_MAR31_12_ARRAY_F004_TWW_31_ALL_PASS_NATIVE_PENDING",
@@ -264,38 +267,57 @@
       "economicPromotions": 0
     },
     "latestDfProspectFrontier": {
-      "modelBlob": "7fb36b9d6c25f6a0bff02dfe5ab1b6855e6a4f42",
-      "manifestBlob": "74f10db75932ca3be685bf3ea44c9ba813a03d7d",
-      "reviewBlob": "b4e08c512f1e820f196ad118d665a82a48caf393",
-      "V8Passed": 19,
-      "V8Failed": 8,
-      "V8Total": 27,
-      "defectGroups": 5,
-      "nativeExecuted": false,
-      "verdict": "FAIL_REPAIR_REQUIRED"
+      "modelBlob": "483842ab580808cbd9d9c130d26781b59d2e6ee4",
+      "reviewBlob": "842fe7507e2f093fd307943d138f5a47c6b019b5",
+      "independentSuiteBlob": "14ad7d0693ee9e1bda43b7352854188972a8fb8d",
+      "newFullSuiteAssertions": 21,
+      "newFullSuiteNativeExecuted": false,
+      "extractedNodeReproductions": 2,
+      "newDefect": "F005-DF-FRONTIER-ARRAY-LENGTH-01",
+      "verdict": "FAIL_DYNAMIC_ARRAY_LENGTH_SNAPSHOT_INTEGRITY",
+      "economicPromotions": 0
+    },
+    "latestDfPrismaticStage": {
+      "modelBlob": "2c9005e1d7be6df68d5631a418fbae95a144f6e7",
+      "manifestBlob": "8ed83117c738ed83ff418de4a677c31505d0e028",
+      "reviewBlob": "842fe7507e2f093fd307943d138f5a47c6b019b5",
+      "identityCorrected": 194545,
+      "previousWrongID": 192880,
+      "nativeFullSuiteExecuted": false,
+      "verdict": "CONDITIONAL_PASS_IDENTITY_ONLY"
+    },
+    "latestDfDiamondCrosspost": {
+      "evidenceBlob": "b3a1012fe481e6bea27dace7ef4ee64b1a58755b",
+      "reviewBlob": "b5ef6c5266710345c0027ef1ed5918403958bd92",
+      "sourceLeads": 3,
+      "confirmedIndependentAuthors": 0,
+      "duplicateJan9Jan10CountedOnce": true,
+      "reportedOreDiscrepancy": 2,
+      "fullNativeSuiteExecuted": false,
+      "verdict": "CONDITIONAL_HISTORICAL_ONLY"
     }
   },
-  "integrationStatus": "WORKING_PREVIEW_COMPLETE_ARCHIVE_DEDUP_ACCEPTED_FRONTIER_V1_REJECTED",
+  "integrationStatus": "WORKING_PREVIEW_COMPLETE_GAP_GATE_CONDITIONAL_CROSSPOST_DEDUP_FRONTIER_ARRAY_REJECTED",
   "nextAssignments": [
     {
       "owner": "baseline-modeller",
-      "taskID": "F003_REPAIR_FRONTIER_AND_PRISMATIC",
-      "scope": "Repair all 5 frontier context defect groups (8 failed cases): require 5 ore/cast for DF prospect keys; immutable validated snapshots for E, fee, cost, provenance, output array; enforce ordered net bounds. Repair separate Prismatic 194545 vs Crumbled Stone 192880 source/manifest identity. Rerun source-pinned self and independent tests without relaxing assertions."
+      "taskID": "F003_FRONTIER_DYNAMIC_ARRAY_LENGTH_REPAIR",
+      "scope": "Repair snapshotOutputs to use one validated immutable array snapshot; reject changing Proxy length and zero/omitted outputs. Do not weaken 21-case independent regression; rerun earlier 27-case frontier and 43-case Prismatic tests. After independent clearance pivot to TWW milling five defects."
     },
     {
       "owner": "independent-validator",
-      "taskID": "F005_NATIVE_FRONTIER_AND_STAGE_RETEST",
-      "scope": "Retest repaired 27-case frontier and 43-case Prismatic suites under native Node; independently attest 52-case DF milling informational CI; preserve 49-case archive duplicate adversarial suite and zero live-EV leakage."
+      "taskID": "F005_NATIVE_FRONTIER_CROSSPOST_AND_GAP_GATE",
+      "scope": "Execute new full 21-case frontier and 26-case crosspost suites under native Node, replay prior 27/43 suites with corrected source pins, independently validate F002 514-gap/217-priority gate; explicitly distinguish informational CI from mandatory acceptance."
     },
     {
       "owner": "completion-engineer",
-      "taskID": "F002_NATIVE_REPIN_AND_TWW_PIVOT",
-      "scope": "Keep deterministic candidate and Lua5.1 isolation; only repin native tests after F003 fixes and F005 review; pivot to TWW milling 5 or Gem Finding 14 context failures; preserve 4072 preview fields and honest 116 evidence E gaps."
+      "taskID": "F002_NATIVE_SOURCE_PIN_REPLAY_AND_TWW_PIVOT",
+      "scope": "Keep 1018/4072 complete and isolated. Repin stale informational Prismatic source SHA only after F005 review; wire corrected source-pinned independent native suites without claiming green on continue-on-error. Then address separate TWW milling or Gem Finding model-integrity test infrastructure, without editing model-owned source."
     },
     {
       "owner": "evidence-researcher",
-      "taskID": "F004_CROSS_ARCHIVE_DEDUP_AND_RETAIL_CASTS",
-      "scope": "Cross-check entire v2 evidence archive before declaring a new source family. Treat zzcnjw as one original cohort. Seek 2026 Retail ore-rank/skill/refund-labelled zero-inclusive casts or pivot to fish 200061 eligibility."
+      "taskID": "F004_RETAIL_RANK_DENOMINATOR_SAMPLING",
+      "scope": "Preserve three historical comment leads and one Jan 9/10 crosspost lineage; do not count verified independent authors or infer 10827 actual casts from 54137 ore. Seek 2026 Retail rank-specific zero-inclusive cast/refund observations or pivot to fish 200061 eligibility after two zero-delta cycles."
     }
   ],
   "lastCoordinatorIntegrationUTC": "2026-10-30T22:58:00Z",
@@ -833,5 +855,14 @@
     "passed": 22,
     "failed": 0,
     "environment": "GitHub connector JS"
+  },
+  "latestGapPriorityContract": {
+    "scriptBlob": "b11bb330428979daa266f631c7c2f95f9f1896e0",
+    "nativeCI": 41143357976,
+    "priorityRecords": 217,
+    "evidenceGapRows": 514,
+    "adversarialMutantsRejected": 13,
+    "independentF005Accepted": false,
+    "verdict": "CONDITIONAL_ACCEPT_NATIVE_GREEN"
   }
 }
