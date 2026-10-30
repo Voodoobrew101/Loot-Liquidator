@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_GEM_UNLOCK_IDENTIFIABILITY_AND_STRUCTURAL_ZERO_SENSITIVITY",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runUTC": "2026-10-30T17:19:36Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "398532ed9b0444d40fc15c5d305355a69d7f3eff",
+  "resultCommitBeforeSubmission": "10e193ed251851943c65fe045f938b83741c5494",
+  "status": "PROPOSED_RESEARCH_ONLY_PENDING_COORDINATOR_AND_INDEPENDENT_QA",
+  "reasonForPivot": "Five priority-122 Dragonflight prospecting conflicts still lack independent cast evidence; current coordinator assigns F003 to eight priority-104 TWW Gem Finding unlock identifiability. Newly reviewed F004 trait wording invalidates the previous structural-zero default.",
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/models_v2/tww_gem_finding_partial_unlock_identification_v1.js",
+      "previousBlobSHA": "4f3261f73c7f6abebfa7e292333f546800d14ae4",
+      "newBlobSHA": "908a447dfeac840aa0d8e2ea63efd2c3323a99e4",
+      "change": "v1.0.0 -> v1.1.0 source-aligned nonexclusive trait model; scenario-only gate"
+    },
+    {
+      "path": "research/models/v2/tww_gem_finding_partial_unlock_identification_v1.json",
+      "previousBlobSHA": "5343e96c2a94068b5e7a01cb8d660e186cd222bf",
+      "newBlobSHA": "52fd8e0f4c8d41799a031f59c038aca3153a3c9b",
+      "change": "versioned source/assumptions/uncertainty/QA manifest"
+    },
+    {
+      "path": "research/coordination/v2/submissions/baseline-modeller/20261030T171936Z-F003-TWW-GEM-NONEXCLUSIVE-UNLOCK-REPAIR.json",
+      "change": "unique role-owned submission"
+    }
+  ],
+  "modelID": "tww-gem-finding-partial-unlock-identification-v1.1.0",
+  "exactTargetKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "exactBehavioralDeltas": {
+    "defaultKnownTraitLockedPositiveGem": "REJECTED_AS_IMPOSSIBLE -> ACCEPTED_AS_POSSIBLE_BASE_GEM",
+    "defaultUnknownTraitPositiveForcesUnlock": "YES -> NO",
+    "defaultEligibleCohortPBounds": "FINITE_SCENARIO_ASSUMPTION_UNDISCLOSED -> NULL_NOT_IDENTIFIABLE",
+    "defaultEligibleCohortEBoundsWithCap": "FINITE_WITH_CAP_ALONE -> NULL_UNLESS_EXCLUSIVE_GATE_EXPLICIT",
+    "hypotheticalExclusiveGate": "MUST_DECLARE_SCENARIO_ONLY_WITH_PROVENANCE_AND_PASS_CONTRADICTION_CHECK",
+    "hypotheticalE": "REQUIRES_EXPLICIT_EXCLUSIVE_GATE_AND_SCENARIO_ONLY_HARD_CAP",
+    "affectedConditionalMappingRows": 8
+  },
+  "sourceBasis": {
+    "evidencePath": "research/evidence/v2/2026-10-30T1428Z-F004-tww-prospecting-amber-substitution-epoch.json",
+    "evidenceBlobSHA": "93ae42122b69df8a60389d3fd466c92c91d48e7c",
+    "sourceFamily": "WOWHEAD_GAME_DATA_PROFESSION_TRAIT_FOUR_PAGES_ONE_LINEAGE",
+    "finding": "Ruby/Sapphire/Onyx/Emerald traits describe substitution for Ambivalent Amber, not unconditional per-cast gem probability or exclusive gem-output gate.",
+    "independentNewCurrentRetailCastLineages": 0
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "Connector JavaScript V8",
+      "source": "exact committed JavaScript read back at blob 908a447dfeac840aa0d8e2ea63efd2c3323a99e4",
+      "selfTestsPassed": 29,
+      "additionalIsolationAssertionsPassed": 8,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "GitHub connector",
+      "test": "source and manifest read-back blob verification",
+      "passed": true
+    }
+  ],
+  "testsNotRun": [
+    "native Node.js exact committed model self-test",
+    "lua5.1 generated candidate decode",
+    "node research/tools/run_completion_pipeline.js --check",
+    "WoW Retail in-game tests",
+    "independent current Retail whole-study holdouts"
+  ],
+  "testsNotRunReasons": "No native repository checkout in this session; no compiler/build inputs modified; independent holdout cast observations unavailable.",
+  "canonicalReadiness": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "unresolvedExpectedQuantityEvidenceCells": 116,
+    "verifiedBaselineRecords": 0
+  },
+  "exactNumericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyFamilies": 0
+  },
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "productionWrites": 0,
+    "frozenTSMWrites": 0,
+    "rawEvidenceWrites": 0,
+    "tooltipOnlyPolicyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "otherRoleFilesModified": 0,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "No independently measured current-Retail per-cast gem+amber joint outcomes, with specialization state and full output rank universe",
+    "No evidence that trait-locked casts structurally cannot yield the same gem via base prospecting",
+    "No verified per-cast hard cap or fixed-N preregistered independent study",
+    "Native Node exact-source test and independent F005 acceptance pending"
+  ],
+  "evidenceResearcherRequest": "Capture controlled matched trait-off/trait-on completed casts per ore/rank with all gem and Ambivalent Amber counts including zeros, refunds, exact profession skill/points, gear and patch epoch. Verify whether a gem can drop with its trait locked. Do not infer per-cast P from 1%-per-point trait descriptions.",
+  "independentValidatorRequest": "Native-run v1.1.0 exact blob; adversarial-test known-false positive output, unknown-positive no forced unlock, hypothetical exclusive-gate contradiction, cap-only no E, scenario-only provenance, and live EV isolation.",
+  "nextTask": "F003_TWW_GEM_AMBER_SUBSTITUTION_JOINT_OUTCOME_IDENTIFIABILITY: when new matched cast cohorts arrive, test base-vs-replacement model with independent held-out family; otherwise pivot to a different ready family, not repeat unchanged trait pages.",
+  "coordinatorAcceptanceRequest": "Accept structural-zero inference removal and conservative preview-only behavior as a research-model repair; do not promote any E, P, mapping eligibility, confidence or live economic use."
+}
