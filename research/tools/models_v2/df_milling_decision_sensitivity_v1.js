@@ -1,7 +1,7 @@
 'use strict';
 // F003 research-only Dragonflight milling decision-sensitivity model; never live EV.
 const assert=require('node:assert/strict');
-const MODEL_ID='df-milling-decision-sensitivity-v1.0.0';
+const MODEL_ID='df-milling-decision-sensitivity-v1.0.1';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const tuples=[
 [191469,198412,1975],[191469,198413,1976],[191469,198414,1977],
@@ -27,6 +27,21 @@ function validateContext(c){
  for(const k of ['skill','specialization','gear','resourcefulness','unlocks','recipeSpellID'])
    check(Object.prototype.hasOwnProperty.call(c.professionContext,k),'MISSING_CONTEXT_'+k);
 }
+// A caller-asserted output universe is a required research decision gate,
+// not independent proof of eligibility. Never infer omitted outputs as zeros.
+function validateRawContext(c){
+ check(c.gameMode==='RETAIL','RAW_GAME_MODE_REQUIRED');
+ check(typeof c.actualObservationEpoch==='string'&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(c.actualObservationEpoch)&&Number.isFinite(Date.parse(c.actualObservationEpoch)),'RAW_OBSERVATION_EPOCH_REQUIRED');
+ check(integer(c.inputQualityRank,1),'RAW_INPUT_QUALITY_RANK_REQUIRED');
+ check(c.outputQualityRanks&&typeof c.outputQualityRanks==='object'&&!Array.isArray(c.outputQualityRanks)&&Object.keys(c.outputQualityRanks).length===c.outputItemIDs.length&&c.outputItemIDs.every(id=>integer(c.outputQualityRanks[id],1)),'RAW_OUTPUT_QUALITY_RANKS_REQUIRED');
+ check(Array.isArray(c.directReagents)&&c.directReagents.length>0&&c.directReagents.every(r=>r&&integer(r.itemID,1)&&integer(r.quantity,1))&&new Set(c.directReagents.map(r=>r.itemID)).size===c.directReagents.length,'RAW_DIRECT_REAGENT_VECTOR_REQUIRED');
+ const primary=c.directReagents.filter(r=>r.itemID===c.inputItemID);
+ check(primary.length===1&&primary[0].quantity===c.nominalInputUnits,'RAW_PRIMARY_REAGENT_COUNT_MISMATCH');
+ check(integer(c.minimumRecipeSkill,1),'RAW_MINIMUM_RECIPE_SKILL_REQUIRED');
+ check(integer(c.professionContext.skill,c.minimumRecipeSkill),'RAW_PROFESSION_SKILL_REQUIRED');
+ check(nonneg(c.professionContext.resourcefulness),'RAW_RESOURCEFULNESS_NUMERIC_REQUIRED');
+ check(c.outputUniverseVerified===true,'RAW_OUTPUT_UNIVERSE_UNVERIFIED');
+}
 function historicalRateScenarios({rate,reportedUnit,nominalInputUnits,sourceLineage}){
  check(nonneg(rate)&&integer(nominalInputUnits,1)&&typeof sourceLineage==='string'&&sourceLineage,'RATE_OR_LINEAGE');
  check(['PER_INPUT_UNIT','PER_COMPLETED_CAST','UNKNOWN'].includes(reportedUnit),'UNIT_REQUIRED');
@@ -38,6 +53,7 @@ function historicalRateScenarios({rate,reportedUnit,nominalInputUnits,sourceLine
 function summarizeCasts({context,sourceType,events}){
  validateContext(context);check(['SYNTHETIC','RAW_CURRENT_RETAIL'].includes(sourceType),'SOURCE_TYPE');
  if(sourceType==='RAW_CURRENT_RETAIL'){
+  validateRawContext(context);
   check(/^\d+\.\d+\.\d+/.test(context.patchBuild),'EXACT_BUILD_REQUIRED');
   for(const k of ['skill','specialization','gear','resourcefulness','unlocks','recipeSpellID'])
    check(context.professionContext[k]!==null&&context.professionContext[k]!==undefined&&context.professionContext[k]!=='UNKNOWN','UNKNOWN_'+k);
@@ -68,7 +84,7 @@ function summarizeCasts({context,sourceType,events}){
   independentHoldout:'NOT_PERFORMED',...POLICY};
 }
 function decisionSensitivity({context,outputs,prices,inputUnitValue,auctionCut=0.05,refundsPerCast=[0,0],alternativeIncrementalValuePerCast=0,priceEpoch}){
- validateContext(context);check(typeof priceEpoch==='string'&&priceEpoch,'PRICE_EPOCH');
+ validateContext(context);check(context.outputUniverseVerified===true,'OUTPUT_UNIVERSE_UNVERIFIED');check(typeof priceEpoch==='string'&&priceEpoch,'PRICE_EPOCH');
  check(nonneg(inputUnitValue)&&nonneg(alternativeIncrementalValuePerCast)&&Number.isFinite(auctionCut)&&auctionCut>=0&&auctionCut<1,'PRICE_OR_CUT');
  bounds(refundsPerCast,'REFUNDS');check(refundsPerCast[1]<=context.nominalInputUnits,'REFUNDS_GT_NOMINAL');
  check(Array.isArray(outputs)&&outputs.length===context.outputItemIDs.length,'COMPLETE_OUTPUT_SET_REQUIRED');
@@ -90,7 +106,7 @@ function decisionSensitivity({context,outputs,prices,inputUnitValue,auctionCut=0
 function selfTest(){
  let n=0;const eq=(a,b)=>{assert.deepEqual(a,b);n++;},ok=x=>{assert.ok(x);n++;},bad=f=>{assert.throws(f);n++;};
  const context={inputItemID:191469,outputItemIDs:[198412,198413,198414],patchBuild:'SYNTHETIC',studyFamilyID:'synthetic',
- nominalInputUnits:5,professionContext:{skill:'UNKNOWN',specialization:'UNKNOWN',gear:'UNKNOWN',resourcefulness:'UNKNOWN',unlocks:'UNKNOWN',recipeSpellID:'UNKNOWN'}};
+ nominalInputUnits:5,outputUniverseVerified:true,professionContext:{skill:'UNKNOWN',specialization:'UNKNOWN',gear:'UNKNOWN',resourcefulness:'UNKNOWN',unlocks:'UNKNOWN',recipeSpellID:'UNKNOWN'}};
  eq(TARGETS.length,24);eq(new Set(TARGETS).size,24);ok(keyFor(191469,198412));eq(keyFor(191469,999999),null);
  const h=historicalRateScenarios({rate:.12,reportedUnit:'UNKNOWN',nominalInputUnits:5,sourceLineage:'frozen-tsm-hypothesis'});
  eq(h.scenarios.map(x=>x.conditionalEPerCast),[.6,.12]);eq(h.currentRetailE,null);eq(h.confidence,0);
