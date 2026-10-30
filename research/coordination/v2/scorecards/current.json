@@ -3,7 +3,7 @@
   "role": "coordinator",
   "taskID": "F001_F005_DF_MILL_V101_CONDITIONAL_INTEGRATION",
   "queueRevision": 30,
-  "sourceCommit": "51359e425d8d557731422a518d3cbffeeb5c5f0b",
+  "sourceCommit": "baba1d1235b28b143040d6f83a6c924deedbd3bb",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "560b885a0039045419c340716e263ae33ddf827a",
@@ -75,23 +75,22 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "CONDITIONAL: F003 DF milling v1.0.1 integrity 30/30 original + 22/22 new F005 independent synthetic V8 tests; exact-source native 52-case replay pending.",
-    "BLOCKING: F002 informational native runner still pins old model/manifest/fixture; CI 41125904833 green for old negative-QA, NOT new 52-case acceptance.",
-    "BLOCKING: F003 TWW milling five and Gem Finding fourteen independent defects remain.",
-    "F004 Jan 2023 historical Serevite/Draconium rounded diamond rates and separate Prismatic second stage context-only; 0 verified actual casts, ranks, refunds or current Retail E.",
-    "116 evidence-supported expectedQuantity gaps, 514 evidence numeric gaps, 0 independent current-Retail holdout families, 0 verified minimum-eligible baselines.",
-    "Three DF identity replacements, twelve fish rank unknowns and input 200061 eligibility remain unresolved."
+    "BLOCKING: F003 stage-guard model misidentifies Prismatic Ore 194545 as Crumbled Stone 192880; F005 40/43 identity tests, 3 failures.",
+    "ACCEPTED HISTORICAL CORRECTION: B-prismatic-1000 second-stage input is 194545; original raw evidence unchanged and no live economic use.",
+    "CONTEXT ONLY: two distinct new original Wowhead author cohorts (TheChisel, Hotfor); no current-Retail cast context or rank-specific E.",
+    "INFORMATIONAL NATIVE PASS: F002 DF milling v1.0.1 30+22 replay, pipeline --check and Lua5.1 in GitHub Actions 41132700353; independent F005 attestation pending.",
+    "BLOCKING: TWW milling 5 and Gem Finding 14 context failures; 116 evidence E gaps, 514 evidence gaps, 0 current-Retail holdouts.",
+    "UNRESOLVED: three DF mapping identity replacements and fish 200061/rank eligibility."
   ],
   "checksExecuted": [
-    "26 source-pin, 43-key, arithmetic, policy and historical-denominator consistency checks 26/26",
-    "Old-pinned informational candidate, pipeline --check and Lua5.1 run 41125904833 success",
-    "Changed source original 30 plus 22 new synthetic regression cases 52/52"
+    "21/21 coordinator source identity/pin/policy checks",
+    "GitHub Actions 41132700353 native 52-case informational replay, pipeline --check, Lua5.1: success",
+    "Independent F005 V8 identity 40/43 passed; 3 failed"
   ],
   "checksUnavailable": [
-    "Native Node exact v1.0.1 model plus 30+22 independent suites",
-    "F002 native re-pinned 52-case runner (still stale)",
-    "Current-Retail independent zero-inclusive completed-cast holdouts, reviewed E caps and in-game EV/tooltip verification",
-    "Local pipeline --check/Lua5.1 by coordinator (branch-head CI reported pass with old pinned runner)"
+    "Local native Node/Lua by coordinator",
+    "Repaired F003 stage guard native test",
+    "Current-Retail independent cast holdouts"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -100,9 +99,9 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T2102Z-F001-F005-df-milling-v101-conditional-integration.json",
-  "decision": "DF_MILL_V101_SYNTHETIC_CONDITIONAL_ACCEPTED_NATIVE_52_PENDING_HISTORICAL_ONLY",
-  "nextTask": "F002_REPIN_NATIVE_DF_MILL_V101_52_CASE_INFORMATIONAL_REPLAY",
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T2159Z-F001-F005-prismatic-attribution-and-native-52.json",
+  "decision": "PRISMATIC_HISTORICAL_ID_CORRECTION_ACCEPTED_STAGE_MODEL_REJECTED_NATIVE_DF_MILL_52_INFORMATIONAL_GREEN",
+  "nextTask": "F003_REPAIR_DF_PRISMATIC_STAGE_IDENTITY",
   "priorityRecords": 217,
   "independentValidator": {
     "status": "F003_V8_72_SELF_18_PAIR_26_MAR31_12_ARRAY_F004_TWW_31_ALL_PASS_NATIVE_PENDING",
@@ -265,30 +264,30 @@
       "economicPromotions": 0
     }
   },
-  "integrationStatus": "WORKING_PREVIEW_100_PERCENT_DF_MILL_V101_SYNTHETIC_52_OF_52_NATIVE_PENDING_NO_ECONOMIC_PROMOTION",
+  "integrationStatus": "WORKING_PREVIEW_COMPLETE_PRISMATIC_IDENTITY_CORRECTION_ACCEPTED_MODEL_BLOCKED_NATIVE_52_INFORMATIONAL_PASS",
   "nextAssignments": [
     {
-      "owner": "completion-engineer",
-      "taskID": "F002_REPIN_NATIVE_DF_MILL_V101_52_CASE_INFORMATIONAL_REPLAY",
-      "scope": "Re-pin F002-owned runner to model e36328de, manifest 94e57e0f, F005 30-case 4bf40e94, new 22-case 25855bf7 and F005 review 1769f8a8; run exact-source native Node 39 self + 30 + 22 independent cases, fail closed on stale SHA or malformed output, pipeline --check and Lua5.1. Keep informational until independent F005 approval; no economic or compiler changes."
+      "owner": "baseline-modeller",
+      "taskID": "F003_REPAIR_DF_PRISMATIC_STAGE_IDENTITY",
+      "scope": "Repair model SOURCE.secondStage.inputItemID 192880 to 194545, analyze output and manifest stage label; preserve Crumbled Stone 192880 mappings and immutable F004 raw evidence. Rerun 27 self and 43 F005 cases; no economic promotion."
     },
     {
       "owner": "independent-validator",
-      "taskID": "F005_VERIFY_F002_NATIVE_52_CASE_REPLAY_THEN_PIVOT",
-      "scope": "Independently inspect F002 updated runner and branch-head GitHub Actions; attest 30+22 native cases and adversarial mutation/fail-closed behavior. Then pivot to changed TWW milling five defects or Gem Finding fourteen failures, avoiding unchanged audits."
+      "taskID": "F005_RETEST_DF_STAGE_IDENTITY_AND_NATIVE_52_ATTESTATION",
+      "scope": "After author repair, independently rerun 43-case Prismatic test (3 failures must clear). Independently attest F002 native 52-case CI source pins and adversarial/fail-closed behavior before making any mandatory gate."
     },
     {
-      "owner": "baseline-modeller",
-      "taskID": "F003_REPAIR_TWW_MILLING_FIVE_CONTEXT_DEFECTS",
-      "scope": "Pivot from synthetically repaired DF milling to five TWW milling accounting/context/nonfinite/mutable-cap failures; preserve exact context and source ancestry, no generic skill multiplier; confidence 0 PREVIEW_ONLY normalizedVerified false until reviewed."
+      "owner": "completion-engineer",
+      "taskID": "F002_KEEP_NATIVE_52_GREEN_PIVOT_TWW_CONTEXT",
+      "scope": "Maintain successful informational native 52-case CI and deterministic pipeline/Lua checks; after F005 attestation, pivot to native QA of five TWW milling or fourteen Gem Finding context failures, without editing production economics."
     },
     {
       "owner": "evidence-researcher",
-      "taskID": "F004_RETAIL_CAST_PROTOCOL_OR_200061_ELIGIBILITY_PIVOT",
-      "scope": "Do not repeat indexed Jan 2023 Reddit scrape. Seek zero-inclusive, rank/skill/patch-labelled completed casts and refunds for five priority-122 Dragonflight prospecting keys; otherwise pivot to independent DF fish 200061 recipe/rank eligibility or Midnight milling output-rank universe leads."
+      "taskID": "F004_RETAIL_CASTS_OR_FISH_200061_PIVOT",
+      "scope": "Keep two new author-level historical cohorts separate, find current-Retail rank/skill/refund-labelled zero-inclusive casts for Prismatic first and second stages; if unavailable pivot to fish 200061 eligibility or Midnight output-rank leads."
     }
   ],
-  "lastCoordinatorIntegrationUTC": "2026-10-30T21:02:00Z",
+  "lastCoordinatorIntegrationUTC": "2026-10-30T21:59:00Z",
   "quantizationDiagnostic": {
     "modelBlob": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca",
     "frozenTSMRows": 9,
@@ -584,10 +583,9 @@
   },
   "zeroDeltaPivot": {
     "applied": true,
-    "from": "Unchanged 1018/4072 audit and repeat historical search",
-    "to": "Changed F003 v1.0.1 integrity repair and F005 22 new tests; historical two-stage denominator isolation",
-    "numericDelta": 0,
-    "modelDefectsNowPassing": 8
+    "from": "Unchanged numeric coverage and repeat historical source audit",
+    "to": "Versioned item identity correction, F003 model rejection and native 52-case CI integration",
+    "numericDelta": 0
   },
   "midnightPowderYieldRankContext": {
     "firstPersonLineages": 1,
@@ -697,7 +695,7 @@
     "expectedQuantityEvidencePromotions": 0,
     "status": "HISTORICAL_ANECDOTE_CONTEXT_ONLY"
   },
-  "coordinatorRevision": 33,
+  "coordinatorRevision": 34,
   "latestF002NativeEmitted": {
     "runID": 41104969064,
     "jobID": 124232116307,
@@ -728,24 +726,17 @@
     "economicPromotions": 0
   },
   "dfMillingFixedNIntegration": {
-    "status": "REJECTED_MODEL_PENDING_F003_REPAIR",
+    "status": "NATIVE_INFORMATIONAL_PASS_F005_ATTESTATION_PENDING",
     "targetPriority102MillKeys": 43,
-    "additionalKeysBeyondPriorDfModel": 19,
-    "sourceBlob": "216a929d4ab7b683e1bc9f4637273c4d766b1081",
-    "manifestBlob": "b981ee50df8ebddf85cecd36e471cbb5903c1fd1",
-    "defects": [
-      "patch-build suffix",
-      "impossible calendar date",
-      "cast output changing after validation",
-      "cap maximum changing after attestation",
-      "study family changing after validation",
-      "observation epoch changing after validation",
-      "recipe identity changing after validation",
-      "cap source ID changing after validation"
-    ],
-    "actualCompletedCastCohorts": 0,
-    "independentlyAttestedOutputCaps": 0,
-    "evidenceEPromotions": 0,
+    "modelBlob": "e36328de0e677582bf9b2b36c4a6144a5c2f17be",
+    "manifestBlob": "94e57e0f7dc91b95c9eed3bb575db3812fb45155",
+    "independentSyntheticPassed": 52,
+    "independentSyntheticFailed": 0,
+    "previousDefectsNowPassing": 8,
+    "nativeRunID": 41132700353,
+    "nativeConclusion": "success",
+    "independentF005Acceptance": "PENDING",
+    "currentRetailHoldouts": 0,
     "economicPromotions": 0
   },
   "dfDiamondHistoricalRankSplit": {
@@ -773,6 +764,48 @@
     ],
     "prismaticSecondStageSeparate": true,
     "verifiedActualCasts": 0,
-    "rankSpecificEApproved": false
+    "rankSpecificEApproved": false,
+    "correctedSecondStageInputItemID": 194545,
+    "previousWrongItemID": 192880,
+    "attributionStatus": "ACCEPTED_VERSIONED_EVENT_RAW_SOURCE_IMMUTABLE",
+    "twoNewHistoricalAuthorLineages": 2,
+    "modelAcceptance": "REJECTED_PENDING_IDENTITY_REPAIR"
+  },
+  "prismaticAttributionCorrection": {
+    "eventType": "APPEND_ONLY_HISTORICAL_ATTRIBUTION_CORRECTION",
+    "priorEvidencePath": "research/evidence/v2/2026-10-30T2028Z-F004-df-two-stage-diamond-denominators.json",
+    "priorEvidenceBlobSHA": "321dc050134de6a996e5978b87cf467516c4cb06",
+    "cohortID": "B-prismatic-1000",
+    "field": "inputItemID",
+    "previousValue": 192880,
+    "correctedValue": 194545,
+    "previousIDActually": "Crumbled Stone",
+    "correctedIDActually": "Prismatic Ore",
+    "rawEvidenceModified": false,
+    "notMappingAdmission": true,
+    "notEconomicPromotion": true,
+    "appliesTo": "Interpretation of prior historical second-stage Prismatic Ore cohort only; legitimate Crumbled Stone records remain untouched.",
+    "proposedBy": "research/evidence/v2/2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts.json",
+    "independentlyReviewedBy": "research/coordination/v2/reviews/20261030T2140Z-F005-df-prismatic-stage-identity.json"
+  },
+  "latestF005PrismaticStageIdentity": {
+    "modelSHA": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1",
+    "manifestSHA": "6aa1141b1a8734cfa644e39cf13a02e454d90841",
+    "reviewSHA": "a48759080a362596293818abd019e973891e0fe7",
+    "passed": 40,
+    "failed": 3,
+    "total": 43,
+    "modelSelfTestsPassed": 27,
+    "verdict": "FAIL_MODEL_IDENTITY",
+    "economicPromotions": 0
+  },
+  "latestNativeDfMilling52": {
+    "runID": 41132700353,
+    "headSHA": "baba1d1235b28b143040d6f83a6c924deedbd3bb",
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41132700353",
+    "informationalStep": "success",
+    "pipelineCheck": "success",
+    "lua51": "success",
+    "independentAcceptance": "PENDING"
   }
 }

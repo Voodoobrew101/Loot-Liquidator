@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_PRISMATIC_ATTRIBUTION_AND_NATIVE_52",
+  "runID": "20261030T2159Z-F001-F005-prismatic-attribution-and-native-52",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "baba1d1235b28b143040d6f83a6c924deedbd3bb",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "SUBMITTED_FOR_INDEPENDENT_QA",
+  "exactFilesAdded": [
+    "research/coordination/v2/acceptance/20261030T2159Z-F001-F005-prismatic-attribution-and-native-52.json",
+    "research/coordination/v2/submissions/coordinator/20261030T2159Z-F001-F005-prismatic-attribution-and-native-52.json"
+  ],
+  "exactFilesModified": [
+    "research/coordination/v2/scorecards/current.json"
+  ],
+  "sourcePins": {
+    "score": "2ad624e3b7c370083ae7ef3690d6f7f77dbe5abe",
+    "ready": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priority": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "old": "321dc050134de6a996e5978b87cf467516c4cb06",
+    "new": "d31529efc7f6d2630bb399daa10740fbdbcf0e74",
+    "sourceReview": "89fd690a4dd386b746295c0e6318af86e53250de",
+    "review": "a48759080a362596293818abd019e973891e0fe7",
+    "model": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1",
+    "manifest": "6aa1141b1a8734cfa644e39cf13a02e454d90841",
+    "runner": "1724455aeda20ace8206cf01fec5d668c0698216",
+    "candidate": "560b885a0039045419c340716e263ae33ddf827a"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "acceptedHistoricalAttributionCorrections": 1,
+    "newHistoricalOriginalAuthorLineages": 2,
+    "independentCurrentRetailHoldouts": 0,
+    "newModelIdentityDefectsConfirmed": 1,
+    "failedModelAssertionSurfaces": 3,
+    "nativeInformationalDfMilling52NowPassing": 1,
+    "coordinatorOwnedFiles": 3
+  },
+  "decisions": [
+    {
+      "owner": "evidence-researcher",
+      "decision": "ACCEPT_HISTORICAL_ATTRIBUTION_CORRECTION_AND_TWO_AUTHOR_COHORTS_CONTEXT_ONLY",
+      "reason": "194545 Prismatic Ore replaces mislabeled 192880 Crumbled Stone for B-prismatic-1000 interpretation. TheChisel 31/1000 reported casts and Hotfor 62/7000 mixed ranks cannot become measured P or current E."
+    },
+    {
+      "owner": "independent-validator",
+      "decision": "ACCEPT_NEGATIVE_QA_40_PASS_3_FAIL",
+      "reason": "Three independent model source/analyze/manifest item identity failures; 27/27 model self-tests do not catch this defect."
+    },
+    {
+      "owner": "baseline-modeller",
+      "decision": "REJECT_STAGE_GUARD_V1_PENDING_IDENTITY_REPAIR",
+      "reason": "Exact model 849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1 and manifest 6aa1141b1a8734cfa644e39cf13a02e454d90841 wrongly use 192880 for Prismatic Ore. Historical arithmetic diagnostics are provisional, not gold inputs."
+    },
+    {
+      "owner": "completion-engineer",
+      "decision": "ACCEPT_NATIVE_INFORMATIONAL_52_CASE_CI_PASS_PENDING_F005",
+      "reason": "Branch-head GitHub Actions 41132700353 succeeded for 30+22 informational native DF milling replay, pipeline --check and Lua5.1; no independent F005 mandatory acceptance yet."
+    }
+  ],
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub connector JS",
+      "checks": 21,
+      "passed": 21,
+      "failed": 0
+    },
+    {
+      "environment": "GitHub Actions native",
+      "runID": 41132700353,
+      "headSHA": "baba1d1235b28b143040d6f83a6c924deedbd3bb",
+      "conclusion": "success",
+      "steps": [
+        "DF milling v1.0.1 30+22 informational replay",
+        "node run_completion_pipeline.js --check",
+        "Lua 5.1 decode"
+      ],
+      "independentF005Acceptance": "PENDING"
+    },
+    {
+      "environment": "Independent F005 connector V8 report",
+      "prismaticAssertionsPassed": 40,
+      "failed": 3,
+      "total": 43,
+      "modelSelfTestsPassed": 27
+    }
+  ],
+  "testsNotRun": [
+    "Coordinator local native Node/Lua checkout",
+    "Native 43-case Prismatic suite after F003 repair",
+    "Independent current-Retail held-out cast study"
+  ],
+  "blockers": [
+    "F003 stage model uses wrong Prismatic Ore ID in source/analyze/manifest (3 failures).",
+    "F005 independent acceptance of native DF milling 52-case informational CI pending.",
+    "116 evidence E gaps, 514 evidence numeric gaps, no >=90 fields or verified minimum-eligible baselines.",
+    "No current-Retail zero-inclusive rank/skill/refund cohorts.",
+    "TWW milling five and Gem Finding fourteen context failures; DF fish 200061 and three DF identity replacements unresolved."
+  ],
+  "nextTask": {
+    "owner": "baseline-modeller",
+    "taskID": "F003_REPAIR_DF_PRISMATIC_STAGE_IDENTITY",
+    "scope": "Repair model SOURCE.secondStage.inputItemID 192880 to 194545, analyze output and manifest stage label; preserve Crumbled Stone 192880 mappings and immutable F004 raw evidence. Rerun 27 self and 43 F005 cases; no economic promotion."
+  },
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_REPAIR_DF_PRISMATIC_STAGE_IDENTITY",
+      "scope": "Repair model SOURCE.secondStage.inputItemID 192880 to 194545, analyze output and manifest stage label; preserve Crumbled Stone 192880 mappings and immutable F004 raw evidence. Rerun 27 self and 43 F005 cases; no economic promotion."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_RETEST_DF_STAGE_IDENTITY_AND_NATIVE_52_ATTESTATION",
+      "scope": "After author repair, independently rerun 43-case Prismatic test (3 failures must clear). Independently attest F002 native 52-case CI source pins and adversarial/fail-closed behavior before making any mandatory gate."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_KEEP_NATIVE_52_GREEN_PIVOT_TWW_CONTEXT",
+      "scope": "Maintain successful informational native 52-case CI and deterministic pipeline/Lua checks; after F005 attestation, pivot to native QA of five TWW milling or fourteen Gem Finding context failures, without editing production economics."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_RETAIL_CASTS_OR_FISH_200061_PIVOT",
+      "scope": "Keep two new author-level historical cohorts separate, find current-Retail rank/skill/refund-labelled zero-inclusive casts for Prismatic first and second stages; if unavailable pivot to fish 200061 eligibility or Midnight output-rank leads."
+    }
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Unchanged numeric coverage and repeat historical source audit",
+    "to": "Versioned item identity correction, F003 model rejection and native 52-case CI integration",
+    "numericDelta": 0
+  },
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "addonReleased": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false
+  },
+  "scorecardRevision": 34
+}
