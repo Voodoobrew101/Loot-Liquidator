@@ -2,8 +2,9 @@
 // F003 research-only: Midnight prospecting March 31, 2026 dated-hotfix epoch isolation.
 // No historical/current rates are promoted to economic use, recipe eligibility or measured facts.
 const assert = require('node:assert/strict');
-const MODEL_ID = 'midnight-prospect-hotfix-epoch-isolation-v1.0.3';
+const MODEL_ID = 'midnight-prospect-hotfix-epoch-isolation-v1.0.4';
 const POLICY = Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
+const COHORT_ATTESTATIONS = new WeakMap(); // Private raw-ledger witness; not a Retail source attestation.
 const TARGETS = Object.freeze({
   237359:'midnight:237359:242608:L733',237361:'midnight:237361:242608:L744',
   237362:'midnight:237362:242608:L755',237363:'midnight:237363:242608:L766',
@@ -48,6 +49,7 @@ function jsonSafe(v,ancestors=new Set()){
  if(v===null||typeof v==='string'||typeof v==='boolean')return true;
  if(typeof v==='number')return Number.isFinite(v);
  if(typeof v!=='object'||ancestors.has(v))return false;
+ for(let p=v;p!==null;p=Object.getPrototypeOf(p))if(Object.getOwnPropertyDescriptor(p,'toJSON'))return false;
  const array=Array.isArray(v),proto=Object.getPrototypeOf(v);
  if(array?proto!==Array.prototype:proto!==Object.prototype&&proto!==null)return false;
  ancestors.add(v);
@@ -93,7 +95,7 @@ function validateContext(c){
 function analyzeCohort({context,events}){
  validateContext(context);
  const c=JSON.parse(JSON.stringify(context));
- check(Array.isArray(events)&&events.length>0,'EVENTS');
+ check(Array.isArray(events)&&events.length>0&&jsonSafe(events),'UNSAFE_EVENTS');
  const start=classifyEpoch(c.observationStart),end=classifyEpoch(c.observationEnd);
  const epoch=start===end?start:'TRANSITION_QUARANTINE';
  let completed=0,aborted=0,positiveCasts=0,zeroCasts=0,outputTotal=0,refunds=0;
@@ -114,20 +116,62 @@ function analyzeCohort({context,events}){
  const gross=completed*c.nominalInputPerCast,net=gross-refunds;
  const p=positiveCasts/completed,e=outputTotal/completed;
  check(Number.isFinite(p)&&Number.isFinite(e),'NONFINITE_RESULT');
- return {modelID:MODEL_ID,stableKey:c.stableKey,sourceType:c.sourceType,studyFamilyID:c.studyFamilyID,sourceLineage:c.sourceLineage,
+ const result={modelID:MODEL_ID,stableKey:c.stableKey,sourceType:c.sourceType,studyFamilyID:c.studyFamilyID,sourceLineage:c.sourceLineage,
   epoch,epochStartClass:start,epochEndClass:end,officialHotfixEntryDate:OFFICIAL_ENTRY_DATE,
   officialHotfixSource:OFFICIAL_SOURCE_URL,hotfixDeploymentHour:'UNKNOWN',hotfixCausalEffect:'NOT_IDENTIFIED',
   contextSnapshot:c,completedCasts:completed,abortedRequests:aborted,zeroOutputCasts:zeroCasts,
   positiveCasts,observedP:p,observedUnconditionalE:e,observedPositiveMin:observedMin,observedPositiveMax:observedMax,
-  grossInput:gross,refundedInput:refunds,netConsumedInput:net,
+  grossInput:gross,refundedInput:refunds,netConsumedInput:net,observedTotalOutput:outputTotal,
   hardYieldCap:null,fullOutputUniverseIndependentlyAudited:false,independentHoldout:'NOT_PERFORMED',...POLICY};
+ check(jsonSafe(result),'UNSAFE_SUMMARY');
+ COHORT_ATTESTATIONS.set(result,{summary:JSON.stringify(result),context:JSON.stringify(c),events:JSON.stringify(events)});
+ return result;
 }
 function profileKey(c){
  return JSON.stringify({stableKey:c.stableKey,recipeSpellID:c.recipeSpellID,inputQualityRank:c.inputQualityRank,
  outputQualityRank:c.outputQualityRank,nominalInputPerCast:c.nominalInputPerCast,directReagents:c.directReagents,
  minimumEligibleSkill:c.minimumEligibleSkill,professionSkill:c.professionSkill,professionContext:c.professionContext});
 }
+function attestCohort(s){
+ check(s&&typeof s==='object'&&jsonSafe(s),'PAIR_UNSAFE_SUMMARY');
+ const witness=COHORT_ATTESTATIONS.get(s);
+ check(!!witness,'PAIR_UNATTESTED_SUMMARY_REANALYZE_RAW_CASTS');
+ check(JSON.stringify(s)===witness.summary,'PAIR_MUTATED_SUMMARY');
+ validateContext(s.contextSnapshot);
+ const c=s.contextSnapshot;
+ check(s.modelID===MODEL_ID&&s.stableKey===c.stableKey&&s.sourceType===c.sourceType&&
+  s.studyFamilyID===c.studyFamilyID&&s.sourceLineage===c.sourceLineage,'PAIR_SOURCE_IDENTITY');
+ const start=classifyEpoch(c.observationStart),end=classifyEpoch(c.observationEnd);
+ check(s.epochStartClass===start&&s.epochEndClass===end&&
+  s.epoch===(start===end?start:'TRANSITION_QUARANTINE'),'PAIR_EPOCH_INTEGRITY');
+ check(s.officialHotfixEntryDate===OFFICIAL_ENTRY_DATE&&s.officialHotfixSource===OFFICIAL_SOURCE_URL&&
+  s.hotfixDeploymentHour==='UNKNOWN'&&s.hotfixCausalEffect==='NOT_IDENTIFIED','PAIR_HOTFIX_CLAIMS');
+ for(const [key,value] of Object.entries(POLICY))check(s[key]===value,'PAIR_PREVIEW_POLICY');
+ check(s.independentHoldout==='NOT_PERFORMED'&&s.fullOutputUniverseIndependentlyAudited===false&&
+  s.hardYieldCap===null,'PAIR_UNVERIFIED_CLAIMS');
+ const n=s.completedCasts;
+ check(positive(n)&&nonnegative(s.abortedRequests)&&nonnegative(s.zeroOutputCasts)&&
+  nonnegative(s.positiveCasts)&&s.positiveCasts+s.zeroOutputCasts===n,'PAIR_CAST_TOTALS');
+ check(nonnegative(s.observedTotalOutput)&&nonnegative(s.grossInput)&&
+  nonnegative(s.refundedInput)&&nonnegative(s.netConsumedInput)&&
+  s.grossInput===n*c.nominalInputPerCast&&s.refundedInput<=s.grossInput&&
+  s.netConsumedInput===s.grossInput-s.refundedInput,'PAIR_INPUT_OUTPUT_TOTALS');
+ check(typeof s.observedP==='number'&&Number.isFinite(s.observedP)&&s.observedP===s.positiveCasts/n&&
+  typeof s.observedUnconditionalE==='number'&&Number.isFinite(s.observedUnconditionalE)&&
+  s.observedUnconditionalE===s.observedTotalOutput/n,'PAIR_P_E_DENOMINATOR');
+ if(s.positiveCasts===0)check(s.observedTotalOutput===0&&s.observedPositiveMin===null&&
+  s.observedPositiveMax===null,'PAIR_ZERO_OUTPUT_CONVENTION');
+ else check(positive(s.observedPositiveMin)&&positive(s.observedPositiveMax)&&
+  s.observedPositiveMin<=s.observedPositiveMax&&
+  s.positiveCasts*s.observedPositiveMin<=s.observedTotalOutput&&
+  s.observedTotalOutput<=s.positiveCasts*s.observedPositiveMax,'PAIR_POSITIVE_BOUNDS');
+ // Internal replay from the original zero-inclusive cast snapshot; not independent source proof.
+ const replay=analyzeCohort({context:JSON.parse(witness.context),events:JSON.parse(witness.events)});
+ check(JSON.stringify(replay)===witness.summary,'PAIR_RAW_CAST_REPLAY');
+ return true;
+}
 function compareEpochs(pre,post){
+ attestCohort(pre);attestCohort(post);
  check(pre&&post&&pre.modelID===MODEL_ID&&post.modelID===MODEL_ID,'MODEL_PAIR');
  check(pre.epoch==='PRE_HOTFIX'&&post.epoch==='POST_HOTFIX','CROSS_EPOCH_PAIR');
  check(pre.sourceType==='RAW_CURRENT_RETAIL'&&post.sourceType==='RAW_CURRENT_RETAIL','RAW_PAIR_REQUIRED');
@@ -195,6 +239,10 @@ function selfTest(){
  throws(()=>compareEpochs(a,a),'CROSS_EPOCH_PAIR');
  throws(()=>compareEpochs(a,analyzeCohort({context:{...post,sourceType:'SYNTHETIC'},events:es})),'RAW_PAIR_REQUIRED');
  eq(a.contextSnapshot.professionSkill,1);c.professionSkill=99;eq(a.contextSnapshot.professionSkill,1);
+ throws(()=>compareEpochs(a,{...b}),'PAIR_UNATTESTED_SUMMARY');
+ const forged=analyzeCohort({context:post,events:[{castID:'z',status:'COMPLETED',outputCount:0,refundedInputUnits:0}]});
+ forged.observedP=1;throws(()=>compareEpochs(a,forged),'PAIR_MUTATED_SUMMARY');
+ eq(b.observedTotalOutput,3);
  const arrayContext=arr=>({...c,professionContext:{...c.professionContext,specialization:arr}});
  const symbolArray=[];symbolArray[Symbol('trait')]='hidden';
  throws(()=>analyzeCohort({context:arrayContext(symbolArray),events:es}),'UNSAFE_CONTEXT');
