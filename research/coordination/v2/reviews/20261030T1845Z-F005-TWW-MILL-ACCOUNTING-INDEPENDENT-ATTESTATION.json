@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_TWW_MILL_REAGENT_ACCOUNTING_IDENTIFICATION_QA",
+  "runID": "20261030T1845Z-F005-TWW-MILL-ACCOUNTING-INDEPENDENT-ATTESTATION",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "reviewUTC": "2026-10-30T18:45:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "de279f3946fd14d39d969c872cb686123baac329",
+  "testCommit": "1d1e618aa204c86abb468b6f23e2935b5511287f",
+  "verdict": "FAIL_MODEL_CONTEXT_AND_NUMERIC_ATTESTATION_REPAIR_REQUIRED",
+  "status": "PROPOSED_INDEPENDENT_REVIEW_FOR_COORDINATOR",
+  "reviewed": [
+    {
+      "path": "research/tools/models_v2/tww_mill_reagent_accounting_identification_v1.js",
+      "blobSHA": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a",
+      "version": "v1.0.0",
+      "author": "baseline-modeller"
+    },
+    {
+      "path": "research/models/v2/tww_mill_reagent_accounting_identification_v1.json",
+      "blobSHA": "758b38f4a42b5becd353ca5e17fb920000f7355c",
+      "author": "baseline-modeller"
+    },
+    {
+      "path": "research/tests/v2/test_f005_tww_mill_accounting_independent_attestation.js",
+      "blobSHA": "1dc22afeed2eefafd845979fafa15cbb59c15708",
+      "author": "independent-validator"
+    }
+  ],
+  "independentTests": {
+    "runtime": "GitHub connector JavaScript V8, exact committed source dynamically evaluated",
+    "selfTest": {
+      "passed": 20425,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    "newRegression": {
+      "passed": 32,
+      "failed": 5,
+      "total": 37,
+      "syntheticOnly": true
+    },
+    "nativeNodeExecuted": false,
+    "lua51Executed": false,
+    "retailClientExecuted": false,
+    "independentCurrentRetailStudyFamilies": 0
+  },
+  "passingAreas": [
+    "Actual completed casts, net plus saved conservation, and net-only denominator lower bounds",
+    "Scenario cap bounds carry capStatus and provenance metadata; scenario bounds remain conditional",
+    "Zero-inclusive per-cast P/E and positive-only observed range",
+    "Rejects sparse/accessor/symbol/extra-key/subclass per-cast arrays",
+    "Rejects contradictory positive-cast and output totals, invalid mapping ID and ineligible skill",
+    "Outputs retain confidence=0, economicUse=PREVIEW_ONLY, normalizedVerified=false, live EV/recommendations false",
+    "Integer cast denominator interval sharpness independently enumerated over 2..8 batch, 0..batch-1 caps, 1..40 net"
+  ],
+  "failures": [
+    {
+      "id": "F005-TWW-MILL-01",
+      "test": "reject contradictory nominal batch in typed context",
+      "actual": "ACCEPTED",
+      "risk": "context nominal batch=1 accepted alongside accounting nominal batch=5; no single canonical reagent/cast unit",
+      "repairOwner": "baseline-modeller",
+      "requirement": "Reject mismatch or require one canonical batch field and cross-validate"
+    },
+    {
+      "id": "F005-TWW-MILL-02",
+      "test": "reject contradictory direct reagent vector in typed context",
+      "actual": "ACCEPTED",
+      "risk": "context reagent quantity=1 accepted alongside accounting nominal batch=5",
+      "repairOwner": "baseline-modeller",
+      "requirement": "Validate direct reagent vector and its nominal quantities against accounting batch; reject unsupported context fields rather than silently ignoring"
+    },
+    {
+      "id": "F005-TWW-MILL-03",
+      "test": "inverse must not return nonfinite conditional mean",
+      "actual": "ACCEPTED_INFINITY",
+      "reproducer": "inverse(1e308, Number.MIN_VALUE) => conditionalMean Infinity; JSON.stringify converts Infinity to null",
+      "risk": "nonfinite numeric result and silent JSON loss",
+      "repairOwner": "baseline-modeller",
+      "requirement": "Reject overflow/nonfinite inverse output before serialization"
+    },
+    {
+      "id": "F005-TWW-MILL-04",
+      "test": "reject proxy that changes mapping after identity check",
+      "actual": "ACCEPTED_WITH_DIFFERENT_RETURNED_TARGET_KEY",
+      "reproducer": "Proxy targetKey returns admitted key 210798:222618 during validation and 210799:222612 on returned object",
+      "risk": "mapping identity can change after validation",
+      "repairOwner": "baseline-modeller",
+      "requirement": "Reject dynamic/proxy inputs or validate and calculate only from a single safe immutable canonical snapshot"
+    },
+    {
+      "id": "F005-TWW-MILL-05",
+      "test": "reject proxy cap whose units change after validation",
+      "actual": "ACCEPTED_WITH_MAX_CASTS_45",
+      "reproducer": "Proxy units returns 1 during validation, 4 during bound calculation; net=45,batch=5 yields max=45 rather than max=11",
+      "risk": "saving-cap provenance and denominator bound can diverge",
+      "repairOwner": "baseline-modeller",
+      "requirement": "Canonicalize and freeze cap inputs before validation and reuse only snapshot values"
+    }
+  ],
+  "qualifiedLimitations": [
+    "Proxy adversarial fixtures are synthetic integrity tests, not observed user input; failure establishes validation/canonicalization gap, not live economic leakage",
+    "Source's scenario-only cap may collapse an integer interval to one cast; that is conditional identification, not independently measured actual casts",
+    "No independent held-out current-Retail cast family supports probability, expectedQuantity, Resourcefulness cap, or minimum skill promotion",
+    "This suite is not yet in mandatory native CI; exact source SHA is pinned in test and will fail closed if the model changes",
+    "No changes made to model, compiler, candidate, original evidence, frozen TSM, tooltip-only policy or production code"
+  ],
+  "economicSafety": {
+    "newAdmittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "evidenceNumericCellsFilled": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "previewPolicy": "PRESERVED"
+  },
+  "canonicalReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116
+  },
+  "blockers": [
+    "F003 model has five independently reproduced integrity failures",
+    "Native Node exact-source regression execution pending",
+    "No independently verified per-cast saving cap or current Retail zero-inclusive cast holdout",
+    "Lua5.1 and Retail client not executed in this review"
+  ],
+  "nextTask": "F005_RETEST_F003_TWW_MILL_ACCOUNTING_CANONICAL_SNAPSHOT_REPAIR_THEN_NATIVE_NODE_37_CASES",
+  "coordinatorRequest": "Reject F003 TWW milling accounting model for independent acceptance pending five repairs. Keep all outputs preview-only and do not promote E/P/eligibility. Review regression suite and add informational native replay before making mandatory."
+}
