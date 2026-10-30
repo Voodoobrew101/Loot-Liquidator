@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_DIAMOND_DUPLICATE_LINEAGE_CORRECTION",
+  "queueRevision": 2,
+  "workflowRevision": 2,
+  "runID": "2026-10-30T2230Z-F004-df-duplicate-cohort-ancestry",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "9bb0adaf8429ad15a5cd8241636732a53fb12bba",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_F005_QA",
+  "priorityBasis": "F004_READY_PRIORITY122_DF_DIAMOND_CONFLICT; CORRECT_PREVIOUSLY_DUPLICATED_SOURCE_ANCESTRY_BEFORE_NEW_SOURCE_PROMOTION",
+  "readinessObserved": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceMissingCells": 514,
+    "expectedQuantityMissingEvidenceCells": 116
+  },
+  "exactTargetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "changedFiles": [
+    "research/evidence/v2/2026-10-30T2230Z-F004-df-duplicate-cohort-ancestry.json",
+    "research/evidence/v2/source-reviews/2026-10-30T2230Z-F004-df-duplicate-cohort-ancestry-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T2230Z-F004-df-duplicate-cohort-ancestry-submission.json"
+  ],
+  "acceptedVersusProposed": "PROPOSED_ONLY",
+  "exactDeltas": {
+    "newPrimaryStudies": 0,
+    "newIndependentLineages": 0,
+    "newVerifiedCompletedCastStudies": 0,
+    "newCurrentRetailCohorts": 0,
+    "newMappingsAdmitted": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "sourceAncestryCorrectionsProposed": 1,
+    "previousLaterSubmissionNewLineageClaim": 1,
+    "correctedLaterSubmissionAcceptedNewLineageIncrement": 0,
+    "proposedAggregateCorrectionIfPreviouslyDoubleCounted": -1
+  },
+  "tests": {
+    "inProcessStructuralAssertions": "16/16 PASSED",
+    "githubReadback": "PENDING",
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "wowClient": "NOT_RUN",
+    "independentF005": "PENDING"
+  },
+  "blockers": [
+    "Coordinator must accept deduplication and adjust derived lineage counters only if both archival records were counted",
+    "No exact source comment permalink or verified completed-cast log",
+    "Input ore family/rank, refunds and patch bridge missing; no live P/E can be promoted"
+  ],
+  "nextTask": "Pivot to a different priority-122 source conflict or independently verify the Dragonflight diamond rank-specific source units; do not re-archive zzcnjw as a new study.",
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "liveRecommendationEligible": false,
+    "rawEvidence": "UNCHANGED",
+    "historicalTSM": "FROZEN_UNCHANGED",
+    "tooltipOnly": "UNCHANGED",
+    "main": "UNCHANGED",
+    "runtimeProfiles": "UNCHANGED",
+    "legacyAssignments": "UNCHANGED"
+  }
+}
