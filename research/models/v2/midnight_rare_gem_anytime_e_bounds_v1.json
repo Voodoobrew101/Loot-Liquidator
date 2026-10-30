@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "midnight-rare-gem-anytime-e-bounds-v1.0.0",
+  "taskID": "F003",
+  "workflowRevision": 2,
+  "status": "PROPOSED_PENDING_INDEPENDENT_QA",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "modelSource": "research/tools/models_v2/midnight_rare_gem_anytime_e_bounds_v1.js",
+  "modelSourceBlobSHA": "d409511c94ae13c09dcccb5e7e8de6c75d52105b",
+  "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "targetKeys": [
+    "midnight:237359:242608:L733",
+    "midnight:237361:242608:L744",
+    "midnight:237362:242608:L755",
+    "midnight:237363:242608:L766",
+    "midnight:237364:242608:L777",
+    "midnight:237365:242608:L788",
+    "midnight:237366:242608:L799"
+  ],
+  "priority": 104,
+  "outputItemID": 242608,
+  "sourceFamily": "NO_NEW_CURRENT_RETAIL_MEASURED_CASTS",
+  "modelPurpose": "Time-uniform simultaneous drop-chance intervals and partial identification of unconditional expected quantity for seven high-priority Midnight rare-gem output mappings; pivot from previously exhausted Dragonflight milling source audit.",
+  "formulas": {
+    "alphaAllocation": "alpha_n_key_metric = alpha * 6 / (pi^2 * n^2 * 7 * 2)",
+    "width": "range * sqrt(log(2 / alpha_n_key_metric) / (2*n))",
+    "dropChance": "successCasts/completedCasts; interval clipped to [0,1] using range=1",
+    "expectedQuantity": "sum(outputCount including zero casts)/completedCasts, not multiplied by occurrence P",
+    "noHardOutputCap": "E lower bound is simultaneous P lower bound because integer positive output >=1; E upper bound remains unknown/null",
+    "independentlySupportedCap": "Conditional E interval from Hoeffding range=B, intersected with [P_lower, B*P_upper] and [0,B]",
+    "guarantee": "Union bound across 7 keys, 2 metrics, every completed-cast sample size n>=1. Requires fixed-context iid bounded outputs, full zero-inclusive cast recording, and valid externally evidenced cap if using finite E upper."
+  },
+  "requiredContext": [
+    "RETAIL",
+    "sourceType",
+    "patchBuild",
+    "recipeSpellID",
+    "observationEpoch",
+    "sourceStudyFamilyID",
+    "inputItemID",
+    "outputItemID",
+    "inputQualityRank",
+    "outputQualityRank",
+    "nominalInputCountPerCast",
+    "directReagents",
+    "minimumRecipeEligibleSkill",
+    "professionSkill",
+    "professionContext.specialization",
+    "professionContext.gear",
+    "professionContext.unlocks",
+    "professionContext.resourcefulnessPercent"
+  ],
+  "eligibility": "Backlog keys only, not independent proof of current recipe, rank, unlock, output universe or nominal batch size. A positive integer spell ID in RAW mode is type validation only.",
+  "applicability": "Each cohort must use one exact fixed character/patch/recipe/input-output-rank profile. Never pool differing profiles; a caller-supplied capEvidenceID is not an independently validated certificate.",
+  "sourceAncestry": {
+    "priorityBacklog": "research/coordination/completion-priorities.json",
+    "currentRetailStudyFamilies": 0,
+    "independentHoldoutFamilies": 0
+  },
+  "outputSemantics": {
+    "observedMinMax": "Sample positive extrema only, not hard game bounds",
+    "outputUniverse": "Not certified; single-output analysis cannot establish complete economic conversion value",
+    "grossNetRefunds": "Nominal gross = completed casts * supplied nominal input; refunds separately subtracted; aborted requests excluded",
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "confidence": 0,
+    "liveEVChanged": false
+  },
+  "example": {
+    "kind": "SYNTHETIC_ONLY",
+    "completedCasts": 3,
+    "abortedRequests": 1,
+    "outputCounts": [
+      0,
+      2,
+      0
+    ],
+    "refunds": [
+      1,
+      0,
+      0
+    ],
+    "observedP": 0.3333333333333333,
+    "observedUnconditionalE": 0.6666666666666666,
+    "noCertifiedCapEUpper": null
+  },
+  "tests": {
+    "javascriptV8SelfTest": {
+      "passed": 40,
+      "failed": 0
+    },
+    "nativeNode": "NOT_RUN_EXACT_FILE",
+    "independentValidator": "PENDING",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "completionPipeline": "NOT_RUN_NO_COMPILER_INPUTS_CHANGED"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newModelTargetKeys": 7
+  },
+  "evidenceRequest": "For each target ore and output rank, collect current-Retail zero-inclusive per-cast outputCount including zero results, exact completed cast count, aborted requests, refund counts, full patch/recipe/skill/spec/gear/unlocks and original source family. Seek independent proof of per-cast output cap before finite E upper bounds.",
+  "independentValidatorRequest": "Review the alpha-spending union bound and no-cap E partial-identification logic independently; probe malformed RAW context, duplicate cast IDs, refunds, output cap violation and cross-profile pooling. Reserve independent study-family holdout.",
+  "blockers": [
+    "No independent current-Retail zero-inclusive casts for seven target keys",
+    "No independently verified per-cast hard output cap, so E upper cannot be identified without extra assumptions",
+    "No independent output-universe/recipe eligibility audit; economic recommendations prohibited",
+    "No native Node, Lua or in-game verification of new model"
+  ]
+}
