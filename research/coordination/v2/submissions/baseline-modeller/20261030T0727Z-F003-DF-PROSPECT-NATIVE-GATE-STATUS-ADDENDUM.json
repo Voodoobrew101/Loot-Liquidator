@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_PROSPECT_NATIVE_GATE_STATUS_ADDENDUM",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T07:27:00Z",
+  "status": "PROPOSED_PENDING_NATIVE_GITHUB_CI",
+  "parentSubmission": "research/coordination/v2/submissions/baseline-modeller/20261030T0722Z-F003-DF-PROSPECT-JOINT-CAST-ADVERSARIAL-REPAIR.json",
+  "baseCommit": "5a1b734d209afa57f56ef9d4fe49591499ea06d7",
+  "resultCommitBeforeSubmission": "ab82d625ad475a51bd2c36d97798ad26ae240bcf",
+  "changedFiles": [
+    "research/models/v2/df_prospecting_joint_cast_conflict_v1.json"
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "manifestStatusCorrected": 1
+  },
+  "cause": "Native completion pipeline rejects manifests whose status does not begin PROPOSED_ or ACCEPTED. First repair manifest used REPAIRED_AFTER_F005... and GitHub Actions failed with 'Unrecognized F003 DF joint-cast model identity or status' before executing the new native 23-case suite.",
+  "repair": "Manifest status changed to PROPOSED_REPAIRED_AFTER_F005_ADVERSARIAL_PENDING_NATIVE_AND_INDEPENDENT_RETEST; no independent acceptance or promotion implied.",
+  "modelBlobSHA": "85d1e4b7b019c6db945335af2ec82392e8a0ddca",
+  "manifestBlobSHA": "72cf68f3c6edb12c3da807202b29b20acc2daa5d",
+  "testsActuallyRun": [
+    {
+      "name": "GitHub workflow failure diagnosis",
+      "result": "PASS",
+      "workflow": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41019955581",
+      "error": "Unrecognized F003 DF joint-cast model identity or status"
+    },
+    {
+      "name": "Manifest readback and PROPOSED_ gate regex check",
+      "result": "PASS",
+      "status": "PROPOSED_REPAIRED_AFTER_F005_ADVERSARIAL_PENDING_NATIVE_AND_INDEPENDENT_RETEST"
+    }
+  ],
+  "testsNotRun": [
+    "Native strict 23/23 after status repair; GitHub workflow pending",
+    "Lua/in-game",
+    "Independent validator formal acceptance"
+  ],
+  "blockers": [
+    "Await fresh native GitHub Actions 23/23 strict gate and F005 acceptance",
+    "No current Retail zero-inclusive cast holdout for priority mappings"
+  ],
+  "nextTask": "If native CI passes, await F005 independent acceptance and pivot to priority-104 model risk; if fails, diagnose exact new error without changing other role-owned files.",
+  "preservation": {
+    "mainUntouched": true,
+    "productionFilesUntouched": true,
+    "rawEvidenceUntouched": true,
+    "frozenTSMUntouched": true,
+    "tooltipOnlyPolicyUntouched": true,
+    "schedulesUntouched": true,
+    "otherRoleFilesUntouched": true
+  }
+}
