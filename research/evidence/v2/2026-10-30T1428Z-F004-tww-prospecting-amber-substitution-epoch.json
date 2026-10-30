@@ -1,0 +1,329 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_PROSPECTING_AMBER_SUBSTITUTION_AND_2024_HOTFIX",
+  "runUTC": "2026-10-30T14:28:35Z",
+  "workflowRevision": 2,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "b2f3e4b3e33c7c844e944c1255215d363a0ed605",
+  "researchQuestion": "Are TWW gem-finding specialization traits unconditional +1% gem chance per point, and can historical 2024 prospecting samples be pooled across the October hotfix?",
+  "resolution": "No. All four trait descriptions specify replacement of an Ambivalent Amber, not a standalone per-cast gem probability. A separate October 25, 2024 hotfix changed byproduct occurrence, gem rates and the 40/40 amber perk; separate pre/post regimes.",
+  "traitMechanics": {
+    "sourceFamily": "WOWHEAD_GAME_DATA_PROFESSION_TRAIT_FOUR_PAGES_ONE_LINEAGE",
+    "traits": [
+      {
+        "name": "Sapphire",
+        "traitID": 98659,
+        "outputItemID": 212508,
+        "wording": "1% chance per point in this sub-specialization to acquire this gem instead of an Ambivalent Amber when Prospecting",
+        "sourceURL": "https://www.wowhead.com/profession-trait/sapphire-98659",
+        "interpretation": "AMBER_SUBSTITUTION_CONDITIONAL_NOT_UNCONDITIONAL_GEM_PER_CAST",
+        "perPointProbabilityInterpretation": "NOT_VALIDATED_IN_GAME",
+        "applicabilityEpoch": "INDEXED_CURRENT_PAGE; EXACT_CAST_EPOCH_UNKNOWN"
+      },
+      {
+        "name": "Ruby",
+        "traitID": 98660,
+        "outputItemID": 212495,
+        "wording": "1% chance per point in this sub-specialization to acquire this gem instead of an Ambivalent Amber when Prospecting",
+        "sourceURL": "https://www.wowhead.com/profession-trait/ruby-98660",
+        "interpretation": "AMBER_SUBSTITUTION_CONDITIONAL_NOT_UNCONDITIONAL_GEM_PER_CAST",
+        "perPointProbabilityInterpretation": "NOT_VALIDATED_IN_GAME",
+        "applicabilityEpoch": "INDEXED_CURRENT_PAGE; EXACT_CAST_EPOCH_UNKNOWN"
+      },
+      {
+        "name": "Onyx",
+        "traitID": 98661,
+        "outputItemID": 212511,
+        "wording": "1% chance per point in this sub-specialization to acquire this gem instead of an Ambivalent Amber when Prospecting",
+        "sourceURL": "https://www.wowhead.com/profession-trait/onyx-98661",
+        "interpretation": "AMBER_SUBSTITUTION_CONDITIONAL_NOT_UNCONDITIONAL_GEM_PER_CAST",
+        "perPointProbabilityInterpretation": "NOT_VALIDATED_IN_GAME",
+        "applicabilityEpoch": "INDEXED_CURRENT_PAGE; EXACT_CAST_EPOCH_UNKNOWN"
+      },
+      {
+        "name": "Emerald",
+        "traitID": 98662,
+        "outputItemID": 212505,
+        "wording": "1% chance per point in this sub-specialization to acquire this gem instead of an Ambivalent Amber when Prospecting",
+        "sourceURL": "https://www.wowhead.com/profession-trait/emerald-98662",
+        "interpretation": "AMBER_SUBSTITUTION_CONDITIONAL_NOT_UNCONDITIONAL_GEM_PER_CAST",
+        "perPointProbabilityInterpretation": "NOT_VALIDATED_IN_GAME",
+        "applicabilityEpoch": "INDEXED_CURRENT_PAGE; EXACT_CAST_EPOCH_UNKNOWN"
+      }
+    ],
+    "mechanicsInterpretation": "The gem finding traits are described as conditional substitutions from Ambivalent Amber. Do not directly add pointPercent to unconditional P or E, nor subtract from amber without a supported joint outcome model. Multiple specialization interaction and actual rank/ore eligibility remain unknown.",
+    "amberItemID": 212498
+  },
+  "historicalPatchBoundary": {
+    "date": "2024-10-25",
+    "patch": "11.0.5 era",
+    "blizzardArticleID": "24148555",
+    "primaryLink": "https://worldofwarcraft.blizzard.com/en-us/news/24148555/hotfixes-october-25-2024",
+    "primaryDirectFetch": "HTTP_403_NOT_DIRECTLY_READ",
+    "contemporaneousQuotationSource": "https://www.reddit.com/r/woweconomy/comments/1gcai5k",
+    "additionalCoverage": "https://www.wowhead.com/ptr/news/recent-prospecting-changes-wowhead-economy-weekly-wrap-up-351-349956",
+    "changes": [
+      "Prospecting 40/40 perk fixed to provide Ambivalent Amber as byproduct",
+      "Glittering Glass and Handful of Pebbles byproducts now occur on every Prospecting action rather than byproducts-or-gems alternative",
+      "Gem drop rates and maximum byproduct yield chance slightly reduced"
+    ],
+    "dateConfidence": "CONTEMPORANEOUS_2024_10_26_REPORT_LINKS_2024_10_25_BLIZZARD_SLUG; NOT_OCT_30_DESPITE_LATER_WOWHEAD_COMMENT_LABEL",
+    "castEpochGuard": "Source publication alone does not prove observation date; cohorts with unknown date cannot be assigned pre/post epoch",
+    "interpretationGuard": "Every prospecting action yields some byproduct according to patch note, not a guarantee of each specific byproduct item in every cast."
+  },
+  "originalHistoricalCohort": {
+    "canonicalStudyID": "wowhead-peaesk-algari-prospecting-three-r2-ore-summaries",
+    "sourceAuthor": "PeaEsk",
+    "sourceURL": "https://www.wowhead.com/spell=434018/algari-prospecting",
+    "independentOriginalAuthorFamilies": 1,
+    "cohorts": [
+      {
+        "inputItemID": 210937,
+        "inputName": "Ironclaw Ore",
+        "inputRank": 2,
+        "reportedInputLabel": "100 Ironclaw rank2",
+        "outputs": [
+          [
+            "Ostentatious Onyx",
+            212511,
+            20
+          ],
+          [
+            "Radiant Ruby",
+            212495,
+            13
+          ],
+          [
+            "Ambivalent Amber",
+            212498,
+            33
+          ],
+          [
+            "Glittering Glass",
+            null,
+            11
+          ],
+          [
+            "Handful of Pebbles",
+            213398,
+            51
+          ]
+        ],
+        "spellID": 434018,
+        "sourceAuthor": "PeaEsk",
+        "sourceURL": "https://www.wowhead.com/spell=434018/algari-prospecting",
+        "observationDate": null,
+        "publicationDate": null,
+        "actualCompletedCasts": null,
+        "resourcefulnessRefunds": null,
+        "skill": null,
+        "specialization": null,
+        "gear": null,
+        "outputRank": null,
+        "nominalInputOreUnits": 100,
+        "nominalUnitsConfidence": "INFERRED_FROM_AUTHOR_LABEL_NOT_CONFIRMED",
+        "reportedOutputs": [
+          {
+            "name": "Ostentatious Onyx",
+            "itemID": 212511,
+            "reportedCount": 20
+          },
+          {
+            "name": "Radiant Ruby",
+            "itemID": 212495,
+            "reportedCount": 13
+          },
+          {
+            "name": "Ambivalent Amber",
+            "itemID": 212498,
+            "reportedCount": 33
+          },
+          {
+            "name": "Glittering Glass",
+            "itemID": null,
+            "reportedCount": 11
+          },
+          {
+            "name": "Handful of Pebbles",
+            "itemID": 213398,
+            "reportedCount": 51
+          }
+        ],
+        "reportedOutputTotal": 128,
+        "verifiedExpectedQuantity": null,
+        "verifiedDropChance": null,
+        "notes": "Original count totals only; cannot infer per-cast probabilities, 100 successful casts, or negative eligibility from unreported gem types."
+      },
+      {
+        "inputItemID": 210934,
+        "inputName": "Aqirite",
+        "inputRank": 2,
+        "reportedInputLabel": "100 Aqirite rank2",
+        "outputs": [
+          [
+            "Stunning Sapphire",
+            212508,
+            20
+          ],
+          [
+            "Extravagant Emerald",
+            212505,
+            15
+          ],
+          [
+            "Ambivalent Amber",
+            212498,
+            35
+          ],
+          [
+            "Glittering Glass",
+            null,
+            13
+          ],
+          [
+            "Handful of Pebbles",
+            213398,
+            35
+          ]
+        ],
+        "spellID": 434018,
+        "sourceAuthor": "PeaEsk",
+        "sourceURL": "https://www.wowhead.com/spell=434018/algari-prospecting",
+        "observationDate": null,
+        "publicationDate": null,
+        "actualCompletedCasts": null,
+        "resourcefulnessRefunds": null,
+        "skill": null,
+        "specialization": null,
+        "gear": null,
+        "outputRank": null,
+        "nominalInputOreUnits": 100,
+        "nominalUnitsConfidence": "INFERRED_FROM_AUTHOR_LABEL_NOT_CONFIRMED",
+        "reportedOutputs": [
+          {
+            "name": "Stunning Sapphire",
+            "itemID": 212508,
+            "reportedCount": 20
+          },
+          {
+            "name": "Extravagant Emerald",
+            "itemID": 212505,
+            "reportedCount": 15
+          },
+          {
+            "name": "Ambivalent Amber",
+            "itemID": 212498,
+            "reportedCount": 35
+          },
+          {
+            "name": "Glittering Glass",
+            "itemID": null,
+            "reportedCount": 13
+          },
+          {
+            "name": "Handful of Pebbles",
+            "itemID": 213398,
+            "reportedCount": 35
+          }
+        ],
+        "reportedOutputTotal": 118,
+        "verifiedExpectedQuantity": null,
+        "verifiedDropChance": null,
+        "notes": "Original count totals only; cannot infer per-cast probabilities, 100 successful casts, or negative eligibility from unreported gem types."
+      },
+      {
+        "inputItemID": 210931,
+        "inputName": "Bismuth",
+        "inputRank": 2,
+        "reportedInputLabel": "100 Bismuth rank2",
+        "outputs": [
+          [
+            "Ambivalent Amber",
+            212498,
+            35
+          ],
+          [
+            "Handful of Pebbles",
+            213398,
+            85
+          ],
+          [
+            "Glittering Glass",
+            null,
+            22
+          ]
+        ],
+        "spellID": 434018,
+        "sourceAuthor": "PeaEsk",
+        "sourceURL": "https://www.wowhead.com/spell=434018/algari-prospecting",
+        "observationDate": null,
+        "publicationDate": null,
+        "actualCompletedCasts": null,
+        "resourcefulnessRefunds": null,
+        "skill": null,
+        "specialization": null,
+        "gear": null,
+        "outputRank": null,
+        "nominalInputOreUnits": 100,
+        "nominalUnitsConfidence": "INFERRED_FROM_AUTHOR_LABEL_NOT_CONFIRMED",
+        "reportedOutputs": [
+          {
+            "name": "Ambivalent Amber",
+            "itemID": 212498,
+            "reportedCount": 35
+          },
+          {
+            "name": "Handful of Pebbles",
+            "itemID": 213398,
+            "reportedCount": 85
+          },
+          {
+            "name": "Glittering Glass",
+            "itemID": null,
+            "reportedCount": 22
+          }
+        ],
+        "reportedOutputTotal": 142,
+        "verifiedExpectedQuantity": null,
+        "verifiedDropChance": null,
+        "notes": "Original count totals only; cannot infer per-cast probabilities, 100 successful casts, or negative eligibility from unreported gem types."
+      }
+    ],
+    "rawReportedOutputCountCells": 13,
+    "rankContext": "R2 inputs; output ranks unreported",
+    "denominatorCaveat": "Author says 100 of each R2 ore; no actual completed-cast count, Resourcefulness, recipe UI batch count or output histogram. 100/5=20 nominal equivalents only if 100 means ore units and all consumed normally; NOT verified E denominator.",
+    "negativeEvidenceGuard": "Unreported ruby/onyx/sapphire/emerald is not an observed zero or proof of ineligibility.",
+    "crossStudyCaveat": "Do not pool with previously indexed 2024-10-14 Aqirite rank comparison or Raven11 Ironclaw; all different authors and unknown actual cast epochs."
+  },
+  "exactTargetKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "workingAndEconomicStatus": {
+    "newAdmittedMappings": 0,
+    "newWorkingNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "newConfidencePromotions": 0,
+    "newEconomicPromotions": 0,
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "evidenceMissingCellsBefore": 514,
+    "evidenceMissingCellsAfter": 514
+  },
+  "requiredNextEvidence": [
+    "Date/build of PeaEsk actual casts and exact ore units vs completed casts",
+    "Per-cast zero-inclusive co-output counts, output ranks and saved/refunded reagents",
+    "Gem-finding specialization point allocations and full skill/gear context",
+    "Independent post-October-25 controlled R2 ore cohorts with matched specialization settings"
+  ]
+}
