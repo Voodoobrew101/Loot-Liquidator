@@ -136,6 +136,31 @@ function run(root, options={}) {
   };
   for (const [relative,contents] of Object.entries(outputs)) writeOrCheck(root,relative,contents,check);
   if (options.test !== false) {
+    // F005 owns these fixtures. Enforce their exact synthetic/source-isolation
+    // contract under native Node, not just a V8 shim. The separate F003
+    // Midnight anytime suite awaits its model-owner repair and must not be
+    // falsely reported as passing here.
+    for (const spec of [
+      {file:"test_f005_priority122_supplemental_rank_lineage.js",
+       suite:"F005_PRIORITY122_SUPPLEMENTAL_RANK_LINEAGE",count:6},
+      {file:"test_f005_crushing_rank_candidate_isolation.js",
+       suite:"F005_CRUSHING_RANK_CANDIDATE_ISOLATION",count:11}
+    ]) {
+      const fixture=path.join(root,"research/tests/v2",spec.file);
+      if(!fs.existsSync(fixture)) throw Error("Required independent F005 fixture missing: "+spec.file);
+      const child=spawnSync(process.execPath,[fixture],{cwd:root,encoding:"utf8",timeout:120000});
+      let report;
+      try { report=JSON.parse((child.stdout||"").trim()); }
+      catch (_) { throw Error("F005 native fixture emitted invalid JSON: "+spec.file+"\n"+child.stdout+child.stderr); }
+      if(report.suite!==spec.suite || report.passed!==spec.count || report.failed!==0 ||
+         !Array.isArray(report.cases) || report.cases.length!==spec.count ||
+         report.cases.some(c=>c.result!=="PASS") ||
+         (spec.count===6 && (report.syntheticOnly!==true || report.actualRetailCasts!==0)) ||
+         (spec.count===11 && report.sourceType!=="RESEARCH_EVIDENCE_STRUCTURAL_QA_NOT_GAME_VERIFICATION") ||
+         child.status!==0)
+        throw Error("F005 native fail-closed fixture failed: "+spec.file+"\n"+child.stdout+child.stderr);
+      console.log("PASS: independent native F005 "+spec.suite+" "+spec.count+"/"+spec.count+" (research-only)");
+    }
     for (const file of ["test_working_estimates.js","test_compile_itemdb.js","test_itemdb_candidate.js","test_completion_pipeline.js","test_five_agent_workflow.js"]) {
       const testPath=path.join(root,"research/tests",file);
       if (!fs.existsSync(testPath)) throw Error("Required check missing: "+file);
