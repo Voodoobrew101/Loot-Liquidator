@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "modelID": "df-milling-fixed-n-simultaneous-bounds-v1.0.0",
+  "modelID": "df-milling-fixed-n-simultaneous-bounds-v1.0.1",
   "status": "PROPOSED_NOT_ACCEPTED",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "role": "baseline-modeller",
@@ -8,7 +8,7 @@
   "workflowRevision": 2,
   "queueRevision": 30,
   "modelCode": "research/tools/models_v2/df_milling_fixed_n_simultaneous_bounds_v1.js",
-  "modelCodeBlobSHA": "216a929d4ab7b683e1bc9f4637273c4d766b1081",
+  "modelCodeBlobSHA": "e36328de0e677582bf9b2b36c4a6144a5c2f17be",
   "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "targetKeys": [
@@ -132,7 +132,8 @@
     "committedSourceV8SelfTest": {
       "passed": 39,
       "failed": 0,
-      "syntheticOnly": true
+      "syntheticOnly": true,
+      "modelBlobSHA": "e36328de0e677582bf9b2b36c4a6144a5c2f17be"
     },
     "independentDeterministicArithmetic": {
       "passed": 6000,
@@ -140,20 +141,44 @@
       "syntheticOnly": true
     },
     "exactBacklogKeyMatch": true,
-    "nativeNode": "NOT_RUN",
+    "nativeNode": "NOT_RUN_FOR_EXACT_COMMITTED_MODEL",
     "lua51": "NOT_RUN",
     "inGame": "NOT_RUN",
-    "independentValidator": "PENDING",
-    "completionPipeline": "NOT_RUN_NO_COMPILER_INPUTS_CHANGED"
+    "independentValidator": "PENDING_NEW_SOURCE_PIN_AND_NATIVE_REVIEW",
+    "completionPipeline": "NOT_RUN_NO_COMPILER_INPUTS_CHANGED",
+    "existingF005FixtureV8Replay": {
+      "passed": 30,
+      "failed": 0,
+      "syntheticOnly": true,
+      "fixtureBlobSHA": "94c85850e353892e1a62c60a1503a6f6e5e37b50",
+      "pinStatus": "STALE_REQUIRES_INDEPENDENT_F005_REPIN",
+      "independentAcceptance": false
+    }
   },
   "blockers": [
     "No independent zero-inclusive current-Retail cast cohorts for these 43 target keys",
     "No independently reviewed maximum per-cast output caps for unconditional E uncertainty intervals",
     "Historical TSM mat_rate denominator ambiguity unresolved",
     "Recipe and output-rank eligibility, especially input 200061, not independently verified",
-    "No independent whole-study holdout or in-game verification"
+    "No independent whole-study holdout or in-game verification",
+    "F005 fixture and F002 native runner are still pinned to old model blob; their owners must independently re-pin after acceptance",
+    "Exact committed v1.0.1 native Node execution and independent F005 acceptance pending"
   ],
   "evidenceResearcherRequest": "For one exact input/rank/recipe/patch context, supply zero-inclusive completed cast logs for every tracked target output, refunded reagents, character skill/spec/gear/unlocks/resourcefulness with units, study family, and independently sourced per-output cast caps. Verify 200061 recipe eligibility separately.",
   "independentValidatorRequest": "Native-run exact committed model, independently check all 43 priority keys, context isolation, simultaneous multiplicity arithmetic, missing-cap E refusal, refund accounting, malformed arrays and full-family holdout gates.",
-  "nextTask": "F003_NEXT: independent validation of fixed-n DF milling bounds; if still no usable cast evidence, pivot to priority-102 Dragonflight prospecting E family or a newly surfaced high-impact source conflict."
+  "nextTask": "F003_NEXT: independent validation of fixed-n DF milling bounds; if still no usable cast evidence, pivot to priority-102 Dragonflight prospecting E family or a newly surfaced high-impact source conflict.",
+  "modelIntegrityRepair": {
+    "revision": "1.0.1",
+    "repairCommit": "b0fe7a0f878a2862918492533969b602c3e8684b",
+    "previousModelBlobSHA": "216a929d4ab7b683e1bc9f4637273c4d766b1081",
+    "independentFixtureBlobSHA": "94c85850e353892e1a62c60a1503a6f6e5e37b50",
+    "corrected": [
+      "strict patch build syntax",
+      "nonexistent calendar date rejection",
+      "single immutable data-descriptor snapshot for context, casts and caps",
+      "no repeated caller-proxy property reads during calculation or report serialization"
+    ],
+    "attestationNote": "Model accepts externally asserted INDEPENDENTLY_VERIFIED cap status but does not independently authenticate source provenance.",
+    "validationStatus": "MODEL_SELF_TEST_AND_EXISTING_F005_FIXTURE_PASS_IN_CONNECTOR_V8; F005_NATIVE_ACCEPTANCE_PENDING"
+  }
 }
