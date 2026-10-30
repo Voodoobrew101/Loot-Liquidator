@@ -10,6 +10,7 @@ function run(){
  const same=(a,b)=>ok(Object.is(a,b),String(a)+' != '+String(b));
  const close=(a,b)=>ok(Math.abs(a-b)<=1e-12*Math.max(1,Math.abs(b)),String(a)+' != '+String(b));
  const rejects=(f)=>{let threw=false;try{f();}catch(_){threw=true;}ok(threw,'unsafe input accepted');};
+ const rejectsOrConsistent=(f,verify)=>{let result,threw=false;try{result=f();}catch(_){threw=true;}if(!threw)verify(result);};
  const c={gameMode:'RETAIL',expansion:'DRAGONFLIGHT',method:'MILL',inputItemID:191462,
   patchBuild:'10.2.7',observationEpoch:'2026-10-30T19:00:00Z',studyFamilyID:'F005-SYNTHETIC',
   nominalInputUnits:5,inputQualityRank:1,minimumRecipeEligibleSkill:1,actualSkill:1,recipeSpellID:382981,
@@ -43,12 +44,12 @@ function run(){
  check('reject invalid alpha',()=>rejects(()=>model.summarize({context:c,casts,alpha:1})));
  check('reject patch-build suffix contamination',()=>rejects(()=>model.summarize({context:{...c,patchBuild:'10.2.7garbage'},casts})));
  check('reject nonexistent calendar observation date',()=>rejects(()=>model.summarize({context:{...c,observationEpoch:'2026-02-30T19:00:00Z'},casts})));
- check('reject cast proxy changing outputs after validation',()=>{let reads=0;const p=new Proxy(casts[0],{get(o,k){if(k==='outputs')return ++reads<=1?o.outputs:{198421:100,198422:0,198423:0};return Reflect.get(o,k);}});rejects(()=>model.summarize({context:c,casts:[p]}));});
- check('reject cap proxy changing maximum after attestation',()=>{let reads=0;const p=new Proxy({maxPerCast:3,status:'INDEPENDENTLY_VERIFIED',sourceID:'SYNTHETIC'},{get(o,k){if(k==='maxPerCast')return ++reads<=2?3:100;return Reflect.get(o,k);}});rejects(()=>model.summarize({context:c,casts,caps:{198421:p}}));});
- check('reject context proxy changing source lineage after validation',()=>{let reads=0;const p=new Proxy(c,{get(o,k){if(k==='studyFamilyID')return ++reads<=1?'F005-SYNTHETIC':'DIFFERENT-STUDY';return Reflect.get(o,k);}});rejects(()=>model.summarize({context:p,casts}));});
- check('reject context proxy changing epoch after validation',()=>{let reads=0;const p=new Proxy(c,{get(o,k){if(k==='observationEpoch')return ++reads<=2?o.observationEpoch:'2025-01-01T00:00:00Z';return Reflect.get(o,k);}});rejects(()=>model.summarize({context:p,casts}));});
- check('reject context proxy changing recipe identity after validation',()=>{let reads=0;const p=new Proxy(c,{get(o,k){if(k==='recipeSpellID')return ++reads<=1?382981:999999;return Reflect.get(o,k);}});rejects(()=>model.summarize({context:p,casts}));});
- check('reject mutated cap source ID after validation',()=>{let reads=0;const p=new Proxy({maxPerCast:3,status:'INDEPENDENTLY_VERIFIED',sourceID:'SYNTHETIC'},{get(o,k){if(k==='sourceID')return ++reads<=2?'SYNTHETIC':'INVENTED-SOURCE';return Reflect.get(o,k);}});rejects(()=>model.summarize({context:c,casts,caps:{198421:p}}));});
+ check('reject cast proxy changing outputs after validation',()=>{let reads=0;const p=new Proxy(casts[0],{get(o,k){if(k==='outputs')return ++reads<=1?o.outputs:{198421:100,198422:0,198423:0};return Reflect.get(o,k);}});rejectsOrConsistent(()=>model.summarize({context:c,casts:[p]}),r=>same(r.outputs[0].sampleUnconditionalE,2));});
+ check('reject cap proxy changing maximum after attestation',()=>{let reads=0;const p=new Proxy({maxPerCast:3,status:'INDEPENDENTLY_VERIFIED',sourceID:'SYNTHETIC'},{get(o,k){if(k==='maxPerCast')return ++reads<=2?3:100;return Reflect.get(o,k);}});rejectsOrConsistent(()=>model.summarize({context:c,casts,caps:{198421:p}}),r=>ok(r.outputs[0].expectedQuantityInterval[1]<=3,'cap changed after validation'));});
+ check('reject context proxy changing source lineage after validation',()=>{let reads=0;const p=new Proxy(c,{get(o,k){if(k==='studyFamilyID')return ++reads<=1?'F005-SYNTHETIC':'DIFFERENT-STUDY';return Reflect.get(o,k);}});rejectsOrConsistent(()=>model.summarize({context:p,casts}),r=>same(r.studyFamilyID,'F005-SYNTHETIC'));});
+ check('reject context proxy changing epoch after validation',()=>{let reads=0;const p=new Proxy(c,{get(o,k){if(k==='observationEpoch')return ++reads<=2?o.observationEpoch:'2025-01-01T00:00:00Z';return Reflect.get(o,k);}});rejectsOrConsistent(()=>model.summarize({context:p,casts}),r=>same(r.observationEpoch,c.observationEpoch));});
+ check('reject context proxy changing recipe identity after validation',()=>{let reads=0;const p=new Proxy(c,{get(o,k){if(k==='recipeSpellID')return ++reads<=1?382981:999999;return Reflect.get(o,k);}});rejectsOrConsistent(()=>model.summarize({context:p,casts}),r=>same(r.recipeSpellID,382981));});
+ check('reject mutated cap source ID after validation',()=>{let reads=0;const p=new Proxy({maxPerCast:3,status:'INDEPENDENTLY_VERIFIED',sourceID:'SYNTHETIC'},{get(o,k){if(k==='sourceID')return ++reads<=2?'SYNTHETIC':'INVENTED-SOURCE';return Reflect.get(o,k);}});rejectsOrConsistent(()=>model.summarize({context:c,casts,caps:{198421:p}}),r=>same(r.outputs[0].capSourceID,'SYNTHETIC'));});
  const failed=cases.filter(x=>!x.pass);
  return {modelBlobSHA:MODEL_BLOB_SHA,total:cases.length,passed:cases.length-failed.length,failed:failed.length,failures:failed,syntheticOnly:true,independentRetailHoldouts:0};
 }
