@@ -89,16 +89,24 @@
   },
   "tests": {
     "modelSelfTestV8": {
-      "status": "NOT_RUN_AFTER_REPAIR",
-      "expectedAssertionCount": 61,
-      "failed": null,
+      "passed": 61,
+      "failed": 0,
       "syntheticOnly": true,
       "exactSourceBlobSHA": "031d36fe3cdebe632d00f5be4e2c4fe116abcb44",
-      "method": "New seven March31 boundary assertions added; exact committed model not yet executed in native Node or V8"
+      "method": "Exact committed CommonJS source executed in V8 with strict-assert shim"
     },
     "nativeNodeExactCommittedSource": "NOT_RUN",
     "nativeNodeBoundaryStandalone": "NOT_RUN",
-    "independentF005": "PENDING_RETEST_26_CASES_PREVIOUS_19_PASS_7_FAIL",
+    "independentF005": {
+      "passed": 26,
+      "failed": 0,
+      "syntheticOnly": true,
+      "exactFixtureBlobSHA": "167582dd8448ec3abe686d036c4a2f4d938ecde4",
+      "exactModelBlobSHA": "031d36fe3cdebe632d00f5be4e2c4fe116abcb44",
+      "method": "Unmodified F005 fixture executed against exact committed model in V8 with strict-assert shim",
+      "nativeNode": "NOT_RUN",
+      "formalValidatorAcceptance": "PENDING"
+    },
     "lua51": "NOT_RUN",
     "inGame": "NOT_RUN",
     "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED"
