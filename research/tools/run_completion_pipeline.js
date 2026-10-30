@@ -87,6 +87,13 @@ function run(root, options={}) {
   }
   const errors = [...validate(result.records), ...validateWorkingEstimates(result.records)];
   if (errors.length) throw Error(errors.join("\n"));
+  // F002: fail closed if the five historical priority-122 TSM source/unit
+  // conflicts are silently normalized, reinterpreted, or economically promoted.
+  // The diagnostic is nonpromoting; independent F005 acceptance remains separate.
+  const {analyze:checkDFPriority122,selfTest:checkDFPrecision} = require("./df_priority122_conflict_diagnostic.js");
+  checkDFPrecision();
+  const dfPriority122 = checkDFPriority122(root,result.records);
+  console.log("PASS: F002 Dragonflight priority-122 nonpromoting source/unit diagnostic "+dfPriority122.targetCount+"/5; rounded compatibility is hypothesis only");
   // Exercise the detached v1 source/context/value seal across a JSON reload.
   // A production verifier must obtain the expected digest from a separately
   // pinned coordinator acceptance, never trust the candidate to supply it.
