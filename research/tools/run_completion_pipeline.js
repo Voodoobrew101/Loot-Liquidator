@@ -250,33 +250,31 @@ function run(root, options={}) {
        dfReport.cases.some(x=>x.result!=="PASS"&&x.result!=="FAIL")||
        new Set(dfReport.cases.map(x=>x.name)).size!==16)
       throw Error("Malformed or changed F005 DF milling native fixture result");
-    const knownPreRepairFailures=new Set([
-      "RAW missing gameMode",
-      "RAW missing actual observation epoch",
-      "RAW missing input quality rank",
-      "RAW missing output quality ranks",
-      "RAW missing direct reagent vector",
-      "RAW missing minimum eligible recipe skill",
-      "RAW malformed profession skill accepted",
-      "RAW malformed resourcefulness accepted",
-      "RAW incomplete output universe must not look zero-inclusive",
-      "decision cannot declare dominance from unverified partial output universe"
-    ]);
-    const unexpected=dfReport.cases.filter(x=>x.result==="FAIL"&&!knownPreRepairFailures.has(x.name));
-    if(unexpected.length)throw Error("New F005 DF milling failures: "+
-      unexpected.map(x=>x.name+": "+x.detail).join("; "));
+    // The repaired F003 v1.0.1 model and current independent F005 fixture
+    // now pass all 16 cases. The historical ten-failure allowance is retired:
+    // any future failure must stop the build rather than remain quarantined.
     const dfManifest=JSON.parse(fs.readFileSync(dfManifestPath,"utf8"));
-    const dfAccepted=/^ACCEPTED(?:_|$)/.test(dfManifest.status||"");
-    if(dfAccepted&&dfReport.failed)
-      throw Error("Accepted F003 model fails mandatory native F005 DF milling gate: "+dfReport.failed+"/16");
-    if(dfReport.failed===0&&dfChild.status!==0)
-      throw Error("F005 DF milling fixture reported zero failures but exited unsuccessfully");
-    if(dfReport.failed>0&&dfChild.status!==1)
-      throw Error("F005 DF milling fixture exit status inconsistent with failed cases");
-    console.log(dfReport.failed
-      ? "QUARANTINED: F005 DF milling native suite "+dfReport.passed+"/16 passed; "+
-        dfReport.failed+" known pre-repair failures; F003 not accepted"
-      : "PASS: F005 DF milling native 16/16 (independent acceptance still separate)");
+    if(!dfManifest.modelID || dfReport.subjectModelID!==dfManifest.modelID ||
+       dfReport.syntheticOnly!==true || dfReport.actualRetailCasts!==0)
+      throw Error("F005 DF milling fixture identity or synthetic-only contract changed");
+    if(!/^(?:PROPOSED_|ACCEPTED(?:_|$))/.test(dfManifest.status||""))
+      throw Error("Unknown F003 DF milling model acceptance status");
+    // Bind the declared model to the actual Git blob content. A model edit
+    // without a matching manifest and fresh independent QA must fail closed.
+    const modelRel=dfManifest.modelCode;
+    if(typeof modelRel!=="string" || !modelRel.startsWith("research/tools/models_v2/") ||
+       modelRel.includes("..") || !modelRel.endsWith(".js"))
+      throw Error("Unexpected F003 model code path");
+    const modelBytes=fs.readFileSync(path.join(root,modelRel));
+    const gitBlobSHA=require("node:crypto").createHash("sha1")
+      .update("blob "+modelBytes.length+"\0").update(modelBytes).digest("hex");
+    if(dfManifest.modelCodeBlobSHA!==gitBlobSHA)
+      throw Error("F003 model code changed without versioned manifest/QA update");
+    if(dfReport.failed!==0 || dfChild.status!==0)
+      throw Error("F005 DF milling native strict 16/16 gate failed: "+
+        dfReport.failed+" failed; "+dfReport.cases.filter(x=>x.result==="FAIL")
+          .map(x=>x.name+": "+x.detail).join("; ")+"; exit="+dfChild.status);
+    console.log("PASS: F005 DF milling native 16/16 strict fail-closed gate (independent acceptance remains separate)");
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
