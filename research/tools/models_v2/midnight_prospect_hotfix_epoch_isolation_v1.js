@@ -2,7 +2,7 @@
 // F003 research-only: Midnight prospecting April 3, 2026 hotfix epoch isolation.
 // No historical/current rates are promoted to economic use, recipe eligibility or measured facts.
 const assert = require('node:assert/strict');
-const MODEL_ID = 'midnight-prospect-hotfix-epoch-isolation-v1.0.0';
+const MODEL_ID = 'midnight-prospect-hotfix-epoch-isolation-v1.0.1';
 const POLICY = Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const TARGETS = Object.freeze({
   237359:'midnight:237359:242608:L733',237361:'midnight:237361:242608:L744',
@@ -10,9 +10,13 @@ const TARGETS = Object.freeze({
   237364:'midnight:237364:242608:L777',237365:'midnight:237365:242608:L788',
   237366:'midnight:237366:242608:L799'
 });
-// Deliberately conservative research quarantine, NOT an asserted deployment timestamp.
-const BEFORE_END_MS = Date.parse('2026-04-02T00:00:00Z');
-const AFTER_START_MS = Date.parse('2026-04-06T00:00:00Z');
+// Blizzard's dated entry is April 1; exact deployment hour/region is unknown.
+// Quarantine April 1-2 UTC and observations locally dated April 1-2 across offsets.
+// This is a safety buffer, NOT an asserted deployment window.
+const OFFICIAL_ENTRY_DATE='2026-04-01';
+const OFFICIAL_SOURCE_URL='https://worldofwarcraft.blizzard.com/en-us/news/24266320';
+const BEFORE_END_MS = Date.parse('2026-04-01T00:00:00Z');
+const AFTER_START_MS = Date.parse('2026-04-03T00:00:00Z');
 function check(ok,code){if(!ok)throw Error(code);}
 const positive = x=>Number.isSafeInteger(x)&&x>0;
 const nonnegative = x=>Number.isSafeInteger(x)&&x>=0;
@@ -33,6 +37,10 @@ function epochMs(s){
 }
 function classifyEpoch(s){
  const ms=epochMs(s);
+ // Do not certify any locally dated April 1/2 cohort as PRE or POST,
+ // even when its timezone conversion falls outside the UTC buffer.
+ const localDate=s.slice(0,10);
+ if(localDate==='2026-04-01'||localDate==='2026-04-02')return 'TRANSITION_QUARANTINE';
  return ms<BEFORE_END_MS?'PRE_HOTFIX':ms>=AFTER_START_MS?'POST_HOTFIX':'TRANSITION_QUARANTINE';
 }
 function jsonSafe(v,ancestors=new Set()){
@@ -88,7 +96,8 @@ function analyzeCohort({context,events}){
  const p=positiveCasts/completed,e=outputTotal/completed;
  check(Number.isFinite(p)&&Number.isFinite(e),'NONFINITE_RESULT');
  return {modelID:MODEL_ID,stableKey:c.stableKey,sourceType:c.sourceType,studyFamilyID:c.studyFamilyID,sourceLineage:c.sourceLineage,
-  epoch,epochStartClass:start,epochEndClass:end,hotfixCausalEffect:'NOT_IDENTIFIED',
+  epoch,epochStartClass:start,epochEndClass:end,officialHotfixEntryDate:OFFICIAL_ENTRY_DATE,
+  officialHotfixSource:OFFICIAL_SOURCE_URL,hotfixDeploymentHour:'UNKNOWN',hotfixCausalEffect:'NOT_IDENTIFIED',
   contextSnapshot:c,completedCasts:completed,abortedRequests:aborted,zeroOutputCasts:zeroCasts,
   positiveCasts,observedP:p,observedUnconditionalE:e,observedPositiveMin:observedMin,observedPositiveMax:observedMax,
   grossInput:gross,refundedInput:refunds,netConsumedInput:net,
@@ -105,6 +114,7 @@ function compareEpochs(pre,post){
  check(pre.sourceType==='RAW_CURRENT_RETAIL'&&post.sourceType==='RAW_CURRENT_RETAIL','RAW_PAIR_REQUIRED');
  check(profileKey(pre.contextSnapshot)===profileKey(post.contextSnapshot),'PROFILE_MISMATCH');
  check(pre.sourceLineage.trim().toLowerCase()!==post.sourceLineage.trim().toLowerCase(),'DUPLICATE_SOURCE_LINEAGE');
+ check(pre.studyFamilyID.trim().toLowerCase()!==post.studyFamilyID.trim().toLowerCase(),'DUPLICATE_STUDY_FAMILY');
  return {modelID:MODEL_ID,stableKey:pre.stableKey,preStudyFamilyID:pre.studyFamilyID,postStudyFamilyID:post.studyFamilyID,
   patchBuildChanged:pre.contextSnapshot.patchBuild!==post.contextSnapshot.patchBuild,
   deltaObservedP:post.observedP-pre.observedP,deltaObservedUnconditionalE:post.observedUnconditionalE-pre.observedUnconditionalE,
@@ -128,10 +138,19 @@ function selfTest(){
  const b=analyzeCohort({context:post,events:[{castID:'4',status:'COMPLETED',outputCount:3,refundedInputUnits:0}]});
  eq(b.epoch,'POST_HOTFIX');eq(b.observedUnconditionalE,3);
  const comp=compareEpochs(a,b);eq(comp.deltaObservedUnconditionalE,2);eq(comp.deltaObservedP,.5);eq(comp.causalAttribution,'NOT_IDENTIFIED');eq(comp.patchBuildChanged,false);
- eq(classifyEpoch('2026-04-01T23:59:59Z'),'PRE_HOTFIX');eq(classifyEpoch('2026-04-02T00:00:00Z'),'TRANSITION_QUARANTINE');
- eq(classifyEpoch('2026-04-03T12:00:00Z'),'TRANSITION_QUARANTINE');eq(classifyEpoch('2026-04-05T23:59:59Z'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-04-01T23:59:59Z'),'TRANSITION_QUARANTINE');eq(classifyEpoch('2026-04-02T00:00:00Z'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-04-03T12:00:00Z'),'POST_HOTFIX');eq(classifyEpoch('2026-04-05T23:59:59Z'),'POST_HOTFIX');
  eq(classifyEpoch('2026-04-06T00:00:00Z'),'POST_HOTFIX');
- eq(classifyEpoch('2026-04-06T01:00:00+02:00'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-03-31T23:59:59Z'),'PRE_HOTFIX');
+ eq(classifyEpoch('2026-04-01T00:00:00Z'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-04-02T23:59:59Z'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-04-03T00:00:00Z'),'POST_HOTFIX');
+ eq(classifyEpoch('2026-04-01T01:00:00+02:00'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-04-02T23:59:00-07:00'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-03-31T23:30:00-07:00'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-04-03T00:30:00+02:00'),'TRANSITION_QUARANTINE');
+ eq(a.officialHotfixEntryDate,'2026-04-01');
+ eq(classifyEpoch('2026-04-06T01:00:00+02:00'),'POST_HOTFIX');
  const mixed={...c,observationEnd:'2026-04-07T13:00:00Z'};
  eq(analyzeCohort({context:mixed,events:es}).epoch,'TRANSITION_QUARANTINE');
  throws(()=>epochMs('2026-02-29T00:00:00Z'),'EPOCH_CALENDAR');eq(classifyEpoch('2024-02-29T00:00:00Z'),'PRE_HOTFIX');
@@ -146,10 +165,11 @@ function selfTest(){
  throws(()=>analyzeCohort({context:c,events:[{castID:'a',status:'ABORTED'}]}),'NO_VALID_CASTS');
  throws(()=>compareEpochs(a,analyzeCohort({context:{...post,professionSkill:2},events:es})),'PROFILE_MISMATCH');
  throws(()=>compareEpochs(a,analyzeCohort({context:{...post,sourceLineage:'synthetic-pre'},events:es})),'DUPLICATE_SOURCE_LINEAGE');
+ throws(()=>compareEpochs(a,analyzeCohort({context:{...post,studyFamilyID:'synthetic-pre'},events:es})),'DUPLICATE_STUDY_FAMILY');
  throws(()=>compareEpochs(a,a),'CROSS_EPOCH_PAIR');
  throws(()=>compareEpochs(a,analyzeCohort({context:{...post,sourceType:'SYNTHETIC'},events:es})),'RAW_PAIR_REQUIRED');
  eq(a.contextSnapshot.professionSkill,1);c.professionSkill=99;eq(a.contextSnapshot.professionSkill,1);
  return {passed,failed:0,syntheticOnly:true};
 }
-module.exports={MODEL_ID,POLICY,TARGETS,classifyEpoch,validateContext,analyzeCohort,compareEpochs,selfTest};
+module.exports={MODEL_ID,POLICY,TARGETS,OFFICIAL_ENTRY_DATE,OFFICIAL_SOURCE_URL,classifyEpoch,validateContext,analyzeCohort,compareEpochs,selfTest};
 if(require.main===module)console.log(JSON.stringify(selfTest()));
