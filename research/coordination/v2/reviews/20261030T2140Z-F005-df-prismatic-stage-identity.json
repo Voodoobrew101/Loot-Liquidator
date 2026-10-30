@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_PRISMATIC_STAGE_IDENTITY_AND_SOURCE_DENOMINATOR_QA",
+  "runID": "20261030T2140Z-F005-df-prismatic-stage-identity",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 30,
+  "status": "FAIL_MODEL_IDENTITY_REPAIR_REQUIRED",
+  "reviewedBranch": "implementation/five-agent-completion",
+  "baseCommit": "b0342e65c320776755124a464db85c54baf365d5",
+  "reviewedSourceBlobs": {
+    "modelCode": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1",
+    "modelManifest": "6aa1141b1a8734cfa644e39cf13a02e454d90841",
+    "originalHistoricalEvidence": "321dc050134de6a996e5978b87cf467516c4cb06",
+    "newOriginalCohortEvidence": "d31529efc7f6d2630bb399daa10740fbdbcf0e74",
+    "newSourceReview": "89fd690a4dd386b746295c0e6318af86e53250de",
+    "independentTest": "4f546a33559a9e8202c1c846d7bbfe91c9f8503c"
+  },
+  "newIndependentTest": "research/tests/v2/test_f005_df_prismatic_stage_identity_20261030.js",
+  "executed": {
+    "runtime": "GitHub-fetched exact source in connector JavaScript V8 with mocked Node fs/path module resolution",
+    "assertions": 43,
+    "passed": 40,
+    "failed": 3,
+    "modelSelfTest": {
+      "passed": 27,
+      "failed": 0
+    },
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "pipeline": "NOT_RUN_NO_COMPILER_INPUT_CHANGE"
+  },
+  "failedAssertions": [
+    {
+      "case": "model source second-stage input uses corrected 194545",
+      "observed": 192880,
+      "expected": 194545
+    },
+    {
+      "case": "model analyze second-stage input uses corrected 194545",
+      "observed": 192880,
+      "expected": 194545
+    },
+    {
+      "case": "model manifest second-stage label uses corrected 194545",
+      "observed": "Prismatic Ore (192880)",
+      "expected": "Prismatic Ore (194545)"
+    }
+  ],
+  "finding": {
+    "severity": "BLOCK_MODEL_ACCEPTANCE_AND_ANY_RANK_ECONOMIC_USE",
+    "description": "F003 model repeats an erroneous F004 historical cohort item ID. The model's secondStage.inputItemID is 192880 (Crumbled Stone), but the named Prismatic Ore input is item 194545. A newly submitted F004 immutable correction confirms the same identity mismatch. The model self-test passes because it does not assert the catalog ID.",
+    "independentlyCorroboratedSourceURLs": [
+      "https://www.wowhead.com/item=194545/prismatic-ore",
+      "https://www.wowhead.com/item=192880/crumbled-stone",
+      "https://warcraft.wiki.gg/wiki/Prismatic_Ore"
+    ],
+    "sourceWitnesses": "Wowhead item pages independently identify the distinct items and reproduce TheChisel and Hotfor firsthand comments; no current-Retail applicability inferred.",
+    "repairOwner": "baseline-modeller",
+    "requiredRepair": [
+      "Update model SOURCE.secondStage.inputItemID from 192880 to 194545 and regenerate emitted analyze() metadata.",
+      "Update model manifest stageSeparation from Prismatic Ore (192880) to Prismatic Ore (194545).",
+      "Keep original historical evidence immutable; coordinator append versioned attribution correction rather than editing the source report.",
+      "Do not mutate valid Crumbled Stone 192880 mappings or collapse separate processing stages.",
+      "Rerun 43-case independent suite and 27 model self-tests under native Node after repair; verify no economic promotion."
+    ]
+  },
+  "passedSafeguards": [
+    "New F004 TheChisel 31/1000 units per reported cast is explicitly not a measured occurrence probability.",
+    "Hotfor 62/1400 is nominal five-ore equivalent, not actual completed-cast E or rank-specific rate.",
+    "Two new named comment lineages are distinct from prior superbondez; shared Wowhead URL does not count as independent replication.",
+    "F003 exact integer-count infeasibility for literal 30000 at 1.08/1000 and 50000 at 2.57/1000 reproduced.",
+    "F003 first/second-stage family guard rejects direct pooling.",
+    "F003 and F004 preserve confidence 0, PREVIEW_ONLY, normalizedVerified false and null verified E.",
+    "Canonical readiness retains 1018 mappings and 4072/4072 numeric working fields."
+  ],
+  "holdoutStatus": "NOT_INDEPENDENTLY_VALIDATED_NO_MATCHED_CURRENT_RETAIL_COMPLETE_CAST_COHORT",
+  "numericDeltas": {
+    "mappingAdmissions": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "modelDefectsNewlyReproduced": 1,
+    "failedAssertionSurfaces": 3
+  },
+  "blockers": [
+    "Historical source comment timestamps, client builds, skill/stat vectors, zero-inclusive cast histograms and refunds remain unknown.",
+    "Model contains wrong item ID until author corrects; coordinator has not accepted versioned source correction.",
+    "Native Node and Lua 5.1 execution not available in connector V8 environment; no WoW client test."
+  ],
+  "nextTask": "Retest repaired F003 stage guard with exact corrected Prismatic Ore item identity, native Node regression, and verify any new F004 primary-cohort evidence before model promotion."
+}
