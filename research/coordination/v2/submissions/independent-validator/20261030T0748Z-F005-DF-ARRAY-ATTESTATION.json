@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_PROSPECT_ARRAY_CONTEXT_ATTESTATION",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T07:48:00Z",
+  "queueRevision": "completion-priorities.json@a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "b1eec70cf2b26a06e5c99eb5e39a39d84cab0b46",
+  "resultCommitBeforeSubmission": "43f8e603db490414d54e3d9f86da25418fd20e4f",
+  "status": "PROPOSED_FAIL_PENDING_BASELINE_MODELLER_REPAIR_AND_COORDINATOR_REVIEW",
+  "review": "research/coordination/v2/reviews/2026-10-30T0747Z-F005-df-prospect-array-attestation.json",
+  "changedFiles": [
+    "research/tests/v2/test_f005_df_prospect_array_context_attestation.js",
+    "research/coordination/v2/reviews/2026-10-30T0747Z-F005-df-prospect-array-attestation.json",
+    "research/coordination/v2/submissions/independent-validator/20261030T0748Z-F005-DF-ARRAY-ATTESTATION.json"
+  ],
+  "sourceBlobs": {
+    "model": "85d1e4b7b019c6db945335af2ec82392e8a0ddca",
+    "manifest": "72cf68f3c6edb12c3da807202b29b20acc2daa5d",
+    "test": "77519d24493455616dbbf94d142af581aa857c3a",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "exactStableKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "acceptedVsProposed": {
+    "accepted": 0,
+    "proposedIndependentTestSuites": 1,
+    "proposedQAReviews": 1,
+    "coordinatorAcceptance": "PENDING",
+    "modelAcceptance": "FAIL_PENDING_REPAIR"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "newTestCases": 13,
+    "baselineControlsPassed": 3,
+    "adversarialFailuresReproduced": 10
+  },
+  "testsActuallyRun": [
+    {
+      "name": "F005 independent array attestation suite",
+      "environment": "V8 Function harness, node:assert/strict-compatible shim, exact GitHub model",
+      "passed": 3,
+      "failed": 10,
+      "syntheticOnly": true
+    },
+    {
+      "name": "F003 model selfTest on exact GitHub source",
+      "environment": "V8 Function harness",
+      "passed": 61,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "name": "Existing native GitHub Actions pipeline on prior branch head",
+      "environment": "GitHub Actions Node + Lua",
+      "conclusion": "SUCCESS",
+      "runURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41021217451",
+      "caveat": "Native CI gates old 23-case suite, not newly added 13-case suite"
+    }
+  ],
+  "testsNotRun": [
+    "New suite under native Node",
+    "Lua5.1 direct local execution",
+    "WoW client/in-game",
+    "Independent current-Retail holdout"
+  ],
+  "readinessUnchanged": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "liveEconomicUseChanged": false
+  },
+  "blocker": "F003 model array jsonSafe validation admits non-JSON-safe hidden metadata, compensated sparse arrays, and custom toJSON; native 13-case execution and independent current-Retail study holdouts remain outstanding.",
+  "repairOwner": "baseline-modeller",
+  "nextTask": "Retest F003 array-context repair against the 13-case suite and native pipeline; then pivot to priority-104 model-family uncertainty.",
+  "preservation": {
+    "mainUntouched": true,
+    "runtimeProfilesBranchUntouched": true,
+    "productionFilesUntouched": true,
+    "legacyAssignmentsUntouched": true,
+    "rawEvidenceUntouched": true,
+    "frozenTSMUntouched": true,
+    "tooltipOnlyPolicyUntouched": true,
+    "schedulesUntouched": true,
+    "otherAgentFilesUntouched": true
+  }
+}
