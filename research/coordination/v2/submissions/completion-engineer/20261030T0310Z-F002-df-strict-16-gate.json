@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T03:10:00Z",
+  "status": "SUBMITTED_FOR_COORDINATOR_AND_INDEPENDENT_VALIDATOR_QA",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "NOT_EXPOSED_BY_CONNECTED_GITHUB_COMMIT_READ",
+  "implementationCommit": "1b310c934e060dfb589531c81762efaec6639bf4",
+  "baseFileBlobSHA": "245387614ff6c080cea5c61a2fdf111e6dbb7c0c",
+  "resultFileBlobSHA": "d370948c40ae32d6c7fe82b48cb9dd024f9a6065",
+  "changeType": "ENGINEERING_NATIVE_QA_GATE_REPAIR",
+  "changedFiles": [
+    "research/tools/run_completion_pipeline.js",
+    "research/coordination/v2/submissions/completion-engineer/20261030T0310Z-F002-df-strict-16-gate.json"
+  ],
+  "exactChanges": [
+    "Retired the previous allowance for ten Dragonflight milling validator failures. The repaired F003 v1.0.1 model and unchanged F005 synthetic fixture now pass all 16 cases.",
+    "Require strict 16/16 PASS and successful native fixture exit regardless of proposal/acceptance status.",
+    "Fail closed on fixture subject model mismatch, non-synthetic reporting, any claimed real Retail casts, or unknown model status.",
+    "Fail closed if F003 manifest modelCode Git blob SHA differs from actual model code content; no model or validator-owned files changed."
+  ],
+  "sourceAnchors": {
+    "modelCodePath": "research/tools/models_v2/df_milling_decision_sensitivity_v1.js",
+    "modelCodeBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+    "modelManifestPath": "research/models/v2/df_milling_decision_sensitivity_v1.json",
+    "modelManifestBlobSHA": "69ef0bdc0d6bf9f9ad1667ab2ff7a39efab783f3",
+    "independentFixturePath": "research/tests/v2/test_f005_df_milling_raw_context_and_universe.js",
+    "independentFixtureBlobSHA": "0f3eb4a1de293fbfebd74c484e252a3887c3e398"
+  },
+  "deltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "sourceEvidenceChanges": 0,
+    "frozenTSMChanges": 0,
+    "tooltipOnlyChanges": 0,
+    "productionAddonChanges": 0,
+    "validationGateChanged": true
+  },
+  "currentReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116,
+    "verifiedBaselineRecords": 0
+  },
+  "testsActuallyRun": [
+    {
+      "test": "JavaScript syntax parse of updated full research/tools/run_completion_pipeline.js",
+      "environment": "connected V8 JavaScript harness",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "test": "Unmodified F005 DF milling fixture against exact repository F003 model source with assert/require shim",
+      "environment": "connected V8 JavaScript harness, not native Node",
+      "passed": 16,
+      "failed": 0,
+      "syntheticOnly": true,
+      "actualRetailCasts": 0
+    },
+    {
+      "test": "Model blob identity cross-check",
+      "environment": "GitHub contents read",
+      "passed": true,
+      "detail": "Manifest modelCodeBlobSHA equals connected GitHub fetched model blob SHA"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node research/tools/run_completion_pipeline.js --check after commit",
+    "Native GitHub Actions CI on new commit",
+    "Lua 5.1 generated candidate decoding",
+    "In-game Retail test",
+    "Independent validator formal acceptance"
+  ],
+  "blockers": [
+    "Native CI and independent validator must confirm strict 16/16 after commit.",
+    "No independent current-Retail completed-cast cohorts or verified eligible profession baselines for economic promotion.",
+    "Externally pinned serialized candidate attestation remains coordinator-owned acceptance."
+  ],
+  "zeroDeltaPivot": "No model/evidence/working cell changed. Pivoted from repeated unchanged data audits to removing a now-obsolete known-failure engineering exception after the independent fixture passed 16/16 in V8.",
+  "nextTask": "Obtain native GitHub CI and F005 independent acceptance for strict DF gate, then integrate newly accepted F003 models only when independently reviewed."
+}
