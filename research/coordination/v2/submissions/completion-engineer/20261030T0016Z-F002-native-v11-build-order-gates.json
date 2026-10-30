@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_WIRE_F005_NESTED_V11_AND_BUILD_ORDER_GATE",
+  "workflowRevision": 2,
+  "queueRevision": 13,
+  "runUTC": "2026-10-30T00:16:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "30207c2426f28d5509bd5d593707b8b90906c627",
+  "implementationCommit": "8c7ec75ffc39ba5dbf5e0cf07c82afee0fd22527",
+  "resultCommit": "SUBMISSION_COMMIT",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "acceptedVersusProposed": {
+    "researchCode": "COMMITTED_AND_NATIVE_CI_PASSED",
+    "independentValidatorAcceptance": "PENDING_F005_FORMAL_REVIEW",
+    "coordinatorAcceptance": "PENDING",
+    "externalDigestPin": "CI_PROPOSAL_ONLY_NOT_INDEPENDENTLY_VERIFIED"
+  },
+  "canonicalInputs": {
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "coordinatorAcceptance": "research/coordination/v2/acceptance/20261030T0003Z-F001-F005-source-v11-ci-integration.json",
+    "validatorFixture": "research/tests/v2/test_f005_serialized_nested_provenance_v11.js",
+    "validatorFixtureBlob": "a9c560665816832e99b3b1b6e544380ad6190cb5"
+  },
+  "exactFileDeltas": [
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "oldBlob": "d3ccfc30667233b4e3f505bb9e81e5a72cca242d",
+      "newBlob": "b227357fb2a1ae69e07f65213f0f930e3f5b97af",
+      "changes": [
+        "In --check mode, independently reload all inputs and compile a second time; fail on differing Lua bytes, ordered record JSON, or report JSON.",
+        "Make the validator-owned v1.1 nested-provenance 14-case detached Node SHA-256 fixture mandatory for the normal pipeline; fail on missing fixture or nonzero exit.",
+        "Preserve existing detached metadata 14-case, 476 numeric assertions and all prior gates."
+      ]
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T0016Z-F002-native-v11-build-order-gates.json",
+      "changes": [
+        "Add immutable role-owned result and exact QA handoff."
+      ]
+    }
+  ],
+  "numericDeltas": {
+    "admittedMappingsBefore": 1018,
+    "admittedMappingsAfter": 1018,
+    "workingNumericBefore": 4072,
+    "workingNumericAfter": 4072,
+    "workingFieldSlots": 4072,
+    "numericCellsFilled": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "invalidMappingsRemoved": 0,
+    "evidenceNumericBefore": 3558,
+    "evidenceNumericAfter": 3558,
+    "evidenceMissing": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentNewStudyLineages": 0,
+    "candidateRegenerated": false,
+    "candidateBlobUnchanged": "940431ecd0cefe1e65701d2cc9f53ae619350b38"
+  },
+  "testsActuallyRun": [
+    {
+      "name": "GitHub Actions verify-five-agent-completion native Node/Lua/schema",
+      "runURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40978457313",
+      "jobID": 123812217280,
+      "checkoutCommit": "8c7ec75ffc39ba5dbf5e0cf07c82afee0fd22527",
+      "conclusion": "success"
+    },
+    {
+      "name": "Independent second compile and record-order deterministic equality",
+      "result": "PASS"
+    },
+    {
+      "name": "F005 serialized nested provenance v1.1 detached Node SHA-256",
+      "passed": 14,
+      "failed": 0
+    },
+    {
+      "name": "F005 existing detached source metadata integrity",
+      "passed": 14,
+      "failed": 0
+    },
+    {
+      "name": "F005/F003 independent binomial numerical assertions",
+      "passed": 476,
+      "failed": 0
+    },
+    {
+      "name": "F005 postrepair metamorphic assertions",
+      "passed": 609,
+      "failed": 0
+    },
+    {
+      "name": "F005 rank-pool isolation",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "Node deterministic pipeline --check and full generated JSON Schema",
+      "result": "PASS"
+    },
+    {
+      "name": "Lua5.1 syntax and decode",
+      "result": "PASS_1018_MAPPINGS_4072_WORKING_FIELDS_514_EVIDENCE_GAPS"
+    },
+    {
+      "name": "Lua5.1 blocker preservation",
+      "result": "PASS_91_MULTI_BLOCKER_FIELDS_124_EXTRA_BLOCKERS"
+    }
+  ],
+  "testsNotRun": [
+    "WoW Retail client/in-game live valuation",
+    "Independent current-Retail whole-study holdout",
+    "Independent coordinator SHA-256 recomputation and externally approved trust-root pin",
+    "Formal post-change independent-validator acceptance"
+  ],
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "workingAffectsLiveEV": false,
+    "tooltipOnlyPolicyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeBranchChanged": false,
+    "productionWrites": 0,
+    "schedulesChanged": false,
+    "otherRoleFilesEdited": false
+  },
+  "blockers": [
+    "Coordinator's recorded SHA-256 a5f472be59536c38cc7534ec5415e449085496519407e48bcfb8643362ccc9b5 remains a CI proposal, not independently recomputed/approved external trust root.",
+    "Independent validator must issue formal post-change review; successful native CI is not self-approval.",
+    "514 numeric evidence gaps including 116 expected quantities, no verified minimum-eligible baseline or current-Retail independent holdout; no economic promotion."
+  ],
+  "zeroDeltaPivot": "After numeric evidence and candidate remained unchanged, pivoted to coordinator's newly ready native nested provenance and deterministic record-order gates; did not re-audit unchanged source rows.",
+  "nextTask": "Independent F005 native v1.1 acceptance and coordinator independent SHA-256 pin challenge; if any new compiler defect is confirmed, repair it before further model integration."
+}
