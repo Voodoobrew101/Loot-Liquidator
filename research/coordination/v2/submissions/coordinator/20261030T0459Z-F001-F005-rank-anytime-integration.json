@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F002_F003_F004_F005_RANK_ANYTIME_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 18,
+  "runUTC": "2026-10-30T04:59:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "d0f1649c5fb4f5cb96d301d26276fda50c86bfff",
+  "commitAfterAcceptance": "75ed75519cd8da9a2aec42707f8d64df8fec0e78",
+  "commitAfterScorecard": "089d827de8a7d4d6dcc851aab2e1cc21b8f0500c",
+  "status": "COORDINATOR_INTEGRATED_PENDING_INDEPENDENT_NATIVE_RETEST",
+  "filesChanged": [
+    "research/coordination/v2/acceptance/20261030T0459Z-F001-F005-rank-anytime-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/20261030T0459Z-F001-F005-rank-anytime-integration.json"
+  ],
+  "acceptedVersusProposed": [
+    {
+      "owner": "completion-engineer",
+      "decision": "CONDITIONAL_ACCEPT_DIAGNOSTIC_HOLD_RANK_ANCESTRY",
+      "reason": "Existing native CI 41001736754 passes five-key diagnostic. Conditional rounding overlap is not measured P/E. Independent synthetic rank test 5/6 exposes explicit supplemental input-rank mismatch; fix before full acceptance."
+    },
+    {
+      "owner": "baseline-modeller",
+      "decision": "ACCEPT_TWW_SYNTHETIC_ONLY_HOLD_MIDNIGHT_ANYTIME",
+      "reason": "TWW integer cast feasibility 9360/9360 in independent V8; Midnight anytime 8/12 with invalid-date (two cases), cap whitespace lineage and missing typed context defects. No verified current-Retail E."
+    },
+    {
+      "owner": "evidence-researcher",
+      "decision": "ACCEPT_SIX_RANK_IDENTITIES_CONTEXT_ONLY",
+      "reason": "Six catalog rank IDs; eight candidate Crushing gem/stone/dust triples unadmitted, no selector or actual casts. F005 quarantine tests 11/11 in V8, not native."
+    },
+    {
+      "owner": "independent-validator",
+      "decision": "ACCEPT_5_REPRODUCED_INTEGRITY_FAILURES",
+      "reason": "Source-hashed synthetic tests: priority122 5/6, anytime 8/12, Crushing 11/11. 29 new tests have not run in native Node CI; repairs must be independently retested."
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEvidenceBackedExpectedQuantity": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newSyntheticModelFamilies": 2,
+    "newCorroboratedRankIDs": 6,
+    "newCurrentRetailCompletedCastFamilies": 0,
+    "newIndependentAdversarialTests": 29,
+    "newReproducedDefects": 5,
+    "coordinatorOwnedFiles": 3
+  },
+  "testsActuallyRun": [
+    "canonical counts",
+    "confidence gate",
+    "priority five",
+    "review source hash",
+    "evidence source hash",
+    "review failures",
+    "crushing unadmitted",
+    "crushing economic isolation",
+    "all 17 changed files research only",
+    "CI 41001736754",
+    "CI 41002298249",
+    "previous queue 17",
+    "rounding hypothesis",
+    "scorecard remains canonical"
+  ],
+  "externalNativeCI": [
+    {
+      "runID": 41001736754,
+      "conclusion": "success"
+    },
+    {
+      "runID": 41002298249,
+      "conclusion": "success"
+    }
+  ],
+  "independentV8": {
+    "priority122": "5/6",
+    "midnightAnytime": "8/12",
+    "crushingQuarantine": "11/11",
+    "twwInteger": "9360/9360"
+  },
+  "testsNotRun": [
+    "New F005 29-case native Node execution",
+    "Local native Node and Lua 5.1 by coordinator",
+    "WoW Retail client",
+    "Independent current-Retail completed-cast holdout"
+  ],
+  "blockers": [
+    "F002 supplemental rank-identity mismatch wrongly corroborates source audit",
+    "F003 four failing synthetic checks: two invalid dates, cap lineage normalization, typed-context output omission",
+    "29 F005 adversarial cases await native Node execution",
+    "514 evidence gaps including 116 E; no confidence >=90, independent current Retail completed-cast holdout or exhaustive universe audit",
+    "Midnight Crushing eight rank triples unadmitted without selector verification"
+  ],
+  "sourceBlobs": {
+    "independentReview": "6969b26fa4dbf0670ff85728dd3abc0223b7a24e",
+    "crushingEvidence": "078a80b38668853063d25f8e84c004dc2168cbcf",
+    "F002Diagnostic": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca",
+    "F003Midnight": "d409511c94ae13c09dcccb5e7e8de6c75d52105b",
+    "F003TWW": "3d6e357258033e11ccc6815f8daea425346930f5",
+    "F005RankTest": "f8cea2037a4e5bcd7cdc59350c5b88764afcdcec",
+    "F005AnytimeTest": "fbb838e348429d6deed741060fe992ead560190b",
+    "F005CrushingTest": "1d7f71520dcfaed7f86181112efddcd9d5c19101"
+  },
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false,
+    "productionWrites": 0
+  },
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T0459Z-F001-F005-rank-anytime-integration.json",
+  "scorecard": "research/coordination/v2/scorecards/current.json",
+  "zeroDeltaPivot": "No numerical or economic promotions. Integrated new model proposals and exact rank-identity context while prioritizing five changed-source integrity defects, not repeated historical audits.",
+  "nextTask": "F002_PRIORITY122_RANK_ANCESTRY_REPAIR"
+}
