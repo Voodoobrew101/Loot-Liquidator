@@ -32,6 +32,13 @@ jobs:
         # before these become mandatory acceptance gates. Never promote P/E.
         continue-on-error: true
         run: node research/tools/working_native_pending_f005_preflight.js
+      - name: F002 cross-version F005 native preflight self-test
+        run: node research/tools/working_native_cross_version_preflight.js --self-test
+      - name: Research-only F005 v0.2-to-v0.8 reconciliation native replay (informational)
+        # This verifies the pinned derived diff, NOT independent compact Lua
+        # reparsing, mapping equivalence, or F005 acceptance. Do not promote EV.
+        continue-on-error: true
+        run: node research/tools/working_native_cross_version_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: Rebuild and expose only validated stale research outputs for F002 handoff
         if: ${{ failure() }}
