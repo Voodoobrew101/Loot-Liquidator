@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "df-historical-diamond-denominator-stage-guard-v1.0.0",
+  "status": "PROPOSED_NOT_ACCEPTED",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_HISTORICAL_DIAMOND_DENOMINATOR_STAGE_GUARD",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "priority": 122,
+  "modelCode": "research/tools/models_v2/df_historical_diamond_denominator_stage_guard_v1.js",
+  "modelCodeBlobSHA": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1",
+  "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "sourceEvidence": "research/evidence/v2/2026-10-30T2028Z-F004-df-two-stage-diamond-denominators.json",
+  "sourceEvidenceBlobSHA": "321dc050134de6a996e5978b87cf467516c4cb06",
+  "sourceEvidenceStatus": "PROPOSED_PENDING_COORDINATOR_AND_F005",
+  "targetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "targetCount": 5,
+  "sourceLineages": [
+    "reddit-108782r-comment-A-30k-serevite-50k-draconium",
+    "reddit-108782r-comment-B-prismatic-1000-25-diamonds"
+  ],
+  "sourceEpoch": "JANUARY_2023_HISTORICAL_NOT_2026_RETAIL",
+  "sourceAccess": "REDDIT_SEARCH_INDEX_ONLY_ORIGINAL_COMMENTS_NOT_DIRECTLY_FETCHED",
+  "modelAssumptions": {
+    "hypothesis": "Reported 30000 and 50000 ore are exact denominators and 1.08/2.57 per 1000 are rounded to nearest 0.01 with half-open upper bound",
+    "integerConsistency": "exact rational arithmetic using BigInt; no rounded implied counts accepted as observed",
+    "refundsAndActualCasts": "UNKNOWN; nominal 5-ore equivalents are not verified casts",
+    "sourceContext": "input ore quality rank, output diamond quality rank, patch build, skill, spec and refunds unknown",
+    "stageSeparation": "Prismatic Ore (192880) is downstream second-stage input; do not combine 25 diamonds/1000 Prismatic Ore with direct first-stage ore yields",
+    "applicability": "historical sensitivity diagnostic only; cannot identify rank-specific current-Retail P or E"
+  },
+  "hypothesisDiagnostics": [
+    {
+      "inputFamily": "Serevite Ore",
+      "reportedOreUnits": 30000,
+      "ratePer1000": "1.08",
+      "literalImpliedCount": 32.4,
+      "integerCountFeasible": false,
+      "nearestCompatibleOreScenario": 29767,
+      "deltaOreUnits": -233,
+      "nearestMultipleOf5Scenario": 29765,
+      "deltaMultipleOf5": -235
+    },
+    {
+      "inputFamily": "Draconium Ore",
+      "reportedOreUnits": 50000,
+      "ratePer1000": "2.57",
+      "literalImpliedCount": 128.5,
+      "integerCountFeasible": false,
+      "nearestCompatibleOreScenario": 49902,
+      "deltaOreUnits": -98,
+      "nearestMultipleOf5Scenario": 49900,
+      "deltaMultipleOf5": -100
+    }
+  ],
+  "hypothesisConclusion": "Both exact-denominator-plus-nearest-0.01-rounding assumptions are incompatible with integer output counts. This does not refute the approximate historical reports; their original denominators/units remain ambiguous.",
+  "numericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyFamilies": 0
+  },
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false
+  },
+  "tests": {
+    "committedSourceV8SelfTests": {
+      "passed": 27,
+      "failed": 0,
+      "syntheticOnly": true,
+      "modelBlobSHA": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1"
+    },
+    "independentPythonExactRationalChecks": {
+      "passed": 45455,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "pipeline": "NOT_RUN_NO_COMPILER_INPUT_CHANGE",
+    "independentValidator": "PENDING"
+  },
+  "blockers": [
+    "Two 2023 first-person source claims only search-indexed; direct comment text and dates unverified",
+    "Reported ore denominators may be approximate/purchased/net/gross; 1.08 and 2.57 may not be exact nearest-0.01 rounding",
+    "No completed cast logs, refund accounting, full output vectors or quality rank for either first-stage cohort",
+    "Second-stage Prismatic Ore has separate denominator and cannot be assigned to direct ore-to-diamond mappings",
+    "No independent current-Retail holdout or independently verified baseline skill/stats"
+  ],
+  "evidenceResearcherRequest": "For the January 2023 source, seek original full comment context to establish whether 30k/50k are approximate and what 'per stack' means. For 2026 Retail, obtain rank-specific zero-inclusive completed casts, exact diamond rank totals and refund logs; do not pool Prismatic second stage.",
+  "independentValidatorRequest": "Native Node run exact SHA 849bfeda..., independently check BigInt half-open decimal rounding, nearest-denominator witness/minimality, stage exclusion, source-family independence and no economic promotion.",
+  "nextTask": "F003_NEXT: After independent QA, use current source/priority changes to select a nonduplicative priority-102 DF prospecting family model or new source-specific denominator repair; do not repeat unchanged rounding audits."
+}
