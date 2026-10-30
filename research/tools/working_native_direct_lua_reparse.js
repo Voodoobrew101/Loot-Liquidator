@@ -10,7 +10,7 @@ const ROOT=path.resolve(__dirname,'../..');
 const PINS=Object.freeze({
   old:'a838d75e82239339bea3861692291b44bd085662',
   new:'560b885a0039045419c340716e263ae33ddf827a',
-  test:'fee8e048406827478cb261b10ca6843422470b5'
+  test:'fee8e048406827478cb261b10ca6843422470b5f'
 });
 const NEW='research/proposed/itemdb.lua';
 const TEST='research/tests/v2/test_f005_v02_v08_direct_lua_identity_reparse.js';
