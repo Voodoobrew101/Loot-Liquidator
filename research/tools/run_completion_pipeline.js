@@ -510,7 +510,7 @@ function run(root, options={}) {
       if(!fs.existsSync(absolute))throw Error("F005 historical source or fixture missing: "+relative);
       const bytes=fs.readFileSync(absolute);
       const actual=require("node:crypto").createHash("sha1")
-        .update("blob "+bytes.length+"\\0").update(bytes).digest("hex");
+        .update("blob "+bytes.length+"\0").update(bytes).digest("hex");
       if(actual!==expected)
         throw Error("F005 historical source/fixture changed without independent review: "+relative);
     }
