@@ -1,5 +1,6 @@
 'use strict';
 // F002: research-only generated-gap identity gate. Not a validation of missing evidence.
+// Missing-field CSV may have an empty reason: preserve that as unknown, not a gate failure.
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const F=['dropChance','yieldMin','yieldMax','expectedQuantity'];
 const ROOT=path.resolve(__dirname,'../..');
@@ -25,7 +26,7 @@ function check(csv,priorities,readiness,report){
  for(const [i,row] of rows.entries()){
   if(row.length!==7)fail('CSV_COLUMN_COUNT:'+i);
   const [id,method,input,output,field,status,reason]=row;
-  if(!id||!method||!/^[1-9]\d*$/.test(input)||!/^[1-9]\d*$/.test(output)||!F.includes(field)||!['unknown','contradictory'].includes(status)||!reason)fail('CSV_INVALID_GAP:'+i);
+  if(!id||!method||!/^[1-9]\d*$/.test(input)||!/^[1-9]\d*$/.test(output)||!F.includes(field)||!['unknown','contradictory'].includes(status))fail('CSV_INVALID_GAP:'+i);
   const key=id+'\u0000'+field;if(unique.has(key))fail('CSV_DUPLICATE_GAP:'+key);unique.add(key);fields[field]++;
   if(!gaps.has(id))gaps.set(id,[]);gaps.get(id).push({method,input:Number(input),output:Number(output),field});
  }
@@ -63,7 +64,7 @@ function selfTest(){
   [csv,priorities,{...readiness,operationalEstimatesAffectLiveValuation:true},report],
   [csv,priorities,readiness,{...report,productionWrites:1}],
   [csv,priorities,readiness,{...report,missingFieldCounts:{...report.missingFieldCounts,expectedQuantity:0}}],
-  [csv.replace('NOT_MEASURED',''),priorities,readiness,report],
+  [csv.replace('"1","2"','"0","2"'),priorities,readiness,report],
   [csv.replace('unknown','measured'),priorities,readiness,report]
  ];
  for(const args of mutants)assert.throws(()=>check(...args));
