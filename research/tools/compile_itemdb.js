@@ -226,6 +226,9 @@ function compile(i){
 }
 function loadInputs(root="."){
  const fs=require("fs"),path=require("path"),get=p=>fs.readFileSync(path.join(root,p),"utf8");
+ // Fail closed before parsing any candidate if a declared or legacy direct
+ // compiler input differs from its exact versioned Git blob pin.
+ require("./source_sha_gate.js").verifySourcePins(root);
  let i={curatedJSON:get("research/proposed/itemdb-curated-additions.json"),rankAuditJSONL:get("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1231-dragonflight-batch012-40key-field-audit.jsonl"),midnightAuditCSV:get("research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1211-midnight-batch012-35key-field-audit.csv"),batch013DragonflightJSONL:get("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1328-dragonflight-batch013-40key-field-audit.jsonl"),batch013TWWJSONL:get("research/coordination/submissions/loot-liquidator-war-within/2026-10-28-1321-warwithin-batch013-35key-field-audit.jsonl"),batch013LegacyJSONL:get("research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1340-legacy-batch013-40key-field-audit.jsonl"),batch014DragonflightJSONL:get("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1432-dragonflight-q16-batch014-40key-fourfield-audit.jsonl"),batch014TWWJSONL:get("research/coordination/submissions/loot-liquidator-war-within/2026-10-28-2116-warwithin-batch014-q16-35key-fourfield-audit.jsonl"),primaryCSV:get("research/ledger/processing-output-fields.csv"),supplementalCSV:get("research/ledger/supplemental-output-fields.csv"),midnightCandidateJSON:get("research/proposed/itemdb-midnight-milling-candidate.json"),gameDataSource:get("GameData.lua"),statYieldSource:get("StatYieldProfiles.lua"),tooltipFallbacksJSON:get("research/proposed/itemdb-tooltip-fallbacks-q25.json"),sha:JSON.parse(get("research/proposed/itemdb-compiler-source-shas.json"))};
  return i;
 }
