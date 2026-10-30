@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_PRIORITY122_AND_CRUSHING_INDEPENDENT_QA",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 17,
+  "runUTC": "2026-10-30T04:40:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "b59087c6868aa2092adc6807ea10a9729d87c823",
+  "resultCommitBeforeSubmission": "fee568c925b1a2ccababc5a88d78e3d6c32b31b4",
+  "status": "SUBMITTED_FOR_COORDINATOR_REVIEW_WITH_F002_F003_DEFECTS",
+  "reviewPath": "research/coordination/v2/reviews/2026-10-30T0440Z-F005-priority122-crushing-anytime-independent-qa.json",
+  "reviewBlobSHA": "6969b26fa4dbf0670ff85728dd3abc0223b7a24e",
+  "filesChanged": [
+    {
+      "path": "research/tests/v2/test_f005_midnight_anytime_context_lineage.js",
+      "blobSHA": "fbb838e348429d6deed741060fe992ead560190b",
+      "change": "12 independent adversarial tests, 4 reproduced model failures"
+    },
+    {
+      "path": "research/tests/v2/test_f005_crushing_rank_candidate_isolation.js",
+      "blobSHA": "1d7f71520dcfaed7f86181112efddcd9d5c19101",
+      "change": "11 passing structural tests for unadmitted gem/stone/dust rank universe and economic isolation"
+    },
+    {
+      "path": "research/tests/v2/test_f005_priority122_supplemental_rank_lineage.js",
+      "blobSHA": "f8cea2037a4e5bcd7cdc59350c5b88764afcdcec",
+      "change": "6 adversarial source-lineage tests, 1 reproduced rank-mismatch acceptance failure"
+    },
+    {
+      "path": "research/coordination/v2/reviews/2026-10-30T0440Z-F005-priority122-crushing-anytime-independent-qa.json",
+      "blobSHA": "6969b26fa4dbf0670ff85728dd3abc0223b7a24e",
+      "change": "Source-hashed QA verdict, reproductions, owner-specific repair requirements and zero-promotion controls"
+    },
+    {
+      "path": "research/coordination/v2/submissions/independent-validator/20261030T0440Z-F005-P122-CRUSHING-ANYTIME-QA.json",
+      "change": "Unique independent-validator run submission"
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "validatorTestFilesAdded": 3,
+    "validatorCasesAdded": 29,
+    "originalEvidenceFieldsChanged": 0,
+    "rawEvidenceFilesChanged": 0,
+    "frozenTSMFilesChanged": 0,
+    "tooltipOnlyFilesChanged": 0,
+    "productionFilesChanged": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "JavaScript V8, exact committed model/test sources with Node-compatible assert shim",
+      "suite": "Midnight anytime RAW context/cap lineage",
+      "passed": 8,
+      "failed": 4,
+      "sourceBlob": "d409511c94ae13c09dcccb5e7e8de6c75d52105b"
+    },
+    {
+      "environment": "JavaScript V8, exact committed model/test sources with in-memory Node fs/path/assert shim",
+      "suite": "Priority-122 supplemental rank lineage",
+      "passed": 5,
+      "failed": 1,
+      "sourceBlob": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca"
+    },
+    {
+      "environment": "JavaScript V8, exact evidence/test source with assert-compatible shim",
+      "suite": "Crushing candidate isolation",
+      "passed": 11,
+      "failed": 0,
+      "sourceBlob": "078a80b38668853063d25f8e84c004dc2168cbcf"
+    },
+    {
+      "environment": "JavaScript V8 exact TWW model source; independent brute-force integer cast enumeration",
+      "suite": "TWW net/refund cast feasibility",
+      "passed": 9360,
+      "failed": 0,
+      "sourceBlob": "3d6e357258033e11ccc6815f8daea425346930f"
+    },
+    {
+      "environment": "GitHub connector post-write readback",
+      "suite": "Three validator files and review",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node execution of new independent tests",
+    "Native Lua 5.1",
+    "Completion pipeline --check after validator-only changes",
+    "WoW Retail client and tooltip",
+    "Current-Retail independent completed-cast holdout"
+  ],
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "verdict": "FAIL_TWO_OWNER_REPAIRS_REQUIRED_CONDITIONAL_ECONOMIC_ISOLATION",
+  "reproducedDefectCount": 5,
+  "defectOwners": {
+    "completion-engineer": [
+      "F005-P122-1"
+    ],
+    "baseline-modeller": [
+      "F005-ANYTIME-1 (two invalid-date probes)",
+      "F005-ANYTIME-2",
+      "F005-ANYTIME-3"
+    ]
+  },
+  "blockers": [
+    "Priority-122 audit fallback matches input/output without rejecting explicitly incompatible input rank",
+    "Midnight anytime RAW epoch accepts impossible calendar dates",
+    "Midnight anytime cap lineage equality bypass via whitespace",
+    "Midnight anytime results omit distinguishing typed context",
+    "No independent current-Retail casts or selector verification"
+  ],
+  "economicPolicy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false
+  },
+  "coordinatorRequest": "Accept independent validator-owned tests and review as reproducible synthetic QA; request F002/F003 repairs, rerun native Node suites and pipeline after repair; preserve source evidence, working preview, frozen TSM and tooltip-only isolation. F004 rank candidates remain unadmitted.",
+  "nextTask": "F005_RETEST_CHANGED_F002_SOURCE_ANCESTRY_AND_F003_ANYTIME_CONTEXT_WITH_NATIVE_NODE_AND_HOLDOUT_GATES"
+}
