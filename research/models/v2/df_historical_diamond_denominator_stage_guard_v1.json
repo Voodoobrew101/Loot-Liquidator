@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "modelID": "df-historical-diamond-denominator-stage-guard-v1.0.0",
-  "status": "PROPOSED_NOT_ACCEPTED",
+  "status": "PROPOSED_REPAIRED_PENDING_INDEPENDENT_QA",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "role": "baseline-modeller",
   "taskID": "F003_DF_HISTORICAL_DIAMOND_DENOMINATOR_STAGE_GUARD",
@@ -9,7 +9,7 @@
   "queueRevision": 30,
   "priority": 122,
   "modelCode": "research/tools/models_v2/df_historical_diamond_denominator_stage_guard_v1.js",
-  "modelCodeBlobSHA": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1",
+  "modelCodeBlobSHA": "2c9005e1d7be6df68d5631a418fbae95a144f6e7",
   "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "sourceEvidence": "research/evidence/v2/2026-10-30T2028Z-F004-df-two-stage-diamond-denominators.json",
@@ -34,7 +34,7 @@
     "integerConsistency": "exact rational arithmetic using BigInt; no rounded implied counts accepted as observed",
     "refundsAndActualCasts": "UNKNOWN; nominal 5-ore equivalents are not verified casts",
     "sourceContext": "input ore quality rank, output diamond quality rank, patch build, skill, spec and refunds unknown",
-    "stageSeparation": "Prismatic Ore (192880) is downstream second-stage input; do not combine 25 diamonds/1000 Prismatic Ore with direct first-stage ore yields",
+    "stageSeparation": "Prismatic Ore (194545) is downstream second-stage input; 192880 is Crumbled Stone and not this source cohort. Preserve original historical evidence and append-only F004 identity correction. Do not combine 25 diamonds/1000 Prismatic Ore with direct first-stage ore yields.",
     "applicability": "historical sensitivity diagnostic only; cannot identify rank-specific current-Retail P or E"
   },
   "hypothesisDiagnostics": [
@@ -82,10 +82,10 @@
   },
   "tests": {
     "committedSourceV8SelfTests": {
-      "passed": 27,
+      "passed": 28,
       "failed": 0,
       "syntheticOnly": true,
-      "modelBlobSHA": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1"
+      "modelBlobSHA": "2c9005e1d7be6df68d5631a418fbae95a144f6e7"
     },
     "independentPythonExactRationalChecks": {
       "passed": 45455,
@@ -96,7 +96,8 @@
     "lua51": "NOT_RUN",
     "inGame": "NOT_RUN",
     "pipeline": "NOT_RUN_NO_COMPILER_INPUT_CHANGE",
-    "independentValidator": "PENDING"
+    "independentValidator": "PENDING",
+    "independentStageIdentitySuite": "43-case F005 suite requires source-pinned native rerun; 3 previously failed identity assertions repaired"
   },
   "blockers": [
     "Two 2023 first-person source claims only search-indexed; direct comment text and dates unverified",
@@ -107,5 +108,8 @@
   ],
   "evidenceResearcherRequest": "For the January 2023 source, seek original full comment context to establish whether 30k/50k are approximate and what 'per stack' means. For 2026 Retail, obtain rank-specific zero-inclusive completed casts, exact diamond rank totals and refund logs; do not pool Prismatic second stage.",
   "independentValidatorRequest": "Native Node run exact SHA 849bfeda..., independently check BigInt half-open decimal rounding, nearest-denominator witness/minimality, stage exclusion, source-family independence and no economic promotion.",
-  "nextTask": "F003_NEXT: After independent QA, use current source/priority changes to select a nonduplicative priority-102 DF prospecting family model or new source-specific denominator repair; do not repeat unchanged rounding audits."
+  "nextTask": "F003_NEXT: After independent QA, use current source/priority changes to select a nonduplicative priority-102 DF prospecting family model or new source-specific denominator repair; do not repeat unchanged rounding audits.",
+  "repairDateUTC": "2026-10-30",
+  "repairTaskID": "F003_REPAIR_FRONTIER_AND_PRISMATIC",
+  "sourceIdentityCorrection": "research/evidence/v2/2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts.json"
 }
