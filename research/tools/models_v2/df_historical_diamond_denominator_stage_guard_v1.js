@@ -17,7 +17,7 @@ const SOURCE=Object.freeze({
  firstStage:Object.freeze([
  Object.freeze({inputFamily:"Serevite Ore",reportedOreUnits:30000,ratePer1000Text:"1.08",inputRank:null,exactCount:null}),
  Object.freeze({inputFamily:"Draconium Ore",reportedOreUnits:50000,ratePer1000Text:"2.57",inputRank:null,exactCount:null})]),
- secondStage:Object.freeze({inputFamily:"Prismatic Ore",inputItemID:192880,reportedOreUnits:1000,reportedDiamonds:25,actualCompletedCasts:null,oreRefunds:null})
+ secondStage:Object.freeze({inputFamily:"Prismatic Ore",inputItemID:194545,reportedOreUnits:1000,reportedDiamonds:25,actualCompletedCasts:null,oreRefunds:null})
 });
 function need(x,code){if(!x)throw Error(code);}
 const posInt=x=>Number.isSafeInteger(x)&&x>0;
@@ -106,6 +106,7 @@ function selfTest(){
  ok(z.firstStage.every(c=>c.expectedQuantity===null&&c.probability===null),"NO_EVIDENCE");
  ok(z.firstStage[0].sourceLineage===z.firstStage[1].sourceLineage,"ONE_AUTHOR");
  ok(z.secondStage.sourceLineage!==z.firstStage[0].sourceLineage,"SECOND_AUTHOR");
+ ok(z.secondStage.inputItemID===194545&&SOURCE.secondStage.inputItemID===194545,"PRISMATIC_ITEM_ID_CORRECTION");
  ok(z.secondStage.perCastExpectedQuantity===null&&z.secondStage.verifiedCastCount===null,"NO_STAGE2_CASTS");
  ok(z.confidence===0&&z.economicUse==="PREVIEW_ONLY"&&!z.normalizedVerified&&!z.liveEconomicEligible,"NO_LIVE_ECONOMICS");
  ok(z.cannotAllocateToRankSpecificKeys&&z.cannotTreatReportedOreAsVerifiedCasts,"NO_RANK_INFERENCE");
