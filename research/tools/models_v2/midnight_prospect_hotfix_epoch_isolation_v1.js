@@ -2,7 +2,7 @@
 // F003 research-only: Midnight prospecting March 31, 2026 dated-hotfix epoch isolation.
 // No historical/current rates are promoted to economic use, recipe eligibility or measured facts.
 const assert = require('node:assert/strict');
-const MODEL_ID = 'midnight-prospect-hotfix-epoch-isolation-v1.0.2';
+const MODEL_ID = 'midnight-prospect-hotfix-epoch-isolation-v1.0.3';
 const POLICY = Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const TARGETS = Object.freeze({
   237359:'midnight:237359:242608:L733',237361:'midnight:237361:242608:L744',
@@ -48,11 +48,29 @@ function jsonSafe(v,ancestors=new Set()){
  if(v===null||typeof v==='string'||typeof v==='boolean')return true;
  if(typeof v==='number')return Number.isFinite(v);
  if(typeof v!=='object'||ancestors.has(v))return false;
- ancestors.add(v);let ok=false;
- if(Array.isArray(v))ok=Object.keys(v).length===v.length&&v.every(x=>jsonSafe(x,ancestors));
- else if(Object.getPrototypeOf(v)===Object.prototype||Object.getPrototypeOf(v)===null)
-  ok=Reflect.ownKeys(v).every(k=>typeof k==='string'&&Object.prototype.propertyIsEnumerable.call(v,k)&&jsonSafe(v[k],ancestors));
- ancestors.delete(v);return ok;
+ const array=Array.isArray(v),proto=Object.getPrototypeOf(v);
+ if(array?proto!==Array.prototype:proto!==Object.prototype&&proto!==null)return false;
+ ancestors.add(v);
+ const keys=Reflect.ownKeys(v);
+ let ok=true;
+ if(array){
+  // Own property order for dense arrays is 0..length-1 followed by "length".
+  // Reject holes, added keys, symbols, accessors and custom serialization.
+  const n=v.length;
+  ok=Number.isSafeInteger(n)&&keys.length===n+1&&keys[n]==='length';
+  for(let i=0;ok&&i<n;i++){
+   if(keys[i]!==String(i)){ok=false;break;}
+   const d=Object.getOwnPropertyDescriptor(v,keys[i]);
+   ok=!!d&&d.enumerable&&Object.hasOwn(d,'value')&&jsonSafe(d.value,ancestors);
+  }
+ }else{
+  for(const k of keys){
+   const d=typeof k==='string'&&Object.getOwnPropertyDescriptor(v,k);
+   if(k==='toJSON'||!d||!d.enumerable||!Object.hasOwn(d,'value')||!jsonSafe(d.value,ancestors)){ok=false;break;}
+  }
+ }
+ ancestors.delete(v);
+ return ok;
 }
 function validateContext(c){
  check(c&&jsonSafe(c),'UNSAFE_CONTEXT');
@@ -177,6 +195,23 @@ function selfTest(){
  throws(()=>compareEpochs(a,a),'CROSS_EPOCH_PAIR');
  throws(()=>compareEpochs(a,analyzeCohort({context:{...post,sourceType:'SYNTHETIC'},events:es})),'RAW_PAIR_REQUIRED');
  eq(a.contextSnapshot.professionSkill,1);c.professionSkill=99;eq(a.contextSnapshot.professionSkill,1);
+ const arrayContext=arr=>({...c,professionContext:{...c.professionContext,specialization:arr}});
+ const symbolArray=[];symbolArray[Symbol('trait')]='hidden';
+ throws(()=>analyzeCohort({context:arrayContext(symbolArray),events:es}),'UNSAFE_CONTEXT');
+ const hiddenArray=[];Object.defineProperty(hiddenArray,'trait',{value:'hidden'});
+ throws(()=>analyzeCohort({context:arrayContext(hiddenArray),events:es}),'UNSAFE_CONTEXT');
+ const sparseArray=['a',,'c'];sparseArray.extra='hidden';
+ throws(()=>analyzeCohort({context:arrayContext(sparseArray),events:es}),'UNSAFE_CONTEXT');
+ class CustomArray extends Array{toJSON(){return ['changed'];}}
+ throws(()=>analyzeCohort({context:arrayContext(new CustomArray('original')),events:es}),'UNSAFE_CONTEXT');
+ const customSerializer=['original'];Object.defineProperty(customSerializer,'toJSON',{value(){return ['changed'];}});
+ throws(()=>analyzeCohort({context:arrayContext(customSerializer),events:es}),'UNSAFE_CONTEXT');
+ const accessorArray=['original'];Object.defineProperty(accessorArray,'0',{get(){return 'changed';},enumerable:true,configurable:true});
+ throws(()=>analyzeCohort({context:arrayContext(accessorArray),events:es}),'UNSAFE_CONTEXT');
+ const objectSerializer={...c.professionContext,toJSON(){return {specialization:[]};}};
+ throws(()=>analyzeCohort({context:{...c,professionContext:objectSerializer},events:es}),'UNSAFE_CONTEXT');
+ const validDense=analyzeCohort({context:arrayContext(['trait','gear']),events:es});
+ eq(validDense.contextSnapshot.professionContext.specialization,['trait','gear']);
  return {passed,failed:0,syntheticOnly:true};
 }
 module.exports={MODEL_ID,POLICY,TARGETS,OFFICIAL_ENTRY_DATE,OFFICIAL_SOURCE_URL,classifyEpoch,validateContext,analyzeCohort,compareEpochs,selfTest};
