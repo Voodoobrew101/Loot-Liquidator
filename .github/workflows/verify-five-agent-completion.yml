@@ -90,6 +90,12 @@ jobs:
         continue-on-error: true
         run: node research/tools/working_native_df_prismatic_identity_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
+      - name: F002 exact gap-to-priority identity and preview coverage contract
+        # Mandatory compiler-output consistency only. This does not validate
+        # source evidence, approve models, or permit economic promotions.
+        run: |
+          node research/tools/working_gap_priority_contract.js --self-test
+          node research/tools/working_gap_priority_contract.js
       - name: Rebuild and expose only validated stale research outputs for F002 handoff
         if: ${{ failure() }}
         # Fail-closed: the primary --check remains a required failing gate.
