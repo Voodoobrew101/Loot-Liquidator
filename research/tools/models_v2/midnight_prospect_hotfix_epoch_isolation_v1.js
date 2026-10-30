@@ -1,8 +1,8 @@
 'use strict';
-// F003 research-only: Midnight prospecting April 3, 2026 hotfix epoch isolation.
+// F003 research-only: Midnight prospecting March 31, 2026 dated-hotfix epoch isolation.
 // No historical/current rates are promoted to economic use, recipe eligibility or measured facts.
 const assert = require('node:assert/strict');
-const MODEL_ID = 'midnight-prospect-hotfix-epoch-isolation-v1.0.1';
+const MODEL_ID = 'midnight-prospect-hotfix-epoch-isolation-v1.0.2';
 const POLICY = Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const TARGETS = Object.freeze({
   237359:'midnight:237359:242608:L733',237361:'midnight:237361:242608:L744',
@@ -10,12 +10,13 @@ const TARGETS = Object.freeze({
   237364:'midnight:237364:242608:L777',237365:'midnight:237365:242608:L788',
   237366:'midnight:237366:242608:L799'
 });
-// Blizzard's dated entry is April 1; exact deployment hour/region is unknown.
-// Quarantine April 1-2 UTC and observations locally dated April 1-2 across offsets.
+// Blizzard's prospecting entry is dated March 31; exact deployment hour/region is unknown.
+// Quarantine March 31-April 2 UTC and observations locally dated March 31-April 2 across offsets.
+// The April 1 Stoic Eversong Diamond armor hotfix is unrelated.
 // This is a safety buffer, NOT an asserted deployment window.
-const OFFICIAL_ENTRY_DATE='2026-04-01';
+const OFFICIAL_ENTRY_DATE='2026-03-31';
 const OFFICIAL_SOURCE_URL='https://worldofwarcraft.blizzard.com/en-us/news/24266320';
-const BEFORE_END_MS = Date.parse('2026-04-01T00:00:00Z');
+const BEFORE_END_MS = Date.parse('2026-03-31T00:00:00Z');
 const AFTER_START_MS = Date.parse('2026-04-03T00:00:00Z');
 function check(ok,code){if(!ok)throw Error(code);}
 const positive = x=>Number.isSafeInteger(x)&&x>0;
@@ -37,10 +38,10 @@ function epochMs(s){
 }
 function classifyEpoch(s){
  const ms=epochMs(s);
- // Do not certify any locally dated April 1/2 cohort as PRE or POST,
+ // Do not certify any locally dated March 31-April 2 cohort as PRE or POST,
  // even when its timezone conversion falls outside the UTC buffer.
  const localDate=s.slice(0,10);
- if(localDate==='2026-04-01'||localDate==='2026-04-02')return 'TRANSITION_QUARANTINE';
+ if(localDate==='2026-03-31'||localDate==='2026-04-01'||localDate==='2026-04-02')return 'TRANSITION_QUARANTINE';
  return ms<BEFORE_END_MS?'PRE_HOTFIX':ms>=AFTER_START_MS?'POST_HOTFIX':'TRANSITION_QUARANTINE';
 }
 function jsonSafe(v,ancestors=new Set()){
@@ -141,15 +142,22 @@ function selfTest(){
  eq(classifyEpoch('2026-04-01T23:59:59Z'),'TRANSITION_QUARANTINE');eq(classifyEpoch('2026-04-02T00:00:00Z'),'TRANSITION_QUARANTINE');
  eq(classifyEpoch('2026-04-03T12:00:00Z'),'POST_HOTFIX');eq(classifyEpoch('2026-04-05T23:59:59Z'),'POST_HOTFIX');
  eq(classifyEpoch('2026-04-06T00:00:00Z'),'POST_HOTFIX');
- eq(classifyEpoch('2026-03-31T23:59:59Z'),'PRE_HOTFIX');
+ eq(classifyEpoch('2026-03-31T23:59:59Z'),'TRANSITION_QUARANTINE');
  eq(classifyEpoch('2026-04-01T00:00:00Z'),'TRANSITION_QUARANTINE');
  eq(classifyEpoch('2026-04-02T23:59:59Z'),'TRANSITION_QUARANTINE');
  eq(classifyEpoch('2026-04-03T00:00:00Z'),'POST_HOTFIX');
  eq(classifyEpoch('2026-04-01T01:00:00+02:00'),'TRANSITION_QUARANTINE');
  eq(classifyEpoch('2026-04-02T23:59:00-07:00'),'TRANSITION_QUARANTINE');
  eq(classifyEpoch('2026-03-31T23:30:00-07:00'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-03-31T00:00:00Z'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-03-31T12:00:00Z'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-03-31T00:30:00+14:00'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-03-30T23:30:00-07:00'),'TRANSITION_QUARANTINE');
+ eq(classifyEpoch('2026-03-30T10:00:00+14:00'),'PRE_HOTFIX');
+ eq(classifyEpoch('2026-04-04T10:00:00+14:00'),'POST_HOTFIX');
+ eq(analyzeCohort({context:{...c,observationEnd:'2026-03-31T12:00:00Z'},events:es}).epoch,'TRANSITION_QUARANTINE');
  eq(classifyEpoch('2026-04-03T00:30:00+02:00'),'TRANSITION_QUARANTINE');
- eq(a.officialHotfixEntryDate,'2026-04-01');
+ eq(a.officialHotfixEntryDate,'2026-03-31');
  eq(classifyEpoch('2026-04-06T01:00:00+02:00'),'POST_HOTFIX');
  const mixed={...c,observationEnd:'2026-04-07T13:00:00Z'};
  eq(analyzeCohort({context:mixed,events:es}).epoch,'TRANSITION_QUARANTINE');
