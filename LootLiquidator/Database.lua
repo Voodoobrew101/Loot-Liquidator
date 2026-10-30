@@ -164,6 +164,7 @@ function LL:InitializeItemDB()
     if ok then ok,reason=self:ValidateTokenCatalog(self.ItemDB.tokenRewards) end
     self.itemDBError=not ok and reason or nil
     self._evidenceIndex={}
+    self._researchRecipeOperations={}
     if not ok then return false end
     for _,r in ipairs(self.ItemDB.tokenRewards or {}) do
         local list=self._tokenRewardIndex[r.tokenID] or {}
@@ -181,6 +182,11 @@ function LL:InitializeItemDB()
         local key=r.method..':'..tostring(r.inputItemID or r.gearKey)
         local list=self._evidenceIndex[key] or {};self._evidenceIndex[key]=list
         list[#list+1]=r
+        if r.sourceKey=='itemdb' and r.inputItemID and r.recipeID
+            and (r.method=='Mill' or r.method=='Prospect' or r.method=='Smelt') then
+            local recipes=self._researchRecipeOperations[r.recipeID] or {}
+            recipes[#recipes+1]=r;self._researchRecipeOperations[r.recipeID]=recipes
+        end
     end
     local compat=self.ItemDB.compat or {}
     for k,v in pairs(compat) do self[k]=v end -- aliases, never copied data
@@ -191,6 +197,11 @@ function LL:InitializeItemDB()
 end
 function LL:ResearchProcessingInput(id)
     return self.ItemDB and self.ItemDB.inputs and self.ItemDB.inputs[id]
+end
+-- Recorder lookup shares the same admitted primary operation records as
+-- valuation discovery. Disabled yield sources do not disable raw capture.
+function LL:ResearchProcessingRecipeOperations(recipeID)
+    return self._researchRecipeOperations and self._researchRecipeOperations[recipeID]
 end
 -- Operation identities are metadata, independent of source weights. A single
 -- herb/ore can have several recipes with different batch sizes; do not replace

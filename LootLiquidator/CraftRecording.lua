@@ -168,17 +168,50 @@ local function call(fn,...)
     local ok,v=pcall(fn,...);return ok and v or nil
 end
 local function describe(self,recipe)
+    local operations=self.ResearchProcessingRecipeOperations and self:ResearchProcessingRecipeOperations(recipe)
+    local method
+    for _,r in ipairs(operations or {}) do
+        if method and method~=r.method then return nil end -- conflicting operation identity
+        method=r.method
+    end
+    if method=='Mill' or method=='Prospect' then
+        return {method=method,operations=operations}
+    end
     if SPELLS[recipe] then return {method=SPELLS[recipe]} end
     for _,list in pairs(self.Conversions or {}) do for _,r in ipairs(list) do
-        if (r.recipeID==recipe or r.requiredSpell==recipe) and METHODS[r.method] then return {method=r.method,conversion=r} end
+        if (r.recipeID==recipe or r.requiredSpell==recipe) and METHODS[r.method] then
+            if method and method~=r.method then return nil end
+            return {method=r.method,conversion=r}
+        end
     end end
     local ui=C_TradeSkillUI
     if call(ui and ui.IsTradeSkillLinked) or call(ui and ui.IsTradeSkillGuild) or call(ui and ui.IsNPCCrafting) then return nil end
     local info=call(ui and ui.GetRecipeInfo,recipe)
     local schematic=call(ui and ui.GetRecipeSchematic,recipe,false)
-    if type(info)=="table" and info.learned==true and type(schematic)=="table" and schematic.recipeID==recipe and not schematic.isRecraft then
-        return {method="Craft",schematic=copy(schematic)}
+    if type(info)=='table' and info.learned==true and type(schematic)=='table' and schematic.recipeID==recipe and not schematic.isRecraft then
+        return {method=method or 'Craft',schematic=copy(schematic)}
     end
+end
+-- Exact recipe/input context takes priority over old expansion-wide hints.
+-- Multiple source profiles may agree on one operation; conflicting batches
+-- remain diagnostics instead of choosing whichever quantity matches the bags.
+local function processingBatch(self,p,f)
+    if p.description.operations then
+        local batch
+        for _,r in ipairs(p.description.operations) do
+            if r.inputItemID==f.id and (not r.expansionID or r.expansionID==f.expansionID)
+                and (not r.inputQualityRank or r.inputQualityRank==f.reagentQuality) then
+                if batch and batch~=r.inputCount then return nil end
+                batch=r.inputCount
+            end
+        end
+        return batch
+    end
+    -- Original generic spells retain their compatibility metadata when no
+    -- explicit ItemDB operation exists for that recipe.
+    local known=self.ResearchProcessingInput and self:ResearchProcessingInput(f.id)
+    if known and known.method~=p.method then return nil end
+    return (known and known.batch) or (p.method=='Mill' and (f.expansionID==10 or f.expansionID==11) and 10 or 5)
 end
 -- A secure post-hook observes the player's actual request; it never calls a
 -- crafting API or changes its arguments. Missing allocations remain unknown.
@@ -294,10 +327,9 @@ local function validateDelta(self,p,after)
         if #inputs==0 then return nil,"Inputs have not settled" end
         local f=p.before.facts[inputs[1].itemID]
         if not f then return nil,"Input metadata unavailable" end
-        local known=self.ResearchProcessingInput and self:ResearchProcessingInput(inputs[1].itemID)
-        local batch=(known and known.batch) or (p.method=="Mill" and (f.expansionID==10 or f.expansionID==11) and 10 or 5)
-        if #inputs~=1 or not f or f.classID~=7 or f.subClassID~=(p.method=="Mill" and 9 or 7)
-            or (known and known.method~=p.method) or inputs[1].quantity+(returned[inputs[1].itemID] or 0)~=batch then return nil,"Not exactly one validated processing batch" end
+        local batch=processingBatch(self,p,f)
+        if not integer(batch) or #inputs~=1 or f.classID~=7 or f.subClassID~=(p.method=="Mill" and 9 or 7)
+            or inputs[1].quantity+(returned[inputs[1].itemID] or 0)~=batch then return nil,"Not exactly one validated recipe processing batch" end
         for id in pairs(returned) do if id~=inputs[1].itemID then return nil,"Unrelated reagent return" end end
         if (p.before.counts[inputs[1].itemID] or 0)<batch then return nil,"Missing nominal input batch" end
         local nominal=copy(inputs);nominal[1].quantity=batch;p.nominalInputs=nominal
@@ -338,7 +370,8 @@ local function validateDelta(self,p,after)
         local allowed={}
         local input=inputs[1].itemID
         for _,r in ipairs(self.ItemDB and self.ItemDB.processing or {}) do
-            if r.method==p.method and (r.inputItemID==input or (p.method=="Disenchant" and r.gearKey==
+            if r.method==p.method and (r.recipeID==nil or r.recipeID==p.recipe)
+                and (r.inputItemID==input or (p.method=="Disenchant" and r.gearKey==
                 ('gear:%s:%s:%s'):format(tostring(p.before.facts[input].expansionID),tostring(p.before.facts[input].quality),p.before.facts[input].classID==2 and 'weapon' or 'armor'))) then
                 for _,m in ipairs(r.materials) do allowed[m.id]=true end
             end

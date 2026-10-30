@@ -1,6 +1,6 @@
 # Recording crafting evidence
 
-Version 0.10.0-alpha2 records measured Retail crafting and processing operations for the mechanics v0.2 contract, empirical baselines, and the conversion engine. It never changes either item database or approves a numerical mechanics rule. Real-client validation remains pending.
+Version 0.10.0-alpha10 records measured Retail crafting and processing operations for the mechanics v0.2 contract, empirical baselines, and the conversion engine. It never changes either item database or approves a numerical mechanics rule. Real-client validation remains pending.
 
 ## Recording workflow
 
@@ -17,6 +17,8 @@ python3 tools/validate_craft_export.py cast-page-1.json cast-page-2.json --outpu
 ```
 
 The validator requires all pages from one stable export, rejects duplicate or mismatched operations, and excludes cohorts with unresolved results or study coverage gaps. It outputs research JSON, not an installable Lua database. Reviewers must reconcile it with the research schema/compiler and independently approve any proposed mechanics. No sample-count threshold alone grants approval.
+
+Exact ItemDB milling/prospecting recipes use their recorded method, input identity and batch before generic craft detection or compatibility hints. This includes BFA mass milling's twenty herbs. Unknown/mismatched input context or conflicting batch definitions remain diagnostics; they do not fall back to a convenient old batch. Raw collection can continue with yield sources disabled, while source controls still gate subsequent valuation. Bag-only outputs must belong to the captured recipe (or a reference with no recipe identity); reported typed results are reconciled with inventory independently.
 
 ## What is captured
 
