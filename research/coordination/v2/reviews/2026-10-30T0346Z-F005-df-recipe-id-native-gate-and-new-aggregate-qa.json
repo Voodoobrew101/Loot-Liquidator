@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_NATIVE_RECIPE_ID_MALFORMED_CONTEXT_REGRESSION",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 16,
+  "runUTC": "2026-10-30T03:46:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "e7c1bb4d8cf6c9e28cd1fcdbc0c365fc950418c7",
+  "testCommit": "a292f73b6f7d10e1bafbb40c5888a8fe675f2e8a",
+  "status": "CONDITIONAL_PENDING_NATIVE_RETEST",
+  "subject": {
+    "modelID": "df-milling-decision-sensitivity-v1.0.2",
+    "modelCodeBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
+    "modelManifestBlobSHA": "07d9a0c640e0f795b6a0e6d88b7cbe2afabd877f",
+    "validatorOldBlobSHA": "0f3eb4a1de293fbfebd74c484e252a3887c3e398",
+    "validatorNewBlobSHA": "ba131ea1984d271c274e2d87496039fdd901d5c2"
+  },
+  "reproducedFailure": {
+    "runID": 40998184488,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40998184488",
+    "observed": "F005 strict DF native gate failed 1/16 because fixture pinned selfTest 32 while v1.0.2 returns 41; CI log shows 41 !== 32",
+    "failureClass": "STALE_VALIDATOR_ASSERTION_NOT_MODEL_DEFECT"
+  },
+  "independentRepair": {
+    "file": "research/tests/v2/test_f005_df_milling_raw_context_and_universe.js",
+    "description": "Update exact model version/self-test expected 41 and independently assert nine malformed RAW recipe IDs rejected while a valid RAW numeric recipe and SYNTHETIC UNKNOWN remain accepted; preserve strict 16-case CI gate.",
+    "malformedRecipeIDs": [
+      "banana",
+      "382981",
+      382981.5,
+      0,
+      -1,
+      null,
+      "NaN",
+      "Infinity",
+      "Number.MAX_SAFE_INTEGER+1"
+    ],
+    "assertionsAddedWithinExistingControl": 13,
+    "caseCountUnchanged": 16
+  },
+  "newEvidenceReview": {
+    "file": "research/evidence/v2/2026-10-30T0333Z-F004-midnight-r2-prospecting-JD3K-totals.json",
+    "blobSHA": "88be9ce78ba2eb0d3e74b01ab2c6e06dfcd2fc2d",
+    "cohorts": 3,
+    "namedOutputTotals": 17,
+    "originalStudyLineages": 1,
+    "arithmeticChecks": 35,
+    "arithmeticPassed": 35,
+    "actualCompletedCasts": null,
+    "resourcefulnessRefunds": null,
+    "outputItemIDs": null,
+    "outputQualityRanks": null,
+    "observationEpoch": null,
+    "verdict": "CONTEXT_ONLY_NOT_INDEPENDENTLY_VALIDATED_NO_ECONOMIC_PROMOTION",
+    "note": "Nominal operations 50/5=10 are not observed completed casts; unlisted diamond is not verified zero; mirror pages are not independent studies."
+  },
+  "readiness": {
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "totalFields": 4072,
+    "missingOriginalEvidenceFields": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "fieldsGE90": 0
+  },
+  "testsActuallyRun": [
+    {
+      "name": "GitHub Actions prior native failing log inspection",
+      "result": "CONFIRMED_1_OF_16_FAILURE",
+      "runID": 40998184488
+    },
+    {
+      "name": "GitHub code and manifest post-write readback",
+      "result": "PASS",
+      "checks": [
+        "validator blob ba131ea1984d271c274e2d87496039fdd901d5c2",
+        "model blob and manifest match"
+      ]
+    },
+    {
+      "name": "New F004 original-aggregate evidence independent arithmetic and economic-boundary assertions",
+      "environment": "JavaScript V8 connector runtime",
+      "passed": 35,
+      "failed": 0
+    }
+  ],
+  "nativeRetest": {
+    "runID": 40999083264,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40999083264",
+    "status": "IN_PROGRESS_AT_REVIEW_CREATION",
+    "expectedGate": "16_OF_16_STRICT"
+  },
+  "testsNotRun": [
+    "Native Node and Lua locally unavailable; awaiting GitHub Actions run 40999083264",
+    "Actual Retail completed-cast cohort or game client test",
+    "Independent holdout family validation"
+  ],
+  "economicPolicy": {
+    "confidenceOfUnsupportedFallback": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "rawEvidenceChanges": 0,
+    "frozenTSMChanges": 0,
+    "productionChanges": 0,
+    "validatorFixtureFilesChanged": 1
+  },
+  "blockers": [
+    "Native strict 16-case pipeline on new fixture commit must pass before unconditional acceptance.",
+    "F003 type checks cannot establish actual recipe eligibility, output-universe completeness, or independent current Retail observations.",
+    "New F004 aggregate source lacks actual completed casts, refund/patch epoch, output item IDs and ranks."
+  ],
+  "nextRepairOwner": "independent-validator if CI remains red; otherwise coordinator for F003 model-only conditional acceptance",
+  "nextTask": "F005_VERIFY_NATIVE_DF_16_GATE_AND_HOLDOUT_SCOPE_OR_PIVOT_TO_NEW_READY_EVIDENCE"
+}
