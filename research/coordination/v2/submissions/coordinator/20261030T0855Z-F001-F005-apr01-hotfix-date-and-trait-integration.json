@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F002_F003_F004_F005_APR01_EPOCH_CHRONOLOGY_AND_TRAIT_INTEGRATION",
+  "runID": "20261030T0855Z-F001-F005-apr01-hotfix-date-and-trait-integration",
+  "workflowRevision": 2,
+  "queueRevision": 22,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "011cd386617fddcabef06ce5be4e7c1f690c62c8",
+  "acceptanceCommit": "b9072804a0147058a21d0042a84d91ab650e123e",
+  "scorecardCommit": "ccb43c4624b02d244054ccc3eadb5a7864013ac1",
+  "resultCommitBeforeSubmission": "ccb43c4624b02d244054ccc3eadb5a7864013ac1",
+  "submissionCommit": "SELF_COMMIT_VERIFY_BY_GITHUB_READBACK",
+  "status": "SUBMITTED_FOR_INDEPENDENT_QA_AND_NEXT_COORDINATOR_ACCEPTANCE",
+  "changedFiles": [
+    "research/coordination/v2/acceptance/20261030T0855Z-F001-F005-apr01-hotfix-date-and-trait-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/20261030T0855Z-F001-F005-apr01-hotfix-date-and-trait-integration.json"
+  ],
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T0855Z-F001-F005-apr01-hotfix-date-and-trait-integration.json",
+  "exactDeltas": {
+    "newCoordinatorAcceptanceFiles": 1,
+    "updatedCoordinatorScorecardFiles": 1,
+    "newCoordinatorSubmissionFiles": 1,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCellsPromoted": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailCastFamilies": 0,
+    "productionFilesChanged": 0,
+    "legacyAssignmentsChanged": 0,
+    "frozenTSMChanged": 0,
+    "rawEvidenceChanged": 0,
+    "tooltipOnlyPolicyChanged": 0,
+    "schedulesChanged": 0
+  },
+  "decisions": [
+    {
+      "owner": "completion-engineer",
+      "task": "F002_ANYTIME_FIXTURE_PINS",
+      "verdict": "CONDITIONALLY_ACCEPT_RESEARCH_GATE_ONLY"
+    },
+    {
+      "owner": "baseline-modeller",
+      "task": "F003_MIDNIGHT_PROSPECT_APR03_HOTFIX_EPOCH_PIVOT",
+      "verdict": "REJECT_EPOCH_DATE_AND_PRE_CLASSIFICATION_PENDING_REPAIR"
+    },
+    {
+      "owner": "evidence-researcher",
+      "task": "F004_MIDNIGHT_DIAMOND_ORE_SPEC_ELIGIBILITY",
+      "verdict": "ACCEPT_QUALITATIVE_UNLOCK_CONTEXT_ONLY"
+    },
+    {
+      "owner": "independent-validator",
+      "task": "F005_MIDNIGHT_DIAMOND_TRAIT_ELIGIBILITY",
+      "verdict": "ACCEPT_CONDITIONAL_RESEARCH_REVIEW_NOT_NATIVE_PASS"
+    }
+  ],
+  "newIntegrityFinding": {
+    "type": "OFFICIAL_SOURCE_DATE_MISMATCH_AFFECTS_PRE_POST_COHORT_CLASSIFICATION",
+    "source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+    "sourceMirror": "https://news.blizzard.com/en-us/article/24266320/hotfixes-april-17-2026",
+    "officialEntryDate": "2026-04-01",
+    "modelIncorrectEntryDate": "2026-04-03",
+    "modelSourceBlob": "95708d9664b92239818aac4443d965ce9840b5ff",
+    "modelManifestBlob": "2fead763af9abd0f79cab518a13151d89ec01a4c",
+    "demonstration": "The committed model self-test asserts classifyEpoch('2026-04-01T23:59:59Z') == PRE_HOTFIX even though the official change appears in the April 1 hotfix section.",
+    "risk": "An April 1 cohort may be misclassified as pre-hotfix; exact deployment hour is unknown, so a conservative quarantine is required. No measured numeric P/E was promoted.",
+    "remediation": "Re-anchor the official date to April 1 and conservatively quarantine ambiguous boundary observations; test no April 1 observation is falsely certified PRE, and preserve no-effect-size claims."
+  },
+  "testsActuallyRun": {
+    "coordinatorStaticChecks": {
+      "passed": 16,
+      "failed": 0,
+      "scope": "GitHub source/manifest/test SHA pins, priority membership, numeric policy and reproduced date-mismatch predicates"
+    },
+    "sourceDateCheck": "Official Blizzard cumulative hotfix page independently checked for April 1 heading and prospecting frequency line; no quantitative yield claimed",
+    "specialistReported": {
+      "modelSelfTests": 44,
+      "modelSyntheticArithmetic": 5600,
+      "traitV8Assertions": 19,
+      "traitMutants": 12,
+      "compilerSimulations": 11
+    },
+    "coordinatorNativeNode": "NOT_RUN_LOCAL_GITHUB_CLONE_UNAVAILABLE",
+    "nativeNodeNewTraitSuite": "NOT_RUN",
+    "nativeNodeNewEpochModel": "NOT_RUN",
+    "pipelineCheck": "NOT_RUN_NO_ACCEPTED_BUILD_INPUTS_CHANGED",
+    "lua51": "NOT_RUN",
+    "wowClient": "NOT_RUN",
+    "currentHeadCI": "NOT_VERIFIED"
+  },
+  "testsNotRun": "NOT_RUN_LOCAL_GITHUB_CLONE_UNAVAILABLE",
+  "blockers": [
+    "F003 April 3 chronology conflicts with official April 1 source and permits April 1 PRE classification",
+    "F003 Dragonflight joint-cast 10 array-attestation synthetic failures remain pending repair and strict native 13/13",
+    "F003 Midnight anytime nested context 8 previously reported failures remain pending correction and strict native execution",
+    "F002 fixture/policy pin hardening awaits native pipeline and independent acceptance",
+    "F005 new 19-case trait suite not executed on native repository checkout",
+    "242608/242712 item identity, exact trait unlock conditions and current-Retail completed-cast evidence unavailable",
+    "116 expectedQuantity evidence gaps and zero independently held-out current-Retail cast families"
+  ],
+  "nextTask": {
+    "owner": "baseline-modeller",
+    "taskID": "F003_CORRECT_APR01_HOTFIX_EPOCH",
+    "scope": "Highest-priority new defect: replace erroneous April 3 official date with April 1, revise PRE/QUARANTINE/POST boundaries conservatively without claiming deployment hour, ensure April 1 cannot be certified PRE, add independent regression fixtures and keep all seven Eversong Diamond keys preview-only. Then repair prior DF array/nested context integrity defects."
+  },
+  "zeroDeltaPivot": "New primary-source chronology discrepancy and seven-key unlock-context decision; no unchanged source re-audit or fabricated numeric promotion",
+  "preservation": {
+    "mainUntouched": true,
+    "runtimeProfilesUntouched": true,
+    "legacyAssignmentsUntouched": true,
+    "rawEvidenceUntouched": true,
+    "frozenTSMUntouched": true,
+    "tooltipOnlyUnchanged": true,
+    "otherRoleFilesUntouched": true,
+    "schedulesUntouched": true
+  }
+}
