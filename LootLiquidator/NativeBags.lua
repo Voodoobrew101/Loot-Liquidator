@@ -1,11 +1,10 @@
 -- Native Blizzard bags, banks and guild-bank adapters.
-local ADDON, LL = ...
+local _, LL = ...
 local subscriptions={}
 local eventFrame=CreateFrame("Frame")
 local function NewNativeObserver()
-    local observer={events={}}
+    local observer={}
     function observer:RegisterEvent(event)
-        self.events[event]=true
         if not subscriptions[event] then subscriptions[event]={};eventFrame:RegisterEvent(event) end
         subscriptions[event][#subscriptions[event]+1]=self
     end
@@ -21,7 +20,6 @@ end)
 do -- Default bags, regular bank and Warband bank
 -- Default Blizzard bag integration, separate and combined modes where their
 -- item buttons expose bag/slot IDs. Never touch Blizzard's addon files.
-local ADDON, LL = ...
 local scheduled = false
 local fullPending = false
 local changedBags = {}
@@ -67,7 +65,6 @@ end
 
 local function ScanFrame(frame, changed)
     if not frame or not frame.IsShown or not frame:IsShown() then return end
-    local num=frame.GetNumChildren and frame:GetNumChildren() or 0
     -- Retail combined bags may use pooled buttons. Check visible children and
     -- their grandchildren; ignore unknown widget shapes rather than mislabel.
     local candidates={}
@@ -311,7 +308,6 @@ end
 end
 
 do -- Guild bank
-local ADDON, LA = ...
 local hooked = false
 local queued = false
 local guildOpen = false
@@ -328,9 +324,9 @@ end
 local function UpdateGuild()
     local f = _G.GuildBankFrame
     if not f then return end
-    if not guildOpen or not LA.db or not LA.db.showGuildBank
+    if not guildOpen or not LL.db or not LL.db.showGuildBank
        or not f:IsShown() or (f.mode and f.mode ~= "bank") then
-        for i=1,98 do LA:ClearButton(GuildButton(f, i)) end
+        for i=1,98 do LL:ClearButton(GuildButton(f, i)) end
         return
     end
     local tab = GetCurrentGuildBankTab and GetCurrentGuildBankTab()
@@ -346,16 +342,16 @@ local function UpdateGuild()
                     local _, c = GetGuildBankItemInfo(tab, slot)
                     count = c or 1
                 end
-                if LA.RememberATTItem then LA:RememberATTItem(link) end
-                LA:Paint(b, link, LA:Evaluate(link, {guild=true, count=count,_LLFastBadge=true}))
+                if LL.RememberATTItem then LL:RememberATTItem(link) end
+                LL:Paint(b, link, LL:Evaluate(link, {guild=true, count=count,_LLFastBadge=true}))
             else
-                LA:ClearButton(b)
+                LL:ClearButton(b)
             end
         end
     end
 end
 
-function LA:QueueGuildRefresh()
+function LL:QueueGuildRefresh()
     if queued then return end
     queued = true
     if C_Timer and C_Timer.After then
@@ -371,12 +367,12 @@ local function HookGuild()
     local f = _G.GuildBankFrame
     if f:IsShown() then guildOpen = true end
     if type(f.Update) == "function" then
-        hooksecurefunc(f, "Update", function() LA:QueueGuildRefresh() end)
+        hooksecurefunc(f, "Update", function() LL:QueueGuildRefresh() end)
     elseif type(_G.GuildBankFrame_Update) == "function" then
-        hooksecurefunc("GuildBankFrame_Update", function() LA:QueueGuildRefresh() end)
+        hooksecurefunc("GuildBankFrame_Update", function() LL:QueueGuildRefresh() end)
     end
-    f:HookScript("OnShow", function() guildOpen = true; LA:QueueGuildRefresh() end)
-    f:HookScript("OnHide", function() guildOpen = false; LA:QueueGuildRefresh() end)
+    f:HookScript("OnShow", function() guildOpen = true; LL:QueueGuildRefresh() end)
+    f:HookScript("OnHide", function() guildOpen = false; LL:QueueGuildRefresh() end)
 end
 
 local e = NewNativeObserver()
@@ -395,7 +391,7 @@ e:SetScript("OnEvent", function(_, event, name)
     if event == "GUILDBANKFRAME_OPENED" then guildOpen = true end
     if event == "GUILDBANKFRAME_CLOSED" then guildOpen = false end
     HookGuild()
-    LA:QueueGuildRefresh()
+    LL:QueueGuildRefresh()
 end)
 
 end

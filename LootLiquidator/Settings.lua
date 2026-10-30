@@ -1,6 +1,6 @@
 -- Native Options > AddOns configuration. Every appearance preference applies
 -- to BetterBags, Blizzard bags, banks and tooltips simultaneously.
-local ADDON, LL = ...
+local _, LL = ...
 local COLORS={A={1,.84,.18},V={.85,.85,.85},D={.72,.36,1},
     M={.20,.88,.36},P={.25,.75,1},S={1,.55,.21},C={1,.64,.22},Q={1,.53,.18},T={.40,.94,.84}}
 local NAMES={A="Auction",V="Vendor",D="Disenchant",M="Mill",P="Prospect",
@@ -74,7 +74,7 @@ local function TSMDropdown(category,key,title)
             out:Add("@assigned","Use item's assigned TSM operation",
                 "Uses TSM grouping and its first auctioning operation")
         end
-        local names,reason=LL:GetAuctionOperationNames()
+        local names=LL:GetAuctionOperationNames()
         for _,name in ipairs(names) do
             out:Add(name,name,"Preview prices using this operation; assign in TSM to actually post with it")
         end
@@ -105,9 +105,6 @@ local function ExplainOnHover(control,title,description)
         end
     end)
     control:SetScript("OnLeave",function() if GameTooltip then GameTooltip:Hide() end end)
-end
-local function SettingsButton(parent)
-    return LL:CreateSettingsButton(parent)
 end
 local PreviewPanel
 local function AppearancePanel()
@@ -165,7 +162,7 @@ local function AppearancePanel()
         LEFT="Middle left",CENTER="Center",RIGHT="Middle right",
         BOTTOMLEFT="Bottom left",BOTTOM="Bottom center",BOTTOMRIGHT="Bottom right"}
     for i,pos in ipairs(POSITIONS) do
-        local btn=SettingsButton(panel)
+        local btn=LL:CreateSettingsButton(panel)
         btn:SetSize(118,24)
         btn:SetPoint("TOPLEFT",20+((i-1)%3)*130,-171-math.floor((i-1)/3)*27)
         ExplainOnHover(btn,"Badge position","Places the badge at this point on the item icon. Applies to every supported bag interface.")
@@ -204,7 +201,7 @@ local function AppearancePanel()
     title("Colors (click to customize each action)",20,-320)
     for i,letter in ipairs(ORDER) do
         local row=math.floor((i-1)/2);local col=(i-1)%2
-        local btn=SettingsButton(panel)
+        local btn=LL:CreateSettingsButton(panel)
         btn:SetSize(174,26)
         btn:SetPoint("TOPLEFT",20+col*192,-344-row*31)
         local function update()
@@ -364,7 +361,7 @@ PreviewPanel=function()
     name:SetPoint("TOPLEFT",icon,"TOPRIGHT",16,-5)
     local indicator=panel:CreateFontString(nil,"ARTWORK","GameFontHighlightSmall")
     indicator:SetPoint("TOPLEFT",name,"BOTTOMLEFT",0,-8)
-    local change=SettingsButton(panel)
+    local change=LL:CreateSettingsButton(panel)
     change:SetSize(155,25);change:SetPoint("TOPLEFT",panel,"TOPLEFT",337,-37)
     change:SetText("Next sample item")
     panel.refresh=function()

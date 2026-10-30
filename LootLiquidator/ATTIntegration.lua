@@ -447,20 +447,19 @@ function LL:ATTTokenSlotSummary(token)
         end
         local group=grouped[slot]
         if not group then
-            group={slot=slot,ids={},rows={},looks={},classMasks={},collected=0,missing=0,unknown=0,count=0}
+            group={slot=slot,ids={},rows={},looks={},collected=0,missing=0,unknown=0,count=0}
             grouped[slot]=group
         end
-        local appearanceID,sourceID
+        local appearanceID
         if collection and type(collection.GetItemInfo)=="function" then
             local ok,aid,sid=pcall(collection.GetItemInfo,"item:"..itemID)
             if ok and SafeNumber(aid) and SafeNumber(sid) then
-                appearanceID,sourceID=aid,sid
+                appearanceID=aid
             end
         end
         local state=self:AppearanceCollectionState("item:"..itemID)
         local mask=self.ItemClassMasks and self.ItemClassMasks[itemID]
         if type(mask)=="number" and mask>0 then
-            group.classMasks[mask]=true
             allClassMasks[mask]=true
         end
         group.rows[#group.rows+1]={id=itemID,name=name or ("Item "..itemID),
@@ -488,7 +487,6 @@ function LL:ATTTokenSlotSummary(token)
         group.multiClass=classCount>1
         group.title=(type(commonPrefix)=="string" and commonPrefix.." " or "")..group.slot
         group.looks=nil
-        group.classMasks=nil
         result[#result+1]=group
     end
     table.sort(result,function(a,b)
@@ -588,10 +586,10 @@ function LL:ATTTokenClassSummary(token)
             local ok,value=pcall(icons,id)
             if ok and (type(value)=="number" or type(value)=="string") then icon=value end
         end
-        local appearance,source
+        local appearance
         if collection and type(collection.GetItemInfo)=="function" then
-            local ok,a,s=pcall(collection.GetItemInfo,"item:"..id)
-            if ok then appearance,source=a,s end
+            local ok,a=pcall(collection.GetItemInfo,"item:"..id)
+            if ok then appearance=a end
         end
         local collected=self:AppearanceCollectionState("item:"..id)
         local row={id=id,name=name or "Reward loading",link=link,icon=icon,collected=collected}
@@ -627,7 +625,7 @@ function LL:TokenBestVendorReward(token)
     if type(info)~="function" then return nil end
     local best
     for _,id in ipairs(token.rewards) do
-        local ok,name,link,quality,level,required,className,subClass,stack,loc,icon,sellPrice=
+        local ok,name,link,_,_,_,_,_,_,loc,_,sellPrice=
             pcall(info,id)
         if ok and type(sellPrice)=="number" and sellPrice>=0
             and EquippableSlot(loc) then
@@ -666,32 +664,9 @@ function LL:TokenDisenchanter(f)
         end
     end
 end
--- Possible output's TSM Destroy is only a QUOTE, not the token's expected
--- value. Rank nothing from token quotes without verified odds and class rules.
+-- Retained compatibility hook; aggregate TSM Destroy never values token rewards.
 function LL:TokenDEQuotes(f,token,enchanter)
-    if not token or not enchanter then return nil end
-    local out={}
-    local fn=C_Item and C_Item.GetItemInfo or GetItemInfo
-    if type(fn)~="function" then return nil end
-    if not enchanter.class or not self.ItemPermitsClass
-        or self:ItemPermitsClass(f.id,enchanter.class)==false then return nil end
-    for _,id in ipairs(token.rewards) do
-        -- ATT class sets cannot be disenchanted by an unrelated class. A
-        -- checked alt must legally be able to redeem the actual reward.
-        if self:ItemPermitsClass(id,enchanter.class)==true then
-        local ok,_,_,quality,_,_,_,_,_,slot,_,_,class=pcall(fn,id)
-        if ok and (class==2 or class==4) and quality and quality>=2 and quality<=4
-            and type(slot)=="string" and slot~=""
-            and not (self.ExternalDisenchantRestriction and self:ExternalDisenchantRestriction(id)) then
-            local value=nil -- No aggregate TSM Destroy valuation for token rewards.
-            if type(value)=="number" and value>0 then
-                out[#out+1]={itemID=id,value=value*(1-(self.AHFeeRate and self:AHFeeRate() or 0))}
-            end
-        end
-        end
-    end
-    table.sort(out,function(a,b)return a.value>b.value end)
-    return #out>0 and out or nil
+    return nil
 end
 
 function LL:InvalidateATTCache()

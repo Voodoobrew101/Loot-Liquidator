@@ -320,11 +320,9 @@ local function validateDelta(self,p,after)
         if n>1 then return nil,"Input item variants are ambiguous" end
     end
     if p.method=="Disenchant" then
-        if #inputs==0 then return nil,"Inputs have not settled" end
         local f=p.before.facts[inputs[1].itemID]
         if next(returned) or #inputs~=1 or inputs[1].quantity~=1 or not self.EligibleDisenchant or not self:EligibleDisenchant(f) then return nil,"Unverified disenchant input" end
     elseif p.method=="Mill" or p.method=="Prospect" then
-        if #inputs==0 then return nil,"Inputs have not settled" end
         local f=p.before.facts[inputs[1].itemID]
         if not f then return nil,"Input metadata unavailable" end
         local batch=processingBatch(self,p,f)
