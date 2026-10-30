@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001",
+  "workflowRevision": 2,
+  "queueRevision": 24,
+  "runID": "20261030T1055Z-F001-F005-native-historical-df-array-tww-context-integration",
+  "reportUTC": "2026-10-30T10:55:36Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "bf6b5aebce1b34461ebdaccbdaaf96b37b9d0ad7",
+  "sourceScorecardBlob": "65dd0c08fcc4d893d9763a0d0b8683921bd57552",
+  "canonicalReadinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "canonicalPrioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "taskSelection": "Highest priority ready coordinator integration: accept changed F002 native historical gate, review F003 array repair, admit F004 single-lineage context only, and integrate independent F005 changed-source QA; preserve unresolved April 1 hotfix blocker.",
+  "decisions": [
+    {
+      "role": "completion-engineer",
+      "sourceSubmission": "research/coordination/v2/submissions/completion-engineer/20261030T1009Z-F002-historical-r3-native-strict-20-gate.json",
+      "sourceBlob": "b49614a508d49a9f153e987c2a3a1f6774c16a23",
+      "verdict": "ACCEPT_RESEARCH_ONLY_NATIVE_GATE",
+      "facts": "Native GitHub Actions at bf6b5aeb completed pipeline --check; job log explicitly PASS historical F005 20/20 strict, source/rank isolation, plus Lua 5.1. Independent F005 review of gate's trust root remains pending.",
+      "implementationPath": "research/tools/run_completion_pipeline.js",
+      "implementationBlob": "f72b0caa0085ce3b9c79e32de1cd3c5ae6fabcbf"
+    },
+    {
+      "role": "baseline-modeller",
+      "sourceSubmission": "research/coordination/v2/submissions/baseline-modeller/20261030T1026Z-F003-DF-PROSPECT-ARRAY-CONTEXT-ATTESTATION-REPAIR.json",
+      "sourceBlob": "cfe3f4d248464f4d420e253a42cfb5a2d937a54c",
+      "verdict": "CONDITIONAL_ACCEPT_SYNTHETIC_REPAIR_PENDING_NATIVE_F005",
+      "facts": "Independent validator V8 retest 61 model, 13 array, 23 joint-cast passing; previous 10/13 array failures now 13/13 V8. Native pipeline CI passed but array fixture not executed natively. April 1 Midnight hotfix error remains uncorrected.",
+      "implementationPath": "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
+      "implementationBlob": "70bab20081db23e899a45b73186200869efae48c"
+    },
+    {
+      "role": "evidence-researcher",
+      "sourceSubmission": "research/coordination/v2/submissions/evidence-researcher/2026-10-30T1032Z-F004-tww-milling-skill-rank-submission.json",
+      "sourceBlob": "9aabf987112c82d471d7d64259c7cec6b9f7c557",
+      "verdict": "ACCEPT_ONE_ORIGINAL_LINEAGE_CONTEXT_ONLY",
+      "facts": "One unmeasured LotzBoi Wowhead comment duplicated on 4 pages, 3 claimed skill bands 0-252/253-504/505+, 3 Mycobloom rank positive ranges 4-6/5-7/6-8, 10-herb claimed operation; 5-herb guide conflict and current-patch denominator unverified. Do not promote to E, P, hard yield bounds, or recipe eligibility.",
+      "evidenceBlob": "1396ef6ce5348e1d0cf9052ef0ad205975c3f869"
+    },
+    {
+      "role": "independent-validator",
+      "sourceSubmission": "research/coordination/v2/submissions/independent-validator/20261030T1040Z-F005-TWW-MILLING-SKILL-RANK-AND-DF-ARRAY-REPAIR.json",
+      "sourceBlob": "f4b982672d9d4b743378d2139c94c1de5ffc0470",
+      "reviewBlob": "905d73c6ff928b446fb69dae998412bac9fcd19b",
+      "verdict": "ACCEPT_INDEPENDENT_REVIEW_AND_TEST_FIXTURE_CONDITIONAL",
+      "facts": "V8 61/61 model, 13/13 DF array, 23/23 joint cast, 25/25 TWW source isolation including 15 adversarial mutations; native Node for new TWW/DF array tests still not run, no independent current Retail holdout.",
+      "fixtureBlob": "f24454a4187263c064eb3a17e94e0770b279e618"
+    }
+  ],
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "fieldSlots": 4072,
+    "workingNumeric": 4072,
+    "evidenceNumeric": 3558,
+    "evidenceMissing": 514,
+    "evidenceMissingE": 116,
+    "priorityRecords": 217,
+    "confidenceGE90": 0,
+    "independentCurrentRetailHoldoutFamilies": 0
+  },
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "evidenceNumericCellsAdded": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newOriginalUnmeasuredSourceLineages": 1,
+    "newIndependentCurrentRetailLineages": 0,
+    "newModelFiles": 0,
+    "repairedModelFilesByF003": 2,
+    "newIndependentTestFilesByF005": 1,
+    "coordinatorOwnedFiles": 3,
+    "productionWrites": 0
+  },
+  "testsActuallyVerified": [
+    {
+      "name": "GitHub Actions native research-candidate",
+      "runID": 41042690223,
+      "headSHA": "bf6b5aebce1b34461ebdaccbdaaf96b37b9d0ad7",
+      "conclusion": "success",
+      "jobLog": "PASS F005 historical R3 native 20/20; PASS source-pin and pipeline --check; Lua 5.1 and JSON schema"
+    },
+    {
+      "name": "GitHub readback exact F002/F003/F004/F005 source and review blobs",
+      "result": "PASS",
+      "modelSHA": "70bab20081db23e899a45b73186200869efae48c",
+      "twwEvidenceSHA": "1396ef6ce5348e1d0cf9052ef0ad205975c3f869",
+      "validatorReviewSHA": "905d73c6ff928b446fb69dae998412bac9fcd19b"
+    },
+    {
+      "name": "Canonical readiness and priorities reconciliation",
+      "result": "PASS",
+      "mappingCount": 1018,
+      "priorityRecords": 217
+    }
+  ],
+  "testsReportedButNotRerun": [
+    {
+      "suite": "F003 model self-test",
+      "runtime": "V8",
+      "passed": 61
+    },
+    {
+      "suite": "F005 DF array attestation",
+      "runtime": "V8",
+      "passed": 13
+    },
+    {
+      "suite": "F005 DF joint-cast",
+      "runtime": "V8",
+      "passed": 23
+    },
+    {
+      "suite": "F005 TWW source isolation",
+      "runtime": "V8",
+      "passed": 25
+    }
+  ],
+  "testsNotRun": [
+    "Native Node DF array 13 and new TWW source 25 suites",
+    "Native corrected April 1 epoch model (not submitted)",
+    "Native Midnight nested 13 and trait 19 strict repaired checks",
+    "Independent current-Retail complete-cast holdouts or WoW client",
+    "Independent external trust root for source pins"
+  ],
+  "blockers": [
+    "Official April 1, 2026 Midnight prospecting hotfix remains misclassified as April 3 in F003 model; unknown exact deployment hour",
+    "10 DF array integrity defects repaired in V8 but no native independent acceptance",
+    "Eight Midnight nested-context defects remain quarantined",
+    "TWW 10-herb indexed spell vs historical five-herb guide conflict unresolved by live cast evidence",
+    "No current-Retail zero-inclusive completed-cast data, independently verified full output universe, or validated economic baseline",
+    "Historical 20-case gate's repository-local trust root still requires F005 review"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_APR01_HOTFIX_EPOCH_CORRECTION",
+      "scope": "Repair official April 1 (not April 3) Midnight prospecting hotfix boundary first, quarantine April 1 without an evidenced deployment hour; submit native-tested model and exact patch/rank context checks. After that repair Midnight nested-context 8 failing cases. Do not substitute the now-V8-passing DF array model for this unresolved defect."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_NATIVE_ARRAY_TWW_AND_APR01_REVIEW",
+      "scope": "Run exact F003 DF model SHA 70bab20081db23e899a45b73186200869efae48c against pinned 13-case array and 23-case joint-cast fixtures under native Node; run new 25-case TWW source-isolation suite natively; independently inspect F002 historical 20-case gate and source pins; review corrected April 1 model when available, then revisit Midnight nested 13 and trait 19. No economic promotions."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_STRICT_CHANGED_SOURCE_AND_MODEL_GATES",
+      "scope": "Preserve native historical R3 20/20 and 14-source 8/8 gates. After F005 native acceptance, integrate 13-case DF array and 25-case TWW source isolation as strict fail-closed, SHA-pinned native checks; keep historical/context tests distinct from current-Retail evidence. Run pipeline --check and Lua 5.1 after any accepted build input change; no addon edits."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_TWW_MILLING_CURRENT_RETAIL_THRESHOLD_HOLDOUT",
+      "scope": "Seek one actual current-Retail, zero-inclusive TWW milling cohort on both sides of 253/505 effective-skill thresholds, with 10-herb vs 5-herb spell/build context, all co-output IDs/ranks, actual casts, refunds, profession spec/gear and separate independent holdout. If no original current cohort, pivot to priority-104 Gem Finding selector eligibility rather than reusing the same LotzBoi mirrors."
+    }
+  ],
+  "nextTask": "F003_APR01_HOTFIX_EPOCH_CORRECTION",
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Re-auditing unchanged 217 priority keys or historical sources",
+    "to": "Integrate changed native historical gate, repaired array attestation and new independent TWW source isolation; assign strict native follow-through"
+  },
+  "preserved": [
+    "main",
+    "implementation/five-agent-runtime-profiles",
+    "research/coordination/assignments.json",
+    "raw evidence",
+    "frozen TSM",
+    "tooltip-only policies",
+    "other agent submissions and ownership",
+    "existing schedules"
+  ],
+  "economicPolicy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0
+  },
+  "resultCommit": "RESOLVED_BY_GITHUB_COMMIT_CONTAINING_THIS_FILE"
+}
