@@ -136,6 +136,7 @@ function run(root, options={}) {
   };
   for (const [relative,contents] of Object.entries(outputs)) writeOrCheck(root,relative,contents,check);
   if (options.test !== false) {
+    require('./verify_context_snapshots.js').verify(root);
     // F005 owns these fixtures. Enforce their exact synthetic/source-isolation
     // contract under native Node, not just a V8 shim. The separate F003
     // Midnight anytime suite awaits its model-owner repair and must not be
@@ -161,7 +162,7 @@ function run(root, options={}) {
         throw Error("F005 native fail-closed fixture failed: "+spec.file+"\n"+child.stdout+child.stderr);
       console.log("PASS: independent native F005 "+spec.suite+" "+spec.count+"/"+spec.count+" (research-only)");
     }
-    for (const file of ["test_working_estimates.js","test_compile_itemdb.js","test_itemdb_candidate.js","test_completion_pipeline.js","test_five_agent_workflow.js"]) {
+    for (const file of ["test_json_context_snapshot.js","test_mechanics_compiler.js","test_working_estimates.js","test_compile_itemdb.js","test_itemdb_candidate.js","test_completion_pipeline.js","test_five_agent_workflow.js"]) {
       const testPath=path.join(root,"research/tests",file);
       if (!fs.existsSync(testPath)) throw Error("Required check missing: "+file);
       const child=spawnSync(process.execPath,[testPath],{cwd:root,encoding:"utf8"});
@@ -341,7 +342,7 @@ function run(root, options={}) {
       "test_f005_midnight_anytime_context_lineage.js":
         "fbb838e348429d6deed741060fe992ead560190b",
       "test_f005_anytime_typed_context_snapshot_integrity.js":
-        "2e64ba46af242740c7a44ecf6bb204ae1345c112"
+        "584e46e5716fe1c8e0aeebdbc1100ec26472e64e"
     });
     for(const spec of anytimeSpecs) {
       const fixture=path.join(root,"research/tests/v2",spec.file);

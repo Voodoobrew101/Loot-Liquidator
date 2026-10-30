@@ -2,24 +2,14 @@
 // F003 research-only. Dragonflight prospecting joint-cast sensitivity and historical source conflict.
 // No mapping admission, production EV, recipe eligibility, or independent evidence promotion.
 const assert=require('node:assert/strict');
-const MODEL_ID='df-prospecting-joint-cast-conflict-v1.0.1';
+const {snapshotJSON}=require('./json_context_snapshot.js');
+const MODEL_ID='df-prospecting-joint-cast-conflict-v1.0.2';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const TARGETS=Object.freeze(['tsm:prospect:188658:192870:L1205','tsm:prospect:188658:192871:L1206','tsm:prospect:189143:192869:L1242','tsm:prospect:189143:192870:L1243','tsm:prospect:190311:192869:L1280']);
 const int=(x,min=0)=>Number.isSafeInteger(x)&&x>=min;
 const nn=x=>typeof x==='number'&&Number.isFinite(x)&&x>=0;
-function jsonSafe(value,ancestors=new Set()){
- if(value===null||typeof value==='string'||typeof value==='boolean')return true;
- if(typeof value==='number')return Number.isFinite(value);
- if(typeof value!=='object'||ancestors.has(value))return false;
- ancestors.add(value);
- let valid=false;
- if(Array.isArray(value)){
-  valid=Object.keys(value).length===value.length&&value.every(v=>jsonSafe(v,ancestors));
- }else if(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null){
-  valid=Reflect.ownKeys(value).every(k=>typeof k==='string'&&
-   Object.prototype.propertyIsEnumerable.call(value,k)&&jsonSafe(value[k],ancestors));
- }
- ancestors.delete(value);return valid;
+function jsonSafe(value){
+ try {snapshotJSON(value);return true;} catch (_) {return false;}
 }
 function checked(value,code='NONFINITE_OR_UNSAFE_RESULT'){
  requireThat(jsonSafe(value),code);return value;
@@ -34,6 +24,7 @@ function validEpoch(s){
  return y>=1970&&mo>=1&&mo<=12&&d>=1&&d<=new Date(Date.UTC(y,mo,0)).getUTCDate()&&h<24&&mi<60&&se<60&&zh<=14&&zm<60&&(zh<14||zm===0);
 }
 function validateContext(c){
+ snapshotJSON(c);
  requireThat(c&&c.gameMode==='RETAIL'&&c.expansion==='DRAGONFLIGHT'&&c.method==='PROSPECT','GAME_METHOD');
  requireThat(typeof c.patchBuild==='string'&&c.patchBuild.length>0&&validEpoch(c.observationEpoch),'PATCH_EPOCH');
  requireThat(typeof c.studyFamilyID==='string'&&c.studyFamilyID.trim()&&typeof c.sourceLineage==='string'&&c.sourceLineage.trim(),'LINEAGE');
@@ -52,7 +43,7 @@ function validateContext(c){
 }
 function analyzeCasts({context,sourceType,events,prices=null,inputUnitPrice=null,auctionCut=0.05}){
  validateContext(context);
- context=JSON.parse(JSON.stringify(context));
+ context=snapshotJSON(context);
  requireThat(['SYNTHETIC','RAW_CURRENT_RETAIL'].includes(sourceType),'SOURCE_TYPE');
  if(sourceType==='RAW_CURRENT_RETAIL')requireThat(/^\d+\.\d+\.\d+(?:\.\d+)?$/.test(context.patchBuild),'BUILD_REQUIRED');
  requireThat(Array.isArray(events)&&events.length>0,'EVENTS');
@@ -111,7 +102,7 @@ function historicalRateAlternatives({stableKey,nominalInputPerCast,candidates}){
 }
 function scenarioBounds({context,outputs,prices,inputUnitPrice,auctionCut=0.05,refundsPerCast=[0,0],alternativeValuePerCast=0}){
  validateContext(context);
- context=JSON.parse(JSON.stringify(context));
+ context=snapshotJSON(context);
  requireThat(Array.isArray(outputs)&&outputs.length===context.outputItemIDs.length,'FULL_OUTPUT_SET');
  requireThat(prices&&nn(inputUnitPrice)&&nn(auctionCut)&&auctionCut<1&&nn(alternativeValuePerCast),'PRICE_DOMAIN');
  interval(refundsPerCast,'REFUND_RANGE');requireThat(refundsPerCast[1]<=context.nominalInputPerCast,'REFUNDS_EXCEED_INPUT');

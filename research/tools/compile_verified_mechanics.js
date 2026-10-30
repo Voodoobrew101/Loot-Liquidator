@@ -5,7 +5,7 @@
 const fs=require("node:fs");
 const path=require("node:path");
 const crypto=require("node:crypto");
-const {canCompileNumericRule}=require("../tests/test_numeric_rules.js");
+const {canCompileNumericRule}=require("./numeric_rule_gate.js");
 const REGISTRY_PATH="research/mechanics/ProfessionMechanicsRegistry.json";
 
 function compileVerifiedMechanics(itemdb,registry,registrySource){
@@ -23,6 +23,12 @@ function compileVerifiedMechanics(itemdb,registry,registrySource){
    if(!gate.eligible)throw Error("Reject claimed approved mechanic "+r.hypothesisID+": "+gate.errors.join("; "));
    if(ids.has(r.hypothesisID))throw Error("Duplicate approved rule "+r.hypothesisID);
    ids.add(r.hypothesisID);
+   const supported={OUTPUT_UNCONDITIONAL_EXPECTATION:'RATIO_ADJUSTMENT',OUTPUT_OCCURRENCE:'RATIO_ADJUSTMENT_OCCURRENCE'};
+   if(supported[r.effectTarget]!==r.formulaID)throw Error('Unsupported approved mechanic '+r.hypothesisID+': '+r.formulaID);
+   const a=r.parameters.referenceFactor,b=r.parameters.targetFactor;
+   if(!Number.isFinite(a)||a<=0||!Number.isFinite(b)||b<0||b/a>10)throw Error('Invalid runtime ratio '+r.hypothesisID);
+   if(!r.referenceContext.build||!r.targetContext.build)throw Error('Approved mechanic requires explicit referenceContext.build and targetContext.build: '+r.hypothesisID);
+   if(!r.requiredLiveContext.every(k=>k!=='build'&&r.targetContext[k]!==undefined))throw Error('Missing required target context '+r.hypothesisID);
    const rule={
      ruleID:r.hypothesisID,profession:r.profession,expansionID:r.expansionID,
      method:r.method,effectTarget:r.effectTarget,formulaID:r.formulaID,
