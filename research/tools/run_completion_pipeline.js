@@ -71,6 +71,11 @@ function writeOrCheck(root, relative, contents, check) {
 }
 
 function run(root, options={}) {
+  // Test that changed bytes, missing inputs and stale/malformed pins are
+  // rejected before any candidate compilation, including --check builds.
+  const pinTests=require(path.join(root,"research/tools/source_sha_gate.js")).selfTest();
+  if(pinTests.failed!==0 || pinTests.passed!==8) throw Error("F002 source-pin self-test contract changed");
+  console.log("PASS: F002 source SHA adversarial regression 8/8");
   const {compile,loadInputs,validate} = require(path.join(root,"research/tools/compile_itemdb.js"));
   const {validateWorkingEstimates,createWorkingAttestation,validateSerializedWorkingEstimates} = require(path.join(root,"research/tools/working_estimates.js"));
   const result = compile(loadInputs(root));
