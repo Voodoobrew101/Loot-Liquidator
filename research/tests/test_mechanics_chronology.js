@@ -1,0 +1,28 @@
+"use strict";
+// Research-only deterministic epoch tests; NO live WoW validation.
+const assert=require("node:assert/strict");
+const fs=require("node:fs"),path=require("node:path");
+const root=path.resolve(__dirname,"../..");
+const {validDate,scopeStatus,classify,compare,validateChronology}=require("../tools/resolve_mechanics_epoch");
+const chronology=JSON.parse(fs.readFileSync(path.join(root,"research/mechanics/mechanics-chronology.json"),"utf8"));
+assert.equal(validateChronology(chronology),true);
+const e=chronology.events[0],base={gameMode:"RETAIL",expansionID:11,method:"Prospect",inputFamily:"MIDNIGHT_ORE",outputFamily:"GEM"};
+const context=(observationDate,extra={})=>({...base,observationDate,...extra});
+assert.equal(e.firstAffectedDate,"2026-03-31","official hotfix is March 31, not April 1");
+assert.equal(validDate("2026-02-29"),false);
+assert.equal(validDate("2026-03-31"),true);
+assert.equal(classify(context("2026-03-30"),e),"BEFORE");
+assert.equal(classify(context("2026-03-31"),e),"CROSSES_OR_TOUCHES_EVENT_DAY");
+assert.equal(classify(context("2026-04-01"),e),"AFTER");
+assert.equal(classify(context(null),e),"UNKNOWN_SAMPLE_DATE");
+assert.equal(classify(context("2026-03-29",{sampleStartDate:"2026-03-29",sampleEndDate:"2026-04-01"}),e),"CROSSES_OR_TOUCHES_EVENT_DAY");
+assert.equal(scopeStatus(context("2026-03-30",{inputFamily:null}),e),"UNKNOWN_SCOPE");
+assert.equal(scopeStatus(context("2026-03-30",{expansionID:10}),e),"OUT_OF_SCOPE");
+assert.equal(compare(context("2026-03-30"),context("2026-04-01"),chronology).eventDecisions[0].decision,"BLOCKED_UNQUANTIFIED_CHANGE");
+assert.equal(compare(context("2026-03-30"),context("2026-03-25"),chronology).decision,"SAME_KNOWN_EPOCH");
+assert.equal(compare(context("2026-03-31"),context("2026-04-01"),chronology).eventDecisions[0].decision,"BLOCKED_UNRESOLVED_DATE");
+assert.equal(compare(context("2026-03-30",{outputFamily:null}),context("2026-03-30"),chronology).eventDecisions[0].decision,"BLOCKED_UNKNOWN_SCOPE");
+assert.equal(compare(context("2026-03-30",{expansionID:10}),context("2026-03-30",{expansionID:10}),chronology).decision,"NO_RELEVANT_REGISTERED_EVENT");
+assert.throws(()=>validateChronology({...chronology,revisionHistory:[]}),/missing revision audit/);
+assert.throws(()=>validateChronology({...chronology,events:[{...e,numericallyBridgeable:true}]}),/lacks parameters/);
+console.log("mechanics chronology static tests passed (17 assertions), no numeric interpolation or WoW runtime changes");

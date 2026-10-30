@@ -1,0 +1,604 @@
+{
+  "schemaVersion": "0.2.1-PROPOSAL",
+  "role": "RESEARCH_NORMALIZATION_CONTRACT_NOT_SHIPPED_DATABASE",
+  "sourceRegistry": "research/mechanics/ProfessionMechanicsRegistry.json",
+  "enums": {
+    "evidenceStatus": [
+      "VERIFIED_NUMERIC",
+      "VERIFIED_QUALITATIVE",
+      "EMPIRICAL_ESTIMATE",
+      "UNVERIFIED",
+      "CONTRADICTED"
+    ],
+    "transformDecision": [
+      "APPLY",
+      "NO_EFFECT_VERIFIED",
+      "BLOCKED_NO_RULE",
+      "BLOCKED_UNKNOWN_PATCH_EFFECT",
+      "BLOCKED_MISSING_CONTEXT",
+      "BLOCKED_INAPPLICABLE",
+      "BLOCKED_DIFFERENT_STAT"
+    ],
+    "effectTarget": [
+      "OUTPUT_OCCURRENCE",
+      "OUTPUT_POSITIVE_QUANTITY",
+      "OUTPUT_UNCONDITIONAL_EXPECTATION",
+      "OUTPUT_QUALITY",
+      "OUTPUT_ELIGIBILITY",
+      "EXPECTED_INPUT_CONSUMPTION",
+      "OPERATION_DURATION",
+      "STAT_RATING_TO_PERCENT"
+    ],
+    "effectKind": [
+      "MULTIPLY",
+      "ADDITIVE",
+      "DISCRETE_ELIGIBILITY",
+      "QUALITY_TRANSITION",
+      "INPUT_SAVINGS",
+      "COST_ONLY",
+      "INFORMATIONAL",
+      "UNKNOWN"
+    ],
+    "unit": [
+      "PER_OPERATION",
+      "PER_INPUT_UNIT",
+      "COUNT_POSITIVE",
+      "PROBABILITY_FRACTION",
+      "PERCENT",
+      "STAT_RATING",
+      "SKILL_POINT",
+      "SECONDS"
+    ],
+    "gameMode": [
+      "RETAIL",
+      "CLASSIC",
+      "PTR"
+    ],
+    "sampleKind": [
+      "RAW_CAST_LOG",
+      "AGGREGATE_TOTALS",
+      "DOCUMENTED_RATE",
+      "MODEL_ESTIMATE",
+      "INELIGIBLE"
+    ],
+    "applicability": [
+      "VERIFIED_APPLIES",
+      "VERIFIED_DOES_NOT_APPLY",
+      "UNKNOWN"
+    ]
+  },
+  "normalization": {
+    "targetGameMode": "RETAIL",
+    "targetBuild": null,
+    "targetBuildMustBeSupplied": true,
+    "unknownCoefficient": "BLOCKED_NO_RULE",
+    "unknownPatchEffect": "BLOCKED_UNKNOWN_PATCH_EFFECT",
+    "missingRelevantContext": "BLOCKED_MISSING_CONTEXT",
+    "neverCoerceUnknownToZero": true,
+    "sourceObservationImmutable": true,
+    "apiProvidedNumericModel": "NO_PUBLIC_API_FOR_HIDDEN_DROP_RATES",
+    "recipeScopedContextRequired": true,
+    "offlineAltCannotQueryLive": true,
+    "sourceProvenanceRequired": true,
+    "liveFieldCollection": [
+      {
+        "field": "expansionSpecificSkill",
+        "apiKey": "profession_skill_by_id",
+        "unknownOnNil": true
+      },
+      {
+        "field": "childSkillLineID",
+        "apiKey": "recipe_skillline",
+        "unknownOnNil": true
+      },
+      {
+        "field": "specializationRanks",
+        "apiKey": "specialization_ranks",
+        "unknownOnNil": true
+      },
+      {
+        "field": "reagentQuality",
+        "apiKey": "quality_rank",
+        "unknownOnNil": true
+      },
+      {
+        "field": "operationBonusStats",
+        "apiKey": "operation_info",
+        "unknownOnNil": true
+      },
+      {
+        "field": "actualResourceReturns",
+        "apiKey": "processing_result_event",
+        "unknownOnNil": true
+      },
+      {
+        "field": "clientBuild",
+        "apiKey": "client_patch",
+        "unknownOnNil": true
+      }
+    ]
+  },
+  "dataDefinitions": {
+    "referenceBaseline": "ONE chosen source-backed input/output/recipe/reference-context per exact target build, with selected observation keys and no implicit cross-conditions conversion",
+    "evidenceArchive": "MANY raw historical and modern cohorts in research branch; not shipped bundled duplicate yield mapping",
+    "recordIdentity": [
+      "gameMode",
+      "expansionID",
+      "method",
+      "recipeID",
+      "inputItemID",
+      "inputQualityRank",
+      "outputItemID",
+      "outputQualityRank",
+      "patchBuild",
+      "referenceContextID"
+    ],
+    "outputQuantities": [
+      {
+        "field": "dropChance",
+        "unit": "PROBABILITY_FRACTION",
+        "meaning": "per-eligible-operation probability of >=1 output; from per-cast hits only if measured"
+      },
+      {
+        "field": "yieldMin",
+        "unit": "COUNT_POSITIVE",
+        "meaning": "positive integer when output occurs; observed bound never automatically proven true game limit"
+      },
+      {
+        "field": "yieldMax",
+        "unit": "COUNT_POSITIVE",
+        "meaning": "positive integer when output occurs; observed bound never automatically proven true game limit"
+      },
+      {
+        "field": "expectedQuantity",
+        "unit": "PER_OPERATION",
+        "meaning": "decimal unconditional expected units per cast; monetary quantity; never chance-multiply again"
+      }
+    ],
+    "individualFieldEvidence": [
+      "sourceClaimID",
+      "evidenceStatus",
+      "confidence0to100",
+      "sampleN",
+      "samplingUncertainty",
+      "observedOrModeled",
+      "effectivePatchBuild"
+    ],
+    "transformationConfidence": "separate confidence0to100 per applied adjustment; downstream confidence not above weakest material input+transform",
+    "rawDistribution": "Preserve per-cast output-count histogram including zero and (where relevant) joint output/proc conditions. Four summary fields cannot fully reconstruct a distribution for arbitrary stat transformations."
+  },
+  "types": {
+    "mechanicRule": [
+      "ruleID",
+      "profession",
+      "expansionIDs",
+      "methods",
+      "recipeIDs",
+      "inputItemIDs",
+      "outputItemIDs",
+      "referencePatch",
+      "effectivePatchBounds",
+      "specializationID",
+      "nodeRankMin",
+      "gearItemIDs",
+      "applies",
+      "evidenceStatus",
+      "effectTarget",
+      "effectKind",
+      "formulaID",
+      "parameters",
+      "parameterUnits",
+      "sourceClaimIDs",
+      "confidence0to100",
+      "notes",
+      "runtimeApiRefs",
+      "runtimeApplicability",
+      "requiredLiveContext",
+      "offlineSnapshotPolicy"
+    ],
+    "observedCohort": [
+      "cohortID",
+      "gameMode",
+      "sampleStart",
+      "sampleEnd",
+      "clientBuild",
+      "expansionID",
+      "method",
+      "recipeID",
+      "inputItemID",
+      "inputQualityRank",
+      "batchInputs",
+      "completedOperations",
+      "outputItemID",
+      "outputQualityRank",
+      "sourceClaimIDs",
+      "rawOutputTotals",
+      "operationHitCount",
+      "positiveCountsHistogram",
+      "professionSkill",
+      "equipment",
+      "statRatings",
+      "statPercentages",
+      "specializationRanks",
+      "concentrationSpent",
+      "unknownContextFields",
+      "fieldEvidence",
+      "zeroCount",
+      "jointPerCastOutputHistogram",
+      "triggeredBonusProcCounts",
+      "observedViaApiRefs",
+      "clientBuild",
+      "sourceValueClass",
+      "fieldsNotExposed",
+      "eventCaptureCompleteness",
+      "statSourceIsRecipeSpecific",
+      "gearLinksFromEquipment",
+      "savedAltLastSeenBuild",
+      "savedAltLastSeenAt",
+      "recipeReagentAllocations",
+      "concentrationCurrencyID",
+      "concentrationAvailable",
+      "bonusStatsByRecipe",
+      "operationId"
+    ],
+    "patchEvent": [
+      "eventID",
+      "effectiveDate",
+      "firstAffectedBuild",
+      "gameMode",
+      "expansionIDs",
+      "methods",
+      "recipeIDs",
+      "outputCategories",
+      "affectedFields",
+      "evidenceStatus",
+      "numericTransformID",
+      "sourceClaimIDs",
+      "intervalConfidence",
+      "notes"
+    ],
+    "sourceClaim": [
+      "claimID",
+      "url",
+      "publishedDate",
+      "retrievedDate",
+      "versionScope",
+      "evidenceClass",
+      "specificClaim",
+      "numericalSupport",
+      "sampleN",
+      "independentCorroboration",
+      "confidence0to100",
+      "apiDocumentationURL",
+      "verifiedLiveBuild"
+    ]
+  },
+  "sourceClaims": [
+    {
+      "claimID": "blizzard-2026-03-31-midnight-gems",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight live hotfix dated 2026-03-31 in official cumulative notes; deployment clock/build unknown",
+      "evidenceClass": "OFFICIAL_HOTFIX",
+      "specificClaim": "Gems found more regularly when prospecting Midnight ore",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null,
+      "chronologyRevision": 1,
+      "previousClaimID": "blizzard-2026-04-01-midnight-gems"
+    },
+    {
+      "claimID": "wowhead-2026-midnight-jc-prospecting-nodes",
+      "url": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
+      "publishedDate": "2026-02-21",
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight (guide as updated)",
+      "evidenceClass": "GUIDE_QUALITATIVE",
+      "specificClaim": "Ore-specific nodes improve chance for Eversong Diamond; does not prove base chance zero",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null
+    },
+    {
+      "claimID": "blizzard-2026-midnight-gear-retroactivity",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
+      "publishedDate": null,
+      "retrievedDate": "2026-10-28",
+      "versionScope": "Midnight content update",
+      "evidenceClass": "OFFICIAL_PATCH_NOTE",
+      "specificClaim": "Profession equipment secondary stats apply to prior-expansion version of same profession; no primary-skill claim",
+      "numericalSupport": false,
+      "sampleN": null,
+      "independentCorroboration": null,
+      "confidence0to100": null
+    }
+  ],
+  "patchEvents": [
+    {
+      "eventID": "midnight-gem-hotfix-2026-03-31",
+      "effectiveDate": "2026-03-31",
+      "firstAffectedBuild": null,
+      "gameMode": "RETAIL",
+      "expansionIDs": [
+        11
+      ],
+      "methods": [
+        "Prospect"
+      ],
+      "recipeIDs": [],
+      "outputCategories": [
+        "gem"
+      ],
+      "affectedFields": [
+        "OUTPUT_OCCURRENCE",
+        "OUTPUT_UNCONDITIONAL_EXPECTATION"
+      ],
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "numericTransformID": null,
+      "sourceClaimIDs": [
+        "blizzard-2026-03-31-midnight-gems"
+      ],
+      "intervalConfidence": null,
+      "notes": "Do not apply numerical patch normalization without posthotfix bridging evidence; no blanket modifier for byproducts. Official date corrected from April 1 to March 31; publication date is not event date. Raw cohorts on March 31 require time/build resolution.",
+      "effectiveTimeUTC": null,
+      "datePrecision": "DAY",
+      "previousEventID": "midnight-gem-hotfix-2026-04-01",
+      "chronologyID": "midnight-gem-prospecting-frequency-2026-03-31"
+    }
+  ],
+  "mechanicRules": [
+    {
+      "ruleID": "midnight-ore-node-diamond",
+      "profession": "Jewelcrafting",
+      "expansionIDs": [
+        11
+      ],
+      "methods": [
+        "Prospect"
+      ],
+      "recipeIDs": [],
+      "inputItemIDs": [],
+      "outputItemIDs": [
+        242608
+      ],
+      "referencePatch": null,
+      "effectivePatchBounds": null,
+      "specializationID": null,
+      "nodeRankMin": 1,
+      "gearItemIDs": [],
+      "applies": "UNKNOWN",
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "effectTarget": "OUTPUT_OCCURRENCE",
+      "effectKind": "UNKNOWN",
+      "formulaID": null,
+      "parameters": null,
+      "parameterUnits": null,
+      "sourceClaimIDs": [
+        "wowhead-2026-midnight-jc-prospecting-nodes"
+      ],
+      "confidence0to100": null,
+      "notes": "Needs exact ore-specific node IDs and recipe IDs; effect is chance increase, not a proven zero-to-unlocked eligibility gate."
+    },
+    {
+      "ruleID": "midnight-secondary-gear-previous-expansions",
+      "profession": "ALL_PROFESSIONS",
+      "expansionIDs": [
+        9,
+        10,
+        11
+      ],
+      "methods": [],
+      "recipeIDs": [],
+      "inputItemIDs": [],
+      "outputItemIDs": [],
+      "referencePatch": null,
+      "effectivePatchBounds": null,
+      "specializationID": null,
+      "nodeRankMin": null,
+      "gearItemIDs": [],
+      "applies": "UNKNOWN",
+      "evidenceStatus": "VERIFIED_QUALITATIVE",
+      "effectTarget": "STAT_RATING_TO_PERCENT",
+      "effectKind": "INFORMATIONAL",
+      "formulaID": null,
+      "parameters": null,
+      "parameterUnits": null,
+      "sourceClaimIDs": [
+        "blizzard-2026-midnight-gear-retroactivity"
+      ],
+      "confidence0to100": null,
+      "notes": "Previous expansion secondary-stat application is confirmed in principle; item-specific stats and applicable recipes still unknown. No inferred primary-skill retroactivity."
+    }
+  ],
+  "negativeFixtures": [
+    {
+      "test": "midnight-pre-mar31-to-post-hotfix-gem",
+      "sourcePatchDate": "2026-03-30",
+      "targetPatchDate": "2026-04-01",
+      "eventID": "midnight-gem-hotfix-2026-03-31",
+      "expectedDecision": "BLOCKED_UNKNOWN_PATCH_EFFECT"
+    },
+    {
+      "test": "ore-node-binary-diamond-gate",
+      "ruleID": "midnight-ore-node-diamond",
+      "expectedDecision": "BLOCKED_NO_RULE",
+      "assertion": "Never force reference diamond chance to zero using this qualitative guide"
+    },
+    {
+      "test": "only-aggregate-totals",
+      "completedOperations": 10,
+      "rawOutputTotals": 7,
+      "operationHitCount": null,
+      "expectedQuantity": 0.7,
+      "expectedDropChance": null,
+      "expectedYieldMin": null,
+      "expectedYieldMax": null
+    },
+    {
+      "test": "ten-herb-milling",
+      "batchInputs": 10,
+      "completedOperations": 10,
+      "rawOutputTotals": 100,
+      "expectedQuantityPerOperation": 10,
+      "expectedQuantityPerHerb": 1
+    },
+    {
+      "test": "missing-gear-context",
+      "sourceEquipment": null,
+      "unknownContextFields": [
+        "equipment"
+      ],
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT"
+    },
+    {
+      "test": "unknown-stat-recipe",
+      "stat": "resourcefulness",
+      "recipeVerified": false,
+      "expectedDecision": "BLOCKED_INAPPLICABLE"
+    },
+    {
+      "test": "known-evidence-high-transform-low",
+      "baselineConfidence": 95,
+      "transformConfidence": 20,
+      "maxDerivedConfidence": 20
+    },
+    {
+      "test": "same-p-min-max-E-different-histograms",
+      "expectedDecision": "BLOCKED_NO_RULE",
+      "assertion": "Do not claim to derive arbitrary nonlinear/quality transition from the four summary statistics; require full distribution or justified direct model"
+    },
+    {
+      "test": "parent-profession-vs-expansion-child-id",
+      "input": {
+        "parentProfessionID": 755,
+        "childSkillLineID": null,
+        "professionName": "Jewelcrafting"
+      },
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT",
+      "assertion": "Generic name or parent ID cannot identify Midnight skill line; obtain exact child ID via GetProfessionChildSkillLineID or GetTradeSkillLineForRecipe"
+    },
+    {
+      "test": "api-operation-result-nil",
+      "recipeID": 1231127,
+      "reagents": [],
+      "operationInfo": null,
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT",
+      "assertion": "No bonus stat or quality claim can be derived from a nil operation result"
+    },
+    {
+      "test": "item-rarity-not-reagent-quality",
+      "itemQualityRarity": 2,
+      "explicitReagentQuality": null,
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT",
+      "assertion": "Do not assign reagent rank 2 from item rarity 2"
+    },
+    {
+      "test": "offline-alt-current-gear",
+      "isAltOnline": false,
+      "lastKnownBuild": "12.0.0",
+      "targetBuild": "12.1.5",
+      "expectedDecision": "BLOCKED_MISSING_CONTEXT",
+      "assertion": "No live profession/gear access for offline alt; snapshot should be marked stale"
+    }
+  ],
+  "reviewStatus": {
+    "passedProductionReadiness": false,
+    "knownNumericTransformationCount": 0,
+    "needsHumanMechanicReview": true,
+    "notes": "This prototype enumerates data requirements; it is not a validated numerical mechanics registry or executable model. Chronological mechanics revision and event-day ambiguity tracked; no numeric coefficients added. Added out-of-sample four-field forward validation plan and synthetic diagnostic tool; no verified numeric formulas or production promotion."
+  },
+  "runtimeApiManifestPath": "research/mechanics/WoWRuntimeAPIRegistry.json",
+  "mechanicsChronology": {
+    "path": "research/mechanics/mechanics-chronology.json",
+    "resolver": "research/tools/resolve_mechanics_epoch.js",
+    "tests": "research/tests/test_mechanics_chronology.js",
+    "releasePolicy": "Chronology and raw sample records are research evidence; do not execute an unverified numeric transform",
+    "refinementPolicy": "Append independently sourced, date/build-scoped event revisions; preserve previous event labels/date corrections and original samples. Master QA reviews each refinement, reassigns sampled cohort epochs, reruns affected synthesis and confidence estimates, and stages versioned new model candidates. Do not overwrite history or silently carry coefficients across an affected patch.",
+    "temporalBoundaryPolicy": "Official calendar-date headings and actual deployment clock differ; event-day samples remain unassigned unless timestamp/build evidence resolves timing. Publication date of cumulative notes is not effective date.",
+    "sourceScopePolicy": "Unknown item-family/recipe/quality context is unresolved, not an implicit match or proof of no effect.",
+    "unskilledBaselinePolicy": "Use minimum recipe-eligible no-optional-bonus profile per input/output/patch; reconstruct by audited inverse mechanics where feasible, preserve skilled raw samples and unknown fields."
+  },
+  "baselineForwardValidation": {
+    "protocolPath": "research/mechanics/BASELINE_FORWARD_VALIDATION.md",
+    "diagnosticTool": "research/tools/validate_forward_predictions.js",
+    "syntheticTest": "research/tests/test_forward_validation.js",
+    "verificationTarget": "Project MINIMUM_RECIPE_ELIGIBLE_UNSKILLED_NO_OPTIONAL_BONUSES candidate back through HISTORICAL source-context mechanics into disjoint original study outcomes.",
+    "validationCoverage": [
+      "dropChance",
+      "yieldMin",
+      "yieldMax",
+      "expectedQuantity"
+    ],
+    "outOfSampleRequired": true,
+    "independentUnit": "ORIGINAL_PRIMARY_DATASET_OR_NON_OVERLAPPING_STUDY_COHORT",
+    "historicalPatchApplicableOnly": true,
+    "dateAttributionPolicy": "Actual cast timestamp/build first, then independently reviewed event-relative source context; publication is an upper bound only.",
+    "fittingMethods": [
+      "CONTEXTUAL_GROUPING",
+      "HIERARCHICAL_PARTIAL_POOLING",
+      "MODEL_FAMILY_COMPARISON",
+      "REGRESSION",
+      "BAYESIAN_PRIOR_POSTERIOR_PREDICTIVE_CHECKS"
+    ],
+    "inferenceStatus": "PROPOSAL_NOT_AUTOMATED_FITTING",
+    "availableDiagnostics": "Supplied forward predictions vs. independent casts, raw histogram variance, optional disjoint-training beta-binomial predictive occurrence diagnostics.",
+    "hardConstraints": [
+      "No verification on the data used to fit a candidate",
+      "Unknown output is not zero; observed zero hits do not prove structural impossibility",
+      "No unsupported rule coefficient or numerical patch bridge",
+      "Positive min/max extrema are not guaranteed mechanical hard bounds",
+      "No double multiplication by chance of unconditional expectedQuantity",
+      "Input costs and resource refunds are not material output boosts"
+    ],
+    "disposition": "RESEARCH_ONLY_NOT_PRODUCTION_QUALITY_VERIFIED"
+  },
+  "latentStudyContextInference": {
+    "status": "RESEARCH_PROTOTYPE_NOT_CALIBRATED_NOT_PRODUCTION",
+    "protocolPath": "research/mechanics/LATENT_STUDY_CONTEXT_INFERENCE.md",
+    "inverseTool": "research/tools/infer_latent_study_context.js",
+    "syntheticTest": "research/tests/test_latent_study_context.js",
+    "inferredVariables": [
+      "effectiveProfessionSkill",
+      "specializationRanks",
+      "applicableProfessionGearBonuses",
+      "professionStatValues",
+      "historicalMechanicsEpoch"
+    ],
+    "inferAs": "POSTERIOR_OVER_PLAUSIBLE_PROFILES_NOT_EXACT_CHARACTER_FACTS",
+    "inputRequirements": [
+      "sameItemRecipeRankGameMode",
+      "actualCompletedCastCount",
+      "perCastHistogramIncludingZero_OR_hitOperations",
+      "candidateProfilesCalibratedIndependently",
+      "historicalEpochCompatibility",
+      "candidatePriorProvenance",
+      "modelAndSourceAncestry"
+    ],
+    "historicalTimeRule": "Date of original publication upper bounds possible cast time; post-event publication alone cannot assign post-event mechanics. Coarse epoch range possible, not exact time without direct logs/build.",
+    "statisticalMethods": [
+      "MULTINOMIAL_LIKELIHOOD",
+      "BINOMIAL_HIT_ONLY_LIKELIHOOD",
+      "EXPLICIT_PRIOR_CANDIDATE_RANKING",
+      "HIERARCHICAL_BAYESIAN_AND_REGRESSION_FUTURE_MODEL"
+    ],
+    "diagnostics": [
+      "candidateProbability",
+      "credibleProfileSet",
+      "observationalEquivalence",
+      "trainingStudyOverlap",
+      "knownDateConstraints",
+      "missingModelCalibration"
+    ],
+    "independentValidationRule": "Same study may inform historical profile inference but cannot independently validate the mechanic model used to infer that profile; entire study-family holdout required.",
+    "guardrails": [
+      "Unlisted candidate profiles invalidate any absolute certainty claim",
+      "Observed samples with only totals cannot yield exact binomial/multinomial likelihood without model",
+      "One output's rates may not identify skill and equipment bonuses separately",
+      "No numeric rule is promoted by a high posterior on a model built from that study",
+      "Do not treat candidate assumed verification tag as independently verified"
+    ]
+  }
+}
