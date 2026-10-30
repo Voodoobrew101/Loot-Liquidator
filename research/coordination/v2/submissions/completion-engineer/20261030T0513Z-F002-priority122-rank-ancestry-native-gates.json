@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_PRIORITY122_RANK_ANCESTRY_REPAIR",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 18,
+  "runUTC": "2026-10-30T05:13:00Z",
+  "branch": "implementation/five-agent-completion",
+  "coordinatorSourceCommit": "d0f1649c5fb4f5cb96d301d26276fda50c86bfff",
+  "coordinatorSourceCommitNote": "Coordinator source ancestor; three coordinator commits preceded the first engineering write. Do not mistake it for the immediate Git parent.",
+  "engineeringCommits": [
+    {
+      "sha": "b1064bd011b6c91a3f47432373b26f2339561b44",
+      "path": "research/tools/df_priority122_conflict_diagnostic.js",
+      "oldBlob": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca",
+      "newBlob": "08acca2f4175670183438d77545caa659034d6ec"
+    },
+    {
+      "sha": "5b19928e89bf3f267e637a28b09b7f646800400b",
+      "path": "research/tools/run_completion_pipeline.js",
+      "oldBlob": "9c6e02f8d74bbfa07714dcf460fd52bd0f343f54",
+      "newBlob": "266524a83c5d5cd6e3a1d42345358d0749aaacbe"
+    }
+  ],
+  "resultCommitBeforeSubmission": "5b19928e89bf3f267e637a28b09b7f646800400b",
+  "status": "ENGINEERING_REPAIR_COMMITTED_NATIVE_CI_AND_INDEPENDENT_VALIDATOR_ACCEPTANCE_PENDING",
+  "problem": "F005 rank-ancestry adversarial case showed input/output item-only supplemental audit fallback could attach an explicitly incompatible input-quality rank to a rank-specific historical TSM record.",
+  "repair": {
+    "sourceAuditSelection": "Require exact input/output IDs; reject any explicit input or output quality-rank mismatch; validate declared method, batch, Retail mode and historical/unknown patch context; reject ambiguous compatible family matches rather than choosing file order.",
+    "sourceIdentity": "Keep exact GameData source line and source units; do not fabricate missing supplemental source lines.",
+    "unrankedAuditTreatment": "Label null-rank supplemental audit as FAMILY_CONTEXT_ONLY_UNRANKED, not rank-specific corroboration.",
+    "nativeGate": "Invoke validator-owned F005 priority122 six-case and Crushing eleven-case suites on native Node for each tested pipeline build, fail closed on missing fixture, malformed report, wrong suite identity, failing case, wrong synthetic-only/source-type status or nonzero exit.",
+    "midnightAnytime": "F003 model-owner repair pending; do not falsely treat its four known synthetic failures as a pass."
+  },
+  "exactDeltas": {
+    "filesModified": 2,
+    "validatorFixturesModified": 0,
+    "newNativeFixtureCasesWired": 17,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsChanged": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "evidenceNumericCellsChanged": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "rawEvidenceWrites": 0,
+    "frozenTSMWrites": 0,
+    "tooltipOnlyWrites": 0,
+    "generatedCandidateWrites": 0,
+    "productionWrites": 0,
+    "otherAgentFilesModified": 0
+  },
+  "currentReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testsActuallyRun": [
+    {
+      "check": "V8 JavaScript syntax parser for both modified source files",
+      "passed": 2,
+      "failed": 0,
+      "environment": "V8 functions execution"
+    },
+    {
+      "check": "Unmodified independent F005 priority122 six-case fixture against modified diagnostic",
+      "passed": 6,
+      "failed": 0,
+      "environment": "V8 with in-memory fs/path/assert/CSV shims; NOT native Node"
+    },
+    {
+      "check": "Unmodified independent F005 Crushing rank candidate isolation fixture",
+      "passed": 11,
+      "failed": 0,
+      "environment": "V8 with in-memory evidence and assert shims; NOT native Node"
+    },
+    {
+      "check": "GitHub read-back of both modified blobs and commits",
+      "passed": 2,
+      "failed": 0,
+      "environment": "GitHub connector"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node pipeline --check and 17 new native fixtures (pending GitHub CI)",
+    "Native Lua 5.1 generated candidate decode after changes",
+    "WoW Retail client and live tooltip/EV",
+    "Independent validator formal post-repair acceptance",
+    "Independent current-Retail completed-cast holdout"
+  ],
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Native CI result for latest engineering commit not yet available via connected status endpoints",
+    "F003 Midnight anytime model has four independently reproduced context/cap/epoch failures owned by baseline-modeller",
+    "Five historical TSM P/E source-unit rounding conflicts remain hypotheses, not rank-specific current-Retail measurements",
+    "Formal F005 and coordinator acceptance pending"
+  ],
+  "nextTask": "Verify native 6/6 and 11/11 fail-closed gates; if accepted, pivot to next changed compiler/model-contract defect instead of repeating priority122 historical source audit"
+}
