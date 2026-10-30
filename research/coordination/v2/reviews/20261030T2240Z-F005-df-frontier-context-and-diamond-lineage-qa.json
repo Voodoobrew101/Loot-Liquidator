@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_FRONTIER_CONTEXT_AND_DIAMOND_DUPLICATE_LINEAGE",
+  "runID": "20261030T2240Z-F005-df-frontier-context-and-diamond-lineage",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 30,
+  "canonicalBranch": "implementation/five-agent-completion",
+  "baseCommit": "871cab549f90a3f59241b088235547416161d87f",
+  "status": "FAIL_F003_FRONTIER_CONTEXT__CONDITIONAL_PASS_F004_ARCHIVE_DEDUP",
+  "acceptance": "PROPOSED_COORDINATOR_REVIEW_REQUIRED",
+  "sourcePins": {
+    "modelCode": "7fb36b9d6c25f6a0bff02dfe5ab1b6855e6a4f42",
+    "modelManifest": "74f10db75932ca3be685bf3ea44c9ba813a03d7d",
+    "frontierTest": "bbb4c309a98e5a14dd8f15ae5225703a828cbad8",
+    "lineageTest": "0da12c82cd358cb30fad66d447f445b17ecd0451",
+    "oldEvidence": "227c997ce7aedb0295db0449c2cb8586a6269015",
+    "oldSourceReview": "9e7a6aa434925637bcb655659473be1a6c685172",
+    "laterEvidence": "fe290ca4ef9e375196da64cbea99a9c1509fb74e",
+    "laterSourceReview": "04c8c97b37a92d7076cd78cc2a003d976de5e887",
+    "laterSubmission": "11efd04c7517b510ca1ec09e22e9e8935a57bff6",
+    "dedupProposal": "b8f829b3b0f286c7900312a99cb3b3af6e0b9c78",
+    "dedupSourceReview": "5242e3d8e13e379ce1133f8cda8f9d82fc29d6a4",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "testedClaims": [
+    "Exact committed F003 JS module loaded in isolated V8 with Node module.exports shim; exact committed F005 test code read back and executed.",
+    "Dragonflight 38-key frontier arithmetic and policy isolation; valid scenario control cases and adversarial context mutation.",
+    "Seven immutable F004 JSON records independently compared, including older October 29 report not searched by later October 30 source-memory check.",
+    "Archive duplicate identity, rank output counts, ~4000 self-reported prospects, 25 percent Inspiration, absent ore rank/actual completed casts and correction's zero-increment policy."
+  ],
+  "executed": {
+    "environment": "GitHub-fetched exact source and exact test files in JavaScript V8 with mocked require; no native Node process",
+    "frontier": {
+      "passed": 19,
+      "failed": 8,
+      "total": 27,
+      "modelSelfTestsPassed": 4039,
+      "syntheticOnly": true
+    },
+    "duplicateLineage": {
+      "passed": 49,
+      "failed": 0,
+      "total": 49,
+      "adversarialMutationsRejected": 18
+    },
+    "totalAssertions": 76,
+    "passed": 68,
+    "failed": 8,
+    "sourceReadback": true,
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "wowClient": "NOT_RUN",
+    "completionPipeline": "NOT_RUN_NO_ACCEPTED_COMPILER_INPUT_CHANGE",
+    "independentRetailHoldouts": 0
+  },
+  "failures": [
+    {
+      "id": "F005-DF-FRONTIER-01",
+      "owner": "baseline-modeller",
+      "severity": "MODEL_CONTEXT_REJECTION_REQUIRED",
+      "cases": [
+        "reject nominal batch size 1 for DF prospect",
+        "reject nominal batch size 6 for DF prospect"
+      ],
+      "observed": "Both 1 and 6 accepted for Dragonflight Prospect stable keys with identical per-cast EV to batch size 5.",
+      "required": "Enforce documented actual operation's five-ore nominal batch for these mapping keys, or introduce an independently evidenced operation-variant context; never silently mix unit denominators."
+    },
+    {
+      "id": "F005-DF-FRONTIER-02",
+      "owner": "baseline-modeller",
+      "severity": "MODEL_CONTEXT_INTEGRITY_HIGH",
+      "cases": [
+        "reject changing output eLower proxy"
+      ],
+      "observed": "Proxy returned eLower 0.5 during checks, 100 during revenue multiplication, and 1 during row construction. Model emitted lowerNet=947, upperNet=6.5, uncertaintyGold=-940.5, and PROSPECT_WINS_IN_SCENARIO despite inverted bounds.",
+      "required": "Reject Proxy/unstable records or materialize one immutable validated canonical snapshot; enforce lowerNet <= upperNet and nonnegative uncertainty when upper known."
+    },
+    {
+      "id": "F005-DF-FRONTIER-03",
+      "owner": "baseline-modeller",
+      "severity": "MODEL_CONTEXT_INTEGRITY_HIGH",
+      "cases": [
+        "reject changing feeRate proxy",
+        "reject changing costGoldPerCast proxy"
+      ],
+      "observed": "Fee proxy changed a 0.05 validated rate into 0.9 during math (baseline lower 1.75 became -2.5); cost proxy changed validated 3 to 300 (lower -295.25). Both accepted.",
+      "required": "Validate and calculate from the same captured finite numeric values; never read mutable input again after validation."
+    },
+    {
+      "id": "F005-DF-FRONTIER-04",
+      "owner": "baseline-modeller",
+      "severity": "PROVENANCE_CONTEXT_INTEGRITY",
+      "cases": [
+        "reject changing snapshotDate proxy",
+        "reject changing scenarioSourceID proxy"
+      ],
+      "observed": "Validated snapshot date 2026-10-30 returned as 2022-01-01; validated source ID original-source returned as replaced-source.",
+      "required": "Snapshot provenance fields once; reject dynamic descriptors/traps and preserve source/epoch attestation."
+    },
+    {
+      "id": "F005-DF-FRONTIER-05",
+      "owner": "baseline-modeller",
+      "severity": "SELECTED_OUTPUT_IDENTITY_INTEGRITY",
+      "cases": [
+        "reject outputs array substitution after validation"
+      ],
+      "observed": "Dense array validation inspected key L1174 but calculation iterated substituted key L1175 at price 999, emitting lower 946.05.",
+      "required": "Copy and freeze validated output array and each row before any calculations; reject output substitution."
+    }
+  ],
+  "lineageFinding": {
+    "verdict": "CONDITIONAL_PASS_ARCHIVE_DEDUP_ONLY",
+    "duplicateArchive": "Same Reddit zzcnjw Dec 30 2022 ~4000-prospect 16 R2/3 R3 diamond comment appears in 2026-10-29T1328Z and 2026-10-30T1930Z evidence. Later source-memory-only check overlooked older immutable v2 report.",
+    "firstLineage": "reddit-zzcnjw-4000-comment-author-unverified",
+    "laterLineage": "reddit-zzcnjw-dec2022-approx4000-prospects-3r3-16r2-commenter",
+    "coordinatorAction": "Count one original archival cohort, not two independent study lineages; revise accepted aggregate only if both entries were actually counted. Existing 2026-10-30T2159Z acceptance record does not explicitly accept the later 1930Z zzcnjw lineage, so do not automatically subtract one from canonical scorecard.",
+    "preserve": "Keep both immutable source reports, 25% Inspiration and tentative gear/specialization follow-up; do not infer ore ID/rank, verified casts or current-Retail applicability.",
+    "noNewIndependentStudies": 0,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "safeguards": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceE": 116,
+    "workingFallbackConfidence": 0,
+    "workingEconomicUse": "PREVIEW_ONLY",
+    "workingNormalizedVerified": false,
+    "numericWorkingCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipOnlyEdited": false,
+    "mainEdited": false,
+    "runtimeProfilesEdited": false,
+    "legacyAssignmentsEdited": false,
+    "schedulesEdited": false
+  },
+  "blockers": [
+    "F003 frontier rejects neither invalid nominal DF batch sizes nor mutable Proxy inputs; model acceptance blocked until source owner repairs and F005 reruns.",
+    "F003 earlier Prismatic Ore 194545 identity defect still unresolved in its separate stage model; no reapproval.",
+    "No independent current-Retail completed-cast, zero-inclusive output, rank/skill/refund matched holdout or actual market price snapshot; no gold rate promotions.",
+    "Native Node for both new suites and Lua 5.1 client testing not executed; V8 shim is not a substitute."
+  ],
+  "nextTask": "After F003 frontier and Prismatic identity repairs, rerun both source-pinned suites under native Node and independently attest F002 52-case DF milling CI; if unchanged, pivot to TWW milling 5 or Gem Finding 14 unresolved context failures."
+}
