@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_PRIORITY122_AND_CRUSHING_INDEPENDENT_QA",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 17,
+  "reviewUTC": "2026-10-30T04:40:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "b59087c6868aa2092adc6807ea10a9729d87c823",
+  "resultCommitBeforeReview": "61af50b3f420ed1d9a56f7bafd24b0dd0d705ceb",
+  "verdict": "FAIL_F002_SUPPLEMENTAL_RANK_ANCESTRY;FAIL_F003_MIDNIGHT_ANYTIME_CONTEXT_AND_CAP_LINEAGE;PASS_F004_CRUSHING_POLICY_ISOLATION;CONDITIONAL_RESEARCH_ONLY",
+  "sourceBlobs": {
+    "workflow": "9831f9777155831bec1603508334d15fdc607da7",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "coordinatorScorecard": "c86c6a67a49d763def1919e2b79ad3886575e3c6",
+    "F002Priority122Diagnostic": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca",
+    "F003MidnightAnytimeModel": "d409511c94ae13c09dcccb5e7e8de6c75d52105b",
+    "F003TWWDenominatorModel": "3d6e357258033e11ccc6815f8daea425346930f5",
+    "F004CrushingRankEvidence": "078a80b38668853063d25f8e84c004dc2168cbcf"
+  },
+  "independentValidatorTests": [
+    {
+      "path": "research/tests/v2/test_f005_priority122_supplemental_rank_lineage.js",
+      "blobSHA": "f8cea2037a4e5bcd7cdc59350c5b88764afcdcec",
+      "passed": 5,
+      "failed": 1,
+      "environment": "JavaScript V8 executing exact committed test and model source with in-memory Node fs/path/assert shim"
+    },
+    {
+      "path": "research/tests/v2/test_f005_midnight_anytime_context_lineage.js",
+      "blobSHA": "fbb838e348429d6deed741060fe992ead560190b",
+      "passed": 8,
+      "failed": 4,
+      "environment": "JavaScript V8 executing exact model and test source with assert-compatible shim"
+    },
+    {
+      "path": "research/tests/v2/test_f005_crushing_rank_candidate_isolation.js",
+      "blobSHA": "1d7f71520dcfaed7f86181112efddcd9d5c19101",
+      "passed": 11,
+      "failed": 0,
+      "environment": "JavaScript V8 executing exact evidence and test source with assert-compatible shim"
+    },
+    {
+      "test": "F003 TWW aggregate integer cast feasibility",
+      "passed": 9360,
+      "failed": 0,
+      "environment": "JavaScript V8 exact source; independently enumerated feasible cast counts for nominal 1..12, refunds 0..nominal-1, net 1..120"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F005-P122-1",
+      "owner": "completion-engineer",
+      "severity": "SOURCE_ANCESTRY_RANK_MISATTRIBUTION",
+      "reproduced": true,
+      "subject": "research/tools/df_priority122_conflict_diagnostic.js",
+      "detail": "Fallback auditRows.find matches supplemental batch014 audit by inputItemID/outputItemID only. A synthetic supplemental audit explicitly marked inputQualityRank=1 for the same item IDs was attached as sourceClaimID corroboration for an inputQualityRank=2 target; diagnostic accepted all five targets and declared nonpromoting source audit successful.",
+      "requestedRepair": "When a supplemental audit explicitly declares input/output rank, reject rank disagreement before using its claim as corroboration. Require typed family/epoch/operation compatibility or label an unmatched audit as uncorroborated; never invent original source lines. Preserve original TSM units and all preview quarantine.",
+      "economicLeakDemonstrated": false
+    },
+    {
+      "id": "F005-ANYTIME-1",
+      "owner": "baseline-modeller",
+      "severity": "RAW_EPOCH_CONTEXT_VALIDATION",
+      "reproduced": true,
+      "detail": "RAW_CURRENT_RETAIL observationEpoch 2026-02-29T20:00:00Z and 2026-02-30T20:00:00Z pass regex and Date.parse even though both dates are invalid in nonleap 2026.",
+      "requestedRepair": "Validate ISO calendar day exactly by round-trip, including leap-year and offset semantics; do not treat Date.parse normalization as exact timestamp validation."
+    },
+    {
+      "id": "F005-ANYTIME-2",
+      "owner": "baseline-modeller",
+      "severity": "CAP_SOURCE_ANCESTRY",
+      "reproduced": true,
+      "detail": "capEvidenceID equal to sourceStudyFamilyID plus trailing whitespace passes the supposedly independent cap certificate check and yields a finite E upper interval.",
+      "requestedRepair": "Normalize/compare lineage identifiers before distinct-family check; an arbitrary different ID is still a caller assertion, not an independently verified certificate."
+    },
+    {
+      "id": "F005-ANYTIME-3",
+      "owner": "baseline-modeller",
+      "severity": "CONTEXT_SERIALIZATION_COLLISION",
+      "reproduced": true,
+      "detail": "Two RAW-shaped synthetic cohorts with different patch, recipeSpellID, input/output ranks, professionSkill and Resourcefulness yield byte-identical result objects when sourceStudyFamilyID, input ID and event totals are the same. The typed input context is discarded from result provenance.",
+      "requestedRepair": "Include immutable typed context snapshot or deterministic context fingerprint in each output, and prevent cross-profile pooling/attestation collisions."
+    }
+  ],
+  "crushingReview": {
+    "status": "PASS_STRUCTURAL_ONLY",
+    "rankIdentities": 6,
+    "gemRankPairs": 2,
+    "stoneRankPairs": 2,
+    "dustRankPairs": 2,
+    "candidateTriples": 8,
+    "admittedTriples": 0,
+    "independentCompletedCastCohorts": 0,
+    "unverifiedSelectorRankPairs": 8,
+    "sourceLineagesNotIndependentlyValidated": true,
+    "scope": "Does not verify Wowhead, catalog URLs or in-game selector"
+  },
+  "twwReview": {
+    "status": "PASS_SYNTHETIC_INTEGER_BOUNDS_ONLY",
+    "enumeratedCases": 9360,
+    "actualCurrentRetailCasts": 0,
+    "verifiedCurrentRetailE": 0
+  },
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingTotalCells": 4072,
+    "missingEvidenceCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "confidence90Cells": 0
+  },
+  "exactDeltas": {
+    "validatorOwnedTestFilesAdded": 3,
+    "validatorTestCasesAdded": 29,
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentCurrentRetailStudyLineages": 0,
+    "rawEvidenceFilesChanged": 0,
+    "frozenTSMFilesChanged": 0,
+    "tooltipOnlyFilesChanged": 0,
+    "productionFilesChanged": 0
+  },
+  "testsNotRun": [
+    "Native Node execution of three new test files",
+    "Native Lua 5.1",
+    "Full completion pipeline --check after these validator-only changes",
+    "WoW Retail client, actual in-game selector or tooltip",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "blockers": [
+    "Five synthetic adversarial test failures require repairs by completion-engineer and baseline-modeller",
+    "Crushing recipe rank selector and reagent eligibility require current-Retail client or authoritative recipe-rank data",
+    "No independent zero-inclusive current-Retail casts or verified minimum eligible baseline"
+  ],
+  "coordinatorAction": "Return F005-P122-1 to completion-engineer and F005-ANYTIME-1/2/3 to baseline-modeller. Accept structural F004 quarantine tests only; keep 1,018 admitted mappings, 4,072 numeric preview cells and economic restrictions unchanged. Wire independent suites into native CI only after owner repair; do not approve any confidence or live-E promotion.",
+  "nextTask": "F005_RETEST_PRIORITY122_RANK_ANCESTRY_AND_MIDNIGHT_ANYTIME_CONTEXT_REPAIRS_ON_CHANGED_BLOBS"
+}
