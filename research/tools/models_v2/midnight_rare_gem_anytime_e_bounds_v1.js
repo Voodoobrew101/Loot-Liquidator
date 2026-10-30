@@ -32,7 +32,7 @@ function jsonSafe(v,ancestors=new Set()){
  const keys=Reflect.ownKeys(v);
  let valid;
  if(Array.isArray(v)){
-  valid=keys.length===v.length+1&&keys.every(k=>k==='length'||(typeof k==='string'&&/^(0|[1-9]\\d*)$/.test(k)&&Number(k)<v.length));
+  valid=keys.length===v.length+1&&keys.every(k=>k==='length'||(typeof k==='string'&&/^(0|[1-9]\d*)$/.test(k)&&Number(k)<v.length));
   if(valid)for(let i=0;i<v.length;i++){if(!Object.hasOwn(v,i)||!jsonSafe(v[i],ancestors)){valid=false;break;}}
  }else valid=keys.every(k=>{
   if(typeof k!=='string')return false;
