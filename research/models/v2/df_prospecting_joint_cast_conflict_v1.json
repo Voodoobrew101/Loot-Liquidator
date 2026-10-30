@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "modelID": "df-prospecting-joint-cast-conflict-v1.0.0",
+  "modelID": "df-prospecting-joint-cast-conflict-v1.0.1",
   "taskID": "F003_DF_PROSPECT_JOINT_CAST_CONFLICT",
   "workflowRevision": 2,
-  "status": "PROPOSED_PENDING_INDEPENDENT_F005",
+  "status": "REPAIRED_AFTER_F005_ADVERSARIAL_PENDING_NATIVE_AND_INDEPENDENT_RETEST",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "modelSource": "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
-  "modelSourceBlobSHA": "20ad9dc03e7c16a910f56ecda659929b0d68b7d3",
+  "modelSourceBlobSHA": "85d1e4b7b019c6db945335af2ec82392e8a0ddca",
   "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "baseCommitBeforeRun": "87c535619f36798ced6bba30029ab0257d9e5402",
@@ -27,9 +27,9 @@
     "independentHoldoutFamilies": 0
   },
   "functions": {
-    "historicalRateAlternatives": "Preserves PER_INPUT, PER_CAST, UNKNOWN as separate hypotheses. Converts only conditional hypothetical E per cast; no invented P or Retail E. Normalizes duplicate lineage strings for distinct-source count.",
-    "analyzeCasts": "Requires full zero-inclusive completed-cast vectors, distinct cast IDs, explicit aborted requests, typed patch/recipe/quality/skill/profession context, refund counts and caller-attested output universe. Computes marginal P, unconditional E, positive observed extrema, sample covariance and descriptive sample margin distribution.",
-    "scenarioBounds": "Uses full caller-attested output universe and unconditional E intervals with price/cost/refund sensitivity; no marginal probability double-multiplication and no independence assumption for expected linear revenue."
+    "historicalRateAlternatives": "Preserves PER_INPUT, PER_CAST, UNKNOWN as separate hypotheses. Converts only conditional hypothetical E per cast; no invented P or Retail E. Normalizes duplicate lineage strings for distinct-source count. Hypothetical rate multiplication overflow is rejected.",
+    "analyzeCasts": "Requires full zero-inclusive completed-cast vectors, distinct cast IDs, explicit aborted requests, typed patch/recipe/quality/skill/profession context, refund counts and caller-attested output universe. Computes marginal P, unconditional E, positive observed extrema, sample covariance and descriptive sample margin distribution. Full typed context is validated recursively as JSON-safe and snapshotted with contextIdentity; nonfinite result arithmetic fails closed.",
+    "scenarioBounds": "Uses full caller-attested output universe and unconditional E intervals with price/cost/refund sensitivity; no marginal probability double-multiplication and no independence assumption for expected linear revenue. Exact output quality rank equality is required, and nonfinite revenues, costs and margins fail closed."
   },
   "math": {
     "P": "number of completed casts with output>0 / actual completed casts",
@@ -39,7 +39,7 @@
     "scenarioRevenue": "sum_j(unconditionalE_j*price_j*(1-AHcut))",
     "scenarioMargin": "revenue - input opportunity cost - alternative value"
   },
-  "applicability": "Research-only, exact same character profile/patch/recipe/rank/source cohort; no pooling across unknown skill or patch; recipe IDs and output universe are caller assertions, not independent evidence.",
+  "applicability": "Research-only, exact same character profile/patch/recipe/rank/source cohort; no pooling across unknown skill or patch; recipe IDs and output universe are caller assertions, not independent evidence. RAW_CURRENT_RETAIL requires a fully anchored dotted numeric patch/build; malformed suffixes rejected.",
   "policy": {
     "confidence": 0,
     "economicUse": "PREVIEW_ONLY",
@@ -54,7 +54,8 @@
     "observedPositiveMinMax": "Sample extrema only, not hard game bounds",
     "sampleCovariance": "Descriptive only; no IID/holdout guarantee",
     "completeOutputUniverse": "Caller attestation is not independent proof",
-    "goldImpact": "Synthetic sensitivity only, not measured AH prices"
+    "goldImpact": "Synthetic sensitivity only, not measured AH prices",
+    "contextSerialization": "Nested unsupported types, nonfinite values and missing values are rejected before snapshot; snapshot does not establish independently audited game context."
   },
   "syntheticExample": {
     "inputItemID": 188658,
@@ -91,15 +92,22 @@
   },
   "tests": {
     "V8ExactGitHubReadback": {
-      "passed": 51,
+      "passed": 61,
       "failed": 0,
       "syntheticOnly": true
     },
-    "nativeNode": "NOT_RUN",
+    "nativeNode": "NOT_RUN_EXACT_REPAIRED_SOURCE",
     "lua51": "NOT_RUN",
     "inGame": "NOT_RUN",
     "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
-    "independentF005": "PENDING"
+    "independentF005": "AWAITING_OWNER_NATIVE_RETEST_AND_VERDICT",
+    "F005AdversarialV8AfterRepair": {
+      "passed": 23,
+      "failed": 0,
+      "syntheticOnly": true,
+      "review": "research/coordination/v2/reviews/2026-10-30T0646Z-F005-df-prospect-joint-cast-adversarial.json",
+      "note": "Exact independent F005 test source executed against repaired model in V8 with strict assert shim; validator has not yet accepted retest"
+    }
   },
   "exactDeltas": {
     "admittedMappings": 0,
@@ -110,7 +118,8 @@
     "confidencePromotions": 0,
     "economicPromotions": 0,
     "existingPriorityMappingsAddressed": 5,
-    "modelFilesCreated": 1
+    "modelFilesCreated": 0,
+    "modelFilesRepaired": 2
   },
   "evidenceResearcherRequest": "For each exact priority-122 key, find independent current-Retail zero-inclusive cast cohorts with actual completed casts, outputs for every possible gem and rank, gross inputs/refunds, recipe ID, patch/build, skill, spec, gear and unlocks; independently verify source units and eligibility including 192871.",
   "independentValidatorRequest": "Run exact committed module with native Node; adversarial tests for incomplete output universes, source-lineage duplicates, unknown rate units, multiple gems in same cast, refund accounting, output-rank context, malformed dates, sample covariance and preview-only isolation. Hold out whole independent study families.",
