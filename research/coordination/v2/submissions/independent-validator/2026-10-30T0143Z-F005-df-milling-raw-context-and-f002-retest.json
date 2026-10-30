@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_MILLING_RAW_CONTEXT_OUTPUT_UNIVERSE_AND_F002_MIDNIGHT_REPAIR_RETEST",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 14,
+  "runUTC": "2026-10-30T01:43:06Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "322253756c993dfde6797a947761615f568648ba",
+  "testCommit": "7ed840467742ed18267e7a7035875cf6270f0913",
+  "reviewCommit": "ad2d157975a52c5b78842d480bf3955db65c4a5e",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_F002_PASS_F003_FAIL",
+  "exactFilesChanged": [
+    "research/tests/v2/test_f005_df_milling_raw_context_and_universe.js",
+    "research/coordination/v2/reviews/2026-10-30T0143Z-F005-df-milling-context-universe-and-midnight-repair.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-30T0143Z-F005-df-milling-raw-context-and-f002-retest.json"
+  ],
+  "exactMappingKeysChanged": [],
+  "testedModelTargetCount": 24,
+  "validatedRepairKeys": [
+    "midnight:mill:236761:245807:legacy-reference",
+    "midnight:mill:236767:245807:legacy-reference",
+    "midnight:mill:236776:245804:legacy-reference",
+    "midnight:mill:236777:245804:legacy-reference",
+    "midnight:mill:236778:245866:legacy-reference",
+    "midnight:mill:236779:245866:legacy-reference",
+    "midnight:mill:236770:245864:legacy-reference",
+    "midnight:mill:236771:245864:legacy-reference"
+  ],
+  "exactDeltas": {
+    "numericWorkingCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "newMappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "economicPromotions": 0,
+    "newIndependentRegressionCases": 16,
+    "newReproducedFailureCases": 10,
+    "newDefectClasses": 2
+  },
+  "verdicts": {
+    "F002": "PASS_RESEARCH_ONLY_NATIVE_27_OF_27",
+    "F003": "FAIL_TYPED_CONTEXT_AND_OUTPUT_UNIVERSE",
+    "F004": "CONDITIONAL_SPELL_BATCH_10_INDEXED_ONLY"
+  },
+  "testedBlobs": {
+    "dfModelCode": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
+    "dfModelManifest": "30ed0f15034f7c60baae55e779be44e28ec4d09d",
+    "test": "97ab6ed0a583a2c1fc9cbed092ef506e674361a8",
+    "f004Evidence": "c06e12227c5961c755f76af838e678b4bcaae6c5",
+    "workingEstimator": "257793a7ac1cfaadb8efd9535d84e979e50aec11"
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub Actions native Node",
+      "runID": 40986579730,
+      "commit": "322253756c993dfde6797a947761615f568648ba",
+      "result": "PASS_F002_27_OF_27_AND_FULL_PIPELINE_LUA51_DETERMINISM"
+    },
+    {
+      "environment": "Independent V8 harness with exact committed GitHub model and regression source",
+      "result": "6_PASS_10_FAIL_OF_16",
+      "selfTestAssertions": 32,
+      "syntheticOnly": true
+    },
+    {
+      "environment": "GitHub connector readback",
+      "result": "PASS_TEST_BLOB_AND_MODEL_BLOB_MATCH"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node execution of new 16-case suite",
+    "In-game Retail client",
+    "Independent current-Retail whole-study holdout",
+    "Real gold price decision test"
+  ],
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceExpectedQuantityMissing": 116,
+    "evidenceGE90Cells": 0
+  },
+  "policy": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyUnchanged": true,
+    "rawEvidenceUnchanged": true,
+    "frozenTSMUnchanged": true,
+    "productionFilesChanged": 0,
+    "schedulesChanged": 0
+  },
+  "blockers": [
+    "F003 raw cohort label accepts incomplete operation identity, rank, reagent and skill context; 8 synthetic adversarial failures",
+    "F003 decision and RAW summarizer accept unverified partial output universe; 2 synthetic adversarial failures",
+    "No independent matched current-Retail holdout for 24 DF milling keys; no confidence/economic promotion",
+    "TWW indexed spell 444181 shows 10 nominal herbs but exact recipe eligibility and actual cast/refunds unverified"
+  ],
+  "repairOwner": "baseline-modeller",
+  "nextTask": "F005_RETEST_F003_DF_MILLING_TYPED_RAW_CONTEXT_AND_OUTPUT_UNIVERSE_AFTER_MODELLER_REPAIR",
+  "zeroDeltaPivot": "Moved from now-green F002 Midnight confidence regression to newly changed F003 Dragonflight milling model and F004 indexed spell denominator.",
+  "coordinatorRequest": "Accept F002 confidence-zero repair as research-only; return F003 model to modeller with new 16-case regression; preserve PREVIEW_ONLY and unverified TWW recipe-null mappings."
+}
