@@ -376,6 +376,89 @@ function run(root, options={}) {
         console.log("PASS: independent native F005 anytime strict "+spec.count+"/"+spec.count+" (research-only)");
       }
     }
+    // F002: execute F005's independent Dragonflight prospecting joint-cast
+    // adversarial fixture under native Node on every research build. The current
+    // unaccepted F003 model has exactly twelve known synthetic defects. Pin
+    // both model and validator fixture blobs to quarantine only that precise
+    // failure set; a repaired/changed model must pass all 23 cases. This is
+    // never an economic-use or independent-model acceptance gate.
+    const dfJointManifestPath=path.join(root,"research/models/v2/df_prospecting_joint_cast_conflict_v1.json");
+    const dfJointFixturePath=path.join(root,"research/tests/v2/test_f005_df_prospecting_joint_cast_adversarial.js");
+    if(!fs.existsSync(dfJointManifestPath) || !fs.existsSync(dfJointFixturePath))
+      throw Error("Required F003 DF joint-cast manifest or independent F005 fixture missing");
+    const dfJointManifest=JSON.parse(fs.readFileSync(dfJointManifestPath,"utf8"));
+    const dfJointModelRel=dfJointManifest.modelSource;
+    if(dfJointModelRel!=="research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js" ||
+       typeof dfJointManifest.modelID!=="string" ||
+       !/^(?:PROPOSED_|ACCEPTED(?:_|$))/.test(dfJointManifest.status||""))
+      throw Error("Unrecognized F003 DF joint-cast model identity or status");
+    if(!dfJointManifest.policy || dfJointManifest.policy.confidence!==0 ||
+       dfJointManifest.policy.economicUse!=="PREVIEW_ONLY" ||
+       dfJointManifest.policy.normalizedVerified!==false ||
+       dfJointManifest.policy.liveEconomicEligible!==false)
+      throw Error("F003 DF joint-cast research-only economic isolation changed");
+    const dfJointGitBlob=bytes=>require("node:crypto").createHash("sha1")
+      .update("blob "+bytes.length+"\\0").update(bytes).digest("hex");
+    const dfJointModelBytes=fs.readFileSync(path.join(root,dfJointModelRel));
+    const dfJointModelBlob=dfJointGitBlob(dfJointModelBytes);
+    if(dfJointModelBlob!==dfJointManifest.modelSourceBlobSHA)
+      throw Error("F003 DF joint-cast model changed without matching versioned manifest");
+    // An independent test edit must be explicitly reviewed and re-pinned;
+    // otherwise a weakened fixture could accidentally turn failures green.
+    const reviewedDFFixtureBlob="058fe6fdb422fcae3790e40fdd5367cc6f6f4610";
+    if(dfJointGitBlob(fs.readFileSync(dfJointFixturePath))!==reviewedDFFixtureBlob)
+      throw Error("F005 DF joint-cast fixture changed without independent review and gate re-pin");
+    const dfJointChild=spawnSync(process.execPath,[dfJointFixturePath],
+      {cwd:root,encoding:"utf8",timeout:120000});
+    let dfJointReport;
+    try {dfJointReport=JSON.parse((dfJointChild.stdout||"").trim());}
+    catch (_) {throw Error("F005 DF joint-cast native fixture emitted invalid JSON\\n"+
+      dfJointChild.stdout+dfJointChild.stderr);}
+    if(dfJointReport.suite!=="F005_DF_PROSPECT_JOINT_CAST_ADVERSARIAL" ||
+       dfJointReport.modelID!==dfJointManifest.modelID ||
+       dfJointReport.syntheticOnly!==true ||
+       dfJointReport.independentCurrentRetailHoldoutFamilies!==0 ||
+       !Array.isArray(dfJointReport.cases) || dfJointReport.cases.length!==23 ||
+       dfJointReport.passed+dfJointReport.failed!==23 ||
+       new Set(dfJointReport.cases.map(c=>c.name)).size!==23 ||
+       dfJointReport.cases.some(c=>c.result!=="PASS"&&c.result!=="FAIL") ||
+       dfJointReport.cases.filter(c=>c.result==="PASS").length!==dfJointReport.passed ||
+       dfJointReport.cases.filter(c=>c.result==="FAIL").length!==dfJointReport.failed)
+      throw Error("Malformed or changed independent F005 DF joint-cast result");
+    const dfJointFailed=dfJointReport.cases.filter(c=>c.result==="FAIL").map(c=>c.name);
+    const knownDFJointFailures=new Set([
+      "reject malformed RAW build suffix",
+      "reject nested NaN specialization",
+      "reject nested Infinity gear",
+      "reject function unlocks",
+      "reject undefined specialization",
+      "reject BigInt nested stat",
+      "reject nested undefined that JSON would omit",
+      "reject wrong output quality rank in scenario",
+      "reject missing output quality rank in scenario",
+      "reject overflowed historical per-cast E",
+      "reject overflowed scenario revenue/margin",
+      "reject overflowed observed economic margins"
+    ]);
+    const stagedDFJointModelBlob="20ad9dc03e7c16a910f56ecda659929b0d68b7d3";
+    const stagedDFJoint=dfJointModelBlob===stagedDFJointModelBlob &&
+      dfJointManifest.status.startsWith("PROPOSED_");
+    if(stagedDFJoint) {
+      if(dfJointReport.passed!==11 || dfJointReport.failed!==12 ||
+         dfJointFailed.length!==knownDFJointFailures.size ||
+         dfJointFailed.some(name=>!knownDFJointFailures.has(name)) ||
+         dfJointChild.status!==1)
+        throw Error("F005 DF joint-cast pinned-model failure set changed: "+
+          JSON.stringify(dfJointFailed)+"; exit="+dfJointChild.status);
+      console.log("QUARANTINED: independent native F005 DF joint-cast 11/23; "+
+        "12 exact known defects, model and fixture SHA pinned, no acceptance");
+    } else {
+      if(dfJointReport.failed!==0 || dfJointChild.status!==0)
+        throw Error("F005 DF joint-cast native strict 23/23 gate failed: "+
+          dfJointFailed.join("; ")+"; exit="+dfJointChild.status);
+      console.log("PASS: independent native F005 DF joint-cast strict 23/23 "+
+        "(synthetic-only; independent acceptance remains separate)");
+    }
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
