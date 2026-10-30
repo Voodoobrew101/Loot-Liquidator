@@ -74,6 +74,17 @@ function run(root, options={}) {
   const {compile,loadInputs,validate} = require(path.join(root,"research/tools/compile_itemdb.js"));
   const {validateWorkingEstimates,createWorkingAttestation,validateSerializedWorkingEstimates} = require(path.join(root,"research/tools/working_estimates.js"));
   const result = compile(loadInputs(root));
+  // A checked candidate must be stable across two independent input loads and
+  // compilations, including serialized record order. A set-equivalent detached
+  // attestation does not itself certify deterministic build ordering.
+  if (options.check === true) {
+    const second = compile(loadInputs(root));
+    if (second.lua !== result.lua ||
+        JSON.stringify(second.records) !== JSON.stringify(result.records) ||
+        JSON.stringify(second.report) !== JSON.stringify(result.report))
+      throw Error("Non-deterministic candidate contents or build order across independent compilations");
+    console.log("PASS: independent repeat compile and deterministic candidate record order");
+  }
   const errors = [...validate(result.records), ...validateWorkingEstimates(result.records)];
   if (errors.length) throw Error(errors.join("\n"));
   // Exercise the detached v1 source/context/value seal across a JSON reload.
@@ -201,6 +212,15 @@ function run(root, options={}) {
     if(metadataChild.status!==0)
       throw Error("F005 detached source-metadata integrity failed\\n"+metadataChild.stdout+metadataChild.stderr);
     process.stdout.write(metadataChild.stdout);
+    // F005 independently authored nested provenance v1.1 detached-process
+    // SHA-256 regression. Missing or failing fixtures fail the native CI gate;
+    // the validator owns the fixture and the engineer only invokes it.
+    const nestedV11Test=path.join(root,"research/tests/v2/test_f005_serialized_nested_provenance_v11.js");
+    if(!fs.existsSync(nestedV11Test)) throw Error("Required F005 nested v1.1 detached provenance check missing");
+    const nestedV11Child=spawnSync(process.execPath,[nestedV11Test],{cwd:root,encoding:"utf8",timeout:120000});
+    if(nestedV11Child.status!==0)
+      throw Error("F005 nested v1.1 detached provenance regression failed\n"+nestedV11Child.stdout+nestedV11Child.stderr);
+    process.stdout.write(nestedV11Child.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
