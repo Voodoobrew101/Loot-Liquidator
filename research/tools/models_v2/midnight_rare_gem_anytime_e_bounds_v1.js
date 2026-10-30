@@ -1,7 +1,7 @@
 'use strict';
 // F003 research-only Midnight rare-gem partial-identification model; never live EV.
 const assert=require('node:assert/strict');
-const MODEL_ID='midnight-rare-gem-anytime-e-bounds-v1.0.0';
+const MODEL_ID='midnight-rare-gem-anytime-e-bounds-v1.0.1';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,evidencePromotion:false});
 const INPUTS=Object.freeze([237359,237361,237362,237363,237364,237365,237366]);
 const OUTPUT=242608;
@@ -10,6 +10,30 @@ function check(b,msg){if(!b)throw Error(msg);}
 function posint(x){return Number.isSafeInteger(x)&&x>0;}
 function nonnegint(x){return Number.isSafeInteger(x)&&x>=0;}
 function known(x){return x!==null&&x!==undefined&&x!==''&&x!=='UNKNOWN';}
+function lineageKey(x){return typeof x==='string'?x.normalize('NFC').trim().toLowerCase():'';}
+function validEpoch(x){
+ if(typeof x!=='string')return false;
+ const m=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(Z|[+-]\d{2}:\d{2})$/.exec(x);
+ if(!m)return false;
+ const [year,month,day,hour,minute,second]=m.slice(1,7).map(Number);
+ const leap=year%4===0&&(year%100!==0||year%400===0);
+ const days=[31,leap?29:28,31,30,31,30,31,31,30,31,30,31];
+ if(year<1||month<1||month>12||day<1||day>days[month-1]||hour>23||minute>59||second>59)return false;
+ const tz=m[7];if(tz!=='Z'){const h=Number(tz.slice(1,3)),min=Number(tz.slice(4,6));if(h>23||min>59)return false;}
+ return Number.isFinite(Date.parse(x));
+}
+function typedContext(c){
+ return {gameMode:c.gameMode,sourceType:c.sourceType,patchBuild:c.patchBuild,
+  recipeSpellID:c.recipeSpellID,observationEpoch:c.observationEpoch,
+  inputItemID:c.inputItemID,outputItemID:c.outputItemID,
+  inputQualityRank:c.inputQualityRank,outputQualityRank:c.outputQualityRank,
+  nominalInputCountPerCast:c.nominalInputCountPerCast,
+  directReagents:c.directReagents.map(r=>({itemID:r.itemID,quantity:r.quantity})),
+  minimumRecipeEligibleSkill:c.minimumRecipeEligibleSkill,professionSkill:c.professionSkill,
+  professionContext:{specialization:c.professionContext.specialization,gear:c.professionContext.gear,
+   unlocks:c.professionContext.unlocks,resourcefulnessPercent:c.professionContext.resourcefulnessPercent},
+  sourceStudyFamilyID:c.sourceStudyFamilyID};
+}
 function validateContext(c){
  check(c&&typeof c==='object'&&c.gameMode==='RETAIL','RETAIL_CONTEXT_REQUIRED');
  check(INPUTS.includes(c.inputItemID)&&c.outputItemID===OUTPUT,'TARGET_IDENTITY_REQUIRED');
@@ -26,7 +50,7 @@ function validateContext(c){
  if(c.sourceType==='RAW_CURRENT_RETAIL'){
   check(typeof c.patchBuild==='string'&&/^\d+\.\d+\.\d+(?:[.-][A-Za-z0-9.-]+)?$/.test(c.patchBuild),'EXACT_PATCH_REQUIRED');
   check(posint(c.recipeSpellID),'RECIPE_ID_REQUIRED');
-  check(typeof c.observationEpoch==='string'&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(c.observationEpoch)&&Number.isFinite(Date.parse(c.observationEpoch)),'OBSERVATION_EPOCH_REQUIRED');
+  check(validEpoch(c.observationEpoch),'OBSERVATION_EPOCH_REQUIRED');
  }else{
   check(known(c.patchBuild)&&known(c.recipeSpellID)&&known(c.observationEpoch),'SYNTHETIC_CONTEXT_REQUIRED');
  }
@@ -38,12 +62,18 @@ function width(n,range,alpha){
  check(typeof alpha==='number'&&Number.isFinite(alpha)&&alpha>0&&alpha<1,'ALPHA_DOMAIN');
  return range*Math.sqrt(Math.log((2*Math.PI*Math.PI*n*n*INPUTS.length*2)/(6*alpha))/(2*n));
 }
-function analyzeCohort({context,events,alpha=0.05,certifiedMaxPerCast=null,capEvidenceID=null}){
+function analyzeCohort({context,events,alpha=0.05,certifiedMaxPerCast=null,capEvidenceID=null,capAttestation=null}){
  validateContext(context);
  check(Array.isArray(events)&&events.length>0,'EVENTS_REQUIRED');
  check(typeof alpha==='number'&&Number.isFinite(alpha)&&alpha>0&&alpha<1,'ALPHA_DOMAIN');
- if(certifiedMaxPerCast!==null)check(posint(certifiedMaxPerCast)&&typeof capEvidenceID==='string'&&capEvidenceID.trim()&&capEvidenceID!==context.sourceStudyFamilyID,'INDEPENDENT_CAP_CERTIFICATE_REQUIRED');
- else check(capEvidenceID===null,'CAP_WITHOUT_MAX');
+ if(certifiedMaxPerCast!==null)check(posint(certifiedMaxPerCast)&&lineageKey(capEvidenceID)&&lineageKey(capEvidenceID)!==lineageKey(context.sourceStudyFamilyID),'INDEPENDENT_CAP_CERTIFICATE_REQUIRED');
+ else check(capEvidenceID===null&&capAttestation===null,'CAP_WITHOUT_MAX');
+ if(capAttestation!==null)check(certifiedMaxPerCast!==null&&capAttestation&&typeof capAttestation==='object'&&!Array.isArray(capAttestation)&&
+   lineageKey(capAttestation.sourceStudyFamilyID)===lineageKey(capEvidenceID)&&
+   typeof capAttestation.reviewRecordID==='string'&&capAttestation.reviewRecordID.trim()&&
+   capAttestation.independentOfCohort===true,'CAP_ATTESTATION_REQUIRED');
+ // Distinct identifiers and caller attestations are not independently verified evidence.
+ // Without an attestation, finite E bounds are explicitly hypothetical only.
  let n=0,aborted=0,success=0,sum=0,refund=0,min=Infinity,max=0;
  const seen=new Set();
  for(const e of events){
@@ -65,9 +95,11 @@ function analyzeCohort({context,events,alpha=0.05,certifiedMaxPerCast=null,capEv
  }else{
   const epsE=width(n,certifiedMaxPerCast,alpha);
   eInterval=[Math.max(0,eMean-epsE,pInterval[0]),Math.min(certifiedMaxPerCast,eMean+epsE,certifiedMaxPerCast*pInterval[1])];
-  capStatus='CONDITIONAL_ON_CALLER_SUPPLIED_INDEPENDENT_CAP_AND_IID';
+  capStatus=capAttestation===null?'CONDITIONAL_ON_UNATTESTED_HYPOTHETICAL_CAP_AND_IID':'CONDITIONAL_ON_CALLER_ATTESTATION_PENDING_INDEPENDENT_REVIEW';
  }
+ const contextSnapshot=typedContext(context);
  return {modelID:MODEL_ID,targetKey:TARGETS[INPUTS.indexOf(context.inputItemID)],sourceStudyFamilyID:context.sourceStudyFamilyID,
+  typedContext:contextSnapshot,typedContextKey:JSON.stringify(contextSnapshot),
   sourceType:context.sourceType,completedCasts:n,abortedRequests:aborted,nominalGrossInputs:n*context.nominalInputCountPerCast,
   refundedInputs:refund,netConsumedInputs:n*context.nominalInputCountPerCast-refund,
   zeroOutputCasts:n-success,positiveOutputCasts:success,observedTotalOutput:sum,
@@ -76,7 +108,8 @@ function analyzeCohort({context,events,alpha=0.05,certifiedMaxPerCast=null,capEv
   observedExtremaAreNotHardBounds:true,dropChanceAnytimeInterval:pInterval,expectedQuantityAnytimeInterval:eInterval,
   intervalConfidence:1-alpha,simultaneousTargetKeys:INPUTS.length,metricsPerKey:2,
   anytimeGuarantee:'CONDITIONAL_ON_FIXED_CONTEXT_IID_COMPLETE_ZERO_INCLUSIVE_CASTS_AND_CORRECT_CAP_IF_USED',
-  capStatus,certifiedMaxPerCast,capEvidenceID,outputUniverseStatus:'NOT_INDEPENDENTLY_CERTIFIED',
+  capStatus,certifiedMaxPerCast,capEvidenceID,capAttestation:capAttestation===null?null:{sourceStudyFamilyID:capAttestation.sourceStudyFamilyID,reviewRecordID:capAttestation.reviewRecordID,independentOfCohort:true},
+  capIndependentlyVerified:false,outputUniverseStatus:'NOT_INDEPENDENTLY_CERTIFIED',
   completeEconomicOutputUniverse:false,independentStudyHoldout:'NOT_PERFORMED',
   ...POLICY};
 }
@@ -118,6 +151,17 @@ function selfTest(){
  bad(()=>analyzeCohort({context:{...raw,recipeSpellID:'banana'},events}));
  bad(()=>analyzeCohort({context:{...raw,observationEpoch:'UNKNOWN'},events}));
  bad(()=>analyzeCohort({context:{...raw,professionSkill:0},events}));
+ bad(()=>analyzeCohort({context:{...raw,observationEpoch:'2026-02-29T20:00:00Z'},events}));
+ bad(()=>analyzeCohort({context:{...raw,observationEpoch:'2026-02-30T20:00:00Z'},events}));
+ bad(()=>analyzeCohort({context:raw,events,certifiedMaxPerCast:3,capEvidenceID:raw.sourceStudyFamilyID+' '}));
+ bad(()=>analyzeCohort({context:raw,events,certifiedMaxPerCast:3,capEvidenceID:'other',capAttestation:{sourceStudyFamilyID:'wrong',reviewRecordID:'r',independentOfCohort:true}}));
+ ok(validEpoch('2024-02-29T23:59:59+05:30'));
+ bad(()=>analyzeCohort({context:{...raw,observationEpoch:'2026-10-29T25:00:00Z'},events}));
+ const changed={...raw,patchBuild:'12.0.1',recipeSpellID:999999,inputQualityRank:3,outputQualityRank:2,professionSkill:100,professionContext:{...raw.professionContext,resourcefulnessPercent:80}};
+ ok(analyzeCohort({context:raw,events}).typedContextKey!==analyzeCohort({context:changed,events}).typedContextKey);
+ const hypo=analyzeCohort({context:raw,events,certifiedMaxPerCast:3,capEvidenceID:'other'});
+ eq(hypo.capIndependentlyVerified,false);
+ eq(hypo.capStatus,'CONDITIONAL_ON_UNATTESTED_HYPOTHETICAL_CAP_AND_IID');
  return {modelID:MODEL_ID,passed:n,failed:0,syntheticOnly:true,targetKeys:TARGETS.length};
 }
 module.exports={MODEL_ID,POLICY,TARGETS,width,validateContext,analyzeCohort,selfTest};
