@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "modelID": "midnight-prospect-hotfix-epoch-isolation-v1.0.3",
-  "taskID": "F003_MIDNIGHT_CONTEXT_ARRAY_ATTESTATION_REPAIR",
+  "modelID": "midnight-prospect-hotfix-epoch-isolation-v1.0.4",
+  "taskID": "F003_MAR31_PAIR_SUMMARY_ATTESTATION_REPAIR",
   "workflowRevision": 2,
-  "status": "PROPOSED_PENDING_INDEPENDENT_QA",
+  "status": "PROPOSED_PAIR_V8_PASS_PENDING_F005_NATIVE_QA",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "modelSource": "research/tools/models_v2/midnight_prospect_hotfix_epoch_isolation_v1.js",
-  "modelSourceBlobSHA": "6847591d66c7acee8ef6b752638e5b4428a9f910",
+  "modelSourceBlobSHA": "70652482e4ac63db50f567fae5cbb35e6f50accd",
   "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "targetKeys": [
@@ -70,7 +70,7 @@
   "functions": {
     "classifyEpoch": "Strict Gregorian timezone parsing; quarantine March 31-April 2 in UTC and local dates, and any cohort crossing classifications.",
     "analyzeCohort": "Computes observed P=positive completed casts/completed casts and unconditional E=total output including zeros/completed casts; gross, refunded and net inputs separate; observed positive extrema are not hard bounds.",
-    "compareEpochs": "Requires same profession/rank/recipe profile and different source lineage AND study-family ID; raw pre/post only; descriptive differences without causal hotfix coefficient.",
+    "compareEpochs": "Attests original analyzeCohort summaries against private zero-inclusive raw-cast witness, exact typed context, source, patch epoch, policy, P/E, positive bounds, refunds and gross/net inputs; rejects mutated/JSON-reloaded summaries; replays original casts before descriptive deltas. No external source authentication.",
     "jsonSafe": "Deeply attest plain-object/array provenance before snapshot: ownKeys, contiguous data descriptors, no symbols/extra keys/accessors/custom toJSON, no cycles; reject unsafe contexts rather than silently serialize altered data."
   },
   "applicability": "Research-only, typed fixed context. Hotfix establishes nonstationarity risk, not a measured baseline. Unknown skill, unlock, cast denominator, recipe eligibility or complete output universe blocks numeric transfer and economic use.",
@@ -80,7 +80,8 @@
     "comparisonConfounding": "Patch/build and source-family effects not eliminated by matched profile alone.",
     "noIndependentCohorts": "Zero actual source logs ingested; synthetic demonstrations only.",
     "noHardYieldCap": "No finite cap asserted from observed positive extrema.",
-    "contextSerialization": "Synthetic adversarial array and nested-object integrity checks passed in V8; independent native Node and current-Retail holdout remain pending."
+    "contextSerialization": "Synthetic adversarial array and nested-object integrity checks passed in V8; independent native Node and current-Retail holdout remain pending.",
+    "summaryIntegrity": "Private in-process WeakMap replay witness; serialized reports must be re-analyzed from raw casts; V8 18/18 is not native Node or independent source proof."
   },
   "policy": {
     "confidence": 0,
@@ -92,11 +93,10 @@
   },
   "tests": {
     "modelSelfTestV8": {
-      "passed": 69,
+      "passed": 72,
       "failed": 0,
       "syntheticOnly": true,
-      "exactSourceBlobSHA": "6847591d66c7acee8ef6b752638e5b4428a9f910",
-      "method": "Exact model source in JavaScript V8 CommonJS harness with strict-assert shim; eight added safety assertions"
+      "exactSourceBlobSHA": "70652482e4ac63db50f567fae5cbb35e6f50accd"
     },
     "nativeNodeExactCommittedSource": "NOT_RUN",
     "nativeNodeBoundaryStandalone": "NOT_RUN",
@@ -105,7 +105,7 @@
       "failed": 0,
       "syntheticOnly": true,
       "exactFixtureBlobSHA": "167582dd8448ec3abe686d036c4a2f4d938ecde4",
-      "exactModelBlobSHA": "6847591d66c7acee8ef6b752638e5b4428a9f910",
+      "exactModelBlobSHA": "70652482e4ac63db50f567fae5cbb35e6f50accd",
       "method": "Unmodified F005 fixture executed against exact committed model in V8 with strict-assert shim",
       "nativeNode": "NOT_RUN",
       "formalValidatorAcceptance": "PENDING"
@@ -118,8 +118,16 @@
       "failed": 0,
       "syntheticOnly": true,
       "exactFixtureBlobSHA": "08e6dba858bffb69561fc8c7f238af8e51e340a4",
-      "exactModelBlobSHA": "6847591d66c7acee8ef6b752638e5b4428a9f910",
+      "exactModelBlobSHA": "70652482e4ac63db50f567fae5cbb35e6f50accd",
       "method": "Unmodified independent F005 array-attestation fixture executed in V8; native Node pending"
+    },
+    "independentF005PairSummary": {
+      "passed": 18,
+      "failed": 0,
+      "syntheticOnly": true,
+      "exactFixtureBlobSHA": "a909b82ec0144bbcd48b868103c955d1e33d851a",
+      "nativeNode": "NOT_RUN",
+      "formalValidatorAcceptance": "PENDING"
     }
   },
   "exactDeltas": {
@@ -133,7 +141,7 @@
     "modelFilesModified": 2
   },
   "evidenceResearcherRequest": "For seven exact stable keys, obtain independent post-April-3 current-Retail zero-inclusive completed-cast logs with all ranks, skill/spec/gear/unlocks/refunds, exact build and timezone timestamps; preserve March 31-April 2 quarantine; do not infer a gem-specific rate change from the March 31 note.",
-  "independentValidatorRequest": "Native Node rerun of model selfTest, unmodified F005 12-case context-array and 26-case March31 suites; verify exact source hashes, context snapshots, and no economic promotion.",
+  "independentValidatorRequest": "Native Node exact v1.0.4: selfTest 72, F005 pair 18, March31 26, array 12; check replay, mutation rejection and preview-only policy. No current Retail holdouts.",
   "blockers": [
     "Exact deployment hour/region on March 31, 2026 unknown; March 31-April 2 quarantine is a conservative assumption",
     "No independent current-Retail zero-inclusive completed-cast logs for seven keys",
