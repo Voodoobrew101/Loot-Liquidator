@@ -39,6 +39,19 @@ jobs:
         # reparsing, mapping equivalence, or F005 acceptance. Do not promote EV.
         continue-on-error: true
         run: node research/tools/working_native_cross_version_preflight.js
+      - name: F002 direct original-Lua source-pinned native self-test
+        run: node research/tools/working_native_direct_lua_reparse.js --self-test
+      - name: Research-only F005 direct original-Lua replay (informational; pending independent acceptance)
+        # Fetch the historical branch without changing the checkout. The F002
+        # runner checks exact old/new/test Git blob hashes before F005's test.
+        # A failed research preflight is visible but cannot promote EV.
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin refs/heads/implementation/database-profession-modernization
+          old_lua="$RUNNER_TEMP/loot-liquidator-v02-original.lua"
+          git show FETCH_HEAD:LootLiquidator/itemdb.lua > "$old_lua"
+          node research/tools/working_native_direct_lua_reparse.js "$old_lua"
       - run: node research/tools/run_completion_pipeline.js --check
       - name: Rebuild and expose only validated stale research outputs for F002 handoff
         if: ${{ failure() }}
