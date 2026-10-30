@@ -1,7 +1,7 @@
 'use strict';
 // F005 independent synthetic QA: fixed-n DF milling context, caps and economic isolation.
 // Do not use as current-Retail evidence or as a live recommendation gate.
-const MODEL_BLOB_SHA='216a929d4ab7b683e1bc9f4637273c4d766b1081';
+const MODEL_BLOB_SHA='e36328de0e677582bf9b2b36c4a6144a5c2f17be';
 const model=require('../../tools/models_v2/df_milling_fixed_n_simultaneous_bounds_v1.js');
 function run(){
  const cases=[];
