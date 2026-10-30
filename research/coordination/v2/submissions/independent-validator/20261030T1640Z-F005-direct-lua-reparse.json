@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_V02_V08_DIRECT_ORIGINAL_LUA_REPARSE",
+  "workflowRevision": 2,
+  "queueRevision": 28,
+  "runUTC": "2026-10-30T16:40:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "705b4e39f6bf475d123479789396c071bba50098",
+  "resultCommitBeforeSubmission": "a4968cdbb5cf46510bf09fc6511c9c86804c03e9",
+  "status": "PROPOSED_COORDINATOR_REVIEW",
+  "verdict": "CONDITIONAL_PASS",
+  "filesCreated": [
+    "research/tests/v2/test_f005_v02_v08_direct_lua_identity_reparse.js",
+    "research/coordination/v2/reviews/2026-10-30T1640Z-F005-direct-original-lua-reparse.json",
+    "research/coordination/v2/submissions/independent-validator/20261030T1640Z-F005-direct-lua-reparse.json"
+  ],
+  "reviewedSourcePaths": [
+    "implementation/database-profession-modernization:LootLiquidator/itemdb.lua",
+    "implementation/five-agent-completion:research/proposed/itemdb.lua",
+    "implementation/five-agent-completion:research/proposed/itemdb-v02-v08-field-reconciliation.json"
+  ],
+  "exactKeysChanged": [],
+  "sourceMappingsChanged": 0,
+  "workingNumericCellsFilled": 0,
+  "newExpectedQuantityCells": 0,
+  "invalidMappingsRemoved": 0,
+  "confidencePromotions": 0,
+  "economicPromotions": 0,
+  "independentStudyLineagesAdded": 0,
+  "independentReparse": {
+    "oldRecords": 976,
+    "newRecords": 1018,
+    "oldNumeric": 3610,
+    "newNumeric": 3558,
+    "added": 45,
+    "retired": 3,
+    "retained": 973,
+    "quarantinedFields": 104,
+    "quarantinedDropChance": 49,
+    "quarantinedExpectedQuantity": 55,
+    "fishRankDowngrades": 12,
+    "nonEquivalentDFSuccessorPairs": 3,
+    "tooltipGrossInputProxyQuarantined": 1
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "Connector JavaScript V8",
+      "scope": "Directly parse original 587,964-byte v0.2 Lua and 3,655,480-byte v0.8 Lua compact raw tables; compare independently of F002 JSON",
+      "assertionsPassed": 180,
+      "mutantsRejected": 14,
+      "failures": 0
+    },
+    {
+      "runtime": "GitHub connector",
+      "scope": "New Node test source read-back",
+      "status": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node execution of new two-source suite: original v0.2 Lua is on another branch and unavailable in this runner filesystem",
+    "Lua 5.1 emitted-file decode and full v0.8 working estimate parse",
+    "WoW client/in-game tests and live EV consumer tests"
+  ],
+  "blockers": [
+    "Three same-operation DF records differ in expansion and output rank; no automatic mapping identity merge",
+    "Twelve fish milling input-rank downgrades lack independent current-client eligibility proof",
+    "No matched current-Retail zero-inclusive completed-cast holdouts"
+  ],
+  "nextTask": "Run source-pinned two-file regression under native Node and verify the v0.8 emitted working table/economic isolation separately; ask F002 to document identity dispositions.",
+  "safety": {
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyPolicyChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "releaseCreated": false,
+    "schedulesChanged": false,
+    "previewEconomicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "unsupportedFallbackConfidence": 0
+  },
+  "coordinatorAcceptanceRequest": "Accept independent direct Lua reparse evidence; retain conditional mapping/rank verdict; do not promote numeric evidence or live economic use."
+}
