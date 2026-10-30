@@ -1,7 +1,7 @@
 -- Read-only TradeSkillMaster v4 operation adapter.
 -- TradeSkillMasterDB internals are NOT a public API and can change across versions.
 -- All TSM price expressions are evaluated by TSM_API.GetCustomPriceValue.
-local ADDON, LL = ...
+local _, LL = ...
 local function Number(n) return type(n)=="number" and n>0 and n<math.huge and n or nil end
 local function SafeActiveProfile()
     if type(TSM_API)~="table" or type(TSM_API.GetActiveProfile)~="function" then return nil end

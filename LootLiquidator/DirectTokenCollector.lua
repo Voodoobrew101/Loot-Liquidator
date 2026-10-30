@@ -154,10 +154,9 @@ end
 function LL:TokenResearchStatus()
     local s=self.db and self.db.directTokenResearch
     local records=s and s.records or {}
-    local merchants,opened,unique={},0,{}
+    local opened,unique=0,{}
     for _,r in pairs(records) do
-        if r.kind=="merchant_offer" then merchants[r.inputID]=true
-        else opened=opened+1 end
+        if r.kind~="merchant_offer" then opened=opened+1 end
         unique[r.inputID]=true
     end
     return ("Direct token research: %d links, %d distinct input items, %d opened-loot links; observational only, not used for prices."):

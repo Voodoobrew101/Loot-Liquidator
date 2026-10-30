@@ -1,7 +1,9 @@
 -- Loot Liquidator: rank ONLY conversions the current character or a verified alt can perform.
 -- Prices are quoted in copper per original input. No automatic crafting or selling.
-local ADDON, LL = ...
-local floor=math.floor
+local _, LL = ...
+local processingMethodLetters={Disenchant="D",Mill="M",Prospect="P",Smelt="S"}
+local conversionMethodLetters={Disenchant="D",Mill="M",Prospect="P",Smelt="S",
+    Recycle="R",Research="R",Combine="X",Split="X",Exchange="X",Craft="C"}
 
 -- Single authoritative processing evaluation path.
 -- All skill/condition matching, reference selection, and valuation live here.
@@ -23,7 +25,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local current=self.CharacterKey and self:CharacterKey()
     local key=(character and character~="Current character") and character or current
     local record=self.db and self.db.characters and self.db.characters[key]
-    local modeKey=({Mill="M",Prospect="P",Smelt="S",Disenchant="D"})[method]
+    local modeKey=processingMethodLetters[method]
     local modeValue=modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)
     local contextKey=table.concat({tostring(key),tostring(profession),tostring(f and f.id),
         tostring(f and f.expansionID),tostring(f and f.reagentQuality),tostring(recipeID),tostring(modeValue)},":")
@@ -73,10 +75,9 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
             ctx.qualityFromBlizzard=type(info.craftingQuality)=="number"
         end
     end
-    local mode=({Mill="M",Prospect="P",Smelt="S",Disenchant="D"})[method]
-    local manual=mode and self.ProcessingMethodMode and self:ProcessingMethodMode(mode)==4
-        and self.AltMethodEnabled and self:AltMethodEnabled(key,mode)
-        and record and record.altMethods and record.altMethods[mode]==true
+    local manual=modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)==4
+        and self.AltMethodEnabled and self:AltMethodEnabled(key,modeKey)
+        and record and record.altMethods and record.altMethods[modeKey]==true
     if not validNumber(ctx.effectiveSkill) and validNumber(skill) then ctx.effectiveSkill=skill end
     local saved=record and record.researchProfiles and record.researchProfiles[tostring(profession)..":"..tostring(f and f.expansionID)]
     ctx.equipment=key==current and record and record.professionEquipment or (saved and saved.equipment)
@@ -326,15 +327,14 @@ function LL:EvaluateDisenchant(f,character)
 end
 local function number(n) return type(n)=="number" and n>0 and n<math.huge and n or nil end
 local function Allowed(db,method)
-    local letter=({Disenchant="D",Mill="M",Prospect="P",Smelt="S",
-        Recycle="R",Research="R",Combine="X",Split="X",Exchange="X",Craft="C"})[method] or "C"
+    local letter=conversionMethodLetters[method] or "C"
     local modes=db and db.processingModes
     if type(modes)=="table" and modes[letter]==3 then return false end
     -- Modes replace all prior redundant method gates; Auto is the default.
     return true
 end
 local function MethodLetter(name)
-    return ({Disenchant="D",Mill="M",Prospect="P",Smelt="S"})[name] or "C"
+    return processingMethodLetters[name] or "C"
 end
 function LL:GetOutputPrice(itemID)
     local key=self:TSMString(nil,itemID)

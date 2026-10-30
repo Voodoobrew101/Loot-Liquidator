@@ -4,7 +4,7 @@ LA.version = "0.10.0-alpha10"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
-local floor, max, min = math.floor, math.max, math.min
+local floor, max = math.floor, math.max
 -- Tests loading Core.lua in isolation may not have the optional item-rule module.
 local function Ignored(self,id,method)
     return self.IsIgnoredAction and self:IsIgnoredAction(id,method) or false
@@ -54,7 +54,6 @@ local defaults = {
 }
 
 local cache = {}
-local cacheUntil = 0
 
 -- The existing AH-fee setting controls BOTH prices and recommendations.
 -- Keep the SavedVariables key so players retain their existing preference.
@@ -395,7 +394,7 @@ function LA:AuctionUnit(f)
     -- If an operation was explicitly selected, a missing TSM record is a
     -- hard error. NEVER silently value it using another operation's price.
     if self.ChosenTSMAuctionOperation then
-        local op,name,override,reason=self:ChosenTSMAuctionOperation(f)
+        local op,_,override,reason=self:ChosenTSMAuctionOperation(f)
         if override and not op then return nil,reason or "Selected operation unavailable" end
         if op then
             return self:QuoteTSMAuctionOperation(f,op)
@@ -521,7 +520,7 @@ function LA:Evaluate(link, context)
     local conversion
     if not tokenInfo then conversion=self:BestConversion(f) end
     local vendor = (Ignored(self,f.id,"V") and 0) or (f.vendor or 0)
-    local action, fallback, reason = nil, nil, nil
+    local action, fallback, reason
     local isToken = tokenInfo~=nil
     local methodLetter = {Disenchant="D", Mill="M", Prospect="P", Smelt="S", Exchange="C", Craft="C", Combine="C", Split="C"}
     local convertedValue = conversion and conversion.value or 0

@@ -101,11 +101,11 @@ local function ruleFor(self,f,option,id,build)
     local found
     for _,r in ipairs(self.ItemDB and self.ItemDB.professionRules or {}) do
         if approved(r) and matches(r,f,option,id) and tostring(r.build)==tostring(build) then
-            if found then return nil,'Conflicting profession rules' end
+            if found then return nil end
             found=r
         end
     end
-    return found,found and nil or 'No numeric profession rule'
+    return found
 end
 local function scale(m,factor,ruleID)
     if m.expectedQuantity~=nil then

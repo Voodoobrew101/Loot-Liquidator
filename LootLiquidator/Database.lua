@@ -3,6 +3,7 @@ local _, LL = ...
 local defaults={itemdb={true,100},personal={true,60},itemtsm={true,30},legacy={false,10}}
 LL.SourceDefaults=defaults
 local order={'itemdb','personal','itemtsm','legacy'}
+local sourcePriority={itemdb=1,personal=2,itemtsm=3,tsm=3,legacy=4}
 local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true}
 local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
@@ -363,8 +364,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     -- Primary database first, then an independent measured personal context.
     -- Incompatible/unknown historical contexts are never silently pooled.
     table.sort(eligible,function(a,b)
-        local rank={itemdb=1,personal=2,itemtsm=3,tsm=3,legacy=4}
-        if rank[a.sourceKey]~=rank[b.sourceKey] then return rank[a.sourceKey]<rank[b.sourceKey] end
+        if sourcePriority[a.sourceKey]~=sourcePriority[b.sourceKey] then
+            return sourcePriority[a.sourceKey]<sourcePriority[b.sourceKey]
+        end
         return a.recordID<b.recordID
     end)
     local anchor

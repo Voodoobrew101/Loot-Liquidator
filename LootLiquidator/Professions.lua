@@ -1,6 +1,6 @@
 -- Loot Liquidator profession snapshots and conservative cross-profession conversion discovery.
 -- This module NEVER presumes that simply having a profession means a recipe is learned.
-local ADDON, LL = ...
+local _, LL = ...
 local PROF = {Disenchant="Enchanting",Mill="Inscription",Prospect="Jewelcrafting",
     Smelt="Mining",Tailor="Tailoring",Leatherwork="Leatherworking",Engineering="Engineering"}
 local KNOWN_SPELLS = {Mill=51005,Prospect=31252,Disenchant=13262}
@@ -202,11 +202,8 @@ function LL:GetResearchProfessionSnapshot(f,profession)
     if cachedRead and now-cachedRead.at<5 then
         return cachedRead.skill,cachedRead.spec,cachedRead.lineID
     end
-    local family=self.DisenchantTables and self.DisenchantTables[exp]
-    local expName=family and family.name
     local chosenID,detail
     for id,rec in pairs(char.details or {}) do
-        local name=rec.name or ""
         local parent=rec.parentName or ""
         if (parent==profession or (parent=="" and char.professions
             and char.professions[profession]))
@@ -519,9 +516,7 @@ function LL:CanUseConversion(f, conversion)
             if name~=key and char.professions and char.professions[profession] then
                 local known=conversion.recipeID and char.recipes and char.recipes[conversion.recipeID]
                 local spellAccess=(not conversion.recipeID and spell and char.spells and char.spells[spell])
-                local methodKey=({Disenchant="D",Mill="M",Prospect="P",Smelt="S",
-                    Craft="C",Recycle="R",Research="R"})[method] or "C"
-                if (not self.AltMethodEnabled or self:AltMethodEnabled(name,methodKey))
+                if (not self.AltMethodEnabled or self:AltMethodEnabled(name,letter))
                     and ((known and known.learned and not known.disabled) or spellAccess) then
                     return true,nil,name
                 end
@@ -550,7 +545,6 @@ function LL:CanUseConversion(f, conversion)
             local chosen
             for _,name in ipairs(selected) do
                 if name==key then
-                    local active=self.db.characters and self.db.characters[name]
                     if self:HasCurrentProfession(profession) then
                         chosen=name
                         break
@@ -607,9 +601,9 @@ end
 -- NOT proof all WoW recipes have been scanned.
 function LL:ScanProfessionRecipes()
     if not self.db or self.db.enableLearnedRecipeDiscovery==false then return end
-    if not self.db or not C_TradeSkillUI or not C_TradeSkillUI.GetAllRecipeIDs
+    if not C_TradeSkillUI or not C_TradeSkillUI.GetAllRecipeIDs
         or not C_TradeSkillUI.GetRecipeInfo or not C_TradeSkillUI.GetRecipeSchematic then return end
-    local lineID,lineName,_,_,parentID,parentName=DisplayedSkillLine()
+    local lineID,lineName,_,_,_,parentName=DisplayedSkillLine()
     local key=self:CharacterKey()
     local char=key and self.db.characters[key]
     if not lineID or not char then return end
@@ -819,9 +813,13 @@ end
 
 function LL:MatchingCharacters(profession)
     local out={}
-    for name,char in pairs(self.db and self.db.characters or {}) do
-        local p=char.professions and char.professions[profession]
-        if p and (not self.AltMethodEnabled or self:AltMethodEnabled(name,({Enchanting="D",Inscription="M",Jewelcrafting="P",Mining="S"})[profession] or "C")) then out[#out+1]={name=name,skill=p.skill,maxSkill=p.maxSkill,details=char.details,faction=char.faction} end
+    local method=({Enchanting="D",Inscription="M",Jewelcrafting="P",Mining="S"})[profession] or "C"
+    for characterKey,character in pairs(self.db and self.db.characters or {}) do
+        local scannedProfession=character.professions and character.professions[profession]
+        if scannedProfession and (not self.AltMethodEnabled or self:AltMethodEnabled(characterKey,method)) then
+            out[#out+1]={name=characterKey,skill=scannedProfession.skill,
+                maxSkill=scannedProfession.maxSkill,details=character.details,faction=character.faction}
+        end
     end
     table.sort(out,function(a,b) return a.name<b.name end)
     return out
@@ -921,7 +919,7 @@ function LL:AltMethodEnabled(key,method)
 end
 function LL:SetAltMethodEnabled(key,method,enabled)
     local entry=self.db and self.db.characters and self.db.characters[key]
-    if not entry or not ({T=true,D=true,M=true,P=true,S=true,C=true,R=true,X=true})[method] then return false end
+    if not entry or not MODES[method] then return false end
     entry.altMethods=entry.altMethods or {}
     entry.altMethods[method]=enabled==true
     self._altRosterRevision=(self._altRosterRevision or 0)+1

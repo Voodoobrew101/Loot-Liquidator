@@ -1,4 +1,4 @@
-local ADDON, LA = ...
+local _, LA = ...
 local hookedBetterBags = false
 -- Weak keys: never prevent Blizzard/BetterBags buttons from being collected.
 local activeButtons=setmetatable({}, {__mode="k"})
@@ -458,9 +458,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         end
         return prefix..label
     end
-    local function valued(label,unit,letter,count)
+    local function valued(label,unit,letter)
         if unit==nil then return end
-        count=math.max(1,tonumber(count) or 1)
         -- All prices are per original item, like TSM. Repeating '(each)'
         -- beside every method obscures the actual value comparison.
         two(label,LA:Money(unit),letter)
@@ -506,7 +505,6 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     -- materials. Collection ownership, auctionability and profit are separate.
     -- Normal equipment must NEVER skip money quotes because the top badge is T.
     if detail>=2 and (decision.action~="T" or not decision.tokenInfo or compactToken) then
-        local count=decision.count or 1
         if LA.db.tooltipAuction~=false then
             local quote=decision.rawAuction and (LA.db.tooltipShowAfterAHCut~=false
                 and decision.netAuction or decision.rawAuction)
@@ -660,7 +658,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     elseif confidence then label=label..(" (Confidence %d/100)"):format(confidence)
                     elseif option.available==false then label=label.." (estimate)" end
                     if option.value then
-                        valued(label,option.value,option.letter,methodName=="Disenchant" and count or 1)
+                        valued(label,option.value,option.letter)
                     else
                         two(label,"Insufficient Data",option.letter or "D")
                     end
@@ -706,7 +704,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         -- Vendor is the LAST comparison row for ordinary items.
         if LA.db.tooltipVendor~=false and type(decision.vendor)=="number"
             and decision.vendor>0 and not compactToken then
-            valued("Vendor",decision.vendor,"V",count)
+            valued("Vendor",decision.vendor,"V")
         end
     end
     if detail>=3 and LA.db.showResearchDetails==true
@@ -909,10 +907,16 @@ local function TooltipItem(tooltip, data)
         local _, l = TooltipUtil.GetDisplayedItem(tooltip)
         link = l
     end
-    if not link and tooltip.GetItem then _, link = tooltip:GetItem() end
+    if not link and tooltip.GetItem then
+        local _,itemLink = tooltip:GetItem()
+        link = itemLink
+    end
     if not link and data and data.id then
         local fn = C_Item and C_Item.GetItemInfo or GetItemInfo
-        if fn then _, link = fn(data.id) end
+        if fn then
+            local _,itemLink = fn(data.id)
+            link = itemLink
+        end
     end
     if not link then return end
     local owner = tooltip.GetOwner and tooltip:GetOwner()
