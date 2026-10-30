@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_GENERATED_EVIDENCE_GAP_PRIORITY_IDENTITY_CONTRACT_REPAIR",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T2316Z-F002-gap-priority-empty-reason-native-green",
+  "reportUTC": "2026-10-30T23:16:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "supersedesStatusOf": "research/coordination/v2/submissions/completion-engineer/20261030T2312Z-F002-gap-priority-exact-contract.json",
+  "status": "PROPOSED_NATIVE_GREEN_FOR_COORDINATOR_AND_INDEPENDENT_F005_REVIEW",
+  "baseImplementationCommit": "e018f99500ca75212563206f0778b12f19b885e4",
+  "failedInitialRun": {
+    "commit": "e018f99500ca75212563206f0778b12f19b885e4",
+    "runID": 41143247075,
+    "conclusion": "failure",
+    "failedStep": "F002 exact gap-to-priority identity and preview coverage contract",
+    "error": "CSV_INVALID_GAP:257",
+    "rootCause": "Generated evidence gap CSV legitimately permits empty reason for unknown evidence; initial new gate incorrectly rejected it.",
+    "selfTestResult": "PASS_13_MUTANTS",
+    "pipelineCheck": "PASS"
+  },
+  "correctionCommit": "8f1c74366422cb32c9f686097407562edf73c695",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/working_gap_priority_contract.js",
+      "action": "UPDATED",
+      "oldBlobSHA": "da7c7c15a55d2ae6c191eac8cae5a410f164d804",
+      "newBlobSHA": "b11bb330428979daa266f631c7c2f95f9f1896e0",
+      "details": "Accept empty gap reason as valid unknown evidence; replace now-inapplicable empty-reason adversarial test with invalid item-ID mutation."
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T2316Z-F002-gap-priority-empty-reason-native-green.json",
+      "action": "CREATED"
+    }
+  ],
+  "generatedEvidenceReconciliation": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "priorityRecords": 217,
+    "uniqueGapRecordIDs": 217,
+    "evidenceMissingCells": 514,
+    "blankReasonRowsAccepted": 188,
+    "missingByField": {
+      "dropChance": 204,
+      "yieldMin": 97,
+      "yieldMax": 97,
+      "expectedQuantity": 116
+    },
+    "gapStatuses": {
+      "unknown": 475,
+      "contradictory": 39
+    },
+    "identityMismatches": 0
+  },
+  "nativeCI": {
+    "runID": 41143357976,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41143357976",
+    "commit": "8f1c74366422cb32c9f686097407562edf73c695",
+    "conclusion": "success",
+    "node": "24",
+    "selfTest": "PASS_13_ADVERSARIAL_MUTATIONS",
+    "fullGapPriorityContract": "PASS_514_GAPS_217_RECORDS",
+    "deterministicPipelineCheck": "PASS",
+    "lua51SyntaxAndDecodedIsolation": "PASS",
+    "otherWorkflowSteps": "PASS"
+  },
+  "exactDeltas": {
+    "mappingAdmissions": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "productionWrites": 0
+  },
+  "testsActuallyRun": [
+    "Native Node 24 self-test: 13/13 adversarial mutations rejected",
+    "Native Node 24 full generated-gap and priority identity reconciliation: 514/514 gaps, 217/217 unique record IDs, zero mismatches",
+    "Native deterministic completion pipeline --check: PASS",
+    "Native Lua 5.1 emitted candidate syntax and working/evidence isolation: PASS",
+    "GitHub read-back of corrected script: SHA b11bb330428979daa266f631c7c2f95f9f1896e0"
+  ],
+  "testsNotRun": [
+    "Independent F005 formal acceptance of new consistency gate",
+    "In-game Retail testing",
+    "Independent held-out current Retail cast studies"
+  ],
+  "blockers": [
+    "116 missing evidence expectedQuantity cells; preview numeric completion is not source evidence.",
+    "F003 Prismatic Ore item identity defect (192880 vs 194545) remains model-author-owned; F005 independent retest required.",
+    "No independent current-Retail completed-cast holdout or verified minimum eligible baseline."
+  ],
+  "nextTask": "On new accepted model/compiler inputs, rebuild and reconcile exact field deltas, then obtain F005 acceptance for this gate; otherwise pivot to a different ready engineering defect rather than repeat unchanged gap audits.",
+  "policy": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "operationalEstimatesAffectLiveValuation": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}
