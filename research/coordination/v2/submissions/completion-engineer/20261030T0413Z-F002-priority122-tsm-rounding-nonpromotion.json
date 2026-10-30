@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_PRIORITY122_CONFLICT_DIAGNOSTIC",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 17,
+  "runUTC": "2026-10-30T04:13:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "8753e1bc98d1598b8fbdd7263572a69732b1d883",
+  "resultCommit": "43f9bc5202a0f28320add10500a3b1243bbef0c6",
+  "status": "SUBMITTED_FOR_COORDINATOR_AND_INDEPENDENT_QA_NATIVE_CI_PENDING",
+  "priority": "Five priority-122 Dragonflight prospecting historical TSM P/E conflicts; research-only source-unit and rounding diagnostic",
+  "filesChanged": [
+    "research/tools/df_priority122_conflict_diagnostic.js",
+    "research/tools/run_completion_pipeline.js",
+    "research/coordination/v2/submissions/completion-engineer/20261030T0413Z-F002-priority122-tsm-rounding-nonpromotion.json"
+  ],
+  "sourceIdentities": {
+    "primaryLedger": {
+      "path": "research/ledger/processing-output-fields.csv",
+      "blobSHA": "3e2bb784dc832d90584eebd8620148caf2133fbd"
+    },
+    "batch014Audit": {
+      "path": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1432-dragonflight-q16-batch014-40key-fourfield-audit.jsonl",
+      "blobSHA": "fc90aeb9607d49ccf4f1877cd49b9988b4ead2ed"
+    },
+    "frozenGameData": {
+      "path": "GameData.lua",
+      "blobSHA": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e"
+    },
+    "diagnostic": {
+      "path": "research/tools/df_priority122_conflict_diagnostic.js",
+      "blobSHA": "5cca4246b0b13793fefd73e86b0c85d65a7b26ed"
+    },
+    "pipeline": {
+      "path": "research/tools/run_completion_pipeline.js",
+      "blobSHA": "9c6e02f8d74bbfa07714dcf460fd52bd0f343f54"
+    }
+  },
+  "keys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "diagnostics": {
+    "historicalTSMPerInput": {
+      "matRate": 0.0142,
+      "amountOfMats": 0.0028
+    },
+    "nominalBatch": 5,
+    "historicalLedgerPerFive": {
+      "dropChance": 0.0142,
+      "expectedQuantity": 0.014
+    },
+    "exactDecimalPMinusE": 0.0002,
+    "roundedMatRateInterval": [
+      0.01415,
+      0.01425
+    ],
+    "roundedAmountOfMatsTimesFiveInterval": [
+      0.01375,
+      0.01425
+    ],
+    "roundedLedgerEInterval": [
+      0.0135,
+      0.0145
+    ],
+    "commonPAndEIntervalUnderUnverifiedUnitAndRoundingHypothesis": [
+      0.01415,
+      0.01425
+    ],
+    "conclusion": "All five apparent P>E contradictions are arithmetically compatible with source rounding IF matRate represents per-cast occurrence and amountOfMats per-input unconditional yield. This does not verify source semantics, rank allocation, cast denominator, or current-Retail applicability. Keep both source fields quarantined.",
+    "independentCurrentRetailCastCohorts": 0,
+    "confidenceOfWorkingPrior": 0,
+    "workingEconomicUse": "PREVIEW_ONLY",
+    "workingNormalizedVerified": false
+  },
+  "exactDeltas": {
+    "sourceRecordsEdited": 0,
+    "rawEvidenceChanged": 0,
+    "frozenTSMChanged": 0,
+    "admittedMappingsChanged": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "expectedQuantityEvidenceCellsFilled": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "sourceUnitDiagnosticKeys": 5,
+    "newEngineeringScripts": 1,
+    "pipelineGatesAdded": 1,
+    "generatedCandidateFilesChanged": 0,
+    "productionWrites": 0
+  },
+  "coverage": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116
+  },
+  "testsActuallyRun": [
+    "Native Node arithmetic spot check: P rounding interval intersects nominal five-input E interval at approximately [0.01415,0.01425]; exact-decimal discrepancy is 0.0002",
+    "GitHub readback of new diagnostic file verified exact source regex and blob SHA",
+    "GitHub readback of current source ledger, batch014 audit, GameData line identities and generated compiler source"
+  ],
+  "testsPending": [
+    "GitHub Actions 41001617350 native Node pipeline --check including five-key diagnostic",
+    "Lua 5.1 roundtrip and full JSON Schema check from same GitHub CI run",
+    "Independent validator adversarial review of source units, rounding assumptions, and nonpromotion"
+  ],
+  "nativeCI": {
+    "runID": 41001617350,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41001617350",
+    "statusAtSubmission": "IN_PROGRESS_NOT_CLAIMED_PASSED"
+  },
+  "notRun": [
+    "Local full repository native Node pipeline (repository not mounted; GitHub CI pending)",
+    "WoW Retail in-game tests",
+    "Independent zero-inclusive current-Retail cast study"
+  ],
+  "blockers": [
+    "matRate semantic unit and rank allocation remain unverified; arithmetic compatibility cannot prove P=E or resolve conflict",
+    "Actual completed casts, profession context, source patch epoch and independent holdout unavailable",
+    "Native CI and independent validator acceptance not yet confirmed"
+  ],
+  "safety": {
+    "allUnsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "legacyAssignmentsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "otherAgentFilesChanged": false,
+    "schedulesChanged": false
+  },
+  "zeroDeltaPivot": "No new numeric or evidence cells were available; pivoted from repeated unchanged source audits to a deterministic, source-bound five-key unit/rounding diagnostic with a fail-closed pipeline gate.",
+  "nextTask": "F002_FOLLOWUP_PRIORITY122_INDEPENDENT_QA_AND_SOURCE_SEMANTICS_OR_NEXT_READY_ENGINEERING_DEFECT"
+}
