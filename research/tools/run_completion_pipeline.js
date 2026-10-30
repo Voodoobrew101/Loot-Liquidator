@@ -229,6 +229,54 @@ function run(root, options={}) {
     if(midnightLegacyChild.status!==0)
       throw Error("F005 Midnight legacy confidence regression failed\n"+midnightLegacyChild.stdout+midnightLegacyChild.stderr);
     process.stdout.write(midnightLegacyChild.stdout);
+    // F003 staged native QA: execute the independent 16-case fixture on every
+    // research build, but quarantine only the ten precisely documented
+    // pre-repair failures while the modeller's proposal remains unaccepted.
+    // An accepted model must pass all cases. New/unknown failures are fatal.
+    // This is not an independent F005 acceptance or evidence promotion.
+    const dfFixture=path.join(root,"research/tests/v2/test_f005_df_milling_raw_context_and_universe.js");
+    const dfManifestPath=path.join(root,"research/models/v2/df_milling_decision_sensitivity_v1.json");
+    if(!fs.existsSync(dfFixture)||!fs.existsSync(dfManifestPath))
+      throw Error("Missing F003 model manifest or independent F005 native fixture");
+    const dfChild=spawnSync(process.execPath,[dfFixture],{cwd:root,encoding:"utf8",timeout:120000});
+    let dfReport;
+    try { dfReport=JSON.parse((dfChild.stdout||"").trim()); }
+    catch (_) { throw Error("F005 DF milling native test did not emit valid JSON\\n"+dfChild.stdout+dfChild.stderr); }
+    if(dfReport.suite!=="F005_DF_MILLING_RAW_CONTEXT_AND_UNIVERSE"||
+       !Array.isArray(dfReport.cases)||dfReport.cases.length!==16||
+       dfReport.passed+dfReport.failed!==16||
+       dfReport.cases.filter(x=>x.result==="PASS").length!==dfReport.passed||
+       dfReport.cases.filter(x=>x.result==="FAIL").length!==dfReport.failed||
+       dfReport.cases.some(x=>x.result!=="PASS"&&x.result!=="FAIL")||
+       new Set(dfReport.cases.map(x=>x.name)).size!==16)
+      throw Error("Malformed or changed F005 DF milling native fixture result");
+    const knownPreRepairFailures=new Set([
+      "RAW missing gameMode",
+      "RAW missing actual observation epoch",
+      "RAW missing input quality rank",
+      "RAW missing output quality ranks",
+      "RAW missing direct reagent vector",
+      "RAW missing minimum eligible recipe skill",
+      "RAW malformed profession skill accepted",
+      "RAW malformed resourcefulness accepted",
+      "RAW incomplete output universe must not look zero-inclusive",
+      "decision cannot declare dominance from unverified partial output universe"
+    ]);
+    const unexpected=dfReport.cases.filter(x=>x.result==="FAIL"&&!knownPreRepairFailures.has(x.name));
+    if(unexpected.length)throw Error("New F005 DF milling failures: "+
+      unexpected.map(x=>x.name+": "+x.detail).join("; "));
+    const dfManifest=JSON.parse(fs.readFileSync(dfManifestPath,"utf8"));
+    const dfAccepted=/^ACCEPTED(?:_|$)/.test(dfManifest.status||"");
+    if(dfAccepted&&dfReport.failed)
+      throw Error("Accepted F003 model fails mandatory native F005 DF milling gate: "+dfReport.failed+"/16");
+    if(dfReport.failed===0&&dfChild.status!==0)
+      throw Error("F005 DF milling fixture reported zero failures but exited unsuccessfully");
+    if(dfReport.failed>0&&dfChild.status!==1)
+      throw Error("F005 DF milling fixture exit status inconsistent with failed cases");
+    console.log(dfReport.failed
+      ? "QUARANTINED: F005 DF milling native suite "+dfReport.passed+"/16 passed; "+
+        dfReport.failed+" known pre-repair failures; F003 not accepted"
+      : "PASS: F005 DF milling native 16/16 (independent acceptance still separate)");
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
