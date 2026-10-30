@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_DF_MILL_ATTESTATION_AND_RANK_SPLIT",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T2004Z-F001-F005-df-mill-attestation-and-rank-split",
+  "reviewUTC": "2026-10-30T20:04:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "f843da725657b68f6288cc966e8106b1f9dd1aed",
+  "resultCommit": "COMMIT_CONTAINING_THIS_COORDINATOR_REPORT",
+  "status": "SPLIT_ACCEPTANCE_RESEARCH_ONLY",
+  "sourcePins": {
+    "baseCommit": "f843da725657b68f6288cc966e8106b1f9dd1aed",
+    "readiness": {
+      "path": "research/coordination/completion-readiness.json",
+      "sha": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+    },
+    "priorities": {
+      "path": "research/coordination/completion-priorities.json",
+      "sha": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+    },
+    "candidate": {
+      "path": "research/proposed/itemdb.lua",
+      "sha": "560b885a0039045419c340716e263ae33ddf827a"
+    },
+    "dfModel": {
+      "path": "research/tools/models_v2/df_milling_fixed_n_simultaneous_bounds_v1.js",
+      "sha": "216a929d4ab7b683e1bc9f4637273c4d766b1081"
+    },
+    "dfManifest": {
+      "path": "research/models/v2/df_milling_fixed_n_simultaneous_bounds_v1.json",
+      "sha": "b981ee50df8ebddf85cecd36e471cbb5903c1fd1"
+    },
+    "dfValidator": {
+      "path": "research/coordination/v2/reviews/20261030T1940Z-F005-df-milling-fixed-n-context-attestation.json",
+      "sha": "4dbaf5eb06b46bb3b2f81ec51e088150ec23ce42"
+    },
+    "dfValidatorTest": {
+      "path": "research/tests/v2/test_f005_df_milling_fixed_n_independent_attestation.js",
+      "sha": "94c85850e353892e1a62c60a1503a6f6e5e37b50"
+    },
+    "historicalCohort": {
+      "path": "research/evidence/v2/2026-10-30T1930Z-F004-df-4000-prospects-rank-split.json",
+      "sha": "fe290ca4ef9e375196da64cbea99a9c1509fb74e"
+    },
+    "engineerSubmission": {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T1905Z-F002-tww-milling-native-negative-qa.json",
+      "sha": "aa669e9ce3d06dc6915b8be672efc42f57bf6972"
+    }
+  },
+  "decisions": [
+    {
+      "owner": "baseline-modeller",
+      "task": "F003_DF_MILL_FIXED_N_SIMULTANEOUS_BOUNDS",
+      "decision": "REJECT_MODEL_FOR_INTEGRATION_REPAIR_REQUIRED",
+      "reason": "Independent F005 exact-source V8: 22 pass / 8 fail of 30. Patch/build/calendar parsing and canonical immutable attestation of casts, caps, study lineage, epoch, recipe and cap source fail. 39 self-tests do not override independent failures.",
+      "defects": [
+        "patch-build suffix",
+        "impossible calendar date",
+        "cast output changing after validation",
+        "cap maximum changing after attestation",
+        "study family changing after validation",
+        "observation epoch changing after validation",
+        "recipe identity changing after validation",
+        "cap source ID changing after validation"
+      ],
+      "newEconomicValues": 0
+    },
+    {
+      "owner": "independent-validator",
+      "task": "F005_DF_MILL_FIXED_N_CONTEXT_ATTESTATION",
+      "decision": "ACCEPT_NEGATIVE_QA_RESEARCH_ONLY",
+      "reason": "Exact source and test blob pins match; all 43 priority-102 Mill keys reconcile, eight distinct adversarial defects documented. Native Node for this suite not run; no current Retail study holdout.",
+      "nativeNode": "NOT_RUN",
+      "independentDefects": 8
+    },
+    {
+      "owner": "evidence-researcher",
+      "task": "F004_DF_APPROX_4000_CAST_DIAMOND_RANK_SPLIT",
+      "decision": "ACCEPT_AS_PROVISIONAL_HISTORICAL_CONTEXT_ONLY",
+      "reason": "New single-author Dec 30 2022 indexed report of approx 4000 prospects, 16 R2 and 3 R3 Illimited Diamonds; no direct source readback, exact casts, ore ID/rank or current Retail context. Not poolable or applicable to priority-122 E.",
+      "newLineages": 1,
+      "actualVerifiedCasts": 0,
+      "verifiedE": 0
+    },
+    {
+      "owner": "completion-engineer",
+      "task": "F002_TWW_MILLING_NATIVE_NEGATIVE_QA_PIVOT",
+      "decision": "ACCEPT_INFORMATIONAL_NEGATIVE_QA_CI_NOT_MODEL_FIX",
+      "reason": "Latest branch-head GitHub Actions research-candidate passed native informational negative-QA runner and deterministic pipeline/Lua 5.1 steps. A successful runner recognizes the existing five expected failures, not a 37/37 model pass. F005 must independently approve before any mandatory gate.",
+      "nativeCI": {
+        "runID": 41117492039,
+        "headSHA": "f843da725657b68f6288cc966e8106b1f9dd1aed",
+        "conclusion": "success"
+      }
+    }
+  ],
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceE": 116,
+    "evidenceGE90Cells": 0,
+    "verifiedBaselineRecords": 0,
+    "independentCurrentRetailHoldouts": 0
+  },
+  "exactDeltas": {
+    "newAdmittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newOriginalHistoricalAuthorLineages": 1,
+    "newApproximateHistoricalCohorts": 1,
+    "newCurrentRetailCohorts": 0,
+    "newIndependentReproducedModelDefects": 8,
+    "coordinatorOwnedFiles": 3
+  },
+  "checksActuallyExecuted": [
+    {
+      "runtime": "GitHub connector V8",
+      "name": "Independent coordinator arithmetic, 43-key identity, blob-pin, cohort and policy consistency",
+      "passed": 30,
+      "total": 30,
+      "failed": 0
+    },
+    {
+      "runtime": "GitHub Actions",
+      "name": "Branch-head native research-candidate informational checks, deterministic pipeline --check, Lua5.1",
+      "runID": 41117492039,
+      "headSHA": "f843da725657b68f6288cc966e8106b1f9dd1aed",
+      "conclusion": "success",
+      "scope": "Does NOT establish F003 DF model passes F005 independent suite"
+    },
+    {
+      "runtime": "GitHub Actions",
+      "name": "Second branch-head research-candidate workflow",
+      "runID": 41117485065,
+      "headSHA": "f843da725657b68f6288cc966e8106b1f9dd1aed",
+      "conclusion": "success",
+      "scope": "Same source head; not independent current Retail validation"
+    }
+  ],
+  "checksNotRun": [
+    "Native Node exact-source F005 DF milling 30-case suite (V8 22/30; repair pending)",
+    "Independent whole-study-family current-Retail cast holdout",
+    "Current Retail client in-game conversion/EV/tooltip verification",
+    "Direct Reddit original comment readback by coordinator",
+    "Native Node rerun of repaired TWW 37-case or Gem Finding 24-case models (no accepted repairs yet)"
+  ],
+  "blockers": [
+    "Eight DF milling fixed-n attestation defects: strict patch/calendar, mutable casts/caps and lineage/context fields",
+    "Five TWW milling model defects remain uncorrected and 14 Gem Finding malformed-context failures remain unresolved",
+    "116 evidence-supported expectedQuantity gaps; no current-Retail independent completed-cast family and no verified minimum recipe-eligible baselines",
+    "Historical 2022 ~4000 prospects report lacks exact completed-cast denominator and input ore/rank; direct source access unavailable",
+    "DF fish milling input 200061 recipe/rank eligibility and independent E caps unverified"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_REPAIR_DF_FIXED_N_EIGHT_CANONICAL_ATTESTATION_DEFECTS",
+      "scope": "Highest-priority ready model defect: strict patchBuild syntax and real UTC date round-trip; one immutable JSON-safe canonical snapshot for outputs, caps, study family, observation epoch, recipe and cap source. Preserve 43 keys, family-wise bounds, 0/PREVIEW_ONLY/false. Separately retain TWW milling five failures and Gem Finding fourteen failures as unresolved; do not claim their repair."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_NATIVE_DF_FIXED_N_30_RETEST_AND_F004_SOURCE_ATTESTATION",
+      "scope": "Run exact-source 30-case suite under native Node on revised F003 model, add mutation checks for nested/proxy context and cross-epoch provenance. Independently verify original 2022 Reddit comment and rank identity; do not turn approximate prospects into measured casts. Keep F002 negative runner informational."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_KEEP_RESEARCH_PREVIEW_COMPLETE_AND_NATIVE_NEGATIVE_QA_INFORMATIONAL",
+      "scope": "Preserve 1018 mappings/4072 working fields, 514 evidence gaps and 116 E gaps. Pin and monitor native informational negative-QA and emitted-Lua isolation; only after F005 independent approval make any revised research gate mandatory. No candidate regeneration without changed accepted build inputs."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_DIRECT_SOURCE_2022_RANK_SPLIT_OR_CURRENT_RETAIL_CAST_PROTOCOL",
+      "scope": "Seek original author comment verification without inferring ore identity from parent; obtain rank/recipe/skill/patch-labelled current-Retail completed-cast vectors with zero-output casts and refunds for five priority-122 Dragonflight prospecting keys, or pivot to independent DF milling input 200061 eligibility and caps after zero-delta cycles."
+    }
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Unchanged 1018/4072 coverage audits",
+    "to": "New 8-defect DF milling attestation and independent historical rank-split cohort triage",
+    "numericDelta": 0,
+    "newModelDefects": 8,
+    "newHistoricalAuthorLineages": 1
+  },
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "tooltipOnlyChanges": 0,
+    "frozenTSMChanges": 0,
+    "rawEvidenceChanges": 0,
+    "legacyAssignmentChanges": 0,
+    "mainChanges": 0,
+    "runtimeProfilesBranchChanges": 0,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}
