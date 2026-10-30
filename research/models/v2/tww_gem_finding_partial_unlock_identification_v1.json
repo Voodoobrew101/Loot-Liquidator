@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "tww-gem-finding-partial-unlock-identification-v1.0.0",
+  "taskID": "F003_TWW_GEM_FINDING_PARTIAL_UNLOCK_IDENTIFICATION",
+  "workflowRevision": 2,
+  "status": "PROPOSED_PENDING_INDEPENDENT_QA",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "modelSource": "research/tools/models_v2/tww_gem_finding_partial_unlock_identification_v1.js",
+  "modelSourceBlobSHA": "4f3261f73c7f6abebfa7e292333f546800d14ae4",
+  "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "baseCommitBeforeRun": "0d744f65c8cead9431c5dcab1e6682065dbe4ac8",
+  "sourceCommit": "596eb6dc8e94c1f35b2905c0deac259f64da1b59",
+  "targetKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "priority": 104,
+  "queuePivot": "Five priority-122 Dragonflight conflicts remain blocked on new independent completed-cast cohorts; previous model and controlled sampling protocol exist. This run pivots to eight priority-104 TWW Gem Finding conditional outputs with unknown per-cast unlock status.",
+  "newCapability": "Partial identification of eligible-cohort P and, only with explicit scenario caps, E from zero-inclusive per-cast observations with true/false/unknown unlock states. Positive output in unknown-unlock cast forces eligibility only under an explicit structural-zero assumption. No causal or minimum-skill baseline identified.",
+  "math": {
+    "eligibleFractionLower": "(knownTrue + unknownPositiveCasts)/completedCasts",
+    "eligibleFractionUpper": "(knownTrue + unknownUnlockCasts)/completedCasts",
+    "observedOccurrence": "positiveCasts/actualCompletedCasts",
+    "observedUnconditionalE": "sumOutputUnits/actualCompletedCasts",
+    "fixedNHoeffdingRadius": "sqrt(log(4*m/alpha)/(2*n)) for m=8 predeclared targets and two metrics per target",
+    "pLower": "max(0,(observedOccurrence-radius)/qUpper)",
+    "pUpper": "qLower=0 ? 1 : min(1,(observedOccurrence+radius)/qLower)",
+    "eLowerUpper": "Only with scenario hard cap M: replace occurrence with observed unconditional E, radius with M*radius, upper cap with M; otherwise null",
+    "claim": "Fixed-N familywise 1-alpha conditional coverage for independent bounded cast outcomes; no iid requirement across casts, no independence across co-outputs; assumes structural zero for truly ineligible casts and valid context/eligibility labels.",
+    "limitations": [
+      "No optional stopping or adaptive target selection",
+      "Cannot transport heterogeneous eligible-cohort averages to a particular character or minimum eligible skill",
+      "Scenario caps are never represented as independently verified game limits",
+      "A positive unknown-unlock result does not independently verify that the underlying unlock mechanism is exclusive; structural-zero assumption needs external review",
+      "Caller-supplied preregistration and context are not independently attested"
+    ]
+  },
+  "context": {
+    "gameMode": "Retail",
+    "recipeSpellID": 434018,
+    "inputQualityRank": 2,
+    "nominalInputPerCompletedCast": 5,
+    "effectiveSkill": "EXPLICIT_UNKNOWN_ALLOWED_NOT_ZERO",
+    "patchEpoch": "MUST_BE_CAPTURED",
+    "unlockState": "PER_CAST_TRUE_FALSE_NULL",
+    "resourcefulness": "REFUNDS_SEPARATE_FROM_CAST_DENOMINATOR",
+    "coOutput": "NOT_MUTUALLY_EXCLUSIVE"
+  },
+  "sourceAncestry": "NO_NEW_PRIMARY_CURRENT_RETAIL_STUDY",
+  "actualRetailCompletedCasts": 0,
+  "independentHoldoutFamilies": 0,
+  "evidenceFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "confidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "goldRecommendationEligible": false,
+  "tooltipFallbackEligible": false,
+  "tests": {
+    "localNativeNode22Draft": {
+      "passed": 30,
+      "failed": 0,
+      "note": "Native Node executed an earlier functionally equivalent local draft; not exact committed source"
+    },
+    "committedSourceReadback": "PASS_SHA_VERIFIED",
+    "committedSourceNativeNode": "NOT_RUN",
+    "independentPythonOracle": {
+      "algebraCases": 10000,
+      "syntheticFixedNReplicates": 1000,
+      "simulatedExclusions": 0,
+      "note": "Synthetic diagnostic, not a coverage guarantee or game evidence"
+    },
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentValidator": "PENDING"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "expectedQuantityEvidenceFilled": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newModelSources": 1,
+    "newModelManifests": 1
+  },
+  "evidenceResearcherRequest": "For eight exact TWW gem-finding keys collect independently identified per-cast unlock state (true/false/unknown), exact input/output ranks, all co-outputs including zeros, completed cast IDs, aborted requests, refunds, profession stats/skill, patch and study lineage. Establish whether ineligible state structurally prohibits each output; obtain independently supported per-cast hard cap before E inference.",
+  "independentValidatorRequest": "Native-run exact committed source and adversarial tests; check structural-zero assumption, positive-unknown eligibility inference, Hoeffding familywise allocation, fixed-N vs optional stopping, q interval coverage, cap scenario isolation, missing data, study-family holdout and all preview-only fields.",
+  "blockers": [
+    "No current Retail cast-level unlock/cast observations",
+    "Structural-zero unlock-output exclusivity unverified in current Retail",
+    "No independently supported hard per-cast yield caps",
+    "No independently attested preregistration/context",
+    "Independent F005 QA and holdout pending"
+  ]
+}
