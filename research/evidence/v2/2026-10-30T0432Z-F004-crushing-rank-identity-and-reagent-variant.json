@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_CRUSHING_RANK_IDENTITIES_AND_SELECTOR_REAGENT_CONFLICT",
+  "runUTC": "2026-10-30T04:32:50Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "68c5cf128877618a621d1dee387cdc7d2fa63570",
+  "workflowRevision": 2,
+  "queueRevisionObserved": null,
+  "queueRevisionNote": "completion-priorities.json has no queueRevision; F004 READY in workflow revision 2",
+  "question": "Can the six exact Midnight Crushing gem, stone and Gemdust quality-rank IDs be resolved without falsely admitting selector eligibility, and does the claimed one-gem-to-stone route match spell 1231132?",
+  "disposition": "SIX_ITEM_RANK_IDENTITIES_CORROBORATED_SELECTOR_CROSS_PRODUCT_UNVERIFIED_GUIDE_VARIANT_CONFLICT_FLAGGED",
+  "priorAncestryReviewed": [
+    "research/evidence/v2/2026-10-29T1626Z-F004-crushing-unit-reconciliation.json",
+    "research/evidence/v2/2026-10-29T2230Z-F004-midnight-crushing-gross-vs-casts.json",
+    "research/evidence/v2/2026-10-29T2332Z-F004-midnight-crushing-net-gem-context.json"
+  ],
+  "newSpecificDelta": "Previous original-cohort audit listed gem IDs as targets and stone/dust IDs as candidates without independently confirming all six exact quality ranks. This run supplies six rank-labelled catalog links, records a concrete source contradiction about one-gem-to-stone conversion, and adds a first-person UI observation that Resourcefulness appears after gem selection. No new cast study or exact selector acceptance.",
+  "itemRankIdentityEvidence": [
+    {
+      "itemID": 242553,
+      "name": "Sanguine Garnet",
+      "qualityRank": 1,
+      "role": "candidate salvage input",
+      "url": "https://saddlebagexchange.com/wow/item-data/242553"
+    },
+    {
+      "itemID": 242723,
+      "name": "Sanguine Garnet",
+      "qualityRank": 2,
+      "role": "candidate salvage input",
+      "url": "https://saddlebagexchange.com/wow/item-data/242723"
+    },
+    {
+      "itemID": 242788,
+      "name": "Dusk-Shrouded Stone",
+      "qualityRank": 1,
+      "role": "additional recipe reagent candidate",
+      "url": "https://saddlebagexchange.com/wow/item-data/242788"
+    },
+    {
+      "itemID": 242789,
+      "name": "Dusk-Shrouded Stone",
+      "qualityRank": 2,
+      "role": "additional recipe reagent candidate",
+      "url": "https://saddlebagexchange.com/wow/item-data/242789"
+    },
+    {
+      "itemID": 242620,
+      "name": "Glimmering Gemdust",
+      "qualityRank": 1,
+      "role": "candidate output rank",
+      "url": "https://saddlebagexchange.com/wow/item-data/242620"
+    },
+    {
+      "itemID": 242621,
+      "name": "Glimmering Gemdust",
+      "qualityRank": 2,
+      "role": "candidate output rank",
+      "url": "https://saddlebagexchange.com/wow/item-data/242621"
+    }
+  ],
+  "recipeFacts": {
+    "spellID": 1231132,
+    "url": "https://www.wowhead.com/spell=1231132/midnight-crushing",
+    "indexedSpellDescription": "Crush 3 Midnight gems into dust, destroying them",
+    "salvageEffectValue": 3,
+    "additionalReagentName": "Dusk-Shrouded Stone",
+    "additionalReagentNominalQuantity": 1,
+    "recipeMinimumProfessionSkill": 5,
+    "stoneRankAcceptedBySelector": null,
+    "gemRankAcceptedBySelector": null,
+    "dustOutputRankByInputAndSkill": null,
+    "crossCheck": "https://warcraft.wiki.gg/wiki/Midnight_jewelcrafting_designs",
+    "crossCheckDescription": "Midnight Crushing recipe row lists Dusk-Shrouded Stone x1 and skill 5; not an independent cast study",
+    "status": "INDEXED_RECIPE_DESCRIPTION_NOT_CLIENT_CAST_VERIFICATION"
+  },
+  "newSourceConflict": {
+    "sourceURL": "https://www.method.gg/guides/midnight-jewelcrafting-profession-guide",
+    "claim": "Guide describes individual gem crushed into Duskshrouded Stone, and three of a gem crushed into Gemdust",
+    "contrastingSpell": "Indexed spell 1231132 lists Dusk-Shrouded Stone x1 as a reagent and salvages three gems",
+    "disposition": "DO_NOT_ADMIT_SINGLE_GEM_TO_STONE_AS_SPELL1231132_OUTPUT",
+    "alternative": "Possible different operation, misworded guide or changed recipe epoch; no distinct spell ID or client capture established",
+    "notProof": "Does not establish that a single-gem-to-stone operation is impossible in all game contexts"
+  },
+  "newFirstPersonUIContext": {
+    "url": "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
+    "published": "2026-03-12",
+    "author": "UNRESOLVED_FROM_INDEX",
+    "claim": "Resourcefulness appears after selecting a gem to crush; commenter suggests refunds could apply to stone or gems",
+    "evidenceType": "FIRST_PERSON_UI_OBSERVATION_PLUS_SPECULATIVE_REFUND_ALTERNATIVES",
+    "exactGemID": null,
+    "exactStoneRank": null,
+    "actualCasts": null,
+    "refundCounts": null,
+    "castEpoch": "ON_OR_BEFORE_PUBLICATION_UNVERIFIED",
+    "note": "Do not treat speculation about which reagent refunds as measured mechanics"
+  },
+  "sourceLineages": {
+    "indexedGameSpell": "WOWHEAD-1231132-RECIPE-DATA",
+    "recipeMirror": "WARCRAFT-WIKI-MIDNIGHT-JC-RECIPE-TRANSCLUSION_NOT_INDEPENDENT_GAME_MEASUREMENT",
+    "rankCatalog": "SADDLEBAG-EXCHANGE-ITEM-RANK-CATALOG-SIX_PAGES_ONE_SOURCE_FAMILY",
+    "secondaryGuide": "METHOD-MIDNIGHT-JC-GUIDE",
+    "firstPersonUI": "REDDIT-WOWECONOMY-1rrn6of-2026-03-12",
+    "newIndependentCompletedCastCohorts": 0
+  },
+  "targets": [
+    "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+    "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
+  ],
+  "candidateContextGrid": {
+    "gemIDs": [
+      242553,
+      242723
+    ],
+    "stoneIDs": [
+      242788,
+      242789
+    ],
+    "dustIDs": [
+      242620,
+      242621
+    ],
+    "candidateTriples": 8,
+    "admittedTriples": 0,
+    "reason": "Rank IDs exist; 2x2x2 selector/output combinations are unverified, and one gem identity can yield context-dependent rank outputs"
+  },
+  "perTargetEconomicEvidence": [
+    {
+      "stableKey": "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+      "dropChance": null,
+      "yieldMin": null,
+      "yieldMax": null,
+      "expectedQuantity": null,
+      "confidence": 0,
+      "economicUse": "PREVIEW_ONLY",
+      "normalizedVerified": false,
+      "selectorEligibility": "UNKNOWN",
+      "economicValueUseAllowed": false
+    },
+    {
+      "stableKey": "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility",
+      "dropChance": null,
+      "yieldMin": null,
+      "yieldMax": null,
+      "expectedQuantity": null,
+      "confidence": 0,
+      "economicUse": "PREVIEW_ONLY",
+      "normalizedVerified": false,
+      "selectorEligibility": "UNKNOWN",
+      "economicValueUseAllowed": false
+    }
+  ],
+  "workingNumericCellsAdded": 0,
+  "newEconomicExpectedQuantityCells": 0,
+  "newMappingsAdmitted": 0,
+  "confidencePromotions": 0,
+  "invalidMappingsRemoved": 0,
+  "existingWorkingCoverageChanged": false,
+  "nextMeasurement": {
+    "question": "For Sanguine Garnet R1 vs R2, which Dusk-Shrouded Stone rank is accepted as the fixed reagent for spell 1231132, and which dust rank results at recorded skill/spec/concentration?",
+    "protocol": "In current Retail with spell 1231132, record profession skill/spec/gear, patch/build, reagent selector state for 242553 and 242723 with three units of one exact gem rank and one stone 242788 or 242789. Record selectable/not-selectable for each gem x stone pair without crafting; only then log actual completed casts including zero dust, output IDs 242620/242621, gem and stone refunds separately, and any concentration. Do not infer negative eligibility from missing inventory."
+  },
+  "blockers": [
+    "No in-game selector/client API capture for exact gem and stone rank pairs",
+    "No independently observed completed casts and zero-inclusive output rank histograms",
+    "Guide one-gem-to-stone statement has no corroborated spell or recipe variant",
+    "No measured Resourcefulness refunds split by stone and gem"
+  ],
+  "economicSafety": "Research-only identity evidence; no change to live EV, recommendations, frozen TSM or tooltip-only fallbacks"
+}
