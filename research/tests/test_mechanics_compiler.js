@@ -33,6 +33,10 @@ function run(){
  assert.throws(()=>compileVerifiedMechanics(candidate,testRegistry,"invalid"),/Reject claimed approved/);checks++;
  testRegistry.numericRuleCandidates=[clone(syntheticFixtureForTests),clone(syntheticFixtureForTests)];
  assert.throws(()=>compileVerifiedMechanics(candidate,testRegistry,"dupe"),/Duplicate approved rule/);checks++;
+ const unsupported=clone(syntheticFixtureForTests);unsupported.formulaID='ADDITIVE_EXPECTATION';unsupported.parameters={offset:1};unsupported.parameterUnits={offset:'units per operation'};
+ testRegistry.numericRuleCandidates=[unsupported];assert.throws(()=>compileVerifiedMechanics(candidate,testRegistry,'unsupported'),/Unsupported approved/);checks++;
+ const ambiguous=clone(syntheticFixtureForTests);delete ambiguous.referenceContext.build;
+ testRegistry.numericRuleCandidates=[ambiguous];assert.throws(()=>compileVerifiedMechanics(candidate,testRegistry,'ambiguous'),/explicit referenceContext.build/);checks++;
  const noArray=clone(registry);delete noArray.numericRuleCandidates;
  assert.throws(()=>compileVerifiedMechanics(candidate,noArray,"missing"),/Missing master-reviewed/);checks++;
  console.log(JSON.stringify({passed:checks,failed:0,compiledRealMechanicRules:base.mechanicRules.length,liveWoWTested:false},null,2));

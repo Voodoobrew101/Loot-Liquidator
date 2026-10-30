@@ -64,10 +64,13 @@ check('function unlocks must not be silently erased by JSON serialization',()=>{
  const c=ctx();c.professionContext.unlocks=()=>true;
  assert.throws(()=>analyze(c),/CONTEXT|PROFESSION|SERIAL/);
 });
-check('distinct nonfinite specialization values must not share a context key',()=>{
+check('distinct nonfinite specialization values are both rejected before context identity',()=>{
  const a=ctx(),b=ctx();a.professionContext.specialization=NaN;
  b.professionContext.specialization=Infinity;
- assert.notEqual(analyze(a).typedContextKey,analyze(b).typedContextKey);
+ // Nonfinite inputs are invalid, as required by the preceding cases. They
+ // must not be analyzed merely to produce different serialized identities.
+ assert.throws(()=>analyze(a),/CONTEXT|PROFESSION|FINITE|SERIAL/);
+ assert.throws(()=>analyze(b),/CONTEXT|PROFESSION|FINITE|SERIAL/);
 });
 check('nested undefined profession field must not silently disappear',()=>{
  const c=ctx();c.professionContext.gear={stat:10,unknown:undefined};

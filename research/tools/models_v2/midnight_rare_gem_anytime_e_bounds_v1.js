@@ -1,7 +1,8 @@
 'use strict';
 // F003 research-only Midnight rare-gem partial-identification model; never live EV.
 const assert=require('node:assert/strict');
-const MODEL_ID='midnight-rare-gem-anytime-e-bounds-v1.0.1';
+const {snapshotJSON}=require('./json_context_snapshot.js');
+const MODEL_ID='midnight-rare-gem-anytime-e-bounds-v1.0.2';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,evidencePromotion:false});
 const INPUTS=Object.freeze([237359,237361,237362,237363,237364,237365,237366]);
 const OUTPUT=242608;
@@ -23,7 +24,7 @@ function validEpoch(x){
  return Number.isFinite(Date.parse(x));
 }
 function typedContext(c){
- return {gameMode:c.gameMode,sourceType:c.sourceType,patchBuild:c.patchBuild,
+ return snapshotJSON({gameMode:c.gameMode,sourceType:c.sourceType,patchBuild:c.patchBuild,
   recipeSpellID:c.recipeSpellID,observationEpoch:c.observationEpoch,
   inputItemID:c.inputItemID,outputItemID:c.outputItemID,
   inputQualityRank:c.inputQualityRank,outputQualityRank:c.outputQualityRank,
@@ -32,9 +33,10 @@ function typedContext(c){
   minimumRecipeEligibleSkill:c.minimumRecipeEligibleSkill,professionSkill:c.professionSkill,
   professionContext:{specialization:c.professionContext.specialization,gear:c.professionContext.gear,
    unlocks:c.professionContext.unlocks,resourcefulnessPercent:c.professionContext.resourcefulnessPercent},
-  sourceStudyFamilyID:c.sourceStudyFamilyID};
+  sourceStudyFamilyID:c.sourceStudyFamilyID});
 }
 function validateContext(c){
+ snapshotJSON(c);
  check(c&&typeof c==='object'&&c.gameMode==='RETAIL','RETAIL_CONTEXT_REQUIRED');
  check(INPUTS.includes(c.inputItemID)&&c.outputItemID===OUTPUT,'TARGET_IDENTITY_REQUIRED');
  check(posint(c.inputQualityRank)&&posint(c.outputQualityRank),'QUALITY_RANK_REQUIRED');
