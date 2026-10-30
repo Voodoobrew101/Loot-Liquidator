@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F005_PAIR_SUMMARY_INTEGRITY_AND_CANDIDATE_NATIVE_RECOVERY",
-  "queueRevision": 27,
-  "sourceCommit": "614593acba7abe0b36656f277b82f9c24a1a4fea",
+  "taskID": "F001_F002_F003_F004_F005_PAIR_REPAIR_AND_CROSS_VERSION_RECONCILIATION",
+  "queueRevision": 28,
+  "sourceCommit": "382bfba517612d7d9e951b17f965e00333aa9360",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "560b885a0039045419c340716e263ae33ddf827a",
@@ -75,22 +75,23 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "F003 compareEpochs accepts 14 mutated pair summaries; independent native repair required",
-    "Per-record v0.2 copied addon to v0.8 regenerated candidate comparison not performed; cannot assert yield/provenance equivalence",
-    "Separate contradictory NaN/Infinity nested fixture still quarantined, must become strict fail-closed 13/13",
-    "No matched current Retail zero-inclusive cast denominator/rank for Midnight powder; 116 evidence E gaps remain"
+    "F005 independent old v0.2 vs current v0.8 45 additions, 3 retirements, 12 rank identity corrections and 104 source field quarantines",
+    "F003 repaired model v1.0.4 V8 pair 18/18, March31 26/26, array 12/12; native strict acceptance not yet run",
+    "F002 add strict native F003 and TWW amber tests only after F005 native acceptance; nested 13 fixture contradictory assertion must be corrected",
+    "No matched current Retail zero-inclusive cast denominator/rank; 116 evidence expectedQuantity gaps remain"
   ],
   "checksExecuted": [
-    "PASS: GitHub exact current-branch SHA readback",
-    "CONFIRMS_MISSING_SUMMARY_ATTESTATION: Static inspection of compareEpochs(pre,post) in exact F003 model",
-    "PASS_RESEARCH_PIPELINE_ONLY: Latest branch-head native CI job steps",
-    "PASS: Canonical readiness/priorities unchanged"
+    "PASS: coordinator GitHub V8 exact-SHA and cross-version artifact audit, corrected 16/16 assertions",
+    "PASS: source evidence arithmetic 3610 + 58 - 6 - 104 = 3558; 104 quarantines confidence 0 and blockers; 973 retained yieldMin/yieldMax unchanged",
+    "PASS: three possible replacement pairs preserve input/output/rank/batch but are NOT accepted as equivalent until independent source review",
+    "PASS_REPORTED_F005_V8: model 72/72, pair 18/18, date 26/26, array 12/12, new TWW amber 31/31; 159/159 total",
+    "PASS_NATIVE_RESEARCH_PIPELINE_ONLY: CI 41073962928 on 382bfba5, 38 informational preflight, --check, Lua5.1 decode and blocker roundtrip"
   ],
   "checksUnavailable": [
-    "Native Node exact F003 69 and F005 12/26/18 suites as strict acceptance",
-    "Per-record old v0.2/new v0.8 candidate values, sources and confidence diff",
-    "Native strict 13/13 Midnight nested fixture after contradictory assertion repair",
-    "In-game completed-cast studies and independent current Retail holdouts"
+    "Coordinator native Node and Lua5.1 execution; current CI does not strictly run F003 18/26/12 or TWW amber 31",
+    "Independent native F005 model/fixture verification and strict Midnight nested 13/13",
+    "Independent direct source/mapping QA for all 45 new, 3 retired, 12 rank changes and 104 quarantined fields",
+    "Independent current Retail cast holdout and complete client recipe/rank/eligibility checks"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -99,12 +100,12 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T1402Z-F001-F005-pair-integrity-candidate-recovery.json",
-  "decision": "CONDITIONAL_ACCEPT_V08_NATIVE_BUILD_AND_F003_ARRAY_REPAIR_REJECT_14_PAIR_SUMMARY_MUTATIONS_NO_ECONOMIC_PROMOTION",
-  "nextTask": "F003_MAR31_PAIR_SUMMARY_ATTESTATION_REPAIR",
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T1502Z-F001-F005-pair-repair-and-v02-v08-reconciliation.json",
+  "decision": "CONDITIONAL_ACCEPT_F003_PAIR_V8_18_PASS_F004_HISTORICAL_ONLY_F002_DIFF_STRUCTURE_ACCEPTED_MAPPING_QA_PENDING",
+  "nextTask": "F005_V02_V08_MAPPING_PROVENANCE_AND_NATIVE_REVIEW",
   "priorityRecords": 217,
   "independentValidator": {
-    "status": "F003_ARRAY_V8_12_OF_12_PASS_NEW_PAIR_SUMMARY_V8_4_OF_18_PASS_NATIVE_PENDING",
+    "status": "F003_V8_72_SELF_18_PAIR_26_MAR31_12_ARRAY_F004_TWW_31_ALL_PASS_NATIVE_PENDING",
     "sourceBlob": "900456bafc042b99f4418846d59fd5cf6024fda4",
     "modelTargetsReviewed": 24,
     "modelSelfTestPassed": 41,
@@ -175,38 +176,39 @@
     "independentRetailHoldouts": 0,
     "latestMidnightPairSummary": {
       "fixtureBlob": "a909b82ec0144bbcd48b868103c955d1e33d851a",
-      "reviewBlob": "81eeb65343cf6d367006a2df90000d64cc73009a",
-      "V8Passed": 4,
-      "V8Failed": 14,
+      "reviewBlob": "c3a31f0646b10c86b74ee2f54ce15ee381e6a86b",
+      "modelBlob": "70652482e4ac63db50f567fae5cbb35e6f50accd",
+      "V8Passed": 18,
+      "V8Failed": 0,
       "total": 18,
       "nativeRun": false,
-      "verdict": "FAIL_PAIR_SUMMARY_INTEGRITY"
+      "verdict": "CONDITIONAL_PASS_SYNTHETIC_ONLY"
     }
   },
-  "integrationStatus": "V08_NATIVE_CI_GREEN_ARRAY_V8_12_PASS_PAIR_V8_14_FAIL_PER_FIELD_DIFF_PENDING_PREVIEW_ONLY",
+  "integrationStatus": "V08_NATIVE_CI_GREEN_F003_PAIR_V8_18_PASS_TWW_31_PASS_F002_DIFF_104_QUARANTINES_INDEPENDENT_QA_PENDING_PREVIEW_ONLY",
   "nextAssignments": [
     {
-      "owner": "baseline-modeller",
-      "taskID": "F003_MAR31_PAIR_SUMMARY_ATTESTATION_REPAIR",
-      "scope": "Highest-priority new F005 fail: compareEpochs(pre,post) admits 14/18 synthetic pair-summary mutations. Attest each summary against typed schema, immutable raw zero-inclusive cast totals/refunds, P/E/bounds, observation epoch, output/rank/recipe/reagent/patch identity, lineage and PREVIEW_ONLY confidence-0 policy; reject tampering before deltas. Preserve v1.0.3 March31 26/26 and array 12/12. Submit model/manifest SHA and self-tests; no economic promotion."
-    },
-    {
       "owner": "independent-validator",
-      "taskID": "F005_NATIVE_PAIR_ARRAY_DATE_AND_CANDIDATE_DIFF_QA",
-      "scope": "Retest F003 repaired model under native Node: pair 18/18, March31 26/26, array 12/12, model selfTest; fix contradictory NaN/Infinity nested fixture by asserting fail-closed. Independently compare v0.2 copied addon candidate a838d75e to regenerated v0.8 560b885a by stable key, four values, provenance, confidence, eligibility, mapping identity; reject unexplained deltas and do not self-approve numeric claims."
+      "taskID": "F005_V02_V08_MAPPING_PROVENANCE_AND_NATIVE_REVIEW",
+      "scope": "Independently reparse old a838d75e and new 560b885a; audit 45 added mapping identities/eligibility, three retired same-operation replacement keys, 12 rank 1-to-null changes, 104 quarantines and unchanged 973 retained yield bounds. Native Node test F003 72 self, pair 18, March31 26, array 12 and nested 13 strict after fixture correction. Do not self-approve numeric claims."
     },
     {
       "owner": "completion-engineer",
-      "taskID": "F002_V02_V08_FIELD_DIFF_AND_STRICT_NATIVE_GATE",
-      "scope": "Current v0.8 proposed candidate 560b885a and native CI --check/Lua5.1 are green. Preserve original packaged v0.2 blob a838d75e on implementation/database-profession-modernization; produce machine-readable per-record v0.2-to-v0.8 mapping/field/provenance/confidence diff before final candidate acceptance. After F005 fixes fixture, remove single-case quarantine and enforce strict native 13/13; add F005 pair/date/array tests as strict pinned gates only after repaired model independently passes. No addon, raw evidence, frozen TSM or runtime branch writes."
+      "taskID": "F002_STRICT_NATIVE_GATES_AND_DIFF_HANDOFF",
+      "scope": "Preserve f951706c diff and 560b885a candidate. After F005 native pass, pin strict F003 pair/date/array, nested 13 and TWW amber 31 tests; run pipeline --check and Lua5.1. Investigate F005 mapping anomalies. No economic or addon edits."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_NEXT_HIGH_IMPACT_MODEL_FAMILY",
+      "scope": "Pair v1.0.4 conditional synthetic repair complete. Pivot to TWW Oct25 amber-substitution conditional model only with dated matched cohort, or priority122 DF P/E sensitivity. Keep unknown epoch and preview-only; no repeat March31 audits."
     },
     {
       "owner": "evidence-researcher",
-      "taskID": "F004_MIDNIGHT_MILLING_RANK_ELIGIBILITY_OR_CONTROLLED_CAST_SAMPLE",
-      "scope": "Pivot from exhausted generic powder yield citations to exact queue30 Midnight Milling rank selector 245807 versus 245808, spell 1269575, ten-herb batch, input quality, skill/spec/patch; seek original matched completed casts, outputs and refunds. March21 forum 12.5 powder and undated editorial 10–12 per ten are contextual only, not measured hard yieldMax or E. If no independent cohort, submit a concrete minimal controlled in-game sample protocol, then pivot to priority122 E gap."
+      "taskID": "F004_MIDNIGHT_MILLING_RANK_SELECTOR_SAMPLE_PROTOCOL",
+      "scope": "Find matched 245807 versus 245808 selector, spell 1269575, 10-herb batch, rank, skill/spec, patch and zero-inclusive casts/refunds; if unavailable submit minimal controlled in-game sampling protocol and pivot to high-impact E gaps. No duplicate PeaEsk mirrors."
     }
   ],
-  "lastCoordinatorIntegrationUTC": "2026-10-30T14:02:08Z",
+  "lastCoordinatorIntegrationUTC": "2026-10-30T15:02:00Z",
   "quantizationDiagnostic": {
     "modelBlob": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca",
     "frozenTSMRows": 9,
@@ -275,21 +277,21 @@
       "status": "CONDITIONAL_V8_REPAIR_ACCEPTED_NATIVE_INDEPENDENT_GATE_PENDING_NO_ECONOMIC_USE"
     },
     "midnightProspectHotfix": {
-      "modelID": "midnight-prospect-hotfix-epoch-isolation-v1.0.3",
-      "sourceBlob": "6847591d66c7acee8ef6b752638e5b4428a9f910",
-      "manifestBlob": "765c5f3947148e269597b97752966dc68c085591",
+      "modelID": "midnight-prospect-hotfix-epoch-isolation-v1.0.4",
+      "sourceBlob": "70652482e4ac63db50f567fae5cbb35e6f50accd",
+      "manifestBlob": "4820000901b87d122e864a08cf88d6decd25746d",
       "officialDate": "2026-03-31",
       "modelClaimedDate": "2026-03-31",
-      "selfTestsReported": 69,
+      "selfTestsReported": 72,
       "independentV8March31Passed": 26,
       "independentV8March31Failed": 0,
       "independentV8ArrayPassed": 12,
       "independentV8ArrayFailed": 0,
-      "independentV8PairSummaryPassed": 4,
-      "independentV8PairSummaryFailed": 14,
+      "independentV8PairSummaryPassed": 18,
+      "independentV8PairSummaryFailed": 0,
       "independentV8PairSummaryTotal": 18,
       "independentNative": "NOT_RUN_FOR_CURRENT_MODEL_AND_NEW_F005_FIXTURES",
-      "status": "CONDITIONAL_ARRAY_PASS_PAIR_SUMMARY_INTEGRITY_FAIL_NO_ECONOMIC_USE"
+      "status": "CONDITIONAL_SYNTHETIC_V8_ALL_PASS_NATIVE_STRICT_AND_REAL_HOLDOUT_PENDING_NO_ECONOMIC_USE"
     },
     "dfProspectingSequentialMargin": {
       "modelID": "df-prospect-sequential-margin-cs-v1.0.0",
@@ -304,7 +306,7 @@
       "status": "PROPOSED_F005_NATIVE_AND_CAP_UNIVERSE_BLOCKED"
     }
   },
-  "newHistoricalSourceFamiliesThisCycle": 0,
+  "newHistoricalSourceFamiliesThisCycle": 1,
   "newCurrentRetailCastCohortsThisCycle": 0,
   "workingPriorClassificationDelta": {
     "dropChance": 0,
@@ -315,14 +317,14 @@
     "interpretation": "No new classification changes this cycle; earlier 8-row Midnight quarantine retained."
   },
   "nativeCI": {
-    "runID": 41065655857,
-    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41065655857",
+    "runID": 41073962928,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41073962928",
     "conclusion": "success",
-    "headSHA": "614593acba7abe0b36656f277b82f9c24a1a4fea",
-    "scope": "Research-only native 38 informational preflight, pipeline --check, Lua5.1 decode/isolation and blocker arrays. F005 pair 18, March31 26, array 12 NOT native strict-gated.",
-    "newIndependentSuitesNative": "DF_ARRAY_13_PASS_TWW_25_PASS_INFORMATIONAL_ONLY_MIDNIGHT_PAIR_18_NOT_RUN_MAR31_26_NOT_RUN_ARRAY_12_NOT_RUN"
+    "headSHA": "382bfba517612d7d9e951b17f965e00333aa9360",
+    "scope": "Native 38 informational preflight, pipeline --check, Lua5.1 decoding/isolation, blocker arrays; F003 pair/date/array and TWW amber NOT strict",
+    "newIndependentSuitesNative": "F003_PAIR_18_NOT_STRICT_MAR31_26_NOT_STRICT_ARRAY_12_NOT_STRICT_TWW_31_NOT_STRICT"
   },
-  "newOriginalAggregateLineagesThisCycle": 0,
+  "newOriginalAggregateLineagesThisCycle": 1,
   "newQualitativeContextLeadsThisCycle": 2,
   "ciAttestationWitness": {
     "sourceCommit": "9ed4986a7e8747ee5c0035a18d08dea342033197",
@@ -334,7 +336,7 @@
   },
   "knownProvenanceViolationCount": 0,
   "newRankIdentitiesThisCycle": 0,
-  "newReproducedIntegrityFailuresThisCycle": 14,
+  "newReproducedIntegrityFailuresThisCycle": 0,
   "historicalSourceResearchThisCycle": {
     "source": "https://www.reddit.com/r/woweconomy/comments/109bytz/prospecting_useless_hold_my_beer_said_the_draenei/",
     "originalAuthorLineages": 1,
@@ -425,7 +427,7 @@
     "verdict": "CONDITIONAL_HISTORICAL_CONTEXT_ONLY"
   },
   "candidateArtifactIntegrity": {
-    "status": "CURRENT_V08_GENERATED_NATIVE_CI_GREEN_PER_FIELD_V02_DIFF_PENDING",
+    "status": "V08_NATIVE_CI_GREEN_F002_PER_RECORD_DIFF_COMMITTED_AND_COORDINATOR_ARITHMETIC_ACCEPTED_F005_MAPPING_QA_PENDING",
     "currentProposedBlob": "560b885a0039045419c340716e263ae33ddf827a",
     "priorUserCopiedResearchBlob": "a838d75e82239339bea3861692291b44bd085662",
     "originalCleanedAddonBlob": "a838d75e82239339bea3861692291b44bd085662",
@@ -435,14 +437,24 @@
     "currentCandidateNativeCI": "PASS_41065655857",
     "currentCandidateNativeLua51": "PASS",
     "copiedFileStillCurrent": false,
-    "perRecordValueDiffPerformed": false,
-    "acceptance": "BUILD_INTEGRITY_ONLY_NOT_NUMERIC_EQUIVALENCE",
-    "economicUse": "PREVIEW_ONLY"
+    "perRecordValueDiffPerformed": true,
+    "acceptance": "DIFF_STRUCTURE_AND_ARITHMETIC_ONLY_NOT_MAPPING_OR_NUMERIC_EQUIVALENCE",
+    "economicUse": "PREVIEW_ONLY",
+    "perRecordDiffBlob": "f951706c3602baf07bfa3f88311304d16067be3a",
+    "oldRecords": 976,
+    "newRecords": 1018,
+    "retained": 973,
+    "added": 45,
+    "retired": 3,
+    "retainedSourceNumericQuarantines": 104,
+    "retainedYieldMinChanged": 0,
+    "retainedYieldMaxChanged": 0,
+    "independentMappingReview": "PENDING"
   },
   "newFirstPersonContextLineagesThisCycle": 1,
   "newEditorialContextSourceFamiliesThisCycle": 1,
-  "newIndependentAdversarialCasesThisCycle": 18,
-  "newIndependentAdversarialFailuresThisCycle": 14,
+  "newIndependentAdversarialCasesThisCycle": 31,
+  "newIndependentAdversarialFailuresThisCycle": 0,
   "midnightMillingBatchSelectorEvidence": {
     "sourceEvidenceBlob": "1ea9c6a2cb20cf26d780370eb41f80d232546349",
     "sourceReviewBlob": "1969dad9f76e477a226a6de4f28c900facd64904",
@@ -459,8 +471,8 @@
   },
   "zeroDeltaPivot": {
     "applied": true,
-    "from": "Previously corrected March31 date and five repaired unsafe array cases",
-    "to": "New independent 14-case compareEpochs integrity failure and v0.2-v0.8 per-field reconciliation",
+    "from": "Repeated unchanged 116 E gap audit and resolved F003 pair-summary failures",
+    "to": "Independent arithmetic/source-provenance reconciliation of 976-to-1018 candidate and targeted F005 mapping review",
     "numericDelta": 0
   },
   "midnightPowderYieldRankContext": {
@@ -480,5 +492,39 @@
     "hardYieldMaxPromotion": false,
     "expectedQuantityPromotion": false,
     "status": "CONTEXT_ONLY_UNMATCHED_RANK_AND_CASTS"
+  },
+  "crossVersionDiffAudit": {
+    "oldBlob": "a838d75e82239339bea3861692291b44bd085662",
+    "newBlob": "560b885a0039045419c340716e263ae33ddf827a",
+    "diffBlob": "f951706c3602baf07bfa3f88311304d16067be3a",
+    "coordinatorAssertionsPassed": 16,
+    "coordinatorAssertionsTotal": 16,
+    "retained": 973,
+    "added": 45,
+    "retired": 3,
+    "sourceNumericQuarantined": 104,
+    "quarantinedDropChance": 49,
+    "quarantinedExpectedQuantity": 55,
+    "retainedYieldMinChanges": 0,
+    "retainedYieldMaxChanges": 0,
+    "changedInputRankIdentity": 12,
+    "sourceClaimArrayChanged": 103,
+    "sourceClaimArrayUnchanged": 1,
+    "independentValidatorPending": true
+  },
+  "twwProspectingAmberContext": {
+    "evidenceBlob": "93ae42122b69df8a60389d3fd466c92c91d48e7c",
+    "validatorReviewBlob": "c3a31f0646b10c86b74ee2f54ce15ee381e6a86b",
+    "originalAuthorLineages": 1,
+    "historicalAggregateCohorts": 3,
+    "reportedOutputCountCells": 13,
+    "traitIdentities": 4,
+    "hotfixDate": "2024-10-25",
+    "actualCompletedCasts": null,
+    "independentCurrentRetailHoldouts": 0,
+    "admissions": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "verdict": "CONTEXT_ONLY"
   }
 }
