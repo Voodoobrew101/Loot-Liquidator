@@ -69,6 +69,15 @@ jobs:
         # F003 owns the model repair, F005 owns independent acceptance.
         continue-on-error: true
         run: node research/tools/working_native_tww_accounting_preflight.js
+      - name: F002 DF milling 30-case native negative-QA self-test
+        run: node research/tools/working_native_df_milling_attestation_preflight.js --self-test
+      - name: Research-only F005 DF milling 30-case native negative-QA replay (informational)
+        # F005 reports 22 PASS and eight F003 canonical-context defects. The
+        # runner recognizes the failures, never counts them as model passes.
+        # Changed source pins or unreviewed partial repairs fail closed.
+        # F003 owns repair; F005 owns acceptance; no economic promotion.
+        continue-on-error: true
+        run: node research/tools/working_native_df_milling_attestation_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: Rebuild and expose only validated stale research outputs for F002 handoff
         if: ${{ failure() }}
