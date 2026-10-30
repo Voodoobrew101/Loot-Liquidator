@@ -491,6 +491,41 @@ function run(root, options={}) {
       console.log("PASS: independent native F005 DF joint-cast strict 23/23 "+
         "(synthetic-only; independent acceptance remains separate)");
     }
+    // F002/F005: independently authored historical Dragonflight R3 diamond
+    // denominator test. Strict native Node gate: 20/20, no quarantined failures.
+    // This protects historical source-unit/rank isolation only; it is NOT
+    // current-Retail completed-cast evidence or economic-model acceptance.
+    const historicalFixtureRel="research/tests/v2/test_f005_df_r3_diamond_historical_denominator.js";
+    const historicalPins=Object.freeze({
+      [historicalFixtureRel]:"b844c09c688ccd3d97a8c4e90227e0eb108c450d",
+      "research/evidence/v2/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort.json":
+        "f76533ac084419f0d19c8a2ebe85e275c505af8e",
+      "research/evidence/v2/source-reviews/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort-source-review.json":
+        "ac16fbd13ad84755a18474ecc113e600d01849b2",
+      "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort-submission.json":
+        "85def43b1d201b22e7da8e33ede63d5eb83c82bc"
+    });
+    for(const [relative,expected] of Object.entries(historicalPins)){
+      const absolute=path.join(root,relative);
+      if(!fs.existsSync(absolute))throw Error("F005 historical source or fixture missing: "+relative);
+      const bytes=fs.readFileSync(absolute);
+      const actual=require("node:crypto").createHash("sha1")
+        .update("blob "+bytes.length+"\\0").update(bytes).digest("hex");
+      if(actual!==expected)
+        throw Error("F005 historical source/fixture changed without independent review: "+relative);
+    }
+    const historicalChild=spawnSync(process.execPath,
+      ["--test","--test-reporter=tap",path.join(root,historicalFixtureRel)],
+      {cwd:root,encoding:"utf8",timeout:120000,maxBuffer:4*1024*1024});
+    const historicalTap=historicalChild.stdout||"";
+    const historicalCount=(name,count)=>new RegExp("^# "+name+" "+count+"\\r?$","m").test(historicalTap);
+    if(historicalChild.error || historicalChild.status!==0 ||
+       !historicalCount("tests",20) || !historicalCount("pass",20) ||
+       !historicalCount("fail",0) || !historicalCount("cancelled",0))
+      throw Error("F005 historical R3 native strict 20/20 gate failed: "+
+        (historicalChild.error?.message||"exit="+historicalChild.status)+"\\n"+
+        historicalTap+"\\n"+(historicalChild.stderr||""));
+    console.log("PASS: F005 historical R3 diamond native 20/20 strict source/rank isolation (historical only; no economic promotion)");
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
