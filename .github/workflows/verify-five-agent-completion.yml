@@ -60,6 +60,15 @@ jobs:
         # Do not use this research preview for EV, recommendations or release.
         continue-on-error: true
         run: node research/tools/working_native_emitted_lua_preflight.js
+      - name: F002 TWW milling negative-QA native replay self-test
+        run: node research/tools/working_native_tww_accounting_preflight.js --self-test
+      - name: Research-only F005 TWW milling 37-case negative-QA native replay (informational)
+        # The independent F005 fixture currently reports 32 PASS and five
+        # actionable F003 model defects. The F002 runner recognizes exactly
+        # those five failures; it does not reclassify them as passing cases.
+        # F003 owns the model repair, F005 owns independent acceptance.
+        continue-on-error: true
+        run: node research/tools/working_native_tww_accounting_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: Rebuild and expose only validated stale research outputs for F002 handoff
         if: ${{ failure() }}
