@@ -333,6 +333,33 @@ function run(root, options={}) {
       {file:"test_f005_anytime_typed_context_snapshot_integrity.js",
        suite:"F005_ANYTIME_TYPED_CONTEXT_SNAPSHOT_INTEGRITY",count:13}
     ];
+    // The independent F005 suites are a trust boundary. Pin both reviewed
+    // fixture Git blobs so edits cannot silently weaken the known-failure
+    // quarantine or turn an unreviewed model into a green native gate.
+    // A changed fixture requires fresh independent QA and an explicit re-pin.
+    const reviewedAnytimeFixtureBlobs=Object.freeze({
+      "test_f005_midnight_anytime_context_lineage.js":
+        "fbb838e348429d6deed741060fe992ead560190b",
+      "test_f005_anytime_typed_context_snapshot_integrity.js":
+        "2e64ba46af242740c7a44ecf6bb204ae1345c112"
+    });
+    for(const spec of anytimeSpecs) {
+      const fixture=path.join(root,"research/tests/v2",spec.file);
+      if(!fs.existsSync(fixture)) throw Error("Required independent F005 anytime fixture missing: "+spec.file);
+      const fixtureBytes=fs.readFileSync(fixture);
+      const fixtureBlob=require("node:crypto").createHash("sha1")
+        .update("blob "+fixtureBytes.length+"\0").update(fixtureBytes).digest("hex");
+      if(fixtureBlob!==reviewedAnytimeFixtureBlobs[spec.file])
+        throw Error("F005 anytime fixture changed without independent review and gate re-pin: "+spec.file);
+    }
+    // The model remains a research-only preview regardless of fixture outcome.
+    // A manifest changing this policy cannot be silently accepted by CI.
+    if(!anytimeManifest.outputSemantics ||
+       anytimeManifest.outputSemantics.economicUse!=="PREVIEW_ONLY" ||
+       anytimeManifest.outputSemantics.normalizedVerified!==false ||
+       anytimeManifest.outputSemantics.confidence!==0 ||
+       anytimeManifest.outputSemantics.liveEVChanged!==false)
+      throw Error("F003 anytime model preview-only economic isolation changed");
     const knownBrokenModelBlob="55e4c0a23ef2403cef97d46d8590a52c09bbe2e9";
     const knownNestedFailures=new Set([
       "nested specialization source mutation cannot rewrite returned provenance",
