@@ -40,12 +40,27 @@ function castBasisApplicable(r, f) {
     return false;
   return true;
 }
+// Explicitly unmeasured legacy display assumptions are preview seeds, not
+// per-completed-cast evidence. Preserve the original source claims and values.
+const LEGACY_DISPLAY_PRIOR_BLOCKER = /\blegacy\s+(?:display\s+(?:assumption|bound)|fallback(?:\s+only)?)\b/i;
+function legacyDisplayPrior(r, f) {
+  const source = r[f];
+  if (!source || positiveInteger(source.sampleOperations) ||
+      !Array.isArray(source.blockers) ||
+      !source.blockers.some(b => typeof b === "string" &&
+        LEGACY_DISPLAY_PRIOR_BLOCKER.test(b))) return null;
+  const v = source.value;
+  if (!finite(v)) return null;
+  if (f === "dropChance") return v >= 0 && v <= 1 ? v : null;
+  if (f === "expectedQuantity") return v >= 0 ? v : null;
+  return positiveInteger(v) ? v : null;
+}
 function evidenceValue(r, f) {
   // A finite source number is not automatically admissible evidence.
   // Unknown, contradictory or unrecognized statuses and untraceable claims
   // must remain separate from the preview, even with high source confidence.
   const source = r[f];
-  if (!castBasisApplicable(r, f)) return null;
+  if (legacyDisplayPrior(r, f) !== null || !castBasisApplicable(r, f)) return null;
   if (!source || !ADMISSIBLE_EVIDENCE_STATUSES.has(source.status) ||
       !Array.isArray(source.sourceClaimIDs) ||
       source.sourceClaimIDs.length === 0 ||
@@ -239,8 +254,10 @@ function applyWorkingEstimates(records, options = {}) {
   };
   for (const r of records) {
     const raw = Object.fromEntries(FIELDS.map(f => [f, evidenceValue(r, f)]));
+    const legacy = Object.fromEntries(FIELDS.map(f => [f, legacyDisplayPrior(r, f)]));
+    const seed = Object.fromEntries(FIELDS.map(f => [f, raw[f] ?? legacy[f]]));
     const w = {
-      ...raw, policyVersion: POLICY_VERSION,
+      ...seed, policyVersion: POLICY_VERSION,
       status: "COPIED_EVIDENCE_PREVIEW", economicUse: "PREVIEW_ONLY",
       modelID: "SOURCE_CONTEXT_COPY_OR_SYNTHETIC_HURDLE_V1",
       normalizedVerified: false, evidenceFieldsPreserved: true,
@@ -264,13 +281,15 @@ function applyWorkingEstimates(records, options = {}) {
       }
       w[f] = v;
     }
+    if (FIELDS.some(f => raw[f] === null && legacy[f] !== null))
+      assumption("UNMEASURED_LEGACY_DISPLAY_VALUES_RETAINED_AS_CONFIDENCE_ZERO_POLICY_PRIORS");
     for (const f of FIELDS) {
       if (r[f]?.status === "contradictory")
         assumption("CONTRADICTORY_SOURCE_FIELD_EXCLUDED_FROM_WORKING_ESTIMATE:" + f);
-      else if (finite(r[f]?.value) && raw[f] === null)
+      else if (finite(r[f]?.value) && raw[f] === null && legacy[f] === null)
         assumption("UNQUALIFIED_SOURCE_FIELD_EXCLUDED_FROM_WORKING_ESTIMATE:" + f);
     }
-    let p = raw.dropChance, a = raw.yieldMin, b = raw.yieldMax, e = raw.expectedQuantity;
+    let p = seed.dropChance, a = seed.yieldMin, b = seed.yieldMax, e = seed.expectedQuantity;
     if (a !== null && b !== null && a > b) {
       [a, b] = [b, a];
       assumption("SOURCE_RANGE_REORDERED_IN_WORKING_LAYER_ONLY");
