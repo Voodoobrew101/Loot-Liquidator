@@ -1,7 +1,7 @@
 'use strict';
 // F003 research-only: fixed-n simultaneous marginal bounds for 43 DF milling E gaps.
 // No output from this module may be used in live EV, recommendations or tooltip fallback.
-const MODEL_ID='df-milling-fixed-n-simultaneous-bounds-v1.0.0';
+const MODEL_ID='df-milling-fixed-n-simultaneous-bounds-v1.0.1';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const tupleText=[
 '191461:198423:1942',
@@ -25,12 +25,44 @@ function requireValid(v,code){if(!v)throw Error(code);}
 function uint(v,min=0){return Number.isSafeInteger(v)&&v>=min;}
 function plain(o){if(!o||typeof o!=='object'||Array.isArray(o)||Object.getPrototypeOf(o)!==Object.prototype)return false;for(const k of Reflect.ownKeys(o)){const d=Object.getOwnPropertyDescriptor(o,k);if(typeof k!=='string'||!d.enumerable||!Object.prototype.hasOwnProperty.call(d,'value'))return false;}return true;}
 function safeArray(a){if(!Array.isArray(a)||Object.getPrototypeOf(a)!==Array.prototype||Reflect.ownKeys(a).length!==a.length+1)return false;for(let i=0;i<a.length;i++){const d=Object.getOwnPropertyDescriptor(a,String(i));if(!d||!Object.prototype.hasOwnProperty.call(d,'value'))return false;}return true;}
+// Copy untrusted caller objects once via data descriptors; reject accessors,
+ // hidden metadata, sparse arrays and non-finite/undefined values. Never use
+ // mutable caller objects for subsequent validation, calculation or reporting.
+function snapshot(value,seen=new WeakSet()){
+ if(value===null||typeof value==='string'||typeof value==='boolean'||typeof value==='number'&&Number.isFinite(value))return value;
+ requireValid(typeof value==='object','SNAPSHOT_DATA_ONLY');
+ requireValid(!seen.has(value),'SNAPSHOT_CYCLE');seen.add(value);
+ const array=Array.isArray(value);
+ requireValid(Object.getPrototypeOf(value)===(array?Array.prototype:Object.prototype),'SNAPSHOT_PROTOTYPE');
+ const keys=Reflect.ownKeys(value),out=array?[]:{};
+ if(array){
+  const d=Object.getOwnPropertyDescriptor(value,'length'),n=d&&d.value;
+  requireValid(Number.isSafeInteger(n)&&n>=0&&keys.length===n+1,'SNAPSHOT_ARRAY_SHAPE');
+  for(let i=0;i<n;i++){const x=Object.getOwnPropertyDescriptor(value,String(i));requireValid(x&&x.enumerable&&Object.prototype.hasOwnProperty.call(x,'value'),'SNAPSHOT_ARRAY_ELEMENT');out.push(snapshot(x.value,seen));}
+ }else{
+  for(const key of keys){requireValid(typeof key==='string','SNAPSHOT_KEY');const d=Object.getOwnPropertyDescriptor(value,key);
+   requireValid(d&&d.enumerable&&Object.prototype.hasOwnProperty.call(d,'value'),'SNAPSHOT_DESCRIPTOR');
+   Object.defineProperty(out,key,{value:snapshot(d.value,seen),enumerable:true,writable:false,configurable:false});}
+ }
+ seen.delete(value);return Object.freeze(out);
+}
+function strictEpoch(s){
+ if(typeof s!=='string')return false;
+ const m=/^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)(?:\.\d+)?(Z|[+-]\d\d:\d\d)$/.exec(s);
+ if(!m)return false;
+ const [y,mo,d,h,mi,se]=m.slice(1,7).map(Number);
+ if(y<2004||mo<1||mo>12||d<1||d>31||h>23||mi>59||se>59)return false;
+ const utc=new Date(Date.UTC(y,mo-1,d));if(utc.getUTCFullYear()!==y||utc.getUTCMonth()!==mo-1||utc.getUTCDate()!==d)return false;
+ if(m[7]!=='Z'){const oh=Number(m[7].slice(1,3)),om=Number(m[7].slice(4));if(oh>14||om>59||oh===14&&om!==0)return false;}
+ return Number.isFinite(Date.parse(s));
+}
 function group(input){requireValid(uint(input,1),'INPUT_ID');const g=TARGETS.filter(t=>t.inputItemID===input);requireValid(g.length>0,'INPUT_NOT_TARGETED');return g;}
-function validateContext(c){
+function validateContext(untrusted){
+ const c=snapshot(untrusted);
  requireValid(plain(c)&&c.gameMode==='RETAIL'&&c.expansion==='DRAGONFLIGHT'&&c.method==='MILL','CONTEXT_IDENTITY');
  const g=group(c.inputItemID);
- requireValid(typeof c.patchBuild==='string'&&/^\d+\.\d+\.\d+/.test(c.patchBuild),'PATCH_BUILD');
- requireValid(typeof c.observationEpoch==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)$/.test(c.observationEpoch)&&Number.isFinite(Date.parse(c.observationEpoch)),'OBSERVATION_EPOCH');
+ requireValid(typeof c.patchBuild==='string'&&/^\d+\.\d+\.\d+(?:\.\d+)*$/.test(c.patchBuild),'PATCH_BUILD');
+ requireValid(strictEpoch(c.observationEpoch),'OBSERVATION_EPOCH');
  requireValid(typeof c.studyFamilyID==='string'&&c.studyFamilyID.trim(),'STUDY_LINEAGE');
  requireValid(uint(c.nominalInputUnits,1)&&uint(c.inputQualityRank,1)&&uint(c.minimumRecipeEligibleSkill,1)&&uint(c.actualSkill,c.minimumRecipeEligibleSkill)&&uint(c.recipeSpellID,1),'RECIPE_OR_SKILL');
  requireValid(plain(c.professionContext)&&['specialization','gear','unlocks'].every(k=>typeof c.professionContext[k]==='string'&&c.professionContext[k].trim()),'PROFESSION_CONTEXT');
@@ -43,12 +75,13 @@ function validateContext(c){
 }
 function validateCaps(caps,g){
  requireValid(caps===undefined||plain(caps),'CAP_MAP');
- const capMap=caps||{};
+ const capMap=caps===undefined?{}:snapshot(caps);
  requireValid(Object.keys(capMap).every(id=>g.some(t=>String(t.outputItemID)===id)),'EXTRA_CAP');
  for(const id of Object.keys(capMap)){const cap=capMap[id];requireValid(plain(cap)&&uint(cap.maxPerCast,1)&&cap.status==='INDEPENDENTLY_VERIFIED'&&typeof cap.sourceID==='string'&&cap.sourceID.trim(),'CAP_ATTESTATION_REQUIRED');}
  return capMap;
 }
-function summarize({context,casts,alpha=0.05,caps}){
+function summarize({context:rawContext,casts:rawCasts,alpha=0.05,caps}){
+ const context=snapshot(rawContext),casts=snapshot(rawCasts);
  const g=validateContext(context),capMap=validateCaps(caps,g);
  requireValid(Number.isFinite(alpha)&&alpha>0&&alpha<1,'ALPHA');
  requireValid(safeArray(casts)&&casts.length>0&&casts.length<=100000,'CAST_ARRAY');
