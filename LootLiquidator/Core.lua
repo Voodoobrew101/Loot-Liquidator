@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.10.0-alpha8"
+LA.version = "0.10.0-alpha9"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -27,27 +27,6 @@ local defaults = {
     showMaterialBreakdown = true, showResearchDetails = false, showExternalRates = false,
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,
     otherConversionDataMode = 1, minPersonalSamples = 30,
-    researchSkillTolerance = 10, materialPriceDisplay = 3,
-    skillAwareProcessing = true, processingFallbackMode = 1,
-    -- Midnight prospecting baseline by default; upgrade is manual/estimated,
-    -- not inferred from profession skill, specialization or output quality.
-    midnightProspectingUpgradePct = 0,
-    midnightDiamondCopper = false, midnightDiamondTin = false,
-    midnightDiamondSilver = false, midnightDiamondThorium = false,
-    -- Independent Dragonflight fallback. Historical TSM rates are provisional
-    -- yield references, NOT guaranteed no-skill measurements.
-    dragonflightProspectingUpgradePct = 0,
-    dragonflightProspectingOutputRank = 0,
-    dragonflightProspectingInspirationPct = 0,
-    dragonflightProspectingInspirationCrossesThreshold = false,
-    dragonflightProspectingResourcefulnessPct = 0,
-    dragonflightProspectingPrismaticUnlocked = false,
-    warWithinProspectingUpgradePct = 0,
-    dragonflightMillingUpgradePct = 0, warWithinMillingUpgradePct = 0,
-    warWithinMillingOutputRank = 0,
-    midnightMillingUpgradePct = 0,
-    dragonflightDisenchantUpgradePct = 0, warWithinDisenchantUpgradePct = 0,
-    midnightDisenchantUpgradePct = 0,
     tooltipDetail = 2, tooltipAuction = true, tooltipVendor = true,
     tooltipShowAfterAHCut = true,
     showUnavailableConversions = true,
@@ -518,25 +497,7 @@ function LA:Evaluate(link, context)
         tostring(ignoreFlags.V),tostring(ignoreFlags.P),tostring(ignoreFlags.T)},",") or "none"
     local signature = ignoreKey..":"..tostring(self.db.disenchantDataMode)..":" .. tostring(self.db.millingDataMode)..":"
        ..tostring(self.db.prospectingDataMode)..":"..tostring(self.db.otherConversionDataMode)..":"
-       ..tostring(self.db.minPersonalSamples)..":"..tostring(self.db.researchSkillTolerance)..":"
-       ..tostring(self.db.skillAwareProcessing)..":"..tostring(self.db.processingFallbackMode)..":"
-       ..tostring(self.db.midnightProspectingUpgradePct)..":"
-       ..tostring(self.db.midnightDiamondCopper)..":"..tostring(self.db.midnightDiamondTin)..":"
-       ..tostring(self.db.midnightDiamondSilver)..":"..tostring(self.db.midnightDiamondThorium)..":"
-       ..tostring(self.db.dragonflightProspectingUpgradePct)..":"
-       ..tostring(self.db.dragonflightProspectingOutputRank)..":"
-       ..tostring(self.db.dragonflightProspectingInspirationPct)..":"
-       ..tostring(self.db.dragonflightProspectingInspirationCrossesThreshold)..":"
-       ..tostring(self.db.dragonflightProspectingResourcefulnessPct)..":"
-       ..tostring(self.db.dragonflightProspectingPrismaticUnlocked)..":"..
-       tostring(self.db.warWithinProspectingUpgradePct)..":"..
-       tostring(self.db.dragonflightMillingUpgradePct)..":"..
-       tostring(self.db.warWithinMillingUpgradePct)..":"..
-       tostring(self.db.warWithinMillingOutputRank)..":"..
-       tostring(self.db.midnightMillingUpgradePct)..":"..
-       tostring(self.db.dragonflightDisenchantUpgradePct)..":"..
-       tostring(self.db.warWithinDisenchantUpgradePct)..":"..
-       tostring(self.db.midnightDisenchantUpgradePct)..":"
+       ..tostring(self.db.minPersonalSamples)..":"
        ..tostring(self.db.tooltipShowAfterAHCut)..":"
        ..tostring(f.tsmString) .. ":" .. tostring(f.count) .. ":" ..
        tostring(f.expansionID) .. ":" .. tostring(f.quality) .. ":" .. tostring(f.itemLevel) .. ":"
@@ -710,7 +671,8 @@ function LA:Evaluate(link, context)
         why=reason, itemID=f.id, count=f.count, name=f.name,
         priceSource="TSM", blocked=blocked, facts=f,
         deIssue=f.disenchantIssue, deUnavailable=f.unavailableDisenchant,
-        deStats=(deAllowed and self.DisenchantStatsFor and self:DisenchantStatsFor(f)) or nil,
+        deStats=deAllowed and f.disenchantEstimate and f.disenchantEstimate.yieldModel
+            and f.disenchantEstimate.yieldModel.personalStats or nil,
         deEstimate=f.disenchantEstimate, canDisenchant=f.currentCanDisenchant,
         disenchantEligible=deAllowed, disenchantRestriction=f.disenchantBlocked and deReason or nil,
         isBound=self:IsNonAuctionableByBinding(f), auctionEligible=canAuction,

@@ -35,7 +35,8 @@ end
 check('Actual database keeps skill 20 and skill 100 yields unadjusted without coefficients',unchanged)
 
 GetBuildInfo=function() return 'test','123456','',120105 end
-local LL={GameData={verifiedMechanicsRules={}}}
+local LL={ItemDB={mechanicRules={}}}
+load(LL,'ProfessionModels.lua')
 load(LL,'ConversionEngine.lua')
 LL.CharacterKey=function() return 'Tester - Realm' end
 LL.ProcessingPlayerConditions=function() return {skill=100} end
@@ -47,13 +48,14 @@ local function base()
 end
 local function rule(target,parameters)
     return {ruleID='synthetic-audit-only',evidenceStatus='VERIFIED_NUMERIC',applyPolicy='EXECUTE',
-        applies='VERIFIED_APPLIES',confidence0to100=95,sourceClaimIDs={'synthetic-audit-only'},
+        applies='VERIFIED_APPLIES',confidence0to100=95,sourceClaimIDs={'synthetic-audit-only','synthetic-independent-review'},
+        numericTransformValidated=true,independentReview='APPROVED',
         method=option.name,recipeID=444,inputItemID=10,inputQualityRank=2,outputItemID=20,
         expansionID=11,sourceBuild='123450',targetBuild='123456',sourceReferenceContextID='cohort',
         targetConditions={skill=100},effectTarget=target,formulaID='MULTIPLY',parameters=parameters}
 end
 local r=rule('OUTPUT_UNCONDITIONAL_EXPECTATION',{multiplier=1.5})
-LL.GameData.verifiedMechanicsRules={r}
+LL.ItemDB.mechanicRules={r}
 local original=base();local transformed=LL:ApplyVerifiedMechanics(f,option,original)
 check('A scoped synthetic expectation coefficient applies',transformed.materials[1].expectedQuantity==3)
 check('Original reference remains immutable',original.materials[1].expectedQuantity==2)
@@ -72,7 +74,7 @@ check('Transformed distributions keep zero occurrence consistent with EV',
 -- Equipment rarity is not a reagent quality rank. A gear-scoped rule has no rank.
 r=rule('OUTPUT_UNCONDITIONAL_EXPECTATION',{multiplier=1.5})
 r.method='Disenchant';r.recipeID=13262;r.inputQualityRank=nil;r.inputRarity=3;r.inputClassID=4
-LL.GameData.verifiedMechanicsRules={r}
+LL.ItemDB.mechanicRules={r}
 local gear={id=10,quality=3,classID=4,expansionID=11}
 local de=LL:ApplyVerifiedMechanics(gear,{name='Disenchant',recipeID=13262,character='Tester - Realm'},base())
 check('Equipment rules can express non-reagent quality applicability',de.materials[1].expectedQuantity==3,

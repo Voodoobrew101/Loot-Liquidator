@@ -24,6 +24,9 @@ check(LL:InitializeItemDB());LL:MigrateEvidenceSettings()
 local target=clone(profile);target.effectiveSkill=100
 local raw={sourceKey='personal',patchBuild='100',observationContext=clone(profile),effectiveSamples=50,inputCount=5,
     materials={{id=20,expectedQuantity=2,chance=.5,minQuantity=2,maxQuantity=6,quantityCounts={['0']=25,['4']=25}}}}
+local buffed=clone(profile);buffed.buffs={12345}
+check(LL:ProjectPersonalEstimate(f,option,raw,buffed,'100')==nil,
+    'different unmodeled buffs cannot take the identical-profile fast path')
 local result=assert(LL:ProjectPersonalEstimate(f,option,raw,profile,'200'))
 near(result.materials[1].expectedQuantity,3);near(raw.materials[1].expectedQuantity,2)
 near(assert(LL:ProjectPersonalEstimate(f,option,result,profile,'200')).materials[1].expectedQuantity,3)

@@ -18,23 +18,6 @@ local function sameCondition(a,b)
     for key in pairs(b) do if a[key]==nil then return false end end
     return true
 end
--- Only use a documented minimum when present in compiled input/recipe data.
--- Recipe difficulty is NOT the same thing as the minimum learn/use skill.
-function LL:MinimumProcessingSkill(f,method,recipeID)
-    local gd=self.GameData
-    local models=gd and (method=="Prospect" and gd.prospect or method=="Mill" and gd.mill)
-    local entry=models and f and models[f.id]
-    local minimum=entry and (entry.minimumSkill or entry.requiredSkill)
-    if validNumber(minimum) then return minimum end
-    local recipes=gd and gd.recipeRequirements
-    local rec=recipes and recipeID and recipes[recipeID]
-    minimum=rec and (rec.minimumSkill or rec.requiredSkill)
-    if validNumber(minimum) then return minimum end
-    return nil -- not documented, don't silently assert zero
-end
--- Manual character entries without a scanned skill use only the minimum
--- recipe requirement, never assumed knowledge points or profession gear.
--- Missing requirements are left unknown instead of claiming skill zero.
 function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local profession=self.ProfessionForMethod and self:ProfessionForMethod(method)
     local current=self.CharacterKey and self:CharacterKey()
@@ -128,14 +111,13 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     return ctx
 end
 -- Compiled mechanics v0.2 adapter. Research JSON is NEVER loaded directly in WoW.
--- A build step may populate GameData.verifiedMechanicsRules only after a rule
+-- A build step may populate ItemDB.mechanicRules only after a rule
 -- has passed recipe-specific numerical validation. Unknown means no transform.
 -- This lives in the existing conversion engine to avoid another runtime module.
 function LL:ApplyVerifiedMechanics(f,option,baseline)
     if baseline and (baseline.sourceKey=='itemtsm' or baseline.sourceKey=='tsm' or baseline.sourceKey=='legacy' or baseline.sourceKey=='personal') then return baseline end
     if baseline and baseline.mechanicsApplied then return baseline end
-    local gd=self.GameData
-    local rules=gd and gd.verifiedMechanicsRules
+    local rules=self.ItemDB and self.ItemDB.mechanicRules
     if type(rules)~="table" or #rules==0 or type(f)~="table"
         or type(option)~="table" or type(baseline)~="table"
         or type(baseline.materials)~="table" then return baseline end
@@ -155,10 +137,8 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
     local eligible={}
     local duplicates={}
     for _,rule in ipairs(rules) do
-        if type(rule)=="table" and rule.evidenceStatus=="VERIFIED_NUMERIC"
-            and rule.applyPolicy=="EXECUTE" and rule.applies=="VERIFIED_APPLIES"
-            and type(rule.confidence0to100)=="number" and rule.confidence0to100>=80 and rule.confidence0to100<=100
-            and type(rule.sourceClaimIDs)=="table" and #rule.sourceClaimIDs>0
+        if self.IsApprovedNumericRule and self:IsApprovedNumericRule(rule)
+            and rule.applies=="VERIFIED_APPLIES"
             and rule.method==option.name and rule.recipeID==option.recipeID
             and rule.recipeID~=nil and rule.inputItemID==f.id
             and rule.expansionID==f.expansionID
@@ -340,7 +320,7 @@ function LL:EvaluateDisenchant(f,character)
     local value=self:ValueProcessingModel(model,0,true)
     return {name='Disenchant',value=value,materials=model and model.materials,
         yieldModel=model,expansion=exp,expansionName=family and family.name,
-        samples=personal and personal.samples,confidence=model and model.confidence or 'unknown',
+        samples=model and model.personalStats and model.personalStats.total,confidence=model and model.confidence or 'unknown',
         source=model and model.source,method=model and model.source,
         note=reason or (model and model.warning),incompletePrices=model and model.partialPrice},reason
 end
@@ -432,12 +412,8 @@ function LL:ConversionOptions(f)
         if price and c.outputCount and c.inputCount and suppliesKnown then
             value=(price*c.outputCount-suppliesCost)/c.inputCount
         elseif suppliesKnown then value=price end
-        -- All compiled GameData processing models can be priced when their
-        -- expected units are supplied and every output has a price.  A model
-        -- marked 'candidates' remains PROVISIONAL and low confidence; its
-        -- expectedQuantity is a scenario per processing batch, not a measured
-        -- drop rate. Do not multiply by chance again (already included).
-        -- GetOutputPrice includes the AH fee once.
+        -- Price stochastic processing only from the resolved ItemDB/personal
+        -- evidence model. EV already includes zero-result operations and chance.
         local yieldModel,modelIssue
         if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or (research and dataMode~=3) then
             local displayOption={name=c.method,inputCount=inputCount,
@@ -455,23 +431,16 @@ function LL:ConversionOptions(f)
         local isFixed = c.outputID and c.outputCount and c.inputCount
             and (c.confidence=="documented" or c.confidence=="verified" or
                  c.method=="Exchange" or c.method=="Combine" or c.method=="Split")
-        if c.method~="Mill" and c.method~="Prospect" and c.method~="Smelt" and not yieldModel then
-            if dataMode==2 and not isFixed then
-                value=research and research.value or nil
-                source="Personal results only"
-            elseif dataMode==1 and research and research.value then
-                value=research.value
-                source="Personal recorded results"
-            end
+        if not yieldModel and dataMode==2 and not isFixed then
+            value=nil;source="Personal results only"
         end
         local v={name=c.method,letter=MethodLetter(c.method),available=available,
             why=why or modelIssue,character=character,profession=c.profession,
             value=value,source=source,inputShort=insufficientCount,
-            confidence=(research and research.value and dataMode~=3)
-                and research.confidence or c.confidence or "verified-recipe",
+            confidence=yieldModel and yieldModel.confidence or c.confidence or "verified-recipe",
             -- Only per-input observations, never shared expansion-wide candidates.
-            estimate=(dataMode~=3 and research) or nil,
-            samples=research and research.samples or 0,
+            estimate=yieldModel and yieldModel.personalStats and research or nil,
+            samples=yieldModel and yieldModel.personalStats and yieldModel.personalStats.total or 0,
             dataMode=dataMode,
             note=modelIssue or (dataMode==2 and (research and research.note or
                 "Personal results only: no matching observations yet")) or c.requirement,
@@ -538,8 +507,6 @@ function LL:ConversionOptions(f)
         f.disenchantIssue=issue
         f.disenchantEstimate=estimate
         if not available then f.unavailableDisenchant=estimate end
-        local research=(self.GetLearnedDisenchantEstimate and self.DisenchantTables
-            and self:GetLearnedDisenchantEstimate(f,self.DisenchantTables[f.expansionID])) or nil
         out[#out+1]={name="Disenchant",letter="D",available=available,
             why=why or issue,character=character,profession="Enchanting",
             value=estimate and estimate.value or nil,
@@ -551,8 +518,7 @@ function LL:ConversionOptions(f)
             amount=estimate and estimate.amount,note=estimate and estimate.note or issue,
             expansion=estimate and estimate.expansion or nil,
             expansionName=estimate and estimate.expansionName or nil,
-            category="disenchant",estimate=estimate,yieldModel=estimate and estimate.yieldModel,
-            personalResearch=(research and research~=estimate) and research or nil}
+            category="disenchant",estimate=estimate,yieldModel=estimate and estimate.yieldModel}
     end
     table.sort(out,function(a,b)
         if a.available~=b.available then return a.available end

@@ -735,8 +735,6 @@ function LL:RegisterNativeSettings()
     Section(researchLayout,"Evidence collection")
     Section(researchLayout,"Source preferences live in Database & Accuracy. Profession contexts live below Professions & Alts.")
     Section(researchLayout,"Confidence thresholds")
-    Slider(research,"researchSkillTolerance","Skill matching tolerance (+/-)",
-        "Borrow compatible observations from nearby profession skill levels. Zero means exact skill only.",0,40,1,10)
     Slider(research,"minPersonalSamples","Minimum weighted samples",
         "Minimum effective samples required before personal observations drive recommendations.",1,100,1,30)
 

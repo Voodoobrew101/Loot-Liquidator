@@ -138,16 +138,17 @@ reference.referenceConditions={skill=50}
 install({reference});eq(model(),nil,'unbridged source skill mismatch')
 local rule={ruleID='numeric-fixture-only',method='Prospect',recipeID=444,inputItemID=10,inputQualityRank=2,
     outputItemID=20,expansionID=11,sourceBuild='123456',targetBuild='123456',
-    sourceReferenceContextID='cohort',targetConditions={skill=100},sourceClaimIDs={'synthetic-test'},
+    sourceReferenceContextID='cohort',targetConditions={skill=100},sourceClaimIDs={'synthetic-test','synthetic-independent-review'},
+    numericTransformValidated=true,independentReview='APPROVED',
     evidenceStatus='VERIFIED_NUMERIC',applyPolicy='EXECUTE',applies='VERIFIED_APPLIES',
     confidence0to100=90,effectTarget='OUTPUT_UNCONDITIONAL_EXPECTATION',formulaID='MULTIPLY',parameters={multiplier=1.5}}
-LL.ItemDB.mechanicRules={rule};LL.GameData.verifiedMechanicsRules=LL.ItemDB.mechanicRules
+LL.ItemDB.mechanicRules={rule}
 m=model();near(m.materials[1].expectedQuantity,3);eq(m.materials[1].chance,nil);eq(m.adjustment,'character-adjusted')
 local raw={inputCount=5,patchBuild='123456',referenceContextID='cohort',materials={{id=20,expectedQuantity=2}}}
 local adjusted=LL:ApplyVerifiedMechanics(f,option,raw)
 eq(LL:ApplyVerifiedMechanics(f,option,adjusted),adjusted,'do not apply a rule twice')
 local cost=clone(rule);cost.ruleID='cost-fixture';cost.effectTarget='EXPECTED_INPUT_CONSUMPTION';cost.parameters.multiplier=.8
-LL.ItemDB.mechanicRules={rule,cost};LL.GameData.verifiedMechanicsRules=LL.ItemDB.mechanicRules
+LL.ItemDB.mechanicRules={rule,cost}
 m=model();near(m.expectedInputCount,4)
 LL.GetOutputPrice=function(_,id) return id==20 and 100 or id==10 and 50 end
 near(LL:ValueProcessingModel(m,0,true,f),70)
@@ -199,22 +200,17 @@ m=model();eq(LL:ValueProcessingModel(m,0,true),nil);check(m.partialPrice)
 LL.GetOutputPrice=function() return 200 end
 near(LL:ValueProcessingModel(m,0,true),80)
 
--- Personal recorders keep observations, but never pool another character/build/recipe.
-LL.db.recordConversions=true;LL.db.processingLearning=nil
-LL.GetResearchProfessionSnapshot=function() return 70,'12=3',1 end
-check(LL:SaveProcessingObservation('Prospect',f,5,{[20]=2},444))
-local pool=LL:MatchingProcessingResearch(f,'Prospect',5,444)
-eq(pool.total,1);near(pool.mats[20].quantity,2)
-check(LL:MatchingProcessingResearch(f,'Prospect',5,445)==nil,'recipe-scoped observations')
-local currentCharacterKey=LL.CharacterKey
-LL.CharacterKey=function() return 'Different - Realm' end
-eq(LL:MatchingProcessingResearch(f,'Prospect',5,444),nil,'no cross-character pooling')
-LL.CharacterKey=currentCharacterKey
-local currentBuild=GetBuildInfo
-GetBuildInfo=function() return '12.1.5','123457','',120105 end
-eq(LL:MatchingProcessingResearch(f,'Prospect',5,444),nil,'no cross-build pooling')
-GetBuildInfo=currentBuild
-check(LL:ExportProcessingData():find('Prospect,10',1,true),'observation CSV remains available')
+-- Old positive-only histories survive for export, never as executable estimates.
+local legacy={total=1,brackets={old={method='Prospect',inputID=10,expansion=11,
+    quality=2,inputCount=5,total=1,mats={[20]={occurrences=1,quantity=2,quantityCounts={[2]=1}}}}}}
+LL.db.processingLearning=legacy
+check(LL:ExportProcessingData():find('Prospect,10',1,true),'legacy CSV remains available')
+eq(LL:GetLearnedProcessingEstimate(f,'Prospect',5,444),nil,'legacy aggregates cannot price a current operation')
+eq(LL.db.processingLearning,legacy,'saved history preserved')
+eq(LL.db.processingLearning.brackets.old.mats[20].quantity,2,'raw legacy quantity unchanged')
+eq(LL.SaveProcessingObservation,nil,'obsolete positive-only writer removed')
+eq(LL.MatchingProcessingResearch,nil,'obsolete Gaussian pool removed')
+eq(LL.DisenchantStatsFor,nil,'obsolete tooltip stats removed')
 -- Primary entries without a usable mean do not hide a usable external fallback.
 local unknown=record('itemdb','unknown',nil,nil,nil,nil)
 unknown.materials[1].expectedQuantity.status='unknown'

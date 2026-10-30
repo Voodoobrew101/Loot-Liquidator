@@ -185,7 +185,6 @@ function LL:InitializeItemDB()
     local compat=self.ItemDB.compat or {}
     for k,v in pairs(compat) do self[k]=v end -- aliases, never copied data
     self.GameData=self.GameData or {}
-    self.GameData.verifiedMechanicsRules=self.ItemDB.mechanicRules
     self.GameDataVersion=self.ItemDB.version
     self.ResearchProcessingOutputs=self.ItemDB.inputs
     return true
@@ -474,6 +473,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         result.materials[#result.materials+1]=b
     end
     for key,v in pairs(result.sources) do result.sources[key]=v/math.max(1,totalContribution) end
+    if personal and (result.sources.personal or 0)>0 then
+        result.personalStats={total=personal.samples or 0,effectiveSamples=personal.effectiveSamples or personal.samples or 0}
+    end
     table.sort(result.materials,function(a,b) return a.id<b.id end)
     if totalContribution==0 then return nil,'Insufficient Data: expected quantities unknown' end
     -- Conservative score of the actual contributing field evidence, not slider values.
@@ -499,7 +501,7 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
     local key=table.concat({tostring(f.id),tostring(f.quality),tostring(f.classID),tostring(f.expansionID),
         tostring(option.name),tostring(option.inputCount),tostring(option.recipeID),tostring(option.character),
         tostring(ctx._cacheIdentity or fingerprint(ctx)),tostring(build),tostring(self.ItemDB and self.ItemDB.version),
-        tostring(mode),tostring(personal and personal.effectiveSamples),
+        tostring(mode),tostring(personal and personal.effectiveSamples),tostring(personal and personal.samples),
         tostring(personal and personal.studyID),tostring(personal and personal.observationContextID),
         tostring(personal and personal.expectedInputCount),
         tostring(userWeight(self,'itemdb',mode)),tostring(userWeight(self,'personal',mode)),

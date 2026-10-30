@@ -27,3 +27,11 @@ import json
 provenance = json.loads(Path('database/research-itemdb-source.json').read_text())
 assert hashlib.sha256(Path('database/research/itemdb.lua').read_bytes()).hexdigest() == provenance['sha256'], 'Research copy differs from pinned source'
 print('PASS: latest research itemdb copy checksum and runtime separation')
+
+# Frozen references retain the exact pre-cleanup values; old formulas are retired.
+assert not Path('database/sources/StatYieldProfiles.lua').exists()
+assert not Path('database/sources/GameData.lua').exists()
+for name, expected in {'itemTSM.lua':'cece33b46b70aa26b56d59e011cf798ea00351ecae1d7e7b920a7c7bdceb98ca',
+                       'GameData.lua':'a1970683591d9511bd5724eaa90ebfccfabfd178effd0c6e6e91e57d6e4eebf0'}.items():
+    assert hashlib.sha256((root/name).read_bytes()).hexdigest()==expected, 'Frozen reference changed: '+name
+print('PASS: frozen reference checksums unchanged after formula retirement')

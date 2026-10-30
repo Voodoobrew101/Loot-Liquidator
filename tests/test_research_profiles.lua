@@ -36,6 +36,7 @@ check(compile(),'schema 0.1.0 compiler fixture')
 local function runtime()
     local LL={db={}}
     assert(originalLoadfile(fixtureDir..'/FixtureItemDB.lua'))('LootLiquidator',LL)
+    assert(originalLoadfile('LootLiquidator/ProfessionModels.lua'))('LootLiquidator',LL)
     assert(originalLoadfile('LootLiquidator/Database.lua'))('LootLiquidator',LL)
     check(LL:InitializeItemDB(),LL.itemDBError);LL:MigrateEvidenceSettings()
     return LL
@@ -121,6 +122,9 @@ m=assert(model(LL,adjusted));check(m.mechanicsApplied,'registry rule executes at
 near(m.materials[1].expectedQuantity,2);near(m.materials[2].expectedQuantity,2)
 near(research.processing[1].expectedQuantity.value,1)
 check(#LL.ItemDB.mechanicRules==2,'scoped rule expands to both concrete output profiles')
+approved.sources[2].claimID='synthetic-independent-a'
+check(not compile(),'duplicate claims fail shared compiler evidence gate')
+approved.sources[2].claimID='synthetic-independent-b'
 approved.formulaID='UNSUPPORTED';check(not compile(),'unsupported approved rule fails build')
 approved.formulaID='RATIO_ADJUSTMENT';approved.referenceContext.effectiveSkill=999
 check(not compile(),'unmatched source baseline fails build')

@@ -389,8 +389,6 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     -- Bound/vendor-only loot remains quiet unless there are research results
     -- or a detailed external reference model worth showing transparently.
     local f=decision.facts
-    local model=f and LA.DisenchantTables and LA.DisenchantTables[f.expansionID]
-    local modelRule=model and model.quality and model.quality[f.quality]
     -- Old imported reference-rates toggle retired: compiled Game Data
     -- supplies rates with explicit per-output confidence instead.
     if not decision.action and (detail<3 or #(decision.conversionOptions or {})==0)
@@ -459,51 +457,6 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             if code then label="|c"..code..label.."|r" end
         end
         return prefix..label
-    end
-    -- Short money labels for showing TWO values in a narrow WoW tooltip.
-    -- These are display-only; all gold decisions keep unrounded copper values.
-    -- For >=10g round to gold, between 1s and 10g round to silver,
-    -- and below 1s retain copper. Icon paths match Blizzard money textures.
-    local function CompactMoney(value)
-        if type(value)~="number" or value<0 or value>=math.huge then return nil end
-        local goldIcon="|TInterface\\MoneyFrame\\UI-GoldIcon:12:12:0:0|t"
-        local silverIcon="|TInterface\\MoneyFrame\\UI-SilverIcon:12:12:0:0|t"
-        local copperIcon="|TInterface\\MoneyFrame\\UI-CopperIcon:12:12:0:0|t"
-        local amount
-        if value>=100000 then
-            amount=math.floor(value/10000+.5)
-            return tostring(amount)..goldIcon
-        end
-        if value>=100 then
-            amount=math.floor(value/100+.5)
-            local g=math.floor(amount/100)
-            local silver=amount%100
-            if g>0 and silver>0 then
-                return tostring(g)..goldIcon.." "..tostring(silver)..silverIcon
-            end
-            if g>0 then return tostring(g)..goldIcon end
-            return tostring(silver)..silverIcon
-        end
-        return tostring(math.floor(value+.5))..copperIcon
-    end
-    local function MaterialPriceText(mat,mode)
-        -- mat.expectedValue is GROSS, based on actual aggregate quantities /
-        -- total operations; chance is ALREADY included, never multiply twice.
-        local gross=mat.expectedValue
-        if gross==nil and mat.unitPrice and mat.expectedQuantity then
-            gross=mat.unitPrice*mat.expectedQuantity
-        end
-        local expected=gross and gross*(1-LA:AHFeeRate())
-        local unit=mat.unitPrice
-        if mode==1 then return unit and LA:Money(unit) or "" end
-        if mode==2 then return expected and LA:Money(expected) or "" end
-        if expected and unit then
-            return CompactMoney(expected).." ("..CompactMoney(unit)..")"
-        end
-        if expected then return CompactMoney(expected) or "" end
-        -- Never imply an unknown drop chance yields a positive expected price.
-        if unit then return "("..CompactMoney(unit).." unit; yield unknown)" end
-        return ""
     end
     local function valued(label,unit,letter,count)
         if unit==nil then return end
@@ -760,14 +713,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         and LA.db.showProcessingSamples~=false and decision.deStats
         and not printedSamples then
         local n=decision.deStats.total or 0
-        if decision.deStats.borrowedSamples and decision.deStats.borrowedSamples>0 then
-            tooltip:AddLine(("Disenchant research: %d exact + %d nearby (%.1f effective / %d)"):format(
-                decision.deStats.exactSamples or 0,decision.deStats.borrowedSamples,
-                decision.deStats.effectiveSamples or n,LA.ProcessingMinimum and LA:ProcessingMinimum() or 30),.56,.81,1,true)
-        else
-            tooltip:AddLine(("Disenchant research: %d / %d matching samples"):format(n,
-                LA.ProcessingMinimum and LA:ProcessingMinimum() or 30),.56,.81,1,true)
-        end
+        tooltip:AddLine(("Personal samples: %d / %d"):format(n,
+            LA.ProcessingMinimum and LA:ProcessingMinimum() or 30),.56,.81,1,true)
     end
     -- Profession progression stays strictly informational: it never changes
     -- the highest-gold action or fabricates discovery/skill-up chances.

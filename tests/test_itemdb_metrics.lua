@@ -111,4 +111,35 @@ assert(#de==1 and de[1].name=='Disenchant' and de[1].yieldModel)
 near(de[1].yieldModel.materials[1].chance,.5)
 assert(de[1].yieldModel.materials[1].minQuantity==10)
 near(de[1].value,800)
+-- Retired manual modifiers cannot alter ItemDB metrics.
+LL.db.researchSkillTolerance=40;LL.db.skillAwareProcessing=false
+LL.db.midnightDisenchantUpgradePct=100;LL.db.dragonflightProspectingInspirationPct=100
+LL.db.warWithinMillingOutputRank=3
+LL._processingModelCache=nil
+local stable=LL:ConversionOptions(f)[1]
+near(stable.value,800);near(stable.yieldModel.materials[1].chance,.5)
+-- DE reuses one complete personal estimate. Only a source that contributes
+-- to the final model can supply the displayed sample count.
+local profile={skill=100,effectiveSkill=100,character='Tester - Realm'}
+LL.CharacterKey=function()return 'Tester - Realm'end
+LL.ProcessingPlayerConditions=function()return profile end
+LL.ProcessingDataMode=function()return LL.db.disenchantDataMode end
+LL.db.source_personal_enabled=true;LL.db.source_personal_weight=100
+LL.db.disenchantDataMode=2
+local reads=0
+LL.GetLearnedDisenchantEstimate=function()
+    reads=reads+1
+    return {inputCount=1,samples=7,effectiveSamples=7,patchBuild='123456',
+        observationContext=profile,materials={{id=900010,expectedQuantity=1,chance=.5,minQuantity=1,maxQuantity=4}}}
+end
+LL._processingModelCache=nil
+local measured=LL:ConversionOptions(f)[1]
+assert(reads==1,'DE must not re-query an old personal aggregation path')
+assert(measured.yieldModel.personalStats.total==7 and measured.estimate.samples==7)
+near(measured.yieldModel.materials[1].expectedQuantity,1)
+LL.db.disenchantDataMode=3;LL._processingModelCache=nil
+local external=LL:ConversionOptions(f)[1]
+assert(external.yieldModel.personalStats==nil and external.estimate.samples==nil,
+    'ItemDB-only tooltip must not show personal samples')
+near(external.yieldModel.materials[1].expectedQuantity,8)
 print('PASS: ItemDB-only real mass-milling recipes, all four metric units, source/access gates, conditional ranges, unknowns and probability/yield precision')

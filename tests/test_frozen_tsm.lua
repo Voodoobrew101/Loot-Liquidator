@@ -1,6 +1,6 @@
 local L={}
-assert(loadfile('database/sources/GameData.lua'))('LootLiquidator',L)
-local original=L.GameData.tsmRetail
+assert(loadfile('database/sources/ReferenceData.lua'))('LootLiquidator',L)
+local original=L.ReferenceData.frozen.rawTables
 assert(loadfile('LootLiquidator/itemTSM.lua'))('LootLiquidator',L)
 local function same(a,b)
     assert(type(a)==type(b))

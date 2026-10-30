@@ -26,6 +26,7 @@ local function approved(r)
     end
     return true
 end
+function LL:IsApprovedNumericRule(rule) return approved(rule) end
 local function matches(r,f,option,id)
     return r.method==option.name and r.recipeID==option.recipeID and r.inputItemID==f.id
         and r.outputItemID==id and r.expansionID==f.expansionID
@@ -159,7 +160,7 @@ function LL:ProjectPersonalEstimate(f,option,raw,target,targetBuild)
     targetBuild=tostring(targetBuild or (GetBuildInfo and select(2,GetBuildInfo())))
     local sourceBuild=tostring(raw.patchBuild)
     local source=raw.observationContext
-    local profileFields={'effectiveSkill','specialization','operationStats','equipment','equipmentKey','craftingQuality'}
+    local profileFields={'effectiveSkill','specialization','operationStats','equipment','equipmentKey','craftingQuality','buffs'}
     local sameProfile=true
     for _,k in ipairs(profileFields) do if not equal(source[k],target[k]) then sameProfile=false end end
     if sourceBuild==targetBuild and sameProfile then return copy(raw) end
