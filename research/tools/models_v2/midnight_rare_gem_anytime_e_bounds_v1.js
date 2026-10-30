@@ -190,6 +190,12 @@ function selfTest(){
  bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,gear:Infinity}},events}));
  bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,unlocks:()=>true}},events}));
  bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,gear:{stat:10,unknown:undefined}}},events}));
+ const longUnlocks=Array.from({length:12},(_,i)=>'unlock'+i);
+ ok(analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,unlocks:longUnlocks}},events}).typedContext.professionContext.unlocks.length===12);
+ const sparseUnlocks=['a','b'];sparseUnlocks.length=3;
+ bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,unlocks:sparseUnlocks}},events}));
+ const hiddenUnlocks=['a'];Object.defineProperty(hiddenUnlocks,'hidden',{value:'x'});
+ bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,unlocks:hiddenUnlocks}},events}));
  const hypo=analyzeCohort({context:raw,events,certifiedMaxPerCast:3,capEvidenceID:'other'});
  eq(hypo.capIndependentlyVerified,false);
  eq(hypo.capStatus,'CONDITIONAL_ON_UNATTESTED_HYPOTHETICAL_CAP_AND_IID');
