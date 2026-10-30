@@ -1,12 +1,12 @@
 {
-  "schemaVersion": "1.0.0",
-  "modelID": "midnight-rare-gem-anytime-e-bounds-v1.0.0",
-  "taskID": "F003",
+  "schemaVersion": "1.0.1",
+  "modelID": "midnight-rare-gem-anytime-e-bounds-v1.0.1",
+  "taskID": "F003_ANYTIME_EPOCH_CAP_CONTEXT_REPAIR",
   "workflowRevision": 2,
-  "status": "PROPOSED_PENDING_INDEPENDENT_QA",
+  "status": "PROPOSED_PENDING_F005_NATIVE_RETEST",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "modelSource": "research/tools/models_v2/midnight_rare_gem_anytime_e_bounds_v1.js",
-  "modelSourceBlobSHA": "d409511c94ae13c09dcccb5e7e8de6c75d52105b",
+  "modelSourceBlobSHA": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9",
   "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "targetKeys": [
@@ -52,7 +52,7 @@
     "professionContext.resourcefulnessPercent"
   ],
   "eligibility": "Backlog keys only, not independent proof of current recipe, rank, unlock, output universe or nominal batch size. A positive integer spell ID in RAW mode is type validation only.",
-  "applicability": "Each cohort must use one exact fixed character/patch/recipe/input-output-rank profile. Never pool differing profiles; a caller-supplied capEvidenceID is not an independently validated certificate.",
+  "applicability": "Each cohort must use one exact fixed character/patch/recipe/input-output-rank profile. Typed context is copied to each output and serialized into a deterministic context key. Never pool distinct profiles; distinct capEvidenceID alone is not independent proof.",
   "sourceAncestry": {
     "priorityBacklog": "research/coordination/completion-priorities.json",
     "currentRetailStudyFamilies": 0,
@@ -87,14 +87,20 @@
   },
   "tests": {
     "javascriptV8SelfTest": {
-      "passed": 40,
-      "failed": 0
+      "passed": 49,
+      "failed": 0,
+      "syntheticOnly": true
     },
-    "nativeNode": "NOT_RUN_EXACT_FILE",
-    "independentValidator": "PENDING",
+    "independentF005SuiteV8": {
+      "passed": 12,
+      "failed": 0,
+      "source": "research/tests/v2/test_f005_midnight_anytime_context_lineage.js",
+      "environment": "V8 exact committed source with Node assert shim"
+    },
+    "nativeNode": "PENDING_GITHUB_CI",
     "lua51": "NOT_RUN",
     "inGame": "NOT_RUN",
-    "completionPipeline": "NOT_RUN_NO_COMPILER_INPUTS_CHANGED"
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED"
   },
   "exactDeltas": {
     "admittedMappings": 0,
@@ -103,14 +109,41 @@
     "newVerifiedExpectedQuantity": 0,
     "confidencePromotions": 0,
     "economicPromotions": 0,
-    "newModelTargetKeys": 7
+    "affectedExistingModelTargetKeys": 7,
+    "modelCodeFilesChanged": 1,
+    "modelManifestFilesChanged": 1
   },
   "evidenceRequest": "For each target ore and output rank, collect current-Retail zero-inclusive per-cast outputCount including zero results, exact completed cast count, aborted requests, refund counts, full patch/recipe/skill/spec/gear/unlocks and original source family. Seek independent proof of per-cast output cap before finite E upper bounds.",
-  "independentValidatorRequest": "Review the alpha-spending union bound and no-cap E partial-identification logic independently; probe malformed RAW context, duplicate cast IDs, refunds, output cap violation and cross-profile pooling. Reserve independent study-family holdout.",
+  "independentValidatorRequest": "Run exact committed F005 twelve-case adversarial suite under native Node, check Gregorian dates with offsets/leap years, cap whitespace and source ancestry, typedContextKey differentiation and deep-copy isolation; require external review before any cap attestation counts as evidence.",
   "blockers": [
     "No independent current-Retail zero-inclusive casts for seven target keys",
-    "No independently verified per-cast hard output cap, so E upper cannot be identified without extra assumptions",
+    "No independently reviewed per-cast output cap attestation; finite bounds under caller cap are hypothetical only",
     "No independent output-universe/recipe eligibility audit; economic recommendations prohibited",
-    "No native Node, Lua or in-game verification of new model"
+    "Native Node, Lua and in-game verification pending"
+  ],
+  "capCertificatePolicy": {
+    "normalizedLineage": "Unicode NFC, trim, case-insensitive comparison rejects identical source and cap lineages including trailing whitespace",
+    "unattestedCap": "Permits hypothetical finite E sensitivity bounds only; capStatus=CONDITIONAL_ON_UNATTESTED_HYPOTHETICAL_CAP_AND_IID; never verified",
+    "optionalAttestation": "Caller must supply capAttestation.sourceStudyFamilyID matching capEvidenceID, nonblank reviewRecordID, independentOfCohort=true. This is still an unverified caller assertion until independent QA checks source documents.",
+    "capIndependentlyVerified": false,
+    "noCap": "E upper remains null; cannot be economically promoted"
+  },
+  "epochValidation": "Exact Gregorian YYYY-MM-DD including leap years, valid hour/minute/second and timezone offset fields; Date.parse alone is insufficient.",
+  "typedContextSerialization": [
+    "gameMode",
+    "sourceType",
+    "patchBuild",
+    "recipeSpellID",
+    "observationEpoch",
+    "inputItemID",
+    "outputItemID",
+    "inputQualityRank",
+    "outputQualityRank",
+    "nominalInputCountPerCast",
+    "directReagents",
+    "minimumRecipeEligibleSkill",
+    "professionSkill",
+    "professionContext",
+    "sourceStudyFamilyID"
   ]
 }
