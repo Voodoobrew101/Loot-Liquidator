@@ -20,6 +20,12 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y lua5.1
       - run: node research/tools/run_completion_pipeline.js --check
+      - name: Research-only native 38-case model preflight (informational, NOT acceptance)
+        # F005 has not yet accepted these fixtures. Run them on the real
+        # checkout to expose native failures without prematurely promoting
+        # model/source claims into the mandatory build or economic gates.
+        continue-on-error: true
+        run: node research/tools/working_native_model_preflight.js
       - name: Verify Lua 5.1 syntax and decoded working/evidence isolation
         run: |
           luac5.1 -p research/proposed/itemdb.lua
