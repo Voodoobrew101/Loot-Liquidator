@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_WIRE_DF_JOINT_CAST_FAIL_CLOSED_NATIVE_AFTER_REPAIR",
+  "workflowRevision": 2,
+  "queueRevision": 20,
+  "runUTC": "2026-10-30T07:13:00Z",
+  "status": "IMMUTABLE_DELTA_CORRECTION_AND_GITHUB_READBACK",
+  "supersedesOnlyField": "exactDeltas.pipelineGateLinesAdded",
+  "originalSubmission": "research/coordination/v2/submissions/completion-engineer/20261030T0712Z-F002-df-joint-cast-native-staged-gate.json",
+  "correction": {
+    "previouslyReported": 84,
+    "authoritativeGitHubCompareAdditions": 83,
+    "deletions": 0,
+    "reason": "Original count used source block newline splitting; GitHub diff is authoritative for committed line additions."
+  },
+  "verifiedCommits": {
+    "base": "b38aeb26da212a60eab6a37ada06c203f82d6e8d",
+    "engineeringFix": "f05adf98546afd1d3eac60cc891bc87f83478f5e",
+    "originalSubmission": "2700f7422abe2a0d3a0335a8babb7f118fffb425"
+  },
+  "verifiedChangedPaths": [
+    "research/tools/run_completion_pipeline.js",
+    "research/coordination/v2/submissions/completion-engineer/20261030T0712Z-F002-df-joint-cast-native-staged-gate.json"
+  ],
+  "testsActuallyRun": [
+    {
+      "name": "GitHub compare base-to-submission",
+      "result": "PASS",
+      "aheadCommits": 3,
+      "pipelineAdditions": 83,
+      "pipelineDeletions": 0,
+      "submissionAdditions": 133
+    }
+  ],
+  "testsNotRun": [
+    "Native GitHub CI on engineering change still not confirmed",
+    "Lua 5.1 and WoW client not run"
+  ],
+  "economicPromotions": 0,
+  "workingNumericCellsChanged": 0,
+  "confidencePromotions": 0,
+  "blockers": [
+    "12 source-pinned F003 DF synthetic failures still quarantined, not passed",
+    "Independent F005 model acceptance and native CI remain outstanding"
+  ],
+  "nextTask": "F002_CONFIRM_NATIVE_CI_THEN_STRICT_DF_23_AND_ANYTIME_13_AFTER_REPAIRS"
+}
