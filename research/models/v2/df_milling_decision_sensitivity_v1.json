@@ -1,9 +1,9 @@
 {
-  "schemaVersion": "1.0.1",
-  "modelID": "df-milling-decision-sensitivity-v1.0.1",
+  "schemaVersion": "1.0.2",
+  "modelID": "df-milling-decision-sensitivity-v1.0.2",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "modelCode": "research/tools/models_v2/df_milling_decision_sensitivity_v1.js",
-  "modelCodeBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+  "modelCodeBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
   "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "workflowRevision": 2,
@@ -48,7 +48,7 @@
     "historicalRateScenarios": "Retains both PER_INPUT_UNIT and PER_COMPLETED_CAST hypotheses when original rate denominator is unknown; never promotes either to current Retail E or P.",
     "summarizeCasts": "Zero-inclusive per-completed-cast marginal P and unconditional E; aborted requests excluded, refunds separate, co-outputs permitted, quality IDs explicit.",
     "decisionSensitivity": "Given externally supplied hypothetical E intervals and time-stamped prices, bounds output value and input opportunity cost with refunds; reports only conditional decision boundary, never measured gold impact. v1.0.1 rejects a self-declared incomplete output universe even if every output in the truncated list is priced; no synthetic dominance from omitted co-outputs.",
-    "validateRawContext": "RAW_CURRENT_RETAIL requires Retail game mode, ISO observation epoch, explicit input and all output ranks, exact direct reagent vector with nominal input, minimum recipe skill, valid numeric actual skill and Resourcefulness, and caller-asserted complete output universe; incomplete data fail closed."
+    "validateRawContext": "RAW_CURRENT_RETAIL requires Retail game mode, ISO observation epoch, explicit input and all output ranks, exact direct reagent vector with nominal input, minimum recipe skill, valid numeric actual skill and Resourcefulness, and caller-asserted complete output universe; incomplete data fail closed. v1.0.2 additionally requires recipeSpellID to be a positive safe integer in RAW_CURRENT_RETAIL; synthetic UNKNOWN remains permitted."
   },
   "assumptions": [
     "Target keys are backlog identities only; this model does not independently admit recipe eligibility or ranks.",
@@ -60,7 +60,8 @@
     "For linear expected gold value, correlation between simultaneous output types is not needed; it matters for risk, not the mean.",
     "Profession skill, specialization, gear, Resourcefulness, unlock and recipe must be explicitly supplied; UNKNOWN remains explicit and blocks current-Retail raw-cohort use.",
     "outputUniverseVerified=true is a caller assertion, not an independently reviewed universe certificate; independent recipe/eligibility verification is still required for any evidence or economic promotion.",
-    "RAW_CURRENT_RETAIL requires explicit typed epoch/ranks/reagents/skill/stats and refuses UNKNOWN or malformed contexts; the synthetic self-test does not establish actual Retail validity."
+    "RAW_CURRENT_RETAIL requires explicit typed epoch/ranks/reagents/skill/stats and refuses UNKNOWN or malformed contexts; the synthetic self-test does not establish actual Retail validity.",
+    "v1.0.2 rejects RAW_CURRENT_RETAIL recipeSpellID strings, fractional, zero, null, NaN and infinite values; this checks type/domain only, not verified Retail eligibility."
   ],
   "example": {
     "syntheticInputID": 191469,
@@ -116,22 +117,20 @@
   },
   "tests": {
     "javascriptV8SelfTest": {
-      "passed": 32,
+      "passed": 41,
       "failed": 0,
       "syntheticOnly": true
     },
-    "nativeNodeExactCommittedFile": "NOT_YET_RUN",
+    "nativeNodeExactCommittedFile": "PENDING_GITHUB_CI_RETEST_V1.0.2",
     "lua51": "NOT_RUN",
     "inGameRetail": "NOT_RUN",
-    "independentValidator": "PENDING",
+    "independentValidator": "PENDING_V1.0.2_REVIEW",
     "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
     "independentF005FixtureV8": {
-      "passed": 15,
-      "failed": 1,
-      "previousPassed": 6,
-      "previousFailed": 10,
-      "remainingFailure": "Fixture simultaneously requires rejection of an incomplete universe and a numeric decision for that same incomplete universe; validator-owned contradiction requires correction.",
-      "modelSideFailures": 0
+      "passed": 16,
+      "failed": 0,
+      "review": "research/coordination/v2/reviews/2026-10-30T0246Z-F005-df-milling-native-fixture-repair-and-residual-context.json",
+      "note": "Independent validator corrected contradictory fixture; new recipe-ID checks are F003 self-tests, pending independent native retest."
     }
   },
   "holdout": "Use whole independently sourced current-Retail study families, never a source reused to infer unknown context. Require actual completed casts and zero-inclusive output vectors.",
@@ -147,15 +146,16 @@
     "No verified minimum recipe-eligible baseline or source-specific profession stats",
     "No current price snapshot to rank actual gold impact",
     "Input 200061 mapping eligibility and batch size require independent audit",
-    "Independent F005 fixture's omitted-co-output demonstration contradicts its fail-closed universe assertion; F005 owns fixture correction, not F003.",
-    "Caller-asserted outputUniverseVerified does not independently establish a complete current-Retail output universe."
+    "Caller-asserted outputUniverseVerified does not independently establish a complete current-Retail output universe.",
+    "Independent F005 native regression for v1.0.2 recipeSpellID type/domain not yet accepted."
   ],
   "modelRepair": {
-    "previousCodeBlobSHA": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
-    "repairedCodeBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
-    "scope": "Typed RAW context and fail-closed universe decision gate",
+    "previousCodeBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+    "repairedCodeBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
+    "scope": "RAW_CURRENT_RETAIL positive safe integer recipeSpellID; synthetic UNKNOWN unaffected",
     "workingCellsChanged": 0,
     "evidencePromotions": 0,
-    "economicPromotions": 0
+    "economicPromotions": 0,
+    "independentQA": "PENDING_V1.0.2"
   }
 }
