@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_MAR31_REPAIR_RETEST_AND_MIDNIGHT_ARRAY_ATTESTATION",
+  "workflowRevision": 2,
+  "queueRevision": 24,
+  "reviewUTC": "2026-10-30T12:38:00Z",
+  "branch": "implementation/five-agent-completion",
+  "verdict": "CONDITIONAL_MAR31_REPAIR_PASS_ARRAY_ATTESTATION_FAIL",
+  "subject": {
+    "modelPath": "research/tools/models_v2/midnight_prospect_hotfix_epoch_isolation_v1.js",
+    "modelBlobSHA": "031d36fe3cdebe632d00f5be4e2c4fe116abcb44",
+    "modelID": "midnight-prospect-hotfix-epoch-isolation-v1.0.2",
+    "manifestPath": "research/models/v2/midnight_prospect_hotfix_epoch_isolation_v1.json",
+    "manifestBlobSHA": "1d9aa76858a9329931f96159e4ec7e897ad7f1a4",
+    "affectedMappings": 7,
+    "outputItemID": 242608
+  },
+  "repairAcceptance": {
+    "previousTestPath": "research/tests/v2/test_f005_midnight_prospect_mar31_official_epoch.js",
+    "previousTestBlobSHA": "167582dd8448ec3abe686d036c4a2f4d938ecde4",
+    "previousResult": "26_PASS_0_FAIL",
+    "modelSelfTest": "61_PASS_0_FAIL",
+    "sourceDate": "2026-03-31",
+    "epochBuffer": "March 31-April 2 UTC/local quarantined; April 3 UTC post subject to local date",
+    "interpretation": "March 31 date correction passes synthetic regression; no measured deployment hour or current-Retail cast holdout"
+  },
+  "newIndependentTest": {
+    "path": "research/tests/v2/test_f005_midnight_prospect_context_array_attestation.js",
+    "blobSHA": "08e6dba858bffb69561fc8c7f238af8e51e340a4",
+    "cases": 12,
+    "passed": 7,
+    "failed": 5,
+    "failedCaseNames": [
+      "reject symbol property on profession array",
+      "reject non-enumerable property on profession array",
+      "reject sparse array disguised with extra key",
+      "reject Array subclass with inherited custom toJSON",
+      "reject own non-enumerable custom toJSON"
+    ],
+    "runtime": "V8 CommonJS-compatible harness with strict assertion shim; not native Node",
+    "syntheticOnly": true
+  },
+  "reproducedDefect": {
+    "function": "jsonSafe",
+    "mechanism": "Array.isArray plus Object.keys(array).length===array.length and array.every skips holes and fails to attest nonenumerable/symbol metadata or inherited/own toJSON",
+    "observed": [
+      "symbol metadata accepted then omitted from contextSnapshot",
+      "non-enumerable metadata accepted then omitted",
+      "sparse array with extra enumerable key accepted; JSON snapshot substitutes null for hole and drops key",
+      "Array subclass custom toJSON accepted; snapshot changed from original to changed",
+      "own non-enumerable toJSON accepted; snapshot changed from original to changed"
+    ],
+    "impact": "Input profession context and stored contextSnapshot can disagree, undermining provenance and matched-profile comparison; no live EV leakage demonstrated"
+  },
+  "requiredRepairOwner": "baseline-modeller",
+  "requiredRepair": [
+    "Reject arrays whose prototype differs from Array.prototype; reject subclass/inherited serializer",
+    "Attest Reflect.ownKeys(array) contains exactly length and contiguous own enumerable data indices; reject symbols, extra keys, holes, accessors and own toJSON",
+    "Ensure snapshot is a faithful copy of validated data and cannot be transformed by custom JSON serialization",
+    "Run previous 26-case and new 12-case suites under native Node; keep all 7 mappings preview-only"
+  ],
+  "coverage": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "confidenceGE90Cells": 0
+  },
+  "deltas": {
+    "numericCellsFilled": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "liveEVChanges": 0,
+    "liveRecommendationsChanged": false,
+    "independentStudyLineagesAdded": 0,
+    "roleOwnedTestFilesAdded": 1
+  },
+  "protection": {
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionCodeChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "legacyAssignmentsChanged": false
+  },
+  "sourcePins": {
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "officialSource": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+    "officialDeploymentHour": "UNKNOWN",
+    "independentCurrentRetailCastHoldouts": 0
+  },
+  "testsNotRun": [
+    "Native Node execution of new suite",
+    "Lua 5.1 generated candidate decode (no accepted build input changed)",
+    "WoW client/API or completed cast observation",
+    "Whole independent current-Retail study holdout"
+  ],
+  "blockers": [
+    "F003 model accepts unsafe array metadata and custom serialization",
+    "No independently verified current-Retail matched cohort for economic promotion"
+  ],
+  "nextTask": "F005_NATIVE_RETEST_MIDNIGHT_ARRAY_FIX_OR_PIVOT_TO_NEW_CHANGED_MODEL",
+  "coordinatorDispositionRequested": "ACCEPT_MARCH31_SOURCE_DATE_REPAIR_CONDITIONALLY; REJECT_NESTED_CONTEXT_ATTESTATION_PENDING_F003_REPAIR; KEEP_PREVIEW_ONLY"
+}
