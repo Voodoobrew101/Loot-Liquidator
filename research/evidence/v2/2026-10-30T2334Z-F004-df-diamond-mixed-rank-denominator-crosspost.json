@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_DIAMOND_MIXED_RANK_DENOMINATOR_CROSSPOST",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "2026-10-30T2334Z-F004-df-diamond-mixed-rank-denominator-crosspost",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "9eaba75c90e716657783fafd5fbe77b1ff561471",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_F005",
+  "question": "Can a previously unindexed firsthand December 2022 Draconium diamond report resolve rank-specific priority-122 P/E conflicts, and do January 2023 Serevite comments supply independent rank-separated denominators without double-counting a crosspost?",
+  "answer": "December 18 Draconium commenter reports R3 diamond outcomes from R1 or R2 ore selected by price and inspiration breakpoint; the stated 10-15 versus 3-4 diamonds per ~15000 ore are anecdotal run ranges with mixed input rank, not rank-specific E. January 2 separate commenter reports 24 R3 diamonds from ~28000 R3 Serevite at skill 274. January 9 commenter reports 38 R2 plus 23 R3 diamonds from 54137 R2 Serevite and 10827 claimed prospects; the same text reappears January 10 in another thread and is ONE source lineage. Reported 54137 ore /5 =10827.4, not 10827 exact casts; keep the two-ore discrepancy unresolved.",
+  "sources": [
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/zox4i7",
+      "threadDate": "2022-12-18",
+      "type": "FIRSTHAND_REDDIT_COMMENT",
+      "access": "WEB_REDDIT_SEARCH_RESULT; DIRECT_REDDIT_OPEN_UNAVAILABLE"
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+      "threadDate": "2022-12-31",
+      "commentDates": [
+        "2023-01-02",
+        "2023-01-09"
+      ],
+      "type": "FIRSTHAND_REDDIT_COMMENTS",
+      "access": "WEB_REDDIT_SEARCH_RESULT; DIRECT_REDDIT_OPEN_UNAVAILABLE"
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/108782r",
+      "threadDate": "2023-01-10",
+      "type": "CROSSPOST_MATCH_AND_ALREADY_INDEXED_THREAD",
+      "access": "WEB_REDDIT_SEARCH_RESULT"
+    }
+  ],
+  "observations": [
+    {
+      "id": "DF-20221218-DRACONIUM-MIXED-R1R2-R3DIAMOND-RUN-RANGE",
+      "source": "https://www.reddit.com/r/woweconomy/comments/zox4i7",
+      "lineage": "reddit-zox4i7-20221218-draconium-reply-author-unverified",
+      "observationEpoch": "ON_OR_BEFORE_2022-12-18",
+      "publicationDate": "2022-12-18",
+      "gameMode": "HISTORICAL_DRAGONFLIGHT_RETAIL",
+      "clientBuild": null,
+      "inputFamily": "Draconium Ore",
+      "inputRank": "MIXED_R1_OR_R2_BY_PRICE_AND_SKILL_BREAKPOINT",
+      "inputItemIDsCandidate": [
+        189143,
+        188658
+      ],
+      "inputRankPerRun": null,
+      "outputFamily": "Illimited Diamond",
+      "outputRank": 3,
+      "outputItemID": 192871,
+      "reportedOreUnitsPerExampleRunApprox": 15000,
+      "reportedTypicalR3DiamondUnitsRange": [
+        10,
+        15
+      ],
+      "reportedLowR3DiamondUnitsRange": [
+        3,
+        4
+      ],
+      "numberOfRuns": null,
+      "actualCompletedCasts": null,
+      "zeroOutputCasts": null,
+      "refundsOreUnits": null,
+      "reportedInspirationPercentApprox": 25,
+      "reportedResourcefulnessPercentApprox": 5,
+      "specialization": "AUTHOR_CLAIMS_ENTERPRISING_AND_PROSPECTING_FILLED; EXACT_POINTS_UNKNOWN",
+      "equipment": "R3 inspiration tool and R3 enchant, R5 headpiece with +53 inspiration; author says earlier runs used R3 headpiece/R2 enchant",
+      "skillBreakpoint": "AUTHOR_SAYS_R1_OR_R2_INPUT_CHOSEN_TO_REACH_INSPIRATION_R3_BREAKPOINT",
+      "skillExact": null,
+      "measuredDropChance": null,
+      "verifiedExpectedQuantity": null,
+      "uncertainty": "RANGES_AND_APPROXIMATE_DENOMINATOR; MIXED_INPUT_RANK; UNVERIFIED_CASTS; HISTORICAL; NOT IDENTIFIABLE FOR RANK-SPECIFIC E"
+    },
+    {
+      "id": "DF-20230102-SEREVITE-R3-28000-24R3DIAMONDS",
+      "source": "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+      "lineage": "reddit-zzyjzu-20230102-28k-r3-serevite-reply-author-unverified",
+      "observationEpoch": "ON_OR_BEFORE_2023-01-02",
+      "publicationDate": "2023-01-02",
+      "gameMode": "HISTORICAL_DRAGONFLIGHT_RETAIL",
+      "clientBuild": null,
+      "inputFamily": "Serevite Ore",
+      "inputRank": 3,
+      "inputItemID": 190394,
+      "outputFamily": "Illimited Diamond",
+      "outputRank": 3,
+      "outputItemID": 192871,
+      "reportedOreUnitsApprox": 28000,
+      "reportedR3DiamondUnits": 24,
+      "nominalInputPerCast": 5,
+      "nominalCastEquivalentsApprox": 5600,
+      "actualCompletedCasts": null,
+      "refundedOreUnits": null,
+      "zeroOutputCasts": null,
+      "skillReported": 274,
+      "inspiration": null,
+      "specialization": null,
+      "reportedR3DiamondUnitsPerOreApprox": 0.0008571428571428571,
+      "measuredDropChance": null,
+      "verifiedExpectedQuantity": null,
+      "uncertainty": "APPROXIMATE ORE INPUT, UNKNOWN ACTUAL CASTS/REFUNDS; ONE HISTORICAL COMMENTER"
+    },
+    {
+      "id": "DF-20230109-SEREVITE-R2-54137-38R2-23R3DIAMONDS",
+      "source": "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+      "crosspostSource": "https://www.reddit.com/r/woweconomy/comments/108782r",
+      "lineage": "reddit-zzyjzu-108782r-20230109-identical-54137-r2-serevite-comment-author-unverified",
+      "observationEpoch": "ON_OR_BEFORE_2023-01-09",
+      "publicationDate": "2023-01-09",
+      "crosspostDate": "2023-01-10",
+      "gameMode": "HISTORICAL_DRAGONFLIGHT_RETAIL",
+      "clientBuild": null,
+      "inputFamily": "Serevite Ore",
+      "inputRank": 2,
+      "inputItemID": 190396,
+      "outputFamily": "Illimited Diamond",
+      "reportedOreUnits": 54137,
+      "reportedProspects": 10827,
+      "nominalInputPerCast": 5,
+      "nominalOreFromReportedProspects": 54135,
+      "reportedOreMinusNominal": 2,
+      "actualCompletedCasts": null,
+      "refundedOreUnits": null,
+      "zeroOutputCasts": null,
+      "outputCounts": [
+        {
+          "rank": 2,
+          "itemID": 192870,
+          "units": 38,
+          "reportedPercentPerProspectApprox": 0.351
+        },
+        {
+          "rank": 3,
+          "itemID": 192871,
+          "units": 23,
+          "reportedPercentPerProspectApprox": 0.2124
+        }
+      ],
+      "reportedInspirationPercent": 37,
+      "measuredDropChance": null,
+      "verifiedExpectedQuantity": null,
+      "uncertainty": "REPEATED VERBATIM IN TWO THREADS; COUNT ONCE; 54137 ORE VERSUS 10827 PROSPECTS NOT EXACT FIVE-ORE EQUIVALENCE; NO CAST LOG"
+    }
+  ],
+  "nonIndependentContext": {
+    "source": "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+    "lineage": "reddit-zzyjzu-original-post-author-aggregate",
+    "note": "Original poster says ~52000 R3 Serevite produced ~0.13% R3 diamonds per ore at skill 268 and also describes aggregate 69000 R2 and 34917 R3 in screenshot. The 52000 cohort may overlap the earlier aggregate; do not count as a new independent sample or reconstruct integer diamonds from a rounded percentage.",
+    "reportedSkill": 268,
+    "reportedR3OreApprox": 52000,
+    "reportedR3DiamondPerOreApprox": 0.0013,
+    "exactDiamondCount": null,
+    "independentSampleCredit": 0
+  },
+  "targetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "modelDisposition": [
+    "Do not allocate mixed R1/R2 Draconium outcomes to any individual priority-122 rank mapping.",
+    "Do not infer occurrence P from diamond unit totals without per-cast hit histogram or a proven one-diamond maximum.",
+    "Do not treat reported ore-unit totals divided by five as verified actual completed casts when Resourcefulness is unknown.",
+    "Do not pool historical 2022/2023 observations with current 2026 Retail calibration without a patch applicability bridge.",
+    "Treat 54137-ore comment repeated in two Reddit threads as a single original cohort.",
+    "Retain numeric working fallback coverage unchanged, without promoting unsupported preview estimates."
+  ],
+  "proposedOnly": true,
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "liveRecommendationEligible": false,
+    "rawEvidence": "UNCHANGED",
+    "frozenHistoricalTSM": "UNCHANGED",
+    "tooltipOnly": "UNCHANGED",
+    "main": "UNCHANGED",
+    "runtimeProfiles": "UNCHANGED",
+    "legacyAssignments": "UNCHANGED"
+  }
+}
