@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "midnight-crushing-gross-net-identifiability-v1.0.0",
+  "taskID": "F003_MIDNIGHT_CRUSHING_GROSS_NET_IDENTIFIABILITY",
+  "workflowRevision": 2,
+  "scope": "RESEARCH_ONLY_SOURCE_RATE_SENSITIVITY_AND_SYNTHETIC_CAST_ACCOUNTING",
+  "modelSource": "research/tools/models_v2/midnight_crushing_gross_net_identifiability_v1.js",
+  "modelSourceBlobSHA": "d62085d7aaf9cc50ecfa310bd4d09058c86cf66e",
+  "sourceAncestry": [
+    {
+      "path": "research/evidence/v2/2026-10-29T2332Z-F004-midnight-crushing-net-gem-context.json",
+      "blobSHA": "4fc9df14fa99275d1e46482403427a01ca64e5ce",
+      "lineages": [
+        "MIDNIGHT-2026-TIRED-AND-FED-UP-CRUSHING-RATE",
+        "MIDNIGHT-2026-JACARA-APRIL-CRUSHING-CONTEXT"
+      ],
+      "sameAuthorJulyAugust": true,
+      "independentCompletedCastCohorts": 0
+    }
+  ],
+  "targetUniverseLeads": [
+    "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+    "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
+  ],
+  "mappingStatus": "UNRESOLVED_NOT_ADMITTED",
+  "nominalGemsPerCompletedCast": 3,
+  "nominalBatchProvenance": "F004 sampling request; treat as conditional until exact recipe and eligibility verified",
+  "sourceClaim": {
+    "reportedPerGem": 0.83925,
+    "approxRepeatSameAuthor": 0.84,
+    "denominator": "UNKNOWN_GROSS_OR_NET",
+    "rateMeasurementStatus": "UNVERIFIED_SELF_REPORT",
+    "exactRank": null,
+    "actualCompletedCasts": null,
+    "actualRefunds": null,
+    "sourceBuild": null
+  },
+  "conditionalExamples": {
+    "ifGrossPerGem": {
+      "dustPerCast": 2.51775
+    },
+    "ifNetPerGemAndOneRefundPerCast": {
+      "dustPerCast": 1.6785
+    },
+    "ifNetPerGemAndRefundsUnknownZeroToThree": {
+      "lowerInfimum": 0,
+      "upper": 2.51775,
+      "lowerMayBeUnattained": true
+    }
+  },
+  "forwardModel": {
+    "entrypoints": [
+      "ratioScenario",
+      "analyzeCastLog"
+    ],
+    "inputs": "Actual completed casts, zero-inclusive dust output vectors by exact item ID/rank, refunds per cast, gross nominal inputs, source lineage and context",
+    "output": "descriptive unconditional E per completed cast and distinct gross/net ratios",
+    "sourceRatesNotMeasurements": true
+  },
+  "inverseModel": {
+    "entrypoint": "inverseMeanRefund",
+    "condition": "Requires E and rate from the same measured cohort and known net denominator; otherwise not identifiable",
+    "noInferredCharacterStats": true
+  },
+  "uncertainty": {
+    "sourceRateInterval": null,
+    "independentHoldout": null,
+    "unverifiedRefundRate": true,
+    "sourceEpochTransferToCurrentRetail": false,
+    "identifiability": "ONLY_CONDITIONAL_SCENARIOS"
+  },
+  "baseline": {
+    "minimumEligibleSkill": null,
+    "optionalBonusesZero": false,
+    "reason": "No verified minimum recipe-eligible profile; anecdote describes high spec/gear, not baseline"
+  },
+  "evidenceFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "confidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "noEconomicPromotion": true,
+  "liveRecommendationEligible": false,
+  "tooltipFallbackEligible": false,
+  "workingCoverageMutation": false,
+  "tests": {
+    "v8SelfTest": {
+      "passed": 32,
+      "failed": 0,
+      "syntheticOnly": true,
+      "sourceCompletedCastDatasets": 0,
+      "newEconomicE": 0,
+      "workingCellsChanged": 0
+    },
+    "syntheticOnly": true,
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentValidator": "PENDING"
+  },
+  "evidenceRequest": "Obtain same-build same-input-rank zero-inclusive completed Crushing casts, dust IDs/ranks, 3-gem nominal inputs verified against recipe, per-cast refunded gems, skill/spec/gear/unlocks and aborted events; keep independent family held out.",
+  "validatorRequest": "Independently check gross/net inversion, zero-net undefined ratio, nonexclusive dust ranks, source ancestry and preview isolation; do not treat synthetic fixtures as retail."
+}
