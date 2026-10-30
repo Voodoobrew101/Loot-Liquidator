@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "modelID": "midnight-prospect-hotfix-epoch-isolation-v1.0.1",
-  "taskID": "F003_APR01_HOTFIX_EPOCH_CORRECTION",
+  "modelID": "midnight-prospect-hotfix-epoch-isolation-v1.0.2",
+  "taskID": "F003_MARCH31_PROSPECT_HOTFIX_DATE_REPAIR",
   "workflowRevision": 2,
   "status": "PROPOSED_PENDING_INDEPENDENT_QA",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "modelSource": "research/tools/models_v2/midnight_prospect_hotfix_epoch_isolation_v1.js",
-  "modelSourceBlobSHA": "fd8571a3d64d8e59476f79aeb70876f8bc97df37",
+  "modelSourceBlobSHA": "031d36fe3cdebe632d00f5be4e2c4fe116abcb44",
   "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "targetKeys": [
@@ -23,7 +23,7 @@
   "newPrimaryMechanicsSource": {
     "publisher": "Blizzard Entertainment",
     "sourceType": "OFFICIAL_HOTFIX_CHANGE_POINT_NOT_YIELD_STUDY",
-    "datedEntry": "2026-04-01",
+    "datedEntry": "2026-03-31",
     "cumulativeArticleTitle": "Hotfixes: April 17, 2026",
     "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
     "statement": "Gems will now be found more regularly when prospecting Midnight ore.",
@@ -33,14 +33,15 @@
       "No assertion every gem was affected",
       "No exact deployment timestamp",
       "No current-patch stability guarantee",
-      "No recipe/rank/unlock verification"
+      "No recipe/rank/unlock verification",
+      "April 1 Stoic Eversong Diamond armor hotfix is not a prospecting rate change"
     ]
   },
   "epochPolicy": {
-    "pre": "Only observations with UTC and local calendar dates safely before April 1, 2026",
+    "pre": "Only observations with UTC and local calendar dates safely before March 31, 2026",
     "post": "Only observations with UTC and local calendar dates safely on or after April 3, 2026",
-    "quarantine": "UTC interval [2026-04-01T00:00:00Z,2026-04-03T00:00:00Z), plus any observation locally dated April 1 or April 2; crossing cohorts also quarantined",
-    "caution": "Safety buffer chosen because Blizzard's official April 1 dated entry has no deployment hour or region; it is NOT a measured deployment window",
+    "quarantine": "UTC interval [2026-03-31T00:00:00Z,2026-04-03T00:00:00Z), plus any observation locally dated March 31, April 1 or April 2; crossing cohorts also quarantined",
+    "caution": "Safety buffer chosen because Blizzard's official March 31 dated prospecting entry has no deployment hour or region; it is NOT a measured deployment window",
     "unknown": "Invalid or missing timestamps rejected; not assigned pre or post"
   },
   "inputContract": {
@@ -66,13 +67,13 @@
     "outputUniverse": "Only marginal output 242608; complete economic output universe remains unverified."
   },
   "functions": {
-    "classifyEpoch": "Strict Gregorian timezone parsing; quarantine April 1-2 in UTC and local dates, and any cohort crossing classifications.",
+    "classifyEpoch": "Strict Gregorian timezone parsing; quarantine March 31-April 2 in UTC and local dates, and any cohort crossing classifications.",
     "analyzeCohort": "Computes observed P=positive completed casts/completed casts and unconditional E=total output including zeros/completed casts; gross, refunded and net inputs separate; observed positive extrema are not hard bounds.",
     "compareEpochs": "Requires same profession/rank/recipe profile and different source lineage AND study-family ID; raw pre/post only; descriptive differences without causal hotfix coefficient."
   },
   "applicability": "Research-only, typed fixed context. Hotfix establishes nonstationarity risk, not a measured baseline. Unknown skill, unlock, cast denominator, recipe eligibility or complete output universe blocks numeric transfer and economic use.",
   "uncertainty": {
-    "sourceTiming": "Official April 1 dated entry lacks deployment hour or region; conservative two-calendar-day quarantine is a safety assumption, not evidence.",
+    "sourceTiming": "Official March 31 dated entry lacks deployment hour or region; conservative three-calendar-day quarantine is a safety assumption, not evidence.",
     "perOutputEffect": "Unidentified, including 242608.",
     "comparisonConfounding": "Patch/build and source-family effects not eliminated by matched profile alone.",
     "noIndependentCohorts": "Zero actual source logs ingested; synthetic demonstrations only.",
@@ -88,15 +89,16 @@
   },
   "tests": {
     "modelSelfTestV8": {
-      "passed": 54,
-      "failed": 0,
+      "status": "NOT_RUN_AFTER_REPAIR",
+      "expectedAssertionCount": 61,
+      "failed": null,
       "syntheticOnly": true,
-      "exactSourceBlobSHA": "fd8571a3d64d8e59476f79aeb70876f8bc97df37",
-      "method": "Exact committed CommonJS source executed with a strict-assert shim in V8"
+      "exactSourceBlobSHA": "031d36fe3cdebe632d00f5be4e2c4fe116abcb44",
+      "method": "New seven March31 boundary assertions added; exact committed model not yet executed in native Node or V8"
     },
     "nativeNodeExactCommittedSource": "NOT_RUN",
     "nativeNodeBoundaryStandalone": "NOT_RUN",
-    "independentF005": "PENDING",
+    "independentF005": "PENDING_RETEST_26_CASES_PREVIOUS_19_PASS_7_FAIL",
     "lua51": "NOT_RUN",
     "inGame": "NOT_RUN",
     "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED"
@@ -111,10 +113,10 @@
     "affectedPriorityMappings": 7,
     "modelFilesModified": 2
   },
-  "evidenceResearcherRequest": "For seven exact stable keys, obtain independent post-April-3 current-Retail zero-inclusive completed-cast logs with all ranks, skill/spec/gear/unlocks/refunds, exact build and timezone timestamps; do not infer a gem-specific rate change from the April 1 note.",
-  "independentValidatorRequest": "Independently confirm official April 1 heading, execute exact v1.0.1 model natively, challenge UTC/local timezone boundary classification and cross-epoch study-family independence, and keep all P/E and gold promotions blocked.",
+  "evidenceResearcherRequest": "For seven exact stable keys, obtain independent post-April-3 current-Retail zero-inclusive completed-cast logs with all ranks, skill/spec/gear/unlocks/refunds, exact build and timezone timestamps; preserve March 31-April 2 quarantine; do not infer a gem-specific rate change from the March 31 note.",
+  "independentValidatorRequest": "Run exact v1.0.2 model and F005 26-case independent March31 regression natively; challenge UTC/local boundaries, crossing cohorts and study-family independence. No P/E or gold promotion.",
   "blockers": [
-    "Exact deployment hour/region on April 1, 2026 unknown; quarantine is a conservative assumption",
+    "Exact deployment hour/region on March 31, 2026 unknown; March 31-April 2 quarantine is a conservative assumption",
     "No independent current-Retail zero-inclusive completed-cast logs for seven keys",
     "No verified full output universe, recipe eligibility or minimum skill baseline",
     "Independent native Node and whole-study held-out acceptance pending"
