@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_NATIVE_REPLAY_GEM_ATTESTATION_GATE",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T1755Z-F001-F005-native-replay-gem-attestation-gate",
+  "reportUTC": "2026-10-30T17:55:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "613c5a332b5e434a63f4f1a93ad0289850e996b6",
+  "acceptanceCommit": "955fc12733e3ded45d7a20e4106429f57c5d0f7e",
+  "scorecardCommit": "78004817ff88ab4aca3cdb5e2c8c11b0fb81abe2",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "COORDINATOR_ACCEPTANCE_RECORDED_SPLIT_VERDICT",
+  "exactFilesChanged": [
+    "research/coordination/v2/acceptance/20261030T1755Z-F001-F005-native-replay-gem-attestation-gate.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/20261030T1755Z-F001-F005-native-replay-gem-attestation-gate.json"
+  ],
+  "accepted": [
+    {
+      "owner": "completion-engineer",
+      "result": "NATIVE_ORIGINAL_LUA_REPLAY_ACCEPTED_AS_SOURCE_ARITHMETIC",
+      "nativeCI": 41096865560,
+      "assertions": 180,
+      "mutants": 14,
+      "identityMismatchPairs": 3,
+      "fishRankUnknown": 12,
+      "newCandidateMappings": 45
+    },
+    {
+      "owner": "independent-validator",
+      "result": "EMITTED_LUA_CHANNEL_ISOLATION_CONDITIONAL_V8_PASS",
+      "assertions": 18320,
+      "mutants": 12,
+      "nativeRun": false
+    },
+    {
+      "owner": "evidence-researcher",
+      "result": "MIDNIGHT_GEAR_REFRESH_QUALITATIVE_CONTEXT_ONLY",
+      "firsthandAuthorLineages": 2,
+      "advisoryAuthorLineages": 1,
+      "measuredCasts": 0
+    }
+  ],
+  "rejected": [
+    {
+      "owner": "baseline-modeller",
+      "result": "GEM_FINDING_V1_1_REJECTED_FOR_INTEGRATION",
+      "sourceBlob": "908a447dfeac840aa0d8e2ea63efd2c3323a99e4",
+      "independentV8Passed": 10,
+      "independentV8Failed": 14,
+      "independentV8Total": 24,
+      "reason": "Non-JSON-safe metadata/accessors/custom serialization cause validated versus serialized context divergence; independent native suite and current Retail cohorts absent"
+    }
+  ],
+  "canonicalReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericFields": 3558,
+    "evidenceGaps": 514,
+    "evidenceExpectedQuantityGaps": 116,
+    "verifiedBaselineRecords": 0,
+    "confidence90Fields": 0
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailCastFamilies": 0,
+    "newQualitativeFirsthandAuthorLineages": 2,
+    "newIndependentModelIntegrityDefectsAccepted": 14,
+    "coordinatorOwnedFilesCreated": 2,
+    "coordinatorOwnedFilesUpdated": 1,
+    "productionWrites": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub-connected JavaScript V8",
+      "scope": "Coordinator cross-artifact source-pinned consistency and arithmetic",
+      "passed": 41,
+      "failed": 0
+    },
+    {
+      "environment": "GitHub Actions native Node 24.22.1 and Lua 5.1",
+      "scope": "Verified external F002 original-source replay and pipeline",
+      "runID": 41096865560,
+      "conclusion": "success",
+      "originalSourceAssertions": 180,
+      "adversarialMutantsRejected": 14
+    },
+    {
+      "environment": "GitHub connector",
+      "scope": "Read-back source blobs and independent review artifacts",
+      "result": "PASS"
+    }
+  ],
+  "testsReportedNotRunHere": [
+    {
+      "scope": "F005 emitted working Lua and Gem model new suites",
+      "runtime": "native Node",
+      "status": "NOT_RUN"
+    },
+    {
+      "scope": "F005 Gem independent V8",
+      "status": "10_PASS_14_FAIL"
+    },
+    {
+      "scope": "F005 emitted Lua V8",
+      "status": "18320_PASS_12_MUTANTS_REJECTED"
+    },
+    {
+      "scope": "WoW client and live economic consumer",
+      "status": "NOT_RUN"
+    },
+    {
+      "scope": "Current Retail whole-study holdouts",
+      "status": "NONE"
+    }
+  ],
+  "sourcePins": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "candidate": "560b885a0039045419c340716e263ae33ddf827a",
+    "originalCleanedAddon": "a838d75e82239339bea3861692291b44bd085662",
+    "gemModel": "908a447dfeac840aa0d8e2ea63efd2c3323a99e4",
+    "f005Review": "6782339d8a6c012e8b56d554df7850648cf8a5fa"
+  },
+  "blockers": [
+    "14/24 Gem independent V8 cases fail; strict JSON-safe canonicalization and native retest required.",
+    "F005 new emitted-Lua and Gem native suites not run; F002 native direct-original-Lua step remains informational pending independent approval.",
+    "45 candidate additions provisional; three DF successor pairs not equivalent; 12 fish ranks unknown.",
+    "116 evidence E gaps, no verified baselines or independent current Retail cast holdouts."
+  ],
+  "nextTask": "F003_STRICT_JSON_CONTEXT_CANONICALIZATION_REPAIR",
+  "nextOwners": [
+    "baseline-modeller",
+    "independent-validator",
+    "completion-engineer",
+    "evidence-researcher"
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "numericDelta": 0,
+    "concreteWork": "Verified native original-Lua CI, accepted split F005 verdict, blocked 14 context integrity failures and triaged newly submitted gear-refresh source; did not repeat unchanged numeric audits."
+  },
+  "policy": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}
