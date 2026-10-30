@@ -1,7 +1,7 @@
 'use strict';
 // F003 research-only Dragonflight milling decision-sensitivity model; never live EV.
 const assert=require('node:assert/strict');
-const MODEL_ID='df-milling-decision-sensitivity-v1.0.1';
+const MODEL_ID='df-milling-decision-sensitivity-v1.0.2';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const tuples=[
 [191469,198412,1975],[191469,198413,1976],[191469,198414,1977],
@@ -40,6 +40,7 @@ function validateRawContext(c){
  check(integer(c.minimumRecipeSkill,1),'RAW_MINIMUM_RECIPE_SKILL_REQUIRED');
  check(integer(c.professionContext.skill,c.minimumRecipeSkill),'RAW_PROFESSION_SKILL_REQUIRED');
  check(nonneg(c.professionContext.resourcefulness),'RAW_RESOURCEFULNESS_NUMERIC_REQUIRED');
+ check(integer(c.professionContext.recipeSpellID,1),'RAW_RECIPE_SPELL_ID_POSITIVE_INTEGER_REQUIRED');
  check(c.outputUniverseVerified===true,'RAW_OUTPUT_UNIVERSE_UNVERIFIED');
 }
 function historicalRateScenarios({rate,reportedUnit,nominalInputUnits,sourceLineage}){
@@ -118,6 +119,13 @@ function selfTest(){
  eq(s.zeroOutputCasts,1);eq(s.coOutputCasts,2);eq(s.outputs[0].observedUnconditionalE,1/3);eq(s.outputs[1].observedUnconditionalE,1);
  eq(s.outputs[0].observedDropChance,1/3);eq(s.outputs[0].observedPositiveMin,1);eq(s.outputs[0].normalizedVerified,false);
  bad(()=>summarizeCasts({context,sourceType:'RAW_CURRENT_RETAIL',events}));
+ const rawContext={...context,patchBuild:'12.0.0',gameMode:'RETAIL',actualObservationEpoch:'2026-10-29T20:00:00Z',
+ inputQualityRank:1,outputQualityRanks:{198412:1,198413:1,198414:1},directReagents:[{itemID:191469,quantity:5}],
+ minimumRecipeSkill:1,professionContext:{skill:1,specialization:'NONE',gear:'NONE',resourcefulness:0,unlocks:'NONE',recipeSpellID:382981}};
+ eq(summarizeCasts({context:rawContext,sourceType:'RAW_CURRENT_RETAIL',events}).completedCasts,3);
+ for(const recipeSpellID of ['banana',382981.5,0,'382981',null,'UNKNOWN',NaN,Infinity]){
+  bad(()=>summarizeCasts({context:{...rawContext,professionContext:{...rawContext.professionContext,recipeSpellID}},sourceType:'RAW_CURRENT_RETAIL',events}));
+ }
  bad(()=>summarizeCasts({context,sourceType:'SYNTHETIC',events:[c('x',{198412:1,198413:0})]}));
  bad(()=>summarizeCasts({context,sourceType:'SYNTHETIC',events:[c('x',{198412:0,198413:0,198414:0}),c('x',{198412:0,198413:0,198414:0})]}));
  const args={context,outputs:[{outputItemID:198412,unconditionalEInterval:[.1,.3],provenance:'SYNTHETIC'},
