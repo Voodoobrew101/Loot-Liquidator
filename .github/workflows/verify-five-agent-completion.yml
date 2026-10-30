@@ -25,6 +25,13 @@ jobs:
         # model/source claims into the mandatory build or economic gates.
         continue-on-error: true
         run: node research/tools/working_native_model_preflight.js
+      - name: F002 pending F005 source-pinned preflight self-test
+        run: node research/tools/working_native_pending_f005_preflight.js --self-test
+      - name: Research-only native 106-case F005 preflight (informational, NOT acceptance)
+        # Exact pinned independent fixtures. F005 must review the native results
+        # before these become mandatory acceptance gates. Never promote P/E.
+        continue-on-error: true
+        run: node research/tools/working_native_pending_f005_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: Rebuild and expose only validated stale research outputs for F002 handoff
         if: ${{ failure() }}
