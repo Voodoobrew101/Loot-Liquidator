@@ -1,9 +1,9 @@
 {
-  "schemaVersion": "1.0.0",
-  "modelID": "df-milling-decision-sensitivity-v1.0.0",
+  "schemaVersion": "1.0.1",
+  "modelID": "df-milling-decision-sensitivity-v1.0.1",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "modelCode": "research/tools/models_v2/df_milling_decision_sensitivity_v1.js",
-  "modelCodeBlobSHA": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
+  "modelCodeBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
   "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "workflowRevision": 2,
@@ -47,7 +47,8 @@
   "methods": {
     "historicalRateScenarios": "Retains both PER_INPUT_UNIT and PER_COMPLETED_CAST hypotheses when original rate denominator is unknown; never promotes either to current Retail E or P.",
     "summarizeCasts": "Zero-inclusive per-completed-cast marginal P and unconditional E; aborted requests excluded, refunds separate, co-outputs permitted, quality IDs explicit.",
-    "decisionSensitivity": "Given externally supplied hypothetical E intervals and time-stamped prices, bounds output value and input opportunity cost with refunds; reports only conditional decision boundary, never measured gold impact."
+    "decisionSensitivity": "Given externally supplied hypothetical E intervals and time-stamped prices, bounds output value and input opportunity cost with refunds; reports only conditional decision boundary, never measured gold impact. v1.0.1 rejects a self-declared incomplete output universe even if every output in the truncated list is priced; no synthetic dominance from omitted co-outputs.",
+    "validateRawContext": "RAW_CURRENT_RETAIL requires Retail game mode, ISO observation epoch, explicit input and all output ranks, exact direct reagent vector with nominal input, minimum recipe skill, valid numeric actual skill and Resourcefulness, and caller-asserted complete output universe; incomplete data fail closed."
   },
   "assumptions": [
     "Target keys are backlog identities only; this model does not independently admit recipe eligibility or ranks.",
@@ -57,7 +58,9 @@
     "Auction fee defaults to 5% only for synthetic comparison; production pricing toggles are unchanged.",
     "Alternative incremental value is additional value beyond input opportunity cost; do not count input vendor value twice.",
     "For linear expected gold value, correlation between simultaneous output types is not needed; it matters for risk, not the mean.",
-    "Profession skill, specialization, gear, Resourcefulness, unlock and recipe must be explicitly supplied; UNKNOWN remains explicit and blocks current-Retail raw-cohort use."
+    "Profession skill, specialization, gear, Resourcefulness, unlock and recipe must be explicitly supplied; UNKNOWN remains explicit and blocks current-Retail raw-cohort use.",
+    "outputUniverseVerified=true is a caller assertion, not an independently reviewed universe certificate; independent recipe/eligibility verification is still required for any evidence or economic promotion.",
+    "RAW_CURRENT_RETAIL requires explicit typed epoch/ranks/reagents/skill/stats and refuses UNKNOWN or malformed contexts; the synthetic self-test does not establish actual Retail validity."
   ],
   "example": {
     "syntheticInputID": 191469,
@@ -117,11 +120,19 @@
       "failed": 0,
       "syntheticOnly": true
     },
-    "nativeNodeExactCommittedFile": "NOT_RUN",
+    "nativeNodeExactCommittedFile": "NOT_YET_RUN",
     "lua51": "NOT_RUN",
     "inGameRetail": "NOT_RUN",
     "independentValidator": "PENDING",
-    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED"
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
+    "independentF005FixtureV8": {
+      "passed": 15,
+      "failed": 1,
+      "previousPassed": 6,
+      "previousFailed": 10,
+      "remainingFailure": "Fixture simultaneously requires rejection of an incomplete universe and a numeric decision for that same incomplete universe; validator-owned contradiction requires correction.",
+      "modelSideFailures": 0
+    }
   },
   "holdout": "Use whole independently sourced current-Retail study families, never a source reused to infer unknown context. Require actual completed casts and zero-inclusive output vectors.",
   "evidenceRequests": [
@@ -135,6 +146,16 @@
     "No independent current-Retail completed-cast cohort for these 24 keys",
     "No verified minimum recipe-eligible baseline or source-specific profession stats",
     "No current price snapshot to rank actual gold impact",
-    "Input 200061 mapping eligibility and batch size require independent audit"
-  ]
+    "Input 200061 mapping eligibility and batch size require independent audit",
+    "Independent F005 fixture's omitted-co-output demonstration contradicts its fail-closed universe assertion; F005 owns fixture correction, not F003.",
+    "Caller-asserted outputUniverseVerified does not independently establish a complete current-Retail output universe."
+  ],
+  "modelRepair": {
+    "previousCodeBlobSHA": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
+    "repairedCodeBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+    "scope": "Typed RAW context and fail-closed universe decision gate",
+    "workingCellsChanged": 0,
+    "evidencePromotions": 0,
+    "economicPromotions": 0
+  }
 }
