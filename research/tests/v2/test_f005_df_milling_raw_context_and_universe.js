@@ -32,13 +32,29 @@ function check(name,fn) {
 function rejectRaw(name,context) {
   check(name,()=>assert.throws(()=>raw(context),"incomplete RAW context must be rejected, not represented as a current-Retail observation"));
 }
-check("model self-test remains 32/32",()=>assert.equal(model.selfTest().passed,32));
+check("model v1.0.2 self-test remains 41/41",()=>{assert.equal(model.MODEL_ID,"df-milling-decision-sensitivity-v1.0.2");assert.equal(model.selfTest().passed,41);});
 check("synthetic fully typed RAW-shaped control retains PREVIEW_ONLY",()=>{
   const r=raw(base);
   assert.equal(r.completedCasts,1);
   assert.equal(r.economicUse,"PREVIEW_ONLY");
   assert.equal(r.normalizedVerified,false);
   assert.ok(r.outputs.every(x=>x.confidence===0));
+  // Independent negative tests: the author self-test alone is insufficient.
+  // Keep these within the existing 16-case native CI gate.
+  const invalidRecipeIDs=["banana","382981",382981.5,0,-1,null,NaN,Infinity,Number.MAX_SAFE_INTEGER+1];
+  for(const recipeSpellID of invalidRecipeIDs){
+    assert.throws(()=>raw({...base,professionContext:{...base.professionContext,recipeSpellID}}),
+      /RAW_RECIPE_SPELL_ID_POSITIVE_INTEGER_REQUIRED/,
+      "RAW recipeSpellID must be a positive safe integer: "+String(recipeSpellID));
+  }
+  const synthetic=model.summarizeCasts({
+    context:{...base,patchBuild:"SYNTHETIC",professionContext:{...base.professionContext,recipeSpellID:"UNKNOWN"}},
+    sourceType:"SYNTHETIC",events:complete
+  });
+  assert.equal(synthetic.completedCasts,1);
+  assert.equal(synthetic.economicUse,"PREVIEW_ONLY");
+  assert.equal(synthetic.normalizedVerified,false);
+  assert.ok(synthetic.outputs.every(x=>x.confidence===0));
 });
 {const {gameMode,...c}=base;rejectRaw("RAW missing gameMode",c);}
 {const {actualObservationEpoch,...c}=base;rejectRaw("RAW missing actual observation epoch",c);}
