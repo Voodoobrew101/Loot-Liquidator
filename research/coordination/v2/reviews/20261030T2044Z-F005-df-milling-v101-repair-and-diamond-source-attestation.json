@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_NATIVE_DF_FIXED_N_30_RETEST_AND_F004_SOURCE_ATTESTATION",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T2044Z-F005-df-milling-v101-repair-and-diamond-source-attestation",
+  "status": "CONDITIONAL_PASS_SYNTHETIC_REPAIR_NATIVE_AND_HOLDOUT_PENDING",
+  "verdict": "CONDITIONAL",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "8f58275c2b7466c9e4c75d04d67034427626a64a",
+  "model": {
+    "path": "research/tools/models_v2/df_milling_fixed_n_simultaneous_bounds_v1.js",
+    "blobSHA": "e36328de0e677582bf9b2b36c4a6144a5c2f17be",
+    "version": "1.0.1",
+    "manifestBlobSHA": "94e57e0f7dc91b95c9eed3bb575db3812fb45155",
+    "targetMappings": 43
+  },
+  "independentlyOwnedTestChanges": [
+    {
+      "path": "research/tests/v2/test_f005_df_milling_fixed_n_independent_attestation.js",
+      "previousBlobSHA": "94c85850e353892e1a62c60a1503a6f6e5e37b50",
+      "newBlobSHA": "4bf40e94e4cfccd483a9bd0263c7525777def6f8",
+      "change": "re-pinned source SHA only; 30 original independent cases preserved"
+    },
+    {
+      "path": "research/tests/v2/test_f005_df_milling_v101_snapshot_boundary.js",
+      "newBlobSHA": "25855bf7d5b03ac0782a232a6d7b17819f5db690",
+      "change": "22 additional synthetic descriptor, proxy, date, overflow, provenance and economic isolation tests"
+    }
+  ],
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub connector JavaScript V8 exact committed model",
+      "name": "model self-test (author's tests)",
+      "passed": 39,
+      "failed": 0,
+      "independent": false
+    },
+    {
+      "environment": "GitHub connector JavaScript V8 exact committed model",
+      "name": "F005 re-pinned original independent suite",
+      "passed": 30,
+      "failed": 0,
+      "independent": true
+    },
+    {
+      "environment": "GitHub connector JavaScript V8 exact committed model",
+      "name": "F005 new snapshot boundary suite",
+      "passed": 22,
+      "failed": 0,
+      "independent": true
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "compare branch before/after F005 edits",
+      "result": "two F005-owned test files only"
+    }
+  ],
+  "regressionDelta": {
+    "priorModelVersion": "1.0.0",
+    "priorIndependentPassed": 22,
+    "priorIndependentFailed": 8,
+    "currentOriginalIndependentPassed": 30,
+    "currentOriginalIndependentFailed": 0,
+    "newIndependentCasesPassed": 22,
+    "newIndependentCasesFailed": 0,
+    "previousEightDefectsReproducedAfterRepair": 0
+  },
+  "independentSourceAttestation": {
+    "originalThread2022": {
+      "url": "https://www.reddit.com/r/woweconomy/comments/zzcnjw",
+      "commentDate": "2022-12-30",
+      "claim": "approximately 4000 prospects, 16 rank-2 and 3 rank-3 Illimited Diamonds; commenter later mentions 25% Inspiration",
+      "exactCompletedCasts": null,
+      "oreInputAndQualityRank": null,
+      "refundedOre": null,
+      "verifiedCurrentRetail": false,
+      "interpretation": "one historical self-reported family, not 4000 verified casts and not rank-specific modern E"
+    },
+    "originalThread2023": {
+      "url": "https://www.reddit.com/r/woweconomy/comments/108782r",
+      "commentDate": "2023-01-10",
+      "claims": [
+        {
+          "family": "Serevite Ore",
+          "reportedOreUnits": 30000,
+          "reportedRoundedDiamondsPer1000": 1.08,
+          "exactDiamondCount": null
+        },
+        {
+          "family": "Draconium Ore",
+          "reportedOreUnits": 50000,
+          "reportedRoundedDiamondsPer1000": 2.57,
+          "exactDiamondCount": null
+        },
+        {
+          "family": "Prismatic Ore",
+          "reportedOreUnits": 1000,
+          "reportedDiamondCount": 25,
+          "secondStage": true
+        }
+      ],
+      "notes": "The Serevite and Draconium averages come from the same original commenter, so they share one study lineage. The Prismatic example is a different commenter and a downstream second-stage conversion. No exact completed-cast denominator, ore quality rank, refund history or matched current-patch skill context."
+    },
+    "retrieval": "Original Reddit comment text independently visible in indexed search results; original comment IDs and raw cast logs not authenticated",
+    "economicDisposition": "HISTORICAL_CONTEXT_ONLY_NOT_CURRENT_RETAIL_E"
+  },
+  "sourceIsolation": {
+    "admittedMappingsChanged": 0,
+    "workingNumericCellsChanged": 0,
+    "evidenceNumericCellsChanged": 0,
+    "newExpectedQuantityEvidence": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentRetailHoldouts": 0,
+    "rawEvidenceChangedByF005": false,
+    "frozenTSMChangedByF005": false,
+    "tooltipOnlyChangedByF005": false,
+    "productionChangedByF005": false,
+    "mainChangedByF005": false,
+    "runtimeProfilesChangedByF005": false,
+    "schedulesChanged": false
+  },
+  "readiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "source": "completion-readiness.json unchanged this run"
+  },
+  "blockers": [
+    "Native Node execution of exact repaired model and both updated F005 suites not performed in this environment; V8 passing is not native acceptance.",
+    "F002-owned informational native DF milling preflight still pins previous model, manifest and fixture SHA; will fail closed until F002 reconciles pins after F005 review.",
+    "No independent current-Retail completed-cast holdout or independently authenticated per-cast E caps for these 43 mappings.",
+    "DF fish input 200061 recipe/rank eligibility remains unverified; frozen historical TSM units do not establish current cast yields.",
+    "Original 2022/2023 Reddit claims are approximate and historical, not current-Retail measured rank-specific EV."
+  ],
+  "nextOwner": "completion-engineer",
+  "nextTask": "F002 re-pin informational native DF milling preflight to F005 reviewed model/fixture and run native 30+22 tests without making it a mandatory economic gate; coordinator separately accepts conditional F005 repair.",
+  "policy": "Research-only; preview confidence 0, PREVIEW_ONLY, normalizedVerified false; no addon release or live EV use."
+}
