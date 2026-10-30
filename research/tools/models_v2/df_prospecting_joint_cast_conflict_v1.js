@@ -2,11 +2,28 @@
 // F003 research-only. Dragonflight prospecting joint-cast sensitivity and historical source conflict.
 // No mapping admission, production EV, recipe eligibility, or independent evidence promotion.
 const assert=require('node:assert/strict');
-const MODEL_ID='df-prospecting-joint-cast-conflict-v1.0.0';
+const MODEL_ID='df-prospecting-joint-cast-conflict-v1.0.1';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const TARGETS=Object.freeze(['tsm:prospect:188658:192870:L1205','tsm:prospect:188658:192871:L1206','tsm:prospect:189143:192869:L1242','tsm:prospect:189143:192870:L1243','tsm:prospect:190311:192869:L1280']);
 const int=(x,min=0)=>Number.isSafeInteger(x)&&x>=min;
 const nn=x=>typeof x==='number'&&Number.isFinite(x)&&x>=0;
+function jsonSafe(value,ancestors=new Set()){
+ if(value===null||typeof value==='string'||typeof value==='boolean')return true;
+ if(typeof value==='number')return Number.isFinite(value);
+ if(typeof value!=='object'||ancestors.has(value))return false;
+ ancestors.add(value);
+ let valid=false;
+ if(Array.isArray(value)){
+  valid=Object.keys(value).length===value.length&&value.every(v=>jsonSafe(v,ancestors));
+ }else if(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null){
+  valid=Reflect.ownKeys(value).every(k=>typeof k==='string'&&
+   Object.prototype.propertyIsEnumerable.call(value,k)&&jsonSafe(value[k],ancestors));
+ }
+ ancestors.delete(value);return valid;
+}
+function checked(value,code='NONFINITE_OR_UNSAFE_RESULT'){
+ requireThat(jsonSafe(value),code);return value;
+}
 function requireThat(x,code){if(!x)throw Error(code)}
 function interval(x,code){requireThat(Array.isArray(x)&&x.length===2&&x.every(nn)&&x[0]<=x[1],code);return x}
 function validEpoch(s){
@@ -30,12 +47,14 @@ function validateContext(c){
  requireThat(Array.isArray(c.outputItemIDs)&&c.outputItemIDs.length>0&&c.outputItemIDs.every(x=>int(x,1))&&new Set(c.outputItemIDs).size===c.outputItemIDs.length,'OUTPUT_IDS');
  requireThat(c.outputQualityRanks&&c.outputItemIDs.every(id=>int(c.outputQualityRanks[id],1))&&Object.keys(c.outputQualityRanks).length===c.outputItemIDs.length,'OUTPUT_RANKS');
  requireThat(c.outputUniverseVerified===true,'OUTPUT_UNIVERSE_UNVERIFIED');
+ requireThat(jsonSafe(c),'UNSAFE_CONTEXT');
  return true;
 }
 function analyzeCasts({context,sourceType,events,prices=null,inputUnitPrice=null,auctionCut=0.05}){
  validateContext(context);
+ context=JSON.parse(JSON.stringify(context));
  requireThat(['SYNTHETIC','RAW_CURRENT_RETAIL'].includes(sourceType),'SOURCE_TYPE');
- if(sourceType==='RAW_CURRENT_RETAIL')requireThat(/^\d+\.\d+\.\d+/.test(context.patchBuild),'BUILD_REQUIRED');
+ if(sourceType==='RAW_CURRENT_RETAIL')requireThat(/^\d+\.\d+\.\d+(?:\.\d+)?$/.test(context.patchBuild),'BUILD_REQUIRED');
  requireThat(Array.isArray(events)&&events.length>0,'EVENTS');
  const ids=context.outputItemIDs,seen=new Set(),vectors=[],refunds=[];let aborted=0,zero=0,co=0;
  for(const e of events){
@@ -66,11 +85,12 @@ function analyzeCasts({context,sourceType,events,prices=null,inputUnitPrice=null
    decision:'DESCRIPTIVE_ONLY_NOT_RECOMMENDATION',...POLICY};
  }
  const totalRefunds=refunds.reduce((s,x)=>s+x,0);
- return {modelID:MODEL_ID,sourceType,studyFamilyID:context.studyFamilyID,sourceLineage:context.sourceLineage,
+ return checked({modelID:MODEL_ID,sourceType,studyFamilyID:context.studyFamilyID,sourceLineage:context.sourceLineage,
+  contextSnapshot:context,contextIdentity:JSON.stringify(context),
   completedCasts:n,abortedRequests:aborted,zeroOutputCasts:zero,coOutputCasts:co,
   nominalGrossInput:n*context.nominalInputPerCast,refundedInput:totalRefunds,netConsumedInput:n*context.nominalInputPerCast-totalRefunds,
   outputs,covarianceSample:covariance,economics,independentHoldout:'NOT_PERFORMED',
-  outputUniverseCallerAttestedNotIndependentlyAudited:true,...POLICY};
+  outputUniverseCallerAttestedNotIndependentlyAudited:true,...POLICY});
 }
 function historicalRateAlternatives({stableKey,nominalInputPerCast,candidates}){
  requireThat(TARGETS.includes(stableKey)&&int(nominalInputPerCast,1),'TARGET_BATCH');
@@ -81,7 +101,7 @@ function historicalRateAlternatives({stableKey,nominalInputPerCast,candidates}){
   requireThat(['PER_INPUT','PER_CAST','UNKNOWN'].includes(c.unit),'SOURCE_UNIT');
   lineages.add(c.sourceLineage.trim().toLowerCase());
   const hypotheses=[];
-  if(c.unit!=='PER_CAST')hypotheses.push({unit:'PER_INPUT',hypotheticalEPerCast:c.rate*nominalInputPerCast});
+  if(c.unit!=='PER_CAST')hypotheses.push({unit:'PER_INPUT',hypotheticalEPerCast:checked(c.rate*nominalInputPerCast,'HISTORICAL_RATE_OVERFLOW')});
   if(c.unit!=='PER_INPUT')hypotheses.push({unit:'PER_CAST',hypotheticalEPerCast:c.rate});
   out.push({studyFamilyID:c.studyFamilyID,sourceLineage:c.sourceLineage,unit:c.unit,hypotheses});
  }
@@ -91,12 +111,14 @@ function historicalRateAlternatives({stableKey,nominalInputPerCast,candidates}){
 }
 function scenarioBounds({context,outputs,prices,inputUnitPrice,auctionCut=0.05,refundsPerCast=[0,0],alternativeValuePerCast=0}){
  validateContext(context);
+ context=JSON.parse(JSON.stringify(context));
  requireThat(Array.isArray(outputs)&&outputs.length===context.outputItemIDs.length,'FULL_OUTPUT_SET');
  requireThat(prices&&nn(inputUnitPrice)&&nn(auctionCut)&&auctionCut<1&&nn(alternativeValuePerCast),'PRICE_DOMAIN');
  interval(refundsPerCast,'REFUND_RANGE');requireThat(refundsPerCast[1]<=context.nominalInputPerCast,'REFUNDS_EXCEED_INPUT');
  const seen=new Set();let low=0,high=0;
  for(const o of outputs){
   requireThat(o&&context.outputItemIDs.includes(o.outputItemID)&&!seen.has(o.outputItemID),'DUPLICATE_OR_UNKNOWN_OUTPUT');seen.add(o.outputItemID);
+  requireThat(int(o.outputQualityRank,1)&&o.outputQualityRank===context.outputQualityRanks[o.outputItemID],'OUTPUT_RANK_MISMATCH');
   const b=interval(o.unconditionalEInterval,'E_INTERVAL');
   requireThat(nn(prices[o.outputItemID])&&typeof o.provenance==='string'&&o.provenance.trim(),'PRICE_PROVENANCE');
   low+=b[0]*prices[o.outputItemID]*(1-auctionCut);high+=b[1]*prices[o.outputItemID]*(1-auctionCut);
@@ -104,9 +126,9 @@ function scenarioBounds({context,outputs,prices,inputUnitPrice,auctionCut=0.05,r
  requireThat(Object.keys(prices).length===context.outputItemIDs.length,'PRICE_UNIVERSE');
  const costs=[(context.nominalInputPerCast-refundsPerCast[1])*inputUnitPrice,(context.nominalInputPerCast-refundsPerCast[0])*inputUnitPrice];
  const margin=[low-costs[1]-alternativeValuePerCast,high-costs[0]-alternativeValuePerCast];
- return {modelID:MODEL_ID,outputRevenueInterval:[low,high],netInputCostInterval:costs,marginInterval:margin,
+ return checked({modelID:MODEL_ID,contextSnapshot:context,contextIdentity:JSON.stringify(context),outputRevenueInterval:[low,high],netInputCostInterval:costs,marginInterval:margin,
   scenarioClassification:margin[0]>0?'POSITIVE_UNDER_ASSUMPTIONS':margin[1]<0?'NEGATIVE_UNDER_ASSUMPTIONS':'SIGN_UNRESOLVED',
-  covarianceNotNeededForExpectedLinearRevenue:true,notAProductionRecommendation:true,...POLICY};
+  covarianceNotNeededForExpectedLinearRevenue:true,notAProductionRecommendation:true,...POLICY});
 }
 function selfTest(){
  let n=0;const eq=(a,b)=>{if(typeof a==='number'&&typeof b==='number')assert.ok(Math.abs(a-b)<1e-10);else assert.deepEqual(a,b);n++};
@@ -144,8 +166,8 @@ function selfTest(){
  eq(h.reconciledCurrentRetailE,null);eq(h.conflictDisposition,'UNRESOLVED_NO_CURRENT_RETAIL_COHORT');
  bad(()=>historicalRateAlternatives({stableKey:'unknown',nominalInputPerCast:5,candidates:[]}));
  bad(()=>historicalRateAlternatives({stableKey:TARGETS[0],nominalInputPerCast:5,candidates:[{rate:-1,unit:'UNKNOWN',studyFamilyID:'a',sourceLineage:'b'}]}));
- const args={context,outputs:[{outputItemID:192870,unconditionalEInterval:[0.1,0.3],provenance:'synthetic'},
- {outputItemID:192871,unconditionalEInterval:[0.2,0.4],provenance:'synthetic'}],
+ const args={context,outputs:[{outputItemID:192870,outputQualityRank:1,unconditionalEInterval:[0.1,0.3],provenance:'synthetic'},
+ {outputItemID:192871,outputQualityRank:2,unconditionalEInterval:[0.2,0.4],provenance:'synthetic'}],
  prices:{192870:10,192871:5},inputUnitPrice:1,auctionCut:0,refundsPerCast:[0,1]};
  const b=scenarioBounds(args);eq(b.outputRevenueInterval,[2,5]);eq(b.netInputCostInterval,[4,5]);
  eq(b.marginInterval,[-3,1]);eq(b.scenarioClassification,'SIGN_UNRESOLVED');
@@ -154,6 +176,15 @@ function selfTest(){
  bad(()=>scenarioBounds({...args,outputs:args.outputs.slice(0,1)}));
  bad(()=>scenarioBounds({...args,refundsPerCast:[0,6]}));
  bad(()=>scenarioBounds({...args,prices:{192870:10}}));
+ bad(()=>analyzeCasts({context:{...context,professionContext:{...context.professionContext,gear:{bonus:NaN}}},sourceType:'SYNTHETIC',events}));
+ bad(()=>analyzeCasts({context:{...context,professionContext:{...context.professionContext,unlocks:()=>true}},sourceType:'SYNTHETIC',events}));
+ bad(()=>analyzeCasts({context:{...context,professionContext:{...context.professionContext,specialization:undefined}},sourceType:'SYNTHETIC',events}));
+ bad(()=>analyzeCasts({context:{...context,patchBuild:'10.2.7BANANA'},sourceType:'RAW_CURRENT_RETAIL',events}));
+ bad(()=>scenarioBounds({...args,outputs:args.outputs.map(o=>({...o,outputQualityRank:3}))}));
+ bad(()=>scenarioBounds({...args,outputs:args.outputs.map(({outputQualityRank,...o})=>o)}));
+ bad(()=>scenarioBounds({...args,outputs:args.outputs.map(o=>({...o,unconditionalEInterval:[1e308,1e308]})),prices:{192870:1e308,192871:1e308}}));
+ bad(()=>historicalRateAlternatives({stableKey:TARGETS[0],nominalInputPerCast:5,candidates:[{rate:1e308,unit:'PER_INPUT',studyFamilyID:'A',sourceLineage:'A'}]}));
+ eq(s.contextSnapshot.professionSkill,1);eq(b.contextSnapshot.outputQualityRanks[192871],2);
  return {modelID:MODEL_ID,passed:n,failed:0,targetMappings:TARGETS.length,syntheticOnly:true};
 }
 module.exports={MODEL_ID,POLICY,TARGETS,validEpoch,validateContext,analyzeCasts,historicalRateAlternatives,scenarioBounds,selfTest};
