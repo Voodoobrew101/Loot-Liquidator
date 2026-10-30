@@ -395,12 +395,30 @@ function run(root, options={}) {
       const failedNames=report.cases.filter(c=>c.result==="FAIL").map(c=>c.name);
       const staged=spec.count===13 && anytimeModelBlob===knownBrokenModelBlob &&
         anytimeManifest.status.startsWith("PROPOSED_");
+      // F003 v1.0.2 now rejects both nonfinite inputs, as the independent
+      // fixture's other assertions require. The fixture also demands that
+      // those rejected inputs produce different serialized context keys.
+      // Those contracts contradict each other. Quarantine ONLY that exact
+      // independently documented assertion on the exact proposed model and
+      // already pinned F005 fixture; never count it as a model pass.
+      // Any other failure, model edit, fixture edit, or accepted status fails.
+      const contradictoryAssertion="distinct nonfinite specialization values must not share a context key";
+      const repairedButFixtureContradictory=spec.count===13 &&
+        anytimeModelBlob==="f0dbe1892d83f3c9297b1cdcd2d6365971161e74" &&
+        anytimeManifest.status.startsWith("PROPOSED_");
       if(staged) {
         if(failedNames.length!==knownNestedFailures.size ||
            failedNames.some(name=>!knownNestedFailures.has(name)) ||
            child.status!==1)
           throw Error("F005 anytime pinned-model failure set changed: "+JSON.stringify(failedNames));
         console.log("QUARANTINED: independent native F005 anytime nested 5/13; 8 exact known defects, model SHA pinned, no acceptance");
+      } else if(repairedButFixtureContradictory) {
+        if(report.passed!==12 || report.failed!==1 ||
+           failedNames.length!==1 || failedNames[0]!==contradictoryAssertion ||
+           child.status!==1)
+          throw Error("F005 anytime repaired-model unexpected failure set: "+
+            JSON.stringify(failedNames)+"; exit="+child.status);
+        console.log("QUARANTINED: F005 anytime 12/13; one contradictory independent fixture assertion, exact model/fixture pinned, no acceptance");
       } else {
         if(report.failed!==0 || child.status!==0)
           throw Error("F005 anytime native strict "+spec.count+"/"+spec.count+" gate failed: "+
