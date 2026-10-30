@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F002_F003_F004_F005_NATIVE_RANK_NESTED_CONTEXT_INTEGRATION",
-  "queueRevision": 19,
-  "sourceCommit": "aa359c765951ac603e08ce42925affc2fd3c48eb",
+  "taskID": "F001_F002_F003_F004_F005_DF_JOINT_CAST_NATIVE_INTEGRATION",
+  "queueRevision": 20,
+  "sourceCommit": "daf8de1b25791284189b4d95b3d6ed2414d5c0ae",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "560b885a0039045419c340716e263ae33ddf827a",
@@ -74,29 +74,26 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "F003 nested typed-context source aliasing: 3 failing cases; repair detached snapshot",
-    "F003 JSON-unsafe nested context: 5 failing cases; repair recursive finite/JSON-safe schema and key",
-    "F005 new 13-case native Node gate not wired; previous F003 12-case suite also requires native gate",
-    "514 evidence gaps including 116 E; zero confidence >=90 and zero independent current Retail completed-cast holdouts",
-    "Midnight Crushing 2x2 selector rank pairs remain unadmitted without live acceptance and cast/refund records"
+    "F003 Midnight anytime nested context: 7 genuine failures plus 1 contradictory F005 test, source-pinned 5/13 quarantine not acceptance",
+    "F003 DF joint-cast: 12 new synthetic failures across four classes, 11/23 pass, native Node not run",
+    "F002 strict native 13/13 gate and DF 23-case gate await owner repairs and F005 independent approval",
+    "514 evidence gaps including 116 E; zero >=90 and zero independent current-Retail completed-cast holdouts",
+    "Five priority-122 DF prospecting P/E conflicts remain unresolved; no audited output/rank eligibility"
   ],
   "checksExecuted": [
-    "canonical readiness and priority blobs reconciled",
-    "four specialist submissions and independent review read",
-    "source blob identities verified",
-    "10 coordinator static and JSON serialization assertions",
-    "F002 6/6 and Crushing 11/11 native CI results reviewed from role report",
-    "F003 12/12 and model 49/49 V8 role report reviewed",
-    "F005 new 13-case V8 5/13 and two defect classes reviewed",
-    "GitHub Actions run 41010017584 completed success for existing pipeline; new fixture not wired",
-    "14 commits since prior coordinator integration, 13 changed paths research-only"
+    "canonical readiness/priority SHA and 4 specialist submissions reconciled",
+    "18 corrected coordinator static/source/numeric invariants passed",
+    "independent F005 11/23 V8 DF joint-cast report and 12 defect details inspected",
+    "native GitHub Actions 41016103607 success at exact head: anytime strict 12/12; nested 5/13 quarantined, not passed",
+    "Lua 5.1 candidate roundtrip and pipeline --check passed in native CI",
+    "10 upstream commits, 11 research-only changed paths since previous coordinator integration"
   ],
   "checksUnavailable": [
-    "New F005 13-case native Node",
-    "Previous F003 12-case native Node",
-    "Coordinator local Node/Lua 5.1",
-    "WoW Retail client",
-    "Independent current Retail completed-cast holdout"
+    "new F005 DF 23-case native Node and mandatory CI",
+    "strict F005 Midnight anytime nested 13/13 after repair and fixture correction",
+    "coordinator local native Node/Lua execution",
+    "WoW Retail client and live EV",
+    "independent current-Retail zero-inclusive completed-cast holdout"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -105,13 +102,13 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T0559Z-F001-F005-native-rank-nested-context-integration.json",
-  "decision": "F002_NATIVE_ACCEPTED_F003_PREVIOUS_REPAIRS_CONDITIONAL_NESTED_FAIL_F004_CONTEXT_ONLY_F005_NEW_FINDING_ACCEPTED",
-  "nextTask": "F003_DETACHED_RECURSIVE_JSON_SAFE_CONTEXT_SNAPSHOT_AND_CANONICAL_KEY",
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T0706Z-F001-F005-df-joint-cast-and-native-gates.json",
+  "decision": "F002_STAGED_NATIVE_ACCEPTED_F003_DF_MODEL_BLOCKED_F004_HISTORICAL_CONTEXT_ONLY_F005_12_DEFECTS_ACCEPTED",
+  "nextTask": "F003_REPAIR_ANYTIME_NESTED_CONTEXT_THEN_DF_JOINT_CAST_12",
   "priorityRecords": 217,
   "independentValidator": {
-    "status": "FAIL_F003_NESTED_CONTEXT_REPAIR_REQUIRED",
-    "sourceBlob": "6283a417e94876d874ed60fde15547642df5bd88",
+    "status": "FAIL_F003_DF_JOINT_CAST_12_OF_23_AND_ANYTIME_8_QUARANTINED",
+    "sourceBlob": "230ad59c74b4c595d85e5d13043d7cf607056eae",
     "modelTargetsReviewed": 24,
     "modelSelfTestPassed": 41,
     "malformedRecipeIDNegativeProbes": 9,
@@ -132,32 +129,39 @@
     "nestedContextTotal": 13,
     "nestedContextFailed": 8,
     "rankAncestryNativePassed": 6,
-    "crushingNativePassed": 11
+    "crushingNativePassed": 11,
+    "dfJointCastPassed": 11,
+    "dfJointCastFailed": 12,
+    "dfJointCastTotal": 23,
+    "dfJointCastNativeExecuted": 0,
+    "midnightAnytimeNativeStrictPassed": 12,
+    "midnightAnytimeNestedNativePassed": 5,
+    "midnightAnytimeNestedNativeQuarantined": 8
   },
-  "integrationStatus": "PREVIEW_COMPLETE_F002_NATIVE_RANK_ACCEPTED_F003_NESTED_INTEGRITY_BLOCKED_ECONOMIC_HOLDOUT_BLOCKED",
+  "integrationStatus": "PREVIEW_COMPLETE_NATIVE_ANYTIME_12_PASS_NESTED_8_QUARANTINED_DF_12_FAIL_ECONOMIC_HOLDOUT_BLOCKED",
   "nextAssignments": [
     {
       "owner": "completion-engineer",
-      "taskID": "F002_WIRE_F003_ANYTIME_NATIVE_FAIL_CLOSED",
-      "scope": "After F003 repair, wire independent prior 12-case and new 13-case suites as native Node mandatory gates. Preserve all existing 6/6 rank and 11/11 Crushing gates, generated candidate and source hashes; no production edits."
+      "taskID": "F002_WIRE_DF_JOINT_CAST_FAIL_CLOSED_NATIVE_AFTER_REPAIR",
+      "scope": "Preserve current strict F005 anytime 12/12 and exact eight-failure source-pinned quarantine. Once F003 and F005 resolve the contradictory nonfinite-key fixture, require strict native 13/13 with no quarantine. After independent F003 DF repair, add the 23-case DF prospecting suite to native pipeline as a mandatory fail-closed gate; never relabel quarantine as PASS."
     },
     {
       "owner": "baseline-modeller",
-      "taskID": "F003_DETACHED_RECURSIVE_JSON_SAFE_CONTEXT_SNAPSHOT_AND_CANONICAL_KEY",
-      "scope": "Deep-copy and recursively validate specialization, gear, unlocks; reject NaN/Infinity/undefined/functions; preserve null/unknown semantics, canonicalize object-key ordering and ensure returned typedContext cannot change after caller mutation. Retest all 25 independent cases."
+      "taskID": "F003_REPAIR_ANYTIME_NESTED_CONTEXT_THEN_DF_JOINT_CAST_12",
+      "scope": "First repair recursive JSON-safe immutable Midnight anytime typed-context snapshots (seven genuine failing checks; F005 owns contradictory eighth fixture). Then repair DF prospecting joint-cast build grammar, six nested JSON-safety failures, two output-rank checks and three nonfinite arithmetic failures. Preserve historical source alternatives and zero-confidence preview-only output; no numeric promotion."
     },
     {
       "owner": "evidence-researcher",
-      "taskID": "F004_CLIENT_SELECTOR_MATRIX_AND_CAST_REFUND_CAPTURE",
-      "scope": "Public selector searches exhausted: obtain four exact Midnight Crushing gem/stone rank-pair client acceptance results and rank-specific completed casts/refunds at two skill profiles; do not admit unverified selector identities. Pivot to live patch121 refining identity if blocked."
+      "taskID": "F004_INDEPENDENT_CURRENT_RETAIL_DF_CAST_LOGS_OR_SELECTOR_PIVOT",
+      "scope": "Preserve Bugy and neoslayyer as two distinct historical author lineages only. Seek rank-separated 2026 Retail zero-inclusive completed-cast logs for five priority-122 keys with output ranks, all co-outputs, actual casts, refunds, skill/spec/gear/unlocks, recipe spell and patch/build. If no new source, pivot to exact Midnight Crushing selector client capture; no invented eligibility."
     },
     {
       "owner": "independent-validator",
-      "taskID": "F005_NATIVE_RETEST_NESTED_CONTEXT_AND_RANK_GATES",
-      "scope": "After owner repair, execute 12 prior + 13 new anytime cases natively; recheck 6 rank and 11 Crushing gates, source ancestry, JSON key stability, and fail-closed CI."
+      "taskID": "F005_CORRECT_CONTRADICTORY_ANYTIME_FIXTURE_AND_RETEST_DF",
+      "scope": "Correct only the 'distinct nonfinite specialization values must not share a context key' case to assert rejection of both invalid contexts, preserving other independent negative checks. Rerun native strict 12/12 and 13/13 after F003 repair, plus new DF 23-case suite after owner repair; independently inspect full output rank, finite arithmetic and live EV isolation."
     }
   ],
-  "lastCoordinatorIntegrationUTC": "2026-10-30T05:59:00Z",
+  "lastCoordinatorIntegrationUTC": "2026-10-30T07:06:05.716Z",
   "quantizationDiagnostic": {
     "modelBlob": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca",
     "frozenTSMRows": 9,
@@ -169,7 +173,7 @@
     "rankAncestryNativeGate": "PASS_6_OF_6"
   },
   "newUniverseLeadsThisCycle": 0,
-  "newSyntheticModelFamiliesThisCycle": 0,
+  "newSyntheticModelFamiliesThisCycle": 1,
   "newDyeOutputSpellIdentitiesThisCycle": 0,
   "prospectiveDesignVerification": {
     "modelID": "df-diamond-exact-binomial-sampling-power-v1.0.0",
@@ -209,9 +213,25 @@
     "nestedContextDefects": [
       "SOURCE_ALIASING",
       "NON_JSON_SAFE_SERIALIZATION"
-    ]
+    ],
+    "dfProspectingJointCast": {
+      "modelID": "df-prospecting-joint-cast-conflict-v1.0.0",
+      "sourceBlob": "20ad9dc03e7c16a910f56ecda659929b0d68b7d3",
+      "targetKeys": [
+        "tsm:prospect:188658:192870:L1205",
+        "tsm:prospect:188658:192871:L1206",
+        "tsm:prospect:189143:192869:L1242",
+        "tsm:prospect:189143:192870:L1243",
+        "tsm:prospect:190311:192869:L1280"
+      ],
+      "independentSyntheticPassed": 11,
+      "independentSyntheticFailed": 12,
+      "independentNative": "NOT_RUN",
+      "independentRetailHoldouts": 0,
+      "status": "PROPOSED_BLOCKED_NO_ECONOMIC_USE"
+    }
   },
-  "newHistoricalSourceFamiliesThisCycle": 0,
+  "newHistoricalSourceFamiliesThisCycle": 2,
   "newCurrentRetailCastCohortsThisCycle": 0,
   "workingPriorClassificationDelta": {
     "dropChance": 8,
@@ -222,14 +242,14 @@
     "interpretation": "F002 eight Midnight legacy display records reclassified from unsupported nonzero copied confidence to confidence-zero POLICY_PRIOR; all numeric values and raw evidence preserved."
   },
   "nativeCI": {
-    "runID": 41010017584,
-    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41010017584",
+    "runID": 41016103607,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41016103607",
     "conclusion": "success",
-    "scope": "Existing pipeline; excludes new F005 13-case and prior F003 12-case native gates",
-    "newIndependentSuitesNative": "NOT_RUN",
+    "scope": "Existing pipeline including strict anytime 12/12 and source-pinned nested 5/13 quarantine; new DF 23-case not wired",
+    "newIndependentSuitesNative": "ANYTIME_12_PASS_NESTED_5_OF_13_QUARANTINED_DF_23_NOT_RUN",
     "rankGateRunID": 41007215344
   },
-  "newOriginalAggregateLineagesThisCycle": 0,
+  "newOriginalAggregateLineagesThisCycle": 2,
   "newQualitativeContextLeadsThisCycle": 0,
   "ciAttestationWitness": {
     "sourceCommit": "9ed4986a7e8747ee5c0035a18d08dea342033197",
@@ -241,5 +261,15 @@
   },
   "knownProvenanceViolationCount": 0,
   "newRankIdentitiesThisCycle": 0,
-  "newReproducedIntegrityFailuresThisCycle": 8
+  "newReproducedIntegrityFailuresThisCycle": 12,
+  "historicalSourceResearchThisCycle": {
+    "source": "https://www.wowhead.com/item=192869/illimited-diamond",
+    "originalAuthorLineages": 2,
+    "cohorts": 10,
+    "historicalRateCells": 84,
+    "rankCountCells": 5,
+    "castDenominator": "UNKNOWN",
+    "rankApplicability": "HISTORICAL_CONTEXT_ONLY",
+    "economicPromotions": 0
+  }
 }
