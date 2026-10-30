@@ -1,7 +1,7 @@
 'use strict';
 // F003 research-only Midnight rare-gem partial-identification model; never live EV.
 const assert=require('node:assert/strict');
-const MODEL_ID='midnight-rare-gem-anytime-e-bounds-v1.0.1';
+const MODEL_ID='midnight-rare-gem-anytime-e-bounds-v1.0.2';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,evidencePromotion:false});
 const INPUTS=Object.freeze([237359,237361,237362,237363,237364,237365,237366]);
 const OUTPUT=242608;
@@ -22,6 +22,25 @@ function validEpoch(x){
  const tz=m[7];if(tz!=='Z'){const h=Number(tz.slice(1,3)),min=Number(tz.slice(4,6));if(h>23||min>59)return false;}
  return Number.isFinite(Date.parse(x));
 }
+function jsonSafe(v,ancestors=new Set()){
+ if(v===null||typeof v==='string'||typeof v==='boolean')return true;
+ if(typeof v==='number')return Number.isFinite(v);
+ if(typeof v!=='object'||ancestors.has(v))return false;
+ const proto=Object.getPrototypeOf(v);
+ if(Array.isArray(v)?proto!==Array.prototype:(proto!==Object.prototype&&proto!==null))return false;
+ ancestors.add(v);
+ const keys=Reflect.ownKeys(v);
+ let valid;
+ if(Array.isArray(v)){
+  valid=keys.length===v.length+1&&keys.every(k=>k==='length'||(typeof k==='string'&&/^(0|[1-9]\\d*)$/.test(k)&&Number(k)<v.length));
+  if(valid)for(let i=0;i<v.length;i++){if(!Object.hasOwn(v,i)||!jsonSafe(v[i],ancestors)){valid=false;break;}}
+ }else valid=keys.every(k=>{
+  if(typeof k!=='string')return false;
+  const d=Object.getOwnPropertyDescriptor(v,k);
+  return d&&d.enumerable&&Object.hasOwn(d,'value')&&jsonSafe(d.value,ancestors);
+ });
+ ancestors.delete(v);return valid;
+}
 function typedContext(c){
  return {gameMode:c.gameMode,sourceType:c.sourceType,patchBuild:c.patchBuild,
   recipeSpellID:c.recipeSpellID,observationEpoch:c.observationEpoch,
@@ -36,6 +55,7 @@ function typedContext(c){
 }
 function validateContext(c){
  check(c&&typeof c==='object'&&c.gameMode==='RETAIL','RETAIL_CONTEXT_REQUIRED');
+ check(jsonSafe(c),'UNSAFE_CONTEXT_SERIALIZATION');
  check(INPUTS.includes(c.inputItemID)&&c.outputItemID===OUTPUT,'TARGET_IDENTITY_REQUIRED');
  check(posint(c.inputQualityRank)&&posint(c.outputQualityRank),'QUALITY_RANK_REQUIRED');
  check(posint(c.nominalInputCountPerCast),'NOMINAL_INPUT_REQUIRED');
@@ -97,7 +117,7 @@ function analyzeCohort({context,events,alpha=0.05,certifiedMaxPerCast=null,capEv
   eInterval=[Math.max(0,eMean-epsE,pInterval[0]),Math.min(certifiedMaxPerCast,eMean+epsE,certifiedMaxPerCast*pInterval[1])];
   capStatus=capAttestation===null?'CONDITIONAL_ON_UNATTESTED_HYPOTHETICAL_CAP_AND_IID':'CONDITIONAL_ON_CALLER_ATTESTATION_PENDING_INDEPENDENT_REVIEW';
  }
- const contextSnapshot=typedContext(context);
+ const contextSnapshot=JSON.parse(JSON.stringify(typedContext(context)));
  return {modelID:MODEL_ID,targetKey:TARGETS[INPUTS.indexOf(context.inputItemID)],sourceStudyFamilyID:context.sourceStudyFamilyID,
   typedContext:contextSnapshot,typedContextKey:JSON.stringify(contextSnapshot),
   sourceType:context.sourceType,completedCasts:n,abortedRequests:aborted,nominalGrossInputs:n*context.nominalInputCountPerCast,
@@ -159,6 +179,17 @@ function selfTest(){
  bad(()=>analyzeCohort({context:{...raw,observationEpoch:'2026-10-29T25:00:00Z'},events}));
  const changed={...raw,patchBuild:'12.0.1',recipeSpellID:999999,inputQualityRank:3,outputQualityRank:2,professionSkill:100,professionContext:{...raw.professionContext,resourcefulnessPercent:80}};
  ok(analyzeCohort({context:raw,events}).typedContextKey!==analyzeCohort({context:changed,events}).typedContextKey);
+ const nested={...raw,professionContext:{specialization:{points:5},gear:{stat:10},unlocks:['a'],resourcefulnessPercent:0}};
+ const snapshot=analyzeCohort({context:nested,events});nested.professionContext.specialization.points=99;
+ nested.professionContext.gear.stat=99;nested.professionContext.unlocks.push('b');
+ eq(snapshot.typedContext.professionContext.specialization.points,5);
+ eq(snapshot.typedContext.professionContext.gear.stat,10);
+ eq(snapshot.typedContext.professionContext.unlocks,['a']);
+ eq(JSON.stringify(snapshot.typedContext),snapshot.typedContextKey);
+ bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,specialization:NaN}},events}));
+ bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,gear:Infinity}},events}));
+ bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,unlocks:()=>true}},events}));
+ bad(()=>analyzeCohort({context:{...raw,professionContext:{...raw.professionContext,gear:{stat:10,unknown:undefined}}},events}));
  const hypo=analyzeCohort({context:raw,events,certifiedMaxPerCast:3,capEvidenceID:'other'});
  eq(hypo.capIndependentlyVerified,false);
  eq(hypo.capStatus,'CONDITIONAL_ON_UNATTESTED_HYPOTHETICAL_CAP_AND_IID');
