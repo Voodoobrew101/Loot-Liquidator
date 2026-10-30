@@ -2,22 +2,41 @@
 // F003 research-only. Dragonflight prospecting joint-cast sensitivity and historical source conflict.
 // No mapping admission, production EV, recipe eligibility, or independent evidence promotion.
 const assert=require('node:assert/strict');
-const MODEL_ID='df-prospecting-joint-cast-conflict-v1.0.1';
+const MODEL_ID='df-prospecting-joint-cast-conflict-v1.0.2';
 const POLICY=Object.freeze({confidence:0,economicUse:'PREVIEW_ONLY',normalizedVerified:false,liveEconomicEligible:false,tooltipOnlyEligible:false});
 const TARGETS=Object.freeze(['tsm:prospect:188658:192870:L1205','tsm:prospect:188658:192871:L1206','tsm:prospect:189143:192869:L1242','tsm:prospect:189143:192870:L1243','tsm:prospect:190311:192869:L1280']);
 const int=(x,min=0)=>Number.isSafeInteger(x)&&x>=min;
 const nn=x=>typeof x==='number'&&Number.isFinite(x)&&x>=0;
+function hasSerializationHook(value){
+ for(let proto=value;proto!==null;proto=Object.getPrototypeOf(proto)){
+  if(Object.getOwnPropertyDescriptor(proto,'toJSON'))return true;
+ }
+ return false;
+}
 function jsonSafe(value,ancestors=new Set()){
  if(value===null||typeof value==='string'||typeof value==='boolean')return true;
  if(typeof value==='number')return Number.isFinite(value);
- if(typeof value!=='object'||ancestors.has(value))return false;
+ if(typeof value!=='object'||ancestors.has(value)||hasSerializationHook(value))return false;
  ancestors.add(value);
  let valid=false;
  if(Array.isArray(value)){
-  valid=Object.keys(value).length===value.length&&value.every(v=>jsonSafe(v,ancestors));
+  // Only dense, ordinary arrays with native length and own enumerable data indices.
+  // Reflect.ownKeys catches hidden non-enumerable and Symbol metadata that JSON drops.
+  const keys=Reflect.ownKeys(value),length=value.length;
+  valid=Object.getPrototypeOf(value)===Array.prototype&&
+   Number.isSafeInteger(length)&&keys.length===length+1&&keys.includes('length');
+  if(valid)for(let i=0;i<length;i++){
+   const descriptor=Object.getOwnPropertyDescriptor(value,String(i));
+   if(!descriptor||!descriptor.enumerable||!Object.hasOwn(descriptor,'value')||
+      !jsonSafe(descriptor.value,ancestors)){valid=false;break}
+  }
  }else if(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null){
-  valid=Reflect.ownKeys(value).every(k=>typeof k==='string'&&
-   Object.prototype.propertyIsEnumerable.call(value,k)&&jsonSafe(value[k],ancestors));
+  valid=Reflect.ownKeys(value).every(k=>{
+   if(typeof k!=='string')return false;
+   const descriptor=Object.getOwnPropertyDescriptor(value,k);
+   return descriptor&&descriptor.enumerable&&Object.hasOwn(descriptor,'value')&&
+    jsonSafe(descriptor.value,ancestors);
+  });
  }
  ancestors.delete(value);return valid;
 }
@@ -34,6 +53,7 @@ function validEpoch(s){
  return y>=1970&&mo>=1&&mo<=12&&d>=1&&d<=new Date(Date.UTC(y,mo,0)).getUTCDate()&&h<24&&mi<60&&se<60&&zh<=14&&zm<60&&(zh<14||zm===0);
 }
 function validateContext(c){
+ requireThat(jsonSafe(c),'UNSAFE_CONTEXT');
  requireThat(c&&c.gameMode==='RETAIL'&&c.expansion==='DRAGONFLIGHT'&&c.method==='PROSPECT','GAME_METHOD');
  requireThat(typeof c.patchBuild==='string'&&c.patchBuild.length>0&&validEpoch(c.observationEpoch),'PATCH_EPOCH');
  requireThat(typeof c.studyFamilyID==='string'&&c.studyFamilyID.trim()&&typeof c.sourceLineage==='string'&&c.sourceLineage.trim(),'LINEAGE');
@@ -47,7 +67,6 @@ function validateContext(c){
  requireThat(Array.isArray(c.outputItemIDs)&&c.outputItemIDs.length>0&&c.outputItemIDs.every(x=>int(x,1))&&new Set(c.outputItemIDs).size===c.outputItemIDs.length,'OUTPUT_IDS');
  requireThat(c.outputQualityRanks&&c.outputItemIDs.every(id=>int(c.outputQualityRanks[id],1))&&Object.keys(c.outputQualityRanks).length===c.outputItemIDs.length,'OUTPUT_RANKS');
  requireThat(c.outputUniverseVerified===true,'OUTPUT_UNIVERSE_UNVERIFIED');
- requireThat(jsonSafe(c),'UNSAFE_CONTEXT');
  return true;
 }
 function analyzeCasts({context,sourceType,events,prices=null,inputUnitPrice=null,auctionCut=0.05}){
