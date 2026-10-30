@@ -35,12 +35,17 @@ function parseRaw(line) {
 function analyze(root,records) {
   const read = p => fs.readFileSync(path.join(root,p),"utf8");
   const primary = new Map(csv(read(SOURCE_PATH)).map(x=>[x.record_key,x]));
-  const audits = new Map(read(AUDIT_PATH).trim().split(/\r?\n/).map(JSON.parse).map(x=>[x.stableKey,x]));
+  const auditRows = read(AUDIT_PATH).trim().split(/\r?\n/).map(JSON.parse);
+  const audits = new Map(auditRows.map(x=>[x.stableKey,x]));
   const lines = read("GameData.lua").split(/\r?\n/);
   const byID = new Map(records.map(x=>[x.recordID,x]));
   const results = [];
   for(const id of TARGETS) {
-    const source = primary.get(id), audit = audits.get(id), record = byID.get(id);
+    const source = primary.get(id), record = byID.get(id);
+    // Two batch014 reviews use a supplemental family key rather than the
+    // exact primary-ledger key. Match their input/output only for diagnostic
+    // corroboration; never re-label the family audit as a rank measurement.
+    const audit = audits.get(id) || auditRows.find(x=>source && x.inputItemID===Number(source.input_id) && x.outputItemID===Number(source.output_id));
     assert(source && audit && record, "Missing priority-122 source/audit/candidate: "+id);
     assert.equal(source.method,"prospect");
     assert.equal(record.method,"Prospect");
@@ -48,7 +53,8 @@ function analyze(root,records) {
     assert.equal(source.quantity_unit_basis,"TSM per input x 5");
     assert.equal(audit.sourceProvenance.sourceLineageIndependent,false);
     assert.equal(audit.originalProxy.actualCompletedOperations,null);
-    assert.equal(audit.sourceLine,Number(source.source_line));
+    if(audit.sourceLine!==null) assert.equal(audit.sourceLine,Number(source.source_line));
+    else assert.equal(audit.sourceProvenance.originalSourceLine,null);
     assert.equal(audit.inputItemID,Number(source.input_id));
     assert.equal(audit.outputItemID,Number(source.output_id));
     assert.equal(record.inputItemID,audit.inputItemID);
@@ -56,7 +62,8 @@ function analyze(root,records) {
     assert.equal(record.inputQualityRank,Number(source.input_quality));
     assert.equal(record.outputQualityRank,Number(source.output_quality));
     const original = lines[Number(source.source_line)-1]?.trim();
-    assert.equal(original,audit.sourceProvenance.originalSourceText);
+    if(audit.sourceProvenance.originalSourceText!==null)
+      assert.equal(original,audit.sourceProvenance.originalSourceText);
     const raw = parseRaw(original);
     assert.equal(Number(raw.id),record.outputItemID);
     assert.equal(Number(raw.sourceQuality),record.inputQualityRank);
