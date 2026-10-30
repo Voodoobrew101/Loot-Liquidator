@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F002_F003_F004_F005_NATIVE_RANK_NESTED_CONTEXT_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 19,
+  "utc": "2026-10-30T05:59:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseHead": "aa359c765951ac603e08ce42925affc2fd3c48eb",
+  "sourceBlobs": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "scorecardBefore": "ae22c87aac8de5075b5f6ed38daf831d650253af",
+    "rankDiagnostic": "08acca2f4175670183438d77545caa659034d6ec",
+    "pipeline": "266524a83c5d5cd6e3a1d42345358d0749aaacbe",
+    "anytimeModel": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9",
+    "anytimeManifest": "05b5dc514cc409ffd66018379d0daa118c6fa8d7",
+    "validatorReview": "6283a417e94876d874ed60fde15547642df5bd88",
+    "newNestedFixture": "2e64ba46af242740c7a44ecf6bb204ae1345c112",
+    "evidenceMatrix": "0e6148e2347eefc930c64a3f34331c84480c811b"
+  },
+  "canonicalReadiness": "research/coordination/completion-readiness.json",
+  "canonicalPriorities": "research/coordination/completion-priorities.json",
+  "decisions": [
+    {
+      "role": "completion-engineer",
+      "task": "F002_PRIORITY122_RANK_ANCESTRY_REPAIR",
+      "decision": "ACCEPT_RESEARCH_DIAGNOSTIC_AND_NATIVE_GATES",
+      "reason": "Exact rank-compatible supplemental source selection and fail-closed 6/6 rank + 11/11 Crushing native gates; existing CI reported success. Unranked audit remains family context only.",
+      "numericPromotion": false,
+      "next": "F002_WIRE_F003_ANYTIME_12_AND_NESTED_13_NATIVE_FAIL_CLOSED_AFTER_MODEL_REPAIR"
+    },
+    {
+      "role": "baseline-modeller",
+      "task": "F003_ANYTIME_EPOCH_CAP_CONTEXT_REPAIR",
+      "decision": "CONDITIONAL_ACCEPT_PREVIOUS_12_REPAIRS_REJECT_NESTED_CONTEXT_INTEGRITY",
+      "reason": "Previous 12/12 independent V8 and 49/49 model self-tests; new 13-case nested fixture 5/13, with 8 failures across caller-owned aliasing and non-JSON-safe context serialization. No independent cap or whole-study holdout.",
+      "numericPromotion": false,
+      "next": "F003_DETACHED_RECURSIVE_JSON_SAFE_CONTEXT_SNAPSHOT_AND_CANONICAL_KEY"
+    },
+    {
+      "role": "evidence-researcher",
+      "task": "F004_CRUSHING_SELECTOR_2X2_EXHAUSTION_AND_PATCH121_REFINING_IDENTITY",
+      "decision": "ACCEPT_CONTEXT_AND_CONTROLLED_MEASUREMENT_PROTOCOL_ONLY",
+      "reason": "Four rank-pair selector matrix, two skill profiles and 240-cast exploratory maximum; all selectors remain unverified, and patch-12.1 refining leads were already counted. No new admitted mappings.",
+      "numericPromotion": false,
+      "next": "F004_CLIENT_SELECTOR_MATRIX_AND_CAST_REFUND_CAPTURE_OR_PIVOT_TO_PATCH121_LIVE_CONFIRMATION"
+    },
+    {
+      "role": "independent-validator",
+      "task": "F005_ANYTIME_CONTEXT_SNAPSHOT_POSTREPAIR_QA",
+      "decision": "ACCEPT_ADVERSARIAL_FINDING_REJECT_FULL_F003_INTEGRITY_ACCEPTANCE",
+      "reason": "Source-hashed 13-case fixture identifies 8 failures; 10 coordinator static/JSON semantics checks independently corroborate bug classes. Native execution of this new fixture not yet wired.",
+      "numericPromotion": false,
+      "next": "F005_NATIVE_RETEST_F003_12_PLUS_NESTED_13_AFTER_OWNER_REPAIR"
+    }
+  ],
+  "highestPriorityReadyTask": "F001_INTEGRATE_CHANGED_F002_F003_F004_F005_AND_BLOCK_NESTED_CONTEXT_PROMOTION",
+  "independentChecks": {
+    "staticAndSerializationAssertions": {
+      "passed": 10,
+      "total": 10
+    },
+    "modelNativeNewSuite": "NOT_RUN",
+    "previousF003IndependentV8": {
+      "passed": 12,
+      "total": 12
+    },
+    "newF005NestedV8": {
+      "passed": 5,
+      "failed": 8,
+      "total": 13
+    },
+    "rankNative": {
+      "passed": 6,
+      "total": 6
+    },
+    "crushingNative": {
+      "passed": 11,
+      "total": 11
+    },
+    "ciRuns": [
+      {
+        "id": 41007215344,
+        "reported": "success",
+        "scope": "F002 native rank/crushing pipeline"
+      },
+      {
+        "id": 41010017584,
+        "reported": "success",
+        "scope": "branch head native existing pipeline; new nested fixture not wired"
+      }
+    ],
+    "lua51": "CI_EXISTING_GENERATED_CANDIDATE_PASS_REPORTED_NOT_LOCAL",
+    "client": "NOT_RUN"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "evidenceNumericCellsFilled": 0,
+    "evidenceExpectedQuantityCellsFilled": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentCurrentRetailCompletedCastLineages": 0,
+    "economicPromotions": 0,
+    "productionWrites": 0,
+    "rawEvidenceWrites": 0,
+    "frozenTSMWrites": 0,
+    "tooltipOnlyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "scheduleChanges": 0,
+    "coordinatorOwnedFilesPlanned": 3,
+    "newConfirmedAdversarialFailures": 8,
+    "newDefectClasses": 2
+  },
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "tooltipOnlySourceNotEconomic": true,
+    "workingCoverage": "4072/4072",
+    "evidenceCoverage": "3558/4072",
+    "admittedMappings": 1018,
+    "evidenceGaps": 514,
+    "missingE": 116,
+    "evidenceGE90": 0
+  },
+  "blockers": [
+    "F003 nested specialization/gear/unlocks caller aliasing invalidates returned context/key consistency",
+    "F003 nested NaN/Infinity/undefined/function fields not rejected before JSON serialization",
+    "F005 13-case and previous F003 12-case suites not native CI gates",
+    "No independent current Retail completed-cast holdout, cap proof, selector rank acceptance or exhaustive universe audit"
+  ],
+  "zeroDeltaPivot": "Accepted repaired F002 native rank gates; moved F003 to new nested serialization integrity rather than repeating prior 12-case audit; F004 public selector search exhausted and pivoted to controlled in-game matrix.",
+  "nextTask": "F003_DETACHED_RECURSIVE_JSON_SAFE_CONTEXT_SNAPSHOT_AND_CANONICAL_KEY"
+}
