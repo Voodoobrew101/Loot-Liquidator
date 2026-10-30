@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "runUTC": "2026-10-30T01:32:07Z",
+  "taskID": "F004_TWW_MILLING_SPELL444181_LIVE_BATCH_EPOCH_RECONCILIATION",
+  "sourceMemoryPolicy": "IMMUTABLE_NEW_REVIEW_EVENTS; DO_NOT_OVERWRITE_EXISTING_SOURCE_HISTORY",
+  "reviews": [
+    {
+      "sourceID": "TWW-WOWDB-LIVE-444181-20261030",
+      "url": "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+      "sourceLineage": "indexed-spell-database-444181",
+      "newness": "NEW_EXACT_LIVE_EFFECT_VALUE_RECONCILIATION",
+      "primaryFor": "indexed spell record",
+      "independentNumericYieldCohort": false,
+      "decision": "SUPPORT_NOMINAL_BATCH_10_ONLY",
+      "confidenceForEconomicExpectedQuantity": 0
+    },
+    {
+      "sourceID": "TWW-MMOCHAMPION-55665-20240717",
+      "url": "https://www.mmo-champion.com/content/12459-The-War-Within-Beta-Datamining-Build-55665",
+      "sourceLineage": "2024-beta-build55665-datamine",
+      "newness": "REUSED_HISTORICAL_BETA_SOURCE",
+      "primaryFor": "beta patch chronology",
+      "independentNumericYieldCohort": false,
+      "decision": "HISTORICAL_5_ONLY",
+      "confidenceForEconomicExpectedQuantity": 0
+    },
+    {
+      "sourceID": "TWW-REDDIT-BETA-RANK-20240821",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1ey4dkl",
+      "sourceLineage": "tww-2024-aug-beta-milling-rank-observation",
+      "newness": "PREVIOUSLY_REVIEWED_NOT_NEW",
+      "primaryFor": "2024 beta self-reported ten-herb context",
+      "independentNumericYieldCohort": false,
+      "decision": "CONTEXTUAL_CROSSCHECK_NO_DOUBLE_COUNT",
+      "confidenceForEconomicExpectedQuantity": 0
+    },
+    {
+      "sourceID": "TWW-REDDIT-20250315-INPUT-RANK-YIELD",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1jc2ya5",
+      "sourceLineage": "tww-2025-mar-inscription-milling-discussion",
+      "newness": "NEW_QUALITATIVE_LINEAGE",
+      "primaryFor": "qualitative rank-direction report",
+      "independentNumericYieldCohort": false,
+      "decision": "PRESERVE_AS_UNVERIFIED_QUALITATIVE_CONTEXT",
+      "confidenceForEconomicExpectedQuantity": 0
+    }
+  ],
+  "independentNumericYieldCohortsAdded": 0,
+  "sourceAncestryDuplicatesPromoted": 0,
+  "confirmedCurrentRetailCastLogsAdded": 0,
+  "exhaustedLead": "Beta build55665 cannot resolve live batch from historical datamining alone; pivot to live spell record and rank-context source rather than re-searching beta text."
+}
