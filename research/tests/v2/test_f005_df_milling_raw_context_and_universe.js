@@ -86,19 +86,24 @@ check("frozen historical TSM rate unit remains ambiguous and preview-only",()=>{
   assert.equal(r.currentRetailE,null);
   assert.equal(r.economicUse,"PREVIEW_ONLY");
 });
-check("omitted co-output can reverse the hypothetical recommendation",()=>{
-  const p=model.decisionSensitivity(decisionArgs(
+check("omitted co-output is rejected; full-universe sensitivity can flip decision",()=>{
+  assert.throws(()=>model.decisionSensitivity(decisionArgs(
     partial,[output(198412,1)],{"198412":1}
+  )));
+  const low=model.decisionSensitivity(decisionArgs(
+    base,[output(198412,1),output(198413,0),output(198414,0)],
+    {"198412":1,"198413":10,"198414":1}
   ));
-  const full=model.decisionSensitivity(decisionArgs(
+  const high=model.decisionSensitivity(decisionArgs(
     base,[output(198412,1),output(198413,10),output(198414,0)],
     {"198412":1,"198413":10,"198414":1}
   ));
-  assert.equal(p.decision,"ALTERNATIVE_DOMINATES_UNDER_ASSUMPTIONS");
-  assert.equal(full.decision,"PROCESS_DOMINATES_UNDER_ASSUMPTIONS");
-  assert.deepEqual(p.marginInterval,[-4,-4]);
-  assert.deepEqual(full.marginInterval,[96,96]);
-  assert.equal(full.economicUse,"PREVIEW_ONLY");
+  assert.equal(low.decision,"ALTERNATIVE_DOMINATES_UNDER_ASSUMPTIONS");
+  assert.equal(high.decision,"PROCESS_DOMINATES_UNDER_ASSUMPTIONS");
+  assert.deepEqual(low.marginInterval,[-4,-4]);
+  assert.deepEqual(high.marginInterval,[96,96]);
+  assert.equal(low.economicUse,"PREVIEW_ONLY");
+  assert.equal(high.normalizedVerified,false);
 });
 check("explicitly complete output universe still computes unconditional E without P multiplier",()=>{
   const r=model.summarizeCasts({context:base,sourceType:"SYNTHETIC",events:complete});
