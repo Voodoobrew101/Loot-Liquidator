@@ -1,6 +1,12 @@
 # Database and profession modernization
 
-Development update: the compiled runtime artifact described below is now `LootLiquidator/ItemDBRuntime.lua`. The newest research artifact is copied unchanged to `LootLiquidator/itemdb.lua` and is not TOC-loaded. Multiple development databases are intentional. See [current copy provenance and scaling audit](profession-scaling-audit.md).
+Historical implementation record: the counts and 80-confidence gate below describe
+earlier revisions. Current behavior and acceptance status are recorded in
+[RELEASE-STATUS.md](../RELEASE-STATUS.md) and the
+[October 30 review](ISSUE-PR-REVIEW-2026-10-30.md). The pinned research copy is now
+`database/research/itemdb.lua`; the TOC loads its generated adapter
+`LootLiquidator/ItemDBRuntime.lua`. Executable rules require at least 90 confidence,
+two source claims, independent approval and validated transforms.
 
 ## Baseline audit (2026-10-28)
 

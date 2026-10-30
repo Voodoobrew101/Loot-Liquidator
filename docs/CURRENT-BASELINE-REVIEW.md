@@ -1,4 +1,11 @@
-# Current-baseline profession projection: review build
+# Historical profession projection review (PR #6)
+
+This records the earlier PR #6 design and source counts. It is superseded by
+[the current release status](../RELEASE-STATUS.md) and the
+[October 30 issue/PR review](ISSUE-PR-REVIEW-2026-10-30.md). In particular, the
+current executable-rule gate requires at least 90 confidence, two source claims,
+independent approval and a validated transform. The old approval-policy paragraph
+and research pins below do not describe the current candidate.
 
 Built from `implementation/database-profession-modernization`, not production main.
 No merge or release has been performed.

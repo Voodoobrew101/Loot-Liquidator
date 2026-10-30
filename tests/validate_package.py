@@ -2,6 +2,10 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 root = Path('LootLiquidator')
+toc_lines = (root / 'LootLiquidator.toc').read_text().splitlines()
+versions = [line.removeprefix('## Version:').strip() for line in toc_lines
+            if line.startswith('## Version:')]
+assert len(versions) == 1 and versions[0], 'TOC must declare one non-empty addon version'
 manifest = [s.strip() for s in (root / 'LootLiquidator.toc').read_text().splitlines()
             if s.strip() and not s.lstrip().startswith('#')]
 assert len(manifest) == len(set(manifest)), 'Duplicate TOC entry'

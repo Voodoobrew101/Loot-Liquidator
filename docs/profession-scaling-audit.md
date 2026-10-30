@@ -1,4 +1,9 @@
-# Latest database copy and profession-scaling audit
+# Historical database copy and profession-scaling audit
+
+The source paths, pins and counts below describe earlier alpha revisions, not the
+current candidate. See [RELEASE-STATUS.md](../RELEASE-STATUS.md) and the
+[October 30 review](ISSUE-PR-REVIEW-2026-10-30.md) for the current pin, active
+research adapter, approval gate and remaining release checks.
 
 ## Copy and runtime status
 

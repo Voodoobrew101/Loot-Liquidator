@@ -1,5 +1,13 @@
 # Consolidated test candidate
 
+October 30 repository review: PR #13 reconciles current research at 8954d24 with
+the earlier aca72a4 mechanics export and repairs nested-context/array serialization
+defects. The candidate now pins PR #13 commit d7bece6. All addon checks pass after
+rebuilding; original economic evidence and frozen TSM/legacy bytes are unchanged.
+Only preview provenance/confidence and source manifests change. Historical notes
+below retain their original pins. See [the completed review and remaining
+gates](docs/ISSUE-PR-REVIEW-2026-10-30.md). Main remains v0.9.70; Retail QA is pending.
+
 Alpha10 repairs ItemDB recipe recognition and nominal batch validation in craft recording. The three shipped BFA mass-milling recipes now record as Mill/20, rather than generic Craft or an old five-herb hint. Recorder recipe metadata comes from the same admitted primary records as valuation; disabled yield sources do not disable research capture. Quality/expansion mismatches and ambiguous recipe batches stay diagnostics. Bag-only output matching is recipe-scoped. Regression fixtures cover the real recipes through raw logs, empirical metrics and personal pricing, including zero confirmation, partial/full refunds, separate recipes and invalid batches/qualities. No research or frozen values are changed. The research integration branch remains at pinned aca72a4; full Retail event validation is still pending.
 
 Alpha9 retires obsolete profession calculations while retaining the newer ItemDB mechanics engines. Nearby-skill Gaussian pooling, positive-only writers, the old price fallback, duplicate DE lookups/statistics, unused upgrade/inspiration/rank settings and the GameData executable-rule alias are removed. All executable numeric rules now share the >=90 confidence/two-claim/independent-review/validated-transform gate and exact applicability checks. Unmodeled buffs cannot pass the personal identical-profile shortcut. Complete cast logs remain the only personal estimate input, and samples displayed with an estimate must belong to a personal source that contributed to that final model. Legacy saved histories remain exportable and untouched. The old build-time GameData/StatYieldProfiles formula sources are replaced by a data-only frozen snapshot; all three generated artifacts rebuild byte-identically, with separate frozen-source checksum guards. No new coefficients or scientific measurements are claimed.
