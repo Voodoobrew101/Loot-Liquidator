@@ -221,6 +221,14 @@ function run(root, options={}) {
     if(nestedV11Child.status!==0)
       throw Error("F005 nested v1.1 detached provenance regression failed\n"+nestedV11Child.stdout+nestedV11Child.stderr);
     process.stdout.write(nestedV11Child.stdout);
+    // Independent F005 Midnight legacy-display provenance regression.
+    // This fixture must run under native Node; the validator owns its assertions.
+    const midnightLegacyTest=path.join(root,"research/tests/v2/test_f005_midnight_milling_legacy_proxy_confidence.js");
+    if(!fs.existsSync(midnightLegacyTest)) throw Error("Required F005 Midnight legacy confidence check missing");
+    const midnightLegacyChild=spawnSync(process.execPath,[midnightLegacyTest],{cwd:root,encoding:"utf8",timeout:120000});
+    if(midnightLegacyChild.status!==0)
+      throw Error("F005 Midnight legacy confidence regression failed\n"+midnightLegacyChild.stdout+midnightLegacyChild.stderr);
+    process.stdout.write(midnightLegacyChild.stdout);
     const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
     const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
     const schemaFile=path.join(schemaDir,"candidate.json");
