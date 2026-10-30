@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F005_DF_MILL_V101_CONDITIONAL_INTEGRATION",
+  "taskID": "F001_F005_DF_FRONTIER_CONTEXT_AND_ARCHIVE_DEDUP",
   "queueRevision": 30,
-  "sourceCommit": "baba1d1235b28b143040d6f83a6c924deedbd3bb",
+  "sourceCommit": "9dfa710d633d89e48dff456053042966da923356",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "560b885a0039045419c340716e263ae33ddf827a",
@@ -29,7 +29,7 @@
     "confidenceOfImputedFields": 0,
     "economicUse": "PREVIEW_ONLY",
     "normalizedVerified": false,
-    "status": "COMPLETE_1018_4072_RESEARCH_PREVIEW_ONLY_DF_MILL_MODEL_REJECTED_8_OF_30_FAILED_NO_LIVE_ECONOMIC_PROMOTION",
+    "status": "COMPLETE_1018_4072_PREVIEW_ONLY_FRONTIER_REJECTED_8_OF_27_NO_ECONOMIC_PROMOTION",
     "imputedFieldCounts": {
       "dropChance": 995,
       "yieldMin": 105,
@@ -75,22 +75,22 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
-    "BLOCKING: F003 stage-guard model misidentifies Prismatic Ore 194545 as Crumbled Stone 192880; F005 40/43 identity tests, 3 failures.",
-    "ACCEPTED HISTORICAL CORRECTION: B-prismatic-1000 second-stage input is 194545; original raw evidence unchanged and no live economic use.",
-    "CONTEXT ONLY: two distinct new original Wowhead author cohorts (TheChisel, Hotfor); no current-Retail cast context or rank-specific E.",
-    "INFORMATIONAL NATIVE PASS: F002 DF milling v1.0.1 30+22 replay, pipeline --check and Lua5.1 in GitHub Actions 41132700353; independent F005 attestation pending.",
-    "BLOCKING: TWW milling 5 and Gem Finding 14 context failures; 116 evidence E gaps, 514 evidence gaps, 0 current-Retail holdouts.",
-    "UNRESOLVED: three DF mapping identity replacements and fish 200061/rank eligibility."
+    "BLOCKING: DF prospect frontier v1 independent V8 19/27 pass, 8 fail across 5 context groups (invalid 1/6 nominal ore batch, mutable E/fees/costs/provenance/output array).",
+    "ACCEPTED DEDUP: Reddit zzcnjw Oct 29 and Oct 30 archives describe ONE original Dec 2022 cohort; no canonical lineage decrement because later +1 was not accepted.",
+    "CONDITIONAL: F005 49/49 archive lineage tests and 18 adversarial mutations rejected in V8; native Node pending.",
+    "BLOCKING: Prismatic Ore 194545 vs Crumbled Stone 192880 stage identity, F002 native 40/43 negative QA is not model acceptance.",
+    "BLOCKING: TWW milling 5 and Gem Finding 14 context defects; 116 evidence E gaps; no independent current-Retail cast holdouts.",
+    "INFORMATIONAL: 52-case DF milling native CI passed previously; independent mandatory acceptance pending."
   ],
   "checksExecuted": [
-    "21/21 coordinator source identity/pin/policy checks",
-    "GitHub Actions 41132700353 native 52-case informational replay, pipeline --check, Lua5.1: success",
-    "Independent F005 V8 identity 40/43 passed; 3 failed"
+    "22/22 coordinator source-pin, build arithmetic and archive ancestry assertions",
+    "F005 independent V8 frontier 19/27 and archive 49/49 (18 adversarial mutants rejected)",
+    "F002 prior native Prismatic 40/43 negative-QA, model remains rejected"
   ],
   "checksUnavailable": [
-    "Local native Node/Lua by coordinator",
-    "Repaired F003 stage guard native test",
-    "Current-Retail independent cast holdouts"
+    "Coordinator native Node/Lua",
+    "Repaired frontier 27-case and Prismatic 43-case native suites",
+    "Current-Retail cast holdout"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -99,9 +99,9 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T2159Z-F001-F005-prismatic-attribution-and-native-52.json",
-  "decision": "PRISMATIC_HISTORICAL_ID_CORRECTION_ACCEPTED_STAGE_MODEL_REJECTED_NATIVE_DF_MILL_52_INFORMATIONAL_GREEN",
-  "nextTask": "F003_REPAIR_DF_PRISMATIC_STAGE_IDENTITY",
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T2258Z-F001-F005-frontier-context-and-lineage-dedup.json",
+  "decision": "ARCHIVE_DEDUP_ACCEPTED_FRONTIER_REJECTED",
+  "nextTask": "F003_REPAIR_FRONTIER_AND_PRISMATIC",
   "priorityRecords": 217,
   "independentValidator": {
     "status": "F003_V8_72_SELF_18_PAIR_26_MAR31_12_ARRAY_F004_TWW_31_ALL_PASS_NATIVE_PENDING",
@@ -262,32 +262,43 @@
       "currentRetailHoldouts": 0,
       "verdict": "CONDITIONAL_PASS_SYNTHETIC_NATIVE_PENDING",
       "economicPromotions": 0
+    },
+    "latestDfProspectFrontier": {
+      "modelBlob": "7fb36b9d6c25f6a0bff02dfe5ab1b6855e6a4f42",
+      "manifestBlob": "74f10db75932ca3be685bf3ea44c9ba813a03d7d",
+      "reviewBlob": "b4e08c512f1e820f196ad118d665a82a48caf393",
+      "V8Passed": 19,
+      "V8Failed": 8,
+      "V8Total": 27,
+      "defectGroups": 5,
+      "nativeExecuted": false,
+      "verdict": "FAIL_REPAIR_REQUIRED"
     }
   },
-  "integrationStatus": "WORKING_PREVIEW_COMPLETE_PRISMATIC_IDENTITY_CORRECTION_ACCEPTED_MODEL_BLOCKED_NATIVE_52_INFORMATIONAL_PASS",
+  "integrationStatus": "WORKING_PREVIEW_COMPLETE_ARCHIVE_DEDUP_ACCEPTED_FRONTIER_V1_REJECTED",
   "nextAssignments": [
     {
       "owner": "baseline-modeller",
-      "taskID": "F003_REPAIR_DF_PRISMATIC_STAGE_IDENTITY",
-      "scope": "Repair model SOURCE.secondStage.inputItemID 192880 to 194545, analyze output and manifest stage label; preserve Crumbled Stone 192880 mappings and immutable F004 raw evidence. Rerun 27 self and 43 F005 cases; no economic promotion."
+      "taskID": "F003_REPAIR_FRONTIER_AND_PRISMATIC",
+      "scope": "Repair all 5 frontier context defect groups (8 failed cases): require 5 ore/cast for DF prospect keys; immutable validated snapshots for E, fee, cost, provenance, output array; enforce ordered net bounds. Repair separate Prismatic 194545 vs Crumbled Stone 192880 source/manifest identity. Rerun source-pinned self and independent tests without relaxing assertions."
     },
     {
       "owner": "independent-validator",
-      "taskID": "F005_RETEST_DF_STAGE_IDENTITY_AND_NATIVE_52_ATTESTATION",
-      "scope": "After author repair, independently rerun 43-case Prismatic test (3 failures must clear). Independently attest F002 native 52-case CI source pins and adversarial/fail-closed behavior before making any mandatory gate."
+      "taskID": "F005_NATIVE_FRONTIER_AND_STAGE_RETEST",
+      "scope": "Retest repaired 27-case frontier and 43-case Prismatic suites under native Node; independently attest 52-case DF milling informational CI; preserve 49-case archive duplicate adversarial suite and zero live-EV leakage."
     },
     {
       "owner": "completion-engineer",
-      "taskID": "F002_KEEP_NATIVE_52_GREEN_PIVOT_TWW_CONTEXT",
-      "scope": "Maintain successful informational native 52-case CI and deterministic pipeline/Lua checks; after F005 attestation, pivot to native QA of five TWW milling or fourteen Gem Finding context failures, without editing production economics."
+      "taskID": "F002_NATIVE_REPIN_AND_TWW_PIVOT",
+      "scope": "Keep deterministic candidate and Lua5.1 isolation; only repin native tests after F003 fixes and F005 review; pivot to TWW milling 5 or Gem Finding 14 context failures; preserve 4072 preview fields and honest 116 evidence E gaps."
     },
     {
       "owner": "evidence-researcher",
-      "taskID": "F004_RETAIL_CASTS_OR_FISH_200061_PIVOT",
-      "scope": "Keep two new author-level historical cohorts separate, find current-Retail rank/skill/refund-labelled zero-inclusive casts for Prismatic first and second stages; if unavailable pivot to fish 200061 eligibility or Midnight output-rank leads."
+      "taskID": "F004_CROSS_ARCHIVE_DEDUP_AND_RETAIL_CASTS",
+      "scope": "Cross-check entire v2 evidence archive before declaring a new source family. Treat zzcnjw as one original cohort. Seek 2026 Retail ore-rank/skill/refund-labelled zero-inclusive casts or pivot to fish 200061 eligibility."
     }
   ],
-  "lastCoordinatorIntegrationUTC": "2026-10-30T21:59:00Z",
+  "lastCoordinatorIntegrationUTC": "2026-10-30T22:58:00Z",
   "quantizationDiagnostic": {
     "modelBlob": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca",
     "frozenTSMRows": 9,
@@ -807,5 +818,20 @@
     "pipelineCheck": "success",
     "lua51": "success",
     "independentAcceptance": "PENDING"
+  },
+  "latestArchiveLineageDedup": {
+    "originalCohorts": 1,
+    "archiveDescriptions": 2,
+    "oldBlob": "227c997ce7aedb0295db0449c2cb8586a6269015",
+    "laterBlob": "fe290ca4ef9e375196da64cbea99a9c1509fb74e",
+    "correctionBlob": "b8f829b3b0f286c7900312a99cb3b3af6e0b9c78",
+    "canonicalAggregateDelta": 0,
+    "reason": "Later +1 was not explicitly accepted",
+    "economicPromotions": 0
+  },
+  "lastCoordinatorChecks": {
+    "passed": 22,
+    "failed": 0,
+    "environment": "GitHub connector JS"
   }
 }
