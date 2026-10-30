@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_PROSPECT_SEQUENTIAL_DECISION_SENSITIVITY",
+  "workflowRevision": 2,
+  "taskStatus": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_F005_ACCEPTANCE",
+  "reportDateUTC": "2026-10-30T09:20:00Z",
+  "branch": "implementation/five-agent-completion",
+  "queueSnapshot": {
+    "readinessPath": "research/coordination/completion-readiness.json",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesPath": "research/coordination/completion-priorities.json",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantityCells": 116
+  },
+  "baseCommitBeforeRun": "0ed82cde755fc820cac9e1c76d9b4182761eb4d6",
+  "implementationCommits": [
+    "e3e91f2ea5ec1273295049cbff3acc524c457fcd",
+    "e7da54e3b2e0d1ac0c6923cff59caf4a65cacdb5"
+  ],
+  "resultCommitBeforeSubmission": "e7da54e3b2e0d1ac0c6923cff59caf4a65cacdb5",
+  "taskSelection": "After prior Midnight hotfix-epoch pivot and DF joint-cast model, address top priority-122 DF prospecting decision uncertainty via a new sequential bounded-margin model. No repeat of unchanged historical rate audit.",
+  "exactStableKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "exactFilesAdded": [
+    {
+      "path": "research/tools/models_v2/df_prospect_sequential_margin_cs_v1.js",
+      "blobSHA": "aed91ab3beb10377ff5d38f7b13c87bdc9a80c0f",
+      "purpose": "Executable zero-inclusive, refund-aware, bounded anytime margin confidence sequence with fail-closed source/universe/cap gates and 30 synthetic self-assertions"
+    },
+    {
+      "path": "research/models/v2/df_prospect_sequential_margin_cs_v1.json",
+      "purpose": "Versioned research-only model, exact target keys, math, assumptions, tests and QA requests"
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "admittedMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCellsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "economicPromotions": 0,
+    "modelFilesAdded": 2,
+    "priorityMappingsAddressed": 5,
+    "workingPreviewCoverageBefore": "4072/4072",
+    "workingPreviewCoverageAfter": "4072/4072",
+    "remainingExpectedQuantityEvidenceGaps": 116
+  },
+  "substantiveNewCapability": "Sequential, optional-stopping-valid (under bounded IID fixed-profile assumptions) margin uncertainty bound on joint-cast value; conservatively blocks numerical interval when independent output universe/caps or fixed price snapshot absent. Historical TSM never treated as observed Retail.",
+  "testsActuallyRun": [
+    {
+      "test": "Native Node syntax check on local development source",
+      "result": "PASS",
+      "scope": "Same 10210-character source subsequently GitHub read-back matched by length and identifying text"
+    },
+    {
+      "test": "Native Node synthetic model self-test using a test-only stand-in for existing validateContext dependency",
+      "result": "PASS",
+      "passed": 30,
+      "failed": 0,
+      "scope": "Math, zero-inclusive casts, refunds, blocked caps/universe/prices, malformed events and overflow. Actual existing dependency was not executed locally."
+    },
+    {
+      "test": "Independent Python alpha-spending arithmetic",
+      "result": "PASS",
+      "scope": "sum alpha/(n(n+1)) for n=1..100000 at alpha=0.05 equals 0.049999500004999954; analytic telescoping sum tends to alpha"
+    },
+    {
+      "test": "GitHub read-back of committed model source",
+      "result": "PASS",
+      "scope": "Blob SHA aed91ab3beb10377ff5d38f7b13c87bdc9a80c0f and length 10210"
+    }
+  ],
+  "testsNotRun": [
+    "Exact committed model with actual existing validateContext under native GitHub Node CI",
+    "Full completion pipeline --check (no build inputs changed)",
+    "Lua 5.1 candidate decoding",
+    "In-game/client tests",
+    "Independent F005 acceptance",
+    "Empirical coverage on independent Retail cast studies"
+  ],
+  "ciAtLastCheck": "No commit statuses or PR-triggered workflow runs returned for manifest commit e7da54e3b2e0d1ac0c6923cff59caf4a65cacdb5; native pass not claimed.",
+  "economicSafety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "productionFilesChanged": false
+  },
+  "blockers": [
+    "No independent full output universe or externally corroborated per-cast caps for these five Dragonflight keys",
+    "No independent current-Retail zero-inclusive joint-cast sample with exact profession context",
+    "No fixed source-verified AH price snapshot or held-out validation study",
+    "Native execution with real dependency and F005 independent QA remain pending"
+  ],
+  "nextTask": "Independent validator executes exact committed source with actual dependency and adversarial cap/universe/time tests; evidence researcher seeks a single fully specified current-Retail joint-cast cohort with independently verified cap/universe. If no new data or QA findings next cycle, pivot to another priority E family rather than repeat source audits.",
+  "ownership": "Only new baseline-modeller research code/model and this unique baseline-modeller submission. No main, runtime-profiles, raw evidence, frozen TSM, tooltip-only paths, legacy assignments, central queues, schedules, or other agents' files changed."
+}
