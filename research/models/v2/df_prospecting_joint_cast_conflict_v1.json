@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "modelID": "df-prospecting-joint-cast-conflict-v1.0.1",
+  "modelID": "df-prospecting-joint-cast-conflict-v1.0.2",
   "taskID": "F003_DF_PROSPECT_JOINT_CAST_CONFLICT",
   "workflowRevision": 2,
-  "status": "PROPOSED_REPAIRED_AFTER_F005_ADVERSARIAL_PENDING_NATIVE_AND_INDEPENDENT_RETEST",
+  "status": "PROPOSED_ARRAY_CONTEXT_ATTESTATION_REPAIRED_PENDING_NATIVE_AND_F005_RETEST",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "modelSource": "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
-  "modelSourceBlobSHA": "85d1e4b7b019c6db945335af2ec82392e8a0ddca",
+  "modelSourceBlobSHA": "70bab20081db23e899a45b73186200869efae48c",
   "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "baseCommitBeforeRun": "87c535619f36798ced6bba30029ab0257d9e5402",
@@ -28,7 +28,7 @@
   },
   "functions": {
     "historicalRateAlternatives": "Preserves PER_INPUT, PER_CAST, UNKNOWN as separate hypotheses. Converts only conditional hypothetical E per cast; no invented P or Retail E. Normalizes duplicate lineage strings for distinct-source count. Hypothetical rate multiplication overflow is rejected.",
-    "analyzeCasts": "Requires full zero-inclusive completed-cast vectors, distinct cast IDs, explicit aborted requests, typed patch/recipe/quality/skill/profession context, refund counts and caller-attested output universe. Computes marginal P, unconditional E, positive observed extrema, sample covariance and descriptive sample margin distribution. Full typed context is validated recursively as JSON-safe and snapshotted with contextIdentity; nonfinite result arithmetic fails closed.",
+    "analyzeCasts": "Requires full zero-inclusive completed-cast vectors, distinct cast IDs, explicit aborted requests, typed patch/recipe/quality/skill/profession context, refund counts and caller-attested output universe. Computes marginal P, unconditional E, positive observed extrema, sample covariance and descriptive sample margin distribution. Full typed context is validated recursively as JSON-safe and snapshotted with contextIdentity; nonfinite result arithmetic fails closed. Version 1.0.2 rejects array subclasses, sparse indices, own symbol/hidden metadata, custom toJSON hooks and getter-backed object fields before context serialization.",
     "scenarioBounds": "Uses full caller-attested output universe and unconditional E intervals with price/cost/refund sensitivity; no marginal probability double-multiplication and no independence assumption for expected linear revenue. Exact output quality rank equality is required, and nonfinite revenues, costs and margins fail closed."
   },
   "math": {
@@ -55,7 +55,7 @@
     "sampleCovariance": "Descriptive only; no IID/holdout guarantee",
     "completeOutputUniverse": "Caller attestation is not independent proof",
     "goldImpact": "Synthetic sensitivity only, not measured AH prices",
-    "contextSerialization": "Nested unsupported types, nonfinite values and missing values are rejected before snapshot; snapshot does not establish independently audited game context."
+    "contextSerialization": "Context JSON safety requires ordinary dense arrays with exactly native length plus own enumerable data indices, plain objects with enumerable data properties, no symbols, cycles, nonfinite numbers, or own/inherited toJSON hooks. Semantic validation runs after serialization safety checks. Snapshot identity still caller-attested and not independent proof."
   },
   "syntheticExample": {
     "inputItemID": 188658,
@@ -94,9 +94,10 @@
     "V8ExactGitHubReadback": {
       "passed": 61,
       "failed": 0,
-      "syntheticOnly": true
+      "syntheticOnly": true,
+      "note": "Pre-commit patched model V8 run; final GitHub read-back to follow"
     },
-    "nativeNode": "NOT_RUN_EXACT_REPAIRED_SOURCE",
+    "nativeNode": "NOT_RUN_EXACT_V1_0_2_SOURCE",
     "lua51": "NOT_RUN",
     "inGame": "NOT_RUN",
     "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
@@ -108,7 +109,16 @@
       "review": "research/coordination/v2/reviews/2026-10-30T0646Z-F005-df-prospect-joint-cast-adversarial.json",
       "note": "Exact independent F005 test source executed against repaired model in V8 with strict assert shim; validator has not yet accepted retest"
     },
-    "nativeGateNote": "Manifest status retains required PROPOSED_ prefix for research/tools/run_completion_pipeline.js strict independent native 23/23 gate; this is not coordinator acceptance."
+    "nativeGateNote": "Manifest status retains required PROPOSED_ prefix for research/tools/run_completion_pipeline.js strict independent native 23/23 gate; this is not coordinator acceptance.",
+    "F005ArrayAttestationV8AfterRepair": {
+      "passed": 13,
+      "failed": 0,
+      "syntheticOnly": true,
+      "review": "research/coordination/v2/reviews/2026-10-30T0747Z-F005-df-prospect-array-attestation.json",
+      "fixture": "research/tests/v2/test_f005_df_prospect_array_context_attestation.js",
+      "fixtureBlobSHA": "77519d24493455616dbbf94d142af581aa857c3a",
+      "note": "Exact independent fixture source executed against patched model in V8 with strict assert-compatible shim; native Node and independent F005 retest remain pending"
+    }
   },
   "exactDeltas": {
     "admittedMappings": 0,
@@ -123,11 +133,12 @@
     "modelFilesRepaired": 2
   },
   "evidenceResearcherRequest": "For each exact priority-122 key, find independent current-Retail zero-inclusive cast cohorts with actual completed casts, outputs for every possible gem and rank, gross inputs/refunds, recipe ID, patch/build, skill, spec, gear and unlocks; independently verify source units and eligibility including 192871.",
-  "independentValidatorRequest": "Run exact committed module with native Node; adversarial tests for incomplete output universes, source-lineage duplicates, unknown rate units, multiple gems in same cast, refund accounting, output-rank context, malformed dates, sample covariance and preview-only isolation. Hold out whole independent study families.",
+  "independentValidatorRequest": "Run exact committed module with native Node; adversarial tests for incomplete output universes, source-lineage duplicates, unknown rate units, multiple gems in same cast, refund accounting, output-rank context, malformed dates, sample covariance and preview-only isolation. Hold out whole independent study families. Re-run F005 array attestation 13/13 and prior adversarial 23/23 natively, check array toJSON/sparse/hidden symbol metadata and explicit null preservation; pin model and fixture blob SHAs.",
   "blockers": [
     "No independent current-Retail zero-inclusive cast cohort for five keys",
     "TSM source rate units and conflict not independently reconciled",
     "No independently audited complete output universe and recipe/quality eligibility",
-    "Native Node, Lua, in-game and independent F005 checks outstanding"
+    "Native Node, Lua, in-game and independent F005 checks outstanding",
+    "Native Node retest and independent F005 acceptance of array-attestation repair pending"
   ]
 }
