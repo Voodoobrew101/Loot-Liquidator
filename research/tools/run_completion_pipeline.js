@@ -398,7 +398,7 @@ function run(root, options={}) {
        dfJointManifest.policy.liveEconomicEligible!==false)
       throw Error("F003 DF joint-cast research-only economic isolation changed");
     const dfJointGitBlob=bytes=>require("node:crypto").createHash("sha1")
-      .update("blob "+bytes.length+"\\0").update(bytes).digest("hex");
+      .update("blob "+bytes.length+"\0").update(bytes).digest("hex");
     const dfJointModelBytes=fs.readFileSync(path.join(root,dfJointModelRel));
     const dfJointModelBlob=dfJointGitBlob(dfJointModelBytes);
     if(dfJointModelBlob!==dfJointManifest.modelSourceBlobSHA)
