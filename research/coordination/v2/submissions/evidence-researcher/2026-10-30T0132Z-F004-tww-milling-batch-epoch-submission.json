@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_MILLING_SPELL444181_LIVE_BATCH_EPOCH_RECONCILIATION",
+  "workflowRevision": 2,
+  "queueRevisionObserved": null,
+  "runUTC": "2026-10-30T01:32:07Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": null,
+  "baseCommitResolution": "GitHub connector did not expose the pre-write branch head or commit parent; no base SHA inferred. First observed write commit is recorded exactly.",
+  "firstResultCommit": "6241219016b521250b985d4603f5f8a062871dc2",
+  "resultCommitBeforeSubmission": "c055ec40a1cfedc0b02bdc46eb9704e74f63e4f5",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "exactFilesChanged": [
+    "research/evidence/v2/2026-10-30T0132Z-F004-tww-milling-live-batch-epoch-reconciliation.json",
+    "research/evidence/v2/source-reviews/2026-10-30T0132Z-F004-tww-milling-live-batch-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0132Z-F004-tww-milling-batch-epoch-submission.json"
+  ],
+  "exactMappingKeysChanged": [],
+  "affectedPriorityKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+  ],
+  "exactDeltas": {
+    "liveIndexedSpell444181NominalBatch": 10,
+    "historicalBetaBuild55665NominalBatch": 5,
+    "historicalBetaDescriptionPreviousBatch": 10,
+    "newQualitativeRankLineages": 1,
+    "newIndependentNumericCohorts": 0,
+    "newlyResolvedContextIssue": "TWW live indexed spell nominal batch versus historical beta five-herb record; do not inherit beta denominator",
+    "numericWorkingCellsFilled": 0,
+    "newEconomicECells": 0,
+    "invalidMappingsRemoved": 0,
+    "newMappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "noProductionOrSharedLedgerChanges": true
+  },
+  "readinessObserved": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceMissingCells": 514,
+    "expectedQuantityEvidenceMissing": 116,
+    "evidenceGE90Cells": 0
+  },
+  "evidencePromotion": "NONE; current Retail client not tested; economic rates remain null",
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "confidence": 0,
+  "sourceLineages": [
+    {
+      "id": "indexed-spell-database-444181",
+      "newForThisRun": true,
+      "kind": "NOMINAL_BATCH_METADATA_NOT_CAST_STUDY"
+    },
+    {
+      "id": "2024-beta-build55665-datamine",
+      "newForThisRun": false,
+      "kind": "HISTORICAL_CONTEXT_ONLY"
+    },
+    {
+      "id": "tww-2024-aug-beta-milling-rank-observation",
+      "newForThisRun": false,
+      "kind": "PREVIOUSLY_REVIEWED_NOT_RECOUNTED"
+    },
+    {
+      "id": "tww-2025-mar-inscription-milling-discussion",
+      "newForThisRun": true,
+      "kind": "QUALITATIVE_PLAYER_TESTIMONY_NOT_E_STUDY"
+    }
+  ],
+  "testsRun": {
+    "inProcessIntegrityAssertions": {
+      "passed": 18,
+      "failed": 0
+    },
+    "githubReadBack": {
+      "filesVerifiedBeforeSubmission": 2,
+      "filesExpectedAfterSubmission": 3
+    },
+    "sourceDateAndEpochSeparation": "PASS",
+    "previewEconomicGate": "PASS"
+  },
+  "testsNotRun": [
+    "Repository Node completion pipeline (no accepted build inputs changed and no checkout available)",
+    "Lua 5.1 generated-file decoding",
+    "Retail in-game client",
+    "Independent whole-study holdout",
+    "Runtime valuation/recommendation regression"
+  ],
+  "blockers": [
+    "No 2026 in-game spell/selector capture for spell444181",
+    "Ten priority candidate mappings have recipeSpellID null, so they cannot be automatically assigned spell444181",
+    "No matched cast logs with output IDs/ranks, zeros, skill/spec/gear and Resourcefulness refunds",
+    "Cannot establish beta five-to-ten reversion date from available records"
+  ],
+  "nextTask": "F004_VERIFY_TWW_MILLING_RECIPE_ID_AND_TEN_HERB_INPUT_CONTEXT_FOR_12_E_GAP_KEYS",
+  "zeroDeltaPivot": "New exact spell denominator correction plus new independent qualitative lineage; no numeric E promotion. Do not repeat 2024 beta search; next work should inspect exact recipe identities or pivot to an unreviewed source family.",
+  "coordinatorRequest": "Accept nominal batch correction as indexed spell metadata only, assign modeller/engineer audit and independent validator denominator regression; do not admit unverified output ranks or E."
+}
