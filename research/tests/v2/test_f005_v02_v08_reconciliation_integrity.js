@@ -76,6 +76,13 @@ function audit(d) {
       ok(meta.eligibilityStatus.includes('NOT_VERIFIED'),'rank unverified');
     }
   }
+  const tooltipContexts=d.changedRetainedRecords.filter(r=>r.addedContext?.tooltipOnly);
+  eq(tooltipContexts.length,1,'one isolated tooltip-only context introduced');
+  const tooltip=tooltipContexts[0];
+  eq(tooltip.recordID,'retail12.0.5:prospect:36910:46849:globalmenace','tooltip-only identity');
+  eq(tooltip.fieldDeltas.expectedQuantity.value.to,null,'gross-input E remains quarantined');
+  eq(tooltip.addedContext.tooltipOnly[13],'PROVISIONAL_TOOLTIP_ONLY_NOT_ECONOMIC',
+    'tooltip-only values prohibited from valuation');
   eq(addedNumeric,58,'added numeric fields');
   eq(groups,{Mill:21,Prospect:14,Refine:2,Smelt:8},'added families');
   const pairs=[];
@@ -122,6 +129,7 @@ function selfTest(d){
   reject('numeric count altered',x=>x.summary.newEvidenceNumeric++);
   reject('live economic promotion',x=>x.safety.economicUse='LIVE');
   reject('forged verified',x=>x.safety.normalizedVerified=true);
+  reject('tooltip-only economic leak',x=>x.changedRetainedRecords.find(r=>r.addedContext?.tooltipOnly).addedContext.tooltipOnly[13]='LIVE');
   return rejected;
 }
 if(require.main===module){
