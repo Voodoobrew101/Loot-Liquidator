@@ -1,12 +1,12 @@
 {
-  "schemaVersion": "1.0.1",
-  "modelID": "midnight-rare-gem-anytime-e-bounds-v1.0.1",
-  "taskID": "F003_ANYTIME_EPOCH_CAP_CONTEXT_REPAIR",
+  "schemaVersion": "1.0.2",
+  "modelID": "midnight-rare-gem-anytime-e-bounds-v1.0.2",
+  "taskID": "F003_MIDNIGHT_NESTED_CONTEXT_SNAPSHOT_HARDENING",
   "workflowRevision": 2,
-  "status": "PROPOSED_PENDING_F005_NATIVE_RETEST",
+  "status": "PROPOSED_PENDING_F005_NATIVE_AND_CONTRADICTORY_TEST_REVIEW",
   "scope": "RESEARCH_ONLY_NOT_SHIPPED",
   "modelSource": "research/tools/models_v2/midnight_rare_gem_anytime_e_bounds_v1.js",
-  "modelSourceBlobSHA": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9",
+  "modelSourceBlobSHA": "f0dbe1892d83f3c9297b1cdcd2d6365971161e74",
   "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
   "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
   "targetKeys": [
@@ -87,20 +87,33 @@
   },
   "tests": {
     "javascriptV8SelfTest": {
-      "passed": 49,
+      "passed": 60,
       "failed": 0,
-      "syntheticOnly": true
+      "syntheticOnly": true,
+      "sourceBlobSHA": "f0dbe1892d83f3c9297b1cdcd2d6365971161e74",
+      "environment": "V8 exact committed CommonJS source with strict assert shim"
     },
     "independentF005SuiteV8": {
       "passed": 12,
       "failed": 0,
       "source": "research/tests/v2/test_f005_midnight_anytime_context_lineage.js",
-      "environment": "V8 exact committed source with Node assert shim"
+      "sourceBlobSHA": "fbb838e348429d6deed741060fe992ead560190b",
+      "environment": "V8 exact committed model with strict assert shim"
     },
-    "nativeNode": "PENDING_GITHUB_CI",
+    "nativeNode": "NOT_RUN",
     "lua51": "NOT_RUN",
     "inGame": "NOT_RUN",
-    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED"
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
+    "independentNestedContextV8": {
+      "passed": 12,
+      "failed": 1,
+      "total": 13,
+      "source": "research/tests/v2/test_f005_anytime_typed_context_snapshot_integrity.js",
+      "sourceBlobSHA": "2e64ba46af242740c7a44ecf6bb204ae1345c112",
+      "environment": "V8 exact committed model with strict assert shim",
+      "failedCase": "distinct nonfinite specialization values must not share a context key",
+      "disposition": "CONTRADICTORY_ASSERTION: other tests correctly require both NaN and Infinity to be rejected; rejecting both means no context keys exist to compare. Independent validator must replace with assert.throws for both."
+    }
   },
   "exactDeltas": {
     "admittedMappings": 0,
@@ -114,12 +127,13 @@
     "modelManifestFilesChanged": 1
   },
   "evidenceRequest": "For each target ore and output rank, collect current-Retail zero-inclusive per-cast outputCount including zero results, exact completed cast count, aborted requests, refund counts, full patch/recipe/skill/spec/gear/unlocks and original source family. Seek independent proof of per-cast output cap before finite E upper bounds.",
-  "independentValidatorRequest": "Run exact committed F005 twelve-case adversarial suite under native Node, check Gregorian dates with offsets/leap years, cap whitespace and source ancestry, typedContextKey differentiation and deep-copy isolation; require external review before any cap attestation counts as evidence.",
+  "independentValidatorRequest": "Native Node retest exact v1.0.2: 60 self-tests, original 12-case lineage suite, 13-case nested suite. Correct contradictory nested case: both NaN and Infinity must throw rather than return distinct serialized keys. No economic promotion.",
   "blockers": [
     "No independent current-Retail zero-inclusive casts for seven target keys",
     "No independently reviewed per-cast output cap attestation; finite bounds under caller cap are hypothetical only",
     "No independent output-universe/recipe eligibility audit; economic recommendations prohibited",
-    "Native Node, Lua and in-game verification pending"
+    "Native Node, Lua and in-game verification pending",
+    "One F005 13-case nested fixture has internally contradictory expectation: nonfinite contexts must be rejected yet their context keys must differ. Fail closed and request independent fixture correction."
   ],
   "capCertificatePolicy": {
     "normalizedLineage": "Unicode NFC, trim, case-insensitive comparison rejects identical source and cap lineages including trailing whitespace",
@@ -144,6 +158,8 @@
     "minimumRecipeEligibleSkill",
     "professionSkill",
     "professionContext",
-    "sourceStudyFamilyID"
+    "sourceStudyFamilyID",
+    "Deep-copied validated JSON-safe nested profession context, preserving snapshot and typedContextKey under later caller mutations",
+    "Reject NaN, Infinity, undefined, functions, sparse arrays, hidden/symbol properties, accessor properties, cycles and non-plain prototypes"
   ]
 }
