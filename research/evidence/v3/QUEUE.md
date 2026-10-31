@@ -16,6 +16,8 @@ Starting list written by Claude, session 12 (2026-10-31). Nothing has been resea
   First settle the evoker conflict: is "Calamitous Echo's Ebon Greathorns" the hands or the head piece, and
   "Calamitous Echo's Magmashapers" the other one?
 - Token records are not evidence records: report IDs in the research files above, with the page each one came from.
+- **Owner decision (2026-10-31):** the research team double-checks these token lists and puts the checked
+  result into its ItemDB export (`itemdb.lua`); Claude never marks them approved. The exact format comes with task C4b1.
 
 ## 2. Disenchanting groups with no data at all
 
