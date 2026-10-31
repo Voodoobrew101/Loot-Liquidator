@@ -24,7 +24,7 @@ local defaults = {
     showSoulboundVendorBadge = false,
     recordDisenchants = true, showDisenchantSamples = true,
     recordConversions = true, showProcessingSamples = true,
-    showMaterialBreakdown = true, showResearchDetails = false, showExternalRates = false,
+    showMaterialBreakdown = true, showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,
     otherConversionDataMode = 1, minPersonalSamples = 30,
     tooltipDetail = 2, tooltipAuction = true, tooltipVendor = true,

@@ -513,7 +513,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
             and (b.expectedQuantity+1e-9<b.chance*b.minQuantity or b.expectedQuantity>b.chance*b.maxQuantity+1e-9) then
             b.minQuantity=nil;b.maxQuantity=nil;b.boundsSource=nil
         end
-        if e then confidenceTotal=confidenceTotal+(e.confidence or 0)/e.weight end
+        if e then
+            -- Per-material confidence (A3): shown on request, and used to value-weight the option's figure.
+            b.confidence=math.min(100,math.floor((e.confidence or 0)/e.weight+.5))
+            confidenceTotal=confidenceTotal+(e.confidence or 0)/e.weight
+        end
         b.sourceContributions={}
         local total=0 for _,v in pairs(b.contributions) do total=total+v end
         for source,w in pairs(b.contributions) do

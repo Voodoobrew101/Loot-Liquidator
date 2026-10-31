@@ -165,5 +165,19 @@ local prospect=LL:ConversionOptions(oreFacts)[1]
 near(prospect.value,40) -- 2 known units * 100 copper / 5 ore; the gem adds nothing yet
 assert(prospect.partial and prospect.confidence==40,'partial value: confidence 80 scaled by 1 of 2 outputs priced')
 text=render(oreFacts,prospect)
-assert(text:find('Partial:',1,true) and text:find('Confidence 40/100, partial',1,true) and not text:find('incomplete output valuation',1,true))
+assert(text:find('Partial:',1,true) and text:find('Confidence 40%, partial',1,true) and not text:find('incomplete output valuation',1,true))
+-- A3: one confidence per option, weighted by value. The valuable output
+-- (confident, 80) dominates a cheap uncertain one (20): (80*900+20*100)/1000=74,
+-- not the plain average 50.
+oreRow.materials={ore(900032,9,80),ore(900033,1,20)}
+LL.GetOutputPrice=function()return 100 end
+assert(LL:InitializeItemDB())
+prospect=LL:ConversionOptions(oreFacts)[1]
+assert(prospect.yieldModel.confidence==50 and prospect.confidence==74,'value-weighted option confidence')
+text=render(oreFacts,prospect)
+assert(text:find('(Confidence 74%)',1,true) and not text:find('(80%)',1,true),'per-material confidence is off by default')
+LL.db.showMaterialConfidence=true
+text=render(oreFacts,prospect)
+assert(text:find('(80%)',1,true) and text:find('(20%)',1,true),'per-material confidence when switched on')
+LL.db.showMaterialConfidence=nil
 print('PASS: ItemDB-only real mass-milling recipes, all four metric units, source/access gates, conditional ranges, unknowns and probability/yield precision')

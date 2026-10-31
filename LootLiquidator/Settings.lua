@@ -670,6 +670,8 @@ function LL:RegisterNativeSettings()
     Section(ttLayout,"Detailed tooltip content")
     Checkbox(tooltips,"showMaterialBreakdown","Show processing materials",
         "In Detailed mode, show a concise table of estimated material yields.",true)
+    Checkbox(tooltips,"showMaterialConfidence","Show confidence per material",
+        "Add each material's own confidence to the breakdown. The option's overall confidence is always shown.",false)
     Checkbox(tooltips,"showResearchDetails","Show notes",
         "Show optional research explanations, yield evidence, and token exchange notes. Core prices, materials and important warnings are always visible.",false)
     Section(ttLayout,"Optional profession information")

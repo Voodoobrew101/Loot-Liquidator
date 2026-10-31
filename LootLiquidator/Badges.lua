@@ -577,6 +577,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                             or (" [x%d-%d]"):format(m.minQuantity,m.maxQuantity))
                     else left=left.." [range ?]" end
                     left=left.."  EV "..UnitsText(m.expectedQuantity)
+                    -- Optional per-material confidence (A3), off by default.
+                    if LA.db.showMaterialConfidence==true and type(m.confidence)=="number" then
+                        left=left..(" (%d%%)"):format(m.confidence)
+                    end
                     local net=m.netExpectedValue
                     local amount=net~=nil and LA:Money(net/batch) or "unknown"
                     two(left,amount,option.letter or "D")
@@ -656,7 +660,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local confidence=model and (model.valueConfidence or model.confidence)
                     local label=names[methodName] or methodName
                     if model and model.confidenceUnscored then label=label.." (Confidence unscored)"
-                    elseif confidence then label=label..(" (Confidence %d/100%s)"):format(confidence,
+                    elseif confidence then label=label..(" (Confidence %d%%%s)"):format(confidence,
                         option.value and model.partial and ", partial" or "")
                     elseif option.available==false then label=label.." (estimate)" end
                     if option.value then

@@ -295,6 +295,21 @@ function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
     -- when nothing of value is known. The model is cached and shared, so the
     -- scaled figure goes in valueConfidence; model.confidence stays untouched.
     local base=type(model.confidence)=='number' and model.confidence or 0
+    -- A3: one confidence per option, weighted by each material's share of the
+    -- value, so a cheap uncertain by-product barely moves it. Model-wide
+    -- discounts (e.g. sources disagreeing) are kept by scaling to the base.
+    local weighted,valueSum,plain,count=0,0,0,0
+    for _,m in ipairs(model.materials or {}) do
+        if type(m.confidence)=='number' then
+            plain=plain+m.confidence;count=count+1
+            local v=m.netExpectedValue
+            if validNumber(v) and v>0 then weighted=weighted+m.confidence*v;valueSum=valueSum+v end
+        end
+    end
+    if valueSum>0 and count>0 and plain>0 then
+        local factor=base/(plain/count) -- 1 unless the model applied a discount
+        base=math.max(0,math.min(100,math.floor(weighted/valueSum*factor+.5)))
+    end
     if not model.partialPrice then
         model.value=model.partialValue;model.partial=nil;model.valueConfidence=base
     elseif total>0 and known>0 then
