@@ -1,6 +1,7 @@
 # Loot Liquidator research, version 3: shared rules for all five agents
 
 Read this file, then your role file in `research/v3/roles/`, at the start of every run.
+Also read `research/v3/mechanics.md`: the checked list of how skill, specializations and stats change results.
 These rules replace the old five-agent workflow in `research/prompts/five-agent/`.
 Leave all old files where they are. Don't edit, move or delete them; they are history.
 
