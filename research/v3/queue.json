@@ -8,91 +8,7 @@
       "inputName": "Midnight prospecting and milling hit-count datasets",
       "what": "Highest-priority occurrence evidence: find current-patch, quality-rank-specific prospecting/milling studies supplying per-output castsWithDrop (including zero-hit casts) or complete 0/1/2/... histograms, with total casts and recorded specialization/skill/unlocks. Target Refulgent Copper Ore, Umbral Tin Ore, Brilliant Silver Ore and Midnight herbs, and especially outputs whose ItemDB chanceSource is 'estimated' or 'starting guess'.",
       "why": "Latest output/estimates.json: just 55/957 input-output estimates have a measured chance; totals-only studies do not establish occurrence probability. Prioritize post-2026-03-31 prospecting data and clear rate-change epochs.",
-      "searchTip": "Search item names plus 'prospecting 1000 results', 'each prospect', 'procs', 'drop counts', 'drop rate sample size', 'histogram', 'spreadsheet', 'addon export' and Wowhead Looter-style drop frequencies with denominators. Try r/woweconomy, WoW forums, guide-linked Google Sheets, Wowhead comments. Capture casts, castsWithDrop or histogram separately for each material; an item count is NOT a hit count when 2+ can drop in one cast. Verify input/output item IDs and rank, patch, unlock state and original source. Record even partial evidence, null for unknown."
-    },
-    {
-      "taskID": "T0040",
-      "agent": "war-within",
-      "type": "drop",
-      "status": "open",
-      "inputName": "The War Within prospecting and milling hit-count datasets",
-      "what": "Seek studies for Bismuth, Ironclaw, Aqirite and Mycobloom with per-output castsWithDrop or 0/1/2/... histograms and explicit cast denominators, ore/herb quality, skill and specialization. Existing Aqirite 1,040-prospect quantities alone cannot identify chance where output multiplicity varies.",
-      "why": "Chance-measuring studies are scarce; recover occurrence counts separately from aggregate outputs and preserve independent study/batch IDs.",
-      "searchTip": "Search by item name + 'individual prospects', 'drop frequency', 'Looter sample size', 'spreadsheets', 'prospected 1000', 'zero outcomes', 'histogram' and original r/woweconomy sources. Count the *casts containing at least one* material (not material units), or copy explicitly stated % per cast plus documented sample size; record denominator, source lineage, game patch, rank, refunds and histogram where available."
-    },
-    {
-      "taskID": "T0041",
-      "agent": "dragonflight",
-      "type": "drop",
-      "status": "open",
-      "inputName": "Dragonflight milling and prospecting hit-count datasets",
-      "what": "Find original worksheets or per-cast logs for Dragonflight prospecting Draconium Ore and milling Hochenblume/Saxifrage/Bubble Poppy with castsWithDrop or 0/1/2/... histograms, rather than only average quantities, by input and output rank and skill/stat/specialization profile.",
-      "why": "Existing high-volume totals provide average quantity but often not actual occurrence chance; preserve Inspiration-era/modern-patch conditions separately.",
-      "searchTip": "Search item names, r/woweconomy original spreadsheet links, Wowhead Looter-style sampled percentages with denominators, profession guides and addon exported cast logs. Count each material's successful casts independently, including zero-count casts; preserve sample size, histogram, output rank, input quality, patch and originalSource. Do not turn item totals into hit counts without proven at-most-one-per-cast mechanics."
-    },
-    {
-      "taskID": "T0042",
-      "agent": "legacy",
-      "type": "drop",
-      "status": "open",
-      "inputName": "Legacy prospecting/milling hit-count and histogram rescue",
-      "what": "Recover per-cast hit counts or histograms with denominators from original studies/archived spreadsheets and older SavedVariables exports for Cobalt Ore, Titanium Ore and high-volume legacy herbs. Keep item totals to support gold EV, but add castsWithDrop to measure chance.",
-      "why": "Current output has 55 measured chances across 957 estimates. Legacy 36909 Cobalt Ore material 36917 is still starting-guess only for chance. Some legacy studies are large enough to improve chance confidence if occurrence counts exist.",
-      "searchTip": "Search Cobalt Ore and Titanium Ore by name with '1000 prospects', 'gem distribution', 'drop rate sample', 'histogram', 'Looter', 'spreadsheet', 'ProspectORE', 'prospecting addon'; inspect r/woweconomy links and source archives. Preserve full cast count, outputs per cast, zero-hit casts, originalSource, date/patch and quality. Explicitly distinguish totalQuantity from castsWithDrop."
-    },
-    {
-      "taskID": "T0035",
-      "agent": "dragonflight",
-      "type": "mechanics",
-      "what": "Verify mechanics.md D1 and D2 (Dragonflight prospecting skill thresholds and ore-quality skill bonus) with a second source.",
-      "why": "the model only uses verified mechanics",
-      "status": "queued",
-      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
-    },
-    {
-      "taskID": "T0034",
-      "agent": "midnight",
-      "type": "mechanics",
-      "what": "Verify mechanics.md M10 and M13: does Resourcefulness save ore when prospecting, and do crafting stats affect disenchanting in Midnight? Sources only.",
-      "why": "the model only uses verified mechanics",
-      "status": "queued",
-      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
-    },
-    {
-      "taskID": "T0033",
-      "agent": "midnight",
-      "type": "mechanics",
-      "what": "Verify mechanics.md M11: does Multicraft apply to Midnight prospecting? Find a direct source (guide text, Blizzard note or a study that reports multicraft procs while prospecting).",
-      "why": "the model only uses verified mechanics",
-      "status": "queued",
-      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
-    },
-    {
-      "taskID": "T0032",
-      "agent": "war-within",
-      "type": "condition",
-      "what": "Conditional drops in The War Within prospecting and milling (specialization or skill unlocks), with source links",
-      "why": "conditional drops must be kept out of the normal baseline",
-      "status": "open",
-      "searchTip": "Search guides for the profession specialization tree (wow-professions.com, Wowhead and Method profession guides) and patch notes."
-    },
-    {
-      "taskID": "T0031",
-      "agent": "dragonflight",
-      "type": "condition",
-      "what": "Conditional drops in Dragonflight prospecting and milling (for example Illimited Diamond skill thresholds, Prismatic Ore talent), with source links",
-      "why": "conditional drops must be kept out of the normal baseline",
-      "status": "open",
-      "searchTip": "Search guides for the profession specialization tree (wow-professions.com, Wowhead and Method profession guides) and patch notes."
-    },
-    {
-      "taskID": "T0030",
-      "agent": "midnight",
-      "type": "condition",
-      "what": "Conditional prospecting drops in Midnight: confirm which specialization nodes unlock Eversong Diamond for each ore (copper, tin, silver, thorium), with source links; any other unlock-only materials",
-      "why": "conditional drops must be kept out of the normal baseline",
-      "status": "open",
-      "searchTip": "Search guides for the profession specialization tree (wow-professions.com, Wowhead and Method profession guides) and patch notes."
+      "searchTip": "Search item names plus 'prospecting 1000 results', 'each prospect', 'procs', 'drop counts', 'drop rate sample size', 'histogram', 'spreadsheet', 'addon export' and Wowhead Looter-style drop frequencies with denominators. Try r/woweconomy, WoW forums, guide-linked Google Sheets, Wowhead comments. Capture casts, castsWithDrop or histogram separately for each material; an item count is NOT a hit count when 2+ can drop in one cast. Verify input/output item IDs and rank, patch, unlock state and original source. Record even partial evidence, null for unknown. Specifically seek paired low-skill/high-skill or specialization-tagged Midnight prospecting and milling studies (mechanics.md M5/M7); prioritize post-2026-03-31 results and preserve pre-hotfix data separately. Do not infer occurrence counts from output totals."
     },
     {
       "taskID": "T0005",
@@ -128,6 +44,27 @@
       "searchTip": "Search Refulgent Copper Ore prospecting by name; find original cast counts and quality rank; do not treat guide percentages as empirical samples. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
     },
     {
+      "taskID": "T0036",
+      "agent": "midnight",
+      "type": "drop",
+      "inputName": "Refulgent Copper Ore",
+      "inputItemID": 237361,
+      "status": "open",
+      "what": "Follow up the April 22, 2026 post-hotfix report: 1,000 Refulgent Copper Ore processed (~200 prospect casts), reported 10 Eversong Diamonds, 40+ each common gem and zero rare gems. Recover exact ore rank/item ID, profession skill/specialization/unlock, output identities/counts and evidence provenance; treat reported numbers as partial until verified.",
+      "why": "Potentially much larger, current-rate Midnight sample than existing 10-cast evidence; April 22 is after March 31 prospecting-rate change. Do not fabricate exact quantities from '40+' or treat this as proof of zero underlying rare-gem rate.",
+      "searchTip": "Primary source https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811 ; follow author and any corroborating posts by name. Record the stated post-hotfix period and whether the reported unlock applies to each output. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0037",
+      "agent": "midnight",
+      "type": "drop",
+      "inputName": "Refulgent Copper Ore",
+      "status": "open",
+      "what": "Investigate March 26–28, 2026 prospecting post reporting 1,000 ore split across two differently equipped/specialized characters (500 each). Seek raw per-character cast and output counts, ore rank, talent allocations and gear; separately capture the 200 ore/40 cast/8 gem report if its source conditions can be identified.",
+      "why": "Rare potential paired skill/specialization comparison; pre-March-31 hotfix observations MUST NOT be pooled with newer Midnight drop rates. Quantities for the 500/500 comparison are not actually published in the thread; use as a lead, not a completed study.",
+      "searchTip": "Primary source https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780 ; contact or follow forum authors where possible, preserving character conditions and exact data dates. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
       "taskID": "T0001",
       "agent": "midnight",
       "type": "drop",
@@ -154,196 +91,11 @@
       "agent": "midnight",
       "type": "drop",
       "what": "Prospecting results for Refulgent Copper Ore (item 237361); known outputs [242553, 242554, 242606, 242607, 242608, 242786, 242788]",
-      "why": "New firsthand prospecting output totals recorded, but completed casts and rank-specific rates remain unverified; prioritize source follow-up and old-evidence rescue.",
-      "status": "open",
+      "why": "Rank-2 Refulgent Copper has some historical output totals; defer behind unsampled rank IDs, post-hotfix firsthand reports and paired skill evidence.",
+      "status": "queued",
       "inputItemID": 237361,
       "inputName": "Refulgent Copper Ore",
       "searchTip": "Follow up by name on existing source reports for Refulgent Copper Ore; seek completed casts, rank, resourcefulness refunds and exact output IDs. Rescue irregular older studies before another searched-only result. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0007",
-      "agent": "war-within",
-      "type": "drop",
-      "what": "Prospecting results for Bismuth (item 210931); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
-      "why": "no recorded casts yet; 4 mappings have no drop chance yet",
-      "status": "open",
-      "inputItemID": 210931,
-      "inputName": "Bismuth",
-      "searchTip": "Search by name: \"Bismuth prospecting results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210931 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0009",
-      "agent": "war-within",
-      "type": "drop",
-      "what": "Prospecting results for Ironclaw Ore (item 210937); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
-      "why": "no recorded casts yet; 2 mappings have no drop chance yet",
-      "status": "open",
-      "inputItemID": 210937,
-      "inputName": "Ironclaw Ore",
-      "searchTip": "Search by name: \"Ironclaw Ore prospecting results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210937 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0010",
-      "agent": "war-within",
-      "type": "drop",
-      "what": "Milling results for Mycobloom (item 210796); known outputs [222619]",
-      "why": "no recorded casts yet; 1 mappings have no drop chance yet",
-      "status": "open",
-      "inputItemID": 210796,
-      "inputName": "Mycobloom",
-      "searchTip": "Search by name: \"Mycobloom milling results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210796 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0011",
-      "agent": "war-within",
-      "type": "drop",
-      "what": "Milling results for Mycobloom (item 210797); known outputs [222619]",
-      "why": "no recorded casts yet; 1 mappings have no drop chance yet",
-      "status": "queued",
-      "inputItemID": 210797,
-      "inputName": "Mycobloom",
-      "searchTip": "Search by name: \"Mycobloom milling results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210797 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0012",
-      "agent": "war-within",
-      "type": "drop",
-      "what": "Milling results for Mycobloom (item 210798); known outputs [222618]",
-      "why": "no recorded casts yet; 1 mappings have no drop chance yet",
-      "status": "queued",
-      "inputItemID": 210798,
-      "inputName": "Mycobloom",
-      "searchTip": "Search by name: \"Mycobloom milling results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210798 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0008",
-      "agent": "war-within",
-      "type": "drop",
-      "what": "Prospecting results for Aqirite (item 210934); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
-      "why": "Aqirite 1040-click report and separate rank-1/rank-2 per-1000-input averages are recorded; rank-to-ID mapping and completed casts for each rank remain unresolved.",
-      "status": "open",
-      "inputItemID": 210934,
-      "inputName": "Aqirite",
-      "searchTip": "Search Aqirite prospecting 'Some Prospecting data' and 'The rank of ore prospected matters A LOT' by name; verify item rank, original cast denominators and Resourcefulness context without inferring rates. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0019",
-      "agent": "dragonflight",
-      "type": "drop",
-      "what": "Prospecting results for Draconium Ore (item 188658); known outputs [192837, 192838, 192839, 192840, 192841, 192842, 192843, 192844]...",
-      "why": "No confirmed completed-cast Draconium Ore prospecting study for this ID; prioritize ahead of Dragonflight herbs with existing source records.",
-      "status": "open",
-      "inputItemID": 188658,
-      "inputName": "Draconium Ore",
-      "searchTip": "Search Draconium Ore prospecting by name; prioritize independent casts, ore quality and output IDs, not secondary guides. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0017",
-      "agent": "dragonflight",
-      "type": "drop",
-      "what": "Milling results for Saxifrage (item 191466); known outputs [198418, 198419, 198420]",
-      "why": "New milling/recipe records available, but exact cast-normalized yields still missing or unverified; continue original-source follow-up and old-evidence rescue.",
-      "status": "open",
-      "inputItemID": 191466,
-      "inputName": "Saxifrage",
-      "searchTip": "Search Saxifrage milling study by name; reconcile original source lineage and seek measured completed casts, outputs by rank and refunds. Rescue irregular old evidence first. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0018",
-      "agent": "dragonflight",
-      "type": "drop",
-      "what": "Milling results for Bubble Poppy (item 191467); known outputs [198412, 198413, 198414]",
-      "why": "New milling/recipe records available, but exact cast-normalized yields still missing or unverified; continue original-source follow-up and old-evidence rescue.",
-      "status": "queued",
-      "inputItemID": 191467,
-      "inputName": "Bubble Poppy",
-      "searchTip": "Search Bubble Poppy milling study by name; reconcile original source lineage and seek measured completed casts, outputs by rank and refunds. Rescue irregular old evidence first. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0016",
-      "agent": "dragonflight",
-      "type": "drop",
-      "what": "Milling results for Saxifrage (item 191465); known outputs [198418, 198419, 198420]",
-      "why": "New milling/recipe records available, but exact cast-normalized yields still missing or unverified; continue original-source follow-up and old-evidence rescue.",
-      "status": "queued",
-      "inputItemID": 191465,
-      "inputName": "Saxifrage",
-      "searchTip": "Search Saxifrage milling study by name; reconcile original source lineage and seek measured completed casts, outputs by rank and refunds. Rescue irregular old evidence first. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0015",
-      "agent": "dragonflight",
-      "type": "drop",
-      "what": "Milling results for Saxifrage (item 191464); known outputs [198418, 198419, 198420]",
-      "why": "Aary reports rank-2 Saxifrage milling output totals for roughly 1,700 input herbs; completed casts and modern-patch applicability remain unknown.",
-      "status": "open",
-      "inputItemID": 191464,
-      "inputName": "Saxifrage",
-      "searchTip": "Search Saxifrage milling by name and rank; seek firsthand completed casts and separate rank-specific output totals; preserve Inspiration-era patch context. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0014",
-      "agent": "dragonflight",
-      "type": "drop",
-      "what": "Milling results for Hochenblume (item 191462); known outputs [198421, 198422, 198423]",
-      "why": "Method confirms Hochenblume-to-Shimmering Pigment relationship and Aary reports 10,000 input herbs with Resourcefulness; no confirmed completed-cast denominator.",
-      "status": "open",
-      "inputItemID": 191462,
-      "inputName": "Hochenblume",
-      "searchTip": "Search Hochenblume milling original studies by name; recover actual casts, herb quality, output ranks, Resourcefulness and current-Retail applicability. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0022",
-      "agent": "legacy",
-      "type": "drop",
-      "what": "Prospecting results for Cobalt Ore (item 36909); known outputs [36917, 36918, 36920, 36921, 36923, 36924, 36926, 36927]...",
-      "why": "Cobalt Ore has output totals and recipe references but no confirmed completed-cast denominator; highest-priority Legacy processing gap.",
-      "status": "open",
-      "inputItemID": 36909,
-      "inputName": "Cobalt Ore",
-      "searchTip": "Search Cobalt Ore prospecting by name for firsthand completed-cast studies and exact gem outputs; recover original source denominators. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0029",
-      "agent": "legacy",
-      "type": "recipe",
-      "what": "Smelting recipes (ore -> bar, extra reagents) for all older expansions",
-      "why": "Nine additional historical smelting recipes were recorded; unrecorded older-expansion recipes and current Retail availability still need coverage.",
-      "status": "open",
-      "searchTip": "Search missing older-expansion smelting recipes by ore and bar names; record input counts, extra reagents and outputs, avoiding duplicates."
-    },
-    {
-      "taskID": "T0021",
-      "agent": "legacy",
-      "type": "drop",
-      "what": "Prospecting results for Titanium Ore (item 36910); known outputs [36917, 36918, 36919, 36920, 36921, 36922, 36923, 36924]...",
-      "why": "New Titanium Ore PTR source explicitly reports 144 prospects from 720 ore, alongside older denominator-unknown studies; prioritize Retail corroboration after no-cast gaps.",
-      "status": "open",
-      "inputItemID": 36910,
-      "inputName": "Titanium Ore",
-      "searchTip": "Search Titanium Ore prospecting by name for current Retail corroboration; distinguish kuraiummei's 144 PTR prospects from older source totals and avoid duplicate lineage. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0013",
-      "agent": "dragonflight",
-      "type": "drop",
-      "what": "(none) results for Prismatic Leaper (item 200061); known outputs [190320, 190322, 190328, 198412, 198413, 198414, 198415, 198416]...",
-      "why": "Item 200061 is Prismatic Leaper, a fish; it can't be milled or prospected. Probably a bad mapping copied from old TSM data.",
-      "status": "skip",
-      "inputItemID": 200061,
-      "inputName": "Prismatic Leaper",
-      "searchTip": "Search by name: \"Prismatic Leaper (none) results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/200061 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
-    },
-    {
-      "taskID": "T0020",
-      "agent": "dragonflight",
-      "type": "drop",
-      "what": "Prospecting results for Draconium Ore (item 189143); known outputs [192837, 192838, 192839, 192840, 192841, 192842, 192843, 192844]...",
-      "why": "no recorded casts yet; 10 mappings have no drop chance yet Reassigned: Draconium Ore is Dragonflight, not legacy.",
-      "status": "queued",
-      "inputItemID": 189143,
-      "inputName": "Draconium Ore",
-      "searchTip": "Search by name: \"Draconium Ore prospecting results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/189143 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
     },
     {
       "taskID": "T0023",
@@ -379,12 +131,220 @@
       "searchTip": " Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
     },
     {
+      "taskID": "T0033",
+      "agent": "midnight",
+      "type": "mechanics",
+      "what": "Verify mechanics.md M11: does Multicraft apply to Midnight prospecting? Find a direct source (guide text, Blizzard note or a study that reports multicraft procs while prospecting).",
+      "why": "the model only uses verified mechanics",
+      "status": "queued",
+      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
+    },
+    {
+      "taskID": "T0034",
+      "agent": "midnight",
+      "type": "mechanics",
+      "what": "Verify mechanics.md M10 and M13: does Resourcefulness save ore when prospecting, and do crafting stats affect disenchanting in Midnight? Sources only.",
+      "why": "the model only uses verified mechanics",
+      "status": "queued",
+      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
+    },
+    {
+      "taskID": "T0030",
+      "agent": "midnight",
+      "type": "condition",
+      "what": "Conditional prospecting drops in Midnight: confirm which specialization nodes unlock Eversong Diamond for each ore (copper, tin, silver, thorium), with source links; any other unlock-only materials",
+      "why": "Four ore-specific Eversong Diamond specialization unlocks now independently documented by Midnight guide records midnight-20261030-962 through 965; further conditional materials belong in a separate future task if discovered.",
+      "status": "done",
+      "searchTip": "Search guides for the profession specialization tree (wow-professions.com, Wowhead and Method profession guides) and patch notes."
+    },
+    {
+      "taskID": "T0040",
+      "agent": "war-within",
+      "type": "drop",
+      "status": "open",
+      "inputName": "The War Within prospecting and milling hit-count datasets",
+      "what": "Seek studies for Bismuth, Ironclaw, Aqirite and Mycobloom with per-output castsWithDrop or 0/1/2/... histograms and explicit cast denominators, ore/herb quality, skill and specialization. Existing Aqirite 1,040-prospect quantities alone cannot identify chance where output multiplicity varies.",
+      "why": "Chance-measuring studies are scarce; recover occurrence counts separately from aggregate outputs and preserve independent study/batch IDs.",
+      "searchTip": "Search by item name + 'individual prospects', 'drop frequency', 'Looter sample size', 'spreadsheets', 'prospected 1000', 'zero outcomes', 'histogram' and original r/woweconomy sources. Count the *casts containing at least one* material (not material units), or copy explicitly stated % per cast plus documented sample size; record denominator, source lineage, game patch, rank, refunds and histogram where available."
+    },
+    {
+      "taskID": "T0007",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Prospecting results for Bismuth (item 210931); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
+      "why": "no recorded casts yet; 4 mappings have no drop chance yet",
+      "status": "open",
+      "inputItemID": 210931,
+      "inputName": "Bismuth",
+      "searchTip": "Search by name: \"Bismuth prospecting results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210931 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0009",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Prospecting results for Ironclaw Ore (item 210937); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
+      "why": "no recorded casts yet; 2 mappings have no drop chance yet",
+      "status": "open",
+      "inputItemID": 210937,
+      "inputName": "Ironclaw Ore",
+      "searchTip": "Search by name: \"Ironclaw Ore prospecting results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210937 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0010",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Milling results for Mycobloom (item 210796); known outputs [222619]",
+      "why": "no recorded casts yet; 1 mappings have no drop chance yet",
+      "status": "open",
+      "inputItemID": 210796,
+      "inputName": "Mycobloom",
+      "searchTip": "Search by name: \"Mycobloom milling results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210796 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0008",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Prospecting results for Aqirite (item 210934); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
+      "why": "Aqirite 1040-click report and separate rank-1/rank-2 per-1000-input averages are recorded; rank-to-ID mapping and completed casts for each rank remain unresolved.",
+      "status": "open",
+      "inputItemID": 210934,
+      "inputName": "Aqirite",
+      "searchTip": "Search Aqirite prospecting 'Some Prospecting data' and 'The rank of ore prospected matters A LOT' by name; verify item rank, original cast denominators and Resourcefulness context without inferring rates. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0032",
+      "agent": "war-within",
+      "type": "condition",
+      "what": "Conditional drops in The War Within prospecting and milling (specialization or skill unlocks), with source links",
+      "why": "Eight TWW Gem Finding unlocks documented in war-within-20261030-401 through 408; verify unresolved Crushed Gemstones and 40/40 Amber bonus claims and look for milling conditions without treating a reported bug as a functioning bonus.",
+      "status": "open",
+      "searchTip": "Follow up war-within-20261030-409 to 411 and newer in-game specialization descriptions for Crushed Gemstones and 40/40 Ambivalent Amber; record only source-supported conditions, not numerical rates. Search TWW milling specializations by herb name."
+    },
+    {
+      "taskID": "T0011",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Milling results for Mycobloom (item 210797); known outputs [222619]",
+      "why": "no recorded casts yet; 1 mappings have no drop chance yet",
+      "status": "queued",
+      "inputItemID": 210797,
+      "inputName": "Mycobloom",
+      "searchTip": "Search by name: \"Mycobloom milling results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210797 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0012",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Milling results for Mycobloom (item 210798); known outputs [222618]",
+      "why": "no recorded casts yet; 1 mappings have no drop chance yet",
+      "status": "queued",
+      "inputItemID": 210798,
+      "inputName": "Mycobloom",
+      "searchTip": "Search by name: \"Mycobloom milling results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210798 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
       "taskID": "T0027",
       "agent": "war-within",
       "type": "token",
       "what": "The War Within gear tokens and rewards by class",
       "why": "token list empty",
       "status": "queued"
+    },
+    {
+      "taskID": "T0041",
+      "agent": "dragonflight",
+      "type": "drop",
+      "status": "open",
+      "inputName": "Dragonflight milling and prospecting hit-count datasets",
+      "what": "Find original worksheets or per-cast logs for Dragonflight prospecting Draconium Ore and milling Hochenblume/Saxifrage/Bubble Poppy with castsWithDrop or 0/1/2/... histograms, rather than only average quantities, by input and output rank and skill/stat/specialization profile.",
+      "why": "Existing high-volume totals provide average quantity but often not actual occurrence chance; preserve Inspiration-era/modern-patch conditions separately.",
+      "searchTip": "Search item names, r/woweconomy original spreadsheet links, Wowhead Looter-style sampled percentages with denominators, profession guides and addon exported cast logs. Count each material's successful casts independently, including zero-count casts; preserve sample size, histogram, output rank, input quality, patch and originalSource. Do not turn item totals into hit counts without proven at-most-one-per-cast mechanics. Newly rescued Bugy study records dragonflight-20261030-200 through 283 have null input/output item IDs and unclear ore ranks; request evidence corrections only when each rank/ID is independently verified, without treating repeated rows as independent studies."
+    },
+    {
+      "taskID": "T0020",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Prospecting results for Draconium Ore (item 189143); known outputs [192837, 192838, 192839, 192840, 192841, 192842, 192843, 192844]...",
+      "why": "Draconium Ore item 189143 has no independently mapped rank-specific cast study; Bugy's historical averages lack explicit ore rank, so investigate this ID before already-documented Hochenblume.",
+      "status": "open",
+      "inputItemID": 189143,
+      "inputName": "Draconium Ore",
+      "searchTip": "Search by name: \"Draconium Ore prospecting results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/189143 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0019",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Prospecting results for Draconium Ore (item 188658); known outputs [192837, 192838, 192839, 192840, 192841, 192842, 192843, 192844]...",
+      "why": "Bugy original Dragonflight prospecting table now provides Draconium Ore per-input averages with 122 Jewelcrafting and 15/25 specialization, but the two ore-quality cohorts and per-cast hit counts are unspecified; rank-specific ID mapping still missing.",
+      "status": "open",
+      "inputItemID": 188658,
+      "inputName": "Draconium Ore",
+      "searchTip": "Search Draconium Ore prospecting by name; prioritize independent casts, ore quality and output IDs, not secondary guides. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0017",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Saxifrage (item 191466); known outputs [198418, 198419, 198420]",
+      "why": "New milling/recipe records available, but exact cast-normalized yields still missing or unverified; continue original-source follow-up and old-evidence rescue.",
+      "status": "open",
+      "inputItemID": 191466,
+      "inputName": "Saxifrage",
+      "searchTip": "Search Saxifrage milling study by name; reconcile original source lineage and seek measured completed casts, outputs by rank and refunds. Rescue irregular old evidence first. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0015",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Saxifrage (item 191464); known outputs [198418, 198419, 198420]",
+      "why": "Aary reports rank-2 Saxifrage milling output totals for roughly 1,700 input herbs; completed casts and modern-patch applicability remain unknown.",
+      "status": "open",
+      "inputItemID": 191464,
+      "inputName": "Saxifrage",
+      "searchTip": "Search Saxifrage milling by name and rank; seek firsthand completed casts and separate rank-specific output totals; preserve Inspiration-era patch context. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0031",
+      "agent": "dragonflight",
+      "type": "condition",
+      "what": "Conditional drops in Dragonflight prospecting and milling (for example Illimited Diamond skill thresholds, Prismatic Ore talent), with source links",
+      "why": "Dragonflight record dragonflight-20261030-284 documents a historical 15-point Prospecting unlock for Prismatic Ore; Illimited Diamond thresholds and current-Retail applicability still unverified.",
+      "status": "open",
+      "searchTip": "Find Dragonflight Illimited Diamond skill or specialization gates by item name, current spell/specialization tooltip and original study; distinguish historical 2022 Prismatic Ore preview from modern Retail."
+    },
+    {
+      "taskID": "T0014",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Hochenblume (item 191462); known outputs [198421, 198422, 198423]",
+      "why": "Hochenblume qualitative and historical quantity sources already exist; defer to unsampled Draconium quality-rank input 189143 and occurrence-count recovery.",
+      "status": "queued",
+      "inputItemID": 191462,
+      "inputName": "Hochenblume",
+      "searchTip": "Search Hochenblume milling original studies by name; recover actual casts, herb quality, output ranks, Resourcefulness and current-Retail applicability. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0016",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Saxifrage (item 191465); known outputs [198418, 198419, 198420]",
+      "why": "New milling/recipe records available, but exact cast-normalized yields still missing or unverified; continue original-source follow-up and old-evidence rescue.",
+      "status": "queued",
+      "inputItemID": 191465,
+      "inputName": "Saxifrage",
+      "searchTip": "Search Saxifrage milling study by name; reconcile original source lineage and seek measured completed casts, outputs by rank and refunds. Rescue irregular old evidence first. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0018",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Bubble Poppy (item 191467); known outputs [198412, 198413, 198414]",
+      "why": "New milling/recipe records available, but exact cast-normalized yields still missing or unverified; continue original-source follow-up and old-evidence rescue.",
+      "status": "queued",
+      "inputItemID": 191467,
+      "inputName": "Bubble Poppy",
+      "searchTip": "Search Bubble Poppy milling study by name; reconcile original source lineage and seek measured completed casts, outputs by rank and refunds. Rescue irregular old evidence first. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
     },
     {
       "taskID": "T0028",
@@ -395,25 +355,65 @@
       "status": "queued"
     },
     {
-      "taskID": "T0036",
-      "agent": "midnight",
-      "type": "drop",
-      "inputName": "Refulgent Copper Ore",
-      "inputItemID": 237361,
+      "taskID": "T0035",
+      "agent": "dragonflight",
+      "type": "mechanics",
+      "what": "Verify mechanics.md D1 and D2 (Dragonflight prospecting skill thresholds and ore-quality skill bonus) with a second source.",
+      "why": "the model only uses verified mechanics",
       "status": "queued",
-      "what": "Follow up the April 22, 2026 post-hotfix report: 1,000 Refulgent Copper Ore processed (~200 prospect casts), reported 10 Eversong Diamonds, 40+ each common gem and zero rare gems. Recover exact ore rank/item ID, profession skill/specialization/unlock, output identities/counts and evidence provenance; treat reported numbers as partial until verified.",
-      "why": "Potentially much larger, current-rate Midnight sample than existing 10-cast evidence; April 22 is after March 31 prospecting-rate change. Do not fabricate exact quantities from '40+' or treat this as proof of zero underlying rare-gem rate.",
-      "searchTip": "Primary source https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811 ; follow author and any corroborating posts by name. Record the stated post-hotfix period and whether the reported unlock applies to each output. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
     },
     {
-      "taskID": "T0037",
-      "agent": "midnight",
+      "taskID": "T0013",
+      "agent": "dragonflight",
       "type": "drop",
-      "inputName": "Refulgent Copper Ore",
-      "status": "queued",
-      "what": "Investigate March 26–28, 2026 prospecting post reporting 1,000 ore split across two differently equipped/specialized characters (500 each). Seek raw per-character cast and output counts, ore rank, talent allocations and gear; separately capture the 200 ore/40 cast/8 gem report if its source conditions can be identified.",
-      "why": "Rare potential paired skill/specialization comparison; pre-March-31 hotfix observations MUST NOT be pooled with newer Midnight drop rates. Quantities for the 500/500 comparison are not actually published in the thread; use as a lead, not a completed study.",
-      "searchTip": "Primary source https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780 ; contact or follow forum authors where possible, preserving character conditions and exact data dates. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+      "what": "(none) results for Prismatic Leaper (item 200061); known outputs [190320, 190322, 190328, 198412, 198413, 198414, 198415, 198416]...",
+      "why": "Item 200061 is Prismatic Leaper, a fish; it can't be milled or prospected. Probably a bad mapping copied from old TSM data.",
+      "status": "skip",
+      "inputItemID": 200061,
+      "inputName": "Prismatic Leaper",
+      "searchTip": "Search by name: \"Prismatic Leaper (none) results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/200061 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0042",
+      "agent": "legacy",
+      "type": "drop",
+      "status": "open",
+      "inputName": "Legacy prospecting/milling hit-count and histogram rescue",
+      "what": "Recover per-cast hit counts or histograms with denominators from original studies/archived spreadsheets and older SavedVariables exports for Cobalt Ore, Titanium Ore and high-volume legacy herbs. Keep item totals to support gold EV, but add castsWithDrop to measure chance.",
+      "why": "Current output has 55 measured chances across 957 estimates. Legacy 36909 Cobalt Ore material 36917 is still starting-guess only for chance. Some legacy studies are large enough to improve chance confidence if occurrence counts exist.",
+      "searchTip": "Search Cobalt Ore and Titanium Ore by name with '1000 prospects', 'gem distribution', 'drop rate sample', 'histogram', 'Looter', 'spreadsheet', 'ProspectORE', 'prospecting addon'; inspect r/woweconomy links and source archives. Preserve full cast count, outputs per cast, zero-hit casts, originalSource, date/patch and quality. Explicitly distinguish totalQuantity from castsWithDrop."
+    },
+    {
+      "taskID": "T0022",
+      "agent": "legacy",
+      "type": "drop",
+      "what": "Prospecting results for Cobalt Ore (item 36909); known outputs [36917, 36918, 36920, 36921, 36923, 36924, 36926, 36927]...",
+      "why": "New Cobalt Ore report gives 180 ore and output totals, but no explicit completed-cast or per-output hit counts; prioritize source denominator and independently mapped gem IDs.",
+      "status": "open",
+      "inputItemID": 36909,
+      "inputName": "Cobalt Ore",
+      "searchTip": "Search Cobalt Ore prospecting by name for firsthand completed-cast studies and exact gem outputs; recover original source denominators. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0029",
+      "agent": "legacy",
+      "type": "recipe",
+      "what": "Smelting recipes (ore -> bar, extra reagents) for all older expansions",
+      "why": "Nine additional historical smelting recipes were recorded; unrecorded older-expansion recipes and current Retail availability still need coverage.",
+      "status": "open",
+      "searchTip": "Search missing older-expansion smelting recipes by ore and bar names; record input counts, extra reagents and outputs, avoiding duplicates."
+    },
+    {
+      "taskID": "T0021",
+      "agent": "legacy",
+      "type": "drop",
+      "what": "Prospecting results for Titanium Ore (item 36910); known outputs [36917, 36918, 36919, 36920, 36921, 36922, 36923, 36924]...",
+      "why": "New Titanium Ore PTR source explicitly reports 144 prospects from 720 ore, alongside older denominator-unknown studies; prioritize Retail corroboration after no-cast gaps.",
+      "status": "open",
+      "inputItemID": 36910,
+      "inputName": "Titanium Ore",
+      "searchTip": "Search Titanium Ore prospecting by name for current Retail corroboration; distinguish kuraiummei's 144 PTR prospects from older source totals and avoid duplicate lineage. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
     },
     {
       "taskID": "T0038",
