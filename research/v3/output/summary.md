@@ -1,8 +1,8 @@
 # ItemDB estimates (first draft, generated)
 
 Built by `research/v3/tools/build_estimates.py` from 2,715 evidence records.
-1,094 input/material estimates; 7 records could not be placed yet (no item ID or name match).
-21 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
+1,095 input/material estimates; 7 records could not be placed yet (no item ID or name match).
+22 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
 
 | Confidence | Estimates |
 | --- | --- |
@@ -69,3 +69,4 @@ Confidence = chance the true drop chance is within +/-5 points of the number sho
 | Prospect | 237366 | 242613 | 15.0% | 0.150 | 1-1 | 11% |  | starting guess only (reference values); chance estimated from average / middle of range |
 | Prospect | 237362 | 242608 | 3.8% | 0.037 | 1-1 | 50% | Midnight Jewelcrafting prospecting specialization unlock for tin (named 'Tin-vestigator' in the old addon settings) | 800 effective study casts; 1 studies left out: unlock status not stated; chance estimated from average / middle of range |
 | Prospect | 237364 | 242608 | 5.4% | 0.054 | 1-1 | 50% | Midnight Jewelcrafting prospecting specialization unlock for silver (named 'Silver Scrapper' in the old addon settings) | 800 effective study casts; 1 studies left out: unlock status not stated; chance estimated from average / middle of range |
+| Prospect | 237366 | 242608 | 20.0% | 0.200 | 1-1 | 92% | Midnight Jewelcrafting prospecting specialization unlock for thorium (named 'Thorium Thresher' in the old addon settings) | 200 effective study casts; dated by post date only, after 2026-03-31 (collection date unknown); average estimated from chance x middle of range (provisional valuation) |
