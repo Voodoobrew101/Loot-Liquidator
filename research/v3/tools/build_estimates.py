@@ -77,7 +77,8 @@ def load():
 CORRECTABLE = {"inputItemID", "inputName", "inputRank", "outputItemID", "outputName", "outputRank",
                "method", "casts", "castsWithDrop", "totalQuantity", "percentShown", "percentMeaning",
                "averageShown", "averagePer", "minSeen", "maxSeen", "dataDate", "patch", "sourceKind",
-               "specialization", "originalSource", "inputsPerCast", "gearGroup", "exclude"}
+               "specialization", "originalSource", "inputsPerCast", "gearGroup", "exclude",
+               "sourcePublished"}  # sourcePublished sets source.published (post date, not collection date)
 
 
 def apply_corrections(rows):
@@ -107,6 +108,8 @@ def apply_corrections(rows):
             if f.get("exclude") is True:
                 continue
             r = dict(r)
+            if "sourcePublished" in f:
+                r["source"] = dict(r.get("source") or {}, published=f.pop("sourcePublished"))
             r.update({k: v for k, v in f.items() if k != "exclude"})
             r["_corrected"] = True
         out.append(r)
@@ -255,6 +258,8 @@ def epoch_weight(r, method, inp, changes):
     latest = max(applicable)
     d = study_date(r)
     if d and d >= latest:
+        if not r.get("dataDate"):
+            return 1.0, "dated by post date only, after " + latest
         return 1.0, None
     return OLD_EPOCH_WEIGHT, ("before " if d else "undated vs ") + latest
 
@@ -319,7 +324,7 @@ def build(rows):
         # ---- add studies (S6 epochs and unlocks, S7 dedupe)
         casts_p = drops = 0.0
         casts_e = total = 0.0
-        seen, skipped_unlock, old_epoch = set(), 0, None
+        seen, skipped_unlock, old_epoch, post_dated = set(), 0, None, None
         for r in g["studies"]:
             ident = study_identity(r)
             if ident in seen:
@@ -329,8 +334,10 @@ def build(rows):
                 skipped_unlock += 1   # unknown/locked studies can't measure an unlock-only drop
                 continue
             w, why = epoch_weight(r, method, inp, changes)
-            if why:
+            if why and w < 1:
                 old_epoch = why
+            elif why:
+                post_dated = why
             n = num(r.get("casts"))
             hits = num(r.get("castsWithDrop"))
             pct = chance_from_percent(r)
@@ -345,6 +352,8 @@ def build(rows):
                 casts_e += n * w; total += tot * w
             elif avg is not None:
                 casts_e += nn; total += avg * nn
+        if post_dated:
+            basis.append(post_dated + " (collection date unknown)")
         if old_epoch:
             basis.append(f"older-period data counted at {int(OLD_EPOCH_WEIGHT*100)}% ({old_epoch} rate change)")
         if skipped_unlock:
