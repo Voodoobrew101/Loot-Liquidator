@@ -50,6 +50,10 @@ does that later, the same way every time. That is how we avoid invented numbers.
      Get a name from `https://nether.wowhead.com/tooltip/item/<ID>`.
    - Wowhead item pages often don't load for automated browsing. Use search results, Reddit,
      wow-professions.com, warcraft.wiki.gg, Icy Veins, Method and guide pages instead.
+   - **Prefer pages that cover many items at once:** full prospecting, milling or disenchanting
+     tables in guides, big result posts, and wiki pages listing every ore or herb of an expansion.
+     One good table page can fill dozens of records; record every item on it, even ones outside
+     your current task, as long as they belong to your expansion.
    - A `searched` record is allowed only after **at least 6 searches across at least 3 different
      sites**, all by name, each listed in `whereLooked`. Then move straight on to the next task
      in the same run.
