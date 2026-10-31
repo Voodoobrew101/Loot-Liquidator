@@ -219,7 +219,7 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 - [ ] **C2. Borrow from a sibling** when an item has no data (other rank of the same ore; same expansion and item level band for disenchanting), shown as "Estimated from X" with low confidence.
 - [ ] **C3. Move the no-disenchant list and the old GameData estimates into ItemDB**, then delete `GameData.lua` from the addon.
 - [ ] **C4. Token list in ItemDB:** add the current Midnight Season 1 tier tokens and their rewards from public sources (Wowhead, warcraft.wiki.gg), with source links and confidence. Keep ATT as an optional fallback only.
-- [ ] **C5. Transmog for alts by armor type** — *waiting for the owner's answer* (see Owner questions).
+- [ ] **C5. Transmog for alts by armor type** — owner answered 2026-10-31: count an alt for **any** gear their armor type can wear, not just tier. Keep the existing transfer rule (`CanTransferToAlt`) and the enabled-alt list.
 - [ ] **C6. Remove ATT** (OptionalDeps, live lookups, attcache/attexport/tokenmigration commands) once C4 covers current tokens.
 
 **Phase D — Research agents (proposals only; don't edit research branches)**
@@ -235,7 +235,10 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 
 ## 8. Owner questions (keep to one or two, plain words)
 
-1. Transmog for alts: should the T badge also count an alt for ordinary gear their armor type can wear, or only for class-specific pieces like tier?
+*(none open)*
+
+Answered:
+- 2026-10-31 Transmog for alts → "any type": the T badge counts an alt for any gear their armor type can wear, not only tier/class-specific pieces (task C5).
 
 ## 9. Owner feedback from the game
 
@@ -255,6 +258,7 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 ## 11. Session log
 
 - 2026-10-31: Prompt written. Branch `LootLiquidatorclaude-V0.1` exists at `8d8753e` (same as alpha10). The test suite passes with the lupa wrapper. Nothing changed in the addon yet.
+- 2026-10-31: Owner answered the transmog question ("any type"); recorded under C5.
 - 2026-10-31 (session 1, v0.11.0-claude.1): Set up the workspace (S1). The addon now uses rough estimates and older data at low weight instead of hiding them (A1), and the old disenchant tables are switched on, so disenchanting gives answers again. When some materials can't be priced, the option still shows a value marked "partial" with lower confidence (A2). Found and fixed a problem where a rough guess could push better data out. Automated tests pass; needs an in-game check.
 
 ---
