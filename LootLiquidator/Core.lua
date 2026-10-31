@@ -32,6 +32,8 @@ local defaults = {
     manualMilling=false,manualProspecting=false,
     manualSmelting=false,manualDisenchanting=false,
     enableLearnedRecipeDiscovery = true, includeVerifiedAlts = true,
+    -- B5a: "Show rates for": 1 me, 2 a chosen alt, 3 a what-if profile.
+    rateProfile = 1, rateProfileCharacter = "",
     minConversionExtraGold = 0, minReagentProfitGold = 0, minGearProfitGold = 0,
     appearance = { position="TOPRIGHT", fontSize=14, colors={} }, characters = {},
     -- A hard floor per bag stack, not per reagent. Equipment needs higher profit.

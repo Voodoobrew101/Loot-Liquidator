@@ -140,6 +140,23 @@ c=LL:ProcessingPlayerConditions(f,'Prospect',444,'Alt - Realm');eq(c.effectiveSk
 LL.db.processingModes.P=1
 c=LL:ProcessingPlayerConditions(f,'Prospect',444,'Alt - Realm');eq(c.effectiveSkill,40);check(not c.simulated)
 check(not LL:SetManualProfessionProfile('Alt - Realm','Jewelcrafting',11,{enabled=true,skill=-2}))
+-- B5a: "Show rates for" picks whose skill sets the rates, never who does the work.
+LL.db.processingModes.P=2;LL._processingContextCache=nil
+LL.db.rateProfile=2;LL.db.rateProfileCharacter='Alt - Realm'
+c=LL:ProcessingPlayerConditions(f,'Prospect',444,'Tester - Realm')
+eq(c.character,'Alt - Realm');eq(c.effectiveSkill,40);eq(c.profileKind,'offline-snapshot');check(not c.simulated)
+LL.db.rateProfileCharacter='Deleted - Realm';LL._processingContextCache=nil
+c=LL:ProcessingPlayerConditions(f,'Prospect',444,'Tester - Realm');eq(c.character,'Tester - Realm');eq(c.effectiveSkill,85)
+LL.db.rateProfile=3;LL.db.rateProfileCharacter='Alt - Realm';LL._processingContextCache=nil
+c=LL:ProcessingPlayerConditions(f,'Prospect',444,'Tester - Realm')
+check(c.simulated,'what-if works without Manual mode');eq(c.effectiveSkill,90);eq(c.profileKind,'manual-simulation')
+check(LL:SetManualProfessionProfile('Alt - Realm','Jewelcrafting',11,{enabled=false,skill=90,specialization='12=5'}))
+LL._processingContextCache=nil
+c=LL:ProcessingPlayerConditions(f,'Prospect',444,'Tester - Realm');check(not c.simulated,'switched-off what-if profile is not used')
+LL.db.rateProfileCharacter='';LL._processingContextCache=nil
+local who,whatIf=LL:RateProfileTarget('Alt - Realm');eq(who,'Tester - Realm');check(whatIf)
+LL.db.rateProfile=1;who,whatIf=LL:RateProfileTarget('Alt - Realm');eq(who,'Alt - Realm');check(not whatIf)
+LL.db.rateProfile=nil;LL.db.rateProfileCharacter=nil;LL._processingContextCache=nil
 -- Verified transformations can bridge only explicitly covered source conditions.
 LL.ProcessingPlayerConditions=function() return {skill=100,effectiveSkill=100,inputQuality=2,character='Tester - Realm',profileKind='live'} end
 local reference=record('itemdb','numeric',2,.5,1,5)

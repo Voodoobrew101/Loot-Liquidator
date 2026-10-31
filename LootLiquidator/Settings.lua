@@ -536,7 +536,7 @@ function LL:CreateProfessionProfilePanel(profession)
     local status=label("",-132)
     local enabled=LL:CreateSettingsCheckbox(panel)
     enabled:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-192)
-    local enabledLabel=label("Use this simulation (requires Manual mode in Professions & Alts)",-194)
+    local enabledLabel=label("Use this what-if profile (when \"Show rates for\" is \"What-if profile\")",-194)
     enabledLabel:ClearAllPoints();enabledLabel:SetPoint("LEFT",enabled,"RIGHT",6,0)
     enabled:SetScript("OnClick",function(self) update(function(p) p.enabled=self:GetChecked()==true end) end)
     local known=LL:CreateSettingsCheckbox(panel)
@@ -620,6 +620,56 @@ function LL:CreateProfessionProfilePanel(profession)
     return panel
 end
 
+-- B5a: one simple choice of whose profession skill sets the rates. Uses only
+-- Blizzard's own Settings dropdowns. Who can do the work is unchanged.
+function LL:RateProfileCharacterChoices()
+    local rows={{"","This character"}}
+    local keys={}
+    for key,entry in pairs(self.db and self.db.characters or {}) do
+        if type(entry)=="table" then keys[#keys+1]=key end
+    end
+    table.sort(keys)
+    for _,key in ipairs(keys) do
+        local label=key
+        if key==(self.CharacterKey and self:CharacterKey()) then label=key.." (this character)" end
+        rows[#rows+1]={key,label}
+    end
+    return rows
+end
+function LL:AddRateProfileSettings(category,layout)
+    Section(layout,"Rates")
+    local mode=Settings.RegisterAddOnSetting(category,"LootLiquidator_rateProfile",
+        "rateProfile",self.db,"number","Show rates for",1)
+    local character=Settings.RegisterAddOnSetting(category,"LootLiquidator_rateProfileCharacter",
+        "rateProfileCharacter",self.db,"string","Character","")
+    for _,setting in ipairs({mode,character}) do
+        if setting.SetValueChangedCallback then
+            setting:SetValueChangedCallback(function()
+                if LL.Invalidate then LL:Invalidate("rateProfile") end
+                LL:UpdateAllAppearance()
+            end)
+        end
+    end
+    local modeInit=Settings.CreateDropdown(category,mode,function()
+        local out=Settings.CreateControlTextContainer()
+        out:Add(1,"Me","Use the skill of whoever would do the work: you, or the alt it can be sent to.")
+        out:Add(2,"A chosen alt","Always use the character picked below, as if they did the work.")
+        out:Add(3,"What-if profile","Use the what-if skill and specialization saved for the character below (Professions pages).")
+        return out:GetData()
+    end,"Whose profession skill is used to estimate milling, prospecting, smelting and disenchanting results. This never changes who can actually do it.")
+    self:WithoutDropdownSteppers(modeInit)
+    local charInit=Settings.CreateDropdown(category,character,function()
+        local out=Settings.CreateControlTextContainer()
+        for _,row in ipairs(LL:RateProfileCharacterChoices()) do out:Add(row[1],row[2]) end
+        return out:GetData()
+    end,"The alt (or what-if profile) used when \"Show rates for\" is not \"Me\". Characters appear here after you log into them once.")
+    self:WithoutDropdownSteppers(charInit)
+    if charInit and charInit.SetParentInitializer then
+        charInit:SetParentInitializer(modeInit,function() return (LL.db.rateProfile or 1)~=1 end)
+    end
+    return modeInit,charInit
+end
+
 -- Settings are grouped by user intent, not by the Lua module providing them.
 -- Crucially each SavedVariables key is registered exactly once so existing
 -- profiles and preferences survive moving a control to another page.
@@ -634,6 +684,7 @@ function LL:RegisterNativeSettings()
     Section(generalLayout,"General")
     Checkbox(general,"enabled","Enable Loot Liquidator",
         "Analyze items and recommend the most valuable available action.",true)
+    self:AddRateProfileSettings(general,generalLayout)
     Section(generalLayout,"Use the pages on the left for badge appearance, tooltips, pricing, and addon integrations.")
 
     local appearancePanel=AppearancePanel()

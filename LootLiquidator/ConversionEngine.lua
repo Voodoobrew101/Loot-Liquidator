@@ -20,15 +20,32 @@ local function sameCondition(a,b)
     for key in pairs(b) do if a[key]==nil then return false end end
     return true
 end
+-- B5a: "Show rates for" (rateProfile): 1 me (whoever does the work, the
+-- default), 2 a chosen alt, 3 a what-if profile. Returns the character whose
+-- skill/specialization sets the rates, and whether the what-if profile applies.
+-- It never changes WHO can do the work (CanUseConversion and CanTransferToAlt).
+function LL:RateProfileTarget(performer)
+    local current=self.CharacterKey and self:CharacterKey()
+    local own=(performer and performer~="Current character") and performer or current
+    local db=self.db
+    local mode=db and db.rateProfile
+    if mode~=2 and mode~=3 then return own,false end
+    local chosen=db.rateProfileCharacter
+    local known=type(chosen)=="string" and type(db.characters)=="table"
+        and type(db.characters[chosen])=="table"
+    if mode==2 then return known and chosen or own,false end
+    return known and chosen or current,true
+end
 function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local profession=self.ProfessionForMethod and self:ProfessionForMethod(method)
     local current=self.CharacterKey and self:CharacterKey()
-    local key=(character and character~="Current character") and character or current
+    local key,whatIf=self:RateProfileTarget(character)
     local record=self.db and self.db.characters and self.db.characters[key]
     local modeKey=processingMethodLetters[method]
     local modeValue=modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)
     local contextKey=table.concat({tostring(key),tostring(profession),tostring(f and f.id),
-        tostring(f and f.expansionID),tostring(f and f.reagentQuality),tostring(recipeID),tostring(modeValue)},":")
+        tostring(f and f.expansionID),tostring(f and f.reagentQuality),tostring(recipeID),tostring(modeValue),
+        tostring(whatIf)},":")
     local now=GetTime and GetTime() or 0
     self._processingContextCache=self._processingContextCache or {}
     local cached=self._processingContextCache[contextKey]
@@ -90,7 +107,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local snapshotNow=time and time()
     ctx.stale=ctx.profileKind=="offline-snapshot" and (not ctx.observed or (snapshotNow and snapshotNow-ctx.observed>7*86400)) or false
     ctx.incomplete=not validNumber(ctx.effectiveSkill) or not ctx.specialization
-    local simulated=manual and self.GetManualProfessionProfile and
+    local simulated=(manual or whatIf) and self.GetManualProfessionProfile and
         self:GetManualProfessionProfile(key,profession,f and f.expansionID)
     if simulated and simulated.enabled then
         ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
@@ -125,8 +142,9 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
     -- The active client's gear and skill cannot be imputed to an offline alt.
     local current=self.CharacterKey and self:CharacterKey()
     local ctx
-    if option.character and option.character~="Current character"
-        and option.character~=current then
+    local target,whatIf=option.character,false
+    if self.RateProfileTarget then target,whatIf=self:RateProfileTarget(option.character) end
+    if whatIf or (target and target~="Current character" and target~=current) then
         ctx=self.ProcessingPlayerConditions and self:ProcessingPlayerConditions(f,option.name,option.recipeID,option.character)
         if not ctx or ctx.stale or ctx.incomplete or
             (ctx.profileKind~="offline-snapshot" and ctx.profileKind~="manual-simulation") then return baseline end
