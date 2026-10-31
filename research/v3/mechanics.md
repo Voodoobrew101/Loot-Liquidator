@@ -23,7 +23,7 @@ Agents: add sources, correct statuses, and add missing mechanics with a `flags.j
 | M8 | Milling cannot Multicraft. | verified | wow-professions.com Midnight Inscription guide and specialization guide |
 | M9 | Resourcefulness applies to milling (saves herbs). | verified | wow-professions.com Midnight Inscription guide ("keep a Resourcefulness tool for milling") |
 | M10 | Resourcefulness applies to prospecting (saves ore). | likely | wow-professions.com Midnight Jewelcrafting prospecting build (Phase 2 "Resourcefulness and Skill") |
-| M11 | Multicraft applies to prospecting. | conflicting | wow-professions.com prospecting build starts with Multicraft points; milling explicitly can't. Needs a direct source. |
+| M11 | Multicraft applies to prospecting. | likely | wow-professions.com prospecting build starts with Multicraft points; the owner thinks so too (doesn't prospect personally). Milling explicitly can't. Still needs a direct source; the addon's craft recorder also logs Multicraft procs, which would settle it. |
 | M12 | Disenchanting results depend on skill and the Disenchanting Delegate specialization (more and better materials). | verified | wow-professions.com Midnight Enchanting specialization guide; dving.net Midnight Enchanting guide |
 | M13 | Resourcefulness, Ingenuity and Multicraft do not change disenchanting. | likely | dving.net Midnight Enchanting guide (single source) |
 | M14 | Rate change: gems found more regularly from Midnight ore after March 31, 2026. | verified | Blizzard hotfix list (see rate-changes.jsonl) |
