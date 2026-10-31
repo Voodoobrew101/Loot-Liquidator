@@ -46,6 +46,7 @@ Loot Liquidator looks at every item in your bags, bank, Warband bank, guild bank
 13. **Public CurseForge release.** The owner may not come back often, so make it future-proof, and keep a clear written path in the repo for prompting an AI to update the addon after a patch.
 14. **Accuracy target:** about ±5% on yields and drop chances is acceptable. Yield ranges are small whole numbers (usually 1–4): just record the smallest and largest seen.
 15. **Never throw data away.** Weak or old evidence counts for less instead of being rejected. Only a number with no source at all is left out.
+16. **Baseline + scaling (owner, 2026-10-31):** ItemDB ships a *baseline* per item/method = roughly what a player with the **minimum required skill** (no optional bonuses) gets. The addon *calculates up* from it with the player's relevant numbers (skill above minimum, Resourcefulness, Multicraft, spec points, profession gear). Both the baselines and the scaling rules are worked out **by research before ItemDB is compiled** (script in D1b), never hand-typed. Research rules run with their confidence shown, like estimates (C7).
 
 ### Recommended data model (from the study notes, use it)
 
@@ -174,7 +175,7 @@ Rules for tests:
 - If you change data in `database/`, rebuild with `lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua` (the test suite checks the compiled file matches).
 - `python3 tools/package_addon.py` (check its usage) builds the installable zip.
 - Research files under `database/research/` (except `itemdb.lua`) are not compiled. Two tests guard them: `tests/test_disenchant_gaps.lua` (the gap list must match ItemDB exactly) and `tests/test_token_research.py` (token research stays NOT_REVIEWED and out of `database/records.lua`).
-- Web pages: WebFetch of wowhead.com and some warcraft.wiki.gg pages asks the owner for approval; if nobody answers, don't retry in that session. WebSearch works without approval, and result URLs often contain item IDs.
+- Web pages: WebFetch of wowhead.com and some warcraft.wiki.gg pages asks the owner for approval; if nobody answers, don't retry in that session. Since session 9 the starter message names both sites and gives permission, so pages on those sites should open; if the app still shows an approval prompt, the owner just clicks allow. WebSearch works without approval, and result URLs often contain item IDs.
 
 ## 6. How each session works
 
@@ -239,7 +240,8 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 **Phase D — Research agents (proposals only; don't edit research branches)**
 
 - [x] **D1.** (`6909470`) Proposal written. Note: the five-agent prompts live on `implementation/five-agent-completion` (also `integration/research-current`), not on the research branches. Original task:
-- [ ] **D1b. (waiting on owner saying yes to D1)** Build the evidence script (`tools/evidence_to_itemdb.*`, proposal section 6), a starting `research/evidence/v3/QUEUE.md`, and paste-ready text for the five automations.
+- [ ] **D1b. Evidence script** (owner agreed 2026-10-31, with decision 16). Split into small steps: (1) record format checker for `research/evidence/v3/` (proposal section 3/3b) + tests; (2) counts → baseline counts per item at minimum skill, writing ItemDB source counts that `tools/compile_itemdb.lua` picks up; (3) simple scaling-rule fits into `mechanicRules`; (4) starting `research/evidence/v3/QUEUE.md`; (5) paste-ready text for the five automations (proposal section 4).
+- [ ] **C7. Let research scaling rules run.** The scaling adapter (rules in ItemDB `mechanicRules`, gate `approved()` at the top of `ProfessionModels.lua` (~line 17), applied via ConversionEngine/Database; audit `tools/audit_profession_scaling.lua`, docs/profession-scaling-audit.md) only runs "approved" rules and ships zero. Per decisions 1 and 16, run research rules with their confidence (lower the option's confidence), keep the "no double scaling" and "fresh skill beats old gear bonus" guards. Change the strict tests on purpose and say why. Needs at least one real rule from D1b to be useful, but the gate change can come first with a synthetic test.
   - (D1 original task text, done:) Write `claude/research-agent-proposal.md`: simpler prompts for the five agents. Agents submit evidence records only (source link, raw counts, date, patch), lowest-confidence items first; a script computes rates and confidence; no hand-written final numbers. The owner decides whether to apply it to `research/prompts/five-agent/`.
 - [ ] **D2. GitHub Action** on this branch that runs `tests/run.sh` (using the lupa wrapper) on every push.
 
@@ -251,13 +253,13 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 
 ## 8. Owner questions (keep to one or two, plain words)
 
-- (2026-10-31, session 9, open) I wrote a plan to make your five research helpers simpler: they would only collect real counts with a link, and the addon works out the numbers itself (`claude/research-agent-proposal.md`). Do you want to switch them over to it?
 
 - (2026-10-31, session 3, open) Taking out TSM's old table left 97 herbs and ores, mostly from older expansions, with no milling or prospecting numbers. Should I keep those old numbers inside the addon's own database as low-confidence "old estimates", or leave them out until real research covers them?
 - (2026-10-31, session 7, open) Confidence numbers will now often look lower than before, because they count how many real casts are behind each number. Is that fine, or would you rather see a simple word like "rough / fair / good" instead of a percentage?
 - (2026-10-31, open) Gear tokens (tier tokens) still show "?" because we don't yet know what they're worth. Would you rather they show "?" or no badge at all until C4 adds token data?
 
 Answered:
+- 2026-10-31 Simpler research helpers → yes, with a change: ItemDB gets a minimum-skill baseline and the addon calculates up with the player's skill/stats; research works out baselines and scaling rules before compiling (decision 16; proposal revised; tasks D1b, C7).
 - 2026-10-31 Transmog for alts → "any type": the T badge counts an alt for any gear their armor type can wear, not only tier/class-specific pieces (task C5).
 
 ## 9. Owner feedback from the game
@@ -308,6 +310,7 @@ Still worth checking from earlier sessions: the "Show rates for" dropdown; the E
 
 ## 11. Session log
 
+- 2026-10-31 (session 9, continued): You answered the research-helpers question: the database should hold what a minimum-skill player gets, and the addon should calculate up from your skill and stats, with both worked out by research first. Recorded as decision 16; the plan and tasks (D1b, C7) now follow it.
 - 2026-10-31 (session 9, v0.11.0-claude.10): No addon behaviour changed. Wrote down the 35 kinds of old gear the addon has no disenchant numbers for, as a to-do list for research, with a check that keeps the list up to date (C2b). Collected the layout of all 20 Midnight Season 1 tier tokens and the omni-token from public pages; most item IDs still need Wowhead pages that need your approval to open, so they're left blank rather than guessed (C4a, rest is C4a2). Wrote a plan to simplify your five research helpers (D1). Automated tests pass; needs an in-game check.
 
 - 2026-10-31 (session 8, v0.11.0-claude.9): The addon now has one database: the old disenchant estimates and the "can't be disenchanted" list moved inside it, and two separate data files are gone; the numbers are exactly the same (C3). The transmog badge now counts an alt for any armor their armor type can wear, not only tier pieces, as you asked (C5). Gear token data (C4) needs Wowhead pages I couldn't open without your approval, so it's split into collecting the data (C4a) and checking it before it goes in (C4b). Automated tests pass; needs an in-game check.
@@ -329,4 +332,4 @@ Still worth checking from earlier sessions: the "Show rates for" dropdown; the E
 
 > Start this chat with the GitHub repo **Voodoobrew101/Loot-Liquidator** selected, then paste:
 >
-> Continue the Loot Liquidator work. Clone https://github.com/Voodoobrew101/Loot-Liquidator, check out branch `LootLiquidatorclaude-V0.1`, open `claude/HANDOFF.md` and follow it exactly. Go.
+> Continue the Loot Liquidator work. Clone https://github.com/Voodoobrew101/Loot-Liquidator, check out branch `LootLiquidatorclaude-V0.1`, open `claude/HANDOFF.md` and follow it exactly. You have my permission to open pages on https://www.wowhead.com/ and https://warcraft.wiki.gg/ for research (item IDs, token rewards, drop data). Go.
