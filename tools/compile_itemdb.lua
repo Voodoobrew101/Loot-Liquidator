@@ -175,15 +175,41 @@ local function contextMatches(actual, expected)
 end
 local function contains(list,value) for _,v in ipairs(list or {}) do if v==value then return true end end return false end
 local approvedIDs={}
+db.buildReport.mechanicRulesSkipped={}
+-- C7b (owner decisions 1, 15, 16): a research mechanic is compiled at its stated
+-- confidence when it names at least one source, like professionRules (C7). It is
+-- marked APPROVED only when the research export itself carries a full review;
+-- this builder never writes an approval of its own. A rule that is switched off
+-- or has no usable source is skipped with a reason (buildReport) instead of
+-- failing the build; a malformed formula or context still fails it.
+local function mechanicEvidence(rule)
+    local c=rule.confidence0to100
+    if rule.applyPolicy=='DISABLED' or rule.applyPolicy=='NO_NUMERIC_TRANSFORM' then return nil,'switched off ('..tostring(rule.applyPolicy)..')' end
+    if rule.evidenceStatus=='REJECTED' then return nil,'rejected by research' end
+    if type(c)~='number' or c~=c or c<0 or c>100 then return nil,'invalid confidence' end
+    if type(rule.sources)~='table' or #rule.sources<1 then return nil,'no source' end
+    local seen={}
+    for _,source in ipairs(rule.sources) do
+        local id=type(source)=='table' and source.claimID
+        if type(id)~='string' or id=='' then return nil,'source without claimID' end
+        if seen[id] then return nil,'same source listed twice: '..id end
+        seen[id]=true
+    end
+    local review=rule.independentReview
+    return rule.applyPolicy=='VERIFIED_FOR_COMPILE' and rule.evidenceStatus=='VERIFIED_NUMERIC'
+        and rule.numericTransformValidated==true and c>=90 and #rule.sources>=2
+        and type(review)=='table' and review.reviewer
+        and type(review.passedTestIDs)=='table' and #review.passedTestIDs>0
+end
 for _,rule in ipairs(research.mechanicRules or {}) do
     local label=tostring(rule.ruleID)
-    assert(not approvedIDs[label],'Duplicate approved mechanic '..label);approvedIDs[label]=true
-    assert(rule.applyPolicy=='VERIFIED_FOR_COMPILE' and rule.evidenceStatus=='VERIFIED_NUMERIC'
-        and rule.numericTransformValidated==true and (rule.confidence0to100 or 0)>=90
-        and type(rule.sources)=='table' and #rule.sources>=2
-        and type(rule.independentReview)=='table' and rule.independentReview.reviewer
-        and type(rule.independentReview.passedTestIDs)=='table' and #rule.independentReview.passedTestIDs>0,
-        'Unapproved ItemDB mechanic '..label)
+    assert(not approvedIDs[label],'Duplicate research mechanic '..label);approvedIDs[label]=true
+    local reviewed,why=mechanicEvidence(rule)
+    if reviewed==nil then
+        local skipped=db.buildReport.mechanicRulesSkipped
+        skipped[#skipped+1]={ruleID=label,reason=why}
+        print('Mechanic rule skipped: '..label..': '..why)
+    else
     local expectedFormula=({OUTPUT_UNCONDITIONAL_EXPECTATION='RATIO_ADJUSTMENT',OUTPUT_OCCURRENCE='RATIO_ADJUSTMENT_OCCURRENCE'})[rule.effectTarget]
     assert(expectedFormula and rule.formulaID==expectedFormula,'Unsupported approved mechanic '..label)
     local scope,reference,target=rule.scope,rule.referenceContext,rule.targetContext
@@ -210,13 +236,16 @@ for _,rule in ipairs(research.mechanicRules or {}) do
                 inputQualityRank=record.inputQualityRank,sourceBuild=reference.build,targetBuild=target.build,
                 sourceReferenceContextID=record.referenceContextID,targetConditions=targetConditions,
                 effectTarget=rule.effectTarget,formulaID='MULTIPLY',parameters={multiplier=factor},
-                evidenceStatus='VERIFIED_NUMERIC',applyPolicy='EXECUTE',applies='VERIFIED_APPLIES',
-                confidence0to100=rule.confidence0to100,numericTransformValidated=true,independentReview='APPROVED',sourceClaimIDs={}}
+                evidenceStatus=reviewed and 'VERIFIED_NUMERIC' or tostring(rule.evidenceStatus or 'UNREVIEWED'),
+                applyPolicy='EXECUTE',applies='VERIFIED_APPLIES',
+                confidence0to100=rule.confidence0to100,numericTransformValidated=rule.numericTransformValidated==true,
+                independentReview=reviewed and 'APPROVED' or 'NOT_REVIEWED',sourceClaimIDs={}}
             for _,source in ipairs(rule.sources) do translated.sourceClaimIDs[#translated.sourceClaimIDs+1]=assert(source.claimID) end
             db.mechanicRules[#db.mechanicRules+1]=translated;matched=matched+1
         end
     end
-    assert(matched>0,'Approved mechanic has no compatible baseline mapping: '..label)
+    assert(matched>0,'Research mechanic has no compatible baseline mapping: '..label)
+    end
 end
 local models=assert(loadfile('database/profession-models.lua'))()
 assert(models.schemaVersion==1,'Unsupported profession model schema')
@@ -255,9 +284,8 @@ end
 table.sort(db.tokenRewards,function(a,b) return a.recordID<b.recordID end)
 for _,r in ipairs(additions.processing or {}) do db.processing[#db.processing+1]=r end
 for _,r in ipairs(additions.mechanicRules or {}) do
-    assert(r.evidenceStatus=='VERIFIED_NUMERIC' and r.applyPolicy=='EXECUTE' and r.numericTransformValidated==true
-        and type(r.sourceClaimIDs)=='table' and #r.sourceClaimIDs>0 and r.independentReview=='APPROVED',
-        'Mechanics require numerical validation and independent approval')
+    assert(r.applyPolicy=='EXECUTE' and type(r.sourceClaimIDs)=='table' and #r.sourceClaimIDs>0,
+        'Mechanics need applyPolicy EXECUTE and at least one source')
     db.mechanicRules[#db.mechanicRules+1]=r
 end
 -- D1b step 2: baseline counts generated from research/evidence/v3 by
@@ -357,7 +385,7 @@ end
 LL.ItemDB=db
 assert(loadfile('LootLiquidator/ProfessionModels.lua'))('LootLiquidator',LL)
 for _,rule in ipairs(db.mechanicRules) do
-    assert(LL:IsApprovedNumericRule(rule),'Mechanic failed shared numeric evidence gate: '..tostring(rule.ruleID))
+    assert(LL:IsUsableProfessionRule(rule),'Mechanic failed shared evidence gate (source, confidence): '..tostring(rule.ruleID))
 end
 local validModels,modelError=LL:ValidateProfessionRules(db)
 assert(validModels,modelError)

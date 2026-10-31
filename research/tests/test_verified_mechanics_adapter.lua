@@ -67,14 +67,35 @@ eq(c.materials[1].maxQuantity,6,"verified maximum")
 -- A probability may be updated independently, only from measured baseline.
 g.mechanicRules={rule("OUTPUT_OCCURRENCE",21,"MULTIPLY",{multiplier=2})}
 eq(evaluate().materials[2].chance,.1,"proxy chance must not be scaled")
+-- C7b (owner decisions 1, 15, 16; changed on purpose): rules that are not
+-- reviewed, under 90% or backed by one source used to be blocked. They now run,
+-- their confidence caps the numbers they change, and the model is flagged
+-- unreviewedRule so the tooltip says "research rule, not yet reviewed".
+local runsWithConfidence={
+    {function(r) r.evidenceStatus="VERIFIED_QUALITATIVE" end,95},
+    {function(r) r.confidence0to100=79 end,79},
+    {function(r) r.sourceClaimIDs={"single-claim"} end,95},
+    {function(r) r.independentReview=nil end,95},
+    {function(r) r.numericTransformValidated=false end,95},
+    {function(r) r.confidence0to100=48 end,48},
+}
+for i,case in ipairs(runsWithConfidence) do
+    local r=rule("OUTPUT_UNCONDITIONAL_EXPECTATION",20,"MULTIPLY",{multiplier=1.5})
+    case[1](r)
+    g.mechanicRules={r}
+    local m=evaluate()
+    eq(m.materials[1].expectedQuantity,3,"research rule "..i.." runs")
+    eq(m.materials[1].transformConfidence,case[2],"research rule "..i.." caps confidence")
+    eq(m.unreviewedRule,true,"research rule "..i.." is flagged unreviewed")
+end
+g.mechanicRules={e}
+eq(evaluate().unreviewedRule,nil,"an approved rule is not flagged unreviewed")
 local negative={
-    function(r) r.evidenceStatus="VERIFIED_QUALITATIVE" end,
-    function(r) r.confidence0to100=79 end,
     function(r) r.sourceClaimIDs={} end,
-    function(r) r.sourceClaimIDs={"single-claim"} end,
-    function(r) r.independentReview=nil end,
-    function(r) r.numericTransformValidated=false end,
-    function(r) r.confidence0to100=89 end,
+    function(r) r.sourceClaimIDs={"same","same"} end,
+    function(r) r.confidence0to100=101 end,
+    function(r) r.applyPolicy="DISABLED" end,
+    function(r) r.evidenceStatus="REJECTED" end,
     function(r) r.sourceBuild="wrong-era" end,
     function(r) r.targetBuild="wrong-build" end,
     function(r) r.sourceReferenceContextID="other-cohort" end,

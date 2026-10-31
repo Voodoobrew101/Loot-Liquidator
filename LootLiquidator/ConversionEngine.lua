@@ -132,6 +132,13 @@ end
 -- A build step may populate ItemDB.mechanicRules only after a rule
 -- has passed recipe-specific numerical validation. Unknown means no transform.
 -- This lives in the existing conversion engine to avoid another runtime module.
+local function usableRule(self,rule)
+    if self.IsUsableProfessionRule then return self:IsUsableProfessionRule(rule) end
+    return self.IsApprovedNumericRule and self:IsApprovedNumericRule(rule) or false
+end
+local function capConfidence(material,rule)
+    material.transformConfidence=math.min(material.transformConfidence or 100,rule.confidence0to100 or 0)
+end
 function LL:ApplyVerifiedMechanics(f,option,baseline)
     if baseline and (baseline.sourceKey=='legacy' or baseline.sourceKey=='personal') then return baseline end
     if baseline and baseline.mechanicsApplied then return baseline end
@@ -156,7 +163,10 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
     local eligible={}
     local duplicates={}
     for _,rule in ipairs(rules) do
-        if self.IsApprovedNumericRule and self:IsApprovedNumericRule(rule)
+        -- C7b (owner decisions 1, 15, 16): same gate as professionRules. A
+        -- research rule runs at its stated confidence (which caps the numbers
+        -- it touches); only an unsourced, invalid or switched-off rule is skipped.
+        if usableRule(self,rule)
             and rule.applies=="VERIFIED_APPLIES"
             and rule.method==option.name and rule.recipeID==option.recipeID
             and rule.recipeID~=nil and rule.inputItemID==f.id
@@ -212,6 +222,7 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
         end
     end
     local changed,materials=0,{}
+    local used={}
     for _,original in ipairs(baseline.materials) do
         local material={}
         for k,v in pairs(original) do material[k]=v end
@@ -228,7 +239,7 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
             and validNumber(original.expectedQuantity) then
             material.expectedQuantity=original.expectedQuantity*expectation.parameters.multiplier
             material.quantityBasis="verified build/context-specific numeric transform"
-            material.transformConfidence=expectation.confidence0to100
+            capConfidence(material,expectation);used[expectation]=true
             material.appliedExpectationRule=expectation.ruleID
             -- Old occurrence/ranges may not hold under a yield-changing rule.
             material.chance=nil;material.minQuantity=nil;material.maxQuantity=nil
@@ -246,6 +257,7 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
                 end
                 material.probabilityBasis="verified numeric occurrence transform"
                 material.appliedProbabilityRule=probability.ruleID
+                capConfidence(material,probability);used[probability]=true
                 changed=changed+1
             end
         end
@@ -254,6 +266,7 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
             material.maxQuantity=bounds.parameters.maxQuantity
             material.yieldBasis="verified conditional bounds at current build"
             material.appliedRangeRule=bounds.ruleID
+            capConfidence(material,bounds);used[bounds]=true
             changed=changed+1
         end
         local e,p,lo,hi=material.expectedQuantity,material.chance,material.minQuantity,material.maxQuantity
@@ -264,8 +277,8 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
     local timeRule=not duplicates.OPERATION_DURATION and eligible.OPERATION_DURATION
     local inputCount=inputRule and baseline.inputCount and baseline.inputCount*inputRule.parameters.multiplier
     local duration=timeRule and baseline.duration and baseline.duration*timeRule.parameters.multiplier
-    if inputCount then changed=changed+1 end
-    if duration then changed=changed+1 end
+    if inputCount then changed=changed+1;used[inputRule]=true end
+    if duration then changed=changed+1;used[timeRule]=true end
     if changed==0 then return baseline end
     local result={}
     for k,v in pairs(baseline) do result[k]=v end
@@ -274,7 +287,11 @@ function LL:ApplyVerifiedMechanics(f,option,baseline)
     result.duration=duration or baseline.duration
     result.mechanicsRuleCount=changed
     result.mechanicsApplied=true
-    result.source=(baseline.source or "compiled reference").." + verified mechanics"
+    for rule in pairs(used) do
+        result.ruleConfidence=math.min(result.ruleConfidence or 100,rule.confidence0to100 or 0)
+        if not (self.IsApprovedNumericRule and self:IsApprovedNumericRule(rule)) then result.unreviewedRule=true end
+    end
+    result.source=(baseline.source or "compiled reference")..(result.unreviewedRule and " + research mechanics" or " + verified mechanics")
     return result
 end
 

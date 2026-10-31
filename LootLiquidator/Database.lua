@@ -445,7 +445,7 @@ local function sourceModel(self,f,option,r)
     if self.ApplyProfessionModel then model=self:ApplyProfessionModel(f,option,model) end
     if model.professionProjected then return model end
     local verified=self.ApplyVerifiedMechanics and self:ApplyVerifiedMechanics(f,option,model) or model
-    if verified~=model and verified.mechanicsApplied then verified.adjustment='character-adjusted' end
+    if verified~=model and verified.mechanicsApplied then verified.adjustment='character-adjusted'..(verified.unreviewedRule and ' / research rule, not yet reviewed' or '') end
     return verified
 end
 -- C2: borrow from a sibling. The same herb or ore at another quality rank is a

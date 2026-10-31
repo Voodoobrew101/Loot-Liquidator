@@ -32,7 +32,7 @@ function LL:IsApprovedNumericRule(rule) return approved(rule) end
 -- carry that confidence as a cap (transformConfidence). Only a rule with no
 -- source, an invalid confidence, or one switched off is left out.
 local function usable(r)
-    if type(r)~='table' or r.applyPolicy=='DISABLED' or r.evidenceStatus=='REJECTED'
+    if type(r)~='table' or r.applyPolicy=='DISABLED' or r.applyPolicy=='NO_NUMERIC_TRANSFORM' or r.evidenceStatus=='REJECTED'
         or not finite(r.confidence0to100) or r.confidence0to100>100
         or type(r.sourceClaimIDs)~='table' or #r.sourceClaimIDs<1 then return false end
     local seen={}

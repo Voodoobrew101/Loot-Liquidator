@@ -151,14 +151,38 @@ m=assert(model(LL,adjusted));check(m.mechanicsApplied,'registry rule executes at
 near(m.materials[1].expectedQuantity,2);near(m.materials[2].expectedQuantity,2)
 near(research.processing[1].expectedQuantity.value,1)
 check(#LL.ItemDB.mechanicRules==2,'scoped rule expands to both concrete output profiles')
+check(LL.ItemDB.mechanicRules[1].independentReview=='APPROVED','a full research review stays APPROVED')
+check(m.adjustment=='character-adjusted','reviewed rule has no "not yet reviewed" label')
+-- C7b (owner decisions 1, 15, 16; changed on purpose): a badly sourced or
+-- switched-off rule used to fail the whole build. It is now skipped with a
+-- reason in buildReport.mechanicRulesSkipped and the build carries on.
 approved.sources[2].claimID='synthetic-independent-a'
-check(not compile(),'duplicate claims fail shared compiler evidence gate')
+check(compile(),'duplicate claims no longer fail the build');LL=runtime()
+check(#LL.ItemDB.mechanicRules==0 and LL.ItemDB.buildReport.mechanicRulesSkipped[1].reason:find('twice'),'duplicate claims skipped with a reason')
 approved.sources[2].claimID='synthetic-independent-b'
-approved.formulaID='UNSUPPORTED';check(not compile(),'unsupported approved rule fails build')
+approved.formulaID='UNSUPPORTED';check(not compile(),'unsupported rule formula still fails build')
 approved.formulaID='RATIO_ADJUSTMENT';approved.referenceContext.effectiveSkill=999
 check(not compile(),'unmatched source baseline fails build')
 approved.referenceContext.effectiveSkill=50;approved.applyPolicy='NO_NUMERIC_TRANSFORM'
-check(not compile(),'unapproved exported rule rejected')
+check(compile(),'switched-off rule does not fail the build');LL=runtime()
+check(#LL.ItemDB.mechanicRules==0 and LL.ItemDB.buildReport.mechanicRulesSkipped[1].reason:find('switched off'),'switched-off rule skipped')
+-- C7b: an unreviewed research rule with one source and 48% confidence now runs.
+-- It is never marked APPROVED by the builder, its confidence caps the numbers it
+-- scales, and the label says it is not yet reviewed.
+approved.applyPolicy='PROPOSED';approved.evidenceStatus='RESEARCH_ESTIMATE';approved.confidence0to100=48
+approved.independentReview=nil;approved.numericTransformValidated=nil
+approved.sources={{claimID='synthetic-single-study'}}
+check(compile(),'unreviewed research rule compiles');LL=runtime()
+check(#LL.ItemDB.mechanicRules==2 and LL.ItemDB.mechanicRules[1].independentReview=='NOT_REVIEWED','builder never writes APPROVED for an unreviewed rule')
+assert(originalLoadfile('LootLiquidator/ConversionEngine.lua'))('LootLiquidator',LL)
+LL.ProcessingPlayerConditions=function()return adjusted end
+m=assert(model(LL,adjusted));check(m.mechanicsApplied,'unreviewed rule executes at runtime')
+near(m.materials[1].expectedQuantity,2)
+check(m.adjustment=='character-adjusted / research rule, not yet reviewed','unreviewed label shown')
+check(m.materials[1].confidence<=48,'rule confidence caps material confidence')
+approved.sources={}
+check(compile(),'rule with no source does not fail the build');LL=runtime()
+check(#LL.ItemDB.mechanicRules==0 and LL.ItemDB.buildReport.mechanicRulesSkipped[1].reason=='no source','rule with no source left out (decision 15)')
 research.mechanicRules={}
 -- Also check a genuine accepted multi-output profile from the shipped research
 -- snapshot after compilation. This guards the production artifact, not just fixtures.
