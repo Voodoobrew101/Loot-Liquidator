@@ -197,7 +197,7 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 
 - [x] **A1. Stop hiding estimates.** (`d10bc33`) In `Database.lua`, working estimates and unknown-confidence sources should get a small non-zero weight instead of zero, and legacy data should count (weakly) instead of only filling gaps. Confidence goes down for them, not to "no answer". *Done when:* an item with only working estimates gets a value and a confidence; tests updated.
 - [x] **A2. Partial outputs still give a value.** (`badde1e`) In `ConversionEngine.lua`, when some outputs of an option are unknown, compute the value from the known outputs, lower the confidence, and mark it "partial". Don't return "Insufficient Data" unless nothing at all is known. *Done when:* the reference case (an ore with one unknown gem) shows a value.
-- [ ] **A3. One confidence figure per option** in the tooltip, value-weighted across materials, e.g. "Prospecting (Confidence 48%)". Per-material confidence as an option, off by default.
+- [x] **A3. One confidence figure per option** (`a52b8d7`) in the tooltip, value-weighted across materials, e.g. "Prospecting (Confidence 48%)". Per-material confidence as an option, off by default.
 - [ ] **A4. The ? badge only when there is truly nothing.** Check `Core.lua` so "?" appears only when no option has any estimate. Otherwise pick the best option and show its confidence.
 - [ ] **A5. Optional price in the header**, "Loot Liquidator: Smelt 6g 87s" (checkbox, default on).
 
@@ -248,16 +248,18 @@ Answered:
 
 ## 10. What to check in game
 
-*(Filled in at the end of each session.)* After session 1 (version 0.11.0-claude.1):
+*(Filled in at the end of each session.)* After session 1 (version 0.11.0-claude.2):
 
 1. Hover a few ores and herbs that used to say "Insufficient Data": they should now show a gold value and a confidence. Values marked "partial" only count the materials that have a price.
 2. Hover some old green/blue gear you could disenchant: the Disenchant line should now show a value (it was usually blank before).
 3. In the breakdown, numbers with a "~" in front are estimates. Check they look sensible (no huge or silly amounts).
-4. Check the addon loads with no error pop-ups, and that your old settings are still there.
+4. Each option line now shows one figure like "Prospecting (Confidence 48%)". In Settings → Tooltips there's a new box "Show confidence per material" (off by default): turning it on adds a small (N%) to each material row.
+5. Check the addon loads with no error pop-ups, and that your old settings are still there.
 
 ## 11. Session log
 
 - 2026-10-31: Prompt written. Branch `LootLiquidatorclaude-V0.1` exists at `8d8753e` (same as alpha10). The test suite passes with the lupa wrapper. Nothing changed in the addon yet.
+- 2026-10-31 (session 1 continued, v0.11.0-claude.2): Each option now shows one confidence figure as a percentage, weighted by how much each material is worth (A3). Optional per-material confidence added, off by default. Automated tests pass; needs an in-game check.
 - 2026-10-31: Owner answered the transmog question ("any type"); recorded under C5.
 - 2026-10-31 (session 1, v0.11.0-claude.1): Set up the workspace (S1). The addon now uses rough estimates and older data at low weight instead of hiding them (A1), and the old disenchant tables are switched on, so disenchanting gives answers again. When some materials can't be priced, the option still shows a value marked "partial" with lower confidence (A2). Found and fixed a problem where a rough guess could push better data out. Automated tests pass; needs an in-game check.
 
