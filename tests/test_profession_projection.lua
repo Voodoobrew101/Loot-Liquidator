@@ -117,20 +117,57 @@ near(assert(P:GetRecordedProcessingEstimate(f,'Prospect',5,444)).materials[1].ex
 P.ItemDB.personalPatchRules={}
 check(P:GetRecordedProcessingEstimate(f,'Prospect',5,444)==nil)
 check(P.personalProjectionStatus:find('unknown'))
--- Admission and execution must reject structurally valid unreviewed rules.
-local good=rule('200');local rejected=clone(good);rejected.independentReview=nil
-check(not LL:ValidateProfessionRules({professionRules={rejected}}),'missing approval rejected')
-rejected=clone(good);rejected.sourceClaimIDs={'same','same'}
-check(not LL:ValidateProfessionRules({professionRules={rejected}}),'duplicate evidence rejected')
-rejected=clone(good);rejected.applyPolicy='PREVIEW_ONLY'
-check(not LL:ValidateProfessionRules({professionRules={rejected}}),'preview excluded from executable collection')
-LL.ItemDB.professionRules={rejected};near(LL:ApplyProfessionModel(f,option,base,target).materials[1].expectedQuantity,3)
-local unreviewedPatch=clone(patch);unreviewedPatch.evidenceStatus=nil
-check(not LL:ValidateProfessionRules({personalPatchRules={unreviewedPatch}}),'patch gate enforced')
-LL.ItemDB.professionRules={good};LL.ItemDB.personalPatchRules={unreviewedPatch}
-check(LL:ProjectPersonalEstimate(f,option,raw,target,'200')==nil,'unreviewed patch cannot execute directly')
+-- C7 (owner decisions 1, 15, 16), changed on purpose: research rules no longer
+-- need independent approval to run. They run at their stated confidence, which
+-- caps the confidence of every number they scale. A rule with no source, a
+-- repeated source, an invalid confidence, or switched off still never runs.
+local good=rule('200')
+check(good.independentReview=='APPROVED' and LL:IsApprovedNumericRule(good))
+local approvedResult=LL:ApplyProfessionModel(f,option,base,target)
+LL.ItemDB.professionRules={good}
+approvedResult=LL:ApplyProfessionModel(f,option,base,target)
+check(approvedResult.materials[1].transformConfidence==94 and not approvedResult.unreviewedRule,'approved rule caps at its confidence')
+local unreviewed=clone(good);unreviewed.independentReview=nil;unreviewed.evidenceStatus='PROVISIONAL'
+unreviewed.applyPolicy='PREVIEW_ONLY';unreviewed.numericTransformValidated=false;unreviewed.confidence0to100=40
+unreviewed.sourceClaimIDs={'one-study'}
+check(LL:ValidateProfessionRules({professionRules={unreviewed}}),'unreviewed rule with a source is admitted')
+LL.ItemDB.professionRules={unreviewed}
+local scaled=LL:ApplyProfessionModel(f,option,base,target)
+near(scaled.materials[1].expectedQuantity,6)
+check(scaled.materials[1].transformConfidence==40 and scaled.ruleConfidence==40,'scaled numbers carry the rule confidence')
+check(scaled.unreviewedRule and scaled.adjustment:find('not yet reviewed'),'unreviewed rule is labelled')
+near(base.materials[1].expectedQuantity,3)
+for label,edit in pairs({['no source']=function(r) r.sourceClaimIDs={} end,
+        ['repeated source']=function(r) r.sourceClaimIDs={'same','same'} end,
+        ['switched off']=function(r) r.applyPolicy='DISABLED' end,
+        ['rejected']=function(r) r.evidenceStatus='REJECTED' end,
+        ['bad confidence']=function(r) r.confidence0to100=140 end}) do
+    local bad=clone(unreviewed);edit(bad)
+    check(not LL:ValidateProfessionRules({professionRules={bad}}),label..' rejected')
+    LL.ItemDB.professionRules={bad}
+    near(LL:ApplyProfessionModel(f,option,base,target).materials[1].expectedQuantity,3)
+end
+local unreviewedPatch=clone(patch);unreviewedPatch.evidenceStatus=nil;unreviewedPatch.confidence0to100=30
+check(LL:ValidateProfessionRules({personalPatchRules={unreviewedPatch}}),'unreviewed patch rule with a source is admitted')
+LL.ItemDB.professionRules={rule('100'),good};LL.ItemDB.personalPatchRules={unreviewedPatch}
+local bridged=assert(LL:ProjectPersonalEstimate(f,option,raw,target,'200'),'unreviewed patch runs with its confidence')
+near(bridged.materials[1].expectedQuantity,6)
+check(bridged.materials[1].transformConfidence==30 and bridged.unreviewedRule,'patch confidence carried')
+local sourceless=clone(patch);sourceless.sourceClaimIDs=nil
+LL.ItemDB.personalPatchRules={sourceless}
+check(LL:ProjectPersonalEstimate(f,option,raw,target,'200')==nil,'patch rule without a source cannot run')
+LL.ItemDB.professionRules={good};LL.ItemDB.personalPatchRules={patch}
 local multiple=clone(base);multiple.materials[2]={id=21,expectedQuantity=1}
 local partial=LL:ApplyProfessionModel(f,option,multiple,target)
 check(partial.projectionIncomplete and not partial.mechanicsApplied,'partial adjustment is not whole-model success')
 near(partial.materials[1].expectedQuantity,3);near(multiple.materials[1].expectedQuantity,3)
+-- C7 end to end: an unreviewed research rule scales the baseline up for a
+-- skilled player, and the shown confidence drops to the rule's confidence.
+LL.db={};LL:MigrateEvidenceSettings();LL:SetEvidenceSource('legacy',false,0)
+LL.ItemDB.processing={record('itemdb',3)};LL.ItemDB.professionRules={unreviewed};LL.ItemDB.personalPatchRules={}
+check(LL:InitializeItemDB());LL._processingModelCache=nil
+LL.ProcessingPlayerConditions=function() return target end
+local e2e=assert(LL:ComputeEvidenceModel(f,option,nil,1,target))
+near(e2e.materials[1].expectedQuantity,6)
+check(e2e.materials[1].confidence and e2e.materials[1].confidence<=40,'confidence capped by rule: '..tostring(e2e.materials[1].confidence))
 print('PASS: '..count..' profession/personal projection assertions; synthetic coefficients only')

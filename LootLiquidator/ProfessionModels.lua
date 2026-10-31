@@ -27,6 +27,22 @@ local function approved(r)
     return true
 end
 function LL:IsApprovedNumericRule(rule) return approved(rule) end
+-- C7 (owner decisions 1, 15, 16): a research scaling rule runs at any stated
+-- confidence as long as it names at least one source; the numbers it scales
+-- carry that confidence as a cap (transformConfidence). Only a rule with no
+-- source, an invalid confidence, or one switched off is left out.
+local function usable(r)
+    if type(r)~='table' or r.applyPolicy=='DISABLED' or r.evidenceStatus=='REJECTED'
+        or not finite(r.confidence0to100) or r.confidence0to100>100
+        or type(r.sourceClaimIDs)~='table' or #r.sourceClaimIDs<1 then return false end
+    local seen={}
+    for _,id in ipairs(r.sourceClaimIDs) do
+        if type(id)~='string' or id=='' or seen[id] then return false end
+        seen[id]=true
+    end
+    return true
+end
+function LL:IsUsableProfessionRule(rule) return usable(rule) end
 local function matches(r,f,option,id)
     return r.method==option.name and r.recipeID==option.recipeID and r.inputItemID==f.id
         and r.outputItemID==id and r.expansionID==f.expansionID
@@ -35,7 +51,7 @@ end
 function LL:ValidateProfessionRules(db)
     local ids={}
     local function identity(r)
-        if not approved(r) or type(r.ruleID)~='string' or r.ruleID=='' or ids[r.ruleID]
+        if not usable(r) or type(r.ruleID)~='string' or r.ruleID=='' or ids[r.ruleID]
             or type(r.method)~='string' or not finite(r.recipeID) or r.recipeID<1
             or not finite(r.inputItemID) or r.inputItemID<1
             or not finite(r.outputItemID) or r.outputItemID<1 or not finite(r.expansionID) then return false end
@@ -100,14 +116,17 @@ end
 local function ruleFor(self,f,option,id,build)
     local found
     for _,r in ipairs(self.ItemDB and self.ItemDB.professionRules or {}) do
-        if approved(r) and matches(r,f,option,id) and tostring(r.build)==tostring(build) then
+        if usable(r) and matches(r,f,option,id) and tostring(r.build)==tostring(build) then
             if found then return nil end
             found=r
         end
     end
     return found
 end
-local function scale(m,factor,ruleID)
+local function scale(m,factor,ruleID,confidence)
+    if finite(confidence) then
+        m.transformConfidence=math.min(m.transformConfidence or 100,confidence)
+    end
     if m.expectedQuantity~=nil then
         if not finite(m.expectedQuantity) or not finite(m.expectedQuantity*factor) then return false end
         m.expectedQuantity=m.expectedQuantity*factor
@@ -136,7 +155,11 @@ function LL:ApplyProfessionModel(f,option,baseline,target)
         if rule then
             local sourceFactor=self:ProfessionFactor(rule,baseline.baselineProfile)
             local targetFactor=self:ProfessionFactor(rule,target)
-            if sourceFactor and targetFactor and scale(m,targetFactor/sourceFactor,rule.ruleID) then applied=true else complete=false end
+            if sourceFactor and targetFactor and scale(m,targetFactor/sourceFactor,rule.ruleID,rule.confidence0to100) then
+                applied=true
+                result.ruleConfidence=math.min(result.ruleConfidence or 100,rule.confidence0to100)
+                if not approved(rule) then result.unreviewedRule=true end
+            else complete=false end
         elseif m.expectedQuantity~=nil then complete=false end
     end
     if applied and not complete then
@@ -147,6 +170,7 @@ function LL:ApplyProfessionModel(f,option,baseline,target)
     if applied then
         result.professionProjected=true;result.mechanicsApplied=true
         result.adjustment='profession model / '..(target.simulated and 'SIMULATED' or 'selected profile')
+            ..(result.unreviewedRule and ' / research rule, not yet reviewed' or '')
         result.projectedContext=copy(target)
     end
     return result
@@ -170,13 +194,18 @@ function LL:ProjectPersonalEstimate(f,option,raw,target,targetBuild)
         local m=copy(original)
         local normalized=not sameProfile
         local historicalFactor=1
+        local ruleConfidence
+        local function used(r)
+            ruleConfidence=math.min(ruleConfidence or 100,r.confidence0to100)
+            if not approved(r) then result.unreviewedRule=true end
+        end
         if normalized then
             local rule=ruleFor(self,f,option,m.id,sourceBuild)
             if not rule then return nil,'No source-profile conversion rule' end
             local sf=self:ProfessionFactor(rule,source)
             local bf=self:ProfessionFactor(rule,rule.referenceProfile)
             if not sf or not bf then return nil,'Unknown source-profile factor' end
-            historicalFactor=bf/sf
+            historicalFactor=bf/sf;used(rule)
             result.projectionRules[#result.projectionRules+1]=rule.ruleID..':inverse'
         end
         local current=sourceBuild
@@ -186,7 +215,7 @@ function LL:ProjectPersonalEstimate(f,option,raw,target,targetBuild)
             visited[current]=true
             local found
             for _,r in ipairs(self.ItemDB and self.ItemDB.personalPatchRules or {}) do
-                if approved(r) and matches(r,f,option,m.id) and tostring(r.fromBuild)==current then
+                if usable(r) and matches(r,f,option,m.id) and tostring(r.fromBuild)==current then
                     if found then return nil,'Ambiguous patch bridge' end
                     found=r
                 end
@@ -201,12 +230,12 @@ function LL:ProjectPersonalEstimate(f,option,raw,target,targetBuild)
                 local sf=rule and self:ProfessionFactor(rule,source)
                 local bf=rule and self:ProfessionFactor(rule,rule.referenceProfile)
                 if not sf or not bf then return nil,'Missing baseline patch normalization' end
-                historicalFactor=historicalFactor*bf/sf;normalized=true
+                historicalFactor=historicalFactor*bf/sf;normalized=true;used(rule)
                 result.projectionRules[#result.projectionRules+1]=rule.ruleID..':inverse'
             elseif found.basis~='baseline' and not equal(found.profile,source) then
                 return nil,'Patch bridge profile mismatch'
             end
-            historicalFactor=historicalFactor*found.expectedMultiplier
+            historicalFactor=historicalFactor*found.expectedMultiplier;used(found)
             result.projectionRules[#result.projectionRules+1]=found.ruleID
             current=tostring(found.toBuild)
         end
@@ -215,10 +244,10 @@ function LL:ProjectPersonalEstimate(f,option,raw,target,targetBuild)
             local tf=rule and self:ProfessionFactor(rule,target)
             local bf=rule and self:ProfessionFactor(rule,rule.referenceProfile)
             if not tf or not bf then return nil,'No target-profile conversion rule' end
-            historicalFactor=historicalFactor*tf/bf
+            historicalFactor=historicalFactor*tf/bf;used(rule)
             result.projectionRules[#result.projectionRules+1]=rule.ruleID..':forward'
         end
-        if not scale(m,historicalFactor,table.concat(result.projectionRules,', ')) then return nil,'Invalid projection' end
+        if not scale(m,historicalFactor,table.concat(result.projectionRules,', '),ruleConfidence) then return nil,'Invalid projection' end
         -- Histograms and sample extrema remain properties of the raw source.
         m.quantityCounts=nil;m.fieldEvidence=nil;m.boundsBasis=nil
         result.materials[#result.materials+1]=m
