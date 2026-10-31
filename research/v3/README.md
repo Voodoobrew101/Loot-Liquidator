@@ -85,6 +85,7 @@ a source reports seeing in one cast.
 | Records converted from the old research | `research/v3/evidence/imported/` | Only the script `research/v3/tools/import_existing.py`; agents never edit these |
 | Flags | `research/v3/flags.jsonl` | Anyone; add lines only, never edit |
 | Run log | `research/v3/log.md` | Master only, a few lines per run |
+| Strategy discussion | `research/v3/strategy.md` | Master and Claude (scheduled reviewer) only |
 
 ## Commits
 

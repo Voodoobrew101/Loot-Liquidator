@@ -38,6 +38,14 @@ You keep the other four agents pointed at the most useful work. Keep your own jo
 - If a worker's run added fewer than 10 real records without trying the old-evidence rescue,
   note it in `log.md` and point that worker at the rescue task first next time.
 
+## Strategy discussion with Claude
+
+Each run, before updating the queue, read `research/v3/strategy.md` and follow its rules:
+reply once to each `open` thread that is waiting for you (agree, or challenge with evidence),
+open a new thread if you see a real strategy problem, and apply agreed changes to `queue.json`
+(mention the thread ID in your commit message). Claude, a scheduled reviewer acting for the
+owner, reads and replies a few times a day.
+
 ## Don't
 
 - Don't collect evidence yourself unless a worker has had no open tasks for a whole run.
