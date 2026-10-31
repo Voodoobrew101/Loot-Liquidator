@@ -19,3 +19,9 @@
 - 2026-10-30 (Master): Spot-check #1 Midnight guide Refulgent Copper ~8% Sanguine Garnet matched published guide; #2 War Within Aqirite Reddit 1040 clicks could not be independently fetched, left unverified (no invented discrepancy).
 - 2026-10-30 (Master): Source references are not completed-cast studies; preserve rank, Resourcefulness and patch context. No probability, confidence or economic calculations made.
 - 2026-10-30 (owner, via Claude): added tools/build_estimates.py and its first output in research/v3/output/: 960 estimates from 2,031 records (400 backed by studies, 560 starting guesses only, 40 flagged where sources disagree). See output/summary.md.
+
+- 2026-10-30 (Master): Reviewed 74 new worker records across 11 evidence files since prior committed Master review; 4 workers retain open tasks Midnight 6, War Within 6, Dragonflight 6, Legacy 3.
+- 2026-10-30 (Master): Reordered open queue to prioritize no-cast evidence gaps ahead of small-sample and 144-cast PTR Titanium follow-ups; refined 11 task descriptions, with no unsupported closures. Legacy's Cobalt Ore remains ahead of Titanium Ore.
+- 2026-10-30 (Master): flags.jsonl has no new flags; no correcting records requested. New studies with unreported cast counts remain source references rather than confirmed denominators.
+- 2026-10-30 (Master): Added Blizzard July 24, 2024 patch 11.0 profession change (Inspiration removed; Concentration/Ingenuity introduced) from official notes; no numerical rate change asserted.
+- 2026-10-30 (Master): Spot-check midnight-20261030-405 matched Warcraft Wiki's 10 herbs per Midnight Milling; war-within-20261030-301 matched original Reddit's 1.15 R2 pigment per R1 Mycobloom, with commenters noting Resourcefulness context. No discrepancies requiring flags.
