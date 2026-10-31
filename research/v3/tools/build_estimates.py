@@ -136,9 +136,11 @@ def load_conditions(rows):
     return out
 
 
-def condition_for(conds, method, inp, out):
+def condition_for(conds, method, inp, out, families=None):
+    # rank-unknown "family:<ore name>" inputs match a condition if any item ID with that name does
+    members = (families or {}).get(inp[7:].lower(), set()) if str(inp).startswith("family:") else set()
     for ids, req in conds.get((method, out), []):
-        if ids is None or inp in ids:
+        if ids is None or inp in ids or (ids and members & set(ids)):
             return req or "an unlock (see conditions list)"
     return None
 
@@ -283,6 +285,10 @@ def build(rows):
     names = name_maps(rows)
     conds = load_conditions(rows)
     changes = load_rate_changes()
+    families = defaultdict(set)   # input name -> item IDs, for family-level unlock checks
+    for r in rows:
+        if r.get("inputName") and r.get("inputItemID"):
+            families[r["inputName"].strip().lower()].add(str(r["inputItemID"]))
     groups = defaultdict(lambda: {"studies": [], "refs": [], "lo": None, "hi": None})
     unplaced = 0
     for r in rows:
@@ -308,7 +314,7 @@ def build(rows):
     results = []
     for (method, inp, out), g in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], str(kv[0][2]))):
         import math
-        req = condition_for(conds, method, inp, out)
+        req = condition_for(conds, method, inp, out, families)
         observed = [g.get("slo"), g.get("shi")] if g.get("slo") is not None or g.get("shi") is not None else None
         has_ref_range = g["lo"] is not None or g["hi"] is not None
         lo = int(g["lo"] or 1)

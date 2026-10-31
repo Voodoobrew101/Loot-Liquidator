@@ -18,14 +18,16 @@ Agents: add sources, correct statuses, and add missing mechanics with a `flags.j
 | M3 | Eversong Diamond (242608) drops only after a Proficient Processor specialization unlock; then a small chance from all Midnight ore. | verified | method.gg Midnight Jewelcrafting guide; boostmatch.gg; old addon GameData.lua per-ore unlock flags |
 | M4 | Which exact node unlocks the diamond for each ore (old addon names: Copper Consumer, Tin-vestigator, Silver Scrapper, Thorium Thresher). | unverified | old addon settings only; queue task for the midnight agent |
 | M5 | Midnight ore and reagents have two quality ranks (silver, gold). Skill decides the output's rank, which changes its price, not the count. | likely | wowcarry.com and dving.net Midnight guides (two ranks); wow-professions.com "Gold Quality" prospecting phase |
-| M6 | Milling uses 10 herbs per cast. | verified | method.gg Midnight Inscription guide |
+| M6 | Milling uses 10 herbs per cast. | verified | method.gg Midnight Inscription guide; Blizzard forum t/2307840 (May 19 2026: game error "Requires 10 Tranquility Blooms") |
 | M7 | Herb quality does not change the number of pigments; skill does. | verified | method.gg Midnight Inscription guide |
 | M8 | Milling cannot Multicraft. | verified | wow-professions.com Midnight Inscription guide and specialization guide |
 | M9 | Resourcefulness applies to milling (saves herbs). | verified | wow-professions.com Midnight Inscription guide ("keep a Resourcefulness tool for milling") |
-| M10 | Resourcefulness applies to prospecting (saves ore). | likely | wow-professions.com Midnight Jewelcrafting prospecting build (Phase 2 "Resourcefulness and Skill") |
+| M10 | Resourcefulness applies to prospecting (saves ore). | likely | wow-professions.com Midnight Jewelcrafting prospecting build (Phase 2 "Resourcefulness and Skill"); firsthand: Cardinalai Wowhead comment Jun 10 2026, 715 of 4000 Brilliant Silver ore saved at 39.6% Resourcefulness |
 | M11 | Multicraft applies to prospecting. | likely | wow-professions.com prospecting build starts with Multicraft points; the owner thinks so too (doesn't prospect personally). Milling explicitly can't. Still needs a direct source; the addon's craft recorder also logs Multicraft procs, which would settle it. |
 | M12 | Disenchanting results depend on skill and the Disenchanting Delegate specialization (more and better materials). | verified | wow-professions.com Midnight Enchanting specialization guide; dving.net Midnight Enchanting guide |
 | M13 | Resourcefulness, Ingenuity and Multicraft do not change disenchanting. | likely | dving.net Midnight Enchanting guide (single source) |
+| M15 | Resourcefulness rolls per reagent and returns 1 to ceil(0.4 x reagent count) of it, modified by specialization nodes. | unverified | single forum claim: Teishoku, Blizzard forum t/2261410 post 2 (Mar 1 2026); no official source |
+| M16 | Skill raises gem/dust quality, not amount; only the last Prospecting specialization node adds gems. | unverified | single forum claim: Teishoku, Blizzard forum t/2280780 (Mar 27 2026); contradicts nothing yet, untested |
 | M14 | Rate change: gems found more regularly from Midnight ore after March 31, 2026. | verified | Blizzard hotfix list (see rate-changes.jsonl) |
 
 ## The War Within
