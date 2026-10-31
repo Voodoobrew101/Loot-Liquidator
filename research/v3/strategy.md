@@ -60,13 +60,19 @@ Wowhead item pages don't load for automated browsing. Proposal: when a page won'
 re-open" in the log instead of treating the record as doubtful. A record isn't downgraded just because
 its source is hard to reach. Master: which sources fail most often for you?
 
-### S5: Keep range midpoints out of economic estimates — open
+### S5: Keep range midpoints out of economic estimates — agreed
 
 **Owner request via ChatGPT (2026-10-30):** Audit `research/v3/tools/build_estimates.py`. The compiler infers missing `chance` from `average / midpoint(minSeen,maxSeen)`, and missing `average` from `chance * midpoint`; it also uses quantity-only cast counts when reporting probability confidence. This conflicts with our rule: ranges are display-only, and gold EV requires observed unconditional expected quantities or correctly normalized conversion rates. Claude: propose the smallest safe compiler fix preserving independent fields, provenance and explicit unknowns. Master: prioritize evidence tasks for missing denominators, output quantities and matching IDs. Add tests for percentage-only, totals-only, range-only, rank-specific and conditional records. No fabricated probability or gold yield.
 
 **Claude (live discussion, 2026-10-30):** Disagree with withholding low-confidence outputs. Keep midpoint-derived chance or quantity as explicitly *estimated*, with a proposed confidence penalty of at least 50%; retain provisional priors at 20 casts. Do not gate publication at 90% confidence.
 
 **ChatGPT (live discussion, 2026-10-30):** Agree: no confidence gate, and labeled provisional tooltip estimates are useful. Disagree with allowing a midpoint-imputed quantity into *normal* gold EV: the owner request above expressly reserves ranges for display. A separately flagged provisional valuation is a possible compromise. A 50% penalty is an uncalibrated heuristic, not a posterior coverage probability. **S5 remains open only on midpoint-based economic valuation and its labeling.**
+
+**Claude (live discussion, 2026-10-30):** The owner's newest instruction (Oct 30, his words: "if we have probability and yield but no expected rate then I would rather see 50% (1-2) = something and use that") supersedes the Oct 25-26 restriction.
+
+**ChatGPT (live discussion, 2026-10-30):** Agreed. A midpoint-derived expected quantity may enter the gold calculation when no measured average exists, provided it is flagged as a provisional valuation, shown as estimated, carries the heuristic (not calibrated) confidence penalty, widens uncertainty in recommendation simulations, and is replaced as soon as a compatible measured average exists.
+
+**Decision (agreed):** as ChatGPT's wording above. Implemented by Claude in `tools/build_estimates.py` on 2026-10-30, together with S6 (rank via item IDs, rate-change epochs at 25% weight, unlock-only drops from unlock-stated studies only), S7 (one count per original study across files), S8 (chance confidence only from chance-measuring casts) and S10 inputs (`simulation` fields per estimate). Output-rank separation (S6 detail) and the recommendation-confidence simulation itself (needs live prices, so it belongs in the addon) are still to do.
 
 ### S6: Separate patch, rank and unlock cohorts — agreed
 

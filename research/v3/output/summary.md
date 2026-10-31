@@ -1,15 +1,15 @@
 # ItemDB estimates (first draft, generated)
 
-Built by `research/v3/tools/build_estimates.py` from 2,031 evidence records.
-960 input/material estimates; 234 records could not be placed yet (no item ID or name match).
-1 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
+Built by `research/v3/tools/build_estimates.py` from 2,169 evidence records.
+957 input/material estimates; 272 records could not be placed yet (no item ID or name match).
+14 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
 
 | Confidence | Estimates |
 | --- | --- |
-| 90% or more | 228 |
-| 75-89% | 19 |
-| 50-74% | 54 |
-| under 50% | 658 |
+| 90% or more | 16 |
+| 75-89% | 4 |
+| 50-74% | 190 |
+| under 50% | 733 |
 
 Confidence = chance the true drop chance is within +/-5 points of the number shown.
 
@@ -25,21 +25,27 @@ Confidence = chance the true drop chance is within +/-5 points of the number sho
 | Mill | 236777 | 245804 | 100.0% | 4.500 | 3-6 | 30% |  | starting guess only (reference values) |
 | Mill | 236778 | 245866 | 100.0% | 4.500 | 3-6 | 30% |  | starting guess only (reference values) |
 | Mill | 236779 | 245866 | 100.0% | 4.500 | 3-6 | 30% |  | starting guess only (reference values) |
-| Prospect | 237361 | 242786 | 80.0% | 1.200 | 1-2 | 30% |  | 10 study casts; range widened to fit the average; chance from average / middle of range |
-| Prospect | 237361 | 242788 | 90.0% | 0.900 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237361 | 242553 | 30.0% | 0.300 | 1-1 | 27% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237361 | 242554 | 10.0% | 0.100 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237361 | 242606 | 10.0% | 0.100 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237361 | 242607 | 10.0% | 0.100 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237363 | 242788 | 73.3% | 1.100 | 1-2 | 28% |  | 10 study casts; range widened to fit the average; chance from average / middle of range |
-| Prospect | 237363 | 242786 | 70.0% | 0.700 | 1-1 | 27% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237363 | 242611 | 20.0% | 0.200 | 1-1 | 30% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237363 | 242606 | 10.0% | 0.100 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237363 | 242610 | 10.0% | 0.100 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237365 | 242788 | 90.0% | 0.900 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237365 | 242786 | 80.0% | 0.800 | 1-1 | 30% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237365 | 242553 | 20.0% | 0.200 | 1-1 | 30% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237365 | 242612 | 20.0% | 0.200 | 1-1 | 30% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237365 | 242554 | 10.0% | 0.100 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237365 | 242613 | 10.0% | 0.100 | 1-1 | 36% |  | 10 study casts; chance from average / middle of range |
-| Prospect | 237366 | 242608 | 20.0% | 0.200 | 1-1 | 92% | Midnight Jewelcrafting prospecting specialization unlock for thorium (named 'Thorium Thresher' in the old addon settings) | 200 study casts; average from chance x middle of range |
+| Prospect | 237361 | 242786 | 80.0% | 1.200 | 1-2 | 7% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); range widened to fit the average; chance estimated from average / middle of range |
+| Prospect | 237361 | 242788 | 90.0% | 0.900 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237361 | 242553 | 30.0% | 0.300 | 1-1 | 7% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237361 | 242554 | 10.0% | 0.100 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237361 | 242606 | 10.0% | 0.100 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237361 | 242607 | 10.0% | 0.100 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237363 | 242788 | 73.3% | 1.100 | 1-2 | 7% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); range widened to fit the average; chance estimated from average / middle of range |
+| Prospect | 237363 | 242786 | 70.0% | 0.700 | 1-1 | 7% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237363 | 242611 | 20.0% | 0.200 | 1-1 | 7% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237363 | 242606 | 10.0% | 0.100 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237363 | 242610 | 10.0% | 0.100 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237364 | 242788 | 72.8% | 1.093 | 1-2 | 44% |  | 200 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); range widened to fit the average; chance estimated from average / middle of range |
+| Prospect | 237364 | 242786 | 83.9% | 0.839 | 1-1 | 47% |  | 200 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237364 | 242553 | 19.1% | 0.191 | 1-1 | 46% |  | 200 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237364 | 242554 | 18.1% | 0.181 | 1-1 | 47% |  | 200 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237364 | 242612 | 14.2% | 0.142 | 1-1 | 48% |  | 200 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237364 | 242613 | 13.9% | 0.139 | 1-1 | 48% |  | 200 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237365 | 242788 | 90.0% | 0.900 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237365 | 242786 | 80.0% | 0.800 | 1-1 | 7% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237365 | 242553 | 20.0% | 0.200 | 1-1 | 7% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237365 | 242612 | 20.0% | 0.200 | 1-1 | 7% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237365 | 242554 | 10.0% | 0.100 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237365 | 242613 | 10.0% | 0.100 | 1-1 | 8% |  | 2 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); chance estimated from average / middle of range |
+| Prospect | 237364 | 242608 | 5.4% | 0.054 | 1-1 | 50% | Midnight Jewelcrafting prospecting specialization unlock for silver (named 'Silver Scrapper' in the old addon settings) | 200 effective study casts; older-period data counted at 25% (undated vs 2026-03-31 rate change); 1 studies left out: unlock status not stated; chance estimated from average / middle of range |

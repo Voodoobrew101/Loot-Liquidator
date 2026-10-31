@@ -23,6 +23,7 @@ Method (see research/v3/README.md and the owner's notes):
   * Confidence comes from a beta distribution of those counts (the "weighted count with a
     starting guess" model, also called beta-binomial / empirical Bayes).
 
+Agreed with ChatGPT in research/v3/strategy.md S5-S10 (2026-10-30).
 Nothing here is tuned to make numbers look better. Change the constants below, not the data.
 
 Usage, from the repository root:
@@ -154,10 +155,82 @@ def confidence(p, n):
     return round(100 * (_beta.cdf(min(1, m + WITHIN), a, b) - _beta.cdf(max(0, m - WITHIN), a, b)))
 
 
+OLD_EPOCH_WEIGHT = 0.25   # studies from before a rate change (or with no date) count at a quarter (S6)
+UNLOCK_YES = ("unlock: yes", "unlocked", "with unlock", "has unlock", "proficient processor",
+              "copper consumer", "tin-vestigator", "silver scrapper", "thorium thresher",
+              "diamond unlock", "max knowledge", "max spec")
+UNLOCK_NO = ("unlock: no", "no unlock", "not unlocked", "no specialization", "no-specialization",
+             "zero-spec", "zero specialization", "0 points")
+
+
+def expansion_range(text):
+    t = (text or "").lower()
+    if "midnight" in t:
+        return (236000, 10**9)
+    if "war within" in t or "khaz algar" in t:
+        return (210000, 235999)
+    if "dragon" in t:
+        return (188000, 209999)
+    return None
+
+
+def load_rate_changes():
+    """Single-method rate changes with a known expansion scope, from rate-changes.jsonl."""
+    out = []
+    path = os.path.join(ROOT, "research", "v3", "rate-changes.jsonl")
+    if not os.path.exists(path):
+        return out
+    for line in open(path, encoding="utf-8"):
+        if not line.strip():
+            continue
+        c = json.loads(line)
+        rng = expansion_range(c.get("affects"))
+        if c.get("method") in ("Prospect", "Mill", "Disenchant", "Smelt") and rng and c.get("date"):
+            out.append((c["method"], rng, c["date"][:10]))
+    return out
+
+
+def study_date(r):
+    for v in (r.get("dataDate"), (r.get("source") or {}).get("published")):
+        if isinstance(v, str) and len(v) >= 10 and v[:4].isdigit() and v[4] == "-":
+            return v[:10]
+    return None
+
+
+def epoch_weight(r, method, inp, changes):
+    """1.0 for studies after the latest applicable rate change, OLD_EPOCH_WEIGHT otherwise."""
+    if not inp.isdigit():
+        return 1.0, None
+    applicable = [d for m, (lo, hi), d in changes if m == method and lo <= int(inp) <= hi]
+    if not applicable:
+        return 1.0, None
+    latest = max(applicable)
+    d = study_date(r)
+    if d and d >= latest:
+        return 1.0, None
+    return OLD_EPOCH_WEIGHT, ("before " if d else "undated vs ") + latest
+
+
+def unlock_state(r):
+    t = " ".join(str(r.get(k) or "") for k in ("specialization", "notes", "stats")).lower()
+    if any(x in t for x in UNLOCK_NO):
+        return False
+    if any(x in t for x in UNLOCK_YES):
+        return True
+    return None
+
+
+def study_identity(r):
+    """Same original study counts once, even if recorded in several files (S7)."""
+    src = r.get("originalSource") or (r.get("source") or {}).get("url") or r.get("studyKey") or r.get("id")
+    return (src, r.get("inputRank"), r.get("casts"), r.get("studyKey") if not r.get("casts") else None)
+
+
 def build(rows):
     names = name_maps(rows)
     conds = load_conditions(rows)
-    groups = defaultdict(lambda: {"studies": [], "refs": [], "lo": None, "hi": None, "unplaced": 0})
+    changes = load_rate_changes()
+    groups = defaultdict(lambda: {"studies": [], "refs": [], "lo": None, "hi": None})
     unplaced = 0
     for r in rows:
         if r.get("type") != "drop":
@@ -176,87 +249,111 @@ def build(rows):
 
     results = []
     for (method, inp, out), g in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2])):
+        import math
+        req = condition_for(conds, method, inp, out)
         lo = int(g["lo"] or 1)
         hi = int(max(g["hi"] or lo, lo))
         mid = (lo + hi) / 2
-        # ---- starting guess from reference values (averaged, weight PRIOR_CASTS in total)
+        basis = []
+        # ---- starting guess from reference values (S9: provisional prior, never counted as casts)
         ref_p = [x for x in (chance_from_percent(r) for r in g["refs"]) if x is not None and x <= 1]
         ref_e = [x for x in (per_cast_average(r) for r in g["refs"]) if x is not None]
         prior_p = sum(ref_p) / len(ref_p) if ref_p else None
         prior_e = sum(ref_e) / len(ref_e) if ref_e else None
-        if prior_p is None and prior_e is not None:
-            prior_p = min(1.0, prior_e / mid)
-        if prior_e is None and prior_p is not None:
-            prior_e = prior_p * mid
-        # ---- add studies
+        # ---- add studies (S6 epochs and unlocks, S7 dedupe)
         casts_p = drops = 0.0
         casts_e = total = 0.0
-        seen = set()
+        seen, skipped_unlock, old_epoch = set(), 0, None
         for r in g["studies"]:
-            sk = (r.get("studyKey"), r.get("_file"))
-            if sk in seen:
-                continue  # one study, one count per material
-            seen.add(sk)
+            ident = study_identity(r)
+            if ident in seen:
+                continue
+            seen.add(ident)
+            if req is not None and unlock_state(r) is not True:
+                skipped_unlock += 1   # unknown/locked studies can't measure an unlock-only drop
+                continue
+            w, why = epoch_weight(r, method, inp, changes)
+            if why:
+                old_epoch = why
             n = num(r.get("casts"))
             hits = num(r.get("castsWithDrop"))
             pct = chance_from_percent(r)
             tot = num(r.get("totalQuantity"))
             avg = per_cast_average(r)
-            if n:
-                if hits is not None:
-                    casts_p += n; drops += hits
-                elif pct is not None and pct <= 1:
-                    casts_p += n; drops += pct * n
-                if tot is not None:
-                    casts_e += n; total += tot
-                elif avg is not None:
-                    casts_e += n; total += avg * n
-            else:
-                if pct is not None and pct <= 1:
-                    casts_p += SMALL_STUDY_CASTS; drops += pct * SMALL_STUDY_CASTS
-                if avg is not None:
-                    casts_e += SMALL_STUDY_CASTS; total += avg * SMALL_STUDY_CASTS
-        w = PRIOR_CASTS if prior_p is not None else 0
-        we = PRIOR_CASTS if prior_e is not None else 0
+            nn = (n if n else SMALL_STUDY_CASTS) * w
+            if hits is not None and n:
+                casts_p += n * w; drops += hits * w
+            elif pct is not None and pct <= 1:
+                casts_p += nn; drops += pct * nn
+            if tot is not None and n:
+                casts_e += n * w; total += tot * w
+            elif avg is not None:
+                casts_e += nn; total += avg * nn
+        if old_epoch:
+            basis.append(f"older-period data counted at {int(OLD_EPOCH_WEIGHT*100)}% ({old_epoch} rate change)")
+        if skipped_unlock:
+            basis.append(f"{skipped_unlock} studies left out: unlock status not stated")
+        # ---- measured fields (studies + starting guess)
         p = e = None
-        basis = []
-        if casts_p + w > 0:
+        chance_measured = average_measured = False
+        # Studies that measured the average but not the chance are more informative than a
+        # 20-cast starting guess for the chance, so the chance is then estimated from them.
+        if casts_p == 0 and casts_e > 0:
+            prior_p = None
+        if casts_p > 0 or prior_p is not None:
+            w = PRIOR_CASTS if prior_p is not None else 0
             p = (drops + (prior_p or 0) * w) / (casts_p + w)
-        if casts_e + we > 0:
-            e = (total + (prior_e or 0) * we) / (casts_e + we)
-        # An average above the top of the range means the range was too small.
+            chance_measured = casts_p > 0
+        if casts_e > 0 or prior_e is not None:
+            w = PRIOR_CASTS if prior_e is not None else 0
+            e = (total + (prior_e or 0) * w) / (casts_e + w)
+            average_measured = casts_e > 0
         if e is not None and e > hi:
-            import math
-            hi = math.ceil(e)
-            mid = (lo + hi) / 2
+            hi = math.ceil(e); mid = (lo + hi) / 2
             basis.append("range widened to fit the average")
+        # ---- derived fields (S5 as agreed: allowed, labelled provisional, confidence halved)
+        chance_derived = average_derived = False
         if p is None and e is not None:
-            p = min(1.0, e / mid); basis.append("chance from average / middle of range")
+            p = min(1.0, e / mid); chance_derived = True
+            basis.append("chance estimated from average / middle of range")
         if e is None and p is not None:
-            e = p * mid; basis.append("average from chance x middle of range")
+            e = p * mid; average_derived = True
+            basis.append("average estimated from chance x middle of range (provisional valuation)")
         if p is None:
             continue
         conflict = False
-        if p and e is not None and e > p * hi + 1e-9:
-            # Chance and average can't both be right with this range: sources disagree.
-            import math
-            hi = math.ceil(e / p)
-            conflict = True
-            basis.append("chance and average from different sources disagree; range widened, confidence halved")
-        n_eff = max(casts_p, casts_e)
-        n_conf = n_eff + (GUESS_CONFIDENCE_CASTS if (prior_p is not None or prior_e is not None) else 0)
+        if p and e > p * hi + 1e-9:
+            hi = math.ceil(e / p); conflict = True
+            basis.append("chance and average disagree; range widened, confidence halved")
+        # ---- confidence (S8: only casts that measured the chance)
+        guess = GUESS_CONFIDENCE_CASTS if (prior_p is not None or prior_e is not None) else 0
+        if chance_derived:
+            conf = confidence(min(p, 1.0), casts_e + guess) // 2
+        else:
+            conf = confidence(min(p, 1.0), casts_p + guess)
         if casts_p == 0 and casts_e == 0:
+            conf = min(GUESS_ONLY_MAX_CONFIDENCE, conf)
             basis.insert(0, "starting guess only (reference values)")
         else:
-            basis.insert(0, f"{round(n_eff):,} study casts" + (" + starting guess" if w or we else ""))
-        req = condition_for(conds, method, inp, out)
+            basis.insert(0, f"{round(max(casts_p, casts_e)):,} effective study casts"
+                         + (" + starting guess" if guess else ""))
+        if conflict:
+            conf //= 2
+        # uncertainty for recommendation-confidence simulations (S10)
+        n_p = (casts_e if chance_derived else casts_p) + guess
+        sim_n = max(n_p, 1.0) / (2 if chance_derived else 1)
+        avg_sd = (e * 0.5) if average_derived else math.sqrt(max(e, 1e-6) / max(casts_e + (PRIOR_CASTS if prior_e is not None else 0), 1))
         results.append({
             "method": method, "input": inp, "outputItemID": out,
             "conditional": req is not None, "requires": req,
             "chance": round(min(p, 1.0), 4), "average": round(e, 4), "range": [lo, hi],
-            "confidence": (min(GUESS_ONLY_MAX_CONFIDENCE, confidence(min(p, 1.0), n_conf)) if n_eff == 0
-                           else confidence(min(p, 1.0), n_conf)) // (2 if conflict else 1),
-            "studyCasts": round(n_eff, 1),
+            "confidence": conf,
+            "chanceSource": "estimated" if chance_derived else ("measured" if chance_measured else "starting guess"),
+            "averageSource": "estimated" if average_derived else ("measured" if average_measured else "starting guess"),
+            "provisionalValuation": average_derived,
+            "simulation": {"chanceBeta": [round(min(p, 1.0) * sim_n + 0.5, 3), round((1 - min(p, 1.0)) * sim_n + 0.5, 3)],
+                           "averageSD": round(avg_sd, 4)},
+            "studyCasts": round(max(casts_p, casts_e), 1),
             "basis": "; ".join(basis),
             "studies": len(seen), "referenceValues": len(g["refs"]),
         })
