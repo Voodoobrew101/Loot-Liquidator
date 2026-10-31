@@ -33,6 +33,11 @@ for t in tokens:
         assert f"item={r['itemID']}" in r['source'] or str(r['itemID']) in r.get('evidence', ''), r['name']
     if t['tokenID'] is None:
         assert isinstance(t.get('tokenIDByPattern'), int), t['name']
+    # C4a3: the summary list must agree with the per-class rewards.
+    if t['rewardIDs'] is not None:
+        assert t['rewardIDs'] == [r['itemID'] for r in t['rewards']], t['name']
+    if t['status'] == 'ids-complete-unreviewed':
+        assert t['tokenID'] and all(r['itemID'] for r in t['rewards']), t['name']
 assert {s for s, _ in seen} == {'Head', 'Shoulders', 'Chest', 'Hands', 'Legs'}
 assert {g for _, g in seen} == {'woven', 'cured', 'cast', 'forged'}
 
