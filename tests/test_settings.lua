@@ -5,7 +5,7 @@ local function widget(kind,parent,template)
     local noop=function() end
     for _,name in ipairs({'SetSize','SetWidth','SetHeight','ClearAllPoints','SetAllPoints','SetColorTexture',
         'SetJustifyH','SetFontObject','SetTextInsets','SetAutoFocus','ClearFocus',
-        'RegisterEvent','SetVertexColor','SetHighlightTexture','SetTextColor','SetObeyStepOnDrag','SetButtonState'}) do w[name]=noop end
+        'RegisterEvent','SetVertexColor','SetHighlightTexture','SetTextColor','SetObeyStepOnDrag','SetButtonState','SetTexture','SetParent','SetScrollChild','SetMaxLetters','RegisterForDrag'}) do w[name]=noop end
     function w:SetPoint(...) self.point={...} end
     function w:Enable() self.enabled=true end
     function w:Disable() self.enabled=false end
@@ -258,4 +258,32 @@ ElvUI={{GetModule=function()return fakeSkin end}}
 LL:SkinSettingsCanvasControl({SliderWithSteppers=stepSlider},'slider')
 assert(skinned==1)
 ElvUI=nil
+-- B4: "Include alts" switch on the Badges page, bound to includeVerifiedAlts.
+do
+    local layout=function() return {AddInitializer=function() end} end
+    Settings.RegisterVerticalLayoutCategory=function() return {},layout() end
+    Settings.RegisterVerticalLayoutSubcategory=function() return {},layout() end
+    Settings.RegisterCanvasLayoutCategory=function() return {} end
+    Settings.RegisterCanvasLayoutSubcategory=function() return {} end
+    Settings.RegisterAddOnCategory=function() end
+    Settings.VarType=Settings.VarType or {Number='number',Boolean='boolean',String='string'}
+    Settings.CreateCheckbox=function(_,setting) return {setting=setting} end
+    Settings.CreateDropdown=function(_,setting,options) return {setting=setting,options=options,InitFrame=function() end} end
+    Settings.CreateElementInitializer=Settings.CreateElementInitializer or function() return {} end
+    CreateSettingsListSectionHeaderInitializer=CreateSettingsListSectionHeaderInitializer or function() return {} end
+    LL.db.includeVerifiedAlts=nil;LL.settingsCategory=nil
+    local ok,err=pcall(LL.RegisterNativeSettings,LL);if not ok then print('settings build stopped early: '..tostring(err)) end
+    local box=LL.badgeSettingsPanel and LL.badgeSettingsPanel.llIncludeAltsCheckbox
+    assert(box,'Include alts checkbox missing on the Badges page'..(ok and '' or (': '..tostring(err))))
+    local native=box.Checkbox or box.CheckBox
+    assert(box:GetChecked()==true,'Include alts defaults on')
+    assert(settings.LootLiquidator_includeVerifiedAlts,'Include alts registered for Defaults')
+    LL.Paint=LL.Paint or function() end
+    local before=invalidations
+    native:SetChecked(false);native.scripts.OnClick(native)
+    assert(LL.db.includeVerifiedAlts==false and invalidations>before,'switch off recalculates badges')
+    native:SetChecked(true);native.scripts.OnClick(native)
+    assert(LL.db.includeVerifiedAlts==true)
+    print('PASS: Include alts switch on the Badges page (B4)')
+end
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')

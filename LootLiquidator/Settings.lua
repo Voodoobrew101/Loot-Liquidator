@@ -263,6 +263,26 @@ local function AppearancePanel()
     panel:HookScript("OnShow",function()
         soulbound:SetChecked(LL.db.showSoulboundVendorBadge==true)
     end)
+    -- B4: one switch for counting alts in badges. The transfer rule
+    -- (CanTransferToAlt) still decides which items can actually go to an alt.
+    local alts=LL:CreateSettingsCheckbox(panel)
+    panel.llIncludeAltsCheckbox=alts
+    alts:SetSize(24,24)
+    alts:SetPoint("TOPLEFT",panel,"TOPLEFT",264,-473)
+    alts:SetChecked(LL.db.includeVerifiedAlts~=false)
+    local altsLabel=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
+    altsLabel:SetPoint("LEFT",alts,"RIGHT",6,0)
+    altsLabel:SetText("Include alts")
+    ExplainOnHover(alts,"Include alts",
+        "Let badges use your alts' professions and transmog, but only for items you can actually send to that alt (never soulbound or quest items).")
+    alts:SetScript("OnClick",function(self)
+        LL.db.includeVerifiedAlts=self:GetChecked()==true
+        if LL.Invalidate then LL:Invalidate("includeVerifiedAlts") end
+        LL:UpdateAllAppearance()
+    end)
+    panel:HookScript("OnShow",function()
+        alts:SetChecked(LL.db.includeVerifiedAlts~=false)
+    end)
     local preview=PreviewPanel()
     preview:SetParent(panel)
     preview:SetPoint("TOPLEFT",panel,"TOPLEFT",0,-510)
@@ -641,6 +661,15 @@ function LL:RegisterNativeSettings()
         self.db,"boolean","Show V on soulbound gear",false)
     if soulboundSetting.SetValueChangedCallback then
         soulboundSetting:SetValueChangedCallback(function() self:UpdateAllAppearance() end)
+    end
+    local altsSetting=Settings.RegisterAddOnSetting(appearance,
+        "LootLiquidator_includeVerifiedAlts","includeVerifiedAlts",
+        self.db,"boolean","Include alts",true)
+    if altsSetting.SetValueChangedCallback then
+        altsSetting:SetValueChangedCallback(function()
+            if self.Invalidate then self:Invalidate("includeVerifiedAlts") end
+            self:UpdateAllAppearance()
+        end)
     end
 
     local tooltips,ttLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Tooltips")
