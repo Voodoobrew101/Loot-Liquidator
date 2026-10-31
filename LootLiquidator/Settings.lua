@@ -620,6 +620,40 @@ function LL:CreateProfessionProfilePanel(profession)
     return panel
 end
 
+-- B6a: recorded-results buttons. Confirmations use Blizzard's StaticPopup.
+local function Notify(message)
+    if print and message then print("|cff66ccffLoot Liquidator|r: "..message) end
+end
+function LL:ShowRecordedResultsExport()
+    if not self.ExportRecordedResultsPage then return end
+    local title,text=self:ExportRecordedResultsPage()
+    if self.ShowCopy then self:ShowCopy(title,text) end
+end
+local function Confirm(key,text,accept)
+    if not StaticPopupDialogs or not StaticPopup_Show then accept();return end
+    StaticPopupDialogs[key]=StaticPopupDialogs[key] or {
+        text=text,button1=YES or "Yes",button2=NO or "No",
+        timeout=0,whileDead=true,hideOnEscape=true,preferredIndex=3}
+    StaticPopupDialogs[key].OnAccept=accept
+    StaticPopup_Show(key)
+end
+function LL:ConfirmResetRecordedResults()
+    local n=self.RecordedResultsCount and self:RecordedResultsCount() or 0
+    Confirm("LOOTLIQUIDATOR_RESET_RESULTS",
+        "Reset all recorded results?\n\nThe previous set is kept as one backup until the next reset.",
+        function()
+            local _,message=LL:ResetRecordedResults()
+            Notify(message)
+        end)
+    return n
+end
+function LL:ConfirmStartNewBatch()
+    Confirm("LOOTLIQUIDATOR_NEW_BATCH","Start a new batch of recorded results?",function()
+        local _,message=LL:StartNewBatch()
+        Notify(message)
+    end)
+end
+
 -- B5a: one simple choice of whose profession skill sets the rates. Uses only
 -- Blizzard's own Settings dropdowns. Who can do the work is unchanged.
 function LL:RateProfileCharacterChoices()
@@ -795,9 +829,21 @@ function LL:RegisterNativeSettings()
     Checkbox(research,"recordDisenchants","Record disenchant results",
         "Record reliably matched disenchant yields to account-wide SavedVariables.",true)
     Checkbox(research,"recordConversions","Record crafting and processing results",
-        "Record isolated completed crafts with measured inputs, outputs and profession context. Unresolved results never become zero samples. Export with /ll craftexport; no automatic database or mechanics approval.",true)
+        "Record isolated completed crafts with measured inputs, outputs and profession context. Unresolved results never become zero samples. Use the Export button below; nothing is sent anywhere automatically.",true)
     Checkbox(research,"showProcessingSamples","Show sample counts in tooltips",
         "Show how many personal observations are available. Full distributions also require Detailed tooltips.",true)
+    -- B6a: buttons instead of slash commands for recorded results.
+    if CreateSettingsButtonInitializer and researchLayout and researchLayout.AddInitializer then
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Export recorded results","Export",function() LL:ShowRecordedResultsExport() end,
+            "Opens your recorded results as text to copy (Ctrl+C). Long lists come in pages: click again for the next page.",false))
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Start new batch","Start new batch",function() LL:ConfirmStartNewBatch() end,
+            "Count the next results you record as a new group, e.g. after changing gear or specialization.",false))
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Reset recorded results","Reset",function() LL:ConfirmResetRecordedResults() end,
+            "Clear your recorded results so estimates use only the built-in database. Asks first; the previous set is kept as one backup.",false))
+    end
     Section(researchLayout,"Evidence collection")
     Section(researchLayout,"Source preferences live in Database & Accuracy. What-if profession profiles live under Professions (what-if).")
     Section(researchLayout,"Confidence thresholds")

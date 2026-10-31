@@ -559,6 +559,40 @@ function LL:ExportCraftBaselines()
     return json({schemaVersion=SCHEMA,artifactStatus="RESEARCH_ONLY_NOT_SHIPPED",baselines=baselines,contexts=d and d.contexts or {},
         automaticMechanicsPromotion=false})
 end
+-- B6a: player buttons (Processing Research page). Plain words, no slash commands.
+function LL:RecordedResultsCount()
+    local d=self.db and self.db.craftResearch
+    return d and #d.records or 0
+end
+-- Each click shows the next page (25 casts per page), then wraps to page 1.
+function LL:ExportRecordedResultsPage()
+    local d=self.db and self.db.craftResearch
+    local pages=math.max(1,math.ceil((d and #d.records or 0)/25))
+    local page=(self._recordedExportPage or 0)+1
+    if page>pages then page=1 end
+    self._recordedExportPage=page
+    local title=("Recorded results - page %d of %d"):format(page,pages)
+    if pages>1 then title=title.." (click Export again for the next page)" end
+    return title,self:ExportCraftResearch(page),page,pages
+end
+-- The previous set is kept once (recordedResultsBackup) so a mistaken click
+-- does not destroy research; the next reset replaces that backup.
+function LL:ResetRecordedResults()
+    if pending then return false,"Wait a moment: a cast is still being recorded." end
+    if not self.db then return false,"Nothing recorded yet." end
+    local db=self.db
+    db.recordedResultsBackup={savedAt=stamp(),craftResearch=db.craftResearch,
+        disenchantLearning=db.disenchantLearning,processingLearning=db.processingLearning}
+    db.craftResearch=nil;db.disenchantLearning=nil;db.processingLearning=nil
+    self._recordedExportPage=nil
+    if self.Invalidate then self:Invalidate() end
+    return true,"Recorded results reset. The previous set is kept as a backup until the next reset."
+end
+function LL:StartNewBatch()
+    local id,reason=self:StartCraftStudy(("Batch started %s"):format(date and date("%Y-%m-%d %H:%M") or tostring(stamp())))
+    if not id then return false,reason or "Could not start a new batch." end
+    return true,"New batch started. Results you record from now on are counted together."
+end
 function LL:CraftRecordingReport()
     local d=self.db and self.db.craftResearch or {records={},droppedRecords=0}
     local complete,unresolved=0,0

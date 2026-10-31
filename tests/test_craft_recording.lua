@@ -204,4 +204,16 @@ check(resumed.db.craftResearch.studies[oldStudy].censored)
 check(newStudy~=oldStudy)
 -- Retained source snapshots and registry are never changed by observations.
 eq(#LL.ItemDB.mechanicRules,0);eq(LL.ItemDB.processing[1].materials[1].expectedQuantity.value,2)
+-- B6a: Export / Start new batch / Reset buttons.
+LL.db.disenchantLearning={legacy=true}
+local recordedBefore=LL:RecordedResultsCount();check(recordedBefore>0)
+local title,text,page,pages=LL:ExportRecordedResultsPage()
+eq(page,1);eq(pages,1);check(title:find('page 1 of 1',1,true),title);check(text:find('RAW_CAST_LOG',1,true))
+eq(select(3,LL:ExportRecordedResultsPage()),1,'single page wraps to page 1')
+local before=LL.db.craftResearch.activeStudy
+check(LL:StartNewBatch());check(LL.db.craftResearch.activeStudy~=before,'new batch is a new study')
+check(LL:ResetRecordedResults())
+eq(LL.db.craftResearch,nil);eq(LL.db.disenchantLearning,nil);eq(LL:RecordedResultsCount(),0)
+eq(#LL.db.recordedResultsBackup.craftResearch.records,recordedBefore,'reset keeps one backup')
+check(LL.db.recordedResultsBackup.disenchantLearning.legacy)
 print('PASS: '..checks..' cast-recorder assertions (events, zeros, delayed loot, coverage, generic crafting, baseline and engine)')
