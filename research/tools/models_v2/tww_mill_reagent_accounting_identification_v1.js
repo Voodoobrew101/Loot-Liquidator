@@ -48,7 +48,7 @@ function denominator(x){
 
 function estimate(x){
  plain(x,"study");const c=plain(x.context,"context");
- if(!KEYS.includes(c.targetKey)||c.expansion!=="tww"||c.method!=="mill"||c.gameMode!=="retail"||typeof c.patchEpoch!=="string"||!c.patchEpoch||typeof c.studyFamily!=="string"||!c.studyFamily)throw Error("context not admitted");
+ if(!KEYS.includes(c.targetKey)||c.expansion!=="tww"||c.method!=="mill"||c.gameMode!=="retail"||typeof c.patchEpoch!=="string"||!c.patchEpoch.trim()||c.patchEpoch.length>256||typeof c.studyFamily!=="string"||!c.studyFamily.trim()||c.studyFamily.length>256)throw Error("context not admitted");
  const parts=c.targetKey.split(":");
  if(uint(c.inputItemID,"input",1)!==Number(parts[3])||uint(c.outputItemID,"output",1)!==Number(parts[4]))throw Error("mapping identity mismatch");
  if(c.minimumEligibleSkill!=null)uint(c.minimumEligibleSkill,"minimum skill");
@@ -69,19 +69,23 @@ function estimate(x){
  const lo=d.min==null?null:Math.max(d.min,success||0),hi=d.max;
  const E=outputs!=null&&lo!=null&&lo>0?{lower:hi==null?0:outputs/hi,upper:outputs/lo}:null;
  const P=success!=null&&lo!=null&&lo>0?{lower:hi==null?0:success/hi,upper:Math.min(1,success/lo)}:null;
- return {modelID:"tww-mill-reagent-accounting-identification-v1.0.0",targetKey:c.targetKey,studyFamily:c.studyFamily,patchEpoch:c.patchEpoch,denominator:d,empiricalE:E,empiricalP:P,observedConditionalRange,interpretation:"SAMPLE_OR_CONDITIONAL_IDENTIFICATION_NOT_POPULATION_CONFIDENCE_INTERVAL",confidence:0,economicUse:"PREVIEW_ONLY",normalizedVerified:false,usableForLiveEV:false,usableForRecommendation:false};
+ return {modelID:"tww-mill-reagent-accounting-identification-v1.0.1",targetKey:c.targetKey,studyFamily:c.studyFamily,patchEpoch:c.patchEpoch,denominator:d,empiricalE:E,empiricalP:P,observedConditionalRange,interpretation:"SAMPLE_OR_CONDITIONAL_IDENTIFICATION_NOT_POPULATION_CONFIDENCE_INTERVAL",confidence:0,economicUse:"PREVIEW_ONLY",normalizedVerified:false,usableForLiveEV:false,usableForRecommendation:false};
 }
 
 function forward(P,conditionalMean){
  if(typeof P!=="number"||!Number.isFinite(P)||P<0||P>1||typeof conditionalMean!=="number"||!Number.isFinite(conditionalMean)||conditionalMean<0||P>0&&conditionalMean===0)throw Error("invalid forward model");
- return {unconditionalE:P*conditionalMean,status:"SCENARIO_ONLY"};
+ const unconditionalE=P*conditionalMean;
+ if(!Number.isFinite(unconditionalE))throw Error("forward result overflow");
+ return {unconditionalE,status:"SCENARIO_ONLY"};
 }
 
 function inverse(E,P){
  if(typeof E!=="number"||!Number.isFinite(E)||E<0||typeof P!=="number"||!Number.isFinite(P)||P<0||P>1)throw Error("invalid inverse model");
  if(P===0){if(E!==0)throw Error("P=0 requires E=0");return {conditionalMean:null,identified:false};}
  if(E===0)throw Error("positive P requires positive E");
- return {conditionalMean:E/P,identified:true,hardYieldBound:false};
+ const conditionalMean=E/P;
+ if(!Number.isFinite(conditionalMean))throw Error("inverse result overflow");
+ return {conditionalMean,identified:true,hardYieldBound:false};
 }
 
 function selfTest(){
@@ -103,6 +107,10 @@ function selfTest(){
  bad(()=>estimate({context:ctx,nominalBatchSize:5,completedCasts:2,totalOutputs:1,positiveCasts:2}));
  bad(()=>estimate({context:ctx,nominalBatchSize:5,perCastOutputs:[0,,2]}));
  const getter=[0,1];Object.defineProperty(getter,"0",{get(){return 0},enumerable:true});bad(()=>estimate({context:ctx,nominalBatchSize:5,perCastOutputs:getter}));
+ bad(()=>estimate({context:{...ctx,patchEpoch:"   "},nominalBatchSize:5,completedCasts:2,totalOutputs:1}));
+ bad(()=>estimate({context:{...ctx,studyFamily:"\t"},nominalBatchSize:5,completedCasts:2,totalOutputs:1}));
+ bad(()=>estimate({context:{...ctx,patchEpoch:"x".repeat(257)},nominalBatchSize:5,completedCasts:2,totalOutputs:1}));
+ bad(()=>inverse(1e308,1e-308));
  eq(forward(0.4,2).unconditionalE,0.8);eq(inverse(0.8,0.4).conditionalMean,2);eq(inverse(0,0).identified,false);bad(()=>inverse(1,0));bad(()=>forward(1.2,1));
  for(let batch=2;batch<=12;batch++)for(let cap=0;cap<batch;cap++)for(let net=1;net<=100;net++){
   const arg={nominalBatchSize:batch,netConsumed:net,maxSavedPerCast:{units:cap,status:"SCENARIO_ONLY",sourceID:"synthetic"}};
