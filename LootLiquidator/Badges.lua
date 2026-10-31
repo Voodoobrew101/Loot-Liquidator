@@ -674,8 +674,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local confidence=model and (model.valueConfidence or model.confidence)
                     local label=names[methodName] or methodName
                     if model and model.confidenceUnscored then label=label.." (Confidence unscored)"
-                    elseif confidence then label=label..(" (Confidence %d%%%s)"):format(confidence,
-                        option.value and model.partial and ", partial" or "")
+                    elseif confidence then label=label..(" (Confidence %d%%%s%s)"):format(confidence,
+                        option.value and model.partial and ", partial" or "",
+                        model.estimatedFrom and ", estimated" or "") -- C2: borrowed from the other rank
                     elseif option.available==false then label=label.." (estimate)" end
                     if option.value then
                         valued(label,option.value,option.letter)

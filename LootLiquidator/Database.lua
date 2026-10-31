@@ -431,7 +431,82 @@ local function sourceModel(self,f,option,r)
     if verified~=model and verified.mechanicsApplied then verified.adjustment='character-adjusted' end
     return verified
 end
-function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
+-- C2: borrow from a sibling. The same herb or ore at another quality rank is a
+-- different item with the same name. When an item has no usable data, the
+-- nearest-rank sibling's estimate is shown as "Estimated from <name> rank N" at
+-- lower confidence (a borrowed guess is worth at most PRIOR_CASTS casts, and
+-- never more than BORROWED_CONFIDENCE_FACTOR of the sibling's own confidence).
+LL.BORROWED_CONFIDENCE_FACTOR=.5
+local function itemName(id)
+    if C_Item and C_Item.GetItemNameByID then
+        local ok,n=pcall(C_Item.GetItemNameByID,id);if ok and type(n)=='string' and n~='' then return n end
+    end
+    if GetItemInfo then
+        local ok,n=pcall(GetItemInfo,id);if ok and type(n)=='string' and n~='' then return n end
+    end
+    if C_Item and C_Item.RequestLoadItemDataByID then pcall(C_Item.RequestLoadItemDataByID,id) end
+end
+-- Returns siblings (nearest rank first) and whether a name is still loading.
+function LL:FindRankSiblings(f,option)
+    if not f or type(f.id)~='number' or not option or not option.name then return {},false end
+    local name=f.name or itemName(f.id)
+    if not name then return {},true end
+    local prefix=option.name..':'
+    local out,pending,seen={},false,{}
+    for key,list in pairs(self._evidenceIndex or {}) do
+        local id=key:sub(1,#prefix)==prefix and tonumber(key:sub(#prefix+1))
+        if id and id~=f.id and not seen[id] then
+            seen[id]=true
+            local rank,sameExpansion
+            for _,r in ipairs(list) do
+                rank=rank or r.inputQualityRank
+                if not r.expansionID or r.expansionID==f.expansionID then sameExpansion=true end
+            end
+            if sameExpansion then
+                local n=itemName(id)
+                if n==nil then pending=true
+                elseif n==name then out[#out+1]={id=id,rank=rank,name=n} end
+            end
+        end
+    end
+    local mine=f.reagentQuality or 0
+    table.sort(out,function(a,b)
+        local da,db=math.abs((a.rank or 0)-mine),math.abs((b.rank or 0)-mine)
+        if da~=db then return da<db end
+        return a.id<b.id
+    end)
+    return out,pending
+end
+function LL:BorrowFromSibling(f,option,mode,ctx)
+    local siblings,pending=self:FindRankSiblings(f,option)
+    for _,s in ipairs(siblings) do
+        local facts=copy(f);facts.id=s.id;facts.name=s.name;facts.reagentQuality=s.rank
+        local sctx=copy(ctx);sctx.inputQuality=s.rank
+        local m=self:ComputeEvidenceModel(facts,option,nil,mode,sctx,true)
+        if m then
+            local label='Estimated from '..s.name..(s.rank and (' rank '..s.rank) or '')
+            local total,count=0,0
+            for _,b in ipairs(m.materials) do
+                if type(b.confidence)=='number' then
+                    local c=math.floor(b.confidence*LL.BORROWED_CONFIDENCE_FACTOR+.5)
+                    if b.chance then
+                        local prior=self:CountsEstimate({prior={chance=b.chance,
+                            casts=math.min(LL.PRIOR_CASTS,b.chanceCasts or LL.PRIOR_CASTS)}})
+                        if prior then c=math.min(c,prior.confidence) end
+                    end
+                    b.confidence=c;total=total+c;count=count+1
+                end
+            end
+            m.confidence=count>0 and math.floor(total/count+.5) or 0
+            if m.conflictingMeans then m.confidence=math.floor(m.confidence*.5) end
+            m.estimatedFrom=label;m.borrowedFromItemID=s.id;m.provisional=true
+            m.warning=m.warning and (label..'; '..m.warning) or label
+            return m
+        end
+    end
+    return nil,pending
+end
+function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
     local build=GetBuildInfo and select(2,GetBuildInfo())
     local records={}
     local function include(input)
@@ -524,6 +599,12 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
             or not enabled and 'Matching yield sources are disabled by Database & Accuracy / Observation policy'
             or #eligible==0 and 'Yield records do not match this recipe, patch or character context'
             or 'Matching yield records have no usable expected quantities'
+        if not noBorrow then
+            local borrowed,pending=self:BorrowFromSibling(f,option,mode,ctx)
+            if borrowed then return borrowed end
+            -- A sibling's name is still loading: answer now, but don't cache the miss.
+            if pending then return nil,'Insufficient Data: '..why,true end
+        end
         return nil,'Insufficient Data: '..why
     end
     local batch=option.inputCount or anchor.inputCount
@@ -730,7 +811,8 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
     local cached=self._processingModelCache[key]
     if cached then return cached.model,cached.reason end
     if self._processingModelCache.count>=512 then self._processingModelCache={count=0} end
-    local model,reason=self:ComputeEvidenceModel(f,option,personal,mode,ctx)
+    local model,reason,retry=self:ComputeEvidenceModel(f,option,personal,mode,ctx)
+    if retry then return model,reason end -- C2: an item name is loading; try again later
     self._processingModelCache[key]={model=model,reason=reason}
     self._processingModelCache.count=self._processingModelCache.count+1
     return model,reason

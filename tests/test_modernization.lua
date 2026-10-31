@@ -147,6 +147,20 @@ local bad=clone(a);bad.materials[1].dropChance.value=1.1
 check(not LL:ValidateItemDB({schemaVersion=1,processing={bad}}))
 check(not LL:ValidateItemDB({schemaVersion=1,processing={a,a}}))
 eq(LL:ValidateItemDB({schemaVersion=999,processing={}}),false)
+do -- C2: no data for this rank -> borrow the same-named item's estimate, at lower confidence.
+    local names={[10]='Test Ore',[12]='Test Ore',[13]='Other Ore'}
+    local oldInfo=GetItemInfo;GetItemInfo=function(id) return names[id] end
+    local sib=clone(a);sib.inputItemID=12;sib.recordID='sib';sib.studyID='sib';sib.inputQualityRank=nil
+    install({sib});LL:Invalidate()
+    local own=LL:ResolveEvidenceModel({id=12,quality=3,reagentQuality=1,expansionID=11},option,nil,1)
+    LL:Invalidate();local m=model()
+    check(m and m.estimatedFrom=='Estimated from Test Ore','other rank borrowed: '..tostring(m and m.estimatedFrom))
+    eq(m.borrowedFromItemID,12);check(m.provisional);near(m.materials[1].expectedQuantity,own.materials[1].expectedQuantity)
+    check(m.confidence<own.confidence and m.confidence<=math.floor(own.confidence*LL.BORROWED_CONFIDENCE_FACTOR+.5),'borrowed has lower confidence')
+    names[12]='Other Ore';LL:Invalidate();eq(model(),nil,'different item name is not a sibling')
+    names[12]=nil;LL:Invalidate();eq(model(),nil);check(LL._processingModelCache.count==0,'loading name is not cached as a miss')
+    GetItemInfo=oldInfo;install({a,b})
+end
 -- Real, explicitly simulated, and offline contexts never borrow each other's stats.
 LL.ProcessingPlayerConditions=liveConditions
 LL.db.characters={['Tester - Realm']={professions={Jewelcrafting={}},details={},altMethods={P=true},
