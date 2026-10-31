@@ -30,15 +30,11 @@ local defaults = {
     tooltipDetail = 2, tooltipHeaderPrice = true, tooltipAuction = true, tooltipVendor = true,
     tooltipShowAfterAHCut = true,
     showUnavailableConversions = true,
-    methodEnabledD=true,methodEnabledM=true,methodEnabledP=true,
-    methodEnabledS=true,methodEnabledC=true,methodEnabledR=true,
-    methodEnabledX=true, manualMilling=false,manualProspecting=false,
+    manualMilling=false,manualProspecting=false,
     manualSmelting=false,manualDisenchanting=false,
     enableLearnedRecipeDiscovery = true, includeVerifiedAlts = true,
     minConversionExtraGold = 0, minReagentProfitGold = 0, minGearProfitGold = 0,
     appearance = { position="TOPRIGHT", fontSize=14, colors={} }, characters = {},
-    allowEnchantingAlt = false, allowMilling = false, allowProspecting = false,
-    allowSmelting = false, allowExchanges = true,
     -- A hard floor per bag stack, not per reagent. Equipment needs higher profit.
     minGearProfit = 100 * COPPER_PER_GOLD,
     minReagentProfit = 2 * COPPER_PER_GOLD,
@@ -353,18 +349,6 @@ end
 -- guaranteed 1x gold values. Prefer current local observations, then Game Data.
 function LA:DisenchantEstimate(f,character)
     return self:EvaluateDisenchant(f,character)
-end
-
-function LA:HasProfessionAccess(method)
-    if method == "Exchange" then return self.db.allowExchanges end
-    if method == "Smelt" then return self.db.allowSmelting end
-    if method == "Mill" then return self.db.allowMilling end
-    if method == "Prospect" then return self.db.allowProspecting end
-    if method == "Disenchant" then
-        if self.db.allowEnchantingAlt then return true end
-        return self:CurrentHasEnchanting()
-    end
-    return false
 end
 
 -- The sole BestConversion implementation is ConversionEngine.lua.
@@ -810,16 +794,6 @@ local function Command(msg)
         local names,reason=LA:GetAuctionOperationNames()
         if #names==0 then Say("No TSM Auctioning operations: "..tostring(reason or "none found"))
         else Say("TSM Auctioning operations: "..table.concat(names,", ")) end
-    elseif command == "enchanting" or command == "milling"
-        or command == "prospecting" or command == "smelting"
-        or command == "exchanges" then
-        local key = ({enchanting="allowEnchantingAlt",milling="allowMilling",
-            prospecting="allowProspecting",smelting="allowSmelting",
-            exchanges="allowExchanges"})[command]
-        if arg == "on" or arg == "off" then
-            LA.db[key] = (arg == "on"); LA:Invalidate()
-        end
-        Say(command .. " = " .. tostring(LA.db[key]))
     elseif command == "tokenstats" then
         Say(LA.TokenResearchStatus and LA:TokenResearchStatus() or "Token collector unavailable")
     elseif command == "tokenexport" then
@@ -970,9 +944,8 @@ local function Command(msg)
             ", BetterBags: " .. tostring(LibStub and LibStub("AceAddon-3.0", true) ~= nil))
     else
         Say("/ll settings - appearance, colors, and optional profession hints")
-        Say("Disenchanting requires a verified current character or eligible alt; /ll enchanting no longer overrides eligibility")
-        Say("/ll milling on|off, /ll prospecting on|off, /ll smelting on|off")
-        Say("/ll craftstats, /ll craftexport [page], /ll craftbaseline, /ll craftstudy LABEL, /ll craftzero, /ll exchanges on|off, /ll inspect ITEMID, /ll inspectbags, /ll destats, /ll detrack, /ll deexport, /ll processstats, /ll processexport, /ll processingdebug start|show|clear, /ll report, /ll scanstatus, /ll clearreport, /ll refresh, /ll tsmops, /ll attdiag ITEMID, /ll attcache, /ll attcache status, /ll attexport PAGE, /ll tokenmigration, /ll dbstatus, /ll ignore ITEMID, /ll unignore ITEMID, /ll status")
+        Say("Choose which professions count in /ll settings.")
+        Say("/ll craftstats, /ll craftexport [page], /ll craftbaseline, /ll craftstudy LABEL, /ll craftzero, /ll inspect ITEMID, /ll inspectbags, /ll destats, /ll detrack, /ll deexport, /ll processstats, /ll processexport, /ll processingdebug start|show|clear, /ll report, /ll scanstatus, /ll clearreport, /ll refresh, /ll tsmops, /ll attdiag ITEMID, /ll attcache, /ll attcache status, /ll attexport PAGE, /ll tokenmigration, /ll dbstatus, /ll ignore ITEMID, /ll unignore ITEMID, /ll status")
         Say("Uses TSM prices; item processing recommendations are estimates, never automatic sells.")
     end
 end
@@ -981,6 +954,19 @@ SLASH_LOOTLIQUIDATOR1 = "/ll"
 SLASH_LOOTLIQUIDATOR2 = "/lootliquidator"
 SLASH_LOOTLIQUIDATOR3 = "/la"
 SlashCmdList.LOOTLIQUIDATOR = Command
+
+-- B1: settings that were saved but never read by any code. Quietly drop
+-- them from old saved data so nothing stale lingers.
+local RETIRED_SETTINGS = {
+    "methodEnabledD","methodEnabledM","methodEnabledP","methodEnabledS",
+    "methodEnabledC","methodEnabledR","methodEnabledX",
+    "allowEnchantingAlt","allowMilling","allowProspecting","allowSmelting","allowExchanges",
+}
+LA.RetiredSettings = RETIRED_SETTINGS
+function LA:RemoveRetiredSettings(db)
+    if type(db) ~= "table" then return end
+    for _, key in ipairs(RETIRED_SETTINGS) do db[key] = nil end
+end
 
 local boot = CreateFrame("Frame")
 boot:RegisterEvent("ADDON_LOADED")
@@ -992,6 +978,7 @@ boot:SetScript("OnEvent", function(_, event, name)
             if LootLiquidatorDB[k] == nil then LootLiquidatorDB[k] = v end
         end
         LA.db = LootLiquidatorDB
+        LA:RemoveRetiredSettings(LA.db)
         if LA.MigrateEvidenceSettings then LA:MigrateEvidenceSettings() end
         LA.db.appearance = LA.db.appearance or {position="TOPRIGHT",fontSize=14,colors={}}
         LA.db.appearance.colors = LA.db.appearance.colors or {}

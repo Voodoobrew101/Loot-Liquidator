@@ -95,3 +95,17 @@ LL.db.tooltipHeaderPrice=false
 h=header({action='S',method='Smelt',converted=68700})
 assert(not h:find(LL:Money(68700),1,true),'header price can be switched off: '..h)
 print('PASS: optional price in the tooltip header (A5)')
+
+-- B1: dead settings are gone from defaults and quietly removed from old saved data.
+local old={methodEnabledD=true,methodEnabledX=false,allowMilling=true,allowExchanges=true,
+    allowEnchantingAlt=true,includeVerifiedAlts=false,tooltipDetail=3}
+LL:RemoveRetiredSettings(old)
+for _,key in ipairs(LL.RetiredSettings) do assert(old[key]==nil,'retired setting kept: '..key) end
+assert(old.includeVerifiedAlts==false and old.tooltipDetail==3,'live settings untouched')
+assert(LL.HasProfessionAccess==nil,'unused allow* reader removed')
+local said={}
+local realPrint=print;print=function(m) said[#said+1]=m end
+SlashCmdList.LOOTLIQUIDATOR('help');print=realPrint
+local help=table.concat(said,'\n')
+assert(#said>0 and not help:find('milling on',1,true) and not help:find('exchanges on',1,true),'help no longer lists dead toggles')
+print('PASS: retired settings removed with a saved-data migration (B1)')
