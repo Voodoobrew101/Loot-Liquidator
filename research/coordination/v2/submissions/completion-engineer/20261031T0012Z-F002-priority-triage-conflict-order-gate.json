@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002",
+  "queueRevision": 2,
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_F005_REVIEW",
+  "summary": "Strengthen mandatory research-only F002 gap-to-priority consistency gate: prevent conflict erasure, incorrect priority/action/basis, and silent triage reordering while preserving the current candidate.",
+  "baseCommit": "300dae43e0cf95cfb9a4cd92f7444c96f88ca629",
+  "implementationCommits": [
+    "1c325d4432476bc9eb319c52a244b956b5b97ecd",
+    "f9c1a6dc6f499ce0d84b3f4b4b44a8139504aef3"
+  ],
+  "implementationHead": "f9c1a6dc6f499ce0d84b3f4b4b44a8139504aef3",
+  "exactChangedFiles": [
+    {
+      "path": "research/tools/working_gap_priority_contract.js",
+      "gitDiff": {
+        "additions": 46,
+        "deletions": 3
+      },
+      "changes": [
+        "Enforce declared FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT priority basis",
+        "Recompute and enforce per-record priority score and nextAction from exact missing fields and contradictory statuses",
+        "Require conflicts to exactly match contradictory gap statuses in CSV, rejecting suppressed conflicts",
+        "Require descending score then ascending recordID order",
+        "Add 19 adversarial mutations and two-record ordering fixture in selfTest"
+      ]
+    }
+  ],
+  "acceptedInputChanges": 0,
+  "proposedCompilerGateChanges": 1,
+  "exactDataDeltas": {
+    "mappingRecordsAdded": 0,
+    "mappingRecordsRemoved": 0,
+    "sourceEvidenceCellsChanged": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "economicPromotions": 0,
+    "tooltipFallbackChanges": 0,
+    "frozenTSMChanges": 0
+  },
+  "observedReadiness": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "workingNumericCoverage": 1,
+    "evidenceMissingCells": 514,
+    "missingByField": {
+      "dropChance": 204,
+      "yieldMin": 97,
+      "yieldMax": 97,
+      "expectedQuantity": 116
+    },
+    "priorityRecords": 217,
+    "contradictoryGapFields": 39
+  },
+  "testsActuallyRun": [
+    {
+      "runner": "Actual repository check() and selfTest() JS function bodies executed in V8 with Node assert-compatible shim",
+      "result": "PASS",
+      "adversarialMutationsRejected": 19,
+      "twoRecordOrderFixture": "PASS"
+    },
+    {
+      "runner": "Actual check() over current GitHub CSV, priorities, readiness, build report",
+      "result": "PASS",
+      "gapFieldsReconciled": 514,
+      "priorityRecordsReconciled": 217
+    },
+    {
+      "runner": "GitHub compare 300dae43..f9c1a6d",
+      "result": "PASS",
+      "modifiedFiles": 1,
+      "additions": 46,
+      "deletions": 3
+    }
+  ],
+  "notRun": [
+    "Native Node 24 after latest commit (GitHub CI not confirmed)",
+    "Lua 5.1 decode or in-game WoW client",
+    "Independent F005 acceptance tests",
+    "Source evidence remeasurement or held-out Retail study"
+  ],
+  "safety": {
+    "researchOnly": true,
+    "unsupportedFallbackConfidence": 0,
+    "unsupportedFallbackEconomicUse": "PREVIEW_ONLY",
+    "unsupportedFallbackNormalizedVerified": false,
+    "liveEVOrRecommendationChanges": false,
+    "sourceEvidenceUntouched": true,
+    "productionBranchUntouched": true,
+    "legacySchedulesUntouched": true
+  },
+  "blockers": [
+    "Independent validator must review added compiler-consistency assertions before treating them as independent evidence acceptance.",
+    "No newly accepted model or source values to incorporate; 116 expectedQuantity evidence gaps remain."
+  ],
+  "zeroDeltaPivot": "Previous cycles added source-pinned QA without new yield evidence; pivoted to an unguarded triage-integrity failure mode instead of rerunning unchanged model audits.",
+  "nextTask": "After independent review, integrate accepted model/source corrections and rerun deterministic candidate compilation; otherwise harden source-to-candidate identity checks only where a concrete unguarded failure is demonstrated."
+}
