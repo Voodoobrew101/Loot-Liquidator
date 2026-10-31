@@ -28,7 +28,7 @@ function check(csv,priorities,readiness,report){
   const [id,method,input,output,field,status,reason]=row;
   if(!id||!method||!/^[1-9]\d*$/.test(input)||!/^[1-9]\d*$/.test(output)||!F.includes(field)||!['unknown','contradictory'].includes(status))fail('CSV_INVALID_GAP:'+i);
   const key=id+'\u0000'+field;if(unique.has(key))fail('CSV_DUPLICATE_GAP:'+key);unique.add(key);fields[field]++;
-  if(!gaps.has(id))gaps.set(id,[]);gaps.get(id).push({method,input:Number(input),output:Number(output),field});
+  if(!gaps.has(id))gaps.set(id,[]);gaps.get(id).push({method,input:Number(input),output:Number(output),field,status});
  }
  const basis='FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT';
  if(priorities.priorityBasis!==basis)fail('PRIORITY_BASIS_DRIFT');
@@ -46,6 +46,10 @@ function check(csv,priorities,readiness,report){
   if(!Array.isArray(r.conflicts)||new Set(r.conflicts).size!==r.conflicts.length||
      r.conflicts.some(f=>!F.includes(f)||!r.gaps.includes(f)))
     fail('PRIORITY_CONFLICT_SHAPE:'+r.recordID);
+  const sourceConflicts=found.filter(x=>x.status==='contradictory').map(x=>x.field);
+  if(sourceConflicts.length!==r.conflicts.length||
+     sourceConflicts.some(f=>!r.conflicts.includes(f)))
+    fail('PRIORITY_SOURCE_CONFLICT_DRIFT:'+r.recordID);
   const expectedPriority=(r.gaps.includes('expectedQuantity')?100:0)+
     r.conflicts.length*20+r.gaps.length;
   const expectedAction=r.conflicts.length?'RECONCILE_SOURCE_CONFLICT':
@@ -90,9 +94,23 @@ function selfTest(){
   [csv,{...priorities,records:[{...priorities.records[0],priority:1}]},readiness,report],
   [csv,{...priorities,records:[{...priorities.records[0],nextAction:'VALIDATE_DISPLAY_METRICS'}]},readiness,report],
   [csv,{...priorities,records:[{...priorities.records[0],conflicts:['yieldMin']}]},readiness,report],
-  [csv,{...priorities,records:[{...priorities.records[0],priorityBasis:'MEASURED_GOLD_IMPACT'}]},readiness,report]
+  [csv,{...priorities,records:[{...priorities.records[0],priorityBasis:'MEASURED_GOLD_IMPACT'}]},readiness,report],
+  [csv.replace('unknown','contradictory'),priorities,readiness,report]
  ];
  for(const args of mutants)assert.throws(()=>check(...args));
+ // A two-row fixture proves ordering is actually enforced, not merely
+ // calculated on each individual row.
+ const csv2=csv+'"id-2","Mill","3","4","expectedQuantity","unknown",""\\n';
+ const r2={...readiness,mappingCount:2,fieldSlots:8,workingNumericCells:8,
+   workingCompleteRecords:2,evidenceMissingCells:2,evidenceNumericCells:6,
+   perField:Object.fromEntries(Object.entries(readiness.perField).map(([f,v])=>
+     [f,{...v,numeric:v.numeric*2,missing:v.missing*2,workingNumeric:2}]))};
+ const report2={...report,sourceMappingCandidates:2,fieldSlots:8,
+   missingFieldCounts:{...report.missingFieldCounts,expectedQuantity:2}};
+ const row2={...priorities.records[0],recordID:'id-2',inputItemID:3,outputItemID:4};
+ const ordered={...priorities,records:[priorities.records[0],row2]};
+ assert.equal(check(csv2,ordered,r2,report2).priorityRecords,2);
+ assert.throws(()=>check(csv2,{...ordered,records:[row2,priorities.records[0]]},r2,report2));
  assert.throws(()=>csvParse('"unterminated'));
  assert.deepEqual(csvParse('a,b\n"x,y","z"\n'),[['a','b'],['x,y','z']]);
  return {status:'PASS',adversarialMutationsRejected:mutants.length+1,independentEvidenceValidated:false};
