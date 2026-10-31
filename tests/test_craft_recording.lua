@@ -194,8 +194,9 @@ eq(matched.observationContext.effectiveSkill,85,'real operation allocation is re
 C_TradeSkillUI.GetCraftingOperationInfo=function() return {baseSkill=70,bonusSkill=16,bonusStats={}} end
 eq(LL:GetRecordedProcessingEstimate(facts[11],'Craft',2,1000),nil,'changed equipment/operation stats cannot reuse baseline')
 eq(craftCalls,0,'recorder never executes a craft')
--- A study left active by an interrupted client session has unknown coverage.
--- Reloading cannot silently reuse it as a complete denominator.
+-- A study left active by a crash/disconnect (saved without the clean-logout
+-- "paused" mark) has unknown coverage. Reloading cannot silently reuse it as a
+-- complete denominator. B6b changed only the clean-logout case (see the end).
 local oldStudy=d.activeStudy
 local resumed={db=clone(LL.db),CharacterKey=LL.CharacterKey}
 assert(loadfile('LootLiquidator/CraftRecording.lua'))('LootLiquidator',resumed)
@@ -216,4 +217,38 @@ check(LL:ResetRecordedResults())
 eq(LL.db.craftResearch,nil);eq(LL.db.disenchantLearning,nil);eq(LL:RecordedResultsCount(),0)
 eq(#LL.db.recordedResultsBackup.craftResearch.records,recordedBefore,'reset keeps one backup')
 check(LL.db.recordedResultsBackup.disenchantLearning.legacy)
+-- B6b: a batch survives a clean logout and resumes on the same character and build.
+local function session(db,charKey)
+ local s={db=db,CharacterKey=charKey and function() return charKey end or LL.CharacterKey}
+ assert(loadfile('LootLiquidator/CraftRecording.lua'))('LootLiquidator',s)
+ s.SnapshotCraftBags=function() return clone(bags) end;s.CaptureCraftContext=function() return {} end;return s
+end
+local function freshDB() return {characters={},recordConversions=true,recordDisenchants=true} end
+local s1=session(freshDB());local batch=assert(s1:StartCraftStudy('logout batch'))
+emit('PLAYER_LOGOUT')
+check(s1.db.craftResearch.studies[batch].paused,'clean logout pauses the batch')
+eq(s1.db.craftResearch.activeStudy,batch,'paused batch is kept through logout')
+local s2=session(clone(s1.db))
+eq((s2:ActiveRecordingBatch()),batch,'next login on the same character resumes the batch')
+local st=s2.db.craftResearch.studies[batch]
+eq(st.censored,nil,'resumed batch is not censored');eq(st.paused,nil);eq(st.resumeCount,1)
+-- Another character logging in between keeps the batch parked for its owner.
+local s3=session(clone(s1.db),'Other-Realm')
+eq(s3:ActiveRecordingBatch(),nil,'other character does not inherit the batch')
+eq(s3.db.craftResearch.studies[batch].censored,nil,'parked batch is not censored')
+emit('PLAYER_LOGOUT')
+local s4=session(clone(s3.db))
+eq((s4:ActiveRecordingBatch()),batch,'owner resumes the parked batch after another character played')
+-- A new game build closes the paused batch cleanly instead of resuming it.
+local realBuild=GetBuildInfo;GetBuildInfo=function() return 'test','999999','',120105 end
+local s5=session(clone(s1.db))
+eq(s5:ActiveRecordingBatch(),nil,'new build does not resume');local closed=s5.db.craftResearch.studies[batch]
+eq(closed.censored,nil);eq(closed.closedReason,'Game build changed')
+GetBuildInfo=realBuild
+-- Logging out with a cast still being recorded leaves the batch censored.
+local s6=session(freshDB());local castBatch=assert(s6:StartCraftStudy('pending batch'))
+check(s6:BeginCraftCapture('cast-at-logout',13262),'capture started')
+emit('PLAYER_LOGOUT')
+check(s6.db.craftResearch.studies[castBatch].censored,'pending cast at logout censors');eq(s6.db.craftResearch.activeStudy,nil)
+local s7=session(clone(s6.db));eq(s7:ActiveRecordingBatch(),nil,'censored batch is not resumed')
 print('PASS: '..checks..' cast-recorder assertions (events, zeros, delayed loot, coverage, generic crafting, baseline and engine)')

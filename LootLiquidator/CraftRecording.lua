@@ -56,10 +56,29 @@ local function ledger(self)
     local d=self.db.craftResearch
     local active=d.activeStudy and d.studies[d.activeStudy]
     if not sessionStarted then
-        -- A normal logout closes the study. A persisted active study indicates
-        -- an interrupted session, whose missing denominator cannot be recovered.
-        if active then active.censored=true;active.coverageReason="Unclosed recording session" end
-        d.activeStudy=nil;sessionStarted=true
+        sessionStarted=true
+        -- B6b: a clean logout (no cast pending) pauses the study so a batch can
+        -- carry on next login. A study saved without the paused mark means the
+        -- client never reached a clean logout, so its denominator is unknown.
+        d.pausedStudies=type(d.pausedStudies)=="table" and d.pausedStudies or {}
+        if active then
+            if active.paused and active.character then d.pausedStudies[active.character]=d.activeStudy
+            else active.censored=true;active.coverageReason="Unclosed recording session" end
+        end
+        d.activeStudy=nil
+        local me=self:CharacterKey()
+        local id=d.pausedStudies[me];local study=id and d.studies[id]
+        d.pausedStudies[me]=nil
+        if study then
+            study.paused=nil
+            if study.build==build() and not study.censored and not study.truncated then
+                study.resumedAt=stamp();study.resumeCount=(study.resumeCount or 0)+1;d.activeStudy=id
+            else
+                -- A new game build is a new sampling frame: close it cleanly, not censored.
+                study.closedAt=stamp();study.closedReason=study.closedReason or "Game build changed"
+            end
+        end
+        active=d.activeStudy and d.studies[d.activeStudy]
     end
     if active and (active.character~=self:CharacterKey() or active.build~=build()) then d.activeStudy=nil end
     return d
@@ -588,6 +607,12 @@ function LL:ResetRecordedResults()
     if self.Invalidate then self:Invalidate() end
     return true,"Recorded results reset. The previous set is kept as a backup until the next reset."
 end
+-- B6b: the batch currently collecting results (resumed after a clean logout).
+function LL:ActiveRecordingBatch()
+    if not self.db then return nil end
+    local d=ledger(self)
+    return d.activeStudy,d.activeStudy and d.studies[d.activeStudy]
+end
 function LL:StartNewBatch()
     local id,reason=self:StartCraftStudy(("Batch started %s"):format(date and date("%Y-%m-%d %H:%M") or tostring(stamp())))
     if not id then return false,reason or "Could not start a new batch." end
@@ -623,7 +648,18 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
     end
     if event=="PLAYER_LOGOUT" then
         if pending and pending.success then LL:FinishCraftCapture(true) end
-        pending=nil;if LL.db and LL.db.craftResearch then LL.db.craftResearch.activeStudy=nil end;return
+        local d=LL.db and LL.db.craftResearch
+        if d then
+            d=ledger(LL)
+            local study=d.activeStudy and d.studies[d.activeStudy]
+            if study and pending then
+                -- A cast still unsettled at logout leaves the batch's coverage unknown.
+                study.censored=true;study.coverageReason="Logged out while a cast was being recorded";d.activeStudy=nil
+            elseif study then
+                study.paused=true;study.pausedAt=stamp()
+            end
+        end
+        pending=nil;return
     end
     if event=="TRADE_SHOW" or event=="MERCHANT_SHOW" or event=="MAIL_SHOW" or event=="BANKFRAME_OPENED" then
         if pending then pending.interference="Inventory interaction during capture" end;return
