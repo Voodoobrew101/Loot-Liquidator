@@ -23,6 +23,108 @@ local function same(a,b)
     for k in pairs(b) do if a[k]==nil then return false end end
     return true
 end
+-- C1a: counts-based (beta-binomial / empirical-Bayes) estimate. Every source is
+-- expressed as casts and drops; a borrowed guess counts as PRIOR_CASTS casts;
+-- weak sources are scaled down by their weight (never dropped); then
+-- chance = drops / casts. Confidence = chance the true rate is within
+-- +/- CONFIDENCE_BAND of the shown number (exact Beta probability).
+LL.PRIOR_CASTS=20
+LL.CONFIDENCE_BAND=.05
+local function logGamma(x) -- Lanczos approximation, x>0
+    local g={76.18009172947146,-86.50532032941677,24.01409824083091,
+        -1.231739572450155,.1208650973866179e-2,-.5395239384953e-5}
+    local y,tmp=x,x+5.5
+    tmp=tmp-(x+.5)*math.log(tmp)
+    local ser=1.000000000190015
+    for i=1,6 do y=y+1;ser=ser+g[i]/y end
+    return -tmp+math.log(2.5066282746310005*ser/x)
+end
+local function betaContinuedFraction(x,a,b)
+    local qab,qap,qam=a+b,a+1,a-1
+    local c,d=1,1-qab*x/qap
+    if math.abs(d)<1e-30 then d=1e-30 end
+    d=1/d
+    local h=d
+    for m=1,200 do
+        local m2=2*m
+        local aa=m*(b-m)*x/((qam+m2)*(a+m2))
+        d=1+aa*d;if math.abs(d)<1e-30 then d=1e-30 end
+        c=1+aa/c;if math.abs(c)<1e-30 then c=1e-30 end
+        d=1/d;h=h*d*c
+        aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2))
+        d=1+aa*d;if math.abs(d)<1e-30 then d=1e-30 end
+        c=1+aa/c;if math.abs(c)<1e-30 then c=1e-30 end
+        d=1/d
+        local del=d*c;h=h*del
+        if math.abs(del-1)<3e-12 then break end
+    end
+    return h
+end
+-- Regularized incomplete beta I_x(a,b): P(p<=x) for p ~ Beta(a,b).
+function LL:BetaCDF(x,a,b)
+    if not (finite(a) and finite(b)) or a<=0 or b<=0 then return nil end
+    if x<=0 then return 0 elseif x>=1 then return 1 end
+    local front=math.exp(logGamma(a+b)-logGamma(a)-logGamma(b)+a*math.log(x)+b*math.log(1-x))
+    if x<(a+1)/(a+b+2) then return front*betaContinuedFraction(x,a,b)/a end
+    return 1-front*betaContinuedFraction(1-x,b,a)/b
+end
+-- Confidence (0-100) that the true rate is within +/-band of drops/casts.
+function LL:RateConfidence(drops,casts,band)
+    band=band or LL.CONFIDENCE_BAND
+    if not finite(drops) or not finite(casts) or casts<=0 then return 0 end
+    drops=math.min(drops,casts)
+    -- Half a count on each side (Jeffreys prior) so 0 drops in 2 casts is not
+    -- "certain"; the shown rate stays drops/casts.
+    local a,b=drops+.5,casts-drops+.5
+    local mean=drops/casts
+    local p=self:BetaCDF(math.min(1,mean+band),a,b)-self:BetaCDF(math.max(0,mean-band),a,b)
+    return math.max(0,math.min(100,math.floor(p*100+.5)))
+end
+-- spec = {prior={chance=0.18, casts=20, label="Rank 1 ore"},
+--         sources={{casts=50, drops=12, weight=1, key="personal"}, ...}}
+-- A source may give {casts, chance} instead of drops. weight (0-1) scales its
+-- casts and drops: weak or old evidence counts for less, never nothing.
+function LL:CountsEstimate(spec)
+    spec=spec or {}
+    local casts,drops,real=0,0,0
+    local prior=spec.prior
+    if prior and finite(prior.chance) and prior.chance<=1 then
+        local n=finite(prior.casts) and prior.casts or LL.PRIOR_CASTS
+        casts,drops=n,prior.chance*n
+    else prior=nil end
+    local used={}
+    for _,src in ipairs(spec.sources or {}) do
+        local n,w=src.casts,src.weight
+        if w==nil then w=1 end
+        local d=src.drops
+        if d==nil and finite(src.chance) and src.chance<=1 and finite(n) then d=src.chance*n end
+        if finite(n) and n>0 and finite(d) and d<=n and finite(w) and w>0 then
+            casts=casts+n*w;drops=drops+d*w;real=real+n*w
+            used[#used+1]=src.key or src.source or #used+1
+        end
+    end
+    if casts<=0 then return nil end
+    return {chance=drops/casts,casts=casts,drops=drops,realCasts=real,
+        confidence=self:RateConfidence(drops,casts),sourcesUsed=used,
+        estimatedFrom=(real==0 and prior and prior.label) and ("Estimated from "..prior.label) or nil,
+        priorOnly=real==0}
+end
+-- Fill one missing figure from the other (owner study notes): average ~= chance x
+-- middle of the range, chance ~= average / middle of the range. Returns
+-- chance, average, filled ("chance" / "average" / nil). Filled figures should be
+-- shown with lower confidence (see FILLED_CONFIDENCE_FACTOR).
+LL.FILLED_CONFIDENCE_FACTOR=.5
+function LL:FillChanceOrAverage(chance,average,minQuantity,maxQuantity)
+    local lo,hi=minQuantity,maxQuantity
+    if not finite(lo) and finite(hi) then lo=hi end
+    if not finite(hi) and finite(lo) then hi=lo end
+    local middle=(finite(lo) and finite(hi)) and (lo+hi)/2 or nil
+    if finite(chance) and not finite(average) and middle then return chance,chance*middle,'average' end
+    if finite(average) and not finite(chance) and middle and middle>0 then
+        return math.min(1,average/middle),average,'chance'
+    end
+    return chance,average,nil
+end
 function LL:MigrateEvidenceSettings()
     if not self.db then return end
     -- B2: the frozen TSM source is gone; drop its saved switches quietly.
