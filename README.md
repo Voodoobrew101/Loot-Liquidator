@@ -78,6 +78,7 @@ Please say which item, what letter and tooltip you saw, and what you expected. `
 ## For developers
 
 - Work happens on branch `LootLiquidatorclaude-V0.1`. The plan, decisions and session log are in [`claude/HANDOFF.md`](claude/HANDOFF.md).
+- After a WoW patch: [`AFTER_PATCH.md`](AFTER_PATCH.md) (a ready prompt for an AI helper, then step by step).
 - Older notes (up to 0.10.0-alpha10) are in [`docs/DEVELOPER-NOTES.md`](docs/DEVELOPER-NOTES.md).
 - Build and test (Lua 5.1 and Python 3):
 
