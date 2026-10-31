@@ -2,7 +2,7 @@
 
 Built by `research/v3/tools/build_estimates.py` from 2,031 evidence records.
 960 input/material estimates; 234 records could not be placed yet (no item ID or name match).
-1 of them are conditional drops (need an unlock or skill level) are left out of the confidence counts below and marked with what unlocks them.
+1 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
 
 | Confidence | Estimates |
 | --- | --- |

@@ -276,7 +276,7 @@ def summary(results, unplaced, total_records):
         "",
         f"Built by `research/v3/tools/build_estimates.py` from {total_records:,} evidence records.",
         f"{len(results):,} input/material estimates; {unplaced} records could not be placed yet (no item ID or name match).",
-        f"{len(cond)} of them are conditional drops (need an unlock or skill level) are left out of the confidence counts below and marked with what unlocks them.",
+        f"{len(cond)} of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.",
         "",
         "| Confidence | Estimates |", "| --- | --- |",
         f"| 90% or more | {by_conf[3]} |", f"| 75-89% | {by_conf[2]} |",
