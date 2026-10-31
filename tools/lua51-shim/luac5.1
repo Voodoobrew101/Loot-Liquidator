@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+# Minimal "luac5.1 -p FILE..." (syntax check only) using lupa.
+import sys, lupa.lua51 as l
+L = l.LuaRuntime()
+chk = L.eval("function(p) local f, e = loadfile(p); return e end")
+bad = 0
+for p in [a for a in sys.argv[1:] if a != "-p"]:
+    e = chk(p)
+    if e: sys.stderr.write("luac5.1: %s\n" % e); bad = 1
+sys.exit(bad)
