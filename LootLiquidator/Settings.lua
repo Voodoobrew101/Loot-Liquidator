@@ -443,9 +443,10 @@ function LL:CreateEvidenceSettingsPanel(category)
     local panel=CreateFrame("Frame")
     local rows={}
     local labels={itemdb="itemdb.lua research database",personal="Personal observations",
-        legacy="Legacy fallback estimates"}
+        imported="Imported results",legacy="Legacy fallback estimates"}
     local descriptions={itemdb="Compiled research, including provisional records; unknown fields remain unknown.",
         personal="Your recorded completed operations. Personal-only modes exclude all external evidence.",
+        imported="Results pasted in from other players (Processing Research > Import). Kept separate from your own.",
         legacy="Optional historical scenarios. Never treated as verified skill coefficients."}
     for index,key in ipairs(LL.SourceOrder) do
         local source=key
@@ -653,6 +654,34 @@ function LL:ConfirmStartNewBatch()
         Notify(message)
     end)
 end
+-- B7: paste another player's exported results into a standard StaticPopup.
+local function PopupEditBox(popup) return popup and ((popup.GetEditBox and popup:GetEditBox()) or popup.editBox or popup.EditBox) end
+local function RunImport(text)
+    local _,message=LL:ImportRecordedResults(text)
+    Notify(message)
+end
+LL.RunImportFromPopup=RunImport
+function LL:ShowImportResultsDialog()
+    if not StaticPopupDialogs or not StaticPopup_Show then return false end
+    StaticPopupDialogs.LOOTLIQUIDATOR_IMPORT_RESULTS=StaticPopupDialogs.LOOTLIQUIDATOR_IMPORT_RESULTS or {
+        text="Import results from another player\n\nPaste the text from their Export button (one page at a time), then click Import.",
+        button1="Import",button2=CANCEL or "Cancel",hasEditBox=true,editBoxWidth=350,maxLetters=0,maxBytes=0,
+        timeout=0,whileDead=true,hideOnEscape=true,preferredIndex=3,
+        OnShow=function(popup) local box=PopupEditBox(popup);if box then box:SetText("");box:SetFocus() end end,
+        OnAccept=function(popup) local box=PopupEditBox(popup);RunImport(box and box:GetText() or "") end,
+        EditBoxOnEnterPressed=function(box)
+            local popup=box:GetParent();RunImport(box:GetText());if popup then popup:Hide() end
+        end,
+        EditBoxOnEscapePressed=function(box) local popup=box:GetParent();if popup then popup:Hide() end end}
+    StaticPopup_Show("LOOTLIQUIDATOR_IMPORT_RESULTS")
+    return true
+end
+function LL:ConfirmClearImportedResults()
+    Confirm("LOOTLIQUIDATOR_CLEAR_IMPORTED","Remove all imported results?\n\nYour own recorded results are not touched.",function()
+        local _,message=LL:ClearImportedResults()
+        Notify(message)
+    end)
+end
 
 -- B5a: one simple choice of whose profession skill sets the rates. Uses only
 -- Blizzard's own Settings dropdowns. Who can do the work is unchanged.
@@ -843,6 +872,13 @@ function LL:RegisterNativeSettings()
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Reset recorded results","Reset",function() LL:ConfirmResetRecordedResults() end,
             "Clear your recorded results so estimates use only the built-in database. Asks first; the previous set is kept as one backup.",false))
+        -- B7: import another player's export as a separate source.
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Import results","Import",function() LL:ShowImportResultsDialog() end,
+            "Paste results another player exported. They are checked for damaged or impossible values and kept separate from your own results, with their own confidence (weight: Database & Accuracy > Imported results).",false))
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Remove imported results","Remove",function() LL:ConfirmClearImportedResults() end,
+            "Remove everything you imported. Your own recorded results are not touched. Asks first.",false))
     end
     Section(researchLayout,"Evidence collection")
     Section(researchLayout,"Source preferences live in Database & Accuracy. What-if profession profiles live under Professions (what-if).")

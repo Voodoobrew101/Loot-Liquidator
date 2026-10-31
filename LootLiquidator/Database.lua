@@ -3,13 +3,14 @@ local _, LL = ...
 -- Legacy (old disenchant tables) is on by default since A1: weak evidence counts
 -- for less, it is not thrown away. Its low weight keeps it from outvoting ItemDB.
 -- B2: the frozen TSM conversion source was removed; TSM gives AH prices only.
-local defaults={itemdb={true,100},personal={true,60},legacy={true,10}}
+-- B7: results imported from other players are their own source (default weight 25).
+local defaults={itemdb={true,100},personal={true,60},imported={true,25},legacy={true,10}}
 -- Weak-evidence multipliers (owner decision 15: weight down, never reject).
 local STALE_FACTOR=.25          -- pre-hotfix, obsolete or past its patch window
 local UNKNOWN_CONFIDENCE=10     -- a value whose source gave no confidence figure
 LL.SourceDefaults=defaults
-local order={'itemdb','personal','legacy'}
-local sourcePriority={itemdb=1,personal=2,legacy=4}
+local order={'itemdb','personal','imported','legacy'}
+local sourcePriority={itemdb=1,personal=2,imported=3,legacy=4}
 local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true}
 local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
@@ -322,6 +323,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         for _,record in ipairs(self._evidenceIndex and self._evidenceIndex[option.name..':'..tostring(input)] or {}) do
             records[#records+1]=record
         end
+        for _,record in ipairs(self.ImportedEvidenceRecords and self:ImportedEvidenceRecords(option.name..':'..tostring(input)) or {}) do
+            records[#records+1]=record
+        end
     end
     include(f.id) -- reviewed research may identify a specific gear item
     if option.name=='Disenchant' then include(gearKey(f)) end
@@ -560,7 +564,7 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(personal and personal.studyID),tostring(personal and personal.observationContextID),
         tostring(personal and personal.expectedInputCount),
         tostring(userWeight(self,'itemdb',mode)),tostring(userWeight(self,'personal',mode)),
-        tostring(userWeight(self,'legacy',mode)),
+        tostring(userWeight(self,'legacy',mode)),tostring(userWeight(self,'imported',mode)),tostring(self._importedRevision),
         tostring(self.ItemDB and self.ItemDB.modelRevision),fingerprint(personal and personal.materials),
         fingerprint(personal and personal.projectionRules)},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
@@ -573,14 +577,14 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
     return model,reason
 end
 function LL:EvidenceDatabaseStatus()
-    local counts={itemdb=0,legacy=0}
+    local counts={itemdb=0,legacy=0,imported=self.ImportedResultsCount and self:ImportedResultsCount() or 0}
     for _,records in pairs(self._evidenceIndex or {}) do
         for _,r in ipairs(records) do counts[r.sourceKey]=(counts[r.sourceKey] or 0)+1 end
     end
     local manifest=self.ItemDB and self.ItemDB.researchManifest or {}
-    return ('ItemDB compiler %s: %d mappings (provisional unless normalized); legacy: %d; profession rules: %d; personal patch rules: %d'):format(
+    return ('ItemDB compiler %s: %d mappings (provisional unless normalized); legacy: %d; imported casts: %d; profession rules: %d; personal patch rules: %d'):format(
         tostring(manifest.compilerVersion or 'unknown'),counts.itemdb,
-        counts.legacy,#(self.ItemDB and self.ItemDB.professionRules or {}),#(self.ItemDB and self.ItemDB.personalPatchRules or {}))
+        counts.legacy,counts.imported,#(self.ItemDB and self.ItemDB.professionRules or {}),#(self.ItemDB and self.ItemDB.personalPatchRules or {}))
 end
 LL:InitializeItemDB()
 

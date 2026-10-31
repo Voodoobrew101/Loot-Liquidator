@@ -128,7 +128,7 @@ for _,w in ipairs(all) do
     if w.template=='SettingsCheckboxControlTemplate' then checkboxes[#checkboxes+1]=w end
     if w.kind=='Slider' then sliders[#sliders+1]=w end
 end
-assert(#checkboxes==3 and #sliders==3) -- B2: one row per source; frozen TSM row removed
+assert(#checkboxes==#LL.SourceOrder and #sliders==#LL.SourceOrder and #LL.SourceOrder==4) -- B2: frozen TSM row removed; B7: Imported results row added
 panel.scripts.OnShow(panel)
 for i,key in ipairs(LL.SourceOrder) do
     assert(sliders[i].minimum==0 and sliders[i].maximum==100 and sliders[i].step==1)
