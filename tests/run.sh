@@ -37,6 +37,7 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
 "$lua_bin" tests/test_counts_model.lua
+"$lua_bin" tests/test_transmog_alts.lua
 python3 tests/test_craft_export.py
 "$lua_bin" tools/audit_profession_scaling.lua
 

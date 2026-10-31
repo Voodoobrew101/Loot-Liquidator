@@ -945,6 +945,30 @@ function LL:ItemPermitsClass(itemID,class)
     -- overflow-prone shifts, and incorrect fallbacks for missing records.
     return math.floor(mask/(2^(id-1)))%2==1
 end
+-- C5 (owner decision): an alt counts for a missing appearance on ANY armor
+-- their armor type can wear, not only class-restricted (tier) pieces.
+-- Armor subclasses: 1 cloth, 2 leather, 3 mail, 4 plate, 5 cosmetic, 6 shield.
+local ARMOR_TYPE={PRIEST=1,MAGE=1,WARLOCK=1,ROGUE=2,MONK=2,DRUID=2,DEMONHUNTER=2,
+    HUNTER=3,SHAMAN=3,EVOKER=3,WARRIOR=4,PALADIN=4,DEATHKNIGHT=4}
+local SHIELD_CLASSES={WARRIOR=true,PALADIN=true,SHAMAN=true}
+LL.ArmorTypeByClass=ARMOR_TYPE
+function LL:ArmorTypePermitsClass(f,class)
+    if not f or f.classID~=4 or not ARMOR_TYPE[class] then return nil end
+    local sub=f.subClassID
+    if f.equipLoc=="INVTYPE_CLOAK" or sub==5 then return true end -- cloaks, cosmetics: any class
+    if sub==6 then return SHIELD_CLASSES[class]==true end
+    if sub==1 or sub==2 or sub==3 or sub==4 then return ARMOR_TYPE[class]==sub end
+    return nil -- rings, trinkets, off-hands: no armor-type answer
+end
+-- true/false when the class mask or the armor type gives an answer, else nil.
+-- A "no" from either wins, so a plate item never counts a cloth alt.
+function LL:AltCanWearAppearance(f,class)
+    local mask=self:ItemPermitsClass(f.id,class)
+    local armor=self:ArmorTypePermitsClass(f,class)
+    if mask==false or armor==false then return false end
+    if mask==true or armor==true then return true end
+    return nil
+end
 function LL:AltProfessionEligible(key,method,recipeOrSpell)
     if not self:AltMethodEnabled(key,method) then return false end
     local char=self.db.characters[key]
@@ -966,7 +990,7 @@ function LL:DirectTransmogRecipient(f)
     local liveClass
     if UnitClass then local _,id=UnitClass("player");liveClass=id end
     local class=(char and char.class) or liveClass
-    local allowed=self:ItemPermitsClass(f.id,class)
+    local allowed=self:AltCanWearAppearance(f,class)
     -- The class-mask database can be absent for old/outlier gear. A current
     -- character that Blizzard explicitly says cannot use the appearance is
     -- not a verified collection recipient. Other eligible alts are tested next.
@@ -992,7 +1016,7 @@ function LL:DirectTransmogRecipient(f)
     for _,key in ipairs(keys) do
         local record=self.db.characters[key]
         if key~=current and record.class and self:AltMethodEnabled(key,"T")
-            and self:ItemPermitsClass(f.id,record.class)==true then
+            and self:AltCanWearAppearance(f,record.class)==true then
             return {name=key,displayName=ShortName(key),class=record.class,classLabel=self:AltClassLabel(record.class),current=false}
         end
     end
