@@ -30,7 +30,7 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,20,'runtime source count')
+eq(#manifest,19,'runtime source count') -- B2: itemTSM.lua removed
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',
@@ -47,8 +47,9 @@ near(LL.db.appearance.colors.A[1],.1)
 for key,defaults in pairs(LL.SourceDefaults) do
     eq(LL.db['source_'..key..'_enabled'],defaults[1]);eq(LL.db['source_'..key..'_weight'],defaults[2])
 end
-LL:SetEvidenceSource('itemtsm',false,17);LL:MigrateEvidenceSettings()
-eq(LL.db.source_itemtsm_weight,17);eq(LL.db.source_itemtsm_enabled,false)
+LL:SetEvidenceSource('legacy',false,17);LL:MigrateEvidenceSettings()
+eq(LL.db.source_legacy_weight,17);eq(LL.db.source_legacy_enabled,false)
+eq(LL.SourceDefaults.itemtsm,nil,'B2: frozen TSM source removed')
 local migrated=clone(LL.db)
 LL.db={processingFallbackMode=3,prospectingDataMode=3}
 LL:MigrateEvidenceSettings();eq(LL.db.millingDataMode,2);eq(LL.db.prospectingDataMode,3)
@@ -70,26 +71,27 @@ local function install(records)
     LL.ItemDB={schemaVersion=1,version='fixture',processing=records,mechanicRules={}}
     check(LL:InitializeItemDB(),LL.itemDBError)
     LL:ResetEvidenceSources();LL.db.processingFallbackMode=1
+    LL:SetEvidenceSource('legacy',true,30) -- B2: legacy stands in for the removed frozen TSM source
 end
 local f={id=10,quality=3,reagentQuality=2,expansionID=11}
 local option={name='Prospect',inputCount=5,recipeID=444,character='Tester - Realm'}
 local function model(mode,personal) LL:Invalidate();return LL:ResolveEvidenceModel(f,option,personal,mode or 1) end
 local a=record('itemdb','a',2,.5,2,6)
-local b=record('itemtsm','b',4,.8,2,6)
+local b=record('legacy','b',4,.8,2,6)
 install({a,b})
 local m=model();near(m.materials[1].expectedQuantity,3.2/1.3)
-near(m.sources.itemdb,1/1.3);near(m.sources.itemtsm,.3/1.3)
+near(m.sources.itemdb,1/1.3);near(m.sources.legacy,.3/1.3)
 near(m.materials[1].chance,(.5+.8*.3)/1.3)
 eq(m.materials[1].minQuantity,2);eq(m.materials[1].maxQuantity,6)
 -- Price is net already; no second occurrence or fee multiplier.
 LL.GetOutputPrice=function(_,id) if id==20 then return 100 end end
 near(LL:ValueProcessingModel(m,10,true),(100*(3.2/1.3)-10)/5)
 near(m.materials[1].netExpectedValue,100*(3.2/1.3))
-LL:SetEvidenceSource('itemtsm',true,0);near(model().materials[1].expectedQuantity,2)
+LL:SetEvidenceSource('legacy',true,0);near(model().materials[1].expectedQuantity,2)
 LL:SetEvidenceSource('itemdb',false);eq(model(),nil,'all effective weights zero')
-LL:SetEvidenceSource('itemtsm',true,30);near(model().materials[1].expectedQuantity,4)
+LL:SetEvidenceSource('legacy',true,30);near(model().materials[1].expectedQuantity,4)
 install({a,b});b.referenceContextID='different';near(model().materials[1].expectedQuantity,2)
-b.referenceContextID='cohort';b.studyID='a';m=model();near(m.materials[1].expectedQuantity,2);eq(m.sources.itemtsm,nil)
+b.referenceContextID='cohort';b.studyID='a';m=model();near(m.materials[1].expectedQuantity,2);eq(m.sources.legacy,nil)
 -- Personal-only really excludes all external source records.
 local personal={effectiveSamples=100,inputCount=5,materials={{id=20,expectedQuantity=7,chance=1,minQuantity=5,maxQuantity=10}}}
 m=model(2,personal);near(m.materials[1].expectedQuantity,7);eq(m.sources.itemdb,nil);near(m.sources.personal,1)
@@ -221,10 +223,10 @@ eq(LL.DisenchantStatsFor,nil,'obsolete tooltip stats removed')
 -- Primary entries without a usable mean do not hide a usable external fallback.
 local unknown=record('itemdb','unknown',nil,nil,nil,nil)
 unknown.materials[1].expectedQuantity.status='unknown'
-local fallback=record('itemtsm','fallback',4,.8,1,6)
+local fallback=record('legacy','fallback',4,.8,1,6)
 install({unknown,fallback});m=model();near(m.materials[1].expectedQuantity,4);eq(m.sources.itemdb,nil)
 local conflict=record('itemdb','low',1,.2,1,9)
-local opposite=record('itemtsm','high',9,1,1,9)
+local opposite=record('legacy','high',9,1,1,9)
 install({conflict,opposite});m=model();check(m.conflictingMeans);check(m.confidence<90)
 -- Native guild-bank event dispatch preserves the guild item-instance context.
 LL.db.showGuildBank=true

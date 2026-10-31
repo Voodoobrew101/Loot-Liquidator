@@ -8,7 +8,7 @@ time=function() return 100 end
 CreateFrame=function()
     return {RegisterEvent=function()end,SetScript=function()end}
 end
-for _,file in ipairs({'ItemDBRuntime.lua','itemTSM.lua','GameData.lua','ProfessionModels.lua',
+for _,file in ipairs({'ItemDBRuntime.lua','GameData.lua','ProfessionModels.lua',
     'Database.lua','Professions.lua','ConversionEngine.lua','Badges.lua'}) do
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end

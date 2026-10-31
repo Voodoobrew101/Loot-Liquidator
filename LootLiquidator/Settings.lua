@@ -423,10 +423,9 @@ function LL:CreateEvidenceSettingsPanel(category)
     local panel=CreateFrame("Frame")
     local rows={}
     local labels={itemdb="itemdb.lua research database",personal="Personal observations",
-        itemtsm="itemTSM (frozen TSM conversion snapshot)",legacy="Legacy fallback estimates"}
+        legacy="Legacy fallback estimates"}
     local descriptions={itemdb="Compiled research, including provisional records; unknown fields remain unknown.",
         personal="Your recorded completed operations. Personal-only modes exclude all external evidence.",
-        itemtsm="Fixed historical TSM conversion quantities. Character skills and auction-price updates never change these rates.",
         legacy="Optional historical scenarios. Never treated as verified skill coefficients."}
     for index,key in ipairs(LL.SourceOrder) do
         local source=key

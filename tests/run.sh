@@ -17,7 +17,7 @@ compiled="$compiled_dir/ItemDBRuntime.lua"
 trap 'rm -rf "$compiled_dir"' EXIT
 "$lua_bin" tools/compile_itemdb.lua "$compiled"
 cmp "$compiled" LootLiquidator/ItemDBRuntime.lua
-cmp "$compiled_dir/itemTSM.lua" LootLiquidator/itemTSM.lua
+test ! -e "$compiled_dir/itemTSM.lua"  # B2: frozen TSM table is no longer built
 cmp "$compiled_dir/GameData.lua" LootLiquidator/GameData.lua
 python3 tests/validate_package.py
 "$lua_bin" research/tests/test_verified_mechanics_adapter.lua

@@ -116,7 +116,7 @@ end
 -- has passed recipe-specific numerical validation. Unknown means no transform.
 -- This lives in the existing conversion engine to avoid another runtime module.
 function LL:ApplyVerifiedMechanics(f,option,baseline)
-    if baseline and (baseline.sourceKey=='itemtsm' or baseline.sourceKey=='tsm' or baseline.sourceKey=='legacy' or baseline.sourceKey=='personal') then return baseline end
+    if baseline and (baseline.sourceKey=='legacy' or baseline.sourceKey=='personal') then return baseline end
     if baseline and baseline.mechanicsApplied then return baseline end
     local rules=self.ItemDB and self.ItemDB.mechanicRules
     if type(rules)~="table" or #rules==0 or type(f)~="table"

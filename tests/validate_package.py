@@ -11,7 +11,7 @@ manifest = [s.strip() for s in (root / 'LootLiquidator.toc').read_text().splitli
 assert len(manifest) == len(set(manifest)), 'Duplicate TOC entry'
 assert all((root / s).is_file() for s in manifest), 'Missing runtime file'
 assert {s for s in manifest if s.endswith('.lua')} == {s.name for s in root.glob('*.lua') if s.name != 'itemdb.lua'}
-assert len([s for s in manifest if s.endswith('.lua')]) == 20
+assert len([s for s in manifest if s.endswith('.lua')]) == 19  # B2: itemTSM.lua removed
 assert 'itemdb.lua' not in manifest, 'Research-only schema must not replace the runtime database'
 for name in manifest:
     assert '/' not in name and '\\' not in name, 'Runtime package must be self-contained'
@@ -35,7 +35,8 @@ print('PASS: latest research itemdb copy checksum and runtime separation')
 # Frozen references retain the exact pre-cleanup values; old formulas are retired.
 assert not Path('database/sources/StatYieldProfiles.lua').exists()
 assert not Path('database/sources/GameData.lua').exists()
-for name, expected in {'itemTSM.lua':'cece33b46b70aa26b56d59e011cf798ea00351ecae1d7e7b920a7c7bdceb98ca',
-                       'GameData.lua':'a1970683591d9511bd5724eaa90ebfccfabfd178effd0c6e6e91e57d6e4eebf0'}.items():
+# B2: the frozen TSM conversion table is no longer shipped (TSM = AH prices only).
+assert not (root/'itemTSM.lua').exists(), 'itemTSM.lua must not ship (B2)'
+for name, expected in {'GameData.lua':'a1970683591d9511bd5724eaa90ebfccfabfd178effd0c6e6e91e57d6e4eebf0'}.items():
     assert hashlib.sha256((root/name).read_bytes()).hexdigest()==expected, 'Frozen reference changed: '+name
 print('PASS: frozen reference checksums unchanged after formula retirement')

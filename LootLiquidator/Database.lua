@@ -2,13 +2,14 @@
 local _, LL = ...
 -- Legacy (old disenchant tables) is on by default since A1: weak evidence counts
 -- for less, it is not thrown away. Its low weight keeps it from outvoting ItemDB.
-local defaults={itemdb={true,100},personal={true,60},itemtsm={true,30},legacy={true,10}}
+-- B2: the frozen TSM conversion source was removed; TSM gives AH prices only.
+local defaults={itemdb={true,100},personal={true,60},legacy={true,10}}
 -- Weak-evidence multipliers (owner decision 15: weight down, never reject).
 local STALE_FACTOR=.25          -- pre-hotfix, obsolete or past its patch window
 local UNKNOWN_CONFIDENCE=10     -- a value whose source gave no confidence figure
 LL.SourceDefaults=defaults
-local order={'itemdb','personal','itemtsm','legacy'}
-local sourcePriority={itemdb=1,personal=2,itemtsm=3,tsm=3,legacy=4}
+local order={'itemdb','personal','legacy'}
+local sourcePriority={itemdb=1,personal=2,legacy=4}
 local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true}
 local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
@@ -23,10 +24,9 @@ local function same(a,b)
 end
 function LL:MigrateEvidenceSettings()
     if not self.db then return end
-    if not self.db.frozenTSMMigrated then
-        if self.db.source_itemtsm_enabled==nil then self.db.source_itemtsm_enabled=self.db.source_tsm_enabled end
-        if self.db.source_itemtsm_weight==nil then self.db.source_itemtsm_weight=self.db.source_tsm_weight end
-        self.db.frozenTSMMigrated=true
+    -- B2: the frozen TSM source is gone; drop its saved switches quietly.
+    for _,k in ipairs({'source_itemtsm_enabled','source_itemtsm_weight','source_tsm_enabled','source_tsm_weight','frozenTSMMigrated'}) do
+        self.db[k]=nil
     end
     -- Materialize the old global policy once, so later per-method changes work
     -- without a hidden legacy selector overriding the visible weighted choice.
@@ -52,7 +52,6 @@ function LL:MigrateEvidenceSettings()
     self.db.evidenceSchemaVersion=2
 end
 function LL:SetEvidenceSource(key,enabled,weight)
-    if key=='tsm' then key='itemtsm' end -- old callers retain effective preference
     if not defaults[key] or not self.db then return false end
     if enabled~=nil then self.db['source_'..key..'_enabled']=enabled==true end
     if weight~=nil then
@@ -98,7 +97,7 @@ function LL:ValidateItemDB(db)
             local p,e,lo,hi=m.dropChance.value,m.expectedQuantity.value,m.minQuantity.value,m.maxQuantity.value
             if (p and p>1) or (lo and (lo<1 or lo%1~=0)) or (hi and (hi<1 or hi%1~=0))
                 or (lo and hi and lo>hi) or (e==0 and p and p>0)
-                or (r.sourceKey~='itemtsm' and e and p and lo and hi and (e+1e-9<p*lo or e>p*hi+1e-9)) then
+                or (e and p and lo and hi and (e+1e-9<p*lo or e>p*hi+1e-9)) then
                 return false,'Contradictory probability/quantity fields'
             end
         end
@@ -182,7 +181,7 @@ function LL:InitializeItemDB()
         list[#list+1]=r;self._tokenRewardIndex[r.tokenID]=list
     end
     local all={}
-    for _,dataset in ipairs({self.ItemDB,self.FrozenTSM or {},self.LegacyDB or {}}) do
+    for _,dataset in ipairs({self.ItemDB,self.LegacyDB or {}}) do
         if dataset~=self.ItemDB and dataset.processing then
             local valid,why=self:ValidateItemDB(dataset)
             if not valid then self.itemDBError=why;return false end
@@ -287,8 +286,8 @@ local function contextEligible(record,ctx,build,model,rules)
     return true,stale
 end
 local function userWeight(self,key,mode)
-    if key=='tsm' then key='itemtsm' end
     local d=defaults[key]
+    if not d then return 0 end
     if (mode==2 and key~='personal') or (mode==3 and key=='personal') then return 0 end
     local enabled=self.db and self.db['source_'..key..'_enabled']
     if enabled==nil then enabled=d[1] end
@@ -561,7 +560,7 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(personal and personal.studyID),tostring(personal and personal.observationContextID),
         tostring(personal and personal.expectedInputCount),
         tostring(userWeight(self,'itemdb',mode)),tostring(userWeight(self,'personal',mode)),
-        tostring(userWeight(self,'itemtsm',mode)),tostring(userWeight(self,'legacy',mode)),
+        tostring(userWeight(self,'legacy',mode)),
         tostring(self.ItemDB and self.ItemDB.modelRevision),fingerprint(personal and personal.materials),
         fingerprint(personal and personal.projectionRules)},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
@@ -574,14 +573,14 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
     return model,reason
 end
 function LL:EvidenceDatabaseStatus()
-    local counts={itemdb=0,itemtsm=0,legacy=0}
+    local counts={itemdb=0,legacy=0}
     for _,records in pairs(self._evidenceIndex or {}) do
         for _,r in ipairs(records) do counts[r.sourceKey]=(counts[r.sourceKey] or 0)+1 end
     end
     local manifest=self.ItemDB and self.ItemDB.researchManifest or {}
-    return ('ItemDB compiler %s: %d mappings (provisional unless normalized); frozen itemTSM %s: %d references; legacy: %d; profession rules: %d; personal patch rules: %d'):format(
-        tostring(manifest.compilerVersion or 'unknown'),counts.itemdb,tostring(self.FrozenTSM and self.FrozenTSM.version or 'missing'),
-        counts.itemtsm,counts.legacy,#(self.ItemDB and self.ItemDB.professionRules or {}),#(self.ItemDB and self.ItemDB.personalPatchRules or {}))
+    return ('ItemDB compiler %s: %d mappings (provisional unless normalized); legacy: %d; profession rules: %d; personal patch rules: %d'):format(
+        tostring(manifest.compilerVersion or 'unknown'),counts.itemdb,
+        counts.legacy,#(self.ItemDB and self.ItemDB.professionRules or {}),#(self.ItemDB and self.ItemDB.personalPatchRules or {}))
 end
 LL:InitializeItemDB()
 

@@ -3,12 +3,11 @@ local LL={}
 CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()end}end
 GetBuildInfo=function()return '12.1.5','123456','Oct 29 2026',120105 end
 GetTime=function()return 100 end
-for _,file in ipairs({'ItemDBRuntime.lua','itemTSM.lua','GameData.lua','ProfessionModels.lua',
+for _,file in ipairs({'ItemDBRuntime.lua','GameData.lua','ProfessionModels.lua',
     'Database.lua','ConversionEngine.lua','Badges.lua'}) do
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
-LL.db={source_itemdb_enabled=true,source_itemdb_weight=100,source_itemtsm_enabled=false,
-    source_personal_enabled=false,source_legacy_enabled=false,processingModes={M=1,P=1,S=1},
+LL.db={source_itemdb_enabled=true,source_itemdb_weight=100,source_personal_enabled=false,source_legacy_enabled=false,processingModes={M=1,P=1,S=1},
     tooltipDetail=3,showTooltips=true,showMaterialBreakdown=true}
 LL:MigrateEvidenceSettings()
 LL.CanUseConversion=function()return true,nil,'Tester - Realm'end

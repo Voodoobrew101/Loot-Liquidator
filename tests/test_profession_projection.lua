@@ -50,7 +50,7 @@ near(LL:ApplyProfessionModel(f,option,base,target).materials[1].expectedQuantity
 near(base.materials[1].expectedQuantity,3)
 local projected=LL:ApplyProfessionModel(f,option,base,target)
 check(LL:ApplyProfessionModel(f,option,projected,target)==projected)
-for _,key in ipairs({'itemtsm','tsm','legacy'}) do
+for _,key in ipairs({'legacy'}) do
     local fixed=clone(base);fixed.sourceKey=key
     check(LL:ApplyProfessionModel(f,option,fixed,target)==fixed)
     check(LL:ApplyVerifiedMechanics(f,option,fixed)==fixed)
@@ -62,21 +62,20 @@ local function record(key,e)
         fixedReference=key~='itemdb',referenceConditions={},baselineProfile=key=='itemdb' and clone(profile) or nil,
         materials={{id=20,expectedQuantity=field(e),dropChance=field(nil),minQuantity=field(nil),maxQuantity=field(nil)}}}
 end
-LL.ItemDB.processing={record('itemdb',3),record('itemtsm',4),record('legacy',9)}
+LL.ItemDB.processing={record('itemdb',3),record('legacy',9)} -- B2: no frozen TSM source
 check(LL:InitializeItemDB());LL:SetEvidenceSource('legacy',true,100)
 local calls=0
 LL.ApplyVerifiedMechanics=function(_,_,_,model) calls=calls+1;return model end
 LL.ProcessingPlayerConditions=function() return target end
 local model=assert(LL:ComputeEvidenceModel(f,option,nil,1,target))
 -- A1: legacy blends in at its own source weight (here set to 100) instead of only filling gaps.
-near(model.materials[1].expectedQuantity,(6+4*.3+9)/2.3)
-near(model.materials[1].sourceContributions.itemtsm,.3/2.3)
-near(model.sources.legacy,1/2.3)
+near(model.materials[1].expectedQuantity,(6+9)/2)
+near(model.sources.legacy,1/2)
 LL:SetEvidenceSource('legacy',true,10);LL._processingModelCache=nil
 model=assert(LL:ComputeEvidenceModel(f,option,nil,1,target))
-near(model.materials[1].expectedQuantity,(6+4*.3+9*.1)/1.4) -- default weight keeps legacy weak
+near(model.materials[1].expectedQuantity,(6+9*.1)/1.1) -- default weight keeps legacy weak
 LL:SetEvidenceSource('legacy',true,100)
-near(LL.ItemDB.processing[2].materials[1].expectedQuantity.value,4)
+near(LL.ItemDB.processing[2].materials[1].expectedQuantity.value,9)
 check(calls==0,'fixed sources never enter mechanics adapter')
 local low=clone(target);low.effectiveSkill=0
 model=assert(LL:ComputeEvidenceModel(f,option,nil,1,low))
@@ -84,12 +83,15 @@ model=assert(LL:ComputeEvidenceModel(f,option,nil,1,low))
 -- user setting change would, then recompute.
 LL.ProcessingPlayerConditions=function() return low end
 model=assert(LL:ComputeEvidenceModel(f,option,nil,1,low))
-near(model.materials[1].expectedQuantity,(3+4*.3+9)/2.3) -- A1: legacy blends at weight 100
-near(LL.ItemDB.processing[2].materials[1].expectedQuantity.value,4)
-LL.db={source_tsm_enabled=false,source_tsm_weight=17};LL:MigrateEvidenceSettings()
-check(LL.db.source_itemtsm_enabled==false);near(LL.db.source_itemtsm_weight,17)
-LL:SetEvidenceSource('itemtsm',true,0);LL:MigrateEvidenceSettings()
-near(LL.db.source_itemtsm_weight,0)
+near(model.materials[1].expectedQuantity,(3+9)/2) -- A1: legacy blends at weight 100
+near(LL.ItemDB.processing[2].materials[1].expectedQuantity.value,9)
+-- B2: old frozen-TSM switches are dropped quietly from saved data.
+LL.db={source_tsm_enabled=false,source_tsm_weight=17,source_itemtsm_enabled=true,source_itemtsm_weight=30,frozenTSMMigrated=true}
+LL:MigrateEvidenceSettings()
+for _,k in ipairs({'source_tsm_enabled','source_tsm_weight','source_itemtsm_enabled','source_itemtsm_weight','frozenTSMMigrated'}) do
+    check(LL.db[k]==nil,'retired '..k)
+end
+check(LL:SetEvidenceSource('itemtsm',true,0)==false,'itemtsm is no longer a source')
 -- No shipped coefficient means a truthful stable unadjusted baseline.
 LL.ItemDB.professionRules={}
 local stable=LL:ApplyProfessionModel(f,option,base,target)

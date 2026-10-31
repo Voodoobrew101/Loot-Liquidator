@@ -128,7 +128,7 @@ for _,w in ipairs(all) do
     if w.template=='SettingsCheckboxControlTemplate' then checkboxes[#checkboxes+1]=w end
     if w.kind=='Slider' then sliders[#sliders+1]=w end
 end
-assert(#checkboxes==4 and #sliders==4)
+assert(#checkboxes==3 and #sliders==3) -- B2: one row per source; frozen TSM row removed
 panel.scripts.OnShow(panel)
 for i,key in ipairs(LL.SourceOrder) do
     assert(sliders[i].minimum==0 and sliders[i].maximum==100 and sliders[i].step==1)
@@ -138,7 +138,7 @@ for i,key in ipairs(LL.SourceOrder) do
     sliders[i]:SetValue(23)
     assert(LL.db['source_'..key..'_weight']==23)
 end
-assert(invalidations>=7)
+assert(invalidations>=2*#LL.SourceOrder-1) -- B2: scales with source rows (was a fixed 7 for four rows)
 local unrelated={graphics=7,bindings='custom'}
 for _,w in ipairs(all) do if w.text=='Reset source weights' and w.kind=='Button' then w.scripts.OnClick(w) end end
 for key,d in pairs(LL.SourceDefaults) do assert(LL.db['source_'..key..'_weight']==d[2]);assert(LL.db['source_'..key..'_enabled']==d[1]) end
