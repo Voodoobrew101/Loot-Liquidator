@@ -27,7 +27,7 @@ local defaults = {
     showMaterialBreakdown = true, showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,
     otherConversionDataMode = 1, minPersonalSamples = 30,
-    tooltipDetail = 2, tooltipAuction = true, tooltipVendor = true,
+    tooltipDetail = 2, tooltipHeaderPrice = true, tooltipAuction = true, tooltipVendor = true,
     tooltipShowAfterAHCut = true,
     showUnavailableConversions = true,
     methodEnabledD=true,methodEnabledM=true,methodEnabledP=true,

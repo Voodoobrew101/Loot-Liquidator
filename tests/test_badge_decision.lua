@@ -67,3 +67,31 @@ r=decide({classID=7,vendor=10,conversionOptions={}},{},{name='Smelt',value=10*G}
 assert(r.action=='S','profitable smelt stays S')
 
 print('PASS: ? badge only when no option has any estimate (A4)')
+
+-- A5: optional price in the tooltip header, default on.
+local evaluated=LL.Evaluate
+assert(loadfile('LootLiquidator/Badges.lua'))('LootLiquidator',LL)
+LL.Evaluate=evaluated
+LL.MarkupColor=function() return '' end
+LL.db.showTooltips=true;LL.db.tooltipDetail=1
+assert(LL.db.tooltipHeaderPrice==nil or LL.db.tooltipHeaderPrice==true)
+local function header(decision)
+    local tip={lines={}}
+    function tip:AddLine(t) self.lines[#self.lines+1]=t end
+    function tip:AddDoubleLine(l,r) self.lines[#self.lines+1]=l..' '..r end
+    decision.facts=decision.facts or {id=1,classID=7};decision.conversionOptions={};decision.count=1
+    LL:AppendRecommendationTooltip(tip,decision)
+    return tip.lines[1] or ''
+end
+local h=header({action='S',method='Smelt',converted=68700})
+assert(h:find('Smelt',1,true) and h:find(LL:Money(68700),1,true),'header shows smelt value: '..h)
+h=header({action='V',vendor=1500})
+assert(h:find(LL:Money(1500),1,true),'header shows vendor value: '..h)
+h=header({action='A',rawAuction=10000,netAuction=9500})
+assert(h:find(LL:Money(9500),1,true),'header shows auction value after AH cut: '..h)
+h=header({action='Q'})
+assert(not h:find('%dg'),'no price for ?: '..h)
+LL.db.tooltipHeaderPrice=false
+h=header({action='S',method='Smelt',converted=68700})
+assert(not h:find(LL:Money(68700),1,true),'header price can be switched off: '..h)
+print('PASS: optional price in the tooltip header (A5)')

@@ -656,6 +656,8 @@ function LL:RegisterNativeSettings()
         "Minimal shows the recommended action; Summary shows key prices; Detailed shows materials and known profession progression. Extra research notes are optional.",
         {{1,"Minimal — recommendation only"},{2,"Summary — main prices"},
          {3,"Detailed — materials and professions"}},2)
+    Checkbox(tooltips,"tooltipHeaderPrice","Show price in the header",
+        "Add the recommended action's gold value per item to the first line, e.g. \"Loot Liquidator: Smelt 6g 87s\".",true)
     Checkbox(tooltips,"tooltipAuction","Show auction estimate",
         "Show the original item's estimated auction value in Summary or Detailed tooltips.",true)
     Checkbox(tooltips,"tooltipVendor","Show vendor value",

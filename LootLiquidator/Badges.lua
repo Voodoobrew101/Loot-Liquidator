@@ -472,8 +472,21 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         end
         if decision.action=="D" and decision.conversion
             and decision.conversion.confidence=="baseline" then suffix=" (estimated)" end
+        -- A5: optional per-item value of the recommended action in the header,
+        -- e.g. "Loot Liquidator: Smelt 6g 87s".
+        local headerPrice=""
+        if LA.db.tooltipHeaderPrice~=false then
+            local a,unit=decision.action,nil
+            if a=="A" then
+                unit=(LA.db.tooltipShowAfterAHCut~=false and decision.netAuction~=0 and decision.netAuction)
+                    or decision.rawAuction or decision.marketAuctionNet
+            elseif a=="V" then unit=decision.vendor
+            elseif a=="D" or a=="M" or a=="P" or a=="S" or a=="C" then unit=decision.converted
+            end
+            if type(unit)=="number" and unit>0 then headerPrice=" "..LA:Money(unit) end
+        end
         tooltip:AddLine("|cff66ccffLoot Liquidator:|r "..
-            LA:MarkupColor(decision.action)..label..suffix.."|r")
+            LA:MarkupColor(decision.action)..label..suffix.."|r"..headerPrice)
     end
     -- All priced methods (including the winning Auction) use the SAME row
     -- renderer below. Minimal mode still includes the Auction quote.
