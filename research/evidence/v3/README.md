@@ -9,3 +9,10 @@ Raw counts collected by the research agents, one file per run:
 - Check your file before committing: `python3 tools/evidence_check.py`. Records that break a rule are
   **set aside with a reason**, never deleted. Fix them in a new file; don't edit another agent's file.
 - Never type a final drop chance, average or confidence. A script works those out from the counts (task D1b).
+- After checking, `python3 tools/evidence_to_baselines.py` turns the usable Disenchant / Mill / Prospect / Smelt
+  records into `database/evidence-baselines.lua` (generated, never hand-edited), which the database compiler adds
+  to ItemDB. Copies with the same `lineage` count once (the biggest wins); `stale` counts ×0.25; a sample counts at
+  full weight only when `skill` equals `minimumSkill` and every stat is 0, otherwise ×0.5 until scaling rules exist;
+  a percentage with no sample size counts as 20 casts; a record the Checker marked `mismatch` is skipped.
+- **List outputs you counted zero of** with `"castsWithDrop": 0`. An output you leave out counts as "not reported",
+  not as "never dropped".

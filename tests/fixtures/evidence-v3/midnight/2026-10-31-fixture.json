@@ -1,0 +1,53 @@
+[
+  {
+    "method": "Prospect", "input": 990001, "inputPerCast": 5, "casts": 200,
+    "outputs": [
+      {"item": 990101, "castsWithDrop": 36, "totalQuantity": 54, "min": 1, "max": 2},
+      {"item": 990102, "castsWithDrop": 200, "totalQuantity": 600, "min": 2, "max": 4}
+    ],
+    "source": "https://example.org/fixture/a", "lineage": "fixture-a",
+    "observedDate": "2026-09", "patch": "12.1.0", "stale": false,
+    "skill": 1, "minimumSkill": 1, "stats": {"resourcefulness": 0, "multicraft": 0},
+    "notes": "At minimum skill: full weight."
+  },
+  {
+    "method": "Prospect", "input": 990001, "inputPerCast": 5, "casts": 100,
+    "outputs": [{"item": 990101, "castsWithDrop": 18, "totalQuantity": 27, "min": 1, "max": 2}],
+    "source": "https://example.org/fixture/a-repost", "lineage": "fixture-a",
+    "observedDate": "2026-09", "patch": "12.1.0", "stale": false,
+    "notes": "Smaller repost of the same data: counted once (the bigger copy wins)."
+  },
+  {
+    "method": "Prospect", "input": 990001, "inputPerCast": 5, "casts": 80,
+    "outputs": [{"item": 990101, "castsWithDrop": 40, "min": 1, "max": 3}],
+    "source": "https://example.org/fixture/b", "lineage": "fixture-b",
+    "observedDate": "2025-01", "patch": "11.0.7", "stale": true,
+    "skill": 100, "minimumSkill": 1,
+    "notes": "Stale and above minimum skill: 80 x 0.25 x 0.5 = 10 casts."
+  },
+  {
+    "method": "Prospect", "input": 990001, "inputPerCast": 5, "casts": null,
+    "outputs": [{"item": 990103, "chance": 0.05}],
+    "source": "https://example.org/fixture/c", "lineage": "fixture-c",
+    "observedDate": null, "patch": null, "stale": false,
+    "notes": "Published percentage only, unknown skill: a guess worth 20 x 0.5 = 10 casts."
+  },
+  {
+    "method": "Mill", "input": 990002, "inputPerCast": 5, "casts": 40,
+    "outputs": [{"item": 990201, "castsWithDrop": 40, "totalQuantity": 100, "min": 2, "max": 3}],
+    "source": "https://example.org/fixture/d", "lineage": "fixture-d",
+    "observedDate": "2026-10", "patch": "12.1.5", "stale": false,
+    "notes": "The Checker marks this one as a mismatch, so it is left out."
+  },
+  {
+    "method": "Craft", "input": 990003, "inputPerCast": 1, "casts": 10,
+    "outputs": [{"item": 990301, "castsWithDrop": 10}],
+    "source": "https://example.org/fixture/e", "lineage": "fixture-e",
+    "observedDate": "2026-10", "patch": "12.1.5", "stale": false,
+    "notes": "Craft is not built into ItemDB yet: kept, skipped."
+  },
+  {"kind": "check", "recordId": "midnight/2026-10-31-fixture.json#4", "result": "mismatch", "saw": "page says 30 casts"},
+  {"kind": "check", "recordId": "midnight/2026-10-31-fixture.json#0", "result": "confirmed", "saw": "200 casts, 36 with the gem"},
+  {"method": "Prospect", "input": 990001, "inputPerCast": 5, "casts": 0, "outputs": [], "source": "http://bad", "lineage": "",
+   "observedDate": null, "patch": null, "stale": false}
+]

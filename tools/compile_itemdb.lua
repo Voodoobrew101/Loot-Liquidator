@@ -231,6 +231,19 @@ for _,r in ipairs(additions.mechanicRules or {}) do
         'Mechanics require numerical validation and independent approval')
     db.mechanicRules[#db.mechanicRules+1]=r
 end
+-- D1b step 2: baseline counts generated from research/evidence/v3 by
+-- tools/evidence_to_baselines.py. Ordinary "itemdb" records whose fields carry
+-- weighted cast counts, so the addon's counting math sets their confidence.
+-- arg[2] lets tests compile a fixture file instead.
+local baselines=assert(loadfile(arg[2] or 'database/evidence-baselines.lua'))()
+assert(baselines.schemaVersion==1 and type(baselines.processing)=='table','Unsupported evidence baseline schema')
+for _,r in ipairs(baselines.processing) do
+    assert(r.sourceKey=='itemdb' and r.recordID:match('^evidence:'),'Evidence baselines must be itemdb evidence records')
+    db.processing[#db.processing+1]=r
+    if r.inputItemID then
+        inputs[r.inputItemID]=inputs[r.inputItemID] or {method=r.method,batch=r.inputCount}
+    end
+end
 table.sort(db.processing,function(a,b) return a.recordID<b.recordID end)
 -- Fixed conversions remain one copy; the valuation engine adapts these to a model.
 db.inputs=inputs

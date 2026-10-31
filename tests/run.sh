@@ -9,9 +9,10 @@ else
     lua_bin=/workspace/.loot-liquidator-tools/lua/usr/bin/lua5.1
     luac_bin=/workspace/.loot-liquidator-tools/lua/usr/bin/luac5.1
 fi
-for file in LootLiquidator/*.lua database/sources/*.lua database/records.lua tools/*.lua tests/*.lua research/tests/*.lua; do
+for file in LootLiquidator/*.lua database/sources/*.lua database/records.lua database/evidence-baselines.lua tools/*.lua tests/*.lua research/tests/*.lua; do
     "$luac_bin" -p "$file"
 done
+python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are current
 compiled_dir=$(mktemp -d)
 compiled="$compiled_dir/ItemDBRuntime.lua"
 trap 'rm -rf "$compiled_dir"' EXIT
@@ -45,3 +46,7 @@ python3 tests/test_craft_export.py
 python3 tests/test_token_research.py
 python3 tests/test_token_research_s2.py
 python3 tests/test_evidence_check.py
+python3 tests/test_evidence_baselines.py
+python3 tools/evidence_to_baselines.py tests/fixtures/evidence-v3 "$compiled_dir/fixture-baselines.lua" >/dev/null
+"$lua_bin" tools/compile_itemdb.lua "$compiled_dir/ItemDBFixture.lua" "$compiled_dir/fixture-baselines.lua" >/dev/null
+"$lua_bin" tests/test_evidence_baselines.lua "$compiled_dir/ItemDBFixture.lua"
