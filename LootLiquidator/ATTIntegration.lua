@@ -640,6 +640,53 @@ function LL:TokenBestVendorReward(token)
     return best
 end
 
+-- C4c (owner, session 12): a tier token never answers "?". Midnight tokens
+-- show no sell price of their own, but the piece they open into has a game
+-- sell price and is disenchantable (soulbound, so disenchanted by whoever
+-- opens it). Value = this character's piece (class mask from ItemClassMasks);
+-- when the class can't be matched, the CHEAPEST reward, never the best one.
+function LL:TokenPieceQuote(f,token)
+    if not token or type(token.rewards)~="table" or #token.rewards==0 then return nil end
+    local info=C_Item and C_Item.GetItemInfo or GetItemInfo
+    if type(info)~="function" then return nil end
+    local class
+    if UnitClass then local _,c=UnitClass("player"); class=c end
+    local own,lowest
+    for _,id in ipairs(token.rewards) do
+        local ok,name,link,_,_,_,_,_,_,loc,_,sellPrice=pcall(info,id)
+        if ok and type(sellPrice)=="number" and sellPrice>=0 and EquippableSlot(loc) then
+            local quote={itemID=id,name=name,link=link or ("item:"..id),vendor=sellPrice}
+            -- An exchange (curio) lets the player pick any of their pieces;
+            -- an open token gives exactly one. Highest own piece covers both.
+            if class and self.ItemPermitsClass and self:ItemPermitsClass(id,class)==true
+                and (not own or sellPrice>own.vendor) then own=quote end
+            if not lowest or sellPrice<lowest.vendor then lowest=quote end
+        elseif C_Item and type(C_Item.RequestLoadItemDataByID)=="function" then
+            pcall(C_Item.RequestLoadItemDataByID,id)
+        end
+    end
+    local piece=own or lowest
+    if not piece then return nil end
+    piece.ownClass=own~=nil
+    -- Disenchant value of the piece through the normal disenchant path, for
+    -- this character's Enchanting. Any failure just leaves it out.
+    if self.GetItemFacts and self.BestConversion then
+        local ok,pf=pcall(self.GetItemFacts,self,piece.link,{count=1})
+        if ok and type(pf)=="table" and pcall(self.BestConversion,self,pf) then
+            for _,option in ipairs(pf.conversionOptions or {}) do
+                if option.name=="Disenchant" and option.available
+                    and type(option.value)=="number" and option.value>0 then
+                    piece.disenchant=option.value
+                    local model=option.yieldModel
+                    piece.disenchantConfidence=model and (model.valueConfidence or model.confidence)
+                    break
+                end
+            end
+        end
+    end
+    return piece
+end
+
 -- Choose a character who is actually documented to have Enchanting and
 -- its disenchant spell. Alt mailability is checked on THIS item instance.
 -- Class is informative for class-dependent token rewards; no fabricated

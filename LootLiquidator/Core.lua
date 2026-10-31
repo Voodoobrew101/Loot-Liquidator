@@ -516,6 +516,7 @@ function LA:Evaluate(link, context)
         fallback = "V"
     end
 
+    local tokenPiece, tokenQuote
     local hasAlternative, hasAvailableDE = false, false
     for _, option in ipairs(f.conversionOptions or {}) do
         if option.available and type(option.value)=="number" and option.value>0 then
@@ -578,7 +579,30 @@ function LA:Evaluate(link, context)
             -- vendor-only soulbound items that cannot be disenchanted.
             action, reason = "V", "Vendor estimate beats other available conversion methods" .. deNote
         elseif isToken then
-            action, reason = "Q", "ATT equipment token: possible rewards; quantities and chances unverified"
+            -- C4c (owner): a token always gets an answer when anything is
+            -- priced: its own sell price, the sell price of the piece it
+            -- opens into, or that piece's disenchant value. T still wins below.
+            tokenPiece = self.TokenPieceQuote and self:TokenPieceQuote(f,tokenInfo) or nil
+            local pieceName = tokenPiece and (tokenPiece.name or ("item "..tokenPiece.itemID))
+            local vendorValue, vendorWhy = vendor, "Vendor the token"
+            if tokenPiece and tokenPiece.vendor > vendorValue then
+                vendorValue, vendorWhy = tokenPiece.vendor, "Open it, then vendor "..pieceName
+            end
+            local deValue = tokenPiece and not Ignored(self,f.id,"D") and tokenPiece.disenchant or 0
+            if deValue > vendorValue then
+                action, reason = "D", "Open it, then disenchant "..pieceName
+                tokenQuote = {letter="D", value=deValue, label="Open, then disenchant", piece=tokenPiece,
+                    confidence=tokenPiece.disenchantConfidence}
+            elseif vendorValue > 0 then
+                action, reason = "V", vendorWhy
+                tokenQuote = {letter="V", value=vendorValue, piece=vendorValue>vendor and tokenPiece or nil,
+                    label=vendorValue>vendor and "Open, then vendor" or "Vendor token"}
+            else
+                action, reason = "Q", "Equipment token: no price known yet for it or the piece it opens into"
+            end
+            if tokenPiece and not tokenPiece.ownClass then
+                reason = reason .. " (cheapest piece; your class's piece not identified)"
+            end
         elseif not canAuction then
             -- Explicit opt-in lets players see V even on vendor-only soulbound
             -- gear; it does not change D eligibility or invent AH eligibility.
@@ -627,7 +651,8 @@ function LA:Evaluate(link, context)
         action,reason=nil,nil
     end
     if action == "V" and self:IsNonAuctionableByBinding(f)
-        and self.db.showSoulboundVendorBadge ~= true and not vendorOptIn then
+        and self.db.showSoulboundVendorBadge ~= true and not vendorOptIn
+        and not isToken then -- C4c: tokens are soulbound but still get their V
         -- Keep conversion math/tooltips intact; only hide the V badge/action.
         action, reason = nil, nil
     end
@@ -688,6 +713,7 @@ function LA:Evaluate(link, context)
         disenchantEligible=deAllowed, disenchantRestriction=f.disenchantBlocked and deReason or nil,
         isBound=self:IsNonAuctionableByBinding(f), auctionEligible=canAuction,
         tokenInfo=tokenInfo, tokenEnchanter=tokenEnchanter,tokenDE=tokenDE,
+        tokenPiece=tokenPiece, tokenQuote=tokenQuote,
         missingAppearance=missingAppearance, collectedAppearance=collectedAppearance,
         transmogRecipient=transmogRecipient }
     self:ReportMissing(f)

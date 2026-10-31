@@ -156,3 +156,72 @@ assert(saved.tooltipDetail==0 and saved.showTooltips==nil and saved.tooltipAucti
 saved={showTooltips=true,tooltipDetail=3};LL:RemoveRetiredSettings(saved)
 assert(saved.tooltipDetail==3,'level kept when tooltips were on')
 print('PASS: tooltip levels Off/Recommendation/Alternatives/Breakdown (B3)')
+
+-- C4c (owner): a tier token never answers "?" when anything is priced. It is
+-- valued by its own sell price, the piece it opens into, or that piece's
+-- disenchant value; T still wins; soulbound does not hide its V.
+LL.db.tooltipDetail=2
+local token={rewards={271457,271466,271475},kind='open'}
+local piece
+LL.ATTTokenInfo=function() return token end
+LL.TokenPieceQuote=function() return piece end
+LL.AuctionEligible=function() return false end
+LL.IsNonAuctionableByBinding=function() return true end
+local function tokenCase(vendor)
+    return decide({classID=15,vendor=vendor,equipLoc='',quality=4,conversionOptions={}},{})
+end
+piece={itemID=271457,name="Jeweled Gauntlets of the Jade Warlord",vendor=45*G,ownClass=true}
+r=tokenCase(0)
+assert(r.action=='V' and r.tokenQuote and r.tokenQuote.value==45*G and r.why:find('Open it, then vendor',1,true),
+    'token with no sell price is valued by its piece: '..tostring(r.action)..' '..tostring(r.why))
+h=header(r)
+assert(h:find(LL:Money(45*G),1,true),'header shows the piece value: '..h)
+piece={itemID=271457,name="Jeweled Gauntlets of the Jade Warlord",vendor=45*G,disenchant=60*G,disenchantConfidence=40,ownClass=true}
+r=tokenCase(0)
+assert(r.action=='D' and r.tokenQuote.value==60*G and r.why:find('disenchant',1,true),'disenchanting the piece can win')
+local tip={lines={}}
+function tip:AddLine(t) self.lines[#self.lines+1]=t end
+function tip:AddDoubleLine(l,rt) self.lines[#self.lines+1]=l..' '..rt end
+LL:AppendRecommendationTooltip(tip,r)
+local all=table.concat(tip.lines,'\n')
+assert(all:find('Open, then vendor Jeweled Gauntlets',1,true) and all:find('Open, then disenchant (Confidence 40%)',1,true),
+    'Alternatives shows both piece rows: '..all)
+piece=nil
+r=tokenCase(5*G)
+assert(r.action=='V' and r.tokenQuote.value==5*G and r.why=='Vendor the token','own sell price works without a piece')
+r=tokenCase(0)
+assert(r.action=='Q' and r.why:find('no price known yet',1,true),'truly nothing priced stays ?')
+piece={itemID=271466,name='Gauntlets of the Consecrated Flame',vendor=30*G,ownClass=false}
+r=tokenCase(0)
+assert(r.action=='V' and r.why:find('cheapest piece',1,true),'unknown class says it used the cheapest piece')
+token.possibleMissingAppearance=true
+LL.TokenTransmogRecipient=function() return {current=true} end
+r=tokenCase(0)
+assert(r.action=='T','a missing appearance still wins over gold')
+token.possibleMissingAppearance=nil;LL.TokenTransmogRecipient=nil
+LL.ATTTokenInfo=function() return nil end
+print('PASS: tokens are valued by the piece they open into, never "?" when priced (C4c)')
+
+-- C4c: the real TokenPieceQuote picks this character's piece by class mask, or
+-- the cheapest reward when the class can't be matched.
+local Q={db={}}
+WOW_PROJECT_ID=1;WOW_PROJECT_MAINLINE=1
+GetBuildInfo=function()return '12.1.5','70575','Oct 29 2026',120105 end
+assert(loadfile('LootLiquidator/ATTIntegration.lua'))('LootLiquidator',Q)
+local sells={[271457]=46*G,[271466]=44*G,[271475]=47*G}
+C_Item={GetItemInfo=function(id) if sells[id] then
+    return 'Piece '..id,'item:'..id,4,219,90,'Armor','Plate',1,'INVTYPE_HAND',0,sells[id] end end}
+UnitClass=function() return 'Paladin','PALADIN' end
+Q.ItemPermitsClass=function(_,id,class) return class=='PALADIN' and id==271466 end
+local p=Q:TokenPieceQuote({id=270913},{rewards={271457,271466,271475}})
+assert(p and p.itemID==271466 and p.vendor==44*G and p.ownClass,'own class piece chosen')
+Q.ItemPermitsClass=function() return nil end
+p=Q:TokenPieceQuote({id=270913},{rewards={271457,271466,271475}})
+assert(p and p.itemID==271466 and not p.ownClass,'cheapest piece when the class is unknown')
+Q.GetItemFacts=function(_,link) return {id=tonumber(link:match('%d+')),conversionOptions={}} end
+Q.BestConversion=function(_,f) f.conversionOptions={{name='Disenchant',available=true,value=61*G,
+    yieldModel={valueConfidence=35}}} return f.conversionOptions[1] end
+p=Q:TokenPieceQuote({id=270913},{rewards={271457}})
+assert(p.disenchant==61*G and p.disenchantConfidence==35,'piece disenchant value and confidence')
+C_Item=nil;UnitClass=nil
+print('PASS: TokenPieceQuote chooses the right piece (C4c)')

@@ -478,7 +478,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         local headerPrice=""
         if LA.db.tooltipHeaderPrice~=false then
             local a,unit=decision.action,nil
-            if a=="A" then
+            if decision.tokenQuote and decision.tokenQuote.letter==a then
+                unit=decision.tokenQuote.value -- C4c: token valued by its piece
+            elseif a=="A" then
                 unit=(LA.db.tooltipShowAfterAHCut~=false and decision.netAuction~=0 and decision.netAuction)
                     or decision.rawAuction or decision.marketAuctionNet
             elseif a=="V" then unit=decision.vendor
@@ -502,6 +504,19 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     if compactToken
         and type(decision.vendor)=="number" and decision.vendor>0 then
         two("Vendor token (guaranteed)",LA:Money(decision.vendor),"V")
+    end
+    -- C4c: what opening the token is worth (piece's sell price / disenchant).
+    local piece=decision.tokenPiece
+    if piece and detail>=2 then
+        local pieceName=piece.name or ("Item "..piece.itemID)
+        if type(piece.vendor)=="number" and piece.vendor>0 then
+            two("Open, then vendor "..pieceName,LA:Money(piece.vendor),"V")
+        end
+        if type(piece.disenchant)=="number" and piece.disenchant>0 then
+            local conf=type(piece.disenchantConfidence)=="number"
+                and (" (Confidence "..math.floor(piece.disenchantConfidence+.5).."%)") or ""
+            two("Open, then disenchant"..conf,LA:Money(piece.disenchant),"D")
+        end
     end
     if decision.action=="Q" and decision.why and not compactToken then
         local issue=decision.why
