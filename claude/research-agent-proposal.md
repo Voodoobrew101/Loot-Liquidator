@@ -107,7 +107,7 @@ Keep the existing schedules and names. Replace each prompt with the shared rules
 
 The coordinator keeps `research/evidence/v3/QUEUE.md`, sorted lowest confidence first. Starting list:
 
-1. **Midnight tier token item IDs and reward IDs** (`database/research/tokens-midnight-s1.json`, task C4a2): 17 token IDs, the Chiming Void Curio ID, and about 65 reward IDs. Two links each.
+1. **Midnight tier tokens.** Season 1 IDs are complete (`database/research/tokens-midnight-s1.json`, session 11); what's left is the Checker's independent confirmation of each ID against its link (task C4b; start with 249960) and collecting Season 2 / Tier 36 (task C4a4).
 2. **Disenchanting groups with no data at all** (`database/research/disenchant-gaps.lua`, 35 groups). Start with `gear:9:4:armor` (Dragonflight purple armor; the weapon version already has data), then Battle for Azeroth to Shadowlands, then Cataclysm to Legion, then Classic/TBC by item-level band.
 3. **Midnight herbs and ores whose numbers are only "estimated from" the other rank** (shown in the addon's tooltip as ", estimated").
 4. **The 97 Draenor/Legion-era herbs and ores** that only had TSM's old numbers (waiting on the owner's answer to B2b; research can start anyway).
