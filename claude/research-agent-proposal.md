@@ -1,5 +1,9 @@
 # Proposal: simpler prompts for the five research agents (task D1)
 
+> **Not read by the agents (session 14).** The research agents were switched to their own v3 workflow in
+> `research/v3/` on `implementation/five-agent-completion` (rules there: `research/v3/README.md`).
+> This branch takes their results through `tools/research_v3_to_baselines.py` (task D1c). Kept for the record.
+
 **Status: revised after the owner's answer (2026-10-31, session 9).** Nothing here changes the research branches or the agents yet.
 
 **Owner's answer, in their words:** "the addon should receive a baseline number which is roughly what a person with minimum required skill would have drop. The addon should calculate up as the player increases in relevant metrics. These metrics and baselines should be determined through the research process before ItemDB is compiled."

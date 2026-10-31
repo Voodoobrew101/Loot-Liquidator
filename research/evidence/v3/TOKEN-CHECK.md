@@ -1,5 +1,9 @@
 # Checking the tier-token lists (Checker agent)
 
+> **Not read by the agents (session 14).** The research agents were switched to their own v3 workflow in
+> `research/v3/` on `implementation/five-agent-completion` (rules there: `research/v3/README.md`).
+> This branch takes their results through `tools/research_v3_to_baselines.py` (task D1c). Kept for the record.
+
 Owner decision (2026-10-31): the **research team** double-checks the token lists and puts the checked result into
 its ItemDB export. Claude's branch never marks anything approved. This page says exactly how.
 

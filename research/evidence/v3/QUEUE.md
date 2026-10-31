@@ -1,5 +1,9 @@
 # Research queue (lowest confidence first)
 
+> **Not read by the agents (session 14).** The research agents were switched to their own v3 workflow in
+> `research/v3/` on `implementation/five-agent-completion` (rules there: `research/v3/README.md`).
+> This branch takes their results through `tools/research_v3_to_baselines.py` (task D1c). Kept for the record.
+
 The **Coordinator** keeps this file up to date each run (see `claude/research-agent-proposal.md`, sections 4–5).
 Work from the top down. When two searches in a row find nothing new for an item, move on and say so in your run report.
 Submit evidence records only (`research/evidence/v3/<agent>/<UTC-date>-<short-name>.json`), never final numbers.

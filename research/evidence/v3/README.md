@@ -1,5 +1,9 @@
 # Research evidence (v3)
 
+> **Not read by the agents (session 14).** The research agents were switched to their own v3 workflow in
+> `research/v3/` on `implementation/five-agent-completion` (rules there: `research/v3/README.md`).
+> This branch takes their results through `tools/research_v3_to_baselines.py` (task D1c). Kept for the record.
+
 Raw counts collected by the research agents, one file per run:
 `research/evidence/v3/<agent>/<UTC-date>-<short-name>.json`, each file a JSON **list** of records.
 
