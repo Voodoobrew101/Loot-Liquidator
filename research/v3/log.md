@@ -13,3 +13,8 @@
 - 2026-10-30 (Master): No new flags to decide; official March 31 prospecting hotfix already recorded, so rate-change list unchanged.
 - 2026-10-30 (Master): Spot-check attempted on Dragonflight Reddit milling study and Midnight Wowhead ore report. Reddit source could not be fetched; Wowhead blocked automated access. Both numerical checks inconclusive; neither certified or flagged as wrong.
 - 2026-10-30 (Master): New evidence includes repeated source lineage and incomplete cast denominators. Prioritize source follow-up; preserve original worker records and do not infer drop rates or economic yields.
+
+- 2026-10-30 (Master): Reviewed five new worker evidence files: Dragonflight 1 rate-change; Legacy 40+30; Midnight 20; War Within 10. Updated T0003, T0008, T0021, T0022, T0029 to prioritize source denominators, original studies, and incomplete older recipes; no tasks falsely marked done. Open: Midnight 6, TWW 6, Dragonflight 6, Legacy 3.
+- 2026-10-30 (Master): flags.jsonl has no new flags. Official Blizzard 11.0 Inspiration-to-Concentration/Ingenuity transition proposed by Dragonflight; verify wording before appending to rate-changes list.
+- 2026-10-30 (Master): Spot-check #1 Midnight guide Refulgent Copper ~8% Sanguine Garnet matched published guide; #2 War Within Aqirite Reddit 1040 clicks could not be independently fetched, left unverified (no invented discrepancy).
+- 2026-10-30 (Master): Source references are not completed-cast studies; preserve rank, Resourcefulness and patch context. No probability, confidence or economic calculations made.
