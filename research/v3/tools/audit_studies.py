@@ -50,9 +50,15 @@ def issues_for(rows, conds, families, names):
 
     has_numbers = [r for r in rows if r.get("totalQuantity") is not None or r.get("averageShown") is not None
                    or r.get("percentShown") is not None or r.get("castsWithDrop") is not None]
-    no_cast = [r["id"] for r in has_numbers if not r.get("casts")]
-    if no_cast:
-        add("CASTS_UNKNOWN", 2, "has numbers but no cast count; weighted as a small study (20 casts)", no_cast)
+    why_words = ("casts stays null", "completed casts", "cast count", "not a verified", "casts unknown",
+                 "refund", "not independently", "nominal")
+    no_cast = [r for r in has_numbers if not r.get("casts")]
+    explained = [r["id"] for r in no_cast if any(w in (r.get("notes") or "").lower() for w in why_words)]
+    unexplained = [r["id"] for r in no_cast if r["id"] not in set(explained)]
+    if unexplained:
+        add("CASTS_UNKNOWN", 2, "has numbers but no cast count and no explanation; weighted as a small study (20 casts)", unexplained)
+    if explained:
+        add("CASTS_UNKNOWN_EXPLAINED", 1, "no cast count on purpose (the record's notes say why, e.g. refunds or nominal casts); needs the author's clarification to resolve", explained)
 
     pct = [r["id"] for r in rows if r.get("percentShown") is not None
            and r.get("percentMeaning") in (None, "unclear")]
@@ -84,10 +90,10 @@ def issues_for(rows, conds, families, names):
         if not k:
             continue
         m, inp, o = k
-        if b.condition_for(conds, m, inp, o, families) is not None and b.unlock_state(r) is not True:
+        if b.condition_for(conds, m, inp, o, families) is not None and b.unlock_state(r) is None:
             locked.append(r["id"])
     if locked:
-        add("UNLOCK_UNSTATED", 3, "output is unlock-only but the study does not state unlock status; skipped", locked)
+        add("UNLOCK_UNSTATED", 3, "output is unlock-only but the study does not state whether the unlock was active; skipped", locked)
 
     unplaced = [r["id"] for r in rows if not b.key_of(r, names)]
     if unplaced:

@@ -8,8 +8,8 @@ Built by `research/v3/tools/build_estimates.py` from 2,737 evidence records.
 | --- | --- |
 | 90% or more | 16 |
 | 75-89% | 4 |
-| 50-74% | 251 |
-| under 50% | 805 |
+| 50-74% | 268 |
+| under 50% | 788 |
 
 Confidence = chance the true drop chance is within +/-5 points of the number shown.
 
