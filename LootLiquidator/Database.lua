@@ -353,6 +353,19 @@ function LL:EvidenceReliability(field,record)
     local class=({verified=1,measured=1,observed=1,provisional=.6,modeled=.25,historical=.4})[field.status] or 0
     return score*sampleFactor*class
 end
+-- C1b: how many casts a drop-chance figure is worth in the counts model.
+-- A real count (field.samples, else record.samples) is used as is. A figure with
+-- no count is a guess worth at most PRIOR_CASTS casts, scaled by its stated
+-- confidence and evidence class (the "no samples" discount in
+-- EvidenceReliability is not applied again: the small count already says it).
+function LL:EvidenceCasts(field,record)
+    if not field or field.value==nil or field.status=='unknown' or field.status=='contradictory' then return 0,false end
+    local n=field.samples or (record and record.samples)
+    if finite(n) and n>0 then return n,true end
+    local stated=finite(field.confidence) and field.confidence>0 and field.confidence or UNKNOWN_CONFIDENCE
+    local class=({verified=1,measured=1,observed=1,provisional=.6,modeled=.25,historical=.4})[field.status] or 0
+    return LL.PRIOR_CASTS*math.min(1,stated/100)*class,false
+end
 local function gearKey(f)
     return 'gear:'..tostring(f.expansionID)..':'..tostring(f.quality)..':'..
         (f.classID==2 and 'weapon' or 'armor')
@@ -589,6 +602,16 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                         elseif field=='dropChance' then
                             b.chanceProvisional=b.chanceProvisional or metadata.status=='provisional'
                                 or metadata.status=='modeled' or metadata.status=='historical'
+                            -- C1b: the chance becomes casts and drops for the counts model,
+                            -- scaled by the source weight (and STALE_FACTOR when stale).
+                            local casts=self:EvidenceCasts(metadata,r)
+                            local w=userWeight(self,r.sourceKey,mode)*(staleRecord[r] and STALE_FACTOR or 1)
+                            if casts>0 and v<=1 then
+                                b.chanceSources=b.chanceSources or {}
+                                b.chanceSources[#b.chanceSources+1]={casts=casts,chance=v,weight=w,key=r.sourceKey}
+                                b.chanceContributions=b.chanceContributions or {}
+                                b.chanceContributions[r.sourceKey]=(b.chanceContributions[r.sourceKey] or 0)+casts*w
+                            end
                         end
                     end
                 end
@@ -613,15 +636,49 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
             b.conflictingMeans=true;result.conflictingMeans=true
         end
         -- Batch normalization rescales means, not occurrence distributions.
-        b.chance=p and p.sum/p.weight
+        -- C1b: drop chance = weighted drops / weighted casts (LL:CountsEstimate),
+        -- with its confidence; falls back to the plain blend if no casts are known.
+        local counts=b.chanceSources and self:CountsEstimate({sources=b.chanceSources})
+        if counts then
+            b.chance=counts.chance;b.chanceCasts=counts.casts;b.chanceConfidence=counts.confidence
+        else
+            b.chance=p and p.sum/p.weight
+        end
         if b.chance and b.expectedQuantity and b.minQuantity and b.maxQuantity
             and (b.expectedQuantity+1e-9<b.chance*b.minQuantity or b.expectedQuantity>b.chance*b.maxQuantity+1e-9) then
             b.minQuantity=nil;b.maxQuantity=nil;b.boundsSource=nil
         end
+        local stated=e and math.min(100,math.floor((e.confidence or 0)/e.weight+.5))
+        -- Fill a missing average from the chance, or a missing chance from the
+        -- average (middle of the quantity range). Filled figures count at half
+        -- confidence (FILLED_CONFIDENCE_FACTOR).
+        if (b.chance==nil)~=(b.expectedQuantity==nil) then
+            local chance,average,filled=self:FillChanceOrAverage(b.chance,b.expectedQuantity,b.minQuantity,b.maxQuantity)
+            if filled=='average' and b.chanceConfidence then
+                b.expectedQuantity=average;b.filled='average';result.filledFigures=true
+                e={} -- now a known output
+                b.contributions=b.chanceContributions or {}
+            elseif filled=='chance' then
+                b.chance=chance;b.filled='chance';result.filledFigures=true
+                b.chanceConfidence=math.floor((stated or 0)*LL.FILLED_CONFIDENCE_FACTOR+.5)
+            end
+        end
         if e then
-            -- Per-material confidence (A3): shown on request, and used to value-weight the option's figure.
-            b.confidence=math.min(100,math.floor((e.confidence or 0)/e.weight+.5))
-            confidenceTotal=confidenceTotal+(e.confidence or 0)/e.weight
+            -- Per-material confidence (A3): shown on request, and used to value-weight the
+            -- option's figure. C1b: from casts and drops when the chance has them; a
+            -- filled average counts at half; never above the
+            -- average's stated confidence; otherwise the sources' stated confidence.
+            if b.filled=='average' then
+                b.confidence=math.floor(b.chanceConfidence*LL.FILLED_CONFIDENCE_FACTOR+.5)
+            elseif counts and stated then
+                -- The value comes from the average, so never above its own stated confidence.
+                b.confidence=math.min(counts.confidence,stated)
+            elseif counts then
+                b.confidence=counts.confidence
+            else
+                b.confidence=stated
+            end
+            confidenceTotal=confidenceTotal+b.confidence
         end
         b.sourceContributions={}
         local total=0 for _,v in pairs(b.contributions) do total=total+v end
@@ -630,7 +687,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
             result.sources[source]=(result.sources[source] or 0)+w/total
         end
         if e then totalContribution=totalContribution+1 else result.unknownOutputs=true end
-        b.fields=nil;b.contributions=nil
+        b.fields=nil;b.contributions=nil;b.chanceSources=nil;b.chanceContributions=nil
         result.materials[#result.materials+1]=b
     end
     for key,v in pairs(result.sources) do result.sources[key]=v/math.max(1,totalContribution) end

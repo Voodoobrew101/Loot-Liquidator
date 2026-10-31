@@ -86,6 +86,26 @@ local m=model();near(m.materials[1].expectedQuantity,3.2/1.3)
 near(m.sources.itemdb,1/1.3);near(m.sources.legacy,.3/1.3)
 near(m.materials[1].chance,(.5+.8*.3)/1.3)
 eq(m.materials[1].minQuantity,2);eq(m.materials[1].maxQuantity,6)
+-- C1b: the chance is counted as casts and drops (itemdb 30 casts x1, legacy 30 x .3),
+-- and its confidence is the counts confidence, capped by the averages' stated 90.
+near(m.materials[1].chanceCasts,39);eq(m.materials[1].chanceConfidence,LL:RateConfidence(15+.8*9,39))
+eq(m.materials[1].confidence,math.min(90,LL:RateConfidence(15+.8*9,39)))
+do -- A source without a cast count is a guess worth at most PRIOR_CASTS casts.
+    local n,real=LL:EvidenceCasts(field(.5,'measured',90),{});near(n,LL.PRIOR_CASTS*.9);eq(real,false)
+    n,real=LL:EvidenceCasts(field(.5,'provisional',50),{samples=200});eq(n,200);eq(real,true)
+    eq((LL:EvidenceCasts(field(nil,'unknown',0),{})),0)
+end
+do -- More casts -> higher confidence for the same rate.
+    local few=clone(a);few.samples=10;install({few});local c10=model().materials[1].chanceConfidence
+    local many=clone(a);many.samples=200;install({many});local c200=model().materials[1].chanceConfidence
+    check(c200>c10,'200 casts are more certain than 10')
+end
+do -- Missing chance is filled from average / middle of range, at half confidence.
+    local r=clone(a);r.materials[1].dropChance=field(nil,'unknown',0);install({r})
+    local mm=model();near(mm.materials[1].chance,2/4);eq(mm.materials[1].filled,'chance');check(mm.filledFigures)
+    eq(mm.materials[1].chanceConfidence,45)
+end
+install({a,b})
 -- Price is net already; no second occurrence or fee multiplier.
 LL.GetOutputPrice=function(_,id) if id==20 then return 100 end end
 near(LL:ValueProcessingModel(m,10,true),(100*(3.2/1.3)-10)/5)

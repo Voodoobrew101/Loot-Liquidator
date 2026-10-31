@@ -62,6 +62,16 @@ check(#m.materials==2,'valuation and tooltip consume the same complete material 
 -- the profile, but cannot anchor or silently complete an economic estimate.
 research.processing[1].expectedQuantity=field(nil)
 check(compile(),'known and unknown cooutput compiler fixture')
+-- C1b (owner study notes): a missing average is filled from chance x middle of
+-- the range (.5 x 2 = 1) at half confidence, so this output is no longer unknown.
+do local filled=assert(model(runtime()))
+    check(#filled.materials==2 and not filled.unknownOutputs,'filled average counts as a known output')
+    near(filled.materials[1].expectedQuantity,1);check(filled.materials[1].filled=='average')
+    check(filled.materials[1].confidence<filled.materials[2].confidence,'filled figure has lower confidence')
+end
+-- With neither average nor chance, the output stays unknown.
+research.processing[1].dropChance=field(nil)
+check(compile(),'known and unknown cooutput compiler fixture (no chance)')
 local partial=runtime();local incomplete=assert(model(partial))
 check(#incomplete.materials==2 and incomplete.unknownOutputs,'unknown cooutput remains in output universe')
 check(incomplete.materials[1].expectedQuantity==nil and incomplete.warning~=nil)
@@ -78,7 +88,7 @@ check(incomplete.confidence==again,'cached model confidence is never compounded'
 partial.GetOutputPrice=function() return nil end
 check(partial:ValueProcessingModel(incomplete,0,true)==nil and not incomplete.partial,'nothing known -> no value')
 partial.GetOutputPrice=function() return 100 end
-research.processing[1].expectedQuantity=field(1)
+research.processing[1].expectedQuantity=field(1);research.processing[1].dropChance=field(.5)
 local wrong=clone(ctx);wrong.inputQuality=1;check(model(LL,wrong)==nil,'input-rank mismatch')
 wrong=clone(ctx);wrong.effectiveSkill=100;check(model(LL,wrong)==nil,'known skill mismatch')
 wrong=clone(ctx);wrong.specialization='other';check(model(LL,wrong)==nil,'known specialization mismatch')
