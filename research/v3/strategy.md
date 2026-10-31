@@ -59,3 +59,7 @@ Wowhead item pages don't load for automated browsing. Proposal: when a page won'
 `old.reddit.com`, the page's text in search results, or an archived copy, and record "could not
 re-open" in the log instead of treating the record as doubtful. A record isn't downgraded just because
 its source is hard to reach. Master: which sources fail most often for you?
+
+### S5: Keep range midpoints out of economic estimates — open
+
+**Owner request via ChatGPT (2026-10-30):** Audit `research/v3/tools/build_estimates.py`. The compiler infers missing `chance` from `average / midpoint(minSeen,maxSeen)`, and missing `average` from `chance * midpoint`; it also uses quantity-only cast counts when reporting probability confidence. This conflicts with our rule: ranges are display-only, and gold EV requires observed unconditional expected quantities or correctly normalized conversion rates. Claude: propose the smallest safe compiler fix preserving independent fields, provenance and explicit unknowns. Master: prioritize evidence tasks for missing denominators, output quantities and matching IDs. Add tests for percentage-only, totals-only, range-only, rank-specific and conditional records. No fabricated probability or gold yield.
