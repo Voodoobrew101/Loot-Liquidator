@@ -267,16 +267,16 @@ function LL:ProcessingYieldDisplayModel(f,option)
 end
 function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
     if not model or suppliesKnown==false then return nil,'Insufficient Data' end
-    local total,missing=0,0
+    local total,missing,known=0,0,0
     for _,m in ipairs(model.materials or {}) do
         local quote=self:GetOutputPrice(m.id)
         m.netUnitPrice=quote
         m.netExpectedValue=nil
         if m.expectedQuantity==0 then
-            m.netExpectedValue=0
+            m.netExpectedValue=0;known=known+1
         elseif quote and validNumber(m.expectedQuantity) then
             m.netExpectedValue=quote*m.expectedQuantity
-            total=total+m.netExpectedValue
+            total=total+m.netExpectedValue;known=known+1
         else missing=missing+1 end
     end
     local savings=0
@@ -287,10 +287,22 @@ function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
         end
         if quote then savings=(model.inputCount-model.expectedInputCount)*quote else missing=missing+1 end
     end
-    model.partialPrice=missing>0 or model.unknownOutputs or model.insufficientSamples
+    model.partialPrice=(missing>0 or model.unknownOutputs or model.insufficientSamples) and true or false
     model.partialValue=(total+savings-(suppliesCost or 0))/model.inputCount
-    -- A partial lower bound is useful diagnostics, never a complete recommendation.
-    model.value=not model.partialPrice and model.partialValue or nil
+    -- A2 (owner decision 1): when some outputs are unknown, the known outputs
+    -- still give a value (a lower bound), marked partial, with confidence scaled
+    -- by the share of outputs that could be valued. "Insufficient Data" only
+    -- when nothing of value is known. The model is cached and shared, so the
+    -- scaled figure goes in valueConfidence; model.confidence stays untouched.
+    local base=type(model.confidence)=='number' and model.confidence or 0
+    if not model.partialPrice then
+        model.value=model.partialValue;model.partial=nil;model.valueConfidence=base
+    elseif total>0 and known>0 then
+        model.value=model.partialValue;model.partial=true
+        model.valueConfidence=math.floor(base*known/(known+missing)+.5)
+    else
+        model.value=nil;model.partial=nil;model.valueConfidence=nil
+    end
     return model.value,model.source
 end
 function LL:EvaluateDisenchant(f,character)
@@ -321,7 +333,8 @@ function LL:EvaluateDisenchant(f,character)
     local value=self:ValueProcessingModel(model,0,true)
     return {name='Disenchant',value=value,materials=model and model.materials,
         yieldModel=model,expansion=exp,expansionName=family and family.name,
-        samples=model and model.personalStats and model.personalStats.total,confidence=model and model.confidence or 'unknown',
+        samples=model and model.personalStats and model.personalStats.total,
+        confidence=model and (model.valueConfidence or model.confidence) or 'unknown',partial=model and model.partial or nil,
         source=model and model.source,method=model and model.source,
         note=reason or (model and model.warning),incompletePrices=model and model.partialPrice},reason
 end
@@ -437,7 +450,8 @@ function LL:ConversionOptions(f)
         local v={name=c.method,letter=MethodLetter(c.method),available=available,
             why=why or modelIssue,character=character,profession=c.profession,
             value=value,source=source,inputShort=insufficientCount,
-            confidence=yieldModel and yieldModel.confidence or c.confidence or "verified-recipe",
+            confidence=yieldModel and (yieldModel.valueConfidence or yieldModel.confidence) or c.confidence or "verified-recipe",
+            partial=yieldModel and yieldModel.partial or nil,
             -- Only per-input observations, never shared expansion-wide candidates.
             estimate=yieldModel and yieldModel.personalStats and research or nil,
             samples=yieldModel and yieldModel.personalStats and yieldModel.personalStats.total or 0,

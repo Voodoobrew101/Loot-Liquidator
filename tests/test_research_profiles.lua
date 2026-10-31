@@ -67,8 +67,17 @@ check(#incomplete.materials==2 and incomplete.unknownOutputs,'unknown cooutput r
 check(incomplete.materials[1].expectedQuantity==nil and incomplete.warning~=nil)
 assert(originalLoadfile('LootLiquidator/ConversionEngine.lua'))('LootLiquidator',partial)
 partial.GetOutputPrice=function() return 100 end
-check(partial:ValueProcessingModel(incomplete,0,true)==nil,'partial model cannot recommend processing')
-near(incomplete.partialValue,20);check(incomplete.partialPrice,'known cooutput is a diagnostic lower bound')
+-- A2 (owner decision 1): the known cooutput still gives a value, marked partial,
+-- with confidence scaled by the share of outputs that could be valued (1 of 2).
+near(partial:ValueProcessingModel(incomplete,0,true),20)
+near(incomplete.partialValue,20);check(incomplete.partialPrice and incomplete.partial,'known cooutput gives a partial value')
+check(incomplete.valueConfidence==math.floor(incomplete.confidence/2+.5),'partial value has lower confidence')
+local again=incomplete.confidence;partial:ValueProcessingModel(incomplete,0,true)
+check(incomplete.confidence==again,'cached model confidence is never compounded')
+-- Nothing priceable at all: still Insufficient Data.
+partial.GetOutputPrice=function() return nil end
+check(partial:ValueProcessingModel(incomplete,0,true)==nil and not incomplete.partial,'nothing known -> no value')
+partial.GetOutputPrice=function() return 100 end
 research.processing[1].expectedQuantity=field(1)
 local wrong=clone(ctx);wrong.inputQuality=1;check(model(LL,wrong)==nil,'input-rank mismatch')
 wrong=clone(ctx);wrong.effectiveSkill=100;check(model(LL,wrong)==nil,'known skill mismatch')

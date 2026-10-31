@@ -146,4 +146,24 @@ local external=LL:ConversionOptions(f)[1]
 assert(external.yieldModel.personalStats==nil and external.estimate.samples==nil,
     'ItemDB-only tooltip must not show personal samples')
 near(external.yieldModel.materials[1].expectedQuantity,8)
+-- A2 reference case: an ore whose prospect gives one known output and one gem
+-- nobody can price. The option still shows a value (known part only), marked
+-- partial, with lower confidence, instead of "Insufficient Data".
+local function ore(id,e,conf)
+    return {id=id,dropChance=field(nil,'unknown'),minQuantity=field(nil,'unknown'),maxQuantity=field(nil,'unknown'),
+        expectedQuantity={value=e,status='measured',confidence=conf}}
+end
+local oreRow={recordID='synthetic:ore',method='Prospect',profession='Jewelcrafting',inputItemID=900030,inputCount=5,
+    recipeID=900031,sourceKey='itemdb',studyID='synthetic-ore',source='synthetic fixture',referenceContextID='ore',
+    referenceConditions={},samples=100,expansionID=7,materials={ore(900032,2,80),ore(900033,.5,80)}}
+LL.ItemDB={schemaVersion=1,processing={oreRow},mechanicRules={},inputs={[900030]={method='Prospect',batch=5,expansion=7}}}
+LL.db.source_personal_enabled=false;LL.ProcessingDataMode=function()return 1 end
+LL.GetOutputPrice=function(_,id)return id==900032 and 100 or nil end
+assert(LL:InitializeItemDB())
+local oreFacts={id=900030,classID=7,expansionID=7,count=5}
+local prospect=LL:ConversionOptions(oreFacts)[1]
+near(prospect.value,40) -- 2 known units * 100 copper / 5 ore; the gem adds nothing yet
+assert(prospect.partial and prospect.confidence==40,'partial value: confidence 80 scaled by 1 of 2 outputs priced')
+text=render(oreFacts,prospect)
+assert(text:find('Partial:',1,true) and text:find('Confidence 40/100, partial',1,true) and not text:find('incomplete output valuation',1,true))
 print('PASS: ItemDB-only real mass-milling recipes, all four metric units, source/access gates, conditional ranges, unknowns and probability/yield precision')

@@ -565,7 +565,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if type(m.chance)=="number" then
                         -- Occurrence probability is separate from unconditional
                         -- expected units. Approximate values are marked ~.
-                        local prefix=(m.chanceProvisional or m.provisional or (type(m.probabilityBasis)=="string"
+                        local prefix=(m.chanceProvisional or m.provisional or m.workingEstimate or m.staleEvidence or (type(m.probabilityBasis)=="string"
                             and (m.probabilityBasis:find("estimated",1,true) or
                                  m.probabilityBasis:find("proxy",1,true)))) and "~" or ""
                         left=left..prefix..ChanceText(m.chance).." "
@@ -578,7 +578,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     else left=left.." [range ?]" end
                     left=left.."  EV "..UnitsText(m.expectedQuantity)
                     local net=m.netExpectedValue
-                    local amount=net~=nil and LA:Money(net/batch) or "Insufficient Data"
+                    local amount=net~=nil and LA:Money(net/batch) or "unknown"
                     two(left,amount,option.letter or "D")
                     if LA.db.showResearchDetails==true then
                         for _,source in ipairs(LA.SourceOrder or {}) do
@@ -623,7 +623,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
                     (model.provisional and " — provisional" or ""),.72,.70,.80,true)
                 if model.warning then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
-                if model.partialPrice then tooltip:AddLine("  Insufficient Data: incomplete output valuation",1,.68,.3,true) end
+                if model.partial then tooltip:AddLine("  Partial: value counts only outputs with a known amount and price",1,.82,.4,true)
+                elseif model.partialPrice then tooltip:AddLine("  Insufficient Data: incomplete output valuation",1,.68,.3,true) end
                 if #list>limit then
                     tooltip:AddLine(("  +%d more materials"):format(#list-limit),.70,.72,.78,true)
                 end
@@ -652,10 +653,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     or (methodName=="Disenchant"
                     and decision.disenchantEligible)
                     or methodName=="Smelt" then
-                    local confidence=model and model.confidence
+                    local confidence=model and (model.valueConfidence or model.confidence)
                     local label=names[methodName] or methodName
                     if model and model.confidenceUnscored then label=label.." (Confidence unscored)"
-                    elseif confidence then label=label..(" (Confidence %d/100)"):format(confidence)
+                    elseif confidence then label=label..(" (Confidence %d/100%s)"):format(confidence,
+                        option.value and model.partial and ", partial" or "")
                     elseif option.available==false then label=label.." (estimate)" end
                     if option.value then
                         valued(label,option.value,option.letter)

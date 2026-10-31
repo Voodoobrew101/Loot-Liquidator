@@ -536,7 +536,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         result.confidence=math.floor(result.confidence*.5)
         result.warning='Compatible sources disagree by more than 2x; confidence discounted'
     end
-    if result.unknownOutputs then result.warning='Insufficient Data: some output quantities unknown' end
+    if result.unknownOutputs then result.warning='Partial: some output quantities unknown' end
     return result
 end
 local function fingerprint(value)
