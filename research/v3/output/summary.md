@@ -1,14 +1,14 @@
 # ItemDB estimates (first draft, generated)
 
 Built by `research/v3/tools/build_estimates.py` from 2,715 evidence records.
-1,093 input/material estimates; 7 records could not be placed yet (no item ID or name match).
+1,092 input/material estimates; 7 records could not be placed yet (no item ID or name match).
 19 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
 
 | Confidence | Estimates |
 | --- | --- |
 | 90% or more | 16 |
 | 75-89% | 4 |
-| 50-74% | 250 |
+| 50-74% | 249 |
 | under 50% | 804 |
 
 Confidence = chance the true drop chance is within +/-5 points of the number shown.
@@ -18,7 +18,6 @@ Confidence = chance the true drop chance is within +/-5 points of the number sho
 | Method | Input | Material | Chance | Average per cast | Range | Confidence | Needs unlock | Basis |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Mill | 236761 | 245807 | 100.0% | 4.500 | 3-6 | 30% |  | starting guess only (reference values) |
-| Mill | 236767 | family:Pigment (aggregate, individual type unspecified) | 100.0% | 14.730 | 1-15 | 50% |  | 100 effective study casts; estimated range widened to fit the average (observed range kept separately); chance estimated from average / middle of range |
 | Mill | 236767 | 245807 | 100.0% | 4.500 | 3-6 | 30% |  | starting guess only (reference values) |
 | Mill | 236770 | 245864 | 100.0% | 4.500 | 3-6 | 30% |  | starting guess only (reference values) |
 | Mill | 236771 | 245864 | 100.0% | 4.500 | 3-6 | 30% |  | starting guess only (reference values) |
