@@ -1,3 +1,4 @@
+-- Build-time source (C3): compiled into ItemDB by tools/compile_itemdb.lua.
 -- Generated from user-supplied Retail ItemSparse DB2 CSV.
 -- Build: 12.1.7.70493
 -- Source rows: 176747; NO_DISENCHANT: 21061; processing hints: 140

@@ -8,7 +8,7 @@ time=function() return 100 end
 CreateFrame=function()
     return {RegisterEvent=function()end,SetScript=function()end}
 end
-for _,file in ipairs({'ItemDBRuntime.lua','GameData.lua','ProfessionModels.lua',
+for _,file in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua',
     'Database.lua','Professions.lua','ConversionEngine.lua','Badges.lua'}) do
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
@@ -99,7 +99,15 @@ print('PASS: exact-item disenchant lookup, source gates, non-economic candidate 
 -- Shipped per-item NO_DISENCHANT exceptions take priority over profession On.
 SlashCmdList={}
 local restricted={db={ignoredItems={}}}
-assert(loadfile('LootLiquidator/DB2Restrictions.lua'))('LootLiquidator',restricted)
+-- C3: the no-disenchant list ships inside ItemDB and is unpacked by Database.lua.
+assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LootLiquidator',restricted)
+assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',restricted)
+local restrictedCount,hintCount=0,0
+for _ in pairs(restricted.ItemRestrictions) do restrictedCount=restrictedCount+1 end
+for _ in pairs(restricted.DB2Processable) do hintCount=hintCount+1 end
+assert(restrictedCount==21061 and hintCount==140,'C3: full no-disenchant list and processing hints unpacked from ItemDB')
+assert(restricted.ItemRestrictionsBuild=='12.1.7.70493' and restricted.DB2Processable[765]=='Mill' and restricted.DB2Processable[2770]=='Prospect')
+assert(restricted.LegacyDB==restricted.ItemDB.legacy and #restricted.LegacyDB.processing>0,'C3: old estimates come from ItemDB')
 assert(loadfile('LootLiquidator/Core.lua'))('LootLiquidator',restricted)
 local holiday={id=143902,quality=4,classID=4,equipLoc='INVTYPE_FINGER',expansionID=11}
 local eligible,why=restricted:DisenchantEligibility(holiday)

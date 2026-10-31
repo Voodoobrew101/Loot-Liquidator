@@ -3,7 +3,7 @@ local LL={}
 CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()end}end
 GetBuildInfo=function()return '12.1.5','123456','Oct 29 2026',120105 end
 GetTime=function()return 100 end
-for _,file in ipairs({'ItemDBRuntime.lua','GameData.lua','ProfessionModels.lua',
+for _,file in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua',
     'Database.lua','ConversionEngine.lua','Badges.lua'}) do
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end

@@ -269,6 +269,23 @@ function LL:ValidateTokenCatalog(records)
     end
     return true
 end
+-- C3: everything static lives in ItemDB. Unpack the old disenchant estimates
+-- and the DB2 no-disenchant list / processing hints into the lookup tables the
+-- rest of the addon already reads (LegacyDB, ItemRestrictions, DB2Processable).
+function LL:UnpackItemDBTables()
+    local db=self.ItemDB
+    if type(db)~='table' then return end
+    if db.legacy and not self.LegacyDB then self.LegacyDB=db.legacy end
+    local r=db.restrictions
+    if type(r)=='table' then
+        self.ItemRestrictions=self.ItemRestrictions or {}
+        for _,id in ipairs(r.noDisenchant or {}) do self.ItemRestrictions[id]=true end
+        self.ItemRestrictionsBuild=r.build
+        self.DB2Processable=self.DB2Processable or {}
+        for id,method in pairs(r.processable or {}) do self.DB2Processable[id]=method end
+    end
+end
+LL:UnpackItemDBTables()
 function LL:InitializeItemDB()
     self._processingModelCache=nil
     self._tokenRewardIndex={}

@@ -1,7 +1,7 @@
 -- Passive, research-only collector for DIRECT equipment-token rewards.
 -- Does NOT depend on ATT, reverse-crafting graphs, TSM or external catalogs.
 -- Never changes recommendations; observations require offline validation before
--- they are compiled into the one authoritative GameData.lua.
+-- they are compiled into the one authoritative ItemDB (ItemDBRuntime.lua).
 local _, LL = ...
 local MAX_LINKS, PAGE_SIZE = 2400, 65
 local function Number(n)
