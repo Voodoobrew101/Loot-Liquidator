@@ -70,7 +70,47 @@ def load():
             r["_file"] = os.path.relpath(path, ROOT)
             rows.append(r)
     replaced = {r["replaces"] for r in rows if r.get("replaces")}
-    return [r for r in rows if r.get("id") not in replaced]
+    rows = [r for r in rows if r.get("id") not in replaced]
+    return apply_corrections(rows)
+
+
+CORRECTABLE = {"inputItemID", "inputName", "inputRank", "outputItemID", "outputName", "outputRank",
+               "method", "casts", "castsWithDrop", "totalQuantity", "percentShown", "percentMeaning",
+               "averageShown", "averagePer", "minSeen", "maxSeen", "dataDate", "patch", "sourceKind",
+               "specialization", "originalSource", "inputsPerCast", "gearGroup", "exclude"}
+
+
+def apply_corrections(rows):
+    """Apply research/v3/corrections.jsonl: one line per fix, original records never rewritten.
+    Line: {"recordID": "...", "file": "<optional evidence file path, needed when an ID is used twice>",
+           "field": "...", "value": ..., "reason": "...", "by": "Claude|ChatGPT", "date": "..."}
+    field "exclude" with value true drops a record (e.g. not a real observation). Later lines win."""
+    path = os.path.join(ROOT, "research", "v3", "corrections.jsonl")
+    if not os.path.exists(path):
+        return rows
+    fixes = defaultdict(dict)
+    for line in open(path, encoding="utf-8"):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            c = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if c.get("field") in CORRECTABLE and c.get("recordID"):
+            fixes[(c["recordID"], c.get("file"))][c["field"]] = c.get("value")
+    out = []
+    for r in rows:
+        f = dict(fixes.get((r.get("id"), None), {}))
+        f.update(fixes.get((r.get("id"), r.get("_file")), {}))
+        if f:
+            if f.get("exclude") is True:
+                continue
+            r = dict(r)
+            r.update({k: v for k, v in f.items() if k != "exclude"})
+            r["_corrected"] = True
+        out.append(r)
+    return out
 
 
 def load_conditions(rows):

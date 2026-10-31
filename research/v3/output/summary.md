@@ -1,7 +1,7 @@
 # ItemDB estimates (first draft, generated)
 
-Built by `research/v3/tools/build_estimates.py` from 2,169 evidence records.
-957 input/material estimates; 272 records could not be placed yet (no item ID or name match).
+Built by `research/v3/tools/build_estimates.py` from 2,190 evidence records.
+957 input/material estimates; 293 records could not be placed yet (no item ID or name match).
 14 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
 
 | Confidence | Estimates |

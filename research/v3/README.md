@@ -99,3 +99,11 @@ a source reports seeing in one cast.
 
 Keep any quote short (under 25 words), only enough to show where a number came from.
 Write everything else in your own words.
+
+## Corrections (reclassifying existing records)
+
+`research/v3/corrections.jsonl` holds fixes to existing records, one JSON line each:
+`{"recordID", "file" (only if the ID is used twice), "field", "value", "reason", "by", "date"}`.
+`tools/build_estimates.py` applies them; original evidence files are never rewritten. Fields that can be
+corrected are listed in `CORRECTABLE` in that script; `"field": "exclude", "value": true` drops a record.
+Claude and ChatGPT add lines here during live review sessions; agents may add lines too.
