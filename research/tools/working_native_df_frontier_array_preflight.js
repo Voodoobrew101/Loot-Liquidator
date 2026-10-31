@@ -110,8 +110,21 @@ function run(){
   cwd:ROOT,encoding:'utf8',timeout:120000,maxBuffer:8*1024*1024});
  if(child.error||child.signal||![0,1].includes(child.status))
   throw Error('NATIVE_F005_EXECUTION_ERROR:'+String(child.error||child.signal||child.status));
+ let report;
+ try{report=validateReport(child.stdout,child.status);}
+ catch(e){
+  if(String(e.message).startsWith('PARTIAL_OR_NEW_FAILURE_REQUIRES_F005_REVIEW:')){
+   // Expose which exact pinned predecessor assertion is stale; never patch F005
+   // or reclassify a failed assertion as passing in this engineer-owned runner.
+   const previous=require(path.join(ROOT,'research/tests/v2/test_f005_df_prismatic_stage_identity_20261030.js')).run();
+   const failed=previous.tests.filter(t=>t.status==='FAIL');
+   throw Error(e.message+'; PREDECESSOR_STAGE_QA='+JSON.stringify({
+    passed:previous.passed,failed:previous.failed,failures:failed}));
+  }
+  throw e;
+ }
  return {runType:'INFORMATIONAL_NEGATIVE_QA_NOT_ECONOMIC_ACCEPTANCE',
-  node:process.version,sourcePins,...validateReport(child.stdout,child.status),
+  node:process.version,sourcePins,...report,
   mappingChanges:0,workingCellsFilled:0,newEvidenceExpectedQuantityCells:0,
   confidencePromotions:0,economicPromotions:0,liveEVChanged:false};
 }
