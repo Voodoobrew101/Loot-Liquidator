@@ -245,16 +245,24 @@ def build(rows):
             g["lo"] = lo if g["lo"] is None else min(g["lo"], lo)
         if hi is not None and hi >= 1:
             g["hi"] = hi if g["hi"] is None else max(g["hi"], hi)
+        if r.get("sourceKind") not in REFERENCE_KINDS:
+            if lo is not None and lo >= 1:
+                g["slo"] = lo if g.get("slo") is None else min(g["slo"], lo)
+            if hi is not None and hi >= 1:
+                g["shi"] = hi if g.get("shi") is None else max(g["shi"], hi)
         (g["refs"] if r.get("sourceKind") in REFERENCE_KINDS else g["studies"]).append(r)
 
     results = []
     for (method, inp, out), g in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2])):
         import math
         req = condition_for(conds, method, inp, out)
+        observed = [g.get("slo"), g.get("shi")] if g.get("slo") is not None or g.get("shi") is not None else None
+        has_ref_range = g["lo"] is not None or g["hi"] is not None
         lo = int(g["lo"] or 1)
         hi = int(max(g["hi"] or lo, lo))
         mid = (lo + hi) / 2
         basis = []
+        range_estimated = not (observed or has_ref_range)
         # ---- starting guess from reference values (S9: provisional prior, never counted as casts)
         ref_p = [x for x in (chance_from_percent(r) for r in g["refs"]) if x is not None and x <= 1]
         ref_e = [x for x in (per_cast_average(r) for r in g["refs"]) if x is not None]
@@ -309,8 +317,8 @@ def build(rows):
             e = (total + (prior_e or 0) * w) / (casts_e + w)
             average_measured = casts_e > 0
         if e is not None and e > hi:
-            hi = math.ceil(e); mid = (lo + hi) / 2
-            basis.append("range widened to fit the average")
+            hi = math.ceil(e); mid = (lo + hi) / 2; range_estimated = True
+            basis.append("estimated range widened to fit the average (observed range kept separately)")
         # ---- derived fields (S5 as agreed: allowed, labelled provisional, confidence halved)
         chance_derived = average_derived = False
         if p is None and e is not None:
@@ -323,8 +331,8 @@ def build(rows):
             continue
         conflict = False
         if p and e > p * hi + 1e-9:
-            hi = math.ceil(e / p); conflict = True
-            basis.append("chance and average disagree; range widened, confidence halved")
+            hi = math.ceil(e / p); conflict = True; range_estimated = True
+            basis.append("chance and average disagree (conflict flagged); estimated range widened, confidence halved")
         # ---- confidence (S8: only casts that measured the chance)
         guess = GUESS_CONFIDENCE_CASTS if (prior_p is not None or prior_e is not None) else 0
         if chance_derived:
@@ -347,6 +355,9 @@ def build(rows):
             "method": method, "input": inp, "outputItemID": out,
             "conditional": req is not None, "requires": req,
             "chance": round(min(p, 1.0), 4), "average": round(e, 4), "range": [lo, hi],
+            "rangeSource": ("estimated" if range_estimated and not (observed or has_ref_range) or "widened" in "; ".join(basis) or conflict
+                            else "observed" if observed else "reference" if has_ref_range else "estimated"),
+            "observedRange": observed, "conflict": conflict,
             "confidence": conf,
             "chanceSource": "estimated" if chance_derived else ("measured" if chance_measured else "starting guess"),
             "averageSource": "estimated" if average_derived else ("measured" if average_measured else "starting guess"),
