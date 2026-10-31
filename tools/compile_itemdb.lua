@@ -264,14 +264,60 @@ end
 -- tools/evidence_to_baselines.py. Ordinary "itemdb" records whose fields carry
 -- weighted cast counts, so the addon's counting math sets their confidence.
 -- arg[2] lets tests compile a fixture file instead.
+-- D1c: the research team's v3 results (tools/research_v3_to_baselines.py, real
+-- studies only) arrive the same way. v3 already contains the studies behind the
+-- older "research:" rows (it imported them), so a v3 record with
+-- supersedesResearch replaces those rows for the same method, input and
+-- material instead of counting the same studies twice. A row whose material v3
+-- does not carry (e.g. an unlock-only gem) is kept. The replaced rows stay in
+-- database/research/itemdb.lua and are listed in buildReport.researchSuperseded.
+-- arg[3] lets tests compile a fixture file instead.
+local v3=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))()
+assert(v3.schemaVersion==1 and type(v3.processing)=='table','Unsupported research v3 baseline schema')
+local superseding={}
+for _,r in ipairs(v3.processing) do
+    assert(r.recordID:match('^evidence:v3:'),'Research v3 baselines must use evidence:v3: record IDs')
+    if r.supersedesResearch then
+        for _,m in ipairs(r.materials) do
+            superseding[r.method..':'..tostring(r.inputItemID or r.gearKey)..':'..m.id]=r.recordID
+        end
+    end
+end
+local function supersededBy(r)
+    if not r.recordID:match('^research:') then return nil end
+    local by
+    for _,m in ipairs(r.materials) do
+        local found=superseding[r.method..':'..tostring(r.inputItemID or r.gearKey)..':'..m.id]
+        if not found then return nil end -- keep any row carrying a material v3 lacks
+        by=found
+    end
+    return by
+end
+db.buildReport.researchSuperseded={}
+local kept={}
+for _,r in ipairs(db.processing) do
+    local by=supersededBy(r)
+    if by then
+        db.buildReport.researchSuperseded[#db.buildReport.researchSuperseded+1]=r.recordID..' -> '..by
+    else
+        kept[#kept+1]=r
+    end
+end
+db.processing=kept
+table.sort(db.buildReport.researchSuperseded)
 local baselines=assert(loadfile(arg[2] or 'database/evidence-baselines.lua'))()
 assert(baselines.schemaVersion==1 and type(baselines.processing)=='table','Unsupported evidence baseline schema')
-for _,r in ipairs(baselines.processing) do
-    assert(r.sourceKey=='itemdb' and r.recordID:match('^evidence:'),'Evidence baselines must be itemdb evidence records')
-    db.processing[#db.processing+1]=r
-    if r.inputItemID then
-        inputs[r.inputItemID]=inputs[r.inputItemID] or {method=r.method,batch=r.inputCount}
+for _,file in ipairs({baselines,v3}) do
+    for _,r in ipairs(file.processing) do
+        assert(r.sourceKey=='itemdb' and r.recordID:match('^evidence:'),'Evidence baselines must be itemdb evidence records')
+        db.processing[#db.processing+1]=r
+        if r.inputItemID then
+            inputs[r.inputItemID]=inputs[r.inputItemID] or {method=r.method,batch=r.inputCount}
+        end
     end
+end
+if #db.buildReport.researchSuperseded>0 then
+    print(('Research v3 replaced %d older research row(s) for the same input'):format(#db.buildReport.researchSuperseded))
 end
 table.sort(db.processing,function(a,b) return a.recordID<b.recordID end)
 -- Fixed conversions remain one copy; the valuation engine adapts these to a model.

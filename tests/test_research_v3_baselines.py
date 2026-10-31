@@ -1,0 +1,96 @@
+"""D1c: research team v3 results -> ItemDB baselines (tools/research_v3_to_baselines.py).
+
+Runs against the pinned snapshot database/research/v3-snapshot/, so results are fixed until
+the snapshot is refreshed on purpose. Checks that only real studies are counted (no TSM or
+reference starting guesses, no copy of the addon's own old disenchant tables), that the
+research team's own numbers come through unchanged, and that blended operations are left out.
+"""
+import json
+import sys
+sys.dont_write_bytecode = True  # never leave cache files in the repo or snapshot
+from pathlib import Path
+
+sys.path.insert(0, 'tools')
+import research_v3_to_baselines as v3  # noqa: E402
+import evidence_to_baselines as eb  # noqa: E402
+
+SNAPSHOT = Path('database/research/v3-snapshot')
+passed = 0
+
+
+def ok(condition, label):
+    global passed
+    assert condition, label
+    passed += 1
+
+
+def near(a, b, label, tol=1e-6):
+    ok(a is not None and abs(a - b) <= tol, f'{label}: {a} != {b}')
+
+
+# ---- snapshot is pinned and complete
+info = json.loads((SNAPSHOT / 'SNAPSHOT.json').read_text())
+ok(len(info['commit']) == 40 and info['branch'] == 'implementation/five-agent-completion', 'snapshot names its commit')
+for path in info['paths']:
+    ok((SNAPSHOT / path).exists(), f'snapshot has {path}')
+
+# ---- small pure helpers
+ok(v3.gear_key('gear:The War Within:uncommon:weapon') == 'gear:10:2:weapon', 'gear names map to numbers')
+ok(v3.gear_key('gear:11:4:armor') == 'gear:11:4:armor', 'numeric gear keys pass through')
+ok(v3.gear_key('gear:Midnight:rare:trinket') is None, 'gear key must end in armor or weapon')
+ok(v3.counts({'simulation': {'chanceBeta': [10.5, 90.5]}}) == (10.0, 100.0), 'beta parameters back to counts')
+
+# A chance worked out from an average carries half confidence; the average stays measured.
+m = v3.material(5, [{'simulation': {'chanceBeta': [50.5, 50.5]}, 'chanceSource': 'estimated',
+                     'averageSource': 'measured', 'rangeSource': 'reference', 'average': 0.75,
+                     'range': [1, 2], 'studyCasts': 200.0}])
+near(m['dropChance']['value'], 0.5, 'derived chance = average / middle of range')
+ok(m['dropChance']['status'] == 'provisional' and m['expectedQuantity']['status'] == 'measured', 'statuses')
+ok(m['dropChance']['confidence'] == eb.rate_confidence(25, 50) // 2, 'derived chance at half confidence')
+near(m['expectedQuantity']['samples'], 100.0, 'average counts its own casts (x0.5 until scaling rules)')
+
+# ---- the real build
+records, notes, total, counted, unplaced = v3.build(SNAPSHOT)
+ok(len(records) > 50 and counted < total, 'records built, some rows not counted')
+module = v3.load_calculator(SNAPSHOT)
+rows = module.load()
+for r in rows:
+    if r.get('sourceKind') in module.REFERENCE_KINDS or r['_file'].endswith(v3.LEGACY_COPY):
+        ok(not v3.is_counted(r, module), 'reference values and the old addon tables are never counted')
+        break
+ok(all(r['recordID'].startswith('evidence:v3:') and r['sourceKey'] == 'itemdb' and r['supersedesResearch']
+       for r in records), 'record IDs and source')
+ok(len({r['recordID'] for r in records}) == len(records), 'record IDs unique')
+for r in records:
+    ok(('inputItemID' in r) != ('gearKey' in r), f'{r["recordID"]}: one input key')
+    for mat in r['materials']:
+        f = mat['dropChance']
+        ok(f['status'] != 'unknown' and 0 <= f['value'] <= 1 and f['samples'] > 0, f'{r["recordID"]}:{mat["id"]} chance')
+        lo, hi, e = mat['minQuantity']['value'], mat['maxQuantity']['value'], mat['expectedQuantity'].get('value')
+        ok(1 <= lo <= hi, f'{r["recordID"]}:{mat["id"]} range')
+        ok(e is None or f['value'] * lo - 1e-9 <= e <= f['value'] * hi + 1e-9, f'{r["recordID"]}:{mat["id"]} average in range')
+by_id = {r['recordID']: r for r in records}
+
+# Saronite Ore (the owner's reference tooltip): matches the research team's published estimate
+# (chance from average / middle of 1-2, half confidence), from real studies only.
+sar = by_id['evidence:v3:Prospect:36912:x5']
+gem = {m['id']: m for m in sar['materials']}[36917]
+near(gem['expectedQuantity']['value'], 0.1792, 'Saronite -> Bloodstone average', 1e-4)
+near(gem['dropChance']['value'], 0.1195, 'Saronite -> Bloodstone chance', 1e-4)
+ok(gem['dropChance']['confidence'] == 50, 'Saronite -> Bloodstone confidence')
+
+# Aqirite rank 1: measured chances straight from the 1,040-prospect study family.
+aq = {m['id']: m for m in by_id['evidence:v3:Prospect:210933:x5']['materials']}
+near(aq[213398]['dropChance']['value'], 0.5209, 'Aqirite -> 213398 chance', 1e-4)
+
+# Gear group written with names by a worker becomes the addon's numeric key.
+ok('evidence:v3:Disenchant:gear:10:2:weapon:x1' in by_id, 'War Within green weapons from a worker study')
+# Battle for Azeroth herbs mix 5-herb and 20-herb studies: left out, never blended.
+ok('evidence:v3:Mill:152506:x5' not in by_id and 'evidence:v3:Mill:152506:x20' not in by_id, 'mixed batch sizes left out')
+ok(notes['studies mix batch sizes (e.g. milling and mass milling)'] > 0, 'mixed batch sizes reported')
+ok(notes['conditional drop (needs an unlock the addon cannot check yet)'] > 0, 'conditional drops reported')
+ok(not any(isinstance(m['id'], str) for r in records for m in r['materials']), 'no family outputs')
+
+# The committed file is current.
+ok(v3.render(records, SNAPSHOT) == v3.DEFAULT_OUTPUT.read_text(), 'database/research-v3-baselines.lua is current')
+print(f'RESEARCH V3 BASELINE TESTS: {passed} passed, 0 failed; {len(records)} records')

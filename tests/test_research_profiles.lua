@@ -25,6 +25,8 @@ local research={schemaVersion='0.1.0',sourceManifest={compilerVersion='fixture'}
 local function compile()
     loadfile=function(path)
         if path=='database/research/itemdb.lua' then return function() return research end end
+        -- D1c: keep the real research v3 baselines out of this synthetic fixture.
+        if path=='database/research-v3-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
         return originalLoadfile(path)
     end
     arg={fixtureDir..'/FixtureItemDB.lua'}
