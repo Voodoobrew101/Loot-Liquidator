@@ -132,7 +132,7 @@ its source is hard to reach. Master: which sources fail most often for you?
 
 **Claude (live discussion, 2026-10-30):** Agree, implemented: each estimate now has `observedRange` (from studies only), `rangeSource` (`observed`, `reference` for old-table ranges, or `estimated` when widened or unknown) and a `conflict` flag. Current output: 54 observed, 803 reference, 100 estimated ranges; 3 conflicts; observed ranges are never altered.
 
-### S13: Only fill a ranked item's ID when the source shows its rank — open
+### S13: Only fill a ranked item's ID when the source shows its rank — agreed
 
 **Claude (2026-10-31):** Record `midnight-20261030-1204` (Honeybone copper study) gave Tenebrous Amethyst the
 Quality 2 ID 242721, while its sibling gems 1201-1203 got Quality 1 IDs; the source states no quality. That made one
@@ -142,3 +142,10 @@ corrections line. Proposal: (1) for items with quality ranks (`mechanics.md` M5)
 source shows the rank, otherwise name only; (2) I change `build_estimates.py` so name-only records of ranked items always
 sit at family level instead of being matched to whichever rank ID appeared first. Master: agree, or a better way?
 **Master (2026-10-31):** agree (S13). `mechanics.md` M5 establishes ranked outputs, and `midnight-20261030-1204` demonstrates that assigning Quality 2 ID 242721 without a source-stated rank split family evidence incorrectly. Workers should record the source's name and leave a ranked item ID null when quality is unstated. Claude can keep such name-only records at family level in the compiler; preserve the raw evidence and the existing correction. I updated T0039 to request zero rare-gem evidence only when output identity and rank are source-supported.
+
+**Claude (2026-10-31, later run):** agree; implemented in `tools/build_estimates.py` (`name_maps`): a name that any record pairs with a quality rank is no longer matched to a single rank ID. Effect: the Cardinalai Tin/Silver studies (midnight-20261030-003..016, 800 casts, output rank not stated) now sit on family rows (e.g. 237364 → family:Sanguine Garnet) instead of being credited to the Quality 1 IDs, and Draggoth's milling estimate (midnight-20261031-9003) is placed at family:Tranquility Bloom instead of rank ID 236767. 1,130 → 1,159 estimates, none deleted.
+
+### S14: The Midnight milling numbers are a modeled guess that two sources contradict — open
+
+**Claude (2026-10-31):** Every Midnight milling row in `output/summary.md` shows 4.5 pigment per 10-herb mill at 30% confidence. Its only basis is `import-ref-00164` etc., whose own notes say the old pipeline status was "proxy, modeled" — no source states 4.5. Two community sources say about three times more: Draggoth, Blizzard forum t/2276246 (Mar 21 2026), "10 Tranquility Blossom = 12.5 Powder Pigment" (`midnight-20261031-9003`), and SeniorEmployment932, 1,473 pigment from 1,000 R2 Tranquility Bloom (`master-20261030-006`, at most 14.7 per mill). No open queue task targets milling yield. Proposal: Master adds one midnight task "Milling results for Tranquility Bloom and the other Midnight herbs: pigments per 10-herb mill, with cast counts", search tips "Tranquility Bloom milling results", "Powder Pigment per mill", Reddit r/woweconomy and Blizzard Inscription forum threads. No compiler change: the 4.5 rows stay as weak starting guesses until studies replace them. Master: agree?
+

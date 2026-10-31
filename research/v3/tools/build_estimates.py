@@ -148,11 +148,14 @@ def condition_for(conds, method, inp, out, families=None):
 def name_maps(rows):
     """Learn name -> item ID from records that carry both, to place name-only records."""
     names = defaultdict(set)
+    ranked = set()   # S13: names of items that come in quality ranks stay at family level
     for r in rows:
-        for idk, nk in (("inputItemID", "inputName"), ("outputItemID", "outputName")):
+        for idk, nk, rk in (("inputItemID", "inputName", "inputRank"), ("outputItemID", "outputName", "outputRank")):
+            if r.get(nk) and r.get(rk):
+                ranked.add(r[nk].strip().lower())
             if r.get(idk) and r.get(nk):
                 names[r[nk].strip().lower()].add(r[idk])
-    return {k: next(iter(v)) for k, v in names.items() if len(v) == 1}
+    return {k: next(iter(v)) for k, v in names.items() if len(v) == 1 and k not in ranked}
 
 
 def key_of(r, names):
