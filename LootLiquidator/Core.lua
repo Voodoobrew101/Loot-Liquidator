@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.10.0-alpha10"
+LA.version = "0.11.0-claude.1"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000

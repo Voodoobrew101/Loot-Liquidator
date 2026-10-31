@@ -1,7 +1,6 @@
 # Loot Liquidator — Claude work session prompt (v0.1, session 1)
 
-> **How to use:** paste this whole file into a new Claude chat and say **"go"**.
-> From session 2 onward, this same prompt lives in the repo at `claude/HANDOFF.md` on branch `LootLiquidatorclaude-V0.1`, and each session updates it before finishing. After session 1 you only need to paste the short **starter message** at the bottom.
+> **How to use:** this prompt lives in the repo at `claude/HANDOFF.md` on branch `LootLiquidatorclaude-V0.1`, and each session updates it before finishing. Paste the short **starter message** at the bottom into a new chat.
 
 ---
 
@@ -70,8 +69,8 @@ Main files in `LootLiquidator/`:
 | File | What it does |
 | --- | --- |
 | Core.lua | The decision for each item (`LA:Evaluate`), defaults, ~40 slash commands |
-| ConversionEngine.lua | Gold value of disenchant/mill/prospect/smelt; currently withholds a value if any output is unknown (`model.partialPrice` → `model.value=nil`, around line 290) |
-| Database.lua | Blends evidence sources with weights; zero-weights legacy and different-batch drop chances (around lines 430–495) |
+| ConversionEngine.lua | Gold value of disenchant/mill/prospect/smelt (`ValueProcessingModel`, ~line 268). Since A2: unknown outputs give a partial value with `model.partial` and `model.valueConfidence` |
+| Database.lua | Blends evidence sources with weights (`ComputeEvidenceModel`, ~lines 330–545). Since A1: weak/old evidence is down-weighted, not dropped; only different-batch drop chances still get zero weight (a different quantity, by design) |
 | Badges.lua | Badge letters and the tooltip |
 | NativeBags.lua | Badges on Blizzard bags, banks, BetterBags, guild bank |
 | Settings.lua / SettingsControls.lua | Settings menus |
@@ -86,6 +85,7 @@ Main files in `LootLiquidator/`:
 Known dead or confusing things (found by code reading):
 
 - `/ll milling on|off`, `/ll prospecting`, `/ll smelting`, `/ll exchanges` change saved settings the code never reads.
+- Settings reads "Legacy" as the old disenchant tables (`GameData.lua` → `LL.LegacyDB`); since A1 it is on by default at weight 10.
 - Seven `methodEnabledD/M/P/S/C/R/X` settings are saved but never used.
 - About ten separate tooltip checkboxes overlap the Minimal/Summary/Detailed level (`tooltipDetail`).
 - ItemDB's `tokenRewards` list is empty, so tokens depend entirely on ATT.
@@ -96,7 +96,9 @@ Known dead or confusing things (found by code reading):
 
 **How the previous chat connected:** it ran in Claude's cloud sandbox, which routes all internet traffic through a proxy. It cloned the public repo over HTTPS with plain `git clone` (no password needed for reading). It could **not** push: the proxy only adds GitHub credentials for repositories that have been **added to the session as a source**, and this repo had not been. Nobody ever pasted a password or token, and you must not either.
 
-**For this chat to push**, the owner must start it with the GitHub repo attached:
+**Session 1 finding:** if the chat has the `add_repo` tool (Claude Code on the web / Cowork), call it with owner `Voodoobrew101`, repo `Loot-Liquidator`, access `push`. That attaches the repo mid-chat and plain `git push` then works from the existing clone — no new chat needed. Only if that tool is missing or refused, fall back to the steps below.
+
+**Otherwise, for this chat to push**, the owner must start it with the GitHub repo attached:
 
 - In the Claude app/website, start the chat where you can pick a GitHub repository (Claude Code on the web at claude.ai/code, or a Cowork session with GitHub connected), and select **Voodoobrew101/Loot-Liquidator**. The first time, GitHub asks the owner to install/authorize the Claude GitHub app for that repo.
 - Once the repo is a source, the sandbox's git proxy injects the credential automatically. Plain `git push` then works. No token, no SSH key, no `gh auth login`.
@@ -116,13 +118,13 @@ git config user.email "noreply@anthropic.com"
 git push --dry-run origin LootLiquidatorclaude-V0.1
 ```
 
-- If the dry run says *"access denied by the git proxy … not in this session's authorized repository set"* or returns 403: **stop**. Tell the owner, in one plain sentence, to start a new chat with the Loot-Liquidator GitHub repo selected as the chat's repository. Don't retry and don't look for workarounds.
+- If the dry run says *"access denied by the git proxy … not in this session's authorized repository set"* or returns 403: first try the `add_repo` tool (above). If that isn't available, **stop**. Tell the owner, in one plain sentence, to start a new chat with the Loot-Liquidator GitHub repo selected as the chat's repository. Don't retry and don't look for workarounds.
 - `gh` (GitHub CLI) may have no valid login in the sandbox; you don't need it. Plain git is enough.
 - If git reports a certificate or proxy error, read `/root/.ccr/README.md` and run `curl -sS "$HTTPS_PROXY/__agentproxy/status"`. Never disable TLS checks.
 
 ## 5. Running the tests (no real Lua needed)
 
-The sandbox package manager has no `lua5.1`, and lua.org is blocked. The previous chat ran the full suite (`tests/run.sh`) successfully using **lupa**, a Python package that embeds real Lua 5.1. Create the two small wrapper scripts below (session 1 commits them to `tools/lua51-shim/`; later sessions just put that folder on PATH):
+The sandbox package manager has no `lua5.1`, and lua.org is blocked. The previous chat ran the full suite (`tests/run.sh`) successfully using **lupa**, a Python package that embeds real Lua 5.1. The two small wrapper scripts are committed in `tools/lua51-shim/`; just `pip install lupa --break-system-packages` and put that folder on PATH. (Their contents, for reference:)
 
 ```bash
 pip install lupa --break-system-packages
@@ -189,12 +191,12 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 
 **Phase 0 — Setup**
 
-- [ ] **S1. Set up the workspace.** Confirm push access. Commit this prompt as `claude/HANDOFF.md` and the Lua wrapper scripts as `tools/lua51-shim/`. Run the tests. Add a short `claude/README.md`: "This branch is Claude's working copy; see HANDOFF.md". *Done when:* both are pushed and tests pass.
+- [x] **S1. Set up the workspace.** (`ca51110`) Confirm push access. Commit this prompt as `claude/HANDOFF.md` and the Lua wrapper scripts as `tools/lua51-shim/`. Run the tests. Add a short `claude/README.md`: "This branch is Claude's working copy; see HANDOFF.md". *Done when:* both are pushed and tests pass.
 
 **Phase A — Give answers again (biggest win for the owner)**
 
-- [ ] **A1. Stop hiding estimates.** In `Database.lua`, working estimates and unknown-confidence sources should get a small non-zero weight instead of zero, and legacy data should count (weakly) instead of only filling gaps. Confidence goes down for them, not to "no answer". *Done when:* an item with only working estimates gets a value and a confidence; tests updated.
-- [ ] **A2. Partial outputs still give a value.** In `ConversionEngine.lua`, when some outputs of an option are unknown, compute the value from the known outputs, lower the confidence, and mark it "partial". Don't return "Insufficient Data" unless nothing at all is known. *Done when:* the reference case (an ore with one unknown gem) shows a value.
+- [x] **A1. Stop hiding estimates.** (`d10bc33`) In `Database.lua`, working estimates and unknown-confidence sources should get a small non-zero weight instead of zero, and legacy data should count (weakly) instead of only filling gaps. Confidence goes down for them, not to "no answer". *Done when:* an item with only working estimates gets a value and a confidence; tests updated.
+- [x] **A2. Partial outputs still give a value.** (`badde1e`) In `ConversionEngine.lua`, when some outputs of an option are unknown, compute the value from the known outputs, lower the confidence, and mark it "partial". Don't return "Insufficient Data" unless nothing at all is known. *Done when:* the reference case (an ore with one unknown gem) shows a value.
 - [ ] **A3. One confidence figure per option** in the tooltip, value-weighted across materials, e.g. "Prospecting (Confidence 48%)". Per-material confidence as an option, off by default.
 - [ ] **A4. The ? badge only when there is truly nothing.** Check `Core.lua` so "?" appears only when no option has any estimate. Otherwise pick the best option and show its confidence.
 - [ ] **A5. Optional price in the header**, "Loot Liquidator: Smelt 6g 87s" (checkbox, default on).
@@ -243,11 +245,17 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 
 ## 10. What to check in game
 
-*(Filled in at the end of each session.)*
+*(Filled in at the end of each session.)* After session 1 (version 0.11.0-claude.1):
+
+1. Hover a few ores and herbs that used to say "Insufficient Data": they should now show a gold value and a confidence. Values marked "partial" only count the materials that have a price.
+2. Hover some old green/blue gear you could disenchant: the Disenchant line should now show a value (it was usually blank before).
+3. In the breakdown, numbers with a "~" in front are estimates. Check they look sensible (no huge or silly amounts).
+4. Check the addon loads with no error pop-ups, and that your old settings are still there.
 
 ## 11. Session log
 
 - 2026-10-31: Prompt written. Branch `LootLiquidatorclaude-V0.1` exists at `8d8753e` (same as alpha10). The test suite passes with the lupa wrapper. Nothing changed in the addon yet.
+- 2026-10-31 (session 1, v0.11.0-claude.1): Set up the workspace (S1). The addon now uses rough estimates and older data at low weight instead of hiding them (A1), and the old disenchant tables are switched on, so disenchanting gives answers again. When some materials can't be priced, the option still shows a value marked "partial" with lower confidence (A2). Found and fixed a problem where a rough guess could push better data out. Automated tests pass; needs an in-game check.
 
 ---
 
