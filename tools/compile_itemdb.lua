@@ -223,7 +223,36 @@ assert(models.schemaVersion==1,'Unsupported profession model schema')
 db.professionRules=models.professionRules;db.personalPatchRules=models.personalPatchRules;db.modelRevision=models.revision
 -- Reviewed additions use the same versioned interface, independent of engine code.
 local additions=assert(loadfile('database/records.lua'))()
-db.tokenRewards=additions.tokenRewards or {}
+-- C4b1 (owner, session 12): checked token lists come ONLY from the research
+-- team's ItemDB export (research.tokenRewards in database/research/itemdb.lua,
+-- a snapshot of research/proposed/itemdb.lua on their branch). This branch
+-- never writes an approval itself, so records.lua must not carry tokens.
+-- Format and checking steps: research/evidence/v3/TOKEN-CHECK.md.
+assert(additions.tokenRewards==nil or next(additions.tokenRewards)==nil,
+    'Token lists belong in the research export (database/research/itemdb.lua tokenRewards), not database/records.lua')
+local tokenValidator={}
+assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',tokenValidator)
+db.tokenRewards={}
+db.buildReport.tokenRewardsSkipped={}
+for index,r in ipairs(type(research.tokenRewards)=='table' and research.tokenRewards or {}) do
+    -- Each record is checked alone, then against everything kept so far
+    -- (duplicate IDs, overlapping patch windows). A bad record is skipped with
+    -- its reason instead of failing the build; it stays in the research file.
+    local ok,why=tokenValidator:ValidateTokenCatalog({r})
+    if ok then
+        local trial={}
+        for i,kept in ipairs(db.tokenRewards) do trial[i]=kept end
+        trial[#trial+1]=r
+        ok,why=tokenValidator:ValidateTokenCatalog(trial)
+    end
+    if ok then db.tokenRewards[#db.tokenRewards+1]=r
+    else
+        local skipped=db.buildReport.tokenRewardsSkipped
+        skipped[#skipped+1]={index=index,recordID=type(r)=='table' and tostring(r.recordID) or '?',reason=tostring(why)}
+        print('Token record skipped: #'..index..' '..skipped[#skipped].recordID..': '..tostring(why))
+    end
+end
+table.sort(db.tokenRewards,function(a,b) return a.recordID<b.recordID end)
 for _,r in ipairs(additions.processing or {}) do db.processing[#db.processing+1]=r end
 for _,r in ipairs(additions.mechanicRules or {}) do
     assert(r.evidenceStatus=='VERIFIED_NUMERIC' and r.applyPolicy=='EXECUTE' and r.numericTransformValidated==true

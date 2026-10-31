@@ -6,18 +6,19 @@ Submit evidence records only (`research/evidence/v3/<agent>/<UTC-date>-<short-na
 
 Starting list written by Claude, session 12 (2026-10-31). Nothing has been researched under v3 yet.
 
-## 1. Tier tokens: independent check and the last IDs
+## 1. Tier tokens: independent check
 
-- **Checker:** confirm every item ID in `database/research/tokens-midnight-s1.json` against its link (task C4b).
-  Start with **249960** (Luminant Verdict's Greaves): its name was cut off in the snippet it came from.
-- **Checker:** confirm the 20 Season 2 token IDs (270910–270929) and the Slumbering Coil Curio (270909) in
-  `database/research/tokens-midnight-s2.json`.
-- **Midnight researcher:** the Season 2 file still needs all 65 tier-piece item IDs and 31 missing piece names (task C4a5).
-  First settle the evoker conflict: is "Calamitous Echo's Ebon Greathorns" the hands or the head piece, and
-  "Calamitous Echo's Magmashapers" the other one?
-- Token records are not evidence records: report IDs in the research files above, with the page each one came from.
+Both lists are complete (session 13): Season 1 and Season 2, 20 tokens + 1 curio + 65 tier pieces each, every ID
+with the page it came from. **Follow `research/evidence/v3/TOKEN-CHECK.md`** (steps and the exact export format).
+
+- **Checker:** confirm every ID in `database/research/tokens-midnight-s1.json`. Start with **249960**
+  (Luminant Verdict's Greaves): its name was cut off in the snippet it came from.
+- **Checker:** confirm every ID in `database/research/tokens-midnight-s2.json`. Weakest: the 52 piece IDs from
+  MythicDrake item URLs only. The evoker head/hands question is settled (Magmashapers = head); confirm anyway.
+- Each confirmed token goes into your ItemDB export (`research/proposed/itemdb.lua`, list `tokenRewards`).
+  A mismatch gets a `check` record with `"result": "mismatch"` instead.
 - **Owner decision (2026-10-31):** the research team double-checks these token lists and puts the checked
-  result into its ItemDB export (`itemdb.lua`); Claude never marks them approved. The exact format comes with task C4b1.
+  result into its ItemDB export; Claude never marks them approved.
 
 ## 2. Disenchanting groups with no data at all
 

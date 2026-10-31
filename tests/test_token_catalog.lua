@@ -104,19 +104,39 @@ local export=LL:ATTResearchExport(1)
 local file=assert(io.open(outdir..'/att-runtime-export.json','w'));file:write(export);file:close()
 assert(LL:ATTResearchStatus():find('1 capped',1,true))
 assert(LL:ATTResearchStatus():find('Removal pending',1,true))
--- Compiler consumes reviewed additions into the SAME generated ItemDB.
+-- C4b1: the compiler takes checked token lists from the research team's ItemDB
+-- export (database/research/itemdb.lua, field tokenRewards) into the SAME
+-- generated ItemDB. (Before C4b1 they came from database/records.lua; changed on
+-- purpose: the owner wants the research team, not this branch, to approve them.)
 local originalLoadfile,originalArg=loadfile,arg
+local researchTokens,recordsTokens={approved},nil
 loadfile=function(path)
-    if path=='database/records.lua' then return function()return {tokenRewards={approved},processing={},mechanicRules={}}end end
+    if path=='database/research/itemdb.lua' then
+        local real=assert(originalLoadfile(path))
+        return function() local r=real();r.tokenRewards=researchTokens;return r end
+    end
+    if path=='database/records.lua' then return function()return {tokenRewards=recordsTokens,processing={},mechanicRules={}}end end
     return originalLoadfile(path)
 end
 arg={outdir..'/TokenFixture.lua'}
 assert(originalLoadfile('tools/compile_itemdb.lua'))()
 local compiled={};assert(originalLoadfile(outdir..'/TokenFixture.lua'))('LootLiquidator',compiled)
 assert(#compiled.ItemDB.tokenRewards==1 and compiled.ItemDB.tokenRewards[1].tokenID==900001)
-approved.listComplete=false
+assert(#compiled.ItemDB.buildReport.tokenRewardsSkipped==0)
+-- A record that fails the check is skipped with its reason; the good one ships.
+local unchecked=clone(approved);unchecked.recordID='unchecked';unchecked.tokenID=900002;unchecked.independentReview='PENDING'
+local overlapping=clone(approved);overlapping.recordID='overlap'
+researchTokens={approved,unchecked,overlapping}
+assert(originalLoadfile('tools/compile_itemdb.lua'))()
+compiled={};assert(originalLoadfile(outdir..'/TokenFixture.lua'))('LootLiquidator',compiled)
+assert(#compiled.ItemDB.tokenRewards==1 and compiled.ItemDB.tokenRewards[1].recordID=='synthetic-only','only the checked record ships')
+local skipped=compiled.ItemDB.buildReport.tokenRewardsSkipped
+assert(#skipped==2 and skipped[1].recordID=='unchecked' and skipped[1].reason:find('Token catalog requires',1,true)
+    and skipped[2].recordID=='overlap' and skipped[2].reason:find('Overlapping',1,true),'skipped records carry their reason')
+-- Tokens in database/records.lua (hand approval on this branch) fail the build.
+researchTokens,recordsTokens={approved},{approved}
 local ok,message=pcall(assert(originalLoadfile('tools/compile_itemdb.lua')))
-assert(not ok and tostring(message):find('Token catalog requires',1,true),'unsupported approval must fail the build')
+assert(not ok and tostring(message):find('belong in the research export',1,true),'records.lua must not carry token lists')
 loadfile,arg=originalLoadfile,originalArg
 -- Quest-class equipment tokens must reach the main recommendation/tooltip
 -- consumer, while unrelated quest items remain excluded. Tokens never run the
