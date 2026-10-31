@@ -330,15 +330,17 @@ def build(rows):
         # ---- add studies (S6 epochs and unlocks, S7 dedupe)
         casts_p = drops = 0.0
         casts_e = total = 0.0
-        seen, skipped_unlock, old_epoch, post_dated = set(), 0, None, None
+        seen, skipped_ids, old_epoch, post_dated = set(), set(), None, None
         for r in g["studies"]:
             ident = study_identity(r)
             if ident in seen:
                 continue
-            seen.add(ident)
             if req is not None and unlock_state(r) is not True:
-                skipped_unlock += 1   # unknown/locked studies can't measure an unlock-only drop
+                # Unknown/locked studies can't measure an unlock-only drop. Don't mark the study as
+                # counted: another copy of the same study may state the unlock and must still count.
+                skipped_ids.add(ident)
                 continue
+            seen.add(ident)
             w, why = epoch_weight(r, method, inp, changes)
             if why and w < 1:
                 old_epoch = why
@@ -362,6 +364,7 @@ def build(rows):
             basis.append(post_dated + " (collection date unknown)")
         if old_epoch:
             basis.append(f"older-period data counted at {int(OLD_EPOCH_WEIGHT*100)}% ({old_epoch} rate change)")
+        skipped_unlock = len(skipped_ids - seen)
         if skipped_unlock:
             basis.append(f"{skipped_unlock} studies left out: unlock status not stated")
         # ---- measured fields (studies + starting guess)
