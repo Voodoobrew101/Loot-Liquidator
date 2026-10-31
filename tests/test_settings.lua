@@ -122,27 +122,39 @@ for _,file in ipairs({'Database.lua','SettingsControls.lua','Settings.lua','Prof
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
 LL:MigrateEvidenceSettings()
-local panel=LL:CreateEvidenceSettingsPanel({})
-local checkboxes,sliders={},{ }
-for _,w in ipairs(all) do
-    if w.template=='SettingsCheckboxControlTemplate' then checkboxes[#checkboxes+1]=w end
-    if w.kind=='Slider' then sliders[#sliders+1]=w end
-end
-assert(#checkboxes==#LL.SourceOrder and #sliders==#LL.SourceOrder and #LL.SourceOrder==4) -- B2: frozen TSM row removed; B7: Imported results row added
-panel.scripts.OnShow(panel)
+-- B8b: Database & Accuracy is a native vertical page: one checkbox and one
+-- weight slider per source (slider nested under its checkbox), plus a Reset
+-- button. Changed on purpose from the old canvas-row test.
+local createdChecks,createdSliders,layoutItems={}, {}, {}
+local function nestable(t) function t:SetParentInitializer(parent,pred) self.parent=parent;self.predicate=pred end;return t end
+Settings.CreateCheckbox=function(_,setting) local i=nestable({setting=setting,factory='checkbox'});createdChecks[#createdChecks+1]=i;return i end
+local baseCreateSlider=Settings.CreateSlider
+Settings.CreateSlider=function(category,setting,options) local i=nestable(baseCreateSlider(category,setting,options));createdSliders[#createdSliders+1]=i;return i end
+local accuracyLayout={AddInitializer=function(_,i) layoutItems[#layoutItems+1]=i end}
+CreateSettingsButtonInitializer=function(name,_,click) return {name=name,click=click,factory='button'} end
+LL:AddEvidenceSettings({},accuracyLayout)
+assert(#createdChecks==#LL.SourceOrder and #createdSliders==#LL.SourceOrder and #LL.SourceOrder==4) -- B2: frozen TSM row removed; B7: Imported results row added
 for i,key in ipairs(LL.SourceOrder) do
-    assert(sliders[i].minimum==0 and sliders[i].maximum==100 and sliders[i].step==1)
-    local native=checkboxes[i].Checkbox
-    native:SetChecked(false);native.scripts.OnClick(native)
-    assert(LL.db['source_'..key..'_enabled']==false)
-    sliders[i]:SetValue(23)
+    local check,slider=createdChecks[i],createdSliders[i]
+    assert(slider.options.minValue==0 and slider.options.maxValue==100 and slider.options.step==1)
+    assert(slider.parent==check,'weight slider sits under its source switch')
+    check.setting:SetValue(false)
+    assert(LL.db['source_'..key..'_enabled']==false and slider.predicate()==false)
+    slider.setting:SetValue(23)
     assert(LL.db['source_'..key..'_weight']==23)
 end
 assert(invalidations>=2*#LL.SourceOrder-1) -- B2: scales with source rows (was a fixed 7 for four rows)
 local unrelated={graphics=7,bindings='custom'}
-for _,w in ipairs(all) do if w.text=='Reset source weights' and w.kind=='Button' then w.scripts.OnClick(w) end end
+local resetButton
+for _,i in ipairs(layoutItems) do if i.name=='Reset source weights' then resetButton=i end end
+assert(resetButton,'Reset source weights button missing')
+resetButton.click()
 for key,d in pairs(LL.SourceDefaults) do assert(LL.db['source_'..key..'_weight']==d[2]);assert(LL.db['source_'..key..'_enabled']==d[1]) end
 assert(unrelated.graphics==7 and unrelated.bindings=='custom')
+Settings.CreateSlider=baseCreateSlider;Settings.CreateCheckbox=nil
+CreateSettingsButtonInitializer=function(_,_,click) return {click=click,factory='button'} end
+print('PASS: Database & Accuracy uses native checkboxes, sliders and a Reset button (B8b)')
+local panel=CreateFrame('Frame')
 -- Every settings control was initialized with its Blizzard factory.
 for _,w in ipairs(all) do
     if w.template and w.template:match('ControlTemplate$') then assert(w.initializer and w.initializer.factory) end
@@ -258,34 +270,70 @@ ElvUI={{GetModule=function()return fakeSkin end}}
 LL:SkinSettingsCanvasControl({SliderWithSteppers=stepSlider},'slider')
 assert(skinned==1)
 ElvUI=nil
--- B4: "Include alts" switch on the Badges page, bound to includeVerifiedAlts.
+-- B4 + B8a: "Include alts" switch on the Badges page, bound to includeVerifiedAlts.
+-- B8a changed the page from a canvas to a native vertical list on purpose,
+-- so the test now looks for the native checkbox registered on that page.
 do
-    local layout=function() return {AddInitializer=function() end} end
-    Settings.RegisterVerticalLayoutCategory=function() return {},layout() end
+    local layouts={}
+    local function layout(name) local l={items={},AddInitializer=function(self,i) self.items[#self.items+1]=i end};layouts[name]=l;return l end
+    Settings.RegisterVerticalLayoutCategory=function() return {name='root'},layout('root') end
     local pages={}
-    Settings.RegisterVerticalLayoutSubcategory=function(_,name) pages[name]=true;return {},layout() end
+    Settings.RegisterVerticalLayoutSubcategory=function(_,name) local c={name=name};pages[name]=c;return c,layout(name) end
     Settings.RegisterCanvasLayoutCategory=function() return {} end
-    Settings.RegisterCanvasLayoutSubcategory=function() return {} end
+    local canvases={}
+    Settings.RegisterCanvasLayoutSubcategory=function(_,_,name) canvases[#canvases+1]=name;return {} end
     Settings.RegisterAddOnCategory=function() end
     Settings.VarType=Settings.VarType or {Number='number',Boolean='boolean',String='string'}
-    Settings.CreateCheckbox=function(_,setting) return {setting=setting} end
-    Settings.CreateDropdown=function(_,setting,options) return {setting=setting,options=options,InitFrame=function() end} end
+    local created={}
+    Settings.CreateCheckbox=function(cat,setting) local i={category=cat,setting=setting};created[#created+1]=i;return i end
+    Settings.CreateDropdown=function(cat,setting,options) local i={category=cat,setting=setting,options=options,InitFrame=function() end};created[#created+1]=i;return i end
+    local baseSlider=Settings.CreateSlider
+    Settings.CreateSlider=function(cat,setting,options) local i=baseSlider(cat,setting,options);i.category=cat;created[#created+1]=i;return i end
+    Settings.CreatePanelInitializer=function(template) return {template=template} end
     Settings.CreateElementInitializer=Settings.CreateElementInitializer or function() return {} end
     CreateSettingsListSectionHeaderInitializer=CreateSettingsListSectionHeaderInitializer or function() return {} end
+    CreateSettingsButtonInitializer=function(name,text,click) return {name=name,text=text,click=click,factory='button'} end
     LL.db.includeVerifiedAlts=nil;LL.settingsCategory=nil
     local ok,err=pcall(LL.RegisterNativeSettings,LL);if not ok then print('settings build stopped early: '..tostring(err)) end
-    local box=LL.badgeSettingsPanel and LL.badgeSettingsPanel.llIncludeAltsCheckbox
-    assert(box,'Include alts checkbox missing on the Badges page'..(ok and '' or (': '..tostring(err))))
-    local native=box.Checkbox or box.CheckBox
-    assert(box:GetChecked()==true,'Include alts defaults on')
-    assert(settings.LootLiquidator_includeVerifiedAlts,'Include alts registered for Defaults')
+    assert(ok,tostring(err))
+    local badges=pages['Badges & Colors']
+    assert(badges,'Badges & Colors page missing')
+    local function control(cat,variable)
+        for _,i in ipairs(created) do if i.category==cat and i.setting==settings[variable] then return i end end
+    end
+    local alts=control(badges,'LootLiquidator_includeVerifiedAlts')
+    assert(alts,'Include alts checkbox missing on the Badges page')
+    assert(LL.db.includeVerifiedAlts==true,'Include alts defaults on')
     LL.Paint=LL.Paint or function() end
     local before=invalidations
-    native:SetChecked(false);native.scripts.OnClick(native)
+    alts.setting:SetValue(false)
     assert(LL.db.includeVerifiedAlts==false and invalidations>before,'switch off recalculates badges')
-    native:SetChecked(true);native.scripts.OnClick(native)
+    alts.setting:SetValue(true)
     assert(LL.db.includeVerifiedAlts==true)
     print('PASS: Include alts switch on the Badges page (B4)')
+    -- B8a: every badge control is a native Settings control on that page.
+    for _,key in ipairs({'showBadges','showUnknownBadge','showSoulboundVendorBadge','showBlizzardBags','showBetterBags','showGuildBank'}) do
+        assert(control(badges,'LootLiquidator_'..key),key..' missing on the Badges page')
+    end
+    local position=control(badges,'LootLiquidator_appearance_position')
+    local size=control(badges,'LootLiquidator_appearance_fontSize')
+    assert(position and size,'position dropdown and font size slider are native')
+    assert(#position.options()==9 and position.setting:GetValue()=='TOPRIGHT')
+    position.setting:SetValue('BOTTOMLEFT');assert(LL.db.appearance.position=='BOTTOMLEFT')
+    assert(size.options.minValue==9 and size.options.maxValue==22)
+    size.setting:SetValue(18);assert(LL.db.appearance.fontSize==18)
+    local colorButtons,reset=0,nil
+    for _,i in ipairs(layouts['Badges & Colors'].items) do
+        if i.factory=='button' and i.text=='Change color' then colorButtons=colorButtons+1 end
+        if i.factory=='button' and i.text=='Reset colors' then reset=i end
+    end
+    assert(colorButtons==#LL.BadgeColorOrder and reset,'one color button per badge and a reset')
+    LL.db.appearance.colors.A={0,0,0};reset.click();assert(next(LL.db.appearance.colors)==nil)
+    -- Only the what-if profession pages and Ignored Items stay as canvas pages.
+    for _,name in ipairs(canvases) do assert(name~='Badges & Colors' and name~='Database & Accuracy',name..' is still a canvas page') end
+    local accuracy=pages['Database & Accuracy']
+    assert(accuracy and control(accuracy,'LootLiquidator_source_itemdb_enabled'),'Database & Accuracy is native')
+    print('PASS: Badges & Colors and Database & Accuracy are native Settings pages (B8a/B8b)')
     -- B5a/B5b: rate choice on the main page; what-if pages have a new home.
     assert(settings.LootLiquidator_rateProfile and settings.LootLiquidator_rateProfileCharacter,'Show rates for registered')
     assert(LL.db.rateProfileCharacter=='' or LL.db.rateProfileCharacter==nil)

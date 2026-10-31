@@ -20,9 +20,6 @@ function LL:UpdateAllAppearance()
     if self.Invalidate then self:Invalidate() end
     if self.QueueBlizzardBagRefresh then self:QueueBlizzardBagRefresh() end
     if self.RefreshPreviews then self:RefreshPreviews() end
-    if self.badgeSettingsPanel and self.badgeSettingsPanel.RefreshVisibility then
-        self.badgeSettingsPanel:RefreshVisibility()
-    end
     -- Refresh currently visible WoW tooltip only when the host exposes a
     -- supported refresh method; never simulate another item hover.
     if GameTooltip and GameTooltip.IsShown and GameTooltip:IsShown()
@@ -35,14 +32,14 @@ local function Section(layout,title)
         layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(title))
     end
 end
-local function Checkbox(category,key,name,description,default)
+local function Checkbox(category,key,name,description,default,onChange)
     local d=LL.db
     local setting=Settings.RegisterAddOnSetting(category,"LootLiquidator_"..key,key,d,
         "boolean",name,default)
     if setting.SetValueChangedCallback then
-        setting:SetValueChangedCallback(function() LL:UpdateAllAppearance() end)
+        setting:SetValueChangedCallback(onChange or function() LL:UpdateAllAppearance() end)
     end
-    Settings.CreateCheckbox(category,setting,description or "")
+    return Settings.CreateCheckbox(category,setting,description or ""),setting
 end
 local function Dropdown(category,key,title,description,options,default)
     local setting=Settings.RegisterAddOnSetting(category,"LootLiquidator_"..key,
@@ -93,201 +90,96 @@ local function Slider(category,key,title,description,lower,upper,step,default)
     if options.SetLabelFormatter and MinimalSliderWithSteppersMixin then
         options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
     end
-    Settings.CreateSlider(category,setting,options,description or "")
-end
-local function ExplainOnHover(control,title,description)
-    control:SetScript("OnEnter",function(self)
-        if GameTooltip then
-            GameTooltip:SetOwner(self,"ANCHOR_RIGHT")
-            GameTooltip:SetText(title,1,1,1)
-            GameTooltip:AddLine(description,.8,.8,.8,true)
-            GameTooltip:Show()
-        end
-    end)
-    control:SetScript("OnLeave",function() if GameTooltip then GameTooltip:Hide() end end)
+    return Settings.CreateSlider(category,setting,options,description or ""),setting
 end
 local PreviewPanel
-local function AppearancePanel()
-    local panel=CreateFrame("Frame")
-    local function title(str,x,y,object)
-        local fs=panel:CreateFontString(nil,"ARTWORK",object or "GameFontNormal")
-        fs:SetPoint("TOPLEFT",panel,"TOPLEFT",x,y)
-        fs:SetText(str)
-        return fs
+-- B8a: Badges & Colors uses Blizzard's own vertical Settings list (checkboxes,
+-- dropdown, slider, buttons) instead of a hand-placed canvas page. Saved keys
+-- are unchanged: db.showBadges/showBlizzardBags/..., db.appearance.position,
+-- db.appearance.fontSize and db.appearance.colors.
+local POSITION_NAMES={TOPLEFT="Top left",TOP="Top center",TOPRIGHT="Top right",
+    LEFT="Middle left",CENTER="Center",RIGHT="Middle right",
+    BOTTOMLEFT="Bottom left",BOTTOM="Bottom center",BOTTOMRIGHT="Bottom right"}
+local function Appearance()
+    LL.db.appearance=LL.db.appearance or {position="TOPRIGHT",fontSize=14,colors={}}
+    LL.db.appearance.colors=LL.db.appearance.colors or {}
+    return LL.db.appearance
+end
+-- Nested appearance keys go through a proxy so a replaced db.appearance table
+-- can never leave the control writing to a stale table.
+local function AppearanceSetting(category,key,kind,label,default)
+    local setting=Settings.RegisterProxySetting(category,"LootLiquidator_appearance_"..key,kind,label,default,
+        function() local v=Appearance()[key];if v==nil then return default end;return v end,
+        function(v) Appearance()[key]=v end)
+    if setting.SetValueChangedCallback then
+        setting:SetValueChangedCallback(function() LL:UpdateAllAppearance() end)
     end
-    title("One appearance profile for every bag and bank",16,-18,"GameFontHighlight")
-    -- Global badge visibility belongs here; the General page only enables the addon.
-    local badgeToggle=LL:CreateSettingsCheckbox(panel)
-    badgeToggle:SetSize(23,23)
-    badgeToggle:SetPoint("TOPLEFT",panel,"TOPLEFT",20,-42)
-    panel.llVisibilityCheckboxes={showBadges=badgeToggle}
-    local badgeLabel=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
-    badgeLabel:SetPoint("LEFT",badgeToggle,"RIGHT",6,0)
-    badgeLabel:SetText("Show item badges")
-    badgeToggle:SetScript("OnClick",function(self)
-        LL.db.showBadges=self:GetChecked()==true
-        LL:UpdateAllAppearance()
-    end)
-    panel:HookScript("OnShow",function()panel:RefreshVisibility()end)
-    title("Where to show badges",20,-88)
-    -- These checkboxes have moved from General; saved keys and the actual bag
-    -- integrations are unchanged. Use Blizzard's real Settings check boxes.
-    local surfaces={
-        {key="showBlizzardBags",label="Blizzard bags & banks",x=20},
-        {key="showBetterBags",label="BetterBags",x=264},
-        {key="showGuildBank",label="Guild bank",x=424},
-    }
-    function panel:RefreshVisibility()
-        for key,checkbox in pairs(self.llVisibilityCheckboxes) do
-            checkbox:SetChecked(LL.db[key]~=false)
-        end
+    return setting
+end
+function LL:PickBadgeColor(letter)
+    if not ColorPickerFrame or not ColorPickerFrame.SetupColorPickerAndShow then return false end
+    local c=self:GetBadgeColor(letter)
+    local before={c[1],c[2],c[3]}
+    ColorPickerFrame:SetupColorPickerAndShow({
+        r=c[1],g=c[2],b=c[3],hasOpacity=false,
+        swatchFunc=function()
+            local r,g,b=ColorPickerFrame:GetColorRGB()
+            Appearance().colors[letter]={r,g,b};LL:UpdateAllAppearance()
+        end,
+        cancelFunc=function() Appearance().colors[letter]=before;LL:UpdateAllAppearance() end,
+    })
+    return true
+end
+function LL:ResetBadgeColors()
+    Appearance().colors={}
+    self:UpdateAllAppearance()
+end
+LL.BadgeColorOrder=ORDER
+function LL:AddBadgeSettings(category,layout)
+    if Settings.CreatePanelInitializer and layout and layout.AddInitializer then
+        layout:AddInitializer(Settings.CreatePanelInitializer("LootLiquidatorTooltipPreviewTemplate",{}))
     end
-    for _,surface in ipairs(surfaces) do
-        local cb=LL:CreateSettingsCheckbox(panel)
-        panel.llVisibilityCheckboxes[surface.key]=cb
-        cb:SetSize(23,23)
-        cb:SetPoint("TOPLEFT",panel,"TOPLEFT",surface.x,-110)
-        local label=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
-        label:SetPoint("LEFT",cb,"RIGHT",6,0)
-        label:SetText(surface.label)
-        cb:SetChecked(LL.db[surface.key]~=false)
-        cb:SetScript("OnClick",function(self)
-            LL.db[surface.key]=self:GetChecked()==true
+    Section(layout,"Badges")
+    Checkbox(category,"showBadges","Show item badges",
+        "Show the letter badges on item icons. Tooltips are set on the Tooltips page.",true)
+    Checkbox(category,"includeVerifiedAlts","Include alts",
+        "Let badges use your alts' professions and transmog, but only for items you can actually send to that alt (never soulbound or quest items).",true,
+        function()
+            if LL.Invalidate then LL:Invalidate("includeVerifiedAlts") end
             LL:UpdateAllAppearance()
         end)
-        panel:HookScript("OnShow",function()cb:SetChecked(LL.db[surface.key]~=false)end)
+    Checkbox(category,"showUnknownBadge","Show ? badge",
+        "Display only: show or hide the ? badge (not enough data). Recommendations do not change.",true)
+    Checkbox(category,"showSoulboundVendorBadge","Show V on soulbound gear",
+        "Show the Vendor badge on soulbound gear that has no better use.",false)
+    Section(layout,"Where to show badges")
+    Checkbox(category,"showBlizzardBags","Blizzard bags & banks","Bags, bank and Warband bank.",true)
+    Checkbox(category,"showBetterBags","BetterBags","Only used when BetterBags is installed.",true)
+    Checkbox(category,"showGuildBank","Guild bank","Badges in the guild bank window.",true)
+    Section(layout,"Look")
+    local position=AppearanceSetting(category,"position","string","Badge position","TOPRIGHT")
+    self:WithoutDropdownSteppers(Settings.CreateDropdown(category,position,function()
+        local out=Settings.CreateControlTextContainer()
+        for _,pos in ipairs(POSITIONS) do out:Add(pos,POSITION_NAMES[pos]) end
+        return out:GetData()
+    end,"Where the badge sits on the item icon, in every bag."))
+    local size=AppearanceSetting(category,"fontSize","number","Badge font size",14)
+    local sizeOptions=Settings.CreateSliderOptions(9,22,1)
+    if sizeOptions.SetLabelFormatter and MinimalSliderWithSteppersMixin then
+        sizeOptions:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
     end
-    title("Badge position",20,-149)
-    local displayNames={TOPLEFT="Top left",TOP="Top center",TOPRIGHT="Top right",
-        LEFT="Middle left",CENTER="Center",RIGHT="Middle right",
-        BOTTOMLEFT="Bottom left",BOTTOM="Bottom center",BOTTOMRIGHT="Bottom right"}
-    for i,pos in ipairs(POSITIONS) do
-        local btn=LL:CreateSettingsButton(panel)
-        btn:SetSize(118,24)
-        btn:SetPoint("TOPLEFT",20+((i-1)%3)*130,-171-math.floor((i-1)/3)*27)
-        ExplainOnHover(btn,"Badge position","Places the badge at this point on the item icon. Applies to every supported bag interface.")
-        btn:SetText(displayNames[pos])
-        btn:SetScript("OnClick",function()
-            LL.db.appearance.position=pos
-            LL:UpdateAllAppearance()
-            if panel.RefreshPositionButtons then panel:RefreshPositionButtons() end
-        end)
-        panel.llPositionButtons=panel.llPositionButtons or {}
-        panel.llPositionButtons[pos]=btn
-    end
-    function panel:RefreshPositionButtons()
-        for pos,button in pairs(self.llPositionButtons or {}) do
-            if button.SetSelected then
-                button:SetSelected(LL.db.appearance.position == pos)
-            end
+    Settings.CreateSlider(category,size,sizeOptions,"Size of the badge letter (9 to 22), in every bag.")
+    Section(layout,"Colors")
+    if CreateSettingsButtonInitializer and layout and layout.AddInitializer then
+        for _,letter in ipairs(ORDER) do
+            layout:AddInitializer(CreateSettingsButtonInitializer(
+                self:MarkupColor(letter)..letter.."|r  "..NAMES[letter],"Change color",
+                function() LL:PickBadgeColor(letter) end,
+                "Display only: change the color of this badge everywhere. Recommendations do not change.",false))
         end
+        layout:AddInitializer(CreateSettingsButtonInitializer("Default colors","Reset colors",
+            function() LL:ResetBadgeColors() end,"Put every badge color back to the default.",false))
     end
-    panel:HookScript("OnShow",function(self) self:RefreshPositionButtons() end)
-    panel:RefreshPositionButtons()
-    title("Badge font size",20,-254)
-    local slider=LL:CreateSettingsCanvasSlider(panel,9,22,1,
-        LL.db.appearance.fontSize or 14,function(num)
-            if LL.db.appearance.fontSize~=num then
-                LL.db.appearance.fontSize=num
-                LL:UpdateAllAppearance()
-            end
-        end)
-    slider:SetPoint("TOPLEFT",panel,"TOPLEFT",20,-277)
-    ExplainOnHover(slider,"Badge font size","DISPLAY ONLY: The shared badge font size (9 to 22) for every supported bag interface.")
-    ExplainOnHover(slider.slider,"Badge font size","DISPLAY ONLY: The shared badge font size (9 to 22) for every supported bag interface.")
-    panel:HookScript("OnShow",function()
-        slider:SetPreferenceValue(LL.db.appearance.fontSize or 14)
-    end)
-    title("Colors (click to customize each action)",20,-320)
-    for i,letter in ipairs(ORDER) do
-        local row=math.floor((i-1)/2);local col=(i-1)%2
-        local btn=LL:CreateSettingsButton(panel)
-        btn:SetSize(174,26)
-        btn:SetPoint("TOPLEFT",20+col*192,-344-row*31)
-        local function update()
-            local c=LL:GetBadgeColor(letter)
-            btn:SetText(letter.."  "..NAMES[letter])
-            local font=btn:GetFontString()
-            if font then font:SetTextColor(c[1],c[2],c[3]) end
-        end
-        ExplainOnHover(btn,"Badge color: "..NAMES[letter],"DISPLAY ONLY: Change the displayed color of this badge everywhere. Gold recommendations do not change.")
-        btn:SetScript("OnClick",function()
-            if not ColorPickerFrame or not ColorPickerFrame.SetupColorPickerAndShow then return end
-            local c=LL:GetBadgeColor(letter)
-            local before={c[1],c[2],c[3]}
-            ColorPickerFrame:SetupColorPickerAndShow({
-                r=c[1],g=c[2],b=c[3],hasOpacity=false,
-                swatchFunc=function()
-                    local r,g,b=ColorPickerFrame:GetColorRGB()
-                    LL.db.appearance.colors[letter]={r,g,b}
-                    update();LL:UpdateAllAppearance()
-                end,
-                cancelFunc=function()
-                    LL.db.appearance.colors[letter]=before
-                    update();LL:UpdateAllAppearance()
-                end,
-            })
-        end)
-        update()
-    end
-    local hideUnknown=LL:CreateSettingsCheckbox(panel)
-    hideUnknown:SetPoint("TOPLEFT",panel,"TOPLEFT",330,-473)
-    hideUnknown:SetSize(25,25)
-    hideUnknown:SetChecked(LL.db.showUnknownBadge~=false)
-    local unknownLabel=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
-    unknownLabel:SetPoint("LEFT",hideUnknown,"RIGHT",3,0)
-    unknownLabel:SetText("Show ?")
-    ExplainOnHover(hideUnknown,"Show Insufficient Data badge",
-        "Display only: Hide or show '?' without changing item recommendations.")
-    hideUnknown:SetScript("OnClick",function(self)
-        LL.db.showUnknownBadge=self:GetChecked()==true
-        LL:UpdateAllAppearance()
-    end)
-    panel:HookScript("OnShow",function()
-        hideUnknown:SetChecked(LL.db.showUnknownBadge~=false)
-    end)
-    -- Display-only badge policy belongs with badge appearance, not valuation.
-    local soulbound=LL:CreateSettingsCheckbox(panel)
-    soulbound:SetSize(24,24)
-    soulbound:SetPoint("TOPLEFT",panel,"TOPLEFT",20,-473)
-    soulbound:SetChecked(LL.db.showSoulboundVendorBadge==true)
-    local boundLabel=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
-    boundLabel:SetPoint("LEFT",soulbound,"RIGHT",6,0)
-    boundLabel:SetText("Show V on soulbound gear")
-    ExplainOnHover(soulbound,"Bound equipment badges",
-        "Display the Vendor badge on soulbound gear with no better available action.")
-    soulbound:SetScript("OnClick",function(self)
-        LL.db.showSoulboundVendorBadge=self:GetChecked()==true
-        LL:UpdateAllAppearance()
-    end)
-    panel:HookScript("OnShow",function()
-        soulbound:SetChecked(LL.db.showSoulboundVendorBadge==true)
-    end)
-    -- B4: one switch for counting alts in badges. The transfer rule
-    -- (CanTransferToAlt) still decides which items can actually go to an alt.
-    local alts=LL:CreateSettingsCheckbox(panel)
-    panel.llIncludeAltsCheckbox=alts
-    alts:SetSize(24,24)
-    alts:SetPoint("TOPLEFT",panel,"TOPLEFT",264,-473)
-    alts:SetChecked(LL.db.includeVerifiedAlts~=false)
-    local altsLabel=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
-    altsLabel:SetPoint("LEFT",alts,"RIGHT",6,0)
-    altsLabel:SetText("Include alts")
-    ExplainOnHover(alts,"Include alts",
-        "Let badges use your alts' professions and transmog, but only for items you can actually send to that alt (never soulbound or quest items).")
-    alts:SetScript("OnClick",function(self)
-        LL.db.includeVerifiedAlts=self:GetChecked()==true
-        if LL.Invalidate then LL:Invalidate("includeVerifiedAlts") end
-        LL:UpdateAllAppearance()
-    end)
-    panel:HookScript("OnShow",function()
-        alts:SetChecked(LL.db.includeVerifiedAlts~=false)
-    end)
-    local preview=PreviewPanel()
-    preview:SetParent(panel)
-    preview:SetPoint("TOPLEFT",panel,"TOPLEFT",0,-510)
-    preview:SetSize(560,82)
-    return panel
 end
 
 -- Shared illustration uses the same LA:Paint and AppendRecommendationTooltip as
@@ -437,56 +329,52 @@ function LootLiquidator_InitTooltipPreview(panel)
     panel.llPreview=preview
 end
 
--- Shared compact source rows use the same native Settings canvas controls as
--- the roster. Preferences are separate from TSM's market-price selection.
-function LL:CreateEvidenceSettingsPanel(category)
-    local panel=CreateFrame("Frame")
-    local rows={}
-    local labels={itemdb="itemdb.lua research database",personal="Personal observations",
-        imported="Imported results",legacy="Legacy fallback estimates"}
-    local descriptions={itemdb="Compiled research, including provisional records; unknown fields remain unknown.",
-        personal="Your recorded completed operations. Personal-only modes exclude all external evidence.",
-        imported="Results pasted in from other players (Processing Research > Import). Kept separate from your own.",
-        legacy="Optional historical scenarios. Never treated as verified skill coefficients."}
-    for index,key in ipairs(LL.SourceOrder) do
-        local source=key
+-- B8b: Database & Accuracy uses Blizzard's own vertical Settings list: one
+-- switch per evidence source with its weight slider underneath. Saved keys are
+-- unchanged (source_<name>_enabled / source_<name>_weight).
+local SOURCE_LABELS={itemdb="Built-in research database",personal="Your recorded results",
+    imported="Imported results",legacy="Old disenchant estimates"}
+local SOURCE_DESCRIPTIONS={itemdb="The addon's own research database, including rough estimates (shown with lower confidence).",
+    personal="Results you recorded yourself. They take over as you record more.",
+    imported="Results pasted in from other players (Processing Research > Import). Kept separate from your own.",
+    legacy="Older disenchant tables. Counted weakly; never treated as exact."}
+function LL:AddEvidenceSettings(category,layout)
+    Section(layout,"Where numbers come from")
+    local function changed()
+        if LL.Invalidate then LL:Invalidate("evidence") end
+        LL:UpdateAllAppearance()
+    end
+    for _,source in ipairs(LL.SourceOrder) do
         local d=LL.SourceDefaults[source]
         local enabledKey,weightKey="source_"..source.."_enabled","source_"..source.."_weight"
-        local checked=Settings.RegisterAddOnSetting(category,"LootLiquidator_"..enabledKey,enabledKey,LL.db,"boolean",labels[source],d[1])
-        local weighted=Settings.RegisterAddOnSetting(category,"LootLiquidator_"..weightKey,weightKey,LL.db,"number",labels[source].." weight",d[2])
-        local check=LL:CreateSettingsCheckbox(panel)
-        check:SetPoint("TOPLEFT",panel,"TOPLEFT",12,-30-(index-1)*78)
-        local text=panel:CreateFontString(nil,"ARTWORK","GameFontHighlight")
-        text:SetPoint("LEFT",check,"RIGHT",6,0);text:SetWidth(230);text:SetJustifyH("LEFT");text:SetText(labels[source])
-        local slider=LL:CreateSettingsCanvasSlider(panel,0,100,1,LL.db[weightKey],function(value)
-            if LL.db[weightKey]~=value then weighted:SetValue(value) end
-        end)
-        slider:SetPoint("TOPLEFT",panel,"TOPLEFT",285,-26-(index-1)*78)
-        check:SetScript("OnClick",function(self) checked:SetValue(self:GetChecked()) end)
-        local function refresh()
-            check:SetChecked(LL.db[enabledKey]);slider:SetPreferenceValue(LL.db[weightKey])
+        local label=SOURCE_LABELS[source] or source
+        local checkInit=Checkbox(category,enabledKey,label,SOURCE_DESCRIPTIONS[source],d[1],changed)
+        local slider=Settings.RegisterAddOnSetting(category,"LootLiquidator_"..weightKey,weightKey,
+            LL.db,"number",label.." weight",d[2])
+        if slider.SetValueChangedCallback then slider:SetValueChangedCallback(changed) end
+        local options=Settings.CreateSliderOptions(0,100,1)
+        if options.SetLabelFormatter and MinimalSliderWithSteppersMixin then
+            options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
         end
-        for _,setting in ipairs({checked,weighted}) do
-            setting:SetValueChangedCallback(function()
-                if LL.Invalidate then LL:Invalidate("evidence") end
-                refresh()
-            end)
+        local sliderInit=Settings.CreateSlider(category,slider,options,
+            "How much this source counts compared with the others (0 to 100). This is not a confidence score.")
+        if sliderInit and sliderInit.SetParentInitializer and checkInit then
+            sliderInit:SetParentInitializer(checkInit,function() return LL.db[enabledKey]~=false end)
         end
-        local note=panel:CreateFontString(nil,"ARTWORK","GameFontHighlightSmall")
-        note:SetPoint("TOPLEFT",panel,"TOPLEFT",40,-58-(index-1)*78)
-        note:SetWidth(550);note:SetJustifyH("LEFT");note:SetText(descriptions[source])
-        rows[#rows+1]=refresh
     end
-    local reset=LL:CreateSettingsButton(panel)
-    reset:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-360);reset:SetSize(230,26);reset:SetText("Reset source weights")
-    reset:SetScript("OnClick",function()
-        for source,d in pairs(LL.SourceDefaults) do
-            Settings.GetSetting("LootLiquidator_source_"..source.."_enabled"):SetValue(d[1])
-            Settings.GetSetting("LootLiquidator_source_"..source.."_weight"):SetValue(d[2])
-        end
-    end)
-    panel:SetScript("OnShow",function() for _,refresh in ipairs(rows) do refresh() end end)
-    return panel
+    if CreateSettingsButtonInitializer and layout and layout.AddInitializer then
+        layout:AddInitializer(CreateSettingsButtonInitializer("Reset source weights","Reset",
+            function() LL:ResetEvidenceSettings() end,"Turn every source back on with its default weight.",false))
+    end
+end
+function LL:ResetEvidenceSettings()
+    for source,d in pairs(LL.SourceDefaults) do
+        local on=Settings.GetSetting and Settings.GetSetting("LootLiquidator_source_"..source.."_enabled")
+        local weight=Settings.GetSetting and Settings.GetSetting("LootLiquidator_source_"..source.."_weight")
+        if on then on:SetValue(d[1]) else LL.db["source_"..source.."_enabled"]=d[1] end
+        if weight then weight:SetValue(d[2]) else LL.db["source_"..source.."_weight"]=d[2] end
+    end
+    if LL.Invalidate then LL:Invalidate("evidence") end
 end
 function LL:CreateProfessionProfilePanel(profession)
     local panel=CreateFrame("Frame")
@@ -750,41 +638,10 @@ function LL:RegisterNativeSettings()
     self:AddRateProfileSettings(general,generalLayout)
     Section(generalLayout,"Use the pages on the left for badge appearance, tooltips, pricing, and addon integrations.")
 
-    local appearancePanel=AppearancePanel()
-    local appearance=Settings.RegisterCanvasLayoutSubcategory(general,appearancePanel,"Badges & Colors")
+    -- B8a: native vertical page (was a hand-placed canvas).
+    local appearance,appearanceLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Badges & Colors")
     Settings.RegisterAddOnCategory(appearance)
-    self.badgeSettingsPanel=appearancePanel
-    -- Register the moved canvas controls for WoW's Defaults button and
-    -- SavedVariables metadata WITHOUT creating a duplicate visible checkbox.
-    -- Default/reset callbacks refresh the same native canvas checkboxes.
-    for _,row in ipairs({
-        {"showBadges","Show item badges"},
-        {"showBlizzardBags","Blizzard bags and banks"},
-        {"showBetterBags","BetterBags"},
-        {"showGuildBank","Guild bank"},
-    }) do
-        local setting=Settings.RegisterAddOnSetting(appearance,
-            "LootLiquidator_"..row[1],row[1],self.db,"boolean",row[2],true)
-        if setting.SetValueChangedCallback then
-            setting:SetValueChangedCallback(function()self:UpdateAllAppearance()end)
-        end
-    end
-
-    local soulboundSetting=Settings.RegisterAddOnSetting(appearance,
-        "LootLiquidator_showSoulboundVendorBadge","showSoulboundVendorBadge",
-        self.db,"boolean","Show V on soulbound gear",false)
-    if soulboundSetting.SetValueChangedCallback then
-        soulboundSetting:SetValueChangedCallback(function() self:UpdateAllAppearance() end)
-    end
-    local altsSetting=Settings.RegisterAddOnSetting(appearance,
-        "LootLiquidator_includeVerifiedAlts","includeVerifiedAlts",
-        self.db,"boolean","Include alts",true)
-    if altsSetting.SetValueChangedCallback then
-        altsSetting:SetValueChangedCallback(function()
-            if self.Invalidate then self:Invalidate("includeVerifiedAlts") end
-            self:UpdateAllAppearance()
-        end)
-    end
+    self:AddBadgeSettings(appearance,appearanceLayout)
 
     local tooltips,ttLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Tooltips")
     Settings.RegisterAddOnCategory(tooltips)
@@ -837,11 +694,10 @@ function LL:RegisterNativeSettings()
             Settings.RegisterAddOnCategory(page)
         end
     end
-    local accuracyPanel=CreateFrame("Frame")
-    local accuracy=Settings.RegisterCanvasLayoutSubcategory(general,accuracyPanel,"Database & Accuracy")
+    -- B8b: native vertical page (was a hand-placed canvas).
+    local accuracy,accuracyLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Database & Accuracy")
     Settings.RegisterAddOnCategory(accuracy)
-    local sources=self:CreateEvidenceSettingsPanel(accuracy)
-    sources:SetParent(accuracyPanel);sources:SetAllPoints(accuracyPanel)
+    self:AddEvidenceSettings(accuracy,accuracyLayout)
     local modes,modeLayout=Settings.RegisterVerticalLayoutSubcategory(accuracy,"Observation policy")
     Settings.RegisterAddOnCategory(modes)
     for _,record in ipairs({{"Disenchanting","disenchantDataMode"},{"Milling","millingDataMode"},
