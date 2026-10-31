@@ -89,6 +89,14 @@ jobs:
         # detecting the known defect is NOT independent model acceptance.
         continue-on-error: true
         run: node research/tools/working_native_df_prismatic_identity_preflight.js
+      - name: F002 DF frontier 21-case native negative-QA self-test
+        run: node research/tools/working_native_df_frontier_array_preflight.js --self-test
+      - name: Research-only F005 DF frontier array snapshot negative QA (informational)
+        # Two known dynamic-length defects remain F003-owned. Source-pinned
+        # replay is not acceptance; any new failure or source change fails closed.
+        # No working/evidence/economic promotion from this diagnostic.
+        continue-on-error: true
+        run: node research/tools/working_native_df_frontier_array_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: F002 exact gap-to-priority identity and preview coverage contract
         # Mandatory compiler-output consistency only. This does not validate
