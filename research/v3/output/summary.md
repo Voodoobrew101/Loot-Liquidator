@@ -1,15 +1,15 @@
 # ItemDB estimates (first draft, generated)
 
 Built by `research/v3/tools/build_estimates.py` from 2,190 evidence records.
-957 input/material estimates; 293 records could not be placed yet (no item ID or name match).
-14 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
+1,048 input/material estimates; 58 records could not be placed yet (no item ID or name match).
+15 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
 
 | Confidence | Estimates |
 | --- | --- |
 | 90% or more | 16 |
 | 75-89% | 4 |
-| 50-74% | 190 |
-| under 50% | 733 |
+| 50-74% | 215 |
+| under 50% | 798 |
 
 Confidence = chance the true drop chance is within +/-5 points of the number shown.
 

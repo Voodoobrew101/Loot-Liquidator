@@ -128,6 +128,8 @@ def load_conditions(rows):
             continue
         ids = set(str(i) for i in c["inputItemIDs"]) if c.get("inputItemIDs") else None
         out.setdefault((c["method"], int(c["outputItemID"])), []).append((ids, c.get("requires")))
+        if c.get("outputName"):
+            out.setdefault((c["method"], "family:" + c["outputName"].strip()), []).append((None, c.get("requires")))
     return out
 
 
@@ -149,15 +151,21 @@ def name_maps(rows):
 
 
 def key_of(r, names):
+    """(method, input, output). Records whose item ID (rank) is unknown are kept at family
+    level ("family:<name>") instead of being dropped, so no study goes unused."""
     if r.get("gearGroup"):
         g = r["gearGroup"]
         inp = f"gear:{g.get('expansion')}:{g.get('quality')}:{g.get('kind')}"
     else:
         inp = r.get("inputItemID") or names.get((r.get("inputName") or "").strip().lower())
+        if not inp and r.get("inputName"):
+            inp = "family:" + r["inputName"].strip()
     out = r.get("outputItemID") or names.get((r.get("outputName") or "").strip().lower())
+    if not out and r.get("outputName"):
+        out = "family:" + r["outputName"].strip()
     if not inp or not out or not r.get("method"):
         return None
-    return (r["method"], str(inp), int(out))
+    return (r["method"], str(inp), out if isinstance(out, str) else int(out))
 
 
 def per_cast_average(r):
@@ -293,7 +301,7 @@ def build(rows):
         (g["refs"] if r.get("sourceKind") in REFERENCE_KINDS else g["studies"]).append(r)
 
     results = []
-    for (method, inp, out), g in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2])):
+    for (method, inp, out), g in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], str(kv[0][2]))):
         import math
         req = condition_for(conds, method, inp, out)
         observed = [g.get("slo"), g.get("shi")] if g.get("slo") is not None or g.get("shi") is not None else None
