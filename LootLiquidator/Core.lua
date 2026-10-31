@@ -573,23 +573,25 @@ function LA:Evaluate(link, context)
         -- The lower-rank-only result is NOT a measured minimum. If a priced
         -- higher-rank outcome could reverse the vendor decision, admit that
         -- our unverified quality distribution prevents a reliable answer.
+        -- Owner decision (A4): "?" only when NO option has any estimate.
+        -- An uncertain higher-rank disenchant result is a note on the best
+        -- known option, not a reason to withhold an answer.
         local possible = f.disenchantEstimate
         local higherValue = possible and possible.higherValue
         local deUncertain = hasAvailableDE and higherValue and higherValue > vendor
             and (higherValue-vendor)*f.count > (self.db.minConversionExtraGold or 5) * COPPER_PER_GOLD
             and convertedValue <= vendor + (self.db.minConversionExtraGold or 5) * COPPER_PER_GOLD / f.count
+        local deNote = (not Ignored(self,f.id,"D") and self:EligibleDisenchant(f)
+            and f.currentCanDisenchant and f.disenchantIssue) and ("; Disenchant: " .. f.disenchantIssue)
+            or (deUncertain and "; Disenchant might beat it (higher-rank yield uncertain)") or ""
         if conversion and convertedValue > vendor
             and (convertedValue - vendor) * f.count > (self.db.minConversionExtraGold or 5) * COPPER_PER_GOLD then
             action, reason = methodLetter[conversion.name] or "C", "Estimated conversion beats vendoring"
-        elseif deUncertain then
-            action, reason = "Q", "Disenchant may beat vendoring, but material quality/yield probabilities are unknown"
         elseif vendor > 0 and hasAlternative then
-            -- Meaningful V: another verified, priced liquidation METHOD exists,
+            -- Meaningful V: another priced liquidation METHOD exists,
             -- but vendoring wins based on our available estimates. Do not mark
             -- vendor-only soulbound items that cannot be disenchanted.
-            action, reason = "V", "Vendor estimate beats other available conversion methods"
-        elseif not Ignored(self,f.id,"D") and self:EligibleDisenchant(f) and f.currentCanDisenchant and f.disenchantIssue then
-            action, reason = "Q", "Disenchant: " .. f.disenchantIssue
+            action, reason = "V", "Vendor estimate beats other available conversion methods" .. deNote
         elseif isToken then
             action, reason = "Q", "ATT equipment token: possible rewards; quantities and chances unverified"
         elseif not canAuction then
@@ -600,15 +602,40 @@ function LA:Evaluate(link, context)
                 action, reason = "V", vendorOptIn
                     and "Vendor is the best remaining method (Disenchant ignored for this item)"
                     or "Vendor-only bound item (badge explicitly enabled)"
+            elseif vendor <= 0 and convertedValue <= 0 and deNote ~= "" and f.disenchantIssue then
+                -- Bound, disenchantable, but nothing at all is priced.
+                action, reason = "Q", "Disenchant: " .. f.disenchantIssue
             else
                 action, reason = nil, nil
             end
-        elseif not ask and (not blocked or blocked == "No TSM price") then
-            action, reason = "Q", "Insufficient Data - missing TSM auction valuation"
         elseif vendor > 0 then
-            action, reason = "V", blocked or "Vendor is the dependable fallback"
+            action, reason = "V", (blocked and (blocked .. "; vendor is the best known option")
+                or (not ask and "No TSM auction price; vendor is the best known option")
+                or "Vendor is the dependable fallback") .. deNote
         else
-            action, reason = "Q", blocked or "Insufficient Data - cannot verify a worthwhile action"
+            -- Nothing clears the profit thresholds. Pick the best option that
+            -- has ANY estimate rather than answering "?".
+            local bestLetter, bestValue, bestWhy
+            if ask and safeGross > 0 then
+                bestLetter, bestValue, bestWhy = "A", safeGross, "Auction House is the only priced option"
+            end
+            if conversion and convertedValue > 0 and convertedValue > (bestValue or 0) then
+                bestLetter, bestValue, bestWhy = methodLetter[conversion.name] or "C", convertedValue,
+                    "Best available estimate (below your profit threshold)"
+            end
+            if not bestLetter and blocked and not Ignored(self,f.id,"A") then
+                local market = self:Price("dbmarket",f.tsmString) or self:Price("dbminbuyout",f.tsmString)
+                    or self:Price("dbregionsaleavg",f.tsmString)
+                if market and market > 0 then
+                    bestLetter, bestWhy = "A", blocked .. "; TSM market price is the only estimate"
+                end
+            end
+            if bestLetter then
+                action, reason = bestLetter, bestWhy .. deNote
+            else
+                action, reason = "Q", (blocked and (blocked .. "; ") or "")
+                    .. "Insufficient Data - no option has any estimate" .. deNote
+            end
         end
     end
     if action and Ignored(self,f.id, action == "Q" and "P" or action) then
