@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "role": "coordinator",
-  "taskID": "F001_F005_FRONTIER_ARRAY_CROSSPOST_GAP_GATE",
+  "taskID": "F001_F005_TWW_SNAPSHOT_HISTORICAL_COHORT_TRIAGE",
   "queueRevision": 30,
-  "sourceCommit": "519d04b66c445fd2b8814cdb38752b7397ad389a",
+  "sourceCommit": "e655f0c9fc6c1ff833eb747fb8c4c7a8c3394fcb",
   "canonicalReadiness": "research/coordination/completion-readiness.json",
   "canonicalPriorities": "research/coordination/completion-priorities.json",
   "candidateHash": "560b885a0039045419c340716e263ae33ddf827a",
@@ -29,7 +29,7 @@
     "confidenceOfImputedFields": 0,
     "economicUse": "PREVIEW_ONLY",
     "normalizedVerified": false,
-    "status": "COMPLETE_1018_4072_PREVIEW_ONLY_FRONTIER_REJECTED_8_OF_27_NO_ECONOMIC_PROMOTION",
+    "status": "COMPLETE_1018_4072_PREVIEW_ONLY_TWW_V101_REJECTED_NO_ECONOMIC_PROMOTION",
     "imputedFieldCounts": {
       "dropChance": 995,
       "yieldMin": 105,
@@ -41,7 +41,7 @@
     "knownUnsupportedCopiedConfidenceRows": 0,
     "knownUnsupportedCopiedConfidenceFields": 0,
     "unsupportedFallbackConfidenceRequired": 0,
-    "scope": "1018 admitted mappings/4072 preview numeric fields remain complete. F002 native emitted-Lua run 41104969064 passed informational source-pinned 18320 assertions and 12 mutants; F003 TWW milling accounting model has 5 independent context/numeric failures; all working fallbacks remain confidence 0 PREVIEW_ONLY normalizedVerified false."
+    "scope": "Canonical 1018/4072 working numeric preview unchanged. F005 rejects TWW milling v1.0.1 for immutable-snapshot and context/cap/provenance defects; no accepted E, economic or confidence promotions."
   },
   "evidenceNumericCompleteness": {
     "present": 3558,
@@ -75,25 +75,26 @@
     "workingFallbacksEligible": 0
   },
   "pendingReviews": [
+    "BLOCKING NEW: TWW milling v1.0.1 exact source SHA 5d90046b... fails F005 independent static/isolated V8 integrity QA: 8 defects (4 prior, 4 additional), 3 unsafe reproductions; original 37 and new 15 native full-source suites not run. F003 repair required.",
+    "CONDITIONAL NEW: F002 priority triage gate SHA b883f9f... reconciles 514 gaps/217 priorities and rejects 19 mutants in V8; native Node24 and independent F005 acceptance pending.",
+    "HISTORICAL CONTEXT ONLY NEW: 3 F004 original cohort leads (R3 Serevite 11500/16 diamonds, R3 Draconium 5000/~40 Prismatic Ore, unknown ore 2000/0 diamonds). No completed casts, refunds, held-out current Retail validation or verified independent archive ancestry.",
     "BLOCKING: F003 DF frontier dynamic Proxy array length 1->0 and 2->1 after dense() allows dropping selected outputs; new F005 21-case full suite not run native. Earlier eight defects were source-level repaired, but frontier still REJECTED.",
     "CONDITIONAL: Prismatic Ore second-stage 194545 model/manifest identity corrected; original 192880 historical report retained, 43-case independent native suite and F002 source-pin update pending.",
     "CONDITIONAL ACCEPT: F002 514-gap/217-priority exact identity gate native Node24 CI 41143357976 PASS, 13 adversarial mutations rejected, blank reason valid unknown; independent F005 acceptance pending.",
     "ACCEPT HISTORICAL CONTEXT ONLY: three comment leads; Jan 9/10 54137 R2 Serevite and 10827 reported prospects with 38 R2/23 R3 diamonds is ONE crosspost lineage; two-ore discrepancy unresolved; no independently verified author, actual casts or current Retail E.",
-    "BLOCKING: TWW milling 5 and Gem Finding 14 context defects, 3 DF identity replacements and fish 200061 rank eligibility, 116 evidence E gaps and zero independent current Retail holdouts.",
     "INFORMATIONAL: latest branch-head CI 41146150899 PASS but did not execute new F005 full frontier/crosspost suites; stale Prismatic source-pin step continue-on-error cannot count as repaired model acceptance."
   ],
   "checksExecuted": [
-    "26/26 coordinator canonical arithmetic/source-pin/lineage/safety checks",
-    "F002 native Node24 13 adversarial mutations and 514-gap/217-priority exact contract PASS (CI 41143357976)",
-    "F005 9 source static and 3000 synthetic BigInt checks; extracted Node v22.16.0 reproduced 2 dynamic array-length failures",
-    "F005 crosspost 26 V8 checks PASS, 10 adversarial mutations rejected; full suite not native",
-    "Latest existing branch CI 41146150899 PASS (informational source-pin mismatch remains)"
+    "47/47 coordinator V8 arithmetic/source-pin/lineage/priority-order/safety checks (new run)",
+    "F005 14 static exact-source checks and 3 isolated V8 unsafe reproductions (agent-reported; full module native NOT run)",
+    "F002 19 adversarial mutants and 514-gap/217-priority reconciliation V8 (agent-reported; new gate native NOT run)"
   ],
   "checksUnavailable": [
     "Coordinator native Node/Lua",
-    "New 21-case frontier and 26-case crosspost full-source native suites",
-    "Corrected Prismatic 43-case strict native suite",
-    "Current Retail cast holdout"
+    "F003 TWW milling original 37 + new 15 full-source native suites",
+    "F002 tightened priority gate native + independent F005 acceptance",
+    "Current Retail completed-cast held-out family",
+    "Full immutable historical source archive dedup"
   ],
   "newCellsThisCycle": 0,
   "newEThisCycle": 0,
@@ -102,9 +103,9 @@
   "sourceMemoryChanged": false,
   "legacyQueueChanged": false,
   "productionWrites": 0,
-  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T2356Z-F001-F005-frontier-array-crosspost-and-gap-gate.json",
-  "decision": "GAP_GATE_CONDITIONAL_ACCEPT_HISTORICAL_CROSSPOST_ACCEPT_FRONTIER_REJECT",
-  "nextTask": "F003_FRONTIER_DYNAMIC_ARRAY_LENGTH_REPAIR",
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261031T0100Z-F001-F005-TWW-SNAPSHOT-HISTORICAL-COHORT-AND-TRIAGE-GATE.json",
+  "decision": "TWW_MODEL_REJECTED_TRIAGE_GATE_CONDITIONAL_HISTORICAL_CONTEXT_ONLY",
+  "nextTask": "F003_TWW_MILL_IMMUTABLE_SNAPSHOT_V102",
   "priorityRecords": 217,
   "independentValidator": {
     "status": "F003_V8_72_SELF_18_PAIR_26_MAR31_12_ARRAY_F004_TWW_31_ALL_PASS_NATIVE_PENDING",
@@ -229,24 +230,19 @@
       "verdict": "FAIL_CONTEXT_ATTESTATION_EMITTED_LUA_V8_PASS_CONDITIONAL"
     },
     "latestTWWMillingAccounting": {
-      "verdict": "FAIL_MODEL_REPAIR_REQUIRED",
-      "reviewBlob": "eea3a0140b78e252f85d5c0f32914118b79d2962",
-      "testBlob": "1dc22afeed2eefafd845979fafa15cbb59c15708",
-      "modelBlob": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a",
-      "manifestBlob": "758b38f4a42b5becd353ca5e17fb920000f7355c",
-      "independentV8Passed": 32,
-      "independentV8Failed": 5,
-      "independentV8Total": 37,
-      "modelSelfTestPassed": 20425,
-      "nativeNodeExecuted": false,
-      "actualCurrentRetailCasts": 0,
-      "defectIDs": [
-        "F005-TWW-MILL-01",
-        "F005-TWW-MILL-02",
-        "F005-TWW-MILL-03",
-        "F005-TWW-MILL-04",
-        "F005-TWW-MILL-05"
-      ],
+      "verdict": "FAIL_MODEL_INTEGRATION_PENDING_REPAIR",
+      "modelBlob": "5d90046b15046fb210523c34363c66596b962d3d",
+      "manifestBlob": "b8d6218f3515f7b3c1f9c32906d8225dba37013d",
+      "reviewBlob": "d2432e177ba352d00c5e41466e8e64410316bdd6",
+      "newTestBlob": "94ea3a1586e986d52d47394745181e8bab3f478e",
+      "previousIndependentSuiteCases": 37,
+      "newAuthoredCases": 15,
+      "newFullSourceNativeExecuted": false,
+      "staticSourceChecks": 14,
+      "isolatedUnsafeReproductions": 3,
+      "unresolvedDefects": 8,
+      "newlyIdentifiedDefects": 4,
+      "currentRetailHoldouts": 0,
       "economicPromotions": 0
     },
     "latestDfMillingFixedN": {
@@ -864,5 +860,22 @@
     "adversarialMutantsRejected": 13,
     "independentF005Accepted": false,
     "verdict": "CONDITIONAL_ACCEPT_NATIVE_GREEN"
+  },
+  "latestF002PriorityGate": {
+    "sourceBlob": "b883f9f2d98b3aaccbc57b1c8a303b88c4b98d42",
+    "status": "CONDITIONAL_PENDING_INDEPENDENT_F005_NATIVE",
+    "v8MutantsRejected": 19,
+    "gapFieldsReconciled": 514,
+    "priorityRecordsReconciled": 217,
+    "nativeNewGateExecuted": false
+  },
+  "latestF004HistoricalCohorts": {
+    "evidenceBlob": "ae4e5ae0f1e6de771f02f410fb90d14c35afd22a",
+    "sourceReviewBlob": "045616b39cfcd17ad8f8dcfa8423f19b8c280673",
+    "proposedOriginalCohortLeads": 3,
+    "confirmedIndependentLineages": 0,
+    "actualCompletedCastLogs": 0,
+    "currentRetailHoldouts": 0,
+    "acceptedEconomicFields": 0
   }
 }
