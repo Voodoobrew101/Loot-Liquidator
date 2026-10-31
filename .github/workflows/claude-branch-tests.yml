@@ -1,0 +1,30 @@
+# D2: run the full test suite on every push to Claude's working branch.
+# Uses the same lupa-based lua5.1 wrapper as the Claude sandbox (tools/lua51-shim/),
+# so a green check here means the same thing as "automated tests pass" in claude/HANDOFF.md.
+name: Claude branch tests
+on:
+  push:
+    branches: [LootLiquidatorclaude-V0.1]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install lupa (embedded Lua 5.1)
+        run: pip install lupa
+      - name: Run tests/run.sh with the lua5.1 wrapper
+        run: |
+          chmod +x tools/lua51-shim/*
+          PATH="$PWD/tools/lua51-shim:$PATH" bash tests/run.sh
+      - name: Build test addon ZIP
+        run: python3 tools/package_addon.py dist/LootLiquidator-test.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LootLiquidator-claude-branch
+          path: dist/LootLiquidator-test.zip
