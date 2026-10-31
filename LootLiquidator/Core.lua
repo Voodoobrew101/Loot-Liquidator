@@ -14,22 +14,21 @@ local defaults = {
     -- External integrations are opt-in to their own runtime dependencies.
     -- Tooltip visibility toggles never change the underlying calculations.
     enableTSMIntegration = true, enableATTIntegration = true,
-    showTSMIntegrationDetails = true, showATTTooltipDetails = true, showATTTokenSummary = true,
+    showTSMIntegrationDetails = true, showATTTooltipDetails = true,
     showATTTokenDEQuotes = true,
-    showTooltips = true, showBetterBags = true, showGuildBank = true, showBlizzardBags = true,
-    showBadges = true, showFallback = true, showProfessionHints = false,
+    showBetterBags = true, showGuildBank = true, showBlizzardBags = true,
+    showBadges = true,
     processingModes = {}, -- T/D/M/P/S/C/R/X: 1 Force on, 2 Auto, 3 Off, 4 Manual
-    showAltHints = false, showSkillDetails = false, showUnknownBadge = true,
-    showDisenchantStatus = false,
+    showSkillDetails = false, showUnknownBadge = true,
     showSoulboundVendorBadge = false,
     recordDisenchants = true, showDisenchantSamples = true,
     recordConversions = true, showProcessingSamples = true,
-    showMaterialBreakdown = true, showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
+    showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,
     otherConversionDataMode = 1, minPersonalSamples = 30,
-    tooltipDetail = 2, tooltipHeaderPrice = true, tooltipAuction = true, tooltipVendor = true,
+    -- B3: one tooltip level: 0 Off, 1 Recommendation, 2 Alternatives, 3 Breakdown.
+    tooltipDetail = 2, tooltipHeaderPrice = true,
     tooltipShowAfterAHCut = true,
-    showUnavailableConversions = true,
     manualMilling=false,manualProspecting=false,
     manualSmelting=false,manualDisenchanting=false,
     enableLearnedRecipeDiscovery = true, includeVerifiedAlts = true,
@@ -961,10 +960,16 @@ local RETIRED_SETTINGS = {
     "methodEnabledD","methodEnabledM","methodEnabledP","methodEnabledS",
     "methodEnabledC","methodEnabledR","methodEnabledX",
     "allowEnchantingAlt","allowMilling","allowProspecting","allowSmelting","allowExchanges",
+    -- B3: folded into the tooltip level (tooltipDetail).
+    "showTooltips","tooltipAuction","tooltipVendor","showMaterialBreakdown",
+    "showUnavailableConversions","showFallback","showATTTokenSummary",
+    "showProfessionHints","showAltHints","showDisenchantStatus",
 }
 LA.RetiredSettings = RETIRED_SETTINGS
 function LA:RemoveRetiredSettings(db)
     if type(db) ~= "table" then return end
+    -- B3: the old "Show Loot Liquidator tooltips" box becomes the Off level.
+    if db.showTooltips == false then db.tooltipDetail = 0 end
     for _, key in ipairs(RETIRED_SETTINGS) do db[key] = nil end
 end
 

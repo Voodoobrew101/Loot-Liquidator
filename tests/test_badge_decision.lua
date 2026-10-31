@@ -109,3 +109,36 @@ SlashCmdList.LOOTLIQUIDATOR('help');print=realPrint
 local help=table.concat(said,'\n')
 assert(#said>0 and not help:find('milling on',1,true) and not help:find('exchanges on',1,true),'help no longer lists dead toggles')
 print('PASS: retired settings removed with a saved-data migration (B1)')
+
+-- B3: one tooltip level: 0 Off, 1 Recommendation, 2 Alternatives, 3 Breakdown.
+LL.db.tooltipHeaderPrice=true
+local function lines(level)
+    LL.db.tooltipDetail=level
+    local tip={lines={}}
+    function tip:AddLine(t) self.lines[#self.lines+1]=t end
+    function tip:AddDoubleLine(l,r) self.lines[#self.lines+1]=l..' '..r end
+    local model={inputCount=5,valueConfidence=48,materials={{id=900,chance=.5,minQuantity=1,maxQuantity=2,
+        expectedQuantity=.75,netExpectedValue=5000}}}
+    LL:AppendRecommendationTooltip(tip,{action='P',method='Prospect',converted=27200,vendor=1500,
+        rawAuction=66500,netAuction=63175,count=1,facts={id=1,classID=7},
+        conversionOptions={{name='Prospect',letter='P',value=27200,available=true,yieldModel=model}}})
+    return table.concat(tip.lines,'\n'),#tip.lines
+end
+local text,n=lines(0)
+assert(n==0,'Off adds no tooltip lines')
+text,n=lines(1)
+assert(n==1 and text:find('Loot Liquidator:',1,true),'Recommendation is one line: '..text)
+text=lines(2)
+assert(text:find('Auction',1,true) and text:find('Vendor',1,true) and text:find('Prospecting (Confidence 48%)',1,true),
+    'Alternatives shows every option: '..text)
+assert(not text:find('[x1-2]',1,true),'Alternatives hides the material breakdown')
+text=lines(3)
+assert(text:find('[x1-2]',1,true),'Breakdown shows materials: '..text)
+-- Old "Show Loot Liquidator tooltips" off becomes the Off level; folded boxes are dropped.
+local saved={showTooltips=false,tooltipDetail=3,tooltipAuction=false,showMaterialBreakdown=false,showFallback=false}
+LL:RemoveRetiredSettings(saved)
+assert(saved.tooltipDetail==0 and saved.showTooltips==nil and saved.tooltipAuction==nil and saved.showMaterialBreakdown==nil,
+    'tooltip settings migrate to the level')
+saved={showTooltips=true,tooltipDetail=3};LL:RemoveRetiredSettings(saved)
+assert(saved.tooltipDetail==3,'level kept when tooltips were on')
+print('PASS: tooltip levels Off/Recommendation/Alternatives/Breakdown (B3)')

@@ -374,12 +374,13 @@ end
 -- calculated decisions. Elsewhere we fail closed for unverified gear binding.
 -- One renderer for in-game tooltips and the live settings preview.
 function LA:AppendRecommendationTooltip(tooltip,decision)
-    if not LA.db or not LA.db.showTooltips or not tooltip or not decision then return end
+    -- B3: tooltip level 0 = Off (badges still show).
+    if not LA.db or (LA.db.tooltipDetail or 2)<=0 or not tooltip or not decision then return end
     local method=decision.method
     local names={A="Auction",V="Vendor",D="Disenchant",M="Mill",P="Prospect",
         S="Smelt",C=method or "Craft/refine",Q="Insufficient Data",T="Transmog"}
     local label=names[decision.action]
-    local compactToken=decision.tokenInfo and LA.db.showATTTokenSummary~=false
+    local compactToken=decision.tokenInfo
         and type(LA.ATTTokenClassSummary)=="function"
     if compactToken and decision.action=="Q" then label="Review token" end
     local detail=LA.db.tooltipDetail or 2
@@ -466,7 +467,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     end
     if label then
         local suffix=""
-        if decision.action=="A" and decision.fallback and LA.db.showFallback~=false then
+        if decision.action=="A" and decision.fallback then
             local fallbackName=names[decision.fallback] or method
             if fallbackName then suffix=" ("..fallbackName..")" end
         end
@@ -498,7 +499,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     -- For tokens the guaranteed price belongs directly below the action,
     -- as it does for ordinary disenchant/vendor recommendations.  Do not
     -- repeat it after class sets or confuse it with a redeemed reward's price.
-    if compactToken and LA.db.tooltipVendor~=false
+    if compactToken
         and type(decision.vendor)=="number" and decision.vendor>0 then
         two("Vendor token (guaranteed)",LA:Money(decision.vendor),"V")
     end
@@ -518,7 +519,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     -- materials. Collection ownership, auctionability and profit are separate.
     -- Normal equipment must NEVER skip money quotes because the top badge is T.
     if detail>=2 and (decision.action~="T" or not decision.tokenInfo or compactToken) then
-        if LA.db.tooltipAuction~=false then
+        do -- B3: the Auction row is part of the Alternatives level
             local quote=decision.rawAuction and (LA.db.tooltipShowAfterAHCut~=false
                 and decision.netAuction or decision.rawAuction)
             if type(quote)=="number" and quote>0 then
@@ -566,7 +567,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             return ('%.3f'):format(units)
         end
         local function ShowMaterials(option,model)
-            if detail<3 or LA.db.showMaterialBreakdown==false then return end
+            if detail<3 then return end
             local list=model and model.materials
             if type(list)=="table" and #list>0 then
                 local batch=math.max(1,tonumber(model.inputCount) or tonumber(option.inputCount) or 1)
@@ -660,7 +661,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             -- because a Force On profession switch is set.
             local isGear=f and (f.classID==2 or f.classID==4)
             if option and (not isGear or methodName=="Disenchant")
-                and (option.available or LA.db.showUnavailableConversions~=false) then
+                then -- B3: unavailable options always show, marked "(estimate)"
                 -- Reuse the exact evaluated material model used to price this option.
                 local model=option.yieldModel
                 local hasMaterials=(model and model.materials and #model.materials>0)
@@ -682,7 +683,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         two(label,"Insufficient Data",option.letter or "D")
                     end
                     ShowMaterials(option,model)
-                    if not option.value and (detail<3 or LA.db.showMaterialBreakdown==false) then
+                    if not option.value and detail<3 then
                         local note=(model and model.warning) or option.note
                         if note then tooltip:AddLine("  "..note,.83,.72,.59,true) end
                     end
@@ -721,7 +722,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 or "AH pricing unavailable (no TSM price data)",.95,.6,.35,true)
         end
         -- Vendor is the LAST comparison row for ordinary items.
-        if LA.db.tooltipVendor~=false and type(decision.vendor)=="number"
+        if type(decision.vendor)=="number"
             and decision.vendor>0 and not compactToken then
             valued("Vendor",decision.vendor,"V")
         end
@@ -740,19 +741,19 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             tooltip:AddLine("Profession: "..progress[i],.67,.85,.97,true)
         end
     end
-    if LA.db.showDisenchantStatus and decision.disenchantEligible
+    if detail>=3 and decision.disenchantEligible -- B3: part of Breakdown
         and decision.action~="D" then
         local note=decision.deIssue or (decision.canDisenchant
             and "Disenchant candidate; outcome probabilities may be unknown"
             or "Disenchant requires a verified eligible character")
         tooltip:AddLine(note,.69,.56,.82,true)
     end
-    if LA.db.showProfessionHints and LA.ProfessionAlternatives and decision.facts then
+    if LA.db.showResearchDetails==true and LA.ProfessionAlternatives and decision.facts then -- B3: with notes
         local options=LA:ProfessionAlternatives(decision.facts,decision)
         for i=1,math.min(#options,4) do
             local option=options[i]
             tooltip:AddLine("Profession: "..option.description,.73,.78,.92,true)
-            if LA.db.showAltHints and LA.MatchingCharacters then
+            if LA.MatchingCharacters then
                 local matches=LA:MatchingCharacters(option.profession)
                 if #matches>0 then
                     local labels={}
@@ -828,7 +829,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 end
             end
         end
-        if detail>=2 and LA.db.showResearchDetails==true and LA.db.showATTTokenSummary~=false then
+        if detail>=2 and LA.db.showResearchDetails==true then
             tooltip:AddLine(token.kind=="exchange"
                 and "Exchange may require additional items or currency"
                 or "Reward quantities or chances not verified",.72,.70,.76,true)
@@ -846,7 +847,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     elseif token then
         -- If the compact summary is deliberately off, preserve useful
         -- recommendations but do not create an unsolicited item dump.
-        if token.kind=="exchange" and detail>=2 and LA.db.showResearchDetails==true and LA.db.showATTTokenSummary~=false then
+        if token.kind=="exchange" and detail>=2 and LA.db.showResearchDetails==true then
             tooltip:AddLine("Exchange may require other items",.70,.68,.77,true)
         end
         if decision.action=="T" and decision.transmogRecipient then
@@ -920,7 +921,7 @@ function LA:VerifyTokenWarboundFromBag(f)
 end
 
 local function TooltipItem(tooltip, data)
-    if not LA.db or not LA.db.showTooltips or not tooltip then return end
+    if not LA.db or (LA.db.tooltipDetail or 2)<=0 or not tooltip then return end
     local link
     if TooltipUtil and TooltipUtil.GetDisplayedItem then
         local _, l = TooltipUtil.GetDisplayedItem(tooltip)

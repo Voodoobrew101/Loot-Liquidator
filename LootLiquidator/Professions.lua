@@ -731,7 +731,7 @@ function LL:ScanProfessionRecipes()
 end
 
 function LL:ProfessionAlternatives(f,result)
-    if not self.db or not self.db.showProfessionHints then return {} end
+    if not self.db or self.db.showResearchDetails~=true then return {} end -- B3: shown with notes
     local list={}
     for _,c in ipairs(result and result.conversionOptions or {}) do
         if c.profession or self:ProfessionForMethod(c.name) then

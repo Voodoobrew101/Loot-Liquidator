@@ -372,8 +372,8 @@ PreviewPanel=function()
             if textureID then texture:SetTexture(textureID) end
         end
         name:SetText(row.name)
-        indicator:SetText("Preview only | "..(LL.db.tooltipDetail==1 and "Minimal" or
-            LL.db.tooltipDetail==3 and "Detailed" or "Summary").." | "..
+        local levels={[0]="Off",[1]="Recommendation",[2]="Alternatives",[3]="Breakdown"}
+        indicator:SetText("Preview only | "..(levels[LL.db.tooltipDetail or 2] or "Alternatives").." | "..
             (LL.db.tooltipShowAfterAHCut~=false and "AH net" or "AH listing"))
         LL:Paint(icon,"preview:"..row.itemID,SampleDecision(row))
     end
@@ -649,39 +649,19 @@ function LL:RegisterNativeSettings()
         ttLayout:AddInitializer(Settings.CreatePanelInitializer("LootLiquidatorTooltipPreviewTemplate",{}))
     end
     Section(ttLayout,"What to display")
-    Checkbox(tooltips,"showTooltips","Show Loot Liquidator tooltips",
-        "Hide or show Loot Liquidator's extra tooltip lines, without changing recommendations.",true)
-    Dropdown(tooltips,"tooltipDetail","Tooltip detail",
-        "Minimal shows the recommended action; Summary shows key prices; Detailed shows materials and known profession progression. Extra research notes are optional.",
-        {{1,"Minimal — recommendation only"},{2,"Summary — main prices"},
-         {3,"Detailed — materials and professions"}},2)
+    -- B3: one level control replaces the old on/off box and most checkboxes.
+    Dropdown(tooltips,"tooltipDetail","Tooltip",
+        "How much Loot Liquidator adds to item tooltips. Badges show either way, and recommendations never change.",
+        {{0,"Off — badges only"},{1,"Recommendation — one line"},
+         {2,"Alternatives — every option with its gold value"},
+         {3,"Breakdown — plus the materials behind each option"}},2)
     Checkbox(tooltips,"tooltipHeaderPrice","Show price in the header",
         "Add the recommended action's gold value per item to the first line, e.g. \"Loot Liquidator: Smelt 6g 87s\".",true)
-    Checkbox(tooltips,"tooltipAuction","Show auction estimate",
-        "Show the original item's estimated auction value in Summary or Detailed tooltips.",true)
-    Checkbox(tooltips,"tooltipVendor","Show vendor value",
-        "Show the guaranteed vendor price in Summary or Detailed tooltips.",true)
-    Checkbox(tooltips,"showUnavailableConversions","Show unavailable processing estimates",
-        "Show possible processing values even when no eligible character is known; these never win a recommendation.",true)
-    Checkbox(tooltips,"showFallback","Show next-best action with Auction",
-        "When Auction wins, show the next best available action in parentheses, such as Auction (Disenchant).",true)
-    Section(ttLayout,"Gear token and exchange information")
-    Checkbox(tooltips,"showATTTokenSummary","Show gear token exchange table",
-        "Show class-specific gear token rewards, missing appearances and available redemption choices. Hiding this does not change recommendations.",true)
-    Section(ttLayout,"Detailed tooltip content")
-    Checkbox(tooltips,"showMaterialBreakdown","Show processing materials",
-        "In Detailed mode, show a concise table of estimated material yields.",true)
+    Section(ttLayout,"Extras")
     Checkbox(tooltips,"showMaterialConfidence","Show confidence per material",
-        "Add each material's own confidence to the breakdown. The option's overall confidence is always shown.",false)
-    Checkbox(tooltips,"showResearchDetails","Show notes",
-        "Show optional research explanations, yield evidence, and token exchange notes. Core prices, materials and important warnings are always visible.",false)
-    Section(ttLayout,"Optional profession information")
-    Checkbox(tooltips,"showProfessionHints","Show profession alternatives",
-        "Describe relevant profession processing options without overriding gold recommendations.",false)
-    Checkbox(tooltips,"showAltHints","Show known alt characters",
-        "Include eligible scanned alts with profession hints; enable profession alternatives as well.",false)
-    Checkbox(tooltips,"showDisenchantStatus","Show disenchant eligibility notes",
-        "Explain why gear that looks disenchantable did not receive a Disenchant recommendation.",false)
+        "Breakdown level: add each material's own confidence. The option's overall confidence is always shown.",false)
+    Checkbox(tooltips,"showResearchDetails","Show research notes",
+        "For troubleshooting: where each number came from, profession hints and which characters could do it. Makes tooltips much longer.",false)
     -- Hover-preview is intentionally at the top of this same page. No extra
     -- Tooltips subcategory or tall static preview remains.
 
