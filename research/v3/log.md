@@ -18,3 +18,4 @@
 - 2026-10-30 (Master): flags.jsonl has no new flags. Official Blizzard 11.0 Inspiration-to-Concentration/Ingenuity transition proposed by Dragonflight; verify wording before appending to rate-changes list.
 - 2026-10-30 (Master): Spot-check #1 Midnight guide Refulgent Copper ~8% Sanguine Garnet matched published guide; #2 War Within Aqirite Reddit 1040 clicks could not be independently fetched, left unverified (no invented discrepancy).
 - 2026-10-30 (Master): Source references are not completed-cast studies; preserve rank, Resourcefulness and patch context. No probability, confidence or economic calculations made.
+- 2026-10-30 (owner, via Claude): added tools/build_estimates.py and its first output in research/v3/output/: 960 estimates from 2,031 records (400 backed by studies, 560 starting guesses only, 40 flagged where sources disagree). See output/summary.md.
