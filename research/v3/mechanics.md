@@ -9,6 +9,12 @@ expansion; **unverified** = assumed, needs a source; **conflicting** = sources d
 Agents: add sources, correct statuses, and add missing mechanics with a `flags.jsonl` line
 (prefix the concern with `mechanics:`); the Master updates this file.
 
+## All expansions
+
+| # | Mechanic | Status | Source |
+| --- | --- | --- | --- |
+| G1 | Prospecting uses 5 ore per cast in every expansion; mass prospecting (some expansions, e.g. Shadowlands) uses 20 ore at once. | verified | warcraft.wiki.gg/wiki/Prospect ("Each prospecting attempt consumes 5 ore of the same type"); Dragon Isles Prospecting spell 374627 (record dragonflight-20261030-285); Midnight M1 |
+
 ## Midnight (current)
 
 | # | Mechanic | Status | Source |
