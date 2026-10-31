@@ -1,8 +1,8 @@
 {
   "schemaVersion": "loot-liquidator.token-research/1",
   "task": "C4a",
-  "collected": "2026-10-31",
-  "collectedBy": "Claude session 9 (web search result snippets only; Wowhead and wiki pages themselves were not opened)",
+  "collected": "2026-10-31 (layout session 9; IDs session 10)",
+  "collectedBy": "Claude sessions 9-10 from web search result snippets (Wowhead item URLs and titles, warcraft.wiki.gg, u.gg image asset names). Wowhead pages render empty to the fetch tool, so IDs come from search-result URLs.",
   "independentReview": "NOT_REVIEWED",
   "automaticApproval": false,
   "completeUniverse": false,
@@ -10,23 +10,24 @@
   "summary": "Tokens are shared by armor type (new in Midnight). Each opens into a soulbound tier piece for the player's class. The omni-token is exchanged at Kirana for one of the 20 tokens of the same difficulty.",
   "exchange": {
     "name": "Chiming Void Curio",
-    "tokenID": null,
+    "tokenID": 249367,
     "kind": "exchange",
     "dropsFrom": "Midnight Falls (L'ura)",
     "raid": "March on Quel'Danas",
     "vendor": "Kirana, Isle of Quel'Danas",
     "exchangesFor": "any of the 20 Tier 35 tokens below, same difficulty, one curio each",
-    "status": "needs-ids",
+    "status": "id-confirmed-unreviewed",
     "sources": [
       "https://warcraft.wiki.gg/wiki/Midnight_Season_1",
       "https://warcraft.wiki.gg/wiki/Kirana",
-      "https://www.method.gg/guides/where-to-hand-in-chiming-void-curio-omni-tokens-in-midnight-season-1"
+      "https://www.method.gg/guides/where-to-hand-in-chiming-void-curio-omni-tokens-in-midnight-season-1",
+      "https://www.wowhead.com/item=249367/chiming-void-curio"
     ]
   },
   "tokens": [
     {
       "name": "Voidwoven Fanatical Nullcore",
-      "tokenID": null,
+      "tokenID": 249355,
       "kind": "open",
       "slot": "Head",
       "armorType": "Cloth",
@@ -39,18 +40,48 @@
       "dropsFrom": "Lightblinded Vanguard",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Blind Oath's Winged Crest",
+        "Voidbreaker's Veil",
+        "Abyssal Immolator's Smoldering Flames"
+      ],
+      "rewardIDs": [
+        250051,
+        250060,
+        250042
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidwoven_Fanatical_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidwoven_Fanatical_Nullcore",
+        "https://www.wowhead.com/item=249355/voidwoven-fanatical-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Priest",
+          "name": "Blind Oath's Winged Crest",
+          "itemID": 250051,
+          "source": "https://www.wowhead.com/item=250051/blind-oaths-winged-crest"
+        },
+        {
+          "class": "Mage",
+          "name": "Voidbreaker's Veil",
+          "itemID": 250060,
+          "source": "https://u.gg/wow/fire/mage/gear",
+          "evidence": "u.gg image asset 250060.webp shown next to the item name"
+        },
+        {
+          "class": "Warlock",
+          "name": "Abyssal Immolator's Smoldering Flames",
+          "itemID": 250042,
+          "source": "https://www.wowhead.com/item=250042/abyssal-immolators-smoldering-flames"
+        }
       ]
     },
     {
       "name": "Voidcured Fanatical Nullcore",
-      "tokenID": null,
+      "tokenID": 249356,
       "kind": "open",
       "slot": "Head",
       "armorType": "Leather",
@@ -64,17 +95,51 @@
       "dropsFrom": "Lightblinded Vanguard",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
+      "rewardNames": [
+        "Masquerade of the Grim Jest",
+        "Fearsome Visage of Ra-den's Chosen",
+        "Branches of the Luminous Bloom",
+        "Devouring Reaver's Intake"
+      ],
       "rewardIDs": null,
-      "status": "needs-ids",
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
-        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio"
+        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
+        "https://www.wowhead.com/item=249356/voidcured-fanatical-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Rogue",
+          "name": "Masquerade of the Grim Jest",
+          "itemID": 250006,
+          "source": "https://u.gg/wow/subtlety/rogue/gear",
+          "evidence": "u.gg image asset 250006.webp shown next to the item name"
+        },
+        {
+          "class": "Monk",
+          "name": "Fearsome Visage of Ra-den's Chosen",
+          "itemID": null,
+          "itemIDByPattern": 250015
+        },
+        {
+          "class": "Druid",
+          "name": "Branches of the Luminous Bloom",
+          "itemID": 250024,
+          "source": "https://u.gg/wow/feral/druid/gear/raid",
+          "evidence": "u.gg image asset 250024.webp shown next to the item name"
+        },
+        {
+          "class": "Demon Hunter",
+          "name": "Devouring Reaver's Intake",
+          "itemID": null,
+          "itemIDByPattern": 250033
+        }
       ]
     },
     {
       "name": "Voidcast Fanatical Nullcore",
-      "tokenID": null,
+      "tokenID": 249357,
       "kind": "open",
       "slot": "Head",
       "armorType": "Mail",
@@ -87,18 +152,43 @@
       "dropsFrom": "Lightblinded Vanguard",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
+      "rewardNames": [
+        "Primal Sentry's Maw",
+        "Locus of the Primal Core",
+        "Hornhelm of the Black Talon"
+      ],
       "rewardIDs": null,
-      "status": "needs-ids",
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidcast_Fanatical_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidcast_Fanatical_Nullcore",
+        "https://www.wowhead.com/item=249357/voidcast-fanatical-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Hunter",
+          "name": "Primal Sentry's Maw",
+          "itemID": 249988,
+          "source": "https://www.wowhead.com/item=249988/primal-sentrys-maw"
+        },
+        {
+          "class": "Shaman",
+          "name": "Locus of the Primal Core",
+          "itemID": null,
+          "itemIDByPattern": 249979
+        },
+        {
+          "class": "Evoker",
+          "name": "Hornhelm of the Black Talon",
+          "itemID": 249997,
+          "source": "https://www.wowhead.com/beta/item=249997/hornhelm-of-the-black-talon"
+        }
       ]
     },
     {
       "name": "Voidforged Fanatical Nullcore",
-      "tokenID": null,
+      "tokenID": 249358,
       "kind": "open",
       "slot": "Head",
       "armorType": "Plate",
@@ -111,13 +201,43 @@
       "dropsFrom": "Lightblinded Vanguard",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Night Ender's Tusks",
+        "Luminant Verdict's Unwavering Gaze",
+        "Relentless Rider's Crown"
+      ],
+      "rewardIDs": [
+        249952,
+        249961,
+        249970
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidforged_Fanatical_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidforged_Fanatical_Nullcore",
+        "https://www.wowhead.com/item=249358/voidforged-fanatical-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Warrior",
+          "name": "Night Ender's Tusks",
+          "itemID": 249952,
+          "source": "https://u.gg/wow/fury/warrior/gear/raid",
+          "evidence": "u.gg image asset 249952.webp shown next to the item name"
+        },
+        {
+          "class": "Paladin",
+          "name": "Luminant Verdict's Unwavering Gaze",
+          "itemID": 249961,
+          "source": "https://www.wowhead.com/item=249961/luminant-verdicts-unwavering-gaze"
+        },
+        {
+          "class": "Death Knight",
+          "name": "Relentless Rider's Crown",
+          "itemID": 249970,
+          "source": "https://www.wowhead.com/item=249970/relentless-riders-crown"
+        }
       ]
     },
     {
@@ -135,18 +255,47 @@
       "dropsFrom": "Fallen-King Salhadaar",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-reward-ids",
+      "rewardNames": [
+        "Blind Oath's Seraphguards",
+        "Voidbreaker's Leyline Nexi",
+        "Abyssal Immolator's Fury"
+      ],
+      "rewardIDs": [
+        250049,
+        250058,
+        250040
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
         "https://www.wowhead.com/item=249363/voidwoven-unraveled-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Priest",
+          "name": "Blind Oath's Seraphguards",
+          "itemID": 250049,
+          "source": "https://www.wowhead.com/beta/item=250049"
+        },
+        {
+          "class": "Mage",
+          "name": "Voidbreaker's Leyline Nexi",
+          "itemID": 250058,
+          "source": "https://www.wowhead.com/item=250058/voidbreakers-leyline-nexi"
+        },
+        {
+          "class": "Warlock",
+          "name": "Abyssal Immolator's Fury",
+          "itemID": 250040,
+          "source": "https://u.gg/wow/affliction/warlock/gear/raid",
+          "evidence": "u.gg image asset 250040.webp shown next to the item name"
+        }
       ]
     },
     {
       "name": "Voidcured Unraveled Nullcore",
-      "tokenID": null,
+      "tokenID": 249364,
       "kind": "open",
       "slot": "Shoulders",
       "armorType": "Leather",
@@ -160,17 +309,54 @@
       "dropsFrom": "Fallen-King Salhadaar",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Venom Casks of the Grim Jest",
+        "Aurastones of Ra-den's Chosen",
+        "Seedpods of the Luminous Bloom",
+        "Devouring Reaver's Exhaustplates"
+      ],
+      "rewardIDs": [
+        250004,
+        250013,
+        250022,
+        250031
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
-        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio"
+        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
+        "https://www.wowhead.com/item=249364/voidcured-unraveled-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Rogue",
+          "name": "Venom Casks of the Grim Jest",
+          "itemID": 250004,
+          "source": "https://www.wowhead.com/item=250004/venom-casks-of-the-grim-jest"
+        },
+        {
+          "class": "Monk",
+          "name": "Aurastones of Ra-den's Chosen",
+          "itemID": 250013,
+          "source": "https://www.wowhead.com/item=250013/aurastones-of-ra-dens-chosen"
+        },
+        {
+          "class": "Druid",
+          "name": "Seedpods of the Luminous Bloom",
+          "itemID": 250022,
+          "source": "https://www.wowhead.com/item=250022/seedpods-of-the-luminous-bloom"
+        },
+        {
+          "class": "Demon Hunter",
+          "name": "Devouring Reaver's Exhaustplates",
+          "itemID": 250031,
+          "source": "https://www.wowhead.com/item=250031/devouring-reavers-exhaustplates"
+        }
       ]
     },
     {
       "name": "Voidcast Unraveled Nullcore",
-      "tokenID": null,
+      "tokenID": 249365,
       "kind": "open",
       "slot": "Shoulders",
       "armorType": "Mail",
@@ -183,12 +369,37 @@
       "dropsFrom": "Fallen-King Salhadaar",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
+      "rewardNames": [
+        "Primal Sentry's Trophies",
+        "Tempests of the Primal Core",
+        "Beacons of the Black Talon"
+      ],
       "rewardIDs": null,
-      "status": "needs-ids",
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
-        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio"
+        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
+        "https://www.wowhead.com/item=249365/voidcast-unraveled-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Hunter",
+          "name": "Primal Sentry's Trophies",
+          "itemID": 249986,
+          "source": "https://www.wowhead.com/item=249986/primal-sentrys-trophies"
+        },
+        {
+          "class": "Shaman",
+          "name": "Tempests of the Primal Core",
+          "itemID": 249977,
+          "source": "https://www.wowhead.com/item=249977/tempests-of-the-primal-core"
+        },
+        {
+          "class": "Evoker",
+          "name": "Beacons of the Black Talon",
+          "itemID": null,
+          "itemIDByPattern": 249995
+        }
       ]
     },
     {
@@ -206,13 +417,37 @@
       "dropsFrom": "Fallen-King Salhadaar",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
+      "rewardNames": [
+        "Night Ender's Pauldrons",
+        "Luminant Verdict's Providence Watch",
+        "Relentless Rider's Dreadthorns"
+      ],
       "rewardIDs": null,
-      "status": "needs-reward-ids",
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
         "https://www.wowhead.com/item=249366/voidforged-unraveled-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Warrior",
+          "name": "Night Ender's Pauldrons",
+          "itemID": 249950,
+          "source": "https://www.wowhead.com/ptr/item=249950"
+        },
+        {
+          "class": "Paladin",
+          "name": "Luminant Verdict's Providence Watch",
+          "itemID": null,
+          "itemIDByPattern": 249959
+        },
+        {
+          "class": "Death Knight",
+          "name": "Relentless Rider's Dreadthorns",
+          "itemID": 249968,
+          "source": "https://www.wowhead.com/item=249968/relentless-riders-dreadthorns"
+        }
       ]
     },
     {
@@ -230,12 +465,41 @@
       "dropsFrom": "Chimaerus",
       "raid": "The Dreamrift",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Blind Oath's Raiment",
+        "Voidbreaker's Robe",
+        "Abyssal Immolator's Dreadrobe"
+      ],
+      "rewardIDs": [
+        250054,
+        250063,
+        250045
+      ],
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio"
+      ],
+      "tokenIDByPattern": 249347,
+      "rewards": [
+        {
+          "class": "Priest",
+          "name": "Blind Oath's Raiment",
+          "itemID": 250054,
+          "source": "https://www.wowhead.com/item=250054/blind-oaths-raiment"
+        },
+        {
+          "class": "Mage",
+          "name": "Voidbreaker's Robe",
+          "itemID": 250063,
+          "source": "https://www.wowhead.com/item=250063/voidbreakers-robe"
+        },
+        {
+          "class": "Warlock",
+          "name": "Abyssal Immolator's Dreadrobe",
+          "itemID": 250045,
+          "source": "https://www.wowhead.com/item=250045/abyssal-immolators-dreadrobe"
+        }
       ]
     },
     {
@@ -254,17 +518,54 @@
       "dropsFrom": "Chimaerus",
       "raid": "The Dreamrift",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Fantastic Finery of the Grim Jest",
+        "Battle Garb of Ra-den's Chosen",
+        "Trunk of the Luminous Bloom",
+        "Devouring Reaver's Engine"
+      ],
+      "rewardIDs": [
+        250009,
+        250018,
+        250027,
+        250036
+      ],
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio"
+      ],
+      "tokenIDByPattern": 249348,
+      "rewards": [
+        {
+          "class": "Rogue",
+          "name": "Fantastic Finery of the Grim Jest",
+          "itemID": 250009,
+          "source": "https://www.wowhead.com/item=250009/fantastic-finery-of-the-grim-jest"
+        },
+        {
+          "class": "Monk",
+          "name": "Battle Garb of Ra-den's Chosen",
+          "itemID": 250018,
+          "source": "https://www.wowhead.com/item=250018/battle-garb-of-ra-dens-chosen"
+        },
+        {
+          "class": "Druid",
+          "name": "Trunk of the Luminous Bloom",
+          "itemID": 250027,
+          "source": "https://www.wowhead.com/item=250027/trunk-of-the-luminous-bloom"
+        },
+        {
+          "class": "Demon Hunter",
+          "name": "Devouring Reaver's Engine",
+          "itemID": 250036,
+          "source": "https://www.wowhead.com/item=250036/devouring-reavers-engine"
+        }
       ]
     },
     {
       "name": "Alncast Riftbloom",
-      "tokenID": null,
+      "tokenID": 249349,
       "kind": "open",
       "slot": "Chest",
       "armorType": "Mail",
@@ -277,17 +578,46 @@
       "dropsFrom": "Chimaerus",
       "raid": "The Dreamrift",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Primal Sentry's Scaleplate",
+        "Embrace of the Primal Core",
+        "Frenzyward of the Black Talon"
+      ],
+      "rewardIDs": [
+        249991,
+        249982,
+        250000
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
-        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio"
+        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
+        "https://www.wowhead.com/beta/item=249349/alncast-riftbloom"
+      ],
+      "rewards": [
+        {
+          "class": "Hunter",
+          "name": "Primal Sentry's Scaleplate",
+          "itemID": 249991,
+          "source": "https://www.wowhead.com/item=249991/primal-sentrys-scaleplate"
+        },
+        {
+          "class": "Shaman",
+          "name": "Embrace of the Primal Core",
+          "itemID": 249982,
+          "source": "https://www.wowhead.com/item=249982/embrace-of-the-primal-core"
+        },
+        {
+          "class": "Evoker",
+          "name": "Frenzyward of the Black Talon",
+          "itemID": 250000,
+          "source": "https://www.wowhead.com/item=250000/frenzyward-of-the-black-talon"
+        }
       ]
     },
     {
       "name": "Alnforged Riftbloom",
-      "tokenID": null,
+      "tokenID": 249350,
       "kind": "open",
       "slot": "Chest",
       "armorType": "Plate",
@@ -300,12 +630,41 @@
       "dropsFrom": "Chimaerus",
       "raid": "The Dreamrift",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Night Ender's Breastplate",
+        "Luminant Verdict's Divine Warplate",
+        "Relentless Rider's Cuirass"
+      ],
+      "rewardIDs": [
+        249955,
+        249964,
+        249973
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
-        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio"
+        "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
+        "https://www.wowhead.com/item=249350/alnforged-riftbloom"
+      ],
+      "rewards": [
+        {
+          "class": "Warrior",
+          "name": "Night Ender's Breastplate",
+          "itemID": 249955,
+          "source": "https://www.wowhead.com/item=249955/night-enders-breastplate"
+        },
+        {
+          "class": "Paladin",
+          "name": "Luminant Verdict's Divine Warplate",
+          "itemID": 249964,
+          "source": "https://www.wowhead.com/item=249964/luminant-verdicts-divine-warplate"
+        },
+        {
+          "class": "Death Knight",
+          "name": "Relentless Rider's Cuirass",
+          "itemID": 249973,
+          "source": "https://www.wowhead.com/item=249973/relentless-riders-cuirass"
+        }
       ]
     },
     {
@@ -323,19 +682,48 @@
       "dropsFrom": "Vorasius",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-reward-ids",
+      "rewardNames": [
+        "Blind Oath's Touch",
+        "Voidbreaker's Gloves",
+        "Abyssal Immolator's Grasps"
+      ],
+      "rewardIDs": [
+        250052,
+        250061,
+        250043
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
         "https://warcraft.wiki.gg/wiki/Voidwoven_Hungering_Nullcore",
         "https://www.wowhead.com/item=249351/voidwoven-hungering-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Priest",
+          "name": "Blind Oath's Touch",
+          "itemID": 250052,
+          "source": "https://www.wowhead.com/item=250052"
+        },
+        {
+          "class": "Mage",
+          "name": "Voidbreaker's Gloves",
+          "itemID": 250061,
+          "source": "https://u.gg/wow/fire/mage/gear",
+          "evidence": "u.gg image asset 250061.webp shown next to the item name"
+        },
+        {
+          "class": "Warlock",
+          "name": "Abyssal Immolator's Grasps",
+          "itemID": 250043,
+          "source": "https://www.wowhead.com/item=250043"
+        }
       ]
     },
     {
       "name": "Voidcured Hungering Nullcore",
-      "tokenID": null,
+      "tokenID": 249352,
       "kind": "open",
       "slot": "Hands",
       "armorType": "Leather",
@@ -356,16 +744,45 @@
         "Devouring Reaver's Essence Grips"
       ],
       "rewardIDs": null,
-      "status": "needs-ids",
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidcured_Hungering_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidcured_Hungering_Nullcore",
+        "https://www.wowhead.com/item=249352/voidcured-hungering-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Rogue",
+          "name": "Sleight of Hand of the Grim Jest",
+          "itemID": 250007,
+          "source": "https://u.gg/wow/subtlety/rogue/gear",
+          "evidence": "u.gg image asset 250007.webp shown next to the item name"
+        },
+        {
+          "class": "Monk",
+          "name": "Thunderfists of Ra-den's Chosen",
+          "itemID": null,
+          "itemIDByPattern": 250016
+        },
+        {
+          "class": "Druid",
+          "name": "Arbortenders of the Luminous Bloom",
+          "itemID": 250025,
+          "source": "https://u.gg/wow/feral/druid/gear/raid",
+          "evidence": "u.gg image asset 250025.webp shown next to the item name"
+        },
+        {
+          "class": "Demon Hunter",
+          "name": "Devouring Reaver's Essence Grips",
+          "itemID": 250034,
+          "source": "https://www.wowhead.com/item=250034/devouring-reavers-essence-grips"
+        }
       ]
     },
     {
       "name": "Voidcast Hungering Nullcore",
-      "tokenID": null,
+      "tokenID": 249353,
       "kind": "open",
       "slot": "Hands",
       "armorType": "Mail",
@@ -378,18 +795,47 @@
       "dropsFrom": "Vorasius",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Primal Sentry's Talonguards",
+        "Earthgrips of the Primal Core",
+        "Enforcer's Grips of the Black Talon"
+      ],
+      "rewardIDs": [
+        249989,
+        249980,
+        249998
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidcast_Hungering_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidcast_Hungering_Nullcore",
+        "https://www.wowhead.com/item=249353/voidcast-hungering-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Hunter",
+          "name": "Primal Sentry's Talonguards",
+          "itemID": 249989,
+          "source": "https://www.wowhead.com/item=249989/primal-sentrys-talonguards"
+        },
+        {
+          "class": "Shaman",
+          "name": "Earthgrips of the Primal Core",
+          "itemID": 249980,
+          "source": "https://www.wowhead.com/item=249980/earthgrips-of-the-primal-core"
+        },
+        {
+          "class": "Evoker",
+          "name": "Enforcer's Grips of the Black Talon",
+          "itemID": 249998,
+          "source": "https://www.wowhead.com/item=249998/enforcers-grips-of-the-black-talon"
+        }
       ]
     },
     {
       "name": "Voidforged Hungering Nullcore",
-      "tokenID": null,
+      "tokenID": 249354,
       "kind": "open",
       "slot": "Hands",
       "armorType": "Plate",
@@ -402,18 +848,47 @@
       "dropsFrom": "Vorasius",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardNames": [
+        "Night Ender's Fists",
+        "Luminant Verdict's Gauntlets",
+        "Relentless Rider's Bonegrasps"
+      ],
+      "rewardIDs": [
+        249953,
+        249962,
+        249971
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidforged_Hungering_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidforged_Hungering_Nullcore",
+        "https://www.wowhead.com/item=249354/voidforged-hungering-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Warrior",
+          "name": "Night Ender's Fists",
+          "itemID": 249953,
+          "source": "https://www.wowhead.com/item=249953/night-enders-fists"
+        },
+        {
+          "class": "Paladin",
+          "name": "Luminant Verdict's Gauntlets",
+          "itemID": 249962,
+          "source": "https://www.wowhead.com/item=249962/luminant-verdicts-gauntlets"
+        },
+        {
+          "class": "Death Knight",
+          "name": "Relentless Rider's Bonegrasps",
+          "itemID": 249971,
+          "source": "https://www.wowhead.com/ptr-2/item=249971/relentless-riders-bonegrasps"
+        }
       ]
     },
     {
       "name": "Voidwoven Corrupted Nullcore",
-      "tokenID": null,
+      "tokenID": 249359,
       "kind": "open",
       "slot": "Legs",
       "armorType": "Cloth",
@@ -426,18 +901,44 @@
       "dropsFrom": "Vaelgor & Ezzorak",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
+      "rewardNames": [
+        "Blind Oath's Leggings",
+        "Voidbreaker's Britches",
+        "Abyssal Immolator's Pillars"
+      ],
       "rewardIDs": null,
-      "status": "needs-ids",
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidwoven_Corrupted_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidwoven_Corrupted_Nullcore",
+        "https://www.wowhead.com/item=249359/voidwoven-corrupted-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Priest",
+          "name": "Blind Oath's Leggings",
+          "itemID": null,
+          "itemIDByPattern": 250050
+        },
+        {
+          "class": "Mage",
+          "name": "Voidbreaker's Britches",
+          "itemID": 250059,
+          "source": "https://u.gg/wow/fire/mage/gear",
+          "evidence": "u.gg image asset 250059.webp shown next to the item name"
+        },
+        {
+          "class": "Warlock",
+          "name": "Abyssal Immolator's Pillars",
+          "itemID": 250041,
+          "source": "https://www.wowhead.com/item=250041/abyssal-immolators-pillars"
+        }
       ]
     },
     {
       "name": "Voidcured Corrupted Nullcore",
-      "tokenID": null,
+      "tokenID": 249360,
       "kind": "open",
       "slot": "Legs",
       "armorType": "Leather",
@@ -453,21 +954,53 @@
       "rewardsSoulbound": true,
       "rewardNames": [
         "Blade Holsters of the Grim Jest",
-        "Devouring Reaver's Pistons",
+        "Swiftsweepers of Ra-den's Chosen",
         "Phloemwraps of the Luminous Bloom",
-        "Swiftsweepers of Ra-den's Chosen"
+        "Devouring Reaver's Pistons"
       ],
-      "rewardIDs": null,
-      "status": "needs-ids",
+      "rewardIDs": [
+        250005,
+        250014,
+        250023,
+        250032
+      ],
+      "status": "ids-complete-unreviewed",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidcured_Corrupted_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidcured_Corrupted_Nullcore",
+        "https://www.wowhead.com/item=249360/voidcured-corrupted-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Rogue",
+          "name": "Blade Holsters of the Grim Jest",
+          "itemID": 250005,
+          "source": "https://www.wowhead.com/item=250005/blade-holsters-of-the-grim-jest"
+        },
+        {
+          "class": "Monk",
+          "name": "Swiftsweepers of Ra-den's Chosen",
+          "itemID": 250014,
+          "source": "https://www.wowhead.com/item=250014/swiftsweepers-of-ra-dens-chosen"
+        },
+        {
+          "class": "Druid",
+          "name": "Phloemwraps of the Luminous Bloom",
+          "itemID": 250023,
+          "source": "https://www.wowhead.com/item=250023/phloemwraps-of-the-luminous-bloom"
+        },
+        {
+          "class": "Demon Hunter",
+          "name": "Devouring Reaver's Pistons",
+          "itemID": 250032,
+          "source": "https://www.wowhead.com/item=250032/devouring-reavers-pistons"
+        }
       ]
     },
     {
       "name": "Voidcast Corrupted Nullcore",
-      "tokenID": null,
+      "tokenID": 249361,
       "kind": "open",
       "slot": "Legs",
       "armorType": "Mail",
@@ -480,18 +1013,43 @@
       "dropsFrom": "Vaelgor & Ezzorak",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
+      "rewardNames": [
+        "Primal Sentry's Legguards",
+        "Leggings of the Primal Core",
+        "Greaves of the Black Talon"
+      ],
       "rewardIDs": null,
-      "status": "needs-ids",
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidcast_Corrupted_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidcast_Corrupted_Nullcore",
+        "https://www.wowhead.com/item=249361/voidcast-corrupted-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Hunter",
+          "name": "Primal Sentry's Legguards",
+          "itemID": null,
+          "itemIDByPattern": 249987
+        },
+        {
+          "class": "Shaman",
+          "name": "Leggings of the Primal Core",
+          "itemID": null,
+          "itemIDByPattern": 249978
+        },
+        {
+          "class": "Evoker",
+          "name": "Greaves of the Black Talon",
+          "itemID": null,
+          "itemIDByPattern": 249996
+        }
       ]
     },
     {
       "name": "Voidforged Corrupted Nullcore",
-      "tokenID": null,
+      "tokenID": 249362,
       "kind": "open",
       "slot": "Legs",
       "armorType": "Plate",
@@ -504,29 +1062,56 @@
       "dropsFrom": "Vaelgor & Ezzorak",
       "raid": "The Voidspire",
       "rewardsSoulbound": true,
-      "rewardNames": null,
+      "rewardNames": [
+        "Night Ender's Chausses",
+        "Luminant Verdict's Greaves",
+        "Relentless Rider's Legguards"
+      ],
       "rewardIDs": null,
-      "status": "needs-ids",
+      "status": "partial-ids",
       "sources": [
         "https://warcraft.wiki.gg/wiki/Kirana",
         "https://warcraft.wiki.gg/wiki/Slumbering_Coil_Curio",
-        "https://warcraft.wiki.gg/wiki/Voidforged_Corrupted_Nullcore"
+        "https://warcraft.wiki.gg/wiki/Voidforged_Corrupted_Nullcore",
+        "https://www.wowhead.com/item=249362/voidforged-corrupted-nullcore"
+      ],
+      "rewards": [
+        {
+          "class": "Warrior",
+          "name": "Night Ender's Chausses",
+          "itemID": 249951,
+          "source": "https://www.wowhead.com/item=249951/night-enders-chausses"
+        },
+        {
+          "class": "Paladin",
+          "name": "Luminant Verdict's Greaves",
+          "itemID": null,
+          "itemIDByPattern": 249960
+        },
+        {
+          "class": "Death Knight",
+          "name": "Relentless Rider's Legguards",
+          "itemID": null,
+          "itemIDByPattern": 249969
+        }
       ]
     }
   ],
   "conflicts": [
     "dving.net swaps Shoulders/Legs (says Corrupted=Shoulders, Unraveled=Legs). The wiki tables (Kirana, Slumbering Coil Curio) and chaosboost.com agree Unraveled=Shoulders, Corrupted=Legs; we follow those.",
     "boostmatch.gg calls every leather token 'Voidcured Unraveled Nullcore' and lists old token names (Dreadful/Mystic/Venerated/Zenith); ignored.",
-    "Wowhead lists item level 48 on the base token items; difficulty versions (237/250/263/276 etc.) are probably the same item ID with bonus IDs, not confirmed."
+    "Wowhead lists item level 48 on the base token items; difficulty versions (237/250/263/276 etc.) are probably the same item ID with bonus IDs, not confirmed.",
+    "boostmatch.gg lists Frenzyward of the Black Talon as shoulders and Beacons as chest; Wowhead says Frenzyward is Chest (item 250000). We follow Wowhead."
   ],
   "stillMissing": [
-    "17 of 20 token item IDs and the Chiming Void Curio item ID.",
-    "All reward item IDs (one per class per token: 3 or 4 each, 65 total). Reward names known only for leather hands and legs.",
-    "Season 2 (Tier 36, Slumbering Coil Curio from Ula'tek, Venomous Abyss) has started and has its own tokens; not collected yet."
+    "Confirm 2 chest token IDs (Alnwoven, Alncured Riftbloom) and 13 reward IDs listed under itemIDByPattern.",
+    "Independent review (task C4b) before anything goes into database/records.lua.",
+    "Season 2 (Tier 36): tokens are Venom<woven|cured|cast|forged> Idol/Icon/Remnant/Relic/Effigy and the Slumbering Coil Curio (overgear.com); not collected yet."
   ],
   "howToFinish": [
-    "Open each Wowhead token page (needs the owner's approval for wowhead.com) and copy the item ID and the 'Contains'/'Creates' reward IDs.",
-    "Or in game: the addon's /ll debug tokenexport records direct token observations; stage with tools/import_token_research.py.",
-    "Then a second, independent check (C4b) before anything goes into database/records.lua."
-  ]
+    "Confirm the 14 pattern hints: WebSearch 'wowhead <item name>' and read the ID from a result URL (wowhead.com/item=NNN/...), or a u.gg gear page image name.",
+    "In game, /ll debug tokenexport records direct token observations; stage with tools/import_token_research.py.",
+    "Then an independent check (C4b) before anything goes into database/records.lua."
+  ],
+  "idPattern": "Observed, not used as data: tokens are 249349-249366 in blocks of 4 per slot (woven, cured, cast, forged; chest 249347-50, hands 249351-54, head 249355-58, legs 249359-62, shoulders 249363-66), curio 249367. Each class has a block of 9 items in the order cloak, wrist, waist, shoulder, legs, head, hands, feet, chest (e.g. warrior 249947-249955, rogue 250001-250009). Every confirmed ID fits. Values in itemIDByPattern / tokenIDByPattern follow this pattern but were not seen next to the item name; confirm before use."
 }

@@ -21,14 +21,31 @@ for t in tokens:
         assert any(f"item={t['tokenID']}" in s for s in t['sources']), t['name']
     assert len(set(t['sources'])) >= 2 and all(s.startswith('https://') for s in t['sources']), t['name']
     assert t['rewardIDs'] is None or all(isinstance(x, int) and x > 0 for x in t['rewardIDs'])
+    # Session 10: one reward per class in the armor group, each with its own evidence.
+    assert [r['class'] for r in t['rewards']] == t['classes'], t['name']
+    for r in t['rewards']:
+        if r['itemID'] is None:
+            assert isinstance(r.get('itemIDByPattern'), int), (t['name'], r['name'])
+            continue
+        assert isinstance(r['itemID'], int) and r['itemID'] > 0 and 'itemIDByPattern' not in r
+        assert r['source'].startswith('https://'), r['name']
+        # Read from a Wowhead URL, or from an explicit note (u.gg image asset name).
+        assert f"item={r['itemID']}" in r['source'] or str(r['itemID']) in r.get('evidence', ''), r['name']
+    if t['tokenID'] is None:
+        assert isinstance(t.get('tokenIDByPattern'), int), t['name']
 assert {s for s, _ in seen} == {'Head', 'Shoulders', 'Chest', 'Hands', 'Legs'}
 assert {g for _, g in seen} == {'woven', 'cured', 'cast', 'forged'}
 
 ids = [t['tokenID'] for t in tokens if t['tokenID']]
 assert len(ids) == len(set(ids))
+rewards = [r['itemID'] for t in tokens for r in t['rewards'] if r['itemID']]
+guesses = [r['itemIDByPattern'] for t in tokens for r in t['rewards'] if r['itemID'] is None]
+guesses += [t['tokenIDByPattern'] for t in tokens if t['tokenID'] is None]
+everything = ids + rewards + guesses + [doc['exchange']['tokenID']]
+assert len(everything) == len(set(everything)), 'an item ID is used twice'
 assert doc['exchange']['kind'] == 'exchange' and doc['exchange']['name'] == 'Chiming Void Curio'
 
 # Research must not leak into the shipped database before C4b review.
 records = Path('database/records.lua').read_text()
 assert 'Nullcore' not in records and 'Riftbloom' not in records
-print(f'TOKEN RESEARCH: staged {len(tokens)} tokens, {len(ids)} with item IDs; not reviewed, not shipped')
+print(f'TOKEN RESEARCH: {len(ids)}/20 token IDs, {len(rewards)}/65 reward IDs confirmed, {len(guesses)} pattern hints; not reviewed, not shipped')
