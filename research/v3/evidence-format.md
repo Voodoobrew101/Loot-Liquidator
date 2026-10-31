@@ -40,6 +40,13 @@ One line **per material** in the study. A study with 6 gems is 6 lines with the 
 | `percentMeaning` | What that percentage means, if clear: `perCast`, `perInput` or `unclear` |
 | `minSeen`, `maxSeen` | Smallest and largest amount seen in one cast, if stated |
 | `skill`, `specialization`, `stats` | The player's profession details if stated (free text is fine), else `null` |
+| `sourceKind` | `study` (real results someone recorded), `personal-pooled` (the owner's own pooled results), or a reference value: `tsm-table`, `compiled-research`, `reference`. Agents normally write `study`. |
+| `averageShown`, `averagePer` | If the source gives only an average (e.g. "0.27 per prospect"), copy it, and say what it is per: `cast`, `input` or `1000 inputs`. Else `null`. |
+| `histogram` | If the source shows how many casts gave 0, 1, 2… of this material, copy it as `{"0": 120, "1": 60, "2": 20}`. Else `null`. |
+
+**Reference values are starting guesses only.** Records whose `sourceKind` is `tsm-table`,
+`compiled-research` or `reference` are never added to study counts. They are only used when an
+item has no studies yet, so the same data is never counted twice.
 
 Example, from a real study (Reddit r/woweconomy, Sept 2024, 1,040 Aqirite prospects):
 

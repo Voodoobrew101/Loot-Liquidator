@@ -38,11 +38,16 @@ study with gem totals.
 
 ## Your standing tasks (when the queue has nothing for you)
 
-1. **Rescue old evidence first.** The folders `research/evidence/observations/` and
-   `research/evidence/leads/` hold about 125 older files from the previous workflow. Many contain
-   real studies with counts that the old rules refused to use (for example a 1,040-prospect Aqirite
-   study). Re-record the ones for your expansion in the new format. Link the original source,
-   not the old file. Skip anything with no source link.
+1. **Finish the old-evidence rescue.** Most old records are already converted automatically into
+   `research/v3/evidence/imported/` (by `research/v3/tools/import_existing.py`). Don't re-record
+   those. What is left for agents:
+   - the old `.json` and `.md` files in `research/evidence/observations/` and the file in
+     `research/evidence/leads/`, which have irregular layouts the script can't read (for example the
+     1,040-prospect Aqirite study). Re-record the ones for your expansion in the new format, linking
+     the original source;
+   - imported study records with a gap (`casts` or `totalQuantity` is `null`): **revisit the source
+     link** and add a corrected record with `replaces` set to the imported record's ID.
+   Skip anything with no source link.
 2. Gear tokens, exchanges, no-disenchant items and batch sizes for your expansion.
 3. More processing studies for your expansion's ores, herbs and gear.
 
