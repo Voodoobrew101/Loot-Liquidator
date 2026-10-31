@@ -106,8 +106,15 @@ m=model();eq(m.materials[1].chance,nil);eq(m.materials[1].minQuantity,nil)
 -- Batch units normalize means only; per-cast probabilities and bounds cannot be rescaled.
 a.inputCount=10;a.materials[1].dropChance=field(.5);a.materials[1].minQuantity=field(1);a.materials[1].maxQuantity=field(6)
 m=model();near(m.materials[1].expectedQuantity,1);eq(m.materials[1].chance,nil);eq(m.materials[1].minQuantity,nil)
-a.inputCount=5;a.hotfixBlocked=true;eq(model(),nil);a.hotfixBlocked=nil
-for _,change in ipairs({function(r)r.patchEndBuild=123455 end,function(r)r.recipeID=999 end,
+-- A1 (owner decision 15): pre-hotfix / past-window data is weighted down, not rejected.
+a.inputCount=5;a.hotfixBlocked=true
+m=model();check(m and m.staleEvidence and m.provisional,'pre-hotfix evidence still gives a flagged estimate')
+check(m.confidence<=50,'stale evidence lowers confidence');a.hotfixBlocked=nil
+do local r=clone(a);r.patchEndBuild=123455;install({r});m=model();check(m and m.staleEvidence,'past patch window counts weakly') end
+-- A1: a value whose source states no confidence is weak (10), not discarded.
+do local r=clone(a);r.materials[1].expectedQuantity=field(2,'provisional',0);install({r})
+    m=model();check(m and m.confidence==10,'unknown-confidence value still gives an estimate') end
+for _,change in ipairs({function(r)r.recipeID=999 end,
     function(r)r.inputQualityRank=1 end,function(r)r.referenceConditions={skill=50} end}) do
     local r=clone(a);change(r);install({r});eq(model(),nil)
 end
@@ -242,13 +249,19 @@ local shipped={};assert(loadfile(root..'ItemDBRuntime.lua'))('LootLiquidator',sh
 check(#shipped.ItemDB.processing>0);check(LL:ValidateItemDB(shipped.ItemDB))
 local originalSettings={source_itemdb_enabled=LL.db.source_itemdb_enabled}
 LL.ItemDB=shipped.ItemDB;LL:InitializeItemDB();LL:MigrateEvidenceSettings()
--- Compiler migration doesn't synthesize occurrence or conditional bounds.
+-- Compiler migration doesn't invent occurrence or conditional bounds: a field is
+-- either the research value, or (A1) the research working estimate, flagged as
+-- such with low confidence, when the research value is unknown.
 for _,r in ipairs(LL.ItemDB.processing) do
     for _,material in ipairs(r.materials) do
         if r.researchRecord then
-            eq(material.dropChance.value,r.researchRecord.dropChance.value)
-            eq(material.minQuantity.value,r.researchRecord.yieldMin.value)
-            eq(material.maxQuantity.value,r.researchRecord.yieldMax.value)
+            local w=r.researchRecord.workingEstimate or {}
+            for field,key in pairs({dropChance='dropChance',minQuantity='yieldMin',maxQuantity='yieldMax'}) do
+                local f=material[field]
+                if f.workingEstimate then
+                    eq(r.researchRecord[key].value,nil);eq(f.value,w[key]);check(f.confidence<=10)
+                else eq(f.value,r.researchRecord[key].value) end
+            end
         end
     end
 end

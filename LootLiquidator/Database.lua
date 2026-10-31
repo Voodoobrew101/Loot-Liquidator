@@ -1,6 +1,11 @@
 -- Versioned evidence interface. No prices or live scans are cached here.
 local _, LL = ...
-local defaults={itemdb={true,100},personal={true,60},itemtsm={true,30},legacy={false,10}}
+-- Legacy (old disenchant tables) is on by default since A1: weak evidence counts
+-- for less, it is not thrown away. Its low weight keeps it from outvoting ItemDB.
+local defaults={itemdb={true,100},personal={true,60},itemtsm={true,30},legacy={true,10}}
+-- Weak-evidence multipliers (owner decision 15: weight down, never reject).
+local STALE_FACTOR=.25          -- pre-hotfix, obsolete or past its patch window
+local UNKNOWN_CONFIDENCE=10     -- a value whose source gave no confidence figure
 LL.SourceDefaults=defaults
 local order={'itemdb','personal','itemtsm','legacy'}
 local sourcePriority={itemdb=1,personal=2,itemtsm=3,tsm=3,legacy=4}
@@ -39,7 +44,12 @@ function LL:MigrateEvidenceSettings()
         if self.db[enabled]==nil then self.db[enabled]=d[1] end
         if self.db[weight]==nil then self.db[weight]=d[2] end
     end
-    self.db.evidenceSchemaVersion=1
+    -- Schema 2 (A1): legacy disenchant tables were off by default and hid most
+    -- disenchant answers. Turn them on once; a later manual choice is respected.
+    if self.db.evidenceSchemaVersion==1 and self.db.source_legacy_enabled==false then
+        self.db.source_legacy_enabled=true
+    end
+    self.db.evidenceSchemaVersion=2
 end
 function LL:SetEvidenceSource(key,enabled,weight)
     if key=='tsm' then key='itemtsm' end -- old callers retain effective preference
@@ -233,7 +243,9 @@ end
 -- Sample saturation and provenance class are independent conservative discounts.
 function LL:EvidenceReliability(field,record)
     if not field or field.value==nil or field.status=='unknown' or field.status=='contradictory' then return 0 end
-    local score=math.min(1,math.max(0,(field.confidence or 0)/100))
+    -- A value with no stated confidence is weak, not worthless (owner decision 1).
+    local stated=finite(field.confidence) and field.confidence>0 and field.confidence or UNKNOWN_CONFIDENCE
+    local score=math.min(1,stated/100)
     local n=field.samples or record.samples
     local sampleFactor=finite(n) and n/(n+30) or 0.35
     local class=({verified=1,measured=1,observed=1,provisional=.6,modeled=.25,historical=.4})[field.status] or 0
@@ -243,13 +255,15 @@ local function gearKey(f)
     return 'gear:'..tostring(f.expansionID)..':'..tostring(f.quality)..':'..
         (f.classID==2 and 'weapon' or 'armor')
 end
+-- Returns eligible, stale. Stale evidence (pre-hotfix, obsolete, or past the end
+-- of its patch window) still counts, at STALE_FACTOR weight and lower confidence.
 local function contextEligible(record,ctx,build,model,rules)
     if model and model.projectionIncomplete then return false end
     if record.mechanicsSourceBuild and tostring(record.mechanicsSourceBuild)~=tostring(build) and not (model and model.mechanicsApplied) then return false end
     if record.targetBuild and tostring(record.targetBuild)~=tostring(build) then return false end
-    if record.patchEndBuild and (not tonumber(build) or tonumber(build)>record.patchEndBuild) then return false end
     if record.patchStartBuild and (not tonumber(build) or tonumber(build)<record.patchStartBuild) then return false end
-    if record.obsolete or record.hotfixBlocked then return false end
+    local stale=record.obsolete or record.hotfixBlocked
+        or (record.patchEndBuild and (not tonumber(build) or tonumber(build)>record.patchEndBuild)) or false
     if record.minimumRecipeSkill~=nil then
         local skill=ctx.skill or ctx.baseSkill or ctx.effectiveSkill
         if not finite(skill) or skill<record.minimumRecipeSkill then return false end
@@ -270,7 +284,7 @@ local function contextEligible(record,ctx,build,model,rules)
             end
         end
     end
-    return true
+    return true,stale
 end
 local function userWeight(self,key,mode)
     if key=='tsm' then key='itemtsm' end
@@ -312,7 +326,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
     end
     include(f.id) -- reviewed research may identify a specific gear item
     if option.name=='Disenchant' then include(gearKey(f)) end
-    local eligible,transformed,hasExpected={},{},{}
+    local eligible,transformed,hasExpected,staleRecord={},{},{},{}
     for _,r in ipairs(records) do
         local hasMean=false
         for _,material in ipairs(r.materials) do
@@ -325,8 +339,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         -- remain an unknown cooutput rather than disappear as if impossible.
         if userWeight(self,r.sourceKey,mode)>0 and (not r.recipeID or r.recipeID==option.recipeID)
             and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
-            and (not r.expansionID or r.expansionID==f.expansionID)
-            and contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules) then eligible[#eligible+1]=r end
+            and (not r.expansionID or r.expansionID==f.expansionID) then
+            local ok,stale=contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules)
+            if ok then eligible[#eligible+1]=r;staleRecord[r]=stale or nil end
+        end
     end
     if personal and personal.observationContext and ctx.simulated and self.ProjectPersonalEstimate then
         personal=self:ProjectPersonalEstimate(f,option,personal,ctx,build)
@@ -369,8 +385,20 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
         end
         return a.recordID<b.recordID
     end)
-    local anchor
-    for _,r in ipairs(eligible) do if hasExpected[r] then anchor=r;break end end
+    -- The anchor fixes the reference context. Within the best source, pick the
+    -- strongest evidence so a low-confidence guess (working estimate or stale
+    -- record) can never push real measurements of another context out.
+    local anchor,anchorStrength
+    for _,r in ipairs(eligible) do
+        if hasExpected[r] and (not anchor or sourcePriority[r.sourceKey]==sourcePriority[anchor.sourceKey]) then
+            local strength=0
+            for _,material in ipairs(r.materials) do
+                strength=math.max(strength,self:EvidenceReliability(material.expectedQuantity,r))
+            end
+            if staleRecord[r] then strength=strength*STALE_FACTOR end
+            if not anchor or strength>anchorStrength then anchor,anchorStrength=r,strength end
+        end
+    end
     if not anchor then
         local enabled=false
         for _,r in ipairs(records) do if userWeight(self,r.sourceKey,mode)>0 then enabled=true end end
@@ -428,7 +456,13 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                     local metadata=copy(original[field]);metadata.value=m[modelField]
                     if m.transformConfidence then metadata.confidence=math.min(metadata.confidence,m.transformConfidence) end
                     local weight=userWeight(self,r.sourceKey,mode)*self:EvidenceReliability(metadata,r)
-                    if r.sourceKey=='legacy' and b.fields[field] then weight=0 end -- gap-only fallback
+                    -- Legacy now blends in at its (low) source weight instead of only filling gaps.
+                    if staleRecord[r] then
+                        weight=weight*STALE_FACTOR
+                        metadata.confidence=math.floor((metadata.confidence or 0)*.5+.5)
+                    end
+                    -- A per-cast chance for another batch size is a different quantity
+                    -- (not a weak version of this one); the mean still converts.
                     if field=='dropChance' and r.inputCount~=batch then weight=0 end
                     if weight>0 and not studySeen[key] then
                         studySeen[key]=true
@@ -437,7 +471,12 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx)
                         local acc=b.fields[field] or {sum=0,weight=0};b.fields[field]=acc
                         acc.minimum=math.min(acc.minimum or v,v);acc.maximum=math.max(acc.maximum or v,v)
                         acc.sum=acc.sum+v*weight;acc.weight=acc.weight+weight
-                        if field=='expectedQuantity' then acc.confidence=(acc.confidence or 0)+(metadata.confidence or 0)*weight end
+                        if field=='expectedQuantity' then
+                            local c=(metadata.confidence or 0)>0 and metadata.confidence or UNKNOWN_CONFIDENCE
+                            acc.confidence=(acc.confidence or 0)+c*weight
+                        end
+                        if metadata.workingEstimate then b.workingEstimate=true;result.workingEstimate=true;result.provisional=true end
+                        if staleRecord[r] then b.staleEvidence=true;result.staleEvidence=true;result.provisional=true end
                         if field=='expectedQuantity' then
                             b.contributions[r.sourceKey]=(b.contributions[r.sourceKey] or 0)+weight
                             result.provisional=result.provisional or r.provisional==true

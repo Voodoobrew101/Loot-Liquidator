@@ -68,9 +68,14 @@ local calls=0
 LL.ApplyVerifiedMechanics=function(_,_,_,model) calls=calls+1;return model end
 LL.ProcessingPlayerConditions=function() return target end
 local model=assert(LL:ComputeEvidenceModel(f,option,nil,1,target))
-near(model.materials[1].expectedQuantity,(6+4*.3)/1.3)
-near(model.materials[1].sourceContributions.itemtsm,.3/1.3)
-check(model.sources.legacy==nil,'legacy only fills missing fields')
+-- A1: legacy blends in at its own source weight (here set to 100) instead of only filling gaps.
+near(model.materials[1].expectedQuantity,(6+4*.3+9)/2.3)
+near(model.materials[1].sourceContributions.itemtsm,.3/2.3)
+near(model.sources.legacy,1/2.3)
+LL:SetEvidenceSource('legacy',true,10);LL._processingModelCache=nil
+model=assert(LL:ComputeEvidenceModel(f,option,nil,1,target))
+near(model.materials[1].expectedQuantity,(6+4*.3+9*.1)/1.4) -- default weight keeps legacy weak
+LL:SetEvidenceSource('legacy',true,100)
 near(LL.ItemDB.processing[2].materials[1].expectedQuantity.value,4)
 check(calls==0,'fixed sources never enter mechanics adapter')
 local low=clone(target);low.effectiveSkill=0
@@ -79,7 +84,7 @@ model=assert(LL:ComputeEvidenceModel(f,option,nil,1,low))
 -- user setting change would, then recompute.
 LL.ProcessingPlayerConditions=function() return low end
 model=assert(LL:ComputeEvidenceModel(f,option,nil,1,low))
-near(model.materials[1].expectedQuantity,(3+4*.3)/1.3)
+near(model.materials[1].expectedQuantity,(3+4*.3+9)/2.3) -- A1: legacy blends at weight 100
 near(LL.ItemDB.processing[2].materials[1].expectedQuantity.value,4)
 LL.db={source_tsm_enabled=false,source_tsm_weight=17};LL:MigrateEvidenceSettings()
 check(LL.db.source_itemtsm_enabled==false);near(LL.db.source_itemtsm_weight,17)

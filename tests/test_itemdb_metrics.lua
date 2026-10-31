@@ -37,13 +37,17 @@ for _,case in ipairs({{152506,256218,15.48},{152507,256223,16.39},{152508,256221
     assert(model.inputCount==20 and #model.materials==3)
     local total=0
     for _,m in ipairs(model.materials)do
-        assert(m.chance==nil and m.minQuantity==nil and m.maxQuantity==nil,'missing empirical fields must stay unknown')
+        -- A1: missing empirical fields may be filled by the research working
+        -- estimate, but only flagged as such (never presented as measured).
+        assert((m.chance==nil and m.minQuantity==nil and m.maxQuantity==nil) or m.workingEstimate,
+            'filled fields must be flagged as working estimates')
         if m.id==153635 then near(m.expectedQuantity,case[3])end
         total=total+m.expectedQuantity*100
     end
     near(options[1].value,total/20)
     local text=render(f,options[1])
-    assert(text:find('Per 20 input(s)',1,true) and text:find('[range ?]',1,true))
+    -- A1: ranges may now come from flagged working estimates ('~' marks an estimate).
+    assert(text:find('Per 20 input(s)',1,true) and (text:find('[range ?]',1,true) or text:find('~100%',1,true)))
     f.count=5
     options=LL:ConversionOptions(f)
     assert(not options[1].available and options[1].inputShort and options[1].inputCount==20)

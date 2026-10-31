@@ -89,8 +89,40 @@ local function adaptField(f)
     if n.value==nil then n.status='unknown' end
     return n
 end
+-- Owner decision (A1): a best guess beats nothing. A research working estimate
+-- fills ONLY fields the evidence leaves unknown, as a low-confidence modeled
+-- value flagged workingEstimate=true. Real evidence is never overwritten.
+local WORKING_CONFIDENCE=10
+local function fillFromWorkingEstimate(r,material)
+    local w=r.workingEstimate
+    if type(w)~='table' then return end
+    local filled={}
+    for field,key in pairs({expectedQuantity='expectedQuantity',dropChance='dropChance',
+        minQuantity='yieldMin',maxQuantity='yieldMax'}) do
+        local f=material[field]
+        if f.value==nil and type(w[key])=='number' and not (key~='expectedQuantity' and key~='dropChance' and w[key]<1) then
+            f.value=w[key];f.status='modeled';f.confidence=WORKING_CONFIDENCE;f.workingEstimate=true
+            filled[field]=true
+        end
+    end
+    local e,p,lo,hi=material.expectedQuantity,material.dropChance,material.minQuantity,material.maxQuantity
+    local function contradictory()
+        return e.value and p.value and lo.value and hi.value
+            and (e.value+1e-9<p.value*lo.value or e.value>p.value*hi.value+1e-9)
+            or (e.value==0 and p.value and p.value>0)
+            or (lo.value and hi.value and lo.value>hi.value)
+    end
+    -- Never let a filled guess contradict real evidence: drop guesses, bounds first.
+    for _,field in ipairs({'minQuantity','maxQuantity','dropChance','expectedQuantity'}) do
+        if not contradictory() then break end
+        if filled[field] then
+            local f=material[field];f.value=nil;f.status='unknown';f.confidence=0;f.workingEstimate=nil
+        end
+    end
+    if next(filled) then db.buildReport.workingEstimatesUsed=(db.buildReport.workingEstimatesUsed or 0)+1 end
+end
 for _,r in ipairs(research.processing) do
-    validatePreview(r) -- retained only under researchRecord; NEVER an economic fallback
+    validatePreview(r) -- full preview stays under researchRecord; unknown fields are filled below
     local provenance=table.concat(r.sources or {},' ')..' '..tostring(r.conditions and r.conditions.sourceContext)
     local isTSM=r.recordID:match('^tsm:') or provenance:lower():find('tsm',1,true)
     if isTSM then
@@ -121,6 +153,7 @@ for _,r in ipairs(research.processing) do
             n.patchStartBuild=patch.startBuild;n.patchEndBuild=patch.endBuild
             n.targetBuild=patch.targetBuild or patch.build
         end
+        fillFromWorkingEstimate(r,n.materials[1])
         n.targetBuild=c.targetBuild or c.patchBuild or n.targetBuild
         n.hotfixBlocked=c.hotfixBlocked==true or c.normalizationBlocked==true or nil
         -- Only an explicit normalized export can opt into forward profession rules.

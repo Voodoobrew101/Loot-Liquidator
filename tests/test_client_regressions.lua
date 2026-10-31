@@ -17,8 +17,18 @@ LL.db={characters={['Tester - Realm']={details={},professions={Enchanting={}},re
 LL:MigrateEvidenceSettings();assert(LL:InitializeItemDB())
 local gear={id=272234,quality=4,classID=4,expansionID=11,count=1}
 local option={name='Disenchant',recipeID=13262,inputCount=1}
+-- A1: legacy disenchant tables are on by default (weak weight), so gear gets an answer.
 local model,reason=LL:ComputeEvidenceModel(gear,option,nil,1,{})
-assert(not model and reason:find('disabled',1,true),'On mode cannot silently enable legacy yields')
+assert(model and #model.materials==2,'default settings give historical gear disenchant estimates')
+-- A player who switches legacy off still gets that choice honoured.
+LL.db.source_legacy_enabled=false;LL._processingModelCache=nil
+model,reason=LL:ComputeEvidenceModel(gear,option,nil,1,{})
+assert(not model and reason:find('disabled',1,true),'manually disabled legacy yields stay off')
+-- Old saved data from before schema 2 had legacy off by default: migrate it on once.
+local old={source_legacy_enabled=false,evidenceSchemaVersion=1};local saved=LL.db;LL.db=old
+LL:MigrateEvidenceSettings();assert(old.source_legacy_enabled==true and old.evidenceSchemaVersion==2)
+old.source_legacy_enabled=false;LL:MigrateEvidenceSettings();assert(old.source_legacy_enabled==false,'later manual choice respected')
+LL.db=saved
 LL.db.source_legacy_enabled=true
 model=LL:ComputeEvidenceModel(gear,option,nil,1,{})
 assert(model and #model.materials==2,'explicitly enabled historical gear records must remain accessible')

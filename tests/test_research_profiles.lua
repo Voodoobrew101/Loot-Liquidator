@@ -77,7 +77,9 @@ wrong=clone(ctx);wrong.skillLineID=nil;check(model(LL,wrong)==nil,'missing known
 wrong=clone(ctx);wrong.skill=10;check(model(LL,wrong)==nil,'minimum base recipe skill requirement')
 local op=clone(option);op.recipeID=445;check(model(LL,nil,op)==nil,'recipe mismatch')
 GetBuildInfo=function() return 'synthetic','201' end
-check(model(LL)==nil,'patch-window mismatch')
+do -- A1: past the end of its patch window = stale, weighted down, not rejected
+    local stale=model(LL);check(stale and stale.staleEvidence and stale.provisional,'patch-window mismatch is flagged stale')
+end
 GetBuildInfo=function() return 'synthetic','200' end
 research.schemaVersion='0.2.0'
 research.processing[1].workingEstimate=preview()
@@ -89,7 +91,13 @@ LL=runtime();m=assert(model(LL));near(m.materials[1].expectedQuantity,1)
 check(#m.materials==2 and LL.ItemDB.buildReport.previewEstimatesPreserved==2)
 near(LL.ItemDB.processing[1].researchRecord.workingEstimate.expectedQuantity,999)
 local facts=clone(f);facts.id=11
-check(model(LL,nil,nil,facts)==nil,'preview-only quantity cannot enter economic valuation')
+-- A1 (owner decision 1): a working estimate fills a fully unknown record as a
+-- low-confidence, flagged guess instead of hiding the answer.
+local guessed=model(LL,nil,nil,facts)
+check(guessed and guessed.workingEstimate and guessed.provisional,'working estimate gives a flagged answer')
+near(guessed.materials[1].expectedQuantity,999);check(guessed.confidence<=10,'working estimate has low confidence')
+-- ...but never overrides a real measured field (record a keeps its measured mean).
+near(m.materials[1].expectedQuantity,1);check(not m.materials[1].workingEstimate)
 research.processing[1].workingEstimate.economicUse='LIVE'
 check(not compile(),'unsupported preview contract rejected')
 research.processing[1].workingEstimate.economicUse='PREVIEW_ONLY';research.schemaVersion='99.0.0'
