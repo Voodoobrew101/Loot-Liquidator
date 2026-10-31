@@ -24,6 +24,18 @@ You keep the other four agents pointed at the most useful work. Keep your own jo
 6. **Log** 3 to 6 lines in `research/v3/log.md`: date, what changed in the queue, flags decided,
    spot-check result. Commit.
 
+## Writing good tasks
+
+- Every task names the item, not just its ID: fill `inputItemID`, `inputName` (look it up at
+  `https://nether.wowhead.com/tooltip/item/<ID>`) and a `searchTip` with search phrases by name.
+- Assign by the item's real expansion, not its ID number (Draconium Ore is Dragonflight).
+- If an input can't be processed at all (for example a fish in a milling task), set `status: "skip"`
+  and say why.
+- A task that got only a `searched` record stays `open` for one more try by a different phrasing,
+  then becomes `tried`. Don't keep re-assigning it.
+- If a worker's run added fewer than 10 real records without trying the old-evidence rescue,
+  note it in `log.md` and point that worker at the rescue task first next time.
+
 ## Don't
 
 - Don't collect evidence yourself unless a worker has had no open tasks for a whole run.

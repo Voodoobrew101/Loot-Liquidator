@@ -35,16 +35,24 @@ does that later, the same way every time. That is how we avoid invented numbers.
    fields as `null`. A 10-cast forum post is worth recording; it simply carries 10 casts of weight.
 2. **Never invent a number.** Every number you write must appear in, or be directly counted from,
    the linked source. If a source gives only a percentage, record the percentage and leave
-   `casts` as `null`. Don't back-calculate counts.
+   `casts` as `null`. Simple arithmetic on the source's own stated numbers is fine and expected:
+   "100 ore prospected" at 5 ore per prospect is `casts: 20`. Say so in `notes`.
 3. **Record where a study originally came from.** Big player studies get copied across Wowhead
    comments, Reddit and guides. Put the original link in `originalSource` so the same data is
    never counted twice. If you can't tell, leave it `null`.
 4. **Don't redo other agents' work.** Don't review, re-check, rewrite or argue with other agents'
    records. If you think a record is wrong, add one line to `research/v3/flags.jsonl` (see
    `evidence-format.md`) and move on. The Master decides.
-5. **Show progress every run.** Each run must add new evidence records or flags. If you can't find
-   anything for an item after a real try, add a `searched` record saying where you looked, so
-   nobody repeats the same search.
+5. **Use the whole run and bring back data.** A run is not finished after one task or two searches.
+   Keep working through tasks, then standing tasks, until you have added **at least 10 real records**
+   (any type except `searched`) or have honestly tried every open task and standing task.
+   - **Always search by item name, never by ID number.** Search engines don't index item IDs.
+     Get a name from `https://nether.wowhead.com/tooltip/item/<ID>`.
+   - Wowhead item pages often don't load for automated browsing. Use search results, Reddit,
+     wow-professions.com, warcraft.wiki.gg, Icy Veins, Method and guide pages instead.
+   - A `searched` record is allowed only after **at least 6 searches across at least 3 different
+     sites**, all by name, each listed in `whereLooked`. Then move straight on to the next task
+     in the same run.
 
 ## Accuracy goal (for knowing what to look for)
 
