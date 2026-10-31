@@ -16,6 +16,10 @@ Method (see research/v3/README.md and the owner's notes):
     starting guess worth PRIOR_CASTS casts, never added to study counts.
   * A percentage with no cast count counts as a small study of SMALL_STUDY_CASTS casts.
   * Missing average = chance x middle of the range; missing chance = average / middle of the range.
+  * Conditional drops (need a specialization unlock or skill level; listed in
+    research/v3/conditions.jsonl or recorded as `condition` records) are tagged
+    `conditional` and kept out of the normal baseline counts. The addon should add them
+    only for characters that meet the condition.
   * Confidence comes from a beta distribution of those counts (the "weighted count with a
     starting guess" model, also called beta-binomial / empirical Bayes).
 
@@ -66,6 +70,31 @@ def load():
             rows.append(r)
     replaced = {r["replaces"] for r in rows if r.get("replaces")}
     return [r for r in rows if r.get("id") not in replaced]
+
+
+def load_conditions(rows):
+    """(method, outputItemID) -> list of (set of input IDs or None for all, requires text)."""
+    found = []
+    path = os.path.join(ROOT, "research", "v3", "conditions.jsonl")
+    if os.path.exists(path):
+        for line in open(path, encoding="utf-8"):
+            if line.strip():
+                found.append(json.loads(line))
+    found += [r for r in rows if r.get("type") == "condition"]
+    out = {}
+    for c in found:
+        if not c.get("method") or not c.get("outputItemID"):
+            continue
+        ids = set(str(i) for i in c["inputItemIDs"]) if c.get("inputItemIDs") else None
+        out.setdefault((c["method"], int(c["outputItemID"])), []).append((ids, c.get("requires")))
+    return out
+
+
+def condition_for(conds, method, inp, out):
+    for ids, req in conds.get((method, out), []):
+        if ids is None or inp in ids:
+            return req or "an unlock (see conditions list)"
+    return None
 
 
 def name_maps(rows):
@@ -127,6 +156,7 @@ def confidence(p, n):
 
 def build(rows):
     names = name_maps(rows)
+    conds = load_conditions(rows)
     groups = defaultdict(lambda: {"studies": [], "refs": [], "lo": None, "hi": None, "unplaced": 0})
     unplaced = 0
     for r in rows:
@@ -219,8 +249,10 @@ def build(rows):
             basis.insert(0, "starting guess only (reference values)")
         else:
             basis.insert(0, f"{round(n_eff):,} study casts" + (" + starting guess" if w or we else ""))
+        req = condition_for(conds, method, inp, out)
         results.append({
             "method": method, "input": inp, "outputItemID": out,
+            "conditional": req is not None, "requires": req,
             "chance": round(min(p, 1.0), 4), "average": round(e, 4), "range": [lo, hi],
             "confidence": (min(GUESS_ONLY_MAX_CONFIDENCE, confidence(min(p, 1.0), n_conf)) if n_eff == 0
                            else confidence(min(p, 1.0), n_conf)) // (2 if conflict else 1),
@@ -233,7 +265,10 @@ def build(rows):
 
 def summary(results, unplaced, total_records):
     by_conf = [0, 0, 0, 0]
+    cond = [r for r in results if r["conditional"]]
     for r in results:
+        if r["conditional"]:
+            continue
         c = r["confidence"]
         by_conf[0 if c < 50 else 1 if c < 75 else 2 if c < 90 else 3] += 1
     lines = [
@@ -241,6 +276,7 @@ def summary(results, unplaced, total_records):
         "",
         f"Built by `research/v3/tools/build_estimates.py` from {total_records:,} evidence records.",
         f"{len(results):,} input/material estimates; {unplaced} records could not be placed yet (no item ID or name match).",
+        f"{len(cond)} of them are conditional drops (need an unlock or skill level) are left out of the confidence counts below and marked with what unlocks them.",
         "",
         "| Confidence | Estimates |", "| --- | --- |",
         f"| 90% or more | {by_conf[3]} |", f"| 75-89% | {by_conf[2]} |",
@@ -251,11 +287,12 @@ def summary(results, unplaced, total_records):
     ]
     mid = [r for r in results if r["input"].isdigit() and int(r["input"]) >= 236000]
     if mid:
-        lines += ["## Midnight", "", "| Method | Input | Material | Chance | Average per cast | Range | Confidence | Basis |",
-                  "| --- | --- | --- | --- | --- | --- | --- | --- |"]
-        for r in sorted(mid, key=lambda r: (r["method"], r["input"], -r["average"])):
+        lines += ["## Midnight", "", "| Method | Input | Material | Chance | Average per cast | Range | Confidence | Needs unlock | Basis |",
+                  "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+        for r in sorted(mid, key=lambda r: (r["conditional"], r["method"], r["input"], -r["average"])):
             lines.append(f"| {r['method']} | {r['input']} | {r['outputItemID']} | {r['chance']*100:.1f}% | "
-                         f"{r['average']:.3f} | {r['range'][0]}-{r['range'][1]} | {r['confidence']}% | {r['basis']} |")
+                         f"{r['average']:.3f} | {r['range'][0]}-{r['range'][1]} | {r['confidence']}% | "
+                         f"{r['requires'] or ''} | {r['basis']} |")
     return "\n".join(lines) + "\n"
 
 

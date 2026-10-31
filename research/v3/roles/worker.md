@@ -48,8 +48,11 @@ study with gem totals.
    - imported study records with a gap (`casts` or `totalQuantity` is `null`): **revisit the source
      link** and add a corrected record with `replaces` set to the imported record's ID.
    Skip anything with no source link.
-2. Gear tokens, exchanges, no-disenchant items and batch sizes for your expansion.
-3. More processing studies for your expansion's ores, herbs and gear.
+2. **Conditional drops for your expansion:** which materials need a specialization unlock or a
+   skill level (for example diamonds, Prismatic Ore), recorded as `condition` records with a source.
+   Confirm or correct the seeded Eversong Diamond lines in `research/v3/conditions.jsonl` (Midnight).
+3. Gear tokens, exchanges, no-disenchant items and batch sizes for your expansion.
+4. More processing studies for your expansion's ores, herbs and gear.
 
 ## Don't
 

@@ -19,9 +19,11 @@ You keep the other four agents pointed at the most useful work. Keep your own jo
 4. **Rate-change list.** Copy any `rateChange` records that come from official Blizzard patch or hotfix
    notes into `research/v3/rate-changes.jsonl`. One line per change. Don't re-debate dates
    already in the list unless a flag shows the official page says otherwise.
-5. **Spot-check two records.** Open the source links for two random new records and confirm the
+5. **Conditions list.** Copy confirmed `condition` records into `research/v3/conditions.jsonl`, one line
+   each. Keep the existing lines unless a source shows they are wrong.
+6. **Spot-check two records.** Open the source links for two random new records and confirm the
    numbers match. Log the result in one line. If one doesn't match, add a flag.
-6. **Log** 3 to 6 lines in `research/v3/log.md`: date, what changed in the queue, flags decided,
+7. **Log** 3 to 6 lines in `research/v3/log.md`: date, what changed in the queue, flags decided,
    spot-check result. Commit.
 
 ## Writing good tasks

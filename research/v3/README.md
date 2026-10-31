@@ -19,8 +19,10 @@ mill it, prospect it, smelt it, or keep it for transmog. To do that it needs one
 2. **Gear tokens:** which token turns into which gear, for which classes.
 3. **Item exchanges:** trade X of one item for Y of another, at a vendor or by using the item.
 4. **Items that cannot be disenchanted.**
-5. **Recipe facts:** batch sizes, such as 5 ore per prospect, 5 or 10 herbs per mill, or 20 herbs for mass milling.
-6. **Rate changes:** patches and hotfixes that changed any of the above, with dates.
+5. **Conditional drops:** materials that only drop after a specialization unlock or at a skill
+   level (for example Eversong Diamond). These are kept out of the normal numbers.
+6. **Recipe facts:** batch sizes, such as 5 ore per prospect, 5 or 10 herbs per mill, or 20 herbs for mass milling.
+7. **Rate changes:** patches and hotfixes that changed any of the above, with dates.
 
 ## Your job: collect evidence, never calculate results
 
@@ -76,6 +78,7 @@ a source reports seeing in one cast.
 | Record format and examples | `research/v3/evidence-format.md` | Owner only |
 | Work queue | `research/v3/queue.json` | Master only |
 | Rate-change list | `research/v3/rate-changes.jsonl` | Master only (workers suggest via flags) |
+| Conditional drops (need an unlock or skill) | `research/v3/conditions.jsonl` | Master only (workers record `condition` records) |
 | Evidence | `research/v3/evidence/<your-agent-name>/` | Each agent, its own folder only |
 | Generated estimates (chance, average, range, confidence) | `research/v3/output/` | Only the script `research/v3/tools/build_estimates.py`; agents never edit these. Use `summary.md` to see which items are weakest. |
 | Records converted from the old research | `research/v3/evidence/imported/` | Only the script `research/v3/tools/import_existing.py`; agents never edit these |

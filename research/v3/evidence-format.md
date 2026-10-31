@@ -106,6 +106,24 @@ and the Master copies confirmed ones into the list.
 | `wording` | The note's own words (short) |
 | `sizeIfGiven` | A number if the note gives one (e.g. `"+20%"`), else `null` |
 
+## `condition`
+
+Use this for a material that only drops when the character meets a condition, such as a
+specialization unlock or a skill level (for example Eversong Diamond from Midnight ore).
+Workers record it in their own folder; the Master copies confirmed ones into
+`research/v3/conditions.jsonl`.
+
+| Field | Meaning |
+| --- | --- |
+| `method` | `Prospect`, `Mill`, `Disenchant` or `Smelt` |
+| `outputItemID`, `outputName` | The conditional material |
+| `inputItemIDs`, `inputName` | Which inputs it applies to (list of IDs, or `null` for a whole expansion's ores/herbs/gear) |
+| `requires` | The condition in words, e.g. the specialization node name |
+| `requiresSkill` | A minimum skill number if the condition is a skill level, else `null` |
+
+In `drop` records, if the source says whether the player had the unlock, put it in `specialization`
+(for example `"Copper unlock: yes"`), so conditional and normal results can be told apart.
+
 ## `searched`
 
 Use this when a real search found nothing, so nobody repeats it.
