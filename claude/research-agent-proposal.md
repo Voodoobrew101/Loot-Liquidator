@@ -117,7 +117,7 @@ The coordinator keeps `research/evidence/v3/QUEUE.md`, sorted lowest confidence 
 
 A small tool on this branch (`tools/evidence_to_itemdb.py` or `.lua`), run **before** `tools/compile_itemdb.lua`, that:
 
-1. reads every `research/evidence/v3/**/*.json` record and applies the checks in section 3;
+1. reads every `research/evidence/v3/**/*.json` record and applies the checks in section 3; **built (D1b step 1, session 11): `tools/evidence_check.py`, tests in `tests/test_evidence_check.py`.** It also accepts Checker verdicts as `{"kind": "check", "recordId": "<file>#<position>", "result": "confirmed"|"mismatch", "saw": "..."}` and rejects unknown field names (to catch typos);
 2. groups records by method, input and output; adds casts and drops per lineage (copies count once);
 3. **works out the scaling rules** per profession/method from the mechanics records and from samples at different known skill/stat levels (simple fits only: e.g. "yield +x% per 10 skill above minimum", "Resourcefulness refunds y% on proc"); each rule keeps its sources and a confidence from how much data supports it;
 4. **turns every sample back into a baseline-equivalent count** (what a minimum-skill player would have got) using those rules; samples at unknown skill count at reduced weight, the same way the addon already down-weights weak sources;

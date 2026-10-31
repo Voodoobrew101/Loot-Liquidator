@@ -43,3 +43,4 @@ python3 tests/test_craft_export.py
 
 "$lua_bin" tests/test_disenchant_gaps.lua
 python3 tests/test_token_research.py
+python3 tests/test_evidence_check.py
