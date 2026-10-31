@@ -41,3 +41,4 @@ python3 tests/test_token_import.py "$compiled_dir"
 python3 tests/test_craft_export.py
 "$lua_bin" tools/audit_profession_scaling.lua
 
+"$lua_bin" tests/test_disenchant_gaps.lua
