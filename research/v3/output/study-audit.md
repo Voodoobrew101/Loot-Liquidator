@@ -1,13 +1,13 @@
 # Study audit
 
-250 studies; 121 with no findings. Records per finding type:
+258 studies; 121 with no findings. Records per finding type:
 
-- CASTS_UNKNOWN: 569
-- OUTPUT_ID_MISSING: 532
-- EPOCH_UNKNOWN: 528
-- INPUT_ID_MISSING: 188
+- CASTS_UNKNOWN: 575
+- OUTPUT_ID_MISSING: 535
+- EPOCH_UNKNOWN: 530
+- INPUT_ID_MISSING: 192
 - PERCENT_MEANING_UNCLEAR: 86
-- UNLOCK_UNSTATED: 43
+- UNLOCK_UNSTATED: 45
 - UNPLACED: 5
 - AGGREGATE_OUTPUT: 1
 
@@ -54,6 +54,7 @@
 | 32.0 | xenastro-draconium-q2-original-prospecting-log-row-28 | dragonflight | Prospect | 8 | 0 | OUTPUT_ID_MISSING, CASTS_UNKNOWN |
 | 31.0 | reddit-1sfds1u-headtripvee-copper-r1 | midnight | Prospect | 7 | 0 | CASTS_UNKNOWN, PERCENT_MEANING_UNCLEAR, UNLOCK_UNSTATED |
 | 30.1 | wowhead-saronite-291540-256 | legacy | Prospect | 6 | 256 | OUTPUT_ID_MISSING, PERCENT_MEANING_UNCLEAR, EPOCH_UNKNOWN |
+| 30.0 | reddit-zzcnjw-comment-approximately-4000-prospects-diamonds | dragonflight | Prospect | 2 | 4000 | INPUT_ID_MISSING |
 | 27.0 | tww-2024-09-17-ironclaw-r1-135skill-specialized-source-only-20261028 | import | Prospect | 8 | 2000 | UNLOCK_UNSTATED |
 | 26.7 | wowhead-feliron-thottbot-565-ore | legacy | Prospect | 12 | 113 | OUTPUT_ID_MISSING, EPOCH_UNKNOWN |
 | 25.2 | wowhead-cardinalai-umbral-4000 | midnight | Prospect | 7 | 800 | OUTPUT_ID_MISSING |
@@ -74,4 +75,3 @@
 | 14.4 | ww-b007-mop_kyparite_1000_555434 | import | Prospect | 12 | 200 | EPOCH_UNKNOWN |
 | 14.0 | reddit-1fdmzwy-mycobloom-rank-comparison | war-within | Mill | 2 | 0 | INPUT_ID_MISSING, OUTPUT_ID_MISSING, CASTS_UNKNOWN |
 | 13.7 | ww-b007-mop_kyparite_690_965740 | import | Prospect | 12 | 138 | EPOCH_UNKNOWN |
-| 13.2 | ww-b007-mop_kyparite_500_463200 | import | Prospect | 12 | 100 | EPOCH_UNKNOWN |
