@@ -11,7 +11,7 @@ manifest = [s.strip() for s in (root / 'LootLiquidator.toc').read_text().splitli
 assert len(manifest) == len(set(manifest)), 'Duplicate TOC entry'
 assert all((root / s).is_file() for s in manifest), 'Missing runtime file'
 assert {s for s in manifest if s.endswith('.lua')} == {s.name for s in root.glob('*.lua') if s.name != 'itemdb.lua'}
-assert len([s for s in manifest if s.endswith('.lua')]) == 19  # B2: itemTSM.lua removed
+assert len([s for s in manifest if s.endswith('.lua')]) == 18  # B2: itemTSM.lua removed; B5b: AltRosterUI.lua removed
 assert 'itemdb.lua' not in manifest, 'Research-only schema must not replace the runtime database'
 for name in manifest:
     assert '/' not in name and '\\' not in name, 'Runtime package must be self-contained'

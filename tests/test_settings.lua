@@ -248,7 +248,7 @@ variable='LootLiquidator_tsmFallbackOperation'
 pooled:InitDropdown();assert(not pooled.Control.steppersShown)
 -- Canvas sliders must take the same modern ElvUI skin path as native Settings
 -- list sliders, passing the complete step-slider container.
-assert(loadfile('LootLiquidator/AltRosterUI.lua'))('LootLiquidator',LL)
+-- B5b: SkinSettingsCanvasControl now lives in SettingsControls.lua (loaded above).
 local skinned=0
 local stepSlider={Slider={}}
 local fakeSkin={HandleStepSlider=function(_,native)
@@ -262,7 +262,8 @@ ElvUI=nil
 do
     local layout=function() return {AddInitializer=function() end} end
     Settings.RegisterVerticalLayoutCategory=function() return {},layout() end
-    Settings.RegisterVerticalLayoutSubcategory=function() return {},layout() end
+    local pages={}
+    Settings.RegisterVerticalLayoutSubcategory=function(_,name) pages[name]=true;return {},layout() end
     Settings.RegisterCanvasLayoutCategory=function() return {} end
     Settings.RegisterCanvasLayoutSubcategory=function() return {} end
     Settings.RegisterAddOnCategory=function() end
@@ -285,5 +286,12 @@ do
     native:SetChecked(true);native.scripts.OnClick(native)
     assert(LL.db.includeVerifiedAlts==true)
     print('PASS: Include alts switch on the Badges page (B4)')
+    -- B5a/B5b: rate choice on the main page; what-if pages have a new home.
+    assert(settings.LootLiquidator_rateProfile and settings.LootLiquidator_rateProfileCharacter,'Show rates for registered')
+    assert(LL.db.rateProfileCharacter=='' or LL.db.rateProfileCharacter==nil)
+    assert(pages['Professions (what-if)'],'what-if profession pages need a parent page')
+    local rows=LL:RateProfileCharacterChoices()
+    assert(rows[1][1]=='' and rows[2][1]=='Tester - Realm','character choices list saved characters')
+    print('PASS: Show rates for + Professions (what-if) page (B5a/B5b)')
 end
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')

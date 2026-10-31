@@ -30,19 +30,22 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,19,'runtime source count') -- B2: itemTSM.lua removed
+eq(#manifest,18,'runtime source count') -- B2: itemTSM.lua removed; B5b: AltRosterUI.lua removed
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',
-    'SetAltMethodEnabled','RegisterNativeRosterTable','TokenResearchExport','Paint','ClearButton',
+    'SetAltMethodEnabled','SkinSettingsCanvasControl','TokenResearchExport','Paint','ClearButton',
     'GetLearnedDisenchantEstimate','GetLearnedProcessingEstimate','ExportProcessingData',
     'ExportDisenchantData','GetAuctionOperationNames','CreateItemIgnorePanel','RecommendedTSMSetupText'}) do
     check(type(LL[name])=='function','missing preserved API '..name)
 end
-LootLiquidatorDB={prospectingDataMode=2,processingModes={P=4},characters={},appearance={colors={A={.1,.2,.3}}}}
+LootLiquidatorDB={prospectingDataMode=2,processingModes={P=4,M=3},characters={['Old - Realm']={altMethods={P=false},professions={Mining={}}}},appearance={colors={A={.1,.2,.3}}}}
 boot.scripts.OnEvent(boot,'ADDON_LOADED','LootLiquidator')
 eq(LL.db.prospectingDataMode,2,'migration preserves personal-only policy')
-eq(LL.db.processingModes.P,4,'migration preserves manual mode')
+-- B5b: the alts table is gone, so its hidden per-method modes and per-alt boxes reset to Auto.
+eq(next(LL.db.processingModes),nil,'alts-table modes cleared')
+eq(LL.db.characters['Old - Realm'].altMethods,nil,'per-alt boxes cleared')
+check(LL.db.characters['Old - Realm'].professions.Mining,'professions kept')
 near(LL.db.appearance.colors.A[1],.1)
 for key,defaults in pairs(LL.SourceDefaults) do
     eq(LL.db['source_'..key..'_enabled'],defaults[1]);eq(LL.db['source_'..key..'_weight'],defaults[2])

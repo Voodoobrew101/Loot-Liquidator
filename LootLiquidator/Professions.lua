@@ -472,7 +472,7 @@ function LL:CanUseConversion(f, conversion)
     local letter=({Disenchant="D",Mill="M",Prospect="P",Smelt="S",
         Craft="C",Recycle="R",Research="R",Exchange="X",Combine="X",Split="X"})[method] or "C"
     local mode=self.ProcessingMethodMode and self:ProcessingMethodMode(letter) or 2
-    if mode==3 then return false,"Disabled in Professions & Alts" end
+    if mode==3 then return false,"Disabled" end
     if method=="Exchange" or method=="Combine" or method=="Split" then
         -- These operations need no learned profession, but Manual must still
         -- respect the actual character selections in the roster table.
@@ -868,7 +868,8 @@ local function ShortName(key)
 end
 function LL:AltDisplayName(key) return ShortName(key) end
 function LL:AltClassLabel(class) return CLASS_LABELS[class] or class or "Unknown class" end
--- Shared per-skill behavior for the compact Professions & Alts menu.
+-- Per-method modes. The Professions & Alts table that set them was removed
+-- in B5b and saved modes are cleared on load, so every method runs as Auto.
 -- "Force on" enables evaluation and diagnostic display; it NEVER bypasses
 -- Blizzard spell checks, recipe requirements, class masks or binding restrictions.
 local MODES={T=true,D=true,M=true,P=true,S=true,C=true,R=true,X=true}

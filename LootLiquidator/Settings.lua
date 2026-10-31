@@ -760,8 +760,14 @@ function LL:RegisterNativeSettings()
     Slider(rules,"minGearProfitGold","Minimum gear auction profit",
         "Extra net gold over vendoring equipment required before an auction recommendation.",0,100,.05,0)
 
-    local chars=self.RegisterNativeRosterTable and self:RegisterNativeRosterTable(general)
+    -- B5b: the alts table is gone. Alts count automatically (the "Include
+    -- alts" switch and the transfer rule); "Show rates for" on the General
+    -- page picks whose skill is used. What-if profiles live under this page.
+    local chars,charsLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Professions (what-if)")
     if chars then
+        Settings.RegisterAddOnCategory(chars)
+        Section(charsLayout,"Your characters' professions are read automatically when you log into them.")
+        Section(charsLayout,"To try a different skill or specialization, pick a profession on the left, set it up, then choose \"What-if profile\" under \"Show rates for\" on the main page.")
         for _,profession in ipairs({"Alchemy","Blacksmithing","Enchanting","Engineering","Herbalism",
             "Inscription","Jewelcrafting","Leatherworking","Mining","Skinning","Tailoring","Cooking","Fishing"}) do
             local page=Settings.RegisterCanvasLayoutSubcategory(chars,self:CreateProfessionProfilePanel(profession),profession)
@@ -793,7 +799,7 @@ function LL:RegisterNativeSettings()
     Checkbox(research,"showProcessingSamples","Show sample counts in tooltips",
         "Show how many personal observations are available. Full distributions also require Detailed tooltips.",true)
     Section(researchLayout,"Evidence collection")
-    Section(researchLayout,"Source preferences live in Database & Accuracy. Profession contexts live below Professions & Alts.")
+    Section(researchLayout,"Source preferences live in Database & Accuracy. What-if profession profiles live under Professions (what-if).")
     Section(researchLayout,"Confidence thresholds")
     Slider(research,"minPersonalSamples","Minimum weighted samples",
         "Minimum effective samples required before personal observations drive recommendations.",1,100,1,30)

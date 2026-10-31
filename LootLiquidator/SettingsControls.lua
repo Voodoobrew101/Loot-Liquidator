@@ -41,6 +41,82 @@ function LL:ProtectSettingsDefaults()
     if EventRegistry then EventRegistry:RegisterCallback("Settings.CategoryChanged",Refresh,LL) end
     Refresh()
 end
+
+-- B5b: moved from the removed AltRosterUI.lua (alts table). Optional ElvUI
+-- skinning for our canvas Settings controls.
+-- ElvUI skins Settings-created rows in SettingsListScrollUpdateChild(),
+-- *not* when Settings.CreateDropdown() registers the initializer. Since a
+-- canvas does not participate in that ScrollBox, mirror the exact native
+-- widget skin calls from ElvUI/Game/Shared/Skins/SettingsPanel.lua.
+-- This is optional integration: without ElvUI the original Blizzard widgets
+-- are left intact, never painted with a hard-coded black/gold approximation.
+local function ApplyElvUISettingsSkin(frame,record)
+    if not frame or frame.llRosterElvUISkinned then return end
+    local E=type(_G.ElvUI)=="table" and _G.ElvUI[1]
+    if not E or type(E.GetModule)~="function" then return end
+    local okSkin,skin=pcall(E.GetModule,E,"Skins")
+    if not okSkin or not skin then return end
+    if record.kind=="drop" then
+        local c=frame.Control
+        if not c or not c.Dropdown or type(skin.HandleButton)~="function" then return end
+        -- The Settings list skins these three native buttons, not their
+        -- container. Hidden steppers remain hidden after being skinned.
+        local good=pcall(function()
+            skin:HandleButton(c.Dropdown)
+            if c.DecrementButton then skin:HandleButton(c.DecrementButton) end
+            if c.IncrementButton then skin:HandleButton(c.IncrementButton) end
+        end)
+        if not good then return end
+    elseif record.kind=="button" then
+        if not frame.Button or type(skin.HandleButton)~="function" then return end
+        if not pcall(skin.HandleButton,skin,frame.Button) then return end
+    elseif record.kind=="slider" then
+        local slider=frame.SliderWithSteppers
+        -- Match ElvUI's SettingsList handler: it skins the complete step
+        -- slider, not the inner Slider as a standalone legacy control.
+        if not slider or type(skin.HandleStepSlider)~="function" then return end
+        if not pcall(skin.HandleStepSlider,skin,slider) then return end
+    else
+        local checkbox=frame.Checkbox or frame.CheckBox
+        if not checkbox or type(checkbox.CreateBackdrop)~="function" then return end
+        -- Mirrors ElvUI's special Settings-list HandleCheckbox helper, which
+        -- differs from its general-purpose HandleCheckBox() implementation.
+        local good=pcall(function()
+            if not checkbox.backdrop then checkbox:CreateBackdrop() end
+            if checkbox.backdrop and checkbox.backdrop.SetInside then
+                checkbox.backdrop:SetInside(nil,4,4)
+            end
+            for _,region in next,{checkbox:GetRegions()} do
+                if region:IsObjectType("Texture") then
+                    if region.GetAtlas and region:GetAtlas()=="checkmark-minimal" then
+                        if E.private and E.private.skins and E.private.skins.checkBoxSkin then
+                            if E.Media and E.Media.Textures and E.Media.Textures.Melli then
+                                region:SetTexture(E.Media.Textures.Melli)
+                            end
+                            local checked=checkbox:GetCheckedTexture()
+                            if checked then
+                                checked:SetVertexColor(1,.82,0,.8)
+                                if checkbox.backdrop and checked.SetInside then
+                                    checked:SetInside(checkbox.backdrop)
+                                end
+                            end
+                        end
+                    else
+                        region:SetTexture(nil)
+                    end
+                end
+            end
+        end)
+        if not good then return end
+    end
+    frame.llRosterElvUISkinned=true
+end
+
+-- Reuse the same skinning path for other existing Settings canvas widgets.
+function LL:SkinSettingsCanvasControl(frame,kind)
+    ApplyElvUISettingsSkin(frame,{kind=kind})
+end
+
 local function Proxy(kind,default)
     if not LL.canvasSettingsCategory then
         -- Initializer host only; it is never registered in AddOns navigation.

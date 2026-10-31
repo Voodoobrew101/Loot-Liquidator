@@ -973,6 +973,16 @@ function LA:RemoveRetiredSettings(db)
     -- B3: the old "Show Loot Liquidator tooltips" box becomes the Off level.
     if db.showTooltips == false then db.tooltipDetail = 0 end
     for _, key in ipairs(RETIRED_SETTINGS) do db[key] = nil end
+    -- B5b: the alts table (per-method On/Auto/Off/Manual and per-alt boxes)
+    -- was removed. With no menu left to change them, old choices would stay
+    -- stuck invisibly, so every method returns to Auto. Professions, recipes
+    -- and what-if profiles are kept.
+    db.processingModes = {}
+    if type(db.characters) == "table" then
+        for _, character in pairs(db.characters) do
+            if type(character) == "table" then character.altMethods = nil end
+        end
+    end
 end
 
 local boot = CreateFrame("Frame")
