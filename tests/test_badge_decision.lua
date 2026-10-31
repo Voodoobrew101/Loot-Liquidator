@@ -223,5 +223,10 @@ Q.BestConversion=function(_,f) f.conversionOptions={{name='Disenchant',available
     yieldModel={valueConfidence=35}}} return f.conversionOptions[1] end
 p=Q:TokenPieceQuote({id=270913},{rewards={271457}})
 assert(p.disenchant==61*G and p.disenchantConfidence==35,'piece disenchant value and confidence')
+-- C4b3: an unreviewed research token list caps the confidence at its own.
+p=Q:TokenPieceQuote({id=270913},{rewards={271457},catalogConfidence=20})
+assert(p.disenchantConfidence==20,'token list confidence caps the disenchant confidence')
+p=Q:TokenPieceQuote({id=270913},{rewards={271457},catalogConfidence=90})
+assert(p.disenchantConfidence==35,'a surer list does not raise it')
 C_Item=nil;UnitClass=nil
 print('PASS: TokenPieceQuote chooses the right piece (C4c)')

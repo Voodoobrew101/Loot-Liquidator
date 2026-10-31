@@ -58,7 +58,7 @@ python3 tools/evidence_to_baselines.py
 PATH="$PWD/tools/lua51-shim:$PATH" lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua
 ```
 
-Read what each command prints (what it used, what it left out and why). Never hand-edit `ItemDBRuntime.lua` or the snapshot. If `tests/test_research_v3_baselines.py` fails only because a pinned number (Saronite, Aqirite) moved, update the pin and say so in the commit.
+The research refresh also rebuilds the gear-token reward lists (C4b3), so new tier tokens the research team has recorded arrive with the same command. Read what each command prints (what it used, what it left out and why). Never hand-edit `ItemDBRuntime.lua` or the snapshot. If `tests/test_research_v3_baselines.py` fails only because a pinned number (Saronite, Aqirite) moved, update the pin and say so in the commit.
 
 ### 2.5 Check Blizzard API changes
 

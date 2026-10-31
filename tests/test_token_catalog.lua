@@ -15,11 +15,24 @@ local LL={ItemDB={schemaVersion=1,processing={},tokenRewards={clone(approved)}},
 assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',LL)
 assert(loadfile('LootLiquidator/ATTIntegration.lua'))('LootLiquidator',LL)
 assert(not LL.itemDBError)
-for field,value in pairs({independentReview='PENDING',listComplete=false,requirementsReviewed=false,
-    sourceRevision='',confidence0to100=89}) do
+-- A record marked APPROVED still needs the full review.
+for field,value in pairs({listComplete=false,requirementsReviewed=false,
+    sourceRevision='',confidence0to100=89,reviewedBy=''}) do
     local bad=clone(approved);bad[field]=value;assert(not LL:ValidateTokenCatalog({bad}),field)
 end
-local bad=clone(approved);bad.requirements={questID=1};assert(not LL:ValidateTokenCatalog({bad}))
+-- C4b3 (owner, session 15; changed on purpose): an unreviewed research list counts at its
+-- confidence with one https source and no class ID; no source, no confidence, or REJECTED
+-- still doesn't.
+local research={recordID='v3token:900006',tokenID=900006,kind='open',gameMode='Retail',
+    patchStartBuild=1,patchEndBuild=2147483647,rewards={900010},listComplete=false,requirementsReviewed=false,
+    requirements={},evidenceStatus='RESEARCH_RELATIONSHIP',independentReview='NOT_REVIEWED',confidence0to100=40,
+    sourceRevision='fixture',sourceURLs={'https://example.test/one'}}
+assert(LL:ValidateTokenCatalog({research}),'unreviewed research list accepted')
+for field,value in pairs({sourceURLs={},confidence0to100=false,evidenceStatus='REJECTED',sourceRevision=''}) do
+    local bad=clone(research);bad[field]=value~=false and value or nil;assert(not LL:ValidateTokenCatalog({bad}),field)
+end
+bad=clone(research);bad.requirements={questID=1};assert(not LL:ValidateTokenCatalog({bad}),'unchecked requirement still refused')
+bad=clone(approved);bad.requirements={questID=1};assert(not LL:ValidateTokenCatalog({bad}))
 bad=clone(approved);bad.expectedQuantity=1;assert(not LL:ValidateTokenCatalog({bad}))
 bad=clone(approved);bad.sourceOrigin='ATT';assert(not LL:ValidateTokenCatalog({bad}))
 bad.licenseSPDX='MIT';bad.licenseText='AllTheThings: Permission is hereby granted';assert(LL:ValidateTokenCatalog({bad}))
@@ -53,8 +66,14 @@ assert(LL:ATTTokenInfo({id=900001,classID=15,equipLoc='INVTYPE_HEAD'})==nil)
 GetBuildInfo=function()return 'synthetic','201','Oct 29 2026',120105 end
 assert(LL:ATTTokenInfo(f)==nil)
 GetBuildInfo=function()return 'synthetic','150','Oct 29 2026',120105 end
-LL.ItemDB.tokenRewards[1].independentReview='PENDING';assert(LL:ATTTokenInfo(f)==nil)
-LL.ItemDB.tokenRewards[1].independentReview='APPROVED'
+LL.ItemDB.tokenRewards[1].evidenceStatus='REJECTED';assert(LL:ATTTokenInfo(f)==nil)
+LL.ItemDB.tokenRewards[1].evidenceStatus='VERIFIED_RELATIONSHIP'
+-- C4b3: an unreviewed list works too, labelled, with its confidence carried along.
+LL.ItemDB.tokenRewards[1].independentReview='PENDING';LL:InvalidateATTCache()
+local unreviewed=assert(LL:ATTTokenInfo(f),'unreviewed list used')
+assert(unreviewed.source:find('not yet reviewed',1,true) and unreviewed.catalogConfidence==90 and not unreviewed.catalogReviewed)
+LL.ItemDB.tokenRewards[1].independentReview='APPROVED';LL:InvalidateATTCache()
+assert(LL:ATTTokenInfo(f).catalogReviewed)
 -- Unreviewed legacy cache remains explicitly labelled, and works with ATT
 -- uninstalled. The integration toggle may still disable that legacy fallback.
 LL.db.attRewardCache={['900002']={kind='open',rewards={900010}}}
@@ -118,13 +137,13 @@ loadfile=function(path)
     if path=='database/records.lua' then return function()return {tokenRewards=recordsTokens,processing={},mechanicRules={}}end end
     return originalLoadfile(path)
 end
-arg={outdir..'/TokenFixture.lua'}
+arg={outdir..'/TokenFixture.lua','database/evidence-baselines.lua','tests/fixtures/research-v3-empty.lua'}
 assert(originalLoadfile('tools/compile_itemdb.lua'))()
 local compiled={};assert(originalLoadfile(outdir..'/TokenFixture.lua'))('LootLiquidator',compiled)
 assert(#compiled.ItemDB.tokenRewards==1 and compiled.ItemDB.tokenRewards[1].tokenID==900001)
 assert(#compiled.ItemDB.buildReport.tokenRewardsSkipped==0)
 -- A record that fails the check is skipped with its reason; the good one ships.
-local unchecked=clone(approved);unchecked.recordID='unchecked';unchecked.tokenID=900002;unchecked.independentReview='PENDING'
+local unchecked=clone(approved);unchecked.recordID='unchecked';unchecked.tokenID=900002;unchecked.sourceURLs={}
 local overlapping=clone(approved);overlapping.recordID='overlap'
 researchTokens={approved,unchecked,overlapping}
 assert(originalLoadfile('tools/compile_itemdb.lua'))()
@@ -133,6 +152,19 @@ assert(#compiled.ItemDB.tokenRewards==1 and compiled.ItemDB.tokenRewards[1].reco
 local skipped=compiled.ItemDB.buildReport.tokenRewardsSkipped
 assert(#skipped==2 and skipped[1].recordID=='unchecked' and skipped[1].reason:find('Token catalog requires',1,true)
     and skipped[2].recordID=='overlap' and skipped[2].reason:find('Overlapping',1,true),'skipped records carry their reason')
+-- C4b3: token lists from the research v3 notes compile into the same ItemDB, after the
+-- reviewed export: a reviewed record for the same token wins (the v3 one is skipped as
+-- overlapping); a new token ships unreviewed with its confidence.
+researchTokens={approved}
+arg={outdir..'/TokenFixture.lua','database/evidence-baselines.lua','tests/fixtures/research-v3-tokens.lua'}
+assert(originalLoadfile('tools/compile_itemdb.lua'))()
+compiled={};assert(originalLoadfile(outdir..'/TokenFixture.lua'))('LootLiquidator',compiled)
+local byID={} for _,r in ipairs(compiled.ItemDB.tokenRewards) do byID[r.tokenID]=r end
+assert(#compiled.ItemDB.tokenRewards==2 and byID[900001].recordID=='synthetic-only','reviewed record wins')
+assert(byID[900007].independentReview=='NOT_REVIEWED' and byID[900007].confidence0to100==40,'v3 list ships unreviewed')
+assert(compiled.ItemDB.buildReport.tokenRewardsFromResearchV3==1)
+assert(compiled.ItemDB.buildReport.tokenRewardsSkipped[1].recordID=='v3token:900001')
+arg={outdir..'/TokenFixture.lua','database/evidence-baselines.lua','tests/fixtures/research-v3-empty.lua'}
 -- Tokens in database/records.lua (hand approval on this branch) fail the build.
 researchTokens,recordsTokens={approved},{approved}
 local ok,message=pcall(assert(originalLoadfile('tools/compile_itemdb.lua')))

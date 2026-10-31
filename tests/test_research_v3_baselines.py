@@ -91,6 +91,22 @@ ok(notes['studies mix batch sizes (e.g. milling and mass milling)'] > 0, 'mixed 
 ok(notes['conditional drop (needs an unlock the addon cannot check yet)'] > 0, 'conditional drops reported')
 ok(not any(isinstance(m['id'], str) for r in records for m in r['materials']), 'no family outputs')
 
+# C4b3: token reward lists from the v3 notes. Pinned numbers may move after a refresh, on purpose.
+import research_v3_tokens as vt  # noqa: E402
+revision = json.loads((SNAPSHOT / 'SNAPSHOT.json').read_text())['commit']
+tokens, token_notes, conflicts = vt.build_tokens(SNAPSHOT, revision)
+tok = {t['tokenID']: t for t in tokens}
+ok(tok[270910]['rewards'] == [271547, 271556, 271565] and tok[270910]['confidence0to100'] == 90,
+   'Venomwoven Idol: 3 pieces, research and our list agree (two pages each)')
+ok(tok[249347]['rewards'] == [250045, 250054, 250063], 'Alnwoven Riftbloom: IDs filled from our staged list by name')
+ok(tok[237581]['rewards'] == [237631, 237694, 237703], 'Manaforge Omega chest token from a War Within worker')
+ok(all(t['independentReview'] == 'NOT_REVIEWED' and t['recordID'].startswith('v3token:') for t in tokens),
+   'never marked APPROVED here')
+ok(249367 not in tok and 270909 not in tok, 'curio exchanges left out (cost not recorded)')
+ok(45634 not in tok, 'copy of the old addon token table not counted')
+ok(not conflicts, 'no source conflicts in this snapshot')
+ok(all(t['sourceURLs'] and all(u.startswith('https://') for u in t['sourceURLs']) for t in tokens), 'every list has https sources')
+
 # The committed file is current.
-ok(v3.render(records, SNAPSHOT) == v3.DEFAULT_OUTPUT.read_text(), 'database/research-v3-baselines.lua is current')
+ok(v3.render(records, SNAPSHOT, tokens) == v3.DEFAULT_OUTPUT.read_text(), 'database/research-v3-baselines.lua is current')
 print(f'RESEARCH V3 BASELINE TESTS: {passed} passed, 0 failed; {len(records)} records')

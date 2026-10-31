@@ -120,14 +120,18 @@ function LL:StandaloneTokenInfo(f)
     local build=GetBuildInfo and tonumber((select(2,GetBuildInfo())))
     for _,r in ipairs(self._tokenRewardIndex and self._tokenRewardIndex[f.id] or {}) do
         if WOW_PROJECT_ID~=nil and WOW_PROJECT_ID==WOW_PROJECT_MAINLINE
-            and build and build>=r.patchStartBuild and build<=r.patchEndBuild and f.classID==r.inputClassID
+            and build and build>=r.patchStartBuild and build<=r.patchEndBuild
+            and (r.inputClassID==nil or f.classID==r.inputClassID)
             and self:ValidateTokenCatalog({r}) then
             local data=tokenCache[f.id]
             if not data or data._catalogRecord~=r or data._catalogBuild~=build then
                 local rewards={} for i,id in ipairs(r.rewards) do rewards[i]=id end
+                local reviewed=r.independentReview=='APPROVED'
                 data={rewards=rewards,kind=r.kind,costs=r.costs,standalone=true,
                     recordID=r.recordID,_catalogRecord=r,_catalogBuild=build,
-                    source='Loot Liquidator reviewed reward catalog (possible outcomes; probabilities unknown)'}
+                    catalogConfidence=r.confidence0to100,catalogReviewed=reviewed,
+                    source=reviewed and 'Loot Liquidator reviewed reward catalog (possible outcomes; probabilities unknown)'
+                        or 'Loot Liquidator research reward list, not yet reviewed (possible outcomes; probabilities unknown)'}
                 tokenCache[f.id]=data
             end
             RefreshMissing(data,(GetTime and GetTime()) or 0)
@@ -679,6 +683,10 @@ function LL:TokenPieceQuote(f,token)
                     piece.disenchant=option.value
                     local model=option.yieldModel
                     piece.disenchantConfidence=model and (model.valueConfidence or model.confidence)
+                    -- C4b3: an unreviewed token list can't be surer than its own confidence.
+                    if type(token.catalogConfidence)=="number" and type(piece.disenchantConfidence)=="number" then
+                        piece.disenchantConfidence=math.min(piece.disenchantConfidence,token.catalogConfidence)
+                    end
                     break
                 end
             end

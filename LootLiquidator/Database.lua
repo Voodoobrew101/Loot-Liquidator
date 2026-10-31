@@ -221,18 +221,26 @@ function LL:ValidateTokenCatalog(records)
     end
     if not array(records) then return false,'Token catalog must be an array' end
     for _,r in ipairs(records) do
+        -- C4b3 (owner, session 15; decisions 1 and 15): research token lists are used at their
+        -- stated confidence, like research scaling rules (C7). A reviewed record (APPROVED) still
+        -- needs everything the old gate asked for; an unreviewed one needs an ID, scope, at
+        -- least one https source and a confidence, and no requirement it can't check.
+        local reviewed=r.independentReview=='APPROVED'
         if type(r)~='table' or type(r.recordID)~='string' or r.recordID=='' or seen[r.recordID]
             or not positive(r.tokenID) or (r.kind~='open' and r.kind~='exchange') or r.gameMode~='Retail'
-            or not finite(r.inputClassID) or r.inputClassID>20 or r.inputClassID%1~=0 or r.inputClassID==7
-            or r.evidenceStatus~='VERIFIED_RELATIONSHIP' or r.independentReview~='APPROVED'
-            or type(r.reviewedBy)~='string' or r.reviewedBy=='' or r.listComplete~=true
-            or r.requirementsReviewed~=true or type(r.requirements)~='table' or next(r.requirements)
-            or not finite(r.confidence0to100) or r.confidence0to100<90 or r.confidence0to100>100
+            or (r.inputClassID~=nil and (not finite(r.inputClassID) or r.inputClassID>20 or r.inputClassID%1~=0 or r.inputClassID==7))
+            or (reviewed and r.inputClassID==nil)
+            or r.evidenceStatus=='REJECTED'
+            or (reviewed and (r.evidenceStatus~='VERIFIED_RELATIONSHIP' or type(r.reviewedBy)~='string' or r.reviewedBy==''
+                or r.listComplete~=true or r.requirementsReviewed~=true or r.confidence0to100==nil or r.confidence0to100<90
+                or not array(r.sourceURLs) or #r.sourceURLs<2))
+            or type(r.requirements)~='table' or next(r.requirements)
+            or not finite(r.confidence0to100) or r.confidence0to100>100
             or not positive(r.patchStartBuild) or not positive(r.patchEndBuild) or r.patchStartBuild>r.patchEndBuild
             or type(r.sourceRevision)~='string' or r.sourceRevision==''
-            or not array(r.sourceURLs) or #r.sourceURLs<2 or not array(r.rewards) or #r.rewards==0 or #r.rewards>500
+            or not array(r.sourceURLs) or #r.sourceURLs<1 or not array(r.rewards) or #r.rewards==0 or #r.rewards>500
             or r.expectedQuantity~=nil or r.dropChance~=nil or r.probability~=nil then
-            return false,'Token catalog requires complete reviewed relationships, explicit scope and provenance'
+            return false,'Token catalog requires an ID, explicit scope, a confidence and at least one https source (reviewed records: the full review)'
         end
         seen[r.recordID]=true
         local urls={}

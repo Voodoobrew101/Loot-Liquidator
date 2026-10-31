@@ -263,7 +263,23 @@ local tokenValidator={}
 assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',tokenValidator)
 db.tokenRewards={}
 db.buildReport.tokenRewardsSkipped={}
-for index,r in ipairs(type(research.tokenRewards)=='table' and research.tokenRewards or {}) do
+-- C4b3 (owner, session 15): "the rewards should be part of the compiler system for
+-- updating the itemdb". Token lists built from the research team's v3 notes by
+-- tools/research_v3_to_baselines.py (tokenRewards in database/research-v3-baselines.lua,
+-- confidence shown, never marked APPROVED) follow any reviewed ones from the research
+-- export, so a reviewed record for the same token wins and the v3 one is skipped.
+local tokenCandidates={}
+for _,r in ipairs(type(research.tokenRewards)=='table' and research.tokenRewards or {}) do tokenCandidates[#tokenCandidates+1]=r end
+do
+    local v3tokens=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))().tokenRewards
+    for _,r in ipairs(type(v3tokens)=='table' and v3tokens or {}) do
+        assert(type(r)=='table' and tostring(r.recordID):match('^v3token:') and r.independentReview~='APPROVED',
+            'Research v3 token lists must use v3token: IDs and are never pre-approved')
+        tokenCandidates[#tokenCandidates+1]=r
+    end
+end
+db.buildReport.tokenRewardsFromResearchV3=0
+for index,r in ipairs(tokenCandidates) do
     -- Each record is checked alone, then against everything kept so far
     -- (duplicate IDs, overlapping patch windows). A bad record is skipped with
     -- its reason instead of failing the build; it stays in the research file.
@@ -274,7 +290,9 @@ for index,r in ipairs(type(research.tokenRewards)=='table' and research.tokenRew
         trial[#trial+1]=r
         ok,why=tokenValidator:ValidateTokenCatalog(trial)
     end
-    if ok then db.tokenRewards[#db.tokenRewards+1]=r
+    if ok then
+        db.tokenRewards[#db.tokenRewards+1]=r
+        if tostring(r.recordID):match('^v3token:') then db.buildReport.tokenRewardsFromResearchV3=db.buildReport.tokenRewardsFromResearchV3+1 end
     else
         local skipped=db.buildReport.tokenRewardsSkipped
         skipped[#skipped+1]={index=index,recordID=type(r)=='table' and tostring(r.recordID) or '?',reason=tostring(why)}
