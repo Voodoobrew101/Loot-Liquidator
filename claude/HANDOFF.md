@@ -68,7 +68,7 @@ Main files in `LootLiquidator/`:
 
 | File | What it does |
 | --- | --- |
-| Core.lua | The decision for each item (`LA:Evaluate`), defaults, ~40 slash commands |
+| Core.lua | The decision for each item (`LA:Evaluate`, ~line 445), defaults, ~35 slash commands, `RETIRED_SETTINGS` migration list (add removed keys there) |
 | ConversionEngine.lua | Gold value of disenchant/mill/prospect/smelt (`ValueProcessingModel`, ~line 268). Since A2: unknown outputs give a partial value with `model.partial` and `model.valueConfidence` |
 | Database.lua | Blends evidence sources with weights (`ComputeEvidenceModel`, ~lines 330–545). Since A1: weak/old evidence is down-weighted, not dropped; only different-batch drop chances still get zero weight (a different quantity, by design) |
 | Badges.lua | Badge letters and the tooltip |
@@ -84,9 +84,8 @@ Main files in `LootLiquidator/`:
 
 Known dead or confusing things (found by code reading):
 
-- `/ll milling on|off`, `/ll prospecting`, `/ll smelting`, `/ll exchanges` change saved settings the code never reads.
 - Settings reads "Legacy" as the old disenchant tables (`GameData.lua` → `LL.LegacyDB`); since A1 it is on by default at weight 10.
-- Seven `methodEnabledD/M/P/S/C/R/X` settings are saved but never used.
+- `manualMilling/Prospecting/Smelting/Disenchanting` are read in `Professions.lua` (~line 590) but nothing in the addon sets them (handle in B5a).
 - About ten separate tooltip checkboxes overlap the Minimal/Summary/Detailed level (`tooltipDetail`).
 - ItemDB's `tokenRewards` list is empty, so tokens depend entirely on ATT.
 - The T badge counts alts only for class-restricted gear (tier). Ordinary gear never counts an alt (open question for the owner).
@@ -165,7 +164,7 @@ Rules for tests:
 
 - Run the full suite before every commit. It must pass.
 - Many existing tests deliberately enforce the old strict rules (e.g. "Runtime database ships no unverified scaling coefficients"). When an owner decision changes a rule, **change that test on purpose** and explain why in the commit message. Never delete a test just to make it pass.
-- Add a small test for each behaviour you change.
+- Add a small test for each behaviour you change. `tests/test_badge_decision.lua` is a light harness for `LA:Evaluate` and the tooltip header (stubs everything); add badge/tooltip cases there.
 - If you change data in `database/`, rebuild with `lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua` (the test suite checks the compiled file matches).
 - `python3 tools/package_addon.py` (check its usage) builds the installable zip.
 
@@ -198,12 +197,12 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 - [x] **A1. Stop hiding estimates.** (`d10bc33`) In `Database.lua`, working estimates and unknown-confidence sources should get a small non-zero weight instead of zero, and legacy data should count (weakly) instead of only filling gaps. Confidence goes down for them, not to "no answer". *Done when:* an item with only working estimates gets a value and a confidence; tests updated.
 - [x] **A2. Partial outputs still give a value.** (`badde1e`) In `ConversionEngine.lua`, when some outputs of an option are unknown, compute the value from the known outputs, lower the confidence, and mark it "partial". Don't return "Insufficient Data" unless nothing at all is known. *Done when:* the reference case (an ore with one unknown gem) shows a value.
 - [x] **A3. One confidence figure per option** (`a52b8d7`) in the tooltip, value-weighted across materials, e.g. "Prospecting (Confidence 48%)". Per-material confidence as an option, off by default.
-- [ ] **A4. The ? badge only when there is truly nothing.** Check `Core.lua` so "?" appears only when no option has any estimate. Otherwise pick the best option and show its confidence.
-- [ ] **A5. Optional price in the header**, "Loot Liquidator: Smelt 6g 87s" (checkbox, default on).
+- [x] **A4. The ? badge only when there is truly nothing.** (`743e378`) Check `Core.lua` so "?" appears only when no option has any estimate. Otherwise pick the best option and show its confidence.
+- [x] **A5. Optional price in the header** (`f5ad5b8`), "Loot Liquidator: Smelt 6g 87s" (checkbox, default on).
 
 **Phase B — Make it simple to use**
 
-- [ ] **B1. Remove dead settings:** the `/ll milling|prospecting|smelting|exchanges` toggles, the seven `methodEnabled*` settings, and help text that lists them. Add a saved-data migration.
+- [x] **B1. Remove dead settings:** (`d888073`) the `/ll milling|prospecting|smelting|exchanges` toggles, the seven `methodEnabled*` settings, and help text that lists them. Add a saved-data migration.
 - [ ] **B2. Remove the frozen TSM conversion source** (`itemTSM.lua` and the "TSM database" source weight). TSM stays for Auction House prices only. Update the compiler, TOC, settings and tests.
 - [ ] **B3. Tooltip levels as the main control:** Off / Recommendation / Alternatives / Breakdown. Fold the ~10 tooltip checkboxes into these levels; keep only a couple of genuinely separate options.
 - [ ] **B4. "Include alts" switch** on the Badges page, bound to `includeVerifiedAlts`.
@@ -235,7 +234,7 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 
 ## 8. Owner questions (keep to one or two, plain words)
 
-*(none open)*
+- (2026-10-31, open) Gear tokens (tier tokens) still show "?" because we don't yet know what they're worth. Would you rather they show "?" or no badge at all until C4 adds token data?
 
 Answered:
 - 2026-10-31 Transmog for alts → "any type": the T badge counts an alt for any gear their armor type can wear, not only tier/class-specific pieces (task C5).
@@ -248,16 +247,18 @@ Answered:
 
 ## 10. What to check in game
 
-*(Filled in at the end of each session.)* After session 1 (version 0.11.0-claude.2):
+*(Filled in at the end of each session.)* After session 2 (version 0.11.0-claude.3):
 
-1. Hover a few ores and herbs that used to say "Insufficient Data": they should now show a gold value and a confidence. Values marked "partial" only count the materials that have a price.
-2. Hover some old green/blue gear you could disenchant: the Disenchant line should now show a value (it was usually blank before).
-3. In the breakdown, numbers with a "~" in front are estimates. Check they look sensible (no huge or silly amounts).
-4. Each option line now shows one figure like "Prospecting (Confidence 48%)". In Settings → Tooltips there's a new box "Show confidence per material" (off by default): turning it on adds a small (N%) to each material row.
-5. Check the addon loads with no error pop-ups, and that your old settings are still there.
+1. Far fewer orange "?" badges. Items that used to show "?" should now show A, V or a processing letter. A "?" should only remain on gear tokens and on items with no price anywhere.
+2. The first tooltip line now ends with a price, e.g. "Loot Liquidator: Smelt 6g 87s". Check the price matches the matching row underneath.
+3. Settings → Tooltips has a new box "Show price in the header" (on). Turning it off removes the price from that first line.
+4. Type `/ll help`: it no longer lists the old milling/prospecting/smelting/exchanges switches. Check the addon loads with no error pop-ups and your settings are still there.
+
+Still worth checking from session 1: ores/herbs show a value and "Confidence N%"; old green/blue gear shows a Disenchant value.
 
 ## 11. Session log
 
+- 2026-10-31 (session 2, v0.11.0-claude.3): The "?" badge now only shows when nothing at all has a price; otherwise the addon picks the best option it has a number for (A4). The tooltip's first line can show the price, on by default (A5). Removed old switches that did nothing (B1). Automated tests pass; needs an in-game check.
 - 2026-10-31: Prompt written. Branch `LootLiquidatorclaude-V0.1` exists at `8d8753e` (same as alpha10). The test suite passes with the lupa wrapper. Nothing changed in the addon yet.
 - 2026-10-31 (session 1 continued, v0.11.0-claude.2): Each option now shows one confidence figure as a percentage, weighted by how much each material is worth (A3). Optional per-material confidence added, off by default. Automated tests pass; needs an in-game check.
 - 2026-10-31: Owner answered the transmog question ("any type"); recorded under C5.
