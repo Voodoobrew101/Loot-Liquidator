@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_MILLING_RAW_CONTEXT_OUTPUT_UNIVERSE_AND_F002_MIDNIGHT_REPAIR_RETEST",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T01:43:06Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "322253756c993dfde6797a947761615f568648ba",
+  "testCommit": "7ed840467742ed18267e7a7035875cf6270f0913",
+  "status": "FAIL_F003_NEW_MODEL_CONDITIONAL_PASS_F002_REPAIR",
+  "verdicts": {
+    "F002MidnightLegacyQuarantine": "PASS_RESEARCH_ONLY_NATIVE_CI_RETEST_27_OF_27",
+    "F003DragonflightMillingDecisionSensitivity": "FAIL_RAW_CONTEXT_AND_OUTPUT_UNIVERSE_GATES",
+    "F004TWWMillingSpellBatch": "CONDITIONAL_INDEXED_BATCH_10_NO_CAST_VERIFICATION_NO_RECIPE_ADMISSION"
+  },
+  "subjectBlobs": {
+    "dfMillingModelCode": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
+    "dfMillingModelManifest": "30ed0f15034f7c60baae55e779be44e28ec4d09d",
+    "independentRegression": "97ab6ed0a583a2c1fc9cbed092ef506e674361a8",
+    "workingEstimator": "257793a7ac1cfaadb8efd9535d84e979e50aec11",
+    "pipeline": "30eae7a4a29af3e41e2a3a9bc805661504b44e00",
+    "twwBatchEvidence": "c06e12227c5961c755f76af838e678b4bcaae6c5",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "scope": {
+    "dfMillingTargetKeys": 24,
+    "dfMillingInputIDs": [
+      191469,
+      191470,
+      191471,
+      191472,
+      200061
+    ],
+    "sourceLineage": "FROZEN_HISTORICAL_TSM_RATES_NOT_MEASURED_CURRENT_RETAIL",
+    "f004TWWPriorityKeys": 12,
+    "f002MidnightKeys": 8
+  },
+  "independentTest": {
+    "path": "research/tests/v2/test_f005_df_milling_raw_context_and_universe.js",
+    "cases": 16,
+    "passed": 6,
+    "failed": 10,
+    "executedEnvironment": "V8 exact GitHub model source and exact committed test source, with compatible assert/require stubs",
+    "syntheticOnly": true,
+    "realRetailCasts": 0,
+    "nativeNodeNewSuite": "NOT_RUN",
+    "passedCases": [
+      "model own 32-assertion selfTest",
+      "fully typed RAW-shaped synthetic control preview-only",
+      "missing zero-inclusive vector rejected",
+      "historical unknown rate retains two unit scenarios and PREVIEW_ONLY",
+      "hypothetical omitted co-output flips decision from -4 to +96",
+      "full output unconditional E without P multiplier"
+    ],
+    "failedCases": [
+      "RAW missing gameMode accepted",
+      "RAW missing actual observation epoch accepted",
+      "RAW missing input quality rank accepted",
+      "RAW missing output rank mapping accepted",
+      "RAW missing direct reagent vector accepted",
+      "RAW missing minimum eligible recipe skill accepted",
+      "RAW nonnumeric skill accepted",
+      "RAW nonnumeric resourcefulness accepted",
+      "RAW incomplete output universe accepted as zero-inclusive",
+      "decisionSensitivity accepts incomplete output universe and reports dominance"
+    ],
+    "defectClasses": [
+      {
+        "code": "RAW_TYPED_CONTEXT_INCOMPLETE",
+        "count": 8,
+        "impact": "RAW_CURRENT_RETAIL observations can be labelled as current-patch output P/E without a complete typed operation/context or valid numeric profession parameters; no verified study is demonstrated"
+      },
+      {
+        "code": "OUTPUT_UNIVERSE_SELF_DECLARED",
+        "count": 2,
+        "impact": "Only supplied output IDs are required; missing co-outputs can reverse synthetic decision. In example one output yields margin -4 and alternative dominates; including another known target yields +96 and processing dominates"
+      }
+    ],
+    "notClaimed": "No evidence of actual live EV leakage, wrong WoW yields, or a real player recommendation"
+  },
+  "nativeCI": {
+    "workflowRunID": 40986579730,
+    "commit": "322253756c993dfde6797a947761615f568648ba",
+    "conclusion": "success",
+    "jobID": 123838909527,
+    "logObservations": [
+      "F005_MIDNIGHT_MILLING_LEGACY_PROXY_CONFIDENCE passed 27 failed 0",
+      "independent repeat compiler deterministic build passed",
+      "Lua 5.1 decoded 1018 mappings and 4072 working cells with 514 evidence gaps",
+      "source-context attestation roundtrip passed"
+    ],
+    "newDFMillingSuiteWiredIntoCI": false,
+    "note": "Native CI proves the F002 repair and existing pipeline; does not execute new F003 suite."
+  },
+  "f004SourceCrosscheck": {
+    "indexedSpellURL": "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+    "indexedNominalBatch": 10,
+    "spellID": 444181,
+    "minimumInscriptionSkill": 1,
+    "betaDatamineURL": "https://www.mmo-champion.com/content/12459-The-War-Within-Beta-Datamining-Build-55665",
+    "betaBuild": 55665,
+    "betaChangedDescriptionToFive": 5,
+    "verdict": "Do not transfer beta 5-herb denominator to indexed 10-herb spell. Indexed spell record does not verify a current in-game completed cast, reagent refund, output rank or expected yield. Do not auto-assign recipeSpellID to 10 recipe-null candidate keys.",
+    "newNumericCohorts": 0,
+    "independentMatchedHoldouts": 0
+  },
+  "currentReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "exactDeltas": {
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "newMappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "economicPromotions": 0,
+    "productionFilesChanged": 0,
+    "sourceEvidenceFilesChanged": 0,
+    "frozenTSMFilesChanged": 0,
+    "tooltipPolicyFilesChanged": 0,
+    "otherAgentFilesChanged": 0
+  },
+  "repairOwner": "baseline-modeller",
+  "repairRequest": "For RAW_CURRENT_RETAIL enforce a versioned typed context with explicit gameMode, observation epoch, rank IDs, direct reagent vector, eligible minimum skill and numeric profession stats. Require an independently supported complete output-universe certificate or return PARTIAL_UNIVERSE_NOT_VALUATION_READY; reject confident decision classifications for incomplete output sets. Preserve synthetic-only scenario exploration, historical TSM uncertainty and PREVIEW_ONLY.",
+  "testsNotRun": [
+    "New 16-case suite under native Node",
+    "In-game Retail casts",
+    "Whole-study independent holdout",
+    "Production runtime consumer audit for new F003 module (research-only module not integrated)"
+  ],
+  "blockers": [
+    "No independently matched current-Retail cast family for 24 DF milling keys",
+    "No verified output universe/recipe eligibility for input 200061",
+    "No native Node invocation of new suite in pipeline",
+    "No current price snapshot for real gold decision boundaries"
+  ],
+  "nextTask": "F005_RETEST_F003_DF_MILLING_TYPED_RAW_CONTEXT_AND_OUTPUT_UNIVERSE_AFTER_MODELLER_REPAIR",
+  "zeroDeltaPivot": "F002 repair accepted from changed native CI; pivoted to newly changed F003 model and distinct F004 denominator source rather than re-auditing identical Midnight evidence."
+}

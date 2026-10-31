@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_ARATHOR_MILLING_SELECTOR_EXCLUSION",
+  "runUTC": "2026-10-30T15:29:00Z",
+  "workflowRevision": 2,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "fb16c812e21a1daf410acffb832f1041fe48d921",
+  "question": "Is Arathor's Spear an eligible input for Khaz Algar Milling, despite being a TWW herb, and may it be admitted as a new herb-to-pigment conversion?",
+  "disposition": "RESEARCH_ONLY_UNIVERSE_EXCLUSION_LEAD_DO_NOT_ADMIT_ARATHOR_MILLING_MAPPINGS",
+  "findings": [
+    {
+      "sourceFamily": "blizzard-forums-2024-arathor-selector-bug-thread",
+      "url": "https://us.forums.blizzard.com/en/wow/t/inscription-unable-to-mill-arathors-spear/1935257",
+      "firsthandAuthors": [
+        {
+          "author": "Jonar",
+          "postDate": "2024-08-29",
+          "reportedHeldHerbs": 119,
+          "claim": "Arathor's Spear did not appear as millable with herbs in reagent bag; moving between bank, reagent bank and warband bank did not resolve selector omission."
+        },
+        {
+          "author": "Boxie",
+          "postDate": "2024-09-06",
+          "reportedHeldHerbs": 10,
+          "claim": "Milling UI showed a one-available indicator while a stack of ten Arathor's Spear was held, but the herb remained absent from selector."
+        },
+        {
+          "author": "Rinoacross",
+          "postDate": "2024-09-10",
+          "reportedHeldHerbs": null,
+          "claim": "Still unable to mill Arathor's Spear."
+        }
+      ],
+      "lastReportedFollowup": "2025-04-29",
+      "note": "Single discussion thread with multiple firsthand commenters; distinct authors but NOT controlled cast studies."
+    },
+    {
+      "sourceFamily": "blizzard-forums-2025-arathor-selector-support-thread",
+      "url": "https://us.forums.blizzard.com/en/wow/t/inscription-arathors-spear-not-on-milling-list/2083666",
+      "firsthandAuthors": [
+        {
+          "author": "Distinction",
+          "postDate": "2025-03-27",
+          "reportedHeldHerbs": 500,
+          "claim": "Arathor's Spear was not present in the Milling selection despite 500 herbs in inventory; same author also posted in 2024 bug thread in March 2025, so this is one author lineage."
+        }
+      ],
+      "note": "Other replies infer intended exclusion, but no Blizzard developer statement confirms permanent design intent."
+    },
+    {
+      "sourceFamily": "wowhead-khaz-algar-inscription-overview-editorial-and-comment",
+      "url": "https://www.wowhead.com/guide/the-war-within/professions/inscription-overview",
+      "publicationOrUpdateDate": "2025-07-31",
+      "claim": "Comment lists Mycobloom, Luredrop, Orbinid and Blessing Blossom as the four milling pigment families; Arathor's Spear is used as a crafting reagent elsewhere, not identified as a milling pigment input.",
+      "independentMeasuredCohorts": 0
+    },
+    {
+      "sourceFamily": "method-2024-inscription-guide",
+      "url": "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
+      "publicationOrUpdateDate": "2024-08-10",
+      "claim": "The milling path explicitly uses Mycobloom and Luredrop; does not independently establish an exhaustive eligible-herb universe.",
+      "independentMeasuredCohorts": 0
+    }
+  ],
+  "itemIdentity": {
+    "herb": "Arathor's Spear",
+    "rank1": 210808,
+    "rank2": 210809,
+    "rank3": 210810,
+    "rankIdentitySources": [
+      "https://tradeskillmaster.com/retail/us/items/210808",
+      "https://tradeskillmaster.com/retail/us/items/210809",
+      "https://tradeskillmaster.com/retail/us/items/210810"
+    ],
+    "exactRankHeldByForumAuthors": null,
+    "outputItemIDs": null,
+    "recipeSpellID": 444181,
+    "recipeAssociation": "FAMILY_ONLY_NOT_VERIFIED_PER_ARATHOR_INPUT",
+    "nominalHerbsPerEligibleOperation": 10
+  },
+  "inferenceLimits": [
+    "Selector absence is evidence of observed ineligibility or persistent UI defect, NOT proof of intentional permanent prohibition or proof of an impossible item ID.",
+    "No author recorded a successful completed Arathor milling cast, pigment output ID, output rank, zero-inclusive output count, skill/gear/spec or build number.",
+    "The Sep 2024 UI availability badge is not proof of actual selectable recipe or successful conversion.",
+    "A failed selection is not a completed cast with zero output; do not encode dropChance=0 or expectedQuantity=0.",
+    "Held stack quantities 119, 10 and 500 are NOT cast counts or denominators.",
+    "March 2025 Distinction appears in two threads; count one author, not two independent cohorts.",
+    "Source publication dates are not exact in-game build identifiers; 2026 Retail eligibility remains unverified."
+  ],
+  "affectedUniverseCandidates": [
+    "candidate:universe:tww:mill:210808:output-unknown:arathor-eligibility",
+    "candidate:universe:tww:mill:210809:output-unknown:arathor-eligibility",
+    "candidate:universe:tww:mill:210810:output-unknown:arathor-eligibility"
+  ],
+  "affectedAdmittedTWWMillingPriorityKeys": 0,
+  "reason": "The 12 queued TWW milling E-gap mappings concern Mycobloom, Luredrop, Orbinid and Blessing Blossom; none uses Arathor's Spear.",
+  "numericEvidence": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "exactDeltas": {
+    "newFirsthandAuthorLineages": 4,
+    "newMeasuredCastStudies": 0,
+    "sourceThreadsReviewed": 2,
+    "sourceGuidesCrossChecked": 2,
+    "unadmittedHerbRankLeadsTriaged": 3,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0
+  },
+  "measurementRequest": {
+    "question": "On current 2026 Retail build, do any of Arathor's Spear R1/R2/R3 item IDs appear in Khaz Algar Milling's reagent selector and complete a cast?",
+    "procedure": "Capture build/version, exact item ID and rank, ten herbs in character bags, selector list and any UI availability badge, then repeat with bank/reagent bank/warbank; record learned Inscription, skill/spec/gear and any error. Only if selectable, complete a controlled cast and capture actual inputs, refunds, exact output IDs/ranks, and zero-inclusive outputs. Do not record UI rejection as a zero-output cast."
+  },
+  "blockers": [
+    "No current-Retail client or 2026 video with exact Arathor rank and successful/failed selector demonstration.",
+    "No developer-confirmed permanent intended exclusion versus longstanding UI defect.",
+    "No successful completed Arathor milling cast or identified pigment output to support a mapping."
+  ],
+  "nextTask": "F004_PIVOT_TO_HIGHEST_PRIORITY_NUMERIC_E_GAP_OR_NEW_MIDNIGHT_SELECTOR_SOURCE_IF_AVAILABLE"
+}

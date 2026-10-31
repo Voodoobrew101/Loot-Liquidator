@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_POWDER_FAMILY_YIELD_RANK_CONTEXT",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T13:31:39Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "aa8fe3665ddf5244ac53d51a428564bb481917f9",
+  "reviewedSourceLineages": [
+    {
+      "sourceID": "midnight-draggoth-2026-03-21-forum",
+      "lineage": "blizzard-forum-2276246-draggoth-march21-powder-recycling",
+      "sourceType": "ORIGINAL_PLAYER_ASSERTED_CONVERSION_RATE_NOT_MEASURED_COHORT",
+      "url": "https://us.forums.blizzard.com/en/wow/t/impossible-patron-orders/2276246/16",
+      "independentMeasuredCohort": false
+    },
+    {
+      "sourceID": "midnight-warcraftable-homely-shelves",
+      "lineage": "warcraftable-homely-wall-shelves-editorial-budget",
+      "sourceType": "EDITORIAL_CRAFTING_BUDGET_UNVERIFIED_YIELD_RANGE",
+      "url": "https://warcraftable.com/homely-wall-shelves/",
+      "independentMeasuredCohort": false
+    },
+    {
+      "sourceID": "midnight-wowhead-powder-item-ids",
+      "lineage": "wowhead-powder-pigment-item-catalog",
+      "sourceType": "ITEM_CATALOG_IDENTITY_ONLY",
+      "url": "https://www.wowhead.com/item=245807/powder-pigment",
+      "independentMeasuredCohort": false
+    },
+    {
+      "sourceID": "midnight-wowhead-tranquility-input-ids",
+      "lineage": "wowhead-tranquility-bloom-item-catalog",
+      "sourceType": "ITEM_CATALOG_IDENTITY_ONLY",
+      "url": "https://www.wowhead.com/item=236761/tranquility-bloom",
+      "independentMeasuredCohort": false
+    }
+  ],
+  "sourceReviewEvents": [
+    {
+      "action": "NEW_ORIGINAL_CLAIM",
+      "sourceID": "midnight-draggoth-2026-03-21-forum",
+      "result": "NAMED_HERB_12_5_POWDER_PER_10_HERBS_WITH_ZERO_KP_CLAIM_NOT_MEASURED_E",
+      "promote": false
+    },
+    {
+      "action": "NEW_EDITORIAL_COMPARISON",
+      "sourceID": "midnight-warcraftable-homely-shelves",
+      "result": "TEN_TO_TWELVE_POWDER_PER_TEN_HERBS_EDITORIAL_NOT_HARD_YIELD_BOUNDS",
+      "promote": false
+    },
+    {
+      "action": "RANK_IDENTITY_CROSSCHECK",
+      "sourceID": "midnight-wowhead-powder-item-ids",
+      "result": "DISTINCT_POWDER_IDS_245807_AND_245808_WITH_UNRESOLVED_OUTPUT_RANK",
+      "promote": false
+    },
+    {
+      "action": "INPUT_IDENTITY_CROSSCHECK",
+      "sourceID": "midnight-wowhead-tranquility-input-ids",
+      "result": "TRANQUILITY_BLOOM_INPUT_IDS_236761_AND_236767_NOT_ASSIGNED_TO_UNRANKED_SOURCE",
+      "promote": false
+    },
+    {
+      "action": "ANCESTRY",
+      "result": "Prior David111 10-for-10 and Errtu selector observations already indexed; not recounted as new lineages",
+      "promote": false
+    },
+    {
+      "action": "MODEL_GUARD",
+      "result": "Legacy 4.5 versus new 10-12.5 only a sensitivity flag, not matched context or unconditional expectedQuantity",
+      "promote": false
+    }
+  ],
+  "sourceMemoryDisposition": "APPEND_ONLY_ROLE_OWNED_REVIEW_NO_MUTATION_OF_LEGACY_SOURCE_MEMORY",
+  "noPromotions": true
+}

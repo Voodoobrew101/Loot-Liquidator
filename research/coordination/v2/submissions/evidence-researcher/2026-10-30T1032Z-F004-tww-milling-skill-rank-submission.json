@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_MILLING_LOTZBOI_SKILL_RANK_CONTEXT",
+  "workflowRevision": 2,
+  "runID": "2026-10-30T1032Z-F004-tww-milling-skill-rank",
+  "runUTC": "2026-10-30T10:32:54Z",
+  "taskStatus": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_F005",
+  "branch": "implementation/five-agent-completion",
+  "queueSnapshot": {
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "fieldSlots": 4072,
+    "evidenceGaps": 514,
+    "missingExpectedQuantity": 116,
+    "priority122DragonflightConflictStillOpen": true
+  },
+  "baseCommitBeforeRun": "9159c1bff97a9ac400276a2fee5b9eb34301bb78",
+  "evidenceCommit": "1c63f62c51070e197abad26aa3968372dc1158de",
+  "sourceReviewCommit": "a38f8eb427101d20fba971bbecbe55448867f495",
+  "exactFilesAdded": [
+    {
+      "path": "research/evidence/v2/2026-10-30T1032Z-F004-tww-milling-skill-rank.json",
+      "blobSHA": "1396ef6ce5348e1d0cf9052ef0ad205975c3f869"
+    },
+    {
+      "path": "research/evidence/v2/source-reviews/2026-10-30T1032Z-F004-tww-milling-skill-rank-source-review.json",
+      "blobSHA": "ae511c18dc3fb4110c81eb48b79b2f072f8e82e5"
+    },
+    {
+      "path": "research/coordination/v2/submissions/evidence-researcher/2026-10-30T1032Z-F004-tww-milling-skill-rank-submission.json",
+      "blobSHA": null,
+      "status": "THIS_SUBMISSION"
+    }
+  ],
+  "taskSelection": "Highest-priority 122 Dragonflight prospecting conflicts have been repeatedly researched historically without current-cast rank-specific data. Per prior run's zero-delta pivot, targeted 12 TWW milling E gaps instead and discovered an original commenter with previously unrecorded effective-skill breakpoints and rank-dependent positive-yield ranges. Did not repeat older 2024 Mycobloom averages as a new cohort.",
+  "exactTargetInputOutputPairs": [
+    "210796:222619",
+    "210797:222619",
+    "210798:222618",
+    "210799:222612",
+    "210800:222613",
+    "210801:222614",
+    "210802:224800",
+    "210803:224801",
+    "210804:224802",
+    "210805:224803",
+    "210806:224804",
+    "210807:224805"
+  ],
+  "finding": "Single Wowhead commenter LotzBoi associates effective skill 0-252/253-504/505+ with Nacreous pigment R1/R2/R3 IDs 222618/222619/222620, and Mycobloom R1/R2/R3 item IDs 210796/210797/210798 with claimed +0/+101/+202 skill and positive yield ranges 4-6/5-7/6-8 per nominal 10-herb milling. Four herb/pigment family identities corroborated; these are unverified historical contextual claims, not measured 2026 drop rates or E. Repeated text on four pages is ONE source lineage.",
+  "exactDeltas": {
+    "newOriginalCommentLineages": 1,
+    "independentlyMeasuredCurrentRetailLineages": 0,
+    "sourceMirrorsDeduplicated": 3,
+    "claimedSkillIntervals": 3,
+    "claimedRankYieldRanges": 3,
+    "herbPigmentFamilyIdentities": 4,
+    "admittedMappingsAdded": 0,
+    "admittedMappingsRemoved": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "workingNumericCoverageBefore": "4072/4072",
+    "workingNumericCoverageAfter": "4072/4072",
+    "remainingEvidenceGaps": 514,
+    "remainingExpectedQuantityGaps": 116
+  },
+  "testsActuallyRun": [
+    {
+      "test": "In-process source/rank/band arithmetic and preview-isolation assertions",
+      "result": "PASS",
+      "passed": 15,
+      "failed": 0
+    },
+    {
+      "test": "GitHub read-back JSON parse and task/role check of evidence and source-review",
+      "result": "PASS",
+      "passed": 2,
+      "failed": 0
+    },
+    {
+      "test": "GitHub compare base to source-review commit",
+      "result": "PASS",
+      "passed": 1,
+      "scope": "Exactly 2 added role-owned files, no modifications or deletions"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node completion pipeline --check; no accepted build inputs changed",
+    "Lua 5.1 generated working estimates decoder",
+    "WoW Retail in-game milling threshold test",
+    "Independent F005 QA and holdout validation"
+  ],
+  "economicSafety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "productionFilesChanged": false
+  },
+  "blockers": [
+    "No publication date or build for commenter",
+    "No actual completed-cast logs, zeros, output histograms, refunds or independently verified effective skill context",
+    "No current 2026 Retail evidence to promote any of the 12 E gaps",
+    "Wowhead leveling guide's 35 casts/175 herbs conflicts with indexed 10-herb spell; guide is not primary cast evidence",
+    "Coordinator acceptance and independent validator review pending"
+  ],
+  "nextTask": "F004_TWW_MILLING_SKILL_THRESHOLD_CLIENT_HOLDOUT_OR_DIFFERENT_SELECTOR_CONTEXT",
+  "ownership": "Only new evidence, source review and this evidence-researcher submission. Other agent commits, main, runtime-profiles, accepted raw data, frozen TSM, tooltip-only policy, legacy assignments, generated scorecards and schedules untouched."
+}

@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_TWW_MILL_REAGENT_ACCOUNTING_IDENTIFICATION_QA",
+  "runID": "20261030T1845Z-F005-TWW-MILL-ACCOUNTING-INDEPENDENT-ATTESTATION",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runUTC": "2026-10-30T18:45:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "de279f3946fd14d39d969c872cb686123baac329",
+  "resultCommitBeforeSubmission": "2c260cd44f61073585cf41193c463b2d995e0786",
+  "status": "PROPOSED_INDEPENDENT_QA_FOR_COORDINATOR",
+  "verdict": "FAIL_REPAIR_REQUIRED",
+  "exactFilesChanged": [
+    {
+      "path": "research/tests/v2/test_f005_tww_mill_accounting_independent_attestation.js",
+      "blobSHA": "1dc22afeed2eefafd845979fafa15cbb59c15708",
+      "change": "new independent 37-case source-pinned regression; 5 failures"
+    },
+    {
+      "path": "research/coordination/v2/reviews/20261030T1845Z-F005-TWW-MILL-ACCOUNTING-INDEPENDENT-ATTESTATION.json",
+      "blobSHA": "eea3a0140b78e252f85d5c0f32914118b79d2962",
+      "change": "immutable independent QA verdict and repair requirements"
+    },
+    {
+      "path": "research/coordination/v2/submissions/independent-validator/20261030T1845Z-F005-TWW-MILL-ACCOUNTING-INDEPENDENT-ATTESTATION.json",
+      "change": "unique role-owned F005 run record"
+    }
+  ],
+  "reviewedModel": {
+    "path": "research/tools/models_v2/tww_mill_reagent_accounting_identification_v1.js",
+    "blobSHA": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a",
+    "manifestBlobSHA": "758b38f4a42b5becd353ca5e17fb920000f7355c"
+  },
+  "exactBehavioralDeltas": {
+    "newModelTests": 37,
+    "passed": 32,
+    "failed": 5,
+    "newDefects": [
+      "context nominal batch contradiction",
+      "context reagent-vector contradiction",
+      "inverse conditionalMean Infinity",
+      "proxy mapping identity change after validation",
+      "proxy saving cap change after validation"
+    ]
+  },
+  "exactNumericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyFamilies": 0
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "GitHub connector V8",
+      "test": "F003 exact committed source selfTest()",
+      "passed": 20425,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "GitHub connector V8",
+      "test": "F005 37-case independent source-pinned suite",
+      "passed": 32,
+      "failed": 5,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "GitHub connector",
+      "test": "readback of exact model/test/review blobs",
+      "passed": true
+    }
+  ],
+  "testsNotRun": [
+    "Native Node exact committed source regression",
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "Retail client and live EV integration",
+    "Whole-study current Retail independent holdout"
+  ],
+  "blockers": [
+    "Five F003 model defects need baseline-modeller repair",
+    "Native Node independent replay pending",
+    "No independently measured current-Retail zero-inclusive milling casts or independently verified Resourcefulness saving cap"
+  ],
+  "canonicalReadiness": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116
+  },
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "rawEvidenceWrites": 0,
+    "frozenTSMWrites": 0,
+    "tooltipOnlyPolicyWrites": 0,
+    "productionWrites": 0,
+    "otherAgentFileWrites": 0,
+    "schedulesChanged": false
+  },
+  "zeroDeltaPivot": {
+    "applied": true,
+    "reason": "New F003 TWW milling model source differs from prior Gem/reconciliation audits; targeted novel model uncertainty and found five actionable defects, no repeated unchanged audit"
+  },
+  "nextTask": "F005_RETEST_F003_TWW_MILL_ACCOUNTING_CANONICAL_SNAPSHOT_REPAIR_THEN_NATIVE_NODE_37_CASES",
+  "coordinatorAcceptanceRequest": "Reject TWW milling accounting v1.0.0 for integration pending five repairs; do not alter working/evidence/economic counters."
+}

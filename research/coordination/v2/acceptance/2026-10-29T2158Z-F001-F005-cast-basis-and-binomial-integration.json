@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_CAST_BASIS_REPAIR_AND_BINOMIAL_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 11,
+  "runUTC": "2026-10-29T21:58:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "a36db2df9303a5c87fd1a5ef4503c8e227b894dc",
+  "resultCommit": "THIS_COMMIT",
+  "canonicalReadinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "canonicalPrioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "inputReview": [
+    {
+      "owner": "completion-engineer",
+      "submission": "research/coordination/v2/submissions/completion-engineer/2026-10-29T2115Z-F002-cast-basis-quarantine.json",
+      "decision": "ACCEPT_RESEARCH_ONLY_AFTER_INDEPENDENT_12_OF_12_AND_NATIVE_CI",
+      "subjectBlobs": {
+        "research/tools/working_estimates.js": "1a100b304bd26fa5a0840ade7d8cf4437803aa6f",
+        "research/tools/run_completion_pipeline.js": "1ef5cf5b7f9ccbcb3bdaef5c99e7e6ff8d44de92",
+        "research/proposed/itemdb.lua": "940431ecd0cefe1e65701d2cc9f53ae619350b38",
+        "research/proposed/itemdb-build-report.json": "46ddc18d77daddfa97486424daf1719f54d9fdcb"
+      },
+      "effect": "Target P/E with non-completed-cast, gross-input or incompatible rank/quantity basis quarantined as confidence-zero working priors. No new numeric evidence or live economic permissions.",
+      "delta": {
+        "newEvidenceFields": 0,
+        "newEvidenceE": 0,
+        "workingCoverageDelta": 0,
+        "workingPriorDropChance": 783,
+        "workingPriorExpectedQuantity": 817,
+        "recordsWithAssumptions": 778,
+        "confidencePromotions": 0
+      }
+    },
+    {
+      "owner": "independent-validator",
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-29T2141Z-F005-cast-basis-and-f003-numerical-qa.json",
+      "review": "research/coordination/v2/reviews/2026-10-29T2140Z-F005-cast-basis-repair-and-binomial-independent-qa.json",
+      "decision": "ACCEPT_INDEPENDENT_SYNTHETIC_QA_WITH_ECONOMIC_HOLDOUT_BLOCK",
+      "verifiedBlobs": {
+        "research/tests/v2/test_f005_f003_independent_binomial_numerics.js": "01822bae52a5eafaa7abea27a054f58146caf176",
+        "research/tools/models_v2/tww_gem_finding_exact_marginal_bounds_v1.js": "28f22970ef4e0307a69bff624844917fa80fca26"
+      },
+      "results": {
+        "castBasis": {
+          "passed": 12,
+          "failed": 0
+        },
+        "priorStatusClaim": {
+          "passed": 11,
+          "failed": 0
+        },
+        "priorProvenance": {
+          "passed": 12,
+          "failed": 0
+        },
+        "independentBinomialNumerical": {
+          "passed": 476,
+          "failed": 0,
+          "maxAbsCDFError": 1.8231338660967822e-10
+        }
+      },
+      "note": "476-case fixture executed in V8 harness but not yet wired into native CI. No measured Retail study holdout."
+    },
+    {
+      "owner": "baseline-modeller",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261029T2123Z-F003-GEM-BINOMIAL-TAIL-STABILITY.json",
+      "decision": "ACCEPT_NUMERICAL_STABILITY_REPAIR_FOR_SYNTHETIC_RESEARCH_ONLY",
+      "modelBlob": "28f22970ef4e0307a69bff624844917fa80fca26",
+      "independentValidation": "F005 476/476 independent numerical checks",
+      "example": {
+        "n": 10000,
+        "k": 8999,
+        "p": 0.9,
+        "modelCDF": 0.4915789606543559,
+        "independentSciPyCDF": 0.491578960734732
+      },
+      "restrictions": "Fixed-sample Clopper-Pearson only; not anytime-valid for optional stopping; no actual current Retail cohorts, E/P promotion or verified skill baseline."
+    },
+    {
+      "owner": "evidence-researcher",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-29T2131Z-F004-tww-milling-two-axis-context-submission.json",
+      "decision": "ACCEPT_AS_HISTORICAL_TWO_AXIS_CONTEXT_HYPOTHESIS_ONLY_NOT_ECONOMIC_EVIDENCE",
+      "evidenceBlob": "451f7d327646225975eba4b1f9988f54935d31cb",
+      "sourceReviewBlob": "4c780507160cb70eb8b5e4b1695ccb10816cb329",
+      "historicalSourceFamilyLeads": 2,
+      "currentRetailCompletedCastCohorts": 0,
+      "exactItemMappingAdmissions": 0,
+      "numericPromotions": 0,
+      "limitations": "Unverified original web content in this run; beta and 2024 anecdote lack exact item IDs, completed-cast denominator, refund and patch/skill context. Do not transfer nominal 10-herb means to current E."
+    }
+  ],
+  "canonicalCounters": {
+    "admittedMappings": 1018,
+    "distinctInputIDs": 179,
+    "fieldSlots": 4072,
+    "workingNumeric": 4072,
+    "evidenceNumeric": 3558,
+    "evidenceMissing": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "ge90EvidenceFields": 0,
+    "verifiedMinimumEligibleBaselines": 0,
+    "independentCurrentRetailHoldoutFamilies": 0
+  },
+  "previewReport": {
+    "workingPriorDropChance": 987,
+    "workingPriorYieldMin": 97,
+    "workingPriorYieldMax": 97,
+    "workingPriorExpectedQuantity": 933,
+    "recordsWithAssumptions": 1000,
+    "workingConsistencyAdjustments": 0,
+    "previewOnlyRecords": 1018,
+    "normalizedVerifiedRecords": 0
+  },
+  "testsVerified": [
+    {
+      "name": "Native branch CI at source head",
+      "run": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40959813084",
+      "sha": "a36db2df9303a5c87fd1a5ef4503c8e227b894dc",
+      "conclusion": "success",
+      "checks": [
+        "Node completion pipeline --check",
+        "Lua5.1 syntax/decoded 1018 mappings/4072 working fields",
+        "blocker array Lua roundtrip",
+        "JSON schema via pipeline"
+      ]
+    },
+    {
+      "name": "Independent V8 cast-basis and provenance controls",
+      "passed": 35,
+      "failed": 0
+    },
+    {
+      "name": "Independent V8 high-n binomial numerical",
+      "passed": 476,
+      "failed": 0
+    },
+    {
+      "name": "Independent local SciPy spot check",
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "notRun": [
+    "Native Node execution of newly authored 476-case F003 independent fixture (not yet wired into pipeline)",
+    "WoW Retail in-game validation",
+    "Independent current-Retail whole-study holdout",
+    "Cross-process serialized working-estimate/source identity tamper test"
+  ],
+  "safety": {
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "unsupportedFallbackConfidence": 0,
+    "newEconomicPromotions": 0,
+    "tooltipOnlyPolicyChanged": false,
+    "frozenTSMChanged": false,
+    "legacyAssignmentsChanged": false,
+    "productionWrites": 0,
+    "mainChanged": false,
+    "runtimeBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "decision": "F002_CAST_BASIS_AND_F005_INDEPENDENT_QA_ACCEPTED_RESEARCH_ONLY; F003_NUMERIC_STABILITY_ACCEPTED_SYNTHETIC_ONLY; F004_HISTORICAL_CONTEXT_ONLY; FULL_ECONOMIC_VALIDATION_BLOCKED",
+  "blockers": [
+    "Cross-process serialized source/context attestation is not independently tested.",
+    "New F003 independent 476-case fixture not wired into native CI.",
+    "116 missing evidence E fields and 514 evidence numeric gaps remain.",
+    "No independent current-Retail completed-cast cohort or verified minimum eligible skill baseline.",
+    "Retail mapping universe not independently exhaustive; 24 legacy queue30 leads and 2 Housing Dye input leads remain unadmitted.",
+    "No WoW client verification."
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_SERIALIZED_SOURCE_CONTEXT_ATTESTATION_AND_F003_NATIVE_CI",
+      "scope": [
+        "research/tools/working_estimates.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Version and verify source/context/value lineage on serialized reload, reject stale/tampered source and status; integrate independent 476-case fixture into native CI. Preserve 4072 preview numeric fields, confidence-zero fallbacks and unchanged evidence."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_CROSS_PROCESS_ATTESTATION_ADVERSARIAL_QA",
+      "scope": [
+        "research/tests/v2/",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Independently test serialized reload and mutated source/context/field provenance, 12 cast-basis + 23 prior controls + 476 numerical checks, inspect native CI and Lua/schema. Do not self-approve evidence."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_GEM_FINDING_OPTIONAL_STOPPING_DESIGN_OR_NEW_COHORT",
+      "scope": [
+        "research/models/v2/",
+        "research/tools/models_v2/"
+      ],
+      "acceptance": "If interim looks planned, design independently testable anytime-valid intervals without relabeling fixed-sample CP. Otherwise pivot to a different E/denominator family; no synthetic-to-economic promotion."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_TWW_MILLING_MATCHED_RANK_CASTS_OR_MIDNIGHT_SELECTOR_PIVOT",
+      "scope": [
+        "research/evidence/v2/"
+      ],
+      "acceptance": "Seek exact herb/output IDs, input/output ranks, 200+ zero-inclusive completed casts per matched cohort, patch, skill, refunds; if unavailable pivot to unadmitted Midnight selector eligibility, no recycled source audit."
+    }
+  ],
+  "zeroDeltaPivot": "No new economic evidence or mapping deltas. Shift integration from the repaired cast-basis family to cross-process serialization attestation and native independent numerical CI; research source efforts pivot to matched current-Retail casts or selector eligibility."
+}

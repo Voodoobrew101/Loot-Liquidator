@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_PENDING_NATIVE_MODEL_PREFLIGHT_EXECUTION",
+  "workflowRevision": 2,
+  "queueRevision": 24,
+  "queueRevisionNote": "24 is last explicitly recorded role queue revision; canonical readiness/priorities identified below by exact current Git blob SHA; no coordinator queue mutation.",
+  "runID": "20261030T1214Z-F002-native-38-pass-stale-candidate-blocker",
+  "runUTC": "2026-10-30T12:14:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "05fee54e36d436d73230caafd78bf4a76c228df6",
+  "initialImplementationCommit": "05fee54e36d436d73230caafd78bf4a76c228df6",
+  "resultImplementationCommit": "2e8eef6fb9c2d88a9c30d9c77efad7c38b5561bd",
+  "canonicalReadiness": {
+    "blobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "canonicalPriorities": {
+    "blobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "topPriority": 122,
+    "priorityBasis": "FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT"
+  },
+  "taskSelection": "Execute previously prepared 13-case Dragonflight array-context and 25-case TWW milling source-isolation native preflight on the exact GitHub checkout, without premature F005 acceptance or mandatory-gate promotion. Move the informational preflight before the strict --check after observing stale candidate output blocking the first CI attempt.",
+  "exactFilesModified": [
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "oldBlobSHA": "50811e5fb9e891f30550a006cad0e1a7e2e5790a",
+      "newBlobSHA": "94d3b17a19145c469c5ae2cdabda5cdc1c491ca9",
+      "netLinesAdded": 6,
+      "change": "Nonblocking research-only native preflight executes before mandatory stale-candidate gate; all existing mandatory checks retained."
+    }
+  ],
+  "exactFilesAdded": [],
+  "exactKeysAffected": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280",
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+  ],
+  "exactDeltas": {
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "admittedMappingsAdded": 0,
+    "evidenceNumericCellsAdded": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "productionWrites": 0
+  },
+  "testsActuallyRun": [
+    {
+      "test": "GitHub CI native Node 24 13-case F005 DF array-context suite",
+      "result": "PASS",
+      "passed": 13,
+      "failed": 0
+    },
+    {
+      "test": "GitHub CI native Node 24 25-case F005 TWW milling source-isolation suite",
+      "result": "PASS",
+      "passed": 25,
+      "failed": 0
+    },
+    {
+      "test": "Six exact source/model/fixture blob pins",
+      "result": "PASS",
+      "count": 6
+    },
+    {
+      "test": "Mandatory completion pipeline --check",
+      "result": "FAIL",
+      "reason": "Stale generated file: research/proposed/itemdb.lua; deterministic compilation and source checks before comparison passed"
+    },
+    {
+      "test": "GitHub read-back of engineering workflow",
+      "result": "PASS",
+      "blobSHA": "94d3b17a19145c469c5ae2cdabda5cdc1c491ca9"
+    }
+  ],
+  "ci": {
+    "runID": 41053694201,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41053694201",
+    "jobID": 124055778903,
+    "conclusion": "failure",
+    "preflight": "38/38 PASS, informational only",
+    "mandatoryBuild": "FAIL: stale generated itemdb.lua"
+  },
+  "testsNotRun": [
+    "Lua 5.1 generated-file checks skipped after mandatory stale candidate failure",
+    "In-game WoW client",
+    "Independent F005 acceptance and coordinator approval",
+    "Current-Retail completed-cast holdout"
+  ],
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "status": "SUBMITTED_FOR_F005_AND_COORDINATOR_REVIEW_NATIVE_PREFLIGHT_PASS_MANDATORY_CANDIDATE_STALE",
+  "blockers": [
+    "Mandatory CI fails because research/proposed/itemdb.lua no longer matches deterministic compiler output; regeneration and reviewed generated artifact update needed before green CI.",
+    "F005 must independently accept native suites before strict mandatory-gate promotion.",
+    "No independently measured current-Retail completed-cast cohorts or verified minimum eligible baseline; preflight is synthetic/source isolation only."
+  ],
+  "nextTask": "Reconcile changed accepted build inputs and regenerate engineer-owned research candidate via deterministic pipeline, preserving evidence/preview isolation and concurrent commits; then --check and Lua 5.1 must pass. After F005 acceptance, promote pinned 13/13 and 25/25 into mandatory gate.",
+  "resultCommit": "RESOLVED_BY_GITHUB_COMMIT_CONTAINING_THIS_FILE"
+}

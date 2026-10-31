@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004",
+  "taskVariant": "F004_MIDNIGHT_CRUSHING_RANK_IDENTITIES_AND_SELECTOR_REAGENT_CONFLICT",
+  "workflowRevision": 2,
+  "queueRevisionObserved": null,
+  "runUTC": "2026-10-30T04:32:50Z",
+  "baseCommit": "68c5cf128877618a621d1dee387cdc7d2fa63570",
+  "resultCommit": "d4de517957d5608af65e96509c856128e9a6a6ea",
+  "branch": "implementation/five-agent-completion",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "filesChanged": [
+    "research/evidence/v2/2026-10-30T0432Z-F004-crushing-rank-identity-and-reagent-variant.json",
+    "research/evidence/v2/source-reviews/2026-10-30T0432Z-F004-crushing-rank-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0432Z-F004-crushing-rank-selector-disposition.json"
+  ],
+  "exactKeysChanged": [
+    "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+    "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
+  ],
+  "exactDelta": {
+    "rankItemIDsCorroborated": [
+      242553,
+      242723,
+      242788,
+      242789,
+      242620,
+      242621
+    ],
+    "newRankCatalogPages": 6,
+    "sourceReviewEvents": 10,
+    "sourceFamilies": 5,
+    "newIndependentCompletedCastCohorts": 0,
+    "numericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "mappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "evidenceMissingCellsBefore": 514,
+    "evidenceMissingCellsAfter": 514
+  },
+  "acceptedVersusProposed": "PROPOSED_ONLY",
+  "tests": {
+    "inProcessAssertions": {
+      "passed": 18,
+      "failed": 0
+    },
+    "githubReadback": "PENDING_AFTER_COMMIT",
+    "nodePipeline": "NOT_RUN_NO_ACCEPTED_BUILD_INPUT_CHANGED",
+    "lua51": "NOT_RUN",
+    "runtime": "NOT_RUN",
+    "inGame": "NOT_RUN"
+  },
+  "blockers": [
+    "No in-game selector/client API capture for exact gem and stone rank pairs",
+    "No independently observed completed casts and zero-inclusive output rank histograms",
+    "Guide one-gem-to-stone statement has no corroborated spell or recipe variant",
+    "No measured Resourcefulness refunds split by stone and gem"
+  ],
+  "nextTask": "Capture gem x stone rank selector 2x2 for spell 1231132; verify one-gem-to-stone claim only if distinct operation identified",
+  "economicPolicy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false
+  },
+  "notes": "Prior Cardinalai 480-gem cohort not recounted. Identity confirmation is not eligibility or drop-rate verification. No central scorecard or other agent files edited."
+}

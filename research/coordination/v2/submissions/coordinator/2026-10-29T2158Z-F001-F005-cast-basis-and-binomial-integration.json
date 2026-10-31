@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_CAST_BASIS_REPAIR_AND_BINOMIAL_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 11,
+  "runUTC": "2026-10-29T21:58:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "a36db2df9303a5c87fd1a5ef4503c8e227b894dc",
+  "resultCommit": "THIS_COMMIT",
+  "status": "COORDINATOR_ACCEPTED_RESEARCH_ONLY_PENDING_INDEPENDENT_SERIALIZED_QA",
+  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T2158Z-F001-F005-cast-basis-and-binomial-integration.json",
+  "scorecardPath": "research/coordination/v2/scorecards/current.json",
+  "changedFiles": [
+    "research/coordination/v2/acceptance/2026-10-29T2158Z-F001-F005-cast-basis-and-binomial-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/2026-10-29T2158Z-F001-F005-cast-basis-and-binomial-integration.json"
+  ],
+  "accepted": [
+    {
+      "owner": "completion-engineer",
+      "scope": "cast-basis quarantine",
+      "status": "RESEARCH_ONLY"
+    },
+    {
+      "owner": "independent-validator",
+      "scope": "12/12 cast-basis + 476/476 numerical",
+      "status": "INDEPENDENT_SYNTHETIC_QA_PASS"
+    },
+    {
+      "owner": "baseline-modeller",
+      "scope": "high-n binomial numerical stability",
+      "status": "SYNTHETIC_ONLY"
+    },
+    {
+      "owner": "evidence-researcher",
+      "scope": "historical TWW input/output rank context",
+      "status": "HYPOTHESIS_ONLY"
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericFieldsFilled": 0,
+    "newEvidenceNumericFields": 0,
+    "newEvidenceExpectedQuantity": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentCurrentRetailStudies": 0,
+    "economicPromotions": 0,
+    "workingPriorDropChanceReclassified": 783,
+    "workingPriorExpectedQuantityReclassified": 817,
+    "recordsWithAssumptionsDelta": 778,
+    "productionFiles": 0,
+    "coordinatorFiles": 3
+  },
+  "testsActuallyChecked": [
+    {
+      "name": "Native branch CI at source head",
+      "run": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40959813084",
+      "sha": "a36db2df9303a5c87fd1a5ef4503c8e227b894dc",
+      "conclusion": "success",
+      "checks": [
+        "Node completion pipeline --check",
+        "Lua5.1 syntax/decoded 1018 mappings/4072 working fields",
+        "blocker array Lua roundtrip",
+        "JSON schema via pipeline"
+      ]
+    },
+    {
+      "name": "Independent V8 cast-basis and provenance controls",
+      "passed": 35,
+      "failed": 0
+    },
+    {
+      "name": "Independent V8 high-n binomial numerical",
+      "passed": 476,
+      "failed": 0
+    },
+    {
+      "name": "Independent local SciPy spot check",
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "testsNotRun": [
+    "Native Node execution of newly authored 476-case F003 independent fixture (not yet wired into pipeline)",
+    "WoW Retail in-game validation",
+    "Independent current-Retail whole-study holdout",
+    "Cross-process serialized working-estimate/source identity tamper test"
+  ],
+  "blockers": [
+    "Cross-process serialized source/context attestation is not independently tested.",
+    "New F003 independent 476-case fixture not wired into native CI.",
+    "116 missing evidence E fields and 514 evidence numeric gaps remain.",
+    "No independent current-Retail completed-cast cohort or verified minimum eligible skill baseline.",
+    "Retail mapping universe not independently exhaustive; 24 legacy queue30 leads and 2 Housing Dye input leads remain unadmitted.",
+    "No WoW client verification."
+  ],
+  "nextTask": "F002_SERIALIZED_SOURCE_CONTEXT_ATTESTATION_AND_F003_NATIVE_CI",
+  "zeroDeltaPivot": "No new economic evidence or mapping deltas. Shift integration from the repaired cast-basis family to cross-process serialization attestation and native independent numerical CI; research source efforts pivot to matched current-Retail casts or selector eligibility."
+}

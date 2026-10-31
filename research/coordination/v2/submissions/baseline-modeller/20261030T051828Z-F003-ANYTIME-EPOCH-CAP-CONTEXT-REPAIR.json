@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_ANYTIME_EPOCH_CAP_CONTEXT_REPAIR",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 18,
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_AND_F005_NATIVE_QA",
+  "utc": "2026-10-30T05:18:28Z",
+  "branch": "implementation/five-agent-completion",
+  "coordinatorSourceCommit": "d0f1649c5fb4f5cb96d301d26276fda50c86bfff",
+  "preWriteBranchHead": "NOT_EXPOSED_BY_GITHUB_CONTENTS_CONNECTOR",
+  "firstWriteCommit": "0a1ea76bdc498a34011a19630bc2c66015b18fc6",
+  "manifestWriteCommit": "df42c5ecdefe4ba9a3b4a0adb1784353c862ef7f",
+  "sourceBlobs": {
+    "modelBefore": "d409511c94ae13c09dcccb5e7e8de6c75d52105b",
+    "modelAfter": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9",
+    "manifestAfter": "05b5dc514cc409ffd66018379d0daa118c6fa8d7",
+    "independentTest": "fbb838e348429d6deed741060fe992ead560190b",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "changedFiles": [
+    "research/tools/models_v2/midnight_rare_gem_anytime_e_bounds_v1.js",
+    "research/models/v2/midnight_rare_gem_anytime_e_bounds_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261030T051828Z-F003-ANYTIME-EPOCH-CAP-CONTEXT-REPAIR.json"
+  ],
+  "targetStableKeys": [
+    "midnight:237359:242608:L733",
+    "midnight:237361:242608:L744",
+    "midnight:237362:242608:L755",
+    "midnight:237363:242608:L766",
+    "midnight:237364:242608:L777",
+    "midnight:237365:242608:L788",
+    "midnight:237366:242608:L799"
+  ],
+  "repairs": [
+    {
+      "id": "F005-ANYTIME-1",
+      "result": "REPAIRED",
+      "detail": "Gregorian leap/day/hour/minute/second/offset field validation rejects normalized-invalid 2026-02-29 and 2026-02-30; accepts valid 2024-02-29."
+    },
+    {
+      "id": "F005-ANYTIME-2",
+      "result": "REPAIRED",
+      "detail": "NFC+trim+casefold cap/study lineage comparison; unreviewed cap produces explicitly hypothetical bound; optional structured capAttestation is caller-supplied and never marked independently verified."
+    },
+    {
+      "id": "F005-ANYTIME-3",
+      "result": "REPAIRED",
+      "detail": "Each model result includes typedContext snapshot and deterministic typedContextKey with patch, spell, ranks, skill, stats, reagents and source lineage."
+    }
+  ],
+  "exactDeltas": {
+    "existingModelTargetsAffected": 7,
+    "newModelTargets": 0,
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "economicPromotions": 0,
+    "productionFilesChanged": 0,
+    "rawEvidenceFilesChanged": 0,
+    "frozenTSMFilesChanged": 0,
+    "tooltipOnlyFilesChanged": 0,
+    "schedulesChanged": 0
+  },
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceExpectedQuantityGaps": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testsRun": [
+    {
+      "name": "model.selfTest exact committed model blob",
+      "runtime": "JavaScript V8 with assert-compatible Node shim",
+      "passed": 49,
+      "failed": 0
+    },
+    {
+      "name": "F005 midnight anytime independent adversarial suite exact committed test and model blobs",
+      "runtime": "JavaScript V8 with assert-compatible Node shim",
+      "passed": 12,
+      "failed": 0
+    }
+  ],
+  "testsNotRun": [
+    "Native Node of exact committed model/test files",
+    "Lua 5.1",
+    "WoW Retail client",
+    "Completion pipeline --check (no build inputs changed)",
+    "Independent external cap-source review",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "tooltipOnlyEligible": false,
+    "capIndependentlyVerified": false
+  },
+  "blockers": [
+    "Independent F005 native Node QA and coordinator acceptance pending",
+    "No independently reviewed hard output cap; finite bounds remain conditional hypotheses",
+    "No current-Retail zero-inclusive independent completed-cast study for seven keys",
+    "Recipe/rank/output universe and minimum eligible skill not independently verified",
+    "Caller attestation is not proof of cap independence"
+  ],
+  "nextTask": "F003_PRIORITY102_DF_PROSPECT_JOINT_CAST_VALUE_SENSITIVITY after F005 native QA; pivot from exhausted source re-audits. If new model defects appear, repair those first.",
+  "note": "All model numbers remain research-only; no economic promotion or fabricated evidence."
+}

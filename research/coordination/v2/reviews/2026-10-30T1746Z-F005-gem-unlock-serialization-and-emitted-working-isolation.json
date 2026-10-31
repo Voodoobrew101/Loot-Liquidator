@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_NATIVE_TWO_SOURCE_REPARSE_AND_GEM_UNLOCK_QA",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "reviewUTC": "2026-10-30T17:46:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "verdict": "SPLIT_VERDICT_EMITTED_LUA_PASS_TWW_GEM_MODEL_FAIL_CONTEXT_ATTESTATION_NO_ECONOMIC_PROMOTION",
+  "sourcePins": {
+    "candidateLua": {
+      "path": "research/proposed/itemdb.lua",
+      "blobSHA": "560b885a0039045419c340716e263ae33ddf827a"
+    },
+    "model": {
+      "path": "research/tools/models_v2/tww_gem_finding_partial_unlock_identification_v1.js",
+      "blobSHA": "908a447dfeac840aa0d8e2ea63efd2c3323a99e4"
+    },
+    "modelManifest": {
+      "path": "research/models/v2/tww_gem_finding_partial_unlock_identification_v1.json",
+      "blobSHA": "52fd8e0f4c8d41799a031f59c038aca3153a3c9b"
+    },
+    "independentTests": [
+      {
+        "path": "research/tests/v2/test_f005_tww_gem_unlock_serialization_attestation.js",
+        "blobSHA": "f764d2f2252d0493049c49f3f6118da08790b590"
+      },
+      {
+        "path": "research/tests/v2/test_f005_emitted_working_lua_channel_isolation.js",
+        "blobSHA": "78a9d35a1c667b039911e7a8950be21ef34dff8c"
+      }
+    ],
+    "originalV02LuaBlob": "a838d75e82239339bea3861692291b44bd085662"
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "GitHub-connected JavaScript V8",
+      "suite": "F005_TWW_GEM_UNLOCK_SERIALIZATION_ATTESTATION",
+      "total": 24,
+      "passed": 10,
+      "failed": 14,
+      "modelSelfTestsPassed": 29,
+      "modelSelfTestsFailed": 0,
+      "source": "exact committed 908a447dfeac840aa0d8e2ea63efd2c3323a99e4"
+    },
+    {
+      "runtime": "GitHub-connected JavaScript V8",
+      "suite": "F005_EMITTED_WORKING_LUA_CHANNEL_ISOLATION",
+      "source": "exact emitted 560b885a0039045419c340716e263ae33ddf827a",
+      "sourceRowsDecoded": 1018,
+      "workingRowsDecoded": 1018,
+      "contextsDecoded": 1018,
+      "selectionsDecoded": 1018,
+      "assertionsPassed": 18320,
+      "assertionsFailed": 0,
+      "adversarialMutantsRejected": 12,
+      "adversarialMutantsEscaped": 0
+    },
+    {
+      "runtime": "GitHub connector",
+      "suite": "Independent fixture creation and exact read-back",
+      "status": "PASS",
+      "testBlobs": [
+        "f764d2f2252d0493049c49f3f6118da08790b590",
+        "78a9d35a1c667b039911e7a8950be21ef34dff8c"
+      ]
+    }
+  ],
+  "modelDefect": {
+    "risk": "Untrusted per-cast and profession-stat objects pass plain()/Array.isArray validation while carrying custom toJSON, getters, symbols, hidden properties or array subclasses. Serialization can alter context/stat values or drop completed-cast records; model returns a different serialized professionStats snapshot than the validated input. No live economic leakage demonstrated.",
+    "escapedCases": [
+      "hidden nested toJSON changes resourcefulness from null to 999",
+      "visible nested toJSON changes resourcefulness",
+      "root professionStats toJSON changes resourcefulness",
+      "root symbol metadata silently omitted",
+      "nested symbol metadata silently omitted",
+      "nested getter changes between validation and output",
+      "events array hidden toJSON serializes to empty array",
+      "events array hidden patch metadata silently omitted",
+      "Array subclass toJSON serializes to empty array",
+      "output counts hidden toJSON serializes positive output as zero",
+      "unlock object hidden metadata omitted",
+      "event object hidden metadata omitted",
+      "nested nonenumerable stat bonus omitted",
+      "output-count getter drifts between validation and analysis"
+    ],
+    "repairRequirements": [
+      "Reject non-plain arrays, sparse/extra-key arrays, symbol and non-enumerable metadata, accessors, functions and custom toJSON throughout session/events/outputCapture/unlocks/inputAccounting/professionStats.",
+      "Deep-clone or canonicalize one strict JSON-safe snapshot before any validation or analysis, then derive both results and serialized context exclusively from that snapshot.",
+      "Retain locked-positive nonexclusive acceptance, unknown unlock not forced true, hypothetical exclusivity contradictions, cap scenario-only and no economic promotion.",
+      "Rerun model self-tests, 24-case F005 regression, and native Node after repair. Do not approve solely on in-sample synthetic tests."
+    ]
+  },
+  "emittedLuaFindings": {
+    "verdict": "PASS_SOURCE_PINNED_RESEARCH_ONLY_CHANNELS",
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "workingPriorCounts": {
+      "dropChance": 995,
+      "yieldMin": 105,
+      "yieldMax": 105,
+      "expectedQuantity": 941
+    },
+    "copiedEvidenceCounts": {
+      "dropChance": 23,
+      "yieldMin": 913,
+      "yieldMax": 913,
+      "expectedQuantity": 77
+    },
+    "workingPriorFieldConfidence": 0,
+    "workingEconomicUse": "PREVIEW_ONLY",
+    "workingNormalizedVerified": false,
+    "tooltipOnlyRecords": 1,
+    "tooltipEconomicUse": "PROHIBITED",
+    "selectionNormalizedVerified": false,
+    "workingContextIdentityAndRank": "PASS",
+    "sourceDonorAncestry": "PASS",
+    "numericSemantics": "PASS",
+    "note": "Ten fixed-recipe records retain nonzero copied-source aggregate confidence 55, not unsupported fallback confidence; all rows containing any POLICY_PRIOR have aggregate confidence 0."
+  },
+  "canonicalReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCoverage": "4072/4072",
+    "evidenceNumericCoverage": "3558/4072",
+    "evidenceGaps": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "confidence90Fields": 0
+  },
+  "exactDeltas": {
+    "newIndependentRegressionFiles": 2,
+    "workingCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentMeasuredLineagesAdded": 0,
+    "productionFilesEdited": 0
+  },
+  "blockers": [
+    "Native Node execution of both new F005 suites not performed; GitHub CI does not yet invoke them.",
+    "Independent F005 native two-original-Lua test not executed by this run; F002 has separately wired an informational source-pinned CI preflight, whose result was not independently verified here.",
+    "Current Retail cast holdouts, trait mechanism event logging and verified hard caps absent; eight TWW Gem Finding target keys remain research-only.",
+    "Three non-equivalent Dragonflight successors and twelve unknown fish input ranks remain unpromoted."
+  ],
+  "nextRepairOwner": "baseline-modeller",
+  "nextTask": "F003 repair Gem Finding JSON-safe typed-context attestation, then F005 independently retest 24-case suite under native Node and review F004 gear-refresh rank-context source.",
+  "coordinatorAcceptanceRequest": "Accept source-pinned emitted Lua isolation PASS and 14 reproduced TWW Gem Finding model serialization FAILs; require F003 repair before model acceptance. Keep all eight conditional rows preview-only and all economic promotions blocked."
+}

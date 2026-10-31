@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_TWW_GEM_ANYTIME_ALPHA_SPENDING",
+  "workflowRevision": 2,
+  "queueRevision": null,
+  "queueRevisionNote": "Canonical completion-readiness and completion-priorities do not expose a v2 queue revision",
+  "runUTC": "2026-10-29T22:15:12Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "240e1f224cb30befdaa50731ca0e81a55ccef72c",
+  "modelCommit": "bbc48ba8f59967f0fb6edc4ee748b97e252120e1",
+  "manifestCommit": "477fb5ffd09fbbf1b421d007e673a2ba20b23857",
+  "resultCommitBeforeSubmission": "477fb5ffd09fbbf1b421d007e673a2ba20b23857",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "pivotReason": "Prior fixed-sample exact CP model and synthetic sampling plans cannot justify repeatedly inspected interim results. New alpha-spending model resolves optional-stopping validity under explicit IID fixed-context assumptions, rather than repeating source audits.",
+  "filesChanged": [
+    "research/tools/models_v2/tww_gem_finding_anytime_marginal_bounds_v1.js",
+    "research/models/v2/tww_gem_finding_anytime_marginal_bounds_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261029T2215Z-F003-GEM-ANYTIME-ALPHA-SPENDING.json"
+  ],
+  "affectedStableKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "findings": {
+    "modelID": "tww-gem-finding-anytime-marginal-bounds-v1.0.0",
+    "problem": "Two-sided fixed-sample Clopper-Pearson intervals do not maintain nominal coverage if users stop after inspecting interim results.",
+    "solution": "Allocate alpha/(8*n*(n+1)) to each two-sided marginal CP interval at completed-cast count n. Infinite sum over n is alpha/8; union bound over eight predeclared outputs controls all-look familywise noncoverage at <= alpha under IID fixed-context Bernoulli assumptions.",
+    "fixedSampleZeroHitOnePercentCasts": 574,
+    "anytimeSafeZeroHitOnePercentCasts": 2096,
+    "anytimeNominalOreForZeroHitTarget": 10480,
+    "anytimeUpperAt574ZeroHits": 0.03167448208355618,
+    "anytimeUpperAt2096ZeroHits": 0.009999464437815839,
+    "evidenceBasis": "SYNTHETIC_AND_MATHEMATICAL_ONLY_NO_CURRENT_RETAIL_OBSERVATIONS",
+    "note": "Design thresholds do not infer actual probabilities or validate unknown unlocks. Co-output dependence is permitted, but changing skill, stats, patch or post hoc target selection invalidates the coverage claim."
+  },
+  "exactDeltas": {
+    "newMappingRecords": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "newVersionedModelFamilies": 1,
+    "newModelSelfTestAssertions": 28,
+    "affectedModelKeys": 8,
+    "liveEVChanged": false,
+    "tooltipFallbackChanged": false,
+    "sourceEvidenceChanged": false
+  },
+  "tests": {
+    "githubReadBack": "PASS_MODEL_AND_MANIFEST_BEFORE_SUBMISSION",
+    "javascriptV8ActualGithubModules": {
+      "newModel": 28,
+      "existingExactModel": 31,
+      "existingCohortModel": 25,
+      "failed": 0
+    },
+    "independentPythonSciPyOracle": {
+      "comparisons": 5,
+      "passed": 5,
+      "tolerance": 1e-8
+    },
+    "nativeNodeSyntax": "PASS_NODE_V22_16_0_LOCAL_MIRROR",
+    "nativeNodeFullGithubModule": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentValidator": "PENDING",
+    "fullCompletionPipeline": "NOT_RUN_NO_ACCEPTED_BUILD_INPUT_CHANGE"
+  },
+  "readinessAtRun": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEconomicExpectedQuantity": 116,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "isolation": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "goldRecommendationEligible": false,
+    "tooltipFallbackEligible": false,
+    "frozenTSMChanged": false,
+    "productionChanged": false,
+    "runtimeProfileBranchChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "No independent current-Retail zero-inclusive completed-cast cohort with fixed rank/skill/patch/unlock context",
+    "Independent validator has not accepted the new anytime-valid statistical model",
+    "Exact binomial numerical backend supports at most 10000 completed casts",
+    "No measured output quantity distribution or evidence-backed unconditional E for these eight Gem Finding relationships"
+  ],
+  "evidenceResearchRequest": "Predeclare eight candidate output relationships and record every completed cast including zero outputs, rank, skill, specialization unlock, patch, stat units, refunds, study family and aborts. Separate cohorts whenever context changes.",
+  "validatorRequest": "Independently check the telescoping alpha-spending proof, five high-n beta-quantile oracle cases, 2096-cast zero-hit threshold, optional stopping coverage assumptions, and no preview/economic or tooltip leakage.",
+  "nextTask": "F003 consume newly available independent fixed-context Gem Finding cast cohorts and test calibration/held-out applicability; if none arrives, pivot to a different unresolved priority E family instead of repeating sampling-design audits."
+}

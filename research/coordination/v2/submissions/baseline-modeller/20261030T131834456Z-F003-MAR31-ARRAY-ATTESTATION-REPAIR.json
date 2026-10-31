@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_MAR31_UNSAFE_ARRAY_ATTESTATION_REPAIR",
+  "workflowRevision": 2,
+  "queueRevision": 26,
+  "runUTC": "2026-10-30T13:18:34.456Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "c8dff58e030bae63e351618b8143ab8f1025d1d6",
+  "resultCommitBeforeSubmission": "9d4740ba67d07d6833a0b8d9dc8e780f65fc57de",
+  "status": "PROPOSED_PENDING_F005_NATIVE_QA_AND_COORDINATOR_ACCEPTANCE",
+  "taskSelection": "Coordinator acceptance 20261030T1259Z-F001 assigned five reproducible unsafe-array provenance defects on Midnight prospecting March31 epoch model; repaired the failing 12-case F005 fixture without modifying independent tests.",
+  "filesChanged": [
+    {
+      "path": "research/tools/models_v2/midnight_prospect_hotfix_epoch_isolation_v1.js",
+      "oldBlob": "031d36fe3cdebe632d00f5be4e2c4fe116abcb44",
+      "newBlob": "6847591d66c7acee8ef6b752638e5b4428a9f910",
+      "commit": "ba1a42919963716fff260a0b11719bfb715e31da"
+    },
+    {
+      "path": "research/models/v2/midnight_prospect_hotfix_epoch_isolation_v1.json",
+      "oldBlob": "1d9aa76858a9329931f96159e4ec7e897ad7f1a4",
+      "newBlob": "765c5f3947148e269597b97752966dc68c085591",
+      "commit": "9d4740ba67d07d6833a0b8d9dc8e780f65fc57de"
+    }
+  ],
+  "exactStableKeys": [
+    "midnight:237359:242608:L733",
+    "midnight:237361:242608:L744",
+    "midnight:237362:242608:L755",
+    "midnight:237363:242608:L766",
+    "midnight:237364:242608:L777",
+    "midnight:237365:242608:L788",
+    "midnight:237366:242608:L799"
+  ],
+  "changes": [
+    "Model v1.0.3 rejects array subclasses, symbol/hidden/extra keys, holes, accessors and custom serializers using exact Reflect.ownKeys contiguous own data descriptor attestation.",
+    "Plain nested objects now reject accessors and custom toJSON; validates before JSON.stringify contextSnapshot.",
+    "Eight synthetic regression assertions added, including one valid dense array acceptance.",
+    "All seven mappings retain confidence 0, PREVIEW_ONLY, normalizedVerified false; zero-inclusive cast denominators and March31-Apr2 quarantine unchanged."
+  ],
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "evidenceNumericCellsAdded": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "modelCodeFilesChanged": 1,
+    "modelManifestFilesChanged": 1,
+    "priorityMappingsProtected": 7,
+    "independentArrayCasesFixed": 5,
+    "modelSelfTestAssertionsAdded": 8
+  },
+  "checksActuallyRun": [
+    {
+      "test": "Exact GitHub readback model selfTest in V8 CommonJS-compatible strict-assert shim",
+      "sourceBlob": "6847591d66c7acee8ef6b752638e5b4428a9f910",
+      "passed": 69,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "test": "Unmodified F005 Midnight array-attestation fixture in V8",
+      "fixtureBlob": "08e6dba858bffb69561fc8c7f238af8e51e340a4",
+      "passed": 12,
+      "failed": 0,
+      "previouslyPassed": 7,
+      "previouslyFailed": 5,
+      "syntheticOnly": true
+    },
+    {
+      "test": "Unmodified F005 March31 hotfix fixture in V8",
+      "passed": 26,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "test": "Unmodified F005 Midnight rare-gem nested context fixture in V8 against unchanged separate model",
+      "fixtureBlob": "2e64ba46af242740c7a44ecf6bb204ae1345c112",
+      "passed": 12,
+      "failed": 1,
+      "failedCase": "distinct nonfinite specialization values must not share a context key",
+      "interpretation": "Contradictory assertion: invalid NaN and Infinity must both throw rather than produce comparable keys; validator-owned test correction requested"
+    },
+    {
+      "test": "Readback model/manifest source SHA agreement",
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "testsNotRun": [
+    "Native Node of exact model and F005 independent fixtures",
+    "Lua 5.1 generated candidate decode",
+    "Fresh completion pipeline --check in local checkout",
+    "In-game current Retail casts",
+    "Independent whole-study-family holdout"
+  ],
+  "currentReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingTotalCells": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "confidenceGE90Cells": 0,
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "note": "Canonical generated counters; stale copied proposed itemdb.lua remains completion-engineer-owned"
+  },
+  "blockers": [
+    "Independent native Node and formal F005/coordinator acceptance pending",
+    "Separate F005 nested rare-gem fixture contains contradictory NaN/Infinity key assertion; validator owns correction",
+    "Known stale copied research/proposed/itemdb.lua candidate blocks completion pipeline; completion engineer owns reconciliation",
+    "No independently measured post-March31 current-Retail zero-inclusive cast holdouts or verified full output universe"
+  ],
+  "requests": {
+    "independentValidator": "Native Node run F005 12-case array fixture, 26-case March31 fixture, and model selfTest on exact v1.0.3 blob; correct contradictory separate nested fixture without weakening fail-closed model.",
+    "coordinator": "Accept source-hashed array attestation repair conditionally pending native F005 QA; no economic promotion.",
+    "completionEngineer": "Non-destructive stale copied itemdb.lua reconciliation and native pipeline --check."
+  },
+  "policies": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "mainChanged": false,
+    "runtimeBranchChanged": false,
+    "otherAgentFilesChanged": false,
+    "schedulesChanged": false
+  },
+  "nextTask": "F003_PIVOT_HIGHEST_DECISION_VALUE_UNRESOLVED_E_MODEL_AFTER_F005_NATIVE_ACCEPTANCE",
+  "zeroDeltaPivot": "New model-integrity repair reduces known validation risk; do not repeat unchanged March31 chronology/source audit. If F005 confirms, pivot to next unresolved E family or controlled-sampling design.",
+  "submissionCommit": "RESOLVED_BY_GITHUB_COMMIT_CONTAINING_THIS_FILE"
+}

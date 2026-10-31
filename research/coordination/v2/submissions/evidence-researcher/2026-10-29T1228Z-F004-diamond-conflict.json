@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DIAMOND_CONFLICT",
+  "taskStatus": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "workflowRevision": 2,
+  "coordinatorQueueRevisionObserved": 1,
+  "runDateUTC": "2026-10-29",
+  "baseCommit": "13124833af6a028956c42fbeff3604280bff8485",
+  "evidenceCommit": "b6cc72feff52d4f54dfec5218f404846bb5cce37",
+  "resultCommit": null,
+  "filesChanged": [
+    "research/evidence/v2/2026-10-29T1228Z-F004-diamond-rank-reconciliation.json",
+    "research/evidence/v2/2026-10-29T1228Z-F004-diamond-cast-capture-protocol.json",
+    "research/evidence/v2/source-reviews/2026-10-29T1228Z-F004-diamond-source-event.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1228Z-F004-diamond-conflict.json"
+  ],
+  "exactKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "sourceSHAs": {
+    "gameData": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
+    "processingFields": "3e2bb784dc832d90584eebd8620148caf2133fbd",
+    "historicalOriginalArchive": "75359fd73256df617f938fe35905c023071d90b3",
+    "roundingPriorAudit": "8209586af812b531b8f88529222040c6b05e2814"
+  },
+  "deltas": {
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "newMeasuredNumericCells": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "newPreviewNumericCells": 0,
+    "confidencePromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "correctedOriginalSourceRecords": 0,
+    "sourceLineageReuses": 2,
+    "exactRankComparisonsQuantified": 2,
+    "controlledMeasurementProtocols": 1,
+    "sourceReviewEvents": 1
+  },
+  "findings": {
+    "rounding": "Already documented: P=0.0142 vs nominal E=0.014 can be rounding-only; intervals overlap. No original TSM semantic proof.",
+    "rank2Cohort": "Previously archived Feb 2023 100k R2 Draconium: 112 R2 + 194 R3 diamonds, 20k nominal five-ore equivalents, completed casts unknown.",
+    "risk": "TSM two-rank nominal E sum 0.028 vs source family gross-equivalent 0.0153 (1.83x); TSM three-rank sum 0.042 (2.75x). Not matched studies, no economic promotion."
+  },
+  "tests": {
+    "jsArithmeticAndLineageAssertionsPassed": 13,
+    "assertions": {
+      "tenReportedBatches": true,
+      "r2Total112": true,
+      "r3Total194": true,
+      "family306": true,
+      "nominalFiveOreEquivalents20000": true,
+      "rank2NominalRatio": true,
+      "rank3NominalRatio": true,
+      "familyNominalRatio": true,
+      "tsmE014": true,
+      "roundedPAndERangesOverlap": true,
+      "rank2Rank3TSMSum": true,
+      "allThreeTSMSum": true,
+      "fiveUniqueAssignedKeys": true
+    },
+    "githubReadbackPending": true,
+    "nodePipelineNotRun": true,
+    "lua51NotRun": true,
+    "wowClientNotRun": true
+  },
+  "blockers": [
+    "Actual zero-inclusive completed-cast data absent",
+    "Historical source cohort patch/skill/refund context not comparable to current Retail",
+    "Original TSM rank-specific P/E units and sample lineage unknown",
+    "Rank1/R3 Draconium current eligible diamond rank outcomes unverified"
+  ],
+  "zeroDeltaPivot": "Previous rounding anomaly and source ancestry audits already exist; do not repeat as new measurements. Pivoted to explicit cross-rank decision-risk quantification and actionable per-cast sampling protocol.",
+  "nextTask": {
+    "id": "F004_NEXT_RANK_ELIGIBILITY",
+    "action": "Seek independently evidenced exact current Retail R1 Draconium -> R1/R2 diamond eligibility or execute model/validator review of proposed capture protocol; do not recycle same historical TSM pages."
+  },
+  "coordinatorDecisionRequested": "Accept as research-only source-reconciliation and measurement specification; reject all numeric economic promotion. Request validator to check cross-rank comparison assumptions."
+}

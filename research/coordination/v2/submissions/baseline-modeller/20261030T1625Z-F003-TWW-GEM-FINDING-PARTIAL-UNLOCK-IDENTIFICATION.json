@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_TWW_GEM_FINDING_PARTIAL_UNLOCK_IDENTIFICATION",
+  "workflowRevision": 2,
+  "queueRevision": 28,
+  "runUTC": "2026-10-30T16:25:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "0d744f65c8cead9431c5dcab1e6682065dbe4ac8",
+  "resultCommitBeforeSubmission": "768ce15df1e49b7bbfc62cc56c2f63630948d2a1",
+  "commits": [
+    {
+      "sha": "596eb6dc8e94c1f35b2905c0deac259f64da1b59",
+      "purpose": "New research-only executable partial-identification model"
+    },
+    {
+      "sha": "768ce15df1e49b7bbfc62cc56c2f63630948d2a1",
+      "purpose": "Versioned model assumptions and source pin"
+    }
+  ],
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_QA",
+  "priorityPivot": {
+    "higherPriorityBlocked": 122,
+    "higherPriorityTargetCount": 5,
+    "reason": "Previously submitted TSM quantization, joint-cast, sequential-margin and controlled sampling models cover these five conflict keys. No new independent completed-cast source or verified cap arrived; zero-delta pivot to next ready family.",
+    "selectedPriority": 104,
+    "selectedFamily": "TWW conditional Gem Finding",
+    "selectedTargetCount": 8
+  },
+  "changedFiles": [
+    {
+      "path": "research/tools/models_v2/tww_gem_finding_partial_unlock_identification_v1.js",
+      "sha": "4f3261f73c7f6abebfa7e292333f546800d14ae4",
+      "status": "ADDED"
+    },
+    {
+      "path": "research/models/v2/tww_gem_finding_partial_unlock_identification_v1.json",
+      "sha": "5343e96c2a94068b5e7a01cb8d660e186cd222bf",
+      "status": "ADDED"
+    }
+  ],
+  "exactAffectedStableKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "exactDeltas": {
+    "newExecutableModels": 1,
+    "newModelManifests": 1,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "evidenceNumericCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "admittedMappingsChanged": 0,
+    "productionFilesChanged": 0
+  },
+  "readinessBefore": {
+    "mappingCount": 1018,
+    "workingNumeric": 4072,
+    "workingSlots": 4072,
+    "evidenceNumeric": 3558,
+    "evidenceMissing": 514,
+    "expectedQuantityEvidenceMissing": 116,
+    "verifiedBaselines": 0,
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "newMethod": "Given known true/false/unknown per-cast Gem Finding unlock states, bound eligible fraction by known true plus unknown-positive casts and all unknown casts; use fixed-N Hoeffding bounds over independent non-identical completed casts, Bonferroni across eight output keys and both P/E; E interval only with explicitly scenario-only cap; structural ineligibility is null, not an estimated zero.",
+  "testsActuallyRun": [
+    {
+      "runtime": "Native Node.js 22.16.0",
+      "scope": "Earlier local draft of same model family, NOT exact committed source",
+      "result": "30/30 synthetic assertions PASS; node --check PASS",
+      "limitation": "Commit differs in implementation; not a native test of exact GitHub blob"
+    },
+    {
+      "runtime": "Independent local Python 3 arithmetic oracle",
+      "scope": "Partial-identification algebra and fixed-N synthetic Hoeffding diagnostic",
+      "result": "10,000 algebra scenarios passed; 1,000 synthetic fixed-N replications with zero exclusions",
+      "limitation": "No measured game data; simulated coverage is not a formal empirical validation"
+    },
+    {
+      "runtime": "GitHub connector",
+      "scope": "Readback of exact model and manifest blobs",
+      "result": "PASS",
+      "shaPins": [
+        "4f3261f73c7f6abebfa7e292333f546800d14ae4",
+        "5343e96c2a94068b5e7a01cb8d660e186cd222bf"
+      ]
+    }
+  ],
+  "notRun": [
+    "Exact committed-source native Node self-test",
+    "Lua 5.1 and in-game tests (research-only JS; no Lua changes)",
+    "Completion pipeline --check (no compiler input changes)",
+    "Independent F005 adversarial acceptance and independent whole-study holdout"
+  ],
+  "economicPolicy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false
+  },
+  "blockers": [
+    "No independent current-Retail zero-inclusive cast-level unlock observations",
+    "Per-output structural-zero unlock exclusion not independently established",
+    "No independently verified per-cast hard output cap for E inference",
+    "Caller-provided fixed-N preregistration not independently attested",
+    "Formal F005 QA and holdout missing"
+  ],
+  "evidenceResearcherRequest": "For each of eight exact TWW Gem Finding mappings, obtain independent per-cast true/false/unknown unlock status, exact input/output ranks and spell, complete zero-inclusive co-output vector, actual completed/aborted cast IDs, refunds, skill/stats with units, patch epoch and independent study-family lineage. Establish structural-zero eligibility and independently supported hard caps.",
+  "validatorRequest": "Native-run exact committed model; independently test q bounds and positive-unknown inference, structural-zero counterexamples, alpha allocation, heterogeneous-cast Hoeffding proof, fixed-N restriction, caps, overflow, malformed contexts, provenance and no live-E/tooltip leakage.",
+  "coordinatorAcceptanceRequest": "Accept as research-only conditional partial-identification tool with zero economic/evidence promotions; do not accept as a verified game rate or baseline. Assign F005 exact native test and F004 unlock/structural-zero evidence.",
+  "nextTask": "If new independent cast-level Gem Finding cohorts arrive, apply the model with independently checked structural-zero eligibility and holdout; otherwise pivot to another ready 104/102 family instead of repeating these same sources."
+}

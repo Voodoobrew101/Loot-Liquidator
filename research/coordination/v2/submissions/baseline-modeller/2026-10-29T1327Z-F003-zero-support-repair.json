@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_ZERO_SUPPORT_REPAIR",
+  "workflowRevision": 2,
+  "coordinatorQueueRevisionObserved": 2,
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "runDateUTC": "2026-10-29",
+  "baseCommit": "7c1f80f55c0f7f395d710169bc7ccf400bc23628",
+  "resultCodeCommit": "816364429a3b7c4b0dc31a7885649fc50284aff5",
+  "resultManifestCommit": "c2d3635d84525bf4bc3e6121eb1e5e5634ae373f",
+  "headBeforeSubmission": "c2d3635d84525bf4bc3e6121eb1e5e5634ae373f",
+  "filesChanged": [
+    "research/tools/models_v2/tww_milling_context_sensitivity_v1.js",
+    "research/models/v2/tww_milling_f003_sensitivity_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/2026-10-29T1327Z-F003-zero-support-repair.json"
+  ],
+  "changedModelBlobSHA": "bea88982382816f315df66facf9060affa0c40bb",
+  "changedManifestBlobSHA": "c4f9a29457f78daf0cf84ade33ae694cdc1c2b6c",
+  "exactMappingKeysChanged": [],
+  "affectedModelKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+  ],
+  "defectAddressed": "F005-ZERO-FORWARD",
+  "changeSummary": [
+    "forward({hitProbability:0}) now returns P=0, E=0, yieldMin=null, yieldMax=null and conditionalYieldApplicable=false; caller-supplied positive PMF cannot leak positive bounds into zero-hit context",
+    "inverseHistogram all-zero cohorts explicitly mark conditionalYieldApplicable=false and retain zero-is-not-impossibility semantics",
+    "P>0 forward returns conditionalYieldApplicable=true and retains independent P, PMF and unconditional E invariants",
+    "Re-emitted role-owned manifest to match executable proposal exactly; all 12 contexts and 12 historical sensitivity scenarios retained without numeric changes"
+  ],
+  "deltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "rawEvidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "workingNumericCellsFilled": 0,
+    "existingWorkingNumericCellsChanged": 0,
+    "confidencePromotions": 0,
+    "independentStudyFamilies": 0,
+    "sourceConflictsResolved": 0,
+    "modelSemanticDefectsFixed": 1,
+    "existingRoleOwnedModelFilesUpdated": 2,
+    "currentRetailEconomicFieldsPromoted": 0
+  },
+  "checksActuallyRun": [
+    {
+      "name": "Full GitHub-fetched model module loaded in V8 and selfTest() executed",
+      "status": "PASS",
+      "assertions": 13
+    },
+    {
+      "name": "Exact GitHub-fetched model buildProposal versus role-owned JSON manifest",
+      "status": "PASS",
+      "records": 12,
+      "historicalScenarios": 12
+    },
+    {
+      "name": "P=0 with PMF, P=0 without PMF, all-zero histogram and P>0 support",
+      "status": "PASS",
+      "zeroConditionalBounds": null
+    },
+    {
+      "name": "GitHub-fetched independent F005 nine-case regression executed in V8 with strict assertion shim and current engineer/model blobs",
+      "status": "PASS_IN_AUTHOR_ENVIRONMENT_NOT_INDEPENDENT_ACCEPTANCE",
+      "passed": 9,
+      "failed": 0,
+      "workingEstimatorBlobSHA": "0bef8795b55043bfd8ba1896b53e4be618ff216c",
+      "independentTestBlobSHA": "fe49f116c3b89e4633b47717c7b1586624db2745"
+    },
+    {
+      "name": "Research-only economic isolation",
+      "status": "PASS_MODEL_SCOPE",
+      "currentRetailEconomicFieldsAllNull": true,
+      "confidence": 0,
+      "economicUse": "PREVIEW_ONLY",
+      "normalizedVerified": false
+    }
+  ],
+  "checksNotRun": [
+    "Native Node independent validator run",
+    "node research/tools/run_completion_pipeline.js --check on full checkout",
+    "Lua 5.1 generated candidate decode",
+    "Full JSON Schema candidate validation",
+    "WoW client/in-game verification",
+    "Independent current Retail matched whole-study holdout"
+  ],
+  "blockers": [
+    "Coordinator/independent validator must rerun native Node nine-case fixture and full candidate/CI checks before accepting combined F002/F003 repair",
+    "12 TWW milling contexts have no matched current Retail zero-inclusive completed-cast study, known minimum eligible skill, or independent family holdout",
+    "No authority to promote historical scenarios, tooltip-only fallback or preview priors into economic EV"
+  ],
+  "safeState": {
+    "workingPreviewNumericCoverageLastReadiness": "4072/4072",
+    "rawEvidenceMissingCellsLastReadiness": 514,
+    "rawExpectedQuantityMissingLastReadiness": 116,
+    "independentRetailUniverseAudit": "NOT_COMPLETE",
+    "noProductionOrLegacyChanges": true,
+    "noLiveEVChanges": true,
+    "noTooltipPromotion": true
+  },
+  "engineerHandoff": "F003 model zero-hit outputs are null conditional bounds; working estimate compiler's numeric zero sentinels remain a distinct working-storage convention with explicit conditionalYieldApplicable=false. Do not substitute null model evidence into numeric candidate cells without policy-aware translation.",
+  "validatorHandoff": "Re-run research/tests/v2/test_f005_context_and_zero_semantics.js under native Node with latest engineer and model SHA, then pipeline --check and Lua decode. Treat V8 9/9 as author-side preflight, not independent acceptance.",
+  "nextTask": {
+    "id": "F003_TWW_MILL_CONTROLLED_SAMPLE",
+    "action": "Create a source-neutral zero-inclusive per-cast capture/analysis adapter with patch, skill/stat, rank, gross/net/refund and independent cohort ancestry; if no eligible observations, pivot to next high-value model family without fabricated values"
+  }
+}

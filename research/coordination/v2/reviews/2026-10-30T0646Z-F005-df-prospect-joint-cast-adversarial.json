@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_PROSPECT_JOINT_CAST_ADVERSARIAL",
+  "workflowRevision": 2,
+  "reviewUTC": "2026-10-30T06:46:00Z",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE",
+  "verdict": "FAIL_F003_NEW_MODEL_TYPED_CONTEXT_RANK_AND_FINITE_OUTPUT;CONDITIONAL_RESEARCH_ONLY",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "e6e0d97595921d68f6103b2faa08780a62e3898c",
+  "testCommit": "31cc61d9d676a9cf350c7d24594b8df55a6b9eea",
+  "sourceBlobs": {
+    "workflow": "9831f9777155831bec1603508334d15fdc607da7",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "model": "20ad9dc03e7c16a910f56ecda659929b0d68b7d3",
+    "modelManifest": "00a1c2b8c1338588847640ec6696778723ad1cc3",
+    "f004NewHistoricalEvidence": "d8c0af49093b0db0048a240863857782e8ca0ed6",
+    "independentTest": "058fe6fdb422fcae3790e40fdd5367cc6f6f4610"
+  },
+  "exactPriorityKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "testsActuallyRun": [
+    {
+      "name": "F005_DF_PROSPECT_JOINT_CAST_ADVERSARIAL",
+      "environment": "JavaScript V8 exact GitHub model and test readback, strict assert shim",
+      "passed": 11,
+      "failed": 12,
+      "total": 23,
+      "syntheticOnly": true,
+      "limitations": "Not native Node; deliberately failing regression expectations document model defects, not real game observations"
+    },
+    {
+      "name": "GitHub readback SHA verification",
+      "environment": "GitHub connector",
+      "status": "PASS",
+      "modelBlobSHA": "20ad9dc03e7c16a910f56ecda659929b0d68b7d3",
+      "testBlobSHA": "058fe6fdb422fcae3790e40fdd5367cc6f6f4610"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F005-DF-PROSPECT-01",
+      "owner": "baseline-modeller",
+      "failedCases": 1,
+      "severity": "CONTEXT_APPLICABILITY",
+      "detail": "RAW_CURRENT_RETAIL patchBuild '10.2.7BANANA' passes prefix-only /^digits.digits.digits/ validation.",
+      "requestedRepair": "Anchor the build format to the full string and explicitly define allowed suffixes; reject malformed patch/build context."
+    },
+    {
+      "id": "F005-DF-PROSPECT-02",
+      "owner": "baseline-modeller",
+      "failedCases": 6,
+      "severity": "PROVENANCE_JSON_SAFETY",
+      "detail": "Nested NaN, Infinity, functions, undefined, BigInt and omitted undefined profession values pass context validation. JSON serialization can erase, coerce or fail on these distinct states.",
+      "requestedRepair": "Validate every nested specialization/gear/unlocks leaf as a typed finite JSON-safe value; preserve explicit unknown, reject unsupported types; snapshot/canonicalize provenance before using it as identity."
+    },
+    {
+      "id": "F005-DF-PROSPECT-03",
+      "owner": "baseline-modeller",
+      "failedCases": 2,
+      "severity": "RANK_APPLICABILITY",
+      "detail": "scenarioBounds accepts missing outputQualityRank and deliberately swapped rank values. Correct IDs alone do not establish output rank identity.",
+      "requestedRepair": "Require each output rank and exact equality to context.outputQualityRanks[id], rejecting missing/mismatched ranks before any scenario arithmetic."
+    },
+    {
+      "id": "F005-DF-PROSPECT-04",
+      "owner": "baseline-modeller",
+      "failedCases": 3,
+      "severity": "NONFINITE_RESEARCH_ARITHMETIC",
+      "detail": "Finite inputs can overflow to Infinity/NaN in historicalRateAlternatives, scenarioBounds and analyzeCasts economics, producing non-finite estimates and invalid decision labels.",
+      "requestedRepair": "Guard every computed hypothesis, revenue, cost, margin, covariance and variance for finite numeric results before returning; fail closed on overflow."
+    }
+  ],
+  "positiveControls": [
+    "Actual completed casts distinct from aborted requests",
+    "Zero-inclusive P and unconditional E",
+    "Co-output covariance",
+    "Refund/gross/net accounting",
+    "Preview-only confidence zero for model and output records",
+    "Historical rate-unit alternatives and duplicate source-lineage count",
+    "Incomplete output, refund, nonfinite count, source type and universe rejection"
+  ],
+  "evidenceDisposition": "F004 new Bugy and neoslayyer lineages are historical; no independently held-out current Retail zero-inclusive cast cohort. Historical denominator ambiguity and rank claims cannot justify current Retail E/P promotion.",
+  "independentCurrentRetailHoldoutFamilies": 0,
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "exactDeltas": {
+    "newValidatorTestFiles": 1,
+    "newValidatorReviewFiles": 1,
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0
+  },
+  "testsNotRun": [
+    "Native Node execution of new 23-case suite",
+    "Lua 5.1 and pipeline check for this new suite",
+    "WoW client and in-game tooltip or EV",
+    "Independent whole-study current-Retail holdout"
+  ],
+  "blockers": [
+    "12 new synthetic adversarial failures across four defect classes",
+    "No independent current-Retail completed-cast family or independently verified complete output universe",
+    "No evidence-strength-90 fields or live economic promotion authorized"
+  ],
+  "coordinatorAction": "Return F003 model defects to baseline modeller; keep current working estimates and evidence unchanged; run 23-case suite under native Node after owner repair and add fail-closed CI through the completion engineer's owned workflow; retain confidence zero PREVIEW_ONLY normalizedVerified false.",
+  "nextTask": "F005_NATIVE_RETEST_DF_PROSPECT_JOINT_CAST_AFTER_F003_REPAIR_OR_PIVOT_TO_CHANGED_READY_MODEL"
+}

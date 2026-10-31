@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_MIDNIGHT_QUARANTINE_AND_DF_CONTEXT_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 15,
+  "runUTC": "2026-10-30T02:02:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "93d813247de6cb44e79925f11d5c76c9768c9155",
+  "resultCommitBeforeSubmission": "a290afc70eb4396c6588236b6407fbcb5fed77bb",
+  "status": "COORDINATOR_ACCEPTANCE_COMMITTED_F002_RESEARCH_ONLY_F003_BLOCKED",
+  "acceptanceRecord": "research/coordination/v2/acceptance/20261030T0202Z-F001-F005-midnight-quarantine-df-context-integration.json",
+  "scorecardPath": "research/coordination/v2/scorecards/current.json",
+  "exactChangedFiles": [
+    "research/coordination/v2/acceptance/20261030T0202Z-F001-F005-midnight-quarantine-df-context-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/20261030T0202Z-F001-F005-midnight-quarantine-df-context-integration.json"
+  ],
+  "reviewedRoleSubmissions": 4,
+  "independentValidatorReviews": 1,
+  "exactDeltas": {
+    "admittedMappingsBefore": 1018,
+    "admittedMappingsAfter": 1018,
+    "workingNumericCellsBefore": 4072,
+    "workingNumericCellsAfter": 4072,
+    "evidenceNumericCellsBefore": 3558,
+    "evidenceNumericCellsAfter": 3558,
+    "evidenceMissingCellsBefore": 514,
+    "evidenceMissingCellsAfter": 514,
+    "evidenceMissingExpectedQuantityBefore": 116,
+    "evidenceMissingExpectedQuantityAfter": 116,
+    "workingFieldsReclassifiedFromUnsupportedNonzeroConfidence": 32,
+    "perFieldReclassified": {
+      "dropChance": 8,
+      "yieldMin": 8,
+      "yieldMax": 8,
+      "expectedQuantity": 8
+    },
+    "workingNumericValuesChanged": 0,
+    "numericCellsFilledThisCoordinatorRun": 0,
+    "newECells": 0,
+    "invalidMappingsRemoved": 0,
+    "newMappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailStudyLineages": 0,
+    "newIndependentSyntheticTestCases": 16,
+    "newSyntheticFailures": 10,
+    "productionChanges": 0,
+    "legacyChanges": 0,
+    "rawEvidenceChanges": 0,
+    "frozenTSMChanges": 0,
+    "tooltipPolicyChanges": 0,
+    "scheduleChanges": 0
+  },
+  "acceptanceDecisions": {
+    "F002": "ACCEPT_8_MIDNIGHT_LEGACY_QUARANTINE_RESEARCH_ONLY_NATIVE_27_OF_27_VALIDATOR_REPORTED",
+    "F003": "BLOCK_NEW_DF_MILLING_MODEL_FOR_RAW_TYPED_CONTEXT_AND_OUTPUT_UNIVERSE_INTEGRITY",
+    "F004": "ACCEPT_TWW_SPELL444181_INDEXED_BATCH10_METADATA_ONLY_NO_EVIDENCE_E_OR_RECIPE_ADMISSION",
+    "F005": "ACCEPT_REVIEW_AND_NEW_16_CASE_SYNTHETIC_REGRESSION_AS_REPAIR_GATE"
+  },
+  "checksActuallyRun": [
+    "GitHub connector fetch/readback of mandatory contracts, source code and all specialist submissions.",
+    "GitHub connector exact blob checks: candidate 560b885a0039045419c340716e263ae33ddf827a, estimator 257793a7ac1cfaadb8efd9535d84e979e50aec11, pipeline 30eae7a4a29af3e41e2a3a9bc805661504b44e00, F003 model 5621836ca4078e9c0003f70e26c3df8f06af11ec, F005 test 97ab6ed0a583a2c1fc9cbed092ef506e674361a8.",
+    "Coordinator static 13 boolean assertions passed: quarantine, policy gates, coverage, native suite wiring distinction and F003 missing guards.",
+    "Compared prior coordinator commit 012e01d7 against starting head: 14 commits, 14 research-only paths.",
+    "Committed and read back coordinator acceptance and scorecard; submission write follows."
+  ],
+  "externalTestsReported": [
+    "Independent validator GitHub Actions 40986579730: native Midnight F002 27/27, full completion pipeline, Lua5.1 and deterministic build passed.",
+    "Independent validator V8 exact-source F003: 6/16 synthetic cases passed, 10/16 failed (8 typed-context, 2 output-universe)."
+  ],
+  "testsNotRun": [
+    "Native Node 16-case F003 fixture",
+    "Native Node full pipeline in coordinator runtime",
+    "Lua5.1 in coordinator runtime",
+    "Retail client",
+    "Independent whole-study current-Retail holdout",
+    "External SHA-256 attestation"
+  ],
+  "blockers": [
+    "F003 RAW_CURRENT_RETAIL lacks full typed context enforcement.",
+    "F003 incomplete output universe can incorrectly support a decision classification.",
+    "New F005 16-case suite not yet wired to native CI; negative partial-output demonstration must expect rejection after repair.",
+    "No verified Retail cast cohort for 24 DF milling target keys, 116 missing evidence-backed E values.",
+    "TWW spell444181 indexed batch10 not verified live recipe/rank/cast denominator."
+  ],
+  "preservedPolicies": {
+    "unsupportedConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVUnchanged": true,
+    "rawEvidenceUnchanged": true,
+    "frozenTSMUnchanged": true,
+    "tooltipOnlyUnchanged": true,
+    "mainUntouched": true,
+    "runtimeProfilesBranchUntouched": true,
+    "legacyAssignmentsUnchanged": true,
+    "existingSchedulesUnchanged": true
+  },
+  "zeroDeltaPivot": "Accepted F002 repair; pivoted from unchanged Midnight audits to F003 newly failed typed-context and output-universe model.",
+  "nextTask": "F003_REPAIR_DF_MILL_TYPED_CONTEXT_AND_CERTIFIED_OUTPUT_UNIVERSE",
+  "nextOwners": {
+    "baselineModeller": "F003 model guard repair",
+    "independentValidator": "F005 native 16-case retest",
+    "completionEngineer": "F002 wire F005 suite after repair",
+    "evidenceResearcher": "F004 TWW live recipe/cast basis"
+  },
+  "resultCommitNote": "resultCommitBeforeSubmission is the scorecard integration commit; this submission itself creates the final coordinator run commit."
+}

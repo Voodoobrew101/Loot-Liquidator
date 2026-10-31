@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_POLICY_ANCHOR_AND_TARGET_CONTEXT_ZERO_DELTA_PIVOT",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 6,
+  "dateUTC": "2026-10-29T17:47:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "63453fef62d5d5fbd6f79779494d31096697d24b",
+  "verdict": "CONDITIONAL_PASS_PRIOR_TWO_REPAIRS_BLOCK_NEW_NONPOOL_TARGET_IDENTITY_GAP",
+  "sourceBlobs": {
+    "estimator": "982dcf0f3b23903eaa6eda41da12add334daec38",
+    "pipeline": "e3487f7e9c874cd558bf69d11f4f19de67609572",
+    "priorFixture": "3ca974762afbea295ef284090c4df4108be7de3a",
+    "newFixture": "e3687c5424f34ad12a23427b18ce8a5f82af7d3e",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+  },
+  "priorRepairRetest": {
+    "policyAnchor": "PASS_SOURCE_CHECK: x.poolExpectedQuantity compared against configured poolMean",
+    "stalePatch": "PASS_SOURCE_CHECK: patchWindow compared via regenerated targetContext",
+    "nativeCI": "PASS_GITHUB_READBACK: 40918955844 at 10befc823a0f3c365961f0b1a4e94506e2950c31",
+    "nativeCIURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40918955844",
+    "caveat": "Independent validator did not execute the old suite locally; relied on source and verified native CI"
+  },
+  "newRisk": {
+    "class": "NONPOOL_TARGET_CONTEXT_INCOMPLETE_IDENTITY_AND_STAT_LINEAGE",
+    "sourceFunction": "workingTargetContext(r)",
+    "validatorFunction": "validateWorkingEstimates(records)",
+    "serializedFields": [
+      "gameMode",
+      "patchWindow",
+      "inputQualityRank",
+      "outputQualityRank",
+      "inputCountPerOperation"
+    ],
+    "omittedIdentityAndContext": [
+      "method",
+      "recipeSpellID",
+      "inputItemID",
+      "outputItemID",
+      "reagents",
+      "conditions.effectiveSkill",
+      "conditions.operationStats"
+    ],
+    "codePath": "Clean nonpool record has no allocation and no donor ancestry; validator compares only the partial targetContext, leaving these mutations unchecked.",
+    "fixture": "research/tests/v2/test_f005_target_identity_staleness.js",
+    "fixtureCases": 11,
+    "sourcePredictedPass": 4,
+    "sourcePredictedFail": 7,
+    "execution": "NEW_FIXTURE_NOT_EXECUTED: counts are static source-derived expectations, not runtime results",
+    "impact": "Research-preview staleness may survive conversion/skill changes. No existing mapping corruption or live EV leak demonstrated.",
+    "repairOwner": "completion-engineer",
+    "acceptance": "Serialize and validate full typed target identity, recipe, reagent vector, skill and stats; preserve deterministic rebuild; run new 11-case suite and prior 8+12+609, Node/schema/Lua."
+  },
+  "currentCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "economicSafety": {
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "unsupportedFallbackConfidence": 0,
+    "newEconomicPromotions": 0,
+    "liveEVLeakDemonstrated": false
+  },
+  "deltas": {
+    "newMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "newIndependentStudies": 0,
+    "newRegressionCases": 11,
+    "newStaticDefectClasses": 1
+  },
+  "testsActuallyRun": [
+    "GitHub source-SHA and source-contract inspection",
+    "GitHub Actions 40918955844 status readback"
+  ],
+  "testsNotRun": [
+    "New 11-case Node/V8 suite",
+    "New commit CI pending",
+    "Local Node/schema/Lua",
+    "WoW client",
+    "Independent Retail matched holdout"
+  ],
+  "blockers": [
+    "Incomplete nonpool target identity/stat contract",
+    "No independent current-Retail holdout",
+    "116 E evidence gaps and 514 total numeric evidence gaps"
+  ],
+  "nextTask": "F005_RETEST_FULL_NONPOOL_IDENTITY_CONTEXT_AFTER_F002_REPAIR",
+  "zeroDeltaPivot": "Prior two defects repaired; shifted to a new source-level nonpool identity risk instead of repeating unchanged audits."
+}

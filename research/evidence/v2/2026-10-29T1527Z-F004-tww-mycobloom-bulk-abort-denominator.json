@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_MILLING_BULK_ABORT_DENOMINATOR",
+  "runUTC": "2026-10-29T15:27:00Z",
+  "gameMode": "RETAIL",
+  "expansion": "THE_WAR_WITHIN",
+  "recipeSpellID": 444181,
+  "nominalReagents": [
+    {
+      "itemID": "MYCOBLOOM_RANK_SELECTED",
+      "quantity": 10
+    }
+  ],
+  "relevantInputIDs": [
+    210796,
+    210797
+  ],
+  "targetKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+  ],
+  "questionResolved": "Does requested bulk Create All count establish actual completed milling casts?",
+  "answer": "NO. First-person reports describe premature bulk milling interruption after a successful craft despite inventory remaining. Requested operations, gross herbs available and completed casts must be recorded separately.",
+  "sources": [
+    {
+      "sourceID": "blizzard-forum-1927887-20240824",
+      "url": "https://us.forums.blizzard.com/en/wow/t/requires-10-mycobloom-for-bulk-milling-but-i-do-have-them/1927887",
+      "reportedDate": "2024-08-24",
+      "author": "Pandeath-baelgun",
+      "observationEpoch": null,
+      "firstPerson": true,
+      "claim": "Bulk milling Mycobloom sometimes succeeds once and then fails with Requires 10 Mycobloom although player reports having enough herbs; reports single-craft workaround.",
+      "originalCastCount": null,
+      "originalHerbCount": null,
+      "outputItemID": null,
+      "skillStats": null,
+      "patchBuild": null,
+      "confidenceEvidenceStrength": 43
+    },
+    {
+      "sourceID": "blizzard-forum-1944679-20240905",
+      "url": "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679",
+      "reportedDate": "2024-09-05",
+      "author": "Feaver",
+      "observationEpoch": null,
+      "firstPerson": true,
+      "claim": "Create All sometimes completes one Mycobloom milling craft then stops with Requires 10 Mycobloom despite large remaining herb inventory; another poster proposes first-stack selection as cause.",
+      "originalCastCount": null,
+      "originalHerbCount": null,
+      "outputItemID": null,
+      "skillStats": null,
+      "patchBuild": null,
+      "confidenceEvidenceStrength": 48
+    }
+  ],
+  "sourceAncestry": {
+    "independentFirstPersonFailureReports": 2,
+    "independentNumericYieldCohorts": 0,
+    "reusedPriorYieldStudy": "reddit-1fdmzwy-2024-original-author",
+    "relatedSecondaryComment": "DragonKnight first-stack workaround is a comment under the Feaver report, not an independent measured cause",
+    "knownSourceMemoryBeforeFetch": {
+      "forum1927887": false,
+      "forum1944679": false,
+      "reddit1f5rby5": true,
+      "reddit1fdmzwy": true
+    }
+  },
+  "evidenceLimitations": [
+    "Historical 2024 behavior only; no proof of current 2026 Retail bug",
+    "No output histogram, rank-specific results, actual successful-cast denominator or measured E",
+    "First-stack hypothesis is community troubleshooting, not a verified game mechanism",
+    "Failed/aborted attempts are not zero-output completed casts",
+    "Do not infer any numeric dropChance or expectedQuantity from forum reports"
+  ],
+  "numericEvidence": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "denominatorGuard": {
+    "rule": "Count a cast only after confirmed successful completion; do not count requested Create All iterations or errors as completed zero-output casts.",
+    "exampleIllustrativeNotStudy": {
+      "startingHerbs": 1000,
+      "nominalHerbsPerCast": 10,
+      "requestedOperations": 100,
+      "confirmedCompletedOperations": 1,
+      "remainingHerbsIfNoRefunds": 990,
+      "denominatorToUseForOneConfirmedCraft": 1
+    },
+    "requiredFields": [
+      "castAttemptID",
+      "successConfirmation",
+      "completedCastCount",
+      "sourceInputItemID",
+      "sourceInputQualityRank",
+      "spellID",
+      "grossInputBeforeAfter",
+      "refundsSavedSeparately",
+      "allOutputItemIDsAndRanksIncludingZero",
+      "skill",
+      "specialization",
+      "gear",
+      "resourcefulness",
+      "buildAndObservationTimestamp",
+      "inventoryStackSplitAndBulkMode"
+    ]
+  },
+  "disposition": "NEW_HISTORICAL_DENOMINATOR_FAILURE_MODE; NO_ECONOMIC_OR_MAPPING_PROMOTION"
+}

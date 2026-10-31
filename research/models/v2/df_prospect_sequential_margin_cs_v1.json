@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "df-prospect-sequential-margin-cs-v1.0.0",
+  "taskID": "F003_DF_PROSPECT_SEQUENTIAL_DECISION_SENSITIVITY",
+  "workflowRevision": 2,
+  "status": "PROPOSED_PENDING_INDEPENDENT_QA",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "modelSource": "research/tools/models_v2/df_prospect_sequential_margin_cs_v1.js",
+  "modelSourceBlobSHA": "aed91ab3beb10377ff5d38f7b13c87bdc9a80c0f",
+  "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "baseCommitBeforeRun": "0ed82cde755fc820cac9e1c76d9b4182761eb4d6",
+  "targetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "priority": 122,
+  "priorityBasis": "FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT",
+  "purpose": "Provide a research-only anytime-valid stopping/decision sensitivity bound for the five highest-priority Dragonflight prospecting source-conflict mappings, conditional on full independently reviewed output universe, finite verified per-cast output caps, fixed price snapshot, homogeneous IID completed casts and exact profession context. No numerical Retail P/E inferred.",
+  "ancestry": {
+    "existingModel": "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
+    "historicalTSM": "FROZEN_HISTORICAL_ONLY_NOT_MODIFIED",
+    "newIndependentRetailStudyFamilies": 0,
+    "independentHoldouts": 0
+  },
+  "context": "Uses existing strict Dragonflight prospecting validateContext; requires full output IDs/quality ranks, recipe, skill, stats, patch, epoch, lineage, nominal reagents and caller-attested complete universe. Separate completed/aborted casts and refunds.",
+  "methods": {
+    "descriptive": "For each output j: observed P_j = completed casts with count_j>0 / completed casts; observed unconditional E_j = sum count_j including zeros / completed casts. Never multiply E by P.",
+    "netMargin": "Per cast margin = sum_j outputCount_j*fixedOutputPrice_j*(1-auctionCut) - (nominalInput-refund)*fixedInputPrice - fixedDepositPerCast.",
+    "range": "If each output has independently supported maxPerCast cap B_j, margin lies in [ -nominalInput*inputPrice-deposit, sum_j(B_j*outputPrice_j*(1-cut))-deposit ]. No assumption of independent co-outputs.",
+    "confidenceSequence": "For n completed IID casts with fixed bounded range [L,U], alpha_n=alpha/(n(n+1)); two-sided Hoeffding radius (U-L)*sqrt(log(2*n*(n+1)/alpha)/(2*n)); clip sampleMean±radius to [L,U]. Sum alpha_n over all n equals alpha. Valid at arbitrary optional stopping times under assumptions.",
+    "decisions": "Only descriptive conditional signs when interval wholly positive or negative. No actual liquidation recommendation, confidence promotion or live EV."
+  },
+  "applicability": {
+    "caps": "Caller claims INDEPENDENTLY_REVIEWED, independent source lineage, exact output ranks, complete universe. Code cannot authenticate provenance; validator must independently verify before interpreting bound.",
+    "price": "Fixed timestamped price vector, all output prices, input price, AH cut and deposit. Not fetched from live TSM/AH.",
+    "iid": "Independent identically distributed completed casts within fixed patch/build, rank, skill, specialization, gear, unlocks, Resourcefulness profile. No cross-epoch pooling.",
+    "unbounded": "If no verified cap/universe or fixed prices, return descriptive E/P and null statistical margin interval; no fabricated finite bound."
+  },
+  "uncertainty": {
+    "independentCaps": "NOT_AVAILABLE",
+    "independentOutputUniverse": "NOT_COMPLETE",
+    "currentRetailCompletedCasts": 0,
+    "priceSnapshot": "SYNTHETIC_ONLY",
+    "heldOutFamilies": 0,
+    "verifiedBaseline": "NONE"
+  },
+  "syntheticExample": {
+    "completedCasts": 2,
+    "abortedRequests": 1,
+    "zeroOutputCasts": 1,
+    "nominalGrossInput": 10,
+    "refundedInput": 1,
+    "netConsumedInput": 9,
+    "sampleP": [
+      0.5,
+      0.5
+    ],
+    "sampleE": [
+      1,
+      0.5
+    ],
+    "sampleMeanMargin": 1.5,
+    "assumedPerCastMarginRange": [
+      -5,
+      12
+    ],
+    "anytimeIntervalAtN2": [
+      -5,
+      12
+    ],
+    "classification": "UNRESOLVED_CONDITIONAL"
+  },
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEconomicEligible": false,
+    "tooltipOnlyEligible": false,
+    "economicPromotions": 0
+  },
+  "tests": {
+    "localNativeNodeWithStubbedExistingValidateContext": {
+      "passed": 30,
+      "failed": 0,
+      "syntheticOnly": true,
+      "limitation": "Dependency stub only; exact committed source plus actual existing validator not executed together locally."
+    },
+    "nodeSyntax": "PASS_LOCAL_COPY",
+    "arithmeticIdentity": "sum alpha_n for n=1..100000 = 0.049999500004999954 at alpha=0.05",
+    "nativeGitHubCI": "NOT_CONFIRMED",
+    "independentF005": "PENDING",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "priorityMappingsAddressed": 5,
+    "modelFilesCreated": 2
+  },
+  "evidenceResearcherRequest": "Obtain independent current-Retail zero-inclusive joint-cast logs for exact five priority-122 keys, with full output universe and separately sourced hard per-cast caps, actual refunds, quality ranks, recipe/skill/stats/patch and observation timestamps. Do not treat observed maxima as caps.",
+  "independentValidatorRequest": "Run exact committed source with real existing validateContext and adversarial contexts; verify any cap/universe provenance independently, test optional-stopping coverage across full independent study families, all-output and refund arithmetic, and fail-closed safety.",
+  "blockers": [
+    "No independently supported per-cast caps or audited output universe for this family",
+    "No current-Retail zero-inclusive joint-cast observations or independent holdouts",
+    "Actual GitHub CI and F005 verdict pending"
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F002_F003_F004_F005_SOURCE_PIN_NATIVE_AND_HISTORICAL_R3_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 23,
+  "runID": "20261030T0957Z-F001-F005-source-pin-native-historical-r3-integration",
+  "reportDateUTC": "2026-10-30T09:57:28Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "0ee58c42f9e22ed51c23e5a459fdbf0bef296bd9",
+  "resultCommit": "SELF_THIS_COMMIT",
+  "status": "COORDINATOR_ACCEPTANCE_SUBMITTED",
+  "exactFilesChanged": [
+    "research/coordination/v2/acceptance/20261030T0957Z-F001-F005-source-pin-native-historical-r3-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/20261030T0957Z-F001-F005-source-pin-native-historical-r3-integration.json"
+  ],
+  "acceptedVersusProposed": [
+    {
+      "owner": "completion-engineer",
+      "task": "F002_DIRECT_COMPILER_INPUT_SHA_GATE",
+      "verdict": "CONDITIONALLY_ACCEPT_RESEARCH_BUILD_INTEGRITY_NATIVE_PASS_F005_CODE_REVIEW_PENDING"
+    },
+    {
+      "owner": "baseline-modeller",
+      "task": "F003_DF_PROSPECT_SEQUENTIAL_DECISION_SENSITIVITY",
+      "verdict": "RECORD_PROVISIONAL_RESEARCH_MODEL_BLOCK_NUMERIC_INFERENCE_PENDING_F005_NATIVE_AND_CAP_UNIVERSE"
+    },
+    {
+      "owner": "evidence-researcher",
+      "task": "F004_DF_R3_DIAMOND_PRIMARY_COHORT",
+      "verdict": "ACCEPT_ONE_HISTORICAL_AUTHOR_LINEAGE_AS_CONTEXT_ONLY_F005_CONDITIONAL"
+    },
+    {
+      "owner": "independent-validator",
+      "task": "F005_DF_R3_DIAMOND_HISTORICAL_DENOMINATOR_QA",
+      "verdict": "ACCEPT_CONDITIONAL_HISTORICAL_ISOLATION_REVIEW_NATIVE_20_CASE_PENDING"
+    }
+  ],
+  "exactDeltas": {
+    "newCoordinatorAcceptanceFiles": 1,
+    "updatedCoordinatorScorecardFiles": 1,
+    "newCoordinatorSubmissionFiles": 1,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCellsPromoted": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailCastFamilies": 0,
+    "otherRoleFilesChanged": 0,
+    "productionFilesChanged": 0,
+    "legacyAssignmentsChanged": 0,
+    "frozenTSMChanged": 0,
+    "rawEvidenceChanged": 0,
+    "tooltipOnlyPolicyChanged": 0,
+    "schedulesChanged": 0
+  },
+  "canonical": {
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "scorecardPreviousBlob": "96b939b72a348376b1ce64d087ce20a0d555f3f4",
+    "blob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingE": 116,
+    "priorityRecords": 217
+  },
+  "testsActuallyRun": {
+    "coordinatorDirectGitBlobChecks": {
+      "passed": 14,
+      "failed": 0
+    },
+    "coordinatorArithmeticChecks": {
+      "passed": 3,
+      "failed": 0,
+      "details": [
+        "591/400000*1000 = 1.4775",
+        "29/20000*1000 = 1.45",
+        "alpha_n=alpha/(n(n+1)) telescopes to alpha"
+      ]
+    },
+    "nativeCI": {
+      "runID": 41035740987,
+      "conclusion": "success",
+      "headSHA": "0ee58c42f9e22ed51c23e5a459fdbf0bef296bd9",
+      "pipelineCheck": "PASS",
+      "sourcePinRegression": "PASS_8_OF_8",
+      "lua51": "PASS_1018_MAPPINGS_4072_WORKING_514_EVIDENCE_GAPS",
+      "schema": "PASS"
+    },
+    "specialistReported": {
+      "f003SyntheticWithStub": 30,
+      "f005HistoricalV8": 20
+    },
+    "notRun": [
+      "New F005 historical 20-case native suite",
+      "New F003 sequential model with actual dependency under native Node",
+      "F005 independent review of F002 source SHA gate",
+      "Current-Retail held-out cast validation",
+      "WoW client"
+    ]
+  },
+  "testsNotRun": [
+    "New F005 historical 20-case native suite",
+    "New F003 sequential model with actual dependency under native Node",
+    "F005 independent review of F002 source SHA gate",
+    "Current-Retail held-out cast validation",
+    "WoW client"
+  ],
+  "blockers": [
+    "F003 April 3 hotfix epoch still wrong; official April 1 boundary remains uncorrected and must be quarantined",
+    "DF array-attestation 10 failures and Midnight nested-context 8 failures remain without strict native repaired acceptance",
+    "New sequential margin model unverified with actual dependency; output caps/universe and current-Retail casts absent",
+    "F005 historical 20-case suite not wired to native CI; full Reddit source retrieval unavailable",
+    "F002 pin gate requires independent F005 code review; repo-local manifest is not external trust root",
+    "116 missing evidence-backed E and 514 evidence fields; zero independent current-Retail cast holdouts"
+  ],
+  "nextTask": "F003_CORRECT_APR01_HOTFIX_EPOCH_AND_CONTEXT",
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_CORRECT_APR01_HOTFIX_EPOCH_AND_CONTEXT",
+      "scope": "First repair still-unchanged April 3 vs official April 1 Midnight prospecting epoch: quarantine April 1 boundary, no fabricated deployment hour, native self-tests and independent F005 QA. Then address DF array-attestation 10 failures and Midnight nested-context 8 failures. The new sequential margin model remains a proposed, separately reviewed research tool; do not substitute it for these blockers."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_NATIVE_SOURCE_PIN_SEQUENTIAL_AND_HISTORICAL_REVIEW",
+      "scope": "Independently inspect F002 14-input gate and its pin-manifest trust limitations; run committed F004 historical 20-case test under native Node, then new F003 sequential margin model with the actual validateContext dependency, adversarial caps/output-universe/context mutation and optional stopping checks. Verify April 1 correction first when available; run outstanding trait 19 and DF array 13 and Midnight nested 13 tests after repairs."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_PIN_GATE_INDEPENDENT_ACCEPTANCE_AND_STRICT_TESTS",
+      "scope": "Preserve verified 14 direct-input SHA pins and native 8/8 gate. After F005 independent review, integrate corrected hotfix and historical 20-case/trait 19-case tests as strict fail-closed native gates; rerun deterministic pipeline --check and Lua 5.1; do not edit addon or promote economic values. Pivot to changed source/model defect if no delta."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_CURRENT_RETAIL_RANK_SEPARATED_CAST_OR_TWW_PIVOT",
+      "scope": "Seek one current-Retail zero-inclusive R3 Draconium completed-cast study with exact output IDs/ranks, full co-output vector, refunds, actual cast count, skill/spec/gear, patch and independent lineage. If none, pivot to priority TWW milling recipe/reagent eligibility and E gaps; do not repeat the same 2023 historical rate sources."
+    }
+  ],
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVOrRecommendationsChanged": false,
+    "tooltipOnlyUnchanged": true
+  },
+  "preservation": {
+    "mainUntouched": true,
+    "runtimeProfilesUntouched": true,
+    "legacyAssignmentsUntouched": true,
+    "rawEvidenceUntouched": true,
+    "frozenTSMUntouched": true,
+    "tooltipOnlyUnchanged": true,
+    "otherRoleFilesUntouched": true,
+    "schedulesUntouched": true
+  }
+}

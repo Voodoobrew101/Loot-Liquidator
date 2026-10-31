@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "df-prospect-controlled-sampling-design-v1.0.0",
+  "taskID": "F003_DF_PROSPECT_CONTROLLED_SAMPLING_DESIGN",
+  "workflowRevision": 2,
+  "status": "PROPOSED_PENDING_INDEPENDENT_QA",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "modelSource": "research/tools/models_v2/df_prospect_controlled_sampling_design_v1.js",
+  "modelSourceBlobSHA": "17d791ec32cda0df99b280d85a6c7909f860f390",
+  "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "baseCommitBeforeRun": "6497ff66be80f67212896f3eb8570090e0996d36",
+  "targetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "priority": 122,
+  "purpose": "Controlled-sampling protocol and finite fixed-sample precision budget for five unresolved Dragonflight prospecting conflict mappings; zero-delta pivot from repeated source/conflict modelling to actionable independent measurement design.",
+  "math": {
+    "perFieldTwoSidedHoeffding": "Pr(|mean-truth|>=epsilon)<=2 exp(-2n epsilon^2/range^2)",
+    "allocation": "Bonferroni over 2K P/E fields across K selected keys; per-field alpha/(2K)",
+    "sampleSize": "ceil(range^2 * ln(4K/alpha)/(2epsilon^2))",
+    "PRange": 1,
+    "ERange": "Only independently reviewed positive maxPerCompletedCast; absent/hypothetical caps return null",
+    "samplingUnit": "actual completed cast, zero-inclusive, fixed context"
+  },
+  "illustrativeDesign": {
+    "selectedKeys": 5,
+    "distinctInputCohorts": 3,
+    "nominalInputPerCast": 5,
+    "alpha": 0.05,
+    "epsilonP": 0.1,
+    "epsilonE": 0.25,
+    "probabilityPrecisionCastsPerInput": 300,
+    "grossInputPerInput": 1500,
+    "fullExpectedQuantityPrecisionCasts": null,
+    "observedDropProbability": null,
+    "observedExpectedQuantity": null,
+    "warning": "Planning counts conditional on IID and exact fixed context; not observed casts, cap evidence, or a request to assume 5-input recipe eligibility."
+  },
+  "independentEvidence": {
+    "newRetailCohorts": 0,
+    "newHoldoutFamilies": 0,
+    "verifiedOutputCaps": 0,
+    "completeOutputUniverse": "NOT_INDEPENDENTLY_AUDITED",
+    "recipeEligibility": "NOT_INDEPENDENTLY_AUDITED"
+  },
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyUnchanged": true,
+    "frozenTSMUnchanged": true
+  },
+  "tests": {
+    "nativeNode22": {
+      "passed": 29,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    "nodeCheck": "PASS",
+    "sourceGitBlobReadback": "17d791ec32cda0df99b280d85a6c7909f860f390",
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentF005": "PENDING"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "expectedQuantityEvidenceFilled": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "modelSourceFilesCreated": 1,
+    "modelManifestsCreated": 1
+  },
+  "evidenceResearcherRequest": "For each input 188658, 189143, 190311 obtain independent current-Retail zero-inclusive completed-cast logs with all output ranks and co-outputs, completed/aborted IDs, refunds, actual build/time, recipe, min-eligible and actual skill, specialization, gear and unlocks. Verify output universe and hard per-cast maxima independently of the cohort; do not infer hard caps from observed sample maxima.",
+  "independentValidatorRequest": "Native-run exact source and adversarial tests; independently review any supplied caps and source lineage, validate Bonferroni/Hoeffding math, fixed-N assumptions, cohort separation, missing-cap null gates, and preview-only policy; no acceptance of caller attestation as source verification.",
+  "blockers": [
+    "No independent current-Retail zero-inclusive casts for five keys",
+    "No independently audited complete output universe or per-cast hard caps",
+    "Recipe/rank eligibility and fixed profession context need independent confirmation",
+    "Formal independent F005 QA and whole-family holdout remain outstanding"
+  ]
+}

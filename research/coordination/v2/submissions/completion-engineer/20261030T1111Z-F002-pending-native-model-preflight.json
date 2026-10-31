@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_STRICT_CHANGED_SOURCE_AND_MODEL_GATES",
+  "workflowRevision": 2,
+  "queueRevision": 24,
+  "runID": "20261030T1111Z-F002-pending-native-model-preflight",
+  "runUTC": "2026-10-30T11:11:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "66ef2300eb77744628575b2041d8d04c5f0dd779",
+  "implementationCommit": "e68c38c07872a925e9226114d5f1e56361848e21",
+  "taskSelection": "Coordinator has not yet accepted native F005 13-case DF array and 25-case TWW suites; create a separate pinned native preflight for changed source/model checks without prematurely adding them to the strict candidate build or changing existing gates.",
+  "canonicalReadiness": {
+    "sha": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "canonicalPriorities": {
+    "sha": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "topPriority": 122,
+    "priorityBasis": "FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT"
+  },
+  "exactFilesAdded": [
+    {
+      "path": "research/tools/working_native_model_preflight.js",
+      "blobSHA": "64c1a44d3dc23d477a4c738daeb1deb4485f2c61",
+      "lines": 102,
+      "bytes": 6140
+    }
+  ],
+  "exactFilesModified": [],
+  "exactKeysAffected": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280",
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+  ],
+  "pinnedInputBlobs": {
+    "research/tests/v2/test_f005_df_prospect_array_context_attestation.js": "77519d24493455616dbbf94d142af581aa857c3a",
+    "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js": "70bab20081db23e899a45b73186200869efae48c",
+    "research/models/v2/df_prospecting_joint_cast_conflict_v1.json": "d18b9ab544bfdc3a575ce88027297ce1ba341893",
+    "research/tests/v2/test_f005_tww_milling_skill_rank_source_isolation.js": "f24454a4187263c064eb3a17e94e0770b279e618",
+    "research/evidence/v2/2026-10-30T1032Z-F004-tww-milling-skill-rank.json": "1396ef6ce5348e1d0cf9052ef0ad205975c3f869",
+    "research/evidence/v2/source-reviews/2026-10-30T1032Z-F004-tww-milling-skill-rank-source-review.json": "ae511c18dc3fb4110c81eb48b79b2f072f8e82e5"
+  },
+  "exactDeltas": {
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "admittedMappingsAdded": 0,
+    "evidenceNumericCellsAdded": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "buildPipelineGatesModified": 0,
+    "productionWrites": 0
+  },
+  "testsActuallyRun": [
+    {
+      "test": "Native Node 22 --check on exact 6140-byte code",
+      "result": "PASS",
+      "note": "Local file git blob hash 64c1a44d3dc23d477a4c738daeb1deb4485f2c61 equals committed GitHub readback"
+    },
+    {
+      "test": "Native Node 22 --self-test",
+      "result": "PASS",
+      "passed": 10,
+      "failed": 0,
+      "description": "Git blob SHA, positive fixture contract and eight malformed-output/exit-code probes"
+    },
+    {
+      "test": "GitHub readback of six pinned input file blobs",
+      "result": "PASS",
+      "count": 6
+    },
+    {
+      "test": "GitHub readback of engineer-owned preflight script",
+      "result": "PASS",
+      "sha": "64c1a44d3dc23d477a4c738daeb1deb4485f2c61"
+    }
+  ],
+  "testsNotRun": [
+    "Full native 13/13 DF array fixture and 25/25 TWW fixture on checked-out repository (repository cannot be cloned in local runtime; GitHub Actions run pending)",
+    "Full completion pipeline --check (no accepted build input or pipeline code changed)",
+    "Lua 5.1 (unavailable locally)",
+    "In-game WoW client",
+    "Independent validator acceptance of these native fixtures"
+  ],
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "status": "SUBMITTED_PENDING_F005_NATIVE_EXECUTION_AND_COORDINATOR_ACCEPTANCE",
+  "blockers": [
+    "F005 must independently run and accept native 13/13 DF array and 25/25 TWW source suites before promotion into strict build pipeline",
+    "No independent current-Retail completed-cast cohorts or verified minimum-eligible profession baseline",
+    "April 1 Midnight hotfix chronology repair and nested-context 8-case defect remain owned by F003"
+  ],
+  "nextTask": "After F005 native acceptance, integrate exact pinned 13/13 and 25/25 as strict fail-closed native pipeline gates, verify --check and Lua 5.1; otherwise pivot to a changed compiler/source-integrity defect, not repeat unchanged audits.",
+  "resultCommit": "RESOLVED_BY_GITHUB_COMMIT_CONTAINING_THIS_FILE"
+}

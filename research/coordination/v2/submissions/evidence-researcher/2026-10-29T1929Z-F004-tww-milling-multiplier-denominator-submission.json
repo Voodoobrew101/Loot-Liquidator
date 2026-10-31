@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_MILLING_MULTIPLIER_UNIT_TRIAGE",
+  "workflowRevision": 2,
+  "queueRevisionObserved": "five-agent-workflow workflowRevision=2; priorities schemaVersion=1.0.0",
+  "runUTC": "2026-10-29T19:29:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "09c351c7e74300449207734c8498ada215f4baa8",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "targetKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028"
+  ],
+  "filesChanged": [
+    "research/evidence/v2/2026-10-29T1929Z-F004-tww-milling-multiplier-denominator.json",
+    "research/evidence/v2/source-reviews/2026-10-29T1929Z-F004-tww-milling-multiplier-denominator-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1929Z-F004-tww-milling-multiplier-denominator-submission.json"
+  ],
+  "deltas": {
+    "newSourceThread": 1,
+    "newFirstPersonHistoricalAggregateMultiplierReports": 2,
+    "newHistoricalMultistageAccount": 1,
+    "sourceReviewEvents": 2,
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "newNumericEvidenceCells": 0,
+    "newExpectedQuantityCells": 0,
+    "newWorkingPreviewCells": 0,
+    "confidencePromotions": 0,
+    "verifiedIndependentCastStudyFamilies": 0
+  },
+  "testsActuallyRun": {
+    "type": "IN_PROCESS_JS_ASSERTIONS",
+    "passed": 12,
+    "failed": 0,
+    "cases": [
+      "two multiplier reports",
+      "multiplier distinct",
+      "30k original count",
+      "100k original count",
+      "downstream herb accounting",
+      "economic null",
+      "no verified normalized",
+      "preview only",
+      "zero confidence",
+      "no fabricated casts",
+      "distinct source review statuses",
+      "nonzero denominator guarded"
+    ]
+  },
+  "notRun": [
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "In-game Retail verification",
+    "Original Reddit author/permalink capture"
+  ],
+  "blockers": [
+    "Original authors/complete thread comment permalinks and whether 30k/100k datasets overlap",
+    "Definition of 1.49x/1.52x denominator and whether saved herbs were netted out",
+    "Completed successful casts, exact herb IDs/ranks, pigment IDs/ranks, co-output totals, skill and Resourcefulness, patch build",
+    "Separate milling inventory deltas from Apricate Ink and Boundless Cipher craft steps"
+  ],
+  "conclusion": "NO: multiplier reference denominator, output rank composition, completed casts, input ranks and saved reagents are not specified; neither number can be used as unconditional expectedQuantity or current-Retail valuation.",
+  "sourceUrl": "https://www.reddit.com/r/woweconomy/comments/1fvhzy0",
+  "nextTask": {
+    "id": "F004_TWW_MILLING_PRIMARY_CAST_LOG",
+    "action": "Seek independently archived, rank-specific zero-inclusive TWW milling cast histogram; otherwise produce controlled current-Retail 10-herb-per-cast measurement specification for Mycobloom R1/R2/R3 and Luredrop R3."
+  },
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "confidence": 0,
+  "productionFilesChanged": 0,
+  "sharedLedgersChanged": false,
+  "scheduleChanged": false
+}

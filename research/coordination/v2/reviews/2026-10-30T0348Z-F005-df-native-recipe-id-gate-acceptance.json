@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_NATIVE_RECIPE_ID_MALFORMED_CONTEXT_REGRESSION",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 16,
+  "runUTC": "2026-10-30T03:48:00Z",
+  "status": "PASS_NATIVE_RECIPE_ID_GATE_CONDITIONAL_MODEL_ECONOMIC_ACCEPTANCE",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "e7c1bb4d8cf6c9e28cd1fcdbc0c365fc950418c7",
+  "testCommit": "a292f73b6f7d10e1bafbb40c5888a8fe675f2e8a",
+  "priorReview": "research/coordination/v2/reviews/2026-10-30T0346Z-F005-df-recipe-id-native-gate-and-new-aggregate-qa.json",
+  "subject": {
+    "modelID": "df-milling-decision-sensitivity-v1.0.2",
+    "modelCodeBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
+    "manifestCodeBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
+    "independentFixtureBlobSHA": "ba131ea1984d271c274e2d87496039fdd901d5c2"
+  },
+  "nativeCI": {
+    "runID": 40999083264,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40999083264",
+    "headSHA": "a292f73b6f7d10e1bafbb40c5888a8fe675f2e8a",
+    "conclusion": "success",
+    "jobID": 123879012575,
+    "jobConclusion": "success",
+    "checks": {
+      "dfMillingStrict": "16/16_PASS",
+      "modelSelfTest": "41/41_ASSERTED_BY_INDEPENDENT_FIXTURE",
+      "malformedRecipeIDs": "9_NEGATIVE_ASSERTIONS_INSIDE_EXISTING_CONTROL",
+      "syntheticUnknownControl": "PASS",
+      "midnightLegacy": "27/27_PASS",
+      "deterministicCandidate": "PASS",
+      "jsonSchema": "PASS",
+      "lua51": "PASS_1018_MAPPINGS_4072_WORKING_CELLS_514_EVIDENCE_GAPS",
+      "blockerArrays": "PASS_91_MULTI_BLOCKER_124_ADDITIONAL"
+    }
+  },
+  "independentEvidenceBoundary": {
+    "source": "research/evidence/v2/2026-10-30T0333Z-F004-midnight-r2-prospecting-JD3K-totals.json",
+    "blobSHA": "88be9ce78ba2eb0d3e74b01ab2c6e06dfcd2fc2d",
+    "arithmeticAssertions": 35,
+    "passed": 35,
+    "cohorts": 3,
+    "namedOutputTotals": 17,
+    "independentOriginalStudyFamilies": 1,
+    "actualCompletedCasts": null,
+    "refunds": null,
+    "outputRankIDs": null,
+    "patchEpoch": null,
+    "verdict": "CONTEXT_ONLY_NO_ECONOMIC_OR_CONFIDENCE_PROMOTION"
+  },
+  "economicSafety": {
+    "workingNumericCoverage": "4072/4072",
+    "admittedMappings": 1018,
+    "missingEvidenceCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "confidence90Cells": 0,
+    "unsupportedFallbackConfidence": 0,
+    "workingEconomicUse": "PREVIEW_ONLY",
+    "workingNormalizedVerified": false,
+    "newLiveEconomicPromotions": 0
+  },
+  "exactDeltas": {
+    "validatorFilesModified": 1,
+    "reviewFilesAdded": 2,
+    "modelFilesModified": 0,
+    "candidateFilesModified": 0,
+    "evidenceFilesModified": 0,
+    "admittedMappings": 0,
+    "numericCellsFilled": 0,
+    "verifiedExpectedQuantityAdded": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "invalidMappingsRemoved": 0
+  },
+  "holdout": "NOT_INDEPENDENTLY_VALIDATED_NO_CURRENT_RETAIL_ZERO_INCLUSIVE_STUDY_FAMILY",
+  "blockers": [
+    "RecipeSpellID type/domain validation is not proof of actual Retail recipe identity, eligibility or rank mapping.",
+    "24 DF milling targets still lack independently audited output universe and independent current-Retail cast study families.",
+    "New F004 Midnight prospecting aggregates have gross-input denominator only; cannot normalize as actual completed-cast E or zero-probability diamond evidence."
+  ],
+  "nextTask": "F005_INDEPENDENT_REVIEW_NEXT_CHANGED_MODEL_OR_CANDIDATE_AND_HOLDOUT_MEASUREMENT",
+  "coordinatorRecommendation": "Accept F003 v1.0.2 typed recipe-ID repair and strict F002 CI gate as research-only QA; do not accept model as current Retail economic evidence or raise confidence."
+}

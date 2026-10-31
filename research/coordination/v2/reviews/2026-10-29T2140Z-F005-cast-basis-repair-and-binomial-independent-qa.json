@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_BLOCKED_CAST_BASIS_AFTER_ENGINEER_REPAIR",
+  "workflowRevision": 2,
+  "queueRevision": 10,
+  "runUTC": "2026-10-29T21:40:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "ec12b463bf136bd0873c2ed6310877fd503b094e",
+  "testedCommit": "00496aa0fe07a65991bd31ca6c9bbc9fbaf75f8d",
+  "verdict": "PASS_CAST_BASIS_REPAIR_CONDITIONAL_F003_NUMERICAL_ONLY",
+  "scope": "Independent synthetic estimator-boundary regression and independent high-n binomial numerical acceptance; no current-Retail cohort or live client validation.",
+  "subjects": {
+    "workingEstimator": {
+      "path": "research/tools/working_estimates.js",
+      "blobSHA": "1a100b304bd26fa5a0840ade7d8cf4437803aa6f"
+    },
+    "castBasisFixture": {
+      "path": "research/tests/v2/test_f005_blocked_evidence_cast_basis.js",
+      "blobSHA": "ff1b946d7e1c76abac6c400f11e7c3835ede17ab"
+    },
+    "statusClaimFixture": {
+      "path": "research/tests/v2/test_f005_evidence_status_claim_contract.js",
+      "blobSHA": "85a7745d7d60307e777f60e99ae4e32423b1a6cc"
+    },
+    "provenanceFixture": {
+      "path": "research/tests/v2/test_f005_provenance_confidence_integrity.js",
+      "blobSHA": "b7b2dd6a2d050423423f2e6dcfd72df16d09d0f8"
+    },
+    "binomialModel": {
+      "path": "research/tools/models_v2/tww_gem_finding_exact_marginal_bounds_v1.js",
+      "blobSHA": "28f22970ef4e0307a69bff624844917fa80fca26"
+    },
+    "cohortModel": {
+      "path": "research/tools/models_v2/tww_gem_finding_conditional_cohorts_v1.js",
+      "blobSHA": "4baa24233b31761bd1aa5167cd7936442e867e4c"
+    },
+    "newIndependentFixture": {
+      "path": "research/tests/v2/test_f005_f003_independent_binomial_numerics.js",
+      "commit": "00496aa0fe07a65991bd31ca6c9bbc9fbaf75f8d"
+    },
+    "generatedReport": {
+      "path": "research/proposed/itemdb-build-report.json",
+      "blobSHA": "46ddc18d77daddfa97486424daf1719f54d9fdcb"
+    }
+  },
+  "executedChecks": [
+    {
+      "name": "Repaired cast-basis source, rank and denominator fixture",
+      "environment": "independent JavaScript V8 module harness",
+      "passed": 12,
+      "failed": 0,
+      "prior": {
+        "passed": 4,
+        "failed": 8
+      },
+      "result": "PASS"
+    },
+    {
+      "name": "Source-status and source-claim ancestry",
+      "environment": "independent JavaScript V8 module harness",
+      "passed": 11,
+      "failed": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "Working provenance and confidence integrity",
+      "environment": "independent JavaScript V8 module harness",
+      "passed": 12,
+      "failed": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "Independent mode-normalized bidirectional binomial recurrence vs model CDF and Clopper-Pearson inversions",
+      "environment": "independent JavaScript V8 module harness",
+      "passed": 476,
+      "failed": 0,
+      "maxAbsoluteCDFError": 1.8231338660967822e-10,
+      "modelMaxCasts": 10000,
+      "result": "PASS"
+    },
+    {
+      "name": "F003 model's own synthetic selfTest",
+      "environment": "JavaScript V8 module harness",
+      "passed": 31,
+      "failed": 0,
+      "result": "PASS_AUTHOR_SUITE_NOT_INDEPENDENT"
+    }
+  ],
+  "independentNumericalMethod": "Reference probabilities are normalized from the binomial mode with bidirectional recurrence, not the model's log-factorial boundary-anchored tails; test covers n=1..10000, p from 1e-7 to 1-1e-7, 20 CP endpoint checks, eight-way Bonferroni zero-hit design and economic/tooltip isolation.",
+  "safety": {
+    "allTestedFallbacksPreviewOnly": true,
+    "normalizedVerified": false,
+    "unsupportedConfidence": 0,
+    "noEconomicPromotion": true,
+    "tooltipFallbackNotUsedForE": true,
+    "liveEVLeakDemonstrated": false,
+    "actualRetailCasts": 0
+  },
+  "canonicalCounters": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "independentCurrentRetailHoldouts": 0
+  },
+  "exactDeltas": {
+    "newIndependentTestFiles": 1,
+    "newIndependentNumericalAssertions": 476,
+    "castBasisFailuresBefore": 8,
+    "castBasisFailuresAfter": 0,
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "newVerifiedE": 0,
+    "confidencePromotions": 0,
+    "productionFiles": 0
+  },
+  "testsNotRun": [
+    "Native Node execution of newly authored independent F003 fixture (not yet wired into CI)",
+    "Local full compiler/schema/Lua5.1 (existing GitHub CI on pre-test head was successful; new push CI pending)",
+    "World of Warcraft Retail in-game client",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "blockers": [
+    "Full F005 acceptance still needs coordinator review and current-Retail matched holdouts for economic confidence promotion.",
+    "No source-family-independent actual completed-cast Gem Finding observations; F003 is prospective/synthetic-only.",
+    "New independent numerical fixture should be wired into native Node CI by completion engineer, without changing research evidence.",
+    "In-process source identity leases do not independently attest a separately reloaded serialized artifact."
+  ],
+  "repairOwner": null,
+  "nextTask": "F005_CROSS_PROCESS_SERIALIZED_WORKING_PREVIEW_ATTESTATION_AND_NATIVE_F003_NUMERICAL_CI",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_NO_ECONOMIC_PROMOTION"
+}

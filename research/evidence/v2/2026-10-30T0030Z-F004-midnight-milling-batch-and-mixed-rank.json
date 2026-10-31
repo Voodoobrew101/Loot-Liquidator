@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_MILLING_BATCH10_MIXED_RANK_CONTEXT",
+  "runUTC": "2026-10-30T00:30:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "c5f1f94ca21d137cab4071d01d7a2440f71cab95",
+  "workflowRevision": 2,
+  "queueRevisionObserved": null,
+  "disposition": "NEW_GAME_SPELL_BATCH_CORRECTION_AND_UNVERIFIED_MIXED_RANK_SELECTOR_LEAD",
+  "question": "Does a generic five-herb batch assumption apply to Midnight milling, and can a completed operation mix herb ranks?",
+  "findings": {
+    "midnight": {
+      "spellID": 1269575,
+      "nominalInputHerbsPerCast": 10,
+      "actualNetConsumedAfterRefunds": null
+    },
+    "dragonflight": {
+      "spellID": 382981,
+      "nominalInputHerbsPerCast": 5
+    },
+    "globalFiveHerbMillingAssumption": "INVALID_FOR_MIDNIGHT",
+    "mixedRankMidnight": "FIRSTHAND_CLAIM_ONLY_NOT_VERIFIED",
+    "mixedRankTestVector": {
+      "rank1": 4,
+      "rank2": 6,
+      "total": 10,
+      "isObserved": false
+    },
+    "twwBatch": "UNRESOLVED_SOURCE_CONFLICT_REQUIRES_CURRENT_SPELL_CHECK",
+    "economicSensitivity": "If a candidate uses 5 herbs for a Midnight operation actually requiring 10, nominal input cost is understated by half of the true 10-herb cost; actual cost is 2x the 5-herb estimate before refunds. This is conditional, not proof the addon has this bug."
+  },
+  "sources": [
+    {
+      "id": "MIDNIGHT-LIVE-SPELL-1269575",
+      "url": "https://www.wowhead.com/spell=1269575/midnight-milling",
+      "kind": "INDEXED_GAME_SPELL_RECORD",
+      "date": null,
+      "claim": {
+        "spellID": 1269575,
+        "nominalHerbsPerCast": 10,
+        "salvageEffectValue": 10,
+        "craftingDataID": 242
+      },
+      "limitations": [
+        "No actual cast logs",
+        "No output distribution or mixed-rank selector proof"
+      ]
+    },
+    {
+      "id": "MIDNIGHT-WIKI-RECIPE",
+      "url": "https://warcraft.wiki.gg/wiki/Midnight_Milling",
+      "kind": "DERIVATIVE_GAME_SPELL_SUMMARY",
+      "date": null,
+      "claim": {
+        "nominalHerbsPerCast": 10,
+        "addedPatch": "12.0.0"
+      },
+      "limitations": [
+        "Not independent yield study"
+      ]
+    },
+    {
+      "id": "MIDNIGHT-METHOD-GUIDE",
+      "url": "https://www.method.gg/guides/midnight-inscription-profession-guide",
+      "kind": "DERIVATIVE_GUIDE",
+      "date": "2026-03",
+      "claim": {
+        "nominalHerbsPerCast": 10
+      },
+      "limitations": [
+        "Not independent yield study"
+      ]
+    },
+    {
+      "id": "MIDNIGHT-2026-09-26-FORUM",
+      "url": "https://us.forums.blizzard.com/en/wow/t/is-perfect-milling-intended-to-be-a-trap/2362528",
+      "kind": "FIRSTHAND_FORUM_CONTEXT_NOT_CAST_LOG",
+      "date": "2026-09-26",
+      "claim": {
+        "author1": "tuxedobob-5294",
+        "author1Experience": "High-rank herbs gave high-rank pigments before Perfect Milling; reports 505 skill requirement and expected 455 with planned points; UI lacks ordinary mixed-rank choice",
+        "author2": "bjm-2732848",
+        "author2Claim": "When fewer than ten of one herb rank are in inventory, a mixed-rank batch may be selected and may produce R2 pigment",
+        "author3": "AuMatar-3197800",
+        "author3Claim": "More specialization lowers concentration requirement; node 30 grants crafting-speed bonus"
+      },
+      "unknown": {
+        "completedCasts": null,
+        "inputItemIDsAndRanks": null,
+        "outputItemIDsAndRanks": null,
+        "exactBuild": null,
+        "refunds": null,
+        "concentrationUsed": null
+      },
+      "limitations": [
+        "One thread not three independent datasets",
+        "Mixed-rank workaround is anecdotal, not verified",
+        "505 and 455 are player calculations, not independently established universal skill thresholds"
+      ]
+    },
+    {
+      "id": "DRAGONFLIGHT-SPELL-382981",
+      "url": "https://www.wowhead.com/spell=382981/dragon-isles-milling",
+      "kind": "INDEXED_GAME_SPELL_COMPARISON",
+      "date": null,
+      "claim": {
+        "spellID": 382981,
+        "nominalHerbsPerCast": 5,
+        "salvageEffectValue": 5
+      },
+      "limitations": [
+        "Different expansion; not transferable to Midnight"
+      ]
+    },
+    {
+      "id": "TWW-WIKI-RECIPE-TABLE",
+      "url": "https://warcraft.wiki.gg/wiki/Khaz_Algar_inscription_techniques",
+      "kind": "DERIVATIVE_RECIPE_TABLE",
+      "date": null,
+      "claim": {
+        "nominalHerbsPerCast": 10
+      },
+      "limitations": [
+        "TWW historical sources disagree on 5 versus 10; do not assume unverified current spell"
+      ]
+    },
+    {
+      "id": "TWW-BETA-BUILD55665",
+      "url": "https://www.mmo-champion.com/content/12459-The-War-Within-Beta-Datamining-Build-55665",
+      "kind": "HISTORICAL_BETA_DATAMINING",
+      "date": "2024",
+      "claim": {
+        "change": "Khaz Algar Milling: 10 -> 5 herbs"
+      },
+      "limitations": [
+        "Historical beta state; cannot establish live 2026 batch size"
+      ]
+    }
+  ],
+  "ancestry": {
+    "forumThreadLineages": 1,
+    "independentCurrentRetailCompletedCastDatasets": 0,
+    "independentNumericYieldStudies": 0,
+    "priorReviewedEvidence": "research/evidence/v2/2026-10-29T2131Z-F004-tww-milling-two-axis-context.json",
+    "noHistoricalCohortsRecounted": true
+  },
+  "affectedQueue30UniverseKeys": [
+    "universe-audit:midnight:mill:236761:245808:alternate-pigment-rank-eligibility",
+    "universe-audit:midnight:mill:236767:245808:alternate-pigment-rank-eligibility",
+    "universe-audit:midnight:mill:236776:245803:alternate-pigment-rank-eligibility",
+    "universe-audit:midnight:mill:236777:245803:alternate-pigment-rank-eligibility",
+    "universe-audit:midnight:mill:236778:245867:alternate-pigment-rank-eligibility",
+    "universe-audit:midnight:mill:236779:245867:alternate-pigment-rank-eligibility",
+    "universe-audit:midnight:mill:236770:245865:alternate-pigment-rank-eligibility",
+    "universe-audit:midnight:mill:236771:245865:alternate-pigment-rank-eligibility"
+  ],
+  "proposals": [
+    {
+      "owner": "baseline-modeller",
+      "action": "Use spell-specific batch quantities; Midnight spell 1269575=10, Dragonflight 382981=5; do not infer TWW from beta or a generic 5."
+    },
+    {
+      "owner": "completion-engineer",
+      "action": "Audit research-only candidate milling batch and price denominators for Midnight; report whether 5-herb assumptions exist."
+    },
+    {
+      "owner": "independent-validator",
+      "action": "Regression test that spell 1269575 never inherits Dragonflight's 5-herb batch."
+    },
+    {
+      "owner": "coordinator",
+      "action": "Keep eight alternate pigment rank selector leads pending until exact in-game reagent and output IDs/ranks verified."
+    }
+  ],
+  "mappingDisposition": "NO_MAPPING_ADMISSION",
+  "numericWorkingCellsAdded": 0,
+  "newEconomicECells": 0,
+  "newMappingsAdmitted": 0,
+  "confidencePromotions": 0,
+  "economicFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "measurementRequest": {
+    "question": "Does Midnight Milling 1269575 consume ten nominal herbs and permit a 4x R1 + 6x R2 same-species cast that creates R2 pigment?",
+    "protocol": "Record current Retail build, spell ID, exact input IDs/ranks and inventory stacks, selected reagent vector, actual completed casts including zero outputs, output IDs/ranks, concentration, gross herbs and Resourcefulness refunds, aborts. Compare 10x R1, 10x R2 and mixed 4+6 at same skill/spec/gear. Do not use one cast to estimate E.",
+    "minimumProof": "Live client selector plus one completed mixed-rank cast for eligibility; independent many-cast dataset for economic E."
+  },
+  "blockers": [
+    "No current client selector proof for mixed ranks",
+    "No rank-specific completed-cast dataset",
+    "TWW live spell batch needs reconciliation",
+    "Research-only candidate batch metadata not yet audited"
+  ]
+}

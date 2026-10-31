@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_R3_DIAMOND_PRIMARY_COHORT",
+  "workflowRevision": 2,
+  "runID": "2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort",
+  "taskStatus": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_F005",
+  "reportDateUTC": "2026-10-30T09:28:00Z",
+  "branch": "implementation/five-agent-completion",
+  "queueSnapshot": {
+    "readinessPath": "research/coordination/completion-readiness.json",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesPath": "research/coordination/completion-priorities.json",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantityCells": 116,
+    "highestPriority": 122
+  },
+  "baseCommitBeforeRun": "ab338f84e2ce544f922cfdf184213a2beac7cae8",
+  "evidenceCommit": "32db67f15c7b8d6855202f2722b6cb31dce8694e",
+  "resultCommitBeforeSubmission": "6996bf900f333fb9c9f3b091ae14b0a61d438cc5",
+  "taskSelection": "Priority-122 Dragonflight prospecting source conflicts now have an F003 sequential-margin model that lacks independent current-Retail cast evidence. Pivoted away from previously exhausted selector/diamond-trait identity searches to a new original high-volume historical cohort with exact aggregate output count and refund denominator warning; did not repeat Bugy or ar_rules audits.",
+  "exactPriorityKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "exactFilesAdded": [
+    {
+      "path": "research/evidence/v2/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort.json",
+      "blobSHA": "f76533ac084419f0d19c8a2ebe85e275c505af8e"
+    },
+    {
+      "path": "research/evidence/v2/source-reviews/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort-source-review.json",
+      "blobSHA": "ac16fbd13ad84755a18474ecc113e600d01849b2"
+    },
+    {
+      "path": "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort-submission.json",
+      "blobSHA": null,
+      "status": "THIS_SUBMISSION"
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "admittedMappingsRemoved": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "evidenceNumericCellsAdded": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "originalFirsthandSourceFamiliesIndexed": 1,
+    "reportedCohorts": 2,
+    "exactNewDiamondTotals": 1,
+    "exactDiamondCount": 591,
+    "independentlyValidatedCurrentRetailLineages": 0,
+    "exactPriorityRankKeysResolved": 0,
+    "workingPreviewCoverageBefore": "4072/4072",
+    "workingPreviewCoverageAfter": "4072/4072",
+    "remainingEvidenceGaps": 514,
+    "remainingExpectedQuantityEvidenceGaps": 116
+  },
+  "substantiveFinding": "January 22 2023 firsthand author reports 591 diamonds from 400,000 R3 Serevite (1.4775 per 1000 ore), with refund-saved ore and secondary Prismatic Ore excluded, and approximate 3.6 diamonds/1000 R3 Draconium over ~30k ore at skill 266. This is a source/denominator correction useful to rank-sensitive model evaluation, not a current Retail E/P. The R3 Draconium input ID 190311 overlaps one priority-122 key but diamond output rank was not reported.",
+  "testsActuallyRun": [
+    {
+      "test": "In-process deterministic arithmetic and null/economic policy assertions",
+      "result": "PASS",
+      "passed": 10,
+      "failed": 0
+    },
+    {
+      "test": "GitHub read-back JSON parse and role/task validation of both evidence files",
+      "result": "PASS",
+      "passed": 2,
+      "failed": 0
+    },
+    {
+      "test": "GitHub comparison base to result commit before submission",
+      "result": "PASS",
+      "scope": "Exactly 2 added files; no modified/deleted existing files",
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "testsNotRun": [
+    "Native Node completion pipeline --check (no build inputs changed)",
+    "Lua 5.1 generated candidate decoding",
+    "In-game WoW prospecting",
+    "Independent F005 source verification",
+    "Independent Retail joint-cast model holdout and optional stopping validation",
+    "Current Retail direct rank-specific drop-rate measurement"
+  ],
+  "economicSafety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "productionFilesChanged": false
+  },
+  "blockers": [
+    "Exact current-Retail completed-cast counts and zero-inclusive rank-separated outputs absent",
+    "Refunds and actual net consumption not measured; 400k ore is a gross reported denominator",
+    "2023 output quality ranks not separated; cannot promote any priority-122 rank-specific key",
+    "Full co-output universe and independent per-cast caps for F003 sequential margin model not verified",
+    "In-game/client validation and independent F005 verdict pending"
+  ],
+  "nextTask": "Find one current-Retail zero-inclusive Dragonflight R3 Draconium joint-cast cohort with output rank IDs, full co-output vector, skill/spec/gear/patch, completed casts and refunds. If absent, pivot to TWW milling E-family recipe/reagent eligibility rather than repeating historical diamond rates.",
+  "ownership": "Only new evidence-researcher evidence, source-review and this submission. No main, runtime-profiles, shared scorecards, legacy assignments, raw evidence, frozen TSM, tooltip-only policy, schedules, other agents' commits/files changed."
+}

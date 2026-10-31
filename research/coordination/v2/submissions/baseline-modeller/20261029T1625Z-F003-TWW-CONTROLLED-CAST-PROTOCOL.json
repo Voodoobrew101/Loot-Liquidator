@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_TWW_MILLING_CONTROLLED_CAST_PROTOCOL",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 5,
+  "branch": "implementation/five-agent-completion",
+  "dateUTC": "2026-10-29T16:25:00Z",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_NOT_SELF_APPROVED",
+  "baseCommit": "8e7e4cd079efb6723b4a92c8acbe887b9909c19f",
+  "resultCommit": "ATOMIC_COMMIT_CONTAINING_THIS_SUBMISSION",
+  "filesChanged": [
+    "research/tools/models_v2/tww_milling_cast_protocol_v1.js",
+    "research/models/v2/tww_milling_controlled_cast_protocol_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261029T1625Z-F003-TWW-CONTROLLED-CAST-PROTOCOL.json"
+  ],
+  "affectedStableKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+  ],
+  "deltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "independentStudyFamilies": 0,
+    "newProtocolModels": 1,
+    "regressionAssertions": 26,
+    "controlledDenominatorRiskClasses": 4
+  },
+  "testsActuallyRun": {
+    "V8ExactModuleSelfTest": {
+      "passed": 26,
+      "failed": 0
+    },
+    "syntheticExample": {
+      "dropChance": 0.5,
+      "yieldMin": 2,
+      "yieldMax": 2,
+      "expectedQuantity": 1,
+      "successCasts": 1,
+      "zeroCasts": 1,
+      "totalOutputUnits": 2,
+      "histogram": {
+        "0": 1,
+        "2": 1
+      },
+      "basis": "ZERO_INCLUSIVE_ACTUAL_COMPLETED_CASTS",
+      "yieldBounds": "OBSERVED_POSITIVE_SUPPORT_NOT_HARD_GAME_BOUNDS"
+    }
+  },
+  "checksNotRun": [
+    "Native Node",
+    "Lua5.1",
+    "completion pipeline --check (no accepted build inputs changed)",
+    "WoW Retail client",
+    "Independent validator"
+  ],
+  "economicIsolation": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false
+  },
+  "canonicalCountsAtRead": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "blockers": [
+    "Current Retail completed-cast log absent",
+    "Minimum recipe-eligible skill unverified",
+    "Independent matched holdout absent",
+    "Historical bulk aborts cannot supply zero-output denominators"
+  ],
+  "nextTask": "F003_WAIT_FOR_INDEPENDENT_ZERO_INCLUSIVE_CAST_DATA_OR_PIVOT_TO_DIFFERENT_E_FAMILY",
+  "independentQA": "Run native Node --self-test, validate incomplete/abort/refund guards, verify synthetic source cannot be admitted, and demand unrelated whole-study holdout."
+}

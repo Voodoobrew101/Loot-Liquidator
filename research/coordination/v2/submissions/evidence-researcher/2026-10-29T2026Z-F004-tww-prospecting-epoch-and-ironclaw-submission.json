@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_PROSPECTING_PATCH_EPOCH_AND_IRONCLAW_PRIMARY",
+  "workflowRevision": 2,
+  "queueRevisionObserved": "five-agent-workflow=2; completion-priorities=1.0.0",
+  "runUTC": "2026-10-29T20:26:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "fa928c6752064f13e4462328b5890fcea01374dd",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "priorityPivot": "Dragonflight diamond top-priority conflict previously investigated repeatedly; pivot to TWW conditional Gem Finding priority=104 with new primary patch epoch and original cohort.",
+  "targetKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "filesChanged": [
+    "research/evidence/v2/2026-10-29T2026Z-F004-tww-prospecting-epoch-and-ironclaw.json",
+    "research/evidence/v2/source-reviews/2026-10-29T2026Z-F004-tww-prospecting-epoch-and-ironclaw-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-29T2026Z-F004-tww-prospecting-epoch-and-ironclaw-submission.json"
+  ],
+  "deltas": {
+    "newPrimaryPatchEpochFindings": 1,
+    "newOriginalAuthorCohorts": 1,
+    "newPrimaryNumericHistoricalAggregateReports": 1,
+    "sourceReviewEvents": 6,
+    "existingSourceFamiliesReusedWithoutDoubleCounting": 3,
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "newNumericEvidenceCells": 0,
+    "newExpectedQuantityCells": 0,
+    "newWorkingPreviewCells": 0,
+    "confidencePromotions": 0,
+    "independentCurrentRetailCastStudies": 0,
+    "changedSharedLedgers": 0
+  },
+  "testsActuallyRun": {
+    "type": "IN_PROCESS_JS_ASSERTIONS",
+    "passed": 18,
+    "failed": 0,
+    "cases": [
+      "8 conditional keys",
+      "9 affected ore ranks",
+      "primary patch date correct",
+      "original source separate from mirror",
+      "nominal casts",
+      "Ruby ratio",
+      "Onyx ratio",
+      "pebble ratio",
+      "all output ratios consistent",
+      "unknown actual casts",
+      "four economic evidence fields unknown",
+      "no invented zero probability",
+      "preview isolation",
+      "source reviews 6",
+      "one new original cohort",
+      "no admitted mappings",
+      "no numeric promotions",
+      "unique paths"
+    ]
+  },
+  "notRun": [
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "In-game Retail verification",
+    "Original Raven11 comment timestamp verification"
+  ],
+  "blockers": [
+    "Original Raven11 observation epoch and completed cast/refund count unknown",
+    "Blizzard hotfix exact activation timestamp and build unknown",
+    "No current-Retail controlled prospecting sample for rank-specific E or specialization effect",
+    "Current recipe/selector gating not directly verified"
+  ],
+  "sourceURLs": [
+    "https://worldofwarcraft.blizzard.com/en-us/news/24134803/hotfixes-october-16-2024",
+    "https://www.bluetracker.gg/wow/topic/us-en/24134803-hotfixes-october-16-2024/",
+    "https://www.wowhead.com/item=212495/radiant-ruby"
+  ],
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "confidence": 0,
+  "productionFilesChanged": 0,
+  "sharedLedgersChanged": false,
+  "scheduleChanged": false,
+  "nextTask": {
+    "id": "F004_TWW_GEM_FINDING_POST_HOTFIX_CASTS",
+    "action": "Seek one independent post-Aug-29-2024 or 2026 Retail zero-inclusive completed-cast dataset for Bismuth R2 (210931), Aqirite R2 (210934), Ironclaw R2 (210937), with exact four rare-gem IDs, specialization state, ore consumed/refunded and ranks; if absent pivot to Midnight selector eligibility."
+  }
+}

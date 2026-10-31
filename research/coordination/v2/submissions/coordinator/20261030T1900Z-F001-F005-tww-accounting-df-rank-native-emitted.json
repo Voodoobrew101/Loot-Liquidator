@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_TWW_ACCOUNTING_DF_RANK_NATIVE_EMITTED",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T1900Z-F001-F005-tww-accounting-df-rank-native-emitted",
+  "reportUTC": "2026-10-30T19:00:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "5b2d9b202731b07540d012f73368e5c69b59a52d",
+  "acceptanceCommit": "f4ced2ea2e033dfa1ad4be54a31954ba41c37d3b",
+  "scorecardCommit": "2a9f3b54cead678d665bdb79f3106d08ac6f5758",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "COORDINATOR_ACCEPTANCE_RECORDED_SPLIT_VERDICT",
+  "exactFilesChanged": [
+    {
+      "path": "research/coordination/v2/acceptance/20261030T1900Z-F001-F005-tww-accounting-df-rank-native-emitted.json",
+      "action": "CREATED",
+      "blobSHA": "317e7b04ab18595c8813dc12286343dcdceffdb7"
+    },
+    {
+      "path": "research/coordination/v2/scorecards/current.json",
+      "action": "UPDATED",
+      "oldBlobSHA": "7a362b8af4b54ea0047aaec86c1e05cfd543903f",
+      "newBlobSHA": "d7919bf96d16a234a757122fcd592051f44a9610"
+    },
+    {
+      "path": "research/coordination/v2/submissions/coordinator/20261030T1900Z-F001-F005-tww-accounting-df-rank-native-emitted.json",
+      "action": "CREATED"
+    }
+  ],
+  "accepted": [
+    {
+      "owner": "completion-engineer",
+      "verdict": "F002_NATIVE_EMITTED_18320_12_INFORMATIONAL_ACCEPTED",
+      "runID": 41104969064,
+      "independentAcceptancePending": true
+    },
+    {
+      "owner": "independent-validator",
+      "verdict": "F005_INDEPENDENT_NEGATIVE_QA_32_PASS_5_FAIL_ACCEPTED",
+      "modelIntegration": false
+    },
+    {
+      "owner": "evidence-researcher",
+      "verdict": "F004_TWO_PROVISIONAL_HISTORICAL_LINEAGES_AND_DERIVED_R3_ID_CORRECTION_PROPOSED",
+      "derivedCorrection": {
+        "from": 190396,
+        "to": 190394
+      },
+      "independentIdentityQARequired": true
+    }
+  ],
+  "rejected": [
+    {
+      "owner": "baseline-modeller",
+      "verdict": "F003_TWW_MILL_ACCOUNTING_V1_REJECTED_FOR_INTEGRATION",
+      "independentCasesPassed": 32,
+      "failed": 5,
+      "total": 37,
+      "defectIDs": [
+        "F005-TWW-MILL-01",
+        "F005-TWW-MILL-02",
+        "F005-TWW-MILL-03",
+        "F005-TWW-MILL-04",
+        "F005-TWW-MILL-05"
+      ],
+      "nativeRun": false
+    }
+  ],
+  "canonicalReadiness": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "confidenceGE90": 0,
+    "verifiedMinimumEligibleBaselines": 0
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newProvisionalHistoricalAuthorLineages": 2,
+    "newHistoricalReportedCohorts": 5,
+    "proposedDerivedRankIDCorrections": 1,
+    "newIndependentRegressionCases": 37,
+    "newIndependentFailures": 5,
+    "productionWrites": 0
+  },
+  "sourcePins": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "candidate": "560b885a0039045419c340716e263ae33ddf827a",
+    "f002Submission": "b5c5d5f0061cb7625f9185e9017f223dabf1cf45",
+    "f003Model": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a",
+    "f003Manifest": "758b38f4a42b5becd353ca5e17fb920000f7355c",
+    "f004Evidence": "af38e0705d2b0f43f6bfd85be1c5c46b7b59c13f",
+    "f005Review": "eea3a0140b78e252f85d5c0f32914118b79d2962",
+    "f005Test": "1dc22afeed2eefafd845979fafa15cbb59c15708"
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub connector V8",
+      "name": "Cross-file canonical readiness/priority/source-pinned/QA and arithmetic checks",
+      "passed": 52,
+      "failed": 0
+    },
+    {
+      "environment": "GitHub connector V8",
+      "name": "Post-commit acceptance/scorecard readback consistency",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "environment": "GitHub Actions native Node v24.22.1 / Lua5.1",
+      "name": "Previously executed F002 emitted-Lua source-pinned replay and pipeline",
+      "runID": 41104969064,
+      "jobID": 124232116307,
+      "conclusion": "success",
+      "assertionsPassed": 18320,
+      "mutantsRejected": 12
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "Fetched exact job status/logs and coordinator acceptance/scorecard blobs",
+      "status": "PASS"
+    }
+  ],
+  "testsNotRunHere": [
+    "Native Node F005 new 37-case TWW milling accounting test; V8 reported 32 pass/5 fail",
+    "F003 model repair (different role owns model)",
+    "Native independent F005 acceptance of F002 emitted-Lua gate",
+    "Retail client, Lua generated-file direct local rerun, current-patch zero-inclusive casts and live EV consumer tests",
+    "CI for final coordinator-only submission commit not yet observed"
+  ],
+  "blockers": [
+    "F003 accounting model five independent integrity defects, no native regression pass",
+    "Gem Finding v1.1 still 14/24 independent failures, separate blocker",
+    "F002 informational native replay requires F005 independent acceptance before mandatory gate",
+    "R3 Serevite correction is append-only proposal pending independent catalog validation, historical sources not current Retail",
+    "116 evidence expectedQuantity gaps and zero verified current Retail held-out cast families"
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Unchanged numeric coverage and original-Lua mapping audits",
+    "to": "New F003 model integrity regression and F004 historical rank-ID correction plus F002 native emitted isolation",
+    "result": "Five new independent failures and one proposed derived identity correction without invented numeric improvements"
+  },
+  "nextTask": "F003_CANONICAL_CONTEXT_REAGENT_AND_CAP_SNAPSHOT_FINITE_MATH_REPAIR_THEN_F005_NATIVE_37_CASE_RETEST",
+  "nextAssignments": {
+    "baselineModeller": "Repair five F003 context/reagent/cap/nonfinite/proxy failures",
+    "independentValidator": "Retest 37 native after repair; accept F002 emitted replay independently; verify F004 rank identity",
+    "completionEngineer": "Promote informational emitted gate to mandatory only after independent F005 acceptance",
+    "evidenceResearcher": "Append derived R3 ID correction and collect current Retail zero-inclusive casts"
+  },
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "mainChanges": 0,
+    "runtimeProfileBranchChanges": 0,
+    "addonReleases": 0,
+    "frozenTSMChanges": 0,
+    "tooltipOnlyChanges": 0,
+    "rawEvidenceChanges": 0,
+    "legacyAssignmentChanges": 0,
+    "schedulesChanged": false
+  }
+}

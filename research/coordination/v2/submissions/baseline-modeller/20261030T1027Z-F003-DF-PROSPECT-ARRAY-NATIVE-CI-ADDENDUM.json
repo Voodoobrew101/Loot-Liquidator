@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_PROSPECT_ARRAY_CONTEXT_ATTESTATION_REPAIR",
+  "workflowRevision": 2,
+  "status": "CI_UPDATE_PENDING_INDEPENDENT_F005_ACCEPTANCE",
+  "runDateUTC": "2026-10-30",
+  "parentSubmission": "research/coordination/v2/submissions/baseline-modeller/20261030T1026Z-F003-DF-PROSPECT-ARRAY-CONTEXT-ATTESTATION-REPAIR.json",
+  "validatedCommit": "d12cc41f6ec64dbeaf5a49d5e5df894363e99278",
+  "validatedModelBlobSHA": "70bab20081db23e899a45b73186200869efae48c",
+  "githubActions": {
+    "runID": 41040635617,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41040635617",
+    "status": "completed",
+    "conclusion": "success",
+    "job": "research-candidate",
+    "stepsPassed": [
+      "Run node research/tools/run_completion_pipeline.js --check",
+      "Verify Lua 5.1 syntax and decoded working/evidence isolation",
+      "Verify blocker arrays survive Lua roundtrip"
+    ]
+  },
+  "separateModelChecks": {
+    "modelSelfTestV8": "61/61",
+    "priorF005AdversarialV8": "23/23",
+    "arrayF005AttestationV8": "13/13",
+    "nativeF005ArrayFixture": "NOT_RUN_BY_THIS_CI",
+    "nativeF005PriorFixture": "NOT_SEPARATELY_VERIFIED_IN_THIS_CI",
+    "independentValidatorAcceptance": "PENDING"
+  },
+  "exactDeltas": {
+    "workingCells": 0,
+    "evidenceCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "additionalCodeFilesChanged": 0
+  },
+  "nextTask": "Independent F005 owner reruns 13/13 array-attestation and 23/23 prior adversarial suites under native Node and issues acceptance verdict; pivot after acceptance."
+}

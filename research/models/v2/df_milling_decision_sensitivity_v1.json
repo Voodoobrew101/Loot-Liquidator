@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "1.0.2",
+  "modelID": "df-milling-decision-sensitivity-v1.0.2",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "modelCode": "research/tools/models_v2/df_milling_decision_sensitivity_v1.js",
+  "modelCodeBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
+  "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "workflowRevision": 2,
+  "taskID": "F003",
+  "status": "PROPOSED_NOT_ACCEPTED",
+  "sourceFamily": "FROZEN_HISTORICAL_TSM_RATES_NOT_MEASURED_CURRENT_RETAIL",
+  "targetKeys": [
+    "tsm:mill:191469:198412:L1975",
+    "tsm:mill:191469:198413:L1976",
+    "tsm:mill:191469:198414:L1977",
+    "tsm:mill:191470:198415:L1980",
+    "tsm:mill:191470:198416:L1981",
+    "tsm:mill:191470:198417:L1982",
+    "tsm:mill:191471:198415:L1985",
+    "tsm:mill:191471:198416:L1986",
+    "tsm:mill:191471:198417:L1987",
+    "tsm:mill:191472:198415:L1990",
+    "tsm:mill:191472:198416:L1991",
+    "tsm:mill:191472:198417:L1992",
+    "tsm:mill:200061:198412:L1998",
+    "tsm:mill:200061:198413:L1999",
+    "tsm:mill:200061:198414:L2000",
+    "tsm:mill:200061:198415:L2001",
+    "tsm:mill:200061:198416:L2002",
+    "tsm:mill:200061:198417:L2003",
+    "tsm:mill:200061:198418:L2004",
+    "tsm:mill:200061:198419:L2005",
+    "tsm:mill:200061:198420:L2006",
+    "tsm:mill:200061:198421:L2007",
+    "tsm:mill:200061:198422:L2008",
+    "tsm:mill:200061:198423:L2009"
+  ],
+  "uniqueInputIDs": [
+    191469,
+    191470,
+    191471,
+    191472,
+    200061
+  ],
+  "targetCount": 24,
+  "methods": {
+    "historicalRateScenarios": "Retains both PER_INPUT_UNIT and PER_COMPLETED_CAST hypotheses when original rate denominator is unknown; never promotes either to current Retail E or P.",
+    "summarizeCasts": "Zero-inclusive per-completed-cast marginal P and unconditional E; aborted requests excluded, refunds separate, co-outputs permitted, quality IDs explicit.",
+    "decisionSensitivity": "Given externally supplied hypothetical E intervals and time-stamped prices, bounds output value and input opportunity cost with refunds; reports only conditional decision boundary, never measured gold impact. v1.0.1 rejects a self-declared incomplete output universe even if every output in the truncated list is priced; no synthetic dominance from omitted co-outputs.",
+    "validateRawContext": "RAW_CURRENT_RETAIL requires Retail game mode, ISO observation epoch, explicit input and all output ranks, exact direct reagent vector with nominal input, minimum recipe skill, valid numeric actual skill and Resourcefulness, and caller-asserted complete output universe; incomplete data fail closed. v1.0.2 additionally requires recipeSpellID to be a positive safe integer in RAW_CURRENT_RETAIL; synthetic UNKNOWN remains permitted."
+  },
+  "assumptions": [
+    "Target keys are backlog identities only; this model does not independently admit recipe eligibility or ranks.",
+    "The nominal input count is required per context and is not inferred from historical TSM rows.",
+    "The observed min/max are sample extrema, not game hard bounds.",
+    "All marginal E intervals are unconditional per completed cast; never multiply by drop chance again.",
+    "Auction fee defaults to 5% only for synthetic comparison; production pricing toggles are unchanged.",
+    "Alternative incremental value is additional value beyond input opportunity cost; do not count input vendor value twice.",
+    "For linear expected gold value, correlation between simultaneous output types is not needed; it matters for risk, not the mean.",
+    "Profession skill, specialization, gear, Resourcefulness, unlock and recipe must be explicitly supplied; UNKNOWN remains explicit and blocks current-Retail raw-cohort use.",
+    "outputUniverseVerified=true is a caller assertion, not an independently reviewed universe certificate; independent recipe/eligibility verification is still required for any evidence or economic promotion.",
+    "RAW_CURRENT_RETAIL requires explicit typed epoch/ranks/reagents/skill/stats and refuses UNKNOWN or malformed contexts; the synthetic self-test does not establish actual Retail validity.",
+    "v1.0.2 rejects RAW_CURRENT_RETAIL recipeSpellID strings, fractional, zero, null, NaN and infinite values; this checks type/domain only, not verified Retail eligibility."
+  ],
+  "example": {
+    "syntheticInputID": 191469,
+    "nominalInputPerCast": 5,
+    "syntheticOutputExpectedQuantityIntervals": {
+      "198412": [
+        0.1,
+        0.3
+      ],
+      "198413": [
+        0.2,
+        0.4
+      ],
+      "198414": [
+        0,
+        0.2
+      ]
+    },
+    "syntheticOutputPrices": {
+      "198412": 10,
+      "198413": 5,
+      "198414": 1
+    },
+    "syntheticInputPrice": 1,
+    "syntheticRefundsPerCast": [
+      0,
+      1
+    ],
+    "syntheticAuctionCut": 0,
+    "outputRevenueInterval": [
+      2,
+      5.2
+    ],
+    "inputOpportunityCostInterval": [
+      4,
+      5
+    ],
+    "marginIntervalApprox": [
+      -3,
+      1.2
+    ],
+    "decision": "UNRESOLVED_DECISION_BOUNDARY",
+    "notActualWoWPricesOrYields": true
+  },
+  "economics": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "workingNumericCellsChanged": 0,
+    "verifiedExpectedQuantityAdded": 0
+  },
+  "tests": {
+    "javascriptV8SelfTest": {
+      "passed": 41,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    "nativeNodeExactCommittedFile": "PENDING_GITHUB_CI_RETEST_V1.0.2",
+    "lua51": "NOT_RUN",
+    "inGameRetail": "NOT_RUN",
+    "independentValidator": "PENDING_V1.0.2_REVIEW",
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
+    "independentF005FixtureV8": {
+      "passed": 16,
+      "failed": 0,
+      "review": "research/coordination/v2/reviews/2026-10-30T0246Z-F005-df-milling-native-fixture-repair-and-residual-context.json",
+      "note": "Independent validator corrected contradictory fixture; new recipe-ID checks are F003 self-tests, pending independent native retest."
+    }
+  },
+  "holdout": "Use whole independently sourced current-Retail study families, never a source reused to infer unknown context. Require actual completed casts and zero-inclusive output vectors.",
+  "evidenceRequests": [
+    "Verify source rate units for exact frozen TSM lines 1975-2009; do not modify frozen source.",
+    "Obtain current Retail 5-input recipe identity and exact output eligibility for 191469-191472 and 200061; do not assume historical mappings remain eligible.",
+    "Collect cast-by-cast zero-inclusive outputs and refunds, character skill/spec/gear, exact patch and source lineage.",
+    "Supply time-stamped AH prices and vendor alternative values only to prioritize decision-flip risk, never to assert current drop rates."
+  ],
+  "blockers": [
+    "TSM mat_rate unit and original cast denominator unresolved",
+    "No independent current-Retail completed-cast cohort for these 24 keys",
+    "No verified minimum recipe-eligible baseline or source-specific profession stats",
+    "No current price snapshot to rank actual gold impact",
+    "Input 200061 mapping eligibility and batch size require independent audit",
+    "Caller-asserted outputUniverseVerified does not independently establish a complete current-Retail output universe.",
+    "Independent F005 native regression for v1.0.2 recipeSpellID type/domain not yet accepted."
+  ],
+  "modelRepair": {
+    "previousCodeBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+    "repairedCodeBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
+    "scope": "RAW_CURRENT_RETAIL positive safe integer recipeSpellID; synthetic UNKNOWN unaffected",
+    "workingCellsChanged": 0,
+    "evidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentQA": "PENDING_V1.0.2"
+  }
+}

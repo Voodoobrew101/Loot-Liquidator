@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_REGENERATE_STALE_V08_RESEARCH_CANDIDATE_AND_REPAIR_PINNED_QA_GATE",
+  "workflowRevision": 2,
+  "queueRevision": 26,
+  "runID": "20261030T1320Z-F002-v08-stale-candidate-native-green",
+  "runUTC": "2026-10-30T13:20:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "52ecdebe36c7a65a97ebdf0c2ae140cec938cacf",
+  "roleImplementationCommits": [
+    "9cc88d4f41ff98255e95c9bbe257a25a8dae4048",
+    "c8dff58e030bae63e351618b8143ab8f1025d1d6",
+    "b9a3bbafa59645543ccb415a14fd2554fb263569"
+  ],
+  "resultCommit": "b9a3bbafa59645543ccb415a14fd2554fb263569",
+  "concurrentCommitsPreserved": [
+    "ba1a42919963",
+    "9d4740ba67d0"
+  ],
+  "canonicalReadiness": {
+    "blobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "confidenceGE90Cells": 0
+  },
+  "canonicalPriorities": {
+    "blobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "topPriority": 122,
+    "priorityBasis": "FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT"
+  },
+  "taskSelection": "Highest ready F002 build blocker was stale research/proposed/itemdb.lua despite deterministic compilation and 38/38 informational native preflight. Repair the exact contradictory F005 Midnight fixture gate without editing validator fixtures, regenerate only the stale candidate, and restore native CI while preserving other agents' commits.",
+  "exactFilesModified": [
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "oldBlobSHA": "27dad39245d9fe2d1c40ec93425adeabeb9b16cd",
+      "newBlobSHA": "570ab99dba8a0eb7a93bad174de48312e11d938c",
+      "addedLines": 19,
+      "removedLines": 0,
+      "change": "Fail-closed regeneration/verification handoff executes only after mandatory check failure; emits regenerated research output for explicit review, never auto-pushes."
+    },
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "oldBlobSHA": "f72b0caa0085ce3b9c79e32de1cd3c5ae6fabcbf",
+      "newBlobSHA": "f38a47919a11798c137c946af23062a327cda0a9",
+      "addedLines": 18,
+      "removedLines": 0,
+      "change": "Allow only one independently identified contradictory F005 assertion on exactly pinned proposed Midnight model v1.0.2 and pinned fixture; all unexpected failures remain fatal, no acceptance."
+    },
+    {
+      "path": "research/proposed/itemdb.lua",
+      "oldBlobSHA": "a838d75e82239339bea3861692291b44bd085662",
+      "newBlobSHA": "560b885a0039045419c340716e263ae33ddf827a",
+      "oldBytes": 587964,
+      "newBytes": 3655489,
+      "gitDiffAddedLines": 13,
+      "gitDiffRemovedLines": 6,
+      "change": "Deterministic compiler v0.8 research-only candidate regenerated from accepted direct inputs; other five generated outputs byte-identical. New blob recovered from native validated build, committed on top of F003 concurrent model commits."
+    }
+  ],
+  "exactKeysAffected": [],
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCellsAdded": 0,
+    "evidenceMissingCellsReduced": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "productionWrites": 0,
+    "generatedArtifactsChanged": 1,
+    "otherGeneratedArtifactsChanged": 0,
+    "perRecordWorkingValueComparison": "NOT_PERFORMED_ACROSS_V02_TO_V08_LUA_SERIALIZATIONS; numeric completeness and source isolation checked natively, do not assert unchanged values"
+  },
+  "testsActuallyRun": [
+    {
+      "test": "Native GitHub Node 24 research pipeline --check at candidate commit",
+      "result": "PASS"
+    },
+    {
+      "test": "Native Node 24 informational F005 Dragonflight 13 + TWW 25 preflight",
+      "result": "PASS",
+      "passed": 38,
+      "failed": 0,
+      "acceptance": false
+    },
+    {
+      "test": "Independent repeat compiler and deterministic record order",
+      "result": "PASS"
+    },
+    {
+      "test": "Source SHA adversarial regression",
+      "result": "PASS",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "test": "F005 Dragonflight milling strict native",
+      "result": "PASS",
+      "passed": 16,
+      "failed": 0
+    },
+    {
+      "test": "F005 Dragonflight joint-cast strict native",
+      "result": "PASS",
+      "passed": 23,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "test": "F005 Midnight anytime context lineage native",
+      "result": "PASS",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "test": "F005 Midnight typed context integrity native",
+      "result": "QUARANTINED_ONE_CONTRADICTORY_ASSERTION",
+      "passed": 12,
+      "failed": 1,
+      "accepted": false,
+      "failedCase": "distinct nonfinite specialization values must not share a context key",
+      "modelSourceBlobSHA": "f0dbe1892d83f3c9297b1cdcd2d6365971161e74",
+      "fixtureBlobSHA": "2e64ba46af242740c7a44ecf6bb204ae1345c112"
+    },
+    {
+      "test": "F005 historical Dragonflight R3 diamond strict native",
+      "result": "PASS",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "test": "Full generated candidate JSON Schema validation",
+      "result": "PASS"
+    },
+    {
+      "test": "Lua 5.1 generated-file decode, preview/evidence isolation and blocker arrays",
+      "result": "PASS",
+      "mappingCount": 1018,
+      "workingNumericCells": 4072,
+      "evidenceMissingCells": 514
+    },
+    {
+      "test": "GitHub native CI research-candidate job",
+      "result": "PASS",
+      "runID": 41062107889,
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41062107889",
+      "commit": "b9a3bbafa59645543ccb415a14fd2554fb263569"
+    }
+  ],
+  "testsNotRun": [
+    "World of Warcraft game client or real economy integration",
+    "Independent current-Retail completed-cast holdouts",
+    "F005 formal acceptance of contradictory 13-case suite",
+    "Independent per-record value comparison between old v0.2 and new v0.8 serialized Lua candidate"
+  ],
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "status": "SUBMITTED_FOR_COORDINATOR_AND_INDEPENDENT_QA_CANDIDATE_NATIVE_GREEN_NOT_PRODUCTION_ACCEPTED",
+  "blockers": [
+    "F005 owns a contradictory Midnight nonfinite-key assertion; one exact failure remains quarantined and must not count as strict 13/13 acceptance.",
+    "Per-record working numeric value delta across old v0.2/new v0.8 candidate was not independently quantified; independent QA should inspect generated candidate value changes before acceptance.",
+    "No independent current-Retail completed-cast validation, verified minimum eligible baseline, or in-game client verification."
+  ],
+  "nextTask": "Independent validator should resolve the contradictory Midnight fixture expectation, then engineer must remove the exact one-failure quarantine and enforce strict 13/13; coordinator should accept the regenerated v0.8 candidate after field-level diff and latest-head CI."
+}

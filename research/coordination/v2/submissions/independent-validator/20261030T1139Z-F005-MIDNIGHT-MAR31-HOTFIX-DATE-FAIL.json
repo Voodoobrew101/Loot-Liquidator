@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_MIDNIGHT_PROSPECT_MARCH31_OFFICIAL_EPOCH_SOURCE_QA",
+  "workflowRevision": 2,
+  "queueRevision": 24,
+  "runUTC": "2026-10-30T11:39:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommitBeforeRun": "b03bc3f041456cd66f1e9bba38040f8834e184e8",
+  "testCommit": "2f5412a217342044afc60c330065e1feb68dca2f",
+  "reviewCommit": "883650de4455efbc42286970596f0691d8ddc875",
+  "resultCommit": "RESOLVED_BY_GITHUB_COMMIT_CONTAINING_THIS_FILE",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "verdict": "FAIL_F003_APR01_MODEL_WRONG_OFFICIAL_DATE",
+  "changedFiles": [
+    {
+      "path": "research/tests/v2/test_f005_midnight_prospect_mar31_official_epoch.js",
+      "blobSHA": "167582dd8448ec3abe686d036c4a2f4d938ecde4",
+      "change": "NEW independent 26-case source-date/epoch regression"
+    },
+    {
+      "path": "research/coordination/v2/reviews/2026-10-30T1138Z-F005-midnight-mar31-official-epoch-source-correction.json",
+      "change": "NEW source-hashed independent FAIL review"
+    },
+    {
+      "path": "research/coordination/v2/submissions/independent-validator/20261030T1139Z-F005-MIDNIGHT-MAR31-HOTFIX-DATE-FAIL.json",
+      "change": "NEW role-owned coordinator submission"
+    }
+  ],
+  "testedModel": {
+    "path": "research/tools/models_v2/midnight_prospect_hotfix_epoch_isolation_v1.js",
+    "blobSHA": "fd8571a3d64d8e59476f79aeb70876f8bc97df37",
+    "manifestBlobSHA": "a9e193a90a1c9bf0e4b61fdd11232f328ac8c150"
+  },
+  "sourceCrosscheck": {
+    "officialURL": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+    "officialBlizzardIndexed": "https://news.blizzard.com/en-us/article/24266320/hotfixes-april-17-2026",
+    "bluePostMirror": "https://www.bluetracker.gg/wow/topic/us-en/2260898-world-of-warcraft-midnight-hotfixes-april-17/",
+    "prospectingDatedEntry": "2026-03-31",
+    "not": "2026-04-01",
+    "note": "Official dated entry establishes day only; deployment hour and per-gem effect unknown"
+  },
+  "exactAffectedStableKeys": [
+    "midnight:237359:242608:L733",
+    "midnight:237361:242608:L744",
+    "midnight:237362:242608:L755",
+    "midnight:237363:242608:L766",
+    "midnight:237364:242608:L777",
+    "midnight:237365:242608:L788",
+    "midnight:237366:242608:L799"
+  ],
+  "exactDeltas": {
+    "newIndependentTestFiles": 1,
+    "newReviewFiles": 1,
+    "newRoleOwnedSubmissionFiles": 1,
+    "admittedMappingsAdded": 0,
+    "admittedMappingsRemoved": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible harness with strict-assert shim",
+      "name": "F003 exact committed model selfTest",
+      "passed": 54,
+      "failed": 0,
+      "limitation": "Self-tests assume wrong date"
+    },
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible harness with strict-assert shim",
+      "name": "New independent official-date/epoch regression",
+      "passed": 19,
+      "failed": 7,
+      "failedCategories": [
+        "March 31 official date",
+        "March 31 UTC quarantine",
+        "timezone-crossing quarantine",
+        "cross-day cohort quarantine"
+      ]
+    },
+    {
+      "runtime": "GitHub connector",
+      "name": "Exact model, manifest, independent test read-back and SHA comparison",
+      "result": "PASS"
+    },
+    {
+      "runtime": "Independent web crosscheck",
+      "name": "Blizzard March 31 profession hotfix entry and unrelated April 1 item entry",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node of 26-case suite",
+    "Lua 5.1 generated working-estimates decode",
+    "WoW client",
+    "Independent current-Retail cast holdout",
+    "F002 pipeline --check; no accepted candidate input changed"
+  ],
+  "blockers": [
+    "F003 model and manifest date April 1 conflicts with official prospecting entry March 31",
+    "Unknown deployment hour/region prevents exact cutover; quarantine required",
+    "No matched zero-inclusive current-Retail completed casts and full output universe for seven mappings",
+    "Previously documented Midnight nested context integrity failures remain unresolved"
+  ],
+  "economicSafety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "productionChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false
+  },
+  "nextRepairOwner": "baseline-modeller",
+  "nextTask": "F005_RETEST_MARCH31_EPOCH_REPAIR_NATIVE_AND_MIDNIGHT_NESTED_CONTEXT",
+  "coordinatorDispositionRequested": "REJECT_F003_APR01_EPOCH_CORRECTION_PENDING_MARCH31_FIX; ACCEPT_NEW_INDEPENDENT_REGRESSION_AS_FAILING_QA"
+}

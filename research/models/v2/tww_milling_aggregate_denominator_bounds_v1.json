@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "tww-milling-aggregate-denominator-bounds-v1.0.0",
+  "workflowRevision": 2,
+  "taskID": "F003_TWW_MILLING_E_CONTEXT_PIVOT",
+  "status": "PROPOSED_PENDING_INDEPENDENT_QA",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "modelSource": "research/tools/models_v2/tww_milling_aggregate_denominator_bounds_v1.js",
+  "modelSourceBlobSHA": "3d6e357258033e11ccc6815f8daea425346930f5",
+  "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "targetKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+  ],
+  "targetCount": 12,
+  "priority": 104,
+  "coordinatorAssignment": "F003_TWW_MILLING_E_CONTEXT_PIVOT",
+  "objective": "Compute mathematically defensible cast-normalized E intervals from zero-inclusive historical aggregate output totals when gross versus net input accounting and Resourcefulness refunds are explicit; refuse to invent cast counts.",
+  "inputs": {
+    "reportedInputUnits": "positive integer; original source units unchanged",
+    "inputAccounting": [
+      "GROSS_COMPLETED_CAST_INPUTS",
+      "NET_CONSUMED_INPUTS"
+    ],
+    "nominalInputCountPerCast": "source-supplied, not assumed to be 10 for all recipes",
+    "maxRefundPerCast": "integer [0, nominal-1] or null unknown; independent evidence required for current-Retail applicability",
+    "totalOutputUnits": "zero-inclusive nonnegative aggregate output count",
+    "rankContext": "explicit input and output quality ranks or UNKNOWN",
+    "sourceStudyFamilyID": "original study family",
+    "observationEpoch": "original study epoch or UNKNOWN",
+    "sourceType": [
+      "SYNTHETIC",
+      "HISTORICAL_AGGREGATE"
+    ]
+  },
+  "forward": {
+    "gross": "if reported gross inputs are confirmed completed-cast inputs, casts=gross/nominal, must be exact multiple",
+    "netWithBound": "min casts=ceil(net/nominal); max casts=floor(net/(nominal-maxRefundPerCast)); reject impossible intervals",
+    "netUnknownRefundMax": "min casts=ceil(net/nominal), max casts unknown/unbounded",
+    "E": "[totalOutput/maxCasts, totalOutput/minCasts], using 0 lower when maxCasts is unbounded"
+  },
+  "inverse": {
+    "castCount": "Only identifiable when minCasts=maxCasts",
+    "historicalTransfer": "No automatic current-Retail transfer or baseline inversion",
+    "dropChance": "Not identified from aggregate output counts alone",
+    "hardYieldBounds": "Not identified from aggregate totals"
+  },
+  "assumptions": [
+    "Zero-inclusive output totals must be explicitly established, not merely positive-output logs",
+    "Input accounting must distinguish gross completed-cast inputs from net consumed inputs",
+    "Gross supplied with unused inputs is not equivalent to gross completed-cast inputs",
+    "A maximum per-cast Resourcefulness refund is a conditional source assumption, not a measured current-patch mechanic",
+    "All results conditional on the supplied rank and recipe context; UNKNOWN cannot be silently pooled",
+    "No shared-study duplicate counted as independent holdout",
+    "Historical aggregate E intervals are not measured current-Retail E",
+    "Output co-occurrence, P and positive conditional yield extrema remain unidentified"
+  ],
+  "syntheticExamples": [
+    {
+      "reportedNet": 100,
+      "nominal": 10,
+      "maxRefundPerCast": 2,
+      "totalOutput": 20,
+      "castRange": [
+        10,
+        12
+      ],
+      "EInterval": [
+        1.6666666666666667,
+        2
+      ]
+    },
+    {
+      "reportedNet": 100,
+      "nominal": 10,
+      "maxRefundPerCast": null,
+      "totalOutput": 20,
+      "castRange": [
+        10,
+        null
+      ],
+      "EInterval": [
+        0,
+        2
+      ]
+    },
+    {
+      "reportedGrossCompletedCastInputs": 100,
+      "nominal": 10,
+      "totalOutput": 20,
+      "castRange": [
+        10,
+        10
+      ],
+      "EInterval": [
+        2,
+        2
+      ]
+    }
+  ],
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "productionChanged": false
+  },
+  "tests": {
+    "javascriptV8SelfTest": {
+      "passed": 33,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    "nativeNode": "NOT_RUN_EXACT_COMMITTED_FILE",
+    "lua51": "NOT_RUN",
+    "independentValidator": "PENDING",
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newModelTargetKeys": 12
+  },
+  "evidenceRequest": "For each TWW milling cohort recover original gross completed-cast inputs versus net consumed, unused inventory, nominal recipe input, actual completed casts, refunded herbs and output totals including zeros. Preserve exact herb/pigment ranks, skill, stats, recipe ID, patch epoch and study family; do not combine 2024 beta and live anecdotes as a matched cohort.",
+  "validatorRequest": "Independently check integer feasibility of cast bounds and zero-inclusive requirement, gross/net confusion, refund-max unknown branch, non-identifiability of P, no economic promotion and study-family holdout separation.",
+  "blockers": [
+    "No independently measured current-Retail zero-inclusive completed-cast TWW milling cohort for 12 keys",
+    "Historical source input accounting and Resourcefulness refunds unresolved",
+    "Recipe/rank eligibility and minimum skill baseline not independently verified",
+    "No whole independent current-Retail study-family holdout",
+    "No actual current-patch gold calculation promoted"
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_PROSPECT_JOINT_CAST_ADVERSARIAL",
+  "workflowRevision": 2,
+  "queueRevision": "completion-priorities.json@a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "runUTC": "2026-10-30T06:46:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "e6e0d97595921d68f6103b2faa08780a62e3898c",
+  "testCommit": "31cc61d9d676a9cf350c7d24594b8df55a6b9eea",
+  "resultCommitBeforeSubmission": "e5d7c9a12491efa2a450be413a0f4f132d972971",
+  "acceptedVsProposed": {
+    "accepted": 0,
+    "proposed": 1,
+    "coordinatorAcceptance": "PENDING",
+    "independentVerdict": "FAIL_F003_MODEL_NEW_ADVERSARIAL_GATES"
+  },
+  "filesCreated": [
+    "research/tests/v2/test_f005_df_prospecting_joint_cast_adversarial.js",
+    "research/coordination/v2/reviews/2026-10-30T0646Z-F005-df-prospect-joint-cast-adversarial.json",
+    "research/coordination/v2/submissions/independent-validator/20261030T0646Z-F005-DF-PROSPECT-JOINT-CAST-QA.json"
+  ],
+  "sourceBlobs": {
+    "model": "20ad9dc03e7c16a910f56ecda659929b0d68b7d3",
+    "test": "058fe6fdb422fcae3790e40fdd5367cc6f6f4610",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "exactStableKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "exactDeltas": {
+    "newValidatorTestFiles": 1,
+    "newReviewFiles": 1,
+    "newSubmissionFiles": 1,
+    "newAdversarialCases": 23,
+    "passingCases": 11,
+    "reproducedFailures": 12,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "numericWorkingCellsChanged": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "rawEvidenceChanged": 0,
+    "frozenTSMChanged": 0,
+    "productionFilesChanged": 0
+  },
+  "findingsSummary": [
+    "1 malformed RAW_CURRENT_RETAIL build prefix accepted",
+    "6 non-JSON-safe nested profession context variants accepted",
+    "2 missing or mismatched output-quality ranks accepted in scenarioBounds",
+    "3 finite-input arithmetic overflow cases return non-finite hypotheses, revenue or margin"
+  ],
+  "testsActuallyRun": [
+    {
+      "name": "23-case synthetic F005 regression on exact GitHub model/test source",
+      "environment": "JavaScript V8 with strict assert shim",
+      "passed": 11,
+      "failed": 12
+    },
+    {
+      "name": "GitHub file readback",
+      "environment": "GitHub connector",
+      "status": "PASS",
+      "modelSHA": "20ad9dc03e7c16a910f56ecda659929b0d68b7d3",
+      "testSHA": "058fe6fdb422fcae3790e40fdd5367cc6f6f4610"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node 23-case suite",
+    "Lua 5.1",
+    "Completion pipeline for new suite",
+    "WoW Retail client",
+    "Independent whole-family current Retail holdout"
+  ],
+  "readinessUnchanged": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyPolicyUnchanged": true
+  },
+  "blockers": [
+    "F003 model owner must repair 12 cases; do not self-repair model in F005",
+    "No independent current-Retail completed-cast holdout or audited rank/output universe",
+    "New suite not yet executed under native Node CI"
+  ],
+  "nextTask": "F005_NATIVE_RETEST_DF_PROSPECT_JOINT_CAST_AFTER_F003_REPAIR_OR_PIVOT_TO_CHANGED_READY_MODEL",
+  "preservation": {
+    "mainUntouched": true,
+    "runtimeProfilesBranchUntouched": true,
+    "legacyAssignmentsUntouched": true,
+    "rawEvidenceUntouched": true,
+    "frozenTSMUntouched": true,
+    "tooltipOnlyPolicyUntouched": true,
+    "otherAgentsFilesUntouched": true,
+    "schedulesUntouched": true
+  }
+}

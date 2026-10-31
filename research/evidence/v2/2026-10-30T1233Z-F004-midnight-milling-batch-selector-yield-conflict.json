@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_MILLING_BATCH_SELECTOR_AND_UNMATCHED_YIELD_REPORT",
+  "runUTC": "2026-10-30T12:33:20Z",
+  "workflowRevision": 2,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "fb0db9ce5e759269076879fb6cec06bac45851d1",
+  "question": "Does 2026 firsthand evidence establish Midnight Milling nominal input batch and same-herb/rank selector behavior, and can an unmatched 10-pigment report validate or falsify the legacy 3-6 preview bounds?",
+  "taskSelection": "Zero-delta pivot away from repeatedly unresolvable Dragonflight rank-specific diamond and TWW milling skill-rate searches to a distinct current-expansion reagent-denominator and selector question.",
+  "sources": [
+    {
+      "sourceID": "midnight-2026-04-06-errtu-forum",
+      "lineage": "blizzard-us-forum-2287404-errtu",
+      "url": "https://us.forums.blizzard.com/en/wow/t/can-we-fix-inscriptions-milling-ability/2287404",
+      "author": "Errtu",
+      "published": "2026-04-06",
+      "observationEpoch": "2026-04-06_or_earlier_UNBOUNDED",
+      "sourceType": "FIRST_PERSON_UI_SELECTOR_REPORT",
+      "claims": {
+        "nominalHerbsPerCast": 10,
+        "sameHerbTypeRequired": true,
+        "oneSelectedQualityStackRequired": true,
+        "exampleDisplayedCrafts": 17,
+        "displayedCraftsNotActualCasts": true,
+        "rankMixedInputAccepted": false
+      },
+      "caveats": [
+        "Reported inability to combine different herb kinds/quality ranks, not an exhaustive recipe selector matrix",
+        "No cast log, build, skill, output totals or refunds",
+        "Displayed 17 craft opportunities is not evidence of 17 completed operations"
+      ]
+    },
+    {
+      "sourceID": "midnight-wowhead-david111-comment",
+      "lineage": "wowhead-midnight-inscription-leveling-david111-comment",
+      "url": "https://www.wowhead.com/guide/midnight/professions/inscription-leveling-1-100",
+      "author": "David111",
+      "published": null,
+      "observationEpoch": null,
+      "sourceType": "FIRST_PERSON_UNCONTROLLED_YIELD_REPORT",
+      "claims": {
+        "reportedInputHerbs": 10,
+        "reportedPigmentOutput": 10,
+        "wording": "I have been getting 10 pigments for the 10 herbs I blow up."
+      },
+      "caveats": [
+        "No sample size, number of completed casts, zero casts, herb/item ranks, pigment itemID, skill, stats, patch or refunds",
+        "Not necessarily the same herb, quality, or skill context as any existing legacy preview row",
+        "Cannot be interpreted as unconditional expectedQuantity or a guaranteed minimum/maximum"
+      ]
+    },
+    {
+      "sourceID": "midnight-method-roguery-2026-03-05",
+      "lineage": "method-roguery-midnight-inscription-editorial",
+      "url": "https://www.method.gg/guides/midnight-inscription-profession-guide",
+      "author": "Roguery",
+      "published": "2026-03-05",
+      "observationEpoch": null,
+      "sourceType": "EDITORIAL_RECIPE_GUIDE",
+      "claims": {
+        "nominalHerbsPerCast": 10,
+        "qualityOfHerbDoesNotIncreaseQuantityClaim": true
+      },
+      "caveats": [
+        "Secondary explanation, not a cast log",
+        "Quality/yield relationship not established by controlled data"
+      ]
+    },
+    {
+      "sourceID": "midnight-wowhead-penguinr2gt-2026-02-21",
+      "lineage": "wowhead-penguinr2gt-midnight-inscription-leveling-editorial",
+      "url": "https://www.wowhead.com/guide/midnight/professions/inscription-leveling-1-100",
+      "author": "Penguinr2gt",
+      "published": "2026-02-21",
+      "observationEpoch": null,
+      "sourceType": "EDITORIAL_CRAFT_SHOPPING_TABLE",
+      "claims": {
+        "craftsAndHerbs": [
+          [
+            9,
+            90
+          ],
+          [
+            15,
+            150
+          ]
+        ],
+        "derivedHerbsPerCast": 10
+      },
+      "caveats": [
+        "Editorial arithmetic, not independently measured output or refunds"
+      ]
+    },
+    {
+      "sourceID": "midnight-warcraft-wiki-recipe",
+      "lineage": "warcraft-wiki-midnight-milling-recipe-index",
+      "url": "https://warcraft.wiki.gg/wiki/Midnight_Milling",
+      "author": null,
+      "published": null,
+      "observationEpoch": null,
+      "sourceType": "INDEXED_RECIPE_DESCRIPTION",
+      "claims": {
+        "nominalHerbsPerCast": 10,
+        "expansion": "Midnight"
+      },
+      "caveats": [
+        "Indexed wiki summary; recipe page not a completed-cast cohort",
+        "Not counted as independent measured study"
+      ]
+    }
+  ],
+  "candidateAudit": {
+    "artifact": "research/proposed/itemdb.lua",
+    "artifactBlobSHA": "a838d75e82239339bea3861692291b44bd085662",
+    "auditedKeys": [
+      "midnight:mill:236761:245807:legacy-reference",
+      "midnight:mill:236767:245807:legacy-reference",
+      "midnight:mill:236770:245864:legacy-reference",
+      "midnight:mill:236771:245864:legacy-reference",
+      "midnight:mill:236776:245804:legacy-reference",
+      "midnight:mill:236777:245804:legacy-reference",
+      "midnight:mill:236778:245866:legacy-reference",
+      "midnight:mill:236779:245866:legacy-reference"
+    ],
+    "admittedRowsAudited": 8,
+    "nominalInputBatchAll": 10,
+    "recipeSpellIDAll": 1269575,
+    "verifiedFromCandidateText": true,
+    "observedBatchMismatchCount": 0,
+    "examplePreviewKey": "midnight:mill:236761:245807:legacy-reference",
+    "exampleLegacyClaimedPositiveBounds": [
+      3,
+      6
+    ],
+    "exampleLegacyClaimedExpectedQuantity": 4.5,
+    "exampleProvenance": "main/StatYieldProfiles.lua:millGroup declarations 80-99",
+    "interpretation": "Candidate already encodes 10-herb nominal batch; no five-to-ten patch is warranted. The unmatched 10-pigment report conflicts with the legacy display bound only if recipe, rank, skill and units match; none are established."
+  },
+  "applicability": {
+    "targetExpansion": "Midnight",
+    "targetMethod": "Milling",
+    "primaryImpact": "REAGENT_VECTOR_AND_SELECTOR_ELIGIBILITY",
+    "secondaryImpact": "UNMATCHED_OUTPUT_YIELD_CONFLICT",
+    "relatedPendingQueue30": "Midnight alternate pigment-rank eligibility leads remain unresolved",
+    "specificQuestionResolved": "10 herbs nominally per Midnight Milling operation, not 5, with firsthand report of same herb/rank selection constraints",
+    "notResolved": [
+      "Which exact output rank appears for each input rank and skill",
+      "Whether rank mixing can ever be permitted by an alternate operation",
+      "Any 2026 zero-inclusive E, P or conditional yield distribution",
+      "Whether the David111 anecdote refers to the same recipe/profile as legacy 3-6"
+    ],
+    "notApplicableTo": "Classic 5-herb milling or separate housing dye-pigment recipes"
+  },
+  "numericEvidence": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "exactDeltas": {
+    "newFirsthandLineages": 2,
+    "newEditorialSourceFamilies": 3,
+    "independentlyMeasuredCohorts": 0,
+    "documentedSelectorConstraints": 2,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "verifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "evidenceGapsBefore": 514,
+    "evidenceGapsAfter": 514
+  },
+  "controlledMeasurement": {
+    "question": "At fixed Midnight herb input ID and rank, do ten units produce output quantity >6, and can any mixed herb/rank inputs be selected for a single operation?",
+    "capture": [
+      "Client build, UTC, recipe spellID and full reagent vector with quality ranks",
+      "Exact herb and pigment IDs, quality ranks, profession skill/spec/equipment and buffs",
+      "Actual completed casts including zero output, output histogram and cooutputs",
+      "Gross consumed herbs, separate Resourcefulness refunds and aborted casts",
+      "Selector attempts for mixed rank and herb types recorded as accepted/rejected, not fabricated zero outputs"
+    ],
+    "holdout": "Repeat matched skill/rank context in independent session/character before economic promotion"
+  },
+  "blockers": [
+    "No actual cast-level output histogram or matched context for 10-pigment anecdote",
+    "Cannot prove current patch behavior beyond source observation epoch",
+    "Pending alternate output rank selector universe requires client verification"
+  ],
+  "nextTask": "Hand off batch/selector and unmatched-yield conflict to coordinator/modeller; pivot next search to independent Midnight milling matched-rank completed-cast observations, or different queue30 eligibility if unavailable"
+}

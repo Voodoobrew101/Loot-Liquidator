@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_RANK_POOL_CONTEXT_AND_ANCESTRY",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 5,
+  "branch": "implementation/five-agent-completion",
+  "reviewUTC": "2026-10-29T16:40:41.612Z",
+  "baseCommit": "e1144ed24e769736c87bd3b30deb48bd911d9fa2",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_WITH_NEW_BLOCKERS",
+  "verdict": "CONDITIONAL_REPAIRED_RANK_POOL_PASS_GLOBAL_F005_BLOCKED",
+  "changedFiles": [
+    "research/tests/v2/test_f005_pool_policy_anchor_and_target_context.js",
+    "research/coordination/v2/reviews/2026-10-29T1640-F005-rank-pool-retest-and-policy-anchor.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-29T1640-F005-rank-pool-retest-policy-anchor.json"
+  ],
+  "reviewPath": "research/coordination/v2/reviews/2026-10-29T1640-F005-rank-pool-retest-and-policy-anchor.json",
+  "tests": {
+    "rankPool": {
+      "passed": 12,
+      "failed": 0,
+      "source": "GitHub blob b3a7decf0b9e3b2a46564a573ecdc6310f5d7bce",
+      "execution": "V8 exact module"
+    },
+    "metamorphic": {
+      "passed": 609,
+      "failed": 0,
+      "source": "GitHub blob ff1cc5b56c5e41da223bca0535d6b8dbfbc53cda",
+      "execution": "V8 exact modules"
+    },
+    "newAdversarial": {
+      "passed": 6,
+      "failed": 2,
+      "source": "GitHub blob 3ca974762afbea295ef284090c4df4108be7de3a",
+      "execution": "V8 exact module",
+      "failures": [
+        "POOL_POLICY_ANCHOR_MISSING",
+        "STALE_NONPOOL_TARGET_CONTEXT"
+      ]
+    },
+    "engineerNativeCI": {
+      "runID": 40910032026,
+      "status": "PASS_REPORTED_BY_ENGINEER",
+      "independentlyRerun": false
+    },
+    "notRun": [
+      "Native Node new suite",
+      "Native Lua locally",
+      "In-game Retail",
+      "Matched independent Retail holdout"
+    ]
+  },
+  "deltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "independentRegressionCasesAdded": 8,
+    "newDefectClasses": 2,
+    "productionFilesChanged": 0
+  },
+  "canonicalCounters": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "sourceHashes": {
+    "estimator": "333fef587046cf14bdf0f3d2646508c6e9f4f38b",
+    "pipeline": "4ba6bbd45c5c3c3da18303647b1981c39749dd17",
+    "candidateLua": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+  },
+  "blockers": [
+    "Two new synthetic integrity tests fail: pool policy mean can be forged with self-consistent P/E and stale targetContext patch survives on nonpool rows",
+    "No independent current-Retail TWW milling whole-study holdout",
+    "116 economic E evidence gaps and 514 total evidence gaps",
+    "No WoW client verification"
+  ],
+  "preservation": {
+    "mainEdited": false,
+    "runtimeProfilesEdited": false,
+    "rawEvidenceEdited": false,
+    "legacyAssignmentsEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipOnlyEdited": false,
+    "schedulesEdited": false
+  },
+  "nextTask": "F002_FIX_POOL_POLICY_ANCHOR_AND_STALE_NONPOOL_TARGET_CONTEXT; independent F005 retest after changed estimator blob",
+  "zeroDeltaPivot": "New integrity mutation cases uncovered after prior rank-pool repair passed; no repeated unchanged audit."
+}

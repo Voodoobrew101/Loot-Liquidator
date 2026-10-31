@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_PRISMATIC_IDENTITY_CORRECTION_AND_FIRST_STAGE_ORE_COHORTS",
+  "runID": "2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts",
+  "status": "SOURCE_REVIEW_PROPOSED",
+  "sources": [
+    {
+      "url": "https://www.wowhead.com/item=194545/prismatic-ore",
+      "sourceClass": "ORIGINAL_ITEM_PAGE_WITH_FIRSTHAND_COMMENTS",
+      "author": "TheChisel",
+      "lineage": "wowhead-prismatic-ore-TheChisel-5000-serevite-r3",
+      "originalCohort": true,
+      "independentOfExistingSuperbondez": true,
+      "confidenceLimits": [
+        "No comment timestamp",
+        "No full skill/gear vector",
+        "No zero-inclusive cast histogram",
+        "Reported prospects not audit-verified"
+      ]
+    },
+    {
+      "url": "https://www.wowhead.com/item=194545/prismatic-ore",
+      "sourceClass": "ORIGINAL_ITEM_PAGE_WITH_FIRSTHAND_COMMENTS",
+      "author": "Hotfor",
+      "lineage": "wowhead-prismatic-ore-Hotfor-7000-draconium-mixed",
+      "originalCohort": true,
+      "independentOfExistingSuperbondez": true,
+      "confidenceLimits": [
+        "Mixed input quality ranks",
+        "No exact completed casts",
+        "No skill/gear/refunds",
+        "No comment timestamp"
+      ]
+    },
+    {
+      "url": "https://www.wowhead.com/item=194545/prismatic-ore",
+      "sourceClass": "ITEM_IDENTITY_CATALOG_AND_EXISTING_SUPERBONDEZ_COHORT",
+      "author": "superbondez",
+      "originalCohort": false,
+      "independentOfExistingSuperbondez": false,
+      "existingMemoryIDs": [
+        "df-superbondez-prismatic-400ore-80casts",
+        "df-prismatic-ore-item-identity"
+      ]
+    },
+    {
+      "url": "https://www.wowhead.com/item=192880/crumbled-stone",
+      "sourceClass": "ITEM_IDENTITY_CATALOG",
+      "originalCohort": false,
+      "identity": "192880 is Crumbled Stone, not Prismatic Ore"
+    },
+    {
+      "url": "https://warcraft.wiki.gg/wiki/Prismatic_Ore",
+      "sourceClass": "SECONDARY_ITEM_IDENTITY_REFERENCE",
+      "originalCohort": false
+    }
+  ],
+  "sourceMemoryCheck": {
+    "path": "research/coordination/source-memory.json",
+    "checkedAtBranchHead": true,
+    "existingURLIndexed": true,
+    "superbondezAlreadyIndexed": true,
+    "TheChiselLiteralHandleFound": false,
+    "HotforLiteralHandleFound": false,
+    "originalCohortsNotProvenAbsentFromAllHistoricalData": true,
+    "appendOnlyProposal": true
+  },
+  "duplicateControl": "The source URL is already indexed; count two new author-level observations, not a new website, and do not recount superbondez or the previous 25/1000 Prismatic Ore commenter.",
+  "correctionTarget": {
+    "file": "research/evidence/v2/2026-10-30T2028Z-F004-df-two-stage-diamond-denominators.json",
+    "field": "cohorts[B-prismatic-1000].inputItemID",
+    "from": 192880,
+    "to": 194545,
+    "method": "IMMUTABLE_CORRECTION_PROPOSAL"
+  },
+  "independentValidation": "NOT_PERFORMED",
+  "economicAdmission": "NONE",
+  "blockers": [
+    "Original commenters do not provide exact observation dates, client builds, rank-separated complete cast logs, Resourcefulness refunds or full skill/spec/gear profiles.",
+    "Hotfor's 7,000 Draconium units mix all three ranks, so rank-specific Prismatic yield cannot be estimated.",
+    "TheChisel's reported 1,000 prospects are not independently audited; 31 output units do not establish occurrence chance without cast histogram.",
+    "Historical Dragonflight results cannot be promoted to current Retail economic E."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003",
+  "reportType": "IMMUTABLE_NATIVE_CI_ADDENDUM",
+  "originalSubmission": "research/coordination/v2/submissions/baseline-modeller/20261030T0319Z-F003-DF-MILL-RAW-RECIPE-SPELL-ID-TYPING.json",
+  "modelCodeBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
+  "validatorTestPath": "research/tests/v2/test_f005_df_milling_raw_context_and_universe.js",
+  "branch": "implementation/five-agent-completion",
+  "modelID": "df-milling-decision-sensitivity-v1.0.2",
+  "nativeCI": {
+    "runIDs": [
+      40996564279,
+      40996559701,
+      40996579091,
+      40996573905
+    ],
+    "status": "FAIL",
+    "failingStep": "node research/tools/run_completion_pipeline.js --check",
+    "logMessage": "F005 DF milling fixture identity or synthetic-only contract changed",
+    "passedEarlierSteps": [
+      "deterministic repeat compile",
+      "serialized attestation",
+      "working estimate numerical coherence and isolation",
+      "Lua5.1 context roundtrip",
+      "F005 binomial 476/476",
+      "F005 Midnight legacy 27/27"
+    ]
+  },
+  "reproduction": {
+    "environment": "V8 executing exact committed model and independent F005 test blobs with assert-compatible shim",
+    "modelSelfTests": {
+      "passed": 41,
+      "failed": 0
+    },
+    "independentF005": {
+      "passed": 15,
+      "failed": 1
+    },
+    "onlyFailure": {
+      "name": "model self-test remains 32/32",
+      "reason": "Independent F005 fixture pins selfTest().passed===32; new valid RAW recipe-ID regression assertions increase count to 41."
+    },
+    "newRawRecipeIdRegressionCases": 8,
+    "previousRawRecipeIdTypeDefect": "FIXED_IN_MODEL"
+  },
+  "ownershipResolution": {
+    "independentValidator": "Update validator-owned self-test count assertion to 41 or make it a non-regressive >=32 assertion after independently inspecting nine added assertions; add independent recipeSpellID type/domain probes; run native pipeline.",
+    "baselineModeller": "Do not weaken model or remove new regression assertions to satisfy stale fixture.",
+    "coordinator": "Keep F003 conditional pending independent native acceptance; retain confidence-zero preview-only and unchanged readiness."
+  },
+  "exactDeltas": {
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0
+  },
+  "nextTask": "INDEPENDENT_F005_NATIVE_FIXTURE_SYNC_THEN_PIVOT_NEW_MODEL_FAMILY"
+}

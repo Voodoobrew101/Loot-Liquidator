@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002",
+  "runID": "20261030T0811Z-F002-anytime-fixture-pins-preview-policy",
+  "workflowRevision": 2,
+  "queueRevision": 2,
+  "status": "SUBMITTED_PENDING_COORDINATOR_AND_INDEPENDENT_F005_ACCEPTANCE",
+  "resultType": "RESEARCH_COMPILER_GATE_HARDENING",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "UNAVAILABLE_FROM_GITHUB_FETCH_COMMIT_RESPONSE",
+  "baseCompilerBlobSHA": "8d12b2489edd8e6e9e3cb63100129810857ecb1b",
+  "engineeringCommit": "9f0e7b9b83ce3b663886eaeb0006d84bdb085b6e",
+  "resultCompilerBlobSHA": "9f3d5e531b54191c8f0f38ca7a71fec0d5077",
+  "inputSnapshots": {
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "anytimeModelManifestBlobSHA": "05b5dc514cc409ffd66018379d0daa118c6fa8d7",
+    "anytimeModelCodeBlobSHA": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9"
+  },
+  "changedFiles": [
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "additions": 27,
+      "deletions": 0,
+      "change": "Pin two independent F005 Midnight anytime fixture Git blobs before running staged/strict native suites; fail closed if either fixture changes without independent review. Enforce model manifest outputSemantics confidence=0, economicUse=PREVIEW_ONLY, normalizedVerified=false and liveEVChanged=false."
+    }
+  ],
+  "reviewedIndependentFixtureBlobs": {
+    "research/tests/v2/test_f005_midnight_anytime_context_lineage.js": "fbb838e348429d6deed741060fe992ead560190b",
+    "research/tests/v2/test_f005_anytime_typed_context_snapshot_integrity.js": "2e64ba46af242740c7a44ecf6bb204ae1345c112"
+  },
+  "reason": "Prior gate pinned the broken model SHA and known failure names but did not pin either independent F005 Midnight fixture. An edited fixture could silently change the test contract; manifest preview-only semantics were not independently guarded at this gate.",
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "workingNumericCellsBefore": 4072,
+    "workingNumericCellsAfter": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceFieldsBefore": 514,
+    "missingEvidenceFieldsAfter": 514,
+    "missingExpectedQuantityBefore": 116,
+    "missingExpectedQuantityAfter": 116,
+    "productionFilesChanged": 0,
+    "rawEvidenceFilesChanged": 0,
+    "frozenTSMFilesChanged": 0,
+    "tooltipOnlyFilesChanged": 0,
+    "validatorOwnedFilesChanged": 0,
+    "modelOwnerFilesChanged": 0
+  },
+  "testsActuallyRun": {
+    "githubFileReadback": "PASS; updated compiler blob SHA verified",
+    "javascriptSyntax": "PASS; V8 new Function parse of exact updated pipeline source",
+    "contractPredicateSimulations": "11/11 PASS; current two fixture SHA pins, tampered SHA rejection, preview policy and four policy mutations, source pin presence and JS syntax",
+    "fullNativeNodePipeline": "NOT_RUN",
+    "githubActions": "NO_STATUS_OR_PR_WORKFLOW_RUN_AVAILABLE_FOR_ENGINEERING_COMMIT_AT_HANDOFF",
+    "lua51": "NOT_RUN",
+    "schemaValidation": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentValidator": "PENDING"
+  },
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVRecommendationsChanged": false,
+    "tooltipOnlyPolicyChanged": false,
+    "sourceEvidenceChanged": false
+  },
+  "blockers": [
+    "Native Node research pipeline and GitHub CI execution are not confirmed for the new gate.",
+    "F003 Midnight anytime model still has 8 pinned synthetic nested-context defects; independent validator must reconcile the contradictory nonfinite-key assertion before strict 13/13 acceptance.",
+    "No independent current-Retail zero-inclusive completed-cast cohort or externally verified output cap for seven Midnight rare-gem keys.",
+    "Coordinator acceptance and independent F005 review outstanding; reviewed fixture changes require deliberate re-pin."
+  ],
+  "nextTask": "Run native research pipeline --check against latest head and obtain F005 acceptance; when F003 fixes Midnight anytime model, require clean 13/13 plus existing 12/12 and update model manifest without weakening fixture pins. If no ready repair, pivot to another compiler/contract defect instead of repeating audits.",
+  "notes": "No source/model/fixture file was changed. Existing known-failure quarantine is preserved exactly; the added gate prevents unreviewed fixture substitution and policy relaxation. Base parent commit is not exposed by the GitHub fetch-commit connector; exact base compiler blob and result commit are provided."
+}

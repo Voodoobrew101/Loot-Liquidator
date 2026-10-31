@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_REPAIR_FRONTIER_AND_PRISMATIC",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T2323Z-F003-frontier-prismatic-integrity-repair",
+  "dateUTC": "2026-10-30",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_QA",
+  "baseCommit": null,
+  "baseCommitNote": "Exact immediate parent of first role write was not exposed by the GitHub connector. The prior coordinator acceptance source commit is 9dfa710d633d89e48dff456053042966da923356; this is a review pin, not asserted to be the immediate parent.",
+  "sourceResultCommit": "dc29ce0de2a8f8cd0907ef437b841f95382cfdd4",
+  "submissionCommit": "COMMIT_CONTAINING_THIS_REPORT",
+  "roleOwnedChanges": [
+    {
+      "path": "research/tools/models_v2/df_prospect_decision_frontier_v1.js",
+      "beforeBlob": "7fb36b9d6c25f6a0bff02dfe5ab1b6855e6a4f42",
+      "afterBlob": "483842ab580808cbd9d9c130d26781b59d2e6ee4",
+      "commit": "66a859508c76dcbd1641b5719d8840f6840bd9e5"
+    },
+    {
+      "path": "research/models/v2/df_prospect_decision_frontier_v1.json",
+      "beforeBlob": "74f10db75932ca3be685bf3ea44c9ba813a03d7d",
+      "afterBlob": "fc90c5d81da49f505ea49b2d56fcf1d29da5d084",
+      "commit": "2ce7531fb6bc5439434ee90b003db05236cc9b98"
+    },
+    {
+      "path": "research/tools/models_v2/df_historical_diamond_denominator_stage_guard_v1.js",
+      "beforeBlob": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1",
+      "afterBlob": "2c9005e1d7be6df68d5631a418fbae95a144f6e7",
+      "commit": "d1b6b4724099075ae9dbfb36726df08c48022dde"
+    },
+    {
+      "path": "research/models/v2/df_historical_diamond_denominator_stage_guard_v1.json",
+      "beforeBlob": "6aa1141b1a8734cfa644e39cf13a02e454d90841",
+      "afterBlob": "8ed83117c738ed83ff418de4a677c31505d0e028",
+      "commits": [
+        "430a9bf367201f4b5dde7a549d91f44fabf6aa9d",
+        "dc29ce0de2a8f8cd0907ef437b841f95382cfdd4"
+      ]
+    }
+  ],
+  "sourcePins": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "frontierIndependentTest": "bbb4c309a98e5a14dd8f15ae5225703a828cbad8",
+    "stageIndependentTest": "4f546a33559a9e8202c1c846d7bbfe91c9f8503c"
+  },
+  "targetScopes": {
+    "frontier": "38 exact stable keys pinned in frontier manifest; 2 DF ore inputs 188658 and 189143; priority 102",
+    "historicalStage": "5 exact priority-122 diamond stable keys pinned in historical stage manifest",
+    "affectedStableKeys": "All 38 frontier manifest targetKeys and all 5 stage manifest targetKeys; no mapping admission or change to their canonical records"
+  },
+  "repair": {
+    "frontier": "Require exactly 5 nominal ore per completed DF prospect cast; copy and freeze validated scenario and output-row descriptors, compare repeated reads to reject observed mutable Proxy traps; calculate solely from snapshot, enforce nonnegative row uncertainty and ordered net bounds. Preserves original modelID and 4039 self-test contract.",
+    "stage": "Correct Prismatic Ore downstream input identity 192880 (Crumbled Stone) to 194545 in model source, analyze() output, and model manifest. Add explicit identity self-test; preserve immutable erroneous historical source with append-only F004 attribution correction.",
+    "economicScope": "SCENARIO_ONLY, never a live valuation, recommendation, measured P or verified E"
+  },
+  "exactDeltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "modelDefectGroupsRepaired": 6,
+    "previouslyFailedIndependentAssertionsNowPassing": 11,
+    "modelAndManifestFilesChanged": 4
+  },
+  "canonicalSnapshot": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "independentRetailHoldouts": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "JavaScript V8 executing GitHub-fetched patched model and exact F005 source-pinned test module",
+      "suite": "DF prospect frontier",
+      "selfTestPassed": 4039,
+      "independentPassed": 27,
+      "independentFailed": 0,
+      "previousIndependentPassed": 19,
+      "previousIndependentFailed": 8
+    },
+    {
+      "environment": "JavaScript V8 with virtual read-only filesystem for exact GitHub-fetched JSON and F005 test",
+      "suite": "DF Prismatic second-stage identity",
+      "selfTestPassed": 28,
+      "independentPassed": 43,
+      "independentFailed": 0,
+      "previousIndependentPassed": 40,
+      "previousIndependentFailed": 3
+    },
+    {
+      "environment": "GitHub read-back",
+      "scope": "Patched model source blobs and pinned frontier/stage manifests",
+      "passed": true
+    }
+  ],
+  "testsNotRun": [
+    "Native Node execution of both exact F005 independent suites",
+    "Lua 5.1 generated-candidate decoding (no compiler input change)",
+    "Full completion pipeline --check (no compiler input change)",
+    "World of Warcraft in-game completed-cast holdout or economic validation"
+  ],
+  "blockers": [
+    "F005 must independently execute and attest repaired 27-case frontier and 43-case Prismatic suites under native Node; V8 author replay is not independent acceptance.",
+    "Historical Prismatic cohort original report still records wrong item ID by design; append-only F004 correction must be applied when interpreting it, without rewriting raw evidence.",
+    "No independently verified current-Retail zero-inclusive casts, matched skill/rank/patch/refund context or market snapshots; 116 evidence E gaps remain.",
+    "Other pre-existing F003 TWW milling and Gem Finding context failures are separate pending assignments."
+  ],
+  "independentValidatorRequest": "Use source blobs 483842ab580808cbd9d9c130d26781b59d2e6ee4 and 2c9005e1d7be6df68d5631a418fbae95a144f6e7, manifests fc90c5d81da49f505ea49b2d56fcf1d29da5d084 and 8ed83117c738ed83ff418de4a677c31505d0e028; rerun exact F005 27-case and 43-case suites under native Node, add adversarial traps with late mutation and verify immutable snapshot economics and zero live-EV leakage.",
+  "evidenceResearcherRequest": "Obtain current-Retail 2026 completed-cast, zero-inclusive, rank/skill/patch/refund labelled observations; keep first-stage Serevite/Draconium distinct from second-stage Prismatic Ore 194545, and deduplicate the archived zzcnjw cohort.",
+  "nextTask": "F003_TWW_MILLING_CONTEXT_REPAIR_AFTER_F005_FRONTIER_STAGE_ACCEPTANCE; if F005 discovers another defect, repair that specific defect instead of repeating unchanged audits.",
+  "safety": {
+    "confidenceOfUnsupportedFallbacks": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "addonReleased": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "otherAgentsFilesChanged": false,
+    "schedulesChanged": false
+  }
+}

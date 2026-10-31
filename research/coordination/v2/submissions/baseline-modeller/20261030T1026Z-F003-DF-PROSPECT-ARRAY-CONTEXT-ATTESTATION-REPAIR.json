@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_PROSPECT_ARRAY_CONTEXT_ATTESTATION_REPAIR",
+  "workflowRevision": 2,
+  "taskStatus": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_RETEST",
+  "reportDateUTC": "2026-10-30T10:26:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "queueSnapshot": {
+    "readinessPath": "research/coordination/completion-readiness.json",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesPath": "research/coordination/completion-priorities.json",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantityCells": 116
+  },
+  "taskSelection": "Highest-priority ready baseline-modeller task was independent F005 FAIL_REPAIR_REQUIRED review of the priority-122 Dragonflight prospecting model. This fixes 10 failed array-context attestation cases instead of repeating zero-delta source audits.",
+  "independentReview": {
+    "path": "research/coordination/v2/reviews/2026-10-30T0747Z-F005-df-prospect-array-attestation.json",
+    "verdictBefore": "FAIL_REPAIR_REQUIRED",
+    "fixture": "research/tests/v2/test_f005_df_prospect_array_context_attestation.js",
+    "fixtureBlobSHA": "77519d24493455616dbbf94d142af581aa857c3a",
+    "priorPassing": 3,
+    "priorFailing": 10
+  },
+  "baseCommitBeforeRun": "6a9dbda5ea830a9eccecbad892eb1c354690da8e",
+  "implementationCommits": [
+    "26fde608986190993a2f7078affd64c9c195ec55",
+    "d12cc41f6ec64dbeaf5a49d5e5df894363e99278"
+  ],
+  "resultCommitBeforeSubmission": "d12cc41f6ec64dbeaf5a49d5e5df894363e99278",
+  "exactStableKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
+      "oldBlobSHA": "85d1e4b7b019c6db945335af2ec82392e8a0ddca",
+      "newBlobSHA": "70bab20081db23e899a45b73186200869efae48c",
+      "change": "v1.0.2: fail closed on array subclasses, inherited/own toJSON, symbol/non-enumerable/extra array keys, sparse arrays, getter-backed objects; semantic validation follows JSON-safe check"
+    },
+    {
+      "path": "research/models/v2/df_prospecting_joint_cast_conflict_v1.json",
+      "oldBlobSHA": "72cf68f3c6edb12c3da807202b29b20acc2daa5d",
+      "newBlobSHA": "d18b9ab544bfdc3a575ce88027297ce1ba341893",
+      "change": "version, source SHA, QA retest request, serialization contract, uncertainty and pending status"
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "admittedMappingsRemoved": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCellsAdded": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "economicPromotions": 0,
+    "modelFilesRepaired": 2,
+    "priorityMappingsProtected": 5,
+    "previousIndependentFailingCasesRepairedInV8": 10,
+    "workingPreviewCoverageBefore": "4072/4072",
+    "workingPreviewCoverageAfter": "4072/4072",
+    "remainingExpectedQuantityEvidenceGaps": 116
+  },
+  "testsActuallyRun": [
+    {
+      "test": "Exact committed model selfTest with strict assert-compatible shim in JavaScript V8",
+      "passed": 61,
+      "failed": 0,
+      "modelBlobSHA": "70bab20081db23e899a45b73186200869efae48c"
+    },
+    {
+      "test": "Unmodified F005 independent prior adversarial suite in JavaScript V8",
+      "passed": 23,
+      "failed": 0,
+      "fixtureBlobSHA": "058fe6fdb422fcae3790e40fdd5367cc6f6f4610"
+    },
+    {
+      "test": "Unmodified F005 independent array-context attestation suite in JavaScript V8",
+      "passed": 13,
+      "failed": 0,
+      "fixtureBlobSHA": "77519d24493455616dbbf94d142af581aa857c3a",
+      "prior": "3 passed, 10 failed"
+    },
+    {
+      "test": "GitHub read-back of exact model and manifest blob SHAs; manifest modelID/sourceSHA consistency",
+      "result": "PASS"
+    }
+  ],
+  "nativeCI": {
+    "statusAtReport": "IN_PROGRESS",
+    "runURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41040635617",
+    "headSHA": "d12cc41f6ec64dbeaf5a49d5e5df894363e99278"
+  },
+  "testsNotRun": [
+    "Native Node of exact v1.0.2 and both F005 suites in this runtime",
+    "Full completion pipeline --check (no candidate build input changed)",
+    "Lua 5.1 candidate decode",
+    "In-game/client testing",
+    "Independent F005 retest and coordinator acceptance",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "economicSafety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEconomicEligible": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "productionFilesChanged": false
+  },
+  "blockers": [
+    "Independent F005 owner must run and accept native 13/13 array suite plus 23/23 prior suite against model blob 70bab20081db23e899a45b73186200869efae48c",
+    "No independent current-Retail zero-inclusive completed-cast study, audited output universe, or full profession context for the five priority-122 keys",
+    "GitHub native CI not yet completed at report time"
+  ],
+  "nextTask": "Check native CI and F005 acceptance of v1.0.2; if no new validator failures, pivot to priority-104 TWW Gem Finding or another changed evidence/model risk rather than re-auditing the five unchanged historical TSM mappings.",
+  "ownership": "Only baseline-modeller research model, manifest and unique role-owned submission changed; no main, runtime-profiles, raw evidence, frozen TSM, tooltip-only policies, legacy assignments, central queues, other agent files, or schedules modified."
+}

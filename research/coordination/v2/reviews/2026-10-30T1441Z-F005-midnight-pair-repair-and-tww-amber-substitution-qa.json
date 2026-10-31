@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005",
+  "runUTC": "2026-10-30T14:41:24Z",
+  "workflowRevision": 2,
+  "branch": "implementation/five-agent-completion",
+  "baseHeadBeforeQA": "5a78052256c1392c4a6fb5d18a06075d2b3d8a33",
+  "reviewed": {
+    "f003Model": {
+      "path": "research/tools/models_v2/midnight_prospect_hotfix_epoch_isolation_v1.js",
+      "blobSHA": "70652482e4ac63db50f567fae5cbb35e6f50accd",
+      "modelID": "midnight-prospect-hotfix-epoch-isolation-v1.0.4"
+    },
+    "f003ModelManifest": {
+      "path": "research/models/v2/midnight_prospect_hotfix_epoch_isolation_v1.json",
+      "blobSHA": "4820000901b87d122e864a08cf88d6decd25746d"
+    },
+    "f004Evidence": {
+      "path": "research/evidence/v2/2026-10-30T1428Z-F004-tww-prospecting-amber-substitution-epoch.json",
+      "blobSHA": "93ae42122b69df8a60389d3fd466c92c91d48e7c"
+    },
+    "readiness": {
+      "path": "research/coordination/completion-readiness.json",
+      "blobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+    },
+    "priorities": {
+      "path": "research/coordination/completion-priorities.json",
+      "blobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+    }
+  },
+  "verdicts": {
+    "f003PairSummaryRepair": "CONDITIONAL_PASS_SYNTHETIC_REPAIR_NATIVE_AND_REAL_HOLDOUT_PENDING",
+    "f004TWWAmberSubstitution": "CONDITIONAL_PASS_HISTORICAL_CONTEXT_ONLY_NO_NUMERIC_PROMOTION",
+    "overall": "CONDITIONAL_PASS_RESEARCH_ONLY"
+  },
+  "tests": {
+    "method": "Exact GitHub-committed JavaScript source and fixtures evaluated in connector V8 with minimal node:assert/strict shim; NOT native Node. New evidence suite loaded exact GitHub evidence bytes via fs mock.",
+    "f003ModelSelfTest": {
+      "passed": 72,
+      "failed": 0
+    },
+    "f003PriorIndependentMarch31": {
+      "passed": 26,
+      "failed": 0
+    },
+    "f003PriorIndependentArrayContext": {
+      "passed": 12,
+      "failed": 0
+    },
+    "f003PriorIndependentPairSummary": {
+      "passed": 18,
+      "failed": 0
+    },
+    "f004NewIndependentEvidenceSuite": {
+      "path": "research/tests/v2/test_f005_tww_prospect_amber_substitution_source_isolation.js",
+      "blobSHA": "c80c7a853437151593d17dcbd26acc13ca883a7b",
+      "passed": 31,
+      "failed": 0,
+      "positiveControls": 11,
+      "negativeMutationChecks": 20
+    },
+    "total": {
+      "passed": 159,
+      "failed": 0
+    },
+    "nativeNode": "NOT_RUN_NO_NATIVE_CHECKOUT_AVAILABLE_IN_THIS_SESSION",
+    "lua51": "NOT_RUN_LUA51_UNAVAILABLE",
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_MODIFIED",
+    "wowClient": "NOT_RUN",
+    "independentCurrentRetailHoldouts": 0
+  },
+  "independentSourceChecks": [
+    {
+      "family": "WOWHEAD_GAME_DATA_TRAITS",
+      "url": "https://www.wowhead.com/profession-trait/sapphire-98659",
+      "result": "Sapphire trait describes replacement of Ambivalent Amber, not unconditional 1%-per-cast gem rate"
+    },
+    {
+      "family": "WOWHEAD_GAME_DATA_TRAITS",
+      "url": "https://www.wowhead.com/profession-trait/ruby-98660",
+      "result": "Ruby trait describes replacement of Ambivalent Amber"
+    },
+    {
+      "family": "WOWHEAD_GAME_DATA_TRAITS",
+      "url": "https://www.wowhead.com/profession-trait/onyx-98661",
+      "result": "Onyx trait describes replacement of Ambivalent Amber"
+    },
+    {
+      "family": "WOWHEAD_GAME_DATA_TRAITS",
+      "url": "https://www.wowhead.com/profession-trait/emerald-98662",
+      "result": "Emerald trait describes replacement of Ambivalent Amber"
+    },
+    {
+      "family": "WOWHEAD_PEAESK_ORIGINAL_COMMENT",
+      "url": "https://www.wowhead.com/spell=434018/algari-prospecting",
+      "result": "One PeaEsk source family: R2 Ironclaw 128, Aqirite 118, Bismuth 142 aggregate outputs across 13 count cells; no completed-cast/refund/skill/rank-output context"
+    },
+    {
+      "family": "BLIZZARD_OFFICIAL_HOTFIX_CUMULATIVE",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24148555",
+      "result": "Search-indexed October 25, 2024 section corroborates 40/40 amber fix, per-action byproduct occurrence, and reduced gem/byproduct maximum-yield rates; direct fetch returned 403 and exact deployment hour is unknown"
+    }
+  ],
+  "exactFindings": [
+    "F003 repaired compareEpochs now rejects un-attested or modified cohort summaries and replays privately snapshotted zero-inclusive casts; 18/18 original adversarial regression passes.",
+    "F003 March 31 transition date and array serializer defenses remain green in 26/26 and 12/12 independent V8 regressions.",
+    "F004 four gem traits are amber-substitution descriptions; no independent cast-level probability or unconditional E follows from 1%-per-point wording.",
+    "PeaEsk's three R2 ore cohorts preserve 13 original output counts (128,118,142) but nominal 100 ore labels do not establish actual casts, refunds, output quality ranks, skill or observation epoch.",
+    "October 25 2024 official hotfix is a historical nonstationarity boundary, not a current-Retail quantitative yield table; unknown observation dates cannot be classified across it.",
+    "Localized Wowhead mirrors and reprints of one PeaEsk comment are one author/source family, not independent holdouts.",
+    "All eight conditional TWW gem-finding target keys remain candidates; no admission or economic transfer is supported."
+  ],
+  "numericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "evidenceNumericCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "independentHoldoutCohorts": 0
+  },
+  "canonicalReadinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "economicPolicy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVOrRecommendationChanges": 0,
+    "tooltipOnlyUnchanged": true,
+    "frozenTSMUnchanged": true
+  },
+  "limitations": [
+    "V8 shim checks are not native Node execution; GitHub Actions existing workflow does not automatically run the new F005 suite.",
+    "No independent current-Retail completed-cast study, matched skill/spec/unlocks, actual casts, refunds or complete output rank universe.",
+    "Source pages may change; this review pins the exact F004 evidence blob, not immutable external web snapshots.",
+    "The October 25 source was independently corroborated in search-indexed official and contemporaneous copies, but direct Blizzard page fetch returned HTTP 403.",
+    "No source files or compiler inputs changed; canonical readiness numbers are read from current generated report, not freshly rebuilt."
+  ],
+  "repairOwner": null,
+  "nextTask": {
+    "owner": "independent-validator",
+    "task": "Independently audit F002 v0.2-to-v0.8 reconciliation: 104 non-null-to-null field quarantines, three removed mappings and 45 added mappings; test exact identity/rank provenance and guard against inadvertent live EV adoption. Pivot away from unchanged PeaEsk/trait source pages unless new completed-cast evidence appears."
+  },
+  "coordinatorAcceptanceRequest": "Accept F003 pair-summary integrity repair for research-only synthetic QA and F004 TWW evidence as historical context only; do not approve verified current-Retail yields, confidence-90 or economic use."
+}

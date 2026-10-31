@@ -1,0 +1,685 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_VERIFY_LOSSLESS_BLOCKER_ROUNDTRIP",
+  "queueRevision": 1,
+  "baseCommit": "ecbd405a5b3003bf0ee523acdb397ebace1b7cc6",
+  "resultCommit": "ecf2f8077600b2493e7099166ff10b776a56b376",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_QA",
+  "problem": "The generated research Lua decoder collapsed multiple distinct evidence blockers into a single pipe-joined string; this obscured independent reasons for non-promotion.",
+  "repair": "Split encoded blocker identifiers back into ordered Lua arrays, reject ambiguous literal pipes/empty/non-string blocker identifiers in the compiler, and add a GitHub Actions Lua 5.1 roundtrip regression.",
+  "changedFiles": [
+    "research/tools/compile_itemdb.js",
+    "research/proposed/itemdb.lua",
+    "research/proposed/itemdb-build-report.json",
+    "research/coordination/completion-readiness.json",
+    ".github/workflows/verify-five-agent-completion.yml"
+  ],
+  "artifact": {
+    "candidateBlobSHA": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "compilerBlobSHA": "c2a81502c24ed6173fbf31d88b4d9009af98d965",
+    "compilerVersion": "0.8.0",
+    "sourceSHA": {
+      "primary": "3e2bb784dc832d90584eebd8620148caf2133fbd",
+      "supplemental": "397e589598102d42c774899399f9d607f44828a1",
+      "midnightCandidate": "35ac6119dc6d47bf6f5279852b317d9d7da5d78e",
+      "gameData": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
+      "statYield": "1d80df8304acaa75a5b507089ef163696381b2ff",
+      "mechanics": "dc1f5225e208eee77abc26e8be67fb30ed1916a7",
+      "curatedAdditions": "af10e392b7e4fc26db131bbecfc073fb9cb92bfb",
+      "rankAudit": "624aa3e4ece044087a21f2c9c818ad233ec7dcde",
+      "midnightAudit": "8e1e4dd1d3750b968dd2a5c134039fd89c97ccfc",
+      "batch014Dragonflight": "fc90aeb9607d49ccf4f1877cd49b9988b4ead2ed",
+      "batch014TWW": "1b6f62bdd6b35eacca6ac00f9ba3de46f0eaf747",
+      "tooltipFallbacks": "c4e144489fa43f46b866f34734e48e5814992402"
+    },
+    "sourceSHAChanged": false,
+    "generatedLuaBytes": 3359045
+  },
+  "deltas": {
+    "admittedMappingsBefore": 1018,
+    "admittedMappingsAfter": 1018,
+    "numericWorkingCellsBefore": 4072,
+    "numericWorkingCellsAfter": 4072,
+    "evidenceMissingCellsBefore": 514,
+    "evidenceMissingCellsAfter": 514,
+    "missingEconomicExpectedQuantityBefore": 116,
+    "missingEconomicExpectedQuantityAfter": 116,
+    "newWorkingNumericCells": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "affectedRecords": 31,
+    "affectedFields": 91,
+    "additionalDistinctBlockerEntriesRestored": 124,
+    "tooltipOnlyFieldsChanged": 0,
+    "frozenTSMInputsChanged": 0,
+    "productionFilesChanged": 0
+  },
+  "affectedKeys": [
+    {
+      "recordID": "historical:bfa:mass-mill:152506:153635:256218:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:bfa:mass-mill:152506:153636:256218:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:bfa:mass-mill:152506:153669:256218:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:bfa:mass-mill:152507:153635:256223:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:bfa:mass-mill:152507:153636:256223:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:bfa:mass-mill:152507:153669:256223:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:bfa:mass-mill:152508:153635:256221:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:bfa:mass-mill:152508:153636:256221:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:bfa:mass-mill:152508:153669:256221:jiyao",
+      "fields": {
+        "expectedQuantity": [
+          "HISTORICAL_SKILL_AND_PATCH_UNVERIFIED",
+          "ROUNDED_MEAN_NOT_RAW_PER_CAST_TOTALS"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+      "fields": {
+        "dropChance": [
+          "NO_CURRENT_PATCH_SKILL_RANK_MATCHED_CAST_HISTOGRAM",
+          "SOURCE_GROSS_HERBS_AND_AVERAGES_NOT_COMPLETED_CAST_DENOMINATOR"
+        ],
+        "yieldMin": [
+          "NO_CURRENT_PATCH_SKILL_RANK_MATCHED_CAST_HISTOGRAM",
+          "SOURCE_GROSS_HERBS_AND_AVERAGES_NOT_COMPLETED_CAST_DENOMINATOR"
+        ],
+        "yieldMax": [
+          "NO_CURRENT_PATCH_SKILL_RANK_MATCHED_CAST_HISTOGRAM",
+          "SOURCE_GROSS_HERBS_AND_AVERAGES_NOT_COMPLETED_CAST_DENOMINATOR"
+        ],
+        "expectedQuantity": [
+          "NO_CURRENT_PATCH_SKILL_RANK_MATCHED_CAST_HISTOGRAM",
+          "SOURCE_GROSS_HERBS_AND_AVERAGES_NOT_COMPLETED_CAST_DENOMINATOR"
+        ]
+      }
+    },
+    {
+      "recordID": "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+      "fields": {
+        "dropChance": [
+          "NO_CURRENT_PATCH_SKILL_RANK_MATCHED_CAST_HISTOGRAM",
+          "SOURCE_GROSS_HERBS_AND_AVERAGES_NOT_COMPLETED_CAST_DENOMINATOR"
+        ],
+        "yieldMin": [
+          "NO_CURRENT_PATCH_SKILL_RANK_MATCHED_CAST_HISTOGRAM",
+          "SOURCE_GROSS_HERBS_AND_AVERAGES_NOT_COMPLETED_CAST_DENOMINATOR"
+        ],
+        "yieldMax": [
+          "NO_CURRENT_PATCH_SKILL_RANK_MATCHED_CAST_HISTOGRAM",
+          "SOURCE_GROSS_HERBS_AND_AVERAGES_NOT_COMPLETED_CAST_DENOMINATOR"
+        ],
+        "expectedQuantity": [
+          "NO_CURRENT_PATCH_SKILL_RANK_MATCHED_CAST_HISTOGRAM",
+          "SOURCE_GROSS_HERBS_AND_AVERAGES_NOT_COMPLETED_CAST_DENOMINATOR"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "candidate:tww:mill:210807:224805:runtime-method-family:20261028",
+      "fields": {
+        "dropChance": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMin": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "yieldMax": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ],
+        "expectedQuantity": [
+          "EXACT_INPUT_OUTPUT_RANK_SKILL_PATCH_DISTRIBUTION_UNVERIFIED",
+          "NO_ZERO_INCLUSIVE_COMPLETED_CAST_LOG"
+        ]
+      }
+    },
+    {
+      "recordID": "tsm:prospect:188658:192869:L1204",
+      "fields": {
+        "dropChance": [
+          "P_E_RANGE_CONFLICT_PRESERVE_EXPECTATION",
+          "RANK_SPECIFIC_TSM_FAMILY_RATE_NOT_MEASURED"
+        ]
+      }
+    },
+    {
+      "recordID": "retail12.0.5:prospect:36910:46849:globalmenace",
+      "fields": {
+        "expectedQuantity": [
+          "GROSS_INPUT_NORMALIZATION_NOT_OBSERVED_CAST_COUNT",
+          "CURRENT_PATCH_SKILL_UNVERIFIED",
+          "GROSS_INPUT_PROXY_NOT_COMPLETED_CAST_E"
+        ]
+      }
+    },
+    {
+      "recordID": "smelt:29356:23445",
+      "fields": {
+        "dropChance": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMin": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMax": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "expectedQuantity": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ]
+      }
+    },
+    {
+      "recordID": "smelt:29360:23448",
+      "fields": {
+        "dropChance": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMin": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMax": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "expectedQuantity": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ]
+      }
+    },
+    {
+      "recordID": "smelt:46353:35128",
+      "fields": {
+        "dropChance": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMin": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMax": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "expectedQuantity": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ]
+      }
+    },
+    {
+      "recordID": "smelt:2659:2841",
+      "fields": {
+        "dropChance": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMin": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMax": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "expectedQuantity": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ]
+      }
+    },
+    {
+      "recordID": "smelt:3569:3859",
+      "fields": {
+        "dropChance": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMin": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMax": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "expectedQuantity": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ]
+      }
+    },
+    {
+      "recordID": "smelt:55208:37663",
+      "fields": {
+        "dropChance": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMin": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMax": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "expectedQuantity": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ]
+      }
+    },
+    {
+      "recordID": "smelt:74537:53039",
+      "fields": {
+        "dropChance": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMin": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMax": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "expectedQuantity": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ]
+      }
+    },
+    {
+      "recordID": "smelt:102167:72095",
+      "fields": {
+        "dropChance": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMin": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "yieldMax": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ],
+        "expectedQuantity": [
+          "RECIPE_DESCRIPTION_FIXED_OUTPUT_NOT_EMPIRICAL_CAST",
+          "REQUIRES_LEARNED_RECIPE_AND_FORGE",
+          "CURRENT_RETAIL_CLIENT_NOT_VERIFIED"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "GitHub Actions full completion pipeline",
+      "status": "PASS",
+      "run": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40871128012"
+    },
+    {
+      "name": "node research/tools/run_completion_pipeline.js --check",
+      "status": "PASS",
+      "source": "CI run 40871128012"
+    },
+    {
+      "name": "Node working-estimate/compiler/candidate/pipeline/workflow tests",
+      "status": "PASS",
+      "source": "CI run 40871128012"
+    },
+    {
+      "name": "Python Draft 2020-12 JSON Schema validation",
+      "status": "PASS",
+      "source": "CI run 40871128012"
+    },
+    {
+      "name": "luac5.1 -p and Lua 5.1 generated evidence/working decode",
+      "status": "PASS",
+      "source": "CI run 40871128012"
+    },
+    {
+      "name": "Lua 5.1 lossless multi-blocker regression",
+      "status": "PASS",
+      "observed": {
+        "multiBlockerFields": 91,
+        "additionalBlockers": 124
+      },
+      "source": "CI run 40871128012"
+    },
+    {
+      "name": "GitHub readback of candidate/compiler/report/readiness",
+      "status": "PASS",
+      "source": "blob SHAs listed in artifact"
+    },
+    {
+      "name": "In-game WoW client verification",
+      "status": "NOT_RUN"
+    },
+    {
+      "name": "Independent F005 validator acceptance",
+      "status": "PENDING"
+    }
+  ],
+  "economicIsolation": {
+    "workingFallbackEconomicUse": "PREVIEW_ONLY",
+    "workingFallbackNormalizedVerified": false,
+    "newEconomicPromotions": 0,
+    "liveRecommendationsAffected": false,
+    "tooltipOnlyChannelUntouched": true
+  },
+  "lessons": [
+    {
+      "status": "CORRECTED",
+      "issue": "Initial patch bumped compiler version to 0.8.1 but validator-owned test pins 0.8.0; reverted version without editing another role's tests.",
+      "failedRun": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40870941231",
+      "resolution": "Version remains 0.8.0 until test owner coordinates a version update; successful full CI proves current code/artifact alignment."
+    }
+  ],
+  "blockers": [
+    "F005 independent QA acceptance pending",
+    "116 missing economic expectedQuantity evidence cells remain unknown; no eligible new economic model this cycle",
+    "Independent Retail universe audit incomplete",
+    "WoW client not run"
+  ],
+  "nextTask": "F002_F003_ACCEPTED_MODEL_INTEGRATION: consume only coordinator-accepted, independently validated model inputs; otherwise pivot to a new compiler contract defect rather than repeat unchanged numeric audits."
+}

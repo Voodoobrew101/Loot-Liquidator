@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003",
+  "queueRevisionObserved": 17,
+  "workflowRevision": 2,
+  "reportUTC": "2026-10-30T04:20:21.722Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "03edac6a00d2e17fd5f5526051eb6e1c590ea68f",
+  "resultCommitBeforeSubmission": "54ac95b04842ac06e6713c2ed63a73ab7938db53",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_QA",
+  "coordinatorAssignedTask": "F003_TWW_MILLING_E_CONTEXT_PIVOT",
+  "workSummary": "Added new TWW milling gross/net completed-cast denominator partial-identification model for 12 priority-104 E gaps, plus separate Midnight rare-gem anytime-valid P and conditionally bounded E model for seven priority-104 keys. These are mathematical/synthetic models, not current-Retail measured E.",
+  "filesChanged": [
+    {
+      "path": "research/tools/models_v2/midnight_rare_gem_anytime_e_bounds_v1.js",
+      "newBlobSHA": "d409511c94ae13c09dcccb5e7e8de6c75d52105b",
+      "commit": "1a66a65f13c4cfc2a1f1b97e86412e449baaedf1"
+    },
+    {
+      "path": "research/models/v2/midnight_rare_gem_anytime_e_bounds_v1.json",
+      "newBlobSHA": "fdea580801db388dc8de6a7dee041228538790dd",
+      "commit": "1ba3675bec35a49950ece1352b86f71e14d989c7"
+    },
+    {
+      "path": "research/tools/models_v2/tww_milling_aggregate_denominator_bounds_v1.js",
+      "newBlobSHA": "3d6e357258033e11ccc6815f8daea425346930f5",
+      "commit": "3560ea9577047262046c3b3546be2e7683cf3186"
+    },
+    {
+      "path": "research/models/v2/tww_milling_aggregate_denominator_bounds_v1.json",
+      "newBlobSHA": "70924fa46445994e0796fa944a64abae27d9d82b",
+      "commit": "54ac95b04842ac06e6713c2ed63a73ab7938db53"
+    }
+  ],
+  "affectedStableKeys": {
+    "twwMilling": [
+      "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+      "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+      "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+      "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+      "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+      "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+      "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+      "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+      "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+      "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+      "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+      "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+    ],
+    "midnightRareGem": [
+      "midnight:237359:242608:L733",
+      "midnight:237361:242608:L744",
+      "midnight:237362:242608:L755",
+      "midnight:237363:242608:L766",
+      "midnight:237364:242608:L777",
+      "midnight:237365:242608:L788",
+      "midnight:237366:242608:L799"
+    ]
+  },
+  "exactDeltas": {
+    "filesCreated": 4,
+    "roleSubmissionCreated": 1,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "newResearchModelFamilies": 2,
+    "newModelledPriorityKeys": 19,
+    "liveEVChanges": 0,
+    "productionChanges": 0
+  },
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceExpectedQuantityMissing": 116,
+    "evidenceGE90Cells": 0
+  },
+  "modelResults": {
+    "tww": {
+      "modelID": "tww-milling-aggregate-denominator-bounds-v1.0.0",
+      "syntheticNetInputs": 100,
+      "nominalPerCast": 10,
+      "maxRefundPerCast": 2,
+      "totalOutput": 20,
+      "feasibleCastCount": [
+        10,
+        12
+      ],
+      "conditionalHistoricalE": [
+        1.6666666666666667,
+        2
+      ],
+      "unknownRefundMaxE": [
+        0,
+        2
+      ],
+      "currentRetailE": null,
+      "dropChance": null
+    },
+    "midnight": {
+      "modelID": "midnight-rare-gem-anytime-e-bounds-v1.0.0",
+      "targetCount": 7,
+      "sourceType": "SYNTHETIC_ONLY",
+      "timeUniformCoverageConditional": "At least 95% simultaneous across 7 keys, P/E metrics and all sample sizes, assuming fixed-context iid zero-inclusive casts and independently valid output cap when used",
+      "withoutCertifiedHardCap": "Finite E upper remains unidentified/null; P remains bounded, E lower at least P lower",
+      "currentRetailE": null
+    }
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "V8 exact GitHub-readback JavaScript with assert-compatible shim",
+      "model": "TWW milling",
+      "result": "33_PASS_0_FAIL",
+      "blobSHA": "3d6e357258033e11ccc6815f8daea425346930f5"
+    },
+    {
+      "environment": "V8 exact GitHub-readback JavaScript with assert-compatible shim",
+      "model": "Midnight rare gem",
+      "result": "40_PASS_0_FAIL",
+      "blobSHA": "d409511c94ae13c09dcccb5e7e8de6c75d52105b"
+    },
+    {
+      "environment": "Independent brute-force integer enumeration V8 (nominal 2..9, refund max 0..nominal-1, net 1..60)",
+      "model": "TWW milling",
+      "result": "2640_CASES_PASS"
+    },
+    {
+      "environment": "GitHub connector code and manifest read-back",
+      "result": "4_FILES_VERIFIED_EXACT_BLOB_SHA"
+    },
+    {
+      "environment": "GitHub Actions",
+      "runIDs": [
+        41002298249,
+        41002293160
+      ],
+      "result": "IN_PROGRESS_AT_SUBMISSION_NOT_CLAIMED_PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node direct invocation of newly committed models",
+    "Lua5.1 model test",
+    "WoW Retail in-game/client test",
+    "Independent validator F005 acceptance",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "economicPolicy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "productionChanged": false,
+    "existingSchedulesChanged": false
+  },
+  "blockers": [
+    "No current-Retail zero-inclusive TWW milling cast cohort with exact source context and original gross/net input units",
+    "No verified Resourcefulness per-cast refund ceiling for TWW historical aggregates; unknown yields an unbounded cast denominator",
+    "No verified hard rare-gem output-per-cast cap for Midnight, so E upper is not identified",
+    "No independently verified current-Retail recipe/rank/output eligibility, minimum skill baseline or complete economic output universe",
+    "No independently held-out current-Retail study family",
+    "Native direct Node, Lua and in-game model tests outstanding"
+  ],
+  "validatorRequest": "Independently test TWW cast-bound integer feasibility, gross/net/refund semantics, source/epoch/rank separation, and Midnight time-uniform Hoeffding alpha-spending plus no-cap E partial identification; ensure no preview-only value leaks into economic use.",
+  "coordinatorRequest": "Review two new immutable research model families and target keys. Accept only model proposals pending F005 QA; do not change central readiness or economic evidence counters.",
+  "zeroDeltaPivot": "Previous Dragonflight milling source/context audit exhausted and typed recipe-ID repair accepted in coordinator queue17; pivoted to TWW milling assigned family and separately to Midnight rare-gem E uncertainty rather than repeat unchanged audits.",
+  "nextTask": "F003_TWW_MILLING_CURRENT_RETAIL_CAST_AND_REFUND_CONTEXT_IDENTIFICATION_OR_INDEPENDENT_QA_REPAIR"
+}

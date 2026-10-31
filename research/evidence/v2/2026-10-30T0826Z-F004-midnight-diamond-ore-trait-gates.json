@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_DIAMOND_ORE_SPEC_ELIGIBILITY",
+  "runID": "2026-10-30T0826Z-F004-midnight-diamond-ore-trait-gates",
+  "workflowRevision": 2,
+  "queueRevision": 2,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "ef546b8b6c170b9dd83b6d8810b2127b0b8f3cb6",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_F005",
+  "question": "Which exact Midnight Jewelcrafting profession traits make Eversong Diamond eligible during prospecting of each ore family, and can that unlock be substituted with a measured drop rate?",
+  "answer": "Four live-indexed profession-trait descriptions explicitly associate ore-family-specific Eversong Diamond finding with Copper Consumer (106981), Tin-vestigator (106980), Silver Scrapper (106979), and Thorium Thresher (106978). The source-supported qualitative eligibility gate is distinct from P/E. Guides say the corresponding sub-node must be invested in, while exact points/unlock behavior and live client API detection still need in-game verification. No numeric probability or verified zero is inferred.",
+  "originalDataLineage": "WOW_CLIENT_PROFESSION_TRAIT_TEXT_REPRODUCED_BY_WOWHEAD_LIVE_INDEX; FOUR_TRAITS_ONE_GAME_DATA_ORIGIN_NOT_FOUR_INDEPENDENT_COHORTS",
+  "traits": [
+    {
+      "ore": "Refulgent Copper",
+      "oreIDs": [
+        237359,
+        237361
+      ],
+      "traitName": "Copper Consumer",
+      "traitID": 106981,
+      "url": "https://www.wowhead.com/profession-trait/copper-consumer-106981",
+      "exactText": "Understand the patterns and intricacies of Refulgent Copper, learning how to spot Eversong Diamonds hiding within while prospecting it.",
+      "sourceType": "LIVE_INDEXED_GAME_TRAIT_DESCRIPTION",
+      "observationDate": null,
+      "actualCastEpoch": null,
+      "gameBuild": null,
+      "profession": "Midnight Jewelcrafting",
+      "unlockCondition": "ORE_FAMILY_SPECIFIC_NODE_REQUIRED_PER_GUIDES",
+      "minimumNodePoints": "GUIDE_SAYS_1_KP_NOT_CLIENT_VERIFIED",
+      "actualCompletedCasts": null,
+      "measuredDropChance": null,
+      "measuredExpectedQuantity": null
+    },
+    {
+      "ore": "Umbral Tin",
+      "oreIDs": [
+        237362,
+        237363
+      ],
+      "traitName": "Tin-vestigator",
+      "traitID": 106980,
+      "url": "https://www.wowhead.com/profession-trait/tin-vestigator-106980",
+      "exactText": "Refuse to sleep on the importance of understanding Umbral Tin, granting you the skill to sometimes spot Eversong Diamonds while prospecting it.",
+      "sourceType": "LIVE_INDEXED_GAME_TRAIT_DESCRIPTION",
+      "observationDate": null,
+      "actualCastEpoch": null,
+      "gameBuild": null,
+      "profession": "Midnight Jewelcrafting",
+      "unlockCondition": "ORE_FAMILY_SPECIFIC_NODE_REQUIRED_PER_GUIDES",
+      "minimumNodePoints": "GUIDE_SAYS_1_KP_NOT_CLIENT_VERIFIED",
+      "actualCompletedCasts": null,
+      "measuredDropChance": null,
+      "measuredExpectedQuantity": null
+    },
+    {
+      "ore": "Brilliant Silver",
+      "oreIDs": [
+        237364,
+        237365
+      ],
+      "traitName": "Silver Scrapper",
+      "traitID": 106979,
+      "url": "https://www.wowhead.com/profession-trait/silver-scrapper-106979",
+      "exactText": "Prepare yourself to shine while working with Brilliant Silver, bestowing the ability to find Eversong Diamonds while prospecting it.",
+      "sourceType": "LIVE_INDEXED_GAME_TRAIT_DESCRIPTION",
+      "observationDate": null,
+      "actualCastEpoch": null,
+      "gameBuild": null,
+      "profession": "Midnight Jewelcrafting",
+      "unlockCondition": "ORE_FAMILY_SPECIFIC_NODE_REQUIRED_PER_GUIDES",
+      "minimumNodePoints": "GUIDE_SAYS_1_KP_NOT_CLIENT_VERIFIED",
+      "actualCompletedCasts": null,
+      "measuredDropChance": null,
+      "measuredExpectedQuantity": null
+    },
+    {
+      "ore": "Dazzling Thorium",
+      "oreIDs": [
+        237366
+      ],
+      "traitName": "Thorium Thresher",
+      "traitID": 106978,
+      "url": "https://www.wowhead.com/profession-trait/thorium-thresher-106978",
+      "exactText": "Learn the telltale signs of gems hiding within Dazzling Thorium, enhancing your ability to locate Eversong Diamonds while prospecting it.",
+      "sourceType": "LIVE_INDEXED_GAME_TRAIT_DESCRIPTION",
+      "observationDate": null,
+      "actualCastEpoch": null,
+      "gameBuild": null,
+      "profession": "Midnight Jewelcrafting",
+      "unlockCondition": "ORE_FAMILY_SPECIFIC_NODE_REQUIRED_PER_GUIDES",
+      "minimumNodePoints": "GUIDE_SAYS_1_KP_NOT_CLIENT_VERIFIED",
+      "actualCompletedCasts": null,
+      "measuredDropChance": null,
+      "measuredExpectedQuantity": null
+    }
+  ],
+  "guideCrosschecks": [
+    {
+      "url": "https://www.wow-professions.com/midnight/jewelcrafting-guide",
+      "sourceType": "SECONDARY_PROFESSION_GUIDE",
+      "claim": "Eversong Diamond does not drop by default; Proficient Processor's ore-specific node unlocks finding it",
+      "sourceFamily": "GUIDE_INTERPRETATION_NOT_INDEPENDENT_CAST_COHORT"
+    },
+    {
+      "url": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
+      "sourceType": "SECONDARY_SPECIALIZATION_GUIDE",
+      "claim": "One knowledge point in each ore-specific Prospecting Pro sub-node improves chance of Eversong Diamond for that ore; maxing Prospecting Pro can increase gems received",
+      "sourceFamily": "GUIDE_INTERPRETATION_NOT_INDEPENDENT_CAST_COHORT"
+    },
+    {
+      "url": "https://www.method.gg/guides/midnight-jewelcrafting-profession-guide",
+      "sourceType": "SECONDARY_SPECIALIZATION_GUIDE",
+      "claim": "Ore-specific knowledge investment can unlock a small chance for Eversong Diamond; beta point requirement caveat",
+      "sourceFamily": "GUIDE_INTERPRETATION_NOT_INDEPENDENT_CAST_COHORT"
+    }
+  ],
+  "candidateContext": {
+    "method": "Prospect",
+    "recipeSpellID": 1231127,
+    "nominalOreUnitsPerOperation": 5,
+    "diamondItemID": 242608,
+    "diamondItemIDBasis": "Repository GameData.lua candidate and live TSM retail item 242608",
+    "targetPriorityKeys": [
+      "midnight:237359:242608:L733",
+      "midnight:237361:242608:L744",
+      "midnight:237362:242608:L755",
+      "midnight:237363:242608:L766",
+      "midnight:237364:242608:L777",
+      "midnight:237365:242608:L788",
+      "midnight:237366:242608:L799"
+    ],
+    "oreRanks": "TWO_RANKS_FOR_COPPER_TIN_SILVER; THORIUM_NO_RANK_IN_REPOSITORY",
+    "unlocksRequired": "ORE_FAMILY_TRAIT_UNLOCK",
+    "unlocksUnknown": "KEEP_UNVERIFIED_PREVIEW_NOT_ZERO_OR_POSITIVE_LIVE_RATE",
+    "unlockAbsent": "STRUCTURALLY_INELIGIBLE_IF_CLIENT_CONFIRMS_TRAIT_GATING; NOT_MEASURED_ZERO_OUTPUT_COHORT",
+    "recipeVariant": "MIDNIGHT_PROSPECTING"
+  },
+  "identityCaveat": {
+    "alternateIndexedID": 242712,
+    "source": "https://www.wowhead.com/item=242712/eversong-diamond",
+    "sameNameCollision": "An additional indexed Wowhead/WoWDB page uses item ID 242712, while repository GameData.lua and live TSM commodity data use 242608. Do not merge, rename or admit 242712 as a second output without client/API identity check.",
+    "decision": "PRESERVE_EXISTING_242608_MAPPING_NO_CHANGE"
+  },
+  "fourEconomicFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "numericFieldConfidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "liveEVEligible": false,
+  "tooltipOnlyPromotion": false,
+  "proposedDisposition": "ADD_VERSIONED_UNLOCK_CONTEXT_TO_MODEL_BACKLOG_NO_MAPPING_ADMISSION",
+  "validationNeeded": "On current Retail build, test each ore family with and without its exact trait and confirm specialization rank, tooltip selector and character-specific node flags; record zero-inclusive completed casts, refunds and output item IDs for numeric P/E separately.",
+  "noProductionChange": true
+}
