@@ -70,10 +70,10 @@ Main files in `LootLiquidator/`:
 | --- | --- |
 | Core.lua | The decision for each item (`LA:Evaluate`, ~line 445), defaults, slash commands (since B6c: `/ll` opens settings, `/ll help` is 3 lines, everything else is `DebugCommand` under `/ll debug NAME`, old names still work; list in `DEBUG_HELP`), `RETIRED_SETTINGS` migration list (add removed keys there) |
 | ConversionEngine.lua | Gold value of disenchant/mill/prospect/smelt (`ValueProcessingModel`, ~line 286). Since B5a, `RateProfileTarget` (top of file) decides whose skill sets the rates ("Show rates for"). Since A2: unknown outputs give a partial value with `model.partial` and `model.valueConfidence` |
-| Database.lua | Blends evidence sources with weights (`ComputeEvidenceModel`, ~lines 320–550). Sources: itemdb, personal, imported (B7), legacy. Since A1: weak/old evidence is down-weighted, not dropped; only different-batch drop chances still get zero weight (a different quantity, by design) |
+| Database.lua | Blends evidence sources with weights (`ComputeEvidenceModel`, ~lines 421–650; since C1a the counts-based estimator `CountsEstimate`/`RateConfidence` sits near the top). Sources: itemdb, personal, imported (B7), legacy. Since A1: weak/old evidence is down-weighted, not dropped; only different-batch drop chances still get zero weight (a different quantity, by design) |
 | Badges.lua | Badge letters and the tooltip |
 | NativeBags.lua | Badges on Blizzard bags, banks, BetterBags, guild bank |
-| Settings.lua / SettingsControls.lua | Settings menus. General page has "Show rates for" (B5a); Processing Research page has the Export / Start new batch / Reset (B6a) and Import / Remove imported results (B7) buttons. The ElvUI skin helper `SkinSettingsCanvasControl` lives in SettingsControls.lua since B5b |
+| Settings.lua / SettingsControls.lua | Settings menus. Since B8 every page is a native vertical list (`LL:AddBadgeSettings`, `LL:AddEvidenceSettings`) except the what-if profession pages and Ignored Items. General page has "Show rates for" (B5a); Processing Research page has the Export / Start new batch / Reset (B6a) and Import / Remove imported results (B7) buttons. The ElvUI skin helper `SkinSettingsCanvasControl` lives in SettingsControls.lua since B5b |
 | Professions.lua / ProfessionModels.lua | Character and alt professions, transmog recipients, `CanTransferToAlt`. The alts table (`AltRosterUI.lua`) was deleted in B5b; the per-method On/Auto/Off/Manual code is still there but dormant (saved modes are cleared on load, so everything runs as Auto) |
 | ATTIntegration.lua / DirectTokenCollector.lua | Gear tokens via ATT (uses ATT's *internal* functions), transmog collection check |
 | CraftRecording.lua / Observations.lua | Recording your own results ("studies" = batches). B6a added `ExportRecordedResultsPage`, `ResetRecordedResults` (keeps one `recordedResultsBackup`), `StartNewBatch`. B6b: clean logout pauses the study (`paused`), `ledger()` parks it per character in `pausedStudies` and resumes it on the same character + build; `ActiveRecordingBatch()` |
@@ -97,7 +97,7 @@ Known dead or confusing things (found by code reading):
 
 **How the previous chat connected:** it ran in Claude's cloud sandbox, which routes all internet traffic through a proxy. It cloned the public repo over HTTPS with plain `git clone` (no password needed for reading). It could **not** push: the proxy only adds GitHub credentials for repositories that have been **added to the session as a source**, and this repo had not been. Nobody ever pasted a password or token, and you must not either.
 
-**Session 1, 3, 4 and 5 finding:** if the chat has the `add_repo` tool (Claude Code on the web / Cowork), call it with owner `Voodoobrew101`, repo `Loot-Liquidator`, access `push`. That attaches the repo mid-chat and plain `git push` then works from the existing clone — no new chat needed (worked again in sessions 3–5). Its reply asks you to re-clone into `/home/claude/loot-liquidator` and call `register_repo_root`; that's optional — an existing clone at another path pushes fine (`register_repo_root` rejects other paths). Only if `add_repo` is missing or refused, fall back to the steps below.
+**Session 1, 3, 4, 5 and 6 finding:** if the chat has the `add_repo` tool (Claude Code on the web / Cowork), call it with owner `Voodoobrew101`, repo `Loot-Liquidator`, access `push`. That attaches the repo mid-chat and plain `git push` then works from the existing clone — no new chat needed (worked again in sessions 3–6). Its reply asks you to re-clone into `/home/claude/loot-liquidator` and call `register_repo_root`; that's optional — an existing clone at another path pushes fine (`register_repo_root` rejects other paths). Only if `add_repo` is missing or refused, fall back to the steps below.
 
 **Otherwise, for this chat to push**, the owner must start it with the GitHub repo attached:
 
@@ -219,11 +219,12 @@ Never: push to other branches, force-push, open or merge pull requests unless th
 - [x] **B6b. A batch survives logging off.** (`d2cb83c`) In CraftRecording.lua, a clean logout (no cast pending) should pause the active study instead of clearing it, and the next login on the same character and game build should resume it without marking it censored. Only a crash/disconnect with a cast pending stays censored. Update the "interrupted session" test in `tests/test_craft_recording.lua` on purpose.
 - [x] **B6c. Slash commands for troubleshooting only:** (`3829e05`) move research/diagnostic commands under `/ll debug …` (keep old names working quietly), and shorten `/ll help` to a few lines.
 - [x] **B7. Import button:** (`f10ef36`) a native StaticPopup with a text box; imported results stored as a separate source with its own confidence; reject damaged or impossible values.
-- [ ] **B8. Native widgets audit:** list the remaining custom canvas pages (Badges & Colors, Database & Accuracy) and replace what can be replaced with `Settings.Create…` controls.
+- [x] **B8. Native widgets audit:** (`582d000`) Badges & Colors and Database & Accuracy are now Blizzard vertical Settings lists (checkboxes, position dropdown, font-size slider, one "Change color" button per badge + "Reset colors"; one switch per source with its weight slider nested under it + "Reset source weights"). Saved keys unchanged. **Kept as canvas on purpose:** the 13 what-if profession pages (their dropdowns depend on the chosen character and expansion) and Ignored Items (a growing list). Known limit: the colored badge-letter label on each color button only updates after `/reload`.
 
 **Phase C — One database, no ATT**
 
-- [ ] **C1. Implement the counts-based confidence model** (section 2, "Recommended data model") in the ItemDB compiler or `Database.lua`, with tests using the worked example (18% guess worth 20 casts + 50 casts/12 drops → 22.3%, about 69% confidence).
+- [x] **C1a. Counts-based estimator** (`bbbafcd`): pure functions at the top of `Database.lua`: `LL:CountsEstimate` (prior worth `PRIOR_CASTS`=20 casts + weighted casts/drops), `LL:RateConfidence` (exact Beta probability of ±5 points, Jeffreys half-count), `LL:BetaCDF`, `LL:FillChanceOrAverage` (+ `FILLED_CONFIDENCE_FACTOR`=0.5). Worked example passes (22.3%, 69%). Tests: `tests/test_counts_model.lua`. **Not used by the addon yet.**
+- [ ] **C1b. Wire C1a into the blend.** In `ComputeEvidenceModel` (`Database.lua`, the `for field,modelField in pairs({expectedQuantity=…,dropChance=…})` loop and the bins loop after it): turn each source's dropChance into casts (`field.samples` or `record.samples`; personal: `personal.effectiveSamples`; when no count is known, use a small pseudo-count such as `PRIOR_CASTS × reliability`), times `userWeight` (× `STALE_FACTOR` when stale), and set `b.chance` and `b.confidence` from `LL:CountsEstimate`. Fill a missing chance/average with `FillChanceOrAverage` (confidence × 0.5). Keep the value-weighted option confidence (A3). Expect to update confidence numbers in existing tests on purpose; keep the "different batch size → zero weight" rule for drop chances.
 - [ ] **C2. Borrow from a sibling** when an item has no data (other rank of the same ore; same expansion and item level band for disenchanting), shown as "Estimated from X" with low confidence.
 - [ ] **C3. Move the no-disenchant list and the old GameData estimates into ItemDB**, then delete `GameData.lua` from the addon.
 - [ ] **C4. Token list in ItemDB:** add the current Midnight Season 1 tier tokens and their rewards from public sources (Wowhead, warcraft.wiki.gg), with source links and confidence. Keep ATT as an optional fallback only.
@@ -257,7 +258,15 @@ Answered:
 
 ## 10. What to check in game
 
-*(Filled in at the end of each session.)* After session 5 (version 0.11.0-claude.6):
+*(Filled in at the end of each session.)* After session 6 (version 0.11.0-claude.7):
+
+1. Settings → Loot Liquidator → **Badges & Colors** now looks like the other pages (a normal list). Try: turning badges off and on, moving the badge (Badge position dropdown), changing the font size, and clicking "Change color" on one badge. Badges in your bags should follow each change.
+2. On the same page, click **Reset colors**: badges go back to the normal colors. (The colored letter on the button itself only updates after `/reload`; that is expected.)
+3. Settings → **Database & Accuracy** is now a normal list: one switch per source with its weight slider under it. Turning a switch off should grey out its slider. "Reset source weights" puts them all back.
+4. Your old badge position, font size, colors and source weights should be kept from before.
+5. The addon loads with no error pop-ups.
+
+Still worth checking from session 5 (version 0.11.0-claude.6):
 
 1. Start a new batch (Settings → Processing Research), disenchant or prospect a few items, log out normally, log back in on the same character, do a few more. Then click Export: all the casts should be in one batch, and nothing should say the batch was interrupted.
 2. Type `/ll`: the settings should open. Type `/ll help`: only three short lines. Type `/ll debug`: the list of troubleshooting commands. An old command such as `/ll refresh` should still work.
@@ -269,6 +278,7 @@ Still worth checking from earlier sessions: the "Show rates for" dropdown; the E
 
 ## 11. Session log
 
+- 2026-10-31 (session 6, v0.11.0-claude.7): The Badges & Colors and Database & Accuracy settings pages now use Blizzard's own standard controls, like the rest of the settings (B8). Added the new "how sure are we" math from the study notes (counting casts and drops, 18% guess + 50 casts → 22.3% at 69% confidence); it is tested but not switched on yet, that is the next step (C1a, C1b). Automated tests pass; needs an in-game check.
 - 2026-10-31 (session 5, v0.11.0-claude.6): A recording batch now carries on after you log out and back in on the same character (B6b). `/ll` now just opens the settings; troubleshooting commands moved under `/ll debug`, and old names still work (B6c). Added an Import button: you can paste results another player exported. They are checked for damaged or impossible numbers and kept separate from your own results, with their own confidence and their own weight setting (B7). Automated tests pass; needs an in-game check.
 - 2026-10-31 (session 4, v0.11.0-claude.5): Added one "Show rates for" choice (me, a chosen alt, or a what-if profile) on the main settings page (B5a). Removed the big alts table; the profession what-if pages moved to a short new page, and old table choices go back to normal (B5b). Added Export, Start new batch and Reset buttons for recorded results, so players don't need slash commands for them (B6a). Split the rest of B6 into B6b/B6c. Automated tests pass; needs an in-game check.
 - 2026-10-31 (session 3, v0.11.0-claude.4): Removed TSM's old frozen yield table, so TSM is only used for auction prices (B2). Tooltips now have one simple level choice instead of about ten checkboxes (B3). Added an "Include alts" switch to the badge settings (B4). Found that 97 older herbs/ores only had yields in the TSM table; asked the owner what to do. Automated tests pass; needs an in-game check.
