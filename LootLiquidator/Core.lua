@@ -750,20 +750,30 @@ function LA:ShowCopy(title, contents)
 end
 
 local function Say(s) print("|cff66ccffLoot Liquidator|r: " .. s) end
-local function Command(msg)
+-- B6c: players use the settings menus. Slash commands are troubleshooting
+-- tools under "/ll debug ...". The old names (e.g. /ll craftexport) still
+-- work quietly so existing notes and research instructions don't break.
+local DEBUG_HELP = {
+    "Troubleshooting commands (/ll debug NAME):",
+    "status, dbstatus, scanstatus, refresh, perf [reset], tsmops",
+    "inspect ITEMID, inspectbags, processingdebug start|show|clear",
+    "report, clearreport, ignore ITEMID, unignore ITEMID",
+    "craftstats, craftexport [page], craftbaseline, craftstudy LABEL, craftzero",
+    "destats, detrack, deexport, processstats, processexport",
+    "tokenstats, tokenexport [page], attdiag ITEMID, attcache [status], attexport [page], tokenmigration",
+}
+local function DebugCommand(msg)
     local command, arg = msg:lower():match("^(%S*)%s*(%S*)")
-    if command == "settings" or command == "config" then
-        if LA.OpenSettings then LA:OpenSettings() end
-    elseif command == "processingdebug" then
+    if command == "processingdebug" then
         if arg=="show" then
             local d=LA.processingDebug
-            LA:ShowCopy("Live Processing Diagnostic",d and d.lines and table.concat(d.lines,"\n") or "No capture yet. Run /ll processingdebug start, then re-hover a milling/prospecting item.")
+            LA:ShowCopy("Live Processing Diagnostic",d and d.lines and table.concat(d.lines,"\n") or "No capture yet. Run /ll debug processingdebug start, then re-hover a milling/prospecting item.")
         elseif arg=="clear" then
             LA.processingDebug=nil
             Say("Processing diagnostic cleared")
         else
             LA.processingDebug={armed=true,done=false,lines={}}
-            Say("LIVE diagnostic ARMED. Move the cursor away and re-hover one ore/herb; then /ll processingdebug show")
+            Say("LIVE diagnostic ARMED. Move the cursor away and re-hover one ore/herb; then /ll debug processingdebug show")
         end
     elseif command == "dbstatus" then
         local restrictions,inputs=0,0
@@ -773,7 +783,7 @@ local function Command(msg)
             tostring(LA.ItemRestrictionsBuild or "no snapshot"), restrictions,inputs))
     elseif command == "ignore" or command == "unignore" then
         local id=tonumber(tostring(arg or ""):match("item:(%d+)")) or tonumber(arg)
-        if not id then Say("Usage: /ll ignore 12345 or /ll unignore 12345")
+        if not id then Say("Usage: /ll debug ignore 12345 or /ll debug unignore 12345")
         elseif not LA.SetIgnoreEntry then Say("Ignore module unavailable")
         else
             if command=="ignore" then
@@ -823,7 +833,7 @@ local function Command(msg)
         end
     elseif command == "attdiag" then
         local id=tonumber(arg)
-        if not id then Say("Usage: /ll attdiag 45648")
+        if not id then Say("Usage: /ll debug attdiag 45648")
         else
             local f=LA:GetItemFacts("item:"..id,{})
             if not f then Say("Item data not ready for "..id.."; hover the item and try again")
@@ -840,7 +850,7 @@ local function Command(msg)
     elseif command == "inspect" then
         local itemID = tonumber(tostring(arg or ""):match("%d+"))
         if not itemID then
-            Say("Usage: /ll inspect 272147 (replace with the item's ID)")
+            Say("Usage: /ll debug inspect 272147 (replace with the item's ID)")
         else
             local f = LA:GetItemFacts("item:"..itemID, {})
             if not f then
@@ -944,10 +954,26 @@ local function Command(msg)
         Say("Version "..LA.version.." (interface " .. LA.targetInterface .. "); Game Data: " .. tostring(LA.GameDataVersion or "missing") .. "; TSM API: " .. tostring(type(TSM_API) == "table") ..
             ", BetterBags: " .. tostring(LibStub and LibStub("AceAddon-3.0", true) ~= nil))
     else
-        Say("/ll settings - appearance, colors, and optional profession hints")
-        Say("Choose which professions count in /ll settings.")
-        Say("/ll craftstats, /ll craftexport [page], /ll craftbaseline, /ll craftstudy LABEL, /ll craftzero, /ll inspect ITEMID, /ll inspectbags, /ll destats, /ll detrack, /ll deexport, /ll processstats, /ll processexport, /ll processingdebug start|show|clear, /ll report, /ll scanstatus, /ll clearreport, /ll refresh, /ll tsmops, /ll attdiag ITEMID, /ll attcache, /ll attcache status, /ll attexport PAGE, /ll tokenmigration, /ll dbstatus, /ll ignore ITEMID, /ll unignore ITEMID, /ll status")
-        Say("Uses TSM prices; item processing recommendations are estimates, never automatic sells.")
+        return false
+    end
+    return true
+end
+LA.DebugHelpLines = DEBUG_HELP
+
+local function Command(msg)
+    msg = tostring(msg or "")
+    local first, rest = msg:match("^%s*(%S*)%s*(.-)%s*$")
+    first = (first or ""):lower()
+    if first == "" or first == "settings" or first == "config" then
+        if LA.OpenSettings then LA:OpenSettings() end
+    elseif first == "debug" then
+        if rest == "" or rest:lower() == "help" or not DebugCommand(rest) then
+            for _, line in ipairs(DEBUG_HELP) do Say(line) end
+        end
+    elseif first == "help" or not DebugCommand(msg) then
+        Say("/ll - open the settings (badges, tooltip, alts, recorded results).")
+        Say("Badges and tooltips work on their own; TSM is used for Auction House prices. Nothing is ever sold automatically.")
+        Say("/ll debug - troubleshooting commands.")
     end
 end
 
@@ -1016,7 +1042,7 @@ boot:SetScript("OnEvent", function(_, event, name)
             LA.db._v04Migrated=true
         end
     elseif event == "PLAYER_LOGIN" then
-        Say("Loaded. /ll settings for options; /ll report to copy unknown conversions. No automatic selling.")
+        Say("Loaded. Type /ll to open the settings. Nothing is ever sold automatically.")
     end
 end)
 

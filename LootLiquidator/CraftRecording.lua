@@ -622,7 +622,7 @@ function LL:CraftRecordingReport()
     local d=self.db and self.db.craftResearch or {records={},droppedRecords=0}
     local complete,unresolved=0,0
     for _,r in ipairs(d.records) do if r.outputCoverage=="complete" then complete=complete+1 else unresolved=unresolved+1 end end
-    return ("Craft research: %d complete, %d unresolved, %d evicted.\nExports are provisional observations, not verified mechanics.\n/ll craftexport [page]; /ll craftbaseline; /ll craftstudy LABEL; /ll craftzero\n%s"):
+    return ("Craft research: %d complete, %d unresolved, %d evicted.\nExports are provisional observations, not verified mechanics.\n/ll debug craftexport [page]; /ll debug craftbaseline; /ll debug craftstudy LABEL; /ll debug craftzero\n%s"):
         format(complete,unresolved,d.droppedRecords,pending and "One cast awaits settled results." or "No pending cast.")
 end
 local schedule

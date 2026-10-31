@@ -868,7 +868,7 @@ function LL:RegisterNativeSettings()
                 if LL.TokenResearchExport and LL.ShowCopy then
                     LL:ShowCopy("Direct token observations - page 1",LL:TokenResearchExport(1))
                 end
-            end,"Copy direct equipment token relationships. Additional pages: /ll tokenexport 2 (etc.).",false))
+            end,"Copy direct equipment token relationships. Additional pages: /ll debug tokenexport 2 (etc.).",false))
     end
     TSMDropdown(integrations,"tsmFallbackOperation","TSM operation for ungrouped items")
     if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
@@ -886,7 +886,7 @@ function LL:RegisterNativeSettings()
         integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
             "ATT migration research","Copy relationships and coverage",function()
                 LL:ShowCopy("ATT relationship research - page 1",LL:ATTResearchExport(1))
-            end,"Export candidates, metadata and collection limits. Additional pages: /ll attexport 2. Status: /ll tokenmigration. No automatic approval.",false))
+            end,"Export candidates, metadata and collection limits. Additional pages: /ll debug attexport 2. Status: /ll debug tokenmigration. No automatic approval.",false))
     end
     if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
         integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(

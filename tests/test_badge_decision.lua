@@ -110,6 +110,20 @@ local help=table.concat(said,'\n')
 assert(#said>0 and not help:find('milling on',1,true) and not help:find('exchanges on',1,true),'help no longer lists dead toggles')
 print('PASS: retired settings removed with a saved-data migration (B1)')
 
+-- B6c: /ll help is short; troubleshooting lives under /ll debug; old names still work.
+assert(#said<=4 and not help:find('craftexport',1,true),'help is a few lines without debug commands: '..help)
+local function run(text) local out={};print=function(m) out[#out+1]=m end;SlashCmdList.LOOTLIQUIDATOR(text);print=realPrint;return out end
+local dbg=table.concat(run('debug'),'\n')
+assert(dbg:find('craftexport',1,true) and dbg:find('inspect ITEMID',1,true),'/ll debug lists troubleshooting commands')
+local opened,invalidated=0,0
+local realOpen,realInvalidate=LL.OpenSettings,LL.Invalidate
+LL.OpenSettings=function() opened=opened+1 end;LL.Invalidate=function() invalidated=invalidated+1 end
+run('');run('settings');assert(opened==2,'/ll opens the settings')
+run('debug refresh');run('refresh');assert(invalidated==2,'debug command and its old name both run')
+assert(#run('debug nosuchcommand')==#LL.DebugHelpLines,'unknown debug command shows the debug list')
+LL.OpenSettings,LL.Invalidate=realOpen,realInvalidate
+print('PASS: slash commands are troubleshooting-only under /ll debug (B6c)')
+
 -- B3: one tooltip level: 0 Off, 1 Recommendation, 2 Alternatives, 3 Breakdown.
 LL.db.tooltipHeaderPrice=true
 local function lines(level)
