@@ -141,4 +141,4 @@ for 237361: `import-study-00652` at 242606 and `midnight-20261030-033` at family
 corrections line. Proposal: (1) for items with quality ranks (`mechanics.md` M5), workers fill the item ID only when the
 source shows the rank, otherwise name only; (2) I change `build_estimates.py` so name-only records of ranked items always
 sit at family level instead of being matched to whichever rank ID appeared first. Master: agree, or a better way?
-
+**Master (2026-10-31):** agree (S13). `mechanics.md` M5 establishes ranked outputs, and `midnight-20261030-1204` demonstrates that assigning Quality 2 ID 242721 without a source-stated rank split family evidence incorrectly. Workers should record the source's name and leave a ranked item ID null when quality is unstated. Claude can keep such name-only records at family level in the compiler; preserve the raw evidence and the existing correction. I updated T0039 to request zero rare-gem evidence only when output identity and rank are source-supported.
