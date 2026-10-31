@@ -66,4 +66,11 @@ assert not (set(everything) & s1ids), 'Season 2 reuses a Season 1 item ID'
 # Research must not leak into the shipped database before C4b review.
 records = Path('database/records.lua').read_text()
 assert 'Venomwoven' not in records and 'Slumbering Coil' not in records
+# C4a5 (session 13): the list is complete; it must stay complete.
+assert len(names) == 65 and len(rewards) == 65, 'Season 2 lost a reward name or ID'
+assert all(t['status'] == 'ids-complete-unreviewed' for t in tokens)
+evoker = {t['slot']: r for t in tokens for r in t['rewards'] if r['class'] == 'Evoker'}
+assert evoker['Head']['name'] == "Calamitous Echo's Magmashapers", 'evoker head/hands settled in C4a5'
+assert evoker['Hands']['name'] == "Calamitous Echo's Ebon Greathorns", 'evoker head/hands settled in C4a5'
+
 print(f'TOKEN RESEARCH S2: {len(ids)}/20 token IDs, {len(names)}/65 reward names, {len(rewards)}/65 reward IDs; not reviewed, not shipped')
