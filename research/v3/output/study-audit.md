@@ -1,9 +1,9 @@
 # Study audit
 
-258 studies; 121 with no findings. Records per finding type:
+260 studies; 121 with no findings. Records per finding type:
 
-- OUTPUT_ID_MISSING: 535
-- EPOCH_UNKNOWN: 530
+- EPOCH_UNKNOWN: 543
+- OUTPUT_ID_MISSING: 542
 - CASTS_UNKNOWN_EXPLAINED: 451
 - INPUT_ID_MISSING: 187
 - PERCENT_MEANING_UNCLEAR: 86
@@ -48,6 +48,7 @@
 | 31.0 | reddit-s6bfrl-titanium-20220117 | legacy | Prospect | 13 | 0 | OUTPUT_ID_MISSING, CASTS_UNKNOWN_EXPLAINED |
 | 30.1 | wowhead-saronite-291540-256 | legacy | Prospect | 6 | 256 | OUTPUT_ID_MISSING, PERCENT_MEANING_UNCLEAR, EPOCH_UNKNOWN |
 | 30.0 | reddit-zzcnjw-comment-approximately-4000-prospects-diamonds | dragonflight | Prospect | 2 | 4000 | INPUT_ID_MISSING |
+| 27.4 | wowhead-thottbot-adamantite-485-ore | legacy | Prospect | 11 | 97 | OUTPUT_ID_MISSING, EPOCH_UNKNOWN |
 | 27.0 | xenastro-draconium-q2-original-prospecting-log-row-52 | dragonflight | Prospect | 9 | 0 | OUTPUT_ID_MISSING, CASTS_UNKNOWN_EXPLAINED |
 | 27.0 | xenastro-draconium-q2-original-prospecting-log-row-54 | dragonflight | Prospect | 9 | 0 | OUTPUT_ID_MISSING, CASTS_UNKNOWN_EXPLAINED |
 | 27.0 | xenastro-draconium-q2-original-prospecting-log-row-55 | dragonflight | Prospect | 9 | 0 | OUTPUT_ID_MISSING, CASTS_UNKNOWN_EXPLAINED |
@@ -75,4 +76,3 @@
 | 13.7 | ww-b007-mop_kyparite_690_965740 | import | Prospect | 12 | 138 | EPOCH_UNKNOWN |
 | 13.2 | ww-b007-mop_kyparite_500_463200 | import | Prospect | 12 | 100 | EPOCH_UNKNOWN |
 | 13.0 | wowhead-algari-prospecting-peaesk-r2-ironclaw | war-within | Prospect | 5 | 0 | CASTS_UNKNOWN_EXPLAINED, EPOCH_UNKNOWN, UNLOCK_UNSTATED |
-| 13.0 | wowhead-algari-prospecting-peaesk-r2-aqirite | war-within | Prospect | 5 | 0 | CASTS_UNKNOWN_EXPLAINED, EPOCH_UNKNOWN, UNLOCK_UNSTATED |
