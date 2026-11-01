@@ -599,6 +599,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         left=left..prefix..ChanceText(m.chance).." "
                     else left=left.."? " end
                     left=left..MaterialDisplay(m.id)
+                    if type(m.rankIDs)=="table" and #m.rankIDs>1 then left=left.." (rank unknown)" end
                     if m.minQuantity and m.maxQuantity then
                         left=left..(m.minQuantity==m.maxQuantity
                             and (" [x%d]"):format(m.minQuantity)

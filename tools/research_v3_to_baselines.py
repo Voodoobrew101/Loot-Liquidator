@@ -64,6 +64,7 @@ import research_v3_no_disenchant  # noqa: E402  D1c4: no-disenchant flags ride a
 DEFAULT_REF = 'origin/implementation/five-agent-completion'
 DEFAULT_SNAPSHOT = Path('database/research/v3-snapshot')
 DEFAULT_OUTPUT = Path('database/research-v3-baselines.lua')
+FAMILIES_FILE = Path(__file__).resolve().parent.parent / 'database' / 'research' / 'rank-families.json'
 SNAPSHOT_PATHS = ['research/v3/evidence', 'research/v3/corrections.jsonl', 'research/v3/conditions.jsonl',
                   'research/v3/rate-changes.jsonl', 'research/v3/tools/build_estimates.py']
 SUPPORTED = {'Mill': 'Inscription', 'Prospect': 'Jewelcrafting', 'Disenchant': 'Enchanting', 'Smelt': 'Mining'}
@@ -97,6 +98,13 @@ def refresh(ref, snapshot):
                                           'refresh with tools/research_v3_to_baselines.py --refresh'},
         indent=1) + '\n')
     return commit
+
+
+# ---- 1b. rank-unknown names (D1c2)
+def load_families(path=None):
+    """lower-case name -> list of item IDs that carry it (database/research/rank-families.json)."""
+    data = json.loads(Path(path or FAMILIES_FILE).read_text())
+    return {name.strip().lower(): list(entry['ids']) for name, entry in data['families'].items()}
 
 
 # ---- 2. run their calculator on real studies only
@@ -156,6 +164,10 @@ def build(snapshot):
     ranges = {(e['method'], e['input'], e['outputItemID']): (e['range'], e['rangeSource']) for e in published}
     names = module.name_maps(rows)            # learn names from every row ...
     counted = [r for r in rows if is_counted(r, module)]
+    families = load_families()
+    for name, ids in families.items():        # D1c2: a name that is one single, unranked item
+        if len(ids) == 1:
+            names.setdefault(name, ids[0])
     module.name_maps = lambda _rows: names    # ... but count real studies only
     results, unplaced = module.build(counted)
     for e in results:
@@ -164,6 +176,11 @@ def build(snapshot):
     batches = batch_sizes(counted, module, names)
     notes = Counter()
     groups = defaultdict(list)
+    # D1c2: which items each (method, input) already has rank-specific figures for.
+    known_outputs = defaultdict(set)
+    for e in results:
+        if isinstance(e['outputItemID'], int) and e['studies'] > 0 and not e['conditional']:
+            known_outputs[(e['method'], e['input'])].add(e['outputItemID'])
     for e in results:
         if e['method'] not in SUPPORTED:
             notes['method not built into ItemDB yet'] += 1
@@ -171,6 +188,17 @@ def build(snapshot):
         if e['conditional']:
             notes['conditional drop (needs an unlock the addon cannot check yet)'] += 1
             continue
+        if not isinstance(e['outputItemID'], int):
+            ids = families.get(str(e['outputItemID']).replace('family:', '', 1).strip().lower())
+            if ids and len(ids) == 1:
+                e['outputItemID'] = ids[0]
+            elif ids and known_outputs[(e['method'], e['input'])] & set(ids):
+                notes['rank unknown, but this input already has figures for the ranks'] += 1
+                continue
+            elif ids:   # D1c2: priced at the cheapest rank that has a price (runtime)
+                e['rankIDs'] = ids
+                e['outputItemID'] = ids[0]
+                notes['+rank unknown: added, priced at the cheapest rank'] += 1
         if not isinstance(e['outputItemID'], int):
             notes['output rank unknown (family:<name>)'] += 1
             continue
@@ -248,6 +276,7 @@ def material(item, estimates):
         chance_measured &= e['chanceSource'] == 'measured'
         average_measured &= e['averageSource'] == 'measured'
         range_observed &= e['rangeSource'] == 'observed'
+    rank_ids = estimates[0].get('rankIDs')
     chance = min(1.0, drops / casts) if casts > 0 else None
     average = qty / qty_casts if qty_casts > 0 else None
     # The addon refuses an average outside chance x min .. chance x max; then it fills the
@@ -261,7 +290,9 @@ def material(item, estimates):
     if not chance_measured:
         confidence //= 2   # a chance worked out from an average: half confidence (their S5, our C1b)
     casts_r = round(casts, 4)
+    extra = {'rankIDs': rank_ids} if rank_ids else {}
     return {
+        **extra,
         'id': item, '_casts': casts,
         'dropChance': field(None if chance is None else round(chance, 6), confidence, casts_r,
                             'measured' if chance_measured else 'provisional'),
@@ -295,7 +326,10 @@ def summary(records, notes, total, counted, unplaced):
              f'{sum(len(r["materials"]) for r in records)} materials, from {counted} of {total} rows '
              f'(reference values and re-imported old addon tables not counted; {unplaced} unplaced)']
     for why, n in sorted(notes.items()):
-        lines.append(f'  left out: {n} estimate(s): {why}')
+        if why.startswith('+'):
+            lines.append(f'  added: {n} estimate(s): {why[1:]}')
+        else:
+            lines.append(f'  left out: {n} estimate(s): {why}')
     return '\n'.join(lines)
 
 

@@ -304,7 +304,7 @@ function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
     if not model or suppliesKnown==false then return nil,'Insufficient Data' end
     local total,missing,known=0,0,0
     for _,m in ipairs(model.materials or {}) do
-        local quote=self:GetOutputPrice(m.id)
+        local quote=self:GetMaterialPrice(m)
         m.netUnitPrice=quote
         m.netExpectedValue=nil
         if m.expectedQuantity==0 then
@@ -398,6 +398,19 @@ local function Allowed(db,method)
 end
 local function MethodLetter(name)
     return processingMethodLetters[name] or "C"
+end
+-- D1c2: a material whose quality rank the research did not state lists every rank's
+-- item ID in rankIDs; it is priced at the cheapest rank that has a price.
+function LL:GetMaterialPrice(m)
+    if type(m.rankIDs)=='table' and #m.rankIDs>1 then
+        local best,bestSource
+        for _,id in ipairs(m.rankIDs) do
+            local price,source=self:GetOutputPrice(id)
+            if validNumber(price) and (not best or price<best) then best,bestSource=price,source end
+        end
+        if best then return best,bestSource end
+    end
+    return self:GetOutputPrice(m.id)
 end
 function LL:GetOutputPrice(itemID)
     local key=self:TSMString(nil,itemID)

@@ -672,6 +672,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                 local original=r.materials[i]
                 local id=m.id
                 local b=bins[id] or {id=id,quality=original.quality,rarity=original.rarity,
+                    rankIDs=original.rankIDs, -- D1c2: rank unknown, priced at the cheapest rank
                     fields={},contributions={},sourceEstimates={}};bins[id]=b
                 b.sourceEstimates[r.sourceKey]={expectedQuantity=m.expectedQuantity,dropChance=m.chance,
                     minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,sourceConflict=original.sourceConflict,
