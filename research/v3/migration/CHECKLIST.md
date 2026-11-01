@@ -4,7 +4,7 @@ Status values: Not Started / In Progress / Blocked / Complete. A box is ticked o
 acceptance criterion is met and the evidence column points at something checkable.
 Sessions run in Claude (owner's choice, 2026-10-31). Effort = Claude's thinking effort: Low / Medium / High / Extra High (xhigh) / Max.
 
-Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M07 ✓ → M08 → M09 → M10
+Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M07 ✓ → M08 ✓ → M09 → M10
 (M04.1 linking may run in parallel with M05 once M02 is done.)
 
 ## Progress
@@ -12,11 +12,11 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
 | | Count |
 | --- | --- |
 | Top-level tasks | 11 |
-| Complete | 8 (M00, M01, M02, M05, M03, M06, M04, M07) |
+| Complete | 9 (M00, M01, M02, M05, M03, M06, M04, M07, M08) |
 | In progress | 0 |
 | Blocked | 0 |
-| Not started | 3 (M08, M09, M10) |
-| Completion (verified top-level) | 73% (8 of 11) |
+| Not started | 2 (M09, M10) |
+| Completion (verified top-level) | 82% (9 of 11) |
 
 ---
 
@@ -130,10 +130,17 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
     - Done MIG-008: 267 → 304 tests OK; link_sources.py, extract_batch.py write --check, validate.py reproduce their committed files; two rebuilds byte-identical
 
 ## M08 — Statistical estimator integration
-- [ ] **M08 — Estimator consumes all usable evidence; every unused record has a reason**
+- [x] **M08 — Estimator consumes all usable evidence; every unused record has a reason**
   - Priority: P1 · Depends on: M05, M06 · Model: Claude Opus 5.5, Medium
   - Acceptance: structured `unlockState` preferred over note text; ISO-only date parsing; `percentMeaning: null` guard; per-record `unusedReason` output; regression tests for observed, derived, provisional, conditional and duplicate records; decision on committing `output/`
-  - Status: Not Started · Evidence: —
+  - Status: Complete (MIG-009)
+  - Evidence: `reports/M08-estimator.md`, `M08-estimator-data.json`, `M08-estimates-diff.md`; `tools/estimator_effects.py`; `tests/test_m08_estimator.py`; 348 tests OK (304 + 44); `estimates.json` byte-identical before and after (0 added, 0 removed, 0 changed); 2 rebuilds byte-identical; all 4,945 records used (2,597) or carrying one reason code (2,348); the 3 guards touch 0 records today
+  - [x] M08.1 structured `unlockState` first, text fallback only when the field is absent (explicit null = not stated)
+  - [x] M08.2 ISO-only dates (`iso_date`, `dated_by`), month-only placed only when unambiguous
+  - [x] M08.3 `percentMeaning` guard (only `perCast`)
+  - [x] M08.4 `analyze()` + `output/unused.json` with a closed reason vocabulary; corpus test that every record is used or has a reason
+  - [x] M08.5 regression tests: observed, derived, provisional, conditional, duplicate, copy, reference, unplaced, non-drop records
+  - [x] M08.6 decision on committing `output/` (recommendation in the report; owner decides)
 
 ## M09 — Migration audit and reporting
 - [ ] **M09 — Before/after metrics and unresolved-issues register**
@@ -159,5 +166,6 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
 | MIG-006 | M04.1, M04.2 | done |
 | MIG-007 | M04.3, M04.4 | done |
 | MIG-008 | M07 | done |
-| MIG-009 | M08 | next |
-| later | M09, M10 | |
+| MIG-009 | M08 | done |
+| MIG-010 | M09 | next |
+| later | M10 | |

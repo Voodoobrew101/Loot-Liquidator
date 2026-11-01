@@ -117,7 +117,8 @@ token (1) records. It never read: the 11 `.json` and 58 `.md` observation files,
 ### Other design flaws noted
 
 - Committed `output/` is stale relative to evidence; outputs should be rebuilt in the same commit as data
-  changes or not committed at all (decide in M08).
+  changes or not committed at all. *(M08: recommendation is never commit it from migration or agent branches; the reviewer
+  regenerates it, after one confidence method is pinned. `reports/M08-estimator.md` section 7.)*
 - `research/v3/tools/__pycache__/*.pyc` is committed and changes on every run; should be git-ignored.
 - `unlock_state()` reads free text in `notes`, so any note mentioning "max knowledge" flips a study to
   unlocked. Fragile; a structured `unlockState` field is safer (M02 schema).
@@ -244,6 +245,13 @@ S5–S13 stand. Changes this plan introduces, each behind tests:
    goes to `manifest/exceptions.jsonl` with record IDs; fixes are proposed as correction lines, never applied by a tool. A new
    unheld source with a count of 20 or more beside the citation, in any file, fails `test_scope_gap_is_fully_decided` until it has a
    checkpoint or a reasoned decision (`reports/M07-dispositions.md`).
+
+9. **Estimator guards and unused reasons (M08, new):** `unlock_state()` reads the structured `unlockState` first (true, false, or
+   an explicit null = not stated) and falls back to note text only when the field is absent; `dataDate`, `observedOn` and
+   `source.published` are read only as ISO dates (month-only dates are placed only when the month lies wholly on one side of a rate
+   change); `percentMeaning` must be `perCast` for a percentage to be a chance. Every effective record is either used (adds casts,
+   hits, a total, an average or a prior) or carries one reason code in `output/unused.json` (closed vocabulary `REASON_CODES`). None
+   of the three guards changes an estimate on today's evidence (`reports/M08-estimator.md`).
 
 ### Risks and safeguards
 

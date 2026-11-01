@@ -38,6 +38,7 @@ Usage, from the repository root:
   python3 research/v3/tools/build_estimates.py
 Writes research/v3/output/estimates.json and research/v3/output/summary.md
 """
+import calendar
 import glob
 import json
 import os
@@ -217,8 +218,10 @@ def per_cast_average(r):
 
 
 def chance_from_percent(r):
+    """A percentage is a per-cast chance only when the record says so (M08). An unstated meaning is not
+    assumed: the evidence format asks for `percentMeaning` whenever a percentage is copied."""
     p = num(r.get("percentShown"))
-    if p is None or r.get("percentMeaning") not in ("perCast", None):
+    if p is None or r.get("percentMeaning") != "perCast":
         return None
     return p / 100  # percentShown is always written as a percentage (18.3 means 18.3%)
 
@@ -374,11 +377,49 @@ def load_rate_changes():
     return out
 
 
+ISO_DATE = re.compile(r"^(\d{4})-(0[1-9]|1[0-2])(?:-(\d{2}))?(?=$|/|T)")
+
+
+def iso_date(v):
+    """'YYYY-MM-DD' or 'YYYY-MM' from the start of an ISO date, a range ('2026-04-02/2026-04-10' gives its
+    first day) or a timestamp; None for anything else. Free text is never parsed (M08): '2026-04 live
+    realms' is prose and says nothing about the day."""
+    m = ISO_DATE.match(v) if isinstance(v, str) else None
+    if not m:
+        return None
+    year, month, day = int(m.group(1)), int(m.group(2)), m.group(3)
+    if day is None:
+        return f"{year:04d}-{month:02d}"
+    if not 1 <= int(day) <= calendar.monthrange(year, month)[1]:
+        return None
+    return f"{year:04d}-{month:02d}-{day}"
+
+
+def dated_by(r):
+    """(date, field) of the first usable date: dataDate, then observedOn (both collection dates), then the
+    post date `source.published`. (None, None) when none is ISO."""
+    for field, v in (("dataDate", r.get("dataDate")), ("observedOn", r.get("observedOn")),
+                     ("published", (r.get("source") or {}).get("published"))):
+        d = iso_date(v)
+        if d:
+            return d, field
+    return None, None
+
+
 def study_date(r):
-    """Collection date (dataDate, then observedOn), else the post date."""
-    for v in (r.get("dataDate"), r.get("observedOn"), (r.get("source") or {}).get("published")):
-        if isinstance(v, str) and len(v) >= 10 and v[:4].isdigit() and v[4] == "-":
-            return v[:10]
+    """Collection date (dataDate, then observedOn), else the post date; ISO only."""
+    return dated_by(r)[0]
+
+
+def epoch_side(d, latest):
+    """'after', 'before' or None (cannot tell) for a date against a rate-change day. A month-only date is
+    placed only if the whole month is on one side of the change."""
+    if len(d) == 10:
+        return "after" if d >= latest else "before"
+    if d + "-01" >= latest:
+        return "after"
+    if d + "-31" < latest:
+        return "before"
     return None
 
 
@@ -390,15 +431,26 @@ def epoch_weight(r, method, inp, changes):
     if not applicable:
         return 1.0, None
     latest = max(applicable)
-    d = study_date(r)
-    if d and d >= latest:
-        if not r.get("dataDate") and not r.get("observedOn"):
+    d, field = dated_by(r)
+    side = epoch_side(d, latest) if d else None
+    if side == "after":
+        if field == "published":
             return 1.0, "dated by post date only, after " + latest
         return 1.0, None
-    return OLD_EPOCH_WEIGHT, ("before " if d else "undated vs ") + latest
+    return OLD_EPOCH_WEIGHT, ("before " if side == "before" else "undated vs ") + latest
 
 
 def unlock_state(r):
+    """True / False / None (not stated). The structured `unlockState` decides when the record has the field,
+    including an explicit null, which means the source does not say (M08). Only a record without the field
+    (every agent record today) falls back to phrases in specialization, notes and stats: fragile, since any
+    note that mentions 'max knowledge' reads as unlocked."""
+    if "unlockState" in r and (r["unlockState"] is None or isinstance(r["unlockState"], bool)):
+        return r["unlockState"]
+    return unlock_state_from_text(r)
+
+
+def unlock_state_from_text(r):
     t = " ".join(str(r.get(k) or "") for k in ("specialization", "notes", "stats")).lower()
     if any(x in t for x in UNLOCK_NO):
         return False
@@ -585,7 +637,61 @@ def misplaced_copies(rows, names, vectors, pooled):
     return out
 
 
+# M08: why a record adds nothing to any estimate. One code per record; `detail` names the group or the
+# row_use reasons. Closed vocabulary, pinned by tests.
+USE_REASONS = (
+    ("totalWithoutCasts", "totalWithoutCasts"), ("totalNoBatch", "totalNoBatch"), ("noNumbers", "noNumbers"),
+    ("hitsWithoutCasts", "hitsWithoutCasts"), ("averageNoBatch", "averageNoBatch"),
+    ("chanceNotConvertible", "chanceNotConvertible"), ("percent:perCast", "percentOutOfRange"),
+    ("percent:", "percentNotPerCast"))
+NON_DROP_TYPES = ("exchange", "token", "recipe", "noDisenchant", "rateChange", "searched")
+REASON_CODES = frozenset(
+    {code for _, code in USE_REASONS}
+    | {"condition:incomplete", "conditional:unlockFalse", "conditional:unlockUnstated", "copy:pooledStudy",
+       "copy:vaguerGroup", "duplicateRowInStudy", "duplicateStudy", "reference:noUsableValue",
+       "reference:otherUnit", "reference:priorSuperseded", "type:missing", "type:unknown",
+       "unplaced:noInput", "unplaced:noMethod", "unplaced:noOutput"}
+    | {"type:" + t for t in NON_DROP_TYPES})
+
+
+def unused_code(reasons):
+    """The first row_use reason that explains why a row added nothing, as a closed-vocabulary code."""
+    for prefix, code in USE_REASONS:
+        if any(x.startswith(prefix) for x in reasons):
+            return code
+    return "noNumbers"
+
+
+def unplaced_code(r, names):
+    if not r.get("method"):
+        return "unplaced:noMethod"
+    has_input = r.get("gearGroup") or r.get("inputItemID") or r.get("inputName")
+    return "unplaced:noInput" if not has_input else "unplaced:noOutput"
+
+
+def non_drop_usage(r):
+    """Usage of a record that is not a drop row. The estimator builds drop estimates only; condition
+    records are read to tag conditional outputs (load_conditions)."""
+    t = r.get("type")
+    if t == "condition":
+        if r.get("method") and r.get("outputItemID"):
+            return {"used": True, "roles": ["condition"]}
+        return {"used": False, "reason": "condition:incomplete"}
+    if t in NON_DROP_TYPES:
+        return {"used": False, "reason": "type:" + t}
+    return {"used": False, "reason": "type:missing" if t is None else "type:unknown"}
+
+
 def build(rows):
+    """(estimates, number of unplaced drop rows). See analyze() for the per-record usage."""
+    results, unplaced, _ = analyze(rows)
+    return results, unplaced
+
+
+def analyze(rows):
+    """Build the estimates and say what became of every record. Returns (estimates, unplaced, usage) where
+    usage maps id(row) to {"used": bool, "roles": [...], "reason": code, "detail": ..., "range": bool}.
+    Every row has an entry: used (roles chance, average, prior, range, condition) or a reason code."""
     names = name_maps(rows)
     vectors, _, pooled = study_vectors(rows)
     copies = misplaced_copies(rows, names, vectors, pooled)
@@ -597,17 +703,22 @@ def build(rows):
             families[r["inputName"].strip().lower()].add(str(r["inputItemID"]))
     groups = defaultdict(lambda: {"studies": [], "refs": [], "lo": None, "hi": None})
     unplaced = 0
+    usage = {}
     for r in rows:
         if r.get("type") != "drop":
+            usage[id(r)] = non_drop_usage(r)
             continue
         k = key_of(r, names)
         if not k:
             unplaced += 1
+            usage[id(r)] = {"used": False, "reason": unplaced_code(r, names)}
             continue
         if id(r) in copies:
+            usage[id(r)] = {"used": False, "reason": "copy:pooledStudy" if study_ref(r) in pooled else "copy:vaguerGroup"}
             continue
         g = groups[k]
         lo, hi = num(r.get("minSeen")), num(r.get("maxSeen"))
+        widens = (lo is not None and lo >= 1) or (hi is not None and hi >= 1)
         if lo is not None and lo >= 1:
             g["lo"] = lo if g["lo"] is None else min(g["lo"], lo)
         if hi is not None and hi >= 1:
@@ -617,11 +728,28 @@ def build(rows):
                 g["slo"] = lo if g.get("slo") is None else min(g["slo"], lo)
             if hi is not None and hi >= 1:
                 g["shi"] = hi if g.get("shi") is None else max(g["shi"], hi)
+        usage[id(r)] = {"used": False, "reason": "pending", "range": widens, "group": k}
         (g["refs"] if r.get("sourceKind") in REFERENCE_KINDS else g["studies"]).append(r)
+
+    def settle(r, roles=(), reason=None, detail=None):
+        """Record the outcome of a placed row. Used means it added casts, hits, a total, an average or a
+        prior; widening a min-max range alone does not count, so such a row is unused and flagged `range`."""
+        u = usage[id(r)]
+        u.pop("group", None)
+        if roles:
+            u.update(used=True, roles=sorted(roles), reason=None)
+            u.pop("range", None)
+        else:
+            u.update(used=False, reason=reason)
+            if detail:
+                u["detail"] = detail
+            if not u.get("range"):
+                u.pop("range", None)
 
     results = []
     for (method, inp, out), g in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], str(kv[0][2]))):
         import math
+        outcome = {}   # id(row) -> (roles, reason, detail) for this group; committed only if it yields an estimate
         req = condition_for(conds, method, inp, out, families)
         observed = [g.get("slo"), g.get("shi")] if g.get("slo") is not None or g.get("shi") is not None else None
         has_ref_range = g["lo"] is not None or g["hi"] is not None
@@ -632,8 +760,11 @@ def build(rows):
         range_estimated = not (observed or has_ref_range)
         unit = group_unit(method, g["studies"] + g["refs"])
         # ---- starting guess from reference values (S9: provisional prior, never counted as casts)
-        ref_p = [x for x in (chance_from_percent(r) for r in g["refs"] if same_unit(r, unit)) if x is not None and x <= 1]
-        ref_e = [x for x in (unit_average(r, unit) for r in g["refs"]) if x is not None]
+        ref_p_rows = [(r, x) for r in g["refs"] if same_unit(r, unit) for x in [chance_from_percent(r)]
+                      if x is not None and x <= 1]
+        ref_e_rows = [(r, x) for r in g["refs"] for x in [unit_average(r, unit)] if x is not None]
+        ref_p = [x for _, x in ref_p_rows]
+        ref_e = [x for _, x in ref_e_rows]
         prior_p = sum(ref_p) / len(ref_p) if ref_p else None
         prior_e = sum(ref_e) / len(ref_e) if ref_e else None
         # ---- add studies (S6 epochs and unlocks, S7 dedupe)
@@ -642,16 +773,20 @@ def build(rows):
         casts_e_chance = 0.0       # casts_e as the chance counts them (M06 weights), for a chance derived from the average
         equivalent_casts, converted, chance_dropped = 0.0, False, 0
         seen, skipped_ids, old_epoch, post_dated = set(), set(), None, None
+        counted_ref, skipped_rows = {}, []
         for r in g["studies"]:
             ident = study_identity(r, vectors)
             if ident in seen:
+                outcome[id(r)] = (set(), "duplicateRowInStudy" if counted_ref[ident] == study_ref(r) else "duplicateStudy", None)
                 continue
             if req is not None and unlock_state(r) is not True:
                 # Unknown/locked studies can't measure an unlock-only drop. Don't mark the study as
                 # counted: another copy of the same study may state the unlock and must still count.
                 skipped_ids.add(ident)
+                skipped_rows.append((r, ident))
                 continue
             seen.add(ident)
+            counted_ref[ident] = study_ref(r)
             w, why = epoch_weight(r, method, inp, changes)
             if why and w < 1:
                 old_epoch = why
@@ -659,16 +794,26 @@ def build(rows):
                 post_dated = why
             use = row_use(r, unit)
             k = use["weight"]
+            roles = set()
             if use["chance"]:
                 n, hits = use["chance"]
                 casts_p += n * w * k; drops += hits * w * k
+                roles.add("chance")
             if use["average"]:
                 n, tot = use["average"]
                 casts_e += n * w; total += tot * w; casts_e_chance += n * w * k
                 if k < 1:
                     equivalent_casts += n * w
+                roles.add("average")
+            outcome[id(r)] = (roles, None if roles else unused_code(use["reasons"]), ",".join(use["reasons"]) or None)
             converted = converted or any(x.startswith("converted") for x in use["reasons"])
             chance_dropped += any(x.startswith("chanceNotConvertible") for x in use["reasons"])
+        for r, ident in skipped_rows:
+            if ident in seen:   # another copy of this cohort states the unlock and was counted
+                outcome[id(r)] = (set(), "duplicateStudy", None)
+            else:
+                state = unlock_state(r)
+                outcome[id(r)] = (set(), "conditional:unlockFalse" if state is False else "conditional:unlockUnstated", req)
         if post_dated:
             basis.append(post_dated + " (collection date unknown)")
         if equivalent_casts:
@@ -690,6 +835,30 @@ def build(rows):
         # 20-cast starting guess for the chance, so the chance is then estimated from them.
         if casts_p == 0 and casts_e > 0:
             prior_p = None
+        # reference rows: used when their value reaches a prior that survives
+        for r in g["refs"]:
+            roles = set()
+            if prior_p is not None and any(r is x for x, _ in ref_p_rows):
+                roles.add("prior")
+            if any(r is x for x, _ in ref_e_rows):
+                roles.add("prior")
+            if roles:
+                outcome[id(r)] = (roles, None, None)
+            elif any(r is x for x, _ in ref_p_rows):
+                outcome[id(r)] = (set(), "reference:priorSuperseded", "studies measured the average only")
+            elif chance_from_percent(r) is not None and not same_unit(r, unit):
+                outcome[id(r)] = (set(), "reference:otherUnit", f"{row_unit(r):g} vs {unit:g} inputs per cast")
+            else:
+                outcome[id(r)] = (set(), "reference:noUsableValue", None)
+
+        def commit():
+            # A group with no estimate has no row that added a number (a number gives a chance or an
+            # average, and either gives an estimate), so every row there already carries a reason.
+            for row in g["refs"] + g["studies"]:
+                roles, reason, detail = outcome[id(row)]
+                if roles and usage[id(row)].get("range"):
+                    roles = roles | {"range"}
+                settle(row, roles, reason, detail)
         if casts_p > 0 or prior_p is not None:
             w = PRIOR_CASTS if prior_p is not None else 0
             p = (drops + (prior_p or 0) * w) / (casts_p + w)
@@ -709,6 +878,7 @@ def build(rows):
         if e is None and p is not None:
             e = p * mid; average_derived = True
             basis.append("average estimated from chance x middle of range (provisional valuation)")
+        commit()
         if p is None:
             continue
         conflict = False
@@ -750,10 +920,34 @@ def build(rows):
             "basis": "; ".join(basis),
             "studies": len(seen), "referenceValues": len(g["refs"]),
         })
-    return results, unplaced
+    return results, unplaced, usage
 
 
-def summary(results, unplaced, total_records):
+def unused_report(rows, usage):
+    """output/unused.json: every effective record is either used by an estimate (roles) or listed here with
+    one reason code. `range: true` marks an unused row that still widened a min-max range: a reference row (its
+    range is the reference range, by design) or a study row left out for another reason (the estimator has
+    always collected ranges before dedupe, so a duplicate or a left-out study can widen the observed range)."""
+    unused, by_reason, by_role = [], defaultdict(int), defaultdict(int)
+    for r in rows:
+        u = usage[id(r)]
+        if u["used"]:
+            for role in u["roles"]:
+                by_role[role] += 1
+            continue
+        by_reason[u["reason"]] += 1
+        entry = {"id": r.get("id"), "file": r.get("_file"), "type": r.get("type"), "reason": u["reason"]}
+        for key in ("detail", "range"):
+            if u.get(key):
+                entry[key] = u[key]
+        unused.append(entry)
+    unused.sort(key=lambda e: (e["file"] or "", str(e["id"]), e["reason"]))
+    return {"records": len(rows), "used": len(rows) - len(unused), "unused": len(unused),
+            "unusedByReason": dict(sorted(by_reason.items())), "usedByRole": dict(sorted(by_role.items())),
+            "unusedRecords": unused}
+
+
+def summary(results, unplaced, total_records, unused=None):
     by_conf = [0, 0, 0, 0]
     cond = [r for r in results if r["conditional"]]
     for r in results:
@@ -775,6 +969,10 @@ def summary(results, unplaced, total_records):
         "Confidence = chance the true drop chance is within +/-5 points of the number shown.",
         "",
     ]
+    if unused:
+        lines += [f"{unused['used']:,} of {unused['records']:,} records feed an estimate; the other {unused['unused']:,} each "
+                  "have a reason in `unused.json`:", "", "| Reason | Records |", "| --- | --- |"]
+        lines += [f"| {k} | {v} |" for k, v in unused["unusedByReason"].items()] + [""]
     mid = [r for r in results if r["input"].isdigit() and int(r["input"]) >= 236000]
     if mid:
         lines += ["## Midnight", "", "| Method | Input | Material | Chance | Average per cast | Range | Confidence | Needs unlock | Basis |",
@@ -788,13 +986,17 @@ def summary(results, unplaced, total_records):
 
 def main():
     rows = load()
-    results, unplaced = build(rows)
+    results, unplaced, usage = analyze(rows)
+    unused = unused_report(rows, usage)
     os.makedirs(OUT, exist_ok=True)
     with open(os.path.join(OUT, "estimates.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"withinTarget": WITHIN, "priorCasts": PRIOR_CASTS, "estimates": results}, fh, indent=1)
+    with open(os.path.join(OUT, "unused.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(unused, fh, indent=1)
     with open(os.path.join(OUT, "summary.md"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(summary(results, unplaced, len(rows)))
-    print(f"{len(rows)} records -> {len(results)} estimates ({unplaced} unplaced)")
+        fh.write(summary(results, unplaced, len(rows), unused))
+    print(f"{len(rows)} records -> {len(results)} estimates ({unplaced} unplaced); "
+          f"{unused['used']} records used, {unused['unused']} unused with a reason (output/unused.json)")
 
 
 if __name__ == "__main__":

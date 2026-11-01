@@ -55,6 +55,11 @@ Add to `CORRECTABLE` in `build_estimates.py`: `castsBasis`, `inputsProcessed`, `
 6. (M03) A name-only output row is placed by name only when it names one material and no v3 agent record already
    holds that cohort (same source URL, or same input, casts, output name and total). Otherwise `outputName` is null and
    `rawOutputName` keeps the label, so it is stored but unplaced.
+7a. (M08, implemented) `unlockState` is read first; an explicit `null` means "the source does not say" and does NOT fall
+   back to the note text. Proposed wording for `evidence-format.md`: "omit `unlockState` unless the source states the
+   unlock; never write null", because the format's "write unknowns as null" rule would otherwise switch the text fallback
+   off on every new record. `dataDate`, `observedOn` and `source.published` must be ISO (`YYYY-MM-DD` or `YYYY-MM`);
+   prose belongs in `dataDateText`. `percentMeaning` must be `perCast` for a percentage to count as a chance.
 7. (M06, proposed for `evidence-format.md` and the worker role in the M10 PR) Agents set `castsBasis` whenever they
    write `casts` (`countedFromInputs` when casts = ore ÷ 5, as README rule 2 allows) and write the source's input count
    in `inputsProcessed` instead of only in `notes` ("10,000 ore, not casts"). Today 398 agent rows carry counted casts

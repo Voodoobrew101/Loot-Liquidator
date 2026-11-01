@@ -492,3 +492,56 @@ lines in the exception rows, not applied (`corrections.jsonl` is the Master's); 
 **Ending commit:** see `git log` ("v3 migration M07: …").
 
 **Remaining:** M08, M09, M10.
+
+---
+
+## MIG-009 — 2026-11-01 (Claude Sonnet 5.5, Claude Code on the owner's Windows machine)
+
+**Tasks:** M08 estimator integration
+
+**Starting commit:** `d4390b87a5a7872f0a36e852bc6246a4031a10eb` (M07) on `migration/v3-historical-research`, fast-forwarded from the
+M05-era local clone with `git fetch --depth=1000` and `git merge --ff-only`.
+
+**Environment:** Windows, clone at a short temp path (`core.longpaths=true`, `core.autocrlf=false`), `python`. **SciPy not installed**
+(expected hash with SciPy `d959496a…` could not be checked; baseline here is `898790d5…`). Before and after ran on the same machine.
+
+**Created:** `migration/tools/estimator_effects.py`; `migration/tests/test_m08_estimator.py` (44 tests);
+`migration/reports/{M08-estimator.md,M08-estimator-data.json,M08-estimates-diff.md}`.
+**Modified:** `research/v3/tools/build_estimates.py` (the one task allowed to); `research/v3/.gitignore` (`output/unused.json`);
+`migration/{PLAN,CHECKLIST,SCHEMA-EXTENSION,SESSION_LOG,HANDOFF}.md`. No evidence file, `corrections.jsonl`, `strategy.md`, committed
+`output/` or addon file changed.
+
+**Commands actually run (repo root):**
+- `python research/v3/tools/build_estimates.py` at HEAD → 4,945 records, 1,205 estimates, 449 unplaced; `estimates.json` `898790d5…`
+  (no SciPy). Copied to `before.json` outside the repo; `git checkout -- research/v3/output`.
+- `python -m unittest discover -s research/v3/migration/tests` at HEAD → 304 OK; at the end → **348 OK** (304 + 44).
+- Measurement scripts kept outside the repo, then folded into `estimator_effects.py`: unlockState / percentMeaning / date shapes;
+  cross-check of the new reasons against M06's `unusedRows`; the `duplicateRowInStudy` and range-leak breakdowns.
+- After the three guards only: build → `cmp` with `before.json` identical. After usage tracking: identical again.
+- `python research/v3/tools/build_estimates.py` twice → `estimates.json` `898790d5…`, `summary.md` `c94b042f…`, `unused.json` `cf8597e4…` both times.
+- `python research/v3/migration/tools/estimates_diff.py before.json research/v3/output/estimates.json --md reports/M08-estimates-diff.md` → 0 added, 0 removed, 0 changed.
+- `python research/v3/migration/tools/estimator_effects.py --json reports/M08-estimator-data.json`.
+- `python research/v3/tools/audit_studies.py` → 475 studies, 40 clean. Output restored; `unused.json` removed.
+- `python research/v3/migration/tools/validate.py` → 5,048 records (4,945 effective), 5 errors, 175 warnings (unchanged).
+- `python research/v3/migration/tools/link_sources.py` → 265 files: linked 140, exception 44, residue 42, disposed 39 (no tracked file changed).
+- `python research/v3/migration/tools/dispositions.py --check` → identical to the committed files (exit 0).
+- `python research/v3/tools/import_existing.py --report <tmp>` twice → reports `cmp` identical.
+- Correction check: 643 lines; 333 corrected records.
+
+**Measured results:** in `reports/M08-estimator.md`. Key: the three guards (unlockState first, ISO-only dates, percentMeaning must be
+perCast) each affect **0 records** in the committed evidence and move 0 estimates; 2,597 of 4,945 records are used and 2,348 carry one
+reason code; M06's 626 contribute-nothing rows reconcile exactly (414 same reason + 212 dropped earlier as duplicate, unlock skip or copy).
+
+**Problems:**
+- Local clone was at the M05 commit; fetched and fast-forwarded 8 commits before starting.
+- No SciPy, so the expected hash could not be compared.
+- The first design had a `groupNoEstimate` reason; it is unreachable (a row that adds a number always yields an estimate), so it was removed.
+
+**Decisions:** `unused.json` is a separate file in `output/`, not a field of `estimates.json`. `unlockState: null` means "not stated" and
+does not fall back to text (task wording); the hazard with `evidence-format.md` is recorded for the Master. Month-only dates are placed
+only when the whole month is on one side of a rate change. Duplicate-row-in-study and ranges-before-dedupe are reported, not changed
+(each would move an estimate). `unused.json` is git-ignored until the owner decides the `output/` policy.
+
+**Ending commit:** see `git log` ("v3 migration M08: …").
+
+**Remaining:** M09, M10.
