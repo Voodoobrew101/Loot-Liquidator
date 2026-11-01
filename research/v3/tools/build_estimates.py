@@ -159,7 +159,7 @@ def load_conditions(rows):
         ids = set(str(i) for i in c["inputItemIDs"]) if c.get("inputItemIDs") else None
         out.setdefault((c["method"], int(c["outputItemID"])), []).append((ids, c.get("requires")))
         if c.get("outputName"):
-            out.setdefault((c["method"], "family:" + c["outputName"].strip()), []).append((None, c.get("requires")))
+            out.setdefault((c["method"], "family:" + c["outputName"].strip()), []).append((ids, c.get("requires")))
     return out
 
 
@@ -468,9 +468,19 @@ def study_ref(r):
     return (str(r.get("_file")), str(r.get("studyKey") or r.get("id")))
 
 
+# M10: a Wowhead page under a language prefix or /ptr/ is the same page (the reviewer's S7 fix, commit 40d9f76: Tontons' BfA table
+# had been counted three times under /ru/, /ptr/ and plain). Game flavours (@cata, @wotlk, @tbc, @mop-classic) are other pages.
+SAME_PAGE_SUFFIXES = ("de", "es", "fr", "it", "pt", "br", "ru", "ko", "cn", "tw", "mx", "ptr", "ptr-2", "beta")
+SAME_PAGE = re.compile(r"@(?:" + "|".join(SAME_PAGE_SUFFIXES) + r")(?=@|#|$)")
+
+
+def same_page(key):
+    return SAME_PAGE.sub("", key) if key.startswith("wowhead:") else key
+
+
 def source_key(r):
     src = r.get("originalSource") or (r.get("source") or {}).get("url")
-    return normalize_url(src) if isinstance(src, str) and src else str(r.get("studyKey") or r.get("id"))
+    return same_page(normalize_url(src)) if isinstance(src, str) and src else str(r.get("studyKey") or r.get("id"))
 
 
 def row_numbers(r):
