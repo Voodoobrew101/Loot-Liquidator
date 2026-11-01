@@ -85,7 +85,10 @@ CORRECTABLE = {"inputItemID", "inputName", "inputRank", "outputItemID", "outputN
                "averageShown", "averagePer", "minSeen", "maxSeen", "dataDate", "patch", "sourceKind",
                "specialization", "originalSource", "inputsPerCast", "gearGroup", "exclude",
                "sourcePublished",  # sets source.published (post date, not collection date)
-               "cohortKey"}
+               "cohortKey",
+               # M03 schema extension (research/v3/migration/SCHEMA-EXTENSION.md)
+               "castsBasis", "inputsProcessed", "inputsPurchased", "inputsRefunded", "unlockState",
+               "dataDateText", "observedOn"}
 
 
 def apply_corrections(rows):
@@ -254,7 +257,8 @@ def load_rate_changes():
 
 
 def study_date(r):
-    for v in (r.get("dataDate"), (r.get("source") or {}).get("published")):
+    """Collection date (dataDate, then observedOn), else the post date."""
+    for v in (r.get("dataDate"), r.get("observedOn"), (r.get("source") or {}).get("published")):
         if isinstance(v, str) and len(v) >= 10 and v[:4].isdigit() and v[4] == "-":
             return v[:10]
     return None
@@ -270,7 +274,7 @@ def epoch_weight(r, method, inp, changes):
     latest = max(applicable)
     d = study_date(r)
     if d and d >= latest:
-        if not r.get("dataDate"):
+        if not r.get("dataDate") and not r.get("observedOn"):
             return 1.0, "dated by post date only, after " + latest
         return 1.0, None
     return OLD_EPOCH_WEIGHT, ("before " if d else "undated vs ") + latest

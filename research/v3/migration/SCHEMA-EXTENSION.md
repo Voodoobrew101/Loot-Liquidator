@@ -20,6 +20,7 @@ All fields are **optional**. A record without them is read exactly as today, so 
 | `dataDateText` | string or `null` | Free-text period description that is not an ISO date (old `hotfixWindow`). Keeps `dataDate` machine-readable; 518 effective records currently put prose in `dataDate`. |
 | `observedOn` | ISO date or `null` | When the player collected the data, if distinct from `source.published` (the old importer stored observation dates in `published`). |
 | `rawOutputName` | string or `null` | The output exactly as the source names it, when it could not be mapped to an item (kept instead of dropping the output). |
+| `rawInputName` | string or `null` | The input exactly as the source (or agent) names it, when it cannot be established as an item or name; `inputName` is then null, so the record is stored but unplaced (M03.0, `import-typeless-00010`). |
 
 ## New fields on any record type
 
@@ -43,3 +44,10 @@ Add to `CORRECTABLE` in `build_estimates.py`: `castsBasis`, `inputsProcessed`, `
 3. `cohortKey` is assigned by importers from source structure (batch labels, comment IDs). When absent, M05
    computes a fingerprint; `cohortKey` always wins over the fingerprint.
 4. How each `castsBasis` is weighted for chance vs average is decided and tested in M06, not here.
+5. (M03, implemented) The importer writes every field above except `cohortKey` and `unlockState`. The estimator
+   reads `observedOn` as a collection date (after `dataDate`, before `source.published`) and all new fields are in
+   `CORRECTABLE`. The validator checks `castsBasis` values (error), a `casts` derivation for computed bases (error),
+   `castsBasis` on migrated rows with casts (warning; agent records are not checked yet) and ISO `observedOn` (warning).
+6. (M03) A name-only output row is placed by name only when it names one material and no v3 agent record already
+   holds that cohort (same source URL, or same input, casts, output name and total). Otherwise `outputName` is null and
+   `rawOutputName` keeps the label, so it is stored but unplaced.

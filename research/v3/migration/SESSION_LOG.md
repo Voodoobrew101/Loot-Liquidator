@@ -109,3 +109,58 @@ is committed because the review lists are longer than the report shows.
 **Ending commit:** see `git log` on `migration/v3-historical-research` ("v3 migration M05: …").
 
 **Remaining:** M03, M06, M04, M07, M08, M09, M10.
+
+---
+
+## MIG-003 — 2026-10-31 (Claude Opus 5.5, Claude in a cloud session)
+
+**Tasks:** M03.0 typeless records · M03.1 deterministic re-import with castsBasis · M03.5 GameData tables
+
+**Starting commit:** `5d993421eca6794f8b40b40d71cc94dddbe7b652` on `migration/v3-historical-research`.
+
+**Environment:** Linux, Python 3.13 (`python3`), **SciPy installed** (MIG-002 had none), so confidence values and the
+estimates hash differ from MIG-002. Before and after used the same code path here. Shallow clone of the branch;
+`before.json` and the M05 identity copy were kept outside the repo. Push access was missing at the start of the
+session and was granted partway through.
+
+**Created:** `research/v3/evidence/imported/{typeless-agent-records,gamedata-mill-prospect-reference}.jsonl`;
+`migration/tests/test_m03_import.py`; `migration/tests/fixtures/pre-m03-study-ids.jsonl`;
+`migration/reports/{M03-import.md,M03-import-data.json,M03-estimates-diff.md,M03-identity-data.json}`.
+**Modified:** `research/v3/tools/import_existing.py` (rewritten around the old code path); `research/v3/tools/build_estimates.py`
+(`CORRECTABLE` + 7 fields; `study_date`/`epoch_weight` read `observedOn`); `research/v3/tools/audit_studies.py`
+(`observedOn` counts as a date); `migration/tools/validate.py` (castsBasis/derivation/inputs/observedOn checks);
+all five existing files in `evidence/imported/` (new fields only on existing rows); `migration/manifest/validation.json`;
+`migration/{SCHEMA-EXTENSION,PLAN,CHECKLIST,HANDOFF,SESSION_LOG}.md`.
+Not changed: any agent evidence file, `corrections.jsonl`, `strategy.md`, `GameData.lua`, committed `output/`, addon files.
+**Tests:** none of the 67 existing tests was edited.
+
+**Commands actually run (repo root):**
+- `python3 research/v3/tools/build_estimates.py` at HEAD → 4,404 records, 1,203 estimates, 35 unplaced; copied to `before.json` (sha256 `0ec7f0e7…`, SciPy). Output restored.
+- `python3 research/v3/tools/import_existing.py` at HEAD → 652 / 1,018 / 52 / 8 / 1, `git status` clean (idempotent baseline).
+- `python3 research/v3/tools/import_existing.py --report research/v3/migration/reports/M03-import-data.json` → 1,055 old-study rows (652 kept IDs + 403 name-only), 10 typeless, 1,018 itemdb, 52/8/1 GameData, 75 GameData mill/prospect reference rows. Run twice: `diff -r` of `evidence/imported/` and `cmp` of the report identical.
+- `python3 research/v3/tools/build_estimates.py` twice → 4,882 records, **1,205 estimates, 433 unplaced**; estimates.json sha256 `1081c316…` and summary.md `3b9d8120…` both times.
+- `python3 research/v3/migration/tools/estimates_diff.py before.json research/v3/output/estimates.json --md research/v3/migration/reports/M03-estimates-diff.md` → 2 added, 0 removed, 67 changed; largest chance move 0.0053.
+- `python3 research/v3/migration/tools/identity_report.py --json research/v3/migration/reports/M03-identity-data.json` → differing groups 0; groups 128; partial copies 24; near copies 23; small subsets 11; cross-source 10; misplaced rows 81; pooled 1.
+- `python3 research/v3/tools/audit_studies.py` → 454 studies, 40 clean (HEAD, run in a worktree: 426 / 140). Output restored.
+- `python3 research/v3/migration/tools/validate.py` → 4,985 records (4,882 effective), **5 errors** (3 METHOD_UNKNOWN, 2 METHOD_MISSING), **175 warnings** (55 FIELDS_MISSING, 120 ID_REUSED_ACROSS_FILES). Was 15 / 693.
+- Correction check (ad-hoc script, HEAD worktree vs branch): 643 lines all matching a record; 333 corrected records (45 import-study, 52 import-ref) both sides.
+- `python3 -m unittest discover -s research/v3/migration/tests` → **99 tests OK** (67 + 32).
+
+**Measured results:** in `reports/M03-import.md`. Key: TYPE_MISSING 10 → 0; DATE_NOT_ISO 518 → 0; effective kept rows
+by basis: 310 reported, 258 nominalEquivalent, 33 countedFromInputs, 19 none; 78 observation dates moved to `observedOn`;
+GameData tsmRetail 903/903 present, mill/prospect 75 of 98 rows missing and imported as reference.
+
+**Problems:**
+- First run placed every single-material name-only row: Kyparite `family:Sparkling Shard` went 438 → 876 study casts
+  (legacy agent copies under a differently normalizing URL). Fixed with an agent-copy check by numbers. A draft would
+  also have placed 222 Jallfo sheet rows that agents had deliberately recorded without casts.
+- The study audit's clean count fell 140 → 34: the audit read only `dataDate`. It now also accepts `observedOn` (40
+  clean). The other 98 studies were never really dated; their prose had passed the audit's truthiness check.
+
+**Decisions:** name-only placement rule (PLAN §3 rule 4); `reportedInitialOre`/`reportedOrePurchasedOrProcessed` go to
+`inputsPurchased`, not processed; GameData mill/prospect chance not carried (Poisson/proxy, "NOT MEASURED");
+`rawInputName` added to the schema for the unplaceable deck record; mapped typeless rows use `replaces`.
+
+**Ending commit:** see `git log` ("v3 migration M03: …").
+
+**Remaining:** M03.2–M03.4, M03.6, M06, M04, M07, M08, M09, M10.

@@ -4,7 +4,7 @@ Status values: Not Started / In Progress / Blocked / Complete. A box is ticked o
 acceptance criterion is met and the evidence column points at something checkable.
 Sessions run in Claude (owner's choice, 2026-10-31). Effort = Claude's thinking effort: Low / Medium / High / Extra High (xhigh) / Max.
 
-Recommended order: M02 ✓ → M05 ✓ → M03 → M06 → M04 → M07 → M08 → M09 → M10
+Recommended order: M02 ✓ → M05 ✓ → M03 (M03.0/.1/.5 ✓) → M06 → M04 → M07 → M08 → M09 → M10
 (M04.1 linking may run in parallel with M05 once M02 is done.)
 
 ## Progress
@@ -13,9 +13,9 @@ Recommended order: M02 ✓ → M05 ✓ → M03 → M06 → M04 → M07 → M08 �
 | --- | --- |
 | Top-level tasks | 11 |
 | Complete | 4 (M00, M01, M02, M05) |
-| In progress | 0 |
+| In progress | 1 (M03: 3 of 7 subtasks) |
 | Blocked | 0 |
-| Not started | 7 |
+| Not started | 6 |
 | Completion (verified top-level) | 36% |
 
 ---
@@ -65,13 +65,16 @@ Recommended order: M02 ✓ → M05 ✓ → M03 → M06 → M04 → M07 → M08 �
 - [ ] **M03 — Import every structured historical source without AI**
   - Priority: P1 · Depends on: M02 (M03.1 also feeds M06) · Model: Claude Sonnet 5.5, High (M03.0/M03.1), Medium (rest)
   - Acceptance: every `imported`, observation `.json`, `evidence/v2`, `leads` and structured submission file is either imported or given a reasoned skip; existing `import-*` IDs unchanged (corrections reference them); raw input quantities, cast basis, structured dates and `migratedFrom` preserved; reruns byte-identical; tests per adapter
-  - Status: Not Started · Evidence: —
-  - [ ] M03.0 the 10 typeless records in `evidence/midnight/2026-10-31-midnight-refining-shattering-decks.jsonl` are real observations in a different schema (e.g. genobeam's diamond comment); map them into valid records via the importer or a correction path, without editing the agent file
-  - [ ] M03.1 re-import old observation JSONL with `castsBasis`, `inputsProcessed`, `dataDate`/`dataDateText` split, published vs observed dates, unmapped outputs kept as name-only rows (IDs stable)
+  - Status: In Progress (MIG-003: M03.0, M03.1, M03.5 done) · Evidence: `reports/M03-import.md`, `reports/M03-import-data.json`, `reports/M03-estimates-diff.md`, `reports/M03-identity-data.json`; `tests/test_m03_import.py` (32 tests); 99 tests OK; import rerun and rebuild byte-identical
+  - [x] M03.0 the 10 typeless records in `evidence/midnight/2026-10-31-midnight-refining-shattering-decks.jsonl` are real observations in a different schema (e.g. genobeam's diamond comment); map them into valid records via the importer or a correction path, without editing the agent file
+    - Done MIG-003: 10 of 10 mapped into `evidence/imported/typeless-agent-records.jsonl` (8 exchanges, 2 drops; `import-typeless-00010` kept unplaced: deck suit unknown); validator TYPE_MISSING 10 → 0
+  - [x] M03.1 re-import old observation JSONL with `castsBasis`, `inputsProcessed`, `dataDate`/`dataDateText` split, published vs observed dates, unmapped outputs kept as name-only rows (IDs stable)
+    - Done MIG-003: 652 IDs unchanged (fixture test), 403 name-only rows added (6 placed), castsBasis + derivations on all rows, DATE_NOT_ISO 518 → 0, corrections 643/333 unchanged
   - [ ] M03.2 adapter: observation `.json` archives (11 files)
   - [ ] M03.3 adapter: `evidence/v2/*.json` (38) and `evidence/leads` (1)
   - [ ] M03.4 adapter: worker-submission JSON/JSONL that carry cohorts (list from manifest)
-  - [ ] M03.5 GameData `gd.mill` / `gd.prospect` / `gd.tsmRetail` vs `itemdb.lua` rows: import only missing rows as `reference`
+  - [x] M03.5 GameData `gd.mill` / `gd.prospect` / `gd.tsmRetail` vs `itemdb.lua` rows: import only missing rows as `reference`
+    - Done MIG-003: tsmRetail 903/903 present; gd.mill/gd.prospect 98 rows, 23 present, 75 imported as `reference` (`gamedata-mill-prospect-reference.jsonl`)
   - [ ] M03.6 ledger CSVs with numbers (`candidate-no-url`): classify; import or dispose
 
 ## M06 — Units, denominators and yield reconciliation
@@ -120,8 +123,8 @@ Recommended order: M02 ✓ → M05 ✓ → M03 → M06 → M04 → M07 → M08 �
 | --- | --- | --- |
 | MIG-001 | M00, M01, M02 | done |
 | MIG-002 | M05 | done |
-| MIG-003 | M03.0, M03.1, M03.5 | next |
-| MIG-004 | M03.2–M03.4, M03.6 | |
+| MIG-003 | M03.0, M03.1, M03.5 | done |
+| MIG-004 | M03.2–M03.4, M03.6 | next |
 | MIG-005 | M06 | |
 | MIG-006 | M04.1, M04.2 | can run any time now (independent of M05) |
 | MIG-007+ | M04.3 batches, M04.4 | parallel workers by source URL |

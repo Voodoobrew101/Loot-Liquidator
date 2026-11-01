@@ -189,7 +189,13 @@ S5–S13 stand. Changes this plan introduces, each behind tests:
    toward the **average** (quantity per cast is bounded and Resourcefulness only blurs it) but enter the
    **chance** confidence at a reduced, documented weight; reported casts count fully. Same rule for
    imported and new records, so the inconsistency in §2.3 disappears.
-3. Dates: structured `dataDate` only; free text moves to `notes`/`dataDateText`.
+3. Dates: structured `dataDate` only; free text moves to `notes`/`dataDateText`. *(Done for imported rows in M03.1: free text
+   in `dataDateText`, the old observation date in `observedOn`, which the estimator reads after `dataDate`.)*
+4. **Name-only outputs (M03.1, new):** an output without an item ID is always stored (`rawOutputName`), but placed
+   by name only when it names one material and no v3 agent record already holds that cohort (same source URL, or
+   same input, casts, output name and total). Categories, aggregates, unnamed indexes and agent-held cohorts stay
+   unplaced with the reason in `notes`, for M04.1 linking. A first pass without the agent check counted the Kyparite
+   Sparkling Shard cohorts twice (`reports/M03-import.md`).
 
 ### Risks and safeguards
 

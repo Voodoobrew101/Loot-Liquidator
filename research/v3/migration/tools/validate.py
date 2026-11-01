@@ -54,6 +54,8 @@ SOURCE_KINDS = {"study", "personal-pooled", "tsm-table", "compiled-research", "r
 PERCENT_MEANINGS = {"perCast", "perInput", "unclear"}
 AVERAGE_PER = {"cast", "input", "1000 inputs"}
 RANKS = {1, 2, 3}
+CASTS_BASES = {"reported", "countedFromInputs", "nominalEquivalent", "derived"}
+COMPUTED_BASES = {"countedFromInputs", "nominalEquivalent", "derived"}
 NUMERIC = ["casts", "inputsPerCast", "totalQuantity", "castsWithDrop", "percentShown", "averageShown",
            "minSeen", "maxSeen"]
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}(/\d{4}-\d{2}-\d{2})?$")
@@ -85,7 +87,7 @@ def check_record(r):
     src = r.get("source")
     if src is not None and not isinstance(src, dict):
         add("error", "SOURCE_NOT_OBJECT", "source must be an object")
-    for k in ("dataDate",):
+    for k in ("dataDate", "observedOn"):
         v = r.get(k)
         if isinstance(v, str) and not ISO_DATE.match(v):
             add("warning", "DATE_NOT_ISO", f"{k} is free text, treated as undated: {v[:60]!r}")
@@ -127,6 +129,18 @@ def check_record(r):
             add("error", "PERCENT_OVER_100", f"per-cast percentage {p} > 100")
         if r.get("averageShown") is not None and r.get("averagePer") is None:
             add("warning", "AVERAGE_UNIT_MISSING", "averageShown without averagePer is not used")
+        cb = r.get("castsBasis")
+        if cb is not None and cb not in CASTS_BASES:
+            add("error", "CASTS_BASIS_UNKNOWN", f"castsBasis {cb!r} is not one of {sorted(CASTS_BASES)}")
+        if cb in COMPUTED_BASES and not any(isinstance(x, dict) and x.get("field") == "casts"
+                                            for x in (r.get("derivations") or [])):
+            add("error", "DERIVATION_MISSING", f"castsBasis {cb!r} needs a derivations entry for casts")
+        if r.get("casts") is not None and cb is None and (r.get("migratedFrom") or r.get("agent") == "import"):
+            add("warning", "CASTS_BASIS_MISSING", "migrated record has casts but no castsBasis")
+        for k in ("inputsProcessed", "inputsPurchased", "inputsRefunded"):
+            v = r.get(k)
+            if v is not None and (not is_num(v) or v < 0):
+                add("error", "NOT_A_NUMBER", f"{k} must be a non-negative number or null, got {v!r}")
         hist = r.get("histogram")
         if hist is not None and not (isinstance(hist, dict) and all(is_num(v) for v in hist.values())):
             add("error", "HISTOGRAM_INVALID", "histogram must map amounts to counts")
