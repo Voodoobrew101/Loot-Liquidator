@@ -113,6 +113,18 @@ def load_calculator(snapshot):
     spec = importlib.util.spec_from_file_location('ll_research_v3_build_estimates', path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
+    # D1c5: the research calculator's file-scoped corrections use POSIX paths.
+    # Normalize its in-memory rows BEFORE applying them, without editing the
+    # snapshot or changing the calculator's math. This also keeps provenance
+    # and ordering byte-identical when ItemDB is rebuilt on Windows.
+    original_corrections = module.apply_corrections
+
+    def portable_corrections(rows):
+        return original_corrections([
+            dict(row, _file=str(row.get('_file', '')).replace('\\', '/')) for row in rows
+        ])
+
+    module.apply_corrections = portable_corrections
     return module
 
 

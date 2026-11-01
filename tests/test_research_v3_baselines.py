@@ -50,6 +50,15 @@ ok(m['dropChance']['confidence'] == eb.rate_confidence(25, 50) // 2, 'derived ch
 near(m['expectedQuantity']['samples'], 100.0, 'average counts its own casts (x0.5 until scaling rules)')
 
 # ---- the real build
+# D1c5: the pinned calculator matches correction paths exactly. Windows paths
+# must be normalized before corrections, or excluded/conditional studies return.
+module = v3.load_calculator(SNAPSHOT)
+fix = json.loads((SNAPSHOT / 'research/v3/corrections.jsonl').read_text().splitlines()[0])
+probe = {'id': fix['recordID'], '_file': fix['file'].replace('/', '\\')}
+corrected = module.apply_corrections([probe])
+ok(corrected[0].get(fix['field']) == fix['value'], 'file-specific correction applies to Windows paths')
+ok(corrected[0]['_file'] == fix['file'], 'calculator receives portable evidence paths')
+ok(probe['_file'] != fix['file'], 'path normalization does not rewrite the original row')
 records, notes, total, counted, unplaced = v3.build(SNAPSHOT)
 ok(len(records) > 50 and counted < total, 'records built, some rows not counted')
 module = v3.load_calculator(SNAPSHOT)
