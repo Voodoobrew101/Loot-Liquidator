@@ -320,9 +320,11 @@ def fix_snapshot_estimator(tree):
     path = os.path.join(tree, "research", "v3", "tools", "build_estimates.py")
     with open(path, encoding="utf-8", newline="") as f:
         text = f.read()
-    old = 'r["_file"] = os.path.relpath(path, ROOT)\n'
-    fixed = 'r["_file"] = os.path.relpath(path, ROOT).replace(os.sep, "/")\n'
-    if old not in text.replace("\r\n", "\n"):
+    old = 'r["_file"] = os.path.relpath(path, ROOT)'
+    fixed = 'r["_file"] = os.path.relpath(path, ROOT).replace(os.sep, "/")'
+    # git archive can apply core.autocrlf to the exported source. Match the
+    # statement independently of its line ending and preserve every other byte.
+    if old + "\n" not in text.replace("\r\n", "\n"):
         raise RuntimeError("the snapshot estimator no longer has the line to fix")
     with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(text.replace(old, fixed))

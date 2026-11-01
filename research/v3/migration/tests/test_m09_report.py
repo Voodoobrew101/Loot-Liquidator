@@ -162,15 +162,18 @@ class Items(unittest.TestCase):
 
 class Trees(unittest.TestCase):
     def test_snapshot_fix_changes_only_that_line(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            tools = os.path.join(tmp, "research", "v3", "tools")
-            os.makedirs(tools)
-            path = os.path.join(tools, "build_estimates.py")
-            with open(path, "w", encoding="utf-8", newline="") as f:
-                f.write('a = 1\n            r["_file"] = os.path.relpath(path, ROOT)\nb = 2\n')
-            report.fix_snapshot_estimator(tmp)
-            with open(path, encoding="utf-8", newline="") as f:
-                self.assertEqual(f.read(), 'a = 1\n            r["_file"] = os.path.relpath(path, ROOT).replace(os.sep, "/")\nb = 2\n')
+        for ending in ("\n", "\r\n"):
+            with self.subTest(ending=repr(ending)), tempfile.TemporaryDirectory() as tmp:
+                tools = os.path.join(tmp, "research", "v3", "tools")
+                os.makedirs(tools)
+                path = os.path.join(tools, "build_estimates.py")
+                original = 'a = 1\n            r["_file"] = os.path.relpath(path, ROOT)\nb = 2\n'.replace("\n", ending)
+                expected = original.replace('os.path.relpath(path, ROOT)', 'os.path.relpath(path, ROOT).replace(os.sep, "/")')
+                with open(path, "w", encoding="utf-8", newline="") as f:
+                    f.write(original)
+                report.fix_snapshot_estimator(tmp)
+                with open(path, encoding="utf-8", newline="") as f:
+                    self.assertEqual(f.read(), expected)
 
     def test_snapshot_fix_refuses_a_file_without_the_line(self):
         with tempfile.TemporaryDirectory() as tmp:
