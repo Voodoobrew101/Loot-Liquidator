@@ -4,7 +4,7 @@ Status values: Not Started / In Progress / Blocked / Complete. A box is ticked o
 acceptance criterion is met and the evidence column points at something checkable.
 Sessions run in Claude (owner's choice, 2026-10-31). Effort = Claude's thinking effort: Low / Medium / High / Extra High (xhigh) / Max.
 
-Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 → M07 → M08 → M09 → M10
+Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 (M04.1, M04.2 ✓) → M07 → M08 → M09 → M10
 (M04.1 linking may run in parallel with M05 once M02 is done.)
 
 ## Progress
@@ -13,10 +13,10 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 → M07 �
 | --- | --- |
 | Top-level tasks | 11 |
 | Complete | 6 (M00, M01, M02, M05, M03, M06) |
-| In progress | 0 |
+| In progress | 1 (M04: M04.1 and M04.2 done, M04.3 and M04.4 open) |
 | Blocked | 0 |
-| Not started | 5 |
-| Completion (verified top-level) | 55% |
+| Not started | 4 |
+| Completion (verified top-level) | 55% (M04 is 2 of 4 subtasks; it counts when M04.4 is done) |
 
 ---
 
@@ -98,11 +98,13 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 → M07 �
 - [ ] **M04 — Link notes deterministically, extract the residue with batched AI**
   - Priority: P2 · Depends on: M01 (M04.1), M03 (M04.2+) · Model: Claude Sonnet 5.5, Medium (linking and extraction batches); Claude Opus 5.5, High (spot-check)
   - Acceptance: each of the ~124 Markdown candidates is linked to v3 records, extracted, or disposed with a reason; extracted rows quote their source text, pass validator + arithmetic checks, carry `migratedFrom`; 10% sample re-checked; checkpoints allow restart
-  - Status: Not Started · Evidence: —
-  - [ ] M04.1 `tools/link_sources.py` (URL + study ID + number matching)
-  - [ ] M04.2 residual queue grouped by source URL
+  - Status: In Progress (MIG-006: M04.1, M04.2 done; M04.3, M04.4 not started) · Evidence: `reports/M04-links.md`, `manifest/links.jsonl`, `manifest/extraction-queue.jsonl`, `manifest/links-summary.json`; `tests/test_link_sources.py` (49); 197 tests OK; estimates `cmp`-identical to the baseline (`6976d1bd…`); manifests rerun byte-identical
+  - [x] M04.1 `tools/link_sources.py` (URL + study ID + number matching)
+    - Done MIG-006: 265 files (165 candidate-unmigrated, 35 candidate-no-url, 65 covered-by-url) → linked 133, exception 44, residue 49, disposed 39, each with a reason; the 124 Markdown candidates → linked 58, exception 18, residue 45, disposed 3. Known candidates: 86 agent-held name-only rows (the handoff's 92 was wrong) → 58 linked, 6 exception, 22 unlinked; 1smgllg 14 → 11 linked by name, 3 listed; s6bfrl uncommon gems 6 → exceptions
+  - [x] M04.2 residual queue grouped by source URL
+    - Done MIG-006: 55 sources in 49 files (`extraction-queue.jsonl`), with anchors, expected record types and method hints; 30 of 70 file-source pieces have their numbers elsewhere in the file (`proximity: file`)
   - [ ] M04.3 extraction batches with schema/arithmetic validation and checkpoints
-  - [ ] M04.4 spot-check sample
+  - [ ] M04.4 spot-check sample (include a sample of the 75 weak links)
 
 ## M07 — Validation and exception review
 - [ ] **M07 — Final dispositions and exception queue**
@@ -137,6 +139,6 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 → M07 �
 | MIG-003 | M03.0, M03.1, M03.5 | done |
 | MIG-004 | M03.2–M03.4, M03.6 | done |
 | MIG-005 | M06 | done |
-| MIG-006 | M04.1, M04.2 | next |
-| MIG-007+ | M04.3 batches, M04.4 | parallel workers by source URL |
+| MIG-006 | M04.1, M04.2 | done |
+| MIG-007+ | M04.3 batches, M04.4 | next; parallel workers by source URL (55 queue entries) |
 | later | M07, M08, M09, M10 | |

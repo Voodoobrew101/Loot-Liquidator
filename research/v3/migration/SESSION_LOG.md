@@ -289,3 +289,61 @@ into the estimator output. Schema proposals 7 and 8 added to `SCHEMA-EXTENSION.m
 **Ending commit:** see `git log` ("v3 migration M06: …").
 
 **Remaining:** M04, M07, M08, M09, M10.
+
+---
+
+## MIG-006 — 2026-11-01 (Claude Sonnet 5.5, Claude in a cloud session)
+
+**Tasks:** M04.1 deterministic linking of Markdown and irregular notes · M04.2 residual queue. M04.3 and M04.4 not started.
+
+**Starting commit:** `eb1db7b` on `migration/v3-historical-research`.
+
+**Environment:** Linux, Python 3.13.18 (`python3`), **SciPy 1.18.1 installed** (same code path as MIG-003 to MIG-005, so hashes compare).
+The first attach-with-push-access request was denied by the session's permission check; the retry the prompt prescribes was
+granted. The clone landed on `main`, so the branch was fetched (`git fetch --depth=1000 origin migration/v3-historical-research`)
+and checked out. `before.json` kept outside the repo. No network for evidence, no AI extraction.
+
+**Created:** `migration/tools/link_sources.py`; `migration/tests/test_link_sources.py`;
+`migration/manifest/{links.jsonl,extraction-queue.jsonl,links-summary.json}`; `migration/reports/M04-links.md`.
+**Modified:** `migration/{CHECKLIST,SESSION_LOG,HANDOFF,PLAN}.md`.
+Not changed: any evidence file, `corrections.jsonl`, `strategy.md`, `evidence-format.md`, `SCHEMA-EXTENSION.md`,
+`build_estimates.py`, `import_existing.py`, committed `output/`, addon files. **Tests:** none of the 148 existing tests was edited.
+
+**Commands actually run (repo root):**
+- `python3 research/v3/tools/build_estimates.py` at HEAD → 4,933 records, 1,205 estimates, 447 unplaced; `estimates.json` sha256 `6976d1bd…`, `summary.md` `c16d76e6…` (= MIG-005). Copied to `before.json`; output restored (`git checkout -- research/v3/output`).
+- `python3 -m unittest discover -s research/v3/migration/tests` at HEAD → 148 OK.
+- Ad-hoc inspection scripts kept outside the repo (inventory row shape, name-only rows, v3 names for the 1smgllg labels, the s6bfrl rows, the zkay8v agent file and its corrections).
+- `python3 research/v3/migration/tools/link_sources.py` (scratch and in-repo runs while developing; final run) → 265 files: linked 133, exception 44, residue 49, disposed 39; 55 queue sources. Three `sha256sum -c` reruns identical.
+- `python3 -m unittest discover -s research/v3/migration/tests` after the work → **197 tests OK** (148 + 49).
+- `python3 research/v3/migration/tools/validate.py` → 5,036 records (4,933 effective), 5 errors, 175 warnings (unchanged; `validation.json` untouched).
+- `python3 research/v3/tools/build_estimates.py` twice → 4,933 records, 1,205 estimates, 447 unplaced; `estimates.json` `6976d1bd…`, `summary.md` `c16d76e6…` both times; `cmp` with `before.json` identical; `estimates_diff.py` → 0 added, 0 removed, 0 changed.
+- `python3 research/v3/tools/audit_studies.py` → 473 studies, 40 clean (unchanged). Output restored.
+- `python3 research/v3/tools/import_existing.py --report <tmp>` twice → `evidence/imported/` unchanged by `git status`, report `cmp` identical.
+- Correction check (`build_estimates.load()`): 643 lines; 333 corrected records (236 agent, 52 import-ref, 45 import-study).
+
+**Measured results:** in `reports/M04-links.md`. Key: 265 in-scope files → linked 133, exception 44, residue 49, disposed 39
+(each with a reason); the 124 Markdown candidates → 58 / 18 / 45 / 3. Citation groups: linked 266 (191 strong, 75 weak),
+source-held 340, exception 91, residue 70, skipped-decided 63, reference 317. Queue: 55 sources, 49 files, 138 anchors.
+Known candidates: 86 name-only rows → 58 linked, 6 exception, 22 unlinked; 1smgllg 11 of 14 linked by name; s6bfrl 6 exceptions.
+Registry (543 URLs): 162 held by a record's source, 16 mentioned in notes only, 365 not in v3.
+
+**Problems:**
+- A first exception rule flagged any observational claim with no matching result, including claims whose only number was a
+  batch size (JSON `sources[]` entries with "1040"): 121 exception groups. Now an exception needs a number that is not a held
+  batch size; the rest are `source-held` (91 groups).
+- Numbers under one URL's list item leaked into the next URL's window (a test caught it). A line now belongs to the nearest URL above it in its paragraph.
+- The name-only candidates found no agent rows for zkay8v: corrections exclude them as duplicates of the import, so the effective
+  index never saw them. Candidates now read raw agent rows (flagged `effective`); label resolution still reads effective rows,
+  because a raw midnight row carried a wrong item ID (242721) that corrections fix.
+- Same-name agent rows for the 10,000-ore zkay8v cohort first read as 22 exceptions; they are 1,000-cast rows, a different cohort. An exception now needs the same cast count.
+- The first run left 26 files with unheld sources whose counts sat elsewhere in the file as leads only (no queue entry). They now enter the queue as `proximity: file` pieces (at most 3 sources per file); in the final run 30 pieces in 24 files, and no citation is left as a bare lead.
+- The handoff's "92 agent-held name-only rows" is 86 in the data (83 by URL, 3 by numbers); the 6 placed rows make 92.
+
+**Decisions:** linking by result numbers, never batch sizes; weak links kept and labelled; file-level residue capped at three
+sources per file; `NEW_SOURCES` decisions reused as written; four reference hosts added to the linker only
+(json-schema.org, wowpedia.fandom.com, wowpedia.org, URL templates); no importer or corrections change, so the 1smgllg
+placements stay proposals. PLAN §3 rule 6 added.
+
+**Ending commit:** see `git log` ("v3 migration M04.1-M04.2: …").
+
+**Remaining:** M04.3, M04.4, M07, M08, M09, M10.

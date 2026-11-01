@@ -211,6 +211,15 @@ S5–S13 stand. Changes this plan introduces, each behind tests:
    rule). Totals whose source counts inputs, not casts, keep `casts: null` (S16, M06), even when an old record
    carries its own normalization (`reports/M03b-import.md`).
 
+6. **Linking notes to v3 (M04.1-M04.2, new):** a Markdown, CSV or irregular note is linked to v3 by source (normalized key,
+   same thread counts), then by a *result* number next to the citation (total, hit count, percent, average, min/max). A
+   matching batch size (casts, inputs processed) alone is not a link. Same source with other observational numbers is an
+   exception (listed, never imported); a source v3 does not hold, with observational counts next to the citation or
+   elsewhere in the file (at most three such sources per file), is residue, grouped by source URL for AI extraction. A URL
+   only mentioned in v3 notes is not held. Reference hosts, entity pages without counts and M03 `NEW_SOURCES` skips are
+   disposed with their reason. The linker reads effective rows (corrections applied) for matching and raw agent rows for
+   name-only candidates, so a row excluded as a duplicate still links. `reports/M04-links.md` has the counts.
+
 ### Risks and safeguards
 
 | Risk | Safeguard |
