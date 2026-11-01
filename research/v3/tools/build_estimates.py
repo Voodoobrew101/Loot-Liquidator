@@ -22,6 +22,12 @@ Method (see research/v3/README.md and the owner's notes):
     only for characters that meet the condition.
   * Each independent cohort counts once: by `cohortKey` when set, otherwise by a fingerprint of
     its source, input rank, casts and every number in the study (see study_identity).
+  * Units (M06, S16): every estimate is per cast of the group's unit (`inputsPerCast`; prospecting 5,
+    mechanics G1; otherwise the smallest batch its rows state). Rows of another batch size are
+    converted per input for the average; their per-cast chance is not convertible and is left out.
+    Casts that are not counted operations in that unit (castsBasis countedFromInputs,
+    nominalEquivalent or derived, casts counted here from inputsProcessed, converted batches) count
+    fully toward the average but at EQUIVALENT_CAST_WEIGHT toward the chance (see row_use).
   * Confidence comes from a beta distribution of those counts (the "weighted count with a
     starting guess" model, also called beta-binomial / empirical Bayes).
 
@@ -56,6 +62,16 @@ GUESS_ONLY_MAX_CONFIDENCE = 30  # a starting guess alone is never shown as trust
 GUESS_CONFIDENCE_CASTS = 5      # how much a starting guess adds to confidence (not to the estimate)
 REFERENCE_KINDS = {"tsm-table", "compiled-research", "reference"}
 NUMBER_FIELDS = ("castsWithDrop", "totalQuantity", "percentShown", "averageShown")  # compared for study identity
+# M06 (S16, PLAN section 3 rule 2). A cast count that is not a count of completed operations in the
+# group's unit says how many inputs went in, not how many casts were made: Resourcefulness refunds
+# (mechanics M9, M10, W2) may or may not have been processed again, so the true count is blurred by up
+# to the refund rate (about 18% in Cardinalai's 715 of 4,000 ore). The average per cast stays
+# bounded, so these casts count fully there; in the chance (its estimate and its confidence) they count
+# at this weight. A heuristic, like S5's halved confidence for estimated values, not a calibrated one.
+EQUIVALENT_CAST_WEIGHT = 0.5
+EQUIVALENT_BASES = {"countedFromInputs", "nominalEquivalent", "derived"}
+NOMINAL_UNIT = 5        # nominalEquivalent casts are the old pipeline's five-ore/five-herb operations
+PROSPECT_UNIT = 5       # mechanics G1: every expansion prospects 5 ore per cast (mass prospecting = 4 casts)
 
 
 def num(v):
@@ -205,6 +221,108 @@ def chance_from_percent(r):
     if p is None or r.get("percentMeaning") not in ("perCast", None):
         return None
     return p / 100  # percentShown is always written as a percentage (18.3 means 18.3%)
+
+
+def row_unit(r):
+    """Inputs behind one of this row's casts: 5 for nominalEquivalent casts (whatever inputsPerCast says;
+    58 imported mass-milling rows say 20 while their casts are five-input equivalents), else inputsPerCast."""
+    if r.get("castsBasis") == "nominalEquivalent":
+        return NOMINAL_UNIT
+    b = num(r.get("inputsPerCast"))
+    return b if b and b > 0 else None
+
+
+def group_unit(method, rows):
+    """Inputs per cast of one estimate group. Prospecting: 5 (G1). Otherwise the smallest batch any of its
+    rows (studies or reference values) states, since mass casts are multiples of the single cast (20 herbs =
+    4 five-herb mills; Midnight mills 10, M6). None if no row states one: rows are then used as stated."""
+    if method == "Prospect":
+        return PROSPECT_UNIT
+    units = [u for u in (num(r.get("inputsPerCast")) for r in rows) if u and u > 0]  # stated batches, not nominal units
+    return min(units) if units else None
+
+
+def same_unit(r, unit):
+    own = row_unit(r)
+    return not (own and unit) or own == unit
+
+
+def unit_average(r, unit):
+    """averageShown per cast of the group's unit (per_cast_average with the conversion per input)."""
+    a, per = num(r.get("averageShown")), r.get("averagePer")
+    if a is None:
+        return None
+    own = row_unit(r)
+    if per == "cast":
+        return a * unit / own if own and unit else a
+    if per in ("input", "1000 inputs") and (unit or own):
+        return a * (unit or own) / (1000 if per == "1000 inputs" else 1)
+    return None
+
+
+def row_use(r, unit):
+    """What one drop row adds to its group, in casts of the group's unit (M06).
+    Returns {"chance": (casts, hits) or None, "average": (casts, total) or None, "weight": 1 or
+    EQUIVALENT_CAST_WEIGHT, "reasons": [...]}. `weight` applies to the chance only. Reasons are
+    machine-readable codes for what was converted, weighted down or left out.
+      * casts stated: converted by row_unit/unit; full weight only when castsBasis is reported (or absent)
+        and no conversion was needed.
+      * no casts but inputsProcessed: casts = inputsProcessed / unit (= / inputsPerCast when the row's batch
+        is the unit). Refunds (inputsRefunded) are never added or subtracted: sources do not say whether
+        refunded inputs were processed again. inputsPurchased alone is not a count of inputs processed.
+      * a chance (castsWithDrop, percent per cast) from a cast of another batch size is not convertible:
+        P(at least one) is not linear in inputs. Averages are, per input."""
+    reasons = []
+    own = row_unit(r)
+    scale = own / unit if own and unit else 1.0
+    n = num(r.get("casts"))
+    equivalent = r.get("castsBasis") in EQUIVALENT_BASES
+    if scale != 1:
+        equivalent = True
+        reasons.append(f"converted:{own:g}->{unit:g}")
+    if n:
+        n_u = n * scale
+        if r.get("castsBasis") in EQUIVALENT_BASES:
+            reasons.append("castsBasis:" + r["castsBasis"])
+    else:
+        n_u = None
+        ip = num(r.get("inputsProcessed"))
+        if ip and unit:
+            n_u, equivalent = ip / unit, True
+            reasons.append("castsFromInputs")
+        elif ip:
+            reasons.append("inputsProcessedNoBatch")
+    weight = EQUIVALENT_CAST_WEIGHT if equivalent else 1.0
+    chance = average = None
+    hits, pct = num(r.get("castsWithDrop")), chance_from_percent(r)
+    if hits is not None or (pct is not None and pct <= 1):
+        if scale != 1:
+            reasons.append(f"chanceNotConvertible:{own:g}->{unit:g}")
+        elif hits is not None and n_u:
+            chance = (n_u, hits)
+        elif pct is not None and pct <= 1:
+            nn = n_u or SMALL_STUDY_CASTS
+            chance = (nn, pct * nn)
+        else:
+            reasons.append("hitsWithoutCasts")
+    tot = num(r.get("totalQuantity"))
+    a, per = num(r.get("averageShown")), r.get("averagePer")
+    avg = unit_average(r, unit)
+    if tot is not None and n_u:
+        average = (n_u, tot)
+    elif avg is not None:
+        nn = n_u or SMALL_STUDY_CASTS
+        average = (nn, avg * nn)
+    if chance is None and average is None and not any(x.startswith("chanceNotConvertible") for x in reasons):
+        if tot is not None:
+            reasons.append("totalWithoutCasts" if not num(r.get("inputsProcessed")) else "totalNoBatch")
+        elif a is not None:
+            reasons.append(f"averageNoBatch:{per}")
+        elif num(r.get("percentShown")) is not None:
+            reasons.append(f"percent:{r.get('percentMeaning')}")
+        elif hits is None:
+            reasons.append("noNumbers")
+    return {"chance": chance, "average": average, "weight": weight, "reasons": reasons}
 
 
 def confidence(p, n):
@@ -512,14 +630,17 @@ def build(rows):
         mid = (lo + hi) / 2
         basis = []
         range_estimated = not (observed or has_ref_range)
+        unit = group_unit(method, g["studies"] + g["refs"])
         # ---- starting guess from reference values (S9: provisional prior, never counted as casts)
-        ref_p = [x for x in (chance_from_percent(r) for r in g["refs"]) if x is not None and x <= 1]
-        ref_e = [x for x in (per_cast_average(r) for r in g["refs"]) if x is not None]
+        ref_p = [x for x in (chance_from_percent(r) for r in g["refs"] if same_unit(r, unit)) if x is not None and x <= 1]
+        ref_e = [x for x in (unit_average(r, unit) for r in g["refs"]) if x is not None]
         prior_p = sum(ref_p) / len(ref_p) if ref_p else None
         prior_e = sum(ref_e) / len(ref_e) if ref_e else None
         # ---- add studies (S6 epochs and unlocks, S7 dedupe)
         casts_p = drops = 0.0
         casts_e = total = 0.0
+        casts_e_chance = 0.0       # casts_e as the chance counts them (M06 weights), for a chance derived from the average
+        equivalent_casts, converted, chance_dropped = 0.0, False, 0
         seen, skipped_ids, old_epoch, post_dated = set(), set(), None, None
         for r in g["studies"]:
             ident = study_identity(r, vectors)
@@ -536,22 +657,27 @@ def build(rows):
                 old_epoch = why
             elif why:
                 post_dated = why
-            n = num(r.get("casts"))
-            hits = num(r.get("castsWithDrop"))
-            pct = chance_from_percent(r)
-            tot = num(r.get("totalQuantity"))
-            avg = per_cast_average(r)
-            nn = (n if n else SMALL_STUDY_CASTS) * w
-            if hits is not None and n:
-                casts_p += n * w; drops += hits * w
-            elif pct is not None and pct <= 1:
-                casts_p += nn; drops += pct * nn
-            if tot is not None and n:
-                casts_e += n * w; total += tot * w
-            elif avg is not None:
-                casts_e += nn; total += avg * nn
+            use = row_use(r, unit)
+            k = use["weight"]
+            if use["chance"]:
+                n, hits = use["chance"]
+                casts_p += n * w * k; drops += hits * w * k
+            if use["average"]:
+                n, tot = use["average"]
+                casts_e += n * w; total += tot * w; casts_e_chance += n * w * k
+                if k < 1:
+                    equivalent_casts += n * w
+            converted = converted or any(x.startswith("converted") for x in use["reasons"])
+            chance_dropped += any(x.startswith("chanceNotConvertible") for x in use["reasons"])
         if post_dated:
             basis.append(post_dated + " (collection date unknown)")
+        if equivalent_casts:
+            basis.append(f"{round(equivalent_casts):,} casts counted from inputs or equivalents "
+                         f"(full weight in the average, {int(EQUIVALENT_CAST_WEIGHT * 100)}% in the chance)")
+        if converted:
+            basis.append(f"other batch sizes converted to {unit:g}-input casts")
+        if chance_dropped:
+            basis.append(f"{chance_dropped} chance values from other batch sizes left out (not convertible)")
         if old_epoch:
             basis.append(f"older-period data counted at {int(OLD_EPOCH_WEIGHT*100)}% ({old_epoch} rate change)")
         skipped_unlock = len(skipped_ids - seen)
@@ -592,7 +718,7 @@ def build(rows):
         # ---- confidence (S8: only casts that measured the chance)
         guess = GUESS_CONFIDENCE_CASTS if (prior_p is not None or prior_e is not None) else 0
         if chance_derived:
-            conf = confidence(min(p, 1.0), casts_e + guess) // 2
+            conf = confidence(min(p, 1.0), casts_e_chance + guess) // 2
         else:
             conf = confidence(min(p, 1.0), casts_p + guess)
         if casts_p == 0 and casts_e == 0:
@@ -604,11 +730,11 @@ def build(rows):
         if conflict:
             conf //= 2
         # uncertainty for recommendation-confidence simulations (S10)
-        n_p = (casts_e if chance_derived else casts_p) + guess
+        n_p = (casts_e_chance if chance_derived else casts_p) + guess
         sim_n = max(n_p, 1.0) / (2 if chance_derived else 1)
         avg_sd = (e * 0.5) if average_derived else math.sqrt(max(e, 1e-6) / max(casts_e + (PRIOR_CASTS if prior_e is not None else 0), 1))
         results.append({
-            "method": method, "input": inp, "outputItemID": out,
+            "method": method, "input": inp, "outputItemID": out, "inputsPerCast": unit,
             "conditional": req is not None, "requires": req,
             "chance": round(min(p, 1.0), 4), "average": round(e, 4), "range": [lo, hi],
             "rangeSource": ("estimated" if range_estimated and not (observed or has_ref_range) or "widened" in "; ".join(basis) or conflict

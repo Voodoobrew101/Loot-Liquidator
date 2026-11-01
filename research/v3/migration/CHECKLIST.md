@@ -4,7 +4,7 @@ Status values: Not Started / In Progress / Blocked / Complete. A box is ticked o
 acceptance criterion is met and the evidence column points at something checkable.
 Sessions run in Claude (owner's choice, 2026-10-31). Effort = Claude's thinking effort: Low / Medium / High / Extra High (xhigh) / Max.
 
-Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 → M04 → M07 → M08 → M09 → M10
+Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 → M07 → M08 → M09 → M10
 (M04.1 linking may run in parallel with M05 once M02 is done.)
 
 ## Progress
@@ -12,11 +12,11 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 → M04 → M07 → M
 | | Count |
 | --- | --- |
 | Top-level tasks | 11 |
-| Complete | 5 (M00, M01, M02, M05, M03) |
+| Complete | 6 (M00, M01, M02, M05, M03, M06) |
 | In progress | 0 |
 | Blocked | 0 |
-| Not started | 6 |
-| Completion (verified top-level) | 45% |
+| Not started | 5 |
+| Completion (verified top-level) | 55% |
 
 ---
 
@@ -82,10 +82,16 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 → M04 → M07 → M
     - Done MIG-004: 8 ledgers classified, 0 imported (coverage/score/derived tables; personal-pooled counts are the GameData rows already imported); s6bfrl uncommon gems listed as an M04.1 exception
 
 ## M06 — Units, denominators and yield reconciliation
-- [ ] **M06 — Use totals-only evidence correctly (S16) and unify cast bases**
+- [x] **M06 — Use totals-only evidence correctly (S16) and unify cast bases**
   - Priority: P1 · Depends on: M02, M03.1, M05 · Model: Claude Opus 5.5, High
   - Acceptance: one rule for `reported` vs `countedFromInputs`/`nominalEquivalent` casts applied to imported and new rows alike; the 529 totals-only rows (92 studies) either contribute or carry a reason; per-input/per-cast/per-hit/aggregate units checked; Resourcefulness treated per mechanics M9/M10/W2; tests for each basis; diff reviewed
-  - Status: Not Started · Evidence: —
+  - Status: Complete (MIG-005) · Evidence: `reports/M06-units.md`, `M06-units-data.json` (`tools/units_report.py`), `M06-estimates-diff.md`, `M06-identity-data.json` (identical to M03b); `tests/test_m06_units.py` (23); 148 tests OK; two rebuilds byte-identical (`6976d1bd…`, SciPy); importer unchanged and idempotent; corrections 643/333; validator 5/175
+  - [x] M06.1 measure units, bases, totals-only rows and mixed groups before any change (654 unused rows, 551 totals-only / 105 studies, 58 mixed groups)
+  - [x] M06.2 one rule: reported full; countedFromInputs / nominalEquivalent / derived / counted from `inputsProcessed` / converted casts full in the average, 0.5 in the chance (`EQUIVALENT_CAST_WEIGHT`)
+  - [x] M06.3 per-input normalization to the group unit (`inputsPerCast` on every estimate); other-batch chances left out; mixed unconverted groups 58 → 0
+  - [x] M06.4 machine-readable reason for every unused row (`row_use` reasons; 626 rows listed); totals-only 551 → 526 unused (25 now count)
+  - [x] M06.5 backfill lists for the Master (434 agent totals with inputs only in notes, 92 of them "do not infer"; 398 agent counted casts without `castsBasis`)
+  - Open for the Master (not M06 acceptance): the 0.5 weight, the two backfills
   - Note (MIG-004): 25 more totals-without-casts rows (`legacy-milling-cohorts.jsonl`, zzyjzu) and 3 per-herb rates arrived; the BfA/SL milling groups mix 20-herb mass-mill means with five-herb equivalents under one per-cast estimate (`reports/M03b-import.md`, For the Master 1)
 
 ## M04 — Markdown and irregular sources
@@ -130,7 +136,7 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 → M04 → M07 → M
 | MIG-002 | M05 | done |
 | MIG-003 | M03.0, M03.1, M03.5 | done |
 | MIG-004 | M03.2–M03.4, M03.6 | done |
-| MIG-005 | M06 | next |
-| MIG-006 | M04.1, M04.2 | can run any time now (independent of M05) |
+| MIG-005 | M06 | done |
+| MIG-006 | M04.1, M04.2 | next |
 | MIG-007+ | M04.3 batches, M04.4 | parallel workers by source URL |
 | later | M07, M08, M09, M10 | |

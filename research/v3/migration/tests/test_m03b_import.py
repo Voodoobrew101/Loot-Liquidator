@@ -253,10 +253,17 @@ class EstimatorEffect(Fixture):
         e = self.one([ref, drop("a", casts=100, castsWithDrop=20, totalQuantity=30)])
         self.assertEqual((e["studyCasts"], e["referenceValues"]), (100, 1))
 
-    def test_totals_without_casts_add_no_casts(self):
-        e = self.one([drop("a", casts=100, castsWithDrop=20, totalQuantity=30),
-                      drop("import-legmill-00001", casts=None, castsBasis=None, inputsProcessed=1000, inputsPerCast=20, totalQuantity=814)])
-        self.assertEqual(e["studyCasts"], 100)
+    def test_totals_without_casts_count_from_inputs(self):
+        # Was test_totals_without_casts_add_no_casts (MIG-004: "M06 decides"). M06 counts casts from
+        # inputsProcessed in the group's unit: 1,000 herbs of 20-herb mass mills = 200 five-herb casts,
+        # full weight in the average, none in the measured chance (the row has no hits).
+        e = self.one([drop("a", method="Mill", casts=100, castsWithDrop=20, totalQuantity=30),
+                      drop("import-legmill-00001", method="Mill", casts=None, castsBasis=None, inputsProcessed=1000,
+                           inputsPerCast=20, totalQuantity=814)], key=("Mill", "1001", 2001))
+        self.assertEqual(e["studyCasts"], 300)
+        self.assertAlmostEqual(e["average"], (30 + 814) / 300, places=4)
+        self.assertAlmostEqual(e["chance"], 0.2)
+        self.assertEqual(e["inputsPerCast"], 5)
 
 
 class Committed(unittest.TestCase):

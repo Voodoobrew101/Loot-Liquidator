@@ -219,3 +219,73 @@ are listed for the Master and not imported.
 **Ending commit:** see `git log` ("v3 migration M03: …").
 
 **Remaining:** M06, M04, M07, M08, M09, M10.
+
+---
+
+## MIG-005 — 2026-10-31 (Claude Opus 5.5, Claude in a cloud session)
+
+**Tasks:** M06 units, denominators and cast-basis weighting (S16). M06 complete.
+
+**Starting commit:** `98893b8` on `migration/v3-historical-research`.
+
+**Environment:** Linux, Python 3.13.18 (`python3`), **SciPy 1.18.1 installed** (same code path as MIG-003/004). Repo
+attached with push access on the first request. Clone deepened with `git fetch --depth=1000 origin
+migration/v3-historical-research`. `before.json` and the M03b identity copy kept outside the repo. No network for evidence,
+no AI extraction. The session was interrupted once and resumed; nothing was lost (all work was on disk).
+
+**Created:** `migration/tools/units_report.py`; `migration/tests/test_m06_units.py`;
+`migration/reports/{M06-units.md,M06-units-data.json,M06-estimates-diff.md,M06-identity-data.json}`.
+**Modified:** `research/v3/tools/build_estimates.py` (`row_unit`, `group_unit`, `same_unit`, `unit_average`, `row_use`,
+four constants; the study loop and reference priors use them; estimates gain `inputsPerCast`; basis text names
+equivalent and converted casts); `migration/tests/test_build_estimates.py`, `migration/tests/test_m03b_import.py` (one test
+each, below); `migration/{PLAN,SCHEMA-EXTENSION,CHECKLIST,HANDOFF,SESSION_LOG}.md`.
+Not changed: any evidence file, `corrections.jsonl`, `strategy.md`, `evidence-format.md`, `import_existing.py`,
+committed `output/`, addon files.
+
+**Test edits, as the test-file header requires:**
+- `test_build_estimates.Basics.test_known_defect_totals_without_casts_unused` → `test_total_without_casts_or_input_count_unused`
+  (assertion unchanged: the row states no `inputsProcessed`; S16 is resolved only for rows that do).
+- `test_m03b_import.EstimatorEffect.test_totals_without_casts_add_no_casts` → `test_totals_without_casts_count_from_inputs`
+  (behaviour changed on purpose: 1,000 herbs at 20 per mass mill now count as 200 five-herb casts; studyCasts 100 → 300).
+
+**Commands actually run (repo root):**
+- `python3 research/v3/tools/build_estimates.py` at HEAD → 4,933 records, 1,205 estimates, 447 unplaced; `estimates.json` `3861b696…`, `summary.md` `0ed83dd3…` (= MIG-004). Copied to `before.json`; `M03b-identity-data.json` copied; output restored.
+- `python3 -m unittest discover -s research/v3/migration/tests` at HEAD → 125 OK.
+- Ad-hoc measurement scripts kept outside the repo (basis × fields, row shapes, contribution today, mixed groups, cast unit consistency `casts × inputsPerCast` vs `inputsProcessed`, agent note patterns, group review); the committed `units_report.py` reproduces their counts.
+- `python3 research/v3/tools/build_estimates.py` twice after the change → 4,933 records, 1,205 estimates, 447 unplaced; `estimates.json` `6976d1bd…`, `summary.md` `c16d76e6…` both times (`sha256sum -c`).
+- `python3 research/v3/migration/tools/estimates_diff.py before.json research/v3/output/estimates.json --md research/v3/migration/reports/M06-estimates-diff.md` → 0 added, 0 removed, 112 changed; largest chance move 0.6753.
+- `python3 research/v3/migration/tools/identity_report.py --json research/v3/migration/reports/M06-identity-data.json` → differing 0; groups 128; partial copies 24; near copies 24; pooled 1. File identical to `M03b-identity-data.json`.
+- `python3 research/v3/migration/tools/units_report.py --json research/v3/migration/reports/M06-units-data.json` (twice, `cmp` identical).
+- Sensitivity run (ad hoc): backfilling the 398 agent counted-cast rows as `countedFromInputs` → 18 estimates change, confidence ≤ 3 points, no chance or average.
+- Output restored (`git checkout -- research/v3/output`).
+- `python3 research/v3/migration/tools/validate.py` → 5 errors (3 METHOD_UNKNOWN, 2 METHOD_MISSING), 175 warnings; `manifest/validation.json` unchanged.
+- `python3 research/v3/tools/audit_studies.py` → 473 studies, 40 clean. Output restored.
+- `python3 research/v3/tools/import_existing.py --report <tmp>` twice → `evidence/imported/` unchanged by `git status`, `diff -r` and report `cmp` identical.
+- Correction check (`build_estimates.load()`): 643 lines all matching; 333 corrected records (45 import-study, 52 import-ref).
+- `python3 -m unittest discover -s research/v3/migration/tests -v` → **148 tests OK** (125 + 23).
+
+**Measured results:** in `reports/M06-units.md`. Key: placed study rows contributing nothing 654 → 626 (every one with a
+reason code); totals without casts unused 551 rows / 105 studies → 526 / 92; mixed-batch groups without conversion 58 → 0;
+373 rows now count at the 0.5 chance weight; 38 chance moves of 5+ points, all from per-20 mass casts converted to
+five-input casts (BfA/SL/Legion milling, SL prospecting) or WoD totals that now count; 65 studyCasts rises, none from copies.
+
+**Problems:**
+- 58 imported nominalEquivalent rows say `inputsPerCast` 20 while their casts are five-input units. A first unit rule
+  that used `inputsPerCast` there would have divided them by 4; `row_unit()` reads nominal casts as 5 (tested).
+- The first `group_unit()` counted nominal units as stated batches, so a Midnight 10-herb group with a nominal row would
+  have become a 5-herb group (caught by `test_midnight_ten_herb_unit`); it now reads stated batches only.
+- The first `row_use()` tagged a conversion only for rows with casts; averages without casts and mass-mill rows counted
+  from inputs were converted silently and `units_report.py` listed 24 groups as "unconverted". Fixed: every conversion
+  carries `converted:<own>-><unit>`.
+- An ad-hoc script named `inspect.py` shadowed the standard library module; renamed (outside the repo).
+- Agents write counted casts (README rule 2) without `castsBasis`, so the field-based rule reads them as reported. Not
+  fixed in code (no new free-text parsing; M08 removes it); listed for backfill.
+
+**Decisions:** PLAN §3 rule 2 implemented as written there and detailed in `reports/M06-units.md` (weight 0.5; normalize
+per input inside one group rather than splitting groups; other-batch chances left out; refunds never change counts;
+notes never read). `units_report.py` is the machine-readable "unused reason" source until M08 moves per-record reasons
+into the estimator output. Schema proposals 7 and 8 added to `SCHEMA-EXTENSION.md`.
+
+**Ending commit:** see `git log` ("v3 migration M06: …").
+
+**Remaining:** M04, M07, M08, M09, M10.

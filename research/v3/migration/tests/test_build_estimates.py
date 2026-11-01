@@ -107,8 +107,10 @@ class Basics(Fixture):
         self.assertLessEqual(e["confidence"], b.GUESS_ONLY_MAX_CONFIDENCE)
         self.assertTrue(e["basis"].startswith("starting guess only"))
 
-    def test_known_defect_totals_without_casts_unused(self):
-        # S16 / M06: a total with no cast count contributes nothing today.
+    def test_total_without_casts_or_input_count_unused(self):
+        # M06: was test_known_defect_totals_without_casts_unused. A total counts once the row states
+        # inputsProcessed (test_m06_units); an input count only in notes is not read, so this row stays
+        # unused, now with the reason "totalWithoutCasts" (row_use).
         res, _ = self.build([drop("a", totalQuantity=300, notes="10,000 ore, not casts")])
         self.assertEqual(res, {})
 

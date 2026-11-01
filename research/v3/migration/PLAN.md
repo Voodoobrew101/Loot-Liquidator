@@ -189,6 +189,13 @@ S5–S13 stand. Changes this plan introduces, each behind tests:
    toward the **average** (quantity per cast is bounded and Resourcefulness only blurs it) but enter the
    **chance** confidence at a reduced, documented weight; reported casts count fully. Same rule for
    imported and new records, so the inconsistency in §2.3 disappears.
+   *Implemented in M06 (MIG-005), `reports/M06-units.md`:* weight `EQUIVALENT_CAST_WEIGHT` = 0.5 in the chance (its
+   estimate and confidence), full in the average, for bases countedFromInputs / nominalEquivalent / derived, casts
+   counted from `inputsProcessed` ÷ unit, and casts converted from another batch size. Every estimate is per cast of its
+   group's unit (`inputsPerCast` in the output: prospecting 5 by G1, otherwise the smallest stated batch); other batch
+   sizes convert per input for averages, and their per-cast chances are left out (not convertible). Refunds never change
+   a count; inputs written only in notes are not read. Agents' counted casts without `castsBasis` read as reported, so the
+   remaining inconsistency is in the data (398 agent rows listed for backfill), not in the code.
 3. Dates: structured `dataDate` only; free text moves to `notes`/`dataDateText`. *(Done for imported rows in M03.1: free text
    in `dataDateText`, the old observation date in `observedOn`, which the estimator reads after `dataDate`.)*
 4. **Name-only outputs (M03.1, new):** an output without an item ID is always stored (`rawOutputName`), but placed
