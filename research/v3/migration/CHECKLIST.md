@@ -12,11 +12,11 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
 | | Count |
 | --- | --- |
 | Top-level tasks | 11 |
-| Complete | 10 (M00, M01, M02, M05, M03, M06, M04, M07, M08, M09) |
-| In progress | 1 (M10: all but the pull request) |
+| Complete | 11 (M00 to M10) |
+| In progress | 0 |
 | Blocked | 0 |
 | Not started | 0 |
-| Completion (verified top-level) | 91% (10 of 11) |
+| Completion (verified top-level) | 100% (11 of 11) |
 
 ---
 
@@ -151,10 +151,10 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
   - Note: bands were produced without SciPy; a SciPy machine has not run `report.py`
 
 ## M10 — Final reconciliation and integration
-- [ ] **M10 — Reconcile agent additions since the snapshot and open the PR**
+- [x] **M10 — Reconcile agent additions since the snapshot and open the PR**
   - Priority: P1 · Depends on: all · Model: Claude Sonnet 5.5, High
   - Acceptance: branch updated with latest `implementation/five-agent-completion`; full pipeline rerun from scratch byte-identical; all tests pass; `evidence-format.md` change proposed; PR open against `implementation/five-agent-completion`
-  - Status: In Progress (MIG-011): every item but the PR is met; no tool could open a PR (no `gh`, GitHub plugin failed to connect). Not ticked until the PR exists.
+  - Status: Complete: PR open, https://github.com/Voodoobrew101/Loot-Liquidator/pull/15, not merged
   - Evidence: `reports/M10-merge.md`, `M10-estimates-diff.md`, `M10-identity-data.json`, `M10-evidence-format-proposal.md`, `M10-pr-description.md`; `tests/test_m10_merge.py` (12); 402 tests OK
   - [x] M10.1 merge `implementation/five-agent-completion` (`0260584`) into the branch, no conflict resolved by guessing
     - Done MIG-011: merge commit `e9a0243`; one conflict (`build_estimates.py`), resolved by keeping M05's identity and porting the reviewer's Wowhead page rule, then checked against the reviewer's own numbers (Tontons 253 / 322 / 555)
@@ -164,8 +164,8 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
     - Done MIG-011: two rebuilds `1089e517…`; two importer reports `cmp` identical; 402 tests OK (390 + 12); `report.py --check` identical; corrections 683 lines, all matching a record
   - [x] M10.4 `evidence-format.md` change proposed (owner-only file not edited)
     - Done MIG-011: `reports/M10-evidence-format-proposal.md`; two choices marked undecided (`unlockState` rule, METHODS wording)
-  - [ ] M10.5 pull request open against `implementation/five-agent-completion`
-    - Not done MIG-011: no PR tool; branch pushed; description drafted in `reports/M10-pr-description.md`; compare URL in HANDOFF
+  - [x] M10.5 pull request open against `implementation/five-agent-completion`
+    - Done (owner opened it by hand after MIG-011): https://github.com/Voodoobrew101/Loot-Liquidator/pull/15; not merged
 
 ## Planned sessions
 
@@ -182,4 +182,4 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
 | MIG-009 | M08 | done |
 | MIG-010 | M09 | done |
 | MIG-011 | M10 | done except the PR |
-| MIG-012 | M10.5 (open the PR) | next |
+| MIG-012 | M10.5 (open the PR) | done by the owner, no session needed |

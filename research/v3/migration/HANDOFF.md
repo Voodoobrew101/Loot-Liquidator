@@ -6,8 +6,8 @@
 
 - Repository `Voodoobrew101/Loot-Liquidator`, working branch **`migration/v3-historical-research`**
   (cut from `implementation/five-agent-completion` at snapshot `575b252`; since MIG-011 it also contains that branch up to `0260584`).
-- Complete: **M00**, **M01**, **M02**, **M05**, **M03**, **M06**, **M04**, **M07**, **M08**, **M09** (10 of 11 top-level tasks, 91%).
-  **M10 is in progress: everything but the pull request is done**; no PR tool was available in MIG-011 (see "Next task").
+- Complete: all 11 top-level tasks (100%).
+  **M10 is complete: the pull request is open, https://github.com/Voodoobrew101/Loot-Liquidator/pull/15** (opened by the owner by hand; not merged).
 - Latest verified baseline (no SciPy on the MIG-011 machine): 5,632 effective evidence records → **1,133 estimates** (451 unplaced);
   **402** migration tests pass; validator 5 errors / 259 warnings; study audit 595 studies, 70 clean; corrections 683 lines (397 record IDs).
 - Estimates sha256 (no SciPy): `1089e517…`; `summary.md` `d2b1a1bb…`; `unused.json` `df921753…`. Earlier hashes (`898790d5…`) are for the pre-merge evidence.
@@ -132,7 +132,9 @@
 - When checking whether v3 holds a source, compare **normalized keys** (`source_keys.normalize_url`), never raw URLs, and treat a
   language-suffixed Wowhead key as its base page (`extract_batch.strip_lang`).
 
-## Next task: open the pull request (the last step of M10)
+## Next: nothing to build. PR https://github.com/Voodoobrew101/Loot-Liquidator/pull/15 is open; the owner decides
+
+(Historical note, written before the PR existed:)
 
 Why: acceptance for M10 includes an open PR against `implementation/five-agent-completion`. MIG-011 had no way to open one: `gh` is not installed on the
 owner's machine and the GitHub plugin failed to connect ("Authorization header is badly formatted"). The branch is pushed, so the owner can open it
