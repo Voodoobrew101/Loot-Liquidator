@@ -63,6 +63,20 @@ local byID={} for _,m in ipairs(model.materials) do byID[m.id]=m end
 ok(byID[36917] and math.abs(byID[36917].expectedQuantity-0.1792)<0.02,'Bloodstone average comes from v3 (~0.18 per prospect)')
 ok(type(model.confidence)=='number' and model.confidence>0,'the option gets a confidence')
 ok(type(prospect.value)=='number' and prospect.value>0,'the option gets a gold value')
+-- D1c6: corrected study identities reach the shipped database and use each
+-- gem's own auction price (Ysemerald R3 is 192861, Neltharite R3 is 192865).
+local serevite = assert(v3['evidence:v3:Prospect:190396:x5'])
+local gemModel = {inputCount=serevite.inputCount,materials={},confidence=50}
+for _,m in ipairs(serevite.materials) do
+    if m.id==192861 or m.id==192865 then
+        gemModel.materials[#gemModel.materials+1]={id=m.id,expectedQuantity=m.expectedQuantity.value,confidence=50}
+        ok(math.abs(m.expectedQuantity.value-(m.id==192861 and 0.005 or 0.008))<1e-9,
+            'Serevite yields belong to the correct gem: '..m.id)
+    end
+end
+LL.GetOutputPrice=function(_,id)return ({[192861]=10000,[192865]=1000})[id] end
+ok(#gemModel.materials==2 and math.abs(LL:ValueProcessingModel(gemModel,0,true)-11.6)<1e-9,
+    'corrected gems are priced separately, per input ore')
 -- D1c2: a gem the research named without a quality rank ships as one material listing
 -- every rank's item ID, and is priced at the cheapest rank that has a price.
 local rankUnknown

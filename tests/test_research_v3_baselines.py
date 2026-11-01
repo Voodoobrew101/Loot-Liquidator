@@ -92,6 +92,14 @@ ok(gem['dropChance']['confidence'] == 50, 'Saronite -> Bloodstone confidence')
 aq = {m['id']: m for m in by_id['evidence:v3:Prospect:210933:x5']['materials']}
 near(aq[213398]['dropChance']['value'], 0.5209, 'Aqirite -> 213398 chance', 1e-4)
 
+# D1c6: the 1,000-prospect R2 Serevite study names Ysemerald R3 (5 gems)
+# and Neltharite R3 (8 gems), but some copies swapped the item numbers.
+# Correct names/ranks before grouping and deduplication, then price the right gem.
+serevite = {m['id']: m for m in by_id['evidence:v3:Prospect:190396:x5']['materials']}
+near(serevite[192861]['expectedQuantity']['value'], 0.005, 'Serevite -> Ysemerald R3 average')
+near(serevite[192865]['expectedQuantity']['value'], 0.008, 'Serevite -> Neltharite R3 average')
+near(serevite[192861]['expectedQuantity']['samples'], 500, 'corrected study counted only once at half weight')
+
 # Gear group written with names by a worker becomes the addon's numeric key.
 ok('evidence:v3:Disenchant:gear:10:2:weapon:x1' in by_id, 'War Within green weapons from a worker study')
 # Battle for Azeroth herbs mix 5-herb and 20-herb studies: left out, never blended.

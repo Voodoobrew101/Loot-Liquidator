@@ -107,6 +107,25 @@ def load_families(path=None):
     return {name.strip().lower(): list(entry['ids']) for name, entry in data['families'].items()}
 
 
+def resolve_ranked_outputs(rows, path=None):
+    """D1c6: fix gem identity from sourced name/rank mappings, never from ID order.
+
+    Some v3 studies swapped Ysemerald/Neltharite IDs; other copies omit the ID.
+    Resolve both before the calculator groups and deduplicates studies. Only
+    explicitly verified ranks are eligible; no counts or on-disk evidence change.
+    """
+    families = json.loads(Path(path or FAMILIES_FILE).read_text())['families']
+    ranked = {(name.strip().lower(), rank): item
+              for name, entry in families.items() if entry.get('source', '').startswith('https://')
+              for rank, item in entry.get('verifiedRanks', {}).items() if item in entry['ids']}
+    resolved = []
+    for row in rows:
+        key = ((row.get('outputName') or '').strip().lower(), str(row.get('outputRank')))
+        item = ranked.get(key)
+        resolved.append(dict(row, outputItemID=item) if item is not None else row)
+    return resolved
+
+
 # ---- 2. run their calculator on real studies only
 def load_calculator(snapshot):
     path = snapshot / 'research' / 'v3' / 'tools' / 'build_estimates.py'
@@ -169,7 +188,7 @@ def counts(estimate):
 
 def build(snapshot):
     module = load_calculator(snapshot)
-    rows = module.load()
+    rows = resolve_ranked_outputs(module.load())
     # Their published run (all rows) only supplies the amount range per cast (e.g. 1-2 gems),
     # which reference rows often state and studies rarely do. A range is not a yield figure.
     published, _ = module.build(rows)
