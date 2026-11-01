@@ -1,37 +1,40 @@
 # Handoff
 
-**Updated:** 2026-11-01, end of session MIG-007.
+**Updated:** 2026-11-01, end of session MIG-008.
 
 ## Status
 
 - Repository `Voodoobrew101/Loot-Liquidator`, working branch **`migration/v3-historical-research`**
   (cut from `implementation/five-agent-completion` at snapshot `575b252`). Hourly agents keep committing to
   `implementation/five-agent-completion`; do not merge it in before M10.
-- Complete: **M00**, **M01**, **M02**, **M05**, **M03**, **M06**, **M04** (7 of 11 top-level tasks, 64%). Open: M07, M08, M09, M10.
-- Latest verified baseline (SciPy installed): 4,945 effective evidence records → **1,205 estimates** (449 unplaced), 3 of them changed
-  by M04.3; **267** migration tests pass; validator 5 errors / 175 warnings (unchanged); identity report unchanged since M03b; study
-  audit 475 studies, 40 clean; corrections 643 lines / 333 corrected records.
-- Estimates sha256 with SciPy: `d959496a…` (`summary.md` `fbf8e3b2…`). It was `6976d1bd…` / `c16d76e6…` through MIG-006. Without
-  SciPy it differs (confidence values only).
+- Complete: **M00**, **M01**, **M02**, **M05**, **M03**, **M06**, **M04**, **M07** (8 of 11 top-level tasks, 73%). Open: M08, M09, M10.
+- Latest verified baseline (SciPy installed): 4,945 effective evidence records → **1,205 estimates** (449 unplaced); **304** migration
+  tests pass; validator 5 errors / 175 warnings (each queued in `exceptions.jsonl` with a proposed fix); study audit 475 studies,
+  40 clean; corrections 643 lines / 333 corrected records. M07 changed no estimate.
+- Estimates sha256 with SciPy: `d959496a…` (`summary.md` `fbf8e3b2…`). Without SciPy it differs (confidence values only).
 
-## What M04.3 and M04.4 produced (MIG-007)
+## What M07 produced (MIG-008)
 
-- `tools/extract_batch.py`: `prompt`, `submit`, `status`, `verify`, `write`. No model API exists in the workspace; the reader is the
-  session. The validator checks quotes, numbers, arithmetic and the finished record (PLAN section 3 rule 7). Report:
-  `reports/M04-extraction.md` (counts, estimate changes, For the Master); spot-check: `reports/M04-spot-check.md`.
-- 55 of 55 queue sources have a checkpoint in `manifest/extraction/`: **9 with rows (12 rows)**, **46 null with a reason code**. Rows
-  are in `evidence/imported/extracted-historical-sources.jsonl`, written only by `extract_batch.py write`. Checkpoints carry their
-  queue entry and the writer reads checkpoints, so rows survive `link_sources.py` dropping a source from the live queue. Rerun
-  `extract_batch.py write` whenever the evidence changes; a source v3 holds by then is skipped and reported as `held` (M10).
-- The 12 rows: 3 Nightshade totals (placed, the only estimate change), 2 Felwort totals (unplaced), 7 recipe batch sizes (no
-  estimator effect). 46 nulls: ambiguous-doubt 12, qualitative 9, reference-table 8, numbers-not-this-source 8, identity-link-only 4,
-  needs-original-post 2, held-elsewhere 2, no-observational-numbers 1.
-- Spot-check: 12 of 12 rows correct; 5 of 5 sampled nulls confirmed; 10 weak links (8 true, 1 right source with a coincidental number,
-  1 false link on a held source).
-- `link_sources.py` amended: a source held only by `recipe` records is `source-held`, not an exception. After the rerun: 265 files →
-  linked 140, exception 44, residue 42, disposed 39; the live queue is the 46 null sources. **The 46 stay residue to the linker**; M07
-  disposes their files using the checkpoint reasons.
-- `EXTRA_FILES` in `extract_batch.py` adds two sibling notes the queue never held (the inventory marked them `source-links-only`).
+- `tools/dispositions.py` builds, deterministically, `manifest/dispositions.jsonl` (1,244 rows: path, sha256, final disposition from a
+  closed vocabulary of 12, `reason {code, text}`, `pointers`), `manifest/exceptions.jsonl` (134 rows), `manifest/scope-gap.jsonl`
+  (47 sources) and `manifest/dispositions-summary.json`. `python3 research/v3/migration/tools/dispositions.py [--check]`. Report:
+  `reports/M07-dispositions.md` (counts, rules, scope gap, the 5 validator fixes, For the Master). PLAN section 3 rule 8 is new.
+- Counts: no-observational-content 432, process-artifact 313, linked 131, held-sources-only 129, exception-queued 65, imported 55,
+  extracted-null 47, reference-only 32, derived-model 22, source-links-only 10, extracted 4, mechanics-knowledge 4. Nothing is left
+  `preliminary`, `candidate-*` or `covered-by-url`.
+- The 46 null sources: their 42 residue files are 21 `extracted-null` + 21 `exception-queued`; 26 further files cite a null source;
+  every null source is named with its code in some reason. The linker still reports them as residue (unchanged).
+- Exception queue: 83 link groups (65 files), 6 Jallfo, s6bfrl (6 outputs), zkay8v (22 rows), 1smgllg (14), Felslate 101-vs-97, 12
+  ambiguous-doubt, 9 cross-source pairs, 3 merges with conflicts, 12 single-row subsets, 5 validator errors. 1,070 record IDs named.
+  The 12 ambiguous-doubt rows point at their checkpoint (nothing was written for them).
+- Validator fixes are *proposed*, each as a correction line in the exception row: 3 `method: null` for rateChange records
+  (`dragonflight-20261030-041`, `dragonflight-20261031-7010`, `war-within-20261031-18028`) and 2 `exclude` for quarantined ItemDB rows
+  (`import-ref-00697`, `-00698`). Checked in memory: estimates unchanged, unplaced 449 → 447. `corrections.jsonl` is the Master's and was not touched.
+- Scope gap: the 23 unheld sources with counts reproduce exactly; cutting CSV rows from the keys leaves 16, of which 9 are queue sources
+  and 7 are decided (qualitative, IDs only, derivative calculator, a patch thread, a published table). No new checkpoint was needed and
+  the linker pattern was not widened. A new such source fails a test until decided.
+- `held-sources-only` (129) means every cited source is held at page or thread level and the file has no observational numbers of
+  its own. It is not a claim that a cohort is covered.
 
 ## Read before relying on older numbers
 
@@ -70,22 +73,22 @@
 - When checking whether v3 holds a source, compare **normalized keys** (`source_keys.normalize_url`), never raw URLs, and treat a
   language-suffixed Wowhead key as its base page (`extract_batch.strip_lang`).
 
-## Next task: M07 — final dispositions and the exception queue
+## Next task: M08 — estimator integration
 
-Why now: M03 and M04 are done, so every historical file is either imported, linked, extracted (rows or a reasoned null), an
-exception, or still unclassified. M07 turns that into one final disposition per file and one queue of what a person must decide.
-Dependencies: M03, M04 (done). No network.
+Why now: M03 to M07 settled what is in v3 and what each historical file became; M08 is the only task that changes
+`build_estimates.py`, so it runs on a clean, fully classified corpus with golden before/after diffs available.
+Dependencies: M05, M06 (done). No network.
 
 Sessions run in **Claude** (owner's choice).
-**Recommended model:** Claude Sonnet 5.5 · **thinking effort:** Medium
-**Alternative:** Claude Opus 5.5 · Medium if the exception triage needs judgement rather than rules
-**Reason:** the dispositions are rule-driven from manifests already built (inventory, links, checkpoints, import reports); the
-exception queue is mostly listing with record IDs. Use the stronger model only if the 83 exception groups need real adjudication.
+**Recommended model:** Claude Opus 5.5 · **thinking effort:** Medium
+**Alternative:** Claude Sonnet 5.5 · High if the owner prefers it for cost; the changes are small but each needs a fixture test and a diff
+**Reason:** this is the one task that changes estimator behaviour; a wrong default silently moves estimates, so the stronger model's care
+with edge cases (structured `unlockState` against note text, ISO-only dates, `percentMeaning: null`) is worth it. Dispositions and reports are done.
 
 ## Ready-to-paste prompt for the next session
 
 ```text
-You are continuing the Loot Liquidator historical-research migration (session MIG-008).
+You are continuing the Loot Liquidator historical-research migration (session MIG-009).
 
 Repository: Voodoobrew101/Loot-Liquidator
 Branch: migration/v3-historical-research (already exists on origin; check it out, do NOT work on main or
@@ -102,67 +105,64 @@ On Windows: clone to a short path with -c core.longpaths=true -c core.autocrlf=f
 
 READ FIRST, in order:
 1. research/v3/migration/HANDOFF.md
-2. research/v3/migration/PLAN.md (section 3 strategy table, "Statistical rules" 1-7, "Risks and safeguards")
-3. research/v3/migration/CHECKLIST.md (task M07)
-4. research/v3/migration/SESSION_LOG.md (MIG-006, MIG-007)
-5. research/v3/migration/reports/M04-extraction.md and M04-spot-check.md ("For the Master" and the two scope findings)
-6. research/v3/migration/manifest/inventory.jsonl (1,244 files, preliminary dispositions), manifest/inventory-summary.md,
-   manifest/links.jsonl (265 in-scope files with outcomes and reasons), manifest/extraction/*.json (55 checkpoints; the 46 nulls
-   carry reason codes), manifest/validation.json
-7. research/v3/migration/reports/M03-import.md, M03b-import.md, M05-identity.md, M06-units.md (what each importer skipped and why)
-8. research/v3/migration/tools/inventory.py, link_sources.py, extract_batch.py, validate.py, and the importer
-   research/v3/tools/import_existing.py (NEW_SOURCES)
+2. research/v3/migration/PLAN.md (section 2 items 4 and 7 and "Other design flaws", section 3 "Statistical rules" 1-8)
+3. research/v3/migration/CHECKLIST.md (task M08)
+4. research/v3/migration/SESSION_LOG.md (MIG-005 for the units work, MIG-008)
+5. research/v3/migration/reports/M06-units.md and M06-units-data.json (unusedRows, contributeNothing, backfill), and
+   research/v3/tools/units_report.py output: today's "unused reason" lives there
+6. research/v3/migration/reports/M07-dispositions.md ("For the Master", the validator fixes)
+7. research/v3/migration/SCHEMA-EXTENSION.md (unlockState, castsBasis, observedOn)
+8. research/v3/tools/build_estimates.py (unlock_state(), chance_from_percent(), the date/epoch logic, study identity from M05/M06)
+   and research/v3/migration/tests/test_build_estimates.py and test_m06_units.py (characterization tests)
 
-TASK: M07 — a final disposition for every one of the 1,244 files, and the exception queue. No network. No AI extraction.
+TASK: M08 — the estimator consumes all usable evidence, and every record it does not use says why. No network. No AI extraction.
 
 Steps:
-1. Baseline: run python research/v3/tools/build_estimates.py, copy research/v3/output/estimates.json outside the repo as before.json,
-   then git checkout -- research/v3/output. Note whether SciPy is installed (expected estimates sha256 with SciPy: d959496a...). Run
-   the tests (267 expected).
-2. Write research/v3/migration/tools/dispositions.py that builds manifest/dispositions.jsonl deterministically from the inventory,
-   the link outcomes, the extraction checkpoints and the import reports. One row per file: path, sha256, final disposition from a
-   closed vocabulary (for example imported, linked, extracted, extracted-null, exception-queued, reference-only, process-artifact,
-   derived-model, mechanics-knowledge, no-observational-content, source-links-only), a machine-readable reason, and pointers
-   (record IDs, checkpoint, report). No file may be left "preliminary", "candidate-*" or "covered-by-url".
-3. The 46 null extraction sources keep their 42 files "residue" in the linker. Dispose those files from their checkpoint reasons,
-   and say in the reason which source and which code.
-4. Exception queue: write manifest/exceptions.jsonl with every contradiction or suspicious transformation, each with record IDs and
-   a kind: the 44 exception files (83 source groups), the six Jallfo exceptions, s6bfrl uncommon gems, the 22 zkay8v 10,000-ore rows,
-   the 1smgllg placements, the 37 v2/source-reviews files and 21 submission audit CSVs (all without study objects, so
-   dispose or queue each), the Felslate 2016 101-vs-97 total, the 12 ambiguous-doubt extraction sources, and the validator's 5
-   errors (3 METHOD_UNKNOWN, 2 METHOD_MISSING: list each with a fix path through corrections.jsonl or an agent flag).
-5. Scope gap from M04.3: the queue missed notes the inventory marked source-links-only, and the linker's count pattern needs a
-   unit word. Measure how many unheld sources with counts sit in out-of-scope files (M04-extraction.md says 23). Decide per source
-   whether it needs an extraction checkpoint (use extract_batch.py and EXTRA_FILES) or a reasoned disposition; widen the linker
-   pattern only if a test pins it and the rerun is explained.
-6. Tests in research/v3/migration/tests/test_dispositions.py (vocabulary closed, every inventory file has one row, no preliminary
-   value left, idempotency, reasons present, exception rows carry IDs, committed files match a fresh run). Keep all 267 existing
-   tests passing.
-7. Rerun link_sources.py and extract_batch.py write --check if anything they read changed, the tests, tools/validate.py, rebuild
-   twice (estimates should not change; if they do, explain with estimates_diff.py), the importer twice (idempotent). Corrections
-   stay 643 lines / 333 records.
+1. Baseline: python research/v3/tools/build_estimates.py, copy research/v3/output/estimates.json outside the repo as before.json, then
+   git checkout -- research/v3/output. Note whether SciPy is installed (expected estimates sha256 with SciPy: d959496a...).
+   Run the tests (304 expected: python3 -m unittest discover -s research/v3/migration/tests).
+2. Structured unlockState: build_estimates.unlock_state() must read the structured field (true / false / null) first and fall back to
+   the note text only when the field is absent. List every record whose result changes (expect few: say how many) and why.
+3. ISO-only dates: the epoch logic reads dataDate / observedOn only when ISO (YYYY-MM-DD or YYYY-MM); free text is never parsed.
+   Count the records affected before and after.
+4. percentMeaning guard: chance_from_percent() must not accept percentMeaning null as per-cast. Measure affected rows (expected 0)
+   and pin it with a test either way.
+5. Per-record unusedReason: output (a new file, for example output/unused.json, or a field in estimates.json: decide and explain)
+   with one machine-readable reason code for every effective record the estimator does not use (unplaced, no numbers, totals without
+   casts, conditional output with unlock unstated, excluded duplicate, reference prior only, and so on). The M06 contributeNothing
+   list is the starting point. Every effective record is either used in an estimate or has a reason; a test enforces that.
+6. Regression tests (research/v3/migration/tests/) for observed, derived, provisional, conditional and duplicate records, with small
+   fixtures. Keep all 304 existing tests passing.
+7. Decision on committing research/v3/output/: it is stale in git. Recommend commit-in-the-same-commit or never-commit and say why;
+   do not commit it unless the owner's rule allows (current rule: do not commit research/v3/output/). Put the recommendation in the
+   report and PLAN.md.
+8. Golden diff: estimates_diff.py before.json vs after for every behavioural change, separately if possible, with the reason of each
+   moved estimate. Rebuild twice (byte-identical), run the importer twice (idempotent), tools/validate.py, link_sources.py and
+   dispositions.py --check (dispositions must still match; if build_estimates changes make them differ, explain). Corrections stay
+   643 lines / 333 records.
 
 Rules: never edit agent evidence files, corrections.jsonl or strategy.md; do not commit research/v3/output/. evidence-format.md is
-owner-only: propose field changes in SCHEMA-EXTENSION.md. Never place an item by name and never guess an item ID.
+owner-only: propose field changes in SCHEMA-EXTENSION.md. Never place an item by name and never guess an item ID. build_estimates.py
+may change in this task only, behind tests.
 
 Acceptance criteria:
-- manifest/dispositions.jsonl gives all 1,244 files a final disposition and a reason; counts by disposition in reports/M07-dispositions.md.
-- manifest/exceptions.jsonl queues every contradiction and suspicious transformation with record IDs; the validator's findings are
-  clean or each is listed.
-- Counts before/after, estimate check, and a "For the Master" section.
+- The three code changes (unlockState, ISO dates, percentMeaning guard) each have a test and a measured before/after.
+- Every effective record is used or carries an unusedReason; counts by reason in reports/M08-estimator.md.
+- Estimate diff for each change with reasons; unchanged where no change is expected; two rebuilds byte-identical.
+- A "For the Master" section and the output/ decision.
 
-Update before ending: CHECKLIST.md (tick only what is met), SESSION_LOG.md (append MIG-008 with commands actually run and measured
-numbers), HANDOFF.md (status, next task M08, model/effort, next prompt), PLAN.md if a rule changed. Commit on
-migration/v3-historical-research with message "v3 migration M07: <summary>" and push.
+Update before ending: CHECKLIST.md (tick only what is met), SESSION_LOG.md (append MIG-009 with commands actually run and measured
+numbers), HANDOFF.md (status, next task M09, model/effort, next prompt), PLAN.md if a rule changed. Commit on
+migration/v3-historical-research with message "v3 migration M08: <summary>" and push.
 
 End with the mandatory report: A. Session summary; B. Progress and checklist (totals, %, newly ticked items, migration metrics);
 C. Next recommended task (ID, why, dependencies, deliverables, acceptance); D. Next Claude configuration (model, thinking effort,
 alternative, reason); E. A complete ready-to-paste prompt for the following session.
-Default next task after this: M08 — estimator integration (structured unlockState, ISO-only dates, percentMeaning guard,
-per-record unusedReason, regression tests, decision on committing output/).
+Default next task after this: M09 — migration audit and reporting (tools/report.py: before/after coverage, confidence bands,
+disposition counts, unresolved-issues register).
 ```
 
 ## Later tasks at a glance
 
-M07 dispositions and exception queue → M08 estimator integration → M09 reports → M10 reconcile with the agents' branch (rerun the
-importer and `extract_batch.py write`: their output may shrink as agents catch up) and open the PR.
+M08 estimator integration → M09 reports (`tools/report.py` from the manifests and outputs) → M10 reconcile with the agents' branch
+(rerun the importer, `extract_batch.py write` and `dispositions.py`: their output may shrink as agents catch up) and open the PR.

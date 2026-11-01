@@ -4,7 +4,7 @@ Status values: Not Started / In Progress / Blocked / Complete. A box is ticked o
 acceptance criterion is met and the evidence column points at something checkable.
 Sessions run in Claude (owner's choice, 2026-10-31). Effort = Claude's thinking effort: Low / Medium / High / Extra High (xhigh) / Max.
 
-Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M07 → M08 → M09 → M10
+Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M07 ✓ → M08 → M09 → M10
 (M04.1 linking may run in parallel with M05 once M02 is done.)
 
 ## Progress
@@ -12,11 +12,11 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
 | | Count |
 | --- | --- |
 | Top-level tasks | 11 |
-| Complete | 7 (M00, M01, M02, M05, M03, M06, M04) |
+| Complete | 8 (M00, M01, M02, M05, M03, M06, M04, M07) |
 | In progress | 0 |
 | Blocked | 0 |
-| Not started | 4 (M07, M08, M09, M10) |
-| Completion (verified top-level) | 64% (7 of 11) |
+| Not started | 3 (M08, M09, M10) |
+| Completion (verified top-level) | 73% (8 of 11) |
 
 ---
 
@@ -110,10 +110,24 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
     - Done MIG-007: all 12 rows re-read (12 correct); 5 of 46 nulls re-read (5 confirmed); 10 distinct weak links checked (8 true, 1 right source with a coincidental number, 1 false); `reports/M04-spot-check.md`
 
 ## M07 — Validation and exception review
-- [ ] **M07 — Final dispositions and exception queue**
+- [x] **M07 — Final dispositions and exception queue**
   - Priority: P1 · Depends on: M03, M04 · Model: Claude Sonnet 5.5, Medium
   - Acceptance: `manifest/dispositions.jsonl` gives every one of the 1,244 files a final disposition; validator clean or every violation listed; contradictions and suspicious transformations queued with record IDs
-  - Status: Not Started · Evidence: —
+  - Status: Complete (MIG-008)
+  - Evidence: `tools/dispositions.py`; `manifest/{dispositions.jsonl (1,244 rows), exceptions.jsonl (134), scope-gap.jsonl (47), dispositions-summary.json}`; `reports/M07-dispositions.md`; `tests/test_dispositions.py` (37); 304 tests OK; estimates `d959496a…` identical before and after (two rebuilds, `estimates_diff.py` 0 changes); importer idempotent; corrections 643/333; validator 5 errors, each queued with a proposed fix
+  - Note: the 12 `ambiguous-doubt` exceptions carry a checkpoint reference, not record IDs, because nothing was written for them; every other exception row names records
+  - [x] M07.1 `tools/dispositions.py` + closed vocabulary (12 values), one row per file with reason code and pointers
+    - Done MIG-008: no-observational-content 432, process-artifact 313, linked 131, held-sources-only 129, exception-queued 65, imported 55, extracted-null 47, reference-only 32, derived-model 22, source-links-only 10, extracted 4, mechanics-knowledge 4
+  - [x] M07.2 the 46 null extraction sources disposed from checkpoint reasons (source and code in each reason)
+    - Done MIG-008: 42 residue files → 21 extracted-null + 21 exception-queued; 26 more unread-by-linker files cite a null source; all 46 sources named with their code
+  - [x] M07.3 exception queue with record IDs
+    - Done MIG-008: 134 rows, 11 kinds, 1,070 record IDs; 83 link groups, 6 Jallfo, s6bfrl, 22 zkay8v, 1smgllg, Felslate 101-vs-97, 12 ambiguous-doubt, 5 validator errors (each with a proposed correction line), M05 pairs 9 / merges 3 / subsets 12
+  - [x] M07.4 v2 source reviews (37) and audit CSVs (42 by name) disposed
+    - Done MIG-008: v2 reviews: held-sources-only 28, reference-only 5, source-links-only 2, linked 1, no-observational-content 1; audit CSVs: process-artifact 19, no-observational-content 15, exception-queued 5, linked 3
+  - [x] M07.5 scope gap measured and decided
+    - Done MIG-008: 23 raw keys reproduced → 16 clean sources out of scope (9 queue sources, 7 decided); 18 in-scope lead-only citations with counts, all checkpointed; no new checkpoint needed; linker pattern not widened (nothing for a test to pin)
+  - [x] M07.6 tests and reruns
+    - Done MIG-008: 267 → 304 tests OK; link_sources.py, extract_batch.py write --check, validate.py reproduce their committed files; two rebuilds byte-identical
 
 ## M08 — Statistical estimator integration
 - [ ] **M08 — Estimator consumes all usable evidence; every unused record has a reason**
@@ -144,5 +158,6 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
 | MIG-005 | M06 | done |
 | MIG-006 | M04.1, M04.2 | done |
 | MIG-007 | M04.3, M04.4 | done |
-| MIG-008 | M07 | next |
-| later | M08, M09, M10 | |
+| MIG-008 | M07 | done |
+| MIG-009 | M08 | next |
+| later | M09, M10 | |

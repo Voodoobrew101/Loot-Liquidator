@@ -153,6 +153,7 @@ research/v3/migration/
   tools/import_historical.py M03 adapters: old-observation JSON(L), v2 JSON, leads, submissions, GameData tables
   tools/link_sources.py     M04  deterministic URL/ID/number linking of notes to v3 records
   tools/extract_batch.py    M04  batch prompts, validator, checkpoints and writer for residual Markdown (done)
+  tools/dispositions.py     M07  final dispositions, exception queue, scope gap (done)
   tools/report.py           M09  before/after metrics, dispositions, unresolved register
   tests/                    unit + regression tests (python -m unittest)
   manifest/                 generated: inventory, url registry, validation, dispositions, checkpoints
@@ -233,6 +234,16 @@ S5–S13 stand. Changes this plan introduces, each behind tests:
    writer reads checkpoints, so rows survive `link_sources.py` dropping the source from the queue. A source v3 holds is never
    written (rule 5), and a translated copy of a Wowhead page counts as the same page. The tool reads the queue's files plus the
    sibling notes listed in `EXTRA_FILES`.
+
+8. **Final dispositions (M07, new):** every inventory file ends in one of 12 dispositions (`tools/dispositions.py`, reasons in
+   `manifest/dispositions.jsonl`): `imported`, `extracted`, `linked`, `extracted-null`, `exception-queued`, `reference-only`,
+   `held-sources-only`, `source-links-only`, `process-artifact`, `derived-model`, `mechanics-knowledge`,
+   `no-observational-content`. Precedence: an open exception first, then rows written (importer, extractor), then a null
+   extraction, then the linker's outcome, then the inventory's own class. `held-sources-only` is a statement about *sources*
+   (page or thread level, rule 5): the file has no observational numbers of its own. A contradiction or a suspicious transformation
+   goes to `manifest/exceptions.jsonl` with record IDs; fixes are proposed as correction lines, never applied by a tool. A new
+   unheld source with a count of 20 or more beside the citation, in any file, fails `test_scope_gap_is_fully_decided` until it has a
+   checkpoint or a reasoned decision (`reports/M07-dispositions.md`).
 
 ### Risks and safeguards
 

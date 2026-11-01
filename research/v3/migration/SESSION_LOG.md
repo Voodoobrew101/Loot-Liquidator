@@ -424,3 +424,71 @@ dropped. PLAN section 3 rule 6 amended, rule 7 added.
 **Ending commit:** see `git log` ("v3 migration M04.3-M04.4: …").
 
 **Remaining:** M07, M08, M09, M10.
+
+## MIG-008 — 2026-11-01 (Claude Sonnet 5.5, Claude in a cloud session)
+
+**Tasks:** M07 final dispositions and the exception queue. M07 complete.
+
+**Starting commit:** `7e0ecba` on `migration/v3-historical-research` (the M04.3-M04.4 commit of MIG-007).
+
+**Environment:** Linux, Python 3.13.18 (`python3`), **SciPy 1.18.1 installed** (same code path as MIG-003 to MIG-007, so hashes
+compare). Repo attached with push access on the first request; the clone landed on `main`, so
+`git fetch --depth=1000 origin migration/v3-historical-research` and `git checkout -b migration/v3-historical-research FETCH_HEAD`.
+`before.json` kept in `/home/claude/work`, outside the repo. No network for evidence; no AI extraction.
+
+**Created:** `migration/tools/dispositions.py`; `migration/tests/test_dispositions.py` (37 tests);
+`migration/manifest/{dispositions.jsonl,exceptions.jsonl,scope-gap.jsonl,dispositions-summary.json}`;
+`migration/reports/M07-dispositions.md`.
+**Modified:** `migration/{CHECKLIST,SESSION_LOG,HANDOFF,PLAN}.md`.
+Not changed: any agent evidence file, `corrections.jsonl`, `strategy.md`, `evidence-format.md`, `build_estimates.py`,
+`import_existing.py`, `link_sources.py`, `extract_batch.py`, `SCHEMA-EXTENSION.md`, committed `output/`, addon files.
+
+**Commands actually run (repo root):**
+- `python3 research/v3/tools/build_estimates.py` at HEAD → 4,945 records, 1,205 estimates, 449 unplaced; `estimates.json`
+  `d959496aa6fb78b007136383d1d0c9e478dc44462bd904162b717fd4dc378e8f`, `summary.md` `fbf8e3b26d8bb12be21219ce956b83f322e1a1684ea01a3f8214b805c2623d6f`
+  (= MIG-007). Copied to `before.json`; `git checkout -- research/v3/output`.
+- `python3 -m unittest discover -s research/v3/migration/tests` at HEAD → 267 OK. (`-s …/tests -t .` fails: the directory is not a package.)
+- Ad-hoc scripts kept outside the repo: the scope-gap scan (out-of-scope and in-scope), a v2 source-review classifier, the overlap
+  counts of exception / residue / imported files.
+- `python3 research/v3/migration/tools/dispositions.py` (about 4 s) after each rule change; final: 1,244 files, 134 exceptions, 47 scope-gap sources.
+- `python3 -m unittest discover -s research/v3/migration/tests` → **304 tests OK** (267 + 37).
+- `python3 research/v3/migration/tools/link_sources.py` → 265 files: linked 140, exception 44, residue 42, disposed 39; 46 queue sources;
+  no tracked file changed. `extract_batch.py write --check` → exit 0. `validate.py` → 5,048 records (4,945 effective), 5 errors, 175 warnings
+  (unchanged); `validation.json` unchanged.
+- `python3 research/v3/tools/build_estimates.py` twice → 4,945 records, 1,205 estimates, 449 unplaced; `estimates.json` `d959496a…`,
+  `summary.md` `fbf8e3b2…` both times. `estimates_diff.py before.json research/v3/output/estimates.json` → 0 added, 0 removed, 0 changed.
+  Output restored (`git checkout -- research/v3/output`).
+- `python3 research/v3/tools/import_existing.py --report <tmp>` twice → reports `cmp` identical, no change under `evidence/imported/`.
+- In-process check of the validator fixes: rows edited in memory (3 rateChange `method` → null, 2 ItemDB rows removed), `build_estimates.build()`
+  → same 1,205 estimates; unplaced 449 → 447 with the two rows gone. Nothing written.
+- Correction check (`build_estimates.load()`): 643 lines; 333 corrected records.
+
+**Measured results:** in `reports/M07-dispositions.md`. Key: no-observational-content 432, process-artifact 313, linked 131,
+held-sources-only 129, exception-queued 65, imported 55, extracted-null 47, reference-only 32, derived-model 22, source-links-only 10,
+extracted 4, mechanics-knowledge 4. Exceptions 134 (83 link groups, 6 Jallfo, 12 ambiguous-doubt, 12 single-row subsets, 9 cross-source
+pairs, 5 validator errors, 3 merges, 1 each of s6bfrl / zkay8v / 1smgllg / Felslate), 1,070 record IDs named. Scope gap: 23 raw keys
+reproduced → 16 clean out-of-scope sources (9 queue sources, 7 decided), 18 in-scope lead-only citations with counts all checkpointed.
+
+**Problems and what they led to:**
+- A first pass classed every inventory `source-links-only` note by its citations and put 136 of 220 in a label I had called
+  "covered-by-held-sources". Held means page or thread level (rule 5), so the label overclaimed; renamed `held-sources-only` and
+  defined as a statement about sources, with the files holding no observational numbers of their own.
+- 16 `source-links-only` audit and validation files first came out as `no-observational-content` (their URLs were shorthand keys such as
+  `reddit:abc` that the citation reader does not see) and then as `reference-only`. Fixed with the inventory's `urlsNotInV3` keys
+  (CSV rows cut off the key) and the importer's own "process artifact" reasons; 33 audit files are process artifacts by name.
+- Out-of-scope notes citing a null-extracted source (26 files) were `source-links-only` at first; they are `extracted-null`, the same
+  fact the 42 in-scope residue files carry.
+- A test found three colliding exception IDs (two merges with different outputs, two subsets with different parents): the hash input now
+  includes input / output / method and the parent study.
+- Three decisions written for CSV-row sources (`milling-table-inscription`, midnight guide, WotLK table) were unused once the key was
+  cut at the comma (the URLs are held); removed, and a test now fails on any decision no scan uses.
+- The handoff's "21 submission audit CSVs" is not reproducible by name; 42 CSVs carry "audit" in the path and all are disposed.
+
+**Decisions:** a file with an exception keeps `exception-queued` even if rows were also written from it (its pointers say how many);
+a `process-artifact` is a thing about the process (tests, audits, coverage, reports citing nothing); policy questions (M06 weight and
+backfills, name-only rule) are in the report's For the Master, not `exceptions.jsonl`; the validator fixes are proposed correction
+lines in the exception rows, not applied (`corrections.jsonl` is the Master's); the linker's count pattern was not widened.
+
+**Ending commit:** see `git log` ("v3 migration M07: …").
+
+**Remaining:** M08, M09, M10.
