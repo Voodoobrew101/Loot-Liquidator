@@ -56,3 +56,4 @@ python3 tests/test_research_v3_baselines.py
 python3 tests/test_research_v3_no_disenchant.py
 python3 tests/test_rank_families.py
 python3 tests/test_input_ranks.py
+python3 tests/test_package_addon.py
