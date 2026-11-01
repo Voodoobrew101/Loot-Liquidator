@@ -347,3 +347,80 @@ placements stay proposals. PLAN §3 rule 6 added.
 **Ending commit:** see `git log` ("v3 migration M04.1-M04.2: …").
 
 **Remaining:** M04.3, M04.4, M07, M08, M09, M10.
+
+
+---
+
+## MIG-007 — 2026-11-01 (Claude Sonnet 5.5, Claude in a cloud session)
+
+**Tasks:** M04.3 batched extraction of the residual queue · M04.4 spot-check. M04 complete.
+
+**Starting commit:** `bbe0516` on `migration/v3-historical-research`.
+
+**Environment:** Linux, Python 3.13.18 (`python3`), **SciPy 1.18.1 installed** (same code path as MIG-003 to MIG-006, so hashes
+compare). Repo attached with push access on the first request; the clone existed on `main`, so
+`git fetch --depth=1000 origin migration/v3-historical-research` and a checkout of the branch. `before.json` kept in
+`/home/claude/scratch`, outside the repo. No network for evidence. There is no model API in the workspace: the reader of each
+prompt was Claude in the session, answering in the JSON shape the tool defines; the tool validates everything.
+
+**Created:** `migration/tools/extract_batch.py`; `migration/tests/test_extract_batch.py` (69 tests);
+`migration/manifest/extraction/*.json` (55 checkpoints); `research/v3/evidence/imported/extracted-historical-sources.jsonl`
+(12 rows); `migration/reports/{M04-extraction.md,M04-extraction-data.json,M04-spot-check.md,M04-estimates-diff.md}`.
+**Modified:** `migration/tools/link_sources.py` (recipe-only holdings, below); `migration/tests/test_link_sources.py` (+1 test, none
+edited); regenerated `manifest/{links.jsonl,links-summary.json,extraction-queue.jsonl,validation.json}`;
+`migration/{PLAN,CHECKLIST,SESSION_LOG,HANDOFF}.md`.
+Not changed: any agent evidence file, `corrections.jsonl`, `strategy.md`, `evidence-format.md`, `build_estimates.py`,
+`import_existing.py`, `SCHEMA-EXTENSION.md`, committed `output/`, addon files.
+
+**Commands actually run (repo root):**
+- `python3 research/v3/tools/build_estimates.py` at HEAD → 4,933 records, 1,205 estimates, 447 unplaced; `estimates.json` `6976d1bd…`,
+  `summary.md` `c16d76e6…` (= MIG-006). Copied to `before.json`; `git checkout -- research/v3/output`.
+- `python3 -m unittest discover -s research/v3/migration/tests` at HEAD → 197 OK.
+- Ad-hoc scripts kept outside the repo (anchor and file sizes, the v3 holdings of each candidate cohort, the weak-link draw, the
+  scan of out-of-scope files for citations with counts, the table generator for the report).
+- `extract_batch.py prompt <source> [--brief]` for all 55 sources; `submit` for 55 answers (one rejected by the holdings rule, then
+  accepted as `held-elsewhere` null); two answers resubmitted after the sibling notes were found; `status`, `verify`, `write
+  [--report] [--check]`.
+- `python3 research/v3/migration/tools/link_sources.py` three times (before and after the recipe-only amendment, and twice more for
+  the byte-identity check, `sha256sum -c` OK) → 265 files: linked 140, exception 44, residue 42, disposed 39; 46 queue sources.
+- `python3 -m unittest discover -s research/v3/migration/tests` → **267 tests OK** (197 + 69 + 1).
+- `python3 research/v3/migration/tools/validate.py` → 5,048 records (4,945 effective), 5 errors, 175 warnings (unchanged; no finding
+  on any extracted row).
+- `python3 research/v3/tools/build_estimates.py` twice → 4,945 records, 1,205 estimates, 449 unplaced; `estimates.json`
+  `d959496aa6fb78b007136383d1d0c9e478dc44462bd904162b717fd4dc378e8f`, `summary.md` `fbf8e3b26d8bb12be21219ce956b83f322e1a1684ea01a3f8214b805c2623d6f` both times.
+- `python3 research/v3/migration/tools/estimates_diff.py before.json research/v3/output/estimates.json --md reports/M04-estimates-diff.md`
+  → 0 added, 0 removed, 3 changed (Nightshade 171315 → 173056, 173057, 175788); largest chance move 0.0020.
+- `python3 research/v3/tools/audit_studies.py` → 475 studies, 40 clean (was 473). Output restored (`git checkout -- research/v3/output`).
+- `python3 research/v3/tools/import_existing.py --report <tmp>` twice → reports `cmp` identical, no change under `evidence/imported/`
+  other than the new file.
+- Correction check (`build_estimates.load()`): 643 lines; 333 corrected records.
+
+**Measured results:** in `reports/M04-extraction.md` and `reports/M04-spot-check.md`. Key: 55 of 55 sources checkpointed; 9 with
+rows (12 rows: 3 + 2 drop, 7 recipe), 46 null (ambiguous-doubt 12, qualitative 9, reference-table 8, numbers-not-this-source 8,
+identity-link-only 4, needs-original-post 2, held-elsewhere 2, no-observational-numbers 1). Spot-check: 12 of 12 rows correct, 5 of
+5 sampled nulls confirmed, 10 weak links (8 true, 1 right source with a coincidental number, 1 false).
+
+**Problems and what they led to:**
+- A first writer iterated the live queue. `link_sources.py` drops an extracted source from the queue once its rows make it
+  held, so a rerun would have deleted the rows. Caught before the linker was rerun. Checkpoints now carry their queue entry, and the
+  writer iterates checkpoints (test `test_rows_survive_the_source_leaving_the_live_queue`).
+- A checkpoint for a source that v3 later holds was revalidated as "invalid", not "held". Found by a test; revalidation now skips
+  the holdings check and the writer reports `held` (the M10 case).
+- The 113-cast Felslate comment was about to be double counted: the French Wowhead page is the same page v3 holds under the
+  English URL (`import-study-01027`). The holdings test now treats `@es @fr @de @ru @tw @cn @ko @pt @it @mx @br` as the same page.
+- Recipe rows made seven Wowhead spell pages "held", which turned seven files from residue to exception (other sources' counts on
+  the same line). `classify()` now calls a source held only by recipe records `source-held`. Exceptions went 44 → 44 files.
+- The queue is incomplete: notes the inventory marked `source-links-only` were never in scope, and the observational-count pattern
+  misses counts without a unit word ("3000 Nightshade"). Two sibling notes with item IDs and a date were added through
+  `EXTRA_FILES`. A scan found 114 file mentions outside the queue entries and 23 unheld sources with counts in out-of-scope files.
+- Test fixtures first appended lines in a paragraph with no URL, so the validator (correctly) refused them; fixed in the tests,
+  not the tool. The first weak-link draw was on 75 links; the redraw on 76 moved two positions and both new ones were checked.
+
+**Decisions:** the reader is the session itself (no API); conditions and rate changes are proposals, never evidence rows; a name
+without an ID in the text is stored raw and unplaced (no placement by name); `casts` stays null unless the text states a cast count
+or a batch size to divide by; `cohortKey` stays unset; recipe facts are written as `recipe` rows; weak links are reported, not
+dropped. PLAN section 3 rule 6 amended, rule 7 added.
+
+**Ending commit:** see `git log` ("v3 migration M04.3-M04.4: …").
+
+**Remaining:** M07, M08, M09, M10.

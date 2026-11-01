@@ -152,7 +152,7 @@ research/v3/migration/
   tools/identity_report.py  M05  which studies merge, before/after, and what needs review (done)
   tools/import_historical.py M03 adapters: old-observation JSON(L), v2 JSON, leads, submissions, GameData tables
   tools/link_sources.py     M04  deterministic URL/ID/number linking of notes to v3 records
-  tools/extract_batch.py    M04  batch prompts + validators for residual Markdown (AI)
+  tools/extract_batch.py    M04  batch prompts, validator, checkpoints and writer for residual Markdown (done)
   tools/report.py           M09  before/after metrics, dispositions, unresolved register
   tests/                    unit + regression tests (python -m unittest)
   manifest/                 generated: inventory, url registry, validation, dispositions, checkpoints
@@ -219,6 +219,20 @@ S5–S13 stand. Changes this plan introduces, each behind tests:
    only mentioned in v3 notes is not held. Reference hosts, entity pages without counts and M03 `NEW_SOURCES` skips are
    disposed with their reason. The linker reads effective rows (corrections applied) for matching and raw agent rows for
    name-only candidates, so a row excluded as a duplicate still links. `reports/M04-links.md` has the counts.
+   *Amended in M04.3 (MIG-007):* a source held only by `recipe` records is `source-held`, never an exception: a recipe fact has no
+   cohort to compare the citation's other counts with (7 files had turned from residue to exception when recipe rows landed). The
+   observational-count pattern needs a unit word after the number, so a citation such as "3000 Nightshade ... 781 Umbral" reads
+   as `lead-only`; M01's `source-links-only` notes can therefore hide cohorts the queue never saw (`reports/M04-extraction.md`).
+7. **Extraction of the residue (M04.3, new):** a queue source is read in a prompt that shows its files as numbered lines, answered
+   in a fixed JSON shape, and accepted only if `tools/extract_batch.py` validates it: every evidence span is a verbatim substring of
+   the named line (under the source's own URL, or tied by a quoted line); every number is in the evidence or computed by a
+   formula the validator evaluates; hits, percents, averages, histograms, batch sizes and rank sums agree; the finished record
+   passes `validate.check_record` with no finding; names move to `rawInputName` / `rawOutputName` unless the ID is in the text, so
+   nothing is placed by name and no ID is guessed; `condition` and `rateChange` readings stay proposals. Each source gets a
+   checkpoint (`manifest/extraction/*.json`) with rows or a null with a reason code. Checkpoints carry their queue entry and the
+   writer reads checkpoints, so rows survive `link_sources.py` dropping the source from the queue. A source v3 holds is never
+   written (rule 5), and a translated copy of a Wowhead page counts as the same page. The tool reads the queue's files plus the
+   sibling notes listed in `EXTRA_FILES`.
 
 ### Risks and safeguards
 

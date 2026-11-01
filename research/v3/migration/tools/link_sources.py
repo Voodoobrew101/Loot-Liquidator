@@ -320,15 +320,18 @@ def classify(cite, index):
                     "recordCount": len(matched_recs),
                     "reason": f"v3 holds this source ({level} match) and {len(hit)} result number(s) match a held row"}
         others = sorted(nums - denominators)
-        if obs and others:
+        cohort = [r for r in recs if r["type"] in ("drop", "exchange")]
+        if obs and others and cohort:
             return {"status": "exception", "level": level, "matched": [], "denominatorMatched": den_hit,
                     "records": refs(recs), "recordCount": len(recs),
                     "reason": "v3 holds this source but none of the citation's numbers is a held result"
                               + (" (the batch size matches)" if den_hit else "")}
         return {"status": "source-held", "level": level, "matched": [], "denominatorMatched": den_hit,
                 "records": refs(recs), "recordCount": len(recs),
-                "reason": "v3 holds this source; the citation carries no observational count to compare"
-                          + (" (only the batch size)" if den_hit and obs else "")}
+                "reason": ("v3 holds this source only as a recipe fact, so the citation's counts have no cohort to be compared with"
+                           if obs and others and not cohort else
+                           "v3 holds this source; the citation carries no observational count to compare"
+                           + (" (only the batch size)" if den_hit and obs else ""))}
     mention = key in index.mentions
     decision = ie.NEW_SOURCES.get(key) or ie.NEW_SOURCES.get(ie.thread_of(key))
     base = {"level": None, "matched": [], "v3Mentions": mention}

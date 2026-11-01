@@ -1,78 +1,91 @@
 # Handoff
 
-**Updated:** 2026-11-01, end of session MIG-006.
+**Updated:** 2026-11-01, end of session MIG-007.
 
 ## Status
 
 - Repository `Voodoobrew101/Loot-Liquidator`, working branch **`migration/v3-historical-research`**
   (cut from `implementation/five-agent-completion` at snapshot `575b252`). Hourly agents keep committing to
   `implementation/five-agent-completion`; do not merge it in before M10.
-- Complete: **M00**, **M01**, **M02**, **M05**, **M03**, **M06** (6 of 11 top-level tasks, 55%). **M04 is in progress**:
-  M04.1 (linking) and M04.2 (residual queue) finished in MIG-006; M04.3 (AI extraction) and M04.4 (spot-check) are open.
-- Latest verified baseline (SciPy installed): 4,933 effective evidence records → **1,205 estimates** (447 unplaced), unchanged
-  by M04 (linking changes no evidence); **197** migration tests pass; validator 5 errors / 175 warnings; identity report
-  unchanged since M03b; study audit 473 studies, 40 clean; corrections 643 lines / 333 corrected records.
-- Estimates sha256 with SciPy: `6976d1bd…` (`summary.md` `c16d76e6…`). Without SciPy it differs (confidence values only).
+- Complete: **M00**, **M01**, **M02**, **M05**, **M03**, **M06**, **M04** (7 of 11 top-level tasks, 64%). Open: M07, M08, M09, M10.
+- Latest verified baseline (SciPy installed): 4,945 effective evidence records → **1,205 estimates** (449 unplaced), 3 of them changed
+  by M04.3; **267** migration tests pass; validator 5 errors / 175 warnings (unchanged); identity report unchanged since M03b; study
+  audit 475 studies, 40 clean; corrections 643 lines / 333 corrected records.
+- Estimates sha256 with SciPy: `d959496a…` (`summary.md` `fbf8e3b2…`). It was `6976d1bd…` / `c16d76e6…` through MIG-006. Without
+  SciPy it differs (confidence values only).
 
-## What M04.1 and M04.2 produced (MIG-006)
+## What M04.3 and M04.4 produced (MIG-007)
 
-- `tools/link_sources.py` → `manifest/links.jsonl` (per file, per source, per study ID, per known candidate),
-  `manifest/extraction-queue.jsonl` (55 sources) and `manifest/links-summary.json`. Rerun after any evidence change; a test fails
-  when the committed files are stale. Rules: PLAN §3 rule 6. Report: `reports/M04-links.md` (counts, For the Master).
-- 265 in-scope files: linked 133, exception 44, residue 49, disposed 39, each with a reason. The 124 Markdown candidates:
-  linked 58, exception 18, residue 45, disposed 3.
-- Known candidates: 86 agent-held name-only rows (not 92) → 58 linked, 6 exception, 22 unlinked (zkay8v's 10,000-ore cohort has
-  no agent copy); 1smgllg → 11 of 14 resolve by name (proposals only, the importer is unchanged); s6bfrl uncommon gems → 6 exceptions.
-- The queue: one entry per source URL with files (sha256), anchors, `expectedTypes` and `methodHints` (hints, not decisions).
-  `proximity: citation` = numbers next to the URL; `proximity: file` = numbers elsewhere in the file (M04.3 must decide whether they
-  belong to that source). 23 of the 55 are Wowhead pages (items, spells, guides) cited with counts but no comment ID: expect mostly null.
-- 75 of 266 linked groups are weak (one small integer match). M04.4 should sample them.
+- `tools/extract_batch.py`: `prompt`, `submit`, `status`, `verify`, `write`. No model API exists in the workspace; the reader is the
+  session. The validator checks quotes, numbers, arithmetic and the finished record (PLAN section 3 rule 7). Report:
+  `reports/M04-extraction.md` (counts, estimate changes, For the Master); spot-check: `reports/M04-spot-check.md`.
+- 55 of 55 queue sources have a checkpoint in `manifest/extraction/`: **9 with rows (12 rows)**, **46 null with a reason code**. Rows
+  are in `evidence/imported/extracted-historical-sources.jsonl`, written only by `extract_batch.py write`. Checkpoints carry their
+  queue entry and the writer reads checkpoints, so rows survive `link_sources.py` dropping a source from the live queue. Rerun
+  `extract_batch.py write` whenever the evidence changes; a source v3 holds by then is skipped and reported as `held` (M10).
+- The 12 rows: 3 Nightshade totals (placed, the only estimate change), 2 Felwort totals (unplaced), 7 recipe batch sizes (no
+  estimator effect). 46 nulls: ambiguous-doubt 12, qualitative 9, reference-table 8, numbers-not-this-source 8, identity-link-only 4,
+  needs-original-post 2, held-elsewhere 2, no-observational-numbers 1.
+- Spot-check: 12 of 12 rows correct; 5 of 5 sampled nulls confirmed; 10 weak links (8 true, 1 right source with a coincidental number,
+  1 false link on a held source).
+- `link_sources.py` amended: a source held only by `recipe` records is `source-held`, not an exception. After the rerun: 265 files →
+  linked 140, exception 44, residue 42, disposed 39; the live queue is the 46 null sources. **The 46 stay residue to the linker**; M07
+  disposes their files using the checkpoint reasons.
+- `EXTRA_FILES` in `extract_batch.py` adds two sibling notes the queue never held (the inventory marked them `source-links-only`).
 
 ## Read before relying on older numbers
 
 - `reports/M06-units.md` explains every MIG-005 change. In short: every estimate is per cast of its group's unit
   (`inputsPerCast` in the output; prospecting 5, otherwise the smallest stated batch). Other batch sizes convert per
   input; their per-cast chances are left out. Counted, nominal, derived and converted casts count fully in the average
-  and at 0.5 in the chance (`EQUIVALENT_CAST_WEIGHT`).
-- `tools/units_report.py` lists every placed study row that contributes nothing, with a reason code (626 rows). Until
-  M08, this is where "unused reason" lives.
-- **Holdings rule (PLAN §3 rule 5):** a historical claim whose source v3 already holds is never imported, so an M10
-  importer rerun cannot double count but its output can shrink when agents catch up.
-- Agents still write counted casts without `castsBasis` (398 rows) and input counts only in notes (434 totals). The
-  estimator reads fields only; both lists are in `M06-units-data.json` → `backfill` for the Master.
-- `cohortKey` is still never set.
-- Open for the Master: the 0.5 weight and the two backfills (M06); R3 Serevite labels, 9 cross-source pairs, single-row
-  subsets (M05); the name-only placement rule, S14 pigment evidence, 9909's ranked input ID (M03); s6bfrl uncommon gems
-  and the Felslate 2016 101-vs-97 total (M03b); zkay8v 10,000-ore placement, 1smgllg placement, the six Jallfo exceptions, whether to skip Wowhead entity pages (M04).
+  and at 0.5 in the chance (`EQUIVALENT_CAST_WEIGHT`). A row with `inputsProcessed` and no casts counts inputs / unit casts at that weight
+  (the Nightshade rows).
+- `tools/units_report.py` lists every placed study row that contributes nothing, with a reason code. Until M08, this is where
+  "unused reason" lives.
+- **Holdings rule (PLAN section 3 rule 5):** a historical claim whose source v3 already holds is never imported, so an M10
+  importer rerun cannot double count but its output can shrink when agents catch up. Wowhead keys with a language suffix (`@es`,
+  `@fr`, ...) are the same page; game flavours (`@cata`, `@wotlk`) are not.
+- The queue is a lower bound (`reports/M04-extraction.md`, finding 1): notes the inventory marked `source-links-only` were never in
+  scope, and the observational-count pattern needs a unit word after the number. 114 file mentions of the 55 sources lie outside
+  their queue entries; 23 unheld source keys with a number of 20 or more beside the citation sit in out-of-scope files (10 of those I could name are queue
+  sources; most others are guide URLs in audit-CSV rows).
+- Agents still write counted casts without `castsBasis` (398 rows) and input counts only in notes (434 totals). Both lists are in
+  `M06-units-data.json` → `backfill` for the Master. `cohortKey` is still never set.
+- Open for the Master: the 0.5 weight and the two backfills (M06); R3 Serevite labels, 9 cross-source pairs, single-row subsets (M05);
+  the name-only placement rule, S14 pigment evidence, 9909's ranked input ID (M03); s6bfrl uncommon gems and the Felslate 2016
+  101-vs-97 total (M03b); zkay8v 10,000-ore placement, 1smgllg placement, the six Jallfo exceptions (M04.1); and from M04.3: recipe
+  rows from entity pages yes or no, the 12 `ambiguous-doubt` sources (Stormvine first), widening the count pattern, comment-level
+  source keys for Wowhead item pages.
 
 ## Environment notes
 
-- **Pushing from a Claude cloud session:** attach the repo with push access (MIG-006: refused once, granted on the retry). The clone lands on `main`; fetch and check out the branch. Use the
-  remote URL `https://github.com/Voodoobrew101/Loot-Liquidator.git` and verify with
+- **Pushing from a Claude cloud session:** attach the repo with push access (MIG-006: refused once, granted on the retry; MIG-007:
+  granted at once). The clone lands on `main`; fetch and check out the branch. Use the remote URL
+  `https://github.com/Voodoobrew101/Loot-Liquidator.git` and verify with
   `git ls-remote origin refs/heads/migration/v3-historical-research` after pushing.
 - Windows: clone with `-c core.longpaths=true -c core.autocrlf=false` to a short path. Use `python`.
-- Without `core.autocrlf=false`, a rebuild shows every output file as modified.
+- Without `core.autocrlf=false`, a rebuild shows every output file as modified. Restore it with `git checkout -- research/v3/output`
+  before committing (never commit `output/`).
 - With or without SciPy, run before and after on the same machine; only confidence values depend on it.
-- When checking whether v3 holds a source, compare **normalized keys** (`source_keys.normalize_url`), never raw URLs:
-  MIG-004 nearly double-imported a held forum post that way (the guard caught it).
+- When checking whether v3 holds a source, compare **normalized keys** (`source_keys.normalize_url`), never raw URLs, and treat a
+  language-suffixed Wowhead key as its base page (`extract_batch.strip_lang`).
 
-## Next task: M04.3 and M04.4 — batched AI extraction of the residual queue, then spot-check
+## Next task: M07 — final dispositions and the exception queue
 
-Why now: M04.1 decided what is left. `manifest/extraction-queue.jsonl` holds 55 sources in 49 files; everything else in the
-265 in-scope files is linked, listed as an exception or disposed with a reason. M04.3 turns the queue into schema-valid,
-arithmetic-checked rows that quote their source text; M04.4 re-checks a 10% sample (plus weak links) and decides M04.
-Dependencies: M04.1, M04.2 (done), M03 (done). No network is available in the workspace: the text to read is what the
-notes quote, so extraction is limited to numbers present in the queue's files, null on doubt.
+Why now: M03 and M04 are done, so every historical file is either imported, linked, extracted (rows or a reasoned null), an
+exception, or still unclassified. M07 turns that into one final disposition per file and one queue of what a person must decide.
+Dependencies: M03, M04 (done). No network.
 
 Sessions run in **Claude** (owner's choice).
-**Recommended model:** Claude Sonnet 5.5 · **thinking effort:** Medium for the extraction batches; **Claude Opus 5.5 · High** for the M04.4 spot-check
-**Alternative:** Claude Opus 5.5 · Medium for extraction if Sonnet's nulls look too cautious on a pilot batch of 5 sources
-**Reason:** the batches are mechanical (one source per prompt, validator and arithmetic checks do the policing); the spot-check needs the stronger judgement.
+**Recommended model:** Claude Sonnet 5.5 · **thinking effort:** Medium
+**Alternative:** Claude Opus 5.5 · Medium if the exception triage needs judgement rather than rules
+**Reason:** the dispositions are rule-driven from manifests already built (inventory, links, checkpoints, import reports); the
+exception queue is mostly listing with record IDs. Use the stronger model only if the 83 exception groups need real adjudication.
 
 ## Ready-to-paste prompt for the next session
 
 ```text
-You are continuing the Loot Liquidator historical-research migration (session MIG-007).
+You are continuing the Loot Liquidator historical-research migration (session MIG-008).
 
 Repository: Voodoobrew101/Loot-Liquidator
 Branch: migration/v3-historical-research (already exists on origin; check it out, do NOT work on main or
@@ -89,61 +102,67 @@ On Windows: clone to a short path with -c core.longpaths=true -c core.autocrlf=f
 
 READ FIRST, in order:
 1. research/v3/migration/HANDOFF.md
-2. research/v3/migration/PLAN.md (§3 strategy table, "Statistical rules" 1-6, "Risks and safeguards")
-3. research/v3/migration/CHECKLIST.md (task M04)
-4. research/v3/migration/SESSION_LOG.md (MIG-005, MIG-006)
-5. research/v3/migration/reports/M04-links.md ("For the Master" and the queue section)
-6. research/v3/migration/manifest/extraction-queue.jsonl (55 sources) and the residue rows of manifest/links.jsonl
-7. research/v3/README.md, research/v3/evidence-format.md, research/v3/migration/SCHEMA-EXTENSION.md
-8. research/v3/tools/import_existing.py (base(), drop_fields(), migrated(), derivation(), NEW_SOURCES),
-   research/v3/migration/tools/link_sources.py, research/v3/migration/tools/validate.py
+2. research/v3/migration/PLAN.md (section 3 strategy table, "Statistical rules" 1-7, "Risks and safeguards")
+3. research/v3/migration/CHECKLIST.md (task M07)
+4. research/v3/migration/SESSION_LOG.md (MIG-006, MIG-007)
+5. research/v3/migration/reports/M04-extraction.md and M04-spot-check.md ("For the Master" and the two scope findings)
+6. research/v3/migration/manifest/inventory.jsonl (1,244 files, preliminary dispositions), manifest/inventory-summary.md,
+   manifest/links.jsonl (265 in-scope files with outcomes and reasons), manifest/extraction/*.json (55 checkpoints; the 46 nulls
+   carry reason codes), manifest/validation.json
+7. research/v3/migration/reports/M03-import.md, M03b-import.md, M05-identity.md, M06-units.md (what each importer skipped and why)
+8. research/v3/migration/tools/inventory.py, link_sources.py, extract_batch.py, validate.py, and the importer
+   research/v3/tools/import_existing.py (NEW_SOURCES)
 
-TASK: M04.3 and M04.4. No network. Extract numbers ONLY from text present in the queue's files; never from memory.
+TASK: M07 — a final disposition for every one of the 1,244 files, and the exception queue. No network. No AI extraction.
 
 Steps:
-1. Baseline: run python research/v3/tools/build_estimates.py, copy research/v3/output/estimates.json outside the repo as
-   before.json, then git checkout -- research/v3/output. Note whether SciPy is installed (expected sha256 with SciPy:
-   6976d1bd...). Run the tests (197 expected).
-2. Write research/v3/migration/tools/extract_batch.py: for each queue entry build a prompt (one source, its files'
-   anchored text with line numbers, the target schema, the rule "quote the text, null on doubt, no invented numbers") and a
-   validator for the model's answer: JSON schema check (validate.py rules), every number must appear in the quoted text,
-   arithmetic checks (totals vs casts, percent vs counts, sums of ranks), source key must equal the queue entry. Checkpoint
-   per source in manifest/extraction/<key>.json so a stopped run resumes. Rows carry migratedFrom {path, sha256, recordRef},
-   castsBasis and derivations as in M03, and are written to research/v3/evidence/imported/ by a deterministic writer
-   (never by hand), only for sources v3 still does not hold (PLAN §3 rule 5).
-3. Pilot 5 sources of mixed type (a Reddit post, a Blizzard forum thread, a wow-professions table, a Wowhead comment, a
-   file-level piece), review every row by hand, then run the rest. Wowhead entity pages cited with incidental counts are expected to
-   yield null; record the null and the reason.
-4. M04.4: sample 10% of the extracted rows plus 10% of the 75 weak links in manifest/links.jsonl, re-check each against its
-   source text, write the verdicts to reports/M04-spot-check.md.
-5. Tests in research/v3/migration/tests/test_extract_batch.py (prompt contents, validator accept/reject cases, arithmetic
-   checks, checkpoint resume, writer determinism). Keep all 197 existing tests passing.
-6. Rerun link_sources.py (the extracted sources become held), the tests, tools/validate.py, rebuild twice (record the
-   estimate changes with estimates_diff.py; they are expected now), the importer twice (idempotent). Corrections stay 643 lines / 333 records.
+1. Baseline: run python research/v3/tools/build_estimates.py, copy research/v3/output/estimates.json outside the repo as before.json,
+   then git checkout -- research/v3/output. Note whether SciPy is installed (expected estimates sha256 with SciPy: d959496a...). Run
+   the tests (267 expected).
+2. Write research/v3/migration/tools/dispositions.py that builds manifest/dispositions.jsonl deterministically from the inventory,
+   the link outcomes, the extraction checkpoints and the import reports. One row per file: path, sha256, final disposition from a
+   closed vocabulary (for example imported, linked, extracted, extracted-null, exception-queued, reference-only, process-artifact,
+   derived-model, mechanics-knowledge, no-observational-content, source-links-only), a machine-readable reason, and pointers
+   (record IDs, checkpoint, report). No file may be left "preliminary", "candidate-*" or "covered-by-url".
+3. The 46 null extraction sources keep their 42 files "residue" in the linker. Dispose those files from their checkpoint reasons,
+   and say in the reason which source and which code.
+4. Exception queue: write manifest/exceptions.jsonl with every contradiction or suspicious transformation, each with record IDs and
+   a kind: the 44 exception files (83 source groups), the six Jallfo exceptions, s6bfrl uncommon gems, the 22 zkay8v 10,000-ore rows,
+   the 1smgllg placements, the 37 v2/source-reviews files and 21 submission audit CSVs (all without study objects, so
+   dispose or queue each), the Felslate 2016 101-vs-97 total, the 12 ambiguous-doubt extraction sources, and the validator's 5
+   errors (3 METHOD_UNKNOWN, 2 METHOD_MISSING: list each with a fix path through corrections.jsonl or an agent flag).
+5. Scope gap from M04.3: the queue missed notes the inventory marked source-links-only, and the linker's count pattern needs a
+   unit word. Measure how many unheld sources with counts sit in out-of-scope files (M04-extraction.md says 23). Decide per source
+   whether it needs an extraction checkpoint (use extract_batch.py and EXTRA_FILES) or a reasoned disposition; widen the linker
+   pattern only if a test pins it and the rerun is explained.
+6. Tests in research/v3/migration/tests/test_dispositions.py (vocabulary closed, every inventory file has one row, no preliminary
+   value left, idempotency, reasons present, exception rows carry IDs, committed files match a fresh run). Keep all 267 existing
+   tests passing.
+7. Rerun link_sources.py and extract_batch.py write --check if anything they read changed, the tests, tools/validate.py, rebuild
+   twice (estimates should not change; if they do, explain with estimates_diff.py), the importer twice (idempotent). Corrections
+   stay 643 lines / 333 records.
 
-Rules: never edit agent evidence files, corrections.jsonl or strategy.md; do not commit research/v3/output/.
-evidence-format.md is owner-only: propose field changes in SCHEMA-EXTENSION.md. Extraction never overwrites an existing
-v3 record and never guesses an item ID.
+Rules: never edit agent evidence files, corrections.jsonl or strategy.md; do not commit research/v3/output/. evidence-format.md is
+owner-only: propose field changes in SCHEMA-EXTENSION.md. Never place an item by name and never guess an item ID.
 
 Acceptance criteria:
-- Every queue entry has a checkpoint: extracted rows, or null with a reason.
-- Extracted rows quote their source text, pass validate.py and the arithmetic checks, carry migratedFrom, and are idempotent.
-- The 10% sample (and weak-link sample) is re-checked, with verdicts written down.
-- Counts before/after in reports/M04-extraction.md with a "For the Master" section; estimate changes explained.
+- manifest/dispositions.jsonl gives all 1,244 files a final disposition and a reason; counts by disposition in reports/M07-dispositions.md.
+- manifest/exceptions.jsonl queues every contradiction and suspicious transformation with record IDs; the validator's findings are
+  clean or each is listed.
+- Counts before/after, estimate check, and a "For the Master" section.
 
-Update before ending: CHECKLIST.md (tick only what is met; M04 completes only when M04.4 is done), SESSION_LOG.md (append MIG-007
-with commands actually run and measured numbers), HANDOFF.md (status, next task, model/effort, next prompt), PLAN.md if a rule
-changed. Commit on migration/v3-historical-research with message "v3 migration M04.3-M04.4: <summary>" and push.
+Update before ending: CHECKLIST.md (tick only what is met), SESSION_LOG.md (append MIG-008 with commands actually run and measured
+numbers), HANDOFF.md (status, next task M08, model/effort, next prompt), PLAN.md if a rule changed. Commit on
+migration/v3-historical-research with message "v3 migration M07: <summary>" and push.
 
-End with the mandatory report: A. Session summary; B. Progress and checklist (totals, %, newly ticked items,
-migration metrics); C. Next recommended task (ID, why, dependencies, deliverables, acceptance); D. Next Claude
-configuration (model, thinking effort, alternative, reason); E. A complete ready-to-paste prompt for the following session.
-Default next task after this: M07 — final dispositions for all 1,244 files and the exception queue (incl. the 91 exception
-groups, the 37 v2/source-reviews files and 21 submission audit CSVs).
+End with the mandatory report: A. Session summary; B. Progress and checklist (totals, %, newly ticked items, migration metrics);
+C. Next recommended task (ID, why, dependencies, deliverables, acceptance); D. Next Claude configuration (model, thinking effort,
+alternative, reason); E. A complete ready-to-paste prompt for the following session.
+Default next task after this: M08 — estimator integration (structured unlockState, ISO-only dates, percentMeaning guard,
+per-record unusedReason, regression tests, decision on committing output/).
 ```
 
 ## Later tasks at a glance
 
-M04.3/M04.4 residual AI extraction and spot-check → M07 dispositions (including the 37 `v2/source-reviews` files and 21 submission audit CSVs, all without study objects)
-→ M08 estimator integration → M09 reports → M10 reconcile with the agents' branch (rerun the importer: its MIG-004 output
-may shrink as agents catch up) and open the PR.
+M07 dispositions and exception queue → M08 estimator integration → M09 reports → M10 reconcile with the agents' branch (rerun the
+importer and `extract_batch.py write`: their output may shrink as agents catch up) and open the PR.

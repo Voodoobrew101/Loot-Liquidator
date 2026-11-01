@@ -151,6 +151,18 @@ class Rules(Repo):
         self.assertEqual(s["matched"], [])
         self.assertEqual(queue, [])
 
+    def test_source_held_only_as_a_recipe_fact_is_not_an_exception(self):
+        """M04.3: a recipe row (20 herbs per mill) holds a Wowhead spell page; other sources' counts on the same
+        line have no cohort to be compared with, so they are not an exception."""
+        self.add("research/a.md", f"Study of 1,000 ore: 53 Sun Crystal ({POST})\n")
+        recipe = {"id": "r1", "type": "recipe", "source": {"url": POST}, "originalSource": None,
+                  "recipeSpellID": 9999, "inputsPerCast": 20, "_file": IMPORT_FILE}
+        links, queue, _ = self.run_links([recipe])
+        s = self.sources(links)[0]
+        self.assertEqual(s["status"], "source-held")
+        self.assertIn("recipe fact", s["reason"])
+        self.assertEqual(queue, [])
+
     def test_only_batch_sizes_is_source_held_not_exception(self):
         self.add("research/a.md", f"The 1,000 ore post ({POST})\n")
         links, _, _ = self.run_links([drop("r1", POST, total=44, casts=1000)])
