@@ -33,6 +33,7 @@ Writes research/v3/output/estimates.json and research/v3/output/summary.md
 import glob
 import json
 import os
+import re
 from collections import defaultdict
 
 try:
@@ -132,7 +133,7 @@ def load_conditions(rows):
         ids = set(str(i) for i in c["inputItemIDs"]) if c.get("inputItemIDs") else None
         out.setdefault((c["method"], int(c["outputItemID"])), []).append((ids, c.get("requires")))
         if c.get("outputName"):
-            out.setdefault((c["method"], "family:" + c["outputName"].strip()), []).append((None, c.get("requires")))
+            out.setdefault((c["method"], "family:" + c["outputName"].strip()), []).append((ids, c.get("requires")))
     return out
 
 
@@ -278,10 +279,37 @@ def unlock_state(r):
     return None
 
 
+_WH_PREFIX = {"de", "es", "fr", "it", "pt", "ru", "ko", "cn", "tw", "mx", "ptr", "ptr-2", "beta"}
+
+
+def norm_source(u):
+    """One spelling per page, so copies of a study under /ru/, /ptr/, old.reddit or a
+    different URL slug are recognised as the same study (S7). The #comment part is kept."""
+    if not isinstance(u, str) or "://" not in u:
+        return u
+    u = u.strip()
+    frag = ""
+    if "#" in u:
+        u, frag = u.split("#", 1)
+        frag = "#" + frag.lower()
+    u = u.split("?", 1)[0].split("://", 1)[1].lower().rstrip("/")
+    host, _, path = u.partition("/")
+    host = re.sub(r"^(www|old|new|np)\.", "", host)
+    parts = [p for p in path.split("/") if p]
+    if host.endswith("wowhead.com"):
+        while parts and parts[0] in _WH_PREFIX:
+            parts = parts[1:]
+        # drop the name slug after "item=123/name"
+        parts = [p for i, p in enumerate(parts) if not (i > 0 and "=" in parts[i - 1] and "=" not in p)]
+    if host.endswith("reddit.com") and len(parts) >= 4 and parts[2] == "comments":
+        parts = parts[:4]
+    return host + "/" + "/".join(parts) + frag
+
+
 def study_identity(r):
     """Same original study counts once, even if recorded in several files (S7)."""
     src = r.get("originalSource") or (r.get("source") or {}).get("url") or r.get("studyKey") or r.get("id")
-    return (src, r.get("inputRank"), r.get("casts"), r.get("studyKey") if not r.get("casts") else None)
+    return (norm_source(src), r.get("inputRank"), r.get("casts"), r.get("studyKey") if not r.get("casts") else None)
 
 
 def build(rows):

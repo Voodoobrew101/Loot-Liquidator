@@ -1,15 +1,15 @@
 # ItemDB estimates (first draft, generated)
 
-Built by `research/v3/tools/build_estimates.py` from 4,544 evidence records.
-1,240 input/material estimates; 35 records could not be placed yet (no item ID or name match).
+Built by `research/v3/tools/build_estimates.py` from 4,840 evidence records.
+1,202 input/material estimates; 35 records could not be placed yet (no item ID or name match).
 25 of them are conditional drops (need an unlock or skill level); they are left out of the confidence counts below and marked with what unlocks them.
 
 | Confidence | Estimates |
 | --- | --- |
 | 90% or more | 19 |
 | 75-89% | 5 |
-| 50-74% | 379 |
-| under 50% | 812 |
+| 50-74% | 371 |
+| under 50% | 782 |
 
 Confidence = chance the true drop chance is within +/-5 points of the number shown.
 
@@ -96,6 +96,6 @@ Confidence = chance the true drop chance is within +/-5 points of the number sho
 | Prospect | 237366 | 242611 | 15.0% | 0.150 | 1-1 | 11% |  | starting guess only (reference values); chance estimated from average / middle of range |
 | Prospect | 237366 | 242612 | 15.0% | 0.150 | 1-1 | 11% |  | starting guess only (reference values); chance estimated from average / middle of range |
 | Prospect | 237366 | 242613 | 15.0% | 0.150 | 1-1 | 11% |  | starting guess only (reference values); chance estimated from average / middle of range |
-| Prospect | 237362 | family:Eversong Diamond | 3.8% | 0.037 | 1-1 | 50% | Midnight Jewelcrafting prospecting specialization unlock for copper (named 'Copper Consumer' in the old addon settings) | 800 effective study casts; chance estimated from average / middle of range |
-| Prospect | 237364 | family:Eversong Diamond | 5.4% | 0.054 | 1-1 | 50% | Midnight Jewelcrafting prospecting specialization unlock for copper (named 'Copper Consumer' in the old addon settings) | 800 effective study casts; chance estimated from average / middle of range |
-| Prospect | 237366 | 242608 | 20.0% | 0.200 | 1-1 | 92% | Midnight Jewelcrafting prospecting specialization unlock for thorium (named 'Thorium Thresher' in the old addon settings) | 200 effective study casts; dated by post date only, after 2026-03-31 (collection date unknown); average estimated from chance x middle of range (provisional valuation) |
+| Prospect | 237362 | family:Eversong Diamond | 3.8% | 0.037 | 1-1 | 50% | Jewelcrafting specialization Proficient Processor > Prospecting Pro > Tin-vestigator: at least 1 Knowledge Point in this ore's node | 800 effective study casts; chance estimated from average / middle of range |
+| Prospect | 237364 | family:Eversong Diamond | 5.4% | 0.054 | 1-1 | 50% | Jewelcrafting specialization Proficient Processor > Prospecting Pro > Silver Scrapper: at least 1 Knowledge Point in this ore's node | 800 effective study casts; chance estimated from average / middle of range |
+| Prospect | 237366 | 242608 | 20.0% | 0.200 | 1-1 | 92% | Jewelcrafting specialization Proficient Processor > Prospecting Pro > Thorium Thresher: at least 1 Knowledge Point in this ore's node | 200 effective study casts; dated by post date only, after 2026-03-31 (collection date unknown); average estimated from chance x middle of range (provisional valuation) |
