@@ -28,6 +28,11 @@
 
 ## Environment notes
 
+- **Pushing from a Claude cloud session:** the repo must be attached with push access. If the first push-access
+  request is denied (MIG-003: an automatic safety check refused it, not GitHub), retry the request once; the owner
+  has confirmed push access is intended. Clone/remote URL must use the exact name
+  `https://github.com/Voodoobrew101/Loot-Liquidator.git` (lowercase works but warns "This repository moved").
+  Verify with `git ls-remote origin refs/heads/migration/v3-historical-research` after pushing.
 - Windows: clone with `-c core.longpaths=true -c core.autocrlf=false` to a short path. Use `python`.
 - Without `core.autocrlf=false`, a rebuild shows every output file as modified.
 - With or without SciPy, run before and after on the same machine; only confidence values depend on it.
@@ -55,6 +60,9 @@ Repository: Voodoobrew101/Loot-Liquidator
 Branch: migration/v3-historical-research (already exists on origin; check it out, do NOT work on main or
 implementation/five-agent-completion, do NOT touch the addon .lua files).
 If your clone is shallow, run: git fetch --depth=1000 origin migration/v3-historical-research
+Push access: the owner has granted it. In a Claude cloud session, attach the repo with push access; if that request
+is denied, retry it once before falling back. Use the exact remote URL
+https://github.com/Voodoobrew101/Loot-Liquidator.git and confirm the push with git ls-remote.
 On Windows: clone to a short path with -c core.longpaths=true -c core.autocrlf=false, and use `python`.
 
 READ FIRST, in order:
