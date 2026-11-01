@@ -19,8 +19,9 @@ Why now: it is the largest measured correctness defect (168 collision groups; 90
 ≈288k material-level casts), it touches only `study_identity()` in the estimator, and the tests that guard it
 now exist.
 
-**Recommended model:** GPT-6 Astra · **effort:** High
-**Alternative:** GPT-6.1 Sol · High
+Sessions run in **Claude** (owner's choice).
+**Recommended model:** Claude Opus 5.5 · **thinking effort:** High
+**Alternative:** Claude Sonnet 5.5 · High
 **Reason:** statistical-identity logic where a wrong rule either double-counts copies or discards real cohorts;
 needs careful reasoning over edge cases, but the scope is one function plus tests, so Extra High is unnecessary.
 
@@ -97,8 +98,8 @@ next prompt), PLAN.md if the rule changed. Commit on migration/v3-historical-res
 "v3 migration M05: <summary>" and push.
 
 End with the mandatory report: A. Session summary; B. Progress and checklist (totals, %, newly ticked items,
-migration metrics); C. Next recommended task (ID, why, dependencies, deliverables, acceptance); D. Next Codex
-configuration (model, effort, alternative, reason); E. A complete ready-to-paste prompt for the following session.
+migration metrics); C. Next recommended task (ID, why, dependencies, deliverables, acceptance); D. Next Claude
+configuration (model, thinking effort, alternative, reason); E. A complete ready-to-paste prompt for the following session.
 Default next task after M05: M03 (M03.0, M03.1, M03.5) — deterministic re-import with castsBasis.
 ```
 
