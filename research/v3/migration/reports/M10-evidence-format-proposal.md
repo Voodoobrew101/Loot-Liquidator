@@ -1,13 +1,12 @@
 # Proposed changes to `research/v3/evidence-format.md` (M10)
 
-Status: **proposal only.** `evidence-format.md` is owner-only and was not edited. Two choices below are marked **undecided**; the owner has to make
-them before the wording is final. Everything else follows what the estimator and the importers already do (`SCHEMA-EXTENSION.md` has the full field
+Status: **proposal only.** `evidence-format.md` is owner-only and was not edited. One choice below (METHODS) is still **undecided**; `unlockState` was decided by the owner as option A. Everything else follows what the estimator and the importers already do (`SCHEMA-EXTENSION.md` has the full field
 list and the reasons). Counts are from the merged evidence, 5,632 effective records, measured in MIG-011.
 
 ## 1. Fields agents should start writing
 
 The format says unknown values are `null` and no field is left out, so each new field is optional for readers but, once adopted, written by agents as
-`null` when unknown. **Exception: `unlockState` (section 3).**
+`null` when unknown. **Exception: `unlockState` (section 3): leave it out when unknown.**
 
 | Field (on `drop`) | Proposed wording | Why, measured |
 | --- | --- | --- |
@@ -33,19 +32,16 @@ Not proposed for agents: `migratedFrom` (importers only), `observedOn` (importer
    covers a method outside the four, and send the three records back for a correcting `replaces` record. Both clear the validator's 5 errors; the
    two ItemDB rows in that queue are unrelated and need `exclude` corrections.
 
-## 3. `unlockState` — undecided
+## 3. `unlockState` — decided: option A (owner, 2026-11-01)
 
-`unlockState` (`true`, `false`, or absent) would replace the estimator's search of `specialization`, `notes` and `stats` for phrases such as "max
-knowledge". The estimator reads it first. The problem is the format's own rule, "write unknowns as `null`":
+`unlockState` (`true`, `false`, or absent) replaces the estimator's search of `specialization`, `notes` and `stats` for phrases such as "max knowledge".
+The estimator reads it first. Proposed wording for `evidence-format.md`, as an explicit exception to "write unknowns as `null`":
 
-- **Option A, recommended: omit unless stated.** "Write `unlockState` only when the source states the unlock (`true` or `false`). Leave it out otherwise;
-  never write `null`." The text fallback stays on for records without the field. Matches what the code does today (an explicit `null` means "source
-  does not say" and turns the fallback off), at the price of one exception to the "never leave fields out" sentence.
-- **Option B: treat `null` as absent.** Change `unlock_state()` (one line) so `null` falls back to the text, then the format can say "`null` when
-  unknown" like every other field. Costs a small estimator change and a test; nothing in the data moves (no record sets the field).
+> `unlockState`: write `true` or `false` only when the source states whether the player had the unlock. Leave the field out otherwise; never write `null`.
 
-Until one is chosen, **do not add `unlockState` to `evidence-format.md`.** If it is added with the "write unknowns as null" rule and the code is
-unchanged, every new conditional study whose unlock is only in `notes` is left out of its estimate (`reports/M08-estimator.md` section 1).
+Why the exception: an explicit `null` means "the source does not say" and switches the text fallback off, so a conditional study whose unlock is only in
+`notes` would be left out of its estimate (`reports/M08-estimator.md` section 1). No code change is needed; no record sets the field today.
+Option B (make `null` mean absent in `unlock_state()`) was considered and not chosen.
 
 ## 4. What not to adopt yet
 

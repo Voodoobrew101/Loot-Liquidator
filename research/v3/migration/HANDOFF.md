@@ -25,9 +25,7 @@
 - Estimates 1,205 → 1,133: 84 removed (all re-keying: their 150 rows now sit in item-ID groups), 12 added, 138 changed. 61 estimates differ in band
   from the snapshot (27 at this merge). The identity report shows 10 `differing` groups: all one pair of copies (Superbondez Prismatic, S17), pinned
   by a test. Details and the full explanation: `reports/M10-merge.md`, `M10-estimates-diff.md`, `M10-identity-data.json`.
-- `reports/M10-evidence-format-proposal.md`: the `evidence-format.md` proposal. **Two choices are undecided and need the owner:** the `unlockState`
-  rule (option A omit-unless-stated, recommended, or option B change the code so `null` means absent) and the METHODS wording for the three
-  `rateChange` records. `evidence-format.md` was not edited.
+- `reports/M10-evidence-format-proposal.md`: the `evidence-format.md` proposal. **One choice is still open:** the METHODS wording for the three `rateChange` records. The owner chose option A for `unlockState` (omit unless stated; written into the proposal). `evidence-format.md` was not edited.
 - `tests/test_m10_merge.py` (12). Existing tests that pinned corpus numbers the merge moved were updated with a reason beside each
   (`reports/M10-merge.md` section 6).
 - `reports/M09-audit.md` regenerated with the merge as a stage; the register has 181 open rows (the M10 report's six items and strategy S18 / S19 are new).
@@ -141,7 +139,7 @@ owner's machine and the GitHub plugin failed to connect ("Authorization header i
 by hand: `https://github.com/Voodoobrew101/Loot-Liquidator/compare/implementation/five-agent-completion...migration/v3-historical-research`, with
 `reports/M10-pr-description.md` as the description. Do not merge it; do not enable auto-merge.
 
-Owner decisions that are not blockers for the PR (all rows in `reports/M09-audit.md` section 5): the `unlockState` rule and the METHODS wording for
+Owner decisions that are not blockers for the PR (all rows in `reports/M09-audit.md` section 5): the METHODS wording for
 `evidence-format.md` (`reports/M10-evidence-format-proposal.md`); S19 (Serevite rank IDs, wait for the reviewer's table); the M06 weight and
 backfills; the exception queue; the output/ and SciPy policy.
 
