@@ -1,4 +1,4 @@
-"""Stage ATT JSON / direct-token exports for review; never approve runtime data."""
+"""Stage direct-token exports (and old ATT JSON exports made before C6) for review; never approve runtime data."""
 import argparse
 import csv
 import hashlib

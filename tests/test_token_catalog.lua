@@ -11,9 +11,9 @@ local approved={recordID='synthetic-only',tokenID=900001,kind='open',gameMode='R
     requirementsReviewed=true,requirements={},evidenceStatus='VERIFIED_RELATIONSHIP',
     independentReview='APPROVED',reviewedBy='synthetic fixture',confidence0to100=90,
     sourceRevision='fixture',sourceURLs={'https://example.test/one','https://example.test/two'}}
-local LL={ItemDB={schemaVersion=1,processing={},tokenRewards={clone(approved)}},db={enableATTIntegration=false}}
+local LL={ItemDB={schemaVersion=1,processing={},tokenRewards={clone(approved)}},db={}}
 assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',LL)
-assert(loadfile('LootLiquidator/ATTIntegration.lua'))('LootLiquidator',LL)
+assert(loadfile('LootLiquidator/Tokens.lua'))('LootLiquidator',LL)
 assert(not LL.itemDBError)
 -- A record marked APPROVED still needs the full review.
 for field,value in pairs({listComplete=false,requirementsReviewed=false,
@@ -42,87 +42,47 @@ bad.costs={['900010']={{kind='item',id=900001,quantity=1}},['900011']={{kind='it
 assert(LL:ValidateTokenCatalog({bad}))
 local overlap=clone(approved);overlap.recordID='second';assert(not LL:ValidateTokenCatalog({approved,overlap}))
 assert(not LL:ValidateTokenCatalog({named=approved}))
+-- C6 (changed on purpose): AllTheThings was removed. Tokens come only from
+-- ItemDB's catalog; a loaded ATT and an old saved ATT cache are never read.
 local calls=0
-C_AddOns={IsAddOnLoaded=function() calls=calls+1;error('standalone path must not query ATT') end}
+C_AddOns={IsAddOnLoaded=function() calls=calls+1;error('token lookup must not query ATT') end}
 AllTheThings={SearchForField=function()error('must not search ATT')end}
 local collected=false
 C_TransmogCollection={GetItemInfo=function()return 1,2 end,GetAppearanceSourceInfo=function()return {isCollected=collected}end}
 local f={id=900001,classID=15,equipLoc='',link='item:900001'}
-local token=assert(LL:ATTTokenInfo(f));assert(token.standalone and token.possibleMissingAppearance and calls==0)
+local token=assert(LL:TokenInfo(f));assert(token.standalone and token.possibleMissingAppearance and calls==0)
 assert(LL:StandaloneTokenInfo({id=279576,classID=12,equipLoc='INVTYPE_NON_EQUIP_IGNORE'})==nil)
-assert(LL:ATTResearchStatus():find('1 current-build tokens',1,true))
 local realSignature=GetBuildInfo
 GetBuildInfo=function()return 'synthetic','unknown','Oct 29 2026',120105 end
 assert(LL:StandaloneTokenInfo(f)==nil,'unparseable build must not admit a catalog record')
-assert(LL:ATTResearchStatus():find('0 current-build tokens',1,true))
 GetBuildInfo=nil
 assert(LL:StandaloneTokenInfo(f)==nil)
-assert(LL:ATTResearchStatus():find('0 current-build tokens',1,true))
 GetBuildInfo=realSignature
-WOW_PROJECT_ID=2;assert(LL:ATTTokenInfo(f)==nil);WOW_PROJECT_ID=1
-collected=true;LL:InvalidateATTCache();token=LL:ATTTokenInfo(f);assert(not token.possibleMissingAppearance)
-assert(LL:ATTTokenInfo({id=900001,classID=7,equipLoc=''})==nil)
-assert(LL:ATTTokenInfo({id=900001,classID=15,equipLoc='INVTYPE_HEAD'})==nil)
+WOW_PROJECT_ID=2;assert(LL:TokenInfo(f)==nil);WOW_PROJECT_ID=1
+collected=true;LL:InvalidateTokenCache();token=LL:TokenInfo(f);assert(not token.possibleMissingAppearance)
+assert(LL:TokenInfo({id=900001,classID=7,equipLoc=''})==nil)
+assert(LL:TokenInfo({id=900001,classID=15,equipLoc='INVTYPE_HEAD'})==nil)
 GetBuildInfo=function()return 'synthetic','201','Oct 29 2026',120105 end
-assert(LL:ATTTokenInfo(f)==nil)
+assert(LL:TokenInfo(f)==nil)
 GetBuildInfo=function()return 'synthetic','150','Oct 29 2026',120105 end
-LL.ItemDB.tokenRewards[1].evidenceStatus='REJECTED';assert(LL:ATTTokenInfo(f)==nil)
+LL.ItemDB.tokenRewards[1].evidenceStatus='REJECTED';assert(LL:TokenInfo(f)==nil)
 LL.ItemDB.tokenRewards[1].evidenceStatus='VERIFIED_RELATIONSHIP'
 -- C4b3: an unreviewed list works too, labelled, with its confidence carried along.
-LL.ItemDB.tokenRewards[1].independentReview='PENDING';LL:InvalidateATTCache()
-local unreviewed=assert(LL:ATTTokenInfo(f),'unreviewed list used')
+LL.ItemDB.tokenRewards[1].independentReview='PENDING';LL:InvalidateTokenCache()
+local unreviewed=assert(LL:TokenInfo(f),'unreviewed list used')
 assert(unreviewed.source:find('not yet reviewed',1,true) and unreviewed.catalogConfidence==90 and not unreviewed.catalogReviewed)
-LL.ItemDB.tokenRewards[1].independentReview='APPROVED';LL:InvalidateATTCache()
-assert(LL:ATTTokenInfo(f).catalogReviewed)
--- Unreviewed legacy cache remains explicitly labelled, and works with ATT
--- uninstalled. The integration toggle may still disable that legacy fallback.
+LL.ItemDB.tokenRewards[1].independentReview='APPROVED';LL:InvalidateTokenCache()
+assert(LL:TokenInfo(f).catalogReviewed)
+-- An old saved ATT cache stays in saved data (never thrown away) but is not used.
 LL.db.attRewardCache={['900002']={kind='open',rewards={900010}}}
 LL.db.enableATTIntegration=true
-local cached=LL:ATTTokenInfo({id=900002,classID=15,equipLoc=''})
-assert(cached and cached.source:find('ATT possible',1,true) and calls==0)
--- Fresh queries preserve actual source metadata and flag their limitations.
-AllTheThings={SearchForField=function(field,id)
-    if field=='itemID' and id==900003 then return {{itemID=id,g={{itemID=900010,c={11},cost={{'i',id,2}},sourceQuests={123}}}}} end
-    return {}
-end}
-C_AddOns={IsAddOnLoaded=function()return true end,GetAddOnMetadata=function()return 'fixture-version' end}
-GetItemSpell=function()return 'Open' end
-C_Item={GetItemInfoInstant=function(id)return id,nil,nil,'INVTYPE_HEAD',nil,4 end}
-local fresh=LL:ATTTokenInfo({id=900003,classID=15,equipLoc='',link='item:900003'})
-assert(fresh and fresh.provenance.version=='fixture-version')
-assert(LL.db.attRewardCache['900003'].details[1].cost[1][3]==2)
-assert(LL.db.attRewardCache['900003'].limitations.ancestorRequirementsUnknown)
-assert(LL.db.attResearchScans['900003'].status=='FOUND_CANDIDATES')
-LL:ATTTokenInfo({id=900004,classID=15,equipLoc='',link='item:900004'})
-assert(LL.db.attResearchScans['900004'].status=='NO_MATCH_OR_UNRESOLVED')
-local many={}for i=1,50 do many[i]=910000+i end
-LL.db.attRewardCache['900005']={kind='open',rewards=many}
--- Ordinary gear source contexts are research too, even though the item is not
--- an equipment token. Preserve parent requirements, but no collection state.
-local oldSearch=AllTheThings.SearchForField
-AllTheThings.SearchForField=function(field,id)
-    if field=='itemID' and id==268226 then
-        return {{itemID=id,q=4,collected=true,text='Alluring Bubbleband',parent={
-            mapID=123,difficultyID=2,npcID=456,eventID=789,timeline={'added 12.1.0'},sourceQuests={55}}}}
-    end
-    return oldSearch(field,id)
+assert(LL:TokenInfo({id=900002,classID=15,equipLoc=''})==nil,'saved ATT cache is not a token source')
+assert(LL.db.attRewardCache['900002'],'saved ATT cache left untouched')
+for _,name in ipairs({'ATTTokenInfo','ATTAvailable','ATTResearchExport','ATTResearchStatus','StartATTCacheUpdate',
+    'HarvestATTItemMetadata','ATTCacheStatus','RememberATTItem','ATTTokenDiagnostics','ImportLegacyTokenCandidates'}) do
+    assert(LL[name]==nil,name..' removed')
 end
-assert(LL:HarvestATTItemMetadata({id=268226,classID=4}))
-local context=LL.db.attItemResearch['268226'].contexts[1]
-assert(context[1].itemID==268226 and context[1].collected==nil)
-assert(context[2].difficultyID==2 and context[2].sourceQuests[1]==55 and context[2].timeline[1]=='added 12.1.0')
-local sourceSearch=AllTheThings.SearchForField
-AllTheThings.SearchForField=function()return {}end
-assert(not LL:HarvestATTItemMetadata({id=268226,classID=4}))
-assert(LL.db.attItemResearch['268226'].contexts[1][2].difficultyID==2,'temporary miss erased source data')
-assert(LL.db.attItemResearch['268226'].lastAttempt.status=='NO_MATCH_OR_UNRESOLVED')
-AllTheThings.SearchForField=sourceSearch
--- Exercise JSON escaping and provenance in the actual runtime export.
-LL.db.attRewardCache['900003'].provenance.note='quote " backslash \\ newline\n雪'
-local export=LL:ATTResearchExport(1)
-local file=assert(io.open(outdir..'/att-runtime-export.json','w'));file:write(export);file:close()
-assert(LL:ATTResearchStatus():find('1 capped',1,true))
-assert(LL:ATTResearchStatus():find('Removal pending',1,true))
+assert(calls==0)
 -- C4b1: the compiler takes checked token lists from the research team's ItemDB
 -- export (database/research/itemdb.lua, field tokenRewards) into the SAME
 -- generated ItemDB. (Before C4b1 they came from database/records.lua; changed on
@@ -175,7 +135,7 @@ loadfile,arg=originalLoadfile,originalArg
 -- crafting conversion evaluator on their own input item.
 SlashCmdList={};max,min=math.max,math.min
 assert(loadfile('LootLiquidator/Core.lua'))('LootLiquidator',LL)
-LL.db.enabled=true;LL.db.enableATTIntegration=false
+LL.db.enabled=true
 LL.ItemDB.tokenRewards[1].inputClassID=12
 assert(LL:InitializeItemDB())
 local questToken={id=900001,classID=12,equipLoc='',link='item:900001',bindType=4,
@@ -187,5 +147,11 @@ assert(decision and decision.tokenInfo and decision.tokenInfo.standalone and not
 questToken.id=999999
 decision=LL:Evaluate('item:999999',{})
 assert(decision.questItem and not decision.tokenInfo)
+-- C6: old ATT switches are dropped from saved data; old ATT caches are kept.
+local saved={enableATTIntegration=true,showATTTooltipDetails=true,showATTTokenDEQuotes=false,
+    attRewardCache={['1']={}},attResearchScans={},attItemResearch={}}
+LL:RemoveRetiredSettings(saved)
+assert(saved.enableATTIntegration==nil and saved.showATTTooltipDetails==nil and saved.showATTTokenDEQuotes==nil)
+assert(saved.attRewardCache and saved.attResearchScans and saved.attItemResearch,'old ATT caches kept')
 AllTheThings=nil
-print('PASS: reviewed token compiler/runtime route, no-ATT lookup, evidence/scope rejection, cached fallback and provenance/coverage export')
+print('PASS: token catalog compiler/runtime route, ATT never read (C6), evidence/scope rejection')

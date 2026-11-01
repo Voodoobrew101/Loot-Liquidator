@@ -35,7 +35,7 @@ Disenchant, mill, prospect and smelt values show a **confidence** percentage, so
 ### Requirements
 
 - **TradeSkillMaster** for Auction House prices (without it, only vendor values are compared).
-- Optional: **BetterBags**, **AllTheThings** (helps recognise gear tokens for now).
+- Optional: **BetterBags**.
 - Retail World of Warcraft: Midnight.
 
 ### Settings

@@ -94,7 +94,6 @@ local function ScanFrame(frame, changed)
                 b.laBlizzardBag = true
                 b.laBagID, b.laSlotID = bag,slot
                 if link then
-                    if LL.RememberATTItem then LL:RememberATTItem(link) end
                     LL:Paint(b,link,LL:Evaluate(link,ItemContext(bag,slot)))
                 else
                     LL:ClearButton(b)
@@ -150,7 +149,6 @@ local function BankTick()
             local link=bag and C_Container and C_Container.GetContainerItemLink
                 and C_Container.GetContainerItemLink(bag,slot)
             if bag==job.bag and slot==job.slot and link==job.link then
-                if LL.RememberATTItem then LL:RememberATTItem(link) end
                 local decision=LL:Evaluate(link,ItemContext(bag,slot))
                 LL:Paint(button,link,decision)
                 button.laBlizzardBag=true
@@ -342,7 +340,6 @@ local function UpdateGuild()
                     local _, c = GetGuildBankItemInfo(tab, slot)
                     count = c or 1
                 end
-                if LL.RememberATTItem then LL:RememberATTItem(link) end
                 LL:Paint(b, link, LL:Evaluate(link, {guild=true, count=count,_LLFastBadge=true}))
             else
                 LL:ClearButton(b)

@@ -1,5 +1,5 @@
 -- Passive, research-only collector for DIRECT equipment-token rewards.
--- Does NOT depend on ATT, reverse-crafting graphs, TSM or external catalogs.
+-- Does NOT depend on other addons, reverse-crafting graphs, TSM or external catalogs.
 -- Never changes recommendations; observations require offline validation before
 -- they are compiled into the one authoritative ItemDB (ItemDBRuntime.lua).
 local _, LL = ...
@@ -185,36 +185,6 @@ function LL:TokenResearchExport(page)
             r.rewardQuantity,r.vendorID or "",costs,r.seen or 1,r.lastSeen or ""},"|")
     end
     return table.concat(lines,"\n")
-end
-
--- One-time migration of the account's EXISTING ATT reward cache for offline
--- review. This does NOT query ATT, turn cached links into active token tables,
--- or accept crafting inputs. Records are flagged unverified; 50-entry lists
--- may be truncated by the legacy ATT scanner.
-function LL:ImportLegacyTokenCandidates()
-    local cache=self.db and self.db.attRewardCache
-    if type(cache)~="table" then return 0,0 end
-    local added,skipped=0,0
-    for rawID,entry in pairs(cache) do
-        local inputID=Number(tonumber(rawID))
-        if inputID and TokenInput(inputID) and type(entry)=="table"
-            and type(entry.rewards)=="table" then
-            local kind=entry.kind=="exchange" and "att_exchange_candidate" or "att_open_candidate"
-            local note=(#entry.rewards>=50)
-                and "Unverified ATT cache; possible truncated list (50 cap)"
-                or "Unverified ATT cache; relation or prerequisites unknown"
-            for _,rewardID in ipairs(entry.rewards) do
-                local store=Store(self)
-                local key=kind..":"..inputID..":"..tostring(rewardID)..":1:1"
-                if store and store[key] then
-                    skipped=skipped+1
-                elseif Record(self,kind,inputID,Number(rewardID),1,1,note,nil) then
-                    added=added+1
-                else skipped=skipped+1 end
-            end
-        elseif inputID then skipped=skipped+1 end
-    end
-    return added,skipped
 end
 
 local frame=CreateFrame("Frame")

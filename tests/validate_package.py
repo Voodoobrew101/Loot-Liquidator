@@ -48,4 +48,12 @@ assert len(legacy) == 1, 'ItemDB must carry the old estimates once'
 assert hashlib.sha256(legacy[0].split('=',1)[1].encode()).hexdigest() == \
     'e97a947b5c8690c69e1f37aa85437a5d824aa14e065907e3d5080450e336bc08', 'Frozen reference changed: legacy'
 assert sum(l.startswith('LL.ItemDB.restrictions=') for l in runtime_lines) == 1
+# C6: AllTheThings is removed. No dependency on it, no file for it, and no
+# addon code that reaches for its global tables.
+assert not (root/'ATTIntegration.lua').exists(), 'ATTIntegration.lua must not ship (C6)'
+assert 'AllTheThings' not in (root/'LootLiquidator.toc').read_text(), 'TOC must not list AllTheThings (C6)'
+import re as _re
+for lua in root.glob('*.lua'):
+    code = lua.read_text()
+    assert not _re.search(r'_G\.(AllTheThings|ATTC)\b|\bAllTheThings\.|SearchForField', code), lua.name+' still reaches for ATT (C6)'
 print('PASS: frozen reference checksums unchanged after formula retirement')

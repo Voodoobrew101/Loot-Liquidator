@@ -15,7 +15,7 @@ LL.db.minReagentProfitGold=2
 local G=10000
 local item, prices, conversion
 LL.GetItemFacts=function() return item end
-LL.ATTTokenInfo=function() return nil end
+LL.TokenInfo=function() return nil end
 LL.AppearanceCollectionState=nil
 LL.BestConversion=function() return conversion end
 LL.AHFeeRate=function() return 0.05 end
@@ -163,7 +163,7 @@ print('PASS: tooltip levels Off/Recommendation/Alternatives/Breakdown (B3)')
 LL.db.tooltipDetail=2
 local token={rewards={271457,271466,271475},kind='open'}
 local piece
-LL.ATTTokenInfo=function() return token end
+LL.TokenInfo=function() return token end
 LL.TokenPieceQuote=function() return piece end
 LL.AuctionEligible=function() return false end
 LL.IsNonAuctionableByBinding=function() return true end
@@ -199,7 +199,7 @@ LL.TokenTransmogRecipient=function() return {current=true} end
 r=tokenCase(0)
 assert(r.action=='T','a missing appearance still wins over gold')
 token.possibleMissingAppearance=nil;LL.TokenTransmogRecipient=nil
-LL.ATTTokenInfo=function() return nil end
+LL.TokenInfo=function() return nil end
 print('PASS: tokens are valued by the piece they open into, never "?" when priced (C4c)')
 
 -- C4c: the real TokenPieceQuote picks this character's piece by class mask, or
@@ -207,7 +207,7 @@ print('PASS: tokens are valued by the piece they open into, never "?" when price
 local Q={db={}}
 WOW_PROJECT_ID=1;WOW_PROJECT_MAINLINE=1
 GetBuildInfo=function()return '12.1.5','70575','Oct 29 2026',120105 end
-assert(loadfile('LootLiquidator/ATTIntegration.lua'))('LootLiquidator',Q)
+assert(loadfile('LootLiquidator/Tokens.lua'))('LootLiquidator',Q)
 local sells={[271457]=46*G,[271466]=44*G,[271475]=47*G}
 C_Item={GetItemInfo=function(id) if sells[id] then
     return 'Piece '..id,'item:'..id,4,219,90,'Armor','Plate',1,'INVTYPE_HAND',0,sells[id] end end}

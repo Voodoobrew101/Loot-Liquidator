@@ -58,7 +58,7 @@ Open them with **/ll** or from the game's Settings → AddOns.
 ## What it needs
 
 - **TradeSkillMaster (TSM)** is needed for Auction House prices. Without it, the addon still works, but it can only compare vendor values.
-- **Optional:** BetterBags (letters in BetterBags), AllTheThings (gear tokens are recognised more completely for now).
+- **Optional:** BetterBags (letters in BetterBags).
 - Retail World of Warcraft: Midnight (12.1).
 
 ## Install

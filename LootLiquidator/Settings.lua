@@ -188,7 +188,7 @@ local previewPanels=setmetatable({}, {__mode="k"})
 -- Preview-only example fixtures. Their output IDs are real materials, but
 -- quantities and monetary values are ILLUSTRATIONS, never live market quotes.
 -- Every example uses the normal tooltip material renderer; no second tooltip
--- implementation or dependency on TSM/ATT is needed to draw the examples.
+-- implementation or dependency on TSM is needed to draw the examples.
 local PREVIEW_ITEMS = {
     {name="Sample Mageroyal (62)",itemID=785,action="A",count=62,
         auction=20000,convert=16200,vendor=100,method="Mill",letter="M",inputCount=5,
@@ -749,11 +749,9 @@ function LL:RegisterNativeSettings()
     Section(integrationsLayout,"Connected addons")
     Checkbox(integrations,"enableTSMIntegration","TradeSkillMaster pricing",
         "Read TSM auction pricing and operations without changing your TSM profile.",true)
-    Checkbox(integrations,"enableATTIntegration","ATT research fallback (temporary)",
-        "Use unreviewed cached/live ATT token relationships while migration is incomplete. Reviewed ItemDB token records work independently. ATT never supplies crafting yields.",true)
     Section(integrationsLayout,"Independent token research")
     Checkbox(integrations,"collectTokenResearch","Record direct token rewards and exchanges",
-        "Passively record item-token vendor offers and directly opened equipment rewards as research candidates. No crafting outputs, no ATT dependency, and no automatic changes to valuations.",true)
+        "Passively record item-token vendor offers and directly opened equipment rewards as research candidates. No crafting outputs and no automatic changes to valuations.",true)
     if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
         integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Token research observations","View / copy research export",function()
@@ -763,33 +761,6 @@ function LL:RegisterNativeSettings()
             end,"Copy direct equipment token relationships. Additional pages: /ll debug tokenexport 2 (etc.).",false))
     end
     TSMDropdown(integrations,"tsmFallbackOperation","TSM operation for ungrouped items")
-    if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
-        integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
-            "Legacy cache (research only)","Import filtered ATT cache",function()
-                if LL.ImportLegacyTokenCandidates then
-                    local count,skipped=LL:ImportLegacyTokenCandidates()
-                    if print then print(("Loot Liquidator: %d unverified ATT relationships copied to research; %d excluded. No valuation data changed."):
-                        format(count or 0,skipped or 0)) end
-                end
-            end,"Reads stored ATT records only. Excludes crafting reagents and non-equipment rewards. Copy via token research export for verification.",false))
-    end
-    Section(integrationsLayout,"ATT reward cache")
-    if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
-        integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
-            "ATT migration research","Copy relationships and coverage",function()
-                LL:ShowCopy("ATT relationship research - page 1",LL:ATTResearchExport(1))
-            end,"Export candidates, metadata and collection limits. Additional pages: /ll debug attexport 2. Status: /ll debug tokenmigration. No automatic approval.",false))
-    end
-    if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
-        integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(
-            "Update ATT cache","Update ATT Cache",function()
-                if LL.StartATTCacheUpdate then
-                    local ok,msg=LL:StartATTCacheUpdate()
-                    if not ok and print then print("Loot Liquidator: "..tostring(msg)) end
-                end
-                if LL.RefreshATTCacheUI then LL.RefreshATTCacheUI() end
-            end,"Refresh cached ATT reward relationships.",false))
-    end
     Section(integrationsLayout,"TSM recommended setup")
     if CreateSettingsButtonInitializer and integrationsLayout.AddInitializer then
         integrationsLayout:AddInitializer(CreateSettingsButtonInitializer(

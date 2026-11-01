@@ -136,7 +136,7 @@ local function BadgeFingerprint(link,data,context)
     }, "|")
 end
 
--- All expensive recommendations remain accurate, but an ATT lookup may
+-- All expensive recommendations remain accurate, but one lookup may
 -- exceed an entire frame's budget by itself. A timer cannot interrupt a
 -- running Lua lookup.  Process ONE at a time and back off after slow calls,
 -- rather than repeatedly blocking consecutive frames.
@@ -214,7 +214,7 @@ local function ProcessBadgeJobs()
                 and (not button.IsVisible or button:IsVisible()) then
                 local t=BadgeTime()
                 local ctx=job.data and GetContext(job.data) or job.context or {}
-                ctx._LLFastBadge=true -- never do an uncached ATT search here
+                ctx._LLFastBadge=true -- fast path for queued bag badges
                 local decision=LA:Evaluate(job.link,ctx)
                 LA:Paint(button,job.link,decision)
                 local fingerprint=job.fingerprint
@@ -240,7 +240,7 @@ local function ProcessBadgeJobs()
     end
     if pendingBadgeHead<=#pendingBadgeOrder and not badgeTickScheduled then
         badgeTickScheduled=true
-        -- A budget can only be observed AFTER an individual ATT call returns.
+        -- A budget can only be observed AFTER an individual lookup returns.
         -- Cool off between expensive item lookups rather than stalling every
         -- frame of a Warbank opening animation.
         local delay=elapsed and (elapsed>=16 and 0.20 or elapsed>=6 and 0.06 or 0) or 0.03
@@ -254,7 +254,6 @@ local function QueueBetterBagsBadge(button,link,data,context,force)
         LA:ClearButton(button)
         return
     end
-    if LA.RememberATTItem then LA:RememberATTItem(link) end
     local fingerprint=BadgeFingerprint(link,data,context)
     -- Do not re-evaluate the same instance when BetterBags repaints a section.
     if not force and button.laLink==link and button.laDecision
@@ -342,7 +341,7 @@ end
 -- required pooled FontString restoration hooks.
 
 -- Blizzard's class icon texture + shared class coordinates. Only markup in
--- Loot Liquidator rows is changed; ATT/TSM own tooltips remain untouched.
+-- Loot Liquidator rows is changed; TSM's own tooltips remain untouched.
 local function LLClassIcon(class)
     local coords=CLASS_ICON_TCOORDS and CLASS_ICON_TCOORDS[class]
     if coords and type(CreateTextureMarkup)=="function" then
@@ -381,7 +380,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         S="Smelt",C=method or "Craft/refine",Q="Insufficient Data",T="Transmog"}
     local label=names[decision.action]
     local compactToken=decision.tokenInfo
-        and type(LA.ATTTokenClassSummary)=="function"
+        and type(LA.TokenClassSummary)=="function"
     if compactToken and decision.action=="Q" then label="Review token" end
     local detail=LA.db.tooltipDetail or 2
     local printedSamples=false
@@ -784,12 +783,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     end
     local token=decision.tokenInfo
     if compactToken then
-        local groups=LA:ATTTokenClassSummary(token)
+        local groups=LA:TokenClassSummary(token)
         if #groups>0 then
             tooltip:AddLine("Class sets",.68,.82,1,true)
             local bestRecipient
             for _,group in ipairs(groups) do
-                -- An ATT reward belonging to another class is not necessarily
+                -- A token reward belonging to another class is not necessarily
                 -- usable by the current character or by an enabled alt.
                 local recipient
                 if group.missing>0 and LA.TokenTransmogRecipient then
@@ -827,7 +826,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local who=recipient.current and "current character"
                         or (recipient.displayName or "eligible alt")
                     -- Class icon comes from the eligible recipient or
-                    -- from ATT's verified reward-to-class set relationship.
+                    -- from the token catalog's reward-to-class set relationship.
                     local class=recipient.class
                     if type(class)~="string" then
                         for _,group in ipairs(groups) do

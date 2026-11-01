@@ -46,4 +46,4 @@ Research continues on its own branch. Its accepted estimator repairs and the rev
 
 See RELEASE-STATUS.md for the integration sources and remaining client checks.
 
-ATT retirement is staged in alpha6: reviewed standalone token relationships compile into ItemDB, legacy cached relationships work without ATT installed, and manual ATT exports now retain reward/source metadata and coverage limitations. Run `/ll attcache`, `/ll tokenmigration`, then `/ll attexport PAGE`; direct observations remain `/ll tokenexport PAGE`. See [the migration workflow](docs/att-migration.md). ATT remains optional until reviewed coverage and real-client equivalence are complete.
+ATT was removed in C6 (0.11.0-claude.18): gear tokens come only from ItemDB.tokenRewards, which is rebuilt from the research team's v3 notes on every ItemDB refresh (C4b3). The old `/ll attcache`, `attexport`, `tokenmigration` and `attdiag` commands are gone; direct observations remain `/ll debug tokenexport PAGE`. Old ATT exports can still be staged with `tools/import_token_research.py`. Historical background: [the migration workflow](att-migration.md).

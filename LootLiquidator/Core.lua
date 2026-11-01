@@ -13,9 +13,8 @@ local defaults = {
     enabled = true, collectTokenResearch = true,
     -- External integrations are opt-in to their own runtime dependencies.
     -- Tooltip visibility toggles never change the underlying calculations.
-    enableTSMIntegration = true, enableATTIntegration = true,
-    showTSMIntegrationDetails = true, showATTTooltipDetails = true,
-    showATTTokenDEQuotes = true,
+    enableTSMIntegration = true,
+    showTSMIntegrationDetails = true,
     showBetterBags = true, showGuildBank = true, showBlizzardBags = true,
     showBadges = true,
     processingModes = {}, -- T/D/M/P/S/C/R/X: 1 Force on, 2 Auto, 3 Off, 4 Manual
@@ -260,7 +259,7 @@ function LA:DisenchantEligibility(f)
     end
     -- Tokens can be item-class Miscellaneous; classify them by known token ID
     -- before checking ordinary equipment. Never apply armor DE rates to tokens.
-    if f and (self.ATTTokenInfo and self:ATTTokenInfo(f)) then
+    if f and (self.TokenInfo and self:TokenInfo(f)) then
         return Verdict(false, "Equipment token: identify redemption/reward before valuing disenchant")
     end
     if not f or not (f.classID == 2 or f.classID == 4) then
@@ -450,7 +449,7 @@ function LA:Evaluate(link, context)
         return {action=nil,itemID=f.id,facts=f,ignoredAll=true,conversionOptions={}}
     end
     local deAllowed,deReason=self:DisenchantEligibility(f)
-    local tokenInfo=self.ATTTokenInfo and self:ATTTokenInfo(f)
+    local tokenInfo=self.TokenInfo and self:TokenInfo(f)
     -- Blizzard classifies quest items (12); they are not vendor trash by default.
     -- A missing external token cache must never create a question-mark badge.
     if not tokenInfo and (f.classID==12 or f.bindType==4 or (f.context and f.context.isQuest==true)) then
@@ -463,9 +462,8 @@ function LA:Evaluate(link, context)
         collectedAppearance=self:AppearanceCollectionState(f.link)
     end
     local missingDirectAppearance=collectedAppearance==false
-    -- ATT's exchange index/item cache may become available after the bag's
-    -- first paint. Include its verified token recognition state in the
-    -- decision cache key, so an early Vendor choice cannot hide later T rows.
+    -- Include the token recognition state in the decision cache key, so an
+    -- early Vendor choice cannot hide later T rows.
     -- The bag item tooltip may know this INSTANCE is Warbound before the
     -- player hovers it.  Read only the passive Blizzard tooltip data for
     -- positively identified equipment tokens. Otherwise a recipient on a
@@ -492,7 +490,6 @@ function LA:Evaluate(link, context)
        .. ":" .. tostring(deAllowed) .. ":" .. tostring(f.disenchantBlocked)
        .. ":" .. tostring(self.db.tsmGearOperation) .. ":" .. tostring(self.db.tsmReagentOperation)
        .. ":" .. tostring(self.db.tsmFallbackOperation)
-       .. ":" .. tostring(self.ATTAvailable and self:ATTAvailable())
        .. ":" .. tostring(tokenInfo and #tokenInfo.rewards or 0)
        .. ":" .. tostring(tokenInfo and tokenInfo.possibleMissingAppearance)
        .. ":" .. tostring(self._altRosterRevision or 0)
@@ -672,7 +669,7 @@ function LA:Evaluate(link, context)
         and (not self.ProcessingMethodMode or self:ProcessingMethodMode("T")~=3)
         and not Ignored(self,f.id,"T") and self.TokenTransmogRecipient then
         transmogRecipient=self:TokenTransmogRecipient(f,tokenInfo)
-        -- ATT's overall reward list can include OTHER classes' gear.
+        -- A token's overall reward list can include OTHER classes' gear.
         -- Only a missing appearance usable by this character or a verified
         -- transferable, enabled alt should override the gold comparison.
         if transmogRecipient then missingAppearance=true end
@@ -683,14 +680,14 @@ function LA:Evaluate(link, context)
             or "Missing appearance usable on enabled alt "..transmogRecipient.displayName)
             or "Appearance missing from collection (not just this source)"
     end
-    -- Unresolved ATT cache entries are not evidence of a token.
+    -- An item missing from the token catalog is not a token.
     -- Never turn an ordinary quest or miscellaneous item into a Q badge.
     local operationName, operationSimulation
     if canAuction and self.ChosenTSMAuctionOperation then
         local _, name, simulated = self:ChosenTSMAuctionOperation(f)
         operationName, operationSimulation = name, simulated
     end
-    -- Only informational estimates for ATT token outputs. Probability and
+    -- Only informational estimates for token outputs. Probability and
     -- class-dependent reward selection aren't verified: never rank these.
     local tokenEnchanter=tokenInfo and self.TokenDisenchanter and self:TokenDisenchanter(f)
     local tokenDE=tokenInfo and tokenEnchanter and self.TokenDEQuotes
@@ -731,7 +728,7 @@ function LA:Invalidate(reason)
     if self.ClearBadgeDecisionCache then self:ClearBadgeDecisionCache() end
     self._deRestrictionCache = nil
     self._enchantCache = nil
-    if self.InvalidateATTCache then self:InvalidateATTCache() end
+    if self.InvalidateTokenCache then self:InvalidateTokenCache() end
     if self.RequestBadgeRefresh then self:RequestBadgeRefresh() end
     if self.QueueBlizzardBagRefresh then self:QueueBlizzardBagRefresh() end
     if self.QueueGuildRefresh then self:QueueGuildRefresh() end
@@ -786,7 +783,7 @@ local DEBUG_HELP = {
     "report, clearreport, ignore ITEMID, unignore ITEMID",
     "craftstats, craftexport [page], craftbaseline, craftstudy LABEL, craftzero",
     "destats, detrack, deexport, processstats, processexport",
-    "tokenstats, tokenexport [page], attdiag ITEMID, attcache [status], attexport [page], tokenmigration",
+    "tokenstats, tokenexport [page]",
 }
 local function DebugCommand(msg)
     local command, arg = msg:lower():match("^(%S*)%s*(%S*)")
@@ -838,40 +835,12 @@ local function DebugCommand(msg)
         if LA.TokenResearchExport then
             LA:ShowCopy("Direct token research - page "..page,LA:TokenResearchExport(page))
         else Say("Token collector unavailable") end
-    elseif command == "attcache" then
-        if arg=="status" then
-            Say(LA.ATTCacheStatus and LA:ATTCacheStatus() or "ATT cache unavailable")
-        elseif LA.StartATTCacheUpdate then
-            local ok,msg=LA:StartATTCacheUpdate()
-            if not ok then Say(msg or "ATT cache update not started") end
-        else Say("ATT cache module unavailable") end
-    elseif command == "attexport" then
-        local page=math.max(1,math.floor(tonumber(arg) or 1))
-        LA:ShowCopy("ATT relationship research - page "..page,LA:ATTResearchExport(page))
-    elseif command == "tokenmigration" then
-        Say(LA:ATTResearchStatus())
     elseif command == "perf" then
         if LA.BadgePerfReport then
             local result=LA:BadgePerfReport(arg=="reset")
             for line in tostring(result):gmatch("[^\n]+") do Say(line) end
         else
             Say("Badge profiler is unavailable")
-        end
-    elseif command == "attdiag" then
-        local id=tonumber(arg)
-        if not id then Say("Usage: /ll debug attdiag 45648")
-        else
-            local f=LA:GetItemFacts("item:"..id,{})
-            if not f then Say("Item data not ready for "..id.."; hover the item and try again")
-            else
-                local info=LA.ATTTokenInfo and LA:ATTTokenInfo(f)
-                Say(("ATT diagnostic item %d: classID=%s slot=%s, %s"):format(id,
-                    tostring(f.classID),tostring(f.equipLoc),
-                    LA.ATTTokenDiagnostics and LA:ATTTokenDiagnostics(id) or "ATT adapter unavailable"))
-                Say(info and ("Token identified: "..#info.rewards.." eligible equipment rewards; "
-                    ..(info.kind or "unknown").."; missing appearance="..tostring(info.possibleMissingAppearance))
-                    or "No confirmed equipment token results yet (not proof this item is vendor-only)")
-            end
         end
     elseif command == "inspect" then
         local itemID = tonumber(tostring(arg or ""):match("%d+"))
@@ -975,7 +944,6 @@ local function DebugCommand(msg)
         Say(("Scanned %d learned recipes; %d single-input recipe candidates; %d reagent IDs observed in profession recipes. Coverage is partial until you open professions on your characters."):format(recipes,candidates,consumers))
     elseif command == "status" then
         if LA.EvidenceDatabaseStatus then Say(LA:EvidenceDatabaseStatus()) end
-        if LA.ATTResearchStatus then Say(LA:ATTResearchStatus()) end
         if LA.personalProjectionStatus then Say("Personal history: "..LA.personalProjectionStatus) end
         Say("Version "..LA.version.." (interface " .. LA.targetInterface .. "); Game Data: " .. tostring(LA.GameDataVersion or "missing") .. "; TSM API: " .. tostring(type(TSM_API) == "table") ..
             ", BetterBags: " .. tostring(LibStub and LibStub("AceAddon-3.0", true) ~= nil))
@@ -1018,6 +986,10 @@ local RETIRED_SETTINGS = {
     "showTooltips","tooltipAuction","tooltipVendor","showMaterialBreakdown",
     "showUnavailableConversions","showFallback","showATTTokenSummary",
     "showProfessionHints","showAltHints","showDisenchantStatus",
+    -- C6: AllTheThings removed; its switches go. Its old saved caches
+    -- (attRewardCache, attResearchScans, attItemResearch) are left in saved
+    -- data untouched (never throw data away); nothing reads them any more.
+    "enableATTIntegration","showATTTooltipDetails","showATTTokenDEQuotes",
 }
 LA.RetiredSettings = RETIRED_SETTINGS
 function LA:RemoveRetiredSettings(db)

@@ -34,7 +34,7 @@ tooltipCallback(tooltip,{id=20})
 assert(evaluated=='item:30' and appended=='item:30' and lookupCalls==1)
 print('PASS: tooltip fallback order and global discard isolation')
 
-assert(loadfile(root..'ATTIntegration.lua'))('LootLiquidator',LL)
+assert(loadfile(root..'Tokens.lua'))('LootLiquidator',LL)
 LL.ItemPermitsClass=function()return true end
 C_Item.GetItemInfo=function()
     lookupCalls=lookupCalls+1

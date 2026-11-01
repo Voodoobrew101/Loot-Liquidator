@@ -7,7 +7,9 @@ import tempfile
 spec = importlib.util.spec_from_file_location('token_import', 'tools/import_token_research.py')
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
-runtime = Path(sys.argv[1]) / 'att-runtime-export.json'
+# C6: the addon no longer writes ATT exports; this is the last one it made
+# (frozen from the pre-C6 runtime), so old saved exports still stage for review.
+runtime = Path('tests/fixtures/att-runtime-export.json')
 data = json.loads(runtime.read_text())
 assert data['records'] and data['completeUniverse'] is False
 fresh = next(r for r in data['records'] if r['tokenID'] == 900003)
@@ -48,4 +50,4 @@ with tempfile.TemporaryDirectory() as folder:
         pass
     else:
         raise AssertionError('must reject a claimed automatic approval')
-print('PASS: actual Lua JSON export roundtrip, original metadata/costs, candidate-only imports, legacy quantity placeholders and incomplete coverage')
+print('PASS: frozen pre-C6 ATT export roundtrip, original metadata/costs, candidate-only imports, legacy quantity placeholders and incomplete coverage')
