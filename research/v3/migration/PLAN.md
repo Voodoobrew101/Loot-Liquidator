@@ -3,7 +3,8 @@
 Owner: Voodoobrew101. Started 2026-10-31 (session MIG-001).
 Branch: `migration/v3-historical-research`, cut from `implementation/five-agent-completion` at
 `575b2529d02820ca4ad77851624dc7ecd7f8d740` (the **migration snapshot**). The hourly research agents keep
-writing to `implementation/five-agent-completion`; anything they add after the snapshot is reconciled in M10.
+writing to `implementation/five-agent-completion`; anything they add after the snapshot is reconciled in M10. Historical (non-v3) content last changed at
+`a023181` (2026-10-30 18:15 PDT); `manifest/snapshot.json` records that commit.
 
 Companion files: `CHECKLIST.md` (task list, the source of truth for status), `SESSION_LOG.md`
 (append-only), `HANDOFF.md` (how to resume), `manifest/` (generated inventory and source registry).
@@ -85,7 +86,7 @@ token (1) records. It never read: the 11 `.json` and 58 `.md` observation files,
    - 529 totals-only drop rows in 92 studies (S16; was 451/71 when S16 was opened).
    - 41 study drop rows with no numbers; 35 unplaced rows; 59 unlock-unstated rows skipped for
      conditional outputs (correct by S6).
-   - 10 records with no `type` in `evidence/midnight/2026-10-31-midnight-refining-shattering-decks.jsonl`,
+   - 10 records with no `type` (real observations written in a different field layout, e.g. `sourceURL`) in `evidence/midnight/2026-10-31-midnight-refining-shattering-decks.jsonl`,
      silently ignored (no schema validation exists).
 5. **Measurement vs reference.** `sourceKind` separates them correctly for ItemDB/TSM rows. Two soft spots:
    GameData `personal-pooled` disenchant rows rebuild totals as `chance × samples` and count as study casts;
@@ -143,13 +144,15 @@ token (1) records. It never read: the 11 `.json` and 58 `.md` observation files,
 ```
 research/v3/migration/
   tools/inventory.py        M01  file inventory + URL registry (done)
-  tools/validate.py         M02  schema validator for all v3 evidence
+  tools/validate.py         M02  schema validator for all v3 evidence (done)
+  tools/estimates_diff.py   M02  before/after estimates comparison (done)
   tools/import_historical.py M03 adapters: old-observation JSON(L), v2 JSON, leads, submissions, GameData tables
   tools/link_sources.py     M04  deterministic URL/ID/number linking of notes to v3 records
   tools/extract_batch.py    M04  batch prompts + validators for residual Markdown (AI)
   tools/report.py           M09  before/after metrics, dispositions, unresolved register
   tests/                    unit + regression tests (python -m unittest)
-  manifest/                 generated: inventory, url registry, dispositions, checkpoints
+  manifest/                 generated: inventory, url registry, validation, dispositions, checkpoints
+  reports/                  per-task before/after diffs and notes for the Master
 research/v3/evidence/imported/   written only by importers (existing rule)
 research/v3/tools/build_estimates.py  changed only in M05/M06/M08, behind tests
 ```
@@ -158,7 +161,7 @@ Every tool is idempotent, writes sorted output, records input file hashes in `ma
 rerun from scratch. AI batches checkpoint per source URL (`manifest/extraction/<key>.json`) so a stopped
 run resumes without repeating work.
 
-### Schema extension (M02, all optional, readers unaffected)
+### Schema extension (M02, all optional, readers unaffected; full text in `SCHEMA-EXTENSION.md`)
 
 - `castsBasis`: `reported` | `countedFromInputs` | `nominalEquivalent` | `derived` | `null`
 - `inputsProcessed`, `inputsPurchased`, `inputsRefunded`: raw input counts as the source states them
