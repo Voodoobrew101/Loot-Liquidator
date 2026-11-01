@@ -108,5 +108,6 @@ ok(not conflicts, 'no source conflicts in this snapshot')
 ok(all(t['sourceURLs'] and all(u.startswith('https://') for u in t['sourceURLs']) for t in tokens), 'every list has https sources')
 
 # The committed file is current.
-ok(v3.render(records, SNAPSHOT, tokens) == v3.DEFAULT_OUTPUT.read_text(), 'database/research-v3-baselines.lua is current')
+no_de, _ = v3.research_v3_no_disenchant.build_no_disenchant(SNAPSHOT)  # D1c4
+ok(v3.render(records, SNAPSHOT, tokens, no_de) == v3.DEFAULT_OUTPUT.read_text(), 'database/research-v3-baselines.lua is current')
 print(f'RESEARCH V3 BASELINE TESTS: {passed} passed, 0 failed; {len(records)} records')

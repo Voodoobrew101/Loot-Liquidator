@@ -105,7 +105,10 @@ assert(loadfile('LootLiquidator/Database.lua'))('LootLiquidator',restricted)
 local restrictedCount,hintCount=0,0
 for _ in pairs(restricted.ItemRestrictions) do restrictedCount=restrictedCount+1 end
 for _ in pairs(restricted.DB2Processable) do hintCount=hintCount+1 end
-assert(restrictedCount==21061 and hintCount==140,'C3: full no-disenchant list and processing hints unpacked from ItemDB')
+-- D1c4 (changed on purpose): the research team's no-disenchant flags add to the
+-- 21061 game-file entries; none are removed.
+assert(restrictedCount==21061+#restricted.ItemDB.restrictions.researchNoDisenchant and hintCount==140,'C3: full no-disenchant list and processing hints unpacked from ItemDB')
+assert(#restricted.ItemDB.restrictions.noDisenchant==21061,'D1c4: game-file list unchanged')
 assert(restricted.ItemRestrictionsBuild=='12.1.7.70493' and restricted.DB2Processable[765]=='Mill' and restricted.DB2Processable[2770]=='Prospect')
 assert(restricted.LegacyDB==restricted.ItemDB.legacy and #restricted.LegacyDB.processing>0,'C3: old estimates come from ItemDB')
 assert(loadfile('LootLiquidator/Core.lua'))('LootLiquidator',restricted)

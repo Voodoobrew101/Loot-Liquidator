@@ -53,3 +53,4 @@ python3 tools/evidence_to_baselines.py tests/fixtures/evidence-v3 "$compiled_dir
 "$lua_bin" tests/test_evidence_baselines.lua "$compiled_dir/ItemDBFixture.lua"
 python3 tests/test_research_v3_baselines.py
 "$lua_bin" tests/test_research_v3_runtime.lua
+python3 tests/test_research_v3_no_disenchant.py

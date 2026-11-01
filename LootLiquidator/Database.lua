@@ -288,6 +288,8 @@ function LL:UnpackItemDBTables()
     if type(r)=='table' then
         self.ItemRestrictions=self.ItemRestrictions or {}
         for _,id in ipairs(r.noDisenchant or {}) do self.ItemRestrictions[id]=true end
+        -- D1c4: research flags only add to the game-file list.
+        for _,id in ipairs(r.researchNoDisenchant or {}) do self.ItemRestrictions[id]=true end
         self.ItemRestrictionsBuild=r.build
         self.DB2Processable=self.DB2Processable or {}
         for id,method in pairs(r.processable or {}) do self.DB2Processable[id]=method end

@@ -63,5 +63,12 @@ local byID={} for _,m in ipairs(model.materials) do byID[m.id]=m end
 ok(byID[36917] and math.abs(byID[36917].expectedQuantity-0.1792)<0.02,'Bloodstone average comes from v3 (~0.18 per prospect)')
 ok(type(model.confidence)=='number' and model.confidence>0,'the option gets a confidence')
 ok(type(prospect.value)=='number' and prospect.value>0,'the option gets a gold value')
+-- D1c4: a research no-disenchant flag (Moth-Ridden Slippers, a Delver item the game-file
+-- list lacks) reaches the lookup the disenchant check reads; game-file entries stay.
+ok(LL.ItemRestrictions[220308]==true,'research no-disenchant flag is used')
+ok(#LL.ItemDB.restrictions.researchNoDisenchant>100,'research no-disenchant flags ship')
+for _,id in ipairs(LL.ItemDB.restrictions.noDisenchant) do
+    if not LL.ItemRestrictions[id] then ok(false,'game-file no-disenchant entry lost: '..id) end
+end
 print('RESEARCH V3 RUNTIME: '..passed..' passed, 0 failed; '..count..' v3 records ship, '..
     #LL.ItemDB.buildReport.researchSuperseded..' older rows replaced')
