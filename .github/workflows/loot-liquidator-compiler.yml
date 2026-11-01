@@ -1,0 +1,152 @@
+name: Compile and verify Loot Liquidator alpha
+on:
+  push:
+    branches:
+      - automation/loot-liquidator-build-20261101-7214b5e
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    if: github.repository == 'Voodoobrew101/Loot-Liquidator'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out pinned addon candidate
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - name: Verify source ancestry and isolated workflow-only modification
+        env:
+          PINNED_SOURCE: 7214b5e8de909826d0ce832878b18ba967435761
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = "$PINNED_SOURCE"
+          test "$(git diff --name-only "$PINNED_SOURCE" HEAD)" = ".github/workflows/loot-liquidator-compiler.yml"
+          test "$(git rev-list --count "$PINNED_SOURCE"..HEAD)" = 1
+          echo "PASS: addon and research bytes match the pinned source commit"
+      - name: Install Lua 5.1
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.1
+      - name: Check research snapshot pin and compiler sources
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          cfg=json.loads(pathlib.Path('database/research-itemdb-source.json').read_text())
+          assert cfg['snapshotCommit']=='d7bece6a30c411125e47c44a1b9932f505924e55'
+          src=pathlib.Path(cfg['researchSnapshot'])
+          assert src.is_file() and hashlib.sha256(src.read_bytes()).hexdigest()==cfg['sha256']
+          assert pathlib.Path('tools/compile_itemdb.lua').is_file()
+          assert pathlib.Path('tests/run.sh').is_file()
+          assert pathlib.Path('docs/ISSUE-PR-REVIEW-2026-10-30.md').is_file()
+          assert cfg['destination']=='LootLiquidator/ItemDBRuntime.lua'
+          print('PASS: integrated research source is pinned, byte-identical, and linked to official compiler')
+          print('NOTE: newer research/v3 evidence on a separate branch is unintegrated; this run does not merge or promote it')
+          PY
+      - name: Mandatory original addon validation suite
+        run: |
+          set -euo pipefail
+          bash tests/run.sh
+      - name: Fresh official DB compilation and baseline regression audit
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          sha256sum LootLiquidator/ItemDBRuntime.lua LootLiquidator/itemTSM.lua LootLiquidator/GameData.lua > dist/baseline-sha256.txt
+          lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua
+          sha256sum -c dist/baseline-sha256.txt
+          luac5.1 -p LootLiquidator/ItemDBRuntime.lua
+          luac5.1 -p LootLiquidator/itemTSM.lua
+          luac5.1 -p LootLiquidator/GameData.lua
+          echo "PASS: freshly generated DB and frozen references exactly match tested baseline; zero unexplained record regressions"
+      - name: Validate freshly rebuilt outputs against the whole addon suite
+        run: |
+          set -euo pipefail
+          bash tests/run.sh
+      - name: Compile database coverage diagnostics
+        run: |
+          set -euo pipefail
+          lua5.1 - <<'LUA' > dist/database-metrics.txt
+          local research=assert(loadfile('database/research/itemdb.lua'))()
+          local ll={}
+          assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LootLiquidator',ll)
+          assert(ll.ItemDB and ll.ItemDB.processing)
+          local total,hasP,hasE,provisional=0,0,0,0
+          local inputs,outputs={},{}
+          for _,r in ipairs(ll.ItemDB.processing) do
+            total=total+1
+            if r.inputItemID then inputs[r.inputItemID]=true end
+            if r.provisional then provisional=provisional+1 end
+            for _,m in ipairs(r.materials or {}) do
+              if m.id then outputs[m.id]=true end
+              if type(m.dropChance)=='table' and type(m.dropChance.value)=='number' then hasP=hasP+1 end
+              if type(m.expectedQuantity)=='table' and type(m.expectedQuantity.value)=='number' then hasE=hasE+1 end
+            end
+          end
+          local function count(t) local n=0; for _ in pairs(t) do n=n+1 end; return n end
+          print('research_mappings='..#research.processing)
+          print('active_processing_records='..total)
+          print('distinct_input_items='..count(inputs))
+          print('distinct_output_items='..count(outputs))
+          print('numeric_probability_fields='..hasP)
+          print('numeric_expected_quantity_fields='..hasE)
+          print('provisional_processing_records='..provisional)
+          print('approved_mechanics='..#(ll.ItemDB.mechanicRules or {}))
+          LUA
+          cat dist/database-metrics.txt
+      - name: Package, extract, and verify release ZIP
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import datetime,hashlib,pathlib,re,subprocess,tempfile,zipfile
+          root=pathlib.Path('LootLiquidator')
+          toc=(root/'LootLiquidator.toc').read_text()
+          version=re.findall(r'^## Version:\s*(\S+)\s*$',toc,re.M)
+          assert len(version)==1
+          date=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d')
+          name='LootLiquidator-v'+version[0]+'-'+date+'.zip'
+          out=pathlib.Path('dist')/name
+          subprocess.run(['python3','tools/package_addon.py',str(out)],check=True)
+          entries=['LootLiquidator/LootLiquidator.toc']+['LootLiquidator/'+s.strip() for s in toc.splitlines() if s.strip() and not s.lstrip().startswith('#')]
+          with zipfile.ZipFile(out,'r') as z:
+            assert z.testzip() is None
+            assert set(z.namelist())==set(entries)
+            assert len(z.namelist())==len(entries)
+            assert all('/' in n and n.startswith('LootLiquidator/') and '..' not in pathlib.PurePosixPath(n).parts for n in z.namelist())
+            with tempfile.TemporaryDirectory() as tmp:
+              z.extractall(tmp)
+              extracted=pathlib.Path(tmp)/'LootLiquidator'
+              assert extracted.is_dir() and (extracted/'LootLiquidator.toc').read_bytes()==(root/'LootLiquidator.toc').read_bytes()
+              assert hashlib.sha256((extracted/'ItemDBRuntime.lua').read_bytes()).digest()==hashlib.sha256((root/'ItemDBRuntime.lua').read_bytes()).digest()
+              for ent in entries: assert (pathlib.Path(tmp)/ent).is_file()
+          digest=hashlib.sha256(out.read_bytes()).hexdigest()
+          (pathlib.Path('dist')/'SHA256SUMS').write_text(digest+'  '+name+'\n')
+          (pathlib.Path('dist')/'release-report.md').write_text(
+            '# Loot Liquidator GitHub Actions verified build\n\n'
+            +'Source: integration/current-addon @ 7214b5e8de909826d0ce832878b18ba967435761\n\n'
+            +'Research: fix/research-context-integrity @ d7bece6a30c411125e47c44a1b9932f505924e55\n\n'
+            +'Version: '+version[0]+' (alpha test candidate, not Retail-approved)\n\n'
+            +'UTC date: '+date+'\n\nZIP: '+name+'\n\nSHA-256: '+digest
+            +'\n\nZIP bytes: '+str(out.stat().st_size)+'\n\n'
+            +'PASS: source pin, research checksum, existing test suite, official DB regeneration, '
+            +'exact baseline regression comparison, Lua syntax, TOC manifest, extraction, DB checksum, and ZIP integrity.\n\n'
+            +'Limitations: No in-game Retail QA; v3 research is newer but not integrated into this alpha.\n')
+          print('PASS: verified archive',out,'size',out.stat().st_size,'sha256',digest)
+          PY
+          cat dist/SHA256SUMS
+      - name: Upload verified release artifact and audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: loot-liquidator-verified-alpha-7214b5e
+          path: |
+            dist/LootLiquidator-*.zip
+            dist/release-report.md
+            dist/database-metrics.txt
+            dist/SHA256SUMS
+            dist/baseline-sha256.txt
+          if-no-files-found: error
+          retention-days: 7
