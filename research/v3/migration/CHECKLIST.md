@@ -4,7 +4,7 @@ Status values: Not Started / In Progress / Blocked / Complete. A box is ticked o
 acceptance criterion is met and the evidence column points at something checkable.
 Sessions run in Claude (owner's choice, 2026-10-31). Effort = Claude's thinking effort: Low / Medium / High / Extra High (xhigh) / Max.
 
-Recommended order: M02 ✓ → M05 → M03 → M06 → M04 → M07 → M08 → M09 → M10
+Recommended order: M02 ✓ → M05 ✓ → M03 → M06 → M04 → M07 → M08 → M09 → M10
 (M04.1 linking may run in parallel with M05 once M02 is done.)
 
 ## Progress
@@ -12,11 +12,11 @@ Recommended order: M02 ✓ → M05 → M03 → M06 → M04 → M07 → M08 → M
 | | Count |
 | --- | --- |
 | Top-level tasks | 11 |
-| Complete | 3 (M00, M01, M02) |
+| Complete | 4 (M00, M01, M02, M05) |
 | In progress | 0 |
 | Blocked | 0 |
-| Not started | 8 |
-| Completion (verified top-level) | 27% |
+| Not started | 7 |
+| Completion (verified top-level) | 36% |
 
 ---
 
@@ -51,14 +51,15 @@ Recommended order: M02 ✓ → M05 → M03 → M06 → M04 → M07 → M08 → M
   - [x] M02.5 `research/v3/.gitignore` for bytecode; three committed `.pyc` files untracked
 
 ## M05 — Study identity and deduplication
-- [ ] **M05 — Count each independent cohort exactly once**
+- [x] **M05 — Count each independent cohort exactly once**
   - Priority: P0 · Depends on: M02 · Model: Claude Opus 5.5, High
   - Acceptance: identity uses `cohortKey` or a cohort fingerprint (source + input + rank + casts + numeric vector); Reddit 10u5ao8 ten Draconium batches and Bugy Serevite ore-1/ore-2 all count; zkay8v and Aqirite 701..707/823001..007 copies count once; 168 collision groups re-measured (target: 0 groups where differing numbers are dropped); estimates diff reviewed and summarized; tests pass
-  - Status: Not Started · Evidence: —
-  - [ ] M05.1 fingerprint + `cohortKey` support in `study_identity()`
-  - [ ] M05.2 regression tests for the known independent and copy cases
-  - [ ] M05.3 collision report before/after; diff summary in SESSION_LOG
-  - [ ] M05.4 proposal note for the Master in `reports/M05-identity.md` (strategy.md is Master/Claude-owned; do not edit it)
+  - Status: Complete (MIG-002)
+  - Evidence: `reports/M05-identity.md`, `reports/M05-identity-data.json`, `reports/M05-estimates-diff.md`; `tools/identity_report.py` → differing groups 77 → 0 (the logged 168 re-measured as 160; the 168 itself could not be reproduced, see the report); 67 tests OK; two rebuilds byte-identical (estimates.json sha256 `9b9923e7…`, no SciPy)
+  - [x] M05.1 fingerprint + `cohortKey` support in `study_identity()`
+  - [x] M05.2 regression tests for the known independent and copy cases
+  - [x] M05.3 collision report before/after; diff summary in SESSION_LOG
+  - [x] M05.4 proposal note for the Master in `reports/M05-identity.md` (strategy.md is Master/Claude-owned; do not edit it)
 
 ## M03 — Deterministic bulk importer
 - [ ] **M03 — Import every structured historical source without AI**
@@ -118,8 +119,8 @@ Recommended order: M02 ✓ → M05 → M03 → M06 → M04 → M07 → M08 → M
 | Session | Tasks | Notes |
 | --- | --- | --- |
 | MIG-001 | M00, M01, M02 | done |
-| MIG-002 | M05 | next; biggest correctness gain |
-| MIG-003 | M03.0, M03.1, M03.5 | |
+| MIG-002 | M05 | done |
+| MIG-003 | M03.0, M03.1, M03.5 | next |
 | MIG-004 | M03.2–M03.4, M03.6 | |
 | MIG-005 | M06 | |
 | MIG-006 | M04.1, M04.2 | can run any time now (independent of M05) |

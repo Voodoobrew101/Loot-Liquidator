@@ -20,6 +20,8 @@ Method (see research/v3/README.md and the owner's notes):
     research/v3/conditions.jsonl or recorded as `condition` records) are tagged
     `conditional` and kept out of the normal baseline counts. The addon should add them
     only for characters that meet the condition.
+  * Each independent cohort counts once: by `cohortKey` when set, otherwise by a fingerprint of
+    its source, input rank, casts and every number in the study (see study_identity).
   * Confidence comes from a beta distribution of those counts (the "weighted count with a
     starting guess" model, also called beta-binomial / empirical Bayes).
 
@@ -33,7 +35,10 @@ Writes research/v3/output/estimates.json and research/v3/output/summary.md
 import glob
 import json
 import os
+import re
 from collections import defaultdict
+
+from source_keys import normalize_url
 
 try:
     from scipy.stats import beta as _beta
@@ -50,6 +55,7 @@ WITHIN = 0.05           # owner's accuracy target: +/-5 percentage points
 GUESS_ONLY_MAX_CONFIDENCE = 30  # a starting guess alone is never shown as trustworthy
 GUESS_CONFIDENCE_CASTS = 5      # how much a starting guess adds to confidence (not to the estimate)
 REFERENCE_KINDS = {"tsm-table", "compiled-research", "reference"}
+NUMBER_FIELDS = ("castsWithDrop", "totalQuantity", "percentShown", "averageShown")  # compared for study identity
 
 
 def num(v):
@@ -67,7 +73,7 @@ def load():
                 r = json.loads(line)
             except json.JSONDecodeError:
                 continue
-            r["_file"] = os.path.relpath(path, ROOT)
+            r["_file"] = os.path.relpath(path, ROOT).replace(os.sep, "/")
             rows.append(r)
     replaced = {r["replaces"] for r in rows if r.get("replaces")}
     rows = [r for r in rows if r.get("id") not in replaced]
@@ -78,7 +84,8 @@ CORRECTABLE = {"inputItemID", "inputName", "inputRank", "outputItemID", "outputN
                "method", "casts", "castsWithDrop", "totalQuantity", "percentShown", "percentMeaning",
                "averageShown", "averagePer", "minSeen", "maxSeen", "dataDate", "patch", "sourceKind",
                "specialization", "originalSource", "inputsPerCast", "gearGroup", "exclude",
-               "sourcePublished"}  # sourcePublished sets source.published (post date, not collection date)
+               "sourcePublished",  # sets source.published (post date, not collection date)
+               "cohortKey"}
 
 
 def apply_corrections(rows):
@@ -278,14 +285,188 @@ def unlock_state(r):
     return None
 
 
-def study_identity(r):
-    """Same original study counts once, even if recorded in several files (S7)."""
-    src = r.get("originalSource") or (r.get("source") or {}).get("url") or r.get("studyKey") or r.get("id")
-    return (src, r.get("inputRank"), r.get("casts"), r.get("studyKey") if not r.get("casts") else None)
+def is_study_row(r):
+    return r.get("type") == "drop" and r.get("sourceKind") not in REFERENCE_KINDS
+
+
+def study_ref(r):
+    """One recorded study: the rows sharing file + studyKey (a row without a studyKey stands alone)."""
+    return (str(r.get("_file")), str(r.get("studyKey") or r.get("id")))
+
+
+def source_key(r):
+    src = r.get("originalSource") or (r.get("source") or {}).get("url")
+    return normalize_url(src) if isinstance(src, str) and src else str(r.get("studyKey") or r.get("id"))
+
+
+def row_numbers(r):
+    return tuple(None if num(r.get(f)) is None else float(r[f]) for f in NUMBER_FIELDS)
+
+
+def item_names(rows):
+    """Item ID -> lower-case name, so a row that has only an ID compares equal to a copy with only a name."""
+    out = {}
+    for r in rows:
+        for idk, nk in (("inputItemID", "inputName"), ("outputItemID", "outputName")):
+            if r.get(idk) and r.get(nk):
+                out.setdefault(str(r[idk]), r[nk].strip().lower())
+    return out
+
+
+def item_token(r, idk, nk, ids):
+    """Copies often lose item IDs (S17), so compare by name and use the ID only without one."""
+    name = (r.get(nk) or "").strip().lower()
+    return name or (ids.get(str(r[idk]), str(r[idk])) if r.get(idk) else "")
+
+
+def study_vector(study, ids):
+    """Every number of one study, per input rank and output. Sorted, so row order does not matter."""
+    entries = []
+    for r in study:
+        casts = num(r.get("casts"))
+        entries.append((str(r.get("inputRank")), None if casts is None else float(casts),
+                        item_token(r, "outputItemID", "outputName", ids), row_numbers(r)))
+    return tuple(sorted(entries, key=repr))
+
+
+def numbers_agree(a, b):
+    """Two rows report the same result: they share a stated number and differ in none."""
+    shared = [(x, y) for x, y in zip(a, b) if x is not None and y is not None]
+    return bool(shared) and all(x == y for x, y in shared)
+
+
+def rows_covered(copy, original, labelled):
+    """Every row of `copy` that has numbers pairs with its own row of `original`."""
+    left = list(original)
+    for e in copy:
+        if any(x is not None for x in e[3]):
+            match = next((o for o in left if e[:2] == o[:2] and numbers_agree(e[3], o[3])
+                          and (not labelled or e[2] == o[2])), None)
+            if match is None:
+                return False
+            left.remove(match)
+    return True
+
+
+def partial_copy_of(copy, original):
+    """True if `copy` repeats `original` without matching it exactly: some rows only, a field left
+    null, or an output label missing or respelled. Needs 2+ non-zero rows. A copy of under half the
+    original must also match its labels, so a chance match of a few numbers merges nothing."""
+    if copy == original or sum(1 for e in copy if any(e[3])) < 2:
+        return False
+    return rows_covered(copy, original, labelled=len(copy) * 2 < len(original))
+
+
+def batch_family(s):
+    """Numbered batches of one write-up: same file, keys that differ only in their digits."""
+    return (s[0], re.sub(r"\d+", "#", s[1]))
+
+
+def output_totals(vector):
+    totals = defaultdict(float)
+    for rank, _, output, numbers in vector:
+        totals[(rank, output)] += numbers[1] or 0
+    return totals
+
+
+def pooled_studies(members, vectors):
+    """Studies in `members` (one source) that are the exact sum of a batch family, with 2+ non-zero
+    totals: they repeat the batches, e.g. df-q21-b019 = the ten Reddit 10u5ao8 batches."""
+    families = defaultdict(list)
+    for s in members:
+        families[batch_family(s)].append(s)
+    out = {}
+    for batches in families.values():
+        casts, totals = defaultdict(float), defaultdict(float)
+        for s in batches:
+            for rank, n in {e[:2] for e in vectors[s]}:
+                casts[rank] += n or 0
+            for k, v in output_totals(vectors[s]).items():
+                totals[k] += v
+        for s in members:
+            if (len(batches) > 1 and s not in batches and sum(1 for e in vectors[s] if e[3][1]) >= 2
+                    and all(e[1] == casts[e[0]] for e in vectors[s])
+                    and all(v == totals[k] for k, v in output_totals(vectors[s]).items())):
+                out[s] = batches[0]
+    return out
+
+
+def study_vectors(rows):
+    """study_ref -> numeric vector used as its identity; the partial copies found, as (copy, original)
+    pairs; and the pooled studies, as {pool: first batch}. A partial copy takes the vector of the study
+    it was copied from, so both count once. Numbered batches stay apart even with equal numbers: small
+    batches can match by chance (Reddit 10u5ao8 batches 1 and 6 both report 7 and 13)."""
+    ids = item_names(rows)
+    studies = defaultdict(list)
+    for r in rows:
+        if is_study_row(r):
+            studies[study_ref(r)].append(r)
+    vectors = {s: study_vector(rs, ids) for s, rs in studies.items()}
+    by_source = defaultdict(list)
+    for s in sorted(studies):
+        by_source[source_key(studies[s][0])].append(s)
+    canonical, partial, pooled = dict(vectors), [], {}
+    for members in by_source.values():
+        members.sort(key=lambda s: -len(vectors[s]))  # stable: ties stay in study_ref order
+        pooled.update(pooled_studies(members, vectors))
+        for i, s in enumerate(members):
+            earlier = members[:i]
+            original = next((o for o in earlier if canonical[o] == vectors[o] and batch_family(o) != batch_family(s)
+                             and partial_copy_of(vectors[s], vectors[o])), None)
+            if original:
+                canonical[s] = vectors[original]
+                partial.append((s, original))
+            elif any(vectors[o] == vectors[s] and batch_family(o) == batch_family(s) for o in earlier):
+                canonical[s] = vectors[s] + (("batch", None, s[1], ()),)
+    return canonical, partial, pooled
+
+
+def study_identity(r, vectors):
+    """One independent cohort counts once, however many files record it (S7).
+    An explicit cohortKey wins. Otherwise a study is its normalized source, input rank, casts and the
+    numbers of ALL its rows: same fingerprint = copy; same source with other numbers = another cohort,
+    even if a single row (a zero-hit material, say) happens to match."""
+    if r.get("cohortKey"):
+        return ("cohort", r["cohortKey"])
+    return (source_key(r), r.get("inputRank"), num(r.get("casts")), vectors[study_ref(r)])
+
+
+def group_specificity(key):
+    return sum(not str(part).startswith("family:") for part in key[1:])
+
+
+def same_output(r, o, ids):
+    """Same material, or (for a relabeled copy) the same non-zero numbers under another label."""
+    return (item_token(r, "outputItemID", "outputName", ids) == item_token(o, "outputItemID", "outputName", ids)
+            or any(row_numbers(r)))
+
+
+def misplaced_copies(rows, names, vectors, pooled):
+    """id() of rows to leave out of every group: pooled studies, and rows of a copy that lost item IDs
+    so they land in a vaguer estimate group than the original, where the per-group dedupe never sees
+    both (S17). A row stating an unlock its original does not state stays, as in the unlock skip."""
+    ids = item_names(rows)
+    twins = defaultdict(list)
+    out = set()
+    for r in rows:
+        k = key_of(r, names) if is_study_row(r) else None
+        if k and study_ref(r) in pooled:
+            out.add(id(r))
+        elif k:
+            twins[(study_identity(r, vectors), item_token(r, "inputItemID", "inputName", ids))].append((r, k))
+    for pairs in twins.values():
+        for r, k in pairs:
+            if any(group_specificity(ok) > group_specificity(k) and study_ref(o) != study_ref(r)
+                   and numbers_agree(row_numbers(r), row_numbers(o)) and same_output(r, o, ids)
+                   and (unlock_state(o) is True or unlock_state(r) is not True) for o, ok in pairs):
+                out.add(id(r))
+    return out
 
 
 def build(rows):
     names = name_maps(rows)
+    vectors, _, pooled = study_vectors(rows)
+    copies = misplaced_copies(rows, names, vectors, pooled)
     conds = load_conditions(rows)
     changes = load_rate_changes()
     families = defaultdict(set)   # input name -> item IDs, for family-level unlock checks
@@ -300,6 +481,8 @@ def build(rows):
         k = key_of(r, names)
         if not k:
             unplaced += 1
+            continue
+        if id(r) in copies:
             continue
         g = groups[k]
         lo, hi = num(r.get("minSeen")), num(r.get("maxSeen"))
@@ -335,7 +518,7 @@ def build(rows):
         casts_e = total = 0.0
         seen, skipped_ids, old_epoch, post_dated = set(), set(), None, None
         for r in g["studies"]:
-            ident = study_identity(r)
+            ident = study_identity(r, vectors)
             if ident in seen:
                 continue
             if req is not None and unlock_state(r) is not True:

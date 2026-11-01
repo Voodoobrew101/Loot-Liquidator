@@ -98,6 +98,9 @@ token (1) records. It never read: the 11 `.json` and 58 `.md` observation files,
    10u5ao8, Bugy's two 400-cast Serevite cohorts), dropping roughly 288k material-level casts. In the other
    **78** the numbers are identical (true copies, correctly merged). Meanwhile copies with null ranked IDs
    still slip through (S17). S7 called for a batch identity; it was never implemented.
+   *Corrected by M05 (MIG-002):* the 168 / 90 / 78 script was not committed and could not be reproduced;
+   `tools/identity_report.py` measures **160 / 77 / 83** (236,076 material-level casts). Only 29,056 of those
+   were independent cohorts; the rest were copies with fields filled differently. See `reports/M05-identity.md`.
 7. **Schema sufficiency.** Close, but missing: an explicit cast basis (`castsBasis`), the inputs the source
    counted (`inputsProcessed`, S16), a cohort identity (`cohortKey`), raw-vs-derived separation for
    quantities, and validation. `CORRECTABLE` cannot set new fields. All can be added as optional fields
@@ -146,6 +149,7 @@ research/v3/migration/
   tools/inventory.py        M01  file inventory + URL registry (done)
   tools/validate.py         M02  schema validator for all v3 evidence (done)
   tools/estimates_diff.py   M02  before/after estimates comparison (done)
+  tools/identity_report.py  M05  which studies merge, before/after, and what needs review (done)
   tools/import_historical.py M03 adapters: old-observation JSON(L), v2 JSON, leads, submissions, GameData tables
   tools/link_sources.py     M04  deterministic URL/ID/number linking of notes to v3 records
   tools/extract_batch.py    M04  batch prompts + validators for residual Markdown (AI)
@@ -174,9 +178,13 @@ run resumes without repeating work.
 ### Statistical rules carried forward (unchanged unless stated)
 
 S5–S13 stand. Changes this plan introduces, each behind tests:
-1. **Identity (M05):** count once per `cohortKey`; when absent, derive a cohort fingerprint from
-   (normalized source, input, rank, casts, and the study's numeric vector). Same fingerprint = copy;
-   same source but different numbers = independent cohort.
+1. **Identity (M05, done):** count once per `cohortKey`; when absent, derive a cohort fingerprint from
+   (normalized source, rank, casts, and the numeric vector of the whole study). Same fingerprint = copy;
+   same source but different numbers = independent cohort. Refinements forced by the data, all tested
+   (`reports/M05-identity.md`): outputs compare by name first; partial copies count once when rows agree
+   wherever both state a number (2+ non-zero rows; under half the original's size, labels must match too);
+   numbered batches in one file never merge, even with equal numbers; a study that is the exact sum of a
+   batch family is left out; copy rows in a vaguer `family:` group are left out.
 2. **Denominators (M06, S16):** casts with `castsBasis` `countedFromInputs` or `nominalEquivalent` count
    toward the **average** (quantity per cast is bounded and Resourcefulness only blurs it) but enter the
    **chance** confidence at a reduced, documented weight; reported casts count fully. Same rule for

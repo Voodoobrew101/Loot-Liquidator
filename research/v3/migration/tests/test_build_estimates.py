@@ -191,14 +191,190 @@ class Identity(Fixture):
         e = self.one([a, c])
         self.assertEqual(e["studyCasts"], 300)
 
-    def test_known_defect_identity_collapses_independent_batches(self):
-        # M05: two batches from one post with equal casts but different results are independent
-        # cohorts, yet study_identity() merges them and only the first counts.
+    def test_independent_batches_both_count(self):
+        # M05: was test_known_defect_identity_collapses_independent_batches. Two batches from one post
+        # with equal casts but different results are independent cohorts.
         a = drop("a", url="https://reddit.com/r/x/comments/abc", casts=2000, castsWithDrop=100, studyKey="batch01")
         c = drop("c", url="https://reddit.com/r/x/comments/abc", casts=2000, castsWithDrop=140, studyKey="batch02")
         e = self.one([a, c])
+        self.assertEqual(e["studies"], 2)
+        self.assertEqual(e["studyCasts"], 4000)
+        self.assertAlmostEqual(e["chance"], 0.06)
+
+    def test_bugy_shape_equal_casts_other_numbers_both_count(self):
+        url = "https://www.wowhead.com/spell=374627"
+        rows = [drop(f"{k}-{o}", url=url, casts=400.0, studyKey=k, outputItemID=o, outputName=f"Gem {o}",
+                     averageShown=v, averagePer="cast")
+                for k, vals in (("bugy-ore-1", {2001: 0.303, 2002: 0.244}), ("bugy-ore-2", {2001: 0.3025, 2002: 0.254}))
+                for o, v in vals.items()]
+        e = self.one(rows)
+        self.assertEqual(e["studies"], 2)
+        self.assertEqual(e["studyCasts"], 800)
+
+    def test_numbered_batches_with_equal_numbers_both_count(self):
+        # Reddit 10u5ao8 batches 1 and 6 both report 7 and 13 diamonds; small batches can match by chance.
+        url = "https://reddit.com/r/x/comments/abc"
+        rows = [drop(f"{k}-{o}", url=url, casts=2000, studyKey=k, outputItemID=o, outputName=f"Gem {o}",
+                     totalQuantity=n, _file="batches.jsonl")
+                for k in ("r2-batch01", "r2-batch06") for o, n in ((2001, 7), (2002, 13))]
+        e = self.one(rows)
+        self.assertEqual(e["studies"], 2)
+        self.assertEqual(e["studyCasts"], 4000)
+
+    def test_pooled_study_is_not_added_to_its_batches(self):
+        # df-q21-b019 is the sum of the ten 10u5ao8 batches; adding it would count 20,000 casts twice.
+        url = "https://reddit.com/r/x/comments/abc"
+        rows = [drop(f"{k}-{o}", url=url, casts=2000, studyKey=k, outputItemID=o, outputName=f"Gem {o}",
+                     totalQuantity=n, _file="batches.jsonl")
+                for k, vals in (("r2-batch01", {2001: 7, 2002: 13}), ("r2-batch02", {2001: 11, 2002: 26}))
+                for o, n in vals.items()]
+        rows += [drop(f"pool-{o}", url=url, casts=4000, studyKey="pool", outputItemID=o, outputName=f"Gem {o}",
+                      totalQuantity=n, _file="old.jsonl") for o, n in ((2001, 18), (2002, 39))]
+        e = self.one(rows)
+        self.assertEqual(e["studies"], 2)
+        self.assertEqual(e["studyCasts"], 4000)
+        self.assertAlmostEqual(e["average"], 18 / 4000)
+
+    def test_copy_across_files_with_different_keys_and_urls_counts_once(self):
+        def study(prefix, key, url, path):
+            return [drop(f"{prefix}-{o}", url=url, casts=500, studyKey=key, outputItemID=o, outputName=f"Gem {o}",
+                         totalQuantity=n, _file=path) for o, n in ((2001, 40), (2002, 60))]
+        rows = study("a", "reddit-abc", "https://www.reddit.com/r/x/comments/abc/some_title/", "a.jsonl")
+        rows += study("c", "agent-recheck", "https://old.reddit.com/r/x/comments/abc", "b.jsonl")
+        e = self.one(rows)
         self.assertEqual(e["studies"], 1)
-        self.assertEqual(e["studyCasts"], 2000)
+        self.assertEqual(e["studyCasts"], 500)
+
+    def test_original_source_links_a_copy_to_its_study(self):
+        url = "https://reddit.com/r/x/comments/abc"
+        a = drop("a", url=url, casts=100, castsWithDrop=10, studyKey="study")
+        c = drop("c", url="https://example.org/guide", originalSource=url, casts=100, castsWithDrop=10, studyKey="guide")
+        self.assertEqual(self.one([a, c])["studies"], 1)
+
+    def test_same_numbers_from_unrelated_sources_both_count(self):
+        a = drop("a", casts=100, castsWithDrop=10, studyKey="first")
+        c = drop("c", casts=100, castsWithDrop=10, studyKey="second")
+        self.assertEqual(self.one([a, c])["studyCasts"], 200)
+
+    def test_copy_with_null_ranked_ids_matches_by_name(self):
+        # S17: the copy has no output IDs, so it lands in a family row the per-group dedupe never sees.
+        url = "https://reddit.com/r/x/comments/abc"
+        ranked = [drop(f"a{rank}", url=url, casts=1000, studyKey="import", outputItemID=2000 + rank,
+                       outputName="Test Gem", outputRank=rank, totalQuantity=n, _file="i.jsonl")
+                  for rank, n in ((1, 315), (2, 72))]
+        copy = [drop(f"c{rank}", url=url, casts=1000, studyKey="recheck", outputItemID=None, outputName="Test Gem",
+                     outputRank=rank, totalQuantity=n, _file="c.jsonl") for rank, n in ((1, 315), (2, 72))]
+        res, _ = self.build(ranked + copy)
+        self.assertEqual(sorted(k[2] for k in res), [2001, 2002])
+        self.assertEqual(res[("Prospect", "1001", 2001)]["studies"], 1)
+
+    def test_copy_keeps_numbers_when_a_field_is_null(self):
+        # Reddit 108782r: one record adds averageShown to the same totals.
+        url = "https://reddit.com/r/x/comments/abc"
+        a = [drop(f"a{o}", url=url, casts=8000, studyKey="a", outputItemID=o, outputName=f"Gem {o}", totalQuantity=n,
+                  _file="a.jsonl") for o, n in ((2001, 800), (2002, 400))]
+        c = [drop(f"c{o}", url=url, casts=8000, studyKey="c", outputItemID=o, outputName=f"Gem {o}", totalQuantity=n,
+                  averageShown=n / 8000, averagePer="cast", _file="c.jsonl") for o, n in ((2001, 800), (2002, 400))]
+        e = self.one(a + c)
+        self.assertEqual(e["studies"], 1)
+        self.assertEqual(e["studyCasts"], 8000)
+
+    def test_relabeled_copy_counts_once_and_is_listed(self):
+        # "Titanium Dust" vs "Titanium Powder": same numbers, another name for one output.
+        url = "https://reddit.com/r/x/comments/abc"
+        a = [drop(f"a{i}", url=url, casts=136, studyKey="a", outputItemID=None, outputName=n, totalQuantity=q,
+                  _file="a.jsonl") for i, (n, q) in enumerate((("Titanium Dust", 97), ("Gem", 40)))]
+        c = [drop(f"c{i}", url=url, casts=136, studyKey="c", outputItemID=None, outputName=n, totalQuantity=q,
+                  _file="c.jsonl") for i, (n, q) in enumerate((("Titanium Powder", 97), ("Gem", 40)))]
+        vectors, partial, _ = b.study_vectors(a + c)
+        self.assertEqual(len(partial), 1)
+        self.assertEqual(b.study_identity(a[1], vectors), b.study_identity(c[1], vectors))
+        self.assertEqual(self.one(a + c, key=("Prospect", "1001", "family:Gem"))["studies"], 1)
+
+    def test_zero_hit_material_does_not_merge_independent_batches(self):
+        # Both batches saw 0 of one material; the other material shows they are different cohorts.
+        url = "https://reddit.com/r/x/comments/abc"
+        rows = [drop(f"{k}-{o}", url=url, casts=500, studyKey=k, outputItemID=o, outputName=f"Gem {o}",
+                     castsWithDrop=n, totalQuantity=n)
+                for k, vals in (("alpha", {2001: 0, 2002: 30}), ("beta", {2001: 0, 2002: 44})) for o, n in vals.items()]
+        zero = self.one(rows)
+        self.assertEqual(zero["studies"], 2)
+        self.assertEqual(zero["studyCasts"], 1000)
+        self.assertEqual(zero["chance"], 0)
+
+    def test_partial_copy_counts_once_and_is_listed(self):
+        url = "https://reddit.com/r/x/comments/abc"
+        full = [drop(f"a{o}", url=url, casts=100, studyKey="full", outputItemID=o, outputName=f"Gem {o}",
+                     totalQuantity=n, _file="a.jsonl") for o, n in ((2001, 9), (2002, 5), (2003, 3))]
+        part = [drop(f"c{o}", url=url, casts=100, studyKey="some", outputItemID=o, outputName=f"Gem {o}",
+                     totalQuantity=n, _file="c.jsonl") for o, n in ((2001, 9), (2002, 5))]
+        e = self.one(full + part)
+        self.assertEqual(e["studies"], 1)
+        self.assertEqual(b.study_vectors(full + part)[1], [(("c.jsonl", "some"), ("a.jsonl", "full"))])
+
+    def test_subset_with_one_non_zero_output_stays_independent(self):
+        url = "https://reddit.com/r/x/comments/abc"
+        full = [drop(f"a{o}", url=url, casts=100, studyKey="full", outputItemID=o, outputName=f"Gem {o}",
+                     totalQuantity=n, _file="a.jsonl") for o, n in ((2001, 9), (2002, 5))]
+        one = drop("c", url=url, casts=100, studyKey="one", totalQuantity=9, _file="c.jsonl")
+        self.assertEqual(self.one(full + [one])["studies"], 2)
+
+    def test_chance_match_of_a_few_numbers_in_a_big_study_is_not_a_copy(self):
+        url = "https://reddit.com/r/x/comments/abc"
+        big = [drop(f"a{o}", url=url, casts=100, studyKey="big", outputItemID=o, outputName=f"Gem {o}",
+                    totalQuantity=o - 2000, _file="a.jsonl") for o in range(2001, 2007)]
+        small = [drop(f"c{o}", url=url, casts=100, studyKey="small", outputItemID=o + 10, outputName=f"Other {o}",
+                      totalQuantity=o - 2000, _file="c.jsonl") for o in (2001, 2002)]
+        self.assertEqual(b.study_vectors(big + small)[1], [])
+
+    def test_cohort_key_overrides_the_fingerprint(self):
+        url = "https://reddit.com/r/x/comments/abc"
+        a = drop("a", url=url, casts=100, castsWithDrop=10, studyKey="s1", cohortKey="reddit:abc#1")
+        same_numbers = drop("c", url=url, casts=100, castsWithDrop=10, studyKey="s2", cohortKey="reddit:abc#2")
+        self.assertEqual(self.one([a, same_numbers])["studyCasts"], 200)
+        other_numbers = drop("d", url=url, casts=100, castsWithDrop=70, studyKey="s3", cohortKey="reddit:abc#1")
+        e = self.one([a, other_numbers])
+        self.assertEqual(e["studies"], 1)
+        self.assertAlmostEqual(e["chance"], 0.1)
+
+    def test_cohort_key_can_be_set_by_correction(self):
+        self.assertIn("cohortKey", b.CORRECTABLE)
+        self.put("evidence/t/a.jsonl", [drop("a", casts=10, castsWithDrop=1)])
+        self.put("corrections.jsonl", [{"recordID": "a", "field": "cohortKey", "value": "x#1", "reason": "t"}])
+        self.assertEqual(b.load()[0]["cohortKey"], "x#1")
+
+
+class IdentityUnlock(Fixture):
+    def setUp(self):
+        super().setUp()
+        self.put("conditions.jsonl", [{"method": "Prospect", "outputItemID": 2001, "inputItemIDs": None,
+                                       "requires": "Test unlock"}])
+
+    def test_skipped_copy_does_not_block_the_copy_that_states_the_unlock(self):
+        url = "https://reddit.com/r/x/comments/abc"
+        unknown = drop("a", url=url, casts=100, castsWithDrop=5, studyKey="study")
+        stated = drop("c", url=url, casts=100, castsWithDrop=5, studyKey="recheck", specialization="unlock: yes")
+        e = self.one([unknown, stated])
+        self.assertEqual(e["studies"], 1)
+        self.assertEqual(e["studyCasts"], 100)
+        self.assertNotIn("left out", e["basis"])
+
+    def test_unknown_batches_are_each_reported_as_left_out(self):
+        url = "https://reddit.com/r/x/comments/abc"
+        rows = [drop("a", url=url, casts=100, castsWithDrop=5, studyKey="s1"),
+                drop("b", url=url, casts=100, castsWithDrop=9, studyKey="s2"),
+                drop("c", url=url, casts=100, castsWithDrop=2, studyKey="s3", specialization="unlock: yes")]
+        e = self.one(rows)
+        self.assertEqual(e["studyCasts"], 100)
+        self.assertIn("2 studies left out", e["basis"])
+
+    def test_vaguer_copy_that_states_the_unlock_is_kept(self):
+        url = "https://reddit.com/r/x/comments/abc"
+        original = drop("a", url=url, casts=100, castsWithDrop=5, studyKey="study", outputRank=1)
+        copy = drop("c", url=url, casts=100, castsWithDrop=5, studyKey="recheck", outputItemID=None, outputRank=1,
+                    specialization="unlock: yes")
+        res, _ = self.build([original, copy])
+        self.assertIn(("Prospect", "1001", "family:Test Gem"), res)
 
 
 class LoadAndCorrections(Fixture):
@@ -221,6 +397,12 @@ class LoadAndCorrections(Fixture):
         self.assertEqual(fix["casts"], 30)
         self.assertTrue(fix["_corrected"])
         self.assertNotIn("notAField", fix)
+
+    def test_file_scoped_correction_applies_on_every_platform(self):
+        self.put("evidence/t/a.jsonl", [drop("a", casts=10, castsWithDrop=1)])
+        self.put("corrections.jsonl", [{"recordID": "a", "file": "research/v3/evidence/t/a.jsonl", "field": "exclude",
+                                        "value": True, "reason": "t"}])
+        self.assertEqual(b.load(), [])
 
     def test_lines_without_json_are_skipped(self):
         path = os.path.join(self.root, "research", "v3", "evidence", "t", "bad.jsonl")
