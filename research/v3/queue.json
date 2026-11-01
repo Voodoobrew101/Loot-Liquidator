@@ -16,9 +16,9 @@
       "agent": "midnight",
       "type": "drop",
       "what": "Midnight disenchanting results by gear quality (uncommon/rare/epic), armor vs weapon",
-      "why": "Twelve new 2026-11-01 Wowhead Looter item-specific Midnight cohorts (44 output rows) provide per-output occurrence counts for 272246, 278900, 278908, 278880, 278888, 278877, 279233, 279282, 251204, 275223, 248062, 250057. Source accessibility and actual eligibility/version must be verified; counts are not unit totals. Earlier five 251254/248074/249949/249947/248059 cohorts still lack exact output IDs.",
+      "why": "New 2026-11-01 Midnight Looter records correct explicit output IDs for earlier 251254/248074/249949/249947/248059 cohorts via replaces, alongside 12 other gear inputs. The original 40-cast 251254 table independently confirms 243599=35, 243602=3, 243605=2 outcome hits, but does not establish per-hit material quantities, item bonus/skill or current player build; keep separate 272246 eligibility conflict T0049.",
       "status": "open",
-      "searchTip": "First verify original Wowhead disenchanting Looter tables and whether each count means completed DE operations, unique outcome hits, or a different denominator; record screenshots/dated source, build, gear version, skill and specialization. For 272246 see separate T0049. Recover per-hit quantity/histograms and source-linked output ranks 243599/243600/243602/243603/243605/243606; do not infer quantity=1 or missing row=zero. Also resolve the earlier five 251254/248074/249949/249947/248059 cohorts.",
+      "searchTip": "Verify version and Looter source semantics before import. First 251254 Recovered Sanctum Sword -> 243599/243602/243605 with 35/3/2 of 40 outcome hits (https://www.wowhead.com/ptr/item=251254/recovered-sanctum-sword); collect material quantities per hit and 0/1/2 histograms, item bonus/iLvl, skill/spec, patch. Treat 2026-11-01T1013 correction records as replacements, not independent cohorts; check 248074,249949,249947,248059 similarly. Resolve 272246 in T0049.",
       "inputName": "Midnight disenchantable gear by rarity and slot"
     },
     {
@@ -46,8 +46,8 @@
       "agent": "midnight",
       "type": "drop",
       "what": "Prospecting results for Umbral Tin Ore (item 237363); known outputs [242606, 242607, 242608, 242610, 242611, 242786, 242788]",
-      "why": "Only 10 completed prospecting casts for Umbral Tin item 237363; prioritize independent samples and occurrence counts after no-evidence tasks.",
-      "status": "open",
+      "why": "10 completed casts for Umbral Tin 237363 remain sparse; temporarily defer one cycle behind owner-seeded 237362 hit-count/conditional-yield recovery (T0005). Reopen next if no new 237362 evidence, preserving no-evidence/fewest-casts priority.",
+      "status": "queued",
       "inputItemID": 237363,
       "inputName": "Umbral Tin Ore",
       "searchTip": "Search Umbral Tin Ore prospecting by name; recover completed casts, ore rank, Duskshrouded Stone and Crystalline Glass quantities, Resourcefulness and original study provenance. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
@@ -78,11 +78,11 @@
       "agent": "midnight",
       "type": "drop",
       "what": "Prospecting results for Umbral Tin Ore (item 237362); known outputs [242606, 242607, 242608, 242610, 242611, 242786, 242788]",
-      "why": "Cardinalai's June 10, 2026 rank-specific study is now placed via corrections: 800 completed casts for item 237362. Output totals are measured, but per-output castsWithDrop remain unknown; defer behind unsampled items.",
-      "status": "queued",
+      "why": "Owner-seeded current-runtime numeric blocker: 800 completed 2026-06-10 Cardinalai Umbral Tin Ore 237362 prospects provide output totals but no per-output castsWithDrop, 0/1/2 histogram or verified output-rank identities. Escalated to open despite stronger sample than rank-paired 237363; seek paired P(hit) and conditional units before runtime import.",
+      "status": "open",
       "inputItemID": 237362,
       "inputName": "Umbral Tin Ore",
-      "searchTip": "Search Umbral Tin Ore prospecting by name, rank and profession stats; recover completed casts and original source, not only reference percentages. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+      "searchTip": "Firsthand Cardinalai 2026-06-10 Umbral Tin Ore 237362 800 completed prospects: seek raw per-cast export or per-output hit counts, zero counts and 0/1/2 histogram for 242606,242607,242610,242611,242786,242788; verify each output rank/identity, specialization Eversong Diamond unlock 242608, skill, resourcefulness refund/reprocessing and build. Do not infer P(hit) from output totals; do not combine duplicate snapshots."
     },
     {
       "taskID": "T0006",
@@ -477,33 +477,33 @@
       "agent": "dragonflight",
       "type": "drop",
       "what": "Resolve Dragonflight Serevite Ore rank-to-item-ID mapping 190394, 190395, 190396 (and Draconium 188658/189143, Khaz'gorite) before interpreting rank-specific prospecting P(hit) and unconditional units.",
-      "why": "New historical Serevite studies report 400,000 rank-3 ore (input recorded 190394) with 591 all-rank Illimited Diamonds, and 24,000 rank-2 ore (input recorded 190396) with 12 rank-3 192871, 19 rank-2 192870 diamonds and about 200 Prismatic Ore 194545. These numeric cohorts cannot safely import until S19 conflicting rank-to-ID map is resolved.",
+      "why": "GoldCap currently identifies Serevite 190396 as quality rank 2, supporting that single ID, but complete 190394/190395/190396 map still conflicts with another item database (S19). New 33,000 nominal R2 Serevite ore -> 192870=19 and 192871=12 units at skill 255/265, and separate 30,000 nominal R2 Draconium 188658 -> 192870=32 and 192871=52; no verified completed cast count. Draconium initial 30k cohort is a subset of later 180k aggregate.",
       "status": "open",
       "inputItemID": 190395,
       "inputName": "Serevite Ore",
-      "searchTip": "Confirm Serevite Ore 190394/190395/190396 item IDs against authoritative live item tooltip quality icons, also Draconium/Khaz'gorite. Cross-check https://www.reddit.com/r/woweconomy/comments/10i63zb and https://www.reddit.com/r/woweconomy/comments/10lruc1; do not assume 400k ore/5 are completed casts because refunds may be reused. Capture skill 266 versus 250, source epoch, per-rank diamond IDs 192870/192871 and raw input denominator."
+      "searchTip": "Resolve full quality-rank IDs from live item tooltip or Blizzard API (190394/190395/190396 and 188658/189143). GoldCap https://goldcap.gg/retail/kr/items/190396 says R2; compare Reddit https://www.reddit.com/r/woweconomy/comments/109bytz 33k R2 Serevite and 30k R2 Draconium cohorts, and prior 10i63zb/10lruc1. Explicitly mark 30k Draconium as subset of later 180k aggregate, 33k ore as nominal inputs not verified casts, skill 255/265 Draenei, Inspiration ~33%, refund unknown. Never assign P(hit) from diamond units."
     },
     {
       "taskID": "T0047",
       "agent": "legacy",
       "type": "drop",
       "what": "Warmaul Legplates 24995 Burning Crusade uncommon plate disenchant: source-backed random yields and hit counts for Arcane Dust 22445, Greater Planar Essence 22446, Large Prismatic Shard 22449; current Retail eligibility.",
-      "why": "Legacy worker added original historical 13-cast and independent 4-cast Netherweave Boots 21853 disenchant histograms (22445/22446/22449), plus item-specific Warmaul Legplates 24995 reference ranges with NO casts. These are distinct gear inputs and old patch contexts; 21853 data cannot be assigned to 24995. Need modern item-specific evidence and verify conflicting old 24995 dust/essence probabilities.",
+      "why": "2026-11-01 legacy worker found historical WotLK Evowow item-specific 24995 reference outputs 22445/22446/22449 with opaque ×7500/×2200/×300 labels, NOT percentages, counts or current Retail evidence; a searched-only record reports no completed Retail casts. Continue only if original item-specific or eligible gear-group measured cohorts become available; avoid repeating references.",
       "status": "open",
       "inputItemID": 24995,
       "inputName": "Warmaul Legplates",
-      "searchTip": "Search Warmaul Legplates disenchant Arcane Dust, Greater Planar Essence, Large Prismatic Shard; compare wowhead item 24995, wowwiki-archive Warmaul Legplates and modern Retail item scaling. Source historical 22/75/3% only as historical reference, not measured current drop chance. Find completed disenchant casts and per-output hits/quantities, or applicable verified gear-group study."
+      "searchTip": "Find Warmaul Legplates 24995 Retail disenchant eligibility and firsthand completed casts with output hits/totalQuantity for 22445,22446,22449, source patch and skill; prefer in-game recorder export. Evowow https://wotlk.evowow.com/?item=24995 ×7500/×2200/×300 are opaque reference weights and MUST NOT be used as 75/22/3% or as casts. Netherweave Boots 21853 studies are not 24995."
     },
     {
       "taskID": "T0048",
       "agent": "war-within",
       "type": "drop",
       "what": "Complete The War Within disenchant numeric cohorts: Boreal Rifle 232446 -> Storm Dust 219946/219947/219948 and Gleaming Shard 219949/219950; Lamplighter's Splitter 229150 -> 219949/219950/219946/219951; Laundered Cape 237126 and Handwraps 233262 -> 219949/219950/219951/219952. Separately reconcile 505 Darkmoon Deck operations (input item IDs unknown) -> 219952/219954/219955/213613/213611/213610/213612.",
-      "why": "New 2026-11-01 records distinguish 18,300 completed TWW green disenchants at skill 105+40 with reported unconditional per-cast Storm Dust averages (219946=0.82, 219947=1.27, 219948=0.71) from five earlier 1,000-operation 105+18 green-tool cohorts; missing per-output hits, unit histograms and exact input item IDs. Keep source cohorts and skill profiles separate.",
+      "why": "2026-11-01 TWW worker adds a separate Sept 22 2024 post-change cohort of 2,400 completed uncommon disenchants reporting 0.68 unconditional rank-3 Storm Dust 219948 units/cast at 105 skill with blue tools; primary source verified. Preserve distinct from author's earlier 21k cohort and unconfirmed stealth nerf; 63,166 purchased blue crafts in same thread are NOT completed casts. Gear IDs, hit counts, histogram and official patch confirmation remain missing.",
       "status": "open",
       "inputName": "Boreal Rifle; Lamplighter's Splitter; Laundered Cape; Laundered Handwraps; The War Within Darkmoon Decks",
       "inputItemID": 232446,
-      "searchTip": "Primary Reddit https://www.reddit.com/r/woweconomy/comments/1fspqym : obtain original sheet/exports and histograms for 18,300 at 105+40 and five 1,000-cast 105+18 blocks, with zero outcomes and distinct source keys. Compare Boreal Rifle 232446, Lamplighter's Splitter 229150, Laundered Cape 237126, Laundered Handwraps 233262 Wowhead Looter hit counts; do not convert hit counts into unit totals. Confirm item versions, specialization and build."
+      "searchTip": "Primary https://www.reddit.com/r/woweconomy/comments/1fmrp4z : request raw 2400-operation Sept 22 2024 green disenchant spreadsheet, input gear IDs, 219948 per-output hit counts, 0/1/2 histogram, skill and build; do not mix with earlier 21k cohort. For 63,166 purchased blue crafts and 95,749 shard units, casts remain unknown; check overlap with 22,500 crafted subset. Continue 232446,229150,237126,233262 item-specific histograms and independent https://www.reddit.com/r/woweconomy/comments/1fspqym 18,300 cohort. No official Blizzard rate change established."
     },
     {
       "taskID": "T0049",
