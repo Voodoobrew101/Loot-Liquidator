@@ -446,7 +446,7 @@ class Committed(unittest.TestCase):
         scope = {r["path"] for r in inv_rows if r["disposition"] in ls.SCOPE}
         files = {e["path"]: e for e in self.links if e["kind"] == "file"}
         self.assertEqual(set(files), scope)
-        self.assertEqual(len(scope), 265)
+        self.assertEqual(len(scope), 259)   # 265 until the M10 merge: agents recorded sources, so files left the candidate classes
         for e in files.values():
             self.assertIn(e["outcome"], ("linked", "exception", "residue", "disposed"))
             self.assertTrue(e["reason"], e["path"])
@@ -471,7 +471,7 @@ class Committed(unittest.TestCase):
         self.assertEqual(sorted(groups), ["1smgllg", "nameOnlyRow", "s6bfrl-uncommon-gems"])
         self.assertEqual(len(groups["1smgllg"]), 14)
         self.assertEqual(len(groups["s6bfrl-uncommon-gems"]), 6)
-        self.assertEqual(len(groups["nameOnlyRow"]), 86)
+        self.assertEqual(len(groups["nameOnlyRow"]), 88)   # 86 until the M10 merge: agents now hold two cohorts the importer had placed by name
         for g in groups.values():
             for e in g:
                 self.assertTrue(e["reason"])

@@ -253,6 +253,11 @@ S5–S13 stand. Changes this plan introduces, each behind tests:
    hits, a total, an average or a prior) or carries one reason code in `output/unused.json` (closed vocabulary `REASON_CODES`). None
    of the three guards changes an estimate on today's evidence (`reports/M08-estimator.md`).
 
+10. **Same Wowhead page (M10, new):** in the estimator's identity key (`source_key`), a Wowhead page under a language prefix or `/ptr/` is one page
+   (`SAME_PAGE_SUFFIXES`), so a study recorded under `/ru/`, `/ptr/` and plain counts once. Game flavours (`@cata`, `@wotlk`, `@tbc`, `@mop-classic`) are
+   other pages. This is the reviewer's S7 rule (commit `40d9f76`) carried into M05's fingerprint; `normalize_url`, the URL registry, the linker and the
+   importer's holdings keep their own rules (language suffixes are stripped there only by `extract_batch.strip_lang`) (`reports/M10-merge.md`).
+
 ### Risks and safeguards
 
 | Risk | Safeguard |

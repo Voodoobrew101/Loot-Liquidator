@@ -294,12 +294,19 @@ class TestCommittedManifest(unittest.TestCase):
     def test_all_46_null_sources_are_named_with_their_code_somewhere(self):
         nulls = {s: ck for s, (slug, ck) in dp.Inputs(REPO).checkpoints.items() if ck["status"] == "null"}
         reasons = " | ".join(r["reason"]["text"] for r in self.committed)
+        # M10: a null source that an agent has since recorded is held, so its files link to the agent's rows and the null
+        # code is no longer the reason. Stormvine (item=52984@cata) is the one so far (agent file stormvine-wotlk-milling-cohorts).
+        import build_estimates as be
+        index = ls.V3Index(be.load())
+        held = {s for s in nulls if index.held(s)}
+        self.assertEqual(held, {"wowhead:item=52984@cata"})
         for source, ck in nulls.items():
-            self.assertIn(f"{source} ({ck['answer']['reasonCode']})", reasons, source)
+            if source not in held:
+                self.assertIn(f"{source} ({ck['answer']['reasonCode']})", reasons, source)
 
-    def test_the_42_residue_files_are_all_disposed(self):
+    def test_the_residue_files_are_all_disposed(self):
         residue = {r["path"] for r in self.links if r["kind"] == "file" and r["outcome"] == "residue"}
-        self.assertEqual(len(residue), 42)
+        self.assertEqual(len(residue), 41)   # 42 until the M10 merge: an agent recorded one source
         by = {r["path"]: r["disposition"] for r in self.committed}
         for p in residue:
             self.assertIn(by[p], ("extracted-null", "exception-queued", "extracted"), p)
@@ -307,7 +314,7 @@ class TestCommittedManifest(unittest.TestCase):
     def test_every_linker_exception_file_is_queued(self):
         exc_files = {r["path"] for r in self.links if r["kind"] == "source" and r["status"] == "exception"}
         by = {r["path"]: r["disposition"] for r in self.committed}
-        self.assertEqual(len(exc_files), 65)
+        self.assertEqual(len(exc_files), 64)   # 65 until the M10 merge
         for p in exc_files:
             self.assertEqual(by[p], "exception-queued", p)
 
@@ -324,7 +331,7 @@ class TestCommittedManifest(unittest.TestCase):
     def test_the_known_exception_groups_are_all_queued(self):
         kinds = collections.Counter(e["kind"] for e in self.committed_ex)
         self.assertEqual(kinds["held-source-numbers-differ"], sum(1 for r in self.links if r["kind"] == "source" and r["status"] == "exception"))
-        self.assertEqual(kinds["held-source-numbers-differ"], 83)
+        self.assertEqual(kinds["held-source-numbers-differ"], 81)   # 83 until the M10 merge: two wowhead:item=46849 groups went
         self.assertEqual(kinds["imported-vs-agent-totals-differ"], 6)
         self.assertEqual(kinds["unverified-output-count"], 1)
         self.assertEqual(kinds["unplaced-name-only-cohort"], 1)
@@ -349,10 +356,15 @@ class TestCommittedManifest(unittest.TestCase):
             self.assertIn("corrections", e["action"] + json.dumps(e["proposedCorrection"]) + "corrections")
 
     def test_proposed_corrections_are_not_applied(self):
-        # M07 proposes; corrections.jsonl is the Master's (643 lines at the start of this task)
+        # M07 proposes; corrections.jsonl is the Master's and the reviewer's. It had 643 lines when M07 ran and has grown (the
+        # reviewer added lines), so the test is that no proposed correction has been written there by this migration.
         with open(os.path.join(REPO, "research", "v3", "corrections.jsonl"), encoding="utf-8") as f:
-            lines = [l for l in f if l.strip()]
-        self.assertEqual(len(lines), 643)
+            lines = [json.loads(l) for l in f if l.strip()]
+        self.assertGreaterEqual(len(lines), 643)
+        for e in self.committed_ex:
+            p = e.get("proposedCorrection")
+            if p:
+                self.assertFalse(any(c.get("recordID") == p["recordID"] and c.get("field") == p["field"] for c in lines), e["id"])
 
     def test_scope_gap_is_fully_decided(self):
         self.assertEqual(self.summary["scopeGap"]["undecided"], [])

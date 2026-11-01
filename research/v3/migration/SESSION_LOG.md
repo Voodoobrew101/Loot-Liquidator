@@ -588,3 +588,56 @@ closedExceptions idea (M07-dispositions/master#2) stays a question for the owner
 **Ending commit:** see `git log` ("v3 migration M09: …").
 
 **Remaining:** M10.
+
+---
+
+## MIG-011 — 2026-11-01 (Claude Sonnet 5.5, Claude Code on the owner's Windows machine)
+
+**Tasks:** M10 final reconciliation. Everything done except the pull request (no tool could open one).
+
+**Starting commit:** `33d179a` (M09) on `migration/v3-historical-research`; `implementation/five-agent-completion` at `0260584`, merge base `575b252`.
+
+**Environment:** Windows, clone at `C:\ll3`, Python 3.15.2 (`python`). **SciPy not installed** (confidence values are the fallback's; before and after
+ran here). `gh` not installed; the GitHub plugin failed to connect ("Authorization header is badly formatted").
+
+**Created:** `migration/tests/test_m10_merge.py` (12 tests); `migration/reports/{M10-merge.md,M10-estimates-diff.md,M10-identity-data.json,M10-evidence-format-proposal.md,M10-pr-description.md}`.
+**Modified:** merge commit `e9a0243` (agents' 47 files; `research/v3/tools/build_estimates.py` resolved by hand); `research/v3/tools/build_estimates.py`
+(`same_page`, `SAME_PAGE_SUFFIXES`, used by `source_key`); importer output `old-studies.jsonl`, `v2-report-cohorts.jsonl`; regenerated `manifest/*`;
+`migration/tools/report.py` (merge stage, strategy.md rows, counts in the data file); `migration/tests/{test_dispositions,test_link_sources,test_m03b_import,test_m08_estimator,test_m09_report}.py`
+(pinned numbers moved by the merge, each with a reason in a comment); `migration/{PLAN,CHECKLIST,HANDOFF,SESSION_LOG}.md`; `reports/M09-audit.md` and `-data.json` regenerated.
+Not changed: any agent evidence file, `corrections.jsonl`, `strategy.md`, `evidence-format.md`, `normalize_url`, the importer's code, committed `output/` (the merge carries
+the reviewer's), addon files.
+
+**Commands actually run (repo root, `python`):**
+- `git fetch origin implementation/five-agent-completion` → 40 commits ahead, 47 files, 38 new evidence files, no `.lua`. `git merge --no-commit --no-ff FETCH_HEAD` → one conflict (`build_estimates.py`).
+- Baseline copied outside the repo from a `git archive` of `33d179a`: `before.json` (1,205 estimates, `898790d5…`), the M09 data file and the M06 identity data. Output restored.
+- Resolved the conflict (kept M05's `source_key`, added `same_page`); measured against the reviewer's estimator run over the same evidence: Prospect 152512 / 152513 / 152579 → 253 / 322 / 555 casts in both. Committed the merge as `e9a0243`.
+- In order: `inventory.py` (1,244 files; URLs in v3 165 → 187) · `import_existing.py` (two files change) · `link_sources.py` (259 files: linked 136, exception 44, residue 41, disposed 38) · `extract_batch.py write --check` (exit 0) · `dispositions.py` (132 exceptions, 46 scope-gap sources; `--check` identical) · `validate.py` (5,789 records, 5 errors, 259 warnings).
+- `python -m unittest discover -s research/v3/migration/tests` after the pipeline → 390 run, 11 failures and 1 error, all pinned corpus numbers or the stale report; fixed one by one (see `reports/M10-merge.md` section 6) → **402 OK** (390 + 12).
+- `build_estimates.py` twice → 5,632 records, 1,133 estimates, 451 unplaced; `estimates.json` `1089e517…`, `summary.md` `d2b1a1bb…`, `unused.json` `df921753…` both times. Output restored after each.
+- A tree built from `e9a0243` against the working tree: `estimates_diff.py` 0 changes, so the importer rerun moves no estimate.
+- `estimates_diff.py before.json research/v3/output/estimates.json --md reports/M10-estimates-diff.md` → 12 added, 84 removed, 138 changed; largest chance move 0.3312.
+- `identity_report.py --json reports/M10-identity-data.json` → groups 220, differing 10 (was 0), identical 207, partial 3; partial copies 39, misplaced copy rows 159, near copies 25, small subsets 21, cross-source 10, studies no longer merged 40.
+- `audit_studies.py` → 595 studies, 70 clean. Output restored; `unused.json` removed.
+- `import_existing.py --report <tmp>` twice → reports `cmp` identical.
+- Ad-hoc scripts kept outside the repo: row-to-group tracing of the 84 removed groups (all 150 rows re-keyed to item-ID groups), exclusion grouping of the reviewer's 40 corrections, changed-estimate categories, inventory / disposition / URL / exception transitions.
+- `report.py` (with tests) and `report.py --check`: see the final entry lines below.
+
+**Measured results:** in `reports/M10-merge.md`. Key: records 4,945 → 5,632; estimates 1,205 → 1,133 (84 re-keyed, 12 added, 138 changed); measured-chance estimates 101 → 103;
+61 estimates differ in band from the snapshot (27 at this merge); unused 2,348 → 2,937 (`duplicateStudy` 148 → 363); 18 final dispositions changed; 2 exceptions gone; corrections 643 → 683 lines
+(all `exclude`, 397 record IDs, every line matches a record); one `import-*` ID gone (`import-v2report-00016`, holdings rule).
+
+**Problems:**
+- The prompt (written in MIG-010) said a conflict outside agent files should be stopped and reported. It was a conflict in the estimator; I resolved it only after measuring
+  that the resolution reproduces the reviewer's own numbers, and said so in the report. Reversible: `same_page()` is one function.
+- 11 tests and 1 error failed after the pipeline. All were counts the new agent evidence legitimately moved or a field value no test knew (`percent:perInput`); none was a regression. No test was deleted.
+- `identity_report.py` shows 10 `differing` groups. Checked, not accepted on sight: one pair of copies, nothing dropped; pinned by a test so a different pair fails.
+- The exception queue still reads M05's frozen identity lists (10 cross-source pairs and 21 small subsets now, 9 and 12 queued). It predates M10; listed as a gap.
+- No way to open the PR (no `gh`; plugin failed). Not worked around with a token from the credential store.
+
+**Decisions:** the page rule lives in the estimator's key only (PLAN section 3 rule 10); the proposal keeps `unlockState` out of recommended text; `cohortKey` still unset; M10 not ticked until the PR exists.
+
+**Ending commit:** see `git log` ("v3 migration M10: …").
+
+**Remaining:** open the PR (MIG-012); the owner's register.
+

@@ -390,7 +390,8 @@ class Corpus(unittest.TestCase):
         dedupe = {"duplicateRowInStudy", "duplicateStudy", "copy:vaguerGroup", "copy:pooledStudy",
                   "conditional:unlockFalse", "conditional:unlockUnstated"}
         same = {"totalWithoutCasts": "totalWithoutCasts", "noNumbers": "noNumbers",
-                "hitsWithoutCasts": "hitsWithoutCasts", "percent:unclear": "percentNotPerCast"}
+                "hitsWithoutCasts": "hitsWithoutCasts", "percent:unclear": "percentNotPerCast",
+                "percent:perInput": "percentNotPerCast"}   # perInput: 23 agent rows by M10
         for key, reason in m06.items():
             u = by_key[key]
             self.assertFalse(u["used"], key)

@@ -286,7 +286,11 @@ class Committed(unittest.TestCase):
             pinned = [json.loads(l) for l in fh]
         now = [{"file": n, "id": r["id"], "studyKey": r["studyKey"], "recordRef": r["migratedFrom"]["recordRef"],
                 "path": r["migratedFrom"]["path"]} for n in NEW_FILES for r in self.rows[n]]
-        self.assertEqual(now, pinned)
+        # M10: PLAN section 3 rule 5. import-v2report-00016 (reddit:zzyjzu) went when the dragonflight agent recorded that
+        # thread (2026-10-31T1928 and T2027 files); every other ID is unchanged.
+        dropped = {"import-v2report-00016"}
+        self.assertEqual(now, [p for p in pinned if p["id"] not in dropped])
+        self.assertTrue(ie.Holdings(self.prior).held("reddit:zzyjzu"))
 
     def test_every_new_source_decided_and_every_decision_used(self):
         undecided, cited = [], {"wowhead:spell=190385"}   # the legacy milling URL, decided by author and numbers
@@ -306,7 +310,8 @@ class Committed(unittest.TestCase):
         """A held source is classified as held before its decision is read, so a decision for it is dead;
         only row-checked mappers (the TBC table) may be held."""
         hold = ie.Holdings(self.prior)
-        self.assertEqual(sorted(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), [])
+        # M10: reddit:zzyjzu has a mapper (kept, its unit tests use it) and is now held by an agent, so the importer skips it.
+        self.assertEqual(sorted(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), ["reddit:zzyjzu"])
 
     def test_every_file_in_scope_reported(self):
         counts = {f: len(self.report[f]) for f in ("archives", "v2Reports", "leads", "submissions")}

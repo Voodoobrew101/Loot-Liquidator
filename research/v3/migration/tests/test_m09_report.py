@@ -132,8 +132,9 @@ class Items(unittest.TestCase):
             if see and see.startswith("exceptions:"):
                 self.assertIn(see.split(":", 1)[1], kinds, key)
             elif see:
-                self.assertIn(see, report.ITEMS, key)
-                self.assertNotIn("closedBy", report.ITEMS[see], key)
+                self.assertTrue(see in report.ITEMS or see in {h["id"] for h in report.HANDOFF_ITEMS}, key)
+                if see in report.ITEMS:
+                    self.assertNotIn("closedBy", report.ITEMS[see], key)
 
     def test_actions_carry_no_hand_typed_figures(self):
         for key, e in report.ITEMS.items():

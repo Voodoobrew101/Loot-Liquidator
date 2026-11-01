@@ -5,22 +5,22 @@ Dispositions are PRELIMINARY (rule-based); later tasks assign final ones.
 
 - Historical files: 1,244 (18.5 MB); unparseable JSON files: 0
 - JSON objects carrying observational numbers: 1,166; Markdown/CSV numeric-claim lines: 899
-- Distinct source URLs cited: 543; already cited by v3 evidence: 165; not yet in v3: 378
+- Distinct source URLs cited: 543; already cited by v3 evidence: 187; not yet in v3: 356
 
 ## Preliminary dispositions
 
 | Disposition | Files |
 | --- | --- |
 | candidate-no-url | 35 |
-| candidate-unmigrated | 165 |
-| covered-by-url | 65 |
+| candidate-unmigrated | 153 |
+| covered-by-url | 71 |
 | derived-model | 22 |
-| imported | 42 |
+| imported | 49 |
 | mechanics-knowledge | 4 |
-| no-observational-content | 441 |
+| no-observational-content | 452 |
 | process-artifact | 248 |
 | reference-imported-partial | 2 |
-| source-links-only | 220 |
+| source-links-only | 208 |
 
 ## By category
 
@@ -34,62 +34,62 @@ Dispositions are PRELIMINARY (rule-based); later tasks assign final ones.
 | ledger | 38 | candidate-no-url 5, candidate-unmigrated 1, covered-by-url 2, no-observational-content 21, source-links-only 9 |
 | mechanics | 4 | mechanics-knowledge 4 |
 | model | 22 | derived-model 22 |
-| observation | 125 | candidate-no-url 1, candidate-unmigrated 34, covered-by-url 20, imported 42, no-observational-content 6, source-links-only 22 |
+| observation | 125 | candidate-no-url 1, candidate-unmigrated 28, covered-by-url 20, imported 49, no-observational-content 8, source-links-only 19 |
 | prompt | 11 | process-artifact 11 |
 | proposed | 17 | candidate-no-url 1, candidate-unmigrated 3, covered-by-url 2, no-observational-content 8, reference-imported-partial 1, source-links-only 2 |
 | qa-feedback | 21 | process-artifact 21 |
 | research-doc | 4 | candidate-unmigrated 3, no-observational-content 1 |
-| review | 34 | candidate-no-url 1, candidate-unmigrated 21, covered-by-url 4, no-observational-content 5, source-links-only 3 |
-| source-review | 89 | no-observational-content 27, source-links-only 62 |
+| review | 34 | candidate-no-url 1, candidate-unmigrated 19, covered-by-url 6, no-observational-content 6, source-links-only 2 |
+| source-review | 89 | no-observational-content 32, source-links-only 57 |
 | test | 60 | process-artifact 60 |
 | tool | 43 | process-artifact 43 |
 | v2-coordination | 78 | process-artifact 78 |
 | v2-evidence | 38 | candidate-unmigrated 5, covered-by-url 4, no-observational-content 7, source-links-only 22 |
 | v2-source-review | 37 | covered-by-url 1, no-observational-content 9, source-links-only 27 |
 | v2-submission | 203 | candidate-no-url 2, no-observational-content 192, source-links-only 9 |
-| worker-submission | 381 | candidate-no-url 25, candidate-unmigrated 97, covered-by-url 32, no-observational-content 165, source-links-only 62 |
+| worker-submission | 381 | candidate-no-url 25, candidate-unmigrated 93, covered-by-url 36, no-observational-content 168, source-links-only 59 |
 
 ## Unmigrated candidates with the most uncited source URLs (first 40)
 
 | File | Study objects | Numeric lines | URLs not in v3 |
 | --- | --- | --- | --- |
-| `research/evidence/observations/2026-10-29-0012-midnight-q26-batch024-retail-tab-availability.md` | 0 | 1 | 25 |
+| `research/evidence/observations/2026-10-29-0012-midnight-q26-batch024-retail-tab-availability.md` | 0 | 1 | 24 |
 | `research/evidence/observations/2026-10-28-1914-midnight-q21-batch019-source-reconciliation.md` | 0 | 1 | 13 |
-| `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1511-midnight-q17-batch015-report.md` | 0 | 3 | 8 |
 | `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-2114-midnight-q23-batch021-report.md` | 0 | 1 | 8 |
 | `research/evidence/observations/2026-10-29-0041-legacy-q26-batch024-prismatic-four-family-source-only.md` | 0 | 1 | 8 |
 | `research/evidence/observations/2026-10-29-0330-dragonflight-q29-batch027-writhebark-bubblepoppy-retail-source-note.md` | 0 | 2 | 8 |
 | `research/research-sources.md` | 0 | 3 | 8 |
 | `research/reviews/2026-10-28-28row-anomaly-and-firstpass-coverage.md` | 0 | 1 | 8 |
 | `research/proposed/2026-10-27-corrections.md` | 0 | 3 | 7 |
-| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1135-legacy-batch011-report.md` | 0 | 3 | 6 |
-| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-legacy-batch003-report.md` | 0 | 5 | 6 |
-| `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-2112-midnight-q16-report.md` | 0 | 3 | 6 |
-| `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-2214-midnight-q24-batch022-report.md` | 0 | 1 | 6 |
+| `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1511-midnight-q17-batch015-report.md` | 0 | 3 | 6 |
 | `research/coordination/submissions/loot-liquidator-war-within/2026-10-29-0020-warwithin-q26-batch024-report.md` | 0 | 3 | 6 |
 | `research/evidence/v2/2026-10-30T1428Z-F004-tww-prospecting-amber-substitution-epoch.json` | 4 | 0 | 6 |
-| `research/coordination/reviews/2026-10-28-master-worker-batch007-verdict.md` | 0 | 2 | 5 |
 | `research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-0434-dragonflight-batch004-report.md` | 0 | 1 | 5 |
-| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-legacy-batch002-report.md` | 0 | 3 | 5 |
-| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-legacy-milling-batch01.md` | 0 | 4 | 5 |
+| `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-2112-midnight-q16-report.md` | 0 | 3 | 5 |
+| `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-2214-midnight-q24-batch022-report.md` | 0 | 1 | 5 |
 | `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-batch002-report.md` | 0 | 6 | 5 |
 | `research/evidence/observations/2026-10-28-1116-warwithin-batch011-source-only.md` | 0 | 2 | 5 |
 | `research/evidence/v2/2026-10-30T1825Z-F004-df-serevite-rank-id-and-diamond-cross-quality.json` | 6 | 0 | 5 |
 | `research/reviews/2026-10-28-first-pass-34-source-backed-study.md` | 0 | 2 | 5 |
+| `research/coordination/reviews/2026-10-28-master-worker-batch007-verdict.md` | 0 | 2 | 4 |
 | `research/coordination/reviews/2026-10-29-master-worker-batch024-verdict.md` | 0 | 1 | 4 |
 | `research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-0728-dragonflight-batch007-numeric-candidate.json` | 7 | 0 | 4 |
 | `research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1126-dragonflight-batch011-report.md` | 0 | 3 | 4 |
 | `research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-assignment-001-review.md` | 0 | 3 | 4 |
-| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-0535-legacy-batch005-report.md` | 0 | 3 | 4 |
-| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-0640-legacy-batch006-felslate-numeric-candidate.json` | 1 | 0 | 4 |
-| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-0640-legacy-batch006-report.md` | 0 | 3 | 4 |
-| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-0740-legacy-batch007-report.md` | 0 | 6 | 4 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1135-legacy-batch011-report.md` | 0 | 3 | 4 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-legacy-batch002-report.md` | 0 | 3 | 4 |
 | `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1105-midnight-batch011-report.md` | 0 | 3 | 4 |
-| `research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1211-midnight-batch012-report.md` | 0 | 1 | 4 |
 | `research/coordination/submissions/loot-liquidator-war-within/2026-10-28-1020-warwithin-batch010-report.md` | 0 | 1 | 4 |
 | `research/coordination/submissions/loot-liquidator-war-within/2026-10-28-tww-batch002-report.md` | 0 | 5 | 4 |
 | `research/evidence/observations/2026-10-28-1105-midnight-batch011-original-source-only.md` | 0 | 3 | 4 |
 | `research/evidence/observations/tsm-anomaly-source-audit-2026-10-28.jsonl` | 7 | 0 | 4 |
 | `research/ledger/first-pass-tsm-other-28-field-evidence-2026-10-28.csv` | 0 | 28 | 4 |
-| `research/coordination/reviews/2026-10-28-master-qa-schema-and-legion-recipe.md` | 0 | 2 | 3 |
-| `research/coordination/reviews/2026-10-28-master-worker-batch014-verdict.md` | 0 | 1 | 3 |
+| `research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-0525-dragonflight-batch005-report.md` | 0 | 1 | 3 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-0436-legacy-batch004-report.md` | 0 | 3 | 3 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-0535-legacy-batch005-report.md` | 0 | 3 | 3 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-0740-legacy-batch007-report.md` | 0 | 6 | 3 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1440-legacy-q16-batch014-40key-fourfield-audit.jsonl` | 2 | 0 | 3 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-2240-legacy-q24-batch022-report.md` | 0 | 3 | 3 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-2337-legacy-q25-batch023-wowhead-retail-tooltip-report.md` | 0 | 1 | 3 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-legacy-batch003-report.md` | 0 | 5 | 3 |
+| `research/coordination/submissions/loot-liquidator-legacy/2026-10-28-legacy-milling-batch01.md` | 0 | 4 | 3 |

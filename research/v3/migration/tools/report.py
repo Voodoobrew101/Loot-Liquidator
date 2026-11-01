@@ -66,7 +66,9 @@ STAGES = (
     ("M04.3-4", "7e0ecba", "new evidence (M04)"),
     ("M07", "d4390b8", "none expected (M07)"),
     ("M08", "0233968", "none expected (M08)"),
+    ("M10 merge", "e9a0243", "agent evidence and the S7 page rule (M10 merge)"),
 )
+FINAL_STAGE = ("working tree", "importer and manifests rerun (M10)")
 TREE_PATHS = ("research/v3/tools", "research/v3/evidence", "research/v3/corrections.jsonl", "research/v3/conditions.jsonl",
               "research/v3/rate-changes.jsonl")
 BUILD_OUTPUTS = ("estimates.json", "summary.md", "unused.json")
@@ -112,6 +114,7 @@ MASTER_SECTIONS = {  # report -> [(tag, heading pattern)]
     "M06-units.md": [("master", r"^## For the Master")],
     "M07-dispositions.md": [("master", r"^## For the Master")],
     "M08-estimator.md": [("findings", r"^## 6\. Findings"), ("master", r"^## For the Master")],
+    "M10-merge.md": [("master", r"^## For the Master")],
 }
 
 
@@ -220,7 +223,25 @@ ITEMS = {
                                    action="Fix the two incomplete condition records; the validator errors are covered elsewhere.",
                                    count=reason_count("condition:incomplete")),
 }
+ITEMS.update({
+    "M10-merge/master#1": dict(kind="policy", m10="none", action="Say whether the Wowhead page rule moves into normalize_url (it changes the URL registry, the linker and the importer)."),
+    "M10-merge/master#2": dict(kind="tool", m10="none", count=lambda c: c["identityNotQueued"],
+                               action="Regenerate dispositions from the current identity lists, or leave the queue on M05's."),
+    "M10-merge/master#3": dict(kind="tool", m10="none", see="M08-estimator/master#4", count=lambda c: c["stillDiffering"],
+                               action="Compare identity groups per input rank, so a re-recorded study reads as identical."),
+    "M10-merge/master#4": dict(kind="agent-rule", m10="none", see="strategy:S18", action="Answered by the S18 decision."),
+    "M10-merge/master#5": dict(kind="source-check", m10="none", see="strategy:S19",
+                               action="Wait for the reviewer's rank-ID table before touching any Serevite row."),
+    "M10-merge/master#6": dict(kind="agent-rule", m10="none", see="M05-identity/master#2", count=reason_count("duplicateStudy"),
+                               action="Apply the roles/worker.md line, or decline it."),
+})
 HANDOFF_ITEMS = (
+    dict(id="strategy:S18", source="research/v3/strategy.md", needle="### S18:", kind="agent-rule", m10="none",
+         action="Say whether record IDs should start with the file's time (the reviewer's proposed line for evidence-format.md).",
+         count=lambda c: c["idReuseWarnings"]),
+    dict(id="strategy:S19", source="research/v3/strategy.md", needle="### S19:", kind="source-check", m10="none",
+         action="Confirm which item ID is rank 1, 2 and 3 for Serevite and the other ores; no record was changed.",
+         count=lambda c: 1),
     dict(id="HANDOFF/unused-json", source="research/v3/migration/HANDOFF.md", needle="Open question to the owner from MIG-009",
          kind="policy", m10="handle", see="M08-estimator/master#1", action="Say whether unused.json should live outside output/.",
          m10Why="It is a one-line change in build_estimates.main(); M10 should not move it undecided."),
@@ -454,9 +475,12 @@ def register(context):
     for h in HANDOFF_ITEMS:
         with open(os.path.join(ROOT, h["source"]), encoding="utf-8") as f:
             line = next(i for i, text in enumerate(f, 1) if h["needle"] in text)
-        rows.append({"id": h["id"], "source": h["source"], "line": line, "title": h["needle"], "origin": "report", "kind": h["kind"],
-                     "count": 1, "pointer": f"{h['source']}:{line}", "action": h["action"], "m10": h["m10"], "m10Why": h["m10Why"],
-                     "see": h["see"], "blocksM10": h["m10"] == "blocks"})
+            f.seek(0)
+            heading = f.read().splitlines()[line - 1].lstrip("# ").strip()
+        rows.append({"id": h["id"], "source": h["source"], "line": line, "title": heading if h["needle"].startswith("#") else h["needle"],
+                     "origin": "report", "kind": h["kind"], "count": h["count"](context) if "count" in h else 1,
+                     "pointer": f"{h['source']}:{line}", "action": h["action"], "m10": h["m10"], "m10Why": h.get("m10Why"),
+                     "see": h.get("see"), "blocksM10": h["m10"] == "blocks"})
     for e in context["exceptions"]:
         ids = e["recordIDs"]
         rows.append({"id": e["id"], "source": "research/v3/migration/manifest/exceptions.jsonl", "origin": "exception", "kind": e["kind"],
@@ -502,7 +526,7 @@ def disposition_check():
     rows = jl(os.path.join(MANIFEST, "dispositions.jsonl"))
     summary = read_json(os.path.join(MANIFEST, "dispositions-summary.json"))
     counts = dict(sorted(collections.Counter(r["disposition"] for r in rows).items()))
-    return {"files": len(rows), "inventoryFiles": len(jl(os.path.join(MANIFEST, "inventory.jsonl"))), "byDisposition": counts,
+    return {"kinds": len(counts), "files": len(rows), "inventoryFiles": len(jl(os.path.join(MANIFEST, "inventory.jsonl"))), "byDisposition": counts,
             "summaryFiles": summary["files"], "equalsSummary": counts == summary["byDisposition"] and len(rows) == summary["files"]}
 
 
@@ -516,7 +540,13 @@ def context_for(usage, after):
     for r in jl(os.path.join(MANIFEST, "scope-gap.jsonl")):
         gap[r["decision"]].add(r["source"])
     extracted = jl(os.path.join(V3, "evidence", "imported", "extracted-historical-sources.jsonl"))
-    return {"usage": usage, "m06": read_json(os.path.join(REPORTS, "M06-units-data.json")), "exceptions": exceptions,
+    validation = read_json(os.path.join(MANIFEST, "validation.json"))
+    ident = read_json(os.path.join(REPORTS, "M10-identity-data.json"))
+    queued = {"cross-source-identity-pair", "identity-merge-with-conflict", "single-row-subset"}
+    return {"identityNotQueued": len(ident["crossSourceMatches"]) + len(ident["mergedWithConflicts"]) + len(ident["smallSubsets"])
+            - sum(1 for e in exceptions if e["kind"] in queued),
+            "stillDiffering": len(ident["stillDiffering"]),
+            "usage": usage, "idReuseWarnings": validation["byCode"].get("warning:ID_REUSED_ACROSS_FILES", 0), "m06": read_json(os.path.join(REPORTS, "M06-units-data.json")), "exceptions": exceptions,
             "exceptionKinds": collections.Counter(e["kind"] for e in exceptions), "validatorErrors": errors, "scopeGap": gap,
             "extractedRecipeRows": sum(1 for r in extracted if r.get("type") == "recipe"),
             "estimatesNoBatch": sum(1 for e in after["estimates"] if e.get("inputsPerCast") is None)}
@@ -561,9 +591,8 @@ def collect(with_tests=True):
         sources = {"before": source_counts(os.path.join(tmp, "snapshot"), registry), "after": source_counts(after_tree, registry)}
         repro = reproducibility(tmp, with_tests)
     before = stages["snapshot"]
-    last = STAGES[-1][0]
     sequence = [(name, cause, stages[name]["estimates"]) for name, _, cause in STAGES]
-    sequence.append(("working tree", "after " + last, after["estimates"]))
+    sequence.append((FINAL_STAGE[0], FINAL_STAGE[1], after["estimates"]))
     usage = after["usage"]
     top = sorted(usage["unusedByReason"].items(), key=lambda kv: (-kv[1], kv[0]))[:5]
     moves = band_moves(sequence)
@@ -573,14 +602,14 @@ def collect(with_tests=True):
     stage_rows = [{"stage": name, "commit": commit[:7], "cause": cause, "records": stages[name]["records"],
                    "estimates": len(stages[name]["estimates"]), "unplaced": stages[name]["unplaced"],
                    "bands": band_counts(stages[name]["estimates"])} for name, commit, cause in STAGES]
-    stage_rows.append({"stage": "working tree", "commit": "-", "cause": sequence[-1][1], "records": after["records"],
+    stage_rows.append({"stage": FINAL_STAGE[0], "commit": "-", "cause": sequence[-1][1], "records": after["records"],
                        "estimates": len(after["estimates"]), "unplaced": after["unplaced"], "bands": band_counts(after["estimates"])})
     kinds = collections.Counter(r["kind"] for r in open_rows if r["origin"] == "exception")
     return {
         "scipy": scipy_setting(),
         "coverage": {"before": coverage(before), "after": coverage(after), "sources": sources, "typesBefore": before["byType"],
                      "typesAfter": after["byType"]},
-        "baselineCheck": {"plan": baseline, "differs": {k: [v, measured[k]] for k, v in sorted(baseline.items()) if v != measured[k]}},
+        "baselineCheck": {"planFigures": len(baseline), "plan": baseline, "differs": {k: [v, measured[k]] for k, v in sorted(baseline.items()) if v != measured[k]}},
         "bands": {"before": band_counts(before["estimates"]), "after": band_counts(after["estimates"]),
                   "afterCappedAt50": sum(1 for e in after["estimates"] if not e["conditional"] and e["chanceSource"] == "estimated"
                                          and e["confidence"] == 50),
@@ -590,7 +619,11 @@ def collect(with_tests=True):
                   "stages": stage_rows, "stageChanges": stage_changes(sequence), "moves": moves},
         "dispositions": disposition_check(),
         "usage": {**usage, "topReasons": [{"reason": k, "records": v, "meaning": REASON_TEXT[k]} for k, v in top]},
-        "register": {"rows": open_rows, "closed": closed, "open": len(open_rows), "blocksM10": sum(1 for r in open_rows if r["blocksM10"]),
+        "register": {"rows": open_rows, "closed": closed, "open": len(open_rows), "closedCount": len(closed),
+                     "reportRows": sum(1 for r in open_rows if r["origin"] == "report"),
+                     "validatorCodes": sum(1 for r in open_rows if r["origin"] == "validator"),
+                     "scopeGapGroups": sum(1 for r in open_rows if r["origin"] == "scope-gap"),
+                     "blockerIDs": [r["id"] for r in open_rows if r["blocksM10"]], "blocksM10": sum(1 for r in open_rows if r["blocksM10"]),
                      "handleInM10": sum(1 for r in open_rows if r["m10"] == "handle"), "exceptionsByKind": dict(sorted(kinds.items())),
                      "exceptionRows": sum(kinds.values()), "recordIDsNamed": sum(len(r.get("recordIDs", ())) for r in open_rows if r["origin"] == "exception")},
         "reproducibility": repro,
@@ -640,7 +673,7 @@ def render(d):
         lines += ["**The snapshot rebuild differs from PLAN section 1:** " +
                   "; ".join(f"{k}: PLAN {n(v[0])}, rebuilt {n(v[1])}" for k, v in differs.items()) + ".", ""]
     else:
-        lines += [f"The snapshot rebuild agrees with all {len(d['baselineCheck']['plan'])} figures PLAN section 1 records for it.", ""]
+        lines += [f"The snapshot rebuild agrees with all {d['baselineCheck']['planFigures']} figures PLAN section 1 records for it.", ""]
     lines += ["## 2. Confidence bands", ""]
     lines += table(("Band", "Before", "After"), [(x, n(bands["before"][x]), n(bands["after"][x])) for x in BAND_ORDER]) + [""]
     lines += [f"{n(bands['afterCappedAt50'])} of the {n(bands['after']['50-74%'])} estimates in 50-74% have a chance derived from the average "
@@ -660,7 +693,7 @@ def render(d):
                      f"{m['bandBefore']} → {m['bandAfter']}", " + ".join(m["causes"])) for m in largest]) + [""]
     disp = d["dispositions"]
     lines += ["## 3. Dispositions", "",
-              f"{n(disp['files'])} files of {n(disp['inventoryFiles'])} in the inventory, in {len(disp['byDisposition'])} dispositions. "
+              f"{n(disp['files'])} files of {n(disp['inventoryFiles'])} in the inventory, in {disp['kinds']} dispositions. "
               f"Counts recomputed from `manifest/dispositions.jsonl` {'equal' if disp['equalsSummary'] else '**differ from**'} "
               "`manifest/dispositions-summary.json`.", ""]
     lines += table(("Disposition", "Files"), [(k, n(v)) for k, v in sorted(disp["byDisposition"].items(), key=lambda kv: (-kv[1], kv[0]))]) + [""]
@@ -674,10 +707,9 @@ def render(d):
     report_rows = [r for r in reg["rows"] if r["origin"] == "report"]
     blockers = [r for r in reg["rows"] if r["blocksM10"]]
     lines += ["## 5. Unresolved issues", "",
-              f"{n(reg['open'])} open rows: {len(report_rows)} from reports, {n(reg['exceptionRows'])} exceptions, "
-              f"{sum(1 for r in reg['rows'] if r['origin'] == 'validator')} validator codes, "
-              f"{sum(1 for r in reg['rows'] if r['origin'] == 'scope-gap')} scope-gap groups. "
-              f"{len(reg['closed'])} further report items were reviewed and are closed. Each row cites its file; `see` names the row that "
+              f"{n(reg['open'])} open rows: {reg['reportRows']} from reports and strategy.md, {n(reg['exceptionRows'])} exceptions, "
+              f"{reg['validatorCodes']} validator codes, {reg['scopeGapGroups']} scope-gap groups. "
+              f"{reg['closedCount']} further report items were reviewed and are closed. Each row cites its file; `see` names the row that "
               "carries the same decision, so one answer settles both. The full list, with record IDs, is `register.rows` in the data file.", ""]
     lines += [f"**M10 blockers: {reg['blocksM10']}.** {reg['handleInM10']} more need care in M10 but no decision. "
               "Nothing here stops the pipeline rerun or the pull request.", ""]
