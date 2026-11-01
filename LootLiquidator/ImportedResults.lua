@@ -17,11 +17,27 @@ local function integer(n,lo,hi) return type(n)=="number" and n==n and n%1==0 and
 local function build() return GetBuildInfo and tostring(select(2,GetBuildInfo())) or "unknown" end
 
 -- Small strict JSON reader. Anything malformed fails the whole paste.
+-- Preserve null entries and container types so a damaged array cannot silently
+-- shrink into a different set of casts or materials during validation.
+local JSON_NULL,JSON_OBJECT,JSON_ARRAY={},{},{}
+local function object(v) return type(v)=="table" and getmetatable(v)==JSON_OBJECT end
+local function array(v) return type(v)=="table" and getmetatable(v)==JSON_ARRAY end
 local function decode(text)
     local pos,len=1,#text
     local function fail(msg) error(msg.." (character "..pos..")",0) end
     local function ws() pos=text:find("[^ \t\r\n]",pos) or len+1 end
     local escapes={['"']='"',['\\']='\\',['/']='/',b='\b',f='\f',n='\n',r='\r',t='\t'}
+    local function codepoint()
+        local hex=text:sub(pos,pos+3)
+        if not hex:match("^%x%x%x%x$") then fail("bad Unicode escape") end
+        pos=pos+4;return tonumber(hex,16)
+    end
+    local function utf8(n)
+        if n<128 then return string.char(n) end
+        if n<2048 then return string.char(192+math.floor(n/64),128+n%64) end
+        if n<65536 then return string.char(224+math.floor(n/4096),128+math.floor(n/64)%64,128+n%64) end
+        return string.char(240+math.floor(n/262144),128+math.floor(n/4096)%64,128+math.floor(n/64)%64,128+n%64)
+    end
     local function str()
         local out={};pos=pos+1
         while true do
@@ -31,11 +47,19 @@ local function decode(text)
             if c=="\\" then
                 local e=text:sub(pos+1,pos+1)
                 if escapes[e] then out[#out+1]=escapes[e];pos=pos+2
-                elseif e=="u" and text:sub(pos+2,pos+5):match("^%x%x%x%x$") then
-                    local n=tonumber(text:sub(pos+2,pos+5),16);out[#out+1]=n<128 and string.char(n) or "?";pos=pos+6
+                elseif e=="u" then
+                    pos=pos+2;local n=codepoint()
+                    if n>=55296 and n<=56319 then
+                        if text:sub(pos,pos+1)~="\\u" then fail("missing Unicode surrogate") end
+                        pos=pos+2;local low=codepoint()
+                        if low<56320 or low>57343 then fail("bad Unicode surrogate") end
+                        n=65536+(n-55296)*1024+low-56320
+                    elseif n>=56320 and n<=57343 then fail("unexpected Unicode surrogate") end
+                    out[#out+1]=utf8(n)
                 else fail("bad escape") end
             else
-                local _,e=text:find('^[^"\\]+',pos);out[#out+1]=text:sub(pos,e);pos=e+1
+                if c:byte()<32 then fail("unescaped control character") end
+                local _,e=text:find('^[^"\\%z\1-\31]+',pos);out[#out+1]=text:sub(pos,e);pos=e+1
             end
         end
     end
@@ -44,18 +68,19 @@ local function decode(text)
         if depth>24 then fail("nested too deeply") end
         ws();local c=text:sub(pos,pos)
         if c=="{" then
-            local t={};pos=pos+1;ws()
+            local t=setmetatable({},JSON_OBJECT);pos=pos+1;ws()
             if text:sub(pos,pos)=="}" then pos=pos+1;return t end
             while true do
                 ws();if text:sub(pos,pos)~='"' then fail("expected a name") end
                 local k=str();ws()
+                if t[k]~=nil then fail("repeated name") end
                 if text:sub(pos,pos)~=":" then fail("expected ':'") end
                 pos=pos+1;t[k]=value(depth+1);ws()
                 local d=text:sub(pos,pos);pos=pos+1
                 if d=="}" then return t elseif d~="," then fail("expected ',' or '}'") end
             end
         elseif c=="[" then
-            local t,i={},0;pos=pos+1;ws()
+            local t,i=setmetatable({},JSON_ARRAY),0;pos=pos+1;ws()
             if text:sub(pos,pos)=="]" then pos=pos+1;return t end
             while true do
                 i=i+1;t[i]=value(depth+1);ws()
@@ -65,12 +90,26 @@ local function decode(text)
         elseif c=='"' then return str()
         elseif text:sub(pos,pos+3)=="true" then pos=pos+4;return true
         elseif text:sub(pos,pos+4)=="false" then pos=pos+5;return false
-        elseif text:sub(pos,pos+3)=="null" then pos=pos+4;return nil
+        elseif text:sub(pos,pos+3)=="null" then pos=pos+4;return JSON_NULL
         end
-        local s,e=text:find("^-?%d+%.?%d*[eE]?[-+]?%d*",pos)
-        local n=s and tonumber(text:sub(s,e))
+        local start=pos
+        local function digits()
+            local s,e=text:find("^%d+",pos)
+            if not s then fail("expected a digit") end
+            pos=e+1
+        end
+        if text:sub(pos,pos)=="-" then pos=pos+1 end
+        if text:sub(pos,pos)=="0" then pos=pos+1 else digits() end
+        if text:sub(pos,pos)=="." then pos=pos+1;digits() end
+        local exp=text:sub(pos,pos)
+        if exp=="e" or exp=="E" then
+            pos=pos+1;local sign=text:sub(pos,pos)
+            if sign=="+" or sign=="-" then pos=pos+1 end
+            digits()
+        end
+        local n=tonumber(text:sub(start,pos-1))
         if not n or n~=n or n==math.huge or n==-math.huge then fail("unexpected character") end
-        pos=e+1;return n
+        return n
     end
     local ok,result=pcall(function()
         local v=value(0);ws()
@@ -84,20 +123,23 @@ LL.DecodeImportJSON=decode
 
 -- Returns a clean cast {method,input,batch,build,outputs={[id]=qty}} or nil, why.
 local function checkRecord(r)
-    if type(r)~="table" then return nil,"damaged" end
+    if not object(r) then return nil,"damaged" end
     if r.outputCoverage~="complete" then return nil,"incomplete" end
     if not SUPPORTED[r.method] then return nil,"unsupported" end
     if r.successful~=true or type(r.operationID)~="string" or r.operationID=="" or #r.operationID>160 then return nil,"damaged" end
-    local inputs=type(r.nominalInputs)=="table" and r.nominalInputs or r.inputs
-    if type(inputs)~="table" or #inputs~=1 or type(inputs[1])~="table" then return nil,"unsupported" end
+    local inputs=r.nominalInputs
+    if inputs==nil then inputs=r.inputs end
+    if not array(inputs) then return nil,"damaged" end
+    if #inputs~=1 then return nil,"unsupported" end
+    if not object(inputs[1]) then return nil,"damaged" end
     local input,batch=inputs[1].itemID,inputs[1].quantity
     if not integer(input) or not integer(batch,1,MAX_INPUTS_PER_CAST) then return nil,"damaged" end
     if r.method=="Disenchant" and batch~=1 then return nil,"damaged" end
-    if type(r.outputs)~="table" or #r.outputs>MAX_OUTPUTS then return nil,"damaged" end
+    if not array(r.outputs) or #r.outputs>MAX_OUTPUTS then return nil,"damaged" end
     if #r.outputs==0 and r.zeroEvidence~="operator-confirmed-empty" then return nil,"damaged" end
     local outputs={}
     for _,m in ipairs(r.outputs) do
-        if type(m)~="table" or not integer(m.itemID) or not integer(m.quantity,1,MAX_PER_MATERIAL)
+        if not object(m) or not integer(m.itemID) or not integer(m.quantity,1,MAX_PER_MATERIAL)
             or m.itemID==input or outputs[m.itemID] then return nil,"damaged" end
         outputs[m.itemID]=m.quantity
     end
@@ -123,8 +165,8 @@ function LL:ImportRecordedResults(text,label)
     if text=="" then return false,"Nothing to import: paste the text from another player's Export first." end
     if #text>MAX_TEXT then return false,"That text is too long. Paste one export page at a time." end
     local data,why=decode(text)
-    if type(data)~="table" then return false,"That text could not be read (it looks damaged or incomplete). Nothing was imported.",{error=why} end
-    if data.schemaVersion~=SCHEMA or data.sampleKind~="RAW_CAST_LOG" or type(data.records)~="table" then
+    if not object(data) then return false,"That text could not be read (it looks damaged or incomplete). Nothing was imported.",{error=why} end
+    if data.schemaVersion~=SCHEMA or data.sampleKind~="RAW_CAST_LOG" or not array(data.records) then
         return false,"That text is not a Loot Liquidator results export. Nothing was imported."
     end
     if #data.records>MAX_RECORDS then return false,"That export has too many results for one page. Nothing was imported." end

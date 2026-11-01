@@ -18,11 +18,12 @@ eq(LL.db.source_imported_enabled,true,'imported source on by default');eq(LL.db.
 check(LL.SourceOrder[3]=='imported','imported listed in Database & Accuracy')
 
 -- Minimal JSON writer for fixtures (same layout the Export button produces).
-local function json(v)
+local arrayFields={records=true,inputs=true,nominalInputs=true,outputs=true}
+local function json(v,forceArray)
  if type(v)=='string' then return '"'..v..'"' end
  if type(v)=='number' or type(v)=='boolean' then return tostring(v) end
- if #v>0 then local o={} for i=1,#v do o[i]=json(v[i]) end return '['..table.concat(o,',')..']' end
- local o={} for k,x in pairs(v) do o[#o+1]='"'..k..'":'..json(x) end return '{'..table.concat(o,',')..'}'
+ if #v>0 or forceArray then local o={} for i=1,#v do o[i]=json(v[i]) end return '['..table.concat(o,',')..']' end
+ local o={} for k,x in pairs(v) do o[#o+1]='"'..k..'":'..json(x,arrayFields[k]) end return '{'..table.concat(o,',')..'}'
 end
 local function cast(id,outputs,overrides)
  local r={operationID=id,recipeID=1231127,method='Prospect',successful=true,character='Other-Realm',build='123456',
@@ -90,6 +91,56 @@ for _,text in ipairs({'','   ','not json at all','{"records":[','{"schemaVersion
 end
 eq((LL:ImportRecordedResults(page({cast('same-item',{{itemID=10,quantity=1}})}))),false,'output equal to the input is impossible')
 eq((LL:ImportRecordedResults(page({cast('de5',{{itemID=21,quantity=1}},{method='Disenchant'})}))),false,'disenchanting uses one item')
+
+-- B7b: malformed JSON must never partially import a plausible-looking page.
+local before=LL:ImportedResultsCount()
+local valid=page({cast('strict-json',{{itemID=21,quantity=3}})})
+for _,number in ipairs({'03','3.','3.e0','3e','3e+','+3','0x3','3e999'}) do
+ local text,n=valid:gsub('"quantity":3','"quantity":'..number,1)
+ eq(n,1,'fixture has an output quantity')
+ eq((LL:ImportRecordedResults(text)),false,'invalid number: '..number)
+ eq(LL:ImportedResultsCount(),before,'invalid JSON never changes counts')
+end
+for _,text in ipairs({
+ valid:gsub('"strict%-json"','"line\nbreak"'),
+ valid:gsub('"strict%-json"','"nul'..string.char(0)..'byte"'),
+ valid:gsub('"strict%-json"','"\\uD800"'),
+ valid:gsub('"strict%-json"','"\\uDC00"'),
+ valid:gsub('"strict%-json"','"\\uD800\\u0041"'),
+ valid:gsub('"strict%-json"','"\\u00xz"'),
+ valid:gsub('"quantity":3','"quantity":900,"quantity":3',1),
+ valid:gsub('"quantity":3','"quantity":null,"quantity":3',1),
+ (valid:gsub('"quantity":3','"quantity":900,"\\u0071uantity":3',1)),
+}) do
+ eq((LL:ImportRecordedResults(text)),false,'damaged text or repeated field rejected')
+ eq(LL:ImportedResultsCount(),before,'no partial import of malformed JSON')
+end
+-- Valid decimal/exponent notation still works; escaped names keep their identity.
+for i,number in ipairs({'3.0','3e0','3E+0'}) do
+ local text=page({cast('valid-number-'..i,{{itemID=21,quantity=3}})}):gsub('"quantity":3','"quantity":'..number,1)
+ check((LL:ImportRecordedResults(text)),'valid JSON number: '..number)
+end
+local unicode=page({cast('unicode-name',{{itemID=21,quantity=3}})}):gsub('"unicode%-name"','"caf\\u00e9-\\uD83D\\uDE00"')
+check((LL:ImportRecordedResults(unicode)),'escaped Unicode operation ID imports')
+local decodedID='caf'..string.char(195,169)..'-'..string.char(240,159,152,128)
+eq((LL:ImportRecordedResults(page({cast(decodedID,{{itemID=21,quantity=3}})}))),false,'same UTF-8 ID is a duplicate')
+check((LL:ImportRecordedResults(page({cast('caf?-?',{{itemID=21,quantity=3}})}))),'different name must not collapse to question marks')
+
+-- Null array entries remain visible to validation instead of becoming Lua holes.
+local withNull=page({cast('after-null',{{itemID=21,quantity=3}})}):gsub('"records":%[','"records":[null,',1)
+ok,msg,counts=LL:ImportRecordedResults(withNull)
+check(ok,msg);eq(counts.accepted,1);eq(counts.damaged,1,'null cast counted as damaged')
+local nullOutput=page({cast('null-output',{{itemID=21,quantity=3}})}):gsub('"outputs":%[','"outputs":[null,',1)
+eq((LL:ImportRecordedResults(nullOutput)),false,'null material invalidates the cast')
+local nullInput=page({cast('null-input',{{itemID=21,quantity=3}})}):gsub('"nominalInputs":%[','"nominalInputs":[null,',1)
+eq((LL:ImportRecordedResults(nullInput)),false,'null input cannot disappear')
+local falseInput=page({cast('false-input',{{itemID=21,quantity=3}},{nominalInputs=false})})
+eq((LL:ImportRecordedResults(falseInput)),false,'invalid nominal inputs cannot fall back to actual inputs')
+-- A confirmed empty result uses [], never {} or null, for its output list.
+local empty=page({cast('confirmed-empty',{}, {zeroEvidence='operator-confirmed-empty'})})
+eq((LL:ImportRecordedResults((empty:gsub('"outputs":%[%]','"outputs":{}')))),false,'object cannot stand for empty output array')
+eq((LL:ImportRecordedResults((empty:gsub('"outputs":%[%]','"outputs":null')))),false,'null cannot stand for empty output array')
+check((LL:ImportRecordedResults(empty)),'confirmed empty output array still imports')
 
 -- Results from another game build still count, at a lower (stale) weight.
 ok=LL:ImportRecordedResults(page({cast('oldbuild',{{itemID=30,quantity=1}},{build='100000',inputs={{itemID=11,quantity=5}},nominalInputs={{itemID=11,quantity=5}}})}))
