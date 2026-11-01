@@ -64,6 +64,10 @@ Repository: Voodoobrew101/Loot-Liquidator
 Branch: migration/v3-historical-research (already exists on origin; check it out, do NOT work on main or
 implementation/five-agent-completion, do NOT touch the addon .lua files).
 If your clone is shallow, run: git fetch --depth=1000 origin migration/v3-historical-research
+The research corpus (research/, including research/v3/ and research/v3/migration/) exists ONLY on this branch;
+main holds just the addon. If your copy is on main, run:
+  git fetch --depth=1000 origin migration/v3-historical-research
+  git checkout -b migration/v3-historical-research FETCH_HEAD
 Push access: the owner has granted it. In a Claude cloud session, attach the repo with push access; if that request
 is denied, retry it once before falling back. Use the exact remote URL
 https://github.com/Voodoobrew101/Loot-Liquidator.git and confirm the push with git ls-remote.
