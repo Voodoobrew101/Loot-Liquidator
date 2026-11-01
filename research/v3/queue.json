@@ -198,8 +198,8 @@
       "agent": "war-within",
       "type": "drop",
       "what": "Prospecting results for Bismuth (item 210931); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
-      "why": "New 2024 rank-1 Bismuth ore study reports aggregate outputs from 400 ores (war-within-20261030-708..709), but item 210931's rank-specific completed casts and per-output hit counts are still absent.",
-      "status": "open",
+      "why": "New 2024 rank-1 Bismuth ore study reports aggregate outputs from 400 ores (war-within-20261030-708..709), but item 210931's rank-specific completed casts and per-output hit counts are still absent. Deferred for T0048: the new Wowhead disenchant cohort has exact per-output hit denominators, so its missing yield histogram is closer to a complete numeric row; return to Bismuth when that follow-up is exhausted.",
+      "status": "queued",
       "inputItemID": 210931,
       "inputName": "Bismuth",
       "searchTip": "Search Bismuth prospecting by name, verify item 210931 rank and original cohort conditions, then seek rank-specific completed casts and castsWithDrop. Do not assign rank-1 totals to a rank-2 item ID or infer completed casts from purchased ore with refunds."
@@ -493,6 +493,17 @@
       "inputItemID": 24995,
       "inputName": "Warmaul Legplates",
       "searchTip": "Search Warmaul Legplates disenchant Arcane Dust, Greater Planar Essence, Large Prismatic Shard; compare wowhead item 24995, wowwiki-archive Warmaul Legplates and modern Retail item scaling. Source historical 22/75/3% only as historical reference, not measured current drop chance. Find completed disenchant casts and per-output hits/quantities, or applicable verified gear-group study."
+    },
+    {
+      "taskID": "T0048",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Complete The War Within disenchant numeric cohorts: Boreal Rifle 232446 -> Storm Dust 219946/219947/219948 and Gleaming Shard 219949/219950; Lamplighter's Splitter 229150 -> 219949/219950/219946/219951; Laundered Cape 237126 and Handwraps 233262 -> 219949/219950/219951/219952. Separately reconcile 505 Darkmoon Deck operations (input item IDs unknown) -> 219952/219954/219955/213613/213611/213610/213612.",
+      "why": "2026-11-01 07:52 worker evidence supplies measured per-output hits from 48/37/128/137 Wowhead-Looter disenchant operations, but no total output units or 0/1/2/... histograms. Darkmoon Deck report supplies 505 operations and seven unit totals but no per-output hit counts or exact deck IDs. These complementary numeric gaps cannot be combined across unrelated cohorts.",
+      "status": "open",
+      "inputName": "Boreal Rifle; Lamplighter's Splitter; Laundered Cape; Laundered Handwraps; The War Within Darkmoon Decks",
+      "inputItemID": 232446,
+      "searchTip": "Check original Wowhead disenchant tabs by item name: https://www.wowhead.com/item=232446/boreal-rifle ; https://www.wowhead.com/item=229150/lamplighters-splitter ; https://www.wowhead.com/item=237126/laundered-cape ; https://www.wowhead.com/item=233262/laundered-handwraps . For each output, seek exact units-per-hit or 0/1/2/3 histogram, rare/epic item version, ilvl, build, skill and spec. Existing row '1-3' is only a range. Original Darkmoon source https://www.reddit.com/r/woweconomy/comments/1fqb34c : 505 completed DEs, unit totals, NOT hits; identify deck item IDs/variants and validate whether LR/WS/CP/VS are disenchant rewards. Avoid duplicate Wowhead snapshots; check original study URLs and record IDs across evidence. Never turn unit totals into hit counts."
     }
   ]
 }
