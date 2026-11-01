@@ -164,3 +164,58 @@ GameData tsmRetail 903/903 present, mill/prospect 75 of 98 rows missing and impo
 **Ending commit:** see `git log` ("v3 migration M03: …").
 
 **Remaining:** M03.2–M03.4, M03.6, M06, M04, M07, M08, M09, M10.
+
+---
+
+## MIG-004 — 2026-10-31 (Claude Opus 5.5, Claude in a cloud session)
+
+**Tasks:** M03.2 observation `.json` archives · M03.3 `evidence/v2` and `evidence/leads` · M03.4 worker submissions and the
+43 other-schema JSONL records · M03.6 ledger CSVs. M03 complete.
+
+**Starting commit:** `c86870907e92c5c1b5ccb8d5224095ae6effa01f` on `migration/v3-historical-research`.
+
+**Environment:** Linux, Python 3.13.18 (`python3`), **SciPy 1.18.1 installed** (same code path as MIG-003, so hashes compare).
+Clone deepened with `git fetch --depth=1000 origin migration/v3-historical-research`. `before.json` and the M03 identity copy
+kept outside the repo. No network access was used for evidence; every number comes from files in the branch.
+
+**Created:** `research/v3/evidence/imported/{historical-archive-cohorts,v2-report-cohorts,legacy-milling-cohorts}.jsonl`;
+`migration/tests/test_m03b_import.py`; `migration/tests/fixtures/m03b-ids.jsonl`;
+`migration/reports/{M03b-import.md,M03b-import-data.json,M03b-estimates-diff.md,M03b-identity-data.json}`.
+**Modified:** `research/v3/tools/import_existing.py` (new section 4, `main()` writes the new families and the `historical`
+report key); `migration/manifest/validation.json` (record counts); `migration/{PLAN,CHECKLIST,HANDOFF,SESSION_LOG}.md`.
+Not changed: any agent evidence file, `corrections.jsonl`, `strategy.md`, `build_estimates.py`, `GameData.lua`, committed
+`output/`, addon files. **Tests:** none of the 99 existing tests was edited.
+
+**Commands actually run (repo root):**
+- `python3 research/v3/tools/build_estimates.py` at HEAD → 4,882 records, 1,205 estimates, 433 unplaced; `estimates.json` sha256 `1081c316…` (= MIG-003). Copied to `before.json`; `M03-identity-data.json` copied; output restored.
+- `python3 -m unittest discover -s research/v3/migration/tests` at HEAD → 99 OK.
+- Scoping and inspection scripts kept outside the repo: inventory selection, a v3 URL index, per-file claim context.
+- `python3 research/v3/tools/import_existing.py --report research/v3/migration/reports/M03b-import-data.json`, run twice → `diff -r` of `evidence/imported/` and `cmp` of the report identical. Output: archives 8, v2 reports 16, legacy milling 27, leads 0, submissions 0.
+- `python3 research/v3/tools/build_estimates.py` twice → 4,933 records, **1,205 estimates, 447 unplaced**; `estimates.json` `3861b696…`, `summary.md` `0ed83dd3…` both times.
+- `python3 research/v3/migration/tools/estimates_diff.py before.json research/v3/output/estimates.json --md research/v3/migration/reports/M03b-estimates-diff.md` → 0 added, 0 removed, 36 changed (chance 8, studies 28); largest chance move 0.0150; no `studyCasts` change.
+- `python3 research/v3/migration/tools/identity_report.py --json research/v3/migration/reports/M03b-identity-data.json` → differing 0; groups 128; partial copies 24; near copies 24 (+1); everything else equal to M03.
+- `python3 research/v3/migration/tools/validate.py` → 5,036 records (4,933 effective), 5 errors, 175 warnings (unchanged).
+- `python3 research/v3/tools/audit_studies.py` → 473 studies, 40 clean. Output restored.
+- Correction check (`build_estimates.load()`, branch and a HEAD worktree): 643 lines all matching; 333 corrected records (45 import-study, 52 import-ref) both sides.
+- `python3 -m unittest discover -s research/v3/migration/tests -v` → **125 tests OK** (99 + 26).
+
+**Measured results:** in `reports/M03b-import.md`. 99 files in scope (11 + 38 + 1 + 38 + 3 + 8) hold 700 claims plus 43
+other-schema records and 8 ledgers. Imported: 51 rows from 5 new sources (8 TBC reference rows, zzyjzu, the Luredrop range,
+14 unplaced 1smgllg rates, 27 legacy milling rows). Skipped: 375 held claims (173 with matching numbers), 274 reference or
+identity links, 44 new sources with a written reason, 3 legacy-milling copies, 8 recipes present, 5 reconciliation copies,
+8 ledgers.
+
+**Problems:**
+- A first legacy-milling pass counted Kidneph's 1,000 herbs as 200 five-herb casts (the old record's normalization). It moved 15 BfA chances by up to 0.335, because those groups already mix 20-herb mass-mill means with five-herb equivalents. The rows now keep `casts: null` for M06.
+- A first 1smgllg pass named studies by ore family. Identity read Silver as a partial copy of Tin (equal rounded rates; 24 → 25 partial copies). Numbering the claims as a batch family fixed it.
+- noriiju (Blizzard forum 2280780) was first mapped as a new source because a manual lookup used the raw URL, not the normalized key. The agent already holds it. The mapper guard (no import once v3 holds a source) caught it. The row was unplaced, so no estimate saw it.
+- `claims_in` first read only URL fields named like `url`/`source`, missing 5 URLs (e.g. `originalPost`, `additionalCoverage`). It also took the nested `source` object, not its parent, as the claim, so Felslate 2016 compared no numbers. Both fixed and tested.
+
+**Decisions:** PLAN §3 rule 5 (historical claims). Families with no imported rows write no file. Reference hosts and
+Wowhead identity pages are links, not cohorts. The 37 `v2/source-reviews` files and 21 submission audit CSVs are outside
+M03 (no study objects); they are left for M04/M07 dispositions. s6bfrl uncommon gems and the Felslate 101-vs-97 total
+are listed for the Master and not imported.
+
+**Ending commit:** see `git log` ("v3 migration M03: …").
+
+**Remaining:** M06, M04, M07, M08, M09, M10.

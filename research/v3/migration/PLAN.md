@@ -196,6 +196,13 @@ S5–S13 stand. Changes this plan introduces, each behind tests:
    same input, casts, output name and total). Categories, aggregates, unnamed indexes and agent-held cohorts stay
    unplaced with the reason in `notes`, for M04.1 linking. A first pass without the agent check counted the Kyparite
    Sparkling Shard cohorts twice (`reports/M03-import.md`).
+5. **Historical claims (M03.2-M03.4, new):** in archives, v2 reports, leads and submissions, every object citing a
+   source URL is a claim. A claim whose source v3 already holds (agent evidence, or rows the importer wrote earlier in
+   the same run; matched by normalized key or thread) is never imported, only compared and listed. A new source is
+   imported only through a mapper listed in `NEW_SOURCES`, and only while v3 does not hold it, so an M10 rerun cannot
+   double count once agents record it. Reference tables are the exception: they check presence row by row (M03.5's
+   rule). Totals whose source counts inputs, not casts, keep `casts: null` (S16, M06), even when an old record
+   carries its own normalization (`reports/M03b-import.md`).
 
 ### Risks and safeguards
 

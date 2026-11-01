@@ -4,7 +4,7 @@ Status values: Not Started / In Progress / Blocked / Complete. A box is ticked o
 acceptance criterion is met and the evidence column points at something checkable.
 Sessions run in Claude (owner's choice, 2026-10-31). Effort = Claude's thinking effort: Low / Medium / High / Extra High (xhigh) / Max.
 
-Recommended order: M02 ✓ → M05 ✓ → M03 (M03.0/.1/.5 ✓) → M06 → M04 → M07 → M08 → M09 → M10
+Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 → M04 → M07 → M08 → M09 → M10
 (M04.1 linking may run in parallel with M05 once M02 is done.)
 
 ## Progress
@@ -12,11 +12,11 @@ Recommended order: M02 ✓ → M05 ✓ → M03 (M03.0/.1/.5 ✓) → M06 → M04
 | | Count |
 | --- | --- |
 | Top-level tasks | 11 |
-| Complete | 4 (M00, M01, M02, M05) |
-| In progress | 1 (M03: 3 of 7 subtasks) |
+| Complete | 5 (M00, M01, M02, M05, M03) |
+| In progress | 0 |
 | Blocked | 0 |
 | Not started | 6 |
-| Completion (verified top-level) | 36% |
+| Completion (verified top-level) | 45% |
 
 ---
 
@@ -62,26 +62,31 @@ Recommended order: M02 ✓ → M05 ✓ → M03 (M03.0/.1/.5 ✓) → M06 → M04
   - [x] M05.4 proposal note for the Master in `reports/M05-identity.md` (strategy.md is Master/Claude-owned; do not edit it)
 
 ## M03 — Deterministic bulk importer
-- [ ] **M03 — Import every structured historical source without AI**
+- [x] **M03 — Import every structured historical source without AI**
   - Priority: P1 · Depends on: M02 (M03.1 also feeds M06) · Model: Claude Sonnet 5.5, High (M03.0/M03.1), Medium (rest)
   - Acceptance: every `imported`, observation `.json`, `evidence/v2`, `leads` and structured submission file is either imported or given a reasoned skip; existing `import-*` IDs unchanged (corrections reference them); raw input quantities, cast basis, structured dates and `migratedFrom` preserved; reruns byte-identical; tests per adapter
-  - Status: In Progress (MIG-003: M03.0, M03.1, M03.5 done) · Evidence: `reports/M03-import.md`, `reports/M03-import-data.json`, `reports/M03-estimates-diff.md`, `reports/M03-identity-data.json`; `tests/test_m03_import.py` (32 tests); 99 tests OK; import rerun and rebuild byte-identical
+  - Status: Complete (MIG-003: M03.0, M03.1, M03.5; MIG-004: M03.2, M03.3, M03.4, M03.6) · Evidence: `reports/M03-import.md`, `reports/M03b-import.md` and their `-data.json`, `-estimates-diff.md`, `-identity-data.json`; `tests/test_m03_import.py` (32) and `tests/test_m03b_import.py` (26); 125 tests OK; import rerun and rebuild byte-identical
   - [x] M03.0 the 10 typeless records in `evidence/midnight/2026-10-31-midnight-refining-shattering-decks.jsonl` are real observations in a different schema (e.g. genobeam's diamond comment); map them into valid records via the importer or a correction path, without editing the agent file
     - Done MIG-003: 10 of 10 mapped into `evidence/imported/typeless-agent-records.jsonl` (8 exchanges, 2 drops; `import-typeless-00010` kept unplaced: deck suit unknown); validator TYPE_MISSING 10 → 0
   - [x] M03.1 re-import old observation JSONL with `castsBasis`, `inputsProcessed`, `dataDate`/`dataDateText` split, published vs observed dates, unmapped outputs kept as name-only rows (IDs stable)
     - Done MIG-003: 652 IDs unchanged (fixture test), 403 name-only rows added (6 placed), castsBasis + derivations on all rows, DATE_NOT_ISO 518 → 0, corrections 643/333 unchanged
-  - [ ] M03.2 adapter: observation `.json` archives (11 files)
-  - [ ] M03.3 adapter: `evidence/v2/*.json` (38) and `evidence/leads` (1)
-  - [ ] M03.4 adapter: worker-submission JSON/JSONL that carry cohorts (list from manifest)
+  - [x] M03.2 adapter: observation `.json` archives (11 files)
+    - Done MIG-004: 11 of 11 assessed, 22 claims; 8 TBC guide rows imported as `reference` (32 of 40 already present); the rest held by agents/old studies, or qualitative
+  - [x] M03.3 adapter: `evidence/v2/*.json` (38) and `evidence/leads` (1)
+    - Done MIG-004: 38 + 1 assessed, 177 claims; 16 rows from 3 new sources (zzyjzu R3 Serevite, 1fb0vv5 Luredrop range, 1smgllg rates, unplaced); the lead is an S17 copy of Bugy's agent-held table
+  - [x] M03.4 adapter: worker-submission JSON/JSONL that carry cohorts (list from manifest)
+    - Done MIG-004: 38 files, 501 claims, 0 imported (19 hypothesis cards, 15 field audits/validations, 1 run summary, 3 citing held cohorts); also the 43 other-schema JSONL records: 27 legacy milling rows imported (`casts` null, S16), 3 copies, 8 recipes present, 5 reconciliation copies
   - [x] M03.5 GameData `gd.mill` / `gd.prospect` / `gd.tsmRetail` vs `itemdb.lua` rows: import only missing rows as `reference`
     - Done MIG-003: tsmRetail 903/903 present; gd.mill/gd.prospect 98 rows, 23 present, 75 imported as `reference` (`gamedata-mill-prospect-reference.jsonl`)
-  - [ ] M03.6 ledger CSVs with numbers (`candidate-no-url`): classify; import or dispose
+  - [x] M03.6 ledger CSVs with numbers (`candidate-no-url`): classify; import or dispose
+    - Done MIG-004: 8 ledgers classified, 0 imported (coverage/score/derived tables; personal-pooled counts are the GameData rows already imported); s6bfrl uncommon gems listed as an M04.1 exception
 
 ## M06 — Units, denominators and yield reconciliation
 - [ ] **M06 — Use totals-only evidence correctly (S16) and unify cast bases**
   - Priority: P1 · Depends on: M02, M03.1, M05 · Model: Claude Opus 5.5, High
   - Acceptance: one rule for `reported` vs `countedFromInputs`/`nominalEquivalent` casts applied to imported and new rows alike; the 529 totals-only rows (92 studies) either contribute or carry a reason; per-input/per-cast/per-hit/aggregate units checked; Resourcefulness treated per mechanics M9/M10/W2; tests for each basis; diff reviewed
   - Status: Not Started · Evidence: —
+  - Note (MIG-004): 25 more totals-without-casts rows (`legacy-milling-cohorts.jsonl`, zzyjzu) and 3 per-herb rates arrived; the BfA/SL milling groups mix 20-herb mass-mill means with five-herb equivalents under one per-cast estimate (`reports/M03b-import.md`, For the Master 1)
 
 ## M04 — Markdown and irregular sources
 - [ ] **M04 — Link notes deterministically, extract the residue with batched AI**
@@ -124,8 +129,8 @@ Recommended order: M02 ✓ → M05 ✓ → M03 (M03.0/.1/.5 ✓) → M06 → M04
 | MIG-001 | M00, M01, M02 | done |
 | MIG-002 | M05 | done |
 | MIG-003 | M03.0, M03.1, M03.5 | done |
-| MIG-004 | M03.2–M03.4, M03.6 | next |
-| MIG-005 | M06 | |
+| MIG-004 | M03.2–M03.4, M03.6 | done |
+| MIG-005 | M06 | next |
 | MIG-006 | M04.1, M04.2 | can run any time now (independent of M05) |
 | MIG-007+ | M04.3 batches, M04.4 | parallel workers by source URL |
 | later | M07, M08, M09, M10 | |

@@ -16,8 +16,14 @@ Inputs (all already in this branch):
   4. research/v3/evidence/midnight/2026-10-31-midnight-refining-shattering-decks.jsonl
                                               ten agent records written without `type`
                                               (read only; mapped records `replace` them)
+  5. (MIG-004) research/evidence/observations/*.json, research/evidence/v2/*.json,
+     research/evidence/leads/*.json, the worker submissions and ledger CSVs listed in
+     research/v3/migration/manifest/inventory.jsonl, and the three other-schema JSONL files
+     M03.1 left (legacy milling, recipe metadata, cohort reconciliation). Section 4 below:
+     a claim is imported only when its source is new to v3 and a mapper copies its numbers.
 
-Output: research/v3/evidence/imported/*.jsonl  (overwritten on each run)
+Output: research/v3/evidence/imported/*.jsonl  (overwritten on each run; a MIG-004 family
+with no imported rows writes no file)
 
 Migration session MIG-003 (M03.0, M03.1, M03.5) added, on every row it writes:
   castsBasis      reported | countedFromInputs | nominalEquivalent (null without casts)
@@ -767,6 +773,591 @@ def import_gamedata_tables():
     return records, report
 
 
+# ---------------------------------------------------------------- 4. remaining structured sources (MIG-004)
+# M03.2 observation .json archives, M03.3 evidence/v2 reports and evidence/leads, M03.4 worker submissions,
+# the 43 other-schema JSONL records left by M03.1, and M03.6 ledger CSVs. These files are research notes,
+# not one schema: each holds "claims" (any object citing a source URL). A claim is imported only when its
+# source is new to v3 and a mapper below copies its numbers; every other claim gets a reason in the report:
+# its source is already held (agent evidence or rows this run wrote: a copy, or a cohort to link in M04.1),
+# it is a reference/identity/news link, or it holds no cohort numbers. Nothing is AI-extracted.
+M03B_DATE = "2026-10-31"
+INVENTORY = "research/v3/migration/manifest/inventory.jsonl"
+ARCHIVE_GLOB = "research/evidence/observations/*.json"
+V2_GLOB = "research/evidence/v2/*.json"
+LEADS_GLOB = "research/evidence/leads/*.json"
+LEGACY_MILLING = "research/evidence/observations/2026-10-28-legacy-milling-batch01.jsonl"
+RECIPE_METADATA = "research/evidence/observations/2026-10-28-2116-warwithin-batch014-q16-recipe-metadata.jsonl"
+COHORT_RECONCILIATION = "research/evidence/observations/2026-10-28-1231-dragonflight-batch012-source-cohort-reconciliation.jsonl"
+TBC_GUIDE = "research/evidence/observations/2026-10-28-0535-legacy-batch005-tbc-guide-source-only.json"
+
+# Hosts these files cite only for item/spell identity, prices, patch notes, guides' recipe facts or news:
+# never a player's cohort in any in-scope file (checked in MIG-004; `wow-professions.com` is not here
+# because its TBC table is imported as reference rows).
+REFERENCE_HOSTS = ("warcraft.wiki.gg", "saddlebagexchange.com", "wowpricehub.com", "goldcap.gg",
+                   "tradeskillmaster.com", "thewowdb.com", "github.com", "worldofwarcraft.blizzard.com",
+                   "news.blizzard.com", "bluetracker.gg", "mmo-champion.com", "method.gg", "icy-veins.com",
+                   "blizzardwatch.com", "wowdb.com", "ptr.wowdb.com", "warcraftable.com", "warcrafttavern.com",
+                   "scribd.com")
+
+# Every source key cited by an in-scope file that v3 does not hold yet and that is not a reference host.
+# "import" keys have a mapper below; the others are skipped for the reason given. A test fails when a new
+# source appears without an entry, so nothing new is ever dropped silently.
+NEW_SOURCES = {
+    # imported
+    "reddit:zzyjzu": ("import", "Jan 2 2023 comment: ~28,000 R3 Serevite, 24 R3 Illimited Diamonds (the Jan 9 comment in the "
+                                "same thread is a copy of agent-held reddit 108782r and is skipped)"),
+    "reddit:1fb0vv5": ("import", "Luredrop milling: 11 to 17 pigment from each milling, as the author saw it"),
+    "reddit:1smgllg": ("import", "calculator-thread commenter's approximate per-prospect rates (under 5,000 ore in all)"),
+    "wow-professions.com/tbc/prospecting": ("import", "published TBC prospecting chance table: reference rows not already in v3"),
+    "wowhead:spell=190385": ("import", "Wowhead comment 516803: six WoD herbs, 2,000 each, mass-milled, Cerulean Pigment totals"),
+    # skipped: same cohort already held under another URL
+    "wowhead:item=192870": ("skip", "Bugy's two 2,000-ore Draconium cohorts (3 and 8 Illimited Diamonds): the same author's table is "
+                                    "held by the dragonflight agent under wowhead spell=374627 (S17 copy)"),
+    # skipped: qualitative, mechanics, UI or economics claims without output quantities
+    "reddit:1fdvkmy": ("skip", "a commenter's proposed 30% Resourcefulness return, no measured outputs"),
+    "reddit:1g8kbaq": ("skip", "Prospect All queue behaviour (1,000-ore stack queues 200 casts); mechanics, no outputs"),
+    "reddit:y3e8ek": ("skip", "2022 original discussion of the Dragonflight beta, qualitative"),
+    "wowhead:news=recent-prospecting-changes-wowhead-economy-weekly-wrap-up-351-349956@ptr":
+        ("skip", "news coverage of the Oct 2024 prospecting hotfix; rate-change context"),
+    "reddit:10s9ol9": ("skip", "Resourcefulness saved-ore rate (mechanics), no outputs"),
+    "reddit:1fvhzy0": ("skip", "pigment multipliers (x1.52, x1.49) and a multi-stage cipher count; no base yield or outputs per mill"),
+    "reddit:1jc2ya5": ("skip", "qualitative rank-versus-yield discussion"),
+    "reddit:1v5esk0": ("skip", "crushing rate forecast (dust per gem); the author's 100,000 ore and 13,000 gems are not a processed batch"),
+    "reddit:1vknxyy": ("skip", "same author repeats the crushing rate; no cohort"),
+    "reddit:1rrn6of": ("skip", "Resourcefulness UI observation while crushing; no outputs"),
+    "reddit:1gcai5k": ("skip", "quotes the Oct 25 2024 prospecting hotfix; rate-change context, no cohort"),
+    "reddit:1s66wrz": ("skip", "community comments on R2 output without concentration; no outputs"),
+    "reddit:1sgvqjt": ("skip", "effective-skill display before and after relog; no outputs"),
+    "reddit:zox4i7": ("skip", "Draconium diamond ranges per ~15,000-ore run of mixed R1/R2 ore; ranges, not totals of one cohort"),
+    "blizzforum:1927887": ("skip", "bulk-milling failure report; no outputs"),
+    "blizzforum:1944679": ("skip", "bulk-milling failure report; no outputs"),
+    "blizzforum:2278388": ("skip", "Resourcefulness explanation for crushing; qualitative"),
+    "blizzforum:2362528": ("skip", "milling UI and skill-threshold discussion; no outputs"),
+    "blizzforum:2287404": ("skip", "milling selector report (17 displayed crafts, not completed casts); no outputs"),
+    "blizzforum:2316717": ("skip", "posts 2, 6 and 7: gear re-equip changed displayed skill, output quality and gemdust "
+                                   "rate compared in words; no casts or totals"),
+    "blizzforum:611648": ("skip", "skill shortfall after reset; no outputs"),
+    "blizzforum:1935257": ("skip", "Arathor's Spear missing from the milling selector; no outputs"),
+    "blizzforum:2083666": ("skip", "Arathor's Spear missing from the milling selector; no outputs"),
+    "blizzforum:1652762": ("skip", "Draggoth on output quality and skill; qualitative"),
+    "blizzforum:1484679": ("skip", "forum reproduction of ar_rules' reddit 109bytz study, which agents hold"),
+    "blizzforum:1901868": ("skip", "concentration and prospecting, two casts without output IDs"),
+    "blizzforum:2260898": ("skip", "hotfix thread: 'gems found more regularly', no rate"),
+    "gdoc:e": ("skip", "ar_rules' published spreadsheet for reddit 109bytz (agent-held); rows not readable offline"),
+    "wowhead:news=dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385":
+        ("skip", "Wowhead article on Jallfo's 2022 beta sheet; the sheet's cohorts are held (agents cite it, M03.1)"),
+    "wowhead:news=i-bet-you-re-dyeing-to-hear-about-this-decor-dye-updates-in-patch-12-1-381939":
+        ("skip", "patch 12.1 dye news; recipe identity, no cohort"),
+}
+# Mappers that check presence row by row themselves, so they still run when v3 already cites the source.
+# Every other "import" source is imported only while v3 does not hold it: once agents record it, the claim
+# becomes "held" and the importer stops writing it (no double count when M10 reruns the importer).
+ROW_CHECKED_SOURCES = {"wow-professions.com/tbc/prospecting"}
+# Wowhead entity pages cited only for an item, spell, trait or recipe identity in these files.
+WOWHEAD_IDENTITY = re.compile(r"^wowhead:(spell|item|npc|object|guide|/profession-trait|/profession-tree-calc)")
+
+
+def source_key(url):
+    return normalize_url(url) if isinstance(url, str) and url.startswith("http") else None
+
+
+def thread_of(key):
+    """The thread a key belongs to: forum post numbers, reddit comment IDs and Wowhead comment anchors dropped."""
+    if key is None:
+        return None
+    if key.startswith(("blizzforum:", "reddit:")):
+        return ":".join(key.split(":")[:2])
+    return key.split("#c")[0]
+
+
+def is_reference_link(key):
+    host = key.split("/")[0]
+    return any(host == h or host.endswith("." + h) for h in REFERENCE_HOSTS)
+
+
+def claims_in(obj, path="$"):
+    """(json path, source key, object) for every object that cites a source URL in a field of its own
+    (any field: these files use url, sourceURL, originalPost, contemporaneousReport, additionalCoverage...)."""
+    out = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if isinstance(v, str) and v.startswith("http"):
+                out.append((f"{path}.{k}", source_key(v), obj))
+            elif k == "source" and isinstance(v, dict) and any(isinstance(x, str) and x.startswith("http") for x in v.values()):
+                # {"source": {"url": ...}, "processing": ..., "outputs": ...}: the claim is the whole object
+                out.extend((f"{path}.source.{sk}", source_key(sv), obj) for sk, sv in v.items()
+                           if isinstance(sv, str) and sv.startswith("http"))
+            elif isinstance(v, (dict, list)):
+                out.extend(claims_in(v, f"{path}.{k}"))
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj):
+            out.extend(claims_in(v, f"{path}[{i}]"))
+    return out
+
+
+def numbers_in(obj):
+    """Every number in an object (deep), for comparing a claim with held rows. Item/spell IDs, ranks and dates
+    are numbers too, so a match needs a value that is also a held row's count or total (see held_numbers)."""
+    out = set()
+    if isinstance(obj, bool):
+        return out
+    if isinstance(obj, (int, float)):
+        out.add(round(float(obj), 6))
+    elif isinstance(obj, dict):
+        for v in obj.values():
+            out |= numbers_in(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            out |= numbers_in(v)
+    return out
+
+
+class Holdings:
+    """What v3 already holds: agent evidence (outside evidence/imported/) plus the rows this run has already
+    written (old studies, typeless, itemdb, GameData). The importer's own MIG-004 output is never read, so a
+    rerun sees the same holdings and writes the same rows."""
+
+    COUNT_FIELDS = ("casts", "totalQuantity", "inputsProcessed", "castsWithDrop", "averageShown", "percentShown",
+                    "minSeen", "maxSeen", "giveCount", "getCount", "outputCount")
+
+    def __init__(self, prior_rows):
+        self.by_key, self.by_thread, self.text, self.recipes = {}, {}, [], {}
+        rows = []
+        for path in sorted(glob.glob(os.path.join(ROOT, "research", "v3", "evidence", "**", "*.jsonl"), recursive=True)):
+            if os.path.basename(os.path.dirname(path)) == "imported":
+                continue
+            rel = os.path.relpath(path, ROOT).replace(os.sep, "/")
+            for line in open(path, encoding="utf-8"):
+                try:
+                    r = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(r, dict):
+                    rows.append((rel, r))
+                    self.text.append(line.lower())
+        rows += [("evidence/imported (this run)", r) for r in prior_rows]
+        for rel, r in rows:
+            if r.get("type") == "recipe":
+                self.recipes.setdefault(r.get("recipeSpellID"), []).append(r)
+            s = r.get("source") if isinstance(r.get("source"), dict) else {}
+            for u in (s.get("url"), r.get("originalSource"), r.get("sourceURL")):
+                k = source_key(u)
+                if k:
+                    self.by_key.setdefault(k, []).append((rel, r))
+                    self.by_thread.setdefault(thread_of(k), []).append((rel, r))
+
+    def held(self, key):
+        return self.by_key.get(key) or self.by_thread.get(thread_of(key)) or []
+
+    def author_known(self, author):
+        a = str(author).strip().lower()
+        return bool(a) and any(a in t for t in self.text)
+
+    @classmethod
+    def row_numbers(cls, r):
+        return {x for x in (round(float(r[f]), 6) for f in cls.COUNT_FIELDS if num(r.get(f)) is not None) if telling(x)}
+
+
+def telling(x):
+    """A number worth comparing: not 0/1 and not a small whole number (batch sizes, ranks and counts like 2 or 5
+    match by chance). Averages such as 0.2675 per ore do count."""
+    return x > 0 and x != 1 and (x != int(x) or x > 5)
+
+
+def compare_with_held(claim, rows):
+    """Which of a claim's telling numbers appear as a count, total or average of a held row from the same source
+    (drop and exchange rows). Only labels the report: a held claim is never imported either way."""
+    held = set()
+    for _, r in rows:
+        held |= Holdings.row_numbers(r)
+    mine = {x for x in numbers_in(claim) if telling(x)}
+    hit = sorted(mine & held)
+    keys = sorted({str(r.get("studyKey") or r.get("id")) for _, r in rows})
+    return hit, keys
+
+
+def assess_file(rel, data, hold, mappers, file_reason=None):
+    """Classify every claim in one file. Returns (rows, entry): rows from mappers, entry for the report."""
+    entry = {"path": rel, "claims": 0, "imported": 0, "outcomes": {}, "held": [], "skippedNew": [], "reason": file_reason}
+    rows, seen, to_import = [], set(), set()
+    objs = data if isinstance(data, list) else [data]
+    for n, obj in enumerate(objs):
+        base_path = f"line {n + 1}" if isinstance(data, list) else "$"
+        for jpath, key, claim in claims_in(obj, base_path):
+            if key is None or (key, id(claim)) in seen:
+                continue
+            seen.add((key, id(claim)))
+            entry["claims"] += 1
+            held = hold.held(key)
+            decision = NEW_SOURCES.get(key) or NEW_SOURCES.get(thread_of(key))
+            if decision and decision[0] == "import" and key in mappers and (not held or key in ROW_CHECKED_SOURCES):
+                outcome = "imported"
+                to_import.add(key)
+            elif held:
+                hit, keys = compare_with_held(claim, held)
+                outcome = "held: numbers match" if hit else "held: no number compared"
+                entry["held"].append({"at": jpath, "source": key, "matched": hit[:12], "heldStudies": keys[:6]})
+            elif decision:
+                outcome = "new source skipped"
+                entry["skippedNew"].append({"at": jpath, "source": key, "reason": decision[1]})
+            elif is_reference_link(key) or WOWHEAD_IDENTITY.match(key):
+                outcome = "reference or identity link"
+            else:
+                outcome = "UNDECIDED new source"
+                entry["skippedNew"].append({"at": jpath, "source": key, "reason": "UNDECIDED: add to NEW_SOURCES"})
+            entry["outcomes"][outcome] = entry["outcomes"].get(outcome, 0) + 1
+    for key in sorted(to_import):
+        rows.extend(mappers[key](rel, data))
+    entry["imported"] = len(rows)
+    if not entry["claims"] and not file_reason:
+        entry["reason"] = "cites no source URL"
+    return rows, entry
+
+
+def hist_drop(rel, ref, url, title, author, published, notes, **kw):
+    r = base(None, "drop", src(url, title, author, published), notes, **drop_fields(**kw))
+    r["recordedOn"] = M03B_DATE
+    r.update(castsBasis=None, inputsProcessed=None, inputsPurchased=None, inputsRefunded=None, dataDateText=None,
+             observedOn=None, rawOutputName=None, rawInputName=None, derivations=None, migratedFrom=migrated(rel, ref))
+    return r
+
+
+def pct_derivation(x, what):
+    return derivation("percentShown", f"{what} x 100 = {x:g} x 100", "the source field is a 0-1 fraction")
+
+
+# ---- M03.2 mappers: observation .json archives
+def map_tbc_guide(rel, data, present):
+    """Published chance claims as `reference` rows, only for pairs v3 does not already hold (same URL, a
+    non-TSM reference row, or a TSM row with the same chance)."""
+    out = []
+    url = (data.get("source") or {}).get("url")
+    for i, x in enumerate(data.get("records") or []):
+        p = num(x.get("publishedChanceClaim"))
+        if p is None or present(x["inputItemID"], x["outputItemID"], p, x.get("outputName")):
+            continue
+        r = hist_drop(rel, f"$.records[{i}] ({x.get('stableKey')})", url, "TBC Prospecting guide (published chance table)",
+                      None, None, f"Reference value from {rel} record {x.get('sourceClaimID')}: published approximate chance "
+                      f"{p:g}, not hit counts ({data.get('notes')}). A starting guess, not a study.",
+                      studyKey=f"wow-professions-tbc-prospecting:{x['inputItemID']}", sourceKind="reference", method="Prospect",
+                      inputItemID=x["inputItemID"], outputItemID=x["outputItemID"], outputName=x.get("outputName"),
+                      inputsPerCast=5, percentShown=round(p * 100, 4), percentMeaning="perCast")
+        r["derivations"] = [pct_derivation(p, "publishedChanceClaim")]
+        out.append(r)
+    return out
+
+
+# ---- M03.3 mappers: evidence/v2 reports
+def map_zzyjzu(rel, data):
+    out = []
+    for i, o in enumerate(data.get("observations") or []):
+        if o.get("id") != "DF-20230102-SEREVITE-R3-28000-24R3DIAMONDS":
+            continue
+        r = hist_drop(rel, f"$.observations[{i}] ({o['id']})", o["source"], None, None, iso_or_none(o.get("publicationDate")),
+                      f"Imported from {rel} observation {o['id']}; skill {o.get('skillReported')}; the ore count is approximate "
+                      f"('{o.get('uncertainty')}'), so casts are not counted from it (S16/M06)",
+                      studyKey="reddit-zzyjzu-20230102-r3-serevite-28000", sourceKind="study", method="Prospect",
+                      inputItemID=o.get("inputItemID"), inputName=o.get("inputFamily"), inputRank=o.get("inputRank"),
+                      outputItemID=o.get("outputItemID"), outputName=o.get("outputFamily"), outputRank=o.get("outputRank"),
+                      inputsPerCast=num(o.get("nominalInputPerCast")), totalQuantity=num(o.get("reportedR3DiamondUnits")),
+                      skill=str(o["skillReported"]) if o.get("skillReported") is not None else None)
+        r["inputsProcessed"] = num(o.get("reportedOreUnitsApprox"))
+        out.append(r)
+    return out
+
+
+def map_luredrop(rel, data):
+    s, c = data.get("source") or {}, (data.get("source") or {}).get("claim") or {}
+    ctx = s.get("context") or {}
+    if source_key(s.get("url")) != "reddit:1fb0vv5":
+        return []
+    r = hist_drop(rel, "$.source.claim", s["url"], None, None, iso_or_none(s.get("publishedDate")),
+                  f"Imported from {rel}: the author's own range per milling ('{s.get('verbatimExcerpt')}'); "
+                  f"{c.get('interpretation')}; no casts or totals",
+                  studyKey="reddit-1fb0vv5-luredrop-range", sourceKind="study", method="Mill",
+                  inputName=ctx.get("inputName"), outputName=ctx.get("outputName"),
+                  minSeen=num(c.get("minObservedClaim")), maxSeen=num(c.get("maxObservedClaim")))
+    r["quote"] = s.get("verbatimExcerpt")
+    return [r]
+
+
+def map_1smgllg(rel, data):
+    """Rough per-prospect rates. The source names ore families ('Copper') and short gem names ('Lapis'),
+    so input and output stay in rawInputName/rawOutputName and the rows are stored but unplaced (M04.1)."""
+    out = []
+    lin = data.get("sourceLineage") or {}
+    url = lin.get("canonicalURL")
+    pub = iso_or_none(lin.get("publicationDate"))
+    note = (f"Imported from {rel}; one commenter in a calculator thread, about {(data.get('commentContext') or {}).get('totalOreReported')}; "
+            "rates are the author's approximations, not counted outcomes; input and output names are the source's short "
+            "names, so the row is stored but unplaced")
+    for i, c in enumerate(data.get("claimedRates") or []):
+        fam = c.get("inputFamily")
+        items = [(n, "eachGemPerProspectApprox", "pct") for n in (c.get("outputNames") or [])
+                 if c.get("eachGemPerProspectApprox") is not None and "Stone" not in n and "Glass" not in n]
+        if c.get("diamondPerProspectApprox") is not None:
+            items.append(("Diamond", "diamondPerProspectApprox", "pct"))
+        if c.get("stoneUnitsPerProspectApprox") is not None:
+            items.append(("Duskshrouded Stone", "stoneUnitsPerProspectApprox", "avg"))
+        if c.get("glassUnitsPerProspectApprox") is not None:
+            items.append(("Crystalline Glass", "glassUnitsPerProspectApprox", "avg"))
+        if c.get("outputNames") is None and c.get("eachGemPerProspectApprox") is not None:
+            items.insert(0, ("each of 'the others' (gems unnamed)", "eachGemPerProspectApprox", "pct"))
+        for name, field, kind in items:
+            v = c[field]
+            r = hist_drop(rel, f"$.claimedRates[{i}].{field} ({name})", url, None, None, pub, note + f"; ore family: {fam}",
+                          # numbered by the claim's position, so the per-ore-family claims of this one comment are
+                          # a batch family (M05): equal rounded rates for Tin and Silver must not read as a copy
+                          studyKey=f"reddit-1smgllg-claim{i + 1}", sourceKind="study",
+                          method="Prospect", inputsPerCast=5,
+                          percentShown=round(v * 100, 4) if kind == "pct" else None,
+                          percentMeaning="perCast" if kind == "pct" else None,
+                          averageShown=v if kind == "avg" else None, averagePer="cast" if kind == "avg" else None,
+                          specialization="author describes a max-spec prospector")
+            r["rawInputName"], r["rawOutputName"] = fam, name
+            r["derivations"] = [pct_derivation(v, field)] if kind == "pct" else None
+            out.append(r)
+    return out
+
+
+# ---- other-schema JSONL left by M03.1
+def import_legacy_milling(hold):
+    """legacy-milling-batch01: Wowhead mass-milling comments (20 herbs per cast). A cohort is imported when
+    no v3 row holds the same input, output and total and its author is not already in v3 evidence.
+    Raw facts only: herbs consumed (inputsProcessed), the mass-mill batch (inputsPerCast 20) and the total.
+    casts stay null: the source counts herbs, and the estimate groups for these items already mix 20-herb
+    mass-mill casts (Jiyao) with five-herb equivalents (Baadkitty), so counting casts either way would set
+    the unit before M06 does (S16). The record's own per-five-herb normalization is derived and not copied."""
+    rel = LEGACY_MILLING
+    path = os.path.join(ROOT, rel)
+    rows, log = [], []
+    if not os.path.exists(path):
+        return rows, log
+    held_totals = {}
+    for k, lst in hold.by_key.items():
+        for _, r in lst:
+            if r.get("type") == "drop" and num(r.get("totalQuantity")) is not None:
+                held_totals.setdefault((r.get("inputItemID"), r.get("outputItemID"), float(r["totalQuantity"])), []).append(
+                    r.get("studyKey") or r.get("id"))
+    for ln, line in enumerate(open(path, encoding="utf-8"), 1):
+        if not line.strip():
+            continue
+        d = json.loads(line)
+        s = d.get("source") or {}
+        author, herbs, total = s.get("commentAuthor"), num(s.get("originalHerbsConsumed")), num(s.get("reportedOutputTotal"))
+        batch = num(s.get("observedMassMillReagentCount"))
+        entry = {"line": ln, "recordKey": d.get("recordKey"), "author": author, "outcome": None, "reason": None}
+        copy = held_totals.get((d.get("inputItemId"), d.get("outputItemId"), float(total))) if total is not None else None
+        if copy:
+            entry.update(outcome="skipped", reason=f"copy: v3 already holds input, output and total {total:g} ({copy[0]})")
+        elif hold.author_known(author):
+            entry.update(outcome="skipped", reason=f"author {author!r} already appears in v3 agent evidence; link in M04.1")
+        else:
+            entry["outcome"] = "imported"
+        log.append(entry)
+        if entry["outcome"] != "imported":
+            continue
+        ref = f"line {ln} ({d.get('recordKey')})"
+        notes = (f"Imported from {rel}; Wowhead comment by {author}: {s.get('sampleContext')}; mass milling, "
+                 f"{batch:g} herbs per cast")
+        if herbs is not None:
+            r = hist_drop(rel, ref, s.get("url"), None, author, None,
+                          notes + f"; {herbs:g} herbs consumed; casts left null because the source counts herbs, not casts "
+                          "(S16, decided in M06)",
+                          studyKey=f"wowhead-{author}-{d.get('inputItemId')}-{herbs:g}herbs".lower(), sourceKind="study",
+                          method="Mill", inputItemID=d.get("inputItemId"), inputName=d.get("inputName"),
+                          outputItemID=d.get("outputItemId"), outputName=d.get("outputName"),
+                          inputsPerCast=batch, totalQuantity=total)
+            r["inputsProcessed"] = herbs
+        else:
+            # Melch1337: a published rate per 100 herbs from a pooled study, no herb count per species.
+            r = hist_drop(rel, ref, s.get("url"), None, author, None,
+                          notes + "; the source gives pigment per 100 herbs from a pooled study (herb count per species not "
+                          "given); inputsPerCast is left null so the per-herb rate is not converted to a per-cast "
+                          "figure before M06 settles the unit (S15/S16)",
+                          studyKey=f"wowhead-{author}-{d.get('inputItemId')}-rate".lower(), sourceKind="study",
+                          method="Mill", inputItemID=d.get("inputItemId"), inputName=d.get("inputName"),
+                          outputItemID=d.get("outputItemId"), outputName=d.get("outputName"),
+                          averageShown=round(total / 100, 6), averagePer="input")
+            r["derivations"] = [derivation("averageShown", f"source.reportedOutputTotal / 100 = {total:g} / 100",
+                                           "the source's figure is pigment per 100 herbs")]
+        rows.append(r)
+    return rows, log
+
+
+def assess_recipe_metadata(hold):
+    rel, out = RECIPE_METADATA, []
+    if not os.path.exists(os.path.join(ROOT, rel)):
+        return out
+    for ln, line in enumerate(open(os.path.join(ROOT, rel), encoding="utf-8"), 1):
+        if not line.strip():
+            continue
+        d = json.loads(line)
+        rc = d.get("recipe") or {}
+        reag = rc.get("exactDirectReagents") or []
+        match = [r for r in hold.recipes.get(rc.get("spellID"), [])
+                 if r.get("outputItemID") == rc.get("outputItemID") and num(r.get("outputCount")) == num(rc.get("outputCount"))
+                 and reag and r.get("inputItemID") == reag[0]["itemID"] and num(r.get("inputsPerCast")) == num(reag[0]["quantity"])]
+        out.append({"line": ln, "id": d.get("observationID"), "spell": rc.get("spellID"),
+                    "outcome": "skipped" if match else "NOT PRESENT",
+                    "reason": f"recipe already in v3 ({', '.join(sorted(r['id'] for r in match))})" if match else
+                    "no v3 recipe with the same spell, first reagent, count and output"})
+    return out
+
+
+def assess_cohort_reconciliation(hold):
+    """Records the dragonflight agent marked REUSED_*: compared with the held rows of their source."""
+    rel, out = COHORT_RECONCILIATION, []
+    if not os.path.exists(os.path.join(ROOT, rel)):
+        return out
+    for ln, line in enumerate(open(os.path.join(ROOT, rel), encoding="utf-8"), 1):
+        if not line.strip():
+            continue
+        d = json.loads(line)
+        key = source_key(d.get("sourceURL"))
+        held = hold.held(key) if key else []
+        hit, keys = compare_with_held(d, held) if held else ([], [])
+        out.append({"line": ln, "id": d.get("id"), "source": key, "sourceStatus": d.get("sourceStatus"),
+                    "outcome": "skipped", "matched": hit[:8], "heldStudies": keys[:6],
+                    "reason": ("copy: the agent marked it " + str(d.get("sourceStatus")) + "; v3 holds the source"
+                               + (f" and the numbers {', '.join(f'{x:g}' for x in hit[:4])}" if hit else "")
+                               if held else "source not held: CHECK")})
+    return out
+
+
+# ---- M03.6 ledger CSVs
+LEDGER_KINDS = {
+    "first-pass-coverage-2026-10-28.csv": "coverage tracker (status per stable key, blocker text); numbers are file/line references",
+    "first-pass-coverage-v1.csv": "coverage scores per GameData/TSM key; the GameData personal-pooled sample counts it quotes "
+                                  "(e.g. samples=12) are the rows already imported in gamedata-disenchant.jsonl",
+    "master-worker-batch002-four-field-scores-2026-10-28.csv": "four-field confidence scores per stable key (process): scores and notes, no raw counts",
+    "master-worker-batch008-four-field-scores-2026-10-28.csv": "four-field confidence scores per stable key (process): scores and notes, no raw counts",
+    "master-worker-batch010-four-field-scores-2026-10-28.csv": "four-field confidence scores per stable key (process): scores and notes, no raw counts",
+    "supplemental-output-fields.csv": "GameData/TSM-derived field table (TSM Prospect.lua, GameData personal pools, recipes); the same "
+                                      "rows are imported from GameData.lua and itemdb.lua",
+    "first-pass-tsm-other-28-field-evidence-2026-10-28.csv": "TSM field review; its six Legion worksheet rows restate the 3,200-ore "
+                                                             "Deckven/Felslate cohort held in old-studies.jsonl",
+    "titanium-observed-yields.csv": "Titanium totals from two sources; each row compared with held rows (rowChecks)",
+}
+
+
+def assess_ledgers(hold):
+    import csv
+    out = []
+    try:
+        inv = [json.loads(l) for l in open(os.path.join(ROOT, INVENTORY), encoding="utf-8")]
+    except OSError:
+        inv = []
+    for i in inv:
+        if i.get("category") != "ledger" or i.get("format") != "csv" or not i.get("numericClaimLines"):
+            continue
+        rel, name = i["path"], os.path.basename(i["path"])
+        entry = {"path": rel, "rows": i.get("records"), "disposition": i.get("disposition"), "outcome": "skipped",
+                 "reason": LEDGER_KINDS.get(name, "UNDECIDED ledger"), "rowChecks": []}
+        if name == "titanium-observed-yields.csv":
+            for n, row in enumerate(csv.DictReader(open(os.path.join(ROOT, rel), encoding="utf-8")), 2):
+                key = source_key(row.get("source_url"))
+                held = hold.held(key)
+                total = num(float(row["observed_output_units"])) if row.get("observed_output_units") else None
+                same = [r.get("studyKey") for _, r in held if r.get("type") == "drop" and num(r.get("totalQuantity")) == total
+                        and str(r.get("inputItemID")) == row["input_id"]]
+                entry["rowChecks"].append({"line": n, "output": row.get("output_name"), "source": key, "total": total,
+                                           "outcome": "copy" if same else ("held source, output not held: M04.1 source check"
+                                                                           if held else "source not held"),
+                                           "heldStudy": same[0] if same else None})
+        out.append(entry)
+    return out
+
+
+# ---- the families
+def import_historical(prior_rows):
+    """M03.2, M03.3, M03.4 and the rest of M03 (MIG-004). Returns {output file: rows} and the report."""
+    hold = Holdings(prior_rows)
+    # Prospect rows by (input, output), from every held row: TSM rows have no URL, so the URL index misses them.
+    by_pair, seen_ids = {}, set()
+    for r in list(prior_rows) + [r for lst in hold.by_key.values() for _, r in lst]:
+        if r.get("type") == "drop" and r.get("method") == "Prospect" and id(r) not in seen_ids:
+            seen_ids.add(id(r))
+            by_pair.setdefault((r.get("inputItemID"), r.get("outputItemID")), []).append(r)
+
+    guide_named = {(r.get("inputItemID"), str(r.get("outputName")).strip().lower())
+                   for _, r in hold.held("wow-professions.com/tbc/prospecting") if r.get("type") == "drop"}
+
+    def tbc_present(inp, out, p, name=None):
+        """M03.5's rule: present = same URL (by output ID, or by name: the legacy agent recorded the guide's
+        Fel Iron gems by name), a non-TSM reference row, or a TSM row with the same chance."""
+        if name and (inp, str(name).strip().lower()) in guide_named:
+            return True
+        for r in by_pair.get((inp, out), []):
+            if source_key((r.get("source") or {}).get("url")) == "wow-professions.com/tbc/prospecting":
+                return True
+            if r.get("sourceKind") in ("compiled-research", "reference") and num(r.get("percentShown")) is not None:
+                return True
+            if r.get("sourceKind") == "tsm-table" and num(r.get("percentShown")) is not None and abs(r["percentShown"] - p * 100) < 1e-6:
+                return True
+        return False
+
+    families = {}
+    report = {}
+
+    def run(family, out_name, paths, mappers, reason_for=lambda rel, d: None):
+        """A mapper is keyed by the source it maps and runs only on files that cite that source."""
+        rows, entries = [], []
+        for rel in paths:
+            with open(os.path.join(ROOT, rel), encoding="utf-8") as fh:
+                txt = fh.read()
+            data = [json.loads(l) for l in txt.splitlines() if l.strip()] if rel.endswith(".jsonl") else json.loads(txt)
+            cited = {key for obj in (data if isinstance(data, list) else [data]) for _, key, _ in claims_in(obj)}
+            r, e = assess_file(rel, data, hold, {k: m for k, m in mappers.items() if k in cited}, reason_for(rel, data))
+            rows += r
+            entries.append(e)
+        families[out_name] = rows
+        report[family] = entries
+
+    def rels(pattern):
+        return sorted(os.path.relpath(p, ROOT).replace(os.sep, "/") for p in glob.glob(os.path.join(ROOT, pattern)))
+
+    archive_mappers = {"wow-professions.com/tbc/prospecting": lambda rel, d: map_tbc_guide(rel, d, tbc_present)}
+    run("archives", "historical-archive-cohorts.jsonl", rels(ARCHIVE_GLOB), archive_mappers)
+    v2_mappers = {"reddit:zzyjzu": map_zzyjzu, "reddit:1fb0vv5": map_luredrop, "reddit:1smgllg": map_1smgllg}
+    run("v2Reports", "v2-report-cohorts.jsonl", rels(V2_GLOB), v2_mappers)
+    run("leads", "leads-cohorts.jsonl", rels(LEADS_GLOB), {})
+    try:
+        inv = [json.loads(l) for l in open(os.path.join(ROOT, INVENTORY), encoding="utf-8")]
+    except OSError:
+        inv = []
+    subs = sorted(i["path"] for i in inv if i.get("category") in ("worker-submission", "v2-submission")
+                  and i.get("format") in ("json", "jsonl")
+                  and (i.get("studyObjects") or str(i.get("disposition")).startswith("candidate")
+                       or i.get("disposition") == "covered-by-url"))
+
+    def submission_kind(rel, data):
+        first = data[0] if isinstance(data, list) and data else data
+        name = os.path.basename(rel)
+        added = [f for f in (first.get("exactFilesAdded") or []) if "research/evidence/v2/" in f] if isinstance(first, dict) else []
+        if added:
+            return f"run summary of a v2 evidence report; its cohorts are assessed with {added[0]} (M03.3)"
+        if isinstance(first, dict) and "hypothesisID" in first:
+            return "mechanics hypothesis card (reference/target contexts restate held cohorts; BLOCKED, no new measurement)"
+        if re.search(r"(key|fourfield|field)-audit|confidence-chart|validation|GATE", name):
+            return "process artifact: field audit, validation or confidence chart (scores and derived values, not observations)"
+        return None
+    run("submissions", "submission-cohorts.jsonl", subs, {}, submission_kind)
+
+    mill_rows, mill_log = import_legacy_milling(hold)
+    families["legacy-milling-cohorts.jsonl"] = mill_rows
+    report["otherSchema"] = {"legacyMilling": mill_log, "recipeMetadata": assess_recipe_metadata(hold),
+                             "cohortReconciliation": assess_cohort_reconciliation(hold)}
+    report["ledgers"] = assess_ledgers(hold)
+    prefixes = {"historical-archive-cohorts.jsonl": "import-archive", "v2-report-cohorts.jsonl": "import-v2report",
+                "leads-cohorts.jsonl": "import-lead", "submission-cohorts.jsonl": "import-submission",
+                "legacy-milling-cohorts.jsonl": "import-legmill"}
+    for name, rows in families.items():
+        for i, r in enumerate(rows, 1):
+            r["id"] = f"{prefixes[name]}-{i:05d}"
+    return families, report
+
+
 def write(name, rows):
     path = os.path.join(OUT, name)
     with open(path, "w", encoding="utf-8", newline="\n") as fh:
@@ -785,6 +1376,7 @@ def main(argv=None):
     refs = import_itemdb()
     de, recipes, tokens = import_gamedata()
     gdrefs, gd_report = import_gamedata_tables()
+    hist, hist_report = import_historical(studies + typeless + refs + de + recipes + tokens + gdrefs)
     write("old-studies.jsonl", studies)
     write("typeless-agent-records.jsonl", typeless)
     write("itemdb-reference-values.jsonl", refs)
@@ -792,12 +1384,16 @@ def main(argv=None):
     write("gamedata-smelting-recipes.jsonl", recipes)
     write("gamedata-tokens.jsonl", tokens)
     write("gamedata-mill-prospect-reference.jsonl", gdrefs)
+    for name, rows in sorted(hist.items()):
+        if rows:  # a family whose every claim is skipped writes no file; the report lists it
+            write(name, rows)
     print(f"old studies: {len(studies)} records ({study_log['existingRows']} kept IDs, "
           f"{len(studies) - study_log['existingRows']} name-only rows added; {skipped})")
     print(f"typeless agent records mapped: {len(typeless)}")
     print(f"ItemDB reference values: {len(refs)}")
     print(f"GameData disenchant: {len(de)}, smelting recipes: {len(recipes)}, tokens: {len(tokens)}")
     print(f"GameData mill/prospect rows missing from itemdb, imported as reference: {len(gdrefs)}")
+    print("historical sources (MIG-004): " + ", ".join(f"{n} {len(r)}" for n, r in sorted(hist.items())))
     if a.report:
         basis = {}
         for r in studies:
@@ -817,6 +1413,7 @@ def main(argv=None):
                            "nameOnly": study_log["nameOnly"]},
             "typeless": typeless_log,
             "gameData": dict(gd_report, imported=len(gdrefs)),
+            "historical": dict(hist_report, rows={n: len(r) for n, r in sorted(hist.items())}),
         }
         os.makedirs(os.path.dirname(os.path.abspath(a.report)), exist_ok=True)
         with open(a.report, "w", encoding="utf-8", newline="\n") as fh:
