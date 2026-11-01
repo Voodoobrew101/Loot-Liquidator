@@ -79,10 +79,10 @@ def issues_for(rows, conds, families, names):
         if odd:
             add("BATCH_SIZE_ODD", 3, "Midnight Mill should be 10 herbs per cast (M6)", odd)
 
-    undated = [r["id"] for r in rows if not r.get("dataDate") and not r.get("patch")
+    undated = [r["id"] for r in rows if not r.get("dataDate") and not r.get("observedOn") and not r.get("patch")
                and not (r.get("source") or {}).get("published")]
     if undated and len(undated) == len(rows):
-        add("EPOCH_UNKNOWN", 1, "no data date, patch or post date; patch-era effects cannot be judged", undated)
+        add("EPOCH_UNKNOWN", 1, "no data date, observation date, patch or post date; patch-era effects cannot be judged", undated)
 
     locked = []
     for r in rows:
