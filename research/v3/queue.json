@@ -16,9 +16,9 @@
       "agent": "midnight",
       "type": "drop",
       "what": "Midnight disenchanting results by gear quality (uncommon/rare/epic), armor vs weapon",
-      "why": "Current Midnight disenchanting has no robust measured, gear-type/quality-specific cast datasets; prioritize original current-patch studies and verified no-disenchant exceptions.",
+      "why": "New 2026-11-01 Wowhead-Looter cohorts for 251254 (40), 248074 (130), 249949 (14), 249947 (9), 248059 (11) contain per-row castsWithDrop but no exact output item IDs/ranks, units-per-hit, or source-specific gear version; preserve same denominator within each cohort and do not merge identically named materials of different ranks.",
       "status": "open",
-      "searchTip": "Search Midnight disenchanting studies by item and rarity (uncommon, rare, epic), armor/weapon, item level and specialization; record original cast totals, output quantities, castsWithDrop, gear source and patch. Record known nondisenchantable exceptions separately; unknown fields null.",
+      "searchTip": "Prioritize output rank IDs and conditional quantity histograms for https://www.wowhead.com/item=251254/recovered-sanctum-sword ; https://www.wowhead.com/item=248074/traitor-captains-executioner ; https://www.wowhead.com/item=249949/night-enders-girdle ; https://www.wowhead.com/item=249947/night-enders-greatmantle ; https://www.wowhead.com/item=248059/golden-city-dagger . For each Wowhead row identify outputItemID/outputRank, castsWithDrop, units per hit, item rarity/ilvl, build and profession spec. Eversinging Dust and Dawn Crystal each occur in multiple source rows; do NOT collapse equal outputName with null rank/ID. Same studyKey rows share completed-cast denominator, not independent casts.",
       "inputName": "Midnight disenchantable gear by rarity and slot"
     },
     {
@@ -477,7 +477,7 @@
       "agent": "dragonflight",
       "type": "drop",
       "what": "Resolve Dragonflight Serevite Ore rank-to-item-ID mapping 190394, 190395, 190396 (and Draconium 188658/189143, Khaz'gorite) before interpreting rank-specific prospecting P(hit) and unconditional units.",
-      "why": "S19: historical cohort rows and third-party item databases disagree on quality-rank IDs; a wrong rank moves every numerical estimate to the wrong input. Keep existing evidence unchanged until independent authoritative item tooltip/Blizzard data confirms.",
+      "why": "Dragonflight worker's 2026-11-01 searched record 85006 claims two third-party databases agree on current Serevite item ranks, but S19 contradictory historical evidence remains. Do not mark mapping resolved until authoritative item-quality icons/build and source cohort input IDs are verified; new 190396 rank-2 100-ore report must not be mapped blindly.",
       "status": "open",
       "inputItemID": 190395,
       "inputName": "Serevite Ore",
@@ -488,7 +488,7 @@
       "agent": "legacy",
       "type": "drop",
       "what": "Warmaul Legplates 24995 Burning Crusade uncommon plate disenchant: source-backed random yields and hit counts for Arcane Dust 22445, Greater Planar Essence 22446, Large Prismatic Shard 22449; current Retail eligibility.",
-      "why": "Owner-seeded 24995 absent from current v3 numeric estimates and candidate compiled baseline. Historical disenchant tables conflict on dust/essence frequency and are not current measured completed-cast evidence. Prioritize sample denominator, per-output hits, 0/1/2... yield and item level/rarity.",
+      "why": "Legacy worker added original historical 13-cast and independent 4-cast Netherweave Boots 21853 disenchant histograms (22445/22446/22449), plus item-specific Warmaul Legplates 24995 reference ranges with NO casts. These are distinct gear inputs and old patch contexts; 21853 data cannot be assigned to 24995. Need modern item-specific evidence and verify conflicting old 24995 dust/essence probabilities.",
       "status": "open",
       "inputItemID": 24995,
       "inputName": "Warmaul Legplates",
@@ -499,11 +499,11 @@
       "agent": "war-within",
       "type": "drop",
       "what": "Complete The War Within disenchant numeric cohorts: Boreal Rifle 232446 -> Storm Dust 219946/219947/219948 and Gleaming Shard 219949/219950; Lamplighter's Splitter 229150 -> 219949/219950/219946/219951; Laundered Cape 237126 and Handwraps 233262 -> 219949/219950/219951/219952. Separately reconcile 505 Darkmoon Deck operations (input item IDs unknown) -> 219952/219954/219955/213613/213611/213610/213612.",
-      "why": "2026-11-01 07:52 worker evidence supplies measured per-output hits from 48/37/128/137 Wowhead-Looter disenchant operations, but no total output units or 0/1/2/... histograms. Darkmoon Deck report supplies 505 operations and seven unit totals but no per-output hit counts or exact deck IDs. These complementary numeric gaps cannot be combined across unrelated cohorts.",
+      "why": "New 2026-11-01 TWW records add 6 explicit green-gear outcomes with rank-specific 0/1/2 histograms (219946/219947/219948), an independent 10-green cohort with measured zero rank-3 219948, 100- and 535-cast aggregate unit totals, and five separate 1,000-cast green-tool blocks with source-stated unconditional average units per cast; these are gear-group studies, NOT per-item studies. Earlier Wowhead-Looter item cohorts and 505 Darkmoon Deck study remain unresolved for quantity/hit complement.",
       "status": "open",
       "inputName": "Boreal Rifle; Lamplighter's Splitter; Laundered Cape; Laundered Handwraps; The War Within Darkmoon Decks",
       "inputItemID": 232446,
-      "searchTip": "Check original Wowhead disenchant tabs by item name: https://www.wowhead.com/item=232446/boreal-rifle ; https://www.wowhead.com/item=229150/lamplighters-splitter ; https://www.wowhead.com/item=237126/laundered-cape ; https://www.wowhead.com/item=233262/laundered-handwraps . For each output, seek exact units-per-hit or 0/1/2/3 histogram, rare/epic item version, ilvl, build, skill and spec. Existing row '1-3' is only a range. Original Darkmoon source https://www.reddit.com/r/woweconomy/comments/1fqb34c : 505 completed DEs, unit totals, NOT hits; identify deck item IDs/variants and validate whether LR/WS/CP/VS are disenchant rewards. Avoid duplicate Wowhead snapshots; check original study URLs and record IDs across evidence. Never turn unit totals into hit counts."
+      "searchTip": "Check original Wowhead disenchant tabs by item name: https://www.wowhead.com/item=232446/boreal-rifle ; https://www.wowhead.com/item=229150/lamplighters-splitter ; https://www.wowhead.com/item=237126/laundered-cape ; https://www.wowhead.com/item=233262/laundered-handwraps . For each output, seek exact units-per-hit or 0/1/2/3 histogram, rare/epic item version, ilvl, build, skill and spec. Existing row '1-3' is only a range. Original Darkmoon source https://www.reddit.com/r/woweconomy/comments/1fqb34c : 505 completed DEs, unit totals, NOT hits; identify deck item IDs/variants and validate whether LR/WS/CP/VS are disenchant rewards. Avoid duplicate Wowhead snapshots; check original study URLs and record IDs across evidence. Never turn unit totals into hit counts. New priority: https://www.reddit.com/r/woweconomy/comments/1f3qf96 (six fully enumerated green DEs: histograms for 219946/219947/219948; separate 100 and 535 green cohorts have totals but not hits); https://eu.forums.blizzard.com/en/wow/t/somethings-not-right-with-disenchanting-talents/538682 (ten greens, 219948 zero); https://www.reddit.com/r/woweconomy/comments/1fspqym (five 1,000-cast blocks with stated per-cast averages, 105+18 skill, max uncommon tree; 18,300 blue-tool comparator is separate and possible historic overlap). Recover exact gear item IDs/versions and per-output hit histograms. Keep each author/cohort/skill separate; do not treat five block rows or three output rows as independent samples."
     }
   ]
 }
