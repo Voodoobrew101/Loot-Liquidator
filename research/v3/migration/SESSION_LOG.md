@@ -545,3 +545,46 @@ only when the whole month is on one side of a rate change. Duplicate-row-in-stud
 **Ending commit:** see `git log` ("v3 migration M08: …").
 
 **Remaining:** M09, M10.
+
+---
+
+## MIG-010 — 2026-11-01 (Claude Opus 5.5, Claude Code on the owner's Windows machine)
+
+**Tasks:** M09 migration audit and reporting. M09 complete.
+
+**Starting commit:** `0233968` on `migration/v3-historical-research` (the M08 commit).
+
+**Environment:** Windows, new clone at `C:\ll3` (`--single-branch`, `core.longpaths=true`, `core.autocrlf=false`, full history), Python 3.15.2
+(`python`). **SciPy not installed**, so bands and confidence values are the fallback's. No network for evidence; no AI extraction.
+
+**Created:** `migration/tools/report.py`; `migration/tests/test_m09_report.py` (42 tests); `migration/reports/{M09-audit.md,M09-audit-data.json}`.
+**Modified:** `migration/{CHECKLIST,SESSION_LOG,HANDOFF,PLAN}.md`. Not changed: any evidence file, `corrections.jsonl`, `strategy.md`,
+`evidence-format.md`, `build_estimates.py`, the importer, any manifest, committed `output/`, addon files.
+
+**Commands actually run (repo root unless noted; `python` on this machine):**
+- First, on the session's original prompt (the old MIG-003 prompt from the MIG-002 handoff): nothing redone. At HEAD: `import_existing.py --report <tmp>` twice → no tree change, reports `cmp` identical; `build_estimates.py` twice → 4,945 records, 1,205 estimates, 449 unplaced, `898790d5…`, `c94b042f…`; `validate.py` → 5 errors, 175 warnings; `audit_studies.py` → 475 studies, 40 clean; `dispositions.py --check` → identical; `python -m unittest discover -s research/v3/migration/tests` → 348 OK. An ad-hoc script checked M03's criteria against the imported rows: 1,058 rows with casts, 0 without `castsBasis`; 653 computed, 0 without a derivation; 0 free-text `dataDate`; all 652 fixture IDs present. Output restored.
+- `python research/v3/migration/tools/report.py --no-tests` while building, then `report.py` twice: `M09-audit.md` and `M09-audit-data.json` sha256 identical; final `e10a04c2…` and `4955bd14…`.
+- `python research/v3/migration/tools/report.py --check` → identical to the committed report.
+- `python -m unittest discover -s research/v3/migration/tests` → **390 tests OK** (348 + 42).
+- `python research/v3/tools/build_estimates.py` twice → `estimates.json` `898790d5…`, `summary.md` `c94b042f…`, `unused.json` `cf8597e4…` both times (= MIG-009). Output restored; `unused.json` removed.
+- `python research/v3/migration/tools/validate.py --out <tmp>` → 5,048 records (4,945 effective), 5 errors, 175 warnings. `import_existing.py --report <tmp>` → no change under `evidence/imported/`.
+
+**Measured results:** in `reports/M09-audit.md`. Key: the snapshot rebuild agrees with all 8 figures in PLAN section 1. Records 4,404 → 4,945,
+estimates 1,238 → 1,205, unplaced 35 → 449, measured-chance estimates 101 → 101, URLs mentioned 165 → 184 of 543. Bands (no SciPy) 47/0/396/770 →
+49/0/370/761, conditional 25 → 25. 37 band moves (26 down, 11 up): 28 units (M06), 9 identity (M05). Dispositions equal the summary. Used 2,597, unused 2,348.
+Register: 175 open rows (37 report, 134 exceptions, 2 validator codes, 2 scope-gap groups), 10 closed, 1 blocks M10, 5 to handle in M10.
+
+**Problems:**
+- The session started from the stale MIG-003 prompt. Its work was already on the branch (`788598a`); the clone showed that before anything changed, the owner was told and chose M09.
+- `report.py` runs the suite while rewriting the report, so the test comparing with the committed report failed on the first run after any change and the report recorded FAILED. That test now skips during the report's own run.
+- Two moves went 50 → 100 under M06 (Prospect 168185 → 168191, 168192); checked: 13,592 study casts, a measured chance after M06's unit fix. Not an error.
+- Report text first said every estimate at 50 was a derived chance; 355 of them are, so the sentence counts those only.
+
+**Decisions:** stages are rebuilt from git instead of quoted from per-task diffs, which only list their largest rows. The snapshot copy takes the M05
+`_file` fix so corrections apply on Windows. Register items are parsed, with action and M10 meaning in `ITEMS`; `see` links repeats so one answer settles them.
+`m10` has three values because almost nothing truly blocks M10: only the `unlockState` wording does, and only for that part of the proposal. M07's
+closedExceptions idea (M07-dispositions/master#2) stays a question for the owner; M09 was read-only, so it was not built.
+
+**Ending commit:** see `git log` ("v3 migration M09: …").
+
+**Remaining:** M10.

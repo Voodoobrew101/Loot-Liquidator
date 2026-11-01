@@ -4,7 +4,7 @@ Status values: Not Started / In Progress / Blocked / Complete. A box is ticked o
 acceptance criterion is met and the evidence column points at something checkable.
 Sessions run in Claude (owner's choice, 2026-10-31). Effort = Claude's thinking effort: Low / Medium / High / Extra High (xhigh) / Max.
 
-Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M07 ✓ → M08 ✓ → M09 → M10
+Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M07 ✓ → M08 ✓ → M09 ✓ → M10
 (M04.1 linking may run in parallel with M05 once M02 is done.)
 
 ## Progress
@@ -12,11 +12,11 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
 | | Count |
 | --- | --- |
 | Top-level tasks | 11 |
-| Complete | 9 (M00, M01, M02, M05, M03, M06, M04, M07, M08) |
+| Complete | 10 (M00, M01, M02, M05, M03, M06, M04, M07, M08, M09) |
 | In progress | 0 |
 | Blocked | 0 |
-| Not started | 2 (M09, M10) |
-| Completion (verified top-level) | 82% (9 of 11) |
+| Not started | 1 (M10) |
+| Completion (verified top-level) | 91% (10 of 11) |
 
 ---
 
@@ -143,10 +143,12 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
   - [x] M08.6 decision on committing `output/` (recommendation in the report; owner decides)
 
 ## M09 — Migration audit and reporting
-- [ ] **M09 — Before/after metrics and unresolved-issues register**
+- [x] **M09 — Before/after metrics and unresolved-issues register**
   - Priority: P2 · Depends on: M07, M08 · Model: Claude Sonnet 5.5, Low
   - Acceptance: `tools/report.py` produces before/after coverage, confidence bands, disposition counts and an unresolved register from manifest + outputs; numbers reproducible
-  - Status: Not Started · Evidence: —
+  - Status: Complete (MIG-010)
+  - Evidence: `tools/report.py`; `reports/M09-audit.md`, `M09-audit-data.json`; `tests/test_m09_report.py` (42); 390 tests OK; `report.py --check` identical; two rebuilds byte-identical (`898790d5…`, no SciPy); snapshot rebuild agrees with all 8 PLAN section 1 figures; 37 band moves, each with its stage; 175 open register rows, 1 blocks M10
+  - Note: bands were produced without SciPy; a SciPy machine has not run `report.py`
 
 ## M10 — Final reconciliation and integration
 - [ ] **M10 — Reconcile agent additions since the snapshot and open the PR**
@@ -167,5 +169,5 @@ Recommended order: M02 ✓ → M05 ✓ → M03 ✓ → M06 ✓ → M04 ✓ → M
 | MIG-007 | M04.3, M04.4 | done |
 | MIG-008 | M07 | done |
 | MIG-009 | M08 | done |
-| MIG-010 | M09 | next |
-| later | M10 | |
+| MIG-010 | M09 | done |
+| MIG-011 | M10 | next |

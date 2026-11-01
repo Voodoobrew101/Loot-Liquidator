@@ -155,7 +155,7 @@ research/v3/migration/
   tools/link_sources.py     M04  deterministic URL/ID/number linking of notes to v3 records
   tools/extract_batch.py    M04  batch prompts, validator, checkpoints and writer for residual Markdown (done)
   tools/dispositions.py     M07  final dispositions, exception queue, scope gap (done)
-  tools/report.py           M09  before/after metrics, dispositions, unresolved register
+  tools/report.py           M09  before/after metrics, dispositions, unresolved register (done)
   tests/                    unit + regression tests (python -m unittest)
   manifest/                 generated: inventory, url registry, validation, dispositions, checkpoints
   reports/                  per-task before/after diffs and notes for the Master

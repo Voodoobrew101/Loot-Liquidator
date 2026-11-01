@@ -1,18 +1,37 @@
 # Handoff
 
-**Updated:** 2026-11-01, end of session MIG-009.
+**Updated:** 2026-11-01, end of session MIG-010.
 
 ## Status
 
 - Repository `Voodoobrew101/Loot-Liquidator`, working branch **`migration/v3-historical-research`**
   (cut from `implementation/five-agent-completion` at snapshot `575b252`). Hourly agents keep committing to
   `implementation/five-agent-completion`; do not merge it in before M10.
-- Complete: **M00**, **M01**, **M02**, **M05**, **M03**, **M06**, **M04**, **M07**, **M08** (9 of 11 top-level tasks, 82%). Open: M09, M10.
-- Latest verified baseline (no SciPy on the MIG-009 machine): 4,945 effective evidence records → **1,205 estimates** (449 unplaced);
-  **348** migration tests pass; validator 5 errors / 175 warnings (each queued in `exceptions.jsonl` with a proposed fix); study audit
-  475 studies, 40 clean; corrections 643 lines / 333 corrected records. **M08 changed no estimate.**
-- Estimates sha256: `898790d5…` without SciPy (this machine), `d959496a…` with SciPy. `summary.md` differs from MIG-008 either way: it now
-  carries the unused-reason table. Run before and after on the same machine; only confidence values depend on SciPy.
+- Complete: **M00**, **M01**, **M02**, **M05**, **M03**, **M06**, **M04**, **M07**, **M08**, **M09** (10 of 11 top-level tasks, 91%). Open: M10.
+- Latest verified baseline (no SciPy on the MIG-010 machine): 4,945 effective evidence records → **1,205 estimates** (449 unplaced);
+  **390** migration tests pass; validator 5 errors / 175 warnings (each queued in `exceptions.jsonl` with a proposed fix); study audit
+  475 studies, 40 clean; corrections 643 lines. **M09 changed no evidence, estimator, manifest or estimate.**
+- Estimates sha256: `898790d5…` without SciPy (this machine), `d959496a…` with SciPy. Run before and after on the same machine; only
+  confidence values depend on SciPy.
+
+## What M09 produced (MIG-010)
+
+- `tools/report.py` writes `reports/M09-audit.md` and `reports/M09-audit-data.json`. `python research/v3/migration/tools/report.py [--check] [--no-tests]`.
+  It exports each stage in `STAGES` from git into a temporary folder and rebuilds it with that commit's own estimator, so before/after and
+  the causes are measured, never quoted. It writes nothing to `output/`. Needs history back to `575b252`. About 50 s with tests.
+- Snapshot rebuild agrees with all 8 figures in PLAN section 1 (the exported snapshot copy gets the M05 Windows `_file` fix, nothing else).
+- Coverage, before → after: records 4,404 → 4,945; study rows 2,364 → 2,817; study keys 426 → 475; estimates 1,238 → 1,205 (35 removed by
+  M05, 2 added by M03); unplaced 35 → 449 (almost all M03 name-only rows, kept by design); estimates with measured chance 101 → 101;
+  historical URLs mentioned in v3 165 → 184 of 543.
+- Bands (no SciPy): 37 estimates moved, 26 down and 11 up: 28 by units (M06), 9 by identity (M05), 0 by new evidence. M03 and M04 added
+  records but moved no band. 355 of the 370 estimates in 50-74% are derived chances at exactly 50, the ceiling of the halving rule (S5).
+  **These band figures are for no SciPy. A SciPy machine has not run report.py.**
+- Register: 175 open rows (37 from reports, 134 exceptions, 2 validator codes, 2 scope-gap groups), 10 report items closed. A new numbered item in
+  a report's Master section fails until it has an entry in `ITEMS`.
+- **One M10 blocker: `M08-estimator/master#2`**, the `unlockState` wording for `evidence-format.md`. It blocks only that part of the proposal, not the
+  pipeline rerun or the PR. Five `handle` rows need care in M10 and no decision (`M05-identity/master#4`, `M04-extraction/master#6`,
+  `M07-dispositions/master#1`, `M08-estimator/master#1`, `HANDOFF/unused-json`).
+- `tests/test_m09_report.py` (42 tests). `test_markdown_figures_all_come_from_the_data` fails on a figure typed into the prose.
 
 ## What M08 produced (MIG-009)
 
@@ -94,82 +113,85 @@
 - When checking whether v3 holds a source, compare **normalized keys** (`source_keys.normalize_url`), never raw URLs, and treat a
   language-suffixed Wowhead key as its base page (`extract_batch.strip_lang`).
 
-## Next task: M09 — migration audit and reporting
+## Next task: M10 — final reconciliation and the pull request
 
-Why now: every estimator and data change is in; M09 only reads. It turns the per-task reports into one reproducible before/after
-picture and an unresolved-issues register the owner can act on. Dependencies: M07, M08 (done). No network.
+Why now: it is the last task. Everything on this branch is measured and reported; what remains is taking in what the hourly agents wrote
+since the snapshot and opening the PR. Dependencies: all tasks done. One owner decision is needed for one step (below).
 
 Sessions run in **Claude** (owner's choice).
-**Recommended model:** Claude Sonnet 5.5 · **thinking effort:** Low
-**Alternative:** Claude Sonnet 5.5 · Medium if the register needs more judgment than the manifests give
-**Reason:** a read-only report generator over files that already hold the numbers; the work is joining and counting, with tests.
+**Recommended model:** Claude Sonnet 5.5 · **thinking effort:** High
+**Alternative:** Claude Opus 5.5 · High if the merge moves many estimates or the importer's holdings rule shrinks imported rows
+**Reason:** a long mechanical pipeline where the risk is misreading a diff, not writing new logic; High keeps it reading each diff.
 
 ## Ready-to-paste prompt for the next session
 
 ```text
-You are continuing the Loot Liquidator historical-research migration (session MIG-010).
+You are continuing the Loot Liquidator historical-research migration (session MIG-011).
 
 Repository: Voodoobrew101/Loot-Liquidator
-Branch: migration/v3-historical-research (already exists on origin; check it out, do NOT work on main or
-implementation/five-agent-completion, do NOT touch the addon .lua files).
+Branch: migration/v3-historical-research (already exists on origin; check it out, do NOT work on main, do NOT touch the addon .lua files).
 If your clone is shallow, run: git fetch --depth=1000 origin migration/v3-historical-research
-The research corpus (research/, including research/v3/ and research/v3/migration/) exists ONLY on this branch;
-main holds just the addon. If your copy is on main, run:
+The research corpus (research/, including research/v3/ and research/v3/migration/) exists ONLY on this branch and on
+implementation/five-agent-completion; main holds just the addon. If your copy is on main, run:
   git fetch --depth=1000 origin migration/v3-historical-research
   git checkout -b migration/v3-historical-research FETCH_HEAD
 Push access: the owner has granted it. In a Claude cloud session, attach the repo with push access; if that request
 is denied, retry it once before falling back. Use the exact remote URL
 https://github.com/Voodoobrew101/Loot-Liquidator.git and confirm the push with git ls-remote.
 On Windows: clone to a short path with -c core.longpaths=true -c core.autocrlf=false, and use `python`.
+report.py needs the branch's history back to 575b252; a shallow clone must reach it.
+
+BEFORE ANYTHING ELSE: compare this prompt with research/v3/migration/HANDOFF.md. If HANDOFF says M10 is done, stop and say so.
 
 READ FIRST, in order:
 1. research/v3/migration/HANDOFF.md
-2. research/v3/migration/PLAN.md (section 1 baseline, section 3 rules 1-9, "Definition of project completion")
-3. research/v3/migration/CHECKLIST.md (task M09)
-4. research/v3/migration/SESSION_LOG.md (MIG-001 baseline numbers, then each task's measured results)
-5. research/v3/migration/reports/*.md and the *-data.json files (the numbers M09 must reproduce, not copy)
-6. research/v3/migration/manifest/ (inventory, dispositions, exceptions, scope-gap, validation, url-registry)
-7. research/v3/tools/build_estimates.py (analyze(), unused_report(), summary()) and research/v3/output after a rebuild
+2. research/v3/migration/reports/M09-audit.md (section 5: the register; the blocker and the five "handle" rows)
+3. research/v3/migration/PLAN.md (section 3 rules 1-9, "Definition of project completion")
+4. research/v3/migration/CHECKLIST.md (task M10)
+5. research/v3/migration/SCHEMA-EXTENSION.md
+6. research/v3/migration/reports/M08-estimator.md (the unlockState hazard and the output/ policy)
 
-TASK: M09 - migration audit and reporting. Read-only: it changes no evidence, no estimator, no manifest. No network. No AI.
+TASK: M10 - take in the agents' work since the snapshot, rerun the whole pipeline, propose the evidence-format.md changes, open the PR.
 
-Deliverable: research/v3/migration/tools/report.py (+ tests) that writes, deterministically (sorted, no timestamps),
-research/v3/migration/reports/M09-audit.md and M09-audit-data.json:
-1. Before/after coverage. Before = the snapshot 575b252 (use the MIG-001 numbers in SESSION_LOG/PLAN and, where a number can be
-   recomputed from git history, recompute it from `git show 575b252:...`); after = a rebuild now. Records, drop rows, study keys,
-   estimates, unplaced, study casts total, estimates by method, estimates with measured chance, and sources (URLs) cited in v3 vs the
-   543 historical URLs.
-2. Confidence bands (90%+, 75-89, 50-74, under 50, conditional apart), before and after, and the estimates that moved bands, with the
-   cause (identity M05, units M06, new evidence M03/M04) taken from the per-task diffs. State which SciPy setting produced them.
-3. Disposition counts from manifest/dispositions.jsonl (all 1,244 files, 12 dispositions) and a check that the counts equal
-   manifest/dispositions-summary.json.
-4. Record usage from build_estimates.analyze(): used by role and unused by reason code (output/unused.json), with the top five
-   reasons explained in one line each.
-5. Unresolved-issues register: one row per open item from reports/M0*-*.md "For the Master" sections, manifest/exceptions.jsonl
-   (134 rows, by kind), validator errors, scope-gap sources and the M08 findings. Each row: id, source report, kind, count, record IDs
-   or a pointer, proposed owner action, whether it blocks M10. Do not invent items; every row must trace to a file.
-6. A reproducibility check section: rebuild twice (byte-identical), dispositions.py --check, validate.py counts, test count.
+Steps:
+1. Baseline: run tools/report.py --no-tests and copy reports/M09-audit-data.json, plus a rebuilt output/estimates.json, outside the repo.
+   Note the SciPy setting; before and after must use the same one.
+2. git fetch origin implementation/five-agent-completion. Merge it into migration/v3-historical-research (never force, never rebase).
+   Agent evidence files and corrections.jsonl take the agents' side; a conflict in anything else is stopped and reported, not guessed.
+3. Rerun from scratch, in order, each one read before the next: tools/inventory.py, research/v3/tools/import_existing.py, tools/link_sources.py,
+   tools/extract_batch.py write --check, tools/dispositions.py, tools/validate.py, research/v3/tools/build_estimates.py twice.
+   Explain every change: the holdings rule (PLAN section 3 rule 5) lets imported rows shrink when agents catch up, and a source an agent
+   now holds is reported as held. All existing import-* IDs stay; corrections still apply (report the counts).
+   A new scope-gap source fails test_scope_gap_is_fully_decided until it has a decision.
+4. Do NOT set cohortKey on imported rows alone (M05-identity/master#4). Do not move unused.json or commit output/ (M08-estimator/master#1).
+5. Regenerate the audit: tools/report.py (add the merge as a stage in STAGES only if that makes the causes clearer) and
+   tools/estimates_diff.py <baseline> research/v3/output/estimates.json --md reports/M10-estimates-diff.md.
+6. Write reports/M10-evidence-format-proposal.md: the changes from SCHEMA-EXTENSION.md as a proposal; evidence-format.md is owner-only, do not edit it.
+   BLOCKER (M08-estimator/master#2): the unlockState wording needs the owner's rule. Ask the owner before writing that part; if there is no
+   answer, write both options and mark it undecided, and keep unlockState out of any recommended text. Include the METHODS option from
+   M07-dispositions/master#1 the same way.
+7. Run all tests, tools/validate.py, research/v3/tools/audit_studies.py (then restore output), rebuild twice for byte identity, importer twice.
+8. Open a pull request against implementation/five-agent-completion. Do not merge it. Do not enable auto-merge.
 
-Rules: never edit agent evidence files, corrections.jsonl, strategy.md or committed output/; do not commit research/v3/output/ (restore it
-with git checkout -- research/v3/output and delete output/unused.json). report.py may import build_estimates read-only.
+Rules: never edit agent evidence files, corrections.jsonl, strategy.md, evidence-format.md or committed output/; do not commit research/v3/output/
+(restore it with git checkout -- research/v3/output and delete output/unused.json).
 
 Acceptance criteria:
-- Every number in M09-audit.md is produced by report.py (no hand-typed figures) and a test recomputes a sample.
-- Register rows each cite a file; counts match the manifests; M10 blockers are marked.
-- Two runs of report.py are byte-identical; all existing tests pass (348 expected).
+- Branch contains the latest implementation/five-agent-completion, with no conflict resolved by guessing.
+- Full pipeline rerun: every tool reproduces its files; rebuild and importer byte-identical; all tests pass (390 expected, plus any added).
+- Every change from the merge is explained in reports/M10-*.md: records, estimates, band moves, dispositions, exceptions, unplaced.
+- evidence-format.md change proposed, with the blocker either answered or marked undecided.
+- PR open against implementation/five-agent-completion, not merged.
 
-Update before ending: CHECKLIST.md (tick only what is met), SESSION_LOG.md (append MIG-010 with commands actually run and measured
-numbers), HANDOFF.md (status, next task M10, model/effort, next prompt). Commit on migration/v3-historical-research with message
-"v3 migration M09: <summary>" and push.
+Update before ending: CHECKLIST.md (tick only what is met), SESSION_LOG.md (append MIG-011 with commands actually run and measured numbers),
+HANDOFF.md (status, what the owner must decide next). Commit on migration/v3-historical-research with message
+"v3 migration M10: <summary>" and push.
 
 End with the mandatory report: A. Session summary; B. Progress and checklist (totals, %, newly ticked items, migration metrics);
-C. Next recommended task (ID, why, dependencies, deliverables, acceptance); D. Next Claude configuration (model, thinking effort,
-alternative, reason); E. A complete ready-to-paste prompt for the following session, shown in full as the last thing in your final reply
-(after the report, not only in HANDOFF.md).
-Default next task after this: M10 - final reconciliation with implementation/five-agent-completion and the pull request.
+C. What the owner must do next; D. PR link. If anything is left, E. A complete ready-to-paste prompt for the following session, shown in full
+as the last thing in your final reply.
 ```
 
 ## Later tasks at a glance
 
-M09 audit and reporting → M10 reconcile with the agents' branch (fetch `implementation/five-agent-completion`, rerun the pipeline on the new
-head, byte-identical rebuild, propose the `evidence-format.md` changes from SCHEMA-EXTENSION.md, open the PR).
+None after M10. What stays open after the PR is the owner's register: `reports/M09-audit.md` section 5.
