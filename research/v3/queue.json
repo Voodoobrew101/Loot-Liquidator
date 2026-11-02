@@ -385,8 +385,8 @@
       "status": "open",
       "inputName": "Legacy prospecting/milling hit-count and histogram rescue",
       "what": "Recover per-cast hit counts or histograms with denominators from original studies/archived spreadsheets and older SavedVariables exports for Cobalt Ore, Titanium Ore and high-volume legacy herbs. Keep item totals to support gold EV, but add castsWithDrop to measure chance.",
-      "why": "New independent historical Green Silken Shoulders 7057 cohorts: 22 completed disenchants with per-output histograms for Vision Dust 11137, Greater Mystic Essence 11135, Large Glowing Shard 11139; separate 10- and 2-cast cohorts. Historical source item level 36 versus current item level 12 prevents unreviewed Retail transfer. Continue legacy numeric baseline work for Cobalt/Titanium/Fel Iron.",
-      "searchTip": "Find source-original cast-level distributions for Runecloth Belt 13856→Dream Dust 11176, Lesser Eternal Essence 16202, Small Brilliant Shard 14343 (50-cast: 33/15/2 hits and 121/18/2 units; separate 4-cast complete histograms). Keep 22- and 83-cast cohorts independent and patch-tagged; do not treat Classic as current Retail. Verify Thunderstrike Falchion 25159→22447/22445/22448 (208 casts, 168/30/10 hits), recover stack distributions. Sources https://www.wowhead.com/item=13856/runecloth-belt and https://www.wowhead.com/item=25159/thunderstrike-falchion .\nCheck current Retail item-level/material pool for 7057 before import. Keep the 22/10/2 independent historical cohorts separate; avoid double-counting 22-cast zero shard as a universal zero rate."
+      "why": "New independent historical Green Silken Shoulders 7057 cohorts: 22 completed disenchants with per-output histograms for Vision Dust 11137, Greater Mystic Essence 11135, Large Glowing Shard 11139; separate 10- and 2-cast cohorts. Historical source item level 36 versus current item level 12 prevents unreviewed Retail transfer. Continue legacy numeric baseline work for Cobalt/Titanium/Fel Iron. NEW: Five 2026-11-01T1644 TBC item-specific Looter cohorts supply denominators and per-output hits but no total units, zeros or complete histogram; source build/eligibility must be reconciled before current-runtime import.",
+      "searchTip": "Prioritize primary Wowhead Looter tables for Bloodfist Legplates 25003, Resonating Axe 30364, Der'izu Chestpiece 24880, Berserker Axe 25206 and Warp-Shielded Hauberk 30363; seek raw table HTML/export, source version/patch and current Retail eligibility, full per-output stack histograms/totalQuantity, per-cast joint outcomes. Current wiki levels differ from historical TBC levels. Do not equate unlisted hits to zero or count repeated snapshots as new cohorts."
     },
     {
       "taskID": "T0022",
@@ -492,7 +492,7 @@
       "status": "open",
       "inputItemID": 24995,
       "inputName": "Warmaul Legplates",
-      "searchTip": "Find Warmaul Legplates 24995 Retail disenchant eligibility and firsthand completed casts with output hits/totalQuantity for 22445,22446,22449, source patch and skill; prefer in-game recorder export. Evowow https://wotlk.evowow.com/?item=24995 ×7500/×2200/×300 are opaque reference weights and MUST NOT be used as 75/22/3% or as casts. Netherweave Boots 21853 studies are not 24995. Compare scaled WoW item 24995 version iLvl31 with original TBC iLvl108 and Retail item variants, using item-specific evidence and completed disenchant operations; do not apply pre-BfA generic table to current player item without verification.\n2026-11-01 Master priority: Check original Wowhead Looter source HTML/dated screenshot for https://www.wowhead.com/item=24995; independently verify 2068 and each hit count, capture output conditional stack histogram or exact total units and patch/ilvl/bonus/skill. Determine whether 37 operations not accounted for by four reported output-hit rows are other materials/rows, not zero-output disenchants. Never treat cumulative snapshot as current Retail-only or duplicate a later cumulative snapshot."
+      "searchTip": "Find Warmaul Legplates 24995 Retail disenchant eligibility and firsthand completed casts with output hits/totalQuantity for 22445,22446,22449, source patch and skill; prefer in-game recorder export. Evowow https://wotlk.evowow.com/?item=24995 ×7500/×2200/×300 are opaque reference weights and MUST NOT be used as 75/22/3% or as casts. Netherweave Boots 21853 studies are not 24995. Compare scaled WoW item 24995 version iLvl31 with original TBC iLvl108 and Retail item variants, using item-specific evidence and completed disenchant operations; do not apply pre-BfA generic table to current player item without verification.\n2026-11-01 Master priority: Check original Wowhead Looter source HTML/dated screenshot for https://www.wowhead.com/item=24995; independently verify 2068 and each hit count, capture output conditional stack histogram or exact total units and patch/ilvl/bonus/skill. Determine whether 37 operations not accounted for by four reported output-hit rows are other materials/rows, not zero-output disenchants. Never treat cumulative snapshot as current Retail-only or duplicate a later cumulative snapshot. Compare historical TBC item-level disenchant tables with current Retail item levels/eligibility before treating Arcane Dust 22445, Greater Planar Essence 22446, Lesser Planar Essence 22447 or Large Prismatic Shard 22449 as current 24995 outputs; verify original Looter table counts and source build."
     },
     {
       "taskID": "T0048",
@@ -526,6 +526,17 @@
       "inputItemID": 13866,
       "inputName": "Runecloth Headband",
       "searchTip": "Source https://www.wowhead.com/item=13866/runecloth-headband comments vikn and urbanmonkey83. Verify modern Rich Illusion Dust 156930 versus old Illusion Dust item ID; request per-output hit counts/zero outcomes, source build, disenchant skill and item-version. Keep 400 and 43 casts as separate cohorts; never infer hit rate from 0.04 average."
+    },
+    {
+      "taskID": "T0052",
+      "agent": "legacy",
+      "type": "drop",
+      "status": "queued",
+      "inputItemID": 25003,
+      "inputName": "Bloodfist Legplates",
+      "what": "Validate historical-vs-current disenchant mapping for Bloodfist Legplates 25003 -> 22445/22446/22447/22449 and Resonating Axe 30364 -> 22446/22445/22449; recover Looter per-hit stack totals/histograms and build-specific eligibility.",
+      "why": "16 newly recorded Looter rows have real completed-operation denominators and output hit counts, but no totalQuantity; the original tables are browser-inaccessible and current wiki item levels differ from historical TBC levels. Avoid importing historical cohorts into current Retail without version mapping.",
+      "searchTip": "Open https://www.wowhead.com/item=25003#disenchanting and https://www.wowhead.com/item=30364#disenchanting in browser with JS, capture source Looter denominators/row hit counts, item build and patch; compare https://warcraft.wiki.gg/wiki/Bloodfist_Legplates and https://wowpedia.fandom.com/wiki/Resonating_Axe ; seek current Retail actual DE eligibility. Do not infer missing hits as zero outcomes."
     }
   ]
 }
