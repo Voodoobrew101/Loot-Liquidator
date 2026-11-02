@@ -641,3 +641,11 @@ the reviewer's), addon files.
 
 **Remaining:** open the PR (MIG-012); the owner's register.
 
+## 2026-11-02 — Research Manager S21 authoritative estimator proposal
+
+- **Scope:** isolated `research/manager-s21-estimator-20261102` based on research head `5976ff3808321b06631584256ed92ecc0597b0f0`; separate from main-based draft PR #21's versioned importer fix. No original evidence, worker files, source pins, economic policies, or shared branch changed.
+- **Root cause:** `build_estimates.same_output()` previously accepted any nonzero numeric row as an output match, so an exact Illimited Diamond total of 4 could suppress an unranked Eternity Amber total of 4 in the same 80-prospect Prismatic Ore 194545 cohort. The correction requires matching normalized output identity; identical quantities alone are not identity. Existing study-vector deduplication remains unchanged.
+- **Regression:** added `S21OutputIdentity` tests for cross-material equal totals and duplicate transcriptions; asserts 192870 Diamond and family:Eternity Amber each retain E=4/80 once, with Amber exact rank-1 ID 192849 absent. These are **synthetic test fixtures reflecting sourced cohort structure**, not new measurements.
+- **Validation:** local checkout unavailable (GitHub DNS resolution failure); Python suite and committed migration-output reproduction must be checked in GitHub CI. Existing migration suite was already failing 6/402 due to stale committed artifacts. This proposal is draft/review-only until target regression passes and reproducibility is repaired. Do not change original evidence or force regenerated manifests merely to satisfy tests.
+- **Other source QA:** independently checked original 13-operation Netherweave Boots 21853 histogram (22445: 7 hits/27 units, 22446: 5/6, 22449: 1/1) against https://www.wowhead.com/wotlk/item=21853/netherweave-boots; historical WotLK context only. Independently checked https://www.reddit.com/r/wow/comments/1tthoqe/best_places_to_get_the_different_herbs/: Argentleaf per-10-herb mill is an anecdotal 2-15 pigment range with 12 most common; no cast denominator, item ID or conditional distribution. These new worker records are post-4df9ae8 research-only and are not imported here.
+

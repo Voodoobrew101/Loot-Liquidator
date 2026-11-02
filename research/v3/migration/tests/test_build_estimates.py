@@ -346,6 +346,45 @@ class Identity(Fixture):
         self.assertEqual(b.load()[0]["cohortKey"], "x#1")
 
 
+class S21OutputIdentity(Fixture):
+    """Equal output totals must not erase a distinct material in copied studies."""
+
+    def test_equal_numbers_do_not_identify_two_materials(self):
+        diamond = drop("diamond", outputItemID=192870, outputName="Illimited Diamond",
+                       casts=80, totalQuantity=4)
+        amber = drop("amber", outputItemID=None, outputName="Eternity Amber",
+                     casts=80, totalQuantity=4)
+        self.assertFalse(b.same_output(diamond, amber, b.item_names([diamond, amber])))
+        self.assertTrue(b.same_output(diamond, dict(diamond), b.item_names([diamond])))
+
+    def test_prismatic_ore_copied_cohort_preserves_amber_and_diamond_once(self):
+        # S21: two transcriptions of one 80-prospect original, with four units
+        # of EACH material. The old "or any(row_numbers(r))" suppressed Amber.
+        url = "https://www.wowhead.com/item=194545/prismatic-ore"
+        rows = []
+        for key, filename in (("original", "a.jsonl"), ("copy", "b.jsonl")):
+            rows.extend([
+                drop(key + "-diamond", url=url, studyKey=key, _file=filename,
+                     inputItemID=194545, inputName="Prismatic Ore", casts=80,
+                     outputItemID=192870, outputName="Illimited Diamond",
+                     outputRank=2, totalQuantity=4),
+                drop(key + "-amber", url=url, studyKey=key, _file=filename,
+                     inputItemID=194545, inputName="Prismatic Ore", casts=80,
+                     outputItemID=None, outputName="Eternity Amber",
+                     outputRank=3, totalQuantity=4),
+            ])
+        estimates, _ = self.build(rows)
+        diamond = estimates[("Prospect", "194545", 192870)]
+        amber = estimates[("Prospect", "194545", "family:Eternity Amber")]
+        for material in (diamond, amber):
+            self.assertEqual(material["studies"], 1)
+            self.assertEqual(material["studyCasts"], 80)
+            self.assertAlmostEqual(material["average"], 4 / 80)
+        # The Amber observation has no sourced exact item ID: it must remain
+        # a family estimate, not become a measured rank-1 output.
+        self.assertNotIn(("Prospect", "194545", 192849), estimates)
+
+
 class IdentityUnlock(Fixture):
     def setUp(self):
         super().setUp()

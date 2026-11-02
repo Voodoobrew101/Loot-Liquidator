@@ -620,9 +620,15 @@ def group_specificity(key):
 
 
 def same_output(r, o, ids):
-    """Same material, or (for a relabeled copy) the same non-zero numbers under another label."""
-    return (item_token(r, "outputItemID", "outputName", ids) == item_token(o, "outputItemID", "outputName", ids)
-            or any(row_numbers(r)))
+    """S21: cross-group copy suppression requires the same normalized output identity.
+
+    Equal nonzero totals are not an identity: a prospect can produce four Amber
+    and four Diamonds in the same cohort. Name/ID aliases are normalized by
+    item_token(); source-level relabelled-copy reporting stays in study_vectors().
+    """
+    left = item_token(r, "outputItemID", "outputName", ids)
+    right = item_token(o, "outputItemID", "outputName", ids)
+    return bool(left and right and left == right)
 
 
 def misplaced_copies(rows, names, vectors, pooled):
