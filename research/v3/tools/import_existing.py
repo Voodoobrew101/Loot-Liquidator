@@ -1356,10 +1356,41 @@ def import_historical(prior_rows):
     prefixes = {"historical-archive-cohorts.jsonl": "import-archive", "v2-report-cohorts.jsonl": "import-v2report",
                 "leads-cohorts.jsonl": "import-lead", "submission-cohorts.jsonl": "import-submission",
                 "legacy-milling-cohorts.jsonl": "import-legmill"}
-    for name, rows in families.items():
-        for i, r in enumerate(rows, 1):
-            r["id"] = f"{prefixes[name]}-{i:05d}"
+    registry = os.path.join(ROOT, "research", "v3", "migration", "manifest", "historical-import-ids.jsonl")
+    pins = []
+    if os.path.exists(registry):
+        with open(registry, encoding="utf-8") as fh:
+            pins = [json.loads(line) for line in fh if line.strip()]
+    assign_historical_ids(families, prefixes, pins)
     return families, report
+
+
+def assign_historical_ids(families, prefixes, pins):
+    """Historical IDs belong to source records, not their current list position.
+
+    A held-source supersession can remove earlier rows. Never renumber surviving
+    rows into those IDs (corrections and lineage may still refer to them).
+    The frozen migration registry is copied from the existing pinned-ID fixture.
+    A new mapping requires a reviewed registry entry; tiny fixture repos without
+    a registry retain sequential IDs.
+    """
+    def key(name, path, ref, study):
+        return name, path, ref, study
+    registered = {key(p["file"], p["path"], p["recordRef"], p["studyKey"]): p["id"] for p in pins}
+    if len(registered) != len(pins) or len(set(registered.values())) != len(pins):
+        raise ValueError("Duplicate historical ID registry entry")
+    seen = set()
+    for name, rows in families.items():
+        for i, row in enumerate(rows, 1):
+            origin = row["migratedFrom"]
+            record = key(name, origin["path"], origin["recordRef"], row["studyKey"])
+            if pins and record not in registered:
+                raise ValueError("Unregistered historical source record: " + repr(record))
+            rid = registered.get(record, f"{prefixes[name]}-{i:05d}")
+            if rid in seen:
+                raise ValueError("Repeated historical source record: " + rid)
+            seen.add(rid)
+            row["id"] = rid
 
 
 def write(name, rows):

@@ -64,6 +64,16 @@ class Repo(unittest.TestCase):
 class Rules(Repo):
     """Shared machinery: holdings, claims, decisions."""
 
+    def test_removed_earlier_mapping_does_not_renumber_a_survivor(self):
+        pins = [{"file": "f", "id": "import-00001", "path": "old.json", "recordRef": "a", "studyKey": "a"},
+                {"file": "f", "id": "import-00002", "path": "old.json", "recordRef": "b", "studyKey": "b"}]
+        row = {"studyKey": "b", "migratedFrom": {"path": "old.json", "recordRef": "b"}}
+        ie.assign_historical_ids({"f": [row]}, {"f": "import"}, pins)
+        self.assertEqual(row["id"], "import-00002")
+        row["migratedFrom"]["recordRef"] = "unreviewed"
+        with self.assertRaisesRegex(ValueError, "Unregistered"):
+            ie.assign_historical_ids({"f": [row]}, {"f": "import"}, pins)
+
     def test_holdings_never_read_importer_output(self):
         self.put("research/v3/evidence/imported/v2-report-cohorts.jsonl", [drop("import-v2report-00001", url="https://reddit.com/r/x/comments/abc")])
         self.agent([drop("ag-1", url="https://reddit.com/r/x/comments/def")])
@@ -296,6 +306,8 @@ class Committed(unittest.TestCase):
     def test_new_ids_stable(self):
         with open(os.path.join(HERE, "fixtures", "m03b-ids.jsonl"), encoding="utf-8") as fh:
             pinned = [json.loads(l) for l in fh]
+        with open(os.path.join(REPO, "research/v3/migration/manifest/historical-import-ids.jsonl"), encoding="utf-8") as fh:
+            self.assertEqual([json.loads(l) for l in fh], pinned)
         now = [{"file": n, "id": r["id"], "studyKey": r["studyKey"], "recordRef": r["migratedFrom"]["recordRef"],
                 "path": r["migratedFrom"]["path"]} for n in NEW_FILES for r in self.rows[n]]
         # Reviewed supersessions: zzyjzu's Jan 2 cohort is now held by the
