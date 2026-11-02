@@ -2,15 +2,16 @@
 local _, LL = ...
 -- Legacy (old disenchant tables) is on by default since A1: weak evidence counts
 -- for less, it is not thrown away. Its low weight keeps it from outvoting ItemDB.
--- B2: the frozen TSM conversion source was removed; TSM gives AH prices only.
+-- Owner clarification: usable tables and calculator estimates are admitted as
+-- a labeled fallback, without changing live TSM market-price behavior.
 -- B7: results imported from other players are their own source (default weight 25).
-local defaults={itemdb={true,100},personal={true,60},imported={true,25},legacy={true,10}}
+local defaults={itemdb={true,100},personal={true,60},imported={true,25},legacy={true,10},reference={true,10}}
 -- Weak-evidence multipliers (owner decision 15: weight down, never reject).
 local STALE_FACTOR=.25          -- pre-hotfix, obsolete or past its patch window
 local UNKNOWN_CONFIDENCE=10     -- a value whose source gave no confidence figure
 LL.SourceDefaults=defaults
-local order={'itemdb','personal','imported','legacy'}
-local sourcePriority={itemdb=1,personal=2,imported=3,legacy=4}
+local order={'itemdb','personal','imported','legacy','reference'}
+local sourcePriority={itemdb=1,personal=2,imported=3,legacy=4,reference=5}
 local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true}
 local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
@@ -127,7 +128,8 @@ function LL:FillChanceOrAverage(chance,average,minQuantity,maxQuantity)
 end
 function LL:MigrateEvidenceSettings()
     if not self.db then return end
-    -- B2: the frozen TSM source is gone; drop its saved switches quietly.
+    -- Retire the old dedicated frozen-table controls; all restored tables now
+    -- share the visible reference source. Never overwrite its saved preference.
     for _,k in ipairs({'source_itemtsm_enabled','source_itemtsm_weight','source_tsm_enabled','source_tsm_weight','frozenTSMMigrated'}) do
         self.db[k]=nil
     end
@@ -671,6 +673,22 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
             for i,m in ipairs(model.materials) do
                 local original=r.materials[i]
                 local id=m.id
+                -- A known rank-family expectation already includes its rank
+                -- alternatives. Do not add exact-rank fallback rows on top.
+                local familyCovered=false
+                if r.fallbackOnly then
+                    for _,existing in pairs(bins) do
+                        if existing.fields.expectedQuantity or original.rankIDs then
+                            for _,rankID in ipairs(original.rankIDs or {}) do
+                                if rankID==existing.id then familyCovered=true end
+                            end
+                            for _,rankID in ipairs(existing.rankIDs or {}) do
+                                if rankID==id then familyCovered=true end
+                            end
+                        end
+                    end
+                end
+                if not familyCovered then
                 local b=bins[id] or {id=id,quality=original.quality,rarity=original.rarity,
                     rankIDs=original.rankIDs, -- D1c2: rank unknown, priced at the cheapest rank
                     fields={},contributions={},sourceEstimates={}};bins[id]=b
@@ -683,6 +701,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                     local metadata=copy(original[field]);metadata.value=m[modelField]
                     if m.transformConfidence then metadata.confidence=math.min(metadata.confidence,m.transformConfidence) end
                     local weight=userWeight(self,r.sourceKey,mode)*self:EvidenceReliability(metadata,r)
+                    -- These sources fill missing fields only. A second copy of
+                    -- a historical rate cannot dilute or double-count an
+                    -- already usable research/personal/legacy expectation.
+                    if r.fallbackOnly and b.fields[field] then weight=0 end
                     -- Legacy now blends in at its (low) source weight instead of only filling gaps.
                     if staleRecord[r] then
                         weight=weight*STALE_FACTOR
@@ -706,6 +728,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                         if staleRecord[r] then b.staleEvidence=true;result.staleEvidence=true;result.provisional=true end
                         if field=='expectedQuantity' then
                             b.contributions[r.sourceKey]=(b.contributions[r.sourceKey] or 0)+weight
+                            if r.fallbackOnly then
+                                b.referenceFallback=true;result.referenceFallback=true
+                                if original.referenceCorrection then result.referenceCorrection=true end
+                            end
                             result.provisional=result.provisional or r.provisional==true
                             if mode==2 and r.sourceKey=='personal' and r.provisional then result.insufficientSamples=true end
                         elseif field=='dropChance' then
@@ -734,6 +760,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                     and self:EvidenceReliability(original.maxQuantity,r)>0 then
                     b.minQuantity=lo;b.maxQuantity=hi;b.boundsSource=r.source
                 end
+                end -- reference family already covered
             end
         end
     end
@@ -812,6 +839,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
         result.warning='Compatible sources disagree by more than 2x; confidence discounted'
     end
     if result.unknownOutputs then result.warning='Partial: some output quantities unknown' end
+    if result.referenceFallback then
+        local note=result.referenceCorrection and 'Reference fallback; conflicting source mean replaced by a conservative estimate'
+            or 'Reference fallback; current skill/patch applicability unverified'
+        result.warning=result.warning and (result.warning..'; '..note) or note
+    end
     return result
 end
 local function fingerprint(value)
@@ -832,7 +864,8 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(personal and personal.studyID),tostring(personal and personal.observationContextID),
         tostring(personal and personal.expectedInputCount),
         tostring(userWeight(self,'itemdb',mode)),tostring(userWeight(self,'personal',mode)),
-        tostring(userWeight(self,'legacy',mode)),tostring(userWeight(self,'imported',mode)),tostring(self._importedRevision),
+        tostring(userWeight(self,'legacy',mode)),tostring(userWeight(self,'imported',mode)),
+        tostring(userWeight(self,'reference',mode)),tostring(self._importedRevision),
         tostring(self.ItemDB and self.ItemDB.modelRevision),fingerprint(personal and personal.materials),
         fingerprint(personal and personal.projectionRules)},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
@@ -851,9 +884,10 @@ function LL:EvidenceDatabaseStatus()
         for _,r in ipairs(records) do counts[r.sourceKey]=(counts[r.sourceKey] or 0)+1 end
     end
     local manifest=self.ItemDB and self.ItemDB.researchManifest or {}
-    return ('ItemDB compiler %s: %d mappings (provisional unless normalized); legacy: %d; imported casts: %d; profession rules: %d; personal patch rules: %d'):format(
+    return ('ItemDB compiler %s: %d mappings (provisional unless normalized); legacy: %d; reference fallbacks: %d; imported casts: %d; profession rules: %d; personal patch rules: %d; v3 source %s'):format(
         tostring(manifest.compilerVersion or 'unknown'),counts.itemdb,
-        counts.legacy,counts.imported,#(self.ItemDB and self.ItemDB.professionRules or {}),#(self.ItemDB and self.ItemDB.personalPatchRules or {}))
+        counts.legacy,counts.reference or 0,counts.imported,#(self.ItemDB and self.ItemDB.professionRules or {}),#(self.ItemDB and self.ItemDB.personalPatchRules or {}),
+        tostring(self.ItemDB and self.ItemDB.researchV3Manifest and self.ItemDB.researchV3Manifest.revision or 'unknown'):sub(1,12))
 end
 LL:InitializeItemDB()
 

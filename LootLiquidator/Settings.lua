@@ -333,11 +333,12 @@ end
 -- switch per evidence source with its weight slider underneath. Saved keys are
 -- unchanged (source_<name>_enabled / source_<name>_weight).
 local SOURCE_LABELS={itemdb="Built-in research database",personal="Your recorded results",
-    imported="Imported results",legacy="Old disenchant estimates"}
+    imported="Imported results",legacy="Old disenchant estimates",reference="Reference tables and calculators"}
 local SOURCE_DESCRIPTIONS={itemdb="The addon's own research database, including rough estimates (shown with lower confidence).",
     personal="Results you recorded yourself. They take over as you record more.",
     imported="Results pasted in from other players (Processing Research > Import). Kept separate from your own.",
-    legacy="Older disenchant tables. Counted weakly; never treated as exact."}
+    legacy="Older disenchant tables. Counted weakly; never treated as exact.",
+    reference="Historical Retail conversion tables and sourced calculator estimates. Fill missing fields at lower confidence; do not replace usable research or recorded results. Auction prices still refresh separately."}
 function LL:AddEvidenceSettings(category,layout)
     Section(layout,"Where numbers come from")
     local function changed()

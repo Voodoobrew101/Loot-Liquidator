@@ -14,6 +14,8 @@ for file in LootLiquidator/*.lua database/sources/*.lua database/records.lua dat
 done
 python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are current
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
+python3 tools/reference_calculators.py --check
+python3 tests/test_reference_calculators.py
 compiled_dir=$(mktemp -d)
 compiled="$compiled_dir/ItemDBRuntime.lua"
 trap 'rm -rf "$compiled_dir"' EXIT
@@ -58,7 +60,9 @@ python3 tests/test_research_v3_snapshot.py
 "$lua_bin" tests/test_research_v3_runtime.lua
 "$lua_bin" tests/test_numeric_refresh_tooltip.lua "$compiled_dir"
 "$lua_bin" tests/test_tooltip_preferences.lua
+"$lua_bin" tests/test_reference_fallback.lua
 python3 tests/test_research_v3_no_disenchant.py
 python3 tests/test_rank_families.py
 python3 tests/test_input_ranks.py
 python3 tests/test_package_addon.py
+python3 tools/audit_usable_data.py --validate --output "$compiled_dir/usable-data-audit"
