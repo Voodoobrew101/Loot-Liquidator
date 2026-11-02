@@ -133,7 +133,7 @@ Settings.CreateSlider=function(category,setting,options) local i=nestable(baseCr
 local accuracyLayout={AddInitializer=function(_,i) layoutItems[#layoutItems+1]=i end}
 CreateSettingsButtonInitializer=function(name,_,click) return {name=name,click=click,factory='button'} end
 LL:AddEvidenceSettings({},accuracyLayout)
-assert(#createdChecks==#LL.SourceOrder and #createdSliders==#LL.SourceOrder and #LL.SourceOrder==4) -- B2: frozen TSM row removed; B7: Imported results row added
+assert(#createdChecks==#LL.SourceOrder and #createdSliders==#LL.SourceOrder and #LL.SourceOrder==5)
 for i,key in ipairs(LL.SourceOrder) do
     local check,slider=createdChecks[i],createdSliders[i]
     assert(slider.options.minValue==0 and slider.options.maxValue==100 and slider.options.step==1)

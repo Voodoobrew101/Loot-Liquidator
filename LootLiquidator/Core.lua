@@ -23,6 +23,7 @@ local defaults = {
     recordDisenchants = true, showDisenchantSamples = true,
     recordConversions = true, showProcessingSamples = true,
     showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
+    showAverageQuantity = false, tooltipOutputSort = 'value',
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,
     otherConversionDataMode = 1, minPersonalSamples = 30,
     -- B3: one tooltip level: 0 Off, 1 Recommendation, 2 Alternatives, 3 Breakdown.
@@ -497,7 +498,10 @@ function LA:Evaluate(link, context)
        .. ":transmogMode:" .. tostring(self.ProcessingMethodMode and self:ProcessingMethodMode("T") or 2)
     local now = (GetTime and GetTime()) or 0
     local cached = cache[signature]
-    if cached and (now - cached.at) < 30 then return cached.result end
+    -- Token reward metadata, exchange balances and currencies can load/change
+    -- between hovers. Re-evaluate that small path instead of keeping a stale
+    -- unavailable or free-exchange result for thirty seconds.
+    if not tokenInfo and cached and (now - cached.at) < 30 then return cached.result end
 
     local conversion
     if not tokenInfo then conversion=self:BestConversion(f) end
@@ -513,7 +517,14 @@ function LA:Evaluate(link, context)
         fallback = "V"
     end
 
-    local tokenPiece, tokenQuote
+    local tokenPiece=tokenInfo and self.TokenPieceQuote and self:TokenPieceQuote(f,tokenInfo) or nil
+    local tokenQuote
+    local tokenVendor=tokenPiece and not Ignored(self,f.id,'V')
+        and (tokenPiece.vendorAvailable==true or (tokenPiece.vendorAvailable==nil and tokenPiece.ownClass))
+        and tokenPiece.vendor or 0
+    local tokenDisenchant=tokenPiece and not Ignored(self,f.id,'D')
+        and (tokenPiece.disenchantAvailable==true or (tokenPiece.disenchantAvailable==nil and tokenPiece.ownClass))
+        and tokenPiece.disenchant or 0
     local hasAlternative, hasAvailableDE = false, false
     for _, option in ipairs(f.conversionOptions or {}) do
         if option.available and type(option.value)=="number" and option.value>0 then
@@ -543,7 +554,7 @@ function LA:Evaluate(link, context)
     end
     local fees = self:AHFeeRate()
     local safeGross = ask and ask * (1 - fees) or 0
-    local bestLiquidate = max(vendor, convertedValue)
+    local bestLiquidate = max(vendor, convertedValue,tokenVendor,tokenDisenchant)
     local minProfit = (f.classID == 2 or f.classID == 4)
         and (self.db.minGearProfitGold or 100) * COPPER_PER_GOLD or (self.db.minReagentProfitGold or 2) * COPPER_PER_GOLD
     -- For equipment, use a conservative heuristic for 48h repeat deposits.
@@ -579,26 +590,33 @@ function LA:Evaluate(link, context)
             -- C4c (owner): a token always gets an answer when anything is
             -- priced: its own sell price, the sell price of the piece it
             -- opens into, or that piece's disenchant value. T still wins below.
-            tokenPiece = self.TokenPieceQuote and self:TokenPieceQuote(f,tokenInfo) or nil
             local pieceName = tokenPiece and (tokenPiece.name or ("item "..tokenPiece.itemID))
+            local dePiece=tokenPiece and (tokenPiece.disenchantReward or tokenPiece)
+            local dePieceName=dePiece and (dePiece.name or ("item "..dePiece.itemID))
+            local opening=tokenInfo.kind=='exchange' and 'Exchange it' or 'Open it'
+            local shortOpening=tokenInfo.kind=='exchange' and 'Exchange' or 'Open'
+            local recipient=tokenPiece and tokenPiece.current==false and ('Send to '..tokenPiece.character..', then ') or ''
             local vendorValue, vendorWhy = vendor, "Vendor the token"
-            if tokenPiece and tokenPiece.vendor > vendorValue then
-                vendorValue, vendorWhy = tokenPiece.vendor, "Open it, then vendor "..pieceName
+            if tokenVendor > vendorValue then
+                vendorValue, vendorWhy = tokenVendor, recipient..opening..", then vendor "..pieceName
             end
-            local deValue = tokenPiece and not Ignored(self,f.id,"D") and tokenPiece.disenchant or 0
+            local deValue = tokenDisenchant
             if deValue > vendorValue then
-                action, reason = "D", "Open it, then disenchant "..pieceName
-                tokenQuote = {letter="D", value=deValue, label="Open, then disenchant", piece=tokenPiece,
+                action, reason = "D", recipient..opening..", then disenchant "..dePieceName
+                tokenQuote = {letter="D", value=deValue, label=shortOpening..", then disenchant", piece=dePiece,
                     confidence=tokenPiece.disenchantConfidence}
             elseif vendorValue > 0 then
                 action, reason = "V", vendorWhy
                 tokenQuote = {letter="V", value=vendorValue, piece=vendorValue>vendor and tokenPiece or nil,
-                    label=vendorValue>vendor and "Open, then vendor" or "Vendor token"}
+                    label=vendorValue>vendor and (shortOpening..", then vendor") or "Vendor token"}
             else
-                action, reason = "Q", "Equipment token: no price known yet for it or the piece it opens into"
-            end
-            if tokenPiece and not tokenPiece.ownClass then
-                reason = reason .. " (cheapest piece; your class's piece not identified)"
+                action, reason = "Q", tokenPiece and (tokenPiece.reason or 'No positive net liquidation value for this redemption')
+                    or "Equipment token: no price known yet for it or the piece it opens into"
+                if tokenPiece then
+                    local estimate=max(tokenPiece.vendor or 0,tokenPiece.disenchant or 0,
+                        tokenPiece.vendor==nil and tokenPiece.vendorGross or 0)
+                    if estimate>0 then tokenQuote={letter='Q',value=estimate,informational=true,piece=tokenPiece,label='Reward reference estimate'} end
+                end
             end
         elseif not canAuction then
             -- Explicit opt-in lets players see V even on vendor-only soulbound
