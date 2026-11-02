@@ -486,6 +486,13 @@ function LL:TokenPieceQuote(f,token)
         if chosen or deChosen or informative then
             local piece=chosen or deChosen or informative
             if deChosen then
+                -- Vendor and disenchant can favor different rewards. Preserve
+                -- the complete DE quote so its identity, variant and costs stay
+                -- attached to the value used by the recommendation/tooltip.
+                local reward={}
+                for k,v in pairs(deChosen) do reward[k]=v end
+                if not reward.variantVerified then reward.variantNote='Base reward estimate; token difficulty/bonus variant not verified' end
+                piece.disenchantReward=reward
                 piece.disenchant=deChosen.disenchant;piece.disenchantModel=deChosen.disenchantModel
                 piece.disenchantConfidence=deChosen.disenchantConfidence;piece.disenchantItemID=deChosen.itemID
                 piece.disenchantAvailable=deChosen.disenchantAvailable and (token.kind=='exchange' or token.rewardSelection=='choice' or deComplete)

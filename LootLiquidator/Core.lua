@@ -591,6 +591,8 @@ function LA:Evaluate(link, context)
             -- priced: its own sell price, the sell price of the piece it
             -- opens into, or that piece's disenchant value. T still wins below.
             local pieceName = tokenPiece and (tokenPiece.name or ("item "..tokenPiece.itemID))
+            local dePiece=tokenPiece and (tokenPiece.disenchantReward or tokenPiece)
+            local dePieceName=dePiece and (dePiece.name or ("item "..dePiece.itemID))
             local opening=tokenInfo.kind=='exchange' and 'Exchange it' or 'Open it'
             local shortOpening=tokenInfo.kind=='exchange' and 'Exchange' or 'Open'
             local recipient=tokenPiece and tokenPiece.current==false and ('Send to '..tokenPiece.character..', then ') or ''
@@ -600,8 +602,8 @@ function LA:Evaluate(link, context)
             end
             local deValue = tokenDisenchant
             if deValue > vendorValue then
-                action, reason = "D", recipient..opening..", then disenchant "..pieceName
-                tokenQuote = {letter="D", value=deValue, label=shortOpening..", then disenchant", piece=tokenPiece,
+                action, reason = "D", recipient..opening..", then disenchant "..dePieceName
+                tokenQuote = {letter="D", value=deValue, label=shortOpening..", then disenchant", piece=dePiece,
                     confidence=tokenPiece.disenchantConfidence}
             elseif vendorValue > 0 then
                 action, reason = "V", vendorWhy

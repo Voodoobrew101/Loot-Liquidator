@@ -9,7 +9,7 @@ Action: `D`
 ```text
 Loot Liquidator: Open, then disenchant (estimate) 100000000 copper
 Open, then vendor Paladin Gloves | 440000 copper
-Open, then disenchant (Confidence 25%) | 100000000 copper
+Open, then disenchant Paladin Gloves (Confidence 25%) | 100000000 copper
 Base reward estimate; token difficulty/bonus variant not verified
 Redeemed reward disenchant outputs (per reward)
   Per 1 input(s); range when a material drops
@@ -66,7 +66,7 @@ Action: `V`
 ```text
 Loot Liquidator: Exchange, then vendor (estimate) 200000 copper
 Exchange, then vendor Paladin Gloves | 200000 copper
-Additional exchange costs per token | 20000 copper
+Additional exchange costs per token (vendor reward) | 20000 copper
 Base reward estimate; token difficulty/bonus variant not verified
 Class sets
 Review [Paladin] Paladin | 1/1
@@ -80,7 +80,7 @@ Action: `Q`
 ```text
 Loot Liquidator: Review token (estimate) 200000 copper
 Reward vendor estimate: Paladin Gloves | 200000 copper
-Additional exchange costs per token | 20000 copper
+Additional exchange costs per token (vendor reward) | 20000 copper
 Additional exchange costs unavailable
 Base reward estimate; token difficulty/bonus variant not verified
 Class sets
@@ -123,7 +123,7 @@ Action: `D`
 ```text
 Loot Liquidator: Open, then disenchant (estimate) 100000000 copper
 Open, then vendor Warrior Gloves | 460000 copper
-Open, then disenchant (Confidence 25%) | 100000000 copper
+Open, then disenchant Warrior Gloves (Confidence 25%) | 100000000 copper
 Reward on War-Realm
 Base reward estimate; token difficulty/bonus variant not verified
 Redeemed reward disenchant outputs (per reward)
@@ -153,7 +153,7 @@ Action: `V`
 ```text
 Loot Liquidator: Exchange, then vendor (estimate) 480000 copper
 Exchange, then vendor ATT Paladin Reward | 480000 copper
-Additional exchange costs per token | 20000 copper
+Additional exchange costs per token (vendor reward) | 20000 copper
 Base reward estimate; token difficulty/bonus variant not verified
 Class sets
 Review [Paladin] ATT Paladin Reward | 15/15
@@ -169,7 +169,7 @@ Action: `Q`
 ```text
 Loot Liquidator: Review token
 Exchange, then vendor ATT Paladin Reward | 99500000 copper net loss
-Additional exchange costs per token | 100000000 copper
+Additional exchange costs per token (vendor reward) | 100000000 copper
 Base reward estimate; token difficulty/bonus variant not verified
 Redeemed reward disenchant outputs (per reward)
   Per 1 input(s); range when a material drops

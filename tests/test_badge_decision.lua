@@ -184,7 +184,8 @@ function tip:AddLine(t) self.lines[#self.lines+1]=t end
 function tip:AddDoubleLine(l,rt) self.lines[#self.lines+1]=l..' '..rt end
 LL:AppendRecommendationTooltip(tip,r)
 local all=table.concat(tip.lines,'\n')
-assert(all:find('Open, then vendor Jeweled Gauntlets',1,true) and all:find('Open, then disenchant (Confidence 40%)',1,true),
+assert(all:find('Open, then vendor Jeweled Gauntlets',1,true)
+    and all:find('Open, then disenchant Jeweled Gauntlets of the Jade Warlord (Confidence 40%)',1,true),
     'Alternatives shows both piece rows: '..all)
 piece=nil
 r=tokenCase(5*G)

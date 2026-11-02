@@ -562,12 +562,22 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             two('Reward vendor before exchange costs: '..pieceName,LA:Money(piece.vendorGross),'V')
         end
         if type(piece.disenchant)=="number" and piece.disenchant>0 then
+            local reward=piece.disenchantReward or piece
+            local rewardName=reward.name or ("Item "..reward.itemID)
             local conf=type(piece.disenchantConfidence)=="number"
                 and (" (Confidence "..math.floor(piece.disenchantConfidence+.5).."%)") or ""
-            two(opening..", then disenchant"..conf..(piece.disenchantAvailable==false and ' (unavailable estimate)' or ''),LA:Money(piece.disenchant),"D")
+            two(opening..", then disenchant "..rewardName..conf..(piece.disenchantAvailable==false and ' (unavailable estimate)' or ''),LA:Money(piece.disenchant),"D")
+            local cost=reward.cost
+            if cost and cost.known and cost.value>0 and
+                (not piece.cost or cost.value/cost.inputCount~=piece.cost.value/piece.cost.inputCount) then
+                two('Additional exchange costs per token (disenchant reward)',LA:Money(cost.value/cost.inputCount),'D')
+            end
+            if reward~=piece and reward.variantNote and reward.variantNote~=piece.variantNote then
+                tooltip:AddLine('Disenchant reward: '..reward.variantNote,.73,.72,.78,true)
+            end
         end
         if piece.cost and piece.cost.known and piece.cost.value>0 then
-            two('Additional exchange costs per token',LA:Money(piece.cost.value/piece.cost.inputCount),'V')
+            two('Additional exchange costs per token (vendor reward)',LA:Money(piece.cost.value/piece.cost.inputCount),'V')
         end
         if piece.reason then tooltip:AddLine(piece.reason,.95,.68,.35,true) end
         if piece.current==false then tooltip:AddLine('Reward on '..piece.character,.68,.82,1,true) end

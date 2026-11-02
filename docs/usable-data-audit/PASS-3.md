@@ -43,4 +43,8 @@ Sources: PR #24 comments [calculator audit](https://github.com/Voodoobrew101/Loo
 
 The implementation keeps one ItemDB and its original evidence. Average quantities default off; compact ranges and all five native tooltip sort modes are tested. ATT's pinned Retail data and MIT notice are preserved without requiring the installed addon. Fixed-price fixtures check actual resolver, valuation, decision and formatter behavior, including consumed gear opportunity costs and exact-variant appearances.
 
+### PR Director reward-identity correction
+
+Review reproduced a choice-token mismatch: vendor selection could retain reward B's identity while copying reward A's higher disenchant quote. The recommendation then named B at A's value. Keep the full selected disenchant reward quote separately, including its exact link, costs and input quantity; use that identity in the decision and alternatives tooltip. Vendor alternatives keep their own identity and costs. Added real-engine synthetic regressions cover different winning rewards, exact-versus-base variants, and different exchange costs/token quantities. Regenerated the offline token proof document. These checks remain simulated and do not establish live WoW eligibility or market prices.
+
 Reference fallback rates can be disabled through their native source control. Reverting this PR removes its compiler/runtime/display changes; no observation-history deletion or main merge was performed. Review the final PR head/checks and perform live-client smoke testing when a WoW client is available. PR Director owns merge/release.

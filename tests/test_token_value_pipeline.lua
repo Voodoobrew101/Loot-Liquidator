@@ -213,3 +213,42 @@ if arg and arg[1] then
     out:close()
 end
 print('PASS: actual token values, class/alt eligibility, exact/base variants, costs, quantities, loading, currency and tooltip propagation')
+
+-- A choice may favor one reward for vendor and another for disenchant.
+-- The winning amount must name the reward actually used to obtain it.
+LL.ItemClassMasks[900002]=nil
+LL.db.characters['Pal-Realm'].professions={Enchanting=true}
+LL.db.includeVerifiedAlts=false
+synthetic.rewards={271466,900003};synthetic.rewardSelection='choice'
+synthetic.rewardLinks={['271466']='item:271466:exactvariant'}
+LL.EvaluateDisenchant=function(self,facts)
+    return {value=facts.id==271466 and 100*G or 20*G,yieldModel={confidence=60}}
+end
+LL._enchantCache=nil;LL:Invalidate()
+r=LL:Evaluate('item:900002',{isSoulbound=true})
+assert(r.action=='D' and r.tokenQuote.value==100*G)
+assert(r.tokenPiece.itemID==900003 and r.tokenPiece.vendor==60*G,'vendor alternative remains intact')
+assert(r.tokenQuote.piece.itemID==271466 and r.tokenQuote.piece.link=='item:271466:exactvariant')
+assert(not r.tokenQuote.piece.variantNote,'exact disenchant reward is not relabeled as the base vendor variant')
+assert(r.why=='Open it, then disenchant Paladin Gloves',r.why)
+text=render(r)
+assert(text:find('Open, then vendor Alternative Paladin Reward',1,true))
+assert(text:find('Open, then disenchant Paladin Gloves',1,true))
+
+-- Exchanges preserve each alternative's own costs and token quantity.
+exchange.rewards={271466,900003};exchange.costsComplete=true
+exchange.costs={
+    ['271466']={{kind='item',id=900001,quantity=2},{kind='money',quantity=4*G}},
+    ['900003']={{kind='item',id=900001,quantity=1},{kind='money',quantity=G}}}
+exchange.rewardLinks={['271466']='item:271466:exactvariant'}
+LL:Invalidate()
+r=LL:Evaluate('item:900001',{count=2,isSoulbound=true})
+assert(r.action=='V' and r.tokenPiece.vendor==59*G and r.tokenPiece.disenchant==48*G)
+assert(r.tokenPiece.disenchantReward.itemID==271466)
+assert(r.tokenPiece.cost.value==G and r.tokenPiece.disenchantReward.cost.value==4*G)
+assert(r.tokenPiece.inputCount==1 and r.tokenPiece.disenchantReward.inputCount==2)
+text=render(r)
+assert(text:find('Exchange, then disenchant Paladin Gloves',1,true))
+assert(text:find('Additional exchange costs per token (disenchant reward)',1,true))
+assert(text:find('Additional exchange costs per token (vendor reward)',1,true))
+print('PASS: distinct vendor/disenchant reward identities, exact variants, exchange costs and quantities')
