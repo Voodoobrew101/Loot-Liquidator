@@ -5,7 +5,7 @@
 ## Original source and provenance
 
 - [DRAGONFLIGHT JC YIELD CALCULATOR](https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit), tab `Sheet1`; native Google Sheets cells and **formulas** read directly, bounded to `A1:X55`. Google Drive metadata reports creation **2022-10-13T17:47:08Z** and last modification **2022-11-30T03:09:50Z**.
-- Existing [pass-1 source inventory](../../../docs/usable-data-audit/source-inventory.json) already identifies **444 pinned evidence transcriptions** for this workbook. This review does **not** add 444 new studies or duplicate any original cohort.
+- Existing [pass-1 source inventory at the reviewed addon commit](https://github.com/Voodoobrew101/Loot-Liquidator/blob/3d667d053db587c91401cfed7ecc56862b8340c9/docs/usable-data-audit/source-inventory.json) already identifies **444 pinned evidence transcriptions** for this workbook. The inventory is on the addon branch, not this research branch; the immutable link also survives the owner-requested main revert. This review does **not** add 444 new studies or duplicate any original cohort.
 - The workbook provides names, input rank 3, six source-labelled character profiles and output-quality labels, but **not** exact input/output item IDs, verified completed-operation counts, refund accounting, per-output hit counts, 0/1/2/... histograms, sample collection date, or current Retail patch verification.
 - Source is historical Dragonflight-era material. The owner's MoP Classic illustration is unrelated and remains excluded.
 
@@ -48,7 +48,7 @@ The displayed `%` fields are raw material units divided by the nominal **5,000 i
 3. **Keep skill contexts distinct** (68, 113, and unresolved 228-versus-218). Confirm the third profile's missing +10 or typo from original author before skill scaling. “Zero skill” is a label, not an observed minimum-required-skill baseline.
 4. **Map exact input/output IDs and rank alternatives** with independent item evidence. Do not confuse the sheet's `PRISMATIC ORE` output with a new independently measured Prismatic Ore input cohort; do not convert output totals into hit counts or source percentages into P(hit).
 5. **Retail applicability and valuation:** only a defensible historical/reference estimate with explicit assumptions may fill a supported gap. Leave P(hit), conditional yield, cast histograms, patch comparability and skill coefficients unknown until sourced. Never import the workbook's cached `EXPECTED` projections or frozen prices as live EV.
-6. **Integration handoff:** the owner's combined implementation is [draft PR #24](https://github.com/Voodoobrew101/Loot-Liquidator/pull/24), `implementation/usable-data-tooltips`; do not edit that branch or create another addon snapshot/import PR. Existing S21 and migration PRs #22/#23 remain separate.
+6. **Integration handoff:** [PR #24](https://github.com/Voodoobrew101/Loot-Liquidator/pull/24) was merged and then reverted at the owner's request. Its repaired code is preserved in unmerged [replacement draft PR #27](https://github.com/Voodoobrew101/Loot-Liquidator/pull/27), `repair/pr24-restored`. This source audit does not authorize an addon snapshot refresh or another import PR. Existing S21 and migration PRs #22/#23 remain separate.
 
 ## Verification performed and limitations
 
