@@ -75,6 +75,18 @@ class Rules(Repo):
         h = ie.Holdings([drop("import-study-00001", url="https://www.wowhead.com/item=1/x")])
         self.assertTrue(h.held("wowhead:item=1"))
 
+    def test_search_log_is_not_a_held_observation(self):
+        self.agent([{"id": "search", "type": "searched",
+                     "source": {"url": "https://www.reddit.com/r/w/comments/zzyjzu"}}])
+        hold = ie.Holdings([])
+        self.assertFalse(hold.held("reddit:zzyjzu"))
+        data = {"observations": [{"id": "DF-20230102-SEREVITE-R3-28000-24R3DIAMONDS",
+                                  "source": "https://www.reddit.com/r/w/comments/zzyjzu",
+                                  "reportedR3DiamondUnits": 24, "reportedOreUnitsApprox": 28000}]}
+        self.put("v.json", data)
+        rows, entry = ie.assess_file("v.json", data, hold, {"reddit:zzyjzu": ie.map_zzyjzu})
+        self.assertEqual((len(rows), entry["outcomes"]), (1, {"imported": 1}))
+
     def test_thread_match(self):
         self.agent([drop("ag-1", url="https://us.forums.blizzard.com/en/wow/t/some-title/2276246")])
         self.assertTrue(ie.Holdings([]).held("blizzforum:2276246:16"))   # a post of a held thread is held
@@ -286,11 +298,15 @@ class Committed(unittest.TestCase):
             pinned = [json.loads(l) for l in fh]
         now = [{"file": n, "id": r["id"], "studyKey": r["studyKey"], "recordRef": r["migratedFrom"]["recordRef"],
                 "path": r["migratedFrom"]["path"]} for n in NEW_FILES for r in self.rows[n]]
-        # M10: PLAN section 3 rule 5. import-v2report-00016 (reddit:zzyjzu) went when the dragonflight agent recorded that
-        # thread (2026-10-31T1928 and T2027 files); every other ID is unchanged.
-        dropped = {"import-v2report-00016"}
+        # Reviewed supersessions: zzyjzu's Jan 2 cohort is now held by the
+        # Dragonflight worker, and 1smgllg's 14 approximate-rate copies by the
+        # Midnight worker (17 source rows, no measured cast denominator).
+        # Original archive files remain untouched; retained IDs never renumber.
+        dropped = {"import-v2report-00016"} | {f"import-v2report-{i:05d}" for i in range(1, 15)}
         self.assertEqual(now, [p for p in pinned if p["id"] not in dropped])
-        self.assertTrue(ie.Holdings(self.prior).held("reddit:zzyjzu"))
+        hold = ie.Holdings(self.prior)
+        self.assertTrue(hold.held("reddit:zzyjzu"))
+        self.assertTrue(hold.held("reddit:1smgllg"))
 
     def test_every_new_source_decided_and_every_decision_used(self):
         undecided, cited = [], {"wowhead:spell=190385"}   # the legacy milling URL, decided by author and numbers
@@ -306,12 +322,24 @@ class Committed(unittest.TestCase):
         self.assertEqual(undecided, [])
         self.assertEqual(sorted(set(ie.NEW_SOURCES) - cited), [])   # no stale decision
 
-    def test_no_decision_for_a_held_source(self):
-        """A held source is classified as held before its decision is read, so a decision for it is dead;
-        only row-checked mappers (the TBC table) may be held."""
+    def test_held_sources_have_reviewed_supersessions(self):
+        """Keep an explicit reviewed set; a new held-source transition must
+        still fail until its provenance and no-double-import behavior are checked."""
         hold = ie.Holdings(self.prior)
-        # M10: reddit:zzyjzu has a mapper (kept, its unit tests use it) and is now held by an agent, so the importer skips it.
-        self.assertEqual(sorted(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), ["reddit:zzyjzu"])
+        reviewed = {
+            "reddit:1fvhzy0": "war-within-20261101-2110",
+            "reddit:1smgllg": "midnight-20261101-19001",
+            "reddit:zzyjzu": "dragonflight-20261101-88008",
+        }
+        self.assertEqual(set(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), set(reviewed))
+        for key, rid in reviewed.items():
+            self.assertTrue(any(r.get("id") == rid and r.get("type") == "drop" for _, r in hold.held(key)), key)
+            self.assertFalse(any(ie.thread_of(ie.source_key(r["source"]["url"])) == key
+                                 for rows in self.fams.values() for r in rows), key)
+        # y3e8ek has only a search record; its explicit qualitative skip remains
+        # active, rather than pretending a failed search supplied observations.
+        self.assertFalse(hold.held("reddit:y3e8ek"))
+        self.assertEqual(ie.NEW_SOURCES["reddit:y3e8ek"][0], "skip")
 
     def test_every_file_in_scope_reported(self):
         counts = {f: len(self.report[f]) for f in ("archives", "v2Reports", "leads", "submissions")}

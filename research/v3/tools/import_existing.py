@@ -937,6 +937,10 @@ class Holdings:
                     self.text.append(line.lower())
         rows += [("evidence/imported (this run)", r) for r in prior_rows]
         for rel, r in rows:
+            # A search log only records a lead/failed search. It is not a held
+            # observation and must not suppress an import from that source.
+            if r.get("type") == "searched":
+                continue
             if r.get("type") == "recipe":
                 self.recipes.setdefault(r.get("recipeSpellID"), []).append(r)
             s = r.get("source") if isinstance(r.get("source"), dict) else {}
