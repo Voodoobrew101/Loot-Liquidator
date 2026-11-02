@@ -372,6 +372,46 @@ end
 -- Extend all ordinary item tooltips. Bag/guild-bank tooltips reuse their already
 -- calculated decisions. Elsewhere we fail closed for unverified gear binding.
 -- One renderer for in-game tooltips and the live settings preview.
+-- Sort a display copy; valuation models are cached and must retain their order.
+function LA:SortedTooltipMaterials(materials)
+    local mode=self.db and self.db.tooltipOutputSort or 'value'
+    local fields={value='netExpectedValue',chance='chance',quantity='expectedQuantity'}
+    if not fields[mode] and mode~='name' and mode~='database' then mode='value' end
+    local rows={}
+    local info=C_Item and C_Item.GetItemInfo or GetItemInfo
+    for i,m in ipairs(materials or {}) do
+        local name
+        if mode=='name' and type(info)=='function' then
+            local ok,result=pcall(info,m.id)
+            if ok and type(result)=='string' then name=result:lower() end
+        end
+        rows[#rows+1]={material=m,index=i,name=name}
+    end
+    if mode~='database' then
+        table.sort(rows,function(a,b)
+            local av,bv
+            if mode=='name' then av,bv=a.name,b.name
+            else
+                av,bv=a.material[fields[mode]],b.material[fields[mode]]
+                if type(av)~='number' or av~=av then av=nil end
+                if type(bv)~='number' or bv~=bv then bv=nil end
+            end
+            if av~=bv then
+                if av==nil then return false end
+                if bv==nil then return true end
+                if mode=='name' then return av<bv end
+                return av>bv
+            end
+            local ai,bi=a.material.id or 0,b.material.id or 0
+            if ai~=bi then return ai<bi end
+            return a.index<b.index
+        end)
+    end
+    local result={}
+    for i,row in ipairs(rows) do result[i]=row.material end
+    return result
+end
+
 function LA:AppendRecommendationTooltip(tooltip,decision)
     -- B3: tooltip level 0 = Off (badges still show).
     if not LA.db or (LA.db.tooltipDetail or 2)<=0 or not tooltip or not decision then return end
@@ -582,10 +622,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         end
         local function ShowMaterials(option,model)
             if detail<3 then return end
-            local list=model and model.materials
+            local list=model and model.materials and LA:SortedTooltipMaterials(model.materials)
             if type(list)=="table" and #list>0 then
                 local batch=math.max(1,tonumber(model.inputCount) or tonumber(option.inputCount) or 1)
-                tooltip:AddLine(("  Per %d input(s); range when a material drops; EV = average units including zeros"):format(batch),.70,.75,.82,true)
+                local explanation=("  Per %d input(s); range when a material drops"):format(batch)
+                if LA.db.showAverageQuantity==true then explanation=explanation.."; average units include zeros" end
+                tooltip:AddLine(explanation,.70,.75,.82,true)
                 local limit=LA.db.showResearchDetails==true and #list or math.min(#list,12)
                 for i=1,limit do
                     local m=list[i]
@@ -602,10 +644,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     if type(m.rankIDs)=="table" and #m.rankIDs>1 then left=left.." (rank unknown)" end
                     if m.minQuantity and m.maxQuantity then
                         left=left..(m.minQuantity==m.maxQuantity
-                            and (" [x%d]"):format(m.minQuantity)
-                            or (" [x%d-%d]"):format(m.minQuantity,m.maxQuantity))
+                            and (" [%d]"):format(m.minQuantity)
+                            or (" [%d-%d]"):format(m.minQuantity,m.maxQuantity))
                     else left=left.." [range ?]" end
-                    left=left.."  "..UnitsText(m.expectedQuantity)
+                    if LA.db.showAverageQuantity==true then left=left.."  "..UnitsText(m.expectedQuantity) end
                     -- Optional per-material confidence (A3), off by default.
                     if LA.db.showMaterialConfidence==true and type(m.confidence)=="number" then
                         left=left..(" (%d%%)"):format(m.confidence)

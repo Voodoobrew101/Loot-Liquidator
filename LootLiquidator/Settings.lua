@@ -658,6 +658,13 @@ function LL:RegisterNativeSettings()
     Checkbox(tooltips,"tooltipHeaderPrice","Show price in the header",
         "Add the recommended action's gold value per item to the first line, e.g. \"Loot Liquidator: Smelt 6g 87s\".",true)
     Section(ttLayout,"Extras")
+    Checkbox(tooltips,"showAverageQuantity","Show average output quantity",
+        "Breakdown level: show average units per operation, including zero outcomes. Estimated averages remain estimates. Hidden by default; gold calculations are unchanged.",false)
+    Dropdown(tooltips,"tooltipOutputSort","Sort material outputs",
+        "Sort breakdown rows before the display limit. Missing values appear last. Gold calculations are unchanged.",
+        {{"value","Value — highest first"},{"chance","Drop chance — highest first"},
+         {"quantity","Average quantity — highest first"},{"name","Name — A to Z"},
+         {"database","Database order"}},"value")
     Checkbox(tooltips,"showMaterialConfidence","Show confidence per material",
         "Breakdown level: add each material's own confidence. The option's overall confidence is always shown.",false)
     Checkbox(tooltips,"showResearchDetails","Show research notes",

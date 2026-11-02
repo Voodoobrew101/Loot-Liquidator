@@ -57,6 +57,7 @@ python3 tests/test_research_v3_dedupe.py
 python3 tests/test_research_v3_snapshot.py
 "$lua_bin" tests/test_research_v3_runtime.lua
 "$lua_bin" tests/test_numeric_refresh_tooltip.lua "$compiled_dir"
+"$lua_bin" tests/test_tooltip_preferences.lua
 python3 tests/test_research_v3_no_disenchant.py
 python3 tests/test_rank_families.py
 python3 tests/test_input_ranks.py

@@ -23,6 +23,7 @@ local defaults = {
     recordDisenchants = true, showDisenchantSamples = true,
     recordConversions = true, showProcessingSamples = true,
     showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
+    showAverageQuantity = false, tooltipOutputSort = 'value',
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,
     otherConversionDataMode = 1, minPersonalSamples = 30,
     -- B3: one tooltip level: 0 Off, 1 Recommendation, 2 Alternatives, 3 Breakdown.

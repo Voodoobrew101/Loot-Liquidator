@@ -239,7 +239,7 @@ integrationRecord.materials[1].maxQuantity=field(nil,'unknown',0)
 LL:Invalidate();eq(LL:ConversionOptions(f)[1].value,0,'known zero is not insufficient data')
 integrationRecord.materials[1]=savedMaterial;LL:Invalidate()
 
-LL.db.tooltipDetail=3;LL.db.showTooltips=true;LL.db.showMaterialBreakdown=true
+LL.db.tooltipDetail=3;LL.db.showTooltips=true;LL.db.showMaterialBreakdown=true;LL.db.showAverageQuantity=true
 LL.ProfessionProgression=function() return {} end
 local tooltip={lines={}}
 function tooltip:AddLine(text) self.lines[#self.lines+1]=text end

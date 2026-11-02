@@ -72,8 +72,9 @@ near(chosen.yieldModel.materials[1].chance,.5)
 assert(chosen.yieldModel.materials[1].minQuantity==10 and chosen.yieldModel.materials[1].maxQuantity==20)
 near(chosen.yieldModel.materials[1].expectedQuantity,8)
 near(chosen.value,40) -- 8 units * 100 copper / 20 inputs, without another P factor
+LL.db.showAverageQuantity=true
 local text=render(f,chosen)
-assert(text:find('50%',1,true) and text:find('[x10-20]',1,true) and text:find('  8.000',1,true))
+assert(text:find('50%',1,true) and text:find('[10-20]',1,true) and text:find('  8.000',1,true))
 material.dropChance.status='provisional'
 assert(render(f,option()):find('~50%',1,true),'provisional probabilities need an approximation marker')
 material.dropChance=field(nil,'unknown');material.minQuantity=field(nil,'unknown');material.maxQuantity=field(nil,'unknown')

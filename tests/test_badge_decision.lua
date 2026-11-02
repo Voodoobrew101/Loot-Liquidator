@@ -145,9 +145,9 @@ assert(n==1 and text:find('Loot Liquidator:',1,true),'Recommendation is one line
 text=lines(2)
 assert(text:find('Auction',1,true) and text:find('Vendor',1,true) and text:find('Prospecting (Confidence 48%)',1,true),
     'Alternatives shows every option: '..text)
-assert(not text:find('[x1-2]',1,true),'Alternatives hides the material breakdown')
+assert(not text:find('[1-2]',1,true),'Alternatives hides the material breakdown')
 text=lines(3)
-assert(text:find('[x1-2]',1,true),'Breakdown shows materials: '..text)
+assert(text:find('[1-2]',1,true),'Breakdown shows materials: '..text)
 -- Old "Show Loot Liquidator tooltips" off becomes the Off level; folded boxes are dropped.
 local saved={showTooltips=false,tooltipDetail=3,tooltipAuction=false,showMaterialBreakdown=false,showFallback=false}
 LL:RemoveRetiredSettings(saved)
