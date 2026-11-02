@@ -26,7 +26,7 @@ local QUALITIES={[2]='Uncommon (green)',[3]='Rare (blue)',[4]='Epic (purple)'}
 
 local keys={
     'gear:0:2:armor','gear:0:2:weapon','gear:0:3:armor','gear:0:3:weapon','gear:0:4:armor','gear:0:4:weapon',
-    'gear:1:2:armor','gear:1:2:weapon','gear:1:3:armor','gear:1:3:weapon','gear:1:4:armor','gear:1:4:weapon',
+    'gear:1:2:armor','gear:1:2:weapon','gear:1:3:weapon','gear:1:4:armor','gear:1:4:weapon',
     'gear:3:4:armor','gear:3:4:weapon',
     'gear:4:3:armor','gear:4:3:weapon','gear:4:4:armor','gear:4:4:weapon',
     'gear:5:3:armor','gear:5:3:weapon','gear:5:4:armor','gear:5:4:weapon',
@@ -34,9 +34,8 @@ local keys={
     'gear:7:3:armor','gear:7:3:weapon','gear:7:4:armor','gear:7:4:weapon',
     'gear:8:3:armor','gear:8:3:weapon','gear:8:4:armor','gear:8:4:weapon',
     'gear:9:3:armor','gear:9:3:weapon',
-    'gear:9:4:armor',
 }
-local otherKindHasData={['gear:9:4:armor']=true}
+local otherKindHasData={['gear:1:3:weapon']=true}
 
 local targets={}
 for i,key in ipairs(keys) do

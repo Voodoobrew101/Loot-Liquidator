@@ -23,7 +23,9 @@ assert(model and #model.materials==2,'default settings give historical gear dise
 -- A player who switches legacy off still gets that choice honoured.
 LL.db.source_legacy_enabled=false;LL._processingModelCache=nil
 model,reason=LL:ComputeEvidenceModel(gear,option,nil,1,{})
-assert(not model and reason:find('disabled',1,true),'manually disabled legacy yields stay off')
+-- New item-specific studies may now answer this item with legacy disabled.
+-- The user's choice disables that source, not independently sourced ItemDB.
+assert(not model or not model.sources.legacy,'manually disabled legacy yields stay off')
 -- Old saved data from before schema 2 had legacy off by default: migrate it on once.
 local old={source_legacy_enabled=false,evidenceSchemaVersion=1};local saved=LL.db;LL.db=old
 LL:MigrateEvidenceSettings();assert(old.source_legacy_enabled==true and old.evidenceSchemaVersion==2)

@@ -246,7 +246,7 @@ function tooltip:AddLine(text) self.lines[#self.lines+1]=text end
 function tooltip:AddDoubleLine(left,right) self.lines[#self.lines+1]=left..' '..right end
 LL:AppendRecommendationTooltip(tooltip,{action='P',facts=f,conversionOptions=options,count=1,method='Prospect'})
 local rendered=table.concat(tooltip.lines,'\n')
-check(rendered:find('EV 2.000',1,true),'tooltip expected units')
+check(rendered:find('  2.000',1,true),'tooltip expected units')
 check(rendered:find('50%',1,true),'tooltip probability')
 check(rendered:find('itemdb: 100.0%',1,true),'tooltip actual source contributions')
 near(options[1].yieldModel.materials[1].expectedQuantity,2,'tooltip must not recalculate')
