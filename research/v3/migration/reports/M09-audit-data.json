@@ -5,7 +5,7 @@
    "75-89%": 90,
    "90%+": 233,
    "conditional": 23,
-   "under 50%": 878
+   "under 50%": 888
   },
   "afterCappedAt50": 359,
   "before": {
@@ -18,12 +18,12 @@
   "byCauses": {
    "agent evidence and the S7 page rule (M10 merge)": 27,
    "identity (M05)": 9,
-   "identity (M05) + importer and manifests rerun (M10)": 3,
+   "identity (M05) + importer and manifests rerun (M10)": 5,
    "importer and manifests rerun (M10)": 12,
    "units (M06)": 25
   },
-  "down": 42,
-  "moved": 76,
+  "down": 44,
+  "moved": 78,
   "moves": [
    {
     "bandAfter": "under 50%",
@@ -932,6 +932,62 @@
     "bandAfter": "under 50%",
     "bandBefore": "50-74%",
     "causes": [
+     "identity (M05)",
+     "importer and manifests rerun (M10)"
+    ],
+    "confidenceAfter": 43,
+    "confidenceBefore": 50,
+    "direction": "down",
+    "input": "194545",
+    "method": "Prospect",
+    "outputItemID": "family:Queen's Ruby",
+    "steps": [
+     {
+      "cause": "identity (M05)",
+      "from": "50-74%",
+      "stage": "M05",
+      "to": null
+     },
+     {
+      "cause": "importer and manifests rerun (M10)",
+      "from": null,
+      "stage": "working tree",
+      "to": "under 50%"
+     }
+    ]
+   },
+   {
+    "bandAfter": "under 50%",
+    "bandBefore": "50-74%",
+    "causes": [
+     "identity (M05)",
+     "importer and manifests rerun (M10)"
+    ],
+    "confidenceAfter": 45,
+    "confidenceBefore": 50,
+    "direction": "down",
+    "input": "194545",
+    "method": "Prospect",
+    "outputItemID": "family:Sundered Onyx",
+    "steps": [
+     {
+      "cause": "identity (M05)",
+      "from": "50-74%",
+      "stage": "M05",
+      "to": null
+     },
+     {
+      "cause": "importer and manifests rerun (M10)",
+      "from": null,
+      "stage": "working tree",
+      "to": "under 50%"
+     }
+    ]
+   },
+   {
+    "bandAfter": "under 50%",
+    "bandBefore": "50-74%",
+    "causes": [
      "importer and manifests rerun (M10)"
     ],
     "confidenceAfter": 49,
@@ -1708,7 +1764,7 @@
     "stage": "M10 merge"
    },
    {
-    "added": 624,
+    "added": 634,
     "cause": "importer and manifests rerun (M10)",
     "movedBand": 12,
     "removed": 10,
@@ -1872,11 +1928,11 @@
      "75-89%": 90,
      "90%+": 233,
      "conditional": 23,
-     "under 50%": 878
+     "under 50%": 888
     },
     "cause": "importer and manifests rerun (M10)",
     "commit": "-",
-    "estimates": 1747,
+    "estimates": 1757,
     "records": 7322,
     "stage": "working tree",
     "unplaced": 442
@@ -1901,17 +1957,17 @@
  "coverage": {
   "after": {
    "dropRows": 6114,
-   "estimates": 1747,
+   "estimates": 1757,
    "estimatesByMethod": {
     "Disenchant": 665,
     "Mill": 209,
-    "Prospect": 863,
+    "Prospect": 873,
     "Smelt": 10
    },
    "estimatesWithMeasuredChance": 600,
    "records": 7322,
    "referenceRows": 1425,
-   "studyCastsTotal": 1930182.9,
+   "studyCastsTotal": 1931098.9,
    "studyKeys": 1145,
    "studyRows": 4689,
    "unplaced": 442
@@ -2037,6 +2093,20 @@
     "title": "The 46 null sources stay in the live queue (the linker still sees them as residue)."
    },
    {
+    "closedBy": "reports/PR-REPAIR-2026-11-02.md",
+    "id": "M04-links/master#1",
+    "line": 95,
+    "source": "research/v3/migration/reports/M04-links.md",
+    "title": "zkay8v 10,000-ore cohort: 22 name-only rows, no agent copy, stored unplaced."
+   },
+   {
+    "closedBy": "reports/PR-REPAIR-2026-11-02.md",
+    "id": "M04-links/master#2",
+    "line": 97,
+    "source": "research/v3/migration/reports/M04-links.md",
+    "title": "1smgllg: 11 rates now have unambiguous output IDs and a family-level input."
+   },
+   {
     "closedBy": "reports/M04-extraction.md",
     "id": "M04-links/master#4",
     "line": 100,
@@ -2065,7 +2135,7 @@
     "title": "`unplaced:noOutput` is almost all by design (397 of 406 are M03's name-only rows)."
    }
   ],
-  "closedCount": 10,
+  "closedCount": 12,
   "exceptionRows": 130,
   "exceptionsByKind": {
    "ambiguous-doubt-source": 12,
@@ -2079,9 +2149,9 @@
    "validator-error": 5
   },
   "handleInM10": 5,
-  "open": 179,
+  "open": 177,
   "recordIDsNamed": 3055,
-  "reportRows": 45,
+  "reportRows": 43,
   "rows": [
    {
     "action": "Say whether to store it as a `reference` row with an `unclear` meaning, or leave it as a null; nothing was written.",
@@ -7357,36 +7427,6 @@
     "title": "Stormvine and Felwort cohorts share a page with other authors."
    },
    {
-    "action": "Place the cohort by name, or ask an agent to record it with item IDs.",
-    "blocksM10": false,
-    "count": 0,
-    "id": "M04-links/master#1",
-    "kind": "policy",
-    "line": 95,
-    "m10": "none",
-    "m10Why": null,
-    "origin": "report",
-    "pointer": "research/v3/migration/reports/M04-links.md:95",
-    "see": "exceptions:unplaced-name-only-cohort",
-    "source": "research/v3/migration/reports/M04-links.md",
-    "title": "zkay8v 10,000-ore cohort: 22 name-only rows, no agent copy, stored unplaced."
-   },
-   {
-    "action": "Approve the importer change, weighted as reference, or leave the rates unplaced.",
-    "blocksM10": false,
-    "count": 0,
-    "id": "M04-links/master#2",
-    "kind": "policy",
-    "line": 97,
-    "m10": "none",
-    "m10Why": null,
-    "origin": "report",
-    "pointer": "research/v3/migration/reports/M04-links.md:97",
-    "see": "exceptions:placement-proposal",
-    "source": "research/v3/migration/reports/M04-links.md",
-    "title": "1smgllg: 11 rates now have unambiguous output IDs and a family-level input."
-   },
-   {
     "action": "Read the original posts; these cannot be settled offline.",
     "blocksM10": false,
     "count": 7,
@@ -7644,7 +7684,7 @@
    {
     "action": "Decide per-rank totals in family groups.",
     "blocksM10": false,
-    "count": 207,
+    "count": 206,
     "id": "M08-estimator/findings#1",
     "kind": "statistics",
     "line": 127,
@@ -7704,7 +7744,7 @@
    {
     "action": "Same decision as the M06 backfills.",
     "blocksM10": false,
-    "count": 525,
+    "count": 530,
     "id": "M08-estimator/master#3",
     "kind": "backfill",
     "line": 161,
@@ -7839,7 +7879,7 @@
    {
     "action": "Apply the roles/worker.md line, or decline it.",
     "blocksM10": false,
-    "count": 499,
+    "count": 512,
     "id": "M10-merge/master#6",
     "kind": "agent-rule",
     "line": 120,
@@ -8007,20 +8047,20 @@
   },
   "rebuild": {
    "first": {
-    "estimates.json": "4723494168b2cdd2932d3f2f0deadaea9b4c88fe77c8f71d4863379c992f02eb",
-    "summary.md": "b21a82d2ec2d997879ec306afad11b220a87bc582fb0d7dc1c0b09e12601af3a",
-    "unused.json": "17ded1f1df1e9d93a34954b07f931d04f37b23f7cb2bcd18f45e5553e319f0c0"
+    "estimates.json": "1705fecc871180963e5e4ad879619841ddd99f14f3db287d23642ff1004128ad",
+    "summary.md": "099c06c59a08428d649894aa715e2366d3e4c4ad192c7c5e92cefd1e29e8c1f1",
+    "unused.json": "d0e4a812a4a48d45f37525ea769aa22db3bdfd32abe5afa1c0bc22600d7638ca"
    },
    "identical": true,
    "second": {
-    "estimates.json": "4723494168b2cdd2932d3f2f0deadaea9b4c88fe77c8f71d4863379c992f02eb",
-    "summary.md": "b21a82d2ec2d997879ec306afad11b220a87bc582fb0d7dc1c0b09e12601af3a",
-    "unused.json": "17ded1f1df1e9d93a34954b07f931d04f37b23f7cb2bcd18f45e5553e319f0c0"
+    "estimates.json": "1705fecc871180963e5e4ad879619841ddd99f14f3db287d23642ff1004128ad",
+    "summary.md": "099c06c59a08428d649894aa715e2366d3e4c4ad192c7c5e92cefd1e29e8c1f1",
+    "unused.json": "d0e4a812a4a48d45f37525ea769aa22db3bdfd32abe5afa1c0bc22600d7638ca"
    }
   },
   "tests": {
-   "ok": false,
-   "ran": 413
+   "ok": true,
+   "ran": 415
   },
   "validate": {
    "byCode": {
@@ -8044,12 +8084,12 @@
    {
     "meaning": "states a total with no cast count or input count, so no rate follows (S16)",
     "reason": "totalWithoutCasts",
-    "records": 525
+    "records": 530
    },
    {
     "meaning": "a copy of a study already counted in the group",
     "reason": "duplicateStudy",
-    "records": 499
+    "records": 512
    },
    {
     "meaning": "no output ID, mostly name-only rows kept by PLAN section 3 rule 4",
@@ -8067,21 +8107,21 @@
     "records": 292
    }
   ],
-  "unused": 3628,
+  "unused": 3617,
   "unusedByReason": {
    "condition:incomplete": 2,
    "conditional:unlockFalse": 1,
    "conditional:unlockUnstated": 94,
    "copy:pooledStudy": 2,
-   "copy:vaguerGroup": 234,
-   "duplicateRowInStudy": 207,
-   "duplicateStudy": 499,
+   "copy:vaguerGroup": 207,
+   "duplicateRowInStudy": 206,
+   "duplicateStudy": 512,
    "hitsWithoutCasts": 3,
-   "noNumbers": 60,
+   "noNumbers": 59,
    "percentNotPerCast": 61,
    "reference:noUsableValue": 273,
    "reference:priorSuperseded": 38,
-   "totalWithoutCasts": 525,
+   "totalWithoutCasts": 530,
    "type:exchange": 377,
    "type:noDisenchant": 275,
    "type:rateChange": 22,
@@ -8092,9 +8132,9 @@
    "unplaced:noMethod": 2,
    "unplaced:noOutput": 411
   },
-  "used": 3694,
+  "used": 3705,
   "usedByRole": {
-   "average": 2107,
+   "average": 2118,
    "chance": 745,
    "condition": 19,
    "prior": 1109,
