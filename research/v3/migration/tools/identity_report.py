@@ -34,6 +34,26 @@ def legacy_identity(r):
     return (src, r.get("inputRank"), r.get("casts"), r.get("studyKey") if not r.get("casts") else None)
 
 
+def same_numeric_rows_across_copies(merged_rows):
+    """Compare whole per-study multisets, not one row against a different rank/variant.
+
+    Family groups can contain R2 and R3 rows, or two unknown-rank materials with
+    the same display name. A second transcription may add item IDs without changing
+    the measurements. Unnumbered labels do not establish a numerical conflict.
+    This is diagnostic only: it does not establish material identity or alter the
+    estimator's actual deduplication.
+    """
+    by_study = defaultdict(list)
+    for r in merged_rows:
+        numbers = b.row_numbers(r)
+        if any(x is not None for x in numbers):
+            by_study[b.study_ref(r)].append(
+                (str(r.get("inputRank")), str(r.get("outputRank")), numbers)
+            )
+    signatures = [tuple(sorted(v, key=repr)) for v in by_study.values()]
+    return len(signatures) > 1 and all(v == signatures[0] for v in signatures[1:])
+
+
 def collisions(rows, identity, partial_refs=frozenset()):
     """Estimate groups where studies share an identity -> how the merged rows compare."""
     names = b.name_maps(rows)
@@ -47,7 +67,7 @@ def collisions(rows, identity, partial_refs=frozenset()):
         merged = [v for v in groups[k].values() if len({b.study_ref(r) for r in v}) > 1]
         if not merged:
             continue
-        differ = [r for v in merged for r in v
+        differ = [r for v in merged if not same_numeric_rows_across_copies(v) for r in v
                   if not same_report(r, v[0], identity is legacy_identity) and b.study_ref(r) != b.study_ref(v[0])]
         kind = "identical"
         if differ:
