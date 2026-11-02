@@ -193,7 +193,8 @@ r=tokenCase(0)
 assert(r.action=='Q' and r.why:find('no price known yet',1,true),'truly nothing priced stays ?')
 piece={itemID=271466,name='Gauntlets of the Consecrated Flame',vendor=30*G,ownClass=false}
 r=tokenCase(0)
-assert(r.action=='V' and r.why:find('cheapest piece',1,true),'unknown class says it used the cheapest piece')
+assert(r.action=='Q' and r.tokenQuote.informational and r.tokenQuote.value==30*G,
+    'an unmatched class keeps a numeric reference without promising opening')
 token.possibleMissingAppearance=true
 LL.TokenTransmogRecipient=function() return {current=true} end
 r=tokenCase(0)
@@ -209,18 +210,19 @@ WOW_PROJECT_ID=1;WOW_PROJECT_MAINLINE=1
 GetBuildInfo=function()return '12.1.5','70575','Oct 29 2026',120105 end
 assert(loadfile('LootLiquidator/Tokens.lua'))('LootLiquidator',Q)
 local sells={[271457]=46*G,[271466]=44*G,[271475]=47*G}
-C_Item={GetItemInfo=function(id) if sells[id] then
+C_Item={GetItemInfo=function(value) local id=tonumber(value) or tonumber(tostring(value):match('item:(%d+)'));if sells[id] then
     return 'Piece '..id,'item:'..id,4,219,90,'Armor','Plate',1,'INVTYPE_HAND',0,sells[id] end end}
 UnitClass=function() return 'Paladin','PALADIN' end
-Q.ItemPermitsClass=function(_,id,class) return class=='PALADIN' and id==271466 end
+Q.ItemPermitsClass=function(_,id,class) if id==270913 then return nil end return class=='PALADIN' and id==271466 end
 local p=Q:TokenPieceQuote({id=270913},{rewards={271457,271466,271475}})
 assert(p and p.itemID==271466 and p.vendor==44*G and p.ownClass,'own class piece chosen')
 Q.ItemPermitsClass=function() return nil end
 p=Q:TokenPieceQuote({id=270913},{rewards={271457,271466,271475}})
 assert(p and p.itemID==271466 and not p.ownClass,'cheapest piece when the class is unknown')
 Q.GetItemFacts=function(_,link) return {id=tonumber(link:match('%d+')),conversionOptions={}} end
-Q.BestConversion=function(_,f) f.conversionOptions={{name='Disenchant',available=true,value=61*G,
-    yieldModel={valueConfidence=35}}} return f.conversionOptions[1] end
+Q.CurrentHasEnchanting=function()return true end
+Q.ItemPermitsClass=function()return true end
+Q.EvaluateDisenchant=function()return {name='Disenchant',value=61*G,yieldModel={valueConfidence=35}}end
 p=Q:TokenPieceQuote({id=270913},{rewards={271457}})
 assert(p.disenchant==61*G and p.disenchantConfidence==35,'piece disenchant value and confidence')
 -- C4b3: an unreviewed research token list caps the confidence at its own.

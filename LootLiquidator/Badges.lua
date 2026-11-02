@@ -421,7 +421,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     local label=names[decision.action]
     local compactToken=decision.tokenInfo
         and type(LA.TokenClassSummary)=="function"
-    if compactToken and decision.action=="Q" then label="Review token" end
+    if decision.tokenInfo and decision.action=="Q" then label="Review token" end
+    if decision.tokenQuote and decision.tokenQuote.piece and not decision.tokenQuote.informational then
+        label=decision.tokenQuote.label or label
+    end
     local detail=LA.db.tooltipDetail or 2
     local printedSamples=false
     local progress=(detail>=3 and LA.ProfessionProgression and decision.facts)
@@ -527,6 +530,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             end
             if type(unit)=="number" and unit>0 then headerPrice=" "..LA:Money(unit) end
         end
+        if decision.tokenQuote and (decision.tokenQuote.informational or
+            (decision.tokenQuote.piece and decision.tokenQuote.piece.variantNote)) then suffix=suffix.." (estimate)" end
         tooltip:AddLine("|cff66ccffLoot Liquidator:|r "..
             LA:MarkupColor(decision.action)..label..suffix.."|r"..headerPrice)
     end
@@ -548,14 +553,27 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     local piece=decision.tokenPiece
     if piece and detail>=2 then
         local pieceName=piece.name or ("Item "..piece.itemID)
-        if type(piece.vendor)=="number" and piece.vendor>0 then
-            two("Open, then vendor "..pieceName,LA:Money(piece.vendor),"V")
+        local opening=decision.tokenInfo and decision.tokenInfo.kind=='exchange' and 'Exchange' or 'Open'
+        if type(piece.vendor)=="number" then
+            local label=opening..", then vendor "..pieceName
+            if piece.vendorAvailable==false then label='Reward vendor estimate: '..pieceName end
+            two(label,piece.vendor<0 and (LA:Money(-piece.vendor)..' net loss') or LA:Money(piece.vendor),"V")
+        elseif type(piece.vendorGross)=='number' then
+            two('Reward vendor before exchange costs: '..pieceName,LA:Money(piece.vendorGross),'V')
         end
         if type(piece.disenchant)=="number" and piece.disenchant>0 then
             local conf=type(piece.disenchantConfidence)=="number"
                 and (" (Confidence "..math.floor(piece.disenchantConfidence+.5).."%)") or ""
-            two("Open, then disenchant"..conf,LA:Money(piece.disenchant),"D")
+            two(opening..", then disenchant"..conf..(piece.disenchantAvailable==false and ' (unavailable estimate)' or ''),LA:Money(piece.disenchant),"D")
         end
+        if piece.cost and piece.cost.known and piece.cost.value>0 then
+            two('Additional exchange costs per token',LA:Money(piece.cost.value/piece.cost.inputCount),'V')
+        end
+        if piece.reason then tooltip:AddLine(piece.reason,.95,.68,.35,true) end
+        if piece.current==false then tooltip:AddLine('Reward on '..piece.character,.68,.82,1,true) end
+        if piece.variantNote then tooltip:AddLine(piece.variantNote,.73,.72,.78,true) end
+    elseif decision.tokenInfo and decision.action=='Q' and decision.why then
+        tooltip:AddLine(decision.why,.95,.68,.35,true)
     end
     if decision.action=="Q" and decision.why and not compactToken then
         local issue=decision.why
@@ -626,6 +644,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             if type(list)=="table" and #list>0 then
                 local batch=math.max(1,tonumber(model.inputCount) or tonumber(option.inputCount) or 1)
                 local explanation=("  Per %d input(s); range when a material drops"):format(batch)
+                if model.operationUnverified then explanation=("  Values normalized per %d input(s); recipe batch unverified"):format(batch) end
                 if LA.db.showAverageQuantity==true then explanation=explanation.."; average units include zeros" end
                 tooltip:AddLine(explanation,.70,.75,.82,true)
                 local limit=LA.db.showResearchDetails==true and #list or math.min(#list,12)
@@ -639,22 +658,36 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                             and (m.probabilityBasis:find("estimated",1,true) or
                                  m.probabilityBasis:find("proxy",1,true)))) and "~" or ""
                         left=left..prefix..ChanceText(m.chance).." "
-                    else left=left.."? " end
+                    end
                     left=left..MaterialDisplay(m.id)
                     if type(m.rankIDs)=="table" and #m.rankIDs>1 then left=left.." (rank unknown)" end
+                    if type(m.chance)~='number' then left=left..' (chance unavailable)' end
                     if m.minQuantity and m.maxQuantity then
                         left=left..(m.minQuantity==m.maxQuantity
                             and (" [%d]"):format(m.minQuantity)
                             or (" [%d-%d]"):format(m.minQuantity,m.maxQuantity))
-                    else left=left.." [range ?]" end
-                    if LA.db.showAverageQuantity==true then left=left.."  "..UnitsText(m.expectedQuantity) end
+                    else left=left.." [yield unavailable]" end
+                    if LA.db.showAverageQuantity==true then
+                        left=left.."  "..(type(m.expectedQuantity)=='number' and UnitsText(m.expectedQuantity)
+                            or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
+                    end
                     -- Optional per-material confidence (A3), off by default.
                     if LA.db.showMaterialConfidence==true and type(m.confidence)=="number" then
                         left=left..(" (%d%%)"):format(m.confidence)
                     end
                     local net=m.netExpectedValue
                     local amount=net~=nil and LA:Money(net/batch) or "unknown"
+                    if net==nil and m.conditionalExpectedValue~=nil then amount=LA:Money(m.conditionalExpectedValue/batch)..' conditional' end
                     two(left,amount,option.letter or "D")
+                    if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
+                    if m.derivedMean then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
+                    if m.inconsistentFields then tooltip:AddLine('    Source range retained; selected average and chance disagree with it',.90,.72,.45,true) end
+                    for _,rank in ipairs(m.rankReferences or {}) do
+                        local fields={}
+                        if rank.chance~=nil then fields[#fields+1]='chance '..ChanceText(rank.chance) end
+                        if rank.minQuantity and rank.maxQuantity then fields[#fields+1]=('yield %d-%d'):format(rank.minQuantity,rank.maxQuantity) end
+                        tooltip:AddLine('    Separate rank reference: '..MaterialDisplay(rank.id)..'; '..table.concat(fields,', '),.70,.75,.82,true)
+                    end
                     if LA.db.showResearchDetails==true then
                         for _,source in ipairs(LA.SourceOrder or {}) do
                             local estimate=m.sourceEstimates and m.sourceEstimates[source]
@@ -759,6 +792,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 end
             end
         end
+        if piece and piece.disenchantModel then
+            tooltip:AddLine('Redeemed reward disenchant outputs (per reward)',.68,.82,1,true)
+            ShowMaterials({letter='D',inputCount=1},piece.disenchantModel)
+        end
         -- The actual collection state is informational even if the account
         -- prefers the higher-gold method or has no eligible transmog recipient.
         if decision.missingAppearance and decision.action~="T" then
@@ -839,19 +876,19 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         {rewards=group.ids,kind=token.kind})
                 end
                 local letter=recipient and "T" or
-                    (group.unknown==0 and group.missing==0 and decision.vendor>0 and "V" or "?")
+                    (group.unknown==0 and group.missing==0 and decision.vendor>0 and "V" or "Q")
                 if recipient and not bestRecipient then bestRecipient=recipient end
-                local actionColor=letter=="?" and "|cffaaaaaa" or LA:MarkupColor(letter)
+                local actionColor=letter=="Q" and "|cffaaaaaa" or LA:MarkupColor(letter)
                 local icon=group.class~="UNKNOWN" and LLClassIcon(group.class) or ""
                 if group.class~="UNKNOWN" and icon=="" then
                     icon="["..(group.className or group.class or "Class").."] "
                 end
                 local status=("%d/%d"):format(group.collected,group.count)
-                if group.unknown>0 then status=status.." ?" end
+                if group.unknown>0 then status=status.." (collection pending)" end
                 local className=group.title
                 if className=="Equipment set" then className=(group.className or "Other").." equipment" end
                 local left=("%s%s|r %s|cffa788dd%s|r"):format(
-                    actionColor,letter,icon,className)
+                    actionColor,letter=='Q' and 'Review' or letter,icon,className)
                 if tooltip.AddDoubleLine then
                     tooltip:AddDoubleLine(left,status,1,1,1,1,1,1)
                 else
@@ -897,7 +934,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         -- name rather than a slot abbreviation or an anonymous reward ID.
         local bestVendor=LA.TokenBestVendorReward and LA:TokenBestVendorReward(token)
         if bestVendor then
-            two("Best reward vendor: "..(LLTokenRewardLabel(bestVendor.itemID)
+            two("Highest listed reward vendor (before costs): "..(LLTokenRewardLabel(bestVendor.itemID)
                 or bestVendor.name or ("Item "..bestVendor.itemID)),
                 LA:Money(bestVendor.value),"V")
 

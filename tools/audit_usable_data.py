@@ -69,6 +69,8 @@ def make_ledger(data):
             reason = 'Output remains unknown or context/rank excluded; other outputs can be valued'
         elif not matches:
             reason = status or 'Needs identity, unit, recipe or context review'
+        if runtime_material.get('unavailableReason'):
+            reason = runtime_material['unavailableReason']
         visible = bool(runtime_material and f"Material {runtime_material['id']} " in probe.get('tooltip', ''))
         rows.append({
             'source_layer': layer, 'source_record': record.get('recordID', ''),
@@ -78,6 +80,8 @@ def make_ledger(data):
             'source_chance': get_field(material, 'dropChance'),
             'source_minimum': get_field(material, 'minQuantity'), 'source_maximum': get_field(material, 'maxQuantity'),
             'compiled_records': ' | '.join(r['recordID'] for r, _ in matches),
+            'compiled_input_counts': ' | '.join(str(r['inputCount']) for r, _ in matches),
+            'compiled_conditional_requirements': ' | '.join(m['conditionalReference'] for _, m in matches if m.get('conditionalReference')),
             'compiled_mean_values': ' | '.join(str(get_field(m, 'expectedQuantity')) if get_field(m, 'expectedQuantity') is not None else 'unknown' for _, m in matches),
             'compiled_chance_values': ' | '.join(str(get_field(m, 'dropChance')) if get_field(m, 'dropChance') is not None else 'unknown' for _, m in matches),
             'compiled_minimum_values': ' | '.join(str(get_field(m, 'minQuantity')) if get_field(m, 'minQuantity') is not None else 'unknown' for _, m in matches),
@@ -85,6 +89,13 @@ def make_ledger(data):
             'normalization': normalization, 'runtime_state': probe.get('state', 'not probed'),
             'runtime_expected_quantity': mean, 'runtime_chance': runtime_material.get('chance'),
             'runtime_minimum': runtime_material.get('minQuantity'), 'runtime_maximum': runtime_material.get('maxQuantity'),
+            'runtime_mean_derived': runtime_material.get('derivedMean', False),
+            'runtime_mean_basis': runtime_material.get('meanBasis'),
+            'conditional_expected_quantity': runtime_material.get('conditionalExpectedQuantity'),
+            'conditional_value_per_input_copper': (runtime_material['conditionalExpectedValue']/probe['inputCount']
+                if runtime_material.get('conditionalExpectedValue') is not None else None),
+            'operation_unverified': probe.get('operationUnverified', False),
+            'separate_rank_references': json.dumps(runtime_material.get('rankReferences', []), sort_keys=True),
             'synthetic_value_per_input_copper': probe.get('valueCopperPerInput'),
             'visible_in_compact_breakdown': visible,
             'reason': reason if visible or mean is None else reason + '; row may be beyond twelve-row compact display limit',
@@ -134,8 +145,11 @@ def report(data, baseline):
         'calculator_material_entries': sum(len(r['materials']) for r in data['calculators']['processing']),
         'calculator_held': data['calculators']['held'],
         'offline_profiles': len(probes),
+        'baseline_profiles': len(previous),
+        'added_profiles': [p['key'] for p in probes if p['key'] not in previous],
         'offline_states_before': dict(Counter(p['state'] for p in previous.values())),
         'offline_states_after': dict(Counter(p['state'] for p in probes)),
+        'offline_states_after_comparable': dict(Counter(p['state'] for p in probes if p['key'] in previous)),
         'new_numeric_profiles': [p['key'] for p in probes if p['state'] in ('value', 'partial_value')
             and previous.get(p['key'], {}).get('state') == 'no_model'],
         'newly_complete_profiles': [p['key'] for p in probes if p['state'] == 'value'
@@ -162,7 +176,14 @@ def write_reports(data, baseline, folder):
     for token, record in sorted(tokens.items()):
         token_rows.append({'item': token, 'kind': 'compiled-token', 'recordID': record['recordID'],
             'rewardIDs': [r['itemID'] if isinstance(r, dict) else r for r in record['rewards']],
-            'status': 'relationship compiled; character/variant-aware valuation audit in pass 2'})
+            'redemption': record['kind'], 'sourceOrigin': record.get('sourceOrigin', 'research'),
+            'costsComplete': record.get('costsComplete', record['kind']=='open'),
+            'sourceRevision': record['sourceRevision'],
+            'status': ('Reward relationships visible; full exchange costs unresolved, no available redemption action'
+                if record.get('costsComplete') is False else
+                'Shared runtime route covered by integration fixtures; actual class, inventory, variant and prices resolved in client'),
+            'rewardRequirements': record.get('rewardRequirements', {}),
+            'costs': record.get('costs', {})})
     candidates = data['compiled']['compat'].get('ResearchTokenCandidates', {})
     for item in sorted(candidates, key=int):
         if int(item) not in tokens:

@@ -16,7 +16,7 @@ class CalculatorTests(unittest.TestCase):
     def test_quality_sections_are_alternatives_and_unlocks_stay_held(self):
         records, held = calc.build()
         copper = next(r for r in records if r['inputItemID'] == 237359)
-        self.assertEqual(len(copper['materials']), 6)
+        self.assertEqual(len(copper['materials']), 7)
         garnet = next(m for m in copper['materials'] if m['outputName'] == 'Sanguine Garnet')
         self.assertEqual(garnet['expectedQuantity']['value'], .08)
         self.assertEqual(len(garnet['sourceCells']), 2)
@@ -25,6 +25,9 @@ class CalculatorTests(unittest.TestCase):
         self.assertNotIn('value', garnet['minQuantity'])
         self.assertNotIn('samples', garnet['expectedQuantity'])
         self.assertTrue(any(r.get('conditional') for r in held))
+        diamond = next(m for m in copper['materials'] if m['outputName']=='Eversong Diamond')
+        self.assertTrue(diamond['conditionalReference'])
+        self.assertEqual(diamond['expectedQuantity']['value'], .025)
         self.assertTrue(any(r.get('sourceID') == 'bfa-milling-calculator' for r in held))
 
     def test_non_retail_cannot_enter_runtime(self):

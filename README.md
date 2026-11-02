@@ -1,5 +1,7 @@
 # Loot Liquidator
 
+The usable-data tooltip work is tracked in [PR #24](https://github.com/Voodoobrew101/Loot-Liquidator/pull/24), with [pass-2 findings](docs/usable-data-audit/PASS-2.md) and [actual offline token tooltip proofs](docs/usable-data-audit/token-tooltip-proofs.md). Pinned AllTheThings Retail references now supply exchange relationships and explicit costs through the compiler; ATT does not need to be installed. Attribution is retained in [ATT-LICENSE.txt](database/research/ATT-LICENSE.txt).
+
 **What should I do with this item?** Loot Liquidator answers that for every item in your bags, bank, Warband bank, guild bank and BetterBags. It puts a small letter on the item's icon, and hovering the item shows the gold value behind the advice.
 
 It only gives advice. It never sells, mails, crafts or destroys anything for you.

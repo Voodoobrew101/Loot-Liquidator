@@ -46,7 +46,7 @@ for _,case in ipairs({{152506,256218,15.48},{152507,256223,16.39},{152508,256221
     near(options[1].value,total/20)
     local text=render(f,options[1])
     -- A1: ranges may now come from flagged working estimates ('~' marks an estimate).
-    assert(text:find('Per 20 input(s)',1,true) and (text:find('[range ?]',1,true) or text:find('~100%',1,true)))
+    assert(text:find('Per 20 input(s)',1,true) and (text:find('[yield unavailable]',1,true) or text:find('~100%',1,true)))
     f.count=5
     options=LL:ConversionOptions(f)
     assert(not options[1].available and options[1].inputShort and options[1].inputCount==20)
@@ -78,7 +78,7 @@ assert(text:find('50%',1,true) and text:find('[10-20]',1,true) and text:find('  
 material.dropChance.status='provisional'
 assert(render(f,option()):find('~50%',1,true),'provisional probabilities need an approximation marker')
 material.dropChance=field(nil,'unknown');material.minQuantity=field(nil,'unknown');material.maxQuantity=field(nil,'unknown')
-text=render(f,option());assert(text:find('[range ?]',1,true) and not text:find('50%',1,true))
+text=render(f,option());assert(text:find('[yield unavailable]',1,true) and text:find('chance unavailable',1,true) and not text:find('50%',1,true))
 material.dropChance=field(1e-7);material.expectedQuantity=field(1e-7)
 material.minQuantity=field(1);material.maxQuantity=field(1)
 text=render(f,option())

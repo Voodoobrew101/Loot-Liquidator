@@ -34,7 +34,10 @@ LL:SetEvidenceSource('itemdb',false)
 local thorium=assert(LL:ResolveEvidenceModel({id=237366,classID=7,expansionID=11},option,nil,1))
 local value=LL:ValueProcessingModel(thorium,0,true)
 assert(math.abs(value-50.8)<1e-9,'six calculator constants, no saved Resourcefulness bonus or cached zeros')
-assert(#thorium.materials==6,'unlock-only Diamond is not included')
+assert(#thorium.materials==7 and thorium.hasConditionalReferences,'unlock-only Diamond is informational and excluded from the total')
+local conditional
+for _,m in ipairs(thorium.materials)do if m.conditionalExpectedQuantity then conditional=m end end
+assert(conditional and conditional.expectedQuantity==nil and math.abs(conditional.conditionalExpectedQuantity-.22)<1e-12)
 local tip={lines={}}
 function tip:AddLine(s)self.lines[#self.lines+1]=s end
 function tip:AddDoubleLine(a,b)self.lines[#self.lines+1]=a..' | '..b end
@@ -43,6 +46,7 @@ LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=237366,classID=
 local text=table.concat(tip.lines,'\n')
 assert(text:find('0.150',1,true) and text:find('1.140',1,true),'calculator quantities reach actual formatter')
 assert(text:find('Reference fallback',1,true),'provisional reference is labeled')
+assert(text:find('conditional',1,true) and text:find('excluded from current value',1,true),'known conditional values remain visible without inventing eligibility')
 LL:SetEvidenceSource('itemdb',true)
 local primary=assert(LL:ResolveEvidenceModel({id=237366,classID=7,expansionID=11},option,nil,1))
 assert(LL:ValueProcessingModel(primary,0,true)==52,'existing usable research is not replaced or added twice')
@@ -85,4 +89,11 @@ LL.ItemDB.processing[2].materials[1].rankIDs={2,3}
 assert(LL:InitializeItemDB())
 model=assert(LL:ComputeEvidenceModel({id=1},option,nil,1,{}))
 assert(#model.materials==1,'a fallback family cannot be added over an already priced exact rank')
+LL.ItemDB.processing[1].materials[1].expectedQuantity=field(nil)
+LL.ItemDB.processing[1].materials[1].dropChance=field(.25)
+assert(LL:InitializeItemDB())
+model=assert(LL:ComputeEvidenceModel({id=1},option,nil,1,{}))
+assert(#model.materials==1 and model.materials[1].rankIDs and math.abs(model.materials[1].expectedQuantity-9)<1e-12)
+assert(model.materials[1].rankReferences[1].chance==.25,
+    'a usable family mean must retain separately labeled exact-rank occurrence data, without treating it as pooled P')
 print('PASS: archived references and live-read calculator constants reach valuation/tooltip, source gates and primary/family isolation')

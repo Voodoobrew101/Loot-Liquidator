@@ -122,7 +122,9 @@ eq(model(2),nil)
 install({a});a.materials[1].expectedQuantity=field(2,'provisional',20);a.provisional=true
 m=model();near(m.materials[1].expectedQuantity,2);check(m.provisional);eq(m.confidence,20)
 -- Unknown means and known zero stay distinct; zero doesn't require a price.
-a.materials[1].expectedQuantity=field(nil,'unknown',0);eq(model(),nil)
+a.materials[1].expectedQuantity=field(nil,'unknown',0)
+m=model();check(m.materials[1].derivedMean,'supported chance/range can derive an average before anchor selection')
+a.materials[1].dropChance=field(nil,'unknown',0);eq(model(),nil,'without either an average or a supported probability there is no expectation')
 a.materials[1].expectedQuantity=field(0);a.materials[1].dropChance=field(0)
 a.materials[1].minQuantity=field(nil,'unknown',0);a.materials[1].maxQuantity=field(nil,'unknown',0)
 m=model();eq(m.materials[1].expectedQuantity,0);near(LL:ValueProcessingModel(m,0,true),0)

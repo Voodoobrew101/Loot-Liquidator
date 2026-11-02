@@ -244,6 +244,12 @@ function LL:ValidateTokenCatalog(records)
             or r.expectedQuantity~=nil or r.dropChance~=nil or r.probability~=nil then
             return false,'Token catalog requires an ID, explicit scope, a confidence and at least one https source (reviewed records: the full review)'
         end
+        if (r.costsComplete~=nil and type(r.costsComplete)~='boolean')
+            or (reviewed and r.costsComplete==false)
+            or (r.rewardSelection~=nil and r.rewardSelection~='choice' and r.rewardSelection~='class')
+            or (r.rewardLinks~=nil and type(r.rewardLinks)~='table') then return false,'Invalid token redemption metadata' end
+        if (r.rewardClassMasks~=nil and type(r.rewardClassMasks)~='table')
+            or (r.rewardRequirements~=nil and type(r.rewardRequirements)~='table') then return false,'Invalid reward eligibility metadata' end
         seen[r.recordID]=true
         local urls={}
         for _,url in ipairs(r.sourceURLs) do
@@ -262,7 +268,15 @@ function LL:ValidateTokenCatalog(records)
         for _,id in ipairs(r.rewards) do
             if not positive(id) or id==r.tokenID or rewards[id] then return false,'Invalid token reward identity' end
             rewards[id]=true
-            if r.kind=='exchange' then
+            local link=r.rewardLinks and r.rewardLinks[tostring(id)]
+            if link~=nil and (type(link)~='string' or tonumber(link:match('item:(%d+)'))~=id) then return false,'Invalid exact reward link' end
+            local mask=r.rewardClassMasks and r.rewardClassMasks[tostring(id)]
+            if mask~=nil and (not positive(mask) or mask>=2^13) then return false,'Invalid reward class mask' end
+            local requirement=r.rewardRequirements and r.rewardRequirements[tostring(id)]
+            if requirement~=nil and (type(requirement)~='table'
+                or (requirement.minimumLevel~=nil and not positive(requirement.minimumLevel))
+                or (requirement.unverified~=nil and type(requirement.unverified)~='boolean')) then return false,'Invalid reward requirements' end
+            if r.kind=='exchange' and (reviewed or r.costsComplete~=false) then
                 local costs=type(r.costs)=='table' and r.costs[tostring(id)]
                 if not array(costs) or #costs==0 then return false,'Exchange reward requires complete costs' end
                 local hasToken=false
@@ -446,12 +460,37 @@ local function sourceModel(self,f,option,r)
         sourceKey=r.sourceKey,baselineProfile=r.baselineProfile,baselineStatus=r.baselineStatus,
         duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source,
         referenceApplicability=r.referenceApplicability,
+        operationUnverified=r.operationUnverified,
         adjustment=(r.baselineStatus or r.referenceApplicability=='unverified-reference')
             and 'provisional source estimate / baseline not normalized' or nil}
     for _,m in ipairs(r.materials) do
-        model.materials[#model.materials+1]={id=m.id,expectedQuantity=m.expectedQuantity.value,
+        local material={id=m.id,expectedQuantity=m.expectedQuantity.value,
             chance=m.dropChance.value,probabilityVerified=m.dropChance.status=='verified' or m.dropChance.status=='measured',
             minQuantity=m.minQuantity.value,maxQuantity=m.maxQuantity.value}
+        if m.conditionalReference then
+            material.conditionalExpectedQuantity=material.expectedQuantity
+            material.conditionalRequirement=m.conditionalReference
+            material.expectedQuantity=nil
+        end
+        -- Resolve supported P(hit) x conditional yield before anchor selection.
+        -- Previously an all-missing-mean record was rejected before this could
+        -- run. This is a modeled expectation, never another measured study.
+        if not m.conditionalReference and self:EvidenceReliability(m.expectedQuantity,r)==0
+            and self:EvidenceReliability(m.dropChance,r)>0
+            and ((material.chance==0) or
+                (self:EvidenceReliability(m.minQuantity,r)>0 and self:EvidenceReliability(m.maxQuantity,r)>0)) then
+            local _,average,filled=self:FillChanceOrAverage(material.chance,nil,material.minQuantity,material.maxQuantity)
+            if material.chance==0 then average=0;filled='average' end
+            if filled then
+                local stated=math.min(m.dropChance.confidence or UNKNOWN_CONFIDENCE,
+                    m.minQuantity.confidence or UNKNOWN_CONFIDENCE,m.maxQuantity.confidence or UNKNOWN_CONFIDENCE)
+                material.expectedQuantity=average
+                material.derivedExpected={value=average,status='modeled',
+                    confidence=math.floor(stated*LL.FILLED_CONFIDENCE_FACTOR+.5),
+                    assumption='P(hit) times midpoint of stated conditional yield range'}
+            end
+        end
+        model.materials[#model.materials+1]=material
     end
     if r.sourceKey~='itemdb' then return model end
     if self.ApplyProfessionModel then model=self:ApplyProfessionModel(f,option,model) end
@@ -459,6 +498,22 @@ local function sourceModel(self,f,option,r)
     local verified=self.ApplyVerifiedMechanics and self:ApplyVerifiedMechanics(f,option,model) or model
     if verified~=model and verified.mechanicsApplied then verified.adjustment='character-adjusted'..(verified.unreviewedRule and ' / research rule, not yet reviewed' or '') end
     return verified
+end
+local function modelMetadata(original,material,field,modelField)
+    local meta=copy((field=='expectedQuantity' and material.derivedExpected) or original[field])
+    meta.value=material[modelField]
+    if material.transformConfidence then meta.confidence=math.min(meta.confidence,material.transformConfidence) end
+    return meta
+end
+local function unavailableReason(record,material)
+    local conditions=record.researchConditions or {}
+    if conditions.eligibilityStatus=='REQUIRES_ORE_SPECIFIC_PROFICIENT_PROCESSOR_SPECIALIZATION' then
+        return 'Requires ore-specific Proficient Processor unlock; rate not established for this profile'
+    end
+    for _,blocker in ipairs(material.expectedQuantity.blockers or {}) do
+        if blocker=='SOURCE_ZERO_NOT_PROVEN' then return 'Source zero is unverified; no supported average for this profile' end
+    end
+    return 'Average unavailable for this source/character context'
 end
 -- C2: borrow from a sibling. The same herb or ore at another quality rank is a
 -- different item with the same name. When an item has no usable data, the
@@ -550,11 +605,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
     if option.name=='Disenchant' then include(gearKey(f)) end
     local eligible,transformed,hasExpected,staleRecord={},{},{},{}
     for _,r in ipairs(records) do
-        local hasMean=false
-        for _,material in ipairs(r.materials) do
-            if self:EvidenceReliability(material.expectedQuantity,r)>0 then hasMean=true;break end
-        end
         local model=sourceModel(self,f,option,r)
+        local hasMean=false
+        for i,material in ipairs(model.materials) do
+            if self:EvidenceReliability(modelMetadata(r.materials[i],material,'expectedQuantity','expectedQuantity'),r)>0 then hasMean=true;break end
+        end
         transformed[r]=model
         hasExpected[r]=hasMean
         -- Applicability defines the output universe. An unknown expectation must
@@ -614,8 +669,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
     for _,r in ipairs(eligible) do
         if hasExpected[r] and (not anchor or sourcePriority[r.sourceKey]==sourcePriority[anchor.sourceKey]) then
             local strength=0
-            for _,material in ipairs(r.materials) do
-                strength=math.max(strength,self:EvidenceReliability(material.expectedQuantity,r))
+            for i,material in ipairs((transformed[r] or sourceModel(self,f,option,r)).materials) do
+                strength=math.max(strength,self:EvidenceReliability(modelMetadata(r.materials[i],material,'expectedQuantity','expectedQuantity'),r))
             end
             if staleRecord[r] then strength=strength*STALE_FACTOR end
             if not anchor or strength>anchorStrength then anchor,anchorStrength=r,strength end
@@ -646,7 +701,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
         result.confidenceUnscored=true -- capture quality weights are not scientific review
         result.adjustment='measured character context / unadjusted'
     end
-    local bins,studySeen={},{}
+    local bins,studySeen,outputReasons={},{},{}
+    for _,r in ipairs(eligible) do
+        for _,m in ipairs(r.materials) do outputReasons[m.id]=outputReasons[m.id] or unavailableReason(r,m) end
+    end
     local function sameContext(r)
         if r==anchor then return true end
         return r.referenceContextID and r.referenceContextID==anchor.referenceContextID
@@ -676,30 +734,48 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                 -- A known rank-family expectation already includes its rank
                 -- alternatives. Do not add exact-rank fallback rows on top.
                 local familyCovered=false
+                local unpricedOverlaps={}
+                local rankReferences={}
                 if r.fallbackOnly then
                     for _,existing in pairs(bins) do
-                        if existing.fields.expectedQuantity or original.rankIDs then
-                            for _,rankID in ipairs(original.rankIDs or {}) do
-                                if rankID==existing.id then familyCovered=true end
-                            end
-                            for _,rankID in ipairs(existing.rankIDs or {}) do
-                                if rankID==id then familyCovered=true end
+                        local overlap=false
+                        for _,rankID in ipairs(original.rankIDs or {}) do if rankID==existing.id then overlap=true end end
+                        for _,rankID in ipairs(existing.rankIDs or {}) do if rankID==id then overlap=true end end
+                        if overlap then
+                            if existing.fields.expectedQuantity then familyCovered=true
+                            else
+                                unpricedOverlaps[#unpricedOverlaps+1]=existing.id
+                                local p=existing.fields.dropChance
+                                if p or existing.minQuantity then rankReferences[#rankReferences+1]={id=existing.id,
+                                    chance=p and p.sum/p.weight,minQuantity=existing.minQuantity,maxQuantity=existing.maxQuantity} end
                             end
                         end
                     end
                 end
                 if not familyCovered then
+                -- A wholly unknown exact-rank placeholder may be replaced by
+                -- a supported family reference. Its rank-specific P/range do
+                -- not become the pooled distribution. Priced ranks above are
+                -- always protected from overlap/double counting.
+                if #unpricedOverlaps>0 and (original.rankIDs or not bins[id]) then
+                    for _,overlapID in ipairs(unpricedOverlaps) do bins[overlapID]=nil end
+                end
                 local b=bins[id] or {id=id,quality=original.quality,rarity=original.rarity,
                     rankIDs=original.rankIDs, -- D1c2: rank unknown, priced at the cheapest rank
                     fields={},contributions={},sourceEstimates={}};bins[id]=b
+                if #rankReferences>0 then b.rankReferences=rankReferences end
+                if m.conditionalExpectedQuantity~=nil then
+                    b.conditionalExpectedQuantity=m.conditionalExpectedQuantity*batch/r.inputCount
+                    b.conditionalRequirement=m.conditionalRequirement
+                    result.hasConditionalReferences=true
+                end
                 b.sourceEstimates[r.sourceKey]={expectedQuantity=m.expectedQuantity,dropChance=m.chance,
                     minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,sourceConflict=original.sourceConflict,
                     inputCount=r.inputCount,originalTSM=original.originalTSM,
                     appliedRule=m.appliedProfessionRule or m.appliedExpectationRule}
                 for field,modelField in pairs({expectedQuantity='expectedQuantity',dropChance='chance'}) do
                     local key=r.studyID..':'..id..':'..field
-                    local metadata=copy(original[field]);metadata.value=m[modelField]
-                    if m.transformConfidence then metadata.confidence=math.min(metadata.confidence,m.transformConfidence) end
+                    local metadata=modelMetadata(original,m,field,modelField)
                     local weight=userWeight(self,r.sourceKey,mode)*self:EvidenceReliability(metadata,r)
                     -- These sources fill missing fields only. A second copy of
                     -- a historical rate cannot dilute or double-count an
@@ -721,6 +797,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                         acc.minimum=math.min(acc.minimum or v,v);acc.maximum=math.max(acc.maximum or v,v)
                         acc.sum=acc.sum+v*weight;acc.weight=acc.weight+weight
                         if field=='expectedQuantity' then
+                            if model.operationUnverified then result.operationUnverified=true end
+                            if m.derivedExpected then
+                                b.derivedMean=true;b.filled='average';b.meanBasis=m.derivedExpected.assumption
+                                result.filledFigures=true;result.provisional=true
+                            end
                             local c=(metadata.confidence or 0)>0 and metadata.confidence or UNKNOWN_CONFIDENCE
                             acc.confidence=(acc.confidence or 0)+c*weight
                         end
@@ -782,7 +863,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
         end
         if b.chance and b.expectedQuantity and b.minQuantity and b.maxQuantity
             and (b.expectedQuantity+1e-9<b.chance*b.minQuantity or b.expectedQuantity>b.chance*b.maxQuantity+1e-9) then
-            b.minQuantity=nil;b.maxQuantity=nil;b.boundsSource=nil
+            -- A disagreement is useful evidence. Retain the named source's
+            -- range instead of silently replacing observed bounds with '?'.
+            b.inconsistentFields=true;result.fieldConflict=true
         end
         local stated=e and math.min(100,math.floor((e.confidence or 0)/e.weight+.5))
         -- Fill a missing average from the chance, or a missing chance from the
@@ -804,7 +887,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
             -- option's figure. C1b: from casts and drops when the chance has them; a
             -- filled average counts at half; never above the
             -- average's stated confidence; otherwise the sources' stated confidence.
-            if b.filled=='average' then
+            if b.derivedMean then
+                b.confidence=math.floor(math.min(stated or 0,counts and counts.confidence*LL.FILLED_CONFIDENCE_FACTOR or (stated or 0))+.5)
+            elseif b.filled=='average' then
                 b.confidence=math.floor(b.chanceConfidence*LL.FILLED_CONFIDENCE_FACTOR+.5)
             elseif counts and stated then
                 -- The value comes from the average, so never above its own stated confidence.
@@ -823,6 +908,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
             result.sources[source]=(result.sources[source] or 0)+w/total
         end
         if e then totalContribution=totalContribution+1 else result.unknownOutputs=true end
+        if not e then b.unavailableReason=b.conditionalRequirement and ('Requires '..b.conditionalRequirement..'; conditional estimate excluded from current value')
+            or outputReasons[b.id] or 'Average unavailable for this source/character context' end
         b.fields=nil;b.contributions=nil;b.chanceSources=nil;b.chanceContributions=nil
         result.materials[#result.materials+1]=b
     end
@@ -839,6 +926,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
         result.warning='Compatible sources disagree by more than 2x; confidence discounted'
     end
     if result.unknownOutputs then result.warning='Partial: some output quantities unknown' end
+    if result.fieldConflict then
+        local note='Source average/chance and retained conditional range disagree'
+        result.warning=result.warning and (result.warning..'; '..note) or note
+    end
     if result.referenceFallback then
         local note=result.referenceCorrection and 'Reference fallback; conflicting source mean replaced by a conservative estimate'
             or 'Reference fallback; current skill/patch applicability unverified'

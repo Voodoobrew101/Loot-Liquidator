@@ -35,6 +35,7 @@ def field(value=None):
 def build(data=None, families=None):
     data = json.loads(SOURCE.read_text()) if data is None else data
     families = json.loads(FAMILIES.read_text())['families'] if families is None else families
+    families = {**families, **data.get('outputIdentities', {})}
     aliases = {'Duskshrouded Stone': 'Dusk-Shrouded Stone'}
     records, held = [], list(data.get('unplaced', []))
     for source in data['sources']:
@@ -46,7 +47,6 @@ def build(data=None, families=None):
             for row in group['rows']:
                 if row.get('conditional'):
                     held.append({'sourceID': source['sourceID'], **row, 'reason': 'Unlock mapping required'})
-                    continue
                 name = aliases.get(row['outputName'], row['outputName'])
                 family = families.get(name)
                 if not family or not family.get('source', '').startswith('https://'):
@@ -55,12 +55,18 @@ def build(data=None, families=None):
                 value = constant(row['formula'])
                 if name in outputs:
                     if value != outputs[name]['expectedQuantity']['value']:
-                        raise ValueError('Different quality sections need separate conditions: ' + name)
+                        if not row.get('conditional'):
+                            raise ValueError('Different quality sections need separate conditions: ' + name)
+                        # Show a conservative conditional scenario without
+                        # choosing a rank or adding both quality sections.
+                        outputs[name]['expectedQuantity']['value'] = min(value, outputs[name]['expectedQuantity']['value'])
                     outputs[name]['sourceCells'].append(row['cell'])
+                    outputs[name].setdefault('sourceConstants', []).append(value)
                     continue
                 ids = family['ids']
                 outputs[name] = {'id': ids[0], 'rankIDs': ids if len(ids) > 1 else None,
                     'outputName': name, 'sourceCells': [row['cell']],
+                    'sourceConstants': [value], 'conditionalReference': row.get('conditional'),
                     'expectedQuantity': field(value), 'dropChance': field(),
                     'minQuantity': field(), 'maxQuantity': field()}
             materials = [{k: v for k, v in m.items() if v is not None}

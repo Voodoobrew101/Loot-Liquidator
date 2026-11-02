@@ -70,6 +70,15 @@ db.buildReport.referenceRankPools=0
 for tableName,method in pairs({mill='Mill',prospect='Prospect'}) do
     for input,raw in pairs(references.frozen.rawTables[tableName]) do
         local hint=inputs[input]
+        local unitOnly=hint==nil
+        if unitOnly then
+            -- The raw snapshot explicitly stores amountOfMats per input.
+            -- It can be valued without inventing this item's recipe/batch.
+            -- A discovered live recipe may later supply those requirements;
+            -- this hint on its own is display-only.
+            hint={method=method,batch=1,operationUnverified=true,quantityBasis='per-input'}
+            inputs[input]={method=method,operationUnverified=true,quantityBasis='per-input'}
+        end
         if hint and hint.method==method then
             local pools={}
             for _,family in ipairs(calculators.rankFamilies or {}) do
@@ -89,6 +98,16 @@ for tableName,method in pairs({mill='Mill',prospect='Prospect'}) do
                 end
             end
             local materials={}
+            if unitOnly then
+                for _,m in ipairs(raw) do
+                    if not m.targetQuality then
+                        materials[#materials+1]={id=m.id,referenceVariants={deepCopy(m)},
+                            expectedQuantity={value=m.amountOfMats,status='historical',confidence=20,
+                                assumption='Source mean per input; actual processing recipe/batch not established'},
+                            dropChance={status='unknown',confidence=0},minQuantity={status='unknown',confidence=0},maxQuantity={status='unknown',confidence=0}}
+                    end
+                end
+            end
             for _,pool in ipairs(pools) do
                 local present=false
                 for _,id in ipairs(pool.ids) do if admitted[method..':'..input..':'..id] then present=true end end
@@ -114,6 +133,7 @@ for tableName,method in pairs({mill='Mill',prospect='Prospect'}) do
                     source='Historical Retail TSM quality alternatives; conservative rank-unknown reference',
                     sourceRevision=references.frozen.sourceRevision,sourceKind='historical-rank-pool',
                     fixedReference=true,fallbackOnly=true,provisional=true,
+                    operationUnverified=unitOnly or nil,quantityBasis=unitOnly and 'per-input' or nil,
                     referenceApplicability='unverified-reference',
                     baselineStatus='Unknown rank distribution; source quality alternatives are not additive',materials=materials}
                 db.buildReport.referenceRankPools=db.buildReport.referenceRankPools+#materials
@@ -365,15 +385,33 @@ db.buildReport.tokenRewardsSkipped={}
 -- confidence shown, never marked APPROVED) follow any reviewed ones from the research
 -- export, so a reviewed record for the same token wins and the v3 one is skipped.
 local tokenCandidates={}
+-- Owner's pass-2 clarification: ATT Retail data is an authorized research
+-- source. Static costs are pinned/attributed; no installed-ATT dependency.
+local att=assert(loadfile('database/att-token-baselines.lua'))()
+assert(att.schemaVersion==1,'Unsupported pinned ATT reference schema')
+db.attSourceManifest=att.sourceManifest
 for _,r in ipairs(type(research.tokenRewards)=='table' and research.tokenRewards or {}) do tokenCandidates[#tokenCandidates+1]=r end
 do
     local v3tokens=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))().tokenRewards
     for _,r in ipairs(type(v3tokens)=='table' and v3tokens or {}) do
         assert(type(r)=='table' and tostring(r.recordID):match('^v3token:') and r.independentReview~='APPROVED',
             'Research v3 token lists must use v3token: IDs and are never pre-approved')
+        for _,proof in ipairs(att.curioEvidence or {}) do
+            if proof.tokenID==r.tokenID then
+                r=deepCopy(r)
+                r.sourceURLs[#r.sourceURLs+1]=proof.sourceURL
+                r.sourceOrigin='ATT';r.licenseSPDX='MIT';r.licenseText=att.licenseText
+                r.additionalSourceRevision=proof.sourceRevision
+                if r.candidateRewards and contextIdentity(r.rewards)==contextIdentity(proof.rewards) then
+                    r.candidateRewards=nil;r.confidence0to100=math.max(r.confidence0to100,60)
+                    r.sourceAssumption='Reward membership corroborated by pinned ATT Retail tier data; complete exchange costs unverified'
+                end
+            end
+        end
         tokenCandidates[#tokenCandidates+1]=r
     end
 end
+for _,r in ipairs(att.tokenRewards or {}) do tokenCandidates[#tokenCandidates+1]=r end
 db.buildReport.tokenRewardsFromResearchV3=0
 for index,r in ipairs(tokenCandidates) do
     -- Each record is checked alone, then against everything kept so far
@@ -455,7 +493,9 @@ for _,file in ipairs({baselines,v3}) do
         assert(r.sourceKey=='itemdb' and r.recordID:match('^evidence:'),'Evidence baselines must be itemdb evidence records')
         db.processing[#db.processing+1]=r
         if r.inputItemID then
-            inputs[r.inputItemID]=inputs[r.inputItemID] or {method=r.method,batch=r.inputCount}
+            if not inputs[r.inputItemID] or (inputs[r.inputItemID].operationUnverified and r.sourceKey=='itemdb') then
+                inputs[r.inputItemID]={method=r.method,batch=r.inputCount,expansion=r.expansionID}
+            end
         end
     end
 end

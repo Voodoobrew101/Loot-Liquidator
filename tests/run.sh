@@ -15,6 +15,8 @@ done
 python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are current
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
 python3 tools/reference_calculators.py --check
+python3 tools/att_token_references.py --check
+python3 tests/test_att_token_references.py
 python3 tests/test_reference_calculators.py
 compiled_dir=$(mktemp -d)
 compiled="$compiled_dir/ItemDBRuntime.lua"
@@ -32,6 +34,7 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_cleanup_regressions.lua
 "$lua_bin" tests/test_itemdb_metrics.lua
 "$lua_bin" tests/test_token_catalog.lua "$compiled_dir"
+"$lua_bin" tests/test_token_value_pipeline.lua
 python3 tests/test_token_import.py "$compiled_dir"
 
 "$lua_bin" tests/test_frozen_tsm.lua
@@ -61,6 +64,7 @@ python3 tests/test_research_v3_snapshot.py
 "$lua_bin" tests/test_numeric_refresh_tooltip.lua "$compiled_dir"
 "$lua_bin" tests/test_tooltip_preferences.lua
 "$lua_bin" tests/test_reference_fallback.lua
+"$lua_bin" tests/test_usable_field_flow.lua
 python3 tests/test_research_v3_no_disenchant.py
 python3 tests/test_rank_families.py
 python3 tests/test_input_ranks.py

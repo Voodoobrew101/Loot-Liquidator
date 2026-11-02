@@ -100,10 +100,14 @@ if arg[2]=='--probe' then
             probe.state=value~=nil and (model.partial and 'partial_value' or 'value') or 'no_value'
             probe.valueCopperPerInput=value;probe.referenceFallback=model.referenceFallback
             probe.warning=model.warning
+            probe.operationUnverified=model.operationUnverified
             for _,m in ipairs(model.materials) do
                 probe.materials[#probe.materials+1]={id=m.id,rankIDs=m.rankIDs,expectedQuantity=m.expectedQuantity,
                     chance=m.chance,minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,
-                    netExpectedValue=m.netExpectedValue,referenceFallback=m.referenceFallback}
+                    netExpectedValue=m.netExpectedValue,referenceFallback=m.referenceFallback,
+                    conditionalExpectedQuantity=m.conditionalExpectedQuantity,conditionalExpectedValue=m.conditionalExpectedValue,
+                    unavailableReason=m.unavailableReason,derivedMean=m.derivedMean,meanBasis=m.meanBasis,
+                    inconsistentFields=m.inconsistentFields,boundsSource=m.boundsSource,rankReferences=m.rankReferences}
             end
             option.letter=({Mill='M',Prospect='P',Disenchant='D',Smelt='S'})[r.method]
             option.value=value;option.yieldModel=model;option.available=false
