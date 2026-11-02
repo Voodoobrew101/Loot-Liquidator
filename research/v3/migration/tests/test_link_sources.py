@@ -468,10 +468,13 @@ class Committed(unittest.TestCase):
         for e in self.links:
             if e["kind"] == "candidate":
                 groups.setdefault(e["group"], []).append(e)
-        self.assertEqual(sorted(groups), ["1smgllg", "nameOnlyRow", "s6bfrl-uncommon-gems"])
-        self.assertEqual(len(groups["1smgllg"]), 14)
+        self.assertEqual(sorted(groups), ["nameOnlyRow", "s6bfrl-uncommon-gems"])
         self.assertEqual(len(groups["s6bfrl-uncommon-gems"]), 6)
-        self.assertEqual(len(groups["nameOnlyRow"]), 88)   # 86 until the M10 merge: agents now hold two cohorts the importer had placed by name
+        self.assertEqual(len(groups["nameOnlyRow"]), 92)   # four newer held-output matches are now deliberately unplaced by the importer
+        zkay = {e["id"]: e for e in groups["nameOnlyRow"] if e["id"] in {f"import-study-{i:05d}" for i in range(691, 713)}}
+        self.assertEqual(len(zkay), 22)
+        self.assertEqual({e["status"] for e in zkay.values()}, {"linked"})
+        self.assertTrue(all(e["agentRecordCount"] > 0 and e["source"] == "reddit:zkay8v" for e in zkay.values()))
         for g in groups.values():
             for e in g:
                 self.assertTrue(e["reason"])

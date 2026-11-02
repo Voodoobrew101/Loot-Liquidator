@@ -9,6 +9,7 @@ games and stay apart.
 Run from the repository root:
   python3 -m unittest discover -s research/v3/migration/tests -v
 """
+import json
 import os
 import sys
 import unittest
@@ -85,21 +86,19 @@ class Corpus(unittest.TestCase):
         casts = {e["input"]: e["studyCasts"] for e in results if e["method"] == "Prospect" and e["outputItemID"] == 153700}
         self.assertEqual({k: casts[k] for k in ("152512", "152513", "152579")}, {"152512": 253.0, "152513": 322.0, "152579": 555.0})
 
-    def test_the_identity_reports_differing_groups_are_one_pair_of_copies(self):
-        """After the merge identity_report.py lists 10 `differing` groups, all family:* groups of Prospect 194545 and all the same two
-        studies: Superbondez's 400-ore Prismatic Ore cohort recorded twice by the dragonflight agent (S17). The report compares a group's
-        rows one by one, and a family group holds one row per input rank per study, so it pairs rows of different ranks. At study level
-        every numeric row of each copy has its own row in the other (the copy has two extra labelled rows with no numbers) and the two
-        have one canonical vector, so nothing is dropped. Any other differing group fails this test and needs a look."""
+    def test_the_identity_report_keeps_identical_ranked_copies_out_of_conflicts(self):
+        """Source-verified copies must not appear as differing merely because a
+        family group has multiple output ranks or unresolved same-name variants.
+        Real conflicting measurements must still fail this strict corpus check."""
         import identity_report as ir
         rows = b.load()
         differing = ir.report(rows)["stillDiffering"]
-        self.assertEqual(len(differing), 10)
+        self.assertEqual(
+            differing, [],
+            "Unresolved identity conflicts require source/cohort review:\n"
+            + json.dumps(differing, indent=2, sort_keys=True),
+        )
         pair = {"wowhead-prismatic-ore-superbondez-400-80", "wowhead-superbondez-prismatic-ore-400"}
-        for g in differing:
-            self.assertEqual((g["method"], g["input"]), ("Prospect", "194545"))
-            self.assertTrue(g["output"].startswith("family:"), g)
-            self.assertEqual(set(g["studies"]), pair)
         ids = b.item_names(rows)
         studies = {}
         for r in rows:
