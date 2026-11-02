@@ -807,20 +807,23 @@ NEW_SOURCES = {
     "reddit:zzyjzu": ("import", "Jan 2 2023 comment: ~28,000 R3 Serevite, 24 R3 Illimited Diamonds (the Jan 9 comment in the "
                                 "same thread is a copy of agent-held reddit 108782r and is skipped)"),
     "reddit:1fb0vv5": ("import", "Luredrop milling: 11 to 17 pigment from each milling, as the author saw it"),
-    "reddit:1smgllg": ("import", "calculator-thread commenter's approximate per-prospect rates (under 5,000 ore in all)"),
     "wow-professions.com/tbc/prospecting": ("import", "published TBC prospecting chance table: reference rows not already in v3"),
     "wowhead:spell=190385": ("import", "Wowhead comment 516803: six WoD herbs, 2,000 each, mass-milled, Cerulean Pigment totals"),
+    # Reconciled 2026-11-02: 1smgllg's 17 approximate, cast-unknown reference
+    # rows are already preserved by the Midnight worker; reimporting its v2
+    # shorthand would duplicate the source as a pseudo-study. The qualitative
+    # 1fvhzy0 and y3e8ek threads are also held by v3, with no importable
+    # standalone per-cast material outcomes. Keep their mapper for historical
+    # unit fixtures, but retire dead NEW_SOURCES decisions (M03b).
     # skipped: same cohort already held under another URL
     "wowhead:item=192870": ("skip", "Bugy's two 2,000-ore Draconium cohorts (3 and 8 Illimited Diamonds): the same author's table is "
                                     "held by the dragonflight agent under wowhead spell=374627 (S17 copy)"),
     # skipped: qualitative, mechanics, UI or economics claims without output quantities
     "reddit:1fdvkmy": ("skip", "a commenter's proposed 30% Resourcefulness return, no measured outputs"),
     "reddit:1g8kbaq": ("skip", "Prospect All queue behaviour (1,000-ore stack queues 200 casts); mechanics, no outputs"),
-    "reddit:y3e8ek": ("skip", "2022 original discussion of the Dragonflight beta, qualitative"),
     "wowhead:news=recent-prospecting-changes-wowhead-economy-weekly-wrap-up-351-349956@ptr":
         ("skip", "news coverage of the Oct 2024 prospecting hotfix; rate-change context"),
     "reddit:10s9ol9": ("skip", "Resourcefulness saved-ore rate (mechanics), no outputs"),
-    "reddit:1fvhzy0": ("skip", "pigment multipliers (x1.52, x1.49) and a multi-stage cipher count; no base yield or outputs per mill"),
     "reddit:1jc2ya5": ("skip", "qualitative rank-versus-yield discussion"),
     "reddit:1v5esk0": ("skip", "crushing rate forecast (dust per gem); the author's 100,000 ore and 13,000 gems are not a processed batch"),
     "reddit:1vknxyy": ("skip", "same author repeats the crushing rate; no cohort"),
