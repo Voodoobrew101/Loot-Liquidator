@@ -337,9 +337,12 @@ def material(item, estimates):
     return {
         **extra,
         'id': item, '_casts': casts,
-        'dropChance': field(None if chance is None else round(chance, 6), confidence, casts_r,
+        # Keep coupled values at full precision. Rounding chance and quantity
+        # independently can violate E = P * stack for a fixed-size drop, even
+        # though the underlying counts agree. Lua serialization uses repr().
+        'dropChance': field(chance, confidence, casts_r,
                             'measured' if chance_measured else 'provisional'),
-        'expectedQuantity': field(None if average is None else round(average, 6), confidence, round(qty_casts, 4),
+        'expectedQuantity': field(average, confidence, round(qty_casts, 4),
                                   'measured' if average_measured else 'provisional'),
         'minQuantity': field(lo, confidence, casts_r, 'measured' if range_observed else 'provisional'),
         'maxQuantity': field(hi, confidence, casts_r, 'measured' if range_observed else 'provisional'),
