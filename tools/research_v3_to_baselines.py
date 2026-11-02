@@ -332,17 +332,18 @@ def material(item, estimates):
     confidence = rate_confidence(drops, casts)
     if not chance_measured:
         confidence //= 2   # a chance worked out from an average: half confidence (their S5, our C1b)
+    # A precise occurrence count does not measure the average stack. Match
+    # the runtime's half-confidence policy for a mean derived from a range.
+    quantity_confidence = confidence if average_measured else confidence // 2
     casts_r = round(casts, 4)
     extra = {'rankIDs': rank_ids} if rank_ids else {}
     return {
         **extra,
         'id': item, '_casts': casts,
-        # Keep coupled values at full precision. Rounding chance and quantity
-        # independently can violate E = P * stack for a fixed-size drop, even
-        # though the underlying counts agree. Lua serialization uses repr().
         'dropChance': field(chance, confidence, casts_r,
                             'measured' if chance_measured else 'provisional'),
-        'expectedQuantity': field(average, confidence, round(qty_casts, 4),
+        'expectedQuantity': field(average, quantity_confidence, round(qty_casts, 4),
+
                                   'measured' if average_measured else 'provisional'),
         'minQuantity': field(lo, confidence, casts_r, 'measured' if range_observed else 'provisional'),
         'maxQuantity': field(hi, confidence, casts_r, 'measured' if range_observed else 'provisional'),

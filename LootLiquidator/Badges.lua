@@ -605,7 +605,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                             and (" [x%d]"):format(m.minQuantity)
                             or (" [x%d-%d]"):format(m.minQuantity,m.maxQuantity))
                     else left=left.." [range ?]" end
-                    left=left.."  EV "..UnitsText(m.expectedQuantity)
+                    left=left.."  "..UnitsText(m.expectedQuantity)
                     -- Optional per-material confidence (A3), off by default.
                     if LA.db.showMaterialConfidence==true and type(m.confidence)=="number" then
                         left=left..(" (%d%%)"):format(m.confidence)

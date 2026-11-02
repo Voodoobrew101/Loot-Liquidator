@@ -49,6 +49,23 @@ ok(m['dropChance']['status'] == 'provisional' and m['expectedQuantity']['status'
 ok(m['dropChance']['confidence'] == eb.rate_confidence(25, 50) // 2, 'derived chance at half confidence')
 near(m['expectedQuantity']['samples'], 100.0, 'average counts its own casts (x0.5 until scaling rules)')
 
+# Fixed positive yields must survive serialization as a consistent pair.
+# Real new cohorts have 2/41 hits returning exactly two units (4/41 mean).
+for hits, casts, units in [(2, 41, 2), (3, 29, 2), (3, 41, 3), (1, 44, 2), (1, 3, 3)]:
+    exact = v3.material(5, [{'simulation': {'chanceBeta': [hits + .5, casts - hits + .5]},
+        'chanceSource': 'measured', 'averageSource': 'measured', 'rangeSource': 'observed',
+        'average': hits * units / casts, 'range': [units, units], 'studyCasts': casts}])
+    p, e = exact['dropChance']['value'], exact['expectedQuantity']['value']
+    ok(p * units - 1e-9 <= e <= p * units, 'serialized fixed yield stays inside probability bounds')
+    near(e, hits * units / casts, 'fixed yield retains source precision', 1e-10)
+
+derived = v3.material(5, [{'simulation': {'chanceBeta': [1500.5, 500.5]},
+    'chanceSource': 'measured', 'averageSource': 'estimated', 'rangeSource': 'observed',
+    'average': 3, 'range': [2, 6], 'studyCasts': 2000}])
+ok(derived['expectedQuantity']['status'] == 'provisional', 'midpoint mean is never marked measured')
+ok(derived['expectedQuantity']['confidence'] == derived['dropChance']['confidence'] // 2,
+   'large hit counts do not give a guessed average full occurrence confidence')
+
 # ---- the real build
 # D1c5: the pinned calculator matches correction paths exactly. Windows paths
 # must be normalized before corrections, or excluded/conditional studies return.
