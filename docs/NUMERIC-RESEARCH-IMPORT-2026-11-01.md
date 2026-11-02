@@ -1,20 +1,20 @@
 # Numerical research import review
 
-Candidate version: `0.11.0-claude.23`; base main `905956d`.
+Merged baseline version: `0.11.0-claude.23`, main `9c20291e02915254f9717d771b32e36efd0b672c` (PR #19; prior main `905956d`). Research Manager activation rechecked the manifest and generated counts below. The earlier report named a superseded source pin and understated the final merged data.
 
 ## Included data
 
-The pinned v3 research snapshot advances from `9a22e2787ec133419bad9bce66d036219e2439a4` to `2d6cbbe383bdf88ed18432b38024bbb878c21dcf`. The snapshot remains a verbatim copy of that research commit, with its calculator dependencies included. Worker evidence and the research branch are not edited by this integration.
+The pinned v3 research snapshot advances from `9a22e2787ec133419bad9bce66d036219e2439a4` to **`4df9ae8b1359d934828e4d0e6d39a9a4dba26fae`**, as recorded in `database/research/v3-snapshot/SNAPSHOT.json`. The snapshot remains a verbatim copy of that research commit, with its calculator dependencies included. Worker evidence and the research branch are not edited by this integration.
 
 | Compiled v3 coverage | Previous | Candidate |
 | --- | ---: | ---: |
-| Processing records | 89 | 199 |
-| Materials | 443 | 766 |
+| Processing records | 89 | 206 |
+| Materials | 443 | 780 |
 | Token records | 229 | 230 |
 | Token rewards | 645 | 652 |
 | Listed disenchant gear-group gaps | 35 | 33 |
 
-The current candidate includes 116 disenchant, 48 milling and 35 prospecting records. These counts describe coverage, not current-patch scientific verification. Exact-item records do not automatically cover every other item in their expansion/rarity group.
+The merged baseline includes 123 disenchant, 48 milling and 35 prospecting records. These v3 counts are a subset of 265 active ItemDB processing records; 137 historical legacy records are stored separately. These counts describe database contents, not actionable item coverage or current-patch scientific verification. Exact-item records do not automatically cover every other item in their expansion/rarity group.
 
 ## Integration corrections
 
@@ -36,7 +36,13 @@ The fixture checks source-count preservation, probability/range/quantity output,
 
 ## Validation performed
 
-The full addon suite passed locally under actual Lua 5.1 (Lupa on Windows), including syntax, deterministic generated-data checks, package validation, Settings, source gates, projections, token import, recording, counts model and numeric tooltip fixtures. The baseline suite passed 2,551 assertions and the runtime v3 suite 892; the scaling audit passed 13 checks with no real numeric profession coefficients shipped. GitHub's native Linux PR suite is also required before recommending merge. No live WoW test of this new candidate is claimed.
+The original implementation was tested under actual Lua 5.1 (Lupa on Windows). Research Manager activation reran `bash tests/run.sh` under native Lua 5.1 against merged main: all checks passed, including 2,600 v3 baseline assertions and 906 v3 runtime assertions. Main's GitHub addon run 41379049334 passed. The separate research-branch migration workflow failed 6 of 402 tests at reviewed head `9bc7f267`; this failure is distinct from the passing addon pipeline. The scaling audit passes 13 checks with no real numeric profession coefficients shipped. No live WoW test is claimed.
+
+## Research Manager follow-up (separate candidate)
+
+The S21 import correction restores one previously discarded Eternity Amber family output for `Prospect 194545 x5`, giving **781** material entries while retaining the same 206 records and original evidence pin. The original four units over 80 completed prospects provide unconditional E=0.05; P(hit), conditional range and exact output rank remain provisional/unknown as appropriate. The family is priced through existing `rankIDs=[192849,192850,192851]` behavior, never described as measured rank 1. Existing material values are unchanged. The pinned evidence/calculator files are unchanged; the import's versioned in-memory output-identity correction is recorded in generated provenance.
+
+The follow-up passes the full native Lua 5.1 addon suite, three new S21 regressions, and a real-engine/expanded-tooltip fixture at synthetic prices. Its v3 suites pass 2,603 baseline and 907 runtime assertions. These are candidate results awaiting PR Director review, not changes already integrated into main. See `docs/research-manager/CHECKPOINT.md` and `baseline.json`.
 
 ## Remaining gaps
 
@@ -46,4 +52,4 @@ Item **272246** still has no new exact-item v3 record in this pin; this import d
 
 PR #13 still has five conflicts in older JS preview tooling against the current research branch. That toolchain is separate from this pinned Python v3 import; resolving it is not a dependency for this candidate. Do not merge its complete old tree over the modern research branch or this addon.
 
-This candidate requires owner approval before merging to main. No release ZIP, live installation, branch deletion, PR closure or production merge is performed by this review.
+PR #19 is already merged. The Research Manager follow-up requires separate PR Director integration; this activation performs no release, live installation, branch deletion, PR closure or production merge.

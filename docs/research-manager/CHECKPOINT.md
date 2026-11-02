@@ -1,0 +1,72 @@
+# Loot Liquidator — Research Manager activation
+
+Operating instructions: the owner's supplied v1.0 master prompt is preserved in `OPERATING-INSTRUCTIONS.md` and adopted for this role. This extends the former coordinator's engineering responsibility; workers retain their evidence ownership. The PR Director retains merge/closure authority.
+
+Baseline reviewed November 1, 2026, 11:57 PM America/Los_Angeles. Main: `9c20291e02915254f9717d771b32e36efd0b672c`; pinned evidence: `4df9ae8b1359d934828e4d0e6d39a9a4dba26fae`. Research reviewed at `9bc7f2673ab417f922a2a402f6f3ff8914a3c06b`, then refreshed to `f87046829c7fb2dd6e05346128aa8e76855eb760`. The new research head is not imported by this candidate.
+
+## Findings and effectiveness
+
+Evidence collection is active and useful, but the program is underperforming against usable recommendations and the agreed baseline/scaling goal. All five ChatGPT automations are enabled, and their latest recorded runs completed with matching repository commits. The four latest worker reports add 66 evidence rows, but report no completed compiled-and-tooltip-verified coverage closure. That row count is throughput, not 66 independent studies, accepted scientific findings, or new actionable items. Recent work supplies historical totals and occurrence counts while essential rank, denominator, quantity and character conditions remain unresolved. The coordinator repeatedly flags engineering problems but its old scope defers compiler repairs to a reviewer. The expanded manager remit addresses that ownership gap.
+
+The historical pause in `claude/HANDOFF.md` is superseded by the live automation state and recent runs. Current enabled jobs are Coordinator, Validation (Legacy), Evidence (Dragonflight), Baseline (War Within), and Completion (Midnight), staggered hourly at minutes 0/40/30/20/10. The manager should preserve these schedules and avoid creating another coordinator.
+
+The recorded ChatGPT–Claude discussion is `research/v3/strategy.md` on the research branch. S1 calls for paired skill/context data; S5 explicitly permits supported midpoint estimates in gold calculations when visibly provisional; S7 requires cohort deduplication; S8 separates occurrence denominators and input savings; S9 rejects a global confidence cutoff; S10 distinguishes recommendation confidence from drop confidence. `claude/research-agent-proposal.md` and owner decision 16 in `claude/HANDOFF.md` specify minimum-required-skill baselines plus research-derived scaling before compilation. Later owner decisions remove frozen TSM yield fallback and use TSM only for prices; the older issue #5 design is superseded on that point.
+
+The current addon has the import, counts model, observation/export path, source controls and numerical tooltip rendering. It ships zero numerical profession mechanic rules and empty profession/personal-patch rule lists. Half-weighting unknown-context studies does not convert them into measured minimum-skill baselines. No calibrated recommendation-win probability or current-Retail baseline verification was established. These remain outcomes to deliver, not grounds to fabricate coefficients or suppress defensible provisional values.
+
+The original Claude artifact could not be read: Firecrawl reported insufficient credits, and no callable Claude document or browser tool was available. This review uses the repository's recorded agreement and owner decisions; it does not claim to have reviewed the full artifact or searched arbitrary private ChatGPT/Claude history. Automation result history was accessible and reviewed.
+
+## Baseline dashboard
+
+| Metric | Main baseline | Isolated S21 candidate |
+| --- | ---: | ---: |
+| Eligible-item census / actionable coverage | Not measured | Not measured |
+| Active ItemDB processing records (all) | 265 | 265 |
+| Imported v3 method/input/batch records | 206 | 206 |
+| Exact v3 input IDs / gear-group records | 201 / 5 | 201 / 5 |
+| Imported v3 material entries | 780 | 781 |
+| Expected quantities: measured / provisional / unknown | 572 / 155 / 53 | 573 / 155 / 53 |
+| Records with all listed expectations present | 172/206 (83.5%) | 172/206 (83.5%) |
+| Records with at least one listed expectation | 198/206 (96.1%) | 198/206 (96.1%) |
+| Real numerical profession mechanic rules | 0 | 0 |
+| New evidence accepted by this activation | — | 0 |
+| Numerical defects reproduced / corrected | 1 / 0 integrated | 1 / 1 proposed |
+| New regressions observed in addon suite | — | 0 |
+| Full addon suite | Passed | Passed |
+| Actual WoW testing | Not run | Not run |
+
+The denominator for data readiness is exactly the pinned converter's method/input/batch records, including five gear groups. It is not a Retail item census. An existing record or all its listed means being filled does not prove that every output is known, the method is currently legal, the character can perform it, or a best action is supported. Raw expected-quantity unknowns may be filled by labeled runtime approximations; they are not a count of blank rendered tooltip cells. All 206 v3 records remain provisional in character/current-context applicability, including individually measured fields.
+
+For the primary KPI, freeze a versioned inventory of supported exact input items plus explicit gear eligibility rules and a declared character/build/recipe/skill profile. Count only items where the actual decision engine can compare supported actions under a declared price environment and eligibility state. Report provisional and complete decisions separately. Report real market-price gaps separately from missing research; use separately labeled synthetic complete prices for a controlled engine census. Until that exists, eligible items, actionable count, coverage percentage and comparable percentage-point change stay unknown. A new output entry alone does not increase item coverage.
+
+Reproduce data readiness from repository root: `python3 tools/audit_research_baseline.py`. `baseline.json` records before/after field counts, missing-expectation identities, exclusions, artifact hashes and validation status.
+
+## Pipeline and tooltip diagnosis
+
+Actual numerical path: append-only `research/v3/evidence` plus corrections/conditions/rate changes → immutable `database/research/v3-snapshot` → pinned `build_estimates.py`, invoked with import identity normalization → `tools/research_v3_to_baselines.py` → `database/research-v3-baselines.lua` → `tools/compile_itemdb.lua` → TOC-loaded `LootLiquidator/ItemDBRuntime.lua` → `Database.lua` resolution/counts → `ConversionEngine.lua` valuation/eligibility → `Badges.lua` tooltip.
+
+The converter excludes references from independent study counts, and keeps the original evidence/calculator snapshot unchanged. Tokens are compiled alongside yields (230 token records / 652 rewards). Seven curio exchanges still lack costs. The snapshot audit excludes 74 mixed-batch estimates, nine uncheckable unlock estimates, eight missing-batch estimates, unresolved input/output families and 22 unrecognized gear-group estimates; these are not 113 distinct eligible items. The rank audit independently reports 113 unresolved identities and four preserved conflicts. Existing secondary token and no-disenchant work must continue after high-value numerical blockers.
+
+The passing 24995 and 258931 fixtures show that numeric data reaches the actual engine and formatter with synthetic 100-copper prices. Their mocked character eligibility is not proof of live disenchant eligibility. S23 flags the current Warmaul eligibility conflict; 272246 remains unresolved. Default breakdowns cap material rows at twelve, with full research details exposing all rows; this explains omission of some materials, not unknown numerical fields. The broad claim that the addon is simply failing to report all existing data is not established.
+
+S21 is a confirmed integration defect: the pinned estimator's `same_output()` treats any nonzero row as the same material during cross-study suppression. Four Amber units and four Diamond units in two copies of the same 80-cast study collide. The import now requires matching normalized output tokens, preserving one Amber family estimate E=4/80=0.05 and the independent Diamond estimate. No existing compiled material values changed; one entry is restored. Amber P(hit)/range remain provisional, rank remains unknown, and the existing cheapest-priced-rank policy is retained. This does not resolve S26's same-name rank ambiguity.
+
+## Validation and completed actions
+
+Repository access, branch heads, four existing open PRs (#3/#7/#13/#14), prior checkpoints, current roles/schema/mechanics/queue/strategy, automation schedules and all five latest recorded results were reviewed. PR #19 is merged; its actual source pin is 4df9ae8. Older #7/#13 preview machinery is distinct from the current pinned Python import. No competing snapshot refresh was opened.
+
+An isolated `research/manager-activation` worktree was created from current main. The baseline full addon suite passed. A versioned in-memory identity correction, three S21 regressions, regenerated baseline/runtime, actual-engine expanded-tooltip proof, reproducible readiness audit and corrected import documentation were completed. The full candidate suite passes native Lua 5.1, including 2,603 baseline and 907 runtime assertions. The evidence pin, original observations, existing material values, token/restriction lists and current eligibility policies are preserved. No live prices or skill formulas were invented.
+
+Separate current research validation: five-agent completion run [41407622764](https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41407622764) passed; migration run [41407622708](https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41407622708) failed 6/402. The six failures concern committed dispositions, source links, old-study imports, held-source decisions, historical imported cohort output and the generated migration report. The later reproduction step was skipped after test failure. These are real research reproducibility blockers; a passing addon suite does not resolve them. Main addon run [41379049334](https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41379049334) passed.
+
+Git CLI refresh was unavailable because the configured proxy could not connect. Authenticated GitHub tools supplied current branches, files, discussions, CI runs/logs and publication capability. No network-policy bypass was attempted.
+
+## Next priorities
+
+1. Have the PR Director review the S21 correction and its scoped generated diff; refresh the authoritative research estimator through its own reviewed change so a later snapshot retains the fix. Do not merge/close a PR from the manager role.
+2. Repair S27's six migration reproducibility failures without changing evidence to satisfy tests or bypassing validation. Reconcile held-source dispositions, regenerate only justified outputs and pass all 402 migration tests before importing later research.
+3. Establish the frozen eligible-item/profile census and controlled action-selection/tooltip audit. Confirm 24995/272246 current eligibility, original item/bonus/build conditions and the installed addon/data revision before diagnosing a live blank report.
+4. Use existing T0045/T0005/T0039/T0037 and rank tasks to recover current Midnight milling units, Umbral Tin per-output hit distributions, and paired skill/context measurements. Resolve source unit/rank conflicts (S25/S26/S28/S29/S30) before importing affected records; totals alone never become measured hit counts.
+5. Measure verified runtime closures and time spent per source/cohort, with shared source deduplication. Retain the four worker ownership boundaries, reduce repeat retrieval, and pursue real minimum-skill/scaling evidence. Keep curios/token costs and no-disenchant conflicts as secondary work.
+
+The manager queue records these states and acceptance criteria in `queue.json`. No production merge, release, PR closure or live-game verification is part of this activation.

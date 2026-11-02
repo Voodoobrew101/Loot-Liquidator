@@ -53,6 +53,7 @@ python3 tools/evidence_to_baselines.py tests/fixtures/evidence-v3 "$compiled_dir
 "$lua_bin" tests/test_evidence_baselines.lua "$compiled_dir/ItemDBFixture.lua"
 python3 tests/test_research_v3_baselines.py
 python3 tests/test_research_v3_precision.py
+python3 tests/test_research_v3_dedupe.py
 python3 tests/test_research_v3_snapshot.py
 "$lua_bin" tests/test_research_v3_runtime.lua
 "$lua_bin" tests/test_numeric_refresh_tooltip.lua "$compiled_dir"
