@@ -44,7 +44,7 @@ end,GetItemInfoInstant=function(value)
     local id=idOf(value);local item=items[id]
     if item then return id,'Armor','Plate',item.loc or '',0,item.class,4 end
 end,RequestLoadItemDataByID=function()end}
-C_TransmogCollection={GetItemInfo=function(value)local id=idOf(value);return id,id end,
+C_TransmogCollection={GetItemInfo=function(value)local id=idOf(value);return id,id+(tostring(value):find('exactvariant',1,true) and 1000000 or 0) end,
     GetAppearanceSourceInfo=function(id)return {isCollected=id~=missing}end,
     GetAppearanceInfoBySource=function(id)return {appearanceIsCollected=id~=missing,appearanceIsUsable=true}end}
 LL.ItemClassMasks={[271457]=1,[271466]=2,[271475]=32,[900003]=2}
@@ -99,6 +99,15 @@ synthetic.rewardLinks={['271466']='item:271466:exactvariant'};LL:Invalidate()
 r=LL:Evaluate('item:900002',{isSoulbound=true})
 assert(r.tokenPiece.vendor==55*G and r.tokenPiece.variantVerified and not r.tokenPiece.variantNote)
 assert(r.tokenPiece.link=='item:271466:exactvariant','exact variant survives all valuation queries')
+missing=1271466;LL:Invalidate()
+r=LL:Evaluate('item:900002',{isSoulbound=true})
+assert(r.action=='T' and r.tokenInfo.possibleMissingAppearance,
+    'a missing exact-variant appearance must be detected even when the base appearance is collected')
+local groups=LL:TokenClassSummary(r.tokenInfo)
+assert(groups[1].missing==1 and groups[1].collected==0,'class collection summary uses the same exact reward link')
+assert(LL:TokenBestVendorReward(r.tokenInfo).value==55*G,'informational reward vendor quote also preserves exact variant')
+proof('Exact reward variant: its missing appearance wins over a collected base appearance',r)
+missing=nil
 synthetic.rewardLinks=nil
 
 local exchange=catalog(900001,{271466},'exchange',{['271466']={

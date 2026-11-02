@@ -55,7 +55,8 @@ local function RefreshMissing(data,now)
     if now-(data._appearanceAt or -100)<5 then return end
     local missing=false
     for _,id in ipairs(data.rewards) do
-        if AppearanceMissing("item:"..id)==true then missing=true;break end
+        local link=LL.TokenRewardLink and LL:TokenRewardLink(data,id) or ("item:"..id)
+        if AppearanceMissing(link)==true then missing=true;break end
     end
     data.possibleMissingAppearance=missing
     data._appearanceAt=now
@@ -196,6 +197,7 @@ function LL:TokenClassSummary(token)
     local icons=C_Item and C_Item.GetItemIconByID or GetItemIcon
     local collection=C_TransmogCollection
     for _,id in ipairs(token.rewards) do
+        local rewardLink=self:TokenRewardLink(token,id)
         local cls=SingleClassFromMask((self.ItemClassMasks and self.ItemClassMasks[id])
             or (token.rewardClassMasks and token.rewardClassMasks[tostring(id)]))
         local classKey=cls and cls[2] or "UNKNOWN"
@@ -209,7 +211,7 @@ function LL:TokenClassSummary(token)
         end
         local name,link,icon
         if type(info)=="function" then
-            local ok,n,l=pcall(info,id)
+            local ok,n,l=pcall(info,rewardLink)
             if ok then name,link=n,l end
         end
         if not name and C_Item and type(C_Item.RequestLoadItemDataByID)=="function" then
@@ -221,10 +223,10 @@ function LL:TokenClassSummary(token)
         end
         local appearance
         if collection and type(collection.GetItemInfo)=="function" then
-            local ok,a=pcall(collection.GetItemInfo,"item:"..id)
+            local ok,a=pcall(collection.GetItemInfo,rewardLink)
             if ok then appearance=a end
         end
-        local collected=self:AppearanceCollectionState("item:"..id)
+        local collected=self:AppearanceCollectionState(rewardLink)
         local row={id=id,name=name or "Reward loading",link=link,icon=icon,collected=collected}
         group.ids[#group.ids+1]=id
         group.rows[#group.rows+1]=row
@@ -258,8 +260,9 @@ function LL:TokenBestVendorReward(token)
     if type(info)~="function" then return nil end
     local best
     for _,id in ipairs(token.rewards) do
+        local rewardLink=self:TokenRewardLink(token,id)
         local ok,name,link,_,_,_,_,_,_,loc,_,sellPrice=
-            pcall(info,id)
+            pcall(info,rewardLink)
         if ok and type(sellPrice)=="number" and sellPrice>=0
             and EquippableSlot(loc) then
             if not best or sellPrice>best.value or

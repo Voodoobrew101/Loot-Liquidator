@@ -46,6 +46,19 @@ Review [Death Knight] Death Knight | 1/1
 Highest listed reward vendor (before costs): item:271475 | 470000 copper
 ```
 
+## Exact reward variant: its missing appearance wins over a collected base appearance
+
+Action: `T`
+
+```text
+Loot Liquidator: Open, then vendor
+Open, then vendor Paladin Gloves | 550000 copper
+Class sets
+Review [Paladin] Paladin | 0/1
+  Get item:271466 current character
+Highest listed reward vendor (before costs): item:271466 | 550000 copper
+```
+
 ## Exchange: subtract additional items and money, then normalize by two tokens
 
 Action: `V`
