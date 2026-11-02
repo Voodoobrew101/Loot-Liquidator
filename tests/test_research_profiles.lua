@@ -25,16 +25,6 @@ local research={schemaVersion='0.1.0',sourceManifest={compilerVersion='fixture'}
 local function compile()
     loadfile=function(path)
         if path=='database/research/itemdb.lua' then return function() return research end end
-        -- These tests inspect positional synthetic research profiles. Keep the
-        -- independently tested reference datasets out of that fixture universe.
-        if path=='database/sources/ReferenceData.lua' then return function(addon,LL)
-            assert(originalLoadfile(path))(addon,LL)
-            LL.ReferenceData.frozen.processing={}
-            LL.ReferenceData.frozen.rawTables={mill={},prospect={}}
-        end end
-        if path=='database/reference-calculator-baselines.lua' then return function()
-            return {schemaVersion=1,processing={},held={}}
-        end end
         -- D1c: keep the real research v3 baselines out of this synthetic fixture.
         if path=='database/research-v3-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
         return originalLoadfile(path)

@@ -90,7 +90,6 @@ assert(calls==0)
 local originalLoadfile,originalArg=loadfile,arg
 local researchTokens,recordsTokens={approved},nil
 loadfile=function(path)
-    if path=='database/att-token-baselines.lua' then return function()return {schemaVersion=1,tokenRewards={}}end end
     if path=='database/research/itemdb.lua' then
         local real=assert(originalLoadfile(path))
         return function() local r=real();r.tokenRewards=researchTokens;return r end
@@ -155,4 +154,4 @@ LL:RemoveRetiredSettings(saved)
 assert(saved.enableATTIntegration==nil and saved.showATTTooltipDetails==nil and saved.showATTTokenDEQuotes==nil)
 assert(saved.attRewardCache and saved.attResearchScans and saved.attItemResearch,'old ATT caches kept')
 AllTheThings=nil
-print('PASS: token catalog compiler/runtime route, installed ATT never read, evidence/scope rejection')
+print('PASS: token catalog compiler/runtime route, ATT never read (C6), evidence/scope rejection')

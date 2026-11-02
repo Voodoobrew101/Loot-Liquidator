@@ -6,22 +6,18 @@ for _,file in ipairs({'ResearchDB.lua','ReferenceData.lua'}) do
 end
 local references=assert(LL.ReferenceData,'Frozen references missing')
 assert(references.schemaVersion==1,'Unsupported frozen reference schema')
-local db={schemaVersion=1,version='1.2.0',processing={},mechanicRules={},
-    provenance='Pinned research plus versioned Retail reference fallbacks; see researchV3Manifest and referenceManifest',
+local db={schemaVersion=1,version='1.1.1',processing={},mechanicRules={},
+    provenance='main 051f582 / v0.9.70; schema-validated provisional migration',
     compat={Conversions=references.compatConversions,DisenchantTables=LL.DisenchantTables,
         ResearchTokenCandidates=LL.ResearchTokenCandidates,ResearchProcessingInputs=LL.ResearchProcessingInputs}}
 local methods={Mill='Inscription',Prospect='Jewelcrafting',Disenchant='Enchanting',Smelt='Mining'}
 local function clone(t) local n={} for k,v in pairs(t or {}) do n[k]=v end return n end
-local function deepCopy(value)
-    if type(value)~='table' then return value end
-    local result={} for k,v in pairs(value) do result[k]=deepCopy(v) end return result
-end
 -- Historical/frozen references are data snapshots, not outputs of old skill,
 -- upgrade, inspiration, resourcefulness or guessed-range calculations.
 local inputs=clone(references.inputs)
--- Latest owner clarification: usable conversion tables/calculators fill gaps
--- from every source, with provenance and uncertainty. They are one fallback
--- source inside ItemDB, not a second database or live TSM price feed.
+-- B2: the frozen TSM conversion snapshot (references.frozen) stays in the source
+-- data for the record but is no longer compiled into the addon. TSM is used
+-- only for Auction House prices (owner decision 3).
 for _,dataset in ipairs({references.legacy}) do
     for _,record in ipairs(dataset.processing) do db.processing[#db.processing+1]=record end
 end
@@ -33,118 +29,6 @@ assert((research.schemaVersion=='0.1.0' or research.schemaVersion=='0.2.0')
 db.researchManifest=research.sourceManifest
 db.buildReport={adapted=0,tsmDuplicates=0,rejected={},researchMappings=#research.processing,
     researchSchemaVersion=research.schemaVersion,previewEstimatesPreserved=0}
-db.buildReport.referenceCorrections={}
-local calculators=assert(loadfile('database/reference-calculator-baselines.lua'))()
-assert(calculators.schemaVersion==1,'Unsupported reference calculator schema')
-local admitted={}
-for _,original in ipairs(references.frozen.processing) do
-    local r=deepCopy(original)
-    r.recordID='reference:'..r.recordID;r.sourceKey='reference';r.fallbackOnly=true
-    r.sourceKind='historical-conversion-table';r.sourceRevision=references.frozen.sourceRevision
-    r.referenceApplicability='unverified-reference'
-    r.baselineStatus='Historical Retail conversion reference; current skill/patch unverified'
-    for _,m in ipairs(r.materials) do
-        admitted[r.method..':'..r.inputItemID..':'..m.id]=true
-        local e,p,lo,hi=m.expectedQuantity.value,m.dropChance.value,m.minQuantity.value,m.maxQuantity.value
-        if e and p and lo and hi and (e+1e-9<p*lo or e>p*hi+1e-9) then
-            -- Source fields disagree. Preserve every original number, and use
-            -- the source's lowest positive conditional yield as an explicitly
-            -- conservative provisional alternative, never as a measured mean.
-            m.referenceOriginal={expectedQuantity=e,dropChance=p,minQuantity=lo,maxQuantity=hi}
-            m.expectedQuantity.value=p*lo;m.expectedQuantity.status='modeled'
-            m.expectedQuantity.confidence=math.floor(math.min(m.expectedQuantity.confidence,m.dropChance.confidence)*.5)
-            m.expectedQuantity.assumption='Source mean contradicts probability/bounds; provisional probability times minimum yield'
-            m.referenceCorrection=true
-            db.buildReport.referenceCorrections[#db.buildReport.referenceCorrections+1]={
-                recordID=r.recordID,outputItemID=m.id,originalExpectedQuantity=e,
-                expectedQuantity=p*lo,reason=m.expectedQuantity.assumption}
-        end
-    end
-    db.processing[#db.processing+1]=r
-end
--- The old adapter omitted quality alternatives. Preserve one conservative
--- unknown-rank estimate per explicitly mapped family, never the sum of ranks.
--- A three-row milling pool with explicit targetQuality 1/2/3 is also a stated
--- quality-alternative contract; equal numbers alone never identify a family.
-db.buildReport.referenceRankPools=0
-for tableName,method in pairs({mill='Mill',prospect='Prospect'}) do
-    for input,raw in pairs(references.frozen.rawTables[tableName]) do
-        local hint=inputs[input]
-        local unitOnly=hint==nil
-        if unitOnly then
-            -- The raw snapshot explicitly stores amountOfMats per input.
-            -- It can be valued without inventing this item's recipe/batch.
-            -- A discovered live recipe may later supply those requirements;
-            -- this hint on its own is display-only.
-            hint={method=method,batch=1,operationUnverified=true,quantityBasis='per-input'}
-            inputs[input]={method=method,operationUnverified=true,quantityBasis='per-input'}
-        end
-        if hint and hint.method==method then
-            local pools={}
-            for _,family in ipairs(calculators.rankFamilies or {}) do
-                if #family.ids>1 then
-                    local members={}
-                    for _,m in ipairs(raw) do
-                        for _,id in ipairs(family.ids) do if m.id==id then members[#members+1]=m end end
-                    end
-                    if #members>1 then pools[#pools+1]={name=family.name,ids=family.ids,rows=members} end
-                end
-            end
-            if method=='Mill' and #pools==0 and #raw==3 then
-                local ranks,ids={},{}
-                for _,m in ipairs(raw) do ranks[m.targetQuality or 0]=true;ids[#ids+1]=m.id end
-                if ranks[1] and ranks[2] and ranks[3] then
-                    table.sort(ids);pools[1]={name='Explicit milling quality alternatives',ids=ids,rows=raw}
-                end
-            end
-            local materials={}
-            if unitOnly then
-                for _,m in ipairs(raw) do
-                    if not m.targetQuality then
-                        materials[#materials+1]={id=m.id,referenceVariants={deepCopy(m)},
-                            expectedQuantity={value=m.amountOfMats,status='historical',confidence=20,
-                                assumption='Source mean per input; actual processing recipe/batch not established'},
-                            dropChance={status='unknown',confidence=0},minQuantity={status='unknown',confidence=0},maxQuantity={status='unknown',confidence=0}}
-                    end
-                end
-            end
-            for _,pool in ipairs(pools) do
-                local present=false
-                for _,id in ipairs(pool.ids) do if admitted[method..':'..input..':'..id] then present=true end end
-                if not present then
-                    local minimum
-                    for _,m in ipairs(pool.rows) do
-                        local mean=m.amountOfMats*hint.batch
-                        minimum=minimum and math.min(minimum,mean) or mean
-                    end
-                    local function unknown()return {status='unknown',confidence=0}end
-                    materials[#materials+1]={id=pool.ids[1],rankIDs=deepCopy(pool.ids),
-                        referenceVariants=deepCopy(pool.rows),outputName=pool.name,
-                        expectedQuantity={value=minimum,status='modeled',confidence=20,
-                            assumption='Unknown rank distribution; minimum of source quality projections, not their sum'},
-                        dropChance=unknown(),minQuantity=unknown(),maxQuantity=unknown()}
-                end
-            end
-            if #materials>0 then
-                table.sort(materials,function(a,b)return a.id<b.id end)
-                db.processing[#db.processing+1]={recordID='reference:rank-pool:'..method..':'..input,
-                    studyID='tsm:'..method..':'..input,sourceKey='reference',method=method,
-                    profession=methods[method],inputItemID=input,inputCount=hint.batch,
-                    source='Historical Retail TSM quality alternatives; conservative rank-unknown reference',
-                    sourceRevision=references.frozen.sourceRevision,sourceKind='historical-rank-pool',
-                    fixedReference=true,fallbackOnly=true,provisional=true,
-                    operationUnverified=unitOnly or nil,quantityBasis=unitOnly and 'per-input' or nil,
-                    referenceApplicability='unverified-reference',
-                    baselineStatus='Unknown rank distribution; source quality alternatives are not additive',materials=materials}
-                db.buildReport.referenceRankPools=db.buildReport.referenceRankPools+#materials
-            end
-        end
-    end
-end
-for _,r in ipairs(calculators.processing) do db.processing[#db.processing+1]=r end
-db.referenceManifest={historicalVersion=references.frozen.version,
-    historicalSourceRevision=references.frozen.sourceRevision,calculatorSourceSHA256=calculators.sourceSHA256,
-    calculatorHeld=calculators.held}
 -- Identity is typed and deterministic. Output identity/source URLs are deliberately
 -- absent: cooutputs with the same input, operation and observed conditions belong
 -- to one reference profile, even though the research ledger stores them as rows.
@@ -385,33 +269,15 @@ db.buildReport.tokenRewardsSkipped={}
 -- confidence shown, never marked APPROVED) follow any reviewed ones from the research
 -- export, so a reviewed record for the same token wins and the v3 one is skipped.
 local tokenCandidates={}
--- Owner's pass-2 clarification: ATT Retail data is an authorized research
--- source. Static costs are pinned/attributed; no installed-ATT dependency.
-local att=assert(loadfile('database/att-token-baselines.lua'))()
-assert(att.schemaVersion==1,'Unsupported pinned ATT reference schema')
-db.attSourceManifest=att.sourceManifest
 for _,r in ipairs(type(research.tokenRewards)=='table' and research.tokenRewards or {}) do tokenCandidates[#tokenCandidates+1]=r end
 do
     local v3tokens=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))().tokenRewards
     for _,r in ipairs(type(v3tokens)=='table' and v3tokens or {}) do
         assert(type(r)=='table' and tostring(r.recordID):match('^v3token:') and r.independentReview~='APPROVED',
             'Research v3 token lists must use v3token: IDs and are never pre-approved')
-        for _,proof in ipairs(att.curioEvidence or {}) do
-            if proof.tokenID==r.tokenID then
-                r=deepCopy(r)
-                r.sourceURLs[#r.sourceURLs+1]=proof.sourceURL
-                r.sourceOrigin='ATT';r.licenseSPDX='MIT';r.licenseText=att.licenseText
-                r.additionalSourceRevision=proof.sourceRevision
-                if r.candidateRewards and contextIdentity(r.rewards)==contextIdentity(proof.rewards) then
-                    r.candidateRewards=nil;r.confidence0to100=math.max(r.confidence0to100,60)
-                    r.sourceAssumption='Reward membership corroborated by pinned ATT Retail tier data; complete exchange costs unverified'
-                end
-            end
-        end
         tokenCandidates[#tokenCandidates+1]=r
     end
 end
-for _,r in ipairs(att.tokenRewards or {}) do tokenCandidates[#tokenCandidates+1]=r end
 db.buildReport.tokenRewardsFromResearchV3=0
 for index,r in ipairs(tokenCandidates) do
     -- Each record is checked alone, then against everything kept so far
@@ -454,7 +320,6 @@ end
 -- arg[3] lets tests compile a fixture file instead.
 local v3=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))()
 assert(v3.schemaVersion==1 and type(v3.processing)=='table','Unsupported research v3 baseline schema')
-db.researchV3Manifest={revision=v3.sourceRevision,branch=v3.sourceBranch}
 local superseding={}
 for _,r in ipairs(v3.processing) do
     assert(r.recordID:match('^evidence:v3:'),'Research v3 baselines must use evidence:v3: record IDs')
@@ -493,9 +358,7 @@ for _,file in ipairs({baselines,v3}) do
         assert(r.sourceKey=='itemdb' and r.recordID:match('^evidence:'),'Evidence baselines must be itemdb evidence records')
         db.processing[#db.processing+1]=r
         if r.inputItemID then
-            if not inputs[r.inputItemID] or (inputs[r.inputItemID].operationUnverified and r.sourceKey=='itemdb') then
-                inputs[r.inputItemID]={method=r.method,batch=r.inputCount,expansion=r.expansionID}
-            end
+            inputs[r.inputItemID]=inputs[r.inputItemID] or {method=r.method,batch=r.inputCount}
         end
     end
 end
@@ -549,7 +412,7 @@ assert(not LL.itemDBError,LL.itemDBError)
 local legacy={schemaVersion=1,version='legacy-v0.9.70/1',processing={}}
 local primary={}
 for _,r in ipairs(db.processing) do
-    assert(r.sourceKey~='itemtsm','Historical conversion data uses the unified reference source')
+    assert(r.sourceKey~='itemtsm','Frozen TSM records must not be compiled (B2)')
     if r.sourceKey=='legacy' then legacy.processing[#legacy.processing+1]=r
     else primary[#primary+1]=r end
 end

@@ -8,7 +8,7 @@ for _,file in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua',
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
 LL.db={source_itemdb_enabled=true,source_personal_enabled=false,source_legacy_enabled=false,
-    tooltipDetail=3,showAverageQuantity=true,processingModes={D=1}}
+    tooltipDetail=3,processingModes={D=1}}
 LL:MigrateEvidenceSettings()
 assert(LL:InitializeItemDB() and not LL.itemDBError)
 LL.EligibleDisenchant=function(_,f)return f.classID==4 end
@@ -36,7 +36,7 @@ local function render(id,expansion,quality)
     return option,text
 end
 local warmaul,text=render(24995,1,2)
-assert(text:find('75.4%',1,true) and text:find('[2-6]',1,true) and text:find('3.015',1,true))
+assert(text:find('75.4%',1,true) and text:find('[x2-6]',1,true) and text:find('3.015',1,true))
 assert(warmaul.value>345 and warmaul.value<346,'derived TBC baseline prices expected units once')
 assert(warmaul.confidence<=50,'a derived mean cannot inherit 100% occurrence confidence')
 local dust
@@ -45,7 +45,7 @@ assert(dust and math.abs(dust.chance-1559/2068)<1e-10,'original occurrence count
 -- Average is the existing midpoint estimate, not a newly claimed measured mean.
 assert(math.abs(dust.expectedQuantity-3.0155)<1e-4)
 local midnight,midText=render(258931,11,3)
-assert(midText:find('60.3%',1,true) and midText:find('[1-3]',1,true) and midText:find('1.238',1,true))
+assert(midText:find('60.3%',1,true) and midText:find('[x1-3]',1,true) and midText:find('1.238',1,true))
 assert(midnight.value>186 and midnight.value<187,'Midnight measured units reach valuation')
 local midnightDust
 for _,m in ipairs(midnight.materials) do if m.id==243599 then midnightDust=m end end

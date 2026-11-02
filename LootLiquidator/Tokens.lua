@@ -1,6 +1,6 @@
 -- Gear tokens from ItemDB's token catalog (C4b3) plus the transmog
--- collection check. Live AllTheThings integration is retired; pinned ATT
--- Retail research may be compiled into the same ItemDB.tokenRewards catalog.
+-- collection check. C6: AllTheThings is no longer used in any way; every
+-- token the addon recognises comes from ItemDB.tokenRewards.
 -- A confirmed appearance is collected from ANY source via Blizzard API.
 local _, LL = ...
 local tokenCache = {}
@@ -55,35 +55,10 @@ local function RefreshMissing(data,now)
     if now-(data._appearanceAt or -100)<5 then return end
     local missing=false
     for _,id in ipairs(data.rewards) do
-        local link=LL.TokenRewardLink and LL:TokenRewardLink(data,id) or ("item:"..id)
-        if AppearanceMissing(link)==true then missing=true;break end
+        if AppearanceMissing("item:"..id)==true then missing=true;break end
     end
     data.possibleMissingAppearance=missing
     data._appearanceAt=now
-end
-local function FlattenRewards(self,record,seen,depth)
-    if depth>4 or seen[record.tokenID] then return {},{},true end
-    seen[record.tokenID]=true
-    local rewards,links,unknown,added={},{},false,{}
-    for _,id in ipairs(record.rewards or {}) do
-        local child
-        for _,candidate in ipairs(self._tokenRewardIndex and self._tokenRewardIndex[id] or {}) do
-            local build=GetBuildInfo and tonumber((select(2,GetBuildInfo())))
-            if build and build>=candidate.patchStartBuild and build<=candidate.patchEndBuild then child=candidate;break end
-        end
-        if child then
-            local sub,subLinks,incomplete=FlattenRewards(self,child,seen,depth+1)
-            unknown=unknown or incomplete or child.kind=='exchange'
-            for _,reward in ipairs(sub) do
-                if not added[reward] then rewards[#rewards+1]=reward;added[reward]=true end
-                links[tostring(reward)]=subLinks[tostring(reward)]
-            end
-        elseif not added[id] then rewards[#rewards+1]=id;added[id]=true end
-        if record.rewardLinks and record.rewardLinks[tostring(id)] then links[tostring(id)]=record.rewardLinks[tostring(id)] end
-    end
-    seen[record.tokenID]=nil
-    table.sort(rewards)
-    return rewards,links,unknown
 end
 function LL:StandaloneTokenInfo(f)
     if not f or not SafeNumber(f.id) or not NonEquippableSlot(f.equipLoc) then return nil end
@@ -97,12 +72,9 @@ function LL:StandaloneTokenInfo(f)
             and self:ValidateTokenCatalog({r}) then
             local data=tokenCache[f.id]
             if not data or data._catalogRecord~=r or data._catalogBuild~=build then
-                local rewards,links,chainCostUnknown=FlattenRewards(self,r,{},0)
+                local rewards={} for i,id in ipairs(r.rewards) do rewards[i]=id end
                 local reviewed=r.independentReview=='APPROVED'
                 data={rewards=rewards,kind=r.kind,costs=r.costs,standalone=true,
-                    rewardLinks=links,rewardSelection=r.rewardSelection,costsComplete=r.costsComplete,
-                    chainCostUnknown=chainCostUnknown,candidateRewards=r.candidateRewards,catalogNote=r.sourceAssumption,
-                    rewardClassMasks=r.rewardClassMasks,rewardRequirements=r.rewardRequirements,
                     recordID=r.recordID,_catalogRecord=r,_catalogBuild=build,
                     catalogConfidence=r.confidence0to100,catalogReviewed=reviewed,
                     source=reviewed and 'Loot Liquidator reviewed reward catalog (possible outcomes; probabilities unknown)'
@@ -197,9 +169,7 @@ function LL:TokenClassSummary(token)
     local icons=C_Item and C_Item.GetItemIconByID or GetItemIcon
     local collection=C_TransmogCollection
     for _,id in ipairs(token.rewards) do
-        local rewardLink=self:TokenRewardLink(token,id)
-        local cls=SingleClassFromMask((self.ItemClassMasks and self.ItemClassMasks[id])
-            or (token.rewardClassMasks and token.rewardClassMasks[tostring(id)]))
+        local cls=SingleClassFromMask(self.ItemClassMasks and self.ItemClassMasks[id])
         local classKey=cls and cls[2] or "UNKNOWN"
         local group=lookup[classKey]
         if not group then
@@ -211,7 +181,7 @@ function LL:TokenClassSummary(token)
         end
         local name,link,icon
         if type(info)=="function" then
-            local ok,n,l=pcall(info,rewardLink)
+            local ok,n,l=pcall(info,id)
             if ok then name,link=n,l end
         end
         if not name and C_Item and type(C_Item.RequestLoadItemDataByID)=="function" then
@@ -223,10 +193,10 @@ function LL:TokenClassSummary(token)
         end
         local appearance
         if collection and type(collection.GetItemInfo)=="function" then
-            local ok,a=pcall(collection.GetItemInfo,rewardLink)
+            local ok,a=pcall(collection.GetItemInfo,"item:"..id)
             if ok then appearance=a end
         end
-        local collected=self:AppearanceCollectionState(rewardLink)
+        local collected=self:AppearanceCollectionState("item:"..id)
         local row={id=id,name=name or "Reward loading",link=link,icon=icon,collected=collected}
         group.ids[#group.ids+1]=id
         group.rows[#group.rows+1]=row
@@ -260,9 +230,8 @@ function LL:TokenBestVendorReward(token)
     if type(info)~="function" then return nil end
     local best
     for _,id in ipairs(token.rewards) do
-        local rewardLink=self:TokenRewardLink(token,id)
         local ok,name,link,_,_,_,_,_,_,loc,_,sellPrice=
-            pcall(info,rewardLink)
+            pcall(info,id)
         if ok and type(sellPrice)=="number" and sellPrice>=0
             and EquippableSlot(loc) then
             if not best or sellPrice>best.value or
@@ -276,246 +245,55 @@ function LL:TokenBestVendorReward(token)
     return best
 end
 
-local function Number(n)
-    return type(n)=='number' and not (issecretvalue and issecretvalue(n)) and n==n and n>=0 and n<math.huge
-end
-local function Read(fn,...)
-    if type(fn)~='function' then return nil end
-    local ok,n=pcall(fn,...)
-    return ok and Number(n) and n or nil
-end
-local function CanDisenchantFor(self,current,character)
-    if self.AltMethodEnabled and not self:AltMethodEnabled(character,'D') then return false end
-    return (current and self.CurrentHasEnchanting and self:CurrentHasEnchanting())
-        or (not current and self.AltProfessionEligible and self:AltProfessionEligible(character,'D')) or false
-end
-function LL:TokenCostItemValue(id,current,character)
-    local info=C_Item and C_Item.GetItemInfo or GetItemInfo
-    if type(info)=='function' then
-        local ok,name,_,_,_,_,_,_,_,_,_,vendor,_,_,binding=pcall(info,id)
-        if ok and name and (binding==1 or binding==4) then
-            -- Bound equipment has an immediate liquidation opportunity cost;
-            -- an AH quote for an unobtainable/untradeable template isn't it.
-            local best=Number(vendor) and vendor or nil
-            if self.GetItemFacts and self.EvaluateDisenchant and CanDisenchantFor(self,current,character) then
-                local good,facts=pcall(self.GetItemFacts,self,'item:'..id,{count=1,isBound=true,isSoulbound=true})
-                if good and facts then
-                    local priced,estimate=pcall(self.EvaluateDisenchant,self,facts,character)
-                    if priced and estimate and Number(estimate.value) then best=math.max(best or 0,estimate.value) end
-                end
-            end
-            return best
-        end
-    end
-    return self.GetOutputPrice and self:GetOutputPrice(id)
-end
-
--- Costs are per redemption; all quotes below are per original token. Currency
--- balances prove ownership, never a made-up copper exchange rate. A priced but
--- unaffordable exchange is still informative and is not an available action.
-function LL:TokenRedemptionCost(f,token,rewardID,current,character)
-    if token.costsComplete==false or token.chainCostUnknown or token.candidateRewards then
-        return {known=false,available=false,inputCount=1,reason=token.catalogNote or 'Complete redemption-chain costs not established'}
-    end
-    if token.kind~='exchange' then return {known=true,available=true,value=0,inputCount=1} end
-    local costs=token.costs and token.costs[tostring(rewardID)]
-    if type(costs)~='table' or #costs==0 then
-        return {known=false,available=false,inputCount=1,reason='Exchange costs not established'}
-    end
-    local result={known=true,available=true,value=0,inputCount=0}
-    local requirement=token.rewardRequirements and token.rewardRequirements[tostring(rewardID)]
-    if requirement then
-        local char=self.db and self.db.characters and self.db.characters[character]
-        local level=current and Read(UnitLevel,'player') or (char and char.level)
-        if requirement.unverified or (requirement.minimumLevel and (not Number(level) or level<requirement.minimumLevel)) then
-            result.available=false;result.reason='Reward level, faction or inherited exchange requirements not verified for this character'
-        end
-    end
-    local counts=C_Item and C_Item.GetItemCount or GetItemCount
-    for _,cost in ipairs(costs) do
-        local quantity=cost.quantity
-        if not Number(quantity) or quantity<=0 then
-            result.known=false;result.available=false;result.reason='Invalid exchange cost'
-        elseif cost.kind=='item' and cost.id==f.id then
-            result.inputCount=result.inputCount+quantity
-        else
-            local unit,balance
-            if cost.kind=='money' then unit=1;balance=current and Read(GetMoney)
-            elseif cost.kind=='item' then
-                unit=self:TokenCostItemValue(cost.id,current,character)
-                balance=current and Read(counts,cost.id,false,false)
-            elseif cost.kind=='currency' then
-                local api=C_CurrencyInfo and C_CurrencyInfo.GetCurrencyInfo
-                if current and type(api)=='function' then
-                    local ok,info=pcall(api,cost.id)
-                    if ok and type(info)=='table' and Number(info.quantity) then balance=info.quantity end
-                end
-            end
-            if Number(unit) then result.value=result.value+unit*quantity
-            else result.known=false;result.reason='Additional '..tostring(cost.kind)..' cost has no verified gold value' end
-            if not balance or balance<quantity then
-                result.available=false;result.reason=result.reason or (current and 'Additional exchange costs unavailable' or 'Alt exchange inventory not verified')
-            end
-        end
-    end
-    if result.inputCount<=0 then result.known=false;result.available=false;result.inputCount=1;result.reason='Token exchange quantity not established'
-    elseif (f.count or 1)<result.inputCount then result.available=false;result.reason='Not enough tokens for one exchange' end
-    return result
-end
-
-function LL:TokenRewardPermitsClass(token,id,class)
-    local allowed=self.ItemPermitsClass and self:ItemPermitsClass(id,class)
-    if allowed~=nil then return allowed end
-    local mask=token.rewardClassMasks and token.rewardClassMasks[tostring(id)]
-    if type(mask)=='number' then
-        for _,entry in ipairs(TOKEN_CLASSES) do
-            if entry[2]==class then return math.floor(mask/2^(entry[1]-1))%2==1 end
-        end
-    end
-end
-
-function LL:TokenRewardLink(token,id)
-    -- A recorded exact reward link can establish its variant. Never copy bonus
-    -- IDs from a token to unrelated gear or pass an ID query off as that variant.
-    local link=token.rewardLinks and token.rewardLinks[tostring(id)]
-    if type(link)=='string' and tonumber(link:match('item:(%d+)'))==id then return link,true end
-    return 'item:'..id,false
-end
-
-local function recipients(self,f)
-    local key=self.CharacterKey and self:CharacterKey()
-    local chars=self.db and self.db.characters or {}
-    local class=chars[key] and chars[key].class
-    if not class and UnitClass then local _,c=UnitClass('player');class=c end
-    local out={{key=key or 'Current character',class=class,current=true}}
-    if self.db and self.db.includeVerifiedAlts~=false and self.CanTransferToAlt and self:CanTransferToAlt(f) then
-        local keys={}
-        for name in pairs(chars) do if name~=key then keys[#keys+1]=name end end
-        table.sort(keys)
-        for _,name in ipairs(keys) do
-            if chars[name].class and (not chars[name].altMethods or chars[name].altMethods.all~=false) then
-                out[#out+1]={key=name,class=chars[name].class,current=false}
-            end
-        end
-    end
-    return out
-end
-
+-- C4c (owner, session 12): a tier token never answers "?". Midnight tokens
+-- show no sell price of their own, but the piece they open into has a game
+-- sell price and is disenchantable (soulbound, so disenchanted by whoever
+-- opens it). Value = this character's piece (class mask from ItemClassMasks);
+-- when the class can't be matched, the CHEAPEST reward, never the best one.
 function LL:TokenPieceQuote(f,token)
-    if not token or type(token.rewards)~='table' or #token.rewards==0 then return nil end
+    if not token or type(token.rewards)~="table" or #token.rewards==0 then return nil end
     local info=C_Item and C_Item.GetItemInfo or GetItemInfo
-    if type(info)~='function' then return nil end
-    local people=recipients(self,f)
-    local wanted,hasWanted={},false
-    for _,who in ipairs(people) do
-        if not self.ItemPermitsClass or self:ItemPermitsClass(f.id,who.class)~=false then
-            for _,id in ipairs(token.rewards) do
-                if self:TokenRewardPermitsClass(token,id,who.class)==true then wanted[id]=true;hasWanted=true end
-            end
-        end
-    end
-    local loaded,reference={},nil
+    if type(info)~="function" then return nil end
+    local class
+    if UnitClass then local _,c=UnitClass("player"); class=c end
+    local own,lowest
     for _,id in ipairs(token.rewards) do
-        if not hasWanted or wanted[id] then
-        local query,exact=self:TokenRewardLink(token,id)
-        local ok,name,link,_,_,_,_,_,_,loc,_,sell=pcall(info,query)
-        if ok and name and EquippableSlot(loc) then
-            local row={itemID=id,name=name,link=query,vendorGross=Number(sell) and sell or nil,variantVerified=exact}
-            loaded[id]=row
-            if row.vendorGross~=nil and (not reference or row.vendorGross<reference.vendorGross
-                or (row.vendorGross==reference.vendorGross and id<reference.itemID)) then reference=row end
-        elseif C_Item and type(C_Item.RequestLoadItemDataByID)=='function' then
+        local ok,name,link,_,_,_,_,_,_,loc,_,sellPrice=pcall(info,id)
+        if ok and type(sellPrice)=="number" and sellPrice>=0 and EquippableSlot(loc) then
+            local quote={itemID=id,name=name,link=link or ("item:"..id),vendor=sellPrice}
+            -- An exchange (curio) lets the player pick any of their pieces;
+            -- an open token gives exactly one. Highest own piece covers both.
+            if class and self.ItemPermitsClass and self:ItemPermitsClass(id,class)==true
+                and (not own or sellPrice>own.vendor) then own=quote end
+            if not lowest or sellPrice<lowest.vendor then lowest=quote end
+        elseif C_Item and type(C_Item.RequestLoadItemDataByID)=="function" then
             pcall(C_Item.RequestLoadItemDataByID,id)
         end
-        end
     end
-    local best
-    for _,who in ipairs(people) do
-        local allowed=self.ItemPermitsClass and who.class and self:ItemPermitsClass(f.id,who.class)
-        local own,missing={},false
-        if allowed~=false then
-            for _,id in ipairs(token.rewards) do
-                local permits=who.class and self:TokenRewardPermitsClass(token,id,who.class)
-                if permits==true then
-                    if loaded[id] then own[#own+1]=loaded[id] else missing=true end
-                end
-            end
-        end
-        local chosen,deChosen,informative,deComplete=nil,nil,nil,not missing
-        for _,row in ipairs(own) do
-            local cost=self:TokenRedemptionCost(f,token,row.itemID,who.current,who.key)
-            if token.kind=='exchange' and self.AltMethodEnabled and not self:AltMethodEnabled(who.key,'X') then
-                cost.available=false;cost.reason='Exchanges disabled for this character'
-            end
-            local quote={itemID=row.itemID,name=row.name,link=row.link,vendorGross=row.vendorGross,
-                variantVerified=row.variantVerified,ownClass=true,current=who.current,character=who.key,
-                cost=cost,reason=cost.reason,inputCount=cost.inputCount}
-            informative=informative or quote
-            if cost.known and row.vendorGross~=nil then quote.vendor=(row.vendorGross-cost.value)/cost.inputCount end
-            local choice=token.kind=='exchange' or token.rewardSelection=='choice'
-            if missing and not choice and not quote.reason then quote.reason='Some possible class rewards are still loading' end
-            quote.vendorAvailable=quote.vendor~=nil and cost.available and (not missing or choice)
-            -- Multiple same-class possibilities can be loot-spec-dependent.
-            -- Without a verified choice use the least result, never the best.
-            if quote.vendor~=nil and (not chosen or
-                (choice and quote.vendorAvailable and not chosen.vendorAvailable) or
-                ((not choice or quote.vendorAvailable==chosen.vendorAvailable) and
-                    ((choice and quote.vendor>chosen.vendor) or (not choice and quote.vendor<chosen.vendor)))) then chosen=quote end
-            if self.GetItemFacts and self.EvaluateDisenchant and cost.known then
-                if CanDisenchantFor(self,who.current,who.key) then
-                    -- The opener receives soulbound gear. Another enchanter
-                    -- must never become eligible by mailing the redeemed item.
-                    local ok,pf=pcall(self.GetItemFacts,self,row.link,{count=1,isBound=true,isSoulbound=true})
-                    if ok and pf then
-                        local good,estimate=pcall(self.EvaluateDisenchant,self,pf,who.key)
-                        if good and estimate and Number(estimate.value) then
-                            quote.disenchant=(estimate.value-cost.value)/cost.inputCount
-                            quote.disenchantModel=estimate.yieldModel
-                            local confidence=estimate.yieldModel and (estimate.yieldModel.valueConfidence or estimate.yieldModel.confidence)
-                            quote.disenchantConfidence=type(confidence)=='number' and math.min(confidence,token.catalogConfidence or confidence) or nil
-                            quote.disenchantAvailable=cost.available and (not missing or choice)
-                        end
+    local piece=own or lowest
+    if not piece then return nil end
+    piece.ownClass=own~=nil
+    -- Disenchant value of the piece through the normal disenchant path, for
+    -- this character's Enchanting. Any failure just leaves it out.
+    if self.GetItemFacts and self.BestConversion then
+        local ok,pf=pcall(self.GetItemFacts,self,piece.link,{count=1})
+        if ok and type(pf)=="table" and pcall(self.BestConversion,self,pf) then
+            for _,option in ipairs(pf.conversionOptions or {}) do
+                if option.name=="Disenchant" and option.available
+                    and type(option.value)=="number" and option.value>0 then
+                    piece.disenchant=option.value
+                    local model=option.yieldModel
+                    piece.disenchantConfidence=model and (model.valueConfidence or model.confidence)
+                    -- C4b3: an unreviewed token list can't be surer than its own confidence.
+                    if type(token.catalogConfidence)=="number" and type(piece.disenchantConfidence)=="number" then
+                        piece.disenchantConfidence=math.min(piece.disenchantConfidence,token.catalogConfidence)
                     end
+                    break
                 end
             end
-            if quote.disenchant==nil then deComplete=false
-            elseif not deChosen or (choice and quote.disenchantAvailable and not deChosen.disenchantAvailable)
-                or ((not choice or quote.disenchantAvailable==deChosen.disenchantAvailable) and
-                    ((choice and quote.disenchant>deChosen.disenchant) or (not choice and quote.disenchant<deChosen.disenchant))) then deChosen=quote end
-        end
-        if chosen or deChosen or informative then
-            local piece=chosen or deChosen or informative
-            if deChosen then
-                -- Vendor and disenchant can favor different rewards. Preserve
-                -- the complete DE quote so its identity, variant and costs stay
-                -- attached to the value used by the recommendation/tooltip.
-                local reward={}
-                for k,v in pairs(deChosen) do reward[k]=v end
-                if not reward.variantVerified then reward.variantNote='Base reward estimate; token difficulty/bonus variant not verified' end
-                piece.disenchantReward=reward
-                piece.disenchant=deChosen.disenchant;piece.disenchantModel=deChosen.disenchantModel
-                piece.disenchantConfidence=deChosen.disenchantConfidence;piece.disenchantItemID=deChosen.itemID
-                piece.disenchantAvailable=deChosen.disenchantAvailable and (token.kind=='exchange' or token.rewardSelection=='choice' or deComplete)
-            end
-            piece.partial=missing or nil
-            local value=math.max(piece.vendorAvailable and piece.vendor or 0,piece.disenchantAvailable and piece.disenchant or 0)
-            if not best or value>best._availableValue then piece._availableValue=value;best=piece end
         end
     end
-    if best then
-        if not best.variantVerified then best.variantNote='Base reward estimate; token difficulty/bonus variant not verified' end
-        return best
-    end
-    -- Retain a known reference number even for an excluded/unknown class.
-    -- It is displayed as information and cannot create an opening action.
-    if reference then
-        local cost=self:TokenRedemptionCost(f,token,reference.itemID,true)
-        return {itemID=reference.itemID,name=reference.name,link=reference.link,vendorGross=reference.vendorGross,
-            vendor=cost.known and (reference.vendorGross-cost.value)/cost.inputCount or nil,
-            ownClass=false,vendorAvailable=false,disenchantAvailable=false,cost=cost,
-            variantNote='Base reward estimate; token difficulty/bonus variant not verified',
-            reason='No verified eligible reward for this character or a transferable enabled alt'}
-    end
+    return piece
 end
 
 -- Choose a character who is actually documented to have Enchanting and
