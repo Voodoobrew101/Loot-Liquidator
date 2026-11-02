@@ -335,16 +335,6 @@ def material(item, estimates):
     # A precise occurrence count does not measure the average stack. Match
     # the runtime's half-confidence policy for a mean derived from a range.
     quantity_confidence = confidence if average_measured else confidence // 2
-    # Serialize a consistent probability/mean pair. Independently rounding
-    # 2/41 and 4/41 to six places made a fixed two-unit yield contradict
-    # its probability and caused the runtime validator to reject all ItemDB.
-    # Keep extra precision and constrain only serialization roundoff; source
-    # counts and the earlier treatment of genuinely inconsistent means stay.
-    chance = None if chance is None else round(chance, 12)
-    if average is not None:
-        average = round(average, 12)
-        if chance is not None:
-            average = min(max(average, chance * lo), chance * hi)
     casts_r = round(casts, 4)
     extra = {'rankIDs': rank_ids} if rank_ids else {}
     return {
@@ -353,6 +343,7 @@ def material(item, estimates):
         'dropChance': field(chance, confidence, casts_r,
                             'measured' if chance_measured else 'provisional'),
         'expectedQuantity': field(average, quantity_confidence, round(qty_casts, 4),
+
                                   'measured' if average_measured else 'provisional'),
         'minQuantity': field(lo, confidence, casts_r, 'measured' if range_observed else 'provisional'),
         'maxQuantity': field(hi, confidence, casts_r, 'measured' if range_observed else 'provisional'),
