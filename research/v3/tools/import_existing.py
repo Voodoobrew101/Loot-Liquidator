@@ -932,7 +932,7 @@ class Holdings:
                     r = json.loads(line)
                 except json.JSONDecodeError:
                     continue
-                if isinstance(r, dict):
+                if isinstance(r, dict) and r.get("type") != "searched":
                     rows.append((rel, r))
                     self.text.append(line.lower())
         rows += [("evidence/imported (this run)", r) for r in prior_rows]

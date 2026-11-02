@@ -216,6 +216,17 @@ class OtherSchema(Repo):
                            "originalHerbsConsumed": herbs, "reportedOutputTotal": total, "sampleContext": "c",
                            "observedMassMillReagentCount": 20}}
 
+    def test_failed_search_mentioning_author_does_not_suppress_milling(self):
+        self.agent([{"id": "search", "type": "searched", "notes": "No cohort found for KnownAuthor",
+                     "source": {"url": "https://elsewhere.example/search"}}])
+        self.put(ie.LEGACY_MILLING, [self.mill("KnownAuthor", 1000, 700)])
+        hold = ie.Holdings([])
+        self.assertFalse(hold.author_known("KnownAuthor"))
+        rows, log = ie.import_legacy_milling(hold)
+        self.assertEqual([entry["outcome"] for entry in log], ["imported"])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual((rows[0]["inputsProcessed"], rows[0]["totalQuantity"], rows[0]["casts"]), (1000, 700, None))
+
     def test_legacy_milling(self):
         self.agent([drop("ag-1", url="https://www.wowhead.com/item=153669/x", inputItemID=152510, outputItemID=153635, totalQuantity=157),
                     drop("ag-2", url="https://elsewhere.example/y", notes="cohort by KnownAuthor")])

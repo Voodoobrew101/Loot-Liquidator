@@ -160,7 +160,7 @@ All reasons:
 
 ## 5. Unresolved issues
 
-179 open rows: 45 from reports and strategy.md, 130 exceptions, 2 validator codes, 2 scope-gap groups. 10 further report items were reviewed and are closed. Each row cites its file; `see` names the row that carries the same decision, so one answer settles both. The full list, with record IDs, is `register.rows` in the data file.
+177 open rows: 43 from reports and strategy.md, 130 exceptions, 2 validator codes, 2 scope-gap groups. 12 further report items were reviewed and are closed. Each row cites its file; `see` names the row that carries the same decision, so one answer settles both. The full list, with record IDs, is `register.rows` in the data file.
 
 **M10 blockers: 1.** 5 more need care in M10 but no decision. Nothing here stops the pipeline rerun or the pull request.
 
@@ -180,8 +180,6 @@ All reasons:
 | M04-extraction/master#2 | policy | 1 | Name-only placement. | Answered by the name-only placement rule. | none | M03-import/master#1 |
 | M04-extraction/master#3 | policy | 12 | The 12 `ambiguous-doubt` sources. | Say whether any of these becomes a reference row with an unclear meaning. | none | exceptions:ambiguous-doubt-source |
 | M04-extraction/master#6 | policy | 1 | Stormvine and Felwort cohorts share a page with other authors. | Decide on comment-level source keys for Wowhead item pages. | handle |  |
-| M04-links/master#1 | policy | 0 | zkay8v 10,000-ore cohort: 22 name-only rows, no agent copy, stored unplaced. | Place the cohort by name, or ask an agent to record it with item IDs. | none | exceptions:unplaced-name-only-cohort |
-| M04-links/master#2 | policy | 0 | 1smgllg: 11 rates now have unambiguous output IDs and a family-level input. | Approve the importer change, weighted as reference, or leave the rates unplaced. | none | exceptions:placement-proposal |
 | M04-links/master#3 | source-check | 7 | s6bfrl uncommon gems and the six Jallfo exceptions need the original posts; they cannot be settled offline. | Read the original posts; these cannot be settled offline. | none | exceptions:imported-vs-agent-totals-differ |
 | M05-identity/master#1 | policy | 1 | S7: implemented as above. | Confirm the numbered-batch and pooled-study rules. | none |  |
 | M05-identity/master#2 | agent-rule | 1 | S17: the worker rule still matters: the estimator now absorbs re-recorded studies, but only when numbers match. | Add the proposed line to roles/worker.md, or decline it. | none |  |
@@ -249,6 +247,8 @@ All reasons:
 | M04-extraction/scope#2 | Recipe-only holdings. | PLAN.md |
 | M04-extraction/master#4 | Queue completeness (finding 1 above). | reports/M07-dispositions.md |
 | M04-extraction/master#5 | The 46 null sources stay in the live queue (the linker still sees them as residue). | reports/M07-dispositions.md |
+| M04-links/master#1 | zkay8v 10,000-ore cohort: 22 name-only rows, no agent copy, stored unplaced. | reports/PR-REPAIR-2026-11-02.md |
+| M04-links/master#2 | 1smgllg: 11 rates now have unambiguous output IDs and a family-level input. | reports/PR-REPAIR-2026-11-02.md |
 | M04-links/master#4 | The 23 wowhead entity-page sources in the queue are probably identity links with incidental counts. | reports/M04-extraction.md |
 | M04-links/master#5 | Handoff said 92 name-only rows; the data says 86 (+6 placed). | reports/M04-links.md |
 | M05-identity/master#5 | Plan correction: the headline defect was smaller than logged (see above): 29,056 independent casts restored and 61,106 double-counted casts removed (57,106 f... | PLAN.md |
@@ -264,4 +264,4 @@ All reasons:
 | `unused.json` | `17ded1f1…` |
 | `dispositions.py --check` | exit 0: identical to the committed files |
 | `validate.py` counts | 7,598 records in 293 files (7,322 after corrections), 5 errors, 308 warnings; equal to `manifest/validation.json` |
-| Migration tests | 413 tests, **FAILED** |
+| Migration tests | 413 tests, all pass |
