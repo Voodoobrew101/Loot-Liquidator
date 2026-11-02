@@ -31,6 +31,16 @@ PRs #22 and #23 remain draft changes targeting `implementation/five-agent-comple
 
 ## Review and rollback
 
+### Post-pin research handoffs reviewed
+
+PR comments through 2026-11-02 were reviewed after readiness. No code review requested changes, main remained unchanged, and the functional checks stayed green. Research-only PR #25 identifies defective EXPECTED projections in the Dragonflight workbook: retain raw yields and their original context, do not import those projections or interpret units/nominal ore as P(hit). The pinned corpus distinguishes reconstructed nominal casts (`castsBasis=countedFromInputs`) from reported operations; the estimator explicitly discounts equivalent denominators. Historical estimates remain provisional, not current-Retail validation or a causal skill model.
+
+The post-pin Dawn Shatter (1280401) and Radiant Shatter (1280394) handoff states three total outputs per legal craft. These recipes are held outside this pinned four-method adapter: per-rank quantities/probabilities and live character skill/unlock applicability are unresolved. Dawn Crystal 243605/243606, Radiant Shard 243602/243603 and Eversinging Dust 243599/243600 are material identities, not proof of a three-highest-rank outcome. Their absence from this adapter must not be described as a missing AH price. No blanket research refresh, invented quality distribution, Multicraft multiplier or duplicate disenchant valuation was added.
+
+Additional historical spot-checks of Prismatic Ore and Vibrant Emulsion are corroboration, not new current-context guarantees. Prismatic Ore as an output of Serevite and as a prospecting input are separate paths. Carnelian Spikes source arithmetic must use raw totals/hit counts rather than the comment's inconsistent prose conditional averages. These are retained research/live-eligibility follow-ups, not blockers requiring a new addon snapshot in this PR.
+
+Sources: PR #24 comments [calculator audit](https://github.com/Voodoobrew101/Loot-Liquidator/pull/24#issuecomment-6577754491), [Shatter/Carnelian handoff](https://github.com/Voodoobrew101/Loot-Liquidator/pull/24#issuecomment-6579203649), and [Prismatic/Emulsion QA](https://github.com/Voodoobrew101/Loot-Liquidator/pull/24#issuecomment-6580978326). External handoffs are source material; they do not replace the owner's instructions or authorize a merge.
+
 The implementation keeps one ItemDB and its original evidence. Average quantities default off; compact ranges and all five native tooltip sort modes are tested. ATT's pinned Retail data and MIT notice are preserved without requiring the installed addon. Fixed-price fixtures check actual resolver, valuation, decision and formatter behavior, including consumed gear opportunity costs and exact-variant appearances.
 
 Reference fallback rates can be disabled through their native source control. Reverting this PR removes its compiler/runtime/display changes; no observation-history deletion or main merge was performed. Review the final PR head/checks and perform live-client smoke testing when a WoW client is available. PR Director owns merge/release.
