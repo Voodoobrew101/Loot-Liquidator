@@ -313,6 +313,25 @@ class Committed(unittest.TestCase):
         # M10: reddit:zzyjzu has a mapper (kept, its unit tests use it) and is now held by an agent, so the importer skips it.
         self.assertEqual(sorted(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), ["reddit:zzyjzu"])
 
+    def test_reconciled_source_decisions_keep_reference_evidence(self):
+        # M03b: all three threads are now represented in v3. A historical
+        # importer decision for them is dead; the original worker evidence
+        # must remain intact, including cast-unknown approximate rates.
+        hold = ie.Holdings(self.prior)
+        retired = ("reddit:1fvhzy0", "reddit:1smgllg", "reddit:y3e8ek")
+        for key in retired:
+            self.assertTrue(hold.held(key), key)
+            self.assertNotIn(key, ie.NEW_SOURCES)
+        rows = [r for _, r in hold.held("reddit:1smgllg")]
+        by_id = {r.get("id"): r for r in rows}
+        for rid in ("midnight-20261101-19001", "midnight-20261101-19017"):
+            self.assertIn(rid, by_id)
+            self.assertEqual(by_id[rid]["sourceKind"], "reference")
+            self.assertIsNone(by_id[rid]["casts"])
+            self.assertIsNone(by_id[rid]["castsWithDrop"])
+        self.assertEqual(by_id["midnight-20261101-19001"]["percentShown"], 10)
+        self.assertEqual(by_id["midnight-20261101-19017"]["averageShown"], 0.75)
+
     def test_every_file_in_scope_reported(self):
         counts = {f: len(self.report[f]) for f in ("archives", "v2Reports", "leads", "submissions")}
         self.assertEqual(counts, {"archives": 11, "v2Reports": 38, "leads": 1, "submissions": 38})
