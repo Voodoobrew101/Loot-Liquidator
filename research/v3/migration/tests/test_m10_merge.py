@@ -9,6 +9,7 @@ games and stay apart.
 Run from the repository root:
   python3 -m unittest discover -s research/v3/migration/tests -v
 """
+import json
 import os
 import sys
 import unittest
@@ -94,7 +95,11 @@ class Corpus(unittest.TestCase):
         import identity_report as ir
         rows = b.load()
         differing = ir.report(rows)["stillDiffering"]
-        self.assertEqual(len(differing), 10)
+        self.assertEqual(
+            len(differing), 10,
+            "Unexpected identity groups; inspect study/cohort provenance before changing the assertion:\n"
+            + json.dumps(differing, indent=2, sort_keys=True),
+        )
         pair = {"wowhead-prismatic-ore-superbondez-400-80", "wowhead-superbondez-prismatic-ore-400"}
         for g in differing:
             self.assertEqual((g["method"], g["input"]), ("Prospect", "194545"))
