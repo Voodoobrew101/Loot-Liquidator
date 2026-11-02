@@ -66,7 +66,7 @@ DEFAULT_SNAPSHOT = Path('database/research/v3-snapshot')
 DEFAULT_OUTPUT = Path('database/research-v3-baselines.lua')
 FAMILIES_FILE = Path(__file__).resolve().parent.parent / 'database' / 'research' / 'rank-families.json'
 SNAPSHOT_PATHS = ['research/v3/evidence', 'research/v3/corrections.jsonl', 'research/v3/conditions.jsonl',
-                  'research/v3/rate-changes.jsonl', 'research/v3/tools/build_estimates.py']
+                  'research/v3/rate-changes.jsonl', 'research/v3/tools']
 SUPPORTED = {'Mill': 'Inscription', 'Prospect': 'Jewelcrafting', 'Disenchant': 'Enchanting', 'Smelt': 'Mining'}
 EXPANSIONS = {'classic': 0, 'the burning crusade': 1, 'burning crusade': 1, 'wrath of the lich king': 2,
               'cataclysm': 3, 'mists of pandaria': 4, 'warlords of draenor': 5, 'legion': 6,
@@ -131,7 +131,19 @@ def load_calculator(snapshot):
     path = snapshot / 'research' / 'v3' / 'tools' / 'build_estimates.py'
     spec = importlib.util.spec_from_file_location('ll_research_v3_build_estimates', path)
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    # The current research calculator imports its sibling source_keys module.
+    # Resolve it from this exact snapshot, never from another loaded snapshot
+    # or the caller's checkout. Older snapshots need no sibling and still load.
+    old_path = sys.path[:]
+    old_source_keys = sys.modules.pop('source_keys', None)
+    sys.path.insert(0, str(path.parent.resolve()))
+    try:
+        spec.loader.exec_module(module)
+    finally:
+        sys.path[:] = old_path
+        sys.modules.pop('source_keys', None)
+        if old_source_keys is not None:
+            sys.modules['source_keys'] = old_source_keys
     # D1c5: the research calculator's file-scoped corrections use POSIX paths.
     # Normalize its in-memory rows BEFORE applying them, without editing the
     # snapshot or changing the calculator's math. This also keeps provenance
