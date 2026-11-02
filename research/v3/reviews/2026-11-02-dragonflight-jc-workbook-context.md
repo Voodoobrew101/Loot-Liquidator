@@ -5,7 +5,7 @@
 ## Original source and provenance
 
 - [DRAGONFLIGHT JC YIELD CALCULATOR](https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit), tab `Sheet1`; native Google Sheets cells and **formulas** read directly, bounded to `A1:X55`. Google Drive metadata reports creation **2022-10-13T17:47:08Z** and last modification **2022-11-30T03:09:50Z**.
-- Existing [pass-1 source inventory](../../../../docs/usable-data-audit/source-inventory.json) already identifies **444 pinned evidence transcriptions** for this workbook. This review does **not** add 444 new studies or duplicate any original cohort.
+- Existing [pass-1 source inventory](../../../docs/usable-data-audit/source-inventory.json) already identifies **444 pinned evidence transcriptions** for this workbook. This review does **not** add 444 new studies or duplicate any original cohort.
 - The workbook provides names, input rank 3, six source-labelled character profiles and output-quality labels, but **not** exact input/output item IDs, verified completed-operation counts, refund accounting, per-output hit counts, 0/1/2/... histograms, sample collection date, or current Retail patch verification.
 - Source is historical Dragonflight-era material. The owner's MoP Classic illustration is unrelated and remains excluded.
 
