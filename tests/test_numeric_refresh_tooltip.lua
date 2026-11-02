@@ -11,7 +11,7 @@ LL.db={source_itemdb_enabled=true,source_personal_enabled=false,source_legacy_en
     tooltipDetail=3,processingModes={D=1}}
 LL:MigrateEvidenceSettings()
 assert(LL:InitializeItemDB() and not LL.itemDBError)
-LL.EligibleDisenchant=function()return true end
+LL.EligibleDisenchant=function(_,f)return f.classID==4 end
 LL.DisenchantExpansion=function(_,f)return f.expansionID end
 LL.ProcessingPlayerConditions=function()return {skill=0,effectiveSkill=0}end
 LL.GetOutputPrice=function()return 100 end
@@ -51,6 +51,32 @@ local midnightDust
 for _,m in ipairs(midnight.materials) do if m.id==243599 then midnightDust=m end end
 assert(math.abs(midnightDust.chance-896/1485)<1e-10)
 assert(math.abs(midnightDust.expectedQuantity-1838/1485)<1e-4)
+-- S21: the recovered Amber family reaches the actual prospecting engine and
+-- formatter, remains rank-unknown, and contributes E[units] exactly once.
+LL.CanUseConversion=function()return true,nil,'Tester - Realm'end
+LL.ProfessionForMethod=function(_,method)return ({Prospect='Jewelcrafting',Mill='Inscription',Smelt='Mining'})[method]end
+local facts={id=194545,expansionID=9,classID=7,count=5}
+local prospect
+for _,option in ipairs(LL:ConversionOptions(facts)) do
+    if option.name=='Prospect' then prospect=option end
+end
+assert(prospect and type(prospect.value)=='number','Prismatic Ore has a priced Prospect option')
+local amber
+for _,m in ipairs(prospect.yieldModel.materials) do if m.id==192849 then amber=m end end
+assert(amber and #amber.rankIDs==3,'Amber remains an unranked family, not measured rank 1')
+assert(math.abs(amber.expectedQuantity-.05)<1e-12,'one 80-cast cohort, four Amber units')
+assert(math.abs(amber.netExpectedValue-5)<1e-10,'100 copper times .05 units, no second chance factor')
+local tip={lines={}}
+function tip:AddLine(s)self.lines[#self.lines+1]=s end
+function tip:AddDoubleLine(a,b)self.lines[#self.lines+1]=a..' | '..b end
+-- Amber sorts after the default twelve-material display limit. Full research
+-- details exposes the complete model; the default still prices all materials.
+LL.db.showResearchDetails=true
+LL:AppendRecommendationTooltip(tip,{action='P',facts=facts,conversionOptions={prospect},count=5})
+local amberText=table.concat(tip.lines,'\n')
+assert(amberText:find('rank unknown',1,true),'tooltip labels the missing rank')
+assert(amberText:find('0.05',1,true),'restored expected quantity reaches the tooltip')
+output[#output+1]='ITEM 194545 — synthetic prices, offline rendering\n'..amberText
 -- Disabling both sources still respects the player's evidence choice.
 LL.db.source_itemdb_enabled=false;LL._processingModelCache=nil
 local disabled=LL:EvaluateDisenchant({id=24995,expansionID=1,quality=2,classID=4,count=1})
@@ -59,4 +85,4 @@ if arg and arg[1] then
     local file=assert(io.open(arg[1]..'/numeric-tooltip-proof.txt','w'))
     file:write(table.concat(output,'\n\n'));file:close()
 end
-print('PASS: imported Warmaul and Midnight chances/ranges/means reach priced tooltips; source gates preserved')
+print('PASS: Warmaul, Midnight and restored Prismatic Amber reach priced tooltips; source gates preserved')
