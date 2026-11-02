@@ -11,6 +11,11 @@ spec.loader.exec_module(rm)
 
 
 class MigrationReconcileSafety(unittest.TestCase):
+    def test_real_git_wrapper_preserves_status_columns(self):
+        result = mock.Mock(stdout=" M research/v3/evidence/imported/old-studies.jsonl\n")
+        with mock.patch.object(rm.subprocess, "run", return_value=result):
+            self.assertEqual(rm.changes(), ["research/v3/evidence/imported/old-studies.jsonl"])
+
     def test_plan_is_read_only(self):
         with mock.patch.object(rm, "run", side_effect=AssertionError("must not run")), \
              mock.patch.object(rm, "clean_branch", side_effect=AssertionError("must not inspect branch")):

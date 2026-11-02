@@ -27,7 +27,9 @@ ALLOWED = (
 
 
 def git(*args):
-    return subprocess.run(["git", *args], cwd=ROOT, text=True, capture_output=True, check=True).stdout.strip()
+    # Porcelain status starts with a meaningful blank for unstaged changes.
+    # strip() shifts the first row's columns and removes its first path letter.
+    return subprocess.run(["git", *args], cwd=ROOT, text=True, capture_output=True, check=True).stdout.rstrip("\r\n")
 
 
 def clean_branch():
