@@ -8,7 +8,7 @@ for _,file in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua',
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
 LL.db={source_itemdb_enabled=true,source_personal_enabled=false,source_legacy_enabled=false,
-    tooltipDetail=3,showAverageQuantity=true,processingModes={D=1}}
+    tooltipDetail=3,showTooltipExplanations=true,showAverageQuantity=true,processingModes={D=1}}
 LL:MigrateEvidenceSettings()
 assert(LL:InitializeItemDB() and not LL.itemDBError)
 LL.EligibleDisenchant=function(_,f)return f.classID==4 end
