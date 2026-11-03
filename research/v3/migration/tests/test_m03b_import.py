@@ -353,16 +353,18 @@ class Committed(unittest.TestCase):
             "reddit:1fvhzy0": "war-within-20261101-2110",
             "reddit:1smgllg": "midnight-20261101-19001",
             "reddit:zzyjzu": "dragonflight-20261101-88008",
+            "reddit:y3e8ek": "dragonflight-20261102-143001",
         }
-        self.assertEqual(set(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), set(reviewed))
+        self.assertEqual(set(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), {"reddit:zzyjzu"})
         for key, rid in reviewed.items():
             self.assertTrue(any(r.get("id") == rid and r.get("type") == "drop" for _, r in hold.held(key)), key)
             self.assertFalse(any(ie.thread_of(ie.source_key(r["source"]["url"])) == key
                                  for rows in self.fams.values() for r in rows), key)
-        # y3e8ek has only a search record; its explicit qualitative skip remains
-        # active, rather than pretending a failed search supplied observations.
-        self.assertFalse(hold.held("reddit:y3e8ek"))
-        self.assertEqual(ie.NEW_SOURCES["reddit:y3e8ek"][0], "skip")
+        # At 37cc605 this thread had only a search note. The later 1430
+        # workbook transcription now supplies actual drop rows. The source
+        # transition is explicit; the search-only negative unit tests remain.
+        self.assertTrue(all(r.get("type") != "searched" for _, r in hold.held("reddit:y3e8ek")))
+        self.assertNotIn("reddit:y3e8ek", ie.NEW_SOURCES)
 
     def test_reconciled_source_decisions_keep_reference_evidence(self):
         # M03b: all three threads are now represented in v3. A historical

@@ -811,10 +811,11 @@ NEW_SOURCES = {
     "wowhead:spell=190385": ("import", "Wowhead comment 516803: six WoD herbs, 2,000 each, mass-milled, Cerulean Pigment totals"),
     # Reconciled 2026-11-02: 1smgllg's 17 approximate, cast-unknown reference
     # rows are already preserved by the Midnight worker; reimporting its v2
-    # shorthand would duplicate the source as a pseudo-study. The qualitative
-    # 1fvhzy0 and y3e8ek threads are also held by v3, with no importable
-    # standalone per-cast material outcomes. Keep their mapper for historical
-    # unit fixtures, but retire dead NEW_SOURCES decisions (M03b).
+    # shorthand would duplicate the source as a pseudo-study. 1fvhzy0 has
+    # existing pooled-herb records. At the reviewed 331a905 baseline y3e8ek
+    # also has actual Jallfo workbook rows (143001..143222), added AFTER the
+    # earlier search-only record. Search logs alone never establish holdings.
+    # Keep historical mappers, but retire these reviewed registry decisions.
     # skipped: same cohort already held under another URL
     "wowhead:item=192870": ("skip", "Bugy's two 2,000-ore Draconium cohorts (3 and 8 Illimited Diamonds): the same author's table is "
                                     "held by the dragonflight agent under wowhead spell=374627 (S17 copy)"),
