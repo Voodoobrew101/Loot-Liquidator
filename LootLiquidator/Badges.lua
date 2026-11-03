@@ -427,7 +427,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     end
     local detail=LA.db.tooltipDetail or 2
     local printedSamples=false
-    local progress=(detail>=3 and LA.ProfessionProgression and decision.facts)
+    local progress=(detail>=3 and LA.db.showProfessionDetails==true and LA.ProfessionProgression and decision.facts)
         and LA:ProfessionProgression(decision.facts,decision) or {}
     -- Bound/vendor-only loot remains quiet unless there are research results
     -- or a detailed external reference model worth showing transparently.
@@ -656,7 +656,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 local explanation=("  Per %d input(s); range when a material drops"):format(batch)
                 if model.operationUnverified then explanation=("  Values normalized per %d input(s); recipe batch unverified"):format(batch) end
                 if LA.db.showAverageQuantity==true then explanation=explanation.."; average units include zeros" end
-                tooltip:AddLine(explanation,.70,.75,.82,true)
+                if LA.db.showTooltipExplanations==true then
+                    tooltip:AddLine(explanation,.70,.75,.82,true)
+                end
                 local limit=LA.db.showResearchDetails==true and #list or math.min(#list,12)
                 for i=1,limit do
                     local m=list[i]
@@ -722,7 +724,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         end
                     end
                 end
-                if model.sources then
+                if LA.db.showResearchDetails==true and model.sources then
                     for _,source in ipairs(LA.SourceOrder or {}) do
                         local contribution=model.sources[source]
                         if contribution and contribution>0 then
@@ -730,7 +732,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         end
                     end
                 end
-                if model.context then
+                if LA.db.showProfessionDetails==true and model.context then
                     local ctx=model.context
                     local era=LA.DisenchantTables and LA.DisenchantTables[ctx.expansionID]
                     tooltip:AddLine(("  %s %s — skill %s"):format(era and era.name or "Unknown expansion",
@@ -738,8 +740,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     tooltip:AddLine(("  %s (%s)"):format(ctx.character or "Unknown character",ctx.profileKind or "unknown context"),.70,.75,.82,true)
                     if ctx.stale or ctx.incomplete then tooltip:AddLine("  Profession snapshot stale or incomplete",1,.68,.3,true) end
                 end
-                tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
-                    (model.provisional and " — provisional" or ""),.72,.70,.80,true)
+                if LA.db.showTooltipExplanations==true then
+                    tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
+                        (model.provisional and " — provisional" or ""),.72,.70,.80,true)
+                elseif model.provisional then
+                    tooltip:AddLine("  Estimate — provisional",.72,.70,.80,true)
+                end
                 if model.warning then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
                 if model.partial then tooltip:AddLine("  Partial: value counts only outputs with a known amount and price",1,.82,.4,true)
                 elseif model.partialPrice then tooltip:AddLine("  Insufficient Data: incomplete output valuation",1,.68,.3,true) end
@@ -846,14 +852,14 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             tooltip:AddLine("Profession: "..progress[i],.67,.85,.97,true)
         end
     end
-    if detail>=3 and decision.disenchantEligible -- B3: part of Breakdown
+    if detail>=3 and LA.db.showProfessionDetails==true and decision.disenchantEligible -- optional profession notes
         and decision.action~="D" then
         local note=decision.deIssue or (decision.canDisenchant
             and "Disenchant candidate; outcome probabilities may be unknown"
             or "Disenchant requires a verified eligible character")
         tooltip:AddLine(note,.69,.56,.82,true)
     end
-    if LA.db.showResearchDetails==true and LA.ProfessionAlternatives and decision.facts then -- B3: with notes
+    if LA.db.showProfessionDetails==true and LA.ProfessionAlternatives and decision.facts then -- B3: with notes
         local options=LA:ProfessionAlternatives(decision.facts,decision)
         for i=1,math.min(#options,4) do
             local option=options[i]
