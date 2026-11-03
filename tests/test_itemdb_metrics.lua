@@ -8,7 +8,7 @@ for _,file in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua',
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
 LL.db={source_itemdb_enabled=true,source_itemdb_weight=100,source_personal_enabled=false,source_legacy_enabled=false,processingModes={M=1,P=1,S=1},
-    tooltipDetail=3,showTooltips=true,showMaterialBreakdown=true}
+    tooltipDetail=3,showTooltipExplanations=true,showTooltips=true,showMaterialBreakdown=true}
 LL:MigrateEvidenceSettings()
 LL.CanUseConversion=function()return true,nil,'Tester - Realm'end
 LL.ProfessionForMethod=function(_,method)return ({Mill='Inscription',Prospect='Jewelcrafting',Smelt='Mining'})[method]end
