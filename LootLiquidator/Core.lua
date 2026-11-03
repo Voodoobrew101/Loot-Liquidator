@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.11.0-claude.23"
+LA.version = "0.12.0"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -23,7 +23,7 @@ local defaults = {
     recordDisenchants = true, showDisenchantSamples = true,
     recordConversions = true, showProcessingSamples = true,
     showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
-    showAverageQuantity = false, tooltipOutputSort = 'value',
+    showAverageQuantity = false, showTooltipExplanations = false, showProfessionDetails = false, tooltipOutputSort = 'value',
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,
     otherConversionDataMode = 1, minPersonalSamples = 30,
     -- B3: one tooltip level: 0 Off, 1 Recommendation, 2 Alternatives, 3 Breakdown.
