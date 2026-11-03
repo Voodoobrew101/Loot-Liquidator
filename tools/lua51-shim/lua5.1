@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+# Minimal lua5.1 stand-in using lupa (pip install lupa). Usage: lua5.1 script.lua [args...]
+import sys, lupa.lua51 as l
+L = l.LuaRuntime(unpack_returned_tuples=True)
+script, args = sys.argv[1], sys.argv[2:]
+L.execute("arg = {}")
+g = L.globals()
+g.arg[0] = script
+for i, a in enumerate(args, 1): g.arg[i] = a
+f = L.eval("function(p) local f, e = loadfile(p); if not f then error(e, 0) end; return f end")(script)
+try:
+    f(*args)
+except l.LuaError as e:
+    sys.stderr.write("lua5.1: %s\n" % e); sys.exit(1)
