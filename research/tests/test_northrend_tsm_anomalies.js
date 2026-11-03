@@ -29,6 +29,6 @@ function auditNorthrendTSM(luaSource) {
 }
 if(typeof module!=="undefined"&&module.exports)module.exports={auditNorthrendTSM};
 if(typeof require==="function"&&typeof module!=="undefined"&&require.main===module){
- const fs=require("fs"),result=auditNorthrendTSM(fs.readFileSync("GameData.lua","utf8"));
+ const fs=require("fs"),result=auditNorthrendTSM(fs.readFileSync("research/legacy-addon-v0.9.70/GameData.lua","utf8"));
  process.stdout.write(JSON.stringify(result,null,2)+"\n");if(result.failed)process.exitCode=1;
 }

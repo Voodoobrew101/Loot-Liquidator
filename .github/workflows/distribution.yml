@@ -1,0 +1,51 @@
+name: Build downloadable Loot Liquidator
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish a downloadable GitHub prerelease
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Lua 5.1
+        run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
+      - name: Pin current research and compile fresh ItemDB
+        run: |
+          git fetch origin implementation/five-agent-completion
+          python3 tools/research_v3_to_baselines.py --refresh origin/implementation/five-agent-completion
+          python3 tools/evidence_to_baselines.py
+          lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua
+      - name: Run all addon validation
+        run: bash tests/run.sh
+      - name: Package and verify
+        run: |
+          python3 tools/package_addon.py dist/LootLiquidator.zip
+          python3 tools/verify_distribution.py dist/LootLiquidator.zip
+          cp database/research/v3-snapshot/SNAPSHOT.json dist/research-snapshot.json
+          git rev-parse HEAD > dist/addon-commit.txt
+          sha256sum dist/LootLiquidator.zip > dist/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LootLiquidator-distribution
+          path: dist/
+      - name: Publish prerelease when requested
+        if: inputs.publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="build-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          gh release create "$tag" dist/LootLiquidator.zip dist/SHA256SUMS.txt dist/research-snapshot.json dist/addon-commit.txt --target "$GITHUB_SHA" --prerelease --title "Loot Liquidator build $GITHUB_RUN_NUMBER" --notes "Validated build from $GITHUB_SHA with research pinned in the attached manifest. Yield estimates remain provisional where evidence is incomplete."

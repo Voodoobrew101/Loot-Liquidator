@@ -241,8 +241,10 @@ class TestCommittedManifest(unittest.TestCase):
 
     def test_every_inventory_file_has_exactly_one_row(self):
         paths = [r["path"] for r in self.committed]
-        self.assertEqual(len(paths), 1244)
-        self.assertEqual(len(set(paths)), 1244)
+        # Main adds five research documents/tests and one archive-provenance
+        # file; the three original addon inputs move without changing bytes.
+        self.assertEqual(len(paths), 1250)
+        self.assertEqual(len(set(paths)), 1250)
         self.assertEqual(set(paths), {r["path"] for r in self.inv})
         by_inv = {r["path"]: r for r in self.inv}
         for r in self.committed:
@@ -314,7 +316,7 @@ class TestCommittedManifest(unittest.TestCase):
     def test_every_linker_exception_file_is_queued(self):
         exc_files = {r["path"] for r in self.links if r["kind"] == "source" and r["status"] == "exception"}
         by = {r["path"]: r["disposition"] for r in self.committed}
-        self.assertEqual(len(exc_files), 64)   # 65 until the M10 merge
+        self.assertEqual(len(exc_files), 65)  # new y3e8ek workbook/source-context conflict remains queued
         for p in exc_files:
             self.assertEqual(by[p], "exception-queued", p)
 
@@ -331,16 +333,20 @@ class TestCommittedManifest(unittest.TestCase):
     def test_the_known_exception_groups_are_all_queued(self):
         kinds = collections.Counter(e["kind"] for e in self.committed_ex)
         self.assertEqual(kinds["held-source-numbers-differ"], sum(1 for r in self.links if r["kind"] == "source" and r["status"] == "exception"))
-        self.assertEqual(kinds["held-source-numbers-differ"], 81)   # 83 until the M10 merge: two wowhead:item=46849 groups went
-        self.assertEqual(kinds["imported-vs-agent-totals-differ"], 6)
+        self.assertEqual(kinds["held-source-numbers-differ"], 82)
+        self.assertTrue(any(e["subject"] == "reddit:y3e8ek cited in 2026-10-28-0525-dragonflight-batch005-report.md"
+                            for e in self.committed_ex if e["kind"] == "held-source-numbers-differ"))
+        self.assertEqual(kinds["imported-vs-agent-totals-differ"], 0)  # six raw Jallfo cooutputs now source-linked
         self.assertEqual(kinds["unverified-output-count"], 1)
-        self.assertEqual(kinds["unplaced-name-only-cohort"], 1)
-        self.assertEqual(kinds["placement-proposal"], 1)
+        self.assertEqual(kinds["unplaced-name-only-cohort"], 0)  # all 22 zkay8v rows now have explicit worker matches
+        self.assertEqual(kinds["placement-proposal"], 0)  # 1smgllg copies superseded by held worker rows
         self.assertEqual(kinds["total-differs-from-source"], 1)
         self.assertEqual(kinds["ambiguous-doubt-source"], 12)
         by_kind = {e["kind"]: e for e in self.committed_ex}
-        self.assertEqual(len(by_kind["unplaced-name-only-cohort"]["recordIDs"]), 22)
-        self.assertEqual(len(by_kind["placement-proposal"]["recordIDs"]), 14)
+        zkay = [r for r in self.links if r["kind"] == "candidate"
+                and r.get("id") in {f"import-study-{i:05d}" for i in range(691, 713)}]
+        self.assertEqual(len(zkay), 22)
+        self.assertTrue(all(r["status"] == "linked" and r["agentRecordCount"] > 0 for r in zkay))
         self.assertEqual(by_kind["total-differs-from-source"]["recordIDs"], ["import-study-00967", "import-study-01041"])
 
     def test_every_validator_error_is_queued_with_a_fix_path(self):
@@ -378,8 +384,8 @@ class TestCommittedManifest(unittest.TestCase):
 
     def test_summary_counts_add_up(self):
         s = self.summary
-        self.assertEqual(sum(s["byDisposition"].values()), 1244)
-        self.assertEqual(s["files"], 1244)
+        self.assertEqual(sum(s["byDisposition"].values()), 1250)
+        self.assertEqual(s["files"], 1250)
         self.assertEqual(s["sha256Mismatches"], [])
         self.assertEqual(s["exceptions"]["total"], len(self.committed_ex))
         for cell in s["byInventoryDisposition"].values():

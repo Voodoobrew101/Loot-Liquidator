@@ -33,8 +33,8 @@ if(typeof module!=="undefined" && module.exports) module.exports={runItemdbResea
 if(typeof require==="function" && typeof module!=="undefined" && require.main===module){
  const fs=require("node:fs");
  const candidate=JSON.parse(fs.readFileSync("research/proposed/itemdb-midnight-milling-candidate.json","utf8"));
- const gd=fs.readFileSync("GameData.lua","utf8");
- const overlay=fs.readFileSync("StatYieldProfiles.lua","utf8");
+ const gd=fs.readFileSync("research/legacy-addon-v0.9.70/GameData.lua","utf8");
+ const overlay=fs.readFileSync("research/legacy-addon-v0.9.70/StatYieldProfiles.lua","utf8");
  const result=runItemdbResearchQA(candidate,gd,overlay);
  process.stdout.write(JSON.stringify(result,null,2)+"\n");
  if(result.failedCount) process.exitCode=1;

@@ -64,6 +64,16 @@ class Repo(unittest.TestCase):
 class Rules(Repo):
     """Shared machinery: holdings, claims, decisions."""
 
+    def test_removed_earlier_mapping_does_not_renumber_a_survivor(self):
+        pins = [{"file": "f", "id": "import-00001", "path": "old.json", "recordRef": "a", "studyKey": "a"},
+                {"file": "f", "id": "import-00002", "path": "old.json", "recordRef": "b", "studyKey": "b"}]
+        row = {"studyKey": "b", "migratedFrom": {"path": "old.json", "recordRef": "b"}}
+        ie.assign_historical_ids({"f": [row]}, {"f": "import"}, pins)
+        self.assertEqual(row["id"], "import-00002")
+        row["migratedFrom"]["recordRef"] = "unreviewed"
+        with self.assertRaisesRegex(ValueError, "Unregistered"):
+            ie.assign_historical_ids({"f": [row]}, {"f": "import"}, pins)
+
     def test_holdings_never_read_importer_output(self):
         self.put("research/v3/evidence/imported/v2-report-cohorts.jsonl", [drop("import-v2report-00001", url="https://reddit.com/r/x/comments/abc")])
         self.agent([drop("ag-1", url="https://reddit.com/r/x/comments/def")])
@@ -74,6 +84,18 @@ class Rules(Repo):
     def test_prior_rows_of_this_run_are_held(self):
         h = ie.Holdings([drop("import-study-00001", url="https://www.wowhead.com/item=1/x")])
         self.assertTrue(h.held("wowhead:item=1"))
+
+    def test_search_log_is_not_a_held_observation(self):
+        self.agent([{"id": "search", "type": "searched",
+                     "source": {"url": "https://www.reddit.com/r/w/comments/zzyjzu"}}])
+        hold = ie.Holdings([])
+        self.assertFalse(hold.held("reddit:zzyjzu"))
+        data = {"observations": [{"id": "DF-20230102-SEREVITE-R3-28000-24R3DIAMONDS",
+                                  "source": "https://www.reddit.com/r/w/comments/zzyjzu",
+                                  "reportedR3DiamondUnits": 24, "reportedOreUnitsApprox": 28000}]}
+        self.put("v.json", data)
+        rows, entry = ie.assess_file("v.json", data, hold, {"reddit:zzyjzu": ie.map_zzyjzu})
+        self.assertEqual((len(rows), entry["outcomes"]), (1, {"imported": 1}))
 
     def test_thread_match(self):
         self.agent([drop("ag-1", url="https://us.forums.blizzard.com/en/wow/t/some-title/2276246")])
@@ -194,6 +216,17 @@ class OtherSchema(Repo):
                            "originalHerbsConsumed": herbs, "reportedOutputTotal": total, "sampleContext": "c",
                            "observedMassMillReagentCount": 20}}
 
+    def test_failed_search_mentioning_author_does_not_suppress_milling(self):
+        self.agent([{"id": "search", "type": "searched", "notes": "No cohort found for KnownAuthor",
+                     "source": {"url": "https://elsewhere.example/search"}}])
+        self.put(ie.LEGACY_MILLING, [self.mill("KnownAuthor", 1000, 700)])
+        hold = ie.Holdings([])
+        self.assertFalse(hold.author_known("KnownAuthor"))
+        rows, log = ie.import_legacy_milling(hold)
+        self.assertEqual([entry["outcome"] for entry in log], ["imported"])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual((rows[0]["inputsProcessed"], rows[0]["totalQuantity"], rows[0]["casts"]), (1000, 700, None))
+
     def test_legacy_milling(self):
         self.agent([drop("ag-1", url="https://www.wowhead.com/item=153669/x", inputItemID=152510, outputItemID=153635, totalQuantity=157),
                     drop("ag-2", url="https://elsewhere.example/y", notes="cohort by KnownAuthor")])
@@ -284,13 +317,19 @@ class Committed(unittest.TestCase):
     def test_new_ids_stable(self):
         with open(os.path.join(HERE, "fixtures", "m03b-ids.jsonl"), encoding="utf-8") as fh:
             pinned = [json.loads(l) for l in fh]
+        with open(os.path.join(REPO, "research/v3/migration/manifest/historical-import-ids.jsonl"), encoding="utf-8") as fh:
+            self.assertEqual([json.loads(l) for l in fh], pinned)
         now = [{"file": n, "id": r["id"], "studyKey": r["studyKey"], "recordRef": r["migratedFrom"]["recordRef"],
                 "path": r["migratedFrom"]["path"]} for n in NEW_FILES for r in self.rows[n]]
-        # M10: PLAN section 3 rule 5. import-v2report-00016 (reddit:zzyjzu) went when the dragonflight agent recorded that
-        # thread (2026-10-31T1928 and T2027 files); every other ID is unchanged.
-        dropped = {"import-v2report-00016"}
+        # Reviewed supersessions: zzyjzu's Jan 2 cohort is now held by the
+        # Dragonflight worker, and 1smgllg's 14 approximate-rate copies by the
+        # Midnight worker (17 source rows, no measured cast denominator).
+        # Original archive files remain untouched; retained IDs never renumber.
+        dropped = {"import-v2report-00016"} | {f"import-v2report-{i:05d}" for i in range(1, 15)}
         self.assertEqual(now, [p for p in pinned if p["id"] not in dropped])
-        self.assertTrue(ie.Holdings(self.prior).held("reddit:zzyjzu"))
+        hold = ie.Holdings(self.prior)
+        self.assertTrue(hold.held("reddit:zzyjzu"))
+        self.assertTrue(hold.held("reddit:1smgllg"))
 
     def test_every_new_source_decided_and_every_decision_used(self):
         undecided, cited = [], {"wowhead:spell=190385"}   # the legacy milling URL, decided by author and numbers
@@ -306,12 +345,45 @@ class Committed(unittest.TestCase):
         self.assertEqual(undecided, [])
         self.assertEqual(sorted(set(ie.NEW_SOURCES) - cited), [])   # no stale decision
 
-    def test_no_decision_for_a_held_source(self):
-        """A held source is classified as held before its decision is read, so a decision for it is dead;
-        only row-checked mappers (the TBC table) may be held."""
+    def test_held_sources_have_reviewed_supersessions(self):
+        """Keep an explicit reviewed set; a new held-source transition must
+        still fail until its provenance and no-double-import behavior are checked."""
         hold = ie.Holdings(self.prior)
-        # M10: reddit:zzyjzu has a mapper (kept, its unit tests use it) and is now held by an agent, so the importer skips it.
-        self.assertEqual(sorted(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), ["reddit:zzyjzu"])
+        reviewed = {
+            "reddit:1fvhzy0": "war-within-20261101-2110",
+            "reddit:1smgllg": "midnight-20261101-19001",
+            "reddit:zzyjzu": "dragonflight-20261101-88008",
+            "reddit:y3e8ek": "dragonflight-20261102-143001",
+        }
+        self.assertEqual(set(k for k in ie.NEW_SOURCES if hold.held(k) and k not in ie.ROW_CHECKED_SOURCES), {"reddit:zzyjzu"})
+        for key, rid in reviewed.items():
+            self.assertTrue(any(r.get("id") == rid and r.get("type") == "drop" for _, r in hold.held(key)), key)
+            self.assertFalse(any(ie.thread_of(ie.source_key(r["source"]["url"])) == key
+                                 for rows in self.fams.values() for r in rows), key)
+        # At 37cc605 this thread had only a search note. The later 1430
+        # workbook transcription now supplies actual drop rows. The source
+        # transition is explicit; the search-only negative unit tests remain.
+        self.assertTrue(all(r.get("type") != "searched" for _, r in hold.held("reddit:y3e8ek")))
+        self.assertNotIn("reddit:y3e8ek", ie.NEW_SOURCES)
+
+    def test_reconciled_source_decisions_keep_reference_evidence(self):
+        # M03b: all three threads are now represented in v3. A historical
+        # importer decision for them is dead; the original worker evidence
+        # must remain intact, including cast-unknown approximate rates.
+        hold = ie.Holdings(self.prior)
+        retired = ("reddit:1fvhzy0", "reddit:1smgllg", "reddit:y3e8ek")
+        for key in retired:
+            self.assertTrue(hold.held(key), key)
+            self.assertNotIn(key, ie.NEW_SOURCES)
+        rows = [r for _, r in hold.held("reddit:1smgllg")]
+        by_id = {r.get("id"): r for r in rows}
+        for rid in ("midnight-20261101-19001", "midnight-20261101-19017"):
+            self.assertIn(rid, by_id)
+            self.assertEqual(by_id[rid]["sourceKind"], "reference")
+            self.assertIsNone(by_id[rid]["casts"])
+            self.assertIsNone(by_id[rid]["castsWithDrop"])
+        self.assertEqual(by_id["midnight-20261101-19001"]["percentShown"], 10)
+        self.assertEqual(by_id["midnight-20261101-19017"]["averageShown"], 0.75)
 
     def test_every_file_in_scope_reported(self):
         counts = {f: len(self.report[f]) for f in ("archives", "v2Reports", "leads", "submissions")}

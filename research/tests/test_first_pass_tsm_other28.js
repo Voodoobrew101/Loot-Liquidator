@@ -36,7 +36,7 @@ function auditOther28(gameData, rowsCsv, coverageCsv, evidenceJsonl, schemaJson,
 if(typeof module!=="undefined"&&module.exports)module.exports={auditOther28};
 if(typeof require==="function"&&typeof module!=="undefined"&&require.main===module){
  const fs=require("fs"),r=auditOther28(
- fs.readFileSync("GameData.lua","utf8"),
+ fs.readFileSync("research/legacy-addon-v0.9.70/GameData.lua","utf8"),
  fs.readFileSync("research/ledger/first-pass-tsm-other-28-field-evidence-2026-10-28.csv","utf8"),
  fs.readFileSync("research/ledger/first-pass-coverage-2026-10-28.csv","utf8"),
  fs.readFileSync("research/evidence/observations/legion-felslate-3200ore-community.jsonl","utf8"),
