@@ -270,6 +270,33 @@ class Identity(Fixture):
         self.assertEqual(sorted(k[2] for k in res), [2001, 2002])
         self.assertEqual(res[("Prospect", "1001", 2001)]["studies"], 1)
 
+    def test_s26_same_name_different_output_rank_not_suppressed(self):
+        # Two output ranks can share a material name and even equal hit counts.
+        # A ranked exact-ID row must not erase a differently ranked family row.
+        url = "https://wowhead.com/item=272242"
+        ranked = drop("rank1", url=url, studyKey="same-looter-cohort",
+                      outputItemID=2001, outputName="Dawn Crystal", outputRank=1,
+                      casts=100, castsWithDrop=20)
+        other_rank = drop("rank2", url=url, studyKey="same-looter-cohort",
+                          outputItemID=None, outputName="Dawn Crystal", outputRank=2,
+                          casts=100, castsWithDrop=20)
+        res, _ = self.build([ranked, other_rank])
+        self.assertIn(("Prospect", "1001", 2001), res)
+        self.assertIn(("Prospect", "1001", "family:Dawn Crystal"), res)
+        self.assertFalse(b.same_output(ranked, other_rank, b.item_names([ranked, other_rank])))
+
+    def test_s26_same_name_different_ids_not_identical(self):
+        # Item IDs are distinct rank alternatives even when the rank field
+        # was omitted in both transcriptions.
+        a = drop("a", outputItemID=2001, outputName="Dawn Crystal")
+        c = drop("c", outputItemID=2002, outputName="Dawn Crystal")
+        self.assertFalse(b.same_output(a, c, b.item_names([a, c])))
+
+    def test_s26_missing_rank_does_not_prove_ranked_copy(self):
+        a = drop("a", outputItemID=2001, outputName="Dawn Crystal", outputRank=1)
+        c = drop("c", outputItemID=None, outputName="Dawn Crystal", outputRank=None)
+        self.assertFalse(b.same_output(a, c, b.item_names([a, c])))
+
     def test_copy_keeps_numbers_when_a_field_is_null(self):
         # Reddit 108782r: one record adds averageShown to the same totals.
         url = "https://reddit.com/r/x/comments/abc"

@@ -628,7 +628,22 @@ def same_output(r, o, ids):
     """
     left = item_token(r, "outputItemID", "outputName", ids)
     right = item_token(o, "outputItemID", "outputName", ids)
-    return bool(left and right and left == right)
+    if not (left and right and left == right):
+        return False
+    # S26: a shared material name is not proof that two quality ranks are one
+    # output. In particular, Looter tables may contain same-name rank rows,
+    # and a family-only transcription must not erase a distinct ranked row.
+    li, ri = r.get("outputItemID"), o.get("outputItemID")
+    if li is not None and ri is not None and str(li) != str(ri):
+        return False
+    lr, rr = r.get("outputRank"), o.get("outputRank")
+    if lr is not None and rr is not None and lr != rr:
+        return False
+    if (lr is None) != (rr is None):
+        # An exact matching item ID is sufficient even when one copy omitted
+        # the rank annotation; a name-only match is not.
+        return li is not None and ri is not None and str(li) == str(ri)
+    return True
 
 
 def misplaced_copies(rows, names, vectors, pooled):
