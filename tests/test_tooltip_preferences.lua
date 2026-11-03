@@ -41,8 +41,27 @@ assert(hidden:find('[1-2]',1,true) and hidden:find('[2]',1,true),'yield ranges o
 assert(not hidden:find('[x',1,true) and not hidden:find('0.375',1,true),'average hidden by default')
 assert(hidden:find('copper',1,true),'gold value stays visible')
 local shown=render(true)
-assert(shown:find('0.375',1,true) and shown:find('average units include zeros',1,true),'average can be enabled')
+assert(shown:find('0.375',1,true),'average can be enabled independently')
+assert(not shown:find('Per 5 input',1,true) and not shown:find('Unadjusted reference',1,true),
+    'processing explanations hidden by default')
+LL.db.showTooltipExplanations=true
+local explained=render(true)
+assert(explained:find('Per 5 input',1,true) and explained:find('average units include zeros',1,true)
+    and explained:find('Unadjusted reference',1,true),'advanced option restores both explanations')
+LL.db.showTooltipExplanations=false
+assert(not render(true):find('Unadjusted reference',1,true),'explanations hide again')
 assert(model.value==12 and a.netExpectedValue==3 and b.netExpectedValue==9,'presentation leaves economic values unchanged')
+-- Technical details are independent opt-ins; core values remain visible.
+model.sources={legacy=100};LL.SourceOrder={'legacy'}
+model.context={profession='Enchanting',effectiveSkill=104,character='Tester',profileKind='live'}
+local plain=render(false)
+assert(not plain:find('effective contribution',1,true) and not plain:find('skill 104',1,true))
+LL.db.showResearchDetails=true
+assert(render(false):find('effective contribution',1,true))
+assert(not render(false):find('skill 104',1,true))
+LL.db.showProfessionDetails=true
+assert(render(false):find('skill 104',1,true) and render(false):find('Tester (live)',1,true))
+LL.db.showProfessionDetails=false;LL.db.showResearchDetails=false
 -- Sort the complete list before the normal twelve-row limit is applied.
 LL.db.tooltipOutputSort='value'
 local many={}
