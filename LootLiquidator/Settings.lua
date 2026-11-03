@@ -185,27 +185,49 @@ end
 -- Shared illustration uses the same LA:Paint and AppendRecommendationTooltip as
 -- real bag buttons. Figures are EXAMPLES, never taken as live TSM quotes.
 local previewPanels=setmetatable({}, {__mode="k"})
--- Preview-only example fixtures. Their output IDs are real materials, but
--- quantities and monetary values are ILLUSTRATIONS, never live market quotes.
--- Every example uses the normal tooltip material renderer; no second tooltip
--- implementation or dependency on TSM is needed to draw the examples.
-local PREVIEW_ITEMS = {
-    {name="Sample Mageroyal (62)",itemID=785,action="A",count=62,
-        auction=20000,convert=16200,vendor=100,method="Mill",letter="M",inputCount=5,
-        outputs={
-            {id=39334,chance=1,expectedQuantity=3,minQuantity=2,maxQuantity=4,priceWeight=1},
-            {id=43103,chance=.25,expectedQuantity=.5,minQuantity=1,maxQuantity=3,priceWeight=3},
-        }},
-    {name="Sample soulbound ring",itemID=272147,action="D",count=1,
-        auction=nil,convert=480000,vendor=369500,method="Disenchant",letter="D",inputCount=1,
-        outputs={{id=243605,expectedQuantity=1,priceWeight=1}}},
-    {name="Sample Copper Ore (10)",itemID=2770,action="S",count=10,
-        auction=35000,convert=47000,vendor=500,method="Smelt",letter="S",inputCount=10,
-        outputs={{id=2840,expectedQuantity=10,minQuantity=10,maxQuantity=10,priceWeight=1}}},
-}
+-- Curated, complete ItemDB studies; prices alone are illustrative. Copy fields
+-- into preview rows so previews never mutate research records or saved data.
+local PREVIEW_ITEMS = {}
+for _,sample in ipairs({
+    {id=2447,name="Peacebloom",method="Mill",action="A",auction=20000,value=16200},
+    {id=765,name="Silverleaf",method="Mill",action="M",auction=12000,value=18000},
+    {id=239671,method="Disenchant",action="D",value=480000},
+    {id=239675,method="Disenchant",action="D",value=520000},
+    {id=258920,method="Disenchant",action="D",value=360000},
+}) do
+    for _,record in ipairs(LL.ItemDB and LL.ItemDB.processing or {}) do
+        if record.recordID==("evidence:v3:%s:%d:x%d"):format(sample.method,sample.id,
+            sample.method=="Mill" and 5 or 1) then
+            local outputs,confidence={},100
+            local complete=#(record.materials or {})>0
+            for _,material in ipairs(record.materials or {}) do
+                local output={id=material.id,priceWeight=1}
+                for target,source in pairs({chance="dropChance",expectedQuantity="expectedQuantity",
+                    minQuantity="minQuantity",maxQuantity="maxQuantity"}) do
+                    local field=material[source]
+                    if type(field)~="table" or type(field.value)~="number"
+                        or (field.confidence or 0)<85 then complete=false;break end
+                    output[target]=field.value
+                    output.confidence=math.min(output.confidence or 100,field.confidence)
+                end
+                confidence=math.min(confidence,output.confidence or 0)
+                outputs[#outputs+1]=output
+            end
+            if complete then
+                PREVIEW_ITEMS[#PREVIEW_ITEMS+1]={name="Sample "..(sample.name or ("item "..sample.id)),
+                    itemID=sample.id,action=sample.action,count=record.inputCount,
+                    auction=sample.auction,convert=sample.value,vendor=100,
+                    method=sample.method,letter=sample.method=="Mill" and "M" or "D",
+                    inputCount=record.inputCount,outputs=outputs,confidence=confidence,
+                    source=record.recordID}
+            end
+            break
+        end
+    end
+end
 local function SampleDecision(row)
     local options={{name=row.method,letter=row.letter,available=true,value=row.convert,
-        confidence="illustrative",source="Illustrative values only",inputCount=row.inputCount}}
+        confidence=row.confidence,source=row.source,inputCount=row.inputCount}}
     -- The mock conversion total is per original item, while outputs are per
     -- processing batch. Allocate synthetic unit quotes so the breakdown adds
     -- back up to the quoted conversion value after the optional AH fee.
@@ -223,36 +245,14 @@ local function SampleDecision(row)
         outputs[#outputs+1]={id=material.id,chance=material.chance,
             expectedQuantity=material.expectedQuantity,
             minQuantity=material.minQuantity,maxQuantity=material.maxQuantity,
-            unitPrice=price,expectedValue=price*material.expectedQuantity,
+            confidence=material.confidence,unitPrice=price,expectedValue=price*material.expectedQuantity,
+            netExpectedValue=price*material.expectedQuantity*(1-fee),
             illustrative=true}
     end
-    options[1].estimate={confidence="illustrative",inputCount=row.inputCount,
-        note="Preview only: sample quantities and prices",materials=outputs}
-    if row.itemID==2770 then
-        -- Copper ore is BOTH smeltable and prospectable. The latter operates
-        -- on two 5-ore batches in this ten-ore illustration. This fixture
-        -- never calls TSM or alters measured/provisional Game Data.
-        local gems={
-            {id=774,chance=.5,expectedQuantity=.75},
-            {id=818,chance=.5,expectedQuantity=.75},
-            {id=1210,chance=.10,expectedQuantity=.15},
-        }
-        local prospectTotal=30000
-        local prospectSum=0
-        for _,m in ipairs(gems) do prospectSum=prospectSum+m.expectedQuantity end
-        local unit=prospectTotal*5/((1-fee)*prospectSum)
-        for _,m in ipairs(gems) do
-            m.minQuantity=1;m.maxQuantity=2
-            m.unitPrice=unit;m.expectedValue=unit*m.expectedQuantity
-            m.illustrative=true
-        end
-        options[#options+1]={name="Prospect",letter="P",available=true,
-            value=prospectTotal,inputCount=5,confidence="illustrative",
-            estimate={confidence="illustrative",inputCount=5,
-                note="Illustrative historical gem chances",materials=gems}}
-    end
+    options[1].yieldModel={confidence=row.confidence,inputCount=row.inputCount,
+        note="ItemDB study yields; illustrative prices only",materials=outputs}
     return {action=row.action,method=row.method,conversion=options[1],
-        conversionOptions=options,itemID=row.itemID,count=row.count,
+        conversionOptions=options,converted=row.convert,itemID=row.itemID,count=row.count,
         rawAuction=row.auction,netAuction=row.auction and row.auction*(1-fee) or 0,
         vendor=row.vendor,auctionEligible=row.auction~=nil,facts={name=row.name},
         isBound=row.auction==nil}
@@ -260,6 +260,7 @@ end
 PreviewPanel=function()
     local panel=CreateFrame("Frame")
     panel:SetSize(560,90)
+    if #PREVIEW_ITEMS==0 then return panel end
     local index=1
     local caption=panel:CreateFontString(nil,"ARTWORK","GameFontHighlightSmall")
     caption:SetPoint("TOPLEFT",panel,"TOPLEFT",20,-7)
@@ -283,7 +284,8 @@ PreviewPanel=function()
             local textureID=C_Item.GetItemIconByID(row.itemID)
             if textureID then texture:SetTexture(textureID) end
         end
-        name:SetText(row.name)
+        local itemName=C_Item and C_Item.GetItemNameByID and C_Item.GetItemNameByID(row.itemID)
+        name:SetText(itemName and ("Sample "..itemName) or row.name)
         local levels={[0]="Off",[1]="Recommendation",[2]="Alternatives",[3]="Breakdown"}
         indicator:SetText("Preview only | "..(levels[LL.db.tooltipDetail or 2] or "Alternatives").." | "..
             (LL.db.tooltipShowAfterAHCut~=false and "AH net" or "AH listing"))
@@ -668,8 +670,13 @@ function LL:RegisterNativeSettings()
          {"database","Database order"}},"value")
     Checkbox(tooltips,"showMaterialConfidence","Show confidence per material",
         "Breakdown level: add each material's own confidence. The option's overall confidence is always shown.",false)
+    Section(ttLayout,"Advanced")
+    Checkbox(tooltips,"showTooltipExplanations","Show processing explanations",
+        "Breakdown level: explain input batches, output ranges and average quantities, and show reference or profession adjustment notes. Hidden by default.",false)
+    Checkbox(tooltips,"showProfessionDetails","Show profession details",
+        "Show profession skill, the character and profile used, profession progression, eligible characters and disenchant candidate notes. Hidden by default.",false)
     Checkbox(tooltips,"showResearchDetails","Show research notes",
-        "For troubleshooting: where each number came from, profession hints and which characters could do it. Makes tooltips much longer.",false)
+        "For troubleshooting: show evidence source contributions, research casts and material source notes. Makes tooltips much longer.",false)
     -- Hover-preview is intentionally at the top of this same page. No extra
     -- Tooltips subcategory or tall static preview remains.
 
