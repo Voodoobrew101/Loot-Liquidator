@@ -158,6 +158,41 @@ def load_calculator(snapshot):
         ])
 
     module.apply_corrections = portable_corrections
+    if hasattr(module, 'study_vectors') and hasattr(module, 'study_identity'):
+        original_vectors = module.study_vectors
+        original_identity = module.study_identity
+        cohort_aliases = {}
+
+        def linked_vectors(rows):
+            result = original_vectors(rows)
+            vectors = result[0]
+            # A refresh can label a cohort while older transcriptions still
+            # use its numeric fingerprint. Link only an unambiguous match of
+            # source, input rank, casts and the calculator's whole-study vector.
+            # Distinct explicit cohort keys must remain independent.
+            def fingerprint(row):
+                return (module.source_key(row), row.get('method'),
+                        json.dumps(row.get('inputItemID') or row.get('inputName') or row.get('gearGroup'), sort_keys=True),
+                        row.get('inputRank'),
+                        module.num(row.get('casts')), vectors[module.study_ref(row)])
+
+            labelled = defaultdict(set)
+            for row in rows:
+                if module.is_study_row(row) and row.get('cohortKey'):
+                    labelled[fingerprint(row)].add(row['cohortKey'])
+            cohort_aliases.clear()
+            for row in rows:
+                if module.is_study_row(row) and not row.get('cohortKey'):
+                    matches = labelled.get(fingerprint(row), ())
+                    if len(matches) == 1:
+                        cohort_aliases[id(row)] = ('cohort', next(iter(matches)))
+            return result
+
+        def linked_identity(row, vectors):
+            return cohort_aliases.get(id(row)) or original_identity(row, vectors)
+
+        module.study_vectors = linked_vectors
+        module.study_identity = linked_identity
     # S21: the pinned estimator's same_output accepts ANY nonzero row. An exact
     # Diamond ID can then suppress a different, rank-unknown Amber output with
     # the same total. Correct identity only, retaining the estimator's cohort
