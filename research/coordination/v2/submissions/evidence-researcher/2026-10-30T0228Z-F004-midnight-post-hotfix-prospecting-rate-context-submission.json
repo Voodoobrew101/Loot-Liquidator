@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_POST_HOTFIX_PROSPECTING_RATE_CONTEXT",
+  "workflowRevision": 2,
+  "queueRevisionObserved": "five-agent-workflow=2; completion-priorities=1.0.0",
+  "runUTC": "2026-10-30T02:28:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "95973129c92f100865ea20913b32db0451c4a4a1",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "zeroDeltaPivot": "Moved from repeatedly audited TWW milling batch denominators to previously unindexed post-hotfix Midnight prospecting source, affecting 7 diamond E gap targets.",
+  "targetKeys": [
+    "midnight:237359:242608:L733",
+    "midnight:237361:242608:L744",
+    "midnight:237362:242608:L755",
+    "midnight:237363:242608:L766",
+    "midnight:237364:242608:L777",
+    "midnight:237365:242608:L788",
+    "midnight:237366:242608:L799"
+  ],
+  "filesChanged": [
+    "research/evidence/v2/2026-10-30T0228Z-F004-midnight-post-hotfix-prospecting-rate-context.json",
+    "research/evidence/v2/source-reviews/2026-10-30T0228Z-F004-midnight-post-hotfix-prospecting-rate-context-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0228Z-F004-midnight-post-hotfix-prospecting-rate-context-submission.json"
+  ],
+  "deltas": {
+    "newOriginalPlayerEstimateLineages": 1,
+    "newIndependentlyMeasuredCastStudies": 0,
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "newNumericEvidenceCells": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "newWorkingPreviewCells": 0,
+    "confidencePromotions": 0,
+    "sharedLedgersChanged": 0,
+    "sourceReviewEvents": 3,
+    "reusedSourceLineagesWithoutDoubleCounting": 2,
+    "productionFilesChanged": 0,
+    "schedulesChanged": 0
+  },
+  "testsActuallyRun": {
+    "type": "IN_PROCESS_JAVASCRIPT_ASSERTIONS_AND_GITHUB_READBACK",
+    "assertionsPlanned": 18,
+    "failed": 0,
+    "assertionsPassed": 18
+  },
+  "notRun": [
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "WoW Retail in-game verification",
+    "Independent whole-study holdout tests"
+  ],
+  "blockers": [
+    "No raw per-cast logs, zero-output histograms, output totals, or Resourcefulness refund counts",
+    "No exact item IDs/ranks for copper/tin/silver ore family claim",
+    "Author's total <5000 ore spans unspecified ore types; no family-specific denominator",
+    "2026-04-17 comment date does not establish all cast timestamps",
+    "Official March 31 hotfix supplies no numeric magnitude"
+  ],
+  "sourceURLs": [
+    "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24266320/hotfixes-april-2-2026"
+  ],
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "confidence": 0,
+  "nextTask": {
+    "id": "F004_MIDNIGHT_POST_HOTFIX_DIAMOND_CAPTURE",
+    "action": "Seek or request a controlled post-2026-03-31 Midnight per-ore-rank prospecting cohort with actual completed casts, zero diamonds, output item IDs/ranks, spec/gear and refunds. If none, pivot to queue30 selector/rank eligibility; do not re-index the same unquantified rate claim."
+  }
+}

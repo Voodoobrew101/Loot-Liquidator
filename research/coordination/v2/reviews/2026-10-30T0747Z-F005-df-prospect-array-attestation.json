@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_PROSPECT_ARRAY_CONTEXT_ATTESTATION",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T07:47:00Z",
+  "verdict": "FAIL_REPAIR_REQUIRED",
+  "reviewedModel": {
+    "path": "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
+    "blobSHA": "85d1e4b7b019c6db945335af2ec82392e8a0ddca",
+    "modelID": "df-prospecting-joint-cast-conflict-v1.0.1"
+  },
+  "reviewedManifest": {
+    "path": "research/models/v2/df_prospecting_joint_cast_conflict_v1.json",
+    "blobSHA": "72cf68f3c6edb12c3da807202b29b20acc2daa5d",
+    "status": "PROPOSED_REPAIRED_AFTER_F005_ADVERSARIAL_PENDING_NATIVE_AND_INDEPENDENT_RETEST"
+  },
+  "independentFixture": {
+    "path": "research/tests/v2/test_f005_df_prospect_array_context_attestation.js",
+    "blobSHA": "77519d24493455616dbbf94d142af581aa857c3a",
+    "syntheticOnly": true
+  },
+  "queueSnapshot": {
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "priority122Keys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "newFindings": [
+    {
+      "code": "F005_DF_ARRAY_SYMBOL_METADATA_IGNORED",
+      "severity": "CONTEXT_INTEGRITY",
+      "testsFailed": 2,
+      "detail": "jsonSafe array branch counts Object.keys and validates .every, but ignores own Symbol keys. Both analyzeCasts and scenarioBounds accept array metadata that JSON.stringify silently drops."
+    },
+    {
+      "code": "F005_DF_ARRAY_NONENUMERABLE_METADATA_IGNORED",
+      "severity": "CONTEXT_INTEGRITY",
+      "testsFailed": 2,
+      "detail": "Array own non-enumerable source metadata is accepted but omitted from contextSnapshot/contextIdentity; unlike plain objects, array property descriptors are not inspected."
+    },
+    {
+      "code": "F005_DF_ARRAY_SPARSE_OFFSET_BYPASS",
+      "severity": "CONTEXT_INTEGRITY",
+      "testsFailed": 2,
+      "detail": "Sparse array ['x', <hole>] with an extra enumerable string property has Object.keys.length === array.length; .every skips hole. Validator accepts, JSON.stringify replaces hole with null and drops extra metadata."
+    },
+    {
+      "code": "F005_DF_ARRAY_TOJSON_SPOOF",
+      "severity": "CONTEXT_INTEGRITY",
+      "testsFailed": 4,
+      "detail": "Array subclass inherited toJSON and own non-enumerable toJSON are accepted; JSON.stringify invokes custom serialization, changing validated profession context before snapshot/identity creation."
+    }
+  ],
+  "exactReproduction": {
+    "fixtureCases": 13,
+    "passed": 3,
+    "failed": 10,
+    "baselinePositiveControlsPassed": 3,
+    "failedByPath": {
+      "analyzeCasts": 5,
+      "scenarioBounds": 5
+    },
+    "environment": "JavaScript V8 Function harness with node:assert/strict compatible shim, exact GitHub model and independent fixture semantics",
+    "independentCurrentRetailHoldoutFamilies": 0
+  },
+  "previousRepairStatus": {
+    "existingNativeSuite": "23/23 gated by research/tools/run_completion_pipeline.js --check",
+    "githubRun": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41021217451",
+    "githubRunHead": "b1eec70cf2b26a06e5c99eb5e39a39d84cab0b46",
+    "conclusion": "success",
+    "caveat": "Native pipeline does not execute newly added array-attestation suite; its success does not clear this finding"
+  },
+  "risk": "An accepted array profession/unlock context can lose hidden metadata or be replaced by toJSON while contextIdentity appears legitimate. This affects reproducibility and source-context attestation, not demonstrated live EV leakage.",
+  "repairOwner": "baseline-modeller",
+  "repairRequirements": [
+    "For every array, require Array.prototype or a documented safe prototype, reject own symbol keys, reject own non-index keys except native length, reject extra non-enumerable own keys, and reject own/inherited custom toJSON before snapshot.",
+    "Verify each index 0..length-1 is an own enumerable data property; reject sparse arrays even when extra keys compensate.",
+    "Validate snapshot/identity equivalence after serialization, with no custom serialization hooks; preserve explicit null distinctly from missing holes.",
+    "Rerun old strict 23/23 and new strict 13/13 under native Node; require new fixture SHA pin before adding CI gate."
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "newIndependentTests": 13,
+    "newReproducedFailures": 10
+  },
+  "testsNotRun": [
+    "Native Node execution of new 13-case suite",
+    "WoW client/in-game test",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "evidenceAndPolicy": {
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "liveEVChanged": false,
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "nextTask": "Retest array-context repair under native Node, then pivot to a changed priority-104 Gem Finding family or new independent completed-cast evidence; do not repeat identical source audit."
+}

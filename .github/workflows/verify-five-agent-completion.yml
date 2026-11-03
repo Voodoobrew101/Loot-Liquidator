@@ -1,0 +1,150 @@
+name: Verify five-agent completion
+on:
+  pull_request:
+  push:
+    branches: [implementation/five-agent-completion]
+jobs:
+  research-candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'jsonschema==4.26.0'
+      - name: Install Lua 5.1 for compiler roundtrip checks
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.1
+      - name: Research-only native 38-case model preflight (informational, NOT acceptance)
+        # F005 has not yet accepted these fixtures. Run them on the real
+        # checkout to expose native failures without prematurely promoting
+        # model/source claims into the mandatory build or economic gates.
+        continue-on-error: true
+        run: node research/tools/working_native_model_preflight.js
+      - name: F002 pending F005 source-pinned preflight self-test
+        run: node research/tools/working_native_pending_f005_preflight.js --self-test
+      - name: Research-only native 106-case F005 preflight (informational, NOT acceptance)
+        # Exact pinned independent fixtures. F005 must review the native results
+        # before these become mandatory acceptance gates. Never promote P/E.
+        continue-on-error: true
+        run: node research/tools/working_native_pending_f005_preflight.js
+      - name: F002 cross-version F005 native preflight self-test
+        run: node research/tools/working_native_cross_version_preflight.js --self-test
+      - name: Research-only F005 v0.2-to-v0.8 reconciliation native replay (informational)
+        # This verifies the pinned derived diff, NOT independent compact Lua
+        # reparsing, mapping equivalence, or F005 acceptance. Do not promote EV.
+        continue-on-error: true
+        run: node research/tools/working_native_cross_version_preflight.js
+      - name: F002 direct original-Lua source-pinned native self-test
+        run: node research/tools/working_native_direct_lua_reparse.js --self-test
+      - name: Research-only F005 direct original-Lua replay (informational; pending independent acceptance)
+        # Fetch the historical branch without changing the checkout. The F002
+        # runner checks exact old/new/test Git blob hashes before F005's test.
+        # A failed research preflight is visible but cannot promote EV.
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin refs/heads/implementation/database-profession-modernization
+          old_lua="$RUNNER_TEMP/loot-liquidator-v02-original.lua"
+          git show FETCH_HEAD:LootLiquidator/itemdb.lua > "$old_lua"
+          node research/tools/working_native_direct_lua_reparse.js "$old_lua"
+      - name: F002 emitted working-Lua native preflight self-test
+        run: node research/tools/working_native_emitted_lua_preflight.js --self-test
+      - name: Research-only F005 emitted working-Lua isolation replay (informational)
+        # F005 accepted source-pinned V8 results; native replay is pending its
+        # independent acceptance. Any changed fixture/candidate fails closed.
+        # Do not use this research preview for EV, recommendations or release.
+        continue-on-error: true
+        run: node research/tools/working_native_emitted_lua_preflight.js
+      - name: F002 TWW milling negative-QA native replay self-test
+        run: node research/tools/working_native_tww_accounting_preflight.js --self-test
+      - name: Research-only F005 TWW milling 37-case negative-QA native replay (informational)
+        # The independent F005 fixture currently reports 32 PASS and five
+        # actionable F003 model defects. The F002 runner recognizes exactly
+        # those five failures; it does not reclassify them as passing cases.
+        # F003 owns the model repair, F005 owns independent acceptance.
+        continue-on-error: true
+        run: node research/tools/working_native_tww_accounting_preflight.js
+      - name: F002 DF milling v1.0.1 52-case native preflight self-test
+        run: node research/tools/working_native_df_milling_attestation_preflight.js --self-test
+      - name: Research-only F005 DF milling v1.0.1 native 30+22 replay (informational)
+        # F003 repaired eight earlier context defects. F005 conditionally
+        # accepted synthetic V8 30+22, not native/current-Retail evidence.
+        # Source-pinned native 52-case replay is informational pending F005
+        # independent review; any changed inputs or failed cases fail closed.
+        # No confidence, expected-quantity or economic promotion.
+        continue-on-error: true
+        run: node research/tools/working_native_df_milling_attestation_preflight.js
+      - name: F002 Dragonflight Prismatic stage-identity negative-QA self-test
+        # Self-test is mandatory but does not pin the model: F003 can repair it
+        # without blocking the main research pipeline on a stale F002 pin.
+        run: node research/tools/working_native_df_prismatic_identity_preflight.js --self-test
+      - name: Research-only F005 Prismatic stage-identity native negative QA (informational)
+        # Exact F005 finding: 40/43 pass, three incorrect 192880 references.
+        # The runner rejects unexpected failures and model/source changes;
+        # detecting the known defect is NOT independent model acceptance.
+        continue-on-error: true
+        run: node research/tools/working_native_df_prismatic_identity_preflight.js
+      - name: F002 DF frontier 21-case native negative-QA self-test
+        run: node research/tools/working_native_df_frontier_array_preflight.js --self-test
+      - name: Research-only F005 DF frontier array snapshot negative QA (informational)
+        # Two known dynamic-length defects remain F003-owned. Source-pinned
+        # replay is not acceptance; any new failure or source change fails closed.
+        # No working/evidence/economic promotion from this diagnostic.
+        continue-on-error: true
+        run: node research/tools/working_native_df_frontier_array_preflight.js
+      - run: node research/tools/run_completion_pipeline.js --check
+      - name: F002 exact gap-to-priority identity and preview coverage contract
+        # Mandatory compiler-output consistency only. This does not validate
+        # source evidence, approve models, or permit economic promotions.
+        run: |
+          node research/tools/working_gap_priority_contract.js --self-test
+          node research/tools/working_gap_priority_contract.js
+      - name: Rebuild and expose only validated stale research outputs for F002 handoff
+        if: ${{ failure() }}
+        # Fail-closed: the primary --check remains a required failing gate.
+        # This emits the exact regenerated bytes for a reviewed F002 commit,
+        # never auto-pushes, and never modifies production or another branch.
+        run: |
+          set -euo pipefail
+          node research/tools/run_completion_pipeline.js
+          node research/tools/run_completion_pipeline.js --check
+          luac5.1 -p research/proposed/itemdb.lua
+          lua5.1 research/tests/test_generated_working_estimates.lua
+          git diff --check -- research/proposed/itemdb.lua research/proposed/itemdb-build-report.json research/ledger/itemdb-missing-fields.csv research/ledger/itemdb-source-alternates.csv research/coordination/completion-readiness.json research/coordination/completion-priorities.json
+          for file in research/proposed/itemdb.lua research/proposed/itemdb-build-report.json research/ledger/itemdb-missing-fields.csv research/ledger/itemdb-source-alternates.csv research/coordination/completion-readiness.json research/coordination/completion-priorities.json; do
+            if ! git diff --quiet -- "$file"; then
+              printf 'F002_GENERATED_BEGIN:%s\\n' "$file"
+              base64 -w0 "$file" | fold -w 1024
+              printf 'F002_GENERATED_END:%s\\n' "$file"
+            fi
+          done
+      - name: Verify Lua 5.1 syntax and decoded working/evidence isolation
+        run: |
+          luac5.1 -p research/proposed/itemdb.lua
+          lua5.1 research/tests/test_generated_working_estimates.lua
+      - name: Verify blocker arrays survive Lua roundtrip
+        run: |
+          lua5.1 - <<'LUA'
+          local db = dofile("research/proposed/itemdb.lua")
+          local fields = {"dropChance", "yieldMin", "yieldMax", "expectedQuantity"}
+          local multi, extra = 0, 0
+          for _, record in ipairs(db.processing) do
+            for _, name in ipairs(fields) do
+              local blockers = record[name].blockers
+              for _, blocker in ipairs(blockers) do
+                assert(not string.find(blocker, "|", 1, true), "Joined blockers: " .. record.recordID .. ":" .. name)
+              end
+              if #blockers > 1 then
+                multi = multi + 1
+                extra = extra + #blockers - 1
+              end
+            end
+          end
+          assert(multi > 0 and extra > 0, "Multi-blocker evidence collapsed in candidate")
+          print("PASS: " .. multi .. " multi-blocker fields and " .. extra .. " additional blockers preserved")
+          LUA

@@ -1,0 +1,16 @@
+# Midnight q26 Batch 024 — source-backed tooltip availability and milling rank QA
+**2026-10-29 00:12 PDT · research/processing-confidence · assignment 2026-10-29-batch024-midnight**
+
+**Results:** 32/32 exact assigned keys audited: 24 compiled prospecting output rows and 8 UNADMITTED pigment-rank leads. **24/24** source lines matched the correct GameData parent input and output IDs. **72/72** missing prospecting compiler cells (P, positive min, positive max) remain unknown. **0** new legitimate mappings, **0** newly admitted rank leads, **0** source-anchored tooltip numeric fields, **0** new verified current-Retail gold/EV numeric fields, **0** new original measured studies.
+
+**New useful negative result:** Fresh raw HTML of the four assigned Retail Wowhead ore pages (Umbral Tin R2 237363, Brilliant Silver R1 237364, Silver R2 237365, Dazzling Thorium 237366) contains other related lists but no Prospecting loot table. Eight reciprocal gem/material pages also lack a prospected-from table. The Legacy worker's successful Wowhead count/outof method cannot presently be applied to these 24 Midnight rows. Do not invent 0%, 100%, or [1–1] tooltip fallbacks just to fill the database.
+
+**Milling:** Eight assigned exact herb-rank→pigment-rank leads are not verified conversions. Eight herb pages and four pigment pages have no milling result table. Archived kyzenbka original family aggregates and Method's Perfect Milling guide were reused, not re-counted as new independent sources. Rank-specific output eligibility, cast counts and skill thresholds remain unresolved. Herb R2 does not automatically prove pigment R2.
+
+**Gold risk:** Existing GameData low/high source proxies are not observed tooltip P/min/max. Some low/high values reflect different skill cohorts and are non-monotone; never force skill scaling, derive P or E from bounds, or price mutually exclusive quality ranks simultaneously. Display-only conservative fallbacks remain isolated from economic EV. No TSM decision flip is supported by the new page checks.
+
+**Workflow:** Read live queue revision 26, newest master batch023 verdict, source-memory cache (full replay pending), research-lessons, prior q24/q25 submissions/source reviews, observation schema and GameData. Avoided redundant re-fetch of known original author studies. **24 distinct Retail item pages checked**, 10 source-review events (8 new negative item-page checks + 2 reused lineages), no source duplication credit. These negative source checks are not evidence of missing in-game recipes.
+
+**Next exact targets:** 237363→242606/242607/242610/242611/242786/242788; 237364/237365→242553/242554/242612/242613/242786/242788; 237366→242610/242611/242612/242613/242786/242788. For milling: 236761/236767→245808 and 236770/236771→245865, then remaining four rank leads. Seek completed-cast zero-inclusive observations with input/output ranks, actual skill/spec and patch, or explicit source-anchored positive tooltip stacks. Plot-group compatible original cohorts, not derivative estimates or absent tables.
+
+**Files:** unique 32-key audit JSONL, source-review JSONL, Retail page evidence Markdown, this report. Only worker-owned research files; no main, production Lua/TOC, master assignments/ledgers, canonical registry, or source-memory cache changed. Hourly schedule untouched.

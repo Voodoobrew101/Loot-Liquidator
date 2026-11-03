@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_RANK_POOL_CONTEXT_AND_ANCESTRY",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 5,
+  "reviewUTC": "2026-10-29T16:40:30.366Z",
+  "baseCommit": "42a64dabdd88a9fdad0991bb4bf2fabb3d6460d5",
+  "branch": "implementation/five-agent-completion",
+  "verdict": "CONDITIONAL_RANK_POOL_REPAIR_PASS_BUT_FULL_F005_ACCEPTANCE_BLOCKED_BY_TWO_NEW_PREVIEW_INTEGRITY_GAPS",
+  "subject": {
+    "workingEstimatorBlob": "333fef587046cf14bdf0f3d2646508c6e9f4f38b",
+    "pipelineBlob": "4ba6bbd45c5c3c3da18303647b1981c39749dd17",
+    "originalRankFixtureBlob": "b3a7decf0b9e3b2a46564a573ecdc6310f5d7bce",
+    "metamorphicFixtureBlob": "ff1cc5b56c5e41da223bca0535d6b8dbfbc53cda",
+    "newAdversarialFixtureBlob": "3ca974762afbea295ef284090c4df4108be7de3a",
+    "candidateLuaBlob": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "candidateBuildReportBlob": "0f3ef7bc4bb16db2c6d4fa49755302e25386e811",
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "primaryEvidenceBlob": "3e2bb784dc832d90584eebd8620148caf2133fbd",
+    "supplementalEvidenceBlob": "397e589598102d42c774899399f9d607f44828a1"
+  },
+  "testsActuallyExecuted": [
+    {
+      "name": "Exact GitHub module in independent V8 require shim: rank-pool isolation",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "Exact GitHub modules in independent V8 require shim: PMF/donor metamorphic",
+      "assertions": 609,
+      "passed": 609,
+      "failed": 0
+    },
+    {
+      "name": "New independent adversarial suite in V8 require shim",
+      "passed": 6,
+      "failed": 2,
+      "expectedNewFailures": 2
+    }
+  ],
+  "nativeCIReadback": {
+    "engineerReportedRunID": 40910032026,
+    "engineerReportedResult": "PASS",
+    "engineerReportedChecks": [
+      "native Node --check deterministic candidate",
+      "12 rank-pool cases",
+      "609 metamorphic assertions",
+      "schema",
+      "Lua5.1"
+    ],
+    "independentNativeRerun": false
+  },
+  "newFindings": [
+    {
+      "id": "POOL_POLICY_ANCHOR_MISSING",
+      "severity": "RESEARCH_PREVIEW_INTEGRITY",
+      "reproduction": "Construct two rank-ambiguous synthetic rows with default unresolvedRankPoolExpectedQuantity=1; after generation change each allocation.poolExpectedQuantity from 1 to 2, each working expectedQuantity from 0.5 to 1, and dropChance from 0.5 to 1. validateWorkingEstimates(rows) returns [] despite total pool E doubling against the default policy.",
+      "expected": "Validator must compare each pool target to configured policy prior (including explicit option override) and detect forged self-consistent E/P changes.",
+      "owner": "completion-engineer",
+      "economicImpact": "Research preview can be inflated; no live EV leak demonstrated."
+    },
+    {
+      "id": "STALE_NONPOOL_TARGET_CONTEXT",
+      "severity": "PROVENANCE_INTEGRITY",
+      "reproduction": "Generate a non-rank synthetic working record with source conditions.patchWindow=12.0.5, then change source patchWindow to 12.0.6. validateWorkingEstimates([record]) returns [] while workingEstimate.targetContext.patchWindow remains 12.0.5.",
+      "expected": "Validator must independently compare serialized targetContext metadata against current source conditions for all rows, not only donor/pool rows.",
+      "owner": "completion-engineer",
+      "economicImpact": "Stale preview context metadata; no live EV leak demonstrated."
+    }
+  ],
+  "repairedDefectsNowPassing": [
+    "GAME_MODE_POOL_SEPARATION",
+    "DIRECT_REAGENT_VECTOR_POOL_SEPARATION",
+    "POOL_MEMBER_ANCESTRY_AND_SHARE_VALIDATION"
+  ],
+  "scope": "Synthetic code-level defects; no confirmed existing itemdb row corruptions and no measured current-Retail evidence.",
+  "canonicalCounters": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "independentRetailHoldoutStudies": 0
+  },
+  "deltas": {
+    "newMappings": 0,
+    "removedMappings": 0,
+    "newWorkingNumericCells": 0,
+    "newEvidenceNumericCells": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudies": 0,
+    "independentRegressionCasesAdded": 8,
+    "newDefectClasses": 2
+  },
+  "economicSafety": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVLeakObserved": false,
+    "tooltipOnlyLeakObserved": false
+  },
+  "notRun": [
+    "New adversarial suite on native Node CI",
+    "WoW Retail client",
+    "Independent current Retail whole-family holdout",
+    "Full local compiler pipeline and Lua5.1"
+  ],
+  "nextTask": "F002_FIX_POOL_POLICY_ANCHOR_AND_STALE_NONPOOL_TARGET_CONTEXT_THEN_F005_RETEST",
+  "zeroDeltaPivot": "After confirming all 12 prior rank-pool regressions and 609 metamorphic assertions, moved to two independent mutation checks rather than repeating unchanged source audits."
+}

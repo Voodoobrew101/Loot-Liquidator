@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_POSTREPAIR_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 4,
+  "reviewUTC": "2026-10-29T14:59:00Z",
+  "baseCommit": "bec0469f006879038cc6926392c3cf960748a621",
+  "resultCommit": "ATOMIC_COMMIT_CONTAINING_THIS_RECORD",
+  "branch": "implementation/five-agent-completion",
+  "decision": "CONDITIONAL_ACCEPT_RESEARCH_ONLY_PMF_AND_ANCESTRY_REPAIRS",
+  "decisions": [
+    {
+      "role": "baseline-modeller",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261029T1419Z-F003-PMF-zero-mass-support-repair.json",
+      "decision": "ACCEPT_RESEARCH_MODEL_REPAIR_NOT_ECONOMIC_BASELINE",
+      "sourceBlob": "ca6edf58aced411ac049198254fb67a72279532d",
+      "reason": "Positive-probability PMF support only; F005 original 9/9 and positive-support 12/12 plus metamorphic 609/609 pass; no independently matched current Retail holdout"
+    },
+    {
+      "role": "completion-engineer",
+      "submission": "research/coordination/v2/submissions/completion-engineer/2026-10-29T1416Z-F002-donor-ancestry-invariants.json",
+      "decision": "ACCEPT_RESEARCH_ONLY_ANCESTRY_GUARDS",
+      "sourceBlob": "b90137d4f67cea6975504b9c8cc4d978afaefb81",
+      "reason": "Independent donor ancestry 8/8 and metamorphic checks; CI native pipeline and Lua 5.1 PASS; no live valuation changes"
+    },
+    {
+      "role": "independent-validator",
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-29T1443Z-F005-postrepair-acceptance.json",
+      "decision": "ACCEPT_INDEPENDENT_CONDITIONAL_PASS",
+      "reviewBlob": "1b4da39d45dae59876e6edddd75c4f96f2900b84",
+      "reason": "Independent 654 checks total; CI run 40893975750 succeeded; no economic or evidence promotions"
+    },
+    {
+      "role": "evidence-researcher",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1433Z-F004-two-ore-context-pivot.json",
+      "decision": "ACCEPT_AS_HISTORICAL_CONTEXT_ONLY",
+      "sourceBlob": "45a855b092022425539b4a7e686fb8f0f7f41431",
+      "reason": "Two ore subcohorts are one lineage; 1.08*30=32.4 and 2.57*50=128.5 imply rounded rates; exact totals, actual casts, ranks and current patch unknown; no E promotion"
+    }
+  ],
+  "verification": {
+    "headReviewed": "bec0469f006879038cc6926392c3cf960748a621",
+    "modelBlob": "ca6edf58aced411ac049198254fb67a72279532d",
+    "estimatorBlob": "b90137d4f67cea6975504b9c8cc4d978afaefb81",
+    "candidateBlob": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "independentTests": {
+      "original": 9,
+      "pmfSupport": 12,
+      "ancestry": 8,
+      "modelSelfTest": 16,
+      "metamorphic": 609,
+      "total": 654,
+      "failures": 0
+    },
+    "nativeCI": {
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40893975750",
+      "commit": "47d77a65498bc023cf792284fa7aa22b775bbe6e",
+      "conclusion": "success",
+      "coverage": "Node completion pipeline --check, JSON Schema, Lua 5.1 decoding and blocker roundtrip; new metamorphic fixture separately run in V8, not yet wired into CI"
+    },
+    "localNativeNode": "NOT_RUN",
+    "localLua": "NOT_RUN",
+    "wowClient": "NOT_RUN"
+  },
+  "deltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "newIndependentRetailHoldouts": 0,
+    "modelDefectsIndependentlyConfirmedRepaired": 1,
+    "newSourceReviewEvents": 1,
+    "changedCoordinatorOwnedFiles": 3
+  },
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "distinctInputs": 179,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "fieldSlots": 4072,
+    "unadmittedLegacyQueue30LeadKeys": 24,
+    "exhaustiveRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionFilesChanged": 0,
+    "legacyAssignmentsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "No independent current Retail zero-inclusive matched TWW milling holdout with exact cast/rank/stat/patch/refund context",
+    "New independent 609-assertion metamorphic fixture not yet wired to native Node pipeline",
+    "WoW client testing and minimum eligible baseline unverified",
+    "116 E evidence gaps; 514 evidence numeric gaps; 24 legacy universe leads unadmitted"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_WIRE_INDEPENDENT_METAMORPHIC_CI",
+      "paths": [
+        "research/tests/v2/test_f005_postrepair_metamorphic.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Wire existing F005 609-assertion fixture into native deterministic pipeline, check schema/Lua/economic isolation, preserve all source/candidate hashes"
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_TWW_MILLING_CAST_PROTOCOL",
+      "targetKeys": [
+        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+      ],
+      "acceptance": "Create controlled zero-inclusive cast capture protocol for 10-herb Khaz Algar Milling, exact ranks, recipe, patch, skill, stats, refunds, co-outputs; no hypothetical scenario promotion"
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_DIAMOND_CAST_DENOMINATOR",
+      "targetKeys": [
+        "tsm:prospect:188658:192870:L1205",
+        "tsm:prospect:188658:192871:L1206",
+        "tsm:prospect:189143:192869:L1242",
+        "tsm:prospect:189143:192870:L1243",
+        "tsm:prospect:190311:192869:L1280"
+      ],
+      "acceptance": "Find original 2026 Retail zero-inclusive cast observations with rank-specific output counts and refunds; otherwise pivot to unadmitted queue30 selector eligibility with exact IDs"
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_RANK_POOL_ISOLATION",
+      "targetScope": "Independent adversarial cross-rank/cross-recipe/cross-patch/reagent pool fixtures, and whole-study holdout when available",
+      "acceptance": "Independent SHA-pinned PASS/FAIL verdict, no self-approval of new numeric claim"
+    }
+  ],
+  "nextTask": "F002_WIRE_INDEPENDENT_METAMORPHIC_CI_AND_F005_RANK_POOL_ISOLATION"
+}

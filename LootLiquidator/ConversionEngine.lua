@@ -307,6 +307,7 @@ function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
         local quote=self:GetMaterialPrice(m)
         m.netUnitPrice=quote
         m.netExpectedValue=nil
+        m.conditionalExpectedValue=quote and validNumber(m.conditionalExpectedQuantity) and quote*m.conditionalExpectedQuantity or nil
         if m.expectedQuantity==0 then
             m.netExpectedValue=0;known=known+1
         elseif quote and validNumber(m.expectedQuantity) then
@@ -435,6 +436,9 @@ function LL:ConversionOptions(f)
         -- Insufficient counted inputs must, however, NEVER make a processing
         -- action actionable or a winning liquidation recommendation.
         local available,why,character=self:CanUseConversion(f,c)
+        if c.operationUnverified then
+            available=false;why='Reference value per input; processing recipe and batch not verified'
+        end
         local price,source
         local defaultBatch=(c.method=="Mill" and (f.expansionID==10 or f.expansionID==11)) and 10 or 5
         local inputCount=c.inputCount or ((c.method=="Mill" or c.method=="Prospect") and defaultBatch or 1)
@@ -567,6 +571,7 @@ function LL:ConversionOptions(f)
             or (destroy=="Mill" and (f.expansionID==10 or f.expansionID==11) and 10 or 5),
         requiredSpell=modern and (({Mill={[10]=444181,[11]=1269575},
             Prospect={[10]=434018,[11]=1231127}})[destroy] or {})[modern.expansion],
+        operationUnverified=modern and modern.operationUnverified,
         confidence=(dataRecord and dataRecord.evidence) or "source-candidate",source=modern and "Research input candidate (client metadata)"
             or "Blizzard processing flag (possible input; yields unknown)"},"destroy") end
     if dataRecord and dataRecord.method~='Disenchant' and not researchMethods[dataRecord.method] and dataRecord.method~=destroy and Allowed(self.db,dataRecord.method)

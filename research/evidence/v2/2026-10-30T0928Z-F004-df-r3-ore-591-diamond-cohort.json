@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_R3_DIAMOND_PRIMARY_COHORT",
+  "workflowRevision": 2,
+  "runID": "2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_F005",
+  "branch": "implementation/five-agent-completion",
+  "question": "Does an original large historical Dragonflight rank-3 ore study add exact diamond output totals and a denominator/context constraint for the priority-122 Dragonflight prospecting conflict family?",
+  "answer": "Yes: a January 22 2023 original r/woweconomy poster reports exactly 591 Illimited Diamonds from 400,000 rank-3 Serevite ore and a separate approximately 30,000 rank-3 Draconium ore experience of about 3.6 diamonds per 1,000 ore. The poster explicitly excludes refunded ore and secondary Prismatic Ore processing from the Serevite rate. These are historical aggregate family totals, NOT current-Retail zero-inclusive per-cast rank-specific E/P, and cannot resolve the rank-specific priority keys.",
+  "source": {
+    "primaryURL": "https://www.reddit.com/r/woweconomy/comments/10i63zb",
+    "threadTitle": "Prospecting Draconium/Serevite",
+    "publicationDate": "2023-01-22",
+    "actualObservationEpoch": "BEFORE_OR_BY_2023-01-22_NOT_CAST_TIMESTAMP",
+    "clientBuild": null,
+    "gameMode": "HISTORICAL_DRAGONFLIGHT_RETAIL",
+    "authorIdentity": "ORIGINAL_POSTER_HANDLE_NOT_RESOLVED_IN_RETRIEVAL",
+    "sourceFamilyID": "reddit-10i63zb-original-poster-r3-ore-prospecting",
+    "originalUnits": [
+      "ore units",
+      "diamonds",
+      "diamonds per 1000 ore"
+    ],
+    "retrievedUTC": "2026-10-30",
+    "sourceScope": "Original post and same-thread author reply as indexed by search; no raw per-cast log"
+  },
+  "contexts": {
+    "reportedProfessionSkill": 266,
+    "reportedInspirationPercent": 13.8,
+    "reportedInspirationBonusSkill": 93,
+    "professionSpecializationPoints": null,
+    "professionGear": null,
+    "resourcefulnessRate": null,
+    "recipeSpellID": 374627,
+    "nominalInputOrePerCast": 5,
+    "sourceContextNote": "266 skill and 13.8% Inspiration/93 bonus from same thread; exact timing and whether every batch shared this context unverified"
+  },
+  "cohorts": [
+    {
+      "cohortID": "10i63zb-r3-serevite-400k",
+      "oreFamily": "Serevite Ore",
+      "inputItemID": 190396,
+      "inputQualityRank": 3,
+      "reportedOreUnits": 400000,
+      "reportedOreUnitMeaning": "AUTHOR_REPORTED_ORE_DENOMINATOR_NOT_REFUND_ADJUSTED",
+      "reportedIllimitedDiamondCount": 591,
+      "reportedDiamondOutputRank": null,
+      "reportedDiamondOutputItemID": null,
+      "reportedRatePer1000Ore": "1.4775",
+      "roundedRateQuotedPer1000Ore": "1.48",
+      "derivedDescriptiveRatePerOre": "0.0014775",
+      "completedCasts": null,
+      "zeroOutputCasts": null,
+      "refundedOreUnits": null,
+      "netConsumedOreUnits": null,
+      "secondaryPrismaticOreOutputsExcluded": true,
+      "unconditionalExpectedQuantityPerCast": null,
+      "dropChancePerCast": null,
+      "economicUse": "PREVIEW_ONLY",
+      "normalizedVerified": false,
+      "confidence": 0
+    },
+    {
+      "cohortID": "10i63zb-r3-draconium-30k",
+      "oreFamily": "Draconium Ore",
+      "inputItemID": 190311,
+      "inputQualityRank": 3,
+      "reportedOreUnitsApprox": 30000,
+      "reportedDiamondRatePer1000OreApprox": 3.6,
+      "reportedDiamondOutputCount": null,
+      "reportedDiamondOutputRank": null,
+      "reportedDiamondOutputItemID": null,
+      "completedCasts": null,
+      "zeroOutputCasts": null,
+      "refundedOreUnits": null,
+      "netConsumedOreUnits": null,
+      "unconditionalExpectedQuantityPerCast": null,
+      "dropChancePerCast": null,
+      "economicUse": "PREVIEW_ONLY",
+      "normalizedVerified": false,
+      "confidence": 0,
+      "comment": "3.6 per 1000 is an approximate aggregate, NOT an observed exact total of 108; poster notes large batch-to-batch variance"
+    }
+  ],
+  "sourceInterpretation": {
+    "diamondFamilyRankUnresolved": true,
+    "denominator": "400000 initial/reported ore units, not independently observed completed casts; author excludes resourcefulness savings from quoted per-1000 rate",
+    "additionalOutput": "Prismatic Ore and subsequent prospecting excluded; do not combine secondary conversions with direct prospect output",
+    "modelImplication": "Do not force a rank-specific 192869/192870/192871 output or promote to current patch; requires current-Retail completed-cast zero-inclusive joint vectors, output ranks, refunds and exact context",
+    "sensitivityOnly": "If exactly 80000 casts occurred with no refunds, 591/80000=0.0073875 diamonds/cast, but this is an unsupported counterfactual, NOT stored E"
+  },
+  "priorityKeysInFamily": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "directInputOverlap": [
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "exactOutputRankMatchedKeys": [],
+  "otherPrimaryContext": {
+    "url": "https://www.reddit.com/r/woweconomy/comments/zh53dd",
+    "published": "2022-12-09",
+    "reportedR3SereviteOre": 20000,
+    "reportedDiamonds": 29,
+    "reportedSkillThreshold": 265,
+    "role": "HISTORICAL_CROSS_CHECK_NOT_COUNTED_AS_NEW_INDEPENDENT_LINEAGE_UNTIL_ANCESTRY_REVIEW",
+    "descriptiveRatePer1000Ore": "1.45"
+  },
+  "policy": {
+    "rawEvidencePreserved": true,
+    "historicalTSMFrozen": true,
+    "tooltipOnlyUntouched": true,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "liveRecommendationEligible": false,
+    "admittedMappingChanges": 0,
+    "verifiedExpectedQuantityPromotions": 0
+  },
+  "blockers": [
+    "Current-Retail per-cast zero-inclusive vectors and actual refunds absent",
+    "Original output ranks not separated; no direct rank-specific mapping confirmation",
+    "Full direct co-output universe and independent per-cast caps unverified",
+    "Author identity, exact cast epoch and skill/gear uniformity not independently verified"
+  ]
+}

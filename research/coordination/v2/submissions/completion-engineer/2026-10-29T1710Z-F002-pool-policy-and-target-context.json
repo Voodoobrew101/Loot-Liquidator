@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_FIX_POOL_POLICY_ANCHOR_AND_STALE_NONPOOL_TARGET_CONTEXT",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 5,
+  "dateUTC": "2026-10-29T17:10:00Z",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_RETEST",
+  "baseCommit": "c9de6a17e959e175ae5e0295cd4f41ac48ad1e8a",
+  "resultCommit": "SAME_ATOMIC_COMMIT_AS_THIS_SUBMISSION",
+  "changedFiles": [
+    "research/tools/working_estimates.js",
+    "research/tools/run_completion_pipeline.js",
+    "research/coordination/v2/submissions/completion-engineer/2026-10-29T1710Z-F002-pool-policy-and-target-context.json"
+  ],
+  "independentReview": "research/coordination/v2/reviews/2026-10-29T1640-F005-rank-pool-retest-and-policy-anchor.json",
+  "defectsFixed": [
+    "POOL_POLICY_ANCHOR_MISSING",
+    "STALE_NONPOOL_TARGET_CONTEXT"
+  ],
+  "changes": [
+    "Compare every rank-pool serialized poolExpectedQuantity against the configured unresolvedRankPoolExpectedQuantity policy, default 1, independent of member E/P and pool sum",
+    "Recompute full serialized targetContext from current original source for all rows, including non-pool, and reject stale patch/rank/mode/eligibility metadata",
+    "Execute existing independent eight-case adversarial fixture in native Node completion pipeline without editing validator-owned test"
+  ],
+  "deltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "defectClassesFixed": 2,
+    "independentAdversarialCasesNowPassing": 2,
+    "productionFilesChanged": 0
+  },
+  "countersBefore": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "expectedGeneratedArtifactDelta": "ZERO_UNLESS_PIPELINE_REVEALS_STALE_ARTIFACTS",
+  "testsActuallyRun": [
+    {
+      "name": "F005 independent pool-policy/target-context suite via V8 Node-compatible module shim",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "name": "F005 rank-pool isolation via V8 Node-compatible module shim",
+      "status": "SEE_TEST_LOG"
+    },
+    {
+      "name": "F005 609-assertion metamorphic suite via V8 Node-compatible module shim",
+      "status": "SEE_TEST_LOG"
+    }
+  ],
+  "testLogs": [
+    {
+      "name": "new-adversarial",
+      "output": "{\"suite\":\"F005_POOL_POLICY_ANCHOR_TARGET_CONTEXT\",\"passed\":8,\"failed\":0,\"cases\":[{\"name\":\"unchanged pool validates\",\"result\":\"PASS\"},{\"name\":\"game-mode separation\",\"result\":\"PASS\"},{\"name\":\"canonical reagent ordering does not split identical pools\",\"result\":\"PASS\"},{\"name\":\"member ancestry tamper rejected\",\"result\":\"PASS\"},{\"name\":\"legitimate nondefault pool policy validates with explicit options\",\"result\":\"PASS\"},{\"name\":\"policy anchor MUST reject self-consistent forged pool E\",\"result\":\"PASS\"}",
+      "passed": 8
+    },
+    {
+      "name": "rank-pool",
+      "output": "{\"suite\":\"F005_RANK_POOL_ISOLATION\",\"passed\":12,\"failed\":0,\"cases\":[{\"name\":\"same-family ranks share one preview pool\",\"result\":\"PASS\"},{\"name\":\"distinct canonical output families split pools\",\"result\":\"PASS\"},{\"name\":\"different recipe spells split pools\",\"result\":\"PASS\"},{\"name\":\"different patch epochs split pools\",\"result\":\"PASS\"},{\"name\":\"different input ranks split pools\",\"result\":\"PASS\"},{\"name\":\"different optional profession stats split pools\",\"result\":\"PASS\"},{\"name\":\"different game modes",
+      "passed": 12
+    },
+    {
+      "name": "metamorphic",
+      "output": "PASS F005 postrepair metamorphic: 609 assertions"
+    }
+  ],
+  "nativeNodeCI": "PENDING_GITHUB_CI",
+  "lua51": "PENDING_GITHUB_CI",
+  "schema": "PENDING_GITHUB_CI",
+  "deterministicPipeline": "PENDING_GITHUB_CI",
+  "economicSafety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false
+  },
+  "blockers": [
+    "Independent F005 source-SHA-pinned retest and coordinator acceptance required",
+    "Current-Retail whole-family holdout unavailable",
+    "116 economic expectedQuantity evidence gaps and 514 numeric evidence gaps",
+    "Unknown direct reagent vectors do not prove exact physical recipe"
+  ],
+  "nextTask": "F005_RETEST_POLICY_ANCHOR_AND_TARGET_CONTEXT_THEN_PIVOT_TO_NEXT_READY_F002_BUILD_DEFECT",
+  "preservation": {
+    "mainEdited": false,
+    "runtimeProfilesBranchEdited": false,
+    "rawEvidenceEdited": false,
+    "legacyAssignmentsEdited": false,
+    "frozenTSMEdited": false,
+    "schedulesEdited": false
+  }
+}

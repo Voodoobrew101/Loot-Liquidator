@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_DF_FRONTIER_CONTEXT_AND_ARCHIVE_DEDUP",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T2258Z-F001-F005-frontier-context-and-lineage-dedup",
+  "reviewUTC": "2026-10-30T22:58:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "9dfa710d633d89e48dff456053042966da923356",
+  "resultCommit": "COMMIT_CONTAINING_THIS_REPORT",
+  "status": "ARCHIVE_DEDUP_ACCEPTED_FRONTIER_REJECTED",
+  "sourcePins": {
+    "baseCommit": "9dfa710d633d89e48dff456053042966da923356",
+    "scorecardBefore": "754869db21eac82c2dd4f161b743322ac03ae246",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "candidate": "560b885a0039045419c340716e263ae33ddf827a",
+    "buildReport": "cf46eae94624f21bc402ea0b4e827325299b1060",
+    "compilerSources": "dcb14170357b90182cae9b70ed1ba933fbf6a187",
+    "frontierModel": "7fb36b9d6c25f6a0bff02dfe5ab1b6855e6a4f42",
+    "frontierManifest": "74f10db75932ca3be685bf3ea44c9ba813a03d7d",
+    "independentReview": "b4e08c512f1e820f196ad118d665a82a48caf393",
+    "independentFrontierSuite": "bbb4c309a98e5a14dd8f15ae5225703a828cbad8",
+    "independentLineageSuite": "0da12c82cd358cb30fad66d447f445b17ecd0451",
+    "earlierCohort": "227c997ce7aedb0295db0449c2cb8586a6269015",
+    "laterDuplicate": "fe290ca4ef9e375196da64cbea99a9c1509fb74e",
+    "correction": "b8f829b3b0f286c7900312a99cb3b3af6e0b9c78"
+  },
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceE": 116,
+    "evidenceGE90Cells": 0,
+    "verifiedMinimumEligibleBaselines": 0,
+    "currentRetailIndependentHoldouts": 0
+  },
+  "decisions": [
+    {
+      "owner": "baseline-modeller",
+      "decision": "REJECT_FRONTIER_V1",
+      "reason": "F005 source-pinned V8 tests 19/27 passed, 8 failed in 5 groups; 4039 author self-tests do not supersede independent negative QA. No economic promotion."
+    },
+    {
+      "owner": "evidence-researcher",
+      "decision": "ACCEPT_ARCHIVE_COHORT_EQUIVALENCE_ONLY",
+      "reason": "October 29 and October 30 immutable zzcnjw reports describe the same December 2022 ~4000-prospect, 16 R2 and 3 R3 diamond, 25% Inspiration cohort. Count one original study; no canonical subtraction because later +1 was never explicitly coordinator-accepted. Keep raw records unchanged."
+    },
+    {
+      "owner": "independent-validator",
+      "decision": "ACCEPT_NEGATIVE_QA_VERDICT",
+      "reason": "Frontier 19 pass / 8 fail; archive duplicate 49/49 pass, 18 adversarial mutations rejected, executed in V8 shim not native Node."
+    },
+    {
+      "owner": "completion-engineer",
+      "decision": "ACCEPT_INFORMATIONAL_NATIVE_NEGATIVE_QA_ONLY",
+      "reason": "Source-pinned Prismatic 40/43 negative QA preserves known model failure; no repaired model or mandatory acceptance. Compiler inputs unchanged."
+    }
+  ],
+  "exactDeltas": {
+    "newMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentLineages": 0,
+    "archiveCohortEquivalencesAccepted": 1,
+    "canonicalLineageCounterChange": 0,
+    "frontierDefectGroupsConfirmed": 5,
+    "frontierFailedAssertionSurfaces": 8,
+    "coordinatorOwnedFiles": 3
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub connector JS",
+      "checks": 22,
+      "passed": 22,
+      "failed": 0,
+      "scope": "Source pins, target E gaps, candidate arithmetic, original-vs-duplicate Reddit cohort ancestry and rank counts"
+    },
+    {
+      "environment": "Independent F005 V8 source-pinned report",
+      "frontierPassed": 19,
+      "frontierFailed": 8,
+      "frontierTotal": 27,
+      "archivePassed": 49,
+      "archiveFailed": 0,
+      "archiveMutantsRejected": 18
+    }
+  ],
+  "testsNotRun": [
+    "Coordinator native Node",
+    "Coordinator Lua5.1; unchanged candidate",
+    "Full compiler pipeline; no accepted input change",
+    "Current-Retail WoW in-game casts"
+  ],
+  "blockers": [
+    "F003 Dragonflight frontier v1 rejected: 8/27 independent V8 failures in 5 context groups, including 1/6 vs 5 ore/cast and Proxy mutation of economics/provenance.",
+    "F003 separate Prismatic stage model 192880/194545 mismatch still unresolved; F002 native 40/43 negative QA is not acceptance.",
+    "Native Node replay of new frontier/lineage suites and repaired Prismatic 43-case suite pending; 52-case DF milling informational CI independent acceptance pending.",
+    "116 evidence-supported expected quantities missing, 514 evidence numeric gaps, zero current-Retail independent completed-cast holdouts and verified baseline profiles.",
+    "TWW milling 5 and Gem Finding 14 context defects, 3 DF mapping identity replacements, and fish 200061 rank eligibility unresolved."
+  ],
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_REPAIR_FRONTIER_AND_PRISMATIC",
+      "scope": "Repair all 5 frontier context defect groups (8 failed cases): require 5 ore/cast for DF prospect keys; immutable validated snapshots for E, fee, cost, provenance, output array; enforce ordered net bounds. Repair separate Prismatic 194545 vs Crumbled Stone 192880 source/manifest identity. Rerun source-pinned self and independent tests without relaxing assertions."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_NATIVE_FRONTIER_AND_STAGE_RETEST",
+      "scope": "Retest repaired 27-case frontier and 43-case Prismatic suites under native Node; independently attest 52-case DF milling informational CI; preserve 49-case archive duplicate adversarial suite and zero live-EV leakage."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_NATIVE_REPIN_AND_TWW_PIVOT",
+      "scope": "Keep deterministic candidate and Lua5.1 isolation; only repin native tests after F003 fixes and F005 review; pivot to TWW milling 5 or Gem Finding 14 context failures; preserve 4072 preview fields and honest 116 evidence E gaps."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_CROSS_ARCHIVE_DEDUP_AND_RETAIL_CASTS",
+      "scope": "Cross-check entire v2 evidence archive before declaring a new source family. Treat zzcnjw as one original cohort. Seek 2026 Retail ore-rank/skill/refund-labelled zero-inclusive casts or pivot to fish 200061 eligibility."
+    }
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Repeated unchanged numeric coverage and historical source discovery",
+    "to": "Independent model rejection and corrected cross-archive lineage identity",
+    "numericDelta": 0
+  },
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}

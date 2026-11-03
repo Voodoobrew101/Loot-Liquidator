@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_PREVIEW_ISOLATION",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 1,
+  "reviewDateUTC": "2026-10-29",
+  "decision": "FAIL_CONTEXT_SAFETY_AND_ZERO_SUPPORT_CONTRACT; PREVIEW_ISOLATION_CONDITIONAL",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_NOT_SELF_APPROVED",
+  "baseCommit": "640c0303f46de7001d9e96397ec02b81f97c8de5",
+  "testCommit": "3c9d60f25cf5815bbc18f36fff58aa33a295a64f",
+  "reviewedArtifacts": {
+    "workingEstimates": {
+      "path": "research/tools/working_estimates.js",
+      "gitBlobSHA": "928ef018e728ca0535947b83ecd63c0189def03c"
+    },
+    "model": {
+      "path": "research/tools/models_v2/tww_milling_context_sensitivity_v1.js",
+      "gitBlobSHA": "76756fce7ae82cb601fb12c279d05f01b9df3eef"
+    },
+    "candidate": {
+      "path": "research/proposed/itemdb.lua",
+      "gitBlobSHA": "6488e39b54ae7961750231cb94391eb34af606e3",
+      "directLuaDecode": "NOT_RUN"
+    },
+    "readiness": {
+      "path": "research/coordination/completion-readiness.json",
+      "gitBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+    },
+    "independentTest": {
+      "path": "research/tests/v2/test_f005_context_and_zero_semantics.js",
+      "gitBlobSHA": "fe49f116c3b89e4633b47717c7b1586624db2745"
+    }
+  },
+  "checks": {
+    "pinnedOriginalGitBlobSHAParity": {
+      "status": "PASS",
+      "count": 5,
+      "paths": [
+        "research/ledger/processing-output-fields.csv",
+        "research/ledger/supplemental-output-fields.csv",
+        "research/proposed/itemdb-midnight-milling-candidate.json",
+        "GameData.lua",
+        "StatYieldProfiles.lua"
+      ]
+    },
+    "v8ExecutedIndependentFixture": {
+      "status": "FAIL",
+      "total": 9,
+      "passed": 4,
+      "failed": 5,
+      "sourceModulesLoadedFromExactGitHubBlobs": true,
+      "nativeNode": false
+    },
+    "currentReadinessCrossCheck": {
+      "status": "METADATA_ONLY",
+      "admittedMappings": 1018,
+      "workingCells": 4072,
+      "rawEvidenceGaps": 514,
+      "missingRawExpectedQuantity": 116,
+      "evidenceGE90": 0
+    },
+    "independentHoldout": {
+      "status": "NOT_INDEPENDENTLY_VALIDATED",
+      "independentStudyFamilies": 0,
+      "modelStudyFamily": "reddit-1fdmzwy-2024-original-author"
+    },
+    "existingPipelineCI": {
+      "status": "PRIOR_RUN_ONLY_NOT_INDEPENDENTLY_REEXECUTED",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40871128012"
+    },
+    "nativeNode": "NOT_RUN_THIS_VALIDATOR_CYCLE",
+    "lua51GeneratedDecode": "NOT_RUN_THIS_VALIDATOR_CYCLE",
+    "jsonSchema": "NOT_RUN_THIS_VALIDATOR_CYCLE",
+    "wowClient": "NOT_RUN"
+  },
+  "defects": [
+    {
+      "id": "F005-DONOR-RECIPE",
+      "severity": "BLOCKING_CONTEXT_QA",
+      "owner": "completion-engineer",
+      "repro": "Different recipeSpellID 111 vs 222 with same output transfers E=100 from donor into target",
+      "cause": "donorKey excludes recipeSpellID",
+      "expected": "No cross-recipe donor transfer; unknown context must not match known by assumption"
+    },
+    {
+      "id": "F005-DONOR-SKILL",
+      "severity": "BLOCKING_CONTEXT_QA",
+      "owner": "completion-engineer",
+      "repro": "effectiveSkill 50 vs 100 transfers E=100",
+      "cause": "donorKey excludes skill and profession stat context",
+      "expected": "Require independently supported skill/stat compatibility or use explicit unrelated policy prior"
+    },
+    {
+      "id": "F005-DONOR-REAGENTS",
+      "severity": "BLOCKING_CONTEXT_QA",
+      "owner": "completion-engineer",
+      "repro": "Second reagent item 8001 vs 8002 transfers E=100",
+      "cause": "donorKey excludes full reagent vector",
+      "expected": "Compare exact full reagent vectors and operation eligibility"
+    },
+    {
+      "id": "F005-DONOR-OUTPUT-RANK",
+      "severity": "BLOCKING_CONTEXT_QA",
+      "owner": "completion-engineer",
+      "repro": "outputQualityRank 1 vs 2 transfers E=100",
+      "cause": "donorKey excludes outputQualityRank",
+      "expected": "Do not transfer E across output rank contexts"
+    },
+    {
+      "id": "F005-ZERO-FORWARD",
+      "severity": "BLOCKING_MODEL_SEMANTICS",
+      "owner": "baseline-modeller",
+      "repro": "forward({hitProbability:0,positiveYieldPMF:[{quantity:2,probability:1}]}) yields P=0 E=0 but yieldMin=yieldMax=2; inverseHistogram of four zero casts returns null bounds",
+      "cause": "forward always exposes positive PMF support even for zero-hit baseline",
+      "expected": "P=E=0 with explicit not-applicable positive-range convention, consistent with inverseHistogram"
+    }
+  ],
+  "passingControls": [
+    "Same-context donor E transfer stays confidence 0 and PREVIEW_ONLY",
+    "Contradictory donor E is excluded",
+    "Zero-inclusive histogram inverse uses null conditional bounds at P=0",
+    "Historical F003 model retains current Retail economic fields null, confidence 0 and independentHoldout NONE"
+  ],
+  "scopeAndRisk": "These are independently reproduced synthetic fixture defects in research-only code, not proof that any specific existing candidate row is affected. No evidence of live EV or recommendation leakage was established. F005 independent acceptance is withheld until context-safe donor filtering and zero-support semantics pass.",
+  "holdoutVerdict": "NOT_INDEPENDENTLY_VALIDATED: all TWW historical ratio scenarios share one original author; no independent matched current-Retail zero-inclusive cast cohort.",
+  "repairAndRetest": [
+    {
+      "owner": "completion-engineer",
+      "action": "Extend donor compatibility to recipeSpellID, output rank, exact reagent vector, skill/stat/spec, eligibility and source context; do not promote missing context to equality. Re-run F005 regression and pipeline --check."
+    },
+    {
+      "owner": "baseline-modeller",
+      "action": "Align forward zero-hit conditional support with inverse and document explicit not-applicable convention; add zero-hit and all-zero holdout fixtures."
+    },
+    {
+      "owner": "independent-validator",
+      "action": "After changed artifacts, rerun native Node F005 test, pipeline --check, Lua5.1 decode, JSON Schema and inspect emitted Lua/economic consumers; require whole-study independent holdout before model promotion."
+    }
+  ],
+  "economicGate": "NO_PROMOTION; working fallback remains confidence 0, economicUse PREVIEW_ONLY, normalizedVerified false; tooltip-only remains prohibited from EV.",
+  "numericDeltas": {
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "newIndependentStudyFamilies": 0
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_MILLING_DECISION_SENSITIVITY",
+  "runUTC": "2026-10-30T01:26:45.155Z",
+  "branch": "implementation/five-agent-completion",
+  "workflowRevision": 2,
+  "queueRevision": "NOT_PRESENT_IN_CURRENT_PRIORITY_FILE",
+  "baseCommit": "27398dc65ea311c80769ced30c876899b897279e",
+  "resultArtifactCommit": "d3fc27945c3b75dfa9734330c54b07555ee01f23",
+  "status": "PROPOSED_COORDINATOR_AND_INDEPENDENT_QA_PENDING",
+  "pivotReason": "No new independent zero-inclusive current-Retail observations for DF diamonds, TWW Gem Finding, TWW milling, or Midnight Crushing; the previous F003 submission explicitly directed a Dragonflight milling pivot. This run supplies a distinct decision-boundary model rather than another unchanged source audit.",
+  "changedFiles": [
+    "research/tools/models_v2/df_milling_decision_sensitivity_v1.js",
+    "research/models/v2/df_milling_decision_sensitivity_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261030T012645155Z-F003-DF-MILL-DECISION-SENSITIVITY.json"
+  ],
+  "exactTargetKeys": [
+    "tsm:mill:191469:198412:L1975",
+    "tsm:mill:191469:198413:L1976",
+    "tsm:mill:191469:198414:L1977",
+    "tsm:mill:191470:198415:L1980",
+    "tsm:mill:191470:198416:L1981",
+    "tsm:mill:191470:198417:L1982",
+    "tsm:mill:191471:198415:L1985",
+    "tsm:mill:191471:198416:L1986",
+    "tsm:mill:191471:198417:L1987",
+    "tsm:mill:191472:198415:L1990",
+    "tsm:mill:191472:198416:L1991",
+    "tsm:mill:191472:198417:L1992",
+    "tsm:mill:200061:198412:L1998",
+    "tsm:mill:200061:198413:L1999",
+    "tsm:mill:200061:198414:L2000",
+    "tsm:mill:200061:198415:L2001",
+    "tsm:mill:200061:198416:L2002",
+    "tsm:mill:200061:198417:L2003",
+    "tsm:mill:200061:198418:L2004",
+    "tsm:mill:200061:198419:L2005",
+    "tsm:mill:200061:198420:L2006",
+    "tsm:mill:200061:198421:L2007",
+    "tsm:mill:200061:198422:L2008",
+    "tsm:mill:200061:198423:L2009"
+  ],
+  "exactDeltas": {
+    "newRoleOwnedModelFiles": 2,
+    "newRoleOwnedSubmissionFiles": 1,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentMeasuredStudyFamilies": 0,
+    "affectedBacklogKeys": 24
+  },
+  "concreteResult": "Executable historical rate-unit scenario preservation, zero-inclusive completed-cast marginal estimation with refunds/co-output, and output-price-weighted decision-flip interval. Synthetic 5-input scenario has output revenue [2,5.2], input opportunity cost [4,5], margin [-3,1.2], hence unresolved; these are not actual WoW prices or yields.",
+  "provenance": {
+    "modelCodeBlobSHA": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
+    "manifestBlobSHA": "30ed0f15034f7c60baae55e779be44e28ec4d09d",
+    "priorityFileBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "readinessFileBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "frozenTSM": "READ_ONLY_NO_MODIFICATION",
+    "independentCurrentRetailStudyFamilies": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "JavaScript V8",
+      "name": "exact committed model selfTest with strict-assert equivalent",
+      "passed": 32,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "exact model/manifest read-back",
+      "status": "PASS",
+      "codeBlobSHA": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
+      "manifestBlobSHA": "30ed0f15034f7c60baae55e779be44e28ec4d09d"
+    },
+    {
+      "environment": "GitHub priority reconciliation",
+      "name": "exact 24 target keys matched priority backlog",
+      "status": "PASS",
+      "keysMatched": 24
+    }
+  ],
+  "checksNotRun": [
+    "native Node exact committed file",
+    "Lua 5.1 generated candidate decode",
+    "in-game Retail validation",
+    "independent validator acceptance",
+    "completion pipeline (no accepted build inputs changed)"
+  ],
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "productionFilesChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "liveEVChanged": false,
+    "otherAgentsFilesChanged": false,
+    "schedulesChanged": false
+  },
+  "readinessSnapshot": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "totalSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "missingEvidenceCells": 514,
+    "missingEvidenceExpectedQuantity": 116
+  },
+  "blockers": [
+    "TSM mat_rate unit and original cast denominator unresolved",
+    "No independent current-Retail completed-cast cohort for these 24 keys",
+    "No verified minimum recipe-eligible baseline or source-specific profession stats",
+    "No current price snapshot to rank actual gold impact",
+    "Input 200061 mapping eligibility and batch size require independent audit"
+  ],
+  "independentValidatorRequest": "Verify 24-key identity, no E*P double multiplication, correct refund opportunity cost, all-output completeness, no promotion from historical TSM rate units, and all negative-context tests; compare against a whole independent Retail cast family only.",
+  "evidenceResearcherRequest": "Verify source unit/eligibility for the 24 Dragonflight herb/fish milling keys, then collect zero-inclusive completed-cast/refund logs with patch and character context.",
+  "nextTask": "Use independent Retail evidence or price snapshots to identify a genuine decision-flip risk in these 24 keys; otherwise pivot to another ready model family after the next zero-delta cycle."
+}

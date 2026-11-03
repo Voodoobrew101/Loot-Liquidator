@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002",
+  "queueRevision": 2,
+  "status": "PROPOSED_FOR_COORDINATOR_AND_F005_REVIEW_NEGATIVE_QA_BLOCKED",
+  "runID": "20261031T0117Z-F002-df-frontier-native-fixture-contract-blocker",
+  "baseCommit": "5e5c5062e6b78413cbbfba7d7bc34b9f713fc6e9",
+  "implementationCommits": [
+    "b7a065d902de417848cb21730934c327545a00d1",
+    "6c3fabb53aa35998ebf6e3b0f4547b51053f7c57",
+    "c1262e03d9d1c59b6d017f640bb5ad1d48376207"
+  ],
+  "implementationHead": "c1262e03d9d1c59b6d017f640bb5ad1d48376207",
+  "summary": "Native Node 24 F002 priority gap/coverage contract and Lua5.1 checks confirmed green at current branch head; added a source-pinned informational replay of the previously unexecuted F005 21-case DF frontier snapshot fixture. Native execution found a third failure: the F005 wrapper expects previousStage.run().total===43, but the independently passing 43-case predecessor report contains passed/failed/tests without total. Two actual F003 dynamic-array-length model failures remain. Do not mark 18/21 as 19/21 or accept the model.",
+  "exactChangedFiles": [
+    {
+      "path": "research/tools/working_native_df_frontier_array_preflight.js",
+      "change": "New 120-line source-pinned native runner; then 14 additions/1 deletion to expose exact predecessor suite failure; strict 21-case report shape and 16 adversarial report mutations plus 4 source-pin checks"
+    },
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "change": "8 lines adding mandatory native self-test and informational negative-QA replay; never modifies production/economic gates"
+    }
+  ],
+  "otherAgentsConcurrentChangesPreserved": [
+    "ee1cbccc1606408ddaec04136a1b8f82d610c711 v3 master commit was retained unchanged"
+  ],
+  "exactDataDeltas": {
+    "mappingRecordsAdded": 0,
+    "mappingRecordsRemoved": 0,
+    "invalidMappingsRemoved": 0,
+    "sourceEvidenceCellsChanged": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "economicPromotions": 0,
+    "tooltipFallbackChanges": 0,
+    "frozenTSMChanges": 0
+  },
+  "observedReadiness": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116,
+    "priorityRecords": 217,
+    "verifiedBaselineRecords": 0
+  },
+  "sourcePins": {
+    "frontierModel": "483842ab580808cbd9d9c130d26781b59d2e6ee4",
+    "stageModel": "2c9005e1d7be6df68d5631a418fbae95a144f6e7",
+    "newIndependentSuite": "14ad7d0693ee9e1bda43b7352854188972a8fb8d",
+    "previousFrontierSuite": "bbb4c309a98e5a14dd8f15ae5225703a828cbad8",
+    "previousStageSuite": "4f546a33559a9e8202c1c846d7bbfe91c9f8503c",
+    "validatorReview": "842fe7507e2f093fd307943d138f5a47c6b019b5"
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "Native GitHub Actions Node 24.22.1",
+      "run": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41154388463",
+      "result": "PASS",
+      "name": "F002 native self-test",
+      "adversarialReportsRejected": 16,
+      "sourcePinChecks": 4
+    },
+    {
+      "environment": "Native GitHub Actions Node 24.22.1",
+      "run": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41154388463",
+      "result": "FAIL_EXPECTED_INFORMATIONAL_BLOCKER",
+      "name": "F005 DF frontier 21-case exact-source replay",
+      "passed": 18,
+      "failed": 3,
+      "failedCases": [
+        "previous Prismatic identity 43-case repair",
+        "reject output array length shrink 1 to 0 after dense validation",
+        "reject output array length shrink 2 to 1 after dense validation"
+      ]
+    },
+    {
+      "environment": "Native GitHub Actions Node 24.22.1",
+      "result": "PASS",
+      "name": "Direct exact F005 predecessor Prismatic stage fixture called by diagnostic",
+      "passed": 43,
+      "failed": 0,
+      "reason": "F005 new wrapper checks r.total===43, but predecessor returns no total field; report passed=43 failed=0 and 43 test rows"
+    },
+    {
+      "environment": "Native GitHub Actions Node 24.22.1",
+      "result": "PASS",
+      "name": "run_completion_pipeline.js --check; deterministic repeat, source pins and research schema"
+    },
+    {
+      "environment": "Native GitHub Actions Node 24.22.1",
+      "result": "PASS",
+      "name": "working_gap_priority_contract.js --self-test and live artifact check",
+      "adversarialMutationsRejected": 19,
+      "missingGapsReconciled": 514,
+      "priorityRecordsReconciled": 217
+    },
+    {
+      "environment": "Native GitHub Actions Lua 5.1",
+      "result": "PASS",
+      "name": "luac5.1 -p and test_generated_working_estimates.lua",
+      "decodedMappings": 1018,
+      "decodedWorkingNumericCells": 4072,
+      "evidenceGapsPreserved": 514
+    }
+  ],
+  "notRun": [
+    "WoW Retail client/in-game cast verification",
+    "Independent F005 acceptance of new F002 runner",
+    "Held-out current-Retail sample cohort"
+  ],
+  "blockers": [
+    "F005 owns the 21-case suite. Correct its previous Prismatic predecessor assertion to use r.passed===43 && r.failed===0 && r.tests.length===43 rather than r.total===43, then independently rerun and review. Do not edit F005 tests from F002.",
+    "F003 owns two real mutable-array-length defects in df_prospect_decision_frontier_v1.js; preserve failed negative QA until fixed.",
+    "Earlier TWW milling and DF Prismatic F002 informational preflights have stale source pins after F003 repairs. CI is green because these steps are informational; this is not independent model acceptance.",
+    "116 expectedQuantity evidence gaps and zero independently verified current-Retail holdouts remain."
+  ],
+  "safety": {
+    "researchOnly": true,
+    "unsupportedFallbackConfidence": 0,
+    "unsupportedFallbackEconomicUse": "PREVIEW_ONLY",
+    "unsupportedFallbackNormalizedVerified": false,
+    "liveEVOrRecommendationChanges": false,
+    "sourceEvidenceUntouched": true,
+    "productionBranchUntouched": true,
+    "legacySchedulesUntouched": true
+  },
+  "zeroDeltaPivot": "No accepted numeric/model input changed. Instead of recompiling byte-identical data or repeating audits, added a new native F005 regression replay and identified an exact cross-suite report-contract defect while preserving the two actual model failures.",
+  "nextTask": "After F005 repairs the 21-case predecessor contract and F003 repairs the two dynamic-length model defects, repin the exact independent suite and require native 21/21 with explicit separate F005 acceptance; otherwise investigate new compiler-only failures without promoting evidence."
+}

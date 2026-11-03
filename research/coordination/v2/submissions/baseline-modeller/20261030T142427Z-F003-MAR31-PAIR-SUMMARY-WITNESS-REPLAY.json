@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_MAR31_PAIR_SUMMARY_ATTESTATION_REPAIR",
+  "workflowRevision": 2,
+  "queueRevision": 27,
+  "runID": "20261030T142427Z-F003-MAR31-PAIR-SUMMARY-WITNESS-REPLAY",
+  "reportUTC": "2026-10-30T14:24:27Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "taskSelection": "Highest-priority coordinator F003 assignment: repair 14/18 F005 failing compareEpochs pair-summary integrity mutations; pivot from previously completed March31 date and array repairs.",
+  "baseCommit": "NOT_PINNED_AT_PREWRITE_HEAD; coordinator anchor 614593acba7abe0b36656f277b82f9c24a1a4fea, intervening engineer commits preserved",
+  "modelCommit": "8f59a025d7a6e8bbd192589f7d06b8aefd34b4a5",
+  "manifestCommit": "d56291577fc7e6ed053fdede09e451b661361ab0",
+  "resultCommit": "THIS_SUBMISSION_COMMIT_SEPARATE",
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/models_v2/midnight_prospect_hotfix_epoch_isolation_v1.js",
+      "previousBlobSHA": "6847591d66c7acee8ef6b752638e5b4428a9f910",
+      "newBlobSHA": "70652482e4ac63db50f567fae5cbb35e6f50accd"
+    },
+    {
+      "path": "research/models/v2/midnight_prospect_hotfix_epoch_isolation_v1.json",
+      "previousBlobSHA": "765c5f3947148e269597b97752966dc68c085591",
+      "newBlobSHA": "4820000901b87d122e864a08cf88d6decd25746d"
+    },
+    {
+      "path": "research/coordination/v2/submissions/baseline-modeller/20261030T142427Z-F003-MAR31-PAIR-SUMMARY-WITNESS-REPLAY.json",
+      "previousBlobSHA": null,
+      "newBlobSHA": "COMMIT_RESULT_PENDING"
+    }
+  ],
+  "targetStableKeys": [
+    "midnight:237359:242608:L733",
+    "midnight:237361:242608:L744",
+    "midnight:237362:242608:L755",
+    "midnight:237363:242608:L766",
+    "midnight:237364:242608:L777",
+    "midnight:237365:242608:L788",
+    "midnight:237366:242608:L799"
+  ],
+  "changes": [
+    "Version 1.0.4: compareEpochs now only accepts original analyzeCohort outputs with private process-local WeakMap witness, not mutable copies or JSON-reloaded reports.",
+    "AnalyzeCohort rejects unsafe cast-event metadata and retains exact observedTotalOutput, while witness snapshots original zero-inclusive events, context and computed summary.",
+    "Before comparison, attest typed context, source identity, hotfix epoch classes, confidence-0 PREVIEW_ONLY policy, cast and refund arithmetic, P/E denominators, positive yield extrema and non-promoting claims.",
+    "Replay original cast ledger from private witness and require exact summary equality; no economic promotion or externally verified source claim.",
+    "Inherited custom toJSON serialization hooks are rejected."
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "affectedExistingMappings": 7,
+    "newModelFamilies": 0,
+    "modelFilesModified": 2,
+    "priorF005PairFailures": 14,
+    "remainingF005PairFailuresInV8": 0
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible strict assertion shim",
+      "suite": "model selfTest exact patched source",
+      "passed": 72,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible strict assertion shim",
+      "suite": "unmodified F005 pair summary fixture",
+      "fixtureBlobSHA": "a909b82ec0144bbcd48b868103c955d1e33d851a",
+      "passed": 18,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible strict assertion shim",
+      "suite": "unmodified F005 March31 fixture",
+      "fixtureBlobSHA": "167582dd8448ec3abe686d036c4a2f4d938ecde4",
+      "passed": 26,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible strict assertion shim",
+      "suite": "unmodified F005 array context fixture",
+      "fixtureBlobSHA": "08e6dba858bffb69561fc8c7f238af8e51e340a4",
+      "passed": 12,
+      "failed": 0,
+      "syntheticOnly": true
+    }
+  ],
+  "testsNotRun": [
+    "Native Node exact committed model and independent F005 fixtures",
+    "Lua5.1 in-game addon checks",
+    "Full local completion pipeline --check (no candidate inputs changed)",
+    "Whole independent current Retail study-family holdout"
+  ],
+  "provenancePolicy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false,
+    "productionChanged": false
+  },
+  "acceptanceStatus": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_NATIVE_QA",
+  "blockers": [
+    "No native Node independent 18/18 attestation acceptance yet",
+    "Process-local witness cannot authenticate external cast evidence; persisted summaries require re-analysis from original raw cast logs",
+    "No independent current Retail zero-inclusive prospecting cast cohorts or verified complete output universe for seven targets",
+    "No economic expectedQuantity evidence promotions; canonical 116 E gaps remain"
+  ],
+  "validatorRequest": "Independently run native Node exact model v1.0.4 and F005 pair 18/18, March31 26/26, array 12/12; challenge coherent mutations and JSON-reloaded summary rejection; pin exact model/manifest SHAs; report pass/fail and holdout limitations.",
+  "coordinatorRequest": "Review model/manifest and accept only as research integrity repair. Preserve F002 per-field candidate reconciliation and strict CI ownership; do not promote economic values.",
+  "nextTask": "After independent F005 acceptance, pivot to new unresolved model family or controlled current Retail cohort protocol; do not repeat unchanged chronology/array audits."
+}

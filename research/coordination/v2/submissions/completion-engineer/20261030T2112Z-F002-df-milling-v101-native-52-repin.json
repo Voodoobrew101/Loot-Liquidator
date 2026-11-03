@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_REPIN_NATIVE_DF_MILL_V101_52_CASE_INFORMATIONAL_REPLAY",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T2112Z-F002-df-milling-v101-native-52-repin",
+  "runUTC": "2026-10-30T21:12:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "0a76918cfdb04e8072b75b412c7d6051994434a9",
+  "implementationCommits": [
+    "9d96b8012252cf969f7254ee29e367dfcf752c59",
+    "23ecdfcf6845999b68f8f9e569ff5dff11cd8028"
+  ],
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "SUBMITTED_FOR_COORDINATOR_AND_INDEPENDENT_F005_NATIVE_QA",
+  "highestPriorityReadyTask": "Coordinator 20261030T2102Z assignment: re-pin F002 runner to changed F003 v1.0.1 and F005 30+22 fixtures, not another unchanged numeric audit.",
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/working_native_df_milling_attestation_preflight.js",
+      "oldBlobSHA": "f9d701c8c5260e05375b6268edc99b103b142b3b",
+      "newBlobSHA": "1724455aeda20ace8206cf01fec5d668c0698216",
+      "change": "Replace old 22/30 eight-failure negative baseline with source-pinned v1.0.1 39-author + 30+22 F005 strict passing suite, five source pins, 30 adversarial report mutations and four pin checks. Fail closed on any native failure or stale pin."
+    },
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "oldBlobSHA": "cd4d89738f767f4cf8d1cbe8c981a8c0977ac429",
+      "newBlobSHA": "ae8395ac7aea1c8fa9b63186d4f9b01487c5a068",
+      "change": "Correct existing self-test and informational replay labels/comments to 52-case repaired v1.0.1; retain mandatory self-test, continue-on-error informational replay and all existing CI steps."
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T2112Z-F002-df-milling-v101-native-52-repin.json",
+      "change": "Unique role-owned coordinator/validator submission; no central acceptance edited."
+    }
+  ],
+  "sourcePins": {
+    "model": "e36328de0e677582bf9b2b36c4a6144a5c2f17be",
+    "modelManifest": "94e57e0f7dc91b95c9eed3bb575db3812fb45155",
+    "independentFixture30": "4bf40e94e4cfccd483a9bd0263c7525777def6f8",
+    "independentFixture22": "25855bf7d5b03ac0782a232a6d7b17819f5db690",
+    "independentReview": "1769f8a8aa9e52509e0e8fe431aab13c55f28bf4"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "previousModelDefectsNowPassingInF005V8": 8,
+    "independentSyntheticCasesConfiguredForNativeReplay": 52,
+    "authorSyntheticSelfTestsConfigured": 39
+  },
+  "readiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub connector V8",
+      "name": "Source-hash and branch-head read-back, manifest/review alignment, workflow and runner contract checks",
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "Read back updated runner and workflow",
+      "runnerBlobSHA": "1724455aeda20ace8206cf01fec5d668c0698216",
+      "workflowBlobSHA": "ae8395ac7aea1c8fa9b63186d4f9b01487c5a068",
+      "result": "PASS"
+    },
+    {
+      "environment": "GitHub Actions",
+      "name": "Previous exact old-model pipeline",
+      "runID": 41125904833,
+      "conclusion": "success",
+      "caveat": "Historical run; does NOT validate the new v1.0.1 runner"
+    }
+  ],
+  "testsNotRunOrUnconfirmed": [
+    "Native Node 24 execution of new 39-author and 30+22 F005 tests: workflow configured and pushed, result not independently confirmed at submission time.",
+    "Native execution of runner's adversarial self-test and five Git blob pins: CI configured, result pending.",
+    "Fresh completion pipeline --check and Lua 5.1 candidate decoding after submission: existing workflow retains gates, new-head results not confirmed.",
+    "Independent current-Retail completed-cast holdout, in-game testing and source-attested E caps: not available."
+  ],
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false,
+    "addonReleased": false
+  },
+  "blockers": [
+    "Independent F005 review of exact new native CI outcome required before mandatory integration or model acceptance.",
+    "116 missing evidence expected quantities, 514 total evidence gaps; 0 >=90 evidence cells and 0 verified minimum-eligible baselines.",
+    "No independent current-Retail zero-inclusive DF milling cast family or independently authenticated E caps for 43 target keys; fish 200061 rank/recipe eligibility unknown.",
+    "Unrelated TWW milling five context defects and TWW Gem Finding fourteen context failures remain model-owner work."
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Unchanged 1018/4072 candidate audit and obsolete eight-failure DF negative runner",
+    "to": "Changed F003 v1.0.1 model, F005 30+22 independent fixtures and source-pinned native QA",
+    "numericDelta": 0,
+    "engineeringDefect": "Stale source pins prevented native validation of repaired model",
+    "engineeringFix": "New five-pin strict 52-case runner and updated workflow"
+  },
+  "nextTask": {
+    "owner": "completion-engineer",
+    "taskID": "F002_NATIVE_52_CI_RESULT_AND_NEXT_CHANGED_MODEL",
+    "action": "Inspect branch-head GitHub Actions job logs and F005 acceptance; fix any genuine runner failure. If 52/52 accepted, pivot to changed TWW milling five-defect or Gem Finding fourteen-defect native replay; do not repeat unchanged audit."
+  }
+}

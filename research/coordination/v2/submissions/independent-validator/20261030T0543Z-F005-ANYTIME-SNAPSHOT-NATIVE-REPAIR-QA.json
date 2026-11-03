@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_ANYTIME_CONTEXT_SNAPSHOT_POSTREPAIR_QA",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 18,
+  "runUTC": "2026-10-30T05:43:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "a08a184b375052644003b897d55940b083b6bd80",
+  "resultCommitBeforeSubmission": "c9ba6d248e658ed1451207dc3006b89560dc2212",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_F003_NESTED_CONTEXT_REPAIR_REQUIRED",
+  "changedFiles": [
+    "research/tests/v2/test_f005_anytime_typed_context_snapshot_integrity.js",
+    "research/coordination/v2/reviews/2026-10-30T0541Z-F005-anytime-context-snapshot-and-native-repair-gates.json",
+    "research/coordination/v2/submissions/independent-validator/20261030T0543Z-F005-ANYTIME-SNAPSHOT-NATIVE-REPAIR-QA.json"
+  ],
+  "sourceBlobs": {
+    "model": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9",
+    "test": "2e64ba46af242740c7a44ecf6bb204ae1345c112",
+    "review": "6283a417e94876d874ed60fde15547642df5bd88",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "targetStableKeys": [
+    "midnight:237359:242608:L733",
+    "midnight:237361:242608:L744",
+    "midnight:237362:242608:L755",
+    "midnight:237363:242608:L766",
+    "midnight:237364:242608:L777",
+    "midnight:237365:242608:L788",
+    "midnight:237366:242608:L799"
+  ],
+  "acceptedVersusProposed": {
+    "accepted": "PREVIOUS_F002_NATIVE_GATE_AND_F003_12_CASE_REPAIR_ONLY",
+    "proposed": "F003_DEEP_COPY_JSON_SAFE_CONTEXT_REPAIR",
+    "verdict": "FAIL_NEW_NESTED_CONTEXT_PROVENANCE_AND_SERIALIZATION"
+  },
+  "exactDeltas": {
+    "validatorFilesAdded": 3,
+    "newAdversarialCases": 13,
+    "newReproducedFailingCases": 8,
+    "newDefectClasses": 2,
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "productionWrites": 0,
+    "rawEvidenceWrites": 0,
+    "frozenTSMWrites": 0,
+    "tooltipOnlyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "scheduleChanges": 0
+  },
+  "testsActuallyRun": [
+    {
+      "name": "F003 model self-test",
+      "runtime": "JavaScript V8 exact source, assert shim",
+      "passed": 49,
+      "failed": 0
+    },
+    {
+      "name": "Previous independent F003 context suite",
+      "runtime": "JavaScript V8 exact source, assert shim",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "New F005 nested context suite",
+      "runtime": "JavaScript V8 exact source, assert shim",
+      "passed": 5,
+      "failed": 8
+    },
+    {
+      "name": "GitHub Actions run 41008709609 on prewrite head",
+      "runtime": "native Node/Lua GitHub Actions",
+      "status": "SUCCESS"
+    },
+    {
+      "name": "GitHub Actions run 41009950738 on new test commit",
+      "runtime": "native Node/Lua GitHub Actions; new test not wired",
+      "status": "SUCCESS"
+    }
+  ],
+  "testsNotRun": [
+    "New 13-case F005 suite under native Node",
+    "Previous F003 12-case suite under native Node",
+    "Local full completion pipeline --check",
+    "Local Lua 5.1",
+    "WoW client and in-game valuation",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "readinessObserved": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "confidenceGE90Cells": 0
+  },
+  "independentStudyLineages": [],
+  "blockers": [
+    "F003 nested specialization/gear/unlocks mutable provenance after return",
+    "Nonfinite/undefined/function nested profession context accepted and JSON-serialized ambiguously",
+    "No independent current-Retail cast holdout, cap attestation, output-universe audit or in-game validation"
+  ],
+  "coordinatorAction": "Return F005-ANYTIME-4/5 to baseline-modeller. Accept prior F002 and F003 repair checks only to demonstrated scope; do not accept new F003 model as integrity-complete. Preserve all numeric preview coverage and research-only economic gates. Request engineer to wire independent F003 12-case and new 13-case suites to native fail-closed CI after model-owner repair.",
+  "nextTask": "F005_NATIVE_RETEST_NESTED_CONTEXT_SNAPSHOT_AND_JSON_SAFE_SCHEMA_ON_CHANGED_F003_MODEL",
+  "zeroDeltaPivot": "Previous five defects repaired; moved to newly exposed nested context aliasing and JSON serialization collision instead of repeating source audits."
+}

@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_GENERATED_EVIDENCE_GAP_PRIORITY_IDENTITY_CONTRACT",
+  "runID": "20261030T2312Z-F002-gap-priority-exact-contract",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "reportUTC": "2026-10-30T23:12:46Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "NOT_CAPTURED_AT_START; FIRST_COMMIT_CREATED_ON_LATEST_BRANCH_HEAD_WITH_CONTENTS_API",
+  "implementationCommits": [
+    "5f4f220c5ec7512a1f161b79b6d23690fb7539b3",
+    "e018f99500ca75212563206f0778b12f19b885e4"
+  ],
+  "resultCommitBeforeSubmission": "e018f99500ca75212563206f0778b12f19b885e4",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_ENGINEERING_CONSISTENCY_GATE_PENDING_NATIVE_CI_AND_INDEPENDENT_REVIEW",
+  "zeroDeltaPivot": {
+    "applied": true,
+    "reason": "No accepted model or compiler input revision observed; previous Dragonflight Prismatic negative-QA remains 40/43 with three baseline-modeller-owned identity failures.",
+    "from": "Repeat source-pinned negative-QA for unchanged F003 model",
+    "to": "Enforce exact generated missing-field CSV to priority-record identity and scorecard consistency, preventing silent stale priorities or coverage claims."
+  },
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/working_gap_priority_contract.js",
+      "action": "CREATED",
+      "blobSHA": "da7c7c15a55d2ae6c191eac8cae5a410f164d804"
+    },
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "action": "UPDATED",
+      "oldBlobSHA": "7051b95fde0cf8b9c5519328812f0f7e43423931",
+      "newBlobSHA": "c5983a1b29f7eab986eb0afd62d76bddf9849709"
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T2312Z-F002-gap-priority-exact-contract.json",
+      "action": "CREATED"
+    }
+  ],
+  "exactKeysChanged": [],
+  "delta": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "productionWrites": 0,
+    "roleOwnedResearchScriptsAdded": 1,
+    "mandatoryResearchConsistencyStepsAdded": 1
+  },
+  "readOnlySourceBlobs": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "gapCSV": "6f229b02447a67e96baaa1a9e1844ac1063121d4",
+    "buildReport": "cf46eae94624f21bc402ea0b4e827325299b1060"
+  },
+  "verifiedCrossArtifactSnapshot": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceCompleteRecords": 801,
+    "priorityRecords": 217,
+    "uniqueCSVGapRecordIDs": 217,
+    "priorityRecordIdentityMismatches": 0,
+    "duplicatePriorityIDs": 0,
+    "missingFields": {
+      "dropChance": 204,
+      "yieldMin": 97,
+      "yieldMax": 97,
+      "expectedQuantity": 116
+    },
+    "gapCSVStatuses": {
+      "unknown": 475,
+      "contradictory": 39
+    }
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "Local native Node",
+      "command": "node working_gap_priority_contract.js --self-test (equivalent working copy)",
+      "status": "PASS",
+      "adversarialMutationsRejected": 13
+    },
+    {
+      "environment": "GitHub connector V8",
+      "test": "Full current generated CSV (514 gaps) versus 217 priority records, all methods/input/output IDs and gap field names",
+      "status": "PASS",
+      "mismatches": 0
+    },
+    {
+      "environment": "GitHub connector",
+      "test": "Read-back of new script and CI workflow on canonical branch",
+      "status": "PASS",
+      "sourceBlobSHA": "da7c7c15a55d2ae6c191eac8cae5a410f164d804",
+      "workflowBlobSHA": "c5983a1b29f7eab986eb0afd62d76bddf9849709"
+    }
+  ],
+  "nativeCI": {
+    "runID": 41143247075,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41143247075",
+    "statusAtReport": "IN_PROGRESS",
+    "conclusionAtReport": null
+  },
+  "testsNotRun": [
+    "New full-repository mandatory contract step in native GitHub CI (in progress at report creation)",
+    "Independent F005 acceptance of this engineering gate",
+    "In-game Retail validation",
+    "Independent current-Retail completed-cast holdouts",
+    "New Lua 5.1 run for this report commit (CI in progress)"
+  ],
+  "blockers": [
+    "F003 Dragonflight Prismatic historical model still identifies Crumbled Stone 192880 as Prismatic Ore; repair owned by baseline-modeller and independent F005 retest.",
+    "116 expectedQuantity evidence gaps remain; 4,072/4,072 preview numeric fields are not evidence verification.",
+    "Independent F005 has not accepted new cross-artifact preflight; it is a compiler-output consistency gate, not a source/model/economic acceptance gate."
+  ],
+  "nextTask": "Verify the new mandatory CI step on its exact commit, repair any cross-artifact drift found; otherwise integrate only newly accepted F003 model updates or changed compiler inputs, not repeat unchanged audits.",
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "operationalEstimatesAffectLiveValuation": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}

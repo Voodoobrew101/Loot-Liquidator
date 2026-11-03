@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_MARCH31_EPOCH_QA_AND_GENERATED_CANDIDATE_INTEGRITY",
+  "workflowRevision": 2,
+  "queueRevision": 25,
+  "runID": "20261030T1203Z-F001-march31-epoch-fail-and-candidate-copy-integrity",
+  "reportUTC": "2026-10-30T12:03:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "d9341ca6965100ad780649f137689a734be1c48d",
+  "sourceScorecardBlob": "dc23d8ea4a1e86fdaf225003a200236f128ab2cc",
+  "canonicalReadinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "canonicalPrioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "taskSelection": "Changed-source integration: independently sourced March 31 Midnight prospecting hotfix invalidates F003 April 1 epoch model; independently assess latest F002/F004/F005 submissions and reconcile externally copied itemdb.lua with compiler v0.8 canonical readiness without overwriting the user-requested copy.",
+  "decisions": [
+    {
+      "role": "baseline-modeller",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261030T112607Z-F003-APR01-HOTFIX-EPOCH-CORRECTION.json",
+      "submissionBlob": "f88eca75f1742043bb52353fb3ada10cdeb8a6d3",
+      "verdict": "REJECT_MODEL_EPOCH_BOUNDARY_PENDING_MARCH31_REPAIR",
+      "sourceBlob": "fd8571a3d64d8e59476f79aeb70876f8bc97df37",
+      "manifestBlob": "a9e193a90a1c9bf0e4b61fdd11232f328ac8c150",
+      "reason": "Blizzard official prospecting rate entry is under March 31, 2026, not April 1; current model marks March 31 PRE_HOTFIX. Reported 54/54 model self-tests use wrong date; independent 26-case suite 19 PASS, 7 FAIL. Retain code as quarantined research-only proposal; no P/E or live promotion."
+    },
+    {
+      "role": "independent-validator",
+      "submission": "research/coordination/v2/submissions/independent-validator/20261030T1139Z-F005-MIDNIGHT-MAR31-HOTFIX-DATE-FAIL.json",
+      "submissionBlob": "1e882079f2c15e0496fefd224f6032034b9b9644",
+      "reviewBlob": "f30cf3688cf0dae872d63f896dcef54abefe1654",
+      "testBlob": "167582dd8448ec3abe686d036c4a2f4d938ecde4",
+      "verdict": "ACCEPT_INDEPENDENT_FAILING_REGRESSION_AS_RESEARCH_QA",
+      "reason": "Direct official source agrees with F005 date and 7 documented failed cases; native Node execution not claimed; regression stays fail-closed until F003 repair and independent native retest."
+    },
+    {
+      "role": "completion-engineer",
+      "submission": "research/coordination/v2/submissions/completion-engineer/20261030T1111Z-F002-pending-native-model-preflight.json",
+      "submissionBlob": "db9d6d1288414b25c831a7899d470df53f6e91e2",
+      "preflightBlob": "64c1a44d3dc23d477a4c738daeb1deb4485f2c61",
+      "verdict": "ACCEPT_PINNED_PREFLIGHT_AS_RESEARCH_ONLY_PENDING_NATIVE_F005",
+      "reason": "Self-test 10/10 reported native; 13-case DF array and 25-case TWW suites not yet independently native-tested. Do not add to strict build pipeline yet."
+    },
+    {
+      "role": "evidence-researcher",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-30T1131Z-F004-midnight-prospecting-effective-skill-refresh-submission.json",
+      "submissionBlob": "933b40a9d82bd5415ce91748eeb8a98a1277222e",
+      "verdict": "ACCEPT_TWO_FIRST_PERSON_CONTEXT_LEADS_NOT_MEASURED_YIELD",
+      "reason": "Two first-person skill/quality UI accounts plus one contextual discussion; no controlled casts, no causation, no yield P/E, no confidence/economic promotion. Source duplication must remain deduplicated."
+    }
+  ],
+  "officialSource": {
+    "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+    "datedEntry": "2026-03-31",
+    "statement": "Gems will now be found more regularly when prospecting Midnight ore.",
+    "deploymentHour": "UNKNOWN",
+    "region": "UNKNOWN",
+    "affectedPerGemRates": "UNKNOWN",
+    "sourceLineageCount": 1,
+    "confusedAdjacentEntry": "April 1 Stoic Eversong Diamond armor bonus is unrelated"
+  },
+  "candidateIntegrity": {
+    "destination": "research/proposed/itemdb.lua",
+    "currentBlob": "a838d75e82239339bea3861692291b44bd085662",
+    "copiedFrom": "implementation/database-profession-modernization:LootLiquidator/itemdb.lua",
+    "copiedSourceBlob": "a838d75e82239339bea3861692291b44bd085662",
+    "copyExact": true,
+    "embeddedCompilerVersion": "0.2.0",
+    "canonicalReadinessCompilerVersion": "0.8.0",
+    "priorScorecardCandidateBlob": "560b885a0039045419c340716e263ae33ddf827a",
+    "status": "COPIED_ARTIFACT_NOT_YET_RECONCILED_WITH_CANONICAL_GENERATED_CANDIDATE",
+    "policy": "Preserve user-requested copy; completion-engineer must compare source/provenance and provide non-destructive reconcile or regeneration proposal before changing file; canonical readiness counts are prior generated snapshot, not newly certified copied-file counts."
+  },
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "fieldSlots": 4072,
+    "workingNumeric": 4072,
+    "evidenceNumeric": 3558,
+    "evidenceMissing": 514,
+    "evidenceMissingE": 116,
+    "priorityRecords": 217,
+    "confidenceGE90": 0,
+    "independentCurrentRetailHoldoutFamilies": 0,
+    "scope": "GENERATED_READINESS_SNAPSHOT_NOT_RECHECKED_AGAINST_COPIED_FILE"
+  },
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "evidenceNumericCellsAdded": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentCurrentRetailLineages": 0,
+    "independentDateRegressionsAddedByF005": 26,
+    "independentDateRegressionsPassing": 19,
+    "independentDateRegressionsFailing": 7,
+    "contextualFirstPersonLineagesAccepted": 2,
+    "coordinatorOwnedFilesPlanned": 3,
+    "productionWrites": 0
+  },
+  "checksActuallyPerformed": [
+    {
+      "test": "Exact GitHub readback of model, manifest, independent regression, four role submissions and current candidate",
+      "result": "PASS",
+      "modelSHA": "fd8571a3d64d8e59476f79aeb70876f8bc97df37",
+      "candidateSHA": "a838d75e82239339bea3861692291b44bd085662"
+    },
+    {
+      "test": "Official Blizzard dated hotfix source crosscheck",
+      "result": "PASS",
+      "date": "2026-03-31",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320"
+    },
+    {
+      "test": "Readiness/priority reconciliation",
+      "result": "PASS",
+      "mappings": 1018,
+      "working": "4072/4072",
+      "evidenceMissing": 514,
+      "missingE": 116,
+      "priorityRecords": 217
+    },
+    {
+      "test": "Exact packaged-to-proposed file blob comparison",
+      "result": "PASS_IDENTICAL",
+      "blob": "a838d75e82239339bea3861692291b44bd085662"
+    }
+  ],
+  "checksReportedNotRerun": [
+    "F003 V8 self-test 54/54 on erroneous epoch",
+    "F005 independent V8 19/26 with 7 failed official date/boundary cases",
+    "F002 native preflight self-test 10/10",
+    "F004 source review 15 assertions"
+  ],
+  "checksNotRun": [
+    "Native Node 26-case March31 regression, 13-case DF array, 25-case TWW isolation",
+    "Completion pipeline --check after externally copied compiler-v0.2 itemdb (would need checkout; do not claim current generated integrity)",
+    "Lua 5.1 decode of current copied itemdb",
+    "WoW client and independently held-out current Retail casts"
+  ],
+  "blockers": [
+    "F003 model uses wrong March 31/April 1 epoch; deployment hour unknown",
+    "Copied itemdb.lua embeds compiler v0.2 while canonical generated readiness reports v0.8; generated hash differs; do not overwrite without non-destructive reconciliation",
+    "Native independent model suites not yet accepted",
+    "116 evidence E gaps and no independent current-Retail cast holdouts"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_MARCH31_PROSPECT_HOTFIX_DATE_REPAIR",
+      "scope": "Correct official March 31 date, quarantine March 31 UTC and local with conservative buffer; preserve unknown deployment hour and per-gem effects; update self-tests/manifest and run independent 26-case native regression. Then repair eight Midnight nested-context failures."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_MARCH31_NATIVE_RETEST_AND_DF_TWW_GATES",
+      "scope": "Native Node retest corrected March31 model against 26 independent cases; independently native-run DF array 13 and TWW isolation 25; review strict source pins, avoid false promotions."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_COPIED_ITEMDB_NONDESTRUCTIVE_RECONCILIATION",
+      "scope": "Compare current copied research/proposed/itemdb.lua (compiler v0.2, SHA a838...) to canonical v0.8 generated readiness and working estimates; report exact mapping/field/source deltas and preserve user-requested copy before any regeneration. No silent overwrite or economic promotion; integrate native model gates only after F005 acceptance."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_MIDNIGHT_POST_MARCH31_CAST_COHORT_OR_SELECTOR_ELIGIBILITY",
+      "scope": "Seek actual current Retail completed zero-inclusive casts and full rank/skill/refund/build context after March31 for seven prospecting keys; pivot to Gem Finding selector eligibility or high-impact E gaps if no independent source. Do not repeat exhausted forum search."
+    }
+  ],
+  "nextTask": "F003_MARCH31_PROSPECT_HOTFIX_DATE_REPAIR",
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Unchanged historical audits and April1 mistaken source-date assumption",
+    "to": "Accept independent March31 failing regression and initiate exact model repair plus candidate copy provenance reconciliation"
+  },
+  "preserved": [
+    "main",
+    "implementation/five-agent-runtime-profiles",
+    "legacy assignments",
+    "raw evidence",
+    "frozen TSM",
+    "tooltip-only policy",
+    "existing schedules",
+    "other role-owned files"
+  ],
+  "economicPolicy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0
+  },
+  "resultCommit": "RESOLVED_BY_GITHUB_COMMIT_CONTAINING_THIS_FILE"
+}

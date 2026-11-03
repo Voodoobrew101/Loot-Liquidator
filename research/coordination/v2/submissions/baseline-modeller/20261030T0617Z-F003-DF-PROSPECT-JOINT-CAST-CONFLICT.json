@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_PROSPECT_JOINT_CAST_CONFLICT",
+  "workflowRevision": 2,
+  "queueRevision": "completion-priorities.json@a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "runUTC": "2026-10-30T06:17:00Z",
+  "status": "PROPOSED_PENDING_COORDINATOR_F001_AND_INDEPENDENT_F005",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "87c535619f36798ced6bba30029ab0257d9e5402",
+  "modelCommit": "2b60bea9c25cbc622253631a0dbbc5371659fb73",
+  "resultCommitBeforeSubmission": "b32bd9e0d293878462ccf3c30f011ec92886b8ad",
+  "filesCreated": [
+    "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
+    "research/models/v2/df_prospecting_joint_cast_conflict_v1.json"
+  ],
+  "exactStableKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "priority": 122,
+  "highestReadyFamily": "Dragonflight prospecting source conflicts and joint-cast E/P sensitivity",
+  "acceptedVsProposed": {
+    "accepted": 0,
+    "proposedModels": 1,
+    "coordinatorAcceptance": "PENDING",
+    "independentQA": "PENDING"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "existingPriorityMappingsAddressed": 5,
+    "modelFilesCreated": 2
+  },
+  "modelFindings": [
+    "Historical TSM source-rate units are retained as per-input/per-cast alternatives rather than silently promoted to measured current-Retail probabilities or expected quantities.",
+    "Actual zero-inclusive completed casts yield marginal P, unconditional E, positive observed extrema and joint sample covariance; aborted casts are excluded and refunded inputs accounted for separately.",
+    "Full-output-set and price/E interval sensitivity yields only conditional research scenario classifications, never live recommendations.",
+    "Unverified output-universe attestations and synthetic contexts do not establish recipe or rank eligibility; preview confidence remains zero."
+  ],
+  "provenance": {
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "modelSourceBlobSHA": "20ad9dc03e7c16a910f56ecda659929b0d68b7d3",
+    "manifestBlobSHA": "00a1c2b8c1338588847640ec6696778723ad1cc3",
+    "frozenTSM": "UNMODIFIED",
+    "currentRetailIndependentCohorts": 0,
+    "independentHoldoutFamilies": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "JavaScript V8",
+      "source": "Exact GitHub model blob read back after commit",
+      "result": "PASS",
+      "assertions": 51
+    },
+    {
+      "environment": "Python 3 statistics reference",
+      "source": "Deterministic 1000 synthetic samples",
+      "result": "PASS",
+      "comparisons": 2000,
+      "scope": "Covariance and sample margin variance; mathematical cross-check, not independent current-Retail validation"
+    },
+    {
+      "environment": "GitHub connector",
+      "source": "Model and manifest read-back",
+      "result": "PASS",
+      "modelSHAConsistent": true
+    }
+  ],
+  "testsNotRun": {
+    "nativeNode": "PENDING_GITHUB_CI_RUN_41013387481",
+    "lua51": "NOT_RUN",
+    "wowClient": "NOT_RUN",
+    "completionPipeline": "NOT_RUN_NO_ACCEPTED_BUILD_INPUTS_CHANGED",
+    "independentValidator": "PENDING"
+  },
+  "readinessUnchanged": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "unresolvedExpectedQuantityEvidenceGaps": 116,
+    "evidenceGE90Cells": 0,
+    "liveEconomicUseChanged": false
+  },
+  "blockers": [
+    "Five priority-122 rows lack independently corroborated current-Retail zero-inclusive casts and source-unit reconciliation.",
+    "Full output universe and exact recipe/rank eligibility not independently audited; model requires caller attestation but does not treat it as proof.",
+    "Native Node and independent F005 regression/holdout validation outstanding.",
+    "No field-evidence confidence promotion is supportable from synthetic tests or frozen historical source data."
+  ],
+  "evidenceResearcherRequest": "Obtain independent current-Retail zero-inclusive cast logs for exact five keys, all gem co-outputs/ranks, completed and aborted casts, Resourcefulness refunds, patch/build, skill/spec/gear/unlocks and spell ID; verify source units and 192871 eligibility.",
+  "validatorRequest": "Native Node run on exact committed source, adversarial context/lineage/date/universe/refund/price tests, covariance and co-output checks, and no preview leakage; keep whole independent study-family holdouts.",
+  "nextTask": "If no new Dragonflight prospecting observations arrive, pivot to a distinct priority-104 family with unresolved model identifiability (Dragonflight 192880 prospecting or TWW milling) rather than repeat historical TSM source audits.",
+  "preservation": {
+    "mainUntouched": true,
+    "productionFilesUntouched": true,
+    "runtimeProfilesBranchUntouched": true,
+    "legacyAssignmentsUntouched": true,
+    "rawEvidenceUntouched": true,
+    "frozenTSMUntouched": true,
+    "tooltipOnlyPolicyUntouched": true,
+    "schedulesUntouched": true,
+    "otherRoleFilesUntouched": true
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_POSTREPAIR_PMF_AND_ANCESTRY_ACCEPTANCE",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 3,
+  "dateUTC": "2026-10-29T14:43:00Z",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_NOT_SELF_APPROVED",
+  "decision": "CONDITIONAL_PASS_MODEL_AND_ANCESTRY_REPAIRS_NO_ECONOMIC_PROMOTION",
+  "baseCommit": "5ae80a8a7bae35ba0715e796b6ae7a3b03bdb403",
+  "testCommit": "47d77a65498bc023cf792284fa7aa22b775bbe6e",
+  "reviewCommit": "4ab4b2966d7698f7f599ee471db6c51491980d2e",
+  "resultCommit": "SAME_ATOMIC_COMMIT_AS_THIS_SUBMISSION",
+  "changedFiles": [
+    {
+      "path": "research/tests/v2/test_f005_postrepair_metamorphic.js",
+      "blobSHA": "ff1cc5b56c5e41da223bca0535d6b8dbfbc53cda",
+      "roleOwned": true
+    },
+    {
+      "path": "research/coordination/v2/reviews/2026-10-29T1442Z-F005-postrepair-model-and-ancestry.json",
+      "roleOwned": true
+    },
+    {
+      "path": "research/coordination/v2/submissions/independent-validator/2026-10-29T1443Z-F005-postrepair-acceptance.json",
+      "roleOwned": true
+    }
+  ],
+  "reviewedSourceBlobs": {
+    "model": "ca6edf58aced411ac049198254fb67a72279532d",
+    "workingEstimator": "b90137d4f67cea6975504b9c8cc4d978afaefb81",
+    "candidate": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+  },
+  "deltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingCellsFilled": 0,
+    "newEconomicExpectedQuantity": 0,
+    "evidenceCellsFilled": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "independentRegressionFilesAdded": 1,
+    "modelDefectsIndependentlyVerifiedRepaired": 1,
+    "sourceFilesModified": 0,
+    "productionFilesModified": 0
+  },
+  "testsActuallyExecuted": [
+    {
+      "name": "F005 original independent context and zero semantics",
+      "runtime": "V8_GITHUB_SOURCE_COMMONJS_SHIM",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "name": "F005 independent positive PMF support",
+      "runtime": "V8_GITHUB_SOURCE_COMMONJS_SHIM",
+      "passed": 12,
+      "failed": 0,
+      "previouslyFailed": 3
+    },
+    {
+      "name": "Engineer donor ancestry self-test independently rerun",
+      "runtime": "V8_GITHUB_SOURCE_COMMONJS_SHIM",
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "name": "F003 model selfTest independently rerun",
+      "runtime": "V8_GITHUB_SOURCE",
+      "passed": 16,
+      "failed": 0
+    },
+    {
+      "name": "New independent F005 metamorphic and stale ancestry",
+      "runtime": "V8_GITHUB_READBACK",
+      "passed": 609,
+      "failed": 0
+    },
+    {
+      "name": "GitHub Actions native Node pipeline --check, Lua 5.1 syntax/decode, blocker roundtrip",
+      "runtime": "GITHUB_ACTIONS_CI_NOT_INDEPENDENT_LOCAL_EXECUTION",
+      "result": "PASS",
+      "runID": 40893975750,
+      "head": "47d77a65498bc023cf792284fa7aa22b775bbe6e",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40893975750"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node execution of the new F005 metamorphic file (not wired to pipeline --check)",
+    "Local Lua 5.1 decoding by validator",
+    "Independent full JSON Schema validation by validator (pipeline CI passed)",
+    "WoW Retail client",
+    "Independent current-Retail matched whole-study TWW milling holdout"
+  ],
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "confidenceGE90Cells": 0
+  },
+  "findings": [
+    "Previous F005 zero-probability PMF support defect is repaired on model blob ca6edf58; 12/12 previously failing fixture now pass, with 609 additional deterministic assertions.",
+    "Working estimator donor ancestry detects incompatible patch, gross-input denominator and unresolved donor after source/context mutation.",
+    "All model scenarios remain confidence zero PREVIEW_ONLY and normalizedVerified false; no live EV or recommendation change.",
+    "Frozen original source hashes and generated candidate hash unchanged; current Retail baseline not independently validated."
+  ],
+  "blockers": [
+    "No independent zero-inclusive current-Retail TWW milling completed-cast holdout with rank, skill, stat, refunds and patch.",
+    "New independent test is not yet wired to native Node pipeline; coordinator/engineer to accept/wire as appropriate.",
+    "No WoW client test and no verified minimum eligible skill baseline."
+  ],
+  "nextTask": {
+    "id": "F005_INDEPENDENT_RANK_POOL_CONTEXT_ISOLATION",
+    "owner": "independent-validator",
+    "action": "Test changed rank-pool grouping and output-family context isolation with adversarial independent fixtures; prioritize matched study-family holdout if new evidence arrives."
+  },
+  "preservation": {
+    "branch": "implementation/five-agent-completion",
+    "mainEdited": false,
+    "runtimeProfilesBranchEdited": false,
+    "legacyAssignmentsEdited": false,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipOnlyPolicyEdited": false,
+    "schedulesEdited": false
+  }
+}

@@ -1052,13 +1052,18 @@ function LL:TokenTransmogRecipient(f,token)
             for _,rewardID in ipairs(token.rewards) do
                 -- Class-specific appearances must only be assigned to eligible
                 -- recipients. Unknown class masks are not proof of eligibility.
-                if self:ItemPermitsClass(rewardID,candidate.class)==true then
-                    local collected=self:AppearanceCollectionState("item:"..rewardID)
+                if (self.TokenRewardPermitsClass and self:TokenRewardPermitsClass(token,rewardID,candidate.class)
+                    or self:ItemPermitsClass(rewardID,candidate.class))==true then
+                    local rewardLink=self.TokenRewardLink and self:TokenRewardLink(token,rewardID) or ("item:"..rewardID)
+                    local cost=self.TokenRedemptionCost and self:TokenRedemptionCost(f,token,rewardID,candidate.current,candidate.key)
+                    local collected=self:AppearanceCollectionState(rewardLink)
                     local usable=true
+                    if cost and not cost.available then usable=false end
+                    if token.kind=='exchange' and self.AltMethodEnabled and not self:AltMethodEnabled(candidate.key,'X') then usable=false end
                     if candidate.current and C_TransmogCollection
                         and type(C_TransmogCollection.GetItemInfo)=="function"
                         and type(C_TransmogCollection.GetAppearanceInfoBySource)=="function" then
-                        local ok,_,source=pcall(C_TransmogCollection.GetItemInfo,"item:"..rewardID)
+                        local ok,_,source=pcall(C_TransmogCollection.GetItemInfo,rewardLink)
                         if ok and type(source)=="number" and source>0 then
                             local good,info=pcall(C_TransmogCollection.GetAppearanceInfoBySource,source)
                             if good and type(info)=="table" and info.appearanceIsUsable==false then

@@ -14,8 +14,9 @@ How a token list is built (nothing typed by hand, nothing marked APPROVED here):
   * a reward whose sources disagree on the item ID is left out (reported), never guessed;
   * confidence: 90 when every reward is backed by at least two different pages, else 60;
     20 less when no source says the list is complete. independentReview = NOT_REVIEWED.
-Left out with a reason: vendor exchanges ("curios": the cost isn't recorded yet), tokens with
-no usable reward ID.
+Vendor relationships are retained even when complete costs are unknown. They
+remain informational (costsComplete=False), never free opening actions. The
+staged Season 2 membership supplies candidate rewards only, explicitly labeled.
 """
 import json
 import re
@@ -87,7 +88,8 @@ def load_staged(paths=STAGED):
     for path in paths:
         if not path.exists():
             continue
-        for t in json.loads(path.read_text()).get('tokens', []):
+        document = json.loads(path.read_text())
+        for t in document.get('tokens', []):
             if not isinstance(t.get('tokenID'), int):
                 continue
             entry = staged.setdefault(t['tokenID'], {'sources': [], 'byName': {}})
@@ -96,6 +98,19 @@ def load_staged(paths=STAGED):
                 if isinstance(w.get('itemID'), int) and w.get('name'):
                     urls = [u for u in (w.get('source'), w.get('nameSource')) if https(u)]
                     entry['byName'][norm(w['name'])] = (w['itemID'], urls)
+        exchange = document.get('exchange') or {}
+        # The S2 note identifies a tier-piece exchange but has no exact vendor
+        # list. Preserve possible season members as candidates, not a verified
+        # vendor inventory or an available zero-cost action.
+        if exchange.get('tokenID') == 270909:
+            entry = staged.setdefault(270909, {'sources': [], 'byName': {}})
+            entry['sources'] += [u for u in exchange.get('sources', []) if https(u)]
+            entry['candidateOnly'] = True
+            for token in document.get('tokens', []):
+                for reward in token.get('rewards', []):
+                    if isinstance(reward.get('itemID'), int) and reward.get('name'):
+                        urls = [u for u in (reward.get('source'), reward.get('nameSource')) if https(u)]
+                        entry['byName'][norm(reward['name'])] = (reward['itemID'], urls)
     return staged
 
 
@@ -120,9 +135,7 @@ def build_tokens(snapshot, revision, staged=None):
     records, conflicts = [], []
     for token_id in sorted(by_token):
         group = by_token[token_id]
-        if any(r.get('howRedeemed') == 'vendor' for r in group):
-            notes['vendor exchange (curio): cost not recorded yet'] += 1
-            continue
+        exchange = any(r.get('howRedeemed') == 'vendor' for r in group)
         stage = staged.get(token_id, {'sources': [], 'byName': {}})
         # name -> {itemID: set(urls)}
         claims = defaultdict(lambda: defaultdict(set))
@@ -166,16 +179,27 @@ def build_tokens(snapshot, revision, staged=None):
         confidence = TWO_SOURCE_CONFIDENCE if weakest >= 2 else ONE_SOURCE_CONFIDENCE
         if not complete:
             confidence -= INCOMPLETE_PENALTY
-        records.append({
+        record = {
             'recordID': f'v3token:{token_id}', 'tokenID': token_id,
             'tokenName': next((r.get('tokenName') for r in group if r.get('tokenName')), None),
-            'kind': 'open', 'gameMode': 'Retail',
+            'kind': 'exchange' if exchange else 'open', 'gameMode': 'Retail',
             'evidenceStatus': 'RESEARCH_RELATIONSHIP', 'independentReview': 'NOT_REVIEWED',
             'listComplete': complete, 'requirements': {}, 'requirementsReviewed': False,
             'confidence0to100': confidence, 'patchStartBuild': PATCH_START, 'patchEndBuild': PATCH_END,
             'sourceRevision': revision, 'sourceURLs': sources[:20], 'rewards': sorted(rewards),
             'researchRecordIDs': sorted(str(r.get('id')) for r in group),
-        })
+        }
+        if exchange:
+            record['costsComplete'] = False
+            record['rewardSelection'] = 'choice'
+            record['sourceAssumption'] = 'Reward relationship only; complete exchange costs are not established'
+            notes['vendor relationship retained; complete costs unknown'] += 1
+        if stage.get('candidateOnly'):
+            record['listComplete'] = False
+            record['confidence0to100'] = 20
+            record['candidateRewards'] = True
+            record['sourceAssumption'] = 'Possible rewards from staged season membership; exact vendor list and complete costs unverified'
+        records.append(record)
     return records, notes, conflicts
 
 

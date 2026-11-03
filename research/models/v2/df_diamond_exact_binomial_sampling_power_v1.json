@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "df-diamond-exact-binomial-sampling-power-v1.0.0",
+  "scope": "RESEARCH_ONLY_PROSPECTIVE_DESIGN_NOT_OBSERVATION",
+  "generatedFrom": "research/tools/models_v2/df_diamond_exact_binomial_sampling_power_v1.js",
+  "frozenTSMSource": "research/tools/models_v2/dragonflight_diamond_tsm_quantization_v1.js",
+  "sourceAncestry": "ONE_FROZEN_TSM_DERIVATIVE_FAMILY",
+  "targetPriorityKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "assumptions": {
+    "p0": 0.0142,
+    "alternativeHalf": 0.0071,
+    "alternativeQuarter": 0.00355,
+    "sourceUnitStatus": "UNVERIFIED_TSM_MAT_RATE_SEMANTICS",
+    "binomialIID": "DESIGN_ASSUMPTION_REQUIRES_HOMOGENEOUS_CAST_CONTEXT"
+  },
+  "design": [
+    {
+      "assumedP": 0.0142,
+      "atLeastOne95": {
+        "casts": 210,
+        "nominalOre": 1050,
+        "probabilityAtLeastOne": 0.9503806692979346
+      },
+      "zeroHitsAt100Casts": 0.23926621633151932
+    },
+    {
+      "assumedP": 0.0071,
+      "atLeastOne95": {
+        "casts": 421,
+        "nominalOre": 2105,
+        "probabilityAtLeastOne": 0.9502010709812222
+      },
+      "zeroHitsAt100Casts": 0.49040068661014485
+    },
+    {
+      "assumedP": 0.00355,
+      "atLeastOne95": {
+        "casts": 843,
+        "nominalOre": 4215,
+        "probabilityAtLeastOne": 0.9501119886671633
+      },
+      "zeroHitsAt100Casts": 0.7007307076787286
+    }
+  ],
+  "discrimination": {
+    "n": 1366,
+    "rejectWhenSuccessesAtMost": 12,
+    "actualTypeI": 0.0498318326149932,
+    "power": 0.8199577707117196,
+    "nominalOre": 6830,
+    "targetPower": 0.8
+  },
+  "preregistration": "For each exact output/rank cohort independently, collect 1366 completed casts under homogeneous, recorded current-Retail skill/stat/unlock context; if testing p0=0.0142 against p1=0.0071, reject p0 for at most 12 positive casts. This is a hypothetical fixed-N one-sided design, not a measured probability or gold estimate.",
+  "requiredMeasurement": {
+    "unit": "ONE_ACTUAL_COMPLETED_PROSPECTING_CAST",
+    "inputUnitsPerCast": 5,
+    "independentStrata": [
+      "inputItemID",
+      "inputRank",
+      "outputItemID",
+      "outputRank",
+      "RetailBuild",
+      "effectiveSkill",
+      "specialization",
+      "professionStats",
+      "unlockState"
+    ],
+    "capture": [
+      "completedCastID",
+      "zeroInclusiveOutputCount",
+      "refundedOreUnits",
+      "abortedRequestsSeparately",
+      "studyFamilyID",
+      "observationEpoch"
+    ],
+    "noPooling": "DO_NOT_POOL_RANKS_OR_SHARED_SOURCE_FAMILIES_AS_INDEPENDENT",
+    "designCaveat": "One-sided fixed-N plan; preregister N and threshold. Optional stopping invalidates nominal alpha without adjustment."
+  },
+  "evidenceFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "confidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "goldRecommendationEligible": false,
+  "tooltipFallbackEligible": false,
+  "independentValidation": "NOT_YET_PERFORMED",
+  "testPreflight": {
+    "passed": 27,
+    "failed": 0,
+    "scenarioOnly": true,
+    "actualCastObservations": 0,
+    "independentStudiesAdded": 0,
+    "newVerifiedE": 0,
+    "workingCellsChanged": 0,
+    "discriminationCasts": 1366,
+    "nominalOre": 6830
+  },
+  "blockers": [
+    "TSM matRate unit semantics unverified",
+    "No 2026 current-Retail cast histogram",
+    "Binomial independence and homogeneous skill/patch assumed for power only",
+    "Rare output success may be co-produced with other outputs; never force marginal rates to sum to one",
+    "Nominal ore budget excludes unknown Resourcefulness refunds"
+  ]
+}

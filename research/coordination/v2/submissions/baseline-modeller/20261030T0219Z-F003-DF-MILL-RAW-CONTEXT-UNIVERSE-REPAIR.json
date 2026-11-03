@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003",
+  "taskScope": "Dragonflight milling typed RAW_CURRENT_RETAIL context and complete-output-universe repair",
+  "workflowRevision": 2,
+  "queueRevision": 15,
+  "runUTC": "2026-10-30T02:19:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "8d21b9e2d1eebbe8c3eace32b9a7d938253a35b1",
+  "resultCommit": "53a64faf0d6a9456dd52fac1502efc33a55a7aa5",
+  "status": "SUBMITTED_FOR_COORDINATOR_AND_INDEPENDENT_QA_NOT_ACCEPTED",
+  "taskRationale": "Highest-priority ready F003 dependency: F005 independent native fixture exposed ten defects in prior 24-key Dragonflight milling proposal; repair model-owned code before pivoting to a new family.",
+  "exactChangedFiles": [
+    {
+      "path": "research/tools/models_v2/df_milling_decision_sensitivity_v1.js",
+      "beforeBlob": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
+      "afterBlob": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+      "changes": [
+        "model version 1.0.0 to 1.0.1",
+        "validate raw Retail game mode and observation epoch",
+        "validate input/output ranks and complete rank map",
+        "validate direct reagent vector and primary input count",
+        "validate minimum recipe skill and numeric skill/resourcefulness",
+        "reject unverified output universe for raw cast summary and hypothetical decision",
+        "preserve 32 synthetic self-test assertions"
+      ]
+    },
+    {
+      "path": "research/models/v2/df_milling_decision_sensitivity_v1.json",
+      "beforeBlob": "30ed0f15034f7c60baae55e779be44e28ec4d09d",
+      "afterBlob": "69ef0bdc0d6bf9f9ad1667ab2ff7a39efab783f3",
+      "changes": [
+        "manifest updated to model 1.0.1 and exact code blob",
+        "documented fail-closed assumptions, caller-assertion limitations and independent fixture contradiction"
+      ]
+    }
+  ],
+  "targetKeys": [
+    "tsm:mill:191469:198412:L1975",
+    "tsm:mill:191469:198413:L1976",
+    "tsm:mill:191469:198414:L1977",
+    "tsm:mill:191470:198415:L1980",
+    "tsm:mill:191470:198416:L1981",
+    "tsm:mill:191470:198417:L1982",
+    "tsm:mill:191471:198415:L1985",
+    "tsm:mill:191471:198416:L1986",
+    "tsm:mill:191471:198417:L1987",
+    "tsm:mill:191472:198415:L1990",
+    "tsm:mill:191472:198416:L1991",
+    "tsm:mill:191472:198417:L1992",
+    "tsm:mill:200061:198412:L1998",
+    "tsm:mill:200061:198413:L1999",
+    "tsm:mill:200061:198414:L2000",
+    "tsm:mill:200061:198415:L2001",
+    "tsm:mill:200061:198416:L2002",
+    "tsm:mill:200061:198417:L2003",
+    "tsm:mill:200061:198418:L2004",
+    "tsm:mill:200061:198419:L2005",
+    "tsm:mill:200061:198420:L2006",
+    "tsm:mill:200061:198421:L2007",
+    "tsm:mill:200061:198422:L2008",
+    "tsm:mill:200061:198423:L2009"
+  ],
+  "exactDeltas": {
+    "admittedMappingsBefore": 1018,
+    "admittedMappingsAfter": 1018,
+    "workingNumericCellsBefore": 4072,
+    "workingNumericCellsAfter": 4072,
+    "evidenceNumericCellsBefore": 3558,
+    "evidenceNumericCellsAfter": 3558,
+    "evidenceMissingCellsBefore": 514,
+    "evidenceMissingCellsAfter": 514,
+    "missingEvidenceExpectedQuantityBefore": 116,
+    "missingEvidenceExpectedQuantityAfter": 116,
+    "numericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "newMappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "independentFixturePassedBefore": 6,
+    "independentFixturePassedAfter": 15,
+    "independentFixtureFailuresBefore": 10,
+    "independentFixtureFailuresAfter": 1,
+    "productionFilesChanged": 0,
+    "otherRoleFilesChanged": 0
+  },
+  "testsActuallyRun": [
+    {
+      "name": "Exact transformed model JavaScript V8 selfTest",
+      "result": "PASS_32_OF_32",
+      "syntheticOnly": true
+    },
+    {
+      "name": "Exact independent F005 fixture JavaScript V8 execution against transformed model",
+      "result": "15_PASS_1_FAIL",
+      "previous": "6_PASS_10_FAIL",
+      "remainingFailure": "Contradictory fixture test 'omitted co-output can reverse the hypothetical recommendation' expects a decision from a partial output universe even though another fixture requires that same partial universe be rejected."
+    },
+    {
+      "name": "GitHub read-back model code and manifest",
+      "result": "PENDING_FINAL_VERIFICATION"
+    },
+    {
+      "name": "GitHub Actions native verify-five-agent-completion",
+      "result": "IN_PROGRESS_AT_REPORT_CREATION",
+      "runID": 40990988725,
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40990988725"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node exact committed model/fixture result pending CI",
+    "Lua5.1 model execution not applicable to JS research model",
+    "Current-Retail in-game completed casts",
+    "Whole independent current-Retail study-family holdout",
+    "Independent validator formal acceptance"
+  ],
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesBranchChanged": false
+  },
+  "blockers": [
+    "Validator-owned fixture has logically contradictory omitted-co-output expectations; must be revised by independent-validator, not modeller.",
+    "outputUniverseVerified=true remains caller assertion rather than independently certified complete current-Retail eligibility.",
+    "No current Retail completed-cast cohort or verified recipe-eligible baseline; no evidence promotion permitted.",
+    "Native Node CI and independent review not yet complete."
+  ],
+  "holdoutInstructions": "After F005 repairs the contradictory fixture, run native Node 16/16 and retain a whole primary-study-family holdout from current Retail with exact cast denominators, zero-inclusive outputs, refund ledger, ranks, skill, specialization, build and independently audited universe.",
+  "evidenceResearcherRequest": "Verify Dragonflight milling input 200061 recipe eligibility, all output ranks, nominal reagent vector, exact patch and independent zero-inclusive cast observations. Preserve original frozen TSM units.",
+  "nextTask": "Independent F005 revises contradictory omitted-co-output demonstration, then F003/F005 re-run native 16/16; coordinator accepts only after no quarantined failures and independent universe evidence remains explicitly gated.",
+  "zeroDeltaPivot": "Not an unchanged audit: addressed a new independent F005 ten-failure model defect; 9 fixture outcomes improved while numeric evidence and live economics stayed unchanged.",
+  "acceptanceRequested": "REVIEW_MODEL_1_0_1_WITH_ONE_VALIDATOR_FIXTURE_BLOCKER_NO_ECONOMIC_PROMOTION"
+}

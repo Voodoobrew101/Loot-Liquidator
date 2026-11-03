@@ -136,7 +136,10 @@ ok(tok[249347]['rewards'] == [250045, 250054, 250063], 'Alnwoven Riftbloom: IDs 
 ok(tok[237581]['rewards'] == [237631, 237694, 237703], 'Manaforge Omega chest token from a War Within worker')
 ok(all(t['independentReview'] == 'NOT_REVIEWED' and t['recordID'].startswith('v3token:') for t in tokens),
    'never marked APPROVED here')
-ok(249367 not in tok and 270909 not in tok, 'curio exchanges left out (cost not recorded)')
+ok(tok[249367]['kind']=='exchange' and tok[249367]['costsComplete'] is False,
+   'known curio relationship retained while unknown full costs block an action')
+ok(tok[270909]['candidateRewards'] and not tok[270909]['listComplete'] and tok[270909]['confidence0to100']==20,
+   'staged S2 membership remains an explicitly unverified candidate list')
 ok(45634 not in tok, 'copy of the old addon token table not counted')
 ok(not conflicts, 'no source conflicts in this snapshot')
 ok(all(t['sourceURLs'] and all(u.startswith('https://') for u in t['sourceURLs']) for t in tokens), 'every list has https sources')

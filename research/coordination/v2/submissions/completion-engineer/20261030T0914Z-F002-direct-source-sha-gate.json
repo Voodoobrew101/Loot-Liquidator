@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_DIRECT_COMPILER_INPUT_SHA_GATE",
+  "workflowRevision": 2,
+  "taskStatus": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_F005_ACCEPTANCE",
+  "reportDateUTC": "2026-10-30T09:14:00Z",
+  "branch": "implementation/five-agent-completion",
+  "queueSnapshot": {
+    "readinessPath": "research/coordination/completion-readiness.json",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesPath": "research/coordination/completion-priorities.json",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingExpectedQuantityCells": 116
+  },
+  "baseCommitBeforeSubmission": "0a988ea9f2493ebdc70f5e269fbbc6a14aa6c0c1",
+  "implementationCommits": [
+    "8ca727afdd890f324b6a4f14dffaf876580d28b9",
+    "1f3751ec6fff9c828035df28b54c284fb011eab8",
+    "0a988ea9f2493ebdc70f5e269fbbc6a14aa6c0c1"
+  ],
+  "resultCommit": "0a988ea9f2493ebdc70f5e269fbbc6a14aa6c0c1",
+  "exactFileDeltas": [
+    {
+      "path": "research/tools/source_sha_gate.js",
+      "change": "ADDED",
+      "blobSHA": "ad564fa3287d4cd75d876ff20a2c6fbd583709e5",
+      "purpose": "Validate Git blob SHA-1 for all 11 manifest-declared direct compiler inputs plus three previously unpinned historical batch013 inputs; eight isolated adversarial self-tests"
+    },
+    {
+      "path": "research/tools/compile_itemdb.js",
+      "change": "MODIFIED",
+      "blobSHA": "8ddf3e8bb52ca339caf02f5e268fec41ac912d2f",
+      "purpose": "Call verifySourcePins before loadInputs parses source evidence"
+    },
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "change": "MODIFIED",
+      "blobSHA": "5ea765018efb9f5a99546107174fc19f671d0891",
+      "purpose": "Enforce eight-case adversarial source-pin self-test before build/check"
+    }
+  ],
+  "exactDataDeltas": {
+    "admittedMappingsAdded": 0,
+    "admittedMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCellsAdded": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "economicPromotions": 0,
+    "candidateLuaChanged": false,
+    "readinessChanged": false,
+    "prioritiesChanged": false,
+    "directInputBlobsNowFailClosed": 14,
+    "manifestDeclaredInputs": 11,
+    "legacyBatch013InputsPinned": 3
+  },
+  "testsActuallyRun": [
+    {
+      "test": "Native Node 22 local development copy source-pin adversarial self-test",
+      "result": "PASS",
+      "passed": 8,
+      "failed": 0,
+      "scope": "Equivalent engineering test logic; exact committed module not independently executed under native CI"
+    },
+    {
+      "test": "GitHub source blob SHA read-back against declared and legacy pins",
+      "result": "PASS",
+      "passed": 14,
+      "failed": 0,
+      "scope": "11 declared direct compiler inputs and three historical batch013 source files"
+    },
+    {
+      "test": "GitHub read-back of all three engineer-owned code paths",
+      "result": "PASS",
+      "passed": 3,
+      "failed": 0,
+      "scope": "Exact committed blobs verified and compiler/pipeline hooks present"
+    }
+  ],
+  "testsNotRun": [
+    "Exact committed module native Node in GitHub CI",
+    "Full deterministic completion pipeline --check after these commits",
+    "Full JSON Schema validation after these commits",
+    "Lua 5.1 generated candidate decoding after these commits",
+    "WoW client and live recommendation tests",
+    "Independent F005 acceptance"
+  ],
+  "economicSafety": {
+    "confidenceForUnsupportedFallbacks": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChannelChanged": false,
+    "productionFilesChanged": false
+  },
+  "blockers": [
+    "GitHub native push CI result not yet available through accessible commit status/workflow query; do not claim native pass",
+    "The historical mechanics registry SHA is a manifest reference, not a direct compiler-loaded file; the new gate explicitly does not certify it",
+    "The source SHA manifest is repository-local rather than an externally coordinator-pinned trust root; coordinated edits still require independent review",
+    "No new current-Retail completed-cast measurements or independent model acceptance"
+  ],
+  "nextTask": "Independent validator checks the exact committed source-pin gate under native Node and full pipeline CI; coordinator accepts the new input-integrity contract, then engineer pivots to next changed model or source build defect rather than repeating unchanged source audits.",
+  "ownership": "Only completion-engineer compiler/build paths and this unique completion-engineer submission were changed. No main, runtime-profiles, raw evidence, frozen TSM, legacy assignments, central queues, other agents' files, or release artifacts were edited."
+}

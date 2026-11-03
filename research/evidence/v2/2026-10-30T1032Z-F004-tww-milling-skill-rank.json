@@ -1,0 +1,175 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_MILLING_LOTZBOI_SKILL_RANK_CONTEXT",
+  "runUTC": "2026-10-30T10:32:54Z",
+  "workflowRevision": 2,
+  "baseCommit": "9159c1bff97a9ac400276a2fee5b9eb34301bb78",
+  "question": "What exact rank IDs, effective-skill thresholds and rank-dependent positive pigment yield ranges are claimed for Khaz Algar Milling, and can any be promoted to current Retail E?",
+  "source": {
+    "author": "LotzBoi",
+    "url": "https://www.wowhead.com/item=222618/nacreous-pigment",
+    "mirrors": [
+      "https://www.wowhead.com/item=222612/luredrop-pigment",
+      "https://www.wowhead.com/item=224802/orbinid-pigment",
+      "https://www.wowhead.com/item=224805/blossom-pigment"
+    ],
+    "lineage": "tww-lotzboi-wowhead-single-author-comment",
+    "sourceType": "ORIGINAL_COMMENT_UNVERIFIED_NO_CAST_LOG",
+    "retrievedUTC": "2026-10-30T10:32Z",
+    "publicationDate": null,
+    "actualCastEpoch": null,
+    "patchBuild": null,
+    "completedCasts": null,
+    "zeroInclusiveTotals": null,
+    "refunds": null,
+    "professionSpecGear": null,
+    "independentCohorts": 0,
+    "mirrorsIndependent": false
+  },
+  "claims": {
+    "nominalHerbsPerOperation": 10,
+    "families": [
+      {
+        "herb": "Mycobloom",
+        "rank1Input": 210796,
+        "rank2Input": 210797,
+        "rank3Input": 210798,
+        "pigment": "Nacreous",
+        "outputRanks": [
+          222618,
+          222619,
+          222620
+        ]
+      },
+      {
+        "herb": "Luredrop",
+        "rank1Input": 210799,
+        "pigment": "Luredrop",
+        "outputRanks": [
+          222612,
+          222613,
+          222614
+        ]
+      },
+      {
+        "herb": "Orbinid",
+        "rank1Input": 210802,
+        "pigment": "Orbinid",
+        "outputRanks": [
+          224800,
+          224801,
+          224802
+        ]
+      },
+      {
+        "herb": "Blessing Blossom",
+        "rank1Input": 210805,
+        "pigment": "Blossom",
+        "outputRanks": [
+          224803,
+          224804,
+          224805
+        ]
+      }
+    ],
+    "skillRankBands": [
+      {
+        "effectiveSkillMin": 0,
+        "effectiveSkillMax": 252,
+        "nacreousOutputID": 222618,
+        "rank": 1
+      },
+      {
+        "effectiveSkillMin": 253,
+        "effectiveSkillMax": 504,
+        "nacreousOutputID": 222619,
+        "rank": 2
+      },
+      {
+        "effectiveSkillMin": 505,
+        "effectiveSkillMax": null,
+        "nacreousOutputID": 222620,
+        "rank": 3
+      }
+    ],
+    "mycobloomInputRankRanges": [
+      {
+        "inputID": 210796,
+        "rank": 1,
+        "claimedSkillBonus": 0,
+        "claimedPositiveYieldMin": 4,
+        "claimedPositiveYieldMax": 6
+      },
+      {
+        "inputID": 210797,
+        "rank": 2,
+        "claimedSkillBonus": 101,
+        "claimedPositiveYieldMin": 5,
+        "claimedPositiveYieldMax": 7
+      },
+      {
+        "inputID": 210798,
+        "rank": 3,
+        "claimedSkillBonus": 202,
+        "claimedPositiveYieldMin": 6,
+        "claimedPositiveYieldMax": 8
+      }
+    ]
+  },
+  "applicability": {
+    "scope": "12 legacy queue29 TWW milling E-gap keys",
+    "targetInputOutputPairs": [
+      "210796:222619",
+      "210797:222619",
+      "210798:222618",
+      "210799:222612",
+      "210800:222613",
+      "210801:222614",
+      "210802:224800",
+      "210803:224801",
+      "210804:224802",
+      "210805:224803",
+      "210806:224804",
+      "210807:224805"
+    ],
+    "exactSpellID": 444181,
+    "spellAssociation": "INDEXED_FAMILY_ONLY_NOT_VERIFIED_PER_RECIPE_NULL_ROW",
+    "effectiveSkillDefinition": "CLAIMED_NOT_CLIENT_VERIFIED",
+    "quantityRanges": "AUTHOR_CLAIMED_POSITIVE_RANGES_NOT_HARD_BOUNDS_OR_MEASURED_DISTRIBUTIONS",
+    "sourceIndependence": "Identical LotzBoi text on four Wowhead item pages counts as ONE source lineage, not four independent samples",
+    "epoch": "Historical TWW context, not measured current 2026 Retail",
+    "disposition": "CONTEXT_HYPOTHESIS_ONLY_NO_NEW_MAPPING_ADMISSION"
+  },
+  "numericEvidence": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "exactDeltas": {
+    "newOriginalCommentLineages": 1,
+    "mirrorsDeduplicated": 3,
+    "claimedSkillBands": 3,
+    "claimedMycobloomRanges": 3,
+    "herbPigmentFamilies": 4,
+    "admittedMappings": 0,
+    "numericWorkingCells": 0,
+    "verifiedExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0
+  },
+  "measurementRequest": {
+    "question": "Do effective-skill thresholds 253/505 and claimed Mycobloom input-rank bonuses 0/101/202 predict output quality and observed positive ranges in 2026 Retail?",
+    "method": "Separate rank1/2/3 Mycobloom cohorts with exact effective skill, spec/gear, spell, patch, completed casts including zero-output casts, exact output IDs and rank, all cooutputs, actual gross herbs, saved/refunded herbs and aborted operations; compare sessions below/above thresholds; independently hold out a second session or character. No E from range midpoint."
+  },
+  "blockers": [
+    "Comment lacks timestamp, completed casts, output histogram, refunds and verified build",
+    "Skill band semantics and bonuses not verified in 2026 Retail",
+    "No zero-inclusive current patch E or probability for any of 12 priority keys"
+  ],
+  "nextTask": "Validate TWW milling skill/rank thresholds in current client or pivot to distinct high-impact eligibility issue"
+}

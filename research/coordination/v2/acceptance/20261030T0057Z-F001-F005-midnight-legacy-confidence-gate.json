@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_MIDNIGHT_LEGACY_CONFIDENCE_GATE",
+  "workflowRevision": 2,
+  "queueRevisionBefore": 13,
+  "queueRevisionAfter": 14,
+  "runUTC": "2026-10-30T00:57:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "cc6d813e42bfd5694c577b8b59e92528ae3de995",
+  "sourceBranchHeadAtReview": "cc6d813e42bfd5694c577b8b59e92528ae3de995",
+  "canonical": {
+    "readiness": "research/coordination/completion-readiness.json",
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "priorityRecords": 217,
+    "candidateBlobSHA": "940431ecd0cefe1e65701d2cc9f53ae619350b38",
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "evidenceGE90": 0,
+    "independentCurrentRetailHoldoutFamilies": 0
+  },
+  "reviews": [
+    {
+      "role": "completion-engineer",
+      "submission": "research/coordination/v2/submissions/completion-engineer/20261030T0016Z-F002-native-v11-build-order-gates.json",
+      "decision": "CONDITIONALLY_ACCEPT_RESEARCH_ONLY",
+      "reason": "Mandatory nested 14-case SHA-256 native CI gate and second independently loaded deterministic compile are present at pipeline blob b227357f; submitted CI 40978457313 passed. Formal F005 postchange acceptance and external independently pinned digest remain pending.",
+      "sourceBlobs": {
+        "research/tools/run_completion_pipeline.js": "b227357fb2a1ae69e07f65213f0f930e3f5b97af"
+      }
+    },
+    {
+      "role": "baseline-modeller",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261030T001726402Z-F003-MIDNIGHT-CRUSHING-GROSS-NET.json",
+      "decision": "ACCEPT_SYNTHETIC_CONDITIONAL_MODEL_ONLY",
+      "reason": "Source rate 0.83925 dust/gem yields 2.51775 dust per nominal 3-gem cast only under gross-input interpretation; net-consumed interpretation requires refunds. No measured current-Retail casts, eligible selector or rank-specific baseline. No E promotion.",
+      "sourceBlobs": {
+        "research/tools/models_v2/midnight_crushing_gross_net_identifiability_v1.js": "d62085d7aaf9cc50ecfa310bd4d09058c86cf66e",
+        "research/models/v2/midnight_crushing_gross_net_identifiability_v1.json": "b660aa296ec06b693f00013c0db6d95e54ddea37"
+      }
+    },
+    {
+      "role": "evidence-researcher",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0030Z-F004-midnight-milling-batch-context-submission.json",
+      "decision": "ACCEPT_SOURCE_INDEXED_BATCH_CONTEXT_ONLY",
+      "reason": "Midnight spell 1269575 source-indexed at 10 nominal herbs, DF 382981 at 5; eight admitted legacy rows already use 10. Mixed-rank 4+6 is anecdotal; TWW current spell unresolved. Eight alternate rank keys stay unadmitted; no economic data.",
+      "sourceBlobs": {
+        "research/evidence/v2/2026-10-30T0030Z-F004-midnight-milling-batch-and-mixed-rank.json": "26964611b9ae96cde12e15f72cdfc1939be44732"
+      }
+    },
+    {
+      "role": "independent-validator",
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-30T0042Z-F005-midnight-legacy-confidence-submission.json",
+      "review": "research/coordination/v2/reviews/2026-10-30T0042Z-F005-midnight-milling-batch-and-legacy-confidence.json",
+      "decision": "ACCEPT_FAIL_VERDICT_AND_REPAIR_BLOCKER",
+      "reason": "Eight source-indexed unmeasured legacy display rows (32 P/min/max/E working field classifications) can be copied with nonzero confidence despite no completed-cast denominator. F005 reproduced 8/8 in V8; 27-case native regression authored but not executed or wired. No live EV leakage shown.",
+      "sourceBlobs": {
+        "research/tests/v2/test_f005_midnight_milling_legacy_proxy_confidence.js": "b75df285f87519c79977c21b5513e425632d718c",
+        "research/tools/working_estimates.js": "956db68c3b2bc7edc59565d15460c479b62344d6"
+      }
+    }
+  ],
+  "confirmedFinding": {
+    "classification": "PREVIEW_PROVENANCE_CONFIDENCE_MISLABEL_NOT_LIVE_ECONOMIC_LEAK",
+    "affectedMappingCount": 8,
+    "affectedWorkingFieldLabels": 32,
+    "affectedRecordIDs": [
+      "midnight:mill:236761:245807:legacy-reference",
+      "midnight:mill:236767:245807:legacy-reference",
+      "midnight:mill:236776:245804:legacy-reference",
+      "midnight:mill:236777:245804:legacy-reference",
+      "midnight:mill:236778:245866:legacy-reference",
+      "midnight:mill:236779:245866:legacy-reference",
+      "midnight:mill:236770:245864:legacy-reference",
+      "midnight:mill:236771:245864:legacy-reference"
+    ],
+    "sourceStatusPerField": {
+      "dropChance": "proxy",
+      "yieldMin": "modeled",
+      "yieldMax": "modeled",
+      "expectedQuantity": "modeled"
+    },
+    "sourceConfidencePerField": {
+      "dropChance": 12,
+      "yieldMin": 12,
+      "yieldMax": 12,
+      "expectedQuantity": 18
+    },
+    "sourceSampleOperations": null,
+    "sourceBlockersPresent": true,
+    "observedWorkingFieldStatus": "COPIED_EVIDENCE",
+    "requiredWorkingFieldStatus": "POLICY_PRIOR_OR_EQUIVALENT",
+    "requiredWorkingFieldConfidence": 0,
+    "requiredRecordConfidence": 0,
+    "originalEvidenceMustRemainUntouched": true,
+    "liveEVLeakEstablished": false
+  },
+  "independentCoordinatorChecks": {
+    "kind": "GITHUB_BLOB_READBACK_AND_STATIC_SOURCE_CHECK_NOT_NATIVE_EXECUTION",
+    "assertions": {
+      "eightSourceRows": true,
+      "eightNominalTenHerb": true,
+      "eightLegacyUnmeasured": true,
+      "estimatorAllowsModeledProxy": true,
+      "estimatorDoesNotRequireCompletedCastForCopiedEvidence": true,
+      "newRegressionNotNativeGate": true,
+      "nestedV11IsNativeGate": true,
+      "canonicalNumericCounts": true,
+      "priorityBacklog": true,
+      "noEconomicAuthorization": true
+    },
+    "sourceRowsChecked": 8,
+    "sourceFieldsChecked": 32,
+    "conditionalGrossArithmetic": 2.5177500000000004,
+    "modelCurrentRetailCastObservations": 0
+  },
+  "testsActuallyRunOrObserved": {
+    "coordinatorStaticChecks": "PASS_10_OF_10",
+    "nativeCIReportedByEngineer": {
+      "runID": 40978457313,
+      "head": "8c7ec75ffc39ba5dbf5e0cf07c82afee0fd22527",
+      "conclusion": "success",
+      "nested14": 14,
+      "existing14": 14,
+      "numerical476": 476,
+      "metamorphic609": 609,
+      "lua51": true
+    },
+    "validatorV8Reproduction": "REPORTED_8_OF_8",
+    "newNative27": "NOT_RUN_OR_WIRED"
+  },
+  "testsNotRun": [
+    "Native Node 27-case new F005 fixture",
+    "Independent coordinator SHA-256 recomputation and external pin",
+    "WoW Retail client/in-game validation",
+    "Independent current-Retail whole-family holdout",
+    "Native Node F003 Crushing model self-test"
+  ],
+  "numericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentMeasuredStudyFamilies": 0,
+    "newModelFiles": 2,
+    "newEvidenceFiles": 2,
+    "newIndependentRegressionFiles": 1,
+    "knownProvenanceViolationsNewlyFlagged": 32
+  },
+  "blockers": [
+    "Eight Midnight legacy display source fields copied as nonzero working evidence confidence; repair and 27-case native independent QA required",
+    "27-case new fixture not wired into native CI",
+    "514 evidence numeric gaps including 116 E; zero >=90 fields, no verified baseline, no held-out Retail cohort",
+    "Current mixed-rank selector and TWW batch unresolved; 24 legacy queue30 universe leads unadmitted",
+    "No independently approved external SHA-256 trust root or in-game verification"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_QUARANTINE_EIGHT_MIDNIGHT_LEGACY_DISPLAY_PRIORS",
+      "scope": [
+        "research/tools/working_estimates.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Reclassify all 32 unsupported legacy display P/min/max/E fields for the eight exact Midnight milling mappings to confidence-zero policy priors; preserve all source records and four numeric working fields, source ancestry, 10-herb spell 1269575, PREVIEW_ONLY and normalizedVerified=false; keep synthetic measured positive control; wire F005 27-case fixture as native Node gate; run --check, schema, Lua5.1, existing regressions."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_RETEST_27_CASE_MIDNIGHT_LEGACY_AND_CROSS_CONTEXT",
+      "scope": [
+        "research/tests/v2/",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Independently run 27/27 new cases against repaired head, confirm eight previously red cases now green, measured control still copies, source/attestation identity intact, 4072 numeric working cells, zero economic leakage; separately review F003 gross/net model and source claim denominator."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_CRUSHING_GROSS_NET_INDEPENDENT_QA_AND_PIVOT",
+      "scope": [
+        "research/models/v2/",
+        "research/tools/models_v2/"
+      ],
+      "acceptance": "Provide exact cast/refund denominator identifiability conditions and controlled three-gem cohort design, with zero-inclusive dust by rank; do not promote 0.83925 source ratio; if no new independent measured cohort, pivot to priority-102 Dragonflight milling E denominators rather than repeating this report."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_MIDNIGHT_MIXED_RANK_AND_TWW_SPELL_SELECTOR",
+      "scope": [
+        "research/evidence/v2/"
+      ],
+      "acceptance": "Verify live spell 1269575 10-herb selector and mixed 4+6 rank vector, reconcile TWW live spell 5-vs-10 with exact build/recipe, obtain zero-inclusive completed casts and refunds; leave eight alternate rank universe keys unadmitted without proof; pivot to targeted E family after zero-delta repeat."
+    }
+  ],
+  "zeroDeltaPivot": "No new usable per-cast evidence or numeric coverage deltas; prioritize newly demonstrated 32-field provenance defect, native 27-case regression and exact selector/denominator proof instead of re-auditing unchanged rows.",
+  "safety": {
+    "unsupportedFallbackConfidencePolicy": 0,
+    "observedPolicyViolationCount": 32,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "productionWrites": 0,
+    "mainChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyPolicyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false,
+    "runtimeBranchChanged": false
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DIAMOND_TWO_ORE_STACK_CONTEXT",
+  "workflowRevision": 2,
+  "reviewedAtUTC": "2026-10-29T14:33:00Z",
+  "question": "Does the newly indexed Jan 2023 original two-ore comment provide exact-rank diamond E or cast denominators for five current Retail conflict keys?",
+  "answer": "No. A commenter reports about 1.08 diamonds per 1000 from 30k Serevite and 2.57 per 1000 from 50k Draconium, but each reported mean implies a fractional total (32.4 and 128.5) if ore counts are exact. Thus rates are rounded/approximate, and exact output totals cannot be recovered. Ore ranks, diamond ranks, actual completed casts, refunds and current patch applicability remain unknown.",
+  "source": {
+    "url": "https://www.reddit.com/r/woweconomy/comments/108782r",
+    "publishedDate": "2023-01-10",
+    "retrievedDate": "2026-10-29",
+    "access": "ORIGINAL_REDDIT_COMMENT_VIA_SEARCH_INDEX_EXCERPT_NOT_DIRECT_REDDIT_READBACK",
+    "studyFamilyID": "reddit-108782r-2023-01-10-30k-serevite-50k-draconium-same-commenter",
+    "parentThreadStatus": "REUSED_PARENT_NEW_COMMENT_CLAIM",
+    "authorIdentity": "UNKNOWN",
+    "independenceFromPriorCohorts": "UNVERIFIED",
+    "originalObservationEpoch": null,
+    "clientBuild": null,
+    "gameMode": "HISTORICAL_RETAIL",
+    "sourceParaphrase": "Player and friend tracked ore prospecting by thousand-ore stacks, reporting 30k Serevite at 1.08 diamonds/stack and 50k Draconium at 2.57 diamonds/stack; ranks not supplied."
+  },
+  "cohorts": [
+    {
+      "ore": "Serevite Ore",
+      "inputItemID": null,
+      "inputRank": null,
+      "reportedGrossOreUnits": 30000,
+      "reportedDiamondsPer1000Ore": 1.08,
+      "reportedStackSize": 1000,
+      "nominalFiveOreEquivalents": 6000,
+      "nominalDiamondsPerFiveOreEquivalent": 0.0054,
+      "impliedDiamondTotalFromPublishedRate": 32.4,
+      "recipeSpellID": 374627,
+      "actualCompletedCasts": null,
+      "refundedOreUnits": null,
+      "diamondRankOutputTotals": {
+        "192869": null,
+        "192870": null,
+        "192871": null
+      },
+      "zeroInclusivePerCastHistogram": null,
+      "skill": null,
+      "specialization": null,
+      "professionStats": null,
+      "sourceRateBasis": "HISTORICAL_GROSS_ORE_STACK_MEAN_NOT_COMPLETED_CAST_EXPECTATION",
+      "exactTotalReconstruction": "REJECT_NONINTEGER_IMPLIED_TOTAL"
+    },
+    {
+      "ore": "Draconium Ore",
+      "inputItemID": null,
+      "inputRank": null,
+      "reportedGrossOreUnits": 50000,
+      "reportedDiamondsPer1000Ore": 2.57,
+      "reportedStackSize": 1000,
+      "nominalFiveOreEquivalents": 10000,
+      "nominalDiamondsPerFiveOreEquivalent": 0.01285,
+      "impliedDiamondTotalFromPublishedRate": 128.5,
+      "recipeSpellID": 374627,
+      "actualCompletedCasts": null,
+      "refundedOreUnits": null,
+      "diamondRankOutputTotals": {
+        "192869": null,
+        "192870": null,
+        "192871": null
+      },
+      "zeroInclusivePerCastHistogram": null,
+      "skill": null,
+      "specialization": null,
+      "professionStats": null,
+      "sourceRateBasis": "HISTORICAL_GROSS_ORE_STACK_MEAN_NOT_COMPLETED_CAST_EXPECTATION",
+      "exactTotalReconstruction": "REJECT_NONINTEGER_IMPLIED_TOTAL"
+    }
+  ],
+  "assignedExactKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "fieldDisposition": {
+    "newHistoricalOriginalCommentClaims": 1,
+    "twoSubcohortsSameCommenter": 2,
+    "newConfirmedIndependentStudyFamilies": 0,
+    "newCurrentRetailEvidenceCells": 0,
+    "newCurrentRetailExpectedQuantityCells": 0,
+    "newTooltipFallbackCells": 0,
+    "correctedMappingIDs": 0
+  },
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "neverAllocateUnknownOreRank": true,
+    "neverInferIntegerTotalsFromRoundedRates": true,
+    "neverTreatGrossOreRateAsActualCastE": true,
+    "neverTransferTo2026Retail": true
+  },
+  "nextRequest": {
+    "inputIDs": [
+      188658,
+      189143,
+      190311
+    ],
+    "outputIDs": [
+      192869,
+      192870,
+      192871
+    ],
+    "actualCompletedCastsRequired": true,
+    "zeroInclusiveCastVectorsRequired": true,
+    "refundsAndRankAndStatsRequired": true,
+    "gameBuildRequired": true
+  }
+}

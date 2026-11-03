@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_MILL_FIXED_N_SIMULTANEOUS_BOUNDS",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runUTC": "2026-10-30T19:27:58.129Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "20c77f164a826d74c1a7fc64ff908130ad254180",
+  "resultCommitBeforeSubmission": "5dc22c9762d7052e3e8139bb6851c5962f338dda",
+  "status": "PROPOSED_RESEARCH_ONLY_PENDING_COORDINATOR_AND_INDEPENDENT_QA",
+  "reasonForPivot": "Priority-122 Dragonflight prospecting remains blocked on independent zero-inclusive cast evidence; priority-104 TWW milling model was just delivered with no new cast studies. Pivoted to 43 priority-102 Dragonflight milling missing-E rows, 19 not covered by earlier DF milling model.",
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/models_v2/df_milling_fixed_n_simultaneous_bounds_v1.js",
+      "blobSHA": "216a929d4ab7b683e1bc9f4637273c4d766b1081",
+      "change": "new executable fixed-n simultaneous marginal probability and unconditional E research bounds"
+    },
+    {
+      "path": "research/models/v2/df_milling_fixed_n_simultaneous_bounds_v1.json",
+      "blobSHA": "b981ee50df8ebddf85cecd36e471cbb5903c1fd1",
+      "change": "versioned 43-key provenance, model assumptions, blocked promotions and QA requests"
+    },
+    {
+      "path": "research/coordination/v2/submissions/baseline-modeller/20261030T192758129Z-F003-DF-MILL-FIXED-N-SIMULTANEOUS-BOUNDS.json",
+      "change": "unique baseline-modeller submission for coordinator and independent QA"
+    }
+  ],
+  "exactStableKeysSource": "research/models/v2/df_milling_fixed_n_simultaneous_bounds_v1.json targetKeys; exact match to all 43 priority-102 Mill backlog keys",
+  "exactTargetCount": 43,
+  "newlyAddressedTargetCountBeyondExistingDfMillingModel": 19,
+  "exactBehavioralDeltas": {
+    "castDenominator": "completed casts, not consumed reagents divided by batch",
+    "refunds": "gross nominal inputs and saved/refunded units tracked separately",
+    "coOutputs": "per-output marginals; simultaneous outputs not forced to sum to 1",
+    "PIntervals": "family-wise fixed-n Hoeffding, conditional on IID assumption",
+    "EIntervals": "only with independently attested output caps; otherwise null",
+    "ECalculation": "unconditional output total per completed cast, never multiplied by P",
+    "minMax": "observed positive sample extrema only, not hard game bounds",
+    "eligibility": "tracked mapping identities are backlog keys, not independent recipe/output-universe verification",
+    "confidence": "0",
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "exactNumericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyFamilies": 0
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "connector JavaScript V8",
+      "test": "exact committed source selfTest",
+      "passed": 39,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "connector JavaScript V8",
+      "test": "deterministic independent randomized cast arithmetic and bound containment",
+      "passed": 6000,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "GitHub connector",
+      "test": "exact target key identity versus current priority-102 Mill backlog",
+      "passed": 43,
+      "failed": 0
+    },
+    {
+      "runtime": "GitHub connector",
+      "test": "committed source and manifest readback plus model SHA agreement",
+      "passed": true,
+      "modelBlobSHA": "216a929d4ab7b683e1bc9f4637273c4d766b1081",
+      "manifestBlobSHA": "b981ee50df8ebddf85cecd36e471cbb5903c1fd1"
+    }
+  ],
+  "testsNotRun": [
+    "native Node exact committed model",
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "independent whole-family Retail holdout",
+    "in-game cast testing"
+  ],
+  "testsNotRunReasons": "No native repository checkout accessible; no candidate compiler inputs changed. Actual current-Retail zero-inclusive cast studies and independently reviewed output caps unavailable.",
+  "canonicalReadiness": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "unresolvedExpectedQuantityEvidenceCells": 116,
+    "verifiedBaselineRecords": 0
+  },
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "productionWrites": 0,
+    "frozenTSMWrites": 0,
+    "rawEvidenceWrites": 0,
+    "tooltipOnlyPolicyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "otherRoleFilesModified": 0,
+    "schedulesChanged": false
+  },
+  "hypotheticalPlanning": {
+    "inputItemID": 191462,
+    "trackedOutputCount": 3,
+    "alpha": 0.05,
+    "halfWidthP": 0.1,
+    "fixedNPlannedCasts": 240,
+    "finiteEPlanningWithoutCaps": false,
+    "actualRetailCastsAdded": 0
+  },
+  "blockers": [
+    "No independent current-Retail zero-inclusive cast cohorts",
+    "No independently reviewed per-output per-cast maximum yield caps",
+    "Historical TSM unit ambiguity",
+    "200061 and other exact recipe/output-rank eligibility unverified",
+    "No independent held-out study-family validation"
+  ],
+  "evidenceResearcherRequest": "Collect complete zero-inclusive cast vectors, patch/recipe/rank/skill/spec/gear/unlocks/resourcefulness, refunds, and independent cast yield caps for the 43 exact keys; verify input 200061 eligibility separately.",
+  "independentValidatorRequest": "Run native Node and independent adversarial tests for fixed-n family-wise alpha, target-key fidelity, cap gating, unsafe arrays, refund accounting, no economic promotion and no unverified output universe claim.",
+  "nextTask": "F003_NEXT: obtain independent QA of new DF milling model; if no new source, pivot to priority-102 DF prospecting model risks rather than repeating audits.",
+  "coordinatorAcceptanceRequest": "Review and accept only research-model functionality; do not promote evidence, confidence, economic use or current-Retail yield accuracy absent independent measurements."
+}

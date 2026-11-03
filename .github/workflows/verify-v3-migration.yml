@@ -1,0 +1,22 @@
+name: Verify v3 migration
+on:
+  pull_request:
+    paths:
+      - 'research/v3/**'
+      - '.github/workflows/verify-v3-migration.yml'
+permissions:
+  contents: read
+jobs:
+  migration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run migration regressions
+        run: python -m unittest discover -s research/v3/migration/tests -v
+      - name: Reproduce the committed migration audit
+        run: python research/v3/migration/tools/report.py --check

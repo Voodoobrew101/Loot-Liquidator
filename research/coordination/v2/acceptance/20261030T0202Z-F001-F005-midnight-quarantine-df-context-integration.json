@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_MIDNIGHT_QUARANTINE_AND_DF_CONTEXT_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 15,
+  "runUTC": "2026-10-30T02:02:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "93d813247de6cb44e79925f11d5c76c9768c9155",
+  "sourceHeadAtReview": "93d813247de6cb44e79925f11d5c76c9768c9155",
+  "decision": "ACCEPT_F002_RESEARCH_ONLY; REJECT_F003_FOR_NUMERIC_OR_DECISION_PROMOTION; ACCEPT_F004_INDEXED_BATCH_METADATA_ONLY; ACCEPT_F005_REVIEW_AND_REQUIRE_NEW_NATIVE_QA",
+  "reviewedSubmissions": [
+    {
+      "role": "completion-engineer",
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T0115Z-F002-midnight-legacy-proxy-quarantine.json",
+      "verdict": "ACCEPT_RESEARCH_ONLY",
+      "evidence": "Eight exact Midnight legacy mappings reclassified from nonzero copied evidence to 32 confidence-zero POLICY_PRIOR working fields. Existing numeric values and source rows retained; native 27/27 and deterministic/Lua gates reported by independent validator.",
+      "sourceBlob": "257793a7ac1cfaadb8efd9535d84e979e50aec11",
+      "candidateBlob": "560b885a0039045419c340716e263ae33ddf827a"
+    },
+    {
+      "role": "independent-validator",
+      "path": "research/coordination/v2/submissions/independent-validator/2026-10-30T0143Z-F005-df-milling-raw-context-and-f002-retest.json",
+      "verdict": "ACCEPT_F002_PASS_AND_F003_BLOCKER",
+      "evidence": "Independent 16-case synthetic adversarial test reported 6 passing and 10 failing; 8 raw typed-context and 2 incomplete-output-universe failures. New suite not yet run in native Node.",
+      "testBlob": "97ab6ed0a583a2c1fc9cbed092ef506e674361a8"
+    },
+    {
+      "role": "baseline-modeller",
+      "path": "research/coordination/v2/submissions/baseline-modeller/20261030T012645155Z-F003-DF-MILL-DECISION-SENSITIVITY.json",
+      "verdict": "REJECT_FOR_ACCEPTANCE_PENDING_REPAIR; RETAIN_RESEARCH_PROPOSAL",
+      "evidence": "24 exact Dragonflight milling backlog keys, 32 self-test assertions in synthetic V8, but current-Retail raw cohorts lack typed context enforcement and output-universe verification.",
+      "modelBlob": "5621836ca4078e9c0003f70e26c3df8f06af11ec"
+    },
+    {
+      "role": "evidence-researcher",
+      "path": "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0132Z-F004-tww-milling-batch-epoch-submission.json",
+      "verdict": "ACCEPT_INDEXED_SPELL_METADATA_ONLY",
+      "evidence": "Spell 444181 indexed nominal batch 10; historical beta build 55665 described five. Neither establishes current in-game cast denominator, rank eligibility or recipe IDs for 12 E-gap mappings.",
+      "evidenceBlob": "c06e12227c5961c755f76af838e678b4bcaae6c5"
+    }
+  ],
+  "canonicalReadiness": {
+    "blob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorityBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "exactDeltas": {
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "newMappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailStudyFamilies": 0,
+    "unsupportedWorkingConfidenceFieldsCorrected": 32,
+    "perFieldReclassified": {
+      "dropChance": 8,
+      "yieldMin": 8,
+      "yieldMax": 8,
+      "expectedQuantity": 8
+    },
+    "workingNumericValuesChanged": 0,
+    "recordsWithAssumptionsDelta": 8,
+    "imputedFieldsDelta": {
+      "dropChance": 8,
+      "yieldMin": 8,
+      "yieldMax": 8,
+      "expectedQuantity": 8
+    },
+    "newIndependentSyntheticRegressionCases": 16,
+    "newReproducedSyntheticFailures": 10,
+    "coordinatorOwnedFilesPlanned": 3
+  },
+  "checksActuallyRun": [
+    "GitHub connector fetched all five mandatory contracts/current readiness/priority files and four specialist submissions plus independent review.",
+    "Verified working_estimates.js blob 257793a7 and generated candidate blob 560b885a; static checks show legacy proxy blocker and confidence-zero POLICY_PRIOR classification.",
+    "Verified pipeline blob 30eae7a4 includes existing F005 Midnight 27-case gate but not new F003 16-case suite.",
+    "Verified F003 model blob 5621836c lacks gameMode and outputUniverseVerified validation; inspected independent 16-case fixture blob 97ab6ed0.",
+    "Cross-checked canonical 1018 mapping / 4072 working / 3558 evidence / 514 gaps / 116 E gaps and generated report 995/105/105/941 imputed fields.",
+    "Compared prior coordinator commit 012e01d7 to branch head: 14 commits and 14 research-only changed paths; no main/production/raw/frozen TSM modifications in that comparison.",
+    "Static coordinator assertions: 13 boolean checks passed; separate fixture-case-count check was informational, not executed."
+  ],
+  "externalTestsReportedNotReexecuted": [
+    "Independent validator reports GitHub Actions run 40986579730 on commit 322253756c993dfde6797a947761615f568648ba: F002 27/27 and full pipeline, Lua 5.1, determinism passed.",
+    "Independent validator reports synthetic V8 F003 new suite: 6/16 passed, 10/16 failed; native Node new suite not run."
+  ],
+  "testsNotRunThisCoordinatorSession": [
+    "Native Node completion pipeline --check",
+    "New F003 native 16-case regression",
+    "Lua5.1 generated decode",
+    "In-game Retail casts",
+    "Independent current-Retail whole-study holdout",
+    "Independent SHA-256 trust-root attestation"
+  ],
+  "blockers": [
+    "F003 RAW_CURRENT_RETAIL validation does not require complete typed game mode, epoch, ranks, reagent vector, minimum recipe skill or numeric stats.",
+    "F003 partial output universe can appear complete and flip a synthetic decision from -4 to +96; do not classify dominance without independent output-universe certification.",
+    "New F005 16-case suite is not wired into native CI; its omitted-co-output demonstration must be revised to assert rejection once the guard is fixed.",
+    "514 evidence numeric gaps, including 116 E; no verified minimum eligible baseline or current-Retail independent holdout.",
+    "TWW indexed 10-herb spell does not prove live cast/recipe eligibility; 24 legacy universe keys and two dye input leads remain unadmitted."
+  ],
+  "policies": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "tooltipOnlyPreserved": true,
+    "rawEvidencePreserved": true,
+    "frozenTSMPreserved": true,
+    "mainUntouched": true,
+    "runtimeProfilesBranchUntouched": true,
+    "legacyAssignmentsPreserved": true,
+    "schedulesPreserved": true
+  },
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_REPAIR_DF_MILL_TYPED_CONTEXT_AND_CERTIFIED_OUTPUT_UNIVERSE",
+      "acceptance": "Enforce complete versioned RAW_CURRENT_RETAIL context and numeric profession parameters; require independently supported output universe certificate; incomplete outputs must return NOT_VALUATION_READY, no dominance. Preserve 24-key historical TSM unit ambiguity, PREVIEW_ONLY, no current E promotion."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_NATIVE_DF_MILL_16_CASE_AND_F003_RETEST",
+      "acceptance": "Adjust adversarial partial-output decision demonstration to expect rejection after repair, run native Node 16-case suite plus 27 Midnight controls and full pipeline, report exact failed/passed cases and blobs; independently verify all-output completeness and source ancestry."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_WIRE_F005_DF_MILL_SUITE_AFTER_MODEL_REPAIR",
+      "acceptance": "Once F003 model passes independent checks, add native Node suite as required pipeline gate and verify deterministic --check, Lua5.1, schema and preview-only isolation. No runtime migration."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_VERIFY_TWW_444181_LIVE_RECIPE_AND_CAST_BASIS",
+      "acceptance": "Obtain current Retail exact recipe selector and rank eligibility for 12 TWW E-gap keys, zero-inclusive completed casts/refunds or pivot to an independent unreviewed family after two zero-delta cycles; do not transfer beta five-herb rate or infer recipe-null IDs."
+    }
+  ],
+  "zeroDeltaPivot": "F002 confidence repair closed; prioritize newly exposed F003 shared typed-context/output-universe failure rather than repeat Midnight audits.",
+  "nextTask": "F003_REPAIR_DF_MILL_TYPED_CONTEXT_AND_CERTIFIED_OUTPUT_UNIVERSE"
+}

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_R3_DIAMOND_HISTORICAL_DENOMINATOR_QA",
+  "workflowRevision": 2,
+  "runID": "2026-10-30T0943Z-F005-df-r3-diamond-denominator",
+  "verdict": "CONDITIONAL_PASS_HISTORICAL_CONTEXT_ONLY",
+  "reviewedBaseCommit": "1a871aa51e28571d10865029068fe7aaffe79b38",
+  "reviewedEvidence": {
+    "path": "research/evidence/v2/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort.json",
+    "gitBlobSHA": "f76533ac084419f0d19c8a2ebe85e275c505af8e"
+  },
+  "reviewedSourceReview": {
+    "path": "research/evidence/v2/source-reviews/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort-source-review.json",
+    "gitBlobSHA": "ac16fbd13ad84755a18474ecc113e600d01849b2"
+  },
+  "independentSourceCrossChecks": [
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/10i63zb/prospecting_draconiumserevite/",
+      "method": "Indexed original Reddit snippets via Firecrawl web search; direct page scrape unavailable",
+      "confirmed": [
+        "400000 R3 Serevite",
+        "591 diamonds",
+        "266 skill",
+        "13.8% Inspiration and +93 skill in same thread",
+        "approximately 30000 Draconium and 3.6 diamonds per 1000"
+      ],
+      "unverified": [
+        "full author/OP linkage for all comments",
+        "precise per-cast completed counts",
+        "refund count",
+        "quality ranks of diamond outputs",
+        "exact observation patch/build"
+      ]
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/zh53dd/data_from_prospecting_20k_rank_3_serevite_ore/",
+      "method": "Indexed Reddit result",
+      "confirmed": [
+        "20000 R3 Serevite",
+        "29 Illimited Diamonds"
+      ],
+      "unverified": [
+        "independence of author and source lineage",
+        "matching profession context"
+      ]
+    }
+  ],
+  "arithmetic": {
+    "sereviteDiamonds": 591,
+    "reportedOre": 400000,
+    "per1000Ore": 1.4775,
+    "perOre": 0.0014775,
+    "nominalFiveOreCastCounterfactual": 80000,
+    "counterfactualPerCast": 0.0073875,
+    "actualCompletedCasts": null,
+    "draconiumRatePer1000Approx": 3.6,
+    "draconiumExactCount": null,
+    "crosscheckDiamonds": 29,
+    "crosscheckOre": 20000,
+    "crosscheckPer1000": 1.45
+  },
+  "findings": [
+    "One source author supplied two cohorts; do not count as two independent holdout families.",
+    "Exact aggregate ore denominator cannot establish unconditional per-completed-cast E without completed casts and refund handling.",
+    "Reported diamond outputs are not separated by item quality rank; no priority-122 rank-specific field promotion is justified.",
+    "Approximate Draconium 3.6 per 1000 from approximately 30000 ore does not establish an exact observed count of 108.",
+    "2022/2023 data are historical; no current-Retail patch applicability established.",
+    "Search snippets corroborate headline numbers and context but not full original thread; direct Reddit scrape was blocked."
+  ],
+  "tests": {
+    "inProcessV8OriginalAssertions": {
+      "passed": 20,
+      "failed": 0
+    },
+    "newNodeRegressionSuite": {
+      "path": "research/tests/v2/test_f005_df_r3_diamond_historical_denominator.js",
+      "definedCases": 20,
+      "execution": "NOT_RUN_NATIVE_NODE_IN_THIS_ENVIRONMENT"
+    },
+    "runtimeLuaInGame": "NOT_RUN",
+    "independentCurrentRetailHoldout": "NOT_AVAILABLE"
+  },
+  "economicSafety": {
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "workingCellsChanged": 0,
+    "admittedMappingsChanged": 0,
+    "liveEVChanged": false,
+    "normalizedVerified": false,
+    "economicUse": "PREVIEW_ONLY"
+  },
+  "blockers": [
+    "Direct full Reddit post/comments could not be retrieved; only indexed snippets available",
+    "Current Retail zero-inclusive rank-specific completed-cast logs and refunds missing",
+    "Output-rank mapping and same-author context uniformity not established"
+  ],
+  "nextOwner": "evidence-researcher",
+  "nextTask": "Seek rank-separated current-Retail Dragonflight R3 Draconium completed-cast sample with refunds and full co-output vectors; otherwise pivot to priority TWW milling eligibility.",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE"
+}

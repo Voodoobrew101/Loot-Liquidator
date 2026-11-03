@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_DF_MILL_V101_CONDITIONAL_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T2102Z-F001-F005-df-milling-v101-conditional-integration",
+  "reviewUTC": "2026-10-30T21:02:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "51359e425d8d557731422a518d3cbffeeb5c5f0b",
+  "resultCommit": "COMMIT_CONTAINING_THIS_COORDINATOR_REPORT",
+  "status": "CONDITIONAL_ACCEPTANCE_RESEARCH_ONLY",
+  "sourcePins": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "candidate": "560b885a0039045419c340716e263ae33ddf827a",
+    "model": "e36328de0e677582bf9b2b36c4a6144a5c2f17be",
+    "manifest": "94e57e0f7dc91b95c9eed3bb575db3812fb45155",
+    "fixture30": "4bf40e94e4cfccd483a9bd0263c7525777def6f8",
+    "fixture22": "25855bf7d5b03ac0782a232a6d7b17819f5db690",
+    "validatorReview": "1769f8a8aa9e52509e0e8fe431aab13c55f28bf4",
+    "historicalEvidence": "321dc050134de6a996e5978b87cf467516c4cb06",
+    "historicalSourceReview": "97215da2e96bf294c1f52462ec762d637ebd738e",
+    "oldPinnedRunner": "f9d701c8c5260e05375b6268edc99b103b142b3b"
+  },
+  "decisions": [
+    {
+      "owner": "baseline-modeller",
+      "task": "F003_DF_MILL_FIXED_N_CONTEXT_ATTESTATION_REPAIR",
+      "decision": "CONDITIONAL_ACCEPT_SYNTHETIC_INTEGRITY_ONLY",
+      "reason": "v1.0.1 fixed 8 prior independent failures; 43 priority-102 mapping keys, author 39/39, F005 original 30/30 and new 22/22 synthetic V8 tests. Native exact-source replay and current-Retail holdout missing; no economic calibration."
+    },
+    {
+      "owner": "independent-validator",
+      "task": "F005_DF_MILL_V101_REPAIR_AND_SOURCE_ATTESTATION",
+      "decision": "ACCEPT_INDEPENDENT_SYNTHETIC_QA_CONDITIONALLY",
+      "reason": "Source and fixture pins verified; 52/52 V8 independent cases, 0 native 52-case executions. Validator did not author F003 model."
+    },
+    {
+      "owner": "evidence-researcher",
+      "task": "F004_DF_TWO_STAGE_DIAMOND_DENOMINATORS",
+      "decision": "ACCEPT_PROVISIONAL_HISTORICAL_CONTEXT_ONLY",
+      "reason": "Jan 2023 30k Serevite at 1.08/1000 and 50k Draconium at 2.57/1000 share commenter lineage; rounded implied 32.4 and 128.5 cannot be exact counts. Separate 1000 Prismatic Ore/25 diamonds downstream lineage. Unknown actual casts, ranks, refunds and skill; 0 confirmed new independent lineages, 0 economic E."
+    },
+    {
+      "owner": "completion-engineer",
+      "task": "F002_DF_MILL_NATIVE_NEGATIVE_QA",
+      "decision": "ACCEPT_OLD_INFORMATIONAL_RUNNER_WITH_STALE_PIN_BLOCKER",
+      "reason": "GitHub Actions 41125904833 passed old model's negative-QA, pipeline --check and Lua5.1; runner still pins old v1.0.0 model/manifest/fixture. Green CI is NOT v1.0.1 52-case native pass."
+    }
+  ],
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceE": 116,
+    "evidenceGE90Cells": 0,
+    "verifiedBaselineRecords": 0,
+    "independentCurrentRetailHoldouts": 0
+  },
+  "exactDeltas": {
+    "newAdmittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "confirmedNewIndependentLineages": 0,
+    "provisionalHistoricalCohorts": 3,
+    "proposedHistoricalCommentLineages": 2,
+    "previousModelDefectsNowPassing": 8,
+    "newIndependentSyntheticRegressionCases": 22,
+    "coordinatorOwnedFiles": 3
+  },
+  "checksActuallyExecuted": [
+    {
+      "environment": "GitHub connector JS",
+      "name": "26 source-pin, 43-key, arithmetic, policy and historical-denominator consistency checks",
+      "passed": 26,
+      "total": 26,
+      "failed": 0
+    },
+    {
+      "environment": "GitHub Actions native",
+      "name": "Old-pinned informational candidate, pipeline --check and Lua5.1",
+      "runID": 41125904833,
+      "headSHA": "51359e425d8d557731422a518d3cbffeeb5c5f0b",
+      "conclusion": "success",
+      "caveat": "NOT new v1.0.1 native 52-case replay"
+    },
+    {
+      "environment": "F005 independent connector V8",
+      "name": "Changed source original 30 plus 22 new synthetic regression cases",
+      "passed": 52,
+      "total": 52,
+      "failed": 0,
+      "caveat": "Reviewed source-pinned F005 report, not native Node execution by coordinator"
+    }
+  ],
+  "checksNotRun": [
+    "Native Node exact v1.0.1 model plus 30+22 independent suites",
+    "F002 native re-pinned 52-case runner (still stale)",
+    "Current-Retail independent zero-inclusive completed-cast holdouts, reviewed E caps and in-game EV/tooltip verification",
+    "Local pipeline --check/Lua5.1 by coordinator (branch-head CI reported pass with old pinned runner)"
+  ],
+  "blockers": [
+    "F002 runner old source pins require reconciliation before new model native acceptance",
+    "116 evidence E gaps, 514 total evidence gaps, 0 >=90 evidence cells and 0 verified minimum-eligible baselines",
+    "No independently held-out current Retail completed-cast family or reviewed hard E cap for 43 DF milling keys",
+    "TWW milling 5 independent defects and Gem Finding 14 context failures remain",
+    "Fish 200061 recipe/rank eligibility unknown; historical diamond rates lack exact casts/refunds/ranks"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_REPIN_NATIVE_DF_MILL_V101_52_CASE_INFORMATIONAL_REPLAY",
+      "scope": "Re-pin F002-owned runner to model e36328de, manifest 94e57e0f, F005 30-case 4bf40e94, new 22-case 25855bf7 and F005 review 1769f8a8; run exact-source native Node 39 self + 30 + 22 independent cases, fail closed on stale SHA or malformed output, pipeline --check and Lua5.1. Keep informational until independent F005 approval; no economic or compiler changes."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_VERIFY_F002_NATIVE_52_CASE_REPLAY_THEN_PIVOT",
+      "scope": "Independently inspect F002 updated runner and branch-head GitHub Actions; attest 30+22 native cases and adversarial mutation/fail-closed behavior. Then pivot to changed TWW milling five defects or Gem Finding fourteen failures, avoiding unchanged audits."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_REPAIR_TWW_MILLING_FIVE_CONTEXT_DEFECTS",
+      "scope": "Pivot from synthetically repaired DF milling to five TWW milling accounting/context/nonfinite/mutable-cap failures; preserve exact context and source ancestry, no generic skill multiplier; confidence 0 PREVIEW_ONLY normalizedVerified false until reviewed."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_RETAIL_CAST_PROTOCOL_OR_200061_ELIGIBILITY_PIVOT",
+      "scope": "Do not repeat indexed Jan 2023 Reddit scrape. Seek zero-inclusive, rank/skill/patch-labelled completed casts and refunds for five priority-122 Dragonflight prospecting keys; otherwise pivot to independent DF fish 200061 recipe/rank eligibility or Midnight milling output-rank universe leads."
+    }
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Unchanged 1018/4072 audit and repeat historical search",
+    "to": "Changed F003 v1.0.1 integrity repair and F005 22 new tests; historical two-stage denominator isolation",
+    "numericDelta": 0,
+    "modelDefectsNowPassing": 8
+  },
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "tooltipOnlyChanges": 0,
+    "frozenTSMChanges": 0,
+    "rawEvidenceChanges": 0,
+    "legacyAssignmentChanges": 0,
+    "mainChanges": 0,
+    "runtimeProfilesBranchChanges": 0,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}

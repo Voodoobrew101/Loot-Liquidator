@@ -1,0 +1,198 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_TWW_ACCOUNTING_DF_RANK_NATIVE_EMITTED",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T1900Z-F001-F005-tww-accounting-df-rank-native-emitted",
+  "reviewUTC": "2026-10-30T19:00:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "5b2d9b202731b07540d012f73368e5c69b59a52d",
+  "resultCommit": "COMMIT_CONTAINING_FINAL_COORDINATOR_SUBMISSION",
+  "status": "SPLIT_ACCEPTANCE_RESEARCH_ONLY",
+  "sourcePins": {
+    "readiness": {
+      "path": "research/coordination/completion-readiness.json",
+      "blobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+    },
+    "priorities": {
+      "path": "research/coordination/completion-priorities.json",
+      "blobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+    },
+    "candidate": {
+      "path": "research/proposed/itemdb.lua",
+      "blobSHA": "560b885a0039045419c340716e263ae33ddf827a"
+    },
+    "f002Submission": {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T1814Z-F002-emitted-lua-native-18320-source-pin.json",
+      "blobSHA": "b5c5d5f0061cb7625f9185e9017f223dabf1cf45"
+    },
+    "f003Model": {
+      "path": "research/tools/models_v2/tww_mill_reagent_accounting_identification_v1.js",
+      "blobSHA": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a"
+    },
+    "f003Manifest": {
+      "path": "research/models/v2/tww_mill_reagent_accounting_identification_v1.json",
+      "blobSHA": "758b38f4a42b5becd353ca5e17fb920000f7355c"
+    },
+    "f004Evidence": {
+      "path": "research/evidence/v2/2026-10-30T1825Z-F004-df-serevite-rank-id-and-diamond-cross-quality.json",
+      "blobSHA": "af38e0705d2b0f43f6bfd85be1c5c46b7b59c13f"
+    },
+    "f004PriorImmutableEvidence": {
+      "path": "research/evidence/v2/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort.json",
+      "blobSHA": "f76533ac084419f0d19c8a2ebe85e275c505af8e"
+    },
+    "f005IndependentReview": {
+      "path": "research/coordination/v2/reviews/20261030T1845Z-F005-TWW-MILL-ACCOUNTING-INDEPENDENT-ATTESTATION.json",
+      "blobSHA": "eea3a0140b78e252f85d5c0f32914118b79d2962"
+    },
+    "f005Regression": {
+      "path": "research/tests/v2/test_f005_tww_mill_accounting_independent_attestation.js",
+      "blobSHA": "1dc22afeed2eefafd845979fafa15cbb59c15708"
+    }
+  },
+  "decisions": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_NATIVE_EMITTED_LUA_CHANNEL_ISOLATION_REPLAY",
+      "verdict": "ACCEPT_NATIVE_INFORMATIONAL_RESEARCH_GATE_CONDITIONAL_F005_INDEPENDENT_APPROVAL",
+      "basis": "GitHub Actions run 41104969064 job 124232116307 concluded success; logs show 18320/18320 assertions, 12/12 mutants, deterministic --check and Lua5.1 decoding 1018 mappings, 4072 working cells and 514 evidence gaps. No independent F005 acceptance of new native replay yet.",
+      "effect": "Preserve informational gate; do not make mandatory or promote economics without F005 approval."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_TWW_MILL_COMPLETED_CAST_REAGENT_ACCOUNTING",
+      "verdict": "REJECT_MODEL_V1_INTEGRATION_REPAIR_REQUIRED",
+      "basis": "F005 independent source-pinned V8 suite 32/37 pass, five failures: context batch contradiction; direct reagent-vector contradiction; inverse E/P overflow; proxy changing targetKey; proxy changing cap units. Model self-tests 20425/20425 do not override independent failures.",
+      "effect": "No evidence E/P, cap, mapping or economic promotion. Repair canonical snapshot and finite math before independent retest."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_DF_RANK_ID_AND_DIAMOND_RANK_COHORTS",
+      "verdict": "ACCEPT_APPEND_ONLY_HISTORICAL_CONTEXT_AND_PROPOSED_DERIVED_IDENTITY_CORRECTION_PENDING_F005",
+      "basis": "Prior immutable 400k R3 Serevite record uses inputItemID 190396 (R2 catalog ID); proposed rank-3 ID 190394; original author provided rank but not item ID. Two proposed original author lineages and five historical cohorts, none current-Retail zero-inclusive casts; indexed Wowhead source not directly fetched.",
+      "effect": "Keep original evidence immutable, mark derived join for 400k R3 cohort as DO_NOT_USE_190396_R2, append correction proposal 190394 after independent rank identity verification; no rank-specific E/P."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_TWW_MILL_REAGENT_ACCOUNTING_IDENTIFICATION_QA",
+      "verdict": "ACCEPT_INDEPENDENT_NEGATIVE_QA_FINDING_NOT_MODEL",
+      "basis": "37 independent V8 cases, 32 pass and 5 fail; exact model/test blob pins match, no native Node run; new failures are actionable model integrity defects.",
+      "effect": "Require F003 repair and native F005 retest. No independent current Retail holdouts."
+    }
+  ],
+  "modelDefectIDs": [
+    "F005-TWW-MILL-01",
+    "F005-TWW-MILL-02",
+    "F005-TWW-MILL-03",
+    "F005-TWW-MILL-04",
+    "F005-TWW-MILL-05"
+  ],
+  "canonicalReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "verifiedBaselineRecords": 0,
+    "independentCurrentRetailHoldouts": 0
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newProvisionalHistoricalAuthorLineages": 2,
+    "newHistoricalReportedCohorts": 5,
+    "proposedDerivedIdentityCorrections": 1,
+    "newIndependentRegressionCases": 37,
+    "newIndependentRegressionFailures": 5,
+    "newVerifiedCurrentRetailCasts": 0,
+    "productionWrites": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub connector JavaScript V8",
+      "name": "Coordinator source-pinned cross-file invariants, priority, numeric and provenance arithmetic",
+      "passed": 52,
+      "failed": 0
+    },
+    {
+      "environment": "GitHub Actions native Node v24.22.1 / Lua5.1",
+      "name": "F002 emitted Lua isolation and deterministic pipeline",
+      "runID": 41104969064,
+      "jobID": 124232116307,
+      "conclusion": "success",
+      "assertionsPassed": 18320,
+      "mutantsRejected": 12
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "Source blob and native job-log readback",
+      "result": "PASS"
+    }
+  ],
+  "testsReportedNotRunHere": [
+    "Native F005 37-case TWW milling accounting suite",
+    "Native F005 independent acceptance of F002 emitted Lua gate",
+    "Retail client or live EV integration",
+    "Independent current-Retail zero-inclusive completed-cast cohorts",
+    "F003 repaired model not yet available"
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "previous": "Repeated numeric coverage and original-Lua diff audits",
+    "current": "Target changed TWW milling accounting model and newly submitted Dragonflight rank correction; accepted native emitted-Lua informational result",
+    "result": "Five new independent integrity defects identified, one proposed rank-ID correction, no numeric evidence promotion"
+  },
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_CANONICAL_CONTEXT_REAGENT_AND_CAP_SNAPSHOT_FINITE_MATH_REPAIR",
+      "scope": "Fix all five F005 TWW milling failures with one canonical immutable context/accounting/cap snapshot, cross-validate nominal batch and reagent vector, reject nonfinite inverse/forward, run self-tests, preserve PREVIEW_ONLY."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_TWW_37_NATIVE_RETEST_F002_EMITTED_NATIVE_ACCEPTANCE_DF_RANK_ID",
+      "scope": "After F003 source change rerun all 37 independent regressions with updated source pin in native Node; independently accept/reject F002 18320/12 native replay and F004 Serevite R3 190394 identity, no self-approval."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_MAKE_EMITTED_LUA_GATE_MANDATORY_ONLY_AFTER_F005",
+      "scope": "Keep current informational native gate; once F005 independent verdict accepts it, make it mandatory with source pins; preserve v0.8 candidate 1018/4072 and preview/evidence separation."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_APPEND_DERIVED_R3_SEREVITE_ID_CORRECTION_AND_CURRENT_CASTS",
+      "scope": "Append 190396->190394 derived R3 cohort correction without editing immutable source; verify original rank catalog and gather zero-inclusive current Retail completed-cast rank-separated output/refund vectors for five priority-122 keys."
+    }
+  ],
+  "blockers": [
+    "Five F003 model-integrity failures; native F005 37-case retest outstanding",
+    "F002 informational native emitted gate awaits independent F005 acceptance",
+    "F004 190394 derived correction awaits independent catalog/author rank verification; no current-patch cast denominator",
+    "116 missing evidence-supported E values; no current-Retail held-out families or verified minimum eligible baselines"
+  ],
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "workingFallbacksAffectLiveEV": false,
+    "workingFallbacksAffectRecommendations": false,
+    "tooltipOnlyUnchanged": true,
+    "frozenTSMUnchanged": true,
+    "rawEvidenceUnchanged": true,
+    "legacyAssignmentsUnchanged": true,
+    "mainUnchanged": true,
+    "runtimeProfilesUnchanged": true,
+    "existingSchedulesUnchanged": true,
+    "addonReleased": false
+  }
+}

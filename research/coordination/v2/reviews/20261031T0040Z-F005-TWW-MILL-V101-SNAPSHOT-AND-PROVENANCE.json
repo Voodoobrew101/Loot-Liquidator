@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261031T0040Z-F005-TWW-MILL-V101-SNAPSHOT-AND-PROVENANCE",
+  "branch": "implementation/five-agent-completion",
+  "verdict": "FAIL_MODEL_INTEGRATION_PENDING_REPAIR",
+  "scope": "F003 TWW milling accounting v1.0.1 changed artifact; independent source/static inspection and adversarial isolated V8 reproductions",
+  "source": {
+    "path": "research/tools/models_v2/tww_mill_reagent_accounting_identification_v1.js",
+    "blobSHA": "5d90046b15046fb210523c34363c66596b962d3d",
+    "modelID": "tww-mill-reagent-accounting-identification-v1.0.1"
+  },
+  "test": {
+    "path": "research/tests/v2/test_f005_tww_mill_v101_snapshot_provenance_20261031.js",
+    "blobSHA": "94ea3a1586e986d52d47394745181e8bab3f478e",
+    "authoredCases": 15,
+    "fullSourceExecution": "NOT_RUN",
+    "predictedUnsafeCases": 8
+  },
+  "executedChecks": [
+    {
+      "name": "Exact committed model/test GitHub read-back and static source probes",
+      "count": 14,
+      "environment": "GitHub connector + JavaScript V8",
+      "result": "COMPLETED; missing immutable-snapshot guards confirmed by direct source inspection"
+    },
+    {
+      "name": "Isolated exact-denominator-control-flow V8 reproduction: mutable cap units",
+      "count": 1,
+      "result": "ACCEPTED unsafe cap; max cast bound inflated from 11 to 45"
+    },
+    {
+      "name": "Isolated exact-denominator-control-flow V8 reproduction: mutable cap status",
+      "count": 1,
+      "result": "ACCEPTED; SCENARIO_ONLY validated then returned INDEPENDENTLY_VERIFIED"
+    },
+    {
+      "name": "Isolated exact-array-loop-control-flow V8 reproduction: mutable length",
+      "count": 1,
+      "result": "ACCEPTED; two original cast entries reduced to one captured zero-output cast"
+    }
+  ],
+  "verifiedFixes": [
+    "inverse(1e308,1e-308) now contains explicit finite-result rejection",
+    "forward result has finite guard",
+    "whitespace-only and >256 character context strings now rejected"
+  ],
+  "unresolvedDefects": [
+    {
+      "key": "CONTEXT_BATCH_MISMATCH",
+      "type": "PREVIOUSLY_REPORTED",
+      "detail": "estimate validates x.nominalBatchSize but does not reconcile c.nominalBatchSize"
+    },
+    {
+      "key": "REAGENT_VECTOR_MISMATCH",
+      "type": "PREVIOUSLY_REPORTED",
+      "detail": "estimate accepts c.reagentVector without matching nominal batch or net/saved reagent accounting"
+    },
+    {
+      "key": "MUTABLE_MAPPING_KEY",
+      "type": "PREVIOUSLY_REPORTED",
+      "detail": "c.targetKey read separately for admission, identity split and returned targetKey; proxy can substitute mapping"
+    },
+    {
+      "key": "MUTABLE_CAP_UNITS",
+      "type": "PREVIOUSLY_REPORTED_REPRODUCED",
+      "detail": "cap.units is validated and later reread; reproduced 11 -> 45 upper cast bound"
+    },
+    {
+      "key": "MUTABLE_CAP_STATUS",
+      "type": "NEW_REPRODUCED",
+      "detail": "cap.status read again after validation; scenario cap can be returned as INDEPENDENTLY_VERIFIED"
+    },
+    {
+      "key": "MUTABLE_CAST_ARRAY_LENGTH",
+      "type": "NEW_REPRODUCED",
+      "detail": "perCastOutputs.length re-read during validation, iteration and denominator assignment; two entries can be captured as one"
+    },
+    {
+      "key": "MUTABLE_STUDY_FAMILY",
+      "type": "NEW_SOURCE_REVIEW",
+      "detail": "c.studyFamily read during validation and again in returned record without canonical snapshot"
+    },
+    {
+      "key": "MUTABLE_PATCH_EPOCH",
+      "type": "NEW_SOURCE_REVIEW",
+      "detail": "c.patchEpoch read during validation and again in returned record without canonical snapshot"
+    }
+  ],
+  "repairRequirements": [
+    "Validate and calculate from one canonical immutable copy of study/context, cap, reagent vector and per-cast output array",
+    "Reject accessor, Proxy/nonstable, extra-field and context/recipe mismatches instead of merely accepting shape-compatible mutable objects",
+    "Use captured array length and captured element values exactly once, then derive cast count and all aggregates from snapshot",
+    "Ensure cap units, status, source ID and source family/patch are bound to the same validated snapshot",
+    "Rerun original 37-case F005 suite and new 15-case suite under native Node on exact source SHA; do not treat authored tests as executed"
+  ],
+  "holdout": "NOT_INDEPENDENTLY_VALIDATED: no matched independent current-Retail completed-cast TWW milling study family",
+  "deltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0
+  },
+  "safety": {
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "confidence": 0,
+    "liveEV": false,
+    "liveRecommendations": false,
+    "rawEvidence": "UNCHANGED",
+    "frozenTSM": "UNCHANGED",
+    "tooltipOnly": "UNCHANGED",
+    "productionMain": "UNCHANGED",
+    "runtimeProfiles": "UNCHANGED"
+  },
+  "notRun": [
+    "Full 15-case test module against exact committed model under native Node",
+    "Native Lua 5.1 and itemdb compiler pipeline",
+    "Retail in-game cast validation"
+  ],
+  "nextRepairOwner": "baseline-modeller",
+  "nextTask": "Retest immutable F003 TWW milling v1.0.2+ with native 37+15 independent cases; otherwise pivot to changed F004 cohort attribution or F002 economic isolation"
+}

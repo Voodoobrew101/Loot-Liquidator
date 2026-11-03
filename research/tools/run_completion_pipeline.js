@@ -1,0 +1,567 @@
+"use strict";
+// Research-only readiness pipeline. Never writes addon runtime or original evidence.
+const fs = require("node:fs");
+const path = require("node:path");
+const os = require("node:os");
+const { spawnSync } = require("node:child_process");
+const FIELDS = ["dropChance", "yieldMin", "yieldMax", "expectedQuantity"];
+
+function summarize(records, report) {
+  let evidenceNumeric = 0, evidenceGE90 = 0, completeEvidence = 0, workingNumeric = 0;
+  let workingComplete = 0, verifiedBaselines = 0;
+  const perField = Object.fromEntries(FIELDS.map(f => [f, { numeric: 0, missing: 0, ge90: 0, workingNumeric: 0 }]));
+  const priorities = [];
+  for (const r of records) {
+    let complete = true, fullWorking = true;
+    const gaps = [], conflicts = [];
+    for (const f of FIELDS) {
+      const value = r[f] && r[f].value;
+      if (typeof value === "number" && Number.isFinite(value)) {
+        evidenceNumeric++; perField[f].numeric++;
+      } else { complete = false; perField[f].missing++; gaps.push(f); }
+      if (typeof value === "number" && Number.isFinite(value) && r[f].confidence >= 90) {
+        evidenceGE90++; perField[f].ge90++;
+      }
+      if (r[f] && r[f].status === "contradictory") conflicts.push(f);
+      const w = r.workingEstimate && r.workingEstimate[f];
+      const n = w && typeof w === "object" ? w.value : w;
+      if (typeof n === "number" && Number.isFinite(n)) { workingNumeric++; perField[f].workingNumeric++; }
+      else fullWorking = false;
+    }
+    if (complete) completeEvidence++;
+    if (fullWorking) workingComplete++;
+    if (r.workingEstimate && r.workingEstimate.normalizedVerified === true) verifiedBaselines++;
+    if (gaps.length || conflicts.length) priorities.push({
+      recordID: r.recordID, method: r.method, inputItemID: r.inputItemID,
+      outputItemID: r.outputItemID, recipeSpellID: r.recipeSpellID || null,
+      gaps, conflicts,
+      priorityBasis: "FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT",
+      priority: (gaps.includes("expectedQuantity") ? 100 : 0) + conflicts.length * 20 + gaps.length,
+      nextAction: conflicts.length ? "RECONCILE_SOURCE_CONFLICT" : gaps.includes("expectedQuantity") ? "VALIDATE_OR_REPLACE_E_PRIOR" : "VALIDATE_DISPLAY_METRICS"
+    });
+  }
+  priorities.sort((a,b) => b.priority-a.priority || a.recordID.localeCompare(b.recordID));
+  const slots = records.length * FIELDS.length;
+  const ratio = n => slots ? n / slots : 0;
+  return {
+    snapshot: {
+      schemaVersion: "1.0.0", status: "RESEARCH_ONLY_NOT_SHIPPED",
+      compilerVersion: report.compilerVersion, sourceSHA: report.sourceSHA,
+      mappingCount: records.length, fieldSlots: slots,
+      independentRetailUniverseAudit: report.independentRetailUniverseAudit,
+      exhaustiveRetailCoverage: null,
+      evidenceNumericCells: evidenceNumeric, evidenceMissingCells: slots-evidenceNumeric,
+      evidenceNumericCoverage: ratio(evidenceNumeric), evidenceCompleteRecords: completeEvidence,
+      workingNumericCells: workingNumeric, workingNumericCoverage: ratio(workingNumeric),
+      workingCompleteRecords: workingComplete,
+      evidenceGE90Cells: evidenceGE90, evidenceGE90Coverage: ratio(evidenceGE90),
+      verifiedBaselineRecords: verifiedBaselines, perField,
+      confidenceMeaning: "ORDINAL_EVIDENCE_STRENGTH_NOT_PROBABILITY_CORRECT",
+      operationalEstimatesAffectLiveValuation: false,
+      inGameVerified: false
+    }, priorities
+  };
+}
+
+function writeOrCheck(root, relative, contents, check) {
+  const target = path.join(root, relative);
+  if (check) {
+    if (!fs.existsSync(target) || fs.readFileSync(target,"utf8") !== contents) throw Error("Stale generated file: " + relative);
+  } else { fs.mkdirSync(path.dirname(target), {recursive:true}); fs.writeFileSync(target, contents); }
+}
+
+function run(root, options={}) {
+  // Test that changed bytes, missing inputs and stale/malformed pins are
+  // rejected before any candidate compilation, including --check builds.
+  const pinTests=require(path.join(root,"research/tools/source_sha_gate.js")).selfTest();
+  if(pinTests.failed!==0 || pinTests.passed!==8) throw Error("F002 source-pin self-test contract changed");
+  console.log("PASS: F002 source SHA adversarial regression 8/8");
+  const {compile,loadInputs,validate} = require(path.join(root,"research/tools/compile_itemdb.js"));
+  const {validateWorkingEstimates,createWorkingAttestation,validateSerializedWorkingEstimates} = require(path.join(root,"research/tools/working_estimates.js"));
+  const result = compile(loadInputs(root));
+  // A checked candidate must be stable across two independent input loads and
+  // compilations, including serialized record order. A set-equivalent detached
+  // attestation does not itself certify deterministic build ordering.
+  if (options.check === true) {
+    const second = compile(loadInputs(root));
+    if (second.lua !== result.lua ||
+        JSON.stringify(second.records) !== JSON.stringify(result.records) ||
+        JSON.stringify(second.report) !== JSON.stringify(result.report))
+      throw Error("Non-deterministic candidate contents or build order across independent compilations");
+    console.log("PASS: independent repeat compile and deterministic candidate record order");
+  }
+  const errors = [...validate(result.records), ...validateWorkingEstimates(result.records)];
+  if (errors.length) throw Error(errors.join("\n"));
+  // F002: fail closed if the five historical priority-122 TSM source/unit
+  // conflicts are silently normalized, reinterpreted, or economically promoted.
+  // The diagnostic is nonpromoting; independent F005 acceptance remains separate.
+  const {analyze:checkDFPriority122,selfTest:checkDFPrecision} = require("./df_priority122_conflict_diagnostic.js");
+  checkDFPrecision();
+  const dfPriority122 = checkDFPriority122(root,result.records);
+  console.log("PASS: F002 Dragonflight priority-122 nonpromoting source/unit diagnostic "+dfPriority122.targetCount+"/5; rounded compatibility is hypothesis only");
+  // Exercise the detached v1 source/context/value seal across a JSON reload.
+  // A production verifier must obtain the expected digest from a separately
+  // pinned coordinator acceptance, never trust the candidate to supply it.
+  const {attestation,sha256:pin} = createWorkingAttestation(result.records);
+  const reload = value => JSON.parse(JSON.stringify(value));
+  const checkSerialized = rows => validateSerializedWorkingEstimates(rows,reload(attestation),pin);
+  const reloaded = reload(result.records);
+  const serializedErrors = checkSerialized(reloaded);
+  if (serializedErrors.length) throw Error("Serialized attestation roundtrip failed: "+serializedErrors.slice(0,8).join(","));
+  const sourceMutation = reload(reloaded);
+  sourceMutation[0].expectedQuantity.status = "TAMPERED_SOURCE_STATUS";
+  if (!checkSerialized(sourceMutation).some(x=>x.startsWith("SERIALIZED_SOURCE_IDENTITY_STALE_OR_TAMPERED:")))
+    throw Error("Serialized source-status tamper escaped attestation");
+  const contextMutation = reload(reloaded);
+  contextMutation[0].conditions.gameMode = "TAMPERED_GAME_MODE";
+  if (!checkSerialized(contextMutation).some(x=>x.startsWith("SERIALIZED_SOURCE_IDENTITY_STALE_OR_TAMPERED:")))
+    throw Error("Serialized source-context tamper escaped attestation");
+  const previewMutation = reload(reloaded);
+  previewMutation[0].workingEstimate.expectedQuantity += 1;
+  if (!checkSerialized(previewMutation).some(x=>x.startsWith("SERIALIZED_WORKING_PREVIEW_STALE_OR_TAMPERED:")))
+    throw Error("Serialized working-value tamper escaped attestation");
+  const forgedSeal = reload(attestation);
+  forgedSeal.entries[0].sourceSHA256 = "0".repeat(64);
+  if (!validateSerializedWorkingEstimates(reloaded,forgedSeal,pin).includes("SERIALIZED_ATTESTATION_UNPINNED_OR_TAMPERED"))
+    throw Error("Forged serialized seal escaped external digest pin");
+  console.log("PASS: versioned serialized source/context/value attestation, 4 adversarial cases");
+  // Proposal only: the coordinator must persist this digest separately from the
+  // candidate and independently approve it before it is a trusted pin.
+  console.log("PROPOSED_DETACHED_ATTESTATION_SHA256 (NOT EXTERNALLY PINNED): "+pin);
+  const {snapshot,priorities} = summarize(result.records,result.report);
+  if (!snapshot.mappingCount || snapshot.workingNumericCells !== snapshot.fieldSlots) throw Error("Working estimate completeness gate failed");
+  const check = options.check === true;
+  const outputs = {
+    "research/proposed/itemdb.lua": result.lua,
+    "research/proposed/itemdb-build-report.json": JSON.stringify(result.report,null,2)+"\n",
+    "research/ledger/itemdb-missing-fields.csv": result.gapCSV,
+    "research/ledger/itemdb-source-alternates.csv": "method_input_output,selected_source_key,not_selected_source_key\n"+result.alternates.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n")+"\n",
+    "research/coordination/completion-readiness.json": JSON.stringify(snapshot,null,2)+"\n",
+    "research/coordination/completion-priorities.json": JSON.stringify({schemaVersion:"1.0.0",priorityBasis:"FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT",records:priorities},null,2)+"\n"
+  };
+  for (const [relative,contents] of Object.entries(outputs)) writeOrCheck(root,relative,contents,check);
+  if (options.test !== false) {
+    // F005 owns these fixtures. Enforce their exact synthetic/source-isolation
+    // contract under native Node, not just a V8 shim. The separate F003
+    // Midnight anytime suite awaits its model-owner repair and must not be
+    // falsely reported as passing here.
+    for (const spec of [
+      {file:"test_f005_priority122_supplemental_rank_lineage.js",
+       suite:"F005_PRIORITY122_SUPPLEMENTAL_RANK_LINEAGE",count:6},
+      {file:"test_f005_crushing_rank_candidate_isolation.js",
+       suite:"F005_CRUSHING_RANK_CANDIDATE_ISOLATION",count:11}
+    ]) {
+      const fixture=path.join(root,"research/tests/v2",spec.file);
+      if(!fs.existsSync(fixture)) throw Error("Required independent F005 fixture missing: "+spec.file);
+      const child=spawnSync(process.execPath,[fixture],{cwd:root,encoding:"utf8",timeout:120000});
+      let report;
+      try { report=JSON.parse((child.stdout||"").trim()); }
+      catch (_) { throw Error("F005 native fixture emitted invalid JSON: "+spec.file+"\n"+child.stdout+child.stderr); }
+      if(report.suite!==spec.suite || report.passed!==spec.count || report.failed!==0 ||
+         !Array.isArray(report.cases) || report.cases.length!==spec.count ||
+         report.cases.some(c=>c.result!=="PASS") ||
+         (spec.count===6 && (report.syntheticOnly!==true || report.actualRetailCasts!==0)) ||
+         (spec.count===11 && report.sourceType!=="RESEARCH_EVIDENCE_STRUCTURAL_QA_NOT_GAME_VERIFICATION") ||
+         child.status!==0)
+        throw Error("F005 native fail-closed fixture failed: "+spec.file+"\n"+child.stdout+child.stderr);
+      console.log("PASS: independent native F005 "+spec.suite+" "+spec.count+"/"+spec.count+" (research-only)");
+    }
+    for (const file of ["test_working_estimates.js","test_compile_itemdb.js","test_itemdb_candidate.js","test_completion_pipeline.js","test_five_agent_workflow.js"]) {
+      const testPath=path.join(root,"research/tests",file);
+      if (!fs.existsSync(testPath)) throw Error("Required check missing: "+file);
+      const child=spawnSync(process.execPath,[testPath],{cwd:root,encoding:"utf8"});
+      if(child.status!==0) throw Error(file+" failed\n"+child.stdout+child.stderr);
+      process.stdout.write(child.stdout);
+    }
+    const ancestryTest=path.join(root,"research/tools/working_estimates_ancestry_selftest.js");
+    const ancestryChild=spawnSync(process.execPath,[ancestryTest],{cwd:root,encoding:"utf8"});
+    if(ancestryChild.status!==0)
+      throw Error("working_estimates_ancestry_selftest.js failed\\n"+ancestryChild.stdout+ancestryChild.stderr);
+    process.stdout.write(ancestryChild.stdout);
+    // Independent validator F005: exercise PMF zero-mass support and stale
+    // donor ancestry on native Node, not only in the validator's V8 shim.
+    // Keep the validator-owned fixture immutable; CI only invokes it.
+    const independentTest=path.join(root,"research/tests/v2/test_f005_postrepair_metamorphic.js");
+    if(!fs.existsSync(independentTest)) throw Error("Required independent F005 check missing");
+    const independentChild=spawnSync(process.execPath,[independentTest],{cwd:root,encoding:"utf8"});
+    if(independentChild.status!==0)
+      throw Error("F005 postrepair metamorphic regression failed\\n"+independentChild.stdout+independentChild.stderr);
+    process.stdout.write(independentChild.stdout);
+    // Independent F005 rank-pool isolation must run on native Node in CI.
+    const rankPoolTest=path.join(root,"research/tests/v2/test_f005_rank_pool_isolation.js");
+    if(!fs.existsSync(rankPoolTest)) throw Error("Required independent rank-pool check missing");
+    const rankPoolChild=spawnSync(process.execPath,[rankPoolTest],{cwd:root,encoding:"utf8"});
+    if(rankPoolChild.status!==0)
+      throw Error("F005 rank-pool isolation failed\\n"+rankPoolChild.stdout+rankPoolChild.stderr);
+    process.stdout.write(rankPoolChild.stdout);
+    // F005 policy-anchor and stale-context adversarial suite; retain validator
+    // ownership of its fixture and run it without editing the fixture.
+    const policyTest=path.join(root,"research/tests/v2/test_f005_pool_policy_anchor_and_target_context.js");
+    if(!fs.existsSync(policyTest)) throw Error("Required independent pool-policy check missing");
+    const policyChild=spawnSync(process.execPath,[policyTest],{cwd:root,encoding:"utf8"});
+    if(policyChild.status!==0)
+      throw Error("F005 pool-policy/target-context regression failed\\n"+policyChild.stdout+policyChild.stderr);
+    process.stdout.write(policyChild.stdout);
+    // Execute the validator-owned full source-identity mutation suite on native Node.
+    const identityTest=path.join(root,"research/tests/v2/test_f005_target_identity_staleness.js");
+    if(!fs.existsSync(identityTest)) throw Error("Required F005 target-identity check missing");
+    const identityChild=spawnSync(process.execPath,[identityTest],{cwd:root,encoding:"utf8"});
+    if(identityChild.status!==0)
+      throw Error("F005 target-identity regression failed\\n"+identityChild.stdout+identityChild.stderr);
+    process.stdout.write(identityChild.stdout);
+    // Validator-owned provenance/confidence suite must run in native CI.
+    // This rejects stale evidence lineage and self-consistent preview edits.
+    const provenanceTest=path.join(root,"research/tests/v2/test_f005_provenance_confidence_integrity.js");
+    if(!fs.existsSync(provenanceTest)) throw Error("Required F005 provenance check missing");
+    const provenanceChild=spawnSync(process.execPath,[provenanceTest],{cwd:root,encoding:"utf8"});
+    if(provenanceChild.status!==0)
+      throw Error("F005 provenance/confidence regression failed\\n"+provenanceChild.stdout+provenanceChild.stderr);
+    process.stdout.write(provenanceChild.stdout);
+    // Independently authored F005 status/claim admission regression. This
+    // guards the direct estimator, not just canonical compiler validation.
+    const admissionTest=path.join(root,"research/tests/v2/test_f005_evidence_status_claim_contract.js");
+    if(!fs.existsSync(admissionTest)) throw Error("Required F005 source-admission check missing");
+    const admissionChild=spawnSync(process.execPath,[admissionTest],{cwd:root,encoding:"utf8"});
+    if(admissionChild.status!==0)
+      throw Error("F005 source-status/claim admission failed\\n"+admissionChild.stdout+admissionChild.stderr);
+    process.stdout.write(admissionChild.stdout);
+    // F005 independently authored cast-basis/denominator quarantine regression.
+    // A source gross-input or rank proxy must not be copied as completed-cast P/E.
+    const castBasisTest=path.join(root,"research/tests/v2/test_f005_blocked_evidence_cast_basis.js");
+    if(!fs.existsSync(castBasisTest)) throw Error("Required F005 cast-basis check missing");
+    const castBasisChild=spawnSync(process.execPath,[castBasisTest],{cwd:root,encoding:"utf8"});
+    if(castBasisChild.status!==0)
+      throw Error("F005 cast-basis quarantine regression failed\\n"+castBasisChild.stdout+castBasisChild.stderr);
+    process.stdout.write(castBasisChild.stdout);
+    // F005 independently authored 476-case F003 numerical fixture runs on
+    // native Node, not just the independent validator V8 harness.
+    const binomialTest=path.join(root,"research/tests/v2/test_f005_f003_independent_binomial_numerics.js");
+    if(!fs.existsSync(binomialTest)) throw Error("Required F005/F003 binomial check missing");
+    const binomialChild=spawnSync(process.execPath,[binomialTest],{cwd:root,encoding:"utf8",timeout:120000});
+    if(binomialChild.status!==0)
+      throw Error("F005/F003 independent binomial numerics failed\n"+binomialChild.stdout+binomialChild.stderr);
+    process.stdout.write(binomialChild.stdout);
+    // F005 independently authored 14-case detached-process source-metadata
+    // suite. Exercise native SHA-256 and prohibit post-seal provenance edits.
+    const metadataTest=path.join(root,"research/tests/v2/test_f005_serialized_metadata_integrity.js");
+    if(!fs.existsSync(metadataTest)) throw Error("Required F005 detached metadata check missing");
+    const metadataChild=spawnSync(process.execPath,[metadataTest],{cwd:root,encoding:"utf8",timeout:120000});
+    if(metadataChild.status!==0)
+      throw Error("F005 detached source-metadata integrity failed\\n"+metadataChild.stdout+metadataChild.stderr);
+    process.stdout.write(metadataChild.stdout);
+    // F005 independently authored nested provenance v1.1 detached-process
+    // SHA-256 regression. Missing or failing fixtures fail the native CI gate;
+    // the validator owns the fixture and the engineer only invokes it.
+    const nestedV11Test=path.join(root,"research/tests/v2/test_f005_serialized_nested_provenance_v11.js");
+    if(!fs.existsSync(nestedV11Test)) throw Error("Required F005 nested v1.1 detached provenance check missing");
+    const nestedV11Child=spawnSync(process.execPath,[nestedV11Test],{cwd:root,encoding:"utf8",timeout:120000});
+    if(nestedV11Child.status!==0)
+      throw Error("F005 nested v1.1 detached provenance regression failed\n"+nestedV11Child.stdout+nestedV11Child.stderr);
+    process.stdout.write(nestedV11Child.stdout);
+    // Independent F005 Midnight legacy-display provenance regression.
+    // This fixture must run under native Node; the validator owns its assertions.
+    const midnightLegacyTest=path.join(root,"research/tests/v2/test_f005_midnight_milling_legacy_proxy_confidence.js");
+    if(!fs.existsSync(midnightLegacyTest)) throw Error("Required F005 Midnight legacy confidence check missing");
+    const midnightLegacyChild=spawnSync(process.execPath,[midnightLegacyTest],{cwd:root,encoding:"utf8",timeout:120000});
+    if(midnightLegacyChild.status!==0)
+      throw Error("F005 Midnight legacy confidence regression failed\n"+midnightLegacyChild.stdout+midnightLegacyChild.stderr);
+    process.stdout.write(midnightLegacyChild.stdout);
+    // F003 staged native QA: execute the independent 16-case fixture on every
+    // research build, but quarantine only the ten precisely documented
+    // pre-repair failures while the modeller's proposal remains unaccepted.
+    // An accepted model must pass all cases. New/unknown failures are fatal.
+    // This is not an independent F005 acceptance or evidence promotion.
+    const dfFixture=path.join(root,"research/tests/v2/test_f005_df_milling_raw_context_and_universe.js");
+    const dfManifestPath=path.join(root,"research/models/v2/df_milling_decision_sensitivity_v1.json");
+    if(!fs.existsSync(dfFixture)||!fs.existsSync(dfManifestPath))
+      throw Error("Missing F003 model manifest or independent F005 native fixture");
+    const dfChild=spawnSync(process.execPath,[dfFixture],{cwd:root,encoding:"utf8",timeout:120000});
+    let dfReport;
+    try { dfReport=JSON.parse((dfChild.stdout||"").trim()); }
+    catch (_) { throw Error("F005 DF milling native test did not emit valid JSON\\n"+dfChild.stdout+dfChild.stderr); }
+    if(dfReport.suite!=="F005_DF_MILLING_RAW_CONTEXT_AND_UNIVERSE"||
+       !Array.isArray(dfReport.cases)||dfReport.cases.length!==16||
+       dfReport.passed+dfReport.failed!==16||
+       dfReport.cases.filter(x=>x.result==="PASS").length!==dfReport.passed||
+       dfReport.cases.filter(x=>x.result==="FAIL").length!==dfReport.failed||
+       dfReport.cases.some(x=>x.result!=="PASS"&&x.result!=="FAIL")||
+       new Set(dfReport.cases.map(x=>x.name)).size!==16)
+      throw Error("Malformed or changed F005 DF milling native fixture result");
+    // The repaired F003 v1.0.1 model and current independent F005 fixture
+    // now pass all 16 cases. The historical ten-failure allowance is retired:
+    // any future failure must stop the build rather than remain quarantined.
+    const dfManifest=JSON.parse(fs.readFileSync(dfManifestPath,"utf8"));
+    if(!dfManifest.modelID || dfReport.subjectModelID!==dfManifest.modelID ||
+       dfReport.syntheticOnly!==true || dfReport.actualRetailCasts!==0)
+      throw Error("F005 DF milling fixture identity or synthetic-only contract changed");
+    if(!/^(?:PROPOSED_|ACCEPTED(?:_|$))/.test(dfManifest.status||""))
+      throw Error("Unknown F003 DF milling model acceptance status");
+    // Bind the declared model to the actual Git blob content. A model edit
+    // without a matching manifest and fresh independent QA must fail closed.
+    const modelRel=dfManifest.modelCode;
+    if(typeof modelRel!=="string" || !modelRel.startsWith("research/tools/models_v2/") ||
+       modelRel.includes("..") || !modelRel.endsWith(".js"))
+      throw Error("Unexpected F003 model code path");
+    const modelBytes=fs.readFileSync(path.join(root,modelRel));
+    const gitBlobSHA=require("node:crypto").createHash("sha1")
+      .update("blob "+modelBytes.length+"\0").update(modelBytes).digest("hex");
+    if(dfManifest.modelCodeBlobSHA!==gitBlobSHA)
+      throw Error("F003 model code changed without versioned manifest/QA update");
+    if(dfReport.failed!==0 || dfChild.status!==0)
+      throw Error("F005 DF milling native strict 16/16 gate failed: "+
+        dfReport.failed+" failed; "+dfReport.cases.filter(x=>x.result==="FAIL")
+          .map(x=>x.name+": "+x.detail).join("; ")+"; exit="+dfChild.status);
+    console.log("PASS: F005 DF milling native 16/16 strict fail-closed gate (independent acceptance remains separate)");
+    // F002 staged native F003 anytime QA. Both independent F005 suites run on
+    // every build. The old, source-pinned model is explicitly quarantined for
+    // eight known nested-context defects; all other failures fail closed.
+    // Any model change requires a matching manifest and clean 13/13 result.
+    // This staged allowance is NOT a model acceptance or economic promotion.
+    const anytimeManifestPath=path.join(root,"research/models/v2/midnight_rare_gem_anytime_e_bounds_v1.json");
+    if(!fs.existsSync(anytimeManifestPath))
+      throw Error("Required F003 anytime model manifest missing");
+    const anytimeManifest=JSON.parse(fs.readFileSync(anytimeManifestPath,"utf8"));
+    const anytimeModelRel=anytimeManifest.modelSource;
+    if(anytimeModelRel!=="research/tools/models_v2/midnight_rare_gem_anytime_e_bounds_v1.js")
+      throw Error("Unexpected F003 anytime model source path");
+    const anytimeModelBytes=fs.readFileSync(path.join(root,anytimeModelRel));
+    const anytimeModelBlob=require("node:crypto").createHash("sha1")
+      .update("blob "+anytimeModelBytes.length+"\0").update(anytimeModelBytes).digest("hex");
+    if(anytimeManifest.modelSourceBlobSHA!==anytimeModelBlob)
+      throw Error("F003 anytime model changed without matching versioned manifest");
+    if(typeof anytimeManifest.modelID!=="string" ||
+       !/^(?:PROPOSED_|ACCEPTED(?:_|$))/.test(anytimeManifest.status||""))
+      throw Error("Unrecognized F003 anytime model identity or acceptance status");
+    const anytimeSpecs=[
+      {file:"test_f005_midnight_anytime_context_lineage.js",
+       suite:"F005_MIDNIGHT_ANYTIME_CONTEXT_LINEAGE",count:12},
+      {file:"test_f005_anytime_typed_context_snapshot_integrity.js",
+       suite:"F005_ANYTIME_TYPED_CONTEXT_SNAPSHOT_INTEGRITY",count:13}
+    ];
+    // The independent F005 suites are a trust boundary. Pin both reviewed
+    // fixture Git blobs so edits cannot silently weaken the known-failure
+    // quarantine or turn an unreviewed model into a green native gate.
+    // A changed fixture requires fresh independent QA and an explicit re-pin.
+    const reviewedAnytimeFixtureBlobs=Object.freeze({
+      "test_f005_midnight_anytime_context_lineage.js":
+        "fbb838e348429d6deed741060fe992ead560190b",
+      "test_f005_anytime_typed_context_snapshot_integrity.js":
+        "2e64ba46af242740c7a44ecf6bb204ae1345c112"
+    });
+    for(const spec of anytimeSpecs) {
+      const fixture=path.join(root,"research/tests/v2",spec.file);
+      if(!fs.existsSync(fixture)) throw Error("Required independent F005 anytime fixture missing: "+spec.file);
+      const fixtureBytes=fs.readFileSync(fixture);
+      const fixtureBlob=require("node:crypto").createHash("sha1")
+        .update("blob "+fixtureBytes.length+"\0").update(fixtureBytes).digest("hex");
+      if(fixtureBlob!==reviewedAnytimeFixtureBlobs[spec.file])
+        throw Error("F005 anytime fixture changed without independent review and gate re-pin: "+spec.file);
+    }
+    // The model remains a research-only preview regardless of fixture outcome.
+    // A manifest changing this policy cannot be silently accepted by CI.
+    if(!anytimeManifest.outputSemantics ||
+       anytimeManifest.outputSemantics.economicUse!=="PREVIEW_ONLY" ||
+       anytimeManifest.outputSemantics.normalizedVerified!==false ||
+       anytimeManifest.outputSemantics.confidence!==0 ||
+       anytimeManifest.outputSemantics.liveEVChanged!==false)
+      throw Error("F003 anytime model preview-only economic isolation changed");
+    const knownBrokenModelBlob="55e4c0a23ef2403cef97d46d8590a52c09bbe2e9";
+    const knownNestedFailures=new Set([
+      "nested specialization source mutation cannot rewrite returned provenance",
+      "nested gear source mutation cannot rewrite returned provenance",
+      "nested unlocks source mutation cannot rewrite returned provenance",
+      "NaN specialization must not be admitted into serialized context",
+      "Infinity gear must not be admitted into serialized context",
+      "function unlocks must not be silently erased by JSON serialization",
+      "distinct nonfinite specialization values must not share a context key",
+      "nested undefined profession field must not silently disappear"
+    ]);
+    for(const spec of anytimeSpecs) {
+      const fixture=path.join(root,"research/tests/v2",spec.file);
+      if(!fs.existsSync(fixture)) throw Error("Required independent F005 anytime fixture missing: "+spec.file);
+      const child=spawnSync(process.execPath,[fixture],{cwd:root,encoding:"utf8",timeout:120000});
+      let report;
+      try {report=JSON.parse((child.stdout||"").trim());}
+      catch(_) {throw Error("F005 anytime fixture emitted invalid JSON: "+spec.file+"\n"+child.stdout+child.stderr);}
+      if(report.suite!==spec.suite || report.syntheticOnly!==true || report.actualRetailCasts!==0 ||
+         (report.modelID||report.sourceModelID)!==anytimeManifest.modelID ||
+         !Array.isArray(report.cases) || report.cases.length!==spec.count ||
+         report.passed+report.failed!==spec.count ||
+         new Set(report.cases.map(c=>c.name)).size!==spec.count ||
+         report.cases.some(c=>c.result!=="PASS"&&c.result!=="FAIL") ||
+         report.cases.filter(c=>c.result==="PASS").length!==report.passed ||
+         report.cases.filter(c=>c.result==="FAIL").length!==report.failed)
+        throw Error("Malformed or changed independent F005 anytime result: "+spec.file);
+      const failedNames=report.cases.filter(c=>c.result==="FAIL").map(c=>c.name);
+      const staged=spec.count===13 && anytimeModelBlob===knownBrokenModelBlob &&
+        anytimeManifest.status.startsWith("PROPOSED_");
+      // F003 v1.0.2 now rejects both nonfinite inputs, as the independent
+      // fixture's other assertions require. The fixture also demands that
+      // those rejected inputs produce different serialized context keys.
+      // Those contracts contradict each other. Quarantine ONLY that exact
+      // independently documented assertion on the exact proposed model and
+      // already pinned F005 fixture; never count it as a model pass.
+      // Any other failure, model edit, fixture edit, or accepted status fails.
+      const contradictoryAssertion="distinct nonfinite specialization values must not share a context key";
+      const repairedButFixtureContradictory=spec.count===13 &&
+        anytimeModelBlob==="f0dbe1892d83f3c9297b1cdcd2d6365971161e74" &&
+        anytimeManifest.status.startsWith("PROPOSED_");
+      if(staged) {
+        if(failedNames.length!==knownNestedFailures.size ||
+           failedNames.some(name=>!knownNestedFailures.has(name)) ||
+           child.status!==1)
+          throw Error("F005 anytime pinned-model failure set changed: "+JSON.stringify(failedNames));
+        console.log("QUARANTINED: independent native F005 anytime nested 5/13; 8 exact known defects, model SHA pinned, no acceptance");
+      } else if(repairedButFixtureContradictory) {
+        if(report.passed!==12 || report.failed!==1 ||
+           failedNames.length!==1 || failedNames[0]!==contradictoryAssertion ||
+           child.status!==1)
+          throw Error("F005 anytime repaired-model unexpected failure set: "+
+            JSON.stringify(failedNames)+"; exit="+child.status);
+        console.log("QUARANTINED: F005 anytime 12/13; one contradictory independent fixture assertion, exact model/fixture pinned, no acceptance");
+      } else {
+        if(report.failed!==0 || child.status!==0)
+          throw Error("F005 anytime native strict "+spec.count+"/"+spec.count+" gate failed: "+
+            failedNames.join("; ")+"; exit="+child.status);
+        console.log("PASS: independent native F005 anytime strict "+spec.count+"/"+spec.count+" (research-only)");
+      }
+    }
+    // F002: execute F005's independent Dragonflight prospecting joint-cast
+    // adversarial fixture under native Node on every research build. The current
+    // unaccepted F003 model has exactly twelve known synthetic defects. Pin
+    // both model and validator fixture blobs to quarantine only that precise
+    // failure set; a repaired/changed model must pass all 23 cases. This is
+    // never an economic-use or independent-model acceptance gate.
+    const dfJointManifestPath=path.join(root,"research/models/v2/df_prospecting_joint_cast_conflict_v1.json");
+    const dfJointFixturePath=path.join(root,"research/tests/v2/test_f005_df_prospecting_joint_cast_adversarial.js");
+    if(!fs.existsSync(dfJointManifestPath) || !fs.existsSync(dfJointFixturePath))
+      throw Error("Required F003 DF joint-cast manifest or independent F005 fixture missing");
+    const dfJointManifest=JSON.parse(fs.readFileSync(dfJointManifestPath,"utf8"));
+    const dfJointModelRel=dfJointManifest.modelSource;
+    if(dfJointModelRel!=="research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js" ||
+       typeof dfJointManifest.modelID!=="string" ||
+       !/^(?:PROPOSED_|ACCEPTED(?:_|$))/.test(dfJointManifest.status||""))
+      throw Error("Unrecognized F003 DF joint-cast model identity or status");
+    if(!dfJointManifest.policy || dfJointManifest.policy.confidence!==0 ||
+       dfJointManifest.policy.economicUse!=="PREVIEW_ONLY" ||
+       dfJointManifest.policy.normalizedVerified!==false ||
+       dfJointManifest.policy.liveEconomicEligible!==false)
+      throw Error("F003 DF joint-cast research-only economic isolation changed");
+    const dfJointGitBlob=bytes=>require("node:crypto").createHash("sha1")
+      .update("blob "+bytes.length+"\0").update(bytes).digest("hex");
+    const dfJointModelBytes=fs.readFileSync(path.join(root,dfJointModelRel));
+    const dfJointModelBlob=dfJointGitBlob(dfJointModelBytes);
+    if(dfJointModelBlob!==dfJointManifest.modelSourceBlobSHA)
+      throw Error("F003 DF joint-cast model changed without matching versioned manifest");
+    // An independent test edit must be explicitly reviewed and re-pinned;
+    // otherwise a weakened fixture could accidentally turn failures green.
+    const reviewedDFFixtureBlob="058fe6fdb422fcae3790e40fdd5367cc6f6f4610";
+    if(dfJointGitBlob(fs.readFileSync(dfJointFixturePath))!==reviewedDFFixtureBlob)
+      throw Error("F005 DF joint-cast fixture changed without independent review and gate re-pin");
+    const dfJointChild=spawnSync(process.execPath,[dfJointFixturePath],
+      {cwd:root,encoding:"utf8",timeout:120000});
+    let dfJointReport;
+    try {dfJointReport=JSON.parse((dfJointChild.stdout||"").trim());}
+    catch (_) {throw Error("F005 DF joint-cast native fixture emitted invalid JSON\\n"+
+      dfJointChild.stdout+dfJointChild.stderr);}
+    if(dfJointReport.suite!=="F005_DF_PROSPECT_JOINT_CAST_ADVERSARIAL" ||
+       dfJointReport.modelID!==dfJointManifest.modelID ||
+       dfJointReport.syntheticOnly!==true ||
+       dfJointReport.independentCurrentRetailHoldoutFamilies!==0 ||
+       !Array.isArray(dfJointReport.cases) || dfJointReport.cases.length!==23 ||
+       dfJointReport.passed+dfJointReport.failed!==23 ||
+       new Set(dfJointReport.cases.map(c=>c.name)).size!==23 ||
+       dfJointReport.cases.some(c=>c.result!=="PASS"&&c.result!=="FAIL") ||
+       dfJointReport.cases.filter(c=>c.result==="PASS").length!==dfJointReport.passed ||
+       dfJointReport.cases.filter(c=>c.result==="FAIL").length!==dfJointReport.failed)
+      throw Error("Malformed or changed independent F005 DF joint-cast result");
+    const dfJointFailed=dfJointReport.cases.filter(c=>c.result==="FAIL").map(c=>c.name);
+    const knownDFJointFailures=new Set([
+      "reject malformed RAW build suffix",
+      "reject nested NaN specialization",
+      "reject nested Infinity gear",
+      "reject function unlocks",
+      "reject undefined specialization",
+      "reject BigInt nested stat",
+      "reject nested undefined that JSON would omit",
+      "reject wrong output quality rank in scenario",
+      "reject missing output quality rank in scenario",
+      "reject overflowed historical per-cast E",
+      "reject overflowed scenario revenue/margin",
+      "reject overflowed observed economic margins"
+    ]);
+    const stagedDFJointModelBlob="20ad9dc03e7c16a910f56ecda659929b0d68b7d3";
+    const stagedDFJoint=dfJointModelBlob===stagedDFJointModelBlob &&
+      dfJointManifest.status.startsWith("PROPOSED_");
+    if(stagedDFJoint) {
+      if(dfJointReport.passed!==11 || dfJointReport.failed!==12 ||
+         dfJointFailed.length!==knownDFJointFailures.size ||
+         dfJointFailed.some(name=>!knownDFJointFailures.has(name)) ||
+         dfJointChild.status!==1)
+        throw Error("F005 DF joint-cast pinned-model failure set changed: "+
+          JSON.stringify(dfJointFailed)+"; exit="+dfJointChild.status);
+      console.log("QUARANTINED: independent native F005 DF joint-cast 11/23; "+
+        "12 exact known defects, model and fixture SHA pinned, no acceptance");
+    } else {
+      if(dfJointReport.failed!==0 || dfJointChild.status!==0)
+        throw Error("F005 DF joint-cast native strict 23/23 gate failed: "+
+          dfJointFailed.join("; ")+"; exit="+dfJointChild.status);
+      console.log("PASS: independent native F005 DF joint-cast strict 23/23 "+
+        "(synthetic-only; independent acceptance remains separate)");
+    }
+    // F002/F005: independently authored historical Dragonflight R3 diamond
+    // denominator test. Strict native Node gate: 20/20, no quarantined failures.
+    // This protects historical source-unit/rank isolation only; it is NOT
+    // current-Retail completed-cast evidence or economic-model acceptance.
+    const historicalFixtureRel="research/tests/v2/test_f005_df_r3_diamond_historical_denominator.js";
+    const historicalPins=Object.freeze({
+      [historicalFixtureRel]:"b844c09c688ccd3d97a8c4e90227e0eb108c450d",
+      "research/evidence/v2/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort.json":
+        "f76533ac084419f0d19c8a2ebe85e275c505af8e",
+      "research/evidence/v2/source-reviews/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort-source-review.json":
+        "ac16fbd13ad84755a18474ecc113e600d01849b2",
+      "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort-submission.json":
+        "85def43b1d201b22e7da8e33ede63d5eb83c82bc"
+    });
+    for(const [relative,expected] of Object.entries(historicalPins)){
+      const absolute=path.join(root,relative);
+      if(!fs.existsSync(absolute))throw Error("F005 historical source or fixture missing: "+relative);
+      const bytes=fs.readFileSync(absolute);
+      const actual=require("node:crypto").createHash("sha1")
+        .update("blob "+bytes.length+"\0").update(bytes).digest("hex");
+      if(actual!==expected)
+        throw Error("F005 historical source/fixture changed without independent review: "+relative);
+    }
+    const historicalChild=spawnSync(process.execPath,
+      ["--test","--test-reporter=tap",path.join(root,historicalFixtureRel)],
+      {cwd:root,encoding:"utf8",timeout:120000,maxBuffer:4*1024*1024});
+    const historicalTap=historicalChild.stdout||"";
+    const historicalCount=(name,count)=>new RegExp("^# "+name+" "+count+"\\r?$","m").test(historicalTap);
+    if(historicalChild.error || historicalChild.status!==0 ||
+       !historicalCount("tests",20) || !historicalCount("pass",20) ||
+       !historicalCount("fail",0) || !historicalCount("cancelled",0))
+      throw Error("F005 historical R3 native strict 20/20 gate failed: "+
+        (historicalChild.error?.message||"exit="+historicalChild.status)+"\\n"+
+        historicalTap+"\\n"+(historicalChild.stderr||""));
+    console.log("PASS: F005 historical R3 diamond native 20/20 strict source/rank isolation (historical only; no economic promotion)");
+    const schemaInput = result.manifest || {schemaVersion:"0.2.0",artifactStatus:"RESEARCH_ONLY_NOT_SHIPPED",sourceManifest:{gameDataSha:result.report.sourceSHA.gameData,statYieldProfilesSha:result.report.sourceSHA.statYield,reviewDate:"2026-10-29"},processing:result.records,mechanicRules:[]};
+    const schemaDir=fs.mkdtempSync(path.join(os.tmpdir(),"ll-candidate-schema-"));
+    const schemaFile=path.join(schemaDir,"candidate.json");
+    fs.writeFileSync(schemaFile,JSON.stringify(schemaInput));
+    let schemaTest;
+    try {
+      schemaTest=spawnSync("python3",["-c","import json,sys,jsonschema; schema=json.load(open(sys.argv[1])); jsonschema.Draft202012Validator.check_schema(schema); jsonschema.Draft202012Validator(schema).validate(json.load(open(sys.argv[2]))); print('PASS: full generated candidate JSON Schema validation')",path.join(root,"research/proposed/itemdb.schema.json"),schemaFile],{cwd:root,encoding:"utf8",timeout:60000,maxBuffer:16*1024*1024});
+    } finally { fs.rmSync(schemaDir,{recursive:true,force:true}); }
+    if(schemaTest.status!==0) throw Error("Schema check failed\n"+schemaTest.stdout+schemaTest.stderr);
+    process.stdout.write(schemaTest.stdout);
+  }
+  return snapshot;
+}
+
+module.exports={summarize,writeOrCheck,run};
+if(require.main===module){
+  try {
+    const args=process.argv.slice(2),root=path.resolve(args.find(x=>!x.startsWith("--"))||path.join(__dirname,"../.."));
+    console.log(JSON.stringify(run(root,{check:args.includes("--check")}),null,2));
+  } catch(error){console.error(error.message);process.exitCode=1;}
+}

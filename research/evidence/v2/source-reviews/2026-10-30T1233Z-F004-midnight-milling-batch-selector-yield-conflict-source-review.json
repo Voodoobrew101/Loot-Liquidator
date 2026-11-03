@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_MILLING_BATCH_SELECTOR_AND_UNMATCHED_YIELD_REPORT",
+  "runUTC": "2026-10-30T12:33:20Z",
+  "baseCommit": "fb0db9ce5e759269076879fb6cec06bac45851d1",
+  "reviewedSourceLineages": [
+    {
+      "sourceID": "midnight-2026-04-06-errtu-forum",
+      "lineage": "blizzard-us-forum-2287404-errtu",
+      "sourceType": "FIRST_PERSON_UI_SELECTOR_REPORT",
+      "originalDatasetOrCohort": "FIRST_PERSON_NO_CAST_LOG",
+      "independentMeasuredCohort": false,
+      "url": "https://us.forums.blizzard.com/en/wow/t/can-we-fix-inscriptions-milling-ability/2287404"
+    },
+    {
+      "sourceID": "midnight-wowhead-david111-comment",
+      "lineage": "wowhead-midnight-inscription-leveling-david111-comment",
+      "sourceType": "FIRST_PERSON_UNCONTROLLED_YIELD_REPORT",
+      "originalDatasetOrCohort": "FIRST_PERSON_NO_CAST_LOG",
+      "independentMeasuredCohort": false,
+      "url": "https://www.wowhead.com/guide/midnight/professions/inscription-leveling-1-100"
+    },
+    {
+      "sourceID": "midnight-method-roguery-2026-03-05",
+      "lineage": "method-roguery-midnight-inscription-editorial",
+      "sourceType": "EDITORIAL_RECIPE_GUIDE",
+      "originalDatasetOrCohort": "NO",
+      "independentMeasuredCohort": false,
+      "url": "https://www.method.gg/guides/midnight-inscription-profession-guide"
+    },
+    {
+      "sourceID": "midnight-wowhead-penguinr2gt-2026-02-21",
+      "lineage": "wowhead-penguinr2gt-midnight-inscription-leveling-editorial",
+      "sourceType": "EDITORIAL_CRAFT_SHOPPING_TABLE",
+      "originalDatasetOrCohort": "NO",
+      "independentMeasuredCohort": false,
+      "url": "https://www.wowhead.com/guide/midnight/professions/inscription-leveling-1-100"
+    },
+    {
+      "sourceID": "midnight-warcraft-wiki-recipe",
+      "lineage": "warcraft-wiki-midnight-milling-recipe-index",
+      "sourceType": "INDEXED_RECIPE_DESCRIPTION",
+      "originalDatasetOrCohort": "NO",
+      "independentMeasuredCohort": false,
+      "url": "https://warcraft.wiki.gg/wiki/Midnight_Milling"
+    }
+  ],
+  "sourceReviewEvents": [
+    {
+      "action": "NEW_PRIMARY_SELECTOR",
+      "sourceID": "midnight-2026-04-06-errtu-forum",
+      "result": "FIRSTHAND_10_HERB_SAME_RANK_AND_TYPE_SELECTOR_REPORT",
+      "promote": false
+    },
+    {
+      "action": "NEW_PRIMARY_YIELD_ANECDOTE",
+      "sourceID": "midnight-wowhead-david111-comment",
+      "result": "UNMATCHED_10_FOR_10_REPORT_NOT_E",
+      "promote": false
+    },
+    {
+      "action": "EDITORIAL_CORROBORATION",
+      "sourceID": "midnight-method-roguery-2026-03-05",
+      "result": "TEN_HERBS_PER_CAST",
+      "promote": false
+    },
+    {
+      "action": "EDITORIAL_ARITHMETIC",
+      "sourceID": "midnight-wowhead-penguinr2gt-2026-02-21",
+      "result": "9x90_AND_15x150",
+      "promote": false
+    },
+    {
+      "action": "RECIPE_INDEX_CORROBORATION",
+      "sourceID": "midnight-warcraft-wiki-recipe",
+      "result": "TEN_HERBS_PER_CAST",
+      "promote": false
+    },
+    {
+      "action": "REPO_READBACK",
+      "sourceID": "research/proposed/itemdb.lua",
+      "result": "EIGHT_ADMITTED_MIDNIGHT_MILLING_ROWS_ALREADY_BATCH_TEN",
+      "promote": false
+    },
+    {
+      "action": "ANCESTRY",
+      "result": "Method TWW and Midnight guides share Roguery author; do not count cross-expansion editorial reuse as independent measured evidence. Wowhead guide and David111 comment share a URL but have distinct authors; neither supplies controlled cohort.",
+      "promote": false
+    }
+  ],
+  "sourceMemoryDisposition": "APPEND_ONLY_ROLE_OWNED_REVIEW_NO_MUTATION_OF_LEGACY_SOURCE_MEMORY",
+  "noPromotions": true
+}

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_V02_V08_DIRECT_ORIGINAL_LUA_REPARSE",
+  "workflowRevision": 2,
+  "queueRevision": 28,
+  "reviewUTC": "2026-10-30T16:40:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseHeadBeforeReview": "705b4e39f6bf475d123479789396c071bba50098",
+  "verdict": "CONDITIONAL_PASS_DIRECT_SOURCE_ARITHMETIC_AND_QUARANTINE;_MAPPING_IDENTITY_UNRESOLVED",
+  "sourcePins": {
+    "old": {
+      "branch": "implementation/database-profession-modernization",
+      "path": "LootLiquidator/itemdb.lua",
+      "gitBlobSHA": "a838d75e82239339bea3861692291b44bd085662"
+    },
+    "new": {
+      "branch": "implementation/five-agent-completion",
+      "path": "research/proposed/itemdb.lua",
+      "gitBlobSHA": "560b885a0039045419c340716e263ae33ddf827a"
+    },
+    "test": {
+      "path": "research/tests/v2/test_f005_v02_v08_direct_lua_identity_reparse.js",
+      "creationCommit": "2e5d83491e2d71016e3826190616a8525236722a"
+    }
+  },
+  "testMethod": "Fetch and parse original compact Lua raw tables independently; JSON conversion only for positional Lua literals with balanced braces and quoted-string protection; never read or trust derived F002 reconciliation JSON in assertions.",
+  "testsActuallyRun": [
+    {
+      "runtime": "Connector JavaScript V8",
+      "oldSourceRowsParsed": 976,
+      "newSourceRowsParsed": 1018,
+      "assertionsPassed": 180,
+      "assertionsFailed": 0,
+      "adversarialMutationsRejected": 14,
+      "adversarialMutationsEscaped": 0
+    },
+    {
+      "runtime": "GitHub connector",
+      "testReadBack": "PASS",
+      "branchHeadAfterTestCommit": "2e5d83491e2d71016e3826190616a8525236722a"
+    }
+  ],
+  "exactDeltas": {
+    "oldRecords": 976,
+    "newRecords": 1018,
+    "retired": 3,
+    "added": 45,
+    "retained": 973,
+    "oldNumericEvidence": 3610,
+    "newNumericEvidence": 3558,
+    "retainedNumericToNull": {
+      "dropChance": 49,
+      "yieldMin": 0,
+      "yieldMax": 0,
+      "expectedQuantity": 55
+    },
+    "numericEvidencePromotion": 0,
+    "fishInputRankDowngrades": 12,
+    "nonEquivalentReplacementCandidates": 3,
+    "tooltipGrossInputEQuarantines": 1
+  },
+  "directSourceFindings": {
+    "retiredDF": [
+      {
+        "recordID": "dragonflight:188658:192869:10",
+        "inputRank": 2,
+        "expansionID": 9,
+        "outputRank": null,
+        "dropChance": 0.0142,
+        "expectedQuantity": 0.014,
+        "candidate": "tsm:prospect:188658:192869:L1204"
+      },
+      {
+        "recordID": "dragonflight:189143:192869:10",
+        "inputRank": 1,
+        "expansionID": 9,
+        "outputRank": null,
+        "dropChance": 0.0142,
+        "expectedQuantity": 0.014,
+        "candidate": "tsm:prospect:189143:192869:L1242"
+      },
+      {
+        "recordID": "dragonflight:190311:192869:10",
+        "inputRank": 3,
+        "expansionID": 9,
+        "outputRank": null,
+        "dropChance": 0.0142,
+        "expectedQuantity": 0.014,
+        "candidate": "tsm:prospect:190311:192869:L1280"
+      }
+    ],
+    "candidateScope": "All three have expansionID 0 and outputQualityRank 1, versus retired expansionID 9 and unknown output rank; candidate P and E remain null/confidence 0, so no identity-preserving replacement or transferred economic evidence.",
+    "fishFamily": "12 tsm:mill:200061:198412..198423:L1998..L2009 records independently decoded; old inputRank=1 -> new unknown/false, outputRank preserved 1/2/3, old P=0.2462 and E=0.8615 -> new null; no source rank-specific economic admission.",
+    "tooltip": "retail12.0.5:prospect:36910:46849:globalmenace original E=0.715 per nominal five gross ore -> null in new evidence; explicit GROSS_INPUT_PROXY_NOT_COMPLETED_CAST_E blocker and PROVISIONAL_TOOLTIP_ONLY_NOT_ECONOMIC status verified in Lua positional row.",
+    "reconciliationEquation": "3610 + 58 added numeric - 6 retired numeric - 104 quarantined numeric = 3558"
+  },
+  "safety": {
+    "workingCoverageFromCanonicalReadiness": "4072/4072",
+    "economicPromotions": 0,
+    "confidencePromotions": 0,
+    "sourceFilesEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipPolicyEdited": false,
+    "liveEVEdited": false
+  },
+  "limitations": [
+    "V8 executes identical source parsing/audit functions as committed Node test, but the committed file has not run under native Node; both original Lua files are required as CLI inputs.",
+    "The audit independently reparses the original compact raw evidence rows, not the separate emitted v0.8 working table or all downstream addon consumers.",
+    "Exact current Retail mapping eligibility, fish input-rank meaning and original study skill/patch context remain unverified; no in-game testing.",
+    "The candidate v0.8 source blob pin must be updated and revalidated if the completion engineer regenerates the candidate."
+  ],
+  "blockers": [
+    "Three Dragonflight retired rows and their same-operation additions are not equivalent in expansion/output rank; no automatic retirement-as-replacement.",
+    "Twelve fish input ranks are now unknown, not demonstrated rank-independent by client evidence.",
+    "Native Node test requires pinned v0.2 original source materialized from its branch; CI does not currently stage it.",
+    "Current Retail measured zero-inclusive cast studies with ranks, refunds and patch context are missing."
+  ],
+  "nextRepairOwner": "completion-engineer",
+  "nextTask": "Have F002 document separate mapping retirement/admission decisions for the three non-equivalent pairs and fish rank eligibility; run source-pinned test with both Lua originals under native Node.",
+  "numericDeltas": {
+    "workingCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentMeasuredLineagesAdded": 0
+  },
+  "coordinatorAcceptanceRequest": "Accept direct-source numeric quarantine and mapping non-equivalence reproduction; keep rank-specific/current-Retail economic promotions blocked pending separate eligibility and native Node verification."
+}

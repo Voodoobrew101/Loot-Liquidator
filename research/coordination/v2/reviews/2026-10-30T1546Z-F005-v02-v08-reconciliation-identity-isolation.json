@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_V02_V08_RECONCILIATION_IDENTITY_AND_ISOLATION",
+  "workflowRevision": 2,
+  "queueRevision": 28,
+  "reviewUTC": "2026-10-30T15:46:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseHeadBeforeReview": "be54e6edfa69e374dc58aee93d01657486b9a25d",
+  "verdict": "CONDITIONAL_PASS_STRUCTURAL_DIFF_QUARANTINES_PASS_MAPPING_EQUIVALENCE_NOT_ESTABLISHED",
+  "sourcePins": {
+    "v02": {
+      "branch": "implementation/database-profession-modernization",
+      "path": "LootLiquidator/itemdb.lua",
+      "blobSHA": "a838d75e82239339bea3861692291b44bd085662",
+      "verifiedByGithubReadback": true
+    },
+    "v08": {
+      "branch": "implementation/five-agent-completion",
+      "path": "research/proposed/itemdb.lua",
+      "blobSHA": "560b885a0039045419c340716e263ae33ddf827a",
+      "verifiedByGithubReadback": true
+    },
+    "diff": {
+      "path": "research/proposed/itemdb-v02-v08-field-reconciliation.json",
+      "blobSHA": "f951706c3602baf07bfa3f88311304d16067be3a"
+    },
+    "test": {
+      "path": "research/tests/v2/test_f005_v02_v08_reconciliation_integrity.js",
+      "blobSHA": "d38b5f662c607a1f5553ee3e4440081cbb396cd9"
+    }
+  },
+  "checksActuallyRun": [
+    {
+      "runtime": "Connector JavaScript V8",
+      "suite": "F005 v0.2-v0.8 structural reconciliation against committed F002 artifact",
+      "assertionsPassed": 1385,
+      "failed": 0,
+      "mutantsRejected": 17,
+      "mutantsEscaped": 0,
+      "scope": "Complete changed/added/removed arrays and metadata, NOT independent Lua reparse"
+    },
+    {
+      "runtime": "GitHub connector readback",
+      "suite": "Old v0.2 and current v0.8 source blob SHA",
+      "result": "PASS",
+      "old": "a838d75e82239339bea3861692291b44bd085662",
+      "new": "560b885a0039045419c340716e263ae33ddf827a"
+    },
+    {
+      "runtime": "GitHub Actions API",
+      "suite": "F002 source-pinned native preflight",
+      "runID": 41077906710,
+      "conclusion": "success",
+      "headSHA": "cfe23d0178250374b3beca5d362dfeae9d7faad4",
+      "scope": "F002 106-case existing native suite only; NOT new F005 reconciliation suite"
+    }
+  ],
+  "exactReconciliation": {
+    "oldRecords": 976,
+    "newRecords": 1018,
+    "retained": 973,
+    "added": 45,
+    "retired": 3,
+    "changedRetained": 55,
+    "unchangedRetained": 918,
+    "oldEvidenceNumeric": 3610,
+    "newEvidenceNumeric": 3558,
+    "addedNumericFields": 58,
+    "retiredNumericFields": 6,
+    "retainedNumericFieldsQuarantined": 104,
+    "equation": "3610 + 58 - 6 - 104 = 3558",
+    "quarantinedDropChance": 49,
+    "quarantinedExpectedQuantity": 55,
+    "sourceFieldPromotionsOnRetained": 0,
+    "rankDeltas": 12,
+    "rankDeltaFamily": "tsm:mill:200061:198412..198423:L1998..L2009",
+    "addedByMethod": {
+      "Mill": 21,
+      "Prospect": 14,
+      "Refine": 2,
+      "Smelt": 8
+    },
+    "nonEquivalentSameOperationCandidates": [
+      {
+        "old": "dragonflight:188658:192869:10",
+        "new": "tsm:prospect:188658:192869:L1204"
+      },
+      {
+        "old": "dragonflight:189143:192869:10",
+        "new": "tsm:prospect:189143:192869:L1242"
+      },
+      {
+        "old": "dragonflight:190311:192869:10",
+        "new": "tsm:prospect:190311:192869:L1280"
+      }
+    ],
+    "replacementCaveat": "Each candidate preserves input/output item IDs, input rank and five-ore batch, but changes expansionID 9 to unknown/0 and output quality rank null to 1. Not an identity-preserving replacement; must remain separate admission/retirement dispositions.",
+    "tooltipOnlyRetained": "retail12.0.5:prospect:36910:46849:globalmenace: gross-input expectedQuantity 0.715 quarantined to null; new tooltip-only context remains PROVISIONAL_TOOLTIP_ONLY_NOT_ECONOMIC."
+  },
+  "evidenceDisposition": "104 formerly numeric proxy/aggregate fields downgraded to null with confidence zero, unknown status, blockers and original claim ancestry preserved where changed; this is quarantine, not a measured yield change. 45 additions are source-attributed but not independently verified current-Retail mapping universe. Do not promote rank eligibility, live EV or confidence.",
+  "safety": {
+    "workingCoverageFromReadiness": "4072/4072",
+    "admittedMappings": 1018,
+    "evidenceMissing": 514,
+    "verifiedExpectedQuantityMissing": 116,
+    "confidenceGE90": 0,
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVPromotions": 0,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipOnlyPolicyEdited": false
+  },
+  "limitations": [
+    "Structural audit reads F002's derived diff; it does not independently reparse 976 old and 1018 new compact Lua records, nor independently prove every added mapping legitimate.",
+    "New 1385-check suite and 17 mutation checks ran in V8, not native Node; native CI has not executed this new file.",
+    "Diff safety section is a declaration; direct verification of every emitted Lua workingEstimate and all live consumers is not performed in this run.",
+    "No independent current Retail completed-cast holdout or in-game recipe/rank/eligibility verification.",
+    "F002 native 106-case CI success is separately confirmed but is not acceptance of this reconciliation."
+  ],
+  "blockers": [
+    "Three removed Dragonflight records have only same-operation candidate successors, not identical expansion/output-rank identities; coordinator must not auto-merge.",
+    "Twelve Dragonflight fish milling input ranks changed from rank 1 to unknown; source/eligibility scope needs independent client corroboration before rank-sensitive economic use.",
+    "45 additions include historical, provisional rank/eligibility and unknown-expansion records; source lineage present does not establish current Retail admission correctness.",
+    "Native Node run of new suite and independent compact-Lua source reparse remain outstanding."
+  ],
+  "nextRepairOwner": "completion-engineer",
+  "nextTask": "F005 native Node execution of this source-pinned 1385-check suite and independent sample reparse of 3 successor pairs, 12 fish rank changes and tooltip-only record; ask F002 to document mapping eligibility evidence without mutating frozen sources.",
+  "numericDeltas": {
+    "workingCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentMeasuredLineagesAdded": 0
+  },
+  "coordinatorAcceptanceRequest": "Accept source-quarantine arithmetic and isolated preview policy as structurally consistent; retain CONDITIONAL on mapping equivalence and native source decoding; do not admit three same-operation pairs as identical replacements or promote 45 added records economically."
+}

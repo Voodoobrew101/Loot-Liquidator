@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "tww-gem-finding-partial-unlock-identification-v1.1.0",
+  "taskID": "F003_TWW_GEM_FINDING_NONEXCLUSIVE_AMBER_SUBSTITUTION_REPAIR",
+  "workflowRevision": 2,
+  "status": "PROPOSED_REPAIR_PENDING_INDEPENDENT_QA",
+  "scope": "RESEARCH_ONLY_NOT_SHIPPED",
+  "modelSource": "research/tools/models_v2/tww_gem_finding_partial_unlock_identification_v1.js",
+  "modelSourceBlobSHA": "908a447dfeac840aa0d8e2ea63efd2c3323a99e4",
+  "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "baseCommitBeforeRun": "398532ed9b0444d40fc15c5d305355a69d7f3eff",
+  "sourceCommit": "a2cc6182f624c6bc9406403d4e413910a05fa3b0",
+  "targetKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "priority": 104,
+  "queuePivot": "Repair the eight priority-104 TWW Gem Finding mappings after new F004 trait evidence showed the previous structural-zero inference was not source-supported. Priority-122 DF conflicts remain blocked on independent casts.",
+  "newCapability": "Source-consistent non-exclusive trait attribution: gemFindingUnlocks=false means trait locked, not that gem output is impossible; observed positive with unknown unlock cannot force trait eligibility. Default P/E conditional cohort bounds are null. Hypothetical exclusive-gate scenario requires explicit SCENARIO_ONLY provenance, and E additionally needs a scenario cap.",
+  "math": {
+    "descriptivePAllCasts": "positiveCompletedCasts/actualCompletedCasts; descriptive, not independently validated",
+    "descriptiveEAllCasts": "totalOutputUnits/actualCompletedCasts; descriptive, not independently validated",
+    "traitUnlockFractionBounds": "[knownTrue/n, (knownTrue+unknown)/n] from recorded labels only",
+    "defaultConditionalP": "null: no structural-zero/exclusive-gate evidence",
+    "defaultConditionalE": "null even with a cap: amber-substitution trait does not establish exclusive gem gate",
+    "scenarioConditionalP": "only with explicit hypothetical exclusive gate, structural-zero consistency, fixed-N Hoeffding and q bounds",
+    "scenarioConditionalE": "only with hypothetical exclusive gate plus SCENARIO_ONLY per-cast cap; no economic promotion",
+    "baseGemVsReplacement": "cannot distinguish base rare gem from substituted amber without cast-level amber/trait event mechanism; no additive pointPercent to P or E",
+    "sourceStatus": "F004 source family is game-data trait wording; not a current-Retail completed-cast measurement"
+  },
+  "context": {
+    "gameMode": "Retail",
+    "recipeSpellID": 434018,
+    "inputQualityRank": 2,
+    "nominalInputPerCompletedCast": 5,
+    "effectiveSkill": "EXPLICIT_UNKNOWN_ALLOWED_NOT_ZERO",
+    "patchEpoch": "MUST_BE_CAPTURED",
+    "unlockState": "PER_CAST_TRUE_FALSE_NULL",
+    "resourcefulness": "REFUNDS_SEPARATE_FROM_CAST_DENOMINATOR",
+    "coOutput": "NOT_MUTUALLY_EXCLUSIVE",
+    "traitUnlockState": "PER_CAST_TRUE_FALSE_NULL; FALSE_IS_NOT_STRUCTURAL_OUTPUT_ZERO",
+    "exclusiveGate": "EXPLICIT_HYPOTHETICAL_SCENARIO_ONLY; DEFAULT_NULL"
+  },
+  "sourceAncestry": "research/evidence/v2/2026-10-30T1428Z-F004-tww-prospecting-amber-substitution-epoch.json (SHA 93ae42122b69df8a60389d3fd466c92c91d48e7c); 4 trait pages one lineage; no new current Retail cast study",
+  "actualRetailCompletedCasts": 0,
+  "independentHoldoutFamilies": 0,
+  "evidenceFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "confidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "goldRecommendationEligible": false,
+  "tooltipFallbackEligible": false,
+  "tests": {
+    "connectorV8ExactPatchedSourceSelfTest": {
+      "passed": 29,
+      "failed": 0
+    },
+    "connectorV8AdditionalIsolationAssertions": {
+      "passed": 8,
+      "failed": 0
+    },
+    "committedSourceReadback": "PASS_EXACT_BLOB_908a447dfeac840aa0d8e2ea63efd2c3323a99e4",
+    "committedSourceNativeNode": "NOT_RUN",
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentValidator": "PENDING",
+    "totalV8Assertions": {
+      "passed": 37,
+      "failed": 0
+    }
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "expectedQuantityEvidenceFilled": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newModelSources": 0,
+    "updatedModelSources": 1,
+    "updatedModelManifests": 1,
+    "previouslyUnsupportedDefaultConditionalBoundsNowNull": 8
+  },
+  "evidenceResearcherRequest": "For all eight exact TWW target keys: independently determine base gem output with trait locked, amber substitution event identity, simultaneous gem/amber co-outputs, trait point allocations, output ranks, actual zero-inclusive completed casts, refunds and patch epoch. Do not treat four trait descriptions as four independent studies.",
+  "independentValidatorRequest": "Independently test default nonexclusive behavior, positive gem with trait=false, unknown positive not forcing unlock, hypothetical gate contradiction rejection, scenario-only cap and no live EV, plus native Node exact source. Verify that P/E are not inferred from 1%-per-point trait wording.",
+  "blockers": [
+    "Base gem output can occur independently of Gem Finding substitution; no exclusive-gate evidence",
+    "No current Retail zero-inclusive per-cast cohort with trait points, amber co-outputs and refunds",
+    "No independently verified per-cast hard caps or minimum-eligible-skill baseline",
+    "Independent validator and native Node run pending"
+  ]
+}

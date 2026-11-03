@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_RANKED_ORE_PRISMATIC_DIAMOND_COHORTS",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "2026-10-31T0034Z-F004-df-ranked-ore-prismatic-diamond-cohorts",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "0ca66397f9a9ec36205fbaefa764fe006bddb110",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_F005",
+  "question": "Can newly surfaced historical rank-labelled prospecting cohorts constrain the Dragonflight diamond/Prismatic Ore model without treating gross ore as verified casts or claiming a 10.0.5 rate change?",
+  "answer": "A Jan 14 original player reports 16 Illimited Diamonds from 11,500 R3 Serevite Ore, including 9 from the first 3,500 (remaining 8,000 yielded 7 by subtraction). A separate Wowhead commenter reports about 40 Prismatic Ore from 5,000 R3 Draconium Ore. Another commenter reports zero diamonds after 1,000 R2 plus 1,000 R3 ore, but the ore family is unidentified. These are distinct historical source leads, not verified current Retail E/P; the nested Serevite segments are one cohort.",
+  "sources": [
+    {
+      "source": "https://www.reddit.com/r/woweconomy/comments/10bngi7",
+      "date": "2023-01-14",
+      "lineage": "reddit-10bngi7-20230114-original-poster-unknown-handle",
+      "indexStatus": "NEW_CANONICAL_SOURCE",
+      "access": "REDDIT_WEB_INDEX_PRIMARY_POST"
+    },
+    {
+      "source": "https://www.wowhead.com/fr/item=194545/minerai-prismatique",
+      "date": null,
+      "lineage": "wowhead-prismatic-ore-commenter-Zuhla",
+      "indexStatus": "EXISTING_ITEM_PAGE_NEW_COMMENTER_COHORT",
+      "access": "WOWHEAD_FRENCH_INDEXED_COMMENT_TRANSLATION"
+    },
+    {
+      "source": "https://www.wowhead.com/item=192869/illimited-diamond",
+      "date": null,
+      "lineage": "wowhead-illimited-diamond-commenter-Alingenomen",
+      "indexStatus": "EXISTING_ITEM_PAGE_NEW_COMMENTER_COHORT",
+      "access": "WOWHEAD_ENGLISH_INDEXED_COMMENT"
+    }
+  ],
+  "observations": [
+    {
+      "id": "DF-20230114-SEREVITE-R3-11500-16DIAMONDS",
+      "source": "https://www.reddit.com/r/woweconomy/comments/10bngi7",
+      "lineage": "reddit-10bngi7-20230114-original-poster-unknown-handle",
+      "publicationDate": "2023-01-14",
+      "observationEpoch": "ON_OR_BEFORE_2023-01-14_PRE_10.0.5",
+      "gameMode": "HISTORICAL_DRAGONFLIGHT_RETAIL",
+      "inputFamily": "Serevite Ore",
+      "inputItemID": 190394,
+      "inputQualityRank": 3,
+      "outputFamily": "Illimited Diamond",
+      "outputItemID": null,
+      "outputRank": null,
+      "outputRankCandidates": [
+        192869,
+        192870,
+        192871
+      ],
+      "reportedGrossOreUnits": 11500,
+      "reportedDiamondUnits": 16,
+      "reportedFirstSegment": {
+        "oreUnits": 3500,
+        "diamondUnits": 9
+      },
+      "derivedRemainderSegment": {
+        "oreUnits": 8000,
+        "diamondUnits": 7,
+        "derivation": "11500-3500=8000;16-9=7; NOT A SECOND INDEPENDENT COHORT"
+      },
+      "nominalReagentPerCast": 5,
+      "nominalCastEquivalents": 2300,
+      "actualCompletedCasts": null,
+      "refundedOreUnits": null,
+      "zeroOutputCasts": null,
+      "professionSkill": null,
+      "professionStats": null,
+      "reportedUnitsPerOre": 0.001391304347826087,
+      "firstSegmentUnitsPerOre": 0.0025714285714285713,
+      "remainderUnitsPerOre": 0.000875,
+      "measuredDropChance": null,
+      "verifiedExpectedQuantity": null,
+      "sourceClaimType": "FIRSTHAND_REPORTED_TOTALS_WITH_NESTED_PARTIAL_SEGMENT",
+      "uncertainty": "OUTPUT RANK UNKNOWN; NO CAST LOG, REFUNDS, SKILL OR STATS; GROSS ORE IS NOT VERIFIED CAST DENOMINATOR; HISTORICAL"
+    },
+    {
+      "id": "DF-ZUHLA-DRACONIUM-R3-5000-ABOUT40PRISMATIC",
+      "source": "https://www.wowhead.com/fr/item=194545/minerai-prismatique",
+      "lineage": "wowhead-prismatic-ore-commenter-Zuhla",
+      "publicationDate": null,
+      "observationEpoch": "UNKNOWN_HISTORICAL_DRAGONFLIGHT_CONTEXT",
+      "gameMode": "DRAGONFLIGHT_PROSPECTING_CONTEXT_PATCH_UNVERIFIED",
+      "inputFamily": "Draconium Ore",
+      "inputItemID": 190311,
+      "inputQualityRank": 3,
+      "outputFamily": "Prismatic Ore",
+      "outputItemID": 194545,
+      "outputRank": "NOT_RANKED",
+      "reportedGrossOreUnits": 5000,
+      "reportedPrismaticUnitsApprox": 40,
+      "nominalReagentPerCast": 5,
+      "nominalCastEquivalents": 1000,
+      "actualCompletedCasts": null,
+      "refundedOreUnits": null,
+      "zeroOutputCasts": null,
+      "professionSkill": null,
+      "professionStats": null,
+      "commentSays": "at maximum level; whether this means player level, profession skill or full specialization is ambiguous",
+      "approxUnitsPerOre": 0.008,
+      "measuredDropChance": null,
+      "verifiedExpectedQuantity": null,
+      "sourceClaimType": "FIRSTHAND_APPROXIMATE_QUANTITY_FROM_TRANSLATED_COMMENT",
+      "uncertainty": "APPROXIMATE OUTPUT COUNT; SKILL AND OBSERVATION EPOCH UNKNOWN; NOT A RANK-SPECIFIC CURRENT-PATCH E"
+    },
+    {
+      "id": "DF-ALINGENOMEN-1000R2-1000R3-ZERO-DIAMONDS",
+      "source": "https://www.wowhead.com/item=192869/illimited-diamond",
+      "lineage": "wowhead-illimited-diamond-commenter-Alingenomen",
+      "publicationDate": null,
+      "observationEpoch": "AUTHOR_DESCRIBES_AFTER_PATCH_10.0.5_2023-01-24; EXACT_CAST_DATE_UNKNOWN",
+      "gameMode": "HISTORICAL_DRAGONFLIGHT_RETAIL",
+      "inputFamily": "UNSPECIFIED_DRAGON_ISLES_ORE",
+      "inputItemID": null,
+      "inputQualityRanks": [
+        2,
+        3
+      ],
+      "reportedGrossOreUnitsByRank": {
+        "2": 1000,
+        "3": 1000
+      },
+      "outputFamily": "Illimited Diamond",
+      "outputItemID": null,
+      "outputRank": null,
+      "reportedDiamondUnits": 0,
+      "reportedProspects": 400,
+      "nominalReagentPerCast": 5,
+      "nominalCastEquivalents": 400,
+      "actualCompletedCasts": null,
+      "refundedOreUnits": null,
+      "zeroOutputCasts": null,
+      "professionSkill": null,
+      "professionStats": null,
+      "observedAggregateZeroDiamondResult": true,
+      "measuredDropChance": null,
+      "verifiedExpectedQuantity": null,
+      "sourceClaimType": "FIRSTHAND_ZERO_OUTPUT_AGGREGATE_WITH_UNSPECIFIED_ORE_FAMILY",
+      "uncertainty": "DO NOT ASSIGN TO DRACONIUM OR SEREVITE; 400 IS ORE/5 REPORTED, NOT CAST LOG; ZERO OBSERVATIONS DO NOT PROVE ZERO TRUE PROBABILITY; PATCH CAUSATION UNPROVEN"
+    }
+  ],
+  "targetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "modelDisposition": [
+    "Keep Serevite nested segments as one author lineage, never two independent samples.",
+    "Do not convert gross ore/5 into verified actual completed casts; Resourcefulness refunds unknown.",
+    "Keep Alingenomen's unknown ore family unassigned and do not infer zero population drop chance.",
+    "Do not equate output gem units with occurrence P absent hit counts and proven per-cast maximum.",
+    "Do not use approximate Zuhla counts as exact observed totals or as current patch E.",
+    "Do not infer undocumented 10.0.5 nerf from unmatched cohorts or player speculation.",
+    "All observations historical; require independent current-Retail applicability bridge before economic promotion."
+  ],
+  "proposedOnly": true,
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "liveRecommendationEligible": false,
+    "rawEvidence": "UNCHANGED",
+    "frozenHistoricalTSM": "UNCHANGED",
+    "tooltipOnly": "UNCHANGED",
+    "main": "UNCHANGED",
+    "runtimeProfiles": "UNCHANGED",
+    "legacyAssignments": "UNCHANGED"
+  }
+}

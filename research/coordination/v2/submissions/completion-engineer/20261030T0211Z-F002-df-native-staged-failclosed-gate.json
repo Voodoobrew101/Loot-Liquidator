@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_STAGE_F005_DF_MILL_NATIVE_FAIL_CLOSED_GATE",
+  "workflowRevision": 2,
+  "queueRevision": 15,
+  "runUTC": "2026-10-30T02:11:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "6b5d24831a9a2ca5acdfa7e5755e77c6c9331d6a",
+  "resultCommit": "309eb9fa6b96b5215c83bb4a1997aac462ef1644",
+  "status": "SUBMITTED_FOR_COORDINATOR_REVIEW_STAGED_QA_NOT_F003_ACCEPTANCE",
+  "assignment": "F002_WIRE_F005_DF_MILL_SUITE_AFTER_MODEL_REPAIR",
+  "dependencyState": {
+    "f003ModelBlob": "5621836ca4078e9c0003f70e26c3df8f06af11ec",
+    "f003ManifestBlob": "30ed0f15034f7c60baae55e779be44e28ec4d09d",
+    "f003Status": "PROPOSED_NOT_ACCEPTED",
+    "f005FixtureBlob": "97ab6ed0a583a2c1fc9cbed092ef506e674361a8",
+    "independentF005Failures": 10,
+    "knownFixtureContradiction": "The omitted-co-output demonstration still expects a decision on an incomplete output universe; validator owns its postrepair revision."
+  },
+  "changeSummary": "Added native execution of independent F005 Dragonflight milling 16-case suite to research pipeline with a narrowly scoped quarantine for ten independently documented pre-repair failures while F003 remains unaccepted. New failures, malformed reports, abnormal exits, and any failures after an ACCEPTED model status are fatal. No source evidence or model/validator file modified.",
+  "exactChangedFiles": [
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "beforeBlob": "30eae7a4a29af3e41e2a3a9bc805661504b44e00",
+      "afterBlob": "245387614ff6c080cea5c61a2fdf111e6dbb7c0c",
+      "changes": [
+        "native Node spawn of F005 DF fixture",
+        "strict 16-case JSON result and exit-code contract",
+        "allowlist limited to ten pre-repair failures",
+        "accepted F003 model requires zero failures",
+        "unexpected new failures fail the build"
+      ]
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T0211Z-F002-df-native-staged-failclosed-gate.json",
+      "change": "new immutable role-owned submission"
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappingsBefore": 1018,
+    "admittedMappingsAfter": 1018,
+    "workingNumericCellsBefore": 4072,
+    "workingNumericCellsAfter": 4072,
+    "evidenceNumericCellsBefore": 3558,
+    "evidenceNumericCellsAfter": 3558,
+    "evidenceMissingCellsBefore": 514,
+    "evidenceMissingCellsAfter": 514,
+    "missingEvidenceExpectedQuantityBefore": 116,
+    "missingEvidenceExpectedQuantityAfter": 116,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "newMappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "modelUncertaintyReduction": "Native reproducibility of known F003 failures established; no numerical uncertainty reduction or verified source evidence",
+    "productionFilesChanged": 0,
+    "rawEvidenceFilesChanged": 0,
+    "frozenTSMFilesChanged": 0,
+    "tooltipPolicyFilesChanged": 0,
+    "otherAgentsFilesChanged": 0
+  },
+  "testsActuallyRun": [
+    {
+      "name": "V8 parse of complete updated research/tools/run_completion_pipeline.js",
+      "result": "PASS"
+    },
+    {
+      "name": "V8 injected execution of staged gate with four synthetic fixture outcomes",
+      "result": "PASS_4_OF_4",
+      "cases": [
+        "pre-repair 6/16 quarantined only while proposed",
+        "future repaired 16/16 accepted",
+        "accepted model with known failures rejected",
+        "unexpected new failure rejected"
+      ],
+      "limitations": "Staged-gate logic harness; not native Node."
+    },
+    {
+      "name": "Native GitHub Actions verify-five-agent-completion.yml",
+      "result": "SUCCESS",
+      "runID": 40990077248,
+      "jobID": 123850081647,
+      "commit": "309eb9fa6b96b5215c83bb4a1997aac462ef1644",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40990077248"
+    },
+    {
+      "name": "Native Node independent F005 DF milling fixture",
+      "result": "EXECUTED_QUARANTINED_6_PASS_10_KNOWN_FAIL",
+      "details": "New fixture runs in the normal native --check pipeline; all ten pre-repair failures match independent F005 list. Not a 16/16 pass or acceptance."
+    },
+    {
+      "name": "Native Node independent F005 Midnight legacy fixture",
+      "result": "PASS_27_OF_27"
+    },
+    {
+      "name": "Native Node deterministic independent repeat compilation",
+      "result": "PASS"
+    },
+    {
+      "name": "Native JSON Schema full candidate",
+      "result": "PASS"
+    },
+    {
+      "name": "Native Lua 5.1 generated candidate decode",
+      "result": "PASS",
+      "details": "1018 mappings, 4072 working numeric cells, 514 evidence gaps, 1008 assumed records"
+    },
+    {
+      "name": "Native Lua blocker arrays roundtrip",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRunOrNotClaimed": [
+    "F003 repaired model 16/16 (not repaired yet)",
+    "Independent validator formal F003 acceptance",
+    "In-game current Retail cast observations",
+    "Current Retail whole-study independent holdout",
+    "Coordinator independently pinned detached SHA-256 digest"
+  ],
+  "preservedPolicies": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "operationalEstimatesAffectLiveValuation": false,
+    "tooltipOnlyEconomicUse": "PROHIBITED",
+    "frozenTSMUnchanged": true,
+    "legacyAssignmentsUnchanged": true,
+    "schedulesUnchanged": true,
+    "mainUntouched": true,
+    "runtimeProfilesBranchUntouched": true
+  },
+  "blockers": [
+    "F003 RAW_CURRENT_RETAIL context remains insufficiently typed and 8 corresponding synthetic tests fail.",
+    "F003 output universe is self-declared; 2 synthetic tests fail, and a missing co-output can reverse synthetic decision.",
+    "Independent F005 fixture has a contradictory pre-repair omitted-co-output expectation; validator must revise after model repair.",
+    "Model manifest is PROPOSED_NOT_ACCEPTED; staged known-failure quarantine must not be represented as final QA acceptance.",
+    "No independent Retail completed-cast holdout, verified output-universe certificate, or external coordinator SHA-256 trust root."
+  ],
+  "nextTask": "After modeller F003 typed-context and output-universe repair and validator's revised independent 16-case fixture, require native 16/16 unconditionally, remove known-failure quarantine, rerun --check/schema/Lua5.1, and request independent F005/coordinator acceptance.",
+  "zeroDeltaPivot": "F002 Midnight quarantine accepted at queue 15; pivoted to distinct native F003 integration readiness instead of repeating unchanged source or numeric audits.",
+  "acceptanceRequested": "ACCEPT_STAGED_NATIVE_QA_ONLY_NOT_F003_MODEL_OR_ECONOMIC_ACCEPTANCE"
+}

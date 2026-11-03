@@ -1,0 +1,104 @@
+{
+  "hypothesisID": "legacy-felslate-standard-mass-compare",
+  "evidenceStatus": "EMPIRICAL_ESTIMATE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 6,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      31252,
+      225904
+    ],
+    "inputItemIDs": [
+      123919
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": null,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "recipeSpellID": 31252,
+    "nominalInputCount": 5,
+    "reportedOre": 10000,
+    "actualCompletedOperations": null,
+    "uncommonUnits": 2063,
+    "rareUnits": 341,
+    "uncommonUnitsPerFiveOreEquivalent": 1.0315,
+    "rareUnitsPerFiveOreEquivalent": 0.1705,
+    "skill": null,
+    "gear": null,
+    "build": null
+  },
+  "targetContext": {
+    "recipeSpellID": 225904,
+    "nominalInputCount": 20,
+    "reportedOre": 10000,
+    "actualCompletedOperations": null,
+    "uncommonUnits": 2070,
+    "rareUnits": 334,
+    "uncommonUnitsPerFiveOreEquivalent": 1.035,
+    "rareUnitsPerFiveOreEquivalent": 0.167,
+    "skill": null,
+    "gear": null,
+    "build": null
+  },
+  "requiredLiveContext": [
+    "Exact same live Retail build and patch for both recipes",
+    "Felslate 123919 and verified standard 5 versus mass 20 input consumption",
+    ">=200 actual zero-inclusive casts for EACH recipe",
+    "Matched character, skill, gear, specialization and relevant stats",
+    "Per-cast output item IDs and counts, saved inputs, independent replication"
+  ],
+  "sources": [
+    {
+      "claimID": "scribd-legion-worksheet-2017-felslate-two-methods",
+      "url": "https://www.scribd.com/document/359130779/Full-Legion-Worksheet",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "wiki-felslate-mass-recipe-20",
+      "url": "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "wowhead-225904-113-mass",
+      "url": "https://www.wowhead.com/spell=225904/mass-prospect-felslate",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": 113
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 48,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Original worksheet lacks actual completed casts, per-cast zeros and mapped output IDs",
+    "Same-character profession skill, gear, specialization and exact patch/build unknown",
+    "Historical ore-normalized arms are not a verified current Retail coefficient",
+    "113 mass-cast source is not matched to standard recipe and has unmapped output vector",
+    "No independent holdout or numerical transformation validation"
+  ],
+  "notes": "Batch009: source memory reused; no new matched Felslate study. Historical 10,000 ore arms: standard 2063 uncommon +341 rare, mass 2070 uncommon +334 rare. Rare ratio 334/341=0.97947 is descriptive only, NOT a multiplier. Separate Cataclysm disenchant experiments do not count toward mechanics hypothesis.",
+  "statusHistory": [
+    {
+      "date": "2026-10-28",
+      "status": "BLOCKED",
+      "reason": "Reused original worksheet and 113 mass report, still missing matched zero-inclusive per-cast records and context."
+    }
+  ]
+}

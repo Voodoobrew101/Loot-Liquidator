@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_DF_NATIVE_CONDITIONAL_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevisionBefore": 15,
+  "queueRevisionAfter": 16,
+  "runUTC": "2026-10-30T02:58:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "1ca5d8a00df85904e276153e9f8bc12b3d886156",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "SUBMITTED_FOR_COORDINATOR_RECORD_AND_INDEPENDENT_QA",
+  "changedFiles": [
+    "research/coordination/v2/acceptance/20261030T0258Z-F001-F005-df-native-conditional-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/20261030T0258Z-F001-F005-df-native-conditional-integration.json"
+  ],
+  "acceptedVersusProposed": [
+    {
+      "role": "completion-engineer",
+      "decision": "ACCEPT_STAGED_RESEARCH_QA_INFRASTRUCTURE_ONLY",
+      "submission": "research/coordination/v2/submissions/completion-engineer/20261030T0211Z-F002-df-native-staged-failclosed-gate.json"
+    },
+    {
+      "role": "baseline-modeller",
+      "decision": "CONDITIONAL_ACCEPT_PRIOR_TEN_DEFECT_REPAIR_NOT_FULL_MODEL_ACCEPTANCE",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261030T0219Z-F003-DF-MILL-RAW-CONTEXT-UNIVERSE-REPAIR.json"
+    },
+    {
+      "role": "baseline-modeller",
+      "decision": "ACCEPT_FAILURE_REPORT_AS_HISTORICAL",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261030T0221Z-F003-DF-MILL-NATIVE-CI-ADDENDUM.json"
+    },
+    {
+      "role": "independent-validator",
+      "decision": "ACCEPT_INDEPENDENT_FIXTURE_CORRECTION_AND_16_OF_16_WITH_RESIDUAL_BLOCKER",
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-30T0246Z-F005-df-milling-native-fixture-repair.json"
+    },
+    {
+      "role": "evidence-researcher",
+      "decision": "ACCEPT_CONTEXT_LEAD_ONLY_REJECT_NUMERIC_PROMOTION",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0228Z-F004-midnight-post-hotfix-prospecting-rate-context-submission.json"
+    }
+  ],
+  "exactDeltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingCellsFilled": 0,
+    "newEvidenceCells": 0,
+    "newEvidenceExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentlyMeasuredStudyLineages": 0,
+    "newContextLeadLineages": 1,
+    "validatorContradictoryTestCasesCorrected": 1,
+    "priorIndependentFixturePassDelta": 10,
+    "productionFilesChanged": 0
+  },
+  "canonicalSnapshot": {
+    "path": "research/coordination/completion-readiness.json",
+    "blobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingNumericTotal": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceE": 116,
+    "evidenceGE90": 0
+  },
+  "testsActuallyRun": [
+    "Read current role contract, coordinator contract, v2 workflow, canonical readiness and priorities",
+    "GitHub compare previous coordinator commit to head: 12 commits, 12 research-only files",
+    "Read all four specialist submissions, modeller CI addendum and independent validator review",
+    "Read and matched model, manifest, native fixture, pipeline, readiness and priority blob SHAs",
+    "19 static coordinator preflight assertions passed",
+    "Queried GitHub Actions job status and inspected native job log for 16/16, Lua5.1 and deterministic pipeline"
+  ],
+  "externalNativeCI": {
+    "nativeRunID": 40993516302,
+    "nativeURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40993516302",
+    "nativeJobID": 123861227481,
+    "nativeJobConclusion": "success",
+    "nativeLogObserved": "PASS: F005 DF milling native 16/16",
+    "nativeLua": "PASS 1018 mappings, 4072 numeric, 514 evidence gaps",
+    "nativeDeterministicBuild": "PASS",
+    "nativeMidnightFixture": "27/27",
+    "nativeBinomial": "476/476",
+    "modelSelfTestReported": "32/32",
+    "residualSyntheticRecipeIDProbes": {
+      "acceptedUnexpectedly": [
+        "banana",
+        382981.5
+      ],
+      "count": 2,
+      "nativeRegressionAdded": false
+    },
+    "inGameRetail": false,
+    "independentRetailHoldouts": 0
+  },
+  "checksNotRun": [
+    "Native Node or Lua executed in coordinator runtime",
+    "WoW Retail client",
+    "Independent current-Retail whole-study-family holdout",
+    "Independent certified output universe",
+    "Native malformed recipeSpellID regression (two probes only synthetic)"
+  ],
+  "blockers": [
+    "RAW_CURRENT_RETAIL recipeSpellID accepts noninteger malformed values; F003 modeller owns repair",
+    "outputUniverseVerified is caller-asserted, not independent current-Retail selector/eligibility certification",
+    "No completed-cast zero-inclusive current Retail cohort for 24 DF model keys or seven Midnight diamond E gaps",
+    "No new confidence-90 fields or verified minimum-eligible baseline",
+    "Temporary pre-repair native quarantine must be removed after accepted repair"
+  ],
+  "oneNextTask": "F003_REPAIR_RAW_RECIPE_SPELL_ID_TYPE",
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_REPAIR_RAW_RECIPE_SPELL_ID_TYPE",
+      "scope": [
+        "research/tools/models_v2/",
+        "research/models/v2/"
+      ],
+      "acceptance": "Require positive safe-integer RAW recipeSpellID or separately versioned typed operation variant; reject 'banana' and 382981.5; keep 32 synthetic model checks and preview-only policy. Do not infer actual recipe eligibility."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_NATIVE_RECIPE_ID_MALFORMED_CONTEXT_REGRESSION",
+      "scope": [
+        "research/tests/v2/",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Add two independently authored malformed RAW recipeSpellID cases; demonstrate pre-repair failure and post-repair native pass (at least 18/18) plus 27 Midnight controls, full --check, Lua5.1 and source-ancestry assertions."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_REMOVE_STAGED_DF_QUARANTINE_AFTER_F003_REVIEW",
+      "scope": [
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "After F003 model repair and F005 independent native acceptance, remove ten-failure quarantine and require unconditional zero-failure DF suite; rerun deterministic --check, JSON schema, Lua5.1 and preview isolation. No production changes."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_MIDNIGHT_DIAMOND_COMPLETED_CAST_CAPTURE_OR_SELECTOR_PIVOT",
+      "scope": [
+        "research/evidence/v2/"
+      ],
+      "acceptance": "Seek independent post-2026-03-31 ore/rank-specific zero-inclusive completed casts and refunds for seven Eversong Diamond E gaps; if unavailable, pivot to legacy queue30 exact Crushing selector/rank eligibility. Do not reuse same unquantified Reddit claim."
+    }
+  ],
+  "policy": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "zeroDeltaPivot": "Prior F002 Midnight quarantine accepted. Pivoted to newly changed F003/F005 native integration and distinct residual typed recipe identity defect; no repeated unchanged evidence audits."
+}

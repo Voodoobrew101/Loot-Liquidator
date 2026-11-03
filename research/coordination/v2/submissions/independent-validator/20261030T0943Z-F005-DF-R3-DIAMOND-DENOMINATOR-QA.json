@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_R3_DIAMOND_HISTORICAL_DENOMINATOR_QA",
+  "workflowRevision": 2,
+  "runID": "2026-10-30T0943Z-F005-df-r3-diamond-denominator",
+  "queueRevision": 2,
+  "baseCommit": "1a871aa51e28571d10865029068fe7aaffe79b38",
+  "resultCommit": "SELF_THIS_COMMIT",
+  "verdict": "CONDITIONAL_PASS_HISTORICAL_CONTEXT_ONLY",
+  "exactFilesAdded": [
+    "research/tests/v2/test_f005_df_r3_diamond_historical_denominator.js",
+    "research/coordination/v2/reviews/2026-10-30T0943Z-F005-df-r3-diamond-historical-denominator.json",
+    "research/coordination/v2/submissions/independent-validator/20261030T0943Z-F005-DF-R3-DIAMOND-DENOMINATOR-QA.json"
+  ],
+  "exactFilesModified": [],
+  "reviewedEvidenceBlobSHA": "f76533ac084419f0d19c8a2ebe85e275c505af8e",
+  "reviewedSourceReviewBlobSHA": "ac16fbd13ad84755a18474ecc113e600d01849b2",
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "admittedMappingsRemoved": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesPromoted": 0,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "newIndependentRegressionCases": 20
+  },
+  "testsActuallyRun": [
+    {
+      "name": "V8 independent source evidence arithmetic/isolation checks",
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "name": "Firecrawl indexed Reddit original-post corroboration",
+      "result": "PARTIAL_PASS_HEADLINE_NUMBERS_ONLY"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node execution of new regression suite",
+    "Lua 5.1 generated-file decoding",
+    "Full original Reddit thread scrape",
+    "In-game/client validation",
+    "Current-Retail matched independent holdout"
+  ],
+  "blockers": [
+    "Direct full Reddit post/comments could not be retrieved; only indexed snippets available",
+    "Current Retail zero-inclusive rank-specific completed-cast logs and refunds missing",
+    "Output-rank mapping and same-author context uniformity not established"
+  ],
+  "nextTask": "Seek rank-separated current-Retail Dragonflight R3 Draconium completed-cast sample with refunds and full co-output vectors; otherwise pivot to priority TWW milling eligibility.",
+  "acceptance": "CONDITIONAL_HISTORICAL_CONTEXT_ONLY",
+  "policy": "No source/model/compiler/production/runtime branch edits; raw evidence, frozen TSM, tooltip-only and schedules preserved."
+}

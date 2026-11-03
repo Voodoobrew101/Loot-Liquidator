@@ -1,0 +1,30 @@
+# Master independent QA — first worker handoff (2026-10-28)
+
+## Repository snapshot and separation
+- Research branch head read before atomic commit: `29d44d5b6ccc744478d9f27a8d73a5fc49e68a7f`. Main production GameData.lua blob `1d47c4a961c5dc5af626e659f7d96d1490d3cf9e`; TOC still points to GameData.lua. No production file edited.
+- Canonical itemdb creation prompt v1.1 and proposed schema already reviewed; no repeated rewrite warranted. Four worker automations exist but have **not yet run**; no worker submissions or worker evidence to accept/reject. This is an independent second-pass review of the previous master research, **not** 34 new first-pass records.
+- Source universe: **1,737** stable ledger keys (1,001 source outputs, 255 supplemental outputs, 92 overlays, 389 profiles), 54 previously examined, 1,683 never examined, 41 examined insufficient, 13 blocked, zero corrected current-Retail, zero >=90. These scopes overlap and do not establish the complete nonprocessing GameData semantic universe.
+- Potential required material numeric field slots: (1,256 static output rows + 92 runtime overlays) × 4 = **5,392** before deduplicating logical relationships. The independently scored modern four-field subset remains **34 records / 136 slots**; all 136 <70. Legacy five-dimension 6,280 slots are not interchangeable with this four-field schema (combined range).
+
+## Independent source checks and QA verdict
+1. **Legion Felslate: ACCEPT as historical reported totals, NOT current Retail rates.** Rechecked [Deckven's Wowhead Legion Jewelcrafting comment](https://www.wowhead.com/guide/legion-jewelcrafting): 3,200 Felslate ore using **Mass Prospect**, rare gem totals 17,19,15,16,24,25 (sum 116); uncommon totals 90,105,168,67,137,123 (sum 690); Gem Chips 742, no colored chip ID assignment. Recomputed all 12 five-ore-equivalent unconditional quantities = output total / (3200/5=640). These are *five-ore equivalents*, **not** observed counts of standard five-ore casts. Exact Mass Prospect cast count, per-cast zero-inclusive histograms, skill, patch and output occurrence are unreported; all four-field current-Retail promotions remain BLOCKED. The observation preserves `batchInputsPerOperation=20`, `completedOperations=null`, and `fiveOreEquivalentOperations=640`; do not replace null with 160 claimed observed casts.
+2. **April 1 Midnight gem buff: ACCEPT date, BLOCK numeric coefficient.** Blizzard's [official hotfix archive](https://worldofwarcraft.blizzard.com/en-us/news/24266320) places “Gems will now be found more regularly when prospecting Midnight ore” under **April 1, 2026**. No numerical multiplier published. Treat any pre/post comparison as a blocked transformation until matching conditions and observed distributions are available.
+3. **Mass recipe normalization: ADD explicit QA hazard.** [Mass Prospect Osmenite](https://www.wowdb.com/spells/300619-mass-prospect-osmenite) specifies **20 Osmenite Ore** per mass recipe, not a universal five-ore recipe. This is a documented separate recipe, not permission to convert other batches or infer output distributions. Keep exact recipe ID and operation denominator.
+4. **Legacy 34-record scorecard: ACCEPT conservative status, reject unsupported promotions.** Rechecked 34 unique score rows, record confidence equal to the minimum of chance, min, max, E, identity and conditions, all <70. Their original coverage statuses remain unchanged. No independent modern output chance, positive conditional bounds or skill/patch coefficients established.
+5. **Coverage and assignment invariants: PASS.** 1,737 unique stable keys; status sum 1,683+41+13=1,737. Initial worker assignments use only NEVER_EXAMINED keys, 35 Midnight + 39 TWW + 36 Dragonflight + 30 Legacy = **140 unique keys** with zero overlaps. Assigned means **not examined**; do not increase coverage until source-backed worker reports pass master QA.
+
+## Quantitative result and blockers
+- **Verified historical arithmetic:** Felslate rare E per five-ore equivalent: 0.0265625, 0.0296875, 0.0234375, 0.025, 0.0375, 0.0390625. Uncommon: 0.140625, 0.1640625, 0.2625, 0.1046875, 0.2140625, 0.1921875.
+- **Blocked:** per-operation occurrence chance and conditional bounds from aggregate totals; actual Mass Prospect cast count; all unknown character conditions; current Retail normalizations; Midnight April 1 gem multiplier; family-wide diamond quality allocation; 200061 milling eligibility.
+- **New material corrections:** 0. **Promoted >=90:** 0. **New first-pass examined:** 0 (master coordinator does not duplicate workers). **No in-game tests.** Independent source-data assertions and per-field floor checks passed. Previous persisted 52 static regression checks were reported in the preceding run, **not re-executed here**.
+
+## Worker submission acceptance rules
+- Accept a new first-pass key only after independently matching a unique assigned stable key and preserving original source evidence, exact item IDs and recipe/batch, conditions/patch, and four separate field evidence scores (unknown remains unknown).
+- Reject any record confidence above its weakest field, source-absent numerical transformation, inferred hit counts from aggregate-only studies, duplicated worker keys, or patch pooling. Preserve rejected worker raw files; append master verdict and only then update central ledger.
+- Review workers' unique commits, test source/line provenance and invariants, then allocate new disjoint batches. Never merge main or declare all-fields-90 achieved from first-pass coverage.
+
+## Source references
+- [Official Blizzard hotfixes](https://worldofwarcraft.blizzard.com/en-us/news/24266320), April 1 2026 section.
+- [Legion Jewelcrafting historical player study](https://www.wowhead.com/guide/legion-jewelcrafting), comment by Deckven.
+- [Mass Prospect Osmenite recipe](https://www.wowdb.com/spells/300619-mass-prospect-osmenite), 20-ore reagent batch.
+- [Live Issue #2](https://github.com/Voodoobrew101/Loot-Liquidator/issues/2), research scope and current production constraints.

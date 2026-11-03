@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_SERIALIZED_SOURCE_CONTEXT_ATTESTATION_AND_F003_NATIVE_CI",
+  "workflowRevision": 2,
+  "queueRevision": 11,
+  "runUTC": "2026-10-29T22:15:17Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "4bbe015a878bed199b0e9778ef33dfbf75e2b045",
+  "resultCodeCommit": "1ae786efab8bbd5842e7ee0332c0a0c8a3d83948",
+  "submissionCommit": "THIS_COMMIT",
+  "status": "PROPOSED_PENDING_NATIVE_CI_AND_INDEPENDENT_F005",
+  "filesChanged": [
+    {
+      "path": "research/tools/working_estimates.js",
+      "blobSHA": "3500fac51b69328cacb6c3ec5089561fcba2f2bb",
+      "change": "Versioned detached SHA-256 source/context/evidence and preview attestation; canonical JSON reload; external digest pin; duplicate and order checks; fail-closed serialized verifier while retaining same-process leases."
+    },
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "blobSHA": "84bc1b017e758fa36e793063766634e5ab8f9fb1",
+      "change": "Serialized JSON roundtrip and four adversarial tamper checks; native Node execution of independent F005/F003 476-case numerical fixture."
+    }
+  ],
+  "contract": {
+    "version": "working-estimate-source-context-v1.0.0",
+    "hash": "SHA-256",
+    "fields": [
+      "recordID",
+      "sourceSHA256",
+      "workingSHA256"
+    ],
+    "externalPinRequired": true,
+    "serializedCandidateArtifactPersisted": false,
+    "note": "Detached attestation is computed and roundtrip-verified by the pipeline. Its digest is not yet published as a separately pinned immutable generated artifact; full durable cross-process deployment is not claimed."
+  },
+  "deltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "evidenceFieldsAdded": 0,
+    "newEvidenceExpectedQuantity": 0,
+    "workingNumericFieldsFilled": 0,
+    "workingNumericFieldsChanged": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "economicPromotions": 0,
+    "productionWrites": 0
+  },
+  "retainedBaseline": {
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "evidenceNumericFields": 3558,
+    "evidenceMissingFields": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "unsupportedWorkingFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "testPlan": {
+    "staticReadback": "GitHub fetched both changed blobs and confirmed attestation contract and native independent fixture invocation.",
+    "gitComparison": "Verified fast-forward code commits from coordinator head; only two completion-engineer-owned code files modified.",
+    "addedExecutableChecks": [
+      "JSON serialization/reload with external digest pin",
+      "Mutated evidence status must fail",
+      "Mutated game mode must fail",
+      "Mutated preview E must fail",
+      "Forged seal with unchanged external digest must fail",
+      "Native F005/F003 independent binomial fixture (476 synthetic numerical checks)"
+    ],
+    "nativeNodeExecution": "NOT_RUN_IN_THIS_SESSION; committed pipeline checks require GitHub Actions or local repository runner",
+    "nativeGitHubCI": "NOT_CONFIRMED: GitHub combined status and PR-triggered workflow queries returned no runs/statuses at submission time",
+    "lua51": "NOT_RUN_IN_THIS_SESSION",
+    "jsonSchema": "NOT_RUN_IN_THIS_SESSION",
+    "wowClient": "NOT_RUN",
+    "independentF005": "PENDING"
+  },
+  "safeguards": {
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "rawEvidenceChanged": false,
+    "mainChanged": false,
+    "runtimeBranchChanged": false,
+    "schedulesChanged": false,
+    "productionRelease": false
+  },
+  "blockers": [
+    "Native pipeline/independent 476-case fixture execution and CI readback pending.",
+    "Versioned detached attestation is verified in-memory across JSON serialization, but a separately persisted/pinned digest has not been accepted by coordinator.",
+    "Independent validator must adversarially test serialized reload, source/evidence provenance and external digest trust.",
+    "116 economic expected-quantity evidence gaps and 514 total numeric evidence gaps remain; no current Retail holdout or in-game verification."
+  ],
+  "nextTask": "F002_F005_NATIVE_CI_READBACK_AND_PINNED_SERIALIZED_ATTESTATION_ARTIFACT_REVIEW"
+}

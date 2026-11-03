@@ -1,5 +1,7 @@
 # Loot Liquidator
 
+The usable-data tooltip work is tracked in [PR #24](https://github.com/Voodoobrew101/Loot-Liquidator/pull/24), with [pass-2 findings](docs/usable-data-audit/PASS-2.md) and [actual offline token tooltip proofs](docs/usable-data-audit/token-tooltip-proofs.md). Pinned AllTheThings Retail references now supply exchange relationships and explicit costs through the compiler; ATT does not need to be installed. Attribution is retained in [ATT-LICENSE.txt](database/research/ATT-LICENSE.txt).
+
 **What should I do with this item?** Loot Liquidator answers that for every item in your bags, bank, Warband bank, guild bank and BetterBags. It puts a small letter on the item's icon, and hovering the item shows the gold value behind the advice.
 
 It only gives advice. It never sells, mails, crafts or destroys anything for you.
@@ -37,6 +39,10 @@ Loot Liquidator: Smelt 6g 87s
 ```
 
 **Confidence** is how sure the addon is about a disenchant, mill, prospect or smelt value. It goes up as more real results are known, including your own. Low-confidence values are still shown, because a best guess is more useful than nothing.
+
+**Reference estimates** fill gaps from stored Retail conversion tables and sourced calculators. They are labeled provisional and do not replace usable research or recorded results. Turn them on or off under **Database & Accuracy → Reference tables and calculators**.
+
+Under **Tooltips**, average output quantities are optional and off by default. Yield ranges read `[1-2]`. Material rows can be sorted by value, drop chance, average quantity, name, or database order.
 
 Choose how much you see under **Settings → AddOns → Loot Liquidator → Tooltips → Tooltip**:
 

@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_ENFORCE_CAST_BASIS_BLOCKERS_AT_WORKING_ESTIMATE_BOUNDARY",
+  "workflowRevision": 2,
+  "queueRevision": 10,
+  "runUTC": "2026-10-29T21:15:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "bcd252ce40fea02408dc821a9c5f237519cea910",
+  "resultCommit": "7de24b637d5f23e60be2c7cca949113d6fc51c5c",
+  "status": "ENGINEERING_REPAIR_SUBMITTED_FOR_INDEPENDENT_QA_AND_COORDINATOR_ACCEPTANCE",
+  "changes": [
+    {
+      "path": "research/tools/working_estimates.js",
+      "commit": "6d78b91cf1aa6d283511b741057fa91cd8915665",
+      "blobSHA": "1a100b304bd26fa5a0840ade7d8cf4437803aa6f",
+      "description": "One shared field-level cast-basis/rank applicability check for target P/E copying, donor selection, rank pooling and validation; gross-input, non-completed-cast, rank-specific and per-input bases cannot be confidence-bearing copied P/E. Raw evidence untouched."
+    },
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "commit": "2b0a8462d7e3d01c8e9b1e92e9677d77ad1594b7",
+      "blobSHA": "1ef5cf5b7f9ccbcb3bdaef5c99e7e6ff8d44de92",
+      "description": "Execute independent validator-owned 12-case cast-basis fixture in native Node pipeline."
+    },
+    {
+      "path": "research/proposed/itemdb.lua",
+      "commit": "4e4d85b71437d4e5c5563f747a725cb7319dbab9",
+      "blobSHA": "940431ecd0cefe1e65701d2cc9f53ae619350b38",
+      "description": "Deterministically regenerated research-only working preview, without changing admitted source mappings or original evidence."
+    },
+    {
+      "path": "research/proposed/itemdb-build-report.json",
+      "commit": "4e4d85b71437d4e5c5563f747a725cb7319dbab9",
+      "blobSHA": "46ddc18d77daddfa97486424daf1719f54d9fdcb",
+      "description": "Updated working-field imputation counters."
+    }
+  ],
+  "temporaryRegeneration": {
+    "method": "One-time branch-scoped CI generation with fast-forward-only push",
+    "generatedCommit": "4e4d85b71437d4e5c5563f747a725cb7319dbab9",
+    "cleanupCommit": "7de24b637d5f23e60be2c7cca949113d6fc51c5c",
+    "workflowRestoredToOriginalBlobSHA": "50811e5fb9e891f30550a006cad0e1a7e2e5790a",
+    "noPersistentGenerationJob": true
+  },
+  "deltas": {
+    "admittedMappings": {
+      "before": 1018,
+      "after": 1018,
+      "delta": 0
+    },
+    "fieldSlots": 4072,
+    "workingNumericCells": {
+      "before": 4072,
+      "after": 4072,
+      "delta": 0
+    },
+    "evidenceNumericCells": {
+      "before": 3558,
+      "after": 3558,
+      "delta": 0
+    },
+    "evidenceMissingCells": {
+      "before": 514,
+      "after": 514,
+      "delta": 0
+    },
+    "evidenceMissingExpectedQuantity": {
+      "before": 116,
+      "after": 116,
+      "delta": 0
+    },
+    "workingPriorDropChance": {
+      "before": 204,
+      "after": 987,
+      "delta": 783
+    },
+    "workingPriorExpectedQuantity": {
+      "before": 116,
+      "after": 933,
+      "delta": 817
+    },
+    "workingPriorYieldMin": {
+      "before": 97,
+      "after": 97,
+      "delta": 0
+    },
+    "workingPriorYieldMax": {
+      "before": 97,
+      "after": 97,
+      "delta": 0
+    },
+    "recordsWithAssumptions": {
+      "before": 222,
+      "after": 1000,
+      "delta": 778
+    },
+    "workingConsistencyAdjustedDropChance": {
+      "before": 5,
+      "after": 0,
+      "delta": -5
+    },
+    "workingConsistencyAdjustedYieldMax": {
+      "before": 12,
+      "after": 0,
+      "delta": -12
+    },
+    "numericEvidenceFieldsAdded": 0,
+    "newEvidenceExpectedQuantity": 0,
+    "mappingsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "workingFallbacksPromotedToEconomic": 0,
+    "originalEvidenceFieldsChanged": 0,
+    "frozenTSMChanged": false,
+    "tooltipChannelChanged": false,
+    "productionFilesChanged": 0,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false
+  },
+  "checks": {
+    "nativeGitHubCI": {
+      "runID": 40956050354,
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40956050354",
+      "conclusion": "success",
+      "commit": "7de24b637d5f23e60be2c7cca949113d6fc51c5c"
+    },
+    "newIndependentCastBasis": {
+      "passed": 12,
+      "failed": 0,
+      "previouslyPassed": 4,
+      "previouslyFailed": 8,
+      "fixture": "research/tests/v2/test_f005_blocked_evidence_cast_basis.js"
+    },
+    "previousIndependentStatusClaim": {
+      "passed": 11,
+      "failed": 0
+    },
+    "previousIndependentProvenance": {
+      "passed": 12,
+      "failed": 0
+    },
+    "additionalNativeSuites": {
+      "rankPool": 12,
+      "policyContext": 8,
+      "targetIdentity": 11,
+      "donorAncestry": 8
+    },
+    "deterministicPipelineCheck": "PASS",
+    "jsonSchema": "PASS",
+    "lua51": {
+      "syntax": "PASS",
+      "decodedMappings": 1018,
+      "decodedWorkingCells": 4072,
+      "preservedEvidenceGaps": 514,
+      "assumedRecords": 1000
+    },
+    "blockerArrayRoundtrip": {
+      "multiBlockerFields": 91,
+      "additionalBlockers": 124
+    },
+    "testsNotRun": [
+      "WoW Retail client",
+      "Independent current-Retail whole-study holdout",
+      "Independent validator post-repair acceptance verdict"
+    ]
+  },
+  "safety": {
+    "allWorkingEstimatesEconomicUse": "PREVIEW_ONLY",
+    "allWorkingEstimatesNormalizedVerified": false,
+    "unsupportedWorkingFieldConfidence": 0,
+    "liveEVOrRecommendationChanged": false,
+    "tooltipFallbacksExcludedFromEconomicFields": true,
+    "note": "The 783 P and 817 E new working-prior classifications are not new evidence; previously confidence-bearing copied source numbers had non-completed-cast or incompatible rank/quantity basis."
+  },
+  "blockers": [
+    "Independent validator acceptance and coordinator disposition still pending.",
+    "Durable serialized cross-process source/working attestation remains absent; current identity lease is in-process.",
+    "116 original evidence E gaps and 514 total evidence numeric gaps remain; no verified current-Retail minimum-eligible baseline.",
+    "Retail conversion-universe exhaustiveness and in-game behavior not verified."
+  ],
+  "nextTask": {
+    "owner": "completion-engineer",
+    "id": "F002_SERIALIZED_SOURCE_CONTEXT_ATTESTATION_V1",
+    "action": "Coordinate a versioned serialized context/evidence identity contract with independent validator, preserving preview-only economics; prioritize any new validator findings over this task."
+  }
+}

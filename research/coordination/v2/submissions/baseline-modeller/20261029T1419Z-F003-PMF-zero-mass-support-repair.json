@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_PMF_ZERO_MASS_SUPPORT_REPAIR",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 3,
+  "dateUTC": "2026-10-29T14:19:34.903Z",
+  "baseCommit": "65036bee329b70f0fbaa7981f4d749e31022ec70",
+  "resultCommit": "SAME_ATOMIC_COMMIT_AS_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_NOT_SELF_APPROVED",
+  "change": {
+    "defectID": "F005-PMF-ZERO-MASS-SUPPORT",
+    "cause": "forward() widened positive yield bounds using PMF rows whose probability was exactly zero",
+    "fix": "Use only strictly positive-probability rows for conditional positive yieldMin/yieldMax while retaining PMF normalization and zero-inclusive expectedQuantity; guard no positive support",
+    "modelVersionBefore": "tww-milling-context-sensitivity-v1.0.0",
+    "modelVersionAfter": "tww-milling-context-sensitivity-v1.0.1",
+    "paths": [
+      "research/tools/models_v2/tww_milling_context_sensitivity_v1.js",
+      "research/models/v2/tww_milling_f003_sensitivity_v1.json",
+      "research/coordination/v2/submissions/baseline-modeller/20261029T1419Z-F003-PMF-zero-mass-support-repair.json"
+    ],
+    "affectedStableKeys": [
+      "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+      "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+      "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+      "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+      "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+      "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+      "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+      "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+      "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+      "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+      "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+      "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+    ],
+    "changedStoredScenarioNumbers": 0,
+    "changedStoredScenarioContexts": 0
+  },
+  "deltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingCellsFilled": 0,
+    "evidenceCellsFilled": 0,
+    "newEconomicExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "previewScenarios": 12,
+    "modelRegressionDefectsRepaired": 1
+  },
+  "tests": {
+    "modelSelfTest": {
+      "runtime": "V8_GITHUB_SOURCE_COMMONJS_SHIM",
+      "passed": 16,
+      "failed": 0
+    },
+    "independentOriginalF005": {
+      "runtime": "V8_GITHUB_SOURCE_COMMONJS_SHIM",
+      "passed": 9,
+      "failed": 0
+    },
+    "independentPositiveSupportF005": {
+      "runtime": "V8_GITHUB_SOURCE_COMMONJS_SHIM",
+      "passed": 12,
+      "failed": 0
+    },
+    "modelManifestDataParity": "ALL_FIELDS_UNCHANGED_EXCEPT_MODEL_VERSION",
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "completionPipelineCheck": "NOT_RUN",
+    "fullSchema": "NOT_RUN",
+    "wowClient": "NOT_RUN",
+    "independentRetest": "PENDING_F005"
+  },
+  "economicGate": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveValuationAffected": false,
+    "tooltipOnlyChannelChanged": false,
+    "sourceEvidenceChanged": false
+  },
+  "blockers": [
+    "Independent F005 retest required against changed blob and native Node pipeline",
+    "No independent 2026 Retail zero-inclusive TWW milling holdout",
+    "Unknown minimum eligible skill/stat context remains unresolved"
+  ],
+  "nextTask": "F003_CONTROLLED_CAST_SAMPLING_DESIGN_FOR_UNIDENTIFIABLE_TWW_MILLING_IF_COORDINATOR_ACCEPTS_MODEL_FIX"
+}

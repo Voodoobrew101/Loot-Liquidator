@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_DRACONIUM_RACIAL_RANK_SPLIT",
+  "workflowRevision": 2,
+  "runID": "2026-10-30T0734Z-F004-df-draconium-racial-rank-split",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_F005",
+  "baseCommit": "d10a97d1f22233592c1ce0913d507e456e0c695e",
+  "question": "Does an independent historical Draconium prospecting cohort constrain diamond output-rank distribution beyond the frozen TSM's identical rank-specific rates, and can it safely replace current-Retail E?",
+  "answer": "The original author's 30,000-ore Draconium trial reports 32 rank-2 and 52 rank-3 Illimited Diamonds at 32.8% Inspiration, a 61.9% rank-3 share among reported diamonds. It is historical support for a skill-threshold/hidden-skill hypothesis and a warning against fixed equal rank-specific TSM probabilities. It cannot establish present-Retail P/E or exact completed-cast rates.",
+  "source": {
+    "primaryURL": "https://www.reddit.com/r/woweconomy/comments/109bytz/prospecting_useless_hold_my_beer_said_the_draenei/",
+    "primaryAuthor": "ar_rules",
+    "sourceFamilyID": "reddit-109bytz-ar_rules-draconium-racial-prospecting",
+    "secondaryDerivativeURL": "https://us.forums.blizzard.com/en/wow/t/massive-profession-advantage-from-racial-bonuses/1484679",
+    "spreadsheetPublishedURL": "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3Z7ML07cOCA6SoVGeSR_HhePGOczmfGs_Ib6vAsgog-C-u8LRjd1i0r2fjgJBSuJ1lEL5JaQt0TjZ/pubhtml",
+    "publishedBy": "2023-01-12",
+    "actualObservationEpoch": "EARLY_JANUARY_2023_APPROXIMATE_NOT_CAST_TIMESTAMP",
+    "clientBuild": null,
+    "gameMode": "HISTORICAL_DRAGONFLIGHT_RETAIL",
+    "newIndependentLineages": 1,
+    "notes": "Forum reproduction and published spreadsheet belong to the same original Reddit author/study, not additional independent studies. Published sheet row contents could not be extracted by available page reader and antibot fetch; do not claim sheet counts were verified."
+  },
+  "cohorts": [
+    {
+      "cohortID": "ar-rules-draconium-initial-30000",
+      "oreFamily": "Draconium",
+      "inputRank": "R2_NARRATIVE_INFERENCE_NOT_BATCH_TAGGED",
+      "inputItemID": null,
+      "reportedOreUnits": 30000,
+      "reportedOreUnitsType": "PURCHASED_OR_PROCESSED_AMBIGUOUS_WITH_RESOURCEFULNESS",
+      "nominalOrePerCast": 5,
+      "nominalFiveOreCastEquivalents": 6000,
+      "actualCompletedCasts": null,
+      "refundOreUnits": null,
+      "skillContext": {
+        "race": "Draenei",
+        "skillVsDifficulty": "255/265 for R2 ore per author's narrative",
+        "inspirationFraction": 0.328,
+        "resourcefulnessFraction": null,
+        "professionSpecializations": "maxed relevant prospecting skills claimed; precise points unknown",
+        "equipment": null
+      },
+      "outputs": [
+        {
+          "name": "Illimited Diamond",
+          "qualityRank": 2,
+          "itemID": 192870,
+          "reportedTotal": 32
+        },
+        {
+          "name": "Illimited Diamond",
+          "qualityRank": 3,
+          "itemID": 192871,
+          "reportedTotal": 52
+        }
+      ],
+      "totalDiamonds": 84,
+      "observedRank3ShareOfDiamonds": 0.6190476190476191,
+      "observedRank2ShareOfDiamonds": 0.38095238095238093,
+      "rank3ShareMinusReportedInspiration": 0.29104761904761905,
+      "descriptivePerNominalFiveOreEquivalent": {
+        "rank2": 0.005333333333333333,
+        "rank3": 0.008666666666666666,
+        "total": 0.014
+      },
+      "descriptiveNotVerifiedPOrE": true,
+      "zeroInclusiveCastLog": null,
+      "otherGemOutputs": null,
+      "patchContext": "EARLY_2023_NOT_CURRENT",
+      "overlap": "SUBSET_OF_180000_DRACONIUM_RUN_NOT_ADDITIVE"
+    },
+    {
+      "cohortID": "ar-rules-draconium-first-180000",
+      "reportedOreUnits": 180000,
+      "oreFamily": "Draconium",
+      "inputRank": "R2_NARRATIVE_INFERENCE",
+      "inputItemID": null,
+      "actualCompletedCasts": null,
+      "rankSpecificOutputTotals": null,
+      "refundOreUnits": null,
+      "includesCohort": "ar-rules-draconium-initial-30000",
+      "reportedRank3Share": "approximately 60% author characterization, not raw totals",
+      "sameLineage": true
+    },
+    {
+      "cohortID": "ar-rules-draconium-additional-120000",
+      "reportedOreUnits": 120000,
+      "oreFamily": "Draconium",
+      "inputRank": "R2_NARRATIVE_INFERENCE",
+      "inputItemID": null,
+      "actualCompletedCasts": null,
+      "rankSpecificOutputTotals": null,
+      "refundOreUnits": null,
+      "reportedInspirationFraction": 0.368,
+      "changedResourcefulnessContext": true,
+      "reportedRank3Share": "almost 60% author characterization, not raw totals",
+      "sameLineage": true
+    }
+  ],
+  "familySummary": {
+    "reportedDistinctDraconiumOreUnits": 300000,
+    "not330000": true,
+    "initial30000NestedIn180000": true,
+    "studyLevelClaim": "Hidden skill bonus triggered approximately 30% when 10 skill below rank threshold; inferred by original author, not directly counted",
+    "rankSplitInterpretation": "A rank-3 share greater than Inspiration alone is consistent with a historical hidden skill threshold but not proof of its exact mechanic or current-patch survival.",
+    "unverifiedFields": [
+      "actual casts",
+      "refund totals",
+      "exact input item IDs per batch",
+      "complete co-output vectors",
+      "zero-output casts",
+      "output rank by individual cast",
+      "independent current patch reproduction",
+      "spreadsheet raw tab counts"
+    ]
+  },
+  "priorityTargetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "proposedDisposition": "HISTORICAL_CONTEXT_AND_RANK_SPLIT_HYPOTHESIS_ONLY",
+  "economicPolicy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEconomicEligible": false,
+    "tooltipOnlyEligible": false,
+    "evidencePromotions": 0,
+    "workingCoverageChange": 0
+  },
+  "nextMeasurement": "Obtain a current-Retail controlled R2 Draconium zero-inclusive completed-cast cohort with precise character skill (including racial), rank-specific outputs, Inspiration and Resourcefulness events, refund totals, recipe ID and build; compare 250/265 vs 255/265 without pooling contexts."
+}

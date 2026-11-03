@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_FIX_WORKING_PROVENANCE_CONFIDENCE_ATTESTATION",
+  "workflowRevision": 2,
+  "queueRevision": 8,
+  "branch": "implementation/five-agent-completion",
+  "runUTC": "2026-10-29T19:14:00Z",
+  "baseCommit": "ca36cbbdd67e1d36bcdaf866eb725b612cd0dd4f",
+  "implementationCommits": [
+    "25f1ef8a6072adcf6d4fc51a68358de677c23d13",
+    "56a77c7c96f4c652a678ac47e3859bb4a738d114"
+  ],
+  "readbackHeadBeforeSubmission": "56a77c7c96f4c652a678ac47e3859bb4a738d114",
+  "changedPaths": [
+    {
+      "path": "research/tools/working_estimates.js",
+      "blobSHA": "3575814d9cecf94f757a2bec6d83d3b7845cc71c",
+      "changes": [
+        "Source identity now pins original field value/status/confidence/sourceClaimIDs/blockers and all other original field metadata for each of four fields, plus mapping and conditions confidence.",
+        "Second nonserialized in-process lease pins generated preview values, provenance and assumptions against post-build tampering.",
+        "Validate copied-evidence field status and confidence against actual source, enforce imputation confidence zero and overall evidence ceiling, reject false verified/provisional statuses."
+      ]
+    },
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "blobSHA": "2cd055b6bbd1860c58c40b26f38f304048ed219a",
+      "changes": [
+        "Require and execute validator-owned research/tests/v2/test_f005_provenance_confidence_integrity.js in native Node pipeline; fail build on nonzero exit."
+      ]
+    }
+  ],
+  "validatorFixtureUnmodified": {
+    "path": "research/tests/v2/test_f005_provenance_confidence_integrity.js",
+    "blobSHA": "b7b2dd6a2d050423423f2e6dcfd72df16d09d0f8"
+  },
+  "tests": {
+    "independentSyntheticFixture": {
+      "passed": 12,
+      "failed": 0,
+      "execution": "IN_PROCESS_V8_FUNCTION_HARNESS_WITH_ASSERT_EMULATION",
+      "before": "4/12 per independent F005 review",
+      "cases": [
+        "measured and unknown controls",
+        "copied confidence inflation",
+        "source confidence drift",
+        "source claim lineage drift",
+        "erased fallback assumptions",
+        "false copied status",
+        "working numeric replacement",
+        "false policy prior",
+        "fabricated verified status",
+        "stale patch control",
+        "economic escalation control"
+      ]
+    },
+    "githubReadback": "PASS_TWO_IMPLEMENTATION_BLOBS_MATCHED",
+    "nativeNode": "NOT_VERIFIED__PIPELINE_NOW_INVOKES_TEST",
+    "deterministicPipeline": "NOT_RUN_IN_THIS_ENVIRONMENT",
+    "schema": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "wowClient": "NOT_RUN",
+    "independentValidatorAcceptance": "PENDING"
+  },
+  "deltas": {
+    "admittedMappings": 0,
+    "removedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "newExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyFamilies": 0,
+    "productionFilesChanged": 0,
+    "modelUncertaintyReduction": "Eight previously reproduced synthetic integrity failures now rejected in V8 harness"
+  },
+  "retainedCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "totalNumericSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingEconomicExpectedQuantity": 116
+  },
+  "safety": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "legacyAssignmentsChanged": false,
+    "rawEvidenceChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Current source and working-preview leases are intentionally nonserialized; cross-process source attestation requires coordinated versioned schema and regenerated artifact.",
+    "Native GitHub CI status not yet verified; commit workflow listing returned no PR-triggered runs and combined status returned no checks.",
+    "Independent validator must rerun 12-case fixture on pinned new estimator SHA.",
+    "116 evidence-backed E gaps and 514 total evidence gaps remain; no current Retail client verification or independent whole-family holdout."
+  ],
+  "nextTask": "F005 independent 12-case native retest and coordinator acceptance; then versioned serialized source/evidence attestation if approved",
+  "status": "PROPOSED_RESEARCH_ONLY_PENDING_INDEPENDENT_QA"
+}

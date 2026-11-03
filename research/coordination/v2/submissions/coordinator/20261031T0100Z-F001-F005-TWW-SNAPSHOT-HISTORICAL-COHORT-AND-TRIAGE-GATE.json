@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_TWW_SNAPSHOT_HISTORICAL_COHORT_TRIAGE",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261031T0100Z-F001-F005-TWW-SNAPSHOT-HISTORICAL-COHORT-AND-TRIAGE-GATE",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "e655f0c9fc6c1ff833eb747fb8c4c7a8c3394fcb",
+  "acceptanceCommit": "d1b0cfd72428d5f6f3f97482fdade2ae8c1367d9",
+  "scorecardCommit": "23df0398195fe3e4634e2d9d9f7befdfb60efe67",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "TWW_MODEL_REJECTED_TRIAGE_GATE_CONDITIONAL_HISTORICAL_CONTEXT_ONLY",
+  "sourcePins": {
+    "branchHeadBeforeIntegration": "e655f0c9fc6c1ff833eb747fb8c4c7a8c3394fcb",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "scorecardBefore": "c7645a64df4318255a8eb04832096f52974e06a4",
+    "engineerGate": "b883f9f2d98b3aaccbc57b1c8a303b88c4b98d42",
+    "engineerSubmission": "87d5a96a3ea44c932a790cc779913c743a91ff11",
+    "modellerSource": "5d90046b15046fb210523c34363c66596b962d3d",
+    "modellerManifest": "b8d6218f3515f7b3c1f9c32906d8225dba37013d",
+    "modellerSubmission": "4b5c0aa86fd76b8af404745523a68692f3cd0712",
+    "evidence": "ae4e5ae0f1e6de771f02f410fb90d14c35afd22a",
+    "sourceReview": "045616b39cfcd17ad8f8dcfa8423f19b8c280673",
+    "researcherSubmission": "32837519c15a42b4432cd4a55100ecbe820801ce",
+    "validatorReview": "d2432e177ba352d00c5e41466e8e64410316bdd6",
+    "validatorSubmission": "8422adbeb117a020143e6538659b233295389968",
+    "validatorTest": "94ea3a1586e986d52d47394745181e8bab3f478e"
+  },
+  "exactFilesChanged": [
+    "research/coordination/v2/acceptance/20261031T0100Z-F001-F005-TWW-SNAPSHOT-HISTORICAL-COHORT-AND-TRIAGE-GATE.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/20261031T0100Z-F001-F005-TWW-SNAPSHOT-HISTORICAL-COHORT-AND-TRIAGE-GATE.json"
+  ],
+  "exactDeltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentlyConfirmedLineages": 0,
+    "proposedHistoricalCohortLeads": 3,
+    "newValidatorIntegrityDefects": 4,
+    "validatorReproducedUnsafeCases": 3,
+    "engineerTriageGateProposed": 1,
+    "coordinatorOwnedFiles": 3
+  },
+  "canonicalSnapshot": {
+    "admittedMappings": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "priorityRecords": 217,
+    "evidenceGE90Cells": 0,
+    "verifiedMinimumEligibleBaselines": 0,
+    "independentCurrentRetailHoldouts": 0
+  },
+  "decisions": [
+    {
+      "owner": "independent-validator",
+      "decision": "ACCEPT_NEGATIVE_QA_REJECT_TWW_MILL_V101_FOR_INTEGRATION",
+      "basis": "Exact F003 source 5d90046b... reviewed. Four prior unresolved defects plus four additional integrity risks; 3 isolated V8 unsafe reproductions (cap units 11->45, cap status SCENARIO_ONLY->INDEPENDENTLY_VERIFIED, mutable cast array length 2->1). Fourteen static checks. Full new 15-case exact-module native Node and original 37-case suite NOT run. No held-out Retail cast family.",
+      "numericPromotions": 0
+    },
+    {
+      "owner": "baseline-modeller",
+      "decision": "ACCEPT_FINITE_INVERSE_AND_STRING_GUARDS_AS_LOCAL_REPAIRS_ONLY_REJECT_MODEL_INTEGRATION",
+      "basis": "v1.0.1 fixes inverse nonfinite and whitespace/oversize patch/study strings; source/manifest pinned. Still fails immutable snapshot and context accounting; eight unresolved validator defects. F003 owns v1.0.2+ repair, independent native 37+15 tests required.",
+      "numericPromotions": 0
+    },
+    {
+      "owner": "completion-engineer",
+      "decision": "CONDITIONALLY_ACCEPT_RESEARCH_ONLY_TRIAGE_GATE_HARDENING",
+      "basis": "F002 changed only working_gap_priority_contract.js (+46/-3), V8 actual check reconciled 514 gaps/217 priority records and 19 adversarial mutations; native Node24 and independent F005 review of new gate not confirmed. Do not claim mandatory independent acceptance.",
+      "numericPromotions": 0
+    },
+    {
+      "owner": "evidence-researcher",
+      "decision": "ACCEPT_THREE_HISTORICAL_COHORT_LEADS_AS_UNVERIFIED_CONTEXT_ONLY",
+      "basis": "Jan 14 2023 11,500 R3 Serevite ->16 unranked diamonds (9 in first 3500, 7 in remainder 8000) is one nested original cohort; Zuhla approx 40 Prismatic Ore from 5000 R3 Draconium; Alingenomen zero diamonds from 1000 R2+1000 R3 unspecified ore. Actual completed casts, refund counts, current patch applicability and full-archive lineage de-dup not verified. No measured P/E or current economic use.",
+      "independentConfirmedLineages": 0,
+      "numericPromotions": 0
+    }
+  ],
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub connector + JavaScript V8",
+      "checks": 47,
+      "passed": 47,
+      "failed": 0,
+      "scope": "Readiness arithmetic, priority uniqueness/order, source hashes, model/review attestation, independent test not-run status, historical cohort arithmetic and preview-only safety"
+    }
+  ],
+  "testsNotRun": [
+    "Coordinator native Node 24 or Lua 5.1",
+    "Full exact-module F005 37+15 native TWW milling regression",
+    "Native F002 19-mutant gate replay",
+    "Current Retail in-game cast holdout",
+    "Full immutable historical source archive de-duplication"
+  ],
+  "blockers": [
+    "TWW milling v1.0.1 eight context/cap/provenance/cast-array integrity risks; model integration rejected.",
+    "F002 tightened gate only V8 tested and awaits independent F005/native Node acceptance.",
+    "Three F004 2023 cohort leads lack actual completed-cast denominators and current-Retail applicability.",
+    "116 evidence E gaps and zero independent current-Retail holdout families persist."
+  ],
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_TWW_MILL_IMMUTABLE_SNAPSHOT_V102",
+      "scope": "Repair all eight F005 v1.0.1 context/cap/provenance/cast-array integrity defects with one validated immutable snapshot; reconcile nominal batch and reagent vector. Do not weaken F005 37+15 tests. Keep preview-only, no economic promotion."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_TWW_MILL_NATIVE_37_PLUS_15_AND_F002_GATE",
+      "scope": "Native-run original 37 and new 15 source-pinned F003 cases after repair; independently review F002 19 mutation gate and F004 full archive cohort ancestry. Preserve FAIL verdict until evidence of pass."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_NATIVE_PRIORITY_GATE_AND_ISOLATION",
+      "scope": "Run native Node check for strengthened 514-gap/217-priority gate, pipeline --check and Lua5.1; retain 1018/4072 preview-only. Integrate only independently accepted changes, preserve other roles' model source."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_CURRENT_RETAIL_DENOMINATOR_OR_ELIGIBILITY_PIVOT",
+      "scope": "Seek original 2026 Retail rank/skill/patch-specific zero-inclusive completed-cast and refund observations for highest-priority Dragonflight diamond keys; do not repeat old 2023 searches. If unavailable, pivot to unresolved fish 200061 rank eligibility or source ancestry."
+    }
+  ],
+  "nextTask": "F003_TWW_MILL_IMMUTABLE_SNAPSHOT_V102",
+  "zeroDeltaPivot": {
+    "applied": true,
+    "numericDelta": 0,
+    "from": "Repeat unchanged preview completeness or 2023 diamond rate audits",
+    "to": "Accept source-pinned F005 negative model QA, conditional F002 triage integrity and segregated F004 historical leads"
+  },
+  "safety": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "operationalEstimatesAffectLiveValuation": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}

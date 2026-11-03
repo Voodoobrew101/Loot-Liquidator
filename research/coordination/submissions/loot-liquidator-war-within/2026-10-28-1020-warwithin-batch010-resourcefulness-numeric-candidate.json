@@ -1,0 +1,121 @@
+{
+  "hypothesisID": "tww-prospect-resourcefulness-savings",
+  "evidenceStatus": "UNVERIFIED",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 10,
+  "method": "Prospect",
+  "effectTarget": "EXPECTED_INPUT_CONSUMPTION",
+  "effectKind": "INPUT_SAVINGS",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      434018
+    ],
+    "inputItemIDs": [
+      210933,
+      210934,
+      210935
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      1,
+      2,
+      3
+    ],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "historicalAqirite2024": {
+      "reportedClicks": 1040,
+      "purchasedOre": 5200,
+      "reportedRefundedOre": null,
+      "resourcefulnessPercent": null,
+      "actualConsumption": null,
+      "characterSkill": null,
+      "gear": null,
+      "source": "https://www.reddit.com/r/woweconomy/comments/1f83cnd"
+    },
+    "batch010": {
+      "newMatchedTWWProspectCohorts": 0,
+      "originalAqirite1040Clicks": "1040 nominal five-ore clicks and 5200 purchased ore, no saved ore count",
+      "community30Percent": "Qualitative explanation, not measured per-cast refunds"
+    }
+  },
+  "targetContext": {
+    "retail2026": {
+      "clientBuild": null,
+      "recipeSpellID": 434018,
+      "oreRank": null,
+      "resourcefulnessRating": null,
+      "resourcefulnessPercent": null,
+      "savedOrePerCast": null,
+      "zeroInclusiveRefunds": null
+    },
+    "batch010": {
+      "retailBuild": null,
+      "recipeSpellID": 434018,
+      "actualResourcefulnessPercent": null,
+      "savedOreHistogramIncludingZero": null,
+      "actualNetConsumption": null
+    }
+  },
+  "requiredLiveContext": [
+    "Exact client build/patch and recipe 434018",
+    "Exact Aqirite input rank and five-ore nominal batch",
+    "Skill, specialization, gear and Resourcefulness rating AND displayed percent",
+    "Per-cast actual consumed/saved ore including zeros",
+    "Initial/final inventories and independent replication"
+  ],
+  "sources": [
+    {
+      "claimID": "ww-b009-2024-aqirite-1040",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "notes": "1040 clicks and 5200 purchased ore do not identify saved reagent total"
+    },
+    {
+      "claimID": "ww-b009-algari-5ore",
+      "url": "https://www.wowhead.com/spell=434018/algari-prospecting",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "notes": "Recipe five-ore nominal batch; no numerical Resourcefulness coefficient"
+    },
+    {
+      "claimID": "ww-b009-stack-vs-refunds",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "notes": "Discusses refunds and stack bug, no actual saved-ore count"
+    },
+    {
+      "claimID": "ww-b010-2024-community-30pct-not-verified",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fdvkmy",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "notes": "Commenter proposes a base 30% return conditional on Resourcefulness; no matched exact TWW Algari prospect saved-ore experiment. Do not use as coefficient."
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 20,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No matched per-cast saved ore including zeros",
+    "No verified Resourcefulness rating/percent, skill/spec/gear and patch controls",
+    "No independent quantitative replication",
+    "No matched same-build TWW Algari Prospecting saved-ore-per-cast including zeros",
+    "Community 30% reagent-return assertion lacks independently verified TWW prospect sample counts"
+  ],
+  "notes": "Batch010 research only. Separate input savings from gem output expected quantity. No source proves a TWW prospect saved-ore coefficient. 0 approved numerical rules; no numeric transform."
+}

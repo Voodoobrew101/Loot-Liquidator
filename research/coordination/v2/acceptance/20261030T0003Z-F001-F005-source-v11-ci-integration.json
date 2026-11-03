@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_SOURCE_V11_CI_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevisionBefore": 12,
+  "queueRevisionAfter": 13,
+  "runUTC": "2026-10-30T00:03:58.484Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "9ed4986a7e8747ee5c0035a18d08dea342033197",
+  "sourceBranchHeadAtReview": "9ed4986a7e8747ee5c0035a18d08dea342033197",
+  "canonical": {
+    "readiness": "research/coordination/completion-readiness.json",
+    "priorities": "research/coordination/completion-priorities.json",
+    "candidateBlobSHA": "940431ecd0cefe1e65701d2cc9f53ae619350b38",
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "evidenceGE90": 0,
+    "independentCurrentRetailHoldoutFamilies": 0
+  },
+  "reviews": [
+    {
+      "role": "completion-engineer",
+      "submission": "research/coordination/v2/submissions/completion-engineer/2026-10-29T2308Z-F002-full-source-seal-native14.json",
+      "decision": "CONDITIONALLY_ACCEPT_RESEARCH_ONLY",
+      "reason": "Source identity v1.1.0 now covers all serialized source fields except independently sealed workingEstimate; native GitHub Actions CI 40975120729 at exact head passed the existing 14-case detached metadata suite, 476 numerical assertions, schema, Lua5.1 and --check. New validator-owned nested 14-case suite is not yet a native CI gate.",
+      "sourceBlobs": {
+        "research/tools/working_estimates.js": "956db68c3b2bc7edc59565d15460c479b62344d6",
+        "research/tools/run_completion_pipeline.js": "d3ccfc30667233b4e3f505bb9e81e5a72cca242d"
+      }
+    },
+    {
+      "role": "independent-validator",
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-29T2347Z-F005-serialized-v11-followup.json",
+      "review": "research/coordination/v2/reviews/2026-10-29T2346Z-F005-serialized-v11-followup.json",
+      "decision": "ACCEPT_FINDINGS_AND_TEST_ARTIFACT_CONDITIONAL",
+      "reason": "13/13 V8 synthetic cases passed using noncryptographic substitute; 14 native detached-process cases authored but not executed. No independent native SHA-256 acceptance yet.",
+      "sourceBlobs": {
+        "research/tests/v2/test_f005_serialized_nested_provenance_v11.js": "a9c560665816832e99b3b1b6e544380ad6190cb5"
+      }
+    },
+    {
+      "role": "baseline-modeller",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261029T2325Z-F003-TWW-TWO-AXIS-RANK-FACTORIAL.json",
+      "decision": "ACCEPT_SYNTHETIC_RESEARCH_PROTOCOL_ONLY",
+      "reason": "New 2x2 rank factorial model has 39 reported native self-checks and correct independently recomputed synthetic interaction SE 1.8596594670351163. It has no current-Retail completed-cast cohort, rank-selector confirmation or independent model QA; do not promote any economic field.",
+      "sourceBlobs": {
+        "research/tools/models_v2/tww_milling_rank_factorial_v1.js": "953dfb6fa4b85e9816b3ee558f5bbd69f22b0416",
+        "research/models/v2/tww_milling_rank_factorial_v1.json": "e037462c6a53f8eb9d32346065771d1111ec3c25"
+      }
+    },
+    {
+      "role": "evidence-researcher",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-29T2332Z-F004-midnight-crushing-net-input-submission.json",
+      "decision": "ACCEPT_CONTEXT_AND_LINEAGE_ONLY",
+      "reason": "0.83925/0.84 dust per gem reports share one author; gross vs net consumed gem and actual completed-cast basis unknown. Distinct author anecdotes not controlled studies; exact Crushing selector and ranks remain unverified. No E or mapping admission.",
+      "sourceBlobs": {
+        "research/evidence/v2/2026-10-29T2332Z-F004-midnight-crushing-net-gem-context.json": "4fc9df14fa99275d1e46482403427a01ca64e5ce"
+      }
+    }
+  ],
+  "ciEvidence": {
+    "runURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40975120729",
+    "runID": 40975120729,
+    "checkoutHeadSHA": "9ed4986a7e8747ee5c0035a18d08dea342033197",
+    "jobID": 123801149578,
+    "conclusion": "success",
+    "observed": "Existing F005 detached 14/14, independent binomial 476/476, 609 metamorphic, Node pipeline --check, JSON schema, Lua5.1, blocker preservation",
+    "notObserved": "New F005 v1.1 nested 14-case native suite; independent cryptographic recomputation; WoW client"
+  },
+  "externalDigestPin": {
+    "algorithm": "sha256",
+    "contractVersion": "working-estimate-source-context-v1.1.0",
+    "candidateBlobSHA": "940431ecd0cefe1e65701d2cc9f53ae619350b38",
+    "sourceIdentityBlobSHA": "956db68c3b2bc7edc59565d15460c479b62344d6",
+    "ciObservedDigest": "a5f472be59536c38cc7534ec5415e449085496519407e48bcfb8643362ccc9b5",
+    "ciObservedAtHead": "9ed4986a7e8747ee5c0035a18d08dea342033197",
+    "trustStatus": "COORDINATOR_RECORDED_CI_PROPOSAL_NOT_INDEPENDENTLY_RECOMPUTED_OR_APPROVED",
+    "usageRestriction": "Do not treat this digest as a production or independently verified trust root; require independent detached native QA and explicit subsequent acceptance."
+  },
+  "numericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "invalidMappingsRemoved": 0,
+    "evidenceNumericCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailStudyFamilies": 0,
+    "newResearchModelFamilies": 1,
+    "newExecutableModelFiles": 1,
+    "newContextEvidenceFiles": 1
+  },
+  "testsActuallyCheckedByCoordinator": [
+    "Exact current GitHub branch head and compare: 12 new commits, all 12 changed paths under research/",
+    "Exact source blob SHA and 14-case new fixture SHA readback",
+    "GitHub Actions push-run 40975120729 at source head 9ed4986a7e8747ee5c0035a18d08dea342033197: successful pipeline, existing detached metadata 14/14, 476 numerical, 609 metamorphic, Lua5.1, schema, blocker checks",
+    "Independently recomputed synthetic rank-factorial sample variances 2.9166666666666665 and 10.916666666666666; interaction SE sqrt((2.9166666666666665+10.916666666666666)/4)=1.8596594670351163",
+    "Compared engineering proposed SHA-256 with exact digest printed in native CI log; equal, but not independently recomputed",
+    "Canonical readiness remains 1018 mappings, 4072/4072 working, 3558/4072 evidence"
+  ],
+  "testsNotExecutedByCoordinator": [
+    "Native Node execution of new F005 nested 14-case fixture",
+    "Independent SHA-256 recomputation of candidate/attestation from separate process",
+    "WoW Retail client/in-game verification",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "blockers": [
+    "New F005 nested 14-case detached SHA-256 suite not wired to native CI or independently executed",
+    "CI-derived SHA-256 recorded but not independently recomputed; no final external trust-root acceptance",
+    "F003 2x2 model lacks independent validator review and current Retail matched zero-inclusive cast observations",
+    "514 evidence numeric gaps including 116 expectedQuantity; zero fields >=90 and no verified minimum eligible baseline",
+    "24 legacy universe leads plus two unadmitted dye input leads; exhaustive Retail mapping coverage not established"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_WIRE_F005_NESTED_V11_AND_BUILD_ORDER_GATE",
+      "scope": [
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Run validator-owned research/tests/v2/test_f005_serialized_nested_provenance_v11.js as mandatory native Node pipeline/CI gate; prove 14/14 on the exact branch source blob, preserve existing 14/14 and all 476 numeric checks, deterministic candidate and 4072 working fields. Do not edit validator fixture."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_NATIVE_V11_DETACHED_RETEST_AND_EXTERNAL_PIN_CHALLENGE",
+      "scope": [
+        "research/tests/v2/",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Execute the new 14-case detached Node SHA-256 fixture and existing 14-case suite on current head; independently challenge source and working identity, order-equivalence, duplicate/deletion, pin trust boundary and source provenance. Review F003 two-axis model separately; do not self-approve numeric estimates."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_TWW_RANK_FACTORIAL_INDEPENDENT_QA_OR_E_PIVOT",
+      "scope": [
+        "research/models/v2/",
+        "research/tools/models_v2/"
+      ],
+      "acceptance": "Request independent F005 review of new paired co-output covariance and exact context gating; require a current-Retail zero-inclusive matched cast cohort before E promotion. If no usable cohort, pivot to a priority-102 Dragonflight milling E denominator family, no repeated historical comparison."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_CRUSHING_SELECTOR_AND_MATCHED_CAST_OR_PIVOT",
+      "scope": [
+        "research/evidence/v2/"
+      ],
+      "acceptance": "Resolve spell 1231132 exact input/output rank selector eligibility and obtain zero-inclusive actual Crushing casts, refunds, full stats and build. Treat 0.83925 and ~0.84 from same author as one lineage, not two independent samples. Pivot to an exact-ID TWW milling cohort if no fresh source."
+    }
+  ],
+  "zeroDeltaPivot": "No new valid numeric source evidence or eligible mappings; accepted new provenance safeguard and newly authored 2x2 synthetic model for review. Shift next cycle to native nested SHA-256/CI and controlled exact-ID cast evidence, not repeat unchanged audit.",
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "liveRecommendationChanges": 0,
+    "productionWrites": 0,
+    "mainChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyPolicyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false,
+    "runtimeBranchChanged": false
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_NATIVE_F005_CROSS_VERSION_RECONCILIATION_REPLAY",
+  "workflowRevision": 2,
+  "queueRevision": 29,
+  "runID": "20261030T1609Z-F002-cross-version-1385-native-preflight",
+  "reportUTC": "2026-10-30T16:09:30Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "9924805331518341fdf78d607a0d2087918c6316",
+  "implementationCommits": [
+    "a23b0b3c75086dd44c00884dd19b400527d5f078",
+    "18ba6ced79b1a7601c405e7254d41025e5d33677"
+  ],
+  "status": "PROPOSED_FOR_INDEPENDENT_F005_NATIVE_ACCEPTANCE",
+  "acceptedVsProposed": "Source-pinned derived-diff structural QA now replayed under native Node 24, but not independently accepted as equivalent compact Lua mapping evidence. Informational CI step only; no mandatory F005 gate or economic promotion.",
+  "changedFiles": [
+    "research/tools/working_native_cross_version_preflight.js",
+    ".github/workflows/verify-five-agent-completion.yml",
+    "research/coordination/v2/submissions/completion-engineer/20261030T1609Z-F002-cross-version-1385-native-preflight.json"
+  ],
+  "exactDeltas": {
+    "newPreflightFiles": 1,
+    "workflowLinesAdded": 7,
+    "sourceAndFixturePins": 3,
+    "newIndependentStructuralAssertionsReplayed": 1385,
+    "syntheticMutantsRejected": 17,
+    "oldRecords": 976,
+    "newRecords": 1018,
+    "retainedRecords": 973,
+    "addedRecords": 45,
+    "retiredRecords": 3,
+    "quarantinedEvidenceFields": 104,
+    "fishRankDowngrades": 12,
+    "nonEquivalentSameOperationSuccessorPairs": 3,
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0
+  },
+  "sourcePins": {
+    "research/tests/v2/test_f005_v02_v08_reconciliation_integrity.js": "d38b5f662c607a1f5553ee3e4440081cbb396cd9",
+    "research/proposed/itemdb-v02-v08-field-reconciliation.json": "f951706c3602baf07bfa3f88311304d16067be3a",
+    "research/proposed/itemdb.lua": "560b885a0039045419c340716e263ae33ddf827a",
+    "research/tools/working_native_cross_version_preflight.js": "e4264199056a8e2d90d8d264b7c77e01e1ab585d",
+    "historicalV02BlobEmbeddedInF005Fixture": "a838d75e82239339bea3861692291b44bd085662"
+  },
+  "testsActuallyRun": [
+    {
+      "name": "Native F005 cross-version derived-diff integrity",
+      "runtime": "GitHub Actions Node 24",
+      "assertionsPassed": 1385,
+      "syntheticMutantsRejected": 17,
+      "step": "success",
+      "note": "Strict expected report parser; independently accepted status NOT claimed"
+    },
+    {
+      "name": "Native F002 preflight self-test",
+      "runtime": "GitHub Actions Node 24",
+      "checks": 8,
+      "mutantReportsRejected": 6,
+      "step": "success"
+    },
+    {
+      "name": "Deterministic completion pipeline --check",
+      "runtime": "GitHub Actions Node 24",
+      "result": "success"
+    },
+    {
+      "name": "Lua 5.1 syntax and decoded working/evidence isolation",
+      "runtime": "GitHub Actions Lua 5.1",
+      "result": "success"
+    },
+    {
+      "name": "Existing 38-case and 106-case native informational preflights",
+      "runtime": "GitHub Actions Node 24",
+      "result": "success"
+    }
+  ],
+  "nativeCI": {
+    "runID": 41087224429,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41087224429",
+    "headSHA": "18ba6ced79b1a7601c405e7254d41025e5d33677",
+    "conclusion": "success"
+  },
+  "testsNotRun": [
+    "Independent reparse of original v0.2 and current v0.8 compact Lua into a separately reconstructed reconciliation",
+    "F005 independent acceptance of this exact native replay",
+    "Current Retail in-game completed casts and mapping/rank eligibility verification",
+    "Direct addon runtime, production consumer, and current Retail economic recommendation tests"
+  ],
+  "canonicalReadinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "verifiedBaselines": 0
+  },
+  "blockers": [
+    "F005 cross-version suite verifies the derived reconciliation JSON; the two compact Lua sources were not independently reparsed by this new runner.",
+    "Three same-operation successor pairs differ expansion and output quality rank, so mapping equivalence remains unproven.",
+    "Twelve Dragonflight fish milling ranks downgraded from 1 to unknown; 45 added mappings not independently verified for current Retail.",
+    "116 evidence expectedQuantity gaps and zero independently held-out current Retail completed-cast families.",
+    "Separate Midnight anytime nested 13-case fixture has contradictory NaN/Infinity assertion."
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Repeated candidate recompilation and unchanged mapping audit",
+    "to": "First native replay of newly submitted F005 cross-version structural suite",
+    "numericDelta": 0,
+    "newReviewableQAArtifact": true
+  },
+  "policyPreservation": {
+    "mainEdited": false,
+    "addonReleased": false,
+    "runtimeProfilesEdited": false,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipOnlyEdited": false,
+    "legacyAssignmentsEdited": false,
+    "otherAgentFilesEdited": false,
+    "schedulesEdited": false,
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false
+  },
+  "nextTask": "F005 independently accept the native 1385-assertion/17-mutant result and separately reparse v0.2/v0.8 Lua; after acceptance, F002 promote the approved cross-version suite to a strict native gate without mapping/economic promotion."
+}

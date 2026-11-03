@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_MILLING_SPELL444181_LIVE_BATCH_EPOCH_RECONCILIATION",
+  "runUTC": "2026-10-30T01:32:07Z",
+  "workflowRevision": 2,
+  "queueRevisionObserved": null,
+  "branch": "implementation/five-agent-completion",
+  "question": "Does the July 2024 beta five-herb change still define Khaz Algar Milling spell 444181, or is the indexed Retail operation ten herbs; what does this imply for the 12 priority TWW milling E gaps?",
+  "disposition": "SPECIFIC_OPERATION_BATCH_CONTEXT_CORRECTION_NOT_A_YIELD_MEASUREMENT",
+  "observations": [
+    {
+      "sourceID": "TWW-WOWDB-LIVE-444181-20261030",
+      "url": "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+      "sourceType": "INDEXED_GAME_SPELL_LIVE_ENDPOINT",
+      "retrievedUTC": "2026-10-30T01:32Z",
+      "spellID": 444181,
+      "operation": "Khaz Algar Milling",
+      "nominalHerbsPerCompletedOperation": 10,
+      "spellEffect": "CraftSalvageItem (67) (2232)",
+      "effectValue": 10,
+      "minimumRecipeEligibleKhazAlgarInscriptionSkill": 1,
+      "patchBuildOfIndexedRecord": null,
+      "actualInGameCastVerified": false,
+      "actualCompletedCasts": null,
+      "actualHerbConsumption": null,
+      "resourcefulnessRefunds": null,
+      "outputItemIDs": null,
+      "outputRank": null,
+      "limitations": [
+        "Indexed LIVE spell entry, not independently verified in 2026 Retail client",
+        "Effect value and tooltip describe nominal batch, not net consumed herbs or output distribution"
+      ]
+    },
+    {
+      "sourceID": "TWW-MMOCHAMPION-55665-20240717",
+      "url": "https://www.mmo-champion.com/content/12459-The-War-Within-Beta-Datamining-Build-55665",
+      "sourceType": "HISTORICAL_BETA_CHANGELOG",
+      "publishedDate": "2024-07-17",
+      "gameMode": "BETA",
+      "spellID": 444181,
+      "oldDescriptionHerbs": 10,
+      "newDescriptionHerbs": 5,
+      "patchBuild": 55665,
+      "actualCompletedCasts": null,
+      "limitations": [
+        "Historical beta change, not current Retail rule",
+        "Description-only evidence; no observed casts or current output distribution"
+      ]
+    },
+    {
+      "sourceID": "TWW-REDDIT-BETA-RANK-20240821",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1ey4dkl",
+      "sourceType": "PREVIOUSLY_REVIEWED_FIRSTHAND_BETA_ANECTODAL_RANK_STUDY",
+      "publishedDate": "2024-08-21",
+      "nominalHerbsPerReportedMill": 10,
+      "sourceAncestry": "research/evidence/v2/2026-10-29T2131Z-F004-tww-milling-two-axis-context.json",
+      "independentNewCohort": false,
+      "limitations": [
+        "Reused solely for temporal consistency",
+        "No exact build or completed-cast count",
+        "Does not prove the beta patch's exact reversion date"
+      ]
+    },
+    {
+      "sourceID": "TWW-REDDIT-20250315-INPUT-RANK-YIELD",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1jc2ya5",
+      "sourceType": "NEW_FIRSTHAND_STYLE_PLAYER_COMMENTARY_NO_LOG",
+      "publishedDate": "2025-03-15",
+      "reportedClaim": "Players report R1 herbs processed to R2 pigment yield less pigment than R2 herbs processed to R2 pigment; another commenter describes R3 requiring higher quality herbs for guaranteed results.",
+      "actualCastEpoch": null,
+      "exactInputItemIDs": null,
+      "exactOutputItemIDs": null,
+      "actualCompletedCasts": null,
+      "zeroOutputCasts": null,
+      "skillSpecGear": null,
+      "resourcefulnessRefunds": null,
+      "outputTotals": null,
+      "independentStudyFamily": "tww-2025-mar-inscription-milling-discussion",
+      "limitations": [
+        "One discussion thread; multiple commenters do not constitute controlled independent studies",
+        "Qualitative directional testimony only",
+        "Cannot establish quantity multiplier, expectedQuantity or 2026 applicability"
+      ]
+    }
+  ],
+  "reconciliation": {
+    "betaChronology": [
+      {
+        "epoch": "2024-07-17_BETA_BUILD55665",
+        "batch": 5,
+        "status": "HISTORICAL_BETA_DATAMINE"
+      },
+      {
+        "epoch": "2024-08-21_BETA_SELF_REPORT",
+        "batch": 10,
+        "status": "SELF_REPORTED_CONTEXT"
+      },
+      {
+        "epoch": "INDEXED_LIVE_ENDPOINT_RETRIEVED_2026-10-30",
+        "batch": 10,
+        "status": "INDEXED_SPELL_RECORD_NOT_CLIENT_TEST"
+      }
+    ],
+    "conclusion": "Do not import beta build 55665's five-herb batch into the current Retail Khaz Algar Milling 444181 candidate. The indexed LIVE spell describes ten nominal herbs and salvage effect value ten. The August beta study is consistent with a later ten-herb state, but neither the date nor mechanism of any reversion is established.",
+    "conditionalCostSensitivity": "For fixed herb price, assuming 5 instead of indexed 10 nominal herbs understates nominal input cost by 50% of the ten-herb cost; before refunds the correct nominal cost is 2x the erroneous five-herb estimate.",
+    "denominatorRule": "Distinguish ten nominal herbs per completed cast from net consumed herbs after Resourcefulness; aborted operations and stack-selection failures are not completed zero-output casts.",
+    "qualityRule": "Input rank and output pigment rank are separate context axes; 2025 testimony reinforces a directional hypothesis but does not supply a numeric rate.",
+    "currentRetailApplicability": "INDEXED_SPELL_EVIDENCE_ONLY_PENDING_IN_GAME_RECHECK"
+  },
+  "affectedStableKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+  ],
+  "proposalForModeller": "Set nominalInputBatch=10 for spell444181 where exact recipe identity is verified; do not blindly assign spell444181 to recipe-null candidate rows; preserve historical beta 5 only with its own epoch. Keep input/output ranks independent.",
+  "proposalForEngineer": "Audit the research-only candidate and valuation denominator for TWW milling spell444181, and flag any five-herb default without silently editing mapping identity.",
+  "proposalForValidator": "Assert TWW spell444181's indexed nominal batch=10 and ensure a beta five-herb record cannot override it without epoch; verify no preview E reaches live valuations.",
+  "exactMappingAdmissions": 0,
+  "numericWorkingCellsFilled": 0,
+  "newEconomicECells": 0,
+  "confidencePromotions": 0,
+  "independentNumericYieldStudies": 0,
+  "economicFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "blockers": [
+    "No 2026 in-game spell and selector capture",
+    "No exact recipe IDs for ten candidate rows whose recipeSpellID is null",
+    "No zero-inclusive cast logs with rank, skill/spec/gear, refunds and outputs"
+  ],
+  "nextTask": "F004_VERIFY_TWW_MILLING_RECIPE_ID_AND_TEN_HERB_INPUT_CONTEXT_FOR_12_E_GAP_KEYS"
+}

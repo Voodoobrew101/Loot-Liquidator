@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "2.0.0",
+  "modelID": "tww-mill-reagent-accounting-identification-v1.0.1",
+  "owner": "baseline-modeller",
+  "status": "PROPOSED_RESEARCH_ONLY_PENDING_F005_QA",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "sourcePath": "research/tools/models_v2/tww_mill_reagent_accounting_identification_v1.js",
+  "sourceBlobSHA": "5d90046b15046fb210523c34363c66596b962d3d",
+  "sourceReadbackLength": 10452,
+  "targetPriority": 104,
+  "targetKeys": [
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028",
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+  ],
+  "mechanics": {
+    "batchSize": "Explicit nominal input count per recipe; never assume one universal batch size",
+    "minimumSkill": "minimumEligibleSkill and actualSkill preserved, unknown as null",
+    "identity": "TWW Retail milling input/output stable key, patch epoch and independent study family required",
+    "resourcefulness": "grossNominalInputs = completedCasts * nominalBatchSize = netConsumed + savedTotal",
+    "completedCasts": "Actual cast denominator, never netConsumed/nominalBatchSize when refunds possible",
+    "coOutputs": "Marginal outputs may co-occur; never force marginal probabilities to sum to one"
+  },
+  "identification": {
+    "actualCasts": "Exact sample E=totalOutputs/completedCasts; sample P=positiveCasts/completedCasts when both measured",
+    "netAndSaved": "Exact casts only if netConsumed+savedTotal is divisible by nominalBatchSize",
+    "netOnly": "Lower bound ceil(netConsumed/batchSize); upper bound unidentified without a per-cast saving cap",
+    "verifiedOrScenarioCap": "Upper bound floor(netConsumed/(batchSize-maxSavedPerCast)); status and provenance mandatory",
+    "boundedE": "[totalOutputs/maxCasts,totalOutputs/minCasts] for finite positive cast bounds; lower=0 if maxCasts unknown",
+    "boundedP": "[positiveCasts/maxCasts,positiveCasts/minCasts] when positive-cast counts available",
+    "yieldBounds": "Positive-cast observed min/max are descriptive sample ranges, never hard game limits",
+    "forward": "E=P*conditionalMean, scenario only",
+    "inverse": "conditionalMean=E/P for P>0; cannot infer P, min, max from E alone",
+    "uncertainty": "These are accounting identification bounds, NOT sampling confidence intervals or evidence of population rates"
+  },
+  "economicSafety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEV": false,
+    "recommendations": false,
+    "tooltipOnly": "UNCHANGED",
+    "frozenTSM": "UNCHANGED"
+  },
+  "testResults": {
+    "runtime": "connector JavaScript V8, exact v1.0.1 committed source",
+    "selfTestsPassed": 20429,
+    "failed": 0,
+    "syntheticOnly": true,
+    "independentPythonArithmeticChecks": 30800,
+    "independentPythonFailures": 0,
+    "sourceReadback": true,
+    "additionalCurrentRevisionAssertions": 14,
+    "independentPythonCheckRevision": "v1.0.0 denominator arithmetic only; not re-executed on v1.0.1"
+  },
+  "notRun": [
+    "Native Node execution of exact committed source",
+    "lua5.1 generated candidate decoding",
+    "node research/tools/run_completion_pipeline.js --check",
+    "Independent F005 QA",
+    "Retail in-game casts"
+  ],
+  "evidenceAdded": {
+    "independentStudyFamilies": 0,
+    "newNumericEvidenceCells": 0,
+    "newVerifiedExpectedQuantityCells": 0
+  },
+  "evidenceResearcherRequest": "For the twelve target mappings, collect zero-inclusive completed-cast logs with all outputs/ranks, input batch, net consumed, saved/refunded units, patch epoch, actual/minimum eligible skill, spec, gear and independent study-family ID. If only inventory deltas exist, obtain verified saving cap before bounding casts.",
+  "independentValidatorRequest": "Native-run exact committed source; independently verify cast conservation, denominator interval sharpness, adversarial context arrays, scenario-cap status and economic isolation; require whole-family held-out observations for evidence promotion.",
+  "blockers": [
+    "Current priority backlog supplies no new zero-inclusive cast study for this family",
+    "Actual completed casts and saved/refunded totals missing in prior rows",
+    "No independently verified applicable per-cast Resourcefulness saving cap",
+    "Independent QA and in-game verification outstanding"
+  ],
+  "repair": {
+    "version": "1.0.1",
+    "type": "CONTEXT_AND_NUMERIC_DOMAIN_INTEGRITY",
+    "changes": [
+      "Reject blank/whitespace-only patch epoch and study-family provenance",
+      "Reject patch epoch and study family strings longer than 256 characters",
+      "Reject non-finite inverse conditional means instead of allowing Infinity to serialize as null",
+      "Require finite forward result"
+    ],
+    "newSelfTestAssertions": 4,
+    "additionalV8Assertions": 14,
+    "economicPromotions": 0,
+    "confidencePromotions": 0,
+    "newRetailObservations": 0,
+    "unchangedTargetKeys": 12
+  }
+}

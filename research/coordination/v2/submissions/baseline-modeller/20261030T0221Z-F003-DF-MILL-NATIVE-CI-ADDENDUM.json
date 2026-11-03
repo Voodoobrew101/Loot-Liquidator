@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003",
+  "reportType": "IMMUTABLE_NATIVE_CI_ADDENDUM",
+  "originalSubmission": "research/coordination/v2/submissions/baseline-modeller/20261030T0219Z-F003-DF-MILL-RAW-CONTEXT-UNIVERSE-REPAIR.json",
+  "branch": "implementation/five-agent-completion",
+  "modelCommit": "ec1f38844b0889840a8e333af36cff09b45e2cdf",
+  "manifestCommit": "53a64faf0d6a9456dd52fac1502efc33a55a7aa5",
+  "modelCodeBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+  "modelManifestBlobSHA": "69ef0bdc0d6bf9f9ad1667ab2ff7a39efab783f3",
+  "nativeRun": {
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40990988725",
+    "runID": 40990988725,
+    "jobID": 123853076042,
+    "conclusion": "FAILURE",
+    "pipeline": "node research/tools/run_completion_pipeline.js --check",
+    "preFailureChecks": [
+      "deterministic repeat compilation",
+      "serialized source/context attestation",
+      "working estimate coherence and evidence isolation",
+      "Lua5.1 context roundtrip",
+      "F005 binomial 476/476",
+      "F005 Midnight legacy 27/27"
+    ],
+    "independentF005Fixture": {
+      "passed": 15,
+      "failed": 1,
+      "remainingFailure": "omitted co-output can reverse the hypothetical recommendation",
+      "failureReason": "OUTPUT_UNIVERSE_UNVERIFIED",
+      "pipelineDisposition": "NEW_UNEXPECTED_FAILURE_FATAL",
+      "why": "F002's ten-item pre-repair quarantine allowlist does not include the logically contradictory fixture case; safe model behavior rejects the partial universe, so native pipeline fails closed."
+    }
+  },
+  "resolutionOwnership": {
+    "independentValidator": "Revise contradictory F005 test to assert fail-closed behavior for omitted co-outputs and separately demonstrate the hypothetical risk without calling an unsafe partial-universe decision.",
+    "completionEngineer": "Rerun native --check after independent fixture repair; remove staged quarantine after 16/16 passes and coordinator acceptance.",
+    "baselineModeller": "Retain fail-closed v1.0.1 model; no unsafe exception to satisfy contradictory test."
+  },
+  "delta": {
+    "workingCells": 0,
+    "evidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "modelChangesSinceOriginalSubmission": 0
+  },
+  "status": "MODEL_REPAIR_SUBMITTED_NATIVE_PIPELINE_BLOCKED_BY_VALIDATOR_FIXTURE_CONTRADICTION",
+  "independentAcceptance": false,
+  "liveEVChanged": false
+}

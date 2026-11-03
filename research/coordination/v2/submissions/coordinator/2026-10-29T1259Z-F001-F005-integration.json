@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_INTEGRATION",
+  "queueRevision": 2,
+  "status": "COMMITTED_COORDINATOR_ACCEPTANCE_AND_SCORECARD; BLOCKED_INDEPENDENT_PREVIEW_GATE",
+  "baseCommit": "450e511481233bd567dd3bd9078eab8a067ba9a2",
+  "lastVerifiedHeadBeforeSubmission": "583b15eaf9a4c6f596254a7a365ddac8bf0d0b49",
+  "resultCommit": null,
+  "resultCommitReason": "Submission commit SHA cannot self-reference; inspect GitHub history",
+  "filesChanged": [
+    "research/coordination/v2/acceptance/2026-10-29T1259Z-F005-context-fail-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/2026-10-29T1259Z-F001-F005-integration.json"
+  ],
+  "exactMappingKeysChanged": [],
+  "acceptedReview": "research/coordination/v2/reviews/2026-10-29T1248Z-F005-context-and-zero-boundary.json",
+  "reviewDecision": "ACCEPT_INDEPENDENT_FAILURE_AS_BLOCKING; NO_ECONOMIC_OR_PREVIEW_PROMOTION",
+  "hashReadback": {
+    "acceptanceBlobSHA": "0e8a6ef4a9ed944a5fe221c899abff4e1c7cfa86",
+    "scorecardBlobSHA": "d69003f18fd492ad65d06dc00230e08e6b25e8de",
+    "workingEstimatorBlobSHA": "928ef018e728ca0535947b83ecd63c0189def03c",
+    "modelBlobSHA": "76756fce7ae82cb601fb12c279d05f01b9df3eef"
+  },
+  "deltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "newWorkingNumericCells": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "newEvidenceNumericCells": 0,
+    "confidencePromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "acceptanceDecisionsCommitted": 1,
+    "scorecardsUpdated": 1,
+    "blockingDefectsAccepted": 5,
+    "productionChanges": 0,
+    "legacyAssignmentChanges": 0
+  },
+  "currentCounters": {
+    "admittedMappings": 1018,
+    "workingCells": 4072,
+    "workingSlots": 4072,
+    "rawEvidenceCells": 3558,
+    "rawEvidenceGaps": 514,
+    "missingRawE": 116,
+    "independentRetailUniverseAudit": "NOT_COMPLETE",
+    "verifiedEvidenceGE90": 0
+  },
+  "checksActuallyRun": [
+    "GitHub connector fetch/readback of current five-agent common/coordinator/workflow/readiness/priorities and four specialist submissions",
+    "GitHub fetch/readback of F005 independent review and source modules at exact SHAs",
+    "Static source inspection confirmed donorKey omits recipeSpellID, outputQualityRank, skill and full reagents; forward P=0 returns positive yield bounds",
+    "Reconciled 1018*4=4072 and 3558+514=4072",
+    "Verified new coordinator acceptance and scorecard readback, current queue revision 2"
+  ],
+  "externalValidatorChecksReportedNotRerun": [
+    {
+      "name": "V8 independent fixture",
+      "passed": 4,
+      "failed": 5
+    },
+    {
+      "name": "Pinned source Git SHA",
+      "passed": 5,
+      "failed": 0
+    }
+  ],
+  "testsNotRun": [
+    "Native Node F005 regression",
+    "Native Node completion pipeline --check",
+    "Lua5.1 generated candidate decode",
+    "Full JSON Schema validation",
+    "WoW client"
+  ],
+  "blockers": [
+    "F005-DONOR-RECIPE",
+    "F005-DONOR-SKILL",
+    "F005-DONOR-REAGENTS",
+    "F005-DONOR-OUTPUT-RANK",
+    "F005-ZERO-FORWARD",
+    "No independent current Retail TWW milling whole-study holdout"
+  ],
+  "economicPolicy": "All unsupported fallbacks remain confidence 0, PREVIEW_ONLY, normalizedVerified false; no live EV or recommendations",
+  "nextTask": {
+    "id": "F001_F005_RETEST_INTEGRATION",
+    "trigger": "F002 donor context and F003 zero-support code changes plus F005 independent retest",
+    "action": "Verify changed GitHub blob hashes, independent 9/9 fixture pass, deterministic build and channel isolation; accept only supported research-stage candidate and update scorecard, no production release"
+  },
+  "zeroDeltaPivot": "Accepted a new independent defect finding and assigned engineering/model fixes rather than re-auditing unchanged 217 priorities; source researcher remains on independent diamond eligibility/cast evidence"
+}

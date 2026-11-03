@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_PRISMATIC_IDENTITY_CORRECTION_AND_FIRST_STAGE_ORE_COHORTS",
+  "runID": "2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 2,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "3c9d90a23eaccda32ca61345ab7fa151fd8b43b1",
+  "resultEvidenceCommit": "bd52397b0c2bf8fb509bc559ff3d11c496dc085d",
+  "submissionCommit": "SELF_COMMIT_USE_GIT_HISTORY",
+  "status": "PROPOSED_PENDING_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "sourceReadiness": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "workingCoverage": 1,
+    "source": "research/coordination/completion-readiness.json",
+    "priorityBasis": "research/coordination/completion-priorities.json"
+  },
+  "exactFilesAdded": [
+    "research/evidence/v2/2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts.json",
+    "research/evidence/v2/source-reviews/2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts-submission.json"
+  ],
+  "exactFilesModified": [],
+  "existingFilesOverwritten": [],
+  "exactDeltas": {
+    "newOriginalCommentLineages": 2,
+    "newOriginalCohorts": 2,
+    "proposedAttributionCorrections": 1,
+    "acceptedAttributionCorrections": 0,
+    "numericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "mappingAdmissions": 0,
+    "existingSourceMemoryEdits": 0,
+    "existingRawEvidenceEdits": 0
+  },
+  "correction": {
+    "priorFile": "research/evidence/v2/2026-10-30T2028Z-F004-df-two-stage-diamond-denominators.json",
+    "priorCohortID": "B-prismatic-1000",
+    "field": "inputItemID",
+    "incorrect": 192880,
+    "correct": 194545,
+    "incorrectIDActually": "Crumbled Stone",
+    "correctIDActually": "Prismatic Ore",
+    "proposedOnly": true
+  },
+  "observations": [
+    {
+      "author": "TheChisel",
+      "input": "Serevite Ore rank 3",
+      "reportedOre": 5000,
+      "reportedCasts": 1000,
+      "prismaticOreUnits": 31,
+      "reportedOutputUnitsPerCast": 0.031,
+      "epoch": "HISTORICAL_UNKNOWN_DATE",
+      "promotion": "NONE"
+    },
+    {
+      "author": "Hotfor",
+      "input": "Draconium Ore mixed ranks",
+      "reportedOre": 7000,
+      "actualCompletedCasts": null,
+      "prismaticOreUnits": 62,
+      "nominalFiveOreCastEquivalents": 1400,
+      "epoch": "HISTORICAL_UNKNOWN_DATE",
+      "promotion": "NONE"
+    }
+  ],
+  "testResults": {
+    "JSON roundtrip for both evidence files": "PASS",
+    "Item identity correction invariants": "PASS",
+    "Serevite denominator arithmetic": "PASS",
+    "Draconium nominal-equivalent arithmetic": "PASS",
+    "Source deduplication against canonical source-memory": "PASS",
+    "No-economic-promotion assertions": "PASS",
+    "Role-owned paths only": "PASS",
+    "GitHub SHA read-back of both files": "PASS",
+    "GitHub compare exactly two additions and no modifications": "PASS",
+    "Native Node pipeline/test suite": "NOT_RUN_NO_REPOSITORY_RUNTIME",
+    "Lua5.1 generated decoder": "NOT_RUN_NO_REPOSITORY_RUNTIME",
+    "WoW Retail in-game client": "NOT_RUN"
+  },
+  "blockers": [
+    "No current-Retail cast logs or skill/gear/stat contexts for new original comments.",
+    "Hotfor cohort mixes three Draconium input ranks; cannot assign 62 Prismatic Ore to individual quality rows.",
+    "TheChisel reported 1000 casts but lacks zero-inclusive histogram/refunds and exact observation epoch.",
+    "Prior evidence's 192880 identity must be corrected by coordinator via immutable attribution event; evidence researcher must not overwrite prior report."
+  ],
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "liveRecommendationsEligible": false,
+    "mainEdited": false,
+    "runtimeProfilesEdited": false,
+    "releaseMade": false,
+    "legacyAssignmentsChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "schedulesChanged": false
+  },
+  "coordinatorRequest": "Accept versioned 192880->194545 correction for the prior Prismatic Ore second-stage cohort; do not alter legitimate Crumbled Stone (192880) mappings. Independently review two original first-stage cohorts before any model use.",
+  "nextTask": "Validate current-Retail first-stage Prismatic Ore occurrence and second-stage Prismatic Ore diamond outputs with rank-labelled complete cast logs, refunds and skill context; otherwise pivot to another ready high-impact E or mapping issue."
+}

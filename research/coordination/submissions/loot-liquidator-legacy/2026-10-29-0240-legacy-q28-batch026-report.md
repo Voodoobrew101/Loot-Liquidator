@@ -1,0 +1,28 @@
+# Legacy q28 Batch026 — exact 21-key economic-gap revisit and denominator erratum
+
+**2026-10-29 02:40 PDT | worker loot-liquidator-legacy | branch research/processing-confidence | research only**
+
+## Assignment and identity checks
+
+Read live `research/coordination/assignments.json` **queue revision 28**, exact assignment `2026-10-29-batch026-legacy`, master batch025 verdict, current source-memory, research-lessons, prior q27 Legacy report/source reviews, GameData.lua pinned blob `1d47c4a961c5dc5af626e659f7d96d1490d3cf9e`, source numeric ledger, compiler missing-field ledger and Titanium comparison/observation references. **21/21 distinct assigned stable keys** audited: **1 WotLK Titanium Powder**, **12 R2 Draconium outputs**, **8 R1 Draconium outputs**. **20/20 original GameData parent input/output source-line matches** independently checked; Titanium is an existing compiler-admitted community observation, not a GameData output line. Zero self-claimed keys outside q28.
+
+## New useful source reconciliation
+
+- The **neoslayyer original** on https://www.wowhead.com/item=192869/illimited-diamond also reports **150 gross R2 Draconium Ore (188658) -> two R2 Illimited Diamonds (192870)** with **20 Enterprising / 30 Prospecting** points. This supports the already mapped **R2 input -> R2 output** relationship under historical conditions. It was mentioned in the q27 original observation, so this q28 structured record is **NOT a new independent author**. No verified completed casts, hit counts, positive min/max, 2026 patch or unconditional E. Record: `research/evidence/observations/2026-10-29-0240-legacy-q28-batch026-neoslayyer-r2-draconium-r2-diamond.jsonl`.
+- A separate January 10, 2023 commenter in https://www.reddit.com/r/woweconomy/comments/108782r describes **50,000 gross Draconium Ore** with approximately **2.57 pooled diamonds per 1,000 ore**, but input ore rank and diamond output rank are absent. This is a new comment-specific extraction from an **already indexed thread**, not a new verified independent author lineage or a usable exact-rank E. The reported rounded average is not an exact total and is **not** converted to completed casts. Source-review only.
+- Three assigned historical TSM diamond rank rows have **source matRate 0.0142 > nominal per-five E 0.014** while positive min is 1, an impossible P/E pair if those numbers represented the same exact-cast distribution. Keys: `tsm:prospect:188658:192870:L1205`, `tsm:prospect:188658:192871:L1206`, `tsm:prospect:189143:192870:L1243`. These are preexisting flagged TSM contradictions, **not new numerical values**. Do not promote P or E; potential gold decision-risk from using contradictory historical proxies.
+- **Titanium ledger denominator erratum:** the existing shared `research/ledger/titanium-observed-yields.csv` and 2026-10-27 comparison use derived gross-ore/5 counts as `prospect_operations`. Correct master-facing labels to *five-ore equivalents*, not measured casts; preserve raw 1,000 gross ore -> 143 powder (12.0.5 comment), and 2022 1,000 -> 152 powder as separate historical authors. Immutable erratum in worker submission; shared ledgers untouched.
+
+## Four independent fields and decision safety
+
+All **84/84 exact-current-context field slots** across 21 keys remain `null` for economic/patch-matched assessment: **21 unknown P(hit), 21 unknown positive min, 21 unknown positive max, 21 unknown unconditional E**. The 20 historical TSM rows retain their source-stated P-like `matRate`, positive min/max, and per-ore `amountOfMats` in a **separate historical-reference object**, never current field values. This does **not** erase historical numeric data or count it as newly measured. Titanium already has a compiler-approved **display-only conservative 1–2** cap, with raw observed positive max **5**, not a new tooltip promotion. **0 new current-Retail economic values; 0 new tooltip fields; 0 new compiled mappings; 1 structured historical rank-eligibility extraction; 1 master-facing denominator erratum.**
+
+No AH prices were checked, so no specific recommendation flip can be claimed. The material gold risk is misusing historical TSM per-ore estimates as exact-rank per-cast EV, double-counting alternative gem quality ranks, and treating Resourcefulness/gross ore as a measured operation denominator.
+
+## Source efficiency and next IDs
+
+Source-memory was used to avoid refetching already archived Xenastro/Jallfo/TSM cohorts; q27 neoslayyer was reused rather than credited again. Targeted searches for new 2026 Draconium rank-specific and Titanium per-cast logs yielded **no qualifying completed-cast dataset**. Reddit 108782r is historical and family-level; no new current numeric promotion. Source-review events record reused/new-comment/negative conclusions without mutating shared cache. Next exact IDs: **`188658->192870`, `188658->192871`, `189143->192870`, `36910->46849`**; seek actual completed-cast zero-inclusive logs with output quality rank, effective skill, Resourcefulness and client patch. Remaining 17 assigned gem rank keys likewise need 2026 rank-resolved operations.
+
+## Validation and scope
+
+Validated **21 unique exact keys**, **20 source parent/child matches**, **3 preexisting P>E flags**, **0 field promotions**, all 84 null exact-current fields, observation structure and source-review identity. Source-review event and immutable erratum supplied for Master QA. No changes to main, production Lua/TOC, shared master ledgers, canonical registry, source-memory, assignments, schedule, or other worker files. The q28 21-key batch is audited, but evidence gaps are **not complete**; retain assignment until master decides reassignment.

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_TWW_GEM_BINOMIAL_TAIL_STABILITY",
+  "workflowRevision": 2,
+  "queueRevision": null,
+  "queueRevisionNote": "No v2 queueRevision in canonical readiness/priorities; workflowRevision=2",
+  "runUTC": "2026-10-29T21:23:29.227Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "b9ab8e560fbfbbee0aeb9d2396e661a71fcc2ecc",
+  "modelCommit": "a30b1906d6c9b51cc8a799f75c18aa494b698eed",
+  "manifestCommit": "9d5fb279c1e14a9f559cd9814f7d6a1335fb830c",
+  "resultCommitBeforeSubmission": "9d5fb279c1e14a9f559cd9814f7d6a1335fb830c",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "pivotReason": "After fixed-sample power and marginal interval models were created without new Retail cohorts, targeted a reproducible high-n numerical defect rather than repeating unchanged source audits.",
+  "filesChanged": [
+    "research/tools/models_v2/tww_gem_finding_exact_marginal_bounds_v1.js",
+    "research/models/v2/tww_gem_finding_exact_marginal_bounds_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261029T2123Z-F003-GEM-BINOMIAL-TAIL-STABILITY.json"
+  ],
+  "affectedStableKeys": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "findings": {
+    "severity": "HIGH_N_NUMERICAL_VALIDITY",
+    "before": "cdf(10000,8999,0.9)=0 due to underflow of P(X=0) recurrence",
+    "after": "cdf(10000,8999,0.9)=0.4915789606543559",
+    "largeN95pctClopperPearson": {
+      "n": 10000,
+      "k": 9000,
+      "lower": 0.8939531000966177,
+      "upper": 0.9058127882660145
+    },
+    "algorithm": "Boundary-anchored lower or complementary upper tail, log factorial for starting mass; no change to fixed-sample inference assumptions",
+    "sampleDesign574CastsUnchanged": true,
+    "optionalStopping": "Existing intervals and zero-hit design are fixed-sample only; repeated looks require separately validated sequential method."
+  },
+  "exactDeltas": {
+    "newMappingRecords": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "modelDefectsRepaired": 1,
+    "newRegressionAssertions": 7,
+    "affectedModelKeys": 8,
+    "liveEVChanged": false
+  },
+  "tests": {
+    "javascriptV8FullModel": {
+      "passed": 31,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    "nativeNodeIsolatedNumerical": {
+      "passed": 9,
+      "failed": 0,
+      "nodeVersion": "v22.16.0",
+      "fullGithubModule": false
+    },
+    "githubReadBack": "PASS_MODEL_AND_MANIFEST",
+    "nativeNodeFullModule": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentValidator": "PENDING",
+    "fullCompletionPipeline": "NOT_RUN_NO_ACCEPTED_BUILD_INPUT_CHANGE"
+  },
+  "readinessAtRun": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEconomicExpectedQuantity": 116,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "isolation": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "productionChanged": false,
+    "runtimeProfileBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "No independent current Retail zero-inclusive completed-cast cohort",
+    "Gem Finding unlock/rank/skill context not independently established",
+    "Independent validator has not accepted numerical repair",
+    "Fixed-sample intervals are not anytime-valid under optional stopping"
+  ],
+  "evidenceResearchRequest": "Collect complete zero-inclusive output vectors and actual completed casts by exact rank/unlock/skill/patch; do not use gross ore as cast denominator.",
+  "validatorRequest": "Run full native Node model and independent high-n CDF/CP oracle checks (n=10000,k=5000/9000/9900), ensure no regressions at n=0, all successes, zero hits, and co-output isolation.",
+  "nextTask": "F003 implement separately reviewed sequential/optional-stopping-safe sampling bounds for Gem Finding if repeated interim looks are planned; otherwise consume new independent cast cohorts."
+}

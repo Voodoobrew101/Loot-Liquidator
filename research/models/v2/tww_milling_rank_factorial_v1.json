@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelID": "tww-milling-rank-factorial-v1.0.0",
+  "taskID": "F003_TWW_TWO_AXIS_RANK_FACTORIAL",
+  "workflowRevision": 2,
+  "scope": "RESEARCH_ONLY_MODEL_AND_SYNTHETIC_FIXTURES",
+  "modelSource": "research/tools/models_v2/tww_milling_rank_factorial_v1.js",
+  "modelSourceBlobSHA": "953dfb6fa4b85e9816b3ee558f5bbd69f22b0416",
+  "sourceAncestry": [
+    {
+      "path": "research/evidence/v2/2026-10-29T2131Z-F004-tww-milling-two-axis-context.json",
+      "blobSHA": "451f7d327646225975eba4b1f9988f54935d31cb",
+      "sourceLineages": [
+        "tww-2024-aug-beta-milling-rank-observation",
+        "tww-2024-nov-r2-pigment-herb-rank-comment"
+      ],
+      "independentCurrentRetailStudyFamilies": 0
+    }
+  ],
+  "targetKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028"
+  ],
+  "sourceContrasts": {
+    "betaFixedInputRank1": {
+      "outputRank1MeanPerNominal10": 13,
+      "outputRank2MeanPerNominal10": 11,
+      "outputRankDifference": -2,
+      "status": "HISTORICAL_BETA_SELF_REPORT_NO_CAST_DENOMINATOR"
+    },
+    "novemberFixedOutputRank2": {
+      "inputRank1ApproxPerNominal10": 11,
+      "inputRank2ApproxPerNominal10": 13,
+      "inputRankDifferenceApprox": 2,
+      "status": "HISTORICAL_ANECDOTAL_APPROXIMATION_NO_CAST_DENOMINATOR"
+    },
+    "crossEpochFactorialInteraction": null,
+    "reason": "Two reports have different epochs, unknown exact IDs and skill/stats. They cannot supply three corners of a common matched factorial grid."
+  },
+  "forwardModel": {
+    "entrypoint": "analyzeMatchedRankCohorts",
+    "recipeSpellID": 444181,
+    "nominalHerbsPerCompletedCast": 10,
+    "design": "Two input-rank cohorts of the same identified herb species, each logging BOTH output-rank quantities per actual completed cast including zeros.",
+    "requiredKnownContext": [
+      "patchBuild",
+      "recipeSpellID",
+      "herbSpecies",
+      "professionSkill",
+      "specialization",
+      "gear",
+      "resourcefulness",
+      "unlocks",
+      "outputRankIDs",
+      "inputItemIDs",
+      "sourceStudyFamilyID",
+      "observationEpoch"
+    ],
+    "outputs": [
+      "unconditional E per cast for each input/output rank cell",
+      "occurrence P per cast",
+      "observed positive min/max only, not hard bounds",
+      "within-cast co-output hit count",
+      "rank contrasts",
+      "difference-in-differences interaction",
+      "descriptive interaction standard error preserving within-cast covariance"
+    ],
+    "castDenominator": "actual completed casts only; aborted requests separate; gross/net/refunded herb ledgers separate",
+    "noExclusivePartitionAssumption": true,
+    "applicability": "OBSERVED_MATCHED_CONTEXT_ONLY_NOT_BASELINE_TRANSFER",
+    "baselineMinimumEligibleSkill": null,
+    "baselineStatus": "UNVERIFIED_NO_CURRENT_RETAIL_CASTS",
+    "inverseModel": "NOT_IDENTIFIABLE_FROM_HISTORICAL_AGGREGATES",
+    "uncertainty": "Descriptive SE requires independent identically distributed completed casts within each fixed context. No inferential interval or 2026 patch transfer is asserted."
+  },
+  "syntheticFixture": {
+    "inputRank1": {
+      "castOutputRank1": [
+        0,
+        4,
+        2,
+        0
+      ],
+      "castOutputRank2": [
+        2,
+        3,
+        0,
+        0
+      ]
+    },
+    "inputRank2": {
+      "castOutputRank1": [
+        0,
+        6,
+        4,
+        0
+      ],
+      "castOutputRank2": [
+        4,
+        5,
+        0,
+        0
+      ]
+    },
+    "expected": {
+      "E11": 1.5,
+      "E12": 1.25,
+      "E21": 2.5,
+      "E22": 2.25,
+      "interactionDifferenceInDifferences": 0,
+      "descriptiveInteractionSE": 1.8596594670351163
+    },
+    "fixtureIsRetailEvidence": false
+  },
+  "evidenceFields": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null
+  },
+  "confidence": 0,
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "evidencePromotion": false,
+  "economicIsolation": {
+    "liveExpectedValueEligible": false,
+    "liveRecommendationEligible": false,
+    "tooltipOnlyFallbackEligible": false,
+    "workingCoverageMutation": false
+  },
+  "tests": {
+    "nativeNodeSyntax": "PASS",
+    "nativeNodeSelfTestAssertions": 39,
+    "nativeNodeSelfTestFailures": 0,
+    "independentPythonArithmeticOracle": "PASS_SYNTHETIC_INTERACTION_SE",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentValidator": "PENDING"
+  },
+  "evidenceRequest": "Collect two exact same-species input-rank cohorts on one known current-Retail patch and profession configuration, with zero-inclusive per-cast vectors for both pigment ranks, item IDs, spell 444181, actual completed casts, aborts, gross/net/refunded herbs and full stats/unlocks. Use independent study-family holdout after estimation.",
+  "validatorRequest": "Independently check matched-context rejection, 2x2 contrasts and paired co-output covariance, denominator/refund isolation, no invented rank eligibility and no live-E promotion."
+}

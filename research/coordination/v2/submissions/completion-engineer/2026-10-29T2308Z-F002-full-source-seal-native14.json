@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_ATTEST_FULL_SOURCE_METADATA_AND_WIRE_F005_NATIVE_14",
+  "workflowRevision": 2,
+  "queueRevision": 12,
+  "runUTC": "2026-10-29T23:08:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "bce68f0b25769a7295f8dbe1eeeb40ad1cfd19b8",
+  "implementationCommits": [
+    "591b62d80ae7bece3708038cee669552d025fb48",
+    "dc8d4e597954efcf9cb9870bcdab9e614c9bec5f"
+  ],
+  "resultCommit": "THIS_COMMIT",
+  "canonicalInputs": {
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "coordinatorAcceptance": "research/coordination/v2/acceptance/2026-10-29T2257Z-F001-F005-detached-metadata-integration.json",
+    "independentFixture": "research/tests/v2/test_f005_serialized_metadata_integrity.js"
+  },
+  "acceptedVersusProposed": {
+    "code": "COMMITTED_TO_RESEARCH_BRANCH",
+    "nativeCI": "PASS",
+    "independentValidatorAcceptance": "PENDING_NEW_REVIEW",
+    "coordinatorAcceptance": "PENDING",
+    "externalDigestPin": "PROPOSED_NOT_PERSISTENTLY_PINNED"
+  },
+  "exactFileDeltas": [
+    {
+      "path": "research/tools/working_estimates.js",
+      "previousBlob": "3500fac51b69328cacb6c3ec5089561fcba2f2bb",
+      "newBlob": "956db68c3b2bc7edc59565d15460c479b62344d6",
+      "changes": [
+        "Version detached contract from working-estimate-source-context-v1.0.0 to v1.1.0",
+        "Attest every enumerable source record key and nested metadata except generated workingEstimate; covers tooltipOnly prohibitions/claims, sources, verifiedDate, status, sourceSelection and future source fields",
+        "Retain independent SHA-256 digest requirement and original source/evidence data"
+      ]
+    },
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "previousBlob": "84bc1b017e758fa36e793063766634e5ab8f9fb1",
+      "newBlob": "d3ccfc30667233b4e3f505bb9e81e5a72cca242d",
+      "changes": [
+        "Run validator-owned 14-case detached Node/SHA-256 metadata fixture as mandatory pipeline gate",
+        "Emit proposed digest to CI output explicitly marked NOT EXTERNALLY PINNED"
+      ]
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/2026-10-29T2308Z-F002-full-source-seal-native14.json",
+      "changes": [
+        "Role-owned immutable submission for coordinator and independent QA"
+      ]
+    }
+  ],
+  "numericalDeltas": {
+    "admittedMappingsBefore": 1018,
+    "admittedMappingsAfter": 1018,
+    "workingNumericBefore": 4072,
+    "workingNumericAfter": 4072,
+    "numericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "evidenceNumericBefore": 3558,
+    "evidenceNumericAfter": 3558,
+    "evidenceMissing": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentNewStudyLineages": 0,
+    "candidateRegenerated": false,
+    "candidateBlobUnchanged": "940431ecd0cefe1e65701d2cc9f53ae619350b38"
+  },
+  "proposedDetachedAttestation": {
+    "contractVersion": "working-estimate-source-context-v1.1.0",
+    "hashAlgorithm": "sha256",
+    "sha256": "a5f472be59536c38cc7534ec5415e449085496519407e48bcfb8643362ccc9b5",
+    "derivation": "Native GitHub Actions deterministic pipeline over 1018 current research records",
+    "status": "PROPOSAL_ONLY_NOT_INDEPENDENTLY_PINNED",
+    "requiredForDurableAcceptance": "Coordinator must independently review and persist the digest separately from the candidate and bind it to the exact candidate/source contract and branch commit; never use a self-reported candidate digest as trust root"
+  },
+  "testsActuallyRun": [
+    {
+      "name": "GitHub Actions native verify-five-agent-completion",
+      "runURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40970895389",
+      "jobID": 123787054009,
+      "conclusion": "success",
+      "checkout": "pull-request merge containing dc8d4e597954efcf9cb9870bcdab9e614c9bec5f"
+    },
+    {
+      "name": "F005 serialized metadata integrity independent 14-case detached-process Node fixture",
+      "passed": 14,
+      "failed": 0,
+      "includingSixPreviouslyUndetectedMetadataMutations": true
+    },
+    {
+      "name": "F005/F003 independent binomial numerics",
+      "passed": 476,
+      "failed": 0
+    },
+    {
+      "name": "node research/tools/run_completion_pipeline.js --check",
+      "result": "PASS_DETERMINISTIC_UNCHANGED_CANDIDATE"
+    },
+    {
+      "name": "full generated candidate JSON Schema",
+      "result": "PASS"
+    },
+    {
+      "name": "Lua5.1 syntax and decoding",
+      "result": "PASS_1018_MAPPINGS_4072_WORKING_FIELDS_514_EVIDENCE_GAPS"
+    },
+    {
+      "name": "blocker-array preservation",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "WoW Retail client or live addon valuation",
+    "Independent current-Retail whole-study holdout",
+    "Coordinator's independent persistence and re-verification of proposed SHA-256 pin",
+    "Formal post-change independent-validator review"
+  ],
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "workingAffectsLiveEV": false,
+    "tooltipOnlyPolicyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeBranchChanged": false,
+    "productionWrites": 0,
+    "schedulesChanged": false,
+    "otherRoleFilesEdited": false
+  },
+  "blockers": [
+    "The SHA-256 value is an engineering proposal printed in CI; no separately pinned coordinator acceptance artifact yet exists.",
+    "Native independent regression passed, but independent validator has not issued a new post-repair acceptance verdict.",
+    "116 evidence expectedQuantity gaps, 514 total evidence gaps, no verified minimum-eligible baseline or independent current-Retail holdout; no economic promotion."
+  ],
+  "zeroDeltaPivot": "Pivoted from repeated unchanged cast-basis/binomial audits to six newly exposed source metadata attestation holes and mandatory native 14-case QA; numeric evidence remains unchanged by design.",
+  "nextTask": "Obtain F005 independent post-repair acceptance and coordinator's externally persisted, commit-bound SHA-256 pin; then address any newly confirmed contract defect rather than rerunning unchanged audits.",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA"
+}

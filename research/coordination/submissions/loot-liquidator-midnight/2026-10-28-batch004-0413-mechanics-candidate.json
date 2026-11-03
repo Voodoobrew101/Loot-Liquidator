@@ -1,0 +1,113 @@
+{
+  "hypothesisID": "midnight-gem-hotfix-2026-03-31-quantification",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 11,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      1231127
+    ],
+    "inputItemIDs": [
+      237361
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      2
+    ],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "candidateInputExample": "Refulgent Copper R2 237361; source JD3K 50 ore",
+    "actualPreHotfixDateKnown": false,
+    "actualBuild": null,
+    "actualSkill": null,
+    "perCastHitHistogram": null,
+    "sourceID": "wowhead-1231127-JD3K-50ore"
+  },
+  "targetContext": {
+    "sourceID": "2026-04-22-eu-forum-honeybone-copper-prospect",
+    "postHotfixDate": "2026-04-22",
+    "inputRank": null,
+    "skill": null,
+    "gear": null,
+    "specialization": "Proficient Processor unspecified ranks",
+    "gemFamilyAggregateOnly": true,
+    "perCastHitHistogram": null,
+    "build": null
+  },
+  "requiredLiveContext": [
+    "recipeSpellID",
+    "inputItemID",
+    "inputQualityRank",
+    "outputItemID",
+    "outputQualityRank",
+    "clientBuild",
+    "hotfixWindow",
+    "baseSkill",
+    "effectiveSkill",
+    "specializationRanks",
+    "professionGear",
+    "recipeBonusStats",
+    "actualCompletedOperations",
+    "perCastOutputsIncludingZeros",
+    "actualConsumedInputs",
+    "actualSavedInputs"
+  ],
+  "sources": [
+    {
+      "claimID": "blizzard-hotfix-2026-03-31-midnight-gems",
+      "url": "https://us.forums.blizzard.com/en/wow/t/world-of-warcraft-midnight-hotfixes-april-17/2260898",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "claim": "Gems more regularly found when prospecting Midnight ore; no numeric rate or affected output IDs published"
+    },
+    {
+      "claimID": "wowhead-1231127-JD3K-50ore",
+      "url": "https://www.wowhead.com/spell=1231127/midnight-prospecting",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": 10,
+      "claim": "R2 Copper source-reported 50 ore; actual observation date unknown; cannot establish pre-hotfix control"
+    },
+    {
+      "claimID": "blizzard-forum-2026-03-26-noriiju-40-casts",
+      "url": "https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": 40,
+      "claim": "200 copper, 40 attempts, 8 gems; input rank, skill, gear, per-gem counts missing"
+    },
+    {
+      "claimID": "eu-forum-2026-04-22-honeybone-200-prospects",
+      "url": "https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": 200,
+      "claim": "1000 copper ore, 10 diamonds, zero rare gems; output IDs, input rank, skill and zero-inclusive per-cast results missing"
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No identical ore rank/recipe/skill/spec/gear matched pre/post March 31 2026 cohorts",
+    "Pre-hotfix date for JD3K 50-ore aggregate not established",
+    "Post-hotfix forum source omits ore rank, individual gem IDs, actual output histogram, complete rank-specific vector and exact build",
+    "March 31 hotfix describes qualitative frequency only; no numerical coefficients",
+    "No controlled separation from 12.0.5 or later patch effects",
+    "No independent replicated zero-inclusive cast-level experiment"
+  ],
+  "notes": "The example scope [237361] is only a possible controlled test stratum; empty outputItemIDs/outputQualityRanks are unresolved scope, NOT wildcard. No executable transformation may compile. Next experiment: same five-ore recipe, ore item 237361 rank2, exact individual gem IDs/ranks, identical skill/spec/gear and patch-build pre/post with >=1000 completed casts per cohort (rare outputs may require more), zeros and refunds recorded. If pre-hotfix client cannot be reproduced, seek timestamped original logs with matching controls."
+}

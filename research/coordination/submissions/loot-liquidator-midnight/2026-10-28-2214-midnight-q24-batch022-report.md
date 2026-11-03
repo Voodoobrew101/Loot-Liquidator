@@ -1,0 +1,42 @@
+# Midnight q24 Batch 022 — new original milling aggregate, Crushing reagent-rank safeguards
+**2026-10-28 22:14 PDT · research-only · queue revision 24 · assignment 2026-10-28-batch022-midnight**
+
+## Scope, safeguards and results
+- Audited **25/25** exact master-assigned stable keys: 16 Midnight Crushing gem selector/rank candidates, eight alternate milling pigment-rank candidates, one stone reagent/rank audit. No keys self-claimed or reassigned.
+- **0 newly admitted legitimate conversion mappings; 0 verified current-Retail numeric fields.** Two possible Gemdust output ranks for each Crushing candidate remain unadmitted (32 conditional output candidates); eight milling alternate rank candidates also remain unadmitted. **160/160 four-field candidate slots remain unknown** (40 candidate output/rank combinations × four), not 40 established legitimate conversions.
+- Read live queue24, master batch021 verdict, source-memory (181 canonical sources at read time), research-lessons, prior Midnight q21/q22/q23 reports/source reviews, GameData.lua, StatYieldProfiles.lua and canonical observation schema before web discovery. Original cohort source is not in source-memory; mirrored Wowhead comment is one author.
+- No synthetic zero, P=1, min/max midpoint, rank-copy E, skill coefficient, or Resourcefulness-to-output transfer.
+
+## P0 — first-hand Midnight milling experiment recovered, four family totals
+An original Russian-language [Wowhead comment by kyzenbka](https://www.wowhead.com/ru/item=245807/powder-pigment) reports level-1 milling without tools. Its wording is reproduced here for attribution, not used to infer sampling patch: "Тихоцвет Просеивается 1 уровня без инструментов 1000 шт в 1305 Порошковый пигмент / Кровотерн 1000 шт в 1286 Пигмент кровотерна / Маналилия в 1336 Пигмент маналилии / Сребревица в 1335 Пигмент сребревицы". Translation: Tranquility Bloom 1000→1305 Powder Pigment; Sanguithorn 1000→1286 Sanguithorn Pigment; Mana Lily→1336 Mana Lily Pigment; Argentleaf→1335 Argentleaf Pigment. **The 1000 input denominator is explicit only for the first two families**; the last two may share the context but must not inherit a denominator automatically.
+
+| Reported input family | Input ID R1 (family ID) | Reported pigment units | Explicit initial herb count | Raw units / herb (if explicit) |
+|---|---:|---:|---:|---:|
+| Tranquility Bloom | 236761 | 1305 | 1000 | 1.305 |
+| Sanguithorn | 236770 | 1286 | 1000 | 1.286 |
+| Mana Lily | 236778 | 1336 | **unknown** | **unknown** |
+| Argentleaf | 236776 | 1335 | **unknown** | **unknown** |
+
+The input IDs above identify family-level R1 catalog entries, **not verified sample input quality ranks**. The reported totals are family-level, without exact output item IDs, ranks, cast counts, per-cast histograms, or actual observation patch. The 100 nominal ten-herb groups for the first two are arithmetic only, **not measured completed operations**; Resourcefulness may change consumed inputs. Accordingly all four P/min/max/E remain unknown for every assigned exact rank candidate. Four schema-valid source-only observations preserve the original totals as **unmappedReportedOutputs**, with null item IDs and no cast-denominator invention. This is **one newly indexed independent author, four subcohorts**, not four independent studies.
+
+[Method's March 5 2026 Midnight Inscription guide](https://www.method.gg/guides/midnight-inscription-profession-guide) independently supports the four herb→pigment families, ten-herb operations, skill-driven quantity and Perfect Milling specialization for higher pigment quality. The guide is qualitative secondary evidence, not a second measured experiment. Its claim that rank-two pigment access requires Perfect Milling is a useful eligibility gate, but the guide does not supply per-skill exact rank-output probabilities. Do not assume herb R2 automatically gives pigment R2 or that R1 is the only rank.
+
+## P0 — Crushing selector and multi-reagent/rank audit
+[Retail spell 1231132](https://www.wowhead.com/spell=1231132/midnight-crushing) confirms **three selected Midnight gems plus one Dusk-Shrouded Stone per operation**. It does not expose a complete item-ID salvage whitelist. The assigned 16 gem IDs form eight catalog family/rank pairs: Sanguine Garnet 242553/242723, Amani Lapis 242554/242722, Harandar Peridot 242607/242720, Tenebrous Amethyst 242606/242721; Flawless Garnet 242613/242724, Flawless Lapis 242612/242727, Flawless Peridot 242610/242726, Flawless Amethyst 242611/242725. These are candidate selector inputs, **not confirmed eligible item IDs**. The prior Cardinalai 480-gem / 330-dust mixed study is reused as one author; no per-ID/rank histogram or confirmed completed cast denominator.
+
+**New explicit reagent rank distinction:** Dusk-Shrouded Stone **242788 R1** and **242789 R2** are separately catalogued [R1](https://goldcap.gg/retail/us/items/242788), [R2](https://www.wowhead.com/item=242789/dusk-shrouded-stone). The spell lists the stone reagent generically and does not prove whether either rank can satisfy the slot or whether the chosen rank affects results. Preserve both as item-identity candidates, with exact substitution rules **unknown**. Gemdust output item identities **242620 and 242621** also exist separately [R1](https://www.wowhead.com/item=242620/glimmering-gemdust), [R2](https://www.wowhead.com/item=242621/glimmering-gemdust); no rank-specific Crushing output histogram or skill threshold was verified.
+
+## P2 — decision risks, numerical semantics and priority
+1. **High:** The correct gross Crushing value is `E_dust_R1×price_R1 + E_dust_R2×price_R2`; subtract `3×selectedGemPrice + 1×selectedStonePrice` before resource savings. Resourcefulness is an input-cost/saved-unit effect, **not extra Gemdust output**. Since both E values and stone-rank eligibility remain unknown, no current gold-optimal action can be asserted.
+2. **High:** A guide's rough "~0.67 per crush" and Cardinalai's 330 dust from 480 gems / 160 stones have different and inadequately specified denominators. Do not import 0.67 as a verified per-cast E or infer 330/160 as actual completed-cast E.
+3. **High:** Eight missing alternate pigment ranks are family-supported, but Perfect Milling skill gating may make a rank impossible in a particular context. Do not double-count rank alternatives or copy the family total into both quality IDs.
+4. **Medium:** The new original milling source provides a concrete **negative conclusion**: family aggregate reports without actual cast logs cannot resolve any of the 160 current-Retail candidate numeric fields, despite substantial herb totals.
+
+## Source lineage, QA and next exact targets
+- **Novel original author:** kyzenbka; four family totals, one lineage. Russian item-page mirrors are **duplicate publication locations**, not independent replications. Original observation date and patch are not stated; publication date was not verified and is not assumed to be the mechanics date.
+- **Reused:** Method family guide, Wowhead spell, Cardinalai original cohort, q23 item identities; new distinct stone-rank identity lookup does not constitute an observed Crushing cast.
+- **Avoided:** redundant JD3K/Cardinalai and q23 Method source scraping for unchanged numeric data. No full independent cast dataset found; no new actual-cast E, P, or bounds.
+- **Invariants:** 25 unique assigned keys; 16 Crushing, eight milling, one reagent; 40 candidate output/rank records and 160 null numeric fields; 0 nulls with positive numeric confidence; 0 assumed zero; 0 rank-family duplication as measured evidence; no extra output ID invented. Four observation records retain unmapped output vectors.
+- **Next exact IDs:** selector captures for 242553, 242723, 242554, 242722, 242607, 242720, 242606, 242721, 242613, 242724, 242612, 242727, 242610, 242726, 242611, 242725 with 242788/242789 stone and 242620/242621 dust rank; then matched skill/R1-R2 10-herb cast histograms for 236761/236767→245808, 236776/236777→245803, 236778/236779→245867, 236770/236771→245865. Record actual client build, skill/Perfect Milling, Resourcefulness, per-cast zeros and output ranks.
+
+Master should QA the new author as source-only and request in-client whitelist and rank captures before admitting any conversion. No production Lua/TOC, main, master ledgers/assignments, canonical registry or source-memory changed. Existing hourly schedule untouched.

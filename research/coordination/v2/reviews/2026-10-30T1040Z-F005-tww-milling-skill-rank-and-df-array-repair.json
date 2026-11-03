@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_TWW_MILLING_SKILL_RANK_AND_DF_ARRAY_REPAIR",
+  "workflowRevision": 2,
+  "reviewUTC": "2026-10-30T10:40:00Z",
+  "branch": "implementation/five-agent-completion",
+  "verdict": "CONDITIONAL_PASS_RESEARCH_CONTEXT_ONLY",
+  "components": {
+    "dfProspectingArrayRepair": {
+      "verdict": "PASS_SYNTHETIC_V8_PENDING_NATIVE_NODE",
+      "modelPath": "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
+      "modelBlobSHA": "70bab20081db23e899a45b73186200869efae48c",
+      "modelID": "df-prospecting-joint-cast-conflict-v1.0.2",
+      "tests": [
+        {
+          "path": "research/tests/v2/test_f005_df_prospect_array_context_attestation.js",
+          "blobSHA": "77519d24493455616dbbf94d142af581aa857c3a",
+          "passed": 13,
+          "failed": 0
+        },
+        {
+          "path": "research/tests/v2/test_f005_df_prospecting_joint_cast_adversarial.js",
+          "blobSHA": "058fe6fdb422fcae3790e40fdd5367cc6f6f4610",
+          "passed": 23,
+          "failed": 0
+        },
+        {
+          "test": "model selfTest",
+          "passed": 61,
+          "failed": 0
+        }
+      ],
+      "previousIndependentFailuresResolved": 10,
+      "previousFailingCases": 10,
+      "independentCurrentRetailHoldoutFamilies": 0,
+      "remainingConditions": [
+        "Native Node execution of exact model and two independent suites not performed in this run",
+        "No independent matched current-Retail study family"
+      ]
+    },
+    "twwMillingSkillRank": {
+      "verdict": "CONDITIONAL_PASS_CONTEXT_ONLY_NOT_MEASURED",
+      "evidencePath": "research/evidence/v2/2026-10-30T1032Z-F004-tww-milling-skill-rank.json",
+      "evidenceBlobSHA": "1396ef6ce5348e1d0cf9052ef0ad205975c3f869",
+      "sourceReviewPath": "research/evidence/v2/source-reviews/2026-10-30T1032Z-F004-tww-milling-skill-rank-source-review.json",
+      "sourceReviewBlobSHA": "ae511c18dc3fb4110c81eb48b79b2f072f8e82e5",
+      "newIndependentTestPath": "research/tests/v2/test_f005_tww_milling_skill_rank_source_isolation.js",
+      "newIndependentTestBlobSHA": "f24454a4187263c064eb3a17e94e0770b279e618",
+      "checksPassed": 25,
+      "checksFailed": 0,
+      "adversarialMutationChecks": 15,
+      "positiveControls": 10,
+      "sourceIndexCrosscheck": {
+        "dateUTC": "2026-10-30",
+        "url": "https://www.wowhead.com/item=222618/nacreous-pigment",
+        "alsoIndexed": [
+          "https://www.wowhead.com/item=222614/luredrop-pigment",
+          "https://www.wowhead.com/item=224805/blossom-pigment"
+        ],
+        "method": "Independent web-index excerpt, not full direct comment retrieval; Wowhead page challenged full fetch",
+        "observedText": "LotzBoi indexed text lists 10 herbs, 0-252/253-504/505+ skill, and +0/+101/+202 with 4-6/5-7/6-8 pigment ranges",
+        "lineageCount": 1,
+        "mirrorsNotIndependent": true
+      },
+      "limitations": [
+        "Comment does not explicitly document completed-cast samples, output histograms, refunds, game build or observation epoch",
+        "Input-quality-rank-to-bonus interpretation is a hypothesis, not verified recipe skill measurement",
+        "Claimed positive ranges are not verified hard bounds or zero-inclusive expected quantities",
+        "Historical 5-herb guide vs indexed 10-herb spell discrepancy unresolved for exact client epoch",
+        "No independently matched current-Retail holdout cohort"
+      ],
+      "disposition": "NO_CURRENT_RETAIL_E_OR_P_PROMOTION"
+    }
+  },
+  "sourcePins": {
+    "readinessPath": "research/coordination/completion-readiness.json",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesPath": "research/coordination/completion-priorities.json",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "admittedMappingsRemoved": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAddedByValidator": 0,
+    "independentRegressionFilesAdded": 1,
+    "reviewFilesAdded": 1,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "remainingOriginalEvidenceGaps": 514,
+    "remainingVerifiedExpectedQuantityGaps": 116
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible harness",
+      "test": "F003 model selfTest",
+      "passed": 61,
+      "failed": 0
+    },
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible harness",
+      "test": "Existing F005 array-context attestation",
+      "passed": 13,
+      "failed": 0
+    },
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible harness",
+      "test": "Existing F005 DF joint-cast adversarial",
+      "passed": 23,
+      "failed": 0
+    },
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible harness",
+      "test": "New F005 TWW milling skill-rank source isolation",
+      "passed": 25,
+      "failed": 0
+    },
+    {
+      "runtime": "GitHub connector",
+      "test": "New test file read-back SHA and branch head verification",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node invocation of the new 25-case source test and existing model suites",
+    "WoW client/in-game milling or prospecting test",
+    "Lua 5.1 decode in this run; no accepted candidate build input changed",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "economicSafety": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "productionFilesChanged": false
+  },
+  "blockers": [
+    "Current-patch completed-cast rank-separated TWW milling observations absent",
+    "TWW original comment provides no verified cast denominator, refunds, skill context or epoch",
+    "Independent model native Node gate not run locally; previous CI reported success for pipeline, not separately for these suites"
+  ],
+  "nextRepairOwner": "evidence-researcher for independent current-Retail TWW milling cast cohort; baseline-modeller for model if native Node fails",
+  "nextTask": "F005_NATIVE_NODE_F003_RETEST_OR_NEW_CURRENT_RETAIL_COHORT_HOLDOUT",
+  "coordinatorDispositionRequested": "ACCEPT_TEST_AND_CONTEXT_ONLY; DO_NOT PROMOTE_ECONOMIC_OR_CONFIDENCE"
+}

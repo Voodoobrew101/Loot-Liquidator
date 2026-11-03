@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_PROSPECT_CONTROLLED_SAMPLING_DESIGN",
+  "queueRevision": 2,
+  "runID": "20261030T152037Z-F003-DF-PROSPECT-CONTROLLED-SAMPLING",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_QA",
+  "baseCommit": "6497ff66be80f67212896f3eb8570090e0996d36",
+  "modelCommit": "be12c2f56ba11ba658c952807de05a02e598e836",
+  "manifestCommit": "b48889d50f8ee81a7e1620c0b721d469aa542581",
+  "branchHeadBeforeSubmission": "b48889d50f8ee81a7e1620c0b721d469aa542581",
+  "resultCommit": "SELF_THIS_SUBMISSION_COMMIT_SEE_GITHUB_FILE_HISTORY",
+  "readinessSourceSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "prioritiesSourceSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "changedFiles": [
+    "research/tools/models_v2/df_prospect_controlled_sampling_design_v1.js",
+    "research/models/v2/df_prospect_controlled_sampling_design_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261030T152037Z-F003-DF-PROSPECT-CONTROLLED-SAMPLING.json"
+  ],
+  "exactTargetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "priority": 122,
+  "priorityBasis": "FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT",
+  "zeroDeltaPivot": "Previous repeated DF source-conflict/probability models yielded zero new independent observations; switched to independent controlled-cast measurement design rather than repeating unchanged audits.",
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyFamilies": 0,
+    "newSourceEvidence": 0,
+    "modelFilesCreated": 2,
+    "priorityKeysAddressedBySamplingDesign": 5
+  },
+  "modelOutput": {
+    "modelID": "df-prospect-controlled-sampling-design-v1.0.0",
+    "modelSourceBlobSHA": "17d791ec32cda0df99b280d85a6c7909f860f390",
+    "targetInputCohorts": [
+      188658,
+      189143,
+      190311
+    ],
+    "samplePlanning": "Bonferroni simultaneous fixed-n Hoeffding P/E precision, null E when hard cap unverified",
+    "illustrativeAlpha": 0.05,
+    "illustrativeProbabilityHalfWidth": 0.1,
+    "illustrativeExpectedQuantityHalfWidth": 0.25,
+    "illustrativeCompletedCastsPerCohort": 300,
+    "illustrativeNominalGrossInputsPerCohort": 1500,
+    "illustrativeEPrecisionCasts": null,
+    "independentHoldout": "NOT_AVAILABLE",
+    "observedP": null,
+    "observedE": null
+  },
+  "testsActuallyRun": {
+    "nativeNodeVersion": "v22.16.0",
+    "nativeNodeSelfTest": "PASS 29/29",
+    "nodeSyntaxCheck": "PASS",
+    "GitHubExactSourceReadback": "PASS blob 17d791ec32cda0df99b280d85a6c7909f860f390",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "completionPipeline": "NOT_RUN_NO_BUILD_INPUTS_CHANGED",
+    "independentF005": "PENDING"
+  },
+  "policies": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEconomicEligible": false,
+    "tooltipOnlyEligible": false,
+    "frozenTSM": "UNCHANGED",
+    "legacyAssignments": "UNCHANGED",
+    "rawEvidence": "UNCHANGED",
+    "production": "UNCHANGED",
+    "schedules": "UNCHANGED"
+  },
+  "blockers": [
+    "Five priority-122 mappings lack independent current-Retail zero-inclusive completed-cast observations",
+    "No independent hard output caps; E precision/sample size must remain null",
+    "No independently verified complete output universe and exact recipe/rank applicability",
+    "Independent validator has not accepted fixed-n math or sampling context"
+  ],
+  "evidenceResearcherRequest": "Collect independently sourced zero-inclusive full-output cast logs by ore, build, recipe, quality rank and profession context; independently verify hard per-cast caps and universe before claiming finite E precision.",
+  "validatorRequest": "Independently reproduce native Node 29/29, verify fixed-n Bonferroni Hoeffding n and cohort separation, missing-cap null gate, no invented EV, and exact policy isolation.",
+  "nextTask": "F003: when new independent current-Retail cast cohorts or reviewed caps arrive, evaluate actual P/E by whole-study holdout and compare historical unit hypotheses; otherwise pivot to next unresolved priority-104 TWW prospecting/milling family with a concrete identifiability repair."
+}

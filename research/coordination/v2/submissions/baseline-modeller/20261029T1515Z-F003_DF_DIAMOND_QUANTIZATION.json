@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_DIAMOND_QUANTIZATION",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 3,
+  "dateUTC": "2026-10-29T15:15:20Z",
+  "baseCommit": "4278229d9e45ef352612a4920cd7d64fdabe94a6",
+  "resultCommit": "SAME_ATOMIC_COMMIT_AS_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_NOT_SELF_APPROVED",
+  "priority": "Top five priority-122 Dragonflight diamond TSM conflicts, plus four same-template siblings",
+  "filesChanged": [
+    "research/tools/models_v2/dragonflight_diamond_tsm_quantization_v1.js",
+    "research/models/v2/dragonflight_diamond_tsm_quantization_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261029T1515Z-F003_DF_DIAMOND_QUANTIZATION.json"
+  ],
+  "affectedStableKeys": [
+    "tsm:prospect:188658:192869:L1204",
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:189143:192871:L1244",
+    "tsm:prospect:190311:192869:L1280",
+    "tsm:prospect:190311:192870:L1281",
+    "tsm:prospect:190311:192871:L1282"
+  ],
+  "findings": {
+    "nineNominalConflicts": "0.0142 P vs 5*0.0028=0.0140 E; nominal E<P*1",
+    "mathematicalDisposition": "9/9 FEASIBLE UNDER HYPOTHETICAL ROUNDING; 5/5 PRIORITY-122 FEASIBLE",
+    "possiblePInterval": "[0.01415,0.01425)",
+    "unitAndDenominatorStatus": "UNVERIFIED; TEN-INPUT HYPOTHETICAL ALTERNATIVE ALSO FEASIBLE",
+    "independentSources": 0,
+    "sourceAncestry": "One frozen TSM table replicated over nine rank mappings",
+    "recommendation": "Coordinator may downgrade rounding-only source-conflict urgency; preserve all E evidence gaps and current-Retail uncertainty"
+  },
+  "deltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "priority122ConflictsDiagnosed": 5,
+    "relatedSiblingKeysDiagnosed": 4,
+    "modelFamiliesAdded": 1
+  },
+  "tests": {
+    "v8Executed": {
+      "passed": 43,
+      "failed": 0,
+      "sourceRows": 9,
+      "priority122": 5,
+      "flaggedConflicts": 8
+    },
+    "sourceLedgerTuples": "9/9",
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "completionPipelineCheck": "NOT_RUN_NO_ACCEPTED_BUILD_INPUTS_CHANGED",
+    "wowClient": "NOT_RUN",
+    "independentQA": "PENDING"
+  },
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceExpectedQuantity": 116,
+    "missingEvidenceCells": 514
+  },
+  "economicGate": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawTSMChanged": false
+  },
+  "blockers": [
+    "No independently confirmed original TSM rate units",
+    "No current-Retail zero-inclusive cast observations",
+    "All nine rows share one derivative source ancestry",
+    "Unknown rank/skill/stat/Resourcefulness applicability"
+  ],
+  "nextTask": "F003_DIAMOND_CONTEXT_CAPTURE_OR_DIFFERENT_HIGH_IMPACT_E_FAMILY"
+}

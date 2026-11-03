@@ -1,0 +1,194 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_RANK_ID_AND_DIAMOND_RANK_COHORTS",
+  "workflowRevision": 2,
+  "runID": "2026-10-30T1825Z-F004-df-serevite-rank-id-and-diamond-cross-quality",
+  "runUTC": "2026-10-30T18:25:33Z",
+  "baseCommit": "79ee4493fd8db3a97557400afa030a9ab6266020",
+  "branch": "implementation/five-agent-completion",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_F005",
+  "question": "Can we correct a wrong R3 Serevite item identity in existing evidence and obtain new rank-separated original diamond reports for the priority-122 Dragonflight conflict family?",
+  "answer": "Yes. The previously filed 400k R3 Serevite study is incorrectly tagged item 190396 (R2); rank 3 is 190394. A Wowhead commenter reports R2 diamonds from R3 Draconium and mixed R2/R3 diamonds from R2 Serevite; an independent January 2023 Reddit commenter reports 19 R2 and 12 R3 diamonds from 24k R2 Serevite with partial skill/refund context. None is a current-patch per-cast probability or expected quantity.",
+  "identityCorrection": {
+    "originalImmutableFile": "research/evidence/v2/2026-10-30T0928Z-F004-df-r3-ore-591-diamond-cohort.json",
+    "jsonPointer": "/cohorts/0/inputItemID",
+    "previousID": 190396,
+    "proposedID": 190394,
+    "reportedSourceInputRank": 3,
+    "rankToID": {
+      "1": 190395,
+      "2": 190396,
+      "3": 190394
+    },
+    "originalPosterSuppliedItemID": false,
+    "originalOreUnits": 400000,
+    "originalDiamondCountAllRanks": 591,
+    "disposition": "APPEND_ONLY_EVIDENCE_IDENTITY_CORRECTION_PROPOSED_DO_NOT_MUTATE_PRIOR_RECORD",
+    "catalogs": [
+      "https://github.com/t-mart/wow-auction/blob/master/README.md",
+      "https://wowpricehub.com/eu/commodity/item/Serevite%20Ore-190396",
+      "https://wowpricehub.com/us/commodity/item/Serevite%20Ore-190394",
+      "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190395"
+    ],
+    "impact": "Do not join original R3 Serevite cohort to R2 item 190396 or use it for R2 model calibration; correct to 190394 in an accepted derived evidence view."
+  },
+  "primaryAuthorLineages": [
+    {
+      "sourceFamilyID": "wowhead-neoslayyer-illimited-diamond-rank-cohorts",
+      "author": "neoslayyer",
+      "url": "https://www.wowhead.com/item=192869/illimited-diamond",
+      "retrieval": "SEARCH_INDEXED_ORIGINAL_COMMENT; DIRECT_PAGE_FETCH_BLOCKED",
+      "publicationDate": null,
+      "observationEpoch": null,
+      "clientBuild": null,
+      "profession": {
+        "enterprisingPoints": 20,
+        "prospectingPoints": 30,
+        "effectiveSkill": null,
+        "inspiration": null,
+        "resourcefulness": null
+      },
+      "originalUnits": "ore units and diamonds",
+      "cohorts": [
+        {
+          "input": "Draconium Ore",
+          "rank": 3,
+          "inputItemID": 190311,
+          "reportedOre": 35,
+          "diamondR2": 2,
+          "diamondR3": null,
+          "casts": null,
+          "refunds": null
+        },
+        {
+          "input": "Draconium Ore",
+          "rank": 2,
+          "inputItemID": 189143,
+          "reportedOre": 150,
+          "diamondR2": 2,
+          "diamondR3": null,
+          "casts": null,
+          "refunds": null
+        },
+        {
+          "input": "Serevite Ore",
+          "rank": 2,
+          "inputItemID": 190396,
+          "reportedOre": 1000,
+          "diamondR2": 2,
+          "diamondR3": 2,
+          "casts": null,
+          "refunds": null
+        },
+        {
+          "input": "Khaz'gorite Ore",
+          "rank": null,
+          "inputItemID": null,
+          "reportedOre": 100,
+          "diamondR2": 2,
+          "diamondR3": null,
+          "casts": null,
+          "refunds": null
+        }
+      ],
+      "reportedTotalR2PlusDiamonds": 10,
+      "reportedPrismaticOreAcrossAllCohorts": 15,
+      "perCohortPrismaticAllocation": null,
+      "interpretation": "Historical first-person reports; 35 ore -> 2 diamonds is an anomalously small sample. No proof of permanent quality mapping; unreported outputs are unknown, not zero."
+    },
+    {
+      "sourceFamilyID": "reddit-10lruc1-jan26-24k-r2-serevite-commenter",
+      "author": "COMMENTER_HANDLE_NOT_VERIFIED",
+      "url": "https://www.reddit.com/r/woweconomy/comments/10lruc1/im_addicted_to_prospecting_so_much_i_m_not_even/",
+      "publicationDate": "2023-01-26",
+      "observationEpoch": "AUTHOR_SAYS_YESTERDAY_APPROX_2023-01-25",
+      "clientBuild": null,
+      "input": "Serevite Ore",
+      "inputRank": 2,
+      "inputItemID": 190396,
+      "reportedOre": 24000,
+      "reportedOreDenominator": "FROM_24K_R2_SEREVITE_GROSS_VS_PURCHASED_UNKNOWN",
+      "diamondR2": 19,
+      "diamondR3": 12,
+      "diamondR1": null,
+      "prismaticOre": 200,
+      "crumbledStone": "MORE_THAN_9000",
+      "savedOre": "MORE_THAN_1700",
+      "profession": {
+        "displayedSkill": 250,
+        "resourcefulnessPercent": 13,
+        "inspirationPercent": 34,
+        "gear": "R4 clamps; other equipment not enumerated",
+        "specialization": null
+      },
+      "actualCasts": null,
+      "zeroOutputCasts": null,
+      "exactRefunds": null,
+      "fullCooutputs": null,
+      "descriptiveDiamondsPer1000ReportedOre": {
+        "R2": 0.7916666666666666,
+        "R3": 0.5,
+        "combined": 1.2916666666666667
+      },
+      "descriptiveNotEconomicE": true
+    }
+  ],
+  "contextualMechanics": {
+    "author": "Draggoth",
+    "date": "2023-08-16",
+    "url": "https://us.forums.blizzard.com/en/wow/t/prospecting-df-ores-does-quality-matters/1652762",
+    "claim": "Output quality depends on prospecting effective skill; R3 ore can allow higher skill bracket but does not alone guarantee R3 output.",
+    "classification": "QUALITATIVE_NOT_MEASURED"
+  },
+  "rankIdentity": {
+    "diamondR1": 192869,
+    "diamondR2": 192870,
+    "diamondR3": 192871,
+    "sereviteR1": 190395,
+    "sereviteR2": 190396,
+    "sereviteR3": 190394
+  },
+  "exactPriority122Keys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "directPriorityKeyWithRank2Report": "tsm:prospect:189143:192870:L1243",
+  "unresolvedPriorityKeyContext": "Other priority-122 rows remain without rank-separated current Retail completed-cast data.",
+  "deltas": {
+    "newOriginalAuthorLineages": 2,
+    "newOriginalReportedCohorts": 5,
+    "identityCorrectionProposals": 1,
+    "existingEvidenceFilesModified": 0,
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0
+  },
+  "blockers": [
+    "Original Wowhead comment has no retrievable date and is indexed, not directly fetched",
+    "35 R3 Draconium sample is small and anomalous",
+    "Both new source families are historical, not October 2026 current Retail",
+    "Actual completed casts, zero-output casts, complete co-output vectors and exact Resourcefulness refunds absent",
+    "Original 400k R3 Serevite author supplied rank, not item ID"
+  ],
+  "nextMeasurement": "Independent current Retail controlled R3 Draconium rank-2 vs rank-3 diamond outputs at measured skill with 5-ore completed casts, zero outputs and refunds; append accepted 190394 correction before training.",
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "liveRecommendationEligible": false,
+    "rawEvidence": "UNCHANGED",
+    "historicalTSM": "FROZEN_UNCHANGED",
+    "tooltipOnly": "UNCHANGED",
+    "main": "UNCHANGED",
+    "runtimeProfiles": "UNCHANGED",
+    "legacyAssignments": "UNCHANGED"
+  }
+}

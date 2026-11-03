@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_PROVENANCE_CONFIDENCE_12_CASE_AND_STATUS_CLAIM_PIVOT",
+  "workflowRevision": 2,
+  "queueRevision": 8,
+  "runUTC": "2026-10-29T19:43:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "f3ddfd1f348faa5c393e4a4bb4ab19ccb29979bb",
+  "subject": {
+    "path": "research/tools/working_estimates.js",
+    "gitBlobSHA": "3575814d9cecf94f757a2bec6d83d3b7845cc71c",
+    "pipelinePath": "research/tools/run_completion_pipeline.js",
+    "pipelineBlobSHA": "2cd055b6bbd1860c58c40b26f38f304048ed219a",
+    "existingIndependentFixture": "research/tests/v2/test_f005_provenance_confidence_integrity.js",
+    "existingFixtureBlobSHA": "b7b2dd6a2d050423423f2e6dcfd72df16d09d0f8"
+  },
+  "verdict": "CONDITIONAL_PREVIOUS_F005_PROVENANCE_REPAIR_PASS__NEW_SOURCE_STATUS_CLAIM_INTEGRITY_FAIL",
+  "tests": {
+    "priorIndependentProvenance": {
+      "cases": 12,
+      "passed": 12,
+      "failed": 0,
+      "execution": "IN_PROCESS_V8_EVALUATING_UNMODIFIED_GITHUB_JAVASCRIPT_SOURCE_WITH_ASSERT_EMULATION",
+      "nativeCI": {
+        "runID": 40940862793,
+        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40940862793",
+        "headSHA": "f3ddfd1f348faa5c393e4a4bb4ab19ccb29979bb",
+        "job": "research-candidate",
+        "conclusion": "success",
+        "steps": [
+          "node research/tools/run_completion_pipeline.js --check",
+          "Lua 5.1 syntax and decoded working/evidence isolation",
+          "blocker arrays Lua roundtrip"
+        ],
+        "note": "Pipeline source invokes the unchanged 12-case fixture; CI successful, but individual fixture stdout was not inspected."
+      }
+    },
+    "newIndependentAdversarial": {
+      "path": "research/tests/v2/test_f005_evidence_status_claim_contract.js",
+      "gitBlobSHA": "85a7745d7d60307e777f60e99ae4e32423b1a6cc",
+      "cases": 11,
+      "passed": 5,
+      "failed": 6,
+      "execution": "IN_PROCESS_V8_EVALUATING_EXACT_GITHUB_ESTIMATOR_AND_FIXTURE_SOURCE_WITH_ASSERT_EMULATION",
+      "syntheticOnly": true,
+      "nativeNode": "NOT_RUN",
+      "nativeCI": "NOT_WIRED_OR_RUN",
+      "failureNames": [
+        "reject unknown-status numeric source even with a claim",
+        "reject unknown-status numeric source with confidence zero",
+        "reject unrecognized-status numeric source",
+        "reject measured numeric source without claim ancestry",
+        "reject modeled numeric source without claim ancestry",
+        "reject community-reported numeric source without claim ancestry"
+      ],
+      "passingControls": [
+        "measured 60 with source claim",
+        "proxy with claim stays preview-only",
+        "contradictory source excluded",
+        "source status mutation rejected after build",
+        "LIVE escalation rejected"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "id": "F005-STATUS-001",
+      "severity": "RESEARCH_PREVIEW_INTEGRITY",
+      "reproduced": true,
+      "detail": "evidenceValue() rejects contradictory values but accepts finite numeric values with status 'unknown' or an unrecognized status; applyWorkingEstimates() labels them COPIED_EVIDENCE and can retain confidence 99 in synthetic fixtures. Numeric presence is not evidence-status validity.",
+      "repairOwner": "completion-engineer",
+      "repair": "Define supported status/value combinations and reject or quarantine numeric unknown/unrecognized statuses before copied-evidence promotion. Keep genuine proxy/modeled historical sources in their provisional evidence class; do not turn status repair into live EV promotion."
+    },
+    {
+      "id": "F005-CLAIMS-002",
+      "severity": "DEFENSE_IN_DEPTH_RESEARCH_PREVIEW",
+      "reproduced": true,
+      "detail": "Direct estimator/validator accepts numeric measured/modeled/community-reported source fields with empty sourceClaimIDs and confidence 99 as COPIED_EVIDENCE. compile_itemdb.js validate() separately checks nonempty claim arrays for canonical compiler inputs, so this synthetic direct-estimator failure is not evidence of a bypass through the full compiler.",
+      "repairOwner": "completion-engineer",
+      "repair": "Validate nonempty and well-formed sourceClaimIDs at the working-estimate API boundary as defense in depth; preserve legitimate source provenance. Reject missing ancestry rather than manufacturing a claim."
+    }
+  ],
+  "caveats": [
+    "Synthetic fixtures only; no specific current itemdb mapping proven incorrect.",
+    "No live EV leakage demonstrated; all tested preview outputs retain economicUse PREVIEW_ONLY and normalizedVerified false.",
+    "Same-process WeakMap attestation is intentionally not durable across serialization; separately loaded candidates must be recompiled, and durable schema/attestation remains a coordinator-owned design decision.",
+    "New suite is intentionally not added to the pipeline until the completion engineer repairs the failing contract; prior native CI does not execute this new suite.",
+    "No independent current-Retail whole-family holdout or in-game verification."
+  ],
+  "currentReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "independentCurrentRetailHoldouts": 0
+  },
+  "deltas": {
+    "newIndependentTestCases": 11,
+    "newReproducedFailureCases": 6,
+    "newFailureClasses": 2,
+    "acceptedEconomicPromotions": 0,
+    "newMappings": 0,
+    "numericCellsFilled": 0,
+    "confidencePromotions": 0,
+    "productionFilesChanged": 0
+  },
+  "safety": {
+    "rawEvidenceUnchanged": true,
+    "frozenTSMUnchanged": true,
+    "legacyAssignmentsUnchanged": true,
+    "tooltipOnlyPolicyUnchanged": true,
+    "runtimeProfilesUnchanged": true,
+    "schedulesUnchanged": true
+  },
+  "nextTask": {
+    "owner": "completion-engineer",
+    "id": "F002_FIX_SOURCE_STATUS_CLAIM_ADMISSION",
+    "acceptance": "Independent 11/11 plus prior 12/12 and full pipeline --check; source status/value contract, required sourceClaimIDs, no economic or tooltip leakage; independent validator to retest exact repaired blob."
+  }
+}

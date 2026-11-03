@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_POWDER_FAMILY_YIELD_RANK_CONTEXT",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T13:31:39Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "aa8fe3665ddf5244ac53d51a428564bb481917f9",
+  "queueRevision": 2,
+  "resultCommit": null,
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_QA",
+  "filesAdded": [
+    "research/evidence/v2/2026-10-30T1331Z-F004-midnight-powder-yield-rank-context.json",
+    "research/evidence/v2/source-reviews/2026-10-30T1331Z-F004-midnight-powder-yield-rank-context-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T1331Z-F004-midnight-powder-yield-rank-context-submission.json"
+  ],
+  "filesModified": [],
+  "exactKeysReviewed": [
+    "midnight:mill:236761:245807:legacy-reference",
+    "midnight:mill:236767:245807:legacy-reference"
+  ],
+  "relatedUniverseLead": "universe-audit:midnight:mill:236761:245808:alternate-pigment-rank-eligibility",
+  "exactDeltas": {
+    "newPlayerClaimLineages": 1,
+    "newEditorialLineages": 1,
+    "newMeasuredIndependentCohorts": 0,
+    "newDistinctItemIDsCrossChecked": 4,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "verifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "evidenceGapsBefore": 514,
+    "evidenceGapsAfter": 514
+  },
+  "sourceLineages": [
+    "blizzard-forum-2276246-draggoth-march21-powder-recycling",
+    "warcraftable-homely-wall-shelves-editorial-budget",
+    "wowhead-powder-pigment-item-catalog",
+    "wowhead-tranquility-bloom-item-catalog"
+  ],
+  "tests": {
+    "prewriteJsonAndInvariantAssertions": 33,
+    "githubReadback": "PENDING",
+    "githubCompare": "PENDING",
+    "nativeNodeTests": "NOT_RUN",
+    "lua51Tests": "NOT_RUN",
+    "runtimeTests": "NOT_RUN",
+    "inGameTests": "NOT_RUN"
+  },
+  "blockers": [
+    "Both new numeric sources omit output itemID/rank, actual completed casts and measured totals",
+    "Forum rate may be a theoretical conversion average rather than observed data",
+    "Warcraftable source is undated editorial budget; independent numeric derivation unknown",
+    "No in-game current-patch matched-rank sampling"
+  ],
+  "nextTask": "Pivot to distinct pending queue30 Midnight milling output-rank eligibility, or acquire an actual rank-labelled completed-cast dataset; do not repeat the same generic yield search.",
+  "policy": {
+    "frozenTSM": "UNCHANGED",
+    "tooltipOnly": "UNCHANGED",
+    "legacyAssignments": "UNCHANGED",
+    "main": "UNCHANGED",
+    "runtimeProfilesBranch": "UNCHANGED",
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "unsupportedFallbackConfidence": 0
+  },
+  "note": "resultCommit null because the immutable submission cannot know its own future Git SHA; GitHub commit/readback receipt reported after publication."
+}

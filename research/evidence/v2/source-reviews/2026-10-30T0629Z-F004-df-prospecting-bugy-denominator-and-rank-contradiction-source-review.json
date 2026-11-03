@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_PROSPECTING_ORIGINAL_COHORT_DENOMINATOR",
+  "reviewedAtUTC": "2026-10-30T06:29:00Z",
+  "status": "APPEND_ONLY_NEW_SOURCE_REVIEW",
+  "sourceReviews": [
+    {
+      "sourceURL": "https://www.wowhead.com/item=192869/illimited-diamond",
+      "author": "Bugy",
+      "lineageID": "wowhead-illimited-diamond-bugy-six-rows",
+      "newOriginalCohorts": 6,
+      "newRateCells": 84,
+      "independentOfOtherAuthor": true,
+      "independentCurrentRetailValidation": false,
+      "sourceOriginalUnits": "per ore claimed, amount prospected ambiguous",
+      "duplicateWarning": "Wowhead localized/PTR mirrors repeat same comment",
+      "proposedDisposition": "HISTORICAL_RATE_TABLE_CONTEXT_AND_DENOMINATOR_WARNING_ONLY"
+    },
+    {
+      "sourceURL": "https://www.wowhead.com/item=192869/illimited-diamond",
+      "author": "neoslayyer",
+      "lineageID": "wowhead-illimited-diamond-neoslayyer-four-cohorts",
+      "newOriginalCohorts": 4,
+      "newRankSpecificCounts": 5,
+      "independentOfOtherAuthor": true,
+      "independentCurrentRetailValidation": false,
+      "sourceOriginalUnits": "reported ore counts and rank-separated diamond totals",
+      "proposedDisposition": "HISTORICAL_RANK_ELIGIBILITY_ONLY"
+    },
+    {
+      "sourceURL": "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
+      "author": "indexed spell",
+      "lineageID": "dragon-isles-prospecting-spell-374627",
+      "nominalOrePerCast": 5,
+      "independentDropRateCohort": false,
+      "proposedDisposition": "RECIPE_NOMINAL_INPUT_REFERENCE_ONLY"
+    }
+  ],
+  "priorSourceMemoryChecked": [
+    "research/evidence/v2/*.json",
+    "research/evidence/v2/source-reviews/*.json",
+    "research/models/v2/dragonflight_diamond_tsm_quantization_v1.json",
+    "research/models/v2/df_prospecting_joint_cast_conflict_v1.json"
+  ],
+  "priorKnownCohortsNotDuplicated": [
+    "reddit-108782r",
+    "reddit-zzcnjw"
+  ],
+  "noExistingV2EvidenceContainingOriginalAuthorNames": true,
+  "tests": {
+    "invariants": [
+      "six rows x fourteen values",
+      "100 Khaz'gorite impossible integer outputs under per-ore denominator",
+      "100 Khaz'gorite all integral under five-ore cast hypothesis",
+      "neoslayyer 2+2+2+2+2=10",
+      "no rank allocation from Bugy",
+      "no cast E promotion"
+    ],
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentF005": "PENDING"
+  }
+}

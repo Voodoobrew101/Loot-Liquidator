@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_TWW_MILLING_NATIVE_NEGATIVE_QA_PIVOT",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T1905Z-F002-tww-milling-native-negative-qa",
+  "reportUTC": "2026-10-30T19:05:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "0fad89c2d8ce3091029e7c51c78c3caef82eb0dd",
+  "implementationCommits": [
+    "8a6a8e7ba455e11c7e7fbad5271ecfa074dbc00d",
+    "014812c6e7cb0243bc7511ba0656df0493c77a40"
+  ],
+  "resultCommitBeforeSubmission": "014812c6e7cb0243bc7511ba0656df0493c77a40",
+  "resultCommit": "COMMIT_CONTAINING_THIS_ROLE_OWNED_SUBMISSION",
+  "status": "PROPOSED_INFORMATIONAL_NATIVE_QA_FOR_COORDINATOR_AND_F005_REVIEW",
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Repeated unchanged 1018/4072 emitted-Lua audits",
+    "to": "Source-pinned native 37-case TWW milling negative-QA runner for newly accepted five independent defects",
+    "rationale": "No accepted new model or evidence; preserve five failures rather than masking them as success"
+  },
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/working_native_tww_accounting_preflight.js",
+      "action": "CREATED",
+      "blobSHA": "8df38b8802f916366bce2dc6f88ac508aadff1da"
+    },
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "action": "UPDATED",
+      "oldBlobSHA": "5b71f646869077eb9f81d3082fed01fffb3e3fc5",
+      "newBlobSHA": "67ea1c059b9b8083ea2361a88fe8603fb096675e"
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T1905Z-F002-tww-milling-native-negative-qa.json",
+      "action": "CREATED"
+    }
+  ],
+  "sourcePins": {
+    "f003Model": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a",
+    "f003Manifest": "758b38f4a42b5becd353ca5e17fb920000f7355c",
+    "f005Fixture": "1dc22afeed2eefafd845979fafa15cbb59c15708",
+    "f005IndependentReview": "eea3a0140b78e252f85d5c0f32914118b79d2962"
+  },
+  "changeDescription": "Added a research-only informational native replay. It explicitly recognizes the exact five F005 reported defects (32/37), refuses any novel or partial failure set without review, and recognizes a future 37/37 only as pending independent acceptance. Source pins and report metadata fail closed. Mandatory self-test and informational fixture run are wired into existing CI. No change to F003 model, validator fixture, candidate or production.",
+  "knownIndependentV8Result": {
+    "passed": 32,
+    "failed": 5,
+    "total": 37,
+    "nativeNodeForFullFixture": "NOT_YET_CONFIRMED"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "productionWrites": 0,
+    "newRoleOwnedNativeRunnerFiles": 1,
+    "newCIResearchSteps": 2
+  },
+  "readiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "Local native Node",
+      "name": "New source-pinned negative-QA preflight self-test",
+      "status": "PASS",
+      "reportMutationsRejected": 15,
+      "pinChecks": 4,
+      "knownFailureCases": 5
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "Read-back of committed source and workflow integration",
+      "status": "PASS",
+      "newFileBlobSHA": "8df38b8802f916366bce2dc6f88ac508aadff1da",
+      "workflowBlobSHA": "67ea1c059b9b8083ea2361a88fe8603fb096675e"
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "Four original model/manifest/fixture/review source pin comparisons",
+      "status": "PASS",
+      "pinned": 4
+    }
+  ],
+  "testsNotRun": [
+    "Full repository-native 37-case F005 fixture execution in GitHub Actions not yet observed; fixture was previously 32/37 in independent V8",
+    "Full deterministic research pipeline --check on new workflow commit not yet observed",
+    "Lua5.1 emitted candidate decoding on new workflow commit not yet observed",
+    "Independent F005 acceptance of this new runner",
+    "Retail client or in-game cast validation"
+  ],
+  "blockers": [
+    "F003 TWW milling model has five independently documented integrity failures; owner baseline-modeller must repair",
+    "F005 independent validator must retest 37/37 after F003 model revision and separately approve any mandatory gate promotion",
+    "GitHub Actions status for new workflow commit was not yet available via connected status endpoints",
+    "116 evidence-supported expectedQuantity cells remain missing; no independent current-Retail held-out cast family"
+  ],
+  "nextTask": "After F003 model revision and F005 independent acceptance, update exact pins, rerun native 37/37 and promote only the accepted gate to mandatory; otherwise pivot to a new source/contract defect, not another unchanged audit.",
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "tooltipOnlyChanges": 0,
+    "frozenTSMChanges": 0,
+    "rawEvidenceChanges": 0,
+    "legacyAssignmentChanges": 0,
+    "mainChanges": 0,
+    "runtimeProfilesBranchChanges": 0,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_POLICY_ANCHOR_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 6,
+  "runUTC": "2026-10-29T16:58:00Z",
+  "baseCommit": "abb8e11969f7455daaba38d9721eb0959c4c2a78",
+  "resultCommit": "ATOMIC_COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "SUBMITTED_FOR_INDEPENDENT_QA_CONDITIONAL_ACCEPTANCE",
+  "acceptanceRecord": "research/coordination/v2/acceptance/2026-10-29T1658Z-F001-F005-policy-anchor-integration.json",
+  "scorecard": "research/coordination/v2/scorecards/current.json",
+  "changedFiles": [
+    "research/coordination/v2/acceptance/2026-10-29T1658Z-F001-F005-policy-anchor-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/2026-10-29T1658Z-F001-F005-policy-anchor-integration.json"
+  ],
+  "deltas": {
+    "newMappings": 0,
+    "removedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyFamilies": 0,
+    "newIndependentDefectClasses": 2,
+    "previousDefectClassesRepaired": 3,
+    "coordinatorFilesChanged": 3
+  },
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "knownInputs": 179,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "unadmittedLegacyQueue30Leads": 24,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "testsActuallyVerified": {
+    "headReviewed": "abb8e11969f7455daaba38d9721eb0959c4c2a78",
+    "sourceBlobs": {
+      "estimator": "333fef587046cf14bdf0f3d2646508c6e9f4f38b",
+      "pipeline": "4ba6bbd45c5c3c3da18303647b1981c39749dd17",
+      "rankPoolFixture": "b3a7decf0b9e3b2a46564a573ecdc6310f5d7bce",
+      "newAdversarialFixture": "3ca974762afbea295ef284090c4df4108be7de3a",
+      "candidateLua": "6488e39b54ae7961750231cb94391eb34af606e3",
+      "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+    },
+    "nativeCI": {
+      "runID": 40910032026,
+      "commit": "6c54e06ec37ab2848b5a46963d292fd2f59d3f71",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40910032026",
+      "includesRankPool12": true,
+      "includesMetamorphic609": true,
+      "includesNewAdversarial8": false
+    },
+    "independentF005": {
+      "oldRankPoolPassed": 12,
+      "oldRankPoolFailed": 0,
+      "metamorphicPassed": 609,
+      "newAdversarialPassed": 6,
+      "newAdversarialFailed": 2,
+      "execution": "V8 exact module; new eight-case fixture not run native"
+    },
+    "coordinatorStaticReview": [
+      "Confirmed source blob identities and CI head SHA",
+      "Read actual validateWorkingEstimates code: pool target is checked against serialized x.poolExpectedQuantity, not configured policy prior",
+      "Read targetContext construction: validator does not independently compare nonpool patch metadata against current source",
+      "Verified 1018*4=4072; 3558+514=4072; 204+97+97+116=514",
+      "Recomputed crushing ratios 330/480=0.6875 and 330/160=2.0625",
+      "Compared prior coordinator commit 496944e to branch head: 13 changed files all under research/"
+    ],
+    "notRun": [
+      "Coordinator native Node/Lua locally",
+      "Native Node new eight-case adversarial fixture",
+      "WoW Retail client",
+      "Independent current Retail matched whole-family holdout"
+    ]
+  },
+  "blockers": [
+    "Two new independent synthetic integrity failures pending F002 repair and F005 retest",
+    "No verified current-Retail completed-cast TWW milling holdout",
+    "116 evidence E gaps and 514 numeric evidence gaps",
+    "24 queue30 universe leads remain unadmitted",
+    "No WoW client verification"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_FIX_POOL_POLICY_ANCHOR_AND_STALE_NONPOOL_TARGET_CONTEXT",
+      "exactPaths": [
+        "research/tools/working_estimates.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Independently derive expected pool E from configured unresolvedRankPoolExpectedQuantity including explicit override, reject forged serialized pool mean; validate targetContext gameMode/patch/input ranks/operation basis against current source for all rows; add eight new adversarial tests to native CI; --check Lua/schema and 12+609+8 passing; preserve candidate and economic isolation."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_RETEST_POOL_POLICY_ANCHOR_AND_TARGET_CONTEXT",
+      "exactPaths": [
+        "research/tests/v2/test_f005_pool_policy_anchor_and_target_context.js",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Source-SHA-pinned independent 8/8 adversarial plus 12/12 rank pool and 609 metamorphic; test explicit policy override and nonpool patch mutation; no self-approval of numeric fields."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_INDEPENDENTLY_VALIDATE_CONTROLLED_CAST_PROTOCOL_OR_PIVOT",
+      "targetKeys": [
+        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+      ],
+      "acceptance": "Independent native protocol self-test and zero-inclusive completed-cast denominator/refund/abort guards; without actual current-Retail casts keep model synthetic and pivot to a different high-impact E family."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_MIDNIGHT_CRUSH_EXACT_SELECTOR_RANK",
+      "inputItemIDs": [
+        242553,
+        242723
+      ],
+      "recipeSpellID": 1231132,
+      "outputItemIDs": [
+        242620,
+        242621
+      ],
+      "acceptance": "New exact Retail selector and rank/stone evidence, or retain both unadmitted and pivot to a new independent source family; no reuse of 480-gem cohort as new study."
+    }
+  ],
+  "nextTask": "F002_FIX_POOL_POLICY_ANCHOR_AND_STALE_NONPOOL_TARGET_CONTEXT_THEN_F005_RETEST",
+  "zeroDeltaPivot": "Accepted actual code and CI repair plus two new distinct integrity failures; avoided re-review of unchanged source rows.",
+  "productionUntouched": true
+}

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_MAR31_ARRAY_REPAIR_AND_PAIR_SUMMARY_INTEGRITY",
+  "workflowRevision": 2,
+  "queueRevision": 26,
+  "runUTC": "2026-10-30T13:41:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "ad2c6c792e60a87ec4d23d675c1b586ec9035d88",
+  "resultCommitsBeforeSubmission": [
+    "9a355e1d18349cbd46bcf721fcb0cc2185407fc5",
+    "05f123889c3f368ab30ffc9c4f2154c7845e3b4a"
+  ],
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_PAIR_INTEGRITY_FAIL_ARRAY_REPAIR_CONDITIONAL_PASS",
+  "filesChanged": [
+    {
+      "path": "research/tests/v2/test_f005_midnight_prospect_compare_summary_attestation.js",
+      "blobSHA": "a909b82ec0144bbcd48b868103c955d1e33d851a",
+      "commit": "9a355e1d18349cbd46bcf721fcb0cc2185407fc5",
+      "action": "ADDED"
+    },
+    {
+      "path": "research/coordination/v2/reviews/2026-10-30T1341Z-F005-midnight-pair-integrity-and-powder-source-review.json",
+      "blobSHA": "81eeb65343cf6d367006a2df90000d64cc73009a",
+      "commit": "05f123889c3f368ab30ffc9c4f2154c7845e3b4a",
+      "action": "ADDED"
+    },
+    {
+      "path": "research/coordination/v2/submissions/independent-validator/20261030T1341Z-F005-PAIR-SUMMARY-ATTESTATION.json",
+      "action": "THIS_SUBMISSION_ADDED"
+    }
+  ],
+  "sourcePins": {
+    "modelBlobSHA": "6847591d66c7acee8ef6b752638e5b4428a9f910",
+    "modelManifestBlobSHA": "765c5f3947148e269597b97752966dc68c085591",
+    "arrayFixtureBlobSHA": "08e6dba858bffb69561fc8c7f238af8e51e340a4",
+    "mar31FixtureBlobSHA": "167582dd8448ec3abe686d036c4a2f4d938ecde4",
+    "powderEvidenceBlobSHA": "ad58d85d9eec92ceff51708af6ae8f276faa8e9a",
+    "powderSourceReviewBlobSHA": "f29bfdc51ef311ffdd7bc918bd2c44e6ee4601b5",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "V8 CommonJS-compatible strict-assert shim",
+      "suite": "F003 model selfTest",
+      "passed": 69,
+      "failed": 0
+    },
+    {
+      "runtime": "V8 CommonJS-compatible strict-assert shim",
+      "suite": "F005 Midnight array attestation",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "runtime": "V8 CommonJS-compatible strict-assert shim",
+      "suite": "F005 March31 epoch",
+      "passed": 26,
+      "failed": 0
+    },
+    {
+      "runtime": "V8 CommonJS-compatible strict-assert shim",
+      "suite": "F005 new pair-summary attestation",
+      "passed": 4,
+      "failed": 14,
+      "total": 18
+    }
+  ],
+  "testTotals": {
+    "executed": 125,
+    "passed": 111,
+    "failed": 14
+  },
+  "exactDeltas": {
+    "admittedMappingsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "numericCellsFilled": 0,
+    "verifiedExpectedQuantityCells": 0,
+    "evidenceNumericCellsAdded": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "liveEVChanges": 0,
+    "liveRecommendationsChanged": false,
+    "independentMeasuredStudyLineagesAdded": 0,
+    "newTestFiles": 1,
+    "newReviewFiles": 1,
+    "newAdversarialCases": 18,
+    "newReproducedFailingChecks": 14,
+    "priorArrayFailuresRepaired": 5
+  },
+  "coverage": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingTotalCells": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "verdict": "CONDITIONAL_PASS_ARRAY_REPAIR; FAIL_PAIR_SUMMARY_INTEGRITY; NO_ECONOMIC_PROMOTION",
+  "evidenceReview": {
+    "powderFamily": "Tranquility Bloom",
+    "firstPersonSourceLineages": 1,
+    "editorialLineages": 1,
+    "measuredCurrentRetailCohorts": 0,
+    "rankIdentity": "UNRESOLVED_245807_VS_245808",
+    "matchedExpectedQuantity": "NOT_AVAILABLE",
+    "status": "CONTEXT_ONLY"
+  },
+  "testsNotRun": [
+    "Native Node exact F003 model and three F005 suites",
+    "Lua5.1 current candidate",
+    "Fresh deterministic completion pipeline --check",
+    "WoW client/API/in-game completed casts",
+    "Independent current Retail holdout"
+  ],
+  "blockers": [
+    "14 mutated pair-summary patterns accepted by compareEpochs without attestation; baseline-modeller owns repair",
+    "Native Node suite execution pending; separate F002 copied candidate remains stale",
+    "No current Retail matched completed-cast holdout for economic promotion"
+  ],
+  "policy": {
+    "allSevenKeysConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionChanged": false,
+    "legacyAssignmentsChanged": false,
+    "runtimeProfilesChanged": false,
+    "otherAgentFilesChanged": false,
+    "schedulesChanged": false
+  },
+  "reviewPath": "research/coordination/v2/reviews/2026-10-30T1341Z-F005-midnight-pair-integrity-and-powder-source-review.json",
+  "nextTask": "F005_NATIVE_RETEST_AFTER_F003_PAIR_ATTESTATION_FIX_OR_PIVOT_TO_F002_CANDIDATE_ISOLATION",
+  "zeroDeltaPivot": "Previous March31 date and array cases now pass unchanged independent suites; pivoted to a newly identified comparison-summary integrity risk rather than repeating the same source audit.",
+  "coordinatorDispositionRequested": "ACCEPT_12_OF_12_ARRAY_REPAIR_CONDITIONALLY_IN_V8; RETURN_14_PAIR_SUMMARY_DEFECTS_TO_F003; KEEP_PREVIEW_ONLY",
+  "submissionCommit": "RESOLVED_BY_GITHUB_COMMIT_CONTAINING_THIS_FILE"
+}

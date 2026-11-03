@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_MIDNIGHT_MILLING_BATCH_SCOPE_AND_LEGACY_PROXY_CONFIDENCE",
+  "workflowRevision": 2,
+  "queueRevisionObserved": null,
+  "runUTC": "2026-10-30T00:42:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "15fce2ac8dc833f348f35b3d96a824110c32787b",
+  "resultCommitBeforeSubmission": "828a64173a01889eaf524128c1a5fcd82d45e71e",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_FAIL_PREVIEW_PROVENANCE_NO_ECONOMIC_PROMOTION",
+  "verdict": "FAIL_EIGHT_LEGACY_DISPLAY_FALLBACKS_COPIED_AS_NONZERO_CONFIDENCE",
+  "exactFilesChanged": [
+    "research/tests/v2/test_f005_midnight_milling_legacy_proxy_confidence.js",
+    "research/coordination/v2/reviews/2026-10-30T0042Z-F005-midnight-milling-batch-and-legacy-confidence.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-30T0042Z-F005-midnight-legacy-confidence-submission.json"
+  ],
+  "reviewPath": "research/coordination/v2/reviews/2026-10-30T0042Z-F005-midnight-milling-batch-and-legacy-confidence.json",
+  "testPath": "research/tests/v2/test_f005_midnight_milling_legacy_proxy_confidence.js",
+  "testBlobSHA": "b75df285f87519c79977c21b5513e425632d718c",
+  "subjectBlobs": {
+    "workingEstimates": "956db68c3b2bc7edc59565d15460c479b62344d6",
+    "midnightCandidate": "35ac6119dc6d47bf6f5279852b317d9d7da5d78e",
+    "f004Evidence": "26964611b9ae96cde12e15f72cdfc1939be44732"
+  },
+  "exactMappingKeys": [
+    "midnight:mill:236761:245807:legacy-reference",
+    "midnight:mill:236767:245807:legacy-reference",
+    "midnight:mill:236776:245804:legacy-reference",
+    "midnight:mill:236777:245804:legacy-reference",
+    "midnight:mill:236778:245866:legacy-reference",
+    "midnight:mill:236779:245866:legacy-reference",
+    "midnight:mill:236770:245864:legacy-reference",
+    "midnight:mill:236771:245864:legacy-reference"
+  ],
+  "exactDelta": "Eight source-indexed Midnight milling mappings already use spell 1269575 and 10 nominal herbs (not Dragonflight's 5). However their 32 unsupported legacy display P/min/max/E fields are copied into working estimates as COPIED_EVIDENCE with field confidence 12/12/12/18 and record confidence 12, despite source blockers explicitly stating no completed-cast counts, histogram or denominator. Expected working fallback confidence 0; no live economic leakage.",
+  "numericWorkingCellsFilled": 0,
+  "newExpectedQuantityCells": 0,
+  "invalidMappingsRemoved": 0,
+  "newMappingsAdmitted": 0,
+  "confidencePromotions": 0,
+  "independentStudyLineages": [],
+  "existingCoverage": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testsActuallyRun": {
+    "sourcePinnedV8Estimator": "PASS_REPRODUCTION_8_OF_8_UNSUPPORTED_CONFIDENCE_MISCLASSIFICATIONS",
+    "syntheticMeasuredControl": "PASS_60_CONFIDENCE_COPIED_EVIDENCE",
+    "previousNativeCI": {
+      "runID": 40980437706,
+      "commit": "15fce2ac8dc833f348f35b3d96a824110c32787b",
+      "conclusion": "success",
+      "detachedMetadata": 14,
+      "detachedNestedV11": 14,
+      "independentBinomial": 476,
+      "deterministicBuild": true,
+      "lua51": true
+    },
+    "newTestCommitCI": {
+      "runID": 40981625054,
+      "commit": "bd06311b16becd84ee93c9674abee6db7481fb80",
+      "conclusion": "success",
+      "note": "Existing pipeline green; new 27-case test not wired into native runner"
+    }
+  },
+  "newRegression": {
+    "casesAuthored": 27,
+    "knownRedCases": 8,
+    "nativeExecution": "NOT_RUN",
+    "expectedPassesAfterRepair": 27
+  },
+  "testsNotRun": [
+    "new 27-case regression under native Node",
+    "WoW Retail in-game cast verification",
+    "independent current-Retail held-out study family",
+    "external coordinator-pinned serialized artifact verification"
+  ],
+  "blockers": [
+    "Eight legacy display fallback rows have no measured completed-cast denominator and cannot carry nonzero working evidence confidence.",
+    "Engineer must explicitly quarantine or relabel unsupported legacy display fields in working estimates without mutating original evidence.",
+    "Current client mixed-rank selector and TWW current spell batch remain unverified; eight rank-alternate universe leads not admitted.",
+    "No independently matched current-Retail holdout supports economic promotion."
+  ],
+  "repairOwner": "completion-engineer",
+  "nextTask": "F005_RETEST_MIDNIGHT_LEGACY_FALLBACK_CONFIDENCE_AFTER_ENGINEER_REPAIR_AND_NATIVE_NODE_GATE",
+  "policy": {
+    "workingCoveragePreserved": true,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "tooltipOnlyUnchanged": true,
+    "frozenTSMUnchanged": true,
+    "rawEvidenceUnchanged": true,
+    "productionFilesChanged": 0,
+    "schedulesChanged": 0
+  }
+}

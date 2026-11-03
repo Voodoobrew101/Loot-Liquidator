@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_MIDNIGHT_CRUSHING_GROSS_NET_IDENTIFIABILITY",
+  "runUTC": "2026-10-30T00:17:26.402Z",
+  "branch": "implementation/five-agent-completion",
+  "workflowRevision": 2,
+  "queueRevision": "NOT_PRESENT_IN_CURRENT_PRIORITY_FILE",
+  "baseCommit": "0e74429ab3324831084322b1c6a1f221650f118c",
+  "resultArtifactCommit": "5710166de6e2f7852d893f4de0ff2673140967a6",
+  "status": "PROPOSED_COORDINATOR_AND_INDEPENDENT_QA_PENDING",
+  "pivotReason": "Previously studied DF diamonds and TWW milling/Gem Finding lack new completed-cast evidence; newly added F004 Midnight Crushing rate/denominator source is a distinct, high-value model uncertainty.",
+  "changedFiles": [
+    "research/tools/models_v2/midnight_crushing_gross_net_identifiability_v1.js",
+    "research/models/v2/midnight_crushing_gross_net_identifiability_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261030T001726402Z-F003-MIDNIGHT-CRUSHING-GROSS-NET.json"
+  ],
+  "targetKeys": [
+    "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+    "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
+  ],
+  "exactDeltas": {
+    "newRoleOwnedModelFiles": 2,
+    "newRoleOwnedSubmissionFiles": 1,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentMeasuredStudyFamilies": 0
+  },
+  "mathematicalResult": "0.83925 dust/gem conditionally implies 2.51775 dust per 3-gem cast if denominator is gross supplied; if denominator is net consumed, E=0.83925*(3-meanRefundPerCast), which is not identifiable without refunds. No rate is promoted.",
+  "sourceBlobSHA": "4fc9df14fa99275d1e46482403427a01ca64e5ce",
+  "modelBlobSHA": "d62085d7aaf9cc50ecfa310bd4d09058c86cf66e",
+  "testsActuallyRun": [
+    {
+      "environment": "JavaScript V8",
+      "name": "model selfTest",
+      "passed": 32,
+      "failed": 0,
+      "syntheticOnly": true,
+      "sourceCompletedCastDatasets": 0,
+      "newEconomicE": 0,
+      "workingCellsChanged": 0
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "model file read-back SHA",
+      "status": "PASS",
+      "sha": "d62085d7aaf9cc50ecfa310bd4d09058c86cf66e"
+    }
+  ],
+  "checksNotRun": [
+    "native Node self-test",
+    "Lua 5.1 candidate decode",
+    "in-game Retail validation",
+    "independent validator verdict",
+    "completion pipeline (no build inputs changed)"
+  ],
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "productionFilesChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "liveEVChanged": false,
+    "otherAgentsFilesChanged": false
+  },
+  "readinessSnapshot": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "totalSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "missingEvidenceExpectedQuantity": 116
+  },
+  "blockers": [
+    "Source rate may be a calculator value, not a cast measurement",
+    "Gross vs net denominator unknown",
+    "No per-cast gem refunds",
+    "No exact eligible gem/dust rank IDs or source build",
+    "No minimum eligible skill baseline or independent holdout"
+  ],
+  "nextTask": "Independent validator tests gross/net inversion and isolation; evidence researcher obtains actual zero-inclusive Crushing cast/refund logs. If still absent, pivot to Dragonflight milling rank/co-output partial identification."
+}

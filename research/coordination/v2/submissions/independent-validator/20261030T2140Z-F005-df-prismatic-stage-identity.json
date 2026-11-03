@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_PRISMATIC_STAGE_IDENTITY_AND_SOURCE_DENOMINATOR_QA",
+  "runID": "20261030T2140Z-F005-df-prismatic-stage-identity",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 30,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "b0342e65c320776755124a464db85c54baf365d5",
+  "resultCommitBeforeSubmission": "ceb79840ecce621e155aff2cfa90fc4972f5497f",
+  "submissionCommit": "SELF_COMMIT_USE_GIT_HISTORY",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_FAIL_MODEL_PENDING_F003_REPAIR",
+  "exactFilesAdded": [
+    "research/tests/v2/test_f005_df_prismatic_stage_identity_20261030.js",
+    "research/coordination/v2/reviews/20261030T2140Z-F005-df-prismatic-stage-identity.json",
+    "research/coordination/v2/submissions/independent-validator/20261030T2140Z-F005-df-prismatic-stage-identity.json"
+  ],
+  "exactFilesModified": [],
+  "exactKeysReviewed": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280",
+    "historical:df:prospect:194545:illimited-diamond:reddit-108782r-comment-B"
+  ],
+  "sourceBlobHashes": {
+    "model": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1",
+    "modelManifest": "6aa1141b1a8734cfa644e39cf13a02e454d90841",
+    "historicalEvidence": "321dc050134de6a996e5978b87cf467516c4cb06",
+    "newEvidence": "d31529efc7f6d2630bb399daa10740fbdbcf0e74",
+    "test": "4f546a33559a9e8202c1c846d7bbfe91c9f8503c"
+  },
+  "exactDeltas": {
+    "numericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesNewlyAddedByValidator": 0,
+    "newTestFiles": 1,
+    "newReviewFiles": 1,
+    "modelIdentityDefectsReproduced": 1,
+    "failedAssertionSurfaces": 3,
+    "newWorkingCoverageDelta": 0
+  },
+  "canonicalReadiness": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testResults": {
+    "independentSuite": {
+      "passed": 40,
+      "failed": 3,
+      "assertions": 43,
+      "runtime": "Exact GitHub source in connector V8, Node fs/path mocked"
+    },
+    "modelSelfTests": {
+      "passed": 27,
+      "failed": 0,
+      "runtime": "Exact GitHub model in connector V8"
+    },
+    "sourceIdentityCrossCheck": "PASS independent Wowhead item catalog and firsthand comments",
+    "GitHubReadback": "test SHA confirmed; review/submission readback pending",
+    "nativeNode": "NOT_RUN_NO_NATIVE_REPO_CHECKOUT",
+    "lua51": "NOT_RUN_NO_NATIVE_REPO_CHECKOUT",
+    "pipeline": "NOT_RUN_NO_BUILD_INPUT_CHANGED",
+    "inGame": "NOT_RUN"
+  },
+  "verdict": "FAIL_F003_MODEL_IDENTITY; CONDITIONAL_F004_HISTORICAL_SOURCE_ATTESTATION",
+  "finding": "F003 incorrectly identifies Prismatic Ore as item 192880 (actually Crumbled Stone) in executable SOURCE, analyze output, and manifest. Correct item ID 194545 independently corroborated; F004 immutable correction proposed. No current-Retail P/E validation.",
+  "holdoutStatus": "NOT_INDEPENDENTLY_VALIDATED",
+  "blockers": [
+    "F003 model author must correct SOURCE.secondStage.inputItemID and model manifest without editing F004 immutable raw report.",
+    "Coordinator must append versioned correction event for earlier misattributed historical cohort.",
+    "Historical study contexts lack current-Retail zero-inclusive completed casts, refunds, skill/gear/rank profiles.",
+    "Native Node and in-game validation pending."
+  ],
+  "safety": {
+    "mainEdited": false,
+    "runtimeProfilesEdited": false,
+    "releaseMade": false,
+    "legacyAssignmentsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "schedulesChanged": false,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false
+  },
+  "nextTask": "Independently retest F003 model after author repairs Prismatic Ore ID 194545, then pivot to next changed ready high-priority E model or source with no repeated unchanged audit."
+}

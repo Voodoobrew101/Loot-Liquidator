@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_PROSPECTING_SKILL_DISPLAY_CONTEXT_REFRESH",
+  "workflowRevision": 2,
+  "runID": "2026-10-30T1131Z-F004-midnight-prospecting-effective-skill-refresh",
+  "runUTC": "2026-10-30T11:31:25Z",
+  "taskStatus": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_F005",
+  "branch": "implementation/five-agent-completion",
+  "queueSnapshot": {
+    "readinessMappings": 1018,
+    "workingNumericFields": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116,
+    "topPriorityConflict": "tsm:prospect:188658:192870:L1205",
+    "priorityBasis": "FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT",
+    "workflowTask": "F004 READY",
+    "queueRevision": "workflowRevision 2; priorities file has no queueRevision"
+  },
+  "baseCommitBeforeRun": "c4dfb4a6478a2149c047c0dc422f1bf562abc772",
+  "interleavedOtherAgentCommit": {
+    "sha": "e85a291238d826a13a38ef736f9d8c1242f78abf",
+    "path": "research/proposed/itemdb.lua",
+    "status": "MODIFIED_BY_OTHER_AGENT_NOT_OWNED_OR_TOUCHED",
+    "preserved": true
+  },
+  "evidenceCommit": "cb7aace2f4ccdb9105948c53fe8b3c8cf6edf252",
+  "sourceReviewCommit": "f45b4225ef9a8c5aee39cf0cbc765f9b27134897",
+  "exactFilesAdded": [
+    "research/evidence/v2/2026-10-30T1131Z-F004-midnight-prospecting-effective-skill-refresh.json",
+    "research/evidence/v2/source-reviews/2026-10-30T1131Z-F004-midnight-prospecting-effective-skill-refresh-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T1131Z-F004-midnight-prospecting-effective-skill-refresh-submission.json"
+  ],
+  "taskSelection": "After repeated searches failed to close top-122 Dragonflight diamond rate conflicts and historical TWW milling E, zero-delta pivot to previously unindexed 2026 Midnight prospecting effective-skill/quality-context discrepancy affecting character-aware models.",
+  "finding": "April 9 first-person report: 5 high-quality Refulgent Copper, Draenei JC skill 105, +40 gear, Prospecting Pro 30, UI effective skill 360 vs max-quality 365, then UI showed 371 after relog (with CraftSim installation also intervening). March 18 independent first-person report: Draenei JC 103, formerly R2 outputs without concentration, later 7 skill points short. March 28 community comments support that R2 ore can reach R2 gem quality with appropriate skill/gear. None are controlled cast studies or prove client bug/addon causation.",
+  "sourceLineages": {
+    "newOriginalFirstPersonUIReports": 2,
+    "newContextualDiscussionLineages": 1,
+    "newIndependentCompletedCastCohorts": 0,
+    "existingSourcesDeduplicated": [
+      "reddit-1s1dtuh",
+      "reddit-1rrn6of"
+    ]
+  },
+  "exactDeltas": {
+    "numericWorkingCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "newAdmittedMappings": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "evidenceGapsBefore": 514,
+    "evidenceGapsAfter": 514,
+    "liveEVChanges": 0,
+    "tooltipOnlyChanges": 0
+  },
+  "testsActuallyRun": [
+    {
+      "test": "Evidence in-process assertions",
+      "passed": 10,
+      "failed": 0
+    },
+    {
+      "test": "Source-review in-process assertions",
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "test": "GitHub read-back, JSON and per-commit ownership assertions",
+      "passed": 15,
+      "failed": 0
+    },
+    {
+      "test": "GitHub compare interleaved agent commit",
+      "passed": 1,
+      "failed": 0,
+      "result": "Other agent modified research/proposed/itemdb.lua before first role-owned commit; preserved"
+    },
+    {
+      "test": "GitHub compare each role-owned commit",
+      "passed": 2,
+      "failed": 0,
+      "result": "Each role-owned commit added exactly its own immutable JSON file"
+    }
+  ],
+  "testsNotRun": [
+    "Node completion pipeline --check; no accepted build input modified by this role",
+    "Lua 5.1 generated-file decoder",
+    "In-game controlled UI refresh and quality test",
+    "Independent F005 review and whole-study holdout"
+  ],
+  "economicSafety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "productionMainChanged": false,
+    "runtimeProfilesChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "scheduledTasksChanged": false
+  },
+  "blockers": [
+    "No controlled before/after UI snapshots or precise build",
+    "No matched ore rank, buffs, gear, selector and concentration controls",
+    "No completed casts, output rank histograms or reagent refunds",
+    "No evidence that either 2026 spring report describes Oct 2026 client behavior"
+  ],
+  "nextTask": "F004_MIDNIGHT_PROSPECTING_SKILL_CONTEXT_CONTROLLED_HOLDOUT_OR_NEW_READY_MAPPING_DISPOSITION",
+  "ownership": "Only new evidence/v2, source-reviews and evidence-researcher submission; preserve concurrent other-agent itemdb.lua modification."
+}

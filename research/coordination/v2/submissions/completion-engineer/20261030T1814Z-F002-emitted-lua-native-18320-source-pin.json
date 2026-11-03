@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_NATIVE_EMITTED_LUA_CHANNEL_ISOLATION_REPLAY",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T1814Z-F002-emitted-lua-native-18320-source-pin",
+  "reportUTC": "2026-10-30T18:14:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "18c60920d406c78fbde36b4d25939e14f4bf29de",
+  "implementationCommits": [
+    "8c8110bfcf4e1ad03013be717696623d2b3bab57",
+    "716ef2e6ac081426b0109ceac0b03588e178babf"
+  ],
+  "resultImplementationCommit": "716ef2e6ac081426b0109ceac0b03588e178babf",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_NATIVE_REVIEW",
+  "canonicalQueuePins": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/working_native_emitted_lua_preflight.js",
+      "action": "ADDED",
+      "blobSHA": "573699d8f39169583593f33cf222163e046df772",
+      "purpose": "Source-pin independently authored F005 emitted-Lua fixture and emitted candidate; fail closed on changed hashes, altered counters, economic/tooltip channel violations or missing fields; native self-tests"
+    },
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "action": "MODIFIED",
+      "blobSHA": "5b71f646869077eb9f81d3082fed01fffb3e3fc5",
+      "purpose": "Mandatory preflight self-test and informational source-pinned F005 emitted-Lua native replay; retain existing mandatory compiler and Lua gates"
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T1814Z-F002-emitted-lua-native-18320-source-pin.json",
+      "action": "ADDED",
+      "purpose": "Immutable role-owned coordinator and independent-QA handoff"
+    }
+  ],
+  "reviewedInputPins": {
+    "emittedLua": {
+      "path": "research/proposed/itemdb.lua",
+      "blobSHA": "560b885a0039045419c340716e263ae33ddf827a"
+    },
+    "independentF005Fixture": {
+      "path": "research/tests/v2/test_f005_emitted_working_lua_channel_isolation.js",
+      "blobSHA": "78a9d35a1c667b039911e7a8950be21ef34dff8c"
+    },
+    "independentReview": {
+      "blobSHA": "6782339d8a6c012e8b56d554df7850648cf8a5fa",
+      "verdict": "EMITTED_LUA_CONDITIONAL_V8_PASS_NATIVE_PENDING"
+    },
+    "coordinatorAcceptance": {
+      "commit": "955fc12733e3ded45d7a20e4106429f57c5d0f7e",
+      "scope": "V8 emitted Lua isolation accepted conditionally; no native acceptance or economic promotion"
+    }
+  },
+  "exactDeltas": {
+    "admittedMappingsBefore": 1018,
+    "admittedMappingsAfter": 1018,
+    "workingNumericCellsBefore": 4072,
+    "workingNumericCellsAfter": 4072,
+    "workingCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "evidenceNumericCellsBefore": 3558,
+    "evidenceNumericCellsAfter": 3558,
+    "evidenceMissingCellsBefore": 514,
+    "evidenceMissingCellsAfter": 514,
+    "evidenceExpectedQuantityMissing": 116,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailCastFamilies": 0,
+    "newResearchRunnerFiles": 1,
+    "workflowFilesUpdated": 1,
+    "productionFilesEdited": 0
+  },
+  "nativeResults": {
+    "githubActionsRunID": 41104969064,
+    "githubActionsURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41104969064",
+    "conclusion": "success",
+    "node": "v24.22.1",
+    "suite": "F005_EMITTED_WORKING_LUA_CHANNEL_ISOLATION",
+    "assertionsPassed": 18320,
+    "adversarialMutantsRejected": 12,
+    "sourcePinsVerified": 2,
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "workingPriorCounts": {
+      "dropChance": 995,
+      "yieldMin": 105,
+      "yieldMax": 105,
+      "expectedQuantity": 941
+    },
+    "copiedEvidenceCounts": {
+      "dropChance": 23,
+      "yieldMin": 913,
+      "yieldMax": 913,
+      "expectedQuantity": 77
+    },
+    "tooltipOnlyRecords": 1,
+    "nativeSelfTest": {
+      "reportMutationsRejected": 13,
+      "pinChecks": 5
+    },
+    "economicPromotions": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub Actions native Node 24.22.1",
+      "test": "node research/tools/working_native_emitted_lua_preflight.js --self-test",
+      "status": "PASS",
+      "reportMutationsRejected": 13,
+      "pinChecks": 5
+    },
+    {
+      "environment": "GitHub Actions native Node 24.22.1",
+      "test": "node research/tools/working_native_emitted_lua_preflight.js",
+      "status": "PASS_INFORMATIONAL",
+      "assertionsPassed": 18320,
+      "mutantsRejected": 12
+    },
+    {
+      "environment": "GitHub Actions native Node 24.22.1 / Lua 5.1",
+      "test": "Existing research pipeline deterministic --check and Lua validation",
+      "status": "PASS",
+      "workflowConclusion": "success"
+    },
+    {
+      "environment": "GitHub connector",
+      "test": "Exact source blob read-back, workflow commit read-back, native CI logs",
+      "status": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Independent F005 acceptance of the new native emitted-Lua result",
+    "Native F005 24-case TWW Gem Finding context-attestation regression; model still has 14 known V8 failures",
+    "WoW client and production economic-consumer tests",
+    "Independent current-Retail completed-cast study holdouts"
+  ],
+  "zeroDeltaPivot": {
+    "applied": true,
+    "priorApproach": "Repeated derived and original v0.2/v0.8 reconciliation without numeric deltas",
+    "newApproach": "Execute coordinator-reviewed F005 emitted Lua channel-isolation fixture on native Node, pin actual source bytes and add mutation-tested report contract",
+    "result": "18320 native assertions and 12 adversarial mutations passed; no fabricated economic or evidence improvement"
+  },
+  "blockers": [
+    "Independent F005 must review exact native 18,320/18,320 and 12/12 results before converting informational workflow step to mandatory acceptance.",
+    "TWW Gem Finding model fails 14 of 24 independent context-attestation tests; F003 owns repair; do not integrate.",
+    "45 additions remain research-only, three DF successors non-equivalent, 12 fish input ranks unknown.",
+    "116 missing evidence E cells, zero verified baseline records and no independent current-Retail cast holdouts; no gold calculation promotion."
+  ],
+  "nextTask": "After F005 native acceptance, convert emitted-Lua replay to mandatory research gate; otherwise pivot to the next changed compiler/source integrity risk without repeating unchanged audits.",
+  "policy": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "legacyAssignmentsChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}

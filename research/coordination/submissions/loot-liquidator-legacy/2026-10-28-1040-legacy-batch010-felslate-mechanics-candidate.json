@@ -1,0 +1,100 @@
+{
+  "hypothesisID": "legacy-felslate-standard-mass-compare",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 6,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      31252,
+      225904
+    ],
+    "inputItemIDs": [
+      123919
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": null,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "recipeSpellID": 31252,
+    "nominalInputOre": 5,
+    "study": "2017 worksheet 10000 ore standard arm; actual cast count and output IDs unavailable",
+    "sourceStudyID": "scribd-full-legion-worksheet-2017-felslate-standard-mass"
+  },
+  "targetContext": {
+    "recipeSpellID": 225904,
+    "nominalInputOre": 20,
+    "study": "2017 worksheet 10000 ore mass arm; actual cast count and output IDs unavailable",
+    "sourceStudyID": "scribd-full-legion-worksheet-2017-felslate-standard-mass"
+  },
+  "requiredLiveContext": [
+    "clientBuild",
+    "gameMode",
+    "recipeSpellID",
+    "actualInputOreConsumed",
+    "inputItemID",
+    "professionSkillLineID",
+    "effectiveSkill",
+    "professionGear",
+    "specializationRanks",
+    "perCastOutputItemIDs",
+    "perCastOutputCountsIncludingZero"
+  ],
+  "sources": [
+    {
+      "claimID": "legacy-felslate-2017-two-10000-ore-arms",
+      "url": "https://www.scribd.com/document/359130779/full-legion-worksheet",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null,
+      "reportedOrePerArm": 10000,
+      "reportedUncommonUnits": [
+        2063,
+        2070
+      ],
+      "reportedRareUnits": [
+        341,
+        334
+      ],
+      "note": "one study, two arms; output IDs, actual operations and context missing"
+    },
+    {
+      "claimID": "felslate-mass-recipe-20",
+      "url": "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "nominalInputOre": 20
+    },
+    {
+      "claimID": "felslate-mixed-ore-unusable",
+      "url": "https://www.wowhead.com/item=123919/felslate",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null,
+      "note": "2017 player reports 880 Leystone + 240 Felslate together, so cannot isolate Felslate outcomes"
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": null,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No verified same-build per-cast denominators for both standard and mass recipes",
+    "No exact output item ID matched vectors across arms",
+    "Profession skill, gear and other conditions not matched or reported",
+    "No zero-inclusive independent replication or current-Retail patch bridge"
+  ],
+  "notes": "Qualitatively documented 5 versus 20 ore recipes; no approved multiplier or verified equivalence. 2017 reported rare units/5-ore equivalent: 341/(10000/5)=0.1705 standard and 334/(10000/5)=0.1670 mass, but neither is per-cast P(hit), and unverified source conditions prohibit promotion. Required experiment: >=200 actual casts per recipe, same character/build/skill/gear, mapped output IDs, zeros and input refunds; independent replication."
+}

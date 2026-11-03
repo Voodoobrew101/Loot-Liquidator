@@ -1,0 +1,104 @@
+{
+  "hypothesisID": "midnight-gem-hotfix-2026-03-31-quantification",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 11,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      1231127
+    ],
+    "inputItemIDs": [],
+    "outputItemIDs": [
+      242608
+    ],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "before": "2026-03-31",
+    "matchedInputID": null,
+    "matchedRank": null,
+    "matchedSkill": null,
+    "matchedGear": null,
+    "matchedOutputID": 242608,
+    "actualCastTimingKnown": false,
+    "originalStudies": [
+      "noriiju-2026-03-26-copper-40-attempts",
+      "jd3k-50ore-q2-date-unknown"
+    ]
+  },
+  "targetContext": {
+    "after": "2026-03-31",
+    "matchedInputID": null,
+    "matchedRank": null,
+    "matchedSkill": null,
+    "matchedGear": null,
+    "actualCastTimingKnown": false,
+    "originalStudies": [
+      "cardinalai-brilliant-silver-800-date-unknown",
+      "honeybone-refulgent-copper-200-published-2026-04-22-but-cast-date-unknown"
+    ]
+  },
+  "requiredLiveContext": [
+    "actual observed cast timestamps and client build",
+    "same ore item ID and rank for pre/post",
+    "same recipe spell 1231127 and nominal input count",
+    "matched skill, specialization, gear, stats and concentration",
+    "gem item ID 242608 and output ranks",
+    "zero-inclusive per-cast hit counts and raw units",
+    "resourcefulness input savings and actual consumption",
+    "independent matched reproduction"
+  ],
+  "sources": [
+    {
+      "claimID": "blizzard-2026-03-31-gem-frequency-direction",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "cardinalai-brilliant-silver-800-source-only",
+      "url": "https://www.wowhead.com/item=237364/brilliant-silver-ore",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": 800
+    },
+    {
+      "claimID": "honeybone-copper-200-posted-apr22-date-unknown",
+      "url": "https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": 200
+    },
+    {
+      "claimID": "jd3k-r2-brilliant-silver-50ore",
+      "url": "https://www.wowhead.com/spell=1231127/midnight-prospecting",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 30,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No actual cast dates for Cardinalai/JD3K or Honeybone; publication date cannot establish hotfix side",
+    "Cardinalai input rank unknown and 237365 is Brilliant Silver, not Refulgent Copper",
+    "Different ore types, skill/spec/resourcefulness and gear across original cohorts",
+    "No matched pre/post zero-inclusive per-cast Eversong Diamond results or variance",
+    "Official patch direction qualitative only; no numerical factor"
+  ],
+  "notes": "Batch011 research-only blocked candidate. 800-cast Silver Eversong mean 43/800=.05375 and 200-cast Copper reported diamond mean 10/200=.05 are distinct uncontrolled cohorts; no pooling, ratio or current-Retail baseline. Empty inputItemIDs and inputQualityRanks indicate unknown scope, never wildcard applicability."
+}

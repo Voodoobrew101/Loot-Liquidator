@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_DIAMOND_CROSSPOST_SOURCE_QA",
+  "runID": "20261030T2340Z-F005-df-crosspost",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 30,
+  "status": "CONDITIONAL_PASS_HISTORICAL_SOURCE_ONLY",
+  "acceptance": "PROPOSED_COORDINATOR_REVIEW_REQUIRED",
+  "sourcePins": {
+    "evidence": "b3a1012fe481e6bea27dace7ef4ee64b1a58755b",
+    "sourceReview": "6441694177e8785a8633c522a26ade755f83ca1d",
+    "independentTest": "5454b1a4897e462dc918fd349a4882c1a4e79f37",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+  },
+  "testedClaims": [
+    "Three distinct historical comment leads with unknown independent author IDs; do not award confirmed independent-study credit.",
+    "January 9 zzyjzu and January 10 108782r comments repeat the same 54137 R2 Serevite / 10827 prospects / 38 R2 and 23 R3 diamond observation; count once.",
+    "Exact arithmetic: 10827*5=54135, reported 54137 differs by 2 ore; 38/10827*100=0.3509744 percent and 23/10827*100=0.2124319 percent. Percent denominators are reported prospects, not ore.",
+    "January 2 Q3 Serevite 28000 approximate ore and 24 R3 diamonds at reported skill 274 remain historical and without verified casts.",
+    "December 18 mixed R1/R2 Draconium run ranges cannot be allocated to one rank-specific economic mapping.",
+    "All three observations retain null measured P, null verified E and null actual completed casts."
+  ],
+  "externalCorroboration": [
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+      "observation": "Original Jan 2 and Jan 9 comment text surfaced in indexed Reddit page; includes skill 274 and 54137/10827/38/23."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/108782r",
+      "observation": "Same 54137/10827/38/23 comment appears in Jan 10 thread; identical wording corroborates crosspost duplication."
+    }
+  ],
+  "executed": {
+    "exactGitHubEvidenceV8Checks": {
+      "passed": 26,
+      "failed": 0
+    },
+    "adversarialV8Mutations": {
+      "rejected": 10,
+      "accepted": 0
+    },
+    "fullSourceNodeSuite": "NOT_RUN_COMMITTED_FOR_NATIVE_REPLAY",
+    "lua51": "NOT_RUN",
+    "wowClient": "NOT_RUN",
+    "independentRetailHoldouts": 0
+  },
+  "newTestPath": "research/tests/v2/test_f005_df_diamond_crosspost_lineage_20261030.js",
+  "numericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentlyConfirmedOriginalAuthors": 0
+  },
+  "safeguards": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingEvidenceE": 116,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipOnlyEdited": false
+  },
+  "blockers": [
+    "Original Reddit author IDs and exact comment permalinks remain unverified; source reports use thread-level links, not an independently captured complete cast log.",
+    "Two-ore discrepancy may reflect rounding, leftovers, Resourcefulness, or report convention; none can be selected as observed fact.",
+    "No current-Retail patch bridge, rank-matched skill/stats, refunds or zero-inclusive cast histogram. No P/E promotion.",
+    "Native Node execution of new test suite pending."
+  ],
+  "nextTask": "Coordinator reconcile duplicate Jan 9/10 lineage without conflating separate existing 8000-cast Q3 Serevite study; F003 repair frontier dynamic output-array length; F005 native replay."
+}

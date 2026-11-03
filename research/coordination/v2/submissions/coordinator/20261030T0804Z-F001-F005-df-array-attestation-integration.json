@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F002_F003_F004_F005_DF_ARRAY_ATTESTATION_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 21,
+  "runUTC": "2026-10-30T08:04:10Z",
+  "baseCommit": "39192901be53d1319aceec2f8a260b072ee79d94",
+  "resultCommit": "SELF_COMMIT_RESOLVED_BY_GITHUB_READBACK",
+  "status": "ACCEPTANCE_AND_SCORECARD_SUBMITTED",
+  "acceptancePath": "research/coordination/v2/acceptance/20261030T0804Z-F001-F005-df-array-attestation-integration.json",
+  "scorecardPath": "research/coordination/v2/scorecards/current.json",
+  "exactDeltas": {
+    "upstreamCommitsReviewed": 15,
+    "upstreamChangedPathsReviewed": 13,
+    "coordinatorOwnedFilesChanged": [
+      "research/coordination/v2/acceptance/20261030T0804Z-F001-F005-df-array-attestation-integration.json",
+      "research/coordination/v2/scorecards/current.json",
+      "research/coordination/v2/submissions/coordinator/20261030T0804Z-F001-F005-df-array-attestation-integration.json"
+    ],
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "evidenceNumericCellsFilled": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentHistoricalAuthorLineages": 1,
+    "newCurrentRetailCastFamilies": 0,
+    "newIndependentSyntheticCases": 13,
+    "newReproducedFailures": 10,
+    "liveEVWrites": 0,
+    "mainWrites": 0,
+    "runtimeProfileWrites": 0,
+    "rawEvidenceWrites": 0,
+    "frozenTSMWrites": 0,
+    "tooltipOnlyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "scheduleChanges": 0
+  },
+  "sourcePins": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "dfModel": "85d1e4b7b019c6db945335af2ec82392e8a0ddca",
+    "dfManifest": "72cf68f3c6edb12c3da807202b29b20acc2daa5d",
+    "dfIndependent23": "058fe6fdb422fcae3790e40fdd5367cc6f6f4610",
+    "dfIndependentArray13": "77519d24493455616dbbf94d142af581aa857c3a",
+    "dfPipeline": "8d12b2489edd8e6e9e3cb63100129810857ecb1b",
+    "f005Review": "8df3a6053fb84e401e4357b623b468dc47a26138",
+    "f004Evidence": "f0f4e0f4c19d9ba309ae3acaf6000abdfeeff72e"
+  },
+  "decisions": [
+    {
+      "owner": "completion-engineer",
+      "decision": "ACCEPT_RESEARCH_NATIVE_GATE_ONLY"
+    },
+    {
+      "owner": "baseline-modeller",
+      "decision": "CONDITIONAL_ACCEPT_OLD_12_REPAIRS_BLOCK_NEW_ARRAY_DEFECTS"
+    },
+    {
+      "owner": "evidence-researcher",
+      "decision": "ACCEPT_HISTORICAL_CONTEXT_ONLY_NO_ECONOMIC_PROMOTION"
+    },
+    {
+      "owner": "independent-validator",
+      "decision": "ACCEPT_NEW_FAILURE_VERDICT_AND_REPRODUCTION_NOT_MODEL"
+    }
+  ],
+  "testsActuallyRun": [
+    {
+      "name": "Independent exact-source V8 F003 model selfTest",
+      "passed": 61,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "name": "Independent exact-source V8 F005 DF joint-cast adversarial",
+      "passed": 23,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "name": "Independent exact-source V8 F005 array attestation",
+      "passed": 3,
+      "failed": 10,
+      "syntheticOnly": true,
+      "exitCode": 1
+    },
+    {
+      "name": "GitHub Actions research-candidate at exact source head",
+      "runID": 41022290113,
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41022290113",
+      "conclusion": "success",
+      "includes": "native pipeline --check, strict DF 23-case gate, Lua 5.1 and blocker checks; does not include new array 13"
+    },
+    {
+      "name": "Source-hash, queue, rank-split arithmetic and field-count coordinator assertions",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node new independent 13-case array-attestation suite",
+    "Strict Midnight anytime nested 13/13 after fixture/model repair",
+    "Independent current-Retail whole-family completed-cast holdout",
+    "WoW client and live EV runtime"
+  ],
+  "blockers": [
+    "F003 DF array jsonSafe allows hidden symbol/non-enumerable metadata, sparse compensated arrays, inherited/own custom toJSON; 10/13 synthetic adversarial failures",
+    "F003 Midnight nested context strict 13/13 pending seven genuine repairs and one contradictory validator fixture correction",
+    "Five priority-122 DF P/E conflicts lack same-build completed-cast output/rank/refund cohorts and independent full-output universe",
+    "116 missing evidence-backed E cells; 0 evidence >=90; no independently validated current Retail holdout"
+  ],
+  "nextTask": {
+    "owner": "baseline-modeller",
+    "taskID": "F003_REPAIR_DF_ARRAY_CONTEXT_10",
+    "scope": "Repair array JSON-safe validation in F003 model: only plain arrays with exact own enumerable indexed data props; reject holes, symbols, nonindex keys, non-enumerable extras, inherited/own custom toJSON and subclasses; preserve explicit null and immutable source context. Run 61 self tests, independent 23 and new 13 before submission. No numeric/economic promotion."
+  },
+  "independentQANext": {
+    "owner": "independent-validator",
+    "taskID": "F005_RETEST_ARRAY_NATIVE_AND_ANYTIME_FIXTURE",
+    "scope": "Independently execute unchanged 13-case array fixture under native Node after F003 repair; require 13/13, source-pin test and model. Independently resolve contradictory Midnight nonfinite-key fixture and rerun strict 13/13; do not approve own numeric evidence."
+  },
+  "zeroDeltaPivot": "No unchanged mapping audit repeated. Nonzero QA/CI integration and new historical lineage reviewed; economic and numeric deltas honestly zero.",
+  "preservation": {
+    "main": true,
+    "production": true,
+    "otherAgentFiles": true,
+    "legacyAssignments": true,
+    "rawEvidence": true,
+    "frozenTSM": true,
+    "tooltipOnly": true,
+    "existingSchedules": true,
+    "runtimeProfiles": true
+  }
+}

@@ -1,0 +1,553 @@
+{
+  "tasks": [
+    {
+      "taskID": "T0003",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Prospecting results for Refulgent Copper Ore (item 237359); known outputs [242553, 242554, 242606, 242607, 242608, 242786, 242788]",
+      "why": "No completed-cast study independently mapped to Refulgent Copper item 237359; Honeybone's 200-cast April report still lacks ore rank/item ID.",
+      "status": "open",
+      "inputItemID": 237359,
+      "inputName": "Refulgent Copper Ore",
+      "searchTip": "Search Refulgent Copper Ore prospecting by name; find original cast counts and quality rank; do not treat guide percentages as empirical samples. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0026",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Midnight disenchanting results by gear quality (uncommon/rare/epic), armor vs weapon",
+      "why": "Midnight item-specific disenchant records now include four independent Looter cohorts with internally consistent positive-stack histograms: 278892 (75 casts), 280278 (121), 278886 (41), 278879 (49) -> Eversinging Dust 243599/243600 and Radiant Shard 243602/243603. The 16 rows' histogram hit sums and quantity totals match their stated counts, but source HTML, item-level/bonus, skill and build still require independent checks. Seven earlier epic-armor hit-only cohorts also remain.\n2026-11-01 15:55 Master QA: New 44 source-derived positive-stack histogram records from 11 distinct Midnight epic gear inputs 278881/278882/278883/278884/278885/278887/278889/278890/278891/278893/278894 -> 243599/243600/243602/243603. QA confirms per-row positive histogram sums equal recorded hits and totalQuantity; source HTML and item build/skill not independently validated. This is research-only; estimator currently ignores histogram field.",
+      "status": "open",
+      "searchTip": "Validate Looter source HTML for 250055→243606 (37/73 hits), 243605 (33/73), and 250058/250059/250060/250061/275218→243605/243606; recover per-hit units, bonus IDs, item level, character skill/specialization, patch epoch, and possible other outcomes. Do NOT convert 37+33<73 into three zero-yield disenchants. https://www.wowhead.com/item=250055/voidbreakers-encryption .\nFor each new epic armor source recover raw pctstack, quantity histogram, bonus/version, skill, build and confirm if missing hit rows represent other outputs, not zero disenchants. Verify item ID 249961 first (55 hits 243605, 34 hits 243606 among 90).\n2026-11-01 Master priority: Prioritize independent raw Wowhead pctstack/source checks for https://www.wowhead.com/item=278892 and https://www.wowhead.com/item=280278 and compare any prior same-item Looter cohorts before import. Preserve each exact item/output/rank; zero count for a given output is casts minus its hits, not proof of an overall zero-output operation. Validate 16 histograms in estimator and offline tooltip; no double-counting.\n2026-11-01 15:55 Master numeric follow-up: Validate source HTML and patch/item versions for 278884 (233 disenchants; 243599 94 hits/201 units with positive stacks 22x1,37x2,35x3), 278881 (99 casts), and the other nine new gear IDs. Capture skill/spec and whether these are independent of earlier snapshots; keep zero count for each material as casts minus material hits only if denominator and cohort are verified. Do not equate unaccounted per-item outcomes to zero-yield operations.\n2026-11-01 17:xx Master numeric QA: Next 24 source-attributed Midnight histogram rows in research/v3/evidence/midnight/2026-11-01T1608-8gear-rank-yields.jsonl describe 8 gear inputs: 258931 (1485 casts),251883 (1017),258920 (1454),239675 (2288),244178 (1582),239671 (2261),250456 (318),250451 (122) -> 243599/243600/243602/243603/243605/243606. Each positive-stack histogram sums to castsWithDrop and stack-weighted totalQuantity. Validate original source per-item Looter table, observed patch/bonus and player skill, check for overlap with earlier cumulative cohorts; don't infer overall zero-output disenchants from missing hits. Request reviewed histogram-aware estimate/import/tooltip pipeline, never edit shared code directly.\n2026-11-01 21:00 PST Master numeric QA: Post-pin Midnight 2026-11-01T2007 file has 16 hit-only Looter rows from 8 Abyssal Immolator items 250041 (103 ops, hits 56/46), 250045 (106,61/44), 250043 (82,42/40), 250040 (70,37/33), 250037 (43,23/19), 250038 (48,24/24), 250039 (52,27/21), 250042 (109,56/52). Both output rows per item are named Dawn Crystal with outputItemID=null, outputRank=null; cannot assign IDs or merge them into one ranked material. Existing estimator key_of uses same family:Dawn Crystal key for both, so future rebuild may collapse distinct rank rows or lose hits. Obtain original Looter linked material IDs/rank/bonus, completed-operation context, positive-stack histograms and totalQuantity. Do not treat missing hits as zero outputs, or selected Wowhead ilvl query as disenchant-time ilvl. No current merged-main import.\n2026-11-01 22:00 PST Master numeric QA: NEW 2026-11-01T2113 Midnight six more Wowhead Looter base-item cohorts 260377 (9 casts, Dawn Crystal hits 5/4), 250024 (36,20/15), 250022 (24,13/11), 250001 (8,4/4), 250026 (14,11/1), 266429 (107,60/45). Across 198 reported item-specific disenchants, both output rows per item are named Dawn Crystal with outputItemID=null, outputRank=null; do not collapse same-name ranks, assign guessed IDs or infer zero-output casts. Find original linked output IDs, bonuses, patch and per-output totalQuantity/stack histograms; sources PTR for 260377/266429, not proof of live build.\n2026-11-01 23:05 Master QA: five NEW Dawn Crystal dual-row cohorts 249949 (14,8/6), 249947 (9,5/4), 250044 (50,25/21), 250021 (14,10/3), 250023 (37,21/16): 124 item-level reported disenchants across five cohorts. Both rows in each cohort say Dawn Crystal but outputItemID=null and outputRank=null; PTR/ptr-2 source for 250044/250021/250023 (12.1.7/12.1.5), live item pages for 249949/249947. No output totals/histograms/skill/actual game build. Treat as source-identity hold, never sum same-name ranks or call PTR live eligibility; extend S26. Distinct post-pin evidence file midnight/2026-11-01T2210.\n2026-11-02 00:32 PST MASTER QA: Six NEW Midnight epic item-side Looter cohorts in 2026-11-01T2348: 250003(10 ops,5/5 hits),249952(17,10/7),250027(40,24/14),249964(78,46/31),249959(73,43/29),249962 PTR(19,11/8): 237 distinct source-reported disenchants and 233 Dawn Crystal material occurrence hits across 12 rows. Both output rows per item say Dawn Crystal with outputItemID=null/outputRank=null; cannot identify ranks, sum hits as distinct operations, infer missing zeros or compute expected units. One cohort 249962 uses PTR. Find original linked material IDs, version/bonus/build and histograms before import. Extends S26; post-pin research only.\n2026-11-02 01:06 PST MASTER QA: Four new Midnight rare-weapon Looter cohorts 251258(59 ops; Eversinging Dust 54, Radiant Shard4, Dawn Crystal1),251254(40;35/3/2),248074(130; Dust104, Shard18, Crystal5, extra same-name Dust3),248062 PTR12.1.5(18;16/1/1). Total 247 item-specific reported operations and 247 material occurrences across 13 rows; all outputItemID/rank null, totalQuantity/histograms null. Do not equate 247 material hits with 247 single-output outcomes, assign dust rank, or claim current live eligibility for PTR 248062. Verify raw material links, per-hit stack distribution, version/bonus/build, source cohort overlap and actual skill/spec. Primary 251258 Wowhead source spot-check 54/59,4/59,1/59 PASS.",
+      "inputName": "Midnight disenchantable gear by rarity and slot"
+    },
+    {
+      "taskID": "T0039",
+      "agent": "midnight",
+      "type": "drop",
+      "status": "open",
+      "inputName": "Midnight prospecting and milling hit-count datasets",
+      "what": "Obtain per-output completed-operation hit counts, zero outcomes and histograms for current-patch Midnight prospecting and milling, including Umbral Tin Ore 237362 and 237363.",
+      "why": "Source totals from 800 completed casts of Umbral Tin Ore 237362 give unconditional units for family outputs, but no per-output castsWithDrop or 0/1/2 histograms. Keep pre/post March 31 cohorts separate.",
+      "searchTip": "Prioritize Cardinalai June 10 2026 800-cast Umbral Tin 237362 source and independent addon exports; identify output rank IDs 242606,242607,242610,242611,242786,242788 versus rank-unspecified family outputs. Obtain completed casts, per-output hit counts, zero casts, conditional yield histogram, refunds, profession skill/specialization/unlock, recipe and patch. Never turn total items into hit counts.\n2026-11-01 17:xx Master numeric QA: Critical runtime gap: existing v3 output/estimates.json blob 15ae8c5b has rank-2 Umbral Tin 237362 six exact material ID rows as prior-derived probabilities only and 800-cast family output totals with no hit denominators. Promote independently sourced per-output 0/1/2/3 histograms for 242606/242607/242610/242611/242786/242788 with rank, current patch, skill, unlock and refunds, then verify compiler and actual tooltip fixture.\n2026-11-01 20:04 PST Master: POST-PIN Midnight Dazzling Thorium 237366 -> Eversong Diamond 242608: firsthand genobeam Reddit https://www.reddit.com/r/woweconomy/comments/1sfds1u reports '20% on 200 crafts', clarifies per craft (not per ore), but no exact castsWithDrop/stack counts, zero histogram, input rank, skill/spec or collection date. Current research estimator output labels P=20% as chanceSource=measured with 92% confidence and Beta(40.5,160.5), effectively treating rounded source percentage as 40 exact hits; ask reviewer to distinguish approximate reported percentage from verified hit counts, cap/label uncertainty without inventing counts, and verify Thorium Thresher unlock. Current merged baseline main has no 237366 exact input; this is usable post-pin RESEARCH only until reviewed import+actual tooltip."
+    },
+    {
+      "taskID": "T0037",
+      "agent": "midnight",
+      "type": "drop",
+      "inputName": "Refulgent Copper Ore",
+      "status": "queued",
+      "what": "Investigate March 26–28, 2026 prospecting post reporting 1,000 ore split across two differently equipped/specialized characters (500 each). Seek raw per-character cast and output counts, ore rank, talent allocations and gear; separately capture the 200 ore/40 cast/8 gem report if its source conditions can be identified.",
+      "why": "Rare potential paired skill/specialization comparison; pre-March-31 hotfix observations MUST NOT be pooled with newer Midnight drop rates. Quantities for the 500/500 comparison are not actually published in the thread; use as a lead, not a completed study. Deferred behind current-patch per-operation numeric evidence and Midnight milling baseline contradiction (S14).",
+      "searchTip": "Primary source https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780 ; contact or follow forum authors where possible, preserving character conditions and exact data dates. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0001",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Prospecting results for Umbral Tin Ore (item 237363); known outputs [242606, 242607, 242608, 242610, 242611, 242786, 242788]",
+      "why": "10 completed casts for Umbral Tin 237363 remain sparse; temporarily defer one cycle behind owner-seeded 237362 hit-count/conditional-yield recovery (T0005). Reopen next if no new 237362 evidence, preserving no-evidence/fewest-casts priority.",
+      "status": "queued",
+      "inputItemID": 237363,
+      "inputName": "Umbral Tin Ore",
+      "searchTip": "Search Umbral Tin Ore prospecting by name; recover completed casts, ore rank, Duskshrouded Stone and Crystalline Glass quantities, Resourcefulness and original study provenance. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0002",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Prospecting results for Brilliant Silver Ore (item 237365); known outputs [242553, 242554, 242608, 242612, 242613, 242786, 242788]",
+      "why": "Brilliant Silver Ore item 237365 has only a small quality-specific completed-cast sample (the other rank 237364 has an 800-cast study). Prioritize independent current-patch cast and hit-count data before token completeness. Deferred one cycle behind 272246 eligibility-versus-Looter conflict and current Midnight hit-count QA.",
+      "status": "queued",
+      "inputItemID": 237365,
+      "inputName": "Brilliant Silver Ore",
+      "searchTip": "Search Brilliant Silver Ore by name and quality/rank; recover completed casts, per-output castsWithDrop/histograms, rank, specialization, Resourcefulness, patch date, and original source. Do not assign an output quality ID unless the source names its rank."
+    },
+    {
+      "taskID": "T0023",
+      "agent": "midnight",
+      "type": "token",
+      "what": "Complete Midnight tier-token coverage: verify Tier 35 reward item IDs and collect Tier 36 Slumbering Coil Curio, tokens and class rewards",
+      "why": "Tier 36's 20 armor-family tokens now have base normal-mode class reward IDs in midnight-20261030-8000..8019; remaining Slumbering Coil Curio choices, difficulty modifiers, and any Tier 35 gaps still need verification. Deferred behind missing prospecting/DE casts.",
+      "status": "queued",
+      "inputName": "Midnight gear tokens",
+      "searchTip": "Follow up Slumbering Coil Curio and Tier 35/36 raid token choices by name; verify exact class reward IDs, bonus IDs for difficulty, and Kirana exchanges without guessing. The 20 new Tier 36 records supersede earlier token records for normal base IDs."
+    },
+    {
+      "taskID": "T0005",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Prospecting results for Umbral Tin Ore (item 237362); known outputs [242606, 242607, 242608, 242610, 242611, 242786, 242788]",
+      "why": "Owner-seeded current-runtime numeric blocker: 800 completed 2026-06-10 Cardinalai Umbral Tin Ore 237362 prospects provide output totals but no per-output castsWithDrop, 0/1/2 histogram or verified output-rank identities. Escalated to open despite stronger sample than rank-paired 237363; seek paired P(hit) and conditional units before runtime import.",
+      "status": "open",
+      "inputItemID": 237362,
+      "inputName": "Umbral Tin Ore",
+      "searchTip": "Firsthand Cardinalai 2026-06-10 Umbral Tin Ore 237362 800 completed prospects: seek raw per-cast export or per-output hit counts, zero counts and 0/1/2 histogram for 242606,242607,242610,242611,242786,242788; verify each output rank/identity, specialization Eversong Diamond unlock 242608, skill, resourcefulness refund/reprocessing and build. Do not infer P(hit) from output totals; do not combine duplicate snapshots."
+    },
+    {
+      "taskID": "T0006",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Prospecting results for Brilliant Silver Ore (item 237364); known outputs [242553, 242554, 242608, 242612, 242613, 242786, 242788]",
+      "why": "Cardinalai's June 10, 2026 rank-specific study is now placed via corrections: 800 completed casts for item 237364. Output totals are measured, but per-output castsWithDrop remain unknown; defer behind unsampled items.",
+      "status": "queued",
+      "inputItemID": 237364,
+      "inputName": "Brilliant Silver Ore",
+      "searchTip": "Search Brilliant Silver Ore prospecting by name and quality rank; prioritize firsthand cast totals, refunds and exact output identities. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0036",
+      "agent": "midnight",
+      "type": "drop",
+      "inputName": "Refulgent Copper Ore",
+      "inputItemID": 237361,
+      "status": "queued",
+      "what": "Follow up the April 22, 2026 post-hotfix report: 1,000 Refulgent Copper Ore processed (~200 prospect casts), reported 10 Eversong Diamonds, 40+ each common gem and zero rare gems. Recover exact ore rank/item ID, profession skill/specialization/unlock, output identities/counts and evidence provenance; treat reported numbers as partial until verified.",
+      "why": "The April 19/22 post-hotfix Honeybone 1,000-ore / 200-prospect study is recorded in midnight-20261030-1200 through 1204. Rank, exact common-gem totals and per-output hit counts remain unknown; follow up after unsampled items.",
+      "searchTip": "Follow up Honeybone's April 19/22 posts by name, https://eu.forums.blizzard.com/en/wow/t/prospecting-1000-refulgent-copper-ore-zero-rare-gems-updated/616811 ; seek ore rank, individual output counts, skill/unlock and castsWithDrop. Existing 200-cast study is one author's data, not two independent reports."
+    },
+    {
+      "taskID": "T0004",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Prospecting results for Refulgent Copper Ore (item 237361); known outputs [242553, 242554, 242606, 242607, 242608, 242786, 242788]",
+      "why": "Rank-2 Refulgent Copper has some historical output totals; defer behind unsampled rank IDs, post-hotfix firsthand reports and paired skill evidence.",
+      "status": "queued",
+      "inputItemID": 237361,
+      "inputName": "Refulgent Copper Ore",
+      "searchTip": "Follow up by name on existing source reports for Refulgent Copper Ore; seek completed casts, rank, resourcefulness refunds and exact output IDs. Rescue irregular older studies before another searched-only result. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0024",
+      "agent": "midnight",
+      "type": "exchange",
+      "what": "Midnight item exchanges (vendor trades, combine/split items)",
+      "why": "Sixteen Midnight gem-crushing conversion records were added (one gem to Dusk-Shrouded Stone; three gems to variable Glimmering Gemdust), but other exchanges remain uncollected. Keep queued behind no-evidence token and disenchant tasks.",
+      "status": "queued"
+    },
+    {
+      "taskID": "T0025",
+      "agent": "midnight",
+      "type": "noDisenchant",
+      "what": "Midnight gear that cannot be disenchanted",
+      "why": "needed to move the list into ItemDB",
+      "status": "queued"
+    },
+    {
+      "taskID": "T0033",
+      "agent": "midnight",
+      "type": "mechanics",
+      "what": "Verify mechanics.md M11: does Multicraft apply to Midnight prospecting? Find a direct source (guide text, Blizzard note or a study that reports multicraft procs while prospecting).",
+      "why": "the model only uses verified mechanics",
+      "status": "queued",
+      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
+    },
+    {
+      "taskID": "T0034",
+      "agent": "midnight",
+      "type": "mechanics",
+      "what": "Verify mechanics.md M10 and M13: does Resourcefulness save ore when prospecting, and do crafting stats affect disenchanting in Midnight? Sources only.",
+      "why": "the model only uses verified mechanics",
+      "status": "queued",
+      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
+    },
+    {
+      "taskID": "T0030",
+      "agent": "midnight",
+      "type": "condition",
+      "what": "Conditional prospecting drops in Midnight: confirm which specialization nodes unlock Eversong Diamond for each ore (copper, tin, silver, thorium), with source links; any other unlock-only materials",
+      "why": "Four ore-specific Eversong Diamond specialization unlocks now independently documented by Midnight guide records midnight-20261030-962 through 965; further conditional materials belong in a separate future task if discovered.",
+      "status": "done",
+      "searchTip": "Search guides for the profession specialization tree (wow-professions.com, Wowhead and Method profession guides) and patch notes."
+    },
+    {
+      "taskID": "T0009",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Prospecting results for Ironclaw Ore (item 210937); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
+      "why": "Ironclaw 210936 R1 now has two DISTINCT pre-hotfix Oct 15 2024 Reikah profession cohorts: gemcutter 105+34 skill/0 prospecting KP processed 9,000 ore and reported 1,089 pooled gems, 951 Pebbles 213398, 358 Glass 213399; prospector 63+18 skill/max prospecting nodes compared against nominal 10,000 ore, 1,504 pooled gems, 1,030 Pebbles, 335 Glass, 202 crushed gems, explicitly zero Ambivalent Amber 212498. Actual completed casts/refund basis unknown. Oct 16 2024 Blizzard gem-rate increase and Oct 25 2024 byproduct change make these historical-only. R2 210937 source '100' denominator still ambiguous.",
+      "status": "open",
+      "inputItemID": 210937,
+      "inputName": "Ironclaw Ore",
+      "searchTip": "Search by name: \"Ironclaw Ore prospecting results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210937 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null.\nSearch Raven11 original https://www.wowhead.com/item=212495/radiant-ruby for rank-1 20-cast context and PeaEsk https://www.wowhead.com/spell=434018/algari-prospecting for what '100 Ironclaw rank2' means. Seek actual hit counts, histograms, refunds, skill and specialization.\n2026-11-01 Master priority: Verify Reikah Oct 15 post https://us.forums.blizzard.com/en/wow/t/jewelcrafting-broken-pebbles-and-glass/1968257, keep 9k vs nominal 10k and distinct character skill/spec; seek post-Oct25 independent R1/R2 210936/210937 per-output completed casts, hits and 0/1/2 histograms, no inferred P from ore totals."
+    },
+    {
+      "taskID": "T0010",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Milling results for Mycobloom (item 210796); known outputs [222619]",
+      "why": "Mycobloom rank-1 210796 -> Nacreous Pigment 222619 now has historical firsthand averageShown=1.15 per INPUT herb, not per mill (reddit 1fdmzwy); no rank-specific completed casts, hit counts, zeros or current-patch skill context.",
+      "status": "open",
+      "inputItemID": 210796,
+      "inputName": "Mycobloom",
+      "searchTip": "Search by name: \"Mycobloom milling results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210796 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null.\nDo not treat 1.15 per herb as 1.15 per cast or measured hit probability. Recover original per-rank input totals, completed mills, refunds, profession build, and 0/1/2/... per-mill distributions.\n2026-11-01 22:00 PST Master numeric QA: NEW 2026-11-01T2123 TWW Mycobloom R1 210796 -> Nacreous Pigment rank-unspecified: undated Wowhead LotzBoi x4-6 per 10 herbs; Sep10 2024 Reddit 1fdmzwy reference 1.1 per herb for R2 Nacreous Pigment 222619 (equivalent 11 per 10 IF same operation/output), neither measured casts/hits. Main currently has provisional E=6.325 per x10, not a verified current-skill baseline. Require original raw logs, exact rank, skill/spec, Resourcefulness, patch epoch, per-herb vs per-mill units and per-output histogram. Do not pool conflicting references or use x4-6 as measured min/max."
+    },
+    {
+      "taskID": "T0011",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Milling results for Mycobloom (item 210797); known outputs [222619]",
+      "why": "Mycobloom rank-2 210797 -> Nacreous Pigment 222619 has historical averageShown=1.35 per INPUT herb (reddit 1fdmzwy); exact per-rank cast denominator, skill and resourcefulness unresolved. Both R1 and R2 record notes mistakenly say 'R2', flagged for clarification.",
+      "status": "open",
+      "inputItemID": 210797,
+      "inputName": "Mycobloom",
+      "searchTip": "Search Mycobloom rank-2 milling by name; find source-stated completed 10-herb casts, per-output totals, input rank, skill/spec and Resourcefulness. Distinguish guide/comment ranges from measured results.\nSeek author raw logs, input/rank counts, refunds, skill and specialization; verify whether 1.15/1.35 are per-herb and not per-cast, and whether output 222619 is correct for both ranks.\n2026-11-01 22:00 PST Master numeric QA: NEW 2026-11-01T2123 TWW Mycobloom R2 210797 -> 222619: undated Wowhead LotzBoi x5-7 per 10, Sep10 2024 Reddit 1fdmzwy reference 1.3 per herb (13 per 10 only as unit conversion), current main provisional E=7.425 per x10. R3 210798 x6-8 is also guide reference only. No reported completed mills/hits; do not merge rank1/rank2, 2024 epoch and undated guide, or infer P(hit) from a range."
+    },
+    {
+      "taskID": "T0007",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Prospecting results for Bismuth (item 210931); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
+      "why": "New 2024 rank-1 Bismuth ore study reports aggregate outputs from 400 ores (war-within-20261030-708..709), but item 210931's rank-specific completed casts and per-output hit counts are still absent. Deferred for T0048: the new Wowhead disenchant cohort has exact per-output hit denominators, so its missing yield histogram is closer to a complete numeric row; return to Bismuth when that follow-up is exhausted.",
+      "status": "queued",
+      "inputItemID": 210931,
+      "inputName": "Bismuth",
+      "searchTip": "Search Bismuth prospecting by name, verify item 210931 rank and original cohort conditions, then seek rank-specific completed casts and castsWithDrop. Do not assign rank-1 totals to a rank-2 item ID or infer completed casts from purchased ore with refunds."
+    },
+    {
+      "taskID": "T0040",
+      "agent": "war-within",
+      "type": "drop",
+      "status": "open",
+      "inputName": "The War Within prospecting and milling hit-count datasets",
+      "what": "Seek studies for Bismuth, Ironclaw, Aqirite and Mycobloom with per-output castsWithDrop or 0/1/2/... histograms and explicit cast denominators, ore/herb quality, skill and specialization. Existing Aqirite 1,040-prospect quantities alone cannot identify chance where output multiplicity varies.",
+      "why": "TWW 210936 R1 and 210937 R2 numeric processing gaps remain. Newly documented Oct 15 2024 Reikah skill cohorts and Oct 27 glass averages predate Blizzard Oct 16 gem-rate and Oct 25 byproduct hotfixes. Source-reported ore totals and averages cannot supply completed casts, P(hit) or conditional histograms. Post-hotfix current-patch studies are higher priority than old numeric record count.",
+      "searchTip": "Find original source operation logs; distinguish completed casts, input ore/herb consumed, refunded/reprocessed inputs, and sample date, rank, skill/spec. Capture exact output item IDs, hits, zeros, total units and histogram. Avoid copied cohorts. Beta source https://www.reddit.com/r/woweconomy/comments/1ey4dkl ; Aug 31 source https://www.reddit.com/r/woweconomy/comments/1f5rby5 . Seek source-supported per-herb/rank/skill completed mills, hit histograms and dated post-release cohorts; do not merge the beta and later regimes or invent Mycobloom IDs.\n2026-11-01 Master priority: Partition all TWW prospecting by before/after 2024-10-16 gem-rate and 2024-10-25 byproduct hotfix. Seek post-Oct25 measured completed casts and per-output hits/0..N histograms for 213398/213399 and gems, with skill/spec/rank/refund context.\n2026-11-01 21:00 PST Master numeric QA: Post-pin 2026-11-01T2020 Reddit 1fisfkn contains 10,000 NOMINAL R1 Ironclaw 210936 (17% Resourcefulness, refunds re-prospected) and separate 10,000 NOMINAL R1 Aqirite 210933 (5% Resourcefulness, refund reuse unspecified), with per-gem total units but NO verified completed cast denominator/hit histogram. Aqirite totals 312/297/332/1045/593 match older Oct31 duplicate source already flagged; dedupe by original commenter/cohort before counting. Do not turn reported 0 Amber 212498 into measured 0% without completed casts and specialization context. These Sept 2024 studies predate Oct16 and Oct25 rate hotfixes; seek post-hotfix R1/R2 per-cast observations. Original Reddit direct page unavailable for independent verification in this run."
+    },
+    {
+      "taskID": "T0008",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Prospecting results for Aqirite (item 210934); known outputs [212495, 212498, 212505, 212508, 212511, 213398, 213399]",
+      "why": "Aqirite 1040-click report and separate rank-1/rank-2 per-1000-input averages are recorded; rank-to-ID mapping and completed casts for each rank remain unresolved.",
+      "status": "open",
+      "inputItemID": 210934,
+      "inputName": "Aqirite",
+      "searchTip": "Search Aqirite prospecting by name and ore quality, particularly the Oct 14 2024 rank comparison; verify the author's direct statement that 11,000 R1 and 10,000 R2 ore were actually processed and refunds were not re-prospected, with a source quote if accessible. Preserve distinct cohorts, skill/unlock and output IDs; no inferred probabilities.\n2026-11-02 Research Manager: Source-verified 1g350pq replacement records war-within-20261102-001..014 report 11,000 R1/10,000 R2 ore and per-1,000-ore averages, but casts=2200/2000 are arithmetic (5 ore/operation), not independently counted. Add worker-owned correcting records declaring castsBasis=countedFromInputs, derivations with formula/assumptions, refund-not-reprocessed context and original studyKey; preserve historical pre-2024-10-16/25 epoch, output averages, unknown hits/zeros and original evidence. Do not reinterpret nominal input equivalents as measured P(hit)."
+    },
+    {
+      "taskID": "T0032",
+      "agent": "war-within",
+      "type": "condition",
+      "what": "Conditional drops in The War Within prospecting and milling (specialization or skill unlocks), with source links",
+      "why": "Eight TWW Gem Finding unlocks already recorded; defer unresolved Crushed Gemstones and 40/40 Amber claims behind Mycobloom inputs lacking completed casts.",
+      "status": "queued",
+      "searchTip": "Follow up war-within-20261030-409 to 411 and newer in-game specialization descriptions for Crushed Gemstones and 40/40 Ambivalent Amber; record only source-supported conditions, not numerical rates. Search TWW milling specializations by herb name."
+    },
+    {
+      "taskID": "T0012",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Milling results for Mycobloom (item 210798); known outputs [222618]",
+      "why": "no recorded casts yet; 1 mappings have no drop chance yet",
+      "status": "queued",
+      "inputItemID": 210798,
+      "inputName": "Mycobloom",
+      "searchTip": "Search by name: \"Mycobloom milling results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/210798 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0027",
+      "agent": "war-within",
+      "type": "token",
+      "what": "The War Within gear tokens and rewards by class",
+      "why": "token list empty",
+      "status": "queued"
+    },
+    {
+      "taskID": "T0020",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Prospecting results for Draconium Ore (item 189143); known outputs [192837, 192838, 192839, 192840, 192841, 192842, 192843, 192844]...",
+      "why": "Draconium Ore item 189143 has no independently mapped rank-specific cast study; Bugy's historical averages lack explicit ore rank, so investigate this ID before already-documented Hochenblume.",
+      "status": "open",
+      "inputItemID": 189143,
+      "inputName": "Draconium Ore",
+      "searchTip": "Search by name: \"Draconium Ore prospecting results\". Wowhead item pages may not load for you; https://nether.wowhead.com/tooltip/item/189143 gives the name. Try reddit, wow-professions.com, warcraft.wiki.gg, guides and Wowhead comments quoted in search results. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0018",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Bubble Poppy (item 191467); known outputs [198412, 198413, 198414]",
+      "why": "Bubble Poppy milling still lacks an independently verified completed-cast yield/hit-count study; prioritize before historical unlock detail follow-ups.",
+      "status": "open",
+      "inputItemID": 191467,
+      "inputName": "Bubble Poppy",
+      "searchTip": "Search Bubble Poppy milling by name and Dragonflight patch/skill; recover completed casts, herb rank, pigment output totals and hit counts, specialization and original study lineage. Avoid counting copied guide tables as independent samples."
+    },
+    {
+      "taskID": "T0017",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Saxifrage (item 191466); known outputs [198418, 198419, 198420]",
+      "why": "New milling/recipe records available, but exact cast-normalized yields still missing or unverified; continue original-source follow-up and old-evidence rescue. Deferred one cycle behind S19 item ID/quality mapping verification; numeric estimates cannot be trusted if input ranks are reversed.",
+      "status": "queued",
+      "inputItemID": 191466,
+      "inputName": "Saxifrage",
+      "searchTip": "Search Saxifrage milling study by name; reconcile original source lineage and seek measured completed casts, outputs by rank and refunds. Rescue irregular old evidence first. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0015",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Saxifrage (item 191464); known outputs [198418, 198419, 198420]",
+      "why": "Aary reports rank-2 Saxifrage milling output totals for roughly 1,700 input herbs; completed casts and modern-patch applicability remain unknown.",
+      "status": "open",
+      "inputItemID": 191464,
+      "inputName": "Saxifrage",
+      "searchTip": "Search Saxifrage milling by name and rank; seek firsthand completed casts and separate rank-specific output totals; preserve Inspiration-era patch context. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0041",
+      "agent": "dragonflight",
+      "type": "drop",
+      "status": "open",
+      "inputName": "Dragonflight milling and prospecting hit-count datasets",
+      "what": "Find original worksheets or per-cast logs for Dragonflight prospecting Draconium Ore and milling Hochenblume/Saxifrage/Bubble Poppy with castsWithDrop or 0/1/2/... histograms, rather than only average quantities, by input and output rank and skill/stat/specialization profile.",
+      "why": "Dragonflight beta-only 2-5 pigment / 5-herb milling reference for Bubble Poppy/Saxifrage/Hochenblume/Writhebark is sourceKind=reference (not measured current Retail). New 1,000 nominal Serevite ore -> five rank-3 Illimited Diamonds 192871 lacks completed-cast denominator, ore rank and refunds.\n2026-11-01 15:55 Master QA: 27 new Dragonflight Wowhead Looter hit-only records for 11 item-specific gear inputs (194353,194382,194395,197692,197905,200316,200318,200322,200323,200330,207286) -> 194123/194124/200113. These advance measured P(hit) if denominator/source semantics hold, but do not supply total units or positive stack histograms. Primary source confirms 194353: 108/122 Chromatic Dust, 13/122 Vibrant Shard, 1/122 Resonant Crystal.",
+      "searchTip": "Seek independent Dragonflight milling/prospecting completed-cast and castsWithDrop datasets by name, with original cohort identity, source links and exact ranks. Bugy's equal-size cohorts may be distinct or duplicates; capture author-stated batch identifiers/conditions for reviewer, never infer identity from totals or modify dedupe code. Verify https://www.reddit.com/r/woweconomy/comments/10h6ccx (100 rank-2 Khaz'gorite, 20 prospects, no Illimited Diamond); seek additional original 0/1/2 histograms with exact diamond rank ID, specialization, batch and post-2022 patch epoch. Do not split one family-level zero cohort into three independent quality cohorts. Secondary mapping rescue: Dragonflight 200113 Resonant Crystal 1-cast/4-unit Mythic+ weapon and separate 2-cast/7-unit Mystic-item report have full positive histograms but unknown exact input IDs; seek original item IDs and item versions without pooling two commenters. https://www.reddit.com/r/wow/comments/zru4kh . Continue prospecting/milling hit-count tasks first.\nFind actual Dragonflight per-cast histograms with input and output rank IDs; keep 2022 beta prior and nominal-ore totals distinct from measured casts; verify Serevite rank mapping before importer handoff.\n2026-11-01 15:55 Master numeric follow-up: Secondary numeric closure: seek per-output 1/2/3+ stack distributions for Dragonflight gear 194353→194123/194124/200113, and investigate 194382 where output hits sum 126+10+4=140 > 138 recorded operations; this does not prove invalidity because multiple outputs can co-occur or item variants can be pooled. Keep original ore/milling tasks ahead of unrelated metadata.\n2026-11-01 17:xx Master numeric QA: New 2026-11-01T1625 Dragonflight item-specific hit-only cohort rows for 197680,198025,198007,194392,198035,194383,194375,194402,202447 -> 194123/194124/200113 provide 26 per-output denominators and hits but no total units/stack histogram. Verify original Looter page and current item build; especially 202447 where listed hits 36+28+2 exceed 55 operations. Multiple materials may co-occur; do not force exclusive probabilities or invent per-cast expected units. Keep ore/milling numeric gaps as the first priority.\n2026-11-01 17:xx Master post-PR19 QA: 14 new records in dragonflight/2026-11-01T1726 cover seven distinct original Wowhead Looter item cohorts: 200317/200319/200324/200327/200329/200331/200332 -> 194124 Vibrant Shard and 200113 Resonant Crystal. The sources give casts and per-output hits, NOT total units/histograms, patch dates or skill; independent spot-check PASS for 200317 (144 operations, 89/75 hits) and 200324 (185 operations, 111/104 hits). Sum of material hits exceeds total operations for these items, so do not force mutually exclusive outputs or derive zero-result operations. Follow up source version/bonus, actual per-material stack totals and joint-output counts; do not import these post-2d6cbbe records into PR19 or double-count future cumulative Looter snapshots. Original research file blob 0ec067084c31dbd5d95bea3fbeb713a384c9e855.\n2026-11-01 Master numeric QA: Investigate PR19 preservation regression Prospect Prismatic Ore 194545 / 5 -> family:Eternity Amber (rank-3 observation, source total 4 over 80 completed prospects; P(hit), positive-stack distribution and zero outcomes UNKNOWN). Two recordings of SAME superbondez Wowhead cohort: dragonflight-20261031-50026..50064 and dragonflight-20261101-021..059. Their rank-3 Amber rows 50044 and 042 each have totalQuantity=4; duplicate copies must not count twice. Existing estimator research/v3/tools/build_estimates.py misplaced_copies appears to discard both due to cross-material numeric collision with rank-2 Illimited Diamond 192870 (also total 4/80), because same_output permits any nonzero number and ignores output identity. See strategy S21, new flag and issue #18. Do not invent rank IDs, restore old compiled rank1 fallback as measured, or modify PR19; obtain actual per-cast Amber histogram only from a source that states it.\n2026-11-01 19:00 PST Master: PR #19 was MERGED externally into main @9c20291e (2026-11-02T02:41:12Z) after being refreshed to actual research pin 4df9ae8; previous 'draft' wording above is superseded. MAIN compiled baseline still has Prospect 194545 x5 but no Eternity Amber family IDs 192849/192850/192851; measured family-level 4 units/80 completed prospects in superbondez study is still omitted due to same_output() cross-material collision with 192870 Illimited Diamond 4/80. S21 requires reviewed follow-up with regression test and owner approval; do not modify main, merge, or write competing snapshot import.\n2026-11-01 23:05 Master QA: NEW DF 2026-11-01T2234 five Wowhead item-side Looter cohorts 202458 (25 disenchants), 200371 (39), 200395 (40), 200402 (17), 200393 (44), 165 distinct item operations total; 11 per-output rows -> 194124/200113 and 194123 (202458). Source https://www.wowhead.com/item=202458 independently confirms 15/25 Shard, 10/25 Crystal, 5/25 Dust; sum 30 hits >25 operations, outputs can co-occur. Material total units, zero-output casts, histograms, item version and patch all unknown. Do not sum 185 material hits as 185 operations, or count later Looter cumulative snapshots independently. Separate Prismatic 194545 'less than 20 Khazgorite' has upstream nominal ore only, NO Prismatic prospect denominator; S21 Amber bug unchanged.\n2026-11-02 00:32 PST MASTER QA: New Dragonflight 2026-11-01T2337 evidence has 14 rows for original Reddit 108782r Jan10 2023 8,000 COMPLETED R3 Serevite prospects (40,000 nominal ore; 2,650 refunded ore, skill283/difficulty265, Inspiration15%, Resourcefulness22%). Reported units include 192871 Illimited Diamond R3=43, 192868 Nozdorite R3=1505, family Eternity Amber R3=2782, Crumbled Stone 192880=11472, Fractured Glass 192872=10288. Original source VERIFIED. Existing imported study import-study-00051..00064 is explicitly identified as SAME original 8,000-operation cohort in strategy S19; research estimates already include family:Eternity Amber 0.3478 with 8,000 study casts. Deduplicate by original cohort, not filename/studyKey, before any future estimator refresh. Per-output castsWithDrop, 0/1/2 histograms and P(hit) remain UNKNOWN; source percentages are UNITS per 100 operations. New independent Crumbled Stone 192880 60 completed prospects gives 55 family Amber/5 family Nozdorite/11 returned stone; Wowhead primary comment VERIFIED. Separate Mgnta 3,125 nominal stone, Resourcefulness16%, totals 564 Amber/65 Nozdorite/160 returned stone has casts=null; source's 'per prospecting' values assume nominal 625 batches and are not independently verified per-completed-operation E[units]. Source https://www.wowhead.com/item=192880/crumbled-stone. No new ItemDB/tooltip closure.\n2026-11-02 01:06 PST MASTER QA: Correct T0013: Prismatic Leaper 200061 IS millable at five fish per operation, primary Wowhead Primer 15 fish/3 completed mills, 3 R2 Serene + 5 R2 Flourishing + 2 R3 Flourishing units; three new rows outputItemID=null and castsWithDrop/histogram=null. Main compiled baselines ALREADY include Mill 200061 x5 with four pigment IDs (198413/198416/198417/198419) and provisional probabilities; review exact output-rank mapping and possible copied Primer cohort before importing, not a new ItemDB closure. Also new mixed-ore 400-prospect zero-Illimited-Diamond cohort has inputItemID=null and R2/R3 mixed; do not allocate its 400 zeros to any exact ore/rank or three independent diamond ranks. Source https://www.wowhead.com/item=200061/prismatic-leaper ; dragonflight/2026-11-02T0042."
+    },
+    {
+      "taskID": "T0019",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Prospecting results for Draconium Ore (item 188658); known outputs [192837, 192838, 192839, 192840, 192841, 192842, 192843, 192844]...",
+      "why": "Xenastro's five original 2023 rank-2 Draconium Ore log rows now have 44 pooled-gem records (item 188658), but no verified casts, individual gem IDs or per-output hit counts; original workbook row verification remains pending.",
+      "status": "open",
+      "inputItemID": 188658,
+      "inputName": "Draconium Ore",
+      "searchTip": "Use Xenastro's original Prospecting Log rows 28, 33, 39, 54, 62 in https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit and the original r/woweconomy post by name. Verify pooled totals, quality, profession skill and Resourcefulness; do not equate logged ore quantity with completed casts or pooled gems with individual outputs. Seek original per-cast histograms and modern Retail comparisons."
+    },
+    {
+      "taskID": "T0031",
+      "agent": "dragonflight",
+      "type": "condition",
+      "what": "Conditional drops in Dragonflight prospecting and milling (for example Illimited Diamond skill thresholds, Prismatic Ore talent), with source links",
+      "why": "Prismatic Ore's historical Prospecting unlock is already recorded; defer unresolved Illimited Diamond thresholds behind unsampled milling and ore-rank tasks.",
+      "status": "queued",
+      "searchTip": "Find Dragonflight Illimited Diamond skill or specialization gates by item name, current spell/specialization tooltip and original study; distinguish historical 2022 Prismatic Ore preview from modern Retail."
+    },
+    {
+      "taskID": "T0014",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Hochenblume (item 191462); known outputs [198421, 198422, 198423]",
+      "why": "Hochenblume qualitative and historical quantity sources already exist; defer to unsampled Draconium quality-rank input 189143 and occurrence-count recovery.",
+      "status": "queued",
+      "inputItemID": 191462,
+      "inputName": "Hochenblume",
+      "searchTip": "Search Hochenblume milling original studies by name; recover actual casts, herb quality, output ranks, Resourcefulness and current-Retail applicability. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0016",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Milling results for Saxifrage (item 191465); known outputs [198418, 198419, 198420]",
+      "why": "New milling/recipe records available, but exact cast-normalized yields still missing or unverified; continue original-source follow-up and old-evidence rescue.",
+      "status": "queued",
+      "inputItemID": 191465,
+      "inputName": "Saxifrage",
+      "searchTip": "Search Saxifrage milling study by name; reconcile original source lineage and seek measured completed casts, outputs by rank and refunds. Rescue irregular old evidence first. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null."
+    },
+    {
+      "taskID": "T0028",
+      "agent": "dragonflight",
+      "type": "token",
+      "what": "Dragonflight gear tokens and rewards by class",
+      "why": "11 Vault of the Incarnates Forgestone token records now identify eligible classes, but class-specific reward item IDs are still null. Defer until current open Dragonflight cast gaps are addressed.",
+      "status": "queued",
+      "searchTip": "Search Dreadful, Zenith, Mystic and Venerated Forgestone token names and linked class tier reward pages; verify token ID, slot, reward item ID and difficulty variant; do not invent IDs."
+    },
+    {
+      "taskID": "T0035",
+      "agent": "dragonflight",
+      "type": "mechanics",
+      "what": "Verify mechanics.md D1 and D2 (Dragonflight prospecting skill thresholds and ore-quality skill bonus) with a second source.",
+      "why": "the model only uses verified mechanics",
+      "status": "queued",
+      "searchTip": "Profession specialization guides (wow-professions.com, Method, Wowhead, Icy Veins), Blizzard patch notes, r/woweconomy."
+    },
+    {
+      "taskID": "T0013",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Prismatic Leaper (200061) is MILLABLE: confirm 5 fish per mill, three-operation Primer cohort and exact rank-specific pigment output IDs; remaining numeric histograms tracked under T0041.",
+      "why": "CORRECTED invalid 'fish cannot be milled' skip: original Wowhead Primer comment directly reports 15 Prismatic Leapers in 3 mills yielding Serene Pigment R2 x3, Flourishing Pigment R3 x2 and R2 x5. New research dragonflight-20261102-003..005 and recipe -011 preserve source counts. Main generated baseline already has Mill 200061 x5 with four pigment IDs and provisional chance, so compare original cohort lineage before any future estimator import; this task's process-identity check is complete, but measured P(hit)/conditional histograms, rank IDs, current Retail availability and actual tooltip remain unresolved under T0041.",
+      "status": "done",
+      "inputItemID": 200061,
+      "inputName": "Prismatic Leaper",
+      "searchTip": "Verified primary source: https://www.wowhead.com/item=200061/prismatic-leaper (Primer, 15 fish, 5 per mill, 3 completed mills, 3 R2 Serene +2 R3 Flourishing +5 R2 Flourishing). Preserve same original cohort identity and output rank. T0041 owns further numeric evidence; no additional import without dedupe."
+    },
+    {
+      "taskID": "T0042",
+      "agent": "legacy",
+      "type": "drop",
+      "status": "open",
+      "inputName": "Legacy prospecting/milling hit-count and histogram rescue",
+      "what": "Recover per-cast hit counts or histograms with denominators from original studies/archived spreadsheets and older SavedVariables exports for Cobalt Ore, Titanium Ore and high-volume legacy herbs. Keep item totals to support gold EV, but add castsWithDrop to measure chance.",
+      "why": "New independent historical Green Silken Shoulders 7057 cohorts: 22 completed disenchants with per-output histograms for Vision Dust 11137, Greater Mystic Essence 11135, Large Glowing Shard 11139; separate 10- and 2-cast cohorts. Historical source item level 36 versus current item level 12 prevents unreviewed Retail transfer. Continue legacy numeric baseline work for Cobalt/Titanium/Fel Iron. NEW: Five 2026-11-01T1644 TBC item-specific Looter cohorts supply denominators and per-output hits but no total units, zeros or complete histogram; source build/eligibility must be reconciled before current-runtime import.",
+      "searchTip": "Prioritize primary Wowhead Looter tables for Bloodfist Legplates 25003, Resonating Axe 30364, Der'izu Chestpiece 24880, Berserker Axe 25206 and Warp-Shielded Hauberk 30363; seek raw table HTML/export, source version/patch and current Retail eligibility, full per-output stack histograms/totalQuantity, per-cast joint outcomes. Current wiki levels differ from historical TBC levels. Do not equate unlisted hits to zero or count repeated snapshots as new cohorts.\n2026-11-01 17:xx Master numeric QA: 2026-11-01T1644 five TBC gear cohorts (25003/30364/24880/25206/30363) remain hit-only and version-ambiguous; do not double count later Looter snapshots or convert unlisted outcomes to zeros. Current numeric import handoff should request per-hit stack frequencies and source version. Queue T0052 remains deferred behind prospect/milling and 24995.\n2026-11-01 17:xx Master post-PR19 QA: 24 records in legacy/2026-11-01T1740 cover Elementium Ore 52185 -> gem IDs 52190/52193/52195/52192/52191/52194/52177/52181/52179/52182/52178/52180, two DISTINCT dated original 200-prospect studies by Agrathus (Moonrunner), 2011-01-19 and 2011-05-02 (blob c626fa3bc46d226442c624bdffd7897b9b3ab92f). Wowhead public comments corroborate both dates and counts; retain separately, keep earlier copied cohorts deduplicated. Each source has gem total units but NO per-output castsWithDrop or 0/1/2 histogram, and guide tier percentages are not per-cast chances. Continue higher-priority Cobalt/Titanium/Fel Iron missing probabilities; pursue Elementium per-cast histogram only when independent original source exists. These are POST-2d6cbbe research-only, not part of PR19.\n2026-11-01 19:00 PST Master: Legacy Thorium Ore 10620 15 new research-only records, three distinct original Wowhead cohorts: Gunshark 600 nominal ore (53 Blue Sapphire 12361,36 Huge Emerald 12364,32 Large Opal 12799,32 Azerothian Diamond 12800,17 Star Ruby 7910), Slextasy 1000 nominal ore (70/68/65/69/37 respectively, source dated 2022-06-28), third anonymous 340 nominal ore (14/32/25/23/3). 120/200/68 are five-ore equivalents, NOT verified completed operations; casts, hits, zero-inclusive histograms and refunds null. Primary Wowhead search text corroborates first two source totals; third remains unchecked. Preserve three original studyKeys and avoid merging identical material rows into one cohort. These 15 rows are AFTER merged main snapshot 4df9ae8, research-only.\n2026-11-01 23:05 Master QA NEW post-pin Kyparite 72093 original author 1117602, https://www.wowhead.com/mop-classic/ru/item=72093: explicitly 800 ore and 160 clicks, 54 rare gem units [76141=10,76138=6,76139=14,76142=7,76140=12,76131=5], 228 common [76135=36,76133=40,76137=37,76134=34,76130=45,76136=36], plus 235 Sparkling Shard 90407. Source states 23 Serpent's Eyes are from CONVERTING shards, not an additional prospecting yield. No per-output hit counts or histograms; source surfaced on MoP Classic mirror, historical build/date unknown, not current Retail proof. This is a distinct 160-click cohort (studyKey wowhead-ru-kyparite-1117602-800ore-160clicks); verify against older copies before combining and seek positive-stack/zero distribution. Main has Kyparite compiled but this post-pin source not imported.\n2026-11-02 00:32 PST MASTER QA: New Legacy 2026-11-02T0005 original WotLK Wowhead commenter 385026 explicitly reports Saronite Ore 36912: 640 ore, 128 COMPLETED prospects, 12 material totals (rare 36918=7,36930=9,36927=8,36921=7,36933=4,36924=1; common 36920=20,36929=32,36923=20,36917=24,36932=19,36926=19). Source https://www.wowhead.com/wotlk/de/item=36912/saroniterz spot-check PASS. This supports per-output zero-inclusive E[units] from total/128, NOT P(hit) or positive stack histogram; source percentages are units per 128 operations, not hits. Merged main already contains 36912 baseline from older pin; this is research-only and must be compared with older copied 385026 source cohorts before import. Additional Fel Iron 23424 8 unspecified stacks ->1 unknown rare gem has casts=null; do not assume full stacks. New exact-item WoWDB noDisenchant 30364 and 30363 conflict with historical Looter, not observed live casts.\n2026-11-02 01:06 PST MASTER QA: Legacy 2026-11-02T0043 Titanium 36910 adds 27 rows/3 original cohort keys; 19 Strath totals over 5,000 nominal ore, seven totals from 61 explicit completed 3.2 PTR prospects, one Retail12.0.5 143 powder over 1,000 nominal ore. Never treat 5,000/5 or 1,000/5 as verified completed casts with refunds, or treat 2023 WotLK Classic PTR as 2026 Retail. Check copies against existing estimator main 36910/46849 before incrementing sample weight."
+    },
+    {
+      "taskID": "T0022",
+      "agent": "legacy",
+      "type": "drop",
+      "what": "Prospecting results for Cobalt Ore (item 36909); known outputs [36917, 36918, 36920, 36921, 36923, 36924, 36926, 36927]...",
+      "why": "New Cobalt Ore report gives 180 ore and output totals, but no explicit completed-cast or per-output hit counts; prioritize source denominator and independently mapped gem IDs.",
+      "status": "open",
+      "inputItemID": 36909,
+      "inputName": "Cobalt Ore",
+      "searchTip": "Search Cobalt Ore prospecting by name for firsthand completed-cast studies and exact gem outputs; recover original source denominators. Prioritize independent studies with explicit cast denominators and castsWithDrop (number of casts yielding >=1 of each output) or per-cast 0/1/2/... histogram. Seek originals: addon exports, linked spreadsheets, Wowhead Looter-style samples with sample size and r/woweconomy reports. Do not equate output item totals with hit counts, or use output quantity as the chance denominator; preserve input/output rank, patch/epoch, skill/spec, unlock state, originalSource and sample size. Unknown remains null.\n2026-11-01 21:00 PST Master numeric QA: New legacy reference records 12001..12012 correctly preserve WoW-Professions WotLK Classic Cobalt 36909 percentages as REFERENCE (23% each common gem, 1.3% each rare), not observed Retail hit counts. Existing committed research/v3/output/estimates.json nevertheless shows SIX Cobalt common outputs 36917/36920/36923/36926/36929/36932 each at provisional 2.5 expected units per 5-ore cast (sum 15), with starting-guess provenance, confidence 10 and fabricated-looking [1,11] fitted ranges. Source guide says each prospect gets at least one common gem, sometimes two; six times 2.5 is incompatible with that guide's mechanics. This is NOT shipped in main baseline, but is a hazardous provisional estimate for future import. Seek independent original Retail per-output totals AND completed casts/hits; ask estimator reviewer to fix per-material unit semantics, cap/reject impossible priors and regression-test cross-output aggregate constraints before importing Cobalt.\n2026-11-01 23:05 Master QA NEW post-4df9ae8 cohort: legacy/2026-11-01T2242 9 Cobalt Ore 36909 output rows from Wowhead RU author 814846, independently source-checked https://www.wowhead.com/ru/item=36909: 24 ore stacks, six common gem totals [36932=22,36923=28,36920=23,36917=22,36926=24,36929=29] and rare [36918=4,36933=2,36924=1]. The source does NOT explicitly say full 20-ore stacks or completed casts; 480 nominal ore / 96 five-ore equivalents are CONDITIONAL on full stacks and NOT observed completed casts. No hit counts or histograms. Current research estimator still has six 2.5-unit per-output STARTING GUESSES (15 common gems per 5-ore prospect), zero study casts; merged main has no exact Cobalt Prospect baseline. S25: request reviewer guardrail; preserve raw 24-stack report, avoid inventing casts/patch/modern yields. Source original cohort key wowhead-ru-cobalt-814846-24stacks; do not re-copy."
+    },
+    {
+      "taskID": "T0044",
+      "agent": "legacy",
+      "type": "drop",
+      "what": "Fel Iron Ore prospecting: extend original 100-ore / 20-cast Thottbot study with independent sample cohorts and per-output hit counts.",
+      "why": "New legacy-20261030-801 onward records include only 20 source-supported completed casts for Fel Iron Ore; prioritize additional independent data before heavily sampled Saronite.",
+      "status": "open",
+      "inputItemID": 23424,
+      "inputName": "Fel Iron Ore",
+      "searchTip": "Search Fel Iron Ore prospecting original Thottbot/Wowhead comments, Classic TBC player logs and sample tables by name. Record actual completed casts, individual gem totals, castsWithDrop or 0/1/2 histograms, patch/version, originalSource and distinct batch IDs. Do not count copied comments twice."
+    },
+    {
+      "taskID": "T0029",
+      "agent": "legacy",
+      "type": "recipe",
+      "what": "Smelting recipes (ore -> bar, extra reagents) for all older expansions",
+      "why": "Historical smelting recipe list is growing, but missing older-expansion recipes and current Retail availability still need source-backed coverage; retain behind no-cast/low-cast tasks. Deferred behind random-yield disenchant numeric baseline for owner seed 24995.",
+      "status": "queued",
+      "searchTip": "Search missing older-expansion smelting recipes by ore and bar names; record input counts, extra reagents and outputs, avoiding duplicates."
+    },
+    {
+      "taskID": "T0021",
+      "agent": "legacy",
+      "type": "drop",
+      "what": "Prospecting results for Titanium Ore (item 36910); known outputs [36917, 36918, 36919, 36920, 36921, 36922, 36923, 36924]...",
+      "why": "Titanium Ore has a 144-prospect historical PTR study, but modern independent casts and occurrence counts remain missing; prioritize after no-cast Cobalt and 20-cast Fel Iron tasks.",
+      "status": "open",
+      "inputItemID": 36910,
+      "inputName": "Titanium Ore",
+      "searchTip": "Search Titanium Ore prospecting by name for independent original completed-cast studies, patch/epoch and per-output hit counts. Keep 144-cast PTR evidence separate from current Retail; do not double-count copied historical tables.\n2026-11-02 01:06 PST MASTER QA: Three post-pin Titanium Ore 36910 cohorts: Strath WotLK Classic PTR 2023-05-18, 5,000 nominal ore and 19 exact output totals including Titanium Powder 46849 x736, NO explicit completed operations; historical patch3.2 PTR commenter 378183 explicitly 61 completed prospects (305 ore), Titanium Powder x39, Cardinal Ruby 36919 x5, Eye of Zul 36934 x4 etc; Globalmenace Retail12.0.5 claims 1,000 nominal ore -> 143 powder, NO completed operations and source page PTR. Main compiled 36910 already has powder E=0.7261 provisional and other historical studies, so audit duplicate original cohort and patch identity before future import; seek per-output hit counts/stack histograms and independently verified current Retail operations. Primary https://www.wowhead.com/wotlk/item=36910/titanium-ore (Strath checked)."
+    },
+    {
+      "taskID": "T0051",
+      "agent": "legacy",
+      "type": "drop",
+      "what": "Adamantite Ore prospecting: corroborate Gary13579's 140-prospect cohort and resolve gem occurrence counts and historical patch.",
+      "why": "Adamantite Ore now has additional independent 97- and 8-prospect Thottbot cohorts plus a separate historical pooled Wowhead table (not an independent new cohort); defer behind Fel Iron, Cobalt and Titanium with less directly recorded evidence.\n2026-11-01 15:55 Master QA: FiveSpice's January 4, 2021 first-person report of 1,000 Adamantite Ore 23425 and twelve gem totals (262 units in aggregate) was independently re-opened at https://xpoff.com/posts/1257082/ . The 200 `casts` in legacy-20261101-154001..154012 are nominal 1,000/5 equivalents, not source-logged completed operations. Their missing `castsBasis` would cause the current estimator to treat them as fully reported casts. Task remains queued behind open low-evidence work.",
+      "status": "queued",
+      "inputItemID": 23425,
+      "inputName": "Adamantite Ore",
+      "searchTip": "Search Adamantite Ore prospecting original Gary13579 35-stack study, TBC Classic 513-stack/2051-prospect Reddit cohort and independent source tables by name. Distinguish original studies and game versions; capture per-output totals, hit counts, originalSource, input batch and any Resourcefulness or patch differences.\n2026-11-01 15:55 Master numeric follow-up: Locate the original thread FiveSpice says was reposted, verify whether a prior study duplicates it; obtain raw casts/hit counts/stack histograms. Ask worker to correct all twelve records with castsBasis=countedFromInputs or nominalEquivalent (as supported by source), inputsProcessed=1000, and documented uncertainty; never silently assign full measured-cast confidence."
+    },
+    {
+      "taskID": "T0043",
+      "agent": "legacy",
+      "type": "drop",
+      "status": "queued",
+      "inputItemID": 36912,
+      "inputName": "Saronite Ore",
+      "what": "Find original measured prospecting casts for Fel Iron Ore (23424) and Adamantite Ore (23425); follow up Saronite Ore (36912) only for current Retail or per-cast occurrence counts.",
+      "why": "Saronite already has multiple original cohorts including Doometh's 10,000-prospect historical study; defer additional corroboration behind 20-cast Fel Iron, incomplete Cobalt and 140-cast Adamantite evidence, while preserving a later hit-count task.",
+      "searchTip": "Prioritize 'Fel Iron Ore prospecting sample results' and 'Adamantite Ore 1000 prospects' by name, original Wowhead comments/spreadsheets. Saronite already has 10,000+ historical prospects; only seek new Retail evidence or per-gem castsWithDrop/histograms. Preserve original study lineage and patch."
+    },
+    {
+      "taskID": "T0038",
+      "agent": "codex",
+      "type": "addon-feature",
+      "status": "queued",
+      "what": "Implement owner-requested manual Export/Import buttons for opt-in Loot Liquidator cast observations once a reviewed data format is ready. Export raw per-cast anonymized input/output/refund records with item ID and quality/rank, process/batch size, character profession skill/specialization and relevant stats, game version/patch/epoch, timestamp, and stable recording/batch/source IDs. Import with validation, user preview, dedupe and explicit consent; prevent imported observations from being re-exported as independent data.",
+      "why": "Reusable first-party observational samples can improve current-expansion rates more reliably than searching small forum studies. This is a coding handoff, not a research worker task; never automatically upload personal data and never add changes to the addon in the research-only agent workflow.",
+      "searchTip": "Before implementation, coordinate schema and SavedVariables compatibility with Claude's research-v3 evidence format; no network transmission by default. Preserve existing Loot Liquidator features and permissions."
+    },
+    {
+      "taskID": "T0045",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Midnight 10-herb milling measured numeric baselines: Tranquility Bloom 236761 -> Powder Pigment 245807; other Midnight herb/rank outputs. Recover completed mills, per-output hits, 0/1/2/... histograms, total pigment and skill/spec/patch.",
+      "why": "New firsthand Wowhead comment 6292037 records herb/pigment totals: 236761->245807=1305, 236770->245864=1286, 236778->245867=1336, 236776->245803=1335. 1,000 input herbs explicitly stated for first two, not repeated for latter two. All casts/hits/histograms remain null; 10-herb Midnight recipe and refund/reprocessing ambiguity must be respected. Legacy 4.5 per-mill proxy must remain labelled prior.",
+      "status": "open",
+      "inputItemID": 236761,
+      "inputName": "Tranquility Bloom",
+      "searchTip": "Search Tranquility Bloom milling results, Powder Pigment per 10-herb mill, Blizzard forum t/2276246 (Draggoth), master-20261030-006 (SeniorEmployment932). Preserve raw 1,000 herbs separately from completed mills, refund handling, output item 245807, quality rank, skill, specialization and date. Seek actual per-cast histogram and hits.\n2026-11-01 Master priority: Follow original https://www.wowhead.com/ru/item=245807 comment 6292037 and recover actual completed mills, resourcefulness/refunds, character skill/spec, date, input ranks and zero-inclusive per-output histograms; do not assume 100 mills from 1000 nominal herbs or extend the denominator to Mana Lily/Argentleaf without source.\n2026-11-01 22:00 PST Master numeric QA: PRIORITY source conflict for Tranquility Bloom 236761 -> Powder Pigment 245807 per 10-herb mill. Committed research estimates.json has 4.5 starting guess (0 study casts, 30% confidence); merged main baseline has no exact 236761 row. NEW reference midnight-20261101-21015 quotes March21 2026 Draggoth forum '10 Tranquility Blossom = 12.5 Powder Pigment without any KP' (Blossom name unlinked). Independent earlier Wowhead Russian kyzenbka comment https://www.wowhead.com/ru/item=245807 reports 1000 rank1 Tranquility Bloom with no tools ->1305 Powder Pigment, but completed 10-herb casts, Resourcefulness refunds, date and histogram unknown. Do not replace 4.5 with measured 12.5 or 13.05; reconcile exact ID/name, recipe batch, character skill/KP, patch, nominal vs consumed herbs, completed mills, totals, hits and positive-stack/zero histogram. Prioritize actual measured numeric baseline before future import; prevent duplicate study if kyzenbka already exists in v3."
+    },
+    {
+      "taskID": "T0046",
+      "agent": "dragonflight",
+      "type": "drop",
+      "what": "Resolve Dragonflight Serevite Ore rank-to-item-ID mapping 190394, 190395, 190396 (and Draconium 188658/189143, Khaz'gorite) before interpreting rank-specific prospecting P(hit) and unconditional units.",
+      "why": "New firsthand ar_rules Reddit pre-Dec-6-2022 R2 Serevite 190396 batches have nominal ore 6000/10000/10000 and Illimited Diamond R2 192870 unit totals 29/31/9, R3 192871 totals 13/9/0. Separate 26,000-ore aggregate supplies other gem totals and 10,000-ore subset supplies byproduct percentages; all overlap the same author and MUST NOT be double-counted as independent cohorts. Casts/refunds unknown; ore ID rank conflict S19 remains.",
+      "status": "open",
+      "inputItemID": 190395,
+      "inputName": "Serevite Ore",
+      "searchTip": "Resolve full quality-rank IDs from live item tooltip or Blizzard API (190394/190395/190396 and 188658/189143). GoldCap https://goldcap.gg/retail/kr/items/190396 says R2; compare Reddit https://www.reddit.com/r/woweconomy/comments/109bytz 33k R2 Serevite and 30k R2 Draconium cohorts, and prior 10i63zb/10lruc1. Explicitly mark 30k Draconium as subset of later 180k aggregate, 33k ore as nominal inputs not verified casts, skill 255/265 Draenei, Inspiration ~33%, refund unknown. Never assign P(hit) from diamond units.\n2026-11-01 Master priority: Original https://www.reddit.com/r/woweconomy/comments/zez5sj/a_tiny_bit_of_prospecting_data/ verified for ar_rules 6k/10k/10k and 29/13,31/9,9/0; preserve distinct batches and aggregate overlap, pre-reset epoch, 18% Inspiration, no hit counts. Resolve 190394/190395/190396 rank map from authoritative tooltips before measured import; do not infer P from diamond units.\n2026-11-01 Master S21: Eternity Amber output rank identity on Prismatic Ore 194545 is a separate open mapping issue. Source superbondez explicitly reports 4 Eternity Amber T3 in 80 prospects; rank-2 and rank-1 Amber text is malformed/ambiguous (\"42 4\" and \"8 4\") and was correctly stored totalQuantity=null. Rank-family IDs [192849,192850,192851] exist but verifiedRanks missing. Verify item ID ↔ quality rank from authoritative tooltip before assigning a specific output ID; keep family-level quantity evidence until then. This is separate from false cross-material dedupe and does not justify silently adding an exact rank-1 output to PR19.\n2026-11-01 19:00 PST Master: New firsthand https://www.reddit.com/r/woweconomy/comments/zh53dd (Dec 9 2022, after Dec 6 reset) is in merged main snapshot 4df9ae8, 13 material rows from ONE 20,000-NOMINAL-R3-Serevite-ore cohort (studyKey reddit-zh53dd-20221209-r3-serevite-20k), input ID assigned 190394 but rank mapping S19 unresolved. Output units include Illimited Diamond R3 192871=29, Nozdorite 192868=715, Eternity Amber family=1452 (exact rank item ID unresolved), Fractured Glass 192872=5132, Crumbled Stone 192880=5804. Source 'Per Ore' averages are per nominal input, NOT P(hit); 15% Resourcefulness not accounted for, completed casts/hits/zeros/histograms all null. Author skill 265 effective. Verify ID rank and per-output ID attribution from authoritative game tooltip before calling exact-rank verified. Preserve original 20k denominator and distinct pre/post reset cohorts; do not add 4,000 invented completed casts.\n2026-11-01 21:00 PST Master numeric QA: New 2026-11-01T2032 Dragonflight file contains a 400,000 NOMINAL R3 Serevite 190394 cohort with 591 pooled Illimited Diamonds (rank unknown), verified against Jan22 2023 Reddit 10i63zb. Same author's later 700,000-ore update is CUMULATIVE, not another independent cohort. Author explicitly says Resourcefulness saved ore not counted, so 80,000 is NOT a verified completed cast denominator; P(hit), zeros, rank split and histograms unknown. Same file contains older known cohorts 88004/88007/88010 copied for additional rank outputs; preserve source cohort identity, do not double count. Serevite rank-ID mapping S19 still open.\n2026-11-01 22:00 PST Master numeric QA: NEW firsthand December31 2022 Reddit zzcnjw commenter reports two DISTINCT daily Serevite rank-unknown nominal ore batches: 1000 ore ->1 pooled Illimited Diamond and 5000 ore ->0 pooled Illimited Diamonds (dragonflight-20261101-213001/213002). Original source spot-check PASS. 5 ore/cast is recipe only, not verified completed casts; Resourcefulness, output rank, skill, zero-outcome histogram and actual P(hit) unknown. Same commenter/day distinction prevents both collapse and falsely independent copies; do not infer 0% measured chance. Separate Dec12 2022 Prismatic Ore 194545 >250 ambiguous units ->0 Khaz'gorite (213003) also has casts=null and output rank null. Keep S21 Eternity Amber dedupe fix as separate higher priority.\n2026-11-01 23:05 DF Prismatic 194545 new reddit-17n69p8 source: commenter says 'probably less than 20' Khaz'gorite Ore from Prismatic after at least 20,000 NOMINAL R3 Serevite upstream. No count of Prismatic Ore obtained or number of completed Prismatic prospects, so this is an upper-bound anecdote, not measured Khaz'gorite expected units or P(hit). Keep separate from original 80-cast superbondez Eternity Amber family S21 defect; do not assign output rank or use 20,000/5 as denominator.\n2026-11-02 00:32 PST MASTER S19: Two additional independent commodity data pages support Serevite ore item rank mapping 190395=R1 (https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190395), 190396=R2 (https://goldcap.gg/retail/kr/items/190396), 190394=R3 (https://wowpricehub.com/us/commodity/item/Serevite%20Ore-190394). They disagree with earlier azerothauctionassassin data. These are secondary market sites, not authoritative game item tooltips; nether.wowhead.com tooltip fetch failed. Keep S19 OPEN until authoritative tooltip/item API or in-game quality-icon confirmation and check Draconium/Khaz'gorite/herbs. New 8,000-cast Reddit 108782r rank3 source is already an original cohort in imported studies; do not count as another 8,000."
+    },
+    {
+      "taskID": "T0047",
+      "agent": "legacy",
+      "type": "drop",
+      "what": "Warmaul Legplates 24995 Burning Crusade uncommon plate disenchant: source-backed random yields and hit counts for Arcane Dust 22445, Greater Planar Essence 22446, Large Prismatic Shard 22449; current Retail eligibility.",
+      "why": "New cumulative Wowhead Looter item-specific cohort (legacy-20261101-201..204) reports 2,068 Warmaul Legplates 24995 disenchants and output hits 22445=1,559; 22446=417; 22447=7; 22449=48. Conditional stack ranges 2-6/1-3/2-3/1, but exact total units and hit histograms are not supplied; historical build, bonus IDs and live eligibility remain unknown. Source table could not be independently inspected through available web access. Scaled item-level-31 Soul Dust/Lesser Mystic/Small Glowing reference conflicts with original TBC pool; do not silently transfer cohorts.",
+      "status": "open",
+      "inputItemID": 24995,
+      "inputName": "Warmaul Legplates",
+      "searchTip": "Find Warmaul Legplates 24995 Retail disenchant eligibility and firsthand completed casts with output hits/totalQuantity for 22445,22446,22449, source patch and skill; prefer in-game recorder export. Evowow https://wotlk.evowow.com/?item=24995 ×7500/×2200/×300 are opaque reference weights and MUST NOT be used as 75/22/3% or as casts. Netherweave Boots 21853 studies are not 24995. Compare scaled WoW item 24995 version iLvl31 with original TBC iLvl108 and Retail item variants, using item-specific evidence and completed disenchant operations; do not apply pre-BfA generic table to current player item without verification.\n2026-11-01 Master priority: Check original Wowhead Looter source HTML/dated screenshot for https://www.wowhead.com/item=24995; independently verify 2068 and each hit count, capture output conditional stack histogram or exact total units and patch/ilvl/bonus/skill. Determine whether 37 operations not accounted for by four reported output-hit rows are other materials/rows, not zero-output disenchants. Never treat cumulative snapshot as current Retail-only or duplicate a later cumulative snapshot. Compare historical TBC item-level disenchant tables with current Retail item levels/eligibility before treating Arcane Dust 22445, Greater Planar Essence 22446, Lesser Planar Essence 22447 or Large Prismatic Shard 22449 as current 24995 outputs; verify original Looter table counts and source build.\n2026-11-01 PR19 integration note: draft PR #19 @9a24ac4 pinned 2d6cbbe includes offline actual conversion-engine and tooltip fixture for Warmaul 24995->22445 (1559 hits/2068 operations, range 2-6, estimated midpoint-derived mean 3.0155, quantity confidence 50%, synthetic prices). This is candidate-only, NOT a new measurement or approved production change. Keep task OPEN to resolve historical patch/item version/eligibility, true output quantities and 1..N histograms; do NOT request duplicate snapshot import of same pin.\n2026-11-01 19:00 PST Master: PR19 now MERGED into main @9c20291e with tested offline 24995->22445 tooltip fixture (1559/2068 hits, provisional 3.0155 units, confidence 50%; synthetic prices). This closes the compiled+offline fixture handoff, NOT historic/current Retail eligibility, live-game tooltip correctness, or measured per-hit units. Task stays OPEN for source build, variant, actual 1..N histograms and current Retail validity.\n2026-11-01 20:04 PST Master: VERIFIED current WoWDB LIVE item 24995 Warmaul Legplates (ilvl 31) says 'Cannot be disenchanted' https://www.wowdb.com/items/24995-warmaul-legplates, while MERGED main 9c20291e contains historical 24995->22445/22446/22447/22449 output rows. The offline test tests/test_numeric_refresh_tooltip.lua sets LL.EligibleDisenchant=function()return true end and manually sets option.available=true; it proves numeric rendering ONLY, not actual current-game eligibility. Prioritize current Retail exact item/bonus eligibility, API gate, and a negative fixture before permitting a DE recommendation. Source historical Looter cohort 2068 operations/1559 Arcane Dust hits has no build, skill, exact output units or zeros. Keep shipped numeric candidate labelled provisional; no main edit.\n2026-11-01 22:00 PST Master numeric QA: NEW legacy 2026-11-01T2144 adds WoWDB LIVE 'Cannot be disenchanted' for adjacent scaled TBC gear 25000 Bloodfist Breastplate, 24999 Bloodfist Greaves, 24988 Boulderfist Epaulets and 25159 Thunderstrike Falchion. Spot-check https://www.wowdb.com/items/25000-bloodfist-breastplate confirms item level 32 and no-DE flag. These are exact-item DATABASE eligibility flags, not player-tested and NOT evidence that 24995 itself was attempted. Preserve historical Looter output cohorts separately; seek in-game eligible gate and negative offline fixture for 24995, and verify item versions/bonus/build before recommending DE."
+    },
+    {
+      "taskID": "T0048",
+      "agent": "war-within",
+      "type": "drop",
+      "what": "Complete The War Within disenchant numeric cohorts: Boreal Rifle 232446 -> Storm Dust 219946/219947/219948 and Gleaming Shard 219949/219950; Lamplighter's Splitter 229150 -> 219949/219950/219946/219951; Laundered Cape 237126 and Handwraps 233262 -> 219949/219950/219951/219952. Separately reconcile 505 Darkmoon Deck operations (input item IDs unknown) -> 219952/219954/219955/213613/213611/213610/213612.",
+      "why": "TWW DE numeric cohorts have measured hit counts for Boreal Rifle 232446 and Laundered gear, plus separate 2,400-operation Sept 2024 rank-3 Storm Dust 219948 average 0.68 units/cast (no hits). New https://www.reddit.com/r/wow/comments/1fmu18u reports 1,345 crafted cloth cuffs and 1,747 direct Gleaming Shards (rank pooled), with no exact cuff item ID or shard hit histogram. Its downstream 5,994 dust from shattering is NOT a direct disenchant output. Recover IDs, skill, output rank, per-hit quantity and build. New 2026-11-01 TWW Looter source-HTML cohorts supply actual conditional stack distributions and zero-inclusive histograms for 229150, 232446, 233262, 237126 plus new 229147, 229149, 229155, 233266, 238249; prior hit-only rows for the same item/source must be replaced or deduplicated, never counted as independent casts.\n2026-11-01 15:55 Master QA: New Wowhead Looter hit-only cohorts for 233264 (120 casts), 233265 (108), 229143 (65), 229162 (31) -> Gleaming Shards 219949/219950/219951, crystals 219954/219952; 229162 -> Storm Dust 219946 has 4 hits, 8 units and complete {0:27,2:4} histogram. Source build/skill and other per-hit quantities remain missing.",
+      "status": "open",
+      "inputName": "Boreal Rifle; Lamplighter's Splitter; Laundered Cape; Laundered Handwraps; The War Within Darkmoon Decks",
+      "inputItemID": 232446,
+      "searchTip": "PRIORITY: compare exact same Looter cohorts across earlier records before estimator import. Confirm raw HTML `pctstack` and `count/outof` for 229150→219946 (37 casts, 3 hits, 1/3 stack distribution), 232446→219946/219947/219948 (48 casts; 27/9/10 hits; explicit 1/2/3 conditional stack distributions), and 238249→219946 (112 casts, 64 hits). Preserve original study identity, build/ilvl, output rank, uncertainty, and no duplicate denominator. The 2026-11-01T1216 war-within file is histogram-enriched replacement for earlier hit-only 229150/232446/233262/237126 records. Verify 229147/229149/229155/233266 as independent item cohorts; source https://www.wowhead.com/item=232446 and https://www.wowhead.com/item=229150 .\n2026-11-01 15:55 Master numeric follow-up: Seek raw stack distributions/totalQuantity and version/build for https://www.wowhead.com/item=233264 , https://www.wowhead.com/item=233265 , https://www.wowhead.com/item=229143 and https://www.wowhead.com/item=229162 . Check overlap with earlier Looter snapshots by item ID and source; do not double count a growing cumulative table.\n2026-11-01 17:xx Master numeric QA: Source spot-check PASS: original https://www.wowhead.com/item=233264 has 120 disenchant operations, 219949=52 hits, 219950=38, 219951=26, 219954=2, 219952=1; https://www.wowhead.com/item=233265 has 108 operations and 219949=43, 219950=42, 219951=18, 219954=3. Compare 2026-11-01T1621 enriched 17 rows with 2026-11-01T1520 hit-only 18 rows by item/output and source before estimator import; same four source items 233264,233265,229143,229162 are cumulative cohorts, NOT independent operations. Prior 229162->219946 4 hits/8 units must be retained, not lost when selecting enriched shard rows. Source markdown confirms hit denominators, not per-stack histograms; raw HTML pctstack remains necessary to validate stacks and exact 0-count buckets. Preserve rank and game build.\n2026-11-01 19:00 PST Master: TWW worker 2026-11-01T1819 added 10 noDisenchant observations from WoWDB for 245721,245737,245718,245709,237934,232734,237867,245707,245708,245710. First seven conflict with cumulative Wowhead Looter Storm Dust R2 219947 occurrence tables; exact current Retail eligibility, bonus/quest variants and build not resolved. Keep as version/eligibility blocker; never combine Looter hit counts with noDisenchant flags into current EV without verification. This evidence is ALREADY in merged main snapshot 4df9ae8, not a future post-pin import.\n2026-11-01 20:04 PST Master: POST-PIN TWW Reddit https://www.reddit.com/r/woweconomy/comments/1f1l4i2 corroborates three separate 500-item disenchant cohorts, 2.72 Storm Dust per disenchant all ranks pooled, with 50 skill/no tools, 100 skill/2 blue tools, and Blood Elf max/2 blue+1 green. Item IDs, rarity mix, output ranks, hits and histograms unknown; preserve cohorts separately and avoid treating shard rank percentages 10%/21% as P(hit). Also 1916-010 reports 1700 Gleaming Shatter recipe 470726 operations/refunds, NOT direct gear disenchant; method currently recorded as Disenchant with null output units. Keep it out of gear DE baselines and request worker/reviewer correction if imported.\n2026-11-01 23:05 Master QA: NEW TWW output-side Wowhead PTR Looter https://www.wowhead.com/ptr/item=219947/storm-dust lists ten separate input-item cohorts 230373(5/7),230364(9/17),237870(34/80),245735(22/53),237872(31/76),245715(19/43),245736(34/89),237938(40/107),237883(45/121),232756(58/158) for R2 Storm Dust 219947: 751 source-reported item disenchant operations, 297 rank2-material hits. Original PTR output page independently confirms 230373 5/7 and 237870 34/80; 12.1.7 PTR is not live Retail eligibility, and output-side cumulative Looter may overlap prior item-side cohorts. Do not double count original source cohorts or infer other-material zeros, unit totals, rank-1/3 results, current build/bonus, or gold EV. Seek per-item original output-side source date and positive-stack histograms; S30 reviewer source-mode gate.\n2026-11-02 00:32 PST MASTER QA: New TWW Reddit historical shuffles 2024-09-30 https://www.reddit.com/r/woweconomy/comments/1ft4m3e and 2024-09-22 https://www.reddit.com/r/woweconomy/comments/1fmrp4z. Hammer author reports 16425 R3 Storm Dust 219948, 29404 R2 219947, 18451 R1 219946 and later clarifies 134x150=20,100 hammers (not precisely 20k); exact gear ID and verified completed DE operations remain unknown. Other commenter 63,166 PURCHASED crafts with 95,749 shards, then 22,500 follow-up crafts/31,924 shards at 145 skill; batches may overlap, exact gear ID/DE denominator unknown. Separate 1,000 cuffs comment gives approximate per-100 shard totals, not measured hits. Preserve separate source/cohort keys, no gold EV, current Retail rates or denominator imputation; prioritize exact item/skill, epoch, overlap and completed disenchant logs. Original hammer source independently verified.\n2026-11-02 01:06 PST MASTER QA: Ten new TWW PTR output-side Storm Dust R2 219947 item cohorts: 229505(15/34),237877(26/67),235621(35/93),245727(23/62),245706(94/262),238188(27/78),245720(33/95),237880(40/112),245731(16/45),232758(34/93): 941 item-specific reported operations and 343 material occurrence hits, no units/histograms. These are cumulative PTR output-side tables; dedupe against item-side cohorts and do not infer current Retail eligibility. New WoWDB noDisenchant flags for 229505,245727,238188 conflict with corresponding PTR Looter hits; independently checked WoWDB 229505/245727/238188. Keep eligibility unresolved and do not convert PTR evidence to current gold EV. Extends S30."
+    },
+    {
+      "taskID": "T0049",
+      "agent": "midnight",
+      "type": "drop",
+      "what": "Resolve 272246 Miststalker's Wristbands disenchant eligibility versus 140-operation Wowhead Looter table: outputs 243606,243605,243602,243603,243599; verify the raw 48/41/24/24/2 occurrence counts and actual current-game item variant.",
+      "why": "WoWDB marks item 272246 Cannot be disenchanted (12.1.0), yet new midnight-20261101-090701..090705 assert 140 Wowhead Looter disenchants. This contradiction blocks using measured hit probabilities or a disenchant recommendation until source semantics and build are checked.",
+      "status": "open",
+      "inputItemID": 272246,
+      "inputName": "Miststalker's Wristbands",
+      "searchTip": "Check https://www.wowhead.com/item=272246/miststalkers-wristbands#disenchanting against https://www.wowdb.com/items/272246-miststalkers-wristbands ; obtain dated screenshot/HTML of Looter table, source method, counts, build and item bonus/version, plus in-game eligibility. Ask whether Looter aggregates are actual disenchant hits. No fabricated totalQuantity or conditional yield; flag discrepancy for reviewer."
+    },
+    {
+      "taskID": "T0050",
+      "agent": "legacy",
+      "type": "drop",
+      "what": "Runecloth Headband 13866 disenchant numeric reconciliation: 400-cast reported averages for 156930 Rich Illusion Dust, 14344 Large Brilliant Shard and 16203 Greater Eternal Essence, plus independent 43-cast 16203=14 units and 58 dust of unspecified type.",
+      "why": "Primary Wowhead comments verify 400 completed DE operations with 3.5/0.04/0.6 source-reported unconditional averages and an independent 43-operation cohort with 14 Greater Eternal Essences and 58 unnamed dust. Modern Retail material identity and per-output occurrence histograms are not measured.",
+      "status": "open",
+      "inputItemID": 13866,
+      "inputName": "Runecloth Headband",
+      "searchTip": "Source https://www.wowhead.com/item=13866/runecloth-headband comments vikn and urbanmonkey83. Verify modern Rich Illusion Dust 156930 versus old Illusion Dust item ID; request per-output hit counts/zero outcomes, source build, disenchant skill and item-version. Keep 400 and 43 casts as separate cohorts; never infer hit rate from 0.04 average."
+    },
+    {
+      "taskID": "T0052",
+      "agent": "legacy",
+      "type": "drop",
+      "status": "queued",
+      "inputItemID": 25003,
+      "inputName": "Bloodfist Legplates",
+      "what": "Validate historical-vs-current disenchant mapping for Bloodfist Legplates 25003 -> 22445/22446/22447/22449 and Resonating Axe 30364 -> 22446/22445/22449; recover Looter per-hit stack totals/histograms and build-specific eligibility.",
+      "why": "16 newly recorded Looter rows have real completed-operation denominators and output hit counts, but no totalQuantity; the original tables are browser-inaccessible and current wiki item levels differ from historical TBC levels. Avoid importing historical cohorts into current Retail without version mapping.",
+      "searchTip": "Open https://www.wowhead.com/item=25003#disenchanting and https://www.wowhead.com/item=30364#disenchanting in browser with JS, capture source Looter denominators/row hit counts, item build and patch; compare https://warcraft.wiki.gg/wiki/Bloodfist_Legplates and https://wowpedia.fandom.com/wiki/Resonating_Axe ; seek current Retail actual DE eligibility. Do not infer missing hits as zero outcomes."
+    },
+    {
+      "taskID": "T0053",
+      "agent": "legacy",
+      "type": "token",
+      "status": "queued",
+      "inputItemID": 45661,
+      "inputName": "Legacy reward item 45661 (name and token status unverified)",
+      "what": "Identify item 45661 and verify any token-to-reward relationships with class restrictions and exact reward item IDs; identify missing compiled tokenRewards entry if it is a redeemable token.",
+      "why": "Owner-requested seed: candidate ItemDBRuntime.lua contains 45661 in an auxiliary catalog/count map but no verified tokenRewards mapping. Lower priority than stochastic numeric gaps; no reward relationships should be fabricated.",
+      "searchTip": "Resolve exact item name at https://nether.wowhead.com/tooltip/item/45661 or https://www.wowhead.com/item=45661 and look for original era raid vendor/reward tables; capture complete reward IDs/classes and source. Distinguish token from reward and candidate-only research from current compiled runtime."
+    }
+  ]
+}

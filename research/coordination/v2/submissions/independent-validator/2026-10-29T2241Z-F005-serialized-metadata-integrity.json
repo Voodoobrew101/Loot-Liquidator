@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_SERIALIZED_METADATA_SOURCE_PROVENANCE_BOUNDARY",
+  "workflowRevision": 2,
+  "queueRevision": "v2 workflowRevision 2; canonical readiness compiler 0.8.0",
+  "runUTC": "2026-10-29T22:41:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "981551991b32d4fe1cde1566caace085036cf81e",
+  "resultCommit": "70a0add34b98c1ca6cbeba58f1fb4a1839090436",
+  "submissionStatus": "PROPOSED_INDEPENDENT_QA_FAIL_AWAITING_COORDINATOR_ACCEPTANCE",
+  "reviewedInput": {
+    "path": "research/tools/working_estimates.js",
+    "gitBlobSHA": "3500fac51b69328cacb6c3ec5089561fcba2f2bb"
+  },
+  "changedFiles": [
+    "research/tests/v2/test_f005_serialized_metadata_integrity.js",
+    "research/coordination/v2/reviews/2026-10-29T2241Z-F005-serialized-metadata-integrity.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-29T2241Z-F005-serialized-metadata-integrity.json"
+  ],
+  "exactKeysChanged": [],
+  "numericCellsFilled": 0,
+  "newExpectedQuantityCells": 0,
+  "invalidMappingsRemoved": 0,
+  "confidencePromotions": 0,
+  "independentStudyLineagesAdded": 0,
+  "executedChecks": [
+    {
+      "name": "GitHub branch/head and original compiler blob identity",
+      "result": "PASS",
+      "head": "981551991b32d4fe1cde1566caace085036cf81e",
+      "sourceBlob": "3500fac51b69328cacb6c3ec5089561fcba2f2bb"
+    },
+    {
+      "name": "Independent V8 module harness, 3 pinned source/preview controls",
+      "passed": 3,
+      "failed": 0,
+      "hashImplementation": "DETERMINISTIC_NONCRYPTOGRAPHIC_TEST_STUB",
+      "result": "PASS_CONTROLS"
+    },
+    {
+      "name": "Independent V8 module harness, 6 omitted metadata mutations",
+      "passed": 0,
+      "failed": 6,
+      "hashImplementation": "DETERMINISTIC_NONCRYPTOGRAPHIC_TEST_STUB",
+      "result": "FAIL_UNDETECTED_METADATA_DRIFT"
+    },
+    {
+      "name": "GitHub test and review file readback",
+      "result": "PASS",
+      "files": 2
+    }
+  ],
+  "testsNotRun": [
+    "Native Node 14-case detached-process regression (submitted, not wired to CI)",
+    "Native Node full completion pipeline --check after test-only change",
+    "Lua5.1 generated working estimate decode and WoW in-game test",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "blockers": [
+    "SourceIdentity excludes tooltipOnly, sources, verifiedDate and status; detached seal cannot reject changes to those source metadata fields.",
+    "Native Node detached-process suite requires execution; current QA finding uses a V8 module harness with noncryptographic hash stub.",
+    "No independently matched current-Retail holdout; no evidence promotion."
+  ],
+  "repairOwner": "completion-engineer",
+  "nextTask": "F005_RETEST_SERIALIZED_METADATA_SEAL_AFTER_ENGINEER_REPAIR",
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "unsupportedFallbackConfidence": 0,
+  "exactDeltas": {
+    "newIndependentTestFiles": 1,
+    "newRegressionCases": 14,
+    "knownUnsealedMetadataClasses": 6,
+    "workingNumericCells": 0,
+    "newVerifiedEconomicFields": 0,
+    "productionFiles": 0
+  },
+  "sourceCounters": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116
+  },
+  "noChangesTo": [
+    "main",
+    "implementation/five-agent-runtime-profiles",
+    "frozen TSM",
+    "raw evidence",
+    "tooltip-only data",
+    "legacy assignments",
+    "automation schedules"
+  ]
+}

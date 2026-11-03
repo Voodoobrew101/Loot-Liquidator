@@ -1,0 +1,120 @@
+{
+  "run": "2026-10-28-1135-legacy-batch011",
+  "branch": "research/processing-confidence",
+  "queueRevision": 13,
+  "assignedKeys": 40,
+  "assignedUnique": 40,
+  "sourceProfiles": {
+    "validProvisional": 39,
+    "invalidIdentityPendingMaster": 1,
+    "compiledOutputRows": 0,
+    "historicalTSMOutputCandidates": 76,
+    "firstPassStatus": "40 NEVER_EXAMINED in master ledger before submission; acceptance pending"
+  },
+  "originalStudy": {
+    "studyFamiliesNew": 1,
+    "cohortsNew": 4,
+    "outputMeansNew": 8,
+    "independentRepostsAvoided": 1,
+    "knownPrimaryReused": 1
+  },
+  "fieldCandidateScores": {
+    "dropChance": {
+      "lt70": 76,
+      "ge70": 0
+    },
+    "yieldMin": {
+      "lt70": 76,
+      "ge70": 0
+    },
+    "yieldMax": {
+      "lt70": 76,
+      "ge70": 0
+    },
+    "expectedQuantity": {
+      "lt70": 76,
+      "ge70": 0
+    }
+  },
+  "numericalRulesApproved": 0,
+  "productionChanges": 0,
+  "arithmetic": {
+    "tests": [
+      {
+        "name": "40 unique assigned profiles",
+        "passed": true
+      },
+      {
+        "name": "39 TSM profiles and one absent",
+        "passed": true
+      },
+      {
+        "name": "76 candidate output rows",
+        "passed": true
+      },
+      {
+        "name": "all compiled profile material lists empty",
+        "passed": true
+      },
+      {
+        "name": "all TSM rows have finite nonnegative expectation and valid chance/range",
+        "passed": true
+      },
+      {
+        "name": "all TSM rows meet necessary same-operation bounds",
+        "passed": true
+      },
+      {
+        "name": "invalid thrown weapon 36721 has no TSM material mapping",
+        "passed": true
+      },
+      {
+        "name": "herb 3819 exists with two pigment outputs",
+        "passed": true
+      },
+      {
+        "name": "no source memory killerpet revised cohort already indexed",
+        "passed": true
+      },
+      {
+        "name": "TSM outputs found for 36901",
+        "passed": true
+      },
+      {
+        "name": "TSM outputs found for 36904",
+        "passed": true
+      },
+      {
+        "name": "TSM outputs found for 36903",
+        "passed": true
+      },
+      {
+        "name": "TSM outputs found for 36905",
+        "passed": true
+      },
+      {
+        "name": "observations meet required top-level schema fields",
+        "passed": true
+      },
+      {
+        "name": "each observation has two independent output evidence sets",
+        "passed": true
+      }
+    ],
+    "passed": 15,
+    "failed": 0
+  },
+  "schemaChecks": "manual required-fields/type and arithmetic only; external JSON Schema, Node and WoW client not run",
+  "knownBlockers": [
+    "current Retail patch and skill eligibility not measured",
+    "TSM original sample denominators/ancestry unknown",
+    "2009 reported means rounded; exact totals and P(hit) unknown",
+    "36721 identity collision must be excluded from future itemdb"
+  ],
+  "nextTargets": [
+    "master validate 36721 thrown weapon vs 3819 herb",
+    "2009 killerpet Goldclover/Tiger Lily current Retail 5-herb cast logs, n>=200 each",
+    "Earthroot source original missing 19 cast outcomes",
+    "Felslate matched 5/20 ore experiments"
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_PMF_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 3,
+  "runDateUTC": "2026-10-29",
+  "baseCommit": "dbcaa11655e3592988c5e681d5def1bf2409fadb",
+  "headBeforeSubmission": "013c72265406756e01f51e32471e2e94c61a88f2",
+  "status": "COORDINATOR_ACCEPTANCE_COMMITTED_PENDING_F003_REPAIR_AND_F005_RETEST",
+  "changedFiles": [
+    "research/coordination/v2/acceptance/2026-10-29T1403Z-F005-pmf-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/2026-10-29T1403Z-F001-F005-pmf-integration.json"
+  ],
+  "acceptanceCommit": "527af55b9320516404923ec38d5bbeaca059b0bc",
+  "scorecardCommit": "013c72265406756e01f51e32471e2e94c61a88f2",
+  "scorecardBlobSHA": "744fcc913e3a8e2d3ac25fdf0e514d8d8fd51db5",
+  "reviewedSourceBlobs": {
+    "workingEstimator": "0bef8795b55043bfd8ba1896b53e4be618ff216c",
+    "model": "bea88982382816f315df66facf9060affa0c40bb",
+    "validatorFixture": "bc387c48e5bf7bee26630a14502a95adcd94d02b",
+    "candidate": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+  },
+  "deltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "evidenceNumericCellsFilled": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "productionFiles": 0,
+    "legacyAssignments": 0,
+    "rawEvidence": 0,
+    "frozenTSM": 0,
+    "tooltipOnly": 0
+  },
+  "canonicalCounts": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "independentRetailUniverseAudit": "NOT_COMPLETE",
+    "evidenceGE90": 0,
+    "priorityBacklog": 217
+  },
+  "testsActuallyReviewed": [
+    {
+      "name": "Independent F005 original context/zero fixture",
+      "runtime": "INDEPENDENT_V8_AS_REPORTED_AND_BLOB_REVIEWED",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "name": "Independent F005 positive PMF support fixture",
+      "runtime": "INDEPENDENT_V8_AS_REPORTED_AND_STATIC_REPRO_CONFIRMED",
+      "passed": 9,
+      "failed": 3
+    },
+    {
+      "name": "Independent tooltip isolation fixture",
+      "runtime": "INDEPENDENT_V8_AS_REPORTED",
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "name": "Frozen source SHA parity",
+      "runtime": "GITHUB_BLOB_READBACK_AS_REPORTED",
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "name": "Coordinator source and manifest consistency",
+      "runtime": "GITHUB_FETCH_AND_JS_RECONCILIATION",
+      "status": "PASS",
+      "invariants": [
+        "1018*4=4072",
+        "3558+514=4072",
+        "204+97+97+116=514",
+        "217 priority records",
+        "three new failures correspond to zero-mass positive support"
+      ]
+    }
+  ],
+  "testsNotRunByCoordinator": [
+    "Native Node pipeline --check",
+    "Native Node F005 fixtures",
+    "Lua5.1 candidate decoding",
+    "Full JSON Schema validation",
+    "WoW Retail client/in-game",
+    "Independent current Retail whole-study holdout"
+  ],
+  "blockers": [
+    {
+      "id": "F005-PMF-ZERO-MASS-SUPPORT",
+      "owner": "baseline-modeller",
+      "status": "BLOCKING"
+    },
+    {
+      "id": "F005-NATIVE-INDEPENDENT-CHECKS",
+      "owner": "independent-validator",
+      "status": "PENDING"
+    },
+    {
+      "id": "F003-INDEPENDENT-HOLDOUT",
+      "owner": "evidence-researcher",
+      "status": "PENDING_EVIDENCE"
+    }
+  ],
+  "nextTask": {
+    "id": "F001_ACCEPT_F003_F005_POST_FIX",
+    "action": "After changed F003 model blob and independent F005 21/21 pass, reconcile actual pipeline, Lua, schema, preview/economic isolation and update acceptance; do not rerun unchanged historical audit."
+  },
+  "economicGate": "ALL_UNSUPPORTED_FALLBACKS_CONFIDENCE_ZERO_PREVIEW_ONLY_NORMALIZEDVERIFIED_FALSE; NO_LIVE_EV_OR_RECOMMENDATION_PROMOTION",
+  "zeroDeltaPivot": "No new numeric evidence; advanced novel independently reproduced semantic defect and disjoint repair/retest/capture tasks.",
+  "preservation": "Only coordinator-owned v2 acceptance/scorecard/submission files changed; no main, runtime branch, production, frozen TSM, tooltip, legacy queue or schedule changes."
+}

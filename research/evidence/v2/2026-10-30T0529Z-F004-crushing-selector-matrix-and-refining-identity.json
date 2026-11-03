@@ -1,0 +1,250 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_CRUSHING_SELECTOR_2X2_EXHAUSTION_AND_PATCH121_REFINING_IDENTITY",
+  "runUTC": "2026-10-30T05:29:00Z",
+  "branch": "implementation/five-agent-completion",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 18,
+  "question": "Can the exact spell 1231132 gem-rank x stone-rank selector and dust output ranks be verified from public current-Retail sources, and can nearby patch-12.1 refining be kept separate from Crushing?",
+  "disposition": "CRUSHING_SELECTOR_2X2_UNVERIFIED_PUBLIC_INDEXED_APPROACH_EXHAUSTED_PIVOT_TO_CONTROLLED_CAST_MATRIX;PATCH121_REFINING_IDENTITIES_CORROBORATED_NOT_NEW_ADMISSIONS",
+  "priorAncestryReviewed": [
+    "research/evidence/v2/2026-10-30T0432Z-F004-crushing-rank-identity-and-reagent-variant.json",
+    "research/evidence/v2/source-reviews/2026-10-30T0432Z-F004-crushing-rank-source-review.json",
+    "research/coordination/v2/scorecards/current.json"
+  ],
+  "deltaFromPrevious": "Second consecutive selector-specific public search still finds no exact rank-by-rank accepted/rejected client capture. Adds one separate firsthand nonquantified one-dust-from-three-gems report, a fully specified eight-context sampling matrix, and explicit patch-12.1 refining spell-to-rank mapping/5+10 PTR-versus-live denominator quarantine. Scorecard already counts two patch-12.1 leads; these are identity cross-checks, not newly discovered admissions.",
+  "spell1231132": {
+    "spellID": 1231132,
+    "nominalGemCount": 3,
+    "nominalStoneCount": 1,
+    "minimumRecipeEligibleSkill": 5,
+    "actualSelectorRankEligibility": null,
+    "outputRankByContext": null,
+    "source": "https://www.wowhead.com/spell=1231132/midnight-crushing"
+  },
+  "selectorMatrix": [
+    {
+      "gemInputItemID": 242553,
+      "gemQualityRank": 1,
+      "stoneReagentItemID": 242788,
+      "stoneQualityRank": 1,
+      "gemCountPerNominalCast": 3,
+      "stoneCountPerNominalCast": 1,
+      "selectorAccepted": null,
+      "outputDustRank1ID": 242620,
+      "outputDustRank2ID": 242621,
+      "outputRankDistribution": null,
+      "completedCasts": null,
+      "refunds": null,
+      "status": "UNVERIFIED_DO_NOT_ADMIT"
+    },
+    {
+      "gemInputItemID": 242553,
+      "gemQualityRank": 1,
+      "stoneReagentItemID": 242789,
+      "stoneQualityRank": 2,
+      "gemCountPerNominalCast": 3,
+      "stoneCountPerNominalCast": 1,
+      "selectorAccepted": null,
+      "outputDustRank1ID": 242620,
+      "outputDustRank2ID": 242621,
+      "outputRankDistribution": null,
+      "completedCasts": null,
+      "refunds": null,
+      "status": "UNVERIFIED_DO_NOT_ADMIT"
+    },
+    {
+      "gemInputItemID": 242723,
+      "gemQualityRank": 2,
+      "stoneReagentItemID": 242788,
+      "stoneQualityRank": 1,
+      "gemCountPerNominalCast": 3,
+      "stoneCountPerNominalCast": 1,
+      "selectorAccepted": null,
+      "outputDustRank1ID": 242620,
+      "outputDustRank2ID": 242621,
+      "outputRankDistribution": null,
+      "completedCasts": null,
+      "refunds": null,
+      "status": "UNVERIFIED_DO_NOT_ADMIT"
+    },
+    {
+      "gemInputItemID": 242723,
+      "gemQualityRank": 2,
+      "stoneReagentItemID": 242789,
+      "stoneQualityRank": 2,
+      "gemCountPerNominalCast": 3,
+      "stoneCountPerNominalCast": 1,
+      "selectorAccepted": null,
+      "outputDustRank1ID": 242620,
+      "outputDustRank2ID": 242621,
+      "outputRankDistribution": null,
+      "completedCasts": null,
+      "refunds": null,
+      "status": "UNVERIFIED_DO_NOT_ADMIT"
+    }
+  ],
+  "controlledSampling": {
+    "designID": "F004-MIDNIGHT-CRUSHING-2X2-TWO-SKILL-CONTEXT-V1",
+    "stage1": "On a current Retail character, select each of four exact gem-rank x stone-rank pairs; capture selector acceptance/rejection and any displayed skill/quality before consuming materials. Preserve rejection error text.",
+    "stage2": "For each accepted pair, capture 30 completed casts at minimum recipe-eligible skill if possible and 30 at a high-skill profile; 30 is exploratory and insufficient for high-confidence economic rates. Do not synthesize missing profiles.",
+    "plannedMaximumCells": 8,
+    "exploratoryCastsPerCell": 30,
+    "maximumExploratoryCompletedCasts": 240,
+    "nominalGemInputsAtMax": 720,
+    "nominalStoneInputsAtMax": 240,
+    "captureFields": [
+      "actualGameBuildAndLocale",
+      "timestampUTCPerCast",
+      "characterProfessionSkillAndRacialBonus",
+      "specializationNodesAndRanks",
+      "toolAndAccessoriesStats",
+      "gemInputIDAndQuality",
+      "stoneReagentIDAndQuality",
+      "displayedRecipeSkillAndTargetQuality",
+      "concentrationSpent",
+      "completedCastBoolean",
+      "gemCountConsumed",
+      "stoneCountConsumed",
+      "gemCountRefunded",
+      "stoneCountRefunded",
+      "dustRank1CountID242620",
+      "dustRank2CountID242621",
+      "otherOutputIDsAndCounts",
+      "zeroOutputBoolean",
+      "clientErrorOrSelectorRejection"
+    ],
+    "analysisRules": [
+      "P(success output rank)=positive-output completed casts / all completed casts in exact context",
+      "E(rank dust)=total dust quantity including zero casts / actual completed casts",
+      "Keep reagent refunds separate from nominal inputs",
+      "Do not force mutually exclusive marginal outputs unless raw evidence establishes exclusive partition",
+      "Do not use output display range or tooltip-only quantity as economic E",
+      "No cross-context pooling without independently supported mechanics"
+    ],
+    "neededClientEvidence": "Unedited UI selector screenshots plus per-cast inventory-delta/event log and build number"
+  },
+  "patch121RefiningIdentityCrossCheck": [
+    {
+      "spellID": 1307462,
+      "operation": "REFINE_CRYSTALLINE_GLASS",
+      "inputItemID": 242787,
+      "inputRank": 1,
+      "nominalInputQuantity": 10,
+      "outputItemID": 242786,
+      "outputRank": 2,
+      "nominalOutputQuantity": 1,
+      "minimumSkill": 50,
+      "liveSpellSource": "https://www.wowdb.com/spells/1307462-refine-crystalline-glass-a-professions-chaticon",
+      "ptrAnomaly": "PTR source lists both x5 and x10 reagent entries; live and guide show x10, no x15 admission",
+      "status": "PREEXISTING_PATCH121_LEAD_IDENTITY_CORROBORATED_NOT_ADMITTED"
+    },
+    {
+      "spellID": 1307466,
+      "operation": "REFINE_DUSK_SHROUDED_STONE",
+      "inputItemID": 242788,
+      "inputRank": 1,
+      "nominalInputQuantity": 18,
+      "outputItemID": 242789,
+      "outputRank": 2,
+      "nominalOutputQuantity": 1,
+      "minimumSkill": 50,
+      "liveSpellSource": "https://www.wowhead.com/spell=1307466/refine-dusk-shrouded-stone",
+      "status": "PREEXISTING_PATCH121_LEAD_IDENTITY_CORROBORATED_NOT_ADMITTED"
+    }
+  ],
+  "sourceLineages": [
+    {
+      "url": "https://www.wowhead.com/spell=1231132/midnight-crushing",
+      "family": "WOWHEAD-LIVE-SPELL-1231132",
+      "kind": "INDEXED_SPELL",
+      "fact": "Three gem salvage items and one Dusk-Shrouded Stone reagent; no exact rank selector matrix; skill 5"
+    },
+    {
+      "url": "https://www.reddit.com/r/wow/comments/1sp0dax/jewelcrafting/",
+      "family": "REDDIT-1sp0dax-2026-04-18",
+      "kind": "FIRSTPERSON_UNCONTROLLED_CRUSHING_OBSERVATION",
+      "fact": "Commenter reports one Gemdust output from three gems, including diamond crushing, but no rank, actual casts, or refund log"
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
+      "family": "REDDIT-1rrn6of-2026-03-12",
+      "kind": "PRIOR_SOURCE_REVIEWED_NOT_NEW_INDEPENDENT_COHORT",
+      "fact": "After selecting gem, UI shows Resourcefulness; possible reagent refunds not itemized"
+    },
+    {
+      "url": "https://www.wowhead.com/spell=1307466/refine-dusk-shrouded-stone",
+      "family": "WOWHEAD-LIVE-SPELL-1307466",
+      "kind": "PATCH121_INDEXED_RECIPE",
+      "fact": "18 rank-one Dusk-Shrouded Stone to one rank-two; distinct from Crushing"
+    },
+    {
+      "url": "https://www.wowdb.com/spells/1307462-refine-crystalline-glass-a-professions-chaticon",
+      "family": "WOWDB-LIVE-SPELL-1307462",
+      "kind": "PATCH121_INDEXED_RECIPE",
+      "fact": "10 rank-one Crystalline Glass to one rank-two"
+    },
+    {
+      "url": "https://ptr.wowdb.com/spells/1307462-refine-crystalline-glass-a-professions-chaticon",
+      "family": "WOWDB-PTR-SPELL-1307462",
+      "kind": "PTR_CONFLICT_NOT_CURRENT_REAGENT",
+      "fact": "PTR-indexed reagent list includes 5 and 10 glass entries despite 10-to-one description; do not sum 15 or treat 5 as live"
+    },
+    {
+      "url": "https://www.icy-veins.com/wow/professions-jewelcrafting/",
+      "family": "ICYVEINS-SECONDARY-GUIDE",
+      "kind": "SECONDARY_PATCH121_CORROBORATION",
+      "fact": "Explicit 10 R1 glass and 18 R1 stone to their R2 forms at skill 50"
+    },
+    {
+      "url": "https://goldcap.gg/fr/retail/tw/items/242787",
+      "family": "GOLDCAP-RANK-CATALOG",
+      "kind": "ITEM_RANK_IDENTITY",
+      "fact": "242787 Crystalline Glass rank 1"
+    },
+    {
+      "url": "https://goldcap.gg/fr/retail/tw/items/242786",
+      "family": "GOLDCAP-RANK-CATALOG",
+      "kind": "ITEM_RANK_IDENTITY",
+      "fact": "242786 Crystalline Glass rank 2"
+    },
+    {
+      "url": "https://goldcap.gg/retail/us/items/242788",
+      "family": "GOLDCAP-RANK-CATALOG",
+      "kind": "ITEM_RANK_IDENTITY",
+      "fact": "242788 Dusk-Shrouded Stone rank 1"
+    }
+  ],
+  "newIndependentCompletedCastCohorts": 0,
+  "newFirstPersonUncontrolledOutputReports": 1,
+  "selectorContextsVerified": 0,
+  "patch121LeadCountAlreadyInScorecard": 2,
+  "economicSafety": {
+    "newAdmittedMappings": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "newWorkingNumericCells": 0,
+    "confidencePromotions": 0,
+    "invalidMappingsRemoved": 0,
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false
+  },
+  "readinessObserved": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116
+  },
+  "blockers": [
+    "No public current-Retail accepted/rejected selector 2x2 evidence",
+    "No per-cast zero-inclusive output-rank logs for exact stone/gem rank pairs",
+    "No actual refunds by gem and stone",
+    "PTR 1307462 x5/x10 reagent discrepancy requires live client confirmation before alternative variant admission"
+  ],
+  "nextTask": "Obtain controlled client 2x2 selector acceptance and rank-specific cast/refund capture; if unavailable, pivot to independent patch121 rank-refining recipe client confirmation without repeating public selector searches"
+}

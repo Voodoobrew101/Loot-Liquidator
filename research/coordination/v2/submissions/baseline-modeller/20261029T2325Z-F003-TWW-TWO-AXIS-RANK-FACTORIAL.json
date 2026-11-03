@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_TWW_TWO_AXIS_RANK_FACTORIAL",
+  "runUTC": "2026-10-29T23:25:00Z",
+  "workflowRevision": 2,
+  "queueRevision": 12,
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "7ef7a6c70c5228dc5cc1fee161f4cc14b2373495",
+  "resultCommit": "1b4f907845503231504ec7a19f512e457db443e1",
+  "status": "PROPOSED_PENDING_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "acceptance": "NOT_YET_ACCEPTED",
+  "taskSelection": {
+    "canonicalPriority": 104,
+    "method": "Mill",
+    "pivotReason": "After Gem Finding sampling-design cycles with no new current-Retail observations, pivoted to new F004 two-axis TWW milling evidence rather than repeat unchanged audits.",
+    "newEvidenceBlobSHA": "451f7d327646225975eba4b1f9988f54935d31cb"
+  },
+  "filesChanged": [
+    {
+      "path": "research/tools/models_v2/tww_milling_rank_factorial_v1.js",
+      "action": "ADD",
+      "blobSHA": "953dfb6fa4b85e9816b3ee558f5bbd69f22b0416"
+    },
+    {
+      "path": "research/models/v2/tww_milling_rank_factorial_v1.json",
+      "action": "ADD",
+      "blobSHA": "e037462c6a53f8eb9d32346065771d1111ec3c25"
+    },
+    {
+      "path": "research/coordination/v2/submissions/baseline-modeller/20261029T2325Z-F003-TWW-TWO-AXIS-RANK-FACTORIAL.json",
+      "action": "ADD",
+      "blobSHA": "SELF_IN_SUBMISSION_COMMIT"
+    }
+  ],
+  "exactAffectedKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028"
+  ],
+  "exactDeltas": {
+    "newResearchModelFamilies": 1,
+    "newExecutableModels": 1,
+    "newModelManifests": 1,
+    "newEconomicExpectedQuantityCells": 0,
+    "newNumericWorkingCells": 0,
+    "invalidMappingsRemoved": 0,
+    "mappingsAdmitted": 0,
+    "confidencePromotions": 0,
+    "independentCurrentRetailStudyLineages": 0,
+    "changedEvidenceCells": 0,
+    "changedWorkingCandidateCells": 0,
+    "changedProductionFiles": 0
+  },
+  "findings": {
+    "withinBetaRankContrast": "At fixed input rank 1, reported output R2 minus R1 mean = -2 pigments per nominal ten herbs (13 vs 11), 2024 beta; cast denominator unknown.",
+    "withinNovemberRankContrast": "At fixed output rank 2, reported input R2 minus R1 mean ≈ +2 pigments per nominal ten herbs (13 vs 11), November 2024 anecdote; cast denominator unknown.",
+    "jointInteraction": "NOT_IDENTIFIABLE_ACROSS_EPOCHS_AND_UNVERIFIED_CONTEXT",
+    "modelAdvancement": "Executable two-input-rank by two-output-rank model using both output ranks per completed cast; preserves co-output covariance in descriptive interaction SE, zeros, refunds, aborts, and explicit context.",
+    "syntheticInteractionSE": 1.8596594670351163,
+    "modelPromotion": "NONE"
+  },
+  "coverageAtRead": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "economicExpectedQuantityEvidenceGaps": 116,
+    "evidenceGE90Cells": 0
+  },
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEV": false,
+    "liveRecommendations": false,
+    "tooltipOnlyPromotion": false,
+    "sourceLineagesUnmerged": true,
+    "frozenTSMUnchanged": true,
+    "legacyAssignmentsUnchanged": true
+  },
+  "testsActuallyRun": [
+    {
+      "command": "node --check /mnt/data/ll_baseline/tww_milling_rank_factorial_v1.js",
+      "status": "PASS"
+    },
+    {
+      "command": "node /mnt/data/ll_baseline/tww_milling_rank_factorial_v1.js",
+      "status": "PASS",
+      "assertions": 39,
+      "failures": 0
+    },
+    {
+      "command": "python statistics.variance synthetic output-rank paired differences",
+      "status": "PASS",
+      "expectedInteractionSE": 1.8596594670351163
+    },
+    {
+      "command": "GitHub fetch_file readback both added files",
+      "status": "PASS",
+      "blobSHAsMatched": true
+    }
+  ],
+  "testsNotRun": [
+    "native Node execution of freshly fetched GitHub blob (local SHA-matched code was executed)",
+    "lua5.1 generated itemdb decode (no candidate change)",
+    "run_completion_pipeline.js --check (no accepted build inputs changed; remote-only connector session)",
+    "in-game WoW cast observations",
+    "independent validator acceptance"
+  ],
+  "blockers": [
+    "No current Retail zero-inclusive matched input-rank cast cohorts with both pigment output ranks",
+    "No verified exact herb species/quality-to-item-ID and pigment rank selector for these historical reports",
+    "No completed-cast denominators or Resourcefulness refund ledgers in beta/2024 anecdotes",
+    "No verified minimum recipe-eligible skill and matched profession stats",
+    "Independent validator has not reviewed this new model"
+  ],
+  "validatorHandoff": "Check fixed-context validation, synthetic 2x2 rank contrasts, within-cast covariance standard error, zero-positive-range convention, co-output probability non-exclusivity, refund/abort isolation, exact ID gating, and PREVIEW_ONLY enforcement.",
+  "evidenceResearcherHandoff": "Request one current-patch paired same-species R1/R2 herb cohort with exact IDs, same skill/spec/gear/unlocks, both pigment rank quantities for each completed cast including zeros, refunds and aborts; hold out an independent study family.",
+  "nextTask": "After independent QA, incorporate an exact-ID matched current-Retail milling cohort if available; otherwise pivot to the unresolved Dragonflight milling E-prior family (priority 102) instead of repeating historical TWW contrasts."
+}

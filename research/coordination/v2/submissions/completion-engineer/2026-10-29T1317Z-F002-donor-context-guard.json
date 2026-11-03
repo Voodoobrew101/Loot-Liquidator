@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_DONOR_CONTEXT_GUARD",
+  "queueRevision": 2,
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "dateUTC": "2026-10-29T13:17:00Z",
+  "baseCommit": "30c0019ff938b072d09428ac9f1b997251e6e758",
+  "implementationCommit": "1ccb9695250b2d15460f8d0f3f71c6c3cac51409",
+  "changedFiles": [
+    {
+      "path": "research/tools/working_estimates.js",
+      "oldBlobSHA": "928ef018e728ca0535947b83ecd63c0189def03c",
+      "newBlobSHA": "0bef8795b55043bfd8ba1896b53e4be618ff216c",
+      "change": "Replace under-specified donorKey with strict full-context key; reject unknown recipe/rank/skill/patch/operation or missing direct-reagent vector; compare full conditions and reagent metadata, normalize only primary input item ID for cross-input family priors. Donor registration and lookup skip null keys; retained transfers remain confidence-zero preview only."
+    }
+  ],
+  "exactAffectedMappingKeys": [],
+  "numericCellsFilled": 0,
+  "newEconomicExpectedQuantityCells": 0,
+  "invalidMappingsRemoved": 0,
+  "newMappings": 0,
+  "confidencePromotions": 0,
+  "independentStudyLineagesAdded": 0,
+  "sourceEvidenceFilesChanged": 0,
+  "frozenTSMFilesChanged": 0,
+  "tooltipOnlyFilesChanged": 0,
+  "productionFilesChanged": 0,
+  "generatedCandidate": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEconomicExpectedQuantity": 116,
+    "candidateBlobSHA": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "buildReportBlobSHA": "0f3ef7bc4bb16db2c6d4fa49755302e25386e811",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "candidateByteDelta": 0,
+    "sourceHashDelta": 0,
+    "explanation": "CI --check passed against the previously generated candidate, confirming no admitted preview row changed in this source snapshot. Synthetic mismatched contexts are now blocked."
+  },
+  "safety": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "workingPreviewNotEconomicEvidence": true,
+    "unknownContextPolicy": "No transfer if recipe, rank, patch, effective skill, operation variant, eligibility, baseline status, or direct primary reagent vector is absent; otherwise all source condition fields must match exactly."
+  },
+  "tests": [
+    {
+      "name": "V8 synthetic donor-key preflight",
+      "result": "PASS",
+      "cases": [
+        "same-context primary-input substitution",
+        "different recipe ID blocked",
+        "different effective skill blocked",
+        "different secondary reagent blocked",
+        "different output rank blocked",
+        "unknown recipe blocked"
+      ]
+    },
+    {
+      "name": "GitHub Actions research-candidate CI 40880185090",
+      "result": "PASS",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40880185090",
+      "checks": [
+        "node research/tools/run_completion_pipeline.js --check",
+        "Node compiler and working estimate tests within pipeline",
+        "full JSON Schema validation within pipeline",
+        "Lua 5.1 syntax and decoded working/evidence isolation",
+        "Lua blocker roundtrip"
+      ]
+    },
+    {
+      "name": "GitHub Actions research-candidate CI 40880198006",
+      "result": "PASS",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40880198006"
+    },
+    {
+      "name": "Full independent F005 nine-case fixture after patch",
+      "result": "NOT_RUN_PENDING_VALIDATOR"
+    },
+    {
+      "name": "WoW Retail client execution",
+      "result": "NOT_RUN"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "F005-ZERO-FORWARD",
+      "owner": "baseline-modeller",
+      "detail": "Separate forward P=0 positive-boundary defect remains for modeller; do not claim nine-case independent PASS."
+    },
+    {
+      "id": "F005-INDEPENDENT-RETEST",
+      "owner": "independent-validator",
+      "detail": "Independent F005 fixture needs rerun against changed working_estimates.js blob 0bef8795b55043bfd8ba1896b53e4be618ff216c and updated F003 model."
+    },
+    {
+      "id": "EVIDENCE-GAPS",
+      "owner": "evidence-researcher",
+      "detail": "116 E and 514 total evidence fields still unresolved; preview coverage is not economic validation."
+    }
+  ],
+  "nextTask": "Independent F005 context-transfer retest; then incorporate only accepted compatible model changes and rebuild research candidate when inputs change. If donor defects are accepted fixed, pivot to a new ready compiler/contract issue rather than repeat unchanged audits."
+}

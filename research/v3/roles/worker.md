@@ -1,0 +1,62 @@
+# Role: worker (automations `loot-liquidator-midnight`, `-war-within`, `-dragonflight`, `-legacy`)
+
+You find evidence for your expansion and write it down in the agreed format.
+
+| Agent | Covers |
+| --- | --- |
+| `midnight` | Midnight (current expansion) |
+| `war-within` | The War Within |
+| `dragonflight` | Dragonflight |
+| `legacy` | Everything older (Classic through Shadowlands) |
+
+## Each run, in order
+
+1. **Read** `research/v3/README.md`, `research/v3/evidence-format.md`, this file, and
+   `research/v3/queue.json`.
+2. **Pick your open tasks** (`agent` = your name), starting at the top. Use each task's
+   `inputName` and `searchTip`. Skip tasks marked `skip`.
+   Work through several tasks per run, not just one. When your open tasks are done or exhausted,
+   continue with **Your standing tasks** below in the same run. Stop only after at least 10 real
+   records (see README rule 5).
+3. **Search.** Good places to look:
+   - Wowhead item pages: the "Prospected from", "Milled from", "Disenchanted from" and "Contains" tabs,
+     and comments that post results with counts
+   - Reddit r/woweconomy result posts
+   - Profession guides (wow-professions.com, Method, Icy Veins, Wowhead guides)
+   - warcraft.wiki.gg item and profession pages
+   - Official Blizzard patch notes and hotfix pages (for `rateChange`)
+4. **Record** every useful source as records in a new file in `research/v3/evidence/<your-name>/`,
+   following `evidence-format.md` exactly. Record what the source says, in its own numbers.
+5. If a real search (at least 6 searches by name, across 3 or more sites) finds nothing, add a
+   `searched` record and move on to the next task.
+6. **Commit** your one new file.
+
+The old-evidence rescue (standing task 1) always produces records, so do it whenever searching
+comes up empty. Many old files hold real counts: for example `research/evidence/observations/
+2026-10-28-0418-warwithin-batch004-resourcefulness-source-only.json` has a 1,040-prospect Aqirite
+study with gem totals.
+
+## Your standing tasks (when the queue has nothing for you)
+
+1. **Finish the old-evidence rescue.** Most old records are already converted automatically into
+   `research/v3/evidence/imported/` (by `research/v3/tools/import_existing.py`). Don't re-record
+   those. What is left for agents:
+   - the old `.json` and `.md` files in `research/evidence/observations/` and the file in
+     `research/evidence/leads/`, which have irregular layouts the script can't read (for example the
+     1,040-prospect Aqirite study). Re-record the ones for your expansion in the new format, linking
+     the original source;
+   - imported study records with a gap (`casts` or `totalQuantity` is `null`): **revisit the source
+     link** and add a corrected record with `replaces` set to the imported record's ID.
+   Skip anything with no source link.
+2. **Conditional drops for your expansion:** which materials need a specialization unlock or a
+   skill level (for example diamonds, Prismatic Ore), recorded as `condition` records with a source.
+   Confirm or correct the seeded Eversong Diamond lines in `research/v3/conditions.jsonl` (Midnight).
+3. Gear tokens, exchanges, no-disenchant items and batch sizes for your expansion.
+4. More processing studies for your expansion's ores, herbs and gear.
+
+## Don't
+
+- Don't calculate drop chances, averages, confidence or gold values.
+- Don't edit files outside your own evidence folder (except adding lines to `flags.jsonl`).
+- Don't review or redo other agents' records.
+- Don't stop at "not enough evidence". Record what exists.

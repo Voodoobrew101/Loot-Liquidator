@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F002_F003_F004_F005_NATIVE_RANK_NESTED_CONTEXT_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 19,
+  "runUTC": "2026-10-30T05:59:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseHead": "aa359c765951ac603e08ce42925affc2fd3c48eb",
+  "resultCommitBeforeSubmission": "86faff31b39f3b22143743c350315c649d0d3bba",
+  "acceptancePath": "research/coordination/v2/acceptance/20261030T0559Z-F001-F005-native-rank-nested-context-integration.json",
+  "acceptanceCommit": "eb157d505cf4a1473ee52512c44e05037e264f61",
+  "scorecardPath": "research/coordination/v2/scorecards/current.json",
+  "scorecardCommit": "86faff31b39f3b22143743c350315c649d0d3bba",
+  "changedFiles": [
+    "research/coordination/v2/acceptance/20261030T0559Z-F001-F005-native-rank-nested-context-integration.json",
+    "research/coordination/v2/scorecards/current.json",
+    "research/coordination/v2/submissions/coordinator/20261030T0559Z-F001-F005-native-rank-nested-context-integration.json"
+  ],
+  "sourceBlobs": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "scorecardBefore": "ae22c87aac8de5075b5f6ed38daf831d650253af",
+    "rankDiagnostic": "08acca2f4175670183438d77545caa659034d6ec",
+    "pipeline": "266524a83c5d5cd6e3a1d42345358d0749aaacbe",
+    "anytimeModel": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9",
+    "anytimeManifest": "05b5dc514cc409ffd66018379d0daa118c6fa8d7",
+    "validatorReview": "6283a417e94876d874ed60fde15547642df5bd88",
+    "newNestedFixture": "2e64ba46af242740c7a44ecf6bb204ae1345c112",
+    "evidenceMatrix": "0e6148e2347eefc930c64a3f34331c84480c811b"
+  },
+  "decisions": [
+    {
+      "role": "completion-engineer",
+      "task": "F002_PRIORITY122_RANK_ANCESTRY_REPAIR",
+      "decision": "ACCEPT_RESEARCH_DIAGNOSTIC_AND_NATIVE_GATES",
+      "next": "F002_WIRE_F003_ANYTIME_12_AND_NESTED_13_NATIVE_FAIL_CLOSED_AFTER_MODEL_REPAIR"
+    },
+    {
+      "role": "baseline-modeller",
+      "task": "F003_ANYTIME_EPOCH_CAP_CONTEXT_REPAIR",
+      "decision": "CONDITIONAL_ACCEPT_PREVIOUS_12_REPAIRS_REJECT_NESTED_CONTEXT_INTEGRITY",
+      "next": "F003_DETACHED_RECURSIVE_JSON_SAFE_CONTEXT_SNAPSHOT_AND_CANONICAL_KEY"
+    },
+    {
+      "role": "evidence-researcher",
+      "task": "F004_CRUSHING_SELECTOR_2X2_EXHAUSTION_AND_PATCH121_REFINING_IDENTITY",
+      "decision": "ACCEPT_CONTEXT_AND_CONTROLLED_MEASUREMENT_PROTOCOL_ONLY",
+      "next": "F004_CLIENT_SELECTOR_MATRIX_AND_CAST_REFUND_CAPTURE_OR_PIVOT_TO_PATCH121_LIVE_CONFIRMATION"
+    },
+    {
+      "role": "independent-validator",
+      "task": "F005_ANYTIME_CONTEXT_SNAPSHOT_POSTREPAIR_QA",
+      "decision": "ACCEPT_ADVERSARIAL_FINDING_REJECT_FULL_F003_INTEGRITY_ACCEPTANCE",
+      "next": "F005_NATIVE_RETEST_F003_12_PLUS_NESTED_13_AFTER_OWNER_REPAIR"
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "evidenceNumericCellsFilled": 0,
+    "evidenceExpectedQuantityCellsFilled": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentCurrentRetailCompletedCastLineages": 0,
+    "economicPromotions": 0,
+    "productionWrites": 0,
+    "rawEvidenceWrites": 0,
+    "frozenTSMWrites": 0,
+    "tooltipOnlyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "scheduleChanges": 0,
+    "coordinatorOwnedFilesPlanned": 3,
+    "newConfirmedAdversarialFailures": 8,
+    "newDefectClasses": 2
+  },
+  "testsActuallyRun": [
+    {
+      "name": "Coordinator static and JSON serialization assertions",
+      "passed": 10,
+      "failed": 0,
+      "environment": "V8 connector source inspection and JavaScript JSON semantics"
+    },
+    {
+      "name": "GitHub source blob readbacks",
+      "passed": 10,
+      "failed": 0,
+      "environment": "GitHub connector"
+    }
+  ],
+  "testsReviewedNotRerun": [
+    {
+      "name": "F002 rank and Crushing native CI",
+      "passed": 17,
+      "failed": 0,
+      "source": "GitHub Actions 41007215344 and F002 addendum"
+    },
+    {
+      "name": "F003 prior anytime independent V8",
+      "passed": 12,
+      "failed": 0,
+      "source": "F005 review"
+    },
+    {
+      "name": "F005 new nested context V8",
+      "passed": 5,
+      "failed": 8,
+      "source": "F005 review"
+    }
+  ],
+  "testsNotRun": [
+    "New 13-case native Node",
+    "Previous 12-case native Node",
+    "Coordinator local pipeline --check and Lua 5.1",
+    "WoW Retail client",
+    "Independent current-Retail completed-cast holdout"
+  ],
+  "blockers": [
+    "F003 nested specialization/gear/unlocks caller aliasing invalidates returned context/key consistency",
+    "F003 nested NaN/Infinity/undefined/function fields not rejected before JSON serialization",
+    "F005 13-case and previous F003 12-case suites not native CI gates",
+    "No independent current Retail completed-cast holdout, cap proof, selector rank acceptance or exhaustive universe audit"
+  ],
+  "nextTask": "F003_DETACHED_RECURSIVE_JSON_SAFE_CONTEXT_SNAPSHOT_AND_CANONICAL_KEY",
+  "zeroDeltaPivot": "Accepted repaired F002 native rank gates; moved F003 to new nested serialization integrity rather than repeating prior 12-case audit; F004 public selector search exhausted and pivoted to controlled in-game matrix.",
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "tooltipOnlySourceNotEconomic": true,
+    "workingCoverage": "4072/4072",
+    "evidenceCoverage": "3558/4072",
+    "admittedMappings": 1018,
+    "evidenceGaps": 514,
+    "missingE": 116,
+    "evidenceGE90": 0
+  },
+  "acceptedVersusProposed": "F002_ACCEPTED_F003_CONDITIONAL_F004_CONTEXT_ONLY_F005_FINDING_ACCEPTED_NO_ECONOMIC_PROMOTION"
+}

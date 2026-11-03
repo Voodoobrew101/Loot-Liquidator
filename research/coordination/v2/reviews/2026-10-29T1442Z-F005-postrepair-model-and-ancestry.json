@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_POSTREPAIR_PMF_AND_ANCESTRY_ACCEPTANCE",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 3,
+  "reviewDateUTC": "2026-10-29T14:42:00Z",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_NOT_SELF_APPROVED",
+  "decision": "CONDITIONAL_PASS_REPAIRED_RESEARCH_SEMANTICS_ECONOMIC_PROMOTION_BLOCKED",
+  "baseCommit": "5ae80a8a7bae35ba0715e796b6ae7a3b03bdb403",
+  "independentTestCommit": "47d77a65498bc023cf792284fa7aa22b775bbe6e",
+  "resultCommit": "SAME_ATOMIC_COMMIT_AS_THIS_REVIEW",
+  "reviewedArtifacts": {
+    "model": {
+      "path": "research/tools/models_v2/tww_milling_context_sensitivity_v1.js",
+      "gitBlobSHA": "ca6edf58aced411ac049198254fb67a72279532d",
+      "version": "tww-milling-context-sensitivity-v1.0.1"
+    },
+    "workingEstimator": {
+      "path": "research/tools/working_estimates.js",
+      "gitBlobSHA": "b90137d4f67cea6975504b9c8cc4d978afaefb81"
+    },
+    "originalIndependentTest": {
+      "path": "research/tests/v2/test_f005_context_and_zero_semantics.js",
+      "gitBlobSHA": "fe49f116c3b89e4633b47717c7b1586624db2745"
+    },
+    "positiveSupportIndependentTest": {
+      "path": "research/tests/v2/test_f005_pmf_positive_support.js",
+      "gitBlobSHA": "bc387c48e5bf7bee26630a14502a95adcd94d02b"
+    },
+    "newMetamorphicIndependentTest": {
+      "path": "research/tests/v2/test_f005_postrepair_metamorphic.js",
+      "gitBlobSHA": "ff1cc5b56c5e41da223bca0535d6b8dbfbc53cda"
+    },
+    "engineerAncestrySelfTest": {
+      "path": "research/tools/working_estimates_ancestry_selftest.js",
+      "gitBlobSHA": "cfc03f07f9208b058421ab233b418fecf2a1afab"
+    },
+    "generatedCandidate": {
+      "path": "research/proposed/itemdb.lua",
+      "gitBlobSHA": "6488e39b54ae7961750231cb94391eb34af606e3"
+    },
+    "readiness": {
+      "path": "research/coordination/completion-readiness.json",
+      "gitBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+    }
+  },
+  "checks": {
+    "independentOriginalFixture": {
+      "execution": "V8_EXECUTED_CURRENT_GITHUB_BLOBS_COMMONJS_ASSERT_SHIM",
+      "passed": 9,
+      "failed": 0
+    },
+    "independentPositiveSupportFixture": {
+      "execution": "V8_EXECUTED_CURRENT_GITHUB_BLOBS_COMMONJS_ASSERT_SHIM",
+      "passed": 12,
+      "failed": 0,
+      "previousFailureCount": 3
+    },
+    "engineerAncestryFixture": {
+      "execution": "V8_EXECUTED_CURRENT_GITHUB_BLOBS_COMMONJS_ASSERT_SHIM",
+      "passed": 8,
+      "failed": 0
+    },
+    "modelSelfTest": {
+      "execution": "V8_EXECUTED_CURRENT_GITHUB_BLOB",
+      "passed": 16,
+      "failed": 0
+    },
+    "independentNewMetamorphicFixture": {
+      "execution": "V8_EXECUTED_GITHUB_READBACK",
+      "passed": 609,
+      "failed": 0,
+      "pmfPerturbations": 150,
+      "assertionsPerPerturbation": 4,
+      "extraBoundaryAssertions": 9
+    },
+    "totalAssertionsAndScenarios": 654,
+    "pinnedSourceBlobParity": {
+      "status": "PASS_GITHUB_TREE_BLOB_SHA",
+      "shaByPath": {
+        "research/ledger/processing-output-fields.csv": "3e2bb784dc832d90584eebd8620148caf2133fbd",
+        "research/ledger/supplemental-output-fields.csv": "397e589598102d42c774899399f9d607f44828a1",
+        "research/proposed/itemdb-midnight-milling-candidate.json": "35ac6119dc6d47bf6f5279852b317d9d7da5d78e",
+        "GameData.lua": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
+        "StatYieldProfiles.lua": "1d80df8304acaa75a5b507089ef163696381b2ff"
+      }
+    },
+    "nativeCIOnPreTestHead": {
+      "head": "5ae80a8a7bae35ba0715e796b6ae7a3b03bdb403",
+      "runID": 40893393993,
+      "status": "PASS",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40893393993",
+      "steps": [
+        "Node deterministic completion pipeline --check",
+        "Lua5.1 syntax and decoded evidence/working isolation",
+        "Lua blocker roundtrip",
+        "JSON Schema via pipeline"
+      ]
+    },
+    "nativeCIOnNewTestCommit": {
+      "head": "47d77a65498bc023cf792284fa7aa22b775bbe6e",
+      "runID": 40893975750,
+      "status": "IN_PROGRESS_AT_REVIEW",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40893975750"
+    },
+    "nativeNodeIndependentFixtures": "NOT_RUN_LOCALLY_NO_GITHUB_CHECKOUT",
+    "nativeLuaIndependentDecode": "NOT_RUN_LOCALLY_CI_PREVIOUS_HEAD_PASS",
+    "fullSchemaIndependent": "NOT_RUN_LOCALLY_CI_PREVIOUS_HEAD_PASS",
+    "wowClient": "NOT_RUN",
+    "independentMatchedCurrentRetailHoldout": "NONE_AVAILABLE"
+  },
+  "findings": [
+    {
+      "id": "F005-PMF-ZERO-MASS-SUPPORT",
+      "previous": "FAIL_3_OF_12",
+      "current": "PASS_12_OF_12_PLUS_609_METAMORPHIC_ASSERTIONS",
+      "status": "REPAIRED_IN_RESEARCH_MODEL",
+      "detail": "Only positive-probability PMF rows affect conditional positive yield bounds; zero-hit forward yields null conditional support and E=0; source is preview-only."
+    },
+    {
+      "id": "F005-DONOR-ANCESTRY",
+      "status": "PASS_CONTEXT_MUTATION_GUARDS",
+      "detail": "Mutating patch, denominator blocker or donor identity after estimate causes validator to reject stale ancestry."
+    },
+    {
+      "id": "F003-INDEPENDENT-HOLDOUT",
+      "status": "NOT_INDEPENDENTLY_VALIDATED",
+      "detail": "Historical TWW milling aggregate has unknown completed-cast denominator/skill/stat context and no independent 2026 Retail whole-study holdout; no promotion."
+    }
+  ],
+  "deltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingCellsFilled": 0,
+    "newEconomicExpectedQuantity": 0,
+    "evidenceCellsFilled": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "modelDefectsIndependentlyVerifiedRepaired": 1,
+    "newIndependentRegressionFiles": 1
+  },
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "economicGate": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "sourceEvidenceChanged": false
+  },
+  "blockers": [
+    "Independent current Retail zero-inclusive completed-cast TWW milling study-family holdout unavailable",
+    "Minimum eligible skill and actual stat context remain unidentified",
+    "New independent metamorphic fixture not yet wired into deterministic pipeline --check; coordinator/engineer may incorporate after acceptance",
+    "WoW client and live addon behavior not tested"
+  ],
+  "nextTask": {
+    "id": "F005_INDEPENDENT_RANK_POOL_CONTEXT_ISOLATION",
+    "owner": "independent-validator",
+    "action": "After coordinator acceptance, independently test rank-pool and cross-family context isolation on changed engineer candidate; if matched holdout appears, prioritize whole-family out-of-sample validation."
+  }
+}

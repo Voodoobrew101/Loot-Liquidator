@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_MIDNIGHT_MILLING_BATCH_SCOPE_AND_LEGACY_PROXY_CONFIDENCE",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T00:42:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "15fce2ac8dc833f348f35b3d96a824110c32787b",
+  "testCommit": "bd06311b16becd84ee93c9674abee6db7481fb80",
+  "verdict": "FAIL_UNSUPPORTED_LEGACY_FALLBACK_CONFIDENCE_NOT_ZERO__BATCH_SCOPE_PASS",
+  "subjectHashes": {
+    "workingEstimatorBlobSHA": "956db68c3b2bc7edc59565d15460c479b62344d6",
+    "compilerBlobSHA": "c2a81502c24ed6173fbf31d88b4d9009af98d965",
+    "midnightCandidateBlobSHA": "35ac6119dc6d47bf6f5279852b317d9d7da5d78e",
+    "f004NewBatchEvidenceBlobSHA": "26964611b9ae96cde12e15f72cdfc1939be44732",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "newRegressionBlobSHA": "b75df285f87519c79977c21b5513e425632d718c"
+  },
+  "scope": {
+    "exactMappingKeys": [
+      "midnight:mill:236761:245807:legacy-reference",
+      "midnight:mill:236767:245807:legacy-reference",
+      "midnight:mill:236776:245804:legacy-reference",
+      "midnight:mill:236777:245804:legacy-reference",
+      "midnight:mill:236778:245866:legacy-reference",
+      "midnight:mill:236779:245866:legacy-reference",
+      "midnight:mill:236770:245864:legacy-reference",
+      "midnight:mill:236771:245864:legacy-reference"
+    ],
+    "nominalInputPerCast": 10,
+    "recipeSpellID": 1269575,
+    "comparatorDragonflightSpellID": 382981,
+    "comparatorDragonflightBatch": 5,
+    "unverifiedRankAlternateUniverseLeads": 8,
+    "mixedRankEligibility": "NOT_INDEPENDENTLY_VERIFIED",
+    "actualRetailCasts": 0
+  },
+  "reproducedFinding": {
+    "classification": "WORKING_PREVIEW_EVIDENCE_PROVENANCE_MISLABEL_NOT_LIVE_EV_LEAK",
+    "originalSourceFieldsPreserved": true,
+    "originalSourceStatus": [
+      "proxy",
+      "modeled",
+      "modeled",
+      "modeled"
+    ],
+    "originalSourceBlockers": [
+      "100% is a legacy display assumption; no per-cast hit counts",
+      "3 is a legacy display bound; no conditional-hit histogram",
+      "6 is a legacy display bound; no conditional-hit histogram",
+      "No cast denominator or skill/quality matched experiment; 4.5 is legacy fallback only"
+    ],
+    "workingStatus": "COPIED_EVIDENCE_PREVIEW",
+    "workingFieldStatusForEachOfEight": {
+      "dropChance": "COPIED_EVIDENCE",
+      "yieldMin": "COPIED_EVIDENCE",
+      "yieldMax": "COPIED_EVIDENCE",
+      "expectedQuantity": "COPIED_EVIDENCE"
+    },
+    "workingFieldConfidenceForEachOfEight": {
+      "dropChance": 12,
+      "yieldMin": 12,
+      "yieldMax": 12,
+      "expectedQuantity": 18
+    },
+    "workingRecordConfidenceForEachOfEight": 12,
+    "workingAssumptionsForEachOfEight": [],
+    "affectedMappings": 8,
+    "affectedWorkingFieldLabels": 32,
+    "policyConflict": "The explicitly unsupported legacy display and no-denominator values are being copied as evidence with positive working confidence rather than marked confidence-zero provisional assumptions. No completed-cast measurement exists for these values.",
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEconomicLeakDemonstrated": false
+  },
+  "executedChecks": {
+    "independentV8ExactGitHubEstimator": {
+      "executed": true,
+      "hashShim": "NONCRYPTOGRAPHIC_STUB_NOT_USED_BY_SAME_PROCESS_ESTIMATOR",
+      "sourceRecords": 8,
+      "numericPreviewComplete": 8,
+      "nominalBatch10": 8,
+      "sourceLegacyBlockersPreserved": 8,
+      "unsupportedConfidenceMisclassifications": 8,
+      "expectedQuantityLegacyCopied": 8,
+      "syntheticCompletedCastControl": {
+        "executed": true,
+        "passed": true,
+        "workingConfidence": 60,
+        "fieldStatus": "COPIED_EVIDENCE"
+      },
+      "nativeNodeNewRegression": "NOT_RUN"
+    },
+    "previousNativeCI": {
+      "runID": 40980437706,
+      "headCommit": "15fce2ac8dc833f348f35b3d96a824110c32787b",
+      "conclusion": "success",
+      "verifiedFrom": "GitHub Actions job logs and step conclusions",
+      "nativeDetachedMetadataSuite": {
+        "passed": 14,
+        "failed": 0
+      },
+      "nativeDetachedNestedV11Suite": {
+        "passed": 14,
+        "failed": 0
+      },
+      "independentBinomialSuite": {
+        "passed": 476,
+        "failed": 0
+      },
+      "deterministicRepeatCompile": "PASS",
+      "lua51DecodeAndBlockerRoundtrip": "PASS",
+      "independentHoldoutCasts": 0
+    },
+    "newTest": {
+      "path": "research/tests/v2/test_f005_midnight_milling_legacy_proxy_confidence.js",
+      "casesAuthored": 27,
+      "expectedRedCases": 8,
+      "expectedGreenCases": 19,
+      "nativeExecution": "NOT_RUN_NEW_SUITE_NOT_YET_WIRED_IN_PIPELINE",
+      "latestCIForTestCommit": "PENDING_AT_REVIEW"
+    }
+  },
+  "counters": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "workingNumericCellsFilledThisRun": 0,
+    "expectedQuantityEvidenceCellsAdded": 0,
+    "mappingAdmissions": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0
+  },
+  "repairRequest": {
+    "owner": "completion-engineer",
+    "requirements": [
+      "Retain the eight legitimate 10-herb Midnight recipe mappings and original evidence/legacy blockers unchanged.",
+      "Treat explicitly unmeasured legacy display probabilities, conditional ranges and expected quantity as confidence-zero working policy assumptions; do not classify them as copied admissible per-cast evidence.",
+      "Keep all four working numeric fields finite with explicit source/model ancestry, policy assumptions, and PREVIEW_ONLY/normalizedVerified=false.",
+      "Do not indiscriminately reject valid measured completed-cast evidence; the synthetic positive control must continue to pass.",
+      "Wire and run the independent F005 regression under native Node; rerun deterministic build, schema, Lua 5.1 and preview isolation checks."
+    ],
+    "acceptance": "Independent F005 suite green, no source/economic promotion and 4072/4072 working coverage retained"
+  },
+  "limitations": [
+    "Batch-10 claim is source-indexed and proposed; not a new independent current-Retail completed-cast study.",
+    "Eight source-row V8 reproductions run against actual GitHub estimator with unused hash shim; the new 27-case full compiler suite was not executed under native Node in this run.",
+    "Previous native CI success does not cover the new regression, which is not yet invoked by run_completion_pipeline.js.",
+    "Generated Lua contents and WoW client were not inspected in this run; earlier CI Lua roundtrip passed.",
+    "No external independently pinned candidate attestation has been coordinator-accepted."
+  ],
+  "exactDeltas": {
+    "independentTestFilesAdded": 1,
+    "independentReviewFilesAdded": 1,
+    "sourceFilesChanged": 0,
+    "modelFilesChanged": 0,
+    "compilerFilesChanged": 0,
+    "productionFilesChanged": 0,
+    "schedulesChanged": 0
+  },
+  "nextTask": "F005_RETEST_MIDNIGHT_LEGACY_FALLBACK_CONFIDENCE_AFTER_ENGINEER_REPAIR_AND_NATIVE_NODE_GATE",
+  "status": "SUBMITTED_FOR_COORDINATOR_ACCEPTANCE_NO_ECONOMIC_PROMOTION"
+}

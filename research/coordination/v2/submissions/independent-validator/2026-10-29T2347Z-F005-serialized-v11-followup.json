@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_SERIALIZED_METADATA_SEAL_AFTER_ENGINEER_REPAIR",
+  "workflowRevision": 2,
+  "queueRevision": 2,
+  "runUTC": "2026-10-29T23:47:00Z",
+  "baseCommit": "2274f403e01bf766c139791b0b94934eb55f5abc",
+  "resultCommit": "49ef9a6fa07bcf189b928427bf04df12693f944c",
+  "branch": "implementation/five-agent-completion",
+  "acceptedVersusProposed": "PROPOSED_CONDITIONAL_PASS_PENDING_COORDINATOR_ACCEPTANCE",
+  "changedFiles": [
+    "research/tests/v2/test_f005_serialized_nested_provenance_v11.js",
+    "research/coordination/v2/reviews/2026-10-29T2346Z-F005-serialized-v11-followup.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-29T2347Z-F005-serialized-v11-followup.json"
+  ],
+  "reviewedSubject": {
+    "file": "research/tools/working_estimates.js",
+    "blobSHA": "956db68c3b2bc7edc59565d15460c479b62344d6",
+    "contract": "working-estimate-source-context-v1.1.0"
+  },
+  "exactKeysChanged": [],
+  "numericCellsFilled": 0,
+  "newExpectedQuantityCells": 0,
+  "invalidMappingsRemoved": 0,
+  "confidencePromotions": 0,
+  "independentStudyLineages": 0,
+  "testsActuallyRun": [
+    {
+      "name": "V8 source-module serialized metadata and record-set mutations",
+      "passed": 13,
+      "failed": 0,
+      "crypto": "DETERMINISTIC_NONCRYPTOGRAPHIC_SUBSTITUTE",
+      "process": "SAME_V8_ISOLATE"
+    }
+  ],
+  "testsAddedNotRun": [
+    {
+      "path": "research/tests/v2/test_f005_serialized_nested_provenance_v11.js",
+      "nativeNodeCases": 14
+    }
+  ],
+  "runtimeLuaClientTestsNotRun": [
+    "native Node 14-case detached-process test",
+    "existing 14-case native detached-process regression",
+    "full Node research pipeline --check",
+    "Lua 5.1 generated working estimate decoder",
+    "WoW in-game addon and live EV consumer"
+  ],
+  "countersAtReview": {
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "fieldSlots": 4072,
+    "rawEvidenceMissing": 514,
+    "expectedQuantityEvidenceMissing": 116
+  },
+  "blockers": [
+    "Independent current-Retail holdout studies absent; cannot validate game yields or promote confidence.",
+    "Native Node detached-process SHA-256 tests and deterministic build order still unverified."
+  ],
+  "zeroDeltaPivot": {
+    "previousSourceMetadataGap": "REPAIRED_IN_CURRENT_SOURCE",
+    "pivotedTo": "NESTED_SOURCE_ATTESTATION_AND_DETACHED_PROCESS_REGRESSION",
+    "repeatedUnchangedAudit": false
+  },
+  "safety": {
+    "newEconomicPromotions": 0,
+    "productionChanges": 0,
+    "frozenTSMChanges": 0,
+    "rawEvidenceChanges": 0,
+    "liveEVChanges": 0,
+    "tooltipOnlyChanges": 0
+  },
+  "verdict": "CONDITIONAL_PASS_SOURCE_ATTESTATION_V1_1",
+  "nextTask": "F005_NATIVE_NODE_DETACHED_ATTESTATION_AND_BUILD_ORDER_RETEST"
+}

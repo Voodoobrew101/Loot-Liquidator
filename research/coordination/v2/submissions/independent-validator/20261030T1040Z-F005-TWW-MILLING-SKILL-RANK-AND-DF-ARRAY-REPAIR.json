@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_TWW_MILLING_SKILL_RANK_AND_DF_ARRAY_REPAIR",
+  "workflowRevision": 2,
+  "runID": "20261030T1040Z-F005-TWW-MILLING-SKILL-RANK-AND-DF-ARRAY-REPAIR",
+  "runUTC": "2026-10-30T10:40:00Z",
+  "taskStatus": "SUBMITTED_PENDING_COORDINATOR_ACCEPTANCE",
+  "branch": "implementation/five-agent-completion",
+  "baseCommitBeforeRun": "f1072cb64a33754cf616302fb2a23acb684d226e",
+  "testCommit": "eaaab6eb54f2db4f432d34dd280c8fa48fe896aa",
+  "reviewCommit": "a9c29558b8cc2d627bd9c8f9b694b52ab433cc80",
+  "queueSnapshot": {
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "fieldSlots": 4072,
+    "missingOriginalEvidenceFields": 514,
+    "missingVerifiedExpectedQuantity": 116
+  },
+  "taskSelection": "Changed F003 model and F004 TWW milling evidence arrived after previous F005 historical-rank review; independently retested previous F003 failure and validated new F004 source with a mutation-resistant evidence gate rather than repeating a zero-delta historical source search.",
+  "exactFilesAdded": [
+    {
+      "path": "research/tests/v2/test_f005_tww_milling_skill_rank_source_isolation.js",
+      "blobSHA": "f24454a4187263c064eb3a17e94e0770b279e618"
+    },
+    {
+      "path": "research/coordination/v2/reviews/2026-10-30T1040Z-F005-tww-milling-skill-rank-and-df-array-repair.json",
+      "blobSHA": "905d73c6ff928b446fb69dae998412bac9fcd19b"
+    },
+    {
+      "path": "research/coordination/v2/submissions/independent-validator/20261030T1040Z-F005-TWW-MILLING-SKILL-RANK-AND-DF-ARRAY-REPAIR.json",
+      "status": "THIS_SUBMISSION"
+    }
+  ],
+  "exactStableKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+  ],
+  "modelStableKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "sourceHashes": {
+    "dfModel": "70bab20081db23e899a45b73186200869efae48c",
+    "twwEvidence": "1396ef6ce5348e1d0cf9052ef0ad205975c3f869",
+    "twwSourceReview": "ae511c18dc3fb4110c81eb48b79b2f072f8e82e5"
+  },
+  "verdicts": {
+    "dfArrayRepair": "PASS_61_13_23_IN_V8_PENDING_NATIVE_NODE",
+    "twwSkillRank": "CONDITIONAL_PASS_CONTEXT_ONLY_NOT_INDEPENDENTLY_VALIDATED",
+    "economicUse": "PREVIEW_ONLY_ONLY"
+  },
+  "exactDeltas": {
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "admittedMappingsAdded": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyLineagesByValidator": 0,
+    "newRegressionFiles": 1,
+    "newReviewFiles": 1,
+    "workingNumericCoverageBefore": "4072/4072",
+    "workingNumericCoverageAfter": "4072/4072"
+  },
+  "testsActuallyRun": [
+    {
+      "test": "F003 model selfTest",
+      "runtime": "V8",
+      "passed": 61,
+      "failed": 0
+    },
+    {
+      "test": "F005 DF array-context",
+      "runtime": "V8",
+      "passed": 13,
+      "failed": 0
+    },
+    {
+      "test": "F005 DF joint-cast adversarial",
+      "runtime": "V8",
+      "passed": 23,
+      "failed": 0
+    },
+    {
+      "test": "F005 new TWW source isolation",
+      "runtime": "V8",
+      "passed": 25,
+      "failed": 0,
+      "adversarialMutations": 15
+    },
+    {
+      "test": "GitHub read-back of new test and review",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node of new and existing F005 suites",
+    "Lua 5.1 decode in this runtime",
+    "In-game Retail testing",
+    "Independent current-patch study-family holdout"
+  ],
+  "blockers": [
+    "Original LotzBoi comment lacks current patch build, completed casts, zeros, refunds and output histogram",
+    "Indexed comment does not independently prove 2026 skill-rank applicability or hard yield ranges",
+    "No independently matched current-Retail cohort to validate DF or TWW models",
+    "Native Node of F005 test files remains pending; prior pipeline CI success does not substitute for it"
+  ],
+  "safety": {
+    "confidenceForUnsupportedFallbacks": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "liveRecommendationsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "nextTask": "F005_NATIVE_NODE_RETEST_ON_CHANGED_MODEL_OR_INDEPENDENT_CURRENT_RETAIL_HOLDOUT",
+  "coordinatorRequestedAction": "ACCEPT_INDEPENDENT_REGRESSION_AND_CONTEXT_ONLY; NO_CONFIDENCE_OR_ECONOMIC_PROMOTION"
+}

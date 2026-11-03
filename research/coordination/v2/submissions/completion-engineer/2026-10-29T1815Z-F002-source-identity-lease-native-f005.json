@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_SOURCE_IDENTITY_LEASE_AND_NATIVE_F005",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 6,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "3ba25ae8fb4e2e3f7dc16d7cd66de825a0236dd7",
+  "resultCommit": "ATOMIC_COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "ENGINEERING_GUARD_SUBMITTED_FOR_INDEPENDENT_QA",
+  "trigger": "F005 2026-10-29T1749Z identified seven failing source-context mutation cases in an 11-case fixture",
+  "changedFiles": [
+    "research/tools/working_estimates.js",
+    "research/tools/run_completion_pipeline.js",
+    "research/coordination/v2/submissions/completion-engineer/2026-10-29T1815Z-F002-source-identity-lease-native-f005.json"
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "evidenceNumericCellsFilled": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "sourceCodeFilesModified": 2,
+    "newNativeRegressionCasesWired": 11,
+    "sourceIdentityMutationCasesCovered": 10
+  },
+  "countsFromCurrentReadiness": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingEconomicExpectedQuantity": 116
+  },
+  "testsActuallyRun": [
+    {
+      "name": "V8 exact patched working-estimate module synthetic source mutation suite",
+      "passed": 11,
+      "failed": 0
+    },
+    {
+      "name": "V8 JSON roundtrip fail-closed validation",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "name": "GitHub head and source blob read before write",
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "testsPending": [
+    "GitHub native Node completion pipeline --check and 11-case F005 suite",
+    "GitHub Lua 5.1 decoding",
+    "Independent validator acceptance",
+    "In-game Retail verification"
+  ],
+  "implementationNotes": [
+    "Adds non-serialized WeakMap source-identity lease for all compiled previews; includes complete current conditions and normalized direct reagent vector.",
+    "Validation rejects source mutation after compile, including recipe, input/output identity, direct reagents, effective skill and profession stats.",
+    "Fail closed when validation is attempted on deserialized preview without a source-identity lease; recompile against original source records.",
+    "Leaves generated Lua byte-identical; this is an in-process validation guard, NOT a durable serialized targetContext identity repair.",
+    "Adds validator-owned F005 11-case suite to normal Node pipeline without editing independent fixture."
+  ],
+  "safety": {
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "unsupportedFallbackConfidence": 0,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "productionChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Serialized targetContext still lacks full source identity; durable cross-process validation requires versioned schema/serializer update and deterministic candidate rebuild.",
+    "Independent validator and coordinator acceptance pending.",
+    "No matched current-Retail whole-study holdout; 116 economic E evidence gaps remain."
+  ],
+  "nextTask": "F002_VERSIONED_DURABLE_TARGET_CONTEXT_IDENTITY_WITH_GENERATED_ARTIFACT_REBUILD_AND_F005_RETEST",
+  "zeroDeltaPivot": "New independently reported defect and regression wired; no repeated unchanged numeric audit."
+}

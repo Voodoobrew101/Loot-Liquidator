@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_BLOCKED_CAST_BASIS_AFTER_ENGINEER_REPAIR",
+  "workflowRevision": 2,
+  "queueRevision": 10,
+  "runUTC": "2026-10-29T21:41:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "ec12b463bf136bd0873c2ed6310877fd503b094e",
+  "testCommit": "00496aa0fe07a65991bd31ca6c9bbc9fbaf75f8d",
+  "resultCommit": "6410c7b8397e934853dcf1a7a6e90c61962d7a91",
+  "status": "INDEPENDENT_QA_PASS_REPAIR_CONDITIONAL_MODEL_SUBMITTED_TO_COORDINATOR",
+  "changedFiles": [
+    {
+      "path": "research/tests/v2/test_f005_f003_independent_binomial_numerics.js",
+      "action": "CREATE",
+      "commit": "00496aa0fe07a65991bd31ca6c9bbc9fbaf75f8d"
+    },
+    {
+      "path": "research/coordination/v2/reviews/2026-10-29T2140Z-F005-cast-basis-repair-and-binomial-independent-qa.json",
+      "action": "CREATE",
+      "commit": "6410c7b8397e934853dcf1a7a6e90c61962d7a91"
+    },
+    {
+      "path": "research/coordination/v2/submissions/independent-validator/2026-10-29T2141Z-F005-cast-basis-and-f003-numerical-qa.json",
+      "action": "CREATE",
+      "commit": "THIS_SUBMISSION_COMMIT"
+    }
+  ],
+  "reviewPath": "research/coordination/v2/reviews/2026-10-29T2140Z-F005-cast-basis-repair-and-binomial-independent-qa.json",
+  "testedSourceHashes": {
+    "workingEstimator": "1a100b304bd26fa5a0840ade7d8cf4437803aa6f",
+    "model": "28f22970ef4e0307a69bff624844917fa80fca26",
+    "cohort": "4baa24233b31761bd1aa5167cd7936442e867e4c",
+    "generatedReport": "46ddc18d77daddfa97486424daf1719f54d9fdcb"
+  },
+  "deltas": {
+    "newIndependentTests": 476,
+    "previouslyFailingCastBasisCasesResolved": 8,
+    "castBasisRegressionsPassed": 12,
+    "priorStatusClaimPassed": 11,
+    "priorProvenancePassed": 12,
+    "admittedMappingDelta": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsAdded": 0,
+    "newEvidenceExpectedQuantity": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "independentStudiesAdded": 0,
+    "economicPromotions": 0,
+    "productionChanges": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "JavaScript V8 harness",
+      "name": "F005 cast-basis",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "environment": "JavaScript V8 harness",
+      "name": "F005 source-status/claim",
+      "passed": 11,
+      "failed": 0
+    },
+    {
+      "environment": "JavaScript V8 harness",
+      "name": "F005 provenance-confidence",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "environment": "JavaScript V8 harness",
+      "name": "F003 independent binomial numeric",
+      "passed": 476,
+      "failed": 0,
+      "maxAbsCDFError": 1.8231338660967822e-10
+    },
+    {
+      "environment": "JavaScript V8 harness",
+      "name": "F003 model self-test",
+      "passed": 31,
+      "failed": 0,
+      "independent": false
+    }
+  ],
+  "testsNotRun": [
+    "Native Node of new F003 independent test (CI integration pending)",
+    "Local schema and Lua5.1",
+    "In-game WoW Retail",
+    "Independent whole-study current-Retail holdout"
+  ],
+  "nativeCI": {
+    "preChangeBranchHead": "ec12b463bf136bd0873c2ed6310877fd503b094e",
+    "preChangeRun": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40958910896",
+    "preChangeConclusion": "success",
+    "newPushRuns": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40959677635",
+    "newPushStatusAtReview": "in_progress"
+  },
+  "readiness": {
+    "mappingCount": 1018,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceMissingCells": 514,
+    "evidenceMissingE": 116,
+    "independentRetailHoldouts": 0
+  },
+  "economicPolicy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveRecommendationsUnchanged": true,
+    "tooltipOnlyNotUsedForE": true
+  },
+  "blockers": [
+    "F003 numerical agreement does not prove current-Retail mechanics or a baseline; no independent completed-cast cohort.",
+    "Native CI has not been extended to execute the new independent numerical fixture.",
+    "Cross-process serialized working preview identity attestation remains unverified.",
+    "Coordinator acceptance pending."
+  ],
+  "zeroDeltaPivot": "The cast-basis repair changed since the previous F005 failure; after verifying it, pivoted to the newly changed F003 high-n binomial model instead of repeating unchanged evidence audits.",
+  "nextTask": "F005_CROSS_PROCESS_SERIALIZED_WORKING_PREVIEW_ATTESTATION_AND_NATIVE_F003_NUMERICAL_CI"
+}

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_PMF_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 3,
+  "dateUTC": "2026-10-29",
+  "observedHead": "dbcaa11655e3592988c5e681d5def1bf2409fadb",
+  "decision": "CONDITIONAL_ACCEPT_PRIOR_CONTEXT_REPAIRS_BLOCK_NEW_PMF_ZERO_MASS_DEFECT",
+  "reviewed": {
+    "completionEngineer": {
+      "submission": "research/coordination/v2/submissions/completion-engineer/2026-10-29T1317Z-F002-donor-context-guard.json",
+      "blobSHA": "96f166939ba2c2ef295f5c389de3467f94f4338d",
+      "codeBlobSHA": "0bef8795b55043bfd8ba1896b53e4be618ff216c"
+    },
+    "baselineModeller": {
+      "submission": "research/coordination/v2/submissions/baseline-modeller/2026-10-29T1327Z-F003-zero-support-repair.json",
+      "blobSHA": "fbdb9edf80f17954984c729c70c5611f252dd584",
+      "codeBlobSHA": "bea88982382816f315df66facf9060affa0c40bb"
+    },
+    "evidenceResearcher": {
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1328Z-F004-diamond-eligibility-pivot.json",
+      "blobSHA": "c66716aff06bce3c80a69c30b9185c414d64e2cf"
+    },
+    "independentValidator": {
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-29T1341Z-F005-pmf-support-retest.json",
+      "blobSHA": "790f8a64cb816cf4318f735030114f598c38bef0",
+      "review": "research/coordination/v2/reviews/2026-10-29T1341Z-F005-pmf-positive-support.json",
+      "reviewBlobSHA": "b20f1dfc3b48d5d46fe5c821c2ee916a49e32674",
+      "testBlobSHA": "bc387c48e5bf7bee26630a14502a95adcd94d02b"
+    },
+    "candidateBlobSHA": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "decisions": [
+    {
+      "owner": "completion-engineer",
+      "task": "F002_DONOR_CONTEXT_GUARD",
+      "status": "ACCEPT_RESEARCH_ONLY_REPAIR_WITH_INDEPENDENT_9_OF_9_V8_REPRODUCER",
+      "reason": "Four prior mismatched-context donor transfers no longer reproduce; no candidate numeric or source hash changes. Native Node/Lua revalidation of this changed source remains outstanding."
+    },
+    {
+      "owner": "baseline-modeller",
+      "task": "F003_ZERO_SUPPORT_REPAIR",
+      "status": "ACCEPT_ZERO_HIT_REPAIR_ONLY_BLOCK_MODEL_FULL_ACCEPTANCE",
+      "reason": "Prior P=0 positive-bound defect now passes independent V8; zero-probability PMF rows still contaminate positive conditional support bounds in three independent fixtures."
+    },
+    {
+      "owner": "evidence-researcher",
+      "task": "F004_DIAMOND_ELIGIBILITY_PIVOT",
+      "status": "ACCEPT_HISTORICAL_PROVENANCE_AND_ZERO_DELTA_PIVOT_ONLY",
+      "reason": "Two historical comment claims and two reviews preserved, but zero new independent current Retail lineages or five-key cast denominators; no economic field promotion."
+    },
+    {
+      "owner": "independent-validator",
+      "task": "F005_PMF_POSITIVE_SUPPORT_RETEST",
+      "status": "ACCEPT_INDEPENDENT_FAIL_VERDICT_AS_BLOCKING",
+      "reason": "Original nine-case fixture 9/9 passes; new twelve-case fixture 9/12 passes, 3 failures from zero-mass positive support. Independent reviewer cannot approve their own numeric evidence."
+    },
+    {
+      "claim": "Working candidate 4072/4072 numeric",
+      "status": "RETAIN_RESEARCH_PREVIEW_NOT_FULL_INTEGRATION_ACCEPTANCE",
+      "reason": "Canonical readiness reconciles 1018*4=4072, 3558+514=4072, 116 missing evidence E; zero confidence unsupported preview-only fields not eligible for EV."
+    }
+  ],
+  "blockingDefects": [
+    {
+      "id": "F005-PMF-ZERO-MASS-SUPPORT",
+      "owner": "baseline-modeller",
+      "reproducer": "P=0.6 with PMF [{quantity:2,probability:1},{quantity:99,probability:0}] must have conditional yieldMin=yieldMax=2; current model returns max 99",
+      "severity": "BLOCKING_MODEL_SUPPORT_SEMANTICS"
+    },
+    {
+      "id": "F005-NATIVE-INDEPENDENT-CHECKS",
+      "owner": "independent-validator",
+      "severity": "TEST_GATE_UNVERIFIED"
+    },
+    {
+      "id": "F003-INDEPENDENT-HOLDOUT",
+      "owner": "evidence-researcher",
+      "severity": "EVIDENCE_PROMOTION_BLOCKED"
+    }
+  ],
+  "nextDisjointWork": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_PMF_ZERO_MASS_SUPPORT_REPAIR",
+      "scope": "Fix forward() min/max to use strictly positive-probability PMF rows only, preserve normalized PMF and P*min<=E<=P*max; add self-tests; keep all 12 TWW context scenarios preview-only",
+      "exactKeys": []
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_PMF_ZERO_MASS_RETEST",
+      "scope": "After changed model blob, independently rerun original 9-case and new 12-case fixtures, full Node pipeline --check, Lua5.1 decode, JSON schema and tooltip/economic isolation; report unavailable checks honestly",
+      "exactKeys": []
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_POST_MODEL_PIPELINE_AND_CONTEXT_CONTRACT",
+      "scope": "After F003 fix verify generated 1018-row preview, typed donor-key context, source ancestry and isolation; run pipeline --check, avoid changing candidate without accepted input delta",
+      "exactKeys": []
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_CURRENT_DIAMOND_CAST_CAPTURE",
+      "scope": "Produce concrete zero-inclusive cast protocol or independently sourced 2026 Retail eligibility for exactly five conflicting Dragonflight diamond pairs, no rehash of historical ratios",
+      "exactKeys": [
+        "tsm:prospect:188658:192870:L1205",
+        "tsm:prospect:188658:192871:L1206",
+        "tsm:prospect:189143:192869:L1242",
+        "tsm:prospect:189143:192870:L1243",
+        "tsm:prospect:190311:192869:L1280"
+      ]
+    }
+  ],
+  "currentCounters": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceGE90": 0,
+    "verifiedMinimumEligibleBaselines": 0,
+    "independentRetailUniverseAudit": "NOT_COMPLETE",
+    "legacyQueue30LeadsUnadmitted": 24,
+    "priorityBacklogRecords": 217
+  },
+  "checks": {
+    "coordinatorGitHubBlobReadback": "PASS: current source, submission, validator and canonical readiness SHA inspected",
+    "coordinatorStaticCodeInspection": "CONFIRMED forward() includes zero-mass rows in conditional support min/max",
+    "independentV8OriginalFixture": {
+      "passed": 9,
+      "failed": 0
+    },
+    "independentV8NewFixture": {
+      "passed": 9,
+      "failed": 3
+    },
+    "independentTooltipIsolation": {
+      "passed": 5,
+      "failed": 0
+    },
+    "independentFrozenSourceSHA": {
+      "passed": 5,
+      "failed": 0
+    },
+    "nativeNode": "NOT_RUN_BY_COORDINATOR",
+    "lua51": "NOT_RUN_BY_COORDINATOR",
+    "fullSchema": "NOT_RUN_BY_COORDINATOR",
+    "wowClient": "NOT_RUN"
+  },
+  "deltas": {
+    "newMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingCellsFilled": 0,
+    "evidenceCellsFilled": 0,
+    "newEconomicExpectedQuantity": 0,
+    "confidencePromotions": 0,
+    "sourceMemoryChanged": false,
+    "legacyAssignmentsChanged": false,
+    "productionFilesChanged": 0
+  },
+  "economicGate": "NO_PROMOTION; UNSUPPORTED FALLBACKS CONFIDENCE_0, PREVIEW_ONLY, normalizedVerified=false; tooltip-only and live EV isolated",
+  "zeroDeltaPivot": "New independent 3-case failure is actionable; do not repeat unchanged 217 priority audits or historical diamond source searches. Focus on shared PMF model semantics and controlled cast acquisition.",
+  "nextAcceptanceTrigger": "F003 positive-support repair committed with new model blob; F005 independent 21/21 fixture pass plus available pipeline/Lua/schema isolation and readback"
+}

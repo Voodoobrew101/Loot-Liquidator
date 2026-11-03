@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_MAR31_ARRAY_ATTESTATION_CI_STATUS_ADDENDUM",
+  "workflowRevision": 2,
+  "queueRevision": 26,
+  "runUTC": "2026-10-30T13:18:58.545Z",
+  "supplements": "research/coordination/v2/submissions/baseline-modeller/20261030T131834456Z-F003-MAR31-ARRAY-ATTESTATION-REPAIR.json",
+  "purpose": "Correct an already-resolved stale candidate blocker after concurrent completion-engineer commit; preserve immutable original submission.",
+  "concurrentCommit": "b9a3bbafa59645543ccb415a14fd2554fb263569",
+  "concurrentFileChanged": "research/proposed/itemdb.lua",
+  "nativePipeline": {
+    "runID": 41062107889,
+    "headCommit": "b9a3bbafa59645543ccb415a14fd2554fb263569",
+    "conclusion": "success",
+    "verifiedSteps": [
+      "Native 38-case informational model preflight",
+      "node research/tools/run_completion_pipeline.js --check",
+      "Lua 5.1 syntax and decoded working/evidence isolation",
+      "Lua blocker arrays roundtrip"
+    ],
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41062107889"
+  },
+  "correction": "The previous submission's stale copied itemdb.lua CI blocker has been resolved on the shared branch by another role. Do not carry it forward as an active blocker. This pipeline did NOT execute the F003 v1.0.3 69-case model selfTest or the F005 12-case Midnight array fixture natively.",
+  "pending": [
+    "Independent F005 native Node execution of exact repaired model and 12/26 fixtures",
+    "Formal coordinator acceptance",
+    "Separate contradictory F005 NaN/Infinity nested fixture assertion",
+    "No current-Retail independent cast holdout"
+  ],
+  "exactDeltas": {
+    "additionalModelChanges": 0,
+    "additionalNumericCells": 0,
+    "evidencePromotions": 0,
+    "economicPromotions": 0,
+    "productionChanges": 0
+  },
+  "nextTask": "F003_PIVOT_TO_UNRESOLVED_E_MODEL_AFTER_F005_NATIVE_RETEST"
+}

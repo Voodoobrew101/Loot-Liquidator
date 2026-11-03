@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_POWDER_FAMILY_YIELD_RANK_CONTEXT",
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T13:31:39Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "aa8fe3665ddf5244ac53d51a428564bb481917f9",
+  "question": "Do independent 2026 Tranquility Bloom-to-Powder Pigment claims supply a matched yield or rank disposition for existing Midnight Milling rows?",
+  "selection": "Pivot from repeated unmeasured generic Midnight milling anecdotes to a named-herb family and output-rank ambiguity that could materially affect the 4.5 legacy working reference.",
+  "sources": [
+    {
+      "sourceID": "midnight-draggoth-2026-03-21-forum",
+      "lineage": "blizzard-forum-2276246-draggoth-march21-powder-recycling",
+      "author": "Draggoth",
+      "sourceType": "ORIGINAL_PLAYER_ASSERTED_CONVERSION_RATE_NOT_MEASURED_COHORT",
+      "url": "https://us.forums.blizzard.com/en/wow/t/impossible-patron-orders/2276246/16",
+      "fallbackUrl": "https://us.forums.blizzard.com/en/wow/t/impossible-patron-orders/2276246",
+      "publicationDate": "2026-03-21",
+      "actualCastEpoch": null,
+      "patchBuild": null,
+      "claim": {
+        "inputText": "Tranquility Blossom",
+        "normalizedInputFamily": "Tranquility Bloom",
+        "inputItemRank": null,
+        "nominalHerbs": 10,
+        "outputText": "Powder Pigment",
+        "outputItemRank": null,
+        "claimedPigmentQuantity": 12.5,
+        "claimedKnowledgePoints": 0,
+        "reportedUnit": "pigments per 10 herbs, presented as an illustrative conversion",
+        "sourceWordingShort": "10 Tranquility Blossom = 12.5 Powder Pigment without any KP."
+      },
+      "limitations": [
+        "No completed casts, output histogram, input/output rank, gear, skill, refunds or sample size",
+        "The 12.5 is a forum calculation/claim, not a reported measured zero-inclusive cast mean",
+        "The herb spelling Blossom is likely colloquial for Bloom but not an itemID proof",
+        "Zero KP is not proof of zero profession skill or absent equipment"
+      ]
+    },
+    {
+      "sourceID": "midnight-warcraftable-homely-shelves",
+      "lineage": "warcraftable-homely-wall-shelves-editorial-budget",
+      "author": null,
+      "sourceType": "EDITORIAL_CRAFTING_BUDGET_UNVERIFIED_YIELD_RANGE",
+      "url": "https://warcraftable.com/homely-wall-shelves/",
+      "publicationDate": null,
+      "actualCastEpoch": null,
+      "patchBuild": null,
+      "claim": {
+        "inputText": "Tranquility Bloom",
+        "nominalHerbs": 10,
+        "outputText": "powder",
+        "outputItemRank": null,
+        "claimedOutputRange": [
+          10,
+          12
+        ],
+        "reportedUnit": "powder per 10 herbs, editorial recipe budget",
+        "shoppingBudget": {
+          "herbs": 200,
+          "pigments": 200
+        }
+      },
+      "limitations": [
+        "No observed casts, quality ranks, actual pigment output totals, skill, stats or refunds",
+        "Editorial material arithmetic may be rounded or inherited; independence of underlying numerical source not established",
+        "The 200-herb shopping budget is not an independently measured yield study"
+      ]
+    },
+    {
+      "sourceID": "midnight-wowhead-powder-item-ids",
+      "lineage": "wowhead-powder-pigment-item-catalog",
+      "sourceType": "ITEM_CATALOG_IDENTITY_ONLY",
+      "url": "https://www.wowhead.com/item=245807/powder-pigment",
+      "secondUrl": "https://www.wowhead.com/item=245808/powder-pigment",
+      "claim": {
+        "distinctPowderItemIDs": [
+          245807,
+          245808
+        ],
+        "item245807RecipeDifficultyModifier": 15,
+        "item245808RecipeDifficultyModifier": 5
+      },
+      "limitations": [
+        "Two item identities exist, but forum/editorial sources do not specify which output ID they mean",
+        "Do not infer rank-specific eligibility or expected quantities from item listing alone"
+      ]
+    },
+    {
+      "sourceID": "midnight-wowhead-tranquility-input-ids",
+      "lineage": "wowhead-tranquility-bloom-item-catalog",
+      "sourceType": "ITEM_CATALOG_IDENTITY_ONLY",
+      "url": "https://www.wowhead.com/item=236761/tranquility-bloom",
+      "secondUrl": "https://www.wowhead.com/item=236767/tranquility-bloom",
+      "claim": {
+        "inputIDs": [
+          236761,
+          236767
+        ]
+      },
+      "limitations": [
+        "Forum/editorial sources do not identify the exact input quality"
+      ]
+    }
+  ],
+  "previousSourceAncestry": [
+    {
+      "lineage": "wowhead-midnight-inscription-leveling-david111-comment",
+      "source": "research/evidence/v2/2026-10-30T1233Z-F004-midnight-milling-batch-selector-yield-conflict.json",
+      "status": "EXISTING_UNMATCHED_10_FOR_10_ANECDOTE_NOT_NEW"
+    },
+    {
+      "lineage": "blizzard-us-forum-2287404-errtu",
+      "status": "EXISTING_10_HERB_SELECTOR_REPORT_NOT_NEW"
+    }
+  ],
+  "targetMappingKeys": [
+    "midnight:mill:236761:245807:legacy-reference",
+    "midnight:mill:236767:245807:legacy-reference"
+  ],
+  "pendingQueue30Key": "universe-audit:midnight:mill:236761:245808:alternate-pigment-rank-eligibility",
+  "candidateReference": {
+    "source": "research/evidence/v2/2026-10-30T1233Z-F004-midnight-milling-batch-selector-yield-conflict.json",
+    "legacyWorkingExpectedQuantity": 4.5,
+    "legacyClaimedPositiveBounds": [
+      3,
+      6
+    ],
+    "referenceType": "LEGACY_PREVIEW_NOT_VERIFIED_CURRENT_RETAIL"
+  },
+  "analysis": {
+    "nominalHerbBatch": 10,
+    "sourceAClaimedRatio": 12.5,
+    "sourceBClaimedRange": [
+      10,
+      12
+    ],
+    "sourceAOverLegacyRatio": 2.7777777777777777,
+    "sourceBLowOverLegacyRatio": 2.2222222222222223,
+    "sourceBHighOverLegacyRatio": 2.6666666666666665,
+    "comparison": "CROSS_CONTEXT_FAMILY_LEVEL_SENSITIVITY_ONLY_NOT_MATCHED_E",
+    "sourceTension": "Claimed 12.5 is above editorial 10-12; different/unknown rank, skill, measurement and statistical units prevent contradiction adjudication.",
+    "newFinding": "Named Tranquility Bloom family and explicit 0-KP claim sharpen the prior unlabelled ten-pigment anecdote, but both output item ranks remain unknown.",
+    "rankDisposition": "UNRESOLVED_DO_NOT_ADMIT_245808_OR_INFER_245807",
+    "status": "PROPOSED_EVIDENCE_REVIEW_ONLY"
+  },
+  "numericEvidence": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "exactDeltas": {
+    "newPlayerClaimLineages": 1,
+    "newEditorialLineages": 1,
+    "newMeasuredIndependentCohorts": 0,
+    "newDistinctItemIDsCrossChecked": 4,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "verifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "evidenceGapsBefore": 514,
+    "evidenceGapsAfter": 514
+  },
+  "measurementRequest": {
+    "question": "For each Tranquility Bloom input rank (236761,236767), what Powder Pigment item ranks (245808,245807) and zero-inclusive output totals occur per completed 10-herb cast at a recorded no-KP minimum-eligible skill baseline?",
+    "capture": [
+      "Retail client build, UTC, recipe spellID, input and output itemIDs and ranks",
+      "Actual completed casts including zero-output casts; gross herbs, saved/refunded herbs and failed selector attempts separately",
+      "Profession skill, optional KP, spec, gear, concentration and other relevant stats",
+      "Per-cast histogram, output co-products and item-rank totals; repeat independently on a held-out session"
+    ],
+    "holdout": "Separate author/character or session before any evidence90 or economic promotion"
+  },
+  "blockers": [
+    "Both new numeric sources omit output itemID/rank, actual completed casts and measured totals",
+    "Forum rate may be a theoretical conversion average rather than observed data",
+    "Warcraftable source is undated editorial budget; independent numeric derivation unknown",
+    "No in-game current-patch matched-rank sampling"
+  ],
+  "nextTask": "Pivot to distinct pending queue30 Midnight milling output-rank eligibility, or acquire an actual rank-labelled completed-cast dataset; do not repeat the same generic yield search."
+}

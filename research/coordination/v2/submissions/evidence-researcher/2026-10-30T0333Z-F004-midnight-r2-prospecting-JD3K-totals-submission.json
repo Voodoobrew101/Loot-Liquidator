@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_R2_PROSPECTING_ORIGINAL_OUTPUT_TOTALS",
+  "runUTC": "2026-10-30T03:33:00Z",
+  "workflowRevision": 2,
+  "queueRevisionObserved": "five-agent-workflow=2; completion-priorities=1.0.0",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "521ddf7ad4f84f6d38abb12314152b39015877c8",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "priorityContext": "F004 ready; high-impact Midnight prospecting expected-quantity and rank-context gaps; new original totals instead of repeating approximate rates",
+  "zeroDeltaPivot": "From rough post-hotfix prospecting author estimates to original rank-2 per-output total cohorts; next pivot queue30 Crushing selector if no raw cast log",
+  "targetInputItemIDs": [
+    237363,
+    237365,
+    237361
+  ],
+  "exactMappingAdmissions": 0,
+  "filesChanged": [
+    "research/evidence/v2/2026-10-30T0333Z-F004-midnight-r2-prospecting-JD3K-totals.json",
+    "research/evidence/v2/source-reviews/2026-10-30T0333Z-F004-midnight-r2-prospecting-JD3K-totals-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T0333Z-F004-midnight-r2-prospecting-JD3K-totals-submission.json"
+  ],
+  "deltas": {
+    "newOriginalCohorts": 3,
+    "newStudyLineages": 1,
+    "newReportedOutputTotalCells": 17,
+    "newVerifiedEconomicExpectedQuantityCells": 0,
+    "newWorkingPreviewCells": 0,
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "sourceReviewEvents": 7,
+    "productionFilesChanged": 0,
+    "sharedLedgersChanged": 0,
+    "schedulesChanged": 0
+  },
+  "testsActuallyRun": {
+    "inProcessAssertions": 14,
+    "githubReadbackChecks": 3
+  },
+  "notRun": [
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "WoW Retail in-game tests",
+    "Independent holdout tests"
+  ],
+  "blockers": [
+    "Comment date and actual cast epoch not provided",
+    "Actual completed casts, zero-inclusive cast logs and Resourcefulness refunds missing",
+    "Output item IDs and quality ranks not supplied; names may correspond to multiple rank IDs",
+    "Unlisted Eversong Diamond is not a verified zero",
+    "No evidence all casts occurred after 2026-03-31 hotfix"
+  ],
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "confidence": 0,
+  "sourceURLs": [
+    "https://www.wowhead.com/spell=1231127/midnight-prospecting",
+    "https://www.wowhead.com/es/spell=1231127/prospeccion-de-midnight",
+    "https://www.wowhead.com/ptr/spell=1231127/midnight-prospecting",
+    "https://saddlebagexchange.com/wow/item-data/237363",
+    "https://saddlebagexchange.com/wow/item-data/237365",
+    "https://saddlebagexchange.com/wow/item-data/237361",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24266320/hotfixes-april-2-2026"
+  ],
+  "nextTask": {
+    "id": "F004_QUEUE30_MIDNIGHT_CRUSHING_SELECTOR_RANK",
+    "action": "Verify exact Midnight Crushing gem eligibility and output-rank selector; do not repeat this cohort without new raw data."
+  }
+}

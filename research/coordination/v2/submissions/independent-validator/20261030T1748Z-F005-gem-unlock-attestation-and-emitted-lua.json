@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_NATIVE_TWO_SOURCE_REPARSE_AND_GEM_UNLOCK_QA",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runUTC": "2026-10-30T17:48:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommitBeforeRoleReview": "1a32301d21c161b83f3baa8b97dd83b959992f64",
+  "firstRoleTestCommit": "20c55da029309f96c4c7d3bee543a5a466641b41",
+  "secondRoleTestCommit": "1a32301d21c161b83f3baa8b97dd83b959992f64",
+  "reviewCommit": "40e77bfd7fae3dd2fa2de8169f2f4be5805b2d6a",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_MODEL_FAIL_EMITTED_LUA_PASS",
+  "exactFilesChanged": [
+    "research/tests/v2/test_f005_tww_gem_unlock_serialization_attestation.js",
+    "research/tests/v2/test_f005_emitted_working_lua_channel_isolation.js",
+    "research/coordination/v2/reviews/2026-10-30T1746Z-F005-gem-unlock-serialization-and-emitted-working-isolation.json",
+    "research/coordination/v2/submissions/independent-validator/20261030T1748Z-F005-gem-unlock-attestation-and-emitted-lua.json"
+  ],
+  "reviewPath": "research/coordination/v2/reviews/2026-10-30T1746Z-F005-gem-unlock-serialization-and-emitted-working-isolation.json",
+  "sourcePins": {
+    "candidateLua": "560b885a0039045419c340716e263ae33ddf827a",
+    "twwGemModel": "908a447dfeac840aa0d8e2ea63efd2c3323a99e4",
+    "modelManifest": "52fd8e0f4c8d41799a031f59c038aca3153a3c9b",
+    "independentGemTest": "f764d2f2252d0493049c49f3f6118da08790b590",
+    "independentEmittedLuaTest": "78a9d35a1c667b039911e7a8950be21ef34dff8c"
+  },
+  "testResults": {
+    "executionEnvironment": "GitHub-connected JavaScript V8 executing exact committed test code and exact source blobs",
+    "gemModelSelfTest": "29/29 PASS",
+    "gemIndependent": "10/24 PASS; 14/24 FAIL (all 14 malformed-context mutants accepted)",
+    "emittedLua": "18320/18320 PASS across 1018 raw, working, context and selection rows",
+    "emittedLuaAdversarial": "12/12 mutations rejected",
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_RUN_THIS_CYCLE",
+    "wowClient": "NOT_RUN",
+    "independentCurrentRetailHoldouts": 0
+  },
+  "verdict": {
+    "emittedWorking": "PASS",
+    "twwGemFinding": "FAIL_NON_JSON_SAFE_CONTEXT_ATTESTATION",
+    "economicIsolation": "PASS_NO_LEAK_DEMONSTRATED"
+  },
+  "numericDeltas": {
+    "workingCellsFilled": 0,
+    "verifiedExpectedQuantityCellsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0
+  },
+  "currentCounters": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceExpectedQuantityMissing": 116
+  },
+  "riskAndBlockers": [
+    "F003 model accepts custom toJSON, getters, symbols, hidden properties and array subclasses, permitting serialized context and event counts to diverge from validated inputs.",
+    "14 new fail-closed model cases require F003 repair; no live EV leakage demonstrated.",
+    "Native Node execution of new independent suites and two-source Lua test still pending; F002 informational CI preflight exists but not independently verified here.",
+    "No current-Retail rank-separated completed-cast holdout or verified cap for eight Gem Finding keys."
+  ],
+  "ownershipPreservation": {
+    "otherAgentsFilesEdited": false,
+    "productionMainEdited": false,
+    "runtimeProfilesEdited": false,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipPolicyEdited": false,
+    "legacyAssignmentsEdited": false,
+    "schedulesChanged": false
+  },
+  "acceptedVersusProposed": "INDEPENDENT_TEST_RESULTS_SUBMITTED; COORDINATOR_ACCEPTANCE_PENDING",
+  "nextTask": "After F003 model repair, rerun 24-case independent model suite under native Node; then independently review F004 gear-refresh context and native source-pinned direct Lua preflight.",
+  "zeroDeltaPivot": "Prior direct-source v0.2-v0.8 reconciliation was not re-audited; pivoted to changed F003 v1.1.0 model and previously untested emitted v0.8 working table."
+}

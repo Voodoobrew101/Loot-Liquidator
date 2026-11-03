@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_HISTORICAL_DIAMOND_DENOMINATOR_STAGE_GUARD",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runUTC": "2026-10-30T21:15:58Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "47c2bdf80c4146baa80aab53033c3a9c15721f36",
+  "resultCommitBeforeSubmission": "3a990502f03572ccfd8140b86224d4db97618f45",
+  "status": "PROPOSED_RESEARCH_ONLY_PENDING_COORDINATOR_AND_INDEPENDENT_QA",
+  "selectionReason": "Highest-priority priority-122 Dragonflight prospecting conflicts have a newly proposed F004 original-comment source (2026-10-30T2028Z). Instead of repeating prior sampling/TSM audits, tested exact rounded-rate denominator consistency and kept downstream Prismatic Ore separate.",
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/models_v2/df_historical_diamond_denominator_stage_guard_v1.js",
+      "blobSHA": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1",
+      "change": "new executable exact BigInt decimal-rounding feasibility and nearest compatible ore denominator; stage-join guard"
+    },
+    {
+      "path": "research/models/v2/df_historical_diamond_denominator_stage_guard_v1.json",
+      "blobSHA": "6aa1141b1a8734cfa644e39cf13a02e454d90841",
+      "change": "versioned assumptions, five exact keys, source provenance, quantitative hypothesis diagnostics, QA requests"
+    },
+    {
+      "path": "research/coordination/v2/submissions/baseline-modeller/20261030T211558Z-F003-DF-DIAMOND-DENOMINATOR-STAGE-GUARD.json",
+      "change": "unique role-owned coordinator/independent QA submission"
+    }
+  ],
+  "exactStableKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "exactTargetCount": 5,
+  "sourceEvidencePath": "research/evidence/v2/2026-10-30T2028Z-F004-df-two-stage-diamond-denominators.json",
+  "sourceEvidenceBlobSHA": "321dc050134de6a996e5978b87cf467516c4cb06",
+  "sourceStatus": "PROPOSED_NOT_ACCEPTED",
+  "exactBehavioralDeltas": {
+    "roundedRates": "Treat 1.08 and 2.57 per 1000 as decimal intervals [1.075,1.085) and [2.565,2.575) under an explicit rounding hypothesis",
+    "integerConsistency": "For exact 30000 Serevite ore, no integer diamond count is feasible; 32.4 is not an observed count",
+    "draconiumConsistency": "For exact 50000 Draconium ore, no integer diamond count is feasible; 128.5 is not an observed count",
+    "nearestReconciliation": "Nearest scenario denominators are 29767 Serevite (-233) and 49902 Draconium (-98); if denominator is constrained to a multiple of five: 29765 (-235) and 49900 (-100)",
+    "stageSeparation": "Prismatic Ore 192880 -> 25 diamonds/1000 reported ore is a separate second stage, never a direct Draconium/Serevite yield",
+    "sourceIndependence": "The 30000 and 50000 first-stage claims are one author/study family; Prismatic claim is another author but not the same conversion",
+    "economicGate": "All numerical witnesses are scenario-only; P and E remain null, no rank allocation or live recommendation"
+  },
+  "exactNumericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyFamilies": 0
+  },
+  "modelUncertaintyDelta": "Two specific exact-denominator-plus-nearest-0.01-rounding hypotheses excluded by integer arithmetic. This does not establish true denominators, current-Retail rates or eliminate approximate historical reports.",
+  "testsActuallyRun": [
+    {
+      "runtime": "connector JavaScript V8",
+      "test": "exact committed source selfTest",
+      "passed": 27,
+      "failed": 0,
+      "syntheticOnly": true,
+      "sourceBlobSHA": "849bfeda16c2cbddd1af9e6fb8a11083ebe4c7a1"
+    },
+    {
+      "runtime": "Python Fraction exact rational independent implementation",
+      "test": "rounding interval count membership randomized over ore/rate/precision",
+      "passed": 45455,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "GitHub connector",
+      "test": "source and manifest readback; SHA agreement; exact 5-key priority-122 match",
+      "passed": true
+    }
+  ],
+  "testsNotRun": [
+    "native Node execution of exact committed model",
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "independent current-Retail whole-study holdout",
+    "in-game prospecting"
+  ],
+  "testsNotRunReasons": "No native repository checkout available to the execution container; no compiler inputs or generated candidate changed; no verified 2026 cast-level observations.",
+  "canonicalReadiness": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "unresolvedExpectedQuantityEvidenceCells": 116,
+    "verifiedBaselineRecords": 0
+  },
+  "sourceLineagesUsed": [
+    "reddit-108782r-comment-A-30k-serevite-50k-draconium",
+    "reddit-108782r-comment-B-prismatic-1000-25-diamonds"
+  ],
+  "newIndependentStudyLineages": 0,
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "productionWrites": 0,
+    "frozenTSMWrites": 0,
+    "rawEvidenceWrites": 0,
+    "tooltipOnlyPolicyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "otherRoleFilesModified": 0,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Original Reddit comments only search-indexed; exact wording and reporting units not directly verified",
+    "30k/50k ore denominators and rates may be approximate, not exact decimal rounding",
+    "Unknown actual completed casts, refunds, ore quality, output rank, skill/spec/gear and patch build",
+    "Prismatic Ore downstream input must not be folded into direct ore yields",
+    "No current-Retail zero-inclusive rank-labelled casts, verified baseline or independent holdout",
+    "Independent F005 native Node verification and coordinator acceptance pending"
+  ],
+  "evidenceResearcherRequest": "Verify original Reddit commenter text and whether 'per stack' refers to 1000 units and denominators exact/approximate. Seek current-Retail complete cast logs with ranks, zero outputs, skill, stats and refunds.",
+  "independentValidatorRequest": "Run exact committed JS under native Node, verify BigInt rounding half-open boundaries and nearest witnesses, adversarial invalid domains, stage guard, no source double count, and no economic promotion.",
+  "coordinatorAcceptanceRequest": "Accept only research diagnostic functionality. Do not promote evidence, confidence, source applicability, or any rank-specific economic E from these historical approximate reports.",
+  "nextTask": "F003_NEXT: if no new source resolves denominator semantics, pivot to priority-102 Dragonflight prospecting 38-key E model with a distinct identifiable risk, not another unchanged rounding audit."
+}

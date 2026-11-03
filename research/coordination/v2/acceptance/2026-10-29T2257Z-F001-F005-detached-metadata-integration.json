@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_DETACHED_METADATA_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 12,
+  "runUTC": "2026-10-29T22:57:15Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "24d94c28b49283c9ac7396cba11e68d311835e92",
+  "resultCommit": "THIS_COMMIT",
+  "canonicalReadinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+  "canonicalPrioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "inputReview": [
+    {
+      "owner": "completion-engineer",
+      "submission": "research/coordination/v2/submissions/completion-engineer/2026-10-29T2215Z-F002-serialized-attestation-f003-native-ci.json",
+      "decision": "ACCEPT_NATIVE_PIPELINE_AND_476_CASE_CI_WIRING; CONDITIONAL_SERIALIZED_ATTESTATION_REJECT_FULL_PROVENANCE_SEAL",
+      "blobs": {
+        "research/tools/working_estimates.js": "3500fac51b69328cacb6c3ec5089561fcba2f2bb",
+        "research/tools/run_completion_pipeline.js": "84bc1b017e758fa36e793063766634e5ab8f9fb1"
+      },
+      "delta": {
+        "workingNumericCells": 0,
+        "evidenceNumericCells": 0,
+        "newE": 0,
+        "economicPromotions": 0
+      },
+      "reason": "Native CI at exact head passes source/context/value roundtrip and 476 independent numerical checks, but F005 found six source metadata fields absent from sourceIdentity; durable detached external digest still pending."
+    },
+    {
+      "owner": "independent-validator",
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-29T2241Z-F005-serialized-metadata-integrity.json",
+      "review": "research/coordination/v2/reviews/2026-10-29T2241Z-F005-serialized-metadata-integrity.json",
+      "decision": "ACCEPT_SYNTHETIC_SOURCE_METADATA_DEFECT_AS_BLOCKER; NATIVE_DETACHED_14_CASE_EXECUTION_PENDING",
+      "blobs": {
+        "research/tests/v2/test_f005_serialized_metadata_integrity.js": "edfe6757b5a7bcf3dbb324350b7e2f9480847019",
+        "research/tools/working_estimates.js": "3500fac51b69328cacb6c3ec5089561fcba2f2bb"
+      },
+      "v8": {
+        "controlsPassed": 3,
+        "metadataMutationsUndetected": 6,
+        "hashStub": "NONCRYPTOGRAPHIC"
+      },
+      "native14": "NOT_RUN",
+      "reason": "Independent static inspection confirmed sourceIdentity hashes selected source evidence and conditions but omits tooltipOnly, sources, verifiedDate and record status. No existing row or live EV leakage demonstrated."
+    },
+    {
+      "owner": "baseline-modeller",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261029T2215Z-F003-GEM-ANYTIME-ALPHA-SPENDING.json",
+      "decision": "ACCEPT_PROSPECTIVE_MATHEMATICAL_MODEL_FOR_RESEARCH_REVIEW_ONLY; INDEPENDENT_F005_REVIEW_PENDING",
+      "blobs": {
+        "research/tools/models_v2/tww_gem_finding_anytime_marginal_bounds_v1.js": "d7118b79802ebfb047f59220d5c0d99892a423c2",
+        "research/models/v2/tww_gem_finding_anytime_marginal_bounds_v1.json": "4757331267e53fc8fcce6c2ee682df981af6f036"
+      },
+      "model": {
+        "targets": 8,
+        "alpha": 0.05,
+        "perLook": "alpha/(8*n*(n+1))",
+        "fixedSampleZeroHitCasts": 574,
+        "anytimeZeroHitCasts": 2096,
+        "independentCoordinatorArithmeticAt2096": 0.009999464437815853,
+        "modelSelfTestsReported": 28,
+        "actualRetailCasts": 0
+      },
+      "reason": "Union-bound allocation is mathematically plausible under IID fixed-context predeclared outputs; self-tests are not independent model acceptance and no P/E promotion is permitted."
+    },
+    {
+      "owner": "evidence-researcher",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-29T2230Z-F004-midnight-crushing-denominator-and-quality-submission.json",
+      "decision": "ACCEPT_ONE_ORIGINAL_SELF_REPORTED_AGGREGATE_AND_TWO_QUALITATIVE_LEADS_AS_CONTEXT_ONLY",
+      "blobs": {
+        "research/evidence/v2/2026-10-29T2230Z-F004-midnight-crushing-gross-vs-casts.json": "6dcbdf0f4c0100340c177ae5860dc664b64577b3",
+        "research/evidence/v2/source-reviews/2026-10-29T2230Z-F004-midnight-crushing-gross-vs-casts-source-review.json": "aafecdab9576e7b1793c737ce89483226bbf30f"
+      },
+      "delta": {
+        "originalAggregateLineages": 1,
+        "qualitativeLeads": 2,
+        "admittedMappings": 0,
+        "actualCompletedCrushingCasts": 0,
+        "newEvidenceE": 0
+      },
+      "reason": "Reported 200 ore, 43 prospects, 34 gems and 24 dust cannot establish actual completed crushing casts or rank-specific P/E. Original forum content not independently checked in this coordinator run."
+    }
+  ],
+  "canonicalCounters": {
+    "admittedMappings": 1018,
+    "distinctInputIDs": 179,
+    "fieldSlots": 4072,
+    "workingNumeric": 4072,
+    "evidenceNumeric": 3558,
+    "evidenceMissing": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "evidenceGE90": 0,
+    "verifiedMinimumEligibleBaselines": 0,
+    "independentRetailHoldoutFamilies": 0,
+    "priorityRecords": 217
+  },
+  "previewReport": {
+    "workingPriorDropChance": 987,
+    "workingPriorYieldMin": 97,
+    "workingPriorYieldMax": 97,
+    "workingPriorExpectedQuantity": 933,
+    "recordsWithAssumptions": 1000,
+    "workingConsistencyAdjustments": 0,
+    "previewOnlyRecords": 1018,
+    "normalizedVerifiedRecords": 0,
+    "candidateBlob": "940431ecd0cefe1e65701d2cc9f53ae619350b38"
+  },
+  "testsVerified": [
+    {
+      "name": "Native branch CI exact head",
+      "sha": "24d94c28b49283c9ac7396cba11e68d311835e92",
+      "run": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40968063368",
+      "conclusion": "success",
+      "checks": [
+        "Node run_completion_pipeline.js --check",
+        "native 476/476 independent F005/F003 binomial fixture",
+        "versioned serialized source/context/value attestation four adversarial cases",
+        "Lua5.1 decode 1018 mappings and 4072 working fields; 514 evidence gaps preserved",
+        "JSON Schema and blocker array roundtrip"
+      ]
+    },
+    {
+      "name": "Independent F005 V8 field-inclusion checks",
+      "passed": 3,
+      "failed": 6,
+      "limitation": "Noncryptographic hash stub; native 14-case suite not run"
+    },
+    {
+      "name": "Coordinator sourceIdentity static inspection",
+      "result": "CONFIRMED_OMITTED_TOOLTIPONLY_SOURCES_VERIFIEDDATE_STATUS"
+    },
+    {
+      "name": "Coordinator arithmetic verification",
+      "result": "PASS",
+      "values": {
+        "anytimeZeroHitUpper2095": 0.010003762588506437,
+        "anytimeZeroHitUpper2096": 0.009999464437815853,
+        "dustPerReportedGem": 0.7058823529411765,
+        "dustPerNominalThreeGemEquivalent": 2.1176470588235294
+      }
+    }
+  ],
+  "notRun": [
+    "New 14-case detached metadata suite in native Node/CI",
+    "Independent F005 validation of F003 anytime model",
+    "WoW Retail client",
+    "Current-Retail whole-study holdout"
+  ],
+  "safety": {
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "unsupportedFallbackConfidence": 0,
+    "newEconomicPromotions": 0,
+    "tooltipOnlyPolicyChanged": false,
+    "frozenTSMChanged": false,
+    "legacyAssignmentsChanged": false,
+    "rawEvidenceChanged": false,
+    "productionWrites": 0,
+    "mainChanged": false,
+    "runtimeBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "decision": "F002_NATIVE_CI_ACCEPTED_BUT_DETACHED_PROVENANCE_SEAL_BLOCKED_BY_F005; F003_ANYTIME_MATH_CONDITIONAL; F004_CONTEXT_ONLY; NO_ECONOMIC_PROMOTIONS",
+  "blockers": [
+    "Independent F005 V8 harness reproduced six unsealed source metadata mutations: tooltipOnly.economicUse, tooltipOnly.displayOnly, tooltipOnly.sourceClaimID, sources, verifiedDate, status. Current sourceIdentity omits them.",
+    "Validator-owned 14-case detached native Node suite is not yet invoked by the pipeline; V8 used a deterministic noncryptographic hash stub, not native SHA-256.",
+    "Detached attestation has no separately persisted and independently pinned candidate digest; the in-process pin check is not a durable deployment guarantee.",
+    "Anytime-valid F003 Gem Finding model awaits independent validator review and has no measured current-Retail cast cohort.",
+    "116 evidence-backed expectedQuantity gaps and 514 total evidence numeric gaps; no >=90 evidence fields or independently verified minimum eligible baseline.",
+    "Retail universe not independently exhaustive; 24 legacy queue30 leads and 2 Housing Dye input leads remain unadmitted.",
+    "No WoW Retail in-game verification."
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_ATTEST_FULL_SOURCE_METADATA_AND_WIRE_F005_NATIVE_14",
+      "scope": [
+        "research/tools/working_estimates.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Extend versioned detached source identity to original provenance and tooltipOnly prohibitions, reject six F005 mutations with native SHA-256, run 14/14 independent suite in CI; preserve 4072 numeric preview fields and do not change evidence or live EV. Publish an externally pinned digest proposal without treating in-memory pin as durable."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_NATIVE_DETACHED_METADATA_RETEST_AND_F003_ANYTIME_REVIEW",
+      "scope": [
+        "research/tests/v2/",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Run 14-case detached native Node suite before and after repair, inspect independent SHA-256 and CI logs, challenge status/provenance/tooltip-only drift, separately verify anytime alpha-spending proof and 2096 zero-hit threshold; do not self-approve numeric claims."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_INDEPENDENT_GEM_ANYTIME_QA_OR_PRIORITY_E_PIVOT",
+      "scope": [
+        "research/models/v2/",
+        "research/tools/models_v2/"
+      ],
+      "acceptance": "Provide independent oracle/assumption challenge for eight-output optional stopping model without copying fixed-sample thresholds; if no new actual cohort or reduced uncertainty, pivot to another priority expectedQuantity denominator family; no synthetic economic promotion."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_MIDNIGHT_CRUSHING_SELECTOR_MATCHED_CAST_CAPTURE",
+      "scope": [
+        "research/evidence/v2/"
+      ],
+      "acceptance": "Verify exact spell 1231132 selector, input gem and dust rank IDs, and matched low/high specialization zero-inclusive completed crushing casts with refunds and patch; keep 200-ore/43-prospect aggregate contextual and do not convert gross gems into actual crushing casts."
+    }
+  ],
+  "zeroDeltaPivot": "No new numeric evidence or mapping admissions. Do not repeat completed cast-basis or high-n binomial audits. Repair the six newly exposed metadata attestation holes; independent validator runs native 14-case suite. Evidence research pivots to exact selector and matched cast capture."
+}

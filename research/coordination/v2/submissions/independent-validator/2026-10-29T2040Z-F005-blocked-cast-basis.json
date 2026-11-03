@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_BLOCKED_EVIDENCE_CAST_BASIS",
+  "workflowRevision": 2,
+  "queueRevision": null,
+  "runUTC": "2026-10-29T20:40:38.869Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "3a6cc4c27ff310df8712098ea11aa71e18da245c",
+  "headBeforeSubmission": "bb771261bfd786fa10cd84fab9275d6ac5060cc0",
+  "proposedStatus": "QA_FAIL_REPAIR_REQUIRED_NOT_COORDINATOR_ACCEPTED",
+  "reviewPath": "research/coordination/v2/reviews/2026-10-29T2040Z-F005-blocked-cast-basis.json",
+  "reviewBlobSHA": "37866b76a81caacd258fc736382edac2182c0266",
+  "changedFiles": [
+    "research/tests/v2/test_f005_blocked_evidence_cast_basis.js",
+    "research/coordination/v2/reviews/2026-10-29T2040Z-F005-blocked-cast-basis.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-29T2040Z-F005-blocked-cast-basis.json"
+  ],
+  "subjectSourceSHA": "e6f6c736114233bf089d9d5251db2ef3dbbe7e42",
+  "testBlobSHA": "ff1b946d7e1c76abac6c400f11e7c3835ede17ab",
+  "testsActuallyRun": {
+    "newSyntheticV8": {
+      "pass": 4,
+      "fail": 8,
+      "total": 12
+    },
+    "priorStatusClaimV8": {
+      "pass": 11,
+      "fail": 0,
+      "total": 11
+    },
+    "priorProvenanceV8": {
+      "pass": 12,
+      "fail": 0,
+      "total": 12
+    }
+  },
+  "checksNotRun": [
+    "native Node",
+    "Lua 5.1",
+    "full completion pipeline --check",
+    "in-game Retail",
+    "independent current-Retail holdout"
+  ],
+  "exactDeltas": {
+    "newTestCases": 12,
+    "reproducedFailureCases": 8,
+    "newDefectClasses": 3,
+    "newMappingKeys": [],
+    "removedInvalidMappingKeys": [],
+    "numericWorkingCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "newIndependentStudies": 0,
+    "productionFilesChanged": 0
+  },
+  "readinessSnapshot": {
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "workingTotalFields": 4072,
+    "missingRawEvidenceFields": 514,
+    "missingVerifiedEconomicExpectedQuantity": 116,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "safety": {
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "noLiveEVLeakDemonstrated": true,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyPolicyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "productionChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Direct estimator copies blocker-inapplicable E/P with positive confidence despite source denominator/rank blockers.",
+    "No independent matched current-Retail holdout; economic promotion remains blocked."
+  ],
+  "nextTask": {
+    "owner": "completion-engineer",
+    "id": "F002_ENFORCE_CAST_BASIS_BLOCKERS_AT_WORKING_ESTIMATE_BOUNDARY",
+    "action": "Quarantine/reject blocked E/P at copy boundary; rerun new 12-case regression, previous 23 controls, native pipeline, Lua and verify preview isolation."
+  }
+}

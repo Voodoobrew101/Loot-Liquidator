@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_TWW_MILL_COMPLETED_CAST_REAGENT_ACCOUNTING",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runUTC": "2026-10-30T18:27:10Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "741a44f145a11c1e5567eb2c3e9cba0eee0d17cb",
+  "resultCommitBeforeSubmission": "f0fc754807d376e41c93b9031178647cda6b0f6b",
+  "status": "PROPOSED_RESEARCH_ONLY_PENDING_COORDINATOR_AND_INDEPENDENT_QA",
+  "reasonForPivot": "Five priority-122 Dragonflight prospecting conflicts remain blocked on independent cast evidence; the recently repaired TWW Gem Finding family likewise lacks new observations. Pivoted to twelve priority-104 TWW milling missing-E rows instead of repeating unchanged audits.",
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/models_v2/tww_mill_reagent_accounting_identification_v1.js",
+      "blobSHA": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a",
+      "change": "new executable zero-inclusive cast denominator and Resourcefulness partial-identification model"
+    },
+    {
+      "path": "research/models/v2/tww_mill_reagent_accounting_identification_v1.json",
+      "blobSHA": "758b38f4a42b5becd353ca5e17fb920000f7355c",
+      "change": "versioned model identity, provenance, applicability, assumptions and holdout requirements"
+    },
+    {
+      "path": "research/coordination/v2/submissions/baseline-modeller/20261030T182710Z-F003-TWW-MILL-REAGENT-ACCOUNTING-IDENTIFICATION.json",
+      "change": "unique baseline-modeller submission for coordinator acceptance"
+    }
+  ],
+  "exactStableKeys": [
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028",
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+  ],
+  "affectedMappingRows": 12,
+  "exactBehavioralDeltas": {
+    "netInputDividedByBatch": "NOT_A_VALID_COMPLETED_CAST_ESTIMATOR_WHEN_REFUNDS_UNKNOWN",
+    "netPlusSaved": "EXACT_CAST_DENOMINATOR_ONLY_WHEN_DIVISIBLE_AND_CONSERVATION_HOLDS",
+    "netOnly": "LOWER_BOUND_ONLY_UNLESS_PROVEN_SAVING_CAP",
+    "scenarioCap": "REQUIRES_SCENARIO_ONLY_LABEL_AND_SOURCE_ID",
+    "empiricalP": "UNAVAILABLE_WITHOUT_ZERO_INCLUSIVE_POSITIVE_CAST_COUNT",
+    "empiricalE": "IDENTIFICATION_INTERVAL_WHEN_CAST_DENOMINATOR_BOUNDED; NO_LIVE_EV",
+    "observedYieldRange": "SAMPLE_ONLY_NOT_GAME_MIN_MAX",
+    "economicGates": "CONFIDENCE_0_PREVIEW_ONLY_NORMALIZED_VERIFIED_FALSE"
+  },
+  "exactNumericDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyFamilies": 0
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "connector JavaScript V8",
+      "test": "exact source-generating function self-tests including accounting and adversarial context cases",
+      "passed": 20425,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "independent Python arithmetic enumeration",
+      "test": "sharpness of integer denominator and E bounds over batch/cap/net domains",
+      "passed": 30800,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "runtime": "GitHub connector",
+      "test": "committed model and manifest read-back",
+      "passed": true,
+      "modelBlobSHA": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a",
+      "manifestBlobSHA": "758b38f4a42b5becd353ca5e17fb920000f7355c"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node exact committed model --self-test",
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "Retail in-game cast testing",
+    "Independent F005 whole-study holdout"
+  ],
+  "testsNotRunReasons": "No native repository checkout or Lua 5.1 interpreter available; no compiler inputs changed. Independent Retail cast observations are unavailable.",
+  "canonicalReadiness": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "unresolvedExpectedQuantityEvidenceCells": 116,
+    "verifiedBaselineRecords": 0
+  },
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "productionWrites": 0,
+    "frozenTSMWrites": 0,
+    "rawEvidenceWrites": 0,
+    "tooltipOnlyPolicyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "otherRoleFilesModified": 0,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Current priority backlog supplies no new zero-inclusive cast study for this family",
+    "Actual completed casts and saved/refunded totals missing in prior rows",
+    "No independently verified applicable per-cast Resourcefulness saving cap",
+    "Independent QA and in-game verification outstanding"
+  ],
+  "evidenceResearcherRequest": "For the twelve target mappings, collect zero-inclusive completed-cast logs with all outputs/ranks, input batch, net consumed, saved/refunded units, patch epoch, actual/minimum eligible skill, spec, gear and independent study-family ID. If only inventory deltas exist, obtain verified saving cap before bounding casts.",
+  "independentValidatorRequest": "Native-run exact committed source; independently verify cast conservation, denominator interval sharpness, adversarial context arrays, scenario-cap status and economic isolation; require whole-family held-out observations for evidence promotion.",
+  "nextTask": "F003_NEXT: independent validator tests for this denominator model; if no new cast evidence, pivot to the 43 priority-102 Dragonflight milling E priors rather than re-audit TWW.",
+  "coordinatorAcceptanceRequest": "Review this bounded-denominator research-only model; do not promote numeric evidence, economic eligibility, confidence or game mechanics without independently measured zero-inclusive cast data."
+}

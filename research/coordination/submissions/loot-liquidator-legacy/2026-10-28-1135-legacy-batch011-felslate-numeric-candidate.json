@@ -1,0 +1,89 @@
+{
+  "hypothesisID": "legacy-felslate-standard-mass-compare",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 6,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      31252,
+      225904
+    ],
+    "inputItemIDs": [
+      123919
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": null,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "recipeSpellID": 31252,
+    "nominalInputOre": 5,
+    "reportedOrePerArm": 10000,
+    "derivedFiveOreEquivalents": 2000,
+    "reportedUncommonTotal": 2063,
+    "reportedRareTotal": 341,
+    "actualCasts": null
+  },
+  "targetContext": {
+    "recipeSpellID": 225904,
+    "nominalInputOre": 20,
+    "reportedOrePerArm": 10000,
+    "derivedFiveOreEquivalents": 2000,
+    "reportedUncommonTotal": 2070,
+    "reportedRareTotal": 334,
+    "actualCasts": null
+  },
+  "requiredLiveContext": [
+    "clientBuild",
+    "recipeSpellID",
+    "actualInputOreConsumed",
+    "inputItemID",
+    "professionSkillLineID",
+    "effectiveSkill",
+    "specializationRanks",
+    "professionGear",
+    "perCastOutputItemIDs",
+    "perCastOutputCountsIncludingZero",
+    "perCastResourcefulnessRefunds"
+  ],
+  "sources": [
+    {
+      "claimID": "felslate-2017-original-two-arms",
+      "url": "https://www.scribd.com/document/359130779/full-legion-worksheet",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null,
+      "reportedOrePerArm": 10000
+    },
+    {
+      "claimID": "felslate-mass-recipe-20",
+      "url": "https://warcraft.wiki.gg/wiki/Design:_Mass_Prospect_Felslate",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": null,
+  "numericTransformValidated": false,
+  "blockers": [
+    "2017 worksheet lacks exact actual cast count and zero-inclusive per-cast outputs",
+    "No item-ID/rank-specific outcome vectors or verified skill/spec/gear matching",
+    "No current-Retail patch bridge or independent controlled replication",
+    "Same ore count is not same number of operations (2000 standard-equivalents versus 500 mass-equivalents if all consumed nominally)"
+  ],
+  "notes": "Background P3 only. 2017 raw reported uncommon totals 2063 vs 2070, rare 341 vs 334 for two 10000-ore arms; descriptive per-five-ore-equivalent rare 0.1705 vs 0.167, not P(hit), and not an approved multiplier. Required matched >=200 actual casts per recipe and independent replication."
+}

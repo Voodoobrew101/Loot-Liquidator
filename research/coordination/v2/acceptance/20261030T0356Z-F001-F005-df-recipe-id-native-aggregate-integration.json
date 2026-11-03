@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F002_F003_F004_F005_DF_RECIPE_ID_NATIVE_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 17,
+  "runUTC": "2026-10-30T03:56:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "8753e1bc98d1598b8fbdd7263572a69732b1d883",
+  "canonicalReadiness": "research/coordination/completion-readiness.json",
+  "canonicalPriorities": "research/coordination/completion-priorities.json",
+  "status": "ACCEPTED_RESEARCH_QA_WITH_ECONOMIC_HOLDOUT",
+  "sourceIdentities": {
+    "modelCode": {
+      "path": "research/tools/models_v2/df_milling_decision_sensitivity_v1.js",
+      "blobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf"
+    },
+    "modelManifest": {
+      "path": "research/models/v2/df_milling_decision_sensitivity_v1.json",
+      "blobSHA": "07d9a0c640e0f795b6a0e6d88b7cbe2afabd877f"
+    },
+    "validatorFixture": {
+      "path": "research/tests/v2/test_f005_df_milling_raw_context_and_universe.js",
+      "blobSHA": "ba131ea1984d271c274e2d87496039fdd901d5c2"
+    },
+    "engineerGate": {
+      "path": "research/tools/run_completion_pipeline.js",
+      "blobSHA": "d370948c40ae32d6c7fe82b48cb9dd024f9a6065"
+    },
+    "evidence": {
+      "path": "research/evidence/v2/2026-10-30T0333Z-F004-midnight-r2-prospecting-JD3K-totals.json",
+      "blobSHA": "88be9ce78ba2eb0d3e74b01ab2c6e06dfcd2fc2d"
+    },
+    "independentReview": {
+      "path": "research/coordination/v2/reviews/2026-10-30T0348Z-F005-df-native-recipe-id-gate-acceptance.json",
+      "blobSHA": "b0ac3717310963063f8fadef38ea22d25653ac58"
+    }
+  },
+  "decisions": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003",
+      "decision": "ACCEPT_MODEL_ONLY_RESEARCH_QA",
+      "reason": "Positive safe-integer RAW recipeSpellID typing repaired; source model and manifest SHA matched; 41 self assertions and independent native fixture passed. Not a verified recipe existence, eligibility, full output universe, or current-Retail EV model."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005",
+      "decision": "ACCEPT_INDEPENDENT_NATIVE_QA",
+      "reason": "GitHub Actions 40999083264 successful; strict DF 16/16, 41 model assertions, nine negative recipe-ID probes, synthetic UNKNOWN control, 27 Midnight controls, Lua5.1 and deterministic pipeline. Independent F004 arithmetic 35/35 V8-only, not native."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002",
+      "decision": "ACCEPT_STRICT_NATIVE_GATE",
+      "reason": "Prior ten-failure quarantine removed and strict 16/16 required; pipeline job and Lua5.1 checks succeeded. No candidate numeric or production changes."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004",
+      "decision": "ACCEPT_ORIGINAL_AGGREGATE_AS_CONTEXT_ONLY",
+      "reason": "One original study lineage, three rank-2 gross-ore cohorts and 17 named output totals. Actual completed casts, refunds, observation epoch, output IDs/ranks and zero-inclusive records missing; no E or P promotion."
+    }
+  ],
+  "checks": {
+    "performedByCoordinator": [
+      "Fetched current branch head and five required governing/canonical files",
+      "Read all four new specialist submissions, model CI addendum and two independent reviews",
+      "Verified five changed source/test/evidence blob SHAs against branch files",
+      "Compared prior coordinator commit to branch head: 13 commits and 13 research-only files",
+      "Read GitHub Actions run 40999083264 and native job-step conclusions"
+    ],
+    "nativeExternalCI": {
+      "runID": 40999083264,
+      "headSHA": "a292f73b6f7d10e1bafbb40c5888a8fe675f2e8a",
+      "conclusion": "success",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40999083264",
+      "strictDF": "16/16",
+      "modelSelfTest": "41/41",
+      "midnight": "27/27",
+      "lua51": "PASS",
+      "deterministicPipeline": "PASS",
+      "schema": "PASS"
+    },
+    "notRunByCoordinator": [
+      "Local native Node/Lua execution",
+      "Retail WoW client and tooltip",
+      "Current Retail zero-inclusive independent held-out family",
+      "Independent exhaustive Retail mapping/output universe"
+    ]
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "newEvidenceBackedExpectedQuantity": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newOriginalSourceLineages": 1,
+    "newGrossOreCohorts": 3,
+    "newNamedOutputTotals": 17,
+    "validatorNegativeRecipeIDAssertions": 9,
+    "validatorSyntheticUnknownControls": 1,
+    "coordinatorOwnedFiles": 3
+  },
+  "currentReadiness": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116,
+    "fieldsGE90": 0,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "productionChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "RAW spell-ID domain correctness does not prove actual Retail recipe eligibility or skill context.",
+    "24 Dragonflight milling mappings lack independently verified complete output universe and current-Retail completed-cast holdouts.",
+    "New Midnight prospecting aggregate is gross ore totals without actual casts/refunds/output ranks/epoch; unlisted diamond is not observed zero.",
+    "514 missing original evidence numeric fields including 116 expected quantities; no evidence field >=90; independent Retail universe not exhaustive."
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_PRIORITY122_CONFLICT_DIAGNOSTIC",
+      "scope": "Research-only compare five priority-122 Dragonflight prospecting conflict keys, verify source unit normalization and produce deterministic nonpromoting conflict diagnostics; keep strict native QA gate and working preview intact."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_TWW_MILLING_E_CONTEXT_PIVOT",
+      "scope": "Pivot from repaired DF typed recipe ID to priority-104 TWW milling E family; derive only identifiable cast-normalized models, explicit unknown context and sensitivity; no speculative economic promotion."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_QUEUE30_MIDNIGHT_CRUSHING_SELECTOR_RANK",
+      "scope": "Verify exact spell 1231132 gem eligibility, output rank and reagent vector for queue30 leads; require primary selector evidence, keep unverified leads unadmitted."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_PRIORITY122_AND_CRUSHING_INDEPENDENT_QA",
+      "scope": "Independently challenge next changed conflict-normalization or Crushing-selector artifacts, retain positive/negative source ancestry and preview isolation controls; do not approve own authored numeric evidence."
+    }
+  ],
+  "zeroDeltaPivot": "No numeric or economic deltas. Accepted a concrete repaired QA gate and new source lineage, then pivoted away from repeated Dragonflight context audits to priority-122 conflict units, TWW E modeling and exact Midnight Crushing eligibility.",
+  "nextTask": "F002_PRIORITY122_CONFLICT_DIAGNOSTIC"
+}

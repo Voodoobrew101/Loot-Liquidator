@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_FIX_SOURCE_STATUS_CLAIM_ADMISSION",
+  "workflowRevision": 2,
+  "queueRevision": 9,
+  "runUTC": "2026-10-29T20:09:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "243872c1263650ce6f763ed5b3495cdc9d531679",
+  "implementationCommits": [
+    "7dd52ba015a31230d7e49732dc8c998e5f3734ce",
+    "cf9bb92bd9daee0726a280bed6059f8b8ef6a847"
+  ],
+  "headBeforeSubmission": "cf9bb92bd9daee0726a280bed6059f8b8ef6a847",
+  "changedPaths": [
+    {
+      "path": "research/tools/working_estimates.js",
+      "blobSHA": "e6f6c736114233bf089d9d5251db2ef3dbbe7e42",
+      "change": "Only five recognized numeric evidence statuses with nonempty traceable sourceClaimIDs may enter copied-evidence working estimates or donor priors; unknown, contradictory, unrecognized, missing-claim source fields are quarantined to confidence-zero preview policy. Explicit unqualified-source assumption records the exclusion."
+    },
+    {
+      "path": "research/tools/run_completion_pipeline.js",
+      "blobSHA": "b2486e64da0054b6dfe4944a5e36b5b9fe70433b",
+      "change": "Require and execute validator-owned 11-case source-status/claim admission fixture under native Node in every pipeline run."
+    }
+  ],
+  "validatorFixtureUnmodified": {
+    "path": "research/tests/v2/test_f005_evidence_status_claim_contract.js",
+    "blobSHA": "85a7745d7d60307e777f60e99ae4e32423b1a6cc"
+  },
+  "tests": {
+    "inProcessV8Harness": {
+      "newSourceStatusClaimSuite": {
+        "passed": 11,
+        "failed": 0,
+        "previousPassed": 5,
+        "previousFailed": 6
+      },
+      "priorProvenanceSuite": {
+        "passed": 12,
+        "failed": 0
+      },
+      "limitations": "Node assert emulated; native Node coverage independently provided by GitHub CI"
+    },
+    "githubActions": {
+      "runID": 40946359278,
+      "headSHA": "cf9bb92bd9daee0726a280bed6059f8b8ef6a847",
+      "conclusion": "success",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40946359278",
+      "checks": [
+        "Native Node completion pipeline --check including new 11-case and prior 12-case suites",
+        "Full candidate JSON Schema validation in pipeline",
+        "Lua 5.1 syntax and generated working/evidence isolation",
+        "Blocker arrays Lua roundtrip"
+      ]
+    },
+    "githubReadback": "PASS_TWO_MODIFIED_BLOBS_VERIFIED",
+    "notRun": [
+      "Local native Node outside GitHub CI",
+      "Local Lua 5.1 outside GitHub CI",
+      "WoW Retail client",
+      "Independent whole-family current Retail holdout"
+    ]
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "removedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0,
+    "productionFilesChanged": 0,
+    "sourceAdmissionSyntheticFailuresRepaired": 6,
+    "validatorOwnedTestCasesWiredToCI": 11,
+    "generatedCandidateChanged": false
+  },
+  "currentCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantityEvidence": 116
+  },
+  "safety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "runtimeProfilesChanged": false,
+    "mainChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Independent validator must retest exact new estimator SHA and coordinator must accept.",
+    "Durable cross-process source/evidence attestation remains unimplemented; current source identity lease is in-process only.",
+    "116 missing economic E evidence fields and 514 total numeric evidence gaps; no verified Retail baseline or exhaustive universe audit."
+  ],
+  "nextTask": {
+    "owner": "completion-engineer",
+    "id": "F002_VERSIONED_SERIALIZED_SOURCE_ATTESTATION",
+    "condition": "Coordinate schema version and independently accepted source-identity contract; do not repeat unchanged 23-case audits."
+  },
+  "status": "PROPOSED_RESEARCH_ONLY_PENDING_INDEPENDENT_QA"
+}

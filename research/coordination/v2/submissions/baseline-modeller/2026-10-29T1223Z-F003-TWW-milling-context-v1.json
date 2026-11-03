@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_TWW_MILL",
+  "taskStatus": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "workflowRevision": 2,
+  "coordinatorQueueRevisionObserved": 1,
+  "runDateUTC": "2026-10-29",
+  "baseCommit": "3ae202db5da34484735407518a2e11a5d829397b",
+  "reviewedModelHead": "a09819aa303e01e32f69fa2864382bc1b8889a45",
+  "resultCommit": null,
+  "pathsChanged": [
+    "research/tools/models_v2/tww_milling_context_sensitivity_v1.js",
+    "research/models/v2/tww_milling_f003_sensitivity_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/2026-10-29T1223Z-F003-TWW-milling-context-v1.json"
+  ],
+  "modelBlobSHA": "76756fce7ae82cb601fb12c279d05f01b9df3eef",
+  "manifestBlobSHA": "2ce7cbf1e460381747a9ae70eafe5d29a1c63720",
+  "scope": {
+    "assignedExactKeys": 12,
+    "sourceAnchoredHistoricalKeys": 2,
+    "unanchoredKeys": 10,
+    "sourceFamilyIDs": [
+      "reddit-1fdmzwy-2024-original-author"
+    ],
+    "independentNewStudyLineages": 0,
+    "sourceReusedNotRecounted": true
+  },
+  "exactKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+  ],
+  "deltas": {
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "rawEvidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "existingWorkingNumericCellsChanged": 0,
+    "confidencePromotions": 0,
+    "sourceConflictsResolved": 0,
+    "newModelFiles": 2,
+    "newVersionedTypedContextContracts": 1,
+    "exactRankContextsReconciledToCurated": 12,
+    "syntheticHistoricalSensitivityScenarios": 12,
+    "currentRetailEconomicFieldsPromoted": 0
+  },
+  "model": {
+    "version": "tww-milling-context-sensitivity-v1.0.0",
+    "nominalReagents": "10 of exact input herb per operation",
+    "minimumEligibleSkill": null,
+    "referenceOptionalBonus": 0,
+    "referenceStatus": "HYPOTHETICAL_NOT_VERIFIED_MIN_SKILL",
+    "sourceRates": "2024 author aggregate 1.15 and 1.35 output units per herb; rank/skill/refund and cast denominators not fully established",
+    "denominatorAlternatives": [
+      "NOMINAL gross 10 herbs per cast",
+      "NET consumed 10 herbs per cast less refunded units"
+    ],
+    "refundFractionSensitivity": [
+      0,
+      0.1,
+      0.2
+    ],
+    "sourceAnchoredHistoricalEIllustrations": {
+      "210796->222619": {
+        "NOMINAL": [
+          11.5,
+          11.5,
+          11.5
+        ],
+        "NET": [
+          11.5,
+          10.35,
+          9.2
+        ]
+      },
+      "210797->222619": {
+        "NOMINAL": [
+          13.5,
+          13.5,
+          13.5
+        ],
+        "NET": [
+          13.5,
+          12.15,
+          10.8
+        ]
+      }
+    },
+    "syntheticDistribution": "P=1 and floor/ceil positive support are explicit hypothetical scenario parameters, not measured dropChance or tooltip ranges",
+    "forwardFunction": "forward({hitProbability,positiveYieldPMF})",
+    "inverseFunction": "inverseHistogram({completedCasts,histogram})",
+    "inverseApplicability": "Only actual completed casts and zero-inclusive output histogram identify P, E and observed positive support; cannot invert unknown character stats into verified baseline",
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "confidence": 0,
+    "tooltipFallbackInputsUsed": false,
+    "liveEconomicInputsChanged": false
+  },
+  "checks": {
+    "v8JavascriptModuleLoaded": true,
+    "inlineSelfTestAssertionsPassed": 8,
+    "sourceManifestExactParity": true,
+    "curatedMappingRankRecipeAndInputCountMatched": 12,
+    "duplicateTargetKeys": 0,
+    "allCurrentRetailFieldsRemainNull": true,
+    "allRecordsPreviewOnlyAndUnverified": true,
+    "nativeNodeSelfTestRun": false,
+    "lua51DecodeRun": false,
+    "compilerPipelineCheckRun": false,
+    "wowClientRun": false,
+    "independentHoldoutRun": false
+  },
+  "blockers": [
+    "No exact current-Retail zero-inclusive completed-cast histograms for the 12 mappings",
+    "Historical 2024 author ratio denominators and rank-specific actual casts unknown; net versus nominal herb basis unresolved",
+    "Minimum recipe-eligible skill and output rank selector under 2026 patch not verified",
+    "Unknown original skill/specialization/gear/Resourcefulness and independent study-family holdout",
+    "Synthetic P=1 and floor/ceil model supports are not evidence or tooltip values"
+  ],
+  "engineerHandoff": "Do not merge scenario E/P/min/max into economic evidence, working estimate generator, tooltip fallback, or production. Current working 4072/4072 numeric remains unchanged. Use typed context/rank gates and inverseHistogram only on actual cast logs. Keep recipeSpellID null for 10 curated candidate keys; 444181 is operation-family spell, not a verified per-key recipe identity.",
+  "validatorHandoff": "Verify exact 12 curated ranks/recipe nullability; check source/manifest parity and P*min<=E<=P*max in synthetic scenarios; require independent whole-author/session holdout with actual cast counts and skill/stat context before baseline normalization; assert zero economic/tooltip leakage.",
+  "nextTask": {
+    "id": "F003_TWW_MILL_CONTROLLED_SAMPLE",
+    "owner": "baseline-modeller",
+    "action": "Specify and test a controlled 2026 Retail per-cast sampling adapter/protocol for the two Mycobloom output-rank relationships; pivot to another E model family if no independent log becomes available after the zero-delta threshold"
+  }
+}

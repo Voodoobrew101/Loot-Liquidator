@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_APR01_HOTFIX_EPOCH_CORRECTION",
+  "workflowRevision": 2,
+  "queueRevision": 24,
+  "runUTC": "2026-10-30T11:26:07.300Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommitBeforeRun": "baff4219ae6d409e17af0549f5147606a0306785",
+  "preSubmissionHead": "80b63f1fe85d0862d0380df1a8a29715725ac924",
+  "resultCommit": "RESOLVED_BY_GITHUB_COMMIT_CONTAINING_THIS_FILE",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "coordinatorAssignment": "research/coordination/v2/acceptance/20261030T1055Z-F001-F005-native-historical-df-array-tww-context-integration.json",
+  "issue": "Official Blizzard April 1 hotfix was erroneously modelled as April 3, allowing April 1 casts to be classified PRE_HOTFIX.",
+  "officialSource": {
+    "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+    "datedEntry": "2026-04-01",
+    "deploymentHour": "UNKNOWN",
+    "effectSize": "UNKNOWN",
+    "perGemApplicability": "UNKNOWN"
+  },
+  "filesChanged": [
+    {
+      "path": "research/tools/models_v2/midnight_prospect_hotfix_epoch_isolation_v1.js",
+      "previousBlob": "95708d9664b92239818aac4443d965ce9840b5ff",
+      "newBlob": "fd8571a3d64d8e59476f79aeb70876f8bc97df37",
+      "change": "v1.0.1 official date, UTC and local offset quarantine, source metadata, same-study-family rejection, 10 new synthetic assertions"
+    },
+    {
+      "path": "research/models/v2/midnight_prospect_hotfix_epoch_isolation_v1.json",
+      "previousBlob": "2fead763af9abd0f79cab518a13151d89ec01a4c",
+      "newBlob": "a9e193a90a1c9bf0e4b61fdd11232f328ac8c150",
+      "change": "corrected datedEntry and epoch assumptions, source pin, test status, evidence requests"
+    }
+  ],
+  "exactAffectedStableKeys": [
+    "midnight:237359:242608:L733",
+    "midnight:237361:242608:L744",
+    "midnight:237362:242608:L755",
+    "midnight:237363:242608:L766",
+    "midnight:237364:242608:L777",
+    "midnight:237365:242608:L788",
+    "midnight:237366:242608:L799"
+  ],
+  "epochRule": {
+    "pre": "UTC and local dates safely before April 1",
+    "transition": "UTC Apr 1 through Apr 2 inclusive; additionally any locally dated Apr 1 or Apr 2; any cohort crossing classes",
+    "post": "UTC and local dates safely from Apr 3 onward",
+    "warning": "Conservative two-day buffer is NOT Blizzard's verified deployment window"
+  },
+  "exactDeltas": {
+    "modelSourceFilesModified": 1,
+    "modelManifestFilesModified": 1,
+    "roleOwnedSubmissionFilesAdded": 1,
+    "admittedMappingsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentRetailStudyLineages": 0,
+    "workingNumericCoverageBefore": "4072/4072",
+    "workingNumericCoverageAfter": "4072/4072",
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116
+  },
+  "testsActuallyRun": [
+    {
+      "runtime": "JavaScript V8 CommonJS-compatible harness with strict-assert shim",
+      "test": "exact committed source selfTest",
+      "passed": 54,
+      "failed": 0,
+      "modelBlob": "fd8571a3d64d8e59476f79aeb70876f8bc97df37"
+    },
+    {
+      "runtime": "JavaScript V8",
+      "test": "Apr 1-2 local and UTC quarantine across six timezone offsets, 15-minute samples",
+      "passed": 1344,
+      "failed": 0
+    },
+    {
+      "runtime": "GitHub connector",
+      "test": "model and manifest exact read-back",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node exact committed source with actual Node assert",
+    "Lua 5.1 in this run (no build inputs changed)",
+    "WoW client",
+    "Independent F005 QA",
+    "Whole current-Retail held-out study"
+  ],
+  "sourcePins": {
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "modelBlob": "fd8571a3d64d8e59476f79aeb70876f8bc97df37",
+    "manifestBlob": "a9e193a90a1c9bf0e4b61fdd11232f328ac8c150"
+  },
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "productionChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "No official deployment hour or region; transition interval remains a safety assumption",
+    "No current-Retail zero-inclusive cast cohorts or independent holdouts for seven mappings",
+    "Exact native Node and independent-validator acceptance pending",
+    "Midnight nested-context 8 adversarial defects remain next repair"
+  ],
+  "requests": {
+    "independentValidator": "Verify official April 1 heading and exact v1.0.1 source under native Node; challenge timezone-local date crossing, study-family duplication and raw cohort context; do not promote E or P.",
+    "evidenceResearcher": "Collect post-April-3 zero-inclusive current-Retail completed casts with exact patch, recipe, ore rank, all outputs, profession context, refunds and independent holdout."
+  },
+  "nextTask": "F003_MIDNIGHT_NESTED_CONTEXT_INTEGRITY_REPAIR_AFTER_APR01"
+}

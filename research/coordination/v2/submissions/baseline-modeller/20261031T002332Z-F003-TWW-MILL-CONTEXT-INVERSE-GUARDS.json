@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261031T002332Z-F003-TWW-MILL-CONTEXT-INVERSE-GUARDS",
+  "status": "PROPOSED_PENDING_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_QA",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": null,
+  "baseCommitNote": "The connector did not expose the branch-parent commit SHA before the first write; exact pre-write file blob SHA is recorded instead. No branch reset or force push was used.",
+  "preWriteSourceBlobSHA": "75169a9a6f2eb7a3f1c4148e09074fba65d88f4a",
+  "modelCommit": "538d68cecaa48d45e9d768f37d1928ab46d7717f",
+  "resultCommit": "d0bc25e2490eb2bb8668d8c0ad6da22546bf3a06",
+  "sourceBlobSHA": "5d90046b15046fb210523c34363c66596b962d3d",
+  "manifestBlobSHA": "b8d6218f3515f7b3c1f9c32906d8225dba37013d",
+  "filesChanged": [
+    "research/tools/models_v2/tww_mill_reagent_accounting_identification_v1.js",
+    "research/models/v2/tww_mill_reagent_accounting_identification_v1.json"
+  ],
+  "exactStableKeysAffected": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+  ],
+  "modelBefore": "tww-mill-reagent-accounting-identification-v1.0.0",
+  "modelAfter": "tww-mill-reagent-accounting-identification-v1.0.1",
+  "changes": [
+    "Require nonblank, non-whitespace patchEpoch and studyFamily, each <=256 characters",
+    "Reject inverse(E,P) when E/P overflows to Infinity instead of returning a nonfinite conditional mean that serializes to null",
+    "Check finite forward result",
+    "Add four targeted regression assertions and version source manifest"
+  ],
+  "deltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "newRetailCastObservations": 0,
+    "workingNumericCoverageBefore": 4072,
+    "workingNumericCoverageAfter": 4072,
+    "workingMappingCountBefore": 1018,
+    "workingMappingCountAfter": 1018
+  },
+  "testsRun": [
+    {
+      "name": "exact committed source V8 selfTest",
+      "passed": 20429,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "name": "extra finite-inverse and forward-domain assertions",
+      "passed": 14,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "name": "GitHub committed source read-back and model version",
+      "passed": 3,
+      "failed": 0
+    }
+  ],
+  "testsNotRun": [
+    "Native Node.js execution of exact committed model",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "node research/tools/run_completion_pipeline.js --check",
+    "Independent F005 model review",
+    "Retail in-game cast holdout validation"
+  ],
+  "blockers": [
+    "No new zero-inclusive TWW milling cast study with source lineage and actual completed-cast denominator",
+    "No independently verified applicable per-cast Resourcefulness savings cap",
+    "Native Node and independent validator acceptance outstanding"
+  ],
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEV": false,
+    "recommendations": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionMainChanged": false,
+    "runtimeProfilesChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "validatorRequest": "Re-run exact SHA 5d90046b15046fb210523c34363c66596b962d3d under native Node and adversarial context strings; verify inverse overflow rejects, denominator conservation and isolation; require independent whole-study-family holdouts for any promotion.",
+  "evidenceResearcherRequest": "Collect zero-inclusive TWW milling cast logs for 12 keys with patch/build, actual casts, gross/net/saved herbs, output rank, skill/spec/gear, and distinct original study-family identifiers.",
+  "nextTask": "Pivot to a changed ready model-family defect or new independent TWW milling observations after F005 review; do not repeat unchanged context audits."
+}

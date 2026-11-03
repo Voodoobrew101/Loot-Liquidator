@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_RETEST_POLICY_ANCHOR_AND_TARGET_CONTEXT_PIVOT",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 6,
+  "dateUTC": "2026-10-29T17:49:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "63453fef62d5d5fbd6f79779494d31096697d24b",
+  "fixtureCommit": "c33aa11b712881b00588b348542603c6474e637b",
+  "reviewCommit": "8d9c669f5388161fa00fec199b139c77045abc7f",
+  "resultCommit": "ATOMIC_COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "INDEPENDENT_STATIC_DEFECT_REVIEW_PENDING_NATIVE_FIXTURE_EXECUTION_AND_COORDINATOR_ACCEPTANCE",
+  "exactFilesAdded": [
+    "research/tests/v2/test_f005_target_identity_staleness.js",
+    "research/coordination/v2/reviews/2026-10-29T1747Z-F005-target-identity-staleness.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-29T1749Z-F005-target-identity-staleness.json"
+  ],
+  "exactFilesModified": [],
+  "evidenceSourceBlobs": {
+    "estimator": "982dcf0f3b23903eaa6eda41da12add334daec38",
+    "newFixture": "e3687c5424f34ad12a23427b18ce8a5f82af7d3e",
+    "review": "ea4aef92b2c7ffdb5ad57e392d265a91e3887de3"
+  },
+  "verdict": {
+    "priorPoolPolicyAnchor": "SOURCE_CONFIRMED_FIXED",
+    "priorNonpoolPatch": "SOURCE_CONFIRMED_FIXED",
+    "nativeCIReadback": "SUCCESS at https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40918955844",
+    "newDefect": "PARTIAL_TARGET_CONTEXT_OMITS_RECIPE_REAGENT_INPUT_OUTPUT_SKILL_AND_STATS",
+    "newFixtureCases": 11,
+    "sourcePredictedPass": 4,
+    "sourcePredictedFail": 7,
+    "newFixtureExecuted": false,
+    "economicPromotion": "BLOCKED",
+    "wholeStudyHoldout": "NOT_INDEPENDENTLY_VALIDATED"
+  },
+  "testsActuallyRun": [
+    "GitHub read-back of current estimator and independent fixtures, exact blob SHA comparison",
+    "Static inspection of workingTargetContext and validateWorkingEstimates",
+    "GitHub Actions result readback for 40918955844; prior native CI succeeded",
+    "GitHub read-back of newly committed 11-case regression fixture"
+  ],
+  "testsNotRun": [
+    "New 11-case fixture on native Node or V8",
+    "Local full pipeline and JSON schema",
+    "Local Lua 5.1",
+    "WoW Retail client",
+    "Current-Retail independent matched holdout"
+  ],
+  "newCommitCI": {
+    "fixtureCommit": "c33aa11b712881b00588b348542603c6474e637b",
+    "runIDs": [
+      40924481214,
+      40924469502
+    ],
+    "conclusion": "success",
+    "newFixtureIncludedInPipeline": false
+  },
+  "deltas": {
+    "newValidMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "newEvidenceNumericCells": 0,
+    "confidencePromotions": 0,
+    "independentSourceLineages": 0,
+    "newRegressionCases": 11,
+    "sourceLevelDefectClasses": 1
+  },
+  "currentCounts": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "missingEvidenceCells": 514,
+    "missingVerifiedExpectedQuantity": 116
+  },
+  "safety": {
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "unsupportedFallbackConfidence": 0,
+    "liveEVChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Nonpool targetContext does not serialize full recipe, direct reagent, input/output and profession stat identity",
+    "11-case new independent regression not yet executed in native CI; pipeline currently does not invoke it",
+    "No independent matched current-Retail holdout",
+    "116 evidence E gaps and 514 total evidence numeric gaps"
+  ],
+  "nextTask": "F005_RUN_11_CASE_NONPOOL_CONTEXT_REGRESSION_AFTER_F002_REPAIR_AND_RECHECK_ECONOMIC_ISOLATION",
+  "zeroDeltaPivot": "No new evidence values; prior two defects already repaired. Added a new independent regression covering previously unchecked nonpool source mutation contexts."
+}

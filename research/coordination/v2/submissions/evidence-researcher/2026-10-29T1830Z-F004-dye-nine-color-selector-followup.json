@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_PATCH121_DYE_STATION_SELECTOR_AND_UNIVERSE",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 7,
+  "runUTC": "2026-10-29T18:30:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "9ad942c3cb525a45e4e63527499ccd2ee060de29",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION_OR_LATER_SEQUENTIAL_FILE_COMMIT",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "filesChanged": [
+    "research/evidence/v2/2026-10-29T1830Z-F004-patch121-nine-dye-spell-universe.json",
+    "research/evidence/v2/source-reviews/2026-10-29T1830Z-F004-patch121-dye-identity-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1830Z-F004-dye-nine-color-selector-followup.json"
+  ],
+  "targetKeys": [
+    "universe:retail12.1+:dye-station:3818:274464:1306642",
+    "universe:retail12.1+:dye-station:765:274468:1306796"
+  ],
+  "additionalOutputIdentities": [
+    {
+      "itemID": 274469,
+      "spellID": 1306797,
+      "color": "Brown",
+      "admitted": false
+    },
+    {
+      "itemID": 274470,
+      "spellID": 1306799,
+      "color": "Green",
+      "admitted": false
+    },
+    {
+      "itemID": 274471,
+      "spellID": 1306801,
+      "color": "Orange",
+      "admitted": false
+    },
+    {
+      "itemID": 274472,
+      "spellID": 1306629,
+      "color": "Purple",
+      "admitted": false
+    },
+    {
+      "itemID": 274473,
+      "spellID": 1306802,
+      "color": "Red",
+      "admitted": false
+    },
+    {
+      "itemID": 274474,
+      "spellID": 1306803,
+      "color": "White",
+      "admitted": false
+    },
+    {
+      "itemID": 274475,
+      "spellID": 1306804,
+      "color": "Yellow",
+      "admitted": false
+    }
+  ],
+  "deltas": {
+    "newOutputItemAndSpellIdentityPairs": 7,
+    "previousPairIdentitiesRechecked": 2,
+    "communityCorroboratedExistingHerbLeads": 2,
+    "newSelectorSourceConflicts": 1,
+    "newAdmittedMappings": 0,
+    "removedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentCompletedCastStudies": 0,
+    "sourceReviewEvents": 22
+  },
+  "testsActuallyRun": [
+    "V8 assertions 9/9",
+    "Direct live Retail Wowhead spell/item metadata and salvage-value verification for seven new colors plus two prior spells",
+    "Warcraft Wiki live selector text crosscheck for Black, Blue, Purple",
+    "GitHub branch head read before write"
+  ],
+  "testsNotRun": [
+    "Native Node completion pipeline --check",
+    "Lua5.1 decoder",
+    "WoW Retail dye-station in-game selector and casts",
+    "Independent QA"
+  ],
+  "blockers": [
+    "No direct current-client herb selector capture; exact rank eligibility unverified",
+    "Wiki vs Wowhead comment Midnight purple herb conflict",
+    "Minimum profession-tier/skill gate not established",
+    "No completed cast denominators or input refund accounting"
+  ],
+  "economicSafety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false
+  },
+  "productionFilesChanged": 0,
+  "sharedLedgersChanged": false,
+  "schedulesChanged": false,
+  "nextTask": "F004_DYE_STATION_CAPTURE_SELECTOR_FOR_FADELEAF_SILVERLEAF_AND_RESOLVE_PURPLE_MIDNIGHT_HERB_CONFLICT"
+}

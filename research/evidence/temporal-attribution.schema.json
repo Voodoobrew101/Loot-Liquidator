@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loot Liquidator immutable study contextual temporal attribution",
+  "description": "A separate revisionable inference about WHICH game mechanic epoch a raw study belongs to. Does not modify raw measurements or assert that publication day is collection day.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "attributionID",
+    "observationID",
+    "eventID",
+    "conclusion",
+    "reviewStatus",
+    "signals",
+    "alternatives",
+    "rationale"
+  ],
+  "properties": {
+    "attributionID": {
+      "type": "string",
+      "minLength": 4
+    },
+    "observationID": {
+      "type": "string",
+      "minLength": 3
+    },
+    "eventID": {
+      "type": "string",
+      "minLength": 3
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "priorAttributionID": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reviewStatus": {
+      "enum": [
+        "WORKER_PROPOSED",
+        "MASTER_REVIEWED",
+        "REJECTED"
+      ]
+    },
+    "conclusion": {
+      "enum": [
+        "BEFORE",
+        "AFTER",
+        "LIKELY_BEFORE",
+        "LIKELY_AFTER",
+        "AMBIGUOUS",
+        "CONTRADICTORY"
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 8
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "BEFORE",
+          "AFTER",
+          "CROSSES_EVENT",
+          "UNKNOWN"
+        ]
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "confidenceAssessment": {
+      "type": "object",
+      "properties": {
+        "degree": {
+          "enum": [
+            "DIRECT",
+            "CORROBORATED",
+            "CONTEXTUAL",
+            "WEAK",
+            "CONFLICTED"
+          ]
+        },
+        "assessment": {
+          "type": "string"
+        },
+        "confidence0to100": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": true
+    },
+    "signals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "relation",
+          "sourceURL",
+          "excerpt",
+          "reason"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "EXPLICIT_CASTS_AFTER_EVENT",
+              "EXPLICIT_CASTS_BEFORE_EVENT",
+              "DOCUMENTED_EVENT_BOUND_GAME_BUILD",
+              "SOURCE_LINKED_CAST_LOG_TIMESTAMP",
+              "SOURCE_PATCH_CHANGE_ANALYSIS",
+              "RECENT_TEST_LANGUAGE",
+              "SOURCE_PUBLICATION_AFTER_EVENT",
+              "PATCH_MECHANIC_OUTPUT_SIGNATURE",
+              "CONTRADICTORY_SIGNAL",
+              "OTHER_CONTEXT"
+            ]
+          },
+          "relation": {
+            "enum": [
+              "BEFORE",
+              "AFTER",
+              "UNDETERMINED"
+            ]
+          },
+          "sourceURL": {
+            "type": "string",
+            "minLength": 6
+          },
+          "excerpt": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Verbatim study text or exact source detail; human reviewer must verify."
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5
+          },
+          "referencedEventID": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sourcePublicationDate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "reviewedBy": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "reviewedBy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reviewedDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "sourceRevision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "studyPublicationDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_BLOCKED_EVIDENCE_CAST_BASIS",
+  "workflowRevision": 2,
+  "queueRevision": null,
+  "queueRevisionNote": "No v2 queueRevision field in current canonical readiness/priorities; workflowRevision=2",
+  "runUTC": "2026-10-29T20:40:28.842Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "3a6cc4c27ff310df8712098ea11aa71e18da245c",
+  "testCommit": "7cf8bbb5cbafbc1566d3fa86abfbc59b3a32213c",
+  "subject": {
+    "path": "research/tools/working_estimates.js",
+    "blobSHA": "e6f6c736114233bf089d9d5251db2ef3dbbe7e42",
+    "compilerPath": "research/tools/compile_itemdb.js",
+    "compilerBlobSHA": "c2a81502c24ed6173fbf31d88b4d9009af98d965",
+    "newTestPath": "research/tests/v2/test_f005_blocked_evidence_cast_basis.js",
+    "newTestBlobSHA": "ff1b946d7e1c76abac6c400f11e7c3835ede17ab"
+  },
+  "verdict": "FAIL_NEW_CAST_BASIS_BLOCKER_COPY_DEFECT__PREVIOUS_STATUS_CLAIM_REPAIR_PASS",
+  "tests": {
+    "newAdversarial": {
+      "cases": 12,
+      "passed": 4,
+      "failed": 8,
+      "syntheticOnly": true,
+      "execution": "IN_PROCESS_V8_EVALUATING_UNMODIFIED_GITHUB_WORKING_ESTIMATES_AND_NEW_TEST_SOURCE_WITH_ASSERT_EMULATION",
+      "failureNames": [
+        "gross-input E blocker",
+        "not-actual-cast E blocker",
+        "rank-specific E blocker",
+        "rank-or-gross-input E blocker",
+        "gross-input occurrence denominator blocker",
+        "quantity basis explicitly not actual casts",
+        "gross-input-equivalent quantity basis",
+        "proxy E with blocked rank ancestry"
+      ],
+      "passingControls": [
+        "actual completed-cast evidence remains copied preview",
+        "null blocked E remains provisional and confidence-zero",
+        "blocked donor not transferred to another input",
+        "source blocker mutation invalidates in-process lease"
+      ]
+    },
+    "previousEvidenceStatusClaim": {
+      "cases": 11,
+      "passed": 11,
+      "failed": 0,
+      "blobSHA": "85a7745d7d60307e777f60e99ae4e32423b1a6cc"
+    },
+    "previousProvenanceIntegrity": {
+      "cases": 12,
+      "passed": 12,
+      "failed": 0,
+      "blobSHA": "b7b2dd6a2d050423423f2e6dcfd72df16d09d0f8"
+    },
+    "nativeNode": "NOT_RUN",
+    "lua51": "NOT_AVAILABLE_IN_CURRENT_RUN",
+    "fullPipelineCheck": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentCurrentRetailHoldout": "NOT_AVAILABLE"
+  },
+  "findings": [
+    {
+      "id": "F005-BLOCKED-E-001",
+      "severity": "RESEARCH_PREVIEW_PROVENANCE_AND_CONFIDENCE",
+      "reproduced": true,
+      "details": "evidenceValue(r,'expectedQuantity') checks finite/status/claims but not source blockers. A measured E=0.5 with GROSS_INPUT, NOT_ACTUAL_CAST, RANK_SPECIFIC or RANK_OR_GROSS_INPUT blocker remains COPIED_EVIDENCE with confidence 99 in a synthetic fixture; donor selection correctly excludes several blockers, but the target record itself is not quarantined. Rank-specific numeric E also suppresses unresolved rank pooling.",
+      "repairOwner": "completion-engineer",
+      "recommendation": "Use a consistent field-level applicability contract for target copying, donor transfer, rank pooling and validation. Preserve original evidence as-is; quarantine inapplicable E into confidence-0 PREVIEW_ONLY working prior or reject; never equate gross-input equivalents with actual completed casts."
+    },
+    {
+      "id": "F005-BLOCKED-P-002",
+      "severity": "RESEARCH_PREVIEW_PROVENANCE_AND_CONFIDENCE",
+      "reproduced": true,
+      "details": "A source dropChance with GROSS_INPUT blocker is copied as confidence-99 per-operation P, despite an invalid completed-cast denominator.",
+      "repairOwner": "completion-engineer",
+      "recommendation": "Validate occurrence denominator and blockers before copied-evidence designation. Unknown actual casts stay unknown; do not derive P from per-ore or gross-input ratios."
+    },
+    {
+      "id": "F005-QUANTITY-BASIS-003",
+      "severity": "DEFENSE_IN_DEPTH_CONTEXT",
+      "reproduced": true,
+      "details": "The direct estimator accepts a numeric E with conditions.quantityBasis GROSS_INPUT_NOT_ACTUAL_CAST or GROSS_INPUT_EQUIVALENT as copied evidence. Compiler validate() rejects the literal NOT_ACTUAL_CAST case, but not every gross-equivalent label; this is not proof of bypass in existing generated records.",
+      "repairOwner": "completion-engineer",
+      "recommendation": "At working-estimate API boundary reject/quarantine explicit non-cast quantity bases and require supported actual-cast normalization evidence before copying E."
+    }
+  ],
+  "limits": [
+    "Synthetic test cases do not establish an existing WoW item record is wrong.",
+    "No live EV leakage demonstrated: economicUse PREVIEW_ONLY and normalizedVerified false remain unchanged in tested records.",
+    "Compiler has a separate quantityBasis guard for NOT_ACTUAL_CAST; direct-estimator finding is not necessarily a full compiler bypass.",
+    "No source, raw evidence, frozen TSM, production Lua, runtime-profile or schedule changes."
+  ],
+  "currentReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedE": 116,
+    "independentRetailUniverseAudit": "NOT_COMPLETE",
+    "economicPromotions": 0
+  },
+  "deltas": {
+    "newTestCases": 12,
+    "newFailingCases": 8,
+    "newDefectClasses": 3,
+    "numericCellsFilled": 0,
+    "newMappings": 0,
+    "confidencePromotions": 0,
+    "independentStudyFamiliesAdded": 0,
+    "productionFilesChanged": 0
+  },
+  "nextTask": {
+    "owner": "completion-engineer",
+    "id": "F002_ENFORCE_CAST_BASIS_BLOCKERS_AT_WORKING_ESTIMATE_BOUNDARY",
+    "acceptance": "New 12/12 and previous 23/23 pass; blocked source E/P never copied at positive confidence; preserve 1018/1018 complete preview with 4072 finite fields, raw evidence unchanged, economicUse PREVIEW_ONLY, normalizedVerified false; rerun full native pipeline and Lua when available."
+  }
+}

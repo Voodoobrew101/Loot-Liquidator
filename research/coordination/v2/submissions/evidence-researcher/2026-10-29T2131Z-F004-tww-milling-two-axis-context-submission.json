@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_TWW_MILLING_INPUT_OUTPUT_RANK_CONTEXT",
+  "workflowRevision": 2,
+  "queueRevisionObserved": "five-agent-workflow=2; completion-priorities=1.0.0",
+  "runUTC": "2026-10-29T21:31:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "260852241991b34cd071e44877f08e5bccdcffa6",
+  "resultCommit": "COMMIT_CONTAINING_THIS_SUBMISSION",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "priorityPivot": "Dragonflight diamond conflicts repeatedly audited; F004 assigned TWW milling model gaps; pivot to previously unindexed two-axis herb-rank/pigment-rank evidence rather than repeating unchanged diamond or Gem Finding sources.",
+  "targetKeys": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028"
+  ],
+  "filesChanged": [
+    "research/evidence/v2/2026-10-29T2131Z-F004-tww-milling-two-axis-context.json",
+    "research/evidence/v2/source-reviews/2026-10-29T2131Z-F004-tww-milling-two-axis-context-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-29T2131Z-F004-tww-milling-two-axis-context-submission.json"
+  ],
+  "deltas": {
+    "newOriginalSourceFamilies": 2,
+    "newCurrentRetailCastCohorts": 0,
+    "newHistoricalBetaOriginalReports": 1,
+    "newHistoricalRetailContextComments": 1,
+    "newContextCorrectionsProposed": 1,
+    "sourceReviewEvents": 5,
+    "sourceReusesWithoutDoubleCounting": 3,
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "newNumericEvidenceCells": 0,
+    "newExpectedQuantityCells": 0,
+    "newWorkingPreviewCells": 0,
+    "confidencePromotions": 0,
+    "changedSharedLedgers": 0
+  },
+  "testsActuallyRun": {
+    "type": "IN_PROCESS_JS_ASSERTIONS",
+    "passed": 19,
+    "failed": 0,
+    "cases": [
+      "beta link not indexed",
+      "live link not indexed",
+      "five review events",
+      "two independent original families",
+      "beta 10-herb mean 13",
+      "beta 10-herb mean 11",
+      "beta positive bounds ordered",
+      "beta output rank delta -2",
+      "live input rank delta +2",
+      "live ratio 13/11",
+      "actual casts unknown",
+      "economic E unknown",
+      "no numeric promotions",
+      "preview isolation",
+      "no mapping admission",
+      "unique paths",
+      "no shared edits",
+      "historical beta not current",
+      "derivative not independent"
+    ]
+  },
+  "notRun": [
+    "node research/tools/run_completion_pipeline.js --check",
+    "lua5.1 research/tests/test_generated_working_estimates.lua",
+    "In-game Retail cast logging",
+    "Full Git checkout tests"
+  ],
+  "blockers": [
+    "No exact herb species or output item ID in either original comment",
+    "Neither original source supplies completed-cast denominators, raw zero-inclusive totals or refunds",
+    "Beta observation is not current Retail and live anecdote lacks exact build and cast epoch",
+    "Cannot adjudicate Method guide conflict without matched rank-specific controlled casts"
+  ],
+  "economicUse": "PREVIEW_ONLY",
+  "normalizedVerified": false,
+  "confidence": 0,
+  "productionFilesChanged": 0,
+  "sharedLedgersChanged": false,
+  "scheduleChanged": false,
+  "nextTask": {
+    "id": "F004_TWW_MILLING_MATCHED_RANK_COEFFICIENT_TEST",
+    "action": "Seek matched R1/R2 herb and R2 pigment completed-cast observations with exact herb/pigment IDs and unchanged skill/spec; if absent, pivot to a different pending Midnight selector eligibility task."
+  }
+}

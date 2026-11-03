@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_WIRE_F003_ANYTIME_NATIVE_FAIL_CLOSED_STAGED",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 19,
+  "runUTC": "2026-10-30T06:10:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "9f9fc0adafc10cce66f641c0c48ba68ed48a9cfe",
+  "implementationCommit": "415f49039a3f15e32de877ac77570c1166916f4a",
+  "implementationPath": "research/tools/run_completion_pipeline.js",
+  "implementationBlobBefore": "266524a83c5d5cd6e3a1d42345358d0749aaacbe",
+  "implementationBlobAfter": "d2bb1da69770c421eec4027f0cc8131acf3ca20a",
+  "status": "ENGINEERING_STAGED_NATIVE_GATE_COMMITTED_PENDING_GITHUB_CI_AND_F005_ACCEPTANCE",
+  "acceptedVersusProposed": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_VALIDATOR; NOT_MODEL_ACCEPTANCE",
+  "assignmentAuthority": "research/coordination/v2/scorecards/current.json nextAssignments completion-engineer; queue revision 19",
+  "implementation": {
+    "description": "Wire both independent F005 Midnight anytime fixtures into the native Node research pipeline. Enforce prior 12/12 strictly now. Execute nested 13-case fixture every build; quarantine only the eight named pre-repair failures while model SHA and proposed status match the exact known broken v1.0.1 source. Any changed model, manifest mismatch, changed failure set, unexpected failure, malformed fixture, non-synthetic report or changed exit status fails closed. Once F003 model changes with matching manifest, strict 13/13 is mandatory.",
+    "nativeFixturePaths": [
+      "research/tests/v2/test_f005_midnight_anytime_context_lineage.js",
+      "research/tests/v2/test_f005_anytime_typed_context_snapshot_integrity.js"
+    ],
+    "knownModelBlob": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9",
+    "fixtureBlobs": [
+      "fbb838e348429d6deed741060fe992ead560190b",
+      "2e64ba46af242740c7a44ecf6bb204ae1345c112"
+    ],
+    "manifestBlob": "05b5dc514cc409ffd66018379d0daa118c6fa8d7",
+    "preRepairFailureNames": [
+      "nested specialization source mutation cannot rewrite returned provenance",
+      "nested gear source mutation cannot rewrite returned provenance",
+      "nested unlocks source mutation cannot rewrite returned provenance",
+      "NaN specialization must not be admitted into serialized context",
+      "Infinity gear must not be admitted into serialized context",
+      "function unlocks must not be silently erased by JSON serialization",
+      "distinct nonfinite specialization values must not share a context key",
+      "nested undefined profession field must not silently disappear"
+    ],
+    "stagedAllowanceScope": "ONLY_KNOWN_MODEL_BLOB_AND_PROPOSED_STATUS; 8 FAILURES ARE QUARANTINED_NOT_PASSED"
+  },
+  "exactDeltas": {
+    "filesChanged": [
+      "research/tools/run_completion_pipeline.js",
+      "research/coordination/v2/submissions/completion-engineer/20261030T0610Z-F002-anytime-native-staged-gates.json"
+    ],
+    "pipelineLinesInserted": 70,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCellsFilled": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "newIndependentStudyLineages": 0,
+    "productionWrites": 0,
+    "rawEvidenceWrites": 0,
+    "frozenTSMWrites": 0,
+    "tooltipOnlyWrites": 0,
+    "legacyAssignmentWrites": 0,
+    "otherAgentOwnedWrites": 0,
+    "scheduleChanges": 0
+  },
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceGaps": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceAtLeast90": 0,
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false
+  },
+  "testsActuallyRun": [
+    {
+      "name": "GitHub committed-source readback and static cross-check of pipeline, fixture identities, model SHA, gating and owned path",
+      "environment": "GitHub connector plus V8 static assertions",
+      "passed": 10,
+      "failed": 0
+    },
+    {
+      "name": "GitHub branch readback after implementation commit",
+      "environment": "GitHub connector",
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "testsNotRun": [
+    "New native Node F005 anytime 12-case and 13-case suites: GitHub CI execution not yet confirmed",
+    "Full research pipeline --check: not executed locally",
+    "Lua 5.1 generated candidate roundtrip: not executed locally",
+    "Independent F005 formal acceptance",
+    "WoW Retail client and in-game EV isolation",
+    "Independent current-Retail completed-cast holdout"
+  ],
+  "blockers": [
+    "F003 model v1.0.1 still has 8 known nested context failures; staged allowance is source-pinned and does not constitute acceptance.",
+    "Independent 13-case fixture's 'distinct nonfinite specialization values must not share a context key' expects two invalid NaN/Infinity contexts to return keys, while five other cases require invalid contexts to throw. F005 must reconcile this contradictory assertion before strict 13/13 can be satisfied by a correctly rejecting model.",
+    "Native GitHub Actions results and F005 independent review pending; do not promote model or values.",
+    "No independently verified current-Retail cast cohorts or per-cast cap proof."
+  ],
+  "zeroDeltaPivot": "Previous five-key historical TSM rank/unit audit already accepted at revision 19. Pivoted to native execution and fail-closed gating of newly changed F003/F005 integrity tests; no redundant source audit.",
+  "nextTask": "After F003 nested context owner repair and F005 resolution of contradictory nonfinite-key fixture, require native strict 12/12 and 13/13 with no quarantine, then obtain F005 and coordinator acceptance."
+}

@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_DF_PROSPECT_JOINT_CAST_F005_ADVERSARIAL_REPAIR",
+  "workflowRevision": 2,
+  "queueRevision": "completion-priorities.json@a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+  "runUTC": "2026-10-30T07:22:00Z",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_NATIVE_RETEST",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "e66577e6b701dfd0ff79b65f256c7eada05de393",
+  "modelCommit": "748b8c15f7b0b35fd69047df0cb8c710f90a751e",
+  "manifestCommit": "84b4094fa41fca59dace5866cc3bbaa701452985",
+  "resultCommitBeforeSubmission": "84b4094fa41fca59dace5866cc3bbaa701452985",
+  "changedFiles": [
+    "research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js",
+    "research/models/v2/df_prospecting_joint_cast_conflict_v1.json"
+  ],
+  "exactStableKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "priority": 122,
+  "priorityBasis": "FIELD_GAP_PROXY_NOT_MEASURED_GOLD_IMPACT",
+  "independentQAReview": "research/coordination/v2/reviews/2026-10-30T0646Z-F005-df-prospect-joint-cast-adversarial.json",
+  "sourceBlobs": {
+    "model": "85d1e4b7b019c6db945335af2ec82392e8a0ddca",
+    "manifest": "cd0de9be225967f9462d8c26933b40e9dca4a1f2",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "independentTest": "058fe6fdb422fcae3790e40fdd5367cc6f6f4610"
+  },
+  "repairs": [
+    "RAW_CURRENT_RETAIL patch/build now full-string anchored; 10.2.7BANANA rejected.",
+    "Recursive JSON-safe typed validation rejects nested NaN/Infinity/undefined/functions/BigInt, nonplain objects, sparse arrays and cycles; context snapshotted with serialized identity.",
+    "Scenario outputQualityRank is required and must match context rank for each exact output ID.",
+    "Fail-closed finite-result validation rejects overflowing cast covariance/economics, scenario revenue/cost/margin and historical rate multiplications."
+  ],
+  "acceptedVsProposed": {
+    "accepted": 0,
+    "proposedModelRepairs": 1,
+    "coordinatorAcceptance": "PENDING",
+    "independentValidatorAcceptance": "PENDING"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "modelSourceFilesModified": 1,
+    "modelManifestFilesModified": 1,
+    "priorityMappingsProtected": 5
+  },
+  "testsActuallyRun": [
+    {
+      "name": "Model selfTest on exact committed GitHub readback",
+      "environment": "JavaScript V8 with strict assert shim",
+      "passed": 61,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "name": "Unmodified independent F005 23-case adversarial suite on exact committed model",
+      "environment": "JavaScript V8 with strict assert shim",
+      "passed": 23,
+      "failed": 0,
+      "syntheticOnly": true
+    },
+    {
+      "name": "GitHub readback model/manifest SHA consistency",
+      "environment": "GitHub connector",
+      "result": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node execution of exact repaired model and independent suite",
+    "lua5.1 generated-file decoding and completion pipeline check (no accepted build inputs changed)",
+    "WoW client/in-game EV and tooltip verification",
+    "Independent current-Retail whole-study holdout"
+  ],
+  "readinessUnchanged": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "unresolvedExpectedQuantityEvidenceGaps": 116,
+    "evidenceGE90Cells": 0,
+    "liveEconomicUseChanged": false
+  },
+  "policy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEconomicEligible": false
+  },
+  "blockers": [
+    "Independent validator has not rerun and accepted repaired model under native Node",
+    "No independently verified complete current-Retail output universe, rank eligibility or zero-inclusive completed-cast cohort for five priority mappings",
+    "Historical TSM rate units remain ambiguous and cannot support live E/P"
+  ],
+  "validatorRequest": "Run node research/tools/models_v2/df_prospecting_joint_cast_conflict_v1.js and node research/tests/v2/test_f005_df_prospecting_joint_cast_adversarial.js on exact source blob 85d1e4b7b019c6db945335af2ec82392e8a0ddca; verify all 23 adversarial cases and reject overflow/unsafe context. Whole-study holdout remains unavailable.",
+  "evidenceResearcherRequest": "Find independent current-Retail completed-cast logs for five exact keys, including full rank outputs, refunds, skill/spec/gear/unlocks, patch/build and independent source-unit corroboration.",
+  "nextTask": "After independent native retest, pivot to priority-104 TWW/Dragonflight Gem Finding model-family risk unless a new zero-inclusive Dragonflight prospecting cohort becomes ready.",
+  "preservation": {
+    "mainUntouched": true,
+    "productionFilesUntouched": true,
+    "runtimeProfilesBranchUntouched": true,
+    "legacyAssignmentsUntouched": true,
+    "rawEvidenceUntouched": true,
+    "frozenTSMUntouched": true,
+    "tooltipOnlyPolicyUntouched": true,
+    "schedulesUntouched": true,
+    "otherRoleFilesUntouched": true
+  }
+}

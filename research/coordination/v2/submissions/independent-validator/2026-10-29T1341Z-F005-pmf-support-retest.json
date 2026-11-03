@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_PMF_POSITIVE_SUPPORT_RETEST",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 2,
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_NOT_SELF_APPROVED",
+  "runDateUTC": "2026-10-29T13:41:00Z",
+  "baseCommit": "086ca5afe0a8b37a1d6a705138d0d279df05c76a",
+  "testCommit": "575246d516e7996ec4a05b8456b3b66c793fe69c",
+  "reviewCommit": "c9bed6238cb1d56af1a0a53a99df2aeb6bcc18e5",
+  "headBeforeSubmission": "c9bed6238cb1d56af1a0a53a99df2aeb6bcc18e5",
+  "changedFiles": [
+    "research/tests/v2/test_f005_pmf_positive_support.js",
+    "research/coordination/v2/reviews/2026-10-29T1341Z-F005-pmf-positive-support.json",
+    "research/coordination/v2/submissions/independent-validator/2026-10-29T1341Z-F005-pmf-support-retest.json"
+  ],
+  "reviewFileBlobSHA": "b20f1dfc3b48d5d46fe5c821c2ee916a49e32674",
+  "testFileBlobSHA": "bc387c48e5bf7bee26630a14502a95adcd94d02b",
+  "subjectModelBlobSHA": "bea88982382816f315df66facf9060affa0c40bb",
+  "subjectWorkingEstimatorBlobSHA": "0bef8795b55043bfd8ba1896b53e4be618ff216c",
+  "exactMappingKeysChanged": [],
+  "numericDeltas": {
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineagesAdded": 0,
+    "sourceEvidenceFilesChanged": 0,
+    "frozenTSMFilesChanged": 0,
+    "tooltipOnlyFilesChanged": 0,
+    "productionFilesChanged": 0
+  },
+  "testsActuallyRun": [
+    {
+      "name": "Original nine-case F005 fixture",
+      "runtime": "V8_GITHUB_SOURCE_WITH_STRICT_ASSERT_SHIM",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "name": "New twelve-case positive support and context fixture",
+      "runtime": "V8_GITHUB_SOURCE_WITH_STRICT_ASSERT_SHIM",
+      "passed": 9,
+      "failed": 3,
+      "expectedExitCode": 1
+    },
+    {
+      "name": "F003 model selfTest()",
+      "runtime": "V8_GITHUB_SOURCE",
+      "assertionsReported": 13,
+      "status": "PASS"
+    },
+    {
+      "name": "Tooltip isolation independent fixtures",
+      "runtime": "V8_GITHUB_SOURCE",
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "name": "Original frozen source blob parity",
+      "runtime": "GITHUB_BLOB_SHA_READBACK",
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "name": "New test and review GitHub read-back",
+      "runtime": "GITHUB_CONNECTOR",
+      "status": "PASS"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node test runner",
+    "node research/tools/run_completion_pipeline.js --check",
+    "Lua 5.1 generated candidate decode",
+    "Full generated JSON Schema validation",
+    "WoW Retail client execution",
+    "Independent matched current-Retail holdout"
+  ],
+  "readiness": {
+    "admittedMappings": 1018,
+    "workingCells": 4072,
+    "workingFieldSlots": 4072,
+    "rawEvidenceMissingCells": 514,
+    "rawExpectedQuantityMissingCells": 116,
+    "evidenceGE90Cells": 0,
+    "source": "research/coordination/completion-readiness.json",
+    "status": "METADATA_READ_ONLY"
+  },
+  "verdict": "CONDITIONAL: prior five F005 regression defects no longer reproduce, but new F005-PMF-ZERO-MASS-SUPPORT is blocking model positive-support acceptance. No economic promotion.",
+  "blockers": [
+    {
+      "id": "F005-PMF-ZERO-MASS-SUPPORT",
+      "owner": "baseline-modeller",
+      "detail": "Zero-probability rows contaminate forward conditional yieldMin/yieldMax; modelled bounds must ignore zero-mass support."
+    },
+    {
+      "id": "F005-NATIVE-INDEPENDENT-CHECKS",
+      "owner": "independent-validator",
+      "detail": "Native Node, generated Lua decode and schema check not executed in this run; prior CI evidence is not a substitute for this independent run."
+    },
+    {
+      "id": "F003-INDEPENDENT-HOLDOUT",
+      "owner": "evidence-researcher",
+      "detail": "No matched current-Retail zero-inclusive completed-cast study from an independent source family; cannot promote historical sensitivity to verified baseline."
+    }
+  ],
+  "zeroDeltaPivot": "Completed changed-source retest, found a novel reproducible semantic defect; no repeat unchanged audit.",
+  "nextTask": {
+    "id": "F005_PMF_ZERO_MASS_RETEST",
+    "owner": "independent-validator",
+    "action": "After baseline modeller repairs forward positive support, rerun the new twelve-case fixture plus original nine-case F005 and full candidate checks; if unchanged, pivot to typed-context missing-stat donor and emitted-Lua consumer isolation."
+  }
+}

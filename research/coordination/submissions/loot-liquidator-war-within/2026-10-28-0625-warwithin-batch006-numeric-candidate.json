@@ -1,0 +1,99 @@
+{
+  "hypothesisID": "tww-prospect-resourcefulness-savings",
+  "evidenceStatus": "UNVERIFIED",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 10,
+  "method": "Prospect",
+  "effectTarget": "EXPECTED_INPUT_CONSUMPTION",
+  "effectKind": "INPUT_SAVINGS",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [
+      434018
+    ],
+    "inputItemIDs": [
+      210933,
+      210934,
+      210935
+    ],
+    "outputItemIDs": [],
+    "nominalInputCount": 5,
+    "inputQualityRanks": [
+      1,
+      2,
+      3
+    ],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "twwAqirite2024": {
+      "initialOre": 5200,
+      "reportedClicks": 1040,
+      "actualSavedOre": null,
+      "endingInventory": null,
+      "resourcefulnessPercent": null
+    }
+  },
+  "targetContext": {
+    "currentRetail2026": {
+      "recipeSpellID": 434018,
+      "skill": null,
+      "oreRank": null,
+      "resourcefulnessRating": null,
+      "resourcefulnessPercent": null,
+      "gear": null,
+      "specializations": null
+    }
+  },
+  "requiredLiveContext": [
+    "exact recipe and reagent quality",
+    "profession skill and specialization ranks",
+    "gear and resourcefulness rating/percent",
+    "patch/build and operation count",
+    "per-cast saved ore including zero saves",
+    "starting and ending inventory and purchases"
+  ],
+  "sources": [
+    {
+      "claimID": "TWW2024_AQIRITE_1040",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f83cnd",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "DF2023_Q3_8000",
+      "url": "https://www.reddit.com/r/woweconomy/comments/108782r",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": 8000,
+      "notes": "Dragonflight only: 2650 saved ore, 8000 casts, 22% Resourcefulness"
+    },
+    {
+      "claimID": "DF2023_10000_RESOURCEFULNESS",
+      "url": "https://www.reddit.com/r/woweconomy/comments/10s9ol9",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null,
+      "notes": "Dragonflight only: 0.26 saved ore per prospect at 17.9% resourcefulness over 10000 ore"
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 0,
+  "numericTransformValidated": false,
+  "blockers": [
+    "No TWW saved ore counts or zero-inclusive refunds",
+    "1040 clicks * 5 = 5200 initial ore; ending inventory and actual refunds unknown",
+    "Dragonflight historical rates are not portable to TWW",
+    "No same-build matched TWW skill/gear/stat cohorts",
+    "Current-Retail applicability unknown"
+  ],
+  "notes": "No numerical TWW coefficient. Resourcefulness adjusts input cost only; historical Dragonflight observations are a nonportable lead, not a TWW formula."
+}

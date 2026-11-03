@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003_TWW_GEM_FINDING_CONDITIONAL_PIVOT",
+  "workflowRevision": 2,
+  "queueRevision": 6,
+  "runUTC": "2026-10-29T17:20:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "affd40fa423ef9afab6be48a6f1d47c5742d5bbb",
+  "resultCommit": "ATOMIC_COMMIT_CONTAINING_THIS_RECORD",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_QA",
+  "pivotReason": "Coordinator accepted controlled-cast protocol as synthetic-only; zero new real cohorts, so pivoted from TWW milling to the next unresolved conditional E family rather than repeating unchanged audits.",
+  "targets": [
+    "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212508:gem-finding:20261028",
+    "candidate:conditional:prospect:210931:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212495:gem-finding:20261028",
+    "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212505:gem-finding:20261028",
+    "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+  ],
+  "filesChanged": [
+    "research/tools/models_v2/tww_gem_finding_conditional_cohorts_v1.js",
+    "research/models/v2/tww_gem_finding_conditional_cohorts_v1.json",
+    "research/coordination/v2/submissions/baseline-modeller/20261029T1720Z-F003-TWW-GEM-FINDING-PIVOT.json"
+  ],
+  "deltas": {
+    "admittedMappings": 0,
+    "removedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyFamilies": 0,
+    "modelFamiliesAdded": 1,
+    "exactTargetKeys": 8,
+    "syntheticAssertions": 25
+  },
+  "tests": {
+    "v8SelfTest": {
+      "passed": 25,
+      "failed": 0,
+      "syntheticOnly": true,
+      "targets": 8,
+      "actualCasts": 0,
+      "economicPromotions": 0
+    },
+    "nativeNode": "NOT_RUN",
+    "nativeLua": "NOT_RUN",
+    "inGame": "NOT_RUN",
+    "independentValidator": "PENDING"
+  },
+  "safety": {
+    "economicUse": "PREVIEW_ONLY",
+    "confidence": 0,
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionChanged": false,
+    "frozenTSMChanged": false,
+    "rawEvidenceChanged": false,
+    "legacyAssignmentsChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "No current Retail zero-inclusive Gem Finding cohort",
+    "Gem Finding unlock thresholds and quality rank selector not independently verified",
+    "Minimum recipe-eligible skill unknown",
+    "No independent held-out study family"
+  ],
+  "nextTask": "F003 obtain independent current Retail conditional Gem Finding cohort and independently validate non-exclusive co-output and unlock gates; otherwise pivot to next high-impact unresolved family."
+}

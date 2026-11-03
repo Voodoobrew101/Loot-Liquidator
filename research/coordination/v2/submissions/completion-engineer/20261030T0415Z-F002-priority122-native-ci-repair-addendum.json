@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_PRIORITY122_CONFLICT_DIAGNOSTIC_NATIVE_QA_ADDENDUM",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 17,
+  "runUTC": "2026-10-30T04:15:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseSubmission": "research/coordination/v2/submissions/completion-engineer/20261030T0413Z-F002-priority122-tsm-rounding-nonpromotion.json",
+  "baseSubmissionCommit": "19129897b5783e22b6942123c65d127ab1b8e183",
+  "engineeringRepairCommit": "1aae0697f62816afa43e694c967099e9944b62d3",
+  "status": "ENGINEERING_NATIVE_CI_PASS_SUBMITTED_FOR_INDEPENDENT_VALIDATOR_AND_COORDINATOR",
+  "failureAndRepair": {
+    "initialRunID": 41001617350,
+    "initialConclusion": "failure",
+    "exactFailure": "Missing priority-122 source/audit/candidate: tsm:prospect:189143:192869:L1242",
+    "rootCause": "Two batch014 reviews are keyed as supplemental family records, not exact primary ledger record IDs; their sourceLine and originalSourceText are null.",
+    "correction": "Match these two reviews by exact input/output as diagnostic corroboration, keep their family lineage distinct, and independently validate the primary GameData line by primary ledger source_line. Never fabricate audit sourceLine or rank-specific measurements.",
+    "changedFile": "research/tools/df_priority122_conflict_diagnostic.js",
+    "changedBlobSHA": "d29a71e8bfd92c4c5dddb3263ffab6d11787e6ca",
+    "changedSourceRecords": 0,
+    "sourceMetadataFabricated": 0
+  },
+  "nativeCI": {
+    "runID": 41001736754,
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41001736754",
+    "conclusion": "success",
+    "jobID": 123887470564,
+    "checks": [
+      "PASS independent repeat compile and deterministic candidate record order",
+      "PASS F002 Dragonflight priority-122 source/unit diagnostic 5/5; rounded compatibility hypothesis only",
+      "PASS detached source/context/value attestation with four adversarial cases",
+      "PASS working/evidence/confidence readiness and stale artifact detection",
+      "PASS five functional agents ownership, schedules and preview isolation",
+      "PASS independent DF milling native 16/16 strict fail-closed gate",
+      "PASS generated candidate JSON Schema",
+      "PASS Lua 5.1 decodes 1,018 mappings and 4,072 working numeric cells; 514 evidence gaps preserved",
+      "PASS 91 multi-blocker fields and 124 additional blockers preserved"
+    ]
+  },
+  "exactDeltas": {
+    "additionalDiagnosticScriptFixes": 1,
+    "admittedMappings": 0,
+    "workingNumericCellsChanged": 0,
+    "evidenceNumericCellsChanged": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "rawEvidenceWrites": 0,
+    "frozenTSMWrites": 0,
+    "generatedCandidateWrites": 0,
+    "productionWrites": 0
+  },
+  "currentReadiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingExpectedQuantity": 116
+  },
+  "safety": {
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "unsupportedFallbackConfidence": 0,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "legacyAssignmentsChanged": false,
+    "otherAgentFilesChanged": false,
+    "mainChanged": false,
+    "runtimeProfilesChanged": false,
+    "schedulesChanged": false
+  },
+  "remainingBlockers": [
+    "Source rounding compatibility is conditional on unverified historical TSM unit semantics; no exact rank-specific current Retail P/E established",
+    "No independently observed completed-cast denominators or holdout families for these five targets",
+    "Formal independent validator acceptance and coordinator integration still pending"
+  ],
+  "nextTask": "F002_NEXT_READY_CONFLICT_OR_MODEL_CONTRACT_DEFECT_AFTER_F005_QA; NO_REPEAT_IDENTICAL_AUDIT"
+}

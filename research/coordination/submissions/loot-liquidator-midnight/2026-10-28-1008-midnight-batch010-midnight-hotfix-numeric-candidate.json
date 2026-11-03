@@ -1,0 +1,80 @@
+{
+  "hypothesisID": "midnight-gem-hotfix-2026-03-31-quantification",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 11,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [],
+    "inputItemIDs": [],
+    "outputItemIDs": [],
+    "nominalInputCount": null,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "dateBefore": "2026-03-31",
+    "matchedOreItemID": null,
+    "oreRank": null,
+    "recipeSpellID": null,
+    "skill": null,
+    "stats": null,
+    "observedPerCastData": false
+  },
+  "targetContext": {
+    "dateAfter": "2026-03-31",
+    "matchedOreItemID": null,
+    "oreRank": null,
+    "recipeSpellID": null,
+    "skill": null,
+    "stats": null,
+    "observedPerCastData": false
+  },
+  "requiredLiveContext": [
+    "actual retail build",
+    "exact Midnight ore itemID and quality rank",
+    "recipeSpellID and input count",
+    "skill/specialization/gear/stats",
+    "all output gem itemIDs/ranks",
+    "per-cast zero-inclusive output counts",
+    "reagent refunds",
+    "matched pre-hotfix and post-hotfix cohorts"
+  ],
+  "sources": [
+    {
+      "claimID": "blizzard-2026-03-31-gem-frequency-direction",
+      "url": "https://worldofwarcraft.blizzard.com/en-gb/news/24266320/",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "midnight-b009-prehotfix-21000-ore-source-only",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/research/processing-confidence/research/evidence/observations/2026-10-28-0912-midnight-batch009-prehotfix-gem-table-SOURCE-ONLY.md",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 30,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Official March 31 2026 note is qualitative (gems more frequent), not numeric",
+    "No same-recipe, same-ore-rank, same-character pre/post gem-specific zero-inclusive logs",
+    "Original 21000-ore pre-hotfix source is not paired to a post-hotfix cohort",
+    "No recipe/patch/stat/quality bridge or per-cast variance; cannot estimate multiplier or CI"
+  ],
+  "notes": "Parallel numeric hypothesis research only; 0 additional first-pass item keys; no approved patch multiplier or formula."
+}

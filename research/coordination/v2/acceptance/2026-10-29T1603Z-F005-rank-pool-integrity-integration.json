@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_RANK_POOL_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 5,
+  "reviewUTC": "2026-10-29T16:03:00Z",
+  "baseCommit": "da6f4f5bfed98bd9c9f2e134f263a6b3485d850a",
+  "resultCommit": "ATOMIC_COMMIT_CONTAINING_THIS_RECORD",
+  "branch": "implementation/five-agent-completion",
+  "decision": "BLOCK_RANK_POOL_RESEARCH_PREVIEW_INTEGRITY_UNTIL_F002_REPAIR_AND_INDEPENDENT_F005_RETEST",
+  "decisions": [
+    {
+      "role": "completion-engineer",
+      "submission": "research/coordination/v2/submissions/completion-engineer/2026-10-29T1507Z-F002-native-f005-metamorphic-ci.json",
+      "decision": "ACCEPT_NATIVE_CI_WIRING_RESEARCH_ONLY",
+      "sourceBlob": "75552eea7c6d75702cee35d9844f99b7ee3923c1",
+      "reason": "CI run 40898230116 at bceed14e succeeded, including 609 independent metamorphic assertions, schema and Lua checks; independent new rank-pool fixture not yet wired."
+    },
+    {
+      "role": "independent-validator",
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-29T1545Z-F005-rank-pool-isolation.json",
+      "decision": "ACCEPT_INDEPENDENT_FAIL_AS_BLOCKER",
+      "fixtureBlob": "b3a7decf0b9e3b2a46564a573ecdc6310f5d7bce",
+      "subjectBlob": "b90137d4f67cea6975504b9c8cc4d978afaefb81",
+      "reason": "7/12 adversarial cases pass; 5/12 fail in three classes: game-mode pooling, direct reagent-vector pooling, stale/forged allocation ancestry. Actual existing rows affected not established; no live EV leak established."
+    },
+    {
+      "role": "baseline-modeller",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261029T1515Z-F003_DF_DIAMOND_QUANTIZATION.json",
+      "decision": "ACCEPT_AS_UNVERIFIED_ROUNDING_FEASIBILITY_DIAGNOSTIC_ONLY",
+      "modelBlob": "a2760e85247765a8e638cfd0bd05283314625d84",
+      "reason": "Nine GameData rows match 0.0142/0.0028 and 1-2 bounds; independent interval arithmetic confirms P [0.01415,0.01425) intersects 5-ore E [0.01375,0.01425) under stated hypothetical units. This does not verify actual TSM units, 5-ore cast denominator, rank exclusivity, or current-Retail E; do not resolve source conflict or promote evidence."
+    },
+    {
+      "role": "evidence-researcher",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1527Z-F004-tww-denominator-pivot.json",
+      "decision": "ACCEPT_HISTORICAL_DENOMINATOR_RISK_ONLY",
+      "sourceBlob": "9e82e99d9d39752e7c5436203cd6edc7162745df",
+      "reason": "Two distinct 2024 first-person reports of interrupted bulk Mycobloom milling, no completed-cast yield histogram. Count successful operations only; failed/aborted Create All requests are not zero-output completed casts. No current Retail numeric promotion."
+    }
+  ],
+  "verification": {
+    "headReviewed": "da6f4f5bfed98bd9c9f2e134f263a6b3485d850a",
+    "workingEstimatorBlob": "b90137d4f67cea6975504b9c8cc4d978afaefb81",
+    "pipelineBlob": "75552eea7c6d75702cee35d9844f99b7ee3923c1",
+    "rankPoolFixtureBlob": "b3a7decf0b9e3b2a46564a573ecdc6310f5d7bce",
+    "candidateBlob": "6488e39b54ae7961750231cb94391eb34af606e3",
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "gameDataBlob": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
+    "independentRankPool": {
+      "passed": 7,
+      "failed": 5,
+      "total": 12,
+      "defectClasses": 3,
+      "execution": "V8 exact module; NOT native Node"
+    },
+    "nativeCI": {
+      "runID": 40898230116,
+      "commit": "bceed14e211328ef7da9a87e693e16daf2cbc272",
+      "conclusion": "success",
+      "independentMetamorphicAssertions": 609,
+      "rankPoolFixtureIncluded": false,
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40898230116"
+    },
+    "coordinatorIndependentArithmetic": {
+      "pInterval": [
+        0.01415,
+        0.01425
+      ],
+      "eIntervalUnderFiveInputAssumption": [
+        0.01375,
+        0.01425
+      ],
+      "feasible": true,
+      "actualUnitVerified": false
+    },
+    "coordinatorChecks": [
+      "Pinned current GitHub file blob hashes and latest role submissions",
+      "Matched all nine frozen GameData diamond rows in three rank blocks",
+      "Recomputed rounded-interval overlap for diamond prior",
+      "Checked canonical 1018*4=4072, 3558+514=4072, E gaps=116"
+    ],
+    "notRun": [
+      "Local native Node and Lua tests",
+      "Native Node execution of new F005 rank-pool fixture",
+      "WoW Retail client",
+      "Current-Retail independent matched holdout"
+    ]
+  },
+  "deltas": {
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "newIndependentRetailHoldouts": 0,
+    "independentRegressionCasesAddedByValidator": 12,
+    "newConfirmedDefectClasses": 3,
+    "changedCoordinatorOwnedFilesPlanned": 3
+  },
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "distinctInputs": 179,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "legacyUnadmittedQueue30LeadKeys": 24,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "economicSafety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionFilesChanged": 0,
+    "legacyAssignmentsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "blockers": [
+    "Five new independent rank-pool cases fail; must repair gameMode and complete direct reagent vector in operation identity, and validate full allocation ancestry and membership",
+    "Independent current Retail zero-inclusive TWW milling holdout and minimum eligible baseline absent",
+    "116 E evidence gaps and 514 total numeric evidence gaps remain; 24 legacy queue30 leads unadmitted"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_FIX_RANK_POOL_CONTEXT_AND_ANCESTRY",
+      "exactPaths": [
+        "research/tools/working_estimates.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Add gameMode and canonical full direct reagents to pool identity; independently recompute poolID, membership, shares and E sum; reject forged/stale ancestry; run 12 F005 cases and 609 metamorphic cases in native CI; deterministic compiler --check and Lua/schema; do not promote evidence."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_RETEST_RANK_POOL_CONTEXT_AND_ANCESTRY",
+      "exactPaths": [
+        "research/tests/v2/test_f005_rank_pool_isolation.js",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Independently rerun all 12 rank-pool cases on repaired exact source SHA plus 609 metamorphic and economic isolation, verify candidate hashes and no live leakage; review F003 diagnostic separately."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_TWW_MILLING_CONTROLLED_CAST_PROTOCOL",
+      "targetKeys": [
+        "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+        "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024"
+      ],
+      "acceptance": "Capture zero-inclusive completed-cast protocol, rank, recipe, patch, stats, refunds, stack and abort behavior; no historical hypothesis promoted."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_QUEUE30_MIDNIGHT_CRUSHING_ELIGIBILITY",
+      "targetKeys": [
+        "universe-audit:midnight:crush:spell1231132:input242553:gemdust-rank-and-eligibility",
+        "universe-audit:midnight:crush:spell1231132:input242723:gemdust-rank-and-eligibility"
+      ],
+      "acceptance": "Find exact current Retail selector/input whitelist and output-rank evidence, otherwise retain unadmitted and pivot to a new independent source family."
+    }
+  ],
+  "zeroDeltaPivot": "Numeric candidate unchanged; integrated new CI safety improvement and actionable independent failure instead of repeating source audits.",
+  "nextTask": "F002_FIX_RANK_POOL_CONTEXT_AND_ANCESTRY_AND_F005_RETEST"
+}

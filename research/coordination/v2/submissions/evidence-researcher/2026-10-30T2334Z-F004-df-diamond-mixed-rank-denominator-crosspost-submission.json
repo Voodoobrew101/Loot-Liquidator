@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_DF_DIAMOND_MIXED_RANK_DENOMINATOR_CROSSPOST",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "2026-10-30T2334Z-F004-df-diamond-mixed-rank-denominator-crosspost",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "9eaba75c90e716657783fafd5fbe77b1ff561471",
+  "sourceEvidenceCommit": "f2baf2652020fbe4d081e3027b3806a08822c669",
+  "sourceReviewCommit": "65d523d6b0ddb0e2e87333f013820b42a88f801b",
+  "status": "PROPOSED_PENDING_COORDINATOR_AND_INDEPENDENT_F005_QA",
+  "filesAdded": [
+    "research/evidence/v2/2026-10-30T2334Z-F004-df-diamond-mixed-rank-denominator-crosspost.json",
+    "research/evidence/v2/source-reviews/2026-10-30T2334Z-F004-df-diamond-mixed-rank-denominator-crosspost-source-review.json",
+    "research/coordination/v2/submissions/evidence-researcher/2026-10-30T2334Z-F004-df-diamond-mixed-rank-denominator-crosspost-submission.json"
+  ],
+  "filesModified": [],
+  "filesDeleted": [],
+  "targetKeys": [
+    "tsm:prospect:188658:192870:L1205",
+    "tsm:prospect:188658:192871:L1206",
+    "tsm:prospect:189143:192869:L1242",
+    "tsm:prospect:189143:192870:L1243",
+    "tsm:prospect:190311:192869:L1280"
+  ],
+  "exactDeltas": {
+    "newOriginalCohortLeadsProposed": 3,
+    "independentAuthorLineagesVerified": 0,
+    "existingCrosspostCohortsDoubleCounted": 0,
+    "sourceContextCorrectionProposals": 1,
+    "acceptedMappingsAdded": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "verifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "readinessCountChanges": 0,
+    "rawEvidenceChanges": 0,
+    "existingFilesChanged": 0
+  },
+  "tests": {
+    "structuralChecksPassed": 14,
+    "structuralChecksFailed": 0,
+    "checks": [
+      {
+        "name": "JSON roundtrip",
+        "passed": true
+      },
+      {
+        "name": "3 unique cohort IDs",
+        "passed": true
+      },
+      {
+        "name": "3 unique proposed lineage IDs",
+        "passed": true
+      },
+      {
+        "name": "Crosspost counted once",
+        "passed": true
+      },
+      {
+        "name": "Nominal denominator exact discrepancy",
+        "passed": true
+      },
+      {
+        "name": "R2 percentages correctly interpreted",
+        "passed": true
+      },
+      {
+        "name": "R3 percentages correctly interpreted",
+        "passed": true
+      },
+      {
+        "name": "Unknown actual casts all null",
+        "passed": true
+      },
+      {
+        "name": "Unknown measured P and E all null",
+        "passed": true
+      },
+      {
+        "name": "No economic promotion",
+        "passed": true
+      },
+      {
+        "name": "Five exact priority keys",
+        "passed": true
+      },
+      {
+        "name": "No inferred item ID for mixed rank",
+        "passed": true
+      },
+      {
+        "name": "Serevite rank identity",
+        "passed": true
+      },
+      {
+        "name": "Crosspost non-independence",
+        "passed": true
+      }
+    ],
+    "sourceMemoryChecked": true,
+    "originalRedditThreadDirectOpen": "UNAVAILABLE",
+    "nativeNodeTests": "NOT_RUN",
+    "nativeLuaTests": "NOT_RUN",
+    "runtimeTests": "NOT_RUN",
+    "inGameTests": "NOT_RUN",
+    "GitHubReadBack": "PENDING_AFTER_COMMIT"
+  },
+  "blockers": [
+    "No original commenter IDs or direct comment permalinks; Reddit search index only.",
+    "Draconium R1/R2 mixed across runs and exact completed casts/refunds unknown; cannot calibrate rank-specific priority-122 P/E.",
+    "Serevite 54137 ore versus 10827 reported prospects differs by two nominal ore units; cannot resolve from comment.",
+    "2022/2023 Dragonflight mechanics cannot be promoted as verified 2026 Retail.",
+    "Coordinator must check full immutable archive and independently QA proposed lineage counts."
+  ],
+  "nextTask": "Prioritize current-Retail rank-labelled Draconium R1/R2/R3 actual-cast logs with zero-output histograms and Resourcefulness refunds; if no new source lead, pivot to a distinct priority-122 source conflict or controlled sampling protocol.",
+  "safety": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVEligible": false,
+    "liveRecommendationEligible": false,
+    "rawEvidence": "UNCHANGED",
+    "frozenHistoricalTSM": "UNCHANGED",
+    "tooltipOnly": "UNCHANGED",
+    "main": "UNCHANGED",
+    "runtimeProfiles": "UNCHANGED",
+    "legacyAssignments": "UNCHANGED"
+  }
+}

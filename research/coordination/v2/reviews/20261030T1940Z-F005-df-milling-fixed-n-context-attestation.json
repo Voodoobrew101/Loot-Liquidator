@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_DF_MILL_FIXED_N_CONTEXT_ATTESTATION",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "reviewUTC": "2026-10-30T19:40:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "0149c9e1761f078ba051dba669bf1382f45e6a58",
+  "verdict": "FAIL_REPAIR_REQUIRED_RESEARCH_MODEL_ONLY",
+  "repairOwner": "baseline-modeller",
+  "model": {
+    "path": "research/tools/models_v2/df_milling_fixed_n_simultaneous_bounds_v1.js",
+    "blobSHA": "216a929d4ab7b683e1bc9f4637273c4d766b1081",
+    "modelID": "df-milling-fixed-n-simultaneous-bounds-v1.0.0",
+    "changedByValidator": false
+  },
+  "independentTest": {
+    "path": "research/tests/v2/test_f005_df_milling_fixed_n_independent_attestation.js",
+    "blobSHA": "94c85850e353892e1a62c60a1503a6f6e5e37b50",
+    "total": 30,
+    "passed": 22,
+    "failed": 8,
+    "runtime": "connector JavaScript V8, exact fetched committed model",
+    "syntheticOnly": true
+  },
+  "independentKeyReconciliation": {
+    "source": "research/coordination/completion-priorities.json",
+    "priority": 102,
+    "method": "Mill",
+    "expected": 43,
+    "modelManifest": 43,
+    "missing": [],
+    "extra": []
+  },
+  "positiveChecks": [
+    "43 unique keys and exact priority backlog agreement",
+    "39 original model self-test assertions pass",
+    "zero-inclusive actual cast P and unconditional E, not P times E",
+    "3 completed casts, 15 nominal input units, 2 refunded, 13 net consumed",
+    "co-output marginals not forced to sum to one",
+    "fixed-n family-wise Hoeffding multiplicity for 3 P tests and 2 capped E tests",
+    "no finite E interval or sample-size guarantee without externally attested cap",
+    "conditional sample extrema not hard game bounds",
+    "zero output extrema remain null",
+    "all output and summary policy fields remain confidence 0, PREVIEW_ONLY, normalizedVerified false, no live EV, no tooltip-only use",
+    "no current-Retail population or independent holdout claim",
+    "invalid alpha, malformed casts, cap contradictions rejected"
+  ],
+  "failedChecks": [
+    {
+      "case": "patch-build suffix",
+      "reproduction": "patchBuild='10.2.7garbage' accepted",
+      "risk": "invalid build/epoch identity silently admitted"
+    },
+    {
+      "case": "impossible calendar date",
+      "reproduction": "observationEpoch='2026-02-30T19:00:00Z' accepted via Date.parse rollover",
+      "risk": "incorrect patch cohort assignment"
+    },
+    {
+      "case": "cast output changing after validation",
+      "reproduction": "proxy outputs first 2, later 100; reported E=100 instead of 2",
+      "risk": "unattested observed output inflation"
+    },
+    {
+      "case": "cap maximum changing after attestation",
+      "reproduction": "proxy cap 3 becomes 100; upper E bound exceeds 3",
+      "risk": "false uncertainty bound"
+    },
+    {
+      "case": "study family changing after validation",
+      "reproduction": "source F005-SYNTHETIC becomes DIFFERENT-STUDY in summary",
+      "risk": "lineage and holdout contamination"
+    },
+    {
+      "case": "observation epoch changing after validation",
+      "reproduction": "2026-10-30 epoch becomes 2025-01-01 in summary",
+      "risk": "patch applicability contamination"
+    },
+    {
+      "case": "recipe identity changing after validation",
+      "reproduction": "recipeSpellID 382981 becomes 999999 in summary",
+      "risk": "recipe eligibility attribution corruption"
+    },
+    {
+      "case": "cap source ID changing after validation",
+      "reproduction": "SYNTHETIC becomes INVENTED-SOURCE in output",
+      "risk": "unattested cap provenance"
+    }
+  ],
+  "repairRequirements": [
+    "Validate strict full build syntax and reject non-existent calendar dates by round-trip parsing",
+    "Canonicalize all nested context/casts/caps to a single validated immutable data-only snapshot and calculate/serialize exclusively from that snapshot",
+    "For dynamic objects either reject or produce only values from the attested snapshot; avoid repeated property reads that can disagree",
+    "Rerun all 30 independent checks under native Node and validate actual source blob SHA",
+    "Retain no current-Retail E confidence/economic promotion without whole-study holdout and verified caps"
+  ],
+  "economicImpact": {
+    "newVerifiedExpectedQuantityCells": 0,
+    "workingNumericCellsFilled": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0
+  },
+  "readiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantityCells": 116,
+    "evidenceGE90Cells": 0
+  },
+  "holdout": "NOT_INDEPENDENTLY_VALIDATED",
+  "notRun": [
+    "native Node exact-source suite",
+    "lua5.1",
+    "current-Retail in-game casts",
+    "whole-independent-study-family holdout",
+    "compiler pipeline --check (no compiler inputs changed)"
+  ],
+  "safety": "Research-only F005 files; source model, main, runtime-profiles, legacy assignments, raw evidence, frozen TSM, tooltip-only policies and schedules unchanged.",
+  "nextTask": "After F003 canonical-snapshot repair, rerun this source-pinned suite; if unchanged for two cycles pivot to new F004 DF diamond rank-split evidence and independent cap/denominator applicability."
+}

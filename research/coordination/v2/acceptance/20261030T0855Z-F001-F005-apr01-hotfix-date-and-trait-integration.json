@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F002_F003_F004_F005_APR01_EPOCH_CHRONOLOGY_AND_TRAIT_INTEGRATION",
+  "queueRevision": 22,
+  "workflowRevision": 2,
+  "runUTC": "2026-10-30T08:55:30Z",
+  "baseCommit": "011cd386617fddcabef06ce5be4e7c1f690c62c8",
+  "branch": "implementation/five-agent-completion",
+  "status": "RESEARCH_ONLY_CONDITIONAL_ACCEPTANCE_EPOCH_DATE_REPAIR_REQUIRED",
+  "canonical": {
+    "readinessBlob": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "prioritiesBlob": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "scorecardPreviousBlob": "1cc3d6c4096ebce85f40a4193339e07d37c9b4d4",
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "missingEvidenceFields": 514,
+    "missingExpectedQuantity": 116,
+    "priorityRecords": 217
+  },
+  "newIndependentFinding": {
+    "type": "OFFICIAL_SOURCE_DATE_MISMATCH_AFFECTS_PRE_POST_COHORT_CLASSIFICATION",
+    "source": "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
+    "sourceMirror": "https://news.blizzard.com/en-us/article/24266320/hotfixes-april-17-2026",
+    "officialEntryDate": "2026-04-01",
+    "modelIncorrectEntryDate": "2026-04-03",
+    "modelSourceBlob": "95708d9664b92239818aac4443d965ce9840b5ff",
+    "modelManifestBlob": "2fead763af9abd0f79cab518a13151d89ec01a4c",
+    "demonstration": "The committed model self-test asserts classifyEpoch('2026-04-01T23:59:59Z') == PRE_HOTFIX even though the official change appears in the April 1 hotfix section.",
+    "risk": "An April 1 cohort may be misclassified as pre-hotfix; exact deployment hour is unknown, so a conservative quarantine is required. No measured numeric P/E was promoted.",
+    "remediation": "Re-anchor the official date to April 1 and conservatively quarantine ambiguous boundary observations; test no April 1 observation is falsely certified PRE, and preserve no-effect-size claims."
+  },
+  "decisions": [
+    {
+      "owner": "completion-engineer",
+      "task": "F002_ANYTIME_FIXTURE_PINS",
+      "verdict": "CONDITIONALLY_ACCEPT_RESEARCH_GATE_ONLY",
+      "exactDelta": {
+        "compilerFilesModified": 1,
+        "linesAdded": 27,
+        "linesRemoved": 0,
+        "numericCells": 0,
+        "newE": 0,
+        "confidencePromotions": 0
+      },
+      "sourceBlob": "9f3d5e531b54191c8f0f38ca7a71b71fec0d5077",
+      "reason": "Two independent F005 fixture blobs and PREVIEW_ONLY manifest policy pinned; connector readback and 11 reported simulations, but native pipeline and independent F005 review not yet confirmed.",
+      "outstanding": "Native --check plus independent test contract and manifest policy review; no release/economic approval"
+    },
+    {
+      "owner": "baseline-modeller",
+      "task": "F003_MIDNIGHT_PROSPECT_APR03_HOTFIX_EPOCH_PIVOT",
+      "verdict": "REJECT_EPOCH_DATE_AND_PRE_CLASSIFICATION_PENDING_REPAIR",
+      "exactDelta": {
+        "newModelSourceFiles": 1,
+        "newModelManifestFiles": 1,
+        "numericCells": 0,
+        "newE": 0,
+        "confidencePromotions": 0
+      },
+      "sourceBlob": "95708d9664b92239818aac4443d965ce9840b5ff",
+      "reason": "Official Blizzard cumulative hotfix article puts Midnight gem prospecting frequency change under April 1, 2026, not April 3. Current model classifies April 1 23:59:59 UTC as PRE_HOTFIX, potentially mixing post-change casts into the pre cohort. The announcement does not specify exact deployment instant or output-specific magnitude.",
+      "outstanding": "Correct datedEntry, model ID/epoch policy, self tests and quarantine; independently test Gregorian offsets and pre/post contamination; no numeric transfer"
+    },
+    {
+      "owner": "evidence-researcher",
+      "task": "F004_MIDNIGHT_DIAMOND_ORE_SPEC_ELIGIBILITY",
+      "verdict": "ACCEPT_QUALITATIVE_UNLOCK_CONTEXT_ONLY",
+      "exactDelta": {
+        "gameTraitIdentities": 4,
+        "oreContexts": 7,
+        "independentCastLineages": 0,
+        "numericCells": 0,
+        "newE": 0,
+        "confidencePromotions": 0
+      },
+      "sourceBlob": "6433cfe3cc77a1b91da6da09e3bf18581f994c87",
+      "reason": "Four exact ore-family profession trait IDs supported by one indexed game-data lineage, F005 conditional independent review; do not assert current-client one-KP threshold, unlock sufficiency, rates, or 242712 mapping.",
+      "outstanding": "Character-specific unlock-on/off and current-client item ID 242608 vs 242712; actual completed-cast logs"
+    },
+    {
+      "owner": "independent-validator",
+      "task": "F005_MIDNIGHT_DIAMOND_TRAIT_ELIGIBILITY",
+      "verdict": "ACCEPT_CONDITIONAL_RESEARCH_REVIEW_NOT_NATIVE_PASS",
+      "exactDelta": {
+        "newTestFile": 1,
+        "testCases": 19,
+        "mutantNegativeControls": 12,
+        "numericCells": 0,
+        "newE": 0
+      },
+      "testBlob": "b79c4cc0acbcd84026b6bb38caa56024e4d636d0",
+      "reason": "19/19 reported exact-source V8 assertions and 12 mutant controls; test and reviewed evidence blob pins matched current GitHub readback.",
+      "outstanding": "Native Node committed fixture against checked-out repository and independent review of corrected hotfix epoch"
+    }
+  ],
+  "independentValidation": {
+    "coordinatorStaticChecks": {
+      "passed": 16,
+      "failed": 0,
+      "scope": "GitHub source/manifest/test SHA pins, priority membership, numeric policy and reproduced date-mismatch predicates"
+    },
+    "sourceDateCheck": "Official Blizzard cumulative hotfix page independently checked for April 1 heading and prospecting frequency line; no quantitative yield claimed",
+    "specialistReported": {
+      "modelSelfTests": 44,
+      "modelSyntheticArithmetic": 5600,
+      "traitV8Assertions": 19,
+      "traitMutants": 12,
+      "compilerSimulations": 11
+    },
+    "coordinatorNativeNode": "NOT_RUN_LOCAL_GITHUB_CLONE_UNAVAILABLE",
+    "nativeNodeNewTraitSuite": "NOT_RUN",
+    "nativeNodeNewEpochModel": "NOT_RUN",
+    "pipelineCheck": "NOT_RUN_NO_ACCEPTED_BUILD_INPUTS_CHANGED",
+    "lua51": "NOT_RUN",
+    "wowClient": "NOT_RUN",
+    "currentHeadCI": "NOT_VERIFIED"
+  },
+  "exactDeltas": {
+    "newCoordinatorAcceptanceFiles": 1,
+    "updatedCoordinatorScorecardFiles": 1,
+    "newCoordinatorSubmissionFiles": 1,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "numericWorkingCellsFilled": 0,
+    "newExpectedQuantityCells": 0,
+    "evidenceNumericCellsPromoted": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailCastFamilies": 0,
+    "productionFilesChanged": 0,
+    "legacyAssignmentsChanged": 0,
+    "frozenTSMChanged": 0,
+    "rawEvidenceChanged": 0,
+    "tooltipOnlyPolicyChanged": 0,
+    "schedulesChanged": 0
+  },
+  "blockers": [
+    "F003 April 3 chronology conflicts with official April 1 source and permits April 1 PRE classification",
+    "F003 Dragonflight joint-cast 10 array-attestation synthetic failures remain pending repair and strict native 13/13",
+    "F003 Midnight anytime nested context 8 previously reported failures remain pending correction and strict native execution",
+    "F002 fixture/policy pin hardening awaits native pipeline and independent acceptance",
+    "F005 new 19-case trait suite not executed on native repository checkout",
+    "242608/242712 item identity, exact trait unlock conditions and current-Retail completed-cast evidence unavailable",
+    "116 expectedQuantity evidence gaps and zero independently held-out current-Retail cast families"
+  ],
+  "nextAssignments": [
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_CORRECT_APR01_HOTFIX_EPOCH",
+      "scope": "Highest-priority new defect: replace erroneous April 3 official date with April 1, revise PRE/QUARANTINE/POST boundaries conservatively without claiming deployment hour, ensure April 1 cannot be certified PRE, add independent regression fixtures and keep all seven Eversong Diamond keys preview-only. Then repair prior DF array/nested context integrity defects."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_APR01_DATE_AND_TRAIT_NATIVE_RETEST",
+      "scope": "Independently confirm April 1 official entry, test pre/post boundary and timezone straddling with exact source blob; run committed 19-case trait suite native, then recheck DF array 13 and Midnight nested 13 after owner repair. No self-approval of numeric evidence."
+    },
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_NATIVE_PIN_CHECK_AND_FAIL_CLOSED_GATES",
+      "scope": "Execute latest pipeline --check in native Node/Lua CI; preserve two pinned F005 anytime fixtures and preview-only manifest invariants. After F005 acceptance wire corrected hotfix and trait QA into strict fail-closed pipeline, not into addon or live EV."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_POST_APR01_DIAMOND_CAST_AND_UNLOCK",
+      "scope": "Collect current-Retail zero-inclusive completed casts after corrected hotfix epoch for seven 242608 candidate keys, with exact ore rank, trait unlock flag, skill/spec/gear, patch, gross/refunded input and all co-outputs; resolve 242608/242712 in client/API. Pivot to Crushing selectors if no new source."
+    }
+  ],
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVOrRecommendationsChanged": false,
+    "tooltipOnlyUnchanged": true
+  },
+  "preservation": {
+    "mainUntouched": true,
+    "runtimeProfilesUntouched": true,
+    "legacyAssignmentsUntouched": true,
+    "rawEvidenceUntouched": true,
+    "frozenTSMUntouched": true,
+    "tooltipOnlyUnchanged": true,
+    "otherRoleFilesUntouched": true,
+    "schedulesUntouched": true
+  }
+}

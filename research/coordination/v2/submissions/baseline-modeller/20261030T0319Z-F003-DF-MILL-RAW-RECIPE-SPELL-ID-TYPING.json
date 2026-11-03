@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "baseline-modeller",
+  "taskID": "F003",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 15,
+  "reportUTC": "2026-10-30T03:19:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "1967de0e3e37fc326dbd81d122f0387acccd4503",
+  "resultCommitBeforeSubmission": "794adcb5f3af66f0bfceb58a9b820f955adf069f",
+  "status": "PROPOSED_PENDING_INDEPENDENT_QA",
+  "priorityBasis": "Independent F005 reproduced RAW_CURRENT_RETAIL recipeSpellID type admission defect; repair higher-utility than repeating exhausted DF milling source audit.",
+  "priorReview": "research/coordination/v2/reviews/2026-10-30T0246Z-F005-df-milling-native-fixture-repair-and-residual-context.json",
+  "changes": [
+    {
+      "path": "research/tools/models_v2/df_milling_decision_sensitivity_v1.js",
+      "oldBlobSHA": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+      "newBlobSHA": "c7b75c9d123a26eddc5473fb4b30d13a0e6dfccf",
+      "change": "RAW_CURRENT_RETAIL requires positive safe integer recipeSpellID; add 1 valid cohort and 8 malformed ID regression probes; preserve SYNTHETIC UNKNOWN support."
+    },
+    {
+      "path": "research/models/v2/df_milling_decision_sensitivity_v1.json",
+      "oldBlobSHA": "69ef0bdc0d6bf9f9ad1667ab2ff7a39efab783f3",
+      "newBlobSHA": "07d9a0c640e0f795b6a0e6d88b7cbe2afabd877f",
+      "change": "Bump model to v1.0.2, bind exact code SHA and document type-domain policy, tests, holdout and remaining blockers."
+    },
+    {
+      "path": "research/coordination/v2/submissions/baseline-modeller/20261030T0319Z-F003-DF-MILL-RAW-RECIPE-SPELL-ID-TYPING.json",
+      "change": "Role-owned immutable F003 submission for coordinator and independent validator."
+    }
+  ],
+  "affectedStableKeys": [
+    "tsm:mill:191469:198412:L1975",
+    "tsm:mill:191469:198413:L1976",
+    "tsm:mill:191469:198414:L1977",
+    "tsm:mill:191470:198415:L1980",
+    "tsm:mill:191470:198416:L1981",
+    "tsm:mill:191470:198417:L1982",
+    "tsm:mill:191471:198415:L1985",
+    "tsm:mill:191471:198416:L1986",
+    "tsm:mill:191471:198417:L1987",
+    "tsm:mill:191472:198415:L1990",
+    "tsm:mill:191472:198416:L1991",
+    "tsm:mill:191472:198417:L1992",
+    "tsm:mill:200061:198412:L1998",
+    "tsm:mill:200061:198413:L1999",
+    "tsm:mill:200061:198414:L2000",
+    "tsm:mill:200061:198415:L2001",
+    "tsm:mill:200061:198416:L2002",
+    "tsm:mill:200061:198417:L2003",
+    "tsm:mill:200061:198418:L2004",
+    "tsm:mill:200061:198419:L2005",
+    "tsm:mill:200061:198420:L2006",
+    "tsm:mill:200061:198421:L2007",
+    "tsm:mill:200061:198422:L2008",
+    "tsm:mill:200061:198423:L2009"
+  ],
+  "affectedMappingCount": 24,
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "evidenceNumericCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "malformedRawRecipeIdCasesNowRejected": 8
+  },
+  "readinessObserved": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "JavaScript V8 via code execution with assert-compatible shim; exact patched model source before GitHub write",
+      "result": "41_PASS_0_FAIL",
+      "previousSelfTests": 32,
+      "newAssertions": 9,
+      "syntheticOnly": true
+    },
+    {
+      "environment": "GitHub connector post-write code+manifest readback",
+      "result": "PENDING_VERIFICATION"
+    },
+    {
+      "environment": "GitHub Actions native Node+Lua5.1 for new model",
+      "result": "IN_PROGRESS",
+      "urls": [
+        "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40996564279",
+        "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40996559701"
+      ]
+    },
+    {
+      "environment": "Prior independent F005 native CI for v1.0.1",
+      "result": "16_PASS_0_FAIL",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40993516302",
+      "note": "Not a validation of v1.0.2"
+    }
+  ],
+  "testsNotRun": [
+    "Independent F005 authored native regression for v1.0.2",
+    "Actual current-Retail zero-inclusive cohort",
+    "In-game client/tooltip test"
+  ],
+  "economicPolicy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "productionChanged": false
+  },
+  "blockers": [
+    "Positive integer recipeSpellID is type validation only; does not establish actual recipe existence or eligibility.",
+    "Independent F005 native retest/acceptance of v1.0.2 pending.",
+    "24 Dragonflight milling mappings lack independent current-Retail zero-inclusive casts, complete independently audited output universe and resolved historical TSM units.",
+    "Input 200061 recipe eligibility and batch size unverified."
+  ],
+  "holdoutRequest": "F005 should add native tests rejecting RAW recipeSpellID strings, fractions, zero, null, NaN and Infinity, accepting a valid numeric spell ID; verify synthetic UNKNOWN remains permitted and no economic promotion. Reserve independent current-Retail whole-study family as holdout.",
+  "nextTask": "F003_PIVOT_NEW_READY_MODEL_FAMILY_IF_NO_NEW_DF_MILLING_COHORT;DO_NOT_REPEAT_CONTEXT_AUDIT",
+  "coordinatorAction": "Review and accept model-only RAW type repair; do not promote confidence or change readiness counters."
+}

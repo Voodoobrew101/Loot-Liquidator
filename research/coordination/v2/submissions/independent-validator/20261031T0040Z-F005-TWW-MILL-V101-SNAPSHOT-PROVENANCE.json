@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "independent-validator",
+  "taskID": "F005",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261031T0040Z-F005-TWW-MILL-V101-SNAPSHOT-PROVENANCE",
+  "status": "SUBMITTED_FOR_COORDINATOR_REVIEW_FAIL_MODEL",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": null,
+  "baseCommitNote": "Connector did not expose the branch head commit before first write; preserved all concurrent commits via sequential create-only writes. Exact pre-write model SHA and result commits are recorded.",
+  "resultCommitBeforeSubmission": "4ac81102c99009533f3d342aa7a0259015bb1f65",
+  "testCommit": "88a19b13af8994e875065392d37e943552475a50",
+  "modelSourceBlobSHA": "5d90046b15046fb210523c34363c66596b962d3d",
+  "testBlobSHA": "94ea3a1586e986d52d47394745181e8bab3f478e",
+  "filesChanged": [
+    "research/tests/v2/test_f005_tww_mill_v101_snapshot_provenance_20261031.js",
+    "research/coordination/v2/reviews/20261031T0040Z-F005-TWW-MILL-V101-SNAPSHOT-AND-PROVENANCE.json",
+    "research/coordination/v2/submissions/independent-validator/20261031T0040Z-F005-TWW-MILL-V101-SNAPSHOT-PROVENANCE.json"
+  ],
+  "exactKeysAffected": [
+    "historical:tww:mill:210796:222619:reddit-1fdmzwy-2024",
+    "historical:tww:mill:210797:222619:reddit-1fdmzwy-2024",
+    "candidate:tww:mill:210798:222618:runtime-method-family:20261028",
+    "candidate:tww:mill:210799:222612:runtime-method-family:20261028",
+    "candidate:tww:mill:210800:222613:runtime-method-family:20261028",
+    "candidate:tww:mill:210801:222614:runtime-method-family:20261028",
+    "candidate:tww:mill:210802:224800:runtime-method-family:20261028",
+    "candidate:tww:mill:210803:224801:runtime-method-family:20261028",
+    "candidate:tww:mill:210804:224802:runtime-method-family:20261028",
+    "candidate:tww:mill:210805:224803:runtime-method-family:20261028",
+    "candidate:tww:mill:210806:224804:runtime-method-family:20261028",
+    "candidate:tww:mill:210807:224805:runtime-method-family:20261028"
+  ],
+  "deltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "newExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0
+  },
+  "readinessSnapshot": {
+    "mappingCount": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantities": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testsActuallyRun": [
+    "14 static model/test source probes against GitHub blob SHA 5d90046b15046fb210523c34363c66596b962d3d",
+    "3 independent isolated V8 exact-control-flow adversarial reproductions (cap units, cap status, array length)",
+    "GitHub readback and blob SHA verification of role-owned 15-case test"
+  ],
+  "testsAuthoredNotRun": [
+    "15-case exact-module Node regression suite; eight unsafe-input cases predicted from direct source inspection, not represented as an executed 7/15 outcome"
+  ],
+  "testsNotRun": [
+    "Native Node exact-module 15-case regression",
+    "Existing 37-case full-source regression on v1.0.1",
+    "lua5.1 generated candidate decoding",
+    "run_completion_pipeline --check",
+    "Retail in-game casts"
+  ],
+  "findings": [
+    "F003 v1.0.1 correctly adds inverse finite-result and context string validation guards",
+    "Four previously reported mutable/context mismatch defects remain",
+    "Four additional integrity risks identified: cap status escalation, shrinking per-cast arrays, mutable study family, mutable patch epoch",
+    "Three isolated reproductions accepted unsafe data; cap units can inflate upper cast bound from 11 to 45"
+  ],
+  "verdict": "FAIL_MODEL_INTEGRATION_PENDING_F003_REPAIR",
+  "blockers": [
+    "Immutable validated context/accounting snapshot missing",
+    "No independently matched current-Retail zero-inclusive completed-cast holdout",
+    "Native full-source regression not yet executed"
+  ],
+  "safety": {
+    "previewOnly": true,
+    "confidence": 0,
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "tooltipOnlyChanged": false,
+    "productionChanged": false,
+    "schedulesChanged": false
+  },
+  "nextTask": "After F003 immutable snapshot repair, run both 37- and 15-case F005 suites under native Node and validate zero-inclusive holdout applicability; if unchanged, pivot to new F004 cohort lineage QA."
+}

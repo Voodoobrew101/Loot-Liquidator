@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_ANYTIME_CONTEXT_SNAPSHOT_POSTREPAIR_QA",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 18,
+  "reviewUTC": "2026-10-30T05:41:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "a08a184b375052644003b897d55940b083b6bd80",
+  "testCommit": "836bd617d239f30f979346f75d51e954eeb39aa9",
+  "verdict": "PASS_F002_NATIVE_GATE_AND_F003_PREVIOUS_12_REPAIRS;FAIL_F003_NEW_NESTED_CONTEXT_INTEGRITY;CONDITIONAL_RESEARCH_ONLY",
+  "sourceBlobs": {
+    "workflow": "9831f9777155831bec1603508334d15fdc607da7",
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "model": "55e4c0a23ef2403cef97d46d8590a52c09bbe2e9",
+    "modelManifest": "05b5dc514cc409ffd66018379d0daa118c6fa8d7",
+    "existingIndependentSuite": "fbb838e348429d6deed741060fe992ead560190b",
+    "newIndependentSuite": "2e64ba46af242740c7a44ecf6bb204ae1345c112",
+    "f002Diagnostic": "08acca2f4175670183438d77545caa659034d6ec",
+    "pipeline": "266524a83c5d5cd6e3a1d42345358d0749aaacbe"
+  },
+  "testsActuallyRun": [
+    {
+      "name": "F003 original independent 12-case regression suite",
+      "environment": "V8 exact GitHub model/test source with assert shim",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "name": "F003 model selfTest",
+      "environment": "V8 exact GitHub source with assert shim",
+      "passed": 49,
+      "failed": 0
+    },
+    {
+      "name": "F003 new nested context snapshot/serialization adversarial suite",
+      "environment": "V8 exact GitHub model/test source with assert shim",
+      "passed": 5,
+      "failed": 8
+    },
+    {
+      "name": "GitHub Actions run 41008709609 at base head",
+      "environment": "native GitHub Actions Node + Lua 5.1 pipeline",
+      "status": "SUCCESS",
+      "details": "run_completion_pipeline.js --check includes fail-closed F005 priority122 6-case and Crushing 11-case gates; Lua 5.1 decoding and generated artifact checks passed"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F005-ANYTIME-4",
+      "owner": "baseline-modeller",
+      "severity": "PROVENANCE_SNAPSHOT_MUTABILITY",
+      "reproduced": true,
+      "failedCases": 3,
+      "detail": "typedContext copies nested specialization, gear and unlocks by reference. Mutating caller-owned objects after analyzeCohort returns changes returned typedContext without changing typedContextKey. Thus serialized source provenance can contradict its own pinned key.",
+      "requestedRepair": "Deep-clone validated JSON-safe typed context recursively before building output; freeze or return detached snapshot. Recompute key from detached canonical snapshot and assert JSON.stringify(typedContext) remains stable after caller mutation."
+    },
+    {
+      "id": "F005-ANYTIME-5",
+      "owner": "baseline-modeller",
+      "severity": "CONTEXT_SERIALIZATION_COLLISION",
+      "reproduced": true,
+      "failedCases": 5,
+      "detail": "validateContext treats nonfinite and non-JSON-safe nested profession fields as known. NaN and Infinity serialize identically to null in typedContextKey; functions and undefined nested values silently disappear. Synthetic RAW-shaped cohorts with distinct unsupported nested contexts can collide.",
+      "requestedRepair": "Validate all nested profession context leaves as finite, explicit JSON-safe primitives/arrays/objects under a typed schema. Reject undefined, NaN, Infinity, functions and unsupported values recursively; canonicalize nested key order if object order is not semantically meaningful. Never infer unknown from null or omit fields."
+    }
+  ],
+  "previousRepairRetest": {
+    "F002RankAncestry": "NATIVE_GATE_PASSED_AT_BASE_HEAD",
+    "F003EpochCapContext": "12_OF_12_INDEPENDENT_V8_PASS",
+    "F003ModelSelfTest": "49_OF_49_V8_PASS",
+    "independentCurrentRetailHoldoutFamilies": 0
+  },
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "fieldSlots": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "exactDeltas": {
+    "validatorOwnedTestFilesAdded": 1,
+    "newAdversarialCases": 13,
+    "newAdversarialFailures": 8,
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "workingNumericCellsChanged": 0,
+    "newEvidenceExpectedQuantity": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentCurrentRetailStudyLineages": 0,
+    "rawEvidenceFilesChanged": 0,
+    "frozenTSMFilesChanged": 0,
+    "tooltipOnlyFilesChanged": 0,
+    "productionFilesChanged": 0
+  },
+  "testsNotRun": [
+    "New 13-case suite under native Node (not wired into pipeline)",
+    "F003 previous 12-case suite under native Node",
+    "WoW Retail client and in-game tooltip/EV",
+    "Independent current-Retail completed-cast whole-study holdout"
+  ],
+  "blockers": [
+    "Two new nested typed-context integrity defect classes; eight synthetic cases fail",
+    "Model remains unverified without independently held-out current Retail cast cohorts and independent cap proof",
+    "No model economic promotion permitted"
+  ],
+  "coordinatorAction": "Accept previous F002/F003 repair retests only to their tested scopes. Return F005-ANYTIME-4/5 to baseline-modeller. Wire previous 12-case and new 13-case F005 suites into native fail-closed CI after owner repair, without editing validator-owned tests or research evidence. Maintain 1,018 mappings, 4,072 preview fields, confidence-zero PREVIEW_ONLY, normalizedVerified=false and no live EV changes.",
+  "nextTask": "F005_NATIVE_RETEST_NESTED_CONTEXT_SNAPSHOT_AND_JSON_SAFE_SCHEMA_ON_CHANGED_F003_MODEL"
+}

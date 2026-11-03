@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_MIDNIGHT_DIAMOND_TRAIT_ELIGIBILITY",
+  "runID": "2026-10-30T0838Z-F005-midnight-diamond-trait-eligibility",
+  "workflowRevision": 2,
+  "queueRevision": 2,
+  "verdict": "CONDITIONAL_PASS_RESEARCH_ONLY_ELIGIBILITY_CONTEXT",
+  "baseCommit": "8954d2402e29e3053812558a73c6b56453223436",
+  "testedSource": {
+    "evidencePath": "research/evidence/v2/2026-10-30T0826Z-F004-midnight-diamond-ore-trait-gates.json",
+    "evidenceBlobSHA": "6433cfe3cc77a1b91da6da09e3bf18581f994c87",
+    "sourceReviewBlobSHA": "8d328245587d29eb3f3384807878d6027e45b266",
+    "priorityBlobSHA": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae",
+    "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "newTestBlobSHA": "b79c4cc0acbcd84026b6bb38caa56024e4d636d0"
+  },
+  "sourceReadback": {
+    "checkedDateUTC": "2026-10-30",
+    "primaryLiveIndexedTraitPages": [
+      "https://www.wowhead.com/profession-trait/copper-consumer-106981",
+      "https://www.wowhead.com/profession-trait/tin-vestigator-106980",
+      "https://www.wowhead.com/profession-trait/silver-scrapper-106979",
+      "https://www.wowhead.com/profession-trait/thorium-thresher-106978"
+    ],
+    "observations": "All four exact source text strings and ore-family associations verified by independent page readback. These are indexed game-trait descriptions, not four independent measured cohorts.",
+    "itemIdentityCrosscheck": [
+      "https://www.wowhead.com/item=242608/eversong-diamond",
+      "https://www.wowhead.com/item=242712/eversong-diamond",
+      "https://tradeskillmaster.com/retail/us/items/242608"
+    ],
+    "identityVerdict": "Two same-name catalog IDs remain indexed. Existing 242608 candidate remains unchanged; no 242712 admission without current client/API reconciliation."
+  },
+  "testedClaims": [
+    "Four exact trait IDs 106981,106980,106979,106978 match Refulgent Copper, Umbral Tin, Brilliant Silver and Dazzling Thorium respectively.",
+    "Seven candidate input IDs and exact output-242608 keys match canonical completion-priorities backlog.",
+    "One game-data origin, not four independent studies; three guides not cast cohorts.",
+    "All numeric evidence remains null, all cast counts and patch epochs unknown; no measured P, E or verified zero.",
+    "Confidence 0, economicUse PREVIEW_ONLY, normalizedVerified false, liveEVEligible false, tooltipOnlyPromotion false.",
+    "Unknown unlock state does not become zero or a positive live drop rate; point threshold not verified.",
+    "Alternate same-name item 242712 does not silently replace or extend candidate mappings."
+  ],
+  "checks": {
+    "actualCommittedEvidenceV8": {
+      "passed": 19,
+      "failed": 0,
+      "mutantNegativeControls": 12
+    },
+    "nativeNodeSyntheticFixture": {
+      "passed": 18,
+      "failed": 0,
+      "note": "Local fixture-only 18-case variant; not native execution against checked-out repository evidence."
+    },
+    "nativeNodeCommittedRepoTest": "NOT_RUN",
+    "lua51": "NOT_RUN_NOT_INSTALLED",
+    "completionPipeline": "NOT_RUN_NO_ACCEPTED_BUILD_INPUT_CHANGED",
+    "inGame": "NOT_RUN"
+  },
+  "exactDeltas": {
+    "newIndependentRegressionTests": 1,
+    "regressionCases": 19,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyFamilies": 0,
+    "liveEVChanges": 0,
+    "existingEvidenceFilesModified": 0
+  },
+  "limitations": [
+    "Indexed profession-trait text supports qualitative ore-family association, not demonstrated necessity/sufficiency of a specific point unlock in current client.",
+    "One-KP guide claim and trait availability are not verified by character API or paired unlock-on/off casts.",
+    "No completed-cast denominators, rank-specific output histograms, refund logs or patch/build-specific P/E.",
+    "242608 versus 242712 same-name catalog collision requires in-game/API item identity check.",
+    "Current candidate universe is not independently certified exhaustive.",
+    "Native Node execution of the new committed regression test on actual checked-out repository remains pending."
+  ],
+  "acceptanceRecommendation": "ACCEPT_AS_VERSIONED_MODEL_UNLOCK_CONTEXT_LEAD_ONLY; do not admit new mappings, set measured zero or positive rates, promote confidence, alter live valuation, or treat 1 KP as a verified hard gate.",
+  "nextRepairOwner": "baseline-modeller and evidence-researcher",
+  "oneNextTask": "Add ore-family trait IDs as conditional research-only context to model backlog, with UNKNOWN/CONFIRMED_UNLOCKED/CONFIRMED_LOCKED states and explicit current-client verification requirements; independently run the committed 19-case Node test before coordinator acceptance."
+}

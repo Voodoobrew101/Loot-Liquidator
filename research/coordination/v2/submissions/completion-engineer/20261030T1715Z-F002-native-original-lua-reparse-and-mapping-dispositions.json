@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_SOURCE_PINNED_NATIVE_REPARSE_AND_MAPPING_DISPOSITIONS",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T1715Z-F002-native-original-lua-reparse-and-mapping-dispositions",
+  "reportUTC": "2026-10-30T17:15:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "900fa9dd754d93f83bb1cec5c6d14fe6b8aba861",
+  "implementationCommits": [
+    {
+      "sha": "f5bc69765882f3e10ae36f183ea4e7b6bb0ad98f",
+      "note": "Initial runner, mapping dispositions and workflow; independent test pin missing final hex character; informational CI exposed failure"
+    },
+    {
+      "sha": "ff5f4766cd341186b9095a0228b2b41c717ee5ae",
+      "note": "Corrected complete 40-character independent test blob SHA; native CI passed"
+    }
+  ],
+  "resultImplementationCommit": "ff5f4766cd341186b9095a0228b2b41c717ee5ae",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_AND_INDEPENDENT_F005_NATIVE_REVIEW",
+  "canonicalQueuePins": {
+    "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+    "priorities": "a656c3afa7e8cf2e6f3e5b93915706985a6eefae"
+  },
+  "sourcePins": {
+    "oldLua": {
+      "branch": "implementation/database-profession-modernization",
+      "path": "LootLiquidator/itemdb.lua",
+      "blobSHA": "a838d75e82239339bea3861692291b44bd085662"
+    },
+    "newLua": {
+      "branch": "implementation/five-agent-completion",
+      "path": "research/proposed/itemdb.lua",
+      "blobSHA": "560b885a0039045419c340716e263ae33ddf827a"
+    },
+    "independentTest": {
+      "path": "research/tests/v2/test_f005_v02_v08_direct_lua_identity_reparse.js",
+      "blobSHA": "fee8e048406827478cb261b10ca6843422470b5f"
+    },
+    "reconciliation": {
+      "path": "research/proposed/itemdb-v02-v08-field-reconciliation.json",
+      "blobSHA": "f951706c3602baf07bfa3f88311304d16067be3a"
+    }
+  },
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/working_native_direct_lua_reparse.js",
+      "action": "ADDED",
+      "blobSHA": "94e4bb1ff314d113cc6d4ba7cbb143234c1687c4",
+      "lines": 92,
+      "scope": "Pins both original compact Lua sources and F005 test; runs independently authored test natively, rejects wrong hashes and altered results; no derived JSON test input"
+    },
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "action": "MODIFIED",
+      "blobSHA": "02a08a2a56c3098049441c51b4cbbfe9efea31b5",
+      "scope": "Stages historical original source from its existing branch into runner temp; executes strict self-test and informational independent direct-Lua replay; preserves mandatory pipeline/Lua checks"
+    },
+    {
+      "path": "research/proposed/itemdb-v02-v08-mapping-dispositions.json",
+      "action": "ADDED",
+      "blobSHA": "71c7b011d249e3af2626829538898ec036250def",
+      "lines": 930,
+      "scope": "Exact 45 research-only candidate admissions, 3 non-equivalent retired Dragonflight identities, 12 fish unknown-input-rank quarantines; explicit source lineage and no economic transfer"
+    }
+  ],
+  "mappingDispositionBreakdown": {
+    "newCandidateRows": 45,
+    "groups": {
+      "BFA_historical_mass_mill": 9,
+      "TWW_historical_milling": 2,
+      "TWW_runtime_family_milling": 10,
+      "DF_TSM_nonEquivalent_successors": 3,
+      "TWW_Gem_Finding_conditional": 8,
+      "Midnight_conditionals": 3,
+      "Midnight_refining": 2,
+      "legacy_smelt": 8
+    },
+    "retiredHistoricalRows": 3,
+    "nonEquivalentReplacementPairs": 3,
+    "fishInputRanksDowngradedToUnknown": 12,
+    "mappingAdmissionChangesThisRun": 0,
+    "invalidMappingsRemovedThisRun": 0,
+    "clientEligibilityVerifiedThisRun": 0,
+    "notes": "These are dispositions of existing v0.8 candidate membership, not newly admitted or independently verified current-Retail mappings."
+  },
+  "numericDeltas": {
+    "admittedMappingsBefore": 1018,
+    "admittedMappingsAfter": 1018,
+    "workingNumericCellsBefore": 4072,
+    "workingNumericCellsAfter": 4072,
+    "workingCellsFilled": 0,
+    "newExpectedQuantityEvidenceCells": 0,
+    "evidenceNumericBefore": 3558,
+    "evidenceNumericAfter": 3558,
+    "evidenceMissingBefore": 514,
+    "evidenceMissingAfter": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentMeasuredCurrentRetailLineagesAdded": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub Actions native Node 24.22.1",
+      "runID": 41096865560,
+      "runURL": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/41096865560",
+      "commit": "ff5f4766cd341186b9095a0228b2b41c717ee5ae",
+      "result": "SUCCESS",
+      "test": "F002 source-pinned direct original Lua runner self-test",
+      "checks": 14,
+      "mutantReportsRejected": 12
+    },
+    {
+      "environment": "GitHub Actions native Node 24.22.1",
+      "runID": 41096865560,
+      "result": "PASS_INFORMATIONAL_PENDING_INDEPENDENT_ACCEPTANCE",
+      "test": "F005 direct original Lua independent source reparse",
+      "assertionsPassed": 180,
+      "assertionsFailed": 0,
+      "mutantsRejected": 14,
+      "mutantsEscaped": 0,
+      "oldRecords": 976,
+      "newRecords": 1018,
+      "quarantinedEvidenceFields": 104,
+      "fishRankUnknown": 12,
+      "nonEquivalentSuccessorPairs": 3,
+      "sourceHashesMatched": 3
+    },
+    {
+      "environment": "GitHub Actions native Node 24.22.1",
+      "runID": 41096865560,
+      "result": "PASS",
+      "test": "Deterministic completion pipeline --check and existing research regression gates"
+    },
+    {
+      "environment": "GitHub Actions Lua 5.1",
+      "runID": 41096865560,
+      "result": "PASS",
+      "test": "Generated candidate syntax, 1018 mappings/4072 numeric preview fields, 514 evidence gaps, 91 multi-blocker fields"
+    },
+    {
+      "environment": "GitHub connector JavaScript V8",
+      "result": "PASS",
+      "test": "Read-back mapping dispositions, workflow, runner and 19 mapping/policy assertions",
+      "assertionsPassed": 19
+    }
+  ],
+  "notRun": [
+    "World of Warcraft client/in-game eligibility or current patch measurements",
+    "Independent F005 acceptance of exact native CI commit",
+    "Current-Retail held-out completed-cast measurements",
+    "Production addon live EV or recommendation integration"
+  ],
+  "limitations": [
+    "The first implementation commit had a 39-character test SHA and informational CI surfaced INVALID_PIN; corrected in the second commit, then verified successful native replay from both original Lua sources.",
+    "Informational workflow step is continue-on-error pending F005 independent acceptance; GitHub job green alone does not confer F005 acceptance.",
+    "Native test proves historical/source arithmetic and quarantines, not mapping equivalence, client eligibility, complete Retail universe or working-to-live EV isolation.",
+    "All 45 additions remain research candidate mappings; three retired Dragonflight mappings are not equivalent to TSM successors; twelve fish input ranks are unknown."
+  ],
+  "policy": {
+    "fallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "legacyAssignmentsEdited": false,
+    "mainEdited": false,
+    "runtimeProfilesEdited": false,
+    "schedulesEdited": false,
+    "addonReleased": false
+  },
+  "zeroDeltaPivot": {
+    "applied": true,
+    "reason": "No new numeric evidence or economic promotion. Pivoted from repeated derived reconciliation audits to the missing native two-original-Lua independent replay and exact mapping dispositions."
+  },
+  "blockers": [
+    "Independent F005 review and explicit acceptance of native two-source replay at exact pinned source hashes.",
+    "Three retired Dragonflight mappings differ in expansion/output rank from possible TSM additions; require separate eligibility dispositions, not automatic equivalence.",
+    "Twelve Dragonflight fish milling input ranks remain unknown without current-client eligibility verification.",
+    "116 evidence expectedQuantity gaps and no independent current-Retail cast holdouts; no gold calculation promotion."
+  ],
+  "nextTask": "Obtain F005 acceptance of native original-source replay; only then make approved strict gate mandatory, while keeping mapping identity/rank and economic promotions blocked until independent current-client evidence."
+}

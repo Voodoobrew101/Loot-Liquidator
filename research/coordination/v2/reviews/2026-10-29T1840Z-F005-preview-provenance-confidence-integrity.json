@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005",
+  "verdict": "FAIL",
+  "reviewType": "ADVERSARIAL_PREVIEW_PROVENANCE_CONFIDENCE_INTEGRITY",
+  "reviewedAtUTC": "2026-10-29T18:40:00Z",
+  "branch": "implementation/five-agent-completion",
+  "reviewedHeadBeforeTest": "ba032e428b370361d90a662193917421f1ebb2c3",
+  "pinnedSources": {
+    "research/tools/working_estimates.js": "c93142520f9b8546e3deead838b137bce23da8c5",
+    "research/coordination/five-agent-workflow.json": "9831f9777155831bec1603508334d15fdc607da7",
+    "research/coordination/completion-readiness.json": "current branch read at test time"
+  },
+  "regressionTest": {
+    "path": "research/tests/v2/test_f005_provenance_confidence_integrity.js",
+    "blobSHA": "b7b2dd6a2d050423423f2e6dcfd72df16d09d0f8",
+    "syntheticOnly": true,
+    "execution": "GitHub-fetched exact JavaScript module executed with new Function in independent V8 harness; Node assert subset emulated; source unchanged",
+    "passed": 4,
+    "failed": 8,
+    "baselineControlsPassed": 2,
+    "safetyControlsPassed": 2,
+    "nativeNodeExecuted": false,
+    "luaExecuted": false,
+    "inGameExecuted": false,
+    "githubActionsForNewSuite": "NOT_VERIFIED"
+  },
+  "findings": [
+    {
+      "id": "F005-PROVENANCE-1",
+      "severity": "HIGH_RESEARCH_INTEGRITY",
+      "reproduced": true,
+      "description": "Copied evidence preview confidence and per-field confidence can be raised to 99 without rejection even though original field confidence remains 60 and mapping/conditions confidence 70.",
+      "risk": "Misleading research confidence and potential future acceptance score; economicUse still PREVIEW_ONLY."
+    },
+    {
+      "id": "F005-PROVENANCE-2",
+      "severity": "HIGH_RESEARCH_INTEGRITY",
+      "reproduced": true,
+      "description": "Post-build source field confidence changes from 60 to 5 and sourceClaimIDs changes to a different study are not included in sourceIdentity lease and are not validated.",
+      "risk": "Preview provenance may outlive the evidence it purports to copy."
+    },
+    {
+      "id": "F005-PROVENANCE-3",
+      "severity": "HIGH_RESEARCH_INTEGRITY",
+      "reproduced": true,
+      "description": "An imputed preview can have its assumptions cleared and confidence set to 99; validator's confidence-zero check only applies when assumptions array remains nonempty.",
+      "risk": "Unsupported fallback may appear high confidence without changing economicUse."
+    },
+    {
+      "id": "F005-PROVENANCE-4",
+      "severity": "MEDIUM_RESEARCH_INTEGRITY",
+      "reproduced": true,
+      "description": "fieldStatus can be relabeled COPIED_EVIDENCE for an unknown field or POLICY_PRIOR for copied evidence; status can be relabeled VERIFIED_MEASURED without rejection.",
+      "risk": "False provenance/status claims."
+    },
+    {
+      "id": "F005-PROVENANCE-5",
+      "severity": "HIGH_RESEARCH_INTEGRITY",
+      "reproduced": true,
+      "description": "A copied source P=0.5,E=0.5 can be replaced by working P=0.25,E=0.25 and fieldConfidence=0, retaining status COPIED_EVIDENCE_PREVIEW and passing numeric invariants.",
+      "risk": "Undocumented numeric change can masquerade as source copy."
+    }
+  ],
+  "protectionsConfirmed": [
+    "Untouched measured fixture validates",
+    "Untouched imputed fixture validates with confidence 0, PREVIEW_ONLY and normalizedVerified=false",
+    "Source patch mutation rejected",
+    "economicUse escalation to LIVE rejected"
+  ],
+  "repairsRequested": [
+    "Completion engineer: compare every working field's status, confidence, source value and adjustment provenance with original evidence; reject unexplained numeric changes even if fieldConfidence is lowered to zero.",
+    "Completion engineer: derive/validate overall confidence as no greater than mapping, conditions and every field confidence; any unsupported imputation must force overall confidence zero independently of assumptions text.",
+    "Completion engineer: pin or deterministically reconstruct evidence-field identity including value/status/confidence/sourceClaimIDs/blockers, and validate source drift; do not rely solely on nonserialized WeakMap for persisted artifact attestation.",
+    "Completion engineer: restrict working and field status enums to supported values and enforce correspondence with copied/imputed fields; preserve research-preview-only economic isolation.",
+    "Independent validator: rerun the new 12-case suite plus full pipeline after repairs; add native CI invocation when stable."
+  ],
+  "limits": [
+    "All eight failing cases are synthetic adversarial mutations, not confirmed incorrect itemdb records.",
+    "No current Retail holdout study was added or independently validated.",
+    "No live EV/recommendation leakage was demonstrated.",
+    "Full Node, Lua and WoW client tests were not executed in this run."
+  ],
+  "candidateSnapshot": {
+    "admittedMappings": 1018,
+    "workingNumericFields": 4072,
+    "workingNumericCoverage": 1,
+    "missingEvidenceFields": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "confidencePromotions": 0,
+    "newEconomicPromotions": 0
+  },
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "tooltipOnlyExcluded": true,
+    "frozenTSMUnchanged": true
+  },
+  "nextOwner": "completion-engineer",
+  "nextTask": "F005 preview provenance/confidence contract repair and independent retest",
+  "acceptanceStatus": "BLOCKED_PENDING_REPAIR"
+}

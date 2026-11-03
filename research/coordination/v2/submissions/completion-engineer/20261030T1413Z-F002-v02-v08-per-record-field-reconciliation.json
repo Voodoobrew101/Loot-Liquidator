@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_V02_V08_FIELD_DIFF_AND_STRICT_NATIVE_GATE",
+  "workflowRevision": 2,
+  "queueRevision": 27,
+  "runID": "20261030T1413Z-F002-v02-v08-per-record-field-reconciliation",
+  "reportUTC": "2026-10-30T14:13:47Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "0cc03d98317f4ca1ef3ab56ad11d7b4807e85451",
+  "implementationCommit": "c6d8b49da520aceae41f9074abbd6f2644ce7ca5",
+  "resultCommitStatus": "SUBMISSION_COMMIT_SEPARATE",
+  "status": "PROPOSED_FOR_COORDINATOR_AND_INDEPENDENT_VALIDATOR_REVIEW",
+  "acceptedVsProposed": "Proposed machine-readable comparison only. No central queue, model, evidence, runtime or economic acceptance asserted.",
+  "sourceInputs": {
+    "old": {
+      "branch": "implementation/database-profession-modernization",
+      "path": "LootLiquidator/itemdb.lua",
+      "blobSHA": "a838d75e82239339bea3861692291b44bd085662",
+      "compiler": "0.2.0"
+    },
+    "current": {
+      "branch": "implementation/five-agent-completion",
+      "path": "research/proposed/itemdb.lua",
+      "blobSHA": "560b885a0039045419c340716e263ae33ddf827a",
+      "compiler": "0.8.0"
+    }
+  },
+  "artifact": {
+    "path": "research/proposed/itemdb-v02-v08-field-reconciliation.json",
+    "blobSHA": "f951706c3602baf07bfa3f88311304d16067be3a",
+    "contents": "Per-record mapping, four evidence fields, provenance, confidence, source-context and new additional-context deltas, including full snapshots for added/retired records."
+  },
+  "exactDeltas": {
+    "filesAdded": [
+      "research/proposed/itemdb-v02-v08-field-reconciliation.json",
+      "research/coordination/v2/submissions/completion-engineer/20261030T1413Z-F002-v02-v08-per-record-field-reconciliation.json"
+    ],
+    "filesModified": [],
+    "originalPackagedMappings": 976,
+    "generatedV08Mappings": 1018,
+    "retainedMappings": 973,
+    "addedMappings": 45,
+    "retiredRecordIDs": 3,
+    "retainedRecordsChanged": 55,
+    "retainedRecordsUnchanged": 918,
+    "mappingIdentityChangedRetained": 12,
+    "sourceMetadataChangedRetained": 54,
+    "additionalContextIntroducedRetained": 1,
+    "evidenceNumericOld": 3610,
+    "evidenceNumericNew": 3558,
+    "addedRecordNumericFields": 58,
+    "retiredRecordNumericFields": 6,
+    "retainedNumericFieldsQuarantined": 104,
+    "retainedFieldValueChanges": 104,
+    "retainedFieldStatusChanges": 104,
+    "retainedFieldConfidenceChanges": 104,
+    "retainedFieldClaimChanges": 103,
+    "retainedFieldBlockerChanges": 104,
+    "sourceNumericValuesPromotedOnRetainedRecords": 0,
+    "sourceConfidenceIncreasesOnRetainedRecords": 0,
+    "sourceConfidenceDecreasesOnRetainedRecords": 104,
+    "dropChanceNonNullToNull": 49,
+    "expectedQuantityNonNullToNull": 55,
+    "yieldMinChangedRetained": 0,
+    "yieldMaxChangedRetained": 0,
+    "newWorkingPreviewCellsFilled": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemovedByThisRun": 0,
+    "confidencePromotionsByThisRun": 0,
+    "economicPromotionsByThisRun": 0,
+    "independentStudyLineagesAdded": 0,
+    "sameOperationReplacementCandidates": [
+      [
+        "dragonflight:188658:192869:10",
+        "tsm:prospect:188658:192869:L1204"
+      ],
+      [
+        "dragonflight:189143:192869:10",
+        "tsm:prospect:189143:192869:L1242"
+      ],
+      [
+        "dragonflight:190311:192869:10",
+        "tsm:prospect:190311:192869:L1280"
+      ]
+    ]
+  },
+  "canonicalReadinessUnchanged": {
+    "admittedMappings": 1018,
+    "workingNumeric": "4072/4072",
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "confidenceGE90": 0
+  },
+  "checksActuallyRun": [
+    {
+      "name": "V8 compact Lua parser nested tables/scalars",
+      "result": "PASS"
+    },
+    {
+      "name": "V8 Lua escaped string and exponent parser",
+      "result": "PASS"
+    },
+    {
+      "name": "Old GitHub source blob pin",
+      "result": "PASS"
+    },
+    {
+      "name": "Unique recordIDs and valid compact evidence fields",
+      "result": "PASS",
+      "old": 976,
+      "new": 1018
+    },
+    {
+      "name": "Finite compact source field values",
+      "result": "PASS"
+    },
+    {
+      "name": "Field-level diff and exact source numeric reconciliation",
+      "result": "PASS",
+      "equation": "3610 + 58 - 6 - 104 = 3558"
+    },
+    {
+      "name": "All retained changed numeric values are non-null to null (quarantine)",
+      "result": "PASS",
+      "cases": 104
+    },
+    {
+      "name": "Read-back and JSON parse of committed diff artifact",
+      "result": "PASS",
+      "artifactBlobSHA": "f951706c3602baf07bfa3f88311304d16067be3a"
+    }
+  ],
+  "checksNotRun": [
+    "Native Node execution of this cross-version reconciliation (V8 connector used)",
+    "Native Lua 5.1 decoding of old packaged v0.2 file in this run",
+    "New strict 13/13 Midnight nested-context gate (validator contradiction unresolved)",
+    "New strict Midnight pair/date/array gates (F003 14 pair-summary failures awaiting model-owner repair and independent native QA)",
+    "WoW client or real current Retail completed-cast verification"
+  ],
+  "blockers": [
+    "Independent validator must examine 45 admissions, three retired keys and 12 retained mapping-identity changes before claiming v0.2/v0.8 equivalence.",
+    "104 formerly numeric historical source fields are now explicitly quarantined; no measured value should be reinstated without source/context evidence.",
+    "F003 compareEpochs pair-summary suite remains 4/18; modeller owns repair and validator owns acceptance.",
+    "Separate Midnight nested-context 13-case suite retains one contradictory NaN/Infinity assertion; cannot safely remove quarantine until validator correction."
+  ],
+  "nextTask": "After F003 pair-summary model repair and independent F005 native pass, pin accepted fixture/model hashes and make Midnight pair 18/18, March31 26/26, array 12/12 and nested 13/13 strict fail-closed native gates; otherwise review mapping/source anomalies from this new diff with F005.",
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Repeated candidate rebuild or already green pipeline",
+    "to": "First exact per-record old packaged v0.2 to v0.8 mapping/evidence/provenance/confidence reconciliation",
+    "newNumericCells": 0,
+    "newReviewableArtifact": true
+  },
+  "policyPreservation": {
+    "productionMainEdited": false,
+    "addonRelease": false,
+    "runtimeProfilesBranchEdited": false,
+    "rawEvidenceEdited": false,
+    "frozenTSMEdited": false,
+    "tooltipOnlyEdited": false,
+    "legacyAssignmentsEdited": false,
+    "otherRoleFilesEdited": false,
+    "schedulesEdited": false,
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "recommendationsChanged": false
+  }
+}

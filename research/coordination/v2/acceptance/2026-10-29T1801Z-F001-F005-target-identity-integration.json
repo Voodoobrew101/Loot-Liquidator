@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "coordinator",
+  "taskID": "F001_F005_TARGET_IDENTITY_INTEGRATION",
+  "workflowRevision": 2,
+  "queueRevision": 7,
+  "reviewUTC": "2026-10-29T18:01:00Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "f6f515db4c4207c3395775fb6054a026c513b571",
+  "resultCommit": "ATOMIC_COMMIT_CONTAINING_THIS_RECORD",
+  "decision": "ACCEPT_TWO_PRIOR_F002_REPAIRS_RESEARCH_ONLY; BLOCK_FULL_INTEGRITY_ON_NEW_F005_UNEXECUTED_NONPOOL_IDENTITY_RISK",
+  "decisions": [
+    {
+      "role": "completion-engineer",
+      "submission": "research/coordination/v2/submissions/completion-engineer/2026-10-29T1713Z-F002-policy-context-ci-readback.json",
+      "decision": "ACCEPT_POOL_POLICY_ANCHOR_AND_PATCH_STALENESS_REPAIR_RESEARCH_ONLY",
+      "subjectBlob": "982dcf0f3b23903eaa6eda41da12add334daec38",
+      "pipelineBlob": "e3487f7e9c874cd558bf69d11f4f19de67609572",
+      "reason": "Independent F005 source inspection confirms policy mean is anchored to configured options and nonpool patch is regenerated; GitHub Actions 40918955844 succeeded at matching implementation SHA 10befc823a0f3c365961f0b1a4e94506e2950c31. Does not clear full target identity."
+    },
+    {
+      "role": "independent-validator",
+      "submission": "research/coordination/v2/submissions/independent-validator/2026-10-29T1749Z-F005-target-identity-staleness.json",
+      "decision": "ACCEPT_NEW_SOURCE_LEVEL_INTEGRITY_BLOCKER_PENDING_EXECUTED_TESTS",
+      "fixtureBlob": "e3687c5424f34ad12a23427b18ce8a5f82af7d3e",
+      "reviewBlob": "ea4aef92b2c7ffdb5ad57e392d265a91e3887de3",
+      "reason": "workingTargetContext serializes patch, ranks and batch but omits method, recipeSpellID, input/output IDs, reagent vector, effectiveSkill and operationStats. Validator compares serialized target only to this partial projection. Eleven new independent synthetic cases committed; 4 predicted pass and 7 predicted fail by static source analysis ONLY, not executed. CI on fixture commit succeeded but pipeline does not invoke new fixture."
+    },
+    {
+      "role": "baseline-modeller",
+      "submission": "research/coordination/v2/submissions/baseline-modeller/20261029T1720Z-F003-TWW-GEM-FINDING-PIVOT.json",
+      "decision": "ACCEPT_CONDITIONAL_GEM_FINDING_MODEL_AS_SYNTHETIC_RESEARCH_ONLY",
+      "modelBlob": "d095a440c049636f3cda6750a69b65a6e5d6c6b5",
+      "reason": "Eight exact candidate keys and 25 reported V8 synthetic assertions; no current Retail completed-cast observations, unlock thresholds, minimum skill or independent holdout. Do not admit new eligibility or promote any E/P/skill values."
+    },
+    {
+      "role": "evidence-researcher",
+      "submission": "research/coordination/v2/submissions/evidence-researcher/2026-10-29T1730Z-F004-housing-dye-universe.json",
+      "decision": "ACCEPT_TWO_PATCH_SCOPED_UNIVERSE_LEADS_UNADMITTED",
+      "evidenceBlob": "57c213c548585919f232363ae64a8f1143cf18ec",
+      "targetKeys": [
+        "universe:retail12.1+:dye-station:3818:274464:1306642",
+        "universe:retail12.1+:dye-station:765:274468:1306796"
+      ],
+      "reason": "Source-linked 12.1+ station-salvage hypothesis with exact item/spell leads, but selectors, ranks, minimum eligibility and actual completed-cast denominators unverified. Keep separate from 24 legacy queue30 leads; no mapping admission, no numeric or economic promotion."
+    }
+  ],
+  "verification": {
+    "headReviewed": "f6f515db4c4207c3395775fb6054a026c513b571",
+    "sourceBlobs": {
+      "estimator": "982dcf0f3b23903eaa6eda41da12add334daec38",
+      "pipeline": "e3487f7e9c874cd558bf69d11f4f19de67609572",
+      "candidateLua": "6488e39b54ae7961750231cb94391eb34af606e3",
+      "readiness": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783",
+      "priorScorecard": "f4a5cd5c69250d37fc89dd9cc3033757a4dc2e50"
+    },
+    "nativeCI": {
+      "runID": 40918955844,
+      "headSHA": "10befc823a0f3c365961f0b1a4e94506e2950c31",
+      "conclusion": "success",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40918955844",
+      "includesNewTargetIdentityFixture": false
+    },
+    "fixtureCommitCI": {
+      "runID": 40924481214,
+      "headSHA": "c33aa11b712881b00588b348542603c6474e637b",
+      "conclusion": "success",
+      "newFixtureIncludedInPipeline": false
+    },
+    "staticChecks": [
+      "Fetched required prompts, v2 workflow, canonical readiness and priorities from live branch",
+      "Re-read latest four role submissions and independent review with blob identities",
+      "Inspected workingTargetContext and validateWorkingEstimates source: source-derived projection is incomplete",
+      "Verified 1018*4=4072; 3558+514=4072; 204+97+97+116=514",
+      "Read current build report and candidate blob SHA",
+      "Read current GitHub Actions run statuses and commit heads"
+    ],
+    "notRun": [
+      "New 11-case fixture in native Node or V8",
+      "Coordinator local native Node pipeline",
+      "Coordinator local Lua 5.1",
+      "WoW Retail client",
+      "Independent current Retail matched whole-family holdout"
+    ]
+  },
+  "canonicalCounts": {
+    "admittedMappings": 1018,
+    "knownInputs": 179,
+    "fieldSlots": 4072,
+    "workingNumericCells": 4072,
+    "evidenceNumericCells": 3558,
+    "evidenceMissingCells": 514,
+    "evidenceMissingExpectedQuantity": 116,
+    "evidenceGE90Cells": 0,
+    "verifiedMinimumEligibleBaselines": 0,
+    "unadmittedLegacyQueue30Leads": 24,
+    "newUnadmittedPatch121Leads": 2,
+    "globalUnadmittedUniverseCount": null,
+    "independentRetailUniverseAudit": "NOT_COMPLETE"
+  },
+  "deltas": {
+    "newMappings": 0,
+    "removedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "evidenceNumericCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyFamilies": 0,
+    "newUniverseLeads": 2,
+    "newSyntheticModelFamilies": 1,
+    "newIndependentRegressionCases": 11,
+    "newSourceLevelIntegrityBlockers": 1,
+    "previousIntegrityDefectClassesRepaired": 2,
+    "productionFilesChanged": 0
+  },
+  "economicSafety": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "productionChanged": false,
+    "legacyAssignmentsChanged": false,
+    "runtimeProfilesBranchChanged": false,
+    "schedulesChanged": false
+  },
+  "nextAssignments": [
+    {
+      "owner": "completion-engineer",
+      "taskID": "F002_COMPLETE_NONPOOL_TARGET_IDENTITY_AND_CI",
+      "exactPaths": [
+        "research/tools/working_estimates.js",
+        "research/tools/run_completion_pipeline.js"
+      ],
+      "acceptance": "Serialize canonical method, recipeSpellID, input/output IDs, full sorted direct reagent vector, effectiveSkill, operationStats and other typed context; reject stale mutations; native 11/11 plus prior 8/8, 12/12, 609/609; deterministic --check, Lua5.1/schema, no candidate or economic-channel drift."
+    },
+    {
+      "owner": "independent-validator",
+      "taskID": "F005_EXECUTE_11_CASE_TARGET_IDENTITY_FIXTURE",
+      "exactPaths": [
+        "research/tests/v2/test_f005_target_identity_staleness.js",
+        "research/coordination/v2/reviews/"
+      ],
+      "acceptance": "Execute source-SHA-pinned 11-case fixture before and after F002 repair, report actual pass/fail separately from static predictions, rerun economic isolation and prior suites; independent verdict."
+    },
+    {
+      "owner": "baseline-modeller",
+      "taskID": "F003_GEM_FINDING_INDEPENDENT_HOLDOUT_OR_NEW_FAMILY_PIVOT",
+      "targetKeys": [
+        "candidate:conditional:prospect:210931:212495:gem-finding:20261028",
+        "candidate:conditional:prospect:210934:212511:gem-finding:20261028",
+        "candidate:conditional:prospect:210937:212508:gem-finding:20261028"
+      ],
+      "acceptance": "Obtain zero-inclusive completed-cast cohort with unlock/recipe/skill/stats/ranks and independent lineage; otherwise retain synthetic model at confidence zero and pivot to distinct high-impact E family after two zero-delta cycles."
+    },
+    {
+      "owner": "evidence-researcher",
+      "taskID": "F004_PATCH121_DYE_STATION_SELECTOR_AND_UNIVERSE",
+      "targetKeys": [
+        "universe:retail12.1+:dye-station:3818:274464:1306642",
+        "universe:retail12.1+:dye-station:765:274468:1306796"
+      ],
+      "acceptance": "Independently corroborate current Retail selector, reagent units, minimum skill, rank and station eligibility for two leads; enumerate other seven dye item/spell IDs as unadmitted leads only; no speculative economic fields."
+    }
+  ],
+  "blockers": [
+    "11-case target-identity fixture has not been executed and is not wired into CI",
+    "Nonpool targetContext omits material recipe/reagent/skill/stat identities",
+    "116 evidence E gaps, 514 numeric evidence gaps",
+    "No current Retail independent held-out study or in-game verification",
+    "24 legacy and two newly identified patch-scoped leads remain unadmitted"
+  ],
+  "zeroDeltaPivot": "Integrated two code/CI repairs, new independent source-level integrity finding, synthetic model-family pivot and two source-linked universe leads without repeating unchanged numeric audits.",
+  "nextTask": "F002_COMPLETE_NONPOOL_TARGET_IDENTITY_AND_CI_THEN_F005_EXECUTE_11_CASE_FIXTURE"
+}

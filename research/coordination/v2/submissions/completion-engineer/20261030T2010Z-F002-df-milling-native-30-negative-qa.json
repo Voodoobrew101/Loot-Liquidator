@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "2.0.0",
+  "role": "completion-engineer",
+  "taskID": "F002_KEEP_RESEARCH_PREVIEW_COMPLETE_AND_NATIVE_NEGATIVE_QA_INFORMATIONAL",
+  "workflowRevision": 2,
+  "queueRevision": 30,
+  "runID": "20261030T2010Z-F002-df-milling-native-30-negative-qa",
+  "reportUTC": "2026-10-30T20:10:00Z",
+  "repository": "Voodoobrew101/Loot-Liquidator",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "939c50e7603b0e59956926e8e874f7c99e619045",
+  "implementationCommits": [
+    "e1f892fdee4af6a83bbfa6c39f79f10ff460e9f8",
+    "161546c4a32af2cb9cc4ff0f21cc7729e1199855"
+  ],
+  "resultCommitBeforeSubmission": "161546c4a32af2cb9cc4ff0f21cc7729e1199855",
+  "resultCommit": "COMMIT_CONTAINING_THIS_ROLE_OWNED_SUBMISSION",
+  "status": "PROPOSED_INFORMATIONAL_NATIVE_NEGATIVE_QA_PENDING_F005_REVIEW",
+  "coordinatorAssignment": "F002_KEEP_RESEARCH_PREVIEW_COMPLETE_AND_NATIVE_NEGATIVE_QA_INFORMATIONAL",
+  "zeroDeltaPivot": {
+    "applied": true,
+    "from": "Repeat 1018/4072 numeric preview audits and already integrated TWW 37-case negative QA",
+    "to": "New F005 DF milling fixed-n 30-case source-pinned native negative-QA replay",
+    "rationale": "F005 identified eight previously unexecuted native attestation failures; F003 owns repair and F005 owns acceptance"
+  },
+  "exactFilesChanged": [
+    {
+      "path": "research/tools/working_native_df_milling_attestation_preflight.js",
+      "action": "CREATED",
+      "blobSHA": "f9d701c8c5260e05375b6268edc99b103b142b3b"
+    },
+    {
+      "path": ".github/workflows/verify-five-agent-completion.yml",
+      "action": "UPDATED",
+      "oldBlobSHA": "67ea1c059b9b8083ea2361a88fe8603fb096675e",
+      "newBlobSHA": "cd4d89738f767f4cf8d1cbe8c981a8c0977ac429"
+    },
+    {
+      "path": "research/coordination/v2/submissions/completion-engineer/20261030T2010Z-F002-df-milling-native-30-negative-qa.json",
+      "action": "CREATED"
+    }
+  ],
+  "sourcePins": {
+    "f003Model": "216a929d4ab7b683e1bc9f4637273c4d766b1081",
+    "f003Manifest": "b981ee50df8ebddf85cecd36e471cbb5903c1fd1",
+    "f005Fixture": "94c85850e353892e1a62c60a1503a6f6e5e37b50",
+    "f005IndependentReview": "4dbaf5eb06b46bb3b2f81ec51e088150ec23ce42"
+  },
+  "changeDescription": "New research-only runner checks exact Git blob SHA pins and parses the F005 independent 30-case fixture with fail-closed JSON/exit contract. The exact 8 named defects (22/30) are reported as BLOCKING, never counted as passing; 30/30 is only pending F005 independent acceptance. Partial repair, new failures, changed pins, malformed results or inconsistent exit codes fail closed. Mandatory self-test and informational replay added before unchanged deterministic candidate --check.",
+  "knownIndependentV8Result": {
+    "passed": 22,
+    "failed": 8,
+    "total": 30,
+    "nativeNodeForFullFixture": "NOT_YET_VERIFIED"
+  },
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCellsFilled": 0,
+    "newEvidenceNumericCells": 0,
+    "newEvidenceExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "productionWrites": 0,
+    "newRoleOwnedNativeRunnerFiles": 1,
+    "newCIResearchSteps": 2
+  },
+  "readiness": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingEvidenceExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "GitHub connector",
+      "name": "Exact committed file read-back of new runner and workflow",
+      "status": "PASS",
+      "runnerBlobSHA": "f9d701c8c5260e05375b6268edc99b103b142b3b",
+      "workflowBlobSHA": "cd4d89738f767f4cf8d1cbe8c981a8c0977ac429"
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "Four F003/F005 source pin comparisons at branch head",
+      "status": "PASS",
+      "pins": 4
+    },
+    {
+      "environment": "GitHub connector",
+      "name": "Canonical readiness unchanged",
+      "status": "PASS",
+      "readinessBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+    }
+  ],
+  "testsNotRun": [
+    "Native Node runner --self-test and 30-case fixture on new commit: GitHub Actions run not yet confirmed",
+    "Deterministic research completion pipeline --check on new commit not yet confirmed",
+    "Lua5.1 candidate decoding on new commit not yet confirmed",
+    "Independent F005 acceptance of new runner",
+    "Current Retail client or completed-cast holdout verification"
+  ],
+  "blockers": [
+    "F003 Dragonflight milling fixed-n model still has eight independently documented attestation defects; F003 owns repair",
+    "F005 must independently retest repaired model and approve any mandatory-gate promotion",
+    "116 evidence-supported expectedQuantity cells remain missing and zero independently held-out current-Retail completed-cast families exist"
+  ],
+  "nextTask": "Monitor native 30-case informational replay and self-test; after F003 model revision, update source pins only with F005 reviewed fixture and retest strict 30/30; otherwise pivot to new ready build/contract defects, not unchanged audits.",
+  "policy": {
+    "unsupportedFallbackConfidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanges": 0,
+    "recommendationChanges": 0,
+    "tooltipOnlyChanges": 0,
+    "frozenTSMChanges": 0,
+    "rawEvidenceChanges": 0,
+    "legacyAssignmentChanges": 0,
+    "mainChanges": 0,
+    "runtimeProfilesBranchChanges": 0,
+    "schedulesChanged": false,
+    "addonReleased": false
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005_PMF_POSITIVE_SUPPORT_RETEST",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 2,
+  "reviewDateUTC": "2026-10-29",
+  "status": "PROPOSED_FOR_COORDINATOR_ACCEPTANCE_NOT_SELF_APPROVED",
+  "decision": "CONDITIONAL_F002_F003_REPAIRS_PASS_ORIGINAL_F005; FAIL_NEW_F003_ZERO_MASS_PMF_SUPPORT",
+  "baseCommit": "086ca5afe0a8b37a1d6a705138d0d279df05c76a",
+  "testCommit": "575246d516e7996ec4a05b8456b3b66c793fe69c",
+  "reviewedArtifacts": {
+    "workingEstimator": {
+      "path": "research/tools/working_estimates.js",
+      "gitBlobSHA": "0bef8795b55043bfd8ba1896b53e4be618ff216c"
+    },
+    "model": {
+      "path": "research/tools/models_v2/tww_milling_context_sensitivity_v1.js",
+      "gitBlobSHA": "bea88982382816f315df66facf9060affa0c40bb"
+    },
+    "existingIndependentTest": {
+      "path": "research/tests/v2/test_f005_context_and_zero_semantics.js",
+      "gitBlobSHA": "fe49f116c3b89e4633b47717c7b1586624db2745"
+    },
+    "newIndependentTest": {
+      "path": "research/tests/v2/test_f005_pmf_positive_support.js",
+      "gitBlobSHA": "bc387c48e5bf7bee26630a14502a95adcd94d02b"
+    },
+    "tooltipChannel": {
+      "path": "research/tools/itemdb_tooltip_channel.js",
+      "gitBlobSHA": "1a46b58f23d497bb120f17ba9d7e3cc072730f09"
+    },
+    "generatedCandidate": {
+      "path": "research/proposed/itemdb.lua",
+      "gitBlobSHA": "6488e39b54ae7961750231cb94391eb34af606e3"
+    },
+    "readiness": {
+      "path": "research/coordination/completion-readiness.json",
+      "gitBlobSHA": "d8704e5f9f1e2d957b225a4ef96f6f60337f4783"
+    }
+  },
+  "checks": {
+    "originalIndependentF005Fixture": {
+      "execution": "V8_EVALUATED_GITHUB_BLOBS_WITH_ASSERT_SHIM",
+      "passed": 9,
+      "failed": 0,
+      "verdict": "PASS_ON_CURRENT_CHANGED_SOURCES"
+    },
+    "newIndependentPositiveSupportFixture": {
+      "execution": "V8_EVALUATED_GITHUB_BLOBS_WITH_ASSERT_SHIM",
+      "passed": 9,
+      "failed": 3,
+      "verdict": "FAIL",
+      "failures": [
+        "Zero-mass lower support: PMF quantity 1 at probability 0 and quantity 2 at probability 1 returns yieldMin 1 instead of 2",
+        "Zero-mass upper support: PMF quantity 99 at probability 0 and quantity 2 at probability 1 returns yieldMax 99 instead of 2",
+        "Adding zero-probability rows changes positive yield bounds despite identical distribution"
+      ]
+    },
+    "modelSelfTest": {
+      "execution": "V8_GITHUB_BLOB",
+      "status": "PASS",
+      "assertionsReportedByModel": 13
+    },
+    "tooltipChannelIsolation": {
+      "execution": "V8_DIRECT_FIXTURES_GITHUB_BLOB",
+      "passed": 5,
+      "failed": 0,
+      "scenarios": [
+        "valid isolated tooltip",
+        "reject economicUse other than PROHIBITED",
+        "reject expectedQuantity in tooltip",
+        "reject tooltip dropChance non-null",
+        "reject overriding stronger source yield"
+      ]
+    },
+    "pinnedSourceBlobParity": {
+      "status": "PASS",
+      "count": 5,
+      "shaByPath": {
+        "research/ledger/processing-output-fields.csv": "3e2bb784dc832d90584eebd8620148caf2133fbd",
+        "research/ledger/supplemental-output-fields.csv": "397e589598102d42c774899399f9d607f44828a1",
+        "research/proposed/itemdb-midnight-milling-candidate.json": "35ac6119dc6d47bf6f5279852b317d9d7da5d78e",
+        "GameData.lua": "1d47c4a961c5dc5af626e659f7d96d1490d3cf9e",
+        "StatYieldProfiles.lua": "1d80df8304acaa75a5b507089ef163696381b2ff"
+      }
+    },
+    "candidateMetadata": {
+      "mappingCount": 1018,
+      "workingNumericCells": 4072,
+      "fieldSlots": 4072,
+      "missingRawEvidenceFields": 514,
+      "missingRawExpectedQuantity": 116,
+      "independentRetailUniverseAudit": "NOT_COMPLETE",
+      "evidenceGE90Cells": 0,
+      "execution": "CURRENT_READINESS_JSON_NOT_FULL_PIPELINE_RERUN"
+    },
+    "nativeNode": "NOT_RUN_NO_REPOSITORY_CHECKOUT_IN_TOOL_RUNTIME",
+    "pipelineCheck": "NOT_RUN_THIS_VALIDATOR_CYCLE",
+    "lua51Decode": "NOT_RUN_THIS_VALIDATOR_CYCLE",
+    "jsonSchema": "NOT_RUN_THIS_VALIDATOR_CYCLE",
+    "wowClient": "NOT_RUN",
+    "independentMatchedHoldout": "NONE_AVAILABLE"
+  },
+  "defects": [
+    {
+      "id": "F005-PMF-ZERO-MASS-SUPPORT",
+      "severity": "BLOCKING_MODEL_SEMANTICS",
+      "owner": "baseline-modeller",
+      "cause": "forward() updates min/max for every positive quantity PMF row even if probability is exactly zero",
+      "repro": "forward({hitProbability:0.6,positiveYieldPMF:[{quantity:2,probability:1},{quantity:99,probability:0}]}) returns yieldMax=99 though only quantity 2 can occur",
+      "expected": "Calculate conditional positive support from strictly positive-probability rows; zero-mass entries must not affect bounds. Preserve sum-to-one validation and confidence-zero preview isolation.",
+      "impact": "Provisional modelled tooltip/support ranges can overpromise impossible yields; unconditional expectedQuantity and P remain unchanged in this fixture; no demonstrated live economic leakage.",
+      "retest": "node research/tests/v2/test_f005_pmf_positive_support.js and existing nine-case F005 regression; then full pipeline --check, Lua 5.1 decode and schema."
+    }
+  ],
+  "priorDefectDisposition": [
+    {
+      "ids": [
+        "F005-DONOR-RECIPE",
+        "F005-DONOR-SKILL",
+        "F005-DONOR-REAGENTS",
+        "F005-DONOR-OUTPUT-RANK"
+      ],
+      "status": "REPRODUCER_NOW_PASS_IN_INDEPENDENT_V8_RETEST"
+    },
+    {
+      "ids": [
+        "F005-ZERO-FORWARD"
+      ],
+      "status": "REPRODUCER_NOW_PASS_IN_INDEPENDENT_V8_RETEST"
+    }
+  ],
+  "holdoutVerdict": "NOT_INDEPENDENTLY_VALIDATED; TWW model historical sensitivity uses a single original author study family and no matched current Retail zero-inclusive cast cohort.",
+  "economicGate": "NO_PROMOTION: all research preview-only, confidence 0 for imputation, normalizedVerified false; tooltip-only PROHIBITED.",
+  "numericDeltas": {
+    "newAdmittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingCellsFilled": 0,
+    "newEconomicExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "independentStudyLineages": 0
+  },
+  "nextTask": {
+    "owner": "baseline-modeller",
+    "action": "Repair zero-mass positive PMF support and rerun independent fixture; independent-validator retests changed model and economic isolation."
+  }
+}

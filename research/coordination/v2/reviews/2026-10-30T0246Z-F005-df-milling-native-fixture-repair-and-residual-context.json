@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "independent-validator",
+  "taskID": "F005",
+  "workflowRevision": 2,
+  "queueRevisionObserved": 15,
+  "reviewUTC": "2026-10-30T02:46:14.205Z",
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "2d7245f176c27f0a563a5d753f610b2e4179fe30",
+  "testFixCommit": "97f6705693eaccfe407ce7fbf78061fc003d9ef6",
+  "testedBlobs": {
+    "modelCode": "812a6749b7b2326c66c5ba144fd182d3cdace62a",
+    "modelManifest": "69ef0bdc0d6bf9f9ad1667ab2ff7a39efab783f3",
+    "validatorTestBefore": "97ab6ed0a583a2c1fc9cbed092ef506e674361a8",
+    "validatorTestAfter": "0f3eb4a1de293fbfebd74c484e252a3887c3e398"
+  },
+  "verdict": "CONDITIONAL_PASS_F003_PRIOR_10_REPAIRED_NATIVE_16_OF_16_RESIDUAL_TYPED_RECIPE_ID_GAP",
+  "subject": "F003 Dragonflight milling research-only decision sensitivity model 1.0.1, 24 backlog keys",
+  "fixtureCorrection": {
+    "reason": "Original validator fixture required a partial output universe to be rejected in one case but priced in another. Model correctly rejects it; prior 15/16 was a test contradiction.",
+    "change": "Replace unsafe partial-universe decision call with assert.throws; demonstrate -4 versus +96 synthetic decision swing using two explicitly complete output vectors.",
+    "testCountBefore": 16,
+    "testCountAfter": 16,
+    "oldPassed": 15,
+    "oldFailed": 1,
+    "newPassed": 16,
+    "newFailed": 0,
+    "modelCodeChanged": false
+  },
+  "testsActuallyRun": [
+    {
+      "environment": "Independent JavaScript V8 harness, exact fetched model and validator test blobs, assert-compatible shim",
+      "before": "15_PASS_1_FAIL",
+      "after": "16_PASS_0_FAIL",
+      "modelSelfTest": "32_PASS",
+      "actualRetailCasts": 0
+    },
+    {
+      "environment": "GitHub Actions native Node+Lua5.1",
+      "runID": 40993516302,
+      "jobID": 123861227481,
+      "commit": "97f6705693eaccfe407ce7fbf78061fc003d9ef6",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/40993516302",
+      "result": "SUCCESS",
+      "dfMillingRegression": "16_OF_16_PASS",
+      "deterministicBuild": "PASS",
+      "lua51Roundtrip": "PASS"
+    },
+    {
+      "environment": "Independent V8 residual malformed RAW-context probes, exact model blob",
+      "result": "recipeSpellID string 'banana' and fractional 382981.5 both accepted as RAW_CURRENT_RETAIL; two synthetic probes reproduced; not a current Retail study"
+    }
+  ],
+  "exactDeltas": {
+    "admittedMappings": 0,
+    "workingNumericCells": 0,
+    "evidenceNumericCells": 0,
+    "newVerifiedExpectedQuantityCells": 0,
+    "invalidMappingsRemoved": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "independentStudyLineages": 0,
+    "validatorOwnedTestCaseCorrections": 1
+  },
+  "readinessObserved": {
+    "admittedMappings": 1018,
+    "workingNumericCells": 4072,
+    "workingFieldSlots": 4072,
+    "evidenceMissingCells": 514,
+    "missingVerifiedExpectedQuantity": 116,
+    "evidenceGE90Cells": 0
+  },
+  "economicPolicy": {
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "liveEVChanged": false,
+    "tooltipOnlyChanged": false,
+    "rawEvidenceChanged": false,
+    "frozenTSMChanged": false,
+    "productionChanged": false
+  },
+  "residualDefect": {
+    "owner": "baseline-modeller",
+    "severity": "RESEARCH_RAW_CONTEXT_INTEGRITY",
+    "status": "REPRODUCED_SYNTHETIC_V8_NOT_YET_NATIVE_REGRESSION",
+    "detail": "validateRawContext only requires professionContext.recipeSpellID to be present and not UNKNOWN, so noninteger values ('banana',382981.5) pass RAW_CURRENT_RETAIL admission. A real recipe/operation identity should be a positive integer or explicitly versioned operation variant; do not silently treat arbitrary text as verified recipe identity.",
+    "reproduction": {
+      "inputItemID": 191469,
+      "outputItemIDs": [
+        198412,
+        198413,
+        198414
+      ],
+      "patchBuild": "12.0.0",
+      "nominalInputUnits": 5,
+      "minimumRecipeSkill": 1,
+      "professionSkill": 1,
+      "sourceType": "RAW_CURRENT_RETAIL",
+      "completedCasts": 1,
+      "recipeSpellIDVariants": [
+        "banana",
+        382981.5
+      ],
+      "bothAccepted": true
+    },
+    "requestedRepair": "Validate numeric positive integer spell ID for RAW context, or explicitly version and validate a typed operation-variant alternative. Keep synthetic UNKNOWN support separate and preserve PREVIEW_ONLY."
+  },
+  "blockers": [
+    "No independent current-Retail whole-study holdout, verified recipe eligibility or complete output universe certificate for the 24 target keys",
+    "Caller-asserted outputUniverseVerified is not an independent eligibility audit",
+    "Residual recipeSpellID type gap must be repaired before full typed-context acceptance",
+    "No in-game client test"
+  ],
+  "nextTask": "F005_ADD_NATIVE_RECIPE_SPELL_ID_TYPE_REGRESSION_AND_RETEST_F003_MODEL_REPAIR",
+  "coordinatorRequest": "Accept corrected validator-owned contradictory fixture and native 16/16 for previously reported 10 failures; retain CONDITIONAL overall F003 and return residual RAW recipe identity typing to baseline-modeller. Do not promote economic evidence."
+}

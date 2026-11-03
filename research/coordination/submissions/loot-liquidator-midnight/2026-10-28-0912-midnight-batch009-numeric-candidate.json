@@ -1,0 +1,97 @@
+{
+  "hypothesisID": "midnight-gem-hotfix-2026-03-31-quantification",
+  "evidenceStatus": "VERIFIED_QUALITATIVE",
+  "applyPolicy": "BLOCKED",
+  "profession": "Jewelcrafting",
+  "expansionID": 11,
+  "method": "Prospect",
+  "effectTarget": "OUTPUT_UNCONDITIONAL_EXPECTATION",
+  "effectKind": "UNKNOWN",
+  "formulaID": null,
+  "parameters": null,
+  "parameterUnits": null,
+  "scope": {
+    "gameMode": "RETAIL",
+    "recipeSpellIDs": [],
+    "inputItemIDs": [],
+    "outputItemIDs": [],
+    "nominalInputCount": null,
+    "inputQualityRanks": [],
+    "outputQualityRanks": [],
+    "patchStartBuild": null,
+    "patchEndBuild": null
+  },
+  "referenceContext": {
+    "window": "pre-2026-03-31",
+    "source": "reddit original commenter pre-hotfix table with 21000 ore across 6 named ore/rank columns; percentages not exact per-cast hit counts",
+    "itemIDsVerified": false,
+    "actualOperationsKnown": false,
+    "professionSkillKnown": false
+  },
+  "targetContext": {
+    "window": "after 2026-03-31",
+    "source": "official qualitative buff; player estimates and post-hotfix cohorts do not match same ore/rank/skill and per-cast logs",
+    "actualOperationsKnown": false
+  },
+  "requiredLiveContext": [
+    "exactRecipeSpellID",
+    "inputItemID",
+    "inputQualityRank",
+    "outputItemID",
+    "outputQualityRank",
+    "patchBuildAndServerHotfixWindow",
+    "effectiveSkill",
+    "specializationRanks",
+    "professionGearAndStats",
+    "completedOperations",
+    "zeroInclusivePerCastOutputs",
+    "resourcefulnessRefunds"
+  ],
+  "sources": [
+    {
+      "claimID": "blizzard-2026-03-31-gem-frequency-direction",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24266320/hotfixes-march-9-2026",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "headtripvee-old-21000-ore-percentage-table",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1sfds1u/did_prospecting_change/",
+      "evidenceKind": "DOCUMENTED_RATE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "noriiju-pre-40-attempts-eight-unmapped-gems",
+      "url": "https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": 40
+    },
+    {
+      "claimID": "jacara-same-author-pre-post-unmatched",
+      "url": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    },
+    {
+      "claimID": "jacara-post-apr10-estimate",
+      "url": "https://us.forums.blizzard.com/en/wow/t/jc-glimmering-gemdust-is-disgusting/2272506",
+      "evidenceKind": "QUALITATIVE",
+      "sampleOperations": null
+    }
+  ],
+  "independentReview": {
+    "reviewer": null,
+    "reviewedAt": null,
+    "passedTestIDs": []
+  },
+  "confidence0to100": 25,
+  "numericTransformValidated": false,
+  "blockers": [
+    "Official March 31 note specifies direction only; no gem-specific numerical coefficient",
+    "Prehotfix 21000-ore table reports rounded percentages by named ore/rank but no verified item IDs, actual completed cast logs or exact skill/gear",
+    "No posthotfix matched same-recipe, same-ore, same-quality, same-character cohort with gem-specific zero-inclusive output totals",
+    "40-attempt prehotfix report has generic unmapped gems, no ore ID/rank",
+    "Do not treat six ore/rank columns as six independent experiments or copied post-hoc discussions as controls"
+  ],
+  "notes": "Research-only blocked numeric candidate; no numerical patch bridge, no per-rank output rates promoted, no compile or runtime changes."
+}

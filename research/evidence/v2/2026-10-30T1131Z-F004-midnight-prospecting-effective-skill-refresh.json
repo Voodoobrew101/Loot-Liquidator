@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "evidence-researcher",
+  "taskID": "F004_MIDNIGHT_PROSPECTING_SKILL_DISPLAY_CONTEXT_REFRESH",
+  "runUTC": "2026-10-30T11:31:25Z",
+  "workflowRevision": 2,
+  "branch": "implementation/five-agent-completion",
+  "baseCommit": "c4dfb4a6478a2149c047c0dc422f1bf562abc772",
+  "question": "Can independent 2026 reports identify a previously unindexed effective-skill/UI-refresh model risk for Midnight Prospecting quality eligibility without inventing drop rates?",
+  "taskSelection": "Priority-122 Dragonflight diamond searches and TWW milling historical source approach repeatedly lacked current rank-specific completed casts; zero-delta pivot to distinct Midnight effective-skill context evidence.",
+  "sources": [
+    {
+      "sourceID": "2026-04-09-reddit-r3-copper-skill",
+      "lineage": "reddit-1sgvqjt-original-poster",
+      "url": "https://www.reddit.com/r/wow/comments/1sgvqjt/how_do_i_prospect_high_quality_ore_without/",
+      "published": "2026-04-09",
+      "author": "UNKNOWN_FROM_INDEX",
+      "type": "FIRST_PERSON_UI_REPORT_NOT_CAST_LOG",
+      "inputName": "Refulgent Copper Ore",
+      "inputRank": "high quality (exact itemID unverified)",
+      "nominalInputUnits": 5,
+      "reportedBaseSkill": 105,
+      "reportedRacialBonus": 5,
+      "reportedGearSkill": 40,
+      "specialization": "30 points Prospecting Pro; Proficient Processor claimed; other ranks unknown",
+      "effectiveSkillBefore": 360,
+      "displayedMaxQualityThreshold": 365,
+      "effectiveSkillAfterRelog": 371,
+      "observedDisplayDelta": 11,
+      "interveningActions": "Installed CraftSim and relogged; neither causation nor unchanged buffs/gear established",
+      "actualCasts": null,
+      "outputs": null,
+      "refunds": null,
+      "build": null,
+      "castEpoch": null
+    },
+    {
+      "sourceID": "2026-03-18-blizzard-forum-r2-regression",
+      "lineage": "blizzard-eu-forum-611648-tarenis",
+      "url": "https://eu.forums.blizzard.com/en/wow/t/prospecting-r2-ore-overnight-requires-concentration/611648",
+      "published": "2026-03-18",
+      "author": "Tarenis",
+      "type": "FIRST_PERSON_UI_COMPARISON_NOT_CAST_LOG",
+      "inputName": "R2 ore",
+      "inputItemID": null,
+      "outputName": "R2 gems",
+      "reportedSkill": 103,
+      "racial": "Draenei",
+      "specialization": "All relevant prospecting knowledge trees reportedly completed, exact ranks unknown",
+      "priorDay": "Able to produce R2 outputs without concentration",
+      "laterDay": "7 displayed skill points short",
+      "reportedShortfall": 7,
+      "actualCasts": null,
+      "outputs": null,
+      "refunds": null,
+      "build": null,
+      "castEpoch": null
+    },
+    {
+      "sourceID": "2026-03-28-reddit-r2-concentration-context",
+      "lineage": "reddit-1s66wrz-community-comments",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1s66wrz/prospecting/",
+      "published": "2026-03-28",
+      "type": "COMMUNITY_CONTEXT_ONLY",
+      "claim": "Several commenters state R2 ore to R2 gems without concentration is possible with sufficient skill, prospecting knowledge and blue equipment; concentration cannot be assumed for every queued cast.",
+      "actualCasts": null,
+      "measuredRateCohorts": 0
+    }
+  ],
+  "interpretation": {
+    "newIndependentFirstPersonUILineages": 2,
+    "additionalContextLineages": 1,
+    "controlledStudies": 0,
+    "claim": "Apparent recipe effective skill and quality threshold can be state-dependent or stale; test skill snapshot freshness and exact recipe/ore selection before assigning output-rank eligibility.",
+    "notProven": [
+      "CraftSim caused +11 skill",
+      "A universal 365 threshold",
+      "A live-client bug",
+      "Same ore/patch/buffs across observations",
+      "Any P, conditional yield bounds or zero-inclusive E",
+      "Oct 30 2026 Retail applicability"
+    ],
+    "patchNote": "March and April 2026 reports are different publication epochs; exact cast epochs and builds unknown."
+  },
+  "applicability": {
+    "family": "Midnight Prospecting",
+    "familySpellID": 1231127,
+    "spellAttribution": "FAMILY_ONLY_NOT_EXACT_RECIPE_PROOF",
+    "priorityTargetKeys": [
+      "midnight:237359:242608:L733",
+      "midnight:237361:242608:L744",
+      "midnight:237362:242608:L755",
+      "midnight:237363:242608:L766",
+      "midnight:237364:242608:L777",
+      "midnight:237365:242608:L788",
+      "midnight:237366:242608:L799"
+    ],
+    "scope": "Quality-rank and character-context model, not diamond-rate evidence"
+  },
+  "controlledMeasurement": {
+    "question": "For identical input itemID/rank and exact recipe on one character, does displayed effective skill or threshold change across selection, UI refresh, /reload, relog or addon toggle without changes in buffs/gear/spec?",
+    "capture": [
+      "client build, UTC timestamp, exact input and output IDs/ranks",
+      "5-unit nominal batch and recipe spell ID",
+      "base/racial skill, each knowledge node rank, gear stats and buffs",
+      "displayed effective skill and threshold before/after each transition",
+      "addon enabled state, screenshots and event logs",
+      "completed casts and output rank/zero events only if actually tested",
+      "actual input consumed and separate refunds, concentration spent"
+    ],
+    "holdout": "Repeat on second character or session; no in-sample proof of formula."
+  },
+  "numericEvidence": {
+    "dropChance": null,
+    "yieldMin": null,
+    "yieldMax": null,
+    "expectedQuantity": null,
+    "confidence": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false
+  },
+  "exactDeltas": {
+    "newFirstPersonUIReportLineages": 2,
+    "newCommunityContextLineages": 1,
+    "newControlledCohorts": 0,
+    "verifiedThresholds": 0,
+    "admittedMappings": 0,
+    "invalidMappingsRemoved": 0,
+    "workingNumericCellsFilled": 0,
+    "verifiedExpectedQuantityCells": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "workingCoverageBefore": "4072/4072",
+    "workingCoverageAfter": "4072/4072",
+    "evidenceGapsBefore": 514,
+    "evidenceGapsAfter": 514
+  },
+  "blockers": [
+    "No raw before/after screenshots, logs or client build",
+    "Unknown buff/gear and selector changes between reports",
+    "No exact cast counts, output histograms or refunds",
+    "Current Oct 2026 applicability not established"
+  ]
+}
