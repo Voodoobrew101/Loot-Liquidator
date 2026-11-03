@@ -1,13 +1,13 @@
 {
  "bands": {
   "after": {
-   "50-74%": 523,
-   "75-89%": 90,
-   "90%+": 233,
+   "50-74%": 556,
+   "75-89%": 106,
+   "90%+": 248,
    "conditional": 23,
-   "under 50%": 888
+   "under 50%": 927
   },
-  "afterCappedAt50": 359,
+  "afterCappedAt50": 379,
   "before": {
    "50-74%": 396,
    "75-89%": 0,
@@ -19,12 +19,33 @@
    "agent evidence and the S7 page rule (M10 merge)": 27,
    "identity (M05)": 9,
    "identity (M05) + importer and manifests rerun (M10)": 5,
-   "importer and manifests rerun (M10)": 12,
+   "importer and manifests rerun (M10)": 13,
    "units (M06)": 25
   },
   "down": 44,
-  "moved": 78,
+  "moved": 79,
   "moves": [
+   {
+    "bandAfter": "50-74%",
+    "bandBefore": "under 50%",
+    "causes": [
+     "importer and manifests rerun (M10)"
+    ],
+    "confidenceAfter": 50,
+    "confidenceBefore": 24,
+    "direction": "up",
+    "input": "54476",
+    "method": "Disenchant",
+    "outputItemID": "52718",
+    "steps": [
+     {
+      "cause": "importer and manifests rerun (M10)",
+      "from": "under 50%",
+      "stage": "working tree",
+      "to": "50-74%"
+     }
+    ]
+   },
    {
     "bandAfter": "under 50%",
     "bandBefore": "50-74%",
@@ -1764,9 +1785,9 @@
     "stage": "M10 merge"
    },
    {
-    "added": 634,
+    "added": 737,
     "cause": "importer and manifests rerun (M10)",
-    "movedBand": 12,
+    "movedBand": 13,
     "removed": 10,
     "stage": "working tree"
    }
@@ -1924,21 +1945,21 @@
    },
    {
     "bands": {
-     "50-74%": 523,
-     "75-89%": 90,
-     "90%+": 233,
+     "50-74%": 556,
+     "75-89%": 106,
+     "90%+": 248,
      "conditional": 23,
-     "under 50%": 888
+     "under 50%": 927
     },
     "cause": "importer and manifests rerun (M10)",
     "commit": "-",
-    "estimates": 1757,
-    "records": 7322,
+    "estimates": 1860,
+    "records": 7620,
     "stage": "working tree",
     "unplaced": 442
    }
   ],
-  "up": 34
+  "up": 35
  },
  "baselineCheck": {
   "differs": {},
@@ -1956,20 +1977,20 @@
  },
  "coverage": {
   "after": {
-   "dropRows": 6114,
-   "estimates": 1757,
+   "dropRows": 6331,
+   "estimates": 1860,
    "estimatesByMethod": {
-    "Disenchant": 665,
-    "Mill": 209,
-    "Prospect": 873,
+    "Disenchant": 756,
+    "Mill": 210,
+    "Prospect": 884,
     "Smelt": 10
    },
-   "estimatesWithMeasuredChance": 600,
-   "records": 7322,
-   "referenceRows": 1425,
-   "studyCastsTotal": 1931098.9,
-   "studyKeys": 1145,
-   "studyRows": 4689,
+   "estimatesWithMeasuredChance": 666,
+   "records": 7620,
+   "referenceRows": 1443,
+   "studyCastsTotal": 1968124.9,
+   "studyKeys": 1235,
+   "studyRows": 4888,
    "unplaced": 442
   },
   "before": {
@@ -1991,24 +2012,24 @@
   },
   "sources": {
    "after": {
-    "citedAsSource": 184,
-    "mentioned": 195,
-    "registry": 543
+    "citedAsSource": 186,
+    "mentioned": 196,
+    "registry": 545
    },
    "before": {
-    "citedAsSource": 149,
-    "mentioned": 165,
-    "registry": 543
+    "citedAsSource": 150,
+    "mentioned": 166,
+    "registry": 545
    }
   },
   "typesAfter": {
    "condition": 21,
-   "drop": 6114,
+   "drop": 6331,
    "exchange": 377,
-   "noDisenchant": 275,
-   "rateChange": 22,
+   "noDisenchant": 337,
+   "rateChange": 27,
    "recipe": 179,
-   "searched": 42,
+   "searched": 56,
    "token": 292
   },
   "typesBefore": {
@@ -2026,23 +2047,23 @@
  "dispositions": {
   "byDisposition": {
    "derived-model": 22,
-   "exception-queued": 64,
+   "exception-queued": 65,
    "extracted": 4,
    "extracted-null": 47,
-   "held-sources-only": 127,
+   "held-sources-only": 117,
    "imported": 53,
-   "linked": 135,
+   "linked": 134,
    "mechanics-knowledge": 4,
-   "no-observational-content": 443,
-   "process-artifact": 309,
+   "no-observational-content": 455,
+   "process-artifact": 313,
    "reference-only": 26,
    "source-links-only": 10
   },
   "equalsSummary": true,
-  "files": 1244,
-  "inventoryFiles": 1244,
+  "files": 1250,
+  "inventoryFiles": 1250,
   "kinds": 12,
-  "summaryFiles": 1244
+  "summaryFiles": 1250
  },
  "register": {
   "blockerIDs": [
@@ -2136,21 +2157,20 @@
    }
   ],
   "closedCount": 12,
-  "exceptionRows": 130,
+  "exceptionRows": 125,
   "exceptionsByKind": {
    "ambiguous-doubt-source": 12,
    "cross-source-identity-pair": 9,
-   "held-source-numbers-differ": 81,
+   "held-source-numbers-differ": 82,
    "identity-merge-with-conflict": 3,
-   "imported-vs-agent-totals-differ": 6,
    "single-row-subset": 12,
    "total-differs-from-source": 1,
    "unverified-output-count": 1,
    "validator-error": 5
   },
   "handleInM10": 5,
-  "open": 177,
-  "recordIDsNamed": 3055,
+  "open": 172,
+  "recordIDsNamed": 3047,
   "reportRows": 43,
   "rows": [
    {
@@ -2352,126 +2372,6 @@
     "title": "Felslate 2016 (reddit:51ovfk) after-hotfix rare-gem total"
    },
    {
-    "action": "Different cohorts or different transcriptions of one sheet: needs the original post (not readable offline). Decide which side to exclude through corrections.jsonl, or ask the owning agent to flag.",
-    "blocksM10": false,
-    "count": 4,
-    "id": "EX-JALLFO-0f966bad",
-    "kind": "imported-vs-agent-totals-differ",
-    "m10": "none",
-    "m10Why": null,
-    "origin": "exception",
-    "pointer": "DF-BETA-20221012-JALLFO-DRACONIUM-COHORT1; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-901; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-938; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-975",
-    "recordIDs": [
-     "dragonflight-20261030-901",
-     "dragonflight-20261030-938",
-     "dragonflight-20261030-975",
-     "import-study-00830"
-    ],
-    "see": null,
-    "source": "research/v3/migration/manifest/exceptions.jsonl",
-    "title": "gdoc:1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q FRACTURED GLASS (1000 casts), imported row against agent rows"
-   },
-   {
-    "action": "Different cohorts or different transcriptions of one sheet: needs the original post (not readable offline). Decide which side to exclude through corrections.jsonl, or ask the owning agent to flag.",
-    "blocksM10": false,
-    "count": 4,
-    "id": "EX-JALLFO-19473a8a",
-    "kind": "imported-vs-agent-totals-differ",
-    "m10": "none",
-    "m10Why": null,
-    "origin": "exception",
-    "pointer": "DF-BETA-20221012-JALLFO-DRACONIUM-COHORT3; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-901; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-938; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-975",
-    "recordIDs": [
-     "dragonflight-20261030-901",
-     "dragonflight-20261030-938",
-     "dragonflight-20261030-975",
-     "import-study-00904"
-    ],
-    "see": null,
-    "source": "research/v3/migration/manifest/exceptions.jsonl",
-    "title": "gdoc:1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q FRACTURED GLASS (1000 casts), imported row against agent rows"
-   },
-   {
-    "action": "Different cohorts or different transcriptions of one sheet: needs the original post (not readable offline). Decide which side to exclude through corrections.jsonl, or ask the owning agent to flag.",
-    "blocksM10": false,
-    "count": 4,
-    "id": "EX-JALLFO-343d47b7",
-    "kind": "imported-vs-agent-totals-differ",
-    "m10": "none",
-    "m10Why": null,
-    "origin": "exception",
-    "pointer": "DF-BETA-20221012-JALLFO-DRACONIUM-COHORT3; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-900; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-937; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-974",
-    "recordIDs": [
-     "dragonflight-20261030-900",
-     "dragonflight-20261030-937",
-     "dragonflight-20261030-974",
-     "import-study-00903"
-    ],
-    "see": null,
-    "source": "research/v3/migration/manifest/exceptions.jsonl",
-    "title": "gdoc:1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q CRUMBLED STONE (1000 casts), imported row against agent rows"
-   },
-   {
-    "action": "Different cohorts or different transcriptions of one sheet: needs the original post (not readable offline). Decide which side to exclude through corrections.jsonl, or ask the owning agent to flag.",
-    "blocksM10": false,
-    "count": 4,
-    "id": "EX-JALLFO-b638cf0e",
-    "kind": "imported-vs-agent-totals-differ",
-    "m10": "none",
-    "m10Why": null,
-    "origin": "exception",
-    "pointer": "DF-BETA-20221012-JALLFO-DRACONIUM-COHORT1; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-900; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-937; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-974",
-    "recordIDs": [
-     "dragonflight-20261030-900",
-     "dragonflight-20261030-937",
-     "dragonflight-20261030-974",
-     "import-study-00829"
-    ],
-    "see": null,
-    "source": "research/v3/migration/manifest/exceptions.jsonl",
-    "title": "gdoc:1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q CRUMBLED STONE (1000 casts), imported row against agent rows"
-   },
-   {
-    "action": "Different cohorts or different transcriptions of one sheet: needs the original post (not readable offline). Decide which side to exclude through corrections.jsonl, or ask the owning agent to flag.",
-    "blocksM10": false,
-    "count": 4,
-    "id": "EX-JALLFO-c48d333a",
-    "kind": "imported-vs-agent-totals-differ",
-    "m10": "none",
-    "m10Why": null,
-    "origin": "exception",
-    "pointer": "DF-BETA-20221012-JALLFO-DRACONIUM-COHORT2; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-900; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-937; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-974",
-    "recordIDs": [
-     "dragonflight-20261030-900",
-     "dragonflight-20261030-937",
-     "dragonflight-20261030-974",
-     "import-study-00866"
-    ],
-    "see": null,
-    "source": "research/v3/migration/manifest/exceptions.jsonl",
-    "title": "gdoc:1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q CRUMBLED STONE (1000 casts), imported row against agent rows"
-   },
-   {
-    "action": "Different cohorts or different transcriptions of one sheet: needs the original post (not readable offline). Decide which side to exclude through corrections.jsonl, or ask the owning agent to flag.",
-    "blocksM10": false,
-    "count": 4,
-    "id": "EX-JALLFO-e84bdcbd",
-    "kind": "imported-vs-agent-totals-differ",
-    "m10": "none",
-    "m10Why": null,
-    "origin": "exception",
-    "pointer": "DF-BETA-20221012-JALLFO-DRACONIUM-COHORT2; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-901; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-938; research/v3/evidence/dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl#dragonflight-20261030-975",
-    "recordIDs": [
-     "dragonflight-20261030-901",
-     "dragonflight-20261030-938",
-     "dragonflight-20261030-975",
-     "import-study-00867"
-    ],
-    "see": null,
-    "source": "research/v3/migration/manifest/exceptions.jsonl",
-    "title": "gdoc:1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q FRACTURED GLASS (1000 casts), imported row against agent rows"
-   },
-   {
     "action": "Read the note's counts against the held rows; if the note records a different cohort, an agent records it with its own studyKey, if it restates a ratio or audit figure, close this entry as not a cohort.",
     "blocksM10": false,
     "count": 3,
@@ -2571,7 +2471,7 @@
    {
     "action": "Read the note's counts against the held rows; if the note records a different cohort, an agent records it with its own studyKey, if it restates a ratio or audit figure, close this entry as not a cohort.",
     "blocksM10": false,
-    "count": 78,
+    "count": 84,
     "id": "EX-LINK-0ed5fa46",
     "kind": "held-source-numbers-differ",
     "m10": "none",
@@ -2629,6 +2529,12 @@
      "dragonflight-20261102-033306",
      "dragonflight-20261102-033307",
      "dragonflight-20261102-033309",
+     "dragonflight-20261102-9301",
+     "dragonflight-20261102-9302",
+     "dragonflight-20261102-9303",
+     "dragonflight-20261102-9304",
+     "dragonflight-20261102-9305",
+     "dragonflight-20261102-9306",
      "import-study-00051",
      "import-study-00052",
      "import-study-00053",
@@ -3274,7 +3180,7 @@
    {
     "action": "Read the note's counts against the held rows; if the note records a different cohort, an agent records it with its own studyKey, if it restates a ratio or audit figure, close this entry as not a cohort.",
     "blocksM10": false,
-    "count": 8,
+    "count": 9,
     "id": "EX-LINK-27b82dec",
     "kind": "held-source-numbers-differ",
     "m10": "none",
@@ -3289,7 +3195,8 @@
      "dragonflight-20261030-011",
      "dragonflight-20261030-012",
      "dragonflight-20261030-013",
-     "dragonflight-20261030-014"
+     "dragonflight-20261030-014",
+     "dragonflight-20261102-102528"
     ],
     "see": null,
     "source": "research/v3/migration/manifest/exceptions.jsonl",
@@ -3418,6 +3325,29 @@
     "see": null,
     "source": "research/v3/migration/manifest/exceptions.jsonl",
     "title": "wowhead:item=46849 cited in 2026-10-28-1540-legacy-q17-batch015-40key-fourfield-audit.jsonl"
+   },
+   {
+    "action": "Read the note's counts against the held rows; if the note records a different cohort, an agent records it with its own studyKey, if it restates a ratio or audit figure, close this entry as not a cohort.",
+    "blocksM10": false,
+    "count": 7,
+    "id": "EX-LINK-36093126",
+    "kind": "held-source-numbers-differ",
+    "m10": "none",
+    "m10Why": null,
+    "origin": "exception",
+    "pointer": "research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-0525-dragonflight-batch005-report.md:16",
+    "recordIDs": [
+     "dragonflight-20261102-012",
+     "dragonflight-20261102-143112",
+     "dragonflight-20261102-143113",
+     "dragonflight-20261102-143149",
+     "dragonflight-20261102-143150",
+     "dragonflight-20261102-143186",
+     "dragonflight-20261102-143187"
+    ],
+    "see": null,
+    "source": "research/v3/migration/manifest/exceptions.jsonl",
+    "title": "reddit:y3e8ek cited in 2026-10-28-0525-dragonflight-batch005-report.md"
    },
    {
     "action": "Read the note's counts against the held rows; if the note records a different cohort, an agent records it with its own studyKey, if it restates a ratio or audit figure, close this entry as not a cohort.",
@@ -3808,7 +3738,7 @@
    {
     "action": "Read the note's counts against the held rows; if the note records a different cohort, an agent records it with its own studyKey, if it restates a ratio or audit figure, close this entry as not a cohort.",
     "blocksM10": false,
-    "count": 8,
+    "count": 9,
     "id": "EX-LINK-75e75c15",
     "kind": "held-source-numbers-differ",
     "m10": "none",
@@ -3823,7 +3753,8 @@
      "dragonflight-20261030-011",
      "dragonflight-20261030-012",
      "dragonflight-20261030-013",
-     "dragonflight-20261030-014"
+     "dragonflight-20261030-014",
+     "dragonflight-20261102-102528"
     ],
     "see": null,
     "source": "research/v3/migration/manifest/exceptions.jsonl",
@@ -4349,7 +4280,7 @@
    {
     "action": "Read the note's counts against the held rows; if the note records a different cohort, an agent records it with its own studyKey, if it restates a ratio or audit figure, close this entry as not a cohort.",
     "blocksM10": false,
-    "count": 16,
+    "count": 17,
     "id": "EX-LINK-959ae432",
     "kind": "held-source-numbers-differ",
     "m10": "none",
@@ -4372,7 +4303,8 @@
      "midnight-20261030-1217",
      "midnight-20261030-1218",
      "midnight-20261030-1219",
-     "midnight-20261030-1220"
+     "midnight-20261030-1220",
+     "midnight-20261102-151502"
     ],
     "see": null,
     "source": "research/v3/migration/manifest/exceptions.jsonl",
@@ -7427,9 +7359,9 @@
     "title": "Stormvine and Felwort cohorts share a page with other authors."
    },
    {
-    "action": "Read the original posts; these cannot be settled offline.",
+    "action": "The six Jallfo cooutput gaps are source-linked; verify the remaining original output count.",
     "blocksM10": false,
-    "count": 7,
+    "count": 1,
     "id": "M04-links/master#3",
     "kind": "source-check",
     "line": 99,
@@ -7437,7 +7369,7 @@
     "m10Why": null,
     "origin": "report",
     "pointer": "research/v3/migration/reports/M04-links.md:99",
-    "see": "exceptions:imported-vs-agent-totals-differ",
+    "see": "exceptions:unverified-output-count",
     "source": "research/v3/migration/reports/M04-links.md",
     "title": "s6bfrl uncommon gems and the six Jallfo exceptions need the original posts; they cannot be settled offline."
    },
@@ -7549,7 +7481,7 @@
    {
     "action": "Add the one-item-per-cast disenchanting fact to mechanics.md if wanted.",
     "blocksM10": false,
-    "count": 53,
+    "count": 98,
     "id": "M06-units/master#4",
     "kind": "data-cleanup",
     "line": 165,
@@ -7579,7 +7511,7 @@
    {
     "action": "Work through the groups by source, and say whether closed groups are recorded.",
     "blocksM10": false,
-    "count": 81,
+    "count": 82,
     "id": "M07-dispositions/master#2",
     "kind": "exceptions",
     "line": 164,
@@ -7684,7 +7616,7 @@
    {
     "action": "Decide per-rank totals in family groups.",
     "blocksM10": false,
-    "count": 206,
+    "count": 241,
     "id": "M08-estimator/findings#1",
     "kind": "statistics",
     "line": 127,
@@ -7744,7 +7676,7 @@
    {
     "action": "Same decision as the M06 backfills.",
     "blocksM10": false,
-    "count": 530,
+    "count": 565,
     "id": "M08-estimator/master#3",
     "kind": "backfill",
     "line": 161,
@@ -7879,7 +7811,7 @@
    {
     "action": "Apply the roles/worker.md line, or decline it.",
     "blocksM10": false,
-    "count": 512,
+    "count": 547,
     "id": "M10-merge/master#6",
     "kind": "agent-rule",
     "line": 120,
@@ -7972,7 +7904,7 @@
    {
     "action": "Say whether record IDs should start with the file's time (the reviewer's proposed line for evidence-format.md).",
     "blocksM10": false,
-    "count": 247,
+    "count": 260,
     "id": "strategy:S18",
     "kind": "agent-rule",
     "line": 172,
@@ -8047,49 +7979,49 @@
   },
   "rebuild": {
    "first": {
-    "estimates.json": "1705fecc871180963e5e4ad879619841ddd99f14f3db287d23642ff1004128ad",
-    "summary.md": "099c06c59a08428d649894aa715e2366d3e4c4ad192c7c5e92cefd1e29e8c1f1",
-    "unused.json": "d0e4a812a4a48d45f37525ea769aa22db3bdfd32abe5afa1c0bc22600d7638ca"
+    "estimates.json": "9e54a3effaa3851e23aa65e15a90712e2cd63e1375681d3dfa89a3a06fc32068",
+    "summary.md": "83ce2c747e96de73d7ec99ad730f1606e5ce0c35f543944e88b7fec0976537fe",
+    "unused.json": "591871cf30ed864a4fc2633bf4bccec85fce919c493338f51c73c735d3ea272c"
    },
    "identical": true,
    "second": {
-    "estimates.json": "1705fecc871180963e5e4ad879619841ddd99f14f3db287d23642ff1004128ad",
-    "summary.md": "099c06c59a08428d649894aa715e2366d3e4c4ad192c7c5e92cefd1e29e8c1f1",
-    "unused.json": "d0e4a812a4a48d45f37525ea769aa22db3bdfd32abe5afa1c0bc22600d7638ca"
+    "estimates.json": "9e54a3effaa3851e23aa65e15a90712e2cd63e1375681d3dfa89a3a06fc32068",
+    "summary.md": "83ce2c747e96de73d7ec99ad730f1606e5ce0c35f543944e88b7fec0976537fe",
+    "unused.json": "591871cf30ed864a4fc2633bf4bccec85fce919c493338f51c73c735d3ea272c"
    }
   },
   "tests": {
    "ok": true,
-   "ran": 415
+   "ran": 429
   },
   "validate": {
    "byCode": {
     "error:METHOD_MISSING": 2,
     "error:METHOD_UNKNOWN": 3,
     "warning:FIELDS_MISSING": 61,
-    "warning:ID_REUSED_ACROSS_FILES": 247
+    "warning:ID_REUSED_ACROSS_FILES": 260
    },
-   "effectiveRecords": 7322,
+   "effectiveRecords": 7620,
    "errors": 5,
-   "evidenceFiles": 293,
-   "records": 7598,
-   "warnings": 308
+   "evidenceFiles": 321,
+   "records": 8172,
+   "warnings": 321
   },
   "validateEqualsManifest": true
  },
  "scipy": null,
  "usage": {
-  "records": 7322,
+  "records": 7620,
   "topReasons": [
    {
     "meaning": "states a total with no cast count or input count, so no rate follows (S16)",
     "reason": "totalWithoutCasts",
-    "records": 530
+    "records": 565
    },
    {
     "meaning": "a copy of a study already counted in the group",
     "reason": "duplicateStudy",
-    "records": 512
+    "records": 547
    },
    {
     "meaning": "no output ID, mostly name-only rows kept by PLAN section 3 rule 4",
@@ -8102,43 +8034,43 @@
     "records": 377
    },
    {
-    "meaning": "a token mapping, not a drop",
-    "reason": "type:token",
-    "records": 292
+    "meaning": "says an item cannot be disenchanted; not a drop",
+    "reason": "type:noDisenchant",
+    "records": 337
    }
   ],
-  "unused": 3617,
+  "unused": 3766,
   "unusedByReason": {
    "condition:incomplete": 2,
-   "conditional:unlockFalse": 1,
-   "conditional:unlockUnstated": 94,
+   "conditional:unlockFalse": 3,
+   "conditional:unlockUnstated": 98,
    "copy:pooledStudy": 2,
-   "copy:vaguerGroup": 207,
-   "duplicateRowInStudy": 206,
-   "duplicateStudy": 512,
-   "hitsWithoutCasts": 3,
-   "noNumbers": 59,
-   "percentNotPerCast": 61,
-   "reference:noUsableValue": 273,
+   "copy:vaguerGroup": 159,
+   "duplicateRowInStudy": 241,
+   "duplicateStudy": 547,
+   "hitsWithoutCasts": 4,
+   "noNumbers": 61,
+   "percentNotPerCast": 62,
+   "reference:noUsableValue": 274,
    "reference:priorSuperseded": 38,
-   "totalWithoutCasts": 530,
+   "totalWithoutCasts": 565,
    "type:exchange": 377,
-   "type:noDisenchant": 275,
-   "type:rateChange": 22,
+   "type:noDisenchant": 337,
+   "type:rateChange": 27,
    "type:recipe": 179,
-   "type:searched": 42,
+   "type:searched": 56,
    "type:token": 292,
    "unplaced:noInput": 29,
    "unplaced:noMethod": 2,
    "unplaced:noOutput": 411
   },
-  "used": 3705,
+  "used": 3854,
   "usedByRole": {
-   "average": 2118,
-   "chance": 745,
+   "average": 2185,
+   "chance": 816,
    "condition": 19,
-   "prior": 1109,
-   "range": 1330
+   "prior": 1126,
+   "range": 1369
   }
  }
 }
