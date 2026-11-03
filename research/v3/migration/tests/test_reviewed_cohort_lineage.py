@@ -46,6 +46,8 @@ class ReviewedCohortLineage(unittest.TestCase):
             for estimate in estimates:
                 self.assertEqual(estimate["studies"], 1)
                 self.assertEqual(estimate["studyCasts"], casts)
+                self.assertEqual(estimate["chanceSource"], "measured")
+                self.assertEqual(estimate["averageSource"], "estimated")
 
     def test_jallfo_duplicates_match_the_same_source_profile_and_raw_total(self):
         old = read("dragonflight/2026-10-30T2131-jallfo-beta-six-prospecting-cohorts.jsonl")
@@ -85,6 +87,20 @@ class ReviewedCohortLineage(unittest.TestCase):
             self.assertIsNone(r.get("casts"))
             self.assertIsNone(r.get("castsWithDrop"))
             self.assertIsNone(r.get("averageShown"))
+
+    def test_zkay8v_original_and_independent_comment_stay_two_cohorts(self):
+        rows = [r for r in self.loaded if r.get("type") == "drop" and "zkay8v" in str(r.get("studyKey", ""))]
+        self.assertEqual(len(rows), 47)
+        by_cohort = collections.defaultdict(list)
+        for r in rows:
+            by_cohort[r["cohortKey"]].append(r)
+        measured = by_cohort["zkay8v-original-1000-completed-prospects"]
+        nominal = by_cohort["zkay8v-independent-50000-nominal-ore-comment"]
+        self.assertEqual((len(measured), len(nominal)), (25, 22))
+        self.assertEqual({r["casts"] for r in measured}, {1000})
+        self.assertEqual({r["casts"] for r in nominal}, {None})
+        self.assertEqual(b.build(nominal)[0], [])
+        self.assertEqual(sorted(r["totalQuantity"] for r in measured if r["outputName"] == "Eternity Amber"), [72, 315])
 
 
 if __name__ == "__main__":

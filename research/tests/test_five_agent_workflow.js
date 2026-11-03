@@ -80,8 +80,8 @@ const immutableInputs = {
   primary: "research/ledger/processing-output-fields.csv",
   supplemental: "research/ledger/supplemental-output-fields.csv",
   midnightCandidate: "research/proposed/itemdb-midnight-milling-candidate.json",
-  gameData: "GameData.lua",
-  statYield: "StatYieldProfiles.lua"
+  gameData: "research/legacy-addon-v0.9.70/GameData.lua",
+  statYield: "research/legacy-addon-v0.9.70/StatYieldProfiles.lua"
 };
 for (const [key, file] of Object.entries(immutableInputs)) {
   const bytes = fs.readFileSync(path.join(root, file));

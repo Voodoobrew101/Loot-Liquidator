@@ -162,8 +162,8 @@ ITEMS = {
                                     m10Why="If agents record another comment on such a page, the writer reports the rows as held."),
     "M04-links/master#1": dict(closedBy="reports/PR-REPAIR-2026-11-02.md"),
     "M04-links/master#2": dict(closedBy="reports/PR-REPAIR-2026-11-02.md"),
-    "M04-links/master#3": dict(kind="source-check", m10="none", see="exceptions:imported-vs-agent-totals-differ",
-                               action="Read the original posts; these cannot be settled offline.",
+    "M04-links/master#3": dict(kind="source-check", m10="none", see="exceptions:unverified-output-count",
+                               action="The six Jallfo cooutput gaps are source-linked; verify the remaining original output count.",
                                count=exception_count("imported-vs-agent-totals-differ", "unverified-output-count")),
     "M04-links/master#4": dict(closedBy="reports/M04-extraction.md"),
     "M04-links/master#5": dict(closedBy="reports/M04-links.md"),
@@ -587,6 +587,13 @@ def collect(with_tests=True):
         after = run_measure(after_tree)
         registry = jl(os.path.join(MANIFEST, "url-registry.jsonl"))
         sources = {"before": source_counts(os.path.join(tmp, "snapshot"), registry), "after": source_counts(after_tree, registry)}
+        # PLAN's 165 cited URLs used the M01 registry. Main's consolidated
+        # research layout adds historical files/URLs; use that original registry
+        # for the baseline assertion while comparing coverage over today's scope.
+        original_registry = [json.loads(line) for line in subprocess.check_output(
+            ["git", "-C", ROOT, "show", "f7ca506:research/v3/migration/manifest/url-registry.jsonl"],
+            encoding="utf-8").splitlines() if line.strip()]
+        original_mentions = source_counts(os.path.join(tmp, "snapshot"), original_registry)["mentioned"]
         repro = reproducibility(tmp, with_tests)
     before = stages["snapshot"]
     sequence = [(name, cause, stages[name]["estimates"]) for name, _, cause in STAGES]
@@ -596,7 +603,7 @@ def collect(with_tests=True):
     moves = band_moves(sequence)
     open_rows, closed = register(context_for(usage, after))
     baseline = plan_baseline()
-    measured = {**coverage(before), "sourcesMentioned": sources["before"]["mentioned"]}
+    measured = {**coverage(before), "sourcesMentioned": original_mentions}
     stage_rows = [{"stage": name, "commit": commit[:7], "cause": cause, "records": stages[name]["records"],
                    "estimates": len(stages[name]["estimates"]), "unplaced": stages[name]["unplaced"],
                    "bands": band_counts(stages[name]["estimates"])} for name, commit, cause in STAGES]
