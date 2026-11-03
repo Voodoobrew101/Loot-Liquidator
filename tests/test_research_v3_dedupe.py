@@ -7,6 +7,34 @@ import research_v3_to_baselines as v3
 
 
 class MaterialIdentityTests(unittest.TestCase):
+    def test_cohort_key_links_an_unlabelled_copy_but_not_independent_studies(self):
+        def row(study, cohort=None, total=5, source='https://www.reddit.com/r/woweconomy/comments/zkay8v'):
+            return dict(id=study, studyKey=study, _file=study + '.jsonl',
+                        type='drop', sourceKind='study', source={'url': source},
+                        inputItemID=190396, inputRank=2, outputItemID=192861,
+                        outputName='Ysemerald', outputRank=3, casts=1000,
+                        totalQuantity=total, cohortKey=cohort)
+
+        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        labelled, copy = row('labelled', 'first'), row('copy')
+        changed = row('changed', total=6)
+        other_source = row('other-source', source='https://www.reddit.com/r/woweconomy/comments/other')
+        rows = [labelled, copy, changed, other_source]
+        vectors = module.study_vectors(rows)[0]
+        identity = lambda r: module.study_identity(r, vectors)
+        self.assertEqual(identity(labelled), identity(copy))
+        self.assertNotEqual(identity(labelled), identity(changed))
+        self.assertNotEqual(identity(labelled), identity(other_source))
+        self.assertIsNone(copy['cohortKey'])
+
+        # Identical numbers cannot resolve a copy to either of two explicitly
+        # independent cohorts. Also verifies aliases reset between builds.
+        second = row('second', 'second')
+        vectors = module.study_vectors(rows + [second])[0]
+        self.assertNotEqual(identity(labelled), identity(second))
+        self.assertNotEqual(identity(copy), identity(labelled))
+        self.assertNotEqual(identity(copy), identity(second))
+
     def test_equal_nonzero_totals_are_not_material_identity(self):
         module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
         amber = dict(outputName='Eternity Amber', outputItemID=None, totalQuantity=4)
