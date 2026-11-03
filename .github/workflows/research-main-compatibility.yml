@@ -1,0 +1,23 @@
+name: Research compatibility with main
+on:
+  pull_request:
+    paths:
+      - 'research/**'
+      - '.github/workflows/research-main-compatibility.yml'
+permissions:
+  contents: read
+jobs:
+  compatible-addon:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Test the prospective combination with current main
+        run: |
+          git fetch --no-tags origin main
+          git -c user.name='Compatibility check' -c user.email='compatibility@localhost' merge --no-commit --no-ff origin/main
+      - name: Install native Lua 5.1
+        run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
+      - name: Validate addon behavior and pinned generated data
+        run: bash tests/run.sh

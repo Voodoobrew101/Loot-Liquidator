@@ -9,6 +9,20 @@ Repository: `Voodoobrew101/Loot-Liquidator`, branch `implementation/five-agent-c
 Work only inside `research/v3/`. Never touch `main`, the addon folder `LootLiquidator/`,
 or other branches.
 
+## Pull-request compatibility
+
+Start new research branches from the current `implementation/five-agent-completion`
+head after fetching it. Reuse the existing migration/importer fixes and append-only
+corrections; do not restore old generated artifacts to silence a failing check.
+Before proposing integration, merge the current research target into the candidate,
+review source lineage, reconcile derived files in an isolated checkout, and require
+the migration tests, deterministic audit, and research completion checks to pass.
+The `Research compatibility with main` workflow additionally combines the candidate
+with current main and runs the full addon suite. Resolve any conflict before merge.
+If main advances, refresh the candidate and rerun checks. A clean text merge alone
+does not establish source validity or live-game eligibility. Workers continue to
+collect evidence; PR Director owns reviewed integration and snapshot refreshes.
+
 ## What we are building
 
 Loot Liquidator tells a player what to do with each item: auction it, vendor it, disenchant it,
