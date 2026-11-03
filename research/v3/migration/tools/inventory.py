@@ -40,6 +40,7 @@ ADDON_DATA_FILES = ["GameData.lua", "StatYieldProfiles.lua", "ResearchDB.lua"]
 
 # Category by path prefix; first match wins. Order matters (more specific first).
 CATEGORIES = [
+    ("research/legacy-addon-v0.9.70/", "addon-data"),
     ("research/evidence/observations/", "observation"),
     ("research/evidence/v2/source-reviews/", "v2-source-review"),
     ("research/evidence/v2/", "v2-evidence"),
@@ -195,7 +196,7 @@ def scan_file(root, rel, v3):
 def preliminary_disposition(i):
     cat = i["category"]
     has_data = i["studyObjects"] > 0 or i["numericClaimLines"] > 0
-    if i["path"] in ("research/proposed/itemdb.lua",) or cat == "addon-data" and i["path"] == "GameData.lua":
+    if i["path"] in ("research/proposed/itemdb.lua",) or cat == "addon-data" and os.path.basename(i["path"]) == "GameData.lua":
         return "reference-imported-partial"
     if i["importedByV3Importer"]:
         return "imported"

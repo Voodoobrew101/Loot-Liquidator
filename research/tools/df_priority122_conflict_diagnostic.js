@@ -37,7 +37,8 @@ function analyze(root,records) {
   const primary = new Map(csv(read(SOURCE_PATH)).map(x=>[x.record_key,x]));
   const auditRows = read(AUDIT_PATH).trim().split(/\r?\n/).map(JSON.parse);
   const audits = new Map(auditRows.map(x=>[x.stableKey,x]));
-  const lines = read("GameData.lua").split(/\r?\n/);
+  const historical = "research/legacy-addon-v0.9.70/GameData.lua";
+  const lines = read(fs.existsSync(path.join(root,historical)) ? historical : "GameData.lua").split(/\r?\n/);
   const byID = new Map(records.map(x=>[x.recordID,x]));
   const results = [];
   for(const id of TARGETS) {

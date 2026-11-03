@@ -15,7 +15,7 @@ const input={
  batch013LegacyJSONL:read("research/coordination/submissions/loot-liquidator-legacy/2026-10-28-1340-legacy-batch013-40key-field-audit.jsonl"),
  batch014DragonflightJSONL:read("research/coordination/submissions/loot-liquidator-dragonflight/2026-10-28-1432-dragonflight-q16-batch014-40key-fourfield-audit.jsonl"),
  batch014TWWJSONL:read("research/coordination/submissions/loot-liquidator-war-within/2026-10-28-2116-warwithin-batch014-q16-35key-fourfield-audit.jsonl"),
- gameDataSource:read("GameData.lua"),statYieldSource:read("StatYieldProfiles.lua"),
+ gameDataSource:read("research/legacy-addon-v0.9.70/GameData.lua"),statYieldSource:read("research/legacy-addon-v0.9.70/StatYieldProfiles.lua"),
  tooltipFallbacksJSON:read("research/proposed/itemdb-tooltip-fallbacks-q25.json"),sha:JSON.parse(read("research/proposed/itemdb-compiler-source-shas.json"))
 };
 const a=compile(input),b=compile(input);
