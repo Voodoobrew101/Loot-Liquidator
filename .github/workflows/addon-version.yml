@@ -1,0 +1,30 @@
+name: Update addon version after PR merge
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+permissions:
+  contents: write
+concurrency:
+  group: addon-version-main
+  cancel-in-progress: false
+jobs:
+  version:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - name: Update version
+        env:
+          VERSION_PATCH: ${{ github.run_number }}
+        run: python3 tools/update_addon_version.py
+      - name: Commit version
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add LootLiquidator/LootLiquidator.toc LootLiquidator/Core.lua
+          git diff --cached --quiet && exit 0
+          git commit -m 'Update addon version after PR merge'
+          git push origin HEAD:main
