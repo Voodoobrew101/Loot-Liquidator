@@ -166,6 +166,16 @@ def migrated(rel, ref):
     return {"path": rel, "sha256": file_sha(rel), "recordRef": ref}
 
 
+def gamedata_source():
+    """Historical source location before/after main's addon consolidation.
+
+    The archive preserves the exact original bytes; the current compiled addon
+    is never a migration input. Synthetic old-layout fixtures still use root.
+    """
+    archived = "research/legacy-addon-v0.9.70/GameData.lua"
+    return archived if os.path.isfile(os.path.join(ROOT, archived)) else "GameData.lua"
+
+
 def derivation(field, formula, assumption=None):
     return {"field": field, "formula": formula, "assumption": assumption}
 
@@ -606,7 +616,8 @@ DE_KIND = {"personal-observed-pooled": "personal-pooled",
 
 
 def import_gamedata():
-    s = open(os.path.join(ROOT, "GameData.lua"), encoding="utf-8").read()
+    source = gamedata_source()
+    s = open(os.path.join(ROOT, source), encoding="utf-8").read()
     de, recipes, tokens = [], [], []
     for m in re.finditer(r'^gd\.disenchant\[(\d+)\]\[(\d+)\]\["(armor|weapon)"\]=', s, re.M):
         exp, quality, kind = int(m.group(1)), int(m.group(2)), m.group(3)
@@ -643,7 +654,7 @@ def import_gamedata():
                 dv.append(derivation("totalQuantity", f"round(expectedQuantity x samples, 3) = round({e:g} x {samples:g}, 3)",
                                      "expectedQuantity is the pooled mean per item"))
             rec["derivations"] = dv or None
-            rec["migratedFrom"] = migrated("GameData.lua", f"line {line_of(s, m.start())}; gd.disenchant[{exp}][{quality}][\"{kind}\"] output {o.get('id')}")
+            rec["migratedFrom"] = migrated(source, f"line {line_of(s, m.start())}; gd.disenchant[{exp}][{quality}][\"{kind}\"] output {o.get('id')}")
     for m in re.finditer(r"^gd\.smelt\[(\d+)\]=", s, re.M):
         e, _ = parse_lua(s, m.end())
         ins = e.get("inputs") or []
@@ -655,7 +666,7 @@ def import_gamedata():
             inputsPerCast=ins[0]["amount"] if ins else None,
             otherReagents=[{"itemID": x["id"], "name": None, "count": x["amount"]} for x in ins[1:]] or None,
             outputItemID=e.get("output"), outputName=None, outputCount=e.get("outputCount")))
-        recipes[-1]["migratedFrom"] = migrated("GameData.lua", f"line {line_of(s, m.start())}; gd.smelt[{m.group(1)}]")
+        recipes[-1]["migratedFrom"] = migrated(source, f"line {line_of(s, m.start())}; gd.smelt[{m.group(1)}]")
     by_token, token_lines = {}, {}
     for m in re.finditer(r"^gd\.tokens\[(\d+)\]\[#gd\.tokens\[\d+\]\+1\]=", s, re.M):
         e, _ = parse_lua(s, m.end())
@@ -668,7 +679,7 @@ def import_gamedata():
             tokenItemID=tid, tokenName=None,
             rewards=[{"itemID": x.get("rewardID"), "name": None, "classes": None} for x in rewards],
             howRedeemed="unknown", vendor=None, cost=None, listComplete=None))
-        tokens[-1]["migratedFrom"] = migrated("GameData.lua", f"line {token_lines[tid]}; gd.tokens[{tid}]")
+        tokens[-1]["migratedFrom"] = migrated(source, f"line {token_lines[tid]}; gd.tokens[{tid}]")
     return de, recipes, tokens
 
 
@@ -701,7 +712,8 @@ def import_gamedata_tables():
     numbers equal it. Only missing rows are imported, as sourceKind `reference`: a starting guess, never
     study casts. Their chance is a Poisson/proxy model in GameData (probabilityBasis says NOT MEASURED),
     so only the average is carried; the chance stays in notes."""
-    s = open(os.path.join(ROOT, "GameData.lua"), encoding="utf-8").read()
+    source = gamedata_source()
+    s = open(os.path.join(ROOT, source), encoding="utf-8").read()
     idx = itemdb_index()
     f = lambda x: None if x[0] is False else x[0]  # noqa: E731
     report = {"tsmRetail": {"rows": 0, "present": 0, "presentValuesDiffer": [], "missing": []},
@@ -768,7 +780,7 @@ def import_gamedata_tables():
             rec["recordedOn"] = M03_DATE
             rec["castsBasis"] = None
             rec["derivations"] = None
-            rec["migratedFrom"] = migrated("GameData.lua", ref)
+            rec["migratedFrom"] = migrated(source, ref)
             records.append(rec)
     return records, report
 

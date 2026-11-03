@@ -13,6 +13,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[4]
 STEPS = (
     ("import", "research/v3/tools/import_existing.py", "--report", "research/v3/migration/reports/M03b-import-data.json"),
+    ("inventory", "research/v3/migration/tools/inventory.py"),
     ("link", "research/v3/migration/tools/link_sources.py"),
     ("extract-check", "research/v3/migration/tools/extract_batch.py", "write", "--check"),
     ("dispositions", "research/v3/migration/tools/dispositions.py"),
