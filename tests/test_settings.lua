@@ -238,6 +238,20 @@ local saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(saved.skill==95 and saved.specialization=='12=4' and saved.enabled and saved.simulated)
 assert(saved.buffs['123']==true)
 assert(char.researchProfiles==nil,'UI must not overwrite scanned snapshots')
+local selector=dropdowns[1]
+local menu=selector.options or selector.initializer.options
+local rows=menu()
+assert(rows[1].value==0 and rows[1].label=="Don't show")
+assert(rows[2].value==-1 and rows[2].label=='Hypothetical')
+assert(rows[3].value==-2 and selector.initializer.setting:GetValue()==-2,'existing automatic display stays explicit until a selection is made')
+selector.initializer.setting:SetValue(0)
+assert(LL.db.professionTooltipProfiles.Jewelcrafting=='@hide')
+selector.initializer.setting:SetValue(-1)
+assert(LL.db.professionTooltipProfiles.Jewelcrafting=='@hypothetical')
+assert(LL.db.professionTooltipProfiles.Enchanting==nil,'selections are per profession')
+selector.initializer.setting:SetValue(1)
+assert(LL.db.professionTooltipProfiles.Jewelcrafting=='Tester - Realm')
+
 dropdowns[2].initializer.setting:SetValue(10)
 assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',10)==nil,'browsing must not create a simulation')
 assert(LL:ProfessionExpansionName(11)=='Midnight')
@@ -379,17 +393,17 @@ do
     end
     assert(colorButtons==#LL.BadgeColorOrder and reset,'one color button per badge and a reset')
     LL.db.appearance.colors.A={0,0,0};reset.click();assert(next(LL.db.appearance.colors)==nil)
-    -- Only the what-if profession pages and Ignored Items stay as canvas pages.
+    -- Only the hypothetical profession pages and Ignored Items stay as canvas pages.
     for _,name in ipairs(canvases) do assert(name~='Badges & Colors' and name~='Database & Accuracy',name..' is still a canvas page') end
     local accuracy=pages['Database & Accuracy']
     assert(accuracy and control(accuracy,'LootLiquidator_source_itemdb_enabled'),'Database & Accuracy is native')
     print('PASS: Badges & Colors and Database & Accuracy are native Settings pages (B8a/B8b)')
-    -- B5a/B5b: rate choice on the main page; what-if pages have a new home.
+    -- B5a/B5b: rate choice on the main page; hypothetical pages have a new home.
     assert(settings.LootLiquidator_rateProfile and settings.LootLiquidator_rateProfileCharacter,'Show rates for registered')
     assert(LL.db.rateProfileCharacter=='' or LL.db.rateProfileCharacter==nil)
-    assert(pages['Professions (what-if)'],'what-if profession pages need a parent page')
+    assert(pages['Professions (Hypothetical)'],'hypothetical profession pages need a parent page')
     local rows=LL:RateProfileCharacterChoices()
     assert(rows[1][1]=='' and rows[2][1]=='Tester - Realm','character choices list saved characters')
-    print('PASS: Show rates for + Professions (what-if) page (B5a/B5b)')
+    print('PASS: Show rates for + Professions (Hypothetical) page (B5a/B5b)')
 end
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')

@@ -630,9 +630,16 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             tooltip:AddLine("TSM preview only: assign this operation in TSM to post with it",1,.63,.24,true)
         end
         local options=decision.conversionOptions or {}
+        if LA.TooltipConversionOptions and f and f.id then
+            options=LA:TooltipConversionOptions(f,options)
+        end
         local choices={}
         for _,option in ipairs(options) do
-            if option.name then
+            -- Filter before choosing a recipe so an unavailable alternative
+            -- cannot conceal a usable option for the same method.
+            local profession=option.profession or ({Disenchant="Enchanting",Mill="Inscription",Prospect="Jewelcrafting",Smelt="Mining"})[option.name]
+            local selection=profession and LA.db.professionTooltipProfiles and LA.db.professionTooltipProfiles[profession]
+            if option.name and selection~="@hide" and (option.available~=false or selection=="@hypothetical") then
                 local previous=choices[option.name]
                 if not previous or (option.value and not previous.value)
                     or (option.value and previous.value
@@ -781,7 +788,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             -- because a Force On profession switch is set.
             local isGear=f and (f.classID==2 or f.classID==4)
             if option and (not isGear or methodName=="Disenchant")
-                then -- B3: unavailable options always show, marked "(estimate)"
+                then -- Unavailable options are an explicit display opt-in.
                 -- Reuse the exact evaluated material model used to price this option.
                 local model=option.yieldModel
                 local hasMaterials=(model and model.materials and #model.materials>0)
@@ -793,13 +800,27 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     or methodName=="Smelt" then
                     local confidence=model and (model.valueConfidence or model.confidence)
                     local label=names[methodName] or methodName
+                    if option.tooltipProfileLabel then
+                        label=label.." — "..option.tooltipProfileLabel
+                    end
                     local status={}
-                    if model and model.confidenceUnscored then status[#status+1]="Confidence unscored"
-                    elseif confidence then status[#status+1]=("Confidence %d%%"):format(confidence) end
-                    if model and (model.partial or model.partialPrice) then status[#status+1]="partial" end
-                    if model and (model.provisional or model.estimatedFrom) then status[#status+1]="estimate" end
-                    if option.available==false then status[#status+1]="unavailable" end
-                    if #status>0 then label=label.." ("..table.concat(status,", ")..")" end
+                    if model and model.confidenceUnscored then
+                        status[#status+1]="Confidence unscored"
+                    elseif confidence then
+                        status[#status+1]=("Confidence %d%%"):format(confidence)
+                    end
+                    if model and (model.partial or model.partialPrice) then
+                        status[#status+1]="partial"
+                    end
+                    if model and (model.provisional or model.estimatedFrom) then
+                        status[#status+1]="estimate"
+                    end
+                    if option.available==false then
+                        status[#status+1]="unavailable"
+                    end
+                    if #status>0 then
+                        label=label.." ("..table.concat(status,", ")..")"
+                    end
                     if option.value then
                         valued(label,option.value,option.letter)
                     else
