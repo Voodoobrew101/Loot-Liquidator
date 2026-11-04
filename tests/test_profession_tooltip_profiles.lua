@@ -80,3 +80,34 @@ LL.db.professionTooltipProfiles.Enchanting='@hypothetical'
 assert(LL:TooltipConversionOptions(f,de)[1].available==false,'hypothetical cannot use live enchanting access')
 assert(de[1].available==true,'actual disenchant recommendation access remains unchanged')
 print('PASS: live enchanting access cannot leak into selected-alt or Hypothetical display contexts')
+
+-- Run the actual database resolver: the earlier valuation stub cannot detect
+-- an uninitialized model-cache counter in isolated tooltip contexts.
+assert(loadfile('LootLiquidator/Database.lua'))('LL',LL)
+LL.ItemDB={schemaVersion=1,version='cache-regression',processing={},mechanicRules={}}
+assert(LL:InitializeItemDB())
+LL:MigrateEvidenceSettings()
+LL.EligibleDisenchant=function()return false end
+LL.db.characters.Alt.altMethods=nil
+LL.db.professionTooltipProfiles={Inscription='Alt'}
+LL._processingModelCache={count=0}
+local parentCache=LL._processingModelCache
+local quotes={{name='Mill',profession='Inscription',recipeID=100,inputCount=5}}
+LL:TooltipConversionOptions(f,quotes)
+LL.db.professionTooltipProfiles.Inscription='@hypothetical'
+LL:TooltipConversionOptions(f,quotes)
+assert(LL._processingModelCache==parentCache and parentCache.count==0,
+    'display caches must not change the recommendation cache')
+LL._processingModelCache={}
+-- No asynchronous sibling item-name lookup in this cache-only fixture.
+LL.BorrowFromSibling=function()end
+local option={name='Mill',recipeID=100,inputCount=5}
+local model,reason=LL:ResolveEvidenceModel(f,option,nil,1)
+assert(model==nil and reason:find('No researched yield record',1,true))
+assert(LL._processingModelCache.count==1,'empty cache initializes its counter')
+LL:ResolveEvidenceModel(f,option,nil,1)
+assert(LL._processingModelCache.count==1,'cached misses do not increment the counter')
+LL._processingModelCache={count=512}
+LL:ResolveEvidenceModel(f,option,nil,1)
+assert(LL._processingModelCache.count==1,'full caches reset before inserting')
+print('PASS: real resolver handles selected profiles, empty caches, cached misses and eviction')

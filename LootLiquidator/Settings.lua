@@ -441,6 +441,10 @@ function LL:CreateProfessionProfilePanel(profession)
         selected=selection:sub(1,1)=="@" and current or selection
         LL.db.professionTooltipProfiles=LL.db.professionTooltipProfiles or {}
         LL.db.professionTooltipProfiles[profession]=selection
+        if selection=="@hypothetical" then
+            LL:SetManualProfessionProfile(current,profession,expansion,
+                {enabled=true,skill=0,specialization='none',buffs={}})
+        end
         nodeIndex=0;buffIndex=0
         LL:UpdateAllAppearance()
         refresh(true)

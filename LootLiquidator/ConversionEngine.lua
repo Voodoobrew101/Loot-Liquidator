@@ -57,7 +57,7 @@ function LL:TooltipConversionOptions(f,options)
                 if record then db.characters[key]=record end
                 db.rateProfile=hypothetical and 3 or 2
                 db.rateProfileCharacter=key
-                local proxy=setmetatable({db=db,_processingModelCache={},_processingContextCache={},
+                local proxy=setmetatable({db=db,_processingModelCache={count=0},_processingContextCache={},
                     _professionOperationCache={}}, {__index=self})
                 if hypothetical or key~=current then
                     -- Live spellbook access belongs only to the current character.

@@ -960,6 +960,7 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(self.ItemDB and self.ItemDB.modelRevision),fingerprint(personal and personal.materials),
         fingerprint(personal and personal.projectionRules)},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
+    self._processingModelCache.count=self._processingModelCache.count or 0
     local cached=self._processingModelCache[key]
     if cached then return cached.model,cached.reason end
     if self._processingModelCache.count>=512 then self._processingModelCache={count=0} end
@@ -981,4 +982,3 @@ function LL:EvidenceDatabaseStatus()
         tostring(self.ItemDB and self.ItemDB.researchV3Manifest and self.ItemDB.researchV3Manifest.revision or 'unknown'):sub(1,12))
 end
 LL:InitializeItemDB()
-
