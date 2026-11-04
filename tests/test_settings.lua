@@ -285,7 +285,11 @@ do
     Settings.RegisterAddOnCategory=function() end
     Settings.VarType=Settings.VarType or {Number='number',Boolean='boolean',String='string'}
     local created={}
-    Settings.CreateCheckbox=function(cat,setting) local i={category=cat,setting=setting};created[#created+1]=i;return i end
+    Settings.CreateCheckbox=function(cat,setting)
+        local i={category=cat,setting=setting}
+        function i:AddShownPredicate(fn) self.shownPredicate=fn end
+        created[#created+1]=i;return i
+    end
     Settings.CreateDropdown=function(cat,setting,options) local i={category=cat,setting=setting,options=options,InitFrame=function() end};created[#created+1]=i;return i end
     local baseSlider=Settings.CreateSlider
     Settings.CreateSlider=function(cat,setting,options) local i=baseSlider(cat,setting,options);i.category=cat;created[#created+1]=i;return i end
@@ -301,6 +305,30 @@ do
     local function control(cat,variable)
         for _,i in ipairs(created) do if i.category==cat and i.setting==settings[variable] then return i end end
     end
+    local toggle
+    for _,i in ipairs(layouts.Tooltips.items) do if i.name=='Advanced' then toggle=i end end
+    assert(toggle and toggle.text()=='Show advanced options','Advanced is a real collapsed button')
+    local advanced={}
+    for _,key in ipairs({'showTooltipExplanations','showProfessionDetails','showResearchDetails'}) do
+        local i=assert(control(pages.Tooltips,'LootLiquidator_'..key))
+        assert(i.shownPredicate and not i.shownPredicate(),'advanced control starts hidden')
+        advanced[#advanced+1]=i
+    end
+    local repairs=0
+    SettingsPanel.GetSettingsList=function() return {RepairDisplay=function(_,layout)
+        assert(layout==layouts.Tooltips);repairs=repairs+1
+    end} end
+    local button={SetText=function(self,text) self.text=text end}
+    toggle.click(button)
+    assert(button.text=='Hide advanced options' and toggle.text()==button.text)
+    for _,i in ipairs(advanced) do assert(i.shownPredicate());i.setting:SetValue(true) end
+    toggle.click(button)
+    for _,i in ipairs(advanced) do assert(not i.shownPredicate() and i.setting:GetValue()==true) end
+    toggle.click(button)
+    for _,i in ipairs(advanced) do assert(i.shownPredicate() and i.setting:GetValue()==true) end
+    assert(repairs==3,'each click repairs native layout without rebuilding settings')
+    assert(control(pages.Tooltips,'LootLiquidator_showMaterialConfidence').shownPredicate==nil,'Extras stay visible')
+    print('PASS: Advanced expands/collapses three controls, repairs native layout and preserves checkbox values')
     local alts=control(badges,'LootLiquidator_includeVerifiedAlts')
     assert(alts,'Include alts checkbox missing on the Badges page')
     assert(LL.db.includeVerifiedAlts==true,'Include alts defaults on')

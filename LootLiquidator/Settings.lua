@@ -627,6 +627,28 @@ end
 -- Settings are grouped by user intent, not by the Lua module providing them.
 -- Crucially each SavedVariables key is registered exactly once so existing
 -- profiles and preferences survive moving a control to another page.
+-- Expansion is presentation state for this Settings session, never a tooltip preference.
+function LL:AddTooltipAdvancedSettings(category,layout)
+    local expanded=false
+    local function buttonText() return expanded and "Hide advanced options" or "Show advanced options" end
+    local toggle=CreateSettingsButtonInitializer("Advanced",buttonText,function(button)
+        expanded=not expanded
+        if button then button:SetText(buttonText()) end
+        local list=SettingsPanel and SettingsPanel:GetSettingsList()
+        if list then list:RepairDisplay(layout) end
+    end,"Expand or collapse the three advanced tooltip controls. Their values are preserved.",false)
+    layout:AddInitializer(toggle)
+    local control=Checkbox(category,"showTooltipExplanations","Show processing explanations",
+        "Breakdown level: explain input batches, output ranges and average quantities, and show reference or profession adjustment notes. Hidden by default.",false)
+    control:AddShownPredicate(function() return expanded end)
+    control=Checkbox(category,"showProfessionDetails","Show profession details",
+        "Show profession skill, the character and profile used, profession progression, eligible characters, recipe/unlock eligibility and disenchant candidate notes. Short unavailable indicators remain visible. Hidden by default.",false)
+    control:AddShownPredicate(function() return expanded end)
+    control=Checkbox(category,"showResearchDetails","Show research notes",
+        "For troubleshooting: show fallback and source-conflict explanations, evidence contributions, research casts and material source notes. Short provisional and incomplete-data indicators remain visible.",false)
+    control:AddShownPredicate(function() return expanded end)
+end
+
 function LL:RegisterNativeSettings()
     if self.settingsCategory or not self.db or not Settings
         or not Settings.RegisterVerticalLayoutCategory then return end
@@ -670,13 +692,7 @@ function LL:RegisterNativeSettings()
          {"database","Database order"}},"value")
     Checkbox(tooltips,"showMaterialConfidence","Show confidence per material",
         "Breakdown level: add each material's own confidence. The option's overall confidence is always shown.",false)
-    Section(ttLayout,"Advanced")
-    Checkbox(tooltips,"showTooltipExplanations","Show processing explanations",
-        "Breakdown level: explain input batches, output ranges and average quantities, and show reference or profession adjustment notes. Hidden by default.",false)
-    Checkbox(tooltips,"showProfessionDetails","Show profession details",
-        "Show profession skill, the character and profile used, profession progression, eligible characters, recipe/unlock eligibility and disenchant candidate notes. Short unavailable indicators remain visible. Hidden by default.",false)
-    Checkbox(tooltips,"showResearchDetails","Show research notes",
-        "For troubleshooting: show fallback and source-conflict explanations, evidence contributions, research casts and material source notes. Short provisional and incomplete-data indicators remain visible.",false)
+    self:AddTooltipAdvancedSettings(tooltips,ttLayout)
     -- Hover-preview is intentionally at the top of this same page. No extra
     -- Tooltips subcategory or tall static preview remains.
 
