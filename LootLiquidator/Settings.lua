@@ -29,7 +29,16 @@ function LL:UpdateAllAppearance()
 end
 local function Section(layout,title)
     if layout and layout.AddInitializer and CreateSettingsListSectionHeaderInitializer then
-        layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(title))
+        local initializer=CreateSettingsListSectionHeaderInitializer(title)
+        local initFrame=initializer.InitFrame
+        initializer.InitFrame=function(self,frame,...)
+            initFrame(self,frame,...)
+            -- Native headers install a title-only tooltip across the whole row.
+            -- These headings are labels; keep hover help on actual controls.
+            -- Native Init restores its own tooltip when a pooled row is reused.
+            frame:SetTooltipFunc(nil)
+        end
+        layout:AddInitializer(initializer)
     end
 end
 local function Checkbox(category,key,name,description,default,onChange)
