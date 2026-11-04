@@ -674,9 +674,9 @@ function LL:RegisterNativeSettings()
     Checkbox(tooltips,"showTooltipExplanations","Show processing explanations",
         "Breakdown level: explain input batches, output ranges and average quantities, and show reference or profession adjustment notes. Hidden by default.",false)
     Checkbox(tooltips,"showProfessionDetails","Show profession details",
-        "Show profession skill, the character and profile used, profession progression, eligible characters and disenchant candidate notes. Hidden by default.",false)
+        "Show profession skill, the character and profile used, profession progression, eligible characters, recipe/unlock eligibility and disenchant candidate notes. Short unavailable indicators remain visible. Hidden by default.",false)
     Checkbox(tooltips,"showResearchDetails","Show research notes",
-        "For troubleshooting: show evidence source contributions, research casts and material source notes. Makes tooltips much longer.",false)
+        "For troubleshooting: show fallback and source-conflict explanations, evidence contributions, research casts and material source notes. Short provisional and incomplete-data indicators remain visible.",false)
     -- Hover-preview is intentionally at the top of this same page. No extra
     -- Tooltips subcategory or tall static preview remains.
 

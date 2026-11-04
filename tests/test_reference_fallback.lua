@@ -38,6 +38,7 @@ assert(#thorium.materials==7 and thorium.hasConditionalReferences,'unlock-only D
 local conditional
 for _,m in ipairs(thorium.materials)do if m.conditionalExpectedQuantity then conditional=m end end
 assert(conditional and conditional.expectedQuantity==nil and math.abs(conditional.conditionalExpectedQuantity-.22)<1e-12)
+LL.db.showResearchDetails=true -- This fixture inspects full fallback and conditional-source explanations.
 local tip={lines={}}
 function tip:AddLine(s)self.lines[#self.lines+1]=s end
 function tip:AddDoubleLine(a,b)self.lines[#self.lines+1]=a..' | '..b end

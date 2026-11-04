@@ -426,8 +426,11 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         label=decision.tokenQuote.label or label
     end
     local detail=LA.db.tooltipDetail or 2
+    local showProcessing=LA.db.showTooltipExplanations==true
+    local showProfession=LA.db.showProfessionDetails==true
+    local showResearch=LA.db.showResearchDetails==true
     local printedSamples=false
-    local progress=(detail>=3 and LA.db.showProfessionDetails==true and LA.ProfessionProgression and decision.facts)
+    local progress=(detail>=3 and showProfession and LA.ProfessionProgression and decision.facts)
         and LA:ProfessionProgression(decision.facts,decision) or {}
     -- Bound/vendor-only loot remains quiet unless there are research results
     -- or a detailed external reference model worth showing transparently.
@@ -515,6 +518,15 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         end
         if decision.action=="D" and decision.conversion
             and decision.conversion.confidence=="baseline" then suffix=" (estimated)" end
+        for _,option in ipairs(decision.conversionOptions or {}) do
+            if option.letter==decision.action then
+                local model=option.yieldModel
+                if option.available==false then suffix=suffix.." (unavailable estimate)" end
+                if model and model.provisional then suffix=suffix.." (provisional)" end
+                if model and (model.partial or model.partialPrice) then suffix=suffix.." (incomplete data)" end
+                break
+            end
+        end
         -- A5: optional per-item value of the recommended action in the header,
         -- e.g. "Loot Liquidator: Smelt 6g 87s".
         local headerPrice=""
@@ -614,7 +626,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 two("Auction"..suffix,LA:Money(market),"A")
             end
         end
-        if detail>=3 and LA.db.showResearchDetails==true and decision.operationSimulation then
+        if detail>=3 and showResearch and decision.operationSimulation then
             tooltip:AddLine("TSM preview only: assign this operation in TSM to post with it",1,.63,.24,true)
         end
         local options=decision.conversionOptions or {}
@@ -656,10 +668,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 local explanation=("  Per %d input(s); range when a material drops"):format(batch)
                 if model.operationUnverified then explanation=("  Values normalized per %d input(s); recipe batch unverified"):format(batch) end
                 if LA.db.showAverageQuantity==true then explanation=explanation.."; average units include zeros" end
-                if LA.db.showTooltipExplanations==true then
+                if showProcessing then
                     tooltip:AddLine(explanation,.70,.75,.82,true)
                 end
-                local limit=LA.db.showResearchDetails==true and #list or math.min(#list,12)
+                local limit=showResearch and #list or math.min(#list,12)
                 for i=1,limit do
                     local m=list[i]
                     local left="  "
@@ -691,16 +703,16 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local amount=net~=nil and LA:Money(net/batch) or "unknown"
                     if net==nil and m.conditionalExpectedValue~=nil then amount=LA:Money(m.conditionalExpectedValue/batch)..' conditional' end
                     two(left,amount,option.letter or "D")
-                    if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
-                    if m.derivedMean then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
-                    if m.inconsistentFields then tooltip:AddLine('    Source range retained; selected average and chance disagree with it',.90,.72,.45,true) end
-                    for _,rank in ipairs(m.rankReferences or {}) do
-                        local fields={}
-                        if rank.chance~=nil then fields[#fields+1]='chance '..ChanceText(rank.chance) end
-                        if rank.minQuantity and rank.maxQuantity then fields[#fields+1]=('yield %d-%d'):format(rank.minQuantity,rank.maxQuantity) end
-                        tooltip:AddLine('    Separate rank reference: '..MaterialDisplay(rank.id)..'; '..table.concat(fields,', '),.70,.75,.82,true)
-                    end
-                    if LA.db.showResearchDetails==true then
+                    if showResearch then
+                        if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
+                        if m.derivedMean then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
+                        if m.inconsistentFields then tooltip:AddLine('    Source range retained; selected average and chance disagree with it',.90,.72,.45,true) end
+                        for _,rank in ipairs(m.rankReferences or {}) do
+                            local fields={}
+                            if rank.chance~=nil then fields[#fields+1]='chance '..ChanceText(rank.chance) end
+                            if rank.minQuantity and rank.maxQuantity then fields[#fields+1]=('yield %d-%d'):format(rank.minQuantity,rank.maxQuantity) end
+                            tooltip:AddLine('    Separate rank reference: '..MaterialDisplay(rank.id)..'; '..table.concat(fields,', '),.70,.75,.82,true)
+                        end
                         for _,source in ipairs(LA.SourceOrder or {}) do
                             local estimate=m.sourceEstimates and m.sourceEstimates[source]
                             if estimate then
@@ -724,7 +736,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         end
                     end
                 end
-                if LA.db.showResearchDetails==true and model.sources then
+                if showResearch and model.sources then
                     for _,source in ipairs(LA.SourceOrder or {}) do
                         local contribution=model.sources[source]
                         if contribution and contribution>0 then
@@ -732,7 +744,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         end
                     end
                 end
-                if LA.db.showProfessionDetails==true and model.context then
+                if showProfession and model.context then
                     local ctx=model.context
                     local era=LA.DisenchantTables and LA.DisenchantTables[ctx.expansionID]
                     tooltip:AddLine(("  %s %s — skill %s"):format(era and era.name or "Unknown expansion",
@@ -740,26 +752,28 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     tooltip:AddLine(("  %s (%s)"):format(ctx.character or "Unknown character",ctx.profileKind or "unknown context"),.70,.75,.82,true)
                     if ctx.stale or ctx.incomplete then tooltip:AddLine("  Profession snapshot stale or incomplete",1,.68,.3,true) end
                 end
-                if LA.db.showTooltipExplanations==true then
+                if showProcessing then
                     tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
                         (model.provisional and " — provisional" or ""),.72,.70,.80,true)
                 elseif model.provisional then
                     tooltip:AddLine("  Estimate — provisional",.72,.70,.80,true)
                 end
-                if model.warning then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
-                if model.partial then tooltip:AddLine("  Partial: value counts only outputs with a known amount and price",1,.82,.4,true)
+                if showResearch and model.warning then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
+                if model.partial then tooltip:AddLine((showProcessing and "  Partial: value counts only outputs with a known amount and price" or "  Partial value"),1,.82,.4,true)
                 elseif model.partialPrice then tooltip:AddLine("  Insufficient Data: incomplete output valuation",1,.68,.3,true) end
                 if #list>limit then
                     tooltip:AddLine(("  +%d more materials"):format(#list-limit),.70,.72,.78,true)
                 end
-                if LA.db.showResearchDetails==true then
+                if showResearch then
                     if model.samples then
                         tooltip:AddLine(("  Research: %d casts"):format(model.samples),.62,.79,.98,true)
                     end
                 end
                 return
             end
-            tooltip:AddLine("  "..(option.note or "Insufficient Data: no researched yield model"),.83,.72,.59,true)
+            if showResearch then
+                tooltip:AddLine("  "..(option.note or "Insufficient Data: no researched yield model"),.83,.72,.59,true)
+            end
         end
         for _,methodName in ipairs(methodOrder) do
             local option=choices[methodName]
@@ -783,25 +797,30 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     elseif confidence then label=label..(" (Confidence %d%%%s%s)"):format(confidence,
                         option.value and model.partial and ", partial" or "",
                         model.estimatedFrom and ", estimated" or "") -- C2: borrowed from the other rank
-                    elseif option.available==false then label=label.." (estimate)" end
+                    end
+                    -- Availability is separate from confidence: never imply an
+                    -- estimate can be executed when verbose reasons are hidden.
+                    if option.available==false then label=label.." (unavailable estimate)" end
+                    if model and model.provisional then label=label.." (provisional)" end
+                    if model and model.partialPrice then label=label.." (incomplete data)" end
                     if option.value then
                         valued(label,option.value,option.letter)
                     else
                         two(label,"Insufficient Data",option.letter or "D")
                     end
                     ShowMaterials(option,model)
-                    if not option.value and detail<3 then
+                    if showResearch and not option.value and detail<3 then
                         local note=(model and model.warning) or option.note
                         if note then tooltip:AddLine("  "..note,.83,.72,.59,true) end
                     end
-                    if option.available==false and option.why then
+                    if showProfession and option.available==false and option.why then
                         tooltip:AddLine("  "..option.why,1,.68,.3,true)
                     end
-                    if not hasMaterials and not option.value
+                    if showResearch and not hasMaterials and not option.value
                         and (methodName=="Mill" or methodName=="Prospect") then
                         tooltip:AddLine("  Output yields not researched yet",.73,.69,.61,true)
                     end
-                    if LA.db.showResearchDetails==true and option.character
+                    if showProfession and option.character
                         and option.character~="Current character" then
                         tooltip:AddLine("  On: "..option.character,.68,.80,.97,true)
                     end
@@ -838,7 +857,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             valued("Vendor",decision.vendor,"V")
         end
     end
-    if detail>=3 and LA.db.showResearchDetails==true
+    if detail>=3 and showResearch
         and LA.db.showProcessingSamples~=false and decision.deStats
         and not printedSamples then
         local n=decision.deStats.total or 0
@@ -852,14 +871,14 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             tooltip:AddLine("Profession: "..progress[i],.67,.85,.97,true)
         end
     end
-    if detail>=3 and LA.db.showProfessionDetails==true and decision.disenchantEligible -- optional profession notes
+    if detail>=3 and showProfession and decision.disenchantEligible -- optional profession notes
         and decision.action~="D" then
         local note=decision.deIssue or (decision.canDisenchant
             and "Disenchant candidate; outcome probabilities may be unknown"
             or "Disenchant requires a verified eligible character")
         tooltip:AddLine(note,.69,.56,.82,true)
     end
-    if LA.db.showProfessionDetails==true and LA.ProfessionAlternatives and decision.facts then -- B3: with notes
+    if showProfession and LA.ProfessionAlternatives and decision.facts then -- B3: with notes
         local options=LA:ProfessionAlternatives(decision.facts,decision)
         for i=1,math.min(#options,4) do
             local option=options[i]
@@ -940,7 +959,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 end
             end
         end
-        if detail>=2 and LA.db.showResearchDetails==true then
+        if detail>=2 and showResearch then
             tooltip:AddLine(token.kind=="exchange"
                 and "Exchange may require additional items or currency"
                 or "Reward quantities or chances not verified",.72,.70,.76,true)
@@ -958,7 +977,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     elseif token then
         -- If the compact summary is deliberately off, preserve useful
         -- recommendations but do not create an unsolicited item dump.
-        if token.kind=="exchange" and detail>=2 and LA.db.showResearchDetails==true then
+        if token.kind=="exchange" and detail>=2 and showResearch then
             tooltip:AddLine("Exchange may require other items",.70,.68,.77,true)
         end
         if decision.action=="T" and decision.transmogRecipient then
