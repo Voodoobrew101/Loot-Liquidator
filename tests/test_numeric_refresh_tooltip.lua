@@ -30,7 +30,7 @@ local function render(id,expansion,quality)
     LL:AppendRecommendationTooltip(tip,{action='D',facts=facts,conversionOptions={option},count=1})
     local text=table.concat(tip.lines,'\n')
     assert(not text:find('Insufficient Data',1,true),'numeric item must not render missing data')
-    assert(text:find('provisional',1,true),'uncertain historical contexts stay labelled')
+    assert(text:find('estimate',1,true),'uncertain historical contexts stay labelled')
     assert(not text:find('  EV ',1,true),'owner-requested EV prefix cleanup')
     output[#output+1]='ITEM '..id..' — synthetic prices, offline rendering\n'..text
     return option,text
