@@ -45,10 +45,14 @@ for _,case in ipairs(cases) do
             local text=table.concat(tip.lines,'\n')
             if level==0 then assert(text=='','Off stays empty even with every Advanced switch on')
             else
-                contains(text,'provisional',true)
-                contains(text,'unavailable estimate',true)
-                contains(text,'incomplete data',true)
+                contains(text,'estimate',true)
+                contains(text,'unavailable',true)
+                contains(text,'partial',true)
                 contains(text,'50 copper',true)
+                contains(text,'~',false)
+                contains(text,'Estimate — provisional',false)
+                contains(text,'Partial value',false)
+                if level>=2 then contains(text,'Confidence 33%, partial, estimate, unavailable',true) end
                 contains(text,'Per 5 input',level==3 and processing)
                 contains(text,'fixture processing adjustment',level==3 and processing)
                 contains(text,'value counts only outputs',level==3 and processing)
@@ -63,7 +67,7 @@ for _,case in ipairs(cases) do
                     'Insufficient Data: no researched yield model'}) do
                     contains(text,note,level==3 and research)
                 end
-                contains(text,'~20% Material 10 [1-2]',level==3)
+                contains(text,'20% Material 10 [1-2]',level==3)
                 contains(text,'5 copper',level>=2) -- per-input material and vendor prices
                 contains(text,'Material 12 (chance unavailable) [yield unavailable]',level==3)
                 contains(text,'Insufficient Data',level>=2)
@@ -109,8 +113,8 @@ for _,case in ipairs(cases) do
     local compact=render(false)
     contains(compact,'Reference fallback',false)
     contains(compact,'Ability manually indicated',false)
-    contains(compact,'provisional',true)
-    contains(compact,'unavailable estimate',true)
+    contains(compact,'estimate',true)
+    contains(compact,'unavailable',true)
     if model.warning then contains(render(true),model.warning,true) end
     assert(LL:ValueProcessingModel(model,0,true)==value,'real evidence valuation unchanged')
 end

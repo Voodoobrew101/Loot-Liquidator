@@ -521,9 +521,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         for _,option in ipairs(decision.conversionOptions or {}) do
             if option.letter==decision.action then
                 local model=option.yieldModel
-                if option.available==false then suffix=suffix.." (unavailable estimate)" end
-                if model and model.provisional then suffix=suffix.." (provisional)" end
-                if model and (model.partial or model.partialPrice) then suffix=suffix.." (incomplete data)" end
+                if option.available==false then suffix=suffix.." (unavailable)" end
+                if model and model.provisional then suffix=suffix.." (estimate)" end
+                if model and (model.partial or model.partialPrice) then suffix=suffix.." (partial)" end
                 break
             end
         end
@@ -676,12 +676,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     local m=list[i]
                     local left="  "
                     if type(m.chance)=="number" then
-                        -- Occurrence probability is separate from unconditional
-                        -- expected units. Approximate values are marked ~.
-                        local prefix=(m.chanceProvisional or m.provisional or m.workingEstimate or m.staleEvidence or (type(m.probabilityBasis)=="string"
-                            and (m.probabilityBasis:find("estimated",1,true) or
-                                 m.probabilityBasis:find("proxy",1,true)))) and "~" or ""
-                        left=left..prefix..ChanceText(m.chance).." "
+                        -- Keep probabilities readable; uncertainty is summarized
+                        -- once on the method row instead of prefixing each material.
+                        left=left..ChanceText(m.chance).." "
                     end
                     left=left..MaterialDisplay(m.id)
                     if type(m.rankIDs)=="table" and #m.rankIDs>1 then left=left.." (rank unknown)" end
@@ -755,12 +752,15 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 if showProcessing then
                     tooltip:AddLine("  "..(model.adjustment or "Unadjusted reference")..
                         (model.provisional and " — provisional" or ""),.72,.70,.80,true)
-                elseif model.provisional then
+                elseif not option.name and model.provisional then
                     tooltip:AddLine("  Estimate — provisional",.72,.70,.80,true)
                 end
                 if showResearch and model.warning then tooltip:AddLine("  "..model.warning,1,.68,.3,true) end
-                if model.partial then tooltip:AddLine((showProcessing and "  Partial: value counts only outputs with a known amount and price" or "  Partial value"),1,.82,.4,true)
-                elseif model.partialPrice then tooltip:AddLine("  Insufficient Data: incomplete output valuation",1,.68,.3,true) end
+                if showProcessing and model.partial then
+                    tooltip:AddLine("  Partial: value counts only outputs with a known amount and price",1,.82,.4,true)
+                elseif (showProcessing or not option.name) and model.partialPrice then
+                    tooltip:AddLine("  Insufficient Data: incomplete output valuation",1,.68,.3,true)
+                end
                 if #list>limit then
                     tooltip:AddLine(("  +%d more materials"):format(#list-limit),.70,.72,.78,true)
                 end
@@ -793,16 +793,13 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     or methodName=="Smelt" then
                     local confidence=model and (model.valueConfidence or model.confidence)
                     local label=names[methodName] or methodName
-                    if model and model.confidenceUnscored then label=label.." (Confidence unscored)"
-                    elseif confidence then label=label..(" (Confidence %d%%%s%s)"):format(confidence,
-                        option.value and model.partial and ", partial" or "",
-                        model.estimatedFrom and ", estimated" or "") -- C2: borrowed from the other rank
-                    end
-                    -- Availability is separate from confidence: never imply an
-                    -- estimate can be executed when verbose reasons are hidden.
-                    if option.available==false then label=label.." (unavailable estimate)" end
-                    if model and model.provisional then label=label.." (provisional)" end
-                    if model and model.partialPrice then label=label.." (incomplete data)" end
+                    local status={}
+                    if model and model.confidenceUnscored then status[#status+1]="Confidence unscored"
+                    elseif confidence then status[#status+1]=("Confidence %d%%"):format(confidence) end
+                    if model and (model.partial or model.partialPrice) then status[#status+1]="partial" end
+                    if model and (model.provisional or model.estimatedFrom) then status[#status+1]="estimate" end
+                    if option.available==false then status[#status+1]="unavailable" end
+                    if #status>0 then label=label.." ("..table.concat(status,", ")..")" end
                     if option.value then
                         valued(label,option.value,option.letter)
                     else
