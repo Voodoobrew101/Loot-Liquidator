@@ -289,7 +289,9 @@ PreviewPanel=function()
         local levels={[0]="Off",[1]="Recommendation",[2]="Alternatives",[3]="Breakdown"}
         indicator:SetText("Preview only | "..(levels[LL.db.tooltipDetail or 2] or "Alternatives").." | "..
             (LL.db.tooltipShowAfterAHCut~=false and "AH net" or "AH listing"))
-        LL:Paint(icon,"preview:"..row.itemID,SampleDecision(row))
+        -- This illustrative decision has no live item link. Do not register
+        -- the sample with the asynchronous bag refresh/evaluation queue.
+        LL:Paint(icon,nil,SampleDecision(row))
     end
     change:SetScript("OnClick",function()
         index=index%#PREVIEW_ITEMS+1
