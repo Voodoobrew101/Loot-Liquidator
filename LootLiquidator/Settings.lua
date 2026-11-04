@@ -428,7 +428,7 @@ function LL:CreateProfessionProfilePanel(profession)
     local status=label("",-132)
     local enabled=LL:CreateSettingsCheckbox(panel)
     enabled:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-192)
-    local enabledLabel=label("Use this what-if profile (when \"Show rates for\" is \"What-if profile\")",-194)
+    local enabledLabel=label("Use this hypothetical profile (when \"Show rates for\" is \"Hypothetical profile\")",-194)
     enabledLabel:ClearAllPoints();enabledLabel:SetPoint("LEFT",enabled,"RIGHT",6,0)
     enabled:SetScript("OnClick",function(self) update(function(p) p.enabled=self:GetChecked()==true end) end)
     local known=LL:CreateSettingsCheckbox(panel)
@@ -501,7 +501,7 @@ function LL:CreateProfessionProfilePanel(profession)
         local record=LL.db.characters and LL.db.characters[selected]
         local snapshot=record and record.researchProfiles and record.researchProfiles[profession..":"..expansion]
         status:SetText(snapshot and (LL:ProfessionExpansionName(expansion).." snapshot: skill "..tostring(snapshot.skill or "unknown")..". Open the profession on that character to refresh it.")
-            or ("No saved "..LL:ProfessionExpansionName(expansion).." "..profession.." scan for this character. This does not disable reference tooltips."))
+            or ("No saved "..LL:ProfessionExpansionName(expansion).." "..profession.." scan for this character. Unavailable estimates are controlled on the parent Professions page."))
         local b=options.buffs[buffIndex]
         buffEnabled:SetChecked(b and p.buffs and p.buffs[tostring(b.id)]==true or false)
         if b then buffEnabled:Enable() else buffEnabled:Disable() end
@@ -608,7 +608,7 @@ function LL:AddRateProfileSettings(category,layout)
         local out=Settings.CreateControlTextContainer()
         out:Add(1,"Me","Use the skill of whoever would do the work: you, or the alt it can be sent to.")
         out:Add(2,"A chosen alt","Always use the character picked below, as if they did the work.")
-        out:Add(3,"What-if profile","Use the what-if skill and specialization saved for the character below (Professions pages).")
+        out:Add(3,"Hypothetical profile","Use the hypothetical skill and specialization saved for the character below (Professions pages).")
         return out:GetData()
     end,"Whose profession skill is used to estimate milling, prospecting, smelting and disenchanting results. This never changes who can actually do it.")
     self:WithoutDropdownSteppers(modeInit)
@@ -616,7 +616,7 @@ function LL:AddRateProfileSettings(category,layout)
         local out=Settings.CreateControlTextContainer()
         for _,row in ipairs(LL:RateProfileCharacterChoices()) do out:Add(row[1],row[2]) end
         return out:GetData()
-    end,"The alt (or what-if profile) used when \"Show rates for\" is not \"Me\". Characters appear here after you log into them once.")
+    end,"The alt (or hypothetical profile) used when \"Show rates for\" is not \"Me\". Characters appear here after you log into them once.")
     self:WithoutDropdownSteppers(charInit)
     if charInit and charInit.SetParentInitializer then
         charInit:SetParentInitializer(modeInit,function() return (LL.db.rateProfile or 1)~=1 end)
@@ -713,12 +713,14 @@ function LL:RegisterNativeSettings()
 
     -- B5b: the alts table is gone. Alts count automatically (the "Include
     -- alts" switch and the transfer rule); "Show rates for" on the General
-    -- page picks whose skill is used. What-if profiles live under this page.
-    local chars,charsLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Professions (what-if)")
+    -- page picks whose skill is used. Hypothetical profiles live under this page.
+    local chars,charsLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Professions (Hypothetical)")
     if chars then
         Settings.RegisterAddOnCategory(chars)
+        Checkbox(chars,"showUnavailableProcessingEstimates","Show unavailable processing estimates",
+            "Show reference prices and material results even when no eligible character can perform the operation. Off by default. Changes tooltip display only, not calculations or recommendations.",false)
         Section(charsLayout,"Your characters' professions are read automatically when you log into them.")
-        Section(charsLayout,"To try a different skill or specialization, pick a profession on the left, set it up, then choose \"What-if profile\" under \"Show rates for\" on the main page.")
+        Section(charsLayout,"To try a different skill or specialization, pick a profession on the left, set it up, then choose \"Hypothetical profile\" under \"Show rates for\" on the main page.")
         for _,profession in ipairs({"Alchemy","Blacksmithing","Enchanting","Engineering","Herbalism",
             "Inscription","Jewelcrafting","Leatherworking","Mining","Skinning","Tailoring","Cooking","Fishing"}) do
             local page=Settings.RegisterCanvasLayoutSubcategory(chars,self:CreateProfessionProfilePanel(profession),profession)
@@ -768,7 +770,7 @@ function LL:RegisterNativeSettings()
             "Remove everything you imported. Your own recorded results are not touched. Asks first.",false))
     end
     Section(researchLayout,"Evidence collection")
-    Section(researchLayout,"Source preferences live in Database & Accuracy. What-if profession profiles live under Professions (what-if).")
+    Section(researchLayout,"Source preferences live in Database & Accuracy. Hypothetical profession profiles live under Professions (Hypothetical).")
     Section(researchLayout,"Confidence thresholds")
     Slider(research,"minPersonalSamples","Minimum weighted samples",
         "Minimum effective samples required before personal observations drive recommendations.",1,100,1,30)

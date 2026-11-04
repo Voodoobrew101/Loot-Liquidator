@@ -632,7 +632,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
         local options=decision.conversionOptions or {}
         local choices={}
         for _,option in ipairs(options) do
-            if option.name then
+            -- Filter before choosing a recipe so an unavailable alternative
+            -- cannot conceal a usable option for the same method.
+            if option.name and (option.available~=false
+                or LA.db.showUnavailableProcessingEstimates==true) then
                 local previous=choices[option.name]
                 if not previous or (option.value and not previous.value)
                     or (option.value and previous.value
@@ -781,7 +784,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             -- because a Force On profession switch is set.
             local isGear=f and (f.classID==2 or f.classID==4)
             if option and (not isGear or methodName=="Disenchant")
-                then -- B3: unavailable options always show, marked "(estimate)"
+                then -- Unavailable options are an explicit display opt-in.
                 -- Reuse the exact evaluated material model used to price this option.
                 local model=option.yieldModel
                 local hasMaterials=(model and model.materials and #model.materials>0)

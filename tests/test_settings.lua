@@ -357,17 +357,21 @@ do
     end
     assert(colorButtons==#LL.BadgeColorOrder and reset,'one color button per badge and a reset')
     LL.db.appearance.colors.A={0,0,0};reset.click();assert(next(LL.db.appearance.colors)==nil)
-    -- Only the what-if profession pages and Ignored Items stay as canvas pages.
+    -- Only the hypothetical profession pages and Ignored Items stay as canvas pages.
     for _,name in ipairs(canvases) do assert(name~='Badges & Colors' and name~='Database & Accuracy',name..' is still a canvas page') end
     local accuracy=pages['Database & Accuracy']
     assert(accuracy and control(accuracy,'LootLiquidator_source_itemdb_enabled'),'Database & Accuracy is native')
     print('PASS: Badges & Colors and Database & Accuracy are native Settings pages (B8a/B8b)')
-    -- B5a/B5b: rate choice on the main page; what-if pages have a new home.
+    -- B5a/B5b: rate choice on the main page; hypothetical pages have a new home.
     assert(settings.LootLiquidator_rateProfile and settings.LootLiquidator_rateProfileCharacter,'Show rates for registered')
     assert(LL.db.rateProfileCharacter=='' or LL.db.rateProfileCharacter==nil)
-    assert(pages['Professions (what-if)'],'what-if profession pages need a parent page')
+    assert(pages['Professions (Hypothetical)'],'hypothetical profession pages need a parent page')
+    local unavailable=assert(control(pages['Professions (Hypothetical)'],'LootLiquidator_showUnavailableProcessingEstimates'))
+    assert(unavailable.setting:GetValue()==false,'unavailable estimates default off on Professions')
+    unavailable.setting:SetValue(true);assert(LL.db.showUnavailableProcessingEstimates==true)
+    unavailable.setting:SetValue(false);assert(LL.db.showUnavailableProcessingEstimates==false)
     local rows=LL:RateProfileCharacterChoices()
     assert(rows[1][1]=='' and rows[2][1]=='Tester - Realm','character choices list saved characters')
-    print('PASS: Show rates for + Professions (what-if) page (B5a/B5b)')
+    print('PASS: Show rates for + Professions (Hypothetical) page (B5a/B5b)')
 end
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')

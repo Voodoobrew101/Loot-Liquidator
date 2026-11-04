@@ -69,7 +69,7 @@ function tip:AddLine(text)self.lines[#self.lines+1]=text end
 function tip:AddDoubleLine(a,b)self.lines[#self.lines+1]=a..' '..b end
 local decision={facts={id=2770,classID=7},count=1,conversionOptions={{name='Smelt',letter='S',available=false,
     why='No character with verified Smelt Copper recipe',note='Insufficient Data: matching yield sources disabled'}}}
-LL.db.showProfessionDetails=true;LL.db.showResearchDetails=true
+LL.db.showUnavailableProcessingEstimates=true;LL.db.showProfessionDetails=true;LL.db.showResearchDetails=true
 LL:AppendRecommendationTooltip(tip,decision)
 local text=table.concat(tip.lines,'\n')
 assert(text:find('Smelting',1,true) and text:find('verified Smelt Copper',1,true) and text:find('sources disabled',1,true))

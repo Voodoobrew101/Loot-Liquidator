@@ -36,7 +36,7 @@ for _,case in ipairs(cases) do
             local processing=mask%2==1
             local profession=math.floor(mask/2)%2==1
             local research=mask>=4
-            LL.db={tooltipDetail=level,showTooltipExplanations=processing,
+            LL.db={showUnavailableProcessingEstimates=true,tooltipDetail=level,showTooltipExplanations=processing,
                 showProfessionDetails=profession,showResearchDetails=research}
             local tip={lines={}}
             function tip:AddLine(s)self.lines[#self.lines+1]=s end
@@ -83,7 +83,7 @@ GetTime=function()return 100 end
 for _,name in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua','ConversionEngine.lua','Badges.lua'}) do
     assert(loadfile('LootLiquidator/'..name))('LootLiquidator',LL)
 end
-LL.db={tooltipDetail=3,source_legacy_enabled=false,source_personal_enabled=false,source_imported_enabled=false}
+LL.db={showUnavailableProcessingEstimates=true,tooltipDetail=3,source_legacy_enabled=false,source_personal_enabled=false,source_imported_enabled=false}
 LL:MigrateEvidenceSettings()
 assert(LL:InitializeItemDB(),LL.itemDBError)
 LL.GetOutputPrice=function()return 100 end -- fixture copper prices
