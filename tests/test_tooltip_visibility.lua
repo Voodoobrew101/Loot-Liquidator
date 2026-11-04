@@ -28,7 +28,7 @@ for _,case in ipairs(cases) do
     local option={name=case[2],letter=case[3],category='destroy',available=false,value=50,yieldModel=model,
         why='Ability manually indicated, but no character/recipe verified',character='Tester'}
     local decision={action=case[3],facts={id=case[1],classID=7},converted=50,vendor=5,
-        conversionOptions={option,{name='Craft',letter='C',value=20,available=false,
+        conversionOptions={option,{name='Craft',profession='Engineering',letter='C',value=20,available=false,
         why='No eligible character with verified recipe/unlock'},
         {name='Smelt',letter='S',available=false}}}
     for level=0,3 do
@@ -36,7 +36,7 @@ for _,case in ipairs(cases) do
             local processing=mask%2==1
             local profession=math.floor(mask/2)%2==1
             local research=mask>=4
-            LL.db={showUnavailableProcessingEstimates=true,tooltipDetail=level,showTooltipExplanations=processing,
+            LL.db={professionTooltipProfiles={Inscription="@hypothetical",Jewelcrafting="@hypothetical",Mining="@hypothetical",Engineering="@hypothetical",},tooltipDetail=level,showTooltipExplanations=processing,
                 showProfessionDetails=profession,showResearchDetails=research}
             local tip={lines={}}
             function tip:AddLine(s)self.lines[#self.lines+1]=s end
@@ -83,7 +83,7 @@ GetTime=function()return 100 end
 for _,name in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua','ConversionEngine.lua','Badges.lua'}) do
     assert(loadfile('LootLiquidator/'..name))('LootLiquidator',LL)
 end
-LL.db={showUnavailableProcessingEstimates=true,tooltipDetail=3,source_legacy_enabled=false,source_personal_enabled=false,source_imported_enabled=false}
+LL.db={professionTooltipProfiles={Inscription="@hypothetical",Jewelcrafting="@hypothetical",Mining="@hypothetical",Engineering="@hypothetical",},tooltipDetail=3,source_legacy_enabled=false,source_personal_enabled=false,source_imported_enabled=false}
 LL:MigrateEvidenceSettings()
 assert(LL:InitializeItemDB(),LL.itemDBError)
 LL.GetOutputPrice=function()return 100 end -- fixture copper prices
@@ -91,6 +91,7 @@ LL.ProcessingPlayerConditions=function()return {}end
 LL.MarkupColor=function()return ''end
 LL.Money=function(_,v)return tostring(v)..' copper'end
 LL.ProfessionProgression=function()return {}end
+LL.TooltipConversionOptions=nil -- Render this fixture's explicitly supplied models.
 for _,case in ipairs(cases) do
     local facts={id=case[1],classID=7,expansionID=case[1]==168487 and 7 or case[1]==188658 and 9 or 6}
     local model=assert(LL:ResolveEvidenceModel(facts,{name=case[2],inputCount=5},nil,1))

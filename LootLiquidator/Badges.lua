@@ -630,12 +630,16 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             tooltip:AddLine("TSM preview only: assign this operation in TSM to post with it",1,.63,.24,true)
         end
         local options=decision.conversionOptions or {}
+        if LA.TooltipConversionOptions and f and f.id then
+            options=LA:TooltipConversionOptions(f,options)
+        end
         local choices={}
         for _,option in ipairs(options) do
             -- Filter before choosing a recipe so an unavailable alternative
             -- cannot conceal a usable option for the same method.
-            if option.name and (option.available~=false
-                or LA.db.showUnavailableProcessingEstimates==true) then
+            local profession=option.profession or ({Disenchant="Enchanting",Mill="Inscription",Prospect="Jewelcrafting",Smelt="Mining"})[option.name]
+            local selection=profession and LA.db.professionTooltipProfiles and LA.db.professionTooltipProfiles[profession]
+            if option.name and selection~="@hide" and (option.available~=false or selection=="@hypothetical") then
                 local previous=choices[option.name]
                 if not previous or (option.value and not previous.value)
                     or (option.value and previous.value
@@ -796,6 +800,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     or methodName=="Smelt" then
                     local confidence=model and (model.valueConfidence or model.confidence)
                     local label=names[methodName] or methodName
+                    if option.tooltipProfileLabel then label=label.." — "..option.tooltipProfileLabel end
                     if model and model.confidenceUnscored then label=label.." (Confidence unscored)"
                     elseif confidence then label=label..(" (Confidence %d%%%s%s)"):format(confidence,
                         option.value and model.partial and ", partial" or "",

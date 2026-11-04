@@ -22,7 +22,7 @@ local defaults = {
     showSoulboundVendorBadge = false,
     recordDisenchants = true, showDisenchantSamples = true,
     recordConversions = true, showProcessingSamples = true,
-    showUnavailableProcessingEstimates = false,
+    professionTooltipProfiles = {}, -- Character key, @auto, @hide, or @hypothetical per profession.
     showMaterialConfidence = false, showResearchDetails = false, showExternalRates = false,
     showAverageQuantity = false, showTooltipExplanations = false, showProfessionDetails = false, tooltipOutputSort = 'value',
     disenchantDataMode = 1, millingDataMode = 1, prospectingDataMode = 1,

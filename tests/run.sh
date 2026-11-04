@@ -66,6 +66,7 @@ python3 tests/test_research_v3_snapshot.py
 "$lua_bin" tests/test_tooltip_preferences.lua
 "$lua_bin" tests/test_tooltip_visibility.lua
 "$lua_bin" tests/test_profession_tooltip_visibility.lua
+"$lua_bin" tests/test_profession_tooltip_profiles.lua
 "$lua_bin" tests/test_reference_fallback.lua
 "$lua_bin" tests/test_usable_field_flow.lua
 python3 tests/test_research_v3_no_disenchant.py

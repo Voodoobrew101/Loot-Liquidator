@@ -36,6 +36,58 @@ function LL:RateProfileTarget(performer)
     if mode==2 then return known and chosen or own,false end
     return known and chosen or current,true
 end
+-- Build display-only quotes in an isolated context. Never replace the
+-- decision's options, character access, or recommendation with these results.
+function LL:TooltipConversionOptions(f,options)
+    local selections=self.db and self.db.professionTooltipProfiles or {}
+    local projected,out={},{}
+    local current=self.CharacterKey and self:CharacterKey()
+    for _,option in ipairs(options or {}) do
+        local profession=option.profession or (self.ProfessionForMethod and self:ProfessionForMethod(option.name))
+        local selection=profession and selections[profession]
+        if not selection or selection=="@auto" then
+            out[#out+1]=option
+        elseif selection~="@hide" then
+            if not projected[profession] then
+                local hypothetical=selection=="@hypothetical"
+                local key=hypothetical and current or selection
+                local db={} for k,v in pairs(self.db) do db[k]=v end
+                local record=key and self.db.characters and self.db.characters[key]
+                db.characters={}
+                if record then db.characters[key]=record end
+                db.rateProfile=hypothetical and 3 or 2
+                db.rateProfileCharacter=key
+                local proxy=setmetatable({db=db,_processingModelCache={},_processingContextCache={},
+                    _professionOperationCache={}}, {__index=self})
+                if hypothetical or key~=current then
+                    -- Live spellbook access belongs only to the current character.
+                    proxy.HasCurrentProfession=function() return false end
+                    proxy.CurrentHasEnchanting=function() return false end
+                end
+                if hypothetical then
+                    -- No scanned skill, equipment or live operation bonuses are
+                    -- silently substituted for an unset hypothetical profile.
+                    db.characters[key or "Current character"]={professions={},recipes={}}
+                    proxy.GetResearchProfessionSnapshot=function() return nil end
+                    proxy.GetCachedOperationInfo=function() return nil end
+                end
+                local facts={} for k,v in pairs(f) do facts[k]=v end
+                projected[profession]=(record or hypothetical) and proxy:ConversionOptions(facts) or {}
+            end
+            for _,quote in ipairs(projected[profession]) do
+                if quote.name==option.name and quote.recipeID==option.recipeID
+                    and (quote.profession or (self.ProfessionForMethod and self:ProfessionForMethod(quote.name)))==profession then
+                    local display={} for k,v in pairs(quote) do display[k]=v end
+                    display.tooltipProfileLabel=selection=="@hypothetical" and "Hypothetical" or selection
+                    out[#out+1]=display
+                    break
+                end
+            end
+        end
+    end
+    return out
+end
+
 function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local profession=self.ProfessionForMethod and self:ProfessionForMethod(method)
     local current=self.CharacterKey and self:CharacterKey()

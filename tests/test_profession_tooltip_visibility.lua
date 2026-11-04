@@ -8,7 +8,7 @@ LL.MarkupColor=function()return ''end
 LL.Money=function(_,v)return tostring(v)..' copper'end
 LL.ProfessionProgression=function()return {}end
 local function render(option,level,show)
-    LL.db.tooltipDetail=level;LL.db.showUnavailableProcessingEstimates=show
+    LL.db.tooltipDetail=level;LL.db.professionTooltipProfiles=show and {Inscription="@hypothetical",Jewelcrafting="@hypothetical"} or nil
     local tip={lines={}}
     function tip:AddLine(s)self.lines[#self.lines+1]=s end
     function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
@@ -49,7 +49,7 @@ for _,method in ipairs({{'Mill','Inscription','M','Milling'},{'Prospect','Jewelc
                 n=n+1
             end
         end
-        LL.db.showUnavailableProcessingEstimates=nil
+        LL.db.professionTooltipProfiles=nil
         assert((render(option,3,nil):find(method[4],1,true)~=nil)==available,'unset defaults off')
     end
 end

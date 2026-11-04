@@ -381,7 +381,9 @@ function LL:ResetEvidenceSettings()
 end
 function LL:CreateProfessionProfilePanel(profession)
     local panel=CreateFrame("Frame")
-    local selected=LL:CharacterKey() or "Current character"
+    local current=LL:CharacterKey() or "Current character"
+    local selection=LL.db.professionTooltipProfiles and LL.db.professionTooltipProfiles[profession]
+    local selected=selection and selection:sub(1,1)~="@" and selection or current
     local expansion=(GetExpansionLevel and GetExpansionLevel()) or 11
     local nodeIndex,buffIndex=0,0
     local options={nodes={},buffs={}}
@@ -409,16 +411,29 @@ function LL:CreateProfessionProfilePanel(profession)
         if refresh then refresh(false) end
     end
     label(profession.." — character and expansion",-16)
-    label("Choose the expansion whose recipes you want to inspect. Log into an alt and open that profession to capture its skills and specialization names.",-44)
+    label("Choose a character for its tooltip results, Don't show to hide them, or Hypothetical for reference estimates. Select an expansion to inspect its profile.",-44)
     local character=LL:CreateSettingsDropdown(panel,function()
         local keys={} for k in pairs(LL.db.characters or {}) do keys[#keys+1]=k end
         table.sort(keys);panel.characterKeys=keys
-        local rows={} for i,k in ipairs(keys) do rows[#rows+1]={i,k} end
+        local rows={{0,"Don't show"},{-1,"Hypothetical"},{-2,"Automatic — available characters"}}
+        for i,k in ipairs(keys) do rows[#rows+1]={i,k} end
         return choices(rows)
     end,function()
+        if not selection or selection=="@auto" then return -2 end
+        if selection=="@hide" then return 0 end
+        if selection=="@hypothetical" then return -1 end
         for i,k in ipairs(panel.characterKeys or {}) do if k==selected then return i end end
-        return 1
-    end,function(i) selected=(panel.characterKeys or {})[i] or selected;nodeIndex=0;buffIndex=0;refresh(true) end)
+        return 0
+    end,function(i)
+        selection=i==0 and "@hide" or i==-1 and "@hypothetical" or i==-2 and "@auto" or (panel.characterKeys or {})[i]
+        if not selection then return end
+        selected=selection:sub(1,1)=="@" and current or selection
+        LL.db.professionTooltipProfiles=LL.db.professionTooltipProfiles or {}
+        LL.db.professionTooltipProfiles[profession]=selection
+        nodeIndex=0;buffIndex=0
+        LL:UpdateAllAppearance()
+        refresh(true)
+    end)
     character:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-90)
     local era=LL:CreateSettingsDropdown(panel,function()
         local rows={} for id=0,11 do rows[#rows+1]={id,LL:ProfessionExpansionName(id)} end
@@ -428,7 +443,7 @@ function LL:CreateProfessionProfilePanel(profession)
     local status=label("",-132)
     local enabled=LL:CreateSettingsCheckbox(panel)
     enabled:SetPoint("TOPLEFT",panel,"TOPLEFT",16,-192)
-    local enabledLabel=label("Use this hypothetical profile (when \"Show rates for\" is \"Hypothetical profile\")",-194)
+    local enabledLabel=label("Apply simulated skill and specialization to Hypothetical results",-194)
     enabledLabel:ClearAllPoints();enabledLabel:SetPoint("LEFT",enabled,"RIGHT",6,0)
     enabled:SetScript("OnClick",function(self) update(function(p) p.enabled=self:GetChecked()==true end) end)
     local known=LL:CreateSettingsCheckbox(panel)
@@ -501,10 +516,12 @@ function LL:CreateProfessionProfilePanel(profession)
         local record=LL.db.characters and LL.db.characters[selected]
         local snapshot=record and record.researchProfiles and record.researchProfiles[profession..":"..expansion]
         status:SetText(snapshot and (LL:ProfessionExpansionName(expansion).." snapshot: skill "..tostring(snapshot.skill or "unknown")..". Open the profession on that character to refresh it.")
-            or ("No saved "..LL:ProfessionExpansionName(expansion).." "..profession.." scan for this character. Unavailable estimates are controlled on the parent Professions page."))
+            or ("No saved "..LL:ProfessionExpansionName(expansion).." "..profession.." scan for this character. Choose Hypothetical above to show reference estimates, or Don't show to hide these results."))
         local b=options.buffs[buffIndex]
         buffEnabled:SetChecked(b and p.buffs and p.buffs[tostring(b.id)]==true or false)
         if b then buffEnabled:Enable() else buffEnabled:Disable() end
+        if selection=="@hide" then status:SetText("Processing results for "..profession.." are hidden from tooltips.")
+        elseif selection=="@hypothetical" then status:SetText("Hypothetical results use reference data and this character's enabled simulation. They do not grant profession access.") end
         character:Refresh();era:Refresh();node:Refresh();rank:Refresh();buff:Refresh()
         refreshing=false
     end
@@ -717,10 +734,8 @@ function LL:RegisterNativeSettings()
     local chars,charsLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Professions (Hypothetical)")
     if chars then
         Settings.RegisterAddOnCategory(chars)
-        Checkbox(chars,"showUnavailableProcessingEstimates","Show unavailable processing estimates",
-            "Show reference prices and material results even when no eligible character can perform the operation. Off by default. Changes tooltip display only, not calculations or recommendations.",false)
         Section(charsLayout,"Your characters' professions are read automatically when you log into them.")
-        Section(charsLayout,"To try a different skill or specialization, pick a profession on the left, set it up, then choose \"Hypothetical profile\" under \"Show rates for\" on the main page.")
+        Section(charsLayout,"Choose a profession, then pick a character, Don't show, or Hypothetical in its dropdown.")
         for _,profession in ipairs({"Alchemy","Blacksmithing","Enchanting","Engineering","Herbalism",
             "Inscription","Jewelcrafting","Leatherworking","Mining","Skinning","Tailoring","Cooking","Fishing"}) do
             local page=Settings.RegisterCanvasLayoutSubcategory(chars,self:CreateProfessionProfilePanel(profession),profession)
