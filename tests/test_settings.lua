@@ -309,11 +309,33 @@ do
     Settings.CreateSlider=function(cat,setting,options) local i=baseSlider(cat,setting,options);i.category=cat;created[#created+1]=i;return i end
     Settings.CreatePanelInitializer=function(template) return {template=template} end
     Settings.CreateElementInitializer=Settings.CreateElementInitializer or function() return {} end
-    CreateSettingsListSectionHeaderInitializer=CreateSettingsListSectionHeaderInitializer or function() return {} end
+    CreateSettingsListSectionHeaderInitializer=function(title)
+        return {title=title,InitFrame=function(_,frame)
+            frame.title=title
+            frame:SetTooltipFunc(function()return title end)
+        end}
+    end
     CreateSettingsButtonInitializer=function(name,text,click) return {name=name,text=text,click=click,factory='button'} end
     LL.db.includeVerifiedAlts=nil;LL.settingsCategory=nil
     local ok,err=pcall(LL.RegisterNativeSettings,LL);if not ok then print('settings build stopped early: '..tostring(err)) end
     assert(ok,tostring(err))
+    local headingFrame={SetTooltipFunc=function(self,fn)self.tooltipFunc=fn end}
+    local count=0
+    for _,layout in pairs(layouts) do
+        for _,initializer in ipairs(layout.items) do
+            if initializer.title then
+                initializer:InitFrame(headingFrame)
+                assert(headingFrame.title==initializer.title,'native heading initialization preserved')
+                assert(headingFrame.tooltipFunc==nil,'heading must not show a floating hover label')
+                count=count+1
+            end
+        end
+    end
+    assert(count>2,'exercise multiple headings including Extras and What to display')
+    local other=CreateSettingsListSectionHeaderInitializer('Other addon heading')
+    other:InitFrame(headingFrame)
+    assert(headingFrame.tooltipFunc()=='Other addon heading','pooled rows restore other addons hover behavior')
+    print('PASS: section headings suppress hover labels without altering native initialization or pooled reuse')
     local badges=pages['Badges & Colors']
     assert(badges,'Badges & Colors page missing')
     local function control(cat,variable)
