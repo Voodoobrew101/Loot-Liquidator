@@ -44,10 +44,15 @@ jobs:
           cp database/research/v3-snapshot/SNAPSHOT.json dist/research-snapshot.json
           git rev-parse HEAD > dist/addon-commit.txt
           sha256sum dist/LootLiquidator.zip > dist/SHA256SUMS.txt
+      - name: Prepare single-layer download
+        run: |
+          mkdir -p artifact
+          python3 -m zipfile -e dist/LootLiquidator.zip artifact/
       - uses: actions/upload-artifact@v6
         with:
-          name: LootLiquidator-distribution
-          path: dist/
+          name: LootLiquidator
+          path: artifact/
+          if-no-files-found: error
       - name: Publish prerelease when requested
         if: inputs.publish
         env:
