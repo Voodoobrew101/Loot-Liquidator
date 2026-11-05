@@ -493,7 +493,7 @@ function LL:CreateProfessionProfilePanel(profession)
     end)
     local status=label('')
     local skillLabel=label('Simulated effective skill',245)
-    local skill=LL:CreateSettingsCanvasSlider(body,0,1000,1,0,function(v)update(function(p)p.skill=v end)end)
+    local skill=LL:CreateSettingsCanvasSlider(body,0,200,1,0,function(v)update(function(p)p.skill=v end)end)
     hover(skill.slider,function()
         return {'Effective profession skill','Use the recipe\'s minimum required skill as the starting point. Zero is the editor minimum, not proof that a recipe is usable.',
             'Skill changes quantities or quality only when a compatible researched formula is available.'}
@@ -548,29 +548,6 @@ function LL:CreateProfessionProfilePanel(profession)
             skill:SetPreferenceValue(profile().skill or 0)
             place(skillLabel,y+6);place(skill,y,270);y=y+44
             place(reset,y);y=y+40
-            statsToggle:SetText(statsOpen and 'Hide profession / crafting stats' or 'Show profession / crafting stats')
-            place(statsToggle,y);y=y+38
-            if statsOpen then
-                place(statsNote,y);y=y+60
-                for _,stat in ipairs(LL:ProfessionSimulationStatOptions(profession)) do
-                    if not statRows[stat.key] then
-                        local key=stat.key
-                        local function set(field,v)
-                            update(function(p)
-                                local stats={} for k,entry in pairs(p.stats or {}) do stats[k]={rating=entry.rating,percent=entry.percent} end
-                                stats[key]=stats[key] or {};stats[key][field]=v;p.stats=stats
-                            end)
-                        end
-                        statRows[key]={label=label(stat.name..' — rating / percent',590),
-                            rating=LL:CreateSettingsCanvasSlider(body,0,10000,1,0,function(v)set('rating',v)end),
-                            percent=LL:CreateSettingsCanvasSlider(body,0,100,.1,0,function(v)set('percent',v)end)}
-                    end
-                    local row=statRows[stat.key];local v=profile().stats and profile().stats[stat.key] or {}
-                    row.rating:SetPreferenceValue(v.rating or 0);row.percent:SetPreferenceValue(v.percent or 0)
-                    place(row.label,y);y=y+23
-                    place(row.rating,y,0);place(row.percent,y,310);y=y+44
-                end
-            end
             place(scan,y);y=y+44
             if #options.nodes==0 then place(empty,y);y=y+68 end
             local groups,order={},{}
@@ -624,6 +601,29 @@ function LL:CreateProfessionProfilePanel(profession)
                     for _,n in ipairs(groups[tree]) do
                         if not n.parentID or not ids[n.parentID] then renderNode(n,groups[tree],0,visited) end
                     end
+                end
+            end
+            statsToggle:SetText(statsOpen and 'Hide profession / crafting stats' or 'Show profession / crafting stats')
+            place(statsToggle,y);y=y+38
+            if statsOpen then
+                place(statsNote,y);y=y+60
+                for _,stat in ipairs(LL:ProfessionSimulationStatOptions(profession)) do
+                    if not statRows[stat.key] then
+                        local key=stat.key
+                        local function set(field,v)
+                            update(function(p)
+                                local stats={} for k,entry in pairs(p.stats or {}) do stats[k]={rating=entry.rating,percent=entry.percent} end
+                                stats[key]=stats[key] or {};stats[key][field]=v;p.stats=stats
+                            end)
+                        end
+                        statRows[key]={label=label(stat.name..' — rating (left) / percent (right)',590),
+                            rating=LL:CreateSettingsCanvasSlider(body,0,1000,1,0,function(v)set('rating',v)end),
+                            percent=LL:CreateSettingsCanvasSlider(body,0,100,.1,0,function(v)set('percent',v)end)}
+                    end
+                    local row=statRows[stat.key];local v=profile().stats and profile().stats[stat.key] or {}
+                    row.rating:SetPreferenceValue(v.rating or 0);row.percent:SetPreferenceValue(v.percent or 0)
+                    place(row.label,y);y=y+23
+                    place(row.rating,y,0);place(row.percent,y,310);y=y+44
                 end
             end
             buffToggle:SetText(buffsOpen and 'Hide buffs' or 'Show buffs');place(buffToggle,y);y=y+38
