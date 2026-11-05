@@ -78,7 +78,7 @@ function LL:TooltipConversionOptions(f,options)
                 if quote.name==option.name and quote.recipeID==option.recipeID
                     and (quote.profession or (self.ProfessionForMethod and self:ProfessionForMethod(quote.name)))==profession then
                     local display={} for k,v in pairs(quote) do display[k]=v end
-                    display.tooltipProfileLabel=selection=="@hypothetical" and "Hypothetical" or selection
+                    display.tooltipProfileLabel=selection=="@hypothetical" and "Simulated" or selection
                     out[#out+1]=display
                     break
                 end
@@ -165,7 +165,9 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
         ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
         ctx.buffs=simulated.buffs
         ctx.specialization=simulated.specialization
-        ctx.baseSkill=nil;ctx.bonusSkill=nil;ctx.operationStats=nil;ctx.craftingQuality=nil;ctx.equipment=nil
+        ctx.baseSkill=nil;ctx.bonusSkill=nil
+        ctx.operationStats=self.SimulatedProfessionOperationStats and self:SimulatedProfessionOperationStats(simulated) or nil
+        ctx.craftingQuality=nil;ctx.equipment=nil
         ctx.qualityFromBlizzard=false;ctx.simulated=true;ctx.stale=false;ctx.profileKind="manual-simulation"
         ctx.incomplete=not validNumber(ctx.skill) or not ctx.specialization
     end

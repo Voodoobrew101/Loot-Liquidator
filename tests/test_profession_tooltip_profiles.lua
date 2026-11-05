@@ -63,7 +63,7 @@ LL.db.characters.Alt.altMethods=nil
 local text=render('Alt')
 assert(text:find('Milling — Alt',1,true) and text:find('80 copper',1,true))
 text=render('@hypothetical')
-assert(text:find('Milling — Hypothetical',1,true) and text:find('180 copper',1,true))
+assert(text:find('Milling — Simulated',1,true) and text:find('180 copper',1,true))
 assert(not render('@hide'):find('Milling',1,true))
 print('PASS: selected-character and Hypothetical quotes, hidden mode, exclusions, original decision/model/global-rate isolation')
 
