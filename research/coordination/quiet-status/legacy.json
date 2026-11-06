@@ -1,110 +1,149 @@
 {
   "role": "legacy",
-  "updated_at": "2026-11-06T06:46:58.745Z",
-  "status": "new-original-tbc-uncommon-armor-cast-totals; per-cast-hits-and-modern-eligibility-unresolved",
+  "updated_at": "2026-11-06T07:50:23.125Z",
+  "status": "new-independent-netherweave-pants-original-studies-verified; historical-version-and-operations-gaps-open",
   "task_ids": [
     "T0042",
     "T0047",
     "T0052",
     "T0022",
     "T0044",
-    "T0021",
-    "T0050",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0042/T0047/T0052: New original 10-cast TBC uncommon-cloth chest cohort Netherweave Tunic item 21855, compare item-level-114 armor to item 24995 historical item-level-108 plate and source-era disagreements.",
-    "Collect 0/1/2/... per-cast outputs, castsWithDrop, zero outcomes, dates, skill/spec and patch/build from original operation-level exports; no such data obtained.",
-    "T0022 Cobalt Ore 36909; T0044 Fel Iron Ore 23424; T0021 Titanium Ore 36910: independent completed-cast and per-output hit histograms remain absent in newly checked sources."
+    "T0042/T0047/T0052: Salvage original item-specific uncommon cloth armor disenchant outcomes for Netherweave Pants 21852 (historical iLvl 102) and Bracers 21849 (historical iLvl 93), against Warmaul Legplates 24995 armor cohort (historical iLvl 108), without falsely transferring historical rates to current Retail.",
+    "Original 70404 report: 30 crafted Netherweave Pants -> 71 Arcane Dust 22445 and 14 Greater Planar Essence 22446; completed disenchant denominator unspecified.",
+    "Original 124141 report: 34 explicitly completed Netherweave Pants -> 33 dust-positive casts 22445, 1 Greater Planar Essence 22446; 0/1 essence histogram derived directly from exhaustive 34-cast report.",
+    "Original darkmagi91 100-bracers + 100-pants batches: 165/190 Arcane Dust, 158/45 unnamed 'Lesser Essences'; exact essence item ID and completed DE counts unknown.",
+    "T0022/T0044: still lack independent complete current Cobalt Ore 36909/Fel Iron Ore 23424 prospecting event logs; prior original sources exhausted.",
+    "T0053 token 45661 reward variant coverage deferred; seven historical rewards previously captured."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-21897-thottbot-shadowsong-ten-netherweave-tunics",
-      "inputItemID": 21855,
-      "inputName": "Netherweave Tunic",
-      "sourceReportedCompletedDisenchants": 10,
-      "inputsPerCast": 1,
-      "sourceReportedHistoricalItemLevel": 114,
-      "sourceReportedQuality": "uncommon",
-      "kind": "armor/cloth/chest",
+      "studyKey": "wowhead-21852-70404-thirty-crafted-pants-disenchant-totals",
+      "inputItemID": 21852,
+      "sourceListedCraftedItems": 30,
+      "casts": null,
       "outputs": [
         {
           "itemID": 22445,
-          "totalQuantity": 32,
-          "castsWithDrop": null,
-          "histogram": null
+          "totalQuantity": 71,
+          "castsWithDrop": null
         },
         {
           "itemID": 22446,
-          "totalQuantity": 8,
-          "castsWithDrop": null,
-          "histogram": null
+          "totalQuantity": 14,
+          "castsWithDrop": null
+        }
+      ]
+    },
+    {
+      "studyKey": "wowhead-21852-124141-thirtyfour-completed-pants",
+      "inputItemID": 21852,
+      "casts": 34,
+      "outputs": [
+        {
+          "itemID": 22445,
+          "totalQuantity": null,
+          "castsWithDrop": 33
         },
         {
-          "itemID": 22449,
+          "itemID": 22446,
           "totalQuantity": 1,
-          "castsWithDrop": null,
-          "histogram": null
+          "castsWithDrop": 1,
+          "histogram": {
+            "0": 33,
+            "1": 1
+          }
         }
-      ],
-      "originalContributor": "Thottbot archived anonymous comment / Shadowsong",
-      "patch": null,
-      "skill": null,
-      "specialization": null,
-      "originalSource": "https://www.wowhead.com/cata/item=21897/pattern-netherweave-tunic"
+      ]
+    },
+    {
+      "studyKey": "wowhead-21852-darkmagi91-onehundred-bracers",
+      "inputItemID": 21849,
+      "sourceListedTestItems": 100,
+      "casts": null,
+      "outputs": [
+        {
+          "itemID": 22445,
+          "totalQuantity": 165
+        },
+        {
+          "itemID": null,
+          "sourceName": "Lesser Essences",
+          "totalQuantity": 158
+        }
+      ]
+    },
+    {
+      "studyKey": "wowhead-21852-darkmagi91-onehundred-pants",
+      "inputItemID": 21852,
+      "sourceListedTestItems": 100,
+      "casts": null,
+      "outputs": [
+        {
+          "itemID": 22445,
+          "totalQuantity": 190
+        },
+        {
+          "itemID": null,
+          "sourceName": "Lesser Essences",
+          "totalQuantity": 45
+        }
+      ]
     }
   ],
   "numeric_summary": {
-    "new_original_cohorts": 1,
-    "new_evidence_records": 3,
+    "new_independent_original_cohorts": 4,
+    "new_evidence_records": 8,
+    "source_explicit_completed_disenchants": 34,
+    "source_listed_nonconfirmed_batch_items": 230,
+    "new_per_output_hit_counts": 2,
+    "new_exact_zero_inclusive_histograms": 1,
     "new_exact_input_ids": [
-      21855
+      21849,
+      21852
     ],
     "new_exact_output_ids": [
       22445,
-      22446,
-      22449
+      22446
     ],
-    "new_verified_material_total_units": [
-      32,
-      8,
-      1
-    ],
-    "new_per_output_hit_counts": 0,
-    "new_zero_counts": 0,
-    "new_histograms": 0,
+    "new_output_name_identity_unknown": "Lesser Essences",
     "current_retail_observed_casts": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-06T0646-netherweave-tunic-original-ten-disenchants.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-06T0646-netherweave-tunic-original-ten-disenchants.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-06T0749-netherweave-pants-original-version-conflict.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-06T0749-netherweave-pants-original-version-conflict.jsonl",
   "sources": [
-    "https://www.wowhead.com/cata/item=21897/pattern-netherweave-tunic",
-    "https://www.wowhead.com/wotlk/item=21855/netherweave-tunic",
-    "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
-    "https://www.wow-professions.com/tbc/disenchanting-tables"
+    "https://www.wowhead.com/tbc/item=21852/netherweave-pants",
+    "https://www.wowhead.com/item=21852/netherweave-pants",
+    "https://www.wowhead.com/wotlk/item=21852/netherweave-pants",
+    "https://warcraft.wiki.gg/wiki/Netherweave_Pants"
   ],
-  "verified_base_commit_sha": "c03a0ceb7c642af4638eff0ceee70f48779f6ade",
+  "verified_base_commit_sha": "6f4e14c252bc0ea66d0259866dfaf3fec6bc39a5",
   "new_commit_sha": null,
-  "commit_sha_note": "A commit cannot store its own SHA. Containing commit must be retrieved from the updated branch ref and files read back. The status records the verified base SHA.",
+  "commit_sha_note": "Atomic same-commit status cannot include its own future SHA; record verified base and verify resulting commit and file contents after ref update.",
   "blockers": [
-    "Same archived original commenter gives ten complete disenchant actions and 32 dust/8 greater essence/1 shard; the total may not fit common version-specific exclusive-output stack maxima for ten casts. No raw event log. Preserve as a disputed, provenance-identified cohort; Master must adjudicate for estimators.",
-    "Historical item-level 114 and current scaled item 21855 are not equivalent current Retail eligibility. No live player-tested disenchant results or character bonus/patch provided.",
-    "Cannot derive hits/zeros from the reported material totals; no raw per-cast output stacks. The date 'Nov 07' is ambiguous without original posting-year metadata.",
-    "Original 2068-operation Warmaul 24995 Looter export unavailable; no newly recovered 24995 hit histograms.",
-    "Cobalt, Fel Iron and Titanium new completed-cast logs not found."
+    "All authors lack dated comment, skill, specialization, complete output stack histograms and game build. Undated 'nerf today' author assertion is not a verified patch/hotfix.",
+    "Historical level-102 pants and level-93 bracers are not direct current scaled Retail item evidence; cannot transfer to Warmaul 24995 item level 31 or assume modern DE eligible.",
+    "darkmagi91 calls output 'Lesser Essences' without explicit full item name; do not assign material ID or aggregate with 22447 until original item identity confirmed.",
+    "Batch sizes 30/100/100 do not provide explicit completed cast logs. Store casts=null to avoid promoting nominal counts to denominators.",
+    "34-cast author explicitly says all remaining pants gave dust, supporting 33 dust hits and one essence hit, but dust units per cast remain unknown.",
+    "No original operation-level logs for Warmaul 24995, Cobalt 36909 or Fel Iron 23424."
   ],
   "exhausted_sources": [
-    "Repeated Warmaul generic disenchant table/24995 Looter summaries, Cobalt RU 24-stack, Fel Iron original 100/565 ore, Titanium Strath and giannis32 PTR data: all previously indexed, no new operation logs.",
-    "Netherweave Gloves five-DE/nine dust study previously recorded at least twice; excluded from new evidence.",
-    "Greater Planar Essence 947919 17-Netherweave-Bracers cohort already indexed; excluded.",
-    "Current web search of TBC/WotLK Netherweave belt, glove, robe, tunic; only previously unrecorded firsthand 10-Tunic cohort produced new distinct results."
+    "Warmaul 24995 2068-Looter historical snapshot, generic WoWWiki/Evowow TBC reference tables: no new operation logs on revisit; do not repeat.",
+    "Fel Iron 23424 Thottbot 100/565 ore and Cobalt 36909 24 nominal stacks previously recorded; no new casts/histograms.",
+    "147 mixed JC ring study (commenter 16088) already in 2026-11-01T0837 and 2026-11-02T1441; excluded despite appearing in search.",
+    "Jakebees Mana-Tombs 9 greens/11 bracers original cohorts already in 2026-11-02T1243 and 2026-11-01T0752; excluded.",
+    "Netherweave Bracers 7-Thottbot and AliasDan 100-DE, 53050 332-crafted and Scott75 70-DE already recorded; excluded.",
+    "Targeted new alternate Netherweave Pants original comments rather than repeating exhausted source families."
   ],
-  "next_concrete_step": "Seek the archived Shadowsong contributor's original dated operation-level records to reconcile 10-DE/32-8-1 totals, then move to distinct original Cobalt/Fel Iron prospecting event logs with explicit completed casts and per-output hit histograms rather than reusing guides.",
+  "next_concrete_step": "Recover dated originals or raw cast logs for commenter 124141's 34-pants cohort and darkmagi91's 100+100 outcomes, confirming whether 'Lesser Essences' are 22447 and identifying exact game patch/ilvl; then switch to unexamined original per-cast Cobalt/Titanium/Fel Iron studies or other queued numeric gap.",
   "decisions_needed": [
-    "Master: 10-cast Netherweave Tunic aggregate may violate standard exclusive-output/historical stack-limit constraints; decide estimator treatment after confirming patch-era and original data, do not auto-blend with item 24995.",
-    "Master: 24995 and 21855 version/ilvl mapping must be checked before current Retail output use."
+    "Master: review undated Netherweave Pants drop identity shift and 124141 nerf assertion before pooling across eras; not sufficient for a rateChange.",
+    "Master: decide whether source-listed 30/100/100 batches support completed casts; left null conservatively pending operation logs."
   ],
-  "previous_run_evidence_file": "research/v3/evidence/legacy/2026-11-06T0549-tbc-netherweave-original-disentchant-results.jsonl",
-  "owner_notifications": "On-demand only; Dot monitors. No PR/CI summaries, merges, releases or schedules.",
-  "gold_ev": "Computed only by addon with live prices; no evidence prices."
+  "previous_run_evidence_file": "research/v3/evidence/legacy/2026-11-06T0646-netherweave-tunic-original-ten-disenchants.jsonl",
+  "owner_notifications": "On-demand only. Dot monitors; no PR/CI, merges, releases or new schedules.",
+  "gold_ev": "Never stored in evidence; addon calculates from live prices."
 }
