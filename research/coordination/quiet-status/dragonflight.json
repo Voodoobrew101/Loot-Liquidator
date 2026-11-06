@@ -1,7 +1,7 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T17:32:24.797Z",
-  "status": "Research-only: 10 new Wowhead pooled Looter material occurrence rows from five previously unrecorded exact-ID Amirdrassil gear inputs; no new independently logged ore/milling completed-cast histograms.",
+  "updated_at": "2026-11-06T18:33:38.004Z",
+  "status": "Research-only; 12 previously unrecorded pooled Wowhead Looter per-material occurrence records across four exact-ID Aberrus gear inputs. No original ore/mill operation histograms discovered.",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0020",
@@ -12,44 +12,54 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Open Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic Ore 194545 prospecting: original per-output 0/1/2+ histograms and refund-adjusted completed casts remain missing.",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466 milling: per-rank actual casts, pigment item IDs, totals, hits and zeros remain missing.",
-    "T0041 secondary Dragonflight disenchant: original gear/material exact IDs with source-reported Looter denominators and material occurrence rows, not full quantity histograms."
+    "Draconium Ore 189143 and alternate quality IDs, Serevite Ore 190394/190395/190396, Khaz'gorite Ore, and Prismatic Ore 194545 require independently verified operation-normalized prospecting cast/hit/0-1-2+ histograms, refunds, skill/spec and output ranks.",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466 milling require source-counted actual 5-herb mills, exact ranked pigment IDs and observed output histograms.",
+    "Secondary Dragonflight disenchanting requires exact-ID item+material source-reported occurrence counts and positive-stack totals by build."
   ],
   "newly_verified_fields": [
-    "207269 Devout Ashdevil's Fanged Sash -> 194124 Vibrant Shard: site-reported 31/52 material occurrences; displayed 60% (interpretation unverified)",
-    "207269 Devout Ashdevil's Fanged Sash -> 200113 Resonant Crystal: site-reported 31/52 material occurrences; displayed 60% (interpretation unverified)",
-    "207274 Devout Ashdevil's Slippers -> 194124 Vibrant Shard: site-reported 43/70 material occurrences; displayed 61% (interpretation unverified)",
-    "207274 Devout Ashdevil's Slippers -> 200113 Resonant Crystal: site-reported 39/70 material occurrences; displayed 56% (interpretation unverified)",
-    "207249 Benevolent Embersage's Featherdrape -> 200113 Resonant Crystal: site-reported 27/35 material occurrences; displayed 77% (interpretation unverified)",
-    "207249 Benevolent Embersage's Featherdrape -> 194124 Vibrant Shard: site-reported 19/35 material occurrences; displayed 54% (interpretation unverified)",
-    "207250 Benevolent Embersage's Wristwraps -> 200113 Resonant Crystal: site-reported 21/31 material occurrences; displayed 68% (interpretation unverified)",
-    "207250 Benevolent Embersage's Wristwraps -> 194124 Vibrant Shard: site-reported 13/31 material occurrences; displayed 42% (interpretation unverified)",
-    "207251 Benevolent Embersage's Sagacious Sash -> 194124 Vibrant Shard: site-reported 23/29 material occurrences; displayed 79% (interpretation unverified)",
-    "207251 Benevolent Embersage's Sagacious Sash -> 200113 Resonant Crystal: site-reported 15/29 material occurrences; displayed 52% (interpretation unverified)"
+    "202529 Wristwraps of the Sinister Savant -> 200113 Resonant Crystal: source-reported occurrences 66/110; displayed 60% (meaning uncertain); quantities and histogram null",
+    "202529 Wristwraps of the Sinister Savant -> 194124 Vibrant Shard: source-reported occurrences 50/110; displayed 45% (meaning uncertain); quantities and histogram null",
+    "202529 Wristwraps of the Sinister Savant -> 194123 Chromatic Dust: source-reported occurrences 4/110; displayed 4% (meaning uncertain); quantities and histogram null",
+    "202530 Skullstrap of the Sinister Savant -> 194124 Vibrant Shard: source-reported occurrences 59/97; displayed 61% (meaning uncertain); quantities and histogram null",
+    "202530 Skullstrap of the Sinister Savant -> 200113 Resonant Crystal: source-reported occurrences 48/97; displayed 49% (meaning uncertain); quantities and histogram null",
+    "202530 Skullstrap of the Sinister Savant -> 194123 Chromatic Dust: source-reported occurrences 2/97; displayed 2% (meaning uncertain); quantities and histogram null",
+    "202544 Sabatons of the Furnace Seraph -> 200113 Resonant Crystal: source-reported occurrences 102/183; displayed 56% (meaning uncertain); quantities and histogram null",
+    "202544 Sabatons of the Furnace Seraph -> 194124 Vibrant Shard: source-reported occurrences 92/183; displayed 50% (meaning uncertain); quantities and histogram null",
+    "202544 Sabatons of the Furnace Seraph -> 194123 Chromatic Dust: source-reported occurrences 14/183; displayed 8% (meaning uncertain); quantities and histogram null",
+    "202539 Sash of the Furnace Seraph -> 194124 Vibrant Shard: source-reported occurrences 94/179; displayed 53% (meaning uncertain); quantities and histogram null",
+    "202539 Sash of the Furnace Seraph -> 200113 Resonant Crystal: source-reported occurrences 89/179; displayed 50% (meaning uncertain); quantities and histogram null",
+    "202539 Sash of the Furnace Seraph -> 194123 Chromatic Dust: source-reported occurrences 12/179; displayed 7% (meaning uncertain); quantities and histogram null"
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-df-207269-cumulative",
-      "inputItemID": 207269,
-      "inputName": "Devout Ashdevil's Fanged Sash",
-      "method": "Disenchant",
-      "source": "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
-      "sourceReportedOperations": 52,
+      "studyKey": "wowhead-looter-df-202529-cumulative",
+      "inputItemID": 202529,
+      "inputName": "Wristwraps of the Sinister Savant",
+      "source": "https://www.wowhead.com/ptr/item=202529/wristwraps-of-the-sinister-savant",
+      "sourceReportedOperations": 110,
+      "siteView": "PTR",
       "materials": [
         {
-          "outputItemID": 194124,
-          "outputName": "Vibrant Shard",
-          "castsWithDrop": 31,
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "siteReportedOccurrences": 66,
           "percentShown": 60,
           "totalQuantity": null,
           "histogram": null
         },
         {
-          "outputItemID": 200113,
-          "outputName": "Resonant Crystal",
-          "castsWithDrop": 31,
-          "percentShown": 60,
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "siteReportedOccurrences": 50,
+          "percentShown": 45,
+          "totalQuantity": null,
+          "histogram": null
+        },
+        {
+          "outputItemID": 194123,
+          "outputName": "Chromatic Dust",
+          "siteReportedOccurrences": 4,
+          "percentShown": 4,
           "totalQuantity": null,
           "histogram": null
         }
@@ -60,17 +70,17 @@
       "specialization": null
     },
     {
-      "studyKey": "wowhead-looter-df-207274-cumulative",
-      "inputItemID": 207274,
-      "inputName": "Devout Ashdevil's Slippers",
-      "method": "Disenchant",
-      "source": "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
-      "sourceReportedOperations": 70,
+      "studyKey": "wowhead-looter-df-202530-cumulative",
+      "inputItemID": 202530,
+      "inputName": "Skullstrap of the Sinister Savant",
+      "source": "https://www.wowhead.com/ptr-2/item=202530/skullstrap-of-the-sinister-savant?bonus=7982",
+      "sourceReportedOperations": 97,
+      "siteView": "PTR",
       "materials": [
         {
           "outputItemID": 194124,
           "outputName": "Vibrant Shard",
-          "castsWithDrop": 43,
+          "siteReportedOccurrences": 59,
           "percentShown": 61,
           "totalQuantity": null,
           "histogram": null
@@ -78,38 +88,54 @@
         {
           "outputItemID": 200113,
           "outputName": "Resonant Crystal",
-          "castsWithDrop": 39,
+          "siteReportedOccurrences": 48,
+          "percentShown": 49,
+          "totalQuantity": null,
+          "histogram": null
+        },
+        {
+          "outputItemID": 194123,
+          "outputName": "Chromatic Dust",
+          "siteReportedOccurrences": 2,
+          "percentShown": 2,
+          "totalQuantity": null,
+          "histogram": null
+        }
+      ],
+      "independentOriginalPerCastStudy": false,
+      "gameBuild": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "studyKey": "wowhead-looter-df-202544-cumulative",
+      "inputItemID": 202544,
+      "inputName": "Sabatons of the Furnace Seraph",
+      "source": "https://www.wowhead.com/item=202544/sabatons-of-the-furnace-seraph?bonus=10313:1550&ilvl=493&spec=256",
+      "sourceReportedOperations": 183,
+      "siteView": "live",
+      "materials": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "siteReportedOccurrences": 102,
           "percentShown": 56,
           "totalQuantity": null,
           "histogram": null
-        }
-      ],
-      "independentOriginalPerCastStudy": false,
-      "gameBuild": null,
-      "skill": null,
-      "specialization": null
-    },
-    {
-      "studyKey": "wowhead-looter-df-207249-cumulative",
-      "inputItemID": 207249,
-      "inputName": "Benevolent Embersage's Featherdrape",
-      "method": "Disenchant",
-      "source": "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape?bonus=9818",
-      "sourceReportedOperations": 35,
-      "materials": [
-        {
-          "outputItemID": 200113,
-          "outputName": "Resonant Crystal",
-          "castsWithDrop": 27,
-          "percentShown": 77,
-          "totalQuantity": null,
-          "histogram": null
         },
         {
           "outputItemID": 194124,
           "outputName": "Vibrant Shard",
-          "castsWithDrop": 19,
-          "percentShown": 54,
+          "siteReportedOccurrences": 92,
+          "percentShown": 50,
+          "totalQuantity": null,
+          "histogram": null
+        },
+        {
+          "outputItemID": 194123,
+          "outputName": "Chromatic Dust",
+          "siteReportedOccurrences": 14,
+          "percentShown": 8,
           "totalQuantity": null,
           "histogram": null
         }
@@ -120,56 +146,34 @@
       "specialization": null
     },
     {
-      "studyKey": "wowhead-looter-df-207250-cumulative",
-      "inputItemID": 207250,
-      "inputName": "Benevolent Embersage's Wristwraps",
-      "method": "Disenchant",
-      "source": "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
-      "sourceReportedOperations": 31,
-      "materials": [
-        {
-          "outputItemID": 200113,
-          "outputName": "Resonant Crystal",
-          "castsWithDrop": 21,
-          "percentShown": 68,
-          "totalQuantity": null,
-          "histogram": null
-        },
-        {
-          "outputItemID": 194124,
-          "outputName": "Vibrant Shard",
-          "castsWithDrop": 13,
-          "percentShown": 42,
-          "totalQuantity": null,
-          "histogram": null
-        }
-      ],
-      "independentOriginalPerCastStudy": false,
-      "gameBuild": null,
-      "skill": null,
-      "specialization": null
-    },
-    {
-      "studyKey": "wowhead-looter-df-207251-cumulative",
-      "inputItemID": 207251,
-      "inputName": "Benevolent Embersage's Sagacious Sash",
-      "method": "Disenchant",
-      "source": "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash",
-      "sourceReportedOperations": 29,
+      "studyKey": "wowhead-looter-df-202539-cumulative",
+      "inputItemID": 202539,
+      "inputName": "Sash of the Furnace Seraph",
+      "source": "https://www.wowhead.com/item=202539/sash-of-the-furnace-seraph?bonus=9385",
+      "sourceReportedOperations": 179,
+      "siteView": "live",
       "materials": [
         {
           "outputItemID": 194124,
           "outputName": "Vibrant Shard",
-          "castsWithDrop": 23,
-          "percentShown": 79,
+          "siteReportedOccurrences": 94,
+          "percentShown": 53,
           "totalQuantity": null,
           "histogram": null
         },
         {
           "outputItemID": 200113,
           "outputName": "Resonant Crystal",
-          "castsWithDrop": 15,
-          "percentShown": 52,
+          "siteReportedOccurrences": 89,
+          "percentShown": 50,
+          "totalQuantity": null,
+          "histogram": null
+        },
+        {
+          "outputItemID": 194123,
+          "outputName": "Chromatic Dust",
+          "siteReportedOccurrences": 12,
+          "percentShown": 7,
           "totalQuantity": null,
           "histogram": null
         }
@@ -180,67 +184,60 @@
       "specialization": null
     }
   ],
-  "new_numerical_measurements": 10,
+  "new_numerical_measurements": 12,
+  "independent_new_controlled_cohorts": 0,
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-06T1732-new-amirdrassil-gear-looter-hits.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-06T1832-new-aberrus-gear-looter-occurrences.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
-    "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
-    "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape?bonus=9818",
-    "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
-    "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash"
+    "https://www.wowhead.com/ptr/item=202529/wristwraps-of-the-sinister-savant",
+    "https://www.wowhead.com/ptr-2/item=202530/skullstrap-of-the-sinister-savant?bonus=7982",
+    "https://www.wowhead.com/item=202544/sabatons-of-the-furnace-seraph?bonus=10313:1550&ilvl=493&spec=256",
+    "https://www.wowhead.com/item=202539/sash-of-the-furnace-seraph?bonus=9385"
   ],
-  "base_head_sha_verified": "e55d4d1b6ff0f442b2fc511720094f8db01a6597",
+  "base_head_sha_verified": "4224ca4497f149796de09e7cd0fe0635f3988bee",
   "commit_sha": null,
-  "commit_sha_note": "One atomic commit includes evidence and status; its SHA cannot be stored in this file without a second commit. Verified commit SHA is obtained by GitHub commit read-back and branch head comparison.",
+  "commit_sha_note": "A single atomic commit contains this status and evidence; its own SHA cannot be embedded self-referentially. Verify final SHA via GitHub commit and branch read-back.",
   "blockers": [
-    "Original Dragonflight ranked prospecting/milling per-cast ledgers with actual completed operations, input Resourcefulness refunds, skill/spec and output 0/1/2+ histograms remain unobtained; source totals cannot be converted into P(hit).",
-    "New five item-specific Wowhead Looter snapshots are cumulative community submissions, not dated controlled studies. Collection game build/bonus/skill, per-material total units and output histograms are unknown; material-row occurrence percentages must not be conflated with independently verified P(at least one output per completed operation).",
-    "Existing ore rank mapping S19 and Prismatic Eternity Amber family-level identity and cross-material dedupe problem S21 remain open for Master."
+    "No new measured Draconium/Serevite/Khaz'gorite/Prismatic operation-by-operation prospecting samples or Bubble Poppy/Saxifrage mill histograms were verified. Prior Jallfo/Xenastro/Bugy/Aary/superbondez numerical cohorts are already in existing evidence; search cannot manufacture omitted cast/refund logs.",
+    "The four new Wowhead item tables are cumulative pooled uploads, not controlled current-Retail skill/rank studies. Two were observed on PTR mirror pages. No independently verified output stack totals, complete zero/positive histograms, joint-material outcomes, or collection patch/build; do not use percentages as proven drop probabilities.",
+    "Serevite input-rank map S19 and Prismatic Eternity Amber family dedupe/estimator issue S21 still require Master review."
   ],
   "exhausted_sources": [
     {
-      "path": "Prior Jallfo beta and Xenastro spreadsheet/Reddit cohort paths for Draconium and Serevite",
-      "reason": "Previously indexed originals; no newly obtainable actual-cast, input-refund and per-output 0/1/2+ evidence."
+      "path": "Prior indexed Jallfo/Xenastro/Bugy/Aary/superbondez prospecting/milling cohorts and r/woweconomy originals",
+      "reason": "Original cohort totals, references and rank observations already recorded; no new per-cast logs, refund-adjusted denominators or histograms surfaced in fresh targeted searches across Reddit, Wowhead and profession guides."
     },
     {
-      "path": "Prior Aary/Hochenblume/Bubble Poppy/Saxifrage and Prismatic Ore Reddit/Wowhead sources",
-      "reason": "Original aggregate output figures and historic model priors already recorded; no newly verified current per-cast histograms."
-    },
-    {
-      "path": "200334 PTR cumulative Looter table (61 disenchants)",
-      "reason": "Overlaps 62-cast live table; must not double-count."
+      "path": "Existing 2026-11-01 through 2026-11-06 Dragonflight pooled Looter input IDs",
+      "reason": "Checked the recorded exact-ID sets to avoid reimporting prior item-level cumulative cohorts (including 194065, 194406, 198041, 202456, 202457 and 202528)."
     }
   ],
-  "next_concrete_step": "Prioritize new original per-cast/refund-aware Draconium/Serevite/Khaz'gorite/Prismatic prospect and Bubble Poppy/Saxifrage mill exports. Request source-owner raw operation ledger or author-supplied workbook with input quality IDs, skill/spec/patch and 0/1/2+ output histograms. For gear only, seek Wowhead Looter stack distributions and epoch, compare same item cumulative snapshots before further importing.",
+  "next_concrete_step": "Seek first-person operation export/workbook from a new ore- or milling-study author: input quality itemID, counted operations, refund-reuse details, skill/spec/epoch, and one 0/1/2+ output histogram per ranked material. Only treat new gear Looter pages as auxiliary material occurrence evidence until their semantics and source epoch are checked.",
   "decisions_needed": [
     {
       "owner": "Master",
-      "issue": "Whether cumulative anonymous Looter gear hit-count tables should be isolated from controlled rank-and-skill baselines pending full source/patch checks."
-    },
-    {
-      "owner": "Master",
-      "issue": "Request original source-author exports of rank/refund-adjusted prospecting/milling logs rather than repeated searches of exhausted originals."
+      "issue": "Keep anonymous cumulative Wowhead Looter material-occurrence counts segregated from controlled measured baselines pending raw stack and epoch verification."
     }
   ],
   "validation": {
-    "evidence_jsonl_parse": "passed locally in JS",
-    "evidence_record_count": 10,
-    "evidence_drop_records": 10,
+    "evidence_jsonl_parse": "passed in JS before GitHub write",
+    "evidence_record_count": 12,
+    "evidence_drop_records": 12,
     "evidence_searched_records": 0,
+    "unique_item_cohorts": 4,
     "known_nulls_preserved": true,
     "derived_probabilities_created": false,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-06T1732-new-amirdrassil-gear-looter-hits.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-06T1832-new-aberrus-gear-looter-occurrences.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "single_commit_intended": true,
-    "branch_head_lease_expected": "e55d4d1b6ff0f442b2fc511720094f8db01a6597",
+    "branch_head_lease_expected": "4224ca4497f149796de09e7cd0fe0635f3988bee",
     "git_readback": "pending"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "session_summary": "10 material-row source-reported positive-occurrence counts from five unique Dragonflight tier gear item IDs; gear item IDs independently identified on original Wowhead item pages. No first-person or controlled original ore/mill histograms, no gold valuations, and no production changes."
+  "session_summary": "Four new exact-input gear identities 202529, 202530, 202539, 202544, each with source-reported occurrence rows for outputs 200113, 194124, 194123. Site-wide operation denominators 110, 97, 179, 183 respectively, not 12 independent cohorts. No new numerical ore/mill cast-level results; no estimates, model confidence or gold prices."
 }
