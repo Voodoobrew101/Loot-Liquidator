@@ -1,7 +1,7 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T14:36:05.144Z",
-  "status": "Research-only: one new original 2024 Dragonflight-wand disenchant non-drop report, with approximate count and explicit zero Resonant Crystal output; no exact completed-cast denominator or ranked prospect/mill histogram recovered.",
+  "updated_at": "2026-11-06T15:42:22.353Z",
+  "status": "Research-only: five new item-specific cumulative Wowhead Looter Dragonflight disenchant cohorts (10 output hit-count rows; 324 distinct reported gear operations), without any prospecting/milling completed-cast/Resourcefulness data or per-cast yield histograms. No production merge/release.",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0020",
@@ -12,45 +12,211 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019: Draconium Ore 189143/188658 need original rank-confirmed per-cast prospective study, actual refunded-input ledger, marginal hits, material units and full zero-inclusive histogram.",
-    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464 need original rank/skill-specific per-mill completed operations and pigment 0/1/2+ distributions, not the already imported beta/reference datasets.",
-    "T0046: Serevite Ore 190394/190395/190396 authoritative quality-rank mappings and Prismatic Ore 194545 Eternity Amber rank attribution remain unverified.",
-    "New late-2024 original source: Enchanted Writhebark Wand 200641 → Resonant Crystal 200113 explicitly had zero reported crystal drops across approximately 600 wand disenchants, but source does NOT disclose an exact completed-cast denominator, output stack log, item version/bonus, or patch build."
+    "T0020/T0019: Draconium Ore 189143/188658 requires independently documented rank, complete prospect operations, resourcefulness refunds, per-output units, hit counts and zero-inclusive per-cast histograms.",
+    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 need named original mill logs with per-rank input, batch size, actual operations, output quantity/hit histogram, skill and spec.",
+    "T0046: confirm Serevite rank-to-ID 190394/190395/190396, Prismatic 194545 Eternity Amber per-rank ID mapping, and completed-cast denominators from original records.",
+    "Secondary numeric coverage: independently located Looter counts for five distinct gear item IDs (200420, 200339, 200414, 200416, 200418); retain historical pooled source limitations."
   ],
   "newly_verified_fields": [
     {
-      "field": "input/output item identities",
-      "inputItemID": 200641,
-      "inputName": "Enchanted Writhebark Wand",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "originalSource": "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
-      "disenchantCountApproximate": "around 600; not an exact cast denominator",
-      "casts": null,
-      "castsWithDrop": 0,
-      "totalQuantity": 0,
-      "perCastHistogram": null,
-      "reportedSkill": "Dragon Isles Enchanting 25",
-      "reportedSpecialization": "40 points Draconic Disenchantment",
-      "sourcePostDate": "2024-11-10",
-      "dataDate": null,
-      "patch": null,
-      "confidence": "No confidence assigned; late-era firsthand report, not current Retail calibrated"
+      "inputItemID": 200420,
+      "inputName": "Virtuous Silver Faulds",
+      "reportedDisenchantOperations": 28,
+      "outputHits": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 19,
+          "percentShown": 68,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": null
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 16,
+          "percentShown": 57,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": [
+            1,
+            2
+          ]
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr/item=200420/virtuous-silver-faulds",
+      "sourceKind": "historical pooled Looter hit counts; not original individual cast log",
+      "totalQuantity": null,
+      "zeroInclusiveHistogram": null,
+      "verifiedQualityVersion": null,
+      "patch": null
+    },
+    {
+      "inputItemID": 200339,
+      "inputName": "Scalesworn Cultist's Girdle",
+      "reportedDisenchantOperations": 55,
+      "outputHits": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 34,
+          "percentShown": 62,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 28,
+          "percentShown": 51,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": null
+        }
+      ],
+      "source": "https://www.wowhead.com/item=200339/scalesworn-cultists-girdle",
+      "sourceKind": "historical pooled Looter hit counts; not original individual cast log",
+      "totalQuantity": null,
+      "zeroInclusiveHistogram": null,
+      "verifiedQualityVersion": null,
+      "patch": null
+    },
+    {
+      "inputItemID": 200414,
+      "inputName": "Virtuous Silver Breastplate",
+      "reportedDisenchantOperations": 82,
+      "outputHits": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 50,
+          "percentShown": 61,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 47,
+          "percentShown": 57,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": null
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr/item=200414/virtuous-silver-breastplate",
+      "sourceKind": "historical pooled Looter hit counts; not original individual cast log",
+      "totalQuantity": null,
+      "zeroInclusiveHistogram": null,
+      "verifiedQualityVersion": null,
+      "patch": null
+    },
+    {
+      "inputItemID": 200416,
+      "inputName": "Virtuous Silver Gauntlets",
+      "reportedDisenchantOperations": 85,
+      "outputHits": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 58,
+          "percentShown": 68,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 40,
+          "percentShown": 47,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": null
+        }
+      ],
+      "source": "https://www.wowhead.com/item=200416/virtuous-silver-gauntlets",
+      "sourceKind": "historical pooled Looter hit counts; not original individual cast log",
+      "totalQuantity": null,
+      "zeroInclusiveHistogram": null,
+      "verifiedQualityVersion": null,
+      "patch": null
+    },
+    {
+      "inputItemID": 200418,
+      "inputName": "Virtuous Silver Cuisses",
+      "reportedDisenchantOperations": 74,
+      "outputHits": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 46,
+          "percentShown": 62,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 43,
+          "percentShown": 58,
+          "percentMeaning": "perCast",
+          "positiveQuantityRange": null
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr-2/item=200418/virtuous-silver-cuisses",
+      "sourceKind": "historical pooled Looter hit counts; not original individual cast log",
+      "totalQuantity": null,
+      "zeroInclusiveHistogram": null,
+      "verifiedQualityVersion": null,
+      "patch": null
     }
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "reddit-1go5h2b-20241110-approx600-writhebark-wands",
-      "originalSource": "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
-      "provenance": "firsthand report; count approximately 600",
-      "inputItemID": 200641,
-      "outputItemID": 200113,
-      "exactCompletedCasts": null,
-      "explicitOutputHitAndUnitCount": 0,
-      "usableAsPerCastRate": false
+      "studyKey": "wowhead-looter-df-200420-cumulative",
+      "source": "https://www.wowhead.com/ptr/item=200420/virtuous-silver-faulds",
+      "reportedOperations": 28,
+      "distinctFromOtherItemIDs": true,
+      "cohortType": "cumulative item-specific Looter observations; later snapshot MUST replace, not append"
+    },
+    {
+      "studyKey": "wowhead-looter-df-200339-cumulative",
+      "source": "https://www.wowhead.com/item=200339/scalesworn-cultists-girdle",
+      "reportedOperations": 55,
+      "distinctFromOtherItemIDs": true,
+      "cohortType": "cumulative item-specific Looter observations; later snapshot MUST replace, not append"
+    },
+    {
+      "studyKey": "wowhead-looter-df-200414-cumulative",
+      "source": "https://www.wowhead.com/ptr/item=200414/virtuous-silver-breastplate",
+      "reportedOperations": 82,
+      "distinctFromOtherItemIDs": true,
+      "cohortType": "cumulative item-specific Looter observations; later snapshot MUST replace, not append"
+    },
+    {
+      "studyKey": "wowhead-looter-df-200416-cumulative",
+      "source": "https://www.wowhead.com/item=200416/virtuous-silver-gauntlets",
+      "reportedOperations": 85,
+      "distinctFromOtherItemIDs": true,
+      "cohortType": "cumulative item-specific Looter observations; later snapshot MUST replace, not append"
+    },
+    {
+      "studyKey": "wowhead-looter-df-200418-cumulative",
+      "source": "https://www.wowhead.com/ptr-2/item=200418/virtuous-silver-cuisses",
+      "reportedOperations": 74,
+      "distinctFromOtherItemIDs": true,
+      "cohortType": "cumulative item-specific Looter observations; later snapshot MUST replace, not append"
     }
   ],
-  "new_numerical_measurements": 0,
+  "new_numerical_measurements": 10,
   "source_metadata_verified": [
     {
       "url": "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
@@ -62,22 +228,24 @@
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-06T1436-late-df-writhebark-crystal-report.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-06T1542-five-new-gear-disenchant-hits.jsonl"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
-    "https://tradeskillmaster.com/retail/us/items/200641",
-    "https://www.wowhead.com/spell=391176/enchanted-writhebark-wand",
-    "https://www.wowhead.com/item=200113/resonant-crystal"
+    "https://www.wowhead.com/ptr/item=200420/virtuous-silver-faulds",
+    "https://www.wowhead.com/item=200339/scalesworn-cultists-girdle",
+    "https://www.wowhead.com/ptr/item=200414/virtuous-silver-breastplate",
+    "https://www.wowhead.com/item=200416/virtuous-silver-gauntlets",
+    "https://www.wowhead.com/ptr-2/item=200418/virtuous-silver-cuisses"
   ],
-  "base_head_sha_verified": "34a667ea770f464248c6b9b64a6418a653a0a35f",
+  "base_head_sha_verified": "d7f7e32d0752fde8c3aa9e8cd3fe87aa015ed092",
   "commit_sha": null,
-  "commit_sha_note": "A commit cannot embed its own SHA in a tracked file within that same single atomic commit; current SHA must be obtained from the GitHub commit/branch readback. Last verified prior evidence commit is preserved in last_run_validation. No second write/commit merely to insert self-referential SHA.",
+  "commit_sha_note": "A one-commit tracked file cannot contain its own as-yet-unknown SHA. Confirm this run's final commit from GitHub branch/read-back rather than implying this null is a failed commit.",
   "blockers": [
-    "Original Draconium/Serevite/Khaz'gorite/Prismatic prospecting and Bubble Poppy/Saxifrage milling ranked completed-cast/resourcefulness-refund accounted 0/1/2+ histograms have not been recovered; avoid recopying known Bugy/Jallfo/Xenastro/Aary originals.",
-    "2024 Nov 10 Writhebark wand post gives an approximate 600 disenchants, not an exact denominator; 0 reported Resonant Crystals does not establish a measured P(hit), item-level or version-specific odds, changes to 2022-era game mechanics, or other material drops.",
-    "Crafted wand's actual item bonus/quality, report's precise casting date, patch build, skill tools and status of 5% Draconic Disenchantment perk unverified; older historical rows must not be pooled with post-TWW anecdote.",
-    "Source-indexed Wowhead Looter gear disenchant counts from prior runs remain cumulative unknown-epoch and lack raw per-cast stack counts; do not double-count cross-item snapshots or infer missing output zeros."
+    "Original Dragonflight Draconium/Serevite/Khaz'gorite/Prismatic prospecting and Bubble Poppy/Saxifrage milling datasets still lack independently verified quality-ranked completed-cast, refunded-ore/herb ledger and zero-inclusive output histograms. Previously indexed originals were not recopied.",
+    "The new five cumulative Wowhead Looter tables report observed material-occurrence counts, not total material quantities, zero-outcome operations or positive-stack histograms; pooled historical periods, item version bonuses, current Retail epoch, Enchanting skill and specialization are unverified.",
+    "On the displayed sources per-material hit counts can sum beyond the total operations; co-occurring materials must not be treated as exclusive; displayed percentages are original rounded site values, not newly calculated drop probabilities.",
+    "PTR-hosted item pages for 200420/200414/200418 have no independently documented match to current Retail cast mechanics; these historical observations require version review before production consumption.",
+    "Original 2023 ranked prospect/mill sheets and Resourcefulness refund-adjusted raw logs remain unavailable; no numeric estimates or prices produced."
   ],
   "exhausted_sources": [
     {
@@ -180,9 +348,17 @@
         "https://us.forums.blizzard.com/en/wow/t/draconic-disenchantment-question/1430821",
         "https://www.wowhead.com/spell=374627/dragon-isles-prospecting"
       ]
+    },
+    {
+      "source": "2026-11-06 fresh by-name prospecting/milling queries (Draconium Ore, Serevite Ore, Khaz'gorite Ore, Prismatic Ore, Bubble Poppy, Saxifrage), including Reddit, Wowhead and Blizzard Forums",
+      "reason": "Revisited indexed old original prospect/mill numbers but no NEW independent rank-and-refund-accounted raw cast datasets; avoided duplicating old cohorts, switched to previously unrecorded gear Looter item identities; four tempting item IDs (194406,194389,207269,207274) were shown already archived in current research branch and deliberately skipped.",
+      "links": [
+        "https://www.reddit.com/r/woweconomy/",
+        "https://www.wowhead.com/spell=374627/dragon-isles-prospecting"
+      ]
     }
   ],
-  "next_concrete_step": "Prioritize a NEW author-provided cast-log or SavedVariables/CSV source for ranked Draconium/Serevite/Khaz'gorite/Prismatic prospects and Bubble Poppy/Saxifrage milling, with exact completed casts/refunds, matched input/output rank IDs and per-output zero-inclusive histograms. If none, request original 2024 Writhebark wand recorder export to obtain the exact wand disenchant denominator, output material totals and patch/tools for 200641→200113; keep this observation out of calibrated rates meanwhile.",
+  "next_concrete_step": "Obtain a player export of complete per-cast rank-specific Draconium 189143/188658 or Bubble Poppy 191467 and Saxifrage 191464 milling (input IDs, nominal units, refunded inputs, actual casts, material 0/1/2+ yields, skill/spec/patch); verify Serevite 190394/190395/190396 rank IDs via official Blizzard API or current game tooltip. Do not re-import cumulative Looter item snapshots or already recorded Bugy/Jallfo/Xenastro studies.",
   "decisions_needed": [
     {
       "request": "Master review of two additive Serevite rank-to-ID refining recipe corrections (replaces dragonflight-20261031-173001/002)",
