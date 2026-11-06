@@ -1,26 +1,34 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-06T01:19:08.120Z",
-  "status": "5 new item-template eligibility flags recorded; 0 new measured completed-cast cohorts; conflicting item/version semantics still blocked",
+  "updated_at": "2026-11-06T02:16:29.217Z",
+  "status": "Original Blizzard Armory item-variant evidence advanced for 272246 (equipped ilvl 305 and 295); no new independently measured completed-cast cohort. Existing PTR Looter data deduplicated, not reimported.",
   "task_ids": [
-    "T0026",
     "T0049",
+    "T0026",
     "T0039",
     "T0005",
     "T0003",
     "T0002",
     "T0045",
+    "T0034",
     "T0033"
   ],
   "exact_gaps_targeted": [
     {
-      "task_id": "T0026",
-      "gap": "Current Retail exact item/bonus version eligibility for epic armor versus cumulative Wowhead Looter observations. Added five same-item WoWDB LIVE non-disenchant flags for prior 2026-11-02 source cohorts; static templates cannot adjudicate live scaled variants."
+      "task_id": "T0049",
+      "input_item_id": 272246,
+      "material_ids": [
+        243606,
+        243605,
+        243602,
+        243603,
+        243599
+      ],
+      "gap": "Live equipped ilvl305 versus WowDB base ilvl206 Cannot be disenchanted and Wowhead Looter cumulative 140 operations (48/41/24/24/2 occurrences). Player itemLink bonus IDs, eligibility-at-305, cast outcomes, build, skill and specializations unverified."
     },
     {
-      "task_id": "T0049",
-      "item_id": 272246,
-      "gap": "Miststalker's Wristbands actual ilvl 305 and 12.1.5 build; WoWDB base ilvl 206 non-DE flag versus Wowhead Looter 140 reported operations (243606,243605,243602,243603,243599). No in-game item string, bonus IDs or cast logs."
+      "task_id": "T0026",
+      "gap": "Live Midnight armor/weapon uncommon/rare/epic item-version and current-build disenchant denominator; output rank and histograms. New Corewright's Zappers 251204 PTR Looter 46-cast source was checked against previously recorded 2026-11-02 cohorts and must not be duplicated."
     },
     {
       "task_id": "T0039",
@@ -37,12 +45,15 @@
         242788,
         242608
       ],
-      "gap": "Rank-specific Umbral Tin prospecting output identities, per-output castsWithDrop/zeros, histograms, completed casts/refunds, skill and Eversong Diamond unlock."
+      "gap": "Independent completed-prospect 0/1/2/... rank-specific per-output hits/zeros, actual output IDs, Tin-vestigator unlock, resourcefulness refunds and skill; June 10 original 800-cast family totals are already recorded."
     },
     {
       "task_id": "T0003",
-      "input_item_id": 237359,
-      "gap": "Refulgent Copper independently counted per-output hits and completed-cast histograms."
+      "input_item_ids": [
+        237359,
+        237361
+      ],
+      "gap": "Refulgent Copper independent current-patch completed-cast output-specific hits and histograms."
     },
     {
       "task_id": "T0002",
@@ -50,93 +61,50 @@
         237364,
         237365
       ],
-      "gap": "Brilliant Silver rank-specific independent raw cast results and output IDs."
+      "gap": "Brilliant Silver independent current-patch rank-specific completed operations, per-output hits and histograms."
     },
     {
       "task_id": "T0045",
       "input_item_id": 236761,
       "output_item_id": 245807,
-      "gap": "Tranquility Bloom 10-herb Powder Pigment completed milling casts, rank, refund accounting, positive stack and zero-inclusive per-cast histograms."
-    },
-    {
-      "task_id": "T0033",
-      "gap": "Mechanics M11 currently 'likely' Multicraft applies to prospecting, but explicit guide and independent firsthand Reddit say it cannot; Master update requested."
+      "gap": "10-herb Tranquility Bloom-to-Powder Pigment completed-mill denominator, Resourcefulness/refunds, output histograms and skill; existing nominal herb totals are not mills."
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "noDisenchant-item-template",
-      "item_id": 250031,
-      "item_name": "Devouring Reaver's Exhaustplates",
-      "source_build": 63534,
-      "source_base_ilvl": 197,
-      "database_flag": "Cannot be disenchanted",
-      "source_url": "https://www.wowdb.com/items/250031-devouring-reavers-exhaustplates",
-      "conflicting_existing_looter_casts": 27,
-      "actual_live_game_disencant_eligibility": null,
-      "scaled_variant_eligibility": null,
-      "independent_completed_casts": null
+      "kind": "live-equipped-item-variant",
+      "task_id": "T0049",
+      "item_id": 272246,
+      "item_name": "Miststalker's Wristbands",
+      "field": "equipped_item_level",
+      "value": 305,
+      "source_url": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/stormrage/garakdruid/",
+      "corroborating_url": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/area-52/boostio/",
+      "source_mode": "Blizzard official character Armory indexed text; live endpoint fetch returned 403; item name + equipment ilvl visible in search index, bonus ID not exposed",
+      "direct_item_link": null,
+      "live_disenchant_eligible": null,
+      "completed_disenchant_casts": null
     },
     {
-      "kind": "noDisenchant-item-template",
-      "item_id": 250032,
-      "item_name": "Devouring Reaver's Pistons",
-      "source_build": 63534,
-      "source_base_ilvl": 197,
-      "database_flag": "Cannot be disenchanted",
-      "source_url": "https://www.wowdb.com/items/250032-devouring-reavers-pistons",
-      "conflicting_existing_looter_casts": 13,
-      "actual_live_game_disencant_eligibility": null,
-      "scaled_variant_eligibility": null,
-      "independent_completed_casts": null
-    },
-    {
-      "kind": "noDisenchant-item-template",
-      "item_id": 250034,
-      "item_name": "Devouring Reaver's Essence Grips",
-      "source_build": 63534,
-      "source_base_ilvl": 197,
-      "database_flag": "Cannot be disenchanted",
-      "source_url": "https://www.wowdb.com/items/250034-devouring-reavers-essence-grips",
-      "conflicting_existing_looter_casts": 20,
-      "actual_live_game_disencant_eligibility": null,
-      "scaled_variant_eligibility": null,
-      "independent_completed_casts": null
-    },
-    {
-      "kind": "noDisenchant-item-template",
-      "item_id": 250000,
-      "item_name": "Frenzyward of the Black Talon",
-      "source_build": 63534,
-      "source_base_ilvl": 197,
-      "database_flag": "Cannot be disenchanted",
-      "source_url": "https://www.wowdb.com/items/250000-frenzyward-of-the-black-talon",
-      "conflicting_existing_looter_casts": 10,
-      "actual_live_game_disencant_eligibility": null,
-      "scaled_variant_eligibility": null,
-      "independent_completed_casts": null
-    },
-    {
-      "kind": "noDisenchant-item-template",
-      "item_id": 260371,
-      "item_name": "Infernal Greatlock Girdle",
-      "source_build": 63724,
-      "source_base_ilvl": 197,
-      "database_flag": "Cannot be disenchanted",
-      "source_url": "https://www.wowdb.com/items/260371-infernal-greatlock-girdle",
-      "conflicting_existing_looter_casts": 12,
-      "actual_live_game_disencant_eligibility": null,
-      "scaled_variant_eligibility": null,
-      "independent_completed_casts": null
+      "kind": "live-equipped-item-variant",
+      "task_id": "T0049",
+      "item_id": 272246,
+      "item_name": "Miststalker's Wristbands",
+      "field": "equipped_item_level",
+      "value": 295,
+      "source_url": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/tichondrius/chuntaroo/",
+      "source_mode": "Blizzard official character Armory indexed text (search result)",
+      "direct_item_link": null,
+      "live_disenchant_eligible": null,
+      "completed_disenchant_casts": null
     },
     {
       "kind": "mechanics-source-corroboration",
-      "task_id": "T0033",
-      "finding": "Guide explicitly states Midnight Prospecting and Crushing cannot Multicraft; use Resourcefulness",
-      "source_url": "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
-      "independent_existing_source": "https://www.reddit.com/r/woweconomy/comments/1wwd0w0/should_i_use_my_1_time_swap_for_jc_to_go_from_gem/",
-      "requires_master_update": true,
-      "source_date": null
+      "task_id": "T0034",
+      "finding": "Wowhead Midnight Enchanting specialization guide explicitly states Disenchanting is not affected by profession stats but is affected by overall Skill. This independently reinforces M13 (still likely in mechanics.md); Master owns any change.",
+      "source_url": "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations",
+      "new_measured_casts": 0,
+      "requires_master_update": true
     }
   ],
   "numeric_fields_advanced": {
@@ -145,49 +113,53 @@
     "new_totalQuantity": 0,
     "new_histograms": 0,
     "new_measured_zero_counts": 0,
-    "new_independent_cohorts": 0
+    "new_independent_cohorts": 0,
+    "new_verified_equipped_item_level_variants": 2
   },
-  "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-06T0119-gear-eligibility-build-conflicts.jsonl"
-  ],
+  "evidence_files": [],
+  "prior_evidence_file": "research/v3/evidence/midnight/2026-11-06T0119-gear-eligibility-build-conflicts.jsonl",
   "source_links": [
-    "https://www.wowdb.com/items/250031-devouring-reavers-exhaustplates",
-    "https://www.wowdb.com/items/250032-devouring-reavers-pistons",
-    "https://www.wowdb.com/items/250034-devouring-reavers-essence-grips",
-    "https://www.wowdb.com/items/250000-frenzyward-of-the-black-talon",
-    "https://www.wowdb.com/items/260371-infernal-greatlock-girdle",
-    "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/stormrage/garakdruid/",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/area-52/boostio/",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/tichondrius/chuntaroo/",
+    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
     "https://www.wowhead.com/item=272246/miststalkers-wristbands",
-    "https://www.wowdb.com/items/272246-miststalkers-wristbands"
+    "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations"
   ],
-  "verified_commit_sha": null,
-  "verified_base_head_sha": "ca4810d28688d6a9efe67a12169281b11cfce5a1",
-  "commit_sha_note": "The file cannot include its own commit SHA in the same atomic commit. Post-write verification will be performed; GitHub file history provides the new commit SHA.",
+  "verified_commit_sha": "2c6c3e47cbc84a8b554d5e640d77ad1db21e1a5d",
+  "verified_commit_sha_scope": "previous run's source-backed noDisenchant JSONL and quiet-status commit, independently rechecked this session. This status update commit cannot contain its own SHA.",
+  "branch_head_at_read": "94b7ee935d1b7ffaacfaaa0c3591e0fc6129c1ac",
   "blockers": [
-    "Current live in-game eligibility and exact 305 ilvl item string/bonus ID for item 272246 not available. WoWDB generic flag conflicts with community Looter, not a resolved permission gate.",
-    "New five conflicting epic item template flags do not establish whether Looter corresponds to an older build, alternate bonus ID, or incorrect aggregate semantics.",
-    "Original dynamic Wowhead Looter table, raw pctstack/quality links and client logs inaccessible via text-only web; browser connector additionally had insufficient credits this session.",
-    "No independent Umbral Tin per-output completed-cast histogram or Milling no-refund operation log; pre-existing pooled studies have unknown hits/zeros.",
-    "M11 change must be made by Master; no direct mechanics.md edits by worker."
+    "Official Blizzard Armory source-indexed character shows named ilvl305 item actually equipped, resolving the base-ilvl-versus-equippable-ilvl distinction, but direct Armory fetch returned 403 and does not supply item bonus IDs or disenchant action logs.",
+    "WoWDB reports cannot be disenchanted on base item template at ilvl206; current equippable 305 item eligibility remains completely untested.",
+    "Wowhead Looter totals 140 operations cannot be reliably attributed to the 305 bonus variant, specific patch, skill or specialization; per-output positive stack histograms and original cast events are still needed.",
+    "Original Cardinalai June 10 Umbral Tin rank2 800-cast source already exists; no raw per-output hits, 0/1/2 histogram or independent export was located this run.",
+    "M13 update requires Master approval; worker cannot change mechanics or compilation.",
+    "No new JSONL was written because all retrievable Looter totals were previously recorded, and item-level Armory snapshots are not processing-drop observations supported by the existing JSONL evidence schema. A repeated searched-only evidence file would inflate research."
   ],
   "exhausted_sources": [
-    "Repeated generic item-name searches for Miststalker's Wristbands 272246 ilvl305 and Cardinalai 237362 pooled totals cannot establish new casts; do not repeat without raw client records.",
-    "Existing March 2026 Reddit 200-Thorium Eversong Diamond percentage and 1000 Tranquility Bloom pooled pigment posts are already captured; no re-import.",
-    "Read-only JS-less Wowhead page renders cannot reveal per-output Looter raw stack distributions; retry only with suitable original upload or functioning page-code access."
+    "Repeated Miststalker's Wristbands name/ilvl keyword searches and WowDB base template no-DE listing cannot establish a completed cast; use an in-game link and actual action log instead.",
+    "Corewright's Zappers 251204 46-cast PTR Looter source already appears in research/v3/evidence/midnight/2026-11-02T0312-de-gear-and-march-hotfixes.jsonl and 2026-11-02T1605-gear-looter-and-beta-eligibility.jsonl; no rerecording.",
+    "Cardinalai Umbral Tin 237362 family pooled totals, April Reddit Eversong reports and 1000-herb milling pooled totals already recorded; must not duplicate or infer missing hits.",
+    "Wowhead JS-less snapshots can show aggregate material names and counts but not rank output links, per-cast histogram, bonus ID or source build."
   ],
   "decisions_needed": [
     {
       "owner": "Master",
-      "decision": "Review WoWDB live generic no-DE flags versus prior same-item Wowhead Looter records for 250031/250032/250034/250000/260371 and 272246; do not map historical/aggregate hits to current Retail eligibility without item string."
+      "decision": "Existing JSONL evidence schema cannot describe primary Blizzard Armory proof of an equipped version (item 272246 at ilvl305) without misclassifying it as a Disenchant drop/noDisenchant. Decide whether a distinct itemVariant observation type is warranted; do not modify shared schema from this worker."
     },
     {
       "owner": "Master",
-      "decision": "Reclassify mechanics M11 to 'verified prospecting does not Multicraft' only after checking explicit guide + existing independent firsthand confirmation; no runtime edit by worker."
+      "decision": "Evaluate M13 from Wowhead's direct statement that Disenchanting ignores profession stats and responds to Skill; if sufficient, update mechanics.md. No worker edit."
+    },
+    {
+      "owner": "Master / integration reviewer",
+      "decision": "Do not let 140 Looter itemID=272246 operations overrule the base-template non-disenchant flag or claim live ilvl305 eligibility without an item bonus/patch-grounded cast."
     }
   ],
-  "next_concrete_step": "Seek exact in-game item hyperlink/bonus list and failed/successful Disenchant attempt for 272246 at ilvl305, then seek original 237362 rank-specific prospecting export with completed-operation log, output item IDs and refund counters. If unavailable pivot to independent current-patch 236761->245807 10-herb mill log, not a repeated pooled forum estimate.",
-  "evidence_readback": "pending",
-  "commit_diff_verification": "pending",
+  "next_concrete_step": "Obtain a Retail 12.1.5 itemLink including all bonus IDs for Miststalker's Wristbands 272246 at equipped ilvl305 and a genuine success/failure Disenchant attempt; record quality/slot, skill, specialization, exact material IDs/counts and build. If unavailable, switch to new original operation-level rank1 Umbral Tin 237363 prospecting or 236761 milling logs rather than searching known reposts.",
+  "evidence_readback": "Previous evidence file 2026-11-06T0119 read successfully from branch during this run; prior commit 2c6c3e47 verified as changing exactly own evidence file and own status. Current status update readback and commit verification to be performed after write.",
+  "commit_diff_verification": "pending current commit",
   "production_merge": false,
   "release": false,
   "notifications": "on demand only; Dot monitors progress"
