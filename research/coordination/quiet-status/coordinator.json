@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T06:13:00.302Z",
+  "updated_at": "2026-11-06T06:37:40.117Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Source-lineage correction confirmed from ORIGINAL 2016 Legion Prospecting sheet: two Gem Chip totalQuantity cells are formulas copying stated casts, not independently recorded measured output; records legacy-20261031-013/026 currently transcribe those formula totals as study quantities. Historical 1-per-cast provisional assumption may be defensible only when labeled as a modeled source-table assumption. Distinct colorless bag Gem Chip 129100 versus blue loot-window Gem Chip 130203 documented; workbook has no itemLink. No new independent cohorts or offline tooltip tests.",
+  "status": "Verified cross-file duplicate in historical Netherweave Boots 3-DE cohort (legacy-20261101-215 vs legacy-20261106-810); do not count Nov6 row as a sixth independent new TBC cohort. Separately verified queued T0053 item 45661 already has 7 rewards in legacy evidence and compiled token ledger. No new measured casts, itemdb import, offline synthetic-price valuation or live Retail verification in this coordinator session.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -49,6 +49,21 @@
       "output_identity": "Source name only. 129100 is colorless bag reagent per linked Wowhead comments; 130203 is blue loot-window Gem Chip; no workbook original itemLink, so do not assert which raw output item ID the author's sheet counted.",
       "new_observed_casts": 0,
       "new_independent_cohorts": 0
+    },
+    {
+      "task_id": "T0042",
+      "kind": "cross_file_source_identity_duplicate",
+      "record_ids": [
+        "legacy-20261101-215",
+        "legacy-20261106-810"
+      ],
+      "remaining_gap": "Worker status says six new TBC original cohorts but one Allakhazam Boots cohort already existed; de-duplicate source identity in reports/audit and preserve separate actual source cases."
+    },
+    {
+      "task_id": "T0053",
+      "kind": "already_resolved_queue_identity",
+      "input_item_id": 45661,
+      "remaining_gap": "Queue still labels token identity/rewards unverified despite existing 2026-11-01 original evidence and compiled 4df9ae8 ledger; live in-game token variant/pricing not executed."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -170,6 +185,84 @@
       "new_gold_ev_coverage_verified": 0,
       "retail_scope_unverified": true,
       "decision": "Flag concern confirmed by original formulas. Distinguish study counts from table-derived assumption, preserve lineage; source still lacks original itemLink."
+    },
+    {
+      "kind": "new_verified_cross_file_duplicate_not_new_study",
+      "task_id": "T0042",
+      "old_record_id": "legacy-20261101-215",
+      "new_record_id": "legacy-20261106-810",
+      "old_file": "research/v3/evidence/legacy/2026-11-01T0752-outland-disenchant-originals-ulduar-token.jsonl",
+      "new_file": "research/v3/evidence/legacy/2026-11-06T0549-tbc-netherweave-original-disentchant-results.jsonl",
+      "original_source": "https://www.wowhead.com/mop-classic/item=21853/netherweave-boots",
+      "input_item_id": 21853,
+      "output_item_id": 22445,
+      "method": "Disenchant",
+      "completed_casts": 3,
+      "total_units": 11,
+      "casts_with_drop": 3,
+      "original_positive_histogram": {
+        "3": 1,
+        "4": 2
+      },
+      "new_histogram": {
+        "0": 0,
+        "3": 1,
+        "4": 2
+      },
+      "same_source_identity": true,
+      "same_estimator_numeric_fingerprint": true,
+      "correct_independent_cohort_increment": 0,
+      "worker_report_currently_counts_as_new": true,
+      "reviewed_estimator_code": "research/v3/tools/build_estimates.py: study_identity uses normalized source and numeric study vector; by inspection duplicate should collapse; current compiled estimator NOT executed",
+      "disposition": "Do not treat Nov6 row as new independent cohort; both original source rows remain append-only. Ask legacy worker to annotate correction/retire duplicate from new-cohort tally without changing original; re-run derived study audit only in authorized engineering review."
+    },
+    {
+      "kind": "newly_confirmed_queue_gap_already_satisfied_not_newly_imported",
+      "task_id": "T0053",
+      "token_item_id": 45661,
+      "token_name": "Spaulders of the Wayward Vanquisher",
+      "allowed_classes": [
+        "Death Knight",
+        "Rogue",
+        "Mage",
+        "Druid"
+      ],
+      "reward_item_ids": [
+        45339,
+        45344,
+        45349,
+        45352,
+        45359,
+        45369,
+        45400
+      ],
+      "reward_ids_by_class": {
+        "Rogue": [
+          45400
+        ],
+        "Death Knight": [
+          45339,
+          45344
+        ],
+        "Mage": [
+          45369
+        ],
+        "Druid": [
+          45349,
+          45352,
+          45359
+        ]
+      },
+      "evidence_file": "research/v3/evidence/legacy/2026-11-01T0752-outland-disenchant-originals-ulduar-token.jsonl",
+      "existing_evidence_record_id": "legacy-20261101-216",
+      "compiled_ledger": "docs/usable-data-audit/token-ledger.json",
+      "compiled_ledger_record_id": "v3token:45661",
+      "compiled_ledger_source_revision": "4df9ae8b1359d934828e4d0e6d39a9a4dba26fae",
+      "source_url": "https://warcraft.wiki.gg/wiki/Spaulders_of_the_Wayward_Vanquisher",
+      "modern_item_url": "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher",
+      "current_status": "T0053 still queued despite existing full seven reward IDs in research and compiled token ledger. The compiled ledger says shared route covered by integration fixtures; this coordinator did not run client tests.",
+      "new_token_relationships_imported": 0,
+      "additional_user_benefit": "Avoid redundant token research; verify queue completion policy and use work time on missing numeric fields."
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -208,7 +301,9 @@
     "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
     "research/v3/evidence/dragonflight/2026-11-02T1025-xenastro-draconium-r3-original-batches.jsonl",
     "research/v3/evidence/legacy/2026-11-06T0149-khorium-bludgeon-original-one-cast.jsonl",
-    "research/v3/evidence/legacy/2026-10-31T0039-legion-prospecting-original-studies.jsonl"
+    "research/v3/evidence/legacy/2026-10-31T0039-legion-prospecting-original-studies.jsonl",
+    "research/v3/evidence/legacy/2026-11-01T0752-outland-disenchant-originals-ulduar-token.jsonl",
+    "research/v3/evidence/legacy/2026-11-06T0549-tbc-netherweave-original-disentchant-results.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -232,7 +327,10 @@
     "https://www.wowhead.com/item=130172/sangrite",
     "https://www.wowhead.com/item=130181/pandemonite",
     "https://github.com/t-mart/wow-auction/blob/master/README.md",
-    "https://warcraft.wiki.gg/wiki/API:C_TradeSkillUI.GetItemReagentQualityByItemInfo"
+    "https://warcraft.wiki.gg/wiki/API:C_TradeSkillUI.GetItemReagentQualityByItemInfo",
+    "https://www.wowhead.com/mop-classic/item=21853/netherweave-boots",
+    "https://warcraft.wiki.gg/wiki/Spaulders_of_the_Wayward_Vanquisher",
+    "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
@@ -253,7 +351,9 @@
     "Exact normalized source->compiled ItemDB->offline valuation/tooltip tracing not executed; cannot declare 36 rows newly imported, priced or actionable.",
     "Dragonflight Blizzard public item endpoint may omit reagent ranks; client reagent-quality API not executed.",
     "Legacy records 013/026 label spreadsheet-formula totals as study totalQuantity: requires worker-owned correcting record or reviewed modeled-reference handling; not new observed yields.",
-    "Workbook lacks original exact Gem Chip itemLink. 129100 colorless reagent vs 130203 blue loot-window variant must not be conflated; live Retail output mapping and valuation not tested."
+    "Workbook lacks original exact Gem Chip itemLink. 129100 colorless reagent vs 130203 blue loot-window variant must not be conflated; live Retail output mapping and valuation not tested.",
+    "Legacy worker's 2026-11-06T0549 status lists six new cohorts, but same 3-DE Allakhazam cohort was already recorded on Nov1 under another studyKey; report count should be five at most, pending checking remaining studies.",
+    "Current estimator has source/fingerprint dedupe by code inspection, but no estimator, migration audit, tooltip fixture or client eligibility test was executed this session."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -261,7 +361,9 @@
     "Jallfo Dragonflight JC Yield Calculator formulas and 444 pinned transcription fields were already thoroughly reviewed in research/v3/reviews/2026-11-02-dragonflight-jc-workbook-context.md; this run did not reopen as new research.",
     "T0053 seven token rewards already represented in existing 2026-11-01 evidence and protected token ledger: re-importing those values or requesting identical study is redundant.",
     "TWW LotzBoi Mycobloom rank/skill reference and Serevite/Retail commodity rank mappings already indexed in research; no independent new measured sample found here.",
-    "Existing Glizzerd/Wubbits and rotab Legion cohorts have been inspected; source identities already in original research JSONL; do not request duplicate numerical studies or inflate casts. Only gem ID disambiguation and modern eligibility remain."
+    "Existing Glizzerd/Wubbits and rotab Legion cohorts have been inspected; source identities already in original research JSONL; do not request duplicate numerical studies or inflate casts. Only gem ID disambiguation and modern eligibility remain.",
+    "T0042: Same 21853→22445 Allakhazam 3/11 study already appears in Nov1 file; do not search or record it again as a new cohort.",
+    "T0053: item 45661 reward identities are complete in existing evidence+4df9ae8 token ledger; do not re-research as missing."
   ],
   "decisions_needed": [
     {
@@ -277,7 +379,7 @@
       "proposal": "Retain source-reported hit counts as historical research only until source build/stack distributions and Retail scope are verified."
     }
   ],
-  "next_concrete_step": "Request an append-only correction from legacy worker for records 013/026: mark 6674/2112 Gem Chip totals as formula-derived (not measured) and retain a labeled provisional 1/cast only if allowed under source/reference table policy; preserve original rows. Follow by reviewed name/ID mapping (129100 bag output vs 130203 blue loot event) and actual source->compiled ItemDB->synthetic-price valuation->tooltip fixture on isolated engineering branch (never protected three-pass branch). Pivot further coordinator time to a different unresolved queue source after this proof.",
+  "next_concrete_step": "Ask legacy worker to correct its new-cohort tally and link duplicate record legacy-20261106-810 to existing legacy-20261101-215 without rewriting append-only originals; confirm estimator's duplicate exclusion in a reproducible study audit when authorized. Mark T0053 queued entry satisfied in future manager queue maintenance once approved. Then pursue an untouched numeric queue gap with original cast logs and exact item IDs; do not touch protected implementation branch.",
   "validation_executed": {
     "repository_git_reads": true,
     "original_spreadsheet_value_range_read": true,
@@ -511,5 +613,25 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl"
   ],
   "research_branch_head_read_before_write": "ffef25ec8a456ae577a3502e2f6e57ecbd9ea7d9",
-  "research_branch_prewrite_head_verified_at_utc": "2026-11-06T06:13:00.302Z"
+  "research_branch_prewrite_head_verified_at_utc": "2026-11-06T06:13:00.302Z",
+  "verified_base_commit_sha": "67d5bbc595ae735e186c05b5a3c861376fb2b238",
+  "current_status_commit_sha": null,
+  "commit_sha_note": "Commit cannot embed its own SHA; save pre-write branch head here and verify containing SHA from GitHub after write.",
+  "last_checkpoint_validation": {
+    "at": "2026-11-06T06:37:40.117Z",
+    "performed": [
+      "Read original two evidence JSONL source rows",
+      "Compared exact original URL and numeric fingerprint for the two records in JavaScript",
+      "Read build_estimates.py same-page/source identity/duplicate handling (no execution)",
+      "Cross-checked existing token 45661 reward list against original legacy evidence and main compiled token ledger",
+      "Read current role statuses for dashboard freshness"
+    ],
+    "not_performed": [
+      "Original live Retail client actions",
+      "Full estimator rebuild or audit fixture",
+      "Synthetic-price valuation/tooltip test",
+      "PR/CI or agent surveillance",
+      "Changes to worker evidence or main/implementation branches"
+    ]
+  }
 }
