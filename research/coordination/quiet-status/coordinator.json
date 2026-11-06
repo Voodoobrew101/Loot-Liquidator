@@ -1,15 +1,17 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T07:09:03.002Z",
+  "updated_at": "2026-11-06T08:03:25.000Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Recovered distinct original January 2023 500-Magma-Thresher prospecting report with 13 source-reported output totals (including zero diamond units) and 25-point specialization context. Source is a candidate absent from checked existing Magma evidence file, not yet deduped across all research, not 2026 Retail eligibility, not measured casts/hits/probabilities, not newly imported ItemDB or verified gold coverage.",
+  "status": "One new source-methodology clarification for Xenastro historical Draconium study: author describes ore prospecting with Resourcefulness, followed by Prismatic Ore/Crumbled Stone reprocessing with a separate Inspiration tool. Original 71 pooled-gem rows and nominal ore/refunds are unchanged; stage attribution and actual completed operations remain unresolved. No new numeric cohort, priced output or live-Retail action verified.",
   "task_ids": [
     "T0042",
     "T0046",
     "T0053",
     "T0025",
     "PASS2-199344",
-    "dragonflight-Magma-Thresher-original-109yr4s"
+    "dragonflight-Magma-Thresher-original-109yr4s",
+    "T0019",
+    "T0041"
   ],
   "exact_gaps_targeted": [
     {
@@ -73,6 +75,25 @@
       "input_item_id": 199344,
       "source_url": "https://www.reddit.com/r/woweconomy/comments/109yr4s",
       "remaining_gap": "Confirm original author and independence; original table says 500 fish not logged casts, 13 output-unit totals but no exact output-rank item IDs, refunds/hit/zero histograms, patch/skill/build/current eligibility. Existing archived source already identified as fish prospectable; protected integration owner handles runtime/tooltip gate."
+    },
+    {
+      "task_id": "T0019/T0041",
+      "kind": "historical_author_methodology_two_processing_stages",
+      "original_source": "https://www.reddit.com/r/woweconomy/comments/10vz6jh/",
+      "existing_rows": {
+        "q2": 44,
+        "q3": 27,
+        "total": 71,
+        "cohorts_q2": 5,
+        "cohorts_q3": 3
+      },
+      "verified_from_source": "Original author says they first prospect ore with Resourcefulness tool, then prospect both Prismatic and Crumbled Stones with an Inspiration tool; the original data follows this method.",
+      "remaining_gap": "Do the existing workbook pooled-gem fields represent direct ore-stage results only, stone-stage results separately, or a combined full workflow? Without stage-tagged original operation/input/output ledgers do not price the gem total as direct ore-only yields or add a second stone EV on top.",
+      "casts": null,
+      "castsWithDrop": null,
+      "outputSpecificItemIDs": null,
+      "currentRetailScopeVerified": false,
+      "novelty": "Newly recovered contextual source interpretation; NOT a new numerical study or additional 71 independent rows."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -377,30 +398,56 @@
       "disposition": "candidate source quantities to preserve as historically observed table totals after worker-owned duplication/identity check; DO NOT silently import or price until eligible input/batch/output selection reviewed",
       "new_verified_retail_2026_casts": 0,
       "verified_live_gold_decisions": 0
+    },
+    {
+      "kind": "source_methodology_new_context_no_new_cohort",
+      "task_ids": [
+        "T0019",
+        "T0041"
+      ],
+      "source_url": "https://www.reddit.com/r/woweconomy/comments/10vz6jh/",
+      "source_date": "2023-02-07",
+      "author": "Xenastro",
+      "methodology": {
+        "primary_stage": "Prospect ore with a Resourcefulness tool",
+        "secondary_stage": "Prospect resulting Prismatic Ore and Crumbled Stone with an Inspiration tool",
+        "stage_specific_casts": null,
+        "stage_specific_refunds": null,
+        "stage_specific_output_units": null
+      },
+      "existing_evidence_files": [
+        "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
+        "research/v3/evidence/dragonflight/2026-11-02T1025-xenastro-draconium-r3-original-batches.jsonl"
+      ],
+      "existing_pooled_output_rows_checked": 71,
+      "newly_measured_cohorts": 0,
+      "new_numeric_fields": 0,
+      "confidence": "Source-author workflow claim verified via indexed original public Reddit post; actual workbook stage allocation not reverified this session.",
+      "retail_2026_live_verified": false
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
     "legacy": {
-      "updated_at": "2026-11-06T06:46:58.745Z",
-      "status": "historical TBC source totals; new casts with histograms unresolved",
-      "source_status_file": "research/coordination/quiet-status/legacy.json"
+      "updated_at": "2026-11-06T07:50:23.125Z",
+      "status_file": "research/coordination/quiet-status/legacy.json",
+      "finding": "worker reports 4 TBC Netherweave cloth/boots cohorts (34 explicitly completed pants; other batch counts not cast denominators), historical applicability untested"
     },
     "dragonflight": {
-      "updated_at": "2026-11-06T06:39:57.451Z",
-      "status": "new 180-DE Dragonflight bracer source quantities; exact input ID pending",
-      "source_status_file": "research/coordination/quiet-status/dragonflight.json"
+      "updated_at": "2026-11-06T07:53:19.279Z",
+      "status_file": "research/coordination/quiet-status/dragonflight.json",
+      "finding": "worker reports 12 Wowhead item-side DE hit-numerator rows from 4 item cohorts; input bonuses/patch and output stack totals unknown"
     },
     "war-within": {
-      "updated_at": "2026-11-06T06:28:02Z",
-      "status": "R3 dust unsized anecdote and earlier 100-DE cohort provenance, no new measured hits",
-      "source_status_file": "research/coordination/quiet-status/war-within.json"
+      "updated_at": "2026-11-06T07:23:19.402Z",
+      "status_file": "research/coordination/quiet-status/war-within.json",
+      "finding": "worker reports original 297 green DE correction and independent 1000 blacksmith hammers average-only cohort; exact hammer item ID missing"
     },
     "midnight": {
-      "updated_at": "2026-11-06T06:15:45.821Z",
-      "status": "crafted-wand disenchant self-report; numeric casts/outcomes unknown",
-      "source_status_file": "research/coordination/quiet-status/midnight.json"
+      "updated_at": "2026-11-06T07:20:23.893Z",
+      "status_file": "research/coordination/quiet-status/midnight.json",
+      "finding": "worker reports three 12.1.5 base item cannot-DE catalog flags (two live catalog, one PTR); no observed live action"
     }
   },
   "evidence_files": [
@@ -439,7 +486,8 @@
     "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher",
     "https://www.reddit.com/r/woweconomy/comments/109yr4s",
     "https://www.wowhead.com/item=199344/magma-thresher",
-    "https://warcraft.wiki.gg/wiki/Magma_Thresher"
+    "https://warcraft.wiki.gg/wiki/Magma_Thresher",
+    "https://www.reddit.com/r/woweconomy/comments/10vz6jh/"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
@@ -465,7 +513,8 @@
     "Workbook lacks original exact Gem Chip itemLink. 129100 colorless reagent vs 130203 blue loot-window variant must not be conflated; live Retail output mapping and valuation not tested.",
     "Legacy worker's 2026-11-06T0549 status lists six new cohorts, but same 3-DE Allakhazam cohort was already recorded on Nov1 under another studyKey; report count should be five at most, pending checking remaining studies.",
     "Current estimator has source/fingerprint dedupe by code inspection, but no estimator, migration audit, tooltip fixture or client eligibility test was executed this session.",
-    "New 500-fish source has source totals but no actual completed-cast log, Resourcefulness/refund basis, per-output hit histograms, exact output quality IDs or proof 2026 client selector accepts input 199344."
+    "New 500-fish source has source totals but no actual completed-cast log, Resourcefulness/refund basis, per-output hit histograms, exact output quality IDs or proof 2026 client selector accepts input 199344.",
+    "Xenastro original spreadsheet direct re-read was unavailable in this session (web inaccessible; connected page scraper out of credits). Earlier readback verified 71 historic totals but did not establish two-stage per-column allocation; no author per-cast logs."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -492,10 +541,10 @@
       "proposal": "Retain source-reported hit counts as historical research only until source build/stack distributions and Retail scope are verified."
     }
   ],
-  "next_concrete_step": "Dragonflight worker: independently verify original 109yr4s author/studyKey and output-rank identities, compare to all existing fish cohorts, then (only if independent) append the 13 original unit totals in worker-owned evidence, with casts=null and refunds/occurrence histograms unknown. Three-pass implementation owner: investigate separate 199344 eligibility gate with actual offline engine and eventual client QA; do not accept historical fish data as automatic 2026 Retail recommendation.",
+  "next_concrete_step": "Use original Xenastro Prospecting Log stage/column definitions or the author's raw operation export to distinguish direct ore versus secondary Prismatic/Crumbled Stone gem totals. If no stage attribution, keep pooled rows reference-only and move to a different cross-expansion exact-identity/units gap; do not duplicate the old batches. Dragonflight worker retains evidence-file ownership.",
   "validation_executed": {
     "repository_git_reads": true,
-    "original_spreadsheet_value_range_read": true,
+    "original_spreadsheet_value_range_read": false,
     "existing_research_jsonl_read_and_counted": true,
     "original_external_item_page_crosschecks": true,
     "synthetic_price_engine_run": false,
@@ -515,8 +564,8 @@
   },
   "notifications": "on demand only; no outbound reports or schedules created",
   "last_session": {
-    "updated_at": "2026-11-06T05:06:09.778Z",
-    "work": "Cross-source Legion original workbook vs existing JSONL exact counts and candidate output IDs; Serevite rank official-client-validation path researched; zero added numeric cohorts and no runtime tests."
+    "updated_at": "2026-11-06T08:03:25.000Z",
+    "work": "Verified original Reddit author's two-stage prospecting tool/workflow methodology; compared 44 Q2 plus 27 Q3 pre-existing pooled numeric rows, no source record mutated; original workbook not accessible this session."
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
@@ -725,8 +774,8 @@
     "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl",
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl"
   ],
-  "research_branch_head_read_before_write": null,
-  "research_branch_prewrite_head_verified_at_utc": "2026-11-06T06:13:00.302Z",
+  "research_branch_head_read_before_write": "2d25a484d1a499202c99a6401767ec72aeedad57",
+  "research_branch_prewrite_head_verified_at_utc": "2026-11-06T08:03:25.000Z",
   "verified_base_commit_sha": "67d5bbc595ae735e186c05b5a3c861376fb2b238",
   "current_status_commit_sha": null,
   "commit_sha_note": "New coordinator status commit cannot embed its own SHA; verify returned SHA via GitHub fetch and dashboard link. No worker status or evidence was modified.",
