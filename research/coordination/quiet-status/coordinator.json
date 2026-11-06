@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T17:05:08.910Z",
+  "updated_at": "2026-11-06T18:04:31.396Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Original Wowhead Astral Glory milling comment's Gem Chip hyperlink resolves directly to item 129100; verified separately sourced first-person 200 Aethril → 2 Gem Chip (129100) units as a potential new historical cohort. Neither account supplies actual completed mill casts or per-output hits. Research-only source validation; no new gold/tooltip coverage or in-game testing.",
+  "status": "Verified a previously unrecorded indexed first-person 2025 shard-outcome report: 35 Runecloth Headbands and 9 Wicked Leather Headbands yielded no shards, while 3 Devilsaur Leggings reportedly gave 3 Large Brilliant Shards. Three input groups from one author, not three independent authors; actual live Retail version, cast logs, skill and item variants remain unverified. Worker-owned append-only evidence has not been added; no gold EV/tooltip coverage claimed.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -24,7 +24,9 @@
     "COORD-TWW-REFULGENT-RANK-ID-20261106",
     "COORD-BFA-REFERENCE-MEAN-COMPARE-20261106",
     "COORD-THORIUM-DUAL-PROFESSION-20261106",
-    "COORD-LEGION-GEMCHIP-200-AETHRIL-20261106"
+    "COORD-LEGION-GEMCHIP-200-AETHRIL-20261106",
+    "T0050",
+    "COORD-2025-RUNE-CLOTH-SHARD-20261106"
   ],
   "exact_gaps_targeted": [
     {
@@ -280,6 +282,46 @@
       "source_two_casts_with_drop": null,
       "source_two_histogram": null,
       "remaining_gap": "Check new Aethril numeric source against all pre-existing legacy v3/imported studies before worker adds append-only record; date, client version, skill, output-positive casts and input-savings unknown. Historical samples alone do not prove current Retail availability."
+    },
+    {
+      "task_id": "T0050",
+      "kind": "new_2025_first_person_disenchant_shard_outcome_candidate",
+      "source": "https://www.wowhead.com/item=14344/large-brilliant-shard",
+      "source_author": "Moritussum",
+      "source_reported_date": "08/06/2025 (day/month not independently established; likely US month/day)",
+      "one_original_comment_three_input_groups": [
+        {
+          "input_item_id": 13866,
+          "input_name": "Runecloth Headband",
+          "source_reported_items": 35,
+          "output_item_id": 14344,
+          "output_name": "Large Brilliant Shard",
+          "reported_shard_positive_items": 0,
+          "reported_shard_units": 0,
+          "completed_de_casts": "implied by comment; no event log"
+        },
+        {
+          "input_item_id": 15086,
+          "input_name": "Wicked Leather Headband",
+          "source_reported_items": 9,
+          "output_item_id": 14344,
+          "reported_shard_positive_items": 0,
+          "reported_shard_units": 0,
+          "completed_de_casts": "implied by comment; no event log"
+        },
+        {
+          "input_item_id": 15062,
+          "input_name": "Devilsaur Leggings",
+          "source_reported_items": 3,
+          "output_item_id": 14344,
+          "reported_shard_positive_items": 3,
+          "reported_shard_units": "not independently established; phrase '3 for 3 Large Brilliant Shards'",
+          "completed_de_casts": "implied by comment; no event log"
+        }
+      ],
+      "source_lineage": "One author and shared source; not independently logged casts/histograms and not proof of 2026 applicability",
+      "dedupe": "Search on GitHub default branch for Moritussum and exact 2025 wording returned no matches; research branch/all imports not exhaustively deduplicated",
+      "worker_action": "Legacy agent verify original source and overlap; append only within legacy evidence area if independent, with patch/skill/game flavor unknown; do not claim overall zero-yield events"
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -1111,6 +1153,39 @@
       "new_worker_evidence_added": 0,
       "new_measured_casters": 0,
       "new_gold_value_coverage": 0
+    },
+    {
+      "kind": "source_verified_2025_shard_outcome_candidate_not_accepted_cohort",
+      "task_id": "T0050",
+      "source_url": "https://www.wowhead.com/item=14344/large-brilliant-shard",
+      "source_author": "Moritussum",
+      "reported_date_raw": "08/06/2025",
+      "input_item_ids": [
+        13866,
+        15086,
+        15062
+      ],
+      "output_item_id": 14344,
+      "source_reported_input_counts": [
+        35,
+        9,
+        3
+      ],
+      "reported_output_occurrence_counts": [
+        0,
+        0,
+        3
+      ],
+      "source_context": "Retail Wowhead shard item page indexed comment, original HTML blocked on direct open; one person, three item inputs",
+      "actual_event_log_available": false,
+      "exact_patch": null,
+      "gear_bonus": null,
+      "skill": null,
+      "has_new_verified_complete_cast_histograms": false,
+      "recorded_in_worker_evidence": false,
+      "new_measured_cohorts_added_by_coordinator": 0,
+      "current_retail_eligibility_verified": false,
+      "pricing_or_tooltip_fixture_ran": false
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -1211,7 +1286,10 @@
     "https://tradeskillmaster.com/retail/us/items/12655",
     "https://www.wowhead.com/item=156930/rich-illusion-dust",
     "https://www.wowhead.com/ptr/item=151565/astral-glory",
-    "https://www.wowhead.com/ptr/item=129100/gem-chip"
+    "https://www.wowhead.com/ptr/item=129100/gem-chip",
+    "https://www.wowhead.com/item=14344/large-brilliant-shard",
+    "https://www.wowhead.com/item=13866/runecloth-headband",
+    "https://warcraft.wiki.gg/wiki/Pattern:_Devilsaur_Leggings"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
@@ -1224,10 +1302,12 @@
     "titanium_corrections_blob_sha": "80f37dbb74e3444585f7a63a3272a6c0989494f7",
     "latest_tww_worker_evidence_blob_sha": "2f9cfd499a9cc573af61529bda25c2dca16a46ab",
     "dashboard_commit_sha": "973868004a8259a05b34f854a8aa3c7e6169ca40",
-    "research_head_at_session": "cedb53bee0a85bfd5e90379888ee39b92ebdb0a4",
+    "research_head_at_session": "9b2c00e21941b453f6ee3b1b386914c8754aeede",
     "main_head_at_session": "ec76f0144778bc744ce9784ecb326326fed46674",
     "implementation_head_at_session": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "legacy_evidence_worker_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b"
+    "legacy_evidence_worker_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b",
+    "source_page_comment_url": "https://www.wowhead.com/item=14344/large-brilliant-shard",
+    "repo_latest_checked_at_utc": "2026-11-06T18:04:31.396Z"
   },
   "commit_sha_when_verified": {
     "existing_q2_evidence": "15dbfffea2b21f11cdfa9fc6750e9c45266a1d08",
@@ -1246,7 +1326,8 @@
     "2022 Titanium study has 1,000 source-stated ore, not verified completed casts/refunds or current Retail eligibility; nine older exact-file output IDs still null without corrections. Compiler/tooltip effect untested.",
     "T0048: no raw Wowhead Looter linked output IDs/rank assignments, material quantities or per-event histogram for four new same-name Crystal cohorts. Candidate ID set is not sufficient to price row-level occurrence. All four input item base pages are BoP.",
     "Six historical BfA source means lack exact completed-cast denominators and current Retail qualification; cross-reference is not a measured P(hit). Independent 2020 Reddit readback relies on worker, since original Reddit page could not be reopened here.",
-    "No actual current-character recipe-book/forge check for Mining 70524 vs Enchanting 17180; runtime action eligibility, cost and no-double-counting not tested; requires protected implementation owner's review."
+    "No actual current-character recipe-book/forge check for Mining 70524 vs Enchanting 17180; runtime action eligibility, cost and no-double-counting not tested; requires protected implementation owner's review.",
+    "Moritussum 2025 disenchant report is an indexed original comment only (Wowhead direct HTML robot-gated); no logged per-cast itemLink, skill, version, variant, all-output material ledger or proof of 2026 Retail eligibility; Legacy must dedupe before acceptance."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -1262,7 +1343,8 @@
     "2022 Sygon_Paul original source Shadowlands (21), WoD (6) and BfA (21) ratios now checked against source blob e47143e; repeat scans of identical cells are exhausted, seek original per-cast logs/lineage rather than claim source-search progress.",
     "First Flower original 2022 cohort and derivative April 2022 TSM ratios already in archive; do not conduct another generic source reread or count as an independent study.",
     "Shadowgem 984088 and 736136 numeric-author mismatches resolved by original comment boundaries; do not rescan translated comment pages without new conflicting evidence.",
-    "Original s6bfrl Jan 2022 total vector now checked once, six formerly missing uncommon rows match; do not re-search or count as new independent evidence; move to exact-file ID corrections/fixtures."
+    "Original s6bfrl Jan 2022 total vector now checked once, six formerly missing uncommon rows match; do not re-search or count as new independent evidence; move to exact-file ID corrections/fixtures.",
+    "Moritussum 2025 three-input shard report identified and indexed once; repeated searches of identical page are unnecessary unless author/date or patch conflicts emerge."
   ],
   "decisions_needed": [
     {
@@ -1288,7 +1370,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Legacy worker: dedupe Wowhead item 129100 commentator 1721314's 200 Aethril -> 2 colorless Gem Chip original against prior imported/v3 studies, then record append-only only if new; capture itemLink/era, exact batch-click count and skill if available. For prior Astral Glory record legacy-20261106-160005, retain directly linked 129100 and do not substitute colored chip 130203. Continue source-original numeric gaps T0005/T0045 and runtime fixture handoff to protected integration owner; unknowns stay null.",
+  "next_concrete_step": "Legacy worker should first check source-cohort overlap for original Moritussum 08/06/2025 report on 14344: 35 Runecloth Headbands 0 shard, 9 Wicked Leather Headbands 0 shard, 3 Devilsaur Leggings 3 shard-positive cases. Append only new independent original evidence under legacy ownership after validating game flavor, exact item IDs, and whether the source's reported item counts represent completed disenchants; leave unreported other materials and cast-level histograms unknown. Other workers retain existing expansion numeric queue; integration owner alone tests source-to-tooltip, no competing implementation PR.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -1302,7 +1384,7 @@
     "worker_status_readback": true,
     "source_catalog_rank_checks": true,
     "gear_page_base_binding_checks": true,
-    "this_run": "Web and GitHub readback only: source spell identity and frozen per-recipe costs, no addon execution or runtime fixture."
+    "this_run": "Cross-checked indexed original comment via two independently crawled language mirrors; compared exact source name against GitHub default-branch code search; source identity/three item names verified, no estimator/addon fixture run."
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -1316,52 +1398,12 @@
   },
   "notifications": "on-demand only; no schedule created, modified or cross-chat ping",
   "last_session": {
-    "updated_at": "2026-11-06T16:00:08.607Z",
-    "task": "T0029 dual profession same product recipe identity",
-    "verified_fields": {
-      "task_id": "T0029",
-      "kind": "verified_two_profession_spell_ids_same_conversion_avoids_false_mining_exclusion",
-      "output_item_id": 12655,
-      "input_item_name": "Thorium Bar",
-      "output_item_name": "Enchanted Thorium Bar",
-      "spell_variants": [
-        {
-          "spell_id": 17180,
-          "profession": "Classic Enchanting",
-          "requires": "Runed Enchanting Rod",
-          "source": "https://www.wowhead.com/spell=17180/enchanted-thorium-bar"
-        },
-        {
-          "spell_id": 70524,
-          "profession": "Classic Mining",
-          "requires": "Forge",
-          "source": "https://www.wowhead.com/spell=70524/enchanted-thorium-bar"
-        }
-      ],
-      "current_retail_indexed_recipe_basis": "Both Wowhead Retail spell records explicitly show Thorium Bar x1 and Rich Illusion Dust x3; quality/output counts from displayed fixed recipe, not random observations.",
-      "source_reagent_id_corroboration": "Rich Illusion Dust retail item 156930; output Enchanted Thorium Bar 12655 confirmed separately by Retail TSM item listing.",
-      "earlier_worker_note": "Legacy worker explicitly excluded prior Enchanted Thorium pseudo-Smelt when identifying 17180 as Enchanting; this correction is a distinct Mining spell, not a reason to import 17180 as Mining.",
-      "pricing_safety": "One output recipe with two profession eligibility paths; never double expected quantity/EV when both professions learned. Add exact extra reagent costs only if eligible runtime recipe and price lookup exist.",
-      "unknowns": [
-        "Live-client availability to current characters and spec/build",
-        "Whether both variants are available in current player profession book",
-        "Existing production adapter recognition and protected branch behavior",
-        "Live prices and best action"
-      ],
-      "new_measured_cohorts": 0,
-      "new_observed_casts": 0,
-      "source_links": [
-        "https://www.wowhead.com/spell=70524/enchanted-thorium-bar",
-        "https://www.wowhead.com/spell=17180/enchanted-thorium-bar",
-        "https://tradeskillmaster.com/retail/us/items/12655",
-        "https://www.wowhead.com/item=156930/rich-illusion-dust"
-      ],
-      "worker_evidence_file": "research/v3/evidence/legacy/20261106T1543-smelting-recipe-identity-rescue.jsonl",
-      "worker_evidence_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b"
-    },
-    "offline_tests_executed": 0,
+    "updated_at": "2026-11-06T18:04:31.396Z",
+    "task": "COORD-2025-RUNE-CLOTH-SHARD-20261106",
+    "verified_fields": "One original 2025 first-person report with input counts 35/9/3 and claimed Large Brilliant Shard outcome counts 0/0/3; provenance only pending independent acceptance",
+    "offline_tests_executed": false,
     "client_qa_executed": false,
-    "ci_observed": "Latest five-agent completion for research head cedb53b success; this is not a run of new addon tests.",
+    "ci_observed": false,
     "merge_or_release": false
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
@@ -1551,13 +1593,53 @@
     }
   ],
   "prior_session": {
-    "date": "2026-11-06",
-    "task": "source author correction and 2022 original-study lineage",
-    "result": "verified six author attribution mismatches in worker file and exact First Flower original-cohort replication, no new independent casts",
-    "status_commit_last_verified": "ddd85ef341ae509999125cb83cb14ae8040f6ea9",
-    "dashboard_commit_verified": "5c87669bd2b96fdfe38901cac74b733b3d050585",
-    "no_merge": true,
-    "no_release": true
+    "updated_at": "2026-11-06T16:00:08.607Z",
+    "task": "T0029 dual profession same product recipe identity",
+    "verified_fields": {
+      "task_id": "T0029",
+      "kind": "verified_two_profession_spell_ids_same_conversion_avoids_false_mining_exclusion",
+      "output_item_id": 12655,
+      "input_item_name": "Thorium Bar",
+      "output_item_name": "Enchanted Thorium Bar",
+      "spell_variants": [
+        {
+          "spell_id": 17180,
+          "profession": "Classic Enchanting",
+          "requires": "Runed Enchanting Rod",
+          "source": "https://www.wowhead.com/spell=17180/enchanted-thorium-bar"
+        },
+        {
+          "spell_id": 70524,
+          "profession": "Classic Mining",
+          "requires": "Forge",
+          "source": "https://www.wowhead.com/spell=70524/enchanted-thorium-bar"
+        }
+      ],
+      "current_retail_indexed_recipe_basis": "Both Wowhead Retail spell records explicitly show Thorium Bar x1 and Rich Illusion Dust x3; quality/output counts from displayed fixed recipe, not random observations.",
+      "source_reagent_id_corroboration": "Rich Illusion Dust retail item 156930; output Enchanted Thorium Bar 12655 confirmed separately by Retail TSM item listing.",
+      "earlier_worker_note": "Legacy worker explicitly excluded prior Enchanted Thorium pseudo-Smelt when identifying 17180 as Enchanting; this correction is a distinct Mining spell, not a reason to import 17180 as Mining.",
+      "pricing_safety": "One output recipe with two profession eligibility paths; never double expected quantity/EV when both professions learned. Add exact extra reagent costs only if eligible runtime recipe and price lookup exist.",
+      "unknowns": [
+        "Live-client availability to current characters and spec/build",
+        "Whether both variants are available in current player profession book",
+        "Existing production adapter recognition and protected branch behavior",
+        "Live prices and best action"
+      ],
+      "new_measured_cohorts": 0,
+      "new_observed_casts": 0,
+      "source_links": [
+        "https://www.wowhead.com/spell=70524/enchanted-thorium-bar",
+        "https://www.wowhead.com/spell=17180/enchanted-thorium-bar",
+        "https://tradeskillmaster.com/retail/us/items/12655",
+        "https://www.wowhead.com/item=156930/rich-illusion-dust"
+      ],
+      "worker_evidence_file": "research/v3/evidence/legacy/20261106T1543-smelting-recipe-identity-rescue.jsonl",
+      "worker_evidence_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b"
+    },
+    "offline_tests_executed": 0,
+    "client_qa_executed": false,
+    "ci_observed": "Latest five-agent completion for research head cedb53b success; this is not a run of new addon tests.",
+    "merge_or_release": false
   },
   "linked_worker_evidence_files": [
     "research/v3/evidence/legacy/2026-11-06T0349-classic-communal-looter-hitcounts.jsonl",
