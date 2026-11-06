@@ -1,7 +1,7 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T05:41:24.028Z",
-  "status": "research_active_no_new_independent_numeric_cohorts_after_new_export_search",
+  "updated_at": "2026-11-06T06:39:16.970Z",
+  "status": "research_active_new_independent_postlaunch_disenchant_quantities_no_new_prospect_or_mill_cast_histograms",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0020",
@@ -138,11 +138,80 @@
         "Xenastro original raw per-cast worksheets and refund-adjusted casts"
       ],
       "blocked_by": "original workbook access and per-cast fields remain unresolved; not repeated"
+    },
+    {
+      "task_id": "T0041",
+      "method": "Disenchant",
+      "input_item_ids": [
+        193497
+      ],
+      "input_id_status": "candidate from independently matched 4 Wildercloth + 4 Spool of Wilderthread recipe, not stated by DE author",
+      "output_item_ids": [
+        194124,
+        194123
+      ],
+      "missing": [
+        "explicit confirmation of exact bracer ID",
+        "skill/specialization/item version",
+        "per-output castsWithDrop and zero-inclusive 0/1/2+ histogram",
+        "independent exact-item post-launch replication"
+      ]
     }
   ],
-  "newly_verified_fields": [],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
+  "newly_verified_fields": [
+    {
+      "method": "Disenchant",
+      "inputItemID": null,
+      "possibleInputID": 193497,
+      "possibleInputID_confirmed": false,
+      "outputItemID": 194124,
+      "casts": 180,
+      "totalQuantity": 155,
+      "castsWithDrop": null,
+      "histogram": null
+    },
+    {
+      "method": "Disenchant",
+      "inputItemID": null,
+      "possibleInputID": 193497,
+      "possibleInputID_confirmed": false,
+      "outputItemID": 194123,
+      "casts": 180,
+      "totalQuantity": 304,
+      "castsWithDrop": null,
+      "histogram": null
+    }
+  ],
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "reddit-zk980g-comment-20221214-180-bracer-disenchants",
+      "originalSource": "https://www.reddit.com/r/woweconomy/comments/zk980g",
+      "originalCohortIndependentOf": "reddit-ymruks-2022-beta-500-bands",
+      "period": "2022-12-14",
+      "expansion": "Dragonflight",
+      "method": "Disenchant",
+      "inputItemID": null,
+      "likelyInputItemID": 193497,
+      "exactInputUnverified": true,
+      "casts": 180,
+      "outputs": [
+        {
+          "itemID": 194124,
+          "totalQuantity": 155
+        },
+        {
+          "itemID": 194123,
+          "totalQuantity": 304
+        }
+      ],
+      "skill": null,
+      "specialization": null,
+      "castsWithDrop": null,
+      "zeroOutcomes": null,
+      "histogram": null
+    }
+  ],
+  "new_numerical_measurements": 2,
   "source_metadata_verified": [
     {
       "material": "Draconium Ore",
@@ -233,6 +302,13 @@
       "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0540-original-cast-export-and-disenchant-source-search.jsonl",
       "records": 1,
       "type": "searched"
+    },
+    {
+      "path": "research/v3/evidence/dragonflight/2026-11-06T06:3-postlaunch-bracer-disenchant-180.jsonl",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T06:3-postlaunch-bracer-disenchant-180.jsonl",
+      "records": 2,
+      "type": "drop",
+      "newIndependentCohorts": 1
     }
   ],
   "source_links": [
@@ -262,16 +338,22 @@
     "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
     "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
     "https://www.reddit.com/r/woweconomy/comments/12hfghy",
-    "https://github.com/Xerrion/DragonLoot/"
+    "https://github.com/Xerrion/DragonLoot/",
+    "https://www.reddit.com/r/woweconomy/comments/zk980g",
+    "https://www.wowhead.com/spell=376509/surveyors-cloth-bands",
+    "https://www.wowhead.com/item=193497/surveyors-cloth-bands",
+    "https://www.wowhead.com/item=194123/chromatic-dust",
+    "https://www.wowhead.com/item=194124/vibrant-shard"
   ],
-  "base_head_sha_verified": "108b0653ab320897ef58509632af818054d098be",
+  "base_head_sha_verified": "a9a2ccf02c3f58c85a830d4ca34380dc43d89006",
   "commit_sha": null,
-  "commit_sha_note": "The atomic commit's own SHA is unavailable before its content is hashed; verified from pushed GitHub commit and two changed paths after publication. Commit SHA cannot be embedded into its own file without making a second commit.",
+  "commit_sha_note": "One atomic commit includes this status file; its final SHA cannot be embedded in the same file without changing that SHA. Parent SHA is recorded above; verify the published SHA via GitHub commit/readback after ref update.",
   "blockers": [
     "No new original completed-operation sample found for ranked Draconium, Serevite, Khaz'gorite, Prismatic, Bubble Poppy, Saxifrage, or new gear DE with a per-output 0/1/2+ stack histogram.",
     "Nominal ore/herb totals, Resourcefulness refunds, and player-stated percentages cannot establish P(hit) or unconditional quantity per completed operation.",
     "Known historical Jallfo/Bugy/Xenastro/Aary/superbondez/neoslayyer/108782r studies must not be treated as new independent cohorts; original-source identity preserved.",
-    "Original post-beta character SavedVariables or author exports and authoritative client quality icons not recovered."
+    "Original post-beta character SavedVariables or author exports and authoritative client quality icons not recovered.",
+    "The new live-era 180-bracer study has reliable per-output units and completed disenchant count, but the exact gear item ID, profession build and per-cast hit/zero histograms are not author-confirmed; do not use the inferred 193497 as a verified input mapping."
   ],
   "exhausted_sources": [
     {
@@ -317,9 +399,13 @@
     {
       "url": "https://github.com/Xerrion/DragonLoot/",
       "reason": "Loot UI/history addon, not an original Dragonflight prospecting/milling/DE per-cast sample export."
+    },
+    {
+      "source": "Unindexed original Draconium/Serevite/Khaz'gorite/Prismatic spreadsheet or addon-export search across Reddit, GitHub, Wowhead, Blizzard Forums and MMO-Champion",
+      "reason": "This run's name-based query combinations produced no new independent ranked original prospect/mill per-cast data; prior Jallfo/Bugy/Xenastro/Aary/superbondez cohorts not re-imported."
     }
   ],
-  "next_concrete_step": "Investigate previously unindexed Dragonflight item-specific disenchants beyond existing Wowhead Looter cohorts (obtain source raw per-stack 0/1/2+ totals and item bonus/build); in parallel seek owner-authorized acquisition of 10.x prospecting and Bubble Poppy milling SavedVariables with actual completed_casts and gross/refunded ore/herbs. Do not revisit Jallfo, Xenastro, Bugy, Aary, superbondez or neoslayyer without original new per-cast data.",
+  "next_concrete_step": "Return to open T0020/T0018/T0046: obtain original 10.x Draconium or Bubble Poppy per-cast export with input quality ranks and Resourcefulness ledger; separately seek confirmation that Reddit zk980g's 4-cloth/4-thread bracers were Surveyor's Cloth Bands (193497), and per-cast DE hit/stack counts. Avoid reusing known Jallfo/Bugy/Xenastro/Aary/superbondez cohorts without new raw data.",
   "decisions_needed": [
     {
       "request": "Master/source-author outreach for original prospecting/milling logs or in-game data gathering",
@@ -328,20 +414,31 @@
     {
       "request": "Master authoritative quality ID verification",
       "reason": "Existing secondary commodity mappings are not authoritative original-era rank confirmations."
+    },
+    {
+      "request": "Master confirmation of assigning inputItemID 193497 to Reddit zk980g post-launch 180-bracer DE cohort",
+      "reason": "Recipe is independently matched but author did not name exact gear; keep inputItemID null until verified."
     }
   ],
   "validation": {
-    "evidence_jsonl_parse": "Pre-commit JSON.parse passed, exactly one searched line, 11 actual checked URL locations across Reddit, Wowhead, Blizzard Forums, wow-professions and GitHub",
-    "status_json_parse": "Pre-commit JSON.stringify/parse passed",
+    "evidence_jsonl_parse": "Two drop JSONL lines parsed; exact raw totals 180 completed disenchant operations, 155 shard units and 304 dust units; distinct output rows share one studyKey and must not double count casts.",
+    "status_json_parse": "JSON.stringify/parse passed prior to commit",
     "git_readback": "pending post-commit verification in this run",
     "commit_changed_paths_expected": [
-      "research/v3/evidence/dragonflight/2026-11-06T0540-original-cast-export-and-disenchant-source-search.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-06T06:3-postlaunch-bracer-disenchant-180.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ]
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "session_summary": "No independent new numeric original found. Researched alternate original-export route and previously unexamined disenchant forum/source avenues; carried forward verified prior source-rank mappings as historical context only. Avoided source audit inflation and duplicate cohort imports.",
-  "new_source_leads": []
+  "session_summary": "One NEW independent December 2022 post-launch DE cohort found through a different source search: 180 completed cloth bracer disenchants, 155 units Vibrant Shard and 304 units Chromatic Dust; no ore/herb rank-specific completed-operation or per-cast histogram recovered. Input candidate 193497 not verified and left null. No prior source batch duplicated.",
+  "new_source_leads": [
+    {
+      "source": "https://www.reddit.com/r/woweconomy/comments/zk980g",
+      "found": "Post-launch first-hand 180 completed cheap-bracer disenchants: 155 Vibrant Shard (194124) units, 304 Chromatic Dust (194123) units; 193497 is a recipe-derived candidate only",
+      "status": "two measured totalQuantity fields recorded; hit counts and output distribution unresolved",
+      "novelty": "independent of pre-launch beta 500 Surveyor's Cloth Bands cohort previously recorded"
+    }
+  ]
 }
