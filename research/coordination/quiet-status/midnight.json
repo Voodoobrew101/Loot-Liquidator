@@ -1,48 +1,42 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-06T12:11:54.646Z",
-  "status": "Ran queue-led independent numeric evidence search. Located NEW NocD 1,000-ore prospecting screenshot lead, but screenshot data inaccessible. Only nominal ore input is source-reported; no new measured completed-cast cohort, output identity, rank-specific hit count, histogram or current-build DE eligibility verified. One searched lead is NOT a study; no numeric progress promoted.",
+  "updated_at": "2026-11-06T13:24:14.244Z",
+  "status": "Research-only: verified three previously unmapped primary-source numeric prospecting specialization trait IDs for conditional Eversong Diamond eligibility; added three refinement records. No new independent measured processing cohort, completed-cast denominator, output hit count, quantity or histogram. Preserved no-probability-invention and source deduplication.",
   "task_ids": [
     "T0049",
     "T0026",
     "T0005",
     "T0039",
+    "T0045",
+    "T0003",
     "T0001",
     "T0002",
-    "T0045",
-    "T0003"
+    "T0030"
   ],
   "exact_gaps_targeted": [
     {
-      "task_id": "T0049",
+      "task_ids": [
+        "T0049",
+        "T0026"
+      ],
       "input_item_ids": [
         272246
       ],
-      "target_item_level": 305,
-      "output_item_ids": [
+      "item_level_target": 305,
+      "known_output_item_ids": [
         243606,
         243605,
         243602,
         243603,
         243599
       ],
-      "missing": "Live 12.1.5+ itemLink with actual bonus IDs, DE eligibility and event-based outputs; WoWDB base noDE vs historical Looter contradiction"
+      "missing": "Current live build + itemLink bonus and 305 real disenchant eligibility; cast-bound item quality/weapon-vs-armor/rank and output histograms; previously indexed 140 Looter operations cannot establish variant."
     },
     {
-      "task_id": "T0026",
-      "input_item_ids": null,
-      "output_item_ids": [
-        243599,
-        243600,
-        243602,
-        243603,
-        243605,
-        243606
+      "task_ids": [
+        "T0005",
+        "T0039"
       ],
-      "missing": "New independent uncommon/rare/epic gear actual cast/zero-inclusive histograms, armor vs weapon, item-level, bonus IDs, skill/spec and builds; rank attribution on Dawn Crystal source rows"
-    },
-    {
-      "task_id": "T0005/T0039/T0001",
       "input_item_ids": [
         237362,
         237363
@@ -50,107 +44,131 @@
       "output_item_ids": [
         242606,
         242607,
-        242608,
         242610,
         242611,
         242786,
-        242788
+        242788,
+        242608
       ],
-      "missing": "Post-hotfix rank-specific original completed casts, output identities, 0/1/2 positive/zero histograms, Tin-vestigator unlock and refunds"
+      "missing": "Independent exact rank-specific completed casts; per-output castsWithDrop, zeros, stack histogram, expected units, Tin-vestigator present, Resourcefulness and skill profile."
     },
     {
-      "task_id": "T0002",
+      "task_ids": [
+        "T0002",
+        "T0003"
+      ],
       "input_item_ids": [
+        237359,
+        237361,
         237364,
         237365
       ],
       "output_item_ids": [
-        242553,
-        242554,
-        242608,
-        242612,
-        242613,
-        242786,
-        242788
+        242608
       ],
-      "missing": "Independent Brilliant Silver rank-specific completed casts and occurrence histograms"
+      "missing": "Fresh rank-specific post-hotfix cast cohorts, positive and zero-count histograms, per-rank item identities and refund logs; previously recorded cohorts not repeated."
     },
     {
-      "task_id": "T0045",
+      "task_ids": [
+        "T0045"
+      ],
       "input_item_ids": [
         236761
       ],
       "output_item_ids": [
         245807
       ],
-      "missing": "Independent 10-herb mill completed operations, direct Powder Pigment totals and histograms, refunds/skill/patch"
+      "missing": "Completed 10-herb mills, directly recorded Powder Pigment per operation and stack distribution, refunds, input rank, skill and build."
     },
     {
-      "task_id": "T0003",
+      "task_ids": [
+        "T0030"
+      ],
       "input_item_ids": [
-        237359,
-        237361
+        237362,
+        237363,
+        237364,
+        237365,
+        237366
       ],
       "output_item_ids": [
-        242553,
-        242554,
-        242606,
-        242607,
-        242608,
-        242786,
-        242788
+        242608
       ],
-      "missing": "Original independent rank-specific Refulgent Copper output/zero casts"
+      "missing": "Copper Consumer numeric trait ID still unverified; talent version and build specificity; the three new primary numeric trait IDs below do not measure diamond rates."
     }
   ],
-  "newly_verified_fields_or_cohorts": [],
-  "new_source_leads": [
+  "newly_verified_fields_or_cohorts": [
     {
-      "kind": "original author reported nominal ore inputs; screenshot unrecovered; NOT a numeric cohort",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1rtqxbr/any_prospecting_sheet_out_there/",
-      "original_attachment": "https://imgur.com/a/fOTeoFs",
-      "author": "NocD",
-      "reported_nominal_ore": 1000,
-      "input_item_id": null,
-      "input_rank": null,
-      "completed_casts": null,
-      "casts_with_drop": null,
-      "output_item_ids": null,
-      "total_quantities": null,
-      "histogram": null,
-      "profession_context": "blue tools; non-maxed knowledge points",
-      "date_collected": null,
-      "notes": "No evidence of ore type or refund and reprocessing; do not infer 200 completed operations from nominal ore."
+      "type": "primary_trait_identifier",
+      "trait": "Tin-vestigator",
+      "profession_trait_id": 106980,
+      "method": "Prospect",
+      "input_item_ids": [
+        237362,
+        237363
+      ],
+      "conditional_output_item_id": 242608,
+      "source_url": "https://www.wowhead.com/profession-trait/tin-vestigator-106980",
+      "prior_condition_refined": "midnight-20261101-002",
+      "independent_measured_cohort": false
+    },
+    {
+      "type": "primary_trait_identifier",
+      "trait": "Silver Scrapper",
+      "profession_trait_id": 106979,
+      "method": "Prospect",
+      "input_item_ids": [
+        237364,
+        237365
+      ],
+      "conditional_output_item_id": 242608,
+      "source_url": "https://www.wowhead.com/profession-trait/silver-scrapper-106979",
+      "prior_condition_refined": "midnight-20261101-003",
+      "independent_measured_cohort": false
+    },
+    {
+      "type": "primary_trait_identifier",
+      "trait": "Thorium Thresher",
+      "profession_trait_id": 106978,
+      "method": "Prospect",
+      "input_item_ids": [
+        237366
+      ],
+      "conditional_output_item_id": 242608,
+      "source_url": "https://www.wowhead.com/profession-trait/thorium-thresher-106978",
+      "prior_condition_refined": "midnight-20261101-004",
+      "independent_measured_cohort": false
     }
   ],
   "numeric_fields_advanced": {
+    "new_independent_numeric_cohorts": 0,
     "new_verified_completed_casts": 0,
     "new_direct_output_quantities": 0,
-    "new_direct_hit_histograms": 0,
-    "new_measured_zeros": 0,
-    "new_independent_numeric_cohorts": 0,
-    "new_output_ids": 0,
-    "new_verified_current_build_eligibility": 0
+    "new_direct_hits": 0,
+    "new_direct_zero_histograms": 0,
+    "new_validated_actual_current_build_disenchant_eligibility": 0,
+    "new_primary_numeric_trait_ids": 3
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-06T1211-nocd-unrecovered-1000ore-prospecting.jsonl"
+    "research/v3/evidence/midnight/2026-11-06T1324-verified-prospecting-trait-ids.jsonl"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1rtqxbr/any_prospecting_sheet_out_there/",
-    "https://imgur.com/a/fOTeoFs",
-    "https://thewowdb.com/guides/disenchant-roi-trap/"
+    "https://www.wowhead.com/profession-trait/tin-vestigator-106980",
+    "https://www.wowhead.com/profession-trait/silver-scrapper-106979",
+    "https://www.wowhead.com/profession-trait/thorium-thresher-106978",
+    "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations"
   ],
-  "verified_commit_sha": "bba2f57c9b46e51b7a4445b1ad9f7dca5ab0858e",
-  "verified_commit_sha_scope": "Verified pre-run branch head only. Current run SHA cannot be embedded in its own Git commit.",
+  "verified_commit_sha": "7c445ad3ffc9b6bf412964dc9d26bbd52fc223a9",
+  "verified_commit_sha_scope": "Read and verified prior branch head at start of run. This is not the current run SHA; a commit cannot contain its own SHA without requiring another commit.",
   "current_run_commit_sha": null,
-  "branch_head_at_read": "bba2f57c9b46e51b7a4445b1ad9f7dca5ab0858e",
-  "commit_readback": "Verify branch commit metadata and both files after publication; commit SHA cannot be self-referential in this same file.",
+  "branch_head_at_read": "7c445ad3ffc9b6bf412964dc9d26bbd52fc223a9",
+  "commit_readback": "After publishing this one atomic commit, verify both file blobs and commit diff against the GitHub branch; current-run SHA is intentionally not embedded in the commit itself.",
   "blockers": [
-    "Original NocD prospecting result image is linked but Imgur album does not expose screenshot content in available public text; no counts or input identity transcribed.",
-    "272246 bonus-selectable Wowhead ilvl305 display is not a dated in-game completed DE attempt; base WoWDB noDE flag and Looter 140-operation history remain irreconcilable without variant+build logs.",
-    "Only source-reported nominal ore count (1000), no completed casts; Resourcefulness refunds and reprocessing untracked.",
-    "Umbral Tin and Brilliant Silver 800-cast original studies already recorded but missing output-specific occurrence histograms; no original alternative export located.",
-    "TheWoWDB September 2026 client bracket article claims item level is not in modern DE bracket selection; unverified secondary explanation, not evidence of item-specific drop or skill applicability. Request Master review rather than changing mechanics."
+    "272246 base-item WoWDB exclusion conflicts with 140 Wowhead Looter historical entries, without actual upgrade bonus, itemLink, client build, skill and per-cast source validation; cannot declare item-level-305 disenchantable.",
+    "Existing Cardinalai 800 completed Umbral Tin 237362 prospects have output quantities but no per-output hit counts/histograms/rank-specific raw logs; those totals cannot be interpreted as per-hit occurrences.",
+    "Source-reported nominal ore and herbs are not necessarily completed operations because Resourcefulness refunds and repeated processing are not tracked.",
+    "No fresh original completed-cast datasets from targeted independent name-based sources in this run. The verified talent IDs are eligibility metadata, not numeric yields.",
+    "Copper Consumer numeric trait ID not confirmed from a primary trait link; do not infer it by adjacency to other IDs."
   ],
   "exhausted_sources": [
     "Do not re-import Cardinalai June10 800-cast Umbral Tin/Brilliant Silver pooled studies or Honeybone Apr19/22 Refulgent Copper; earlier studies already recorded.",
@@ -163,19 +181,20 @@
     "r/woweconomy 1s7nfcw 5294 rare DE knowledge study already recorded 2026-11-01T1812; not reimported.",
     "Cardinalai June10 800-cast 237362/237364, Honeybone copper, March26 Draggoth milling observations and 272246 206/305 tooltip discrepancies already documented; avoid more source-only repeats.",
     "NocD r/woweconomy 1rtqxbr original 1000-ore screenshot lead newly identified; linked Imgur fOTeoFs cannot be transcribed with available access. Do not repeat this search or record a measured cohort without the original screenshot/export.",
-    "No new cohort in name-targeted Reddit, WoW profession forum, Wowhead checks for Umbral Tin, Brilliant Silver, Tranquility Bloom; 2026-04-17 Battlefield Goods hotfix and JD3K test already in prior evidence."
+    "No new cohort in name-targeted Reddit, WoW profession forum, Wowhead checks for Umbral Tin, Brilliant Silver, Tranquility Bloom; 2026-04-17 Battlefield Goods hotfix and JD3K test already in prior evidence.",
+    "This run: no independent direct cast log emerged from Midnight profession-item search on Wowhead, WoW profession forum, Reddit or guides; avoided importing existing Looter cumulative snapshots, Cardinalai/Honeybone/kyzenbka/Draggoth numeric results, or NocD inaccessible image again. Switched to primary profession-trait pages; three new exact IDs, not repeated drop-rate studies."
   ],
   "decisions_needed": [
     {
       "owner": "Master",
-      "decision": "Determine whether independent client DB bracket claim of 166 brackets / item-level-independent modern disenchant is valid for Midnight, with official DBC build and exact eligibility exceptions. Do NOT change estimator or item-level rules on secondary explanation alone."
+      "decision": "Review three direct profession-trait ID refinements (106980,106979,106978) for immutable condition identity mapping; do not import as new occurrences or rates."
     },
     {
       "owner": "Master",
-      "decision": "Request or obtain NocD's original 2026 prospecting screenshot/result export through authorized source access; do not extrapolate 1,000 nominal ore to 200 completed casts."
+      "decision": "Review actual 272246 upgraded item variant plus live Disenchant action logs before changing noDisenchant/eligibility mechanic or proposing item-level-specific yield."
     }
   ],
-  "next_concrete_step": "Seek original NocD March 2026 result image https://imgur.com/a/fOTeoFs or an independent direct export to resolve input ore identity, rank, complete output totals, casts and refunds. If unavailable, switch to newly reported direct 12.1.5+ disenchant event logs for 272246 (bonus-aware) and unseen gear, not already-documented Looter snapshots.",
+  "next_concrete_step": "Obtain an original live 12.1.5+ disenchant event log with full itemLink/bonus, actual iLvl 305 and material count for 272246 (and an uncommon/rare/epic armor/weapon control); otherwise obtain a new per-cast prospecting addon export for 237362/237363 containing ranks, Tin-vestigator and refund data, not recycled 800-cast pooled outputs. Resolve Copper Consumer trait ID only from an authoritative direct link.",
   "production_merge": false,
   "release": false,
   "notifications": "on-demand only; Dot monitors progress"
