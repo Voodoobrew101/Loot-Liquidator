@@ -827,6 +827,15 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         two(label,"Insufficient Data",option.letter or "D")
                     end
                     ShowMaterials(option,model)
+                    if LA.ProfessionThresholdNotes and f and model and model.context
+                        and LA.db.showProfessionThresholds~=false then
+                        local notes=LA:ProfessionThresholdNotes(f,option,model.context)
+                        for i=1,math.min(#notes,3) do
+                            if showProfession or notes[i]:sub(1,3)~='No ' then
+                                tooltip:AddLine('  '..notes[i],.78,.82,.95,true)
+                            end
+                        end
+                    end
                     if showResearch and not option.value and detail<3 then
                         local note=(model and model.warning) or option.note
                         if note then tooltip:AddLine("  "..note,.83,.72,.59,true) end

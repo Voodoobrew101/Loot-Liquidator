@@ -321,29 +321,53 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
         if type(fn)~='function' then return nil end
         local ok,value=pcall(fn,...);if ok then return value end
     end
+    local form=ProfessionsFrame and ProfessionsFrame.CraftingPage and ProfessionsFrame.CraftingPage.SchematicForm
+    local selectedRecipe=form and read(form.GetRecipeInfo,form)
+    if selectedRecipe and selectedRecipe.recipeID and self.GetCachedOperationInfo then
+        self:GetCachedOperationInfo(selectedRecipe.recipeID)
+    end
     local api,traits=C_ProfSpecs,C_Traits
     local config=read(api and api.GetConfigIDForSkillLine,line)
     local tabs=read(api and api.GetSpecTabIDsForSkillLine,line)
-    local options={nodes={},buffs=previous.buffs or {},lineID=line,observed=Now()}
+    local options={nodes={},buffs=previous.buffs or {},lineID=line,observed=Now(),
+        operation=char.professionOperationProfiles and char.professionOperationProfiles[tostring(line)]}
     local seen={}
-    local function Visit(path,tab)
+    local function Visit(path,tab,parentID,depth)
         if type(path)~='number' or seen[path] then return end
         seen[path]=true
         local node=read(traits and traits.GetNodeInfo,config,path)
         local entryID=read(api and api.GetSpendEntryForPath,path)
         local entry=entryID and read(traits and traits.GetEntryInfo,config,entryID)
+        local unlockID=read(api and api.GetUnlockEntryForPath,path)
+        local unlock=unlockID and read(traits and traits.GetEntryInfo,config,unlockID)
+        local unlockRanks=unlock and unlock.maxRanks or 0
+        local milestones={}
+        for _,perk in ipairs(read(api and api.GetPerksForPath,path) or {}) do
+            local perkID=type(perk)=='table' and perk.perkID or perk
+            local at=read(api and api.GetUnlockRankForPerk,perkID)
+            local text=read(api and api.GetDescriptionForPerk,perkID)
+            if type(at)=='number' and type(text)=='string' and text~='' then
+                milestones[#milestones+1]={rank=at,description=text,source='Blizzard specialization'}
+            end
+        end
+        table.sort(milestones,function(a,b)return a.rank<b.rank end)
         local definition=entry and read(traits and traits.GetDefinitionInfo,entry.definitionID)
         local name=definition and definition.overrideName
         if (not name or name=='') and definition and definition.spellID then
             name=read(C_Spell and C_Spell.GetSpellName,definition.spellID)
         end
         if node and type(name)=='string' and name~='' and type(node.maxRanks)=='number' then
-            options.nodes[#options.nodes+1]={id=path,name=name,tab=tab,maxRank=node.maxRanks,
-                rank=node.currentRank,description=read(api.GetDescriptionForPath,path)}
+            options.nodes[#options.nodes+1]={id=path,name=name,tab=tab,maxRank=math.max(0,node.maxRanks-unlockRanks),
+                rank=math.max(0,(node.currentRank or 0)-unlockRanks),description=read(api.GetDescriptionForPath,path),
+                parentID=parentID,depth=depth or 0,milestones=milestones,
+                requirementText=read(api.GetSourceTextForPath,path,config),
+                -- Live condition booleans describe the real character, not a
+                -- simulated allocation. Do not treat them as simulated access.
+                requirementsKnown=false}
         end
         local children=read(api and api.GetChildrenForPath,path)
         for _,child in ipairs(type(children)=='table' and children or {}) do
-            Visit(type(child)=='table' and (child.pathID or child.id) or child,tab)
+            Visit(type(child)=='table' and (child.pathID or child.id) or child,tab,path,(depth or 0)+1)
         end
     end
     if config and type(tabs)=='table' then
@@ -373,10 +397,93 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
     char.professionOptions[key]=options
     return options
 end
+-- Keep simulated ratings and percentages independent; no universal rating curve.
+LL.ProfessionSimulationStats={
+    {key='resourcefulness',name='Resourcefulness'},{key='multicraft',name='Multicraft'},
+    {key='ingenuity',name='Ingenuity'},{key='craftingSpeed',name='Crafting speed'},
+    {key='finesse',name='Finesse'},{key='perception',name='Perception'},{key='deftness',name='Deftness'}}
+function LL:ProfessionSimulationStatOptions(profession)
+    local gathering=profession=='Herbalism' or profession=='Mining' or profession=='Skinning'
+    local out={}
+    for i,stat in ipairs(self.ProfessionSimulationStats) do
+        if gathering and i>=5 or not gathering and i<=4 then out[#out+1]=stat end
+    end
+    return out
+end
+local function finiteStat(v,max)
+    return v==nil or type(v)=='number' and v==v and v>=0 and v<=max
+end
+function LL:SimulatedProfessionOperationStats(profile)
+    if type(profile.stats)~='table' then return nil end
+    local out={}
+    for _,stat in ipairs(self.ProfessionSimulationStats) do
+        local v=profile.stats[stat.key]
+        if v and (v.rating~=nil or v.percent~=nil) then
+            out[#out+1]={bonusStatName=stat.name,bonusStatValue=v.rating,ratingPct=v.percent,
+                simulated=true,statKey=stat.key}
+        end
+    end
+    return #out>0 and out or nil
+end
+function LL:ProfessionNodeRequirements(node,points,skill)
+    -- Only structured, source-backed requirements are executable. Text and
+    -- the live character's isMet flag cannot validate a different allocation.
+    for _,req in ipairs(node.requirements or {}) do
+        if req.kind=='node' and type(req.nodeID)=='number' and type(req.rank)=='number' then
+            if (points[tostring(req.nodeID)] or 0)<req.rank then
+                return false,('Requires %d points in %s'):format(req.rank,req.name or ('node '..req.nodeID))
+            end
+        elseif req.kind=='skill' and type(req.skill)=='number' then
+            if not skill or skill<req.skill then return false,('Requires skill %d'):format(req.skill) end
+        else return false,'Unlock requirements not yet supported' end
+    end
+    if node.requirementsKnown==false then return nil,node.requirementText or 'Unlock requirements not captured' end
+    return true
+end
+function LL:ProfessionNodeTooltip(node,rank,points,skill)
+    local lines={node.name,('%d / %d points'):format(rank,node.maxRank)}
+    if node.description then lines[#lines+1]=node.description end
+    local allowed,why=self:ProfessionNodeRequirements(node,points,skill)
+    if allowed~=true then lines[#lines+1]=why end
+    for _,m in ipairs(node.milestones or {}) do
+        lines[#lines+1]=('%s %d points: %s'):format(rank>=m.rank and 'Reached' or 'At',m.rank,m.description)
+    end
+    if #(node.milestones or {})==0 then lines[#lines+1]='No milestone descriptions captured. Refresh this profession to load them.' end
+    return lines
+end
+function LL:ProfessionThresholdNotes(f,option,ctx)
+    local lines,breakpoints={},{}
+    if not ctx then return lines end
+    local skill=ctx.effectiveSkill or ctx.skill
+    local build=GetBuildInfo and select(2,GetBuildInfo())
+    local seen={}
+    for _,rule in ipairs(self.ItemDB and self.ItemDB.professionRules or {}) do
+        if self.IsApprovedNumericRule and self:IsApprovedNumericRule(rule)
+            and rule.method==option.name and rule.recipeID==option.recipeID
+            and rule.inputItemID==f.id and rule.expansionID==f.expansionID
+            and (rule.inputQualityRank==nil or rule.inputQualityRank==f.reagentQuality)
+            and tostring(rule.build)==tostring(build)
+            and self.ProfessionFactor and self:ProfessionFactor(rule,ctx) then
+            for _,point in ipairs(rule.skillFactors or {}) do
+                if type(skill)=='number' and type(point.skill)=='number' and point.skill>skill and not seen[point.skill] then
+                    seen[point.skill]=true
+                    breakpoints[#breakpoints+1]=point.skill
+                    break
+                end
+            end
+        end
+    end
+    table.sort(breakpoints)
+    for _,point in ipairs(breakpoints) do
+        lines[#lines+1]=('Next researched skill breakpoint: %g (+%g skill)'):format(point,point-skill)
+    end
+    if #lines==0 and ctx.simulated then lines[1]='No researched skill breakpoint is available for this recipe.' end
+    return lines
+end
 function LL:SetManualProfessionProfile(character,profession,expansion,values)
     if not self.db or type(character)~='string' or type(profession)~='string'
         or type(expansion)~='number' or type(values)~='table' then return false end
-    if values.skill~=nil and (type(values.skill)~='number' or values.skill<0 or values.skill>1000) then return false end
+    if not finiteStat(values.skill,1000) then return false end
     if values.specialization~=nil then
         if type(values.specialization)~='string' then return false end
         if values.specialization~='none' then
@@ -399,7 +506,19 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
             if not tonumber(id) or tonumber(id)<=0 or tonumber(id)%1~=0 or enabled~=true then return false end
         end
     end
-    local profile={enabled=values.enabled==true,skill=values.skill,specialization=values.specialization,
+    local stats
+    if values.stats~=nil then
+        if type(values.stats)~='table' then return false end
+        stats={}
+        for _,stat in ipairs(self.ProfessionSimulationStats) do
+            local v=values.stats[stat.key]
+            if v~=nil then
+                if type(v)~='table' or not finiteStat(v.rating,10000) or not finiteStat(v.percent,100) then return false end
+                stats[stat.key]={rating=v.rating,percent=v.percent}
+            end
+        end
+    end
+    local profile={enabled=values.enabled==true,skill=values.skill,specialization=values.specialization,stats=stats,
         buffs=values.buffs and next(values.buffs) and values.buffs or nil,
         character=character,profession=profession,expansionID=expansion,simulated=true}
     chars[character][profession..':'..expansion]=profile
@@ -439,7 +558,26 @@ function LL:GetCachedOperationInfo(recipeID)
     if cached~=nil then return cached or nil end
     local ok,info=pcall(api,recipeID,{},nil,false)
     self._professionOperationCache[recipeID]=ok and type(info)=='table' and info or false
+    if ok and type(info)=='table' then self:CaptureProfessionOperation(recipeID,info) end
     return self._professionOperationCache[recipeID] or nil
+end
+function LL:CaptureProfessionOperation(recipeID,info)
+    local api=C_TradeSkillUI
+    if not api or not api.GetProfessionInfoByRecipeID then return end
+    local ok,profession=pcall(api.GetProfessionInfoByRecipeID,recipeID)
+    if not ok or type(profession)~='table' or type(profession.professionID)~='number' then return end
+    local char=self.db and self.db.characters and self.db.characters[self:CharacterKey()]
+    if not char then return end
+    local function number(v) return type(v)=='number' and not (issecretvalue and issecretvalue(v)) and v==v and v or nil end
+    local saved={recipeID=recipeID,observed=Now(),baseSkill=number(info.baseSkill),bonusSkill=number(info.bonusSkill),
+        lowerSkillThreshold=number(info.lowerSkillThreshold),upperSkillThreshold=number(info.upperSkillTreshold),stats={}}
+    for _,stat in ipairs(info.bonusStats or {}) do
+        if type(stat.bonusStatName)=='string' and not (issecretvalue and issecretvalue(stat.bonusStatName)) then
+            saved.stats[#saved.stats+1]={name=stat.bonusStatName,rating=number(stat.bonusStatValue),percent=number(stat.ratingPct)}
+        end
+    end
+    char.professionOperationProfiles=char.professionOperationProfiles or {}
+    char.professionOperationProfiles[tostring(profession.professionID)]=saved
 end
 function LL:HasCurrentProfession(name)
     if not name then return false end

@@ -215,50 +215,91 @@ end
 local start=#all
 local profile=LL:CreateProfessionProfilePanel('Jewelcrafting')
 profile.scripts.OnShow(profile)
-local checks,dropdowns,skillSlider={},{},nil
+local dropdowns={}
 for i=start+1,#all do
     local w=all[i]
-    assert(w.kind~='EditBox','profession editor must not require typing')
-    if w.template=='SettingsCheckboxControlTemplate' then checks[#checks+1]=w end
     if w.template=='SettingsDropdownControlTemplate' then dropdowns[#dropdowns+1]=w end
-    if w.kind=='Slider' then skillSlider=w end
 end
-assert(#checks==3 and #dropdowns==5 and skillSlider)
-for _,dropdown in ipairs(dropdowns) do
-    assert(not dropdown.Control.steppersShown)
-    dropdown:InitDropdown();dropdown:Refresh()
-    assert(not dropdown.Control.steppersShown,'menu rebuild restored dropdown arrows')
+assert(#dropdowns==2,'only character and expansion need dropdowns')
+local function find(text)
+    for i=start+1,#all do
+        local w=all[i]
+        if w.kind=='Button' and w.text==text then return w end
+    end
+    error('Missing button '..text)
 end
-local function click(w,value) w.Checkbox:SetChecked(value);w.Checkbox.scripts.OnClick(w.Checkbox) end
-click(checks[1],true);click(checks[2],true);skillSlider:SetValue(95)
-dropdowns[3].initializer.setting:SetValue(1) -- choose Blizzard specialization
-dropdowns[4].initializer.setting:SetValue(4) -- rank selection
-dropdowns[5].initializer.setting:SetValue(1);click(checks[3],true)
-local saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
-assert(saved.skill==95 and saved.specialization=='12=4' and saved.enabled and saved.simulated)
-assert(saved.buffs['123']==true)
-assert(char.researchProfiles==nil,'UI must not overwrite scanned snapshots')
+local function press(text) local w=find(text);w.scripts.OnClick(w) end
 local selector=dropdowns[1]
-local menu=selector.options or selector.initializer.options
-local rows=menu()
-assert(rows[1].value==0 and rows[1].label=="Don't show")
-assert(rows[2].value==-1 and rows[2].label=='Hypothetical')
-assert(rows[3].value==-2 and selector.initializer.setting:GetValue()==-2,'existing automatic display stays explicit until a selection is made')
-selector.initializer.setting:SetValue(0)
-assert(LL.db.professionTooltipProfiles.Jewelcrafting=='@hide')
+local rows=(selector.options or selector.initializer.options)()
+assert(rows[2].label=='Simulated')
+assert(selector.initializer.setting:GetValue()==-2)
 selector.initializer.setting:SetValue(-1)
-assert(LL.db.professionTooltipProfiles.Jewelcrafting=='@hypothetical')
-local minimum=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
-assert(minimum.enabled and minimum.skill==0 and minimum.specialization=='none' and minimum.buffs==nil,
-    'choosing Hypothetical resets a saved boosted profile to minimum skill with no bonuses')
-assert(char.researchProfiles==nil,'minimum simulation must not overwrite scanned data')
-assert(LL.db.professionTooltipProfiles.Enchanting==nil,'selections are per profession')
+local saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
+assert(saved.enabled and saved.skill==0 and saved.specialization=='none' and not saved.buffs)
+assert(char.researchProfiles==nil,'simulation never overwrites scanned data')
+assert(find('Show Gems').shown,'trees begin collapsed')
+press('Show Gems')
+assert(find('Hide Gems').shown)
+local sliders={}
+for i=start+1,#all do if all[i].kind=='Slider' then sliders[#sliders+1]=all[i] end end
+assert(#sliders==2,'skill plus the scanned node')
+sliders[1]:SetValue(95);sliders[2]:SetValue(4)
+saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
+assert(saved.skill==95 and saved.specialization=='12=4')
+press('Hide Gems')
+assert(not sliders[2].parent.parent.shown,'collapsing hides its slider')
+assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).specialization=='12=4')
+press('Show buffs')
+local check
+for i=start+1,#all do if all[i].template=='SettingsCheckboxControlTemplate' then check=all[i] end end
+check.Checkbox:SetChecked(true);check.Checkbox.scripts.OnClick(check.Checkbox)
+assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).buffs['123'])
+press('Reset to minimum')
+saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
+assert(saved.skill==0 and saved.specialization=='none' and saved.buffs==nil)
+selector.initializer.setting:SetValue(0)
+assert(not find('Show Gems').shown,'hidden mode hides simulation controls')
 selector.initializer.setting:SetValue(1)
-assert(LL.db.professionTooltipProfiles.Jewelcrafting=='Tester - Realm')
-
 dropdowns[2].initializer.setting:SetValue(10)
-assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',10)==nil,'browsing must not create a simulation')
+assert(not LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',10),'browsing real character is read only')
 assert(LL:ProfessionExpansionName(11)=='Midnight')
+selector.initializer.setting:SetValue(-1)
+assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',10).skill==0)
+print('PASS: Simulated minimum, collapsible trees and buffs, direct point sliders, reset and character isolation')
+-- Multi-level trees retain collapsed branches and enforce known thresholds.
+char.professionOptions['Jewelcrafting:11'].nodes={
+    {id=12,name='Gem Cutting',tab='Gems',maxRank=30},
+    {id=13,parentID=12,name='Rare Gems',tab='Gems',maxRank=20,
+        requirements={{kind='node',nodeID=12,rank=10,name='Gem Cutting'}}},
+    {id=14,parentID=13,name='Epic Gems',tab='Gems',maxRank=15,
+        requirements={{kind='node',nodeID=13,rank=5,name='Rare Gems'}}}}
+dropdowns[2].initializer.setting:SetValue(11)
+press('Show Gems');press('Show Gem Cutting branches')
+local function lastSlider()
+    for i=#all,start+1,-1 do if all[i].kind=='Slider' then return all[i] end end
+end
+local child=lastSlider()
+assert(child.enabled==false,'child locked below prerequisite')
+sliders[2]:SetValue(10)
+assert(child.enabled==true,'exact parent boundary unlocks child')
+child:SetValue(5);press('Show Rare Gems branches')
+local grandchild=lastSlider();grandchild:SetValue(4)
+assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).specialization:find('14=4',1,true))
+sliders[2]:SetValue(9)
+saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
+assert(not saved.specialization:find('13=5',1,true) and not saved.specialization:find('14=4',1,true),
+    'lowering parent clears dependent allocations through every branch level')
+press('Show profession / crafting stats')
+lastSlider():SetValue(25.5)
+saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
+assert(saved.stats.craftingSpeed.percent==25.5,'stat controls save percentages separately from ratings')
+press('Hide profession / crafting stats')
+assert(not lastSlider().parent.parent.shown,'stats collapse without clearing choices')
+assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats.craftingSpeed.percent==25.5)
+press('Reset to minimum')
+assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats==nil)
+print('PASS: nested branches, prerequisite boundary and cascade, stat controls and collapse preservation')
+
 -- Pooled vertical controls must hide arrows for our settings after every
 -- rebuild, then restore normal behavior when reused by another category.
 hooksecurefunc=function(frame,method,callback)
@@ -405,9 +446,9 @@ do
     -- B5a/B5b: rate choice on the main page; hypothetical pages have a new home.
     assert(settings.LootLiquidator_rateProfile and settings.LootLiquidator_rateProfileCharacter,'Show rates for registered')
     assert(LL.db.rateProfileCharacter=='' or LL.db.rateProfileCharacter==nil)
-    assert(pages['Professions (Hypothetical)'],'hypothetical profession pages need a parent page')
+    assert(pages['Professions (Simulated)'],'hypothetical profession pages need a parent page')
     local rows=LL:RateProfileCharacterChoices()
     assert(rows[1][1]=='' and rows[2][1]=='Tester - Realm','character choices list saved characters')
-    print('PASS: Show rates for + Professions (Hypothetical) page (B5a/B5b)')
+    print('PASS: Show rates for + Professions (Simulated) page (B5a/B5b)')
 end
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')
