@@ -245,6 +245,19 @@ function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration)
     end
     local ui=C_TradeSkillUI
     local info=OwnTradeSkillWindow() and read(ui and ui.GetProfessionInfoByRecipeID,recipeID)
+    if method=='Disenchant' and f and f.expansionID~=nil then
+        self:RefreshResearchSkillLines()
+        local char=self.db and self.db.characters and self.db.characters[self:CharacterKey()]
+        for id,detail in pairs(char and char.details or {}) do
+            if detail.parentName=='Enchanting' and self:ProfessionDetailMatchesExpansion(detail,f.expansionID) then
+                info=read(ui and ui.GetProfessionInfoBySkillLineID,tonumber(id))
+                if not info then info={professionID=tonumber(id),parentProfessionID=333,parentProfessionName='Enchanting',
+                    expansionName=self:ProfessionExpansionName(f.expansionID),skillLevel=detail.skill,
+                    skillModifier=detail.skillModifier,maxSkillLevel=detail.maxSkill} end
+                break
+            end
+        end
+    end
     local line=info and info.professionID
     local spec=line and ReadSpec(line)
     local context={character=self:CharacterKey(),recipeID=recipeID,method=method,
@@ -307,6 +320,12 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
     local key=profession..':'..expansion
     char.professionOptions=char.professionOptions or {}
     local previous=char.professionOptions[key] or {nodes={},buffs={}}
+    if #(previous.nodes or {})==0 then
+        for _,other in pairs(self.db.characters or {}) do
+            local catalog=other.professionOptions and other.professionOptions[key]
+            if catalog and #(catalog.nodes or {})>0 then previous=catalog;break end
+        end
+    end
     if character~=self:CharacterKey() or not OwnTradeSkillWindow() then return previous end
     local line
     local snapshot=char.researchProfiles and char.researchProfiles[key]

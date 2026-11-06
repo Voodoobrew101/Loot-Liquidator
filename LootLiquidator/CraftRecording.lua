@@ -390,7 +390,24 @@ local function validateDelta(self,p,after)
             if r.method==p.method and (r.recipeID==nil or r.recipeID==p.recipe)
                 and (r.inputItemID==input or (p.method=="Disenchant" and r.gearKey==
                 ('gear:%s:%s:%s'):format(tostring(p.before.facts[input].expansionID),tostring(p.before.facts[input].quality),p.before.facts[input].classID==2 and 'weapon' or 'armor'))) then
-                for _,m in ipairs(r.materials) do allowed[m.id]=true end
+                for _,m in ipairs(r.materials) do
+                    allowed[m.id]=true
+                    for _,id in ipairs(m.rankIDs or {}) do allowed[id]=true end
+                end
+            end
+        end
+        -- A completed single-item disenchant may discover a new gear mapping.
+        -- Accept only already catalogued DE materials from the same expansion,
+        -- never arbitrary bag gains or results from another expansion.
+        if p.method=='Disenchant' and p.lootClosed then
+            local expansion=p.before.facts[input].expansionID
+            for _,r in ipairs(self.ItemDB and self.ItemDB.processing or {}) do
+                if r.method=='Disenchant' and r.expansionID==expansion then
+                    for _,m in ipairs(r.materials) do
+                        allowed[m.id]=true
+                        for _,id in ipairs(m.rankIDs or {}) do allowed[id]=true end
+                    end
+                end
             end
         end
         if p.description.conversion and p.description.conversion.outputID then allowed[p.description.conversion.outputID]=true end
@@ -434,6 +451,10 @@ function LL:FinishCraftCapture(final)
         nominalInputs=p.nominalInputs,outputCoverage=complete and "complete" or "unresolved",startedAt=p.startedAt,endedAt=stamp(),
         durationSeconds=clock()-p.started,attribution=p.lootClosed and "cast-loot-bag" or "cast-result-bag",
         resultMetadata=copy(p.results),allocation=p.request and p.request.allocation,applyConcentration=p.request and p.request.concentration,zeroReason=not complete and "No authoritative empty-result signal" or nil}
+    if p.method=='Disenchant' and result.inputs[1] then
+        local facts=p.before.facts[result.inputs[1].itemID]
+        record.context=self:CaptureCraftContext(p.recipe,facts,p.method,nil,nil)
+    end
     local ok,saved=self:RecordCraftObservation(record)
     p.finalCoverage=ok and saved.outputCoverage or "unresolved"
     pending=nil

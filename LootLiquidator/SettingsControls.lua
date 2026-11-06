@@ -214,7 +214,9 @@ function LL:CreateSettingsCanvasSlider(parent,minValue,maxValue,step,initial,onC
     local setting=Proxy("number",initial)
     local options=Settings.CreateSliderOptions(minValue,maxValue,step)
     if options.SetLabelFormatter and MinimalSliderWithSteppersMixin then
-        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right,function(v)
+            return step<1 and ('%.1f%%'):format(v) or ('%.0f'):format(v)
+        end)
     end
     local control=self:CreateSettingsControl(parent,"SettingsSliderControlTemplate",
         Settings.CreateSlider(self.canvasSettingsCategory,setting,options,""),"slider")
