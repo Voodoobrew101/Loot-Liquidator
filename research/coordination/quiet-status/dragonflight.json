@@ -1,7 +1,7 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T10:41:19.291Z",
-  "status": "active_new_item_specific_looter_hits; original_ranked_prospect_and_mill_histograms_unresolved",
+  "updated_at": "2026-11-06T11:37:19.013Z",
+  "status": "completed_new_disenchant_hit_counts_and_historical_rank_identity; original_ranked_prospect_mill_cast_histograms_unresolved",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0020",
@@ -12,11 +12,12 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019 Draconium ranked 189143/188658 cast/Resourcefulness accounting and output-level histograms",
-    "T0046 Serevite 190394/190395/190396 and Khaz'gorite 190312/190313/190314 authoritative quality IDs and rank-controlled outcomes",
-    "T0041 Prismatic Ore 194545 -> Eternity Amber 192849/192850/192851 original rank/cast histograms",
-    "T0018/T0015 Bubble Poppy 191467 and Saxifrage 191464/191465/191466 original completed mills, pigments, refunds and zero-inclusive histograms",
-    "T0041 item-specific Dragonflight gear disenchanting occurrence counts, per-cast stack histograms, build/profession profiles"
+    "Draconium 189143 R1 / 188658 R2 rank-aware prospecting completed casts and hit histograms",
+    "Serevite 190395 R1 / 190396 R2 / 190394 R3 prospecting original Resourcefulness-adjusted completed-cast logs",
+    "Khaz'gorite 190312/190313/190314 ore prospecting and Prismatic Ore 194545 original cast output logs",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466 ranked milling yield/hit histograms",
+    "Independent item-specific Dragonflight gear disenchant output-hit cohorts",
+    "Historical Serevite ore rank-ID reconciliation with source-corroborated 5-to-1 refining recipes"
   ],
   "newly_verified_fields": [
     "4 exact new Dragonflight gear input IDs and 3 exact enchanting output IDs",
@@ -138,14 +139,40 @@
     }
   ],
   "new_numerical_measurements": {
-    "records": 9,
-    "unique_item_cohorts": 4,
-    "item_disenchants_reported": 186,
-    "verified_material_hit_counts": 9,
+    "records": 11,
+    "unique_item_cohorts": 5,
+    "item_disenchants_reported": 257,
+    "verified_material_hit_counts": 11,
+    "new_verified_refining_recipe_identity_corrections": 2,
     "original_completed_prospect_or_mill_cast_cohorts": 0,
-    "zero_inclusive_histograms": 0
+    "zero_inclusive_histograms": 0,
+    "new_output_total_units": 0
   },
   "source_metadata_verified": [
+    {
+      "material": "Serevite Ore",
+      "pairs": [
+        [
+          190395,
+          1
+        ],
+        [
+          190396,
+          2
+        ],
+        [
+          190394,
+          3
+        ]
+      ],
+      "quality_evidence": [
+        "https://github.com/t-mart/wow-auction/blob/master/README.md",
+        "https://goldcap.gg/retail/us/items/190395",
+        "https://goldcap.gg/retail/us/items/190396",
+        "https://goldcap.gg/retail/eu/items/190394"
+      ],
+      "status": "Independently corroborated early-2023 rank-ID README and currently labeled rank pages; source identity only, no prospecting P(hit)"
+    },
     {
       "material": "Draconium Ore",
       "pairs": [
@@ -224,6 +251,15 @@
     }
   ],
   "evidence_files": [
+    {
+      "path": "research/v3/evidence/dragonflight/2026-11-06T1137-new-gear-hit-counts-and-serevite-rank-recipe.jsonl",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T1137-new-gear-hit-counts-and-serevite-rank-recipe.jsonl",
+      "records": 14,
+      "drop_records": 11,
+      "recipe_corrections": 2,
+      "searched_records": 1,
+      "unique_gear_cohorts": 5
+    },
     {
       "path": "research/v3/evidence/dragonflight/2026-11-06T0431-rank-identity-and-original-logs-search.jsonl",
       "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0431-rank-identity-and-original-logs-search.jsonl",
@@ -313,12 +349,21 @@
     "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
     "https://www.wowhead.com/item=198041/khazgorite-fabric-cutters-left-blade",
     "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
-    "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark"
+    "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
+    "https://www.wowhead.com/item=194378/explorers-belt-knife",
+    "https://www.wowhead.com/item=194417/vault-guards-talon",
+    "https://www.wowhead.com/item=194401/expedition-guards-chestguard",
+    "https://www.wowhead.com/item=194388/obsidian-guardians-cleaver",
+    "https://www.wowhead.com/item=202463/lingering-phantoms-stompers",
+    "https://github.com/t-mart/wow-auction/blob/master/README.md",
+    "https://warcraft.wiki.gg/wiki/Smelting"
   ],
-  "base_head_sha_verified": "05891e4c757da4931a1b04bef69a660c1b3f9e90",
+  "base_head_sha_verified": "247088643698fa1986592d65a0e1f2c76335837c",
   "commit_sha": null,
-  "commit_sha_note": "Atomic commit's SHA cannot be included inside its own hashed contents. GitHub history gives the verified final SHA; base_head_sha_verified is the prior branch head.",
+  "commit_sha_note": "A commit cannot contain its own final SHA within its hashed tree; base head captured here, final verified SHA can be checked in branch history.",
   "blockers": [
+    "Original ranked post-beta prospecting/milling per-operation histograms with Resourcefulness refunds remain unavailable; do not turn nominal ore/herb inputs into observed operations.",
+    "Five new gear Looter snapshots are undated cumulative observations with unknown character skill/spec, gear variant, original patch and total output units; do not infer absent outcomes or full histograms.",
     "No new original completed-operation sample found for ranked Draconium, Serevite, Khaz'gorite, Prismatic, Bubble Poppy, Saxifrage, or new gear DE with a per-output 0/1/2+ stack histogram.",
     "Nominal ore/herb totals, Resourcefulness refunds, and player-stated percentages cannot establish P(hit) or unconditional quantity per completed operation.",
     "Known historical Jallfo/Bugy/Xenastro/Aary/superbondez/neoslayyer/108782r studies must not be treated as new independent cohorts; original-source identity preserved.",
@@ -331,6 +376,15 @@
     "No original post-beta ranked prospect/mill completed-operation and Resourcefulness-ledger samples found in cross-site searches; quality-rank authoritative tooltips still unresolved."
   ],
   "exhausted_sources": [
+    {
+      "source": "New 2026-11-06 Dragonflight named searches for original Draconium/Serevite/Khaz'gorite/Prismatic prospecting and Bubble Poppy/Saxifrage milling per-cast sheets",
+      "reason": "At least six searches across Reddit/Wowhead/Warcraft Wiki/GitHub returned previously indexed historical cohorts, no newly verified completed-cast refund-adjusted output histogram. Distinct unrecorded gear Looter input IDs found instead.",
+      "links": [
+        "https://www.reddit.com/r/woweconomy/comments/y3e8ek",
+        "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
+        "https://thelazygoldmaker.com/i-prospected-40-000-serevite-ore-so-you-dont-have-to/"
+      ]
+    },
     {
       "url": "https://www.wowhead.com/item=198418/blazing-pigment",
       "reason": "Aary rank-2/3 Saxifrage 100-herb numeric comment already imported more than once; no new cast histogram"
@@ -404,8 +458,12 @@
       ]
     }
   ],
-  "next_concrete_step": "Recover unrecorded original post-beta ranked Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Bubble Poppy/Saxifrage milling per-cast exports with Resourcefulness refunds and zero-inclusive quantities. If none exist, pursue item-specific disenchanting original dated per-cast stack histograms, never duplicate cumulative Looter snapshots.",
+  "next_concrete_step": "Seek an unrecorded dated original Dragonflight ranked Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Bubble Poppy/Saxifrage milling SavedVariables/CSV that records each completed cast, zero and positive output stacks, and Resourcefulness inventory/refunds; if inaccessible, pursue new distinct gear-item original dated DE logs instead of fresh snapshots of known Looter input IDs.",
   "decisions_needed": [
+    {
+      "request": "Master review of two additive Serevite rank-to-ID refining recipe corrections (replaces dragonflight-20261031-173001/002)",
+      "reason": "Early-2023 source and current rank-labeled sources agree 190395 R1, 190396 R2, 190394 R3; cannot edit shared schema, queue or compiled ItemDB."
+    },
     {
       "request": "Master/source-author outreach for original prospecting/milling logs or in-game data gathering",
       "reason": "No public post-beta original cast/refund histogram located; repeated search snippets cannot resolve missing per-operation fields."
@@ -420,19 +478,19 @@
     }
   ],
   "validation": {
-    "jsonl": "9 parseable JSONL rows, 34 schema fields each; source values read against original item tables",
+    "jsonl": "14 valid JSONL records; 11 drop records plus 2 recipe replacements and 1 searched record, required schema keys present, distinct IDs and castsWithDrop <= casts",
     "status_json_parse": "valid",
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-06T1041-four-new-gear-looter-cohorts.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-06T1137-new-gear-hit-counts-and-serevite-rank-recipe.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "git_readback": "pending post-commit verification",
-    "parent_head_sha": "05891e4c757da4931a1b04bef69a660c1b3f9e90"
+    "git_readback": "pending commit and post-commit SHA/path verification",
+    "parent_head_sha": "247088643698fa1986592d65a0e1f2c76335837c"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "session_summary": "Nine newly verified Looter per-material hit counts across four previously unrecorded exact Dragonflight gear input IDs (209937,198041,209923,209919), 186 source-reported disenchants; percentages/positive ranges preserved. No original independent prospecting or milling casts found, no output-unit totals, full histogram, or probabilities inferred.",
+  "session_summary": "Eleven new source-reported disenchant material-hit records for five previously unrecorded exact Dragonflight gear IDs (194378,194417,194401,194388,202463) covering 257 cumulative Looter disenchant operations (not 257 independent source-dated observations). Two additive historical rank-ID corrections to 5-to-1 Serevite refining recipes; new full 0/1/2+ histograms, output totals, source character builds, and prospecting/milling measured data remain absent.",
   "new_source_leads": [
     {
       "url": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
@@ -472,12 +530,166 @@
     "note": "Source search only, no new measured probabilities. Status update is second Contents-API commit because the connector cannot atomically write two paths with unavailable tree SHA; no merge or release."
   },
   "current_run": {
-    "updated_at": "2026-11-06T10:41:19.291Z",
-    "evidence_path": "research/v3/evidence/dragonflight/2026-11-06T1041-four-new-gear-looter-cohorts.jsonl",
-    "records": 9,
-    "cohorts": 4,
-    "source_reported_item_disenchants": 186,
-    "original_prospect_mill_cohorts": 0,
-    "parent_head": "05891e4c757da4931a1b04bef69a660c1b3f9e90"
-  }
+    "updated_at": "2026-11-06T11:37:19.013Z",
+    "evidence_path": "research/v3/evidence/dragonflight/2026-11-06T1137-new-gear-hit-counts-and-serevite-rank-recipe.jsonl",
+    "records": 14,
+    "drop_records": 11,
+    "new_gear_cohorts": 5,
+    "reported_gear_disenchants": 257,
+    "new_recipe_identity_corrections": 2,
+    "original_prospect_mill_cast_cohorts": 0
+  },
+  "newly_verified_fields_and_cohorts": [
+    {
+      "inputItemID": 194378,
+      "inputName": "Explorer's Belt Knife",
+      "reportedDisenchants": 22,
+      "outputHitCounts": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 20,
+          "percentShown": 91,
+          "positiveRange": [
+            1,
+            4
+          ]
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 2,
+          "percentShown": 9,
+          "positiveRange": null
+        }
+      ],
+      "source": "https://www.wowhead.com/item=194378/explorers-belt-knife",
+      "provenance": "Undated cumulative Wowhead Looter community uploads, not individual original cast logs"
+    },
+    {
+      "inputItemID": 194417,
+      "inputName": "Vault Guard's Talon",
+      "reportedDisenchants": 11,
+      "outputHitCounts": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 10,
+          "percentShown": 91,
+          "positiveRange": [
+            2,
+            3
+          ]
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 1,
+          "percentShown": 9,
+          "positiveRange": null
+        }
+      ],
+      "source": "https://www.wowhead.com/item=194417/vault-guards-talon",
+      "provenance": "Undated cumulative Wowhead Looter community uploads, not individual original cast logs"
+    },
+    {
+      "inputItemID": 194401,
+      "inputName": "Expedition Guard's Chestguard",
+      "reportedDisenchants": 191,
+      "outputHitCounts": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 173,
+          "percentShown": 91,
+          "positiveRange": [
+            1,
+            3
+          ]
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 13,
+          "percentShown": 7,
+          "positiveRange": null
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 5,
+          "percentShown": 3,
+          "positiveRange": null
+        }
+      ],
+      "source": "https://www.wowhead.com/item=194401/expedition-guards-chestguard",
+      "provenance": "Undated cumulative Wowhead Looter community uploads, not individual original cast logs"
+    },
+    {
+      "inputItemID": 194388,
+      "inputName": "Obsidian Guardian's Cleaver",
+      "reportedDisenchants": 8,
+      "outputHitCounts": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 8,
+          "percentShown": 100,
+          "positiveRange": [
+            1,
+            3
+          ]
+        }
+      ],
+      "source": "https://www.wowhead.com/item=194388/obsidian-guardians-cleaver",
+      "provenance": "Undated cumulative Wowhead Looter community uploads, not individual original cast logs"
+    },
+    {
+      "inputItemID": 202463,
+      "inputName": "Lingering Phantom's Stompers",
+      "reportedDisenchants": 25,
+      "outputHitCounts": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 15,
+          "percentShown": 60,
+          "positiveRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 11,
+          "percentShown": 44,
+          "positiveRange": null
+        },
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 3,
+          "percentShown": 12,
+          "positiveRange": [
+            1,
+            2
+          ]
+        }
+      ],
+      "source": "https://www.wowhead.com/item=202463/lingering-phantoms-stompers",
+      "provenance": "Undated cumulative Wowhead Looter community uploads, not individual original cast logs"
+    },
+    {
+      "inputItemID": 190395,
+      "inputRank": 1,
+      "outputItemID": 190396,
+      "outputRank": 2,
+      "inputsPerCast": 5,
+      "outputCount": 1,
+      "source": "https://github.com/t-mart/wow-auction/blob/master/README.md",
+      "recipeSource": "https://warcraft.wiki.gg/wiki/Smelting",
+      "sourceKind": "corrected historical recipe identity, not measured processing"
+    },
+    {
+      "inputItemID": 190396,
+      "inputRank": 2,
+      "outputItemID": 190394,
+      "outputRank": 3,
+      "inputsPerCast": 5,
+      "outputCount": 1,
+      "source": "https://github.com/t-mart/wow-auction/blob/master/README.md",
+      "recipeSource": "https://warcraft.wiki.gg/wiki/Smelting",
+      "sourceKind": "corrected historical recipe identity, not measured processing"
+    }
+  ]
 }
