@@ -544,8 +544,13 @@ function LL:CreateProfessionProfilePanel(profession)
         visible={}
         place(title,16);place(intro,46);place(character,96);place(era,96,326);place(status,138)
         local y=200
+        if selection~='@hide' then
+            advanced:SetText(advancedOpen and 'Hide advanced' or 'Advanced')
+            place(advanced,y);y=y+38
+        end
         if selection=='@hypothetical' then
             status:SetText('Simulated profile. Controls save your choices; reference yields change only where researched formulas are available.')
+            if advancedOpen then
             skill:SetPreferenceValue(profile().skill or 0)
             place(skillLabel,y+6);place(skill,y,270);y=y+44
             place(reset,y);y=y+40
@@ -594,8 +599,6 @@ function LL:CreateProfessionProfilePanel(profession)
                     end
                 end
             end
-            advanced:SetText(advancedOpen and 'Hide advanced' or 'Advanced')
-            place(advanced,y);y=y+38
             if advancedOpen then
                 place(statsTitle,y);y=y+30
                 place(statsNote,y);y=y+60
@@ -638,15 +641,12 @@ function LL:CreateProfessionProfilePanel(profession)
                 end
             end
             place(note,y+8);y=y+64
+            end
         elseif selection=='@hide' then status:SetText('Processing results for '..profession..' are hidden from tooltips.')
         else
             status:SetText('Uses scanned character data. Choose Simulated to try different skill and specialization points.')
         end
         if selection~='@hide' then
-            if selection~='@hypothetical' then
-                advanced:SetText(advancedOpen and 'Hide advanced' or 'Advanced')
-                place(advanced,y);y=y+38
-            end
             if advancedOpen then
                 if selection=='@hypothetical' then place(scan,y);y=y+40 end
                 local record=LL.db.characters and LL.db.characters[selected]

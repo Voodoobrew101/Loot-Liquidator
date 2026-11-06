@@ -237,9 +237,11 @@ selector.initializer.setting:SetValue(-1)
 local saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(saved.enabled and saved.skill==0 and saved.specialization=='none' and not saved.buffs)
 assert(char.researchProfiles==nil,'simulation never overwrites scanned data')
+assert(find('Advanced').point[5]==-200,'Advanced stays directly below the status text')
+press('Advanced')
 local sliders={}
 for i=start+1,#all do if all[i].kind=='Slider' then sliders[#sliders+1]=all[i] end end
-assert(#sliders==2,'skill and specialization sliders are shown immediately')
+assert(#sliders==10,'Advanced reveals skill, specialization and all eight stat sliders together')
 sliders[1]:SetValue(95)
 local holder=sliders[2].parent.parent
 local hidden=holder.hideCount or 0
@@ -247,7 +249,6 @@ for value=1,4 do sliders[2]:SetValue(value) end
 assert((holder.hideCount or 0)==hidden,'changing a slider must never hide it and cancel continuous dragging')
 saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(saved.skill==95 and saved.specialization=='12=4')
-press('Advanced')
 local check
 for i=start+1,#all do if all[i].template=='SettingsCheckboxControlTemplate' then check=all[i] end end
 check.Checkbox:SetChecked(true);check.Checkbox.scripts.OnClick(check.Checkbox)
@@ -295,7 +296,9 @@ saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(saved.stats.craftingSpeed.percent==126,'speed bonus is whole-number and not capped at 100 percent')
 press('Hide advanced')
 assert(not speedInput.parent.parent.shown,'single Advanced section hides stats')
-assert(holder.shown,'specializations stay visible when Advanced is closed')
+assert(not holder.shown,'Advanced hides all specialization controls')
+assert(not sliders[1].parent.parent.shown,'Advanced also hides simulated skill')
+assert(find('Advanced').point[5]==-200,'collapsing keeps Advanced at the top')
 assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats.craftingSpeed.percent==126)
 for i=start+1,#all do
     local w=all[i]

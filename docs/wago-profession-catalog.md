@@ -29,9 +29,10 @@ unlock threshold. Choosing a node never grants learned recipes or real access.
 
 Profession sliders now use the same Blizzard Settings slider factory, native
 artwork, steppers and value formatter as Pricing & Actions, in whole-number steps.
-Simulated effective skill is at the top. Every tree and branch is visible, with
-indented child labels and sliders. One **Advanced** button per page controls all
-stats, buffs, scan refresh and captured details; there are no nested disclosures.
+One **Advanced** button sits directly below the character/expansion selectors and
+status text. It starts collapsed and contains effective skill, all specialization
+trees with indented branch sliders, stats, buffs, scan refresh and captured details.
+There are no nested disclosures. Collapsing it retains saved choices.
 
 The refresh path lays out visible controls before hiding unused ones. It never
 hides/re-shows the active slider during OnValueChanged, which previously cancelled
