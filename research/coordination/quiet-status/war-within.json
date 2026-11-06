@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-06T03:24:54Z",
-  "status": "research_active_new_source_leads_no_new_verified_numeric_yields",
+  "updated_at": "2026-11-06T04:32:13.469Z",
+  "status": "research_active_no_new_numeric_cohort_standing_milling_gap_searched",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0040",
@@ -61,27 +61,50 @@
         "cumulative Wowhead Looter source overlap reconciliation",
         "positive stack histograms, total output units and game build"
       ]
+    },
+    {
+      "task_id": "standing_task_4_TWW_milling",
+      "inputs": [
+        "Orbinid (rank-specific ID unresolved in this search)",
+        "Blessing Blossom (rank-specific ID unresolved in this search)"
+      ],
+      "missing_fields": [
+        "separately measured completed 10-herb mills by input rank",
+        "exact pigment output item ID and quality rank",
+        "castsWithDrop and per-cast zeros/1/2+ histograms",
+        "skill, spec, client build and Resourcefulness refund/reuse basis"
+      ]
     }
   ],
   "newly_verified_fields": [],
   "new_cohorts": [],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl"
+    "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T0430-orbinid-blossom-cast-log-search.jsonl"
   ],
   "source_links": [
     "https://eu.forums.blizzard.com/en/wow/t/it-is-impossible-to-earn-gold-via-prospecting-now/554920",
     "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-    "https://www.reddit.com/r/woweconomy/comments/1g6jcfr"
+    "https://www.reddit.com/r/woweconomy/comments/1g6jcfr",
+    "https://www.reddit.com/r/woweconomy/comments/1f9qado",
+    "https://www.wowhead.com/guide/the-war-within/professions/inscription-overview",
+    "https://www.wowhead.com/item=222618/nacreous-pigment",
+    "https://warcraft.wiki.gg/wiki/Orbinid_Pigment",
+    "https://warcraft.wiki.gg/wiki/Blossom_Pigment",
+    "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679"
   ],
   "commit_sha": null,
-  "verified_pre_run_branch_commit_sha": "cbec3202663355f8e066e345ca9881d7bb543b08",
-  "commit_note": "Single atomic commit of owned searched evidence and status. A file cannot contain its own resulting commit SHA; verify actual SHA from GitHub branch and read-back.",
+  "verified_pre_run_branch_commit_sha": "ca96f9bc2968389045e51a903737a323eb0cc54f",
+  "commit_note": "One searched-only ledger line is not numeric progress. One atomic commit intended for worker-owned evidence and quiet-status. Commit SHA cannot be embedded in the commit's own blob; confirm SHA/read-back after branch update.",
   "blockers": [
     "December 28, 2024 first-person rank 1/2/3 Bismuth, Aqirite and Ironclaw tests claim recorded Google Sheets, but original sheets or operation-level data were not publicly linked in indexed post.",
     "March 31, 2025 600 rank-1 Ironclaw Reddit anecdote mentions 117 prospects but has no output item counts, hits, refunds or histograms, so cannot advance any drop row.",
     "October 2024 original milling calculator describes Google Sheets without an accessible source of actual herb/rank-specific completed mills and 0/1/2+ histogram.",
     "No new independent numeric drop/conditional yield cohort verified; no measured P(hit), zeros, denominator, confidence or gold EV imputed.",
-    "Wowhead PTR cumulative disenchant tables remain unfit to establish current Retail item eligibility or independent raw per-cast histograms."
+    "Wowhead PTR cumulative disenchant tables remain unfit to establish current Retail item eligibility or independent raw per-cast histograms.",
+    "Orbinid/Blessing Blossom original rank-separated per-cast logs not found in 7 reviewed source links; guide recipe associations are not evidence of measured probabilities or yields.",
+    "Firecrawl source-page access was unavailable because that connected service has exhausted credits; no live scrape or linked sheet extraction was performed.",
+    "General Wowhead Looter disenchant tables mix build/variant and can show TWW Storm Dust alongside legacy outputs for anniversary items, so they do not establish current Retail per-rarity numeric baseline."
   ],
   "exhausted_sources": [
     {
@@ -115,9 +138,21 @@
     {
       "url": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
       "reason": "March 2025 600-rank1-Ironclaw cost anecdote and 117-prospects follow-up contain no output material counts or 0..N histograms; further source rechecks not worthwhile without author's raw log."
+    },
+    {
+      "url": "https://www.wowhead.com/guide/the-war-within/professions/inscription-overview",
+      "reason": "Milling recipes/ingredient identity only, no dated original per-cast Orbinid/Blessing Blossom sample or histogram."
+    },
+    {
+      "url": "https://warcraft.wiki.gg/wiki/Orbinid_Pigment",
+      "reason": "Ten-Orbinid-to-pigment recipe association, not actual measured casts, hits or output quantities."
+    },
+    {
+      "url": "https://warcraft.wiki.gg/wiki/Blossom_Pigment",
+      "reason": "Ten-Blessing-Blossom-to-pigment recipe association, not an independent measured mill study."
     }
   ],
-  "next_concrete_step": "Follow original October 18, 2024 milling-calculator author's linked Google Sheet (reddit 1g6jcfr) and December 28, 2024 multi-rank prospect sheet author (EU Blizzard forum 554920) for a directly accessible cast-level source. If spreadsheets lack raw per-cast distributions, move to an unexhausted gear-specific T0048 source rather than repeating TWW aggregate reddit searches. Require exact output IDs, operation denominators, skill/unlocks, patch and refund basis.",
+  "next_concrete_step": "Switch to previously unexhausted first-person T0048 Storm Dust shuffle results (https://www.reddit.com/r/woweconomy/comments/1f9qado): retrieve its actual linked Google Sheet and test whether input crafted-gear item ID, observed completed disenchants, by-rank totals, operation-level hits/histograms and 73/100 skill can be verified. If only profits or aggregate totals, do not record fabricated hits; next investigate an original in-game per-cast log/export for Aqirite 210934.",
   "decisions_needed": [],
   "gold_ev_policy": "Use addon live prices only; never frozen historical research prices."
 }
