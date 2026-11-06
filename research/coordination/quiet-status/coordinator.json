@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T05:06:09.778Z",
+  "updated_at": "2026-11-06T06:13:00.302Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Coordinator source-lineage/identity checkpoint: inspected original connected 2016 Legion Prospecting workbook and existing 38 numeric evidence rows (two original workbook cohorts + one separately sourced Reddit cohort), verified 12 distinct gem-name-to-item-ID candidates from external item pages for 36 source rows; two Gem Chip rows remain ambiguous because two different IDs share that name (129100,130203). No new casts or measured cohorts, no compiled ItemDB/engine/tooltip validation; preserve historical 2016 context and worker ownership.",
+  "status": "Source-lineage correction confirmed from ORIGINAL 2016 Legion Prospecting sheet: two Gem Chip totalQuantity cells are formulas copying stated casts, not independently recorded measured output; records legacy-20261031-013/026 currently transcribe those formula totals as study quantities. Historical 1-per-cast provisional assumption may be defensible only when labeled as a modeled source-table assumption. Distinct colorless bag Gem Chip 129100 versus blue loot-window Gem Chip 130203 documented; workbook has no itemLink. No new independent cohorts or offline tooltip tests.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -24,6 +24,31 @@
       "task_id": "T0046",
       "kind": "Dragonflight_reagent_rank_validation_path",
       "details": "Existing secondary Serevite mappings 190395 R1/190396 R2/190394 R3 corroborated in independent open-source README and market pages; Blizzard public item endpoint reportedly omits reagent rank per developer forum; client C_TradeSkillUI.GetItemReagentQualityByItemInfo(itemInfo) API is documented, but no client invocation here. Do not call secondary IDs authoritative or claim verified runtime mapping."
+    },
+    {
+      "task_id": "T0042",
+      "kind": "verified_formula_vs_empirical_yield_and_output_identity_gap",
+      "input_item_ids": [
+        123918,
+        123919
+      ],
+      "record_ids": [
+        "legacy-20261031-013",
+        "legacy-20261031-026"
+      ],
+      "original_workbook_cells": {
+        "leystone_casts": "K2=6674 (entered numeric)",
+        "leystone_gem_chip": "E16 = K2 (6674; derived)",
+        "leystone_gem_chip_rate": "H16 = E16/$K$2 (1; derived)",
+        "felslate_casts": "K19=2112 (entered numeric)",
+        "felslate_gem_chip": "E33 = K19 (2112; derived)",
+        "felslate_gem_chip_rate": "H33 = E33/$K$19 (1; derived)",
+        "gem_chip_vendor_g": "B16=0.225"
+      },
+      "why_it_matters": "E16/E33 were authored as spreadsheet formulas; do not interpret those two exact totals as independently observed material quantities. Retain original workbook, recorded cast counts as stated, and original numeric transcription, but correct derived-field provenance via worker-owned append-only correction or lower-priority provisional reference policy.",
+      "output_identity": "Source name only. 129100 is colorless bag reagent per linked Wowhead comments; 130203 is blue loot-window Gem Chip; no workbook original itemLink, so do not assert which raw output item ID the author's sheet counted.",
+      "new_observed_casts": 0,
+      "new_independent_cohorts": 0
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -99,6 +124,52 @@
       "blizzard_public_api_limitation_report": "https://us.forums.blizzard.com/en/blizzard/t/commodities-api-item-rankquality/51895",
       "verified_client_response": false,
       "new_numeric_cohort": false
+    },
+    {
+      "kind": "original_spreadsheet_formula_lineage_confirmed_not_new_numeric_measurement",
+      "original_workbook": "https://docs.google.com/spreadsheets/d/1a415g8FlUJ_EdC8TlA6U2Yzz8KSh9PA2WvV0dAsPLnM/edit",
+      "original_tab": "Sheet1",
+      "cells_checked": [
+        "K2",
+        "D16",
+        "E16",
+        "H16",
+        "K19",
+        "D33",
+        "E33",
+        "H33",
+        "B16"
+      ],
+      "evidence_file": "research/v3/evidence/legacy/2026-10-31T0039-legion-prospecting-original-studies.jsonl",
+      "record_ids": [
+        "legacy-20261031-013",
+        "legacy-20261031-026"
+      ],
+      "existing_flag_in_repo": "research/v3/flags.jsonl (2026-10-31 claude-reviewer, legacy-20261031-013/026)",
+      "leystone": {
+        "stated_prospects": 6674,
+        "gem_chip_total_formula": "=K2",
+        "derived_total": 6674,
+        "gem_chip_rate_formula": "=E16 / $K$2",
+        "derived_rate": 1,
+        "observed_chip_total": null
+      },
+      "felslate": {
+        "stated_prospects": 2112,
+        "gem_chip_total_formula": "=K19",
+        "derived_total": 2112,
+        "gem_chip_rate_formula": "=E33 / $K$19",
+        "derived_rate": 1,
+        "observed_chip_total": null
+      },
+      "wowhead_source": "https://www.wowhead.com/item=130203/gem-chip",
+      "colorless_bag_item_id": 129100,
+      "blue_loot_window_item_id": 130203,
+      "numeric_rows_affected": 2,
+      "unique_cohorts_added": 0,
+      "new_gold_ev_coverage_verified": 0,
+      "retail_scope_unverified": true,
+      "decision": "Flag concern confirmed by original formulas. Distinguish study counts from table-derived assumption, preserve lineage; source still lacks original itemLink."
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -180,7 +251,9 @@
     "Legion workbook outputs are name-only; two different historic item IDs are displayed as Gem Chip (129100 and 130203), so automatic name-join risks price misattribution.",
     "T0042 reported casts/quantities are historical Legion-era scope, not measured current-Retail applicability; castsWithDrop/histograms remain unknown.",
     "Exact normalized source->compiled ItemDB->offline valuation/tooltip tracing not executed; cannot declare 36 rows newly imported, priced or actionable.",
-    "Dragonflight Blizzard public item endpoint may omit reagent ranks; client reagent-quality API not executed."
+    "Dragonflight Blizzard public item endpoint may omit reagent ranks; client reagent-quality API not executed.",
+    "Legacy records 013/026 label spreadsheet-formula totals as study totalQuantity: requires worker-owned correcting record or reviewed modeled-reference handling; not new observed yields.",
+    "Workbook lacks original exact Gem Chip itemLink. 129100 colorless reagent vs 130203 blue loot-window variant must not be conflated; live Retail output mapping and valuation not tested."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -204,7 +277,7 @@
       "proposal": "Retain source-reported hit counts as historical research only until source build/stack distributions and Retail scope are verified."
     }
   ],
-  "next_concrete_step": "Request reviewed source-identity normalization for 12 unambiguous Legion gem names and obtain original historical Gem Chip itemLink or authoritative 2016 item payload to distinguish 129100 vs 130203; then trace exact 123918/123919 fields through protected branch's actual ItemDB->synthetic-price engine->tooltip, preserving 2016 epoch and avoiding duplicate cohorts. Separate follow-up: run C_TradeSkillUI.GetItemReagentQualityByItemInfo in actual Retail client for T0046 rather than expecting Blizzard public item API to include rank.",
+  "next_concrete_step": "Request an append-only correction from legacy worker for records 013/026: mark 6674/2112 Gem Chip totals as formula-derived (not measured) and retain a labeled provisional 1/cast only if allowed under source/reference table policy; preserve original rows. Follow by reviewed name/ID mapping (129100 bag output vs 130203 blue loot event) and actual source->compiled ItemDB->synthetic-price valuation->tooltip fixture on isolated engineering branch (never protected three-pass branch). Pivot further coordinator time to a different unresolved queue source after this proof.",
   "validation_executed": {
     "repository_git_reads": true,
     "original_spreadsheet_value_range_read": true,
@@ -436,5 +509,7 @@
     "research/v3/evidence/dragonflight/2026-11-06T0330-post-beta-prospect-and-mill-logs-search.jsonl",
     "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl",
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl"
-  ]
+  ],
+  "research_branch_head_read_before_write": "ffef25ec8a456ae577a3502e2f6e57ecbd9ea7d9",
+  "research_branch_prewrite_head_verified_at_utc": "2026-11-06T06:13:00.302Z"
 }
