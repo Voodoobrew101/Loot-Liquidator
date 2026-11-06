@@ -200,8 +200,7 @@ function LL:CreateSettingsCheckbox(parent)
     return holder
 end
 function LL:CreateSettingsEditBox(parent)
-    -- Retail Settings has no text-entry factory. Keep text entry only for item
-    -- links and copy/export utilities, using Blizzard's input template.
+    -- Retail Settings has no text-entry factory; use Blizzard's input template.
     local edit=CreateFrame("EditBox",nil,parent,"InputBoxTemplate")
     edit:SetSize(205,24);edit:SetAutoFocus(false)
     edit:SetScript("OnEscapePressed",function(self)self:ClearFocus()end)
@@ -242,6 +241,27 @@ function LL:CreateSettingsCanvasSlider(parent,minValue,maxValue,step,initial,onC
     function control:GetPreferenceValue() return setting:GetValue() end
     control.slider=native.Slider
     return control
+end
+-- Ratings and speed bonuses have no documented universal game cap. Precise
+-- numeric input avoids turning an arbitrary slider span into a claimed cap.
+function LL:CreateSettingsNumberInput(parent,onChange)
+    local edit=self:CreateSettingsEditBox(parent)
+    local previous=''
+    function edit:SetPreferenceValue(v)
+        previous=v~=nil and ('%.1f'):format(v):gsub('%.0$','') or ''
+        self:SetText(previous)
+    end
+    function edit:GetPreferenceValue()return tonumber(self:GetText())end
+    local function commit(self)
+        local text=self:GetText()
+        if text==previous then return end
+        local v=text~='' and tonumber(text) or nil
+        if text~='' and (not v or v~=v or v<0 or v==math.huge) then self:SetText(previous);return end
+        previous=text;onChange(v)
+    end
+    edit:SetScript('OnEnterPressed',function(self)commit(self);self:ClearFocus()end)
+    edit:SetScript('OnEditFocusLost',commit)
+    return edit
 end
 function LL:CreateSettingsDropdown(parent,options,getValue,setValue)
     local setting=Proxy("number",getValue())

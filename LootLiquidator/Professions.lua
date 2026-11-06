@@ -314,9 +314,46 @@ function LL:ProfessionDetailMatchesExpansion(detail,expansion)
         or (alias and detail.name:find(alias,1,true)~=nil)
         or (expansion==0 and detail.name==detail.parentName)
 end
+-- The bundled public catalog is independent of learned professions/config IDs.
+-- Client metadata can localize/enrich it without scanning a character.
+function LL:GetBundledProfessionUIOptions(profession,expansion)
+    local catalog=self.ProfessionCatalog and self.ProfessionCatalog[profession..':'..expansion]
+    if not catalog then return nil end
+    local function read(fn,...)
+        if type(fn)~='function' then return nil end
+        local ok,value=pcall(fn,...);if ok then return value end
+    end
+    local api=C_ProfSpecs
+    local options={nodes={},buffs={},lineID=catalog.lineID,source='Wago',build=self.ProfessionCatalogBuild}
+    for _,source in ipairs(catalog.nodes) do
+        local n={} for k,v in pairs(source) do n[k]=v end
+        n.rank=0;n.milestones={}
+        n.requirementText='Unlock requirements are unverified for this simulated allocation.'
+        local definition=read(C_Traits and C_Traits.GetDefinitionInfo,n.definitionID)
+        local name=definition and definition.overrideName
+        if (not name or name=='') and definition and definition.spellID then
+            name=read(C_Spell and C_Spell.GetSpellName,definition.spellID)
+        end
+        if type(name)=='string' and name~='' then n.name=name end
+        local description=read(api and api.GetDescriptionForPath,n.id)
+        if type(description)=='string' and description~='' then n.description=description end
+        for _,perk in ipairs(read(api and api.GetPerksForPath,n.id) or {}) do
+            local id=type(perk)=='table' and perk.perkID or perk
+            local rank=read(api and api.GetUnlockRankForPerk,id)
+            local text=read(api and api.GetDescriptionForPerk,id)
+            if type(rank)=='number' and type(text)=='string' and text~='' then
+                n.milestones[#n.milestones+1]={rank=rank,description=text,source='Blizzard specialization'}
+            end
+        end
+        table.sort(n.milestones,function(a,b)return a.rank<b.rank end)
+        options.nodes[#options.nodes+1]=n
+    end
+    return options
+end
 function LL:GetProfessionUIOptions(character,profession,expansion)
+    local bundled=self:GetBundledProfessionUIOptions(profession,expansion)
     local char=self.db.characters and self.db.characters[character]
-    if not char then return {nodes={},buffs={}} end
+    if not char then return bundled or {nodes={},buffs={}} end
     local key=profession..':'..expansion
     char.professionOptions=char.professionOptions or {}
     local previous=char.professionOptions[key] or {nodes={},buffs={}}
@@ -325,6 +362,11 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
             local catalog=other.professionOptions and other.professionOptions[key]
             if catalog and #(catalog.nodes or {})>0 then previous=catalog;break end
         end
+    end
+    if bundled then
+        bundled.buffs=previous.buffs or {}
+        bundled.operation=previous.operation
+        previous=bundled
     end
     if character~=self:CharacterKey() or not OwnTradeSkillWindow() then return previous end
     local line
@@ -430,7 +472,10 @@ function LL:ProfessionSimulationStatOptions(profession)
     return out
 end
 local function finiteStat(v,max)
-    return v==nil or type(v)=='number' and v==v and v>=0 and v<=max
+    return v==nil or type(v)=='number' and v==v and v>=0 and v<math.huge and (max==nil or v<=max)
+end
+function LL:IsProfessionChanceStat(key)
+    return key=='resourcefulness' or key=='multicraft' or key=='ingenuity' or key=='finesse'
 end
 function LL:SimulatedProfessionOperationStats(profile)
     if type(profile.stats)~='table' then return nil end
@@ -467,7 +512,7 @@ function LL:ProfessionNodeTooltip(node,rank,points,skill)
     for _,m in ipairs(node.milestones or {}) do
         lines[#lines+1]=('%s %d points: %s'):format(rank>=m.rank and 'Reached' or 'At',m.rank,m.description)
     end
-    if #(node.milestones or {})==0 then lines[#lines+1]='No milestone descriptions captured. Refresh this profession to load them.' end
+    if #(node.milestones or {})==0 then lines[#lines+1]='Milestone descriptions are unavailable from the client.' end
     return lines
 end
 function LL:ProfessionThresholdNotes(f,option,ctx)
@@ -502,7 +547,7 @@ end
 function LL:SetManualProfessionProfile(character,profession,expansion,values)
     if not self.db or type(character)~='string' or type(profession)~='string'
         or type(expansion)~='number' or type(values)~='table' then return false end
-    if not finiteStat(values.skill,1000) then return false end
+    if not finiteStat(values.skill) then return false end
     if values.specialization~=nil then
         if type(values.specialization)~='string' then return false end
         if values.specialization~='none' then
@@ -532,7 +577,8 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
         for _,stat in ipairs(self.ProfessionSimulationStats) do
             local v=values.stats[stat.key]
             if v~=nil then
-                if type(v)~='table' or not finiteStat(v.rating,10000) or not finiteStat(v.percent,100) then return false end
+                if type(v)~='table' or not finiteStat(v.rating)
+                    or not finiteStat(v.percent,self:IsProfessionChanceStat(stat.key) and 100 or nil) then return false end
                 stats[stat.key]={rating=v.rating,percent=v.percent}
             end
         end
