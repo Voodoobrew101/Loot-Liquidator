@@ -1,7 +1,7 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T08:36:45.232Z",
-  "status": "research_active_no_new_independent_numeric_dragonflight_cohort_original_workbook_and_cast_histograms_unavailable",
+  "updated_at": "2026-11-06T09:38:14.987Z",
+  "status": "research_active_no_new_independent_cast_level_numeric_cohort; searching_new_original_ranked_ore_and_milling_exports",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0020",
@@ -300,6 +300,13 @@
       "records": 1,
       "type": "searched",
       "newIndependentCohorts": 0
+    },
+    {
+      "path": "research/v3/evidence/dragonflight/2026-11-06T0938-ranked-ore-milling-original-log-search.jsonl",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0938-ranked-ore-milling-original-log-search.jsonl",
+      "records": 1,
+      "type": "searched",
+      "newIndependentCohorts": 0
     }
   ],
   "source_links": [
@@ -340,9 +347,9 @@
     "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
     "https://www.wowhead.com/ptr/item=194394/persistent-threat-cleaver"
   ],
-  "base_head_sha_verified": "bdc9394392b15ee148912d949eeea26b148e05ff",
-  "commit_sha": "70d921aec6fa0a09fd4af3fd6cbb000122ff7528",
-  "commit_sha_note": "One atomic commit adds evidence plus role status. The commit's SHA cannot be put into its own hashed status JSON without changing the SHA. Parent SHA stored above; final SHA is verified externally via GitHub, not invented.",
+  "base_head_sha_verified": "9a6f804fd12602ca73b55087f85b3644084e5304",
+  "commit_sha": null,
+  "commit_sha_note": "This single atomic commit's final SHA cannot appear inside its own hashed JSON. Parent commit SHA is recorded in base_head_sha_verified; use GitHub history/commit readback for final verified commit.",
   "blockers": [
     "No new original completed-operation sample found for ranked Draconium, Serevite, Khaz'gorite, Prismatic, Bubble Poppy, Saxifrage, or new gear DE with a per-output 0/1/2+ stack histogram.",
     "Nominal ore/herb totals, Resourcefulness refunds, and player-stated percentages cannot establish P(hit) or unconditional quantity per completed operation.",
@@ -350,7 +357,8 @@
     "Original post-beta character SavedVariables or author exports and authoritative client quality icons not recovered.",
     "The new live-era 180-bracer study has reliable per-output units and completed disenchant count, but the exact gear item ID, profession build and per-cast hit/zero histograms are not author-confirmed; do not use the inferred 193497 as a verified input mapping.",
     "Original Xenastro Google Sheets workbook inaccessible to current web readers; external scraping quota also unavailable. Do not infer spreadsheet rows or pretend raw logs verified.",
-    "Fresh name-based searches yielded only nominal-input ore reports, a gem-crushing sample without prospecting results, and previously catalogued beta milling / Prismatic / disenchant sources, not a ranked completed-cast hit/zero histogram."
+    "Fresh name-based searches yielded only nominal-input ore reports, a gem-crushing sample without prospecting results, and previously catalogued beta milling / Prismatic / disenchant sources, not a ranked completed-cast hit/zero histogram.",
+    "Current targeted name-based original-log searches produced no unimported Dragonflight prospecting/milling ranked per-cast histograms. Prior Reddit originals already in repository; no new measured P(hit), denominator or yield totals established."
   ],
   "exhausted_sources": [
     {
@@ -414,9 +422,19 @@
         "https://warcraft.wiki.gg/wiki/Prismatic_Ore",
         "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit"
       ]
+    },
+    {
+      "source": "2026-11-06 targeted ranked Draconium/Serevite/Khaz'gorite/Prismatic prospect/milling original CSV/SavedVariables and identity search",
+      "reason": "Ten named cross-site searches produced already-indexed historical cohorts or narrative guides, no new raw completed-cast and refund-adjusted observations; move to distinct item-specific gear disenchant histograms or fresh original player exports next time.",
+      "links": [
+        "https://www.reddit.com/r/woweconomy/comments/108782r",
+        "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+        "https://www.wowhead.com/item=198412/serene-pigment",
+        "https://addons.wago.io/addons/prospectmate"
+      ]
     }
   ],
-  "next_concrete_step": "Seek new direct author-hosted per-cast SavedVariables/CSV export from an independent ranked Draconium 189143/188658 or Bubble Poppy 191467 dataset, documenting actual completed operations and Resourcefulness refunds. If original Xenastro workbook becomes accessible, inspect raw per-operation lines first and deduplicate against prior 44 pooled-gem observations; otherwise pivot to open T0046 direct item-rank mapping or distinct original gear disenchant source, not previously exhausted guides.",
+  "next_concrete_step": "Seek a genuinely new first-hand Dragonflight 10.x-or-later ranked 5-ore prospecting/5-herb milling SavedVariables or CSV log with explicit completed operations and Resourcefulness saves. If publicly unavailable, pivot to an unrecorded exact-item gear disenchanting original with 0/1/2+ stack histogram; do not duplicate Xenastro/Jallfo/Bugy/Aary/superbondez/108782r or cumulative Wowhead Looter snapshots.",
   "decisions_needed": [
     {
       "request": "Master/source-author outreach for original prospecting/milling logs or in-game data gathering",
@@ -478,5 +496,20 @@
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "note": "Source search only, no new measured probabilities. Status update is second Contents-API commit because the connector cannot atomically write two paths with unavailable tree SHA; no merge or release."
+  },
+  "current_run": {
+    "updated_at": "2026-11-06T09:38:14.987Z",
+    "evidence_path": "research/v3/evidence/dragonflight/2026-11-06T0938-ranked-ore-milling-original-log-search.jsonl",
+    "searches": 10,
+    "sites": [
+      "Reddit",
+      "GitHub",
+      "Wowhead",
+      "Blizzard Forums",
+      "MMO-Champion",
+      "Wago/CurseForge"
+    ],
+    "new_independent_studies": 0,
+    "records": 1
   }
 }
