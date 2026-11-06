@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T21:10:56.868Z",
+  "updated_at": "2026-11-06T22:02:14.232Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Source verified: 2017 Legion Leystone worksheet has 24 item-specific gross-ore-normalized material quantities; its Gem % entries are NOT observed per-cast probabilities. Worker readbacks refreshed, no new coordinator cohorts or gold coverage.",
+  "status": "New source-linked Midnight Recycling numerical candidate: one author reports 15,669 operations, 51,154 cores, 69,882 consumed pigment units; original stated cores-per-craft average fails arithmetic. Unresolved exact pigment/core rank and net-input context. No research admission, addon EV or live coverage.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -30,7 +30,8 @@
     "COORD-MIDNIGHT-MILL-1RTEOQR-UNLINKED-20261106",
     "T0047",
     "COORD-ELEMENTIUM-SOURCE-AND-JOINT-HIST-20261106",
-    "COORD-LEGION-2017-LEYSTONE-GROSS-ORE-UNITS-20261106"
+    "COORD-LEGION-2017-LEYSTONE-GROSS-ORE-UNITS-20261106",
+    "COORD-MIDNIGHT-RECYCLE-CAROLUS-20261106"
   ],
   "exact_gaps_targeted": [
     {
@@ -365,6 +366,28 @@
       "input_item_id": 123918,
       "original_source": "https://www.scribd.com/document/359130779/Full-Legion-Worksheet",
       "remaining_gap": "Need original completed click logs, per-output hits and zero-inclusive histograms, exact mass batch size, refund and skill/build basis, original recorder identity, source study deduplication and Retail eligibility."
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-RECYCLE-CAROLUS-20261106",
+      "kind": "source_reported_midnight_recycling_expected_units_with_missing_input_output_rank_and_ratio_arithmetic_conflict",
+      "method": "Recycle",
+      "source_url": "https://www.wowhead.com/item=253849/recycling",
+      "source_author": "CarolusRex2333",
+      "recipe_or_topic_item_id": 253849,
+      "source_reported_input_name": "Pigments",
+      "exact_input_item_id": null,
+      "possible_but_not_author_confirmed_input_ids": [
+        245807,
+        245808
+      ],
+      "source_reported_output_name": "Eternity Cores (Evercore)",
+      "exact_output_item_id": null,
+      "known_distinct_retail_output_candidates": [
+        243581,
+        243582
+      ],
+      "gap": "Original author does not link consumed pigment item/rank or produced core quality/item; not independently deduplicated across branch source archives. Determine whether 69,882 indicates net consumed after 36% Resourcefulness, confirm recipe batch/eligibility and game epoch, capture actual per-cast output/item-level logs if available. Author's stated per-craft average differs from source totals; do not import uncorrected average or assign per-output occurrence probability.",
+      "owner_boundary": "Research-only candidate; integration/usable-data-tooltips owns adapter, tooltip, final audit and PR; research schema currently lists Prospect/Mill/Disenchant/Smelt so do not misclassify Recycling as one of those methods."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -1465,34 +1488,73 @@
       "source_page_text_checked": true,
       "current_retail_applicability_tested": false,
       "addon_valuation_tested": false
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-RECYCLE-CAROLUS-20261106",
+      "kind": "independently_reopened_original_source_numeric_crosscheck_not_accepted_as_compiled_cohort",
+      "author": "CarolusRex2333",
+      "original_source": "https://www.wowhead.com/item=253849/recycling",
+      "source_reported_recycling_operations": 15669,
+      "source_reported_cores_units": 51154,
+      "source_reported_consumed_pigment_units": 69882,
+      "source_reported_resourcefulness_percent": 36,
+      "source_reported_spec": "Resourcefulness and Recycling max; blue profession tool",
+      "source_reported_ratio_cores_per_consumed_pigment": 0.7320053805,
+      "ratio_recalculated_from_source_totals": 0.7320053804985547,
+      "source_reported_mean_cores_per_craft": 3.264743997,
+      "mean_recalculated_from_source_totals": 3.264662709809177,
+      "mismatch": "The author's quoted 3.2647439970 cores/craft disagrees with 51,154/15,669 (=3.2646627098). The 0.7320053805 cores/consumed pigment ratio DOES agree with 51,154/69,882.",
+      "numerator_units": "cores (historical author total)",
+      "denominator_units": [
+        "source-reported completed craft count",
+        "source-reported consumed pigments, gross/refund definition unknown"
+      ],
+      "source_original_patch": null,
+      "source_actual_collection_date": null,
+      "source_specific_input_item_id": null,
+      "source_specific_output_item_id": null,
+      "source_output_rank": null,
+      "output_occurrence_probability": null,
+      "positive_cast_histogram": null,
+      "source_logged_per_event_casts": false,
+      "uncertainty": "author's aggregate self-report; no original event log or itemLink; not independently current-client validated",
+      "source_catalog_links": [
+        "https://www.wowhead.com/item=243582/evercore",
+        "https://tradeskillmaster.com/retail/us/items/243581",
+        "https://tradeskillmaster.com/retail/us/items/243582",
+        "https://www.wowhead.com/item=245807/powder-pigment"
+      ],
+      "new_accepted_cohorts": 0,
+      "new_verified_gold_decisions": 0,
+      "source_to_tooltip_fixture_executed": false
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
     "legacy": {
-      "updated_at": "2026-11-06T20:51:32.674Z",
+      "updated_at": "2026-11-06T21:46:50.903Z",
       "status_file": "research/coordination/quiet-status/legacy.json",
-      "status_file_blob_sha": "9aade14c406cf1e2c89f1feb37caeff9b5ea1d93",
-      "finding": "24 historical original-worksheet gem-quantity records, two 20,000-ore arms; no measured completed casts"
+      "status_file_blob_sha": "f4c9a68944521739627940d083f99bbb4c97deba",
+      "finding": "2 original old-world milling authors, 10 quantity rows, raw completed casts absent; Classic page is mirrored historical source not current Retail evidence"
     },
     "dragonflight": {
-      "updated_at": "2026-11-06T20:36:43.807Z",
+      "updated_at": "2026-11-06T21:36:10.875Z",
       "status_file": "research/coordination/quiet-status/dragonflight.json",
-      "status_file_blob_sha": "a5827cca0913f8dc275aa50ebc6b8a2a83ab6a2a",
-      "finding": "five cumulative site Looter gear cases, 12 output-positive hit rows, original epoch/skill unknown"
+      "status_file_blob_sha": "908749b28a78fb6ebb779a1d8b6d384f215634be",
+      "finding": "4 Amirdrassil gear Looter tables, 8 occurrence rows / 57 site reported operations; era/skill unknown"
     },
     "war-within": {
-      "updated_at": "2026-11-06T20:23:39.301Z",
+      "updated_at": "2026-11-06T21:28:35.447Z",
       "status_file": "research/coordination/quiet-status/war-within.json",
-      "status_file_blob_sha": "84d42406a9027f6ee3c4c814b019a00b3cc97237",
-      "finding": "four plate Looter cohorts, 11 ranked Refulgent Crystal rows, zeros per output only"
+      "status_file_blob_sha": "a6a0e59651ad5d98a0bf4a7eb631594397a92d44",
+      "finding": "17 rank-identified Refulgent Crystal occurrence rows from 6 gear pages; source hits not quantities"
     },
     "midnight": {
-      "updated_at": "2026-11-06T20:21:02.289Z",
+      "updated_at": "2026-11-06T21:15:59.454Z",
       "status_file": "research/coordination/quiet-status/midnight.json",
-      "status_file_blob_sha": "3940a1fa53b2be06e86f47d79a88eefa6a64c622",
-      "finding": "five gear Looter tables, ten same-name Dawn Crystal material rows without linked rank IDs"
+      "status_file_blob_sha": "ee621655ec203492005eca2c2711388651a65b25",
+      "finding": "five cumulative site Looter gear cases, 10 Dawn Crystal name-only rows / 53 reported operations; output rank identity missing"
     }
   },
   "evidence_files": [
@@ -1508,7 +1570,11 @@
     "research/evidence/observations/2026-10-28-legacy-batch002-shadowlands-bfa-original-cohorts.jsonl",
     "research/v3/evidence/legacy/2026-11-06T1245-titanium-uncommon-gap-and-firsthand-prospect-histogram.jsonl",
     "research/v3/evidence/legacy/20261106T1543-smelting-recipe-identity-rescue.jsonl",
-    "research/v3/evidence/legacy/2026-11-06T2051-leystone-2017-mass-regular-20000ore.jsonl"
+    "research/v3/evidence/legacy/2026-11-06T2051-leystone-2017-mass-regular-20000ore.jsonl",
+    "research/v3/evidence/midnight/2026-11-06T2115-five-s2-de-looter-identity-holds.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T2128-six-plate-mail-armor-looter-counts.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-06T2136-four-unique-amirdrassil-disenchant-looter-cohorts.jsonl",
+    "research/v3/evidence/legacy/2026-11-06T2146-dusky-verdant-nether-ebon-firsthand.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -1573,11 +1639,16 @@
     "https://www.reddit.com/r/woweconomy/comments/1rteoqr/no_money_gain_possible_with_inscription_mats/",
     "https://www.wowhead.com/ptr/item=52185/elementium-ore",
     "https://www.wowhead.com/es/item=52185/mena-de-elementium",
-    "https://www.scribd.com/document/359130779/Full-Legion-Worksheet"
+    "https://www.scribd.com/document/359130779/Full-Legion-Worksheet",
+    "https://www.wowhead.com/item=253849/recycling",
+    "https://www.wowhead.com/item=245807/powder-pigment",
+    "https://www.wowhead.com/item=243582/evercore",
+    "https://tradeskillmaster.com/retail/us/items/243581",
+    "https://tradeskillmaster.com/retail/us/items/243582"
   ],
   "verified_revisions_before_write": {
     "main": "efeeb8ca1188cd87b5bd3a1f8807eb270ad3df51",
-    "research": "2fceae6533b170386891b118cc55c11d0dda1e2c",
+    "research": "a9cf339801a057526b4c06866b7d7ff55b67557a",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "research_branch": "fac00438ff5cf93d65f3a6530adb47f879707bc5",
     "protected_implementation": "3d667d053db587c91401cfed7ecc56862b8340c9",
@@ -1585,7 +1656,7 @@
     "titanium_old_cohort_blob_sha": "d2cd1618bf6d0ad3e4d632452dee5dad3b25ec39",
     "titanium_corrections_blob_sha": "80f37dbb74e3444585f7a63a3272a6c0989494f7",
     "latest_tww_worker_evidence_blob_sha": "2f9cfd499a9cc573af61529bda25c2dca16a46ab",
-    "dashboard_commit_sha": "0b64f88042bb958f60e673f63c9cd3911c558c27",
+    "dashboard_commit_sha": "a9cf339801a057526b4c06866b7d7ff55b67557a",
     "research_head_at_session": "9b2c00e21941b453f6ee3b1b386914c8754aeede",
     "main_head_at_session": "ec76f0144778bc744ce9784ecb326326fed46674",
     "implementation_head_at_session": "3d667d053db587c91401cfed7ecc56862b8340c9",
@@ -1594,7 +1665,8 @@
     "repo_latest_checked_at_utc": "2026-11-06T18:04:31.396Z",
     "this_checkpoint_status_commit": "91e868f840add36777404cf3e1c952f4962df016",
     "this_checkpoint_dashboard_commit": "a304aa55d3919a0fad8e44e1c2fa71bd9f9ec159",
-    "leystone_evidence_blob_sha": "5e00995acd7b3f6a8185cafaec589aaca2364e58"
+    "leystone_evidence_blob_sha": "5e00995acd7b3f6a8185cafaec589aaca2364e58",
+    "researched_source_url": "https://www.wowhead.com/item=253849/recycling"
   },
   "commit_sha_when_verified": "91e868f840add36777404cf3e1c952f4962df016",
   "blockers": [
@@ -1609,7 +1681,8 @@
     "New FortuneWooden8308 March 2026 '2000 twilight → around 3000 pigment' is approximate with no exact input herb ID/rank, output pigment ID/rank, logged mills, reused savings or client build; cannot enter per-output Retail EV yet.",
     "Elementium 382-cast joint histogram is rarity-category evidence, not twelve identified material outcome histograms; a per-output import would invent gem identity/chances. Source build/current Retail and character availability are not verified.",
     "Elementium 846144's 10,000 ore permits denominator per INPUT ore, not 2,000 observed completed prospect casts; 12 raw totals are already in Legacy worker-owned evidence. Correction of Fawnish source identity requires append-only review in worker/migration-owned area.",
-    "Leystone 2017 original worksheet has gross ore and gem unit counts, but no independently counted completed clicks, positive-cast probabilities, saved input/refunds, original recorder or controlled skill/build context. Gem % is NOT prospect P(hit)."
+    "Leystone 2017 original worksheet has gross ore and gem unit counts, but no independently counted completed clicks, positive-cast probabilities, saved input/refunds, original recorder or controlled skill/build context. Gem % is NOT prospect P(hit).",
+    "New Recycling author sample: item 253849 page lists 15,669 crafts but original input 'Pigments' and output 'Eternity Cores' lack explicit itemLinks/rank; cannot assign 245807/245808 or 243581/243582 without a source-consistent identity. Original per-craft average inconsistent with source totals; 69,882 input is described as consumed, no independent gross/refund ledger, patch/date, event histograms or current character recipe. No importer/engine fixture run."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -1629,7 +1702,8 @@
     "Moritussum 2025 three-input shard report identified and indexed once; repeated searches of identical page are unnecessary unless author/date or patch conflicts emerge.",
     "1rteoqr SeniorEmployment932 1,000 R2 Tranquility → 1,473 unspecified pigments already exists as master-20261030-006 and midnight-20261102-110519. Do not present it as a new source; one original commenter and cohort.",
     "Elementium original Wowhead 846144, 243051, and Fawnish/jjhilly comment boundaries checked from original Retail/PTR-indexed and translated Retail source; do not repeat this exact page for the same fields without a new provenance conflict.",
-    "2017 Scribd original Leystone 20,000-ore mass/regular tabs and Gem % semantics independently inspected; do not reprocess pricing/ore-weaving derived tabs as additional cohorts."
+    "2017 Scribd original Leystone 20,000-ore mass/regular tabs and Gem % semantics independently inspected; do not reprocess pricing/ore-weaving derived tabs as additional cohorts.",
+    "CarolusRex2333 source comment on LIVE 253849 independently reopened and its two quoted ratios audited once (2026-11-06); do not re-scan identical numeric text unless original event logs/item links/patch or correction emerges."
   ],
   "decisions_needed": [
     {
@@ -1655,7 +1729,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Legacy worker should seek original per-click Leystone mass/regular SavedVariables, completed casts, 0/1+ stack histograms, refund basis and exact profession/build, deduplicating the 2017 source first; if unavailable, move to another queued original-source gap. Protected integration owner must separately test synthetic-price source-to-tooltip fallback before any decision claims.",
+  "next_concrete_step": "Prioritize the new source-reported 15,669-craft Midnight Recycling candidate (research-only): dedupe CarolusRex2333 original comment across v3/master/legacy/personal imports; verify exact pigment input quality/item, Evercore output quality/item, recipe 5-unit versus net 69,882 input accounting, source timestamp/patch and character eligibility. Preserve 51,154/15,669 source-derived expected output, but DO NOT use mismatched published mean, invent probabilities or assign rank. Then let protected integration owner determine eligibility and synthetic-price source→tooltip fixture; workers continue disjoint original-source queue tasks.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -1669,7 +1743,8 @@
     "worker_status_readback": true,
     "source_catalog_rank_checks": true,
     "gear_page_base_binding_checks": true,
-    "this_run": "Original 2017 Scribd worksheet page text independently checked vs 24 worker evidence rows; 12 named outputs in each arm and source totals mass 1242+187 and regular 1221+184 matched, source 269/20000 and 240/20000 rounded Gem % verified. No addon tests. Verified research CI workflow run 42291902728 successful for pre-write head 2fceae6 on 2026-11-06 20:52:07 UTC; PRs #22/#23 observed closed unmerged."
+    "this_run": "Read original LIVE-indexed Wowhead Recycling source and reconciled reported 51,154/15,669 vs stated mean, 51,154/69,882 vs stated ratio. Read current main/research/integration heads, PR22/23 closed-unmerged, current 4 worker status files + four corresponding evidence files; latest research workflow 42299532286 successful for pre-write a733541. No new CI or game test executed.",
+    "arithmetic_crosscheck": true
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -1683,13 +1758,16 @@
   },
   "notifications": "on-demand only; no schedule created, modified or cross-chat ping",
   "last_session": {
-    "updated_at": "2026-11-06T21:10:56.868Z",
-    "task": "COORD-LEGION-2017-LEYSTONE-GROSS-ORE-UNITS-20261106",
-    "verified_fields": "Two 20,000 gross-ore arms; 24 historical gem quantities; Gem % is units per 100 gross input ore not per-cast chance",
-    "source_lineage_count": 1,
-    "source_arms": 2,
-    "source_author_independence_not_established": true,
-    "new_admitted_cohorts": 0,
+    "updated_at": "2026-11-06T22:02:14.232Z",
+    "task": "COORD-MIDNIGHT-RECYCLE-CAROLUS-20261106",
+    "source_author": "CarolusRex2333",
+    "source_recycling_crafts_reported": 15669,
+    "source_cores_reported": 51154,
+    "source_consumed_pigments_reported": 69882,
+    "computed_cores_per_craft": 3.264662709809177,
+    "computed_cores_per_consumed_pigment": 0.7320053804985547,
+    "author_average_mismatch": true,
+    "new_accepted_cohorts": 0,
     "new_gold_ev_coverage": 0,
     "source_to_tooltip_fixture": false,
     "live_client_validation": false,
@@ -1937,16 +2015,18 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
     "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
-  "research_branch_head_read_before_write": "fac00438ff5cf93d65f3a6530adb47f879707bc5",
-  "research_branch_prewrite_head_verified_at_utc": "2026-11-06T08:03:25.000Z",
-  "verified_base_commit_sha": "67d5bbc595ae735e186c05b5a3c861376fb2b238",
-  "current_status_commit_sha": "91e868f840add36777404cf3e1c952f4962df016",
-  "commit_sha_note": "The coordinator file cannot embed its own resulting commit SHA without changing that SHA. A separate readback of GitHub commit/branch is required for verification.",
+  "research_branch_head_read_before_write": "a9cf339801a057526b4c06866b7d7ff55b67557a",
+  "research_branch_prewrite_head_verified_at_utc": "2026-11-06T22:02:14.232Z",
+  "verified_base_commit_sha": "a9cf339801a057526b4c06866b7d7ff55b67557a",
+  "current_status_commit_sha": null,
+  "commit_sha_note": "Self-referential status commit SHA cannot be embedded before GitHub creates it. This file was updated from verified research head a9cf339 (dashboard commit); verify final SHA from subsequent readback.",
   "last_checkpoint_validation": {
-    "kind": "read_only_record_comparison",
-    "quantity_rows_checked": 6,
-    "source_match": true,
-    "old_id_gap_rows": 9,
+    "kind": "independent_source_ratio_arithmetic",
+    "author_aggregate_operations": 15669,
+    "author_core_units": 51154,
+    "author_consumed_pigment_units": 69882,
+    "reported_mean_mismatch": true,
+    "reported_input_ratio_match": true,
     "compiled_db_test": "not_run",
     "synthetic_tooltip_test": "not_run",
     "live_wow_test": "not_run"
@@ -1956,19 +2036,24 @@
   "integration_branch_head_checked_before_write": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "main_head_checked_before_write": "ec76f0144778bc744ce9784ecb326326fed46674",
   "session_validation": {
-    "github_status_blob_sha_read_before_write": "fa68088567869243a546001c6603fb9b2800760c",
-    "source_check": "Original Reddit source and corresponding Wowhead reprint examined; source's 21 BfA input-output coefficients transcribed. No fresh independent empirical operation dataset, local runtime tests, migrations or client verification.",
-    "ci_one_time_checkpoint": "Existing research head 57f5119c at 2026-11-06T09:46:53Z had GitHub Verify five-agent completion success; not a test executed by coordinator.",
-    "pr_dependency_status": "PR 22 and PR 23 closed unmerged 2026-11-03; PR 24 already merged into main 2026-11-02. Not touched."
+    "source_recheck": "Retail Wowhead page 253849; original comment CarolusRex2333",
+    "numeric_division_check": true,
+    "exact_input_rank_known": false,
+    "exact_output_rank_known": false,
+    "github_actions_run_checked": 42299532286,
+    "action_result": "success on a733541 prior to this dashboard/status write; no CI result for new commit yet",
+    "research_branch_head_prewrite": "a9cf339801a057526b4c06866b7d7ff55b67557a",
+    "addon_tests_run": false,
+    "live_wow_test_run": false
   },
-  "dashboard_commit_sha_when_verified": "0b64f88042bb958f60e673f63c9cd3911c558c27",
-  "actual_last_worker_readbacks_utc": "2026-11-06T19:05:22.667Z",
+  "dashboard_commit_sha_when_verified": "a9cf339801a057526b4c06866b7d7ff55b67557a",
+  "actual_last_worker_readbacks_utc": "2026-11-06T22:02:14.232Z",
   "worker_readback_utc": "2026-11-06T17:05:08.910Z",
   "worker_statuses_verified_in_this_session": {
-    "midnight": "2026-11-06T18:19:52.258Z",
-    "war-within": "2026-11-06T18:27:27.326Z",
-    "dragonflight": "2026-11-06T18:33:38.004Z",
-    "legacy": "2026-11-06T18:49:44.224Z"
+    "midnight": "2026-11-06T21:15:59.454Z",
+    "war-within": "2026-11-06T21:28:35.447Z",
+    "dragonflight": "2026-11-06T21:36:10.875Z",
+    "legacy": "2026-11-06T21:46:50.903Z"
   },
   "branch_head_at_read": "c02b126d362a7990a1b92a3f6dacf3470022a7a0",
   "latest_research_check_at_read": {
