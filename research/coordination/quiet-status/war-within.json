@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-06T11:19:50.165Z",
-  "status": "active: new item-specific cumulative disenchant hit counts recorded; source-era and output quality unresolved; no current live EV promotion",
+  "updated_at": "2026-11-06T12:31:30.173Z",
+  "status": "active: four additional independently item-identified epic armor Wowhead Looter cohorts (12 positive occurrence rows) added as research-only; output item IDs/ranks/stack histograms, collector epoch, skill, specialization and eligibility remain unknown",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0048",
@@ -13,11 +13,588 @@
     "T0011"
   ],
   "exact_gaps_targeted": [
-    "T0048: exact gear input identities and source-reported completed operations/castsWithDrop by distinct unknown-rank Refulgent Crystal material row, uncommon/rare/epic armor-versus-weapon and skill partitions; this run adds four epic armor input IDs but no rank-resolved material IDs.",
-    "T0040/T0009/T0007/T0008: post-2024-10-25 Bismuth 210931, Ironclaw 210937, Aqirite 210934 per-rank per-output hit counts, zeros, 0/1/2+ histograms, unlock/skill and completed/refunded cast basis; no verified new ore logs this run.",
-    "T0010/T0011: Mycobloom 210796/210797 rank-separated mills and all Khaz Algar herb-rank completed-operation per-output histograms; no valid new mill log this run."
+    "T0048 disenchant by precise gear item, class armor/slot, material hit counts and casts: four epic armor inputs 237700 cloth head, 237703 cloth chest, 237622 plate chest, 237647 mail gloves now have positive occurrence counts/denominators for three distinct output rows each, but output material ID/rank, totals and per-cast histograms still unknown.",
+    "T0040/T0009/T0007/T0008 Bismuth 210931, Ironclaw 210937, Aqirite 210934 by input rank, specialization/unlock, post-2024-10-25 completed casts vs ore spent, refunded inputs and per-output 0/1/2+ histograms; no new verified rank-specific prospect casts this session.",
+    "T0010/T0011 Mycobloom 210796/210797 and other Khaz Algar herbs by rank/skill, per-output hit totals and per-mill histograms; no new verified independent measured milling log this session."
   ],
   "newly_verified_fields": [
+    {
+      "task_id": "T0048",
+      "inputItemID": 237700,
+      "inputName": "Inquisitor's Portal to Madness",
+      "input_type": "cloth head epic",
+      "casts": 154,
+      "output_family": "Refulgent Crystal",
+      "material_row_order": [
+        1,
+        2,
+        3
+      ],
+      "castsWithDrop": [
+        78,
+        48,
+        28
+      ],
+      "outputItemID": null,
+      "outputRank": null,
+      "totalQuantity": null,
+      "zeroOutcomeOperations": null,
+      "perCastHistogram": null,
+      "skill": null,
+      "patch": null,
+      "source": "https://www.wowhead.com/item=237700/inquisitors-portal-to-madness",
+      "qualification": "three distinct rank-unresolved cumulative output rows; do not sum across rows or treat as verified live gold EV"
+    },
+    {
+      "task_id": "T0048",
+      "inputItemID": 237703,
+      "inputName": "Inquisitor's Robes of Madness",
+      "input_type": "cloth chest epic",
+      "casts": 142,
+      "output_family": "Refulgent Crystal",
+      "material_row_order": [
+        1,
+        2,
+        3
+      ],
+      "castsWithDrop": [
+        72,
+        43,
+        25
+      ],
+      "outputItemID": null,
+      "outputRank": null,
+      "totalQuantity": null,
+      "zeroOutcomeOperations": null,
+      "perCastHistogram": null,
+      "skill": null,
+      "patch": null,
+      "source": "https://www.wowhead.com/item=237703/inquisitors-robes-of-madness",
+      "qualification": "three distinct rank-unresolved cumulative output rows; do not sum across rows or treat as verified live gold EV"
+    },
+    {
+      "task_id": "T0048",
+      "inputItemID": 237622,
+      "inputName": "Cuirass of the Lucent Battalion",
+      "input_type": "plate chest epic",
+      "casts": 86,
+      "output_family": "Refulgent Crystal",
+      "material_row_order": [
+        1,
+        2,
+        3
+      ],
+      "castsWithDrop": [
+        46,
+        23,
+        13
+      ],
+      "outputItemID": null,
+      "outputRank": null,
+      "totalQuantity": null,
+      "zeroOutcomeOperations": null,
+      "perCastHistogram": null,
+      "skill": null,
+      "patch": null,
+      "source": "https://www.wowhead.com/item=237622/cuirass-of-the-lucent-battalion",
+      "qualification": "three distinct rank-unresolved cumulative output rows; do not sum across rows or treat as verified live gold EV"
+    },
+    {
+      "task_id": "T0048",
+      "inputItemID": 237647,
+      "inputName": "Midnight Herald's Gloves",
+      "input_type": "mail hands epic",
+      "casts": 36,
+      "output_family": "Refulgent Crystal",
+      "material_row_order": [
+        1,
+        2,
+        3
+      ],
+      "castsWithDrop": [
+        19,
+        9,
+        8
+      ],
+      "outputItemID": null,
+      "outputRank": null,
+      "totalQuantity": null,
+      "zeroOutcomeOperations": null,
+      "perCastHistogram": null,
+      "skill": null,
+      "patch": null,
+      "source": "https://www.wowhead.com/item=237647/midnight-heralds-gloves",
+      "qualification": "three distinct rank-unresolved cumulative output rows; do not sum across rows or treat as verified live gold EV"
+    }
+  ],
+  "new_cohorts": [
+    {
+      "study_key": "wowhead-looter-237700-cumulative-source-20261106",
+      "input_item_id": 237700,
+      "input_name": "Inquisitor's Portal to Madness",
+      "kind": "cloth head",
+      "source": "https://www.wowhead.com/item=237700/inquisitors-portal-to-madness",
+      "reported_disenchant_operations": 154,
+      "distinct_output_rows": 3,
+      "per_row_castsWithDrop": [
+        78,
+        48,
+        28
+      ],
+      "all_output_ranks_unresolved": true,
+      "total_output_units": null,
+      "zero_outcome_operations": null,
+      "per_cast_histograms": null,
+      "original_submission_dates": null,
+      "skill_specialization": null,
+      "caveat": "One shared source-specific denominator; cumulative collectors may have different builds/versions. Source table shows three identically named output-family rows, not resolvable rank/item IDs. No current live EV eligibility asserted."
+    },
+    {
+      "study_key": "wowhead-looter-237703-cumulative-source-20261106",
+      "input_item_id": 237703,
+      "input_name": "Inquisitor's Robes of Madness",
+      "kind": "cloth chest",
+      "source": "https://www.wowhead.com/item=237703/inquisitors-robes-of-madness",
+      "reported_disenchant_operations": 142,
+      "distinct_output_rows": 3,
+      "per_row_castsWithDrop": [
+        72,
+        43,
+        25
+      ],
+      "all_output_ranks_unresolved": true,
+      "total_output_units": null,
+      "zero_outcome_operations": null,
+      "per_cast_histograms": null,
+      "original_submission_dates": null,
+      "skill_specialization": null,
+      "caveat": "One shared source-specific denominator; cumulative collectors may have different builds/versions. Source table shows three identically named output-family rows, not resolvable rank/item IDs. No current live EV eligibility asserted."
+    },
+    {
+      "study_key": "wowhead-looter-237622-cumulative-source-20261106",
+      "input_item_id": 237622,
+      "input_name": "Cuirass of the Lucent Battalion",
+      "kind": "plate chest",
+      "source": "https://www.wowhead.com/item=237622/cuirass-of-the-lucent-battalion",
+      "reported_disenchant_operations": 86,
+      "distinct_output_rows": 3,
+      "per_row_castsWithDrop": [
+        46,
+        23,
+        13
+      ],
+      "all_output_ranks_unresolved": true,
+      "total_output_units": null,
+      "zero_outcome_operations": null,
+      "per_cast_histograms": null,
+      "original_submission_dates": null,
+      "skill_specialization": null,
+      "caveat": "One shared source-specific denominator; cumulative collectors may have different builds/versions. Source table shows three identically named output-family rows, not resolvable rank/item IDs. No current live EV eligibility asserted."
+    },
+    {
+      "study_key": "wowhead-looter-237647-cumulative-source-20261106",
+      "input_item_id": 237647,
+      "input_name": "Midnight Herald's Gloves",
+      "kind": "mail hands",
+      "source": "https://www.wowhead.com/item=237647/midnight-heralds-gloves",
+      "reported_disenchant_operations": 36,
+      "distinct_output_rows": 3,
+      "per_row_castsWithDrop": [
+        19,
+        9,
+        8
+      ],
+      "all_output_ranks_unresolved": true,
+      "total_output_units": null,
+      "zero_outcome_operations": null,
+      "per_cast_histograms": null,
+      "original_submission_dates": null,
+      "skill_specialization": null,
+      "caveat": "One shared source-specific denominator; cumulative collectors may have different builds/versions. Source table shows three identically named output-family rows, not resolvable rank/item IDs. No current live EV eligibility asserted."
+    }
+  ],
+  "evidence_files": [
+    "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T0430-orbinid-blossom-cast-log-search.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T0525-four-epic-armor-looter-hits.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T0628-r3-dust-unsized-firsthand-rate.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T0723-green-de-denominators-hammers.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T0838-azra-leather-de-hits.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T0923-lamplighter-weapon-looter-hits.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T1044-four-nerubar-armor-looter-hits.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T1119-four-item-epic-de-source-hits.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl"
+  ],
+  "source_links": [
+    "https://eu.forums.blizzard.com/en/wow/t/it-is-impossible-to-earn-gold-via-prospecting-now/554920",
+    "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
+    "https://www.reddit.com/r/woweconomy/comments/1g6jcfr",
+    "https://www.reddit.com/r/woweconomy/comments/1f9qado",
+    "https://www.wowhead.com/guide/the-war-within/professions/inscription-overview",
+    "https://www.wowhead.com/item=222618/nacreous-pigment",
+    "https://warcraft.wiki.gg/wiki/Orbinid_Pigment",
+    "https://warcraft.wiki.gg/wiki/Blossom_Pigment",
+    "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679",
+    "https://www.wowhead.com/ptr/item=237615/vambraces-of-the-lucent-battalion",
+    "https://www.wowhead.com/ptr-2/item=237616/seal-of-the-lucent-battalion",
+    "https://www.wowhead.com/ptr/item=237611/living-weapons-crushers",
+    "https://www.wowhead.com/ptr/item=237663/pants-of-the-sudden-eclipse",
+    "https://www.wowhead.com/ptr/item=219948/storm-dust",
+    "https://www.reddit.com/r/woweconomy/comments/1f117id",
+    "https://www.reddit.com/r/woweconomy/comments/1fhkjm9",
+    "https://www.wowhead.com/ptr-2/item=229070/azras-spare-striders?bonus=10382",
+    "https://www.wowhead.com/ptr/item=229077/azras-spare-shoulderguards",
+    "https://www.wowhead.com/item=229141/lamplighter-elites-polearm",
+    "https://www.wowhead.com/ptr/item=229148/lamplighters-staff",
+    "https://www.wowhead.com/ptr/item=212058/treads-of-the-greatlynx",
+    "https://www.wowhead.com/ptr/item=212069/hexflame-covens-shawl",
+    "https://www.wowhead.com/ptr/item=211999/exhumed-centurions-baltea",
+    "https://www.wowhead.com/item=212044/gatecrashers-cord",
+    "https://www.curseforge.com/wow/addons/prospectmate",
+    "https://github.com/Urutseg/ProspectMate",
+    "https://www.wowhead.com/item=229331/confessors-unshakable-ornament?ilvl=678",
+    "https://www.wowhead.com/item=237617/chargers-of-the-lucent-battalion",
+    "https://www.wowhead.com/item=237618/cuisses-of-the-lucent-battalion",
+    "https://www.wowhead.com/item=237698/inquisitors-gaze-of-madness",
+    "https://www.wowhead.com/item=237700/inquisitors-portal-to-madness",
+    "https://www.wowhead.com/item=237703/inquisitors-robes-of-madness",
+    "https://www.wowhead.com/item=237622/cuirass-of-the-lucent-battalion",
+    "https://www.wowhead.com/item=237647/midnight-heralds-gloves"
+  ],
+  "commit_sha": null,
+  "verified_pre_run_branch_commit_sha": null,
+  "commit_note": "Single atomic commit contains exactly the new owned evidence JSONL and owned quiet-status JSON. A Git commit cannot contain its own SHA in its body; no fabricated self-reference is stored. Verify the resulting branch commit SHA and both files by read-back.",
+  "blockers": [
+    "New 237700/237703/237622/237647 Wowhead Looter item-level cumulative tables show 154/142/86/36 reported disenchant operations with per-row positive occurrences only. No raw collector submissions, actual disenchant build/bonus/skill, source epoch, resourcefulness, or zero-inclusive cast data.",
+    "All 3 result rows per item have the same family name 'Refulgent Crystal'; material item links and quality rank IDs are not resolved by indexed text. Row hit counts are not total units; no per-cast histogram or overall zero count can be inferred.",
+    "Wowhead/PTR/beta gear-item eligibility may conflict for these old 11.2 sets. Collector-era totals cannot establish current live eligibility. Master review required before compiling ItemDB or using live gold EV.",
+    "Original post-October-2024 hotfix independent raw prospecting/milling cast logs with rank, unlock, 0/1/2+ output histograms and refund accounting still not located; previously documented Reddit and forum cohorts remain exhausted.",
+    "Direct raw HTML source inspection unavailable this session; Firecrawl returned daily-credit exhaustion. GitHub/Wowhead indexed source rows independently checked."
+  ],
+  "exhausted_sources": [
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f3qf96",
+      "reason": "Six individually enumerated green disenchants already captured twice (2026-11-02T1620 and 2026-11-04T0520); no new independent cohort."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fisfkn",
+      "reason": "Existing historical Aqirite/Ironclaw nominal ore cohorts; no new completed-cast histograms."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+      "reason": "Existing Mycobloom rank averages; no raw completed-operation logs."
+    },
+    {
+      "url": "https://www.wowhead.com/item=212495/radiant-ruby",
+      "reason": "Raven11 and Elfshinobi1 observations already represented; no new exact per-output hit data."
+    },
+    {
+      "url": "https://www.wowhead.com/spell=434018/algari-prospecting",
+      "reason": "PeaEsk three-rank-2-ore tests already recorded; the '100' ore-versus-cast denominator remains unknown."
+    },
+    {
+      "url": "https://us.forums.blizzard.com/en/wow/t/glittering-glass/1958379",
+      "reason": "Existing mixed-ore 200/415 prospect cohorts and Oct27 per-ore byproduct averages already captured; no new rank-specific hits."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
+      "reason": "Aqirite rank-1/rank-2 averaged cohorts already captured with unresolved measured hits; do not re-import."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
+      "reason": "March 2025 600-rank1-Ironclaw cost anecdote and 117-prospects follow-up contain no output material counts or 0..N histograms; further source rechecks not worthwhile without author's raw log."
+    },
+    {
+      "url": "https://www.wowhead.com/guide/the-war-within/professions/inscription-overview",
+      "reason": "Milling recipes/ingredient identity only, no dated original per-cast Orbinid/Blessing Blossom sample or histogram."
+    },
+    {
+      "url": "https://warcraft.wiki.gg/wiki/Orbinid_Pigment",
+      "reason": "Ten-Orbinid-to-pigment recipe association, not actual measured casts, hits or output quantities."
+    },
+    {
+      "url": "https://warcraft.wiki.gg/wiki/Blossom_Pigment",
+      "reason": "Ten-Blessing-Blossom-to-pigment recipe association, not an independent measured mill study."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f117id",
+      "reason": "Original Aug25 100 green gear / 119-97-55 dust units is same cohort as Aug29 re-post 1f3qf96; cannot add any cast study. Use only for dedupe and provenance."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=219947/storm-dust",
+      "reason": "PTR cumulative input/output Looter snapshots were extensively copied in existing 2026-11-01/02 War Within evidence. No newly independent histograms identified from search; avoid source churn."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fhkjm9",
+      "reason": "Original September 2024 comments now mined for the specific 297-green totals and separate 1000-hammer rank averages; no input item IDs, 0/1/2+ histograms, hits or patch build there. Further repeats of these two numeric cohorts would duplicate."
+    },
+    {
+      "url": "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-broken-pebbles-and-glass/1968257",
+      "reason": "Previously recorded Sep/Oct 2024 ore quantity-only cohorts including FireEmblem01 350 R1 Bismuth and Reikah R1 Ironclaw; no new completed rank-specific histograms."
+    },
+    {
+      "url": "https://www.wowhead.com/item=213399/glittering-glass",
+      "reason": "Adreymar pooled 50,000-ore study and 80 glass per 1000 inputs already in 2026-11-02T0824; no new rank-specific per-cast hits."
+    },
+    {
+      "url": "https://github.com/Urutseg/ProspectMate",
+      "reason": "Public source contains addon logic and no public measured input/output cohort; latest code does not list TWW Algari Prospecting 434018 among monitored spells. Do not infer input spell coverage or data logs."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1l91chl",
+      "reason": "June 2025 Ironclaw ore cost/profit story with no exact completed casts, output IDs/counts or zero-inclusive raw histograms; unsuitable for numeric row."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fvhzy0",
+      "reason": "October 2024 Luredrop + Mycobloom pooled milling-to-ink/cipher craft chain: blended inputs and downstream process yields confound per-herb per-cast pigment data. No independent per-rank histogram."
+    },
+    {
+      "url": "https://www.wowhead.com/ptr/item=237620/protectors-of-the-lucent-battalion?bonus=12295",
+      "reason": "Four-row candidate screened out: same 65-operation 42/14/8 crystal observations already captured in existing 2026-11-02T1523 War Within evidence; no new independent cohort."
+    }
+  ],
+  "next_concrete_step": "Recover original Wowhead output material links and pctstack histograms for source items 237700, 237703, 237622, 237647; validate same-item snapshot independence and beta/PTR vs live disenchant eligibility before promotion. Switch targeted prospect/mill search to new addon SavedVariables exports or original per-operation logs with post-Oct25 epoch, precise rank IDs, spec/unlock, completed casts, outputs and Resourcefulness refunds.",
+  "decisions_needed": [
+    "Master/reviewer: verify the 297-cast three `replaces` lines supersede existing 2026-11-01T0921 green-dust average records, not combine them as independent studies.",
+    "Master: keep historical 1000-hammer rounded averages unpriced/unpromoted to current skill-specific gold EV until exact hammer item identity and current patch eligibility are confirmed.",
+    "Master: determine whether unresolved raw histogram/source identifiers merit targeted collection; no schema change requested.",
+    "Master review: rows with identical outputName but unknown rank should remain distinct ranked-unresolved evidence, not be aggregated into a single ambiguous output material ID or live DE EV.",
+    "Master: decide how to quarantine gear-item Looter hit-only cohorts with outputName duplicated across quality ranks and no linked output IDs; do not apply to live-valued current ItemDB until eligible.",
+    "Master: quarantine new 237700/237703/237622/237647 family-name-only crystal hits until exact output rank IDs, source cohort patch and item DE eligibility are independently established; do not create zero counts from hit row residuals."
+  ],
+  "gold_ev_policy": "Addon uses live item prices; no frozen gold, inferred probabilities/denominators, invented confidence or unverified current-game eligibility recorded.",
+  "new_source_observations": [
+    {
+      "record_id": "war-within-20261106-1231-001",
+      "source": "https://www.wowhead.com/item=237700/inquisitors-portal-to-madness",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237700,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 1,
+      "casts": 154,
+      "castsWithDrop": 78,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-002",
+      "source": "https://www.wowhead.com/item=237700/inquisitors-portal-to-madness",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237700,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 2,
+      "casts": 154,
+      "castsWithDrop": 48,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-003",
+      "source": "https://www.wowhead.com/item=237700/inquisitors-portal-to-madness",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237700,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 3,
+      "casts": 154,
+      "castsWithDrop": 28,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-004",
+      "source": "https://www.wowhead.com/item=237703/inquisitors-robes-of-madness",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237703,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 1,
+      "casts": 142,
+      "castsWithDrop": 72,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-005",
+      "source": "https://www.wowhead.com/item=237703/inquisitors-robes-of-madness",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237703,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 2,
+      "casts": 142,
+      "castsWithDrop": 43,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-006",
+      "source": "https://www.wowhead.com/item=237703/inquisitors-robes-of-madness",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237703,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 3,
+      "casts": 142,
+      "castsWithDrop": 25,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-007",
+      "source": "https://www.wowhead.com/item=237622/cuirass-of-the-lucent-battalion",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237622,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 1,
+      "casts": 86,
+      "castsWithDrop": 46,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-008",
+      "source": "https://www.wowhead.com/item=237622/cuirass-of-the-lucent-battalion",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237622,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 2,
+      "casts": 86,
+      "castsWithDrop": 23,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-009",
+      "source": "https://www.wowhead.com/item=237622/cuirass-of-the-lucent-battalion",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237622,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 3,
+      "casts": 86,
+      "castsWithDrop": 13,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-010",
+      "source": "https://www.wowhead.com/item=237647/midnight-heralds-gloves",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237647,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 1,
+      "casts": 36,
+      "castsWithDrop": 19,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-011",
+      "source": "https://www.wowhead.com/item=237647/midnight-heralds-gloves",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237647,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 2,
+      "casts": 36,
+      "castsWithDrop": 9,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    },
+    {
+      "record_id": "war-within-20261106-1231-012",
+      "source": "https://www.wowhead.com/item=237647/midnight-heralds-gloves",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
+      "inputItemID": 237647,
+      "outputName": "Refulgent Crystal",
+      "outputItemID": null,
+      "outputRank": null,
+      "source_row_order": 3,
+      "casts": 36,
+      "castsWithDrop": 8,
+      "totalQuantity": null,
+      "zeroOutcomeCount": null,
+      "histogram": null,
+      "skill": null,
+      "patch": null,
+      "classification": "source-indexed cumulative gear-item per-material occurrence hits; exact output IDs/ranks unresolved; research-only"
+    }
+  ],
+  "corrected_cohorts": [
+    {
+      "study_key": "reddit-1fhkjm9-max-skill-green-dust",
+      "casts": 297,
+      "source": "https://www.reddit.com/r/woweconomy/comments/1fhkjm9",
+      "prior_ids": [
+        "war-within-20261101-92104",
+        "war-within-20261101-92105",
+        "war-within-20261101-92106"
+      ],
+      "note": "Numerator totals directly reported and mathematically match old averages; replacement, not new sample."
+    }
+  ],
+  "previous_run_newly_verified_fields": [
     {
       "record_id": "war-within-20261106-1119-001",
       "inputItemID": 229331,
@@ -235,426 +812,7 @@
       "classification": "source-indexed cumulative gear-item Looter per-row positive occurrence, rank unresolved; research-only"
     }
   ],
-  "new_cohorts": [
-    {
-      "study_key": "wowhead-looter-229331-cumulative-source-20261106",
-      "input_item_id": 229331,
-      "input_name": "Confessor's Unshakable Ornament",
-      "source": "https://www.wowhead.com/item=229331/confessors-unshakable-ornament?ilvl=678",
-      "reported_disenchant_operations": 82,
-      "distinct_output_rows": 3,
-      "per_row_castsWithDrop": [
-        49,
-        21,
-        10
-      ],
-      "all_output_ranks_unresolved": true,
-      "total_output_units": null,
-      "zero_outcome_operations": null,
-      "per_cast_histograms": null,
-      "original_submission_dates": null,
-      "skill_specialization": null,
-      "caveat": "Same item-specific denominator for all displayed output rows; duplicated output family name, unknown rank IDs; source is cumulative, not independently validated for current retail use."
-    },
-    {
-      "study_key": "wowhead-looter-237617-cumulative-source-20261106",
-      "input_item_id": 237617,
-      "input_name": "Chargers of the Lucent Battalion",
-      "source": "https://www.wowhead.com/item=237617/chargers-of-the-lucent-battalion",
-      "reported_disenchant_operations": 69,
-      "distinct_output_rows": 3,
-      "per_row_castsWithDrop": [
-        37,
-        17,
-        9
-      ],
-      "all_output_ranks_unresolved": true,
-      "total_output_units": null,
-      "zero_outcome_operations": null,
-      "per_cast_histograms": null,
-      "original_submission_dates": null,
-      "skill_specialization": null,
-      "caveat": "Same item-specific denominator for all displayed output rows; duplicated output family name, unknown rank IDs; source is cumulative, not independently validated for current retail use."
-    },
-    {
-      "study_key": "wowhead-looter-237618-cumulative-source-20261106",
-      "input_item_id": 237618,
-      "input_name": "Cuisses of the Lucent Battalion",
-      "source": "https://www.wowhead.com/item=237618/cuisses-of-the-lucent-battalion",
-      "reported_disenchant_operations": 68,
-      "distinct_output_rows": 3,
-      "per_row_castsWithDrop": [
-        37,
-        17,
-        12
-      ],
-      "all_output_ranks_unresolved": true,
-      "total_output_units": null,
-      "zero_outcome_operations": null,
-      "per_cast_histograms": null,
-      "original_submission_dates": null,
-      "skill_specialization": null,
-      "caveat": "Same item-specific denominator for all displayed output rows; duplicated output family name, unknown rank IDs; source is cumulative, not independently validated for current retail use."
-    },
-    {
-      "study_key": "wowhead-looter-237698-cumulative-source-20261106",
-      "input_item_id": 237698,
-      "input_name": "Inquisitor's Gaze of Madness",
-      "source": "https://www.wowhead.com/item=237698/inquisitors-gaze-of-madness",
-      "reported_disenchant_operations": 145,
-      "distinct_output_rows": 3,
-      "per_row_castsWithDrop": [
-        77,
-        45,
-        22
-      ],
-      "all_output_ranks_unresolved": true,
-      "total_output_units": null,
-      "zero_outcome_operations": null,
-      "per_cast_histograms": null,
-      "original_submission_dates": null,
-      "skill_specialization": null,
-      "caveat": "Same item-specific denominator for all displayed output rows; duplicated output family name, unknown rank IDs; source is cumulative, not independently validated for current retail use."
-    }
-  ],
-  "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl",
-    "research/v3/evidence/war-within/2026-11-06T0430-orbinid-blossom-cast-log-search.jsonl",
-    "research/v3/evidence/war-within/2026-11-06T0525-four-epic-armor-looter-hits.jsonl",
-    "research/v3/evidence/war-within/2026-11-06T0628-r3-dust-unsized-firsthand-rate.jsonl",
-    "research/v3/evidence/war-within/2026-11-06T0723-green-de-denominators-hammers.jsonl",
-    "research/v3/evidence/war-within/2026-11-06T0838-azra-leather-de-hits.jsonl",
-    "research/v3/evidence/war-within/2026-11-06T0923-lamplighter-weapon-looter-hits.jsonl",
-    "research/v3/evidence/war-within/2026-11-06T1044-four-nerubar-armor-looter-hits.jsonl",
-    "research/v3/evidence/war-within/2026-11-06T1119-four-item-epic-de-source-hits.jsonl"
-  ],
-  "source_links": [
-    "https://eu.forums.blizzard.com/en/wow/t/it-is-impossible-to-earn-gold-via-prospecting-now/554920",
-    "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-    "https://www.reddit.com/r/woweconomy/comments/1g6jcfr",
-    "https://www.reddit.com/r/woweconomy/comments/1f9qado",
-    "https://www.wowhead.com/guide/the-war-within/professions/inscription-overview",
-    "https://www.wowhead.com/item=222618/nacreous-pigment",
-    "https://warcraft.wiki.gg/wiki/Orbinid_Pigment",
-    "https://warcraft.wiki.gg/wiki/Blossom_Pigment",
-    "https://us.forums.blizzard.com/en/wow/t/anyone-else-having-issues-getting-mycobloom-to-mill-via-create-all/1944679",
-    "https://www.wowhead.com/ptr/item=237615/vambraces-of-the-lucent-battalion",
-    "https://www.wowhead.com/ptr-2/item=237616/seal-of-the-lucent-battalion",
-    "https://www.wowhead.com/ptr/item=237611/living-weapons-crushers",
-    "https://www.wowhead.com/ptr/item=237663/pants-of-the-sudden-eclipse",
-    "https://www.wowhead.com/ptr/item=219948/storm-dust",
-    "https://www.reddit.com/r/woweconomy/comments/1f117id",
-    "https://www.reddit.com/r/woweconomy/comments/1fhkjm9",
-    "https://www.wowhead.com/ptr-2/item=229070/azras-spare-striders?bonus=10382",
-    "https://www.wowhead.com/ptr/item=229077/azras-spare-shoulderguards",
-    "https://www.wowhead.com/item=229141/lamplighter-elites-polearm",
-    "https://www.wowhead.com/ptr/item=229148/lamplighters-staff",
-    "https://www.wowhead.com/ptr/item=212058/treads-of-the-greatlynx",
-    "https://www.wowhead.com/ptr/item=212069/hexflame-covens-shawl",
-    "https://www.wowhead.com/ptr/item=211999/exhumed-centurions-baltea",
-    "https://www.wowhead.com/item=212044/gatecrashers-cord",
-    "https://www.curseforge.com/wow/addons/prospectmate",
-    "https://github.com/Urutseg/ProspectMate",
-    "https://www.wowhead.com/item=229331/confessors-unshakable-ornament?ilvl=678",
-    "https://www.wowhead.com/item=237617/chargers-of-the-lucent-battalion",
-    "https://www.wowhead.com/item=237618/cuisses-of-the-lucent-battalion",
-    "https://www.wowhead.com/item=237698/inquisitors-gaze-of-madness"
-  ],
-  "commit_sha": null,
-  "verified_pre_run_branch_commit_sha": "cfe96f938b186a33e242d802291f04875241e5ce",
-  "commit_note": "One atomic commit will contain only this role's status JSON and exactly one new war-within evidence JSONL. A Git commit cannot embed its own SHA in its content; verified commit SHA is provided by external commit/read-back check. Status commit_sha intentionally null rather than a fabricated self-reference.",
-  "blockers": [
-    "Wowhead Looter aggregate rows provide exact item-specific operation denominators and per-row positive occurrence hits, but not source individual submissions, chronology, patch, original item bonus/ilvl, enchant skill/specialization, zero outcomes, raw per-cast stack counts or Resourcefulness/refunds.",
-    "All three output rows within each new epic gear study are identically named Refulgent Crystal. Link IDs and output quality ranks remain unknown: no family collapsing, inferred output IDs or current EV eligibility.",
-    "237617 is flagged 'Cannot be disenchanted' on a separate beta WoWDB page even while Wowhead cumulative Looter reports disenchants. Resolve per-source/variant eligibility with Master; no production promotion.",
-    "Current search-indexed Wowhead source tables exposed hit counts, but plain HTML text extraction did not include the JS Looter output links or pctstack histogram; exact output identity is blocked.",
-    "No new original post-hotfix rank-specific completed-cast/hit/histogram datasets discovered for Bismuth/Ironclaw/Aqirite or Khaz Algar milling. Prior source threads remain exhausted, not re-imported.",
-    "Do not equate sum of material hits with number of operations or cast zero-outcomes; one cast may yield multiple materials and source rows may have overlapping submissions."
-  ],
-  "exhausted_sources": [
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1f3qf96",
-      "reason": "Six individually enumerated green disenchants already captured twice (2026-11-02T1620 and 2026-11-04T0520); no new independent cohort."
-    },
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1fisfkn",
-      "reason": "Existing historical Aqirite/Ironclaw nominal ore cohorts; no new completed-cast histograms."
-    },
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
-      "reason": "Existing Mycobloom rank averages; no raw completed-operation logs."
-    },
-    {
-      "url": "https://www.wowhead.com/item=212495/radiant-ruby",
-      "reason": "Raven11 and Elfshinobi1 observations already represented; no new exact per-output hit data."
-    },
-    {
-      "url": "https://www.wowhead.com/spell=434018/algari-prospecting",
-      "reason": "PeaEsk three-rank-2-ore tests already recorded; the '100' ore-versus-cast denominator remains unknown."
-    },
-    {
-      "url": "https://us.forums.blizzard.com/en/wow/t/glittering-glass/1958379",
-      "reason": "Existing mixed-ore 200/415 prospect cohorts and Oct27 per-ore byproduct averages already captured; no new rank-specific hits."
-    },
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
-      "reason": "Aqirite rank-1/rank-2 averaged cohorts already captured with unresolved measured hits; do not re-import."
-    },
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-      "reason": "March 2025 600-rank1-Ironclaw cost anecdote and 117-prospects follow-up contain no output material counts or 0..N histograms; further source rechecks not worthwhile without author's raw log."
-    },
-    {
-      "url": "https://www.wowhead.com/guide/the-war-within/professions/inscription-overview",
-      "reason": "Milling recipes/ingredient identity only, no dated original per-cast Orbinid/Blessing Blossom sample or histogram."
-    },
-    {
-      "url": "https://warcraft.wiki.gg/wiki/Orbinid_Pigment",
-      "reason": "Ten-Orbinid-to-pigment recipe association, not actual measured casts, hits or output quantities."
-    },
-    {
-      "url": "https://warcraft.wiki.gg/wiki/Blossom_Pigment",
-      "reason": "Ten-Blessing-Blossom-to-pigment recipe association, not an independent measured mill study."
-    },
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1f117id",
-      "reason": "Original Aug25 100 green gear / 119-97-55 dust units is same cohort as Aug29 re-post 1f3qf96; cannot add any cast study. Use only for dedupe and provenance."
-    },
-    {
-      "url": "https://www.wowhead.com/ptr/item=219947/storm-dust",
-      "reason": "PTR cumulative input/output Looter snapshots were extensively copied in existing 2026-11-01/02 War Within evidence. No newly independent histograms identified from search; avoid source churn."
-    },
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1fhkjm9",
-      "reason": "Original September 2024 comments now mined for the specific 297-green totals and separate 1000-hammer rank averages; no input item IDs, 0/1/2+ histograms, hits or patch build there. Further repeats of these two numeric cohorts would duplicate."
-    },
-    {
-      "url": "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-broken-pebbles-and-glass/1968257",
-      "reason": "Previously recorded Sep/Oct 2024 ore quantity-only cohorts including FireEmblem01 350 R1 Bismuth and Reikah R1 Ironclaw; no new completed rank-specific histograms."
-    },
-    {
-      "url": "https://www.wowhead.com/item=213399/glittering-glass",
-      "reason": "Adreymar pooled 50,000-ore study and 80 glass per 1000 inputs already in 2026-11-02T0824; no new rank-specific per-cast hits."
-    },
-    {
-      "url": "https://github.com/Urutseg/ProspectMate",
-      "reason": "Public source contains addon logic and no public measured input/output cohort; latest code does not list TWW Algari Prospecting 434018 among monitored spells. Do not infer input spell coverage or data logs."
-    },
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1l91chl",
-      "reason": "June 2025 Ironclaw ore cost/profit story with no exact completed casts, output IDs/counts or zero-inclusive raw histograms; unsuitable for numeric row."
-    },
-    {
-      "url": "https://www.reddit.com/r/woweconomy/comments/1fvhzy0",
-      "reason": "October 2024 Luredrop + Mycobloom pooled milling-to-ink/cipher craft chain: blended inputs and downstream process yields confound per-herb per-cast pigment data. No independent per-rank histogram."
-    },
-    {
-      "url": "https://www.wowhead.com/ptr/item=237620/protectors-of-the-lucent-battalion?bonus=12295",
-      "reason": "Four-row candidate screened out: same 65-operation 42/14/8 crystal observations already captured in existing 2026-11-02T1523 War Within evidence; no new independent cohort."
-    }
-  ],
-  "next_concrete_step": "Find source-raw Looter output item link IDs/ranks and positive stack counts for 229331/237617/237618/237698. Cross-check WowDB 'cannot disenchant' variant conflicts and collector epoch before estimator eligibility. Then prioritize genuinely new post-Oct25 2024 prospecting/milling SavedVariables or cast logs for 210931/210937/210934 and 210796/210797 by input rank, spec/unlock, completed casts, outputs, zeros and refund basis.",
-  "decisions_needed": [
-    "Master/reviewer: verify the 297-cast three `replaces` lines supersede existing 2026-11-01T0921 green-dust average records, not combine them as independent studies.",
-    "Master: keep historical 1000-hammer rounded averages unpriced/unpromoted to current skill-specific gold EV until exact hammer item identity and current patch eligibility are confirmed.",
-    "Master: determine whether unresolved raw histogram/source identifiers merit targeted collection; no schema change requested.",
-    "Master review: rows with identical outputName but unknown rank should remain distinct ranked-unresolved evidence, not be aggregated into a single ambiguous output material ID or live DE EV.",
-    "Master: decide how to quarantine gear-item Looter hit-only cohorts with outputName duplicated across quality ranks and no linked output IDs; do not apply to live-valued current ItemDB until eligible."
-  ],
-  "gold_ev_policy": "Addon uses live item prices; no frozen gold, inferred probabilities/denominators, invented confidence or unverified current-game eligibility recorded.",
-  "new_source_observations": [
-    {
-      "record_id": "war-within-20261106-0628-001",
-      "source": "https://www.wowhead.com/ptr/item=219948/storm-dust",
-      "evidence_file": "research/v3/evidence/war-within/2026-11-06T0628-r3-dust-unsized-firsthand-rate.jsonl",
-      "kind": "self-reported undated percent only",
-      "independent_completed_cast_cohort": false
-    }
-  ],
-  "corrected_cohorts": [
-    {
-      "study_key": "reddit-1fhkjm9-max-skill-green-dust",
-      "casts": 297,
-      "source": "https://www.reddit.com/r/woweconomy/comments/1fhkjm9",
-      "prior_ids": [
-        "war-within-20261101-92104",
-        "war-within-20261101-92105",
-        "war-within-20261101-92106"
-      ],
-      "note": "Numerator totals directly reported and mathematically match old averages; replacement, not new sample."
-    }
-  ],
-  "previous_run_newly_verified_fields": [
-    {
-      "record_id": "war-within-20261106-1044-001",
-      "inputItemID": 212058,
-      "inputName": "Treads of the Greatlynx",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 46,
-      "castsWithDrop": 19,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=212058/treads-of-the-greatlynx",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-002",
-      "inputItemID": 212058,
-      "inputName": "Treads of the Greatlynx",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 46,
-      "castsWithDrop": 19,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=212058/treads-of-the-greatlynx",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-003",
-      "inputItemID": 212058,
-      "inputName": "Treads of the Greatlynx",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 46,
-      "castsWithDrop": 4,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=212058/treads-of-the-greatlynx",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-004",
-      "inputItemID": 212069,
-      "inputName": "Hexflame Coven's Shawl",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 143,
-      "castsWithDrop": 72,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=212069/hexflame-covens-shawl",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-005",
-      "inputItemID": 212069,
-      "inputName": "Hexflame Coven's Shawl",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 143,
-      "castsWithDrop": 41,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=212069/hexflame-covens-shawl",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-006",
-      "inputItemID": 212069,
-      "inputName": "Hexflame Coven's Shawl",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 143,
-      "castsWithDrop": 21,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=212069/hexflame-covens-shawl",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-007",
-      "inputItemID": 211999,
-      "inputName": "Exhumed Centurion's Baltea",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 40,
-      "castsWithDrop": 32,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=211999/exhumed-centurions-baltea",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-008",
-      "inputItemID": 211999,
-      "inputName": "Exhumed Centurion's Baltea",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 40,
-      "castsWithDrop": 5,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=211999/exhumed-centurions-baltea",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-009",
-      "inputItemID": 211999,
-      "inputName": "Exhumed Centurion's Baltea",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 40,
-      "castsWithDrop": 3,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=211999/exhumed-centurions-baltea",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-010",
-      "inputItemID": 212044,
-      "inputName": "Gatecrasher's Cord",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 42,
-      "castsWithDrop": 27,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/item=212044/gatecrashers-cord",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-011",
-      "inputItemID": 212044,
-      "inputName": "Gatecrasher's Cord",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 42,
-      "castsWithDrop": 10,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/item=212044/gatecrashers-cord",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    },
-    {
-      "record_id": "war-within-20261106-1044-012",
-      "inputItemID": 212044,
-      "inputName": "Gatecrasher's Cord",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "casts": 42,
-      "castsWithDrop": 5,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/item=212044/gatecrashers-cord",
-      "classification": "new indexed cumulative item-specific Looter per-output hit row; not verified current-patch or live-valuation eligible"
-    }
-  ],
-  "last_run_evidence_file": "research/v3/evidence/war-within/2026-11-06T1119-four-item-epic-de-source-hits.jsonl",
+  "last_run_evidence_file": "research/v3/evidence/war-within/2026-11-06T1231-four-independent-epic-armor-looter-hits.jsonl",
   "run_record_count": 12,
   "run_new_independent_item_cohorts": 4
 }
