@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T16:00:08.607Z",
+  "updated_at": "2026-11-06T17:05:08.910Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Verified an additional Retail-indexed Classic Mining spell (70524) for Enchanted Thorium Bar alongside the separate Classic Enchanting spell (17180), correcting the earlier blanket Smelt exclusion. Both source records specify 1 Thorium Bar + 3 Rich Illusion Dust. Read back legacy worker's 13 fixed-recipe corrections and the other workers' latest quiet statuses; no new stochastic casts, gold-EV coverage, addon modification or actual client QA.",
+  "status": "Original Wowhead Astral Glory milling comment's Gem Chip hyperlink resolves directly to item 129100; verified separately sourced first-person 200 Aethril → 2 Gem Chip (129100) units as a potential new historical cohort. Neither account supplies actual completed mill casts or per-output hits. Research-only source validation; no new gold/tooltip coverage or in-game testing.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -23,7 +23,8 @@
     "T0048",
     "COORD-TWW-REFULGENT-RANK-ID-20261106",
     "COORD-BFA-REFERENCE-MEAN-COMPARE-20261106",
-    "COORD-THORIUM-DUAL-PROFESSION-20261106"
+    "COORD-THORIUM-DUAL-PROFESSION-20261106",
+    "COORD-LEGION-GEMCHIP-200-AETHRIL-20261106"
   ],
   "exact_gaps_targeted": [
     {
@@ -263,6 +264,22 @@
       ],
       "worker_evidence_file": "research/v3/evidence/legacy/20261106T1543-smelting-recipe-identity-rescue.jsonl",
       "worker_evidence_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b"
+    },
+    {
+      "task_id": "COORD-LEGION-GEMCHIP-200-AETHRIL-20261106",
+      "kind": "original_output_ID_link_and_unimported_first_person_historical_quantity_candidate",
+      "source_one_input_item_id": 151565,
+      "source_one_record_id": "legacy-20261106-160005",
+      "source_one_verified_hyperlink_output_item_id": 129100,
+      "source_one_quantity": 8,
+      "source_two_input_item_id": 124101,
+      "source_two_input_quantity_herbs": 200,
+      "source_two_output_item_id": 129100,
+      "source_two_output_quantity_units": 2,
+      "source_two_raw_casts": null,
+      "source_two_casts_with_drop": null,
+      "source_two_histogram": null,
+      "remaining_gap": "Check new Aethril numeric source against all pre-existing legacy v3/imported studies before worker adds append-only record; date, client version, skill, output-positive casts and input-savings unknown. Historical samples alone do not prove current Retail availability."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -1066,6 +1083,34 @@
       "observed_casts": null,
       "measured_cohorts": 0,
       "eligibility_unverified": true
+    },
+    {
+      "kind": "historical_original_source_direct_hyperlink_and_new_independent_candidate",
+      "task_id": "COORD-LEGION-GEMCHIP-200-AETHRIL-20261106",
+      "source_original_astral_glory": "https://www.wowhead.com/ptr/item=151565/astral-glory",
+      "source_original_gem_chip": "https://www.wowhead.com/ptr/item=129100/gem-chip",
+      "source_original_hyperlink_resolution": "Modinstaller Astral Glory comment '8 Gem Chip' links to item=129100, preserving original ID rather than infer from name alone",
+      "existing_v3_record": "legacy-20261106-160005",
+      "existing_v3_reported_herbs": 200,
+      "existing_v3_reported_chip_units": 8,
+      "candidate_new_author": "1721314 (Wowhead displayed numeric commenter handle)",
+      "candidate_new_quote": "Mass-milling 200 Aethril only provided me with 2 gem chips.",
+      "candidate_input_item_id": 124101,
+      "candidate_input_herbs": 200,
+      "candidate_output_item_id": 129100,
+      "candidate_total_units": 2,
+      "candidate_actual_completed_casts": null,
+      "candidate_hits": null,
+      "candidate_zero_count": null,
+      "candidate_histogram": null,
+      "candidate_patch": null,
+      "candidate_skill": null,
+      "candidate_source_site_comment": "https://www.wowhead.com/ptr/item=129100/gem-chip",
+      "author_independence_from_MODINSTALLER": true,
+      "independence_from_all_existing_research_records": "not fully checked",
+      "new_worker_evidence_added": 0,
+      "new_measured_casters": 0,
+      "new_gold_value_coverage": 0
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -1164,7 +1209,9 @@
     "https://www.wowhead.com/spell=70524/enchanted-thorium-bar",
     "https://www.wowhead.com/spell=17180/enchanted-thorium-bar",
     "https://tradeskillmaster.com/retail/us/items/12655",
-    "https://www.wowhead.com/item=156930/rich-illusion-dust"
+    "https://www.wowhead.com/item=156930/rich-illusion-dust",
+    "https://www.wowhead.com/ptr/item=151565/astral-glory",
+    "https://www.wowhead.com/ptr/item=129100/gem-chip"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
@@ -1241,7 +1288,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Hand off Retail-indexed Mining spell 70524 as the separate profession path for Enchanted Thorium Bar 12655, alongside Enchanting 17180; ask protected integration owner to check runtime profession eligibility, reagent cost (Thorium Bar 1, Rich Illusion Dust 3), one EV per feasible action, and offline tooltip fixture without editing that branch. Continue distinct queue gap when handoff complete.",
+  "next_concrete_step": "Legacy worker: dedupe Wowhead item 129100 commentator 1721314's 200 Aethril -> 2 colorless Gem Chip original against prior imported/v3 studies, then record append-only only if new; capture itemLink/era, exact batch-click count and skill if available. For prior Astral Glory record legacy-20261106-160005, retain directly linked 129100 and do not substitute colored chip 130203. Continue source-original numeric gaps T0005/T0045 and runtime fixture handoff to protected integration owner; unknowns stay null.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -1549,5 +1596,25 @@
     "dragonflight": "2026-11-06T10:41:19.291Z",
     "war-within": "2026-11-06T10:43:56.330Z",
     "midnight": "2026-11-06T10:14:23.449Z"
-  }
+  },
+  "worker_readback_utc": "2026-11-06T17:05:08.910Z",
+  "worker_statuses_verified_in_this_session": {
+    "legacy": "2026-11-06T16:57:01.775Z",
+    "dragonflight": "2026-11-06T15:42:22.353Z",
+    "war-within": "2026-11-06T16:27:10.140Z",
+    "midnight": "2026-11-06T16:22:06.180Z"
+  },
+  "branch_head_at_read": "c02b126d362a7990a1b92a3f6dacf3470022a7a0",
+  "latest_research_check_at_read": {
+    "commit": "c02b126d362a7990a1b92a3f6dacf3470022a7a0",
+    "status": "success",
+    "workflow_url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42257145738",
+    "completed_at": "2026-11-06T16:57:54Z"
+  },
+  "open_research_prs_checked": {
+    "22": "closed_unmerged",
+    "23": "closed_unmerged"
+  },
+  "newly_confirmed_economic_actions_this_run": 0,
+  "release_or_merges_performed": false
 }
