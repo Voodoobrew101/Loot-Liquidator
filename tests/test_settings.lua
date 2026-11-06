@@ -11,7 +11,7 @@ local function widget(kind,parent,template)
     function w:Disable() self.enabled=false end
     function w:SetEnabled(v) self.enabled=v end
     function w:Show() local was=self.shown;self.shown=true;if not was and self.scripts.OnShow then self.scripts.OnShow(self) end end
-    function w:Hide() self.shown=false end
+    function w:Hide() self.shown=false;self.hideCount=(self.hideCount or 0)+1 end
     function w:SetScript(k,fn) self.scripts[k]=fn end
     function w:GetScript(k) return self.scripts[k] end
     function w:HookScript(k,fn) local old=self.scripts[k];self.scripts[k]=function(...) if old then old(...) end;fn(...) end end
@@ -208,6 +208,7 @@ LL:ProtectSettingsDefaults();defaults.scripts.OnClick(defaults);assert(nativeCli
 -- Profession editor: no typed node IDs, explicit unknowns, native controls,
 -- independent character/expansion settings, measured scan untouched.
 local char=LL.db.characters['Tester - Realm']
+local realProfessionOptions=LL.GetProfessionUIOptions
 char.professionOptions={['Jewelcrafting:11']={nodes={{id=12,name='Gem Cutting',tab='Gems',maxRank=30}},buffs={{id=123,name='Profession Tea'}}}}
 LL.GetProfessionUIOptions=function(_,character,profession,expansion)
     return char.professionOptions[profession..':'..expansion] or {nodes={},buffs={}}
@@ -237,22 +238,18 @@ selector.initializer.setting:SetValue(-1)
 local saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(saved.enabled and saved.skill==0 and saved.specialization=='none' and not saved.buffs)
 assert(char.researchProfiles==nil,'simulation never overwrites scanned data')
-assert(find('Show Gems').shown,'trees begin collapsed')
-press('Show Gems')
-assert(find('Hide Gems').shown)
+assert(find('Advanced').point[5]==-200,'Advanced stays directly below the status text')
+press('Advanced')
 local sliders={}
 for i=start+1,#all do if all[i].kind=='Slider' then sliders[#sliders+1]=all[i] end end
-assert(#sliders==1,'only the specialization has a bounded point slider')
-local skillInput
-for i=start+1,#all do if all[i].kind=='EditBox' then skillInput=all[i];break end end
-skillInput:SetText('95');skillInput.scripts.OnEnterPressed(skillInput)
-sliders[1]:SetValue(4)
+assert(#sliders==10,'Advanced reveals skill, specialization and all eight stat sliders together')
+sliders[1]:SetValue(95)
+local holder=sliders[2].parent.parent
+local hidden=holder.hideCount or 0
+for value=1,4 do sliders[2]:SetValue(value) end
+assert((holder.hideCount or 0)==hidden,'changing a slider must never hide it and cancel continuous dragging')
 saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(saved.skill==95 and saved.specialization=='12=4')
-press('Hide Gems')
-assert(not sliders[1].parent.parent.shown,'collapsing hides its slider')
-assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).specialization=='12=4')
-press('Show buffs')
 local check
 for i=start+1,#all do if all[i].template=='SettingsCheckboxControlTemplate' then check=all[i] end end
 check.Checkbox:SetChecked(true);check.Checkbox.scripts.OnClick(check.Checkbox)
@@ -261,15 +258,15 @@ press('Reset to minimum')
 saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(saved.skill==0 and saved.specialization=='none' and saved.buffs==nil)
 selector.initializer.setting:SetValue(0)
-assert(not find('Show Gems').shown,'hidden mode hides simulation controls')
+assert(not holder.shown,'hidden mode hides simulation controls')
 selector.initializer.setting:SetValue(1)
 dropdowns[2].initializer.setting:SetValue(10)
 assert(not LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',10),'browsing real character is read only')
 assert(LL:ProfessionExpansionName(11)=='Midnight')
 selector.initializer.setting:SetValue(-1)
 assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',10).skill==0)
-print('PASS: Simulated minimum, collapsible trees and buffs, direct point sliders, reset and character isolation')
--- Multi-level trees retain collapsed branches and enforce known thresholds.
+print('PASS: Simulated minimum, continuous sliders, one Advanced section, reset and character isolation')
+-- Multi-level trees are visible with indentation and enforce known thresholds.
 char.professionOptions['Jewelcrafting:11'].nodes={
     {id=12,name='Gem Cutting',tab='Gems',maxRank=30},
     {id=13,parentID=12,name='Rare Gems',tab='Gems',maxRank=20,
@@ -277,35 +274,51 @@ char.professionOptions['Jewelcrafting:11'].nodes={
     {id=14,parentID=13,name='Epic Gems',tab='Gems',maxRank=15,
         requirements={{kind='node',nodeID=13,rank=5,name='Rare Gems'}}}}
 dropdowns[2].initializer.setting:SetValue(11)
-press('Show Gems');press('Show Gem Cutting branches')
 local function lastSlider()
     for i=#all,start+1,-1 do if all[i].kind=='Slider' then return all[i] end end
 end
-local child=lastSlider()
+local grandchild=lastSlider()
+local child
+for i=start+1,#all do if all[i].kind=='Slider' and all[i].maximum==20 then child=all[i] end end
 assert(child.enabled==false,'child locked below prerequisite')
-sliders[1]:SetValue(10)
+sliders[2]:SetValue(10)
 assert(child.enabled==true,'exact parent boundary unlocks child')
-child:SetValue(5);press('Show Rare Gems branches')
-local grandchild=lastSlider();grandchild:SetValue(4)
+child:SetValue(5);grandchild:SetValue(4)
+assert(child.parent.parent.point[4]>sliders[2].parent.parent.point[4],'branch sliders are indented')
 assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).specialization:find('14=4',1,true))
-sliders[1]:SetValue(9)
+sliders[2]:SetValue(9)
 saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(not saved.specialization:find('13=5',1,true) and not saved.specialization:find('14=4',1,true),
     'lowering parent clears dependent allocations through every branch level')
-press('Show profession / crafting stats')
 local speedInput
-for i=#all,start+1,-1 do if all[i].kind=='EditBox' then speedInput=all[i];break end end
-speedInput:SetText('125.5');speedInput.scripts.OnEnterPressed(speedInput)
+for i=start+1,#all do if all[i].kind=='Slider' and all[i].maximum==200 then speedInput=all[i] end end
+speedInput:SetValue(125.5)
 saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
-assert(saved.stats.craftingSpeed.percent==125.5,'speed bonus is not a chance capped at 100 percent')
-speedInput:SetText('-1');speedInput.scripts.OnEnterPressed(speedInput)
-assert(speedInput:GetText()=='125.5','invalid input restores previous value')
-press('Hide profession / crafting stats')
-assert(not speedInput.shown,'stats collapse without clearing choices')
-assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats.craftingSpeed.percent==125.5)
+assert(saved.stats.craftingSpeed.percent==126,'speed bonus is whole-number and not capped at 100 percent')
+press('Hide advanced')
+assert(not speedInput.parent.parent.shown,'single Advanced section hides stats')
+assert(not holder.shown,'Advanced hides all specialization controls')
+assert(not sliders[1].parent.parent.shown,'Advanced also hides simulated skill')
+assert(find('Advanced').point[5]==-200,'collapsing keeps Advanced at the top')
+assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats.craftingSpeed.percent==126)
+for i=start+1,#all do
+    local w=all[i]
+    assert(not(w.kind=='Button' and w.text and (w.text:match('^Show .*branches') or w.text=='Show Gems')),'no nested disclosure buttons')
+end
 press('Reset to minimum')
 assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).stats==nil)
 print('PASS: nested branches, prerequisite boundary and cascade, stat controls and collapse preservation')
+assert(LL:SetManualProfessionProfile('Tester - Realm','Jewelcrafting',11,
+    {enabled=true,skill=1250,specialization='none',stats={craftingSpeed={rating=12000,percent=275}}}))
+profile.scripts.OnShow(profile);press('Advanced')
+assert(sliders[1].value==1250 and sliders[1].maximum>=1250,'saved skill expands editing span')
+assert(speedInput.value==275 and speedInput.maximum>=275,'saved speed expands editing span')
+local largeRating=false
+for i=start+1,#all do
+    if all[i].kind=='Slider' and all[i].value==12000 then largeRating=all[i].maximum>=12000 end
+end
+assert(largeRating,'saved ratings above the starting span remain available')
+print('PASS: high saved skill, rating and speed values survive whole-number slider layout')
 
 -- Pooled vertical controls must hide arrows for our settings after every
 -- rebuild, then restore normal behavior when reused by another category.
@@ -459,3 +472,41 @@ do
     print('PASS: Show rates for + Professions (Simulated) page (B5a/B5b)')
 end
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')
+do
+    -- Exercise the real bundled catalog through the UI, starting in Automatic.
+    LL.GetProfessionUIOptions=realProfessionOptions
+    assert(loadfile('LootLiquidator/ProfessionCatalog.lua'))('LL',LL)
+    LL.db.professionTooltipProfiles.Enchanting=nil
+    local before=#all
+    local editor=LL:CreateProfessionProfilePanel('Enchanting')
+    editor.scripts.OnShow(editor)
+    local toggle,selector
+    for i=before+1,#all do
+        local w=all[i]
+        if w.kind=='Button' and w.text=='Advanced' then toggle=w end
+        if w.template=='SettingsDropdownControlTemplate' and not selector then selector=w end
+    end
+    assert(selector.initializer.setting:GetValue()==-2)
+    toggle.scripts.OnClick(toggle)
+    local crystal
+    for i=before+1,#all do
+        local w=all[i]
+        if w.kind=='FontString' and w.text and w.text:find('Crystal Collector',1,true)==1 then crystal=w end
+    end
+    assert(crystal and crystal.shown,'Automatic Advanced must show the real Enchanting specialization catalog')
+    local slider
+    for i=before+1,#all do
+        local w=all[i]
+        if w.kind=='Slider' and w.parent.parent.point and w.parent.parent.point[5]==crystal.point[5]+5 then slider=w end
+    end
+    assert(slider and slider.maximum==30 and slider.parent.parent.shown)
+    assert(LL.db.professionTooltipProfiles.Enchanting==nil,'opening Advanced does not change the tooltip profile')
+    slider:SetValue(7)
+    assert(selector.initializer.setting:GetValue()==-1,'editing a specialization switches to Simulated')
+    assert(LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11).specialization:find('107646=7',1,true))
+    selector.initializer.setting:SetValue(1)
+    assert(slider.parent.parent.shown,'character view also exposes the specialization editor')
+    toggle.scripts.OnClick(toggle)
+    assert(not slider.parent.parent.shown,'one Advanced toggle still collapses everything')
+    print('PASS: real Wago specialization sliders in Automatic and character views; edits select Simulated')
+end

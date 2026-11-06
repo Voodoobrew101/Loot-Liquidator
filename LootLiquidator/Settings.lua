@@ -402,11 +402,13 @@ function LL:CreateProfessionProfilePanel(profession)
     local selected=selection and selection:sub(1,1)~='@' and selection or current
     local expansion=(GetExpansionLevel and GetExpansionLevel()) or 11
     local options={nodes={},buffs={}}
-    local openTrees,treeRows,nodeRows,buffRows,statRows={},{},{},{},{}
-    local buffsOpen,statsOpen,scanOpen=false,false,false
+    local treeRows,nodeRows,buffRows,statRows={},{},{},{}
+    local advancedOpen=false
+    local visible={}
     local refreshing=false
     local refresh
     local function place(w,y,x)
+        visible[w]=true
         w:ClearAllPoints();w:SetPoint('TOPLEFT',body,'TOPLEFT',x or 16,-y);w:Show()
     end
     local function label(text,width)
@@ -431,8 +433,14 @@ function LL:CreateProfessionProfilePanel(profession)
         LL:SetManualProfessionProfile(current,profession,expansion,
             {enabled=true,skill=0,specialization='none',buffs={}})
     end
+    local function useSimulation()
+        selection='@hypothetical';selected=current
+        LL.db.professionTooltipProfiles=LL.db.professionTooltipProfiles or {}
+        LL.db.professionTooltipProfiles[profession]=selection
+    end
     local function update(change)
-        if refreshing or selection~='@hypothetical' then return end
+        if refreshing then return end
+        useSimulation()
         local p={} for k,v in pairs(profile()) do p[k]=v end
         p.enabled=true;p.skill=p.skill or 0;p.specialization=p.specialization or 'none'
         p.buffs={} for k,v in pairs(profile().buffs or {}) do p.buffs[k]=v end
@@ -461,7 +469,7 @@ function LL:CreateProfessionProfilePanel(profession)
         return c:GetData()
     end
     local title=label(profession..' — tooltip results')
-    local intro=label('Choose a character, Simulated results, or Don\'t show. Expand a section only when you want to change it.')
+    local intro=label('Choose a character, Simulated results, or Don\'t show. Specializations are grouped by tree; indented rows are branches.')
     local character=LL:CreateSettingsDropdown(body,function()
         local keys={} for k in pairs(LL.db.characters or {}) do keys[#keys+1]=k end
         table.sort(keys);panel.characterKeys=keys
@@ -493,21 +501,22 @@ function LL:CreateProfessionProfilePanel(profession)
     end)
     local status=label('')
     local skillLabel=label('Simulated effective skill',245)
-    local skill=LL:CreateSettingsNumberInput(body,function(v)update(function(p)p.skill=v end)end)
-    hover(skill,function()
+    local skill=LL:CreateSettingsCanvasSlider(body,0,300,1,0,function(v)update(function(p)p.skill=v end)end)
+    skill.expandRange=true
+    hover(skill.slider,function()
         return {'Effective profession skill','Use the recipe\'s minimum required skill as the starting point. Zero is the editor minimum, not proof that a recipe is usable.',
             'Skill changes quantities or quality only when a compatible researched formula is available.'}
     end)
-    local reset=button('Reset to minimum',function()minimum();LL:UpdateAllAppearance();refresh(false)end)
+    local reset=button('Reset to minimum',function()useSimulation();minimum();LL:UpdateAllAppearance();refresh(false)end)
     local scan=button('Refresh specialization choices from current profession',function()
         LL:GetResearchProfessionSnapshot({expansionID=expansion},profession);refresh(true)
     end)
     local empty=label('No specialization catalog is available for this expansion. Bundled choices cover Dragonflight, The War Within, and Midnight; a character scan can supply additional catalogs.')
-    local buffToggle=button('Show buffs',function()buffsOpen=not buffsOpen;refresh(false)end)
+    local advanced=button('Advanced',function()advancedOpen=not advancedOpen;refresh(false)end)
+    local buffsTitle=label('Buffs')
     local noBuffs=label('No captured buffs. Open this profession on the character to refresh available choices.')
-    local statsToggle=button('Show profession / crafting stats',function()statsOpen=not statsOpen;refresh(false)end)
-    local statsNote=label('Enter ratings directly. Chance sliders run from 0 to 100%; speed and other bonuses use numeric input without an invented cap. Press Enter to save a number. Empty means unknown.')
-    local scannedToggle=button('Show scanned profession stats',function()scanOpen=not scanOpen;refresh(false)end)
+    local statsTitle=label('Profession / crafting stats')
+    local statsNote=label('Whole-number simulation controls. Ratings and percentages are separate. Slider ranges are editing spans, not game caps; saved values above a span are retained.')
     local scannedStats=label('')
     local note=label('Reference yields stay unadjusted where no compatible formula exists. Simulated choices never change your actual character.')
     local function ranks()
@@ -536,19 +545,23 @@ function LL:CreateProfessionProfilePanel(profession)
     refresh=function(reload)
         refreshing=true
         if reload then options=LL:GetProfessionUIOptions(selected,profession,expansion) end
-        for _,row in pairs(treeRows) do row:Hide() end
-        for _,row in pairs(nodeRows) do row.label:Hide();row.slider:Hide() end
-        for _,row in pairs(buffRows) do row.check:Hide();row.label:Hide() end
-        for _,row in pairs(statRows) do row.label:Hide();row.percentLabel:Hide();row.rating:Hide();row.percent:Hide() end
-        for _,w in ipairs({skillLabel,skill,reset,scan,empty,buffToggle,noBuffs,note,statsToggle,statsNote,scannedToggle,scannedStats}) do w:Hide() end
+        -- Hiding an active native slider cancels its mouse drag. Lay out the
+        -- controls first, then hide only those no longer used on this page.
+        visible={}
         place(title,16);place(intro,46);place(character,96);place(era,96,326);place(status,138)
         local y=200
-        if selection=='@hypothetical' then
-            status:SetText('Simulated profile. Controls save your choices; reference yields change only where researched formulas are available.')
+        if selection~='@hide' then
+            advanced:SetText(advancedOpen and 'Hide advanced' or 'Advanced')
+            place(advanced,y);y=y+38
+        end
+        if selection~='@hide' then
+            status:SetText(selection=='@hypothetical'
+                and 'Simulated profile. Reference yields change only where researched formulas are available.'
+                or 'Uses scanned character data. Open Advanced to simulate skill and specializations; changing a slider switches to Simulated.')
+            if advancedOpen then
             skill:SetPreferenceValue(profile().skill or 0)
             place(skillLabel,y+6);place(skill,y,270);y=y+44
             place(reset,y);y=y+40
-            place(scan,y);y=y+44
             if #options.nodes==0 then place(empty,y);y=y+68 end
             local groups,order={},{}
             for _,n in ipairs(options.nodes) do
@@ -574,28 +587,19 @@ function LL:CreateProfessionProfilePanel(profession)
                 row.label:SetText(n.name..' ('..n.maxRank..' points)'..(allowed==false and ' — locked' or allowed==nil and ' — requirements unknown' or ''))
                 row.slider:SetPreferenceValue(points[tostring(n.id)] or 0)
                 row.slider.slider:SetEnabled(allowed~=false)
-                place(row.label,y+5,28+math.min(depth,3)*12);place(row.slider,y,290)
+                place(row.label,y+5,28+math.min(depth,4)*12);place(row.slider,y,270+math.min(depth,4)*8)
                 y=y+math.max(48,(row.label.GetStringHeight and row.label:GetStringHeight() or 0)+16)
                 local children={}
                 for _,child in ipairs(nodes) do if child.parentID==n.id then children[#children+1]=child end end
-                if #children>0 then
-                    local branchKey='branch:'..key
-                    if not treeRows[branchKey] then
-                        treeRows[branchKey]=button('',function()openTrees[branchKey]=not openTrees[branchKey];refresh(false)end)
-                    end
-                    treeRows[branchKey]:SetText((openTrees[branchKey] and 'Hide ' or 'Show ')..n.name..' branches')
-                    place(treeRows[branchKey],y,28);y=y+36
-                    if openTrees[branchKey] then for _,child in ipairs(children) do renderNode(child,nodes,depth+1,visited) end end
-                end
+                for _,child in ipairs(children) do renderNode(child,nodes,depth+1,visited) end
             end
             for _,tree in ipairs(order) do
                 if not treeRows[tree] then
-                    local treeName=tree
-                    treeRows[tree]=button('',function()openTrees[treeName]=not openTrees[treeName];refresh(false)end)
+                    treeRows[tree]=label(tree)
                 end
-                treeRows[tree]:SetText((openTrees[tree] and 'Hide ' or 'Show ')..tree)
+                treeRows[tree]:SetText(tree)
                 place(treeRows[tree],y);y=y+38
-                if openTrees[tree] then
+                do
                     local ids={} for _,n in ipairs(groups[tree]) do ids[n.id]=true end
                     local visited={}
                     for _,n in ipairs(groups[tree]) do
@@ -603,9 +607,8 @@ function LL:CreateProfessionProfilePanel(profession)
                     end
                 end
             end
-            statsToggle:SetText(statsOpen and 'Hide profession / crafting stats' or 'Show profession / crafting stats')
-            place(statsToggle,y);y=y+38
-            if statsOpen then
+            if advancedOpen then
+                place(statsTitle,y);y=y+30
                 place(statsNote,y);y=y+60
                 for _,stat in ipairs(LL:ProfessionSimulationStatOptions(profession)) do
                     if not statRows[stat.key] then
@@ -617,20 +620,21 @@ function LL:CreateProfessionProfilePanel(profession)
                             end)
                         end
                         local chance=LL:IsProfessionChanceStat(key)
-                        statRows[key]={label=label(stat.name..' rating',270),
-                            percentLabel=label(stat.name..(chance and ' chance (%)' or ' bonus (%)'),270),
-                            rating=LL:CreateSettingsNumberInput(body,function(v)set('rating',v)end),
-                            percent=chance and LL:CreateSettingsCanvasSlider(body,0,100,.1,0,function(v)set('percent',v)end)
-                                or LL:CreateSettingsNumberInput(body,function(v)set('percent',v)end)}
+                        local rating=LL:CreateSettingsCanvasSlider(body,0,1000,1,0,function(v)set('rating',v)end)
+                        local percent=LL:CreateSettingsCanvasSlider(body,0,chance and 100 or 200,1,0,function(v)set('percent',v)end)
+                        rating.expandRange=true;percent.expandRange=not chance
+                        statRows[key]={label=label(stat.name..' rating',245),
+                            percentLabel=label(stat.name..(chance and ' chance (%)' or ' bonus (%)'),245),
+                            rating=rating,percent=percent}
                     end
                     local row=statRows[stat.key];local v=profile().stats and profile().stats[stat.key] or {}
-                    row.rating:SetPreferenceValue(v.rating);row.percent:SetPreferenceValue(v.percent or (LL:IsProfessionChanceStat(stat.key) and 0 or nil))
-                    place(row.label,y);place(row.percentLabel,y,326);y=y+23
-                    place(row.rating,y,16);place(row.percent,y,326);y=y+44
+                    row.rating:SetPreferenceValue(v.rating or 0);row.percent:SetPreferenceValue(v.percent or 0)
+                    place(row.label,y+5);place(row.rating,y,270);y=y+44
+                    place(row.percentLabel,y+5);place(row.percent,y,270);y=y+44
                 end
             end
-            buffToggle:SetText(buffsOpen and 'Hide buffs' or 'Show buffs');place(buffToggle,y);y=y+38
-            if buffsOpen then
+            if advancedOpen then
+                place(buffsTitle,y);y=y+30
                 if #options.buffs==0 then place(noBuffs,y);y=y+56 end
                 for _,b in ipairs(options.buffs) do
                     if not buffRows[b.id] then
@@ -645,14 +649,12 @@ function LL:CreateProfessionProfilePanel(profession)
                 end
             end
             place(note,y+8);y=y+64
+            end
         elseif selection=='@hide' then status:SetText('Processing results for '..profession..' are hidden from tooltips.')
-        else
-            status:SetText('Uses scanned character data. Choose Simulated to try different skill and specialization points.')
         end
         if selection~='@hide' then
-            scannedToggle:SetText(scanOpen and 'Hide scanned profession stats' or 'Show scanned profession stats')
-            place(scannedToggle,y);y=y+38
-            if scanOpen then
+            if advancedOpen then
+                place(scan,y);y=y+40
                 local record=LL.db.characters and LL.db.characters[selected]
                 local snapshot=record and record.researchProfiles and record.researchProfiles[profession..':'..expansion]
                 local text={'Scanned '..selected..' — '..LL:ProfessionExpansionName(expansion)}
@@ -670,6 +672,14 @@ function LL:CreateProfessionProfilePanel(profession)
                 scannedStats:SetText(table.concat(text,'\n'));place(scannedStats,y);y=y+#text*20+20
             end
         end
+        local function hideUnused(w) if not visible[w] then w:Hide() end end
+        for _,w in pairs(treeRows) do hideUnused(w) end
+        for _,row in pairs(nodeRows) do hideUnused(row.label);hideUnused(row.slider) end
+        for _,row in pairs(buffRows) do hideUnused(row.check);hideUnused(row.label) end
+        for _,row in pairs(statRows) do
+            hideUnused(row.label);hideUnused(row.percentLabel);hideUnused(row.rating);hideUnused(row.percent)
+        end
+        for _,w in ipairs({skillLabel,skill,reset,scan,empty,advanced,buffsTitle,noBuffs,note,statsTitle,statsNote,scannedStats}) do hideUnused(w) end
         body:SetHeight(math.max(y,260))
         character:Refresh();era:Refresh();refreshing=false
     end
@@ -773,7 +783,7 @@ function LL:AddRateProfileSettings(category,layout)
         local out=Settings.CreateControlTextContainer()
         out:Add(1,"Me","Use the skill of whoever would do the work: you, or the alt it can be sent to.")
         out:Add(2,"A chosen alt","Always use the character picked below, as if they did the work.")
-        out:Add(3,"Simulated profile","Use the hypothetical skill and specialization saved for the character below (Professions pages).")
+        out:Add(3,"Simulated profile","Use the simulated skill and specialization saved for the character below (Professions pages).")
         return out:GetData()
     end,"Whose profession skill is used to estimate milling, prospecting, smelting and disenchanting results. This never changes who can actually do it.")
     self:WithoutDropdownSteppers(modeInit)

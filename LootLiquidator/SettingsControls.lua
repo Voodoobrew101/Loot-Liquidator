@@ -213,9 +213,7 @@ function LL:CreateSettingsCanvasSlider(parent,minValue,maxValue,step,initial,onC
     local setting=Proxy("number",initial)
     local options=Settings.CreateSliderOptions(minValue,maxValue,step)
     if options.SetLabelFormatter and MinimalSliderWithSteppersMixin then
-        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right,function(v)
-            return step<1 and ('%.1f%%'):format(v) or ('%.0f'):format(v)
-        end)
+        options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
     end
     local control=self:CreateSettingsControl(parent,"SettingsSliderControlTemplate",
         Settings.CreateSlider(self.canvasSettingsCategory,setting,options,""),"slider")
@@ -234,6 +232,12 @@ function LL:CreateSettingsCanvasSlider(parent,minValue,maxValue,step,initial,onC
     -- a setting changes; writing the setting from that method loops forever,
     -- because SettingMixin also notifies for unchanged values.
     function control:SetPreferenceValue(value)
+        -- Non-chance slider spans are editor ranges, not claimed game caps.
+        -- Preserve previously saved values above the initial editing span.
+        if control.expandRange and value>maxValue then
+            maxValue=math.ceil(value/100)*100
+            native.Slider:SetMinMaxValues(minValue,maxValue)
+        end
         value=minValue+math.floor((value-minValue)/step+.5)*step
         value=math.max(minValue,math.min(maxValue,value))
         if setting:GetValue()~=value then setting:SetValue(value) end
