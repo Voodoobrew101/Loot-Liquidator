@@ -1,9 +1,10 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-06T15:13:29.111Z",
-  "status": "Research-only: found a new original firsthand Mantle of Dark Devotion (251085) disenchant/restoration account conflicting with WoWDB base-item cannot-disenchant; recorded original source without converting restoration costs into measured outputs. No new completed-cast or per-output distributions.",
+  "updated_at": "2026-11-06T16:22:06.180Z",
+  "status": "Research-only: one newly identified 8-reported-operation Wowhead Looter epic armor disenchant cohort (260375), with TWO same-name unlinked Dawn Crystal hit rows (4/8 each), plus two new WoWDB base-item non-disenchant flags (251135, 251183) that conflict with scaled Season 2 preview eligibility assumptions. Zero newly verified direct per-cast stack distributions, output identities, live-current-build successful DE casts, or prospect/mill hit cohorts.",
   "task_ids": [
     "T0026",
+    "T0025",
     "T0049",
     "T0005",
     "T0039",
@@ -13,21 +14,34 @@
     {
       "task_ids": [
         "T0026",
-        "T0049"
+        "T0025"
       ],
       "input_item_ids": [
-        251085,
-        272246
+        260375,
+        251135,
+        251183
       ],
       "output_item_ids": [
         243605,
-        243606,
-        267654,
+        243606
+      ],
+      "missing": "Raging Storm Sash two distinct Dawn Crystal linked item IDs/ranks, exact player itemLink/bonus, cast-date patch/build, per-cast item quantities, raw stack histograms/zeros, skill and specialization; base rare/epic scale-specific actual disenchant eligibility of 251135 and 251183. 243605/243606 are candidate family rank IDs only, NOT assigned to Looter rows."
+    },
+    {
+      "task_ids": [
+        "T0049"
+      ],
+      "input_item_ids": [
+        272246
+      ],
+      "output_item_ids": [
         243599,
         243602,
-        243603
+        243603,
+        243605,
+        243606
       ],
-      "missing": "current-client bonus/ilvl and live disenchantable flag; output rank identity, direct actual cast log, raw Looter stack histogram, build and skill/specialization; restoration cost vs original loot mapping"
+      "missing": "One actual current-client ilvl305 (or other scaled variant) DE action with full bonus string, build/skill/spec, output rank identity and raw per-cast log; generic ilvl206 WoWDB non-DE flag versus existing 140-operation unversioned Looter table remains unresolved."
     },
     {
       "task_ids": [
@@ -47,7 +61,7 @@
         242786,
         242788
       ],
-      "missing": "rank-matched independent completed casts, castsWithDrop, zeros, output counts/histograms, Diamond unlock, resourcefulness, precise client build"
+      "missing": "Independent rank-matched completed prospecting casts and per-output castsWithDrop, zero counts/histograms, item IDs, unlock/resourcefulness and patch; prior Cardinalai 800 casts provide quantities only."
     },
     {
       "task_ids": [
@@ -59,68 +73,128 @@
       "output_item_ids": [
         245807
       ],
-      "missing": "10-herb completed mill logs, per-output hits/zeros/stack histograms, skill/spec/rank and refunds"
+      "missing": "Completed 10-herb mills, output rank/amount/hit counts, zero outcomes/positive-stack histogram, skill/spec and refunds."
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "firsthand_report_only",
-      "input_item_id": 251085,
-      "input_name": "Mantle of Dark Devotion",
-      "reported_disEnchantedDate": "2026-05-15",
-      "original_source": "https://us.forums.blizzard.com/en/wow/t/item-restore-issue-w-prof-item-as-cost/2308765",
-      "observed_fact": "Player reports disenchanting one Mantle and restoration page demands 1 Dawn Crystal, 1 Swirling Arcane Essence, 1 weekly tracker. These are restoration requirements, not independently observed actual loot.",
-      "verified_output_item_id": 267654,
-      "dawn_crystal_rank": null,
-      "actual_output_quantity": null,
-      "completed_casts": null,
-      "independent_measured_cohort": false,
-      "source_kind": "reference"
+      "kind": "new_original_source_aggregate_research_only",
+      "input_item_id": 260375,
+      "input_name": "Raging Storm Sash",
+      "source": "https://www.wowhead.com/item=260375/raging-storm-sash",
+      "study_key": "wowhead-looter-de-260375",
+      "reported_completed_operations": 8,
+      "output_rows": [
+        {
+          "display_row": 1,
+          "name": "Dawn Crystal",
+          "reported_hits": 4,
+          "reported_denominator": 8,
+          "output_item_id": null,
+          "output_rank": null,
+          "total_quantity": null,
+          "histogram": null
+        },
+        {
+          "display_row": 2,
+          "name": "Dawn Crystal",
+          "reported_hits": 4,
+          "reported_denominator": 8,
+          "output_item_id": null,
+          "output_rank": null,
+          "total_quantity": null,
+          "histogram": null
+        }
+      ],
+      "duplicate_warning": "One 8-operation original cohort, both linked identities unavailable. Do not sum to 16 or merge unlinked same-name rows; no zero-output inference.",
+      "input_item_level_at_cast": null,
+      "skill": null,
+      "specialization": null,
+      "patch_at_cast": null,
+      "original_individual_cast_logs": false,
+      "live_build_eligibility_verified": false
     },
     {
-      "kind": "conflicting_base_item_eligibility_reference",
-      "input_item_id": 251085,
-      "source": "https://www.wowdb.com/items/251085-mantle-of-dark-devotion",
-      "source_base_item_ilvl": 108,
-      "source_added_build": 63534,
-      "source_added_patch": "12.0.0",
-      "source_says_cannot_disEnchant": true,
-      "current_client_variant_disEnchantable": null,
-      "independent_measured_cohort": false
+      "kind": "WoWDB_generic_base_item_nonDE_reference",
+      "input_item_id": 251135,
+      "input_name": "Fury-fletched Armlets",
+      "generic_ilvl": 108,
+      "patch": "12.0.0",
+      "build": 63534,
+      "source": "https://www.wowdb.com/items/251135-fury-fletched-armlets",
+      "scaled_epic_context": "https://gamgem.com/world-of-warcraft/items/fury-fletched-armlets",
+      "current_live_variant_disEnchantable": null
+    },
+    {
+      "kind": "WoWDB_generic_base_item_nonDE_reference",
+      "input_item_id": 251183,
+      "input_name": "Rootwarden Wraps",
+      "generic_ilvl": 108,
+      "patch": "12.0.0",
+      "build": 63534,
+      "source": "https://www.wowdb.com/items/251183-rootwarden-wraps",
+      "scaled_epic_context": "https://www.wowhead.com/item=251183/rootwarden-wraps",
+      "current_live_variant_disEnchantable": null
+    },
+    {
+      "kind": "updated_item_variant_display_only_not_cast_evidence",
+      "input_item_id": 272246,
+      "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652%3A13696%3A13662%3A12845&ilvl=318",
+      "query_bonus_ids": [
+        6652,
+        13696,
+        13662,
+        12845
+      ],
+      "displayed_ilvl": 318,
+      "actual_disenchant_link": null,
+      "notes": "Bonus/ilvl URL demonstrates preview scaling, NOT actual 140-cast Looter version or ilvl305 processing."
     }
   ],
   "numeric_fields_advanced": {
-    "new_independent_numeric_cohorts": 0,
-    "new_verified_completed_casts": 0,
-    "new_direct_output_quantities": 0,
-    "new_direct_hits": 0,
-    "new_direct_zero_histograms": 0,
-    "new_current_build_disenchant_eligibility": 0,
-    "new_source_conflict_gear_items": 1,
-    "new_verified_weekly_knowledge_output_identities": 1
+    "new_original_looter_cohorts": 1,
+    "distinct_reported_completed_operations": 8,
+    "new_output_hit_rows": 2,
+    "per_output_reported_hits": [
+      4,
+      4
+    ],
+    "new_output_item_ids_verified": 0,
+    "new_output_quantities_verified": 0,
+    "new_zero_inclusive_histograms": 0,
+    "new_verified_live_current_build_disenchants": 0,
+    "new_base_item_nonDE_reference_flags": 2,
+    "new_prospecting_or_milling_completed_cast_cohorts": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/20261106T1513-mantle-eligibility-restoration.jsonl"
+    "research/v3/evidence/midnight/2026-11-06T1622-raging-storm-de-and-base-flags.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-20261106-2510851",
-    "midnight-20261106-2510852",
-    "midnight-20261106-2510853"
+    "midnight-20261106-1622-260375-a",
+    "midnight-20261106-1622-260375-b",
+    "midnight-20261106-1622-251135",
+    "midnight-20261106-1622-251183"
   ],
   "source_links": [
-    "https://us.forums.blizzard.com/en/wow/t/item-restore-issue-w-prof-item-as-cost/2308765",
-    "https://www.wowdb.com/items/251085-mantle-of-dark-devotion",
-    "https://www.wowhead.com/item=251085/mantle-of-dark-devotion",
-    "https://www.wowhead.com/item=267654/swirling-arcane-essence"
+    "https://www.wowhead.com/item=260375/raging-storm-sash",
+    "https://www.wowhead.com/ptr-2/item=260375/raging-storm-sash",
+    "https://www.wowdb.com/items/251135-fury-fletched-armlets",
+    "https://gamgem.com/world-of-warcraft/items/fury-fletched-armlets",
+    "https://www.wowdb.com/items/251183-rootwarden-wraps",
+    "https://www.wowhead.com/item=251183/rootwarden-wraps",
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652%3A13696%3A13662%3A12845&ilvl=318"
   ],
-  "verified_commit_sha": "831b374096901b89213ee38f21dbf283ad2ff7f0",
-  "verified_commit_sha_scope": "Verified starting branch-head SHA (parent of this session's one atomic two-file commit); a commit cannot contain its own SHA because that would change its hash. New commit SHA is verified by read-back of branch ref after publication, not self-embedded.",
-  "commit_readback": "Pending publication and read-back verification of one atomic evidence+status commit.",
+  "verified_commit_sha": "9a48a4b24f19b4da380c77123f7b7d01f8c97a3c",
+  "verified_commit_sha_scope": "Verified research branch HEAD used as parent of this one atomic two-file commit. The published commit cannot contain its own SHA as that would change the hash; post-commit SHA must be verified externally by branch-ref/commit read-back.",
+  "base_commit_sha_verified": "9a48a4b24f19b4da380c77123f7b7d01f8c97a3c",
+  "commit_readback": "Pending independent post-publication branch-ref and content read-back; actual published SHA not self-embedded because of Git object SHA self-reference.",
   "blockers": [
-    "Mantle of Dark Devotion 251085 player says disenchanted May 15 2026 and restore cost included Dawn Crystal and weekly essence, but WoWDB base item ilvl108 explicitly says cannot be disenchanted. Actual bonus, upgraded ilvl and live 12.1.x client build unknown.",
-    "Restoration charges cannot be treated as source-measured output quantities or zero-inclusive drop denominator; Dawn Crystal quality rank/item ID not given.",
-    "Miststalker's Wristbands 272246 current ilvl305 bonus/client eligibility still not confirmed against 140-operation historical/cumulative Looter table and base WoWDB no-disEnchant flag.",
-    "Rank-specific 237362/237363 finished prospect logs and 236761 mill histograms still unavailable; prior Cardinalai/Honeybone/Draggoth/Kyzenbka counts are existing evidence, not new."
+    "260375 Wowhead Looter reports 8 disenchants with two indistinguishable Dawn Crystal 4/8 rows. Exact linked output item/rank IDs, per-cast units/zero histograms, ilvl/bonus/build, skill/spec and original player logs inaccessible; do not collapse the rows or infer 8 separate hits or current-build eligibility.",
+    "WoWDB base item 251135/251183 ilvl108 cannot-disenchant flags may not apply to scaled S2 Epic versions. Production itemID-only eligibility requires exact live itemLink/bonus and actual Retail Disenchant attempt.",
+    "272246 Miststalker's Wristbands generic ilvl206 non-DE versus 140-operation Looter report remains unresolved for ilvl305; bonus/ilvl preview URL is not proof of processed version.",
+    "237362 Umbral Tin per-output zero-inclusive completed casts and diamond unlock/refund conditions remain unavailable; prior 800-cast output totals do not establish hit rates.",
+    "236761 milling remains without a new verified cast/quantity histogram.",
+    "Source pages can show cumulative Looter tallies syndicated across live/PTR versions. Deduped by input base ID, not per URL."
   ],
   "exhausted_sources": [
     "Do not re-import Cardinalai June10 800-cast Umbral Tin/Brilliant Silver pooled studies or Honeybone Apr19/22 Refulgent Copper; earlier studies already recorded.",
@@ -137,7 +211,11 @@
     "This run: no independent direct cast log emerged from Midnight profession-item search on Wowhead, WoW profession forum, Reddit or guides; avoided importing existing Looter cumulative snapshots, Cardinalai/Honeybone/kyzenbka/Draggoth numeric results, or NocD inaccessible image again. Switched to primary profession-trait pages; three new exact IDs, not repeated drop-rate studies.",
     "This session checked indexed rare Shard Aspalar ~5000 operations (already midnight-20261102-081301+), Draggoth 12.5 Powder/10 herbs (already recorded), HeadtripVee rank table (already recorded), and prior 272246 base/bonus ambiguity; no duplicate study entered. Pivoted to previously unrecorded Slumbering Coil Curio four difficulty-specific source-linked bonus strings.",
     "2026-11-06 targeted searches revisited reddit/r/woweconomy 1sfds1u (prior genobeam/HeadtripVee cohort), 1rju9nm March-03 milling 11-15 (already evidence 2026-10-30T1830), wowhead 267654 Kestevavild ~32/3 weekly essence (already evidence 2026-11-01T1812), Honeybone/Cardinalai source sets; no duplicate records. New independent gear restoration original at Blizzard forum t/2308765 was not indexed in branch evidence.",
-    "Firecrawl full raw HTML extraction unavailable due to connected service credit exhaustion; ordinary web text used without inventing raw Wowhead Looter data."
+    "Firecrawl full raw HTML extraction unavailable due to connected service credit exhaustion; ordinary web text used without inventing raw Wowhead Looter data.",
+    "Current session: independently matched candidate 248064, 248066, 250033, 251202, 248077, 251251 and 248059 against prior source-backed Midnight evidence files; all are already recorded and were NOT re-imported.",
+    "Searches for new Umbral Tin / Tranquility Bloom per-cast histograms recovered previously documented Cardinalai, JD3K, Krathalan and existing guide results; no new independent denominators or distributions.",
+    "Live and PTR 260375 Raging Storm Sash Wowhead Looter both show 8/4/4, treated as ONE original base-ID cohort, not independent datasets.",
+    "Previously documented 251085 Mantle restoration cost versus actual drop discrepancy remains on hold, not repeated."
   ],
   "decisions_needed": [
     {
@@ -147,11 +225,18 @@
     {
       "owner": "Master",
       "decision": "If a schema needs a provenance field for restoration costs versus actual disenchant loot, request review; current records have sourceKind reference and unknown numeric fields."
+    },
+    {
+      "owner": "Master",
+      "decision": "Hold 260375 research-only until raw linked Dawn Crystal rows can be mapped to exact IDs/ranks. Avoid collapse of the two 4/8 same-name rows and do not take count=8 to imply 8 independent item material casts or no-zero-operation probability."
+    },
+    {
+      "owner": "Master",
+      "decision": "Before using 251135 and 251183 noDisenchant base flags as ItemDB eligibility vetoes, verify actual live scaled Season 2 variant itemLinks and client API/DE action; base ilvl108 WoWDB template may differ from epic upgraded content."
     }
   ],
-  "next_concrete_step": "Seek a player-verified in-game itemLink plus actual completed DE event for Mantle of Dark Devotion 251085 and Miststalker's Wristbands 272246 with bonus IDs, ilvl, current build, rank-specific outputs and skill/spec; alternatively obtain addon per-cast export for rank-specific Umbral Tin 237362 including hits/zeros/refunds. Avoid sources already exhausted.",
+  "next_concrete_step": "Obtain a new rare/uncommon item-level-tagged current-client disenchant craft event with itemLink bonus string, skill/spec, exact output item ID/rank and stack size; follow with new completed-operation exports for 237362 Umbral Tin (per-output hits/zeros/refunds) and 236761 milling (10-herb batch histograms). Ask Master to resolve two same-name Dawn Crystal IDs for 260375 if API/source links become accessible.",
   "production_merge": false,
   "release": false,
-  "notifications": "on-demand only; Dot handles monitoring",
-  "base_commit_sha_verified": "831b374096901b89213ee38f21dbf283ad2ff7f0"
+  "notifications": "on-demand only; Dot handles monitoring"
 }
