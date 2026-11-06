@@ -1,0 +1,61 @@
+{
+  "role": "legacy",
+  "updated_at": "2026-11-06T00:42:02.783Z",
+  "status": "source-backed-observations-recorded",
+  "task_ids": [
+    "T0050",
+    "T0042"
+  ],
+  "exact_gaps_targeted": [
+    "Runecloth Headband 13866 -> Greater Eternal Essence 16203: original positive-hit and raw unit observations not in reviewed legacy evidence",
+    "Legacy record ID reuse collisions requiring file-qualified Master correction",
+    "Unresolved source build/skill/item-version for historical disenchants, including T0047 Warmaul 24995"
+  ],
+  "newly_verified_fields_cohorts": [
+    {
+      "studyKey": "wowhead-16203-comment-930224-runecloth-14-crafted-eight-gees",
+      "inputItemID": 13866,
+      "outputItemID": 16203,
+      "source_quoted_nominal_crafts": 14,
+      "totalQuantity": 8,
+      "casts": null,
+      "castsWithDrop": null,
+      "histogram": null,
+      "classification": "firsthand historical raw material total, not verified DE denominator"
+    },
+    {
+      "studyKey": "thottbot-16203-anonymous-about25-runecloth-one-gee-hit",
+      "inputItemID": 13866,
+      "outputItemID": 16203,
+      "source_quoted_approximate_crafts": "about 25",
+      "totalQuantity": 2,
+      "casts": null,
+      "castsWithDrop": 1,
+      "histogram": null,
+      "classification": "firsthand historical one positive cast, unknown completed-cast denominator"
+    }
+  ],
+  "evidence_file": "research/v3/evidence/legacy/2026-11-06T0042-runecloth-original-essence-observations.jsonl",
+  "sources": [
+    "https://www.wowhead.com/wotlk/item=16203/greater-eternal-essence",
+    "https://www.wowhead.com/wotlk/item=16203/greater-eternal-essence"
+  ],
+  "source_origin_note": "Both are different original archived comments on Wowhead. Localized and era-specific mirrors are copies, not independent cohorts.",
+  "verified_base_commit_sha": "cfd5a5232ebff5c140b7d2f23c98047cde520f7c",
+  "new_commit_sha": null,
+  "commit_sha_note": "A single commit cannot embed its own final SHA in its content. Latest verified pre-write head is recorded above; identify this run's commit from history and read-back.",
+  "blockers": [
+    "Neither report provides a verified full completed-cast denominator or overall zero-outcome histogram; do not infer chance.",
+    "Original commenter behind Thottbot name not recoverable from archive, with residual identity-overlap risk.",
+    "Missing source build, item instance/bonus, skill/specialization for legacy reports.",
+    "Warmaul 24995 Looter cumulative cohort and Retail eligibility still unverified by real-game casts.",
+    "Migration validation reports ID_REUSED_ACROSS_FILES, including legacy-20261101-201; escalate corrections to Master and preserve originals."
+  ],
+  "exhausted_sources": [
+    "Previously inspected Warmaul 24995 cumulative Looter and WoWWiki tables: no operation-level export or version metadata; do not repeat without a new source.",
+    "Previous Cobalt 36909 and Fel Iron 23424 reference priors and copied cohorts: no new independent histograms; move to unrecovered originals."
+  ],
+  "next_concrete_step": "Locate unrecorded original per-cast Lua SavedVariables export or independent item-specific DE log for 13866/24995; validate actual completed casts, item version and zero-inclusive output histograms. If none, seek unrecorded legacy queue original processing cohorts and request Master file-qualified resolution of ID collisions.",
+  "owner_notifications": "on-demand only; Dot handles monitoring; no merge/release/new automation",
+  "gold_ev": "live-price addon only; not stored here"
+}
