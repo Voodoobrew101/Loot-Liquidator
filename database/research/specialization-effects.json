@@ -1,0 +1,918 @@
+{
+  "schemaVersion": 1,
+  "revision": "specialization-effects/2026-11-06",
+  "reviewedOn": "2026-11-06",
+  "build": 70783,
+  "catalogSourceCommit": "efeeb8ca1188cd87b5bd3a1f8807eb270ad3df51",
+  "catalogSourceSHA256": "14543de0026c37b267d8e3a3ff7ed8b18871c3a60e6edaa8105c52a34c8f4c2c",
+  "about": "Numerical effects of the existing specialization point sliders; no generic baseline-output control and no universal skill-to-quantity multiplier.",
+  "sourceClaims": [
+    {
+      "id": "wago-node-identity",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/efeeb8ca1188cd87b5bd3a1f8807eb270ad3df51/database/wago-professions-70783.json",
+      "sourceType": "PINNED_BLIZZARD_DB2_CATALOG",
+      "build": "12.1.5.70783",
+      "sourceSHA256": "14543de0026c37b267d8e3a3ff7ed8b18871c3a60e6edaa8105c52a34c8f4c2c",
+      "support": "Spend-entry point caps and node IDs; separate unlock-entry ranks are excluded from point slider values."
+    },
+    {
+      "id": "live-trait:107649",
+      "url": "https://www.wowhead.com/profession-trait/disenchanting-delegate-107649",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional skill per invested point to all equipment in its own expansion.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:107648",
+      "url": "https://www.wowhead.com/profession-trait/dust-deliverer-107648",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional skill per invested point to matching-rarity equipment in its own expansion.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:107647",
+      "url": "https://www.wowhead.com/profession-trait/shard-supplier-107647",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional skill per invested point to matching-rarity equipment in its own expansion.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:99890",
+      "url": "https://www.wowhead.com/profession-trait/designated-disenchanter-99890",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional skill per invested point to all equipment in its own expansion.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:99889",
+      "url": "https://www.wowhead.com/profession-trait/uncommon-utilitarian-99889",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional skill per invested point to matching-rarity equipment in its own expansion.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:99888",
+      "url": "https://www.wowhead.com/profession-trait/rare-resourcing-99888",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional skill per invested point to matching-rarity equipment in its own expansion.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:99887",
+      "url": "https://www.wowhead.com/profession-trait/epic-escalations-99887",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional skill per invested point to matching-rarity equipment in its own expansion.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:109653",
+      "url": "https://www.wowhead.com/profession-trait/perfect-milling-109653",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional recipe skill per invested point to milling or its parent reagent-processing scope.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:109655",
+      "url": "https://www.wowhead.com/profession-trait/processing-109655",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional recipe skill per invested point to milling or its parent reagent-processing scope.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "live-trait:109660",
+      "url": "https://www.wowhead.com/profession-trait/perfected-products-109660",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one additional recipe skill per invested point to milling or its parent reagent-processing scope.",
+      "numericClaim": {
+        "skillPerInvestedPoint": 1
+      },
+      "milestonePolicy": "Only the per-point amount is established by this claim."
+    },
+    {
+      "id": "craftsim:9:382981:34832",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/Dragonflight/Inscription.lua#L4884",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/Dragonflight/Inscription.lua",
+      "sourceSHA256": "2b9b14c9b1e8db5f2b019e1c0ceefd5735da1ec02721586cff815f459732ac4f",
+      "numericClaim": {
+        "nodeID": 34832,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 382981
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "craftsim:9:382981:34835",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/Dragonflight/Inscription.lua#L4828",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/Dragonflight/Inscription.lua",
+      "sourceSHA256": "2b9b14c9b1e8db5f2b019e1c0ceefd5735da1ec02721586cff815f459732ac4f",
+      "numericClaim": {
+        "nodeID": 34835,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 382981
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "craftsim:9:374627:28609",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/Dragonflight/Jewelcrafting.lua#L5625",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/Dragonflight/Jewelcrafting.lua",
+      "sourceSHA256": "247ebbfe9866a07787478af4e015661ebb23d989c183586dfc2c86c6423153c7",
+      "numericClaim": {
+        "nodeID": 28609,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 374627
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "craftsim:9:374627:28610",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/Dragonflight/Jewelcrafting.lua#L5231",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/Dragonflight/Jewelcrafting.lua",
+      "sourceSHA256": "247ebbfe9866a07787478af4e015661ebb23d989c183586dfc2c86c6423153c7",
+      "numericClaim": {
+        "nodeID": 28610,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 374627
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "craftsim:9:374627:28672",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/Dragonflight/Jewelcrafting.lua#L4761",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/Dragonflight/Jewelcrafting.lua",
+      "sourceSHA256": "247ebbfe9866a07787478af4e015661ebb23d989c183586dfc2c86c6423153c7",
+      "numericClaim": {
+        "nodeID": 28672,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 374627
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "craftsim:10:444181:101625",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/The_War_Within/Inscription.lua#L4897",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/The_War_Within/Inscription.lua",
+      "sourceSHA256": "258cfcc518d2e304b82e8fd045d511bb177457ff4ef39fb3041c7ef25854fe63",
+      "numericClaim": {
+        "nodeID": 101625,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 444181
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "craftsim:10:444181:101627",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/The_War_Within/Inscription.lua#L4948",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/The_War_Within/Inscription.lua",
+      "sourceSHA256": "258cfcc518d2e304b82e8fd045d511bb177457ff4ef39fb3041c7ef25854fe63",
+      "numericClaim": {
+        "nodeID": 101627,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 444181
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "craftsim:11:1231127:106982",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/Midnight/Jewelcrafting.lua#L5041",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/Midnight/Jewelcrafting.lua",
+      "sourceSHA256": "4abba1020f492399561e803d39b57695f0a9a01a0deb02ed4616973665eb03e5",
+      "numericClaim": {
+        "nodeID": 106982,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 1231127
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "craftsim:11:1231127:106983",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Data/SpecializationData/Midnight/Jewelcrafting.lua#L4670",
+      "sourceType": "PINNED_OPEN_SOURCE_RECIPE_STAT_MODEL",
+      "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+      "path": "Data/SpecializationData/Midnight/Jewelcrafting.lua",
+      "sourceSHA256": "4abba1020f492399561e803d39b57695f0a9a01a0deb02ed4616973665eb03e5",
+      "numericClaim": {
+        "nodeID": 106983,
+        "skillPerInvestedPoint": 1,
+        "recipeID": 1231127
+      },
+      "support": "The pinned recipe map includes this spend-entry node, whose base stat model contributes one recipe skill per invested point. Auxiliary perk thresholds are not inferred."
+    },
+    {
+      "id": "live-gem-replacement:98659",
+      "url": "https://www.wowhead.com/profession-trait/sapphire-98659",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The trait substitutes Stunning Sapphire for Ambivalent Amber with one percentage point of replacement chance per invested point.",
+      "numericClaim": {
+        "replacementProbabilityPerPoint": 0.01,
+        "sourceItemID": 212498,
+        "targetItemID": 212508
+      },
+      "itemIdentityEvidence": "Matching output IDs retained in the pinned research/v3 War Within evidence and native ItemDB; these gem species are unranked."
+    },
+    {
+      "id": "live-gem-replacement:98660",
+      "url": "https://www.wowhead.com/profession-trait/ruby-98660",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The trait substitutes Radiant Ruby for Ambivalent Amber with one percentage point of replacement chance per invested point.",
+      "numericClaim": {
+        "replacementProbabilityPerPoint": 0.01,
+        "sourceItemID": 212498,
+        "targetItemID": 212495
+      },
+      "itemIdentityEvidence": "Matching output IDs retained in the pinned research/v3 War Within evidence and native ItemDB; these gem species are unranked."
+    },
+    {
+      "id": "live-gem-replacement:98661",
+      "url": "https://www.wowhead.com/profession-trait/onyx-98661",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The trait substitutes Ostentatious Onyx for Ambivalent Amber with one percentage point of replacement chance per invested point.",
+      "numericClaim": {
+        "replacementProbabilityPerPoint": 0.01,
+        "sourceItemID": 212498,
+        "targetItemID": 212511
+      },
+      "itemIdentityEvidence": "Matching output IDs retained in the pinned research/v3 War Within evidence and native ItemDB; these gem species are unranked."
+    },
+    {
+      "id": "live-gem-replacement:98662",
+      "url": "https://www.wowhead.com/profession-trait/emerald-98662",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The trait substitutes Extravagant Emerald for Ambivalent Amber with one percentage point of replacement chance per invested point.",
+      "numericClaim": {
+        "replacementProbabilityPerPoint": 0.01,
+        "sourceItemID": 212498,
+        "targetItemID": 212505
+      },
+      "itemIdentityEvidence": "Matching output IDs retained in the pinned research/v3 War Within evidence and native ItemDB; these gem species are unranked."
+    },
+    {
+      "id": "courtly-full-specialization-reference",
+      "url": "https://www.wowhead.com/item=239671/courtly-wrists#comments",
+      "sourceType": "PRIMARY_COUNTED_SPECIALIZATION_REFERENCE",
+      "accessedOn": "2026-11-06",
+      "archive": "research/mechanics/midnight-enchanting-yields-2026-11-06.json",
+      "studyKey": "wowhead-mikimm-courtly-wrists-1000",
+      "support": "A separate 1,000-item rare-armor study reports fully invested Disenchanting Delegate and Shard Supplier; shard units are 629 at rank 1 and 660 at rank 2.",
+      "numericClaim": {
+        "completedCasts": 1000,
+        "rank1ShardUnits": 629,
+        "rank2ShardUnits": 660
+      },
+      "limits": "Not a zero-point baseline or a point-by-point curve. Hit probabilities, study patch and actual skill were not reported."
+    },
+    {
+      "id": "draconic-extra-reagent-proc",
+      "url": "https://www.wowhead.com/profession-trait/draconic-disenchantment-68401",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-06",
+      "support": "The current trait description assigns one percentage point of additional-reagent proc chance per invested point; the amount awarded by the proc is not specified.",
+      "numericClaim": {
+        "nodeID": 68401,
+        "additionalReagentProcProbabilityPerPoint": 0.01,
+        "maximumInvestedPoints": 40
+      },
+      "limits": "A proc chance is not an unconditional output multiplier. The bonus quantity distribution and compatible source-baseline proc frequency are unreported."
+    }
+  ],
+  "rules": [
+    {
+      "ruleID": "specialization:11:Disenchant:107649:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "nodeID": 107649,
+      "nodeName": "Disenchanting Delegate",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:107649"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1
+    },
+    {
+      "ruleID": "specialization:11:Disenchant:107648:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "nodeID": 107648,
+      "nodeName": "Dust Deliverer",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:107648"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "inputRarity": 2
+    },
+    {
+      "ruleID": "specialization:11:Disenchant:107647:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "nodeID": 107647,
+      "nodeName": "Shard Supplier",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:107647"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "inputRarity": 3
+    },
+    {
+      "ruleID": "specialization:10:Disenchant:99890:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 10,
+      "nodeID": 99890,
+      "nodeName": "Designated Disenchanter",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:99890"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1
+    },
+    {
+      "ruleID": "specialization:10:Disenchant:99889:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 10,
+      "nodeID": 99889,
+      "nodeName": "Uncommon Utilitarian",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:99889"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "inputRarity": 2
+    },
+    {
+      "ruleID": "specialization:10:Disenchant:99888:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 10,
+      "nodeID": 99888,
+      "nodeName": "Rare Resourcing",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:99888"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "inputRarity": 3
+    },
+    {
+      "ruleID": "specialization:10:Disenchant:99887:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 10,
+      "nodeID": 99887,
+      "nodeName": "Epic Escalations",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:99887"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "inputRarity": 4
+    },
+    {
+      "ruleID": "specialization:11:Mill:109653:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Mill",
+      "profession": "Inscription",
+      "expansionID": 11,
+      "nodeID": 109653,
+      "nodeName": "Perfect Milling",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:109653"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1
+    },
+    {
+      "ruleID": "specialization:11:Mill:109655:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Mill",
+      "profession": "Inscription",
+      "expansionID": 11,
+      "nodeID": 109655,
+      "nodeName": "Processing",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:109655"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1
+    },
+    {
+      "ruleID": "specialization:11:Mill:109660:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Mill",
+      "profession": "Inscription",
+      "expansionID": 11,
+      "nodeID": 109660,
+      "nodeName": "Perfected Products",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:109660"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1
+    },
+    {
+      "ruleID": "specialization:9:Mill:34832:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Mill",
+      "profession": "Inscription",
+      "expansionID": 9,
+      "nodeID": 34832,
+      "nodeName": "Understanding Flora",
+      "maxRank": 20,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:9:382981:34832"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 382981
+    },
+    {
+      "ruleID": "specialization:9:Mill:34835:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Mill",
+      "profession": "Inscription",
+      "expansionID": 9,
+      "nodeID": 34835,
+      "nodeName": "Rune Mastery",
+      "maxRank": 40,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:9:382981:34835"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 382981
+    },
+    {
+      "ruleID": "specialization:9:Prospect:28609:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 9,
+      "nodeID": 28609,
+      "nodeName": "Prospecting",
+      "maxRank": 25,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:9:374627:28609"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 374627
+    },
+    {
+      "ruleID": "specialization:9:Prospect:28610:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 9,
+      "nodeID": 28610,
+      "nodeName": "Enterprising",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:9:374627:28610"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 374627
+    },
+    {
+      "ruleID": "specialization:9:Prospect:28672:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 9,
+      "nodeID": 28672,
+      "nodeName": "Jeweler's Toolset Mastery",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:9:374627:28672"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 374627
+    },
+    {
+      "ruleID": "specialization:10:Mill:101625:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Mill",
+      "profession": "Inscription",
+      "expansionID": 10,
+      "nodeID": 101625,
+      "nodeName": "Improved Milling",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:10:444181:101625"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 444181
+    },
+    {
+      "ruleID": "specialization:10:Mill:101627:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Mill",
+      "profession": "Inscription",
+      "expansionID": 10,
+      "nodeID": 101627,
+      "nodeName": "Pursuit of Perfection",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:10:444181:101627"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 444181
+    },
+    {
+      "ruleID": "specialization:11:Prospect:106982:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 11,
+      "nodeID": 106982,
+      "nodeName": "Prospecting Pro",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:11:1231127:106982"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 1231127
+    },
+    {
+      "ruleID": "specialization:11:Prospect:106983:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 11,
+      "nodeID": 106983,
+      "nodeName": "Proficient Processor",
+      "maxRank": 30,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "craftsim:11:1231127:106983"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 1,
+      "recipeID": 1231127
+    },
+    {
+      "ruleID": "specialization:10:Prospect:98659:replace-family",
+      "kind": "replace-family",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 10,
+      "nodeID": 98659,
+      "nodeName": "Sapphire",
+      "maxRank": 20,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-gem-replacement:98659"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 0.01,
+      "sourceFamily": {
+        "id": 212498,
+        "name": "Ambivalent Amber"
+      },
+      "targetFamily": {
+        "id": 212508,
+        "name": "Stunning Sapphire"
+      },
+      "recipeID": 434018,
+      "reservoirPolicy": "shared-original-source-quantity",
+      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS"
+    },
+    {
+      "ruleID": "specialization:10:Prospect:98660:replace-family",
+      "kind": "replace-family",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 10,
+      "nodeID": 98660,
+      "nodeName": "Ruby",
+      "maxRank": 20,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-gem-replacement:98660"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 0.01,
+      "sourceFamily": {
+        "id": 212498,
+        "name": "Ambivalent Amber"
+      },
+      "targetFamily": {
+        "id": 212495,
+        "name": "Radiant Ruby"
+      },
+      "recipeID": 434018,
+      "reservoirPolicy": "shared-original-source-quantity",
+      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS"
+    },
+    {
+      "ruleID": "specialization:10:Prospect:98661:replace-family",
+      "kind": "replace-family",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 10,
+      "nodeID": 98661,
+      "nodeName": "Onyx",
+      "maxRank": 20,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-gem-replacement:98661"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 0.01,
+      "sourceFamily": {
+        "id": 212498,
+        "name": "Ambivalent Amber"
+      },
+      "targetFamily": {
+        "id": 212511,
+        "name": "Ostentatious Onyx"
+      },
+      "recipeID": 434018,
+      "reservoirPolicy": "shared-original-source-quantity",
+      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS"
+    },
+    {
+      "ruleID": "specialization:10:Prospect:98662:replace-family",
+      "kind": "replace-family",
+      "method": "Prospect",
+      "profession": "Jewelcrafting",
+      "expansionID": 10,
+      "nodeID": 98662,
+      "nodeName": "Emerald",
+      "maxRank": 20,
+      "build": 70783,
+      "confidence0to100": 70,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-gem-replacement:98662"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "perPoint": 0.01,
+      "sourceFamily": {
+        "id": 212498,
+        "name": "Ambivalent Amber"
+      },
+      "targetFamily": {
+        "id": 212505,
+        "name": "Extravagant Emerald"
+      },
+      "recipeID": 434018,
+      "reservoirPolicy": "shared-original-source-quantity",
+      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS"
+    },
+    {
+      "ruleID": "specialization:11:Disenchant:max-shard-reference",
+      "kind": "reference-context",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "inputRarity": 3,
+      "inputClassID": 4,
+      "requiredNodes": {
+        "107649": 30,
+        "107647": 30
+      },
+      "referenceContextID": "de-category:gear:11:3:armor:max-specialization:a194c8a33fcf",
+      "build": 70783,
+      "confidence0to100": 60,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "courtly-full-specialization-reference"
+      ],
+      "baselinePolicy": "select-observed-matching-full-specialization-reference",
+      "quantityPolicy": "USE_REFERENCE_VECTOR_ONCE_NO_EXTRA_MULTIPLIER"
+    }
+  ],
+  "held": [
+    {
+      "id": "midnight-crystal-per-point",
+      "nodeID": 107646,
+      "reason": "Current main tooltip describes epic material quality but does not state a numeric skill-per-point amount."
+    },
+    {
+      "id": "disenchant-quantity-procs",
+      "nodeIDs": [
+        68401,
+        99889,
+        107648,
+        107647
+      ],
+      "reason": "Midnight and War Within sources describe additional dust/shards/bonus-material perks but do not establish numerical proc rates or bonus stack amounts. Dragonflight Draconic Disenchantment does specify 1% additional-reagent chance per point, but does not supply the bonus-stack expectation needed to convert this into units per cast."
+    },
+    {
+      "id": "milestone-rank-thresholds",
+      "reason": "Pinned CraftSim data lists auxiliary perk skill/stat amounts but does not establish which invested-point boundary activates every perk. Unknown thresholds are not synthesized."
+    },
+    {
+      "id": "draconic-extra-reagent-quantity",
+      "nodeID": 68401,
+      "expansionID": 9,
+      "additionalReagentProcProbabilityPerPoint": 0.01,
+      "maximumInvestedPoints": 40,
+      "sourceClaimIDs": [
+        "draconic-extra-reagent-proc"
+      ],
+      "reason": "Confirmed proc coefficient retained for future distributions; the proc bonus amount is unknown, so no 1+points/100 total-output multiplier is generated."
+    }
+  ],
+  "calculationPolicy": {
+    "pointConvention": "Invested knowledge points from spend entries; never add a free unlock rank.",
+    "skill": "Add relevant sourced per-point contributions to the simulated pre-specialization recipe skill once; real operation skill already includes live talents.",
+    "replacement": "Allocate all selected color fractions from the same original Amber expectation, reducing Amber by their sum. No extra gems, measured hit probability or sample count is created.",
+    "baseline": "Reference-scenario projection; mixed historical source specialties are not falsely labeled an experimentally normalized zero-point baseline.",
+    "reference": "Full matching specialization may select its separately measured category context; intermediate ranks are not interpolated."
+  }
+}

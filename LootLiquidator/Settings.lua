@@ -488,7 +488,13 @@ function LL:CreateProfessionProfilePanel(profession)
         selected=selection:sub(1,1)=='@' and current or selection
         LL.db.professionTooltipProfiles=LL.db.professionTooltipProfiles or {}
         LL.db.professionTooltipProfiles[profession]=selection
-        if selection=='@hypothetical' then minimum() end
+        if selection=='@hypothetical' then
+            local saved=LL:GetManualProfessionProfile(current,profession,expansion)
+            if saved then
+                saved.enabled=true
+                LL:SetManualProfessionProfile(current,profession,expansion,saved)
+            else minimum() end
+        end
         LL:UpdateAllAppearance();refresh(true)
     end)
     local era=LL:CreateSettingsDropdown(body,function()
@@ -500,12 +506,12 @@ function LL:CreateProfessionProfilePanel(profession)
         refresh(true)
     end)
     local status=label('')
-    local skillLabel=label('Simulated effective skill',245)
+    local skillLabel=label('Skill before specialization',245)
     local skill=LL:CreateSettingsCanvasSlider(body,0,300,1,0,function(v)update(function(p)p.skill=v end)end)
     skill.expandRange=true
     hover(skill.slider,function()
-        return {'Effective profession skill','Use the recipe\'s minimum required skill as the starting point. Zero is the editor minimum, not proof that a recipe is usable.',
-            'Skill changes quantities or quality only when a compatible researched formula is available.'}
+        return {'Profession skill before specialization bonuses','Named specialization points add their researched skill bonuses for the selected operation. Zero is the editor minimum, not proof that a recipe is usable.',
+            'The resulting effective skill changes quantities or quality when a compatible researched formula is available.'}
     end)
     local reset=button('Reset to minimum',function()useSimulation();minimum();LL:UpdateAllAppearance();refresh(false)end)
     local scan=button('Refresh specialization choices from current profession',function()

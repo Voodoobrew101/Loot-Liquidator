@@ -67,7 +67,8 @@ function LL:TooltipConversionOptions(f,options)
                 if hypothetical then
                     -- No scanned skill, equipment or live operation bonuses are
                     -- silently substituted for an unset hypothetical profile.
-                    db.characters[key or "Current character"]={professions={},recipes={}}
+                    db.characters[key or "Current character"]={professions={},recipes={},
+                        skillQualityOperations=record and record.skillQualityOperations}
                     proxy.GetResearchProfessionSnapshot=function() return nil end
                     proxy.GetCachedOperationInfo=function() return nil end
                 end
@@ -96,7 +97,8 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local modeKey=processingMethodLetters[method]
     local modeValue=modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)
     local contextKey=table.concat({tostring(key),tostring(profession),tostring(f and f.id),
-        tostring(f and f.expansionID),tostring(f and f.reagentQuality),tostring(recipeID),tostring(modeValue),
+        tostring(f and f.expansionID),tostring(f and f.reagentQuality),tostring(f and f.quality),
+        tostring(f and f.classID),tostring(recipeID),tostring(modeValue),
         tostring(whatIf)},":")
     local now=GetTime and GetTime() or 0
     self._processingContextCache=self._processingContextCache or {}
@@ -129,11 +131,13 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     end
     local ctx={skill=skill,specialization=spec,skillLineID=lineID,
         inputID=f and f.id,inputQuality=f and f.reagentQuality,recipeID=recipeID,
+        inputRarity=f and f.quality,inputClassID=f and f.classID,
         character=key,profession=profession,expansionID=f and f.expansionID,assumedMinimum=false}
     -- Blizzard operation information is specific to the CURRENT character.
     -- Never use current gear/skill when pricing an offline alt.
     if key==current and self.GetCachedOperationInfo then
-        local info=self:GetCachedOperationInfo(recipeID)
+        local exactTarget=(method=="Mill" or method=="Prospect") and f or nil
+        local info=self:GetCachedOperationInfo(recipeID,exactTarget)
         if info then
             ctx.baseSkill=info.baseSkill;ctx.bonusSkill=info.bonusSkill
             if validNumber(info.baseSkill) and validNumber(info.bonusSkill) then
@@ -165,11 +169,21 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
         ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
         ctx.buffs=simulated.buffs
         ctx.specialization=simulated.specialization
+        ctx.specializationPoints=self.ProfessionSpecializationPoints and self:ProfessionSpecializationPoints(simulated.specialization) or nil
+        ctx.stats={}
+        for stat,values in pairs(simulated.stats or {}) do ctx.stats[stat]={rating=values.rating,percent=values.percent} end
         ctx.baseSkill=nil;ctx.bonusSkill=nil
         ctx.operationStats=self.SimulatedProfessionOperationStats and self:SimulatedProfessionOperationStats(simulated) or nil
         ctx.craftingQuality=nil;ctx.equipment=nil
         ctx.qualityFromBlizzard=false;ctx.simulated=true;ctx.stale=false;ctx.profileKind="manual-simulation"
+        ctx.benchmark=self.NormalizeSyntheticBenchmark and self:NormalizeSyntheticBenchmark(simulated.benchmark) or nil
         ctx.incomplete=not validNumber(ctx.skill) or not ctx.specialization
+    end
+    if self.GetSkillQualityOperation and (method=="Mill" or method=="Prospect") then
+        ctx.skillQualityOperation=self:GetSkillQualityOperation(f,recipeID,key,simulated and simulated.enabled)
+    end
+    if self.ApplySpecializationSkill then
+        ctx=self:ApplySpecializationSkill(f,{name=method,recipeID=recipeID,character=character},ctx)
     end
     ctx.skillKnown=validNumber(ctx.skill) and not ctx.simulated
     ctx.skillSource=ctx.simulated and "manual-simulation"
@@ -400,6 +414,9 @@ function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
         local factor=base/(plain/count) -- 1 unless the model applied a discount
         base=math.max(0,math.min(100,math.floor(weighted/valueSum*factor+.5)))
     end
+    -- Pricing weights must not lift a projected option above its research
+    -- rule's confidence cap when unaffected cooutputs dominate the value.
+    if validNumber(model.ruleConfidence) then base=math.min(base,math.floor(model.ruleConfidence)) end
     if not model.partialPrice then
         model.value=model.partialValue;model.partial=nil;model.valueConfidence=base
     elseif total>0 and known>0 then

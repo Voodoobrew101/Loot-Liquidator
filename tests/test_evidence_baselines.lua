@@ -28,7 +28,21 @@ end
 -- Nothing else changed: the real database has no evidence records yet.
 local count=0
 for _,r in ipairs(LL.ItemDB.processing) do if r.recordID:match('^evidence:') then count=count+1 end end
-ok(count==1,'only the fixture record is an evidence record')
+ok(count==3,'only the three fixture records are evidence records')
+local units,published
+for _,r in ipairs(LL.ItemDB.processing) do
+    if r.inputItemID==990004 then units=r elseif r.inputItemID==990005 then published=r end
+end
+ok(units and units.recipeID==13262 and units.expansionID==11 and units.inputRarity==3 and units.inputClassID==4,
+    'units-only operation identity survives the compiler')
+ok(units.referenceContextID=='fixture-maxspec-study' and type(units.referenceConditions)=='table',
+    'source distribution context survives the compiler')
+ok(units.materials[1].expectedQuantity.value==.629 and units.materials[1].expectedQuantity.observedSamples==1000
+    and units.materials[1].dropChance.status=='unknown','compiled unit mean has real n and unknown occurrence probability')
+ok(published and published.inputQualityRank==1 and published.materials[1].expectedQuantity.value==13
+    and published.materials[1].expectedQuantity.samples==0 and published.materials[1].expectedQuantity.priorWeight==10,
+    'published unknown-n mean preserves provisional prior separately')
+ok(#published.materials==1 and #published.materials[1].rankIDs==2,'family expectation appears once with two alternative quality IDs')
 -- The addon values it through its normal path (same stubs as test_itemdb_metrics).
 LL.db={source_itemdb_enabled=true,source_itemdb_weight=100,source_personal_enabled=false,
     source_legacy_enabled=false,processingModes={M=1,P=1,S=1}}

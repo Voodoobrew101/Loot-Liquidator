@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-11-06",
+  "purpose": "Primary open-source numerical quality-threshold research for Loot Liquidator; evidence export, not a universal output-count multiplier.",
+  "retrieval": {
+    "method": "Pinned shallow git clones over the configured proxy; files inspected directly with line numbers. No WoW client or server experiment performed.",
+    "craftSimVersion": "27.0.8",
+    "craftSimCommit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+    "craftSimCommitDate": "2026-10-21T09:44:18+02:00",
+    "blizzardUiBuild": "12.1.5 (70783)",
+    "blizzardUiCommit": "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+    "blizzardUiCommitDate": "2026-11-04T00:46:01Z"
+  },
+  "findings": [
+    {
+      "id": "craftsim-current-quality-thresholds",
+      "status": "CONFIRMED_SOURCE_CODE_MODEL",
+      "dimension": "OUTPUT_QUALITY",
+      "formula": "Q(S)=1+sum_j 1[S >= T_j]",
+      "inputs": {
+        "S": "Effective skill: API baseSkill + bonusSkill, with separately modeled simulation modifiers",
+        "D": "Recipe difficulty for the exact recipe and allocation",
+        "K": "Recipe maxQuality"
+      },
+      "thresholdsByMaxQuality": {
+        "1": [],
+        "2": [
+          "D+offset"
+        ],
+        "3": [
+          "0.5*D+offset",
+          "D+offset"
+        ],
+        "5": [
+          "0.2*D+offset",
+          "0.5*D+offset",
+          "0.8*D+offset",
+          "D+offset"
+        ]
+      },
+      "optionalBreakpointOffset": {
+        "default": 0,
+        "enabledOption": 1,
+        "caveat": "CraftSim exposes a one-skill breakpoint workaround. Default is false; it is not proof of a universal +1 game requirement."
+      },
+      "sources": [
+        {
+          "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Modules/RecipeInfo/RecipeInfo.lua#L58-L69",
+          "repository": "derfloh205/CraftSim",
+          "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+          "path": "Modules/RecipeInfo/RecipeInfo.lua",
+          "lines": [
+            58,
+            69
+          ],
+          "support": "Implements the numerical quality thresholds for recipes with one, two, three and five qualities."
+        },
+        {
+          "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Classes/ResultData.lua#L135-L173",
+          "repository": "derfloh205/CraftSim",
+          "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+          "path": "Classes/ResultData.lua",
+          "lines": [
+            135,
+            173
+          ],
+          "support": "Counts crossed skill thresholds to select expected output quality; quantity is computed separately."
+        },
+        {
+          "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Classes/ProfessionStats.lua#L33-L40",
+          "repository": "derfloh205/CraftSim",
+          "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+          "path": "Classes/ProfessionStats.lua",
+          "lines": [
+            33,
+            40
+          ],
+          "support": "Reads effective skill as baseSkill plus bonusSkill from operation info, and recipeDifficulty from baseDifficulty."
+        },
+        {
+          "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Util/Const.lua#L508-L508",
+          "repository": "derfloh205/CraftSim",
+          "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+          "path": "Util/Const.lua",
+          "lines": [
+            508,
+            508
+          ],
+          "support": "The quality breakpoint offset option defaults to false."
+        }
+      ],
+      "limits": [
+        "Open-source implementation is direct evidence of the addon model, not independent in-game validation for every randomized processing recipe.",
+        "A piecewise quality selector is not E(quantity) increasing linearly with skill.",
+        "Do not carry this modern deterministic quality model backward into historical Dragonflight Inspiration/hidden-skill-variance studies without explicit era proof.",
+        "For modified difficulty, prefer actual operation thresholds over assuming CraftSim baseDifficulty alone covers every optional reagent or target."
+      ]
+    },
+    {
+      "id": "blizzard-current-operation-quality-fields",
+      "status": "CONFIRMED_PRIMARY_API_CONTRACT",
+      "dimension": "EXACT_RECIPE_ALLOCATION_QUALITY_CONTEXT",
+      "fields": [
+        "recipeID",
+        "baseDifficulty",
+        "bonusDifficulty",
+        "baseSkill",
+        "bonusSkill",
+        "isQualityCraft",
+        "quality",
+        "craftingQuality",
+        "craftingQualityID",
+        "craftingDataID",
+        "lowerSkillThreshold",
+        "upperSkillTreshold",
+        "guaranteedCraftingQualityID",
+        "bonusStats"
+      ],
+      "caveat": "upperSkillTreshold is the API field spelling. An arbitrary changed simulated skill cannot be sent into this API; capture real operation thresholds then apply a scoped research model to a simulated target.",
+      "sources": [
+        {
+          "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUITypesDocumentation.lua#L170-L190",
+          "repository": "Gethe/wow-ui-source",
+          "commit": "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+          "path": "Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUITypesDocumentation.lua",
+          "lines": [
+            170,
+            190
+          ],
+          "support": "Generated Blizzard contract exposes skill, difficulty, output quality and current bracketing thresholds."
+        },
+        {
+          "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua#L149-L166",
+          "repository": "Gethe/wow-ui-source",
+          "commit": "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+          "path": "Interface/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua",
+          "lines": [
+            149,
+            166
+          ],
+          "support": "Blizzard UI uses upperSkillTreshold to show the skill requirement for the next recipe quality."
+        }
+      ],
+      "implementation": "For a confirmed two-quality operation without concentration, capture exact current target input, current quality and its boundary. Prefer API bracketing threshold to a universal hardcoded number; validate boundary against current craftingQuality and effective skill."
+    },
+    {
+      "id": "blizzard-current-salvage-allocation-contract",
+      "status": "CONFIRMED_PRIMARY_RUNTIME_CALL_PATTERN",
+      "call": "C_TradeSkillUI.GetCraftingOperationInfo(recipeID, allocatedCraftingReagents, targetAllocationItemGUID, false)",
+      "observedActionHookContract": "CraftSalvage(recipeSpellID, numCasts, itemTarget, craftingReagents, applyConcentration); record its actual itemTarget GUID through a secure posthook and do not invoke crafting actions.",
+      "sources": [
+        {
+          "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua#L76-L90",
+          "repository": "Gethe/wow-ui-source",
+          "commit": "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+          "path": "Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+          "lines": [76, 90],
+          "support": "Generated current API documentation establishes the CraftSalvage argument order and identifies itemTarget as a required ItemLocation."
+        },
+        {
+          "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSchematicForm.lua#L273-L290",
+          "repository": "Gethe/wow-ui-source",
+          "commit": "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+          "path": "Interface/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSchematicForm.lua",
+          "lines": [
+            273,
+            290
+          ],
+          "support": "The normal crafting details path passes the transaction reagent allocation and allocation GUID to operation info."
+        },
+        {
+          "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsTransaction.lua#L569-L580",
+          "repository": "Gethe/wow-ui-source",
+          "commit": "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+          "path": "Interface/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsTransaction.lua",
+          "lines": [
+            569,
+            580
+          ],
+          "support": "For salvage transactions, the allocation GUID is the actual salvage item GUID."
+        },
+        {
+          "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Classes/RecipeData.lua#L715-L725",
+          "repository": "derfloh205/CraftSim",
+          "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+          "path": "Classes/RecipeData.lua",
+          "lines": [
+            715,
+            725
+          ],
+          "support": "CraftSim also resolves the selected salvage input to its inventory item GUID."
+        }
+      ],
+      "implementation": [
+        "Key a live salvage operation cache by exact recipe plus input item ID/rank and target allocation identity; invalidate on gear, talents, buffs, skill and allocation changes.",
+        "Do not reuse a recipe-only operation response with no allocationItemGUID to claim ore/herb-rank-specific requirements.",
+        "No target in inventory or no usable response means no live numeric quality claim; retain a source-labeled reference estimate.",
+        "Offline character and hypothetical stats must use that character's compatible captured context or an explicit compiled research rule, never current-character operation data."
+      ]
+    },
+    {
+      "id": "quality-preview-does-not-establish-random-output-counts",
+      "status": "CONFIRMED_CONTRACT_LIMIT",
+      "sources": [
+        {
+          "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUITypesDocumentation.lua#L261-L269",
+          "repository": "Gethe/wow-ui-source",
+          "commit": "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+          "path": "Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUITypesDocumentation.lua",
+          "lines": [
+            261,
+            269
+          ],
+          "support": "CraftingRecipeOutputInfo returns a representative item identifier/hyperlink/icon; it does not enumerate stochastic cooutput probabilities or quantity distributions."
+        },
+        {
+          "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUITypesDocumentation.lua#L281-L295",
+          "repository": "Gethe/wow-ui-source",
+          "commit": "297d7aaaa736f346b3e036f38ee088eaf7f8c07f",
+          "path": "Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUITypesDocumentation.lua",
+          "lines": [
+            281,
+            295
+          ],
+          "support": "Recipe schematic has declared minimum/maximum quantity and an operation-info capability flag, rather than per-cooutput skill-conditioned empirical yields."
+        },
+        {
+          "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Classes/ResultData.lua#L149-L173",
+          "repository": "derfloh205/CraftSim",
+          "commit": "e15fb18c1004b2f373ee3247b2ade0b917fbea69",
+          "path": "Classes/ResultData.lua",
+          "lines": [
+            149,
+            173
+          ],
+          "support": "Expected craft quantity is baseItemAmount plus expected extra Multicraft items, while skill chooses output quality separately."
+        }
+      ],
+      "limits": [
+        "Do not take the schematic midpoint as a measured random processing mean.",
+        "Applying an operation quality to every random gem or byproduct requires recipe/family-specific research or observed outcomes.",
+        "This code search did not find a validated universal current milling/prospecting/disenchanting quantity-versus-skill curve."
+      ]
+    }
+  ],
+  "recommendedPipelineContract": {
+    "kind": "QUALITY_SELECTION",
+    "scope": [
+      "expansion",
+      "client build or compatible build interval",
+      "method",
+      "recipeID",
+      "inputItemID",
+      "inputQualityRank",
+      "allocation-sensitive difficulty/threshold",
+      "explicit output-family rank map"
+    ],
+    "formulaForTwoRanks": "Q=1 if S<T else 2; T is the exact captured or sourced boundary, not a global 365/505 constant.",
+    "amountPolicy": "Keep E_total for an eligible output family unchanged and allocate that family expectation to the selected rank only when deterministic rank allocation is supported. Do not lift unknown/locked conditional expectations.",
+    "sourcePolicy": "Keep source totals, sample counts and confidence separate from quality-rule evidence. Export numerical thresholds/rank maps through the research compiler rather than hand-editing generated ItemDB.",
+    "rankMapWarning": "database/research/rank-families.json states its ids arrays are unordered sets; Crystalline Glass rank order is explicitly disputed. Never index material.rankIDs by numeric quality without verifiedRanks or validated game rank metadata.",
+    "confidencePolicy": "A source-code model does not justify an invented 90% or 100% experimental confidence. Record model evidence and its applicability limits separately.",
+    "unresolved": [
+      "Exact live Midnight input-rank-specific thresholds must come from a current operation capture or a numerically explicit study.",
+      "The code model does not establish extra gem/pigment talent proc rates or their interaction with skill.",
+      "Disenchanting is not automatically an ordinary deterministic quality-crafting recipe."
+    ]
+  }
+}

@@ -42,7 +42,7 @@ Loot Liquidator: Smelt 6g 87s
 
 **Reference estimates** fill gaps from stored Retail conversion tables and sourced calculators. They are labeled provisional and do not replace usable research or recorded results. Turn them on or off under **Database & Accuracy → Reference tables and calculators**.
 
-Under **Tooltips**, average output quantities are optional and off by default. Yield ranges read `[1-2]`. Material rows can be sorted by value, drop chance, average quantity, name, or database order.
+Under **Tooltips**, average output quantities are optional and off by default. The same preference applies to disenchanting and hypothetical profiles. Yield ranges read `[1-2]`. Material rows can be sorted by value, drop chance, average quantity, name, or database order.
 
 Choose how much you see under **Settings → AddOns → Loot Liquidator → Tooltips → Tooltip**:
 
@@ -56,6 +56,8 @@ Choose how much you see under **Settings → AddOns → Loot Liquidator → Tool
 Open them with **/ll** or from the game's Settings → AddOns.
 
 - **General → Show rates for**: whose profession skill sets the numbers: you, one of your alts, or a made-up "what-if" profile.
+- **Professions (Simulated) → choose a profession → Advanced**: adjust the named specialization point sliders, skill, stats and buffs. Editing a slider selects Simulated; returning to that profile preserves your points. Researched specialization effects feed the selected baseline and output-quality calculation. **Reset to minimum** clears the simulation. See the [research and modeling notes](docs/SYNTHETIC-BENCHMARK.md).
+- **Researched skill effects**: Midnight prospecting and supported milling pigment families can select output quality from the exact recipe threshold, changing auction value. Open the profession with the input in your bags to capture that threshold; the hypothetical effective-skill slider can then cross it. Pigment totals use a labeled calculator estimate. Disenchanting research, personal observations and classified imports apply to matching expansion, rarity and armor/weapon groups. [Sources and research pipeline](docs/SKILL-YIELD-RESEARCH.md), [Midnight material yields](docs/MIDNIGHT-MATERIAL-YIELDS.md).
 - **Badges & Colors**: turn letters on or off, move them, change size and colors, and **Include alts** (count alts who could use or process an item you can send them).
 - **Tooltips**: the tooltip level above, plus **Show price in the header**.
 - **Pricing & Actions**: the Auction House cut, and how much extra profit an auction or processing option needs before it is recommended.

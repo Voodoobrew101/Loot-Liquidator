@@ -273,6 +273,17 @@ for _,r in ipairs(research.processing) do
             n.targetBuild=patch.targetBuild or patch.build
         end
         fillFromWorkingEstimate(r,n.materials[1])
+        -- These Midnight milling rows are explicitly unmeasured legacy
+        -- estimates. Keep them as references rather than letting a guessed
+        -- exact-rank quantity hide a sourced, whole-family calculator total.
+        if r.method=='Mill' and (r.expansionID==nil or r.expansionID==11) and r.recordID:match('^midnight:mill:')
+            and r.recordID:match(':legacy%-reference$') and r.expectedQuantity.sampleOperations==nil
+            and r.expectedQuantity.status~='measured' and r.expectedQuantity.status~='verified' then
+            n.sourceKey='reference';n.sourceKind='legacy-model'
+            n.fallbackOnly=true;n.fixedReference=true
+            n.sourceAssumption='Unmeasured legacy milling estimate; source rank/skill unverified'
+            db.buildReport.legacyMillingReferences=(db.buildReport.legacyMillingReferences or 0)+1
+        end
         n.targetBuild=c.targetBuild or c.patchBuild or n.targetBuild
         n.hotfixBlocked=c.hotfixBlocked==true or c.normalizationBlocked==true or nil
         -- Only an explicit normalized export can opt into forward profession rules.
@@ -366,6 +377,30 @@ end
 local models=assert(loadfile('database/profession-models.lua'))()
 assert(models.schemaVersion==1,'Unsupported profession model schema')
 db.professionRules=models.professionRules;db.personalPatchRules=models.personalPatchRules;db.modelRevision=models.revision
+-- Sourced skill-to-quality models are generated independently of quantity
+-- baselines. They require an exact-input operation context at runtime.
+local skillQuality=assert(loadfile('database/skill-quality-rules.lua'))()
+assert(skillQuality.schemaVersion==1 and type(skillQuality.skillQualityRules)=='table',
+    'Unsupported generated skill-quality schema')
+db.skillQualityRules=skillQuality.skillQualityRules
+db.skillQualityRevision=skillQuality.revision..':'..skillQuality.sourceSHA256
+db.skillQualitySources=skillQuality.sourceClaims
+db.skillQualityHeld=skillQuality.held
+db.skillQualityHeldNumericCandidates=skillQuality.heldNumericCandidates
+local skillQualityFamilies=0
+for _,rule in ipairs(db.skillQualityRules) do skillQualityFamilies=skillQualityFamilies+#rule.outputFamilies end
+db.buildReport.skillQuality={rules=#db.skillQualityRules,families=skillQualityFamilies,
+    held=#skillQuality.held,heldNumeric=#(skillQuality.heldNumericCandidates or {})}
+-- Named specialization point sliders use sourced operation effects. Keep
+-- these separate from empirical baselines and legacy aggregate assumptions.
+local specialization=assert(loadfile('database/specialization-effects.lua'))()
+assert(specialization.schemaVersion==1 and type(specialization.specializationRules)=='table',
+    'Unsupported generated specialization-effect schema')
+db.specializationRules=specialization.specializationRules
+db.specializationRevision=specialization.revision..':'..specialization.sourceSHA256
+db.specializationSources=specialization.sourceClaims
+db.specializationHeld=specialization.held
+db.buildReport.specializationEffects={rules=#specialization.specializationRules,held=#specialization.held}
 -- Reviewed additions use the same versioned interface, independent of engine code.
 local additions=assert(loadfile('database/records.lua'))()
 -- C4b1 (owner, session 12): checked token lists come ONLY from the research
@@ -498,6 +533,22 @@ for _,file in ipairs({baselines,v3}) do
             end
         end
     end
+end
+-- Reviewed item observations also inform their expansion + rarity + item-type
+-- category. The scope adapter reuses the native evidence counting compiler;
+-- exact records remain provenance, and runtime chooses one applicable context.
+-- Existing evidence/v3 fixture compiles stay isolated unless arg[4] supplies a
+-- category fixture explicitly.
+local categories={schemaVersion=1,processing={}}
+if arg[4] or (not arg[2] and not arg[3]) then
+    categories=assert(loadfile(arg[4] or 'database/disenchant-category-baselines.lua'))()
+end
+assert(categories.schemaVersion==1 and type(categories.processing)=='table','Unsupported disenchant category baseline schema')
+db.buildReport.disenchantCategoryRecords=#categories.processing
+for _,r in ipairs(categories.processing) do
+    assert(r.sourceKey=='itemdb' and r.isDisenchantCategory and r.recordID:match('^evidence:category:'),
+        'Disenchant category baselines must be scoped itemdb evidence records')
+    db.processing[#db.processing+1]=r
 end
 if #db.buildReport.researchSuperseded>0 then
     print(('Research v3 replaced %d older research row(s) for the same input'):format(#db.buildReport.researchSuperseded))

@@ -15,6 +15,11 @@ local SUPPORTED={Disenchant=true,Mill=true,Prospect=true,Smelt=true}
 
 local function integer(n,lo,hi) return type(n)=="number" and n==n and n%1==0 and n>=(lo or 1) and n<=(hi or 2147483647) end
 local function build() return GetBuildInfo and tostring(select(2,GetBuildInfo())) or "unknown" end
+local function disenchantCategory(expansion,rarity,classID)
+    if integer(expansion,0,11) and integer(rarity,2,4) and (classID==2 or classID==4) then
+        return ('gear:%d:%d:%s'):format(expansion,rarity,classID==2 and 'weapon' or 'armor')
+    end
+end
 
 -- Small strict JSON reader. Anything malformed fails the whole paste.
 -- Preserve null entries and container types so a damaged array cannot silently
@@ -135,6 +140,19 @@ local function checkRecord(r)
     local input,batch=inputs[1].itemID,inputs[1].quantity
     if not integer(input) or not integer(batch,1,MAX_INPUTS_PER_CAST) then return nil,"damaged" end
     if r.method=="Disenchant" and batch~=1 then return nil,"damaged" end
+    -- Modern cast exports carry the physical input category. Keep it instead
+    -- of restricting every imported result to the sampled item ID. Missing
+    -- fields in older exports are unknown, never guessed from item IDs.
+    local expansion,rarity,classID
+    if r.method=="Disenchant" then
+        local item=inputs[1]
+        expansion=item.expansionID;if expansion==JSON_NULL then expansion=nil end
+        rarity=item.rarity;if rarity==JSON_NULL then rarity=nil end
+        classID=item.classID;if classID==JSON_NULL then classID=nil end
+        if (expansion~=nil and not integer(expansion,0,11))
+            or (rarity~=nil and not integer(rarity,2,4))
+            or (classID~=nil and classID~=2 and classID~=4) then return nil,"damaged" end
+    end
     if not array(r.outputs) or #r.outputs>MAX_OUTPUTS then return nil,"damaged" end
     if #r.outputs==0 and r.zeroEvidence~="operator-confirmed-empty" then return nil,"damaged" end
     local outputs={}
@@ -146,7 +164,9 @@ local function checkRecord(r)
     local b=r.build
     if type(b)=="number" then b=tostring(b) end
     if type(b)~="string" or not (b:match("^%d+$") or b=="unknown") then return nil,"damaged" end
-    return {id=r.operationID,method=r.method,input=input,batch=batch,build=b,outputs=outputs}
+    return {id=r.operationID,method=r.method,input=input,batch=batch,build=b,outputs=outputs,
+        expansionID=expansion,inputRarity=rarity,inputClassID=classID,
+        gearKey=r.method=="Disenchant" and disenchantCategory(expansion,rarity,classID) or nil}
 end
 
 local function store(self)
@@ -187,12 +207,23 @@ function LL:ImportRecordedResults(text,label)
         return false,("%d of %d results had impossible values, so this text looks damaged or edited. Nothing was imported."):format(counts.damaged,total),counts
     end
     for _,cast in ipairs(clean) do
-        local key=cast.method..":"..cast.input..":"..cast.batch..":"..cast.build
+        local inputKey=cast.gearKey or tostring(cast.input)
+        -- Partial category metadata is still useful as a physical scope guard;
+        -- separate it from old unscoped per-item sets rather than losing it.
+        if cast.method=="Disenchant" and not cast.gearKey
+            and (cast.expansionID~=nil or cast.inputRarity~=nil or cast.inputClassID~=nil) then
+            inputKey=inputKey..":"..tostring(cast.expansionID)..":"..tostring(cast.inputRarity)..":"..tostring(cast.inputClassID)
+        end
+        local key=cast.method..":"..inputKey..":"..cast.batch..":"..cast.build
         local set=d.sets[key]
         if not set then
-            set={method=cast.method,inputItemID=cast.input,inputCount=cast.batch,build=cast.build,casts=0,materials={}}
+            set={method=cast.method,inputItemID=not cast.gearKey and cast.input or nil,gearKey=cast.gearKey,
+                expansionID=cast.expansionID,inputRarity=cast.inputRarity,inputClassID=cast.inputClassID,
+                inputCount=cast.batch,build=cast.build,casts=0,materials={},memberInputItemIDs={}}
             d.sets[key]=set
         end
+        set.memberInputItemIDs=set.memberInputItemIDs or {}
+        set.memberInputItemIDs[cast.input]=true
         set.casts=set.casts+1
         for id,qty in pairs(cast.outputs) do
             local m=set.materials[id] or {drops=0,total=0};set.materials[id]=m
@@ -252,12 +283,24 @@ function LL:ImportedEvidenceRecords(indexKey)
     if not self._importedIndex or self._importedIndex.build~=current then
         local index={build=current}
         for key,set in pairs(d.sets) do
-            if SUPPORTED[set.method] and integer(set.casts) and integer(set.inputItemID) and integer(set.inputCount) then
+            local category=set.method=="Disenchant" and disenchantCategory(set.expansionID,set.inputRarity,set.inputClassID)
+            category=category and category==set.gearKey and category or nil
+            if SUPPORTED[set.method] and integer(set.casts) and (category or integer(set.inputItemID)) and integer(set.inputCount) then
                 local r={recordID="imported:"..key,studyID="imported:"..key,sourceKey="imported",source="Imported results",
-                    method=set.method,inputItemID=set.inputItemID,inputCount=set.inputCount,samples=set.casts,
+                    method=set.method,inputItemID=not category and set.inputItemID or nil,gearKey=category,
+                    expansionID=set.expansionID,inputRarity=set.inputRarity,inputClassID=set.inputClassID,
+                    isDisenchantCategory=category and true or nil,
+                    inputCount=set.inputCount,samples=set.casts,
                     patchBuild=set.build,fixedReference=true,referenceConditions={},provisional=true,
                     -- Results from another game build count for less (stale), never zero.
                     obsolete=set.build~=current or nil,materials={}}
+                if category then
+                    r.memberInputItemIDs={}
+                    for id in pairs(set.memberInputItemIDs or {}) do
+                        if integer(id) then r.memberInputItemIDs[#r.memberInputItemIDs+1]=id end
+                    end
+                    table.sort(r.memberInputItemIDs)
+                end
                 local ids={} for id in pairs(set.materials) do ids[#ids+1]=id end
                 table.sort(ids)
                 for _,id in ipairs(ids) do
@@ -268,7 +311,10 @@ function LL:ImportedEvidenceRecords(indexKey)
                         dropChance=field(m.drops/set.casts),minQuantity=field(m.min),maxQuantity=field(m.max)}
                 end
                 if #r.materials>0 then
-                    local k=set.method..":"..set.inputItemID
+                    -- Index category results once. Looking up the sampled item
+                    -- already includes this group, so an exact-ID alias would
+                    -- count those same casts a second time.
+                    local k=set.method..":"..(category or set.inputItemID)
                     index[k]=index[k] or {};table.insert(index[k],r)
                 end
             end

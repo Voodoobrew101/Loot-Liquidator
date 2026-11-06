@@ -2,10 +2,64 @@
   "schemaVersion": 1,
   "outputIdentities": {
     "Eversong Diamond": {
-      "ids": [242608],
+      "ids": [
+        242608
+      ],
       "source": "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-specializations",
       "sourceRecordID": "midnight-20261101-001",
       "note": "Existing pinned research maps this output ID; no additional quality rank is asserted."
+    },
+    "Powder Pigment": {
+      "ids": [
+        245807,
+        245808
+      ],
+      "verifiedRanks": {
+        "1": 245807,
+        "2": 245808
+      },
+      "source": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/PricingDerivation.lua#L52",
+      "sourceRecordID": "gam-midnight-milling-base-yield",
+      "note": "Pinned source Q1/Q2 comments explicitly identify ordered alternative quality IDs; one family mean, never additive rank outputs."
+    },
+    "Argentleaf Pigment": {
+      "ids": [
+        245803,
+        245804
+      ],
+      "verifiedRanks": {
+        "1": 245803,
+        "2": 245804
+      },
+      "source": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/PricingDerivation.lua#L54",
+      "sourceRecordID": "gam-midnight-milling-base-yield",
+      "note": "Pinned source Q1/Q2 comments explicitly identify ordered alternative quality IDs; one family mean, never additive rank outputs."
+    },
+    "Sanguithorn Pigment": {
+      "ids": [
+        245865,
+        245864
+      ],
+      "verifiedRanks": {
+        "1": 245865,
+        "2": 245864
+      },
+      "source": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/PricingDerivation.lua#L58",
+      "sourceRecordID": "gam-midnight-milling-base-yield",
+      "note": "Pinned source Q1/Q2 comments explicitly identify ordered alternative quality IDs; one family mean, never additive rank outputs."
+    },
+    "Mana Lily Pigment": {
+      "ids": [
+        245867,
+        245866
+      ],
+      "verifiedRanks": {
+        "1": 245867,
+        "2": 245866
+      },
+      "source": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/PricingDerivation.lua#L56",
+      "sourceRecordID": "gam-midnight-milling-base-yield",
+      "note": "Pinned source Q1/Q2 comments explicitly identify ordered alternative quality IDs; one family mean, never additive rank outputs."
     }
   },
   "sources": [
@@ -318,6 +372,56 @@
               "formula": "=SUM(((((Materials!E2*0.3)/100)*G2)/5)+(G2/5)*0.8)"
             }
           ]
+        }
+      ]
+    },
+    {
+      "sourceID": "gam-midnight-milling-base-yield",
+      "kind": "calculator",
+      "gameMode": "Retail",
+      "formulaMode": "DIRECT_BASE_YIELD_PER_OPERATION",
+      "url": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/Data/RecipesGenerated.lua",
+      "retrievedOn": "2026-11-06",
+      "authorSource": "https://github.com/crystaltech/GoldAdvisorMidnight",
+      "lineage": "calculator:gam-workbook:midnight-milling",
+      "archive": "database/research/midnight-pigment-calculator-source.json",
+      "assumption": "Pinned authored calculator base family yield per completed operation before Resourcefulness. Empirical casts, skill, specialization and collection build unknown. Quality IDs are alternatives. Separately sourced skill allocation may choose output rank; source match_input policy is not imported. Omitted cooutputs stay unknown.",
+      "groups": [
+        {
+          "sourceStrategyID": "inscription__tranquility_bloom_milling__midnight_1",
+          "method": "Mill",
+          "expansionID": 11,
+          "inputQualityRanksByID": {
+            "236761": 1,
+            "236767": 2
+          }
+        },
+        {
+          "sourceStrategyID": "inscription__argentleaf_milling__midnight_1",
+          "method": "Mill",
+          "expansionID": 11,
+          "inputQualityRanksByID": {
+            "236776": 1,
+            "236777": 2
+          }
+        },
+        {
+          "sourceStrategyID": "inscription__sanguithorn_milling__midnight_1",
+          "method": "Mill",
+          "expansionID": 11,
+          "inputQualityRanksByID": {
+            "236770": 1,
+            "236771": 2
+          }
+        },
+        {
+          "sourceStrategyID": "inscription__mana_lily_milling__midnight_1",
+          "method": "Mill",
+          "expansionID": 11,
+          "inputQualityRanksByID": {
+            "236778": 1,
+            "236779": 2
+          }
         }
       ]
     }

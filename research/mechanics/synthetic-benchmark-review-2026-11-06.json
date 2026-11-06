@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-11-06",
+  "purpose": "Source review for hypothetical benchmark sliders; research metadata only, not an executable profession rule or a compiled baseline update.",
+  "verificationLimits": [
+    "Web pages were retrieved through the available web-search fallback after Firecrawl reported exhausted account credits.",
+    "Live-URL datamined tooltips were read; no current in-game client, recipe operation or full perk table was inspected.",
+    "Wowhead profession-trait IDs are reference identifiers. Their equality to saved C_Traits node IDs is unverified.",
+    "Guide and registry claims can differ in date and scope. No universal skill-to-yield, specialization-to-yield or stat-rating-to-percentage curve was established."
+  ],
+  "researchPath": [
+    "research/v3/evidence and correction/condition/rate-change records",
+    "Pinned database/research/v3-snapshot produced by tools/research_v3_to_baselines.py --refresh",
+    "The pinned research team's build_estimates.py calculator",
+    "tools/research_v3_to_baselines.py excludes duplicate reference/Legacy contributions, unresolved family identities, unknown operation batches and conditional outputs",
+    "database/research-v3-baselines.lua",
+    "tools/compile_itemdb.lua and generated ItemDB runtime data",
+    "LootLiquidator/Database.lua source selection and LootLiquidator/ProfessionModels.lua context transforms"
+  ],
+  "baselineFinding": {
+    "meaning": "Typical or provisional source estimate with non-minimum-skill studies discounted; not a measured unskilled baseline.",
+    "sourceFiles": [
+      "tools/research_v3_to_baselines.py",
+      "research/v3/mechanics.md",
+      "research/v3/strategy.md",
+      "research/mechanics/ProfessionMechanicsRegistry.json",
+      "LootLiquidator/ProfessionModels.lua"
+    ],
+    "preserve": [
+      "Original source observations, cast denominators, per-field provenance and confidence",
+      "Expansion, input/output ranks, recipe batch and patch boundaries",
+      "Conditional output eligibility and unknown values"
+    ]
+  },
+  "documentedPointBonuses": [
+    {
+      "profession": "Jewelcrafting",
+      "expansionID": 11,
+      "name": "Proficient Processor",
+      "professionTraitID": 106983,
+      "skillPerPoint": 1,
+      "scope": "Prospecting, Crushing and reagent crafting",
+      "source": "https://www.wowhead.com/profession-trait/proficient-processor-106983"
+    },
+    {
+      "profession": "Jewelcrafting",
+      "expansionID": 11,
+      "name": "Prospecting Pro",
+      "professionTraitID": 106982,
+      "skillPerPoint": 1,
+      "scope": "Prospecting",
+      "source": "https://www.wowhead.com/profession-trait/prospecting-pro-106982",
+      "otherEffect": "Guide reports additional gems at maximum investment; proc probability and numeric amount remain unestablished."
+    },
+    {
+      "profession": "Inscription",
+      "expansionID": 11,
+      "name": "Perfect Milling",
+      "professionTraitID": 109653,
+      "skillPerPoint": 1,
+      "scope": "Milling pigment quality",
+      "source": "https://www.wowhead.com/profession-trait/perfect-milling-109653"
+    },
+    {
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "name": "Disenchanting Delegate",
+      "professionTraitID": 107649,
+      "skillPerPoint": 1,
+      "scope": "Disenchanting Midnight equipment",
+      "source": "https://www.wowhead.com/profession-trait/disenchanting-delegate-107649"
+    },
+    {
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "name": "Dust Deliverer",
+      "professionTraitID": 107648,
+      "skillPerPoint": 1,
+      "scope": "Disenchanting Uncommon Midnight equipment",
+      "source": "https://www.wowhead.com/profession-trait/dust-deliverer-107648"
+    },
+    {
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "name": "Shard Supplier",
+      "professionTraitID": 107647,
+      "skillPerPoint": 1,
+      "scope": "Disenchanting Rare Midnight equipment",
+      "source": "https://www.wowhead.com/profession-trait/shard-supplier-107647"
+    },
+    {
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "name": "Crystal Collector",
+      "professionTraitID": 107646,
+      "skillPerPoint": null,
+      "scope": "Epic item disenchanting quality",
+      "source": "https://www.wowhead.com/profession-trait/crystal-collector-107646",
+      "unknownReason": "Retrieved main tooltip describes quality improvement without a numeric skill or output coefficient."
+    }
+  ],
+  "oreDiamondNodes": [
+    {"name": "Copper Consumer", "ore": "Refulgent Copper", "professionTraitID": 106981, "source": "https://www.wowhead.com/profession-trait/copper-consumer-106981"},
+    {"name": "Tin-vestigator", "ore": "Umbral Tin", "professionTraitID": 106980, "source": "https://www.wowhead.com/profession-trait/tin-vestigator-106980"},
+    {"name": "Silver Scrapper", "ore": "Brilliant Silver", "professionTraitID": 106979, "source": "https://www.wowhead.com/profession-trait/silver-scrapper-106979"},
+    {"name": "Thorium Thresher", "ore": "Dazzling Thorium", "professionTraitID": 106978, "source": "https://www.wowhead.com/profession-trait/thorium-thresher-106978"}
+  ],
+  "oreDiamondCaveat": "Tooltips identify the matching ore and diamond capability; they do not supply a drop probability. Simulating an unlocked node does not establish an unconditional expected diamond rate or authorize transferring another ore's rate.",
+  "statApplicability": [
+    {
+      "methods": ["Prospect", "Crush"],
+      "expansionID": 11,
+      "multicraft": "CURRENT_GUIDE_SAYS_DOES_NOT_APPLY",
+      "resourcefulness": "INPUT_SAVINGS_ONLY",
+      "source": "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
+      "conflict": "research/v3/mechanics.md M11 calls prospecting Multicraft likely, and Wowhead's guide lists broad profession stats. Current wow-professions text explicitly excludes Prospecting and Crushing; do not enable an automatic Multicraft multiplier from the older note."
+    },
+    {
+      "methods": ["Mill"],
+      "expansionID": 11,
+      "multicraft": "CURRENT_GUIDE_SAYS_DOES_NOT_APPLY",
+      "resourcefulness": "INPUT_SAVINGS_ONLY",
+      "source": "https://www.wow-professions.com/midnight/inscription-specialization-guide-and-builds"
+    },
+    {
+      "methods": ["Disenchant"],
+      "expansionID": 11,
+      "multicraft": "GUIDES_SAY_DOES_NOT_APPLY",
+      "resourcefulness": "GUIDES_SAY_DOES_NOT_APPLY",
+      "ingenuity": "GUIDES_SAY_DOES_NOT_APPLY",
+      "source": "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations",
+      "corroboration": "https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds"
+    }
+  ],
+  "safeSimulationContract": [
+    "A neutral manual output factor can change an explicitly hypothetical estimate without claiming to represent measured skill or specialization bonuses.",
+    "Label manual factors as assumptions relative to the selected research estimate; avoid calling that estimate an unskilled baseline or applying the same existing specialization bonus twice.",
+    "Skill and node-rank sliders describe target context. Apply numeric yield conversion only through a compatible recipe, expansion, build and output-specific model.",
+    "Keep measured sample counts and confidence unchanged. Simulation must not create evidence or replace the recorded character's actual profile.",
+    "Resourcefulness savings change expected input consumption or cost, not expected output units per completed operation.",
+    "If exposing independent Resourcefulness proc chance p and saved fraction s as manual assumptions, expected input consumption is nominal batch times (1 - p*s). A default 30% saving is an unverified approximation, not a verified general mechanic.",
+    "Do not derive occurrence probability, conditional ranges or quality-rank redistribution from a generic expected-output multiplier.",
+    "Do not convert locked or unknown conditional outputs into a numeric rate merely because the simulation control is enabled."
+  ],
+  "historicalNote": "MIDNIGHT_MODEL_README.txt describes addon 0.9.67's manual low/high interpolation and manually gated diamonds. It is useful design history, not current validated specialization coefficients. The registry's strict approval prose also predates the current sourced lower-confidence rule path in ProfessionModels.lua."
+}

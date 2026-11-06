@@ -146,6 +146,65 @@ check((LL:ImportRecordedResults(empty)),'confirmed empty output array still impo
 ok=LL:ImportRecordedResults(page({cast('oldbuild',{{itemID=30,quantity=1}},{build='100000',inputs={{itemID=11,quantity=5}},nominalInputs={{itemID=11,quantity=5}}})}))
 check(ok);check(LL:ImportedEvidenceRecords('Prospect:11')[1].obsolete,'old build marked stale, not dropped')
 
+-- Disenchant imports apply to their expansion/rarity/armor-or-weapon group,
+-- including items that were never in the imported log. The same item ID can
+-- occur at another rarity, so its ID cannot be the grouping key.
+LL:SetEvidenceSource('legacy',false);LL:SetEvidenceSource('reference',false)
+local function de(id,item,quantity,expansion,rarity,classID,extra)
+ local input={itemID=item,quantity=1,expansionID=expansion,rarity=rarity,classID=classID}
+ local overrides={method='Disenchant',recipeID=13262,inputs={input},nominalInputs={input}}
+ for k,v in pairs(extra or {}) do overrides[k]=v end
+ return cast(id,{{itemID=300,quantity=quantity}},overrides)
+end
+local grouped={
+ de('de-rare-a',201,1,11,3,4),de('de-rare-b',202,3,11,3,4),
+ de('de-epic',201,4,11,4,4),de('de-other-expansion',203,2,10,3,4),
+ de('de-weapon',204,5,11,3,2),
+}
+ok,msg,counts=LL:ImportRecordedResults(page(grouped));check(ok,msg);eq(counts.accepted,5)
+local category=assert(LL:ImportedEvidenceRecords('Disenchant:gear:11:3:armor'))
+eq(#category,1,'one category record for two sampled armor IDs');eq(category[1].samples,2,'casts counted once')
+eq(category[1].gearKey,'gear:11:3:armor');eq(category[1].inputItemID,nil,'category is not exact-item evidence')
+eq(#category[1].memberInputItemIDs,2,'sampled item IDs retained as provenance')
+eq(category[1].inputRarity,3);eq(category[1].inputClassID,4);eq(category[1].expansionID,11)
+eq(category[1].materials[1].expectedQuantity.value,2,'category mean pools reported totals')
+eq(category[1].materials[1].dropChance.value,1,'category chance pools reported hits')
+eq(LL:ImportedEvidenceRecords('Disenchant:201'),nil,'no duplicate exact-ID index for category casts')
+eq(LL:ImportedEvidenceRecords('Disenchant:gear:11:4:armor')[1].samples,1,'rarity remains separate')
+eq(LL:ImportedEvidenceRecords('Disenchant:gear:10:3:armor')[1].samples,1,'expansion remains separate')
+eq(LL:ImportedEvidenceRecords('Disenchant:gear:11:3:weapon')[1].samples,1,'weapons remain separate')
+local gear={id=299,quality=3,classID=4,expansionID=11}
+local option={name='Disenchant',inputCount=1,recipeID=13262}
+model=assert(LL:ComputeEvidenceModel(gear,option,nil,1,{}))
+eq(model.materials[1].expectedQuantity,2,'unseen matching item receives the category result')
+eq((LL:ComputeEvidenceModel({id=299,quality=2,classID=4,expansionID=11},option,nil,1,{})),nil,'no rarity leakage')
+eq((LL:ComputeEvidenceModel({id=299,quality=3,classID=2,expansionID=9},option,nil,1,{})),nil,'no expansion leakage')
+eq((LL:ComputeEvidenceModel(gear,option,nil,2,{})),nil,'personal-only mode still excludes imported categories')
+LL:SetEvidenceSource('imported',false)
+eq((LL:ComputeEvidenceModel(gear,option,nil,1,{})),nil,'source switch still excludes imported categories')
+LL:SetEvidenceSource('imported',true)
+ok,msg,counts=LL:ImportRecordedResults(page(grouped));eq(ok,false,'category import duplicates refused');eq(counts.duplicate,5)
+eq(LL:ImportedEvidenceRecords('Disenchant:gear:11:3:armor')[1].samples,2,'duplicate casts do not inflate category totals')
+
+-- Old exports without classification remain available on their sampled item;
+-- partial metadata stays scoped and cannot be promoted into a guessed group.
+ok,msg=LL:ImportRecordedResults(page({de('de-legacy',205,1),de('de-partial',206,2,nil,3,4)}));check(ok,msg)
+eq(LL:ImportedEvidenceRecords('Disenchant:205')[1].gearKey,nil,'legacy export remains exact-item fallback')
+local partial=LL:ImportedEvidenceRecords('Disenchant:206')[1]
+eq(partial.gearKey,nil,'partial classification does not invent an expansion')
+eq(partial.inputRarity,3,'partial rarity preserved');eq(partial.inputClassID,4,'partial class preserved')
+local upgraded=assert(LL:ComputeEvidenceModel({id=206,quality=4,classID=4,expansionID=11},option,nil,1,{}))
+eq(upgraded.materials[1].expectedQuantity,4,'upgraded item gets epic category, excluding partial rare data')
+for i,meta in ipairs({{12,3,4},{11,5,4},{11,3,7},{'11',3,4},{false,3,4},{11,false,4},{11,3,false}}) do
+ eq((LL:ImportRecordedResults(page({de('de-invalid-meta-'..i,207,1,meta[1],meta[2],meta[3])}))),false,'invalid category metadata rejected')
+end
+ok,msg=LL:ImportRecordedResults(page({de('de-old-category',208,1,11,3,4,{build='100000'})}));check(ok,msg)
+category=LL:ImportedEvidenceRecords('Disenchant:gear:11:3:armor')
+eq(#category,2,'builds retain separate category cohorts')
+local stale=0;for _,record in ipairs(category) do if record.obsolete then stale=stale+1;eq(record.samples,1) else eq(record.samples,2) end end
+eq(stale,1,'historical category retains stale discount')
+LL:SetEvidenceSource('legacy',true);LL:SetEvidenceSource('reference',true)
+
 -- Remove imported results.
 ok,msg=LL:ClearImportedResults();check(ok,msg);eq(LL:ImportedResultsCount(),0);eq(LL:ImportedEvidenceRecords('Prospect:10'),nil)
 check(LL.db.craftResearch.records[1].operationID=='mine-1','own results untouched')

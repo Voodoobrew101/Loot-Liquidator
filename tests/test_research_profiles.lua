@@ -37,6 +37,8 @@ local function compile()
         end end
         -- D1c: keep the real research v3 baselines out of this synthetic fixture.
         if path=='database/research-v3-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
+        if path=='database/evidence-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
+        if path=='database/disenchant-category-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
         return originalLoadfile(path)
     end
     arg={fixtureDir..'/FixtureItemDB.lua'}

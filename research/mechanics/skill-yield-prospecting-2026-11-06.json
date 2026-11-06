@@ -1,0 +1,436 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewedOn": "2026-11-06",
+  "scope": "Actual skill, specialization and output-quality relations for Midnight Prospecting and Crushing, with historical Dragonflight comparison",
+  "status": "Sourced mechanics review; no invented continuous skill-to-quantity coefficient",
+  "runtimeRecommendation": {
+    "midnightProspect": "Preserve each output-family quantity and allocate it to the quality returned by a fresh Blizzard operation snapshot for the exact selected salvage item. Require recipe 1231127, Midnight expansion, exact input item/GUID, recorded recipe difficulty and effective skill. Do not hardcode 365 for unidentified ore.",
+    "midnightCrush": "Skill affects quality according to primary player observations and general game tooltip. Exact target and fixed-reagent selectors matter. No supported skill-to-dust-quantity curve was found.",
+    "quantityPerSkillPoint": null,
+    "prospectingProCapstoneProcChance": null,
+    "prospectingProCapstoneAdditionalQuantity": null,
+    "historicalThresholdsMustNotBecomeCurrentRules": true,
+    "baselineLimitation": "The existing baseline is a mixture of published player contexts, not a measured zero-skill state. Adding a guessed universal specialization multiplier can double-count bonuses already present in those studies.",
+    "qualityRankMappingFile": "research/mechanics/midnight-output-ranks-2026-11-06.json"
+  },
+  "sources": [
+    {
+      "id": "midnight-skill-quality-not-amount",
+      "url": "https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780",
+      "sourceType": "primary-player-observations",
+      "publishedOn": "2026-03-26",
+      "relevantPostsOn": [
+        "2026-03-27",
+        "2026-03-28"
+      ],
+      "accessedOn": "2026-11-06",
+      "shortPassage": "Skill does not increase the amount of gems nor dust.",
+      "findings": [
+        "Teishoku says skill changes output quality when enough skill is reached; only the final Prospecting Pro node changes gem quantity, with low unquantified proc chance.",
+        "Jacara describes 500 ore on rank-5 blue tools with maxed prospect/crush talents versus 500 on green tools with no talents and approximately equal gem and dust totals. Exact outputs, ore item/rank, skill and refunds are absent.",
+        "Original post reports 200 copper, 40 attempts and 8 gems; this is pre-hotfix and not a skill comparison."
+      ],
+      "supports": "Qualitative quality/quantity distinction; no numeric derivative or capstone probability",
+      "patchApplicability": "Early Midnight before 2026-03-31 gem-frequency hotfix; later quality observations corroborate only the quality distinction",
+      "caveats": [
+        "Forum users are not Blizzard developers",
+        "No controlled zero-inclusive cast logs",
+        "Approximately equal quantities cannot prove an exact zero coefficient"
+      ]
+    },
+    {
+      "id": "midnight-capstone-beta-anecdote",
+      "url": "https://us.forums.blizzard.com/en/wow/t/questions-about-jewelcrafting/2278388",
+      "sourceType": "primary-player-beta-observation",
+      "publishedOn": "2026-03-23",
+      "accessedOn": "2026-11-06",
+      "shortPassage": "it’s only by 1-2 gems over 100 prospects",
+      "numericalObservations": {
+        "reportedAdditionalGemsMin": 1,
+        "reportedAdditionalGemsMax": 2,
+        "reportedProspects": 100,
+        "arithmeticAdditionalGemsPerProspectMin": 0.01,
+        "arithmeticAdditionalGemsPerProspectMax": 0.02
+      },
+      "findings": [
+        "Teishoku describes Prospecting Pro rank30 as an additional-gem chance after finding a gem.",
+        "The arithmetic 0.01–0.02 additional gems per prospect is a beta anecdotal absolute increment, not a measured 1–2% conditional proc chance."
+      ],
+      "patchApplicability": "Unspecified Midnight beta build, recalled in a March23 live discussion",
+      "caveats": [
+        "No eligible-gem-hit denominator",
+        "No exact input item/rank or sample table",
+        "No current live coefficient",
+        "Author's same post denies prospecting secondary stats, conflicting with later refund observations and current guides"
+      ]
+    },
+    {
+      "id": "midnight-dynamic-quality-gate-365",
+      "url": "https://us.forums.blizzard.com/en/wow/t/ever-gonna-fix-horrible-gemdust-drop-rate/2316717",
+      "sourceType": "primary-player-before-after-gear-refresh",
+      "publishedOn": "2026-06-16",
+      "relevantPostsOn": [
+        "2026-06-27"
+      ],
+      "accessedOn": "2026-11-06",
+      "shortPassage": "when 365 is required",
+      "numericalObservations": {
+        "reportedRequiredSkill": 365,
+        "reportedSuccessfulEffectiveSkill": 366,
+        "reportedPreviousSkillApprox": "320-something",
+        "knowledgePoints": 164
+      },
+      "reportedSpecialization": {
+        "Proficient Processor": 30,
+        "Prospecting Pro": 30,
+        "Material Manufacturer": 30,
+        "Boldly Basic": 30,
+        "Crushing Connoisseur": 40,
+        "eachOreDiamondUnlock": 1
+      },
+      "findings": [
+        "Loolie reports gold-quality ore produced only silver-quality materials while gear skill was missing; reequipping all three profession items restored displayed skill366 and gold gems, glass and stone.",
+        "Draggoth independently describes all-gold results at max prospecting skill and all-silver while short."
+      ],
+      "supports": "A threshold quality-allocation model using current exact-target API data",
+      "patchApplicability": "Live June27 Midnight, exact build unreported",
+      "caveats": [
+        "No exact ore itemID or salvageGUID",
+        "No per-quality cast counts",
+        "Several ore types discussed together",
+        "365 is an observation, not a verified universal recipe constant",
+        "Skill refresh bug can stale a captured operation context"
+      ]
+    },
+    {
+      "id": "midnight-second-rd365-report",
+      "url": "https://us.forums.blizzard.com/en/wow/t/jc-prospecting-in-midnight/2273814",
+      "sourceType": "primary-player-UI-reading",
+      "publishedOn": "2026-03-17",
+      "relevantPostOn": "2026-03-21",
+      "accessedOn": "2026-11-06",
+      "shortPassage": "the RD for Prospecting is 365",
+      "numericalObservations": {
+        "reportedRecipeDifficulty": 365,
+        "reportedEffectiveSkill": 105,
+        "reportedBaseSkill": 68
+      },
+      "findings": [
+        "Turjan post20 reports 105 total skill from 68 base plus equipment and specialization, compared with displayed recipe difficulty365."
+      ],
+      "patchApplicability": "Early live Midnight before March31 frequency hotfix",
+      "caveats": [
+        "Post20 is March21, not March18",
+        "No input ore item/rank or quality outcomes",
+        "Cannot derive ore-quality skill contribution or amount scaling"
+      ]
+    },
+    {
+      "id": "midnight-quality-context-refresh",
+      "url": "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-glitch-prospecting-not-giving-high-quality-mats/2315952",
+      "sourceType": "primary-player-bug-report",
+      "publishedOn": "2026-06-15",
+      "accessedOn": "2026-11-06",
+      "findings": [
+        "Player with maxed specialization and high-quality ore reports quality behavior restored after logging out and back in."
+      ],
+      "patchApplicability": "Live June2026 Midnight",
+      "caveats": [
+        "No numerical threshold or cast denominator",
+        "Supports invalidating stale operation context, not deriving a formula"
+      ]
+    },
+    {
+      "id": "midnight-prospect-node-skill",
+      "url": "https://www.wowhead.com/profession-trait/prospecting-pro-106982",
+      "sourceType": "primary-game-tooltip-transcription",
+      "publishedOn": null,
+      "accessedOn": "2026-11-06",
+      "shortPassage": "gaining +1 Skill while Prospecting",
+      "numericalCoefficients": [
+        {
+          "quantity": "professionSkill",
+          "perAllocatedPoint": 1,
+          "scope": "Prospecting Pro, Midnight Prospecting"
+        }
+      ],
+      "caveats": [
+        "+1 profession skill is not +1% output",
+        "Main tooltip does not expose rank30 proc chance"
+      ]
+    },
+    {
+      "id": "midnight-processor-node-skill",
+      "url": "https://www.wowhead.com/profession-trait/proficient-processor-106983",
+      "sourceType": "primary-game-tooltip-transcription",
+      "publishedOn": null,
+      "accessedOn": "2026-11-06",
+      "numericalCoefficients": [
+        {
+          "quantity": "professionSkill",
+          "perAllocatedPoint": 1,
+          "scope": "Proficient Processor, Midnight Prospecting/Crushing/reagents"
+        }
+      ],
+      "caveats": [
+        "Bonus skill must not be added a second time if already present in Blizzard effective operation skill"
+      ]
+    },
+    {
+      "id": "midnight-crushing-node-skill",
+      "url": "https://www.wowhead.com/profession-trait/crushing-connoisseur-106977",
+      "sourceType": "primary-game-tooltip-transcription",
+      "publishedOn": null,
+      "accessedOn": "2026-11-06",
+      "numericalCoefficients": [
+        {
+          "quantity": "professionSkill",
+          "perAllocatedPoint": 1,
+          "scope": "Crushing Connoisseur, Midnight Crushing"
+        }
+      ],
+      "caveats": [
+        "No dust-quantity coefficient follows from the +1 skill tooltip"
+      ]
+    },
+    {
+      "id": "midnight-craftsim-stat-map",
+      "url": "https://raw.githubusercontent.com/derfloh205/CraftSim/main/Data/SpecializationData/Midnight/Jewelcrafting.lua",
+      "sourceType": "third-party-addon-static-specialization-data",
+      "revision": "main, unpinned",
+      "accessedOn": "2026-11-06",
+      "findings": [
+        "Recipe1231127 maps to Prospecting Pro106982 and Proficient Processor106983; recipe1231132 maps to Crushing Connoisseur106977 and processor106983.",
+        "Prospecting Pro metadata: max30, +1skill/point, three auxiliary +5skill perks and +20% crafting speed. The extra-gem capstone is absent from the stat map, so this file does not quantify it.",
+        "Crushing metadata: max40, +1skill/point, auxiliary skill bonuses5+5+10+10+20, total+10resourcefulness,+10ingenuity and5% reduced concentration cost."
+      ],
+      "caveats": [
+        "Third-party data is corroboration and an ID-discovery lead",
+        "No pinned commit obtained",
+        "Trait-node IDs are not spell IDs",
+        "Not a substitute for captured current operation stats"
+      ]
+    },
+    {
+      "id": "midnight-crushing-quantity-discussion",
+      "url": "https://us.forums.blizzard.com/en/wow/t/jc-glimmering-gemdust-is-disgusting/2272506",
+      "sourceType": "primary-player-observations",
+      "publishedOn": "2026-03-15",
+      "relevantPostOn": "2026-04-10",
+      "accessedOn": "2026-11-06",
+      "findings": [
+        "Teishoku distinguishes more skill and higher quality from more dust quantity; no controlled skill-stratified output table is supplied."
+      ],
+      "caveats": [
+        "Quantity anecdotes have no usable cast denominator",
+        "No patch-pinned numeric relation"
+      ]
+    },
+    {
+      "id": "midnight-crushing-endcap",
+      "url": "https://us.forums.blizzard.com/en/wow/t/why-is-jewelcrafting-so-incredibly-expensive/2277117",
+      "sourceType": "primary-player-tooltip-description",
+      "publishedOn": "2026-03-21",
+      "accessedOn": "2026-11-06",
+      "findings": [
+        "Reikah describes the40-point Crushing endcap as5% lower concentration cost; not an additional-dust proc. This agrees with CraftSim's stat map."
+      ],
+      "caveats": [
+        "No direct numeric auxiliary-spell extraction",
+        "Early live Midnight"
+      ]
+    },
+    {
+      "id": "midnight-crushing-recipe",
+      "url": "https://www.wowhead.com/spell=1231132/midnight-crushing",
+      "sourceType": "primary-game-recipe-transcription",
+      "publishedOn": null,
+      "accessedOn": "2026-11-06",
+      "numericalRecipe": {
+        "salvageGemUnits": 3,
+        "fixedDuskShroudedStoneUnits": 1,
+        "baseCastSeconds": 2
+      },
+      "findings": [
+        "The recipe is a3-gem salvage operation plus1 stone. Skill-up color numbers5/15/17/20 are recipe-learning/skill-up metadata, not output-quality thresholds."
+      ],
+      "caveats": [
+        "Public page does not establish the complete exact gem-rank by stone-rank selector matrix",
+        "Refunds mean net gems consumed divided by3 is not an actual completed-cast count"
+      ]
+    },
+    {
+      "id": "midnight-crushing-aggregate",
+      "url": "https://www.wowhead.com/ptr/item=242620/glimmering-gemdust",
+      "sourceType": "primary-player-comment-on-item-page",
+      "author": "Cardinalai",
+      "publishedOn": null,
+      "accessedOn": "2026-11-06",
+      "numericalObservations": {
+        "reportedGems": 480,
+        "reportedStones": 160,
+        "reportedDust": 330,
+        "reportedResourcefulnessPercent": 40.7,
+        "reportedSpecialization": "maxed"
+      },
+      "findings": [
+        "Aggregate is useful yield context but cannot identify skill effects. 480/3=160 nominal batch equivalents is not established as actual completed casts with returned gems recrafted."
+      ],
+      "caveats": [
+        "PTR URL, unspecified collection build",
+        "Input counts may be net or gross",
+        "No recorded numerical skill",
+        "No lower-skill comparator"
+      ]
+    },
+    {
+      "id": "official-midnight-two-qualities",
+      "url": "https://worldofwarcraft.blizzard.com/en-us/news/24244646",
+      "sourceType": "official-Blizzard-profession-overview",
+      "publishedOn": null,
+      "accessedOn": "2026-11-06",
+      "findings": [
+        "Midnight stackable reagents use two quality levels rather than the previous three."
+      ],
+      "caveats": [
+        "This establishes quality-system scope, not a particular ore's skill threshold"
+      ]
+    },
+    {
+      "id": "game-quality-tooltip",
+      "url": "https://www.wowhead.com/spell=1264995/quality",
+      "sourceType": "primary-game-tooltip-transcription",
+      "publishedOn": null,
+      "accessedOn": "2026-11-06",
+      "findings": [
+        "Crafted quality depends jointly on skill, reagent quality, specialization and recipe difficulty. Concentration can exceed ordinary skill limits."
+      ],
+      "caveats": [
+        "A generic tooltip supplies no numerical skill-to-quantity or quality probability curve"
+      ]
+    },
+    {
+      "id": "official-midnight-frequency-change",
+      "url": "https://worldofwarcraft.blizzard.com/news/24266320/",
+      "sourceType": "official-Blizzard-hotfix-list",
+      "publishedOn": "2026-03-31",
+      "accessedOn": "2026-11-06",
+      "shortPassage": "Gems will now be found more regularly when prospecting Midnight ore.",
+      "findings": [
+        "Do not pool pre-March31 and post-March31 gem-frequency observations without patch context. No numeric change size was published."
+      ],
+      "caveats": [
+        "Running list title can show a later date; relevant entry heading is March31"
+      ]
+    },
+    {
+      "id": "df-beta-multi-profile-study",
+      "url": "https://www.reddit.com/r/woweconomy/comments/y3e8ek",
+      "sourceType": "primary-player-beta-study",
+      "author": "Jallfo",
+      "publishedOn": "2022-10-13",
+      "accessedOn": "2026-11-06",
+      "sheetURL": "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit",
+      "existingRawEvidence": "research/v3/evidence/dragonflight/2026-11-02T1430-jallfo-beta-six-profile-prospecting.jsonl",
+      "numericalObservations": {
+        "baseSkillProfiles": [
+          5,
+          25,
+          100
+        ],
+        "nominalOreEachProfileEachOre": 5000,
+        "oreTypes": [
+          "Serevite rank3",
+          "Draconium rank3"
+        ],
+        "claimedQuality2Threshold": 150,
+        "claimedQuality3Threshold": 250,
+        "claimedRank3OreSkillContribution": 63
+      },
+      "findings": [
+        "Six beta cohorts compare base skill and specialization together; source describes quality thresholds and rare/epic distribution changes.",
+        "Claimed effective skills68/113/228 cannot all be reproduced from the stated inputs:100+25+30+63=218, not228. Source later lists ore quality1/2/3 skill bonuses25/56/83, conflicting with its own rank3 +63 description."
+      ],
+      "patchApplicability": "Dragonflight beta, October2022; not current Midnight",
+      "caveats": [
+        "Historical150/250 thresholds differ from live265 reports",
+        "Gear/spec/base skill are confounded",
+        "No actual completed-cast/refund denominators",
+        "Source arithmetic inconsistency",
+        "No transferable current coefficient"
+      ],
+      "dataAsOfBuildDate": "2022-10-12"
+    },
+    {
+      "id": "df-live-1000-cast-study",
+      "url": "https://www.reddit.com/r/woweconomy/comments/zkay8v/tier_2_serevite_1000_prospects_distribution/",
+      "sourceType": "primary-player-counted-cast-study",
+      "author": "CptSmackThat",
+      "publishedOn": "2022-12-13",
+      "accessedOn": "2026-11-06",
+      "numericalObservations": {
+        "actualProspects": 1000,
+        "oreRank": 2,
+        "oreType": "Serevite",
+        "recipeDifficulty": 265,
+        "effectiveSkill": 171,
+        "inspirationPercent": 18,
+        "resourcefulnessPercent": 3,
+        "multicraft": "N/A",
+        "diamondQuality2": 8,
+        "diamondQuality3": 1,
+        "oresSaved": 36
+      },
+      "findings": [
+        "This is a usable historical per-cast output distribution at a known profile, not a skill curve.",
+        "Naturage's reply has50k rank2 ore at skill210,inspiration23.7%(+93),resourcefulness4.1%,diamond39Q2+15Q3; it changes several variables and does not establish completed casts.",
+        "Commenter estimates similar total gem yield1.211 versus1.2366 per nominal prospect and different rarity/rank mix; their probability explanation is an inference, not a game formula."
+      ],
+      "patchApplicability": "Dragonflight live December2022 with Inspiration",
+      "caveats": [
+        "Do not port265 or Inspiration behavior to Midnight",
+        "Published percentage means output quantity per prospect, not always hit probability",
+        "Serevite differs from Draconium",
+        "No one-variable experimental sweep"
+      ]
+    },
+    {
+      "id": "df-live-racial-rank-study",
+      "url": "https://www.reddit.com/r/woweconomy/comments/109bytz/prospecting_useless_hold_my_beer_said_the_draenei/",
+      "sourceType": "primary-player-historical-study",
+      "author": "ar_rules",
+      "publishedOn": "2023-01-12",
+      "accessedOn": "2026-11-06",
+      "existingReview": "research/evidence/v2/2026-10-30T0734Z-F004-df-draconium-racial-rank-split.json",
+      "numericalObservations": {
+        "effectiveSkill": 255,
+        "recipeDifficulty": 265,
+        "oreRank": 2,
+        "draeneiSkillBonus": 5,
+        "nominalDraconiumOreInSubset": 30000,
+        "inspirationPercent": 32.8,
+        "diamondQuality2": 32,
+        "diamondQuality3": 52,
+        "arithmeticQuality3FractionOfDiamonds": 0.619047619
+      },
+      "findings": [
+        "Observed diamond high-rank share exceeds stated Inspiration percentage; hidden-skill explanation is the player's inference.",
+        "The30k Draconium subset is nested in larger reported cohorts and must not be added as a new independent sample."
+      ],
+      "patchApplicability": "Dragonflight live January2023, Inspiration-era",
+      "caveats": [
+        "No actual completed-cast/refund denominator",
+        "No paired skill-only comparison",
+        "No proof of a universal linear hidden-skill curve",
+        "Historical data is not current Midnight mechanics"
+      ]
+    }
+  ],
+  "researchGaps": [
+    "No current live numeric Prospecting Pro30 capstone procChance or extra-gem conditional distribution recovered. Main Wowhead trait and CraftSim stat map omit it; exact auxiliary spell was not located. Wago/Wow.tools DB2 endpoints were inaccessible.",
+    "No current primary zero-inclusive controlled Midnight skill sweep for total gem/dust quantity found.",
+    "No evidence that displayed generic recipe difficulty365 can be applied to every exact Midnight ore/rank. Use the game's fresh exact-target operation context.",
+    "Recipe skill-up color thresholds must not be mistaken for output-quality thresholds.",
+    "Do not turn old beta150/250 or live Dragonflight265 into Midnight rules."
+  ]
+}

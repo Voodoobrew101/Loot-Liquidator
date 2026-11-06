@@ -67,7 +67,39 @@ ok(reasons_for(lambda r: r.update(casts=None, outputs=[{'item': 36917, 'chance':
 bad(lambda r: r.update(casts=None), 'needs casts', 'counts need casts')
 bad(lambda r: r.update(outputs=[{'item': 36917, 'chance': 18}]), 'between 0 and 1', 'chance is a fraction')
 bad(lambda r: r['outputs'][0].update(chance=0.18), 'not both', 'counts or chance, not both')
-bad(lambda r: r['outputs'][0].pop('castsWithDrop'), 'needs castsWithDrop', 'output needs counts or chance')
+bad(lambda r: r.update(outputs=[{'item': 36917}]), 'needs castsWithDrop', 'output needs a sourced probability or expectation')
+
+# Unit totals and occurrence counts answer different questions. The operation
+# denominator is explicit; no conversion from nominal input units is allowed.
+ok(reasons_for(lambda r: r.update(casts=1000, outputs=[{'item': 36917, 'totalQuantity': 1289}])) == [],
+   'units may exceed completed operations without pretending they are occurrence counts')
+bad(lambda r: r.update(casts=None, outputs=[{'item': 36917, 'totalQuantity': 1289}]), 'totalQuantity needs casts',
+    'a nominal batch without completed casts cannot give measured units per cast')
+ok(reasons_for(lambda r: r.update(casts=None, outputs=[{'item': 36917, 'averageQuantity': 13}])) == [],
+   'an explicitly published mean is usable with honestly unknown n')
+bad(lambda r: r.update(outputs=[{'item': 36917, 'averageQuantity': float('nan')}]), 'finite number', 'mean must be finite')
+bad(lambda r: r['outputs'][0].update(averageQuantity=1), 'not both', 'raw total and published mean are separate alternatives')
+bad(lambda r: r.update(outputs=[{'item': 36917, 'totalQuantity': -1}]), 'totalQuantity must', 'total units nonnegative')
+ok(reasons_for(lambda r: r.update(recipeID=1231127, expansionID=11, inputQualityRank=1,
+                                 inputRarity=3, inputClassID=4, referenceContextID='source-maxspec', referenceConditions={})) == [],
+   'reviewed identity and source context accepted')
+bad(lambda r: r.update(inputRarity=9), 'inputRarity', 'rarity is bounded')
+bad(lambda r: r.update(recipeID=True), 'recipeID', 'identity bool rejected')
+bad(lambda r: r.update(referenceConditions={'speculation': 10}), 'unknown field', 'context keys reviewed')
+bad(lambda r: r.update(referenceConditions={'effectiveSkill': float('inf')}), 'finite number', 'context values finite')
+ok(reasons_for(lambda r: r.update(outputs=[{'item': 36917, 'averageQuantity': 13, 'rankIDs': [36917, 36918],
+                                           'rankSource': 'https://example.org/family',
+                                           'fieldConfidence': {'expectedQuantity': 20}}])) == [], 'one sourced family total with independent confidence')
+bad(lambda r: r['outputs'][0].update(rankIDs=[36917, 36918]), 'rankSource', 'family mapping requires source proof')
+bad(lambda r: r['outputs'][0].update(rankIDs=[36917, 36917], rankSource='https://example.org/family'),
+    'distinct positive', 'family IDs must be unique')
+bad(lambda r: r['outputs'][0].update(fieldConfidence={'expectedQuantity': float('nan')}), 'finite number', 'field confidence finite')
+bad(lambda r: r.update(outputs=[{'item': 36917, 'averageQuantity': 13, 'rankIDs': [36917, 36918], 'rankSource': 'https://example.org/family'},
+                                {'item': 36918, 'averageQuantity': 13, 'rankIDs': [36917, 36918], 'rankSource': 'https://example.org/family'}]),
+    'overlap', 'same family total cannot be repeated under both rank alternatives')
+bad(lambda r: r.update(outputs=[{'item': 36918, 'totalQuantity': 1},
+                                {'item': 36917, 'averageQuantity': 13, 'rankIDs': [36917, 36918], 'rankSource': 'https://example.org/family'}]),
+    'overlap', 'exact-rank quantity and its family total cannot be added together')
 
 # Honest nulls, typos and other shape checks.
 bad(lambda r: r.pop('lineage'), 'missing field', 'lineage required')

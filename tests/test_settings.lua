@@ -254,6 +254,13 @@ local check
 for i=start+1,#all do if all[i].template=='SettingsCheckboxControlTemplate' then check=all[i] end end
 check.Checkbox:SetChecked(true);check.Checkbox.scripts.OnClick(check.Checkbox)
 assert(LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11).buffs['123'])
+sliders[4]:SetValue(17)
+selector.initializer.setting:SetValue(0)
+selector.initializer.setting:SetValue(-1)
+saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
+assert(saved.skill==95 and saved.specialization=='12=4' and saved.buffs['123']
+    and saved.stats.resourcefulness.percent==17,
+    'returning to Simulated preserves specialization points, skill, buffs and stats')
 press('Reset to minimum')
 saved=LL:GetManualProfessionProfile('Tester - Realm','Jewelcrafting',11)
 assert(saved.skill==0 and saved.specialization=='none' and saved.buffs==nil)

@@ -168,7 +168,15 @@ LL.ProcessingPlayerConditions=liveConditions
 LL.db.characters={['Tester - Realm']={professions={Jewelcrafting={}},details={},altMethods={P=true},
     researchProfiles={}},['Alt - Realm']={researchProfiles={['Jewelcrafting:11']={skill=40,specialization='none',lineID=2,observed=1}},altMethods={P=true}}}
 LL.GetResearchProfessionSnapshot=function() return 70,'12=3',1 end
-C_TradeSkillUI={GetCraftingOperationInfo=function() return {baseSkill=70,bonusSkill=15,craftingQuality=2,bonusStats={}} end}
+-- Processing operation stats must now identify this exact salvage input;
+-- recipe-only operation information is not an input-quality calculation.
+LL.FindSkillQualityTarget=function(_,target)
+    return target.id==f.id and target.reagentQuality==f.reagentQuality and 'fixture-input-10' or nil
+end
+C_TradeSkillUI={GetCraftingOperationInfo=function(_,_,guid)
+    eq(guid,'fixture-input-10')
+    return {baseSkill=70,bonusSkill=15,craftingQuality=2,bonusStats={}}
+end}
 LL.db.processingModes.P=2
 local c=LL:ProcessingPlayerConditions(f,'Prospect',444,'Tester - Realm')
 eq(c.effectiveSkill,85);eq(c.inputQuality,2);eq(c.skill,70)

@@ -1,5 +1,6 @@
 """D1b step 2: research evidence -> baseline counts for ItemDB (tools/evidence_to_baselines.py)."""
 import contextlib
+import copy
 import io
 import sys
 import tempfile
@@ -32,11 +33,11 @@ ok(eb.rate_confidence(0, 0) == 0, 'no casts, no confidence')
 report = evidence_check.check_folder(Path('tests/fixtures/evidence-v3'))
 ok(len(report['setAside']) == 1, 'the broken fixture record is set aside by the checker')
 records, notes = eb.build(report)
-ok(len(records) == 1, 'one item record (the mismatch and the Craft record are left out)')
+ok(len(records) == 3, 'three item records (the mismatch and the Craft record are left out)')
 ok(notes['mismatch'] == 1 and notes['confirmed'] == 1 and notes['duplicates'] == 1, 'notes count verdicts and copies')
 ok(any('Craft is not built' in why or 'method Craft' in why for _, why in notes['skipped']), 'Craft is reported as kept')
 
-r = records[0]
+r = next(row for row in records if row['inputItemID'] == 990001)
 ok(r['recordID'] == 'evidence:Prospect:990001:x5' and r['studyID'] == r['recordID'], 'record identity')
 ok(r['inputItemID'] == 990001 and r['inputCount'] == 5 and r['sourceKey'] == 'itemdb', 'record input')
 ok(r['evidenceRecordIDs'] == ['midnight/2026-10-31-fixture.json#0', 'midnight/2026-10-31-fixture.json#2',
@@ -75,6 +76,58 @@ ok(eb.record_weight({'stale': True}) == 0.125, 'stale + unknown skill')
 # An average that contradicts the chance and range is dropped, never shipped.
 bad = eb.material(1, {'casts': 10.0, 'drops': 1.0, 'qtyCasts': 10.0, 'qty': 9.0, 'lo': 1, 'hi': 2, 'real': True})
 ok(bad['expectedQuantity']['status'] == 'unknown', 'contradictory average left for the addon to fill')
+
+# Totals-only observations have their own true operation denominator. They do
+# not acquire a drop probability from units, stack guesses, or another study.
+units = next(row for row in records if row['inputItemID'] == 990004)
+ok(units['recipeID'] == 13262 and units['expansionID'] == 11 and units['inputRarity'] == 3 and units['inputClassID'] == 4,
+   'exact operation and gear identity metadata survive conversion')
+ok(units['referenceContextID'] == 'fixture-maxspec-study' and units['referenceConditions'] == {}, 'source context survives conversion')
+ok(units['recordID'].startswith('evidence:Disenchant:990004:x1:scope:'), 'scoped evidence identity cannot collide with legacy records')
+for m, total in zip(units['materials'], (629, 660)):
+    near(m['expectedQuantity']['value'], total / 1000, 'units divided by actual completed operations')
+    near(m['expectedQuantity']['samples'], 500, 'unknown-baseline weighting changes support, not E')
+    ok(m['expectedQuantity']['observedSamples'] == 1000 and m['expectedQuantity']['sampleSizeKnown'], 'actual n recorded independently')
+    ok(m['dropChance'] == {'status': 'unknown', 'confidence': 0}, 'unit total never masquerades as occurrence probability')
+    ok(m['minQuantity']['status'] == 'unknown' and m['maxQuantity']['status'] == 'unknown', 'unit totals invent no stack range')
+
+mean = next(row for row in records if row['inputItemID'] == 990005)
+family = mean['materials'][0]
+near(family['expectedQuantity']['value'], 13, 'published family mean included once')
+ok(family['rankIDs'] == [990501, 990502] and family['rankSources'] == ['https://example.org/fixture/rank-family'], 'sourced family alternatives preserved')
+ok(family['expectedQuantity']['status'] == 'provisional' and family['expectedQuantity']['samples'] == 0
+   and family['expectedQuantity']['observedSamples'] == 0 and not family['expectedQuantity']['sampleSizeKnown'], 'unknown-n mean never claims measured casts')
+near(family['expectedQuantity']['priorWeight'], 10, 'unknown-n expectation uses only a half-weight 20-cast prior')
+ok(family['expectedQuantity']['confidence'] == 20 and family['dropChance']['status'] == 'unknown', 'field-specific source quality does not invent P')
+ok(mean['samples'] == 0 and mean['inputQualityRank'] == 1, 'row preserves unknown observed n and exact input rank')
+
+def build_sources(sources):
+    report = {'usable': [], 'setAside': []}
+    for index, source in enumerate(sources):
+        ok(evidence_check.check_record(source)[1] == [], 'test source validates')
+        report['usable'].append({'id': f'scope.json#{index}', 'kind': 'evidence', 'record': source})
+    return eb.build(report)
+
+source = copy.deepcopy(next(entry['record'] for entry in report['usable'] if entry['kind'] == 'evidence' and entry['record']['input'] == 990004))
+copy_source = copy.deepcopy(source)
+copy_source.update(casts=100, source='https://example.org/repost')
+copy_source['outputs'] = [{'item': 990401, 'totalQuantity': 100}]
+scoped, detail = build_sources([source, copy_source])
+ok(len(scoped) == 1 and detail['duplicates'] == 1 and scoped[0]['materials'][0]['expectedQuantity']['observedSamples'] == 1000,
+   'same published study deduplicates inside one exact scope')
+other_scope = copy.deepcopy(copy_source)
+other_scope['inputRarity'] = 4
+scoped, detail = build_sources([source, other_scope])
+ok(len(scoped) == 2 and len({row['recordID'] for row in scoped}) == 2 and detail['duplicates'] == 0, 'different identity scopes never collide or deduplicate')
+other_context = copy.deepcopy(source)
+other_context['referenceContextID'] = 'different-source-conditions'
+scoped, _ = build_sources([source, other_context])
+ok(len(scoped) == 2, 'different source contexts remain separate distributions')
+stale = copy.deepcopy(source)
+stale['stale'] = True
+scoped, _ = build_sources([stale])
+near(scoped[0]['materials'][0]['expectedQuantity']['samples'], 125, 'stale units-only study discounted')
+near(scoped[0]['materials'][0]['expectedQuantity']['value'], .629, 'stale discount never changes source mean')
 
 # Lua output round-trips through the checked-in format and --check spots drift.
 text = eb.render(records)

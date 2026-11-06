@@ -181,6 +181,14 @@ function LL:ValidateItemDB(db)
                 and not (r.method=='Disenchant' and type(r.gearKey)=='string' and
                     (r.gearKey:match('^gear:%d+:%d+:armor$') or r.gearKey:match('^gear:%d+:%d+:weapon$'))))
             or (r.recipeID~=nil and (not finite(r.recipeID) or r.recipeID<1 or r.recipeID%1~=0))
+            or (r.inputRarity~=nil and (not finite(r.inputRarity) or r.inputRarity>8 or r.inputRarity%1~=0))
+            or (r.inputClassID~=nil and (not finite(r.inputClassID) or r.inputClassID>20 or r.inputClassID%1~=0))
+            or (r.isDisenchantCategory~=nil and type(r.isDisenchantCategory)~='boolean')
+            or (r.isDisenchantCategory and (r.method~='Disenchant' or r.inputItemID~=nil
+                or not finite(r.expansionID) or r.expansionID%1~=0 or not finite(r.inputRarity)
+                or (r.inputClassID~=2 and r.inputClassID~=4)
+                or r.gearKey~=('gear:'..tostring(r.expansionID)..':'..tostring(r.inputRarity)..':'..
+                    (r.inputClassID==2 and 'weapon' or 'armor'))))
             or (r.referenceConditions~=nil and type(r.referenceConditions)~='table')
             or (r.referenceContextID~=nil and type(r.referenceContextID)~='string')
             or (r.patchStartBuild~=nil and not finite(r.patchStartBuild))
@@ -334,7 +342,27 @@ function LL:InitializeItemDB()
         end
         for _,r in ipairs(dataset.processing or {}) do all[#all+1]=r end
     end
+    local reviewedMilling={}
     for _,r in ipairs(all) do
+        if r.sourceKey=='reference' and r.sourceKind=='calculator' and r.method=='Mill'
+            and r.expansionID==11 and r.recipeID==1269575 and r.realStudy==false then
+            reviewedMilling[r.inputItemID]=true
+        end
+    end
+    for _,original in ipairs(all) do
+        local r=original
+        if r.sourceKey=='legacy' and r.method=='Mill' and reviewedMilling[r.inputItemID] then
+            -- Curate the runtime view, keeping the frozen historical table
+            -- byte-for-byte intact. An old modeled milling profile is a
+            -- reference fallback, not a sampled primary quantity.
+            r=copy(original)
+            r.originalRecordID=original.recordID
+            r.recordID='reference:legacy-model:'..original.recordID
+            r.sourceKey='reference';r.sourceKind='legacy-model'
+            r.fallbackOnly=true;r.fixedReference=true
+            r.referenceApplicability='unverified-reference'
+            r.sourceAssumption='Unmeasured historical milling profile; original values and lineage retained'
+        end
         local key=r.method..':'..tostring(r.inputItemID or r.gearKey)
         local list=self._evidenceIndex[key] or {};self._evidenceIndex[key]=list
         list[#list+1]=r
@@ -391,8 +419,13 @@ function LL:EvidenceReliability(field,record)
     -- A value with no stated confidence is weak, not worthless (owner decision 1).
     local stated=finite(field.confidence) and field.confidence>0 and field.confidence or UNKNOWN_CONFIDENCE
     local score=math.min(1,stated/100)
-    local n=field.samples or record.samples
-    local sampleFactor=finite(n) and n/(n+30) or 0.35
+    local n=field.samples or (record and record.samples)
+    local unknownSize=field.sampleSizeKnown==false
+        or (field.sampleSizeKnown==nil and record and record.sampleSizeKnown==false)
+    -- A reported mean with an unknown sample size is a weak reference. Its
+    -- explicit zero observed samples is not a measured zero-cast study.
+    local sampleFactor=unknownSize and (n==nil or n==0) and .35
+        or (finite(n) and n/(n+30) or .35)
     local class=({verified=1,measured=1,observed=1,provisional=.6,modeled=.25,historical=.4})[field.status] or 0
     return score*sampleFactor*class
 end
@@ -410,8 +443,18 @@ function LL:EvidenceCasts(field,record)
     return LL.PRIOR_CASTS*math.min(1,stated/100)*class,false
 end
 local function gearKey(f)
+    if not finite(f.expansionID) or f.expansionID%1~=0
+        or not finite(f.quality) or f.quality%1~=0
+        or (f.classID~=2 and f.classID~=4) then return nil end
     return 'gear:'..tostring(f.expansionID)..':'..tostring(f.quality)..':'..
         (f.classID==2 and 'weapon' or 'armor')
+end
+local function itemCategoryException(record)
+    if type(record.categoryExceptionReason)~='string' or not record.categoryExceptionReason:match('%S') then return false end
+    for _,url in ipairs(record.categoryExceptionSources or {}) do
+        if type(url)=='string' and url:match('^https://%S+$') then return true end
+    end
+    return false
 end
 -- Returns eligible, stale. Stale evidence (pre-hotfix, obsolete, or past the end
 -- of its patch window) still counts, at STALE_FACTOR weight and lower confidence.
@@ -592,19 +635,25 @@ function LL:BorrowFromSibling(f,option,mode,ctx)
 end
 function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
     local build=GetBuildInfo and select(2,GetBuildInfo())
-    local records={}
+    local records,seenRecords={},{}
     local function include(input)
+        if input==nil then return end
         for _,record in ipairs(self._evidenceIndex and self._evidenceIndex[option.name..':'..tostring(input)] or {}) do
-            records[#records+1]=record
+            if not seenRecords[record] then records[#records+1]=record;seenRecords[record]=true end
         end
         for _,record in ipairs(self.ImportedEvidenceRecords and self:ImportedEvidenceRecords(option.name..':'..tostring(input)) or {}) do
-            records[#records+1]=record
+            if not seenRecords[record] then records[#records+1]=record;seenRecords[record]=true end
         end
     end
-    include(f.id) -- reviewed research may identify a specific gear item
+    include(f.id) -- preserved source studies and documented item exceptions
     if option.name=='Disenchant' then include(gearKey(f)) end
     local eligible,transformed,hasExpected,staleRecord={},{},{},{}
     for _,r in ipairs(records) do
+        -- Input rarity can change on the same gear item ID (for example an
+        -- upgraded Courtly Wrists). Mechanics must never normalize away that
+        -- physical identity mismatch or apply a rare study to an epic copy.
+        if (r.inputRarity==nil or r.inputRarity==f.quality)
+            and (r.inputClassID==nil or r.inputClassID==f.classID) then
         local model=sourceModel(self,f,option,r)
         local hasMean=false
         for i,material in ipairs(model.materials) do
@@ -619,6 +668,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
             and (not r.expansionID or r.expansionID==f.expansionID) then
             local ok,stale=contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules)
             if ok then eligible[#eligible+1]=r;staleRecord[r]=stale or nil end
+        end
         end
     end
     if personal and personal.observationContext and ctx.simulated and self.ProjectPersonalEstimate then
@@ -665,7 +715,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
     -- The anchor fixes the reference context. Within the best source, pick the
     -- strongest evidence so a low-confidence guess (working estimate or stale
     -- record) can never push real measurements of another context out.
-    local anchor,anchorStrength
+    local anchor,anchorStrength,anchorSpecificity,anchorExactInput,anchorCategoryRank
     for _,r in ipairs(eligible) do
         if hasExpected[r] and (not anchor or sourcePriority[r.sourceKey]==sourcePriority[anchor.sourceKey]) then
             local strength=0
@@ -673,7 +723,30 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                 strength=math.max(strength,self:EvidenceReliability(modelMetadata(r.materials[i],material,'expectedQuantity','expectedQuantity'),r))
             end
             if staleRecord[r] then strength=strength*STALE_FACTOR end
-            if not anchor or strength>anchorStrength then anchor,anchorStrength=r,strength end
+            -- Prefer a cohort that identifies this exact rarity/class variant
+            -- over a mixed or unspecified variant of the same item. Sources
+            -- still keep their normal priority and incompatible cohorts remain
+            -- separate rather than lending one another probabilities or means.
+            local specificity=(r.inputRarity~=nil and 1 or 0)+(r.inputClassID~=nil and 1 or 0)
+            local exactInput=r.inputItemID==f.id and 1 or 0
+            -- Ordinary disenchant studies describe a physical gear category.
+            -- The preserved exact-item source rows must not override the
+            -- category aggregate or count a study for a second time. An item
+            -- exception requires a documented reason and supporting source.
+            local categoryRank=1
+            if option.name=='Disenchant' then
+                if exactInput==1 and itemCategoryException(r) then categoryRank=4
+                elseif r.isDisenchantCategory then
+                    categoryRank=r.categoryReferenceOnly and 0 or 2
+                    if ctx.referenceContextID and ctx.referenceContextID==r.referenceContextID then categoryRank=3 end
+                end
+            end
+            if not anchor or categoryRank>anchorCategoryRank
+                or (categoryRank==anchorCategoryRank and (exactInput>anchorExactInput
+                    or (exactInput==anchorExactInput and (specificity>anchorSpecificity
+                        or (specificity==anchorSpecificity and strength>anchorStrength))))) then
+                anchor,anchorStrength,anchorSpecificity,anchorExactInput,anchorCategoryRank=r,strength,specificity,exactInput,categoryRank
+            end
         end
     end
     if not anchor then
@@ -694,7 +767,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
     local batch=option.inputCount or anchor.inputCount
     local result={kind='weighted-evidence',inputCount=batch,materials={},sources={},
         source='Weighted evidence',context=ctx,adjustment='baseline / unadjusted',
-        provisional=false,confidence=0,excludedSources={},unknownOutputs=false}
+        provisional=false,confidence=0,excludedSources={},unknownOutputs=false,
+        gearKey=anchor.gearKey,isDisenchantCategory=anchor.isDisenchantCategory,
+        referenceContextID=anchor.referenceContextID,
+        categorySourceStudyIDs=anchor.categorySourceStudyIDs,memberInputItemIDs=anchor.memberInputItemIDs}
     if anchor.sourceKey=='personal' and personal and personal.observationContext then
         result.context=copy(personal.observationContext)
         result.provisional=true
@@ -708,10 +784,15 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
     local function sameContext(r)
         if r==anchor then return true end
         return r.referenceContextID and r.referenceContextID==anchor.referenceContextID
+            and r.inputItemID==anchor.inputItemID and r.gearKey==anchor.gearKey
+            and r.inputRarity==anchor.inputRarity and r.inputClassID==anchor.inputClassID
             and r.patchBuild==anchor.patchBuild and same(r.referenceConditions,anchor.referenceConditions)
     end
     for _,r in ipairs(eligible) do
-        if not sameContext(r) and not r.fixedReference then
+        if anchor.isDisenchantCategory and r.sourceKey==anchor.sourceKey and r.inputItemID
+            and not itemCategoryException(r) then
+            result.excludedSources[#result.excludedSources+1]=r.sourceKey..': source study represented by disenchant category'
+        elseif not sameContext(r) and not r.fixedReference then
             result.excludedSources[#result.excludedSources+1]=r.sourceKey..': reference context cannot be normalized'
         else
             -- Build a model, then apply the preserved PR #4 adapter exactly once.
@@ -772,6 +853,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                 b.sourceEstimates[r.sourceKey]={expectedQuantity=m.expectedQuantity,dropChance=m.chance,
                     minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,sourceConflict=original.sourceConflict,
                     inputCount=r.inputCount,originalTSM=original.originalTSM,
+                    recordID=r.recordID,studyID=r.studyID,
                     appliedRule=m.appliedProfessionRule or m.appliedExpectationRule}
                 for field,modelField in pairs({expectedQuantity='expectedQuantity',dropChance='chance'}) do
                     local key=r.studyID..':'..id..':'..field
@@ -958,13 +1040,16 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(userWeight(self,'legacy',mode)),tostring(userWeight(self,'imported',mode)),
         tostring(userWeight(self,'reference',mode)),tostring(self._importedRevision),
         tostring(self.ItemDB and self.ItemDB.modelRevision),fingerprint(personal and personal.materials),
-        fingerprint(personal and personal.projectionRules)},'|')
+        tostring(self.ItemDB and self.ItemDB.specializationRevision),fingerprint(personal and personal.projectionRules)},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
     self._processingModelCache.count=self._processingModelCache.count or 0
     local cached=self._processingModelCache[key]
     if cached then return cached.model,cached.reason end
     if self._processingModelCache.count>=512 then self._processingModelCache={count=0} end
     local model,reason,retry=self:ComputeEvidenceModel(f,option,personal,mode,ctx)
+    if model and self.ApplySkillQualityModel then model=self:ApplySkillQualityModel(f,option,model,ctx) end
+    if model and self.ApplySpecializationEffects then model=self:ApplySpecializationEffects(f,option,model,ctx) end
+    if model and self.ApplySyntheticBenchmark then model=self:ApplySyntheticBenchmark(f,option,model,ctx) end
     if retry then return model,reason end -- C2: an item name is loading; try again later
     self._processingModelCache[key]={model=model,reason=reason}
     self._processingModelCache.count=self._processingModelCache.count+1

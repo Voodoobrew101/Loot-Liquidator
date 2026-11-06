@@ -700,7 +700,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                             or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
                     end
                     -- Optional per-material confidence (A3), off by default.
-                    if LA.db.showMaterialConfidence==true and type(m.confidence)=="number" then
+                    if LA.db.showMaterialConfidence==true and not model.syntheticBenchmark and type(m.confidence)=="number" then
                         left=left..(" (%d%%)"):format(m.confidence)
                     end
                     local net=m.netExpectedValue
@@ -804,11 +804,14 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         label=label.." — "..option.tooltipProfileLabel
                     end
                     local status={}
-                    if model and model.confidenceUnscored then
+                    if model and model.syntheticBenchmark then
+                        status[#status+1]="Simulated assumptions"
+                    elseif model and model.confidenceUnscored then
                         status[#status+1]="Confidence unscored"
                     elseif confidence then
                         status[#status+1]=("Confidence %d%%"):format(confidence)
                     end
+                    if model and model.skillQualityApplied then status[#status+1]="skill-based quality" end
                     if model and (model.partial or model.partialPrice) then
                         status[#status+1]="partial"
                     end

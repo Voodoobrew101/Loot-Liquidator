@@ -18,6 +18,7 @@ FOLDER defaults to research/evidence/v3. --json prints the full report as JSON.
 --strict exits with status 1 when anything was set aside (normal runs always exit 0).
 """
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -31,8 +32,14 @@ CHECK_RESULTS = {'confirmed', 'mismatch'}
 
 EVIDENCE_REQUIRED = {'method', 'input', 'inputPerCast', 'casts', 'outputs', 'source', 'lineage',
                      'observedDate', 'patch', 'stale'}
-EVIDENCE_OPTIONAL = {'skill', 'minimumSkill', 'stats', 'notes'}
-OUTPUT_KEYS = {'item', 'castsWithDrop', 'totalQuantity', 'min', 'max', 'chance'}
+IDENTITY_FIELDS = {'recipeID', 'expansionID', 'inputQualityRank', 'inputRarity', 'inputClassID'}
+SCOPE_FIELDS = IDENTITY_FIELDS | {'referenceContextID', 'referenceConditions'}
+REFERENCE_CONDITION_FIELDS = {'skill', 'baseSkill', 'effectiveSkill', 'bonusSkill',
+                              'resourcefulness', 'multicraft', 'specPoints', 'gearBonusSkill'}
+EVIDENCE_OPTIONAL = {'skill', 'minimumSkill', 'stats', 'notes'} | SCOPE_FIELDS
+FIELD_NAMES = {'dropChance', 'expectedQuantity', 'minQuantity', 'maxQuantity'}
+OUTPUT_KEYS = {'item', 'castsWithDrop', 'totalQuantity', 'averageQuantity', 'min', 'max', 'chance',
+               'rankIDs', 'rankSource', 'fieldConfidence', 'notes'}
 MECHANIC_REQUIRED = {'kind', 'profession', 'metric', 'effect', 'appliesTo', 'source', 'patch'}
 MECHANIC_OPTIONAL = {'numbers', 'notes'}
 CHECK_REQUIRED = {'kind', 'recordId', 'result', 'saw'}
@@ -50,7 +57,7 @@ def whole(value, minimum=0):
 
 
 def number(value):
-    return isinstance(value, (int, float)) and not isinstance(value, bool)
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
 
 def text(value):
@@ -98,18 +105,47 @@ def check_output(output, casts, index, reasons):
             reasons.append(where + 'castsWithDrop must be a whole number, 0 or more')
         elif whole(casts, 1) and drops > casts:
             reasons.append(where + 'castsWithDrop is larger than casts')
-        total = output.get('totalQuantity')
-        if total is not None:
-            if not whole(total):
-                reasons.append(where + 'totalQuantity must be a whole number, 0 or more')
-            elif whole(drops) and total < drops:
-                reasons.append(where + 'totalQuantity is smaller than castsWithDrop')
     elif has_chance:
         chance = output['chance']
         if not (number(chance) and 0 <= chance <= 1):
             reasons.append(where + 'chance must be between 0 and 1 (0.18 means 18%)')
-    else:
-        reasons.append(where + 'needs castsWithDrop (counts) or chance (a published percentage)')
+    has_total, has_average = 'totalQuantity' in output, 'averageQuantity' in output
+    if not (has_counts or has_chance or has_total or has_average):
+        reasons.append(where + 'needs castsWithDrop, chance, totalQuantity, or an explicitly published averageQuantity')
+    if has_total and has_average:
+        reasons.append(where + 'give totalQuantity or averageQuantity, not both')
+    if has_total:
+        total = output['totalQuantity']
+        if not whole(total):
+            reasons.append(where + 'totalQuantity must be a whole number, 0 or more')
+        if not whole(casts, 1):
+            reasons.append(where + 'totalQuantity needs casts (completed operations, not input units)')
+        if whole(total) and has_counts and whole(output['castsWithDrop']) and total < output['castsWithDrop']:
+            reasons.append(where + 'totalQuantity is smaller than castsWithDrop')
+    if has_average and not (number(output['averageQuantity']) and output['averageQuantity'] >= 0):
+        reasons.append(where + 'averageQuantity must be a finite number, 0 or more, explicitly stated per completed operation')
+    if 'rankIDs' in output:
+        ranks = output['rankIDs']
+        if not (isinstance(ranks, list) and 2 <= len(ranks) <= 5
+                and all(whole(item, 1) for item in ranks) and len(set(ranks)) == len(ranks)):
+            reasons.append(where + 'rankIDs must contain 2 to 5 distinct positive item IDs for one complete output family')
+        elif output.get('item') not in ranks:
+            reasons.append(where + 'item must be included in rankIDs')
+        if not https(output.get('rankSource')):
+            reasons.append(where + 'rankIDs needs rankSource, an https:// link proving the complete family mapping')
+    elif 'rankSource' in output:
+        reasons.append(where + 'rankSource needs rankIDs')
+    if 'fieldConfidence' in output:
+        confidence = output['fieldConfidence']
+        if not isinstance(confidence, dict):
+            reasons.append(where + 'fieldConfidence must be an object of independent field quality scores')
+        else:
+            check_keys(confidence, set(), FIELD_NAMES, reasons, where + 'fieldConfidence: ')
+            for name, value in confidence.items():
+                if not (number(value) and 0 <= value <= 100):
+                    reasons.append(where + f'fieldConfidence: {name} must be a finite number between 0 and 100')
+    if 'notes' in output and not isinstance(output['notes'], str):
+        reasons.append(where + 'notes must be text')
     lo, hi = output.get('min'), output.get('max')
     for name, value in (('min', lo), ('max', hi)):
         if value is not None and not whole(value, 1):
@@ -135,6 +171,27 @@ def check_evidence(record):
         reasons.append('input must be a positive whole number (item ID)')
     if not whole(record.get('inputPerCast'), 1):
         reasons.append('inputPerCast must be a whole number, 1 or more')
+    for name in IDENTITY_FIELDS:
+        if name not in record:
+            continue
+        value = record[name]
+        if not whole(value, 0 if name in {'expansionID', 'inputRarity', 'inputClassID'} else 1):
+            reasons.append(f'{name} must be a whole number in its identity scope')
+        elif name == 'inputQualityRank' and value > 5:
+            reasons.append('inputQualityRank must be between 1 and 5')
+        elif name == 'inputRarity' and value > 8:
+            reasons.append('inputRarity must be between 0 and 8')
+    if 'referenceContextID' in record and not (text(record['referenceContextID']) and len(record['referenceContextID']) <= 256):
+        reasons.append('referenceContextID must be non-empty text of at most 256 characters')
+    if 'referenceConditions' in record:
+        conditions = record['referenceConditions']
+        if not isinstance(conditions, dict):
+            reasons.append('referenceConditions must be an object of known numeric player conditions')
+        else:
+            check_keys(conditions, set(), REFERENCE_CONDITION_FIELDS, reasons, 'referenceConditions: ')
+            for key, value in conditions.items():
+                if not (number(value) and value >= 0):
+                    reasons.append(f'referenceConditions: {key} must be a finite number, 0 or more')
     casts = record.get('casts')
     if casts is not None and not whole(casts, 1):
         reasons.append('casts must be a whole number above 0, or null when no sample size is given')
@@ -143,12 +200,20 @@ def check_evidence(record):
         reasons.append('outputs must be a non-empty list')
     else:
         seen = set()
+        family_members = set()
         for index, output in enumerate(outputs):
             check_output(output, casts, index, reasons)
             item_id = output.get('item') if isinstance(output, dict) else None
             if whole(item_id, 1):
                 if item_id in seen:
                     reasons.append(f'outputs[{index}]: item {item_id} is listed twice')
+                if item_id in family_members:
+                    reasons.append(f'outputs[{index}]: output overlaps a previously listed complete rank family')
+                ranks = output.get('rankIDs')
+                if isinstance(ranks, list) and all(whole(item, 1) for item in ranks):
+                    if set(ranks) & (seen | family_members):
+                        reasons.append(f'outputs[{index}]: complete rank family overlaps another output; report its total once')
+                    family_members.update(ranks)
                 seen.add(item_id)
     if not text(record.get('lineage')):
         reasons.append('lineage must name the original data (same value for reposts)')

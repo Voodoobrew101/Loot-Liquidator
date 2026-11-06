@@ -1,0 +1,510 @@
+{
+  "schemaVersion": 1,
+  "researchDate": "2026-11-06",
+  "topic": "Milling: effective skill, pigment quantity, quality routing and specialization perks",
+  "status": "RESEARCH_ONLY_NO_RUNTIME_OR_ORIGINAL_EVIDENCE_CHANGES",
+  "retrieval": {
+    "webTool": "search_service_web_run",
+    "reason": "Parent reported Firecrawl quota exhausted; available web fallback used.",
+    "originalEvidenceEdited": false
+  },
+  "findings": [
+    "Midnight has concrete player-reported quality thresholds and Perfect Milling skill/speed perks, but retrieved primary reports do not establish a positive skill-to-total-pigment slope.",
+    "Method wording contrasts herb quality with amount: higher herb quality supplies skill. Reading it as a numerical character-skill quantity rule is unsupported.",
+    "TWW beta/launch firsthand comparisons support a discontinuous rank-pair quantity model: increasing skill enough to upgrade output rank can lower quantity for the same input rank.",
+    "Output quality allocation, total pigment quantity, completed-operation denominators and Resourcefulness savings must be modeled separately.",
+    "No retrieved source supplies a controlled Midnight pair with exact completed casts and only effective skill changed."
+  ],
+  "sources": [
+    {
+      "id": "midnight-method-20260305",
+      "url": "https://www.method.gg/guides/midnight-inscription-profession-guide",
+      "title": "Midnight Inscription Profession Guide",
+      "author": "Roguery",
+      "published": "2026-03-05",
+      "sourceType": "SECONDARY_GUIDE",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "The quality of the herb doesn’t increase the amount of pigment you receive, just your skill.",
+      "observations": {
+        "nominalHerbsPerOperation": 10,
+        "guideAdvice": "Max Perfect Milling to obtain rank-2 pigments.",
+        "skillToQuantityCoefficient": null,
+        "sampleDenominator": null
+      },
+      "assessment": "This sentence does not explicitly say that profession skill increases quantity. Skill may describe reagent-quality contribution to crafting quality. The guide gives no controlled totals, threshold or formula and its max-tree advice conflicts with current firsthand rank-2 input reports."
+    },
+    {
+      "id": "midnight-forum-perfect-milling-20260926",
+      "url": "https://us.forums.blizzard.com/en/wow/t/is-perfect-milling-intended-to-be-a-trap/2362528",
+      "title": "Is Perfect Milling intended to be a trap?",
+      "author": "tuxedobob; AuMatar; bjm",
+      "published": "2026-09-26",
+      "sourceType": "PRIMARY_PLAYER_REPORT_AND_REPLIES",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "And at 30 you get a stacking crafting speed buff when milling",
+      "observations": {
+        "originalAuthor": {
+          "baseSkill": "maxed",
+          "toolBonus": 40,
+          "perfectMillingPoints": 24,
+          "perfectMillingCap": 30,
+          "lowToHighOutputRequiredSkill": 505,
+          "predictedSkillAtCap": 455,
+          "highQualityHerbHighQualityPigmentBeforeNodePoints": true,
+          "completedCasts": null,
+          "outputUnits": null
+        },
+        "replyClaims": {
+          "skillBonusAt25Points": 25,
+          "maxNodePerk": "stacking Crafting Speed",
+          "concentrationCostReducedByMoreSkill": true,
+          "mixedRanksPossibleWhenFewerThan10OfOneRankInInventory": true
+        }
+      },
+      "assessment": "The original author asks whether skill yields more pigment; no reply supplies quantity data. Predicted max 455 is not a verified cap: reply asserts an overlooked +25 milestone and mentions an extra 30-point item. Requires actual tooltip/API verification. Crafting Speed is throughput, not units per completed cast."
+    },
+    {
+      "id": "midnight-reddit-rank-gate",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1roocmn/am_i_misreading_the_inscription_treeis_my_math/",
+      "title": "Am I misreading the inscription tree/is my math wrong?",
+      "author": "Emergency_Oil and commenters",
+      "published": null,
+      "sourceType": "PRIMARY_PLAYER_REPORT_AND_REPLIES",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "Pretty sure I could do the r2 from r2 with only like 10 points in it.",
+      "observations": {
+        "claimedTrees": {
+          "Perfected Products": 30,
+          "Processing": 30,
+          "Perfect Milling": 30
+        },
+        "claimedLowToHighRequiredSkill": 505,
+        "gear": "all blue; epic considered",
+        "comments": "Other player reports about 40 KP sufficient and no points required in final milling node for matching high-rank input/output.",
+        "completedCasts": null,
+        "outputUnits": null
+      },
+      "assessment": "Current firsthand quality gating evidence contradicts a universal need to max Perfect Milling for R2 herbs->R2 pigments. Point counts and gear are incomplete/conflicting, so do not encode exact talent requirement."
+    },
+    {
+      "id": "midnight-recipe-difficulty-post",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1ry2ffv/recipe_difficulty_tuning_with_no_warning/",
+      "title": "Recipe difficulty tuning with no warning",
+      "author": "genobeam",
+      "published": null,
+      "sourceType": "PRIMARY_PLAYER_REPORT",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "Also milling was somehow untouched at 505 difficulty",
+      "observations": {
+        "reportedMillingDifficulty": 505,
+        "context": "Author reports other Inscription recipe difficulties increased while milling remained unchanged.",
+        "completedCasts": null,
+        "outputUnits": null
+      },
+      "assessment": "Independent source for a reported Midnight quality difficulty of 505, not a quantity curve or proof of a current client build."
+    },
+    {
+      "id": "midnight-wowhead-kyzenbka",
+      "url": "https://www.wowhead.com/ru/item=245807/powder-pigment",
+      "title": "Powder Pigment comment 6292037",
+      "author": "kyzenbka",
+      "published": "2026-02-27",
+      "sourceType": "PRIMARY_AGGREGATE_RETAINED_IN_REPOSITORY",
+      "retrieved": "2026-11-06",
+      "retrievalLimitation": "Direct web open inaccessible; source content and mappings retained in repository evidence.",
+      "supportingPassage": "1000 шт в 1305",
+      "repositoryEvidence": "research/v3/evidence/midnight/2026-11-01T1414-de-stack-histograms-and-milling.jsonl",
+      "recordIDs": [
+        "midnight-20261101-1417",
+        "midnight-20261101-1418",
+        "midnight-20261101-1419",
+        "midnight-20261101-1420"
+      ],
+      "observations": {
+        "cohorts": [
+          {
+            "inputID": 236761,
+            "inputRank": 1,
+            "inputHerbs": 1000,
+            "outputID": 245807,
+            "outputUnits": 1305,
+            "outputPerStartingHerb": 1.305
+          },
+          {
+            "inputID": 236770,
+            "inputRank": 1,
+            "inputHerbs": 1000,
+            "outputID": 245864,
+            "outputUnits": 1286,
+            "outputPerStartingHerb": 1.286
+          },
+          {
+            "inputID": 236778,
+            "inputHerbs": null,
+            "outputUnits": 1336
+          },
+          {
+            "inputID": 236776,
+            "inputHerbs": null,
+            "outputUnits": 1335
+          }
+        ],
+        "effectiveSkill": null,
+        "gear": "without tools stated on first line",
+        "completedCasts": null,
+        "refundAccounting": null
+      },
+      "assessment": "The Russian level-1 phrase is ambiguous between reagent rank and profession level. It does not establish minimum character skill. Last two rows lack explicit repeated denominators; all four share one author lineage. Ratios are descriptive starting-input ratios, not E per completed cast."
+    },
+    {
+      "id": "midnight-reddit-r2-aggregate",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1rteoqr/no_money_gain_possible_with_inscription_mats/",
+      "title": "No Money gain possible with Inscription Mats",
+      "author": "SeniorEmployment932 (milling aggregate); Crazypaddy2412 (original post)",
+      "published": "2026-03-15",
+      "sourceType": "PRIMARY_AGGREGATE",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "I just got 1000 r2 Tranquility Bloom for 15500g which gave me 1473 pigment worth 20401g",
+      "repositoryEvidence": "research/v3/evidence/midnight/2026-11-02T1105-miststalker-and-courtly-de-milling.jsonl",
+      "recordIDs": [
+        "midnight-20261102-110519"
+      ],
+      "observations": {
+        "inputID": 236767,
+        "inputRank": 2,
+        "inputHerbs": 1000,
+        "pigmentUnitsReported": 1473,
+        "outputPerStartingHerb": 1.473,
+        "effectiveSkill": null,
+        "completedCasts": null,
+        "refundAccounting": null,
+        "pigmentRankExplicitlyNamed": false,
+        "gear": "blue tools (same commenter)",
+        "craftingSpeedPercent": 69,
+        "separateCommenterComparison": {
+          "author": "FortuneWooden8308",
+          "resourcefulnessPercent": 29,
+          "gear": "blue tools",
+          "startingHerbsReported": 2000,
+          "inputNameReported": "twilight",
+          "approxPigmentUnits": 3000,
+          "effectiveSkill": null,
+          "completedCasts": null,
+          "sameCohortAs1473": false
+        }
+      },
+      "assessment": "Directly re-read original comment and author. Resourcefulness29% belongs to a different commenter and must not be assigned to the1473 cohort. Skill, pigment rank and fixed completed casts unreported; starting-input ratio may include recycled savings."
+    },
+    {
+      "id": "tww-lotzboi",
+      "url": "https://www.wowhead.com/item=224805/blossom-pigment",
+      "title": "Blossom Pigment comment: Milling Guide / Quality Control",
+      "author": "LotzBoi",
+      "published": null,
+      "sourceType": "PRIMARY_COMMUNITY_REFERENCE",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "Mycobloom: +101 skill, x5-7 pigments.",
+      "repositoryEvidence": "research/v3/evidence/war-within/2026-11-01T2123-milling-skill-ranges-and-pooled-herb-studies.jsonl",
+      "recordIDs": [
+        "war-within-20261101-2105",
+        "war-within-20261101-2106",
+        "war-within-20261101-2107"
+      ],
+      "observations": {
+        "nominalHerbsPerOperation": 10,
+        "qualityThresholds": [
+          {
+            "effectiveSkillMin": 0,
+            "effectiveSkillMax": 252,
+            "outputRank": 1
+          },
+          {
+            "effectiveSkillMin": 253,
+            "effectiveSkillMax": 504,
+            "outputRank": 2
+          },
+          {
+            "effectiveSkillMin": 505,
+            "effectiveSkillMax": null,
+            "outputRank": 3
+          }
+        ],
+        "inputRankReferences": [
+          {
+            "inputID": 210796,
+            "inputRank": 1,
+            "skillContribution": 0,
+            "reportedMin": 4,
+            "reportedMax": 6
+          },
+          {
+            "inputID": 210797,
+            "inputRank": 2,
+            "skillContribution": 101,
+            "reportedMin": 5,
+            "reportedMax": 7
+          },
+          {
+            "inputID": 210798,
+            "inputRank": 3,
+            "skillContribution": 202,
+            "reportedMin": 6,
+            "reportedMax": 8
+          }
+        ],
+        "characterBaseSkill": null,
+        "completedCasts": null,
+        "totalUnits": null
+      },
+      "assessment": "The +0/+101/+202 figures are reagent-quality contributions, not three controlled profession-skill settings. Reported ranges conflict with beta/launch 11-15 behavior; comment patch/date unknown. Do not use range midpoint as measured mean or combine with another patch."
+    },
+    {
+      "id": "tww-genobeam-beta",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1ey4dkl/milling_you_get_less_pigments_the_higher_quality/",
+      "title": "Milling: You get less pigments the higher quality you go",
+      "author": "genobeam",
+      "published": "2024-08-21",
+      "sourceType": "PRIMARY_BETA_TEST",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "once you have enough skill to guarantee r2 the quantity of pigments you receive goes down",
+      "repositoryEvidence": "research/v3/evidence/war-within/2026-11-01T1122-beta-milling-epochs-and-gear-de.jsonl",
+      "observations": {
+        "pooledHerbsReportedApprox": 10000,
+        "nominalHerbsPerOperation": 10,
+        "cohorts": [
+          {
+            "inputRank": 1,
+            "outputRank": 1,
+            "reportedOutputPerHerb": 1.3,
+            "reportedOutputPerOperation": 13,
+            "reportedMin": 11,
+            "reportedMax": 15
+          },
+          {
+            "inputRank": 1,
+            "outputRank": 2,
+            "reportedOutputPerHerb": 1.1,
+            "reportedOutputPerOperation": 11,
+            "reportedMin": 9,
+            "reportedMax": 13
+          }
+        ],
+        "completedCastsByCohort": null,
+        "herbSpecies": null,
+        "absoluteSkillValues": null,
+        "refundAccounting": null
+      },
+      "assessment": "Within-author direction-of-change evidence across a quality transition, not current Retail or a linear skill slope. About 10k herbs is pooled, not 10k casts and not a split denominator. Exact IDs, skill and build unreported."
+    },
+    {
+      "id": "tww-genobeam-launch",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f5rby5/improved_milling_is_the_worst_tree_in_the_game/",
+      "title": "Improved milling is the worst tree in the game right now",
+      "author": "genobeam; canadiatv; Kroq-Gar-Mundi",
+      "published": "2024-08-31",
+      "sourceType": "PRIMARY_PLAYER_TEST_DISCUSSION",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "The rank of herb increases output by 2. The rank of pigment decreased it by 2.",
+      "observations": {
+        "genobeamClaim": {
+          "meanAtMatchingInputOutputRank": 13,
+          "extraPerInputRank": 2,
+          "deductionPerOutputRank": 2,
+          "r2HerbToR1PigmentMean": 15
+        },
+        "canadiatvCheck": {
+          "herbsPerBatchReported": 1000,
+          "pigmentsReported": 1300,
+          "additionalHerbsMentioned": 2000,
+          "inputRanksCompared": [
+            1,
+            2
+          ],
+          "reportedRangeForBoth": {
+            "min": 11,
+            "max": 15
+          },
+          "outputRanksNotConfirmedByTester": true
+        },
+        "thirdCommenter": "Kroq-Gar-Mundi reports subsequent ranges7-13 without rank/skill control.",
+        "completedCasts": null,
+        "exactSpecies": null
+      },
+      "assessment": "The same genobeam author as beta is one lineage. An independent matching-rank observation supports the diagonal13 mean but does not test off-diagonal coefficients. Apparent hotfix/change reports require epoch isolation; current applicability unverified."
+    },
+    {
+      "id": "df-kurraga-hochenblume",
+      "url": "https://www.reddit.com/r/woweconomy/comments/10me1e7/results_from_millling_10500_hiche_blune_with_max/",
+      "title": "Results from milling 10500 Hochenblume with max resourcefulness",
+      "author": "Kurraga",
+      "published": "2023-01-27",
+      "sourceType": "PRIMARY_TWO_INPUT_RANK_AGGREGATE",
+      "retrieved": "2026-11-06",
+      "supportingPassage": "just kept milling each herb until I had <5 of that herb left to mill",
+      "repositoryEvidence": "research/v3/evidence/dragonflight/2026-10-31T0727-hochenblume-writhebark-and-diamond-cohorts.jsonl",
+      "observations": {
+        "baseInscriptionSkill": 100,
+        "runeMastery": "full tree including Understanding Flora, Perfect Practice, Flawless Inks",
+        "professionGearRank": 5,
+        "inspirationPercent": 18.3,
+        "resourcefulnessPercent": 35,
+        "cohorts": [
+          {
+            "inputRank": 1,
+            "effectiveSkill": 202,
+            "difficulty": 250,
+            "startingHerbs": 1500,
+            "remainingHerbs": 0,
+            "r2Pigments": 1063,
+            "r3Pigments": 202,
+            "totalPigments": 1265,
+            "r3ShareOfPigmentUnits": 0.15968379446640316,
+            "outputPerStartingHerb": 0.8433333333333334
+          },
+          {
+            "inputRank": 2,
+            "effectiveSkill": 233,
+            "difficulty": 250,
+            "startingHerbs": 9000,
+            "remainingHerbs": 2,
+            "r2Pigments": 6050,
+            "r3Pigments": 1418,
+            "totalPigments": 7468,
+            "r3ShareOfPigmentUnits": 0.1898768077129084,
+            "outputPerStartingHerb": 0.8297777777777777
+          }
+        ],
+        "completedCasts": null,
+        "savedHerbsReprocessed": true
+      },
+      "assessment": "Greater skill did not increase the descriptive total/starting-herb ratio in these unequal batches; high-rank unit share increased. Input rank, sample size, refunds and quality allocation confound any skill effect. Shares are pigment-unit shares, not proc probabilities. Do not divide initial herbs by5 as a cast count."
+    }
+  ],
+  "narrowRuleCandidates": [
+    {
+      "id": "tww-rank-pair-quantity-scenario",
+      "scope": {
+        "expansion": "The War Within",
+        "era": "2024 beta/launch only",
+        "method": "Mill",
+        "nominalInputCount": 10,
+        "exactRecipeIDVerified": false,
+        "exactInputSpeciesVerified": false
+      },
+      "candidate": "E_total = 13 + 2 * (inputRank - outputRank), after separately determining output rank from effective skill.",
+      "kind": "RANK_PAIR_PIECEWISE_EXPECTATION_HYPOTHESIS",
+      "supportingSourceIDs": [
+        "tww-genobeam-beta",
+        "tww-genobeam-launch"
+      ],
+      "independentLineagesForOffDiagonalCoefficient": 1,
+      "reportedExamples": [
+        {
+          "inputRank": 1,
+          "outputRank": 1,
+          "E": 13
+        },
+        {
+          "inputRank": 1,
+          "outputRank": 2,
+          "E": 11
+        },
+        {
+          "inputRank": 2,
+          "outputRank": 1,
+          "E": 15
+        }
+      ],
+      "applyPolicy": "PREVIEW_ONLY",
+      "runtimeAdmissible": false,
+      "missing": [
+        "exact species/output IDs and current patch",
+        "cast-level denominator and variance",
+        "replicated quality transition with fixed stats",
+        "current-build confirmation; source epoch conflicts"
+      ]
+    },
+    {
+      "id": "tww-quality-threshold-reference",
+      "scope": {
+        "expansion": "The War Within",
+        "method": "Mill",
+        "sourcePatch": null
+      },
+      "candidate": "R1 at effective skill<=252; R2 at253..504; R3 at>=505.",
+      "kind": "QUALITY_ALLOCATION_REFERENCE",
+      "supportingSourceIDs": [
+        "tww-lotzboi"
+      ],
+      "applyPolicy": "PREVIEW_ONLY",
+      "runtimeAdmissible": false,
+      "doesNotDetermine": [
+        "total pigment quantity",
+        "P of zero",
+        "proc counts"
+      ],
+      "missing": [
+        "dated build-specific API/tooltip confirmation",
+        "input rank contribution verification on same build"
+      ]
+    },
+    {
+      "id": "midnight-perfect-milling-cap-perk",
+      "scope": {
+        "expansion": "Midnight",
+        "method": "Mill",
+        "reportedDate": "2026-09-26",
+        "nodeName": "Perfect Milling",
+        "nodeRank": 30
+      },
+      "candidate": "Max-rank perk affects Crafting Speed; do not turn it into a per-cast output multiplier.",
+      "kind": "THROUGHPUT_ONLY",
+      "supportingSourceIDs": [
+        "midnight-forum-perfect-milling-20260926"
+      ],
+      "applyPolicy": "INFORMATIONAL_ONLY",
+      "runtimeAdmissible": false,
+      "missing": [
+        "actual talent ID and exact tooltip",
+        "buff increment/cap/duration",
+        "independent current-build confirmation"
+      ]
+    },
+    {
+      "id": "midnight-total-yield-skill",
+      "scope": {
+        "expansion": "Midnight",
+        "method": "Mill"
+      },
+      "candidate": null,
+      "kind": "UNIDENTIFIED_SKILL_TO_TOTAL_QUANTITY",
+      "supportingSourceIDs": [
+        "midnight-method-20260305",
+        "midnight-forum-perfect-milling-20260926",
+        "midnight-wowhead-kyzenbka",
+        "midnight-reddit-r2-aggregate"
+      ],
+      "applyPolicy": "NO_NUMERIC_TRANSFORM",
+      "runtimeAdmissible": false,
+      "reason": "Available skill thresholds address quality; available quantities lack fixed completed casts and controlled paired skill. Positive universal output multiplier would conflict with historical rank-transition evidence."
+    }
+  ],
+  "nextConcreteDataToCollect": {
+    "design": "For one exact Midnight herb and fixed input rank, use explicit fixed completed-cast blocks at effective skill immediately below/above the client quality threshold, then two additional skill levels while output rank stays fixed.",
+    "record": [
+      "client build and observation time",
+      "base/bonus/effective recipe skill",
+      "talent node IDs/ranks and tools",
+      "each cast output item IDs, ranks and quantities including zeros",
+      "nominal input10 and actual saved herbs per cast",
+      "do not remill refunds during the fixed-cast blocks",
+      "Concentration off or explicitly controlled"
+    ],
+    "separateTests": [
+      "R1 herb->R1 pigment at different skill with same output rank",
+      "R2 herb->R2 pigment before/after Perfect Milling cap with speed normalized per completed cast",
+      "quality threshold crossing without changing input rank",
+      "Resourcefulness changes input cost, not completed-cast output denominator"
+    ]
+  }
+}

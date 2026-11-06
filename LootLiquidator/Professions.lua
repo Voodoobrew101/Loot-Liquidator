@@ -237,7 +237,7 @@ end
 
 -- A recorder context is always measured for the logged-in character. It never
 -- reads Manual profiles and never substitutes an offline or cached trait value.
-function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration)
+function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration,allocationItemGUID)
     local function read(fn,...)
         if type(fn)~="function" then return nil end
         local ok,value=pcall(fn,...)
@@ -278,11 +278,26 @@ function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration)
         context.fieldStatus.equipment="measured"
     else context.fieldStatus.equipment="unknown" end
     if OwnTradeSkillWindow() and allocation and type(applyConcentration)=="boolean" then
-        local operation=read(ui and ui.GetCraftingOperationInfo,recipeID,allocation,nil,applyConcentration)
+        local operation=read(ui and ui.GetCraftingOperationInfo,recipeID,allocation,allocationItemGUID,applyConcentration)
         if operation then
             context.operationStats=operation.bonusStats
             context.operationBaseSkill=operation.baseSkill;context.operationBonusSkill=operation.bonusSkill
             context.craftingQuality=operation.craftingQuality
+            -- Preserve directly measured quality context in exported research.
+            -- This is not a quantity/probability formula for random cooutputs.
+            for _,name in ipairs({'baseDifficulty','bonusDifficulty','lowerSkillThreshold','upperSkillTreshold'}) do
+                local value=operation[name]
+                if type(value)=='number' and value==value and value>=0 and value<math.huge
+                    and not (issecretvalue and issecretvalue(value)) then context[name]=value end
+            end
+            if f and allocationItemGUID and applyConcentration==false and self.FindSkillQualityTarget then
+                local guid=self:FindSkillQualityTarget(f,allocationItemGUID)
+                if guid==allocationItemGUID then
+                    context.operationInputItemID=f.id;context.operationInputQualityRank=f.reagentQuality
+                    context.allocationVerified=true
+                    if self.RememberSkillQualityOperation then self:RememberSkillQualityOperation(f,recipeID,operation) end
+                end
+            end
             if type(operation.baseSkill)=="number" and type(operation.bonusSkill)=="number" then
                 context.effectiveSkill=operation.baseSkill+operation.bonusSkill
                 context.skillBasis="recipe-operation"
@@ -458,6 +473,22 @@ function LL:GetProfessionUIOptions(character,profession,expansion)
     char.professionOptions[key]=options
     return options
 end
+-- Manual benchmark percentages are assumptions, never profession ratings.
+-- Return a fresh complete table so caller-owned or SavedVariables tables cannot
+-- be shared with cached simulation contexts.
+function LL:NormalizeSyntheticBenchmark(values)
+    if type(values)~='table' then return nil end
+    local limits={outputLevel=200,specializationBonus=100,resourcefulnessChance=100,resourcefulnessSaved=100}
+    for key in pairs(values) do if not limits[key] then return nil end end
+    local normalized={}
+    for key,upper in pairs(limits) do
+        local value=values[key]
+        if value==nil then value=key=='outputLevel' and 100 or 0 end
+        if type(value)~='number' or value~=value or value<0 or value>upper or value%1~=0 then return nil end
+        normalized[key]=value
+    end
+    return normalized
+end
 -- Keep simulated ratings and percentages independent; no universal rating curve.
 LL.ProfessionSimulationStats={
     {key='resourcefulness',name='Resourcefulness'},{key='multicraft',name='Multicraft'},
@@ -488,6 +519,23 @@ function LL:SimulatedProfessionOperationStats(profile)
         end
     end
     return #out>0 and out or nil
+end
+-- Point sliders store the same node=rank signature as measured snapshots.
+-- Expose a fresh allocation for recipe/category-specific research rules;
+-- an absent allocation remains unknown rather than becoming zero points.
+function LL:ProfessionSpecializationPoints(signature)
+    if signature=='none' then return {} end
+    if type(signature)~='string' or signature=='' then return nil end
+    local points={}
+    for token in (signature..','):gmatch('(.-),') do
+        local node,rank=token:match('^%s*(%d+)=(%d+)%s*$')
+        node,rank=tonumber(node),tonumber(rank)
+        if not PositiveInt(node) or not finiteStat(node) or not finiteStat(rank) or rank==nil or rank%1~=0 then return nil end
+        local key=tostring(node)
+        if points[key]~=nil then return nil end
+        points[key]=rank
+    end
+    return points
 end
 function LL:ProfessionNodeRequirements(node,points,skill)
     -- Only structured, source-backed requirements are executable. Text and
@@ -548,6 +596,8 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
     if not self.db or type(character)~='string' or type(profession)~='string'
         or type(expansion)~='number' or type(values)~='table' then return false end
     if not finiteStat(values.skill) then return false end
+    local benchmark=values.benchmark~=nil and self:NormalizeSyntheticBenchmark(values.benchmark) or nil
+    if values.benchmark~=nil and not benchmark then return false end
     if values.specialization~=nil then
         if type(values.specialization)~='string' then return false end
         if values.specialization~='none' then
@@ -570,6 +620,10 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
             if not tonumber(id) or tonumber(id)<=0 or tonumber(id)%1~=0 or enabled~=true then return false end
         end
     end
+    local buffs
+    if values.buffs and next(values.buffs) then
+        buffs={} for id,enabled in pairs(values.buffs) do buffs[id]=enabled end
+    end
     local stats
     if values.stats~=nil then
         if type(values.stats)~='table' then return false end
@@ -584,7 +638,7 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
         end
     end
     local profile={enabled=values.enabled==true,skill=values.skill,specialization=values.specialization,stats=stats,
-        buffs=values.buffs and next(values.buffs) and values.buffs or nil,
+        buffs=buffs,benchmark=benchmark,
         character=character,profession=profession,expansionID=expansion,simulated=true}
     chars[character][profession..':'..expansion]=profile
     if self.Invalidate then self:Invalidate() end
@@ -612,19 +666,149 @@ function LL:GetManualProfessionProfile(character,profession,expansion)
     local p=profiles and profiles[character]
     return p and p[profession..':'..tostring(expansion)]
 end
--- Operation API reads are cached by recipe and invalidated by profession events.
--- This API describes skill/quality, not hidden output probabilities.
-function LL:GetCachedOperationInfo(recipeID)
+local function qualityNumber(value)
+    if issecretvalue and issecretvalue(value) then return nil end
+    return type(value)=='number' and value==value and value>=0 and value<math.huge and value or nil
+end
+local function qualityRead(fn,...)
+    if type(fn)~='function' then return nil end
+    local ok,value=pcall(fn,...)
+    if ok and not (issecretvalue and issecretvalue(value)) then return value end
+end
+local function qualityCopy(value)
+    if type(value)~='table' then return value end
+    local result={} for key,v in pairs(value) do result[key]=qualityCopy(v) end return result
+end
+local function qualityBuild() return GetBuildInfo and tostring(select(2,GetBuildInfo())) or nil end
+-- Verify a real inventory target. A raw GUID supplied in tooltip context alone
+-- cannot establish that it belongs to this item or reagent rank.
+function LL:FindSkillQualityTarget(f,expectedGUID)
+    if type(f)~='table' or not PositiveInt(f.id) or not ItemLocation or not C_Item then return nil end
+    local function inspect(location)
+        if not location or qualityRead(C_Item.GetItemID,location)~=f.id then return nil end
+        local guid=qualityRead(C_Item.GetItemGUID,location)
+        if type(guid)~='string' or guid=='' then return nil end
+        if expectedGUID and guid~=expectedGUID then return nil end
+        local rank=qualityRead(C_TradeSkillUI and C_TradeSkillUI.GetItemReagentQualityByItemInfo,'item:'..f.id)
+        if rank~=nil and rank~=f.reagentQuality then return nil end
+        return guid
+    end
+    local context=f.context or {}
+    if context.itemLocation then
+        local guid=inspect(context.itemLocation);if guid then return guid end
+    end
+    local function bagSlot(bag,slot)
+        local location=qualityRead(ItemLocation.CreateFromBagAndSlot,ItemLocation,bag,slot)
+        return inspect(location)
+    end
+    if type(context.bagID)=='number' and type(context.slotID)=='number' then
+        local guid=bagSlot(context.bagID,context.slotID);if guid then return guid end
+    end
+    if C_Container and C_Container.GetContainerNumSlots then
+        for bag=0,5 do
+            local slots=qualityRead(C_Container.GetContainerNumSlots,bag)
+            if PositiveInt(slots) then for slot=1,slots do
+                local guid=bagSlot(bag,slot);if guid then return guid end
+            end end
+        end
+    end
+end
+-- Only the actual two-quality salvage operation supplies a usable boundary.
+-- No quality-count or minimum-skill inference is made from recipe difficulty.
+function LL:RememberSkillQualityOperation(f,recipeID,operation)
+    if type(f)~='table' or not PositiveInt(f.id) or not PositiveInt(f.reagentQuality)
+        or not qualityNumber(f.expansionID) or type(operation)~='table' or operation.recipeID~=recipeID
+        or operation.isQualityCraft~=true then return nil end
+    local recipe=qualityRead(C_TradeSkillUI and C_TradeSkillUI.GetRecipeInfo,recipeID)
+    if type(recipe)~='table' or recipe.supportsQualities~=true or recipe.maxQuality~=2
+        or recipe.isSalvageRecipe~=true then return nil end
+    local base,bonus=qualityNumber(operation.baseSkill),qualityNumber(operation.bonusSkill)
+    local low,high=qualityNumber(operation.lowerSkillThreshold),qualityNumber(operation.upperSkillTreshold)
+    local q=qualityNumber(operation.craftingQuality)
+    if not base or not bonus or not low or not high or high<low or (q~=1 and q~=2) then return nil end
+    local skill=base+bonus
+    local threshold=q==1 and high or low
+    if not qualityNumber(skill) or threshold<=0 or (q==1 and skill>=threshold) or (q==2 and skill<threshold) then return nil end
+    local current=self.CharacterKey and self:CharacterKey()
+    local char=current and self.db and self.db.characters and self.db.characters[current]
+    local build=qualityBuild()
+    if not char or not build then return nil end
+    local snapshot={recipeID=recipeID,inputItemID=f.id,inputQualityRank=f.reagentQuality,expansionID=f.expansionID,
+        character=current,build=build,observed=Now(),effectiveSkill=skill,craftingQuality=q,
+        highQualitySkillThreshold=threshold,maxQuality=2,allocationVerified=true,concentration=false}
+    char.skillQualityOperations=char.skillQualityOperations or {}
+    local snapshots=char.skillQualityOperations
+    local key=tostring(recipeID)..':'..tostring(f.id)
+    if not snapshots[key] then
+        local count,oldest,oldestAt=0
+        for id,entry in pairs(snapshots) do
+            count=count+1
+            local at=type(entry)=='table' and qualityNumber(entry.observed) or nil
+            if not oldest or (at or 0)<oldestAt then oldest,oldestAt=id,at or 0 end
+        end
+        if count>=128 and oldest then snapshots[oldest]=nil end
+    end
+    snapshots[key]=snapshot
+    return qualityCopy(snapshot)
+end
+-- Operation API reads are allocation-specific for milling/prospecting. The
+-- legacy recipe-only branch remains available for general stat context, but
+-- can never qualify a skill-to-quality snapshot.
+function LL:GetCachedOperationInfo(recipeID,f)
     if not recipeID or not OwnTradeSkillWindow() then return nil end
     local api=C_TradeSkillUI and C_TradeSkillUI.GetCraftingOperationInfo
     if type(api)~='function' then return nil end
     self._professionOperationCache=self._professionOperationCache or {}
+    if f then
+        local guid=self:FindSkillQualityTarget(f)
+        if not guid then return nil end
+        local key=table.concat({'quality',tostring(recipeID),tostring(f.id),tostring(f.reagentQuality),guid},':')
+        local entry=self._professionOperationCache[key]
+        local now=GetTime and GetTime() or 0
+        if entry and now-entry.at<5 then return entry.info or nil end
+        local info=qualityRead(api,recipeID,{},guid,false)
+        if type(info)~='table' then info=nil end
+        if (self._professionOperationCache.qualityCount or 0)>=128 then self._professionOperationCache={} end
+        self._professionOperationCache[key]={at=now,info=info}
+        self._professionOperationCache.qualityCount=(self._professionOperationCache.qualityCount or 0)+1
+        if info then self:CaptureProfessionOperation(recipeID,info) end
+        local snapshot=info and self:RememberSkillQualityOperation(f,recipeID,info)
+        if not snapshot then
+            local current=self.CharacterKey and self:CharacterKey()
+            local char=current and self.db and self.db.characters and self.db.characters[current]
+            if char and char.skillQualityOperations then
+                char.skillQualityOperations[tostring(recipeID)..':'..tostring(f.id)]=nil
+            end
+        end
+        return info
+    end
     local cached=self._professionOperationCache[recipeID]
     if cached~=nil then return cached or nil end
     local ok,info=pcall(api,recipeID,{},nil,false)
     self._professionOperationCache[recipeID]=ok and type(info)=='table' and info or false
     if ok and type(info)=='table' then self:CaptureProfessionOperation(recipeID,info) end
     return self._professionOperationCache[recipeID] or nil
+end
+function LL:GetSkillQualityOperation(f,recipeID,character,allowStored)
+    if type(f)~='table' then return nil end
+    local current=self.CharacterKey and self:CharacterKey()
+    character=character or current
+    if character==current and not allowStored then
+        -- Cached API reads are invalidated with skills, equipment and talents;
+        -- if an exact operation is unavailable, a live quote stays unqualified.
+        local info=self:GetCachedOperationInfo(recipeID,f)
+        if not info then return nil end
+    end
+    local char=character and self.db and self.db.characters and self.db.characters[character]
+    local snapshots=char and char.skillQualityOperations
+    local snapshot=snapshots and snapshots[tostring(recipeID)..':'..tostring(f.id)]
+    if type(snapshot)~='table' or snapshot.character~=character or snapshot.recipeID~=recipeID
+        or snapshot.inputItemID~=f.id or snapshot.inputQualityRank~=f.reagentQuality or snapshot.expansionID~=f.expansionID
+        or snapshot.build~=qualityBuild() or snapshot.allocationVerified~=true or snapshot.concentration~=false
+        or not qualityNumber(snapshot.highQualitySkillThreshold) or snapshot.highQualitySkillThreshold<=0
+        or not qualityNumber(snapshot.effectiveSkill) or not qualityNumber(snapshot.observed)
+        or (snapshot.craftingQuality~=1 and snapshot.craftingQuality~=2) then return nil end
+    return qualityCopy(snapshot)
 end
 function LL:CaptureProfessionOperation(recipeID,info)
     local api=C_TradeSkillUI

@@ -51,7 +51,9 @@ at zero. Negative/nonfinite values remain rejected by the profile API. These
 controls do not assert which stats affect a given recipe.
 
 Catalog data supplies no yield formulas, rating curves or promotion of research
-mechanics. Tooltip values change only where an approved rule supports the chosen
+mechanics. A separate sourced specialization-effect pipeline now consumes the
+named point allocations; see [the calculation contract](SYNTHETIC-BENCHMARK.md).
+Tooltip values change where a scoped researched rule supports the chosen
 context. Automated coverage includes all catalogs with an empty character database,
 Enchanting names and hierarchy, static milestone enrichment, numeric validation,
 speed >100%, collapse preservation and the existing engine contract tests.

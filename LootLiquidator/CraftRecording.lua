@@ -241,6 +241,21 @@ end
 if hooksecurefunc and C_TradeSkillUI and type(C_TradeSkillUI.CraftRecipe)=="function" then
     hooksecurefunc(C_TradeSkillUI,"CraftRecipe",function(...) LL:ObserveCraftRequest(...) end)
 end
+-- Salvage operations carry their target separately from ordinary reagents.
+-- Observe the genuine player request and preserve the exact inventory GUID;
+-- no API that creates, salvages or consumes items is called here.
+function LL:ObserveSalvageRequest(recipe,numCasts,itemTarget,allocation,concentration)
+    self:ObserveCraftRequest(recipe,numCasts,allocation or {},nil,nil,concentration)
+    local id=call(C_Item and C_Item.GetItemID,itemTarget)
+    local guid=call(C_Item and C_Item.GetItemGUID,itemTarget)
+    if secret(id) then id=nil end
+    if integer(id) and type(guid)=='string' and guid~='' and not secret(guid) then
+        request.salvageInputID=id;request.allocationItemGUID=guid
+    end
+end
+if hooksecurefunc and C_TradeSkillUI and type(C_TradeSkillUI.CraftSalvage)=="function" then
+    hooksecurefunc(C_TradeSkillUI,"CraftSalvage",function(...) LL:ObserveSalvageRequest(...) end)
+end
 local function allocatedInputs(p)
     local schematic=p.description.schematic
     if not schematic then return nil end
@@ -291,7 +306,9 @@ function LL:BeginCraftCapture(guid,recipe)
     d.confirmableEmpty=nil
     local hint=request and request.recipe==recipe and request.remaining>0 and clock()-request.at<120 and request or nil
     if hint and hint.orderID~=nil and hint.orderID~=0 then return false end -- customer/order inventory is not this character's bags
-    local context=self:CaptureCraftContext(recipe,nil,description.method,hint and hint.allocation,hint and hint.concentration)
+    local targetFacts=hint and hint.salvageInputID and before.facts[hint.salvageInputID]
+    local context=self:CaptureCraftContext(recipe,targetFacts,description.method,hint and hint.allocation,
+        hint and hint.concentration,hint and hint.allocationItemGUID)
     if hint then hint.remaining=hint.remaining-1 end
     pending={guid=guid,recipe=recipe,method=description.method,description=description,before=before,
         request=copy(hint),context=copy(context),startedAt=stamp(),started=clock(),success=false,results={},resultKeys={}}
@@ -450,7 +467,9 @@ function LL:FinishCraftCapture(final)
         build=build(),gameMode="RETAIL",context=p.context,inputs=result.inputs,outputs=result.outputs,
         nominalInputs=p.nominalInputs,outputCoverage=complete and "complete" or "unresolved",startedAt=p.startedAt,endedAt=stamp(),
         durationSeconds=clock()-p.started,attribution=p.lootClosed and "cast-loot-bag" or "cast-result-bag",
-        resultMetadata=copy(p.results),allocation=p.request and p.request.allocation,applyConcentration=p.request and p.request.concentration,zeroReason=not complete and "No authoritative empty-result signal" or nil}
+        resultMetadata=copy(p.results),allocation=p.request and p.request.allocation,
+        allocationItemGUID=p.request and p.request.allocationItemGUID,
+        applyConcentration=p.request and p.request.concentration,zeroReason=not complete and "No authoritative empty-result signal" or nil}
     if p.method=='Disenchant' and result.inputs[1] then
         local facts=p.before.facts[result.inputs[1].itemID]
         record.context=self:CaptureCraftContext(p.recipe,facts,p.method,nil,nil)
@@ -519,7 +538,128 @@ function LL:CraftBaseline(studyID,contextRef,recipeID)
     end
     return base
 end
+local function disenchantCategory(item)
+    local expansion=item and item.expansionID
+    local rarity=item and (item.rarity or item.quality)
+    local class=item and item.classID
+    if not finite(expansion) or expansion%1~=0 or expansion>11
+        or not finite(rarity) or rarity%1~=0 or rarity<2 or rarity>4
+        or (class~=2 and class~=4) then return nil end
+    return ('gear:%s:%s:%s'):format(expansion,rarity,class==2 and 'weapon' or 'armor')
+end
+local function categoryProfileIdentity(context)
+    local profile=copy(context)
+    -- Keep the original item identities in the raw log. They do not make two
+    -- casts in the same disenchant category different profession profiles.
+    profile.inputIdentity=nil
+    return identity(profile)
+end
+local function disenchantInputMatches(input,f)
+    return (input.expansionID==nil or input.expansionID==f.expansionID)
+        and (input.rarity==nil or input.rarity==f.quality)
+        and (input.classID==nil or input.classID==f.classID)
+end
+function LL:GetRecordedDisenchantCategoryEstimate(f,recipeID)
+    local category=disenchantCategory(f)
+    local d=self.db and self.db.craftResearch
+    if not category or not d or not self.CaptureCraftContext then return nil end
+    d=ledger(self)
+    local character,currentBuild=self:CharacterKey(),build()
+    local groups,order,checked,queries={},{},{},{}
+    for i=#d.records,1,-1 do
+        local r=d.records[i]
+        local inputs=r.nominalInputs or r.inputs
+        local queryID=tostring(r.studyID)..':'..tostring(r.contextID)
+        if r.method=='Disenchant' and r.recipeID==recipeID and r.character==character
+            and r.build==currentBuild and #inputs==1 and inputs[1].quantity==1
+            and disenchantCategory(inputs[1])==category and not checked[queryID] then
+            checked[queryID]=true
+            local baseline=self:CraftBaseline(r.studyID,r.contextID,recipeID)
+            local context=d.contexts[r.contextID]
+            if baseline and context and context.character==character then
+                local query=json({allocation=r.allocation,concentration=r.applyConcentration})
+                local current=queries[query]
+                if not current then
+                    current=self:CaptureCraftContext(recipeID,f,'Disenchant',r.allocation,r.applyConcentration)
+                    queries[query]=current
+                end
+                local exact=current.effectiveSkill and current.specialization and current.skillLineID
+                    and current.fieldStatus.equipment=='measured'
+                    and categoryProfileIdentity(context)==categoryProfileIdentity(current)
+                if exact or self.ProjectPersonalEstimate then
+                    local signature=categoryProfileIdentity(context)
+                    local group=groups[signature]
+                    if not group then
+                        group={context=context,current=current,exact=exact,baselines={}}
+                        groups[signature]=group;order[#order+1]=group
+                    end
+                    group.baselines[#group.baselines+1]=baseline
+                end
+            end
+        end
+    end
+    for _,group in ipairs(order) do
+        local totals,operations,members,studies,contexts,sourceRecords={},0,{},{},{},{}
+        for _,baseline in ipairs(group.baselines) do
+            local present={}
+            for _,material in ipairs(baseline.materials) do
+                local id=material.id;present[id]=true
+                local total=totals[id]
+                if not total then
+                    total={id=id,quality=material.quality,rarity=material.rarity,histogram={['0']=operations},units=0,hits=0}
+                    totals[id]=total
+                end
+                for quantity,count in pairs(material.quantityCounts) do
+                    total.histogram[quantity]=(total.histogram[quantity] or 0)+count
+                    local n=tonumber(quantity)
+                    total.units=total.units+n*count
+                    if n>0 then total.hits=total.hits+count end
+                end
+                if material.minQuantity then total.minimum=math.min(total.minimum or material.minQuantity,material.minQuantity) end
+                if material.maxQuantity then total.maximum=math.max(total.maximum or material.maxQuantity,material.maxQuantity) end
+            end
+            for id,total in pairs(totals) do
+                if not present[id] then total.histogram['0']=(total.histogram['0'] or 0)+baseline.operations end
+            end
+            operations=operations+baseline.operations
+            members[baseline.inputs[1].itemID]=true
+            studies[baseline.studyID]=true;contexts[baseline.referenceContextID]=true
+            for _,recordID in ipairs(baseline.sourceRecordIDs) do sourceRecords[#sourceRecords+1]=recordID end
+        end
+        local context=copy(group.context)
+        context.inputIdentity=nil;context.inputCategory=category
+        context.expansionID=f.expansionID;context.skill=context.baseSkill
+        context.verifiedAt=group.current.observed;context.incomplete=context.operationStats==nil
+        local baseline={method='Disenchant',inputCount=1,expectedInputCount=1,
+            effectiveSamples=operations,samples=operations,operations=operations,
+            studyID='category:'..category..':'..table.concat(keys(studies),','),
+            observationContextID='category:'..table.concat(keys(contexts),','),
+            sourceStudyIDs=keys(studies),sourceRecordIDs=sourceRecords,memberInputItemIDs=keys(members),
+            gearKey=category,isDisenchantCategory=true,patchBuild=currentBuild,
+            observationContext=context,source='Measured personal disenchant category',provisional=true,materials={}}
+        for _,id in ipairs(keys(totals)) do
+            local total=totals[id]
+            baseline.materials[#baseline.materials+1]={id=id,quality=total.quality,rarity=total.rarity,
+                expectedQuantity=total.units/operations,chance=total.hits/operations,
+                minQuantity=total.minimum,maxQuantity=total.maximum,quantityCounts=total.histogram,samples=operations,
+                boundsBasis='observed-positive-range',fieldEvidence={
+                    expectedQuantity={status='measured',sampleOperations=operations,confidence='UNSCORED'},
+                    dropChance={status='measured',sampleOperations=operations,confidence='UNSCORED'},
+                    conditionalBounds={status='observed-range-not-guaranteed',confidence='UNSCORED'}}}
+        end
+        if group.exact then return baseline end
+        if self.ProjectPersonalEstimate then
+            local projected,reason=self:ProjectPersonalEstimate(f,{name='Disenchant',recipeID=recipeID,inputCount=1},baseline,group.current,currentBuild)
+            self.personalProjectionStatus=reason or (projected and projected.adjustment)
+            if projected then return projected end
+        end
+    end
+end
 function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
+    if method=='Disenchant' and batch==1 then
+        local category=self:GetRecordedDisenchantCategoryEstimate(f,recipeID)
+        if category then return category end
+    end
     local d=self.db and self.db.craftResearch;if not d or not self.CaptureCraftContext then return nil end
     d=ledger(self) -- classify an interrupted prior session before valuation
     local checked,queries={},{}
@@ -527,14 +667,16 @@ function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
         local r=d.records[i];local id=r.contextID;local inputs=r.nominalInputs or r.inputs
         local queryID=tostring(r.studyID)..':'..tostring(id)
         if r.recipeID==recipeID and r.method==method and not checked[queryID]
-            and #inputs==1 and inputs[1].itemID==f.id and inputs[1].quantity==batch then
+            and #inputs==1 and inputs[1].itemID==f.id and inputs[1].quantity==batch
+            and (method~='Disenchant' or disenchantInputMatches(inputs[1],f)) then
             checked[queryID]=true
             -- Re-query the recorded allocation instead of substituting an empty
             -- allocation. This only reads operation data; it never crafts.
             local query=json({allocation=r.allocation,concentration=r.applyConcentration})
             local current=queries[query]
             if not current then
-                current=self:CaptureCraftContext(recipeID,f,method,r.allocation,r.applyConcentration)
+                local allocationGUID=r.allocationItemGUID and self.FindSkillQualityTarget and self:FindSkillQualityTarget(f)
+                current=self:CaptureCraftContext(recipeID,f,method,r.allocation,r.applyConcentration,allocationGUID)
                 current.inputIdentity={{itemID=f.id,qualityRank=f.reagentQuality,rarity=f.quality,quantity=batch,
                     itemLevel=(f.classID==2 or f.classID==4) and f.itemLevel or nil,
                     hyperlink=(f.classID==2 or f.classID==4) and f.link or nil}}
@@ -547,7 +689,8 @@ function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
             if exact or self.ProjectPersonalEstimate then
                 local baseline=self:CraftBaseline(r.studyID,id,recipeID)
                 if baseline and baseline.method==method and #baseline.inputs==1
-                    and baseline.inputs[1].itemID==f.id and baseline.inputs[1].quantity==batch then
+                    and baseline.inputs[1].itemID==f.id and baseline.inputs[1].quantity==batch
+                    and (method~='Disenchant' or disenchantInputMatches(baseline.inputs[1],f)) then
                     baseline.inputCount=batch;baseline.expectedInputCount=baseline.expectedInputsConsumed[1].expectedQuantity
                     baseline.patchBuild=r.build;baseline.effectiveSamples=baseline.operations;baseline.samples=baseline.operations
                     baseline.source="Measured personal cast log";baseline.observationContext=copy(context)

@@ -12,13 +12,21 @@ fi
 for file in LootLiquidator/*.lua database/sources/*.lua database/records.lua database/evidence-baselines.lua database/research-v3-baselines.lua tools/*.lua tests/*.lua research/tests/*.lua; do
     "$luac_bin" -p "$file"
 done
+python3 tools/import_midnight_enchanting.py --check
 python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are current
+python3 tools/disenchant_categories.py --check
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
 python3 tools/reference_calculators.py --check
+python3 tools/skill_quality_to_rules.py --check
 python3 tools/import_profession_catalog.py --check
+python3 tools/specialization_effects.py --check
 python3 tools/att_token_references.py --check
 python3 tests/test_att_token_references.py
 python3 tests/test_reference_calculators.py
+python3 tests/test_skill_quality_pipeline.py
+python3 tests/test_midnight_enchanting_import.py
+python3 tests/test_disenchant_categories.py
+python3 tests/test_specialization_effects_pipeline.py
 compiled_dir=$(mktemp -d)
 compiled="$compiled_dir/ItemDBRuntime.lua"
 trap 'rm -rf "$compiled_dir"' EXIT
@@ -45,6 +53,7 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_profession_projection.lua
 "$lua_bin" tests/test_research_profiles.lua "$compiled_dir"
 "$lua_bin" tests/test_craft_recording.lua
+"$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
 "$lua_bin" tests/test_counts_model.lua
@@ -70,7 +79,14 @@ python3 tests/test_research_v3_snapshot.py
 "$lua_bin" tests/test_tooltip_visibility.lua
 "$lua_bin" tests/test_profession_tooltip_visibility.lua
 "$lua_bin" tests/test_profession_tooltip_profiles.lua
+"$lua_bin" tests/test_synthetic_benchmark.lua
+"$lua_bin" tests/test_skill_quality_capture.lua
+"$lua_bin" tests/test_skill_quality_runtime.lua
+"$lua_bin" tests/test_midnight_research_runtime.lua
+"$lua_bin" tests/test_disenchant_category_runtime.lua
+"$lua_bin" tests/test_midnight_pigment_runtime.lua
 "$lua_bin" tests/test_profession_simulation.lua
+"$lua_bin" tests/test_specialization_effects.lua
 "$lua_bin" tests/test_reference_fallback.lua
 "$lua_bin" tests/test_usable_field_flow.lua
 python3 tests/test_research_v3_no_disenchant.py

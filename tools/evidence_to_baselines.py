@@ -5,11 +5,13 @@ Reads every record under research/evidence/v3 (through tools/evidence_check.py,
 so broken records are already set aside with a reason) and writes
 database/evidence-baselines.lua, which tools/compile_itemdb.lua appends to
 ItemDB as ordinary "itemdb" source records. Nobody types a final number:
-drop chance = weighted drops / weighted casts, and every field carries the
-weighted cast count, so the addon's own counting math (LL:CountsEstimate)
-sets the confidence.
+drop chance = weighted occurrence counts / weighted casts. Independently,
+expected quantity = weighted total units / weighted completed operations.
+Units-only studies leave probability unknown. Explicit published means with
+unknown n are provisional source estimates: the 20-cast prior used to combine
+them is stored separately and never reported as observed casts.
 
-How records are combined, per method + input + inputs-per-cast:
+How records are combined, per method + input + inputs-per-cast + reviewed scope:
   * Copies of the same data count once: per lineage, the record with the
     most casts is kept (reposts share a lineage).
   * Stale (pre-hotfix / outdated) data counts at STALE_FACTOR (0.25), like
@@ -26,6 +28,9 @@ How records are combined, per method + input + inputs-per-cast:
   * An output a record does not list is "not reported" by that record, so
     that record adds no casts for it. List outputs you counted zero of with
     castsWithDrop 0.
+  * Recipe, expansion, input rank/rarity/class and source condition identity
+    separate incompatible cohorts. A sourced rankIDs family is one total,
+    distinct from quantities reported for individual ranks.
 
 Usage:
   python3 tools/evidence_to_baselines.py            # write the file, print a report
@@ -33,6 +38,8 @@ Usage:
   python3 tools/evidence_to_baselines.py FOLDER OUT # other folder / output (tests)
 """
 import math
+import hashlib
+import json
 import sys
 from pathlib import Path
 
@@ -112,7 +119,26 @@ def record_weight(record):
 
 
 def group_key(record):
-    return (record['method'], str(record['input']), record['inputPerCast'])
+    # A family total and a quantity for one exact rank are different measurements.
+    # Keep their identities separate even when they use the same representative ID.
+    scope = {name: record[name] for name in evidence_check.SCOPE_FIELDS if name in record}
+    families = sorted((out['item'], out['rankIDs']) for out in record['outputs'] if 'rankIDs' in out)
+    if families:
+        scope['outputFamilies'] = families
+    return (record['method'], str(record['input']), record['inputPerCast'],
+            json.dumps(scope, sort_keys=True, separators=(',', ':')) if scope else '')
+
+
+def new_accumulator():
+    return {'casts': 0.0, 'drops': 0.0, 'qtyCasts': 0.0, 'qty': 0.0,
+            'qtyPriorWeight': 0.0, 'qtyPrior': 0.0, 'qtyObserved': 0,
+            'lo': None, 'hi': None, 'real': False, 'qtyReal': False,
+            'rangeCasts': 0.0, 'rangeReal': False, 'confidence': {}}
+
+
+def quality_score(weight):
+    """Conservative ordinal support score; units alone cannot give sampling variance."""
+    return min(80, math.floor(100 * weight / (weight + 30) + 0.5)) if weight > 0 else 0
 
 
 def build(report):
@@ -149,40 +175,62 @@ def build(report):
                 continue
         lineages[record['lineage']] = (entry['id'], size, record)
     records = []
-    for (method, input_key, per_cast), lineages in sorted(groups.items()):
+    for (method, input_key, per_cast, scope_key), lineages in sorted(groups.items()):
         chosen = [lineages[name] for name in sorted(lineages)]
         notes['used'] += len(chosen)
         outputs = {}
         for record_id, size, record in chosen:
             weight = record_weight(record)
             for out in record['outputs']:
-                acc = outputs.setdefault(out['item'], {'casts': 0.0, 'drops': 0.0, 'qtyCasts': 0.0,
-                                                        'qty': 0.0, 'lo': None, 'hi': None, 'real': False})
+                acc = outputs.setdefault(out['item'], new_accumulator())
                 casts = size * weight
-                drops = (out['castsWithDrop'] if 'castsWithDrop' in out else out['chance'] * size) * weight
-                acc['casts'] += casts
-                acc['drops'] += drops
-                acc['real'] = acc['real'] or record['casts'] is not None
+                if 'castsWithDrop' in out or 'chance' in out:
+                    drops = (out['castsWithDrop'] if 'castsWithDrop' in out else out['chance'] * size) * weight
+                    acc['casts'] += casts
+                    acc['drops'] += drops
+                    acc['real'] = acc['real'] or record['casts'] is not None
                 if out.get('totalQuantity') is not None and record['casts'] is not None:
                     acc['qtyCasts'] += casts
                     acc['qty'] += out['totalQuantity'] * weight
+                    acc['qtyObserved'] += record['casts']
+                    acc['qtyReal'] = True
+                if 'averageQuantity' in out:
+                    if record['casts'] is None:
+                        acc['qtyPriorWeight'] += casts
+                        acc['qtyPrior'] += out['averageQuantity'] * casts
+                    else:
+                        acc['qtyCasts'] += casts
+                        acc['qty'] += out['averageQuantity'] * casts
+                        acc['qtyObserved'] += record['casts']
+                if 'rankIDs' in out:
+                    acc['rankIDs'] = out['rankIDs'][:]
+                    acc.setdefault('rankSources', set()).add(out['rankSource'])
                 for side, pick in (('lo', min), ('hi', max)):
                     value = out.get('min' if side == 'lo' else 'max')
                     if value is not None:
                         acc[side] = value if acc[side] is None else pick(acc[side], value)
+                if out.get('min') is not None or out.get('max') is not None:
+                    acc['rangeCasts'] += casts
+                    acc['rangeReal'] = acc['rangeReal'] or record['casts'] is not None
+                for name, score in out.get('fieldConfidence', {}).items():
+                    total, support = acc['confidence'].get(name, (0.0, 0.0))
+                    acc['confidence'][name] = (total + score * casts, support + casts)
         materials = []
         for item, acc in sorted(outputs.items()):
             materials.append(material(item, acc))
         study = f"evidence:{method}:{input_key}:x{per_cast}"
+        if scope_key:
+            study += ':scope:' + hashlib.sha256(scope_key.encode('utf-8')).hexdigest()[:12]
         row = {
             'recordID': study, 'studyID': study, 'sourceKey': 'itemdb', 'method': method,
             'profession': SUPPORTED[method], 'inputCount': per_cast, 'provisional': True,
-            'samples': round(max(acc['casts'] for acc in outputs.values()), 4),
+            'samples': round(max(max(acc['casts'], acc['qtyCasts']) for acc in outputs.values()), 4),
             'source': '; '.join(sorted({r['source'] for _, _, r in chosen})),
             'evidenceRecordIDs': [record_id for record_id, _, _ in chosen],
             'baselineStatus': 'minimum-skill counts; samples not known to be at minimum skill count at half weight (no scaling rules yet)',
             'materials': materials,
         }
+        row.update({name: chosen[0][2][name] for name in evidence_check.SCOPE_FIELDS if name in chosen[0][2]})
         minimums = {r.get('minimumSkill') for _, _, r in chosen} - {None}
         if len(minimums) == 1:
             row['evidenceMinimumSkill'] = minimums.pop()
@@ -205,7 +253,9 @@ def material(item, acc):
     chance = min(1.0, acc['drops'] / acc['casts']) if acc['casts'] > 0 else None
     status = 'measured' if acc['real'] else 'provisional'
     confidence = rate_confidence(acc['drops'], acc['casts'])
-    average = acc['qty'] / acc['qtyCasts'] if acc['qtyCasts'] > 0 else None
+    prior_weight = acc.get('qtyPriorWeight', 0)
+    quantity_weight = acc['qtyCasts'] + prior_weight
+    average = (acc['qty'] + acc.get('qtyPrior', 0)) / quantity_weight if quantity_weight > 0 else None
     lo, hi = acc['lo'], acc['hi']
     # The addon refuses an average outside chance x min .. chance x max. Counts
     # from different subsets can disagree; keep the chance and let the addon
@@ -217,13 +267,35 @@ def material(item, acc):
             average = None
     chance_r = None if chance is None else round(chance, 6)
     average_r = None if average is None else round(average, 6)
-    return {
+    overrides = acc.get('confidence', {})
+    def score(name, default):
+        total, support = overrides.get(name, (0, 0))
+        return round(total / support, 4) if support > 0 else default
+    # Existing count+chance records retain their scores. For units-only data,
+    # confidence describes source support, never a binomial posterior for units.
+    qty_confidence = confidence if acc['casts'] > 0 else quality_score(quantity_weight)
+    qty_status = 'measured' if acc.get('qtyReal', acc['real']) else 'provisional'
+    result = {
         'id': item,
-        'dropChance': field(chance_r, confidence, casts, status),
-        'expectedQuantity': field(average_r, confidence, round(acc['qtyCasts'], 4), status),
-        'minQuantity': field(lo, confidence, casts, status),
-        'maxQuantity': field(hi, confidence, casts, status),
+        'dropChance': field(chance_r, score('dropChance', confidence), casts, status),
+        'expectedQuantity': field(average_r, score('expectedQuantity', qty_confidence), round(acc['qtyCasts'], 4), qty_status),
+        'minQuantity': field(lo, score('minQuantity', confidence if acc['casts'] > 0 else quality_score(acc.get('rangeCasts', 0))),
+                             round(acc.get('rangeCasts', acc['casts']), 4), 'measured' if acc.get('rangeReal', acc['real']) else 'provisional'),
+        'maxQuantity': field(hi, score('maxQuantity', confidence if acc['casts'] > 0 else quality_score(acc.get('rangeCasts', 0))),
+                             round(acc.get('rangeCasts', acc['casts']), 4), 'measured' if acc.get('rangeReal', acc['real']) else 'provisional'),
     }
+    if average_r is not None and (prior_weight or acc['casts'] == 0):
+        result['expectedQuantity'].update({
+            'observedSamples': acc.get('qtyObserved', 0),
+            'sampleSizeKnown': acc['qtyCasts'] > 0,
+            'confidenceBasis': 'Ordinal source-support score; quantity variance was not reported',
+        })
+        if prior_weight:
+            result['expectedQuantity']['priorWeight'] = round(prior_weight, 4)
+    if 'rankIDs' in acc:
+        result['rankIDs'] = acc['rankIDs']
+        result['rankSources'] = sorted(acc.get('rankSources', set()))
+    return result
 
 
 # ---- writing Lua
@@ -261,7 +333,7 @@ def summary(report, records, notes):
     for record_id, why in notes['skipped']:
         lines.append(f'  skipped {record_id}: {why}')
     for r in records:
-        parts = [f"{m['id']} {m['dropChance'].get('value')} ({m['dropChance']['confidence']}%)" for m in r['materials']]
+        parts = [f"{m['id']} P={m['dropChance'].get('value')} E={m['expectedQuantity'].get('value')}" for m in r['materials']]
         lines.append(f"  {r['recordID']} ({r['samples']} weighted casts): " + ', '.join(parts))
     return '\n'.join(lines)
 

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "revision": "skill-quality-rules/1",
+  "reviewedOn": "2026-11-06",
+  "purpose": "Source-reviewed current Midnight output-quality calculation. These rules select the quality of a known family expectation using an exact-input Blizzard operation snapshot; they supply no extra output units, proc rate or minimum-skill normalization.",
+  "sourceClaims": [
+    {
+      "id": "blizzard-operation-quality-contract-70783",
+      "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUITypesDocumentation.lua#L170-L190",
+      "kind": "PINNED_BLIZZARD_API_CONTRACT",
+      "support": "Operation info exposes recipe identity, effective-skill components, difficulty, crafting quality and bracketing skill thresholds. This is a quality context, not a random-output distribution."
+    },
+    {
+      "id": "blizzard-exact-salvage-allocation-70783",
+      "url": "https://github.com/Gethe/wow-ui-source/blob/297d7aaaa736f346b3e036f38ee088eaf7f8c07f/Interface/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsTransaction.lua#L569-L580",
+      "kind": "PINNED_BLIZZARD_UI_CALL_PATTERN",
+      "support": "A salvage transaction identifies its exact selected input by allocation GUID. A recipe-only response does not establish the requirement for another ore or herb quality."
+    },
+    {
+      "id": "craftsim-two-quality-threshold-27.0.8",
+      "url": "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Modules/RecipeInfo/RecipeInfo.lua#L58-L69",
+      "kind": "PINNED_OPEN_SOURCE_QUALITY_MODEL",
+      "support": "The two-quality model crosses one recipe-difficulty threshold. Its optional one-point offset is a user workaround, not a universal game requirement; actual operation thresholds take priority."
+    },
+    {
+      "id": "midnight-prospect-quality-observation-2026-06-27",
+      "url": "https://us.forums.blizzard.com/en/wow/t/ever-gonna-fix-horrible-gemdust-drop-rate/2316717",
+      "kind": "FIRSTHAND_OPERATION_QUALITY_OBSERVATION",
+      "support": "A prospector reports silver results below the displayed requirement, then gold gems, glass and stone after re-equipping to 366 skill. The reported 365 requirement is not compiled as a universal constant."
+    },
+    {
+      "id": "midnight-milling-quality-boundary-2026-09-26",
+      "url": "https://us.forums.blizzard.com/en/wow/t/is-perfect-milling-intended-to-be-a-trap/2362528",
+      "kind": "FIRSTHAND_OPERATION_QUALITY_OBSERVATION",
+      "support": "A scribe reports a displayed skill requirement for upgrading low-quality herbs, with profession gear and specialization affecting effective skill. The reported requirement is context-specific and is not compiled as a constant."
+    },
+    {
+      "id": "glass-refine-ordered-quality-1307462",
+      "url": "https://www.wowhead.com/spell=1307462/refine-crystalline-glass",
+      "kind": "LIVE_RECIPE_QUALITY_ICON_MAPPING",
+      "support": "The linked reagent item 242787 carries the tier-1 quality icon; linked result 242786 carries tier-2. Ordered qualities are the reverse of numerical item-ID order."
+    },
+    {
+      "id": "stone-refine-ordered-quality-1307466",
+      "url": "https://www.wowhead.com/spell=1307466/refine-dusk-shrouded-stone",
+      "kind": "LIVE_RECIPE_QUALITY_ICON_MAPPING",
+      "support": "The linked reagent item 242788 carries the tier-1 quality icon; linked result 242789 carries tier-2."
+    },
+    {"id": "item-quality-242554", "url": "https://goldcap.gg/retail/us/items/242554", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Amani Lapis item 242554 is explicitly labeled quality rank 1 of 2."},
+    {"id": "item-quality-242722", "url": "https://goldcap.gg/retail/us/items/242722", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Amani Lapis item 242722 is explicitly labeled quality rank 2 of 2."},
+    {"id": "item-quality-242607", "url": "https://goldcap.gg/retail/us/items/242607", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Harandar Peridot item 242607 is explicitly labeled quality rank 1 of 2."},
+    {"id": "item-quality-242720", "url": "https://goldcap.gg/retail/us/items/242720", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Harandar Peridot item 242720 is explicitly labeled quality rank 2 of 2."},
+    {"id": "item-quality-242553", "url": "https://goldcap.gg/retail/us/items/242553", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Sanguine Garnet item 242553 is explicitly labeled quality rank 1 of 2."},
+    {"id": "item-quality-242723", "url": "https://goldcap.gg/retail/us/items/242723", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Sanguine Garnet item 242723 is explicitly labeled quality rank 2 of 2."},
+    {"id": "item-quality-242606", "url": "https://goldcap.gg/retail/us/items/242606", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Tenebrous Amethyst item 242606 is explicitly labeled quality rank 1 of 2."},
+    {"id": "item-quality-242721", "url": "https://goldcap.gg/retail/us/items/242721", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Tenebrous Amethyst item 242721 is explicitly labeled quality rank 2 of 2."},
+    {"id": "item-quality-242788", "url": "https://goldcap.gg/retail/us/items/242788", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Dusk-Shrouded Stone item 242788 is explicitly labeled quality rank 1 of 2."},
+    {"id": "item-quality-242789", "url": "https://goldcap.gg/retail/us/items/242789", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Dusk-Shrouded Stone item 242789 is explicitly labeled quality rank 2 of 2."},
+    {"id": "item-quality-245807", "url": "https://goldcap.gg/retail/eu/items/245807", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Powder Pigment item 245807 is explicitly labeled quality rank 1 of 2."},
+    {"id": "item-quality-245808", "url": "https://goldcap.gg/retail/eu/items/245808", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Powder Pigment item 245808 is explicitly labeled quality rank 2 of 2."},
+    {"id": "item-quality-245803", "url": "https://goldcap.gg/retail/eu/items/245803", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Argentleaf Pigment item 245803 is explicitly labeled quality rank 1 of 2."},
+    {"id": "item-quality-245804", "url": "https://goldcap.gg/retail/eu/items/245804", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Argentleaf Pigment item 245804 is explicitly labeled quality rank 2 of 2."},
+    {"id": "item-quality-245865", "url": "https://goldcap.gg/retail/eu/items/245865", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Sanguithorn Pigment item 245865 is explicitly labeled quality rank 1 of 2."},
+    {"id": "item-quality-245864", "url": "https://goldcap.gg/retail/eu/items/245864", "kind": "PUBLISHED_ITEM_QUALITY_DATA", "support": "Sanguithorn Pigment item 245864 is explicitly labeled quality rank 2 of 2."}
+  ],
+  "rules": [
+    {
+      "ruleID": "midnight-prospect-exact-input-quality/1",
+      "method": "Prospect",
+      "recipeID": 1231127,
+      "expansionID": 11,
+      "formulaID": "EXACT_INPUT_QUALITY_THRESHOLD",
+      "maxQuality": 2,
+      "inputQualityRanks": [1, 2],
+      "requireExactOperationContext": true,
+      "quantityPolicy": "PRESERVE_SELECTED_FAMILY_EXPECTATION",
+      "confidence0to100": 70,
+      "applyPolicy": "EXECUTE",
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "sourceClaimIDs": ["blizzard-operation-quality-contract-70783", "blizzard-exact-salvage-allocation-70783", "craftsim-two-quality-threshold-27.0.8", "midnight-prospect-quality-observation-2026-06-27"],
+      "outputFamilies": [
+        {"name": "Amani Lapis", "rankItemIDs": [242554, 242722], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["item-quality-242554", "item-quality-242722"]},
+        {"name": "Harandar Peridot", "rankItemIDs": [242607, 242720], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["item-quality-242607", "item-quality-242720"]},
+        {"name": "Sanguine Garnet", "rankItemIDs": [242553, 242723], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["item-quality-242553", "item-quality-242723"]},
+        {"name": "Tenebrous Amethyst", "rankItemIDs": [242606, 242721], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["item-quality-242606", "item-quality-242721"]},
+        {"name": "Dusk-Shrouded Stone", "rankItemIDs": [242788, 242789], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["stone-refine-ordered-quality-1307466", "item-quality-242788", "item-quality-242789"]},
+        {"name": "Crystalline Glass", "rankItemIDs": [242787, 242786], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["glass-refine-ordered-quality-1307462"]}
+      ]
+    },
+    {
+      "ruleID": "midnight-mill-exact-input-quality/1",
+      "method": "Mill",
+      "recipeID": 1269575,
+      "expansionID": 11,
+      "formulaID": "EXACT_INPUT_QUALITY_THRESHOLD",
+      "maxQuality": 2,
+      "inputQualityRanks": [1, 2],
+      "requireExactOperationContext": true,
+      "quantityPolicy": "PRESERVE_SELECTED_FAMILY_EXPECTATION",
+      "confidence0to100": 60,
+      "applyPolicy": "EXECUTE",
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "sourceClaimIDs": ["blizzard-operation-quality-contract-70783", "blizzard-exact-salvage-allocation-70783", "craftsim-two-quality-threshold-27.0.8", "midnight-milling-quality-boundary-2026-09-26"],
+      "outputFamilies": [
+        {"name": "Powder Pigment", "rankItemIDs": [245807, 245808], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["item-quality-245807", "item-quality-245808"]},
+        {"name": "Argentleaf Pigment", "rankItemIDs": [245803, 245804], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["item-quality-245803", "item-quality-245804"]},
+        {"name": "Sanguithorn Pigment", "rankItemIDs": [245865, 245864], "rankMappingStatus": "SOURCE_CHECKED_ORDER", "sourceClaimIDs": ["item-quality-245865", "item-quality-245864"]}
+      ]
+    }
+  ],
+  "held": [
+    {"method": "Mill", "outputFamily": "Mana Lily Pigment", "reason": "Published rank labels conflict between item-data sites; no primary rank mapping has yet resolved the order."},
+    {"method": "Prospect", "outputFamily": "Flawless Midnight gems", "reason": "Complete ordered quality mappings have not yet been source checked."},
+    {"method": "Prospect", "outputFamily": "Eversong Diamond", "reason": "Specialization unlock and proc rate require separate evidence; this rankless conditional output is not a quality threshold."},
+    {"method": "Disenchant", "reason": "Current skill-to-output rank probabilities and quantity distributions remain unmeasured; do not apply a deterministic crafting-quality boundary."},
+    {"expansionID": 10, "reason": "Historical TWW milling thresholds and quantity reports need patch-specific validation; do not extrapolate the current Midnight model."}
+  ],
+  "heldResearchArtifacts": [
+    "research/mechanics/skill-yield-milling-2026-11-06.json",
+    "research/mechanics/skill-yield-disenchanting-2026-11-06.json"
+  ]
+}

@@ -27,13 +27,13 @@ order('invalid-saved-value',{20,10,30,40})
 C_Item={GetItemInfo=function(id)return ({[10]='Zinc',[20]='amber',[30]='Copper'})[id]end}
 order('name',{20,30,10,40})
 local model={inputCount=5,materials={a,b},confidence=50,value=12}
-local function render(show)
+local function render(show,method)
     LL.db.showAverageQuantity=show
     local tip={lines={}}
     function tip:AddLine(s)self.lines[#self.lines+1]=s end
     function tip:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
     LL:AppendRecommendationTooltip(tip,{action='P',facts={id=1,classID=7,count=5},count=5,
-        conversionOptions={{name='Prospect',letter='P',available=true,value=12,yieldModel=model}}})
+        conversionOptions={{name=method or 'Prospect',letter='P',available=true,value=12,yieldModel=model}}})
     return table.concat(tip.lines,'\n')
 end
 local hidden=render(nil)
@@ -62,6 +62,18 @@ assert(not render(false):find('skill 104',1,true))
 LL.db.showProfessionDetails=true
 assert(render(false):find('skill 104',1,true) and render(false):find('Tester (live)',1,true))
 LL.db.showProfessionDetails=false;LL.db.showResearchDetails=false
+-- Simulated and disenchanting results honor the same saved preference.
+-- Empirical confidence must not be claimed for assumed material quantities.
+model.syntheticBenchmark=true;model.confidence=0;a.confidence=0;b.confidence=0
+LL.db.showMaterialConfidence=true
+local assumed=render(false)
+assert(assumed:find('Simulated assumptions',1,true) and not assumed:find('0.375',1,true))
+assert(render(true):find('0.375',1,true),'simulated averages appear only when enabled')
+assert(not assumed:find('Confidence 0%',1,true) and not assumed:find('(0%)',1,true),
+    'synthetic quantities have assumptions, not measured numeric confidence')
+model.syntheticBenchmark=nil
+assert(not render(false,'Disenchant'):find('0.375',1,true),'disenchanting cannot override hidden averages')
+assert(render(true,'Disenchant'):find('0.375',1,true),'disenchanting follows the enabled average preference')
 -- Sort the complete list before the normal twelve-row limit is applied.
 LL.db.tooltipOutputSort='value'
 local many={}

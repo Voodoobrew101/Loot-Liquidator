@@ -1,0 +1,457 @@
+{
+  "schemaVersion": 1,
+  "researchDate": "2026-11-06",
+  "topic": "Disenchanting: skill, quality distribution, quantity specialization and empirical reference cohorts",
+  "status": "RESEARCH_ONLY_NO_RUNTIME_OR_ORIGINAL_EVIDENCE_CHANGES",
+  "retrieval": {
+    "method": "Repository evidence inspected; Reddit, Method and Wowhead trait/guide pages re-read with search_service_web_run. Open addon first read via web, then verified against a pinned shallow clone.",
+    "fallbackReason": "Firecrawl quota exhausted, as reported by parent agent.",
+    "courtlyWristsLimitation": "Wowhead item page was blocked on this retrieval. Its existing repository transcription is identified explicitly, not claimed as independently re-read.",
+    "originalEvidenceEdited": false,
+    "openAddonRevision": "4a7903820d45262994ecd689dc4edbcf0235f8c8",
+    "openAddonVersion": "1.0.2; Interface120001",
+    "quotedWordsPerSourceMaximum": 24
+  },
+  "findings": [
+    "Current Midnight guides distinguish skill-driven output quality from quantity/additional-material perks in the matching rarity specialization. No retrieved controlled Midnight cohort isolates a numerical skill-to-total-quantity slope.",
+    "The TWW 3x500 comparison reports the same pooled dust average, 2.72 per disenchant, across different skill/tool setups; its rank percentages have an unresolved denominator and cannot calibrate rank-specific probabilities.",
+    "Exact Midnight skilled-reference data exist: one 1000-item Courtly Wrists cohort yielded 629 R1 and 660 R2 Radiant Shards, plus separately listed bonus materials. It is a max-spec reference, not an unskilled baseline or a skill curve.",
+    "A TWW same-author 4000/3000 comparison at reported skill145 shows R3 units per cast falling 0.995 to0.688 across dates while pooled dust stays near2.8. Patch/time applicability must precede skill calibration.",
+    "An open addon hardcodes candidate skill milestones and fallback probabilities, but declares approximate/prelaunch data. Its 25-skill bands are storage buckets for personal observations, not established game thresholds.",
+    "No universal linear skill multiplier, deterministic quality cutoff for disenchanting, maximum-rank R2 probability, or numerical extra-material proc rate is established by these sources."
+  ],
+  "sources": [
+    {
+      "id": "midnight-method",
+      "url": "https://www.method.gg/guides/midnight-enchanting-profession-guide",
+      "author": "Roguery",
+      "published": "2026-03-05",
+      "sourceType": "SECONDARY_GUIDE",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "Skill doesn’t increase the amount of reagents you receive, just the quality.",
+      "claims": {
+        "skillDimension": "quality",
+        "dustDelivererDimension": "quantity",
+        "recommendedStarterKnowledge": {"Disenchanting Delegate": 5, "Dust Deliverer": 30},
+        "baseProfessionCap": 100,
+        "bloodElfRacialSkill": 5,
+        "kulTiranRacialSkill": 2
+      },
+      "assessment": "Qualitative mechanics claim without output totals or skill intervention. Does not supply a coefficient, probability or plateau location."
+    },
+    {
+      "id": "midnight-wowhead-delegate",
+      "url": "https://www.wowhead.com/profession-trait/disenchanting-delegate-107649",
+      "sourceType": "CURRENT_INDEXED_TRAIT_TEXT",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "gaining +1 Skill per point in this Specialization when disenchanting Midnight equipment.",
+      "observations": {"traitID": 107649, "skillPerInvestedPoint": 1, "scope": "Midnight equipment"},
+      "assessment": "Supports per-point skill and scope, not the entire milestone table, API node identity, quantity coefficient or rank probability."
+    },
+    {
+      "id": "midnight-wowhead-dust",
+      "url": "https://www.wowhead.com/profession-trait/dust-deliverer-107648",
+      "sourceType": "CURRENT_INDEXED_TRAIT_TEXT",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "Learn the art of Disenchanting Uncommon Midnight equipment, gaining +1 Skill per point",
+      "observations": {"traitID": 107648, "skillPerInvestedPoint": 1, "equipmentRarity": "Uncommon", "scope": "Midnight"},
+      "assessment": "Per-point skill is rarity-specific. Does not quantify the additional dust perk."
+    },
+    {
+      "id": "midnight-wowhead-shard",
+      "url": "https://www.wowhead.com/profession-trait/shard-supplier-107647",
+      "sourceType": "CURRENT_INDEXED_TRAIT_TEXT",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "Practice your ritual for disenchanting Rare Midnight equipment, gaining +1 Skill per point",
+      "observations": {"traitID": 107647, "skillPerInvestedPoint": 1, "equipmentRarity": "Rare", "scope": "Midnight"},
+      "assessment": "Per-point skill is rarity-specific. Does not quantify extra shards or other materials."
+    },
+    {
+      "id": "midnight-wowhead-crystal",
+      "url": "https://www.wowhead.com/profession-trait/crystal-collector-107646",
+      "sourceType": "CURRENT_INDEXED_TRAIT_TEXT",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "improving the quality of materials you receive when breaking down Epic items.",
+      "observations": {"traitID": 107646, "equipmentRarity": "Epic", "numericSkillPerPointInRetrievedTooltip": null},
+      "assessment": "Unlike the other retrieved base tooltips, this text does not itself state +1 skill per point. Do not attribute that numerical claim to this tooltip."
+    },
+    {
+      "id": "midnight-wowhead-calculator",
+      "url": "https://www.wowhead.com/profession-tree-calc/enchanting",
+      "sourceType": "CURRENT_INDEXED_CALCULATOR",
+      "retrievalStatus": "SEARCH_INDEX_TEXT; DIRECT_PAGE_JAVASCRIPT_SHELL",
+      "supportingPassage": "+5 Skill when disenchanting Midnight equipment.",
+      "observations": {"rootLearningSkillBonus": 5, "rootInvestedKnowledgeCap": 30, "eachRarityChildInvestedKnowledgeCap": 30},
+      "assessment": "Learning bonus and invested knowledge are distinct from raw C_Traits rank. Retrieved index does not expose every milestone or resolve the open addon's rank31 versus30-point convention."
+    },
+    {
+      "id": "midnight-wowhead-specializations",
+      "url": "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations",
+      "sourceType": "SECONDARY_GUIDE",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "Disenchanting is not affected by Profession Stats; however, it is affected by your overall Skill level.",
+      "claims": {
+        "applicableTree": "Disenchanting Delegate",
+        "resourcefulnessMulticraftIngenuityApplyToDisenchanting": false,
+        "Dust Deliverer": "Skill for uncommon equipment and more Eversinging Dust.",
+        "Shard Supplier": "Skill for rare equipment, more Radiant Shards and additional materials.",
+        "Crystal Collector": "Skill for epic equipment, Dawn Crystal quality and more additional materials."
+      },
+      "assessment": "Supports separating quality, main-material quantity and bonus-material outputs. No numerical proc rate or multiplier is supplied. Shattering/crafting stat rules must be assessed separately."
+    },
+    {
+      "id": "tww-three-500",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f1l4i2/",
+      "author": "Sweaty-Painter-1043",
+      "published": "2024-08-26",
+      "sourceType": "PRIMARY_SELF_REPORTED_COMPARISON",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "all 3 test return 2.72 dust on average",
+      "repositoryEvidence": "research/v3/evidence/war-within/2026-11-01T1916-r2-stormdust-skill-cohorts.jsonl",
+      "recordIDs": ["war-within-20261101-1916-005", "war-within-20261101-1916-006", "war-within-20261101-1916-007", "war-within-20261101-1916-008", "war-within-20261101-1916-009"],
+      "assessment": "Same author, three setups, max tree claimed. Item identities/mix and dates absent; skill and equipment change together. Dust average has a completed-cast denominator, while rank-rate denominator and shard/dust wording are ambiguous. Possible cross-post1f2h7ih is not independent evidence."
+    },
+    {
+      "id": "midnight-courtly-1000",
+      "url": "https://www.wowhead.com/item=239671/courtly-wrists",
+      "author": "MikiMM",
+      "published": null,
+      "sourceType": "PRIMARY_TOTALS_RETAINED_IN_REPOSITORY",
+      "retrievalStatus": "ORIGINAL_ITEM_PAGE_BLOCKED; ARCHIVAL_TRANSCRIPTION_USED",
+      "supportingPassage": "Radiant Shard (Rank 1) x629",
+      "repositoryEvidence": "research/v3/evidence/midnight/2026-11-02T1105-miststalker-and-courtly-de-milling.jsonl",
+      "recordIDs": ["midnight-20261102-110512", "midnight-20261102-110513", "midnight-20261102-110514", "midnight-20261102-110515", "midnight-20261102-110516", "midnight-20261102-110517", "midnight-20261102-110518"],
+      "assessment": "Exact totals and denominator for one item and max named paths. Actual effective skill, gear, item bonus/level, date and hit counts absent. Potential overlap with2261-operation Wowhead Looter aggregate unknown; do not pool."
+    },
+    {
+      "id": "midnight-aspalar-rare",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1rpwov0/disenchantingshard_help/",
+      "author": "Aspalar",
+      "published": "2026-03-10",
+      "sourceType": "PRIMARY_SELF_REPORTED_AVERAGES",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "max enchanting, max skill from tools, and max KP for blue disenchanting.",
+      "repositoryEvidence": "research/v3/evidence/midnight/2026-11-02T0813-aspalar-rare-shard-averages.jsonl",
+      "assessment": "Approximately5000 operations, no exact total or input identity. The source's stated total1.45 conflicts with its rank means0.42+0.97=1.39; preserve discrepancy and do not force a fitted distribution."
+    },
+    {
+      "id": "tww-september-824-and-20k",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fkhr8j/",
+      "authors": ["RaziarEdge", "Aspalar"],
+      "published": "2024-09-20",
+      "sourceType": "PRIMARY_TOTALS_AND_SEPARATE_COMMENTER_AVERAGES",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "the results from 824 greens disenchanted from last week",
+      "repositoryEvidence": ["research/v3/evidence/war-within/2026-11-02T0324-historical-de-skill-and-r1-bismuth.jsonl", "research/v3/evidence/war-within/2026-11-02T1219-september-de-overlap-reference-and-blue-bracer-test.jsonl"],
+      "assessment": "Different authors, input mix, gear and unknown patch windows. Both descriptive; not a controlled paired skill intervention.20k averages may overlap Aspalar's roughly21k pre-change report elsewhere. Do not add those denominators as independent data."
+    },
+    {
+      "id": "tww-same-skill-date-comparison",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fpswuz/",
+      "author": "Drazsyker",
+      "published": "2024-09-28",
+      "sourceType": "PRIMARY_SELF_REPORTED_BEFORE_AFTER_AVERAGES",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "145/100 with BE racial",
+      "repositoryEvidence": "research/v3/evidence/war-within/2026-11-02T0324-historical-de-skill-and-r1-bismuth.jsonl",
+      "assessment": "Reported skill constant; input mix, specialization, exact build and operation dates incomplete. Apparent hotfix is a player inference, not confirmed Blizzard patch evidence. Demonstrates serious time-window confounding of inferred skill effects."
+    },
+    {
+      "id": "tww-skill-allocation-claim",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1ftjlf9/",
+      "author": "RaziarEdge",
+      "published": "2024-10-01",
+      "sourceType": "PRIMARY_PLAYER_MECHANICS_CLAIM_WITHOUT_DATASET",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "specializing in greens will give you +65 skill",
+      "observations": {"Designated DisenchanterMaxSkillClaim": 65, "Uncommon UtilitarianMaxSkillClaim": 80, "sumClaim": 145, "investmentClaim": {"root": 30, "matchingChild": 30}},
+      "assessment": "Historical TWW tree, not Midnight Delegate. Author's illustrative R3 percentages use a might qualifier and no denominator; they are not a calibrated skill-response dataset."
+    },
+    {
+      "id": "midnight-knowledge-control",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1s7nfcw/kp_from_disenchanting_rares_data_n5294/",
+      "author": "Insomnist",
+      "published": "2026-03-30",
+      "sourceType": "PRIMARY_KNOWLEDGE_ITEM_STUDY",
+      "retrievalStatus": "DIRECTLY_READ",
+      "supportingPassage": "I have no points in disenchanting specializations",
+      "repositoryEvidence": "research/v3/evidence/midnight/2026-11-01T1812-de-kp-and-historical-anomalies.jsonl",
+      "assessment": "Controlled profession-level comparison concerns bound Knowledge items, not auctionable dust/shards/crystals. Exclude from market-material skill/quantity calibration. Skill subgroups overlap the pooled Glimmering Powder group."
+    },
+    {
+      "id": "advisor-data",
+      "url": "https://github.com/brandanq2/disenchanting-advisor/blob/4a7903820d45262994ecd689dc4edbcf0235f8c8/Data/DisenchantData.lua",
+      "sourceType": "OPEN_ADDON_MODEL",
+      "retrievalStatus": "DIRECTLY_READ_AND_VERIFIED_IN_PINNED_CLONE",
+      "supportingPassage": "entries are still approximate",
+      "assessment": "Hardcoded node bonuses and prelaunch fallback rates are evidence of this addon's assumptions. No numerical proc rate, controlled test dataset or fitted skill curve accompanies the table."
+    },
+    {
+      "id": "advisor-tracking",
+      "url": "https://github.com/brandanq2/disenchanting-advisor/blob/4a7903820d45262994ecd689dc4edbcf0235f8c8/Data/Tracking.lua",
+      "sourceType": "OPEN_ADDON_OBSERVATION_PIPELINE",
+      "retrievalStatus": "DIRECTLY_READ_AND_VERIFIED_IN_PINNED_CLONE",
+      "supportingPassage": "For Midnight, bucket by enchanting skill tier (25-point bands).",
+      "assessment": "Source bins observations; it does not establish25-point game breakpoints. Reads raw currentRank as points, then sums per-point and hardcoded milestone skill; validate free-rank/API identity before reusing."
+    }
+  ],
+  "numericCohorts": [
+    {
+      "id": "tww-three-500",
+      "sourceID": "tww-three-500",
+      "expansion": "The War Within",
+      "unit": "pooled Storm Dust units per completed disenchant",
+      "setups": [
+        {"completedCasts": 500, "baseSkillReported": 50, "toolsReported": "none", "specializationReported": "max DE tree", "pooledMeanReported": 2.72, "effectiveSkill": null},
+        {"completedCasts": 500, "baseSkillReported": 100, "toolsReported": "two blue", "specializationReported": "max DE tree", "pooledMeanReported": 2.72, "effectiveSkill": null},
+        {"completedCasts": 500, "baseSkillReported": "max; Blood Elf", "toolsReported": "two blue and one green", "specializationReported": "max DE tree", "pooledMeanReported": 2.72, "effectiveSkill": null}
+      ],
+      "otherReportedRates": {
+        "r3AtSkill50": 0.10,
+        "r3AtSkill100": 0.21,
+        "r3AtMaxBloodElfSetup": 0.21,
+        "maxSetupRankFractionsReported": {"R1": 0.38, "R2": 0.41, "R3": 0.21},
+        "laterMaxSetup": {"completedCasts": 180, "R3RateReportedLowerBoundExclusive": 0.31},
+        "rateDenominator": "UNKNOWN: units share versus casts with rank not stated; earlier sentence says shards while later sentences say dust"
+      },
+      "comparability": {
+        "inputItemIDs": null,
+        "inputRarityMix": null,
+        "sameInputMixConfirmed": false,
+        "samePatchConfirmed": false,
+        "exactSpecializationPoints": null,
+        "exactRankTotals": null,
+        "castsWithDropByRank": null,
+        "totalQuantityMustNotBeImputedFromRoundedMean": true
+      },
+      "usableFor": "Historical descriptive pooled-quantity comparison; motivates quality redistribution and a plateau hypothesis.",
+      "notUsableFor": "Current Midnight curve, exact plateau, deterministic thresholds, per-rank probability or linear skill slope."
+    },
+    {
+      "id": "midnight-courtly-skilled-reference",
+      "sourceID": "midnight-courtly-1000",
+      "expansion": "Midnight",
+      "inputItemID": 239671,
+      "inputName": "Courtly Wrists",
+      "completedCasts": 1000,
+      "inputsPerCast": 1,
+      "effectiveSkill": null,
+      "specializationReported": "Disenchanting Delegate and Shard Supplier maxed",
+      "outputs": [
+        {"itemID": 243602, "name": "Radiant Shard", "rank": 1, "units": 629, "EUnitsPerCast": 0.629},
+        {"itemID": 243603, "name": "Radiant Shard", "rank": 2, "units": 660, "EUnitsPerCast": 0.660},
+        {"itemID": 236963, "name": "Bright Linen", "rank": 1, "units": 71, "EUnitsPerCast": 0.071},
+        {"itemID": 236761, "name": "Tranquility Bloom", "rank": 1, "units": 60, "EUnitsPerCast": 0.060},
+        {"itemID": 237359, "name": "Refulgent Copper Ore", "rank": 1, "units": 43, "EUnitsPerCast": 0.043},
+        {"itemID": 238513, "name": "Void-Tempered Scales", "rank": 1, "units": 72, "EUnitsPerCast": 0.072},
+        {"itemID": 238511, "name": "Void-Tempered Leather", "rank": 1, "units": 43, "EUnitsPerCast": 0.043}
+      ],
+      "derived": {"pooledShardUnits": 1289, "pooledShardEUnitsPerCast": 1.289, "R2ShareOfShardUnits": 0.5120248254, "bonusMaterialUnitsListed": 289, "listedBonusMaterialEUnitsPerCast": 0.289},
+      "comparability": {"allRowsShareSame1000Casts": true, "countingRowsAs7000CastsIsInvalid": true, "inputRank": null, "itemBonusOrLevel": null, "baseSkill": null, "gear": null, "patchOrDate": null, "castsWithDrop": null, "stackHistogram": null},
+      "usableFor": "Item-specific skilled reference vector, with provenance and known uncertainty.",
+      "notUsableFor": "Unskilled baseline, universal rare-gear yield, knowledge proc probability, per-rank hit probability, or skill/spec multiplier. Bonus units do not reveal number of proc events."
+    },
+    {
+      "id": "midnight-aspalar-skilled-reference",
+      "sourceID": "midnight-aspalar-rare",
+      "expansion": "Midnight",
+      "completedCasts": null,
+      "approximateCastsReported": 5000,
+      "inputItemID": null,
+      "inputRarity": "Rare",
+      "effectiveSkill": null,
+      "setupReported": "Blood Elf, max Enchanting, max skill from tools, max KP for blue disenchanting",
+      "meansReported": {"R1RadiantShardUnitsPerCast": 0.42, "R2RadiantShardUnitsPerCast": 0.97, "pooledShardUnitsPerCastAsWritten": 1.45},
+      "derivedRankSum": 1.39,
+      "sourceArithmeticConflict": true,
+      "usableFor": "Qualitative cross-check that skilled rare disenchanting can exceed one shard per cast; retain separate source means with warning.",
+      "notUsableFor": "Precise pooled total, rank probabilities, exact n weighting or a matched skill comparison."
+    },
+    {
+      "id": "tww-raziar-824",
+      "sourceID": "tww-september-824-and-20k",
+      "expansion": "The War Within",
+      "author": "RaziarEdge",
+      "completedCasts": 824,
+      "inputRarity": "Uncommon",
+      "inputItemID": null,
+      "skillReported": {"base": 98, "equipmentModifier": 24, "basePlusEquipment": 122},
+      "effectiveSkillIncludingSpecialization": null,
+      "specializationPointsReported": {"Designated Disenchanter": 30, "matchingUncommonChild": 30},
+      "outputs": [
+        {"itemID": 219946, "name": "Storm Dust", "rank": 1, "units": 718, "EUnitsPerCast": 0.8713592233},
+        {"itemID": 219947, "name": "Storm Dust", "rank": 2, "units": 1012, "EUnitsPerCast": 1.2281553398},
+        {"itemID": 219948, "name": "Storm Dust", "rank": 3, "units": 604, "EUnitsPerCast": 0.7330097087}
+      ],
+      "derived": {"pooledUnits": 2334, "pooledEUnitsPerCast": 2.8325242718, "rankUnitShares": {"R1": 0.3076263925, "R2": 0.4335904027, "R3": 0.2587832048}},
+      "pooledMeanAsWritten": 2.83333,
+      "sourceSmallArithmeticConflict": true,
+      "pooledObservedPositiveStackRangeReported": {"min": 1, "max": 6},
+      "laterSetupWithoutMatchedOutcomeDataset": {"base": 100, "equipmentModifier": 34},
+      "usableFor": "Exact historical rank-specific E vector at the reported setup.",
+      "notUsableFor": "Per-rank hit probabilities, rank-specific min/max, paired skill intervention or current Midnight values."
+    },
+    {
+      "id": "tww-aspalar-20k",
+      "sourceID": "tww-september-824-and-20k",
+      "expansion": "The War Within",
+      "author": "Aspalar",
+      "completedCasts": null,
+      "approximateCastsReported": 20000,
+      "inputRarity": "Uncommon",
+      "inputItemID": null,
+      "skillReported": 105,
+      "toolsReported": "all blue",
+      "exactEquipmentModifier": null,
+      "specializationPointsReported": null,
+      "effectiveSkillIncludingSpecialization": null,
+      "rankEUnitsPerCastReported": {"R1": 0.72, "R2": 1.10, "R3": 0.99},
+      "pooledEUnitsPerCastReported": 2.81,
+      "rankUnitSharesReportedRoundedPercent": {"R1": 25, "R2": 39, "R3": 35},
+      "usableFor": "Separate historical skilled-reference average; possible overlap with approximately21000 pre-change report.",
+      "notUsableFor": "An independent extra20k denominator when pooling other Aspalar reports, or causal delta against the824-item other-author cohort."
+    },
+    {
+      "id": "tww-same-skill-time-window",
+      "sourceID": "tww-same-skill-date-comparison",
+      "expansion": "The War Within",
+      "skillReportedBoth": "145/100 including Blood Elf racial; specialization contribution not specified",
+      "inputItemID": null,
+      "specializationPointsReported": null,
+      "before": {"completedCasts": 4000, "dateWindow": "before2024-09-24", "rankEUnitsPerCastReported": {"R1": 0.730, "R2": 1.059, "R3": 0.995}, "pooledMeanDerived": 2.784},
+      "after": {"completedCasts": 3000, "dateWindow": "today/yesterday relative to2024-09-28 comment", "rankEUnitsPerCastReported": {"R1": 0.816, "R2": 1.336, "R3": 0.688}, "pooledMeanDerived": 2.840},
+      "derivedRatiosAfterOverBefore": {"R3EUnitsPerCast": 0.6914572864, "pooledEUnitsPerCast": 1.0201149425},
+      "usableFor": "Patch/time-window confounding warning: approximately31% R3 decline at reported constant skill, with similar pooled quantity.",
+      "notUsableFor": "Confirmed hotfix claim, skill-response slope, exact output totals from rounded averages or cross-expansion adjustment."
+    },
+    {
+      "id": "midnight-kp-skill-control-excluded",
+      "sourceID": "midnight-knowledge-control",
+      "expansion": "Midnight",
+      "outputCategory": "bound profession Knowledge items, not auctionable disenchant materials",
+      "specializationPointsReported": 0,
+      "skillSubgroups": [
+        {"skillRange": [90, 100], "completedCasts": 626, "GlimmeringPowderKnowledgeItems": 197, "reportedRatePercent": 31.47},
+        {"skillRange": [50, 60], "completedCasts": 3013, "GlimmeringPowderKnowledgeItems": 904, "reportedRatePercent": 30.00}
+      ],
+      "pooledOverlappingSummary": {"completedCasts": 5294, "KnowledgeItems": 1607, "reportedRatePercent": 30.36},
+      "usableFor": "Knowledge-item research only; broadly similar KP rates across these profession-level groups.",
+      "notUsableFor": "Skill-to-dust/shard/crystal yield or quantity specialization. Do not add subgroup n to pooled n."
+    }
+  ],
+  "openAddonModel": {
+    "repository": "https://github.com/brandanq2/disenchanting-advisor",
+    "sourceIDs": ["advisor-data", "advisor-tracking"],
+    "status": "CANDIDATE_MODEL_NOT_CURRENT_GAME_VALIDATION",
+    "skillFormulaAsImplemented": "profession skillLevel + skillModifier + raw node currentRank * perPointSkill + every satisfied hardcoded flat-skill milestone; include matching-rarity child only",
+    "scope": "Midnight expansionID11; main node all equipment rarities, child qualityFilters2/3/4",
+    "nodeTable": [
+      {"pathIDClaimed": 107649, "name": "Disenchanting Delegate", "qualityFilter": null, "perRawRankSkill": 1, "flatMilestonesAsImplemented": [{"rawRank": 1, "skill": 5}, {"rawRank": 10, "skill": 5}, {"rawRank": 20, "skill": 10}, {"rawRank": 30, "skill": 20}], "computedSkillAtRawRank30": 70},
+      {"pathIDClaimed": 107648, "name": "Dust Deliverer", "qualityFilter": 2, "perRawRankSkill": 1, "flatMilestonesAsImplemented": [{"rawRank": 1, "skill": 5}, {"rawRank": 5, "skill": 5}, {"rawRank": 10, "skill": 5}, {"rawRank": 15, "skill": 5}, {"rawRank": 25, "skill": 10}, {"rawRank": 30, "skill": 20}], "computedSkillAtRawRank30": 80},
+      {"pathIDClaimed": 107647, "name": "Shard Supplier", "qualityFilter": 3, "perRawRankSkill": 1, "flatMilestoneTable": "same as Dust Deliverer", "computedSkillAtRawRank30": 80},
+      {"pathIDClaimed": 107646, "name": "Crystal Collector", "qualityFilter": 4, "perRawRankSkill": 1, "flatMilestoneTable": "same as Dust Deliverer", "computedSkillAtRawRank30": 80}
+    ],
+    "nonSkillMilestoneComments": [
+      {"node": "Dust Deliverer", "rawRankClaimed": 20, "effect": "chance of bonus Eversinging Dust", "procProbability": null, "procQuantity": null},
+      {"node": "Shard Supplier", "rawRankClaimed": 20, "effect": "chance of bonus Radiant Shards", "procProbability": null, "procQuantity": null},
+      {"node": "Crystal Collector", "rawRankClaimed": 20, "effect": "bonus native magical essences", "procProbability": null, "procQuantity": null}
+    ],
+    "criticalRankCaveat": "Source comments maxRanks31, while public calculator shows30 invested KP and a free learning bonus. The code calls currentRank actual invested points without resolving the free rank.70/80 above are arithmetic at rawRank30, not confirmed actual max-investment totals. Verify client pathID/nodeID mapping, free ranks and milestone descriptions before applying.",
+    "unlockOrderCommentCaveat": "Source comments assign Rare/Dust/Epic to root5/15/25; public starter guide selects Dust at5. Do not hardcode that order as a universal fixed child unlock.",
+    "skillStorage": {"bucketFormula": "floor(effectiveSkill/25)*25", "bucketWidth": 25, "gameThresholdEvidence": false, "sourceCommentStaleUpperBound": 100, "actualCodeUpperClamp": null, "midnightKey": "expansionID_quality_skillTier", "twwKey": "expansionID_quality", "minimumPersonalObservationsBeforeUse": 10},
+    "midnightFallbackProbabilityTable": {
+      "sourceWindow": "community testing February2026 prelaunch, explicitly approximate",
+      "skillDependent": false,
+      "green": [{"itemID": 243600, "probability": 0.90, "conditionalMin": 1, "conditionalMax": 2}, {"itemID": 243599, "probability": 0.10, "conditionalMin": 1, "conditionalMax": 2}],
+      "blue": [{"itemID": 243603, "probability": 0.45, "conditionalMin": 1, "conditionalMax": 1}, {"itemID": 243602, "probability": 0.45, "conditionalMin": 1, "conditionalMax": 1}, {"itemID": 243600, "probability": 0.10, "conditionalMin": 1, "conditionalMax": 3}],
+      "epic": [{"itemID": 243606, "probability": 0.75, "conditionalMin": 1, "conditionalMax": 1}, {"itemID": 243605, "probability": 0.25, "conditionalMin": 1, "conditionalMax": 1}],
+      "internalCommentConflicts": ["Green comment mentions approximately10% chance without a clear target, beside R2=.90/R1=.10.", "Blue comment says approximately50% shard, while implemented shard probabilities sum to.90."]
+    },
+    "twwFallbackProbabilityTable": {"skillDependent": false, "rankProbabilitiesAllRarities": {"Q3": 0.50, "Q2": 0.35, "Q1": 0.15}, "dustConditionalRanges": {"Q3": [1, 2], "Q2": [1, 3], "Q1": [1, 3]}, "shardAndCrystalConditionalRangeAllRanks": [1, 1], "sourceStatus": "Quality ratios explicitly estimates"},
+    "applicability": "Useful to locate candidate milestones, APIs and observation dimensions. Fallback probabilities, bucket edges and candidate skill arithmetic must not become verified Loot Liquidator baseline rules."
+  },
+  "narrowRuleCandidates": [
+    {
+      "id": "tww-de-three500-pooled-quantity-reference",
+      "runtimeAdmissible": false,
+      "supportingSourceIDs": ["tww-three-500"],
+      "dimension": "POOLED_DUST_EXPECTATION_AT_REPORTED_SETUPS",
+      "method": "Disenchant",
+      "expansionID": 10,
+      "formulaOrObservation": "E[Storm Dust units per completed disenchant] reported as 2.72 in each of three separate 500-cast setups.",
+      "cohorts": [
+        {"completedCasts": 500, "baseSkillReported": 50, "tools": "none", "specialization": "max DE tree claimed", "pooledEUnitsPerCast": 2.72},
+        {"completedCasts": 500, "baseSkillReported": 100, "tools": "two blue", "specialization": "max DE tree claimed", "pooledEUnitsPerCast": 2.72},
+        {"completedCasts": 500, "baseSkillReported": "max Blood Elf", "tools": "two blue and one green", "specialization": "max DE tree claimed", "pooledEUnitsPerCast": 2.72}
+      ],
+      "exactLimits": ["Historical August 2024 only; no current patch bridge.", "Input IDs, rarity/type mix and effective skill including specialization unknown.", "Skill and gear differ together, and input comparability is unproven.", "Reported rounded mean does not establish exact dust totals or per-rank probabilities.", "Does not identify a skill-to-quantity coefficient, deterministic quality threshold, or zero-skill baseline."],
+      "holdReason": "Descriptive constant pooled mean across reported setups; no controlled numerical skill-response curve or exact input/patch scope."
+    },
+    {
+      "id": "midnight-courtly1000-maxspec-observed-E-vector",
+      "runtimeAdmissible": false,
+      "supportingSourceIDs": ["midnight-courtly-1000"],
+      "dimension": "SKILLED_ITEM_SPECIFIC_REFERENCE_EXPECTATION",
+      "method": "Disenchant",
+      "expansionID": 11,
+      "inputItemID": 239671,
+      "completedCasts": 1000,
+      "condition": "Disenchanting Delegate and Shard Supplier maxed; actual effective skill, gear and item bonus/level not reported.",
+      "cohortVector": [
+        {"outputItemID": 243602, "outputRank": 1, "totalUnits": 629, "EUnitsPerCast": 0.629},
+        {"outputItemID": 243603, "outputRank": 2, "totalUnits": 660, "EUnitsPerCast": 0.660},
+        {"outputItemID": 236963, "outputRank": 1, "totalUnits": 71, "EUnitsPerCast": 0.071},
+        {"outputItemID": 236761, "outputRank": 1, "totalUnits": 60, "EUnitsPerCast": 0.060},
+        {"outputItemID": 237359, "outputRank": 1, "totalUnits": 43, "EUnitsPerCast": 0.043},
+        {"outputItemID": 238513, "outputRank": 1, "totalUnits": 72, "EUnitsPerCast": 0.072},
+        {"outputItemID": 238511, "outputRank": 1, "totalUnits": 43, "EUnitsPerCast": 0.043}
+      ],
+      "exactLimits": ["All seven outputs share the same 1000 casts; they are not 7000 independent casts.", "No unskilled/control setup or matched skill intervention.", "Source retained in repository; original Wowhead item page blocked on current retrieval.", "No patch/date, hit counts, per-cast histograms or measured proc probabilities.", "Do not multiply this max-spec observed reference by an additional presumed max-spec bonus.", "Do not pool with the separate 2261-cast Wowhead Looter aggregate without overlap resolution."],
+      "holdReason": "Scoped skilled reference E vector, not a source-to-target skill or specialization rule; current applicability and normalization are unresolved."
+    },
+    {
+      "id": "midnight-de-addon-skill-milestone-candidate",
+      "runtimeAdmissible": false,
+      "supportingSourceIDs": ["advisor-data", "advisor-tracking", "midnight-wowhead-calculator"],
+      "dimension": "CANDIDATE_SPECIALIZATION_SKILL_ACCOUNTING",
+      "method": "Disenchant",
+      "expansionID": 11,
+      "formulaOrObservation": "Open addon computes 70 skill at root rawRank30 and 80 at matching child rawRank30, then adds profession skillLevel and skillModifier.",
+      "exactLimits": ["Source maxRanks31 and currentRank-as-points are unresolved against 30 invested KP and a free learning rank/bonus.", "Trait/path/node ID equivalence requires client validation.", "No numerical conversion from extra skill to rank probability or total material quantity.", "25-point buckets are observation storage bands, not game thresholds.", "Hardcoded fallback probabilities are approximate prelaunch estimates."],
+      "holdReason": "Candidate API/skill accounting only; free-rank convention and numerical yield response are unvalidated."
+    }
+  ],
+  "applicationToSimulation": {
+    "usableNow": [
+      "Keep an explicit synthetic expected-output control as a user assumption, without representing it as a verified skill conversion.",
+      "Label any imported reference with expansion, item, study date, skill/spec context and material units per completed cast.",
+      "Keep quality redistribution, main-material amount and bonus-material vectors separate. Resourcefulness, Multicraft and Ingenuity do not supply a general disenchant bonus.",
+      "An exact-count reference such as Courtly1000 can support a scoped observed E vector; uncertainty needs per-cast data before inferring distributions or hit probabilities."
+    ],
+    "notEstablished": {
+      "midnightSkillToTotalQuantitySlope": null,
+      "midnightSkillToR2ProbabilityCurve": null,
+      "midnightDeterministicQualityThreshold": null,
+      "rarityNodeQuantityMultiplier": null,
+      "bonusMaterialsProcProbability": null,
+      "universalZeroSkillBaseline": null,
+      "validatedCrossExpansionTransportFactor": null
+    },
+    "normalizationRule": "Transform a skilled empirical reference only with an independently supported source-to-target rule for its exact expansion, item class and patch. Otherwise expose the observed reference unchanged and mark the proposed adjustment synthetic.",
+    "doubleCountingRisks": [
+      "Multiplying a max-spec observed E vector by an additional presumed max-spec quantity bonus.",
+      "Adding node skill a second time if the chosen effective-skill API already contains that contribution.",
+      "Treating material-unit shares as probabilities of a cast producing that rank.",
+      "Pooling rows from one shared denominator as independent samples, or counting cross-posted Aspalar/Sweaty-Painter cohorts twice.",
+      "Using bound Knowledge-item studies or shatter recipe yields as equipment-disenchant material evidence.",
+      "Applying CraftSim deterministic recipe quality thresholds or another profession's thresholds to randomized gear disenchanting without a matching operation contract."
+    ],
+    "minimumUsefulFutureStudy": {
+      "controlledInputs": "Same exact itemID, bonus/level, rarity and armor/weapon class; same client build and short date window.",
+      "recordSetup": "Base skill, racial, each equipment skill modifier, exact root/child invested KP, free-rank convention and effective skill for that rarity.",
+      "intervention": "Several skill levels with only gear/base-skill changed; separately vary one quantity milestone while preserving effective skill where possible.",
+      "recordOutcomes": "Every completed cast including zero outcomes; each output itemID/rank/quantity; whether extra outputs co-occur. Retain per-cast histograms.",
+      "analysis": "Estimate rank-specific E units/cast and rank hit probabilities separately, compare pooled main-material quantity, and fit only within confirmed patch/item scope."
+    }
+  }
+}
