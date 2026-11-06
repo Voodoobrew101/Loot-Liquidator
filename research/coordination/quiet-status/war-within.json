@@ -1,39 +1,37 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-06T02:21:45.494Z",
-  "status": "research_active_partial_yield_range_advance",
+  "updated_at": "2026-11-06T03:24:54Z",
+  "status": "research_active_new_source_leads_no_new_verified_numeric_yields",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0040",
-    "T0010",
-    "T0011",
-    "T0012",
     "T0009",
     "T0008",
     "T0007",
+    "T0010",
+    "T0011",
+    "T0012",
     "T0048"
   ],
   "exact_gaps_targeted": [
     {
-      "task_id": "T0040",
+      "task_id": "T0040/T0009/T0008/T0007",
       "inputs": [
         210936,
         210937,
         210930,
         210931,
         210933,
-        210934,
-        210796,
-        210797,
-        210798
+        210934
       ],
       "missing_fields": [
-        "source-recorded completed processing casts",
-        "per-output castsWithDrop",
-        "0/1/2+ histograms",
-        "rank-specific input and output IDs",
-        "skill, specialization, refund/re-prospect basis",
-        "post-2024-10-25 cohort"
+        "post-2024-10-25 original operation log",
+        "rank-specific completed cast denominator",
+        "per-output exact ID/totalQuantity/castsWithDrop",
+        "zero-inclusive 0/1/2+ histogram",
+        "skill and specialization nodes",
+        "Resourcefulness refunds and re-prospect handling",
+        "client build or patch"
       ]
     },
     {
@@ -44,11 +42,10 @@
         210798
       ],
       "missing_fields": [
-        "per-rank 10-herb mill count",
-        "Nacreous Pigment output rank ID",
-        "raw output distribution and zero observations",
-        "skill/spec/Resourcefulness",
-        "reconcile conflicting historical per-mill ranges"
+        "original 10-herb per-rank milling operations",
+        "pigment output rank item identity",
+        "per-output hit counts/quantities/zeros/histograms",
+        "skill, specialization and Resourcefulness context"
       ]
     },
     {
@@ -60,65 +57,31 @@
         237126
       ],
       "missing_fields": [
-        "Retail-current eligible item variant",
-        "raw conditional output stack histogram by rank",
-        "output quantity totals",
-        "version/build and profession skill/spec"
+        "live-Retail disenchant eligibility for exact item variant",
+        "cumulative Wowhead Looter source overlap reconciliation",
+        "positive stack histograms, total output units and game build"
       ]
-    },
-    {
-      "related_standing_milling_input": "Luredrop; rank-1 ID 210799, rank-2 210800, rank-3 210801; input rank in firsthand source unknown"
     }
   ],
-  "newly_verified_fields": [
-    {
-      "source": "https://www.reddit.com/r/woweconomy/comments/1fb0vv5/what_item_did_you_farmflipsell_and_turned_a_huge/",
-      "author": "Saisino",
-      "study_key": "reddit-1fb0vv5-saisino-luredrop-milling-sep2024",
-      "method": "Mill",
-      "inputName": "Luredrop",
-      "inputItemID": null,
-      "inputRank": null,
-      "outputName": "Luredrop Pigment",
-      "outputItemID": null,
-      "outputRank": null,
-      "inputsPerCast": 10,
-      "observed_minSeen_per_cast": 11,
-      "observed_maxSeen_per_cast": 17,
-      "casts": null,
-      "castsWithDrop": null,
-      "histogram": null,
-      "basis": "original September 7, 2024 first-person reported per-mill range; 10-herb mechanic from existing recipe evidence"
-    }
-  ],
-  "new_cohorts": [
-    {
-      "studyKey": "reddit-1fb0vv5-saisino-luredrop-milling-sep2024",
-      "kind": "firsthand_historical_per_cast_range_only",
-      "verified_numeric_fields": [
-        "minSeen",
-        "maxSeen"
-      ],
-      "casts": null,
-      "rank_specific_baseline_eligible": false,
-      "measured_probability": null
-    }
-  ],
+  "newly_verified_fields": [],
+  "new_cohorts": [],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-06T0221-luredrop-firsthand-per-mill-range.jsonl"
+    "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1fb0vv5/what_item_did_you_farmflipsell_and_turned_a_huge/",
-    "https://www.wowhead.com/item=224805/blossom-pigment"
+    "https://eu.forums.blizzard.com/en/wow/t/it-is-impossible-to-earn-gold-via-prospecting-now/554920",
+    "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
+    "https://www.reddit.com/r/woweconomy/comments/1g6jcfr"
   ],
   "commit_sha": null,
-  "verified_pre_run_branch_commit_sha": "4f7efcc2dffaf6d38a6441e977cdef0b6d13d748",
-  "commit_note": "One-commit invariant: this file cannot contain its own commit SHA. Resolve the verified commit through branch history, and verify source and evidence read-back.",
+  "verified_pre_run_branch_commit_sha": "cbec3202663355f8e066e345ca9881d7bb543b08",
+  "commit_note": "Single atomic commit of owned searched evidence and status. A file cannot contain its own resulting commit SHA; verify actual SHA from GitHub branch and read-back.",
   "blockers": [
-    "No independent post-2024-10-25 War Within rank-specific ore/herb exports with exact completed casts and per-output zero-inclusive histograms found this run.",
-    "Saisino Luredrop milling comment reports an 11–17 per-mill range only, without herb rank, pigment output rank, sampling count, skill/spec, patch/build or Resourcefulness accounting; do not interpret as hit probability or a current yield baseline.",
-    "Known PeaEsk '100' rank-2 ore denominator remains ambiguous, and original Aqirite/Mycobloom cohort reports remain unfit for measured P(hit).",
-    "Wowhead PTR Looter gear cohorts cannot establish current live Retail eligibility or a current gear EV by themselves."
+    "December 28, 2024 first-person rank 1/2/3 Bismuth, Aqirite and Ironclaw tests claim recorded Google Sheets, but original sheets or operation-level data were not publicly linked in indexed post.",
+    "March 31, 2025 600 rank-1 Ironclaw Reddit anecdote mentions 117 prospects but has no output item counts, hits, refunds or histograms, so cannot advance any drop row.",
+    "October 2024 original milling calculator describes Google Sheets without an accessible source of actual herb/rank-specific completed mills and 0/1/2+ histogram.",
+    "No new independent numeric drop/conditional yield cohort verified; no measured P(hit), zeros, denominator, confidence or gold EV imputed.",
+    "Wowhead PTR cumulative disenchant tables remain unfit to establish current Retail item eligibility or independent raw per-cast histograms."
   ],
   "exhausted_sources": [
     {
@@ -148,9 +111,13 @@
     {
       "url": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
       "reason": "Aqirite rank-1/rank-2 averaged cohorts already captured with unresolved measured hits; do not re-import."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
+      "reason": "March 2025 600-rank1-Ironclaw cost anecdote and 117-prospects follow-up contain no output material counts or 0..N histograms; further source rechecks not worthwhile without author's raw log."
     }
   ],
-  "next_concrete_step": "Target independent post-Oct25 2024 per-rank Bismuth 210931 / Ironclaw 210937 / Aqirite 210934 original prospect log or 10-herb Mycobloom 210796/210797/210798 mill export. Require exact completed operations and per-output 0/1/2+ bins, skill, profession nodes, Resourcefulness and output item/rank IDs. For Luredrop specifically, seek Saisino's original per-cast log and rank-qualified N=... study before any current baseline promotion.",
+  "next_concrete_step": "Follow original October 18, 2024 milling-calculator author's linked Google Sheet (reddit 1g6jcfr) and December 28, 2024 multi-rank prospect sheet author (EU Blizzard forum 554920) for a directly accessible cast-level source. If spreadsheets lack raw per-cast distributions, move to an unexhausted gear-specific T0048 source rather than repeating TWW aggregate reddit searches. Require exact output IDs, operation denominators, skill/unlocks, patch and refund basis.",
   "decisions_needed": [],
-  "gold_ev_policy": "Only live addon prices, never historical frozen price inputs."
+  "gold_ev_policy": "Use addon live prices only; never frozen historical research prices."
 }
