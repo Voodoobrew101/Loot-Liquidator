@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T11:04:11.907Z",
+  "updated_at": "2026-11-06T12:03:36.287Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Completed new cross-expansion source comparison: 21 historical Shadowlands + 6 WoD 2022 TSM pricing coefficients checked against the shipped pinned TSM reference; 21 previously sourced BfA coefficients also checked against source pin. 48/48 input/output pairs already present; 1/48 identical coefficient. Potential source-cohort duplicates identified for Widowbloom and First Flower; no new independent casts, import, tooltip test, or Retail gold coverage claimed.",
+  "status": "Source identity reconciliation: six newly filed Tin prospecting rows have incorrect comment-author attribution; First Flower 2022 TSM coefficient lineage ties to a preexisting 4,000-herb original cohort. Source numeric totals verified; no new independent measured cohorts, addon imports or gold coverage.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -16,7 +16,9 @@
     "REFERENCE-BFA-TSM-21",
     "REFERENCE-SL-TSM-21",
     "REFERENCE-WOD-TSM-6",
-    "REFERENCE-BFA-TSM-21-BASELINE-COMPARE"
+    "REFERENCE-BFA-TSM-21-BASELINE-COMPARE",
+    "COORD-AUTHOR-LEGACY-20261106",
+    "COORD-FIRST-FLOWER-187699"
   ],
   "exact_gaps_targeted": [
     {
@@ -167,6 +169,14 @@
         153635
       ],
       "gap": "Historical 2022 TSM formula ratios are numerically distinct from shipped originalTSM amountOfMats for most corresponding pairs, yet overlap preexisting source identities. Original author cites unnamed player samplers, no cohort IDs or cast counts. Need source attribution and consistent units before any alternate reference scenario; no missing item/output identity among these 48."
+    },
+    {
+      "task_id": "COORD-AUTHOR-LEGACY-20261106",
+      "gap": "Correct original author identity for legacy-20261106-005..010 without rewriting worker originals; anchor on actual comment boundaries."
+    },
+    {
+      "task_id": "COORD-FIRST-FLOWER-187699",
+      "gap": "Prevent duplicate 4,000-First-Flower study weighting across three linked reference surfaces; source-claimed 200 mass mills vs archived casts=null remains a separate denominator decision."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -690,6 +700,82 @@
       "new_supported_gold_decisions": 0,
       "batch_unit_warning": "The author's outer 5 multiplier is a price/cost normalizer, not a measured yield or independent multiplier.",
       "proposed_disposition": "Retain exact 2022 ratio source as a separate historically scoped reference alternative; do not double count copied/possibly shared cohorts or override existing anchored output means. Check provenance and use synthetic price fixtures before reviewed import if any field is genuinely absent."
+    },
+    {
+      "kind": "firsthand_source_comment_author_identity_correction_needed_worker_owned",
+      "task_id": "T0042",
+      "evidence_file": "research/v3/evidence/legacy/2026-11-06T1145-tin-primary-and-cata-milling-originals.jsonl",
+      "source": "https://www.wowhead.com/item=1210/shadowgem",
+      "source_readback": "Original page labels 100-Tin 5-output comment 'twonavels' (not '984088'); the preceding comment by '984088' discusses Copper veins. A separate 175-Tin/35-prospect/20-Shadowgem comment is by 'DarthKeller' (not '736136').",
+      "affected_record_ids": [
+        "legacy-20261106-005",
+        "legacy-20261106-006",
+        "legacy-20261106-007",
+        "legacy-20261106-008",
+        "legacy-20261106-009",
+        "legacy-20261106-010"
+      ],
+      "claimed_author_to_source_verified": {
+        "736136": "DarthKeller",
+        "984088": "twonavels"
+      },
+      "source_numeric_fields_rechecked": {
+        "twonavels_input_ore": 100,
+        "twonavels_output_totals": [
+          8,
+          7,
+          7,
+          1,
+          1
+        ],
+        "DarthKeller_input_ore": 175,
+        "DarthKeller_source_stated_prospects": 35,
+        "DarthKeller_shadowgem_units": 20
+      },
+      "source_provenance_hold": "The numbers match the original page, but wrong author attribution can fracture the source identity registry and create duplicate-study counts. Worker should append corrective metadata rather than rewrite original evidence. For twonavels, 100 ore is not direct proof of 20 completed casts; keep casts=null.",
+      "new_measured_studies_by_coordinator": 0,
+      "new_actionable_gold_actions": 0,
+      "verification_date_utc": "2026-11-06T12:03:36.287Z"
+    },
+    {
+      "kind": "first_flower_historical_reference_formula_lineage_identified_as_preexisting_original_source",
+      "task_id": "REFERENCE-SL-TSM-21",
+      "input_item_id": 187699,
+      "output_item_ids": [
+        173056,
+        173057,
+        175788
+      ],
+      "prior_pricing_reference": "https://www.reddit.com/r/woweconomy/comments/u0f32m",
+      "original_report": "https://www.reddit.com/r/woweconomy/comments/t8lubc",
+      "same_totals_on_original_wowhead_comment": "https://www.wowhead.com/item=187699/first-flower",
+      "archived_original": "research/evidence/observations/2026-10-28-legacy-batch002-shadowlands-bfa-original-cohorts.jsonl",
+      "archived_observation_id": "legacy-batch002-187699-aggregate-20261028",
+      "archived_study_id": "reddit-t8lubc-firstflower-4000",
+      "historical_source_input_herbs": 4000,
+      "original_reported_material_totals": {
+        "173056": 972,
+        "173057": 1031,
+        "175788": 1984
+      },
+      "published_rounded_per_herb": [
+        0.243,
+        0.258,
+        0.496
+      ],
+      "archive_completed_operations": null,
+      "archived_recipe_batch": 20,
+      "wowhead_source_claim": "Mass Mill First Flower x 200, First Flower x 4000; this is a historical 200-operation claim from a repeated source, not verified per-cast inventory logs.",
+      "verified_disposition": "The April 2022 Sygon_Paul TSM coefficient vector is an exact numerical re-use of a March 7 2022 First Flower cohort already archived (minor rounding 1031/4000=0.25775). Do not treat price formula, Reddit report and Wowhead comment as three studies; preserve original study ID and mean units per herb, avoid applying outer price 5x as yield. Other 20 coefficient pairs need their own evidence lineage.",
+      "remaining_unknowns": [
+        "independently logged event-by-event completed casts",
+        "per-output positive hits/zeros/histograms",
+        "exact source patch and modern Retail applicability",
+        "whether Wowhead x200 corresponds to actual completed operations or nominal 4000/20"
+      ],
+      "new_measured_studies_by_coordinator": 0,
+      "new_actionable_gold_actions": 0,
+      "verification_date_utc": "2026-11-06T12:03:36.287Z"
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -724,7 +810,9 @@
     "research/v3/evidence/legacy/2026-11-01T0752-outland-disenchant-originals-ulduar-token.jsonl",
     "research/v3/evidence/legacy/2026-11-06T0549-tbc-netherweave-original-disentchant-results.jsonl",
     "research/v3/evidence/imported/legacy-milling-cohorts.jsonl",
-    "research/v3/migration/reports/M06-units.md"
+    "research/v3/migration/reports/M06-units.md",
+    "research/v3/evidence/legacy/2026-11-06T1145-tin-primary-and-cata-milling-originals.jsonl",
+    "research/evidence/observations/2026-10-28-legacy-batch002-shadowlands-bfa-original-cohorts.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -764,37 +852,32 @@
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/migration/reports/M06-units.md",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/database/sources/ReferenceData.lua",
     "https://www.wowhead.com/item=175788/tranquil-pigment",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/imported/legacy-milling-cohorts.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/imported/legacy-milling-cohorts.jsonl",
+    "https://www.wowhead.com/item=1210/shadowgem",
+    "https://www.reddit.com/r/woweconomy/comments/t8lubc",
+    "https://www.wowhead.com/item=187699/first-flower",
+    "https://www.reddit.com/r/woweconomy/comments/u0f32m"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
     "research": "57f5119c46b5a3cb7454b9ba8669b2df972603ab",
-    "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
+    "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
+    "research_branch": "fac00438ff5cf93d65f3a6530adb47f879707bc5",
+    "protected_implementation": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "commit_sha_when_verified": {
     "existing_q2_evidence": "15dbfffea2b21f11cdfa9fc6750e9c45266a1d08",
     "existing_q3_evidence": "fd120811ef43463a76cac4e2b4c6c4ad9025740d",
     "legacy_recent_evidence": "15bcf1ddc78d5620328c58a9459c412657894d9a",
     "current_status_commit": "available from GitHub commit response, cannot embed its own SHA in same commit",
-    "coordinator_status_current_commit": "Self-commit cannot be embedded in its own content; verify external GitHub update response and re-fetch readback."
+    "coordinator_status_current_commit": "Self-commit cannot be embedded in its own content; verify external GitHub update response and re-fetch readback.",
+    "research_head_before_status_write": "fac00438ff5cf93d65f3a6530adb47f879707bc5",
+    "status_commit": "read commit response and verify externally; cannot self-embed self SHA"
   },
   "blockers": [
-    "Legion workbook outputs are name-only; two different historic item IDs are displayed as Gem Chip (129100 and 130203), so automatic name-join risks price misattribution.",
-    "T0042 reported casts/quantities are historical Legion-era scope, not measured current-Retail applicability; castsWithDrop/histograms remain unknown.",
-    "Exact normalized source->compiled ItemDB->offline valuation/tooltip tracing not executed; cannot declare 36 rows newly imported, priced or actionable.",
-    "Dragonflight Blizzard public item endpoint may omit reagent ranks; client reagent-quality API not executed.",
-    "Legacy records 013/026 label spreadsheet-formula totals as study totalQuantity: requires worker-owned correcting record or reviewed modeled-reference handling; not new observed yields.",
-    "Workbook lacks original exact Gem Chip itemLink. 129100 colorless reagent vs 130203 blue loot-window variant must not be conflated; live Retail output mapping and valuation not tested.",
-    "Legacy worker's 2026-11-06T0549 status lists six new cohorts, but same 3-DE Allakhazam cohort was already recorded on Nov1 under another studyKey; report count should be five at most, pending checking remaining studies.",
-    "Current estimator has source/fingerprint dedupe by code inspection, but no estimator, migration audit, tooltip fixture or client eligibility test was executed this session.",
-    "New 500-fish source has source totals but no actual completed-cast log, Resourcefulness/refund basis, per-output hit histograms, exact output quality IDs or proof 2026 client selector accepts input 199344.",
-    "Xenastro original spreadsheet direct re-read was unavailable in this session (web inaccessible; connected page scraper out of credits). Earlier readback verified 71 historic totals but did not establish two-stage per-column allocation; no author per-cast logs.",
-    "ATT r field semantics identified, but character faction routing, parent/inherited requirements and live vendor exchange eligibility not verified by coordinator; no runtime fixture executed.",
-    "The 2022 TSM source lists 21 pigment reference ratios, not original casts, quality ranks, gear/skill conditions, hit counts, zero distributions, source cohort identifiers or any 2026 Retail validation. Do not infer empirical P(hit) from them.",
-    "TSM table external 5× pricing factor and existing 5-versus-20-herb milling normalization can cause double-counted/multiplied yields; reconcile units and existing historical cohorts before any gap-only import.",
-    "2022 Sygon_Paul formulas give no independent cohort IDs, casts, positive-hit/zero histograms, skill/build or original study dates; do not treat cost ratios as empirically measured probabilities.",
-    "Source equalities for Widowbloom and First Flower are fingerprints, not conclusive common-study authorship; original Wowhead comments page returned bot challenge.",
-    "All 48 reviewed pairs already have pinned historical ItemDB entries. No supported additional action/tooltip field is demonstrated until source overlap/units and current Retail eligibility are resolved."
+    "Original worker-owned 6 rows need append-only author correction and reviewer deduplication before treating them as independent source identities.",
+    "First Flower cross-reference is historical and not current-patch Retail; completed operations remain ambiguous without actual cast logs. Keep archives and TSM reference independent of measured statistics.",
+    "No source-to-tooltip offline engine fixture or live client test was run in this coordinator session."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -807,7 +890,9 @@
     "T0053: item 45661 reward identities are complete in existing evidence+4df9ae8 token ledger; do not re-research as missing.",
     "199344 Magma Thresher identity was already documented in research/evidence/observations/2026-10-28-2231-dragonflight-q24-batch022-special-input-identity-source-only.md; do not claim the fish identity itself as new evidence.",
     "Known Kidneph/Jiyao/Baadkitty BfA milling numeric observations are already present in old research; do not re-import them as newly independent studies when comparing Sygon_Paul 2022 reference ratios.",
-    "2022 Sygon_Paul original source Shadowlands (21), WoD (6) and BfA (21) ratios now checked against source blob e47143e; repeat scans of identical cells are exhausted, seek original per-cast logs/lineage rather than claim source-search progress."
+    "2022 Sygon_Paul original source Shadowlands (21), WoD (6) and BfA (21) ratios now checked against source blob e47143e; repeat scans of identical cells are exhausted, seek original per-cast logs/lineage rather than claim source-search progress.",
+    "First Flower original 2022 cohort and derivative April 2022 TSM ratios already in archive; do not conduct another generic source reread or count as an independent study.",
+    "Shadowgem 984088 and 736136 numeric-author mismatches resolved by original comment boundaries; do not rescan translated comment pages without new conflicting evidence."
   ],
   "decisions_needed": [
     {
@@ -821,18 +906,26 @@
     {
       "issue": "Historical Classic denominators",
       "proposal": "Retain source-reported hit counts as historical research only until source build/stack distributions and Retail scope are verified."
+    },
+    {
+      "owner_approval_required": false,
+      "route": "legacy worker / research manager",
+      "issue": "Append worker-owned correction to author metadata for twonavels and DarthKeller, preserving original IDs and aggregate counts."
+    },
+    {
+      "owner_approval_required": false,
+      "route": "research evidence importer/reviewer",
+      "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Resolve possible cohort reuse: compare original First Flower 4,000-herb counts (972/1031/1984) and Widowbloom Melch1337 per-100-herb values against existing archived study IDs and source epoch. Record distinct lineage only if original authorship is verified; otherwise mark relation unproven. Then move to the highest-value NEW queue gap with exact operation denominators and zero-inclusive counts, not exhausted 2022 pricing tables. No addon integration without protected owner/synthetic-price fixture.",
+  "next_concrete_step": "On next checkpoint, verify whether existing imported/shipped 187699 records already alias t8lubc study, and request worker-owned correction for six mistaken Tin source authors. Shift subsequent search to a NEW queue gap with actual per-cast histograms/identity rather than exhausted 2022 tables. Preserve source distinctions, uncertainty and PR Director authority.",
   "validation_executed": {
-    "repository_git_reads": true,
-    "original_spreadsheet_value_range_read": false,
-    "existing_research_jsonl_read_and_counted": true,
-    "original_external_item_page_crosschecks": true,
-    "synthetic_price_engine_run": false,
-    "lua_test_run": false,
-    "live_wow_client_run": false,
-    "GitHub_CI_run": false
+    "source_readback": true,
+    "source_comment_boundary_check": true,
+    "json_parse_before_write": true,
+    "repo_write_pending": true,
+    "addon_engine_fixture": false,
+    "live_client": false
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -844,7 +937,7 @@
     "schedules_changed": false,
     "shared_queue_untouched": true
   },
-  "notifications": "on-demand only; Dot monitors; no new schedules",
+  "notifications": "on-demand only; no schedule created, modified or cross-chat ping",
   "last_session": {
     "updated_at": "2026-11-06T08:03:25.000Z",
     "work": "Verified original Reddit author's two-stage prospecting tool/workflow methodology; compared 44 Q2 plus 27 Q3 pre-existing pooled numeric rows, no source record mutated; original workbook not accessible this session."
@@ -1056,7 +1149,7 @@
     "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl",
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl"
   ],
-  "research_branch_head_read_before_write": "57f5119c46b5a3cb7454b9ba8669b2df972603ab",
+  "research_branch_head_read_before_write": "fac00438ff5cf93d65f3a6530adb47f879707bc5",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-06T08:03:25.000Z",
   "verified_base_commit_sha": "67d5bbc595ae735e186c05b5a3c861376fb2b238",
   "current_status_commit_sha": null,
