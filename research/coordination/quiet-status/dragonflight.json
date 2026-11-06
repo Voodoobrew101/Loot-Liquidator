@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T20:36:43.807Z",
-  "status": "Five unindexed Dragonflight gear Looter item-specific cumulative occurrence tables captured (12 hit-count/range rows); high-priority prospecting/milling per-operation histograms still unavailable after differentiated cross-site search.",
+  "updated_at": "2026-11-06T21:36:10.875Z",
   "branch": "implementation/five-agent-completion",
+  "status": "Four unindexed Amirdrassil item-specific Wowhead Looter gear material occurrence cohorts recorded; priority ore and milling controlled cast-level data still missing.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,196 +12,178 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143/188658/190311: independent rank-specific completed prospects and quality-mapped material hit/0-1-2+ distributions.",
-    "Serevite Ore 190394/190395/190396, Khaz'gorite Ore quality ranks, and Prismatic Ore 194545: completed rather than nominal actions, per-output ranks, refund accounting, zeros and joint/stack histograms; rank identity S19 and duplicate Amber S21 remain Master-owned.",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: dated non-beta measured 5-herb mill actions and exact pigment rank-ID distributions.",
-    "Secondary gear disenchanting: recover new item-specific Looter cast/occurrence counts and displayed quantity ranges without treating them as controlled studies or exact material P(hit)."
+    "Draconium 189143/188658/190311 quality ranks: cast-denominated prospect outputs, independently checked item identities, Resourcefulness-adjusted completed actions, per-output hits and zeros.",
+    "Serevite 190394/190395/190396 and Khaz'gorite ranks; Prismatic Ore 194545: verified quality IDs, completed casts, diamond/Amber/Khaz drops and per-cast 0/1/2+ histograms; S19/S21 remain Master-owned.",
+    "Bubble Poppy 191467; Saxifrage 191464/191465/191466: post-beta item-rank-specific milling casts, pigment output totals/hits and zeros.",
+    "Fallback: previously unindexed item-specific historical Dragonflight disenchant material occurrence counts, without promotion to controlled probability."
   ],
   "newly_verified_fields": [
-    "Five gear item IDs 207269,207274,207283,194406,194389 mapped to three material IDs 194123 Chromatic Dust, 194124 Vibrant Shard, 200113 Resonant Crystal using item-specific Wowhead Looter tables.",
-    "Site-reported completed disenchants by distinct item: 52, 70, 62, 77, 77 (338 reported, pooled, not current-patch controlled).",
-    "Twelve per-material positive occurrence numerators and corresponding displayed percentages; material stack quantity ranges when explicitly shown (NOT aggregate units or per-cast distributions).",
-    "Input quality is gear-rank inapplicable; exact gear versions, item-level variants and site data-collection epoch remain unverified. No new priority ore/herb output histogram or probabilistic baseline."
+    "Four distinct input gear identities 207222,207240,207229,207224; outputs Vibrant Shard 194124 and Resonant Crystal 200113.",
+    "57 distinct site-reported disenchants across four item-specific cumulative Looter tables (13,15,11,18), not four independent current-patch experiments.",
+    "Eight site-reported positive material occurrence counts (9,7,12,4,9,3,16,9), eight native displayed percentages (69,54,80,27,82,27,89,50), and four displayed shard stack ranges 1-2.",
+    "No new controlled original prospecting/milling cohort; source epoch, profession variables, full histograms, material unit totals and actual validated per-cast probability remain unknown."
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-df-207269-cumulative",
-      "inputItemID": 207269,
-      "castsSiteReported": 52,
+      "studyKey": "wowhead-looter-df-207222-cumulative",
+      "inputItemID": 207222,
+      "inputName": "Weyrnkeeper's Timeless Ornamented Cloak",
+      "castsSiteReported": 13,
       "outputs": [
         {
           "outputItemID": 194124,
-          "castsWithDropSiteReported": 31,
-          "percentShown": 60,
+          "outputName": "Vibrant Shard",
+          "siteReportedPositiveOccurrences": 9,
+          "percentShown": 69,
           "minSeen": 1,
           "maxSeen": 2
         },
         {
           "outputItemID": 200113,
-          "castsWithDropSiteReported": 31,
-          "percentShown": 60,
+          "outputName": "Resonant Crystal",
+          "siteReportedPositiveOccurrences": 7,
+          "percentShown": 54,
           "minSeen": null,
           "maxSeen": null
         }
       ],
-      "dataEpoch": null,
-      "source": "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
-      "controlled": false
+      "source": "https://www.wowhead.com/item=207222/weyrnkeepers-timeless-ornamented-cloak",
+      "controlled": false,
+      "dataEpoch": null
     },
     {
-      "studyKey": "wowhead-looter-df-207274-cumulative",
-      "inputItemID": 207274,
-      "castsSiteReported": 70,
+      "studyKey": "wowhead-looter-df-207240-cumulative",
+      "inputItemID": 207240,
+      "inputName": "Mystic Heron's Feathered Mantle",
+      "castsSiteReported": 15,
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "siteReportedPositiveOccurrences": 12,
+          "percentShown": 80,
+          "minSeen": null,
+          "maxSeen": null
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "siteReportedPositiveOccurrences": 4,
+          "percentShown": 27,
+          "minSeen": 1,
+          "maxSeen": 2
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr/item=207240/mystic-herons-feathered-mantle",
+      "controlled": false,
+      "dataEpoch": null
+    },
+    {
+      "studyKey": "wowhead-looter-df-207229-cumulative",
+      "inputItemID": 207229,
+      "inputName": "Weyrnkeeper's Timeless Treads",
+      "castsSiteReported": 11,
       "outputs": [
         {
           "outputItemID": 194124,
-          "castsWithDropSiteReported": 43,
-          "percentShown": 61,
+          "outputName": "Vibrant Shard",
+          "siteReportedPositiveOccurrences": 9,
+          "percentShown": 82,
           "minSeen": 1,
           "maxSeen": 2
         },
         {
           "outputItemID": 200113,
-          "castsWithDropSiteReported": 39,
-          "percentShown": 56,
+          "outputName": "Resonant Crystal",
+          "siteReportedPositiveOccurrences": 3,
+          "percentShown": 27,
           "minSeen": null,
           "maxSeen": null
         }
       ],
-      "dataEpoch": null,
-      "source": "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
-      "controlled": false
+      "source": "https://www.wowhead.com/item=207229/weyrnkeepers-timeless-treads",
+      "controlled": false,
+      "dataEpoch": null
     },
     {
-      "studyKey": "wowhead-looter-df-207283-cumulative",
-      "inputItemID": 207283,
-      "castsSiteReported": 62,
+      "studyKey": "wowhead-looter-df-207224-cumulative",
+      "inputItemID": 207224,
+      "inputName": "Weyrnkeeper's Timeless Adorned Sash",
+      "castsSiteReported": 18,
       "outputs": [
         {
-          "outputItemID": 194124,
-          "castsWithDropSiteReported": 44,
-          "percentShown": 71,
-          "minSeen": 1,
-          "maxSeen": 2
-        },
-        {
           "outputItemID": 200113,
-          "castsWithDropSiteReported": 36,
-          "percentShown": 58,
+          "outputName": "Resonant Crystal",
+          "siteReportedPositiveOccurrences": 16,
+          "percentShown": 89,
           "minSeen": null,
           "maxSeen": null
-        }
-      ],
-      "dataEpoch": null,
-      "source": "https://www.wowhead.com/item=207283/poulaines-of-lunar-communion",
-      "controlled": false
-    },
-    {
-      "studyKey": "wowhead-looter-df-194406-cumulative",
-      "inputItemID": 194406,
-      "castsSiteReported": 77,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDropSiteReported": 66,
-          "percentShown": 86,
-          "minSeen": 1,
-          "maxSeen": 3
         },
         {
           "outputItemID": 194124,
-          "castsWithDropSiteReported": 11,
-          "percentShown": 14,
+          "outputName": "Vibrant Shard",
+          "siteReportedPositiveOccurrences": 9,
+          "percentShown": 50,
           "minSeen": 1,
-          "maxSeen": 2
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDropSiteReported": 1,
-          "percentShown": 1.3,
-          "minSeen": null,
-          "maxSeen": null
-        }
-      ],
-      "dataEpoch": null,
-      "source": "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
-      "controlled": false
-    },
-    {
-      "studyKey": "wowhead-looter-df-194389-cumulative",
-      "inputItemID": 194389,
-      "castsSiteReported": 77,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDropSiteReported": 69,
-          "percentShown": 90,
-          "minSeen": 1,
-          "maxSeen": 5
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDropSiteReported": 7,
-          "percentShown": 9,
-          "minSeen": 1,
-          "maxSeen": 2
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDropSiteReported": 1,
-          "percentShown": 1.3,
-          "minSeen": 2,
           "maxSeen": 2
         }
       ],
-      "dataEpoch": null,
-      "source": "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "controlled": false
+      "source": "https://www.wowhead.com/item=207224/weyrnkeepers-timeless-adorned-sash",
+      "controlled": false,
+      "dataEpoch": null
     }
   ],
-  "new_numerical_measurements": 12,
+  "new_numerical_measurements": 8,
   "independent_new_controlled_cohorts": 0,
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-06T2035-five-gear-looter-hits-and-priority-source-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-06T2136-four-unique-amirdrassil-disenchant-looter-cohorts.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
-    "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
-    "https://www.wowhead.com/item=207283/poulaines-of-lunar-communion",
-    "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
-    "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-    "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385"
+    "https://www.wowhead.com/item=207222/weyrnkeepers-timeless-ornamented-cloak",
+    "https://www.wowhead.com/ptr/item=207240/mystic-herons-feathered-mantle",
+    "https://www.wowhead.com/item=207229/weyrnkeepers-timeless-treads",
+    "https://www.wowhead.com/item=207224/weyrnkeepers-timeless-adorned-sash"
   ],
   "commit_sha": null,
-  "commit_sha_note": "A commit cannot embed its own SHA; the exact final commit is checked after publication and reported in the task history; null is intentional, not a guessed SHA.",
+  "commit_sha_note": "The future Git commit cannot contain its own SHA without changing its hash; verified final SHA is reported after publication, not fabricated here.",
   "blockers": [
-    "Original prospecting/milling sources returned existing cohorts or did not publish cast-level material histograms with independently verified quality rank identities and Resourcefulness reuse.",
-    "Wowhead Looter counts are cumulative anonymous uploads with unspecified build, item bonuses and grouping semantics; treat reported numerator and displayed percentages as site observations only, not an independent controlled P(hit).",
-    "Master review required for S19 ore rank mapping and S21 Prismatic Eternity Amber deduplication."
+    "Priority ore/milling sources returned previously indexed/copied cohorts or lack verifiable actual completed casts, output rank identities, Resourcefulness accounting and zero-inclusive output histograms.",
+    "Looter cumulative anonymized gear tables do not specify date/patch, item version, independent profession setups, per-output total units or joint-zero outcomes; source's displayed percent is not independently audited as P(hit).",
+    "Serevite rank identity S19 and Prismatic Eternity Amber S21 review remain Master-owned. No addon/prod valuation changed."
   ],
   "exhausted_sources": [
     {
-      "path": "This run's distinct cross-site original operation log searches across Reddit, Wowhead, Blizzard forums, wiki, Method and guide/spreadsheet results",
-      "reason": "No previously unindexed measured Draconium/Serevite/Khaz'gorite/Prismatic or Bubble Poppy/Saxifrage completed cast + output histogram dataset found; preexisting Jallfo and other copied cohorts not re-added."
+      "path": "Original Dragonflight prospecting/milling name-based result searches on Reddit, Wowhead, Warcraft Wiki, WoW-Professions, Blizzard forums and Method",
+      "reason": "No unindexed raw per-action dataset with correctly mapped inputs, skill/spec, measured zeros and refund-controlled denominators; prior Bugy/Jallfo/Aary/Xenastro/TheChisel/Superbondez records were deliberately not duplicated.",
+      "queries": [
+        "site:reddit.com/r/woweconomy Draconium Ore prospecting original completed casts histograms",
+        "site:wowhead.com Draconium Ore prospecting per-output raw logs",
+        "site:warcraft.wiki.gg Khaz'gorite Ore quality rank prospecting",
+        "site:wow-professions.com Bubble Poppy milling output quantities",
+        "site:us.forums.blizzard.com Serevite Ore prospecting observed diamonds",
+        "site:reddit.com/r/woweconomy Saxifrage milling pigment results per cast",
+        "site:wowhead.com Prismatic Ore prospecting original results Resourcefulness",
+        "site:method.gg Dragonflight Inscription milling Saxifrage quantitative batches"
+      ]
     }
   ],
-  "next_concrete_step": "Seek original Dragonflight character addon-processing exports, author worksheet raw rows, or verified client logs giving ore/herb quality item IDs, actual completed casts, per-output 0/1/2+ stack outcomes, skill, specialization, resourcefulness and exact patch/build; advance ore/mill before any more gear fallback.",
+  "next_concrete_step": "Prioritize new primary addon-cast exports or direct original worksheets with rank-linked input IDs, actual operations/refunds and per-output 0/1/2+ histograms for Draconium and Bubble Poppy; after ore/mill gap closure, verify Looter version, data epoch and item variants before any estimator use.",
   "validation": {
-    "evidence_jsonl_parse": "passed locally in JavaScript before write",
-    "evidence_record_count": 13,
-    "evidence_drop_records": 12,
+    "evidence_jsonl_parse": "passed",
+    "evidence_record_count": 9,
+    "evidence_drop_records": 8,
     "evidence_searched_records": 1,
-    "distinct_site_looter_gear_cohorts": 5,
-    "measured_new_priority_ore_or_milling_cast_count": null,
-    "source_percent_semantics": "unverified; explicitly labelled unclear",
+    "distinct_site_looter_gear_cohorts": 4,
+    "site_reported_disencants": 57,
+    "source_percent_semantics": "unclear; native percentages preserved without conversion",
     "known_nulls_preserved": true,
     "derived_probabilities_created": false,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-06T2035-five-gear-looter-hits-and-priority-source-search.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-06T2136-four-unique-amirdrassil-disenchant-looter-cohorts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "single_commit_intended": true,
-    "git_readback": "pending"
+    "git_readback": "pending during status creation"
   },
   "production_changed": false,
   "merge_performed": false,
