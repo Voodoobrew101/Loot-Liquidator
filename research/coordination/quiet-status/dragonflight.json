@@ -1,6 +1,6 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T06:39:16.970Z",
+  "updated_at": "2026-11-06T06:39:57.451Z",
   "status": "research_active_new_independent_postlaunch_disenchant_quantities_no_new_prospect_or_mill_cast_histograms",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
@@ -304,8 +304,8 @@
       "type": "searched"
     },
     {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T06:3-postlaunch-bracer-disenchant-180.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T06:3-postlaunch-bracer-disenchant-180.jsonl",
+      "path": "research/v3/evidence/dragonflight/2026-11-06T0637-postlaunch-bracer-disenchant-180.jsonl",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0637-postlaunch-bracer-disenchant-180.jsonl",
       "records": 2,
       "type": "drop",
       "newIndependentCohorts": 1
@@ -345,9 +345,9 @@
     "https://www.wowhead.com/item=194123/chromatic-dust",
     "https://www.wowhead.com/item=194124/vibrant-shard"
   ],
-  "base_head_sha_verified": "a9a2ccf02c3f58c85a830d4ca34380dc43d89006",
+  "base_head_sha_verified": "609de9b577c913e77f08c1a8f2e8e158e9362356",
   "commit_sha": null,
-  "commit_sha_note": "One atomic commit includes this status file; its final SHA cannot be embedded in the same file without changing that SHA. Parent SHA is recorded above; verify the published SHA via GitHub commit/readback after ref update.",
+  "commit_sha_note": "Final commit SHA cannot be embedded in the same atomic status file without circular hash. Parent SHA is available in base_head_sha_verified; actual final SHA verified via GitHub after push. Corrected first commit's invalid HHMM filename in a forward-only follow-up commit, rather than force-rewriting shared history.",
   "blockers": [
     "No new original completed-operation sample found for ranked Draconium, Serevite, Khaz'gorite, Prismatic, Bubble Poppy, Saxifrage, or new gear DE with a per-output 0/1/2+ stack histogram.",
     "Nominal ore/herb totals, Resourcefulness refunds, and player-stated percentages cannot establish P(hit) or unconditional quantity per completed operation.",
@@ -421,11 +421,12 @@
     }
   ],
   "validation": {
-    "evidence_jsonl_parse": "Two drop JSONL lines parsed; exact raw totals 180 completed disenchant operations, 155 shard units and 304 dust units; distinct output rows share one studyKey and must not double count casts.",
-    "status_json_parse": "JSON.stringify/parse passed prior to commit",
-    "git_readback": "pending post-commit verification in this run",
+    "evidence_jsonl_parse": "Two valid source-backed drop rows; 180 completed Dragonflight bracer disenchants; 155 Vibrant Shard and 304 Chromatic Dust units; no inferred P(hit) or individual output histogram.",
+    "status_json_parse": "JSON.parse round trip passed",
+    "git_readback": "Committed working-tree exact readback verified; previous malformed colon-bearing research filename repaired in an additional forward-only corrective commit.",
     "commit_changed_paths_expected": [
       "research/v3/evidence/dragonflight/2026-11-06T06:3-postlaunch-bracer-disenchant-180.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-06T0637-postlaunch-bracer-disenchant-180.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ]
   },
