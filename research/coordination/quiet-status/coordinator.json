@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T13:04:27.050Z",
+  "updated_at": "2026-11-06T14:11:46.407Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New cross-file source normalization gap verified: six Titanium uncommon quantities from latest Legacy evidence match original January 2022 post, but nine older same-study output rows still have null IDs without corrections. No new independent cohort, import or actual gold coverage.",
+  "status": "New candidate quality-ID set independently verified for recent TWW Refulgent Crystal Looter same-name rows (R1 219952, R2 219954, R3 219955), and four source gear base items confirmed Bind on Pickup. Looter row-to-ID mapping and material quantities remain unknown. Dashboard refreshed from four verified worker status readbacks; no new measured casts, import, or current-Retail gold coverage.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -19,7 +19,9 @@
     "REFERENCE-BFA-TSM-21-BASELINE-COMPARE",
     "COORD-AUTHOR-LEGACY-20261106",
     "COORD-FIRST-FLOWER-187699",
-    "COORD-TITANIUM-UNPLACED-20261106"
+    "COORD-TITANIUM-UNPLACED-20261106",
+    "T0048",
+    "COORD-TWW-REFULGENT-RANK-ID-20261106"
   ],
   "exact_gaps_targeted": [
     {
@@ -183,6 +185,27 @@
       "task_id": "COORD-TITANIUM-UNPLACED-20261106",
       "scope": "Titanium Ore 36910 legacy original study outputs; nine older source rows without exact output IDs or same-file correction; one source study across 19 historical outputs; cast denominator/2026 eligibility unverified",
       "source": "https://www.reddit.com/r/woweconomy/comments/s6bfrl"
+    },
+    {
+      "task_id": "COORD-TWW-REFULGENT-RANK-ID-20261106",
+      "kind": "TWW_epic_gear_named_output_rank_identity_and_auction_eligibility",
+      "input_item_ids": [
+        237690,
+        237694,
+        237621,
+        237691
+      ],
+      "source": "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl",
+      "rank_to_item_id_catalog_candidates": {
+        "1": 219952,
+        "2": 219954,
+        "3": 219955
+      },
+      "primary_source_gear_base_bind": "Binds when picked up, all four item base pages",
+      "still_unknown": "Exact linked rank/item ID for each of three cumulative Looter rows per input; material units/stack histogram, original collector timing, bonus/ilvl/skill/build and current disenchant eligibility; no rank assignment based on row order",
+      "action_guard": "Base item is bound, so no Auction recommendation for the base item; cannot infer actual client tooltips or eligible disenchant action.",
+      "new_independent_cohorts": 0,
+      "new_observed_casts": 0
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -863,30 +886,66 @@
       "source_date": "2022-01-17",
       "verification_date_utc": "2026-11-06T13:04:27.050Z",
       "recommended_action": "Migration/research integration owner reviews nine name-ID aliases and writes append-only scoped corrections for exact file/record IDs; test deterministic estimator and real offline tooltip with synthetic prices on isolated approved integration path, without importing a new cohort or touching protected addon branch."
+    },
+    {
+      "type": "candidate_reagent_rank_ids_and_gear_binding_only",
+      "method": "Disenchant",
+      "material_family": "Refulgent Crystal",
+      "candidate_item_ids_by_rank": {
+        "1": 219952,
+        "2": 219954,
+        "3": 219955
+      },
+      "checked_on": "2026-11-06",
+      "source_catalog_urls": [
+        "https://goldcap.gg/retail/us/items/219952",
+        "https://goldcap.gg/retail/kr/items/219954",
+        "https://goldcap.gg/retail/us/items/219955"
+      ],
+      "gear_base_binding_verified_on": [
+        237690,
+        237694,
+        237621,
+        237691
+      ],
+      "gear_urls": [
+        "https://www.wowhead.com/item=237690/charhounds-vicious-hidecoat",
+        "https://www.wowhead.com/item=237694/charhounds-vicious-bindings",
+        "https://www.wowhead.com/item=237621/stompers-of-the-lucent-battalion",
+        "https://www.wowhead.com/item=237691/charhounds-vicious-scalp"
+      ],
+      "worker_rows_matching_specific_rank_ids": 0,
+      "later_direct_looter_row_identity_check_required": true,
+      "no_independent_measured_cohort": true,
+      "no_new_gold_ev_coverage": true
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
     "legacy": {
-      "updated_at": "2026-11-06T09:46:18.969Z",
+      "updated_at": "2026-11-06T13:51:25.665Z",
       "status_file": "research/coordination/quiet-status/legacy.json",
-      "finding": "Worker reports a new Obsidium 1755-ore input-quantity cohort; 351 only nominal 5-ore batch equivalents, actual completed operation count unknown."
+      "status_file_blob_sha": "69066aaf3b59b426964ccd37135c86eaaed6d15c",
+      "finding": "28 historical quantity fields; 840 ore vs 210 prospective operations inconsistent; no actual logged casts"
     },
     "dragonflight": {
-      "updated_at": "2026-11-06T09:38:14.987Z",
+      "updated_at": "2026-11-06T13:34:41.908Z",
       "status_file": "research/coordination/quiet-status/dragonflight.json",
-      "finding": "No new independent numeric cohort this worker checkpoint; prior 180-bracer original has item ID still unresolved."
+      "status_file_blob_sha": "0463b0bf96ccc5e43a294f388915b4edb95d3737",
+      "finding": "five historical cumulative gear Looter snapshots; no source rank/histogram validation"
     },
     "war-within": {
-      "updated_at": "2026-11-06T09:23:23.272Z",
+      "updated_at": "2026-11-06T13:32:33.497Z",
       "status_file": "research/coordination/quiet-status/war-within.json",
-      "finding": "Six material rows from two item-specific historical cumulative Looter disenchant cohorts; rank IDs/source scope unconfirmed."
+      "status_file_blob_sha": "609abee999a1c125fa2a0662e39db1d8e6302d49",
+      "finding": "four exact-input TWW epic gear cumulative Looter cohorts, 12 rankless outputs; direct source row links unavailable"
     },
     "midnight": {
-      "updated_at": "2026-11-06T09:18:44.285Z",
+      "updated_at": "2026-11-06T13:24:14.244Z",
       "status_file": "research/coordination/quiet-status/midnight.json",
-      "finding": "One original one-operation 251085 restoration-list Dawn Crystal family output, rank unspecified; cannot extrapolate drop chance."
+      "status_file_blob_sha": "20714b7d72601fda6b7578cc0d4f7c65eb8eacd6",
+      "finding": "three documented ore-specialization trait IDs; measured yields still unknown"
     }
   },
   "evidence_files": [
@@ -945,17 +1004,26 @@
     "https://www.reddit.com/r/woweconomy/comments/t8lubc",
     "https://www.wowhead.com/item=187699/first-flower",
     "https://www.reddit.com/r/woweconomy/comments/u0f32m",
-    "https://www.reddit.com/r/woweconomy/comments/s6bfrl/i_prospected_1000_titanium_so_you_dont_have_to/"
+    "https://www.reddit.com/r/woweconomy/comments/s6bfrl/i_prospected_1000_titanium_so_you_dont_have_to/",
+    "https://goldcap.gg/retail/us/items/219952",
+    "https://goldcap.gg/retail/kr/items/219954",
+    "https://goldcap.gg/retail/us/items/219955",
+    "https://www.wowhead.com/item=237690/charhounds-vicious-hidecoat",
+    "https://www.wowhead.com/item=237694/charhounds-vicious-bindings",
+    "https://www.wowhead.com/item=237621/stompers-of-the-lucent-battalion",
+    "https://www.wowhead.com/item=237691/charhounds-vicious-scalp"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
-    "research": "57f5119c46b5a3cb7454b9ba8669b2df972603ab",
+    "research": "973868004a8259a05b34f854a8aa3c7e6169ca40",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "research_branch": "fac00438ff5cf93d65f3a6530adb47f879707bc5",
     "protected_implementation": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "titanium_new_worker_evidence_blob_sha": "7a6ec902ddd48c3cca7d7bfb1ed70e7095b468f1",
     "titanium_old_cohort_blob_sha": "d2cd1618bf6d0ad3e4d632452dee5dad3b25ec39",
-    "titanium_corrections_blob_sha": "80f37dbb74e3444585f7a63a3272a6c0989494f7"
+    "titanium_corrections_blob_sha": "80f37dbb74e3444585f7a63a3272a6c0989494f7",
+    "latest_tww_worker_evidence_blob_sha": "2f9cfd499a9cc573af61529bda25c2dca16a46ab",
+    "dashboard_commit_sha": "973868004a8259a05b34f854a8aa3c7e6169ca40"
   },
   "commit_sha_when_verified": {
     "existing_q2_evidence": "15dbfffea2b21f11cdfa9fc6750e9c45266a1d08",
@@ -964,13 +1032,15 @@
     "current_status_commit": "available from GitHub commit response, cannot embed its own SHA in same commit",
     "coordinator_status_current_commit": "Self-commit cannot be embedded in its own content; verify external GitHub update response and re-fetch readback.",
     "research_head_before_status_write": "fac00438ff5cf93d65f3a6530adb47f879707bc5",
-    "status_commit": "read commit response and verify externally; cannot self-embed self SHA"
+    "status_commit": "Read GitHub update response/readback; SHA cannot be embedded in its own content",
+    "dashboard_commit": "973868004a8259a05b34f854a8aa3c7e6169ca40"
   },
   "blockers": [
     "Original worker-owned 6 rows need append-only author correction and reviewer deduplication before treating them as independent source identities.",
     "First Flower cross-reference is historical and not current-patch Retail; completed operations remain ambiguous without actual cast logs. Keep archives and TSM reference independent of measured statistics.",
     "No source-to-tooltip offline engine fixture or live client test was run in this coordinator session.",
-    "2022 Titanium study has 1,000 source-stated ore, not verified completed casts/refunds or current Retail eligibility; nine older exact-file output IDs still null without corrections. Compiler/tooltip effect untested."
+    "2022 Titanium study has 1,000 source-stated ore, not verified completed casts/refunds or current Retail eligibility; nine older exact-file output IDs still null without corrections. Compiler/tooltip effect untested.",
+    "T0048: no raw Wowhead Looter linked output IDs/rank assignments, material quantities or per-event histogram for four new same-name Crystal cohorts. Candidate ID set is not sufficient to price row-level occurrence. All four input item base pages are BoP."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -1012,7 +1082,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Hand nine old Titanium s6bfrl record IDs and Retail name-to-item candidates to authorized migration/worker for append-only exact-file identity corrections; then run offline deterministic estimator + synthetic-price real engine/tooltip fixture before any gold coverage claim. If that path cannot run, prioritize another fresh queue gap rather than rescan.",
+  "next_concrete_step": "Ask authorized War Within researcher to acquire source Looter linked material URLs/IDs for 237690/237694/237621/237691 and original event-level output units; have protected three-pass implementation owner run synthetic-price actual-engine/tooltip rank and bound-action fixture only after eligibility is supported. If source is unavailable, pivot to a different queued evidence gap; do not repeat this catalog lookup.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -1020,9 +1090,12 @@
     "repo_write_pending": false,
     "addon_engine_fixture": false,
     "live_client": false,
-    "status_readback_verified": true,
-    "dashboard_readback_verified": true,
-    "source_to_tooltip_fixture": false
+    "status_readback_verified": false,
+    "dashboard_readback_verified": false,
+    "source_to_tooltip_fixture": false,
+    "worker_status_readback": true,
+    "source_catalog_rank_checks": true,
+    "gear_page_base_binding_checks": true
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -1036,13 +1109,14 @@
   },
   "notifications": "on-demand only; no schedule created, modified or cross-chat ping",
   "last_session": {
-    "id": "COORD-TITANIUM-UNPLACED-20261106",
-    "updated_at_utc": "2026-11-06T13:04:27.050Z",
-    "type": "source-to-record reconciliation; no new independent observations",
-    "source_checked": "original 2022 Reddit article and two repository JSONL source files, exact-file corrections",
+    "id": "COORD-TWW-REFULGENT-RANK-ID-20261106",
+    "updated_at_utc": "2026-11-06T14:11:46.407Z",
+    "type": "Cross-expansion source identity/eligibility verification; no new measured observations",
+    "checked_sources": "TWW worker JSONL, four live Wowhead gear pages, three Retail reagent-rank catalog pages, four worker status files",
     "stats": {
-      "new_worker_source_totals_reverified": 6,
-      "existing_old_rows_with_absent_item_id_uncorrected": 9,
+      "new_candidate_rank_item_ids_verified": 3,
+      "gear_base_binding_fields_verified": 4,
+      "original_looter_row_links_verified": 0,
       "new_independent_studies": 0,
       "synthetic_tooltip_tests": 0,
       "live_client_tests": 0
@@ -1247,7 +1321,8 @@
     "research/v3/evidence/legacy/2026-11-06T0349-classic-communal-looter-hitcounts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-06T0330-post-beta-prospect-and-mill-logs-search.jsonl",
     "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl",
-    "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl"
+    "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
+    "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
   "research_branch_head_read_before_write": "fac00438ff5cf93d65f3a6530adb47f879707bc5",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-06T08:03:25.000Z",
