@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T09:06:01.212Z",
+  "updated_at": "2026-11-06T10:09:26.867Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New high-impact source-field identity: in pinned Retail ATT source, r=1 explicitly denotes Horde and r=2 Alliance. Archived 415 costed leaves include 95 of each, totaling 190 faction-marked leaves. This is a provenance/eligibility-field improvement, not new numeric evidence or confirmed in-game redemption.",
+  "status": "One new historically scoped reference-source lineage verified: a 2022 original TSM BfA milling-cost table supplies 21 exact herb/pigment coefficients. Source-based reference evidence only; not new measured casts, probabilities, live Retail eligibility or current gold coverage. Worker reports read back; no addon or production branch changes.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -12,7 +12,8 @@
     "dragonflight-Magma-Thresher-original-109yr4s",
     "T0019",
     "T0041",
-    "ATT-R-190"
+    "ATT-R-190",
+    "REFERENCE-BFA-TSM-21"
   ],
   "exact_gaps_targeted": [
     {
@@ -102,6 +103,25 @@
       "source_revision": "4a95eab7696e74a929996eefd2f6890890e26efe",
       "evidence": "src/base.lua direct faction association; archived snapshot explicit r=1 (95), r=2 (95)",
       "remaining_gap": "Verify retained per-leaf faction conditions reach runtime, parent/inherited filters, costs and opener's current faction without inferring availability or rewriting protected integration branch"
+    },
+    {
+      "task_id": "REFERENCE-BFA-TSM-21",
+      "kind": "historical_reference_units_and_lineage",
+      "input_herb_item_ids": [
+        152510,
+        152511,
+        152508,
+        152509,
+        152505,
+        152506,
+        152507
+      ],
+      "output_pigment_item_ids": [
+        153669,
+        153636,
+        153635
+      ],
+      "remaining_gap": "Compare table ratio units, exact 21 values and source overlap with existing BfA Kidneph/Jiyao/Baadkitty records and pinned reference tables; source does not state original logged casts or rank/skill/build. If genuinely gap-only, reviewed importer/tooltip handoff must keep historical/reference label and regression test synthetic prices."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -460,30 +480,94 @@
       "new_gold_coverage_verified": 0,
       "addon_offline_fixture_executed": false,
       "client_verified": false
+    },
+    {
+      "kind": "historical_secondary_TSM_milling_ratio_source_21_exact_BFA_reference_cells_NOT_NEW_STUDY",
+      "task_id": "REFERENCE-BFA-TSM-21",
+      "source_original": "https://www.reddit.com/r/woweconomy/comments/u0f32m/how_to_make_crafting_profitable_material_prices/",
+      "source_reprint": "https://www.wowhead.com/news/10-0-economy-speculation-wowhead-economy-weekly-wrap-up-223-326714",
+      "author": "u/Sygon_Paul",
+      "source_epoch": "April 2022; historical Retail price-reference table",
+      "input_herb_item_ids_in_order": [
+        152510,
+        152511,
+        152508,
+        152509,
+        152505,
+        152506,
+        152507
+      ],
+      "output_ratios": {
+        "153669_Viridescent": [
+          0.328,
+          0.132,
+          0.132,
+          0.132,
+          0.13,
+          0.131,
+          0.134
+        ],
+        "153636_Crimson": [
+          0.316,
+          0.316,
+          0.312,
+          0.316,
+          0.316,
+          0.315,
+          0.318
+        ],
+        "153635_Ultramarine": [
+          0.827,
+          0.825,
+          0.825,
+          0.822,
+          0.825,
+          0.826,
+          0.827
+        ]
+      },
+      "verified_exact_source_reference_cells": 21,
+      "provenance": "Original author's TSM pigment-cost formulas, independently reproduced in a Wowhead economy weekly-wrap reprint; reprint is NOT an independent study. Ratios are reference coefficients based on unspecified underlying third-party milling data, not individual observed attempts or empirical hit probabilities.",
+      "unit_interpretation": "Table ratios appear to be per input herb in 5-herb milling price formulas, but independently logged cast/quality/specialization bases are not provided. Do not mistake the external 5× price/cost factor for measured output quantity or multiply unconditional yields by probability a second time.",
+      "independence_cross_check": "Previously archived Kidneph/Jiyao/Baadkitty historical BfA milling cohorts have separate raw herb/output totals; reference may be derivative or overlapping; do not add to independent observed study count or automatically aggregate with existing ItemDB rates.",
+      "original_study_ids": null,
+      "underlying_casts": null,
+      "castsWithDrop": null,
+      "histograms": null,
+      "resourcefulness_basis": null,
+      "skill": null,
+      "source_game_patch": null,
+      "current_retail_2026_applicability": "unverified",
+      "imported_to_ItemDB_this_run": false,
+      "synthetic_price_engine_fixture_executed": false,
+      "new_measured_casts": 0,
+      "new_independent_cohorts": 0,
+      "new_verified_current_gold_actions": 0,
+      "disposition": "Preserve as historical reference candidate only; compare all 21 exact input-output-value cells and original formula units to pinned reference source and existing source identities before reviewed gap-only import. Do not import source price quotes as output quantities."
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
     "legacy": {
-      "updated_at": "2026-11-06T07:50:23.125Z",
+      "updated_at": "2026-11-06T09:46:18.969Z",
       "status_file": "research/coordination/quiet-status/legacy.json",
-      "finding": "worker reports 4 TBC Netherweave cloth/boots cohorts (34 explicitly completed pants; other batch counts not cast denominators), historical applicability untested"
+      "finding": "Worker reports a new Obsidium 1755-ore input-quantity cohort; 351 only nominal 5-ore batch equivalents, actual completed operation count unknown."
     },
     "dragonflight": {
-      "updated_at": "2026-11-06T07:53:19.279Z",
+      "updated_at": "2026-11-06T09:38:14.987Z",
       "status_file": "research/coordination/quiet-status/dragonflight.json",
-      "finding": "worker reports 12 Wowhead item-side DE hit-numerator rows from 4 item cohorts; input bonuses/patch and output stack totals unknown"
+      "finding": "No new independent numeric cohort this worker checkpoint; prior 180-bracer original has item ID still unresolved."
     },
     "war-within": {
-      "updated_at": "2026-11-06T07:23:19.402Z",
+      "updated_at": "2026-11-06T09:23:23.272Z",
       "status_file": "research/coordination/quiet-status/war-within.json",
-      "finding": "worker reports original 297 green DE correction and independent 1000 blacksmith hammers average-only cohort; exact hammer item ID missing"
+      "finding": "Six material rows from two item-specific historical cumulative Looter disenchant cohorts; rank IDs/source scope unconfirmed."
     },
     "midnight": {
-      "updated_at": "2026-11-06T07:20:23.893Z",
+      "updated_at": "2026-11-06T09:18:44.285Z",
       "status_file": "research/coordination/quiet-status/midnight.json",
-      "finding": "worker reports three 12.1.5 base item cannot-DE catalog flags (two live catalog, one PTR); no observed live action"
+      "finding": "One original one-operation 251085 restoration-list Dawn Crystal family output, rank unspecified; cannot extrapolate drop chance."
     }
   },
   "evidence_files": [
@@ -526,15 +610,15 @@
     "https://www.reddit.com/r/woweconomy/comments/10vz6jh/",
     "https://github.com/ATTWoWAddon/AllTheThings/blob/4a95eab7696e74a929996eefd2f6890890e26efe/src/base.lua",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/database/research/att-exchanges-snapshot.json",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/docs/usable-data-audit/PASS-3.md"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/docs/usable-data-audit/PASS-3.md",
+    "https://www.reddit.com/r/woweconomy/comments/u0f32m/how_to_make_crafting_profitable_material_prices/",
+    "https://www.wowhead.com/news/10-0-economy-speculation-wowhead-economy-weekly-wrap-up-223-326714",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/migration/reports/M06-units.md"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
-    "research": "563c6ab17cc7268ac196110a807fbeccc37cc88c",
-    "implementation/usable-data-tooltips": "3d667d053db587c91401cfed7ecc56862b8340c",
-    "integration/research-current": "aca72a4de9b8c2a6a1f8ce65c22f19a5c06ed8cd",
-    "coordinator_status_commit": "8e5b97b421660be24a45918df38b5bbb342f5749",
-    "dashboard_commit": "9143111d903cb9a04c2c997973fea1c6f6aded53"
+    "research": "57f5119c46b5a3cb7454b9ba8669b2df972603ab",
+    "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "commit_sha_when_verified": {
     "existing_q2_evidence": "15dbfffea2b21f11cdfa9fc6750e9c45266a1d08",
@@ -554,7 +638,9 @@
     "Current estimator has source/fingerprint dedupe by code inspection, but no estimator, migration audit, tooltip fixture or client eligibility test was executed this session.",
     "New 500-fish source has source totals but no actual completed-cast log, Resourcefulness/refund basis, per-output hit histograms, exact output quality IDs or proof 2026 client selector accepts input 199344.",
     "Xenastro original spreadsheet direct re-read was unavailable in this session (web inaccessible; connected page scraper out of credits). Earlier readback verified 71 historic totals but did not establish two-stage per-column allocation; no author per-cast logs.",
-    "ATT r field semantics identified, but character faction routing, parent/inherited requirements and live vendor exchange eligibility not verified by coordinator; no runtime fixture executed."
+    "ATT r field semantics identified, but character faction routing, parent/inherited requirements and live vendor exchange eligibility not verified by coordinator; no runtime fixture executed.",
+    "The 2022 TSM source lists 21 pigment reference ratios, not original casts, quality ranks, gear/skill conditions, hit counts, zero distributions, source cohort identifiers or any 2026 Retail validation. Do not infer empirical P(hit) from them.",
+    "TSM table external 5× pricing factor and existing 5-versus-20-herb milling normalization can cause double-counted/multiplied yields; reconcile units and existing historical cohorts before any gap-only import."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -565,7 +651,8 @@
     "Existing Glizzerd/Wubbits and rotab Legion cohorts have been inspected; source identities already in original research JSONL; do not request duplicate numerical studies or inflate casts. Only gem ID disambiguation and modern eligibility remain.",
     "T0042: Same 21853→22445 Allakhazam 3/11 study already appears in Nov1 file; do not search or record it again as a new cohort.",
     "T0053: item 45661 reward identities are complete in existing evidence+4df9ae8 token ledger; do not re-research as missing.",
-    "199344 Magma Thresher identity was already documented in research/evidence/observations/2026-10-28-2231-dragonflight-q24-batch022-special-input-identity-source-only.md; do not claim the fish identity itself as new evidence."
+    "199344 Magma Thresher identity was already documented in research/evidence/observations/2026-10-28-2231-dragonflight-q24-batch022-special-input-identity-source-only.md; do not claim the fish identity itself as new evidence.",
+    "Known Kidneph/Jiyao/Baadkitty BfA milling numeric observations are already present in old research; do not re-import them as newly independent studies when comparing Sygon_Paul 2022 reference ratios."
   ],
   "decisions_needed": [
     {
@@ -581,7 +668,7 @@
       "proposal": "Retain source-reported hit counts as historical research only until source build/stack distributions and Retail scope are verified."
     }
   ],
-  "next_concrete_step": "Owner's integration/PR Director can confirm 95 Horde/95 Alliance marked ATT cost leaves are gated by faction in actual resolver/token action selection (other parent/inherited constraints still unknown). Independently pursue a different original numeric identity/denominator gap rather than reauditing Xenastro, Magma Thresher or archived token mappings.",
+  "next_concrete_step": "Compare each of 21 exact BfA historical TSM reference coefficients against the immutable/pinned reference and original Kidneph/Jiyao/Baadkitty evidence; determine duplicate versus missing supported fields without assigning observed casts or P(hit). Submit only genuinely new source-proven, Retail-applicable gap-only reference candidates for the integration owner's offline synthetic-price tooltip fixture; independently target missing original per-cast numerator/denominator gaps from current queue.",
   "validation_executed": {
     "repository_git_reads": true,
     "original_spreadsheet_value_range_read": false,
@@ -602,7 +689,7 @@
     "schedules_changed": false,
     "shared_queue_untouched": true
   },
-  "notifications": "on demand only; no outbound reports or schedules created",
+  "notifications": "on-demand only; Dot monitors; no new schedules",
   "last_session": {
     "updated_at": "2026-11-06T08:03:25.000Z",
     "work": "Verified original Reddit author's two-stage prospecting tool/workflow methodology; compared 44 Q2 plus 27 Q3 pre-existing pooled numeric rows, no source record mutated; original workbook not accessible this session."
@@ -814,11 +901,11 @@
     "research/v3/evidence/war-within/2026-11-06T0325-posthotfix-rank-specific-log-search.jsonl",
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl"
   ],
-  "research_branch_head_read_before_write": "2d25a484d1a499202c99a6401767ec72aeedad57",
+  "research_branch_head_read_before_write": "57f5119c46b5a3cb7454b9ba8669b2df972603ab",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-06T08:03:25.000Z",
   "verified_base_commit_sha": "67d5bbc595ae735e186c05b5a3c861376fb2b238",
   "current_status_commit_sha": null,
-  "commit_sha_note": "New coordinator status commit cannot embed its own SHA; verify returned SHA via GitHub fetch and dashboard link. No worker status or evidence was modified.",
+  "commit_sha_note": "This file cannot contain its own commit SHA without changing that SHA; verify the GitHub update response and subsequent readback externally.",
   "last_checkpoint_validation": {
     "at": "2026-11-06T07:06:03.106Z",
     "performed": [
@@ -845,19 +932,9 @@
   "integration_branch_head_checked_before_write": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "main_head_checked_before_write": "ec76f0144778bc744ce9784ecb326326fed46674",
   "session_validation": {
-    "at_utc": "2026-11-06T09:06:01.212Z",
-    "actions": [
-      "Read charter and v3 instructions/queue/flags and three-pass checkpoints",
-      "Verified original pinned ATT faction-association code",
-      "Scanned pinned archived ATT snapshot in bounded line chunks for explicit leaf r flags; 95 r=1, 95 r=2",
-      "Read worker quiet-status updates for dashboard refresh"
-    ],
-    "not_executed": [
-      "Research estimator",
-      "Offline addon valuation/tooltip suite",
-      "Live WoW client",
-      "Merge/release",
-      "Worker evidence edits"
-    ]
+    "github_status_blob_sha_read_before_write": "fa68088567869243a546001c6603fb9b2800760c",
+    "source_check": "Original Reddit source and corresponding Wowhead reprint examined; source's 21 BfA input-output coefficients transcribed. No fresh independent empirical operation dataset, local runtime tests, migrations or client verification.",
+    "ci_one_time_checkpoint": "Existing research head 57f5119c at 2026-11-06T09:46:53Z had GitHub Verify five-agent completion success; not a test executed by coordinator.",
+    "pr_dependency_status": "PR 22 and PR 23 closed unmerged 2026-11-03; PR 24 already merged into main 2026-11-02. Not touched."
   }
 }
