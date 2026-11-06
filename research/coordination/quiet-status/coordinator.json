@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T14:11:46.407Z",
+  "updated_at": "2026-11-06T15:01:37.979Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New candidate quality-ID set independently verified for recent TWW Refulgent Crystal Looter same-name rows (R1 219952, R2 219954, R3 219955), and four source gear base items confirmed Bind on Pickup. Looter row-to-ID mapping and material quantities remain unknown. Dashboard refreshed from four verified worker status readbacks; no new measured casts, import, or current-Retail gold coverage.",
+  "status": "Compared two new historical BfA study-family mean vectors (six source-reported per-herb output quantities) with six pinned TSM values and six 2022 pricing coefficients. Independently verified original 2019 forum text. All six means exceed frozen coefficients; source ancestry and current Retail scope unresolved. No new independent study imported, casts counted, or runtime test.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -21,7 +21,8 @@
     "COORD-FIRST-FLOWER-187699",
     "COORD-TITANIUM-UNPLACED-20261106",
     "T0048",
-    "COORD-TWW-REFULGENT-RANK-ID-20261106"
+    "COORD-TWW-REFULGENT-RANK-ID-20261106",
+    "COORD-BFA-REFERENCE-MEAN-COMPARE-20261106"
   ],
   "exact_gaps_targeted": [
     {
@@ -206,6 +207,20 @@
       "action_guard": "Base item is bound, so no Auction recommendation for the base item; cannot infer actual client tooltips or eligible disenchant action.",
       "new_independent_cohorts": 0,
       "new_observed_casts": 0
+    },
+    {
+      "task_id": "COORD-BFA-REFERENCE-MEAN-COMPARE-20261106",
+      "kind": "independent_historical_source_rate_vs_pinned_reference_conflict",
+      "input_item_ids": [
+        152506,
+        152508
+      ],
+      "output_item_ids": [
+        153635,
+        153636,
+        153669
+      ],
+      "gap": "Six original author-rounded average units per herb differ from frozen TSM originalTSM.amountOfMats for matching fields; determine 2022 TSM formula upstream study overlap and character/patch/batch compatibility before introducing source preference."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -918,6 +933,73 @@
       "later_direct_looter_row_identity_check_required": true,
       "no_independent_measured_cohort": true,
       "no_new_gold_ev_coverage": true
+    },
+    {
+      "kind": "NEW_TWO_FAMILY_BFA_SOURCE_MEAN_VS_PINNED_TSM_CROSSCHECK",
+      "task_id": "COORD-BFA-REFERENCE-MEAN-COMPARE-20261106",
+      "original_worker_evidence": "research/v3/evidence/legacy/2026-11-06T1453-bfa-pigment-averages-and-tbc-discharge-eligibility.jsonl",
+      "forum_rechecked_url": "https://us.forums.blizzard.com/en/wow/t/crimson-pigment-from-milling-reduced/117190",
+      "reddit_worker_source": "https://www.reddit.com/r/woweconomy/comments/eq4qcq",
+      "reddit_reopened_by_coordinator": false,
+      "formula_reference": "https://www.reddit.com/r/woweconomy/comments/u0f32m",
+      "pinned_source": "database/sources/ReferenceData.lua",
+      "pinned_source_blob_sha": "e47143ee72be8e9fd3128ebad62e364774608c4f",
+      "output_order": [
+        153635,
+        153636,
+        153669
+      ],
+      "star_moss_152506": {
+        "forum_2019_per_input": [
+          0.8,
+          0.3,
+          0.15
+        ],
+        "frozen_tsm_per_input": [
+          0.75,
+          0.272,
+          0.111
+        ],
+        "frozen_tsm_per_five_input": [
+          3.75,
+          1.36,
+          0.555
+        ],
+        "formula_2022_per_input": [
+          0.826,
+          0.315,
+          0.131
+        ]
+      },
+      "winters_kiss_152508": {
+        "reddit_2020_per_input": [
+          0.82,
+          0.31,
+          0.13
+        ],
+        "frozen_tsm_per_input": [
+          0.75,
+          0.272,
+          0.111
+        ],
+        "frozen_tsm_per_five_input": [
+          3.75,
+          1.36,
+          0.555
+        ],
+        "formula_2022_per_input": [
+          0.825,
+          0.312,
+          0.132
+        ]
+      },
+      "source_group_count": 2,
+      "distinct_paired_mean_fields": 6,
+      "coordinator_measured_cohorts_added": 0,
+      "verified_cast_denominators_added": 0,
+      "gold_actions_verified": 0,
+      "interpretation": "All six author means exceed six frozen coefficients. 2022 formula approximates 2019 and 2020 reports but upstream sample overlap unknown, so do not sum or weight as independent experiments. These are historical average material units per herb, not P(hit).",
+      "next": "Review exact upstream study lineage behind 2022 TSM formula, then ask protected implementation owner to exercise source selection/field fallback using controlled synthetic-price real-engine/tooltip checks before any import."
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -1040,7 +1122,8 @@
     "First Flower cross-reference is historical and not current-patch Retail; completed operations remain ambiguous without actual cast logs. Keep archives and TSM reference independent of measured statistics.",
     "No source-to-tooltip offline engine fixture or live client test was run in this coordinator session.",
     "2022 Titanium study has 1,000 source-stated ore, not verified completed casts/refunds or current Retail eligibility; nine older exact-file output IDs still null without corrections. Compiler/tooltip effect untested.",
-    "T0048: no raw Wowhead Looter linked output IDs/rank assignments, material quantities or per-event histogram for four new same-name Crystal cohorts. Candidate ID set is not sufficient to price row-level occurrence. All four input item base pages are BoP."
+    "T0048: no raw Wowhead Looter linked output IDs/rank assignments, material quantities or per-event histogram for four new same-name Crystal cohorts. Candidate ID set is not sufficient to price row-level occurrence. All four input item base pages are BoP.",
+    "Six historical BfA source means lack exact completed-cast denominators and current Retail qualification; cross-reference is not a measured P(hit). Independent 2020 Reddit readback relies on worker, since original Reddit page could not be reopened here."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -1082,7 +1165,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Ask authorized War Within researcher to acquire source Looter linked material URLs/IDs for 237690/237694/237621/237691 and original event-level output units; have protected three-pass implementation owner run synthetic-price actual-engine/tooltip rank and bound-action fixture only after eligibility is supported. If source is unavailable, pivot to a different queued evidence gap; do not repeat this catalog lookup.",
+  "next_concrete_step": "Determine whether 2022 TSM BfA formula rates reused 2019 Star Moss or 2020 Winter's Kiss cohorts; then review field-level reference fallback and tooltip effect with synthetic-price actual-engine fixtures on protected implementation branch; switch to a different queue gap if lineage exhausted.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
