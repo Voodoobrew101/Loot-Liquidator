@@ -1,10 +1,9 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-06T16:22:06.180Z",
-  "status": "Research-only: one newly identified 8-reported-operation Wowhead Looter epic armor disenchant cohort (260375), with TWO same-name unlinked Dawn Crystal hit rows (4/8 each), plus two new WoWDB base-item non-disenchant flags (251135, 251183) that conflict with scaled Season 2 preview eligibility assumptions. Zero newly verified direct per-cast stack distributions, output identities, live-current-build successful DE casts, or prospect/mill hit cohorts.",
+  "updated_at": "2026-11-06T17:18:40.598Z",
+  "status": "Research-only: three newly recorded original-base-ID Wowhead Looter aggregates (250016, 250006, 250019) report 19 + 20 + 19 = 58 disenchant operations, six same-name Dawn Crystal appearance rows (11/19, 7/19; 10/20, 9/20; 12/19, 7/19). Original linked material IDs/ranks, exact item variant/ilvl, cast-level units/zeros, character skill/spec and observed client build remain unknown. No verified live-client eligibility or output-specific zero-inclusive histogram; no prospect/mill completed-cast cohort.",
   "task_ids": [
     "T0026",
-    "T0025",
     "T0049",
     "T0005",
     "T0039",
@@ -13,19 +12,18 @@
   "exact_gaps_targeted": [
     {
       "task_ids": [
-        "T0026",
-        "T0025"
+        "T0026"
       ],
       "input_item_ids": [
-        260375,
-        251135,
-        251183
+        250016,
+        250006,
+        250019
       ],
       "output_item_ids": [
         243605,
         243606
       ],
-      "missing": "Raging Storm Sash two distinct Dawn Crystal linked item IDs/ranks, exact player itemLink/bonus, cast-date patch/build, per-cast item quantities, raw stack histograms/zeros, skill and specialization; base rare/epic scale-specific actual disenchant eligibility of 251135 and 251183. 243605/243606 are candidate family rank IDs only, NOT assigned to Looter rows."
+      "missing": "Linked Dawn Crystal output IDs/rank for each same-name row; true cast time itemLink, bonus string, item level/rarity; actual patch/client; individual per-output stack quantities/histograms, zeros for each material only after denominator verification; enchanting skill and specialization. Candidate family IDs are NOT assigned to observed rows."
     },
     {
       "task_ids": [
@@ -41,7 +39,7 @@
         243605,
         243606
       ],
-      "missing": "One actual current-client ilvl305 (or other scaled variant) DE action with full bonus string, build/skill/spec, output rank identity and raw per-cast log; generic ilvl206 WoWDB non-DE flag versus existing 140-operation unversioned Looter table remains unresolved."
+      "missing": "Actual itemLink ilvl305 versus generic item ilvl206 eligibility conflict still unresolved; existing 140-operation Wowhead Looter base table has no verified cast-level item version."
     },
     {
       "task_ids": [
@@ -61,7 +59,7 @@
         242786,
         242788
       ],
-      "missing": "Independent rank-matched completed prospecting casts and per-output castsWithDrop, zero counts/histograms, item IDs, unlock/resourcefulness and patch; prior Cardinalai 800 casts provide quantities only."
+      "missing": "New independent rank-specific completed prospects, hits per output, zero-inclusive histograms, Eversong Diamond unlock, input/refund and contemporaneous patch; Cardinalai 800 operations have quantities but not output hit counts."
     },
     {
       "task_ids": [
@@ -73,128 +71,170 @@
       "output_item_ids": [
         245807
       ],
-      "missing": "Completed 10-herb mills, output rank/amount/hit counts, zero outcomes/positive-stack histogram, skill/spec and refunds."
+      "missing": "Completed 10-herb milling operations with original hit/quantity and zeros, rank, skill/spec and Resourcefulness context."
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "new_original_source_aggregate_research_only",
-      "input_item_id": 260375,
-      "input_name": "Raging Storm Sash",
-      "source": "https://www.wowhead.com/item=260375/raging-storm-sash",
-      "study_key": "wowhead-looter-de-260375",
-      "reported_completed_operations": 8,
-      "output_rows": [
+      "kind": "source_reported_original_base_item_looter_aggregate_research_only",
+      "input_item_id": 250016,
+      "input_name": "Thunderfists of Ra-den's Chosen",
+      "source": "https://www.wowhead.com/ptr-2/item=250016/thunderfists-of-ra-dens-chosen",
+      "study_key": "wowhead-looter-base-250016-20261106",
+      "reported_disenchants": 19,
+      "reported_same_name_material_rows": [
         {
-          "display_row": 1,
-          "name": "Dawn Crystal",
-          "reported_hits": 4,
-          "reported_denominator": 8,
+          "row": 1,
+          "output_name": "Dawn Crystal",
+          "castsWithDrop": 11,
+          "casts_denominator": 19,
           "output_item_id": null,
           "output_rank": null,
           "total_quantity": null,
           "histogram": null
         },
         {
-          "display_row": 2,
-          "name": "Dawn Crystal",
-          "reported_hits": 4,
-          "reported_denominator": 8,
+          "row": 2,
+          "output_name": "Dawn Crystal",
+          "castsWithDrop": 7,
+          "casts_denominator": 19,
           "output_item_id": null,
           "output_rank": null,
           "total_quantity": null,
           "histogram": null
         }
       ],
-      "duplicate_warning": "One 8-operation original cohort, both linked identities unavailable. Do not sum to 16 or merge unlinked same-name rows; no zero-output inference.",
-      "input_item_level_at_cast": null,
-      "skill": null,
-      "specialization": null,
-      "patch_at_cast": null,
-      "original_individual_cast_logs": false,
-      "live_build_eligibility_verified": false
+      "observed_item_level_at_disEnchant": null,
+      "observed_item_bonus_link": null,
+      "player_skill": null,
+      "player_specialization": null,
+      "observed_client_build": null,
+      "warning": "Looter aggregate by item base ID; source item page preview variant not the processed item. Same-name output rows not merged or mapped to guessed rank; unknown zeros remain null."
     },
     {
-      "kind": "WoWDB_generic_base_item_nonDE_reference",
-      "input_item_id": 251135,
-      "input_name": "Fury-fletched Armlets",
-      "generic_ilvl": 108,
-      "patch": "12.0.0",
-      "build": 63534,
-      "source": "https://www.wowdb.com/items/251135-fury-fletched-armlets",
-      "scaled_epic_context": "https://gamgem.com/world-of-warcraft/items/fury-fletched-armlets",
-      "current_live_variant_disEnchantable": null
-    },
-    {
-      "kind": "WoWDB_generic_base_item_nonDE_reference",
-      "input_item_id": 251183,
-      "input_name": "Rootwarden Wraps",
-      "generic_ilvl": 108,
-      "patch": "12.0.0",
-      "build": 63534,
-      "source": "https://www.wowdb.com/items/251183-rootwarden-wraps",
-      "scaled_epic_context": "https://www.wowhead.com/item=251183/rootwarden-wraps",
-      "current_live_variant_disEnchantable": null
-    },
-    {
-      "kind": "updated_item_variant_display_only_not_cast_evidence",
-      "input_item_id": 272246,
-      "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652%3A13696%3A13662%3A12845&ilvl=318",
-      "query_bonus_ids": [
-        6652,
-        13696,
-        13662,
-        12845
+      "kind": "source_reported_original_base_item_looter_aggregate_research_only",
+      "input_item_id": 250006,
+      "input_name": "Masquerade of the Grim Jest",
+      "source": "https://www.wowhead.com/ptr-2/item=250006/masquerade-of-the-grim-jest",
+      "study_key": "wowhead-looter-base-250006-20261106",
+      "reported_disenchants": 20,
+      "reported_same_name_material_rows": [
+        {
+          "row": 1,
+          "output_name": "Dawn Crystal",
+          "castsWithDrop": 10,
+          "casts_denominator": 20,
+          "output_item_id": null,
+          "output_rank": null,
+          "total_quantity": null,
+          "histogram": null
+        },
+        {
+          "row": 2,
+          "output_name": "Dawn Crystal",
+          "castsWithDrop": 9,
+          "casts_denominator": 20,
+          "output_item_id": null,
+          "output_rank": null,
+          "total_quantity": null,
+          "histogram": null
+        }
       ],
-      "displayed_ilvl": 318,
-      "actual_disenchant_link": null,
-      "notes": "Bonus/ilvl URL demonstrates preview scaling, NOT actual 140-cast Looter version or ilvl305 processing."
+      "observed_item_level_at_disEnchant": null,
+      "observed_item_bonus_link": null,
+      "player_skill": null,
+      "player_specialization": null,
+      "observed_client_build": null,
+      "warning": "Looter aggregate by item base ID; source item page preview variant not the processed item. Same-name output rows not merged or mapped to guessed rank; unknown zeros remain null."
+    },
+    {
+      "kind": "source_reported_original_base_item_looter_aggregate_research_only",
+      "input_item_id": 250019,
+      "input_name": "Leafdrape of the Luminous Bloom",
+      "source": "https://www.wowhead.com/item=250019/leafdrape-of-the-luminous-bloom?bonus=12276",
+      "study_key": "wowhead-looter-base-250019-20261106",
+      "reported_disenchants": 19,
+      "reported_same_name_material_rows": [
+        {
+          "row": 1,
+          "output_name": "Dawn Crystal",
+          "castsWithDrop": 12,
+          "casts_denominator": 19,
+          "output_item_id": null,
+          "output_rank": null,
+          "total_quantity": null,
+          "histogram": null
+        },
+        {
+          "row": 2,
+          "output_name": "Dawn Crystal",
+          "castsWithDrop": 7,
+          "casts_denominator": 19,
+          "output_item_id": null,
+          "output_rank": null,
+          "total_quantity": null,
+          "histogram": null
+        }
+      ],
+      "observed_item_level_at_disEnchant": null,
+      "observed_item_bonus_link": null,
+      "player_skill": null,
+      "player_specialization": null,
+      "observed_client_build": null,
+      "warning": "Looter aggregate by item base ID; source item page preview variant not the processed item. Same-name output rows not merged or mapped to guessed rank; unknown zeros remain null."
     }
   ],
   "numeric_fields_advanced": {
-    "new_original_looter_cohorts": 1,
-    "distinct_reported_completed_operations": 8,
-    "new_output_hit_rows": 2,
-    "per_output_reported_hits": [
-      4,
-      4
-    ],
-    "new_output_item_ids_verified": 0,
-    "new_output_quantities_verified": 0,
-    "new_zero_inclusive_histograms": 0,
-    "new_verified_live_current_build_disenchants": 0,
-    "new_base_item_nonDE_reference_flags": 2,
-    "new_prospecting_or_milling_completed_cast_cohorts": 0
+    "new_base_id_looter_aggregates": 3,
+    "new_distinct_source_reported_disenchant_operations": 58,
+    "new_same_name_material_hit_rows": 6,
+    "new_reported_hit_counts": {
+      "250006": [
+        10,
+        9
+      ],
+      "250016": [
+        11,
+        7
+      ],
+      "250019": [
+        12,
+        7
+      ]
+    },
+    "new_exact_linked_output_item_ids": 0,
+    "new_per_cast_stack_histograms": 0,
+    "new_verified_input_item_bonus_versions": 0,
+    "new_verified_current_client_disenchants": 0,
+    "new_prospect_or_mill_completed_cast_cohorts": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-06T1622-raging-storm-de-and-base-flags.jsonl"
+    "research/v3/evidence/midnight/2026-11-06T1718-three-dawn-crystal-looter-cohorts.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-20261106-1622-260375-a",
-    "midnight-20261106-1622-260375-b",
-    "midnight-20261106-1622-251135",
-    "midnight-20261106-1622-251183"
+    "midnight-20261106-1718-01",
+    "midnight-20261106-1718-02",
+    "midnight-20261106-1718-03",
+    "midnight-20261106-1718-04",
+    "midnight-20261106-1718-05",
+    "midnight-20261106-1718-06"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=260375/raging-storm-sash",
-    "https://www.wowhead.com/ptr-2/item=260375/raging-storm-sash",
-    "https://www.wowdb.com/items/251135-fury-fletched-armlets",
-    "https://gamgem.com/world-of-warcraft/items/fury-fletched-armlets",
-    "https://www.wowdb.com/items/251183-rootwarden-wraps",
-    "https://www.wowhead.com/item=251183/rootwarden-wraps",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652%3A13696%3A13662%3A12845&ilvl=318"
+    "https://www.wowhead.com/ptr-2/item=250016/thunderfists-of-ra-dens-chosen",
+    "https://www.wowhead.com/ptr-2/item=250006/masquerade-of-the-grim-jest",
+    "https://www.wowhead.com/item=250019/leafdrape-of-the-luminous-bloom?bonus=12276"
   ],
-  "verified_commit_sha": "9a48a4b24f19b4da380c77123f7b7d01f8c97a3c",
-  "verified_commit_sha_scope": "Verified research branch HEAD used as parent of this one atomic two-file commit. The published commit cannot contain its own SHA as that would change the hash; post-commit SHA must be verified externally by branch-ref/commit read-back.",
-  "base_commit_sha_verified": "9a48a4b24f19b4da380c77123f7b7d01f8c97a3c",
-  "commit_readback": "Pending independent post-publication branch-ref and content read-back; actual published SHA not self-embedded because of Git object SHA self-reference.",
+  "verified_commit_sha": "bbffc2f4e7cfcb9e98f4e2e8347f669d00b442ae",
+  "verified_commit_sha_scope": "This is the verified starting branch HEAD/parent, NOT the new published commit SHA. A commit cannot embed its own SHA inside a file it hashes; verify the published SHA independently via the branch ref and post-write read-back.",
+  "base_commit_sha_verified": "bbffc2f4e7cfcb9e98f4e2e8347f669d00b442ae",
+  "commit_readback": "Awaiting post-publication verification external to the committed JSON; check current branch ref, GitHub commit file list and both file bytes.",
   "blockers": [
-    "260375 Wowhead Looter reports 8 disenchants with two indistinguishable Dawn Crystal 4/8 rows. Exact linked output item/rank IDs, per-cast units/zero histograms, ilvl/bonus/build, skill/spec and original player logs inaccessible; do not collapse the rows or infer 8 separate hits or current-build eligibility.",
-    "WoWDB base item 251135/251183 ilvl108 cannot-disenchant flags may not apply to scaled S2 Epic versions. Production itemID-only eligibility requires exact live itemLink/bonus and actual Retail Disenchant attempt.",
-    "272246 Miststalker's Wristbands generic ilvl206 non-DE versus 140-operation Looter report remains unresolved for ilvl305; bonus/ilvl preview URL is not proof of processed version.",
-    "237362 Umbral Tin per-output zero-inclusive completed casts and diamond unlock/refund conditions remain unavailable; prior 800-cast output totals do not establish hit rates.",
-    "236761 milling remains without a new verified cast/quantity histogram.",
-    "Source pages can show cumulative Looter tallies syndicated across live/PTR versions. Deduped by input base ID, not per URL."
+    "250016, 250006, 250019 Looter tables provide 58 source-reported input-base operations but no linked Dawn Crystal rank IDs, per-cast stacks or logged versions. Six same-name rows must stay distinct, and 56 recorded row-hits must not be treated as 56 mutually exclusive operation outcomes. Neither selected page ilvl nor PTR path proves source cast epoch.",
+    "250019 displays a selectable rare-level variant yet Dawn Crystal rows; actual disenchant rarity/level for collected casts cannot be reconstructed from current display.",
+    "250016/250006 data indexed on PTR 12.1.5 pages. Live-client eligibility and whether underlying Looter aggregate spans multiple patches remain unverified.",
+    "272246 Miststalker's Wristbands generic ilvl206 vs Armory ilvl305 and 140-operation Looter cohort unresolved without original itemLink and actual DE craft event.",
+    "Umbral Tin Ore 237362/237363 per-output completed casts/hits/histograms and Eversong Diamond unlock conditions missing from existing 800-cast aggregate. No unsupported probabilities or zero counts assigned.",
+    "Tranquility Bloom 236761 milling sample lacks confirmed completed-cast denominator, refund handling and per-cast pigment distribution."
   ],
   "exhausted_sources": [
     "Do not re-import Cardinalai June10 800-cast Umbral Tin/Brilliant Silver pooled studies or Honeybone Apr19/22 Refulgent Copper; earlier studies already recorded.",
@@ -215,7 +255,10 @@
     "Current session: independently matched candidate 248064, 248066, 250033, 251202, 248077, 251251 and 248059 against prior source-backed Midnight evidence files; all are already recorded and were NOT re-imported.",
     "Searches for new Umbral Tin / Tranquility Bloom per-cast histograms recovered previously documented Cardinalai, JD3K, Krathalan and existing guide results; no new independent denominators or distributions.",
     "Live and PTR 260375 Raging Storm Sash Wowhead Looter both show 8/4/4, treated as ONE original base-ID cohort, not independent datasets.",
-    "Previously documented 251085 Mantle restoration cost versus actual drop discrepancy remains on hold, not repeated."
+    "Previously documented 251085 Mantle restoration cost versus actual drop discrepancy remains on hold, not repeated.",
+    "Current session: 242712 Eversong Diamond alternate same-name catalog ID was already investigated/held in original V2 source-review 2026-10-30T0826; did not record or resolve this existing identity dispute anew.",
+    "Current session: Draggoth March 21 Tranquility Bloom 12.5 and rare 81/90 shard percent references already recorded in midnight 2026-10-31T0006; no repeated evidence. Jacara 400-ore gem report, headtripvee/JD3K/previous Looter cohorts checked against branch and not reimported.",
+    "Current session: duplicate detection excluded existing 249953,249989,249956,250053,260371,250063,251204 and rare weapon 251251/251258/248074; only unseen 250016/250006/250019 base Looter aggregates added. Avoid re-fetching the same indexed snapshots until linked output IDs or original cast logs emerge."
   ],
   "decisions_needed": [
     {
@@ -233,10 +276,14 @@
     {
       "owner": "Master",
       "decision": "Before using 251135 and 251183 noDisenchant base flags as ItemDB eligibility vetoes, verify actual live scaled Season 2 variant itemLinks and client API/DE action; base ilvl108 WoWDB template may differ from epic upgraded content."
+    },
+    {
+      "owner": "Master",
+      "decision": "Keep 250016, 250006 and 250019 research-only: match the two same-name Dawn Crystal rows per item to actually linked IDs/ranks, determine whether item variants were epic/rare at cast time and gate estimator import on verified source lineage/stack quantities rather than the current page selection."
     }
   ],
-  "next_concrete_step": "Obtain a new rare/uncommon item-level-tagged current-client disenchant craft event with itemLink bonus string, skill/spec, exact output item ID/rank and stack size; follow with new completed-operation exports for 237362 Umbral Tin (per-output hits/zeros/refunds) and 236761 milling (10-herb batch histograms). Ask Master to resolve two same-name Dawn Crystal IDs for 260375 if API/source links become accessible.",
+  "next_concrete_step": "Recover original Looter linked Dawn Crystal item hrefs/pctstack histograms for new base items 250016,250006,250019, with full itemLink+game build (especially rare display for 250019); otherwise pivot to original character-captured current Retail ilvl305 DE test of 272246 and a fully logged completed 237362 Umbral Tin / 236761 milling batch with rank, Resourcefulness and unlock context.",
   "production_merge": false,
   "release": false,
-  "notifications": "on-demand only; Dot handles monitoring"
+  "notifications": "on-demand only; Dot owns PR/CI monitoring"
 }
