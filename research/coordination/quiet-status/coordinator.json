@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T22:02:14.232Z",
+  "updated_at": "2026-11-06T23:05:53.740Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New source-linked Midnight Recycling numerical candidate: one author reports 15,669 operations, 51,154 cores, 69,882 consumed pigment units; original stated cores-per-craft average fails arithmetic. Unresolved exact pigment/core rank and net-input context. No research admission, addon EV or live coverage.",
+  "status": "New documented five-input-per-Recycling-craft normalization checked against original self-reported Midnight aggregate: 15,669×5=78,345 nominal units versus 69,882 stated consumed, an 8,463-unit (10.8022%) difference; consistent with Resourcefulness savings but not an observed refund ledger. Original input/output item IDs and ranks, epoch, context and live action remain unverified; no production valuation admission.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -31,7 +31,8 @@
     "T0047",
     "COORD-ELEMENTIUM-SOURCE-AND-JOINT-HIST-20261106",
     "COORD-LEGION-2017-LEYSTONE-GROSS-ORE-UNITS-20261106",
-    "COORD-MIDNIGHT-RECYCLE-CAROLUS-20261106"
+    "COORD-MIDNIGHT-RECYCLE-CAROLUS-20261106",
+    "COORD-RECYCLE-FIVE-UNIT-NOMINAL-20261106"
   ],
   "exact_gaps_targeted": [
     {
@@ -388,6 +389,37 @@
       ],
       "gap": "Original author does not link consumed pigment item/rank or produced core quality/item; not independently deduplicated across branch source archives. Determine whether 69,882 indicates net consumed after 36% Resourcefulness, confirm recipe batch/eligibility and game epoch, capture actual per-cast output/item-level logs if available. Author's stated per-craft average differs from source totals; do not import uncorrected average or assign per-output occurrence probability.",
       "owner_boundary": "Research-only candidate; integration/usable-data-tooltips owns adapter, tooltip, final audit and PR; research schema currently lists Prospect/Mill/Disenchant/Smelt so do not misclassify Recycling as one of those methods."
+    },
+    {
+      "task_id": "COORD-RECYCLE-FIVE-UNIT-NOMINAL-20261106",
+      "kind": "new_batch_normalization_scenario_not_new_study",
+      "original_source": "https://www.wowhead.com/item=253849/recycling",
+      "recipe_unit_sources": [
+        "https://www.wow-professions.com/midnight/engineering-guide",
+        "https://boostmatch.gg/blog/wow/articles/wow-midnight-engineering-guide"
+      ],
+      "original_author": "CarolusRex2333",
+      "source_reported_operations": 15669,
+      "verified_reference_nominal_inputs_per_operation": 5,
+      "nominal_input_units_if_same_recipe": 78345,
+      "author_reported_consumed_pigment_units": 69882,
+      "implied_nominal_minus_reported_consumed_units": 8463,
+      "implied_fraction_of_nominal_inputs_unconsumed": 0.1080222094581658,
+      "author_reported_resourcefulness_percent": 36,
+      "arithmetically_implied_input_saving_fraction_divided_by_reported_resourcefulness_rate": 0.3000616929393495,
+      "conditional_nature": "only if every reported operation used exactly 5 of the same ingredient and 'consumed' is net of refunds; cannot infer actual proc counts/savings coefficient from aggregates",
+      "output_total_units_reported": 51154,
+      "derived_output_units_per_reported_operation": 3.264662709809177,
+      "derived_output_units_per_nominal_input": 0.6529325419618355,
+      "derived_output_units_per_reported_consumed_input": 0.7320053804985547,
+      "exact_input_item_id": null,
+      "exact_output_item_id": null,
+      "output_quality_rank": null,
+      "original_cast_level_histogram": null,
+      "observed_resourcefulness_proc_count": null,
+      "cohort_count_added": 0,
+      "compiled_ev_test": "not_run",
+      "note": "External guide confirms recipe batch but does not independently verify the author's ingredient/ranks/ledger; no duplicate evidence row added."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -1527,34 +1559,49 @@
       "new_accepted_cohorts": 0,
       "new_verified_gold_decisions": 0,
       "source_to_tooltip_fixture_executed": false
+    },
+    {
+      "task_id": "COORD-RECYCLE-FIVE-UNIT-NOMINAL-20261106",
+      "kind": "batch_size_and_aggregate_unit_reconciliation",
+      "source_wowhead": "https://www.wowhead.com/item=253849/recycling",
+      "crosschecked_batch_sources": [
+        "https://www.wow-professions.com/midnight/engineering-guide",
+        "https://boostmatch.gg/blog/wow/articles/wow-midnight-engineering-guide"
+      ],
+      "reference_nominal_reagents_per_operation": 5,
+      "nominal_reagents_for_reported_15669_operations": 78345,
+      "author_net_consumed_reagents": 69882,
+      "arithmetic_difference_units": 8463,
+      "arithmetic_difference_fraction_of_nominal": 0.1080222094581658,
+      "author_resourcefulness_percent": 36,
+      "apparent_savings_fraction_per_reported_resourcefulness_probability": 0.3000616929393495,
+      "caution": "0.30006 is a ratio of aggregate rates under assumptions; NOT a verified savings coefficient or observed Resourcefulness proc yield. The 5-unit rule is independently guide-stated; the sample ingredient and exact source-based net ledger are unknown.",
+      "new_measured_cohorts": 0,
+      "new_verified_gold_decisions": 0
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": {
-      "updated_at": "2026-11-06T21:46:50.903Z",
-      "status_file": "research/coordination/quiet-status/legacy.json",
-      "status_file_blob_sha": "f4c9a68944521739627940d083f99bbb4c97deba",
-      "finding": "2 original old-world milling authors, 10 quantity rows, raw completed casts absent; Classic page is mirrored historical source not current Retail evidence"
-    },
-    "dragonflight": {
-      "updated_at": "2026-11-06T21:36:10.875Z",
-      "status_file": "research/coordination/quiet-status/dragonflight.json",
-      "status_file_blob_sha": "908749b28a78fb6ebb779a1d8b6d384f215634be",
-      "finding": "4 Amirdrassil gear Looter tables, 8 occurrence rows / 57 site reported operations; era/skill unknown"
+    "midnight": {
+      "updated_at": "2026-11-06T22:21:28.334Z",
+      "status_file": "research/coordination/quiet-status/midnight.json",
+      "finding": "5 source-linked gear Looter snapshots / 69 site reported events; 10 same-name Dawn Crystal rows; two PTR; material rank/units unresolved; readback only"
     },
     "war-within": {
-      "updated_at": "2026-11-06T21:28:35.447Z",
+      "updated_at": "2026-11-06T22:28:13.741Z",
       "status_file": "research/coordination/quiet-status/war-within.json",
-      "status_file_blob_sha": "a6a0e59651ad5d98a0bf4a7eb631594397a92d44",
-      "finding": "17 rank-identified Refulgent Crystal occurrence rows from 6 gear pages; source hits not quantities"
+      "finding": "6 gear item-side Looter cohorts, 17 material occurrence rows; displayed names repeat and original ranked output itemLinks not fully independently resolved; not raw casts"
     },
-    "midnight": {
-      "updated_at": "2026-11-06T21:15:59.454Z",
-      "status_file": "research/coordination/quiet-status/midnight.json",
-      "status_file_blob_sha": "ee621655ec203492005eca2c2711388651a65b25",
-      "finding": "five cumulative site Looter gear cases, 10 Dawn Crystal name-only rows / 53 reported operations; output rank identity missing"
+    "dragonflight": {
+      "updated_at": "2026-11-06T22:39:14.497Z",
+      "status_file": "research/coordination/quiet-status/dragonflight.json",
+      "finding": "4 Dragonflight gear Looter tables / 314 site-reported operations / 10 native positive-result rows; not a controlled cast ledger"
+    },
+    "legacy": {
+      "updated_at": "2026-11-06T22:46:14.836Z",
+      "status_file": "research/coordination/quiet-status/legacy.json",
+      "finding": "One author 2011 Elementium 100 stacks and Adamantite 50 unspecified units: 24 item-ID linked output quantity totals plus one unresolved Nightseye name; no logged completed casts"
     }
   },
   "evidence_files": [
@@ -1644,7 +1691,9 @@
     "https://www.wowhead.com/item=245807/powder-pigment",
     "https://www.wowhead.com/item=243582/evercore",
     "https://tradeskillmaster.com/retail/us/items/243581",
-    "https://tradeskillmaster.com/retail/us/items/243582"
+    "https://tradeskillmaster.com/retail/us/items/243582",
+    "https://www.wow-professions.com/midnight/engineering-guide",
+    "https://boostmatch.gg/blog/wow/articles/wow-midnight-engineering-guide"
   ],
   "verified_revisions_before_write": {
     "main": "efeeb8ca1188cd87b5bd3a1f8807eb270ad3df51",
@@ -1666,7 +1715,11 @@
     "this_checkpoint_status_commit": "91e868f840add36777404cf3e1c952f4962df016",
     "this_checkpoint_dashboard_commit": "a304aa55d3919a0fad8e44e1c2fa71bd9f9ec159",
     "leystone_evidence_blob_sha": "5e00995acd7b3f6a8185cafaec589aaca2364e58",
-    "researched_source_url": "https://www.wowhead.com/item=253849/recycling"
+    "researched_source_url": "https://www.wowhead.com/item=253849/recycling",
+    "research_head": "3f0e3b0f848a3f004a6184355d61594bceabad5f",
+    "main_head": "efeeb8ca1188cd87b5bd3a1f8807eb270ad3df51",
+    "integration_head": "3d667d053db587c91401cfed7ecc56862b8340c9",
+    "checked_at_utc": "2026-11-06T23:05:53.740Z"
   },
   "commit_sha_when_verified": "91e868f840add36777404cf3e1c952f4962df016",
   "blockers": [
@@ -1682,7 +1735,8 @@
     "Elementium 382-cast joint histogram is rarity-category evidence, not twelve identified material outcome histograms; a per-output import would invent gem identity/chances. Source build/current Retail and character availability are not verified.",
     "Elementium 846144's 10,000 ore permits denominator per INPUT ore, not 2,000 observed completed prospect casts; 12 raw totals are already in Legacy worker-owned evidence. Correction of Fawnish source identity requires append-only review in worker/migration-owned area.",
     "Leystone 2017 original worksheet has gross ore and gem unit counts, but no independently counted completed clicks, positive-cast probabilities, saved input/refunds, original recorder or controlled skill/build context. Gem % is NOT prospect P(hit).",
-    "New Recycling author sample: item 253849 page lists 15,669 crafts but original input 'Pigments' and output 'Eternity Cores' lack explicit itemLinks/rank; cannot assign 245807/245808 or 243581/243582 without a source-consistent identity. Original per-craft average inconsistent with source totals; 69,882 input is described as consumed, no independent gross/refund ledger, patch/date, event histograms or current character recipe. No importer/engine fixture run."
+    "New Recycling author sample: item 253849 page lists 15,669 crafts but original input 'Pigments' and output 'Eternity Cores' lack explicit itemLinks/rank; cannot assign 245807/245808 or 243581/243582 without a source-consistent identity. Original per-craft average inconsistent with source totals; 69,882 input is described as consumed, no independent gross/refund ledger, patch/date, event histograms or current character recipe. No importer/engine fixture run.",
+    "COORD-RECYCLE-FIVE-UNIT-NOMINAL: 15,669 operations × independently documented 5 reagents per Recycling recipe = 78,345 nominal reagents; self-reported 69,882 consumed implies 8,463 net difference (10.8022%). This is internally compatible with stated 36% Resourcefulness but NOT independently measured savings/proc counts, and cannot be used as a character-specific coefficient, assumed ingredient/rank or actionable recipe without ledger/source and client eligibility."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -1729,7 +1783,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Prioritize the new source-reported 15,669-craft Midnight Recycling candidate (research-only): dedupe CarolusRex2333 original comment across v3/master/legacy/personal imports; verify exact pigment input quality/item, Evercore output quality/item, recipe 5-unit versus net 69,882 input accounting, source timestamp/patch and character eligibility. Preserve 51,154/15,669 source-derived expected output, but DO NOT use mismatched published mean, invent probabilities or assign rank. Then let protected integration owner determine eligibility and synthetic-price source→tooltip fixture; workers continue disjoint original-source queue tasks.",
+  "next_concrete_step": "For COORD-RECYCLE-FIVE-UNIT-NOMINAL: obtain CarolusRex2333 original reagent/item links, recipe output links and rank, actual refund ledger, game build/date, and whether all 15,669 operations used the same five-reagent recipe; if unavailable, retain the aggregate solely as provisional contextual quantity and do not price across unknown ranks. Worker-owned priority queues continue independently; no new cohort duplicate. Protected implementation owner alone handles adding Recycling adapter if it is in scope.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -1743,8 +1797,9 @@
     "worker_status_readback": true,
     "source_catalog_rank_checks": true,
     "gear_page_base_binding_checks": true,
-    "this_run": "Read original LIVE-indexed Wowhead Recycling source and reconciled reported 51,154/15,669 vs stated mean, 51,154/69,882 vs stated ratio. Read current main/research/integration heads, PR22/23 closed-unmerged, current 4 worker status files + four corresponding evidence files; latest research workflow 42299532286 successful for pre-write a733541. No new CI or game test executed.",
-    "arithmetic_crosscheck": true
+    "this_run": "Read source author Wowhead Retail Recycling comment and two independent retail Engineering guide statements that each Recycling operation consumes 5 reagents. Checked source totals with direct arithmetic; read main/research/integration ref SHAs, worker quiet-status snapshots, and PR22/23 closed-unmerged; inspected source-memory and compiled estimate/audit for literal name/ID matches (none in those limited files, not exhaustive evidence deduplication). No original event log, item/rank link, in-client or addon engine fixture; no new cohort or gold recommendation.",
+    "arithmetic_crosscheck": true,
+    "computed_aggregate_unit_check": true
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -2050,10 +2105,10 @@
   "actual_last_worker_readbacks_utc": "2026-11-06T22:02:14.232Z",
   "worker_readback_utc": "2026-11-06T17:05:08.910Z",
   "worker_statuses_verified_in_this_session": {
-    "midnight": "2026-11-06T21:15:59.454Z",
-    "war-within": "2026-11-06T21:28:35.447Z",
-    "dragonflight": "2026-11-06T21:36:10.875Z",
-    "legacy": "2026-11-06T21:46:50.903Z"
+    "midnight": "2026-11-06T22:21:28.334Z",
+    "war-within": "2026-11-06T22:28:13.741Z",
+    "dragonflight": "2026-11-06T22:39:14.497Z",
+    "legacy": "2026-11-06T22:46:14.836Z"
   },
   "branch_head_at_read": "c02b126d362a7990a1b92a3f6dacf3470022a7a0",
   "latest_research_check_at_read": {
