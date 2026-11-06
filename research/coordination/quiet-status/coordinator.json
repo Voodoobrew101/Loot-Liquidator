@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T15:01:37.979Z",
+  "updated_at": "2026-11-06T16:00:08.607Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Compared two new historical BfA study-family mean vectors (six source-reported per-herb output quantities) with six pinned TSM values and six 2022 pricing coefficients. Independently verified original 2019 forum text. All six means exceed frozen coefficients; source ancestry and current Retail scope unresolved. No new independent study imported, casts counted, or runtime test.",
+  "status": "Verified an additional Retail-indexed Classic Mining spell (70524) for Enchanted Thorium Bar alongside the separate Classic Enchanting spell (17180), correcting the earlier blanket Smelt exclusion. Both source records specify 1 Thorium Bar + 3 Rich Illusion Dust. Read back legacy worker's 13 fixed-recipe corrections and the other workers' latest quiet statuses; no new stochastic casts, gold-EV coverage, addon modification or actual client QA.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -22,7 +22,8 @@
     "COORD-TITANIUM-UNPLACED-20261106",
     "T0048",
     "COORD-TWW-REFULGENT-RANK-ID-20261106",
-    "COORD-BFA-REFERENCE-MEAN-COMPARE-20261106"
+    "COORD-BFA-REFERENCE-MEAN-COMPARE-20261106",
+    "COORD-THORIUM-DUAL-PROFESSION-20261106"
   ],
   "exact_gaps_targeted": [
     {
@@ -221,6 +222,47 @@
         153669
       ],
       "gap": "Six original author-rounded average units per herb differ from frozen TSM originalTSM.amountOfMats for matching fields; determine 2022 TSM formula upstream study overlap and character/patch/batch compatibility before introducing source preference."
+    },
+    {
+      "task_id": "T0029",
+      "kind": "verified_two_profession_spell_ids_same_conversion_avoids_false_mining_exclusion",
+      "output_item_id": 12655,
+      "input_item_name": "Thorium Bar",
+      "output_item_name": "Enchanted Thorium Bar",
+      "spell_variants": [
+        {
+          "spell_id": 17180,
+          "profession": "Classic Enchanting",
+          "requires": "Runed Enchanting Rod",
+          "source": "https://www.wowhead.com/spell=17180/enchanted-thorium-bar"
+        },
+        {
+          "spell_id": 70524,
+          "profession": "Classic Mining",
+          "requires": "Forge",
+          "source": "https://www.wowhead.com/spell=70524/enchanted-thorium-bar"
+        }
+      ],
+      "current_retail_indexed_recipe_basis": "Both Wowhead Retail spell records explicitly show Thorium Bar x1 and Rich Illusion Dust x3; quality/output counts from displayed fixed recipe, not random observations.",
+      "source_reagent_id_corroboration": "Rich Illusion Dust retail item 156930; output Enchanted Thorium Bar 12655 confirmed separately by Retail TSM item listing.",
+      "earlier_worker_note": "Legacy worker explicitly excluded prior Enchanted Thorium pseudo-Smelt when identifying 17180 as Enchanting; this correction is a distinct Mining spell, not a reason to import 17180 as Mining.",
+      "pricing_safety": "One output recipe with two profession eligibility paths; never double expected quantity/EV when both professions learned. Add exact extra reagent costs only if eligible runtime recipe and price lookup exist.",
+      "unknowns": [
+        "Live-client availability to current characters and spec/build",
+        "Whether both variants are available in current player profession book",
+        "Existing production adapter recognition and protected branch behavior",
+        "Live prices and best action"
+      ],
+      "new_measured_cohorts": 0,
+      "new_observed_casts": 0,
+      "source_links": [
+        "https://www.wowhead.com/spell=70524/enchanted-thorium-bar",
+        "https://www.wowhead.com/spell=17180/enchanted-thorium-bar",
+        "https://tradeskillmaster.com/retail/us/items/12655",
+        "https://www.wowhead.com/item=156930/rich-illusion-dust"
+      ],
+      "worker_evidence_file": "research/v3/evidence/legacy/20261106T1543-smelting-recipe-identity-rescue.jsonl",
+      "worker_evidence_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b"
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -1000,6 +1042,30 @@
       "gold_actions_verified": 0,
       "interpretation": "All six author means exceed six frozen coefficients. 2022 formula approximates 2019 and 2020 reports but upstream sample overlap unknown, so do not sum or weight as independent experiments. These are historical average material units per herb, not P(hit).",
       "next": "Review exact upstream study lineage behind 2022 TSM formula, then ask protected implementation owner to exercise source selection/field fallback using controlled synthetic-price real-engine/tooltip checks before any import."
+    },
+    {
+      "kind": "retail_spell_recipe_identity",
+      "item_id": 12655,
+      "distinct_spell_ids": [
+        17180,
+        70524
+      ],
+      "professions": [
+        "Classic Enchanting",
+        "Classic Mining"
+      ],
+      "input": "Thorium Bar x1",
+      "additional_reagent": "Rich Illusion Dust x3",
+      "output": "Enchanted Thorium Bar x1",
+      "source_urls": [
+        "https://www.wowhead.com/spell=70524/enchanted-thorium-bar",
+        "https://www.wowhead.com/spell=17180/enchanted-thorium-bar",
+        "https://tradeskillmaster.com/retail/us/items/12655",
+        "https://www.wowhead.com/item=156930/rich-illusion-dust"
+      ],
+      "observed_casts": null,
+      "measured_cohorts": 0,
+      "eligibility_unverified": true
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -1041,7 +1107,8 @@
     "research/v3/migration/reports/M06-units.md",
     "research/v3/evidence/legacy/2026-11-06T1145-tin-primary-and-cata-milling-originals.jsonl",
     "research/evidence/observations/2026-10-28-legacy-batch002-shadowlands-bfa-original-cohorts.jsonl",
-    "research/v3/evidence/legacy/2026-11-06T1245-titanium-uncommon-gap-and-firsthand-prospect-histogram.jsonl"
+    "research/v3/evidence/legacy/2026-11-06T1245-titanium-uncommon-gap-and-firsthand-prospect-histogram.jsonl",
+    "research/v3/evidence/legacy/20261106T1543-smelting-recipe-identity-rescue.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -1093,7 +1160,11 @@
     "https://www.wowhead.com/item=237690/charhounds-vicious-hidecoat",
     "https://www.wowhead.com/item=237694/charhounds-vicious-bindings",
     "https://www.wowhead.com/item=237621/stompers-of-the-lucent-battalion",
-    "https://www.wowhead.com/item=237691/charhounds-vicious-scalp"
+    "https://www.wowhead.com/item=237691/charhounds-vicious-scalp",
+    "https://www.wowhead.com/spell=70524/enchanted-thorium-bar",
+    "https://www.wowhead.com/spell=17180/enchanted-thorium-bar",
+    "https://tradeskillmaster.com/retail/us/items/12655",
+    "https://www.wowhead.com/item=156930/rich-illusion-dust"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
@@ -1105,7 +1176,11 @@
     "titanium_old_cohort_blob_sha": "d2cd1618bf6d0ad3e4d632452dee5dad3b25ec39",
     "titanium_corrections_blob_sha": "80f37dbb74e3444585f7a63a3272a6c0989494f7",
     "latest_tww_worker_evidence_blob_sha": "2f9cfd499a9cc573af61529bda25c2dca16a46ab",
-    "dashboard_commit_sha": "973868004a8259a05b34f854a8aa3c7e6169ca40"
+    "dashboard_commit_sha": "973868004a8259a05b34f854a8aa3c7e6169ca40",
+    "research_head_at_session": "cedb53bee0a85bfd5e90379888ee39b92ebdb0a4",
+    "main_head_at_session": "ec76f0144778bc744ce9784ecb326326fed46674",
+    "implementation_head_at_session": "3d667d053db587c91401cfed7ecc56862b8340c9",
+    "legacy_evidence_worker_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b"
   },
   "commit_sha_when_verified": {
     "existing_q2_evidence": "15dbfffea2b21f11cdfa9fc6750e9c45266a1d08",
@@ -1123,7 +1198,8 @@
     "No source-to-tooltip offline engine fixture or live client test was run in this coordinator session.",
     "2022 Titanium study has 1,000 source-stated ore, not verified completed casts/refunds or current Retail eligibility; nine older exact-file output IDs still null without corrections. Compiler/tooltip effect untested.",
     "T0048: no raw Wowhead Looter linked output IDs/rank assignments, material quantities or per-event histogram for four new same-name Crystal cohorts. Candidate ID set is not sufficient to price row-level occurrence. All four input item base pages are BoP.",
-    "Six historical BfA source means lack exact completed-cast denominators and current Retail qualification; cross-reference is not a measured P(hit). Independent 2020 Reddit readback relies on worker, since original Reddit page could not be reopened here."
+    "Six historical BfA source means lack exact completed-cast denominators and current Retail qualification; cross-reference is not a measured P(hit). Independent 2020 Reddit readback relies on worker, since original Reddit page could not be reopened here.",
+    "No actual current-character recipe-book/forge check for Mining 70524 vs Enchanting 17180; runtime action eligibility, cost and no-double-counting not tested; requires protected implementation owner's review."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -1165,7 +1241,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Determine whether 2022 TSM BfA formula rates reused 2019 Star Moss or 2020 Winter's Kiss cohorts; then review field-level reference fallback and tooltip effect with synthetic-price actual-engine fixtures on protected implementation branch; switch to a different queue gap if lineage exhausted.",
+  "next_concrete_step": "Hand off Retail-indexed Mining spell 70524 as the separate profession path for Enchanted Thorium Bar 12655, alongside Enchanting 17180; ask protected integration owner to check runtime profession eligibility, reagent cost (Thorium Bar 1, Rich Illusion Dust 3), one EV per feasible action, and offline tooltip fixture without editing that branch. Continue distinct queue gap when handoff complete.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -1178,7 +1254,8 @@
     "source_to_tooltip_fixture": false,
     "worker_status_readback": true,
     "source_catalog_rank_checks": true,
-    "gear_page_base_binding_checks": true
+    "gear_page_base_binding_checks": true,
+    "this_run": "Web and GitHub readback only: source spell identity and frozen per-recipe costs, no addon execution or runtime fixture."
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -1192,18 +1269,53 @@
   },
   "notifications": "on-demand only; no schedule created, modified or cross-chat ping",
   "last_session": {
-    "id": "COORD-TWW-REFULGENT-RANK-ID-20261106",
-    "updated_at_utc": "2026-11-06T14:11:46.407Z",
-    "type": "Cross-expansion source identity/eligibility verification; no new measured observations",
-    "checked_sources": "TWW worker JSONL, four live Wowhead gear pages, three Retail reagent-rank catalog pages, four worker status files",
-    "stats": {
-      "new_candidate_rank_item_ids_verified": 3,
-      "gear_base_binding_fields_verified": 4,
-      "original_looter_row_links_verified": 0,
-      "new_independent_studies": 0,
-      "synthetic_tooltip_tests": 0,
-      "live_client_tests": 0
-    }
+    "updated_at": "2026-11-06T16:00:08.607Z",
+    "task": "T0029 dual profession same product recipe identity",
+    "verified_fields": {
+      "task_id": "T0029",
+      "kind": "verified_two_profession_spell_ids_same_conversion_avoids_false_mining_exclusion",
+      "output_item_id": 12655,
+      "input_item_name": "Thorium Bar",
+      "output_item_name": "Enchanted Thorium Bar",
+      "spell_variants": [
+        {
+          "spell_id": 17180,
+          "profession": "Classic Enchanting",
+          "requires": "Runed Enchanting Rod",
+          "source": "https://www.wowhead.com/spell=17180/enchanted-thorium-bar"
+        },
+        {
+          "spell_id": 70524,
+          "profession": "Classic Mining",
+          "requires": "Forge",
+          "source": "https://www.wowhead.com/spell=70524/enchanted-thorium-bar"
+        }
+      ],
+      "current_retail_indexed_recipe_basis": "Both Wowhead Retail spell records explicitly show Thorium Bar x1 and Rich Illusion Dust x3; quality/output counts from displayed fixed recipe, not random observations.",
+      "source_reagent_id_corroboration": "Rich Illusion Dust retail item 156930; output Enchanted Thorium Bar 12655 confirmed separately by Retail TSM item listing.",
+      "earlier_worker_note": "Legacy worker explicitly excluded prior Enchanted Thorium pseudo-Smelt when identifying 17180 as Enchanting; this correction is a distinct Mining spell, not a reason to import 17180 as Mining.",
+      "pricing_safety": "One output recipe with two profession eligibility paths; never double expected quantity/EV when both professions learned. Add exact extra reagent costs only if eligible runtime recipe and price lookup exist.",
+      "unknowns": [
+        "Live-client availability to current characters and spec/build",
+        "Whether both variants are available in current player profession book",
+        "Existing production adapter recognition and protected branch behavior",
+        "Live prices and best action"
+      ],
+      "new_measured_cohorts": 0,
+      "new_observed_casts": 0,
+      "source_links": [
+        "https://www.wowhead.com/spell=70524/enchanted-thorium-bar",
+        "https://www.wowhead.com/spell=17180/enchanted-thorium-bar",
+        "https://tradeskillmaster.com/retail/us/items/12655",
+        "https://www.wowhead.com/item=156930/rich-illusion-dust"
+      ],
+      "worker_evidence_file": "research/v3/evidence/legacy/20261106T1543-smelting-recipe-identity-rescue.jsonl",
+      "worker_evidence_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b"
+    },
+    "offline_tests_executed": 0,
+    "client_qa_executed": false,
+    "ci_observed": "Latest five-agent completion for research head cedb53b success; this is not a run of new addon tests.",
+    "merge_or_release": false
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
