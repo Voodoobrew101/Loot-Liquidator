@@ -33,6 +33,10 @@ One **Advanced** button sits directly below the character/expansion selectors an
 status text. It starts collapsed and contains effective skill, all specialization
 trees with indented branch sliders, stats, buffs, scan refresh and captured details.
 There are no nested disclosures. Collapsing it retains saved choices.
+Advanced exposes the simulation editor in Automatic and character views as well
+as Simulated. Opening it does not change the active tooltip profile. Editing a
+slider or resetting the simulation explicitly switches the selector to Simulated.
+The visible name remains Simulated; the historical saved key is unchanged.
 
 The refresh path lays out visible controls before hiding unused ones. It never
 hides/re-shows the active slider during OnValueChanged, which previously cancelled

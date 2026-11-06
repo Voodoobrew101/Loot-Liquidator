@@ -208,6 +208,7 @@ LL:ProtectSettingsDefaults();defaults.scripts.OnClick(defaults);assert(nativeCli
 -- Profession editor: no typed node IDs, explicit unknowns, native controls,
 -- independent character/expansion settings, measured scan untouched.
 local char=LL.db.characters['Tester - Realm']
+local realProfessionOptions=LL.GetProfessionUIOptions
 char.professionOptions={['Jewelcrafting:11']={nodes={{id=12,name='Gem Cutting',tab='Gems',maxRank=30}},buffs={{id=123,name='Profession Tea'}}}}
 LL.GetProfessionUIOptions=function(_,character,profession,expansion)
     return char.professionOptions[profession..':'..expansion] or {nodes={},buffs={}}
@@ -471,3 +472,41 @@ do
     print('PASS: Show rates for + Professions (Simulated) page (B5a/B5b)')
 end
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')
+do
+    -- Exercise the real bundled catalog through the UI, starting in Automatic.
+    LL.GetProfessionUIOptions=realProfessionOptions
+    assert(loadfile('LootLiquidator/ProfessionCatalog.lua'))('LL',LL)
+    LL.db.professionTooltipProfiles.Enchanting=nil
+    local before=#all
+    local editor=LL:CreateProfessionProfilePanel('Enchanting')
+    editor.scripts.OnShow(editor)
+    local toggle,selector
+    for i=before+1,#all do
+        local w=all[i]
+        if w.kind=='Button' and w.text=='Advanced' then toggle=w end
+        if w.template=='SettingsDropdownControlTemplate' and not selector then selector=w end
+    end
+    assert(selector.initializer.setting:GetValue()==-2)
+    toggle.scripts.OnClick(toggle)
+    local crystal
+    for i=before+1,#all do
+        local w=all[i]
+        if w.kind=='FontString' and w.text and w.text:find('Crystal Collector',1,true)==1 then crystal=w end
+    end
+    assert(crystal and crystal.shown,'Automatic Advanced must show the real Enchanting specialization catalog')
+    local slider
+    for i=before+1,#all do
+        local w=all[i]
+        if w.kind=='Slider' and w.parent.parent.point and w.parent.parent.point[5]==crystal.point[5]+5 then slider=w end
+    end
+    assert(slider and slider.maximum==30 and slider.parent.parent.shown)
+    assert(LL.db.professionTooltipProfiles.Enchanting==nil,'opening Advanced does not change the tooltip profile')
+    slider:SetValue(7)
+    assert(selector.initializer.setting:GetValue()==-1,'editing a specialization switches to Simulated')
+    assert(LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11).specialization:find('107646=7',1,true))
+    selector.initializer.setting:SetValue(1)
+    assert(slider.parent.parent.shown,'character view also exposes the specialization editor')
+    toggle.scripts.OnClick(toggle)
+    assert(not slider.parent.parent.shown,'one Advanced toggle still collapses everything')
+    print('PASS: real Wago specialization sliders in Automatic and character views; edits select Simulated')
+end

@@ -433,8 +433,14 @@ function LL:CreateProfessionProfilePanel(profession)
         LL:SetManualProfessionProfile(current,profession,expansion,
             {enabled=true,skill=0,specialization='none',buffs={}})
     end
+    local function useSimulation()
+        selection='@hypothetical';selected=current
+        LL.db.professionTooltipProfiles=LL.db.professionTooltipProfiles or {}
+        LL.db.professionTooltipProfiles[profession]=selection
+    end
     local function update(change)
-        if refreshing or selection~='@hypothetical' then return end
+        if refreshing then return end
+        useSimulation()
         local p={} for k,v in pairs(profile()) do p[k]=v end
         p.enabled=true;p.skill=p.skill or 0;p.specialization=p.specialization or 'none'
         p.buffs={} for k,v in pairs(profile().buffs or {}) do p.buffs[k]=v end
@@ -501,7 +507,7 @@ function LL:CreateProfessionProfilePanel(profession)
         return {'Effective profession skill','Use the recipe\'s minimum required skill as the starting point. Zero is the editor minimum, not proof that a recipe is usable.',
             'Skill changes quantities or quality only when a compatible researched formula is available.'}
     end)
-    local reset=button('Reset to minimum',function()minimum();LL:UpdateAllAppearance();refresh(false)end)
+    local reset=button('Reset to minimum',function()useSimulation();minimum();LL:UpdateAllAppearance();refresh(false)end)
     local scan=button('Refresh specialization choices from current profession',function()
         LL:GetResearchProfessionSnapshot({expansionID=expansion},profession);refresh(true)
     end)
@@ -548,8 +554,10 @@ function LL:CreateProfessionProfilePanel(profession)
             advanced:SetText(advancedOpen and 'Hide advanced' or 'Advanced')
             place(advanced,y);y=y+38
         end
-        if selection=='@hypothetical' then
-            status:SetText('Simulated profile. Controls save your choices; reference yields change only where researched formulas are available.')
+        if selection~='@hide' then
+            status:SetText(selection=='@hypothetical'
+                and 'Simulated profile. Reference yields change only where researched formulas are available.'
+                or 'Uses scanned character data. Open Advanced to simulate skill and specializations; changing a slider switches to Simulated.')
             if advancedOpen then
             skill:SetPreferenceValue(profile().skill or 0)
             place(skillLabel,y+6);place(skill,y,270);y=y+44
@@ -643,12 +651,10 @@ function LL:CreateProfessionProfilePanel(profession)
             place(note,y+8);y=y+64
             end
         elseif selection=='@hide' then status:SetText('Processing results for '..profession..' are hidden from tooltips.')
-        else
-            status:SetText('Uses scanned character data. Choose Simulated to try different skill and specialization points.')
         end
         if selection~='@hide' then
             if advancedOpen then
-                if selection=='@hypothetical' then place(scan,y);y=y+40 end
+                place(scan,y);y=y+40
                 local record=LL.db.characters and LL.db.characters[selected]
                 local snapshot=record and record.researchProfiles and record.researchProfiles[profession..':'..expansion]
                 local text={'Scanned '..selected..' — '..LL:ProfessionExpansionName(expansion)}
