@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-06T17:25:05.563Z",
-  "status": "active: verified original Wowhead HTML linked output identities and quality ranks for 8 TWW epic-gear Looter tables; corrected 16 prior hit-only records and added 9 hit-only records from 3 additional distinct gear inputs; provenance/stack histograms unresolved, research-only",
+  "updated_at": "2026-11-06T18:27:27.326Z",
+  "status": "active: 33 source-verified existing Wowhead Looter rows enriched with exact TWW Refulgent Crystal output IDs/ranks, fixed one-unit yields, totalQuantity and per-material 0/1 histograms across 11 prior gear cohorts; zero independent new cohorts. Research-only, epoch/skill remains unknown.",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0048",
@@ -13,449 +13,601 @@
     "T0007"
   ],
   "exact_gaps_targeted": [
-    "T0048: Refulgent Crystal material IDs 219952/219954/219955 and ranks 1/2/3 for Augur cloth 237714/237715/237717/237718/237721; 243605 rank-1 Dawn Crystal cross-expansion exception on 237714. Correct 237718 cumulative cohort from 150/89 to 151/90 first row.",
-    "T0048: new separate epic cloth cohorts 237716 (157 reported operations, material hits 85/48/21), 237707 (121; 61/40/17), 237712 (130; 68/41/19), with material-rank IDs linked in source HTML.",
-    "T0048: true per-cast output stack histograms, total units, overall zero-output events, character skill/spec, actual patch/bonus/ilvl and source collection date still unknown; no inferred rank-aggregated probabilities.",
-    "T0040/T0009/T0008/T0007: Bismuth 210931, Ironclaw 210937, Aqirite 210934 post-Oct25 independent input rank, refund-adjusted casts, per-gem hit counts/histograms still absent.",
-    "T0010/T0011: Mycobloom 210796/210797 independent completed 10-herb mills, per-rank output hit/zero histograms, skill/refund details still absent."
+    "T0048: replace 12 unlinked Refulgent Crystal material rows on epic plate 237615/237617/237618/237619 with explicit output material IDs 219952/219954/219955 (ranks 1/2/3) and source-supported stack:[1,1], totals and histograms.",
+    "T0048: replace 21 previously hit-only, linked-ID Refulgent rows on epic cloth 237716/237707/237712/237715/237717/237718/237721 with source-supported fixed positive stack:[1,1], totals and per-output 0/1 histograms.",
+    "T0048 remaining: original participant-level operation log, item bonus/ilvl, actual collection hotfix epoch and profession skill/spec not obtainable from cumulative Looter tables; do not treat cross-output residual counts as overall zero-yield operations.",
+    "T0040/T0009/T0008/T0007: current post-Oct25 rank-specific Bismuth 210931, Ironclaw 210937, Aqirite 210934 completed operations, per-output hits/histograms and refund denominators still unverified.",
+    "T0010/T0011: rank-specific Mycobloom 210796/210797 source-level complete 10-herb mill records and per-cast histograms/skill/refunds still absent."
   ],
   "newly_verified_fields": [
     {
-      "record_id": "war-within-20261106-1725-001",
-      "replaces": "war-within-20261106-1627-001",
-      "inputItemID": 237714,
+      "record_id": "war-within-20261106-1827-001",
+      "replaces": "war-within-20261106-1530-001",
+      "inputItemID": 237615,
       "outputItemID": 219952,
       "outputRank": 1,
-      "source_reported_operations": 54,
-      "castsWithDrop": 36,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-002",
-      "replaces": "war-within-20261106-1627-002",
-      "inputItemID": 237714,
-      "outputItemID": 219954,
-      "outputRank": 2,
-      "source_reported_operations": 54,
+      "casts": 21,
       "castsWithDrop": 11,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
+      "totalQuantity": 11,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 10,
+        "1": 11
+      },
+      "source": "https://www.wowhead.com/item=237615/vambraces-of-the-lucent-battalion"
     },
     {
-      "record_id": "war-within-20261106-1725-003",
-      "replaces": "war-within-20261106-1627-003",
-      "inputItemID": 237714,
-      "outputItemID": 219955,
-      "outputRank": 3,
-      "source_reported_operations": 54,
-      "castsWithDrop": 6,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-004",
-      "replaces": "war-within-20261106-1627-004",
-      "inputItemID": 237714,
-      "outputItemID": 243605,
-      "outputRank": 1,
-      "source_reported_operations": 54,
-      "castsWithDrop": 1,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-005",
-      "replaces": "war-within-20261106-1627-005",
-      "inputItemID": 237715,
-      "outputItemID": 219952,
-      "outputRank": 1,
-      "source_reported_operations": 57,
-      "castsWithDrop": 30,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-006",
-      "replaces": "war-within-20261106-1627-006",
-      "inputItemID": 237715,
+      "record_id": "war-within-20261106-1827-002",
+      "replaces": "war-within-20261106-1530-002",
+      "inputItemID": 237615,
       "outputItemID": 219954,
       "outputRank": 2,
-      "source_reported_operations": 57,
-      "castsWithDrop": 20,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
+      "casts": 21,
+      "castsWithDrop": 7,
+      "totalQuantity": 7,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 14,
+        "1": 7
+      },
+      "source": "https://www.wowhead.com/item=237615/vambraces-of-the-lucent-battalion"
     },
     {
-      "record_id": "war-within-20261106-1725-007",
-      "replaces": "war-within-20261106-1627-007",
-      "inputItemID": 237715,
+      "record_id": "war-within-20261106-1827-003",
+      "replaces": "war-within-20261106-1530-003",
+      "inputItemID": 237615,
       "outputItemID": 219955,
       "outputRank": 3,
-      "source_reported_operations": 57,
-      "castsWithDrop": 5,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
+      "casts": 21,
+      "castsWithDrop": 3,
+      "totalQuantity": 3,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 18,
+        "1": 3
+      },
+      "source": "https://www.wowhead.com/item=237615/vambraces-of-the-lucent-battalion"
     },
     {
-      "record_id": "war-within-20261106-1725-008",
-      "replaces": "war-within-20261106-1627-008",
-      "inputItemID": 237717,
+      "record_id": "war-within-20261106-1827-004",
+      "replaces": "war-within-20261106-1530-004",
+      "inputItemID": 237617,
       "outputItemID": 219952,
       "outputRank": 1,
-      "source_reported_operations": 160,
-      "castsWithDrop": 93,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
+      "casts": 69,
+      "castsWithDrop": 37,
+      "totalQuantity": 37,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 32,
+        "1": 37
+      },
+      "source": "https://www.wowhead.com/item=237617/chargers-of-the-lucent-battalion"
     },
     {
-      "record_id": "war-within-20261106-1725-009",
-      "replaces": "war-within-20261106-1627-009",
-      "inputItemID": 237717,
+      "record_id": "war-within-20261106-1827-005",
+      "replaces": "war-within-20261106-1530-005",
+      "inputItemID": 237617,
       "outputItemID": 219954,
       "outputRank": 2,
-      "source_reported_operations": 160,
-      "castsWithDrop": 46,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-010",
-      "replaces": "war-within-20261106-1627-010",
-      "inputItemID": 237717,
-      "outputItemID": 219955,
-      "outputRank": 3,
-      "source_reported_operations": 160,
-      "castsWithDrop": 16,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-011",
-      "replaces": "war-within-20261106-1627-011",
-      "inputItemID": 237718,
-      "outputItemID": 219952,
-      "outputRank": 1,
-      "source_reported_operations": 151,
-      "castsWithDrop": 90,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-012",
-      "replaces": "war-within-20261106-1627-012",
-      "inputItemID": 237718,
-      "outputItemID": 219954,
-      "outputRank": 2,
-      "source_reported_operations": 151,
-      "castsWithDrop": 32,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-013",
-      "replaces": "war-within-20261106-1627-013",
-      "inputItemID": 237718,
-      "outputItemID": 219955,
-      "outputRank": 3,
-      "source_reported_operations": 151,
-      "castsWithDrop": 26,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-014",
-      "replaces": "war-within-20261106-1627-014",
-      "inputItemID": 237721,
-      "outputItemID": 219952,
-      "outputRank": 1,
-      "source_reported_operations": 148,
-      "castsWithDrop": 85,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-015",
-      "replaces": "war-within-20261106-1627-015",
-      "inputItemID": 237721,
-      "outputItemID": 219954,
-      "outputRank": 2,
-      "source_reported_operations": 148,
-      "castsWithDrop": 41,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-016",
-      "replaces": "war-within-20261106-1627-016",
-      "inputItemID": 237721,
-      "outputItemID": 219955,
-      "outputRank": 3,
-      "source_reported_operations": 148,
-      "castsWithDrop": 18,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-017",
-      "replaces": null,
-      "inputItemID": 237716,
-      "outputItemID": 219952,
-      "outputRank": 1,
-      "source_reported_operations": 157,
-      "castsWithDrop": 85,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-018",
-      "replaces": null,
-      "inputItemID": 237716,
-      "outputItemID": 219954,
-      "outputRank": 2,
-      "source_reported_operations": 157,
-      "castsWithDrop": 48,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-019",
-      "replaces": null,
-      "inputItemID": 237716,
-      "outputItemID": 219955,
-      "outputRank": 3,
-      "source_reported_operations": 157,
-      "castsWithDrop": 21,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-020",
-      "replaces": null,
-      "inputItemID": 237707,
-      "outputItemID": 219952,
-      "outputRank": 1,
-      "source_reported_operations": 121,
-      "castsWithDrop": 61,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-021",
-      "replaces": null,
-      "inputItemID": 237707,
-      "outputItemID": 219954,
-      "outputRank": 2,
-      "source_reported_operations": 121,
-      "castsWithDrop": 40,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    },
-    {
-      "record_id": "war-within-20261106-1725-022",
-      "replaces": null,
-      "inputItemID": 237707,
-      "outputItemID": 219955,
-      "outputRank": 3,
-      "source_reported_operations": 121,
+      "casts": 69,
       "castsWithDrop": 17,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
+      "totalQuantity": 17,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 52,
+        "1": 17
+      },
+      "source": "https://www.wowhead.com/item=237617/chargers-of-the-lucent-battalion"
     },
     {
-      "record_id": "war-within-20261106-1725-023",
-      "replaces": null,
+      "record_id": "war-within-20261106-1827-006",
+      "replaces": "war-within-20261106-1530-006",
+      "inputItemID": 237617,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 69,
+      "castsWithDrop": 9,
+      "totalQuantity": 9,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 60,
+        "1": 9
+      },
+      "source": "https://www.wowhead.com/item=237617/chargers-of-the-lucent-battalion"
+    },
+    {
+      "record_id": "war-within-20261106-1827-007",
+      "replaces": "war-within-20261106-1530-007",
+      "inputItemID": 237618,
+      "outputItemID": 219952,
+      "outputRank": 1,
+      "casts": 68,
+      "castsWithDrop": 37,
+      "totalQuantity": 37,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 31,
+        "1": 37
+      },
+      "source": "https://www.wowhead.com/item=237618/cuisses-of-the-lucent-battalion"
+    },
+    {
+      "record_id": "war-within-20261106-1827-008",
+      "replaces": "war-within-20261106-1530-008",
+      "inputItemID": 237618,
+      "outputItemID": 219954,
+      "outputRank": 2,
+      "casts": 68,
+      "castsWithDrop": 17,
+      "totalQuantity": 17,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 51,
+        "1": 17
+      },
+      "source": "https://www.wowhead.com/item=237618/cuisses-of-the-lucent-battalion"
+    },
+    {
+      "record_id": "war-within-20261106-1827-009",
+      "replaces": "war-within-20261106-1530-009",
+      "inputItemID": 237618,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 68,
+      "castsWithDrop": 12,
+      "totalQuantity": 12,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 56,
+        "1": 12
+      },
+      "source": "https://www.wowhead.com/item=237618/cuisses-of-the-lucent-battalion"
+    },
+    {
+      "record_id": "war-within-20261106-1827-010",
+      "replaces": "war-within-20261106-1530-010",
+      "inputItemID": 237619,
+      "outputItemID": 219952,
+      "outputRank": 1,
+      "casts": 73,
+      "castsWithDrop": 37,
+      "totalQuantity": 37,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 36,
+        "1": 37
+      },
+      "source": "https://www.wowhead.com/item=237619/protectors-of-the-lucent-battalion"
+    },
+    {
+      "record_id": "war-within-20261106-1827-011",
+      "replaces": "war-within-20261106-1530-011",
+      "inputItemID": 237619,
+      "outputItemID": 219954,
+      "outputRank": 2,
+      "casts": 73,
+      "castsWithDrop": 18,
+      "totalQuantity": 18,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 55,
+        "1": 18
+      },
+      "source": "https://www.wowhead.com/item=237619/protectors-of-the-lucent-battalion"
+    },
+    {
+      "record_id": "war-within-20261106-1827-012",
+      "replaces": "war-within-20261106-1530-012",
+      "inputItemID": 237619,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 73,
+      "castsWithDrop": 14,
+      "totalQuantity": 14,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 59,
+        "1": 14
+      },
+      "source": "https://www.wowhead.com/item=237619/protectors-of-the-lucent-battalion"
+    },
+    {
+      "record_id": "war-within-20261106-1827-013",
+      "replaces": "war-within-20261106-1725-017",
+      "inputItemID": 237716,
+      "outputItemID": 219952,
+      "outputRank": 1,
+      "casts": 157,
+      "castsWithDrop": 85,
+      "totalQuantity": 85,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 72,
+        "1": 85
+      },
+      "source": "https://www.wowhead.com/item=237716/augurs-ephemeral-orbs-of-power"
+    },
+    {
+      "record_id": "war-within-20261106-1827-014",
+      "replaces": "war-within-20261106-1725-018",
+      "inputItemID": 237716,
+      "outputItemID": 219954,
+      "outputRank": 2,
+      "casts": 157,
+      "castsWithDrop": 48,
+      "totalQuantity": 48,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 109,
+        "1": 48
+      },
+      "source": "https://www.wowhead.com/item=237716/augurs-ephemeral-orbs-of-power"
+    },
+    {
+      "record_id": "war-within-20261106-1827-015",
+      "replaces": "war-within-20261106-1725-019",
+      "inputItemID": 237716,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 157,
+      "castsWithDrop": 21,
+      "totalQuantity": 21,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 136,
+        "1": 21
+      },
+      "source": "https://www.wowhead.com/item=237716/augurs-ephemeral-orbs-of-power"
+    },
+    {
+      "record_id": "war-within-20261106-1827-016",
+      "replaces": "war-within-20261106-1725-020",
+      "inputItemID": 237707,
+      "outputItemID": 219952,
+      "outputRank": 1,
+      "casts": 121,
+      "castsWithDrop": 61,
+      "totalQuantity": 61,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 60,
+        "1": 61
+      },
+      "source": "https://www.wowhead.com/item=237707/dying-stars-pyrelights"
+    },
+    {
+      "record_id": "war-within-20261106-1827-017",
+      "replaces": "war-within-20261106-1725-021",
+      "inputItemID": 237707,
+      "outputItemID": 219954,
+      "outputRank": 2,
+      "casts": 121,
+      "castsWithDrop": 40,
+      "totalQuantity": 40,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 81,
+        "1": 40
+      },
+      "source": "https://www.wowhead.com/item=237707/dying-stars-pyrelights"
+    },
+    {
+      "record_id": "war-within-20261106-1827-018",
+      "replaces": "war-within-20261106-1725-022",
+      "inputItemID": 237707,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 121,
+      "castsWithDrop": 17,
+      "totalQuantity": 17,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 104,
+        "1": 17
+      },
+      "source": "https://www.wowhead.com/item=237707/dying-stars-pyrelights"
+    },
+    {
+      "record_id": "war-within-20261106-1827-019",
+      "replaces": "war-within-20261106-1725-023",
       "inputItemID": 237712,
       "outputItemID": 219952,
       "outputRank": 1,
-      "source_reported_operations": 130,
+      "casts": 130,
       "castsWithDrop": 68,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
+      "totalQuantity": 68,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 62,
+        "1": 68
+      },
+      "source": "https://www.wowhead.com/item=237712/dying-stars-cassock"
     },
     {
-      "record_id": "war-within-20261106-1725-024",
-      "replaces": null,
+      "record_id": "war-within-20261106-1827-020",
+      "replaces": "war-within-20261106-1725-024",
       "inputItemID": 237712,
       "outputItemID": 219954,
       "outputRank": 2,
-      "source_reported_operations": 130,
+      "casts": 130,
       "castsWithDrop": 41,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
+      "totalQuantity": 41,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 89,
+        "1": 41
+      },
+      "source": "https://www.wowhead.com/item=237712/dying-stars-cassock"
     },
     {
-      "record_id": "war-within-20261106-1725-025",
-      "replaces": null,
+      "record_id": "war-within-20261106-1827-021",
+      "replaces": "war-within-20261106-1725-025",
       "inputItemID": 237712,
       "outputItemID": 219955,
       "outputRank": 3,
-      "source_reported_operations": 130,
+      "casts": 130,
       "castsWithDrop": 19,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "patch": null
-    }
-  ],
-  "new_cohorts": [
-    {
-      "studyKey": "wowhead-looter-disenchant-input-237716-cumulative",
-      "inputItemID": 237716,
-      "inputName": "Augur's Ephemeral Orbs of Power",
-      "source": "https://www.wowhead.com/item=237716/augurs-ephemeral-orbs-of-power",
-      "source_reported_operations": 157,
-      "output_materials": [
-        {
-          "outputItemID": 219952,
-          "outputRank": 1,
-          "castsWithDrop": 85
-        },
-        {
-          "outputItemID": 219954,
-          "outputRank": 2,
-          "castsWithDrop": 48
-        },
-        {
-          "outputItemID": 219955,
-          "outputRank": 3,
-          "castsWithDrop": 21
-        }
-      ],
-      "independent_from_other_item_ids": true,
-      "collection_epoch_verified": false,
-      "histograms_verified": false
+      "totalQuantity": 19,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 111,
+        "1": 19
+      },
+      "source": "https://www.wowhead.com/item=237712/dying-stars-cassock"
     },
     {
-      "studyKey": "wowhead-looter-disenchant-input-237707-cumulative",
-      "inputItemID": 237707,
-      "inputName": "Dying Star's Pyrelights",
-      "source": "https://www.wowhead.com/item=237707/dying-stars-pyrelights",
-      "source_reported_operations": 121,
-      "output_materials": [
-        {
-          "outputItemID": 219952,
-          "outputRank": 1,
-          "castsWithDrop": 61
-        },
-        {
-          "outputItemID": 219954,
-          "outputRank": 2,
-          "castsWithDrop": 40
-        },
-        {
-          "outputItemID": 219955,
-          "outputRank": 3,
-          "castsWithDrop": 17
-        }
-      ],
-      "independent_from_other_item_ids": true,
-      "collection_epoch_verified": false,
-      "histograms_verified": false
+      "record_id": "war-within-20261106-1827-022",
+      "replaces": "war-within-20261106-1725-005",
+      "inputItemID": 237715,
+      "outputItemID": 219952,
+      "outputRank": 1,
+      "casts": 57,
+      "castsWithDrop": 30,
+      "totalQuantity": 30,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 27,
+        "1": 30
+      },
+      "source": "https://www.wowhead.com/item=237715/augurs-ephemeral-quillsash"
     },
     {
-      "studyKey": "wowhead-looter-disenchant-input-237712-cumulative",
-      "inputItemID": 237712,
-      "inputName": "Dying Star's Cassock",
-      "source": "https://www.wowhead.com/item=237712/dying-stars-cassock",
-      "source_reported_operations": 130,
-      "output_materials": [
-        {
-          "outputItemID": 219952,
-          "outputRank": 1,
-          "castsWithDrop": 68
-        },
-        {
-          "outputItemID": 219954,
-          "outputRank": 2,
-          "castsWithDrop": 41
-        },
-        {
-          "outputItemID": 219955,
-          "outputRank": 3,
-          "castsWithDrop": 19
-        }
-      ],
-      "independent_from_other_item_ids": true,
-      "collection_epoch_verified": false,
-      "histograms_verified": false
+      "record_id": "war-within-20261106-1827-023",
+      "replaces": "war-within-20261106-1725-006",
+      "inputItemID": 237715,
+      "outputItemID": 219954,
+      "outputRank": 2,
+      "casts": 57,
+      "castsWithDrop": 20,
+      "totalQuantity": 20,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 37,
+        "1": 20
+      },
+      "source": "https://www.wowhead.com/item=237715/augurs-ephemeral-quillsash"
+    },
+    {
+      "record_id": "war-within-20261106-1827-024",
+      "replaces": "war-within-20261106-1725-007",
+      "inputItemID": 237715,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 57,
+      "castsWithDrop": 5,
+      "totalQuantity": 5,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 52,
+        "1": 5
+      },
+      "source": "https://www.wowhead.com/item=237715/augurs-ephemeral-quillsash"
+    },
+    {
+      "record_id": "war-within-20261106-1827-025",
+      "replaces": "war-within-20261106-1725-008",
+      "inputItemID": 237717,
+      "outputItemID": 219952,
+      "outputRank": 1,
+      "casts": 160,
+      "castsWithDrop": 93,
+      "totalQuantity": 93,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 67,
+        "1": 93
+      },
+      "source": "https://www.wowhead.com/item=237717/augurs-ephemeral-trousers"
+    },
+    {
+      "record_id": "war-within-20261106-1827-026",
+      "replaces": "war-within-20261106-1725-009",
+      "inputItemID": 237717,
+      "outputItemID": 219954,
+      "outputRank": 2,
+      "casts": 160,
+      "castsWithDrop": 46,
+      "totalQuantity": 46,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 114,
+        "1": 46
+      },
+      "source": "https://www.wowhead.com/item=237717/augurs-ephemeral-trousers"
+    },
+    {
+      "record_id": "war-within-20261106-1827-027",
+      "replaces": "war-within-20261106-1725-010",
+      "inputItemID": 237717,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 160,
+      "castsWithDrop": 16,
+      "totalQuantity": 16,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 144,
+        "1": 16
+      },
+      "source": "https://www.wowhead.com/item=237717/augurs-ephemeral-trousers"
+    },
+    {
+      "record_id": "war-within-20261106-1827-028",
+      "replaces": "war-within-20261106-1725-011",
+      "inputItemID": 237718,
+      "outputItemID": 219952,
+      "outputRank": 1,
+      "casts": 151,
+      "castsWithDrop": 90,
+      "totalQuantity": 90,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 61,
+        "1": 90
+      },
+      "source": "https://www.wowhead.com/item=237718/augurs-ephemeral-wide-brim"
+    },
+    {
+      "record_id": "war-within-20261106-1827-029",
+      "replaces": "war-within-20261106-1725-012",
+      "inputItemID": 237718,
+      "outputItemID": 219954,
+      "outputRank": 2,
+      "casts": 151,
+      "castsWithDrop": 32,
+      "totalQuantity": 32,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 119,
+        "1": 32
+      },
+      "source": "https://www.wowhead.com/item=237718/augurs-ephemeral-wide-brim"
+    },
+    {
+      "record_id": "war-within-20261106-1827-030",
+      "replaces": "war-within-20261106-1725-013",
+      "inputItemID": 237718,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 151,
+      "castsWithDrop": 26,
+      "totalQuantity": 26,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 125,
+        "1": 26
+      },
+      "source": "https://www.wowhead.com/item=237718/augurs-ephemeral-wide-brim"
+    },
+    {
+      "record_id": "war-within-20261106-1827-031",
+      "replaces": "war-within-20261106-1725-014",
+      "inputItemID": 237721,
+      "outputItemID": 219952,
+      "outputRank": 1,
+      "casts": 148,
+      "castsWithDrop": 85,
+      "totalQuantity": 85,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 63,
+        "1": 85
+      },
+      "source": "https://www.wowhead.com/item=237721/augurs-ephemeral-habiliments"
+    },
+    {
+      "record_id": "war-within-20261106-1827-032",
+      "replaces": "war-within-20261106-1725-015",
+      "inputItemID": 237721,
+      "outputItemID": 219954,
+      "outputRank": 2,
+      "casts": 148,
+      "castsWithDrop": 41,
+      "totalQuantity": 41,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 107,
+        "1": 41
+      },
+      "source": "https://www.wowhead.com/item=237721/augurs-ephemeral-habiliments"
+    },
+    {
+      "record_id": "war-within-20261106-1827-033",
+      "replaces": "war-within-20261106-1725-016",
+      "inputItemID": 237721,
+      "outputItemID": 219955,
+      "outputRank": 3,
+      "casts": 148,
+      "castsWithDrop": 18,
+      "totalQuantity": 18,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "histogram": {
+        "0": 130,
+        "1": 18
+      },
+      "source": "https://www.wowhead.com/item=237721/augurs-ephemeral-habiliments"
     }
   ],
+  "new_cohorts": [],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-06T1725-wowhead-linked-refulgent-identity.jsonl"
+    "research/v3/evidence/war-within/2026-11-06T1827-refulgent-fixed-stack-corrections.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=237714/augurs-ephemeral-bindings",
-    "https://www.wowhead.com/item=237715/augurs-ephemeral-quillsash",
-    "https://www.wowhead.com/item=237717/augurs-ephemeral-trousers",
-    "https://www.wowhead.com/item=237718/augurs-ephemeral-wide-brim",
-    "https://www.wowhead.com/item=237721/augurs-ephemeral-habiliments",
+    "https://www.wowhead.com/item=237615/vambraces-of-the-lucent-battalion",
+    "https://www.wowhead.com/item=237617/chargers-of-the-lucent-battalion",
+    "https://www.wowhead.com/item=237618/cuisses-of-the-lucent-battalion",
+    "https://www.wowhead.com/item=237619/protectors-of-the-lucent-battalion",
     "https://www.wowhead.com/item=237716/augurs-ephemeral-orbs-of-power",
     "https://www.wowhead.com/item=237707/dying-stars-pyrelights",
     "https://www.wowhead.com/item=237712/dying-stars-cassock",
-    "https://goldcap.gg/retail/us/items/219952",
-    "https://goldcap.gg/retail/us/items/219954",
-    "https://goldcap.gg/retail/us/items/219955",
-    "https://goldcap.gg/retail/us/items/243605"
+    "https://www.wowhead.com/item=237715/augurs-ephemeral-quillsash",
+    "https://www.wowhead.com/item=237717/augurs-ephemeral-trousers",
+    "https://www.wowhead.com/item=237718/augurs-ephemeral-wide-brim",
+    "https://www.wowhead.com/item=237721/augurs-ephemeral-habiliments"
   ],
   "commit_sha": null,
-  "verified_pre_run_branch_commit_sha": "d78acf8f9d52d33bcad8520edc77a119dc557a41",
-  "commit_note": "New evidence and this status written in one atomic Git commit. A file cannot include the SHA of its own enclosing Git commit without changing that SHA; verify final branch SHA and both file read-backs externally. Do not create an extra status-only commit.",
+  "verified_pre_run_branch_commit_sha": "40a65f2aff8b7c38fc8c54b4786afccd1c428b84",
+  "commit_note": "This status and its evidence file are written atomically in ONE Git commit. A file cannot contain the SHA of its own enclosing commit without changing that SHA. Final commit/read-back verification is performed after the ref update, outside the status file.",
   "blockers": [
-    "Original Wowhead HTML resolved Refulgent Crystal linked output IDs/ranks, but did NOT disclose output quantities per occurrence, 0/1/2/3 histograms, actual overall no-output events, profession skill/spec, item bonus/ilvl variants, exact patch/collection date, or refund basis.",
-    "237714 links one rank-1 Dawn Crystal 243605 (Midnight material) alongside TWW Refulgent Crystal. Cross-expansion or collector/version contamination; quarantine this row from normal TWW EV and refer to Master.",
-    "The 237714 Looter cohort is also present in the older 2026-11-02T1318 evidence; replacing the latest 2026-11-06T1627 record alone does not automatically dedupe the earlier identical same-source cohort. Master should exclude same original cohort across both files.",
-    "237718 source now reports 151 operations / 90 occurrences for rank 1 versus earlier 150/89: overlapping cumulative growth, not an independent new sample.",
-    "Wowhead table source-reported operations/hits are pooled across unknown players, versions and gear bonus/ilvl; original raw per-character logs are absent.",
-    "No new independently measured post-Oct25 Bismuth/Ironclaw/Aqirite/Mycobloom zero-inclusive per-cast histograms were found in prior exhausted source leads."
+    "Wowhead Looter original per-input result Listview JSON exposes [1,1] fixed-size stacks for the 33 material rows, permitting exact per-material 0/1 histograms and totalQuantity. It does not expose participant-level actual data dates, patch/hotfix, input bonus/ilvl, skill/spec/refund basis or a separately verified overall no-output disenchant count.",
+    "Cumulative source cohorts may overlap pre-Midnight, Midnight and PTR collection epochs; all statistics remain research-only until owner/Research Master classifies game build and live eligibility.",
+    "Previously captured 237714 Augur's Ephemeral Bindings source has one linked Midnight Dawn Crystal 243605 alongside TWW Refulgent materials; left untouched and quarantined pending Master adjudication.",
+    "Prior 237714 original cohort appears in both older 2026-11-02T1318 and 2026-11-06T1627 evidence; Master must deduplicate before compilation.",
+    "TWW input-rank-specific Bismuth/Ironclaw/Aqirite raw post-Oct25 cast logs and Mycobloom raw 0/1/2+ milling histograms remain unavailable; historical ore quantity totals must not be reused as measured per-cast hits."
   ],
   "exhausted_sources": [
     {
@@ -569,159 +721,318 @@
   ],
   "decisions_needed": [
     "Master: dedupe 237714 original cumulative source (2026-11-02T1318 and 2026-11-06T1627) before estimator integration; don't count duplicate cohorts as independent.",
-    "Master: quarantine or investigate the linked 243605 Dawn Crystal on TWW item 237714, and determine eligibility/epoch split before gold EV or tooltip use."
+    "Master: quarantine or investigate the linked 243605 Dawn Crystal on TWW item 237714, and determine eligibility/epoch split before gold EV or tooltip use.",
+    "Master: confirm the chained `replaces` corrections 2026-11-06T1530 or T1725 -> this file are resolved transitively and not double-counted by build_estimates.py. Do not integrate cumulative Looter rows as current patch before epoch/eligibility review."
   ],
-  "next_concrete_step": "Seek original per-cast export or Wowhead Looter pctstack quantity distribution for 237716/237707/237712 and updated 237718; then pivot to fresh post-Oct25 independent rank-specific Bismuth/Ironclaw/Aqirite prospecting or Mycobloom mill logs with skill/spec/refunds. Do not recycle exhausted September/October 2024 cohorts.",
+  "next_concrete_step": "Recover additional original participant-level TWW skill/rank/hotfix/refund logs from post-Oct25 Bismuth/Ironclaw/Aqirite prospecting or Mycobloom milling; alternatively audit old source hit-only non-replaced gear for real `stack` and per-material 0/1/2/3 distributions. Do not re-count cumulative item snapshots.",
   "corrected_existing_cohorts": [
     {
-      "studyKey": "wowhead-looter-disenchant-input-237714-cumulative",
-      "inputItemID": 237714,
-      "inputName": "Augur's Ephemeral Bindings",
-      "source": "https://www.wowhead.com/item=237714/augurs-ephemeral-bindings",
-      "source_reported_operations": 54,
-      "output_materials": [
-        {
-          "outputItemID": 219952,
-          "outputRank": 1,
-          "castsWithDrop": 36
-        },
-        {
-          "outputItemID": 219954,
-          "outputRank": 2,
-          "castsWithDrop": 11
-        },
-        {
-          "outputItemID": 219955,
-          "outputRank": 3,
-          "castsWithDrop": 6
-        },
-        {
-          "outputItemID": 243605,
-          "outputRank": 1,
-          "castsWithDrop": 1
-        }
+      "inputItemID": 237615,
+      "inputName": "Vambraces of the Lucent Battalion",
+      "source": "https://www.wowhead.com/item=237615/vambraces-of-the-lucent-battalion",
+      "original_reported_operations": 21,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
       ],
-      "independent_from_other_item_ids": true,
-      "collection_epoch_verified": false,
-      "histograms_verified": false,
-      "replaces_previous_20261106_evidence": true,
-      "not_additional_independent_sample": true
+      "material_hits": [
+        11,
+        7,
+        3
+      ],
+      "material_totals": [
+        11,
+        7,
+        3
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1530-001",
+        "war-within-20261106-1530-002",
+        "war-within-20261106-1530-003"
+      ],
+      "independent_new_cohort": false
     },
     {
-      "studyKey": "wowhead-looter-disenchant-input-237715-cumulative",
+      "inputItemID": 237617,
+      "inputName": "Chargers of the Lucent Battalion",
+      "source": "https://www.wowhead.com/item=237617/chargers-of-the-lucent-battalion",
+      "original_reported_operations": 69,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
+      ],
+      "material_hits": [
+        37,
+        17,
+        9
+      ],
+      "material_totals": [
+        37,
+        17,
+        9
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1530-004",
+        "war-within-20261106-1530-005",
+        "war-within-20261106-1530-006"
+      ],
+      "independent_new_cohort": false
+    },
+    {
+      "inputItemID": 237618,
+      "inputName": "Cuisses of the Lucent Battalion",
+      "source": "https://www.wowhead.com/item=237618/cuisses-of-the-lucent-battalion",
+      "original_reported_operations": 68,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
+      ],
+      "material_hits": [
+        37,
+        17,
+        12
+      ],
+      "material_totals": [
+        37,
+        17,
+        12
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1530-007",
+        "war-within-20261106-1530-008",
+        "war-within-20261106-1530-009"
+      ],
+      "independent_new_cohort": false
+    },
+    {
+      "inputItemID": 237619,
+      "inputName": "Protectors of the Lucent Battalion",
+      "source": "https://www.wowhead.com/item=237619/protectors-of-the-lucent-battalion",
+      "original_reported_operations": 73,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
+      ],
+      "material_hits": [
+        37,
+        18,
+        14
+      ],
+      "material_totals": [
+        37,
+        18,
+        14
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1530-010",
+        "war-within-20261106-1530-011",
+        "war-within-20261106-1530-012"
+      ],
+      "independent_new_cohort": false
+    },
+    {
+      "inputItemID": 237716,
+      "inputName": "Augur's Ephemeral Orbs of Power",
+      "source": "https://www.wowhead.com/item=237716/augurs-ephemeral-orbs-of-power",
+      "original_reported_operations": 157,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
+      ],
+      "material_hits": [
+        85,
+        48,
+        21
+      ],
+      "material_totals": [
+        85,
+        48,
+        21
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1725-017",
+        "war-within-20261106-1725-018",
+        "war-within-20261106-1725-019"
+      ],
+      "independent_new_cohort": false
+    },
+    {
+      "inputItemID": 237707,
+      "inputName": "Dying Star's Pyrelights",
+      "source": "https://www.wowhead.com/item=237707/dying-stars-pyrelights",
+      "original_reported_operations": 121,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
+      ],
+      "material_hits": [
+        61,
+        40,
+        17
+      ],
+      "material_totals": [
+        61,
+        40,
+        17
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1725-020",
+        "war-within-20261106-1725-021",
+        "war-within-20261106-1725-022"
+      ],
+      "independent_new_cohort": false
+    },
+    {
+      "inputItemID": 237712,
+      "inputName": "Dying Star's Cassock",
+      "source": "https://www.wowhead.com/item=237712/dying-stars-cassock",
+      "original_reported_operations": 130,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
+      ],
+      "material_hits": [
+        68,
+        41,
+        19
+      ],
+      "material_totals": [
+        68,
+        41,
+        19
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1725-023",
+        "war-within-20261106-1725-024",
+        "war-within-20261106-1725-025"
+      ],
+      "independent_new_cohort": false
+    },
+    {
       "inputItemID": 237715,
       "inputName": "Augur's Ephemeral Quillsash",
       "source": "https://www.wowhead.com/item=237715/augurs-ephemeral-quillsash",
-      "source_reported_operations": 57,
-      "output_materials": [
-        {
-          "outputItemID": 219952,
-          "outputRank": 1,
-          "castsWithDrop": 30
-        },
-        {
-          "outputItemID": 219954,
-          "outputRank": 2,
-          "castsWithDrop": 20
-        },
-        {
-          "outputItemID": 219955,
-          "outputRank": 3,
-          "castsWithDrop": 5
-        }
+      "original_reported_operations": 57,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
       ],
-      "independent_from_other_item_ids": true,
-      "collection_epoch_verified": false,
-      "histograms_verified": false,
-      "replaces_previous_20261106_evidence": true,
-      "not_additional_independent_sample": true
+      "material_hits": [
+        30,
+        20,
+        5
+      ],
+      "material_totals": [
+        30,
+        20,
+        5
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1725-005",
+        "war-within-20261106-1725-006",
+        "war-within-20261106-1725-007"
+      ],
+      "independent_new_cohort": false
     },
     {
-      "studyKey": "wowhead-looter-disenchant-input-237717-cumulative",
       "inputItemID": 237717,
       "inputName": "Augur's Ephemeral Trousers",
       "source": "https://www.wowhead.com/item=237717/augurs-ephemeral-trousers",
-      "source_reported_operations": 160,
-      "output_materials": [
-        {
-          "outputItemID": 219952,
-          "outputRank": 1,
-          "castsWithDrop": 93
-        },
-        {
-          "outputItemID": 219954,
-          "outputRank": 2,
-          "castsWithDrop": 46
-        },
-        {
-          "outputItemID": 219955,
-          "outputRank": 3,
-          "castsWithDrop": 16
-        }
+      "original_reported_operations": 160,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
       ],
-      "independent_from_other_item_ids": true,
-      "collection_epoch_verified": false,
-      "histograms_verified": false,
-      "replaces_previous_20261106_evidence": true,
-      "not_additional_independent_sample": true
+      "material_hits": [
+        93,
+        46,
+        16
+      ],
+      "material_totals": [
+        93,
+        46,
+        16
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1725-008",
+        "war-within-20261106-1725-009",
+        "war-within-20261106-1725-010"
+      ],
+      "independent_new_cohort": false
     },
     {
-      "studyKey": "wowhead-looter-disenchant-input-237718-cumulative",
       "inputItemID": 237718,
       "inputName": "Augur's Ephemeral Wide-Brim",
       "source": "https://www.wowhead.com/item=237718/augurs-ephemeral-wide-brim",
-      "source_reported_operations": 151,
-      "output_materials": [
-        {
-          "outputItemID": 219952,
-          "outputRank": 1,
-          "castsWithDrop": 90
-        },
-        {
-          "outputItemID": 219954,
-          "outputRank": 2,
-          "castsWithDrop": 32
-        },
-        {
-          "outputItemID": 219955,
-          "outputRank": 3,
-          "castsWithDrop": 26
-        }
+      "original_reported_operations": 151,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
       ],
-      "independent_from_other_item_ids": true,
-      "collection_epoch_verified": false,
-      "histograms_verified": false,
-      "replaces_previous_20261106_evidence": true,
-      "not_additional_independent_sample": true
+      "material_hits": [
+        90,
+        32,
+        26
+      ],
+      "material_totals": [
+        90,
+        32,
+        26
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1725-011",
+        "war-within-20261106-1725-012",
+        "war-within-20261106-1725-013"
+      ],
+      "independent_new_cohort": false
     },
     {
-      "studyKey": "wowhead-looter-disenchant-input-237721-cumulative",
       "inputItemID": 237721,
       "inputName": "Augur's Ephemeral Habiliments",
       "source": "https://www.wowhead.com/item=237721/augurs-ephemeral-habiliments",
-      "source_reported_operations": 148,
-      "output_materials": [
-        {
-          "outputItemID": 219952,
-          "outputRank": 1,
-          "castsWithDrop": 85
-        },
-        {
-          "outputItemID": 219954,
-          "outputRank": 2,
-          "castsWithDrop": 41
-        },
-        {
-          "outputItemID": 219955,
-          "outputRank": 3,
-          "castsWithDrop": 18
-        }
+      "original_reported_operations": 148,
+      "output_material_ids": [
+        219952,
+        219954,
+        219955
       ],
-      "independent_from_other_item_ids": true,
-      "collection_epoch_verified": false,
-      "histograms_verified": false,
-      "replaces_previous_20261106_evidence": true,
-      "not_additional_independent_sample": true
+      "material_hits": [
+        85,
+        41,
+        18
+      ],
+      "material_totals": [
+        85,
+        41,
+        18
+      ],
+      "histogram_basis": "stack:[1,1]; zero per material = outof minus hit count",
+      "replaced_record_ids": [
+        "war-within-20261106-1725-014",
+        "war-within-20261106-1725-015",
+        "war-within-20261106-1725-016"
+      ],
+      "independent_new_cohort": false
     }
   ]
 }
