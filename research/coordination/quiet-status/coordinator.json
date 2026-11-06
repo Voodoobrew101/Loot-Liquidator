@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T19:05:22.667Z",
+  "updated_at": "2026-11-06T20:09:01.385Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New March-2026 independent-commenter Midnight milling numerical lead identified (approx. 2,000 'twilight' herbs -> approx. 3,000 unspecified pigments, with 29% Resourcefulness and blue tools), but unresolved material IDs/casts prevent admission. Identified original-cohort duplicate risk for separately keyed 1,473-pigment Tranquility source; corrected cast=null already exists. No new compiled quantities or gold coverage.",
+  "status": "Original-source reconciliation: checked the 846144 Elementium 10,000-ore/12-output vector against Retail/PTR-indexed comments, derived source-basis per-input yields without inventing casts; verified 243051's 382-operation joint rarity histogram and located 12 misattributed Fawnish output rows. Research-only; no new accepted coordinator cohorts or prices.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -27,7 +27,9 @@
     "COORD-LEGION-GEMCHIP-200-AETHRIL-20261106",
     "T0050",
     "COORD-2025-RUNE-CLOTH-SHARD-20261106",
-    "COORD-MIDNIGHT-MILL-1RTEOQR-UNLINKED-20261106"
+    "COORD-MIDNIGHT-MILL-1RTEOQR-UNLINKED-20261106",
+    "T0047",
+    "COORD-ELEMENTIUM-SOURCE-AND-JOINT-HIST-20261106"
   ],
   "exact_gaps_targeted": [
     {
@@ -331,6 +333,30 @@
       "input_item_id": null,
       "output_item_id": null,
       "remaining_gap": "Identify named 'twilight' herb exact item/rank and pigment type/rank, recover actual cast denominator/savings and corroborate approximated 2000/3000. Independently dedupe SeniorEmployment932 original 1473 units across master and midnight source copies before any importer/estimator use."
+    },
+    {
+      "task_id": "COORD-ELEMENTIUM-SOURCE-AND-JOINT-HIST-20261106",
+      "kind": "historical_elementium_source_lineage_and_rarity_joint_distribution",
+      "input_item_id": 52185,
+      "source_urls": [
+        "https://www.wowhead.com/ptr/item=52185/elementium-ore",
+        "https://www.wowhead.com/es/item=52185/mena-de-elementium"
+      ],
+      "record_ids": [
+        "legacy-20261102-0937001",
+        "legacy-20261102-0937002",
+        "legacy-20261102-0937003",
+        "legacy-20261102-0937004",
+        "legacy-20261102-0937005",
+        "legacy-20261102-0937006",
+        "legacy-20261102-0937007",
+        "legacy-20261102-0937008",
+        "legacy-20261102-0937009",
+        "legacy-20261102-0937010",
+        "legacy-20261102-0937011",
+        "legacy-20261102-0937012"
+      ],
+      "missing": "Author/studyKey append-only correction; explicit joint category schema before using observed 382-cast distribution; exact original build/refund basis for 10,000-ore study; no per-output identity assignment to categories, no current Retail applicability test."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -1243,6 +1269,162 @@
       "correction": "research/v3/corrections.jsonl already sets master-20261030-006 casts=null; the raw original has nominal 100; worker copy has casts=null",
       "risk": "Distinct studyKeys and URLs for the same original author/comment could count source twice on a future import; not claiming current compiled 4df9ae8 or live ItemDB has duplicated it.",
       "new_independent_studies": 0
+    },
+    {
+      "id": "elementium-846144-original-source-nominal-input-rates",
+      "task_id": "T0047",
+      "kind": "source_verified_historical_material_totals_and_per_input_normalization_not_observed_casts",
+      "input_item_id": 52185,
+      "original_author": "846144",
+      "source_url": "https://www.wowhead.com/ptr/item=52185/elementium-ore",
+      "related_mirror": "https://www.wowhead.com/mop-classic/item=52185/elementium-ore",
+      "provenance_note": "Identical original comment also appears in present Retail/PTR-indexed Wowhead comments. MoP Classic path alone is not evidence of current Retail; preserve unknown actual capture patch/build and treat as historically sourced candidate only.",
+      "original_nominal_ore_units": 10000,
+      "original_stacks": 500,
+      "original_completed_casts": null,
+      "original_per_output_quantities": [
+        {
+          "id": 52179,
+          "quantity": 371
+        },
+        {
+          "id": 52177,
+          "quantity": 367
+        },
+        {
+          "id": 52181,
+          "quantity": 361
+        },
+        {
+          "id": 52182,
+          "quantity": 355
+        },
+        {
+          "id": 52180,
+          "quantity": 369
+        },
+        {
+          "id": 52178,
+          "quantity": 360
+        },
+        {
+          "id": 52195,
+          "quantity": 97
+        },
+        {
+          "id": 52194,
+          "quantity": 87
+        },
+        {
+          "id": 52192,
+          "quantity": 99
+        },
+        {
+          "id": 52193,
+          "quantity": 99
+        },
+        {
+          "id": 52190,
+          "quantity": 83
+        },
+        {
+          "id": 52191,
+          "quantity": 82
+        }
+      ],
+      "derived_uncommon_total_units": 2183,
+      "derived_rare_total_units": 547,
+      "derived_total_units": 2730,
+      "derived_uncommon_units_per_input_ore": 0.2183,
+      "derived_rare_units_per_input_ore": 0.0547,
+      "derived_combined_units_per_nominal_five_ore": 1.365,
+      "normalization_note": "Derived by dividing source material totals by 10,000 stated input ore; 2,000 five-ore equivalents are NOT actual observed casts and are NOT occurrence-probability sample size. Potential historical reference only after epoch, recipe, refunds and source selection review; no independent new cohort added by coordinator.",
+      "worker_existing_evidence": "research/v3/evidence/legacy/2026-11-06T1955-elementium-846144-original-10000ore.jsonl",
+      "worker_evidence_blob_sha": "22924654439d479a092a7df4ee1753bc064b2ffa",
+      "verified_output_pairs": 12,
+      "new_accepted_cast_cohorts": 0,
+      "new_gold_actions": 0
+    },
+    {
+      "id": "elementium-243051-original-joint-cast-histogram-derived-category-means",
+      "task_id": "T0047",
+      "kind": "source_verified_joint_category_histogram_not_output_item_histograms",
+      "input_item_id": 52185,
+      "author": "243051",
+      "source_url": "https://www.wowhead.com/ptr/item=52185/elementium-ore",
+      "original_completed_prospects": 382,
+      "original_input_ore": 1910,
+      "joint_bins": [
+        {
+          "uncommon": 1,
+          "rare": 0,
+          "casts": 265
+        },
+        {
+          "uncommon": 1,
+          "rare": 1,
+          "casts": 79
+        },
+        {
+          "uncommon": 2,
+          "rare": 0,
+          "casts": 29
+        },
+        {
+          "uncommon": 1,
+          "rare": 2,
+          "casts": 3
+        },
+        {
+          "uncommon": 2,
+          "rare": 1,
+          "casts": 6
+        }
+      ],
+      "derived_uncommon_units": 417,
+      "derived_rare_units": 91,
+      "derived_total_units": 508,
+      "derived_rare_positive_casts": 88,
+      "derived_rare_hit_rate": 0.23036649214659685,
+      "derived_uncommon_mean_units_per_cast": 1.0916230366492146,
+      "derived_rare_mean_units_per_cast": 0.23821989528795812,
+      "source_era": "historical original, precise original timestamp/build not verified",
+      "scope": "Complete author-reported 382-cast rarity-category distribution; no specific gem item IDs, occurrence rates for individual gems, prices or current Retail changes. Store as original joint categorical evidence, not twelve invented per-gem hit histograms.",
+      "accepted_in_worker_evidence": false,
+      "addon_pricing_tested": false,
+      "new_independent_cohorts_by_coordinator": 0
+    },
+    {
+      "id": "elementium-fawnish-misattribution-existing-study",
+      "task_id": "T0047",
+      "kind": "original_source_author_and_studykey_correction_required",
+      "source_url": "https://www.wowhead.com/es/item=52185/mena-de-elementium",
+      "retail_ptr_source_url": "https://www.wowhead.com/ptr/item=52185/elementium-ore",
+      "verified_commenter": "Fawnish",
+      "retail_ptr_indexed_numeric_commenter": "581155",
+      "incorrect_existing_author": "jjhilly",
+      "incorrect_existing_study_key": "wowhead-elementium-jjhilly-100-original",
+      "existing_evidence_file": "research/v3/evidence/legacy/2026-11-02T0937-elementium-independent-cohorts-tbc-eligibility.jsonl",
+      "affected_record_ids": [
+        "legacy-20261102-0937001",
+        "legacy-20261102-0937002",
+        "legacy-20261102-0937003",
+        "legacy-20261102-0937004",
+        "legacy-20261102-0937005",
+        "legacy-20261102-0937006",
+        "legacy-20261102-0937007",
+        "legacy-20261102-0937008",
+        "legacy-20261102-0937009",
+        "legacy-20261102-0937010",
+        "legacy-20261102-0937011",
+        "legacy-20261102-0937012"
+      ],
+      "original_reported_completed_prospects": 100,
+      "original_reported_input_ore": 500,
+      "existing_total_quantities_match_original": true,
+      "corrections_in_current_jsonl": 0,
+      "action": "Worker/master-owned append-only file-scoped source.author + studyKey corrections; do not re-add 12 output lines, do not treat jjhilly route comment as original prospect data.",
+      "new_cohorts": 0
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -1347,7 +1529,9 @@
     "https://www.wowhead.com/item=14344/large-brilliant-shard",
     "https://www.wowhead.com/item=13866/runecloth-headband",
     "https://warcraft.wiki.gg/wiki/Pattern:_Devilsaur_Leggings",
-    "https://www.reddit.com/r/woweconomy/comments/1rteoqr/no_money_gain_possible_with_inscription_mats/"
+    "https://www.reddit.com/r/woweconomy/comments/1rteoqr/no_money_gain_possible_with_inscription_mats/",
+    "https://www.wowhead.com/ptr/item=52185/elementium-ore",
+    "https://www.wowhead.com/es/item=52185/mena-de-elementium"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
@@ -1379,7 +1563,9 @@
     "Six historical BfA source means lack exact completed-cast denominators and current Retail qualification; cross-reference is not a measured P(hit). Independent 2020 Reddit readback relies on worker, since original Reddit page could not be reopened here.",
     "No actual current-character recipe-book/forge check for Mining 70524 vs Enchanting 17180; runtime action eligibility, cost and no-double-counting not tested; requires protected implementation owner's review.",
     "Moritussum 2025 disenchant report is an indexed original comment only (Wowhead direct HTML robot-gated); no logged per-cast itemLink, skill, version, variant, all-output material ledger or proof of 2026 Retail eligibility; Legacy must dedupe before acceptance.",
-    "New FortuneWooden8308 March 2026 '2000 twilight → around 3000 pigment' is approximate with no exact input herb ID/rank, output pigment ID/rank, logged mills, reused savings or client build; cannot enter per-output Retail EV yet."
+    "New FortuneWooden8308 March 2026 '2000 twilight → around 3000 pigment' is approximate with no exact input herb ID/rank, output pigment ID/rank, logged mills, reused savings or client build; cannot enter per-output Retail EV yet.",
+    "Elementium 382-cast joint histogram is rarity-category evidence, not twelve identified material outcome histograms; a per-output import would invent gem identity/chances. Source build/current Retail and character availability are not verified.",
+    "Elementium 846144's 10,000 ore permits denominator per INPUT ore, not 2,000 observed completed prospect casts; 12 raw totals are already in Legacy worker-owned evidence. Correction of Fawnish source identity requires append-only review in worker/migration-owned area."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -1397,7 +1583,8 @@
     "Shadowgem 984088 and 736136 numeric-author mismatches resolved by original comment boundaries; do not rescan translated comment pages without new conflicting evidence.",
     "Original s6bfrl Jan 2022 total vector now checked once, six formerly missing uncommon rows match; do not re-search or count as new independent evidence; move to exact-file ID corrections/fixtures.",
     "Moritussum 2025 three-input shard report identified and indexed once; repeated searches of identical page are unnecessary unless author/date or patch conflicts emerge.",
-    "1rteoqr SeniorEmployment932 1,000 R2 Tranquility → 1,473 unspecified pigments already exists as master-20261030-006 and midnight-20261102-110519. Do not present it as a new source; one original commenter and cohort."
+    "1rteoqr SeniorEmployment932 1,000 R2 Tranquility → 1,473 unspecified pigments already exists as master-20261030-006 and midnight-20261102-110519. Do not present it as a new source; one original commenter and cohort.",
+    "Elementium original Wowhead 846144, 243051, and Fawnish/jjhilly comment boundaries checked from original Retail/PTR-indexed and translated Retail source; do not repeat this exact page for the same fields without a new provenance conflict."
   ],
   "decisions_needed": [
     {
@@ -1423,7 +1610,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Midnight worker T0045: verify FortuneWooden8308's original item name/ID, output material IDs/ranks, exact operation count, refunds/reuse, skill/spec and build; preserve approximate numbers as a source lead only until identity is resolved. Reviewer: key both SeniorEmployment932 transcriptions to one original Reddit comment and apply existing casts=null correction before any future importer. Do not modify worker evidence or protected integration.",
+  "next_concrete_step": "Request worker/master-owned append-only author=Fawnish and canonical studyKey corrections for legacy-20261102-0937001..012, then adopt schema for the 243051 joint rarity (U,R) 382-cast distribution. Source-specific 846144 per-input means may enter only as historical, explicitly normalized gap-only references after epoch/refund review and the protected three-pass owner runs offline synthetic-price resolver/tooltip fixtures.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -1711,7 +1898,7 @@
   "research_branch_prewrite_head_verified_at_utc": "2026-11-06T08:03:25.000Z",
   "verified_base_commit_sha": "67d5bbc595ae735e186c05b5a3c861376fb2b238",
   "current_status_commit_sha": "91e868f840add36777404cf3e1c952f4962df016",
-  "commit_sha_note": "Record identity reconciliation only. Latest coordinator status/dashboard GitHub commit SHAs are confirmed by readback after write; this status cannot self-reference its containing commit SHA atomically.",
+  "commit_sha_note": "The coordinator file cannot embed its own resulting commit SHA without changing that SHA. A separate readback of GitHub commit/branch is required for verification.",
   "last_checkpoint_validation": {
     "kind": "read_only_record_comparison",
     "quantity_rows_checked": 6,
@@ -1752,5 +1939,9 @@
     "23": "closed_unmerged"
   },
   "newly_confirmed_economic_actions_this_run": 0,
-  "release_or_merges_performed": false
+  "release_or_merges_performed": false,
+  "verified_source_evidence_branch_head": "f4bf8e91223d0aadfcc429ae07b3a80e93e6d9a3",
+  "verified_source_evidence_blob_sha": "22924654439d479a092a7df4ee1753bc064b2ffa",
+  "no_new_measured_cohorts_by_coordinator": true,
+  "no_addon_or_client_validation_in_this_run": true
 }
