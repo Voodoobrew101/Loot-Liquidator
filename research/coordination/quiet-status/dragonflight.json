@@ -1,7 +1,7 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T12:32:56.665Z",
-  "status": "completed evidence session; new source-reported item-specific disenchant material hit counts; ranked prospect/mill per-cast histogram gaps remain open",
+  "updated_at": "2026-11-06T13:34:41.908Z",
+  "status": "research evidence written; cumulative Looter evidence pending original cast/epoch validation",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0020",
@@ -12,138 +12,174 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Original completed-cast, Resourcefulness-refund-adjusted Draconium/Serevite/Khaz'gorite/Prismatic prospecting denominators and 0/1/2+ quantity histograms; independently verified ore/output quality ranks",
-    "Original completed mills and per-pigment hit/zero distributions for Bubble Poppy, Saxifrage and Hochenblume, broken down by source herb rank, skill and specialization",
-    "Distinct gear-input Dragonflight disenchant material occurrence counts without inventing output stack units or per-operation joint distributions"
+    "T0020/T0019 Draconium rank-specific prospecting sample and refund-adjusted completed casts (189143, 188658)",
+    "T0046 Serevite (190394/190395/190396) and Khaz'gorite/Prismatic quality-mapped original prospecting logs",
+    "T0018/T0015/T0041 Bubble Poppy and Saxifrage ranked milling casts, per-output hit and quantity histograms",
+    "T0041 secondary: independent exact gear ID Dragonflight disenchanting observed material occurrences"
   ],
   "newly_verified_fields": [
-    "4 exact new Dragonflight gear input IDs and 3 exact enchanting output IDs",
-    "4 source-reported cumulative item-level disenchant denominators",
-    "9 material-level observed occurrence counts (castsWithDrop) with 9 source-shown percentages perCast",
-    "7 positive stack-size ranges; no material total units or zero-inclusive histograms"
+    "5 exact input gear IDs and names",
+    "source-reported item-specific disenchant sample counts",
+    "10 source-reported material occurrence hit counts and displayed percentages",
+    "2 independently mapped output item IDs per gear: Vibrant Shard 194124, Resonant Crystal 200113",
+    "Vibrant Shard source positive stack range 1-2 (not a histogram)"
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 209937,
-      "inputName": "Chartreuse Champion's Gavel",
-      "source": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
-      "sourceKind": "undated historical cumulative Wowhead Looter",
-      "casts": 55,
-      "outputs": [
+      "inputItemID": 200325,
+      "inputName": "Draconic Hierophant's Slippers",
+      "source": "https://www.wowhead.com/ptr/item=200325/draconic-hierophants-slippers",
+      "reportedDisenchants": 57,
+      "outputHitCounts": [
         {
-          "outputItemID": 194123,
-          "castsWithDrop": 39,
-          "percentShown": 71,
-          "positiveStackRange": [
-            1,
-            5
-          ]
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceReportedOccurrenceCount": 34,
+          "percentShown": 60,
+          "minSeen": null,
+          "maxSeen": null
         },
         {
           "outputItemID": 194124,
-          "castsWithDrop": 16,
-          "percentShown": 29,
-          "positiveStackRange": [
-            1,
-            3
-          ]
+          "outputName": "Vibrant Shard",
+          "sourceReportedOccurrenceCount": 31,
+          "percentShown": 54,
+          "minSeen": 1,
+          "maxSeen": 2
+        }
+      ],
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
+      ]
+    },
+    {
+      "inputItemID": 207213,
+      "inputName": "Blazing Dreamstalker's Staghide",
+      "source": "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+      "reportedDisenchants": 24,
+      "outputHitCounts": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceReportedOccurrenceCount": 17,
+          "percentShown": 71,
+          "minSeen": 1,
+          "maxSeen": 2
         },
         {
           "outputItemID": 200113,
-          "castsWithDrop": 2,
-          "percentShown": 4,
-          "positiveStackRange": [
-            1,
-            2
-          ]
+          "outputName": "Resonant Crystal",
+          "sourceReportedOccurrenceCount": 9,
+          "percentShown": 38,
+          "minSeen": null,
+          "maxSeen": null
         }
+      ],
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
       ]
     },
     {
-      "inputItemID": 198041,
-      "inputName": "Khaz'gorite Fabric Cutters Left Blade",
-      "source": "https://www.wowhead.com/item=198041/khazgorite-fabric-cutters-left-blade",
-      "sourceKind": "undated historical cumulative Wowhead Looter",
-      "casts": 59,
-      "outputs": [
+      "inputItemID": 207214,
+      "inputName": "Blazing Dreamstalker's Bracers",
+      "source": "https://www.wowhead.com/item=207214/blazing-dreamstalkers-bracers",
+      "reportedDisenchants": 17,
+      "outputHitCounts": [
         {
-          "outputItemID": 194123,
-          "castsWithDrop": 37,
-          "percentShown": 63,
-          "positiveStackRange": [
-            2,
-            3
-          ]
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceReportedOccurrenceCount": 15,
+          "percentShown": 88,
+          "minSeen": null,
+          "maxSeen": null
         },
         {
           "outputItemID": 194124,
-          "castsWithDrop": 33,
+          "outputName": "Vibrant Shard",
+          "sourceReportedOccurrenceCount": 12,
+          "percentShown": 71,
+          "minSeen": 1,
+          "maxSeen": 2
+        }
+      ],
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
+      ]
+    },
+    {
+      "inputItemID": 207220,
+      "inputName": "Blazing Dreamstalker's Striders",
+      "source": "https://www.wowhead.com/item=207220/blazing-dreamstalkers-striders",
+      "reportedDisenchants": 18,
+      "outputHitCounts": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceReportedOccurrenceCount": 10,
           "percentShown": 56,
-          "positiveStackRange": null
-        }
-      ]
-    },
-    {
-      "inputItemID": 209923,
-      "inputName": "Chartreuse Champion's Blade",
-      "source": "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
-      "sourceKind": "undated historical cumulative Wowhead Looter",
-      "casts": 30,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 27,
-          "percentShown": 90,
-          "positiveStackRange": [
-            1,
-            5
-          ]
+          "minSeen": null,
+          "maxSeen": null
         },
         {
           "outputItemID": 194124,
-          "castsWithDrop": 4,
-          "percentShown": 13,
-          "positiveStackRange": [
-            1,
-            2
-          ]
+          "outputName": "Vibrant Shard",
+          "sourceReportedOccurrenceCount": 8,
+          "percentShown": 44,
+          "minSeen": 1,
+          "maxSeen": 2
         }
+      ],
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
       ]
     },
     {
-      "inputItemID": 209919,
-      "inputName": "Chartreuse Champion's Bulwark",
-      "source": "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
-      "sourceKind": "undated historical cumulative Wowhead Looter",
-      "casts": 42,
-      "outputs": [
+      "inputItemID": 207215,
+      "inputName": "Blazing Dreamstalker's Spined Girdle",
+      "source": "https://www.wowhead.com/ptr-2/item=207215/blazing-dreamstalkers-spined-girdle",
+      "reportedDisenchants": 21,
+      "outputHitCounts": [
         {
-          "outputItemID": 194123,
-          "castsWithDrop": 36,
-          "percentShown": 86,
-          "positiveStackRange": [
-            1,
-            3
-          ]
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceReportedOccurrenceCount": 14,
+          "percentShown": 67,
+          "minSeen": null,
+          "maxSeen": null
         },
         {
           "outputItemID": 194124,
-          "castsWithDrop": 13,
-          "percentShown": 31,
-          "positiveStackRange": null
+          "outputName": "Vibrant Shard",
+          "sourceReportedOccurrenceCount": 11,
+          "percentShown": 52,
+          "minSeen": 1,
+          "maxSeen": 2
         }
+      ],
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
       ]
     }
   ],
   "new_numerical_measurements": {
-    "records": 11,
-    "unique_item_cohorts": 5,
-    "item_disenchants_reported": 257,
-    "verified_material_hit_counts": 11,
-    "new_verified_refining_recipe_identity_corrections": 2,
-    "original_completed_prospect_or_mill_cast_cohorts": 0,
-    "zero_inclusive_histograms": 0,
-    "new_output_total_units": 0
+    "source_reported_disenchants": 137,
+    "source_reported_material_occurrence_rows": 10,
+    "new_original_ranked_prospect_or_mill_completed_cast_samples": 0
   },
   "source_metadata_verified": [
     {
@@ -248,63 +284,7 @@
     }
   ],
   "evidence_files": [
-    {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T1137-new-gear-hit-counts-and-serevite-rank-recipe.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T1137-new-gear-hit-counts-and-serevite-rank-recipe.jsonl",
-      "records": 14,
-      "drop_records": 11,
-      "recipe_corrections": 2,
-      "searched_records": 1,
-      "unique_gear_cohorts": 5
-    },
-    {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T0431-rank-identity-and-original-logs-search.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0431-rank-identity-and-original-logs-search.jsonl",
-      "records": 1,
-      "type": "searched"
-    },
-    {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T0540-original-cast-export-and-disenchant-source-search.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0540-original-cast-export-and-disenchant-source-search.jsonl",
-      "records": 1,
-      "type": "searched"
-    },
-    {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T0637-postlaunch-bracer-disenchant-180.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0637-postlaunch-bracer-disenchant-180.jsonl",
-      "records": 2,
-      "type": "drop",
-      "newIndependentCohorts": 1
-    },
-    {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T0753-new-independent-gear-looter-counts.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0753-new-independent-gear-looter-counts.jsonl",
-      "records": 12,
-      "type": "drop",
-      "newIndependentItemIDs": 4,
-      "provenance": "historical cumulative Wowhead Looter"
-    },
-    {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T0836-new-original-log-source-search.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0836-new-original-log-source-search.jsonl",
-      "records": 1,
-      "type": "searched",
-      "newIndependentCohorts": 0
-    },
-    {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T0938-ranked-ore-milling-original-log-search.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T0938-ranked-ore-milling-original-log-search.jsonl",
-      "records": 1,
-      "type": "searched",
-      "newIndependentCohorts": 0
-    },
-    {
-      "path": "research/v3/evidence/dragonflight/2026-11-06T1041-four-new-gear-looter-cohorts.jsonl",
-      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-06T1041-four-new-gear-looter-cohorts.jsonl",
-      "records": 9,
-      "type": "drop",
-      "unique_item_ids": 4
-    }
+    "research/v3/evidence/dragonflight/2026-11-06T1334-new-hunter-priest-de-looter-hits.jsonl"
   ],
   "source_links": [
     "https://goldcap.gg/retail/us/items/189143",
@@ -353,11 +333,16 @@
     "https://www.wowhead.com/item=194388/obsidian-guardians-cleaver",
     "https://www.wowhead.com/item=202463/lingering-phantoms-stompers",
     "https://github.com/t-mart/wow-auction/blob/master/README.md",
-    "https://warcraft.wiki.gg/wiki/Smelting"
+    "https://warcraft.wiki.gg/wiki/Smelting",
+    "https://www.wowhead.com/ptr/item=200325/draconic-hierophants-slippers",
+    "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+    "https://www.wowhead.com/item=207214/blazing-dreamstalkers-bracers",
+    "https://www.wowhead.com/item=207220/blazing-dreamstalkers-striders",
+    "https://www.wowhead.com/ptr-2/item=207215/blazing-dreamstalkers-spined-girdle"
   ],
-  "base_head_sha_verified": "e0a5fc1e23777ef7cb7d8613f5a3beb2a5a83393",
+  "base_head_sha_verified": "c482e79c94d20be12143f3ea889c77dfc56fb5df",
   "commit_sha": null,
-  "commit_sha_note": "Self-referential commit SHA cannot be stored inside a single atomic commit's status JSON; verify the final commit in branch history and inspect its two changed paths.",
+  "commit_sha_note": "One atomic commit includes this status file, so its own SHA cannot be embedded in itself. Run verification resolves the exact SHA from branch HEAD after creation.",
   "blockers": [
     "Original ranked post-beta prospecting/milling per-operation histograms with Resourcefulness refunds remain unavailable; do not turn nominal ore/herb inputs into observed operations.",
     "Five new gear Looter snapshots are undated cumulative observations with unknown character skill/spec, gear variant, original patch and total output units; do not infer absent outcomes or full histograms.",
@@ -372,7 +357,9 @@
     "New Looter data lack raw per-cast stack quantities, joint outputs, actual collection patch, skill/spec and input variants; marginal hit counts do not establish zero-inclusive histograms or expected units.",
     "No original post-beta ranked prospect/mill completed-operation and Resourcefulness-ledger samples found in cross-site searches; quality-rank authoritative tooltips still unresolved.",
     "No new independent original post-beta prospect/mill per-operation export found; sample ore/herb quantities and Resourcefulness refunds remain unsuitable as completed-cast denominators.",
-    "New item-specific Looter tables are undated and aggregated across unknown gear versions/profession contexts; marginal hits and min-max ranges do not establish total units or full zero-inclusive histograms."
+    "New item-specific Looter tables are undated and aggregated across unknown gear versions/profession contexts; marginal hits and min-max ranges do not establish total units or full zero-inclusive histograms.",
+    "No source-original ranked prospecting or milling complete-cast/refund-accounted source found in this session; no newly verified per-cast 0/1/2+ histogram.",
+    "These five item-specific Looter tables are undated cumulative observations, not independently controlled studies with actual item versions, source player skill, output units or patch."
   ],
   "exhausted_sources": [
     {
@@ -467,7 +454,7 @@
       ]
     }
   ],
-  "next_concrete_step": "Search a DIFFERENT original source path for post-2022 ranked Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Dragonflight herb milling SavedVariables with completed operations, returns/refunds, per-output 0/1/2+ logs. If unavailable, find item-specific previously unrecorded, independently sourced DE original datasets with individual cast output units and dated patch/skill.",
+  "next_concrete_step": "Pursue a NEW original SavedVariables/CSV/log author with ranked Draconium/Serevite/Prismatic prospecting or Bubble Poppy/Saxifrage milling completed cast counts, refunded reagent ledger, and per-output zero/positive histograms; alternatively obtain linked Looter original event logs/stack histogram for 200325 and 207213/207214/207215/207220.",
   "decisions_needed": [
     {
       "request": "Master review of two additive Serevite rank-to-ID refining recipe corrections (replaces dragonflight-20261031-173001/002)",
@@ -491,19 +478,19 @@
     }
   ],
   "validation": {
-    "jsonl": "local JSON.parse and field check passed: 11 drop records plus 1 searched; unique IDs; hits <= reported disenchants; all unknown numeric yields null",
+    "jsonl": "10 records parse; all required fields present; IDs unique; hits <= source disenchant counts; unknown output totals/zero histograms kept null",
     "status_json_parse": "valid",
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-06T1232-new-gear-looter-hit-counts.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-06T1334-new-hunter-priest-de-looter-hits.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "git_readback": "to be verified from GitHub commit and file readback after commit",
-    "parent_head_sha": "e0a5fc1e23777ef7cb7d8613f5a3beb2a5a83393"
+    "parent_head_sha": "c482e79c94d20be12143f3ea889c77dfc56fb5df",
+    "git_readback": "pending (to be verified after atomic commit)"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "session_summary": "No new original ranked prospect/mill completed-operation cohorts. Five new undated item-specific Wowhead Looter cohorts: 194389 (77), 207269 (52), 207274 (70), 207267 (44), 207268 (36) = 279 source-reported disenchants, 11 independently identified per-material marginal hit-count rows. All source percentages kept exactly; no total quantities, P(hit) estimated, per-cast histogram or derived zeros.",
+  "session_summary": "Five previously unrecorded Dragonflight gear-item Looter cohorts with ten exact input/output material-occurrence hit-count rows, 137 cumulative reported disenchants; no new original ranked prospect/mill data, no measured output units or zero-inclusive histograms.",
   "new_source_leads": [
     {
       "url": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
@@ -543,198 +530,175 @@
     "note": "Source search only, no new measured probabilities. Status update is second Contents-API commit because the connector cannot atomically write two paths with unavailable tree SHA; no merge or release."
   },
   "current_run": {
-    "updated_at": "2026-11-06T12:32:56.665Z",
-    "evidence_path": "research/v3/evidence/dragonflight/2026-11-06T1232-new-gear-looter-hit-counts.jsonl",
-    "records": 12,
-    "drop_records": 11,
+    "updated_at": "2026-11-06T13:34:41.908Z",
+    "evidence_path": "research/v3/evidence/dragonflight/2026-11-06T1334-new-hunter-priest-de-looter-hits.jsonl",
+    "records": 10,
+    "drop_records": 10,
     "new_gear_cohorts": 5,
-    "reported_gear_disenchants": 279,
+    "reported_gear_disenchants": 137,
     "original_prospect_mill_cast_cohorts": 0
   },
   "newly_verified_fields_and_cohorts": [
     {
-      "inputItemID": 194389,
-      "inputName": "Brush-Clearing Axe",
-      "source": "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "sourceKind": "Wowhead Looter cumulative undated",
-      "reportedDisenchants": 77,
+      "inputItemID": 200325,
+      "inputName": "Draconic Hierophant's Slippers",
+      "source": "https://www.wowhead.com/ptr/item=200325/draconic-hierophants-slippers",
+      "reportedDisenchants": 57,
       "outputHitCounts": [
         {
-          "outputItemID": 194123,
-          "outputName": "Chromatic Dust",
-          "castsWithDrop": 69,
-          "percentShown": 90,
-          "minSeen": 1,
-          "maxSeen": 5
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceReportedOccurrenceCount": 34,
+          "percentShown": 60,
+          "minSeen": null,
+          "maxSeen": null
         },
         {
           "outputItemID": 194124,
           "outputName": "Vibrant Shard",
-          "castsWithDrop": 7,
-          "percentShown": 9,
+          "sourceReportedOccurrenceCount": 31,
+          "percentShown": 54,
           "minSeen": 1,
-          "maxSeen": 2
-        },
-        {
-          "outputItemID": 200113,
-          "outputName": "Resonant Crystal",
-          "castsWithDrop": 1,
-          "percentShown": 1.3,
-          "minSeen": 2,
           "maxSeen": 2
         }
       ],
-      "unknownFields": [
-        "actual source patch/build",
-        "item-version split",
-        "skill/specialization",
-        "totalQuantity",
-        "zero-inclusive histogram",
-        "joint outputs"
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
       ]
     },
     {
-      "inputItemID": 207269,
-      "inputName": "Devout Ashdevil's Fanged Sash",
-      "source": "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
-      "sourceKind": "Wowhead Looter cumulative undated",
-      "reportedDisenchants": 52,
+      "inputItemID": 207213,
+      "inputName": "Blazing Dreamstalker's Staghide",
+      "source": "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+      "reportedDisenchants": 24,
       "outputHitCounts": [
         {
           "outputItemID": 194124,
           "outputName": "Vibrant Shard",
-          "castsWithDrop": 31,
-          "percentShown": 60,
+          "sourceReportedOccurrenceCount": 17,
+          "percentShown": 71,
           "minSeen": 1,
           "maxSeen": 2
         },
         {
           "outputItemID": 200113,
           "outputName": "Resonant Crystal",
-          "castsWithDrop": 31,
-          "percentShown": 60,
+          "sourceReportedOccurrenceCount": 9,
+          "percentShown": 38,
           "minSeen": null,
           "maxSeen": null
         }
       ],
-      "unknownFields": [
-        "actual source patch/build",
-        "item-version split",
-        "skill/specialization",
-        "totalQuantity",
-        "zero-inclusive histogram",
-        "joint outputs"
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
       ]
     },
     {
-      "inputItemID": 207274,
-      "inputName": "Devout Ashdevil's Slippers",
-      "source": "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
-      "sourceKind": "Wowhead Looter cumulative undated",
-      "reportedDisenchants": 70,
+      "inputItemID": 207214,
+      "inputName": "Blazing Dreamstalker's Bracers",
+      "source": "https://www.wowhead.com/item=207214/blazing-dreamstalkers-bracers",
+      "reportedDisenchants": 17,
       "outputHitCounts": [
-        {
-          "outputItemID": 194124,
-          "outputName": "Vibrant Shard",
-          "castsWithDrop": 43,
-          "percentShown": 61,
-          "minSeen": 1,
-          "maxSeen": 2
-        },
         {
           "outputItemID": 200113,
           "outputName": "Resonant Crystal",
-          "castsWithDrop": 39,
+          "sourceReportedOccurrenceCount": 15,
+          "percentShown": 88,
+          "minSeen": null,
+          "maxSeen": null
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceReportedOccurrenceCount": 12,
+          "percentShown": 71,
+          "minSeen": 1,
+          "maxSeen": 2
+        }
+      ],
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
+      ]
+    },
+    {
+      "inputItemID": 207220,
+      "inputName": "Blazing Dreamstalker's Striders",
+      "source": "https://www.wowhead.com/item=207220/blazing-dreamstalkers-striders",
+      "reportedDisenchants": 18,
+      "outputHitCounts": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceReportedOccurrenceCount": 10,
           "percentShown": 56,
           "minSeen": null,
           "maxSeen": null
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceReportedOccurrenceCount": 8,
+          "percentShown": 44,
+          "minSeen": 1,
+          "maxSeen": 2
         }
       ],
-      "unknownFields": [
-        "actual source patch/build",
-        "item-version split",
-        "skill/specialization",
-        "totalQuantity",
-        "zero-inclusive histogram",
-        "joint outputs"
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
       ]
     },
     {
-      "inputItemID": 207267,
-      "inputName": "Devout Ashdevil's Fiendcloak",
-      "source": "https://www.wowhead.com/ptr/item=207267/devout-ashdevils-fiendcloak",
-      "sourceKind": "Wowhead Looter cumulative undated",
-      "reportedDisenchants": 44,
+      "inputItemID": 207215,
+      "inputName": "Blazing Dreamstalker's Spined Girdle",
+      "source": "https://www.wowhead.com/ptr-2/item=207215/blazing-dreamstalkers-spined-girdle",
+      "reportedDisenchants": 21,
       "outputHitCounts": [
         {
           "outputItemID": 200113,
           "outputName": "Resonant Crystal",
-          "castsWithDrop": 28,
-          "percentShown": 64,
+          "sourceReportedOccurrenceCount": 14,
+          "percentShown": 67,
           "minSeen": null,
           "maxSeen": null
         },
         {
           "outputItemID": 194124,
           "outputName": "Vibrant Shard",
-          "castsWithDrop": 21,
-          "percentShown": 48,
+          "sourceReportedOccurrenceCount": 11,
+          "percentShown": 52,
           "minSeen": 1,
           "maxSeen": 2
         }
       ],
-      "unknownFields": [
-        "actual source patch/build",
-        "item-version split",
-        "skill/specialization",
-        "totalQuantity",
-        "zero-inclusive histogram",
-        "joint outputs"
-      ]
-    },
-    {
-      "inputItemID": 207268,
-      "inputName": "Devout Ashdevil's Bracelets",
-      "source": "https://www.wowhead.com/ptr-2/item=207268/devout-ashdevils-bracelets",
-      "sourceKind": "Wowhead Looter cumulative undated",
-      "reportedDisenchants": 36,
-      "outputHitCounts": [
-        {
-          "outputItemID": 194124,
-          "outputName": "Vibrant Shard",
-          "castsWithDrop": 30,
-          "percentShown": 83,
-          "minSeen": 1,
-          "maxSeen": 2
-        },
-        {
-          "outputItemID": 200113,
-          "outputName": "Resonant Crystal",
-          "castsWithDrop": 11,
-          "percentShown": 31,
-          "minSeen": null,
-          "maxSeen": null
-        }
-      ],
-      "unknownFields": [
-        "actual source patch/build",
-        "item-version split",
-        "skill/specialization",
-        "totalQuantity",
-        "zero-inclusive histogram",
-        "joint outputs"
+      "unknown": [
+        "actual collection patch/build and item bonuses",
+        "profession skill and specialization",
+        "total output quantity and per-cast 0/1/2+ histograms",
+        "joint outputs and cohort overlap"
       ]
     }
   ],
-  "new_numerical_records": 11,
+  "new_numerical_records": 10,
   "new_original_ranked_prospect_mill_cohorts": 0,
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-06T1232-new-gear-looter-hit-counts.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-06T1334-new-hunter-priest-de-looter-hits.jsonl",
   "evidence_source_links": [
-    "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-    "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
-    "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
-    "https://www.wowhead.com/ptr/item=207267/devout-ashdevils-fiendcloak",
-    "https://www.wowhead.com/ptr-2/item=207268/devout-ashdevils-bracelets"
+    "https://www.wowhead.com/ptr/item=200325/draconic-hierophants-slippers",
+    "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+    "https://www.wowhead.com/item=207214/blazing-dreamstalkers-bracers",
+    "https://www.wowhead.com/item=207220/blazing-dreamstalkers-striders",
+    "https://www.wowhead.com/ptr-2/item=207215/blazing-dreamstalkers-spined-girdle"
   ],
-  "previous_session_summary": "Eleven new source-reported disenchant material-hit records for five previously unrecorded exact Dragonflight gear IDs (194378,194417,194401,194388,202463) covering 257 cumulative Looter disenchant operations (not 257 independent source-dated observations). Two additive historical rank-ID corrections to 5-to-1 Serevite refining recipes; new full 0/1/2+ histograms, output totals, source character builds, and prospecting/milling measured data remain absent."
+  "previous_session_summary": "Five Looter gear cohorts 194389/207269/207274/207267/207268 documented 11 hit-count rows; no prospect/mill histogram."
 }
