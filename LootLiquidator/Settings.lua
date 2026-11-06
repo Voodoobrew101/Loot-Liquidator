@@ -493,8 +493,8 @@ function LL:CreateProfessionProfilePanel(profession)
     end)
     local status=label('')
     local skillLabel=label('Simulated effective skill',245)
-    local skill=LL:CreateSettingsCanvasSlider(body,0,200,1,0,function(v)update(function(p)p.skill=v end)end)
-    hover(skill.slider,function()
+    local skill=LL:CreateSettingsNumberInput(body,function(v)update(function(p)p.skill=v end)end)
+    hover(skill,function()
         return {'Effective profession skill','Use the recipe\'s minimum required skill as the starting point. Zero is the editor minimum, not proof that a recipe is usable.',
             'Skill changes quantities or quality only when a compatible researched formula is available.'}
     end)
@@ -502,11 +502,11 @@ function LL:CreateProfessionProfilePanel(profession)
     local scan=button('Refresh specialization choices from current profession',function()
         LL:GetResearchProfessionSnapshot({expansionID=expansion},profession);refresh(true)
     end)
-    local empty=label('No specialization choices loaded. Open this profession and expansion on a character who knows it, then refresh here. Simulated skill alone does not load its tree.')
+    local empty=label('No specialization catalog is available for this expansion. Bundled choices cover Dragonflight, The War Within, and Midnight; a character scan can supply additional catalogs.')
     local buffToggle=button('Show buffs',function()buffsOpen=not buffsOpen;refresh(false)end)
     local noBuffs=label('No captured buffs. Open this profession on the character to refresh available choices.')
     local statsToggle=button('Show profession / crafting stats',function()statsOpen=not statsOpen;refresh(false)end)
-    local statsNote=label('Ratings and percentages are separate simulated inputs. They are not converted automatically; effects apply only where a researched rule supports them.')
+    local statsNote=label('Enter ratings directly. Chance sliders run from 0 to 100%; speed and other bonuses use numeric input without an invented cap. Press Enter to save a number. Empty means unknown.')
     local scannedToggle=button('Show scanned profession stats',function()scanOpen=not scanOpen;refresh(false)end)
     local scannedStats=label('')
     local note=label('Reference yields stay unadjusted where no compatible formula exists. Simulated choices never change your actual character.')
@@ -539,7 +539,7 @@ function LL:CreateProfessionProfilePanel(profession)
         for _,row in pairs(treeRows) do row:Hide() end
         for _,row in pairs(nodeRows) do row.label:Hide();row.slider:Hide() end
         for _,row in pairs(buffRows) do row.check:Hide();row.label:Hide() end
-        for _,row in pairs(statRows) do row.label:Hide();row.rating:Hide();row.percent:Hide() end
+        for _,row in pairs(statRows) do row.label:Hide();row.percentLabel:Hide();row.rating:Hide();row.percent:Hide() end
         for _,w in ipairs({skillLabel,skill,reset,scan,empty,buffToggle,noBuffs,note,statsToggle,statsNote,scannedToggle,scannedStats}) do w:Hide() end
         place(title,16);place(intro,46);place(character,96);place(era,96,326);place(status,138)
         local y=200
@@ -616,14 +616,17 @@ function LL:CreateProfessionProfilePanel(profession)
                                 stats[key]=stats[key] or {};stats[key][field]=v;p.stats=stats
                             end)
                         end
-                        statRows[key]={label=label(stat.name..' — rating (left) / percent (right)',590),
-                            rating=LL:CreateSettingsCanvasSlider(body,0,1000,1,0,function(v)set('rating',v)end),
-                            percent=LL:CreateSettingsCanvasSlider(body,0,100,.1,0,function(v)set('percent',v)end)}
+                        local chance=LL:IsProfessionChanceStat(key)
+                        statRows[key]={label=label(stat.name..' rating',270),
+                            percentLabel=label(stat.name..(chance and ' chance (%)' or ' bonus (%)'),270),
+                            rating=LL:CreateSettingsNumberInput(body,function(v)set('rating',v)end),
+                            percent=chance and LL:CreateSettingsCanvasSlider(body,0,100,.1,0,function(v)set('percent',v)end)
+                                or LL:CreateSettingsNumberInput(body,function(v)set('percent',v)end)}
                     end
                     local row=statRows[stat.key];local v=profile().stats and profile().stats[stat.key] or {}
-                    row.rating:SetPreferenceValue(v.rating or 0);row.percent:SetPreferenceValue(v.percent or 0)
-                    place(row.label,y);y=y+23
-                    place(row.rating,y,0);place(row.percent,y,310);y=y+44
+                    row.rating:SetPreferenceValue(v.rating);row.percent:SetPreferenceValue(v.percent or (LL:IsProfessionChanceStat(stat.key) and 0 or nil))
+                    place(row.label,y);place(row.percentLabel,y,326);y=y+23
+                    place(row.rating,y,16);place(row.percent,y,326);y=y+44
                 end
             end
             buffToggle:SetText(buffsOpen and 'Hide buffs' or 'Show buffs');place(buffToggle,y);y=y+38

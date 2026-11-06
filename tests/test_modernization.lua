@@ -30,7 +30,7 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,17,'runtime source count') -- B2: itemTSM.lua removed; B5b: AltRosterUI.lua removed; B7: ImportedResults.lua added; C3: GameData.lua + DB2Restrictions.lua folded into ItemDB
+eq(#manifest,18,'runtime source count') -- Includes the bundled profession catalog.
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',

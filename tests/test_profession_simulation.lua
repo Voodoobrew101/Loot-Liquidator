@@ -71,6 +71,9 @@ assert(ctx.operationStats[1].bonusStatValue==250 and ctx.operationStats[1].ratin
 assert(ctx.simulated and LL.db.characters.Player.researchProfiles==nil)
 assert(not LL:SetManualProfessionProfile('Player','Inscription',9,{stats={resourcefulness={percent=0/0}}}))
 assert(not LL:SetManualProfessionProfile('Player','Inscription',9,{stats={resourcefulness={percent=101}}}))
+assert(LL:SetManualProfessionProfile('Player','Inscription',9,{skill=1250,stats={craftingSpeed={rating=12000,percent=125.5}}}),
+    'effective skill, rating and speed bonus have no fabricated slider cap')
+assert(not LL:SetManualProfessionProfile('Player','Inscription',9,{stats={craftingSpeed={percent=math.huge}}}))
 local n={id=2,name='Child',maxRank=30,requirements={{kind='node',nodeID=1,rank=10,name='Parent'}},
     milestones={{rank=15,description='A sourced milestone'}}}
 assert(LL:ProfessionNodeRequirements(n,{['1']=9},100)==false)

@@ -15,6 +15,7 @@ done
 python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are current
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
 python3 tools/reference_calculators.py --check
+python3 tools/import_profession_catalog.py --check
 python3 tools/att_token_references.py --check
 python3 tests/test_att_token_references.py
 python3 tests/test_reference_calculators.py
@@ -29,6 +30,7 @@ python3 tests/validate_package.py
 "$lua_bin" research/tests/test_verified_mechanics_adapter.lua
 "$lua_bin" tests/test_modernization.lua
 "$lua_bin" tests/test_settings.lua
+"$lua_bin" tests/test_profession_catalog.lua
 "$lua_bin" tests/test_preview_samples.lua
 "$lua_bin" tests/test_preview_refresh.lua
 "$lua_bin" tests/test_client_regressions.lua
