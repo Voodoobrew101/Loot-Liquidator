@@ -1,7 +1,7 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-06T17:07:43.892Z",
-  "status": "Research-only: one newly documented Dragonflight gear-item cumulative Looter cohort (62 source-reported disenchant operations; 2 material hit-count observations), not an original controlled prospecting/milling cast histogram.",
+  "updated_at": "2026-11-06T17:32:24.797Z",
+  "status": "Research-only: 10 new Wowhead pooled Looter material occurrence rows from five previously unrecorded exact-ID Amirdrassil gear inputs; no new independently logged ore/milling completed-cast histograms.",
   "branch": "implementation/five-agent-completion",
   "task_ids": [
     "T0020",
@@ -12,32 +12,66 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143/188658 and Serevite 190394/190395/190396 rank-prospecting per-output completed-cast hits/zero-inclusive histograms and refunded ore accounting",
-    "Khaz'gorite and Prismatic prospecting original 0/1/2+ material cast logs",
-    "Bubble Poppy 191467 and Saxifrage 191464 ranked mill pigment totals/0-hit histograms with Resourcefulness",
-    "Dragonflight gear Disenchant marginal material hits with exact gear/material IDs (T0041)"
+    "Open Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic Ore 194545 prospecting: original per-output 0/1/2+ histograms and refund-adjusted completed casts remain missing.",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466 milling: per-rank actual casts, pigment item IDs, totals, hits and zeros remain missing.",
+    "T0041 secondary Dragonflight disenchant: original gear/material exact IDs with source-reported Looter denominators and material occurrence rows, not full quantity histograms."
   ],
   "newly_verified_fields": [
-    "200334 Scalesworn Cultist's Sandals live Wowhead cumulative item-specific operations 62; Vibrant Shard 194124 hit count 39/62 (site 63%, shown positive stack 1–2); Resonant Crystal 200113 hit count 39/62 (site 63%). No total quantities or zero-inclusive histograms verified."
+    "207269 Devout Ashdevil's Fanged Sash -> 194124 Vibrant Shard: site-reported 31/52 material occurrences; displayed 60% (interpretation unverified)",
+    "207269 Devout Ashdevil's Fanged Sash -> 200113 Resonant Crystal: site-reported 31/52 material occurrences; displayed 60% (interpretation unverified)",
+    "207274 Devout Ashdevil's Slippers -> 194124 Vibrant Shard: site-reported 43/70 material occurrences; displayed 61% (interpretation unverified)",
+    "207274 Devout Ashdevil's Slippers -> 200113 Resonant Crystal: site-reported 39/70 material occurrences; displayed 56% (interpretation unverified)",
+    "207249 Benevolent Embersage's Featherdrape -> 200113 Resonant Crystal: site-reported 27/35 material occurrences; displayed 77% (interpretation unverified)",
+    "207249 Benevolent Embersage's Featherdrape -> 194124 Vibrant Shard: site-reported 19/35 material occurrences; displayed 54% (interpretation unverified)",
+    "207250 Benevolent Embersage's Wristwraps -> 200113 Resonant Crystal: site-reported 21/31 material occurrences; displayed 68% (interpretation unverified)",
+    "207250 Benevolent Embersage's Wristwraps -> 194124 Vibrant Shard: site-reported 13/31 material occurrences; displayed 42% (interpretation unverified)",
+    "207251 Benevolent Embersage's Sagacious Sash -> 194124 Vibrant Shard: site-reported 23/29 material occurrences; displayed 79% (interpretation unverified)",
+    "207251 Benevolent Embersage's Sagacious Sash -> 200113 Resonant Crystal: site-reported 15/29 material occurrences; displayed 52% (interpretation unverified)"
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-df-200334-cumulative",
-      "inputItemID": 200334,
-      "inputName": "Scalesworn Cultist's Sandals",
+      "studyKey": "wowhead-looter-df-207269-cumulative",
+      "inputItemID": 207269,
+      "inputName": "Devout Ashdevil's Fanged Sash",
       "method": "Disenchant",
-      "source": "https://www.wowhead.com/item=200334/scalesworn-cultists-sandals",
-      "sourceReportedOperations": 62,
+      "source": "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
+      "sourceReportedOperations": 52,
       "materials": [
         {
           "outputItemID": 194124,
           "outputName": "Vibrant Shard",
-          "castsWithDrop": 39,
-          "percentShown": 63,
-          "positiveStackRange": [
-            1,
-            2
-          ],
+          "castsWithDrop": 31,
+          "percentShown": 60,
+          "totalQuantity": null,
+          "histogram": null
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 31,
+          "percentShown": 60,
+          "totalQuantity": null,
+          "histogram": null
+        }
+      ],
+      "independentOriginalPerCastStudy": false,
+      "gameBuild": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "studyKey": "wowhead-looter-df-207274-cumulative",
+      "inputItemID": 207274,
+      "inputName": "Devout Ashdevil's Slippers",
+      "method": "Disenchant",
+      "source": "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
+      "sourceReportedOperations": 70,
+      "materials": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 43,
+          "percentShown": 61,
           "totalQuantity": null,
           "histogram": null
         },
@@ -45,36 +79,125 @@
           "outputItemID": 200113,
           "outputName": "Resonant Crystal",
           "castsWithDrop": 39,
-          "percentShown": 63,
-          "positiveStackRange": null,
+          "percentShown": 56,
           "totalQuantity": null,
           "histogram": null
         }
       ],
       "independentOriginalPerCastStudy": false,
-      "overlapWithPTR61": "PTR 61-count page appears prior cumulative view; not counted again",
+      "gameBuild": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "studyKey": "wowhead-looter-df-207249-cumulative",
+      "inputItemID": 207249,
+      "inputName": "Benevolent Embersage's Featherdrape",
+      "method": "Disenchant",
+      "source": "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape?bonus=9818",
+      "sourceReportedOperations": 35,
+      "materials": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 27,
+          "percentShown": 77,
+          "totalQuantity": null,
+          "histogram": null
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 19,
+          "percentShown": 54,
+          "totalQuantity": null,
+          "histogram": null
+        }
+      ],
+      "independentOriginalPerCastStudy": false,
+      "gameBuild": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "studyKey": "wowhead-looter-df-207250-cumulative",
+      "inputItemID": 207250,
+      "inputName": "Benevolent Embersage's Wristwraps",
+      "method": "Disenchant",
+      "source": "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
+      "sourceReportedOperations": 31,
+      "materials": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 21,
+          "percentShown": 68,
+          "totalQuantity": null,
+          "histogram": null
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 13,
+          "percentShown": 42,
+          "totalQuantity": null,
+          "histogram": null
+        }
+      ],
+      "independentOriginalPerCastStudy": false,
+      "gameBuild": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "studyKey": "wowhead-looter-df-207251-cumulative",
+      "inputItemID": 207251,
+      "inputName": "Benevolent Embersage's Sagacious Sash",
+      "method": "Disenchant",
+      "source": "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash",
+      "sourceReportedOperations": 29,
+      "materials": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 23,
+          "percentShown": 79,
+          "totalQuantity": null,
+          "histogram": null
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 15,
+          "percentShown": 52,
+          "totalQuantity": null,
+          "histogram": null
+        }
+      ],
+      "independentOriginalPerCastStudy": false,
       "gameBuild": null,
       "skill": null,
       "specialization": null
     }
   ],
-  "new_numerical_measurements": 2,
+  "new_numerical_measurements": 10,
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-06T1707-new-sandals-disenchant-hits.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-06T1732-new-amirdrassil-gear-looter-hits.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=200334/scalesworn-cultists-sandals",
-    "https://www.reddit.com/r/woweconomy/comments/y3e8ek",
-    "https://www.reddit.com/r/woweconomy/comments/108782r",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting"
+    "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
+    "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
+    "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape?bonus=9818",
+    "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
+    "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash"
   ],
-  "base_head_sha_verified": "fd18a259f79ae7b7d89a32faf9a25de5585f6549",
+  "base_head_sha_verified": "e55d4d1b6ff0f442b2fc511720094f8db01a6597",
   "commit_sha": null,
-  "commit_sha_note": "This owned status file and evidence are written in one atomic Git commit; the commit SHA cannot be embedded in its own contents without a second commit. Verify commit SHA from GitHub read-back.",
+  "commit_sha_note": "One atomic commit includes evidence and status; its SHA cannot be stored in this file without a second commit. Verified commit SHA is obtained by GitHub commit read-back and branch head comparison.",
   "blockers": [
-    "No fresh independently sourced per-cast ranked ore prospecting or herb milling logs with refund-adjusted actual casts and zero-inclusive histograms; former studies already recorded, not duplicated.",
-    "Historical cumulative Wowhead Looter 200334 gear sample lacks actual game version/item bonus, enchantment skill/spec, full output material quantities, positive histograms and joint zero-outcome denominator.",
-    "Different Wowhead PTR view reports 61 operations versus live 62; these are potentially overlapping cumulative snapshots, not independent cohorts."
+    "Original Dragonflight ranked prospecting/milling per-cast ledgers with actual completed operations, input Resourcefulness refunds, skill/spec and output 0/1/2+ histograms remain unobtained; source totals cannot be converted into P(hit).",
+    "New five item-specific Wowhead Looter snapshots are cumulative community submissions, not dated controlled studies. Collection game build/bonus/skill, per-material total units and output histograms are unknown; material-row occurrence percentages must not be conflated with independently verified P(at least one output per completed operation).",
+    "Existing ore rank mapping S19 and Prismatic Eternity Amber family-level identity and cross-material dedupe problem S21 remain open for Master."
   ],
   "exhausted_sources": [
     {
@@ -90,7 +213,7 @@
       "reason": "Overlaps 62-cast live table; must not double-count."
     }
   ],
-  "next_concrete_step": "Seek player-made ranked Draconium/Serevite/Khaz'gorite prospect or Bubble Poppy/Saxifrage mill exported per-cast logs with exact input/output IDs, completed casts, nominal inputs, Resourcefulness refunds, 0/1/2+ quantities and skill/spec/patch. Compare against existing original-source cohort index before any new record; ask Master for author outreach/official rank-ID check.",
+  "next_concrete_step": "Prioritize new original per-cast/refund-aware Draconium/Serevite/Khaz'gorite/Prismatic prospect and Bubble Poppy/Saxifrage mill exports. Request source-owner raw operation ledger or author-supplied workbook with input quality IDs, skill/spec/patch and 0/1/2+ output histograms. For gear only, seek Wowhead Looter stack distributions and epoch, compare same item cumulative snapshots before further importing.",
   "decisions_needed": [
     {
       "owner": "Master",
@@ -102,22 +225,22 @@
     }
   ],
   "validation": {
-    "evidence_jsonl_parse": "passed",
-    "evidence_record_count": 3,
-    "evidence_drop_records": 2,
-    "evidence_searched_records": 1,
+    "evidence_jsonl_parse": "passed locally in JS",
+    "evidence_record_count": 10,
+    "evidence_drop_records": 10,
+    "evidence_searched_records": 0,
     "known_nulls_preserved": true,
     "derived_probabilities_created": false,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-06T1707-new-sandals-disenchant-hits.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-06T1732-new-amirdrassil-gear-looter-hits.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "single_commit_intended": true,
-    "branch_head_lease_expected": "fd18a259f79ae7b7d89a32faf9a25de5585f6549",
-    "git_readback": "pending at staging; verify after branch update"
+    "branch_head_lease_expected": "e55d4d1b6ff0f442b2fc511720094f8db01a6597",
+    "git_readback": "pending"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "session_summary": "Two exact-ID material hit counts newly transcribed for 200334 from one live cumulative 62-operation Wowhead Looter source. No new original ranked ore/herb cast histogram. All prior same-source candidate cohorts excluded; no new estimates, gold values or production modifications."
+  "session_summary": "10 material-row source-reported positive-occurrence counts from five unique Dragonflight tier gear item IDs; gear item IDs independently identified on original Wowhead item pages. No first-person or controlled original ore/mill histograms, no gold valuations, and no production changes."
 }
