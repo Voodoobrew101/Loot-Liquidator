@@ -1,0 +1,135 @@
+{
+  "role": "war-within",
+  "updated_at": "2026-11-06T01:30:46.265Z",
+  "status": "research_active_partial_identity_advance",
+  "branch": "implementation/five-agent-completion",
+  "task_ids": [
+    "T0040",
+    "T0009",
+    "T0010",
+    "T0011",
+    "T0008",
+    "T0007",
+    "T0012",
+    "T0048"
+  ],
+  "exact_gaps_targeted": [
+    {
+      "task_id": "T0040",
+      "inputs": [
+        210931,
+        210936,
+        210937,
+        210933,
+        210934,
+        210796,
+        210797,
+        210798
+      ],
+      "missing_fields": [
+        "rank-specific verified completed operations",
+        "per-output castsWithDrop",
+        "0/1/2/... histograms",
+        "refund/re-prospect accounting",
+        "skill/specialization",
+        "post-2024-10-25 rate epoch"
+      ]
+    },
+    {
+      "task_id": "T0048",
+      "inputs": [
+        232446,
+        229150,
+        237126,
+        233262
+      ],
+      "missing_fields": [
+        "source-version and source-epoch verification",
+        "input gear kind and ilvl",
+        "per-cast original stack histograms",
+        "skill/specialization",
+        "cross-source cohort deduplication"
+      ]
+    },
+    {
+      "task_id": "T0010/T0011/T0012",
+      "inputs": [
+        210796,
+        210797,
+        210798
+      ],
+      "missing_fields": [
+        "completed 10-herb mill casts by herb rank",
+        "pigment output rank ID",
+        "measured hit counts and histogram",
+        "Resourcefulness/refunds",
+        "skill/spec"
+      ]
+    },
+    {
+      "related_expansion_milling_identity": "Specular Rainbowfish (item 220141) newly verified as a Khaz Algar milling input; distinct from Mycobloom; no numeric baseline"
+    }
+  ],
+  "newly_verified_fields": [
+    {
+      "source": "https://www.wowhead.com/item=220141/specular-rainbowfish",
+      "study_key": "wowhead-golgoth-specular-rainbowfish-3-nacreous",
+      "inputItemID": 220141,
+      "inputName": "Specular Rainbowfish",
+      "method": "Mill",
+      "outputName": "Nacreous Pigment",
+      "outputItemID": null,
+      "outputRank": null,
+      "observed_totalQuantity": 3,
+      "casts": null,
+      "castsWithDrop": null,
+      "histogram": null,
+      "basis": "Firsthand comment; no operations or recipe batch size supplied"
+    }
+  ],
+  "new_cohorts": [
+    {
+      "studyKey": "wowhead-golgoth-specular-rainbowfish-3-nacreous",
+      "type": "identity_and_single_pooled_total_only",
+      "casts": null,
+      "measured_probability": null,
+      "eligible_for_rank_specific_baseline": false
+    }
+  ],
+  "evidence_files": [
+    "research/v3/evidence/war-within/20261106T0130-specular-rainbowfish-milling-identity.jsonl"
+  ],
+  "source_links": [
+    "https://www.wowhead.com/item=220141/specular-rainbowfish",
+    "https://warcraft.wiki.gg/wiki/Nacreous_Pigment"
+  ],
+  "commit_sha": null,
+  "verified_pre_run_branch_commit_sha": "2c6c3e47cbc84a8b554d5e640d77ad1db21e1a5d",
+  "commit_note": "One-commit invariant: a Git commit SHA cannot be embedded inside the file that determines that same commit SHA. New commit is verifiable by resolving the branch head and reading back this file and the evidence file.",
+  "blockers": [
+    "No new per-output hit counts or histograms in priority ore/herb/gear studies; existing aggregate output totals cannot supply measured probabilities.",
+    "New fish milling source omits completed casts, fish quantity, pigment rank ID, skill, specialization, patch date, and Resourcefulness/refund basis; keep all unknowns null.",
+    "Original per-operation logs and post-hotfix matched skill/rank cohorts are still required for 210937,210934,210931,210796-210798; PTR Looter gear eligibility may conflict with retail."
+  ],
+  "exhausted_sources": [
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1f3qf96",
+      "reason": "Six individually enumerated green disenchants already captured twice (2026-11-02T1620 and 2026-11-04T0520); no new independent cohort."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fisfkn",
+      "reason": "Existing historical Aqirite/Ironclaw nominal ore cohorts; no new completed-cast histograms."
+    },
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+      "reason": "Existing Mycobloom rank averages; no raw completed-operation logs."
+    },
+    {
+      "url": "https://www.wowhead.com/item=212495/radiant-ruby",
+      "reason": "Raven11 and Elfshinobi1 observations already represented; no new exact per-output hit data."
+    }
+  ],
+  "next_concrete_step": "Seek an independent post-2024-10-25 210937 Ironclaw R2 or 210934 Aqirite R2 raw prospect log/export with completed operations, 0/1/2+ stack bins, skill/spec/unlock/refunds; prioritize an original rank-specific per-mill Mycobloom 210796/210797/210798 export if no ore logs are available. Verify full output rank IDs before compiling.",
+  "decisions_needed": [],
+  "gold_ev_policy": "Only live addon prices, never frozen historical source prices."
+}
