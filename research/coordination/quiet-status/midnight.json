@@ -1,42 +1,38 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-06T14:20:43.838Z",
-  "status": "Research-only: recovered four source-linked Season 2 Slumbering Coil Curio difficulty bonus-ID sequences for base item 270909 from an original Method article and four linked Wowhead PTR entries; no new independent measured processing cohorts or verified current-client itemLinks. Exhausted numeric candidate sources not recopied.",
+  "updated_at": "2026-11-06T15:13:29.111Z",
+  "status": "Research-only: found a new original firsthand Mantle of Dark Devotion (251085) disenchant/restoration account conflicting with WoWDB base-item cannot-disenchant; recorded original source without converting restoration costs into measured outputs. No new completed-cast or per-output distributions.",
   "task_ids": [
-    "T0049",
     "T0026",
-    "T0039",
+    "T0049",
     "T0005",
-    "T0003",
-    "T0045",
-    "T0001",
-    "T0002",
-    "T0023"
+    "T0039",
+    "T0045"
   ],
   "exact_gaps_targeted": [
     {
       "task_ids": [
-        "T0049",
-        "T0026"
+        "T0026",
+        "T0049"
       ],
       "input_item_ids": [
+        251085,
         272246
       ],
-      "target_actual_item_level": 305,
       "output_item_ids": [
-        243606,
         243605,
+        243606,
+        267654,
+        243599,
         243602,
-        243603,
-        243599
+        243603
       ],
-      "missing": "live itemLink with upgrade/bonus, client build, actual DE eligibility, cast-specific results, quality, armor/weapon, skill and spec"
+      "missing": "current-client bonus/ilvl and live disenchantable flag; output rank identity, direct actual cast log, raw Looter stack histogram, build and skill/specialization; restoration cost vs original loot mapping"
     },
     {
       "task_ids": [
-        "T0039",
         "T0005",
-        "T0001"
+        "T0039"
       ],
       "input_item_ids": [
         237362,
@@ -51,23 +47,7 @@
         242786,
         242788
       ],
-      "missing": "independent exact finished casts by ore rank with hits, per-cast zeros, quantities and stack histogram, unlock status, Resourcefulness and build"
-    },
-    {
-      "task_ids": [
-        "T0003",
-        "T0002"
-      ],
-      "input_item_ids": [
-        237359,
-        237361,
-        237364,
-        237365
-      ],
-      "output_item_ids": [
-        242608
-      ],
-      "missing": "new matched source rank and current patch output IDs, completed casts, per-output histograms, unlock and refund flags"
+      "missing": "rank-matched independent completed casts, castsWithDrop, zeros, output counts/histograms, Diamond unlock, resourcefulness, precise client build"
     },
     {
       "task_ids": [
@@ -79,99 +59,34 @@
       "output_item_ids": [
         245807
       ],
-      "missing": "directly observed 10-herb completed mill logs with Powder Pigment quantities and 0/1/2 histogram, skill, spec, input rank and refunds"
-    },
-    {
-      "task_ids": [
-        "T0023"
-      ],
-      "input_item_ids": [
-        270909
-      ],
-      "source_linked_bonus_variants": [
-        {
-          "difficulty": "LFR",
-          "token_item_id": 270909,
-          "bonus_ids": [
-            13332
-          ],
-          "url": "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=13332"
-        },
-        {
-          "difficulty": "Normal",
-          "token_item_id": 270909,
-          "bonus_ids": [
-            12847
-          ],
-          "url": "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=12847"
-        },
-        {
-          "difficulty": "Heroic",
-          "token_item_id": 270909,
-          "bonus_ids": [
-            12855,
-            13334
-          ],
-          "url": "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=12855:13334"
-        },
-        {
-          "difficulty": "Mythic",
-          "token_item_id": 270909,
-          "bonus_ids": [
-            13335,
-            13848
-          ],
-          "url": "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=13335:13848"
-        }
-      ],
-      "missing": "live client itemLinks for each difficulty, NPC Kirana/Ki'rula naming reconciliation, exact 20 vendor token choices and reward IDs/bonuses/difficulty modifiers; no inference from token item-level-219 tooltip"
+      "missing": "10-herb completed mill logs, per-output hits/zeros/stack histograms, skill/spec/rank and refunds"
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "type": "source_linked_token_difficulty_bonus_identities",
-      "input_item_id": 270909,
-      "variants": [
-        {
-          "difficulty": "LFR",
-          "token_item_id": 270909,
-          "bonus_ids": [
-            13332
-          ],
-          "url": "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=13332"
-        },
-        {
-          "difficulty": "Normal",
-          "token_item_id": 270909,
-          "bonus_ids": [
-            12847
-          ],
-          "url": "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=12847"
-        },
-        {
-          "difficulty": "Heroic",
-          "token_item_id": 270909,
-          "bonus_ids": [
-            12855,
-            13334
-          ],
-          "url": "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=12855:13334"
-        },
-        {
-          "difficulty": "Mythic",
-          "token_item_id": 270909,
-          "bonus_ids": [
-            13335,
-            13848
-          ],
-          "url": "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=13335:13848"
-        }
-      ],
-      "source_url": "https://www.method.gg/guides/where-to-hand-in-slumbering-coil-curio-omni-tokens-in-midnight-wow-season-2",
-      "replaces_record_id": "midnight-20261030-7620",
+      "kind": "firsthand_report_only",
+      "input_item_id": 251085,
+      "input_name": "Mantle of Dark Devotion",
+      "reported_disEnchantedDate": "2026-05-15",
+      "original_source": "https://us.forums.blizzard.com/en/wow/t/item-restore-issue-w-prof-item-as-cost/2308765",
+      "observed_fact": "Player reports disenchanting one Mantle and restoration page demands 1 Dawn Crystal, 1 Swirling Arcane Essence, 1 weekly tracker. These are restoration requirements, not independently observed actual loot.",
+      "verified_output_item_id": 267654,
+      "dawn_crystal_rank": null,
+      "actual_output_quantity": null,
+      "completed_casts": null,
       "independent_measured_cohort": false,
-      "current_client_verified": false,
-      "fields_advanced": 4
+      "source_kind": "reference"
+    },
+    {
+      "kind": "conflicting_base_item_eligibility_reference",
+      "input_item_id": 251085,
+      "source": "https://www.wowdb.com/items/251085-mantle-of-dark-devotion",
+      "source_base_item_ilvl": 108,
+      "source_added_build": 63534,
+      "source_added_patch": "12.0.0",
+      "source_says_cannot_disEnchant": true,
+      "current_client_variant_disEnchantable": null,
+      "independent_measured_cohort": false
     }
   ],
   "numeric_fields_advanced": {
@@ -181,31 +96,31 @@
     "new_direct_hits": 0,
     "new_direct_zero_histograms": 0,
     "new_current_build_disenchant_eligibility": 0,
-    "new_source_linked_token_bonus_variants": 4
+    "new_source_conflict_gear_items": 1,
+    "new_verified_weekly_knowledge_output_identities": 1
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/20261106T1419-curio-difficulty-bonus-identities.jsonl"
+    "research/v3/evidence/midnight/20261106T1513-mantle-eligibility-restoration.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-20261106-14194391"
+    "midnight-20261106-2510851",
+    "midnight-20261106-2510852",
+    "midnight-20261106-2510853"
   ],
   "source_links": [
-    "https://www.method.gg/guides/where-to-hand-in-slumbering-coil-curio-omni-tokens-in-midnight-wow-season-2",
-    "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=13332",
-    "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=12847",
-    "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=12855:13334",
-    "https://www.wowhead.com/ptr/item=270909/slumbering-coil-curio?bonus=13335:13848"
+    "https://us.forums.blizzard.com/en/wow/t/item-restore-issue-w-prof-item-as-cost/2308765",
+    "https://www.wowdb.com/items/251085-mantle-of-dark-devotion",
+    "https://www.wowhead.com/item=251085/mantle-of-dark-devotion",
+    "https://www.wowhead.com/item=267654/swirling-arcane-essence"
   ],
-  "verified_commit_sha": "4bb848f5f0f2d4081f5089b4237c4fa8596a2d92",
-  "verified_commit_sha_scope": "New evidence-file commit SHA verified by fetch_commit plus read-back of exact one-line JSONL, one changed file. Quiet-status update requires separate commit because connected GitHub commit API does not expose base tree SHA for atomic two-file tree; this run consequently uses two commits, an exception to one-commit preference.",
-  "commit_readback": "Evidence commit 4bb848f5f0f2d4081f5089b4237c4fa8596a2d92 read-back PASS; status commit to be checked after write. No production branch changed.",
+  "verified_commit_sha": "831b374096901b89213ee38f21dbf283ad2ff7f0",
+  "verified_commit_sha_scope": "Verified starting branch-head SHA (parent of this session's one atomic two-file commit); a commit cannot contain its own SHA because that would change its hash. New commit SHA is verified by read-back of branch ref after publication, not self-embedded.",
+  "commit_readback": "Pending publication and read-back verification of one atomic evidence+status commit.",
   "blockers": [
-    "Miststalker's Wristbands 272246 base WoWDB no-disenchant flag vs 140 Wowhead Looter historical counts unresolved without ilvl305 itemLink and actual disenchant log.",
-    "Cardinalai June10 800 completed Umbral Tin 237362 prospect results only per-output quantity totals, no castsWithDrop/zeros/histogram or original rank-matched event export.",
-    "Resourcefulness can make nominal herbs/ore differ from completed casts; pre/post Mar31 changes and ore rank must stay disjoint.",
-    "New Curio bonus strings are from Method-linked PTR Wowhead pages, not in-game link verification. Class/vendor output inventory and corresponding piece bonus IDs still missing.",
-    "Numeric research sources revisited this session yielded only previously recorded cohorts. Do not promote any probabilities or denomators.",
-    "Atomic two-file single-commit workflow unavailable in accessible GitHub connector (create_tree requires tree SHA; fetch_commit does not expose it). Evidence was committed first and status updated separately without touching unrelated files."
+    "Mantle of Dark Devotion 251085 player says disenchanted May 15 2026 and restore cost included Dawn Crystal and weekly essence, but WoWDB base item ilvl108 explicitly says cannot be disenchanted. Actual bonus, upgraded ilvl and live 12.1.x client build unknown.",
+    "Restoration charges cannot be treated as source-measured output quantities or zero-inclusive drop denominator; Dawn Crystal quality rank/item ID not given.",
+    "Miststalker's Wristbands 272246 current ilvl305 bonus/client eligibility still not confirmed against 140-operation historical/cumulative Looter table and base WoWDB no-disEnchant flag.",
+    "Rank-specific 237362/237363 finished prospect logs and 236761 mill histograms still unavailable; prior Cardinalai/Honeybone/Draggoth/Kyzenbka counts are existing evidence, not new."
   ],
   "exhausted_sources": [
     "Do not re-import Cardinalai June10 800-cast Umbral Tin/Brilliant Silver pooled studies or Honeybone Apr19/22 Refulgent Copper; earlier studies already recorded.",
@@ -220,20 +135,23 @@
     "NocD r/woweconomy 1rtqxbr original 1000-ore screenshot lead newly identified; linked Imgur fOTeoFs cannot be transcribed with available access. Do not repeat this search or record a measured cohort without the original screenshot/export.",
     "No new cohort in name-targeted Reddit, WoW profession forum, Wowhead checks for Umbral Tin, Brilliant Silver, Tranquility Bloom; 2026-04-17 Battlefield Goods hotfix and JD3K test already in prior evidence.",
     "This run: no independent direct cast log emerged from Midnight profession-item search on Wowhead, WoW profession forum, Reddit or guides; avoided importing existing Looter cumulative snapshots, Cardinalai/Honeybone/kyzenbka/Draggoth numeric results, or NocD inaccessible image again. Switched to primary profession-trait pages; three new exact IDs, not repeated drop-rate studies.",
-    "This session checked indexed rare Shard Aspalar ~5000 operations (already midnight-20261102-081301+), Draggoth 12.5 Powder/10 herbs (already recorded), HeadtripVee rank table (already recorded), and prior 272246 base/bonus ambiguity; no duplicate study entered. Pivoted to previously unrecorded Slumbering Coil Curio four difficulty-specific source-linked bonus strings."
+    "This session checked indexed rare Shard Aspalar ~5000 operations (already midnight-20261102-081301+), Draggoth 12.5 Powder/10 herbs (already recorded), HeadtripVee rank table (already recorded), and prior 272246 base/bonus ambiguity; no duplicate study entered. Pivoted to previously unrecorded Slumbering Coil Curio four difficulty-specific source-linked bonus strings.",
+    "2026-11-06 targeted searches revisited reddit/r/woweconomy 1sfds1u (prior genobeam/HeadtripVee cohort), 1rju9nm March-03 milling 11-15 (already evidence 2026-10-30T1830), wowhead 267654 Kestevavild ~32/3 weekly essence (already evidence 2026-11-01T1812), Honeybone/Cardinalai source sets; no duplicate records. New independent gear restoration original at Blizzard forum t/2308765 was not indexed in branch evidence.",
+    "Firecrawl full raw HTML extraction unavailable due to connected service credit exhaustion; ordinary web text used without inventing raw Wowhead Looter data."
   ],
   "decisions_needed": [
     {
       "owner": "Master",
-      "decision": "Determine schema treatment for multiple difficulty/bonus sequences of token base ID 270909 (notes-only under existing token schema until approved); do not convert to four duplicated reward records or production item levels."
+      "decision": "For item 251085, hold both base-record noDisenchant and player restoration evidence separately until exact live bonus/ilvl itemLink is tested; do not promote global cannot-DE flag or restoration amounts to measured outputs."
     },
     {
       "owner": "Master",
-      "decision": "Live NPC/vendor exchange mapping and 272246 itemLink disench eligibility must be verified before promoting to addon."
+      "decision": "If a schema needs a provenance field for restoration costs versus actual disenchant loot, request review; current records have sourceKind reference and unknown numeric fields."
     }
   ],
-  "next_concrete_step": "Seek an original current-client completed-cast DE log for 272246 at actual ilvl305, or addon prospecting per-cast export for 237362/237363 including input rank, unlock and Resourcefulness. Independently resolve 270909 four linked bonus sequences and vendor catalog via current-client itemLink/vendor screenshots; do not repeat known source audits.",
+  "next_concrete_step": "Seek a player-verified in-game itemLink plus actual completed DE event for Mantle of Dark Devotion 251085 and Miststalker's Wristbands 272246 with bonus IDs, ilvl, current build, rank-specific outputs and skill/spec; alternatively obtain addon per-cast export for rank-specific Umbral Tin 237362 including hits/zeros/refunds. Avoid sources already exhausted.",
   "production_merge": false,
   "release": false,
-  "notifications": "on-demand only; Dot handles monitoring"
+  "notifications": "on-demand only; Dot handles monitoring",
+  "base_commit_sha_verified": "831b374096901b89213ee38f21dbf283ad2ff7f0"
 }
