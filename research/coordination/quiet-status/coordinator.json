@@ -1,158 +1,223 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-06T01:10:00Z",
-  "status": "research checkpoint committed: original-source legacy numerator verified; Dragonflight input quality item-ID metadata cross-checked; no new completed-cast cohort or runtime coverage claimed",
+  "updated_at": "2026-11-06T02:03:40.433Z",
+  "branch": "implementation/five-agent-completion",
+  "status": "original workbook independently read; 71 pre-existing Draconium Q2/Q3 pooled quantity records verified against source with 0 mismatches; no new independent cohort or measured probability",
   "task_ids": [
-    "T0046",
     "T0019",
     "T0020",
-    "T0050",
-    "T0042"
+    "T0041",
+    "T0046",
+    "T0042",
+    "T0052"
   ],
   "exact_gaps_targeted": [
     {
+      "task_id": "T0019",
+      "input": "Draconium Ore Q2, 188658",
+      "issue": "Original Xenastro workbook 5 batch row identities and historical 44 pooled gem quantity fields; source row pointers incorrect in current queue; completed casts, per-output hits and output item IDs still unknown"
+    },
+    {
+      "task_id": "T0041",
+      "input": "Draconium Ore Q3, 190311",
+      "issue": "Original workbook 3 previously recorded batch row identities and historical 27 pooled quantity fields; rank 1/2/3 gem group totals are not exact gem identity, casts or hit probabilities"
+    },
+    {
       "task_id": "T0046",
-      "category": "item-identity/rank",
-      "gap": "Input-quality mapping for Serevite and Draconium must not be inferred from item-number ordering or substituted into already overlapping original cohorts. Serevite secondary mapping was previously documented; Draconium R1/R2/R3 independently read this session. Current catalog data is secondary, not Blizzard tooltip evidence."
+      "input": "Dragonflight ore rank mappings",
+      "issue": "Secondary item-ID/rank mapping remains nonauthoritative, not source-study output rank proof"
     },
     {
-      "task_ids": [
-        "T0019",
-        "T0020"
-      ],
-      "category": "cohort-identity/denominator",
-      "gap": "Draconium 188658 is R2, 189143 R1 on secondary Retail commodity listings; original Xenastro Prospecting Log rows 28/33/39/54/62 not rechecked in spreadsheet; pooled gem total, completed casts, skill and Resourcefulness remain unknown. Do not derive probabilities."
-    },
-    {
-      "task_ids": [
-        "T0050",
-        "T0042"
-      ],
-      "category": "historical-numeric-lineage",
-      "gap": "Runecloth Headband 13866→Greater Eternal Essence 16203: two original archived comments report numerators but no verified DE cast denominator; one says 14 crafted→8 units, the other about 25 crafted and 2 units in one disenchant. Separate identities; historical applicability to present Retail unverified."
-    },
-    {
-      "category": "usable-but-unimported/valuation/display",
-      "gap": "Do not equate source-catalog rank mapping or historical numerator with imported current Retail gold valuation. Actual source→compiled ItemDB→offline valuation→tooltip under synthetic prices not executed in this checkpoint; implementation/usable-data-tooltips remains owner-protected."
+      "task_id": "T0052",
+      "input": "Khorium Plated Bludgeon 25122",
+      "issue": "Legacy worker has an original historic one-positive-cast record; current Retail eligibility and sampling uncertainty remain unresolved"
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "input-rank-identity",
-      "status": "verified against current secondary Retail commodity item pages; not authoritative game API; not measured conversion study",
-      "expansion": "Dragonflight",
-      "input_name": "Draconium Ore",
-      "id_to_rank": {
-        "188658": 2,
-        "189143": 1,
-        "190311": 3
+      "kind": "independent_original_workbook_source_to_existing_record_validation",
+      "is_new_study": false,
+      "source_title": "Prospecting Calculator V1.xlsx",
+      "worksheet": "Prospecting Log",
+      "source_url": "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
+      "workbook_format": "XLSX",
+      "current_session_validation": "71 of 71 existing pooled-material quantity fields equal original workbook values, 0 mismatches",
+      "rank_2": {
+        "inputItemID": 188658,
+        "existing_records_checked": 44,
+        "study_rows_excel": [
+          28,
+          52,
+          54,
+          55,
+          62
+        ],
+        "original_record_commit": "15dbfffea2b21f11cdfa9fc6750e9c45266a1d08",
+        "batches": [
+          {
+            "row": 28,
+            "nominalOre": 8543,
+            "refundCountReported": 126,
+            "green": 2907,
+            "blue": 1504,
+            "epic": 24,
+            "skill": 237
+          },
+          {
+            "row": 52,
+            "nominalOre": 15000,
+            "refundCountReported": 893,
+            "green": 5304,
+            "blue": 2824,
+            "epic": 50,
+            "skill": 248
+          },
+          {
+            "row": 54,
+            "nominalOre": 13000,
+            "refundCountReported": 883,
+            "green": 4676,
+            "blue": 2417,
+            "epic": 42,
+            "skill": 248
+          },
+          {
+            "row": 55,
+            "nominalOre": 21000,
+            "refundCountReported": null,
+            "green": 7587,
+            "blue": 3803,
+            "epic": 61,
+            "skill": 249
+          },
+          {
+            "row": 62,
+            "nominalOre": 13000,
+            "refundCountReported": 735,
+            "green": 4603,
+            "blue": 2401,
+            "epic": 45,
+            "skill": 250
+          }
+        ]
       },
-      "source_urls": [
-        "https://goldcap.gg/retail/us/items/189143",
-        "https://goldcap.gg/retail/us/items/188658",
-        "https://goldcap.gg/retail/us/items/190311"
-      ],
-      "measured_casts": null,
-      "output_quantities": null,
-      "output_probabilities": null,
-      "novelty": "R3 190311 source checked alongside R1/R2; rank mapping still needs authoritative client/API confirmation"
-    },
-    {
-      "kind": "prior-rank-mapping-cross-check",
-      "status": "previously known in T0046; NOT new evidence",
-      "expansion": "Dragonflight",
-      "input_name": "Serevite Ore",
-      "id_to_rank": {
-        "190394": 3,
-        "190395": 1,
-        "190396": 2
+      "rank_3": {
+        "inputItemID": 190311,
+        "existing_records_checked": 27,
+        "study_rows_csv": [
+          61,
+          63,
+          65
+        ],
+        "original_record_commit": "fd120811ef43463a76cac4e2b4c6c4ad9025740d",
+        "reportedOreQuantities": [
+          30000,
+          30000,
+          20000
+        ],
+        "reportedRefundCounts": [
+          4157,
+          null,
+          null
+        ],
+        "skill": 283
       },
-      "source_urls": [
-        "https://goldcap.gg/retail/us/items/190395",
-        "https://goldcap.gg/retail/us/items/190396",
-        "https://goldcap.gg/retail/eu/items/190394"
-      ]
-    },
-    {
-      "kind": "worker-evidence-readback",
-      "agent": "legacy",
-      "task_id": "T0050",
-      "status": "verified worker file content + historic source quotes, not measured-current-Retail success",
-      "evidence_path": "research/v3/evidence/legacy/2026-11-06T0042-runecloth-original-essence-observations.jsonl",
-      "source_urls": [
-        "https://www.wowhead.com/wotlk/item=16203/greater-eternal-essence",
-        "https://www.wowhead.com/ptr/item=16203/greater-eternal-essence"
-      ],
-      "reported_numerators": [
-        {
-          "study": "wowhead-16203-comment-930224-runecloth-14-crafted-eight-gees",
-          "crafted": 14,
-          "output_units": 8,
-          "completed_casts": null,
-          "positive_casts": null
-        },
-        {
-          "study": "thottbot-16203-anonymous-about25-runecloth-one-gee-hit",
-          "crafted": "about 25",
-          "output_units": 2,
-          "completed_casts": null,
-          "positive_casts": 1
-        }
-      ],
-      "newly_added_by": "legacy worker, not coordinator"
+      "method": "Read original workbook via connected Google Drive and compare parsed Prospecting Log quantities directly with saved JSONL numeric fields; identical transcript values were NOT reimported or relabeled new",
+      "casts": null,
+      "castsWithDrop": null,
+      "per_output_histograms": null,
+      "exact_gem_item_ids": null,
+      "current_retail_applicability": null
     }
   ],
+  "new_measured_cohorts_added_by_coordinator": 0,
+  "new_gold_ev_coverage_verified": 0,
+  "worker_reports_verified": {
+    "legacy": {
+      "updated_at": "2026-11-06T01:49:27Z",
+      "status": "one source-reported single historical DE cast: 25122 -> 22445 quantity 3 (1 positive of 1); original source independently check pending",
+      "evidence_path": "research/v3/evidence/legacy/2026-11-06T0149-khorium-bludgeon-original-one-cast.jsonl",
+      "evidence_commit": "15bcf1ddc78d5620328c58a9459c412657894d9a"
+    },
+    "dragonflight": {
+      "updated_at": "2026-11-06T01:37:05.765Z",
+      "status": "one searched-only record, no new measured cohort; worker originally blocked on workbook, coordinator has now read source",
+      "evidence_path": "research/v3/evidence/dragonflight/2026-11-06T0136-original-workbook-and-rank-cast-search.jsonl"
+    },
+    "war-within": {
+      "updated_at": "2026-11-06T01:30:46.265Z",
+      "status": "item 220141 -> Nacreous Pigment 3 units with unknown casts and output rank/item ID",
+      "evidence_path": "research/v3/evidence/war-within/20261106T0130-specular-rainbowfish-milling-identity.jsonl"
+    },
+    "midnight": {
+      "updated_at": "2026-11-06T01:19:08.120Z",
+      "status": "five noDE template flags; conflicts with accumulated Looter casts, no demonstrated current-live eligibility",
+      "evidence_path": "research/v3/evidence/midnight/2026-11-06T0119-gear-eligibility-build-conflicts.jsonl"
+    }
+  },
   "evidence_files": [
-    "research/v3/evidence/legacy/2026-11-06T0042-runecloth-original-essence-observations.jsonl"
+    "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-02T1025-xenastro-draconium-r3-original-batches.jsonl",
+    "research/v3/evidence/legacy/2026-11-06T0149-khorium-bludgeon-original-one-cast.jsonl"
   ],
   "source_links": [
-    "https://goldcap.gg/retail/us/items/189143",
-    "https://goldcap.gg/retail/us/items/188658",
-    "https://goldcap.gg/retail/us/items/190311",
-    "https://goldcap.gg/retail/us/items/190395",
-    "https://goldcap.gg/retail/us/items/190396",
-    "https://goldcap.gg/retail/eu/items/190394",
-    "https://www.wowhead.com/wotlk/item=16203/greater-eternal-essence",
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
+    "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/queue.json"
   ],
   "verified_revisions_before_write": {
     "main": "ec76f0144778bc744ce9784ecb326326fed46674",
-    "research": "644e5e86e6a01e7157e742daaf2fbe428d648ae2",
-    "protected_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9"
+    "research": "15bcf1ddc78d5620328c58a9459c412657894d9a",
+    "implementation/usable-data-tooltips": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
-  "commit_sha_when_verified": "644e5e86e6a01e7157e742daaf2fbe428d648ae2",
-  "commit_sha_note": "Verified research head prior to status commit, not a SHA of this file's own commit; self-referential commit SHA cannot be embedded.",
-  "worker_reports_verified": {
-    "legacy": {
-      "updated_at": "2026-11-06T00:42:02.783Z",
-      "status": "source-backed-observations-recorded",
-      "evidence_readback": true
-    },
-    "dragonflight": "awaiting report",
-    "war-within": "awaiting report",
-    "midnight": "awaiting report"
+  "commit_sha_when_verified": {
+    "existing_q2_evidence": "15dbfffea2b21f11cdfa9fc6750e9c45266a1d08",
+    "existing_q3_evidence": "fd120811ef43463a76cac4e2b4c6c4ad9025740d",
+    "legacy_recent_evidence": "15bcf1ddc78d5620328c58a9459c412657894d9a",
+    "current_status_commit": "available from GitHub commit response, cannot embed its own SHA in same commit"
   },
   "blockers": [
-    "Authoritative Blizzard API/in-client quality icon verification not available for Dragonflight rank mappings (secondary commodity pages corroborated).",
-    "Xenastro's original public workbook URL could not be opened in the available browser; avoid inventing row quantities or requesting duplicate studies before a worker reviews it.",
-    "Neither archived Runecloth comment has a known completed disenchant denominator; current Retail output/eligibility or changes in mechanics not confirmed.",
-    "Shared old research record collisions (e.g. legacy-20261101-201) require file-qualified lineage resolution by authorized owner, not retroactive edits to source originals.",
-    "No compiled ItemDB, actual-engine offline gold or tooltip fixture executed."
+    "Exact current Retail applicability and exact gem item IDs/individual gem rank output mapping not established for Xenastro's pooled categories.",
+    "Original workbook provides ore quantity, some refunded ore and profession context, not logged completed prospects, castsWithDrop or zero-inclusive per-gem histograms. Do not convert nominal inputs/5 into observed casts.",
+    "T0019 queue searchTip references original workbook rows 28,33,39,54,62 but the five actual Q2 Draconium rows match Excel rows 28,52,54,55,62; currently mistaken row pointers would search Serevite/other inputs.",
+    "Reference source 2023 Inspiration-era results, and modern eligibility/behavior may differ.",
+    "No actual compiled ItemDB→offline valuation→tooltip fixture executed; current Retail gold-actionable coverage not measured.",
+    "Midnight M11 mechanics list says prospecting Multicraft 'likely'; worker now reports guide evidence of cannot Multicraft. Keep Multicraft off until scoped rule reviewed."
   ],
   "exhausted_sources": [
-    "Serevite rank-to-ID secondary mappings 190395/190396/190394 were already identified in queue T0046 before this session; do not re-count or revisit without authoritative tooltip.",
-    "Prior generic Dragonflight prospecting zero-inclusive histogram searches are exhausted in coordinator history; pivot to exact-original logs and missing denominators.",
-    "Xenastro workbook direct web access failed this run; don't pretend row review completed; retry only via available original workbook reader rather than repeating a blind search."
+    "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
+    "Original XLSX browser fetch failed, but authenticated Drive read succeeded this session; not a remaining source-access blocker for coordinator."
   ],
-  "decisions_needed": [],
-  "next_concrete_step": "Use original spreadsheet reader or worker's permitted access to inspect Xenastro's Draconium Prospecting Log rows 28/33/39/54/62; verify rank identity, 44 pooled-gem totals, actual completed cast denominators and refunds. If access remains blocked, pivot to a distinct ready queue original where item ID, positive casts and per-cast quantities can be independently checked. Require official in-game/API rank verification before using external commodity map to amend measured import.",
+  "decisions_needed": [
+    {
+      "issue": "T0019 row locator correction",
+      "proposal": "Review queue typo 28,33,39,54,62 -> 28,52,54,55,62; no direct shared queue edit during quiet-only coordinator session"
+    },
+    {
+      "issue": "Midnight M11",
+      "proposal": "Review source-claimed no-Multicraft prospecting and mechanics.md M11 conflict before any mechanics/estimator change; Multicraft remains off"
+    }
+  ],
+  "next_concrete_step": "Use the original workbook source rows 28,52,54,55,62 (Draconium R2) and 61,63,65 (R3) to preserve original-batch identity and refund/skill scope, then seek independent per-operation export for exact gem IDs, item ranks, observed completed casts and 0/1/2+ stack histograms. Avoid duplicate copies; separately validate historical-record admission to ItemDB/tooltip at synthetic prices in authorized integration work.",
+  "validation_executed": {
+    "source": "Google Drive XLSX readable text, Prospecting Log",
+    "rank2_saved_numeric_fields_compared": 44,
+    "rank3_saved_numeric_fields_compared": 27,
+    "mismatches": 0,
+    "records_added": 0,
+    "local_lua_tests": "not run",
+    "offline_gold_fixture": "not run",
+    "live_wow": "not run",
+    "original_file_unchanged": true
+  },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
-  "validation_executed": [
-    "GitHub evidence-file readback and JSON parsing of legacy worker quiet status; source comment quotes visually checked on Wowhead/WotLK search",
-    "External Retail commodity pages independently retrieved for six item IDs",
-    "No offline Lua or actual tooltip tests performed"
-  ],
-  "safety": "No production edits, no PR merge/closure, no release, no current Retail claims; keep original research append-only and unverified Multicraft off.",
-  "notifications": "on demand only; Dot handles monitoring"
+  "safety": {
+    "protected_implementation_branch_untouched": true,
+    "append_only_originals_unchanged": true,
+    "worker_status_files_untouched": true,
+    "merge_performed": false,
+    "release_performed": false,
+    "schedules_changed": false
+  },
+  "notifications": "on-demand only"
 }
