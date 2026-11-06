@@ -1,29 +1,42 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-06T03:19:19.698Z",
-  "status": "Three new source-backed WoWDB LIVE generic base-item no-disenchant facts recorded for two Darkmoon Deck trinkets and Drum of Renewed Bonds, without extrapolating to item variants. Zero new independent numeric disenchant/prospect/milling casts or hit histograms.",
+  "updated_at": "2026-11-06T04:18:18.374Z",
+  "status": "Five NEW independently item-identified WoWDB LIVE generic base-item disenchant-exclusion flags for Patch 12.1.0 Build #68209 (two jewelry, a polearm, mail waist and shield). No new raw independent completed-cast cohorts or numeric yield/hit histograms. Do not interpret database base-template flags as in-game variant action eligibility.",
   "task_ids": [
     "T0025",
-    "T0026",
     "T0049",
+    "T0026",
     "T0039",
     "T0005",
-    "T0003",
+    "T0001",
     "T0002",
+    "T0003",
     "T0045"
   ],
   "exact_gaps_targeted": [
+    {
+      "task_id": "T0025",
+      "item_ids": [
+        268252,
+        268265,
+        268215,
+        268216,
+        276169
+      ],
+      "requested": "generic base-template exclusion identities with authoritative live-database source",
+      "new_verified_flags": 5
+    },
     {
       "task_id": "T0049",
       "input_item_id": 272246,
       "actual_equipped_item_level": 305,
       "base_template_item_level": 206,
-      "requested": "live in-game disenchant eligibility at exact bonus-ID variant, itemLink, skill/spec/build, completed casts, per-output IDs and histograms",
+      "requested": "actual bonus-ID itemLink and live action outcome at ilvl305; Looter source origin; build, completed DE casts, output IDs/quantities",
       "new_completed_casts": 0
     },
     {
       "task_id": "T0026",
-      "requested": "uncommon/rare/epic gear material yields and build and bonus version; original completed casts and per-output 0/1/2 stacks",
+      "requested": "uncommon/rare/epic armor and weapon completed disenchants by actual item level, build, skill and specialization with output-specific hits, zero-inclusive histograms",
       "new_completed_casts": 0
     },
     {
@@ -41,7 +54,7 @@
         242788,
         242608
       ],
-      "requested": "Tin output-specific hit counts/rank identities and zero-inclusive histograms, verified completed casts, refunds, Eversong unlock",
+      "requested": "independent per-rank Umbral Tin prospect records with completed casts, positive/zero outcomes, per-material counts and Eversong unlock",
       "new_completed_casts": 0
     },
     {
@@ -50,7 +63,7 @@
         237359,
         237361
       ],
-      "requested": "rank-specific Refulgent Copper original completed-prospect output histograms",
+      "requested": "copper rank-specific casts/hit histograms and true refunds",
       "new_completed_casts": 0
     },
     {
@@ -59,63 +72,92 @@
         237364,
         237365
       ],
-      "requested": "rank-specific Brilliant Silver original completed-prospect output histograms",
+      "requested": "silver rank-specific completed casts/hit histograms",
       "new_completed_casts": 0
     },
     {
       "task_id": "T0045",
       "input_item_id": 236761,
       "output_item_id": 245807,
-      "requested": "Tranquility Bloom Powder Pigment raw completed 10-herb mill log and refunds, skill/spec, histogram",
+      "requested": "Tranquility Bloom Powder Pigment completed 10-herb operations, rank/skill/refunds and per-cast histogram",
       "new_completed_casts": 0
-    },
-    {
-      "task_id": "T0025",
-      "item_ids": [
-        245750,
-        245829,
-        248583
-      ],
-      "requested": "exact generic item template disenchant exclusions, separate from live variant eligibility",
-      "new_verified_flags": 3
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "base-item-template-noDisenchant",
-      "item_id": 245750,
-      "item_name": "Darkmoon Deck: Void",
+      "kind": "source-backed-base-template-noDisenchant",
+      "item_id": 268252,
+      "item_name": "Apex Brute's Claw Ring",
       "field": "cannot_be_disenchanted",
       "value": true,
-      "scope": "WoWDB LIVE generic base item only, Patch 12.0.0 Build #63534",
-      "base_item_level": 90,
-      "source_url": "https://www.wowdb.com/items/245750-darkmoon-deck-void",
+      "scope": "WoWDB LIVE generic template; Patch 12.1.0 Build #68209",
+      "base_item_level": 219,
+      "item_type": "ring",
+      "source_url": "https://www.wowdb.com/items/268252-apex-brutes-claw-ring",
       "live_variant_eligibility": null,
-      "completed_disenchant_casts": null
+      "completed_disenchant_casts": null,
+      "castsWithDrop": null,
+      "output_item_ids": null
     },
     {
-      "kind": "base-item-template-noDisenchant",
-      "item_id": 245829,
-      "item_name": "Darkmoon Deck: Hunt",
+      "kind": "source-backed-base-template-noDisenchant",
+      "item_id": 268265,
+      "item_name": "Aqirbane Reliquary",
       "field": "cannot_be_disenchanted",
       "value": true,
-      "scope": "WoWDB LIVE generic base item only, Patch 12.0.0 Build #63534",
-      "base_item_level": 90,
-      "source_url": "https://www.wowdb.com/items/245829-darkmoon-deck-hunt",
+      "scope": "WoWDB LIVE generic template; Patch 12.1.0 Build #68209",
+      "base_item_level": 219,
+      "item_type": "neck",
+      "source_url": "https://www.wowdb.com/items/268265-aqirbane-reliquary",
       "live_variant_eligibility": null,
-      "completed_disenchant_casts": null
+      "completed_disenchant_casts": null,
+      "castsWithDrop": null,
+      "output_item_ids": null
     },
     {
-      "kind": "base-item-template-noDisenchant",
-      "item_id": 248583,
-      "item_name": "Drum of Renewed Bonds",
+      "kind": "source-backed-base-template-noDisenchant",
+      "item_id": 268215,
+      "item_name": "Abyssal Broodfiend's Bardiche",
       "field": "cannot_be_disenchanted",
       "value": true,
-      "scope": "WoWDB LIVE generic base item only, Patch 12.0.0 Build #63534",
-      "base_item_level": 100,
-      "source_url": "https://www.wowdb.com/items/248583-drum-of-renewed-bonds",
+      "scope": "WoWDB LIVE generic template; Patch 12.1.0 Build #68209",
+      "base_item_level": 219,
+      "item_type": "two-hand polearm",
+      "source_url": "https://www.wowdb.com/items/268215-abyssal-broodfiends-bardiche",
       "live_variant_eligibility": null,
-      "completed_disenchant_casts": null
+      "completed_disenchant_casts": null,
+      "castsWithDrop": null,
+      "output_item_ids": null
+    },
+    {
+      "kind": "source-backed-base-template-noDisenchant",
+      "item_id": 268216,
+      "item_name": "Cursed Reliquary Cincture",
+      "field": "cannot_be_disenchanted",
+      "value": true,
+      "scope": "WoWDB LIVE generic template; Patch 12.1.0 Build #68209",
+      "base_item_level": 219,
+      "item_type": "mail waist",
+      "source_url": "https://www.wowdb.com/items/268216-cursed-reliquary-cincture",
+      "live_variant_eligibility": null,
+      "completed_disenchant_casts": null,
+      "castsWithDrop": null,
+      "output_item_ids": null
+    },
+    {
+      "kind": "source-backed-base-template-noDisenchant",
+      "item_id": 276169,
+      "item_name": "Malformed Barrier",
+      "field": "cannot_be_disenchanted",
+      "value": true,
+      "scope": "WoWDB LIVE generic template; Patch 12.1.0 Build #68209",
+      "base_item_level": 259,
+      "item_type": "shield",
+      "source_url": "https://www.wowdb.com/items/276169-malformed-barrier",
+      "live_variant_eligibility": null,
+      "completed_disenchant_casts": null,
+      "castsWithDrop": null,
+      "output_item_ids": null
     }
   ],
   "numeric_fields_advanced": {
@@ -125,47 +167,49 @@
     "new_histograms": 0,
     "new_measured_zero_counts": 0,
     "new_independent_cohorts": 0,
-    "new_base_template_noDisenchant_flags": 3
+    "new_base_template_noDisenchant_flags": 5
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl"
+    "research/v3/evidence/midnight/2026-11-06T0418-venomous-abyss-base-de-eligibility.jsonl"
   ],
-  "prior_evidence_file": "research/v3/evidence/midnight/2026-11-06T0119-gear-eligibility-build-conflicts.jsonl",
   "source_links": [
-    "https://www.wowdb.com/items/245750-darkmoon-deck-void",
-    "https://www.wowdb.com/items/245829-darkmoon-deck-hunt",
-    "https://www.wowdb.com/items/248583-drum-of-renewed-bonds"
+    "https://www.wowdb.com/items/268252-apex-brutes-claw-ring",
+    "https://www.wowdb.com/items/268265-aqirbane-reliquary",
+    "https://www.wowdb.com/items/268215-abyssal-broodfiends-bardiche",
+    "https://www.wowdb.com/items/268216-cursed-reliquary-cincture",
+    "https://www.wowdb.com/items/276169-malformed-barrier"
   ],
   "verified_commit_sha": "2c6c3e47cbc84a8b554d5e640d77ad1db21e1a5d",
-  "verified_commit_sha_scope": "Previous run only, retained as last verifiable SHA when preparing this atomic one-commit evidence+status write. A Git commit cannot contain its own SHA in its content. Verify this run's actual SHA through branch history and commit metadata.",
-  "branch_head_at_read": "7bf356e17403af462753aa90b68466d6f3cf57c8",
+  "verified_commit_sha_scope": "Last independently verified prior run, NOT this run. A commit cannot contain its own SHA in committed file content; this run's actual SHA must be verified externally from branch history and commit metadata.",
+  "this_run_commit_sha": null,
+  "branch_head_at_read": "a54727c7e7ee6cd0668fd0723ffb4c126f6766f7",
   "blockers": [
-    "No new firsthand raw per-cast log with completed-cast denominators, per-output positive stacks, zero-inclusive histogram, rank, skill, specialization, hotfix context and resourcefulness; numeric unknowns remain null.",
-    "Miststalker's Wristbands 272246 has known equipped item level 305 versus generic base level 206, but no live bonus-ID-specific disenchant action result; prior Looter cumulative output observations cannot establish current live eligibility.",
-    "March 2026 forum claim that a player disenchanted 'a Deck' does not identify whether 245750 or 245829 or another deck, nor game build or bonus variant, so source-listed base-template noDE cannot be safely generalized to every deck variant.",
-    "Known June 10 Umbral Tin 237362 family totals, approximate diamond rates, earlier copper/silver/milling pooled observations have already been recorded; no additional measured cohort imported.",
-    "Original raw current-patch cast exports or in-game recorder observations are needed to advance probabilities; ambiguous counts of item sightings are not disenchant observations."
+    "No new original complete action-level disenchant/ore/herb logs with precise completed casts, skill, specialization, itemLink/rank/bonus version and per-output quantities; unknown casts, hits, zeros, chance and prices remain null.",
+    "WoWDB item-quick-fact base template exclusions may disagree with Wowhead Looter aggregate reports for a scaled/bonus item version; no in-game evidence to adjudicate any particular variant.",
+    "Miststalker's Wristbands 272246 base ilvl206 vs equipped ilvl305 remains unresolved; cannot use generic template or Looter aggregate to establish live disenchant eligibility.",
+    "Cardinalai June 10 800 completed 237362 prospecting study and other pooled/milling reports already imported lack output-specific hits/histograms; no duplicate imported.",
+    "No distinction between nominal ore/herb amounts and exact completed casts can be recovered from previously exhausted guide/forum totals."
   ],
   "exhausted_sources": [
-    "Prior repeated Miststalker's Wristbands name/id search, WowDB base template, Blizzard Armory indexed ilvl snapshots and cumulative Looter reposts do not yield the original itemLink or completed action logs.",
-    "Cardinalai June 10 800 completed Umbral Tin prospects and ranked Brilliant Silver family totals are already imported, without required output-specific hit counts; don't duplicate their pooled totals.",
-    "March/April forum percentages and 1,000-herb/ore reports do not have original completed-cast histograms or refunds, and must not become exact measured hits.",
-    "WoWDB LIVE quick facts for IDs 245750, 245829 and 248583 used as generic template identity facts only; further browsing those exact pages will not supply in-game DE cohorts."
+    "Prior multiple Wowhead, Reddit, Blizzard Forum and guide name-based numeric cohort searches for 272246, Umbral Tin 237362, Copper 237359/237361 and Silver 237364/237365; only old pooled or cumulative Looter evidence, no raw action logs.",
+    "Wowhead David111 10 pigments/10 herbs comment is already documented in research/evidence/v2/2026-10-30T1233Z-F004-midnight-milling-batch-selector-yield-conflict.json; not a new study, cannot add independent sample.",
+    "Honeybone April Refulgent Copper report duplicated across different Blizzard forum threads; same player and 1000-ore cohort, cannot count again.",
+    "This run's WoWDB LIVE item pages provide base-template flags only; re-opening them will not resolve actual variant gameplay or yield denominators."
   ],
   "decisions_needed": [
     {
       "owner": "Master",
-      "decision": "Base-item noDisenchant evidence for Darkmoon Deck IDs 245750/245829 must not override an independently identified future live bonus-ID disenchant success; evaluate variant-aware processing eligibility."
+      "decision": "For item 272246 and other base-vs-scaled gear conflicts, keep base-item noDE flags distinct from possible bonus-ID/version disenchant actions; request variant-aware eligibility representation as needed."
     },
     {
       "owner": "Master",
-      "decision": "Still need represent item 272246 ilvl305-equipped proof without treating a base item-level-206 noDE flag or cumulative Looter table as conclusive current Retail action eligibility."
+      "decision": "No source-backed per-output hits or completed cast denominators for Midnight ore/mill; retain null, require in-game recorder exports and provenance, never promote historical reference percents into exact samples."
     }
   ],
-  "next_concrete_step": "Prioritize original Retail action-level DE attempt or recorder export with complete itemLink/bonuses for Miststalker's Wristbands 272246 ilvl305, current game build and skill/spec, completed cast outcome/output IDs/counts. If unavailable, obtain fresh rank1 Umbral Tin 237363 or Tranquility Bloom 236761 per-operation exports including 0/1/2+ output histograms, actual casts and resourcefulness refunds; do not search known pooled studies again.",
-  "evidence_readback": "Pending commit and authoritative read-back of exact new file path at committed SHA.",
-  "commit_diff_verification": "Pending atomic commit verification.",
+  "next_concrete_step": "Obtain a firsthand current Retail Loot Liquidator action log from disenchanting Miststalker's Wristbands 272246 at equipped ilvl305 with exact itemLink bonusIDs, game build, skill and spec, output IDs/quantities and operation completion; failing that, seek fresh rank1 Umbral Tin 237363 or Tranquility Bloom 236761 raw cast exports with zero-inclusive histogram and Resourcefulness refunds, not previously documented summaries.",
+  "evidence_readback": "Precommit five-source item identity/Quick Info checks completed; committed-SHA read-back to be verified after ref update (cannot write result into the same commit without another commit).",
+  "commit_diff_verification": "Precommit tree contains exactly the own status path and one new Midnight evidence JSONL; authoritative commit-diff verification pending after ref update.",
   "production_merge": false,
   "release": false,
-  "notifications": "on demand only; Dot handles monitoring"
+  "notifications": "on demand only; Dot owns progress monitoring"
 }
