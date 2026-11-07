@@ -1,50 +1,55 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-07T18:23:15.160Z",
-  "status": "research-only: new site-restricted numeric/identity searches documented without new measured cast cohorts; newly verified mechanics contradiction for Midnight prospecting Multicraft",
+  "updated_at": "2026-11-07T19:24:24.143Z",
+  "status": "Research-only: newly verified 281238 live raid-gear catalog 219 vs worn 334 identity mismatch; no new raw measured Disenchant, Prospect or Mill cohorts.",
   "task_ids": [
     "T0026",
     "T0005",
     "T0039",
     "T0003",
-    "T0033",
-    "T0034"
+    "T0001",
+    "T0002"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands: actual disenchant-time ilvl305 itemLink/bonus, skill and current-live eligibility versus generic ilvl206",
-    "237362/237363 Umbral Tin Ore: original per-output castsWithDrop, zeros and positive stack histograms separated by rank, profession build and Eversong Diamond 242608 node",
-    "237359/237361 Refulgent Copper and 237364/237365 Brilliant Silver: independent completed casts and output conditional yield range under current patch",
-    "236761 Tranquility Bloom and other Midnight herbs: output-specific 10-herb mill totals/histograms, herb rank, refunds",
-    "M11 Midnight Prospecting Multicraft eligibility: source conflict with current verified mechanics model"
+    "281238 Aberrant Commander's Gauntlets: base ilvl219 vs Blizzard armory equipped ilvl334; live itemLink/bonus, disenchantability, actual current-patch cast and outputs missing",
+    "272246 Miststalker's Wristbands: in-game ilvl305 bonus/itemLink and actual DE result needed (generic catalog ilvl206 is not enough)",
+    "237362/237363 Umbral Tin Ore: rank-specific completed casts, material hit/zero histograms, profession skill, Eversong Diamond 242608 specialization gate and refunds",
+    "237359/237361 Refulgent Copper and 237364/237365 Brilliant Silver: independent post-hotfix ranked-ore cast cohorts, output ranks and distributions",
+    "Midnight 10-herb milling: original per-output completed casts, quantities/zeros and skill-rank context"
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "source_backed_mechanics_correction_lead",
-      "method": "Prospect",
-      "mechanic": "Multicraft eligibility",
-      "current_registry_status": "M11 likely applies",
-      "source_claim": "Prospecting and Crushing also cannot Multicraft. Use Resourcefulness here too.",
-      "source": "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
-      "independent_context": "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
-      "original_cast_cohort": false,
-      "needs_master_review": true,
-      "note": "Do not update shared mechanics.md or code directly; Wowhead Feb21 guide's column-only table is not decisive because icons/marks are stripped in indexed text."
+      "kind": "live_identity_reference_only",
+      "inputItemID": 281238,
+      "inputName": "Aberrant Commander's Gauntlets",
+      "method": "Disenchant",
+      "quality": "epic",
+      "armor": "mail hands",
+      "basePreviewItemLevel": 219,
+      "armoryDisplayEquippedItemLevel": 334,
+      "exactLiveBonusVerified": false,
+      "disenchantAbilityVerified": false,
+      "castCohortVerified": false,
+      "sources": [
+        "https://gamgem.com/world-of-warcraft/items/aberrant-commanders-gauntlets",
+        "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/proudmoore/destalynn/",
+        "https://guildloot.de/en/item/retail/281238-aberrant-commanders-gauntlets/"
+      ]
     },
     {
-      "kind": "identity_deduplication_check",
-      "method": "Mill",
-      "outputItemIDsChecked": [
-        245803,
-        245804,
-        245807,
-        245808,
-        245864,
-        245865,
-        245866,
-        245867
-      ],
-      "new_records_imported": 0,
-      "reason": "Exact rank mapping already present in repo's summary/research, so did not duplicate GoldCap and Wowhead references."
+      "kind": "catalog_identity_reference_only",
+      "inputItemID": 281236,
+      "inputName": "Chestwrap of Palpable Terror",
+      "method": "Disenchant",
+      "quality": "epic",
+      "armor": "leather chest",
+      "basePreviewItemLevel": 219,
+      "disenchantAbilityVerified": false,
+      "castCohortVerified": false,
+      "sources": [
+        "https://www.wowhead.com/item=281236/chestwrap-of-palpable-terror",
+        "https://gamgem.com/world-of-warcraft/items/chestwrap-of-palpable-terror"
+      ]
     }
   ],
   "numeric_fields_advanced": {
@@ -53,35 +58,40 @@
     "new_measured_totalQuantity": 0,
     "new_zero_inclusive_histograms": 0,
     "new_reference_records": 0,
-    "new_searched_records": 3,
+    "new_searched_records": 1,
     "new_output_rank_ids": [],
-    "mechanics_discrepancies_requiring_review": 1
+    "new_item_catalog_identities": [
+      281238,
+      281236
+    ],
+    "new_base_vs_worn_ilvl_contrasts": 1
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-07T1823-numeric-gap-search-and-m11-lead.jsonl"
+    "research/v3/evidence/midnight/2026-11-07T1924-kithix-scaled-ilvl-de-gap.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-20261107-1823-001",
-    "midnight-20261107-1823-002",
-    "midnight-20261107-1823-003"
+    "midnight-20261107-1924-001"
   ],
   "source_links": [
-    "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
-    "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
-    "https://www.wowhead.com/item=237362/umbral-tin-ore",
-    "https://www.method.gg/guides/midnight-inscription-profession-guide"
+    "https://www.wowhead.com/item=281238/aberrant-commanders-gauntlets",
+    "https://www.wowhead.com/item=281236/chestwrap-of-palpable-terror",
+    "https://gamgem.com/world-of-warcraft/items/aberrant-commanders-gauntlets",
+    "https://gamgem.com/world-of-warcraft/items/chestwrap-of-palpable-terror",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/proudmoore/destalynn/",
+    "https://guildloot.de/en/item/retail/281238-aberrant-commanders-gauntlets/",
+    "https://needbeforegreed.com/retail/items/281238",
+    "https://www.method.gg/guides/all-new-items-from-the-unbinding-of-kith-ix-raid"
   ],
-  "verified_commit_sha": null,
-  "verified_commit_sha_scope": "Pending verification of this run's evidence/status commit; no merged/released changes.",
-  "base_commit_sha_verified": "9639950e25b3a7590a9c6cb21ae6968f290eb9ba",
-  "commit_readback": "Pending post-write fetch/verification.",
+  "verified_commit_sha": "f81d7764054cf84c026adf8c61bffc703b5e2871",
+  "verified_commit_sha_scope": "This is the verified PARENT branch SHA. A single atomic commit cannot self-embed its own SHA; inspect current branch head for this run's commit.",
+  "base_commit_sha_verified": "f81d7764054cf84c026adf8c61bffc703b5e2871",
+  "commit_readback": "Readback required after commit; see repository current branch. This status file cannot self-reference the future commit SHA.",
   "blockers": [
-    "No new independent current-live original cast-level dataset for uncommon/rare/epic disenchant, Umbral Tin 237362, rank-paired Copper/Silver or Midnight 10-herb milling; do not invent denominators, sample zeros, confidence or prices.",
-    "272246's actual game ilvl305 and original disenchant-time itemLink/bonus or source cohort remain unresolved.",
-    "Current shared research/v3/mechanics.md M11 says prospecting Multicraft is likely, while a current Wow-Professions guide explicitly says Prospecting and Crushing cannot Multicraft. Master review against live recipe stat pane/addon recorder needed before treating either as verified.",
-    "GoldCap pigment identity pages and leveling-guide shopping quantities are not source-measured processing yields and were not reused.",
-    "Reference Looter cumulative tables from previous runs are not independent operation-level studies and must not be added to measured estimator counts."
+    "No new verified current-patch original operation-level material hits, per-output zeros/histograms or rank-conditional yields for Midnight gear, ore, or herbs; all unknown fields remain unknown.",
+    "281238 actual in-game bonus/itemLink and DE eligibility missing despite armory display showing item name and equipped ilvl334; do not equate base219 with disenchant-time gear context.",
+    "272246 ilvl305 vs generic ilvl206 cannot resolve without true linked gear and DE cast evidence.",
+    "237362/237363 per-rank outputs and 242608 diamond unlock-conditioned occurrence/quantity remain unmeasured.",
+    "Shared mechanics M11 Prospecting Multicraft discrepancy still awaits Master review and live profession pane/recorder data."
   ],
   "exhausted_sources": [
     "Do not re-import Cardinalai June10 800-cast Umbral Tin/Brilliant Silver pooled studies or Honeybone Apr19/22 Refulgent Copper; earlier studies already recorded.",
@@ -134,7 +144,8 @@
     "2026-11-07T15:18:57.097Z: Targeted original data searches across Wowhead item pages (including Courtly Wrists MikiMM 1,000 DE — already in 2026-11-02T1105 evidence), WoW-Professions, Reddit 1rke21a/1si9t1g/1rteoqr, Blizzard discussion and Warcraft Wiki. No new independent original item-level-specific disenchant cohort or rank-separated per-cast prospect/mill histogram. Reddit 2000-shard Radiant Shatter is a distinct process with no schema-safe Disenchant mapping; do not import as Disenchant. New source-backed candidate IDs 244586/237923 and disenchant skill/spec structure retained as references, not numerical estimator samples.",
     "2026-11-07T16:12:59.351Z: Name-based searches for Midnight DE distributions and ore/milling casts only surfaced previously recorded Cardinalai, Honeybone, Draggoth, MikiMM and Looter references; intentionally not reimported. Newly located Grimmella Evercore 1–2-shard comment is posted verbatim on 244751, 244753 and 244754; logged once as reference only (no sample size). Oct 3 Reddit 1wwd0w0 is a separate mechanics lead, not a cast dataset.",
     "2026-11-07T17:18Z: five previously unrecorded LIVE epic armor base IDs 250038,249964,250043,250040,250042 had indexed same-name Dawn Crystal output rows; imported once only as Looter reference, not casts. Alternate bonus/PTR snapshots for each are overlapping versions and must not be counted independently. Name-based original source searches for 272246, 237362, 237359/237361, 237364/237365 and Midnight milling returned previous Cardinalai/Honeybone/Draggoth/JD3K/5294 studies; no new raw ledger. Firecrawl credits exhausted; Wowhead direct browser strips JS Looter tables; indexed excerpts preserved with caution.",
-    "2026-11-07T18:23:15.160Z: New item-name site-restricted searches for Umbral Tin 237362/237363 (Reddit, Blizzard forums, Wowhead, Wiki, Wow-Professions, Method) and 272246 Miststalker's Wristbands actual ilvl305 (Reddit, Blizzard forums, Wowhead, WoWDB, Wiki, Icy Veins) found no source-linked original per-cast file. Existing Cardinalai/Honeybone/Draggoth and material rank-ID references were deduplicated, not reimported."
+    "2026-11-07T18:23:15.160Z: New item-name site-restricted searches for Umbral Tin 237362/237363 (Reddit, Blizzard forums, Wowhead, Wiki, Wow-Professions, Method) and 272246 Miststalker's Wristbands actual ilvl305 (Reddit, Blizzard forums, Wowhead, WoWDB, Wiki, Icy Veins) found no source-linked original per-cast file. Existing Cardinalai/Honeybone/Draggoth and material rank-ID references were deduplicated, not reimported.",
+    "2026-11-07T19:24:24.143Z: Kith'ix 12.1.5 item-name searches across Wowhead, GamGem, guildloot, Method, NeedBeforeGreed, Blizzard Armory found no original DE cast; 281238 base219 versus armory worn334 is NEW identity context only. Do not re-import existing 281056/281235 WoWDB noDE catalog flags or treat boss loot chances as material yields."
   ],
   "decisions_needed": [
     {
@@ -170,7 +181,7 @@
       "decision": "Confirm whether new guide-only disenchantable blue armor IDs 244586/237923 may be sampled for in-game material breakdown; do not promote to measured drop rate or definite generic eligibility before live client bonus/ilvl check. Mechanics guide asserts +40 skill from rare tool set (+18 rod) and 30-point root + matching 30-point rarity subtree; assess through existing M12/M13 without worker edits."
     }
   ],
-  "next_concrete_step": "Ask Master to review and test M11 against the current in-game Prospecting recipe's Multicraft/Resourcefulness pane and recorder; separately seek one actual raw itemLink/bonus + enchanting-skill DE log for 272246 ilvl305, then per-output zero-inclusive 237362 Rank 1/2 prospect logs. Do not recheck exhausted source copies.",
+  "next_concrete_step": "Obtain in-game itemLink and bonusID plus actual current-patch DE attempt for ilvl334 281238 (or 272246 ilvl305) with skill/spec and output stacks. Then request original per-rank 237362 Umbral Tin prospect ledger including zero outcomes and Eversong Diamond unlock; do not revisit previously exhausted studies.",
   "production_merge": false,
   "release": false,
   "notifications": "on-demand only"
