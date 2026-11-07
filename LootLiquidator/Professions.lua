@@ -1279,14 +1279,70 @@ function LL:MatchingCharacters(profession)
     table.sort(out,function(a,b) return a.name<b.name end)
     return out
 end
+do -- Retail's salvage label can receive a stack count before its item name.
+local guarded=setmetatable({},{__mode="k"})
+local waiting=setmetatable({},{__mode="k"})
+local function ProtectSalvageName(target)
+    local original=target and target.UpdateAllocationText
+    if type(original)~="function" or guarded[original] then return end
+    local function UpdateAllocationText(self,...)
+        local item=self.allocationItem
+        local name=item and item:GetItemName()
+        if item and (type(name)~="string" or name=="") then
+            local quantity=item:GetStackCount()
+            if quantity then
+                self:SetNameText(("%s %s"):format(
+                    TRADESKILL_REAGENT_COUNT:format(quantity,self.quantityRequired),
+                    RETRIEVING_ITEM_INFO or "Loading item..."))
+                if waiting[self]~=item and type(item.ContinueOnItemLoad)=="function" then
+                    waiting[self]=item
+                    -- The selected stack can disappear before the load request.
+                    -- Only item-data loading is guarded; crafting is untouched.
+                    local ok=pcall(item.ContinueOnItemLoad,item,function()
+                        if waiting[self]~=item then return end
+                        if self.allocationItem~=item then waiting[self]=nil;return end
+                        local loaded=item:GetItemName()
+                        if type(loaded)=="string" and loaded~="" then
+                            waiting[self]=nil
+                            self:Update()
+                        end
+                    end)
+                    if not ok then waiting[self]=nil end
+                end
+                return true
+            end
+        end
+        waiting[self]=nil
+        return original(self,...)
+    end
+    guarded[UpdateAllocationText]=true
+    target.UpdateAllocationText=UpdateAllocationText
+end
+function LL:InstallSalvageNameGuard()
+    ProtectSalvageName(ProfessionsSalvageSlotMixin)
+    -- Mixins are copied into frames. Also cover an already-created slot when
+    -- Loot Liquidator loads after the profession UI or another addon creates it.
+    local form=ProfessionsFrame and ProfessionsFrame.CraftingPage
+        and ProfessionsFrame.CraftingPage.SchematicForm
+    ProtectSalvageName(form and form.salvageSlot)
+end
+LL:InstallSalvageNameGuard()
+end
+
 local events=CreateFrame("Frame")
+events:RegisterEvent("ADDON_LOADED")
 events:RegisterEvent("PLAYER_LOGIN")
 events:RegisterEvent("SKILL_LINES_CHANGED")
 events:RegisterEvent("TRADE_SKILL_SHOW")
 events:RegisterEvent("TRADE_SKILL_LIST_UPDATE")
 events:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 events:RegisterEvent("TRAIT_CONFIG_UPDATED")
-events:SetScript("OnEvent",function(_,event)
+events:SetScript("OnEvent",function(_,event,addon)
+    if event=="PLAYER_LOGIN" or event=="TRADE_SKILL_SHOW"
+        or (event=="ADDON_LOADED" and type(addon)=="string"
+            and addon:find("Blizzard_Professions",1,true)==1) then
+        LL:InstallSalvageNameGuard()
+    end
     if not LL.db then return end
     if event=="PLAYER_LOGIN" or event=="SKILL_LINES_CHANGED" then LL:RecordProfessions() end
     if event=="PLAYER_LOGIN" or event=="SKILL_LINES_CHANGED"

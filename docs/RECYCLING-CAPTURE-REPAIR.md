@@ -71,3 +71,29 @@ Live-client event ordering remains to be confirmed with a fresh pilot after
 installation. Open Engineering to scan its inputs, enable Record crafting and
 processing results, click Start new batch, and export after results settle.
 No recorded-results reset or typed command is required.
+
+## Salvage selection name-loading error
+
+The owner's November 7 client error occurs in Blizzard's salvage slot after
+selecting an item: the stack count is available (995), but `GetItemName()` is
+nil. The native `UpdateAllocationText` immediately passes that nil to the
+two-string formatter. This happens before the user submits a Recycling cast.
+The upstream implementation and item loading contract were checked in
+[Blizzard's salvage slot](https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeSalvageSlot.lua)
+and [Item API](https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ObjectAPI/Mainline/Item.lua).
+
+The compatibility guard intercepts only a missing or empty item name when the
+selected stack count is available. It shows the native reagent count and a
+localized loading label, requests item data once, and refreshes the native label
+when that same selection has a name. Other cases continue through the existing
+native function. Clearing or changing the selection invalidates stale callbacks;
+an immediate callback without a name cannot recurse. A moved item cannot raise
+another error from the data-loading request. Both the mixin and an existing
+copied slot are covered across profession UI load order.
+
+`tests/test_salvage_ui.lua` reproduces the original formatter error and covers
+995/5 with an uncached name, asynchronous and immediate loads, empty names,
+zero-count and missing stacks, changed/cleared selections, failed loads and
+repeated installation. It verifies that no crafting API is called and no
+recorded-results database is created. Existing capture, yield and specialization
+logic is unchanged; recorded results do not need to be cleared.
