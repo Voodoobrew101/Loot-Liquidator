@@ -25,9 +25,10 @@ took about 12.5 ms. Thirty repeated blocked-item lookups fell from about
 These timings use stubbed game APIs and exclude real UI/API costs. They measure
 the local code changes, not WoW FPS or proof of the original slowdown's cause.
 
-`tests/test_recorder_lookup.lua` replays the actual 483- and 514-record exports.
+`tests/test_recorder_lookup.lua` replays the actual 483-, 514- and 575-record exports.
 It checks zero live reads for rejected cohorts, the clean 31-cast batch's exact
-30/31 R1 and 1/31 R2 means, rejection after live skill changes, stable existing
+30/31 R1 and 1/31 R2 means, the combined 92-cast/88 R1/four R2 clean batches,
+rejection after live skill changes, stable existing
 context IDs, distinct changed profiles, snapshot isolation, duplicate rejection
 and a fresh index after reset with the old ledger preserved in its backup.
 The full `tests/run.sh` suite passes under Lua 5.1 with a fresh byte-identical

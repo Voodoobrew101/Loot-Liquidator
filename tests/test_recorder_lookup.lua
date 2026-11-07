@@ -43,6 +43,16 @@ measured.baseSkill=65;measured.effectiveSkill=65
 assert(not LL:GetLearnedDisenchantEstimate(f),'changed live skill cannot borrow the old cohort')
 assert(reads>oldReads,'a usable cohort always checks the live profile')
 
+d=loadCapture('2026-11-07-pr48-reported-3000ms-after-reload')
+original=d.records[#d.records]
+measured=clone(d.contexts[original.contextID]);measured.inputIdentity=nil
+baseline=assert(LL:GetLearnedDisenchantEstimate(f))
+assert(baseline.operations==92,'both clean batches combine without counting re-exported casts twice')
+quantities={}
+for _,m in ipairs(baseline.materials)do quantities[m.id]=m.expectedQuantity end
+assert(math.abs(quantities[243602]-88/92)<1e-12 and math.abs(quantities[243603]-4/92)<1e-12,
+    'all 61 post-reload receipts remain in the combined exact-context estimate')
+
 local function contextCount()local n=0 for _ in pairs(d.contexts)do n=n+1 end;return n end
 local initialCount=contextCount()
 local function append(id,skill)
@@ -66,6 +76,6 @@ assert(LL:ExportCraftResearch()==beforeExport,'rejected duplicates leave exporte
 assert(LL:ResetRecordedResults())
 stored=append('lookup-test:after-reset')
 assert(stored.contextID=='context:1','a reset creates a fresh context index')
-assert(#LL.db.craftResearch.records==1 and #LL.db.recordedResultsBackup.craftResearch.records==518,
+assert(#LL.db.craftResearch.records==1 and #LL.db.recordedResultsBackup.craftResearch.records==579,
     'reset preserves the full prior ledger and does not reuse its index')
-print('PASS: actual 483/514-cast lookup replay, no blocked live scans, fresh skills and stable context identities')
+print('PASS: actual 483/514/575-cast lookup replay, no blocked live scans, fresh skills and stable context identities')
