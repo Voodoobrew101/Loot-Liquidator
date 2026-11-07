@@ -8,7 +8,7 @@ local SPELLS={[13262]="Disenchant",[51005]="Mill",[31252]="Prospect",[382981]="M
 local MAX_RECORDS=2000
 local pending
 local request
-local RECORDER_REVISION=4
+local RECORDER_REVISION=5
 local disenchantIntents,intentOrder={},{}
 local sessionStarted=false
 local recyclingReceipts,recyclingReceiptOrder={},{}
@@ -361,6 +361,11 @@ end
 function LL:BeginCraftCapture(guid,recipe)
     if type(guid)~="string" or not integer(recipe) then return false end
     local description=describe(self,recipe)
+    -- This event stream includes ordinary player spells, not just tracked
+    -- profession operations. They must not finalize/discard a pending capture
+    -- or turn its known recipe gap into an unscoped study-wide overlap.
+    -- Real inventory interference is still checked by the bag/result matcher.
+    if not description then return false end
     local preceding
     if pending then
         if pending.guid==guid then return true end
@@ -386,7 +391,6 @@ function LL:BeginCraftCapture(guid,recipe)
             pending=nil;return false
         end
     end
-    if not description then return false end
     if not enabled(self,description.method) then if self.db then ledger(self).activeStudy=nil end;return false end
     local before=self:SnapshotCraftBags()
     if not before then
@@ -395,9 +399,10 @@ function LL:BeginCraftCapture(guid,recipe)
     end
     local d=ledger(self)
     local active=d.activeStudy and d.studies[d.activeStudy]
-    if description.method=='Disenchant' and active and not active.recorderRevision and active.censored
+    if active and active.censored
+        and (tonumber(active.recorderRevision) or 0)<RECORDER_REVISION
         and not preceding then
-        self:StartCraftStudy('After disenchant recorder update')
+        self:StartCraftStudy('After recorder update')
     end
     if not d.activeStudy then self:StartCraftStudy() end
     d.confirmableEmpty=nil

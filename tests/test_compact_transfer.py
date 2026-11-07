@@ -3,6 +3,7 @@ import base64
 import copy
 import importlib.util
 import json
+import hashlib
 from pathlib import Path
 import unittest
 import zlib
@@ -23,6 +24,34 @@ Path('/tmp/loot-transfer-wire.json').write_text(wire)
 
 
 class CompactTransferTests(unittest.TestCase):
+    def test_live_pr49_transfer_and_operator_count_review(self):
+        folder = Path('research/integration/measured-captures/2026-11-07-pr49-20-cast-check')
+        source = (folder / 'export-page-1.json').read_bytes()
+        packet_bytes = (folder / 'compact-export.json').read_bytes()
+        original = json.loads(source)
+        self.assertEqual(validator.unpack_transfer(json.loads(packet_bytes)), original)
+        review = json.loads((folder / 'coverage-review.json').read_text())
+        self.assertEqual(review['sourceDecodedSHA256'], hashlib.sha256(source).hexdigest())
+        self.assertEqual(review['sourceWireSHA256'], hashlib.sha256(packet_bytes).hexdigest())
+        self.assertEqual(review['operatorConfirmedAttemptCount'], 20)
+        self.assertTrue(review['operatorConfirmedNoInterruptedOrFailedDisenchants'])
+        self.assertEqual(set(review['sourceRecordIDs']), {r['operationID'] for r in original['records']})
+        self.assertEqual(len(review['sourceRecordIDs']), 20)
+        self.assertTrue(all(r['castStartSeen'] and r['outputCoverage']=='complete' and r['recorderRevision']==4
+                            and r['method']=='Disenchant' and r['recipeID']==13262 for r in original['records']))
+        self.assertFalse(validator.compile_baselines([original])['baselines'], 'raw global flag is preserved')
+        subset = json.loads((folder / 'reviewed-disenchant-subset.json').read_text())
+        self.assertEqual(subset['records'], original['records'])
+        self.assertEqual(subset['contexts'], original['contexts'])
+        self.assertEqual(subset['diagnostics'], original['diagnostics'])
+        expected_studies = copy.deepcopy(original['studies'])
+        expected_studies[original['exportStudyID']].pop('globalCoverageGap')
+        self.assertEqual(subset['studies'], expected_studies)
+        reviewed = validator.compile_baselines([subset])
+        self.assertEqual(sum(b['operations'] for b in reviewed['baselines']), 20)
+        self.assertFalse(reviewed['excludedCohorts'])
+        self.assertFalse(review['runtimePromotion'])
+
     def test_exact_latest_batch_roundtrip_and_validation(self):
         self.assertLess(len(wire), 65536)
         self.assertEqual(validator.unpack_transfer(transfer), data)

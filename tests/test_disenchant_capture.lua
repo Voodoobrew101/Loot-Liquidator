@@ -173,7 +173,7 @@ for _,event in ipairs(replay)do
 end
 eq(#d.records-before,75);eq(d.targetingActivations-cursorBefore,19)
 eq(produced[243602],70);eq(produced[243603],5);eq(d.studies[batch].censored,nil)
-eq(last().castStartSeen,true);eq(last().recorderRevision,4)
+eq(last().castStartSeen,true);eq(last().recorderRevision,5)
 -- Opening the next cursor while real loot is unsettled must not force-finalize it.
 LL:StartNewBatch();bags={{gearA}};loot={};targeting=false
 emit('UNIT_SPELLCAST_START','player','delayed-real',13262)
@@ -194,9 +194,74 @@ targeting=false;emit('UNIT_SPELLCAST_SENT','player','','unknown-start',13262)
 emit('UNIT_SPELLCAST_SUCCEEDED','player','unknown-start',13262)
 eq(d.studies[batch].coverageGaps['Disenchant:13262']~=nil,true)
 -- A blocked pre-fix batch is retained, and collection automatically uses a fresh one.
-d.studies[batch].recorderRevision=nil
+d.studies[batch].recorderRevision=4
 bags={{gearA}};emit('UNIT_SPELLCAST_START','player','after-upgrade',13262)
 eq(d.activeStudy~=batch,true);eq(d.studies[batch].censored,true)
 emit('UNIT_SPELLCAST_INTERRUPTED','player','after-upgrade',13262)
-print('PASS: 75 real receipts, 19 cursor activations, unknown-start gaps and upgrade rollover')
+-- Replay the new PR49 check after an unresolved ordinary craft. Unrecognized
+-- player spells must not prematurely finalize that capture or create a global
+-- gap, and they must not discard a real Disenchant START awaiting its success.
+local checkFile=assert(io.open('research/integration/measured-captures/2026-11-07-pr49-20-cast-check/export-page-1.json'))
+local latest=assert(decoder.DecodeImportJSON(checkFile:read('*a')));checkFile:close()
+C_TradeSkillUI={GetRecipeInfo=function(id)if id==1229863 then return {learned=true}end end,
+    GetRecipeSchematic=function(id)if id==1229863 then return {recipeID=id,reagentSlotSchematics={
+        {dataSlotIndex=1,required=true,quantityRequired=1,reagents={{itemID=243581},{itemID=243582}}}}}end end}
+LL:StartNewBatch();batch=d.activeStudy;bags={{gearA}};loot={}
+emit('UNIT_SPELLCAST_START','player','scope-craft',1229863)
+emit('UNIT_SPELLCAST_SUCCEEDED','player','scope-craft',1229863)
+local diagnosticsBefore=#(d.diagnostics or {})
+emit('UNIT_SPELLCAST_SENT','player','','unrecognized-spell',999998)
+emit('UNIT_SPELLCAST_START','player','unrecognized-spell',999998)
+eq(#(d.diagnostics or {}),diagnosticsBefore,'unrecognized spell cannot finalize a pending profession capture')
+eq(d.studies[batch].globalCoverageGap,nil,'unrecognized spell cannot create a study-wide overlap gap')
+advance(13.1)
+eq(d.studies[batch].coverageGaps['Craft:1229863']~=nil,true,'actual craft failure stays scoped')
+local remaining,totals={},{}
+for _,r in ipairs(latest.records)do
+    local i=r.inputs[1];remaining[#remaining+1]=i.hyperlink
+    facts[i.hyperlink]={id=i.itemID,link=i.hyperlink,classID=i.classID,quality=i.rarity,itemLevel=i.itemLevel,expansionID=i.expansionID}
+    for _,m in ipairs(r.outputs)do facts[m.hyperlink]={id=m.itemID,link=m.hyperlink,classID=m.classID,
+        quality=m.rarity,reagentQuality=m.qualityRank,itemLevel=m.itemLevel,expansionID=m.expansionID}end
+end
+local function replayBag()
+    local result={}
+    for _,link in ipairs(remaining)do result[#result+1]={link}end
+    for link,n in pairs(totals)do result[#result+1]={link,n}end
+    return result
+end
+local accepted=#d.records;local materialTotals={};local contextRefs={}
+for _,r in ipairs(latest.records)do
+    bags=replayBag();loot={}
+    emit('UNIT_SPELLCAST_START','player',r.operationID,13262)
+    emit('UNIT_SPELLCAST_SENT','player','','unrecognized-during-real-start',999998)
+    emit('UNIT_SPELLCAST_START','player','unrecognized-during-real-start',999998)
+    for i,link in ipairs(remaining)do if link==r.inputs[1].hyperlink then table.remove(remaining,i);break end end
+    for _,m in ipairs(r.outputs)do
+        totals[m.hyperlink]=(totals[m.hyperlink] or 0)+m.quantity
+        loot[#loot+1]={m.hyperlink,m.quantity}
+        materialTotals[m.itemID]=(materialTotals[m.itemID] or 0)+m.quantity
+    end
+    emit('UNIT_SPELLCAST_SUCCEEDED','player',r.operationID,13262)
+    finish(replayBag(),loot);contextRefs[last().contextID]=true
+end
+eq(#d.records-accepted,20);eq(materialTotals[243602],19);eq(materialTotals[243603],1)
+eq(d.activeStudy,batch);eq(d.studies[batch].globalCoverageGap,nil)
+eq(d.studies[batch].coverageGaps['Disenchant:13262'],nil,'Craft gap cannot censor subsequent complete disenchants')
+local usable=0
+for id in pairs(contextRefs)do usable=usable+assert(LL:CraftBaseline(batch,id,13262)).operations end
+eq(usable,20,'all 20 actual receipts reach recipe-scoped baselines in replay')
+-- Genuine overlaps between two known tracked casts still block their recipe.
+bags={{gearA},{gearA}};loot={}
+emit('UNIT_SPELLCAST_START','player','known-overlap-first',13262)
+emit('UNIT_SPELLCAST_SUCCEEDED','player','known-overlap-first',13262)
+emit('UNIT_SPELLCAST_START','player','known-overlap-second',13262)
+eq(d.studies[batch].coverageGaps['Disenchant:13262']~=nil,true,'real known-cast overlap remains blocked')
+-- Any tracked profession, not just Disenchant, leaves a blocked older revision
+-- in place and opens a clean collection batch after upgrading.
+d.studies[batch].recorderRevision=4
+emit('UNIT_SPELLCAST_START','player','craft-after-scope-upgrade',1229863)
+eq(d.activeStudy~=batch,true);eq(d.studies[batch].censored,true)
+eq(d.studies[d.activeStudy].recorderRevision,5)
+emit('UNIT_SPELLCAST_INTERRUPTED','player','craft-after-scope-upgrade',1229863)
+print('PASS: 75 original and 20 PR49 receipts, cursor/unrecognized spell isolation, real overlaps and upgrade rollover')
 print('PASS: '..checks..' disenchant recorder regression assertions')
