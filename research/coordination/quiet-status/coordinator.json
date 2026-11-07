@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T21:09:15.252Z",
+  "updated_at": "2026-11-07T22:04:42.522Z",
   "branch": "implementation/five-agent-completion",
-  "status": "research_only: validated 16/16 exact output-ID replacements of one original WotLK Classic Ceari 200-Titanium-Ore cohort, retained 17th Titanium Powder original; zero new independent casts and zero verified current Retail gold decisions",
+  "status": "research_only: independently checked April and June 2026 first-person Midnight prospecting 365 recipe-skill quality-gate/gear-state reports; new conditional quality/context identity guard, no newly observed casts, no verified current Retail EV",
   "task_ids": [
     "COORD-MIDNIGHT-MULTICRAFT-SCOPE-20261107",
     "T0042",
@@ -57,7 +57,8 @@
     "COORD-RESOURCEFULNESS-RETURN-BASIS-20261107",
     "COORD-MIDNIGHT-LAUNCH-DE-EXPANSION-IDENTITY-20261107",
     "COORD-ELEMENTIUM-382-DUPLICATE-STUDY-LINEAGE-20261107",
-    "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107"
+    "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107",
+    "COORD-MIDNIGHT-PROSPECT-365-SKILL-GEAR-STATE-20261107"
   ],
   "exact_gaps_targeted": [
     "M10/T0034: March 12 original player reports Resourcefulness hidden in Prospecting Crafting Details while ore refunds occur; actual per-operation nominal inputs, saved ore counts, effective stats/skill/build and cast-time reagent quality links are missing; no input-saving coefficient can be calibrated.",
@@ -1209,6 +1210,28 @@
       "still_missing": "Current Retail itemLinks, profession/patch eligibility, counted cast operations, refunds, probability, conditional output yield/rank; original WotLK Classic source alone cannot establish current retail EV",
       "source": "https://www.wowhead.com/wotlk/item=36910/titanium-ore",
       "evidence_file": "research/v3/evidence/master/2026-11-07T2107-ceari-titanium-17-row-replacement-integrity.md"
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-PROSPECT-365-SKILL-GEAR-STATE-20261107",
+      "method": "Prospect",
+      "input_name": "high-quality Refulgent Copper in April report; other gold ore in June report",
+      "source_reported_recipe_quality_difficulty": 365,
+      "source_reported_effective_skill_before_and_after": [
+        {
+          "reported_date": "2026-04-09",
+          "before": 360,
+          "after": 371,
+          "shift": 11
+        },
+        {
+          "reported_date": "2026-06-27",
+          "before": "approximately 320-something",
+          "after": 366,
+          "reported_missing_gear_skill": 40
+        }
+      ],
+      "unresolved": "Exactly which recipe/ore itemLink and quality, output itemIDs, current patch context, profession panel state and post-re-equip event-level results; cannot generalize cutoff or calculate rank odds from these reports",
+      "current_retail_gold_ev_covered": false
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -3322,39 +3345,56 @@
       "compiler_or_addon_tests_executed": false,
       "source_evidence_file": "research/v3/evidence/master/2026-11-07T2107-ceari-titanium-17-row-replacement-integrity.md",
       "source_worker_file": "research/v3/evidence/legacy/2026-11-07T2043-titanium-output-id-enrichment-adamantite-original.jsonl"
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-PROSPECT-365-SKILL-GEAR-STATE-20261107",
+      "kind": "source_scoped_historical_character_skill_display_and_output_quality_identity",
+      "new_measured_cohorts": 0,
+      "new_completed_crafts": 0,
+      "new_gold_decisions": 0,
+      "confirmed_from_original_source_text": [
+        "April 09 2026 recipe-pane high quality requirement 365, displayed 360 then 371 after relog, Gold-quality Refulgent Copper context",
+        "June 27 2026 gear re-equip: display approximately 320-something then 366, reported Gold-quality gems/glass/stone after re-equip, estimated omitted gear bonus ~40",
+        "Secondary guide: max profession skill, blue gear and specialization can make Gold prospecting outputs"
+      ],
+      "evidence_file": "research/v3/evidence/master/2026-11-07T2203-midnight-prospecting-skill-quality-gate-gear-state.md",
+      "original_source_urls": [
+        "https://www.reddit.com/r/wow/comments/1sgvqjt/how_do_i_prospect_high_quality_ore_without/",
+        "https://us.forums.blizzard.com/en/wow/t/ever-gonna-fix-horrible-gemdust-drop-rate/2316717",
+        "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds"
+      ],
+      "probability": null,
+      "expected_quantity": null,
+      "output_quality_rank_id": null,
+      "calibrated_skill_coefficient": null
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
     "legacy": {
-      "reported_at": "2026-11-07T20:43:43.071Z",
-      "status_blob_sha": "c35472c1b6771bb3d7f10fb31664aa289db7f78d",
-      "evidence_file": "research/v3/evidence/legacy/2026-11-07T2043-titanium-output-id-enrichment-adamantite-original.jsonl",
-      "evidence_blob_sha": "8f00b92a662079801dc342988d1cec853acc65f6",
-      "kind": "16 one-to-one WotLK Titanium output ID enrichments and one separate Adamantite seven-unit report; zero independent new completed casts",
-      "new_current_retail_actionable_ev": 0
+      "reported_at": "2026-11-07T21:51:35.453Z",
+      "status_blob_sha": "1593277e105272e958a1fb4c58edfaa797d7d796",
+      "evidence_file": "research/v3/evidence/legacy/2026-11-07T2151-golden-ptr-and-pandaria-milling-originals.jsonl",
+      "kind": "3 historical PTR Golden Pigment herb histograms and 2 separate old Pandaria author-source cohorts; no new Retail confirmed conversion outcome"
     },
     "dragonflight": {
-      "reported_at": "2026-11-07T20:37:39.550Z",
-      "status_blob_sha": "e8f0d7b0b85cfd62a4d4dc70640a1af24f881e34",
-      "evidence_file": "research/v3/evidence/dragonflight/2026-11-07T2037-new-gear-looter-occurrence-cohorts.jsonl",
-      "kind": "four source-attributed historical gear Looter cohorts, output rank/quantities unresolved",
-      "new_current_retail_actionable_ev": 0
+      "reported_at": "2026-11-07T21:36:57.851Z",
+      "status_blob_sha": "09d361f5be7ffbfa3b028e03af19fa50558766a5",
+      "evidence_file": "research/v3/evidence/dragonflight/2026-11-07T2136-six-new-gear-looter-cohorts.jsonl",
+      "kind": "6 cumulative gear Looter item-side occurrence cohorts, missing rank/item IDs and total units"
     },
     "war-within": {
-      "reported_at": "2026-11-07T20:23:37.879Z",
-      "status_blob_sha": "ec6da40fc9a32b0558f99f61f00fdd380ba2de79",
-      "evidence_file": "research/v3/evidence/war-within/2026-11-07T2023-four-new-epic-armor-looter-hit-cohorts.jsonl",
-      "kind": "four original gear Looter hit-only tables, material item rank/output total units and current eligibility unknown",
-      "new_current_retail_actionable_ev": 0
+      "reported_at": "2026-11-07T21:25:15.192Z",
+      "status_blob_sha": "791eff60b955d937e5c9cf2175e84179c029862b",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-07T2125-four-original-epic-looter-gear-cohorts.jsonl",
+      "kind": "4 TWW epic gear cumulative Looter cohorts, only per-row occurrences, no verified output rank/quantity"
     },
     "midnight": {
-      "reported_at": "2026-11-07T20:17:48.434Z",
-      "status_blob_sha": "439f55d4a8339577ba1ec5735751a3f10fb30941",
-      "evidence_file": "research/v3/evidence/midnight/2026-11-07T2017-independent-milling-planning-yields.jsonl",
-      "kind": "three secondary guide milling planning estimates, no new raw casts",
-      "new_current_retail_actionable_ev": 0
+      "reported_at": "2026-11-07T21:23:06.580Z",
+      "status_blob_sha": "UNKNOWN_NOT_RECORDED_IN_SESSION",
+      "evidence_file": null,
+      "kind": "5 cumulative Midnight Dawn Crystal reference item-side snapshots; null output rank IDs and observed unit totals"
     }
   },
   "evidence_files": [
@@ -3389,7 +3429,8 @@
     "research/v3/evidence/master/2026-11-07T1912-midnight-launch-disenchant-expansion-source-guard.md",
     "research/v3/evidence/master/2026-11-07T2001-elementium-382-cross-file-lineage-qa.md",
     "research/v3/evidence/master/2026-11-07T2107-ceari-titanium-17-row-replacement-integrity.md",
-    "research/v3/evidence/legacy/2026-11-07T2043-titanium-output-id-enrichment-adamantite-original.jsonl"
+    "research/v3/evidence/legacy/2026-11-07T2043-titanium-output-id-enrichment-adamantite-original.jsonl",
+    "research/v3/evidence/master/2026-11-07T2203-midnight-prospecting-skill-quality-gate-gear-state.md"
   ],
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
@@ -3526,16 +3567,18 @@
     "https://us.forums.blizzard.com/en/wow/t/professions-in-1107/2008739",
     "https://www.reddit.com/r/wow/comments/1rx9nvh/disenchanting_midnight_wand_receiving_war_within/",
     "https://www.wowhead.com/cata/item=52185/elementium-ore",
-    "https://www.wowhead.com/wotlk/item=36910/titanium-ore"
+    "https://www.wowhead.com/wotlk/item=36910/titanium-ore",
+    "https://www.reddit.com/r/wow/comments/1sgvqjt/how_do_i_prospect_high_quality_ore_without/",
+    "https://us.forums.blizzard.com/en/wow/t/ever-gonna-fix-horrible-gemdust-drop-rate/2316717"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "613135fc5ee8276572108df1c5eb02e450d9f8a2",
+    "research": "111afdabec81df26ebec7dc28f527f2856195b7a",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_evidence_qa_commit": "6fcefb6bf0b8a9ec62926eff58d99330bbc7a9f5",
-    "research_dashboard_qa_commit": "613135fc5ee8276572108df1c5eb02e450d9f8a2"
+    "research_evidence_qa_commit": "db59e0f23e7c8c9abeeb6c45e2b24f22886953d9",
+    "research_dashboard_qa_commit": "111afdabec81df26ebec7dc28f527f2856195b7a"
   },
-  "commit_sha_when_verified": "613135fc5ee8276572108df1c5eb02e450d9f8a2",
+  "commit_sha_when_verified": "111afdabec81df26ebec7dc28f527f2856195b7a",
   "blockers": [
     "M10/T0034: firsthand reported hidden profession-UI Resourcefulness versus refunded ore lacks exact operation, rank, equipment, returned reagent amount and effective stat telemetry; cannot price uncalibrated savings as guaranteed.",
     "M11/T0033: actual 2026 Retail Prospect/Crush recipe craft-window Multicraft capability was not inspected in a WoW client; despite three agreeing public sources, stat formula/per-cast observed data unavailable. No multiplier/extra-gem output term can be licensed by this research.",
@@ -3583,7 +3626,8 @@
     "M15 Resourcefulness current Retail coefficient and low-stack per-ingredient-group discretization remain unverified on a build-/rank-/spec-stamped 5-ore Prospect, 10-herb Mill or five-reagent Recycle log; community formulas cannot be silently priced as a verified character-specific refund multiplier.",
     "COORD-MIDNIGHT-LAUNCH-DE-EXPANSION-IDENTITY-20261107: Original March 18 screenshot/report lacks verified exact input/output itemLinks, bonus, material quality, output units, player skill, build and current patch reproduction. Do not associate speculative 259349 with any older-expansion disenchant output or claim 2026-November live eligibility.",
     "COORD-ELEMENTIUM-382-DUPLICATE-STUDY-LINEAGE-20261107: Distinct sourceKind/studyKey and /cata vs /ptr mirror route for the same original 382 Elementium prospects, plus different null-ID aggregate family names; no reviewed cross-study correction, v3 audit/compile or tooltip proof yet. Do not price rarity-aggregate as individual gems.",
-    "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107: Original patch 3.3.3 is historical WotLK Classic; 40 derived five-ore equivalents, no verified completed click/refund ledger, material hit probabilities, zero histograms, cast-time ranks, exact player itemLink or current Retail eligibility. Compiler's replace filter inspected, but v3 recompile and addon valuation/tooltip NOT executed. Do not import this as new independent 40 casts or verified 2026 Retail EV."
+    "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107: Original patch 3.3.3 is historical WotLK Classic; 40 derived five-ore equivalents, no verified completed click/refund ledger, material hit probabilities, zero histograms, cast-time ranks, exact player itemLink or current Retail eligibility. Compiler's replace filter inspected, but v3 recompile and addon valuation/tooltip NOT executed. Do not import this as new independent 40 casts or verified 2026 Retail EV.",
+    "Midnight Prospecting quality evidence is two 2026 anecdotal recipe/character states, not cast logs: no exact ore/output quality itemLinks, recipe IDs, patch-pinned skill threshold proof, operation numbers, price/EV or client reproduction. Do not import 365 as a universal quality gate or interpret gear re-equip as an addon fix."
   ],
   "exhausted_sources": [
     "2026-11-07 M11 checked two independent current JC processing guide assertions, October 3 original player correction, and March 12 UI/refund firsthand comment. Do not re-audit as independent drop data; obtain actual game spell capability and per-cast refunds next.",
@@ -3616,7 +3660,8 @@
     "Two 2026 Engineering guides and original 10-KP Draggoth note were compared once for quantity-vs-quality mechanics; avoid repeating these secondary texts as new casts. Seek original node/spell tooltip or rank-linked operation export.",
     "2026-03-13 original Resourcefulness per-stack/30%-base discussion, 2026-03-19 math explanation, and 2024 Blizzard 11.0.7 PTR reversal reviewed once. They contain no raw 2026 recipe-specific refunds, so do not re-crawl as independent casts or live verification.",
     "March 18 2026 Midnight launch disenchant original Reddit discussion inspected once; no event-level itemLink/quantity/patch ledger. Do not re-audit anecdotes as independent samples without primary item ID or later-build result.",
-    "Ceari Titanium Ore historical original: 17 output rows already recorded and 16 identity-enriched by the Legacy worker. Repeated source auditing is exhausted unless an original itemLink, different original cohort, or actual Retail operations become available; no duplicate new study."
+    "Ceari Titanium Ore historical original: 17 output rows already recorded and 16 identity-enriched by the Legacy worker. Repeated source auditing is exhausted unless an original itemLink, different original cohort, or actual Retail operations become available; no duplicate new study.",
+    "April 09 r/wow 1sgvqjt and June 27 Blizzard forum 2316717 skill-display reports transcribed as a single source-scoped context guard. Re-searching those posts will not create new independent cast cohorts; request paired client skill/output logs instead."
   ],
   "decisions_needed": [
     {
@@ -3642,7 +3687,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "First obtain reviewed append-only correction/exclusion for duplicated 382-Elementium original pair in two Legacy files, then run isolated v3 cohort audit/compile to confirm no double-counted pseudo-output. For Titanium, confirm actual modern Retail eligible itemLink/processing and obtain a rank/skill/operation/refund-stamped log; do not use historical 200 nominal ore as 40 independently logged current Retail clicks.",
+  "next_concrete_step": "Highest-value new context gap: source one original current Retail before/after profession-equipment refresh export for same character, exact Prospect recipe/ore itemLink/rank, patch, recipe-pane 365 difficulty/effective skill, output itemLinks and zero-inclusive casts; independently establish quality selection before synthetic-price fixture or any runtime change. Also keep prior Elementium 382 duplicate-study correction pending worker-owned review.",
   "validation_executed": {
     "at_utc": "2026-11-07T21:09:15.252Z",
     "source_pairwise_replacements_checked": 16,
@@ -3695,29 +3740,31 @@
   },
   "notifications": "none: owner requested on-demand updates only",
   "last_session": {
-    "task_id": "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107",
-    "at_utc": "2026-11-07T21:09:15.252Z",
-    "evidence_file": "research/v3/evidence/master/2026-11-07T2107-ceari-titanium-17-row-replacement-integrity.md",
-    "verified_evidence_commit_sha": "6fcefb6bf0b8a9ec62926eff58d99330bbc7a9f5",
-    "dashboard_commit_sha": "613135fc5ee8276572108df1c5eb02e450d9f8a2",
-    "research_branch_prestatus_head": "613135fc5ee8276572108df1c5eb02e450d9f8a2",
+    "task_id": "COORD-MIDNIGHT-PROSPECT-365-SKILL-GEAR-STATE-20261107",
+    "at_utc": "2026-11-07T22:04:42.522Z",
+    "evidence_file": "research/v3/evidence/master/2026-11-07T2203-midnight-prospecting-skill-quality-gate-gear-state.md",
+    "verified_evidence_commit_sha": "db59e0f23e7c8c9abeeb6c45e2b24f22886953d9",
+    "dashboard_commit_sha": "111afdabec81df26ebec7dc28f527f2856195b7a",
+    "research_branch_prestatus_head": "111afdabec81df26ebec7dc28f527f2856195b7a",
     "checks_executed": [
-      "fetched both historical/new JSONL files",
-      "parsed and pairwise-checked all 16 one-to-one replacements",
-      "verified retained powder 46849 row and total source units",
-      "read Python build_estimates.py loader replacement rules",
-      "read original Dragonflight JC source spreadsheet without duplicate import",
-      "read current four worker quiet-status reports"
+      "read owner charter, current 3-pass plan and PASS-1",
+      "read v3 README/schema/mechanics/queue/strategy and recent flags",
+      "read actual four worker checkpoint files",
+      "read latest branch heads, open PRs, PR #22/#23 states and CI run 42417855495",
+      "read two independent firsthand source pages Apr 09 and Jun 27 plus guide",
+      "checked current queue and prior coordinator status for 365-skills duplicate source",
+      "wrote evidence source guard and verified evidence blob after commit",
+      "wrote scoped dashboard checkpoint"
     ],
     "new_independent_casts": 0,
     "new_verified_gold_decisions": 0,
     "actual_v3_compiler_or_addon_tests_executed": false,
     "actual_client_tests_executed": false,
     "worker_reports_at_utc": {
-      "legacy": "2026-11-07T20:43:43.071Z",
-      "dragonflight": "2026-11-07T20:37:39.550Z",
-      "war-within": "2026-11-07T20:23:37.879Z",
-      "midnight": "2026-11-07T20:17:48.434Z"
+      "legacy": "2026-11-07T21:51:35.453Z",
+      "dragonflight": "2026-11-07T21:36:57.851Z",
+      "war-within": "2026-11-07T21:25:15.192Z",
+      "midnight": "2026-11-07T21:23:06.580Z"
     }
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
@@ -3933,7 +3980,7 @@
   "research_branch_prewrite_head_verified_at_utc": "2026-11-07T20:03:14.107Z",
   "verified_base_commit_sha": "6bf8363b5b2e1e4aa2c274d732dbcd127df580a9",
   "current_status_commit_sha": null,
-  "commit_sha_note": "Commit_sha_when_verified is prior verified research head containing evidence and dashboard; status commit is returned after this write and cannot be embedded self-referentially.",
+  "commit_sha_note": "Most recent VERIFIED research dashboard commit before this status write; status cannot contain own SHA in the same commit. Verify final branch head and file readback separately.",
   "last_checkpoint_validation": {
     "utc": "2026-11-07T04:01:11.389Z",
     "previous_status_commit_verified": "be6273c2a8c8c78bc4cf4562cd97e16cfc9075c4",
@@ -3950,31 +3997,31 @@
   "integration_branch_head_checked_before_write": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "main_head_checked_before_write": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
   "session_validation": {
-    "current_run_at_utc": "2026-11-07T13:09:58.759Z",
-    "forum_original_text_read": true,
-    "previous_source_crosschecked": true,
-    "conditional_source_number_read": true,
-    "expected_1_3_is_source_reference_not_observed_mean": true,
-    "exact_input_rank_known": false,
-    "exact_output_rank_known": false,
-    "sample_denominator_known": false,
-    "research_ci_head_checked": "06c59d02bd7f830150b9d65aa69c5dbcc18440d2",
-    "research_ci_run_id": 42374446863,
-    "research_ci_conclusion": "success on prior worker research head; not coordinator commits",
-    "evidence_commit_readback": true,
-    "dashboard_commit_readback": true,
-    "actual_addon_engine_executed": false,
-    "actual_tooltip_executed": false,
-    "real_character_tests_executed": false
+    "at_utc": "2026-11-07T22:04:42.522Z",
+    "source_text_originals_read": true,
+    "source_specific_quality_difficulty": 365,
+    "universal_current_patch_threshold_verified": false,
+    "actual_output_item_links_verified": false,
+    "zero_inclusive_cast_histograms_verified": false,
+    "local_v3_estimator_executed": false,
+    "addon_engine_or_tooltip_executed": false,
+    "wow_client_executed": false,
+    "github_ci_readback": {
+      "run_id": 42417855495,
+      "conclusion": "success",
+      "on_sha": "987668ab2318c98a4b3a98c240757f79f7ac5e1c",
+      "is_on_new_evidence_or_status": false
+    },
+    "three_pass_branch_writes": 0
   },
   "dashboard_commit_sha_when_verified": "6bf8363b5b2e1e4aa2c274d732dbcd127df580a9",
   "actual_last_worker_readbacks_utc": {
-    "legacy": "2026-11-07T19:50:31.288Z",
-    "dragonflight": "2026-11-07T19:38:26.258Z",
-    "war-within": "2026-11-07T19:22:50.650Z",
-    "midnight": "2026-11-07T19:24:24.143Z"
+    "legacy": "2026-11-07T21:51:35.453Z",
+    "dragonflight": "2026-11-07T21:36:57.851Z",
+    "war-within": "2026-11-07T21:25:15.192Z",
+    "midnight": "2026-11-07T21:23:06.580Z"
   },
-  "worker_readback_utc": "2026-11-07T20:02:12.337Z",
+  "worker_readback_utc": "2026-11-07T22:04:42.522Z",
   "worker_statuses_verified_in_this_session": {
     "legacy": "2026-11-07T19:50:31.288Z",
     "dragonflight": "2026-11-07T19:38:26.258Z",
