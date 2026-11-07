@@ -1,8 +1,8 @@
 {
   "role": "legacy",
-  "updated_at": "2026-11-07T21:51:35.453Z",
+  "updated_at": "2026-11-07T22:46:00.090Z",
   "branch": "implementation/five-agent-completion",
-  "status": "10 new firsthand historical milling output records: three separate Golden Pigment PTR herb histograms and two independent Pandaria source cohorts. No new independent Warmaul/Cobalt/Fel Iron completed casts or Retail eligibility verification.",
+  "status": "12 new original historical milling output records covering three distinct warcanon herb runs, a Mountain Silversage stack cohort, one mixed Icecap/Silversage harvest, an independent 32-mill sample, and one single-cast Plaguebloom stack. New positive-stack histograms and distinct counted mill denominators; not Retail-patch compatible and no new independent Warmaul/Cobalt/Fel Iron logs.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -11,161 +11,205 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 Burning Crusade 22445/22446/22447/22449: historic 2068-event cumulative Looter source now has older recorded positive-stack histograms, but current Retail item variant/bonus/build and disenchant eligibility remain unverified; do not duplicate old cohort.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: original independent, current-version per-cast output hit counts and zero-inclusive event sequences remain missing; existing old samples not repeated.",
-    "Legacy milling fallback: recover formerly unrecorded Golden Pigment 39338 / Burnt Pigment 43104 original PTR quantity histograms for Kingsblood 3356, Liferoot 3357, Wild Steelbloom 3355.",
-    "Mists of Pandaria milling: recover source-stated total output quantities for unspecified non-Fool's-Gold mixed Pandaria herbs and Fool's Cap 79011; preserve genuine 134-mill denominator versus nominal 615/5.",
-    "Spaulders of the Wayward Vanquisher 45661: prior token class rewards unchanged; no new variant or live redemption verification."
+    "Warmaul Legplates 24995 historic disenchant item/build mismatch; source 2068 Looter operations and current Cannot be disenchanted flag remain not reconciled. No recopy.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424 absent independent source-logged zero-inclusive hits/refunds; no new original completed casts this run.",
+    "Legacy random-yield fallback for Silvery Pigment 39341 and Sapphire Pigment 43107: recover firsthand per-operation histogram and raw totals for Sorrowmoss 13466, Golden Sansam 13464, Mountain Silversage 13465, plus mixed sample of Icecap 13467 and Silversage 13465.",
+    "Spaulders of the Wayward Vanquisher 45661 full class rewards/variants/redeemer not newly verified."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-180977-ptr-kingsblood-golden-burnt",
-      "inputItemID": 3356,
-      "method": "Mill",
-      "casts": 33,
-      "outputs": [
-        {
-          "outputItemID": 39338,
-          "totalQuantity": 103,
-          "castsWithDrop": 33,
-          "histogram": {
-            "2": 11,
-            "3": 7,
-            "4": 15
-          }
-        },
-        {
-          "outputItemID": 43104,
-          "totalQuantity": 15,
-          "castsWithDrop": null
-        }
-      ],
-      "source": "https://www.wowhead.com/ptr/item=39338/golden-pigment",
-      "build": "old PTR, build unspecified"
-    },
-    {
-      "studyKey": "wowhead-180977-ptr-liferoot-golden-burnt",
-      "inputItemID": 3357,
-      "method": "Mill",
-      "casts": 18,
-      "outputs": [
-        {
-          "outputItemID": 39338,
-          "totalQuantity": 55,
-          "castsWithDrop": 18,
-          "histogram": {
-            "2": 5,
-            "3": 7,
-            "4": 6
-          }
-        },
-        {
-          "outputItemID": 43104,
-          "totalQuantity": 14,
-          "castsWithDrop": null
-        }
-      ],
-      "source": "https://www.wowhead.com/ptr/item=39338/golden-pigment",
-      "build": "old PTR, build unspecified"
-    },
-    {
-      "studyKey": "wowhead-180977-ptr-wild-steelbloom-golden-burnt",
-      "inputItemID": 3355,
-      "method": "Mill",
-      "casts": 20,
-      "outputs": [
-        {
-          "outputItemID": 39338,
-          "totalQuantity": 52,
-          "castsWithDrop": 20,
-          "histogram": {
-            "2": 8,
-            "3": 12
-          }
-        },
-        {
-          "outputItemID": 43104,
-          "totalQuantity": 3,
-          "castsWithDrop": null
-        }
-      ],
-      "source": "https://www.wowhead.com/ptr/item=39338/golden-pigment",
-      "build": "old PTR, build unspecified"
-    },
-    {
-      "studyKey": "wowhead-misty-uroshnor-670-mixed-mop-herbs-134-mills",
+      "studyKey": "wowhead-warcanon-sorrowmoss-run1-425-herbs-85-mills",
       "inputItemID": null,
-      "method": "Mill",
-      "casts": 134,
-      "reportedInputHerbs": 670,
+      "inputs": "Sorrowmoss and Golden Sansam, proportions unspecified",
+      "reportedHerbs": 425,
+      "casts": 85,
       "outputs": [
         {
-          "outputItemID": 79251,
-          "totalQuantity": 644
+          "itemID": 39341,
+          "totalQuantity": 245,
+          "castsWithDrop": 85,
+          "histogram": {
+            "2": 33,
+            "3": 29,
+            "4": 23
+          }
         },
         {
-          "outputItemID": 79253,
-          "totalQuantity": 68
+          "itemID": 43107,
+          "totalQuantity": 42,
+          "castsWithDrop": 41,
+          "positiveHistogram": {
+            "1": 40,
+            "2": 1
+          }
         }
       ],
-      "source": "https://www.wowhead.com/ptr/item=79253/misty-pigment"
+      "source": "https://www.wowhead.com/item=13466/sorrowmoss"
     },
     {
-      "studyKey": "wowhead-misty-zandjil-615-fools-cap-unknown-completed-mills",
-      "inputItemID": 79011,
-      "method": "Mill",
-      "casts": null,
-      "reportedInputHerbs": 615,
-      "nominalFiveHerbEquivalents": 123,
+      "studyKey": "wowhead-warcanon-sorrowmoss-run2-480-herbs-96-mills",
+      "inputItemID": 13466,
+      "reportedHerbs": 480,
+      "casts": 96,
       "outputs": [
         {
-          "outputItemID": 79251,
-          "totalQuantity": 363
+          "itemID": 39341,
+          "totalQuantity": 286,
+          "castsWithDrop": 96,
+          "histogram": {
+            "2": 36,
+            "3": 26,
+            "4": 34
+          }
         },
         {
-          "outputItemID": 79253,
-          "totalQuantity": 61
+          "itemID": 43107,
+          "totalQuantity": 47,
+          "castsWithDrop": 47,
+          "positiveHistogram": {
+            "1": 47
+          }
         }
       ],
-      "source": "https://www.wowhead.com/ptr/item=79253/misty-pigment"
+      "source": "https://www.wowhead.com/item=13466/sorrowmoss"
+    },
+    {
+      "studyKey": "wowhead-warcanon-golden-sansam-17-stacks-68-mills",
+      "inputItemID": 13464,
+      "reportedStacks": 17,
+      "casts": 68,
+      "castsBasis": "enumerated 31+37 observed common-output mills, not unverified stack conversion",
+      "outputs": [
+        {
+          "itemID": 39341,
+          "totalQuantity": 173,
+          "castsWithDrop": 68,
+          "histogram": {
+            "2": 31,
+            "3": 37
+          }
+        },
+        {
+          "itemID": 43107,
+          "totalQuantity": 16,
+          "castsWithDrop": 16,
+          "positiveHistogram": {
+            "1": 16
+          }
+        }
+      ],
+      "source": "https://www.wowhead.com/item=13464/golden-sansam"
+    },
+    {
+      "studyKey": "wowhead-257849-mountain-silversage-three-stacks",
+      "inputItemID": 13465,
+      "reportedStacks": 3,
+      "casts": null,
+      "outputs": [
+        {
+          "itemID": 39341,
+          "totalQuantity": 19,
+          "minSeen": 2,
+          "maxSeen": 4
+        },
+        {
+          "itemID": 43107,
+          "totalQuantity": 4,
+          "castsWithDrop": 4,
+          "positiveHistogram": {
+            "1": 4
+          }
+        }
+      ],
+      "source": "https://www.wowhead.com/item=13465/mountain-silversage"
+    },
+    {
+      "studyKey": "wowhead-anastasy-186-icecap-101-silversage-mixed",
+      "inputItemID": null,
+      "reportedInputHerbs": {
+        "13465": 101,
+        "13467": 186
+      },
+      "casts": null,
+      "outputs": [
+        {
+          "itemID": 39341,
+          "totalQuantity": 158
+        },
+        {
+          "itemID": 43107,
+          "totalQuantity": 32
+        }
+      ],
+      "source": "https://www.wowhead.com/item=39341/silvery-pigment"
+    },
+    {
+      "studyKey": "wowhead-affe83-eight-stacks-32-mills",
+      "inputItemID": null,
+      "casts": 32,
+      "outputs": [
+        {
+          "itemID": 43107,
+          "totalQuantity": 2,
+          "castsWithDrop": null
+        }
+      ],
+      "source": "https://www.wowhead.com/item=43107/sapphire-pigment"
+    },
+    {
+      "studyKey": "wowhead-435764-plaguebloom-one-mill-three-sapphire",
+      "inputItemID": 13466,
+      "sourceInputLabel": "Plaguebloom",
+      "casts": 1,
+      "outputs": [
+        {
+          "itemID": 43107,
+          "totalQuantity": 3,
+          "castsWithDrop": 1,
+          "histogram": {
+            "3": 1
+          }
+        }
+      ],
+      "source": "https://www.wowhead.com/item=43107/sapphire-pigment"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 10,
-    "distinct_input_cohorts": 5,
-    "distinct_original_authors": 3,
-    "source_count": 2,
-    "completed_historical_mills_from_primary_account": 205,
-    "pandaria_completed_mills": 134,
-    "old_PTR_completed_mills": 71,
-    "new_individual_output_positive_hit_fields": 3,
-    "new_positive_stack_histograms": 3,
-    "zero_invented_zero_bins": 0,
-    "new_warmaul_cobalt_feliron_completed_casts": 0,
-    "new_gold_prices": 0
+    "new_evidence_records": 12,
+    "distinct_original_authors": 5,
+    "distinct_original_cohorts": 7,
+    "new_histogram_output_rows": 7,
+    "new_exact_item_logged_mill_cohorts": 3,
+    "new_warmaul_cobalt_feliron_casts": 0,
+    "verified_current_retail_casts": 0,
+    "prices_recorded": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-07T2151-golden-ptr-and-pandaria-milling-originals.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-07T2151-golden-ptr-and-pandaria-milling-originals.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-07T2246-silvery-sapphire-original-mill-histograms.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-07T2246-silvery-sapphire-original-mill-histograms.jsonl",
   "sources": [
-    "https://www.wowhead.com/ptr/item=39338/golden-pigment",
-    "https://www.wowhead.com/ptr/item=79253/misty-pigment",
-    "https://www.wowhead.com/item=24995#disenchanting",
-    "https://www.wowdb.com/items/24995-warmaul-legplates"
+    "https://www.wowhead.com/item=13466/sorrowmoss",
+    "https://www.wowhead.com/item=13464/golden-sansam",
+    "https://www.wowhead.com/item=13465/mountain-silversage",
+    "https://www.wowhead.com/item=39341/silvery-pigment",
+    "https://www.wowhead.com/item=43107/sapphire-pigment"
   ],
-  "verified_base_commit_sha": "22bc4eb94f6e020f6b4cf7e67b51c09e53a30ad6",
+  "verified_base_commit_sha": "ddbac976569b1b52b6349b24018004f53ea32ee1",
   "verified_commit_sha": null,
-  "commit_sha_note": "Only one atomic commit for evidence and status: the self-referential SHA cannot be embedded. Verify the resulting commit SHA and both files by remote readback, without a second commit.",
+  "commit_sha_note": "Evidence and status are written in one atomic commit; the commit SHA cannot be embedded without a second commit. Read-back the branch HEAD and both files after publishing.",
   "blockers": [
-    "Warmaul 24995 historical 2,068 pooled events may represent a different item variant than current Retail iLvl31 cannot-disenchant flag; no actual Retail bonus-ID/skill/build in-game test. Missing source build and independent current eligible cast log.",
-    "No new per-cast hits, non-hits, refunds or complete histograms for Cobalt 36909 or Fel Iron 23424; previously exhausted Wowhead original studies and generic old tables would only replicate known cohorts.",
-    "Golden PTR author did not give exact game build, skill, resourceful saves or positive Burnt Pigment stack histogram. PTR samples must not be labeled Retail rates.",
-    "Uroshnor mixed-herb species unknown; Zandjil reports 615 herbs but not click count, so 123 is only nominal. No positive per-output hit counts or zero-inclusive histograms for either MoP cohort.",
-    "Token 45661 no new complete class-variant redemption evidence this run."
+    "Existing Warmaul 24995 historical 2068-count Looter material mapping conflicts with modern scaled 24995 cannot-disenchant; no current live bonus ID, skill, build, eligibility attempt or original per-cast export.",
+    "No independent current Retail Cobalt 36909 or Fel Iron 23424 source-logged cast/hit/zero/refund arrays; previously exhausted source tables not recopied.",
+    "New milling numbers are historical forum comments, missing original build/patch, skill and profession statistics; warcanon notes guild perk but not specific material count effect.",
+    "Warmaul token 45661 lacks new current redeem/variants validation.",
+    "First Sorrowmoss run mixed Golden Sansam, so output cannot be partitioned by input; anastasy mixed Icecap/Silversage also indivisible.",
+    "Some positive-stack histograms omit zero bins; did not invent missed casts or derive probabilities from quantity totals.",
+    "257849 uses three unspecified-size historical stacks without explicit mill count; no nominal equivalent presented as measured."
   ],
   "exhausted_sources": [
-    "Current queue Warmaul 24995 2068-hit pool and published positive-stack reconstruction already in 2026-11-07T1722; reused neither the original hits nor its derived histograms in this run.",
-    "Earlier Cobalt 36909 24-stack and 180-ore, Fel Iron 23424 100-ore and 565-ore studies and latest first-five-ore anecdote are existing legacy evidence; no duplicate rows created.",
-    "Prior legacy milling files inspected for the three Golden PTR herbs and two MoP original authors; no matching recorded cohorts found in reviewed files."
+    "Existing 24995 and neighboring TBC Looter cumulative counts, 36909 24-stack and 180-ore samples, and Fel Iron historic original Thottbot studies already in legacy evidence; no duplicate counts.",
+    "Killerpet 2009 Northrend milling and Sgtown samples already in imported old research; no republication as new cohorts.",
+    "Original 2008 PTR commenter 180977 pigment counts are already in earlier research and migration; not copied.",
+    "Warcanon, anastasy and identified independent Silvery/Sapphire original authors not found by dedicated GitHub code search before recording."
   ],
-  "next_concrete_step": "Seek genuinely independent original click-by-click Cobalt 36909 and Fel Iron 23424 outcome exports with source version, item IDs and refund accounting; for Warmaul 24995 request in-game current Retail API eligibility + item bonus/skill/build; retain historical rates segregated until variant/patch proven."
+  "next_concrete_step": "Obtain unambiguous original current-Retail Warmaul 24995 eligibility/bonus-ID/disenchant logs; seek first-party click-by-click Cobalt 36909 and Fel Iron 23424 zero-inclusive output exports. For historical milling seek patch/skill and isolate mixed herb sources before extrapolation."
 }
