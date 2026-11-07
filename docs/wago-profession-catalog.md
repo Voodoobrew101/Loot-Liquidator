@@ -2,9 +2,10 @@
 
 The preview bundles 727 paths in 33 profession/expansion catalogs: all eleven
 professions with specialization trees in Dragonflight, The War Within and
-Midnight. Choose **Simulated**, select an expansion, and move the named point
-sliders under each tree and its indented branches. No character scan or profession
-access is required. Enchanting includes Disenchanting Delegate and its branches.
+Midnight. The editor shows named point sliders only when a researched calculation
+can use them to change output. Other catalog entries and saved allocations remain
+available for future research. No character scan or profession access is required
+to see a supported modifier.
 
 Source: public [Wago DB2 tables](https://wago.tools/db2/ProfTraitPathNode?build=12.1.5.70783),
 pinned to **12.1.5.70783**, enUS. `database/wago-professions-70783.json` records
@@ -30,8 +31,8 @@ unlock threshold. Choosing a node never grants learned recipes or real access.
 Profession sliders now use the same Blizzard Settings slider factory, native
 artwork, steppers and value formatter as Pricing & Actions, in whole-number steps.
 One **Advanced** button sits directly below the character/expansion selectors and
-status text. It starts collapsed and contains effective skill, all specialization
-trees with indented branch sliders, stats, buffs, scan refresh and captured details.
+status text. It starts collapsed and contains supported skill/specialization/stat
+modifiers, their tree headings, scan refresh and captured details.
 There are no nested disclosures. Collapsing it retains saved choices.
 Advanced exposes the simulation editor in Automatic and character views as well
 as Simulated. Opening it does not change the active tooltip profile. Editing a
@@ -54,7 +55,8 @@ Catalog data supplies no yield formulas, rating curves or promotion of research
 mechanics. A separate sourced specialization-effect pipeline now consumes the
 named point allocations; see [the calculation contract](SYNTHETIC-BENCHMARK.md).
 Tooltip values change where a scoped researched rule supports the chosen
-context. Automated coverage includes all catalogs with an empty character database,
+context. A shared [capability check](PROFESSION-CONTROL-VISIBILITY.md) hides inactive
+sliders and restores them when compatible compiled rules arrive. Automated coverage includes all catalogs with an empty character database,
 Enchanting names and hierarchy, static milestone enrichment, numeric validation,
 speed >100%, collapse preservation and the existing engine contract tests.
 In-game rendering and recording remain owner-test items.

@@ -4,6 +4,12 @@ Keep the individual profession pages. Choose a character, Simulated, Automatic,
 or Don't show, then an expansion. The saved `@hypothetical` key remains compatible;
 visible labels use Simulated.
 
+Only controls with an executable researched output effect are displayed. This
+includes working quality modifiers and structured prerequisites for those
+modifiers. Other point, skill, stat and buff controls remain hidden, with their
+catalogs and saved values retained. New compatible calculation rules restore the
+controls automatically; see [control visibility](PROFESSION-CONTROL-VISIBILITY.md).
+
 Simulated starts at editor-minimum skill with no optional specialization or buffs.
 This is not a claim that zero skill meets a particular recipe's requirements.
 Reset to minimum clears skill, points, stats and selected buffs. Scanned character

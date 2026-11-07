@@ -81,11 +81,28 @@ disenchanting.
 
 ## Named specialization point calculations
 
-Open **Professions (Simulated) → a profession → Advanced**. Existing tree and
-branch sliders, stats and buffs remain available. Editing a control selects the
+Open **Professions (Simulated) → a profession → Advanced**. Only controls linked
+to executable researched output calculations are shown. Editing a control selects the
 Simulated profile; selecting that profile again preserves the saved allocation.
 Only **Reset to minimum** clears it. Scanned character data and profession access
 remain independent of the editor.
+
+Visibility follows the compiled calculation rules for the selected profession,
+expansion and game build. Merely storing a stat or adding skill to a context is
+insufficient: the value must reach a quantity, probability, quality or valuation
+calculation. Unsupported controls are hidden without deleting their catalog or
+saved values, and return when compatible research supplies that calculation.
+Needed tree headings remain labels. Structured prerequisites that unlock a
+working modifier remain editable. Missing a live operation capture does not
+remove a supported quality control; the capture can be supplied in game.
+
+With the current research, Midnight Enchanting exposes Disenchanting Delegate
+and Shard Supplier for the measured full-investment reference. Dust Deliverer,
+Crystal Collector and the Enchanting skill slider remain hidden because they
+do not currently change the calculated output. Midnight milling/prospecting keep
+their supported skill and quality-related point controls. TWW Gem Finding keeps
+its four gem-replacement controls. Current context-only crafting/gathering stats
+and buffs are hidden. See [the visibility contract](PROFESSION-CONTROL-VISIBILITY.md).
 
 The existing skill control is **Skill before specialization**. For an operation
 with a sourced per-point bonus, effective recipe skill is that input plus the

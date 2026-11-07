@@ -209,6 +209,18 @@ LL:ProtectSettingsDefaults();defaults.scripts.OnClick(defaults);assert(nativeCli
 -- independent character/expansion settings, measured scan untouched.
 local char=LL.db.characters['Tester - Realm']
 local realProfessionOptions=LL.GetProfessionUIOptions
+-- These controls exercise native widget behavior under a declared synthetic
+-- future model. Real shipped research support is tested through the same UI
+-- below; this fixture does not make unsupported production inputs visible.
+local function syntheticControlSupport(_,profession,expansion,nodes)
+    local support={skill=true,nodes={},stats={},buffs={['123']=true},dependencyNodes={}}
+    for _,node in ipairs(nodes or {}) do support.nodes[tostring(node.id)]=true end
+    for _,stat in ipairs(LL:ProfessionSimulationStatOptions(profession)) do
+        support.stats[stat.key]={rating=true,percent=true}
+    end
+    return support
+end
+LL.GetProfessionSimulationControlSupport=syntheticControlSupport
 char.professionOptions={['Jewelcrafting:11']={nodes={{id=12,name='Gem Cutting',tab='Gems',maxRank=30}},buffs={{id=123,name='Profession Tea'}}}}
 LL.GetProfessionUIOptions=function(_,character,profession,expansion)
     return char.professionOptions[profession..':'..expansion] or {nodes={},buffs={}}
@@ -480,9 +492,79 @@ do
 end
 print('PASS: native Settings factories, slider notification regression, scoped Defaults, arrow-free dropdown refresh/reuse and profession simulations')
 do
-    -- Exercise the real bundled catalog through the UI, starting in Automatic.
+    -- Inert ancestors may label a working branch without becoming sliders.
+    -- Unsupported siblings and entire inactive trees do not clutter the editor.
+    local previousSupport=LL.GetProfessionSimulationControlSupport
+    char.professionOptions['Inscription:11']={nodes={
+        {id=81,name='Heading parent',tab='Working tree',maxRank=30},
+        {id=82,name='Working child',parentID=81,tab='Working tree',maxRank=20},
+        {id=83,name='Inactive sibling',parentID=81,tab='Working tree',maxRank=20},
+        {id=84,name='Inactive tree',tab='No calculation',maxRank=30}},buffs={}}
+    LL.GetProfessionSimulationControlSupport=function()
+        return {skill=false,nodes={['82']=true},stats={},buffs={},dependencyNodes={}}
+    end
+    local first=#all
+    local editor=LL:CreateProfessionProfilePanel('Inscription')
+    editor.scripts.OnShow(editor)
+    local advanced
+    for i=first+1,#all do if all[i].kind=='Button' and all[i].text=='Advanced' then advanced=all[i] end end
+    assert(advanced);advanced.scripts.OnClick(advanced)
+    local function shown(w)
+        while w do if w.shown==false then return false end;w=w.parent end
+        return true
+    end
+    local active,parent,child=0,nil,nil
+    for i=first+1,#all do
+        local w=all[i]
+        if shown(w) then
+            if w.kind=='Slider' then active=active+1 end
+            if w.kind=='FontString' and w.text then
+                if w.text:find('Heading parent',1,true)==1 then parent=w end
+                if w.text:find('Working child',1,true)==1 then child=w end
+                assert(w.text:find('Inactive sibling',1,true)~=1 and w.text~='No calculation',
+                    'unsupported siblings and empty trees remain hidden')
+            end
+        end
+    end
+    assert(active==1 and parent and child,'only the working child has a slider; its ancestor remains a heading')
+    assert(child.point[4]>parent.point[4],'the remaining branch keeps its hierarchy')
+    LL.GetProfessionSimulationControlSupport=previousSupport
+    print('PASS: filtered tree keeps inert ancestor labels without dead sliders or inactive siblings')
+end
+do
+    -- Exercise real research support and the bundled catalog through the UI.
+    -- Catalog membership alone must never expose a slider with no calculation.
     LL.GetProfessionUIOptions=realProfessionOptions
     assert(loadfile('LootLiquidator/ProfessionCatalog.lua'))('LL',LL)
+    assert(loadfile('LootLiquidator/ProfessionModels.lua'))('LL',LL)
+    assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',LL)
+    GetBuildInfo=function() return '12.1.5','70783' end
+    assert(LL:InitializeItemDB())
+    local function shown(w)
+        while w do if w.shown==false then return false end;w=w.parent end
+        return true
+    end
+    local function labelsAfter(first,prefix)
+        local result={}
+        for i=first+1,#all do
+            local w=all[i]
+            if w.kind=='FontString' and w.text and w.text:find(prefix,1,true)==1 and shown(w) then result[#result+1]=w end
+        end
+        return result
+    end
+    local function slidersAfter(first)
+        local result={}
+        for i=first+1,#all do if all[i].kind=='Slider' and shown(all[i]) then result[#result+1]=all[i] end end
+        return result
+    end
+    local function sliderAt(label,first)
+        for _,w in ipairs(slidersAfter(first)) do
+            if w.parent.parent.point and w.parent.parent.point[5]==label.point[5]+5 then return w end
+        end
+    end
+    assert(LL:SetManualProfessionProfile('Tester - Realm','Enchanting',11,{enabled=true,skill=245,
+        specialization='107646=12,107648=17,107649=9,107647=8',
+        stats={resourcefulness={rating=250,percent=17}},buffs={['123']=true}}))
     LL.db.professionTooltipProfiles.Enchanting=nil
     local before=#all
     local editor=LL:CreateProfessionProfilePanel('Enchanting')
@@ -495,25 +577,68 @@ do
     end
     assert(selector.initializer.setting:GetValue()==-2)
     toggle.scripts.OnClick(toggle)
-    local crystal
-    for i=before+1,#all do
-        local w=all[i]
-        if w.kind=='FontString' and w.text and w.text:find('Crystal Collector',1,true)==1 then crystal=w end
-    end
-    assert(crystal and crystal.shown,'Automatic Advanced must show the real Enchanting specialization catalog')
-    local slider
-    for i=before+1,#all do
-        local w=all[i]
-        if w.kind=='Slider' and w.parent.parent.point and w.parent.parent.point[5]==crystal.point[5]+5 then slider=w end
-    end
+    local delegate=assert(labelsAfter(before,'Disenchanting Delegate (')[1])
+    local shard=assert(labelsAfter(before,'Shard Supplier')[1])
+    local slider=sliderAt(delegate,before)
     assert(slider and slider.maximum==30 and slider.parent.parent.shown)
+    assert(sliderAt(shard,before),'the sourced max-specialization reference keeps both required point sliders')
+    assert(#slidersAfter(before)==2,'Enchanting has only its two calculated reference-allocation sliders')
+    assert(#labelsAfter(before,'Crystal Collector')==0 and #labelsAfter(before,'Dust Deliverer')==0,
+        'skill-only branches without an output model stay hidden')
+    assert(#labelsAfter(before,'Skill before specialization')==0,'skill alone has no Enchanting output model')
+    assert(#labelsAfter(before,'Resourcefulness rating')==0 and #labelsAfter(before,'Crafting speed')==0,
+        'context-only crafting stats are not displayed as working controls')
     assert(LL.db.professionTooltipProfiles.Enchanting==nil,'opening Advanced does not change the tooltip profile')
     slider:SetValue(7)
     assert(selector.initializer.setting:GetValue()==-1,'editing a specialization switches to Simulated')
-    assert(LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11).specialization:find('107646=7',1,true))
+    local saved=LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11)
+    assert(saved.specialization:find('107649=7',1,true))
+    assert(saved.specialization:find('107646=12',1,true) and saved.specialization:find('107648=17',1,true)
+        and saved.skill==245 and saved.stats.resourcefulness.percent==17 and saved.buffs['123'],
+        'editing a supported slider preserves hidden points, skill, stats and buffs')
     selector.initializer.setting:SetValue(1)
     assert(slider.parent.parent.shown,'character view also exposes the specialization editor')
     toggle.scripts.OnClick(toggle)
     assert(not slider.parent.parent.shown,'one Advanced toggle still collapses everything')
-    print('PASS: real Wago specialization sliders in Automatic and character views; edits select Simulated')
+    -- A newly supplied executable formula brings its control back on refresh.
+    -- This coefficient is explicitly synthetic; it is never shipped research.
+    local added={ruleID='synthetic-ui-only:crystal-output',kind='quantity-multiplier',
+        method='Disenchant',profession='Enchanting',expansionID=11,inputRarity=4,
+        nodeID=107646,maxRank=30,perPoint=.01,build=70783,
+        applyPolicy='EXECUTE',evidenceStatus='SOURCED_PROVISIONAL',confidence0to100=70,
+        sourceClaimIDs={'synthetic-ui-test-only'}}
+    LL.ItemDB.specializationRules[#LL.ItemDB.specializationRules+1]=added
+    editor.scripts.OnShow(editor);toggle.scripts.OnClick(toggle)
+    local restored=assert(labelsAfter(before,'Crystal Collector')[1],'new compatible research restores the named slider')
+    local restoredSlider=assert(sliderAt(restored,before))
+    assert(restoredSlider.value==12,'the returning control restores its saved point value')
+    table.remove(LL.ItemDB.specializationRules)
+    editor.scripts.OnShow(editor)
+    assert(#labelsAfter(before,'Crystal Collector')==0 and not shown(restoredSlider),
+        'removing executable support hides an existing pooled control again')
+    assert(LL:GetManualProfessionProfile('Tester - Realm','Enchanting',11).specialization:find('107646=12',1,true),
+        'hiding a control never deletes the saved allocation')
+    local function nativePanel(profession,expansion)
+        local first=#all
+        local panel=LL:CreateProfessionProfilePanel(profession)
+        panel.scripts.OnShow(panel)
+        local dropdowns,advanced={},nil
+        for i=first+1,#all do
+            local w=all[i]
+            if w.template=='SettingsDropdownControlTemplate' then dropdowns[#dropdowns+1]=w end
+            if w.kind=='Button' and w.text=='Advanced' then advanced=w end
+        end
+        if expansion~=11 then dropdowns[2].initializer.setting:SetValue(expansion) end
+        assert(advanced);advanced.scripts.OnClick(advanced)
+        return first,panel
+    end
+    local jcFirst=nativePanel('Jewelcrafting',11)
+    assert(#slidersAfter(jcFirst)==3,'Midnight Jewelcrafting shows base skill and two quality-linked point controls')
+    assert(#labelsAfter(jcFirst,'Skill before specialization')==1)
+    local twwFirst=nativePanel('Jewelcrafting',10)
+    assert(#slidersAfter(twwFirst)==4,'TWW Jewelcrafting shows the four effective gem-replacement branches')
+    assert(#labelsAfter(twwFirst,'Skill before specialization')==0,'a replacement model does not make unrelated skill effective')
+    local unusedFirst=nativePanel('Blacksmithing',11)
+    assert(#slidersAfter(unusedFirst)==0,'an unmodeled profession does not expose inert skill, stat or point sliders')
+    print('PASS: real research hides inactive sliders, retains calculated points and restores controls and saved values with new support')
 end

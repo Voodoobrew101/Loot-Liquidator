@@ -727,3 +727,395 @@ function LL:ApplySpecializationEffects(f,option,model,context)
     result.value=nil;result.partialValue=nil;result.valueConfidence=nil
     return result
 end
+
+-- Describe controls that can reach an executable outcome calculation. The
+-- complete catalog and saved profile remain intact; this is presentation
+-- capability, independent of the selected points or source preferences.
+function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
+    local support={skill=false,nodes={},stats={},buffs={},dependencyNodes={},skillDependency=false,nodeEffects={}}
+    local db=self.ItemDB
+    local build=GetBuildInfo and select(2,GetBuildInfo())
+    if type(db)~='table' or build==nil then return support end
+    local methodProfessions={Disenchant='Enchanting',Mill='Inscription',Prospect='Jewelcrafting',Smelt='Mining'}
+    local function positive(value) return finite(value) and value>0 end
+    local function identity(value) return positive(value) and value%1==0 end
+    if nodes==nil then
+        local bundled=self.ProfessionCatalog and self.ProfessionCatalog[profession..':'..tostring(expansion)]
+        nodes=bundled and bundled.nodes
+    end
+    local catalog={}
+    for _,node in ipairs(type(nodes)=='table' and nodes or {}) do
+        if type(node)=='table' and identity(node.id) and identity(node.maxRank) then catalog[node.id]=node end
+    end
+    local function ruleScope(rule,strict)
+        return usable(rule) and type(rule.ruleID)=='string' and rule.ruleID~=''
+            and (not strict or rule.applyPolicy=='EXECUTE')
+            and (rule.profession or methodProfessions[rule.method])==profession
+            and rule.expansionID==expansion
+            and (rule.build==nil or tostring(rule.build)==tostring(build))
+            and (rule.inputItemIDs==nil or type(rule.inputItemIDs)=='table')
+            and (rule.inputQualityRanks==nil or type(rule.inputQualityRanks)=='table')
+    end
+    local function listHas(list,value)
+        for _,entry in ipairs(list or {}) do if entry==value then return true end end
+        return false
+    end
+    local function fieldValue(field)
+        if type(field)~='table' or field.status=='unknown' or field.status=='contradictory' then return nil end
+        return finite(field.value) and field.value or nil
+    end
+    local function overlaps(a,b)
+        for _,key in ipairs({'recipeID','inputRarity','inputClassID','inputQualityRank','inputItemID'}) do
+            if a[key]~=nil and b[key]~=nil and a[key]~=b[key] then return false end
+        end
+        for _,pair in ipairs({{'inputItemID','inputItemIDs'},{'inputQualityRank','inputQualityRanks'}}) do
+            local one,many=pair[1],pair[2]
+            if a[one]~=nil and b[many] and not listHas(b[many],a[one]) then return false end
+            if b[one]~=nil and a[many] and not listHas(a[many],b[one]) then return false end
+            if a[many] and b[many] then
+                local shared=false
+                for _,value in ipairs(a[many]) do if listHas(b[many],value) then shared=true end end
+                if not shared then return false end
+            end
+        end
+        return true
+    end
+    local records={}
+    for _,dataset in ipairs({db,db.legacy or {}}) do
+        for _,record in ipairs(dataset.processing or {}) do
+            local consistent=type(record)=='table'
+            if consistent and record.gearKey~=nil then
+                local era,rarity,kind
+                if type(record.gearKey)=='string' then era,rarity,kind=record.gearKey:match('^gear:(%d+):(%d+):(%a+)$') end
+                era=tonumber(era);rarity=tonumber(rarity)
+                local class=kind=='weapon' and 2 or kind=='armor' and 4 or nil
+                consistent=era~=nil and rarity~=nil and class~=nil
+                    and (record.expansionID==nil or record.expansionID==era)
+                    and (record.inputRarity==nil or record.inputRarity==rarity)
+                    and (record.inputClassID==nil or record.inputClassID==class)
+                if consistent then
+                    local original=record;record={}
+                    for key,value in pairs(original) do record[key]=value end
+                    record.expansionID=era;record.inputRarity=rarity;record.inputClassID=class
+                end
+            end
+            if consistent and methodProfessions[record.method]==profession
+                and (record.expansionID==nil or record.expansionID==expansion)
+                and (record.targetBuild==nil or tostring(record.targetBuild)==tostring(build))
+                and (record.patchStartBuild==nil or tonumber(build) and tonumber(build)>=record.patchStartBuild) then
+                local hint=record.inputItemID and db.inputs and db.inputs[record.inputItemID]
+                if record.expansionID~=nil or not hint or hint.expansion==nil or hint.expansion==expansion then
+                    records[#records+1]=record
+                end
+            end
+        end
+    end
+    local function baselineFor(rule,predicate)
+        for _,record in ipairs(records) do
+            if record.method==rule.method and overlaps(rule,record) and predicate(record) then return record end
+        end
+    end
+    local function mean(material)
+        if material.conditionalReference or material.conditionalRequirement then return false end
+        if positive(fieldValue(material.expectedQuantity)) then return true end
+        -- The resolver also admits its existing P(hit) times stated midpoint
+        -- estimate when a measured expected quantity is absent.
+        local p,lo,hi=fieldValue(material.dropChance),fieldValue(material.minQuantity),fieldValue(material.maxQuantity)
+        return positive(p) and p<=1 and positive(lo) and positive(hi) and hi>=lo
+    end
+    local function familyMatches(material,family)
+        if type(family)~='table' or not identity(family.id)
+            or family.rankIDs~=nil and type(family.rankIDs)~='table' then return false end
+        if material.rankIDs then
+            if type(family.rankIDs)~='table' or #material.rankIDs~=#family.rankIDs then return false end
+            for _,id in ipairs(material.rankIDs) do if not listHas(family.rankIDs,id) then return false end end
+            return true
+        end
+        return material.id==family.id or listHas(family.rankIDs,material.id)
+    end
+    local function anyMean(record,family)
+        for _,material in ipairs(record.materials or {}) do
+            if mean(material) and (not family or familyMatches(material,family)) then return true end
+        end
+        return false
+    end
+    local function showNode(id,ruleID,dependency)
+        if not identity(tonumber(id)) then return end
+        id=tostring(id)
+        support.nodes[id]=true
+        if dependency then support.dependencyNodes[id]=true end
+        support.nodeEffects[id]=support.nodeEffects[id] or {}
+        if ruleID and not listHas(support.nodeEffects[id],ruleID) then
+            support.nodeEffects[id][#support.nodeEffects[id]+1]=ruleID
+        end
+    end
+    local skillModels={}
+    local quality={}
+    for _,rule in ipairs(db.skillQualityRules or {}) do
+        if ruleScope(rule,true) and rule.formulaID=='EXACT_INPUT_QUALITY_THRESHOLD'
+            and rule.maxQuality==2 and rule.requireExactOperationContext==true
+            and rule.quantityPolicy=='PRESERVE_SELECTED_FAMILY_EXPECTATION'
+            and identity(rule.recipeID) and type(rule.inputQualityRanks)=='table' and #rule.inputQualityRanks>0 then
+            quality[#quality+1]=rule
+        end
+    end
+    for _,rule in ipairs(quality) do
+        local ambiguous=false
+        for _,other in ipairs(quality) do
+            if other~=rule and other.method==rule.method and overlaps(rule,other) then ambiguous=true end
+        end
+        local record=not ambiguous and baselineFor(rule,function(candidate)
+            for _,material in ipairs(candidate.materials or {}) do
+                if mean(material) and type(material.rankIDs)=='table' and #material.rankIDs==2 then
+                    for _,family in ipairs(rule.outputFamilies or {}) do
+                        local ids=family.rankItemIDs
+                        if type(ids)=='table' and #ids==2 and identity(ids[1]) and identity(ids[2]) and ids[1]~=ids[2]
+                            and listHas(ids,material.rankIDs[1]) and listHas(ids,material.rankIDs[2]) then return true end
+                    end
+                end
+            end
+            return false
+        end)
+        if record then support.skill=true;skillModels[#skillModels+1]={rule=rule,record=record} end
+    end
+    for _,rule in ipairs(db.professionRules or {}) do
+        if ruleScope(rule,false) and tostring(rule.build)==tostring(build)
+            and identity(rule.recipeID) and identity(rule.inputItemID) and identity(rule.outputItemID)
+            and type(rule.referenceProfile)=='table' and type(rule.skillFactors)=='table' and #rule.skillFactors>0 then
+            local valid,varies,previous,first=true,false,nil,nil
+            for _,point in ipairs(rule.skillFactors) do
+                if type(point)~='table' or not finite(point.skill) or not positive(point.factor)
+                    or previous and point.skill<=previous then valid=false;break end
+                if first and first~=point.factor then varies=true end
+                first=first or point.factor;previous=point.skill
+            end
+            local record=valid and baselineFor(rule,function(candidate)
+                if candidate.sourceKey~='itemdb' or tostring(candidate.patchBuild)~=tostring(build)
+                    or type(candidate.baselineProfile)~='table' then return false end
+                for _,material in ipairs(candidate.materials or {}) do
+                    if material.id==rule.outputItemID and mean(material) then return true end
+                end
+                return false
+            end)
+            if record and self:ProfessionFactor(rule,record.baselineProfile) then
+                if varies then support.skill=true;skillModels[#skillModels+1]={rule=rule,record=record} end
+                local factors=rule.specializationFactors
+                if type(factors)=='table' then
+                    local allocations={}
+                    for signature,factor in pairs(factors) do
+                        local points=self.ProfessionSpecializationPoints and self:ProfessionSpecializationPoints(signature)
+                        if positive(factor) and type(points)=='table' then allocations[#allocations+1]={points=points,factor=factor} end
+                    end
+                    for _,a in ipairs(allocations) do for _,b in ipairs(allocations) do
+                        if a.factor~=b.factor then
+                            for id,rank in pairs(a.points) do if rank~=(b.points[id] or 0) then showNode(id,rule.ruleID) end end
+                            for id,rank in pairs(b.points) do if rank~=(a.points[id] or 0) then showNode(id,rule.ruleID) end end
+                        end
+                    end end
+                end
+            end
+        end
+    end
+    local special,counts={},{ }
+    for _,rule in ipairs(db.specializationRules or {}) do
+        if ruleScope(rule,true) then
+            special[#special+1]=rule;counts[rule.ruleID]=(counts[rule.ruleID] or 0)+1
+        end
+    end
+    for _,rule in ipairs(special) do
+        local node=catalog[rule.nodeID]
+        local validNode=identity(rule.nodeID) and identity(rule.maxRank)
+            and (nodes==nil or node~=nil) and (not node or node.maxRank==rule.maxRank)
+        if counts[rule.ruleID]==1 then
+            if rule.kind=='reference-context' and type(rule.requiredNodes)=='table' and type(rule.referenceContextID)=='string' then
+                local valid,required=rule.requiredNodeCaps==nil or type(rule.requiredNodeCaps)=='table',0
+                for id,rank in pairs(rule.requiredNodes) do
+                    required=required+1
+                    local n=catalog[tonumber(id)]
+                    local cap=type(rule.requiredNodeCaps)=='table' and rule.requiredNodeCaps[tostring(id)] or rank
+                    if not identity(tonumber(id)) or not identity(rank) or nodes~=nil and not n or n and rank>n.maxRank
+                        or not identity(cap) or cap<rank then valid=false end
+                end
+                local record=valid and required>0 and baselineFor(rule,function(candidate)
+                    return candidate.referenceContextID==rule.referenceContextID and anyMean(candidate)
+                end)
+                if record then for id in pairs(rule.requiredNodes) do showNode(id,rule.ruleID) end end
+            elseif validNode and rule.kind=='skill-per-point' and positive(rule.perPoint) then
+                for _,model in ipairs(skillModels) do
+                    local acceptsPoints=model.rule.formulaID=='EXACT_INPUT_QUALITY_THRESHOLD'
+                    -- ProfessionFactor requires an explicit specialization
+                    -- mapping before it can accept a changed allocation. A
+                    -- skill curve alone cannot consume arbitrary node points.
+                    if not acceptsPoints and type(model.rule.specializationFactors)=='table' then
+                        local prior
+                        for signature,factor in pairs(model.rule.specializationFactors) do
+                            local allocation=self.ProfessionSpecializationPoints and self:ProfessionSpecializationPoints(signature)
+                            if positive(factor) and allocation then
+                                local rank=allocation[tostring(rule.nodeID)] or 0
+                                if prior~=nil and prior~=rank then acceptsPoints=true end
+                                prior=rank
+                            end
+                        end
+                    end
+                    if acceptsPoints and model.rule.method==rule.method and overlaps(rule,model.rule) and overlaps(rule,model.record) then
+                        showNode(rule.nodeID,rule.ruleID)
+                    end
+                end
+            elseif validNode and rule.kind=='replace-family' and positive(rule.perPoint)
+                and rule.perPoint*rule.maxRank<=1 and type(rule.targetFamily)=='table'
+                and identity(rule.targetFamily.id) and type(rule.sourceFamily)=='table'
+                and rule.sourceFamily.id~=rule.targetFamily.id
+                and baselineFor(rule,function(record) return anyMean(record,rule.sourceFamily) end) then
+                showNode(rule.nodeID,rule.ruleID)
+            elseif validNode and rule.kind=='quantity-multiplier' then
+                local valid=(rule.perPoint==nil or finite(rule.perPoint))
+                    and (rule.milestones==nil or type(rule.milestones)=='table')
+                local ranks={1,rule.maxRank}
+                for _,milestone in ipairs(valid and rule.milestones or {}) do
+                    if type(milestone)~='table' or not identity(milestone.rank)
+                        or milestone.rank>rule.maxRank or not positive(milestone.multiplier) then valid=false
+                    else
+                        ranks[#ranks+1]=milestone.rank;ranks[#ranks+1]=math.max(0,milestone.rank-1)
+                    end
+                end
+                local changes=false
+                if valid then for _,rank in ipairs(ranks) do
+                    local factor=multiplierAt(rule,rank)
+                    if not factor then valid=false elseif factor~=1 then changes=true end
+                end end
+                if valid and changes and baselineFor(rule,function(record) return anyMean(record,rule.outputFamily) end) then
+                    showNode(rule.nodeID,rule.ruleID)
+                end
+            end
+        end
+    end
+    -- Existing context-specific mechanic rules can consume typed stat/buff
+    -- values. Mere captured stats or a fixed profession reference profile do
+    -- not establish an effect and never reveal a control by themselves.
+    local statKeys,statNames={},{ }
+    for _,stat in ipairs(self.ProfessionSimulationStats or {}) do statKeys[stat.key]=true;statNames[stat.name]=stat.key end
+    local function showStat(key,field,value)
+        if statKeys[key] and (field=='rating' or field=='percent') and finite(value) then
+            support.stats[key]=support.stats[key] or {};support.stats[key][field]=true
+        end
+    end
+    local function manualConditionsReachable(rule,conditions)
+        local constants={simulated=true,profileKind='manual-simulation',stale=false,qualityFromBlizzard=false,
+            assumedMinimum=false,skillKnown=false,skillSource='manual-simulation',incomplete=false,
+            profession=profession,expansionID=expansion,recipeID=rule.recipeID,inputID=rule.inputItemID,
+            inputQuality=rule.inputQualityRank,inputRarity=rule.inputRarity,inputClassID=rule.inputClassID,
+            character=self.CharacterKey and self:CharacterKey()}
+        local editable={stats=true,operationStats=true,buffs=true,specialization=true,skill=true,effectiveSkill=true}
+        for key,value in pairs(conditions) do
+            if not editable[key] and not equal(constants[key],value) then return false end
+        end
+        if conditions.skill~=nil and not finite(conditions.skill)
+            or conditions.effectiveSkill~=nil and not finite(conditions.effectiveSkill) then return false end
+        local stats={}
+        for key,values in pairs(type(conditions.stats)=='table' and conditions.stats or {}) do
+            if not statKeys[key] or type(values)~='table' then return false end
+            for field,value in pairs(values) do
+                if (field~='rating' and field~='percent') or not finite(value)
+                    or field=='percent' and self.IsProfessionChanceStat and self:IsProfessionChanceStat(key) and value>100 then return false end
+            end
+            stats[key]=copy(values)
+        end
+        if conditions.stats~=nil and type(conditions.stats)~='table' then return false end
+        if conditions.operationStats~=nil then
+            if type(conditions.operationStats)~='table' or not self.SimulatedProfessionOperationStats then return false end
+            for _,stat in ipairs(conditions.operationStats) do
+                if type(stat)~='table' or not statKeys[stat.statKey] then return false end
+                stats[stat.statKey]=stats[stat.statKey] or {}
+                for field,value in pairs({rating=stat.bonusStatValue,percent=stat.ratingPct}) do
+                    if not finite(value) or stats[stat.statKey][field]~=nil and stats[stat.statKey][field]~=value then return false end
+                    stats[stat.statKey][field]=value
+                end
+            end
+            if conditions.stats~=nil and not equal(stats,conditions.stats)
+                or not equal(self:SimulatedProfessionOperationStats({stats=stats}),conditions.operationStats) then return false end
+        end
+        if conditions.buffs~=nil then
+            if type(conditions.buffs)~='table' or not next(conditions.buffs) then return false end
+            for id,on in pairs(conditions.buffs) do
+                if type(id)~='string' or not identity(tonumber(id)) or tostring(tonumber(id))~=id or on~=true then return false end
+            end
+        end
+        if conditions.specialization~=nil and (not self.ProfessionSpecializationPoints
+            or not self:ProfessionSpecializationPoints(conditions.specialization)) then return false end
+        return true
+    end
+    for _,rule in ipairs(db.mechanicRules or {}) do
+        if ruleScope(rule,false) and rule.applies=='VERIFIED_APPLIES'
+            and tostring(rule.targetBuild)==tostring(build) and identity(rule.recipeID)
+            and identity(rule.inputItemID) and type(rule.sourceReferenceContextID)=='string' and rule.sourceReferenceContextID~=''
+            and ((rule.method=='Disenchant' and identity(rule.inputRarity) and (rule.inputClassID==2 or rule.inputClassID==4))
+                or rule.method~='Disenchant' and identity(rule.inputQualityRank))
+            and type(rule.targetConditions)=='table' and type(rule.parameters)=='table'
+            and manualConditionsReachable(rule,rule.targetConditions) then
+            local target,params=rule.effectTarget,rule.parameters
+            local multiply=rule.formulaID=='MULTIPLY' and finite(params.multiplier) and params.multiplier<=10 and params.multiplier~=1
+            local record=baselineFor(rule,function(candidate)
+                if candidate.sourceKey~='itemdb' or tostring(candidate.patchBuild)~=tostring(rule.sourceBuild)
+                    or candidate.referenceContextID~=rule.sourceReferenceContextID then return false end
+                if target=='EXPECTED_INPUT_CONSUMPTION' then
+                    return (rule.method=='Mill' or rule.method=='Prospect') and multiply
+                        and params.multiplier<1 and positive(candidate.inputCount)
+                end
+                for _,material in ipairs(candidate.materials or {}) do
+                    if material.id==rule.outputItemID then
+                        if target=='OUTPUT_UNCONDITIONAL_EXPECTATION' then return multiply and mean(material) end
+                        local probability=fieldValue(material.dropChance)
+                        if target=='OUTPUT_OCCURRENCE' then
+                            return multiply and positive(probability) and probability<=1 and probability*params.multiplier<=1
+                                and (material.dropChance.status=='measured' or material.dropChance.status=='verified')
+                        end
+                        if target=='OUTPUT_POSITIVE_QUANTITY' and rule.formulaID=='SET_VERIFIED_RANGE' then
+                            return identity(params.minQuantity) and identity(params.maxQuantity) and params.maxQuantity>=params.minQuantity
+                                and (fieldValue(material.minQuantity)~=params.minQuantity or fieldValue(material.maxQuantity)~=params.maxQuantity)
+                        end
+                    end
+                end
+                return false
+            end)
+            if record then
+                local conditions=rule.targetConditions
+                if finite(conditions.skill) or finite(conditions.effectiveSkill) then support.skill=true end
+                if type(conditions.specialization)=='string' then
+                    local points=self.ProfessionSpecializationPoints and self:ProfessionSpecializationPoints(conditions.specialization)
+                    for id,rank in pairs(points or {}) do if rank>0 then showNode(id,rule.ruleID) end end
+                end
+                for key,values in pairs(type(conditions.stats)=='table' and conditions.stats or {}) do
+                    if type(values)=='table' then showStat(key,'rating',values.rating);showStat(key,'percent',values.percent) end
+                end
+                for _,stat in ipairs(type(conditions.operationStats)=='table' and conditions.operationStats or {}) do
+                    if type(stat)=='table' then
+                        local key=stat.statKey or statNames[stat.bonusStatName]
+                        showStat(key,'rating',stat.bonusStatValue);showStat(key,'percent',stat.ratingPct)
+                    end
+                end
+                for id,on in pairs(type(conditions.buffs)=='table' and conditions.buffs or {}) do
+                    if on==true and identity(tonumber(id)) then support.buffs[tostring(id)]=true end
+                end
+            end
+        end
+    end
+    -- A prerequisite is useful only when it unlocks an actual calculated
+    -- control. Catalog parent edges alone never reveal otherwise inert sliders.
+    local changed=true
+    while changed do
+        changed=false
+        for id in pairs(support.nodes) do
+            local node=catalog[tonumber(id)]
+            for _,requirement in ipairs(node and node.requirements or {}) do
+                if type(requirement)=='table' and requirement.kind=='node' and identity(requirement.nodeID) and positive(requirement.rank)
+                    and catalog[requirement.nodeID] and not support.nodes[tostring(requirement.nodeID)] then
+                    showNode(requirement.nodeID,nil,true);changed=true
+                elseif type(requirement)=='table' and requirement.kind=='skill' and positive(requirement.skill) then
+                    if not support.skill then support.skillDependency=true end
+                    support.skill=true
+                end
+            end
+        end
+    end
+    return support
+end

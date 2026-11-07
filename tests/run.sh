@@ -90,6 +90,7 @@ python3 tests/test_research_v3_snapshot.py
 "$lua_bin" tests/test_midnight_pigment_runtime.lua
 "$lua_bin" tests/test_profession_simulation.lua
 "$lua_bin" tests/test_specialization_effects.lua
+"$lua_bin" tests/test_profession_control_support.lua
 "$lua_bin" tests/test_reference_fallback.lua
 "$lua_bin" tests/test_usable_field_flow.lua
 python3 tests/test_research_v3_no_disenchant.py
