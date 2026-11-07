@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-07T00:33:47.456Z",
+  "updated_at": "2026-11-07T01:36:39.291Z",
   "branch": "implementation/five-agent-completion",
-  "status": "12 new item-specific, historical cumulative Dragonflight disenchant Looter occurrence rows (five gear item IDs); no new controlled prospecting/milling 0/1/2+ histograms found.",
+  "status": "Completed source-search and duplicate check; no new independently measured Dragonflight processing event table. Neither prospecting nor milling gaps closed.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -10,224 +10,87 @@
     "T0015",
     "T0041",
     "T0019",
-    "T0046"
+    "T0046",
+    "T0016"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019/T0046: rank-verified Draconium 189143/188658/190311, Serevite 190394/190395/190396, Khaz'gorite ore exact input IDs and Prismatic Ore 194545: original per-cast event logs, Resourcefulness gross-to-completed accounting, castsWithDrop, zero outcomes and rank-resolved 0/1/2+ histograms still missing.",
-    "T0018/T0017/T0015/T0041: Bubble Poppy 191467, Saxifrage 191464/191465/191466 milling actual completed casts, per-output ranks and pigment zero-inclusive histograms remain missing; previous Aary and beta guides do not close.",
-    "T0041 fall-back: item-specific gear disenchant Looter cumulative occurrence counts from four distinct Emerald Dream/one tailoring pair (five item IDs); source rank and epoch remain unverified."
+    "Draconium 189143 (R1), 188658 (R2), 190311 (R3), Serevite 190395/190396/190394 and Khaz'gorite 190312/190313/190314 prospecting: absent original completed-operation denominators by output item/rank, castsWithDrop, zero-inclusive histograms, full refund accounting, recorded skill/spec/patch. Rank-to-ID verification still secondary-only S19.",
+    "Prismatic Ore 194545: original superbondez 80-completed-prospect output family Eternity Amber rank-3 4 units is already recorded, but exact 192849/192850/192851 rank-ID attribution, per-output hits and 0/1/2+ histograms and S21 estimator dedupe bug remain unresolved.",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466 milling: no new controlled output pigment-rank 198412/198413/198414 or 198418/198419/198420 individual completed cast counts, hits, zeros or stack histograms."
   ],
-  "newly_verified_fields": [
-    "Chartreuse Champion's Gavel 209937: indexed Wowhead site-reported 55 disenchant operations; material row hits 194123=39/55 (71% displayed), 194124=16/55 (29% displayed), 200113=2/55 (4% displayed); output unit totals/zero histograms UNKNOWN.",
-    "Chartreuse Champion's Blade 209923: indexed Wowhead site-reported 30 disenchant operations; material row hits 194123=27/30 (90% displayed), 194124=4/30 (13% displayed); output unit totals/zero histograms UNKNOWN.",
-    "Chartreuse Champion's Bulwark 209919: indexed Wowhead site-reported 42 disenchant operations; material row hits 194123=36/42 (86% displayed), 194124=13/42 (31% displayed); output unit totals/zero histograms UNKNOWN.",
-    "Khaz'gorite Fabric Cutters Left Blade 198041: indexed Wowhead site-reported 59 disenchant operations; material row hits 194123=37/59 (63% displayed), 194124=33/59 (56% displayed); output unit totals/zero histograms UNKNOWN.",
-    "Khaz'gorite Fabric Cutters Right Blade 194065: indexed Wowhead site-reported 61 disenchant operations; material row hits 194124=40/61 (66% displayed), 194123=29/61 (48% displayed), 200113=1/61 (1.6% displayed); output unit totals/zero histograms UNKNOWN."
+  "newly_verified_fields": [],
+  "new_source_only_findings": [
+    "GitHub-hosted raw Dragonflight mining/prospecting export and independent native per-operation histogram searches did not surface an accessible new original study.",
+    "GoldCap/market and repository references agree on Serevite IDs 190395=R1, 190396=R2, 190394=R3, Draconium 189143=R1, 188658=R2, 190311=R3, Khaz'gorite 190312=R1, 190313=R2, 190314=R3. These are secondary corroboration, not game item API/tooltip verified."
   ],
-  "newly_verified_cohorts": [
-    {
-      "studyKey": "wowhead-looter-dragonflight-209937-item-cumulative",
-      "inputItemID": 209937,
-      "inputName": "Chartreuse Champion's Gavel",
-      "siteReportedDisenchants": 55,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 39,
-          "percentShown": 71,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 16,
-          "percentShown": 29,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 2,
-          "percentShown": 4,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
-      "patch": null,
-      "controlled": false
-    },
-    {
-      "studyKey": "wowhead-looter-dragonflight-209923-item-cumulative",
-      "inputItemID": 209923,
-      "inputName": "Chartreuse Champion's Blade",
-      "siteReportedDisenchants": 30,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 27,
-          "percentShown": 90,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 4,
-          "percentShown": 13,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
-      "patch": null,
-      "controlled": false
-    },
-    {
-      "studyKey": "wowhead-looter-dragonflight-209919-item-cumulative",
-      "inputItemID": 209919,
-      "inputName": "Chartreuse Champion's Bulwark",
-      "siteReportedDisenchants": 42,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 36,
-          "percentShown": 86,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 13,
-          "percentShown": 31,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
-      "patch": null,
-      "controlled": false
-    },
-    {
-      "studyKey": "wowhead-looter-dragonflight-198041-item-cumulative",
-      "inputItemID": 198041,
-      "inputName": "Khaz'gorite Fabric Cutters Left Blade",
-      "siteReportedDisenchants": 59,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 37,
-          "percentShown": 63,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 33,
-          "percentShown": 56,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/ptr-2/item=198041/khazgorite-fabric-cutters-left-blade",
-      "patch": null,
-      "controlled": false
-    },
-    {
-      "studyKey": "wowhead-looter-dragonflight-194065-item-cumulative",
-      "inputItemID": 194065,
-      "inputName": "Khaz'gorite Fabric Cutters Right Blade",
-      "siteReportedDisenchants": 61,
-      "outputs": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 40,
-          "percentShown": 66,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        },
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 29,
-          "percentShown": 48,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 1,
-          "percentShown": 1.6,
-          "percentMeaning": "unclear",
-          "totalQuantity": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/item=194065/khazgorite-fabric-cutters-right-blade",
-      "patch": null,
-      "controlled": false
-    }
-  ],
-  "new_numerical_measurements": 12,
+  "newly_verified_cohorts": [],
+  "new_numerical_measurements": 0,
   "independent_new_controlled_cohorts": 0,
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-07T0033-dragonflight-new-gear-looter-counts.jsonl"
+    "research/v3/evidence/dragonflight/20261107T0136-original-cast-source-search.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
-    "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
-    "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
-    "https://www.wowhead.com/ptr-2/item=198041/khazgorite-fabric-cutters-left-blade",
-    "https://www.wowhead.com/item=194065/khazgorite-fabric-cutters-right-blade"
+    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
+    "https://www.wowhead.com/item=198418/blazing-pigment",
+    "https://www.reddit.com/r/woweconomy/comments/108782r",
+    "https://www.reddit.com/r/woweconomy/comments/10u5ao8",
+    "https://www.reddit.com/r/woweconomy/comments/10me1e7",
+    "https://goldcap.gg/retail/us/items/190395",
+    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit"
   ],
-  "commit_sha": "21e30727ead0b37705fc45e39ae603acf90c2bd6",
-  "commit_sha_note": "Verified new evidence file at this GitHub commit by exact text read-back. Quiet status update is a follow-up commit because available GitHub contents operations cannot atomically write both paths without a parent tree SHA; no production change.",
-  "verified_source_head_sha": "4558c97f5ebe8aa79027b694bad16c2c87687ced",
+  "verified_source_head_sha": "197c2dbb218687ffbf25ec9dc7447213d3c5ab4c",
+  "verified_commit_sha": "197c2dbb218687ffbf25ec9dc7447213d3c5ab4c",
+  "commit_sha_scope": "Verified parent commit at beginning of run, not this new atomic evidence/status commit; a self-referential SHA cannot be recorded in its own commit. New commit SHA is externally verified by post-write read-back.",
   "blockers": [
-    "No independently verified new original rank+skill-specific Dragonflight prospecting or milling completed-cast histograms, zeros or per-output hit counts were found.",
-    "Five Wowhead Looter item-side denominators and per-material counts were surfaced by search-indexed page text. Rendered live item page hides Looter table from static fetch; original event time, item version, cast mechanics, skill and source patch UNKNOWN. These are not controlled current-Retail rates.",
-    "Displayed Looter percentages may be rounded and per-output occurrences can overlap, so do not derive exclusive outcomes or any unconditional units from hit counts.",
-    "Existing S19 Serevite ore rank mapping and S21 Prismatic Eternity Amber cross-material dedupe require Master review; no shared files were changed.",
-    "Firecrawl connector reported insufficient credits until 2026-11-07T15:51:09Z; primary page JS interaction unavailable in this run."
+    "No newly found original per-operation output-event export for the prioritized ores or herbs, so P(hit) and 0/1/2+ yield histograms remain unknown; unknown is not zero.",
+    "Historical nominal input counts cannot stand in for Resourcefulness-adjusted completed casts; old Reddit/Bugy/Aary studies already recorded and deduplicated by original source.",
+    "Xenastro original Google workbook contents could not be read; S19 ID-rank requires official item tooltip or Blizzard item API; S21 Eternity Amber identity and compiler dedupe require Master.",
+    "No direct current Retail game-build, skill/spec, refund and item-variant controls in historical source pages."
   ],
   "exhausted_sources": [
     {
-      "path": "2026-11-07 new named Dragonflight prospecting/milling cast-log search",
-      "reason": "Multi-site new targeted queries surfaced 2022 beta Jallfo/Liqourice5, existing 2023 community aggregate/Bugy/Aary and already recorded Prismatic/serevite result summaries, but no new rank-controlled raw completed-operation histogram.",
+      "path": "New targeted original Dragonflight ore per-operation export and authoritative rank identity search",
+      "reason": "Searched cross-site named Draconium, Serevite, Khaz'gorite, Prismatic and GitHub source data; results only archived aggregate cohorts, inaccessible Xenastro workbook, and secondary rank corroboration.",
       "whereLooked": [
-        "reddit.com/r/woweconomy (y3e8ek, 10h6ccx, 10i63zb, 10vz6jh)",
-        "wowhead.com/item=194545 Prismatic Ore; /item=198418 Blazing Pigment; spell=374627",
-        "us.forums.blizzard.com/en/wow/t/illimited-diamond-where-are-you/1505082",
-        "warcraft.wiki.gg/wiki/Prismatic_Ore and wiki/Khaz'gorite_Ore"
+        "GitHub code search by name: Draconium Ore prospecting results CSV / spreadsheet / original raw logs (no new export)",
+        "https://www.wowhead.com/spell=374627/dragon-isles-prospecting — historical Bugy per-ore aggregate means already archived",
+        "https://www.reddit.com/r/woweconomy/comments/10u5ao8 — pre-existing 100k nominal Draconium ore ten batches, not individual outcome events",
+        "https://www.reddit.com/r/woweconomy/comments/108782r — existing 8000 completed Serevite prospects and output unit aggregates, no per-output hit histograms",
+        "https://www.reddit.com/r/woweconomy/comments/10h6ccx — already recorded Khaz'gorite rank-2 zero-diamond sample",
+        "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit — Xenastro original log inaccessible, no row readback",
+        "https://warcraft.wiki.gg/wiki/Prismatic_Ore — item/profession context but no original per-cast sampling table",
+        "https://goldcap.gg/retail/us/items/190395 — secondary commodity ID indicates rank-1 Serevite, not authoritative item tooltip",
+        "https://www.wowhead.com/item=190394/serevite-ore — static source does not establish an authoritative quality-rank tooltip"
+      ]
+    },
+    {
+      "path": "New targeted Bubble Poppy and Saxifrage milling raw cast histogram search",
+      "reason": "Multi-site named search yielded prior Aary/Hochenblume studies, qualitative guides and a recorder addon without public original output events.",
+      "whereLooked": [
+        "Reddit r/woweconomy by names Bubble Poppy milling pigments results and Saxifrage milling batch original spreadsheets (no new original cast logs)",
+        "https://www.wowhead.com/item=198418/blazing-pigment — Aary original samples already held in Dragonflight v3 files",
+        "https://www.wowhead.com/item=191465/saxifrage — existing approximately 1700-herb Aary source, not newly observed casts",
+        "https://www.reddit.com/r/woweconomy/comments/10me1e7 — existing January 2023 Hochenblume resourcefulness aggregate",
+        "https://www.wow-professions.com/guides/milling-table-inscription — recipes / outputs, not independent yield trials",
+        "Warcraft Wiki Dragon Isles Milling and Dragon Isles Inscription searches by item name — no original 0/1/2+ event logs",
+        "Blizzard community forum search by name Bubble Poppy milling yield pigment (no measured per-cast denominator)",
+        "https://www.curseforge.com/wow/addons/prospectmate — candidate event-recording tool, but no publicly retrieved original Dragonflight dataset"
       ]
     }
   ],
-  "next_concrete_step": "Locate genuine Dragonflight original per-operation 0/1/2+ output event logs or native importable datasets (Draconium 189143/188658 then Bubble Poppy 191467); obtain authoritative original live item tooltip rank IDs for S19, and ask Master to review S21. Avoid recycling indexed Wowhead Looter cumulative cohorts.",
+  "next_concrete_step": "Seek an original ProspectMate / in-game SavedVariables per-operation export for Draconium R1 189143 and Bubble Poppy 191467 with each output rank and raw 0/1/2+ histogram, exact skill/spec/patch and refund counts. Revisit Xenastro workbook only if actual access is restored. Send S19 rank tooltip/S21 family dedupe changes to Master; do not alter shared files.",
   "validation": {
     "evidence_jsonl_parse": "PASS",
-    "evidence_record_count": 13,
-    "evidence_drop_records": 12,
-    "evidence_searched_records": 1,
-    "distinct_site_looter_gear_cohorts": 5,
-    "site_reported_disenchants_distinct_items_total": 247,
-    "rank_and_patch_unknown_preserved": true,
-    "percentMeaning": "unclear",
-    "zero_histograms_fabricated": false,
+    "evidence_record_count": 2,
+    "evidence_searched_records": 2,
+    "evidence_drop_records": 0,
+    "existing_study_duplicate_added": false,
+    "unknown_numeric_fields_imputed": false,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-07T0033-dragonflight-new-gear-looter-counts.jsonl",
+      "research/v3/evidence/dragonflight/20261107T0136-original-cast-source-search.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "evidence_git_readback": "PASS",
-    "two_sequential_contents_commits": true
+    "single_atomic_commit_intended": true
   },
   "production_changed": false,
   "merge_performed": false,
