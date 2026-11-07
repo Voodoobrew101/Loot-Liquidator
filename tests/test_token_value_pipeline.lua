@@ -137,7 +137,8 @@ r=LL:Evaluate('item:900001',{isSoulbound=true})
 assert(r.action=='T','affordable collection can win even when currency opportunity cost is unpriced')
 exchange.costsComplete=false;LL:Invalidate()
 r=LL:Evaluate('item:900001',{isSoulbound=true})
-assert(r.action~='T' and r.action=='Q','unknown full exchange requirements never promise collection or free gear')
+assert(r.action=='T' and not r.tokenPiece.vendorAvailable,
+    'keep a known missing appearance despite unknown exchange costs; never promise a free available exchange')
 missing=nil
 
 LL.ItemClassMasks[900002]=1;LL:Invalidate()

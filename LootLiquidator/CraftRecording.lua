@@ -748,15 +748,23 @@ function LL:RecordedResultsCount()
     return d and #d.records or 0
 end
 -- Each click shows the next page (25 casts per page), then wraps to page 1.
-function LL:ExportRecordedResultsPage()
+function LL:ExportRecordedResultsPage(requestedPage)
     local d=self.db and self.db.craftResearch
     local pages=math.max(1,math.ceil((d and #d.records or 0)/25))
-    local page=(self._recordedExportPage or 0)+1
-    if page>pages then page=1 end
+    local page
+    if type(requestedPage)=='number' and finite(requestedPage) then
+        page=math.max(1,math.min(pages,math.floor(requestedPage)))
+    else
+        page=(self._recordedExportPage or 0)+1
+        if page>pages then page=1 end
+    end
     self._recordedExportPage=page
     local title=("Recorded results - page %d of %d"):format(page,pages)
-    if pages>1 then title=title.." (click Export again for the next page)" end
-    return title,self:ExportCraftResearch(page),page,pages
+    -- WoW text widgets interpret item-link/color/texture pipes before copying.
+    -- JSON's Unicode escape preserves every decoded string while keeping the
+    -- export literal, readable and safe to copy without rendered link markup.
+    local text=self:ExportCraftResearch(page):gsub('|','\\u007c')
+    return title,text,page,pages
 end
 -- The previous set is kept once (recordedResultsBackup) so a mistaken click
 -- does not destroy research; the next reset replaces that backup.

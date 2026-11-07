@@ -47,17 +47,20 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_itemdb_metrics.lua
 "$lua_bin" tests/test_token_catalog.lua "$compiled_dir"
 "$lua_bin" tests/test_token_value_pipeline.lua
+"$lua_bin" tests/test_token_transmog_priority.lua
 python3 tests/test_token_import.py "$compiled_dir"
 
 "$lua_bin" tests/test_frozen_tsm.lua
 "$lua_bin" tests/test_profession_projection.lua
 "$lua_bin" tests/test_research_profiles.lua "$compiled_dir"
 "$lua_bin" tests/test_craft_recording.lua
+"$lua_bin" tests/test_export_dialog.lua
 "$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
 "$lua_bin" tests/test_counts_model.lua
 "$lua_bin" tests/test_transmog_alts.lua
+"$lua_bin" tests/test_appearance_collection.lua
 python3 tests/test_craft_export.py
 "$lua_bin" tools/audit_profession_scaling.lua
 

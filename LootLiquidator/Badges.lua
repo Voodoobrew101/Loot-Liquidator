@@ -937,8 +937,10 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 -- usable by the current character or by an enabled alt.
                 local recipient
                 if group.missing>0 and LA.TokenTransmogRecipient then
-                    recipient=LA:TokenTransmogRecipient(decision.facts,
-                        {rewards=group.ids,kind=token.kind})
+                    local classToken={}
+                    for key,value in pairs(token) do classToken[key]=value end
+                    classToken.rewards=group.ids
+                    recipient=LA:TokenTransmogRecipient(decision.facts,classToken)
                 end
                 local letter=recipient and "T" or
                     (group.unknown==0 and group.missing==0 and decision.vendor>0 and "V" or "Q")

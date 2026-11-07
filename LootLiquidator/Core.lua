@@ -1,6 +1,6 @@
 local ADDON, LA = ...
 LA = LA or {}
-LA.version = "0.12.17"
+LA.version = "0.12.18"
 LA.targetInterface = 120105  -- Current Retail 12.1.5 compatibility target; NOT in-game QA
 
 local COPPER_PER_GOLD = 10000
@@ -767,28 +767,126 @@ function LA:MakeReport()
     return table.concat(lines, "\n")
 end
 
-function LA:ShowCopy(title, contents)
+function LA:ShowCopy(title, contents, options)
     if not self.copyDialog then
         local f = CreateFrame("Frame", "LootLiquidatorCopyDialog", UIParent, "BasicFrameTemplateWithInset")
-        f:SetSize(720, 450); f:SetPoint("CENTER"); f:SetMovable(true)
+        f:SetSize(680, 430); f:SetMovable(true); f:SetClampedToScreen(true)
+        f:SetToplevel(true); f:SetFrameStrata("FULLSCREEN_DIALOG")
         f:EnableMouse(true); f:RegisterForDrag("LeftButton")
         f:SetScript("OnDragStart", f.StartMoving)
         f:SetScript("OnDragStop", f.StopMovingOrSizing)
-        local sf = CreateFrame("ScrollFrame", nil, f, "ScrollFrameTemplate")
-        sf:SetPoint("TOPLEFT", 12, -32); sf:SetPoint("BOTTOMRIGHT", -30, 12)
-        local edit = self:CreateSettingsEditBox(sf)
-        edit:SetMultiLine(true); edit:SetAutoFocus(false); edit:SetFontObject(ChatFontNormal)
-        edit:SetWidth(650); edit:SetHeight(400)
+        local help = f:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        help:SetPoint("TOPLEFT", 20, -36); help:SetPoint("TOPRIGHT", -20, -36)
+        help:SetJustifyH("LEFT"); f.help = help
+        local inset = f.Inset or CreateFrame("Frame", nil, f, "InsetFrameTemplate")
+        inset:ClearAllPoints(); inset:SetPoint("TOPLEFT", 16, -66)
+        inset:SetPoint("BOTTOMRIGHT", -16, 54); f.Inset = inset
+        local sf = CreateFrame("ScrollFrame", nil, inset, "UIPanelScrollFrameTemplate")
+        sf:SetPoint("TOPLEFT", 10, -10); sf:SetPoint("BOTTOMRIGHT", -30, 10)
+        sf:SetClipsChildren(true)
+        -- A multiline export is not a single-line Settings input box. Its
+        -- native inset supplies the border; the edit child has no extra art.
+        local edit = CreateFrame("EditBox", nil, sf)
+        edit:SetMultiLine(true); edit:SetAutoFocus(false); edit:SetFontObject(GameFontHighlightSmall)
+        edit:SetMaxLetters(0); edit:SetMaxBytes(0); edit:SetTextInsets(0, 0, 0, 0)
+        edit:SetSpacing(2); edit:SetIndentedWordWrap(false)
+        edit:SetWidth(600); edit:SetHeight(280)
+        local function fitText()
+            local width = sf:GetWidth()
+            if width and width > 0 then edit:SetWidth(width) end
+            local _, lineHeight = edit:GetFont()
+            edit:SetHeight(math.max(sf:GetHeight() or 0, (edit:GetNumLines() or 1) * ((lineHeight or 12) + 2) + 12))
+        end
+        sf:HookScript("OnSizeChanged", fitText)
+        edit:SetScript("OnTextChanged", function(control, userInput)
+            -- Copy/export is read-only, while retaining native selection and
+            -- Ctrl+C. An accidental keystroke must not damage the export.
+            if userInput and control:GetText() ~= f.contents then
+                control:SetText(f.contents); control:SetCursorPosition(0); control:HighlightText()
+            end
+            fitText()
+        end)
         edit:SetScript("OnEscapePressed", function() f:Hide() end)
+        if type(ScrollingEdit_OnCursorChanged) == "function" then
+            edit:SetScript("OnCursorChanged", ScrollingEdit_OnCursorChanged)
+        end
         sf:SetScrollChild(edit)
-        f.edit = edit
+        f.edit = edit; f.scrollFrame = sf
+        function f:SelectText()
+            self.edit:SetFocus(); self.edit:SetCursorPosition(0); self.edit:HighlightText()
+            self.scrollFrame:SetVerticalScroll(0)
+        end
+        local function button(text, width)
+            local b = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+            b:SetSize(width, 24); b:SetText(text); return b
+        end
+        f.selectAll = button("Select all", 105)
+        f.selectAll:SetPoint("BOTTOMLEFT", 16, 16)
+        f.selectAll:SetScript("OnClick", function() f:SelectText() end)
+        f.previous = button("Previous", 90)
+        f.previous:SetPoint("LEFT", f.selectAll, "RIGHT", 12, 0)
+        f.previous:SetScript("OnClick", function()
+            if f.onPage and f.page > 1 then f.onPage(f.page - 1) end
+        end)
+        f.next = button("Next", 90)
+        f.next:SetPoint("LEFT", f.previous, "RIGHT", 8, 0)
+        f.next:SetScript("OnClick", function()
+            if f.onPage and f.page < f.pages then f.onPage(f.page + 1) end
+        end)
+        f.pageLabel = f:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        f.pageLabel:SetPoint("LEFT", f.next, "RIGHT", 12, 0)
+        f.close = button(CLOSE or "Close", 90)
+        f.close:SetPoint("BOTTOMRIGHT", -16, 16)
+        f.close:SetScript("OnClick", function() f:Hide() end)
+        f:SetScript("OnHide", function()
+            edit:ClearFocus(); f.onPage = nil -- release the recording snapshot
+        end)
+        if UISpecialFrames then UISpecialFrames[#UISpecialFrames + 1] = "LootLiquidatorCopyDialog" end
         self.copyDialog = f
     end
-    self.copyDialog.TitleText:SetText(title)
-    self.copyDialog.edit:SetText(contents)
-    self.copyDialog.edit:SetFocus()
-    self.copyDialog.edit:HighlightText()
-    self.copyDialog:Show()
+    local f = self.copyDialog
+    -- Match the user's installed Settings skin, without requiring ElvUI or
+    -- inventing a separate addon theme. Native Blizzard art remains otherwise.
+    if not f.llCopyElvUISkinned then
+        local E = type(_G.ElvUI) == "table" and _G.ElvUI[1]
+        local ok, skin
+        if E and type(E.GetModule) == "function" then ok, skin = pcall(E.GetModule, E, "Skins") end
+        if ok and skin and type(f.SetTemplate) == "function" then
+            local skinned = pcall(function()
+                if f.StripTextures then f:StripTextures() end
+                if f.NineSlice then f.NineSlice:Hide() end
+                f:SetTemplate("Default")
+                if f.Inset.StripTextures then f.Inset:StripTextures() end
+                if f.Inset.NineSlice then f.Inset.NineSlice:Hide() end
+                if f.Inset.SetTemplate then f.Inset:SetTemplate("Default") end
+                if skin.HandleCloseButton and f.CloseButton then skin:HandleCloseButton(f.CloseButton) end
+                if skin.HandleScrollBar and f.scrollFrame.ScrollBar then skin:HandleScrollBar(f.scrollFrame.ScrollBar) end
+                if skin.HandleButton then
+                    for _,b in ipairs({f.selectAll, f.previous, f.next, f.close}) do skin:HandleButton(b) end
+                end
+            end)
+            f.llCopyElvUISkinned = skinned or nil
+        end
+    end
+    options = type(options) == "table" and options or {}
+    f.page = options.page or 1; f.pages = options.pages or 1; f.onPage = options.onPage
+    local paged = type(f.onPage) == "function" and f.pages > 1
+    f.previous:SetShown(paged); f.next:SetShown(paged); f.pageLabel:SetShown(paged)
+    f.previous:SetEnabled(f.page > 1); f.next:SetEnabled(f.page < f.pages)
+    f.pageLabel:SetText(("Page %d of %d"):format(f.page, f.pages))
+    f.help:SetText(paged and "Press Ctrl+C to copy this page. Use Previous and Next for the remaining pages."
+        or "Press Ctrl+C to copy the selected text. Use Select all to select it again.")
+    local anchor = SettingsPanel and SettingsPanel.IsShown and SettingsPanel:IsShown() and SettingsPanel or UIParent
+    if not f:IsShown() or not f.opened then
+        f:ClearAllPoints(); f:SetPoint("CENTER", anchor, "CENTER", 0, 0)
+    end
+    f:SetFrameLevel(math.max(100, (anchor.GetFrameLevel and anchor:GetFrameLevel() or 0) + 20))
+    f.TitleText:SetText(title or "Loot Liquidator")
+    f.contents = tostring(contents or "")
+    f.edit:SetText(f.contents)
+    f:Show(); f:Raise(); f.opened = true
+    f:SelectText()
+    return f
 end
 
 local function Say(s) print("|cff66ccffLoot Liquidator|r: " .. s) end

@@ -699,8 +699,18 @@ local function Notify(message)
 end
 function LL:ShowRecordedResultsExport()
     if not self.ExportRecordedResultsPage then return end
-    local title,text=self:ExportRecordedResultsPage()
-    if self.ShowCopy then self:ShowCopy(title,text) end
+    -- A recording can finish while this window is open. Freeze one bounded
+    -- snapshot so Previous/Next never shift casts between export pages.
+    local function snapshot(value)
+        if type(value)~='table' then return value end
+        local out={} for key,entry in pairs(value) do out[key]=snapshot(entry) end return out
+    end
+    local proxy=setmetatable({db={craftResearch=snapshot(self.db and self.db.craftResearch)}},{__index=self})
+    local function show(page)
+        local title,text,current,pages=proxy:ExportRecordedResultsPage(page)
+        if self.ShowCopy then self:ShowCopy(title,text,{page=current,pages=pages,onPage=show}) end
+    end
+    show(1)
 end
 local function Confirm(key,text,accept)
     if not StaticPopupDialogs or not StaticPopup_Show then accept();return end
@@ -935,7 +945,7 @@ function LL:RegisterNativeSettings()
     if CreateSettingsButtonInitializer and researchLayout and researchLayout.AddInitializer then
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Export recorded results","Export",function() LL:ShowRecordedResultsExport() end,
-            "Opens your recorded results as text to copy (Ctrl+C). Long lists come in pages: click again for the next page.",false))
+            "Opens your recorded results as text to copy (Ctrl+C). Use Previous and Next in the export window for additional pages.",false))
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Start new batch","Start new batch",function() LL:ConfirmStartNewBatch() end,
             "Count the next results you record as a new group, e.g. after changing gear or specialization.",false))

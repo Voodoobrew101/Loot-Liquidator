@@ -19,32 +19,77 @@ local function EquippableSlot(slot)
 end
 
 -- One account-wide collection resolver for normal gear AND token rewards.
--- Retail 12.x GetAppearanceSourceInfo.isCollected works across class boundaries.
--- The legacy appearance-wide bit is retained as a fallback, never substitute
--- sourceIsCollected (owning one specific item source is NOT the same thing).
+-- An uncollected item source must not hide a visual learned from another item.
+-- Query all sources of this exact appearance without changing wardrobe filters;
+-- class-filtered source lists can confirm ownership but cannot prove absence.
 function LL:AppearanceCollectionState(link)
     local collection=C_TransmogCollection
     if not collection or type(collection.GetItemInfo)~="function" then return nil end
-    local ok,_,sourceID=pcall(collection.GetItemInfo,link)
-    if not ok or not SafeNumber(sourceID) then return nil end
+    local ok,appearanceID,sourceID=pcall(collection.GetItemInfo,link)
+    if not ok then return nil end
+    if not SafeNumber(sourceID) and not SafeNumber(appearanceID) then return nil end
+    local function info(fn,id)
+        if type(fn)~='function' or not SafeNumber(id) then return nil end
+        local good,value=pcall(fn,id)
+        if good and type(value)=='table' then return value end
+    end
+    local function boolean(value)
+        return type(value)=='boolean' and not (issecretvalue and issecretvalue(value))
+    end
+    local function sameAppearance(value)
+        return not SafeNumber(value) or not SafeNumber(appearanceID) or value==appearanceID
+    end
     local newState,oldState
-    if type(collection.GetAppearanceSourceInfo)=="function" then
-        local good,info=pcall(collection.GetAppearanceSourceInfo,sourceID)
-        if good and type(info)=="table" and type(info.isCollected)=="boolean" then
-            newState=info.isCollected
+    local current=info(collection.GetAppearanceSourceInfo,sourceID)
+    if current then
+        if not SafeNumber(appearanceID) and SafeNumber(current.itemAppearanceID) then appearanceID=current.itemAppearanceID end
+        if sameAppearance(current.itemAppearanceID) and boolean(current.isCollected) then newState=current.isCollected end
+    end
+    local legacy=info(collection.GetAppearanceInfoBySource,sourceID)
+    if legacy then
+        if not SafeNumber(appearanceID) and SafeNumber(legacy.appearanceID) then appearanceID=legacy.appearanceID end
+        if sameAppearance(legacy.appearanceID) then
+            if boolean(legacy.appearanceIsCollected) then oldState=legacy.appearanceIsCollected end
+            -- An affirmative source is sufficient; a false source bit is not
+            -- evidence that its shared appearance is absent.
+            if boolean(legacy.sourceIsCollected) and legacy.sourceIsCollected then return true,sourceID,appearanceID end
         end
     end
-    if type(collection.GetAppearanceInfoBySource)=="function" then
-        local good,info=pcall(collection.GetAppearanceInfoBySource,sourceID)
-        if good and type(info)=="table" and type(info.appearanceIsCollected)=="boolean" then
-            oldState=info.appearanceIsCollected
+    if newState==true or oldState==true then return true,sourceID,appearanceID end
+    if SafeNumber(appearanceID) then
+        if type(collection.GetAppearanceSources)=='function' then
+            local good,sources=pcall(collection.GetAppearanceSources,appearanceID)
+            if good and type(sources)=='table' then
+                for _,source in ipairs(sources) do
+                    if type(source)=='table' and sameAppearance(source.visualID)
+                        and boolean(source.isCollected) and source.isCollected then return true,sourceID,appearanceID end
+                end
+            end
+        end
+        if type(collection.GetAllAppearanceSources)=='function' then
+            local good,sources=pcall(collection.GetAllAppearanceSources,appearanceID)
+            if good and type(sources)=='table' then
+                local seen={}
+                for _,id in ipairs(sources) do
+                    if SafeNumber(id) and id~=sourceID and not seen[id] then
+                        seen[id]=true
+                        local source=info(collection.GetAppearanceSourceInfo,id)
+                        if source and sameAppearance(source.itemAppearanceID)
+                            and boolean(source.isCollected) and source.isCollected then return true,sourceID,appearanceID end
+                        source=info(collection.GetAppearanceInfoBySource,id)
+                        if source and sameAppearance(source.appearanceID)
+                            and ((boolean(source.appearanceIsCollected) and source.appearanceIsCollected)
+                                or (boolean(source.sourceIsCollected) and source.sourceIsCollected)) then return true,sourceID,appearanceID end
+                        source=info(collection.GetSourceInfo,id)
+                        if source and sameAppearance(source.visualID)
+                            and boolean(source.isCollected) and source.isCollected then return true,sourceID,appearanceID end
+                    end
+                end
+            end
         end
     end
-    -- Avoid a false "missing" recommendation during temporary API disagreement:
-    -- either affirmative account-wide signal means the appearance is owned.
-    if newState==true or oldState==true then return true,sourceID end
-    if newState==false or oldState==false then return false,sourceID end
-    return nil,sourceID
+    if newState==false or oldState==false then return false,sourceID,appearanceID end
+    return nil,sourceID,appearanceID
 end
 local function AppearanceMissing(link)
     local collected,sourceID=LL:AppearanceCollectionState(link)
@@ -363,6 +408,25 @@ function LL:TokenRedemptionCost(f,token,rewardID,current,character)
     return result
 end
 
+-- A collection recommendation means keep this token for a missing appearance.
+-- It does not promise that its owner can pay the exchange costs immediately.
+-- An unverified reward relationship or character requirement cannot certify a
+-- look; unknown prices and additional chain costs do not make it disposable.
+function LL:TokenAppearanceEligibility(token,rewardID,current,character)
+    if token.candidateRewards then
+        return false,token.catalogNote or 'Reward relationship not established'
+    end
+    local requirement=token.rewardRequirements and token.rewardRequirements[tostring(rewardID)]
+    if requirement then
+        local char=self.db and self.db.characters and self.db.characters[character]
+        local level=current and Read(UnitLevel,'player') or (char and char.level)
+        if requirement.unverified or (requirement.minimumLevel and (not Number(level) or level<requirement.minimumLevel)) then
+            return false,'Reward level, faction or inherited exchange requirements not verified for this character'
+        end
+    end
+    return true
+end
+
 function LL:TokenRewardPermitsClass(token,id,class)
     local allowed=self.ItemPermitsClass and self:ItemPermitsClass(id,class)
     if allowed~=nil then return allowed end
@@ -555,7 +619,10 @@ end
 -- T badges don't linger after learning a visual from another item.
 local eventFrame=CreateFrame and CreateFrame("Frame")
 if eventFrame and eventFrame.RegisterEvent then
-    pcall(eventFrame.RegisterEvent,eventFrame,"TRANSMOG_COLLECTION_UPDATED")
+    for _,event in ipairs({'TRANSMOG_COLLECTION_UPDATED','TRANSMOG_COLLECTION_SOURCE_ADDED',
+        'TRANSMOG_COLLECTION_SOURCE_REMOVED','TRANSMOG_COLLECTION_ITEM_UPDATE'}) do
+        pcall(eventFrame.RegisterEvent,eventFrame,event)
+    end
     eventFrame:SetScript("OnEvent",function()
         if LL.Invalidate then LL:Invalidate() end
     end)

@@ -1439,13 +1439,17 @@ function LL:TokenTransmogRecipient(f,token)
             for _,rewardID in ipairs(token.rewards) do
                 -- Class-specific appearances must only be assigned to eligible
                 -- recipients. Unknown class masks are not proof of eligibility.
-                if (self.TokenRewardPermitsClass and self:TokenRewardPermitsClass(token,rewardID,candidate.class)
-                    or self:ItemPermitsClass(rewardID,candidate.class))==true then
+                local rewardAllowed
+                if self.TokenRewardPermitsClass then rewardAllowed=self:TokenRewardPermitsClass(token,rewardID,candidate.class)
+                else rewardAllowed=self:ItemPermitsClass(rewardID,candidate.class) end
+                if rewardAllowed==true then
                     local rewardLink=self.TokenRewardLink and self:TokenRewardLink(token,rewardID) or ("item:"..rewardID)
-                    local cost=self.TokenRedemptionCost and self:TokenRedemptionCost(f,token,rewardID,candidate.current,candidate.key)
                     local collected=self:AppearanceCollectionState(rewardLink)
-                    local usable=true
-                    if cost and not cost.available then usable=false end
+                    -- Keep missing looks for an eligible recipient even when
+                    -- their other exchange items or currency are not on hand.
+                    -- Economic quotes retain their immediate-cost checks.
+                    local usable=self.TokenAppearanceEligibility
+                        and self:TokenAppearanceEligibility(token,rewardID,candidate.current,candidate.key)
                     if token.kind=='exchange' and self.AltMethodEnabled and not self:AltMethodEnabled(candidate.key,'X') then usable=false end
                     if candidate.current and C_TransmogCollection
                         and type(C_TransmogCollection.GetItemInfo)=="function"
