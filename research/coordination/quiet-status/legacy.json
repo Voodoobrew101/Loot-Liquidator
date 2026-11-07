@@ -1,215 +1,170 @@
 {
   "role": "legacy",
-  "updated_at": "2026-11-07T22:46:00.090Z",
+  "updated_at": "2026-11-07T23:41:52.384Z",
   "branch": "implementation/five-agent-completion",
-  "status": "12 new original historical milling output records covering three distinct warcanon herb runs, a Mountain Silversage stack cohort, one mixed Icecap/Silversage harvest, an independent 32-mill sample, and one single-cast Plaguebloom stack. New positive-stack histograms and distinct counted mill denominators; not Retail-patch compatible and no new independent Warmaul/Cobalt/Fel Iron logs.",
+  "status": "Research-only: one newly identified historical Saronite 30-stack prospecting cohort with 12 exact gem item IDs and source-reported item totals; one complete historical Spaulders of the Wayward Vanquisher 45661 seven-reward vendor mapping. No additional verified disenchant casts for Warmaul and no new Cobalt/Fel Iron completed-cast logs; current Retail reward/DE behavior unresolved.",
   "task_ids": [
     "T0047",
-    "T0042",
     "T0022",
     "T0044",
+    "T0043",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 historic disenchant item/build mismatch; source 2068 Looter operations and current Cannot be disenchanted flag remain not reconciled. No recopy.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424 absent independent source-logged zero-inclusive hits/refunds; no new original completed casts this run.",
-    "Legacy random-yield fallback for Silvery Pigment 39341 and Sapphire Pigment 43107: recover firsthand per-operation histogram and raw totals for Sorrowmoss 13466, Golden Sansam 13464, Mountain Silversage 13465, plus mixed sample of Icecap 13467 and Silversage 13465.",
-    "Spaulders of the Wayward Vanquisher 45661 full class rewards/variants/redeemer not newly verified."
+    "Warmaul Legplates 24995 historical 2,068-operation Looter cohort vs modern scaled no-disenchant/current item variation: original per-output cast histogram, quantities, build, item-level, enchanting skill/eligibility still missing; no recopy or reinterpretation.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: no additional original completed five-ore operations, castsWithDrop, zero-inclusive histograms or refund histories; previously recorded nominal stack/ore equivalents remain unmeasured.",
+    "Saronite Ore 36912: distinct firsthand 30-stack gem output quantities for 36927/36924/36933/36921/36930/36918/36932/36923/36929/36920/36926/36917; no explicit measured number of casts or per-material hits.",
+    "Spaulders of the Wayward Vanquisher 45661: historical Dalaran 1-token vendor mapping identified for 7 exact rewards, but modern Use/loot-specialization variant behavior not verified."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-warcanon-sorrowmoss-run1-425-herbs-85-mills",
-      "inputItemID": null,
-      "inputs": "Sorrowmoss and Golden Sansam, proportions unspecified",
-      "reportedHerbs": 425,
-      "casts": 85,
-      "outputs": [
+      "studyKey": "wowhead-original-comment-558153-saronite-30-stacks",
+      "method": "Prospect",
+      "inputItemID": 36912,
+      "inputName": "Saronite Ore",
+      "reportedStacks": 30,
+      "actualCompletedCasts": null,
+      "nominalCastCount": null,
+      "outputItemTotals": [
         {
-          "itemID": 39341,
-          "totalQuantity": 245,
-          "castsWithDrop": 85,
-          "histogram": {
-            "2": 33,
-            "3": 29,
-            "4": 23
-          }
+          "outputItemID": 36927,
+          "outputName": "Twilight Opal",
+          "totalQuantity": 7
         },
         {
-          "itemID": 43107,
-          "totalQuantity": 42,
-          "castsWithDrop": 41,
-          "positiveHistogram": {
-            "1": 40,
-            "2": 1
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/item=13466/sorrowmoss"
-    },
-    {
-      "studyKey": "wowhead-warcanon-sorrowmoss-run2-480-herbs-96-mills",
-      "inputItemID": 13466,
-      "reportedHerbs": 480,
-      "casts": 96,
-      "outputs": [
-        {
-          "itemID": 39341,
-          "totalQuantity": 286,
-          "castsWithDrop": 96,
-          "histogram": {
-            "2": 36,
-            "3": 26,
-            "4": 34
-          }
+          "outputItemID": 36924,
+          "outputName": "Sky Sapphire",
+          "totalQuantity": 5
         },
         {
-          "itemID": 43107,
-          "totalQuantity": 47,
-          "castsWithDrop": 47,
-          "positiveHistogram": {
-            "1": 47
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/item=13466/sorrowmoss"
-    },
-    {
-      "studyKey": "wowhead-warcanon-golden-sansam-17-stacks-68-mills",
-      "inputItemID": 13464,
-      "reportedStacks": 17,
-      "casts": 68,
-      "castsBasis": "enumerated 31+37 observed common-output mills, not unverified stack conversion",
-      "outputs": [
-        {
-          "itemID": 39341,
-          "totalQuantity": 173,
-          "castsWithDrop": 68,
-          "histogram": {
-            "2": 31,
-            "3": 37
-          }
+          "outputItemID": 36933,
+          "outputName": "Forest Emerald",
+          "totalQuantity": 5
         },
         {
-          "itemID": 43107,
-          "totalQuantity": 16,
-          "castsWithDrop": 16,
-          "positiveHistogram": {
-            "1": 16
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/item=13464/golden-sansam"
-    },
-    {
-      "studyKey": "wowhead-257849-mountain-silversage-three-stacks",
-      "inputItemID": 13465,
-      "reportedStacks": 3,
-      "casts": null,
-      "outputs": [
-        {
-          "itemID": 39341,
-          "totalQuantity": 19,
-          "minSeen": 2,
-          "maxSeen": 4
+          "outputItemID": 36921,
+          "outputName": "Autumn's Glow",
+          "totalQuantity": 5
         },
         {
-          "itemID": 43107,
-          "totalQuantity": 4,
-          "castsWithDrop": 4,
-          "positiveHistogram": {
-            "1": 4
-          }
+          "outputItemID": 36930,
+          "outputName": "Monarch Topaz",
+          "totalQuantity": 10
+        },
+        {
+          "outputItemID": 36918,
+          "outputName": "Scarlet Ruby",
+          "totalQuantity": 4
+        },
+        {
+          "outputItemID": 36932,
+          "outputName": "Dark Jade",
+          "totalQuantity": 24
+        },
+        {
+          "outputItemID": 36923,
+          "outputName": "Chalcedony",
+          "totalQuantity": 23
+        },
+        {
+          "outputItemID": 36929,
+          "outputName": "Huge Citrine",
+          "totalQuantity": 19
+        },
+        {
+          "outputItemID": 36920,
+          "outputName": "Sun Crystal",
+          "totalQuantity": 17
+        },
+        {
+          "outputItemID": 36926,
+          "outputName": "Shadow Crystal",
+          "totalQuantity": 23
+        },
+        {
+          "outputItemID": 36917,
+          "outputName": "Bloodstone",
+          "totalQuantity": 27
         }
       ],
-      "source": "https://www.wowhead.com/item=13465/mountain-silversage"
+      "source": "https://www.wowhead.com/cata/spell=31252/prospecting",
+      "sourceComment": "myrmideon / 558153",
+      "note": "Counted item totals from firsthand source, NOT per-item hit counts. One comment mirrored on WotLK/PTR/locale pages; 30 unspecified-size stacks, no verified completed casts or zero outcomes."
     },
     {
-      "studyKey": "wowhead-anastasy-186-icecap-101-silversage-mixed",
-      "inputItemID": null,
-      "reportedInputHerbs": {
-        "13465": 101,
-        "13467": 186
+      "tokenItemID": 45661,
+      "tokenName": "Spaulders of the Wayward Vanquisher",
+      "historicalRedeem": "vendor",
+      "historicalDalaranVendors": [
+        "Dubin Clay",
+        "Valerie Langrom",
+        "Paldesse"
+      ],
+      "rewardItemIDs": [
+        45400,
+        45339,
+        45344,
+        45369,
+        45352,
+        45359,
+        45349
+      ],
+      "classMap": {
+        "Rogue": [
+          45400
+        ],
+        "Death Knight": [
+          45339,
+          45344
+        ],
+        "Mage": [
+          45369
+        ],
+        "Druid": [
+          45352,
+          45359,
+          45349
+        ]
       },
-      "casts": null,
-      "outputs": [
-        {
-          "itemID": 39341,
-          "totalQuantity": 158
-        },
-        {
-          "itemID": 43107,
-          "totalQuantity": 32
-        }
-      ],
-      "source": "https://www.wowhead.com/item=39341/silvery-pigment"
-    },
-    {
-      "studyKey": "wowhead-affe83-eight-stacks-32-mills",
-      "inputItemID": null,
-      "casts": 32,
-      "outputs": [
-        {
-          "itemID": 43107,
-          "totalQuantity": 2,
-          "castsWithDrop": null
-        }
-      ],
-      "source": "https://www.wowhead.com/item=43107/sapphire-pigment"
-    },
-    {
-      "studyKey": "wowhead-435764-plaguebloom-one-mill-three-sapphire",
-      "inputItemID": 13466,
-      "sourceInputLabel": "Plaguebloom",
-      "casts": 1,
-      "outputs": [
-        {
-          "itemID": 43107,
-          "totalQuantity": 3,
-          "castsWithDrop": 1,
-          "histogram": {
-            "3": 1
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/item=43107/sapphire-pigment"
+      "listCompleteForHistoricalVendor": true,
+      "currentUseVersionUnverified": true,
+      "source": "https://warcraft.wiki.gg/wiki/Spaulders_of_the_Wayward_Vanquisher",
+      "corroboration": "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 12,
-    "distinct_original_authors": 5,
-    "distinct_original_cohorts": 7,
-    "new_histogram_output_rows": 7,
-    "new_exact_item_logged_mill_cohorts": 3,
-    "new_warmaul_cobalt_feliron_casts": 0,
-    "verified_current_retail_casts": 0,
+    "new_evidence_records": 13,
+    "distinct_original_numeric_cohorts": 1,
+    "source_reported_output_quantity_rows": 12,
+    "verified_completed_new_casts": 0,
+    "verified_new_zero_histograms": 0,
+    "verified_current_retail_processing_samples": 0,
+    "new_token_reward_variants": 7,
     "prices_recorded": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-07T2246-silvery-sapphire-original-mill-histograms.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-07T2246-silvery-sapphire-original-mill-histograms.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-07T2341-saronite-30stack-wayward-token.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-07T2341-saronite-30stack-wayward-token.jsonl",
   "sources": [
-    "https://www.wowhead.com/item=13466/sorrowmoss",
-    "https://www.wowhead.com/item=13464/golden-sansam",
-    "https://www.wowhead.com/item=13465/mountain-silversage",
-    "https://www.wowhead.com/item=39341/silvery-pigment",
-    "https://www.wowhead.com/item=43107/sapphire-pigment"
+    "https://www.wowhead.com/cata/spell=31252/prospecting",
+    "https://www.wowhead.com/wotlk/spell=31252/prospecting",
+    "https://warcraft.wiki.gg/wiki/Spaulders_of_the_Wayward_Vanquisher",
+    "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher"
   ],
-  "verified_base_commit_sha": "ddbac976569b1b52b6349b24018004f53ea32ee1",
-  "verified_commit_sha": null,
-  "commit_sha_note": "Evidence and status are written in one atomic commit; the commit SHA cannot be embedded without a second commit. Read-back the branch HEAD and both files after publishing.",
+  "verified_base_commit_sha": "ca0fbff3eb8cf08e06e06223bd796a51a3f8f44c",
+  "verified_commit_sha": "27879b6aee555a671f24641ad1fba7dbc18a604e",
+  "commit_sha_note": "Evidence file was committed and read back with 13 JSONL records; GitHub connector could not supply base tree SHA for a one-commit atomic two-file write, so status is recorded as a separate subsequent content commit. verified_commit_sha identifies the verified evidence commit.",
   "blockers": [
-    "Existing Warmaul 24995 historical 2068-count Looter material mapping conflicts with modern scaled 24995 cannot-disenchant; no current live bonus ID, skill, build, eligibility attempt or original per-cast export.",
-    "No independent current Retail Cobalt 36909 or Fel Iron 23424 source-logged cast/hit/zero/refund arrays; previously exhausted source tables not recopied.",
-    "New milling numbers are historical forum comments, missing original build/patch, skill and profession statistics; warcanon notes guild perk but not specific material count effect.",
-    "Warmaul token 45661 lacks new current redeem/variants validation.",
-    "First Sorrowmoss run mixed Golden Sansam, so output cannot be partitioned by input; anastasy mixed Icecap/Silversage also indivisible.",
-    "Some positive-stack histograms omit zero bins; did not invent missed casts or derive probabilities from quantity totals.",
-    "257849 uses three unspecified-size historical stacks without explicit mill count; no nominal equivalent presented as measured."
+    "24995 original item-based 2068 Looter material counts remain patch/bonus/item-level ambiguous against modern Retail eligibility. No independently verified original raw completed-cast exports or zero-inclusive stack histogram.",
+    "Cobalt 36909 and Fel Iron 23424 still lack independent real completed-cast+material-hit+zero/refund logs; previously exhausted historical tables deliberately not recopied.",
+    "Saronite 30 historical stacks may be partially filled; no actual operation denominator, skill, patch, item-level, build, histogram, positive-hit count or refund trace. Never infer 120 actual casts or a chance from gem totals.",
+    "Token 45661 current tooltip gives use-created loot-specialization reward, distinct from historical vendor option. Exact modern use output mapping requires in-game verification.",
+    "Source mirror duplication avoided: same Wowhead 558153/myrmideon comment appears across regional, expansion and PTR pages."
   ],
   "exhausted_sources": [
-    "Existing 24995 and neighboring TBC Looter cumulative counts, 36909 24-stack and 180-ore samples, and Fel Iron historic original Thottbot studies already in legacy evidence; no duplicate counts.",
-    "Killerpet 2009 Northrend milling and Sgtown samples already in imported old research; no republication as new cohorts.",
-    "Original 2008 PTR commenter 180977 pigment counts are already in earlier research and migration; not copied.",
-    "Warcanon, anastasy and identified independent Silvery/Sapphire original authors not found by dedicated GitHub code search before recording."
+    "Warmaul 24995 cumulative Wowhead Looter source and Evowow opaque weights already documented in preexisting evidence; no repeat.",
+    "Cobalt 36909 24-stack RU Wowhead report and Fel Iron 23424 Thottbot 100/565-ore original cohorts already documented; no repeat.",
+    "Targeted new searches across Wowhead, Reddit, Warcraft Wiki and profession guide sites found no additional independent completed Cobalt/Fel Iron cast logs with hit counts this run.",
+    "Saronite 36912 original commenter myrmideon/558153 indexed in multiple Wowhead locale/expansion mirrors; all are a SINGLE original cohort."
   ],
-  "next_concrete_step": "Obtain unambiguous original current-Retail Warmaul 24995 eligibility/bonus-ID/disenchant logs; seek first-party click-by-click Cobalt 36909 and Fel Iron 23424 zero-inclusive output exports. For historical milling seek patch/skill and isolate mixed herb sources before extrapolation."
+  "next_concrete_step": "Recover original Retail 24995 eligibility bonus/version and DE cast-by-cast export; seek Cobalt 36909 or Fel Iron 23424 first-party observer logs with denominator and zero-inclusive output histogram. Independently test contemporary token 45661 Use redemption by class/loot spec before mapping historic vendors to Retail."
 }
