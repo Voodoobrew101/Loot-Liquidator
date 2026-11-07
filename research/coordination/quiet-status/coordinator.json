@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T17:03:37.274Z",
+  "updated_at": "2026-11-07T18:29:20.815Z",
   "branch": "implementation/five-agent-completion",
-  "status": "research_only: two independent Midnight prospecting/Crushing no-Multicraft guides plus original player correction corroborated; input-Resourcefulness UI omission recorded; no new measured casts, gold decisions or client validation",
+  "status": "research_only: newly checked March 2026 Resourcefulness input-return math and documented 11.0.7 PTR rollback; source guard and verified worker checkpoint only; no new measured Retail operations, validated gold decisions, or engine/client tests",
   "task_ids": [
     "COORD-MIDNIGHT-MULTICRAFT-SCOPE-20261107",
     "T0042",
@@ -53,7 +53,8 @@
     "COORD-DF-STINGERPROOF-MARGINAL-HIT-OVERLAP-20261107",
     "T0020",
     "COORD-LEGACY-EMERALD-INDIGO-PTR-20261107",
-    "COORD-RECYCLE-30KP-MULTIPLIER-QUALITY-20261107"
+    "COORD-RECYCLE-30KP-MULTIPLIER-QUALITY-20261107",
+    "COORD-RESOURCEFULNESS-RETURN-BASIS-20261107"
   ],
   "exact_gaps_targeted": [
     "M10/T0034: March 12 original player reports Resourcefulness hidden in Prospecting Crafting Details while ore refunds occur; actual per-operation nominal inputs, saved ore counts, effective stats/skill/build and cast-time reagent quality links are missing; no input-saving coefficient can be calibrated.",
@@ -1129,7 +1130,8 @@
         "https://us.forums.blizzard.com/en/wow/t/impossible-patron-orders/2276246/16",
         "https://www.reddit.com/r/woweconomy/comments/1sv5u5a/recycling_changes/"
       ]
-    }
+    },
+    "M15/T0034: two March 2026 original community discussions report Resourcefulness base conditional return approximately 30% per proc and per-reagent-group roll semantics, with multiplicative specialization bonus; this is not a measured current-build recipe-specific coefficient or 0-inclusive ledger. Historical proposed 11.0.7 +50%-return PTR change was officially reverted. Distinguish average conditional saved reagent share from chance, discrete 1..ceil(0.4×stack) hypothetical and actual spell-level effective savings; require original live recipe/rank/skill/build-stamped input-refund record before changing EV."
   ],
   "newly_verified_fields_or_cohorts": [
     {
@@ -3153,33 +3155,65 @@
       "new_independent_cohorts_added": 0,
       "current_Retail_gold_decisions_verified": 0,
       "source_evidence_file": "research/v3/evidence/master/2026-11-07T1604-recycling-specialization-yield-quality-source-guard.md"
+    },
+    {
+      "task_id": "COORD-RESOURCEFULNESS-RETURN-BASIS-20261107",
+      "kind": "source_supported_unverified_live_input_savings_mechanics_not_measured_cohort",
+      "sources": [
+        "https://www.reddit.com/r/woweconomy/comments/1rmxr6g/a_heads_up_on_how_resourcefulness_works_for_those/",
+        "https://www.reddit.com/r/woweconomy/comments/1ry1wey/resourcefulness_math/",
+        "https://www.icy-veins.com/wow/news/patch-11-0-7-ptr-development-notes-no-profession-respec/",
+        "https://us.forums.blizzard.com/en/wow/t/professions-in-1107/2008739"
+      ],
+      "original_2026_community_base_return_given_proc": 0.3,
+      "reference_community_extra_return_bonus_example": 0.5,
+      "arithmetic_example_proc_chance": 0.3,
+      "arithmetic_example_expected_input_saving": 0.135,
+      "illustrative_only": true,
+      "previous_patch_change": "11.0.7 PTR proposed +50% return increase was reverted before release; not a 2026 coefficient",
+      "current_2026_profession_specific_coefficient_verified": false,
+      "per_operation_refunds_or_casts": null,
+      "output_quantity_or_hit_probability_evidence": false,
+      "source_evidence_file": "research/v3/evidence/master/2026-11-07T1826-resourcefulness-return-basis-source-guard.md",
+      "actual_engine_or_live_client_test": false,
+      "independent_measured_cohorts_added": 0,
+      "verified_gold_decisions_added": 0
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
-  "new_gold_ev_coverage_verified": 0,
+  "new_gold_ev_coverage_verified": false,
   "worker_reports_verified": {
     "legacy": {
-      "reported_at": "2026-11-07T17:01:41.726Z",
-      "source_rows": 17,
-      "adamantite_rows": 13,
-      "tbc_mixed_ring_rows": 3,
-      "netherweave_gloves_rows": 1,
-      "source_flavour": "TBC Classic / historical",
-      "new_current_retail_actionable_ev": 0,
-      "original_source_direct_reopened_by_coordinator": false,
-      "worker_status_sha": "d577df80801cfc774b0dcdc23ca9c99f0de4f3e7"
+      "reported_at": "2026-11-07T18:18:59.929Z",
+      "status_blob_sha": "7e85e4b2726036e8fa79bef284af33792598ec71",
+      "evidence_blob_sha": "fde434952bdaac07340a70465b426b1597ecb413",
+      "evidence_rows_parsed": 13,
+      "kind": "TBC Classic independently authored commenter cumulative unit totals; not cast histograms",
+      "new_current_retail_actionable_ev": 0
     },
     "dragonflight": {
-      "reported_at": "2026-11-07T16:35:18.152Z",
-      "run_status": "completed"
+      "reported_at": "2026-11-07T17:40:43.200Z",
+      "status_blob_sha": "38e939760910d9f2b48262495c338e07ba1c3e84",
+      "evidence_blob_sha": "26e605525f14a49a23b0838947f0ef076820ac91",
+      "evidence_rows_parsed": 1,
+      "kind": "second third-party rank corroboration with conflicting vendor; no original measured cohort",
+      "new_current_retail_actionable_ev": 0
     },
     "war-within": {
-      "reported_at": "2026-11-07T16:26:47.396Z",
-      "run_status": "completed"
+      "reported_at": "2026-11-07T17:27:18.435Z",
+      "status_blob_sha": "f7eacee926ffae9cd5cc6178d5b3db93a32b05eb",
+      "evidence_blob_sha": "2bdcd8695cc52a131d7f30ae86d7ccc06c3d55bf",
+      "evidence_rows_parsed": 15,
+      "kind": "four anniversary-reissue Looter cumulative correction cohorts, not live TWW baseline",
+      "new_current_retail_actionable_ev": 0
     },
     "midnight": {
-      "reported_at": "2026-11-07T16:12:59.351Z",
-      "run_status": "completed"
+      "reported_at": "2026-11-07T18:23:15.160Z",
+      "status_blob_sha": "1b1bce5a0706fac1705a73623c4a3f2c2c7f73d9",
+      "evidence_blob_sha": "782ca59d526b20eaf04b2c23fd3633b9b5ef68c2",
+      "evidence_rows_parsed": 3,
+      "kind": "searched / no new measured prospecting or DE cast cohort; M11 discrepancy reaffirmed",
+      "new_current_retail_actionable_ev": 0
     }
   },
   "evidence_files": [
@@ -3209,7 +3243,8 @@
     "research/v3/evidence/master/2026-11-07T1307-powder-evercore-conditional-reference.md",
     "research/v3/evidence/master/2026-11-07T1407-df-stingerproof-overlap-guard.md",
     "research/v3/evidence/master/2026-11-07T1506-emerald-indigo-source-cooutputs-range.md",
-    "research/v3/evidence/master/2026-11-07T1604-recycling-specialization-yield-quality-source-guard.md"
+    "research/v3/evidence/master/2026-11-07T1604-recycling-specialization-yield-quality-source-guard.md",
+    "research/v3/evidence/master/2026-11-07T1826-resourcefulness-return-basis-source-guard.md"
   ],
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
@@ -3339,14 +3374,18 @@
     "https://www.wowhead.com/cata/item=39339/emerald-pigment",
     "https://www.wowhead.com/item=43105/indigo-pigment",
     "https://www.wow-professions.com/guides/milling-table-inscription",
-    "https://www.wow-professions.com/midnight/engineering-specialization-guide-and-builds"
+    "https://www.wow-professions.com/midnight/engineering-specialization-guide-and-builds",
+    "https://www.reddit.com/r/woweconomy/comments/1rmxr6g/a_heads_up_on_how_resourcefulness_works_for_those/",
+    "https://www.reddit.com/r/woweconomy/comments/1ry1wey/resourcefulness_math/",
+    "https://www.icy-veins.com/wow/news/patch-11-0-7-ptr-development-notes-no-profession-respec/",
+    "https://us.forums.blizzard.com/en/wow/t/professions-in-1107/2008739"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "0f9e68527af51a8d41e341d3b15d0107c951db14",
+    "research": "fa3b34dfcf9808cdf0273be7261955a189ad05e5",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
-  "commit_sha_when_verified": "b16844be4aa23285496bc3de3b4ce09b1f7f1bd0",
+  "commit_sha_when_verified": "c0f672698ec0f300dd561dea82fd4cc512b68cd5",
   "blockers": [
     "M10/T0034: firsthand reported hidden profession-UI Resourcefulness versus refunded ore lacks exact operation, rank, equipment, returned reagent amount and effective stat telemetry; cannot price uncalibrated savings as guaranteed.",
     "M11/T0033: actual 2026 Retail Prospect/Crush recipe craft-window Multicraft capability was not inspected in a WoW client; despite three agreeing public sources, stat formula/per-cast observed data unavailable. No multiplier/extra-gem output term can be licensed by this research.",
@@ -3390,7 +3429,8 @@
     "COORD-POWDER-EVERCORE-130-REFERENCE-20261107: Draggoth's 1.3 Evercores for five Powder Pigment at 10 Recycling KP is a player illustrative reference, not observed input/output rank-specific 0-inclusive operation data. Missing exact variant itemLinks, zero/hit histogram, live patch/skill/refunds and verified current recipe eligibility. Do not infer P(hit), assign 243582 to original output, invent skill scaling, or price a current action until protected actual-engine source-precedence/tooltip validation.",
     "COORD-DF-STINGERPROOF-MARGINAL-HIT-OVERLAP-20261107: Source 194406 has 78 positive material-row occurrences against 77 Looter 'disenchanted' entries; original full 0-inclusive per-cast multi-material/bonus output events and shared denominator semantics unavailable. Do not force mutually exclusive rows, infer per-output exact units, zero histogram, current game eligibility, or supported current Retail gold EV.",
     "COORD-LEGACY-EMERALD-INDIGO-PTR-20261107: Unknown original IP material item hyperlink, full source dedup, current Retail behavior/eligibility and output-specific hits/zeros; original Fadeleaf reported rate uses inconsistent stack units. Worker-only source correction required; no current gold action/tooltip proof.",
-    "COORD-RECYCLE-30KP-MULTIPLIER-QUALITY-20261107: Current 30-KP source yield-doubling claim is secondary/rounded; specialization skill and reagent quality affect rank, a player reports April 2026 Q2-to-Q1 change; no exact node coefficient, actual spell and rank-linked input/output, operation-level output and refunded stacks, or live game confirmation. Cannot value rank-specific Evercore or apply a 2x scaling."
+    "COORD-RECYCLE-30KP-MULTIPLIER-QUALITY-20261107: Current 30-KP source yield-doubling claim is secondary/rounded; specialization skill and reagent quality affect rank, a player reports April 2026 Q2-to-Q1 change; no exact node coefficient, actual spell and rank-linked input/output, operation-level output and refunded stacks, or live game confirmation. Cannot value rank-specific Evercore or apply a 2x scaling.",
+    "M15 Resourcefulness current Retail coefficient and low-stack per-ingredient-group discretization remain unverified on a build-/rank-/spec-stamped 5-ore Prospect, 10-herb Mill or five-reagent Recycle log; community formulas cannot be silently priced as a verified character-specific refund multiplier."
   ],
   "exhausted_sources": [
     "2026-11-07 M11 checked two independent current JC processing guide assertions, October 3 original player correction, and March 12 UI/refund firsthand comment. Do not re-audit as independent drop data; obtain actual game spell capability and per-cast refunds next.",
@@ -3420,7 +3460,8 @@
     "2014 Enchantrix ProspectableItems vs 2015 ReagentMaker eight exact ID-pair crosswalk audited once; do not reuse as independent source cohorts, and do not repeat without new upstream units/actual measurements.",
     "Coordinator reread of original 194406 and control 194389 Looter cumulative tables completed; do not repeat as a new study without an original event-level export, source correction or independent cast evidence. The Jallfo Dragonflight workbook formula discrepancy was already thoroughly audited 2026-11-02; no duplication this run.",
     "Source comment 180977/Legacy 20261107T1447 rechecked once for its missing Indigo cooutputs and Khadgar minSeen; do not repeat as new independent study unless source event-level information appears.",
-    "Two 2026 Engineering guides and original 10-KP Draggoth note were compared once for quantity-vs-quality mechanics; avoid repeating these secondary texts as new casts. Seek original node/spell tooltip or rank-linked operation export."
+    "Two 2026 Engineering guides and original 10-KP Draggoth note were compared once for quantity-vs-quality mechanics; avoid repeating these secondary texts as new casts. Seek original node/spell tooltip or rank-linked operation export.",
+    "2026-03-13 original Resourcefulness per-stack/30%-base discussion, 2026-03-19 math explanation, and 2024 Blizzard 11.0.7 PTR reversal reviewed once. They contain no raw 2026 recipe-specific refunds, so do not re-crawl as independent casts or live verification."
   ],
   "decisions_needed": [
     {
@@ -3446,19 +3487,27 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Ask existing Midnight T0033/T0034 worker to secure the original current Retail prospect/crush recipe pane (Multicraft stat eligibility) and logged ore-refund events with nominal 5-ore operation, exact input/output links/ranks, effective skill/spec/stats, and saved input quantity; reviewer can then correct mechanics.md M11 on authorized scope and integration owner can fixture synthetic-price calculation. No new worker schedule or ownership change.",
+  "next_concrete_step": "Request a single original live build-stamped 5-ore Prospect or 10-herb Mill complete-input/refund log with item/rank IDs, recipe pane Resourcefulness display, node extra-return bonus, skill/spec and 0-refund events; use reviewer-owned mechanics correction after confirming actual small-stack return distribution. Protect three-pass source selection and test only on its owner's branch with synthetic prices.",
   "validation_executed": {
-    "at_utc": "2026-11-07T17:01:34.263Z",
-    "git_head_read": "0f9e68527af51a8d41e341d3b15d0107c951db14",
-    "evidence_blob_readback": true,
-    "dashboard_readback": true,
-    "source_crosscheck_public_guides": 2,
-    "original_player_discussion_sources": 2,
-    "worker_actual_run_results_read": true,
+    "at_utc": "2026-11-07T18:29:20.815Z",
+    "read_github_main_research_integration_heads": true,
+    "research_rules_queue_strategy_flags_reviewed": true,
+    "original_source_texts_read": 5,
+    "latest_four_worker_json_statuses_read": true,
+    "latest_four_worker_evidence_files_parsed": [
+      13,
+      1,
+      15,
+      3
+    ],
+    "new_research_guard_read_back": true,
+    "dashboard_read_back": true,
     "github_ci_readback": {
-      "sha": "4a62fc262641c86eb0a02a4cd2b07f9051cffd82",
-      "run_id": 42392060461,
-      "conclusion": "success_on_prewrite_worker_head_only"
+      "run_id": 42401048336,
+      "head_sha": "fa3b34dfcf9808cdf0273be7261955a189ad05e5",
+      "conclusion": "success",
+      "finished_at_utc": "2026-11-07T18:23:53Z",
+      "note": "passed only prewrite worker head; coordinator commits not CI-tested"
     },
     "addon_compiler_or_lua_suite_executed": false,
     "synthetic_price_valuation_executed": false,
@@ -3466,8 +3515,8 @@
     "live_retail_client_executed": false,
     "new_independent_measured_cohorts": 0,
     "new_verified_gold_decisions": 0,
-    "no_main_or_integration_branch_writes": true,
-    "no_merges_or_releases": true
+    "main_or_integration_branch_writes": 0,
+    "merges_or_releases": 0
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -3481,52 +3530,32 @@
     "no_production_main_edits": true,
     "no_protected_implementation_edits": true,
     "no_merge_or_release": true,
-    "multicraft_unverified_off": true
+    "multicraft_unverified_off": true,
+    "no_merges": true,
+    "no_releases": true,
+    "no_main_modifications": true,
+    "no_three_pass_branch_modifications": true,
+    "no_worker_file_overwrites": true,
+    "no_new_schedules": true,
+    "no_live_WoW_verified": true
   },
-  "notifications": "On demand only. No routine outbound reports; Dot monitors.",
+  "notifications": "none: owner requested on-demand updates only",
   "last_session": {
-    "task_id": "COORD-MIDNIGHT-MULTICRAFT-SCOPE-20261107",
-    "at_utc": "2026-11-07T17:01:34.263Z",
-    "verified_revisions_before_write": {
-      "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-      "research": "0f9e68527af51a8d41e341d3b15d0107c951db14",
-      "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
-    },
-    "evidence_file": "research/v3/evidence/master/2026-11-07T1656-midnight-prospecting-stats-scope-guard.md",
-    "evidence_commit_sha": "b16844be4aa23285496bc3de3b4ce09b1f7f1bd0",
-    "dashboard_commit_sha": "0f9e68527af51a8d41e341d3b15d0107c951db14",
-    "worker_reports_at_utc": {
-      "legacy": "2026-11-07T15:42:02.314Z",
-      "dragonflight": "2026-11-07T16:35:18.152Z",
-      "war_within": "2026-11-07T16:26:47.396Z",
-      "midnight": "2026-11-07T16:12:59.351Z"
-    },
-    "actual_checks": [
-      "two independent guide source texts",
-      "original Oct 3 community correction",
-      "original Mar 12 UI/refund comment",
-      "research v3 rules queue mechanics strategy and flags",
-      "worker status and execution readbacks",
-      "GitHub refs PR and workflow checks",
-      "evidence and dashboard readback"
-    ],
-    "new_measured_casts": 0,
+    "task_id": "COORD-RESOURCEFULNESS-RETURN-BASIS-20261107",
+    "at_utc": "2026-11-07T18:29:20.815Z",
+    "evidence_file": "research/v3/evidence/master/2026-11-07T1826-resourcefulness-return-basis-source-guard.md",
+    "evidence_commit_sha": "c0f672698ec0f300dd561dea82fd4cc512b68cd5",
+    "dashboard_commit_sha": "cc88fda08815479a2bddb28857cbd69c243e2ce5",
+    "prior_head": "fa3b34dfcf9808cdf0273be7261955a189ad05e5",
     "new_measured_cohorts": 0,
     "new_verified_gold_decisions": 0,
-    "actual_client_tests": false,
-    "actual_engine_tests": false,
-    "merges": 0,
-    "releases": 0,
-    "later_worker_checkpoint": {
-      "role": "legacy",
-      "reported_at": "2026-11-07T17:01:41.726Z",
-      "notes": "17 worker evidence rows read back after coordinator source guard and first dashboard; no claim of coordinator-discovered studies",
-      "evidence_file": "research/v3/evidence/legacy/20261107T1701-adamantite-48315-and-tbc-disenchant.jsonl",
-      "rows_parsed": 17,
-      "research_head_before_dashboard": "a93a83f83ea204bb30ceab0c30bd9bcfc71ae74f",
-      "updated_dashboard_commit": "895de2cb604731661fc757bed4187cfc4767ba83"
-    },
-    "dashboard_latest_worker_addendum_commit": "895de2cb604731661fc757bed4187cfc4767ba83"
+    "actual_engine_or_client_tests": false,
+    "worker_reports_at_utc": {
+      "legacy": "2026-11-07T18:18:59.929Z",
+      "dragonflight": "2026-11-07T17:40:43.200Z",
+      "war-within": "2026-11-07T17:27:18.435Z",
+      "midnight": "2026-11-07T18:23:15.160Z"
+    }
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
@@ -3754,8 +3783,8 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
     "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
-  "research_branch_head_read_before_write": "559d5d287bd53c134c1d81c8578adf27c5532e53",
-  "research_branch_prewrite_head_verified_at_utc": "2026-11-07T16:06:38.395Z",
+  "research_branch_head_read_before_write": "cc88fda08815479a2bddb28857cbd69c243e2ce5",
+  "research_branch_prewrite_head_verified_at_utc": "2026-11-07T18:29:20.815Z",
   "verified_base_commit_sha": "559d5d287bd53c134c1d81c8578adf27c5532e53",
   "current_status_commit_sha": null,
   "commit_sha_note": "This SHA is the verified research-only evidence note commit; dashboard write was separately returned as 1aede81b3f50. This coordinator status update has its own later SHA, which cannot be inserted into its own commit.",
@@ -3792,8 +3821,13 @@
     "actual_tooltip_executed": false,
     "real_character_tests_executed": false
   },
-  "dashboard_commit_sha_when_verified": "895de2cb604731661fc757bed4187cfc4767ba83",
-  "actual_last_worker_readbacks_utc": "2026-11-06T22:02:14.232Z",
+  "dashboard_commit_sha_when_verified": "cc88fda08815479a2bddb28857cbd69c243e2ce5",
+  "actual_last_worker_readbacks_utc": {
+    "legacy": "2026-11-07T18:18:59.929Z",
+    "dragonflight": "2026-11-07T17:40:43.200Z",
+    "war-within": "2026-11-07T17:27:18.435Z",
+    "midnight": "2026-11-07T18:23:15.160Z"
+  },
   "worker_readback_utc": "2026-11-06T17:05:08.910Z",
   "worker_statuses_verified_in_this_session": {
     "legacy": "2026-11-06T23:38:38.877Z",
@@ -3815,7 +3849,7 @@
   "newly_confirmed_economic_actions_this_run": 0,
   "release_or_merges_performed": false,
   "verified_source_evidence_branch_head": "b16844be4aa23285496bc3de3b4ce09b1f7f1bd0",
-  "verified_source_evidence_blob_sha": "01e92be47422cbfa2b244d992f49027212369fed",
+  "verified_source_evidence_blob_sha": "742b16bd1dc8a8c9317185cc9d152b748c095011",
   "no_new_measured_cohorts_by_coordinator": true,
   "no_addon_or_client_validation_in_this_run": true,
   "previous_last_session": {
