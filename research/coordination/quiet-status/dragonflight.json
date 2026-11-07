@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-07T05:39:56.920Z",
+  "updated_at": "2026-11-07T06:29:56.719Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Identity-only correction for an EXISTING 80-prospect Prismatic Ore study: rank-3 Eternity Amber 192851, four units. No new independent completed-cast/zero-inclusive prospecting or milling cohort; priority source search exhausted for this run.",
+  "status": "12 new original item-specific Wowhead Looter per-output disenchant occurrence rows from six Dragonflight items (107 reported disenchants across distinct items). No new rank-specific prospecting/milling per-cast histograms; those remain open.",
   "task_ids": [
     "T0020",
     "T0019",
@@ -15,135 +15,260 @@
     "T0014"
   ],
   "exact_gaps_targeted": [
-    "T0041/T0046: input Prismatic Ore 194545 -> rank-3 Eternity Amber 192851; original superbondez 400 ore / 80 explicitly completed prospects / 4 output units, but occurrence hits, zeros, positive stack histogram, refund details, skill/spec/patch still unreported.",
-    "T0046 S19: Serevite Ore item rank identity GoldCap current retail 190395=R1, 190396=R2, 190394=R3; original author rank-to-ID conflict pending Master+Blizzard authoritative tooltip approval.",
-    "T0020/T0019: Draconium 189143 R1/188658 R2/190311 R3 lack independent rank-specific complete cast outcome histograms; old nominal ore totals are not actual cast denominators.",
-    "T0041: Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545 output 0/1/2+ per-cast distributions missing; S21 Eternity Amber R1/R2 source malformed, unit counts still unknown.",
-    "T0018/T0015/T0017/T0016/T0014: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 and Hochenblume 191462 milling by exact rank/output missing measured completed casts, outputs and Resourcefulness-aware histograms."
+    "T0020/T0019 Draconium 189143 R1, 188658 R2, 190311 R3: fresh independent per-output completed casts/hits, zero outcomes and 0/1/2+ histograms absent; nominal ore input not a cast denominator.",
+    "T0046 Serevite 190395 R1, 190396 R2, 190394 R3: Blizzard-authoritative rank-ID corroboration and rank-specific independent post-hotfix casts/histograms still missing.",
+    "T0041 Khaz'gorite 190312/190313/190314, Prismatic 194545: independent per-output zero-inclusive cast histograms absent; known superbondez 80-prospect cohort is already recorded and must not be duplicated.",
+    "T0018/T0015/T0017/T0016/T0014 Bubble Poppy 191467, Saxifrage 191464/191465/191466 and Hochenblume 191462: current patch rank- and skill-specific completed mill logs/histograms/refunds missing.",
+    "Gear-specific disenchants: sample denominators and per-material occurrence counts for 207213, 207214, 207215, 207220, 200431, 200430 were previously unrepresented in currently searchable research; original material unit totals and joint outcome histograms remain missing."
   ],
   "newly_verified_fields": [
     {
-      "inputItemID": 194545,
-      "outputItemID": 192851,
-      "outputName": "Eternity Amber",
-      "outputRank": 3,
-      "field": "previously-null outputItemID",
-      "cohort": "wowhead-superbondez-prismatic-ore-400",
-      "casts": 80,
-      "totalQuantity": 4,
-      "source": "https://www.wowhead.com/item=194545/prismatic-ore",
-      "corroboration": "https://goldcap.gg/retail/us/items/192851",
-      "verification": "Source-identification corroboration by secondary current Retail catalog, not an independent in-game Blizzard API reading or new measured cohort"
+      "inputItemID": 207213,
+      "outputItemID": 194124,
+      "casts": 24,
+      "castsWithDrop": 17,
+      "percentShown": 71,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+      "source_kind": "wowhead-looter-cumulative"
     },
     {
-      "inputItemID": 190395,
-      "inputName": "Serevite Ore",
-      "inputRank": 1,
-      "field": "rank-to-itemID",
-      "source": "https://goldcap.gg/retail/us/items/190395",
-      "verification": "Secondary current-Retail catalog corroboration; t-mart/wow-auction historical GitHub README independently lists same rank mapping; Master shared-schema review pending"
+      "inputItemID": 207213,
+      "outputItemID": 200113,
+      "casts": 24,
+      "castsWithDrop": 9,
+      "percentShown": 38,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+      "source_kind": "wowhead-looter-cumulative"
     },
     {
-      "inputItemID": 190396,
-      "inputName": "Serevite Ore",
-      "inputRank": 2,
-      "field": "rank-to-itemID",
-      "source": "https://goldcap.gg/retail/us/items/190396",
-      "verification": "Secondary current-Retail catalog corroboration; t-mart/wow-auction historical GitHub README independently lists same rank mapping; Master shared-schema review pending"
+      "inputItemID": 207214,
+      "outputItemID": 200113,
+      "casts": 17,
+      "castsWithDrop": 15,
+      "percentShown": 88,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=207214/blazing-dreamstalkers-bracers",
+      "source_kind": "wowhead-looter-cumulative"
     },
     {
-      "inputItemID": 190394,
-      "inputName": "Serevite Ore",
-      "inputRank": 3,
-      "field": "rank-to-itemID",
-      "source": "https://goldcap.gg/retail/us/items/190394",
-      "verification": "Secondary current-Retail catalog corroboration; t-mart/wow-auction historical GitHub README independently lists same rank mapping; Master shared-schema review pending"
+      "inputItemID": 207214,
+      "outputItemID": 194124,
+      "casts": 17,
+      "castsWithDrop": 12,
+      "percentShown": 71,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=207214/blazing-dreamstalkers-bracers",
+      "source_kind": "wowhead-looter-cumulative"
     },
     {
-      "outputItemID": 192849,
-      "outputName": "Eternity Amber",
-      "outputRank": 1,
-      "field": "rank-to-itemID corroboration",
-      "source": "https://goldcap.gg/retail/us/items/192849",
-      "verification": "Secondary current-Retail catalog; original Prismatic R1/R2 units remain ambiguous null"
+      "inputItemID": 207215,
+      "outputItemID": 200113,
+      "casts": 21,
+      "castsWithDrop": 14,
+      "percentShown": 67,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=207215/blazing-dreamstalkers-spined-girdle",
+      "source_kind": "wowhead-looter-cumulative"
     },
     {
-      "outputItemID": 192850,
-      "outputName": "Eternity Amber",
-      "outputRank": 2,
-      "field": "rank-to-itemID corroboration",
-      "source": "https://goldcap.gg/retail/us/items/192850",
-      "verification": "Secondary current-Retail catalog; original Prismatic R1/R2 units remain ambiguous null"
+      "inputItemID": 207215,
+      "outputItemID": 194124,
+      "casts": 21,
+      "castsWithDrop": 11,
+      "percentShown": 52,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=207215/blazing-dreamstalkers-spined-girdle",
+      "source_kind": "wowhead-looter-cumulative"
+    },
+    {
+      "inputItemID": 207220,
+      "outputItemID": 200113,
+      "casts": 18,
+      "castsWithDrop": 10,
+      "percentShown": 56,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=207220/blazing-dreamstalkers-striders",
+      "source_kind": "wowhead-looter-cumulative"
+    },
+    {
+      "inputItemID": 207220,
+      "outputItemID": 194124,
+      "casts": 18,
+      "castsWithDrop": 8,
+      "percentShown": 44,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=207220/blazing-dreamstalkers-striders",
+      "source_kind": "wowhead-looter-cumulative"
+    },
+    {
+      "inputItemID": 200431,
+      "outputItemID": 194124,
+      "casts": 14,
+      "castsWithDrop": 8,
+      "percentShown": 57,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=200431/drape-of-the-walking-mountain",
+      "source_kind": "wowhead-looter-cumulative"
+    },
+    {
+      "inputItemID": 200431,
+      "outputItemID": 200113,
+      "casts": 14,
+      "castsWithDrop": 7,
+      "percentShown": 50,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=200431/drape-of-the-walking-mountain",
+      "source_kind": "wowhead-looter-cumulative"
+    },
+    {
+      "inputItemID": 200430,
+      "outputItemID": 200113,
+      "casts": 13,
+      "castsWithDrop": 9,
+      "percentShown": 69,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=200430/bracers-of-the-walking-mountain",
+      "source_kind": "wowhead-looter-cumulative"
+    },
+    {
+      "inputItemID": 200430,
+      "outputItemID": 194124,
+      "casts": 13,
+      "castsWithDrop": 7,
+      "percentShown": 54,
+      "percentMeaning": "perCast",
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=200430/bracers-of-the-walking-mountain",
+      "source_kind": "wowhead-looter-cumulative"
     }
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [
+  "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-superbondez-prismatic-ore-400",
-      "replaces": "dragonflight-20261031-50044",
-      "inputItemID": 194545,
-      "outputItemID": 192851,
-      "existingCasts": 80,
-      "existingTotalQuantity": 4,
-      "newCasts": 0,
-      "newTotalQuantity": 0
+      "studyKey": "wowhead-looter-df-207213-cumulative",
+      "inputItemID": 207213,
+      "reportedCompletedDisenchants": 24,
+      "source": "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+      "sourceDate": null,
+      "patch": null,
+      "skill": null,
+      "notes": "Cumulative reported Looter table; historic and version scope unknown; two material hits may overlap per cast."
+    },
+    {
+      "studyKey": "wowhead-looter-df-207214-cumulative",
+      "inputItemID": 207214,
+      "reportedCompletedDisenchants": 17,
+      "source": "https://www.wowhead.com/item=207214/blazing-dreamstalkers-bracers",
+      "sourceDate": null,
+      "patch": null,
+      "skill": null,
+      "notes": "Cumulative reported Looter table; historic and version scope unknown; two material hits may overlap per cast."
+    },
+    {
+      "studyKey": "wowhead-looter-df-207215-cumulative",
+      "inputItemID": 207215,
+      "reportedCompletedDisenchants": 21,
+      "source": "https://www.wowhead.com/item=207215/blazing-dreamstalkers-spined-girdle",
+      "sourceDate": null,
+      "patch": null,
+      "skill": null,
+      "notes": "Cumulative reported Looter table; historic and version scope unknown; two material hits may overlap per cast."
+    },
+    {
+      "studyKey": "wowhead-looter-df-207220-cumulative",
+      "inputItemID": 207220,
+      "reportedCompletedDisenchants": 18,
+      "source": "https://www.wowhead.com/item=207220/blazing-dreamstalkers-striders",
+      "sourceDate": null,
+      "patch": null,
+      "skill": null,
+      "notes": "Cumulative reported Looter table; historic and version scope unknown; two material hits may overlap per cast."
+    },
+    {
+      "studyKey": "wowhead-looter-df-200431-cumulative",
+      "inputItemID": 200431,
+      "reportedCompletedDisenchants": 14,
+      "source": "https://www.wowhead.com/item=200431/drape-of-the-walking-mountain",
+      "sourceDate": null,
+      "patch": null,
+      "skill": null,
+      "notes": "Cumulative reported Looter table; historic and version scope unknown; two material hits may overlap per cast."
+    },
+    {
+      "studyKey": "wowhead-looter-df-200430-cumulative",
+      "inputItemID": 200430,
+      "reportedCompletedDisenchants": 13,
+      "source": "https://www.wowhead.com/item=200430/bracers-of-the-walking-mountain",
+      "sourceDate": null,
+      "patch": null,
+      "skill": null,
+      "notes": "Cumulative reported Looter table; historic and version scope unknown; two material hits may overlap per cast."
     }
+  ],
+  "new_numerical_measurements": 12,
+  "numerical_fields_improved": [
+    "12 output-specific castsWithDrop counts and matching observed disenchant denominators; 12 original rounded percentage fields retained as per-material occurrence rates, not unit quantities."
   ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-07T0629-six-original-gear-disenchant-looter-counts.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://goldcap.gg/retail/us/items/192849",
-    "https://goldcap.gg/retail/us/items/192850",
-    "https://goldcap.gg/retail/us/items/192851",
-    "https://goldcap.gg/retail/us/items/190395",
-    "https://goldcap.gg/retail/us/items/190396",
-    "https://goldcap.gg/retail/us/items/190394",
-    "https://github.com/t-mart/wow-auction/blob/master/README.md"
+    "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+    "https://www.wowhead.com/item=207214/blazing-dreamstalkers-bracers",
+    "https://www.wowhead.com/item=207215/blazing-dreamstalkers-spined-girdle",
+    "https://www.wowhead.com/item=207220/blazing-dreamstalkers-striders",
+    "https://www.wowhead.com/item=200431/drape-of-the-walking-mountain",
+    "https://www.wowhead.com/item=200430/bracers-of-the-walking-mountain"
   ],
   "verified_commit_sha": null,
-  "commit_sha_scope": "A commit cannot contain its own SHA in committed status content. This exact single-commit evidence+status write must be verified externally against branch HEAD; prior evidence and status are not altered. No self-referential SHA fabricated.",
+  "commit_sha_scope": "The commit SHA cannot be embedded in the very commit that contains this status file. Verify returned commit SHA, branch HEAD, changed-path set and evidence/status readback externally. This status deliberately does not invent a self-referential commit hash.",
   "blockers": [
-    "No NEW original completed-cast-level prospecting/milling histograms, hits and refunds found; prior nominal-ore, estimated and copied original cohorts not independent.",
-    "Superbondez sample already duplicated in historic evidence as dragonflight-20261101-042; corrected record explicitly replaces 20261031-50044 only. Master owns cross-file deduplication and compiler handoff.",
-    "S19 Serevite quality mapping awaiting authoritative Blizzard/character tooltip review. GoldCap is one vendor not independent primary tooltip.",
-    "S21 Prismatic Ore Eternity Amber R1/R2 units are ambiguous in source; no quantity/hit imputation.",
-    "No production, master/shared, queue, agent, schema, release or PR changes."
+    "No new independent rank-specific ore or milling post-launch raw per-cast logs / 0-1-2+ histograms, nor source-verified refund-adjusted denominators.",
+    "Wowhead cumulative Looter samples have no original acquisition dates, gear bonus versions, enchant skill/spec or exact material units; sums of output hits can exceed item disenchant operations because materials may co-occur.",
+    "The original Draconium and Serevite 2022/2023 studies remain already represented and must not be duplicated; secondary Serevite quality mapping still awaits authoritative client/API verification."
   ],
   "exhausted_sources": [
     {
-      "path": "New original Draconium/Serevite/Khaz'gorite/Prismatic per-operation drop histograms",
-      "reason": "Prior original Reddit/Wowhead studies are already archived; new searches returned third-party catalogs and summaries, not new logged completed-cast data.",
+      "path": "New site-filtered named original-cast export searches for Dragonflight prospecting/milling",
+      "reason": "Searches exposed previously known beta analysis and forum nominal-ore totals, not new independent full operation logs.",
       "whereLooked": [
-        "Reddit r/woweconomy named Dragonflight Draconium Ore prospecting studies including original 10h6ccx and 10i63zb",
-        "Reddit r/woweconomy named Khaz'gorite Ore and Serevite Ore original prospected batch studies",
-        "Wowhead Prismatic Ore item=194545 original superbondez and TheChisel comments",
-        "Wowhead Dragon Isles Prospecting spell=374627 and Dragonflight ore output comments",
-        "Warcraft Wiki named Dragonflight ore, Prismatic Ore and Milling pages",
-        "wow-professions.com named Dragonflight Jewelcrafting/Inscription milling guides",
-        "GitHub indexed Dragonflight ProspectMate SavedVariables, csv and spreadsheet export searches",
-        "GoldCap Retail named Serevite Ore and Eternity Amber quality-rank item pages",
-        "Blizzard forums named Dragonflight milling and ore-prospecting results"
+        "site:docs.google.com/spreadsheets \"Dragonflight\" \"milling\" \"Saxifrage\"",
+        "site:github.com \"Dragonflight\" \"Prospect\" \"Draconium\" csv data",
+        "site:us.forums.blizzard.com \"Dragonflight\" \"Saxifrage\" \"milled\" \"pigments\"",
+        "site:reddit.com/r/woweconomy \"milling\" \"Bubble Poppy\" \"tested\"",
+        "site:reddit.com/r/woweconomy \"Saxifrage\" \"milling\" \"1,000\"",
+        "site:wowhead.com \"Draconium Ore\" \"casts\" \"histogram\"",
+        "site:youtube.com Dragonflight \"milling\" \"Bubble Poppy\" results 1000"
       ]
     }
   ],
-  "next_concrete_step": "Master to review same-study dedupe for superbondez 80-cast Prismatic Ore (including dragonflight-20261101-042) and authoritative API item-rank mapping; next worker search should target UNSEEN original Dragonflight ProspectMate SavedVariables/log exports or raw Blob/Google Sheets per-cast operations and resourcefulness refunds rather than repeat known forum cohorts.",
+  "next_concrete_step": "Target an original rank-specific Dragonflight prospecting/milling SavedVariables workbook or recorded UI output with completed casts, each material's hit count, 0/1/2+ stacks and refunded reagents; ask Master for rank mapping resolution before importing historical Serevite split.",
   "validation": {
     "prepared_jsonl_parse": "PASS",
-    "evidence_record_count": 2,
-    "drop_corrections": 1,
+    "evidence_record_count": 13,
+    "drop_records": 12,
     "searched_records": 1,
-    "completed_cast_cohorts_new": 0,
-    "unmeasured_fields_null": true,
-    "source_audit_named_sites": 9,
-    "source_audit_minimum_met": true,
+    "distinct_gear_studies": 6,
+    "distinct_gear_operations": 107,
+    "new_ore_milling_cast_cohorts": 0,
+    "unknown_unit_and_histogram_fields_remain_null": true,
+    "duplicate_source_families_in_this_file": 0,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-07T0629-six-original-gear-disenchant-looter-counts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "atomic_commit_planned": true,
     "post_commit_readback": "PENDING"
   },
   "production_changed": false,
