@@ -8,6 +8,8 @@ local SPELLS={[13262]="Disenchant",[51005]="Mill",[31252]="Prospect",[382981]="M
 local MAX_RECORDS=2000
 local pending
 local request
+local RECORDER_REVISION=4
+local disenchantIntents,intentOrder={},{}
 local sessionStarted=false
 local recyclingReceipts,recyclingReceiptOrder={},{}
 local function finite(n) return type(n)=="number" and n==n and n>=0 and n<math.huge end
@@ -96,7 +98,7 @@ function LL:StartCraftStudy(label)
     local d=ledger(self);d.sequence=d.sequence+1
     local id=tostring(self:CharacterKey())..":"..build()..":"..stamp()..":"..d.sequence
     d.studies[id]={label=type(label)=="string" and label:sub(1,80) or "Measured operations",startedAt=stamp(),
-        character=self:CharacterKey(),build=build(),truncated=false,coverageVersion=2,coverageGaps={}}
+        character=self:CharacterKey(),build=build(),truncated=false,coverageVersion=2,coverageGaps={},recorderRevision=RECORDER_REVISION}
     d.activeStudy=id
     if self.Invalidate then self:Invalidate() end
     return id
@@ -153,7 +155,8 @@ function LL:RecordCraftObservation(record)
             hyperlink=(item.classID==2 or item.classID==4) and item.hyperlink or nil}
     end
     local id=contextID(self,measured);if not id then return false,"Context capacity reached; export research before continuing" end
-    local r=copy(record);r.context=nil;r.contextID=id;r.schemaVersion=SCHEMA
+    local r=copy(record);r.context=nil;r.contextID=id;r.schemaVersion=SCHEMA;r.recorderRevision=RECORDER_REVISION
+    r.addonCommit=self.buildInfo and (self.buildInfo.headCommit or self.buildInfo.commit)
     r.studyID=d.activeStudy or self:StartCraftStudy();r.recordedAt=stamp()
     r.provenance={sampleKind="RAW_CAST_LOG",source="measured-addon-capture",independentReview="PENDING",
         numericTransformValidated=false,applyPolicy="NO_NUMERIC_TRANSFORM",registryContract="profession-mechanics/0.2"}
@@ -374,7 +377,13 @@ function LL:BeginCraftCapture(guid,recipe)
         if preceding then pending=table.remove(preceding);pending.previousRecycling=preceding end
         return false
     end
-    local d=ledger(self);if not d.activeStudy then self:StartCraftStudy() end
+    local d=ledger(self)
+    local active=d.activeStudy and d.studies[d.activeStudy]
+    if description.method=='Disenchant' and active and not active.recorderRevision and active.censored
+        and not preceding then
+        self:StartCraftStudy('After disenchant recorder update')
+    end
+    if not d.activeStudy then self:StartCraftStudy() end
     d.confirmableEmpty=nil
     local hint=request and request.recipe==recipe and request.remaining>0 and clock()-request.at<120 and request or nil
     if hint and hint.orderID~=nil and hint.orderID~=0 then return false end -- customer/order inventory is not this character's bags
@@ -555,6 +564,8 @@ local function diagnostic(self,p,reason)
     local removed,added={},{}
     if after and p.before then removed,added=diff(p.before,after) end
     d.diagnostics[#d.diagnostics+1]={operationID=p.guid,recipeID=p.recipe,method=p.method,reason=reason,at=stamp(),
+        recorderRevision=RECORDER_REVISION,addonCommit=self.buildInfo and (self.buildInfo.headCommit or self.buildInfo.commit),
+        castStartSeen=p.castStarted==true,spellTargeting=call(SpellIsTargeting),
         studyID=d.activeStudy,startedAt=p.startedAt,endedAt=stamp(),successful=p.success==true,
         context=copy(p.context),netInputs=itemVector(removed,p.before and p.before.facts),
         lootSlots=copy(p.lootSlots),
@@ -687,7 +698,7 @@ function LL:FinishCraftCapture(final)
         build=build(),gameMode="RETAIL",context=p.context,inputs=result.inputs,outputs=result.outputs,
         nominalInputs=p.nominalInputs,outputCoverage=complete and "complete" or "unresolved",startedAt=p.startedAt,endedAt=stamp(),
         durationSeconds=clock()-p.started,attribution=p.lootClosed and "cast-loot-bag" or "cast-result-bag",
-        resultMetadata=copy(p.results),lootSlots=copy(p.lootSlots),captureVersion=2,allocation=p.request and p.request.allocation,
+        resultMetadata=copy(p.results),lootSlots=copy(p.lootSlots),captureVersion=2,castStartSeen=p.castStarted==true,allocation=p.request and p.request.allocation,
         allocationItemGUID=p.request and p.request.allocationItemGUID,
         applyConcentration=p.request and p.request.concentration,zeroReason=not complete and "No authoritative empty-result signal" or nil}
     if p.method=='Disenchant' and result.inputs[1] then
@@ -970,7 +981,8 @@ function LL:ExportCraftResearch(page)
     return json({schemaVersion=SCHEMA,registryContract="profession-mechanics/0.2",sampleKind="RAW_CAST_LOG",
         artifactStatus="RESEARCH_ONLY_NOT_SHIPPED",page=page,pages=all and 1 or math.max(1,math.ceil(#d.records/25)),
         records=records,contexts=contexts,studies=d.studies,diagnostics=d.diagnostics or {},
-        retainedRecords=#d.records,droppedRecords=d.droppedRecords,automaticMechanicsPromotion=false})
+        retainedRecords=#d.records,droppedRecords=d.droppedRecords,automaticMechanicsPromotion=false,
+        exporterRecorderRevision=RECORDER_REVISION,targetingActivations=d.targetingActivations or 0})
 end
 function LL:ExportCraftBaselines()
     local d=self.db and self.db.craftResearch;local baselines,seen={},{}
@@ -1134,8 +1146,31 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
     end
     if unit~="player" then return end
     local guid,recipe=event=="UNIT_SPELLCAST_SENT" and b or a,event=="UNIT_SPELLCAST_SENT" and c or b
-    if event=="UNIT_SPELLCAST_SENT" or event=="UNIT_SPELLCAST_START" then LL:BeginCraftCapture(guid,recipe)
-    elseif not pending and event=="UNIT_SPELLCAST_SUCCEEDED" and LL.db and describe(LL,recipe) then
+    if recipe==13262 and event=="UNIT_SPELLCAST_SENT" then
+        if not enabled(LL,'Disenchant') then return end
+        -- Opening the targeting cursor is not a cast on an item. Do not force
+        -- a previous genuine cast to finish just because another was requested.
+        if type(guid)=='string' then
+            disenchantIntents[guid]=clock();intentOrder[#intentOrder+1]=guid
+            if #intentOrder>128 then disenchantIntents[table.remove(intentOrder,1)]=nil end
+        end
+        return
+    end
+    if recipe==13262 and event=="UNIT_SPELLCAST_SUCCEEDED"
+        and (not pending or pending.guid~=guid) and disenchantIntents[guid]
+        and clock()-disenchantIntents[guid]<60 and call(SpellIsTargeting)==true then
+        disenchantIntents[guid]=nil
+        local d=enabled(LL,'Disenchant') and ledger(LL)
+        if d then d.targetingActivations=(d.targetingActivations or 0)+1 end
+        return
+    end
+    if event=="UNIT_SPELLCAST_START" or event=="UNIT_SPELLCAST_FAILED" or event=="UNIT_SPELLCAST_INTERRUPTED" then
+        if guid then disenchantIntents[guid]=nil end
+    end
+    if event=="UNIT_SPELLCAST_SENT" or event=="UNIT_SPELLCAST_START" then
+        LL:BeginCraftCapture(guid,recipe)
+        if event=="UNIT_SPELLCAST_START" and pending and pending.guid==guid then pending.castStarted=true end
+    elseif (not pending or pending.guid~=guid) and event=="UNIT_SPELLCAST_SUCCEEDED" and LL.db and describe(LL,recipe) then
         local recorded=false
         for _,r in ipairs(ledger(LL).records) do if r.operationID==guid then recorded=true end end
         if not recorded and enabled(LL,describe(LL,recipe).method) then diagnostic(LL,{guid=guid,recipe=recipe,method=describe(LL,recipe).method,success=true},"Success without an isolated start snapshot") end

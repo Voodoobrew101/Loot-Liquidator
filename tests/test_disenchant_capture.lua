@@ -128,4 +128,75 @@ eq(c.effectiveSkill,nil);eq(c.skillLineID,nil,'no parent skill substituted for m
 -- Feed the actual event-captured records to the native popup integration test.
 local export=assert(io.open('/tmp/loot-disenchant-capture-v2.json','w'))
 export:write(LL:ExportCraftResearch(1));export:close()
+-- Replay the owner's 75 output receipts interleaved with the 19 no-input,
+-- no-loot signatures as targeting activations. The old export didn't store
+-- cursor/start flags, so this reproduces the bug, not recovered historical events.
+for _,frame in ipairs(frames)do if frame.events.UNIT_SPELLCAST_SENT then frames={frame};break end end
+local input=assert(io.open('research/integration/measured-captures/2026-11-07-disenchant-75-casts/export-page-1.json','r'))
+local decoder={};assert(loadfile('LootLiquidator/ImportedResults.lua'))('LL',decoder)
+local original=assert(decoder.DecodeImportJSON(input:read('*a')));input:close()
+local replay,inventory={},{}
+local sid='Voodoobrew - Grizzly Hills:70783:1794071551:12'
+for _,r in ipairs(original.records)do if r.studyID==sid then
+    replay[#replay+1]={kind='cast',data=r};inventory[#inventory+1]={r.inputs[1].hyperlink}
+    local i=r.inputs[1];facts[i.hyperlink]={id=i.itemID,link=i.hyperlink,classID=i.classID,quality=i.rarity,itemLevel=i.itemLevel,expansionID=i.expansionID}
+    for _,m in ipairs(r.outputs)do facts[m.hyperlink]={id=m.itemID,link=m.hyperlink,classID=7,quality=m.rarity,reagentQuality=m.qualityRank,expansionID=11}end
+end end
+for _,g in ipairs(original.diagnostics)do if g.studyID==sid and g.method=='Disenchant'then replay[#replay+1]={kind='cursor',data=g}end end
+table.sort(replay,function(a,b)return a.data.startedAt<b.data.startedAt end)
+local targeting=false;SpellIsTargeting=function()return targeting end
+LL.CaptureCraftContext=function(self,recipe,_,method)return {character=self:CharacterKey(),recipeID=recipe,method=method,
+    profileKind='measured',simulated=false,baseSkill=64,bonusSkill=0,effectiveSkill=64,specialization='none'}end
+bags=inventory;loot={};LL:StartNewBatch()
+local batch=d.activeStudy;local before=#d.records;local cursorBefore=d.targetingActivations or 0
+local produced={}
+for _,event in ipairs(replay)do
+    local r=event.data;targeting=event.kind=='cursor'
+    emit('UNIT_SPELLCAST_SENT','player','',r.operationID,13262)
+    if event.kind=='cursor'then
+        emit('UNIT_SPELLCAST_SUCCEEDED','player',r.operationID,13262)
+    else
+        emit('UNIT_SPELLCAST_START','player',r.operationID,13262);advance(1.7)
+        local nextBag={};local removed=false
+        for _,entry in ipairs(bags)do
+            if not removed and entry[1]==r.inputs[1].hyperlink then removed=true else nextBag[#nextBag+1]=entry end
+        end
+        assert(removed)
+        loot={}
+        for _,m in ipairs(r.outputs)do
+            nextBag[#nextBag+1]={m.hyperlink,m.quantity};loot[#loot+1]={m.hyperlink,m.quantity}
+            produced[m.itemID]=(produced[m.itemID] or 0)+m.quantity
+        end
+        bags=nextBag;emit('UNIT_SPELLCAST_SUCCEEDED','player',r.operationID,13262)
+        emit('LOOT_READY');emit('LOOT_CLOSED');emit('BAG_UPDATE_DELAYED');advance(1.3)
+    end
+end
+eq(#d.records-before,75);eq(d.targetingActivations-cursorBefore,19)
+eq(produced[243602],70);eq(produced[243603],5);eq(d.studies[batch].censored,nil)
+eq(last().castStartSeen,true);eq(last().recorderRevision,4)
+-- Opening the next cursor while real loot is unsettled must not force-finalize it.
+LL:StartNewBatch();bags={{gearA}};loot={};targeting=false
+emit('UNIT_SPELLCAST_START','player','delayed-real',13262)
+emit('UNIT_SPELLCAST_SUCCEEDED','player','delayed-real',13262)
+targeting=true;emit('UNIT_SPELLCAST_SENT','player','','next-cursor',13262)
+emit('UNIT_SPELLCAST_SUCCEEDED','player','next-cursor',13262)
+finish({{'item:109693',2}},{{'item:109693',2}})
+eq(last().operationID,'delayed-real');eq(d.studies[d.activeStudy].censored,nil)
+-- The targeting flag cannot suppress a genuine START plus reconciled result.
+LL:StartNewBatch();bags={{gearA}};loot={}
+emit('UNIT_SPELLCAST_START','player','real-with-cursor',13262)
+emit('UNIT_SPELLCAST_SUCCEEDED','player','real-with-cursor',13262)
+finish({{'item:109693',1}},{{'item:109693',1}})
+eq(last().operationID,'real-with-cursor')
+batch=d.activeStudy
+-- Unknown/missed-start successes still create gaps; no generic suppression.
+targeting=false;emit('UNIT_SPELLCAST_SENT','player','','unknown-start',13262)
+emit('UNIT_SPELLCAST_SUCCEEDED','player','unknown-start',13262)
+eq(d.studies[batch].coverageGaps['Disenchant:13262']~=nil,true)
+-- A blocked pre-fix batch is retained, and collection automatically uses a fresh one.
+d.studies[batch].recorderRevision=nil
+bags={{gearA}};emit('UNIT_SPELLCAST_START','player','after-upgrade',13262)
+eq(d.activeStudy~=batch,true);eq(d.studies[batch].censored,true)
+emit('UNIT_SPELLCAST_INTERRUPTED','player','after-upgrade',13262)
+print('PASS: 75 real receipts, 19 cursor activations, unknown-start gaps and upgrade rollover')
 print('PASS: '..checks..' disenchant recorder regression assertions')
