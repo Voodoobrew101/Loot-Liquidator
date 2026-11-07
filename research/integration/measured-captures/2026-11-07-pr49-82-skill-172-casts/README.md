@@ -16,7 +16,9 @@ the detailed Disenchant failure. The persistent scoped flag must not be erased
 because the detailed entry is absent. Strict staging admits zero numerical
 cohorts from this upload. The complete positive receipts remain research data.
 
-The operator has been asked whether exactly 172 items were disenchanted with no
-failed/interrupted attempts, or whether additional attempts occurred. No count
-confirmation, gap override, runtime promotion or skill coefficient is assumed.
+The operator reports one visible failure near the beginning, when disenchanting
+overlapped goggles crafting, and is unsure of the total attempts. This matches
+the kind of transition represented by the scoped gap, but does not establish
+exactly one missing outcome or a complete denominator. No count confirmation,
+gap override, runtime promotion or skill coefficient is assumed.
 All earlier measurements and source flags remain preserved.
