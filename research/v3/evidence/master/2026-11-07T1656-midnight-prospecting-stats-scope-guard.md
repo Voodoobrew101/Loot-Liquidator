@@ -1,0 +1,21 @@
+# Midnight prospecting and crushing: Multicraft scope / Resourcefulness display guard
+Checked (UTC): 2026-11-07T16:59:26.792Z
+Research-only coordinator task: COORD-MIDNIGHT-MULTICRAFT-SCOPE-20261107; related worker-owned tasks T0033/T0034.
+
+## Distinct original sources, not independent numerical cohorts
+
+1. [Icy Veins, *Stats Guide for Jewelcrafting in Midnight*](https://www.icy-veins.com/wow/professions-jewelcrafting-stats), guide publicly indexed in 2026 and read 2026-11-07: explicitly states **Prospecting and Crushing cannot Multicraft**. This is recipe-specific guide advice, not a raw processing log.
+2. [wow-professions.com, *Midnight Jewelcrafting Specialization Guide & Best Builds*](https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds), read 2026-11-07: also explicitly excludes Prospecting and Crushing from Multicraft, while contrasting **gem/reagent crafting** (eligible) with **prospecting/crushing** (not eligible). Recommends Resourcefulness for prospecting/crushing. Do not transfer generic gemcraft Multicraft to prospecting output drops.
+3. [Original r/woweconomy discussion, October 3, 2026](https://www.reddit.com/r/woweconomy/comments/1wwd0w0/should_i_use_my_1_time_swap_for_jc_to_go_from_gem/): one commentator edited an initial "epic multicraft" gear recommendation to "**resourcefulness not multicraft**"; another directly says Multicraft does not affect prospecting, only Resourcefulness. This corroborates recipe-scope classification, but is **not** a controlled proc trial or measured zero-Multicraft probability.
+4. [Original r/woweconomy firsthand UI report, March 12, 2026](https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/): the poster reports that Resourcefulness **disappears in the Prospecting Crafting Details panel** while prospecting still **saves ore**. In the same post the player mentions about 29% displayed Resourcefulness on Crushing but a small personal sample of about 5% gems returned. This does not yield an input-savings calibration for either operation; no counts of operations, refunded units, ranks, character stats at proc time or zero outcomes are given.
+
+## New QA disposition versus current registry
+
+- [research/v3/mechanics.md](../../mechanics.md) M11 currently reads `Multicraft applies to prospecting` with status `likely` from a general guide/talent interpretation. **That affirmative premise is contradicted by two explicit recipe-scope guides and a dated firsthand correction.** Keep Multicraft off for Prospect and Crush pending actual client recipe/stats inspection. This fits the owner's explicit unverified-Multicraft-off policy; flag M11 for scoped owner/reviewer correction, without changing worker-owned tasks/registry or the protected addon integration branch.
+- M10's Resourcefulness applicability is supported by the sources above, yet the **visible profession-pane stat may omit it**. Do not treat a missing displayed stat as proof of zero actual input refunds; do not multiply output yield by Resourcefulness. Track net consumed units/refunds separately from full 5-ore nominal processing inputs.
+- Other Jewelcrafting recipes may Multicraft: **do not globally disable** the stat on gem/reagent crafting. The change, when reviewed, must be limited to processing recipe scopes.
+- Proposed research-to-addon handoff: document and fixture one `Prospect` expected-value case with Multicraft reported by the character but with **no Multicraft output multiplier**, and a separate refunded-input accounting case using actual saved ore. Run offline valuation/tooltip checks at synthetic prices only on the owner's integration branch; no addon files are modified here.
+
+## Measurement and compatibility limits
+
+Original observed **cast counts**: unknown. Original per-cast outputs, output-rank IDs, refunds, P(hit), probability of extra units, quality-specific statistics, and skill scaling: **unknown**. No independent measured cohort, no formula coefficient, no calibrated confidence, and **zero new verified gold decisions** from this guard. Not a live-WoW-client test and not a proof of every Retail recipe. Existing research and worker originals are untouched.
