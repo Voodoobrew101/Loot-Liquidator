@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T10:01:08.294Z",
+  "updated_at": "2026-11-07T11:33:18.079Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New estimator provenance/weighting gap verified for 13 historical Cataclysm Pyrite rows: 352 nominal casts inferred from 1,760 ore are stored as if stated operations (castsBasis missing). Independently crosschecked older 52-cast and new 15-reported-cast Volatile Earth quantities; no new observed cohort or runtime gold test.",
+  "status": "Source-checked four newly added historical prospecting identities (25 material rows) against original Wowhead comments, not current Retail outcomes. Confirmed 80 explicitly stated Obsidium prospects with 11 exact output totals, one direct 5-ore Obsidium prospect with 1 Nightstone, and two ore-only denominator cohorts. Identified separate same-author Elementium observation not yet in latest 25-row file; no coordinator casts, numeric estimator run, gold decisions or client validation.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -45,7 +45,8 @@
     "T0051",
     "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107",
     "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107",
-    "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107"
+    "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
+    "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -923,6 +924,31 @@
         "Per-output P(hit), 0/1/2 histograms",
         "Current character eligibility, client output and market prices"
       ]
+    },
+    {
+      "task_id": "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107",
+      "kind": "new_historical_source_identity_and_units_review",
+      "source_file": "research/v3/evidence/legacy/20261107T1046-obsidium-mithril-firsthand.jsonl",
+      "source_blob_sha": "a7516d1efaf6c568bb439c6fb7c65784ef2e176b",
+      "input_item_ids": [
+        53038,
+        3858
+      ],
+      "source_study_count": 4,
+      "source_material_rows": 25,
+      "verified_from_original": "jaymoney 400 ore/80 prospects and 11 exact gem totals; 957663 1200 ore with 6 exact uncommon gem totals and unspecified blues; 610726 200 Mithril ore with 7 exact prospect gem totals excluding 2 mined gemstones; 370112 explicitly 5 Obsidium ore and 1 Nightstone",
+      "new_unrecorded_same_author_candidate": {
+        "inputItemID": 52185,
+        "inputName": "Elementium Ore",
+        "outputItemID": 52180,
+        "outputName": "Nightstone",
+        "totalQuantity": 1,
+        "nominalInput": "three stacks",
+        "casts": null,
+        "originalCommentAuthor": "370112",
+        "overlap_with_other_legacy_records_not_exhaustively_checked": true
+      },
+      "remaining_gap": "Completed cast denominators and refund handling are unknown for 1200 Obsidium and 200 Mithril amounts, and stack size/number of completed casts unknown for the same-author Elementium report. Output hit counts, zeros, histograms, source patch/skill and 2026 Retail eligibility unverified. Do not reinterpret 80 as 80 hits or historical as current."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -2737,15 +2763,70 @@
       "estimator_weight_current_if_basis_missing": 1,
       "estimator_weight_if_derived_basis_recorded": 0.5,
       "notes": "Source amounts are distinct cohorts and quantities, never P(hit); exact provenance metadata requires worker-owner evidence correction. Code path read, not executed."
+    },
+    {
+      "kind": "manager_review_of_latest_worker_historical_four_original_source_identities",
+      "task_id": "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107",
+      "is_new_independent_cohort_added_by_coordinator": false,
+      "worker_file": "research/v3/evidence/legacy/20261107T1046-obsidium-mithril-firsthand.jsonl",
+      "worker_file_blob_sha": "a7516d1efaf6c568bb439c6fb7c65784ef2e176b",
+      "source_rows_read": 25,
+      "original_source_pages_independently_verified": 2,
+      "original_comment_authors_checked": [
+        "jaymoney",
+        "957663",
+        "610726",
+        "370112"
+      ],
+      "source_study_keys": [
+        "wowhead-nightstone-jaymoney-obsidium-400ore-80prospects",
+        "wowhead-nightstone-957663-obsidium-1200ore",
+        "wowhead-aquamarine-610726-mithril-200ore",
+        "wowhead-nightstone-370112-one-obsidium-prospect"
+      ],
+      "original_explicit_completed_operations": {
+        "jaymoney_obsidium_53038": 80,
+        "370112_obsidium_53038": 1
+      },
+      "original_input_ore_without_verified_completed_casts": {
+        "957663_obsidium_53038": 1200,
+        "610726_mithril_3858": 200
+      },
+      "source_matched_11_obssidium_output_quantity_totals": {
+        "52177": 18,
+        "52178": 28,
+        "52179": 17,
+        "52180": 13,
+        "52181": 19,
+        "52182": 19,
+        "52190": 2,
+        "52191": 1,
+        "52192": 1,
+        "52193": 2,
+        "52194": 1
+      },
+      "historical_nightstone_52180_per_reported_jaymoney_prospect": "13/80 = 0.1625 units per stated operation, NOT P(hit)",
+      "separate_same_original_comment_elementium_candidate": {
+        "inputItemID": 52185,
+        "outputItemID": 52180,
+        "totalQuantity": 1,
+        "nominalInput": "3 stacks",
+        "casts": null,
+        "needs_original_cohort_crossfile_dedupe": true
+      },
+      "original_200_mithril_source_mined_gems_separated": true,
+      "current_retail_scope_verified": false,
+      "new_observed_casts_added_by_coordinator": 0,
+      "new_gold_decisions_verified": 0
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": "2026-11-07T09:43:29.433Z",
-    "dragonflight": "2026-11-07T08:34:46.434Z",
-    "war_within": "2026-11-07T08:28:34.182Z",
-    "midnight": "2026-11-07T08:16:50.999Z"
+    "legacy": "2026-11-07T10:46:19.600Z",
+    "dragonflight": "2026-11-07T10:36:32.209Z",
+    "war_within": "2026-11-07T11:20:53.450Z",
+    "midnight": "2026-11-07T11:21:19.340Z"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
@@ -2767,7 +2848,8 @@
     "research/v3/evidence/legacy/2026-11-06T2146-dusky-verdant-nether-ebon-firsthand.jsonl",
     "research/v3/evidence/dragonflight/2026-10-31T1234-prismatic-and-serevite-cast-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-01T0230-aberrus-tokens-prismatic-prospecting.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl",
+    "research/v3/evidence/legacy/20261107T1046-obsidium-mithril-firsthand.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -2881,11 +2963,13 @@
     "https://tradeskillmaster.com/retail/us/items/199344",
     "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/v3/migration/reports/M04-extraction.md",
-    "https://gist.github.com/pzb/af1df9cbdf0791a6018e"
+    "https://gist.github.com/pzb/af1df9cbdf0791a6018e",
+    "https://www.wowhead.com/cata/item=52180/nightstone",
+    "https://www.wowhead.com/item=7909/aquamarine"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "a11e89dbdd84a1650731433f87c8c4e75eb3d3a3",
+    "research": "7d95e922379ba55f9bb2f74bc1a785a89ae9c33e",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "commit_sha_when_verified": "57ef9ae95a96299d3e537307f3afd196a4ba5ae8",
@@ -2924,7 +3008,8 @@
     {
       "task_id": "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
       "blocker": "Worker-owned Rikikijr historical PTR rows 914..926 need append-only basis correction with source read-back; research estimator and actual addon/tooltip not executed. 836908 80-ore versus 15-prospect mismatch cannot be resolved from original author comment; preserve source claim and unknown leftover/refunds."
-    }
+    },
+    "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107: 957663 1200-ore and 610726 200-ore reports give material totals but not logged completed operations/Resourcefulness; 370112's separate 3-stack Elementium result has unknown stack size and unresolved prior-source overlap; historical build and modern eligibility absent."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -2976,7 +3061,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Have legacy evidence owner append a correcting castsBasis provenance for Rikikijr 914..926 (not rewriting originals), then validate estimator derived-chance/confidence against an exact existing cohort and 4df9ae8 pin; protected three-pass integrator alone owns any addon valuation/tooltip changes. Seek firsthand modern ore rank/hit/zero logs rather than additional historical copies.",
+  "next_concrete_step": "Legacy evidence owner: check whether original author 370112's one Nightstone from three stacks of Elementium is already represented; if not, append source-preserving Elementium 52185->52180 output-unit observation with casts=null and stack size unknown, retaining independence from their one 5-ore Obsidium result. Request raw actual prospect/refund and per-output hit/zero logs for latest Obsidium/Mithril cohorts. Independently, pursue the older Cataclysm Pyrite castsBasis correction via legacy owner and estimator reviewer; protected integration branch alone owns engine/tooltip tests.",
   "validation_executed": {
     "source_comparison": true,
     "source_rows_crossmatched": 78,
@@ -3006,7 +3091,16 @@
     "current_run_read_original_report": true,
     "current_run_estimator_code_inspection": true,
     "current_run_estimator_or_migration_execution": false,
-    "current_run_actual_tooltip_tests": false
+    "current_run_actual_tooltip_tests": false,
+    "manager_current_run_utc": "2026-11-07T11:33:18.079Z",
+    "original_public_wowhead_comment_pages_checked": 2,
+    "original_comment_authors_crosschecked": 4,
+    "legacy_rows_parsed": 25,
+    "legacy_study_keys_count": 4,
+    "older_obsidium_source_files_compared": 4,
+    "full_historical_source_dedup_executed": false,
+    "synthetic_price_tests_run": false,
+    "latest_research_head_ci_success": "42367837449 on 7d95e922379ba55f9bb2f74bc1a785a89ae9c33e"
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -3020,24 +3114,30 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "task_id": "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
-    "at_utc": "2026-11-07T10:01:08.294Z",
+    "task_id": "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107",
+    "at_utc": "2026-11-07T11:33:18.079Z",
     "verified_revisions_before_write": {
       "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-      "research": "a11e89dbdd84a1650731433f87c8c4e75eb3d3a3",
+      "research": "7d95e922379ba55f9bb2f74bc1a785a89ae9c33e",
       "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
     },
-    "source_evidence_blobs": {
-      "older": "317f6ae461be94baf471922b9fbe31586b7c4644",
-      "new_worker": "512f26215e376cdf9d07bb2db2e381e3a8188030"
+    "source_evidence_blob_sha": "a7516d1efaf6c568bb439c6fb7c65784ef2e176b",
+    "source_pages": [
+      "https://www.wowhead.com/cata/item=52180/nightstone",
+      "https://www.wowhead.com/item=7909/aquamarine"
+    ],
+    "verification": "25 worker evidence rows parsed; four original authors crosschecked in two public source pages; earlier Obsidium/Mithril source keys checked for distinct author provenance in selected files; not exhaustive across all historic evidence",
+    "worker_reports_verified": {
+      "legacy": "2026-11-07T10:46:19.600Z",
+      "dragonflight": "2026-11-07T10:36:32.209Z",
+      "war_within": "2026-11-07T11:20:53.450Z",
+      "midnight": "2026-11-07T11:21:19.340Z"
     },
-    "verified_legacy_report_at": "2026-11-07T09:43:29.433Z",
-    "validation": "GitHub source record read-back, original Wowhead comment independently read, exact arithmetic and estimator source inspection; no tests run",
-    "newly_observed_casts": 0,
-    "new_measured_cohorts": 0,
-    "addon_engine_tests": false,
-    "tooltip_tests": false,
-    "live_wow_tests": false,
+    "observed_casts_added_by_coordinator": 0,
+    "measured_cohorts_added_by_coordinator": 0,
+    "gold_decisions_verified": 0,
+    "full_estimator_or_engine_tests": false,
+    "live_client_tests": false,
     "merges": 0,
     "releases": 0
   },
@@ -3320,8 +3420,8 @@
   },
   "newly_confirmed_economic_actions_this_run": 0,
   "release_or_merges_performed": false,
-  "verified_source_evidence_branch_head": "a11e89dbdd84a1650731433f87c8c4e75eb3d3a3",
-  "verified_source_evidence_blob_sha": "317f6ae461be94baf471922b9fbe31586b7c4644",
+  "verified_source_evidence_branch_head": "7d95e922379ba55f9bb2f74bc1a785a89ae9c33e",
+  "verified_source_evidence_blob_sha": "a7516d1efaf6c568bb439c6fb7c65784ef2e176b",
   "no_new_measured_cohorts_by_coordinator": true,
   "no_addon_or_client_validation_in_this_run": true
 }
