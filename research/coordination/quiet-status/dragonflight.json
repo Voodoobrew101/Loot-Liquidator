@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-07T16:35:18.152Z",
+  "updated_at": "2026-11-07T17:40:43.200Z",
   "branch": "implementation/five-agent-completion",
-  "status": "searched_new_raw_cast_export_and_addon_source_angle_without_independent_numerical_cohort",
+  "status": "rank_quality_cross_provider_corroborated_no_new_original_numeric_cohort",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,29 +12,56 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium 189143/188658/190311, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545: exact input quality, skill/refund-controlled completed prospect denominators, per-output castsWithDrop, zero counts and histograms",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: complete mill operations and pigment units/hits by herb and pigment quality; stats and refunds",
-    "Original Dragonflight prospecting/milling cast-logging software/public cohort exports rather than compiled profitability tables or recycled 2022/23 forum studies"
+    "Draconium Ore 189143/188658/190311, Serevite Ore 190394/190395/190396, Khaz'gorite Ore 190312/190313/190314, Prismatic Ore 194545: independent actual completed prospects, rank-specific output IDs, per-output castsWithDrop, 0/1/2+ histograms, skill/specialization and Resourcefulness refund accounting",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: rank-specific completed mills and Serene/Blazing pigment per-output quantities, hits and 0/1/2+ histograms",
+    "Xenastro original 2023 spreadsheet Prospecting Log rows 28,33,39,54,62: publicly visible calculator distribution not sufficient to verify original row values or completed casts",
+    "Serevite Ore quality mappings: reconcile conflicting secondary rank labels before Master-approved import"
   ],
   "newly_verified_fields": [],
+  "newly_corroborated_fields": [
+    {
+      "name": "Serevite Ore quality-rank-to-ID",
+      "mapping": {
+        "190394": 3,
+        "190395": 1,
+        "190396": 2
+      },
+      "scope": "independent third-party current catalog crosscheck only; NOT Blizzard item API or original in-game tooltip confirmation",
+      "sources": [
+        "https://goldcap.gg/retail/us/items/190394",
+        "https://goldcap.gg/retail/us/items/190395",
+        "https://goldcap.gg/retail/us/items/190396",
+        "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190394",
+        "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190395",
+        "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190396"
+      ],
+      "conflict": "https://saddlebagexchange.com/wow/item-data/190394 lists item 190394 as Quality 1, and 190395/190396 as Quality 2/3"
+    }
+  ],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/20261107T1635-original-addon-export-source-triage.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-07T1740-independent-rank-crosscheck-and-workbook-access.jsonl"
   ],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/prospectmate",
-    "https://www.curseforge.com/wow/addons/libprocessable/files/4419395/additional-files",
-    "https://www.reddit.com/r/woweconomy/comments/109bytz",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting"
+    "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190394",
+    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
+    "https://www.reddit.com/r/woweconomy/comments/10vz6jh",
+    "https://goldcap.gg/retail/us/items/190394",
+    "https://goldcap.gg/retail/us/items/190395",
+    "https://goldcap.gg/retail/us/items/190396",
+    "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190395",
+    "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190396",
+    "https://saddlebagexchange.com/wow/item-data/190394"
   ],
   "verified_commit_sha": null,
-  "commit_sha_scope": "This status and new evidence are in the same atomic commit; its own hash cannot be included self-referentially. Verify the final commit SHA via GitHub after the branch ref update.",
+  "commit_sha_scope": "Evidence and status are written atomically in the same commit; the final commit hash cannot be included in its own content. The commit and read-back will be verified after pushing the branch ref.",
   "blockers": [
-    "No newly published original per-cast Dragonflight ore/herb dataset found through a new search channel (addons/source repositories) or cross-checks on Reddit, Wowhead, Warcraft Wiki, Method or Blizzard forums.",
-    "ProspectMate stores per-character data but public project page has no measured raw samples; no basis to invent completed casts, output ranks, refunds or histograms.",
-    "Independent live-game or Blizzard item-rank mappings and 2022 hotfix epoch remain unresolved; old sampled studies already documented and not re-imported."
+    "No newly verifiable original Dragonflight per-cast processing log or 0/1/2+ histogram for top ore/milling queue tasks; historical cohorts already preserved and must not be duplicated.",
+    "Xenastro's original public Google workbook resolves to a calculator table in current scraper; direct edit/gviz/export URLs did not expose the Prospecting Log tab or raw operation ledger.",
+    "GoldCap/WoW Price Hub current Serevite rank mapping is corroborated by independent third-party publishers but conflicts with Saddlebag Exchange labels; Blizzard in-game or item API verification still desirable.",
+    "No confirmed completed casts from nominal ore totals where Resourcefulness refunds occur; exact per-output hit counts and zeros remain null."
   ],
   "exhausted_sources": [
     {
@@ -50,9 +77,24 @@
         "Blizzard forums named Prismatic Ore prospecting logs/results and pre/post hotfix studies; no fresh 0-N histogram",
         "Wowhead Dragon Isles Prospecting (spell 374627) and original Draconium Ore/Prismatic Ore pages; linked Bugy/Jallfo/Xenastro studies already in repo"
       ]
+    },
+    {
+      "path": "Independent Serevite quality cross-publisher validation and original Xenastro workbook raw-tab access",
+      "reason": "New second source corroborates rank mapping but another vendor disagrees; public workbook scraper only returned distribution/price calculator and no original cast ledger.",
+      "whereLooked": [
+        "Reddit r/woweconomy named original Draconium Ore prospecting 2022 beta y3e8ek and Serevite Ore 1000-prospect original zkay8v; both already tracked in research",
+        "Reddit r/woweconomy original Xenastro 700k ore prospecting workbook: https://www.reddit.com/r/woweconomy/comments/10vz6jh",
+        "Google Sheets original Xenastro workbook https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit; public rendered calculator/distribution table accessible but Prospecting Log tab raw rows/cast counts not accessible via tested direct edit, gviz CSV and export CSV URLs",
+        "Wowhead Dragon Isles Prospecting spell 374627, Dragonflight Draconium Ore and Prismatic Ore source/result comments; historical Bugy and superbondez studies already on file",
+        "Wowhead Serene Pigment 198412/198414 and Blazing Pigment 198418/198420 comments for named Bubble Poppy/Saxifrage milling: ranks/qualitative identities but no new per-cast result dataset",
+        "wow-professions.com Dragon Isles Jewelcrafting leveling guide, named Serevite Ore 5-ore prospect recipe; no original result histogram",
+        "GoldCap Retail US current item pages Serevite Ore 190394, 190395, 190396: quality R3, R1, R2 respectively",
+        "WoW Price Hub Retail US Serevite Ore 190394, 190395, 190396: quality TIER_3, TIER_1, TIER_2 respectively (independent site corroboration)",
+        "Saddlebag Exchange item-data Serevite Ore 190394, 190395, 190396: labels Quality 1, 2, 3 respectively, CONFLICTING with both other catalogs; its 190395 page text also incorrectly situates Dragonflight Serevite in Spires of Arak"
+      ]
     }
   ],
-  "next_concrete_step": "Locate a user-supplied or publicly shared original ProspectMate/other addon cast log for Dragonflight ore or herbs, including raw per-output material identities, rank IDs, skill/specialization, refund handling, completed casts and 0-N distributions; only then submit numeric drops. Do not recycle archived forum cohort screenshots.",
+  "next_concrete_step": "Retrieve the source spreadsheet's actual 'Prospecting Log' sheet rows 28,33,39,54,62 via verified workbook/xlsx export or public named-tab link, not calculator-derived percentages; ask Master for direct archived workbook or original raw cast logs if access remains blocked. Obtain Blizzard/client item-quality data to resolve Serevite ID ranking, then seek post-beta ore/mill 0-N outcome exports.",
   "validation": {
     "prepared_jsonl_parse": "PASS",
     "record_count": 1,
@@ -62,10 +104,10 @@
     "zero_outcomes_invented": false,
     "units_invented": false,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/20261107T1635-original-addon-export-source-triage.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-07T1740-independent-rank-crosscheck-and-workbook-access.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "post_commit_readback": "PENDING external verification",
+    "post_commit_readback": "PENDING",
     "production_changed": false
   },
   "production_changed": false,
