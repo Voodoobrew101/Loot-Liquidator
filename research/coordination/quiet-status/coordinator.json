@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T08:08:44.738Z",
+  "updated_at": "2026-11-07T09:00:15Z",
   "branch": "implementation/five-agent-completion",
-  "status": "ReagentMaker 2015 Enchantrix-derived prospecting table: verified legacy input/output catalog IDs and five-ore recipe, discovered ambiguous third-column units (byproduct coefficients >1). Source-only hold; 0 measured cohorts or validated gold actions.",
+  "status": "New 2014 original Enchantrix quantity-reference schema identified and eight 2015 ReagentMaker input/output coefficients crosschecked; shared historical lineage, unresolved chance-vs-quantity units, no new measured casts or gold-action verification.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -43,7 +43,8 @@
     "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
     "T0044",
     "T0051",
-    "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107"
+    "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107",
+    "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -894,7 +895,8 @@
       "new_measured_cohorts": 0,
       "new_supported_gold_decisions": 0,
       "runtime_or_client_validation": false
-    }
+    },
+    "Historical Enchantrix/ReagentMaker coefficients: upstream Wowhead quantitative source methodology, exact per-five-ore output-unit normalization, original denominator and current Retail applicability not established; prevent double-counting duplicate references."
   ],
   "newly_verified_fields_or_cohorts": [
     {
@@ -2606,15 +2608,92 @@
       "observed_casts": 0,
       "measured_cohorts": 0,
       "actual_engine_price_checks": 0
+    },
+    {
+      "task_id": "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107",
+      "kind": "historical_source_lineage_and_output_quantity_schema_not_observed_casts",
+      "upstream_source": "https://gist.github.com/pzb/af1df9cbdf0791a6018e",
+      "upstream_created": "2014-07-07",
+      "downstream_source": "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
+      "downstream_revision": "42baf007f3c7",
+      "source_lineage": "2015 ReagentMaker credits Enchantrix; upstream ProspectableItems credits Wowhead quantity-probability data. Same item IDs plus close or identical coefficients support shared source lineage, not independent empirical cohorts.",
+      "crosschecked_pairs": [
+        {
+          "inputID": 2770,
+          "outputID": 818,
+          "upstream": "0.997584/2",
+          "upstreamCoefficient": 0.498792,
+          "downstream": 0.5
+        },
+        {
+          "inputID": 23424,
+          "outputID": 23077,
+          "upstream": "1.100808/6",
+          "upstreamCoefficient": 0.183468,
+          "downstream": 0.19
+        },
+        {
+          "inputID": 36909,
+          "outputID": 36923,
+          "upstream": "1.485622/6",
+          "upstreamCoefficient": 0.24760366666666667,
+          "downstream": 0.25
+        },
+        {
+          "inputID": 36909,
+          "outputID": 36927,
+          "upstream": "0.075524/6",
+          "upstreamCoefficient": 0.012587333333333332,
+          "downstream": 0.013
+        },
+        {
+          "inputID": 52183,
+          "outputID": 52327,
+          "upstream": "2.0",
+          "upstreamCoefficient": 2,
+          "downstream": 2
+        },
+        {
+          "inputID": 72092,
+          "outputID": 90407,
+          "upstream": "1.198490",
+          "upstreamCoefficient": 1.19849,
+          "downstream": 1.14
+        },
+        {
+          "inputID": 72093,
+          "outputID": 90407,
+          "upstream": "1.505320",
+          "upstreamCoefficient": 1.50532,
+          "downstream": 1.46
+        },
+        {
+          "inputID": 72094,
+          "outputID": 90407,
+          "upstream": "1.503700",
+          "upstreamCoefficient": 1.5037,
+          "downstream": 1.65
+        }
+      ],
+      "disposition": "The upstream prose mixes 'quantity' and 'probability', while downstream labels its third slot chanceToHaveOne. Values >1 cannot be P(hit). Possibly historical expected output quantity, but normalization not independently verified for all fields. Reference-only, gap-only handoff subject to precedence and protected implementation owner engine/tooltip test. No source casts, coefficients or contemporary eligibility inferred.",
+      "independent_cohorts": 0,
+      "observed_casts": 0,
+      "verified_gold_actions": 0,
+      "tests": {
+        "source_arithmetic_comparison": true,
+        "offline_engine": false,
+        "tooltip": false,
+        "live_retail": false
+      }
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": "2026-11-07T07:50:52.282Z",
-    "dragonflight": "2026-11-07T07:37:59.436Z",
-    "war_within": "2026-11-07T07:22:43.250Z",
-    "midnight": "2026-11-07T07:12:12.219Z"
+    "legacy": "2026-11-07T08:47:08.650Z",
+    "dragonflight": "2026-11-07T08:34:46.434Z",
+    "war_within": "2026-11-07T08:28:34.182Z",
+    "midnight": "2026-11-07T08:16:50.999Z"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
@@ -2749,13 +2828,13 @@
     "https://www.wowhead.com/item=194545/prismatic-ore",
     "https://tradeskillmaster.com/retail/us/items/199344",
     "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/v3/migration/reports/M04-extraction.md"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/v3/migration/reports/M04-extraction.md",
+    "https://gist.github.com/pzb/af1df9cbdf0791a6018e"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "27b66638ed26b5d22fc382d5a97dd29bada43505",
-    "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_integration": "aca72a4de9b8c2a6a1f8ce65c22f19a5c06ed8cd"
+    "research": "a65357217ebc82f636adb768501458b3c377cc77",
+    "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "commit_sha_when_verified": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
   "blockers": [
@@ -2788,7 +2867,8 @@
       "task_id": "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
       "blocker": "No confirmed completed-fish operations, refunds/zero counts or quality-item links in the original 500-fish study; game-client spell eligibility not tested. Wiki/TSM/Wowhead descriptions do not by themselves validate actual game behavior. No source-to-tooltip simulation run."
     },
-    "ReagentMaker ProspectingData.lua is a 2015 Enchantrix-derived authored reference. The third column is labeled chanceToHaveOne yet includes Volatile Earth=2 and Sparkling Shard=1.14/1.46/1.65, which are impossible per-operation hit probabilities. Source documentation does not prove which rows are occurrence chances versus expected multiunits. Compare upstream Enchantrix, reference tables, and current eligibility before admitting or pricing any source coefficient."
+    "ReagentMaker ProspectingData.lua is a 2015 Enchantrix-derived authored reference. The third column is labeled chanceToHaveOne yet includes Volatile Earth=2 and Sparkling Shard=1.14/1.46/1.65, which are impossible per-operation hit probabilities. Source documentation does not prove which rows are occurrence chances versus expected multiunits. Compare upstream Enchantrix, reference tables, and current eligibility before admitting or pricing any source coefficient.",
+    "2014 'quantity probability' wording plus 2015 'chanceToHaveOne' conflicts with greater-than-one byproduct rates; no defensible P(hit), original cast denominator or current Retail skill/build. Source-to-tooltip engine tests not executed."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -2813,7 +2893,8 @@
     "2017 IcyVeins 35,890-ore/1,135-gem secondary aggregate traced to primary Reddit posts 6ywwdq,6xa92j,6ydssd,6ygegx; do not recollect aggregate as an independent source or misread 19.20% gem composition as P(hit). Further work requires archived-cohort dedupe or original event ledgers, not repeating the guide.",
     "Checked original Teishoku Feb27 table, Method Mar05 list, Wowhead player-linked eligible-item list, and 13 Missive links; these have no new cast-level output logs or source-specific ranks. Do not re-search them for numerical histograms without new context.",
     "Magma Thresher 199344: reviewed existing original 2023 Reddit output table, Retail TSM catalog item, Wowhead item description and Warcraft Wiki reagent-for table; no independent recent cast histogram, refundable-input evidence or linked rank output IDs in those pages. Do not revisit as novel numeric study.",
-    "Checked 2015 ReagentMaker ProspectingData.lua @42baf007f3c7, verified nominal five-ore inputs, item IDs and above-one byproduct coefficients. It explicitly credits Enchantrix. Do not recollect this as independent experimental cohorts or multiply it into existing TSM/legacy sources. Further work needs upstream provenance/units rather than rereading the same file."
+    "Checked 2015 ReagentMaker ProspectingData.lua @42baf007f3c7, verified nominal five-ore inputs, item IDs and above-one byproduct coefficients. It explicitly credits Enchantrix. Do not recollect this as independent experimental cohorts or multiply it into existing TSM/legacy sources. Further work needs upstream provenance/units rather than rereading the same file.",
+    "2014 Enchantrix ProspectableItems vs 2015 ReagentMaker eight exact ID-pair crosswalk audited once; do not reuse as independent source cohorts, and do not repeat without new upstream units/actual measurements."
   ],
   "decisions_needed": [
     {
@@ -2839,7 +2920,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "For T0042/T0044/T0051 compare the archived 2015 Enchantrix/ReagentMaker output pairs and coefficients against already pinned legacy/TSM/research sources to identify truly gap-only values, and request an original upstream schema/units definition. Never treat >1 as P(hit), or price unknown mean; any admissible historical value must be labeled and tested by the protected three-pass implementation owner with synthetic-price engine/tooltip probes. Workers continue original-source cast/rank/skill pursuit.",
+  "next_concrete_step": "Determine upstream historical Wowhead quantity metric units and whether any item/output rates are genuinely gap-only against frozen TSM and existing ItemDB; protected 3-pass owner controls synthetic-price resolver/valuation/tooltip admission. Workers continue original-source cast/rank/skill gaps, especially current Midnight copper/tin.",
   "validation_executed": {
     "source_comparison": true,
     "source_rows_crossmatched": 78,
@@ -2860,7 +2941,11 @@
     "current_run_synthetic_price_tests": false,
     "current_run_full_test_suite": false,
     "current_run_live_client": false,
-    "current_run_ci_observed_for_prewrite_head": true
+    "current_run_ci_observed_for_prewrite_head": true,
+    "current_run_source_arithmetic_comparison": true,
+    "current_run_upstream_schema_read": true,
+    "current_run_8_id_matched_pairs": true,
+    "current_run_actual_engine": false
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -2874,35 +2959,35 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "task_id": "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107",
-    "at_utc": "2026-11-07T08:08:44.738Z",
+    "task_id": "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107",
+    "at_utc": "2026-11-07T09:00:15Z",
     "verified_revisions_before_write": {
       "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-      "research": "27b66638ed26b5d22fc382d5a97dd29bada43505",
-      "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
-      "research_integration": "aca72a4de9b8c2a6a1f8ce65c22f19a5c06ed8cd"
+      "research": "a65357217ebc82f636adb768501458b3c377cc77",
+      "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
     },
-    "source_url": "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
-    "source_revision": "42baf007f3c7",
-    "actual_worker_reports_read": {
-      "legacy": "2026-11-07T07:50:52.282Z",
-      "dragonflight": "2026-11-07T07:37:59.436Z",
-      "war_within": "2026-11-07T07:22:43.250Z",
-      "midnight": "2026-11-07T07:12:12.219Z"
-    },
-    "research_ci_seen": {
-      "id": 42352974456,
-      "head": "27b66638ed26b5d22fc382d5a97dd29bada43505",
-      "conclusion": "success",
-      "completed_at": "2026-11-07T07:51:27Z"
-    },
-    "original_evidence_files_changed": 0,
-    "new_measured_cohorts": 0,
-    "new_supported_gold_decisions": 0,
-    "actual_engine_or_tooltip_tests": false,
-    "live_wow": false,
+    "source_links": [
+      "https://gist.github.com/pzb/af1df9cbdf0791a6018e",
+      "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper"
+    ],
+    "verified_crosswalk_pairs": 8,
+    "observed_casts": 0,
+    "measured_cohorts": 0,
+    "actual_engine_tests": false,
+    "tooltip_tests": false,
+    "live_client_tests": false,
     "merges": 0,
-    "releases": 0
+    "releases": 0,
+    "prewrite_research_ci": {
+      "run_id": 42356950117,
+      "commit": "a65357217ebc82f636adb768501458b3c377cc77",
+      "conclusion": "success",
+      "updated_at": "2026-11-07T08:47:39Z"
+    },
+    "pull_requests": {
+      "22": "closed_unmerged",
+      "23": "closed_unmerged"
+    }
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
@@ -3146,7 +3231,7 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
     "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
-  "research_branch_head_read_before_write": "49b434e13c312f81a51dfb53ef723f45cd6863c1",
+  "research_branch_head_read_before_write": "a65357217ebc82f636adb768501458b3c377cc77",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-07T02:03:30.887Z",
   "verified_base_commit_sha": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
   "current_status_commit_sha": null,
