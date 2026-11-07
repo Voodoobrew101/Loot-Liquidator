@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T11:33:18.079Z",
+  "updated_at": "2026-11-07T12:04:20.465Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Source-checked four newly added historical prospecting identities (25 material rows) against original Wowhead comments, not current Retail outcomes. Confirmed 80 explicitly stated Obsidium prospects with 11 exact output totals, one direct 5-ore Obsidium prospect with 1 Nightstone, and two ore-only denominator cohorts. Identified separate same-author Elementium observation not yet in latest 25-row file; no coordinator casts, numeric estimator run, gold decisions or client validation.",
+  "status": "Independently verified latest Legacy worker's original Jasper Ring source counts and discovered a conditional-input context hazard: wilzam's 610 green-ring disenchants include Bountiful Bags extras while nubi's 1,389 Enchantrix green-ring disenchants have unknown perk status. Existing research estimator groups by method/input/output and does not stratify on 'stats'; a future blended average would not be a proven baseline for one Retail character. This is a source-backed potential source-mixing risk, not an executed estimator or addon defect. No new coordinator cohort, full migration, gold decision or live-client test.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -46,7 +46,8 @@
     "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107",
     "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107",
     "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
-    "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107"
+    "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107",
+    "COORD-CATA-JASPER-ENCHANTRIX-PERK-CONTEXT-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -949,6 +950,47 @@
         "overlap_with_other_legacy_records_not_exhaustively_checked": true
       },
       "remaining_gap": "Completed cast denominators and refund handling are unknown for 1200 Obsidium and 200 Mithril amounts, and stack size/number of completed casts unknown for the same-author Elementium report. Output hit counts, zeros, histograms, source patch/skill and 2026 Retail eligibility unverified. Do not reinterpret 80 as 80 hits or historical as current."
+    },
+    {
+      "task_id": "COORD-CATA-JASPER-ENCHANTRIX-PERK-CONTEXT-20261107",
+      "kind": "historical_cataclysm_disenchant_perk_profile_source_stratification",
+      "source_file": "research/v3/evidence/legacy/20261107T1154-cataclysm-ring-pendant-bracer-logs.jsonl",
+      "source_blob_sha": "fbef60ba0b5a9083c673b97a84d9d23d5c4d8ad0",
+      "original_primary_retail_wowhead_locale": "https://www.wowhead.com/ru/item=52306",
+      "original_wilzam_mirror": "https://www.wowhead.com/cata/item=52306/jasper-ring",
+      "original_nubi_mirror": "https://www.wowhead.com/mop-classic/item=52306/jasper-ring",
+      "input_item_id": 52306,
+      "outputs": [
+        52555,
+        52718
+      ],
+      "worker_record_ids": [
+        "legacy-20261107-42007",
+        "legacy-20261107-42008",
+        "legacy-20261107-42010",
+        "legacy-20261107-42011"
+      ],
+      "observed_nubi": {
+        "casts": 1389,
+        "dust_positive_casts": 1059,
+        "dust_total_units": 2098,
+        "essence_positive_casts": 330,
+        "essence_total_units": 675,
+        "dust_unconditional_units_per_cast": 1.5104391648668107,
+        "essence_unconditional_units_per_cast": 0.48596112311015116,
+        "source_hit_counts_sum_to_casts": true,
+        "bountiful_bags_status": null
+      },
+      "observed_wilzam": {
+        "uncommon_green_casts": 610,
+        "dust_total_units": 1054,
+        "essence_total_units": 318,
+        "bountiful_bags_active": true,
+        "rare_variant_casts": 62,
+        "rare_shard_units": 71
+      },
+      "risk": "Compiler key_of groups (method,input ID,output ID) without stats/profile; totals-weighted pooling of 610 Bountiful Bags and 1389 unknown-perk operations would misrepresent a perk-free baseline. Character/profession/patch and current Retail behavior remain unverified. Nubi's comment is present on current Retail Wowhead locale as historical inherited text, not proof it was measured in a modern Retail build. Do not infer a cross-expansion Classic cohort or live client eligibility from mirrored page route.",
+      "duplicate_scope": "Reviewed the latest 14-row source file and existing main Carnelian nubi 288-ring evidence; source-specific cross-repository duplicate search not exhaustive. No new original rows appended by coordinator."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -2818,12 +2860,26 @@
       "current_retail_scope_verified": false,
       "new_observed_casts_added_by_coordinator": 0,
       "new_gold_decisions_verified": 0
+    },
+    {
+      "task_id": "COORD-CATA-JASPER-ENCHANTRIX-PERK-CONTEXT-20261107",
+      "kind": "manager_primary_source_readback_and_context_stratification_audit",
+      "is_new_independent_cohort_added_by_coordinator": false,
+      "worker_file": "research/v3/evidence/legacy/20261107T1154-cataclysm-ring-pendant-bracer-logs.jsonl",
+      "worker_file_blob_sha": "fbef60ba0b5a9083c673b97a84d9d23d5c4d8ad0",
+      "original_source_quoted_counts_verified": true,
+      "source_mirror_flavor_crosscheck": true,
+      "source_reported_measured_nubi_1389_operations": true,
+      "measured_probability_from_source_hits_available_for_historical_cohort": true,
+      "actual_estimator_or_runtime_executed": false,
+      "new_current_retail_gold_decisions": 0,
+      "note": "Nubi primary Wowhead source explicitly reports 1,389 green-ring disenchants, 1,059 dust-positive, 330 essence-positive, total units 2,098 and 675. Wilzam separately reports 610 green disenchants, 1,054/318 units and Bountiful Bags extra gains; historical source conditions differ."
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": "2026-11-07T10:46:19.600Z",
+    "legacy": "2026-11-07T11:54:30.529Z",
     "dragonflight": "2026-11-07T10:36:32.209Z",
     "war_within": "2026-11-07T11:20:53.450Z",
     "midnight": "2026-11-07T11:21:19.340Z"
@@ -2849,7 +2905,8 @@
     "research/v3/evidence/dragonflight/2026-10-31T1234-prismatic-and-serevite-cast-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-01T0230-aberrus-tokens-prismatic-prospecting.jsonl",
     "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl",
-    "research/v3/evidence/legacy/20261107T1046-obsidium-mithril-firsthand.jsonl"
+    "research/v3/evidence/legacy/20261107T1046-obsidium-mithril-firsthand.jsonl",
+    "research/v3/evidence/legacy/20261107T1154-cataclysm-ring-pendant-bracer-logs.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -2965,11 +3022,14 @@
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/v3/migration/reports/M04-extraction.md",
     "https://gist.github.com/pzb/af1df9cbdf0791a6018e",
     "https://www.wowhead.com/cata/item=52180/nightstone",
-    "https://www.wowhead.com/item=7909/aquamarine"
+    "https://www.wowhead.com/item=7909/aquamarine",
+    "https://www.wowhead.com/ru/item=52306",
+    "https://www.wowhead.com/cata/item=52306/jasper-ring",
+    "https://www.wowhead.com/mop-classic/item=52306/jasper-ring"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "7d95e922379ba55f9bb2f74bc1a785a89ae9c33e",
+    "research": "86eb8bfd53aefb1995d2059f1eb221ff8a975639",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "commit_sha_when_verified": "57ef9ae95a96299d3e537307f3afd196a4ba5ae8",
@@ -3009,7 +3069,8 @@
       "task_id": "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
       "blocker": "Worker-owned Rikikijr historical PTR rows 914..926 need append-only basis correction with source read-back; research estimator and actual addon/tooltip not executed. 836908 80-ore versus 15-prospect mismatch cannot be resolved from original author comment; preserve source claim and unknown leftover/refunds."
     },
-    "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107: 957663 1200-ore and 610726 200-ore reports give material totals but not logged completed operations/Resourcefulness; 370112's separate 3-stack Elementium result has unknown stack size and unresolved prior-source overlap; historical build and modern eligibility absent."
+    "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107: 957663 1200-ore and 610726 200-ore reports give material totals but not logged completed operations/Resourcefulness; 370112's separate 3-stack Elementium result has unknown stack size and unresolved prior-source overlap; historical build and modern eligibility absent.",
+    "COORD-CATA-JASPER-ENCHANTRIX-PERK-CONTEXT-20261107: Perk-conditioned and unconditioned output averages cannot be characterized as one verified character baseline. Nubi's guild perk, historical source patch and exact Retail compatibility unknown; no completed character-specific current Retail test or performed estimator regression."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -3061,7 +3122,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Legacy evidence owner: check whether original author 370112's one Nightstone from three stacks of Elementium is already represented; if not, append source-preserving Elementium 52185->52180 output-unit observation with casts=null and stack size unknown, retaining independence from their one 5-ore Obsidium result. Request raw actual prospect/refund and per-output hit/zero logs for latest Obsidium/Mithril cohorts. Independently, pursue the older Cataclysm Pyrite castsBasis correction via legacy owner and estimator reviewer; protected integration branch alone owns engine/tooltip tests.",
+  "next_concrete_step": "Legacy worker: retain Bountiful Bags/Enchantrix fields and original source identities for Jasper 52306, seek verified historical perk status and dated version only if new primary material exists, avoiding recycled searches. Research engineer on separate approved scope: add a regression demonstrating source-profile separation or explicit uncertain historical blending; hand off to protected three-pass integration owner for real engine/tooltip synthetic-price test. Highest gold priority remains current-rank/item-specific completed operations, zero-inclusive histograms and actual source identity where missing.",
   "validation_executed": {
     "source_comparison": true,
     "source_rows_crossmatched": 78,
@@ -3100,7 +3161,18 @@
     "older_obsidium_source_files_compared": 4,
     "full_historical_source_dedup_executed": false,
     "synthetic_price_tests_run": false,
-    "latest_research_head_ci_success": "42367837449 on 7d95e922379ba55f9bb2f74bc1a785a89ae9c33e"
+    "latest_research_head_ci_success": "42367837449 on 7d95e922379ba55f9bb2f74bc1a785a89ae9c33e",
+    "current_run_latest_worker_14_jsonl_rows_parsed": true,
+    "current_run_primary_nubi_source_readback": true,
+    "current_run_original_wilzam_perk_readback": true,
+    "current_run_source_quantity_arithmetic_checked": true,
+    "current_run_estimator_key_and_aggregation_source_inspected": true,
+    "current_run_actual_estimator_execution": false,
+    "current_run_actual_val_tooltip_execution": false,
+    "current_run_live_wow_execution": false,
+    "current_run_research_head_before_write": "86eb8bfd53aefb1995d2059f1eb221ff8a975639",
+    "current_run_pr22_pr23_state": "both closed unmerged",
+    "current_run_ci": "42370157196 success for 86eb8bfd53aefb1995d2059f1eb221ff8a975639 before this update"
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -3114,32 +3186,29 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "task_id": "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107",
-    "at_utc": "2026-11-07T11:33:18.079Z",
+    "task_id": "COORD-CATA-JASPER-ENCHANTRIX-PERK-CONTEXT-20261107",
+    "at_utc": "2026-11-07T12:04:20.465Z",
     "verified_revisions_before_write": {
       "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-      "research": "7d95e922379ba55f9bb2f74bc1a785a89ae9c33e",
+      "research": "86eb8bfd53aefb1995d2059f1eb221ff8a975639",
       "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
     },
-    "source_evidence_blob_sha": "a7516d1efaf6c568bb439c6fb7c65784ef2e176b",
-    "source_pages": [
-      "https://www.wowhead.com/cata/item=52180/nightstone",
-      "https://www.wowhead.com/item=7909/aquamarine"
+    "worker_file_blob_sha": "fbef60ba0b5a9083c673b97a84d9d23d5c4d8ad0",
+    "worker_report_utc": "2026-11-07T11:54:30.529Z",
+    "checks": [
+      "14 worker rows parsed",
+      "original primary Wowhead published figures checked",
+      "conditional perk scope compared",
+      "estimator key_of/average-weighting code read",
+      "PR22/23 closed unmerged and CI metadata read"
     ],
-    "verification": "25 worker evidence rows parsed; four original authors crosschecked in two public source pages; earlier Obsidium/Mithril source keys checked for distinct author provenance in selected files; not exhaustive across all historic evidence",
-    "worker_reports_verified": {
-      "legacy": "2026-11-07T10:46:19.600Z",
-      "dragonflight": "2026-11-07T10:36:32.209Z",
-      "war_within": "2026-11-07T11:20:53.450Z",
-      "midnight": "2026-11-07T11:21:19.340Z"
-    },
-    "observed_casts_added_by_coordinator": 0,
-    "measured_cohorts_added_by_coordinator": 0,
-    "gold_decisions_verified": 0,
-    "full_estimator_or_engine_tests": false,
-    "live_client_tests": false,
-    "merges": 0,
-    "releases": 0
+    "not_run": [
+      "rebuild of estimates",
+      "actual synthetic-priced addon valuation/tooltip",
+      "Retail client QA",
+      "exhaustive cross-file source dedup"
+    ],
+    "new_measured_cohorts_by_coordinator": 0
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
