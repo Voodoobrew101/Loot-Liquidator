@@ -113,6 +113,54 @@ def validate(pages):
             require(inputs.keys() == nominal.keys() and not (returned.keys() - nominal.keys()) and
                     all(inputs[item] == qty - returned[item] for item, qty in nominal.items()),
                     'Nominal consumption/net inputs/refunds disagree')
+    # Version3 Recycling separates per-cast typed receipts while reconciling a
+    # consecutive sequence against one inventory delta. Every member must be
+    # present, and the receipts, individual vectors and shared delta must agree.
+    batches = collections.defaultdict(list)
+    result_operations = set()
+    for r in records:
+        if r.get('attribution') != 'cast-result-batch-bag':
+            continue
+        require(r['method'] == 'Recycle' and r['recipeID'] == 1229930 and r.get('captureVersion') == 3,
+                'Unsupported batch reconciliation operation')
+        evidence = r.get('bagReconciliation', {})
+        batch_id = evidence.get('id')
+        require(isinstance(batch_id, str) and batch_id and integer(evidence.get('operations')),
+                'Invalid Recycling reconciliation membership')
+        typed = collections.Counter()
+        operation = None
+        receipts = r.get('resultMetadata')
+        require(isinstance(receipts, list) and receipts, 'Missing Recycling result receipts')
+        for receipt in receipts:
+            require(integer(receipt.get('operationID')) and integer(receipt.get('itemID')) and
+                    integer(receipt.get('quantity')) and isinstance(receipt.get('itemGUID'), str) and receipt['itemGUID'],
+                    'Invalid Recycling result receipt')
+            require(operation is None or operation == receipt['operationID'], 'Multiple Recycling result operations')
+            operation = receipt['operationID']
+            typed[receipt['itemID']] += receipt['quantity']
+        require(operation not in result_operations, 'Duplicate Recycling result operation')
+        result_operations.add(operation)
+        require(dict(typed) == vector(r['outputs']), 'Recycling receipts and outputs disagree')
+        nominal = vector(r.get('nominalInputs'))
+        require(len(nominal) == 1 and next(iter(nominal.values())) == 5, 'Invalid nominal Recycling batch')
+        target = r.get('salvageTarget', {})
+        require(target.get('itemID') in nominal and target.get('quantity') == 5 and
+                isinstance(target.get('itemGUID'), str) and target['itemGUID'] and
+                target['itemGUID'] == r.get('allocationItemGUID') and
+                target.get('eligibilitySource') == 'C_TradeSkillUI.GetSalvagableItemIDs',
+                'Missing verified Recycling target')
+        batches[(r['studyID'], batch_id)].append(r)
+    for (_, batch_id), members in batches.items():
+        evidence = members[0]['bagReconciliation']
+        require(len(members) == evidence['operations'] and batch_id in {r['operationID'] for r in members},
+                'Missing Recycling reconciliation casts')
+        total_inputs, total_outputs = collections.Counter(), collections.Counter()
+        for r in members:
+            require(r['bagReconciliation'] == evidence, 'Conflicting Recycling reconciliation evidence')
+            total_inputs.update(vector(r['inputs'], allow_zero=True))
+            total_outputs.update(vector(r['outputs']))
+        require({i: n for i, n in total_inputs.items() if n} == vector(evidence.get('inputs')) and
+                dict(total_outputs) == vector(evidence.get('outputs')), 'Recycling batch inventory totals disagree')
     return records, contexts, studies
 
 

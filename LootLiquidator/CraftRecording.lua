@@ -9,6 +9,7 @@ local MAX_RECORDS=2000
 local pending
 local request
 local sessionStarted=false
+local recyclingReceipts,recyclingReceiptOrder={},{}
 local function finite(n) return type(n)=="number" and n==n and n>=0 and n<math.huge end
 local function integer(n) return finite(n) and n>0 and n%1==0 end
 local function secret(v) return issecretvalue and issecretvalue(v) end
@@ -30,7 +31,7 @@ local function quote(s)
         return ({['"']='\\"',['\\']='\\\\',['\n']='\\n',['\r']='\\r',['\t']='\\t'})[c] or ('\\u%04x'):format(c:byte())
     end)..'"'
 end
-local arrayFields={records=true,inputs=true,outputs=true,nominalInputs=true,materials=true,baselines=true,diagnostics=true,resultMetadata=true,sourceRecordIDs=true,expectedInputsConsumed=true,resourcesReturned=true,inputIdentity=true}
+local arrayFields={records=true,inputs=true,outputs=true,nominalInputs=true,materials=true,baselines=true,diagnostics=true,resultMetadata=true,sourceRecordIDs=true,expectedInputsConsumed=true,resourcesReturned=true,inputIdentity=true,operationIDs=true}
 local function json(v,forceArray)
     if type(v)=="string" then return quote(v) end
     if type(v)=="number" then assert(finite(v));return ('%.17g'):format(v) end
@@ -219,6 +220,16 @@ function LL:CaptureResearchLoot()
     end
 end
 local function describe(self,recipe)
+    local salvage=self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(recipe)
+    if salvage then
+        local ui=C_TradeSkillUI
+        if call(ui and ui.IsTradeSkillLinked) or call(ui and ui.IsTradeSkillGuild) or call(ui and ui.IsNPCCrafting) then return nil end
+        local info=call(ui and ui.GetRecipeInfo,recipe)
+        if type(info)=='table' and info.learned==true and info.disabled~=true and info.isSalvageRecipe==true then
+            return {method=salvage.method,salvage=copy(salvage)}
+        end
+        return nil
+    end
     local operations=self.ResearchProcessingRecipeOperations and self:ResearchProcessingRecipeOperations(recipe)
     local method
     for _,r in ipairs(operations or {}) do
@@ -320,30 +331,51 @@ local function allocatedInputs(p)
 end
 function LL:BeginCraftCapture(guid,recipe)
     if type(guid)~="string" or not integer(recipe) then return false end
+    local description=describe(self,recipe)
+    local preceding
     if pending then
         if pending.guid==guid then return true end
         local previous=pending
-        self:FinishCraftCapture(true)
+        -- Consecutive Recycling results have individual server operation IDs,
+        -- but bag updates can span cast boundaries. Keep their typed receipts
+        -- until the whole sequence reconciles, rather than mixing two deltas.
+        if description and enabled(self,description.method) and previous.method=='Recycle' and previous.recipe==recipe and previous.success
+            and #previous.results>0 and not previous.interference then
+            self:FinishCraftCapture(false)
+            if pending and #(previous.previousRecycling or {})<MAX_RECORDS-1 then
+                preceding=previous.previousRecycling or {}
+                previous.previousRecycling=nil
+                preceding[#preceding+1]=previous
+                pending=nil
+            end
+        else self:FinishCraftCapture(true) end
         -- A second cast before the previous result settles contaminates both
         -- operations. Keep a diagnostic gap rather than pooling their loot.
-        if pending or previous.finalCoverage~="complete" then
+        if not preceding and (pending or previous.finalCoverage~="complete") then
             local d=ledger(self);local study=d.activeStudy or self:StartCraftStudy()
             d.studies[study].censored=true;pending=nil;return false
         end
     end
-    local description=describe(self,recipe);if not description then return false end
+    if not description then return false end
     if not enabled(self,description.method) then if self.db then ledger(self).activeStudy=nil end;return false end
-    local before=self:SnapshotCraftBags();if not before then return false end
+    local before=self:SnapshotCraftBags()
+    if not before then
+        if preceding then pending=table.remove(preceding);pending.previousRecycling=preceding end
+        return false
+    end
     local d=ledger(self);if not d.activeStudy then self:StartCraftStudy() end
     d.confirmableEmpty=nil
     local hint=request and request.recipe==recipe and request.remaining>0 and clock()-request.at<120 and request or nil
     if hint and hint.orderID~=nil and hint.orderID~=0 then return false end -- customer/order inventory is not this character's bags
     local targetFacts=hint and hint.salvageInputID and before.facts[hint.salvageInputID]
+    local salvageInputs=description.salvage and self.ReadSalvageInputs and self:ReadSalvageInputs(recipe)
     local context=self:CaptureCraftContext(recipe,targetFacts,description.method,hint and hint.allocation,
         hint and hint.concentration,hint and hint.allocationItemGUID)
-    if hint then hint.remaining=hint.remaining-1 end
+    if hint then hint.remaining=hint.remaining-1;hint.at=clock() end
     pending={guid=guid,recipe=recipe,method=description.method,description=description,before=before,
-        request=copy(hint),context=copy(context),startedAt=stamp(),started=clock(),success=false,results={},resultKeys={}}
+        request=copy(hint),context=copy(context),startedAt=stamp(),started=clock(),success=false,results={},resultKeys={},
+        salvageInputVerified=salvageInputs and hint and salvageInputs[hint.salvageInputID]==true,
+        previousRecycling=preceding}
     if C_Timer and C_Timer.After then
         local p=pending;C_Timer.After(60,function()
             if pending==p and not p.success then
@@ -505,6 +537,8 @@ local function validateDelta(self,p,after)
     return {inputs=inputs,outputs=itemVector(added,after.facts)}
 end
 local function diagnostic(self,p,reason)
+    local preceding=p.previousRecycling;p.previousRecycling=nil
+    for _,earlier in ipairs(preceding or {}) do diagnostic(self,earlier,reason) end
     local d=ledger(self);d.diagnostics=d.diagnostics or {}
     local after=self:SnapshotCraftBags()
     local removed,added={},{}
@@ -531,10 +565,108 @@ end
 function LL:AbandonCraftCapture(reason)
     if pending then diagnostic(self,pending,reason);pending=nil end
 end
+local function finishRecycling(self,p,after,final)
+    local casts={}
+    for _,earlier in ipairs(p.previousRecycling or {}) do casts[#casts+1]=earlier end
+    casts[#casts+1]=p
+    local nominal,net,produced,seen,parts={},{},{},{},{}
+    local reason
+    for _,cast in ipairs(casts) do
+        local id=cast.request and cast.request.salvageInputID
+        local guid=cast.request and cast.request.allocationItemGUID
+        local batch=cast.description.salvage and cast.description.salvage.inputCount
+        local facts=id and cast.before.facts[id]
+        local returns=reportedReturns(cast)
+        if not cast.success or cast.interference or not integer(id) or not integer(batch)
+            or type(guid)~='string' or guid=='' or not facts or not cast.salvageInputVerified
+            or not returns or #cast.results==0 then
+            reason=cast.interference or 'Recycling needs a verified salvage target and craft result';break
+        end
+        local variants=0 for _ in pairs(cast.before.variants[id] or {}) do variants=variants+1 end
+        if variants~=1 then reason='Recycling input item variants are ambiguous';break end
+        local refunded=returns[id] or 0
+        for returnedID in pairs(returns) do if returnedID~=id then reason='Unrelated Recycling reagent return' end end
+        if reason or refunded>batch then reason=reason or 'Invalid Recycling reagent return';break end
+        local outputs={}
+        local operation
+        for _,r in ipairs(cast.results) do
+            if not integer(r.operationID) or (operation and operation~=r.operationID)
+                or not integer(r.itemID) or not integer(r.quantity) or r.itemID==id then
+                reason='Ambiguous Recycling result operation';break
+            end
+            operation=r.operationID
+            outputs[r.itemID]=(outputs[r.itemID] or 0)+r.quantity
+        end
+        if reason then break end
+        if seen[operation] then reason='Duplicate Recycling result operation';break end
+        seen[operation]=true
+        nominal[id]=(nominal[id] or 0)+batch
+        net[id]=(net[id] or 0)+batch-refunded
+        for outputID,n in pairs(outputs) do produced[outputID]=(produced[outputID] or 0)+n end
+        parts[#parts+1]={cast=cast,inputs=itemVector({[id]=batch-refunded},cast.before.facts),
+            nominalInputs=itemVector({[id]=batch},cast.before.facts),outputs=itemVector(outputs,after.facts)}
+    end
+    local before=casts[1].before
+    local removed,added=diff(before,after)
+    if not reason then
+        local budget=copy(before.counts)
+        for _,part in ipairs(parts) do
+            local id=part.nominalInputs[1].itemID
+            if (budget[id] or 0)<part.nominalInputs[1].quantity then reason='Missing nominal Recycling input batch';break end
+            budget[id]=budget[id]-part.inputs[1].quantity
+        end
+        for id,n in pairs(net) do
+            if produced[id] then reason='Recycling input and output identities overlap'
+            elseif (removed[id] or 0)~=n then reason='Recycling inputs have not reconciled' end
+        end
+        for id,n in pairs(removed) do if n~=(net[id] or 0) then reason='Unrelated Recycling input change' end end
+        for id,n in pairs(produced) do if (added[id] or 0)~=n then reason='Recycling outputs have not reconciled' end end
+        for id,n in pairs(added) do if n~=(produced[id] or 0) then reason='Unrelated Recycling output change' end end
+    end
+    if reason then
+        if final then diagnostic(self,p,reason);pending=nil end
+        return false
+    end
+    -- Compact shared identity/count: the member records carry their own cast
+    -- IDs. Repeating a long GUID list in every record makes large exports grow
+    -- quadratically and can exceed the native copy/import limits.
+    local evidence={id=casts[1].guid,operations=#casts,
+        inputs=itemVector(removed,before.facts),outputs=itemVector(added,after.facts)}
+    -- All receipts have been matched to one exact aggregate inventory delta.
+    -- Per-cast outputs come from those receipts, not a division of bag totals.
+    p.previousRecycling=nil
+    local complete=true
+    for _,part in ipairs(parts) do
+        local cast=part.cast
+        local record={operationID=cast.guid,recipeID=cast.recipe,method='Recycle',successful=true,
+            character=self:CharacterKey(),build=build(),gameMode='RETAIL',context=cast.context,
+            inputs=part.inputs,nominalInputs=part.nominalInputs,outputs=part.outputs,outputCoverage='complete',
+            startedAt=cast.startedAt,endedAt=cast.completedAt,reconciledAt=stamp(),
+            durationSeconds=cast.completed-cast.started,
+            attribution='cast-result-batch-bag',captureVersion=3,resultMetadata=copy(cast.results),
+            allocation=cast.request.allocation,allocationItemGUID=cast.request.allocationItemGUID,
+            applyConcentration=cast.request.concentration,bagReconciliation=copy(evidence),
+            salvageTarget={itemID=part.nominalInputs[1].itemID,quantity=part.nominalInputs[1].quantity,
+                itemGUID=cast.request.allocationItemGUID,eligibilitySource='C_TradeSkillUI.GetSalvagableItemIDs'}}
+        local ok,why=self:RecordCraftObservation(record)
+        cast.finalCoverage=ok and 'complete' or 'unresolved'
+        if not ok then complete=false;diagnostic(self,cast,why)
+        else
+            recyclingReceipts[cast.operationID]=copy(cast.resultKeys)
+            recyclingReceiptOrder[#recyclingReceiptOrder+1]=cast.operationID
+            if #recyclingReceiptOrder>MAX_RECORDS then
+                recyclingReceipts[table.remove(recyclingReceiptOrder,1)]=nil
+            end
+        end
+    end
+    pending=nil
+    return complete
+end
 function LL:FinishCraftCapture(final)
     local p=pending;if not p or not p.success then return false end
     if p.interference then diagnostic(self,p,p.interference);pending=nil;return false end
     local after=self:SnapshotCraftBags();if not after then return false end
+    if p.method=='Recycle' then return finishRecycling(self,p,after,final) end
     local result,reason=validateDelta(self,p,after)
     if not result then
         if final then diagnostic(self,p,reason);pending=nil end
@@ -908,6 +1040,7 @@ for _,event in ipairs({"UNIT_SPELLCAST_SENT","UNIT_SPELLCAST_START","UNIT_SPELLC
     "TRADE_SHOW","MERCHANT_SHOW","MAIL_SHOW","BANKFRAME_OPENED","PLAYER_LOGOUT"}) do frame:RegisterEvent(event) end
 frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
     if pending and not enabled(LL,pending.method) then
+        if pending.method=='Recycle' then LL:AbandonCraftCapture('Recording disabled with unsettled Recycling results') end
         pending=nil
         if LL.db and LL.db.craftResearch then LL.db.craftResearch.activeStudy=nil end
     end
@@ -936,6 +1069,24 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
             pending.interference="Unsupported result kind";return
         end
         local key=tostring(r.operationID)..":"..tostring(r.itemGUID)..":"..r.itemID
+        if pending.method=='Recycle' then
+            local old=recyclingReceipts[r.operationID]
+            if old then
+                if old[key]~=json(r) then pending.interference='Conflicting completed Recycling result' end
+                return
+            end
+            for _,earlier in ipairs(pending.previousRecycling or {}) do
+                if earlier.operationID==r.operationID then
+                    local fingerprint=json(r)
+                    if earlier.resultKeys[key] and earlier.resultKeys[key]~=fingerprint then
+                        pending.interference='Conflicting duplicate Recycling result'
+                    elseif not earlier.resultKeys[key] then
+                        earlier.resultKeys[key]=fingerprint;earlier.results[#earlier.results+1]=r
+                    end
+                    schedule();return
+                end
+            end
+        end
         if integer(r.operationID) then
             if pending.operationID and pending.operationID~=r.operationID then pending.interference="Multiple result operations" end
             pending.operationID=r.operationID
@@ -960,12 +1111,24 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
         if event=="UNIT_SPELLCAST_SUCCEEDED" then
             if not pending.success then
                 pending.success=true
+                pending.completedAt=stamp();pending.completed=clock()
                 if C_Timer and C_Timer.After then
                     local p=pending;C_Timer.After(13,function() if pending==p then LL:FinishCraftCapture(true) end end)
                 end
             end
             schedule()
-        else pending=nil end
+        else
+            local preceding=pending.previousRecycling
+            pending=nil
+            if preceding and #preceding>0 then
+                pending=table.remove(preceding);pending.previousRecycling=preceding
+                local restored=pending
+                schedule()
+                if C_Timer and C_Timer.After then
+                    C_Timer.After(13,function()if pending==restored then LL:FinishCraftCapture(true)end end)
+                end
+            end
+        end
     end
 end)
 -- Preserve public diagnostic entry points; capture itself uses the unified frame.

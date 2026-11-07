@@ -469,7 +469,7 @@ local function Allowed(db,method)
     return true
 end
 local function MethodLetter(name)
-    return processingMethodLetters[name] or "C"
+    return processingMethodLetters[name] or (name=="Recycle" and "R") or "C"
 end
 -- D1c2: a material whose quality rank the research did not state lists every rank's
 -- item ID in rankIDs; it is priced at the cheapest rank that has a price.
@@ -566,7 +566,7 @@ function LL:ConversionOptions(f)
         -- Price stochastic processing only from the resolved ItemDB/personal
         -- evidence model. EV already includes zero-result operations and chance.
         local yieldModel,modelIssue
-        if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or (research and dataMode~=3) then
+        if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or c.method=="Recycle" or (research and dataMode~=3) then
             local displayOption={name=c.method,inputCount=inputCount,
                 recipeID=processingRecipe,character=character}
             local current=self.CharacterKey and self:CharacterKey()
@@ -598,6 +598,7 @@ function LL:ConversionOptions(f)
                 "Personal results only: no matching observations yet")) or c.requirement,
             outputID=c.outputID,outputCount=c.outputCount,inputCount=inputCount,
             recipeID=processingRecipe,expansion=c.expansion,
+            eligibleInput=c.eligibleInput,
             dataSource=c.source,category=kind,
             vendorSupplyCost=suppliesKnown and suppliesCost or nil,
             yieldModel=yieldModel}
@@ -607,6 +608,9 @@ function LL:ConversionOptions(f)
     for _,c in ipairs((self.Conversions and self.Conversions[f.id]) or {}) do
         -- Explicit verified conversion recipes / vendor exchanges.
         add(c,"curated")
+    end
+    for _,c in ipairs(self.SalvageConversionOptions and self:SalvageConversionOptions(f) or {}) do
+        add(c,"salvage-input")
     end
     for _,c in pairs((self.db.recipeCandidates and self.db.recipeCandidates[f.id]) or {}) do
         -- A discovered craft is eligible only if the produced reagent is consumed

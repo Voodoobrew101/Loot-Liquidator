@@ -228,4 +228,18 @@ if arg and arg[1] then
     output:write(f.edit:GetText());output:close()
     print('PASS: live-event recorder fixture -> native export popup -> unchanged copied research JSON')
 end
+if arg and arg[2] then
+    local file=assert(io.open(arg[2],'r'));local captured=file:read('*a');file:close()
+    local measured=assert(LL.DecodeImportJSON(captured))
+    LL.db.craftResearch={records=measured.records,contexts=measured.contexts,studies=measured.studies,
+        diagnostics=measured.diagnostics,droppedRecords=measured.droppedRecords}
+    f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport()
+    local copied=assert(LL.DecodeImportJSON(f.edit:GetText()))
+    check(same(copied,measured),'Recycling receipts and aggregate reconciliation survive native copy')
+    eq(#copied.records,20);eq(copied.records[1].method,'Recycle');eq(copied.records[1].captureVersion,3)
+    eq(copied.records[1].bagReconciliation.operations,20)
+    local output=assert(io.open('/tmp/loot-recycling-popup.json','w'))
+    output:write(f.edit:GetText());output:close()
+    print('PASS: Recycling20 receipt replay -> native export popup -> unchanged copied JSON')
+end
 print('PASS: '..checks..' native export dialog, literal JSON, importer, snapshot paging and optional skin assertions')

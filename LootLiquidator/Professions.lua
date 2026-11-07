@@ -2,7 +2,7 @@
 -- This module NEVER presumes that simply having a profession means a recipe is learned.
 local _, LL = ...
 local PROF = {Disenchant="Enchanting",Mill="Inscription",Prospect="Jewelcrafting",
-    Smelt="Mining",Tailor="Tailoring",Leatherwork="Leatherworking",Engineering="Engineering"}
+    Smelt="Mining",Recycle="Engineering",Tailor="Tailoring",Leatherwork="Leatherworking",Engineering="Engineering"}
 local KNOWN_SPELLS = {Mill=51005,Prospect=31252,Disenchant=13262}
 local function Now() return time and time() or 0 end
 local function SpellKnown(id)
@@ -11,7 +11,41 @@ local function SpellKnown(id)
     if IsSpellKnown and IsSpellKnown(id) then return true end
     return false
 end
-local function PositiveInt(n) return type(n)=="number" and n>0 and n==math.floor(n) end
+local function PositiveInt(n) return type(n)=="number" and n>0 and n<math.huge and n==math.floor(n) end
+
+-- Operation identity/batch only. Eligibility comes from the client's complete
+-- salvage list, never from an item name, bag contents or assumed output rates.
+local SALVAGE_RECIPES={
+    [1229930]={method="Recycle",profession="Engineering",expansionID=11,inputCount=5},
+}
+function LL:SalvageRecipeDefinition(recipeID) return SALVAGE_RECIPES[recipeID] end
+function LL:ReadSalvageInputs(recipeID)
+    local api=C_TradeSkillUI and C_TradeSkillUI.GetSalvagableItemIDs
+    if not SALVAGE_RECIPES[recipeID] or type(api)~="function" then return nil end
+    local ok,ids=pcall(api,recipeID)
+    if not ok or type(ids)~="table" or (issecretvalue and issecretvalue(ids)) then return nil end
+    local inputs={}
+    for _,id in ipairs(ids) do
+        if not (issecretvalue and issecretvalue(id)) and PositiveInt(id) then inputs[id]=true end
+    end
+    return inputs
+end
+function LL:SalvageConversionOptions(f)
+    local out={}
+    for recipeID,definition in pairs(SALVAGE_RECIPES) do
+        for _,char in pairs(self.db and self.db.characters or {}) do
+            local scan=char.salvageRecipes and char.salvageRecipes[recipeID]
+            if scan and scan.inputs and scan.inputs[f.id] then
+                out[#out+1]={method=definition.method,profession=definition.profession,
+                    recipeID=recipeID,requiredSpell=recipeID,inputCount=definition.inputCount,
+                    salvage=true,eligibleInput=true,source="In-game Recycling input list",
+                    confidence="verified-input",requirement="Output yields need matching recorded results"}
+                break
+            end
+        end
+    end
+    return out
+end
 
 -- Retail 10+ uses ProfessionInfo structures; GetTradeSkillLine was removed.
 -- Never use an alt, a linked profession or NPC craft window as a scan of
@@ -892,16 +926,21 @@ function LL:CanUseConversion(f, conversion)
     local profession=conversion.profession or PROF[method]
     if not profession then return false,"Profession requirement not verified" end
     local key=self:CharacterKey()
+    local function targetKnown(char)
+        if not conversion.salvage then return true end
+        local scan=char and char.salvageRecipes and char.salvageRecipes[conversion.recipeID]
+        return scan and scan.inputs and scan.inputs[f.id]==true
+    end
     if (mode~=4 or not self.AltMethodEnabled or self:AltMethodEnabled(key,letter))
         and (self:HasCurrentProfession(profession) or (method=="Disenchant" and self:CurrentHasEnchanting())) then
         if conversion.recipeID then
             local char=self.db.characters[key]
-            local recipe=char.recipes and char.recipes[conversion.recipeID]
-            if recipe and recipe.learned and recipe.disabled~=true then
+            local recipe=char and char.recipes and char.recipes[conversion.recipeID]
+            if recipe and recipe.learned and recipe.disabled~=true and targetKnown(char) then
                 return true,nil,"Current character"
             end
             -- Learned recipe checked from actual spellbook as a fallback.
-            if conversion.requiredSpell and SpellKnown(conversion.requiredSpell) then
+            if conversion.requiredSpell and SpellKnown(conversion.requiredSpell) and targetKnown(char) then
                 return true,nil,"Current character"
             end
         elseif spell and SpellKnown(spell) then
@@ -918,7 +957,7 @@ function LL:CanUseConversion(f, conversion)
                 local known=conversion.recipeID and char.recipes and char.recipes[conversion.recipeID]
                 local spellAccess=(not conversion.recipeID and spell and char.spells and char.spells[spell])
                 if (not self.AltMethodEnabled or self:AltMethodEnabled(name,letter))
-                    and ((known and known.learned and not known.disabled) or spellAccess) then
+                    and targetKnown(char) and ((known and known.learned and not known.disabled) or spellAccess) then
                     return true,nil,name
                 end
                 -- Profession alone never makes an alt eligible: recipe/specialization
@@ -1017,6 +1056,10 @@ function LL:ScanProfessionRecipes()
     self.db.recipeCandidates=self.db.recipeCandidates or {}
     self.db.reagentConsumers=self.db.reagentConsumers or {}
     char.reagentUses=char.reagentUses or {}
+    char.salvageRecipes=char.salvageRecipes or {}
+    for recipeID,scan in pairs(char.salvageRecipes) do
+        if scan.skillLineID==lineID then char.salvageRecipes[recipeID]=nil end
+    end
     -- Replace this profession's prior reagent records; a recipe may have
     -- become unlearned since its last scan. Other professions are preserved.
     for reagentID,used in pairs(char.reagentUses) do
@@ -1090,6 +1133,17 @@ function LL:ScanProfessionRecipes()
                 if info.isSalvageRecipe and info.learned and info.disabled~=true then
                     char.spells=char.spells or {}
                     char.spells[recipeID]=true
+                    local definition=self:SalvageRecipeDefinition(recipeID)
+                    local inputs=definition and definition.profession==profession and self:ReadSalvageInputs(recipeID)
+                    if inputs then
+                        char.salvageRecipes[recipeID]={inputs=inputs,skillLineID=lineID,scanned=Now()}
+                        for id in pairs(inputs) do
+                            self.db.reagentConsumers[id]=self.db.reagentConsumers[id] or {}
+                            self.db.reagentConsumers[id][profession]=true
+                            char.reagentUses[id]=char.reagentUses[id] or {}
+                            char.reagentUses[id][recipeID]={skillLineID=lineID}
+                        end
+                    end
                 end
                 local output=schem.outputItemID
                 local qmin=schem.quantityMin; local qmax=schem.quantityMax

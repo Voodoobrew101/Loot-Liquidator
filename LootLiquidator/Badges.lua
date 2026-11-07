@@ -639,7 +639,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             -- cannot conceal a usable option for the same method.
             local profession=option.profession or ({Disenchant="Enchanting",Mill="Inscription",Prospect="Jewelcrafting",Smelt="Mining"})[option.name]
             local selection=profession and LA.db.professionTooltipProfiles and LA.db.professionTooltipProfiles[profession]
-            if option.name and selection~="@hide" and (option.available~=false or selection=="@hypothetical") then
+            if option.name and selection~="@hide" and (option.available~=false or option.eligibleInput or selection=="@hypothetical") then
                 local previous=choices[option.name]
                 if not previous or (option.value and not previous.value)
                     or (option.value and previous.value
@@ -792,7 +792,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 -- Reuse the exact evaluated material model used to price this option.
                 local model=option.yieldModel
                 local hasMaterials=(model and model.materials and #model.materials>0)
-                if option.value or hasMaterials
+                if option.value or hasMaterials or option.eligibleInput
                     or ((option.category=="destroy" or option.category=="research-operation") and
                         (methodName=="Mill" or methodName=="Prospect"))
                     or (methodName=="Disenchant"
@@ -830,6 +830,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         two(label,"Insufficient Data",option.letter or "D")
                     end
                     ShowMaterials(option,model)
+                    if option.eligibleInput and option.available==false and option.why then
+                        tooltip:AddLine('  '..option.why,.83,.72,.59,true)
+                    end
                     if LA.ProfessionThresholdNotes and f and model and model.context
                         and LA.db.showProfessionThresholds~=false then
                         local notes=LA:ProfessionThresholdNotes(f,option,model.context)
