@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T09:01:25Z",
+  "updated_at": "2026-11-07T10:01:08.294Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New 2014 original Enchantrix quantity-reference schema identified and eight 2015 ReagentMaker input/output coefficients crosschecked; shared historical lineage, unresolved chance-vs-quantity units, no new measured casts or gold-action verification.",
+  "status": "New estimator provenance/weighting gap verified for 13 historical Cataclysm Pyrite rows: 352 nominal casts inferred from 1,760 ore are stored as if stated operations (castsBasis missing). Independently crosschecked older 52-cast and new 15-reported-cast Volatile Earth quantities; no new observed cohort or runtime gold test.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -44,7 +44,8 @@
     "T0044",
     "T0051",
     "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107",
-    "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107"
+    "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107",
+    "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -896,7 +897,33 @@
       "new_supported_gold_decisions": 0,
       "runtime_or_client_validation": false
     },
-    "Historical Enchantrix/ReagentMaker coefficients: upstream Wowhead quantitative source methodology, exact per-five-ore output-unit normalization, original denominator and current Retail applicability not established; prevent double-counting duplicate references."
+    "Historical Enchantrix/ReagentMaker coefficients: upstream Wowhead quantitative source methodology, exact per-five-ore output-unit normalization, original denominator and current Retail applicability not established; prevent double-counting duplicate references.",
+    {
+      "task_id": "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
+      "kind": "inferred_nominal_casts_missing_explicit_basis_and_derived_chance_confidence_risk",
+      "source_evidence_file": "research/v3/evidence/legacy/2026-10-31T1545-pyrite-three-original-prospecting-cohorts.jsonl",
+      "record_ids": "legacy-20261031-914..926",
+      "cohort_key": "wowhead-pyrite-rikikijr-ptr-1760-ore",
+      "input_item_id": 52183,
+      "output_example_item_id": 52327,
+      "recorded_fields": {
+        "gross_ore": 1760,
+        "casts": 352,
+        "castsBasis": null,
+        "volatileEarthTotal": 711
+      },
+      "source_label": "Cataclysm PTR; nominal operations =1760/5, not author-supplied click log",
+      "estimator_path": "research/v3/tools/build_estimates.py lines 66-75 (EQUIVALENT_BASES), 281-298 (row_use weight), 826-835 and 866-935 (derived P/confidence)",
+      "why_it_matters": "Without castsBasis derived/countFromInputs metadata, row_use assigns chance-confidence weight 1.0 to 352 nominal operations instead of the declared 0.5 derived-denominator policy; no individual material hit counts, so the chance uses average-derived inference rather than a measured P(hit). Average quantities stay distinct from occurrence probabilities. Correct in worker-owned append-only record, then rerun estimator regression before any new import.",
+      "other_source_comparison": "New separate author 836908: 38 Volatile Earth units / 15 explicitly reported Pyrite prospects = 2.53333 units per reported cast, but same author wrote 80 ore (16 nominal five-ore equivalents); prior author 125795: 100/52 = 1.92308 units per explicitly reported cast. Distinct historical cohorts, not one weighted study or a current Retail coefficient.",
+      "output_mean_reference": "PTR Rikikijr 711/352=2.019886 units per nominal five-ore operation; quantity-derived historical reference only, not observed hit probability.",
+      "still_unknown": [
+        "Exact operation log and denominator basis for PTR 1760 ore",
+        "Any refund/reprocessing context or PTR-to-Retail comparability",
+        "Per-output P(hit), 0/1/2 histograms",
+        "Current character eligibility, client output and market prices"
+      ]
+    }
   ],
   "newly_verified_fields_or_cohorts": [
     {
@@ -2685,12 +2712,37 @@
         "tooltip": false,
         "live_retail": false
       }
+    },
+    {
+      "task_id": "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
+      "kind": "existing_original_corpus_and_estimator_source_provenance_audit",
+      "new_independent_cohorts": 0,
+      "new_observed_casts": 0,
+      "new_retail_current_patch_cohorts": 0,
+      "new_supported_gold_recommendations": 0,
+      "verified_existing_record_count": 13,
+      "records": "legacy-20261031-914..926",
+      "source": "https://www.wowhead.com/cata/item=52183/pyrite-ore",
+      "source_file_blob_sha": "317f6ae461be94baf471922b9fbe31586b7c4644",
+      "worker_new_evidence_blob_sha": "512f26215e376cdf9d07bb2db2e381e3a8188030",
+      "corrected_data_written": false,
+      "code_change_performed": false,
+      "arithmetic": {
+        "ptr_nominal_casts": 352,
+        "ptr_earth_units_per_nominal_cast": 2.0198863636363638,
+        "original_prior_earth_units_per_cast": 1.9230769230769231,
+        "new_earth_units_per_reported_cast": 2.533333333333333,
+        "new_claimed_ore_nominal_casts": 16
+      },
+      "estimator_weight_current_if_basis_missing": 1,
+      "estimator_weight_if_derived_basis_recorded": 0.5,
+      "notes": "Source amounts are distinct cohorts and quantities, never P(hit); exact provenance metadata requires worker-owner evidence correction. Code path read, not executed."
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": "2026-11-07T08:47:08.650Z",
+    "legacy": "2026-11-07T09:43:29.433Z",
     "dragonflight": "2026-11-07T08:34:46.434Z",
     "war_within": "2026-11-07T08:28:34.182Z",
     "midnight": "2026-11-07T08:16:50.999Z"
@@ -2833,7 +2885,7 @@
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "a65357217ebc82f636adb768501458b3c377cc77",
+    "research": "a11e89dbdd84a1650731433f87c8c4e75eb3d3a3",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "commit_sha_when_verified": "57ef9ae95a96299d3e537307f3afd196a4ba5ae8",
@@ -2868,7 +2920,11 @@
       "blocker": "No confirmed completed-fish operations, refunds/zero counts or quality-item links in the original 500-fish study; game-client spell eligibility not tested. Wiki/TSM/Wowhead descriptions do not by themselves validate actual game behavior. No source-to-tooltip simulation run."
     },
     "ReagentMaker ProspectingData.lua is a 2015 Enchantrix-derived authored reference. The third column is labeled chanceToHaveOne yet includes Volatile Earth=2 and Sparkling Shard=1.14/1.46/1.65, which are impossible per-operation hit probabilities. Source documentation does not prove which rows are occurrence chances versus expected multiunits. Compare upstream Enchantrix, reference tables, and current eligibility before admitting or pricing any source coefficient.",
-    "2014 'quantity probability' wording plus 2015 'chanceToHaveOne' conflicts with greater-than-one byproduct rates; no defensible P(hit), original cast denominator or current Retail skill/build. Source-to-tooltip engine tests not executed."
+    "2014 'quantity probability' wording plus 2015 'chanceToHaveOne' conflicts with greater-than-one byproduct rates; no defensible P(hit), original cast denominator or current Retail skill/build. Source-to-tooltip engine tests not executed.",
+    {
+      "task_id": "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
+      "blocker": "Worker-owned Rikikijr historical PTR rows 914..926 need append-only basis correction with source read-back; research estimator and actual addon/tooltip not executed. 836908 80-ore versus 15-prospect mismatch cannot be resolved from original author comment; preserve source claim and unknown leftover/refunds."
+    }
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -2920,7 +2976,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Determine upstream historical Wowhead quantity metric units and whether any item/output rates are genuinely gap-only against frozen TSM and existing ItemDB; protected 3-pass owner controls synthetic-price resolver/valuation/tooltip admission. Workers continue original-source cast/rank/skill gaps, especially current Midnight copper/tin.",
+  "next_concrete_step": "Have legacy evidence owner append a correcting castsBasis provenance for Rikikijr 914..926 (not rewriting originals), then validate estimator derived-chance/confidence against an exact existing cohort and 4df9ae8 pin; protected three-pass integrator alone owns any addon valuation/tooltip changes. Seek firsthand modern ore rank/hit/zero logs rather than additional historical copies.",
   "validation_executed": {
     "source_comparison": true,
     "source_rows_crossmatched": 78,
@@ -2945,7 +3001,12 @@
     "current_run_source_arithmetic_comparison": true,
     "current_run_upstream_schema_read": true,
     "current_run_8_id_matched_pairs": true,
-    "current_run_actual_engine": false
+    "current_run_actual_engine": false,
+    "gitHub_branch_heads_checked": true,
+    "current_run_read_original_report": true,
+    "current_run_estimator_code_inspection": true,
+    "current_run_estimator_or_migration_execution": false,
+    "current_run_actual_tooltip_tests": false
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -2959,37 +3020,26 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "task_id": "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107",
-    "at_utc": "2026-11-07T09:00:15Z",
+    "task_id": "COORD-CATA-PYRITE-DERIVED-CAST-BASIS-20261107",
+    "at_utc": "2026-11-07T10:01:08.294Z",
     "verified_revisions_before_write": {
       "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-      "research": "a65357217ebc82f636adb768501458b3c377cc77",
+      "research": "a11e89dbdd84a1650731433f87c8c4e75eb3d3a3",
       "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
     },
-    "source_links": [
-      "https://gist.github.com/pzb/af1df9cbdf0791a6018e",
-      "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper"
-    ],
-    "verified_crosswalk_pairs": 8,
-    "observed_casts": 0,
-    "measured_cohorts": 0,
-    "actual_engine_tests": false,
+    "source_evidence_blobs": {
+      "older": "317f6ae461be94baf471922b9fbe31586b7c4644",
+      "new_worker": "512f26215e376cdf9d07bb2db2e381e3a8188030"
+    },
+    "verified_legacy_report_at": "2026-11-07T09:43:29.433Z",
+    "validation": "GitHub source record read-back, original Wowhead comment independently read, exact arithmetic and estimator source inspection; no tests run",
+    "newly_observed_casts": 0,
+    "new_measured_cohorts": 0,
+    "addon_engine_tests": false,
     "tooltip_tests": false,
-    "live_client_tests": false,
+    "live_wow_tests": false,
     "merges": 0,
-    "releases": 0,
-    "prewrite_research_ci": {
-      "run_id": 42356950117,
-      "commit": "a65357217ebc82f636adb768501458b3c377cc77",
-      "conclusion": "success",
-      "updated_at": "2026-11-07T08:47:39Z"
-    },
-    "pull_requests": {
-      "22": "closed_unmerged",
-      "23": "closed_unmerged"
-    },
-    "status_commit_verified": "57ef9ae95a96299d3e537307f3afd196a4ba5ae8",
-    "dashboard_commit_verified": "dcd76bb25f51084e2c9838415c3b0160dfe5b803"
+    "releases": 0
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
@@ -3178,53 +3228,37 @@
     }
   ],
   "prior_session": {
-    "updated_at": "2026-11-06T16:00:08.607Z",
-    "task": "T0029 dual profession same product recipe identity",
-    "verified_fields": {
-      "task_id": "T0029",
-      "kind": "verified_two_profession_spell_ids_same_conversion_avoids_false_mining_exclusion",
-      "output_item_id": 12655,
-      "input_item_name": "Thorium Bar",
-      "output_item_name": "Enchanted Thorium Bar",
-      "spell_variants": [
-        {
-          "spell_id": 17180,
-          "profession": "Classic Enchanting",
-          "requires": "Runed Enchanting Rod",
-          "source": "https://www.wowhead.com/spell=17180/enchanted-thorium-bar"
-        },
-        {
-          "spell_id": 70524,
-          "profession": "Classic Mining",
-          "requires": "Forge",
-          "source": "https://www.wowhead.com/spell=70524/enchanted-thorium-bar"
-        }
-      ],
-      "current_retail_indexed_recipe_basis": "Both Wowhead Retail spell records explicitly show Thorium Bar x1 and Rich Illusion Dust x3; quality/output counts from displayed fixed recipe, not random observations.",
-      "source_reagent_id_corroboration": "Rich Illusion Dust retail item 156930; output Enchanted Thorium Bar 12655 confirmed separately by Retail TSM item listing.",
-      "earlier_worker_note": "Legacy worker explicitly excluded prior Enchanted Thorium pseudo-Smelt when identifying 17180 as Enchanting; this correction is a distinct Mining spell, not a reason to import 17180 as Mining.",
-      "pricing_safety": "One output recipe with two profession eligibility paths; never double expected quantity/EV when both professions learned. Add exact extra reagent costs only if eligible runtime recipe and price lookup exist.",
-      "unknowns": [
-        "Live-client availability to current characters and spec/build",
-        "Whether both variants are available in current player profession book",
-        "Existing production adapter recognition and protected branch behavior",
-        "Live prices and best action"
-      ],
-      "new_measured_cohorts": 0,
-      "new_observed_casts": 0,
-      "source_links": [
-        "https://www.wowhead.com/spell=70524/enchanted-thorium-bar",
-        "https://www.wowhead.com/spell=17180/enchanted-thorium-bar",
-        "https://tradeskillmaster.com/retail/us/items/12655",
-        "https://www.wowhead.com/item=156930/rich-illusion-dust"
-      ],
-      "worker_evidence_file": "research/v3/evidence/legacy/20261106T1543-smelting-recipe-identity-rescue.jsonl",
-      "worker_evidence_commit": "0e61ccf656c549e72c59243c68f385b11865ff5b"
+    "task_id": "COORD-ENCHANTRIX-UPSTREAM-QUANTITY-LINEAGE-20261107",
+    "at_utc": "2026-11-07T09:00:15Z",
+    "verified_revisions_before_write": {
+      "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
+      "research": "a65357217ebc82f636adb768501458b3c377cc77",
+      "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
     },
-    "offline_tests_executed": 0,
-    "client_qa_executed": false,
-    "ci_observed": "Latest five-agent completion for research head cedb53b success; this is not a run of new addon tests.",
-    "merge_or_release": false
+    "source_links": [
+      "https://gist.github.com/pzb/af1df9cbdf0791a6018e",
+      "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper"
+    ],
+    "verified_crosswalk_pairs": 8,
+    "observed_casts": 0,
+    "measured_cohorts": 0,
+    "actual_engine_tests": false,
+    "tooltip_tests": false,
+    "live_client_tests": false,
+    "merges": 0,
+    "releases": 0,
+    "prewrite_research_ci": {
+      "run_id": 42356950117,
+      "commit": "a65357217ebc82f636adb768501458b3c377cc77",
+      "conclusion": "success",
+      "updated_at": "2026-11-07T08:47:39Z"
+    },
+    "pull_requests": {
+      "22": "closed_unmerged",
+      "23": "closed_unmerged"
+    },
+    "status_commit_verified": "57ef9ae95a96299d3e537307f3afd196a4ba5ae8",
+    "dashboard_commit_verified": "dcd76bb25f51084e2c9838415c3b0160dfe5b803"
   },
   "linked_worker_evidence_files": [
     "research/v3/evidence/legacy/2026-11-06T0349-classic-communal-looter-hitcounts.jsonl",
@@ -3233,7 +3267,7 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
     "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
-  "research_branch_head_read_before_write": "a65357217ebc82f636adb768501458b3c377cc77",
+  "research_branch_head_read_before_write": "a11e89dbdd84a1650731433f87c8c4e75eb3d3a3",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-07T02:03:30.887Z",
   "verified_base_commit_sha": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
   "current_status_commit_sha": "57ef9ae95a96299d3e537307f3afd196a4ba5ae8",
@@ -3250,7 +3284,7 @@
     "merges": 0
   },
   "research_branch_head_read_before_write_note": "Previous value ec76f014... was main compare base_commit.sha, NOT the research branch HEAD; withdrawn rather than misrepresenting a verified branch revision. Coordinator status write 8e5b97b and dashboard 9143111 were returned and read back separately.",
-  "research_branch_head_checked_before_write": "8d2b3555d4a9bbc22bcb87dfd0725776b3b17806",
+  "research_branch_head_checked_before_write": "a11e89dbdd84a1650731433f87c8c4e75eb3d3a3",
   "integration_branch_head_checked_before_write": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "main_head_checked_before_write": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
   "session_validation": {
@@ -3286,8 +3320,8 @@
   },
   "newly_confirmed_economic_actions_this_run": 0,
   "release_or_merges_performed": false,
-  "verified_source_evidence_branch_head": "f4bf8e91223d0aadfcc429ae07b3a80e93e6d9a3",
-  "verified_source_evidence_blob_sha": "22924654439d479a092a7df4ee1753bc064b2ffa",
+  "verified_source_evidence_branch_head": "a11e89dbdd84a1650731433f87c8c4e75eb3d3a3",
+  "verified_source_evidence_blob_sha": "317f6ae461be94baf471922b9fbe31586b7c4644",
   "no_new_measured_cohorts_by_coordinator": true,
   "no_addon_or_client_validation_in_this_run": true
 }
