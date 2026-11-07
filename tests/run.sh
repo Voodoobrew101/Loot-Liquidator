@@ -15,6 +15,10 @@ done
 python3 tools/import_midnight_enchanting.py --check
 python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are current
 python3 tools/disenchant_categories.py --check
+python3 tools/capture_observations.py --check
+python3 tools/recycling_capture_baselines.py --check
+python3 tests/test_build_info.py
+python3 tests/test_capture_observations.py
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
 python3 tools/reference_calculators.py --check
 python3 tools/skill_quality_to_rules.py --check
@@ -45,6 +49,7 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_badge_decision.lua
 "$lua_bin" tests/test_cleanup_regressions.lua
 "$lua_bin" tests/test_itemdb_metrics.lua
+"$lua_bin" tests/test_capture_database.lua
 "$lua_bin" tests/test_token_catalog.lua "$compiled_dir"
 "$lua_bin" tests/test_token_value_pipeline.lua
 "$lua_bin" tests/test_token_transmog_priority.lua
@@ -54,7 +59,12 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_profession_projection.lua
 "$lua_bin" tests/test_research_profiles.lua "$compiled_dir"
 "$lua_bin" tests/test_craft_recording.lua
-"$lua_bin" tests/test_export_dialog.lua
+"$lua_bin" tests/test_recorder_lookup.lua
+"$lua_bin" tests/test_recycling.lua
+"$lua_bin" tests/test_salvage_ui.lua
+"$lua_bin" tests/test_recipe_coverage.lua
+"$lua_bin" tests/test_disenchant_capture.lua
+"$lua_bin" tests/test_export_dialog.lua /tmp/loot-disenchant-capture-v2.json /tmp/loot-recycling-capture-v3.json
 "$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
@@ -62,6 +72,7 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_transmog_alts.lua
 "$lua_bin" tests/test_appearance_collection.lua
 python3 tests/test_craft_export.py
+python3 tests/test_recipe_coverage.py
 "$lua_bin" tools/audit_profession_scaling.lua
 
 "$lua_bin" tests/test_disenchant_gaps.lua

@@ -33,8 +33,6 @@ local defaults = {
     manualMilling=false,manualProspecting=false,
     manualSmelting=false,manualDisenchanting=false,
     enableLearnedRecipeDiscovery = true, includeVerifiedAlts = true,
-    -- B5a: "Show rates for": 1 me, 2 a chosen alt, 3 a what-if profile.
-    rateProfile = 1, rateProfileCharacter = "",
     minConversionExtraGold = 0, minReagentProfitGold = 0, minGearProfitGold = 0,
     appearance = { position="TOPRIGHT", fontSize=14, colors={} }, characters = {},
     -- A hard floor per bag stack, not per reagent. Equipment needs higher profit.
@@ -1096,6 +1094,7 @@ SlashCmdList.LOOTLIQUIDATOR = Command
 -- B1: settings that were saved but never read by any code. Quietly drop
 -- them from old saved data so nothing stale lingers.
 local RETIRED_SETTINGS = {
+    "rateProfile","rateProfileCharacter",
     "methodEnabledD","methodEnabledM","methodEnabledP","methodEnabledS",
     "methodEnabledC","methodEnabledR","methodEnabledX",
     "allowEnchantingAlt","allowMilling","allowProspecting","allowSmelting","allowExchanges",

@@ -8,10 +8,13 @@ import argparse
 import collections
 import json
 import math
+import hashlib
+import functools
 from pathlib import Path
 
 SCHEMA = 'loot-liquidator.cast-log/1'
 METHODS = {'Disenchant', 'Mill', 'Prospect', 'Smelt', 'Craft', 'Recycle', 'Research', 'Unravel', 'Thaumaturgy'}
+REVIEW_ROOT = Path(__file__).resolve().parents[1] / 'research/integration/measured-captures/2026-11-07-recycling-200-casts'
 
 
 def require(value, message):
@@ -113,7 +116,103 @@ def validate(pages):
             require(inputs.keys() == nominal.keys() and not (returned.keys() - nominal.keys()) and
                     all(inputs[item] == qty - returned[item] for item, qty in nominal.items()),
                     'Nominal consumption/net inputs/refunds disagree')
+    # Version3 Recycling separates per-cast typed receipts while reconciling a
+    # consecutive sequence against one inventory delta. Every member must be
+    # present, and the receipts, individual vectors and shared delta must agree.
+    batches = collections.defaultdict(list)
+    result_operations = set()
+    for r in records:
+        if r.get('attribution') != 'cast-result-batch-bag':
+            continue
+        require(r['method'] == 'Recycle' and r['recipeID'] == 1229930 and r.get('captureVersion') == 3,
+                'Unsupported batch reconciliation operation')
+        evidence = r.get('bagReconciliation', {})
+        batch_id = evidence.get('id')
+        require(isinstance(batch_id, str) and batch_id and integer(evidence.get('operations')),
+                'Invalid Recycling reconciliation membership')
+        typed = collections.Counter()
+        operation = None
+        receipts = r.get('resultMetadata')
+        require(isinstance(receipts, list) and receipts, 'Missing Recycling result receipts')
+        for receipt in receipts:
+            require(integer(receipt.get('operationID')) and integer(receipt.get('itemID')) and
+                    integer(receipt.get('quantity')) and isinstance(receipt.get('itemGUID'), str) and receipt['itemGUID'],
+                    'Invalid Recycling result receipt')
+            require(operation is None or operation == receipt['operationID'], 'Multiple Recycling result operations')
+            operation = receipt['operationID']
+            typed[receipt['itemID']] += receipt['quantity']
+        require(operation not in result_operations, 'Duplicate Recycling result operation')
+        result_operations.add(operation)
+        require(dict(typed) == vector(r['outputs']), 'Recycling receipts and outputs disagree')
+        nominal = vector(r.get('nominalInputs'))
+        require(len(nominal) == 1 and next(iter(nominal.values())) == 5, 'Invalid nominal Recycling batch')
+        target = r.get('salvageTarget', {})
+        require(target.get('itemID') in nominal and target.get('quantity') == 5 and
+                isinstance(target.get('itemGUID'), str) and target['itemGUID'] and
+                target['itemGUID'] == r.get('allocationItemGUID') and
+                target.get('eligibilitySource') == 'C_TradeSkillUI.GetSalvagableItemIDs',
+                'Missing verified Recycling target')
+        batches[(r['studyID'], batch_id)].append(r)
+    for (_, batch_id), members in batches.items():
+        evidence = members[0]['bagReconciliation']
+        require(len(members) == evidence['operations'] and batch_id in {r['operationID'] for r in members},
+                'Missing Recycling reconciliation casts')
+        total_inputs, total_outputs = collections.Counter(), collections.Counter()
+        for r in members:
+            require(r['bagReconciliation'] == evidence, 'Conflicting Recycling reconciliation evidence')
+            total_inputs.update(vector(r['inputs'], allow_zero=True))
+            total_outputs.update(vector(r['outputs']))
+        require({i: n for i, n in total_inputs.items() if n} == vector(evidence.get('inputs')) and
+                dict(total_outputs) == vector(evidence.get('outputs')), 'Recycling batch inventory totals disagree')
     return records, contexts, studies
+
+
+def observation_signature(record, context):
+    return json.dumps({'record': {k: v for k, v in record.items() if k != 'contextID'},
+                       'context': context}, sort_keys=True, ensure_ascii=True)
+
+
+@functools.lru_cache(maxsize=1)
+def reviewed_legacy_capture():
+    """An explicit, hash-bound review of the owner's preserved 200-cast capture.
+
+    Legacy bounded diagnostics cannot reconstruct arbitrary old study coverage.
+    This review admits only the exact reviewed observations, never new records
+    appended to a censored study or other legacy exports.
+    """
+    path = REVIEW_ROOT / 'coverage-review.json'
+    if not path.exists(): return {}, {}
+    review = json.loads(path.read_text())
+    pages = []
+    for source in review['pages']:
+        raw = (REVIEW_ROOT / source['file']).read_bytes()
+        require(hashlib.sha256(raw).hexdigest() == source['sha256'], 'Reviewed capture page checksum changed')
+        pages.append(json.loads(raw))
+    records, contexts, studies = validate(pages)
+    selected = {r['operationID']: observation_signature(r, contexts[r['contextID']])
+                for r in records if r['operationID'] in review['operationIDs']}
+    require(len(selected) == len(review['operationIDs']) == 200, 'Reviewed capture membership changed')
+    return selected, {review['studyID']: studies[review['studyID']]}
+
+
+def coverage_reason(study_id, study, method, recipe, cohort, contexts):
+    if study.get('truncated') or study.get('globalCoverageGap'):
+        return 'Study capture was truncated or session coverage is unknown'
+    if not study.get('censored'): return None
+    if study.get('coverageVersion') == 2:
+        gaps = study.get('coverageGaps')
+        if not isinstance(gaps, dict) or not gaps:
+            return 'Missing recipe coverage ledger'
+        if f'{method}:{recipe}' in gaps:
+            return 'Recipe capture has unresolved coverage gaps'
+        return None
+    reviewed, original_studies = reviewed_legacy_capture()
+    original = original_studies.get(study_id)
+    fields = ('censored', 'truncated', 'coverageReason', 'coverageOperationID')
+    if original and all(study.get(k) == original.get(k) for k in fields) and all(
+            reviewed.get(r['operationID']) == observation_signature(r, contexts[r['contextID']]) for r in cohort):
+        return None
+    return 'Legacy study has unscoped coverage gaps'
 
 
 def compile_baselines(pages):
@@ -125,8 +224,8 @@ def compile_baselines(pages):
     result, excluded = [], []
     for (study_id, context_id, recipe), cohort in sorted(grouped.items()):
         study = studies[study_id]
-        reason = ('Study capture was censored or truncated' if study.get('censored') or study.get('truncated') else
-                  'Unresolved output coverage' if any(r['outputCoverage'] != 'complete' for r in cohort) else None)
+        reason = coverage_reason(study_id, study, cohort[0]['method'], recipe, cohort, contexts)
+        if any(r['outputCoverage'] != 'complete' for r in cohort): reason = 'Unresolved output coverage'
         nominal = cohort[0].get('nominalInputs', cohort[0]['inputs'])
         if any(r.get('nominalInputs', r['inputs']) != nominal for r in cohort):
             reason = 'Unlike input batches or variants'

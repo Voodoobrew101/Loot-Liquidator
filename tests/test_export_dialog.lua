@@ -101,7 +101,8 @@ for index=1,51 do
     source.records[index]={operationID='operation-'..index,recipeID=13262,method='Disenchant',
         successful=true,character='Other-Realm',build='70783',contextID='ctx',studyID='study',
         inputs={{itemID=100+index,quantity=1,expansionID=11,rarity=3,classID=4,hyperlink=link}},
-        outputs={{itemID=500,quantity=2}},outputCoverage='complete'}
+        outputs={{itemID=500,quantity=2}},outputCoverage='complete',captureVersion=2,
+        lootSlots={{itemID=500,quantity=2,hyperlink=link}}}
 end
 LL.db.craftResearch=source
 local raw=LL:ExportCraftResearch(1)
@@ -122,7 +123,7 @@ local recipient=setmetatable({db={},Invalidate=function()end},{__index=LL})
 local ok,message,count=recipient:ImportRecordedResults(text)
 check(ok,message);eq(count.accepted,25,'copied JSON remains a valid research import')
 
-LL:ShowRecordedResultsExport()
+LL:ShowRecordedResultsExport(true)
 local f=assert(LL.copyDialog)
 eq(f.template,'BasicFrameTemplateWithInset','dialog uses native Blizzard chrome')
 eq(f.scrollFrame.template,'UIPanelScrollFrameTemplate')
@@ -206,4 +207,59 @@ LL:ShowRecordedResultsExport()
 eq(f.page,1);eq(f.pages,1)
 eq(#assert(LL.DecodeImportJSON(f.edit:GetText())).records,0,'empty recordings are still copyable')
 check(not f.previous.shown and not f.next.shown)
+-- Optional full-suite integration: actual successful cast events, new loot-slot
+-- evidence and variant identities -> native popup -> the exact copied JSON.
+-- Standalone dialog fixtures need no external file; tests/run.sh supplies it.
+if arg and arg[1] then
+    local file=assert(io.open(arg[1],'r'));local captured=file:read('*a');file:close()
+    local measured=assert(LL.DecodeImportJSON(captured))
+    LL.db.craftResearch={records=measured.records,contexts=measured.contexts,studies=measured.studies,
+        diagnostics=measured.diagnostics,droppedRecords=measured.droppedRecords}
+    f.close.scripts.OnClick(f.close);SettingsPanel:Show();LL:ShowRecordedResultsExport()
+    eq(f.page,1);eq(f.pages,1);eq(f.point[2],SettingsPanel)
+    local copied=assert(LL.DecodeImportJSON(f.edit:GetText()))
+    check(same(copied,measured),'copy field preserves all event-captured facts and provenance')
+    eq(copied.records[1].captureVersion,2)
+    eq(copied.records[1].lootSlots[1].itemID,109693)
+    eq(copied.records[3].inputs[1].itemLevel,280,'consumed variant survives native export')
+    eq(copied.records[3].inputs[1].hyperlink,'item:109979:0:0:0:0:0:0:2')
+    check(copied.diagnostics[#copied.diagnostics].studyID~=nil,'diagnostic links survive native export')
+    local output=assert(io.open('/tmp/loot-disenchant-popup.json','w'))
+    output:write(f.edit:GetText());output:close()
+    print('PASS: live-event recorder fixture -> native export popup -> unchanged copied research JSON')
+end
+if arg and arg[2] then
+    local file=assert(io.open(arg[2],'r'));local captured=file:read('*a');file:close()
+    local measured=assert(LL.DecodeImportJSON(captured))
+    LL.db.craftResearch={records=measured.records,contexts=measured.contexts,studies=measured.studies,
+        diagnostics=measured.diagnostics,droppedRecords=measured.droppedRecords}
+    f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport()
+    local copied=assert(LL.DecodeImportJSON(f.edit:GetText()))
+    check(same(copied,measured),'Recycling receipts and aggregate reconciliation survive native copy')
+    eq(#copied.records,20);eq(copied.records[1].method,'Recycle');eq(copied.records[1].captureVersion,3)
+    eq(copied.records[1].bagReconciliation.operations,20)
+    local output=assert(io.open('/tmp/loot-recycling-popup.json','w'))
+    output:write(f.edit:GetText());output:close()
+    print('PASS: Recycling20 receipt replay -> native export popup -> unchanged copied JSON')
+end
+-- The owner's full 13-page upload is now one copy, with all evidence retained.
+local merged={records={},contexts={},studies={},diagnostics={},droppedRecords=0}
+for i=1,13 do
+    local file=assert(io.open(('research/integration/measured-captures/2026-11-07-recycling-200-casts/export-page-%02d.json'):format(i),'r'))
+    local page=assert(LL.DecodeImportJSON(file:read('*a')));file:close()
+    for _,r in ipairs(page.records)do merged.records[#merged.records+1]=r end
+    for k,v in pairs(page.contexts)do merged.contexts[k]=v end
+    for k,v in pairs(page.studies)do merged.studies[k]=v end
+    merged.diagnostics=page.diagnostics
+end
+LL.db.craftResearch=merged
+f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport()
+local all=assert(LL.DecodeImportJSON(f.edit:GetText()))
+eq(all.page,1);eq(all.pages,1);eq(#all.records,301);eq(all.retainedRecords,301)
+check(not f.previous.shown and not f.next.shown,'one-copy export needs no page navigation')
+check(same(all.records,merged.records) and same(all.contexts,merged.contexts)
+    and same(all.studies,merged.studies) and same(all.diagnostics,merged.diagnostics),'all evidence survives one copy')
+eq(f.edit.selected,f.contents,'all retained results are selected for one Ctrl+C')
+local out=assert(io.open('/tmp/loot-recycling-200-popup.json','w'));out:write(f.contents);out:close()
+print('PASS: 301 real records from 13 pages -> single native copy, unchanged evidence and fallback paging')
 print('PASS: '..checks..' native export dialog, literal JSON, importer, snapshot paging and optional skin assertions')
