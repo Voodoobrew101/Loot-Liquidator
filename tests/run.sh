@@ -57,10 +57,10 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_profession_projection.lua
 "$lua_bin" tests/test_research_profiles.lua "$compiled_dir"
 "$lua_bin" tests/test_craft_recording.lua
-"$lua_bin" tests/test_export_dialog.lua
+"$lua_bin" tests/test_disenchant_capture.lua
+"$lua_bin" tests/test_export_dialog.lua /tmp/loot-disenchant-capture-v2.json
 "$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_craft_operations.lua
-"$lua_bin" tests/test_disenchant_capture.lua
 "$lua_bin" tests/test_imported_results.lua
 "$lua_bin" tests/test_counts_model.lua
 "$lua_bin" tests/test_transmog_alts.lua

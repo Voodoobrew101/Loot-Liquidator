@@ -95,6 +95,16 @@ duplicate exports and contradictory operation identities. The full tests/run.sh
 suite passes under Lua 5.1 with the current main-branch research and UI changes.
 World of Warcraft event timing still requires a fresh in-game capture.
 
+The native export popup from main commit `93068d2` is retained. A combined test
+feeds five actual event-replay captures through that dialog's displayed copy
+field, then checks the exact copied JSON with the existing Python validator and
+baseline stager. All five complete uncensored test cohorts remain eligible;
+loot slots, capture version, consumed variant level/link and diagnostic study
+references survive unchanged. The 51-record popup fixture separately covers
+literal link pipes in the new loot-slot evidence, Previous/Next navigation,
+snapshot isolation, selection, Escape and optional ElvUI styling. No game renderer
+or operating-system clipboard access is claimed by these deterministic tests.
+
 The updated main-branch calculator generator also needed POSIX paths for source
 archive identities and hashes on Windows. That portability correction reproduces
 the existing generated calculator baseline byte-for-byte; it changes no values.

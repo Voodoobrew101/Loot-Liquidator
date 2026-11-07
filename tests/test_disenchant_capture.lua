@@ -123,4 +123,7 @@ maximum=100;c=realContext(LL,13262,{expansionID=11},'Disenchant')
 eq(c.effectiveSkill,0);eq(c.maxSkill,100);eq(c.fieldStatus.effectiveSkill,'measured')
 c=realContext(LL,13262,{expansionID=2},'Disenchant')
 eq(c.effectiveSkill,nil);eq(c.skillLineID,nil,'no parent skill substituted for missing expansion')
+-- Feed the actual event-captured records to the native popup integration test.
+local export=assert(io.open('/tmp/loot-disenchant-capture-v2.json','w'))
+export:write(LL:ExportCraftResearch(1));export:close()
 print('PASS: '..checks..' disenchant recorder regression assertions')

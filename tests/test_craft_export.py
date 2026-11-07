@@ -13,6 +13,19 @@ class CraftExportTests(unittest.TestCase):
     def setUp(self):
         self.page = json.loads(Path('/tmp/loot-craft-export.json').read_text())
 
+    def test_actual_disenchant_capture_copied_from_native_popup_validates(self):
+        raw = json.loads(Path('/tmp/loot-disenchant-capture-v2.json').read_text())
+        copied = json.loads(Path('/tmp/loot-disenchant-popup.json').read_text())
+        self.assertEqual(copied, raw)
+        records, contexts, studies = validator.validate([copied])
+        self.assertEqual(len(records), 5)
+        self.assertEqual(records[0]['captureVersion'], 2)
+        self.assertEqual(records[0]['lootSlots'][0]['itemID'], 109693)
+        self.assertEqual(records[2]['inputs'][0]['itemLevel'], 280)
+        staged = validator.compile_baselines([copied])
+        self.assertEqual(len(staged['baselines']), 5)
+        self.assertEqual(staged['excludedCohorts'], [])
+
     def test_confirmed_zero_is_in_denominator_and_histogram(self):
         staged = validator.compile_baselines([self.page])
         self.assertEqual(len(staged['baselines']), 1)
