@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T14:09:50.821Z",
+  "updated_at": "2026-11-07T15:08:40.010Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Source-checked an unrecorded interpretation risk in current Dragonflight Looter evidence: 194406 has 77 claimed disenchant entries but 66+11+1=78 per-output hits. These cannot be a mutually exclusive 3-way distribution; unknown joint output/event semantics held rather than inventing casts, P(hit) for exclusive categories, observed quantity or current Retail gold EV. Research-only note and coordinator dashboard written. Zero new independent cohorts or verified gold decisions; no engine, tooltip, live-client, merges or releases.",
+  "status": "New original-author source audit: three historical rare IP pigment unit totals (1 Fadeleaf, 10 Goldthorn, 14 Khadgar's Whisker) are not present beside the Legacy worker's common Emerald rows. Source also confirms Khadgar EP positive-stack minimum 3, not recorded minSeen 2, and an inconsistent Fadeleaf 'per stack' rate. Research-only audit and dashboard committed; zero new independent measured cohorts, zero verified current Retail gold decisions. No estimator, actual-engine/tooltip, live-client tests, merges or releases.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -50,7 +50,8 @@
     "COORD-CATA-JASPER-ENCHANTRIX-PERK-CONTEXT-20261107",
     "COORD-POWDER-EVERCORE-130-REFERENCE-20261107",
     "COORD-DF-STINGERPROOF-MARGINAL-HIT-OVERLAP-20261107",
-    "T0020"
+    "T0020",
+    "COORD-LEGACY-EMERALD-INDIGO-PTR-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -1045,6 +1046,62 @@
       "gap": "Actual per-operation joint outcomes, source Looter cumulative methodology, output quantities/zeros, item bonus/build and current Retail eligibility unknown. An exclusive 3-category normalization is unsupported; distinguish real co-occurrence from source aggregation discrepancies.",
       "evidence_file": "research/v3/evidence/master/2026-11-07T1407-df-stingerproof-overlap-guard.md",
       "source_url": "https://www.wowhead.com/ptr/item=194406/stingerproof-helmet"
+    },
+    {
+      "task_id": "COORD-LEGACY-EMERALD-INDIGO-PTR-20261107",
+      "kind": "prelive_ptr_milling_original_cooutput_missing_and_observed_histogram_minimum",
+      "source_author": "180977",
+      "source_url": "https://www.wowhead.com/cata/item=39339/emerald-pigment",
+      "source_original_game_context": "pre-live Inscription PTR; modern Retail applicability unverified",
+      "worker_source_file": "research/v3/evidence/legacy/20261107T1447-ptr-mill-histograms-stormvine.jsonl",
+      "worker_source_blob_sha": "c15765dbd0e4fe1cc6d7f61712419d6e99a5502f",
+      "original_same_study_cooutputs": [
+        {
+          "worker_record_id": "legacy-20261107-7712",
+          "studyKey": "wowhead-180977-ptr-fadeleaf-9",
+          "input_item_id": 3818,
+          "reported_IP_units": 1,
+          "nominal_five_herb_mills": 9
+        },
+        {
+          "worker_record_id": "legacy-20261107-7713",
+          "studyKey": "wowhead-180977-ptr-goldthorn-26",
+          "input_item_id": 3821,
+          "reported_IP_units": 10,
+          "nominal_five_herb_mills": 26
+        },
+        {
+          "worker_record_id": "legacy-20261107-7714",
+          "studyKey": "wowhead-180977-ptr-khadgar-22",
+          "input_item_id": 3358,
+          "reported_IP_units": 14,
+          "nominal_five_herb_mills": 22
+        }
+      ],
+      "output_name_original": "IP (abbreviation only)",
+      "secondary_catalog_output_id_candidate": 43105,
+      "newly_confirmed_histogram_minimum_issue": {
+        "record_id": "legacy-20261107-7714",
+        "original_positive_stack_histogram": {
+          "2": 0,
+          "3": 10,
+          "4": 12
+        },
+        "original_positive_total_units": 78,
+        "source_supported_minimum_positive_yield": 3,
+        "worker_minSeen": 2
+      },
+      "fadeleaf_unit_discrepancy": "Original 1 IP over 2.25 20-herb stacks is 0.44444 per stack; author labels 0.1 per stack, which approximates 1/9 five-herb operations instead. Exact original total and wording preserved; do not assume author meant per mill.",
+      "known_gaps": [
+        "Full cross-corpus original-study dedup before worker change",
+        "Original IP output hyperlink, build/skill/patch and later-era eligibility",
+        "IP castsWithDrop, 0 inclusive histogram, quality rank and direct conditional amounts",
+        "Retail character eligibility and existing compiled/tooltip impact not tested"
+      ],
+      "evidence_file": "research/v3/evidence/master/2026-11-07T1506-emerald-indigo-source-cooutputs-range.md",
+      "evidence_commit_sha": "1a5b67cca3f0824dd72a1893f3bab8fd90ed71a8",
+      "new_measured_cohorts": 0,
+      "new_current_retail_gold_actions_verified": 0
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -2977,15 +3034,47 @@
       "current_Retail_gold_EV_verified": false,
       "worker_evidence_file": "research/v3/evidence/dragonflight/2026-11-07T1333-four-original-gear-looter-cohorts.jsonl",
       "coordinator_evidence_file": "research/v3/evidence/master/2026-11-07T1407-df-stingerproof-overlap-guard.md"
+    },
+    {
+      "task_id": "COORD-LEGACY-EMERALD-INDIGO-PTR-20261107",
+      "type": "historical_source_field_recovery_and_worker_range_discrepancy",
+      "source": "https://www.wowhead.com/cata/item=39339/emerald-pigment",
+      "recovered_source_only_IP_material_unit_totals": [
+        {
+          "inputItemID": 3818,
+          "totalQuantity": 1,
+          "nominalOperations": 9
+        },
+        {
+          "inputItemID": 3821,
+          "totalQuantity": 10,
+          "nominalOperations": 26
+        },
+        {
+          "inputItemID": 3358,
+          "totalQuantity": 14,
+          "nominalOperations": 22
+        }
+      ],
+      "outputItemID_catalog_candidate": 43105,
+      "outputItemID_in_original_source": null,
+      "observed_common_EP_minimum_source": 3,
+      "worker_record_7714_minSeen": 2,
+      "observed_IP_cumulatives_not_positive_hit_counts": true,
+      "original_source_epoch": "pre-live Wrath PTR",
+      "new_independent_observations": 0,
+      "new_price_ready_expected_quantities": 0,
+      "actual_client_validation": false,
+      "linked_master_evidence": "research/v3/evidence/master/2026-11-07T1506-emerald-indigo-source-cooutputs-range.md"
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": "2026-11-07T13:42:08.003Z",
-    "dragonflight": "2026-11-07T13:33:26.416Z",
-    "war_within": "2026-11-07T13:25:48.050Z",
-    "midnight": "2026-11-07T13:18:05.143Z"
+    "legacy": "2026-11-07T14:47:06.504Z",
+    "dragonflight": "2026-11-07T14:36:37.780Z",
+    "war_within": "2026-11-07T14:28:50.959Z",
+    "midnight": "2026-11-07T14:30:56.370Z"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
@@ -3011,7 +3100,8 @@
     "research/v3/evidence/legacy/20261107T1046-obsidium-mithril-firsthand.jsonl",
     "research/v3/evidence/legacy/20261107T1154-cataclysm-ring-pendant-bracer-logs.jsonl",
     "research/v3/evidence/master/2026-11-07T1307-powder-evercore-conditional-reference.md",
-    "research/v3/evidence/master/2026-11-07T1407-df-stingerproof-overlap-guard.md"
+    "research/v3/evidence/master/2026-11-07T1407-df-stingerproof-overlap-guard.md",
+    "research/v3/evidence/master/2026-11-07T1506-emerald-indigo-source-cooutputs-range.md"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -3133,14 +3223,17 @@
     "https://www.wowhead.com/mop-classic/item=52306/jasper-ring",
     "https://us.forums.blizzard.com/en/wow/t/impossible-patron-orders/2276246/16",
     "https://www.wowhead.com/ptr/item=194406/stingerproof-helmet",
-    "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe"
+    "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
+    "https://www.wowhead.com/cata/item=39339/emerald-pigment",
+    "https://www.wowhead.com/item=43105/indigo-pigment",
+    "https://www.wow-professions.com/guides/milling-table-inscription"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "1aede81b3f500d1e3f082a7291bd1017ff81e2b3",
+    "research": "b6e724d70d74c8b4ca09e5a447ed446cfa3e2e5b",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
-  "commit_sha_when_verified": "d594d86119fec359b66a4fd930bffd9251f06bb5",
+  "commit_sha_when_verified": "b6e724d70d74c8b4ca09e5a447ed446cfa3e2e5b",
   "blockers": [
     "Original worker-owned 6 rows need append-only author correction and reviewer deduplication before treating them as independent source identities.",
     "First Flower cross-reference is historical and not current-patch Retail; completed operations remain ambiguous without actual cast logs. Keep archives and TSM reference independent of measured statistics.",
@@ -3180,7 +3273,8 @@
     "COORD-LEGACY-OBSIDIUM-MITHRIL-ORIGINAL-QA-20261107: 957663 1200-ore and 610726 200-ore reports give material totals but not logged completed operations/Resourcefulness; 370112's separate 3-stack Elementium result has unknown stack size and unresolved prior-source overlap; historical build and modern eligibility absent.",
     "COORD-CATA-JASPER-ENCHANTRIX-PERK-CONTEXT-20261107: Perk-conditioned and unconditioned output averages cannot be characterized as one verified character baseline. Nubi's guild perk, historical source patch and exact Retail compatibility unknown; no completed character-specific current Retail test or performed estimator regression.",
     "COORD-POWDER-EVERCORE-130-REFERENCE-20261107: Draggoth's 1.3 Evercores for five Powder Pigment at 10 Recycling KP is a player illustrative reference, not observed input/output rank-specific 0-inclusive operation data. Missing exact variant itemLinks, zero/hit histogram, live patch/skill/refunds and verified current recipe eligibility. Do not infer P(hit), assign 243582 to original output, invent skill scaling, or price a current action until protected actual-engine source-precedence/tooltip validation.",
-    "COORD-DF-STINGERPROOF-MARGINAL-HIT-OVERLAP-20261107: Source 194406 has 78 positive material-row occurrences against 77 Looter 'disenchanted' entries; original full 0-inclusive per-cast multi-material/bonus output events and shared denominator semantics unavailable. Do not force mutually exclusive rows, infer per-output exact units, zero histogram, current game eligibility, or supported current Retail gold EV."
+    "COORD-DF-STINGERPROOF-MARGINAL-HIT-OVERLAP-20261107: Source 194406 has 78 positive material-row occurrences against 77 Looter 'disenchanted' entries; original full 0-inclusive per-cast multi-material/bonus output events and shared denominator semantics unavailable. Do not force mutually exclusive rows, infer per-output exact units, zero histogram, current game eligibility, or supported current Retail gold EV.",
+    "COORD-LEGACY-EMERALD-INDIGO-PTR-20261107: Unknown original IP material item hyperlink, full source dedup, current Retail behavior/eligibility and output-specific hits/zeros; original Fadeleaf reported rate uses inconsistent stack units. Worker-only source correction required; no current gold action/tooltip proof."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -3207,7 +3301,8 @@
     "Magma Thresher 199344: reviewed existing original 2023 Reddit output table, Retail TSM catalog item, Wowhead item description and Warcraft Wiki reagent-for table; no independent recent cast histogram, refundable-input evidence or linked rank output IDs in those pages. Do not revisit as novel numeric study.",
     "Checked 2015 ReagentMaker ProspectingData.lua @42baf007f3c7, verified nominal five-ore inputs, item IDs and above-one byproduct coefficients. It explicitly credits Enchantrix. Do not recollect this as independent experimental cohorts or multiply it into existing TSM/legacy sources. Further work needs upstream provenance/units rather than rereading the same file.",
     "2014 Enchantrix ProspectableItems vs 2015 ReagentMaker eight exact ID-pair crosswalk audited once; do not reuse as independent source cohorts, and do not repeat without new upstream units/actual measurements.",
-    "Coordinator reread of original 194406 and control 194389 Looter cumulative tables completed; do not repeat as a new study without an original event-level export, source correction or independent cast evidence. The Jallfo Dragonflight workbook formula discrepancy was already thoroughly audited 2026-11-02; no duplication this run."
+    "Coordinator reread of original 194406 and control 194389 Looter cumulative tables completed; do not repeat as a new study without an original event-level export, source correction or independent cast evidence. The Jallfo Dragonflight workbook formula discrepancy was already thoroughly audited 2026-11-02; no duplication this run.",
+    "Source comment 180977/Legacy 20261107T1447 rechecked once for its missing Indigo cooutputs and Khadgar minSeen; do not repeat as new independent study unless source event-level information appears."
   ],
   "decisions_needed": [
     {
@@ -3233,16 +3328,18 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "On an isolated research-only review, test whether estimator/fixtures tolerate source-reported marginal hit counts totaling above cast count without normalizing an exclusive distribution; recover original 194406 complete cast event logs with joint quantities, item variant/bonus, skill/build and timestamp. Keep the protected three-pass addon implementation owned by its operator; Dragonflight worker retains T0020 source tasks.",
+  "next_concrete_step": "Legacy worker should, after an exact same-author/study-key dedup, append original 1/10/14 IP unit-total cooutputs as historical source records and a source-based correction setting legacy-20261107-7714 minSeen=3 (zero-count bin not observed); retain provenance and unknown IP hits/ranks. Prioritize fresh current Retail cast-level examples on existing queue; do not touch protected 3-pass addon branch or normalize old PTR rates into live EV.",
   "validation_executed": {
-    "at_utc": "2026-11-07T14:09:50.821Z",
-    "github_source_table_read": true,
-    "worker_current_evidence_rows_parsed": true,
-    "source_marginal_arithmetic_recomputed": true,
-    "control_item_source_read": true,
-    "existing_jallfo_review_read_no_duplicate": true,
+    "at_utc": "2026-11-07T15:08:40.010Z",
+    "worker_source_rows_read": 18,
+    "worker_positive_histogram_rows_audited": 10,
+    "source_comment_180977_directly_checked": true,
+    "indigo_catalog_independent_identity_checked": true,
+    "original_IP_unit_totals_crosschecked": true,
     "worker_statuses_read": 4,
-    "github_branches_and_actions_read": true,
+    "github_branch_heads_prs_and_actions_checked": true,
+    "research_actions_run_42383231090": "success on 6c7529bdba23411668279085f14cc3303a371572 BEFORE coordinator edits",
+    "source_to_addon_ingest_test_run": false,
     "estimator_regression_run": false,
     "actual_addon_engine_tests_run": false,
     "actual_tooltip_tests_run": false,
@@ -3260,27 +3357,32 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "task_id": "COORD-DF-STINGERPROOF-MARGINAL-HIT-OVERLAP-20261107",
-    "at_utc": "2026-11-07T14:09:50.821Z",
+    "task_id": "COORD-LEGACY-EMERALD-INDIGO-PTR-20261107",
+    "at_utc": "2026-11-07T15:08:40.010Z",
     "verified_revisions_before_write": {
       "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-      "research": "1aede81b3f500d1e3f082a7291bd1017ff81e2b3",
+      "research": "b6e724d70d74c8b4ca09e5a447ed446cfa3e2e5b",
       "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
     },
-    "evidence_file": "research/v3/evidence/master/2026-11-07T1407-df-stingerproof-overlap-guard.md",
-    "evidence_commit_sha": "d594d86119fec359b66a4fd930bffd9251f06bb5",
-    "dashboard_commit_sha": "1aede81b3f500d1e3f082a7291bd1017ff81e2b3",
-    "work_performed": [
-      "read original two Wowhead item-side tables",
-      "read 11 worker original-source evidence rows",
-      "recomputed marginal row-hit sum",
-      "recorded research-only evidence note and dashboard"
+    "evidence_file": "research/v3/evidence/master/2026-11-07T1506-emerald-indigo-source-cooutputs-range.md",
+    "evidence_commit_sha": "1a5b67cca3f0824dd72a1893f3bab8fd90ed71a8",
+    "dashboard_commit_sha": "b6e724d70d74c8b4ca09e5a447ed446cfa3e2e5b",
+    "workers_verified": {
+      "legacy": "2026-11-07T14:47:06.504Z",
+      "dragonflight": "2026-11-07T14:36:37.780Z",
+      "war_within": "2026-11-07T14:28:50.959Z",
+      "midnight": "2026-11-07T14:30:56.370Z"
+    },
+    "checks_executed": [
+      "source original first-person comment",
+      "source-catalog output name ID consistency",
+      "newest 18 legacy source lines and 10 source-stated positive quantity histograms",
+      "current GitHub heads, PR state and existing CI run"
     ],
-    "no_new_measured_retail_cohorts": true,
-    "actual_estimator_test_executed": false,
-    "actual_engine_test_executed": false,
-    "actual_tooltip_test_executed": false,
-    "actual_live_character_test": false,
+    "new_measured_cohorts": 0,
+    "new_gold_decisions": 0,
+    "actual_addon_tests_run": false,
+    "live_client_tests_run": false,
     "merges": 0,
     "releases": 0
   },
@@ -3510,8 +3612,8 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
     "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
-  "research_branch_head_read_before_write": "1aede81b3f500d1e3f082a7291bd1017ff81e2b3",
-  "research_branch_prewrite_head_verified_at_utc": "2026-11-07T14:09:50.821Z",
+  "research_branch_head_read_before_write": "b6e724d70d74c8b4ca09e5a447ed446cfa3e2e5b",
+  "research_branch_prewrite_head_verified_at_utc": "2026-11-07T15:08:40.010Z",
   "verified_base_commit_sha": "2c6564cf9c8e3ae8524e7655beb30f158c1fd7e6",
   "current_status_commit_sha": null,
   "commit_sha_note": "This SHA is the verified research-only evidence note commit; dashboard write was separately returned as 1aede81b3f50. This coordinator status update has its own later SHA, which cannot be inserted into its own commit.",
