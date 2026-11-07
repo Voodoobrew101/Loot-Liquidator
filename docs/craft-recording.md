@@ -8,7 +8,7 @@ Version 0.10.0-alpha10 records measured Retail crafting and processing operation
 2. Click **Start new batch** in Processing Research before a controlled session. Keep all required reagents in character bags. Craft normally; the addon only observes. Avoid looting unrelated items, trading, selling, mailing or bank transfers during capture.
 3. Use **Recording status** to inspect complete/unresolved counts. Timeout, missing loot, interruption, or an unknown output never automatically means zero. A successful isolated cast with consumed inputs and no outputs stays unresolved after the result window.
 4. Only if you personally verified that such a cast genuinely produced nothing, run `/ll craftzero` after tracking finishes (normally 13 seconds after success). It confirms only the latest isolated empty candidate, on the same character/build with unchanged inventory, and labels it **operator-confirmed-empty**. Do not use it when loot is delayed or uncertain.
-5. Stop crafting and let bag updates settle before clicking **Export**. The popup provides paged JSON, 25 records per page. Save every page indicated by `pages` as a separate `.json` file. Retain the raw pages for review. Debug commands remain available for advanced inspection; normal recording, batch changes and export use buttons.
+5. Stop crafting and let bag updates settle before clicking **Export**. Copy once and paste once: the default is a complete JSON document. **Export pages** is a fallback for smaller destinations; all pages must be supplied together. Retain the raw export for review. Recording, batch changes and export use buttons.
 
 Validate and stage the raw pages outside the addon directory:
 
@@ -16,7 +16,7 @@ Validate and stage the raw pages outside the addon directory:
 python3 tools/validate_craft_export.py cast-page-1.json cast-page-2.json --output staged-baselines.json
 ```
 
-The validator requires all pages from one stable export, rejects duplicate or mismatched operations, and excludes cohorts with unresolved results or study coverage gaps. It outputs research JSON, not an installable Lua database. Reviewers must reconcile it with the research schema/compiler and independently approve any proposed mechanics. No sample-count threshold alone grants approval.
+The validator requires all pages from one stable export, rejects duplicate or mismatched operations, and excludes cohorts with unresolved results or recipe coverage gaps. It outputs research JSON, not an installable Lua database. Reviewers must reconcile it with the research schema/compiler and independently approve any proposed mechanics. No sample-count threshold alone grants approval.
 
 Exact ItemDB milling/prospecting recipes use their recorded method, input identity and batch before generic craft detection or compatibility hints. This includes BFA mass milling's twenty herbs. Unknown/mismatched input context or conflicting batch definitions remain diagnostics; they do not fall back to a convenient old batch. Raw collection can continue with yield sources disabled, while source controls still gate subsequent valuation. Bag-only outputs must belong to the captured recipe (or a reference with no recipe identity); reported typed results are reconciled with inventory independently.
 
@@ -45,7 +45,7 @@ inventory totals. Missing receipts/targets, conflicting duplicates, unrelated ba
 changes and interrupted coverage remain diagnostics rather than zero results.
 
 Old diagnostic exports stay unchanged and research-only. Updating the addon does
-not repair their missing input attribution or clear a censored batch. Use **Start
+not repair their missing input attribution. Recipe-scoped coverage now keeps unrelated failures separate. Use **Start
 new batch** after installing the fix. No recorded-results reset is needed.
 
 ## What is captured
@@ -75,7 +75,7 @@ Old aggregates, preferences, processing CSV exports, and public diagnostic comma
 
 ## Capture limits
 
-The collector accepts matched successful player casts with a pre-cast bag snapshot and either closed loot or matching typed craft results. It rejects ambiguous batches, mixed item variants, unmapped bag-only outputs, unrelated inventory interactions, conflicting result duplicates, and overlapping operations that cannot be separated. Diagnostics retain the available raw facts; a successful unattributed operation censors the study so its remaining successes cannot create a biased denominator. Start a new controlled study after investigating the gap. An active study left by an interrupted client session is also censored on reload.
+The collector accepts matched successful player casts with a pre-cast bag snapshot and either closed loot or matching typed craft results. It rejects ambiguous batches, mixed item variants, unmapped bag-only outputs, unrelated inventory interactions, conflicting result duplicates, and overlapping operations that cannot be separated. Diagnostics retain the available raw facts; a successful unattributed operation marks its method and recipe as having a coverage gap so remaining successes cannot create a biased denominator. Other recipes remain usable. An interrupted client session still has a study-wide gap. See RECIPE-COVERAGE-AND-BUILD-INFO.md for the legacy capture review and forward coverage policy.
 
 Generic learned recipes support fixed required reagents and observed optional/alternative allocations. Recrafts, customer orders, enchant-only results, reagent-bank/customer inventory, and unknown allocations are not supported as complete samples. Rapid multi-craft sequences may be censored if their results overlap. Some modern API fields may be unavailable until the relevant profession UI is open; export still retains those unknowns.
 

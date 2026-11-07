@@ -189,6 +189,15 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     ctx.skillSource=ctx.simulated and "manual-simulation"
         or (ctx.qualityFromBlizzard and "blizzard-operation"
         or (ctx.skillKnown and "scanned-profession" or "unknown"))
+    -- Zero-stat empirical cohorts must work across client languages. Preserve
+    -- the typed API payload, but don't match localized names/descriptions.
+    if type(ctx.operationStats)=="table" and #ctx.operationStats>0 then
+        ctx.operationStatCount=#ctx.operationStats
+        ctx.zeroOperationStats=true
+        for _,stat in ipairs(ctx.operationStats) do
+            if stat.bonusStatValue~=0 or stat.ratingPct~=0 or stat.bonusRatingPct~=0 then ctx.zeroOperationStats=false end
+        end
+    end
     self._processingContextGeneration=(self._processingContextGeneration or 0)+1
     ctx._cacheIdentity=self._processingContextGeneration
     if (self._processingContextCache.count or 0)>=256 then self._processingContextCache={} end

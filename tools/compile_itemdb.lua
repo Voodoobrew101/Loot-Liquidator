@@ -473,6 +473,10 @@ for _,r in ipairs(additions.processing or {}) do db.processing[#db.processing+1]
 -- Direct captured output identities survive study-level denominator gaps.
 -- This adapter carries no numerical rates, bounds, confidence or mechanics.
 local captures=assert(loadfile('database/capture-observations.lua'))()
+local recycling=assert(loadfile('database/recycling-capture-baselines.lua'))()
+assert(recycling.schemaVersion==1,'Unsupported reviewed Recycling captures')
+db.captureCoverageReviews=recycling.coverageReviews
+for _,r in ipairs(recycling.processing) do db.processing[#db.processing+1]=r end
 assert(captures.schemaVersion==1 and type(captures.processing)=='table','Unsupported capture observations')
 for _,r in ipairs(captures.processing) do
     assert(r.observationOnly==true and r.sourceKey=='itemdb' and r.sourceKind=='direct-player-cast-observation')

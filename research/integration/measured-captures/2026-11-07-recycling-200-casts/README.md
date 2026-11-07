@@ -14,11 +14,17 @@ verified no-skill baseline.
 
 The study was later censored by a different Craft operation (recipe 1229866,
 Inputs have not settled). Another study has unknown-reagent-allocation Craft
-diagnostics. The existing validator rejects every cohort because of study-wide
-coverage flags. Original flags are preserved. No numerical baseline or mechanic
-is promoted. validated-baseline-review.json records the exclusions. Reviewing
-method-specific coverage is a separate implementation decision; this intake
-does not silently erase the coverage gaps.
+diagnostics. The initial validator rejected every cohort because of study-wide
+coverage flags; validated-baseline-review.json preserves that original decision.
+
+The owner subsequently requested recipe-scoped coverage and use of the 200 valid
+Recycling casts. coverage-review.json is the explicit, hash-bound review of
+exactly those observations. restored-baselines.json contains the 14 admitted
+measured contexts. The official compiler now ships these empirical rates, scoped
+to their measured skill, bonus, specialization, stats, quality and game build.
+No skill transform is inferred. Original raw flags remain unchanged; other
+legacy censored observations remain excluded. See
+docs/RECIPE-COVERAGE-AND-BUILD-INFO.md for the forward coverage policy.
 
 For further controlled Recycling collection, use Start new batch before the
 session and export it before other crafting. Existing results should be kept.

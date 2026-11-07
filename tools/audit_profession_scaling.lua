@@ -15,7 +15,8 @@ local A={ItemDB=runtime.ItemDB,db={}}
 load(A,'Database.lua');load(A,'ConversionEngine.lua');A:MigrateEvidenceSettings()
 local sample
 for _,r in ipairs(A.ItemDB.processing) do
-    if r.sourceKey=='itemdb' and r.inputItemID and r.method~='Smelt' then
+    if r.sourceKey=='itemdb' and r.inputItemID and r.method~='Smelt'
+        and not (r.referenceConditions and (r.referenceConditions.effectiveSkill~=nil or r.referenceConditions.skill~=nil)) then
         for _,m in ipairs(r.materials) do if m.expectedQuantity.value~=nil then sample=r;break end end
         if sample then break end
     end

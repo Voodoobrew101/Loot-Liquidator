@@ -118,7 +118,7 @@ local LL={ItemDB={schemaVersion=1,processing={},mechanicRules={}},db={characters
 LL.CharacterKey=function() return 'Tester - Realm' end
 local invalidations=0
 LL.Invalidate=function() invalidations=invalidations+1 end
-for _,file in ipairs({'Database.lua','SettingsControls.lua','Settings.lua','Professions.lua'}) do
+for _,file in ipairs({'Database.lua','BuildInfo.lua','SettingsControls.lua','Settings.lua','Professions.lua'}) do
     assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
 end
 LL:MigrateEvidenceSettings()
@@ -403,6 +403,18 @@ do
     LL.db.includeVerifiedAlts=nil;LL.settingsCategory=nil
     local ok,err=pcall(LL.RegisterNativeSettings,LL);if not ok then print('settings build stopped early: '..tostring(err)) end
     assert(ok,tostring(err))
+    local buildSection,rateSection,details=false,false,nil
+    for _,item in ipairs(layouts.root.items)do
+        if item.title=='PRs & build' then buildSection=true end
+        if item.title=='Rates' then rateSection=true end
+        if item.name=='Build details' then details=item end
+    end
+    assert(buildSection and details and not rateSection,'main page shows build provenance instead of global Rates')
+    local shownTitle,shownText
+    local originalCopy=LL.ShowCopy
+    LL.ShowCopy=function(_,title,text)shownTitle,shownText=title,text end
+    details.click();assert(shownTitle=='PRs & build' and shownText:find('Source commit:',1,true))
+    LL.ShowCopy=originalCopy
     local headingFrame={SetTooltipFunc=function(self,fn)self.tooltipFunc=fn end}
     local count=0
     for _,layout in pairs(layouts) do
@@ -482,8 +494,8 @@ do
     local accuracy=pages['Database & Accuracy']
     assert(accuracy and control(accuracy,'LootLiquidator_source_itemdb_enabled'),'Database & Accuracy is native')
     print('PASS: Badges & Colors and Database & Accuracy are native Settings pages (B8a/B8b)')
-    -- B5a/B5b: rate choice on the main page; hypothetical pages have a new home.
-    assert(settings.LootLiquidator_rateProfile and settings.LootLiquidator_rateProfileCharacter,'Show rates for registered')
+    -- Profession pages replace the redundant global rate controls.
+    assert(not settings.LootLiquidator_rateProfile and not settings.LootLiquidator_rateProfileCharacter,'global Rates controls are retired')
     assert(LL.db.rateProfileCharacter=='' or LL.db.rateProfileCharacter==nil)
     assert(pages['Professions (Simulated)'],'hypothetical profession pages need a parent page')
     local rows=LL:RateProfileCharacterChoices()

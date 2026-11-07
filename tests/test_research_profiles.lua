@@ -40,6 +40,7 @@ local function compile()
         if path=='database/evidence-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
         if path=='database/disenchant-category-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
         if path=='database/capture-observations.lua' then return function() return {schemaVersion=1,processing={}} end end
+        if path=='database/recycling-capture-baselines.lua' then return function() return {schemaVersion=1,processing={}} end end
         return originalLoadfile(path)
     end
     arg={fixtureDir..'/FixtureItemDB.lua'}

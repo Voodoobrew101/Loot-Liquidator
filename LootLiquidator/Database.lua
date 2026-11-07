@@ -12,7 +12,7 @@ local UNKNOWN_CONFIDENCE=10     -- a value whose source gave no confidence figur
 LL.SourceDefaults=defaults
 local order={'itemdb','personal','imported','legacy','reference'}
 local sourcePriority={itemdb=1,personal=2,imported=3,legacy=4,reference=5}
-local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true}
+local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true,Recycle=true}
 local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
 local function finite(n) return type(n)=='number' and n==n and n>=0 and n<math.huge end

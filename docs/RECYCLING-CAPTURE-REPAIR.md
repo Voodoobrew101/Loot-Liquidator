@@ -97,3 +97,11 @@ zero-count and missing stacks, changed/cleared selections, failed loads and
 repeated installation. It verifies that no crafting API is called and no
 recorded-results database is created. Existing capture, yield and specialization
 logic is unchanged; recorded results do not need to be cleared.
+
+
+## November 7 follow-up
+
+Recipe-scoped coverage, the reviewed 200-cast shared rates, one-copy export and
+the main PRs & build panel are documented in RECIPE-COVERAGE-AND-BUILD-INFO.md.
+The original 20 diagnostic pilot casts remain excluded; the later 200 complete
+Recycling observations are now admitted in their 14 measured contexts.

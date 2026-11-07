@@ -102,13 +102,15 @@ eq(#d.records,n);eq(d.studies[d.activeStudy].censored,true)
 -- Genuine inventory interactions retain censorship and the reason.
 start('trade',{{gearA}});emit('TRADE_SHOW');finish({{'item:109693',2}},{{'item:109693',2}});advance(13)
 eq(d.studies[d.activeStudy].coverageReason,'Inventory interaction during capture')
--- Clean logout of a censored batch is not a game-build change.
+-- A clean logout can resume a recipe-scoped batch without discarding its gaps.
 emit('PLAYER_LOGOUT')
 local closedBatch=d.activeStudy
 local s={db=LL.db,CharacterKey=LL.CharacterKey}
 assert(loadfile('LootLiquidator/CraftRecording.lua'))('LootLiquidator',s)
 s:ActiveRecordingBatch()
-eq(d.studies[closedBatch].closedReason,'Study has unresolved coverage gaps')
+eq(d.studies[closedBatch].closedReason,nil)
+eq(d.activeStudy,closedBatch)
+eq(d.studies[closedBatch].coverageGaps['Disenchant:13262']~=nil,true)
 -- API placeholder 0/0 is unknown, not a measured zero-skill baseline. A real
 -- zero out of a positive cap is retained as a legitimate measurement.
 LL.ProfessionCatalog={['Enchanting:11']={lineID=2909}}

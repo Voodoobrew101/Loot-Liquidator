@@ -30,7 +30,7 @@ for line in io.lines(root..'LootLiquidator.toc') do
     end
 end
 check(not LL.itemDBError,LL.itemDBError)
-eq(#manifest,18,'runtime source count') -- Includes the bundled profession catalog.
+eq(#manifest,19,'runtime source count') -- Includes build provenance.
 check(LL.ApplyVerifiedMechanics and LL.ResolveEvidenceModel and LL.QueueGuildRefresh and LL.QueueBlizzardBagRefresh)
 -- Names present before consolidation remain available.
 for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','RecordProfessions',
@@ -39,9 +39,12 @@ for _,name in ipairs({'SetIgnoreEntry','IsIgnoredAction','CanUseConversion','Rec
     'ExportDisenchantData','GetAuctionOperationNames','CreateItemIgnorePanel','RecommendedTSMSetupText'}) do
     check(type(LL[name])=='function','missing preserved API '..name)
 end
-LootLiquidatorDB={prospectingDataMode=2,processingModes={P=4,M=3},characters={['Old - Realm']={altMethods={P=false},professions={Mining={}}}},appearance={colors={A={.1,.2,.3}}}}
+LootLiquidatorDB={rateProfile=3,rateProfileCharacter='Old - Realm',professionTooltipProfiles={Engineering='@hypothetical'},prospectingDataMode=2,processingModes={P=4,M=3},characters={['Old - Realm']={altMethods={P=false},professions={Mining={}}}},appearance={colors={A={.1,.2,.3}}}}
 boot.scripts.OnEvent(boot,'ADDON_LOADED','LootLiquidator')
 eq(LL.db.prospectingDataMode,2,'migration preserves personal-only policy')
+eq(LL.db.rateProfile,nil,'retired global rate override cannot stay active invisibly')
+eq(LL.db.rateProfileCharacter,nil)
+eq(LL.db.professionTooltipProfiles.Engineering,'@hypothetical','profession-specific choices are preserved')
 -- B5b: the alts table is gone, so its hidden per-method modes and per-alt boxes reset to Auto.
 eq(next(LL.db.processingModes),nil,'alts-table modes cleared')
 eq(LL.db.characters['Old - Realm'].altMethods,nil,'per-alt boxes cleared')

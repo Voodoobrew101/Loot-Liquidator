@@ -198,5 +198,23 @@ for _,scenario in ipairs({'wrong-batch','wrong-target','no-target','no-receipt',
  advance(13.1)
  eq(#ledger().records,before,scenario..' cannot be accepted');check(ledger().studies[ledger().activeStudy].censored,scenario)
 end
+-- An unrelated failed craft must not remove a successful Recycling denominator.
+LL:StartCraftStudy('recipe coverage isolation');counts={[245807]=5};request(1);start('coverage-good')
+counts={[243581]=2};finish('coverage-good',result(999001,2));advance(1.3)
+local good=ledger().records[#ledger().records]
+check(LL:BeginCraftCapture('coverage-craft',1000))
+emit('UNIT_SPELLCAST_SUCCEEDED','player','coverage-craft',1000);LL:AbandonCraftCapture('Unknown reagent allocation')
+local study=ledger().studies[good.studyID]
+eq(study.coverageVersion,2);check(study.coverageGaps['Craft:1000'])
+check(LL:CraftBaseline(good.studyID,good.contextID,1229930),'an unrelated failed recipe leaves Recycling usable')
+counts={[245807]=5};request(1);start('coverage-bad')
+emit('UNIT_SPELLCAST_SUCCEEDED','player','coverage-bad',1229930);LL:AbandonCraftCapture('Missing receipt')
+check(not LL:CraftBaseline(good.studyID,good.contextID,1229930),'a Recycling gap blocks that recipe')
+for i=1,60 do
+    check(LL:BeginCraftCapture('coverage-later-'..i,1000))
+    emit('UNIT_SPELLCAST_SUCCEEDED','player','coverage-later-'..i,1000);LL:AbandonCraftCapture('Unknown reagent allocation')
+end
+check(study.coverageGaps['Recycle:1229930'],'recipe gaps survive diagnostic eviction')
+check(not LL:CraftBaseline(good.studyID,good.contextID,1229930))
 eq(craftCalls,0,'observer never executes crafting or recycling')
 print('PASS: '..checks..' Recycling discovery, 20-receipt replay, delayed-batch reconciliation, quality, refunds and rejection checks')

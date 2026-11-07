@@ -64,7 +64,7 @@ local function ledger(self)
         d.pausedStudies=type(d.pausedStudies)=="table" and d.pausedStudies or {}
         if active then
             if active.paused and active.character then d.pausedStudies[active.character]=d.activeStudy
-            else active.censored=true;active.coverageReason="Unclosed recording session" end
+            else active.censored=true;active.globalCoverageGap="Unclosed recording session";active.coverageReason=active.globalCoverageGap end
         end
         d.activeStudy=nil
         local me=self:CharacterKey()
@@ -72,7 +72,7 @@ local function ledger(self)
         d.pausedStudies[me]=nil
         if study then
             study.paused=nil
-            if study.build==build() and not study.censored and not study.truncated then
+            if study.build==build() and (not study.censored or (study.coverageVersion==2 and not study.globalCoverageGap)) and not study.truncated then
                 study.resumedAt=stamp();study.resumeCount=(study.resumeCount or 0)+1;d.activeStudy=id
             else
                 -- A new game build is a new sampling frame: close it cleanly, not censored.
@@ -96,10 +96,20 @@ function LL:StartCraftStudy(label)
     local d=ledger(self);d.sequence=d.sequence+1
     local id=tostring(self:CharacterKey())..":"..build()..":"..stamp()..":"..d.sequence
     d.studies[id]={label=type(label)=="string" and label:sub(1,80) or "Measured operations",startedAt=stamp(),
-        character=self:CharacterKey(),build=build(),truncated=false}
+        character=self:CharacterKey(),build=build(),truncated=false,coverageVersion=2,coverageGaps={}}
     d.activeStudy=id
     if self.Invalidate then self:Invalidate() end
     return id
+end
+local function coverageGap(study,method,recipe,reason,operation)
+    if not study.censored then study.coverageVersion=2;study.coverageGaps=study.coverageGaps or {} end
+    study.censored=true
+    study.coverageReason=study.coverageReason or reason
+    study.coverageOperationID=study.coverageOperationID or operation
+    if study.coverageVersion==2 and METHODS[method] and integer(recipe) then
+        local key=method..":"..recipe
+        study.coverageGaps[key]=study.coverageGaps[key] or {reason=reason,operationID=operation}
+    else study.globalCoverageGap=study.globalCoverageGap or reason end
 end
 local function contextID(self,context)
     local d=ledger(self);local signature=identity(context)
@@ -353,7 +363,8 @@ function LL:BeginCraftCapture(guid,recipe)
         -- operations. Keep a diagnostic gap rather than pooling their loot.
         if not preceding and (pending or previous.finalCoverage~="complete") then
             local d=ledger(self);local study=d.activeStudy or self:StartCraftStudy()
-            d.studies[study].censored=true;pending=nil;return false
+            coverageGap(d.studies[study],description and description.method,recipe,"Overlapping cast has unresolved coverage",guid)
+            pending=nil;return false
         end
     end
     if not description then return false end
@@ -549,16 +560,14 @@ local function diagnostic(self,p,reason)
         lootSlots=copy(p.lootSlots),
         observedOutputs=itemVector(added,after and after.facts),resultMetadata=copy(p.results),outputCoverage="unknown"}
     if #d.diagnostics>50 then table.remove(d.diagnostics,1) end
-    -- A successful but unattributed operation invalidates this study's sampling
-    -- coverage. Export still retains its diagnostic and raw confirmed casts.
+    -- Missing outcomes affect their recipe's denominator, not other recipes.
+    -- Persist the gap independently of the bounded diagnostic history.
     if p.success or p.uncertainCompletion then
         local study=d.activeStudy or self:StartCraftStudy()
-        d.studies[study].censored=true
-        d.studies[study].coverageReason=d.studies[study].coverageReason or reason
-        d.studies[study].coverageOperationID=d.studies[study].coverageOperationID or p.guid
+        coverageGap(d.studies[study],p.method,p.recipe,reason,p.guid)
         if not d.studies[study].coverageNotified then
             d.studies[study].coverageNotified=true
-            if print then print("|cff66ccffLoot Liquidator|r: Batch needs review: "..tostring(reason)..". Results are saved; see Processing Research > Recording status.") end
+            if print then print("|cff66ccffLoot Liquidator|r: "..tostring(p.method).." recipe "..tostring(p.recipe).." needs review: "..tostring(reason)..". Other recipes keep their coverage. Results are saved.") end
         end
     end
 end
@@ -712,7 +721,27 @@ end
 function LL:CraftBaseline(studyID,contextRef,recipeID)
     local d=self.db and self.db.craftResearch;if not d then return nil end
     local study=d.studies[studyID]
-    if not study or study.censored or study.truncated then return nil,"Study has unresolved coverage gaps" end
+    if not study or study.truncated or study.globalCoverageGap then return nil,"Study has unresolved coverage gaps" end
+    local context=d.contexts[contextRef]
+    local method=context and context.method
+    if not method then
+        for _,r in ipairs(d.records) do
+            if r.studyID==studyID and r.contextID==contextRef and r.recipeID==recipeID then method=r.method;break end
+        end
+    end
+    local review
+    if study.censored then
+        if not method then return nil,"Unknown operation coverage" end
+        if study.coverageVersion==2 and type(study.coverageGaps)=="table" and next(study.coverageGaps) then
+            if study.coverageGaps[tostring(method)..":"..recipeID] then return nil,"Recipe has unresolved coverage gaps" end
+        else
+            review=self.ItemDB and self.ItemDB.captureCoverageReviews and self.ItemDB.captureCoverageReviews[studyID]
+            if not review or review.method~=method or review.recipeID~=recipeID
+                or review.coverageOperationID~=study.coverageOperationID or review.coverageReason~=study.coverageReason then
+                return nil,"Legacy study has unscoped coverage gaps"
+            end
+        end
+    end
     local base={schemaVersion=SCHEMA,sampleKind="RAW_CAST_LOG",referenceContextID=contextRef,recipeID=recipeID,
         studyID=studyID,materials={},operations=0,sourceRecordIDs={},status="EMPIRICAL_ESTIMATE",
         numericTransformValidated=false,applyPolicy="NO_NUMERIC_TRANSFORM"}
@@ -720,6 +749,7 @@ function LL:CraftBaseline(studyID,contextRef,recipeID)
     base.observationContext=copy(d.contexts[contextRef])
     local totals,inputTotals,signature={},{},nil
     for _,r in ipairs(d.records) do if r.studyID==studyID and r.contextID==contextRef and r.recipeID==recipeID then
+        if review and not review.operations[r.operationID] then return nil,"Operation is outside the reviewed legacy capture" end
         if r.outputCoverage~="complete" then return nil,"Unresolved output coverage" end
         local inputSignature=json(d.contexts[r.contextID].inputIdentity)
         if signature and signature~=inputSignature then return nil,"Different input batches or variants" end
@@ -932,12 +962,13 @@ function LL:GetLearnedDisenchantEstimate(f)
 end
 function LL:ExportCraftResearch(page)
     local d=self.db and self.db.craftResearch or {records={},contexts={},studies={},droppedRecords=0}
+    local all=page=="all"
     page=math.max(1,math.floor(tonumber(page) or 1));local records,contexts={},{}
-    for i=(page-1)*25+1,math.min(page*25,#d.records) do
+    for i=all and 1 or (page-1)*25+1,all and #d.records or math.min(page*25,#d.records) do
         local r=copy(d.records[i]);records[#records+1]=r;contexts[r.contextID]=copy(d.contexts[r.contextID])
     end
     return json({schemaVersion=SCHEMA,registryContract="profession-mechanics/0.2",sampleKind="RAW_CAST_LOG",
-        artifactStatus="RESEARCH_ONLY_NOT_SHIPPED",page=page,pages=math.max(1,math.ceil(#d.records/25)),
+        artifactStatus="RESEARCH_ONLY_NOT_SHIPPED",page=page,pages=all and 1 or math.max(1,math.ceil(#d.records/25)),
         records=records,contexts=contexts,studies=d.studies,diagnostics=d.diagnostics or {},
         retainedRecords=#d.records,droppedRecords=d.droppedRecords,automaticMechanicsPromotion=false})
 end
@@ -1017,10 +1048,11 @@ function LL:RecordingStatus()
             if r.outputCoverage=="complete" then complete=complete+1 else unresolved=unresolved+1 end
         end
     end
-    local state=not study and "No active batch" or study.censored and
+    local state=not study and "No active batch" or study.truncated and "Needs review: retained results were truncated" or (study.censored and study.coverageVersion==2 and not study.globalCoverageGap) and
+        "Needs review for some recipes; other recipes keep recording and remain usable" or study.censored and
         ("Needs review: "..tostring(study.coverageReason or "Earlier recorder reported a coverage gap")) or
-        study.truncated and "Needs review: retained results were truncated" or "Recording"
-    return ("%s\nCurrent batch: %d complete, %d unresolved.\nResults stay saved for export. Complete uncensored batches can be staged for shared database review."):format(state,complete,unresolved)
+        "Recording"
+    return ("%s\nCurrent batch: %d complete, %d unresolved.\nResults stay saved for export. Complete recipes without coverage gaps can be used independently."):format(state,complete,unresolved)
 end
 local schedule
 schedule=function()
@@ -1052,7 +1084,7 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
             local study=d.activeStudy and d.studies[d.activeStudy]
             if study and pending then
                 -- A cast still unsettled at logout leaves the batch's coverage unknown.
-                study.censored=true;study.coverageReason="Logged out while a cast was being recorded";d.activeStudy=nil
+                study.censored=true;study.globalCoverageGap="Logged out while a cast was being recorded";study.coverageReason=study.globalCoverageGap;d.activeStudy=nil
             elseif study then
                 study.paused=true;study.pausedAt=stamp()
             end

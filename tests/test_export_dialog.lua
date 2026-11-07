@@ -123,7 +123,7 @@ local recipient=setmetatable({db={},Invalidate=function()end},{__index=LL})
 local ok,message,count=recipient:ImportRecordedResults(text)
 check(ok,message);eq(count.accepted,25,'copied JSON remains a valid research import')
 
-LL:ShowRecordedResultsExport()
+LL:ShowRecordedResultsExport(true)
 local f=assert(LL.copyDialog)
 eq(f.template,'BasicFrameTemplateWithInset','dialog uses native Blizzard chrome')
 eq(f.scrollFrame.template,'UIPanelScrollFrameTemplate')
@@ -242,4 +242,24 @@ if arg and arg[2] then
     output:write(f.edit:GetText());output:close()
     print('PASS: Recycling20 receipt replay -> native export popup -> unchanged copied JSON')
 end
+-- The owner's full 13-page upload is now one copy, with all evidence retained.
+local merged={records={},contexts={},studies={},diagnostics={},droppedRecords=0}
+for i=1,13 do
+    local file=assert(io.open(('research/integration/measured-captures/2026-11-07-recycling-200-casts/export-page-%02d.json'):format(i),'r'))
+    local page=assert(LL.DecodeImportJSON(file:read('*a')));file:close()
+    for _,r in ipairs(page.records)do merged.records[#merged.records+1]=r end
+    for k,v in pairs(page.contexts)do merged.contexts[k]=v end
+    for k,v in pairs(page.studies)do merged.studies[k]=v end
+    merged.diagnostics=page.diagnostics
+end
+LL.db.craftResearch=merged
+f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport()
+local all=assert(LL.DecodeImportJSON(f.edit:GetText()))
+eq(all.page,1);eq(all.pages,1);eq(#all.records,301);eq(all.retainedRecords,301)
+check(not f.previous.shown and not f.next.shown,'one-copy export needs no page navigation')
+check(same(all.records,merged.records) and same(all.contexts,merged.contexts)
+    and same(all.studies,merged.studies) and same(all.diagnostics,merged.diagnostics),'all evidence survives one copy')
+eq(f.edit.selected,f.contents,'all retained results are selected for one Ctrl+C')
+local out=assert(io.open('/tmp/loot-recycling-200-popup.json','w'));out:write(f.contents);out:close()
+print('PASS: 301 real records from 13 pages -> single native copy, unchanged evidence and fallback paging')
 print('PASS: '..checks..' native export dialog, literal JSON, importer, snapshot paging and optional skin assertions')

@@ -8,10 +8,13 @@ import argparse
 import collections
 import json
 import math
+import hashlib
+import functools
 from pathlib import Path
 
 SCHEMA = 'loot-liquidator.cast-log/1'
 METHODS = {'Disenchant', 'Mill', 'Prospect', 'Smelt', 'Craft', 'Recycle', 'Research', 'Unravel', 'Thaumaturgy'}
+REVIEW_ROOT = Path(__file__).resolve().parents[1] / 'research/integration/measured-captures/2026-11-07-recycling-200-casts'
 
 
 def require(value, message):
@@ -164,6 +167,54 @@ def validate(pages):
     return records, contexts, studies
 
 
+def observation_signature(record, context):
+    return json.dumps({'record': {k: v for k, v in record.items() if k != 'contextID'},
+                       'context': context}, sort_keys=True, ensure_ascii=True)
+
+
+@functools.lru_cache(maxsize=1)
+def reviewed_legacy_capture():
+    """An explicit, hash-bound review of the owner's preserved 200-cast capture.
+
+    Legacy bounded diagnostics cannot reconstruct arbitrary old study coverage.
+    This review admits only the exact reviewed observations, never new records
+    appended to a censored study or other legacy exports.
+    """
+    path = REVIEW_ROOT / 'coverage-review.json'
+    if not path.exists(): return {}, {}
+    review = json.loads(path.read_text())
+    pages = []
+    for source in review['pages']:
+        raw = (REVIEW_ROOT / source['file']).read_bytes()
+        require(hashlib.sha256(raw).hexdigest() == source['sha256'], 'Reviewed capture page checksum changed')
+        pages.append(json.loads(raw))
+    records, contexts, studies = validate(pages)
+    selected = {r['operationID']: observation_signature(r, contexts[r['contextID']])
+                for r in records if r['operationID'] in review['operationIDs']}
+    require(len(selected) == len(review['operationIDs']) == 200, 'Reviewed capture membership changed')
+    return selected, {review['studyID']: studies[review['studyID']]}
+
+
+def coverage_reason(study_id, study, method, recipe, cohort, contexts):
+    if study.get('truncated') or study.get('globalCoverageGap'):
+        return 'Study capture was truncated or session coverage is unknown'
+    if not study.get('censored'): return None
+    if study.get('coverageVersion') == 2:
+        gaps = study.get('coverageGaps')
+        if not isinstance(gaps, dict) or not gaps:
+            return 'Missing recipe coverage ledger'
+        if f'{method}:{recipe}' in gaps:
+            return 'Recipe capture has unresolved coverage gaps'
+        return None
+    reviewed, original_studies = reviewed_legacy_capture()
+    original = original_studies.get(study_id)
+    fields = ('censored', 'truncated', 'coverageReason', 'coverageOperationID')
+    if original and all(study.get(k) == original.get(k) for k in fields) and all(
+            reviewed.get(r['operationID']) == observation_signature(r, contexts[r['contextID']]) for r in cohort):
+        return None
+    return 'Legacy study has unscoped coverage gaps'
+
+
 def compile_baselines(pages):
     records, contexts, studies = validate(pages)
     grouped = collections.defaultdict(list)
@@ -173,8 +224,8 @@ def compile_baselines(pages):
     result, excluded = [], []
     for (study_id, context_id, recipe), cohort in sorted(grouped.items()):
         study = studies[study_id]
-        reason = ('Study capture was censored or truncated' if study.get('censored') or study.get('truncated') else
-                  'Unresolved output coverage' if any(r['outputCoverage'] != 'complete' for r in cohort) else None)
+        reason = coverage_reason(study_id, study, cohort[0]['method'], recipe, cohort, contexts)
+        if any(r['outputCoverage'] != 'complete' for r in cohort): reason = 'Unresolved output coverage'
         nominal = cohort[0].get('nominalInputs', cohort[0]['inputs'])
         if any(r.get('nominalInputs', r['inputs']) != nominal for r in cohort):
             reason = 'Unlike input batches or variants'
