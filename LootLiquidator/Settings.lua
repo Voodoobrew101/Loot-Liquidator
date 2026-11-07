@@ -1018,6 +1018,10 @@ function LL:RegisterNativeSettings()
     -- B6a: buttons instead of slash commands for recorded results.
     if CreateSettingsButtonInitializer and researchLayout and researchLayout.AddInitializer then
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Recording status","Show status",function()
+                if LL.ShowCopy and LL.RecordingStatus then LL:ShowCopy("Recording status",LL:RecordingStatus()) end
+            end,"Shows whether the current batch is recording cleanly, its complete/unresolved counts, and the reason it needs review.",false))
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Export recorded results","Export",function() LL:ShowRecordedResultsExport() end,
             "Opens your recorded results as text to copy (Ctrl+C). Use Previous and Next in the export window for additional pages.",false))
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(

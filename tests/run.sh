@@ -15,6 +15,8 @@ done
 python3 tools/import_midnight_enchanting.py --check
 python3 tools/evidence_to_baselines.py --check  # D1b: generated baselines are current
 python3 tools/disenchant_categories.py --check
+python3 tools/capture_observations.py --check
+python3 tests/test_capture_observations.py
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
 python3 tools/reference_calculators.py --check
 python3 tools/skill_quality_to_rules.py --check
@@ -45,6 +47,7 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_badge_decision.lua
 "$lua_bin" tests/test_cleanup_regressions.lua
 "$lua_bin" tests/test_itemdb_metrics.lua
+"$lua_bin" tests/test_capture_database.lua
 "$lua_bin" tests/test_token_catalog.lua "$compiled_dir"
 "$lua_bin" tests/test_token_value_pipeline.lua
 "$lua_bin" tests/test_token_transmog_priority.lua
@@ -57,6 +60,7 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_export_dialog.lua
 "$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_craft_operations.lua
+"$lua_bin" tests/test_disenchant_capture.lua
 "$lua_bin" tests/test_imported_results.lua
 "$lua_bin" tests/test_counts_model.lua
 "$lua_bin" tests/test_transmog_alts.lua

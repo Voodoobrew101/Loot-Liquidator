@@ -75,7 +75,9 @@ local function ledger(self)
                 study.resumedAt=stamp();study.resumeCount=(study.resumeCount or 0)+1;d.activeStudy=id
             else
                 -- A new game build is a new sampling frame: close it cleanly, not censored.
-                study.closedAt=stamp();study.closedReason=study.closedReason or "Game build changed"
+                study.closedAt=stamp();study.closedReason=study.closedReason or
+                    (study.build~=build() and "Game build changed" or
+                    (study.truncated and "Recorded results were truncated" or "Study has unresolved coverage gaps"))
             end
         end
         active=d.activeStudy and d.studies[d.activeStudy]
@@ -170,14 +172,20 @@ local function diff(before,after)
 end
 function LL:SnapshotCraftBags()
     if not C_Container or not C_Container.GetContainerNumSlots or not C_Container.GetContainerItemInfo then return nil end
-    local out={counts={},facts={},variants={}}
+    local out={counts={},facts={},variants={},variantCounts={},variantFacts={}}
     for bag=0,5 do for slot=1,(C_Container.GetContainerNumSlots(bag) or 0) do
         local i=C_Container.GetContainerItemInfo(bag,slot)
         if i and integer(i.itemID) and integer(i.stackCount or 1) then
             local id=i.itemID;out.counts[id]=(out.counts[id] or 0)+(i.stackCount or 1)
             local link=i.hyperlink or ("item:"..id)
             out.variants[id]=out.variants[id] or {};out.variants[id][link]=true
-            if not out.facts[id] then out.facts[id]=self.GetItemFacts and self:GetItemFacts(link,{count=i.stackCount or 1}) or {id=id,link=link} end
+            out.variantCounts[id]=out.variantCounts[id] or {}
+            out.variantCounts[id][link]=(out.variantCounts[id][link] or 0)+(i.stackCount or 1)
+            out.variantFacts[id]=out.variantFacts[id] or {}
+            if not out.variantFacts[id][link] then
+                out.variantFacts[id][link]=self.GetItemFacts and self:GetItemFacts(link,{count=i.stackCount or 1}) or {id=id,link=link}
+            end
+            if not out.facts[id] then out.facts[id]=out.variantFacts[id][link] end
         end
     end end
     return out
@@ -185,6 +193,30 @@ end
 local function call(fn,...)
     if type(fn)~="function" then return nil end
     local ok,v=pcall(fn,...);return ok and v or nil
+end
+-- Read the actual loot before autoloot clears the window. Repeated READY / OPENED
+-- events describe the same slots, not extra casts. Bag deltas must still agree.
+function LL:CaptureResearchLoot()
+    local p=pending
+    if not p or p.method~="Disenchant" then return end
+    if p.lootClosed then p.interference="Multiple loot windows during capture";return end
+    local n=call(GetNumLootItems)
+    if not integer(n) or type(GetLootSlotInfo)~="function" or type(GetLootSlotLink)~="function" then return end
+    p.lootSlots=p.lootSlots or {}
+    for slot=1,n do
+        local ok,_,_,quantity=pcall(GetLootSlotInfo,slot)
+        local link=call(GetLootSlotLink,slot)
+        if ok and not secret(link) and type(link)=="string" and not secret(quantity) and integer(quantity) then
+            local id=tonumber(link:match("item:(%d+)"))
+            if integer(id) then
+                local previous=p.lootSlots[slot]
+                if previous and (previous.itemID~=id or previous.quantity~=quantity) then
+                    p.interference="Loot slot changed during capture";return
+                end
+                p.lootSlots[slot]={itemID=id,quantity=quantity,hyperlink=link}
+            end
+        end
+    end
 end
 local function describe(self,recipe)
     local operations=self.ResearchProcessingRecipeOperations and self:ResearchProcessingRecipeOperations(recipe)
@@ -353,11 +385,39 @@ local function validateDelta(self,p,after)
     if #inputs==0 then return nil,"Inputs have not settled" end
     for _,item in ipairs(inputs) do
         local n=0 for _ in pairs(p.before.variants[item.itemID] or {}) do n=n+1 end
-        if n>1 then return nil,"Input item variants are ambiguous" end
+        if n>1 then
+            -- Multiple copies in bags are normal. Select the variant whose count
+            -- fell, rather than borrowing metadata from the first bag slot.
+            local before=p.before.variantCounts and p.before.variantCounts[item.itemID]
+            local later=after.variantCounts and after.variantCounts[item.itemID]
+            local chosen,consumed
+            if p.method=="Disenchant" and before and later then
+                for link,count in pairs(before) do
+                    local delta=count-(later[link] or 0)
+                    if delta>0 then
+                        if chosen then return nil,"Input item variants are ambiguous" end
+                        chosen,consumed=link,delta
+                    elseif delta<0 then return nil,"Input item variants are ambiguous" end
+                end
+                for link,count in pairs(later) do
+                    if count>(before[link] or 0) then return nil,"Input item variants are ambiguous" end
+                end
+            end
+            local f=chosen and p.before.variantFacts and p.before.variantFacts[item.itemID]
+                and p.before.variantFacts[item.itemID][chosen]
+            if consumed~=1 or not f then return nil,"Input item variants are ambiguous" end
+            p.disenchantInputFacts=f
+            inputs=itemVector(removed,{[item.itemID]=f})
+        end
     end
     if p.method=="Disenchant" then
-        local f=p.before.facts[inputs[1].itemID]
-        if next(returned) or #inputs~=1 or inputs[1].quantity~=1 or not self.EligibleDisenchant or not self:EligibleDisenchant(f) then return nil,"Unverified disenchant input" end
+        local f=p.disenchantInputFacts or p.before.facts[inputs[1].itemID]
+        -- A successful player cast plus one consumed gear item is evidence of
+        -- eligibility. Valuation exclusions (ignore list, old DB restrictions,
+        -- missing equipLoc) must not veto something the game just disenchanted.
+        if next(returned) or #inputs~=1 or inputs[1].quantity~=1 or not f
+            or (f.classID~=2 and f.classID~=4) then return nil,"Unverified disenchant input" end
+        p.disenchantInputFacts=f
     elseif p.method=="Mill" or p.method=="Prospect" then
         local f=p.before.facts[inputs[1].itemID]
         if not f then return nil,"Input metadata unavailable" end
@@ -398,6 +458,11 @@ local function validateDelta(self,p,after)
     if #p.results>0 then
         for id,n in pairs(added) do if resultCounts[id]~=n then return nil,"Craft result/bag delta mismatch" end end
         for id,n in pairs(resultCounts) do if added[id]~=n then return nil,"Craft result/bag delta mismatch" end end
+    elseif p.method=="Disenchant" and p.lootSlots and next(p.lootSlots) then
+        local loot={}
+        for _,slot in pairs(p.lootSlots) do loot[slot.itemID]=(loot[slot.itemID] or 0)+slot.quantity end
+        for id,n in pairs(added) do if loot[id]~=n then return nil,"Loot result/bag delta mismatch" end end
+        for id,n in pairs(loot) do if added[id]~=n then return nil,"Loot result/bag delta mismatch" end end
     else
         -- Stochastic loot must be a mapped possible output. Unknown materials
         -- remain a research diagnostic, never contaminate a priced baseline.
@@ -417,7 +482,13 @@ local function validateDelta(self,p,after)
         -- Accept only already catalogued DE materials from the same expansion,
         -- never arbitrary bag gains or results from another expansion.
         if p.method=='Disenchant' and p.lootClosed then
-            local expansion=p.before.facts[input].expansionID
+            local expansion=p.disenchantInputFacts.expansionID
+            -- Compatibility when the client/addon missed the loot snapshot:
+            -- identity candidates do not claim a yield or a rarity restriction.
+            local family=self.DisenchantTables and self.DisenchantTables[expansion]
+            for _,tier in pairs(family and family.quality or {}) do
+                for _,id in ipairs(tier.candidates or {}) do allowed[id]=true end
+            end
             for _,r in ipairs(self.ItemDB and self.ItemDB.processing or {}) do
                 if r.method=='Disenchant' and r.expansionID==expansion then
                     for _,m in ipairs(r.materials) do
@@ -439,7 +510,9 @@ local function diagnostic(self,p,reason)
     local removed,added={},{}
     if after and p.before then removed,added=diff(p.before,after) end
     d.diagnostics[#d.diagnostics+1]={operationID=p.guid,recipeID=p.recipe,method=p.method,reason=reason,at=stamp(),
+        studyID=d.activeStudy,startedAt=p.startedAt,endedAt=stamp(),successful=p.success==true,
         context=copy(p.context),netInputs=itemVector(removed,p.before and p.before.facts),
+        lootSlots=copy(p.lootSlots),
         observedOutputs=itemVector(added,after and after.facts),resultMetadata=copy(p.results),outputCoverage="unknown"}
     if #d.diagnostics>50 then table.remove(d.diagnostics,1) end
     -- A successful but unattributed operation invalidates this study's sampling
@@ -447,6 +520,12 @@ local function diagnostic(self,p,reason)
     if p.success or p.uncertainCompletion then
         local study=d.activeStudy or self:StartCraftStudy()
         d.studies[study].censored=true
+        d.studies[study].coverageReason=d.studies[study].coverageReason or reason
+        d.studies[study].coverageOperationID=d.studies[study].coverageOperationID or p.guid
+        if not d.studies[study].coverageNotified then
+            d.studies[study].coverageNotified=true
+            if print then print("|cff66ccffLoot Liquidator|r: Batch needs review: "..tostring(reason)..". Results are saved; see Processing Research > Recording status.") end
+        end
     end
 end
 function LL:AbandonCraftCapture(reason)
@@ -467,11 +546,11 @@ function LL:FinishCraftCapture(final)
         build=build(),gameMode="RETAIL",context=p.context,inputs=result.inputs,outputs=result.outputs,
         nominalInputs=p.nominalInputs,outputCoverage=complete and "complete" or "unresolved",startedAt=p.startedAt,endedAt=stamp(),
         durationSeconds=clock()-p.started,attribution=p.lootClosed and "cast-loot-bag" or "cast-result-bag",
-        resultMetadata=copy(p.results),allocation=p.request and p.request.allocation,
+        resultMetadata=copy(p.results),lootSlots=copy(p.lootSlots),captureVersion=2,allocation=p.request and p.request.allocation,
         allocationItemGUID=p.request and p.request.allocationItemGUID,
         applyConcentration=p.request and p.request.concentration,zeroReason=not complete and "No authoritative empty-result signal" or nil}
     if p.method=='Disenchant' and result.inputs[1] then
-        local facts=p.before.facts[result.inputs[1].itemID]
+        local facts=p.disenchantInputFacts or p.before.facts[result.inputs[1].itemID]
         record.context=self:CaptureCraftContext(p.recipe,facts,p.method,nil,nil)
     end
     local ok,saved=self:RecordCraftObservation(record)
@@ -797,6 +876,20 @@ function LL:CraftRecordingReport()
     return ("Craft research: %d complete, %d unresolved, %d evicted.\nExports are provisional observations, not verified mechanics.\n/ll debug craftexport [page]; /ll debug craftbaseline; /ll debug craftstudy LABEL; /ll debug craftzero\n%s"):
         format(complete,unresolved,d.droppedRecords,pending and "One cast awaits settled results." or "No pending cast.")
 end
+function LL:RecordingStatus()
+    local id,study=self:ActiveRecordingBatch()
+    local d=self.db and self.db.craftResearch or {records={}}
+    local complete,unresolved=0,0
+    for _,r in ipairs(d.records) do
+        if r.studyID==id then
+            if r.outputCoverage=="complete" then complete=complete+1 else unresolved=unresolved+1 end
+        end
+    end
+    local state=not study and "No active batch" or study.censored and
+        ("Needs review: "..tostring(study.coverageReason or "Earlier recorder reported a coverage gap")) or
+        study.truncated and "Needs review: retained results were truncated" or "Recording"
+    return ("%s\nCurrent batch: %d complete, %d unresolved.\nResults stay saved for export. Complete uncensored batches can be staged for shared database review."):format(state,complete,unresolved)
+end
 local schedule
 schedule=function()
     local p=pending
@@ -811,7 +904,7 @@ schedule=function()
 end
 local frame=CreateFrame("Frame")
 for _,event in ipairs({"UNIT_SPELLCAST_SENT","UNIT_SPELLCAST_START","UNIT_SPELLCAST_SUCCEEDED","UNIT_SPELLCAST_FAILED",
-    "UNIT_SPELLCAST_INTERRUPTED","LOOT_CLOSED","BAG_UPDATE_DELAYED","TRADE_SKILL_ITEM_CRAFTED_RESULT",
+    "UNIT_SPELLCAST_INTERRUPTED","LOOT_READY","LOOT_OPENED","LOOT_CLOSED","BAG_UPDATE_DELAYED","TRADE_SKILL_ITEM_CRAFTED_RESULT",
     "TRADE_SHOW","MERCHANT_SHOW","MAIL_SHOW","BANKFRAME_OPENED","PLAYER_LOGOUT"}) do frame:RegisterEvent(event) end
 frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
     if pending and not enabled(LL,pending.method) then
@@ -852,6 +945,7 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
         if not pending.resultKeys[key] then pending.resultKeys[key]=fingerprint;pending.results[#pending.results+1]=r end
         schedule();return
     end
+    if event=="LOOT_READY" or event=="LOOT_OPENED" then LL:CaptureResearchLoot();return end
     if event=="LOOT_CLOSED" or event=="BAG_UPDATE_DELAYED" then
         if pending then pending.lastChange=clock();if event=="LOOT_CLOSED" then pending.lootClosed=true end;schedule() end;return
     end

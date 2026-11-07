@@ -470,6 +470,19 @@ for index,r in ipairs(tokenCandidates) do
 end
 table.sort(db.tokenRewards,function(a,b) return a.recordID<b.recordID end)
 for _,r in ipairs(additions.processing or {}) do db.processing[#db.processing+1]=r end
+-- Direct captured output identities survive study-level denominator gaps.
+-- This adapter carries no numerical rates, bounds, confidence or mechanics.
+local captures=assert(loadfile('database/capture-observations.lua'))()
+assert(captures.schemaVersion==1 and type(captures.processing)=='table','Unsupported capture observations')
+for _,r in ipairs(captures.processing) do
+    assert(r.observationOnly==true and r.sourceKey=='itemdb' and r.sourceKind=='direct-player-cast-observation')
+    for _,m in ipairs(r.materials) do
+        for _,key in ipairs({'expectedQuantity','dropChance','minQuantity','maxQuantity'}) do
+            assert(m[key].value==nil and m[key].status=='unknown','Capture identity must not imply a yield rate')
+        end
+    end
+    db.processing[#db.processing+1]=r
+end
 for _,r in ipairs(additions.mechanicRules or {}) do
     assert(r.applyPolicy=='EXECUTE' and type(r.sourceClaimIDs)=='table' and #r.sourceClaimIDs>0,
         'Mechanics need applyPolicy EXECUTE and at least one source')

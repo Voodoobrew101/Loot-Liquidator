@@ -138,7 +138,8 @@ function LL:RefreshResearchSkillLines()
     for id,detail in pairs(char.details or {}) do
         local ok,info=pcall(api,tonumber(id) or id)
         if ok and type(info)=="table" and type(info.skillLevel)=="number"
-            and info.skillLevel>=0 then
+            and info.skillLevel>=0 and type(info.maxSkillLevel)=="number"
+            and info.maxSkillLevel>0 then
             detail.skill=info.skillLevel
             detail.maxSkill=info.maxSkillLevel or detail.maxSkill
             detail.skillModifier=type(info.skillModifier)=='number' and info.skillModifier or nil
@@ -246,15 +247,28 @@ function LL:CaptureCraftContext(recipeID,f,method,allocation,applyConcentration,
     local ui=C_TradeSkillUI
     local info=OwnTradeSkillWindow() and read(ui and ui.GetProfessionInfoByRecipeID,recipeID)
     if method=='Disenchant' and f and f.expansionID~=nil then
+        -- The generic Disenchant spell describes parent Enchanting, not the
+        -- input's expansion. Never label parent skill as expansion skill.
+        info=nil
         self:RefreshResearchSkillLines()
         local char=self.db and self.db.characters and self.db.characters[self:CharacterKey()]
+        local catalog=self.ProfessionCatalog and self.ProfessionCatalog['Enchanting:'..f.expansionID]
+        local expectedLine=catalog and catalog.lineID
         for id,detail in pairs(char and char.details or {}) do
             if detail.parentName=='Enchanting' and self:ProfessionDetailMatchesExpansion(detail,f.expansionID) then
-                info=read(ui and ui.GetProfessionInfoBySkillLineID,tonumber(id))
-                if not info then info={professionID=tonumber(id),parentProfessionID=333,parentProfessionName='Enchanting',
-                    expansionName=self:ProfessionExpansionName(f.expansionID),skillLevel=detail.skill,
-                    skillModifier=detail.skillModifier,maxSkillLevel=detail.maxSkill} end
+                expectedLine=tonumber(id)
                 break
+            end
+        end
+        if expectedLine then
+            local live=OwnTradeSkillWindow() and read(ui and ui.GetProfessionInfoBySkillLineID,expectedLine)
+            if live and live.professionID==expectedLine and type(live.maxSkillLevel)=='number' and live.maxSkillLevel>0 then
+                info=live
+            else
+                -- Known line identity / spec are useful even when live skill is
+                -- unavailable. Cached skill and API 0/0 placeholders stay unknown.
+                info={professionID=expectedLine,parentProfessionID=333,parentProfessionName='Enchanting',
+                    expansionName=self:ProfessionExpansionName(f.expansionID)}
             end
         end
     end

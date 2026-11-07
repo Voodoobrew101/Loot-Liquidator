@@ -34,6 +34,7 @@ jobs:
           # Do not fetch or refresh research during distribution builds.
           python3 tools/research_v3_to_baselines.py
           python3 tools/evidence_to_baselines.py
+          python3 tools/capture_observations.py
           lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua
       - name: Run all addon validation
         run: bash tests/run.sh
