@@ -1,52 +1,42 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-07T15:18:57.097Z",
-  "status": "research-only: two new guide-backed rare armor candidate IDs plus one numeric equipment/spec mechanics reference; no new original DE/prospect/mill cohort or measured yield denominator",
+  "updated_at": "2026-11-07T16:12:59.351Z",
+  "status": "research-only: one new source-attributed rare gear disenchant positive-yield range 1–2, no verified cast cohort or zero-inclusive histogram",
   "task_ids": [
     "T0026",
-    "T0005",
+    "T0049",
     "T0039",
-    "T0003",
-    "T0001",
-    "T0002",
+    "T0005",
+    "T0045",
     "T0034"
   ],
   "exact_gaps_targeted": [
-    "242? not applicable: 244586 Smuggler's Leather Wristbands and 237923 Blood-Tempered Bracers — verify live bonus/ilvl, DE eligibility, ranks, exact output IDs, casts/hits/histograms",
-    "272246 Miststalker's Wristbands — in-game itemLink scaled actual ilvl305 vs generic catalog ilvl206, and DE eligibility, no cast logs",
-    "237362/237363 Umbral Tin R1/R2 prospect Eversong Diamond 242608 ranks, unlock, actual completed-cast/zero-inclusive histograms",
-    "Midnight rare/epic/uncommon disenchant: numeric yield stratification by skill (including rare rod/accessories +40) and 30-point specialization per rarity",
-    "237359 Refulgent Copper and 237364/237365 Brilliant Silver per-rank prospect outputs; 236761/236770/236776/236778 milling per-cast data"
+    "244751 Evercore Zoomshroud rare cloth head: Wowhead commenter indicates 1–2 Radiant Shards; same comment syndicated across multiple goggles; existing WoWDB generic noDisenchant evidence conflicts; actual scaled itemLink, client eligibility, output rank IDs 243602/243603 and cast-time conditions unknown",
+    "272246 Miststalker's Wristbands: catalog ilvl206 versus scaled ilvl305+; live game DE eligibility and 140-Looter operation source lineage unresolved",
+    "237362/237363 Umbral Tin Ore: known 800 completed prospects family totals but no material-specific hit counts, output quality IDs, conditional Eversong Diamond 242608 unlock state or per-cast histograms",
+    "237359/237361 Refulgent Copper, 237364/237365 Brilliant Silver: rank-specific completed-cast yield/hit data still missing",
+    "Midnight milling 236761 and other 10-herb input species: per-cast 0/1/2 histograms, skill/spec, refund handling still absent",
+    "Prospecting Multicraft M11: Oct 3 2026 first-person community correction explicitly says Multicraft does not affect prospecting; existing guide-based prohibition needs Master review"
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "reference_identity",
+      "kind": "source_attributed_positive_yield_range_reference",
       "method": "Disenchant",
-      "inputItemID": 244586,
-      "inputName": "Smuggler's Leather Wristbands",
+      "sourceItemID": 244751,
+      "inputName": "Evercore Zoomshroud",
+      "sourceItemLevelVariants": [
+        44,
+        165
+      ],
       "outputFamily": "Radiant Shard",
-      "source": "https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds",
-      "measured": false
-    },
-    {
-      "kind": "reference_identity",
-      "method": "Disenchant",
-      "inputItemID": 237923,
-      "inputName": "Blood-Tempered Bracers",
-      "outputFamily": "Radiant Shard",
-      "source": "https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds",
-      "measured": false
-    },
-    {
-      "kind": "source_attributed_mechanics",
-      "method": "Disenchant",
-      "rareToolTotalSkill": 40,
-      "rodSkillEachRareOrEpic": 18,
-      "rootSpecPoints": 30,
-      "perRarityBranchPoints": 30,
-      "materialDropProbability": null,
-      "source": "https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds",
-      "measured": false
+      "outputItemID": null,
+      "outputRank": null,
+      "minSeen": 1,
+      "maxSeen": 2,
+      "reportedCasts": null,
+      "sourceKind": "reference",
+      "note": "Single syndicated Grimmella comment, not per-item raw cast sample. Source's 1–2 is positive outcome range; does not prove fixed yield or absence of zeros.",
+      "source": "https://www.wowhead.com/item=244751/evercore-zoomshroud"
     }
   ],
   "numeric_fields_advanced": {
@@ -54,39 +44,41 @@
     "new_measured_castsWithDrop": 0,
     "new_measured_totalQuantity": 0,
     "new_zero_inclusive_histograms": 0,
-    "new_exact_inputIDs": [
-      244586,
-      237923
+    "new_source_stated_positive_yield_range": {
+      "inputItemID": 244751,
+      "outputFamily": "Radiant Shard",
+      "minSeen": 1,
+      "maxSeen": 2,
+      "casts": null
+    },
+    "new_exact_source_page_inputIDs": [
+      244751
     ],
-    "new_mechanics_guide_stated_skillBonusTotal": 40,
-    "new_mechanics_guide_stated_rodBonus": 18,
-    "new_mechanics_guide_stated_rootAndSubtreePoints": 30
+    "verified_outputItemIDs": [],
+    "confirmed_cast_time_ilvl": null
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-07T1518-new-rare-armor-identities-and-skill-context.jsonl"
+    "research/v3/evidence/midnight/2026-11-07T1612-evercore-rare-shard-yield-identity-hold.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-20261107-1518-001",
-    "midnight-20261107-1518-002",
-    "midnight-20261107-1518-003"
+    "midnight-20261107-1612-001"
   ],
   "source_links": [
-    "https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds",
-    "https://www.wowhead.com/item=244586",
-    "https://www.wowhead.com/item=237923"
+    "https://www.wowhead.com/item=244751/evercore-zoomshroud",
+    "https://www.wowdb.com/items/244751-evercore-zoomshroud",
+    "https://www.reddit.com/r/woweconomy/comments/1wwd0w0/should_i_use_my_1_time_swap_for_jc_to_go_from_gem/"
   ],
   "verified_commit_sha": null,
-  "verified_commit_sha_scope": "Both files are written by one new commit; its SHA cannot be embedded inside its own content. Verify externally against branch head and exact files after commit.",
-  "base_commit_sha_verified": "53b13c5730a9784d502c5e166626931f2a6cc2e7",
-  "commit_readback": "Pending external post-push verification: GitHub branch head, single commit file list and exact evidence/status file contents must match.",
+  "verified_commit_sha_scope": "One-commit constraint means the SHA of this commit cannot be embedded in a file inside itself; externally verify this commit and both files from the branch head.",
+  "base_commit_sha_verified": "e5e35759f230d6e1441474ba2356e5b611d3f3b2",
+  "commit_readback": "Pending post-commit external branch-head and two-file content read-back; verified SHA reported by run history, not self-embedded.",
   "blockers": [
-    "No new original current-build Midnight processing event log was found in available original Reddit discussions: all precise completed-cast denominators, output itemLinks/ranks, zero-inclusive material histograms, specialization unlock and saved-ore reprocessing remain unknown.",
-    "Reddit author with 200 'ore mined' did not state processed ore or ore type; reported 9 gems and 1–2 diamonds cannot support estimator probability, a source-linked Eversong Diamond ID or verified completed casts.",
-    "99 skill vs 100+40 / 140 may reflect base versus effective displayed skill and KP/equipment context; do not call them conflicting measured thresholds without same recipe difficulty/ore rank and client test.",
-    "Generic profession tool equip-state report does not establish actual prospecting/milling/de yield effect or game-wide recurrence; keep separate from player-client measured results.",
-    "Guide-backed rare armor 244586/237923 contains no original DE cast counts or rank-linked outcomes; exact scaled itemLink and in-game test needed before actionable odds.",
-    "Current original source hunt found no new independent completed-cast DE, prospect or milling dataset; known MikiMM 1000 Courtly Wrists, Cardinalai, Draggoth, Honeybone and Looter tables deduped and NOT reimported.",
-    "Guide mechanics +40 skill/+18 rod/30+30 subtree are reference-only and not quantitative yield changes. Master must approve any modeling or mechanics-file change."
+    "No new independent original Midnight completed-cast DE, prospect or milling logger export identified; do not convert reference min/max to empirical frequency, mean, or unconditional EV.",
+    "Evercore goggles same Grimmella comment reused on multiple item pages; cannot treat as independent data for 244751/244753/244754. Exact Radiant Shard rank and output item ID are unknown.",
+    "244751 source-attributed 1–2-shard disenchant statement conflicts with WoWDB generic cannot-disenchant flag; original cast-time itemLink/bonus and actual current-game eligibility must be confirmed.",
+    "No denominator, hit count, all-output zero count, skill/spec or original 272246 ilvl305 DE log; Looter snapshots remain research-only.",
+    "Umbral Tin 237362 rank-specific output item IDs and conditional Eversong Diamond unlock-adjusted occurrence/histograms remain missing; Cardinalai 800-cast totals must not be duplicated.",
+    "Oct 3 2026 r/woweconomy statement that prospecting cannot Multicraft corroborates guide prohibition; request M11 review by Master, not a worker mechanics edit."
   ],
   "exhausted_sources": [
     "Do not re-import Cardinalai June10 800-cast Umbral Tin/Brilliant Silver pooled studies or Honeybone Apr19/22 Refulgent Copper; earlier studies already recorded.",
@@ -136,7 +128,8 @@
     "2026-11-07T12:24Z: deduped 146 prior Midnight evidence files against candidate raid/season2 gear; excluded 249960,250036,250034,249961,249956,249959,249962,250003,250006,260377,249955 and earlier Cardinalai/Honeybone/Draggoth/272246 source repeats. Only 249957 previously unlogged PTR source rows recorded; no new verified original per-cast cohort in Reddit, item-name WoWhead, wow-professions/Method or Blizzard forum search.",
     "2026-11-07T13:18:05.143Z: new 271563/271562 Wowhead LIVE variant tables and WoWDB generic noDE catalog checked once; 271562 alternate 5/3/1 table not imported as a second cohort. Name-based search for original raw ilvl305 272246, ranked Umbral Tin, copper/silver and Tranquility Bloom logged histograms found only preexisting Cardinalai/Honeybone/Draggoth/5294 and older Looter data. Do not reimport without itemLink/actual cast logs.",
     "2026-11-07 independent Reddit rank-quality/gear-stat leads checked: 1ro5vay (Manthieus, SeniorEmployment932, PublicRepulsive1721), 1s1dtuh (NocD visible 99 skill, OldWolf2 rough 200-ore), 1t95kjs (maqisha equip-state); do not revisit unless original full cast exports, exact itemLinks/bonus, or controlled skill thresholds emerge. No previously known NocD image, Cardinalai/Honeybone/Draggoth or Wowhead Looter tables imported.",
-    "2026-11-07T15:18:57.097Z: Targeted original data searches across Wowhead item pages (including Courtly Wrists MikiMM 1,000 DE — already in 2026-11-02T1105 evidence), WoW-Professions, Reddit 1rke21a/1si9t1g/1rteoqr, Blizzard discussion and Warcraft Wiki. No new independent original item-level-specific disenchant cohort or rank-separated per-cast prospect/mill histogram. Reddit 2000-shard Radiant Shatter is a distinct process with no schema-safe Disenchant mapping; do not import as Disenchant. New source-backed candidate IDs 244586/237923 and disenchant skill/spec structure retained as references, not numerical estimator samples."
+    "2026-11-07T15:18:57.097Z: Targeted original data searches across Wowhead item pages (including Courtly Wrists MikiMM 1,000 DE — already in 2026-11-02T1105 evidence), WoW-Professions, Reddit 1rke21a/1si9t1g/1rteoqr, Blizzard discussion and Warcraft Wiki. No new independent original item-level-specific disenchant cohort or rank-separated per-cast prospect/mill histogram. Reddit 2000-shard Radiant Shatter is a distinct process with no schema-safe Disenchant mapping; do not import as Disenchant. New source-backed candidate IDs 244586/237923 and disenchant skill/spec structure retained as references, not numerical estimator samples.",
+    "2026-11-07T16:12:59.351Z: Name-based searches for Midnight DE distributions and ore/milling casts only surfaced previously recorded Cardinalai, Honeybone, Draggoth, MikiMM and Looter references; intentionally not reimported. Newly located Grimmella Evercore 1–2-shard comment is posted verbatim on 244751, 244753 and 244754; logged once as reference only (no sample size). Oct 3 Reddit 1wwd0w0 is a separate mechanics lead, not a cast dataset."
   ],
   "decisions_needed": [
     {
@@ -172,7 +165,7 @@
       "decision": "Confirm whether new guide-only disenchantable blue armor IDs 244586/237923 may be sampled for in-game material breakdown; do not promote to measured drop rate or definite generic eligibility before live client bonus/ilvl check. Mechanics guide asserts +40 skill from rare tool set (+18 rod) and 30-point root + matching 30-point rarity subtree; assess through existing M12/M13 without worker edits."
     }
   ],
-  "next_concrete_step": "Seek one ORIGINAL in-game DE event export for 244586 or 237923 with exact itemLink/ilvl, rarity, equipped +40-skill tool config and 30/30 Shard Supplier allocation; log individual casts and per-rank shard itemIDs/hits/quantity/zeros. Still prioritize scaled 272246 ilvl305 eligibility and 237362 rank-specific prospect with 242608 diamond unlock verified against actual 5-ore completed casts.",
+  "next_concrete_step": "Get an actual current-build in-game Disenchant of Evercore Zoomshroud 244751 with full itemLink/bonus/ilvl and raw output itemLink/quantity/skill/spec to resolve WoWDB noDE conflict and rank of observed 1–2 Radiant Shards; concurrently seek unlogged 272246 scaled DE and 237362 per-output cast histograms.",
   "production_merge": false,
   "release": false,
   "notifications": "on-demand only"
