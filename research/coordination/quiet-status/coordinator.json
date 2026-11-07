@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T07:03:27.486Z",
+  "updated_at": "2026-11-07T08:08:44.738Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Cross-source Magma Thresher (199344) fish-to-Dragon Isles Prospecting eligibility corroborated and 13 old source totals normalized per nominal fish only. No new cohorts, completed cast denominators, output-rank IDs or tested gold actions.",
+  "status": "ReagentMaker 2015 Enchantrix-derived prospecting table: verified legacy input/output catalog IDs and five-ore recipe, discovered ambiguous third-column units (byproduct coefficients >1). Source-only hold; 0 measured cohorts or validated gold actions.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -40,7 +40,10 @@
     "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107",
     "COORD-RECYCLING-TORM-CATALOG-LINKS-20261107",
     "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
-    "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107"
+    "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
+    "T0044",
+    "T0051",
+    "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -814,6 +817,83 @@
         "2026 Retail client behavior"
       ],
       "read_only_addon": true
+    },
+    {
+      "task_id": "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107",
+      "kind": "legacy_2015_enchantrix_derived_reference_identity_and_coefficient_unit_guard",
+      "source_url": "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
+      "source_revision": "42baf007f3c7",
+      "author": "contrebasse",
+      "published": "2015-07-30",
+      "source_flavor": "historical Retail-era addon reference; not current 2026 Retail evidence",
+      "original_provenance": "ProspectingData.lua explicitly credits Enchantrix; not an independent observed study or new sample",
+      "documented_source_shape": "[outputItemID] -> {inputOreItemID, 5 nominal ore per prospect, third numeric coefficient}; comment calls third column chanceToHaveOne but several values exceed 1",
+      "original_numeric_examples": [
+        {
+          "input_item_id": 23424,
+          "input_name": "Fel Iron Ore",
+          "output_item_id": 23077,
+          "output_name": "Blood Garnet",
+          "source_coefficient": 0.19,
+          "nominal_input_per_operation": 5
+        },
+        {
+          "input_item_id": 23425,
+          "input_name": "Adamantite Ore",
+          "output_item_id": 23436,
+          "output_name": "Living Ruby",
+          "source_coefficient": 0.03,
+          "nominal_input_per_operation": 5
+        },
+        {
+          "input_item_id": 36909,
+          "input_name": "Cobalt Ore",
+          "output_item_id": 36923,
+          "output_name": "Chalcedony",
+          "source_coefficient": 0.25,
+          "nominal_input_per_operation": 5
+        },
+        {
+          "input_item_id": 36909,
+          "input_name": "Cobalt Ore",
+          "output_item_id": 36927,
+          "output_name": "Twilight Opal",
+          "source_coefficient": 0.013,
+          "nominal_input_per_operation": 5
+        },
+        {
+          "input_item_id": 52183,
+          "input_name": "Pyrite Ore",
+          "output_item_id": 52327,
+          "output_name": "Volatile Earth",
+          "source_coefficient": 2,
+          "nominal_input_per_operation": 5
+        },
+        {
+          "input_item_id": 72092,
+          "input_name": "Ghost Iron Ore",
+          "output_item_id": 90407,
+          "output_name": "Sparkling Shard",
+          "source_coefficient": 1.14,
+          "nominal_input_per_operation": 5
+        },
+        {
+          "input_item_id": 72093,
+          "input_name": "Kyparite",
+          "output_item_id": 90407,
+          "output_name": "Sparkling Shard",
+          "source_coefficient": 1.46,
+          "nominal_input_per_operation": 5
+        }
+      ],
+      "verified_fields": "Exact historical source-listed ore IDs, output IDs, 5-ore nominal operation and authored coefficients. Coefficient unit not established across byproducts; above-one values cannot be P(hit).",
+      "admission": "HOLD as source-only historical reference pending overlap, provenance and unit resolution; source value != independent measured chance, hit count, unconditional expected quantity or current Retail eligibility",
+      "overlap": "ReagentMaker MillingData.lua is separately cataloged as an authored reference in research/v3/migration/reports/M04-extraction.md; repository default-branch code search did not surface ProspectingData.lua. Full research/reference-source duplication audit has not been performed.",
+      "not_mop_classic_illustration": true,
+      "new_observed_casts": 0,
+      "new_measured_cohorts": 0,
+      "new_supported_gold_decisions": 0,
+      "runtime_or_client_validation": false
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -2514,15 +2594,27 @@
         "https://tradeskillmaster.com/retail/us/items/199344",
         "https://www.reddit.com/r/woweconomy/comments/109yr4s"
       ]
+    },
+    {
+      "task_id": "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107",
+      "kind": "historical_source_reference_fields_not_observed_casts",
+      "source_revision": "42baf007f3c7",
+      "source_url": "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
+      "verified_input_output_pairs": 7,
+      "verified_recipe_nominal_input_units": 5,
+      "source_coefficient_ambiguous": true,
+      "observed_casts": 0,
+      "measured_cohorts": 0,
+      "actual_engine_price_checks": 0
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": "2026-11-07T06:54:26.358Z",
-    "dragonflight": "2026-11-07T06:29:56.719Z",
-    "war_within": "2026-11-07T06:21:24.691Z",
-    "midnight": "2026-11-07T06:13:00.939Z"
+    "legacy": "2026-11-07T07:50:52.282Z",
+    "dragonflight": "2026-11-07T07:37:59.436Z",
+    "war_within": "2026-11-07T07:22:43.250Z",
+    "midnight": "2026-11-07T07:12:12.219Z"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
@@ -2655,11 +2747,13 @@
     "https://goldcap.gg/retail/us/items/244608",
     "https://warcraft.wiki.gg/wiki/Primal_Spore_Binding",
     "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://tradeskillmaster.com/retail/us/items/199344"
+    "https://tradeskillmaster.com/retail/us/items/199344",
+    "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/v3/migration/reports/M04-extraction.md"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "4692b1dc19319ed55466e300de40334bb426b78a",
+    "research": "27b66638ed26b5d22fc382d5a97dd29bada43505",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "research_integration": "aca72a4de9b8c2a6a1f8ce65c22f19a5c06ed8cd"
   },
@@ -2693,7 +2787,8 @@
     {
       "task_id": "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
       "blocker": "No confirmed completed-fish operations, refunds/zero counts or quality-item links in the original 500-fish study; game-client spell eligibility not tested. Wiki/TSM/Wowhead descriptions do not by themselves validate actual game behavior. No source-to-tooltip simulation run."
-    }
+    },
+    "ReagentMaker ProspectingData.lua is a 2015 Enchantrix-derived authored reference. The third column is labeled chanceToHaveOne yet includes Volatile Earth=2 and Sparkling Shard=1.14/1.46/1.65, which are impossible per-operation hit probabilities. Source documentation does not prove which rows are occurrence chances versus expected multiunits. Compare upstream Enchantrix, reference tables, and current eligibility before admitting or pricing any source coefficient."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -2717,7 +2812,8 @@
     "CarolusRex2333 source comment on LIVE 253849 independently reopened and its two quoted ratios audited once (2026-11-06); do not re-scan identical numeric text unless original event logs/item links/patch or correction emerges.",
     "2017 IcyVeins 35,890-ore/1,135-gem secondary aggregate traced to primary Reddit posts 6ywwdq,6xa92j,6ydssd,6ygegx; do not recollect aggregate as an independent source or misread 19.20% gem composition as P(hit). Further work requires archived-cohort dedupe or original event ledgers, not repeating the guide.",
     "Checked original Teishoku Feb27 table, Method Mar05 list, Wowhead player-linked eligible-item list, and 13 Missive links; these have no new cast-level output logs or source-specific ranks. Do not re-search them for numerical histograms without new context.",
-    "Magma Thresher 199344: reviewed existing original 2023 Reddit output table, Retail TSM catalog item, Wowhead item description and Warcraft Wiki reagent-for table; no independent recent cast histogram, refundable-input evidence or linked rank output IDs in those pages. Do not revisit as novel numeric study."
+    "Magma Thresher 199344: reviewed existing original 2023 Reddit output table, Retail TSM catalog item, Wowhead item description and Warcraft Wiki reagent-for table; no independent recent cast histogram, refundable-input evidence or linked rank output IDs in those pages. Do not revisit as novel numeric study.",
+    "Checked 2015 ReagentMaker ProspectingData.lua @42baf007f3c7, verified nominal five-ore inputs, item IDs and above-one byproduct coefficients. It explicitly credits Enchantrix. Do not recollect this as independent experimental cohorts or multiply it into existing TSM/legacy sources. Further work needs upstream provenance/units rather than rereading the same file."
   ],
   "decisions_needed": [
     {
@@ -2743,7 +2839,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Research-only handoff to the protected integration owner: add Magma Thresher 199344 to the fish/prospect eligibility review (Wiki explicitly lists Dragon Isles Prospecting even though TSM categories say Cooking), and test source-to-engine/tooltip synthetic-price behavior on their branch. Obtain original linked R2 gem IDs, actual 5-fish operations and refunds before pricing 500-fish ratios as E per completed cast; no duplicated cohort.",
+  "next_concrete_step": "For T0042/T0044/T0051 compare the archived 2015 Enchantrix/ReagentMaker output pairs and coefficients against already pinned legacy/TSM/research sources to identify truly gap-only values, and request an original upstream schema/units definition. Never treat >1 as P(hit), or price unknown mean; any admissible historical value must be labeled and tested by the protected three-pass implementation owner with synthetic-price engine/tooltip probes. Workers continue original-source cast/rank/skill pursuit.",
   "validation_executed": {
     "source_comparison": true,
     "source_rows_crossmatched": 78,
@@ -2757,7 +2853,14 @@
     "last_research_run_seen": "42344227230 success on earlier research head 141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
     "source_item_and_recipe_crosscheck": true,
     "source_nominal_output_arithmetic": true,
-    "commit_status_note": "At pre-write research head, PR-only workflow query and combined status returned no entries; not a claim that all CI completed."
+    "commit_status_note": "At pre-write research head, PR-only workflow query and combined status returned no entries; not a claim that all CI completed.",
+    "current_run_original_2015_source_read": true,
+    "current_run_repository_crosscheck_default_branch_only": true,
+    "current_run_full_historical_source_dedup": false,
+    "current_run_synthetic_price_tests": false,
+    "current_run_full_test_suite": false,
+    "current_run_live_client": false,
+    "current_run_ci_observed_for_prewrite_head": true
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -2771,26 +2874,33 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "task_id": "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
-    "at_utc": "2026-11-07T07:03:27.486Z",
+    "task_id": "COORD-REAGENTMAKER-PROSPECTING-REFERENCE-UNIT-20261107",
+    "at_utc": "2026-11-07T08:08:44.738Z",
     "verified_revisions_before_write": {
       "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-      "research": "4692b1dc19319ed55466e300de40334bb426b78a",
+      "research": "27b66638ed26b5d22fc382d5a97dd29bada43505",
       "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
       "research_integration": "aca72a4de9b8c2a6a1f8ce65c22f19a5c06ed8cd"
     },
-    "primary_source": "https://warcraft.wiki.gg/wiki/Magma_Thresher",
-    "other_sources": [
-      "https://www.wowhead.com/item=199344/magma-thresher",
-      "https://tradeskillmaster.com/retail/us/items/199344",
-      "https://www.reddit.com/r/woweconomy/comments/109yr4s"
-    ],
-    "source_reported_output_rows": 13,
-    "original_cohorts_added": 0,
-    "source_tally_normalization_only": true,
-    "client_verification": false,
-    "actual_engine_run": false,
-    "protected_branch_modified": false,
+    "source_url": "https://repos.wowace.com/wow/reagentmaker/file/default/ProspectingData.lua?style=paper",
+    "source_revision": "42baf007f3c7",
+    "actual_worker_reports_read": {
+      "legacy": "2026-11-07T07:50:52.282Z",
+      "dragonflight": "2026-11-07T07:37:59.436Z",
+      "war_within": "2026-11-07T07:22:43.250Z",
+      "midnight": "2026-11-07T07:12:12.219Z"
+    },
+    "research_ci_seen": {
+      "id": 42352974456,
+      "head": "27b66638ed26b5d22fc382d5a97dd29bada43505",
+      "conclusion": "success",
+      "completed_at": "2026-11-07T07:51:27Z"
+    },
+    "original_evidence_files_changed": 0,
+    "new_measured_cohorts": 0,
+    "new_supported_gold_decisions": 0,
+    "actual_engine_or_tooltip_tests": false,
+    "live_wow": false,
     "merges": 0,
     "releases": 0
   },
