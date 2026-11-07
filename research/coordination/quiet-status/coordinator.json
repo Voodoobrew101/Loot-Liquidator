@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T02:57:38.089Z",
+  "updated_at": "2026-11-07T04:00:32.106Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Reconciled 7 of the prior 30 original February Recycling input names against 14 distinct Retail/PTR catalog item IDs as possible variants (5 Aetherlume families and 2 Evercore families). Exact source-used quality/rank and current patch eligibility remain unverified; no newly measured casts/conditional means, EV models or addon tooltip validation.",
+  "status": "NEW source-to-source contradiction: two Midnight Recycling inputs (Sin'dorei Armor Banding and Sterling Alloy) map to opposite output material families in the Feb 27 original table versus the Mar 5 Method guide; four source-name candidates cross-referenced to eight catalog quality IDs. Mark both output-family models blocked, not valued. No newly measured casts or supported gold actions.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -36,7 +36,8 @@
     "COORD-CATA-JASPER-CRAFT-DE-2011-20261107",
     "COORD-EMPYRIUM-FOUR-SOURCE-LINEAGE-20261107",
     "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107",
-    "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107"
+    "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107",
+    "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -638,6 +639,70 @@
       "new_zero_inclusive_cast_logs": 0,
       "imported_models": 0,
       "synthetic_price_valuation_run": false
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107",
+      "kind": "new_cross_source_recycling_output_family_conflict_and_source_name_identity",
+      "original_source": "Teishoku Blizzard forum original source, 2026-02-27, one unmeasured reference table",
+      "secondary_source": "Method Engineering guide by Roguery, dated 2026-03-05, without independently observed casts",
+      "conflicting_rows": [
+        {
+          "source_name": "Sin’dorei Armor Banding",
+          "catalog_rank_1": 244635,
+          "catalog_rank_2": 244636,
+          "original_reported_output": "Aetherlume",
+          "secondary_reported_output": "Evercore",
+          "disposition": "HOLD output family; conflicting sources with no rank-specific completed-cast logs"
+        },
+        {
+          "source_name": "Sterling Alloy",
+          "catalog_rank_1": 238204,
+          "catalog_rank_2": 238205,
+          "original_reported_output": "Evercore",
+          "secondary_reported_output": "Aetherlume",
+          "disposition": "HOLD output family; conflicting sources with no rank-specific completed-cast logs"
+        }
+      ],
+      "other_identity_variants": [
+        {
+          "original_source_name": "Codefied Azeroot",
+          "secondary_catalog_name": "Codified Azeroot",
+          "catalog_rank_1": 245764,
+          "catalog_rank_2": 245765,
+          "source_item_link": null,
+          "confidence": "plausible spelling alias; original input quality unspecified; exact source item variant unverified"
+        },
+        {
+          "original_source_name": "Primal Soul Binding",
+          "secondary_catalog_name": "Primal Spore Binding",
+          "catalog_rank_1": 244607,
+          "catalog_rank_2": 244608,
+          "source_item_link": null,
+          "confidence": "unverified identity candidate, not asserted synonym; original name differs substantively"
+        }
+      ],
+      "source_range": "1–3 reference quantity on original table, not measured zero-inclusive range or supported unconditional mean",
+      "operation_input_units": "Method says five parts per recycle; verify per named source and current version before eligible model",
+      "reported_source_rows_rechecked": 4,
+      "cross_source_output_family_conflicts": 2,
+      "source_name_identity_questions": 2,
+      "new_observed_casts": 0,
+      "new_independent_measured_cohorts": 0,
+      "new_supported_gold_decisions": 0,
+      "current_retail_client_verified": false,
+      "synthetic_price_engine_tooltip_run": false,
+      "source_links": [
+        "https://us.forums.blizzard.com/en/wow/t/engineer-recycling-only-gives-evercores/2259599",
+        "https://www.method.gg/guides/midnight-engineering-profession-guide",
+        "https://goldcap.gg/retail/tw/items/244635",
+        "https://goldcap.gg/retail/tw/items/244636",
+        "https://goldcap.gg/retail/us/items/238204",
+        "https://goldcap.gg/retail/tw/items/238205",
+        "https://goldcap.gg/retail/us/items/245764",
+        "https://goldcap.gg/retail/us/items/245765",
+        "https://goldcap.gg/retail/kr/items/244607",
+        "https://goldcap.gg/retail/us/items/244608"
+      ]
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -2124,6 +2189,43 @@
       "unconditional_expected_quantities": null,
       "drop_probability": null,
       "measured_output_range": null
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107",
+      "verified": "Two published source tables disagree on output family for two specific named Recycling inputs; catalog identity alternatives corroborated for both, with two additional name-normalization holds",
+      "catalog_rank_pairs": [
+        [
+          244635,
+          244636
+        ],
+        [
+          238204,
+          238205
+        ],
+        [
+          245764,
+          245765
+        ],
+        [
+          244607,
+          244608
+        ]
+      ],
+      "measured_casts": 0,
+      "verified_current_conversion_rules": 0,
+      "gold_EV_or_tooltip_regressions_tested": 0,
+      "source_links": [
+        "https://us.forums.blizzard.com/en/wow/t/engineer-recycling-only-gives-evercores/2259599",
+        "https://www.method.gg/guides/midnight-engineering-profession-guide",
+        "https://goldcap.gg/retail/tw/items/244635",
+        "https://goldcap.gg/retail/tw/items/244636",
+        "https://goldcap.gg/retail/us/items/238204",
+        "https://goldcap.gg/retail/tw/items/238205",
+        "https://goldcap.gg/retail/us/items/245764",
+        "https://goldcap.gg/retail/us/items/245765",
+        "https://goldcap.gg/retail/kr/items/244607",
+        "https://goldcap.gg/retail/us/items/244608"
+      ]
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -2270,7 +2372,16 @@
     "https://www.wowhead.com/ptr/item=245803/argentleaf-pigment",
     "https://www.wowhead.com/item=245804/argentleaf-pigment",
     "https://www.wowhead.com/item=238197/refulgent-copper-ingot",
-    "https://www.wowhead.com/item=238198/refulgent-copper-ingot"
+    "https://www.wowhead.com/item=238198/refulgent-copper-ingot",
+    "https://www.method.gg/guides/midnight-engineering-profession-guide",
+    "https://goldcap.gg/retail/tw/items/244635",
+    "https://goldcap.gg/retail/tw/items/244636",
+    "https://goldcap.gg/retail/us/items/238204",
+    "https://goldcap.gg/retail/tw/items/238205",
+    "https://goldcap.gg/retail/us/items/245764",
+    "https://goldcap.gg/retail/us/items/245765",
+    "https://goldcap.gg/retail/kr/items/244607",
+    "https://goldcap.gg/retail/us/items/244608"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
@@ -2293,10 +2404,10 @@
     "this_checkpoint_dashboard_commit": "a304aa55d3919a0fad8e44e1c2fa71bd9f9ec159",
     "leystone_evidence_blob_sha": "5e00995acd7b3f6a8185cafaec589aaca2364e58",
     "researched_source_url": "https://www.wowhead.com/item=253849/recycling",
-    "research_head": "ef942af552f69e962164d12f2022151d25d8a941",
+    "research_head": "2db5ecdd89850521d1cd84d40c2333133800f846",
     "main_head": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
     "integration_head": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "checked_at_utc": "2026-11-07T02:57:38.089Z",
+    "checked_at_utc": "2026-11-07T04:00:32.106Z",
     "worker_statuses_verified_utc": "2026-11-07T02:57:38.089Z"
   },
   "commit_sha_when_verified": "ef942af552f69e962164d12f2022151d25d8a941",
@@ -2319,7 +2430,8 @@
     "Jasper original Whirlpool author alias/cohort independence versus earlier Cataclysm Jasper Ring Enchantrix studies remains unverified; do not double-weight.",
     "Empyrium 2017 IcyVeins table percentages divide by 1,135 gem units and are NOT per-ore or per-prospect hit probabilities; 17,290/20 mass-batch quotient is noninteger. Four original sources and two additional same-poster 6ygegx arms require source-identity dedupe across archived/imported records before new row admission; no original raw per-click zero histograms, exact refunds or current 2026 eligibility verification.",
     "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107: February author reports range 1–3 without 0-inclusive casts, conditional distribution or mean; not a priceable expected quantity by itself. Thirty input names lack validated item/rank variant IDs (including missive families and author-only spellings), output names lack exact rank IDs. April 2026 self-reports imply changed skill/quality context but do not prove current mechanics, coefficient or official patch cause. Do not import/publish to protected three-pass branch without independent identity/patch scope, precedence and synthetic-price/render fixture.",
-    "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107: seven named inputs have 2 separately indexed possible item variants each; original February table does not identify which rank was recycled or whether both variants are eligible. PTR-only catalog hits for 245803/245875 are not current live confirmation. Unknown P(hit), per-operation means, saved reagent amounts and April patch-specific quality rules; no EV or recommendation changes."
+    "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107: seven named inputs have 2 separately indexed possible item variants each; original February table does not identify which rank was recycled or whether both variants are eligible. PTR-only catalog hits for 245803/245875 are not current live confirmation. Unknown P(hit), per-operation means, saved reagent amounts and April patch-specific quality rules; no EV or recommendation changes.",
+    "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107: Original Feb 27 table vs Mar 5 Method guide give directly opposite output families for Sin'dorei Armor Banding and Sterling Alloy; no zero-inclusive ranked recycling logs or later primary patch correction. Do not choose a priceable family from name-only guide; no verified per-operation EV, input rank or current eligibility. Teishoku 'Primal Soul Binding' may not be the Method/catalog 'Primal Spore Binding' and must not be silently aliased."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -2367,7 +2479,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Resolve source-specific rank/quality and current Retail eligibility for the 7 catalog-paired Recycling inputs using original recipe/itemLinks or raw 0-inclusive Recycling logs; verify remaining 23 named families without duplicating worker research, then submit research-only identity/units handoff to protected three-pass implementation owner for gap-only precedence and synthetic-price engine/tooltip checks. No addon branch edits.",
+  "next_concrete_step": "Obtain firsthand current-Retail five-input Recycling logs/itemLinks for 244635/244636 and 238204/238205 showing output 251? item-ID/rank, counts, zero bins and skill/tree/patch; resolve the source conflict before any family/EV admission. Independently verify whether 'Primal Soul Binding' was a typo for 244607/244608 before using that catalog association. Hand source conflict to protected three-pass owner without editing its branch.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -2382,16 +2494,16 @@
     "status_readback_verified": false,
     "dashboard_readback_verified": false,
     "this_run": {
-      "utc": "2026-11-07T02:57:38.089Z",
-      "source_checks": "Feb 27 original Blizzard forum table and 14 indexed Wowhead live/PTR item entries for 7 source names",
+      "utc": "2026-11-07T04:00:32.106Z",
+      "source_checks": "Direct original Feb 27 forum and Method Mar 5 guide source rows compared for two contradictory material families; catalog rank alternatives checked on third-party retail listings; name mismatch inspected for two more entries",
       "offline_engine_or_tooltip": false,
       "lua_tests": false,
-      "github_research_ci": "run 42331037860 success at research head ef942af; no CI validation yet for coordinator changes",
-      "main_ci": "run 42318496207 success at 1a0494a",
-      "integration_ci": "run 41484262496 success at 3d667d0 (Nov 2)",
       "real_wow_client": false,
-      "processed_new_evidence_files": 0,
-      "measured_cohorts_admitted": 0
+      "measured_cohorts_admitted": 0,
+      "github_research_ci": "42335444861 success on prewrite research SHA 2db5ecdd, not the new coordinator commit",
+      "main_ci": "42318496207 success on 1a0494aa",
+      "integration_ci": "41484262496 success on 3d667d05 (Nov 2)",
+      "new_evidence_original_files": 0
     }
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
@@ -2406,21 +2518,17 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "updated_at": "2026-11-07T02:03:30.887Z",
-    "task": "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107",
-    "source_url": "https://us.forums.blizzard.com/en/wow/t/engineer-recycling-only-gives-evercores/2259599",
-    "reference_rows": 30,
-    "aetherlume_rows": 16,
-    "evercore_rows": 14,
-    "reported_range": "1–3",
-    "kind": "historical_author_reference_no_measured_casts",
-    "new_observed_cast_cohorts": 0,
-    "new_gold_ev_coverage": 0,
-    "patch_quality_break_supported_by_first_person_reports_not_verified_mechanic": true,
-    "unresolved_source_item_ids": true,
-    "offline_fixture": false,
+    "updated_at": "2026-11-07T04:00:32.106Z",
+    "task": "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107",
+    "findings": 2,
+    "source_name_questions": 2,
+    "verified_catalog_item_id_candidates": 8,
+    "original_date": "2026-02-27",
+    "secondary_date": "2026-03-05",
+    "new_measured_casts": 0,
+    "new_independent_cohorts": 0,
     "live_client": false,
-    "no_merge_release": true
+    "engine_tests": false
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
@@ -2664,9 +2772,9 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
     "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
-  "research_branch_head_read_before_write": "ef942af552f69e962164d12f2022151d25d8a941",
+  "research_branch_head_read_before_write": "2db5ecdd89850521d1cd84d40c2333133800f846",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-07T02:03:30.887Z",
-  "verified_base_commit_sha": "df61214ab02ea024054443b5bdbbca9f97ba7e12",
+  "verified_base_commit_sha": "2db5ecdd89850521d1cd84d40c2333133800f846",
   "current_status_commit_sha": null,
   "commit_sha_note": "Prewrite verified research branch SHA only; status write's resulting commit is independently read back after commit. Own-write SHA cannot be embedded into its own JSON blob.",
   "last_checkpoint_validation": {
