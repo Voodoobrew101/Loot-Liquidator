@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T05:04:08.541Z",
+  "updated_at": "2026-11-07T06:04:35.941Z",
   "branch": "implementation/five-agent-completion",
-  "status": "NEW cross-source indexed item identity: 28 individual original Recycling source name families matched to a later Wowhead player-linked catalog list (including two UNRESOLVED author-name aliases), plus 13 named Thalassian Missive candidate links for two original table groups. No rank-specific original input IDs, measured outcomes, expected units, gold actions or corrected family conflicts established.",
+  "status": "Source-to-estimator reconciliation: 39+39 duplicated Prismatic Ore output transcriptions = one original 80-operation cohort; rank-3 Amber 4/80 corrected to item 192851, but frozen estimator retains three independent rank-specific reference guesses 0.613 beside measured family 0.05. Selection impact untested; no new casts, prices, or gold actions.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -38,7 +38,8 @@
     "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107",
     "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107",
     "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107",
-    "COORD-RECYCLING-TORM-CATALOG-LINKS-20261107"
+    "COORD-RECYCLING-TORM-CATALOG-LINKS-20261107",
+    "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -788,6 +789,10 @@
       "new_numeric_output_fields": 0,
       "new_gold_coverage": 0,
       "source_scope": "later player catalog source not 30 independent studies; 13 missive variants do not imply individual outcomes"
+    },
+    {
+      "task_id": "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
+      "gap": "Ensure measured 192851 rank3 Amber 4 units/80 operations and copied source output identities cannot be hidden or double-valued by rank1/2/3 starting-guess alternatives. Rank1/2 exact source units ambiguous, runtime selection/eligibility untested."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -2322,15 +2327,87 @@
       "unknown_source_rank": true,
       "unknown_output_distribution": true,
       "source": "https://www.wowhead.com/item=253849/recycling"
+    },
+    {
+      "task_id": "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
+      "kind": "original_cohort_crossfile_reconciliation_and_frozen_estimator_selection_risk",
+      "input_item_id": 194545,
+      "method": "Prospect",
+      "original_source": "https://www.wowhead.com/item=194545/prismatic-ore",
+      "original_author": "superbondez",
+      "source_reported_nominal_ore": 400,
+      "source_reported_completed_prospects": 80,
+      "original_records_a": "dragonflight-20261031-50026..50064",
+      "original_records_b": "dragonflight-20261101-021..059",
+      "verified_same_source_pair_count": 39,
+      "all_matching_source_output_name_rank_totalquantity": 39,
+      "independent_studies": 1,
+      "duplicate_independent_casts": 0,
+      "source_output_row_numerics": {
+        "per_copy": 39,
+        "positive_quantity_rows": 36,
+        "explicit_zero_quantity_rows": 1,
+        "ambiguous_quantity_rows": 2
+      },
+      "actual_rank3_amber": {
+        "output_name": "Eternity Amber",
+        "output_rank": 3,
+        "source_reported_units": 4,
+        "operations": 80,
+        "derived_unconditional_units_per_completed_operation": 0.05,
+        "corrected_output_item_id": 192851,
+        "worker_correction": "dragonflight-20261107-amber-r3-001",
+        "original_rows": [
+          "dragonflight-20261031-50044",
+          "dragonflight-20261101-042"
+        ]
+      },
+      "ambiguous_amber_rank1_2": "Original comment literally has malformed '42 4' and '8 4'; quantities remain null, not zero.",
+      "frozen_estimator_snapshot": {
+        "path": "research/v3/output/estimates.json",
+        "blob_sha": "15ae8c5b7f7b2587ceff1dcd3e8b9d13d4351d1e",
+        "family_amber_unconditional_average": 0.05,
+        "family_amber_study_casts": 80,
+        "ranked_amber_reference_item_ids": [
+          192849,
+          192850,
+          192851
+        ],
+        "each_ranked_reference_average": 0.613,
+        "each_ranked_reference_study_casts": 0,
+        "critical_caveat": "These are parallel estimator rows, not proof that runtime sums them or that all are supported; run source-precedence and actual-engine/tooltip audit before any gold decision."
+      },
+      "original_source_item_binding": "Wowhead currently labels input Prismatic Ore binds when picked up; current 2026 prospect ability and live-client result unverified.",
+      "dedupe_findings": "39 matching (name, rank, quantity) lines across both worker files; nine asymmetric null-vs-nonnull item-ID annotations do not make new studies. Current build_estimates.py same_output() explicitly checks normalized material identity and rank; full script was not executed.",
+      "expected_follow_up": "Check actual estimator and guarded import/tooltip selection: exact rank3 192851 4/80 must not be suppressed by copied rank2 Illimited Diamond 4/80 or overridden/doubled by three rank-specific reference starting guesses. Preserve rank1/2 null original quantities; no client claim.",
+      "new_captured_cumulative_casts": 0,
+      "new_measured_cohorts": 0,
+      "new_supported_gold_actions_verified": 0,
+      "validation": {
+        "github_source_read": true,
+        "original_wowhead_source_read": true,
+        "source_rows_parsed_and_crossmatched": 78,
+        "estimated_output_snapshot_read": true,
+        "actual_compiler_run": false,
+        "actual_engine_run": false,
+        "actual_tooltip_run": false,
+        "live_wow_run": false
+      },
+      "source_files": [
+        "research/v3/evidence/dragonflight/2026-10-31T1234-prismatic-and-serevite-cast-cohorts.jsonl",
+        "research/v3/evidence/dragonflight/2026-11-01T0230-aberrus-tokens-prismatic-prospecting.jsonl",
+        "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl"
+      ],
+      "source_url": "https://www.wowhead.com/item=194545/prismatic-ore"
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": "2026-11-07T04:53:14.464Z",
-    "dragonflight": "2026-11-07T04:37:04.130Z",
-    "war_within": "2026-11-07T04:30:40.079Z",
-    "midnight": "2026-11-07T04:14:37.081Z"
+    "legacy": "2026-11-07T05:47:44.184Z",
+    "dragonflight": "2026-11-07T05:39:56.920Z",
+    "war_within": "2026-11-07T05:27:00.000Z",
+    "midnight": "2026-11-07T05:27:33.855Z"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
@@ -2349,7 +2426,10 @@
     "research/v3/evidence/midnight/2026-11-06T2115-five-s2-de-looter-identity-holds.jsonl",
     "research/v3/evidence/war-within/2026-11-06T2128-six-plate-mail-armor-looter-counts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-06T2136-four-unique-amirdrassil-disenchant-looter-cohorts.jsonl",
-    "research/v3/evidence/legacy/2026-11-06T2146-dusky-verdant-nether-ebon-firsthand.jsonl"
+    "research/v3/evidence/legacy/2026-11-06T2146-dusky-verdant-nether-ebon-firsthand.jsonl",
+    "research/v3/evidence/dragonflight/2026-10-31T1234-prismatic-and-serevite-cast-cohorts.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-01T0230-aberrus-tokens-prismatic-prospecting.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -2458,14 +2538,15 @@
     "https://goldcap.gg/retail/us/items/245765",
     "https://goldcap.gg/retail/kr/items/244607",
     "https://goldcap.gg/retail/us/items/244608",
-    "https://warcraft.wiki.gg/wiki/Primal_Spore_Binding"
+    "https://warcraft.wiki.gg/wiki/Primal_Spore_Binding",
+    "https://www.wowhead.com/item=194545/prismatic-ore"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "49b434e13c312f81a51dfb53ef723f45cd6863c1",
+    "research": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
-  "commit_sha_when_verified": "be6273c2a8c8c78bc4cf4562cd97e16cfc9075c4",
+  "commit_sha_when_verified": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
   "blockers": [
     "Original worker-owned 6 rows need append-only author correction and reviewer deduplication before treating them as independent source identities.",
     "First Flower cross-reference is historical and not current-patch Retail; completed operations remain ambiguous without actual cast logs. Keep archives and TSM reference independent of measured statistics.",
@@ -2487,7 +2568,11 @@
     "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107: February author reports range 1–3 without 0-inclusive casts, conditional distribution or mean; not a priceable expected quantity by itself. Thirty input names lack validated item/rank variant IDs (including missive families and author-only spellings), output names lack exact rank IDs. April 2026 self-reports imply changed skill/quality context but do not prove current mechanics, coefficient or official patch cause. Do not import/publish to protected three-pass branch without independent identity/patch scope, precedence and synthetic-price/render fixture.",
     "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107: seven named inputs have 2 separately indexed possible item variants each; original February table does not identify which rank was recycled or whether both variants are eligible. PTR-only catalog hits for 245803/245875 are not current live confirmation. Unknown P(hit), per-operation means, saved reagent amounts and April patch-specific quality rules; no EV or recommendation changes.",
     "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107: Original Feb 27 table vs Mar 5 Method guide give directly opposite output families for Sin'dorei Armor Banding and Sterling Alloy; no zero-inclusive ranked recycling logs or later primary patch correction. Do not choose a priceable family from name-only guide; no verified per-operation EV, input rank or current eligibility. Teishoku 'Primal Soul Binding' may not be the Method/catalog 'Primal Spore Binding' and must not be silently aliased.",
-    "Catalog crosswalk provides only later source-linked BASE ID candidates; original 2026-02-27 player has no itemLinks, rank, skill, per-operation material outcome, cast totals or empirical quantities; 13 Missives are variations of two headings. No 2026 client confirmation of specific rank input recipe. Two family contradictions unresolved."
+    "Catalog crosswalk provides only later source-linked BASE ID candidates; original 2026-02-27 player has no itemLinks, rank, skill, per-operation material outcome, cast totals or empirical quantities; 13 Missives are variations of two headings. No 2026 client confirmation of specific rank input recipe. Two family contradictions unresolved.",
+    {
+      "task_id": "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
+      "blocker": "Frozen research snapshot is not current addon runtime; three rank-specific 0.613 reference expected values overlap 0.05 source-family study on estimator output, but actual selection/double count not verified. Need approved integration-owner actual-engine synthetic price probes and new independent ranked client inputs/casts."
+    }
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -2536,16 +2621,18 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Seek exact-ranked current-Retail Recycling input/output event logs for 244635/244636 Sin'dorei Armor Banding and 238204/238205 Sterling Alloy, with output item IDs, cast-level quantities, source build, skill, spec, refunds and zero bins. Resolve the Feb27/Mar05 output-family contradiction. Then collect original itemLinks for Codefied/Codified Azeroot and Primal Soul/Spore Binding aliases; do not derive means from a range or 41 catalog links.",
+  "next_concrete_step": "Research-only: cross-check newly corrected Dragonflight Amber rank-3 ID 192851 against source-level identity and dedupe all 39 rows as one 80-prospect cohort; request protected integration owner to test synthetic-price actual runtime selection of 192849/192850/192851 vs family:Eternity Amber (0.05), preserving partial field nulls. Seek raw per-cast/bonus/refund logs; no duplicate studies.",
   "validation_executed": {
     "source_comparison": true,
-    "original_name_vs_indexed_item_id_links": 41,
+    "source_rows_crossmatched": 78,
+    "original_author_source_checked": true,
+    "frozen_estimator_readback": true,
+    "actual_addon_engine_tests_run": false,
+    "actual_tooltip_tests_run": false,
+    "live_wow_tests_run": false,
     "github_branch_heads_checked": true,
-    "github_pr22_pr23_checked": true,
-    "github_actions_last_run_checked": "42340375881 success at 49b434e13c312f81a51dfb53ef723f45cd6863c1",
-    "local_addon_tests_run": false,
-    "engine_tooltip_renderer_run": false,
-    "live_wow_tests_run": false
+    "pr22_pr23_checked": true,
+    "last_research_run_seen": "42344227230 success on earlier research head 141b446c10ebb6b3c1cfe0c88d13acb86ae80c06"
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -2559,25 +2646,25 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "task_id": "COORD-RECYCLING-TORM-CATALOG-LINKS-20261107",
-    "at_utc": "2026-11-07T05:04:08.541Z",
-    "source_checks": [
-      "https://www.wowhead.com/item=253849/recycling",
-      "https://us.forums.blizzard.com/en/wow/t/engineer-recycling-only-gives-evercores/2259599",
-      "https://www.method.gg/guides/midnight-engineering-profession-guide"
-    ],
-    "linked_source_families": 28,
-    "linked_missives": 13,
-    "numeric_fields_added": 0,
-    "new_measured_casts": 0,
-    "gold_actions_verified": 0,
-    "source_note": "Independent catalog links, not original study itemLinks. No source-specific variant rank confirmed.",
-    "verified_prewrite_research_sha": "49b434e13c312f81a51dfb53ef723f45cd6863c1",
-    "dashboard_commit_sha": "52a09fb2e83f036c9ebd4a37670a33c6da2c8942",
-    "ci_checked": "42340375881 success before new commits",
-    "tests_executed_this_run": 0,
-    "pr22_pr23": "closed/unmerged",
-    "protected_branch_edited": false
+    "task_id": "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
+    "at_utc": "2026-11-07T06:04:35.941Z",
+    "verified_revisions_before_write": {
+      "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
+      "research": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
+      "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
+    },
+    "primary_source": "https://www.wowhead.com/item=194545/prismatic-ore",
+    "original_source_rows_compared": 78,
+    "matched_twins": 39,
+    "distinct_original_cohorts": 1,
+    "frozen_estimator_amber_family_avg": 0.05,
+    "frozen_estimator_each_ranked_reference_avg": 0.613,
+    "source_selection_test_executed": false,
+    "source_evidence_committed_by_coordinator": false,
+    "protected_branch_modified": false,
+    "addons_or_live_wow_tested": false,
+    "merges": 0,
+    "releases": 0
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
@@ -2823,9 +2910,9 @@
   ],
   "research_branch_head_read_before_write": "49b434e13c312f81a51dfb53ef723f45cd6863c1",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-07T02:03:30.887Z",
-  "verified_base_commit_sha": "2db5ecdd89850521d1cd84d40c2333133800f846",
+  "verified_base_commit_sha": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
   "current_status_commit_sha": null,
-  "commit_sha_note": "Prewrite verified research branch SHA only; status write's resulting commit is independently read back after commit. Own-write SHA cannot be embedded into its own JSON blob.",
+  "commit_sha_note": "The recorded commit SHA is the GitHub-verified research branch HEAD before this status update, not a self-referential SHA for this file's own new commit.",
   "last_checkpoint_validation": {
     "utc": "2026-11-07T04:01:11.389Z",
     "previous_status_commit_verified": "be6273c2a8c8c78bc4cf4562cd97e16cfc9075c4",
