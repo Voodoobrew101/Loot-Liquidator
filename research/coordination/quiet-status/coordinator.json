@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T06:04:35.941Z",
+  "updated_at": "2026-11-07T07:03:27.486Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Source-to-estimator reconciliation: 39+39 duplicated Prismatic Ore output transcriptions = one original 80-operation cohort; rank-3 Amber 4/80 corrected to item 192851, but frozen estimator retains three independent rank-specific reference guesses 0.613 beside measured family 0.05. Selection impact untested; no new casts, prices, or gold actions.",
+  "status": "Cross-source Magma Thresher (199344) fish-to-Dragon Isles Prospecting eligibility corroborated and 13 old source totals normalized per nominal fish only. No new cohorts, completed cast denominators, output-rank IDs or tested gold actions.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -39,7 +39,8 @@
     "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107",
     "COORD-MIDNIGHT-RECYCLING-SOURCE-CONFLICT-20261107",
     "COORD-RECYCLING-TORM-CATALOG-LINKS-20261107",
-    "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107"
+    "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
+    "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -793,6 +794,26 @@
     {
       "task_id": "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
       "gap": "Ensure measured 192851 rank3 Amber 4 units/80 operations and copied source output identities cannot be hidden or double-valued by rank1/2/3 starting-guess alternatives. Rank1/2 exact source units ambiguous, runtime selection/eligibility untested."
+    },
+    {
+      "task_id": "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
+      "kind": "fish_recipe_and_nominal_units_vs_completed_casts",
+      "input_item_id": 199344,
+      "source_links": [
+        "https://warcraft.wiki.gg/wiki/Magma_Thresher",
+        "https://www.wowhead.com/item=199344/magma-thresher",
+        "https://tradeskillmaster.com/retail/us/items/199344",
+        "https://www.reddit.com/r/woweconomy/comments/109yr4s"
+      ],
+      "remains_unknown": [
+        "completed casts",
+        "refunds",
+        "exact ranked output item IDs",
+        "P(hit)",
+        "positive-yield stacks",
+        "2026 Retail client behavior"
+      ],
+      "read_only_addon": true
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -2399,15 +2420,109 @@
         "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl"
       ],
       "source_url": "https://www.wowhead.com/item=194545/prismatic-ore"
+    },
+    {
+      "task_id": "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
+      "kind": "independent_recipe_eligibility_and_nominal_output_denominator_context",
+      "input_item_id": 199344,
+      "input_name": "Magma Thresher",
+      "identity": "Already identified in a previous coordinator checkpoint; not a newly discovered item or study.",
+      "new_cross_source_fact": "Warcraft Wiki's specific Magma Thresher reagent-for table explicitly names Dragon Isles Prospecting; current Wowhead and Retail TSM item descriptions independently call it prospectable despite TSM's Cooking category. This is source-backed historical recipe applicability, not live-client eligibility verification.",
+      "acquisition_vs_processing": "Iskaara Renown 15 and Lava Fishing unlock are acquisition conditions; they are not demonstrated to be requirements for a JC character to prospect a traded fish.",
+      "original_report": "2023-01-12 r/woweconomy 109yr4s; title 500 Magma Thresher, 25 Prospecting specialization points, 'all R2'. Historical totals are not a new study; exact per-output rank item IDs and R2 meaning need source-link/tooltip corroboration.",
+      "source_reported_nominal_fish": 500,
+      "report_output_rows": 13,
+      "source_reported_total_output_units": 382,
+      "arithmetic_only_normalized_per_100_nominal_fish": [
+        {
+          "output_name": "Illimited Diamond",
+          "reported_units": 0,
+          "units_per_100_nominal_fish": 0
+        },
+        {
+          "output_name": "Nozdorite",
+          "reported_units": 6,
+          "units_per_100_nominal_fish": 1.2
+        },
+        {
+          "output_name": "Neltharite",
+          "reported_units": 3,
+          "units_per_100_nominal_fish": 0.6
+        },
+        {
+          "output_name": "Ysemerald",
+          "reported_units": 2,
+          "units_per_100_nominal_fish": 0.4
+        },
+        {
+          "output_name": "Alexstraszite",
+          "reported_units": 4,
+          "units_per_100_nominal_fish": 0.8
+        },
+        {
+          "output_name": "Malygite",
+          "reported_units": 1,
+          "units_per_100_nominal_fish": 0.2
+        },
+        {
+          "output_name": "Eternity Amber",
+          "reported_units": 45,
+          "units_per_100_nominal_fish": 9
+        },
+        {
+          "output_name": "Mystic Sapphire",
+          "reported_units": 11,
+          "units_per_100_nominal_fish": 2.2
+        },
+        {
+          "output_name": "Queen's Ruby",
+          "reported_units": 16,
+          "units_per_100_nominal_fish": 3.2
+        },
+        {
+          "output_name": "Sundered Onyx",
+          "reported_units": 17,
+          "units_per_100_nominal_fish": 3.4
+        },
+        {
+          "output_name": "Vibrant Emerald",
+          "reported_units": 16,
+          "units_per_100_nominal_fish": 3.2
+        },
+        {
+          "output_name": "Glass",
+          "reported_units": 121,
+          "units_per_100_nominal_fish": 24.2
+        },
+        {
+          "output_name": "Stone",
+          "reported_units": 140,
+          "units_per_100_nominal_fish": 28
+        }
+      ],
+      "normalization_guard": "Each derived ratio is (source total / source-described 500 fish)*100; it is NOT E[units]/completed cast, P(hit), a measured distribution, or net consumed inputs. Do not infer 100 measured casts, zero-result count, quality-ID mapping, refunds or current patch rate.",
+      "confirmed_current_retail_distributions": 0,
+      "independent_new_cohorts": 0,
+      "independent_new_completed_casts": 0,
+      "new_gold_ev_actions": 0,
+      "actual_addon_valuer_tooltip_test_run": false,
+      "current_wow_client_test_run": false,
+      "exact_remaining": "Verify 5-fish operation for this fish in current client or original prospect recipe; source batch consumption/refunds and output link/rank identities; import/eligibility adapter must not reject prospectable fish merely because its auction category is Cooking; test with protected implementation owner's synthetic-price actual engine/tooltip only.",
+      "source_links": [
+        "https://warcraft.wiki.gg/wiki/Magma_Thresher",
+        "https://www.wowhead.com/item=199344/magma-thresher",
+        "https://tradeskillmaster.com/retail/us/items/199344",
+        "https://www.reddit.com/r/woweconomy/comments/109yr4s"
+      ]
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
-    "legacy": "2026-11-07T05:47:44.184Z",
-    "dragonflight": "2026-11-07T05:39:56.920Z",
-    "war_within": "2026-11-07T05:27:00.000Z",
-    "midnight": "2026-11-07T05:27:33.855Z"
+    "legacy": "2026-11-07T06:54:26.358Z",
+    "dragonflight": "2026-11-07T06:29:56.719Z",
+    "war_within": "2026-11-07T06:21:24.691Z",
+    "midnight": "2026-11-07T06:13:00.939Z"
   },
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
@@ -2539,12 +2654,14 @@
     "https://goldcap.gg/retail/kr/items/244607",
     "https://goldcap.gg/retail/us/items/244608",
     "https://warcraft.wiki.gg/wiki/Primal_Spore_Binding",
-    "https://www.wowhead.com/item=194545/prismatic-ore"
+    "https://www.wowhead.com/item=194545/prismatic-ore",
+    "https://tradeskillmaster.com/retail/us/items/199344"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
-    "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
+    "research": "4692b1dc19319ed55466e300de40334bb426b78a",
+    "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
+    "research_integration": "aca72a4de9b8c2a6a1f8ce65c22f19a5c06ed8cd"
   },
   "commit_sha_when_verified": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
   "blockers": [
@@ -2572,6 +2689,10 @@
     {
       "task_id": "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
       "blocker": "Frozen research snapshot is not current addon runtime; three rank-specific 0.613 reference expected values overlap 0.05 source-family study on estimator output, but actual selection/double count not verified. Need approved integration-owner actual-engine synthetic price probes and new independent ranked client inputs/casts."
+    },
+    {
+      "task_id": "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
+      "blocker": "No confirmed completed-fish operations, refunds/zero counts or quality-item links in the original 500-fish study; game-client spell eligibility not tested. Wiki/TSM/Wowhead descriptions do not by themselves validate actual game behavior. No source-to-tooltip simulation run."
     }
   ],
   "exhausted_sources": [
@@ -2595,7 +2716,8 @@
     "2017 Scribd original Leystone 20,000-ore mass/regular tabs and Gem % semantics independently inspected; do not reprocess pricing/ore-weaving derived tabs as additional cohorts.",
     "CarolusRex2333 source comment on LIVE 253849 independently reopened and its two quoted ratios audited once (2026-11-06); do not re-scan identical numeric text unless original event logs/item links/patch or correction emerges.",
     "2017 IcyVeins 35,890-ore/1,135-gem secondary aggregate traced to primary Reddit posts 6ywwdq,6xa92j,6ydssd,6ygegx; do not recollect aggregate as an independent source or misread 19.20% gem composition as P(hit). Further work requires archived-cohort dedupe or original event ledgers, not repeating the guide.",
-    "Checked original Teishoku Feb27 table, Method Mar05 list, Wowhead player-linked eligible-item list, and 13 Missive links; these have no new cast-level output logs or source-specific ranks. Do not re-search them for numerical histograms without new context."
+    "Checked original Teishoku Feb27 table, Method Mar05 list, Wowhead player-linked eligible-item list, and 13 Missive links; these have no new cast-level output logs or source-specific ranks. Do not re-search them for numerical histograms without new context.",
+    "Magma Thresher 199344: reviewed existing original 2023 Reddit output table, Retail TSM catalog item, Wowhead item description and Warcraft Wiki reagent-for table; no independent recent cast histogram, refundable-input evidence or linked rank output IDs in those pages. Do not revisit as novel numeric study."
   ],
   "decisions_needed": [
     {
@@ -2621,7 +2743,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Research-only: cross-check newly corrected Dragonflight Amber rank-3 ID 192851 against source-level identity and dedupe all 39 rows as one 80-prospect cohort; request protected integration owner to test synthetic-price actual runtime selection of 192849/192850/192851 vs family:Eternity Amber (0.05), preserving partial field nulls. Seek raw per-cast/bonus/refund logs; no duplicate studies.",
+  "next_concrete_step": "Research-only handoff to the protected integration owner: add Magma Thresher 199344 to the fish/prospect eligibility review (Wiki explicitly lists Dragon Isles Prospecting even though TSM categories say Cooking), and test source-to-engine/tooltip synthetic-price behavior on their branch. Obtain original linked R2 gem IDs, actual 5-fish operations and refunds before pricing 500-fish ratios as E per completed cast; no duplicated cohort.",
   "validation_executed": {
     "source_comparison": true,
     "source_rows_crossmatched": 78,
@@ -2632,7 +2754,10 @@
     "live_wow_tests_run": false,
     "github_branch_heads_checked": true,
     "pr22_pr23_checked": true,
-    "last_research_run_seen": "42344227230 success on earlier research head 141b446c10ebb6b3c1cfe0c88d13acb86ae80c06"
+    "last_research_run_seen": "42344227230 success on earlier research head 141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
+    "source_item_and_recipe_crosscheck": true,
+    "source_nominal_output_arithmetic": true,
+    "commit_status_note": "At pre-write research head, PR-only workflow query and combined status returned no entries; not a claim that all CI completed."
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -2646,23 +2771,26 @@
   },
   "notifications": "on-demand-only",
   "last_session": {
-    "task_id": "COORD-DF-PRISMATIC-CROSSCOPY-SELECTION-20261107",
-    "at_utc": "2026-11-07T06:04:35.941Z",
+    "task_id": "COORD-DF-MAGMA-THRESHER-ELIGIBILITY-CONTEXT-20261107",
+    "at_utc": "2026-11-07T07:03:27.486Z",
     "verified_revisions_before_write": {
       "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-      "research": "141b446c10ebb6b3c1cfe0c88d13acb86ae80c06",
-      "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
+      "research": "4692b1dc19319ed55466e300de40334bb426b78a",
+      "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
+      "research_integration": "aca72a4de9b8c2a6a1f8ce65c22f19a5c06ed8cd"
     },
-    "primary_source": "https://www.wowhead.com/item=194545/prismatic-ore",
-    "original_source_rows_compared": 78,
-    "matched_twins": 39,
-    "distinct_original_cohorts": 1,
-    "frozen_estimator_amber_family_avg": 0.05,
-    "frozen_estimator_each_ranked_reference_avg": 0.613,
-    "source_selection_test_executed": false,
-    "source_evidence_committed_by_coordinator": false,
+    "primary_source": "https://warcraft.wiki.gg/wiki/Magma_Thresher",
+    "other_sources": [
+      "https://www.wowhead.com/item=199344/magma-thresher",
+      "https://tradeskillmaster.com/retail/us/items/199344",
+      "https://www.reddit.com/r/woweconomy/comments/109yr4s"
+    ],
+    "source_reported_output_rows": 13,
+    "original_cohorts_added": 0,
+    "source_tally_normalization_only": true,
+    "client_verification": false,
+    "actual_engine_run": false,
     "protected_branch_modified": false,
-    "addons_or_live_wow_tested": false,
     "merges": 0,
     "releases": 0
   },
