@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T02:03:30.887Z",
+  "updated_at": "2026-11-07T02:57:38.089Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New February 2026 primary-author Recycling reference table verified: 30 distinct source-name/category rows, all source-reported 1–3 output units without spec bonuses (16 Aetherlume, 14 Evercore). Two April 2026 first-person reports flag post-.5-patch rank/skill change. Source-only historical candidates; no exact input/output variant IDs, accepted 2026 Retail yield model, measured casts, gold valuation, or in-client tooltip verification.",
+  "status": "Reconciled 7 of the prior 30 original February Recycling input names against 14 distinct Retail/PTR catalog item IDs as possible variants (5 Aetherlume families and 2 Evercore families). Exact source-used quality/rank and current patch eligibility remain unverified; no newly measured casts/conditional means, EV models or addon tooltip validation.",
   "task_ids": [
     "T0042",
     "T0046",
@@ -35,7 +35,8 @@
     "COORD-RECYCLE-FIVE-UNIT-NOMINAL-20261106",
     "COORD-CATA-JASPER-CRAFT-DE-2011-20261107",
     "COORD-EMPYRIUM-FOUR-SOURCE-LINEAGE-20261107",
-    "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107"
+    "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107",
+    "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107"
   ],
   "exact_gaps_targeted": [
     {
@@ -547,6 +548,96 @@
       "zero_cast_histogram": null,
       "observed_casts": null,
       "castsWithDrop": null
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107",
+      "kind": "historical_midnight_recycling_input_family_to_variant_catalog_identity",
+      "source_name_rows_checked": 7,
+      "variant_catalog_ids_checked": 14,
+      "original_source_url": "https://us.forums.blizzard.com/en/wow/t/engineer-recycling-only-gives-evercores/2259599",
+      "catalog_pairs": [
+        {
+          "source_name": "Arcanoweave Lining",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            240166,
+            240167
+          ],
+          "rank_assignment": null,
+          "source_specific_variant": null,
+          "notes": "No rank assignment from name-only original"
+        },
+        {
+          "source_name": "Sunfire Silk Lining",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            240164,
+            240165
+          ],
+          "rank_assignment": null,
+          "source_specific_variant": null,
+          "notes": "No rank assignment from name-only original"
+        },
+        {
+          "source_name": "Devouring Banding",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            244674,
+            244675
+          ],
+          "rank_assignment": null,
+          "source_specific_variant": null,
+          "notes": "No rank assignment from name-only original"
+        },
+        {
+          "source_name": "Soul Sprocket",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            243576,
+            243577
+          ],
+          "rank_assignment": null,
+          "source_specific_variant": null,
+          "notes": "No rank assignment from name-only original"
+        },
+        {
+          "source_name": "Darkmoon Sigil: Hunt",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            245875,
+            245876
+          ],
+          "rank_assignment": null,
+          "source_specific_variant": null,
+          "notes": "245875 independently indexable on PTR 12.1.7; direct live page bot-gated. Do not claim live variant eligibility."
+        },
+        {
+          "source_name": "Argentleaf Pigment",
+          "reported_output_family": "Evercore",
+          "catalog_item_id_alternatives": [
+            245803,
+            245804
+          ],
+          "rank_assignment": null,
+          "source_specific_variant": null,
+          "notes": "245803 indexed on PTR 12.1.7; direct live page bot-gated."
+        },
+        {
+          "source_name": "Refulgent Copper Ingot",
+          "reported_output_family": "Evercore",
+          "catalog_item_id_alternatives": [
+            238197,
+            238198
+          ],
+          "rank_assignment": null,
+          "source_specific_variant": null,
+          "notes": "No rank assignment from name-only original"
+        }
+      ],
+      "remaining_gap": "Original table names no itemLinks or quality variants, 23 other family names not checked in this checkpoint; prospective catalog matches must not be treated as seven verified eligible conversion recipes, nor variant selection. Output family identity is not rank-specific. Source range 1–3 is reference-only, not expectation.",
+      "new_zero_inclusive_cast_logs": 0,
+      "imported_models": 0,
+      "synthetic_price_valuation_run": false
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -1932,42 +2023,135 @@
       "mean_unconditional": null,
       "new_independent_numeric_studies": 0,
       "new_accepted_gold_recommendations": 0
+    },
+    {
+      "kind": "independent_name_to_item_catalog_crosscheck_no_new_studies",
+      "task_id": "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107",
+      "source_original": "https://us.forums.blizzard.com/en/wow/t/engineer-recycling-only-gives-evercores/2259599",
+      "catalog_candidate_pairs": [
+        {
+          "source_name": "Arcanoweave Lining",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            240166,
+            240167
+          ],
+          "urls": [
+            "https://www.wowhead.com/item=240166/arcanoweave-lining",
+            "https://www.wowhead.com/item=240167/arcanoweave-lining"
+          ]
+        },
+        {
+          "source_name": "Sunfire Silk Lining",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            240164,
+            240165
+          ],
+          "urls": [
+            "https://www.wowhead.com/item=240164/sunfire-silk-lining",
+            "https://www.wowhead.com/item=240165/sunfire-silk-lining"
+          ]
+        },
+        {
+          "source_name": "Devouring Banding",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            244674,
+            244675
+          ],
+          "urls": [
+            "https://www.wowhead.com/item=244674/devouring-banding",
+            "https://www.wowhead.com/item=244675/devouring-banding"
+          ]
+        },
+        {
+          "source_name": "Soul Sprocket",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            243576,
+            243577
+          ],
+          "urls": [
+            "https://www.wowhead.com/item=243576/soul-sprocket",
+            "https://www.wowhead.com/item=243577/soul-sprocket"
+          ]
+        },
+        {
+          "source_name": "Darkmoon Sigil: Hunt",
+          "reported_output_family": "Aetherlume",
+          "catalog_item_id_alternatives": [
+            245875,
+            245876
+          ],
+          "urls": [
+            "https://www.wowhead.com/ptr/item=245875/darkmoon-sigil-hunt",
+            "https://www.wowhead.com/item=245876/darkmoon-sigil-hunt"
+          ],
+          "note": "245875 independently indexable on PTR 12.1.7; direct live page bot-gated. Do not claim live variant eligibility."
+        },
+        {
+          "source_name": "Argentleaf Pigment",
+          "reported_output_family": "Evercore",
+          "catalog_item_id_alternatives": [
+            245803,
+            245804
+          ],
+          "urls": [
+            "https://www.wowhead.com/ptr/item=245803/argentleaf-pigment",
+            "https://www.wowhead.com/item=245804/argentleaf-pigment"
+          ],
+          "note": "245803 indexed on PTR 12.1.7; direct live page bot-gated."
+        },
+        {
+          "source_name": "Refulgent Copper Ingot",
+          "reported_output_family": "Evercore",
+          "catalog_item_id_alternatives": [
+            238197,
+            238198
+          ],
+          "urls": [
+            "https://www.wowhead.com/item=238197/refulgent-copper-ingot",
+            "https://www.wowhead.com/item=238198/refulgent-copper-ingot"
+          ]
+        }
+      ],
+      "identity_status": "catalog-name verified; rank mapping and applicability unresolved",
+      "output_family_source": "Teishoku Feb 27 2026 table",
+      "new_observed_casts": 0,
+      "new_independent_measured_cohorts": 0,
+      "new_supported_gold_decisions": 0,
+      "unconditional_expected_quantities": null,
+      "drop_probability": null,
+      "measured_output_range": null
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
   "new_gold_ev_coverage_verified": 0,
   "worker_reports_verified": {
     "legacy": {
-      "updated_at": "2026-11-07T01:53:41.991Z",
-      "status_file": "research/coordination/quiet-status/legacy.json",
-      "finding": "verified-new-independent-original-wotlk-titanium-quantities-no-logged-cast-histograms",
-      "verified_commit_sha": null,
-      "verified_at_utc": "2026-11-07T02:03:30.887Z",
-      "source_read_from_branch_head": "0c0ddbb5b2d696ecb42a76dfed2aa03a9cf4d01e"
+      "read_utc": "2026-11-07T02:57:38.089Z",
+      "worker_updated_at": "2026-11-07T02:48:27.647Z",
+      "status_blob_sha": "a36c6fe1685ca930367dcb5a9b9dc1de922c1556",
+      "summary": "historical TBC DE reference mappings; no observed new casts"
     },
     "dragonflight": {
-      "updated_at": "2026-11-07T01:36:39.291Z",
-      "status_file": "research/coordination/quiet-status/dragonflight.json",
-      "finding": "Completed source-search and duplicate check; no new independently measured Dragonflight processing event table. Neither prospecting nor milling gaps closed.",
-      "verified_commit_sha": "197c2dbb218687ffbf25ec9dc7447213d3c5ab4c",
-      "verified_at_utc": "2026-11-07T02:03:30.887Z",
-      "source_read_from_branch_head": "0c0ddbb5b2d696ecb42a76dfed2aa03a9cf4d01e"
+      "read_utc": "2026-11-07T02:57:38.089Z",
+      "worker_updated_at": "2026-11-07T02:40:01.500Z",
+      "status_blob_sha": "b9ba2bb2e2b47c79390dbb5e0755237099846c55",
+      "summary": "8 historical material rows in six cited original cohorts, not new measured per-cast logs"
     },
     "war-within": {
-      "updated_at": "2026-11-07T01:29:13.873Z",
-      "status_file": "research/coordination/quiet-status/war-within.json",
-      "finding": "research_only_12_pigment_output_rank_identities_verified_and_one_2025_milling_context_source_no_measured_numeric_baseline",
-      "verified_commit_sha": null,
-      "verified_at_utc": "2026-11-07T02:03:30.887Z",
-      "source_read_from_branch_head": "0c0ddbb5b2d696ecb42a76dfed2aa03a9cf4d01e"
+      "read_utc": "2026-11-07T02:57:38.089Z",
+      "worker_updated_at": "2026-11-07T02:24:00.566Z",
+      "status_blob_sha": "4a2d09724bb8aa66c5a4be4287532cde69bdaaf3",
+      "summary": "one original two-cast shatter hit report; not eligible standard DE estimator without method schema"
     },
     "midnight": {
-      "updated_at": "2026-11-07T01:18:22.266Z",
-      "status_file": "research/coordination/quiet-status/midnight.json",
-      "finding": "Two new original source-linked reference leads documented (approximate skill-conditioned rank-2 Dawn Crystal quality claim and first-person one-deck disenchant with unresolved output identity); no new validated completed-cast per-material cohort, zero histogram, output quantity, live Miststalker's 272246 ilvl305 eligibility or Umbral Tin 237362 rank-specific yields. Both records reference-only, not measured estimator data.",
-      "verified_commit_sha": "04d1acbe9e7935b96ebe3932af5f18507ec7c11c",
-      "verified_at_utc": "2026-11-07T02:03:30.887Z",
-      "source_read_from_branch_head": "0c0ddbb5b2d696ecb42a76dfed2aa03a9cf4d01e"
+      "read_utc": "2026-11-07T02:57:38.089Z",
+      "worker_updated_at": "2026-11-07T02:11:44.520Z",
+      "status_blob_sha": "9659e711944baffe5bf9fc1c882f0c94062a76d0",
+      "summary": "260374 source index 9 reported base-item disenchant events with unnamed 7/9 & 2/9 material rows"
     }
   },
   "evidence_files": [
@@ -2072,7 +2256,21 @@
     "https://www.reddit.com/r/woweconomy/comments/6ygegx/",
     "https://us.forums.blizzard.com/en/wow/t/engineer-recycling-only-gives-evercores/2259599",
     "https://www.reddit.com/r/woweconomy/comments/1sv5u5a/recycling_changes/",
-    "https://www.reddit.com/r/woweconomy/comments/1swweyv/change_in_skill_after_patch/"
+    "https://www.reddit.com/r/woweconomy/comments/1swweyv/change_in_skill_after_patch/",
+    "https://www.wowhead.com/item=240166/arcanoweave-lining",
+    "https://www.wowhead.com/item=240167/arcanoweave-lining",
+    "https://www.wowhead.com/item=240164/sunfire-silk-lining",
+    "https://www.wowhead.com/item=240165/sunfire-silk-lining",
+    "https://www.wowhead.com/item=244674/devouring-banding",
+    "https://www.wowhead.com/item=244675/devouring-banding",
+    "https://www.wowhead.com/item=243576/soul-sprocket",
+    "https://www.wowhead.com/item=243577/soul-sprocket",
+    "https://www.wowhead.com/ptr/item=245875/darkmoon-sigil-hunt",
+    "https://www.wowhead.com/item=245876/darkmoon-sigil-hunt",
+    "https://www.wowhead.com/ptr/item=245803/argentleaf-pigment",
+    "https://www.wowhead.com/item=245804/argentleaf-pigment",
+    "https://www.wowhead.com/item=238197/refulgent-copper-ingot",
+    "https://www.wowhead.com/item=238198/refulgent-copper-ingot"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
@@ -2095,12 +2293,13 @@
     "this_checkpoint_dashboard_commit": "a304aa55d3919a0fad8e44e1c2fa71bd9f9ec159",
     "leystone_evidence_blob_sha": "5e00995acd7b3f6a8185cafaec589aaca2364e58",
     "researched_source_url": "https://www.wowhead.com/item=253849/recycling",
-    "research_head": "df61214ab02ea024054443b5bdbbca9f97ba7e12",
+    "research_head": "ef942af552f69e962164d12f2022151d25d8a941",
     "main_head": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
     "integration_head": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "checked_at_utc": "2026-11-07T01:02:40.767Z"
+    "checked_at_utc": "2026-11-07T02:57:38.089Z",
+    "worker_statuses_verified_utc": "2026-11-07T02:57:38.089Z"
   },
-  "commit_sha_when_verified": "0c0ddbb5b2d696ecb42a76dfed2aa03a9cf4d01e",
+  "commit_sha_when_verified": "ef942af552f69e962164d12f2022151d25d8a941",
   "blockers": [
     "Original worker-owned 6 rows need append-only author correction and reviewer deduplication before treating them as independent source identities.",
     "First Flower cross-reference is historical and not current-patch Retail; completed operations remain ambiguous without actual cast logs. Keep archives and TSM reference independent of measured statistics.",
@@ -2119,7 +2318,8 @@
     "Jasper Ring 2011 eight triplets lack a verified per-row crafting denominator and separate green-ring DE event count; blue-quality ring creation must not be mistaken for a DE material drop; modern Retail eligibility and guild perks not verified.",
     "Jasper original Whirlpool author alias/cohort independence versus earlier Cataclysm Jasper Ring Enchantrix studies remains unverified; do not double-weight.",
     "Empyrium 2017 IcyVeins table percentages divide by 1,135 gem units and are NOT per-ore or per-prospect hit probabilities; 17,290/20 mass-batch quotient is noninteger. Four original sources and two additional same-poster 6ygegx arms require source-identity dedupe across archived/imported records before new row admission; no original raw per-click zero histograms, exact refunds or current 2026 eligibility verification.",
-    "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107: February author reports range 1–3 without 0-inclusive casts, conditional distribution or mean; not a priceable expected quantity by itself. Thirty input names lack validated item/rank variant IDs (including missive families and author-only spellings), output names lack exact rank IDs. April 2026 self-reports imply changed skill/quality context but do not prove current mechanics, coefficient or official patch cause. Do not import/publish to protected three-pass branch without independent identity/patch scope, precedence and synthetic-price/render fixture."
+    "COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107: February author reports range 1–3 without 0-inclusive casts, conditional distribution or mean; not a priceable expected quantity by itself. Thirty input names lack validated item/rank variant IDs (including missive families and author-only spellings), output names lack exact rank IDs. April 2026 self-reports imply changed skill/quality context but do not prove current mechanics, coefficient or official patch cause. Do not import/publish to protected three-pass branch without independent identity/patch scope, precedence and synthetic-price/render fixture.",
+    "COORD-MIDNIGHT-RECYCLING-VARIANT-CATALOG-20261107: seven named inputs have 2 separately indexed possible item variants each; original February table does not identify which rank was recycled or whether both variants are eligible. PTR-only catalog hits for 245803/245875 are not current live confirmation. Unknown P(hit), per-operation means, saved reagent amounts and April patch-specific quality rules; no EV or recommendation changes."
   ],
   "exhausted_sources": [
     "Generic Dragonflight data searches and previously indexed cohorts are exhausted; do not duplicate 71 verified historical pooled rows.",
@@ -2167,7 +2367,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Research-only priority COORD-MIDNIGHT-RECYCLING-FAMILY-RANGE-20261107: crosswalk the 30 February original Recycling table input names to 2026 Retail exact item IDs and quality variants, distinguish the 16 Aetherlume and 14 Evercore families, verify the April 2026 skill/quality break from contemporary official patch or original profession screenshots, and obtain 0-inclusive per-operation output/refund logs or verified conditional means. Send reviewed findings to protected three-pass integrator for labeled gap-only source precedence and offline synthetic-price tooltip tests; no direct addon branch edits.",
+  "next_concrete_step": "Resolve source-specific rank/quality and current Retail eligibility for the 7 catalog-paired Recycling inputs using original recipe/itemLinks or raw 0-inclusive Recycling logs; verify remaining 23 named families without duplicating worker research, then submit research-only identity/units handoff to protected three-pass implementation owner for gap-only precedence and synthetic-price engine/tooltip checks. No addon branch edits.",
   "validation_executed": {
     "source_readback": true,
     "source_comment_boundary_check": true,
@@ -2181,7 +2381,18 @@
     "assumed_craft_denominator_admitted": false,
     "status_readback_verified": false,
     "dashboard_readback_verified": false,
-    "this_run": "Fetched original Feb27 Blizzard community forum first-person table; manually transcribed and JS-counted 30 rows 16 Aetherlume/14 Evercore; compared independent April25/Apr27 first-person patch/skill change reports and current five-reagent recipe guide. Read charter, protected three-pass plan/PASS-1, research queue/schema/mechanics/strategy/flags; fetched 4 worker quiet statuses and main/research/integration branch heads; checked PR22/23 closed-unmerged; latest branch has no PR-triggered Actions run or combined status in queried results. No addon/offline valuation/WoW test."
+    "this_run": {
+      "utc": "2026-11-07T02:57:38.089Z",
+      "source_checks": "Feb 27 original Blizzard forum table and 14 indexed Wowhead live/PTR item entries for 7 source names",
+      "offline_engine_or_tooltip": false,
+      "lua_tests": false,
+      "github_research_ci": "run 42331037860 success at research head ef942af; no CI validation yet for coordinator changes",
+      "main_ci": "run 42318496207 success at 1a0494a",
+      "integration_ci": "run 41484262496 success at 3d667d0 (Nov 2)",
+      "real_wow_client": false,
+      "processed_new_evidence_files": 0,
+      "measured_cohorts_admitted": 0
+    }
   },
   "reporting_dashboard": "research/coordination/RESEARCH-DASHBOARD.md",
   "safety": {
@@ -2453,7 +2664,7 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
     "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
-  "research_branch_head_read_before_write": "0c0ddbb5b2d696ecb42a76dfed2aa03a9cf4d01e",
+  "research_branch_head_read_before_write": "ef942af552f69e962164d12f2022151d25d8a941",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-07T02:03:30.887Z",
   "verified_base_commit_sha": "df61214ab02ea024054443b5bdbbca9f97ba7e12",
   "current_status_commit_sha": null,
