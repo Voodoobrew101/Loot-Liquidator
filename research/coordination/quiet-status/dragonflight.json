@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-07T04:37:04.130Z",
+  "updated_at": "2026-11-07T05:39:56.920Z",
   "branch": "implementation/five-agent-completion",
-  "status": "New Dragonflight Draconium Ore rank-1 and rank-2 item-ID corroboration from current Retail GoldCap; no new independent per-cast prospecting/milling measurements. A seven-route named cross-site audit is recorded without duplicating historical cohorts.",
+  "status": "Identity-only correction for an EXISTING 80-prospect Prismatic Ore study: rank-3 Eternity Amber 192851, four units. No new independent completed-cast/zero-inclusive prospecting or milling cohort; priority source search exhausted for this run.",
   "task_ids": [
     "T0020",
     "T0019",
@@ -15,97 +15,136 @@
     "T0014"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019: Draconium ore quality IDs 189143 (R1), 188658 (R2), 190311 (R3) now mapped by GoldCap pages; still request independent in-game/API verification of quality identity and input-rank prospect outcomes.",
-    "T0046: Serevite 190395/190396/190394 item-to-rank discrepancy S19 remains Master-owned; Khaz'gorite 190312/190313/190314 per-rank outcome distributions are absent.",
-    "T0041: Prismatic Ore 194545 material outcomes including Eternity Amber 192849/192850/192851 rank attribution, input/output 0/1/2+ per-cast histograms, skill/specialization and Resourcefulness refunds remain unknown.",
-    "T0018/T0015/T0017/T0016: Bubble Poppy 191467 -> 198412/198413/198414 and Saxifrage 191464/191465/191466 -> 198418/198419/198420 lack independently captured per-cast pigment hits, unit totals, and zero-inclusive histograms."
+    "T0041/T0046: input Prismatic Ore 194545 -> rank-3 Eternity Amber 192851; original superbondez 400 ore / 80 explicitly completed prospects / 4 output units, but occurrence hits, zeros, positive stack histogram, refund details, skill/spec/patch still unreported.",
+    "T0046 S19: Serevite Ore item rank identity GoldCap current retail 190395=R1, 190396=R2, 190394=R3; original author rank-to-ID conflict pending Master+Blizzard authoritative tooltip approval.",
+    "T0020/T0019: Draconium 189143 R1/188658 R2/190311 R3 lack independent rank-specific complete cast outcome histograms; old nominal ore totals are not actual cast denominators.",
+    "T0041: Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545 output 0/1/2+ per-cast distributions missing; S21 Eternity Amber R1/R2 source malformed, unit counts still unknown.",
+    "T0018/T0015/T0017/T0016/T0014: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 and Hochenblume 191462 milling by exact rank/output missing measured completed casts, outputs and Resourcefulness-aware histograms."
   ],
   "newly_verified_fields": [
     {
-      "inputItemID": 189143,
-      "inputName": "Draconium Ore",
+      "inputItemID": 194545,
+      "outputItemID": 192851,
+      "outputName": "Eternity Amber",
+      "outputRank": 3,
+      "field": "previously-null outputItemID",
+      "cohort": "wowhead-superbondez-prismatic-ore-400",
+      "casts": 80,
+      "totalQuantity": 4,
+      "source": "https://www.wowhead.com/item=194545/prismatic-ore",
+      "corroboration": "https://goldcap.gg/retail/us/items/192851",
+      "verification": "Source-identification corroboration by secondary current Retail catalog, not an independent in-game Blizzard API reading or new measured cohort"
+    },
+    {
+      "inputItemID": 190395,
+      "inputName": "Serevite Ore",
       "inputRank": 1,
-      "field": "qualityRank",
-      "verification": "Current GoldCap Retail US item page; independent game/API confirmation pending",
-      "source": "https://goldcap.gg/retail/us/items/189143"
+      "field": "rank-to-itemID",
+      "source": "https://goldcap.gg/retail/us/items/190395",
+      "verification": "Secondary current-Retail catalog corroboration; t-mart/wow-auction historical GitHub README independently lists same rank mapping; Master shared-schema review pending"
     },
     {
-      "inputItemID": 188658,
-      "inputName": "Draconium Ore",
+      "inputItemID": 190396,
+      "inputName": "Serevite Ore",
       "inputRank": 2,
-      "field": "qualityRank",
-      "verification": "Current GoldCap Retail US item page; independent game/API confirmation pending",
-      "source": "https://goldcap.gg/retail/us/items/188658"
+      "field": "rank-to-itemID",
+      "source": "https://goldcap.gg/retail/us/items/190396",
+      "verification": "Secondary current-Retail catalog corroboration; t-mart/wow-auction historical GitHub README independently lists same rank mapping; Master shared-schema review pending"
     },
     {
-      "inputItemID": 190311,
-      "inputName": "Draconium Ore",
+      "inputItemID": 190394,
+      "inputName": "Serevite Ore",
       "inputRank": 3,
-      "field": "qualityRank",
-      "verification": "Current GoldCap Retail US item page; previously noted rank 3 mapping, now corroborated alongside ranks 1 and 2",
-      "source": "https://goldcap.gg/retail/us/items/190311"
+      "field": "rank-to-itemID",
+      "source": "https://goldcap.gg/retail/us/items/190394",
+      "verification": "Secondary current-Retail catalog corroboration; t-mart/wow-auction historical GitHub README independently lists same rank mapping; Master shared-schema review pending"
+    },
+    {
+      "outputItemID": 192849,
+      "outputName": "Eternity Amber",
+      "outputRank": 1,
+      "field": "rank-to-itemID corroboration",
+      "source": "https://goldcap.gg/retail/us/items/192849",
+      "verification": "Secondary current-Retail catalog; original Prismatic R1/R2 units remain ambiguous null"
+    },
+    {
+      "outputItemID": 192850,
+      "outputName": "Eternity Amber",
+      "outputRank": 2,
+      "field": "rank-to-itemID corroboration",
+      "source": "https://goldcap.gg/retail/us/items/192850",
+      "verification": "Secondary current-Retail catalog; original Prismatic R1/R2 units remain ambiguous null"
     }
   ],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
-  "independent_new_controlled_cohorts": 0,
+  "numerical_fields_improved": [
+    {
+      "studyKey": "wowhead-superbondez-prismatic-ore-400",
+      "replaces": "dragonflight-20261031-50044",
+      "inputItemID": 194545,
+      "outputItemID": 192851,
+      "existingCasts": 80,
+      "existingTotalQuantity": 4,
+      "newCasts": 0,
+      "newTotalQuantity": 0
+    }
+  ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-07T0436-draconium-rank-source-audit.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl"
   ],
   "source_links": [
-    "https://goldcap.gg/retail/us/items/189143",
-    "https://goldcap.gg/retail/us/items/188658",
-    "https://goldcap.gg/retail/us/items/190311",
-    "https://www.reddit.com/r/woweconomy/comments/y3e8ek",
-    "https://www.reddit.com/r/woweconomy/comments/10i63zb"
+    "https://www.wowhead.com/item=194545/prismatic-ore",
+    "https://goldcap.gg/retail/us/items/192849",
+    "https://goldcap.gg/retail/us/items/192850",
+    "https://goldcap.gg/retail/us/items/192851",
+    "https://goldcap.gg/retail/us/items/190395",
+    "https://goldcap.gg/retail/us/items/190396",
+    "https://goldcap.gg/retail/us/items/190394",
+    "https://github.com/t-mart/wow-auction/blob/master/README.md"
   ],
-  "verified_commit_sha": "afdc919042abca2d8213e763faddb9e2a7fe78ad",
-  "commit_sha_scope": "This SHA is the read-back-verified new evidence-file commit. Status updated in a subsequent commit because available GitHub contents actions do not offer a two-file atomic write; final status commit can only be verified after creation. No other worker files changed.",
+  "verified_commit_sha": null,
+  "commit_sha_scope": "A commit cannot contain its own SHA in committed status content. This exact single-commit evidence+status write must be verified externally against branch HEAD; prior evidence and status are not altered. No self-referential SHA fabricated.",
   "blockers": [
-    "No NEW original per-output, rank-specific completed prospect/mill operation logs with actual hits, output units, zeros and histograms, despite named multi-site searches. Older beta, nominal-ore and pooled records are not independent cohorts.",
-    "GoldCap is one source vendor (three individual item pages), not an independent in-game rank tooltip; Master must approve any shared rank mappings.",
-    "S19 Serevite quality-ID conflict and S21 Prismatic/Eternity Amber family-rank mapping unresolved; no fabricated casts from nominal inputs or Resourcefulness refunds.",
-    "No addon, estimator, common schema, queue, flags, other worker status or dashboard edits; no full production test or compilation performed."
+    "No NEW original completed-cast-level prospecting/milling histograms, hits and refunds found; prior nominal-ore, estimated and copied original cohorts not independent.",
+    "Superbondez sample already duplicated in historic evidence as dragonflight-20261101-042; corrected record explicitly replaces 20261031-50044 only. Master owns cross-file deduplication and compiler handoff.",
+    "S19 Serevite quality mapping awaiting authoritative Blizzard/character tooltip review. GoldCap is one vendor not independent primary tooltip.",
+    "S21 Prismatic Ore Eternity Amber R1/R2 units are ambiguous in source; no quantity/hit imputation.",
+    "No production, master/shared, queue, agent, schema, release or PR changes."
   ],
   "exhausted_sources": [
     {
-      "path": "New original Dragonflight prospecting per-operation rank-specific distributions",
-      "reason": "Named cross-site audit surfaced earlier beta Jallfo/Bugy, Reddit 10u5ao8, 10i63zb, zkay8v, zjh0d0 and Superbondez source cohorts, already represented; no independent fresh histograms.",
+      "path": "New original Draconium/Serevite/Khaz'gorite/Prismatic per-operation drop histograms",
+      "reason": "Prior original Reddit/Wowhead studies are already archived; new searches returned third-party catalogs and summaries, not new logged completed-cast data.",
       "whereLooked": [
-        "Reddit r/woweconomy",
-        "Wowhead sources/comments",
-        "Blizzard forums",
-        "Warcraft Wiki",
-        "GitHub CSV/SavedVariables searches"
-      ]
-    },
-    {
-      "path": "Bubble Poppy/Saxifrage mill 0/1/2+ per-operation outputs",
-      "reason": "New named checks of guide and forum source surfaces did not yield completed operation histograms or Resourcefulness-adjusted denominators.",
-      "whereLooked": [
-        "wow-professions.com",
-        "Blizzard forums",
-        "Warcraft Wiki",
-        "Reddit r/woweconomy",
-        "Wowhead by name"
+        "Reddit r/woweconomy named Dragonflight Draconium Ore prospecting studies including original 10h6ccx and 10i63zb",
+        "Reddit r/woweconomy named Khaz'gorite Ore and Serevite Ore original prospected batch studies",
+        "Wowhead Prismatic Ore item=194545 original superbondez and TheChisel comments",
+        "Wowhead Dragon Isles Prospecting spell=374627 and Dragonflight ore output comments",
+        "Warcraft Wiki named Dragonflight ore, Prismatic Ore and Milling pages",
+        "wow-professions.com named Dragonflight Jewelcrafting/Inscription milling guides",
+        "GitHub indexed Dragonflight ProspectMate SavedVariables, csv and spreadsheet export searches",
+        "GoldCap Retail named Serevite Ore and Eternity Amber quality-rank item pages",
+        "Blizzard forums named Dragonflight milling and ore-prospecting results"
       ]
     }
   ],
-  "next_concrete_step": "Request current in-game/Blizzard-API tooltip check from Master for Draconium rank IDs 189143/188658/190311, then seek an original Dragonflight ProspectMate SavedVariables export with per-operation ore quality, raw consumed/refunded ore, material stack outcomes and exact item IDs; pursue raw mill traces for Bubble Poppy/Saxifrage if ore logs remain unavailable.",
+  "next_concrete_step": "Master to review same-study dedupe for superbondez 80-cast Prismatic Ore (including dragonflight-20261101-042) and authoritative API item-rank mapping; next worker search should target UNSEEN original Dragonflight ProspectMate SavedVariables/log exports or raw Blob/Google Sheets per-cast operations and resourcefulness refunds rather than repeat known forum cohorts.",
   "validation": {
-    "evidence_jsonl_parse": "PASS (read back)",
-    "evidence_record_count": 1,
-    "evidence_drop_records": 0,
-    "evidence_searched_records": 1,
-    "named_search_routes": 7,
-    "quality_ids_correspond_to_source_urls": true,
-    "no_inferred_casts_or_probabilities": true,
+    "prepared_jsonl_parse": "PASS",
+    "evidence_record_count": 2,
+    "drop_corrections": 1,
+    "searched_records": 1,
+    "completed_cast_cohorts_new": 0,
+    "unmeasured_fields_null": true,
+    "source_audit_named_sites": 9,
+    "source_audit_minimum_met": true,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-07T0436-draconium-rank-source-audit.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-07T0539-prismatic-amber-r3-identity-and-cast-audit.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "atomic_commit": false,
-    "reason_for_two_commits": "GitHub connector exposes single-file write API but does not expose current tree SHA for two-file atomic Git commit; evidence committed once, own status separately."
+    "atomic_commit_planned": true,
+    "post_commit_readback": "PENDING"
   },
   "production_changed": false,
   "merge_performed": false,
