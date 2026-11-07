@@ -1,21 +1,20 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-07T17:40:43.200Z",
+  "updated_at": "2026-11-07T19:06:38.960Z",
   "branch": "implementation/five-agent-completion",
-  "status": "rank_quality_cross_provider_corroborated_no_new_original_numeric_cohort",
+  "status": "cross_provider_draconium_rank_corroboration_no_new_numeric_cast_cohort",
   "task_ids": [
     "T0020",
+    "T0019",
+    "T0046",
     "T0018",
     "T0015",
-    "T0041",
-    "T0019",
-    "T0046"
+    "T0041"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143/188658/190311, Serevite Ore 190394/190395/190396, Khaz'gorite Ore 190312/190313/190314, Prismatic Ore 194545: independent actual completed prospects, rank-specific output IDs, per-output castsWithDrop, 0/1/2+ histograms, skill/specialization and Resourcefulness refund accounting",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: rank-specific completed mills and Serene/Blazing pigment per-output quantities, hits and 0/1/2+ histograms",
-    "Xenastro original 2023 spreadsheet Prospecting Log rows 28,33,39,54,62: publicly visible calculator distribution not sufficient to verify original row values or completed casts",
-    "Serevite Ore quality mappings: reconcile conflicting secondary rank labels before Master-approved import"
+    "Draconium Ore 189143/188658/190311: independent item ID ↔ rank identity crosscheck, original per-rank completed prospects, exact per-output hits, zeros and 0/1/2+ histograms",
+    "Serevite Ore 190394/190395/190396 and Khaz'gorite Ore 190312/190313/190314; Prismatic Ore 194545: original prospecting logs separated by patch, skill/spec, Resourcefulness refunds and output quality identity",
+    "Bubble Poppy 191467/191468/191469 → Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 → Blazing Pigment 198418/198419/198420: independent completed-mill output and 0-N distributions"
   ],
   "newly_verified_fields": [],
   "newly_corroborated_fields": [
@@ -36,13 +35,31 @@
         "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190396"
       ],
       "conflict": "https://saddlebagexchange.com/wow/item-data/190394 lists item 190394 as Quality 1, and 190395/190396 as Quality 2/3"
+    },
+    {
+      "name": "Draconium Ore rank-to-item ID cross-provider corroboration",
+      "mapping": {
+        "188658": 2,
+        "189143": 1,
+        "190311": 3
+      },
+      "scope": "new independent second third-party item-catalog confirmation, not original Blizzard item service or in-game quality tooltip, and not a measured processing cohort",
+      "sources": [
+        "https://goldcap.gg/retail/us/items/189143",
+        "https://goldcap.gg/retail/us/items/188658",
+        "https://goldcap.gg/retail/us/items/190311",
+        "https://wowpricehub.com/us/commodity/item/Draconium%20Ore-189143",
+        "https://wowpricehub.com/us/illidan/item/Draconium%20Ore-188658",
+        "https://wowpricehub.com/us/commodity/item/Draconium%20Ore-190311"
+      ]
     }
   ],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-07T1740-independent-rank-crosscheck-and-workbook-access.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-07T1740-independent-rank-crosscheck-and-workbook-access.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-07T1908-independent-draconium-rank-crosscheck-and-numeric-search.jsonl"
   ],
   "source_links": [
     "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190394",
@@ -53,15 +70,22 @@
     "https://goldcap.gg/retail/us/items/190396",
     "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190395",
     "https://wowpricehub.com/us/illidan/item/Serevite%20Ore-190396",
-    "https://saddlebagexchange.com/wow/item-data/190394"
+    "https://saddlebagexchange.com/wow/item-data/190394",
+    "https://goldcap.gg/retail/us/items/189143",
+    "https://goldcap.gg/retail/us/items/188658",
+    "https://goldcap.gg/retail/us/items/190311",
+    "https://wowpricehub.com/us/commodity/item/Draconium%20Ore-189143",
+    "https://wowpricehub.com/us/illidan/item/Draconium%20Ore-188658",
+    "https://wowpricehub.com/us/commodity/item/Draconium%20Ore-190311",
+    "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight"
   ],
   "verified_commit_sha": null,
-  "commit_sha_scope": "Evidence and status are written atomically in the same commit; the final commit hash cannot be included in its own content. The commit and read-back will be verified after pushing the branch ref.",
+  "commit_sha_scope": "Atomic one-commit evidence/status update. The commit SHA cannot be stored in its own hashed content; commit and branch read-back are verified after ref update.",
   "blockers": [
-    "No newly verifiable original Dragonflight per-cast processing log or 0/1/2+ histogram for top ore/milling queue tasks; historical cohorts already preserved and must not be duplicated.",
-    "Xenastro's original public Google workbook resolves to a calculator table in current scraper; direct edit/gviz/export URLs did not expose the Prospecting Log tab or raw operation ledger.",
-    "GoldCap/WoW Price Hub current Serevite rank mapping is corroborated by independent third-party publishers but conflicts with Saddlebag Exchange labels; Blizzard in-game or item API verification still desirable.",
-    "No confirmed completed casts from nominal ore totals where Resourcefulness refunds occur; exact per-output hit counts and zeros remain null."
+    "All priority ore/mill per-output hit counts and 0/1/2+ histograms remain unavailable from NEW original player samples; historical cohorts cannot be duplicated.",
+    "No confirmed completed casts derivable from nominal ore input totals where Resourcefulness refunds are possible; keep casts and chance null.",
+    "Secondary catalog rank mappings now agree for Draconium, but Blizzard/item client authoritative confirmation is still outstanding; Serevite conflict with Saddlebag remains.",
+    "Xenastro original public Prospecting Log rows remain unexposed from accessible workbook summaries, and previous access attempts were exhausted."
   ],
   "exhausted_sources": [
     {
@@ -92,9 +116,27 @@
         "WoW Price Hub Retail US Serevite Ore 190394, 190395, 190396: quality TIER_3, TIER_1, TIER_2 respectively (independent site corroboration)",
         "Saddlebag Exchange item-data Serevite Ore 190394, 190395, 190396: labels Quality 1, 2, 3 respectively, CONFLICTING with both other catalogs; its 190395 page text also incorrectly situates Dragonflight Serevite in Spires of Arak"
       ]
+    },
+    {
+      "path": "Independent Draconium ore quality catalog crosscheck plus named raw prospecting/milling search",
+      "reason": "Cross-vendor rank labels newly corroborated; no previously unrecorded original material-by-cast sample. Other discovered player tables are already in repository and were not duplicated.",
+      "whereLooked": [
+        "Reddit r/woweconomy named Draconium Ore prospecting, Khaz'gorite Ore 100 R2 prospective sample, and Prismatic Ore prospecting results: originals y3e8ek, 10u5ao8, 10h6ccx and 17n69p8 already in repo; no new post-hotfix per-cast output histogram",
+        "Reddit r/woweconomy named Bubble Poppy and Saxifrage milling original pigment quantities; no new independent completed-mill 0-N dataset",
+        "Wowhead named Dragon Isles Draconium Ore prospecting and Bubble Poppy Serene Pigment / Saxifrage Blazing Pigment comments: qualitative outputs or already archived Aary firsthand totals; no new hit-count log",
+        "wow-professions.com Dragon Isles Inscription leveling guide named Bubble Poppy and Saxifrage: 5 herbs per mill and reference 2-5 pigment range, NOT player measured distribution (https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight)",
+        "Warcraft Wiki named Draconium Ore and Khaz'gorite Ore processing search: item location and recipes, no original per-cast 0-N prospecting ledger",
+        "Cross-provider current Draconium Ore rank item identity: https://goldcap.gg/retail/us/items/189143",
+        "Cross-provider current Draconium Ore rank item identity: https://goldcap.gg/retail/us/items/188658",
+        "Cross-provider current Draconium Ore rank item identity: https://goldcap.gg/retail/us/items/190311",
+        "Cross-provider current Draconium Ore rank item identity: https://wowpricehub.com/us/commodity/item/Draconium%20Ore-189143",
+        "Cross-provider current Draconium Ore rank item identity: https://wowpricehub.com/us/illidan/item/Draconium%20Ore-188658",
+        "Cross-provider current Draconium Ore rank item identity: https://wowpricehub.com/us/commodity/item/Draconium%20Ore-190311",
+        "GoldCap Khaz'gorite Ore IDs 190312/190313/190314 and WoW Price Hub corroboration: mappings already recorded earlier; not counted as new research"
+      ]
     }
   ],
-  "next_concrete_step": "Retrieve the source spreadsheet's actual 'Prospecting Log' sheet rows 28,33,39,54,62 via verified workbook/xlsx export or public named-tab link, not calculator-derived percentages; ask Master for direct archived workbook or original raw cast logs if access remains blocked. Obtain Blizzard/client item-quality data to resolve Serevite ID ranking, then seek post-beta ore/mill 0-N outcome exports.",
+  "next_concrete_step": "Request Master acceptance of Draconium R1=189143, R2=188658, R3=190311 from two independent catalogs; seek firsthand in-game/item-service authority before production changes. Continue sourcing new original live-era per-cast processing exports for T0020/T0019/T0018/T0015/T0041 rather than rereading Jallfo, Bugy, Xenastro, Aary and copied Reddit aggregate cohorts.",
   "validation": {
     "prepared_jsonl_parse": "PASS",
     "record_count": 1,
@@ -104,7 +146,7 @@
     "zero_outcomes_invented": false,
     "units_invented": false,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-07T1740-independent-rank-crosscheck-and-workbook-access.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-07T1908-independent-draconium-rank-crosscheck-and-numeric-search.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "post_commit_readback": "PENDING",
