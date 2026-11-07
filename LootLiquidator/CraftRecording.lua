@@ -113,12 +113,28 @@ local function coverageGap(study,method,recipe,reason,operation)
         study.coverageGaps[key]=study.coverageGaps[key] or {reason=reason,operationID=operation}
     else study.globalCoverageGap=study.globalCoverageGap or reason end
 end
+-- Stored contexts are immutable snapshots. Index their identities once per
+-- context table, rather than copying and serializing every saved profile on
+-- each cast. Keep the index out of SavedVariables; resetting/replacing a ledger
+-- naturally starts a new index and old ledgers can be garbage collected.
+local contextIndexes=setmetatable({}, {__mode="k"})
 local function contextID(self,context)
     local d=ledger(self);local signature=identity(context)
-    for id,c in pairs(d.contexts) do if identity(c)==signature then return id end end
-    local n=0 for _ in pairs(d.contexts) do n=n+1 end
-    if n>=256 then return nil end
-    local id="context:"..(n+1);d.contexts[id]=copy(context);return id
+    local index=contextIndexes[d.contexts]
+    if not index then
+        index={identities={},count=0}
+        for id,c in pairs(d.contexts) do
+            index.identities[identity(c)]=id;index.count=index.count+1
+        end
+        contextIndexes[d.contexts]=index
+    end
+    local existing=index.identities[signature]
+    if existing then return existing end
+    if index.count>=256 then return nil end
+    local id="context:"..(index.count+1)
+    d.contexts[id]=copy(context)
+    index.identities[signature]=id;index.count=index.count+1
+    return id
 end
 function LL:ValidateCraftObservation(r)
     if type(r)~="table" or not METHODS[r.method] or not integer(r.recipeID)
@@ -922,27 +938,29 @@ function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
             and #inputs==1 and inputs[1].itemID==f.id and inputs[1].quantity==batch
             and (method~='Disenchant' or disenchantInputMatches(inputs[1],f)) then
             checked[queryID]=true
-            -- Re-query the recorded allocation instead of substituting an empty
-            -- allocation. This only reads operation data; it never crafts.
-            local query=json({allocation=r.allocation,concentration=r.applyConcentration})
-            local current=queries[query]
-            if not current then
-                local allocationGUID=r.allocationItemGUID and self.FindSkillQualityTarget and self:FindSkillQualityTarget(f)
-                current=self:CaptureCraftContext(recipeID,f,method,r.allocation,r.applyConcentration,allocationGUID)
-                current.inputIdentity={{itemID=f.id,qualityRank=f.reagentQuality,rarity=f.quality,quantity=batch,
-                    itemLevel=(f.classID==2 or f.classID==4) and f.itemLevel or nil,
-                    hyperlink=(f.classID==2 or f.classID==4) and f.link or nil}}
-                queries[query]=current
-            end
-            local context=d.contexts[id]
-            -- Incomplete measurements remain exportable, never priced as matched.
-            local exact=current.effectiveSkill and current.specialization and current.skillLineID
-                and current.fieldStatus.equipment=="measured" and identity(context)==identity(current) and r.build==build()
-            if exact or self.ProjectPersonalEstimate then
-                local baseline=self:CraftBaseline(r.studyID,id,recipeID)
-                if baseline and baseline.method==method and #baseline.inputs==1
-                    and baseline.inputs[1].itemID==f.id and baseline.inputs[1].quantity==batch
-                    and (method~='Disenchant' or disenchantInputMatches(baseline.inputs[1],f)) then
+            -- Coverage can reject a cohort without any live profession/trait
+            -- API calls. Bag badges query this path for many items per cast.
+            local baseline=self:CraftBaseline(r.studyID,id,recipeID)
+            if baseline and baseline.method==method and #baseline.inputs==1
+                and baseline.inputs[1].itemID==f.id and baseline.inputs[1].quantity==batch
+                and (method~='Disenchant' or disenchantInputMatches(baseline.inputs[1],f)) then
+                -- Re-query the recorded allocation instead of substituting an empty
+                -- allocation. This only reads operation data; it never crafts.
+                local query=json({allocation=r.allocation,concentration=r.applyConcentration})
+                local current=queries[query]
+                if not current then
+                    local allocationGUID=r.allocationItemGUID and self.FindSkillQualityTarget and self:FindSkillQualityTarget(f)
+                    current=self:CaptureCraftContext(recipeID,f,method,r.allocation,r.applyConcentration,allocationGUID)
+                    current.inputIdentity={{itemID=f.id,qualityRank=f.reagentQuality,rarity=f.quality,quantity=batch,
+                        itemLevel=(f.classID==2 or f.classID==4) and f.itemLevel or nil,
+                        hyperlink=(f.classID==2 or f.classID==4) and f.link or nil}}
+                    queries[query]=current
+                end
+                local context=d.contexts[id]
+                -- Incomplete measurements remain exportable, never priced as matched.
+                local exact=current.effectiveSkill and current.specialization and current.skillLineID
+                    and current.fieldStatus.equipment=="measured" and identity(context)==identity(current) and r.build==build()
+                if exact or self.ProjectPersonalEstimate then
                     baseline.inputCount=batch;baseline.expectedInputCount=baseline.expectedInputsConsumed[1].expectedQuantity
                     baseline.patchBuild=r.build;baseline.effectiveSamples=baseline.operations;baseline.samples=baseline.operations
                     baseline.source="Measured personal cast log";baseline.observationContext=copy(context)
