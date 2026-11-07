@@ -765,7 +765,14 @@ function LA:MakeReport()
     return table.concat(lines, "\n")
 end
 
+LA.MaxCopyTextBytes=65536
 function LA:ShowCopy(title, contents, options)
+    contents=tostring(contents or '')
+    if #contents>self.MaxCopyTextBytes then
+        title='Export too large to display safely'
+        contents='This export exceeds the safe copy-window size. Your recorded results are still saved. Use Export pages, or share LootLiquidator.lua from your SavedVariables folder.'
+        options=nil
+    end
     if not self.copyDialog then
         local f = CreateFrame("Frame", "LootLiquidatorCopyDialog", UIParent, "BasicFrameTemplateWithInset")
         f:SetSize(680, 430); f:SetMovable(true); f:SetClampedToScreen(true)
@@ -789,11 +796,16 @@ function LA:ShowCopy(title, contents, options)
         edit:SetMaxLetters(0); edit:SetMaxBytes(0); edit:SetTextInsets(0, 0, 0, 0)
         edit:SetSpacing(2); edit:SetIndentedWordWrap(false)
         edit:SetWidth(600); edit:SetHeight(280)
+        local fitting=false
         local function fitText()
+            if fitting then return end
+            fitting=true
             local width = sf:GetWidth()
-            if width and width > 0 then edit:SetWidth(width) end
+            if width and width > 0 and math.abs(edit:GetWidth()-width)>0.5 then edit:SetWidth(width) end
             local _, lineHeight = edit:GetFont()
-            edit:SetHeight(math.max(sf:GetHeight() or 0, (edit:GetNumLines() or 1) * ((lineHeight or 12) + 2) + 12))
+            local height=math.max(sf:GetHeight() or 0, (edit:GetNumLines() or 1) * ((lineHeight or 12) + 2) + 12)
+            if math.abs(edit:GetHeight()-height)>0.5 then edit:SetHeight(height) end
+            fitting=false
         end
         sf:HookScript("OnSizeChanged", fitText)
         edit:SetScript("OnTextChanged", function(control, userInput)
@@ -838,6 +850,7 @@ function LA:ShowCopy(title, contents, options)
         f.close:SetScript("OnClick", function() f:Hide() end)
         f:SetScript("OnHide", function()
             edit:ClearFocus(); f.onPage = nil -- release the recording snapshot
+            f.contents='';edit:SetText('') -- release native text layout and selection
         end)
         if UISpecialFrames then UISpecialFrames[#UISpecialFrames + 1] = "LootLiquidatorCopyDialog" end
         self.copyDialog = f
@@ -880,7 +893,7 @@ function LA:ShowCopy(title, contents, options)
     end
     f:SetFrameLevel(math.max(100, (anchor.GetFrameLevel and anchor:GetFrameLevel() or 0) + 20))
     f.TitleText:SetText(title or "Loot Liquidator")
-    f.contents = tostring(contents or "")
+    f.contents = contents
     f.edit:SetText(f.contents)
     f:Show(); f:Raise(); f.opened = true
     f:SelectText()

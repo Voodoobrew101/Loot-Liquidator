@@ -6,7 +6,7 @@
 local _,LL=...
 local SCHEMA="loot-liquidator.cast-log/1"
 local MAX_TEXT=500000          -- characters; one export page is far smaller
-local MAX_RECORDS=1000         -- per pasted page (exports hold 25 per page)
+local MAX_RECORDS=2000         -- matches the recorder's bounded retained ledger
 local MAX_INPUTS_PER_CAST=20   -- mass milling uses 20; disenchanting uses 1
 local MAX_PER_MATERIAL=100     -- no processing cast returns more of one item
 local MAX_OUTPUTS=20
@@ -124,7 +124,25 @@ local function decode(text)
     if ok then return result end
     return nil,result
 end
-LL.DecodeImportJSON=decode
+local function decodeTransfer(text)
+    local data,why=decode(text)
+    if not data then return nil,why end
+    if not object(data) or data.schemaVersion~='loot-liquidator.cast-transfer/1' then return data,nil,text end
+    if data.encoding~='zlib-base64' or not integer(data.uncompressedBytes,1,16777216)
+        or type(data.payload)~='string' or #data.payload>65536 then return nil,'Invalid compact export' end
+    local api=C_EncodingUtil
+    if not api or type(api.DecodeBase64)~='function' or type(api.DecompressString)~='function' then
+        return nil,'This client cannot read compact exports; ask for Export pages.'
+    end
+    local ok,compressed=pcall(api.DecodeBase64,data.payload)
+    if not ok or type(compressed)~='string' then return nil,'Damaged compact export' end
+    local raw;ok,raw=pcall(api.DecompressString,compressed,1)
+    if not ok or type(raw)~='string' or #raw~=data.uncompressedBytes then return nil,'Damaged compact export length' end
+    local inner;inner,why=decode(raw)
+    if not object(inner) or inner.schemaVersion~=SCHEMA then return nil,why or 'Invalid compact research data' end
+    return inner,nil,raw
+end
+LL.DecodeImportJSON=decodeTransfer
 
 -- Returns a clean cast {method,input,batch,build,outputs={[id]=qty}} or nil, why.
 local function checkRecord(r)
@@ -184,7 +202,7 @@ function LL:ImportRecordedResults(text,label)
     text=text:gsub("^%s+",""):gsub("%s+$","")
     if text=="" then return false,"Nothing to import: paste the text from another player's Export first." end
     if #text>MAX_TEXT then return false,"That text is too long. Paste one export page at a time." end
-    local data,why=decode(text)
+    local data,why=decodeTransfer(text)
     if not object(data) then return false,"That text could not be read (it looks damaged or incomplete). Nothing was imported.",{error=why} end
     if data.schemaVersion~=SCHEMA or data.sampleKind~="RAW_CAST_LOG" or not array(data.records) then
         return false,"That text is not a Loot Liquidator results export. Nothing was imported."

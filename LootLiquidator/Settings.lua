@@ -771,23 +771,28 @@ end
 local function Notify(message)
     if print and message then print("|cff66ccffLoot Liquidator|r: "..message) end
 end
-function LL:ShowRecordedResultsExport(paged)
+function LL:ShowRecordedResultsExport(paged,allBatches)
     if not self.ExportRecordedResultsPage then return end
     -- A recording can finish while this window is open. Freeze one bounded
     -- snapshot so Previous/Next never shift casts between export pages.
-    local function snapshot(value)
-        if type(value)~='table' then return value end
-        local out={} for key,entry in pairs(value) do out[key]=snapshot(entry) end return out
-    end
-    local proxy=setmetatable({db={craftResearch=snapshot(self.db and self.db.craftResearch)}},{__index=self})
-    if not paged then
-        local text=proxy:ExportCraftResearch("all"):gsub('|','\\u007c')
-        if self.ShowCopy then self:ShowCopy("Recorded results - all in one",text) end
-        return
+    local proxy=setmetatable({db={craftResearch=self:SnapshotRecordedResearch(not allBatches)}},{__index=self})
+    local limit=self.MaxCopyTextBytes or 65536
+    local function displayText(raw)
+        local literal=raw:gsub('|','\\u007c')
+        if #literal<=32768 then return literal end
+        return (self.PackCraftExport and self:PackCraftExport(raw)) or literal
     end
     local function show(page)
-        local title,text,current,pages=proxy:ExportRecordedResultsPage(page)
+        local title,_,current,pages=proxy:ExportRecordedResultsPage(page)
+        local text=displayText(proxy:ExportCraftResearch(current))
         if self.ShowCopy then self:ShowCopy(title,text,{page=current,pages=pages,onPage=show}) end
+    end
+    if not paged then
+        local text=displayText(proxy:ExportCraftResearch("all"))
+        if #text<=limit then
+            if self.ShowCopy then self:ShowCopy(allBatches and "Recorded results - all batches" or "Recorded results - latest batch",text) end
+            return
+        end
     end
     show(1)
 end
@@ -1004,11 +1009,11 @@ function LL:RegisterNativeSettings()
                 if LL.ShowCopy and LL.RecordingStatus then LL:ShowCopy("Recording status",LL:RecordingStatus()) end
             end,"Shows whether the current batch is recording cleanly, its complete/unresolved counts, and the reason it needs review.",false))
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
-            "Export recorded results","Export",function() LL:ShowRecordedResultsExport() end,
-            "Copy all recorded results once with Ctrl+C, then paste once. The export includes every retained cast and its evidence.",false))
+            "Export latest batch","Export",function() LL:ShowRecordedResultsExport() end,
+            "Copy the latest batch and its evidence with Ctrl+C. Older batches stay in SavedVariables. Large exports use a compact lossless format.",false))
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
-            "Export as pages (fallback)","Export pages",function() LL:ShowRecordedResultsExport(true) end,
-            "Use smaller pages if your destination cannot accept the all-in-one export.",false))
+            "Export latest batch as pages","Export pages",function() LL:ShowRecordedResultsExport(true) end,
+            "Copy smaller pages of the latest batch. Older batches stay saved.",false))
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Start new batch","Start new batch",function() LL:ConfirmStartNewBatch() end,
             "Count the next results you record as a new group, e.g. after changing gear or specialization.",false))

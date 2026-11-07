@@ -207,6 +207,18 @@ LL:ShowRecordedResultsExport()
 eq(f.page,1);eq(f.pages,1)
 eq(#assert(LL.DecodeImportJSON(f.edit:GetText())).records,0,'empty recordings are still copyable')
 check(not f.previous.shown and not f.next.shown)
+-- Contract stubs for the native codec; actual zlib/base64 interoperability is
+-- checked separately against the exact raw bytes emitted by this UI fixture.
+local sources,encoded,serial={},{},0
+C_EncodingUtil={
+    CompressString=function(raw,method,level)
+        eq(method,1,'native compression uses Zlib');eq(level,2,'native compression optimizes size')
+        serial=serial+1;local token=('x%03d'):format(serial);sources[token]=raw;return token
+    end,
+    EncodeBase64=function(token)encoded[token]=token;return token end,
+    DecodeBase64=function(token)return encoded[token] end,
+    DecompressString=function(token,method)eq(method,1);return sources[token] end}
+CopyToClipboard=function()error('protected clipboard API must never be called by addon export')end
 -- Optional full-suite integration: actual successful cast events, new loot-slot
 -- evidence and variant identities -> native popup -> the exact copied JSON.
 -- Standalone dialog fixtures need no external file; tests/run.sh supplies it.
@@ -215,7 +227,7 @@ if arg and arg[1] then
     local measured=assert(LL.DecodeImportJSON(captured))
     LL.db.craftResearch={records=measured.records,contexts=measured.contexts,studies=measured.studies,
         diagnostics=measured.diagnostics,droppedRecords=measured.droppedRecords}
-    f.close.scripts.OnClick(f.close);SettingsPanel:Show();LL:ShowRecordedResultsExport()
+    f.close.scripts.OnClick(f.close);SettingsPanel:Show();LL:ShowRecordedResultsExport(false,true)
     eq(f.page,1);eq(f.pages,1);eq(f.point[2],SettingsPanel)
     local copied=assert(LL.DecodeImportJSON(f.edit:GetText()))
     check(same(copied,measured),'copy field preserves all event-captured facts and provenance')
@@ -225,7 +237,7 @@ if arg and arg[1] then
     eq(copied.records[3].inputs[1].hyperlink,'item:109979:0:0:0:0:0:0:2')
     check(copied.diagnostics[#copied.diagnostics].studyID~=nil,'diagnostic links survive native export')
     local output=assert(io.open('/tmp/loot-disenchant-popup.json','w'))
-    output:write(f.edit:GetText());output:close()
+    output:write(select(3,LL.DecodeImportJSON(f.edit:GetText())));output:close()
     print('PASS: live-event recorder fixture -> native export popup -> unchanged copied research JSON')
 end
 if arg and arg[2] then
@@ -233,16 +245,17 @@ if arg and arg[2] then
     local measured=assert(LL.DecodeImportJSON(captured))
     LL.db.craftResearch={records=measured.records,contexts=measured.contexts,studies=measured.studies,
         diagnostics=measured.diagnostics,droppedRecords=measured.droppedRecords}
-    f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport()
+    f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport(false,true)
     local copied=assert(LL.DecodeImportJSON(f.edit:GetText()))
     check(same(copied,measured),'Recycling receipts and aggregate reconciliation survive native copy')
     eq(#copied.records,20);eq(copied.records[1].method,'Recycle');eq(copied.records[1].captureVersion,3)
     eq(copied.records[1].bagReconciliation.operations,20)
     local output=assert(io.open('/tmp/loot-recycling-popup.json','w'))
-    output:write(f.edit:GetText());output:close()
+    output:write(select(3,LL.DecodeImportJSON(f.edit:GetText())));output:close()
     print('PASS: Recycling20 receipt replay -> native export popup -> unchanged copied JSON')
 end
--- The owner's full 13-page upload is now one copy, with all evidence retained.
+-- Full-history export remains available to internal callers without becoming
+-- the default. Its large payload uses the native codec rather than raw layout.
 local merged={records={},contexts={},studies={},diagnostics={},droppedRecords=0}
 for i=1,13 do
     local file=assert(io.open(('research/integration/measured-captures/2026-11-07-recycling-200-casts/export-page-%02d.json'):format(i),'r'))
@@ -253,13 +266,43 @@ for i=1,13 do
     merged.diagnostics=page.diagnostics
 end
 LL.db.craftResearch=merged
-f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport()
+f.close.scripts.OnClick(f.close);LL:ShowRecordedResultsExport(false,true)
 local all=assert(LL.DecodeImportJSON(f.edit:GetText()))
 eq(all.page,1);eq(all.pages,1);eq(#all.records,301);eq(all.retainedRecords,301)
 check(not f.previous.shown and not f.next.shown,'one-copy export needs no page navigation')
 check(same(all.records,merged.records) and same(all.contexts,merged.contexts)
     and same(all.studies,merged.studies) and same(all.diagnostics,merged.diagnostics),'all evidence survives one copy')
 eq(f.edit.selected,f.contents,'all retained results are selected for one Ctrl+C')
-local out=assert(io.open('/tmp/loot-recycling-200-popup.json','w'));out:write(f.contents);out:close()
-print('PASS: 301 real records from 13 pages -> single native copy, unchanged evidence and fallback paging')
+local out=assert(io.open('/tmp/loot-recycling-200-popup.json','w'));out:write(select(3,LL.DecodeImportJSON(f.contents)));out:close()
+-- Reproduce the 1.8 MB owner upload: export only its latest 169-record batch,
+-- preserving all 683 saved records, its coverage flags and its diagnostics.
+local path='research/integration/measured-captures/2026-11-07-disenchant-108-export-freeze/export-page-1.json'
+local input=assert(io.open(path));local captured=assert(LL.DecodeImportJSON(input:read('*a')));input:close()
+LL.db.craftResearch=captured
+local history=LL:ExportCraftResearch('all')
+LL:ShowRecordedResultsExport()
+local latest,_,raw=LL.DecodeImportJSON(f.contents)
+eq(#latest.records,169);eq(latest.retainedRecords,169);eq(latest.totalRetainedRecords,683)
+eq(latest.exportScope,'latest-batch');eq(latest.exportStudyID,captured.records[#captured.records].studyID)
+for _,r in ipairs(latest.records)do eq(r.studyID,latest.exportStudyID)end
+local studyCount=0 for _ in pairs(latest.studies)do studyCount=studyCount+1 end;eq(studyCount,1)
+check(latest.studies[latest.exportStudyID].coverageGaps['Disenchant:13262'],'filtering must not erase existing coverage gaps')
+eq(#latest.diagnostics,50);eq(LL:ExportCraftResearch('all'),history,'export leaves every saved batch unchanged')
+check(#f.edit:GetText()<=LL.MaxCopyTextBytes,'copy widget receives bounded compact text')
+eq(f.edit.selected,f.contents,'latest batch is ready for one Ctrl+C')
+out=assert(io.open('/tmp/loot-latest-batch.json','w'));out:write(raw);out:close()
+f.close.scripts.OnClick(f.close)
+eq(f.edit:GetText(),'','closing releases native text layout');eq(f.contents,'')
+LL:ShowCopy('Oversize report',string.rep('x',LL.MaxCopyTextBytes+1))
+check(#f.edit:GetText()<LL.MaxCopyTextBytes and f.TitleText.text:find('too large',1,true),'oversize text never reaches the native widget')
+-- An active empty batch is newer than the last completed record.
+captured.activeStudy='new-empty';captured.studies['new-empty']={startedAt=9999999999,label='New empty batch'}
+LL:ShowRecordedResultsExport()
+latest=assert(LL.DecodeImportJSON(f.contents));eq(#latest.records,0);eq(latest.exportStudyID,'new-empty')
+eq(#captured.records,683,'starting/exporting another batch preserves history')
+captured.activeStudy=nil;C_EncodingUtil=nil
+LL:ShowRecordedResultsExport()
+check(#f.edit:GetText()<=LL.MaxCopyTextBytes,'missing native codec cannot expose an oversized copy widget')
+eq(#captured.records,683,'fallback does not remove older results')
+print('PASS: latest-batch export, bounded compact copy, all-history preservation and native text cleanup')
 print('PASS: '..checks..' native export dialog, literal JSON, importer, snapshot paging and optional skin assertions')

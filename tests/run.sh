@@ -66,6 +66,8 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_recipe_coverage.lua
 "$lua_bin" tests/test_disenchant_capture.lua
 "$lua_bin" tests/test_export_dialog.lua /tmp/loot-disenchant-capture-v2.json /tmp/loot-recycling-capture-v3.json
+python3 tests/test_compact_transfer.py
+"$lua_bin" tests/test_compact_transfer.lua
 "$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua

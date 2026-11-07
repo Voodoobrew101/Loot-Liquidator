@@ -989,6 +989,46 @@ end
 function LL:GetLearnedDisenchantEstimate(f)
     return self:GetRecordedProcessingEstimate(f,"Disenchant",1,13262)
 end
+-- Build only the requested export snapshot. Older batches remain in SavedVariables.
+function LL:SnapshotRecordedResearch(latestOnly)
+    local d=self.db and self.db.craftResearch or {records={},contexts={},studies={},diagnostics={},droppedRecords=0}
+    if not latestOnly then return copy(d) end
+    local id=d.activeStudy
+    if not (id and d.studies[id]) then
+        local last=d.records[#d.records];id=last and last.studyID
+        if not id then
+            for candidate,study in pairs(d.studies) do
+                if not id or (study.startedAt or 0)>(d.studies[id].startedAt or 0) then id=candidate end
+            end
+        end
+    end
+    local out={records={},contexts={},studies={},diagnostics={},droppedRecords=d.droppedRecords or 0,
+        targetingActivations=d.targetingActivations or 0,exportScope='latest-batch',exportStudyID=id,
+        totalRetainedRecords=#d.records}
+    if id then
+        out.studies[id]=copy(d.studies[id])
+        for _,r in ipairs(d.records) do if r.studyID==id then
+            out.records[#out.records+1]=copy(r)
+            if r.contextID and not out.contexts[r.contextID] then out.contexts[r.contextID]=copy(d.contexts[r.contextID]) end
+        end end
+        for _,diagnostic in ipairs(d.diagnostics or {}) do
+            if diagnostic.studyID==id then out.diagnostics[#out.diagnostics+1]=copy(diagnostic) end
+        end
+    end
+    return out
+end
+-- Native lossless compression avoids rendering hundreds of thousands of JSON
+-- characters in the copy box. The payload remains portable zlib + base64.
+function LL:PackCraftExport(text)
+    local api=C_EncodingUtil
+    if not api or type(api.CompressString)~='function' or type(api.EncodeBase64)~='function' then return nil end
+    local ok,compressed=pcall(api.CompressString,text,1,2) -- documented Zlib / OptimizeForSize enums
+    if not ok or type(compressed)~='string' or compressed=='' then return nil end
+    local encoded;ok,encoded=pcall(api.EncodeBase64,compressed)
+    if not ok or type(encoded)~='string' or encoded=='' then return nil end
+    return json({schemaVersion='loot-liquidator.cast-transfer/1',encoding='zlib-base64',
+        uncompressedBytes=#text,payload=encoded})
+end
 function LL:ExportCraftResearch(page)
     local d=self.db and self.db.craftResearch or {records={},contexts={},studies={},droppedRecords=0}
     local all=page=="all"
@@ -1000,7 +1040,8 @@ function LL:ExportCraftResearch(page)
         artifactStatus="RESEARCH_ONLY_NOT_SHIPPED",page=page,pages=all and 1 or math.max(1,math.ceil(#d.records/25)),
         records=records,contexts=contexts,studies=d.studies,diagnostics=d.diagnostics or {},
         retainedRecords=#d.records,droppedRecords=d.droppedRecords,automaticMechanicsPromotion=false,
-        exporterRecorderRevision=RECORDER_REVISION,targetingActivations=d.targetingActivations or 0})
+        exporterRecorderRevision=RECORDER_REVISION,targetingActivations=d.targetingActivations or 0,
+        exportScope=d.exportScope,exportStudyID=d.exportStudyID,totalRetainedRecords=d.totalRetainedRecords})
 end
 function LL:ExportCraftBaselines()
     local d=self.db and self.db.craftResearch;local baselines,seen={},{}

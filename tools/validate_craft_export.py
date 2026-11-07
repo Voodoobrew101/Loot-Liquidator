@@ -10,6 +10,9 @@ import json
 import math
 import hashlib
 import functools
+import base64
+import binascii
+import zlib
 from pathlib import Path
 
 SCHEMA = 'loot-liquidator.cast-log/1'
@@ -37,7 +40,29 @@ def vector(items, allow_zero=False):
     return out
 
 
+def unpack_transfer(page):
+    if not isinstance(page, dict) or page.get('schemaVersion') != 'loot-liquidator.cast-transfer/1':
+        return page
+    require(page.get('encoding') == 'zlib-base64', 'Unsupported compact export encoding')
+    size = page.get('uncompressedBytes')
+    require(integer(size) and size <= 16777216, 'Invalid compact export length')
+    payload = page.get('payload')
+    require(isinstance(payload, str) and len(payload) <= 65536, 'Invalid compact export payload')
+    try:
+        compressed = base64.b64decode(payload, validate=True)
+        decoder = zlib.decompressobj()
+        raw = decoder.decompress(compressed, size + 1)
+        require(len(raw) == size and decoder.eof and not decoder.unconsumed_tail and not decoder.unused_data,
+                'Damaged compact export length or trailing data')
+        inner = json.loads(raw.decode('utf-8'))
+    except (ValueError, binascii.Error, zlib.error, UnicodeError) as exc:
+        raise ValueError('Damaged compact export: ' + str(exc)) from exc
+    require(isinstance(inner, dict) and inner.get('schemaVersion') == SCHEMA, 'Invalid compact research data')
+    return inner
+
+
 def validate(pages):
+    pages = [unpack_transfer(page) for page in pages]
     require(pages, 'No export pages supplied')
     records, contexts, studies, page_numbers = [], {}, {}, set()
     def finite_tree(value):
