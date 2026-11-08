@@ -1,230 +1,176 @@
 {
   "role": "legacy",
-  "updated_at": "2026-11-08T16:49:26.742Z",
+  "updated_at": "2026-11-08T17:50:05.866Z",
   "branch": "implementation/five-agent-completion",
-  "status": "12 NEW original item-specific historical disenchant records: three firsthand TBC material quantities (including Arcanoweave Boots 21867 -> Void Crystal 22450, 1 observed in 14 completed disenchant operations) and nine nonduplicated item-side cumulative Looter occurrence rows (one shared 40601 cohort with two outputs). No current-game item eligibility, no Cobalt/Fel Iron new casts, and no unmeasured zero outcomes inferred.",
+  "status": "11 new nonduplicated source-backed records across seven independent cohorts: item-side historical Looter positive-hit counts for Thunderstrike Falchion 25159 (3 output IDs; 208 events), Flesh Beast's Metal Greaves 29325 (2; 144 events), and Communal Warmaul 186057 (2; 7 events); original TBC Reaver Legplates 24979 -> five Arcane Dust (cast count unknown); two distinct first-person Adamantite Ore 23425 -> Golden Draenite 23112 totals (7 and 5) from five stacks each; firsthand Horned Cobalt Helm 40955 -> Infinite Dust 34054 5–7 range (cast count unknown). None licenses modern Retail EV or Warmaul-specific probabilities. No new measured Warmaul 24995/Cobalt 36909/Fel Iron 23424 completed casts.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "T0052",
+    "T0021",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 historical Looter 2068 completed events; material positive rows 22445=1559, 22446=417, 22447=7, 22449=48. Build, item-level/bonus, exact units/histograms, missing-output identity, source epoch and current Retail eligibility still unresolved; do not recycle snapshot.",
-    "Adjacent TBC armor/weapon numerical evidence 21867/29497/30000 and historic epic 33533/33469/33354/33283: source-completed batches or cumulative material-positive counts verified with exact output IDs 22450,22449,22445, but no direct interchangeable uncommon Warmaul mapping.",
-    "TBC-era item IDs 28241/30343/30349 and mixed-era 40601 item-side Looter show 22449 and 34053 with separate source cohorts; source build, variant, quantity/histogram and modern eligibility still unknown.",
-    "Cobalt 36909 and Fel Iron 23424: no new independent per-output hit histograms, completed-cast denominator and specializations; previously recorded Fel Iron 10 stacks / JC361 source not reimported.",
-    "Spaulders of the Wayward Vanquisher token 45661: seven existing class reward IDs 45400/45339/45344/45369/45352/45359/45349 retained; no invented redemptions or variants."
+    "Warmaul Legplates 24995 TBC iLvl108 uncommon plate vs adjacent Reaver Legplates 24979 iLvl102; no original Warmaul measured conditional stack histograms, exact completed click logs, build, suffix, skill or variant despite prior historical 2068-event Looter 22445/22446/22447/22449 snapshot.",
+    "TBC armor/weapon candidate 25159 reported 208 item-side disenchants (22447 168 hits, 22445 30, 22448 10) but item is later Cata/WoD salvage-era and must not be treated as same item cohort or same-era group as 24995.",
+    "TBC era rare iLvl97 plate item 29325 144 source events (22448 143, 22445 1) and distinct TBC Classic starter mace 186057 iLvl52 7 source events (16202 6, 11176 1); keep rarity/level/context separate.",
+    "Legacy prospecting Cobalt Ore 36909 and Fel Iron Ore 23424: no fresh per-cast numerator/denominator, zeros, skill/patch; two new independent Adamantite Ore 23425 first-person five-stack Golden Draenite 23112 totals, casts unknown.",
+    "Legacy WotLK Horned Cobalt Helm 40955 output Infinite Dust 34054 source-observed quantity range 5–7, sample size/patch unknown; distinct from Cobalt Ore prospecting.",
+    "Spaulders of Wayward Vanquisher token 45661 prior seven class rewards unchanged; no independent variant or redemption identity found."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "thottbot-arcanoweave-boots-14-de-one-void",
-      "inputItemID": 21867,
-      "itemLevel": 114,
-      "completedCasts": 14,
+      "studyKey": "wowhead-looter-25159-208-legacy-20261108",
+      "inputItemID": 25159,
+      "sourceReportedDisenchants": 208,
       "outputs": [
         {
-          "outputItemID": 22450,
-          "castsWithDrop": 1,
-          "totalQuantity": 1
-        }
-      ],
-      "source": "https://www.wowhead.com/tbc/item=21867/arcanoweave-boots",
-      "skill": null,
-      "patch": null
-    },
-    {
-      "studyKey": "thottbot-enchanted-clefthoof-boots-single-shard",
-      "inputItemID": 29497,
-      "itemLevel": 112,
-      "completedCasts": 1,
-      "outputs": [
-        {
-          "outputItemID": 22449,
-          "castsWithDrop": 1,
-          "totalQuantity": 1,
-          "histogram": {
-            "1": 1
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/tbc/item=29497/enchanted-clefthoof-boots"
-    },
-    {
-      "studyKey": "thottbot-mixologists-gloves-single-four-dust",
-      "inputItemID": 30000,
-      "itemLevel": 108,
-      "completedCasts": 1,
-      "outputs": [
+          "outputItemID": 22447,
+          "castsWithDrop": 168
+        },
         {
           "outputItemID": 22445,
-          "castsWithDrop": 1,
-          "totalQuantity": 4,
-          "histogram": {
-            "4": 1
-          }
+          "castsWithDrop": 30
+        },
+        {
+          "outputItemID": 22448,
+          "castsWithDrop": 10
         }
       ],
-      "source": "https://www.wowhead.com/tbc/item=30000/mixologists-gloves"
+      "source": "https://www.wowhead.com/item=25159/thunderstrike-falchion",
+      "sourceBuild": null
     },
     {
-      "studyKey": "wowhead-33533-22450-looter-cumulative",
-      "inputItemID": 33533,
-      "historicalBuild": null,
-      "reportedLooterEvents": 10,
-      "outputItemID": 22450,
-      "castsWithDrop": 6,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/ptr/item=33533/avalanche-leggings"
+      "studyKey": "wowhead-mopclassic-looter-29325-144-legacy-20261108",
+      "inputItemID": 29325,
+      "itemLevel": 97,
+      "sourceReportedDisenchants": 144,
+      "outputs": [
+        {
+          "outputItemID": 22448,
+          "castsWithDrop": 143
+        },
+        {
+          "outputItemID": 22445,
+          "castsWithDrop": 1
+        }
+      ],
+      "source": "https://www.wowhead.com/mop-classic/item=29325/flesh-beasts-metal-greaves",
+      "sourceBuild": null
     },
     {
-      "studyKey": "wowhead-33469-22450-looter-cumulative",
-      "inputItemID": 33469,
-      "historicalBuild": null,
-      "reportedLooterEvents": 10,
-      "outputItemID": 22450,
-      "castsWithDrop": 9,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/ptr/item=33469/hauberk-of-the-empires-champion"
+      "studyKey": "wowhead-wotlk-looter-186057-7-legacy-20261108",
+      "inputItemID": 186057,
+      "itemLevel": 52,
+      "sourceReportedDisenchants": 7,
+      "outputs": [
+        {
+          "outputItemID": 16202,
+          "castsWithDrop": 6
+        },
+        {
+          "outputItemID": 11176,
+          "castsWithDrop": 1
+        }
+      ],
+      "source": "https://www.wowhead.com/wotlk/item=186057/communal-warmaul",
+      "sourceBuild": null
     },
     {
-      "studyKey": "wowhead-33354-22450-looter-cumulative",
-      "inputItemID": 33354,
-      "historicalBuild": null,
-      "reportedLooterEvents": 10,
-      "outputItemID": 22450,
-      "castsWithDrop": 4,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/ptr-2/item=33354/wubs-cursed-hexblade"
+      "studyKey": "allakhazam-reaver-legplates-five-arcane-dust-original",
+      "inputItemID": 24979,
+      "itemLevel": 102,
+      "outputItemID": 22445,
+      "totalQuantity": 5,
+      "completedCasts": null,
+      "source": "https://www.wowhead.com/tbc/item=24979/reaver-legplates"
     },
     {
-      "studyKey": "wowhead-33283-22450-looter-cumulative",
-      "inputItemID": 33283,
-      "historicalBuild": null,
-      "reportedLooterEvents": 10,
-      "outputItemID": 22450,
-      "castsWithDrop": 4,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/ptr-2/item=33283/amani-punisher"
+      "studyKey": "wowhead-23112-329944-adamantite-five-stacks-seven-draenite",
+      "inputItemID": 23425,
+      "outputItemID": 23112,
+      "totalQuantity": 7,
+      "sourceReportedStacks": 5,
+      "completedCasts": null,
+      "source": "https://www.wowhead.com/item=23112/golden-draenite"
     },
     {
-      "studyKey": "wowhead-28241-22449-looter-cumulative",
-      "inputItemID": 28241,
-      "historicalBuild": null,
-      "reportedLooterEvents": 7,
-      "outputItemID": 22449,
-      "castsWithDrop": 7,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/item=28241/medallion-of-the-horde"
+      "studyKey": "wowhead-23112-687895-adamantite-five-stacks-five-draenite",
+      "inputItemID": 23425,
+      "outputItemID": 23112,
+      "totalQuantity": 5,
+      "sourceReportedStacks": 5,
+      "completedCasts": null,
+      "source": "https://www.wowhead.com/item=23112/golden-draenite"
     },
     {
-      "studyKey": "wowhead-30343-22449-looter-cumulative",
-      "inputItemID": 30343,
-      "historicalBuild": null,
-      "reportedLooterEvents": 15,
-      "outputItemID": 22449,
-      "castsWithDrop": 15,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/ptr-2/item=30343/medallion-of-the-horde"
-    },
-    {
-      "studyKey": "wowhead-30349-22449-looter-cumulative",
-      "inputItemID": 30349,
-      "historicalBuild": null,
-      "reportedLooterEvents": 37,
-      "outputItemID": 22449,
-      "castsWithDrop": 37,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/ptr/item=30349/medallion-of-the-alliance"
-    },
-    {
-      "studyKey": "wowhead-40601-disenchant-looter-cumulative",
-      "inputItemID": 40601,
-      "historicalBuild": null,
-      "reportedLooterEvents": 9,
-      "outputItemID": 22449,
-      "castsWithDrop": 6,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/ptr/item=40601/argent-dawn-banner"
-    },
-    {
-      "studyKey": "wowhead-40601-disenchant-looter-cumulative",
-      "inputItemID": 40601,
-      "historicalBuild": null,
-      "reportedLooterEvents": 9,
-      "outputItemID": 34053,
-      "castsWithDrop": 2,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/ptr/item=40601/argent-dawn-banner"
+      "studyKey": "wowhead-34054-296787-horned-cobalt-helm-five-to-seven-firsthand",
+      "inputItemID": 40955,
+      "outputItemID": 34054,
+      "minSeen": 5,
+      "maxSeen": 7,
+      "completedCasts": null,
+      "source": "https://www.wowhead.com/item=34054/infinite-dust"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 12,
-    "new_firsthand_item_specific_drop_records": 3,
-    "new_looter_output_occurrence_rows": 9,
-    "new_distinct_input_item_ids": [
-      21867,
-      29497,
-      30000,
-      33533,
-      33469,
-      33354,
-      33283,
-      28241,
-      30343,
-      30349,
-      40601
+    "new_evidence_records": 11,
+    "new_independent_source_cohorts": 7,
+    "new_input_item_ids": [
+      23425,
+      24979,
+      25159,
+      29325,
+      40955,
+      186057
     ],
     "new_output_item_ids": [
+      11176,
+      16202,
       22445,
-      22449,
-      22450,
-      34053
+      22447,
+      22448,
+      23112,
+      34054
     ],
-    "source_narrated_completed_casts_summed_once_per_batch": 16,
-    "historical_cumulative_looter_disenchants_summed_once_per_distinct_item": 108,
-    "source_reported_output_units_from_firsthand": 6,
-    "cumulative_material_positive_event_rows": 90,
+    "new_item_side_looter_event_denominators_sum_once": 359,
+    "new_item_side_positive_material_occurrences": 359,
+    "new_firsthand_reported_material_units": 17,
+    "new_historical_quantity_ranges": 1,
     "new_complete_zero_inclusive_histograms": 0,
-    "new_fel_iron_or_cobalt_casts": 0,
-    "new_verified_build_skill_or_patch_fields": 0,
-    "gold_values": 0
+    "new_current_retail_completed_cast_cohorts": 0,
+    "new_warmaul_24995_completed_cast_cohorts": 0,
+    "new_cobalt_or_fel_iron_ore_prospect_completed_cast_cohorts": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-08T1649-tbc-original-void-shard-de-and-looter-cohorts.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T1649-tbc-original-void-shard-de-and-looter-cohorts.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-08T1750-tbc-warmaul-neighbor-and-original-prospecting.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T1750-tbc-warmaul-neighbor-and-original-prospecting.jsonl",
   "sources": [
-    "https://www.wowhead.com/tbc/item=21867/arcanoweave-boots",
-    "https://www.wowhead.com/tbc/item=29497/enchanted-clefthoof-boots",
-    "https://www.wowhead.com/tbc/item=30000/mixologists-gloves",
-    "https://www.wowhead.com/ptr/item=33533/avalanche-leggings",
-    "https://www.wowhead.com/ptr/item=33469/hauberk-of-the-empires-champion",
-    "https://www.wowhead.com/ptr-2/item=33354/wubs-cursed-hexblade",
-    "https://www.wowhead.com/ptr-2/item=33283/amani-punisher",
-    "https://www.wowhead.com/item=28241/medallion-of-the-horde",
-    "https://www.wowhead.com/ptr-2/item=30343/medallion-of-the-horde",
-    "https://www.wowhead.com/ptr/item=30349/medallion-of-the-alliance",
-    "https://www.wowhead.com/ptr/item=40601/argent-dawn-banner"
+    "https://www.wowhead.com/item=25159/thunderstrike-falchion",
+    "https://www.wowhead.com/mop-classic/item=29325/flesh-beasts-metal-greaves",
+    "https://www.wowhead.com/wotlk/item=186057/communal-warmaul",
+    "https://www.wowhead.com/tbc/item=24979/reaver-legplates",
+    "https://www.wowhead.com/item=23112/golden-draenite",
+    "https://www.wowhead.com/item=34054/infinite-dust"
   ],
-  "verified_base_commit_sha": "ebc644660776f994ca3d62d42deb9c17e0a050ee",
+  "verified_base_commit_sha": "8cf7f1c52fd7909719b97bd038b5ee748b7af84c",
   "verified_commit_sha": null,
-  "commit_sha_note": "Status and evidence are authored atomically. This status cannot contain its own final Git commit SHA (self-reference changes the SHA). The final branch read-back is the authority for verified commit SHA.",
+  "commit_sha_note": "Evidence and status are one atomic commit. Its own final SHA cannot be inserted into its status without changing the SHA; subsequent branch and file read-back establish verified commit SHA.",
   "blockers": [
-    "Warmaul 24995 original 2068-operation Looter table remains patch/bonus unpinned, with no positive-stack histogram or exact units; current scaled WoWDB says cannot be disenchanted. No live API attempt or verified eligible variant.",
-    "Nine new Looter rows are historical cumulative source entries, not 2026 Retail/PTR event logs: recorded build, item variants, cast semantics beyond table denominators and material quantities are unknown. Retired PvP trinkets and Zul'Aman epics must not be used as uncommon Warmaul priors.",
-    "Arcanoweave Boots 14-operation account reports only one Void Crystal and leaves other outputs/zero outcomes unresolved; no Enchanting skill stated.",
-    "Old Cobalt 24-stack, Fel Iron 10-stack JC361 and other prospecting totals already exist in prior evidence; no new independent click-by-click outcomes or refunds found.",
-    "40601 Looter outputs 22449 6/9 and 34053 2/9; ninth outcome unreported, not observed zero. All output quantities unknown."
+    "Warmaul 24995 prior 2068 Looter events remain historical build/bonus/quantity unpinned; 37 nonlisted material occurrences NOT zeros; scaled modern eligibility conflict unresolved.",
+    "25159 source's item was released in Cataclysm-era databases/salvage: do not treat as genuine original Burning Crusade class-weapon match. 29325 is an obsolete rare quest reward, and 186057 is a TBC Classic starter/boost weapon iLvl52: all separate cohorts, not pooled with Warmaul.",
+    "Looter 'out of N' counts material-positive events, not total yielded material units; source displayed 1–3 or 2–3 is not an observed zero-inclusive histogram; source build, skill, and item bonus unverified.",
+    "Reaver Legplates Allakhazam uses plural 'them' and gives no explicit cast denominator. Five stacks for each Adamantite prospect study do NOT imply 20-ore stacks or logged completed 5-ore clicks. No per-output hits or zero outcomes.",
+    "Horned Cobalt Helm 5–7 firsthand range has no completed-operation denominator or verified hotfix/version. Cobalt Ore 36909 and Fel Iron Ore 23424 per-cast histograms still missing.",
+    "No live price or frozen gold EV stored."
   ],
   "exhausted_sources": [
-    "Previously collected Warmaul 24995 Wowhead Looter 2068-operation snapshot and associated 22445/22446/22447/22449 occurrence rows not reimported; 37 unaccounted material rows not assumed zeros.",
-    "Previously archived Cobalt 36909 24-stack report and Fel Iron 23424 100/565-ore Thottbot totals checked for duplicate lineage and not duplicated.",
-    "Previously verified token 45661 seven class rewards not reimported; no new independent reward variant or redemption IDs supported.",
-    "Previously imported Wowhead Looter TBC armor 24744/25064/24831 and original Warmaul 24995 cumulative snapshots not recopied.",
-    "Thottbot 5 Netherweave Gloves 21851 -> Arcane Dust 22445 x9, Fel Leather Boots 25686 -> Large Prismatic Shard 22449 and Fel Iron JC361 10-stack anecdote were already recorded; no duplicate cohorts created.",
-    "No fresh exact source of Cobalt 36909 or Fel Iron 23424 per-output 0..N prospect histogram after new searches."
+    "Earlier Warmaul 24995 2068-event Looter 22445/22446/22447/22449 material rows and contradictory historical WoWWiki reference not recopied.",
+    "Prior Fel Iron Ore 23424 Thottbot 100/565-ore studies, 10-stack JC361, and Cobalt Ore 36909 24-stack totals, including repeated language mirrors, not duplicated.",
+    "Previous TBC firsthand studies 21867,29497,30000,25122 and 30568, plus duplicate Titanium 407900 and ZeRoTaCtIcS cohorts were checked and not duplicated.",
+    "Current Fel Iron and Cobalt search results largely returned already indexed non-clicklogged, theoretical prospecting model rates; mining-route ore counts excluded as not prospecting.",
+    "Token 45661 existing seven class rewards not recopied."
   ],
-  "next_concrete_step": "Seek a first-person current Retail Warmaul 24995 disenchant eligibility API/item-bonus/build test, then independently dated full per-output cast/quantity histogram for 24995. Follow Cobalt 36909 and Fel Iron 23424 per-cast prospecting CSV/SavedVariables with raw counts and refund accounting before promoting any modern rate.",
-  "previous_status_updated_at": "2026-11-08T15:45:01.632Z"
+  "next_concrete_step": "Acquire dated original per-cast saved-variable exports or individual screenshots for Warmaul Legplates 24995 (including exact bonus/quality/build), Cobalt Ore 36909 or Fel Iron Ore 23424 with output ID, hit histogram and completed-cast denominator. Check TBC item-group eligibility/level before blending any adjacent cohorts; validate any nominal refunds before deriving chance.",
+  "previous_status_updated_at": "2026-11-08T16:49:26.742Z"
 }
