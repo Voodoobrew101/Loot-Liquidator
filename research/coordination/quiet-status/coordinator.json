@@ -1,127 +1,139 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-08T08:03:43.270Z",
+  "updated_at": "2026-11-08T09:19:50.947Z",
   "branch": "implementation/five-agent-completion",
-  "status": "research_only: independently validated 2026-03-13 newly-created Battlefield Goods crate source scope and 80-vs-81 source discrepancy; identified same-name crate 135539/135540 identity ambiguity, no new measured yields or supported Retail gold decision",
+  "status": "research_only: independently cross-checked new archived WoWWiki Duskweave Belt probability-column inversion against Warcraft Wiki old-armor table and original WotLK Classic 49-belt study; verified histogram arithmetic and visible source author alias; no new observed cohort or current-Retail recommendation",
   "task_ids": [
-    "T0026",
-    "T0048"
+    "T0042",
+    "T0050"
   ],
   "exact_gaps_targeted": [
     {
-      "category": "source_version_boundary_conflict",
-      "hotfix_date": "2026-03-13",
-      "source_subject": "newly created Crate of Battlefield Goods reward gear",
-      "blizzard_current_level_brackets": {
-        "10-79": "The War Within",
-        "80-90": "Midnight"
-      },
-      "wowhead_same_day_level_brackets": {
-        "10-79": "The War Within",
-        "81-90": "Midnight"
-      },
-      "unresolved": "level 80 wording at time of original post and in-game per-reward implementation; currently published Blizzard running text is not proof of original wording"
+      "category": "contradictory_historical_reference_probability",
+      "inputItemID": 41543,
+      "method": "Disenchant",
+      "archive": "WoWWiki Duskweave Belt: Infinite Dust 22%; Greater Cosmic Essence 75%",
+      "other_reference": "Warcraft Wiki old 152-200 ilvl generic armor: Infinite Dust 75%; Greater Cosmic Essence 22%",
+      "issue": "Apparently swapped item-archive material probabilities; game era/patch and field applicability unresolved. Do not treat either as Retail baseline."
     },
     {
-      "category": "same_name_input_identity_and_reward_context",
-      "candidate_crate_item_ids": [
-        135539,
-        135540
-      ],
-      "quest_id": 95230,
-      "reported_quest_level": 80,
-      "issue": "Readable quest reward only gives Crate name; cannot tie either crate ID to actual newly created crate item, rewarded gear itemLink/bonus, actual acquisition character level or disenchant"
+      "category": "yield_range_scope_mismatch",
+      "inputItemID": 41543,
+      "archive_dust_range": "2-5",
+      "warcraft_wiki_generic_range": "4-7",
+      "original_histogram_observed_range": "1-5",
+      "issue": "Different item/group reference and historic version scopes; no universal supported fixed range."
+    },
+    {
+      "category": "source_identity_alias",
+      "studyKey": "wowhead-41543-180353-49-belts-histogram",
+      "worker_author_field": "180353",
+      "primary_visible_author": "zetapoo",
+      "issue": "Original Wowhead comment has visible contributor name zetapoo; retain numeric source identifier as alias, not a new author or independent cohort."
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "independent_source_scope_corroboration_not_cast",
-      "hotfix_date": "2026-03-13",
-      "blizzard_current": "10-79 TWW; 80-90 Midnight; only newly created crate rewards",
-      "contemporary_secondary": "10-79 TWW; 81-90 Midnight",
-      "material_family_only": true,
-      "source_experiment": false,
-      "completed_casts": null
-    },
-    {
-      "kind": "new_item_identity_candidates_not_verified_reward_mapping",
-      "same_name_crate_item_id_candidates": [
-        135539,
-        135540
+      "kind": "original_source_histogram_arithmetic_validation_of_existing_worker_evidence",
+      "studyKey": "wowhead-41543-180353-49-belts-histogram",
+      "source_context": "archived WotLK Classic commentary",
+      "fresh_independent_casts": 0,
+      "material_rows": [
+        {
+          "outputItemID": 34054,
+          "casts": 49,
+          "castsWithDrop": 37,
+          "totalQuantity": 111,
+          "hit_proportion": 0.7551020408163265,
+          "conditional_mean": 3,
+          "unconditional_units_per_cast": 2.2653061224489797
+        },
+        {
+          "outputItemID": 34055,
+          "casts": 49,
+          "castsWithDrop": 12,
+          "totalQuantity": 18,
+          "hit_proportion": 0.24489795918367346,
+          "conditional_mean": 1.5,
+          "unconditional_units_per_cast": 0.3673469387755102
+        }
       ],
-      "quest_level_80_reward_name": "Crate of Battlefield Goods",
-      "resolved_crate_for_quest_95230": null,
-      "reward_gear_item_id": null,
-      "original_actual_disenchant": null
+      "method_note": "Source arithmetic checked against exact existing JSONL and readable first-person comment; samples are historic. Separate positive counts add to 49 but do not prove cooccurrence or universal zero shards."
     },
     {
-      "kind": "disposition",
-      "new_independent_casts": 0,
-      "newly_verified_expected_units": 0,
-      "newly_verified_occurrence_probabilities": 0,
-      "verified_current_retail_gold_decisions": 0,
-      "verified_new_tooltip_fields": 0
+      "kind": "reference_source_conflict",
+      "resolution": "verified source contradiction; conservative candidate transposition, not correction/import to current Retail",
+      "legacy_page_dust_pct": 22,
+      "legacy_page_essence_pct": 75,
+      "old_generic_table_dust_pct": 75,
+      "old_generic_table_essence_pct": 22
+    },
+    {
+      "kind": "gold_and_tooltip_disposition",
+      "verified_current_Retail_gold_decisions": 0,
+      "verified_current_Retail_tooltip_fields": 0,
+      "new_independent_studies": 0,
+      "new_measured_casts": 0,
+      "new_retail_eligibility_proof": 0
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-08T0802-battlefield-crate-level80-source-and-item-identity.md"
+    "research/v3/evidence/master/2026-11-08T0917-duskweave-reference-chance-transposition.md"
   ],
+  "worker_evidence_compared": "research/v3/evidence/legacy/20261108T0855-wotlk-belt-histograms-and-independent-greens.jsonl",
   "source_links": [
-    "https://worldofwarcraft.blizzard.com/en-us/news/24266320",
-    "https://www.wowhead.com/news/midnight-hotfixes-for-march-13th-marl-decor-cost-reduction-class-bugfixes-and-380785",
-    "https://www.wowhead.com/es/blue-tracker/topic/eu/world-of-warcraft-midnight-hotfixes-17-april-608698",
-    "https://www.wowhead.com/item=135539/crate-of-battlefield-goods",
-    "https://www.wowhead.com/item=135540/crate-of-battlefield-goods",
-    "https://www.wowhead.com/quest=95230/midnight-80-e",
-    "https://warcraft.wiki.gg/wiki/Crate_of_Battlefield_Goods"
+    "https://www.wowhead.com/wotlk/item=41543/duskweave-belt",
+    "https://wowwiki-archive.fandom.com/wiki/Duskweave_Belt",
+    "https://warcraft.wiki.gg/wiki/Disenchanting_tables",
+    "https://warcraft.wiki.gg/wiki/Disenchanting"
   ],
-  "verified_commit_sha": "3803a31512ad180bc4d9dd14fdbdf9897769065",
-  "verified_commit_sha_scope": "Coordinator's original-source audit created and exact content read back at 3803a315; dashboard committed and read back at 190f757; status cannot embed its own resulting commit SHA.",
-  "verified_dashboard_commit_sha": "190f75733b1833b139b98b167a4b988432ee4801",
-  "evidence_blob_sha": "5ffa3cba439857a0d344f8ca497375c973321f80",
+  "verified_commit_sha": "fcd11563fe622ff348e07c87ba600f07a1e0a788",
+  "verified_commit_sha_scope": "Coordinator new audit note created and read back on research branch; this is not a numeric evidence worker commit and status cannot embed its own final commit SHA.",
+  "verified_dashboard_commit_sha": "41a8185c6421d1287713ac3f3876b84c6f3262e8",
+  "verified_evidence_blob_sha": "d3591ca7ffebe9fcd8210fe05feb2ad42b8f58d6",
+  "verified_worker_evidence_blob_sha": "492c1e48f80d499c423b351dca77b3e85f21ed34",
   "current_heads_at_read": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research_pre_status": "190f75733b1833b139b98b167a4b988432ee4801",
+    "research_pre_status": "41a8185c6421d1287713ac3f3876b84c6f3262e8",
     "three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "worker_reports_read": [
     {
       "role": "midnight",
-      "reported_at_utc": "2026-11-08T07:16:09Z",
+      "at_utc": "2026-11-08T08:18:39.754Z",
       "file": "research/coordination/quiet-status/midnight.json",
-      "evidence": "research/v3/evidence/midnight/2026-11-08T0716-battlefield-crate-de-hotfix.jsonl",
-      "result": "Blizzard hotfix original reference; no new measured casts"
+      "result": "One reused Evercore goggle reference comment across four variant IDs; rank, casts, live noDE eligibility unknown; next run 09:10Z in progress at check, pending report."
     },
     {
       "role": "war-within",
-      "reported_at_utc": "2026-11-08T07:23:29.871Z",
+      "at_utc": "2026-11-08T08:22:40.220Z",
       "file": "research/coordination/quiet-status/war-within.json",
-      "evidence": "research/v3/evidence/war-within/2026-11-08T0723-lamplighter-cudgel-mallet-bulwark-de-looter.jsonl",
-      "result": "Three item-side source Looter cohorts N35/26/22, material rank IDs unknown; one named Storm Dust 2-stack"
+      "result": "Two anniversary gear item-side Looter cohorts, mixed legacy/TWW materials with unresolved same-name rank/identity and unknown unit totals."
     },
     {
       "role": "dragonflight",
-      "reported_at_utc": "2026-11-08T07:35:07.535Z",
+      "at_utc": "2026-11-08T08:41:11.538Z",
       "file": "research/coordination/quiet-status/dragonflight.json",
-      "evidence": "research/v3/evidence/dragonflight/2026-11-08T0735-khazg-rank-crosscheck-and-numeric-search.jsonl",
-      "result": "Rank 190313=R2 and 190314=R3 cross-publisher corroboration, no measured processing cohort"
+      "result": "11 new reported DE rows across five source cohorts, no new Dragonflight prospecting/milling raw cast histograms."
     },
     {
       "role": "legacy",
-      "reported_at_utc": "2026-11-08T07:50:10.406Z",
+      "at_utc": "2026-11-08T08:55:15.850Z",
       "file": "research/coordination/quiet-status/legacy.json",
-      "evidence": "research/v3/evidence/legacy/20261108T0750-mageweave-classic-looter-originals.jsonl",
-      "result": "Two historical MoP Classic first-person cohorts 40+15 and separate cumulative 70/272; not verified current Retail evidence"
+      "result": "14 new historical DE rows; coordinator independently verified the 49-belt output histogram arithmetic and reference conflict."
     }
   ],
-  "actual_worker_run_results": "Four worker automation latest recorded results reported completed and evidence commits read from current branch; no coordinator-generated worker measurements or acknowledgments.",
+  "actual_automation_run_results": "Peek read: previous runs recorded completed Midnight 08:18:58Z, War Within 08:23:06Z, Dragonflight 08:41:28Z and Legacy 08:55:36Z; next Midnight automation was in progress at 09:08:43Z. No invented worker acknowledgment.",
   "ci_last_checked": {
-    "research_sha": "fd33cc7d01f29f75251b341c247a2841889382c4",
-    "workflow_run_id": 42460404444,
-    "status": "completed",
+    "last_completed_research_head": "09d3416567d6efa31664a87a248edb83a221637c",
+    "last_completed_run_id": 42464963116,
     "conclusion": "success",
-    "updated_at": "2026-11-08T07:50:58Z",
-    "scope": "Push workflow for prior worker head only, not coordinator source audit/dashboard/status or offline valuation/tooltip"
+    "updated_at": "2026-11-08T08:55:50Z",
+    "coordinator_note_run_id": 42466597225,
+    "coordinator_note_run_status": "in_progress_at_read",
+    "dashboard_run_id": 42466635290,
+    "dashboard_run_status": "in_progress_at_read",
+    "scope": "Research push workflow only, not current coordinator status or actual offline price/tooltip validation."
   },
   "research_prs": {
     "22": "closed-unmerged",
@@ -129,19 +141,19 @@
     "25": "closed-unmerged"
   },
   "blockers": [
-    "Cannot resolve which of same-name crate item IDs 135539/135540 (or another variant) level-80 quest 95230 awards from readable source; actual reward gear itemLink/bonus unknown.",
-    "Official CURRENT Blizzard running article says 80-90 while contemporaneous Wowhead quotes 81-90; no archived original Blizzard edit history or in-game level-80 disenchant proves boundary.",
-    "No reward-specific output material IDs/rank, actual cast denominators, positive stack quantities, source version, current prices or character eligibility available.",
-    "Historic MoP Classic source context must not be used as Retail probability/quantity, including owner's illustration.",
-    "No original client, compiler, estimator, actual synthetic-price valuation, tooltip-render or Lua tests run by coordinator."
+    "Historical WotLK source and pre-BfA bracket guide do not establish current-Retail disenchant eligibility, character skill, versioned yield or gold action.",
+    "WoWWiki item's dust/essence percentage labels disagree with independent generic armor reference and original 49-item sample; no original edit history explaining inversion.",
+    "Reference-table input lineage into current compiled Retail ItemDB not traced; no scoped import correction or actual offline engine/tooltip test executed.",
+    "Original commentator's exact patch/build, skill and sample independence from broader same-item source collections not established.",
+    "No new independent Retail casts, material prices, source-grounded output changes or tested current gold recommendations."
   ],
   "exhausted_sources": [
-    "Read current Blizzard March-13 running-list entry and contemporaneous Wowhead March-13 transcription plus available same-name crate/level-80 reward indexed pages. Further prose searches cannot settle actual itemLink, 80 boundary or per-output yield; request only original versioned item evidence.",
-    "Previous run's 237707 repeated source and 237712 PTR/live cumulative comparisons remain exhausted; did not redo them.",
-    "Earlier Legion sheet arithmetic, Duskweave/Frostwoven and Cardinalai original-source checks remain historical findings and were not recounted as new work."
+    "Existing Legacy Duskweave 49/28/50/100/8-belt comments already in worker evidence. This checkpoint only reconciles archived reference probability labels and original author identity; do not recopy those cohorts.",
+    "Prior coordinator Battlefield crate level-80 boundary, TWW 237707/237712 overlap, Legion Gem Chip formulas and other historical source checks remain in dashboard and are not recounted as new work.",
+    "Archived WoWWiki item and Warcraft Wiki old generic table cannot resolve current patch applicability or live DE eligibility; further duplicated summaries are low priority versus source-to-compiler trace or actual versioned observations."
   ],
-  "next_concrete_step": "Midnight evidence worker T0026: identify exact level-80 newly created crate itemLink (135539 vs 135540 vs another) and actual reward gear itemLink/bonus at acquisition; compare independently date-stamped level-81 result. Capture actual eligible disenchant and material IDs/positive units with full build/skill. Coordinator to review append-only source correction before any scoped import or source-to-valuation/tooltip test; do not change owned implementation branch.",
-  "tests_executed": "Repository heads (main/research/integration), latest 4 worker reports and actual run summaries, relevant v3 instructions/queue/flags/mechanics/strategy and PR #22/#23/#25 states read; latest research push CI queried; official Blizzard and third-party hotfix text compared, Wowhead two same-name crate item URLs and level-80 reward source inspected; new research-only Markdown created and read back; dashboard update created and read back. No runtime engine, price simulation, tooltip, compile, Lua or in-game tests.",
-  "restricted_actions": "Only coordinator-owned original-source research note, coordinator-owned RESEARCH-DASHBOARD.md and this own quiet-status file changed on implementation/five-agent-completion. No original worker evidence/status, queue, strategy, flags, main, immutable 4df9ae8 snapshot, three-pass branch, PR, merge, closure, release or schedule changed.",
-  "previous_status_blob_sha": "232f814379f1ed0187d76dcb77eb5c4ab1e8933b"
+  "next_concrete_step": "Legacy evidence owner T0042: trace whether inverted WoWWiki 41543 chance pair is present in archived legacy/TSM/current Reference table import; retain distinct source/version scopes, add linked correction only if directly imported, and verify same 49-cast source author alias (zetapoo/180353). After research-only review, three-pass owner may run isolated synthetic-price actual-engine/tooltip fixture on current Retail-eligible inputs; coordinator must not touch protected implementation branch. For higher impact, current Midnight/TWW workers continue exact ranked identity and completed-cast numeric gaps.",
+  "tests_executed": "Fetched current repo heads, charter/three-pass plan/pass1, research v3 instructions/evidence schema/mechanics/queue/strategy/flags, current workers, original Legacy JSONL, source web pages, and PR #22/#23/#25 states. Independently computed both 49-cast positive/zero-bin histogram arithmetic, checked hits and totals against original JSONL using JavaScript assertions, created and read back coordinator source audit, updated dashboard and read it back. Queried GitHub Actions status and real automation run statuses. No Lua, compiler, actual estimator, synthetic-price valuation, tooltip, WoW-client, merge, release or new schedule operations.",
+  "restricted_actions": "Only coordinator-owned research evidence note, coordinator-owned RESEARCH-DASHBOARD.md and this coordinator quiet-status file changed on research branch; no worker original/status, shared queue, strategy, flags, main, 4df9ae8 immutable snapshot, three-pass implementation, PR or schedule touched.",
+  "previous_status_blob_sha": "daf3019357fd22410e5cb35821924bd5776ad756"
 }
