@@ -1,176 +1,214 @@
 {
   "role": "legacy",
-  "updated_at": "2026-11-08T17:50:05.866Z",
+  "updated_at": "2026-11-08T18:45:43.983Z",
   "branch": "implementation/five-agent-completion",
-  "status": "11 new nonduplicated source-backed records across seven independent cohorts: item-side historical Looter positive-hit counts for Thunderstrike Falchion 25159 (3 output IDs; 208 events), Flesh Beast's Metal Greaves 29325 (2; 144 events), and Communal Warmaul 186057 (2; 7 events); original TBC Reaver Legplates 24979 -> five Arcane Dust (cast count unknown); two distinct first-person Adamantite Ore 23425 -> Golden Draenite 23112 totals (7 and 5) from five stacks each; firsthand Horned Cobalt Helm 40955 -> Infinite Dust 34054 5–7 range (cast count unknown). None licenses modern Retail EV or Warmaul-specific probabilities. No new measured Warmaul 24995/Cobalt 36909/Fel Iron 23424 completed casts.",
+  "status": "10 nonduplicated replacement/enrichment rows for two historical cumulative Warmaul family Looter cohorts: exact source-backed positive stack bins and reconstructed material unit totals for Warmaul Belt 24990 and Warmaul Gloves 24993, all five output IDs each. Source denominator and hit counts ALREADY recorded in 2026-11-01 originals; no newly observed casts. Warmaul Legplates 24995 and Cobalt/Fel Iron cast/zero/build gaps persist; no Retail EV extrapolation.",
   "task_ids": [
     "T0047",
     "T0042",
+    "T0052",
     "T0022",
     "T0044",
-    "T0021",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 TBC iLvl108 uncommon plate vs adjacent Reaver Legplates 24979 iLvl102; no original Warmaul measured conditional stack histograms, exact completed click logs, build, suffix, skill or variant despite prior historical 2068-event Looter 22445/22446/22447/22449 snapshot.",
-    "TBC armor/weapon candidate 25159 reported 208 item-side disenchants (22447 168 hits, 22445 30, 22448 10) but item is later Cata/WoD salvage-era and must not be treated as same item cohort or same-era group as 24995.",
-    "TBC era rare iLvl97 plate item 29325 144 source events (22448 143, 22445 1) and distinct TBC Classic starter mace 186057 iLvl52 7 source events (16202 6, 11176 1); keep rarity/level/context separate.",
-    "Legacy prospecting Cobalt Ore 36909 and Fel Iron Ore 23424: no fresh per-cast numerator/denominator, zeros, skill/patch; two new independent Adamantite Ore 23425 first-person five-stack Golden Draenite 23112 totals, casts unknown.",
-    "Legacy WotLK Horned Cobalt Helm 40955 output Infinite Dust 34054 source-observed quantity range 5–7, sample size/patch unknown; distinct from Cobalt Ore prospecting.",
-    "Spaulders of Wayward Vanquisher token 45661 prior seven class rewards unchanged; no independent variant or redemption identity found."
+    "24990 Warmaul Belt original 2,574 source-reported Looter disenchants: 5 material-positive rows previously lacked integer conditional stack histogram and material total.",
+    "24993 Warmaul Gloves original 2,441 source-reported Looter disenchants: same five rows previously lacked integer conditional stack histogram and material total.",
+    "24995 Warmaul Legplates historical 2,068 source-reported events already histogram-enriched in earlier original cohort, but live eligibility, patch, suffix/bonus, per-output zeros and joint outcomes remain unknown; no repeat.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: no NEW completed, per-output logged prospecting denominators/histograms or patch and skill data found; existing Thottbot and classic guide cohorts not recopied.",
+    "Spaulders of the Wayward Vanquisher token 45661: existing seven class rewards not recopied; modern use-to-create vs historical Dalaran redemption variant ambiguity remains."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-looter-25159-208-legacy-20261108",
-      "inputItemID": 25159,
-      "sourceReportedDisenchants": 208,
-      "outputs": [
-        {
-          "outputItemID": 22447,
-          "castsWithDrop": 168
-        },
-        {
-          "outputItemID": 22445,
-          "castsWithDrop": 30
-        },
-        {
-          "outputItemID": 22448,
-          "castsWithDrop": 10
-        }
-      ],
-      "source": "https://www.wowhead.com/item=25159/thunderstrike-falchion",
-      "sourceBuild": null
-    },
-    {
-      "studyKey": "wowhead-mopclassic-looter-29325-144-legacy-20261108",
-      "inputItemID": 29325,
-      "itemLevel": 97,
-      "sourceReportedDisenchants": 144,
-      "outputs": [
-        {
-          "outputItemID": 22448,
-          "castsWithDrop": 143
-        },
-        {
-          "outputItemID": 22445,
-          "castsWithDrop": 1
-        }
-      ],
-      "source": "https://www.wowhead.com/mop-classic/item=29325/flesh-beasts-metal-greaves",
-      "sourceBuild": null
-    },
-    {
-      "studyKey": "wowhead-wotlk-looter-186057-7-legacy-20261108",
-      "inputItemID": 186057,
-      "itemLevel": 52,
-      "sourceReportedDisenchants": 7,
-      "outputs": [
-        {
-          "outputItemID": 16202,
-          "castsWithDrop": 6
-        },
-        {
-          "outputItemID": 11176,
-          "castsWithDrop": 1
-        }
-      ],
-      "source": "https://www.wowhead.com/wotlk/item=186057/communal-warmaul",
-      "sourceBuild": null
-    },
-    {
-      "studyKey": "allakhazam-reaver-legplates-five-arcane-dust-original",
-      "inputItemID": 24979,
-      "itemLevel": 102,
+      "inputItemID": 24990,
       "outputItemID": 22445,
-      "totalQuantity": 5,
-      "completedCasts": null,
-      "source": "https://www.wowhead.com/tbc/item=24979/reaver-legplates"
+      "casts": 2574,
+      "castsWithDrop": 1864,
+      "totalQuantity": 6493,
+      "histogram": {
+        "2": 490,
+        "3": 491,
+        "4": 391,
+        "5": 476,
+        "6": 16
+      },
+      "source": "https://www.wowhead.com/item=24990#disenchanting",
+      "replaces": "legacy-20261101-222"
     },
     {
-      "studyKey": "wowhead-23112-329944-adamantite-five-stacks-seven-draenite",
-      "inputItemID": 23425,
-      "outputItemID": 23112,
-      "totalQuantity": 7,
-      "sourceReportedStacks": 5,
-      "completedCasts": null,
-      "source": "https://www.wowhead.com/item=23112/golden-draenite"
+      "inputItemID": 24990,
+      "outputItemID": 22446,
+      "casts": 2574,
+      "castsWithDrop": 481,
+      "totalQuantity": 755,
+      "histogram": {
+        "1": 207,
+        "2": 274
+      },
+      "source": "https://www.wowhead.com/item=24990#disenchanting",
+      "replaces": "legacy-20261101-223"
     },
     {
-      "studyKey": "wowhead-23112-687895-adamantite-five-stacks-five-draenite",
-      "inputItemID": 23425,
-      "outputItemID": 23112,
-      "totalQuantity": 5,
-      "sourceReportedStacks": 5,
-      "completedCasts": null,
-      "source": "https://www.wowhead.com/item=23112/golden-draenite"
+      "inputItemID": 24990,
+      "outputItemID": 22447,
+      "casts": 2574,
+      "castsWithDrop": 82,
+      "totalQuantity": 210,
+      "histogram": {
+        "2": 36,
+        "3": 46
+      },
+      "source": "https://www.wowhead.com/item=24990#disenchanting",
+      "replaces": "legacy-20261101-224"
     },
     {
-      "studyKey": "wowhead-34054-296787-horned-cobalt-helm-five-to-seven-firsthand",
-      "inputItemID": 40955,
-      "outputItemID": 34054,
-      "minSeen": 5,
-      "maxSeen": 7,
-      "completedCasts": null,
-      "source": "https://www.wowhead.com/item=34054/infinite-dust"
+      "inputItemID": 24990,
+      "outputItemID": 22448,
+      "casts": 2574,
+      "castsWithDrop": 55,
+      "totalQuantity": 55,
+      "histogram": {
+        "1": 55
+      },
+      "source": "https://www.wowhead.com/item=24990#disenchanting",
+      "replaces": "legacy-20261101-225"
+    },
+    {
+      "inputItemID": 24990,
+      "outputItemID": 22449,
+      "casts": 2574,
+      "castsWithDrop": 60,
+      "totalQuantity": 60,
+      "histogram": {
+        "1": 60
+      },
+      "source": "https://www.wowhead.com/item=24990#disenchanting",
+      "replaces": "legacy-20261101-226"
+    },
+    {
+      "inputItemID": 24993,
+      "outputItemID": 22445,
+      "casts": 2441,
+      "castsWithDrop": 1591,
+      "totalQuantity": 5604,
+      "histogram": {
+        "2": 348,
+        "3": 479,
+        "4": 366,
+        "5": 384,
+        "6": 11,
+        "7": 3
+      },
+      "source": "https://www.wowhead.com/item=24993#disenchanting",
+      "replaces": "legacy-20261101-213"
+    },
+    {
+      "inputItemID": 24993,
+      "outputItemID": 22446,
+      "casts": 2441,
+      "castsWithDrop": 602,
+      "totalQuantity": 915,
+      "histogram": {
+        "1": 301,
+        "2": 289,
+        "3": 12
+      },
+      "source": "https://www.wowhead.com/item=24993#disenchanting",
+      "replaces": "legacy-20261101-214"
+    },
+    {
+      "inputItemID": 24993,
+      "outputItemID": 22447,
+      "casts": 2441,
+      "castsWithDrop": 9,
+      "totalQuantity": 21,
+      "histogram": {
+        "2": 6,
+        "3": 3
+      },
+      "source": "https://www.wowhead.com/item=24993#disenchanting",
+      "replaces": "legacy-20261101-215"
+    },
+    {
+      "inputItemID": 24993,
+      "outputItemID": 22448,
+      "casts": 2441,
+      "castsWithDrop": 33,
+      "totalQuantity": 33,
+      "histogram": {
+        "1": 33
+      },
+      "source": "https://www.wowhead.com/item=24993#disenchanting",
+      "replaces": "legacy-20261101-216"
+    },
+    {
+      "inputItemID": 24993,
+      "outputItemID": 22449,
+      "casts": 2441,
+      "castsWithDrop": 173,
+      "totalQuantity": 173,
+      "histogram": {
+        "1": 173
+      },
+      "source": "https://www.wowhead.com/item=24993#disenchanting",
+      "replaces": "legacy-20261101-217"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 11,
-    "new_independent_source_cohorts": 7,
-    "new_input_item_ids": [
-      23425,
-      24979,
-      25159,
-      29325,
-      40955,
-      186057
-    ],
-    "new_output_item_ids": [
-      11176,
-      16202,
-      22445,
-      22447,
-      22448,
-      23112,
-      34054
-    ],
-    "new_item_side_looter_event_denominators_sum_once": 359,
-    "new_item_side_positive_material_occurrences": 359,
-    "new_firsthand_reported_material_units": 17,
-    "new_historical_quantity_ranges": 1,
-    "new_complete_zero_inclusive_histograms": 0,
-    "new_current_retail_completed_cast_cohorts": 0,
-    "new_warmaul_24995_completed_cast_cohorts": 0,
-    "new_cobalt_or_fel_iron_ore_prospect_completed_cast_cohorts": 0
+    "new_evidence_records": 10,
+    "new_independent_cohorts": 0,
+    "existing_historical_cohorts_enriched": 2,
+    "source_reported_casts_existing_not_new": 5015,
+    "source_reported_positive_hit_counts_existing_not_new": 4950,
+    "positive_stack_bins_recovered": 24,
+    "source_rounded_pctstack_reconstructed_material_units": 14319,
+    "new_source_logged_completed_casts": 0,
+    "new_zero_inclusive_histograms": 0,
+    "new_verified_current_retail_cohorts": 0,
+    "by_input": [
+      {
+        "inputItemID": 24990,
+        "reportedCasts": 2574,
+        "source": "https://www.wowhead.com/item=24990#disenchanting",
+        "newIndependentCasts": 0,
+        "materialTotals": 7573
+      },
+      {
+        "inputItemID": 24993,
+        "reportedCasts": 2441,
+        "source": "https://www.wowhead.com/item=24993#disenchanting",
+        "newIndependentCasts": 0,
+        "materialTotals": 6746
+      }
+    ]
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-08T1750-tbc-warmaul-neighbor-and-original-prospecting.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T1750-tbc-warmaul-neighbor-and-original-prospecting.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-08T1845-warmaul-belt-gloves-positive-histograms.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T1845-warmaul-belt-gloves-positive-histograms.jsonl",
   "sources": [
-    "https://www.wowhead.com/item=25159/thunderstrike-falchion",
-    "https://www.wowhead.com/mop-classic/item=29325/flesh-beasts-metal-greaves",
-    "https://www.wowhead.com/wotlk/item=186057/communal-warmaul",
-    "https://www.wowhead.com/tbc/item=24979/reaver-legplates",
-    "https://www.wowhead.com/item=23112/golden-draenite",
-    "https://www.wowhead.com/item=34054/infinite-dust"
+    "https://www.wowhead.com/item=24990/warmaul-belt#disenchanting",
+    "https://www.wowhead.com/item=24993/warmaul-gloves#disenchanting",
+    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates"
   ],
-  "verified_base_commit_sha": "8cf7f1c52fd7909719b97bd038b5ee748b7af84c",
+  "verified_base_commit_sha": "8f71222469e745c3d5aca466b43ff525cb629753",
   "verified_commit_sha": null,
-  "commit_sha_note": "Evidence and status are one atomic commit. Its own final SHA cannot be inserted into its status without changing the SHA; subsequent branch and file read-back establish verified commit SHA.",
+  "commit_sha_note": "The evidence and status are written in the same one atomic commit: that commit SHA cannot be included inside its own status file without changing its hash. Verify the resulting branch head and these two files via read-back after the commit.",
   "blockers": [
-    "Warmaul 24995 prior 2068 Looter events remain historical build/bonus/quantity unpinned; 37 nonlisted material occurrences NOT zeros; scaled modern eligibility conflict unresolved.",
-    "25159 source's item was released in Cataclysm-era databases/salvage: do not treat as genuine original Burning Crusade class-weapon match. 29325 is an obsolete rare quest reward, and 186057 is a TBC Classic starter/boost weapon iLvl52: all separate cohorts, not pooled with Warmaul.",
-    "Looter 'out of N' counts material-positive events, not total yielded material units; source displayed 1–3 or 2–3 is not an observed zero-inclusive histogram; source build, skill, and item bonus unverified.",
-    "Reaver Legplates Allakhazam uses plural 'them' and gives no explicit cast denominator. Five stacks for each Adamantite prospect study do NOT imply 20-ore stacks or logged completed 5-ore clicks. No per-output hits or zero outcomes.",
-    "Horned Cobalt Helm 5–7 firsthand range has no completed-operation denominator or verified hotfix/version. Cobalt Ore 36909 and Fel Iron Ore 23424 per-cast histograms still missing.",
-    "No live price or frozen gold EV stored."
+    "Source pctstack represents positive-stack relative frequencies and is rounded; integer histograms/totalQuantity reconstructed, not original individual cast logs. No fabricated zero bucket, joint-outcome distribution or independently timed casts.",
+    "The historical aggregate source reports 2,574 and 2,441 operations, not patch/build or live Retail eligibility; current item page's 2.0.1 'added' is not evidence of cohort collection patch.",
+    "Looter 24990 material hit sums and 24993 material hit sums need not equal reported disenchants; any unaccounted events are NOT proven zero-output operations.",
+    "Warmaul 24995, Cobalt Ore 36909 and Fel Iron Ore 23424 original source-logged complete casts/skill/patch still missing; don't blend with modern Retail gold EV.",
+    "User-data Resourcefulness refunds, item bonus variants and enchanting skill unknown; no price freeze."
   ],
   "exhausted_sources": [
     "Earlier Warmaul 24995 2068-event Looter 22445/22446/22447/22449 material rows and contradictory historical WoWWiki reference not recopied.",
     "Prior Fel Iron Ore 23424 Thottbot 100/565-ore studies, 10-stack JC361, and Cobalt Ore 36909 24-stack totals, including repeated language mirrors, not duplicated.",
     "Previous TBC firsthand studies 21867,29497,30000,25122 and 30568, plus duplicate Titanium 407900 and ZeRoTaCtIcS cohorts were checked and not duplicated.",
     "Current Fel Iron and Cobalt search results largely returned already indexed non-clicklogged, theoretical prospecting model rates; mining-route ore counts excluded as not prospecting.",
-    "Token 45661 existing seven class rewards not recopied."
+    "Token 45661 existing seven class rewards not recopied.",
+    "Warmaul Belt 24990 and Warmaul Gloves 24993 earlier 2026-11-01 hit-only Looter cohorts now enriched rather than counted as additional casts; full source HTML pctstack confirmed.",
+    "Warmaul Legplates 24995 previous positive histograms already recovered in 2026-11-07 and not duplicated.",
+    "Cobalt/Fel Iron past Thottbot, classic guides, and copied historical samples not repeated."
   ],
-  "next_concrete_step": "Acquire dated original per-cast saved-variable exports or individual screenshots for Warmaul Legplates 24995 (including exact bonus/quality/build), Cobalt Ore 36909 or Fel Iron Ore 23424 with output ID, hit histogram and completed-cast denominator. Check TBC item-group eligibility/level before blending any adjacent cohorts; validate any nominal refunds before deriving chance.",
-  "previous_status_updated_at": "2026-11-08T16:49:26.742Z"
+  "next_concrete_step": "Seek new firsthand completed-cast + per-output 0/1/2/... logs, item bonuses, original game build/skill and any refunds for Warmaul 24995, then Cobalt 36909 and Fel Iron 23424. If acquiring such logs is impossible, seek new independent same-era armor/weapon sample studies with version-scoped item-level and rarity; request schema/provenance reviewer for ambiguous cumulative Looter zero interpretation.",
+  "previous_status_updated_at": "2026-11-08T17:50:05.866Z"
 }
