@@ -1,8 +1,8 @@
 {
   "role": "legacy",
-  "updated_at": "2026-11-08T02:43:39.281Z",
+  "updated_at": "2026-11-08T03:56:13.182Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Research-only: 12 original WotLK disenchant output rows (6 distinct firsthand cohorts; one complete 28-operation stack histogram), one dated 2009 hotfix, and a conflicting current Duskweave Belt 41543 no-disenchant database flag. Historical and current Retail evidence segregated; no changes to live addon, probability estimates, personal data or prices.",
+  "status": "Research-only: 10 new exact-item WotLK Classic/Vanilla-era pooled Wowhead Looter material-hit-denominator rows (six Wrath uncommon armor -> Infinite Dust, four Classic rare armor/jewelry -> Small Glowing Shard), plus one separate 7-Frostwoven-Belt firsthand 21-dust report. No newly recovered Warmaul, Cobalt or Fel Iron casts. No zeros, complete histograms, gold prices, current Retail eligibility or source epoch invented.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,188 +12,177 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 TBC historical 2068 operations remain without build/bonus/skill/true unit totals; no new direct 24995 operations or evidence. 22445=1559 hits, 22446=417, 22447=7 and 22449=48 are previously recorded and not re-imported.",
-    "New independent WotLK crafted uncommon cloth armor baseline, exact Duskweave Belt 41543 at historical item level 154: 28, 50 and 100 distinct original disenchants with 34054 Infinite Dust / 34055 Greater Cosmic Essence / 34052 Dream Shard source numbers.",
-    "Duskweave 28-cast report has complete per-output stacks/hits and source-backed material-specific zero bins. 50- and 100-cast reports provide total quantities only (not hit counts).",
-    "Frostwoven Belt 41522: six original casts with 34054 hit on each, positive range 1–2; Frostwoven Leggings 41519: ten items -> 36 units 34054; Frostwoven Shoulders 41513: nine items -> 21 units 34054, no per-output occurrence logs.",
-    "2009-10-22 official historical increase in Infinite Dust from disenchanting/shattering, no source magnitude. Current WoWDB marks scaled Duskweave Belt 41543 at item level 33 cannot be disenchanted, contradicting historical WotLK iLvl154 outcomes.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: independent completed-cast gem hit/zero histograms, refunds and modern context still unrecovered. Token 45661 seven-reward map already verified in prior evidence and not duplicated."
+    "Warmaul Legplates 24995 remains previously logged at 2,068 pooled historical Looter casts with 22445 hits=1559 qty5638, 22446 hits417 qty695, 22447 hits7 qty19, 22449 hits48 qty48 and positive-only stack histograms; historical build, bonus/skill, joint outcomes and live eligibility remain unverified. No additional 24995 measurement.",
+    "Cobalt Ore 36909: actual completed casts, per-gem positive hit/zero histograms and refunded ore still missing. Fel Iron Ore 23424: independent completed-cast gem hit histograms still missing. Avoid duplicate Thottbot and Wowhead cohorts.",
+    "Broader historical disenchant numeric baseline: newly source-grounded 10 exact gear inputs 9454/18585/6697/45627/35835/36233/36216/36324/36205/37415 -> material 11138 or 34054, with exact reported Looter cast denominators and per-material positive hits but no output quantities.",
+    "Frostwoven Belt 41522: one new independent original seven-item disenchant report (7 completed belts, 21 Infinite Dust, each said to give at least three) with skill and build unknown; distinguish from earlier 6-belt cohort.",
+    "Token 45661 full seven historical rewards/variant IDs previously recorded and not duplicated; current use versus legacy Dalaran vendor redemption still needs in-game verification."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-41543-436760-28-disenchant-operations",
-      "inputItemID": 41543,
-      "historicalItemLevel": 154,
-      "casts": 28,
-      "outputs": [
-        {
-          "itemID": 34054,
-          "totalQuantity": 60,
-          "castsWithDrop": 20,
-          "histogram": {
-            "0": 8,
-            "2": 7,
-            "3": 8,
-            "4": 3,
-            "5": 2
-          }
-        },
-        {
-          "itemID": 34055,
-          "totalQuantity": 8,
-          "castsWithDrop": 7,
-          "histogram": {
-            "0": 21,
-            "1": 6,
-            "2": 1
-          }
-        },
-        {
-          "itemID": 34052,
-          "totalQuantity": 1,
-          "castsWithDrop": 1,
-          "histogram": {
-            "0": 27,
-            "1": 1
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/wotlk/item=41543/duskweave-belt"
-    },
-    {
-      "studyKey": "wowhead-41543-343290-50-disenchant-operations",
-      "inputItemID": 41543,
-      "casts": 50,
-      "outputs": [
-        {
-          "itemID": 34054,
-          "totalQuantity": 175
-        },
-        {
-          "itemID": 34055,
-          "totalQuantity": 22
-        },
-        {
-          "itemID": 34052,
-          "totalQuantity": 2
-        }
-      ],
-      "source": "https://www.wowhead.com/wotlk/item=41543/duskweave-belt"
-    },
-    {
-      "studyKey": "wowhead-41543-477375-100-disenchant-operations",
-      "inputItemID": 41543,
-      "casts": 100,
-      "outputs": [
-        {
-          "itemID": 34054,
-          "totalQuantity": 396
-        },
-        {
-          "itemID": 34055,
-          "totalQuantity": 39
-        },
-        {
-          "itemID": 34052,
-          "totalQuantity": 5
-        }
-      ],
-      "source": "https://www.wowhead.com/wotlk/item=41543/duskweave-belt"
-    },
-    {
-      "studyKey": "wowhead-41522-244234-six-belts",
-      "inputItemID": 41522,
-      "casts": 6,
-      "outputs": [
-        {
-          "itemID": 34054,
-          "castsWithDrop": 6,
-          "minSeen": 1,
-          "maxSeen": 2
-        }
-      ],
-      "source": "https://www.wowhead.com/wotlk/item=41522/frostwoven-belt"
-    },
-    {
-      "studyKey": "wowhead-34054-988948-ten-frostwoven-leggings",
-      "inputItemID": 41519,
-      "sourceReportedItemsDisenchanted": 10,
-      "outputs": [
-        {
-          "itemID": 34054,
-          "totalQuantity": 36
-        }
-      ],
-      "source": "https://www.wowhead.com/item=34054/infinite-dust"
-    },
-    {
-      "studyKey": "wowhead-34054-cymre-nine-frostwoven-shoulders",
-      "inputItemID": 41513,
-      "sourceReportedItemsDisenchanted": 9,
-      "outputs": [
-        {
-          "itemID": 34054,
-          "totalQuantity": 21
-        }
-      ],
-      "source": "https://www.wowhead.com/item=34054/infinite-dust"
-    },
-    {
-      "type": "rateChange",
-      "date": "2009-10-22",
+      "inputItemID": 35835,
+      "inputName": "Antique Reinforced Legguards",
+      "historicalItemLevel": 138,
       "outputItemID": 34054,
-      "method": "Disenchant",
-      "notes": "Also shattering; no measured magnitude",
-      "source": "https://warcraft.wiki.gg/wiki/Hotfixes/2009_Archive"
+      "casts": 118,
+      "castsWithDrop": 103,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=34054/infinite-dust",
+      "studyKey": "wowhead-wotlk-looter-35835-disenchants-cumulative"
     },
     {
-      "type": "noDisenchant",
-      "inputItemID": 41543,
-      "currentScaledItemLevel": 33,
-      "source": "https://www.wowdb.com/items/41543-duskweave-belt"
+      "inputItemID": 36233,
+      "inputName": "Trapper Shoulderguards",
+      "historicalItemLevel": 154,
+      "outputItemID": 34054,
+      "casts": 101,
+      "castsWithDrop": 87,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=34054/infinite-dust",
+      "studyKey": "wowhead-wotlk-looter-36233-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 36216,
+      "inputName": "Orca Legwraps",
+      "historicalItemLevel": 146,
+      "outputItemID": 34054,
+      "casts": 88,
+      "castsWithDrop": 75,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=34054/infinite-dust",
+      "studyKey": "wowhead-wotlk-looter-36216-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 36324,
+      "inputName": "Halgrind Greaves",
+      "historicalItemLevel": 146,
+      "outputItemID": 34054,
+      "casts": 93,
+      "castsWithDrop": 78,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=34054/infinite-dust",
+      "studyKey": "wowhead-wotlk-looter-36324-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 36205,
+      "inputName": "Nifflevar Chestpiece",
+      "historicalItemLevel": 142,
+      "outputItemID": 34054,
+      "casts": 123,
+      "castsWithDrop": 103,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=34054/infinite-dust",
+      "studyKey": "wowhead-wotlk-looter-36205-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 37415,
+      "inputName": "Tundrastrider Ringmail",
+      "historicalItemLevel": 138,
+      "outputItemID": 34054,
+      "casts": 117,
+      "castsWithDrop": 98,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=34054/infinite-dust",
+      "studyKey": "wowhead-wotlk-looter-37415-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 9454,
+      "inputName": "Acidic Walkers",
+      "historicalItemLevel": 32,
+      "outputItemID": 11138,
+      "casts": 198,
+      "castsWithDrop": 198,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=11138/small-glowing-shard",
+      "studyKey": "wowhead-wotlk-looter-9454-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 18585,
+      "inputName": "Band of Allegiance",
+      "historicalItemLevel": 35,
+      "outputItemID": 11138,
+      "casts": 22,
+      "castsWithDrop": 22,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=11138/small-glowing-shard",
+      "studyKey": "wowhead-wotlk-looter-18585-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 6697,
+      "inputName": "Batwing Mantle",
+      "historicalItemLevel": 32,
+      "outputItemID": 11138,
+      "casts": 27,
+      "castsWithDrop": 27,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=11138/small-glowing-shard",
+      "studyKey": "wowhead-wotlk-looter-6697-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 45627,
+      "inputName": "Amulet of Truesight",
+      "historicalItemLevel": 34,
+      "outputItemID": 11138,
+      "casts": 9,
+      "castsWithDrop": 9,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/wotlk/item=11138/small-glowing-shard",
+      "studyKey": "wowhead-wotlk-looter-45627-disenchants-cumulative"
+    },
+    {
+      "inputItemID": 41522,
+      "inputName": "Frostwoven Belt",
+      "historicalItemLevel": null,
+      "outputItemID": 34054,
+      "casts": 7,
+      "castsWithDrop": 7,
+      "totalQuantity": 21,
+      "source": "https://www.wowhead.com/item=34054/infinite-dust",
+      "studyKey": "wowhead-34054-854192-seven-frostwoven-belts"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 14,
-    "drop_records": 12,
-    "dated_rate_changes": 1,
-    "noDisenchant_database_flags": 1,
-    "distinct_original_disenchant_cohorts": 6,
-    "source_stated_or_implied_completed_disencasts": 203,
-    "source_explicit_completed_casts": 184,
-    "source_reported_distinct_additional_item_operations_with_completed_disencasts_implied": 19,
-    "outputs_with_real_positive_hit_counts": 4,
-    "outputs_with_full_zero_inclusive_histograms": 3,
-    "number_of_gold_prices_recorded": 0,
+    "new_evidence_records": 11,
+    "pooled_looter_input_output_rows": 10,
+    "independent_firsthand_cohorts": 1,
+    "exact_item_mappings": 11,
+    "looter_reported_disenchant_denominators": 896,
+    "looter_reported_positive_material_hits": 800,
+    "additional_firsthand_completed_item_disenchants": 7,
+    "additional_firsthand_infinite_dust_units": 21,
     "new_warmaul_casts": 0,
-    "new_cobalt_feliron_casts": 0
+    "new_cobalt_feliron_casts": 0,
+    "new_measured_zero_counts": 0,
+    "new_complete_histograms": 0,
+    "gold_prices_recorded": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-08T0243-wotlk-duskweave-firsthand-disenchants.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T0243-wotlk-duskweave-firsthand-disenchants.jsonl",
-  "evidence_blob_sha": "330feed57100c5aeaccc7d823eb54361e6ca0a63",
+  "evidence_file": "research/v3/evidence/legacy/20261108T0356-wotlk-classic-looter-disencasts.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/20261108T0356-wotlk-classic-looter-disencasts.jsonl",
   "sources": [
-    "https://www.wowhead.com/wotlk/item=41543/duskweave-belt",
-    "https://www.wowhead.com/wotlk/item=41522/frostwoven-belt",
+    "https://www.wowhead.com/wotlk/item=34054/infinite-dust",
+    "https://www.wowhead.com/wotlk/item=11138/small-glowing-shard",
     "https://www.wowhead.com/item=34054/infinite-dust",
-    "https://warcraft.wiki.gg/wiki/Hotfixes/2009_Archive",
-    "https://www.wowdb.com/items/41543-duskweave-belt"
+    "https://www.wowhead.com/item=24995#disenchanting",
+    "https://www.wowdb.com/items/24995-warmaul-legplates"
   ],
-  "verified_base_commit_sha": "8a7d7d6759a1ee88716a6e70e59bf9ca4d3e2818",
+  "verified_base_commit_sha": "83429f442349141b85a938a64962aff81c9a8d68",
   "verified_commit_sha": null,
-  "commit_sha_note": "The new commit SHA cannot be placed in the contents of the same commit that determines its hash. Evidence blob SHA above is directly verifiable. Following publish, verify branch HEAD and read-back both files, and use the GitHub branch history for the resulting actual commit SHA.",
+  "commit_sha_note": "One atomic research+status commit: the resulting SHA cannot be embedded in its own content without changing the hash; verify published branch HEAD and files by read-back.",
   "blockers": [
-    "Current Retail WoWDB 'Cannot be disenchanted' for 41543 (item level 33) conflicts with historical WotLK disenchant evidence (item level 154); do not apply historical results to live loot recommendations until player-tested build/item variant eligibility and API gating are checked.",
-    "28-cast Duskweave stack histogram is complete for each known output; does not imply game-wide no-output disenchants. Unknown patch/build and enchanting skill, with Oct 22 2009 dust hotfix causing historical before/after comparability questions.",
-    "50/100 Duskweave and 10/9 Frostwoven cohorts give totals but no 0/1/2/... stack histograms or positive output counts.",
-    "Previous Warmaul 24995, Cobalt 36909 and Fel Iron 23424 gaps persist; no new independent original completed casts found for them. Cannot infer rates from reference tables or nominal stack counts.",
-    "Master should review Oct 22 2009 rateChange ingestion and historical/current eligibility isolation; do not modify Master-owned shared files."
+    "Fresh high-priority Warmaul 24995 skill/version/build and current Retail Disenchant API eligibility remain unverified. Retail WoWDB scaled version flags 'Cannot be disenchanted' versus old historical Looter, so no current recommendation may be inferred.",
+    "No original Cobalt 36909 or Fel Iron 23424 new completed processing log with positive-hit counts, true zero bins, 0..N gem stack histograms and refunds was found from remaining prior candidate sources.",
+    "WotLK Looter 'out of' is cumulative aggregate uploads with unknown study dates, hotfix epoch, bonus/version, player skill/spec, output quantities and full histograms; pooled rows should not be treated as independent per-player modern studies or source-driven zero counts.",
+    "Classic rare-item 11138 Looter rows cannot establish current scaled Retail material eligibility or game-version identity.",
+    "Frostwoven Belt firsthand seven-cast report lacks per-cast raw stack counts, source date, skill and independent build verification.",
+    "Same or copied cumulative Wowhead Looter cohorts must not be re-imported under new source URLs."
   ],
   "exhausted_sources": [
-    "Warmaul Legplates 24995 Looter 2068 and adjacent TBC 25003/30364 cohorts already recorded; no copied source reused.",
-    "Cobalt Ore 36909 Wowhead 814846 24 unspecified stacks, and Fel Iron Ore 23424 Thottbot 100/565-ore cohorts preexisting; no duplicate denominator.",
-    "Netherweave Boots 21853 13-cast exhaustive Thottbot dust/essence/shard histogram already duplicated in 2026-11-01T0837 and 2026-11-02T0140 evidence; skipped entirely.",
-    "Mithril Ore historical Kaliope per-cast test and Titanium Ore original commenter 407900 already recorded; skipped.",
-    "Existing 45661 seven-reward class token mapping, Cataclysm 52555 Deathsilk original studies, historical Saronite 36912 totals not repeated."
+    "Warmaul Legplates 24995 existing 2068-Looter positive-stack histograms already rescued in legacy/2026-11-07T1722; no duplicate.",
+    "Cobalt Ore 36909 24-unspecified-stacks Russian Wowhead 814846 and Fel Iron 23424 original 100/565-ore Thottbot studies were already recorded; no nominal cast conversions.",
+    "WotLK Duskweave Belt 41543 prior 28/50/100 cohorts and 6-Frostwoven-Belt study 41522-244234 already recorded; not duplicated.",
+    "45661 seven-reward historical Dalaran token identity already recorded at legacy-20261107-234113.",
+    "WotLK 34054 and Classic 11138 cumulative Looter pages were used only for newly indexed exact input rows; no previously recorded names found in GitHub repository search."
   ],
-  "next_concrete_step": "Seek new original Warmaul 24995 Retail eligibility/bonus test logs and item-level version; then new Cobalt 36909 and Fel Iron 23424 five-ore prospect finished casts with individual gem hit/zero histograms, refunds, expansion-era/build; isolate all historical Wrath 3.2.2 before/after dust cohorts and have Master review rateChange/no-DE conflict."
+  "next_concrete_step": "Seek original 24995 disenchant logs with exact version/bonus/skill, current Retail eligible API negative test, and source-dated TBC pool. Then source independent 36909/23424 completed five-ore prospect event logs with per-output hit counts/zeros and resourceful refund context. Expand other historical item-group Looter quantities with version/epoch validation, never cross-pool.",
+  "previous_status_sha": "70b08b6b3665818004d8c0406f14730d20cf294a"
 }
