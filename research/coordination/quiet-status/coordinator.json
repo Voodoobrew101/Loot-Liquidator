@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-08T00:03:36.368Z",
+  "updated_at": "2026-11-08T01:06:03.475Z",
   "branch": "implementation/five-agent-completion",
-  "status": "research_only: source-verified Dragonflight 2-material cumulative Looter marginal counts force >=49 joint material co-occurrences across five reported item cohorts (conditional arithmetic); three source-reported 1–2 shard ranges exist only in notes, not minSeen/maxSeen; zero new casts, zero current Retail EV decisions.",
+  "status": "research_only: newly source-checked conditional numerical conflict between M2 guaranteed Crystalline Glass per Midnight prospect and 671 Glass units / 800 original Brilliant Silver operations; E=0.83875 units/cast (cohort-scoped), conditional >=129 zero-Glass operations if tally complete; no observed P(hit), new casts, current Retail EV or addon changes.",
   "task_ids": [
     "COORD-MIDNIGHT-MULTICRAFT-SCOPE-20261107",
     "T0042",
@@ -60,7 +60,8 @@
     "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107",
     "COORD-MIDNIGHT-PROSPECT-365-SKILL-GEAR-STATE-20261107",
     "COORD-WARCANON-SOURCE-MEAN-QA-20261107",
-    "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108"
+    "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108",
+    "COORD-MIDNIGHT-GLASS-M2-GUARANTEE-CONFLICT-20261108"
   ],
   "exact_gaps_targeted": [
     "M10/T0034: March 12 original player reports Resourcefulness hidden in Prospecting Crafting Details while ore refunds occur; actual per-operation nominal inputs, saved ore counts, effective stats/skill/build and cast-time reagent quality links are missing; no input-saving coefficient can be calibrated.",
@@ -1297,6 +1298,39 @@
         200420
       ],
       "unresolved": "Original joint event IDs, positive stack quantity histograms, source patch/bonus/skill, current Retail legal disenchanting and price/auction availability. Bound valid only if each per-material row shares exact N source-reported disenchant denominator. Source marginal counts cannot be normalized as disjoint outcome probabilities."
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-GLASS-M2-GUARANTEE-CONFLICT-20261108",
+      "kind": "midnight_guaranteed_glass_claim_vs_original_total_conditional_conflict",
+      "original_source": "https://www.wowhead.com/item=237364/brilliant-silver-ore",
+      "existing_original_rows": [
+        "midnight-20261030-015",
+        "midnight-20261030-016"
+      ],
+      "registry": "research/v3/mechanics.md M2 currently verified both Crystalline Glass and Dusk-Shrouded Stone every prospect; guides claim both guaranteed",
+      "method": "Prospect",
+      "inputName": "Brilliant Silver Ore",
+      "input_source_family": "Brilliant Silver Ore rank unstated by original author",
+      "casts_reported": 800,
+      "glass_total_units": 671,
+      "stone_total_units": 874,
+      "expected_glass_units_per_reported_cast": 0.83875,
+      "expected_stone_units_per_reported_cast": 1.0925,
+      "min_glass_zero_casts_if_complete": 129,
+      "castsWithDrop": null,
+      "glass_zero_histogram": null,
+      "output_rank": null,
+      "exact_current_Retail_patch_verified": false,
+      "separate_umbral_tin_original": {
+        "source": "https://www.wowhead.com/item=237362/umbral-tin-ore",
+        "gross_ore_reported": 4000,
+        "glass_units": 597,
+        "stone_units": 911,
+        "actual_completed_casts": null,
+        "nominal_five_ore_equivalents": 800
+      },
+      "remaining_gap": "Full glass output accounting/completeness, actual per-operation positive and zero glass quantities, source build, input/output quality ranks, profession skill, spec and refunded inputs. Conditional bound is not a measured hit rate. Duskstone total cannot prove 100% or disprove it.",
+      "disposition": "Hold unqualified M2 guarantee as source-disputed; preserve cohort-specific expected quantity for valuation while chance remains unknown; no approved mechanics or protected runtime change."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -3491,6 +3525,24 @@
       "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-08T0001-dragonflight-looter-multi-output-overlap-bounds.md",
       "evidence_commit_sha": "e2615658e22642b57aa68bccc090b3a0c8a69f07",
       "no_addon_or_tooltip_execution": true
+    },
+    {
+      "task_id": "COORD-MIDNIGHT-GLASS-M2-GUARANTEE-CONFLICT-20261108",
+      "kind": "independent_cross_source_numerical_consistency_check_existing_800_cast_study",
+      "new_independent_studies": 0,
+      "new_measured_casts": 0,
+      "new_current_retail_gold_decisions": 0,
+      "source_reported_casts": 800,
+      "source_reported_glass_units": 671,
+      "source_reported_stone_units": 874,
+      "unconditional_glass_units_per_reported_cast": 0.83875,
+      "unconditional_stone_units_per_reported_cast": 1.0925,
+      "conditional_min_zero_glass_casts_if_output_tally_complete": 129,
+      "observed_per_cast_glass_zero_histogram": null,
+      "observed_occurrence_probability": null,
+      "critical_distinction": "Expected units per cast is usable if context/identity valid; does not give P(hit) or 0-inclusive histogram. 129 is a conditional mathematical lower bound, not measured zero observations.",
+      "evidence_file": "research/v3/evidence/master/2026-11-08T0100-midnight-glass-guarantee-vs-cardinalai-800casts.md",
+      "evidence_commit_sha": "30fa464faf513a552feda9de7bdfc9a34ccca658"
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -3536,7 +3588,8 @@
     "research/v3/evidence/legacy/2026-11-07T2043-titanium-output-id-enrichment-adamantite-original.jsonl",
     "research/v3/evidence/master/2026-11-07T2203-midnight-prospecting-skill-quality-gate-gear-state.md",
     "research/v3/evidence/master/2026-11-07T2258-warcanon-milling-source-mean-reconciliation.md",
-    "research/v3/evidence/master/2026-11-08T0001-dragonflight-looter-multi-output-overlap-bounds.md"
+    "research/v3/evidence/master/2026-11-08T0001-dragonflight-looter-multi-output-overlap-bounds.md",
+    "research/v3/evidence/master/2026-11-08T0100-midnight-glass-guarantee-vs-cardinalai-800casts.md"
   ],
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
@@ -3680,17 +3733,20 @@
     "https://www.wowhead.com/item=13464/golden-sansam",
     "https://www.wowhead.com/item=200360/chestwrap-of-the-waking-fist",
     "https://www.wowhead.com/ptr/item=200414/virtuous-silver-breastplate",
-    "https://www.wowhead.com/item=200416/virtuous-silver-gauntlets"
+    "https://www.wowhead.com/item=200416/virtuous-silver-gauntlets",
+    "https://www.wowhead.com/item=237364/brilliant-silver-ore",
+    "https://www.wowhead.com/item=237362/umbral-tin-ore",
+    "https://www.wow-professions.com/midnight/jewelcrafting-guide",
+    "https://boostmatch.gg/blog/wow/articles/wow-midnight-jewelcrafting-guide"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research_pre_evidence": "c53ae44dcefeffb68951070a7f75a72806514d5e",
-    "research_pre_status": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
     "protected_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_evidence_commit": "e2615658e22642b57aa68bccc090b3a0c8a69f07",
-    "research_dashboard_commit": "8949a59c142a23c68bf7979cf2d6361aaf72ee11"
+    "research_evidence_commit": "30fa464faf513a552feda9de7bdfc9a34ccca658",
+    "research_dashboard_commit": "06456933ee10b9745c3853b2861b58ab76eb7445",
+    "research_pre_status_head": "06456933ee10b9745c3853b2861b58ab76eb7445"
   },
-  "commit_sha_when_verified": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
+  "commit_sha_when_verified": "06456933ee10b9745c3853b2861b58ab76eb7445",
   "blockers": [
     "M10/T0034: firsthand reported hidden profession-UI Resourcefulness versus refunded ore lacks exact operation, rank, equipment, returned reagent amount and effective stat telemetry; cannot price uncalibrated savings as guaranteed.",
     "M11/T0033: actual 2026 Retail Prospect/Crush recipe craft-window Multicraft capability was not inspected in a WoW client; despite three agreeing public sources, stat formula/per-cast observed data unavailable. No multiplier/extra-gem output term can be licensed by this research.",
@@ -3741,7 +3797,8 @@
     "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107: Original patch 3.3.3 is historical WotLK Classic; 40 derived five-ore equivalents, no verified completed click/refund ledger, material hit probabilities, zero histograms, cast-time ranks, exact player itemLink or current Retail eligibility. Compiler's replace filter inspected, but v3 recompile and addon valuation/tooltip NOT executed. Do not import this as new independent 40 casts or verified 2026 Retail EV.",
     "Midnight Prospecting quality evidence is two 2026 anecdotal recipe/character states, not cast logs: no exact ore/output quality itemLinks, recipe IDs, patch-pinned skill threshold proof, operation numbers, price/EV or client reproduction. Do not import 365 as a universal quality gate or interpret gear re-equip as an addon fix.",
     "Warcanon source says 1.5801 Silvery per mill despite enumerating 531/181=2.933701657. Original patch/skill/guild perk and current Retail fidelity unknown; source means must not silently override verified quantities. Historical Golden Sansam 16/68 Sapphire units/mill materially differs from frozen reference 0.4775, but a current Retail rate/correct valuation is not verified.",
-    "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108: Per-operation joint outcomes, item bonuses, timestamps and actual live skill/spec needed before estimating correlation or a current Retail EV. Three positive-stack ranges exist in worker notes but minSeen/maxSeen are null; ask worker for source-preserving append-only structured field corrections, do not rewrite their file."
+    "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108: Per-operation joint outcomes, item bonuses, timestamps and actual live skill/spec needed before estimating correlation or a current Retail EV. Three positive-stack ranges exist in worker notes but minSeen/maxSeen are null; ask worker for source-preserving append-only structured field corrections, do not rewrite their file.",
+    "COORD-MIDNIGHT-GLASS-M2-GUARANTEE-CONFLICT-20261108: Original author did not publish complete per-cast Glass 0/1/2 quantities, glass filtering/consumption accounting, actual input quality rank, build, skill, specs or original game-time context. Guide 100% guarantee conflicts conditionally with 671 units across 800 operations; 129 inferred minimum zero-casts cannot be recorded as observed histogram or calibrated P(hit)."
   ],
   "exhausted_sources": [
     "2026-11-07 M11 checked two independent current JC processing guide assertions, October 3 original player correction, and March 12 UI/refund firsthand comment. Do not re-audit as independent drop data; obtain actual game spell capability and per-cast refunds next.",
@@ -3777,7 +3834,8 @@
     "Ceari Titanium Ore historical original: 17 output rows already recorded and 16 identity-enriched by the Legacy worker. Repeated source auditing is exhausted unless an original itemLink, different original cohort, or actual Retail operations become available; no duplicate new study.",
     "April 09 r/wow 1sgvqjt and June 27 Blizzard forum 2316717 skill-display reports transcribed as a single source-scoped context guard. Re-searching those posts will not create new independent cast cohorts; request paired client skill/output logs instead.",
     "Warcanon Sorrowmoss and Golden Sansam original Wowhead comments, frozen v3 13464/13466 Sapphire/Silvery estimates, and legacy TSM matRate/amountOfMats units were independently checked this run; do not repeatedly report this sample as a new cohort without patch-pinned current Retail evidence.",
-    "Dragonflight source tables for gear 200360, 200414 and 200416 were independently reopened only for their already-captured cumulative marginal counts and 1–2 Shard display ranges. Additional repeated page checks will not recover a joint event log or prove live 2026 eligibility; obtain raw logs/true source version instead."
+    "Dragonflight source tables for gear 200360, 200414 and 200416 were independently reopened only for their already-captured cumulative marginal counts and 1–2 Shard display ranges. Additional repeated page checks will not recover a joint event log or prove live 2026 eligibility; obtain raw logs/true source version instead.",
+    "Already indexed Cardinalai original Brilliant Silver 800-prospect source, Umbral Tin 4000-ore totals and two current guide guarantee claims have now been crosschecked; do not repeat those as new studies without source-level raw ledgers or game-specific rank/patch information."
   ],
   "decisions_needed": [
     {
@@ -3803,7 +3861,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Request original per-disenchant joint output quantities (same-item, same-source cohort, 0-inclusive per-output stacks), gear bonus/patch/skill and exact material rank from original Looter export or opt-in Retail SavedVariables. Have Dragonflight worker append-only correct 200360/200414/200416 note-only positive-stack min1/max2 ranges; then protected three-pass integration owner can execute synthetic-price actual-engine/tooltip field propagation. Do not merge/modify owner implementation branch.",
+  "next_concrete_step": "Request complete per-cast 0/1/2 Crystalline Glass ledger or source confirmation of Glass consumption/filtering, original ore/item quality links, build, skill/specialization, refunds for the Cardinalai Brilliant Silver 800-prospect study. Have M2 reviewer mark conflicting guide guarantee as scoped dispute; protected three-pass owner handles any offline synthetic-price valuation/tooltip fixture and PR review only after identity/context adjudication.",
   "validation_executed": {
     "at_utc": "2026-11-07T21:09:15.252Z",
     "source_pairwise_replacements_checked": 16,
@@ -3856,24 +3914,21 @@
   },
   "notifications": "none: owner requested on-demand updates only",
   "last_session": {
-    "task_id": "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108",
-    "at_utc": "2026-11-08T00:03:36.368Z",
-    "evidence_file": "research/v3/evidence/master/2026-11-08T0001-dragonflight-looter-multi-output-overlap-bounds.md",
-    "evidence_commit_sha": "e2615658e22642b57aa68bccc090b3a0c8a69f07",
-    "dashboard_commit_sha": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
-    "research_branch_prestatus_head": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
-    "derived_joint_overlap_lower_bound": 49,
-    "conditional_yield_range_fields_missing": 3,
-    "measured_new_casts": 0,
+    "task_id": "COORD-MIDNIGHT-GLASS-M2-GUARANTEE-CONFLICT-20261108",
+    "at_utc": "2026-11-08T01:06:03.475Z",
+    "evidence_file": "research/v3/evidence/master/2026-11-08T0100-midnight-glass-guarantee-vs-cardinalai-800casts.md",
+    "evidence_commit_sha": "30fa464faf513a552feda9de7bdfc9a34ccca658",
+    "dashboard_commit_sha": "06456933ee10b9745c3853b2861b58ab76eb7445",
+    "research_prestatus_head": "06456933ee10b9745c3853b2861b58ab76eb7445",
+    "original_sources_inspected": 2,
+    "guide_claims_compared": 2,
+    "new_measured_casts": 0,
     "new_retail_gold_decisions": 0,
-    "worker_reports_verified": 4,
-    "source_pages_reopened": 3,
-    "tests_not_executed": [
-      "compiler",
-      "addon",
-      "offline_valuation",
-      "live-WoW"
-    ]
+    "conditional_inference_only": true,
+    "compiler_executed": false,
+    "addon_or_actual_engine_executed": false,
+    "live_client_test_executed": false,
+    "worker_reports_verified": 4
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
@@ -4105,21 +4160,26 @@
   "integration_branch_head_checked_before_write": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "main_head_checked_before_write": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
   "session_validation": {
-    "at_utc": "2026-11-08T00:03:36.368Z",
-    "read_current_heads": true,
-    "worker_original_rows_compared": 13,
-    "two_material_groups_arithmetically_checked": 5,
-    "source_tables_independently_reopened": 3,
-    "source_structured_field_omissions_checked": 3,
-    "source_note_verified_blob_sha": "982e949ad6a6404f7a1441c72ba6a34c3100ae4b",
-    "dashboard_verified_blob_sha": "81058e971947cb57c36e78495910146be4c533e1",
-    "programmatic_marginal_overlap_checked": true,
+    "at_utc": "2026-11-08T01:06:03.475Z",
+    "source_original_transcription_checked": true,
+    "guarantee_conflict_arithmetic_checked": true,
+    "reported_bril_silver_casts": 800,
+    "reported_glass_units": 671,
+    "computed_min_zero_casts_if_complete": 129,
+    "source_completeness_verified": false,
+    "source_rank_patch_verified": false,
+    "worker_statuses_read": 4,
+    "source_original_pages_read": 2,
+    "guide_pages_read": 2,
     "new_casts_observed": 0,
     "new_current_retail_ev_decisions_verified": 0,
     "v3_compiler_ran": false,
     "synthetic_price_engine_ran": false,
     "lua_addon_tests_ran": false,
-    "live_wow_client_checked": false
+    "live_wow_client_checked": false,
+    "ci_researched_prewrite_only": true,
+    "ci_success_prior_head_sha": "ca6622ba9009d482b6ddd07fe5175814a9bf8079",
+    "ci_success_prior_head_url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42430349126"
   },
   "dashboard_commit_sha_when_verified": "6bf8363b5b2e1e4aa2c274d732dbcd127df580a9",
   "actual_last_worker_readbacks_utc": {
