@@ -1,159 +1,172 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-08T09:19:50.947Z",
+  "updated_at": "2026-11-08T10:15:09.600Z",
   "branch": "implementation/five-agent-completion",
-  "status": "research_only: independently cross-checked new archived WoWWiki Duskweave Belt probability-column inversion against Warcraft Wiki old-armor table and original WotLK Classic 49-belt study; verified histogram arithmetic and visible source author alias; no new observed cohort or current-Retail recommendation",
+  "status": "research_only: new static source-to-frozen-reference rank-alt gap for Midnight Eversong Diamond R2; verified source/output quality identities and exact compiled-reference omission, no newly observed casts, prices, client eligibility or tested current gold actions",
   "task_ids": [
-    "T0042",
-    "T0050"
+    "T0039",
+    "T0005",
+    "T0026"
   ],
   "exact_gaps_targeted": [
     {
-      "category": "contradictory_historical_reference_probability",
-      "inputItemID": 41543,
-      "method": "Disenchant",
-      "archive": "WoWWiki Duskweave Belt: Infinite Dust 22%; Greater Cosmic Essence 75%",
-      "other_reference": "Warcraft Wiki old 152-200 ilvl generic armor: Infinite Dust 75%; Greater Cosmic Essence 22%",
-      "issue": "Apparently swapped item-archive material probabilities; game era/patch and field applicability unresolved. Do not treat either as Retail baseline."
+      "category": "ranked_output_identity_not_propagated_to_reference",
+      "method": "Prospect",
+      "output_name": "Eversong Diamond",
+      "rank1_item_id": 242608,
+      "rank2_item_id": 242712,
+      "source": "current Retail commodity catalog labels quality ranks 1/2 and 2/2",
+      "current_frozen_reference": "database/reference-calculator-baselines.lua @ 3d667d053db587c91401cfed7ecc56862b8340c9; seven conditional entries id=242608, zero id=242712",
+      "impact": "conditional reference output rank-2 not represented in this frozen source; no claim of actual runtime failure or gold misvaluation"
     },
     {
-      "category": "yield_range_scope_mismatch",
-      "inputItemID": 41543,
-      "archive_dust_range": "2-5",
-      "warcraft_wiki_generic_range": "4-7",
-      "original_histogram_observed_range": "1-5",
-      "issue": "Different item/group reference and historic version scopes; no universal supported fixed range."
+      "category": "missing_measured_rank_allocation",
+      "inputs": [
+        237359,
+        237361,
+        237362,
+        237363,
+        237364,
+        237365,
+        237366
+      ],
+      "output_rank1": 242608,
+      "output_rank2": 242712,
+      "missing": [
+        "source-original per-quality outputs per completed cast",
+        "per-output 0/N hits and histogram",
+        "skill and spec",
+        "refund basis",
+        "ore-specific unlock live applicability"
+      ],
+      "impact": "do not split rank-unknown conditional Diamond coefficient into both quality IDs or price an unmeasured rank distribution"
     },
     {
-      "category": "source_identity_alias",
-      "studyKey": "wowhead-41543-180353-49-belts-histogram",
-      "worker_author_field": "180353",
-      "primary_visible_author": "zetapoo",
-      "issue": "Original Wowhead comment has visible contributor name zetapoo; retain numeric source identifier as alias, not a new author or independent cohort."
+      "category": "not_price_or_display_gap",
+      "facts": "Three-pass synthetic profile audit already shows all seven ordinary outputs valued; seven diamond components are conditional and excluded from live value. This is not a TSM price gap, nor proof that formatter dropped a supported measured field."
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "original_source_histogram_arithmetic_validation_of_existing_worker_evidence",
-      "studyKey": "wowhead-41543-180353-49-belts-histogram",
-      "source_context": "archived WotLK Classic commentary",
-      "fresh_independent_casts": 0,
-      "material_rows": [
-        {
-          "outputItemID": 34054,
-          "casts": 49,
-          "castsWithDrop": 37,
-          "totalQuantity": 111,
-          "hit_proportion": 0.7551020408163265,
-          "conditional_mean": 3,
-          "unconditional_units_per_cast": 2.2653061224489797
-        },
-        {
-          "outputItemID": 34055,
-          "casts": 49,
-          "castsWithDrop": 12,
-          "totalQuantity": 18,
-          "hit_proportion": 0.24489795918367346,
-          "conditional_mean": 1.5,
-          "unconditional_units_per_cast": 0.3673469387755102
-        }
-      ],
-      "method_note": "Source arithmetic checked against exact existing JSONL and readable first-person comment; samples are historic. Separate positive counts add to 49 but do not prove cooccurrence or universal zero shards."
-    },
-    {
-      "kind": "reference_source_conflict",
-      "resolution": "verified source contradiction; conservative candidate transposition, not correction/import to current Retail",
-      "legacy_page_dust_pct": 22,
-      "legacy_page_essence_pct": 75,
-      "old_generic_table_dust_pct": 75,
-      "old_generic_table_essence_pct": 22
-    },
-    {
-      "kind": "gold_and_tooltip_disposition",
-      "verified_current_Retail_gold_decisions": 0,
-      "verified_current_Retail_tooltip_fields": 0,
+      "kind": "cross_source_rank_identity_crosscheck",
+      "source_kind": "Retail commodity catalog reference (not cast study)",
+      "material_item_ids": {
+        "rank1": 242608,
+        "rank2": 242712
+      },
       "new_independent_studies": 0,
-      "new_measured_casts": 0,
-      "new_retail_eligibility_proof": 0
+      "new_completed_casts": 0,
+      "measured_probability": null,
+      "measured_expected_quantity": null
+    },
+    {
+      "kind": "frozen_reference_static_file_audit",
+      "file": "database/reference-calculator-baselines.lua",
+      "blob_sha": "52ce8aa9c25bcf43134306eaa6b089f38ad107c4",
+      "implementation_commit": "3d667d053db587c91401cfed7ecc56862b8340c9",
+      "id_242608_occurrences": 7,
+      "id_242712_occurrences": 0,
+      "interpretation": "static source output identity gap, not runtime validation"
+    },
+    {
+      "kind": "synthetic_audit_scope",
+      "source": "docs/usable-data-audit/summary.json",
+      "partial_profiles": [
+        "Prospect:237359:x5",
+        "Prospect:237361:x5",
+        "Prospect:237362:x5",
+        "Prospect:237363:x5",
+        "Prospect:237364:x5",
+        "Prospect:237365:x5",
+        "Prospect:237366:x5"
+      ],
+      "primary_actionable_coverage": null,
+      "gold_decisions_verified_this_run": 0,
+      "tooltips_verified_this_run": 0
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-08T0917-duskweave-reference-chance-transposition.md"
+    "research/v3/evidence/master/2026-11-08T1006-eversong-diamond-r2-reference-rank-gap.md"
   ],
-  "worker_evidence_compared": "research/v3/evidence/legacy/20261108T0855-wotlk-belt-histograms-and-independent-greens.jsonl",
+  "worker_evidence_compared": "research/v3/evidence/midnight/2026-11-08T0941-eversong-diamond-rank2-live-identity.jsonl; earlier v2 F004 same-name identity hold",
   "source_links": [
-    "https://www.wowhead.com/wotlk/item=41543/duskweave-belt",
-    "https://wowwiki-archive.fandom.com/wiki/Duskweave_Belt",
-    "https://warcraft.wiki.gg/wiki/Disenchanting_tables",
-    "https://warcraft.wiki.gg/wiki/Disenchanting"
+    "https://goldcap.gg/retail/us/items/242608",
+    "https://goldcap.gg/retail/us/items/242712",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/database/reference-calculator-baselines.lua",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/docs/usable-data-audit/summary.json",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-08T0941-eversong-diamond-rank2-live-identity.jsonl"
   ],
-  "verified_commit_sha": "fcd11563fe622ff348e07c87ba600f07a1e0a788",
-  "verified_commit_sha_scope": "Coordinator new audit note created and read back on research branch; this is not a numeric evidence worker commit and status cannot embed its own final commit SHA.",
-  "verified_dashboard_commit_sha": "41a8185c6421d1287713ac3f3876b84c6f3262e8",
-  "verified_evidence_blob_sha": "d3591ca7ffebe9fcd8210fe05feb2ad42b8f58d6",
-  "verified_worker_evidence_blob_sha": "492c1e48f80d499c423b351dca77b3e85f21ed34",
+  "verified_commit_sha": "fcf96a9050d4a992c6498348b5431200184dd6e7",
+  "verified_commit_sha_scope": "New coordinator-owned research audit file was GitHub-created and independently read back; not a numeric cohort/compiled ItemDB change",
+  "verified_evidence_blob_sha": "ed788a3217e1530aa25f60f359d4a8e4bceb3305",
+  "verified_dashboard_commit_sha": "343b63623b72624b53d4e94e7c0f4cccf9b041db",
+  "verified_dashboard_blob_sha": "1b1d6398d9fd5b2ca73df19062505903b17da342",
   "current_heads_at_read": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research_pre_status": "41a8185c6421d1287713ac3f3876b84c6f3262e8",
+    "research_before_coordinator_audit": "73f9d6bc5ea0041431900a929f37fee06cb64056",
     "three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "worker_reports_read": [
     {
       "role": "midnight",
-      "at_utc": "2026-11-08T08:18:39.754Z",
-      "file": "research/coordination/quiet-status/midnight.json",
-      "result": "One reused Evercore goggle reference comment across four variant IDs; rank, casts, live noDE eligibility unknown; next run 09:10Z in progress at check, pending report."
+      "at_utc": "2026-11-08T09:41:29.824Z",
+      "blob_sha": "79bf2c278bc9a0e2324012a09e91963c353f3926",
+      "result": "R2 242712 source catalog identity; zero new measured casts",
+      "latest_automation": "new 10Z run in progress at peek, report pending"
     },
     {
       "role": "war-within",
-      "at_utc": "2026-11-08T08:22:40.220Z",
-      "file": "research/coordination/quiet-status/war-within.json",
-      "result": "Two anniversary gear item-side Looter cohorts, mixed legacy/TWW materials with unresolved same-name rank/identity and unknown unit totals."
+      "at_utc": "2026-11-08T09:33:51.416Z",
+      "blob_sha": "97d4dc65c4f4f028f24b04fba02faa90456c7937",
+      "result": "anniversary gear Looter occurrences, no rank/quantity closure"
     },
     {
       "role": "dragonflight",
-      "at_utc": "2026-11-08T08:41:11.538Z",
-      "file": "research/coordination/quiet-status/dragonflight.json",
-      "result": "11 new reported DE rows across five source cohorts, no new Dragonflight prospecting/milling raw cast histograms."
+      "at_utc": "2026-11-08T09:43:49.340Z",
+      "blob_sha": "29d4ed9172383e5446f1fa01a9291b8663a05425",
+      "result": "seven item-side Looter cohorts, no original prospect/mill histogram"
     },
     {
       "role": "legacy",
-      "at_utc": "2026-11-08T08:55:15.850Z",
-      "file": "research/coordination/quiet-status/legacy.json",
-      "result": "14 new historical DE rows; coordinator independently verified the 49-belt output histogram arithmetic and reference conflict."
+      "at_utc": "2026-11-08T09:48:59Z",
+      "blob_sha": "3c612273e97b56d4dd6edaa94e216a8490b38adc",
+      "result": "five MoP Classic item-side Looter cohorts, not Retail proof"
     }
   ],
-  "actual_automation_run_results": "Peek read: previous runs recorded completed Midnight 08:18:58Z, War Within 08:23:06Z, Dragonflight 08:41:28Z and Legacy 08:55:36Z; next Midnight automation was in progress at 09:08:43Z. No invented worker acknowledgment.",
+  "actual_automation_run_results": {
+    "checked_at_utc": "2026-11-08T10:14Z",
+    "midnight": "current run in_progress (previous finished 2026-11-08T09:41:45Z)",
+    "war_within": "previous completed 2026-11-08T09:34:28Z",
+    "dragonflight": "previous completed 2026-11-08T09:44:29Z",
+    "legacy": "previous completed 2026-11-08T09:50:34Z"
+  },
   "ci_last_checked": {
-    "last_completed_research_head": "09d3416567d6efa31664a87a248edb83a221637c",
-    "last_completed_run_id": 42464963116,
+    "run_id": 42468862617,
+    "name": "Verify five-agent completion",
+    "head": "73f9d6bc5ea0041431900a929f37fee06cb64056",
+    "status": "completed",
     "conclusion": "success",
-    "updated_at": "2026-11-08T08:55:50Z",
-    "coordinator_note_run_id": 42466597225,
-    "coordinator_note_run_status": "in_progress_at_read",
-    "dashboard_run_id": 42466635290,
-    "dashboard_run_status": "in_progress_at_read",
-    "scope": "Research push workflow only, not current coordinator status or actual offline price/tooltip validation."
+    "scope": "pre-coordinator worker research head only, NOT new coordinator note/dashboard/status or current addon engine tests"
   },
   "research_prs": {
     "22": "closed-unmerged",
     "23": "closed-unmerged",
+    "24": "merged 2026-11-02 (three-pass addon implementation)",
     "25": "closed-unmerged"
   },
   "blockers": [
-    "Historical WotLK source and pre-BfA bracket guide do not establish current-Retail disenchant eligibility, character skill, versioned yield or gold action.",
-    "WoWWiki item's dust/essence percentage labels disagree with independent generic armor reference and original 49-item sample; no original edit history explaining inversion.",
-    "Reference-table input lineage into current compiled Retail ItemDB not traced; no scoped import correction or actual offline engine/tooltip test executed.",
-    "Original commentator's exact patch/build, skill and sample independence from broader same-item source collections not established.",
-    "No new independent Retail casts, material prices, source-grounded output changes or tested current gold recommendations."
+    "No source-original rank-2 prospecting itemLink with exactly identified input ore, rank, per-ore specialization unlock and completed-cast totals; the catalog rank identity is not a verified output-specific rate.",
+    "The frozen reference has only rank-1 ID 242608 for seven modeled Diamond conditional quantities; inserting 242712 without per-rank yield allocation could fabricate double value.",
+    "No owned permission to modify protected three-pass implementation; scoped engineering test/rank alternative mapping belongs to PR Director/addon owner.",
+    "No actual Retail character, price source or client-connected operation; synthetic audits do not establish live gold decisions."
   ],
   "exhausted_sources": [
-    "Existing Legacy Duskweave 49/28/50/100/8-belt comments already in worker evidence. This checkpoint only reconciles archived reference probability labels and original author identity; do not recopy those cohorts.",
-    "Prior coordinator Battlefield crate level-80 boundary, TWW 237707/237712 overlap, Legion Gem Chip formulas and other historical source checks remain in dashboard and are not recounted as new work.",
-    "Archived WoWWiki item and Warcraft Wiki old generic table cannot resolve current patch applicability or live DE eligibility; further duplicated summaries are low priority versus source-to-compiler trace or actual versioned observations."
+    "Historical Magma Thresher 199344 fish identity and prospecting special-batch caveat were already established in 2026-10-28 original audit; not counted as new finding.",
+    "Earlier 242712 ambiguous same-name identity recorded in October v2; current catalog quality disambiguation is worker research, coordinator added only new frozen-file propagation trace.",
+    "Prior Duskweave/Frostwoven/TWW cohort and archived reference topics remain previous checkpoints, not repeated as new progress."
   ],
-  "next_concrete_step": "Legacy evidence owner T0042: trace whether inverted WoWWiki 41543 chance pair is present in archived legacy/TSM/current Reference table import; retain distinct source/version scopes, add linked correction only if directly imported, and verify same 49-cast source author alias (zetapoo/180353). After research-only review, three-pass owner may run isolated synthetic-price actual-engine/tooltip fixture on current Retail-eligible inputs; coordinator must not touch protected implementation branch. For higher impact, current Midnight/TWW workers continue exact ranked identity and completed-cast numeric gaps.",
-  "tests_executed": "Fetched current repo heads, charter/three-pass plan/pass1, research v3 instructions/evidence schema/mechanics/queue/strategy/flags, current workers, original Legacy JSONL, source web pages, and PR #22/#23/#25 states. Independently computed both 49-cast positive/zero-bin histogram arithmetic, checked hits and totals against original JSONL using JavaScript assertions, created and read back coordinator source audit, updated dashboard and read it back. Queried GitHub Actions status and real automation run statuses. No Lua, compiler, actual estimator, synthetic-price valuation, tooltip, WoW-client, merge, release or new schedule operations.",
-  "restricted_actions": "Only coordinator-owned research evidence note, coordinator-owned RESEARCH-DASHBOARD.md and this coordinator quiet-status file changed on research branch; no worker original/status, shared queue, strategy, flags, main, 4df9ae8 immutable snapshot, three-pass implementation, PR or schedule touched.",
-  "previous_status_blob_sha": "daf3019357fd22410e5cb35821924bd5776ad756"
+  "next_concrete_step": "Midnight worker T0039/T0005: get original exact per-rank Eversong Diamond output itemLinks, ore input quality and completed 0/N histograms with unlock, skill and refund context. Protected addon owner: review labeled rank-2 conditional unknown alternative without duplicating R1 expectation, then run actual offline resolver/formatter synthetic-price fixture before scoped PR change. Coordinator stays research-only, no new schedule/PR/merge.",
+  "tests_executed": "GitHub reads of current heads, owner's charter and three-pass checkpoint files, v3 readme/evidence schema/mechanics/strategy/queue/flags and four worker status files; original October v2 identity caveat; worker's rank2 source JSONL and two GoldCap catalog pages; independent static count of seven id=242608 and zero 242712 occurrences in 32,638-character frozen source; read three-pass summary's seven partial profiles and synthetic price boundary; checked four existing automation run statuses, PR 22-25 metadata and research CI; created research-only note and read it back, updated dashboard and read it back. No Lua, research estimator, compiler, actual valuation/tooltip synthetic fixture, in-client test, merge, release or new schedule.",
+  "restricted_actions": "Only research/v3/evidence/master coordinator note, research/coordination/RESEARCH-DASHBOARD.md and coordinator-owned quiet-status file modified on research branch. No worker status/evidence/history, strategy, queue, main, protected three-pass code, immutable snapshot, PRs or automations changed.",
+  "previous_status_blob_sha": "8531f5b98e72ff259fc114e76b6b1eef766440c9"
 }
