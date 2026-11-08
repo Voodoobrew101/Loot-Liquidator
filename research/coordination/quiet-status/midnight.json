@@ -1,116 +1,65 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-08T01:13:03.096Z",
-  "status": "One previously unrecorded firsthand nominal-ore/gem-total observation preserved as reference only; no verified rank-specific completed-cast cohort, source item IDs, or per-output histogram.",
+  "updated_at": "2026-11-08T02:15:32.442Z",
+  "status": "One new previously unrecorded exact Midnight weapon disenchant-ineligibility identity (PTR catalog only); no new measured gear, prospecting or milling casts.",
   "task_ids": [
     "T0026",
     "T0039",
     "T0005",
-    "T0003"
+    "T0003",
+    "T0025"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands: actual 305 ilvl/bonus/build at disenchant, and conditional armor/weapon rarity and skill/spec samples",
-    "237362 Umbral Tin Ore: rank-specific completed prospect casts, 242606/242607/242610/242611/242786/242788 output IDs and hits/zero/stack histograms; 242608 Tin-vestigator unlock",
-    "237359/237361 Refulgent Copper: original current-patch independent gem-output counts versus pre-April reports; reported April 4 50-ore two-gem anecdote has NO verified source ore",
-    "237364/237365 Brilliant Silver and Midnight 10-herb milling: actual cast-level input/output IDs, rank, skill and refunds"
+    "272246 Miststalker's Wristbands: actual at-disenchant itemLevel/bonus/build and rank/skill/spec sample remain unverified",
+    "237362 Umbral Tin Ore: per-output hit counts, zeros, histograms, exact rank IDs and Tin-vestigator unlock/Resourcefulness at actual completed casts remain unverified",
+    "237359/237361 Refulgent Copper and 237364/237365 Brilliant Silver: independent current-epoch rank-specific zero-inclusive samples absent",
+    "Midnight milling: item-identified ten-herb completed casts, pigment output quantities/ranges with skill and refunds absent",
+    "269992 Sharpened Arcanite Warglaive: no-disenchant identity in PTR catalog, live-attempt confirmation absent"
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "record_id": "midnight-20261108-0113-001",
-      "kind": "firsthand reference, NOT measured operation cohort",
-      "input_item_id": null,
-      "input_name": "Midnight ore, unspecified",
-      "nominal_ore_reported": 50,
-      "output_item_id": null,
-      "output_name": "gems, unspecified",
-      "total_quantity_reported": 2,
+      "record_id": "midnight-20261108-0215-001",
+      "kind": "noDisenchant eligibility identity, PTR reference, NOT cast cohort",
+      "input_item_id": 269992,
+      "input_name": "Sharpened Arcanite Warglaive",
+      "item_type": "heirloom weapon / warglaive",
+      "base_item_level": 29,
+      "source": "https://www.wowhead.com/ptr/item=269992/sharpened-arcanite-warglaive",
+      "source_build": "12.1.7 PTR",
+      "outcome": "Cannot be disenchanted (catalog flag)",
       "completed_casts": null,
       "casts_with_drop": null,
-      "zero_outcomes": null,
-      "histogram": null,
-      "source": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=2",
-      "post_author": "Jerek-589955",
-      "post_date": "2026-04-04",
-      "scope": "pre-April hotfix; generic ore identity; excluded from numeric estimator"
+      "output_item_id": null
     }
   ],
   "numeric_fields_advanced": [
-    "New independent pre-hotfix firsthand report preserves nominal 50 unspecified ore and total 2 unidentified gems; no verified casts, hit counts, zeros, per-rank quantities, skill or unlock advanced."
+    "Verified catalog item identity 269992 and base heirloom ilvl 29; no numeric processing probability, yield, completed-cast denominator, zero bins or output ranks advanced."
   ],
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-08T0113-jerek-50ore-2gems-identity-gap.jsonl"
+    "research/v3/evidence/midnight/2026-11-08T0215-arcanite-warglaive-no-disenchant.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-20261108-0113-001"
+    "midnight-20261108-0215-001"
   ],
   "source_links": [
-    "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=2"
+    "https://www.wowhead.com/ptr/item=269992/sharpened-arcanite-warglaive",
+    "https://www.wowhead.com/item=269992/sharpened-arcanite-warglaive"
   ],
-  "verified_commit_sha": "4e1c874ec6bc1ddab436fd9d9cf1c82fd3f8b93f",
-  "verified_commit_sha_scope": "Verified baseline branch HEAD BEFORE this run's one atomic evidence+status commit; a Git commit cannot embed its own SHA in its tracked status content. This run's resulting SHA is independently resolved and read back from the branch ref/commit after commit.",
-  "base_commit_sha_verified": "4e1c874ec6bc1ddab436fd9d9cf1c82fd3f8b93f",
+  "verified_commit_sha": "45772eb38539346e3bd6493e6997772cf0ed94fd",
+  "verified_commit_sha_scope": "Verified branch HEAD before this atomic evidence+status commit; a tracked file cannot contain the SHA of the commit containing itself. Resulting commit SHA must be independently read back after update_ref.",
+  "base_commit_sha_verified": "45772eb38539346e3bd6493e6997772cf0ed94fd",
   "commit_readback": {
-    "state": "planned in this atomic commit; external post-commit readback and SHA verification performed after branch ref update",
-    "expected_evidence_record_id": "midnight-20261108-0113-001",
-    "expected_evidence_path": "research/v3/evidence/midnight/2026-11-08T0113-jerek-50ore-2gems-identity-gap.jsonl"
+    "state": "awaiting post-update ref and file readback",
+    "expected_evidence_record_id": "midnight-20261108-0215-001",
+    "expected_evidence_path": "research/v3/evidence/midnight/2026-11-08T0215-arcanite-warglaive-no-disenchant.jsonl"
   },
   "blockers": [
-    "Missing current-build, item-level/bonus, profession skill/specialization and exact 272246 firsthand disenchants.",
-    "Umbral Tin 237362 rank, per-output castsWithDrop, histograms, completed casts including Resourcefulness refunds, and 242608 Tin-vestigator unlock confirmation remain unknown.",
-    "New Jerek report lacks input item ID/rank and gem output IDs and is pre-April 2026 hotfix, so cannot inform current ranked probabilities.",
-    "Current-patch Refulgent Copper, Brilliant Silver and ten-herb milling lack independent zero-inclusive per-cast item-ID logger exports."
+    "No new independent current-patch zero-inclusive per-cast disenchant study for 272246 by actual ilvl/build/skill/spec.",
+    "Existing 237362 800-cast Cardinalai cohort lacks independently verifiable per-output castsWithDrop/zero histograms, ranks and refund-adjusted operation provenance.",
+    "No independent verified raw logs for Refulgent Copper, Brilliant Silver or ten-herb milling despite name-targeted multi-site search.",
+    "269992 no-disenchant flag is PTR 12.1.7 catalog only; no in-game live test. Do not generalize to other heirlooms or use as numeric DE yield."
   ],
   "exhausted_sources": [
-    "Do not re-import Cardinalai June10 800-cast Umbral Tin/Brilliant Silver pooled studies or Honeybone Apr19/22 Refulgent Copper; earlier studies already recorded.",
-    "Do not re-record 1000 Tranquility Bloom/1473 pigment Reddit pooled example, 2026-11-04 Glimmering Powder wow-professions rate references, or Miststalker's generic 206 vs 305 PTR tooltip discrepancy; they are in prior evidence.",
-    "March 18 Blossoming Rootwarden's Focus cross-expansion disenchant bug is already documented; avoided duplicate.",
-    "April 28 Heart of Wind restoration Imgur screenshot unavailable; do not infer missing rank or item level.",
-    "Direct Reddit/WoW forum/Wowhead item-name search on Midnight disenchant and Umbral Tin yielded previous reports but no new multi-cast logs. Avoid rerunning same sources without a new lead.",
-    "Krathalan 145 disenchant/45 Glimmering Powder was previously recorded (midnight-20261031-13002); not reimported.",
-    "Joe 100 Refulgent Copper ore forum 2281743 already in earlier Midnight evidence; not reimported.",
-    "r/woweconomy 1s7nfcw 5294 rare DE knowledge study already recorded 2026-11-01T1812; not reimported.",
-    "Cardinalai June10 800-cast 237362/237364, Honeybone copper, March26 Draggoth milling observations and 272246 206/305 tooltip discrepancies already documented; avoid more source-only repeats.",
-    "NocD r/woweconomy 1rtqxbr original 1000-ore screenshot lead newly identified; linked Imgur fOTeoFs cannot be transcribed with available access. Do not repeat this search or record a measured cohort without the original screenshot/export.",
-    "No new cohort in name-targeted Reddit, WoW profession forum, Wowhead checks for Umbral Tin, Brilliant Silver, Tranquility Bloom; 2026-04-17 Battlefield Goods hotfix and JD3K test already in prior evidence.",
-    "This run: no independent direct cast log emerged from Midnight profession-item search on Wowhead, WoW profession forum, Reddit or guides; avoided importing existing Looter cumulative snapshots, Cardinalai/Honeybone/kyzenbka/Draggoth numeric results, or NocD inaccessible image again. Switched to primary profession-trait pages; three new exact IDs, not repeated drop-rate studies.",
-    "This session checked indexed rare Shard Aspalar ~5000 operations (already midnight-20261102-081301+), Draggoth 12.5 Powder/10 herbs (already recorded), HeadtripVee rank table (already recorded), and prior 272246 base/bonus ambiguity; no duplicate study entered. Pivoted to previously unrecorded Slumbering Coil Curio four difficulty-specific source-linked bonus strings.",
-    "2026-11-06 targeted searches revisited reddit/r/woweconomy 1sfds1u (prior genobeam/HeadtripVee cohort), 1rju9nm March-03 milling 11-15 (already evidence 2026-10-30T1830), wowhead 267654 Kestevavild ~32/3 weekly essence (already evidence 2026-11-01T1812), Honeybone/Cardinalai source sets; no duplicate records. New independent gear restoration original at Blizzard forum t/2308765 was not indexed in branch evidence.",
-    "Firecrawl full raw HTML extraction unavailable due to connected service credit exhaustion; ordinary web text used without inventing raw Wowhead Looter data.",
-    "Current session: independently matched candidate 248064, 248066, 250033, 251202, 248077, 251251 and 248059 against prior source-backed Midnight evidence files; all are already recorded and were NOT re-imported.",
-    "Searches for new Umbral Tin / Tranquility Bloom per-cast histograms recovered previously documented Cardinalai, JD3K, Krathalan and existing guide results; no new independent denominators or distributions.",
-    "Live and PTR 260375 Raging Storm Sash Wowhead Looter both show 8/4/4, treated as ONE original base-ID cohort, not independent datasets.",
-    "Previously documented 251085 Mantle restoration cost versus actual drop discrepancy remains on hold, not repeated.",
-    "Current session: 242712 Eversong Diamond alternate same-name catalog ID was already investigated/held in original V2 source-review 2026-10-30T0826; did not record or resolve this existing identity dispute anew.",
-    "Current session: Draggoth March 21 Tranquility Bloom 12.5 and rare 81/90 shard percent references already recorded in midnight 2026-10-31T0006; no repeated evidence. Jacara 400-ore gem report, headtripvee/JD3K/previous Looter cohorts checked against branch and not reimported.",
-    "Current session: duplicate detection excluded existing 249953,249989,249956,250053,260371,250063,251204 and rare weapon 251251/251258/248074; only unseen 250016/250006/250019 base Looter aggregates added. Avoid re-fetching the same indexed snapshots until linked output IDs or original cast logs emerge.",
-    "This run: excluded PTR/live overlapping Looter snapshots for 275220 (127,135,136), 250013 (28,29), 250028 (11,12), 250015 (27,28,29). Only one chosen cumulative base-ID source per item; WoWDB generic non-DE flags do not settle live variant eligibility. Do not re-import these cohorts without raw source lineage.",
-    "2026-11-06T19:18 UTC: Rechecked indexed Wowhead rare gear examples 250057,248068,248066,248077,251251,248062,248064,251204,251202,250019; each already recorded earlier. Excluded duplicate Looter aggregates, including PTR/live overlapping snapshots.",
-    "2026-11-06T19:18 UTC: Known Cardinalai Umbral Tin 800-cast outputs, Honeybone Refulgent Copper 1,000-ore sample, Draggoth Tranquility Bloom 1,000-herb examples, and screenshot-inaccessible NocD prospecting were not reimported; name-based web searches yielded no independently logged per-cast cast/zero distribution.",
-    "2026-11-06T19:18 UTC: Item 249920 Eye of Midnight WoWDB noDE flag already exists as midnight-20261031-200512; excluded from this run.",
-    "2026-11-06 2020 UTC: Excluded previously recorded Cardinalai 237362 800-cast, Honeybone 237359/237361 1000-ore, JD3K 50-ore prospect tests, kyzenbka/Draggoth milling and older 248074/251258/251254 Looter rows. No new independent raw prospect/milling denominator, and did not retry inaccessible NocD screenshot.",
-    "2026-11-06 2020 UTC: Source searches for Miststalker's Wristbands, Umbral Tin, Tranquility Bloom and rank-specific milling did not yield cast-time proof. Found five distinct 12.1.0 Season 2 epic armor Looter page summaries; selected only one LIVE URL per base item and never treated other bonus preview URLs or PTR mirror listings as independent cohorts.",
-    "2026-11-06 run: Diffracted May 5 Brilliant Silver 43-prospect/34-gem/zero-diamond report already represented by midnight-20261031-1505 and midnight-20261031-12007; no new same-source cohort reimported. Existing 250049,250032,249986,249990,249983,277897 Looter aggregates found in earlier files; not duplicated.",
-    "2026-11-06 22:21 UTC: avoided re-import of Cardinalai rank-1 Umbral Tin 800-cast, Honeybone Refulgent Copper, Stormwarning July 3 two-Jewelcrafter ranked-ore forum 2323248, and previously documented 272246 live ilvl305 armory context; these provide no new independent raw completed casts/zero histograms.",
-    "2026-11-06 23:14 UTC: targeted new primary profession-trait pages and June 27 / September 26 firsthand skill discussions: seven previously unrecorded numeric profession trait IDs and two skill contexts found; neither thread supplied original zero-inclusive per-cast material quantities. No duplicate imported Cardinalai, Honeybone, prior Dawn Crystal cumulative Looter snapshots or inaccessible NocD screenshot.",
-    "2026-11-07 worker run: inspected queue and previous 134 Midnight evidence files, did not duplicate Cardinalai 800-prospect Umbral Tin, Honeybone copper, Draggoth milling, NocD inaccessible screenshot, or existing 272246 140-Looter contradiction. Item-name searches did not uncover independent raw casts. Pivoted to ten unrecorded LIVE profession trait IDs and new first-person resourcefulness UI/character context; do not repeatedly search these pages without new logs.",
-    "2026-11-07 01:18 UTC: New original March8 r/woweconomy 1ro8ber and March20 1ryolii checked; the former contains one deck-to-'Epic Shard' firsthand anecdote with unresolved IDs, and the latter an approximate 66% rank2-quality skill-conditioned claim without a source denominator. Do not re-import as measured study or treat 66% as unconditional drop probability. Other searches for ilvl305 Wristbands, Umbral Tin raw logs and rare/epic casts yielded prior Cardinalai, Draggoth, NocD and 5294 rare-KP studies only, not new outputs.",
-    "2026-11-07 0211 UTC: checked live and PTR 260374 Looter (identical 9/7/2), counted ONLY live original; rechecked overlapping 249996,250000,250063,251204,260375 and 260377 already represented in Midnight evidence and excluded duplication. Forum/Reddit item-name searches for Umbral Tin, milling, and rare DE raw casts surfaced prior Cardinalai, Honeybone, Draggoth and historical bug reports, no independent new cast-level logger cohort.",
-    "2026-11-07 03:12 UTC: prior Reddit 1vknxyy Copper 12,900/100,000 gem pool already present in midnight-20261103-1705-001. Only previously unrecorded distinct silver+tin 1,700/10,000 pooled row added; do not reimport either or treat the two ore families as independent cast cohorts. Name-based 272246 lookups across live Wowhead, WoWDB, armory-style worn-gear sites and Warcraft Logs yielded a live 305 bonus-preview identity but no actual Disenchant-attempt log.",
-    "2026-11-07 04:13 UTC: ForKalimdor us forum 2270729 has no gems/outcome counts; do not reimport as a measured 100-cast cohort. Wowhead Aurn repeated identical four-gem mapping is one source (not four studies); PandaKingJ rank-adjective does not establish exact 237362 itemLink. Other recent searches returned prior Cardinalai/Honeybone/Draggoth, current guides lacking original yields; no reimports.",
-    "2026-11-07 05:xx UTC: Name-based targeted searches across indexed WoWhead current/PTR Looter tables, Blizzard official Armory, WoWDB, WoW profession forums and Reddit. 248068/248074/248066/251251/251258 and existing 2500xx/2715xx Looter cohorts already recorded; deliberately NOT re-imported. Existing Cardinalai, JD3K, Honeybone and 272246 305 selected preview not re-imported. No independent raw completed cast logger, material stack histograms, or new output rank links.",
-    "2026-11-07 source-original discovery: Blizzard forum 2276246 post 16 Draggoth unmeasured rare level-81/90 shard chances and post 10 Agni rough untyped ore/gem counts recorded once. Do not reimport as measured cast data, or repeat Draggoth's previously recorded Tranquility Bloom milling 12.5 pigment reference.",
-    "This session avoided previous Cardinalai 800-prospect data, Honeybone, NocD inaccessible screenshots, previously logged rank-2 crystal references and Miststalker catalog/Armory 305/308/321 source snapshots.",
-    "2026-11-07T07:11Z: Deduped known Cardinalai 237362, Honeybone/Draggoth, 271544/271545/271546/271465/271435/271549 and existing epic 2500xx source snapshots; did not reimport. Five newly distinct live base-item Looter tables retained as reference-only pending full original cast lineage; avoided overlapping PTR versions.",
-    "2026-11-07T08:xx UTC: excluded prior recorded 271553/271555/271556 from 2026-11-02T0905; did not reimport known Cardinalai 800-cast Umbral Tin, Honeybone, Draggoth or NocD screenshot leads. Live and PTR pages with the same item base ID are not independent sample cohorts. Five distinct previously unlogged page-row identities were held as reference only; no raw cast log uncovered.",
-    "2026-11-07 09xx UTC: targeted uncommon/rare/epic DE, 272246 Miststalker's Wristbands, Umbral Tin 237362, Refulgent Copper, Brilliant Silver and milling on Reddit, Blizzard forums and item/guide sources. Existing Cardinalai/Honeybone/Draggoth/NocD and Looter cohorts excluded; independent raw cast ledgers unavailable. Reddit 1rke21a provided four NEW distinct author contexts only; do not re-import this thread as a measured study.",
-    "2026-11-07 follow-up name-targeted indexed WoWhead, Reddit, Blizzard forums and modern profession-guide searches found no additional independent current-patch raw per-cast 272246, 237362, 237359/237365 or 10-herb milling logger exports. Existing Cardinalai/nezroy/HeadtripVee/JD3K/Honeybone/Draggoth and previous Looter studies deliberately not reimported. Newly identified March14 forum 2271802 historical DE anomaly recorded once only; do not revisit unless original itemLinks or a post-hotfix retest surface.",
-    "2026-11-07 11xx UTC: fresh name-based search revisited Golden City Baton (LIVE 58 vs overlapping PTR 57, only LIVE retained), Preyhunter's gear, Midnight Tin and Miststalker's Wristbands; previously imported Cardinalai/Honeybone/Draggoth/Looter and the 272246 ilvl305 armory-vs-template contradiction not duplicated. Indexed Looter/Chinese catalog tables were unaccompanied by original raw per-cast logs.",
-    "2026-11-07T12:24Z: deduped 146 prior Midnight evidence files against candidate raid/season2 gear; excluded 249960,250036,250034,249961,249956,249959,249962,250003,250006,260377,249955 and earlier Cardinalai/Honeybone/Draggoth/272246 source repeats. Only 249957 previously unlogged PTR source rows recorded; no new verified original per-cast cohort in Reddit, item-name WoWhead, wow-professions/Method or Blizzard forum search.",
-    "2026-11-07T13:18:05.143Z: new 271563/271562 Wowhead LIVE variant tables and WoWDB generic noDE catalog checked once; 271562 alternate 5/3/1 table not imported as a second cohort. Name-based search for original raw ilvl305 272246, ranked Umbral Tin, copper/silver and Tranquility Bloom logged histograms found only preexisting Cardinalai/Honeybone/Draggoth/5294 and older Looter data. Do not reimport without itemLink/actual cast logs.",
-    "2026-11-07 independent Reddit rank-quality/gear-stat leads checked: 1ro5vay (Manthieus, SeniorEmployment932, PublicRepulsive1721), 1s1dtuh (NocD visible 99 skill, OldWolf2 rough 200-ore), 1t95kjs (maqisha equip-state); do not revisit unless original full cast exports, exact itemLinks/bonus, or controlled skill thresholds emerge. No previously known NocD image, Cardinalai/Honeybone/Draggoth or Wowhead Looter tables imported.",
-    "2026-11-07T15:18:57.097Z: Targeted original data searches across Wowhead item pages (including Courtly Wrists MikiMM 1,000 DE — already in 2026-11-02T1105 evidence), WoW-Professions, Reddit 1rke21a/1si9t1g/1rteoqr, Blizzard discussion and Warcraft Wiki. No new independent original item-level-specific disenchant cohort or rank-separated per-cast prospect/mill histogram. Reddit 2000-shard Radiant Shatter is a distinct process with no schema-safe Disenchant mapping; do not import as Disenchant. New source-backed candidate IDs 244586/237923 and disenchant skill/spec structure retained as references, not numerical estimator samples.",
-    "2026-11-07T16:12:59.351Z: Name-based searches for Midnight DE distributions and ore/milling casts only surfaced previously recorded Cardinalai, Honeybone, Draggoth, MikiMM and Looter references; intentionally not reimported. Newly located Grimmella Evercore 1–2-shard comment is posted verbatim on 244751, 244753 and 244754; logged once as reference only (no sample size). Oct 3 Reddit 1wwd0w0 is a separate mechanics lead, not a cast dataset.",
-    "2026-11-07T17:18Z: five previously unrecorded LIVE epic armor base IDs 250038,249964,250043,250040,250042 had indexed same-name Dawn Crystal output rows; imported once only as Looter reference, not casts. Alternate bonus/PTR snapshots for each are overlapping versions and must not be counted independently. Name-based original source searches for 272246, 237362, 237359/237361, 237364/237365 and Midnight milling returned previous Cardinalai/Honeybone/Draggoth/JD3K/5294 studies; no new raw ledger. Firecrawl credits exhausted; Wowhead direct browser strips JS Looter tables; indexed excerpts preserved with caution.",
     "2026-11-07T18:23:15.160Z: New item-name site-restricted searches for Umbral Tin 237362/237363 (Reddit, Blizzard forums, Wowhead, Wiki, Wow-Professions, Method) and 272246 Miststalker's Wristbands actual ilvl305 (Reddit, Blizzard forums, Wowhead, WoWDB, Wiki, Icy Veins) found no source-linked original per-cast file. Existing Cardinalai/Honeybone/Draggoth and material rank-ID references were deduplicated, not reimported.",
     "2026-11-07T19:24:24.143Z: Kith'ix 12.1.5 item-name searches across Wowhead, GamGem, guildloot, Method, NeedBeforeGreed, Blizzard Armory found no original DE cast; 281238 base219 versus armory worn334 is NEW identity context only. Do not re-import existing 281056/281235 WoWDB noDE catalog flags or treat boss loot chances as material yields.",
     "2026-11-07 new focused search found no independent zero-inclusive original Midnight disenchant / Umbral Tin / milling casts. Excluded prior Cardinalai/Honeybone/Draggoth/MikiMM/JD3K/previous Looter cohorts, all generic mixed-expansion spell 13262 Looter group snapshots, and guide prices. One NEW Warcraftable milling budgeting page (not study) recorded once with three input IDs; avoid repeating without new logger evidence.",
@@ -119,7 +68,8 @@
     "2026-11-07T23:11:53.534Z: New line of inquiry checked TheWoWDB 166-bracket claim, LibItemDB loot-template data (prospect 166/mill 57 NOT DE), ProspectMate tracker, April prospect calculator and cross-site current player reports. No original cast datasets; Reddit 1smgllg already logged on 2026-11-01T1910, not re-imported. DE bracket claim unverified until original client raw table.",
     "2026-11-08T00:18:24.013Z: Checked new Visage of Unseen Truths 260370 12.1.7 PTR table (9 reported DE, 7/2 Dawn Crystal rows) and 12.1.5 PTR 8/6/2 overlapping older cumulative snapshot; selected ONLY newer 12.1.7 table as one reference identity, not independent PTR cohorts. Checked Infernal Greatlock Girdle 260371 but it is already in midnight/2026-11-02T0633, Blind Oath's Raiment 250054 already in 2026-11-01T1110, and Wowhead Glimmering Powder 145/45 and guide 10/50/100 already in 2026-10-31T0411, 2026-10-31T1206 and 2026-11-04T0613. No duplicate. No raw 272246 ilvl305, Umbral Tin rank-specific or milling log found. No repeated older source imports.",
     "2026-11-08T01:13:03.096Z: Firsthand Jerek April 4 Blizzard forum post26 in topic 2274222: nominal 50 unspecified ore and 2 unspecified gems, one original, no cast count or item IDs. Recorded once as reference only; do not revisit or count as Refulgent Copper or as 10 completed casts without new source itemLinks/logger. Jacara April4 same forum and prior Honeybone/Cardinalai/Draggoth/MikiMM/JD3K/Looter sources intentionally not reimported.",
-    "2026-11-08T01:13:03.096Z: New targeted name-based checks on Miststalker's Wristbands, Umbral Tin, Refulgent Copper, Brilliant Silver, Tranquility Bloom, Mana Lily/Sanguithorn, and Dawn Crystal disenchant during 2026 across Blizzard forums, Reddit, WoW profession guides and indexed Wowhead. No new exact input/output ID + original completed-cast/zero-bin distributions; avoid re-running until original logger evidence appears."
+    "2026-11-08T01:13:03.096Z: New targeted name-based checks on Miststalker's Wristbands, Umbral Tin, Refulgent Copper, Brilliant Silver, Tranquility Bloom, Mana Lily/Sanguithorn, and Dawn Crystal disenchant during 2026 across Blizzard forums, Reddit, WoW profession guides and indexed Wowhead. No new exact input/output ID + original completed-cast/zero-bin distributions; avoid re-running until original logger evidence appears.",
+    "Run 2026-11-08T02:15:32.442Z: Rechecked by-item-name indexed Wowhead/Blizzard forum/Reddit/WoW-Professions/Method (272246, Umbral Tin, Copper, Silver, Tranquility Bloom); no new original verified rank-specific completed-cast and zero-inclusive material cohort. Cardinalai/Honeybone/Draggoth/NocD, old estimates, guide rates and duplicate Looter snapshots deliberately excluded. Pivotted to unrecorded Midnight 269992 noDE catalog identity."
   ],
   "decisions_needed": [
     {
