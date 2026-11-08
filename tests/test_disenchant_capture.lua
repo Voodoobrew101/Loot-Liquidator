@@ -173,7 +173,7 @@ for _,event in ipairs(replay)do
 end
 eq(#d.records-before,75);eq(d.targetingActivations-cursorBefore,19)
 eq(produced[243602],70);eq(produced[243603],5);eq(d.studies[batch].censored,nil)
-eq(last().castStartSeen,true);eq(last().recorderRevision,5)
+eq(last().castStartSeen,true);eq(last().recorderRevision,6)
 -- Opening the next cursor while real loot is unsettled must not force-finalize it.
 LL:StartNewBatch();bags={{gearA}};loot={};targeting=false
 emit('UNIT_SPELLCAST_START','player','delayed-real',13262)
@@ -261,7 +261,7 @@ eq(d.studies[batch].coverageGaps['Disenchant:13262']~=nil,true,'real known-cast 
 d.studies[batch].recorderRevision=4
 emit('UNIT_SPELLCAST_START','player','craft-after-scope-upgrade',1229863)
 eq(d.activeStudy~=batch,true);eq(d.studies[batch].censored,true)
-eq(d.studies[d.activeStudy].recorderRevision,5)
+eq(d.studies[d.activeStudy].recorderRevision,6)
 emit('UNIT_SPELLCAST_INTERRUPTED','player','craft-after-scope-upgrade',1229863)
 print('PASS: 75 original and 20 PR49 receipts, cursor/unrecognized spell isolation, real overlaps and upgrade rollover')
 print('PASS: '..checks..' disenchant recorder regression assertions')

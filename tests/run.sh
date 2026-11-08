@@ -62,6 +62,8 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_craft_recording.lua
 "$lua_bin" tests/test_recorder_lookup.lua
 "$lua_bin" tests/test_recycling.lua
+"$lua_bin" tests/test_radiant_shatter.lua
+python3 tests/test_radiant_shatter_contract.py
 "$lua_bin" tests/test_salvage_ui.lua
 "$lua_bin" tests/test_recipe_coverage.lua
 "$lua_bin" tests/test_disenchant_capture.lua

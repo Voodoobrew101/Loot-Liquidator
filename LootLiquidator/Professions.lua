@@ -17,6 +17,7 @@ local function PositiveInt(n) return type(n)=="number" and n>0 and n<math.huge a
 -- salvage list, never from an item name, bag contents or assumed output rates.
 local SALVAGE_RECIPES={
     [1229930]={method="Recycle",profession="Engineering",expansionID=11,inputCount=5},
+    [1280394]={method="Craft",profession="Enchanting",expansionID=11,inputCount=1}, -- Radiant Shatter
 }
 function LL:SalvageRecipeDefinition(recipeID) return SALVAGE_RECIPES[recipeID] end
 function LL:ReadSalvageInputs(recipeID)
@@ -33,12 +34,18 @@ end
 function LL:SalvageConversionOptions(f)
     local out={}
     for recipeID,definition in pairs(SALVAGE_RECIPES) do
+        local existing=false
+        for _,conversion in ipairs(self.Conversions and self.Conversions[f.id] or {}) do
+            if conversion.method==definition.method and (conversion.recipeID or conversion.requiredSpell)==recipeID
+                and (conversion.inputCount or 1)==definition.inputCount then existing=true;break end
+        end
         for _,char in pairs(self.db and self.db.characters or {}) do
             local scan=char.salvageRecipes and char.salvageRecipes[recipeID]
-            if scan and scan.inputs and scan.inputs[f.id] then
+            if not existing and scan and scan.inputs and scan.inputs[f.id] then
                 out[#out+1]={method=definition.method,profession=definition.profession,
                     recipeID=recipeID,requiredSpell=recipeID,inputCount=definition.inputCount,
-                    salvage=true,eligibleInput=true,source="In-game Recycling input list",
+                    salvage=true,eligibleInput=true,source=definition.method=='Recycle' and
+                        "In-game Recycling input list" or "In-game salvage input list",
                     confidence="verified-input",requirement="Output yields need matching recorded results"}
                 break
             end

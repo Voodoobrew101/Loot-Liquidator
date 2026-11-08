@@ -40,7 +40,7 @@ class CraftExportTests(unittest.TestCase):
         page = copy.deepcopy(original)
         page['records'].pop()
         page['retainedRecords'] -= 1
-        with self.assertRaisesRegex(ValueError, 'Missing Recycling reconciliation casts'):
+        with self.assertRaisesRegex(ValueError, 'Missing salvage reconciliation casts'):
             validator.validate([page])
 
     def test_actual_disenchant_capture_copied_from_native_popup_validates(self):

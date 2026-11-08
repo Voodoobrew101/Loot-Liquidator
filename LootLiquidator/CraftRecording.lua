@@ -8,7 +8,7 @@ local SPELLS={[13262]="Disenchant",[51005]="Mill",[31252]="Prospect",[382981]="M
 local MAX_RECORDS=2000
 local pending
 local request
-local RECORDER_REVISION=5
+local RECORDER_REVISION=6
 local disenchantIntents,intentOrder={},{}
 local sessionStarted=false
 local recyclingReceipts,recyclingReceiptOrder={},{}
@@ -358,6 +358,9 @@ local function allocatedInputs(p)
     if next(selected) then return nil end
     return expected
 end
+local function salvageCapture(p)
+    return p and p.description and p.description.salvage
+end
 function LL:BeginCraftCapture(guid,recipe)
     if type(guid)~="string" or not integer(recipe) then return false end
     local description=describe(self,recipe)
@@ -370,10 +373,10 @@ function LL:BeginCraftCapture(guid,recipe)
     if pending then
         if pending.guid==guid then return true end
         local previous=pending
-        -- Consecutive Recycling results have individual server operation IDs,
+        -- Consecutive verified salvage results have individual server operation IDs,
         -- but bag updates can span cast boundaries. Keep their typed receipts
         -- until the whole sequence reconciles, rather than mixing two deltas.
-        if description and enabled(self,description.method) and previous.method=='Recycle' and previous.recipe==recipe and previous.success
+        if description.salvage and enabled(self,description.method) and salvageCapture(previous) and previous.recipe==recipe and previous.success
             and #previous.results>0 and not previous.interference then
             self:FinishCraftCapture(false)
             if pending and #(previous.previousRecycling or {})<MAX_RECORDS-1 then
@@ -607,6 +610,7 @@ function LL:AbandonCraftCapture(reason)
     if pending then diagnostic(self,pending,reason);pending=nil end
 end
 local function finishRecycling(self,p,after,final)
+    local label=p.method=='Recycle' and 'Recycling' or 'Salvage'
     local casts={}
     for _,earlier in ipairs(p.previousRecycling or {}) do casts[#casts+1]=earlier end
     casts[#casts+1]=p
@@ -621,25 +625,25 @@ local function finishRecycling(self,p,after,final)
         if not cast.success or cast.interference or not integer(id) or not integer(batch)
             or type(guid)~='string' or guid=='' or not facts or not cast.salvageInputVerified
             or not returns or #cast.results==0 then
-            reason=cast.interference or 'Recycling needs a verified salvage target and craft result';break
+            reason=cast.interference or label..' needs a verified salvage target and craft result';break
         end
         local variants=0 for _ in pairs(cast.before.variants[id] or {}) do variants=variants+1 end
-        if variants~=1 then reason='Recycling input item variants are ambiguous';break end
+        if variants~=1 then reason=label..' input item variants are ambiguous';break end
         local refunded=returns[id] or 0
-        for returnedID in pairs(returns) do if returnedID~=id then reason='Unrelated Recycling reagent return' end end
-        if reason or refunded>batch then reason=reason or 'Invalid Recycling reagent return';break end
+        for returnedID in pairs(returns) do if returnedID~=id then reason='Unrelated '..label..' reagent return' end end
+        if reason or refunded>batch then reason=reason or 'Invalid '..label..' reagent return';break end
         local outputs={}
         local operation
         for _,r in ipairs(cast.results) do
             if not integer(r.operationID) or (operation and operation~=r.operationID)
                 or not integer(r.itemID) or not integer(r.quantity) or r.itemID==id then
-                reason='Ambiguous Recycling result operation';break
+                reason='Ambiguous '..label..' result operation';break
             end
             operation=r.operationID
             outputs[r.itemID]=(outputs[r.itemID] or 0)+r.quantity
         end
         if reason then break end
-        if seen[operation] then reason='Duplicate Recycling result operation';break end
+        if seen[operation] then reason='Duplicate '..label..' result operation';break end
         seen[operation]=true
         nominal[id]=(nominal[id] or 0)+batch
         net[id]=(net[id] or 0)+batch-refunded
@@ -653,16 +657,16 @@ local function finishRecycling(self,p,after,final)
         local budget=copy(before.counts)
         for _,part in ipairs(parts) do
             local id=part.nominalInputs[1].itemID
-            if (budget[id] or 0)<part.nominalInputs[1].quantity then reason='Missing nominal Recycling input batch';break end
+            if (budget[id] or 0)<part.nominalInputs[1].quantity then reason='Missing nominal '..label..' input batch';break end
             budget[id]=budget[id]-part.inputs[1].quantity
         end
         for id,n in pairs(net) do
-            if produced[id] then reason='Recycling input and output identities overlap'
-            elseif (removed[id] or 0)~=n then reason='Recycling inputs have not reconciled' end
+            if produced[id] then reason=label..' input and output identities overlap'
+            elseif (removed[id] or 0)~=n then reason=label..' inputs have not reconciled' end
         end
-        for id,n in pairs(removed) do if n~=(net[id] or 0) then reason='Unrelated Recycling input change' end end
-        for id,n in pairs(produced) do if (added[id] or 0)~=n then reason='Recycling outputs have not reconciled' end end
-        for id,n in pairs(added) do if n~=(produced[id] or 0) then reason='Unrelated Recycling output change' end end
+        for id,n in pairs(removed) do if n~=(net[id] or 0) then reason='Unrelated '..label..' input change' end end
+        for id,n in pairs(produced) do if (added[id] or 0)~=n then reason=label..' outputs have not reconciled' end end
+        for id,n in pairs(added) do if n~=(produced[id] or 0) then reason='Unrelated '..label..' output change' end end
     end
     if reason then
         if final then diagnostic(self,p,reason);pending=nil end
@@ -679,7 +683,7 @@ local function finishRecycling(self,p,after,final)
     local complete=true
     for _,part in ipairs(parts) do
         local cast=part.cast
-        local record={operationID=cast.guid,recipeID=cast.recipe,method='Recycle',successful=true,
+        local record={operationID=cast.guid,recipeID=cast.recipe,method=cast.method,successful=true,
             character=self:CharacterKey(),build=build(),gameMode='RETAIL',context=cast.context,
             inputs=part.inputs,nominalInputs=part.nominalInputs,outputs=part.outputs,outputCoverage='complete',
             startedAt=cast.startedAt,endedAt=cast.completedAt,reconciledAt=stamp(),
@@ -707,7 +711,7 @@ function LL:FinishCraftCapture(final)
     local p=pending;if not p or not p.success then return false end
     if p.interference then diagnostic(self,p,p.interference);pending=nil;return false end
     local after=self:SnapshotCraftBags();if not after then return false end
-    if p.method=='Recycle' then return finishRecycling(self,p,after,final) end
+    if salvageCapture(p) then return finishRecycling(self,p,after,final) end
     local result,reason=validateDelta(self,p,after)
     if not result then
         if final then diagnostic(self,p,reason);pending=nil end
@@ -1148,7 +1152,7 @@ for _,event in ipairs({"UNIT_SPELLCAST_SENT","UNIT_SPELLCAST_START","UNIT_SPELLC
     "TRADE_SHOW","MERCHANT_SHOW","MAIL_SHOW","BANKFRAME_OPENED","PLAYER_LOGOUT"}) do frame:RegisterEvent(event) end
 frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
     if pending and not enabled(LL,pending.method) then
-        if pending.method=='Recycle' then LL:AbandonCraftCapture('Recording disabled with unsettled Recycling results') end
+        if salvageCapture(pending) then LL:AbandonCraftCapture('Recording disabled with unsettled salvage results') end
         pending=nil
         if LL.db and LL.db.craftResearch then LL.db.craftResearch.activeStudy=nil end
     end
@@ -1177,17 +1181,17 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
             pending.interference="Unsupported result kind";return
         end
         local key=tostring(r.operationID)..":"..tostring(r.itemGUID)..":"..r.itemID
-        if pending.method=='Recycle' then
+        if salvageCapture(pending) then
             local old=recyclingReceipts[r.operationID]
             if old then
-                if old[key]~=json(r) then pending.interference='Conflicting completed Recycling result' end
+                if old[key]~=json(r) then pending.interference='Conflicting completed salvage result' end
                 return
             end
             for _,earlier in ipairs(pending.previousRecycling or {}) do
                 if earlier.operationID==r.operationID then
                     local fingerprint=json(r)
                     if earlier.resultKeys[key] and earlier.resultKeys[key]~=fingerprint then
-                        pending.interference='Conflicting duplicate Recycling result'
+                        pending.interference='Conflicting duplicate salvage result'
                     elseif not earlier.resultKeys[key] then
                         earlier.resultKeys[key]=fingerprint;earlier.results[#earlier.results+1]=r
                     end
