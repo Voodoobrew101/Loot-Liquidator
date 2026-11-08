@@ -1,162 +1,163 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-08T05:01:23.372Z",
+  "updated_at": "2026-11-08T06:08:37.322Z",
   "branch": "implementation/five-agent-completion",
-  "status": "research_only: independently cross-checked new TWW Refulgent Looter item-version aggregation and derived conservative listed-outcome bounds; new source-context blocker for rank-specific Retail valuation, not new casts or gold decisions",
+  "status": "research_only: native original Legion workbook proved two study-labeled Gem Chip totals are formulas referencing prospect counts, not independently measured output; source correction handoff documented, no new casts/eligibility/gold decisions",
   "task_ids": [
-    "COORD-TWW-REFULGENT-BASE-ID-VARIANT-AGGREGATION-20261108",
-    "T0048"
+    "T0042",
+    "S17"
   ],
   "exact_gaps_targeted": [
     {
-      "category": "source_variant_identity_not_usable_for_rank_valuation",
-      "input_item_ids": [
-        229336,
-        229329
-      ],
-      "method": "Disenchant",
-      "issue": "Base-item Looter rows appear identical across distinct displayed item bonus/quality/ilvl variants; actual per-player bonus/patch and same-name Refulgent output row item IDs/ranks are absent."
+      "category": "misclassified_formula_as_observed_study_total",
+      "record_id": "legacy-20261031-013",
+      "input_item_id": 123918,
+      "output_name": "Gem Chip",
+      "source_cells": {
+        "K2": 6674,
+        "E16": "=K2",
+        "H16": "=E16/$K$2"
+      },
+      "issue": "Study-labeled totalQuantity 6674 is copied from a prospect count, not an independently entered item yield."
     },
     {
-      "category": "reported_operation_rows_not_complete_material_outcomes",
-      "input_item_ids": [
-        229336,
-        229329,
-        227625
-      ],
-      "issue": "Source material hit totals below item operation denominator. These imply some casts without the listed Refulgent rows but not proven no-output disenchant or exact mean."
+      "category": "misclassified_formula_as_observed_study_total",
+      "record_id": "legacy-20261031-026",
+      "input_item_id": 123919,
+      "output_name": "Gem Chip",
+      "source_cells": {
+        "K19": 2112,
+        "E33": "=K19",
+        "H33": "=E33/$K$19"
+      },
+      "issue": "Study-labeled totalQuantity 2112 is copied from a prospect count, not an independently entered item yield."
     },
     {
-      "category": "mixed_expansion_context",
-      "input_item_id": 227625,
-      "issue": "11.0.5 anniversary reissue has both TWW Refulgent Crystal and MoP Sha Crystal rows; cannot serve as ordinary TWW epic input baseline."
+      "category": "retail_context_eligibility_and_reference_value_undetermined",
+      "input_item_ids": [
+        123918,
+        123919
+      ],
+      "issue": "Workbook formula is explicit one-chip-per-prospect reference assumption, not observed Retail P(hit) or measured mean; requires separately validated method, output identity, source era and implementation test before actionable valuation."
     }
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "independently_original-source-checked_source_table_and_variant_linkage_not_new_measurement",
-      "input_item_id": 229336,
-      "reported_operations": 122,
-      "refulgent_same_name_row_hits": [
-        59,
-        38,
-        24
-      ],
-      "source_row_hit_sum": 121,
-      "lower_bound_operations_without_listed_refulgent": 1,
-      "source_variants": [
-        "https://www.wowhead.com/item=229336/confessors-unshakable-boots?ilvl=678",
-        "https://www.wowhead.com/it/item=229336/stivali-incrollabili-del-confessore?bonus=11948"
-      ],
-      "claim": "Mythic/Epic and indexed Rare variant display same site-wide Looter numerator/denominator, indicating base-ID aggregation; actual upload quality composition unverified.",
-      "output_rank_item_id_match": null
+      "kind": "independently_read_original_native_sheet_cell_formulas_not_new_craft_observation",
+      "source_title": "Legion Prospecting",
+      "sheet": "Sheet1",
+      "source": "https://docs.google.com/spreadsheets/d/1a415g8FlUJ_EdC8TlA6U2Yzz8KSh9PA2WvV0dAsPLnM/edit",
+      "source_formula_cells": {
+        "E16": "=K2",
+        "E33": "=K19",
+        "H16": "=E16 / $K$2",
+        "H33": "=E33 / $K$19"
+      },
+      "literal_prospect_counts": {
+        "K2": 6674,
+        "K19": 2112
+      },
+      "literal_control_gem_counts": {
+        "E2": 33,
+        "E9": 210,
+        "E19": 47,
+        "E26": 220
+      },
+      "source_imposed_chips_total": 8786,
+      "observed_gem_chip_quantity": null,
+      "measured_hit_probability": null,
+      "complete_zero_histogram": null
     },
     {
-      "kind": "independently_original-source-checked_source_table_not_new_measurement",
-      "input_item_id": 229329,
-      "reported_operations": 107,
-      "refulgent_same_name_row_hits": [
-        57,
-        35,
-        13
+      "kind": "crosscheck_existing_flag_and_original_evidence",
+      "record_ids": [
+        "legacy-20261031-013",
+        "legacy-20261031-026"
       ],
-      "source_row_hit_sum": 105,
-      "lower_bound_operations_without_listed_refulgent": 2,
-      "source_variants": [
-        "https://www.wowhead.com/item=229329/confessors-unshakable-lightcover?bonus=12020",
-        "https://www.wowhead.com/item=229329/confessors-unshakable-lightcover?ilvl=678"
-      ],
-      "output_rank_item_id_match": null
-    },
-    {
-      "kind": "independently_original-source-checked_mixed_expansion_context_not_new_measurement",
-      "input_item_id": 227625,
-      "reported_operations": 22,
-      "refulgent_same_name_row_hits": [
-        13,
-        6,
-        2
-      ],
-      "sha_crystal_item_id": 74248,
-      "sha_crystal_hits": 1,
-      "lower_bound_operations_without_listed_refulgent": 1,
-      "source": "https://www.wowhead.com/ptr/item=227625/malevolent-gladiators-treads-of-cruelty",
-      "output_rank_item_id_match": null
+      "flag_date": "2026-10-31",
+      "related_corrections_present": false,
+      "claim": "Source formula basis independently proven; proposed additive corrections not applied because Legacy worker owns investigation and shared corrections require review."
     },
     {
       "kind": "disposition",
       "newly_measured_casts": 0,
       "newly_verified_expected_units": 0,
       "confirmed_current_retail_gold_decisions": 0,
-      "verified_tooltip_fields_delivered": 0,
-      "source_bounded_quantities_only": true
+      "verified_tooltip_fields_delivered": 0
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-08T0500-tww-refulgent-variant-aggregation-and-unlisted-outcome-bounds.md"
+    "research/v3/evidence/master/2026-11-08T0600-legion-gem-chip-formula-vs-observation.md"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=229336/confessors-unshakable-boots?ilvl=678",
-    "https://www.wowhead.com/it/item=229336/stivali-incrollabili-del-confessore?bonus=11948",
-    "https://www.wowhead.com/item=229329/confessors-unshakable-lightcover?bonus=12020",
-    "https://www.wowhead.com/item=229329/confessors-unshakable-lightcover?ilvl=678",
-    "https://www.wowhead.com/ptr/item=227625/malevolent-gladiators-treads-of-cruelty",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-08T0431-new-priest-cloth-and-anniversary-source-hit-cohorts.jsonl"
+    "https://docs.google.com/spreadsheets/d/1a415g8FlUJ_EdC8TlA6U2Yzz8KSh9PA2WvV0dAsPLnM/edit",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-10-31T0039-legion-prospecting-original-studies.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/flags.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-08T0600-legion-gem-chip-formula-vs-observation.md"
   ],
-  "verified_commit_sha": "b3a32987a52ff82657937e727153cec60154a7e6",
-  "verified_commit_sha_scope": "Evidence commit independently read back (blob 42c030283e63f601e62bdbcc0cd9a150874743ba); manager dashboard committed bfa5fe822ba31272cceb36624b8bbb293ea104fb. Final status commit cannot self-reference. Branch may advance concurrently.",
-  "evidence_blob_sha": "42c030283e63f601e62bdbcc0cd9a150874743ba",
+  "verified_commit_sha": "1e303fb91293e0f48646791c8d8c25f43a363180",
+  "verified_commit_sha_scope": "Original source-audit note created and read back at commit 1e303fb; manager dashboard last written at 0fe079beac2c7a834afe9c86dcf98321c2496de1; status commit cannot self-reference. Worker evidence blobs also independently read.",
+  "evidence_blob_sha": "8ef703f32cca7f1307f89bab54c55133e6b06b38",
   "current_heads_at_read": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research_pre_status": "bfa5fe822ba31272cceb36624b8bbb293ea104fb",
+    "research_pre_status": "0fe079beac2c7a834afe9c86dcf98321c2496de1",
     "integration": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "ci_last_checked": {
-    "research_pre_status_sha": "bfa5fe822ba31272cceb36624b8bbb293ea104fb",
-    "combined_statuses": [],
-    "pr_triggered_actions_at_earlier_research_head": "no runs returned",
-    "scope": "No check-run/CI pass established on current evidence/dashboard/status commits; no test execution claimed. The GitHub Actions commit-run method filters to PR-triggered runs."
+    "research_sha": "9157282da74f507c0d43b23023fbd627d5f8fa1a",
+    "workflow_run_id": 42452107910,
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-11-08T05:47:33Z",
+    "scope": "Prior worker branch head only; did not claim checks ran on this coordinator's documentation/status commits."
   },
   "worker_reports_read": [
     {
-      "role": "legacy",
-      "reported_at_utc": "2026-11-08T04:39:50.333Z",
-      "file": "research/coordination/quiet-status/legacy.json",
-      "note": "13 source-attributed TBC Arcane Dust marginal hit rows; no current Retail eligible gold decision."
-    },
-    {
-      "role": "dragonflight",
-      "reported_at_utc": "2026-11-08T04:29:43.365Z",
-      "file": "research/coordination/quiet-status/dragonflight.json",
-      "note": "No new original cast-level cohort; missing rank-specific denominators."
+      "role": "midnight",
+      "reported_at_utc": "2026-11-08T05:15:08.808Z",
+      "file": "research/coordination/quiet-status/midnight.json",
+      "evidence": "research/v3/evidence/midnight/2026-11-08T0515-golden-city-baton-live-looter.jsonl",
+      "evidence_blob_sha": "c9ae292297facace389f7d4c5d080a8eb8219e22",
+      "note": "Source-reported 58-operation item-side Looter 248076; ranks/stack units unverified; not a verified current Retail cohort."
     },
     {
       "role": "war-within",
-      "reported_at_utc": "2026-11-08T04:31:40.484Z",
+      "reported_at_utc": "2026-11-08T05:27:25.544Z",
       "file": "research/coordination/quiet-status/war-within.json",
-      "source_evidence": "research/v3/evidence/war-within/2026-11-08T0431-new-priest-cloth-and-anniversary-source-hit-cohorts.jsonl",
-      "note": "Three new original item-side Looter aggregate cohorts, 10 output rows; rank identities and current context still unknown."
+      "evidence": "research/v3/evidence/war-within/2026-11-08T0527-dying-star-priest-epic-looter-source-hits.jsonl",
+      "evidence_blob_sha": "7a60b869cf4ebb594450e9b2d18644a51de98999",
+      "note": "Four item-side priest gear Looter cohorts; material row rank/units and sample context unknown."
     },
     {
-      "role": "midnight",
-      "reported_at_utc": "2026-11-08T04:09:00.588Z",
-      "file": "research/coordination/quiet-status/midnight.json",
-      "note": "Wowhead item-variant preview links only, no new measured casts."
+      "role": "dragonflight",
+      "reported_at_utc": "2026-11-08T05:38:55.951Z",
+      "file": "research/coordination/quiet-status/dragonflight.json",
+      "evidence": "research/v3/evidence/dragonflight/2026-11-08T0538-postpatch-disenchant-firsthand-cohorts.jsonl",
+      "evidence_blob_sha": "c4abde88d86bc5aa18d9afcc4ca4cad5c6ac4edf",
+      "note": "Firstperson Jan 2023 eight-zero and four-one crystal reports, ambiguous identity; later approximately 600 wands lacks exact denominator."
+    },
+    {
+      "role": "legacy",
+      "reported_at_utc": "2026-11-08T05:46:51.741Z",
+      "file": "research/coordination/quiet-status/legacy.json",
+      "evidence": "research/v3/evidence/legacy/20261108T0546-tbc-arcane-plate-cloth-leather-looter.jsonl",
+      "evidence_blob_sha": "a5b3e9281a0318c818c415a9770f72d07666a0b8",
+      "note": "14 cumulative output-side Arcane Dust rows, undated; not new independent firsthand cast log."
     }
   ],
   "blockers": [
-    "229336/229329 output table has three same-name Refulgent Crystal rows with no verifiable per-row item links/quality ranks; do not assign 219952/219954/219955 by position.",
-    "Wowhead indexed table appears to aggregate across item bonuses/quality; raw per-player itemLink, patch, skill, amount and 0..N events are missing. The web plain HTML lacks JS table; an alternative hosted scraper could not run due a credit limit.",
-    "N-minus-material-hit-sum bounds apply only to listed material rows and do not imply no-output disenchant, exact unit yield or current Retail chance.",
-    "227625 mixed Sha Crystal and Refulgent outcomes are reissue-context contaminated; 2026 Retail item eligibility/bonus not verified.",
-    "No synthetic-price actual engine/formatter, Lua tests, live WoW client or rank-resolved ItemDB results executed in this run."
+    "The workbook Gem Chip totals are formula copies; source does not supply an independent count or zero-inclusive histogram for these two outputs. Do not convert =K2/=K19 into measured P(hit)=100% or confidence.",
+    "Two Legacy evidence records still encode formula-derived Gem Chip quantities as measured study totals; existing Oct 31 flag is source-resolved, but additive corrections and source-kind label not yet reviewed/applied.",
+    "Legion-era processing/rank/output identity cannot establish current Retail eligibility and AH pricing without character-specific method/valuation audit.",
+    "No actual offline Lua source-to-valuation-to-tooltip run, compiler regression, market-pricing check or live WoW client executed by coordinator."
   ],
   "exhausted_sources": [
     "This checkpoint checked distinct indexed Wowhead 229336 Rare/Epic, 229329 normal/Mythic and 227625 anniversary item-side tables; no original upload or row-ID hyperlinks surfaced, so do not repeat name-only/source preview searches without raw exports.",
     "Prior coordinator checkpoint exhausted historical Frostwoven original commenters and archived 22/75 table pending date/patch/source attribution; earlier Duskweave, Midnight glass and Cardinalai follow-ups remain unresolved and were not repeated.",
-    "Firecrawl live/rawHtml request returned insufficient available credits, not source invalidity; do not retry until available credits or another accessible original-source method."
+    "Firecrawl live/rawHtml request returned insufficient available credits, not source invalidity; do not retry until available credits or another accessible original-source method.",
+    "2026-11-08T06:07Z: Original Legion Prospecting Sheet1 E16/H16, E33/H33 plus K2/K19 and literal gem controls fully resolved this narrow source-formula question; no further text-search or duplicate Gem Chip studies needed until additive correction review or original independent per-cast logs arrive. Dragonflight JC workbook skill arithmetic/EXPECTED formula defect already identified in PR #25; intentionally not recycled."
   ],
-  "next_concrete_step": "T0048 War Within worker: obtain source-original Looter linked material item IDs and full itemLink/bonus, dated 0..N stack data for 229336/229329, separating rare/epic item versions; preserve 227625 cross-era context. No duplicate study from variant URL mirrors. Three-pass owner decides whether any validated field can reach actual Retail engine/tooltip on its protected implementation branch.",
-  "tests_executed": "Read 10 new worker JSONL rows and original indexed Wowhead item-side tables, independently checked two different 229336 item-quality previews, calculated and rechecked integer bounds [122-(59+38+24)=1,107-(57+35+13)=2,22-(13+6+2)=1], verified evidence blob readback. Read repository charter, three-pass plan/pass1, v3 README/schema/mechanics/queue/strategy/flags, worker statuses, current branch/PR states and selected CI. No compiled ItemDB, unit/price valuation, Lua suite, tooltip-client or live Retail test executed.",
-  "restricted_actions": "Only manager-owned research/v3/evidence/master note, research/coordination/RESEARCH-DASHBOARD.md and this coordinator status updated. No main/addon/three-pass branch changes, worker edits, queue/strategy changes, PR merges/closures, release, schedule changes or notifications."
+  "next_concrete_step": "T0042 Legacy evidence owner: adopt source-readback proof for legacy-20261031-013/026; prepare additive audited totalQuantity=null correction(s) in an authorized reviewable research change and preserve explicit worksheet assumption as a distinctly labeled reference candidate if corroborated. Then test compiler output and actual offline item valuation/tooltip on a separate approved branch; no forced current Retail action.",
+  "tests_executed": "Native original Google Sheet CellData formula/value bounded reads (E16, E33, H16, H33, K2, K19, four literal control gems), arithmetic 6674+2112=8786; GitHub source JSONL 2 matching record read-back; flags and corrections check; master evidence note and dashboard read-back; four worker status/evidence file checks; current branch heads and PR states, prior push CI viewed. No Lua, compiler, synthetic price engine, live client or gold decision tests.",
+  "restricted_actions": "Only coordinator-owned master research note, RESEARCH-DASHBOARD.md and quiet-status/coordinator.json changed on implementation/five-agent-completion. No original study changes, queue, worker status/evidence, main, owner implementation, PR merges/closures/releases, schedules or outbound notices."
 }
