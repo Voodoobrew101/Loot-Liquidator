@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-08T04:29:43.365Z",
+  "updated_at": "2026-11-08T05:38:55.951Z",
   "branch": "implementation/five-agent-completion",
-  "status": "active_research_no_new_original_cyclic_samples",
+  "status": "active_research_new_firsthand_postpatch_disenchant_cohorts",
   "task_ids": [
     "T0020",
     "T0046",
@@ -15,15 +15,35 @@
     "T0014"
   ],
   "exact_gaps_targeted": [
-    "Prospect: Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314, Prismatic 194545: original output-specific castsWithDrop, finished operations with refunds, quality rank context and zero-inclusive cast histograms",
-    "Mill: Bubble Poppy 191467 => 198412/198413/198414; Saxifrage 191464/191465/191466 => 198418/198419/198420; Hochenblume 191460/191461/191462 and Writhebark: unrecorded rank-specific completed mills and output-hit/zero histograms",
-    "Wowhead item 207120/207118/207123 and other unrepresented gear: separate future Looter numeric source cells not verifiable in plain text"
+    "Draconium 189143/188658, Serevite 190394/190395/190396 and Khaz'gorite 190312/190313/190314: no novel exact per-output completed-cast hit table or refund-aware 0-N histogram",
+    "Prismatic Ore 194545: no new rank-specific independently sourced material-by-cast histogram; historical originals already represented",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466 and Hochenblume: no new original per-cast positive-and-zero milling table after distinguishing nominal herbs/refunds",
+    "Unrecorded Dragon Isles gear disenchant source cohorts from Jan 2023 10.0.5 discussion and Nov 2024 era: original first-person 8 epic/0 crystal, 4 epic/1 crystal, per-100 dust/shard averages, and approximate 600 Enchanted Writhebark Wand/0 crystal"
   ],
-  "newly_verified_fields": [],
-  "newly_corroborated_fields": [],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [],
+  "newly_verified_fields": [
+    "Dragonflight gear original 8 reported epics -> 0 Resonant Crystals (200113), explicitly 8 material-zero operations, but exact gear IDs unknown",
+    "Independent original 4 epics -> 1 Resonant Crystal (200113); 1 material hit and 3 material zeros from explicit counts",
+    "Original Jan 2023 commenter reported 132 dust and 49 shards per 100 earlier; later 200 operations at averages of 119 dust and 57 shards per 100; item identities unstated and normalization marked",
+    "Nov 2024 Enchanted Writhebark Wand input 200641 -> zero Resonant Crystals (200113) after roughly 600 disenchants; EXACT denominator unknown"
+  ],
+  "newly_corroborated_fields": [
+    "Enchanted Writhebark Wand is item 200641 (TradeSkillMaster / Warcraft Wiki); no inferred actual ilvl/quality modifier"
+  ],
+  "newly_verified_cohorts": [
+    "reddit-10ldfo5-20230125-eight-epics-no-resonant",
+    "reddit-10ldfo5-20230126-four-epics-one-crystal",
+    "reddit-10ldfo5-20230126-comment-earlier-dust-shard-per100 (cohort independence unconfirmed)",
+    "reddit-10ldfo5-20230126-comment-later-200-operations (same commenter as earlier averages)",
+    "reddit-1go5h2b-20241110-approx-600-enchanted-wands (approximate denom)"
+  ],
+  "new_numerical_measurements": 7,
+  "numerical_fields_improved": [
+    "8 observed zero crystals for 8 epic disenchants (item 200113), per-output 0-count histogram",
+    "4 epic disenchants, 1 Resonant Crystal item 200113, per-output {0:3,1:1} outcome histogram",
+    "200 reported DE operations with separately quoted dust and shard average per 100; converted 1.19/0.57 per operation without inventing total quantities",
+    "earlier raw dust/shard averages per 100 from independent statement, CASTS UNKNOWN; 1.32/0.49 per operation only after normalization",
+    "explicit zero Resonant Crystal report for input item 200641 across ABOUT 600 wands (not exact cast count)"
+  ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-07T1908-independent-draconium-rank-crosscheck-and-numeric-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-07T1938-new-original-gear-looter-occurrences.jsonl",
@@ -35,7 +55,8 @@
     "research/v3/evidence/dragonflight/2026-11-08T0141-four-unindexed-shaman-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-08T0241-four-original-looter-cohorts-and-numeric-source-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-08T0333-postlaunch-numeric-and-unindexed-gear-source-triage.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-08T0429-output-item-and-original-ledger-source-triage.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-08T0429-output-item-and-original-ledger-source-triage.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-08T0538-postpatch-disenchant-firsthand-cohorts.jsonl"
   ],
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/1135bti",
@@ -47,15 +68,22 @@
     "https://www.wowhead.com/item=198418/blazing-pigment",
     "https://www.wowhead.com/item=194545/prismatic-ore",
     "https://www.reddit.com/r/woweconomy/comments/10me1e7",
-    "https://www.reddit.com/r/woweconomy/comments/10u5ao8"
+    "https://www.reddit.com/r/woweconomy/comments/10u5ao8",
+    "https://www.reddit.com/r/woweconomy/comments/10ldfo5",
+    "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
+    "https://tradeskillmaster.com/retail/us/items/200641",
+    "https://warcraft.wiki.gg/wiki/Enchanted_Writhebark_Wand"
   ],
-  "verified_commit_sha": "c809b1ff46838616872787a1bd8edb766ac100cb",
-  "commit_sha_scope": "Verified parent commit used for the atomic tree update; final commit SHA is established by post-commit readback because a commit cannot contain its own SHA.",
+  "verified_commit_sha": "3a29396aa0982988615f8ea0f5b6d02a25d69b16",
+  "commit_sha_scope": "Verified starting branch parent SHA; the new final commit SHA is read back and verified after the single atomic commit. A commit cannot include its own SHA.",
   "blockers": [
     "No new unindexed original cast-level source after output-item-first searches. Original public comments either repeat indexed studies or report nominal inputs without completed cast/outcome rows.",
     "Resourcefulness-refunded ore/herbs prevent converting nominal inputs into completed operations; preserve denominators and P(hit) as unknown.",
     "Raw Wowhead Looter per-material count tables for remaining Amirdrassil gear are JS-rendered; plain accessible Wowhead HTML exposes only item identity.",
-    "Original 2022 beta mechanic/rank reports cannot be treated as current Retail measured output probabilities."
+    "Original 2022 beta mechanic/rank reports cannot be treated as current Retail measured output probabilities.",
+    "January 2023 10.0.5 Reddit comment does not identify exact disenchanted gear or exact Chromatic Dust/Vibrant Shard material links in its dust/shard per-100 observations; preserve output IDs as null.",
+    "November 2024 approximately 600 wands lacks an exact operation denominator; keep casts null despite explicitly zero reported Resonant Crystals.",
+    "Postlaunch Dragonflight ore/Prismatic prospecting and milling castsWithDrop by output, refund-aware denominators and zero/stack histograms remain missing."
   ],
   "exhausted_sources": [
     {
@@ -168,21 +196,36 @@
         "Blizzard US WoW forums named search Writhebark milling 1000 pigments and resourcefulness logs, no exact finished operations or hit table",
         "Wowpedia Inscription techniques (Dragon Isles) identifies profession recipes, not firsthand pigment output cast study (https://wowpedia.fandom.com/wiki/Inscription_techniques)"
       ]
+    },
+    {
+      "at": "2026-11-08T05:38:55.951Z",
+      "scope": "New patch-specific and post-expansion disenchant discussions, rather than rerunning exhausted original ore spreadsheets",
+      "reason": "Recovered two previously unindexed first-person Reddit source threads with material-zero outcomes and unit averages. Fresh searches of Draconium, Serevite, Khaz'gorite, Bubble Poppy, Saxifrage, Prismatic Ore on Reddit, Blizzard WoW forums, Warcraft Wiki, Wowhead and guides still did not surface a new original per-output 0-N ore/herb processing ledger.",
+      "whereLooked": [
+        "Reddit r/woweconomy Jan 25-26 2023 original patch 10.0.5 disenchanting zero/material quantities https://www.reddit.com/r/woweconomy/comments/10ldfo5",
+        "Reddit r/woweconomy Nov 10 2024 post-TWW original Dragonflight-wand no-crystal report https://www.reddit.com/r/woweconomy/comments/1go5h2b",
+        "Reddit original Serevite/Draconium ore prospecting numerical searches (known historical original cohorts 109bytz and 10b8z7x not re-imported)",
+        "Reddit original Bubble Poppy/Saxifrage and Writhebark milling output log search (no new ranks and 0-N outcomes)",
+        "Blizzard US WoW forum named Dragonflight prospecting and milling 1000 output logs (no source-original cast/zero table)",
+        "Wowhead Dragon Isles named disenchant and pigment pages (mainly general reference, not new first-person 0-N cast source)",
+        "Warcraft Wiki Dragon Isles milling and item facts (batch/method identity only, not cast observations)"
+      ]
     }
   ],
-  "next_concrete_step": "Target new direct captured SavedVariables / first-party per-cast export of Dragon Isles Prospecting or Milling with rank, skill, refund and 0-N counts, or a source-original publicly accessible spreadsheet CSV; avoid repeating the indexed Wowhead/Reddit cohorts. Inspect item-side Looter numeric cells for still-unindexed gear only when genuine underlying table rows are retrievable.",
+  "next_concrete_step": "Seek new rank-specific Dragonflight processing addon SavedVariables or public spreadsheet first; for disenchanting, confirm source comment attribution and whether the 200-operation 119/57 averages include whole counts or rounding, plus exact gear IDs/loot tables in the two Jan 2023 epic cohorts. Do not promote unnamed dust/shard output IDs; leave approx 600-wand denominator unknown.",
   "validation": {
     "prepared_jsonl_parse": "PASS",
-    "record_count": 2,
-    "drop_records": 0,
-    "searched_records": 2,
-    "distinct_study_cohorts": 0,
-    "source_search_minimum": "PASS: each entry documents >=6 named searches across >=3 independent sites",
-    "source_numbers_as_measurements": false,
+    "record_count": 7,
+    "drop_records": 7,
+    "searched_records": 0,
+    "distinct_study_cohorts": 5,
+    "source_numbers_as_measurements": true,
+    "source_zero_counts_verified_only_when_explicit": true,
     "unknown_casts_and_hit_histograms_preserved": true,
     "prior_cohorts_not_duplicated": true,
+    "source_search_minimum": "N/A: new firsthand numeric records found; no searched records added",
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-08T0429-output-item-and-original-ledger-source-triage.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-08T0538-postpatch-disenchant-firsthand-cohorts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "post_commit_readback": "PENDING_AT_STATUS_CREATION",
@@ -197,6 +240,6 @@
     "191467 Bubble Poppy and 191464/191465/191466 Saxifrage: Resourcefulness-adjusted operation denominators and per-output units/hits",
     "Amirdrassil item IDs 207120/207118/207123/210204/207115: Looter page table actual numerator and denominator unverified"
   ],
-  "verified_parent_sha": "c809b1ff46838616872787a1bd8edb766ac100cb",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-08T0429-output-item-and-original-ledger-source-triage.jsonl"
+  "verified_parent_sha": "3a29396aa0982988615f8ea0f5b6d02a25d69b16",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-08T0538-postpatch-disenchant-firsthand-cohorts.jsonl"
 }
