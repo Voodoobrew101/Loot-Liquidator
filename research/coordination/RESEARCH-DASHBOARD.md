@@ -1,5 +1,3 @@
-## Coordinator new TWW item-version/rank identity checkpoint — 2026-11-08T05:00Z
-
 ## Original Legion Gem Chip field provenance — 2026-11-08T06:07:35.934Z
 
 **New original-workbook verification (not new observed casts):** [Glizzerd/Wubbits Legion prospecting sheet](https://docs.google.com/spreadsheets/d/1a415g8FlUJ_EdC8TlA6U2Yzz8KSh9PA2WvV0dAsPLnM/edit) has Leystone `E16 = K2` with `K2 = 6674` prospects and Felslate `E33 = K19` with `K19 = 2112`; rates `H16` and `H33` are likewise formulas fixed to one. The current Legacy research rows `legacy-20261031-013` / `-026` mark these **8,786 arithmetically copied Gem Chips** as study `totalQuantity`, not a separately counted outcome. Other gem rows checked are actual numeric literals. This **resolves the source-formula basis of the existing October 31 flag**, but does *not* prove historical or current Retail drop probability. [Read-back-verified original-source audit](../v3/evidence/master/2026-11-08T0600-legion-gem-chip-formula-vs-observation.md) at commit [1e303fb](https://github.com/Voodoobrew101/Loot-Liquidator/commit/1e303fb91293e0f48646791c8d8c25f43a363180). **Next:** Legacy T0042 review additive numeric corrections, preserving a separately labeled one-chip reference assumption only if validated; no original evidence rewrite or new source search.
@@ -9,6 +7,10 @@
 No synthetic-price engine, tooltip, Lua or live-client tests were executed by this coordinator checkpoint; no protected addon branch, main, queue, worker evidence, PR or release changed.
 
 ---
+
+## Coordinator new TWW item-version/rank identity checkpoint — 2026-11-08T05:00Z
+
+
 
 **Verified new source-to-context defect, not new casts:** The newly reported [229336 priest boots](https://www.wowhead.com/item=229336/confessors-unshakable-boots?ilvl=678) Looter table gives **122** base-item DE operations and same-name Refulgent Crystal rows **59/38/24**. An [indexed Rare bonus-11948 variant](https://www.wowhead.com/it/item=229336/stivali-incrollabili-del-confessore?bonus=11948) shows those *same* **122, 59/38/24** counts despite differing from the Epic/Mythic item version; this indicates base-item aggregation and **does not support Rare-versus-Epic-specific rates**. The [229329 cloak](https://www.wowhead.com/item=229329/confessors-unshakable-lightcover?bonus=12020) reports **107, 57/35/13** at both ordinary and Mythic preview URLs. Source row item IDs and quality ranks are still hidden in the indexed tables; do **not** assign 219952/219954/219955 to row order.
 
