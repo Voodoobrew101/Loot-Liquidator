@@ -1,134 +1,145 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-08T14:11:44.668Z",
+  "updated_at": "2026-11-08T15:09:28.368Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Completed research-only source-to-build identity/field check for Ulduar token 45661: current main already compiles seven historical reward IDs despite stale T0053 queue wording; explicit original per-reward class requirements are not transferred into compiled requirements fields. WotLK 3.3.5 corroboration only; no current Retail gold action or tooltip test.",
+  "status": "Completed research-only T0050 original-source-to-compiled field/identity audit: modern Rich vs Light Illusion Dust IDs, 400-operation source-reported expected units versus provisional inferred chance/bounds, and reciprocal fixed 3:1 dust transformations identified. No new independent cast cohort, live Retail eligibility or actual engine/tooltip test.",
   "task_ids": [
-    "T0053"
+    "T0050"
   ],
-  "task_ids_note": "Legacy worker retains task ownership; coordinator documented and verified a cross-branch source-to-runtime discrepancy without editing the queue or worker evidence.",
+  "task_ids_note": "Legacy worker retains original-study and numeric tasks; coordinator audited fields and item-use exchange identity only. Protected three-pass owner retains implementation and final single PR.",
   "exact_gaps_targeted": [
-    "T0053 queue says 45661 is unidentified/absent tokenRewards in older candidate, but original legacy-20261101-216 identifies Spaulders of the Wayward Vanquisher and today's main compiled token ledger already contains seven exact reward IDs; queue wording stale relative to main.",
-    "Original token research records each of four applicable historical classes and per-reward classes; current main database/research-v3-baselines.lua has requirements={} and requirementsReviewed=false and docs/usable-data-audit/token-ledger.json has rewardRequirements={}. Need verify which are deliberate conservative holds versus source-to-compiled fields not yet carried.",
-    "WotLK 3.3.5 source verifies seven historical reward IDs; no evidence today establishes modern Retail token redemption, class/variant restrictions, current vendor eligibility, prices or runtime per-character action."
+    "Current main v3 baseline for Runecloth Headband 13866 shows Rich Illusion Dust 156930 source-reported E=3.5 units per disenchant but derived/provisional P=1.0 and range=1..4; original vikn 400 DE comment does not report P(hit), minimum/maximum or 0..N histograms. Avoid presenting 100% as directly observed.",
+    "Original 400-DE vikn Greater Eternal Essence 16203 E=0.6 differs from compiled blended E=0.5686 because another separate 43-DE source contributes 14 units; distinguish literal cohort from combined estimate. 14344 E=.04 similarly not an observed 4% hit chance.",
+    "Current Retail Rich Illusion Dust 156930 is different from Light Illusion Dust 16204; old Illusion Dust was renamed. Fixed-use transformations spell 262119: 3 Light -> 1 Rich and spell 262120: 1 Rich -> 3 Light are separate from DE yield. Inspect exchange routing and exact eligibility before adding potential gold action.",
+    "Independent 43-operation urbanmonkey83 data identifies 14 Greater Eternal Essence but 58 generic 'dust' with no item ID, rank, chance, or histogram. Keep null dust identity.",
+    "Modern item/variant DE legality, profession prerequisites, source build/skill/date, actual exchange availability/fees, and live prices all unresolved; no character-specific gold recommendation validated."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "cross_layer_existing_mapping_not_new_cohort",
-      "token_item_id": 45661,
-      "token_name": "Spaulders of the Wayward Vanquisher",
-      "historical_reward_item_ids": [
-        45339,
-        45344,
-        45349,
-        45352,
-        45359,
-        45369,
-        45400
+      "kind": "cross_layer_existing_source_not_new_cohort",
+      "inputItemID": 13866,
+      "operation": "Disenchant",
+      "original_study_id": "wowhead-13866-vikn-400-headbands",
+      "reported_completed_operations": 400,
+      "original_source_reported_expected_units_per_operation": {
+        "14344": 0.04,
+        "16203": 0.6,
+        "156930": 3.5
+      },
+      "compiled_main_expected_units": {
+        "14344": 0.04,
+        "16203": 0.5686,
+        "156930": 3.5
+      },
+      "compiled_main_inferred_chance_156930": 1,
+      "compiled_main_inferred_range_156930": [
+        1,
+        4
       ],
-      "historical_classes": [
-        "Death Knight",
-        "Druid",
-        "Mage",
-        "Rogue"
-      ],
-      "original_research_record": "legacy-20261101-216",
-      "compiled_record_id": "v3token:45661",
-      "main_compiled_mapping_present": true,
-      "source_context": "historical WotLK corroboration; not proved current Retail",
-      "measured_casts": 0
+      "inference_status": "provisional, not source-observed",
+      "new_independent_cohort": false
     },
     {
-      "kind": "source_to_compiled_field_disposition",
-      "original_per_reward_classes_present": true,
-      "compiled_requirements_empty": true,
-      "requirements_reviewed": false,
-      "main_token_ledger_reward_requirements_empty": true,
-      "actual_client_class_gating_unknown": true,
-      "exact_item_engine_fixture_executed": false
+      "kind": "secondary_source_fixed_item_use_identity_not_drop_cohort",
+      "item_ids": {
+        "rich": 156930,
+        "light": 16204
+      },
+      "rules": [
+        {
+          "spell": 262119,
+          "inputItemID": 16204,
+          "inputCount": 3,
+          "outputItemID": 156930,
+          "outputCount": 1
+        },
+        {
+          "spell": 262120,
+          "inputItemID": 156930,
+          "inputCount": 1,
+          "outputItemID": 16204,
+          "outputCount": 3
+        }
+      ],
+      "current_character_eligibility": "not tested",
+      "valuation_and_tooltip": "not tested",
+      "new_casts": null
     }
   ],
   "newly_verified_independent_cast_cohorts": 0,
   "new_gold_decisions_verified": 0,
   "new_tooltip_fields_runtime_verified": 0,
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-08T1409-token-45661-queue-runtime-identity.md"
+    "research/v3/evidence/master/2026-11-08T1506-runecloth-13866-source-to-field-and-dust-exchange.md"
   ],
   "source_links": [
-    "https://warcraft.wiki.gg/wiki/Spaulders_of_the_Wayward_Vanquisher",
-    "https://wotlk.evowow.com/?item=45661&locale=4",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/database/research-v3-baselines.lua",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/docs/usable-data-audit/token-ledger.json",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-01T0752-outland-disenchant-originals-ulduar-token.jsonl"
+    "https://www.wowhead.com/item=13866/runecloth-headband",
+    "https://www.wowhead.com/item=156930/rich-illusion-dust",
+    "https://www.wowhead.com/item=16204/light-illusion-dust",
+    "https://www.wowhead.com/spell=262119/rich-illusion-dust",
+    "https://www.wowhead.com/spell=262120/light-illusion-dust",
+    "https://warcraft.wiki.gg/wiki/Illusion_Dust",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/1a0494aaa9c27918899e7ac74c555ade0bf474c9/database/research-v3-baselines.lua",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-01T0935-outland-disenchant-and-runecloth-originals.jsonl"
   ],
-  "verified_commit_sha": "27826ec38b5c5a7c60c5124729204b5b32b77123",
-  "verified_commit_sha_scope": "Coordinator-owned research-only note created and exact note read back at blob 2b7438715a8023fa34056a716fdc5437764067bc; no snapshot, addon implementation or Gold EV test.",
-  "verified_evidence_blob_sha": "2b7438715a8023fa34056a716fdc5437764067bc",
-  "verified_dashboard_commit_sha": "47ddd8b8f6d195c73d15ad4fe8be32e872210a87",
-  "verified_dashboard_blob_sha": "b105c215c7a24492402afb08e50e0200812058e9",
+  "verified_commit_sha": "e1dc75e33090fb4160e62328673150c6ba7fedab",
+  "verified_commit_sha_scope": "Coordinator-owned research-only source-to-compiled audit note created, read back at blob e39af7eab5d2786e69a9c49e16f9e4bf142f728f; no source original or addon altered.",
+  "verified_evidence_blob_sha": "e39af7eab5d2786e69a9c49e16f9e4bf142f728f",
+  "verified_dashboard_commit_sha": "f41f07a0978b8be71f3ae22ead24705639c30f74",
+  "verified_dashboard_blob_sha": "9f0d89e844e53a2a1675218acca79d08a5b440c4",
   "current_heads_at_read": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research_pre_status": "47ddd8b8f6d195c73d15ad4fe8be32e872210a87",
+    "research_pre_status": "f41f07a0978b8be71f3ae22ead24705639c30f74",
     "three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "verified_worker_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-08T13:59:14.014Z",
-      "blob_sha": "9da40fb31855ccef1a00820d4bb879e212416239",
-      "report": "Five historic early-Midnight cross-expansion disenchant material occurrences; no eligible present-patch per-output yield."
-    },
-    {
-      "role": "dragonflight",
-      "updated_at": "2026-11-08T13:39:02.685Z",
-      "blob_sha": "5495b13b0d412ef0cb47add7bca4a1131796ae1a",
-      "report": "Six original gear-item Looter cohorts as 13 occurrence rows; missing full output stack quantities and current patch/skill."
+      "updated_at": "2026-11-08T14:22:00.316Z",
+      "report": "Eight secondary pigment exact output-rank identities; no new independent casts or current gold."
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-08T13:32:36.382Z",
-      "blob_sha": "dfe8ddffb78ff8f42834d9fdb89c08e16f813e39",
-      "report": "Smite's Pistol six-operation, mixed-era Storm Dust and Large Brilliant Shard Looter table; two dust ranks unknown."
+      "updated_at": "2026-11-08T14:39:53.282Z",
+      "report": "Three mixed-era Plagueheart Gloves output-side occurrence records with unresolved ranks."
+    },
+    {
+      "role": "dragonflight",
+      "updated_at": "2026-11-08T14:41:24.059Z",
+      "report": "Four distinct source gear Looter cohorts/10 material occurrence rows; prospective ore/milling histograms absent."
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-08T13:52:30.382Z",
-      "blob_sha": "0c5efc17cc8e79ddd1095316e405f44e4b72099a",
-      "report": "TBC historical gear disenchant source reports; item versions/skill and current Retail applicability unresolved."
+      "updated_at": "2026-11-08T14:44:57.950Z",
+      "report": "Five exact current WoWDB plate no-DE metadata flags; no direct Retail player test."
     }
   ],
-  "actual_automation_run_results": {
-    "checked_at_utc": "2026-11-08T14:11:44.668Z",
-    "midnight": "completed 2026-11-08T13:59:47.195845Z",
-    "dragonflight": "completed 2026-11-08T13:40:40.140841Z",
-    "war_within": "completed 2026-11-08T13:33:11.201219Z",
-    "legacy": "completed 2026-11-08T13:53:09.527814Z",
-    "source": "Recorded automation results independently retrieved; matching worker quiet-status files re-read from GitHub."
-  },
   "ci_last_checked": {
-    "head": "55dc51bbd7470647303d62db786b48e9c5481725",
-    "commit_associated_pr_workflow_runs": 0,
-    "combined_status_checks": 0,
-    "scope": "No commit-associated PR workflow results returned on checked pre-coordinator research head; cannot infer pass or failure. No checks triggered by coordinator."
+    "run_id": 42491328609,
+    "head": "de45df86eb09502333a316cb29917324ff20267e",
+    "workflow": "Verify five-agent completion",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-08T14:45:04Z",
+    "updated_at": "2026-11-08T14:45:27Z",
+    "scope": "Succeeded for latest worker research commit before coordinator note/dashboard/status writes; not evidence of addon field fidelity or CI on these coordinator commits."
   },
   "research_prs": {
-    "22": "closed-unmerged (checked)",
-    "23": "closed-unmerged (checked)",
-    "24": "merged already 2026-11-02T16:44:22Z, no change",
-    "25": "closed-unmerged (checked)"
+    "22": "closed-unmerged, checked",
+    "23": "closed-unmerged, checked"
   },
   "blockers": [
-    "Historical WotLK 3.3.5 class/vendor data does not establish current Retail redemption, so no actionable token recommendation can be newly verified.",
-    "Original Warcraft Wiki page returned 403 in direct web access; preserved original research record and independently inspected historical WotLK mirror seven reward links instead.",
-    "Main class requirements deliberately unreviewed and empty; test exact 45661 and class restrictions in controlled current engine/tooltip fixtures before any claimed recommendations.",
-    "No GitHub CI run, Lua compiler, synthetic-price decision/tooltip or actual WoW client executed this coordinator run."
+    "No original per-output hit numerator, zero-inclusive histograms or min/max for vikn's 400 original operations; unknown source patch/build/skill and gear variant. Existing source averages should remain usable as E.",
+    "Contemporary Rich/Light Dust item-use exchange is documented by item/spell pages, but current character eligibility and whether addon exchange engine supports those edges not verified.",
+    "Repo code search for spell 262119 and 262120 returned no indexed files; search absence alone does not establish complete absence from all runtime/external imported records.",
+    "No actual WoW client, Lua, estimator, synthetic-price decision or tooltip formatter executed in this coordinator run. Worker CI success does not substitute."
   ],
   "exhausted_sources": [
-    "Old candidate missing 45661 inference is stale; current main already has v3token:45661 in research-v3-baselines and token-ledger, so do not re-request complete reward list as missing.",
-    "WotLK 3.3.5 mirror corroborates seven historical reward identities but cannot close modern Retail eligibility; do not continue using historical mirrors as contemporary proof."
+    "vikn headband comment appears both on source 13866 and output 156930 Wowhead pages; one 400-operation original cohort. Do not create another measurement from mirror.",
+    "Original 43-operation '58 dust' comment is not enough to resolve Rich versus Light ID; do not assume."
   ],
-  "next_concrete_step": "Legacy T0053 worker verifies current Retail redemption/class/quest/vendor eligibility and records exact modern source or explicit unsupported status. Protected implementation owner compares original per-reward classes with compiled requirements and runs exact-token positive/wrong-class offline synthetic-price valuation/formatter before approving any runtime class rule. Coordinator pivots to other queued numerical/identity field gaps next run.",
-  "tests_executed": "Read main owner's charter, pass plan and pass-1 checkpoint, research v3 README/schema/mechanics/queue/strategy/flags and owner status/dashboard; inspected source legacy-20261101-216, current main compiled v3 token baseline and token-ledger; independently opened WotLK 3.3.5 source item and seven exact reward links; read all four fresh worker status files and recorded automation results, branch heads, research PRs and commit-associated CI metadata; wrote new research-only note and dashboard checkpoint, read both back. No estimator, ItemDB compile, Lua, offline synthetic-price valuation, runtime formatter, live WoW or GitHub Actions tests performed.",
-  "restricted_actions": "Wrote only coordinator-owned additive research master note, coordinator-owned dashboard and own quiet-status on implementation/five-agent-completion; no main, protected three-pass, original evidence, queue, worker files, PR, schedule, merge, closure, release or destructive edits.",
-  "previous_status_blob_sha": "4b740175ce06180860e04cc18ae07f57f9241c5c"
+  "next_concrete_step": "Legacy T0050 worker seeks original source epoch and completed-operation per-output 0..N/skill/bonus details; protected three-pass implementation owner checks separate 156930↔16204 deterministic item-use conversion/eligibility and synthetic-price valuation, and ensures source E=3.5 is priced without misrepresenting P=100% as observed. Coordinator moves to another queued unresolved numeric/identity issue next run; no duplicate comment scraping.",
+  "tests_executed": "Read current main research charter, protected three-pass plan and pass-1 checkpoint, v3 README/schema/mechanics/queue/strategy and flags excerpts, four worker quiet-status files and main compiled 13866 processing record; independently checked original current Wowhead item/spell pages and 13866 v3 source records; confirmed exact GitHub branch heads and recent worker workflow success plus #22/#23 closed-unmerged status. Committed new coordinator-owned research note and dashboard and read both back. No compiler, estimator, Lua, actual-engine economic fixture, tooltip renderer, live WoW or own GitHub Actions run executed.",
+  "restricted_actions": "Edited only own evidence note, own dashboard and own quiet-status on implementation/five-agent-completion. No main, three-pass integration, original worker files, queue, automation schedules, PR, merge, closure or release edits.",
+  "previous_status_blob_sha": "b0ae902860880f7de29c0c9a304ec1a8c47299af"
 }
