@@ -1,63 +1,80 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-08T02:15:32.442Z",
-  "status": "One new previously unrecorded exact Midnight weapon disenchant-ineligibility identity (PTR catalog only); no new measured gear, prospecting or milling casts.",
+  "updated_at": "2026-11-08T03:18:07.526Z",
+  "status": "Independent current Retail equipped item-level 315 observed for 272246 (not DE eligibility); one searched record, zero NEW measured cast cohorts or numeric DE/prospect/mill yields.",
   "task_ids": [
     "T0026",
+    "T0049",
     "T0039",
     "T0005",
-    "T0003",
-    "T0025"
+    "T0003"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands: actual at-disenchant itemLevel/bonus/build and rank/skill/spec sample remain unverified",
-    "237362 Umbral Tin Ore: per-output hit counts, zeros, histograms, exact rank IDs and Tin-vestigator unlock/Resourcefulness at actual completed casts remain unverified",
-    "237359/237361 Refulgent Copper and 237364/237365 Brilliant Silver: independent current-epoch rank-specific zero-inclusive samples absent",
-    "Midnight milling: item-identified ten-herb completed casts, pigment output quantities/ranges with skill and refunds absent",
-    "269992 Sharpened Arcanite Warglaive: no-disenchant identity in PTR catalog, live-attempt confirmation absent"
+    "Miststalker's Wristbands 272246: reconcile catalog base ilvl 206 with actual worn ilvl 305/308/315; source original 140 Looter operations, exact disenchant-time bonus/ilvl, client action, build, specialization.",
+    "Umbral Tin Ore 237362: exact rank per 242606/242607/242610/242611/242786/242788, output-specific 800-cast hit/zero histograms and 242608 Tin-vestigator unlock.",
+    "Refulgent Copper Ore 237359/237361 and Brilliant Silver Ore 237364/237365: new independent post-hotfix rank-specific completed-cast output samples.",
+    "Midnight milling 236761/236767,236776/236777,236770/236771,236778/236779: per-cast pigment histograms with skill and Resourcefulness (not calculator forecasts)."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "record_id": "midnight-20261108-0215-001",
-      "kind": "noDisenchant eligibility identity, PTR reference, NOT cast cohort",
-      "input_item_id": 269992,
-      "input_name": "Sharpened Arcanite Warglaive",
-      "item_type": "heirloom weapon / warglaive",
-      "base_item_level": 29,
-      "source": "https://www.wowhead.com/ptr/item=269992/sharpened-arcanite-warglaive",
-      "source_build": "12.1.7 PTR",
-      "outcome": "Cannot be disenchanted (catalog flag)",
+      "kind": "identity/item-level source only; NOT processing cohort",
+      "input_item_id": 272246,
+      "input_name": "Miststalker's Wristbands",
+      "official_retail_armory_observed_item_level": 315,
+      "other_official_armory_observed_item_levels": [
+        305,
+        308
+      ],
+      "catalog_base_item_level": 206,
+      "source": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/rexxar/jasminn%C3%AA/",
+      "corroboration_sources": [
+        "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/area-52/shigani/",
+        "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/tichondrius/mosunbear/",
+        "https://www.wowhead.com/item=272246/miststalkers-wristbands"
+      ],
+      "item_link_bonus_ids": null,
+      "gear_quality": null,
+      "disenchant_eligible": null,
       "completed_casts": null,
       "casts_with_drop": null,
-      "output_item_id": null
+      "outputs": null
     }
   ],
   "numeric_fields_advanced": [
-    "Verified catalog item identity 269992 and base heirloom ilvl 29; no numeric processing probability, yield, completed-cast denominator, zero bins or output ranks advanced."
+    "Verified official Retail equipped ilvl 315 for base item 272246; 305 and 308 independently visible. No material yields, probabilities, per-cast denominators, zeros or gold EV advanced."
   ],
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-08T0215-arcanite-warglaive-no-disenchant.jsonl"
+    "research/v3/evidence/midnight/2026-11-08T0317-miststalker-variant-search.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-20261108-0215-001"
+    "midnight-20261108-0317-001"
   ],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=269992/sharpened-arcanite-warglaive",
-    "https://www.wowhead.com/item=269992/sharpened-arcanite-warglaive"
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
+    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/rexxar/jasminn%C3%AA/",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/area-52/shigani/",
+    "https://www.reddit.com/r/woweconomy/comments/1wwd0w0/",
+    "https://www.reddit.com/r/woweconomy/comments/1vknxyy/",
+    "https://us.forums.blizzard.com/en/wow/t/is-disenchanting-kind-of-profit-worthless/2285797",
+    "https://www.wow-professions.com/",
+    "https://www.method.gg/guides/midnight-inscription-profession-guide",
+    "https://warcraft.wiki.gg/wiki/Mana_Lily_Pigment"
   ],
-  "verified_commit_sha": "45772eb38539346e3bd6493e6997772cf0ed94fd",
-  "verified_commit_sha_scope": "Verified branch HEAD before this atomic evidence+status commit; a tracked file cannot contain the SHA of the commit containing itself. Resulting commit SHA must be independently read back after update_ref.",
-  "base_commit_sha_verified": "45772eb38539346e3bd6493e6997772cf0ed94fd",
+  "verified_commit_sha": "f4f4f957eb188ad7ae10fc58e1bc4c7b127f318e",
+  "verified_commit_sha_scope": "Branch HEAD read and verified as parent of this atomic commit; resulting commit cannot self-reference its own SHA in a tracked JSON file.",
+  "base_commit_sha_verified": "f4f4f957eb188ad7ae10fc58e1bc4c7b127f318e",
   "commit_readback": {
-    "state": "awaiting post-update ref and file readback",
-    "expected_evidence_record_id": "midnight-20261108-0215-001",
-    "expected_evidence_path": "research/v3/evidence/midnight/2026-11-08T0215-arcanite-warglaive-no-disenchant.jsonl"
+    "state": "pending post-update fetch",
+    "expected_evidence_record_id": "midnight-20261108-0317-001",
+    "expected_evidence_path": "research/v3/evidence/midnight/2026-11-08T0317-miststalker-variant-search.jsonl"
   },
   "blockers": [
-    "No new independent current-patch zero-inclusive per-cast disenchant study for 272246 by actual ilvl/build/skill/spec.",
-    "Existing 237362 800-cast Cardinalai cohort lacks independently verifiable per-output castsWithDrop/zero histograms, ranks and refund-adjusted operation provenance.",
-    "No independent verified raw logs for Refulgent Copper, Brilliant Silver or ten-herb milling despite name-targeted multi-site search.",
-    "269992 no-disenchant flag is PTR 12.1.7 catalog only; no in-game live test. Do not generalize to other heirlooms or use as numeric DE yield."
+    "No original current Retail 272246 disenchant action log with exact itemLink/bonuses and skill/spec; Wowhead Looter cumulative denominators not independently readable through JS-only HTML.",
+    "No NEW current-epoch 237362 material-specific cast hits/zero histograms; published 800 casts supply item totals, not material hit rates.",
+    "No independent post-hotfix raw per-cast Refulgent Copper, Brilliant Silver, or ten-herb milling skill/rank cohorts in newly checked original sources.",
+    "M11 prospecting Multicraft source conflict persists. 2026-10-03 original Reddit comment supports no Multicraft, but is not controlled proc data and Master owns mechanics.md.",
+    "Optional dynamic-browser source check unavailable because connected Firecrawl credits were exhausted (not a reason to infer source data)."
   ],
   "exhausted_sources": [
     "2026-11-07T18:23:15.160Z: New item-name site-restricted searches for Umbral Tin 237362/237363 (Reddit, Blizzard forums, Wowhead, Wiki, Wow-Professions, Method) and 272246 Miststalker's Wristbands actual ilvl305 (Reddit, Blizzard forums, Wowhead, WoWDB, Wiki, Icy Veins) found no source-linked original per-cast file. Existing Cardinalai/Honeybone/Draggoth and material rank-ID references were deduplicated, not reimported.",
@@ -69,7 +86,8 @@
     "2026-11-08T00:18:24.013Z: Checked new Visage of Unseen Truths 260370 12.1.7 PTR table (9 reported DE, 7/2 Dawn Crystal rows) and 12.1.5 PTR 8/6/2 overlapping older cumulative snapshot; selected ONLY newer 12.1.7 table as one reference identity, not independent PTR cohorts. Checked Infernal Greatlock Girdle 260371 but it is already in midnight/2026-11-02T0633, Blind Oath's Raiment 250054 already in 2026-11-01T1110, and Wowhead Glimmering Powder 145/45 and guide 10/50/100 already in 2026-10-31T0411, 2026-10-31T1206 and 2026-11-04T0613. No duplicate. No raw 272246 ilvl305, Umbral Tin rank-specific or milling log found. No repeated older source imports.",
     "2026-11-08T01:13:03.096Z: Firsthand Jerek April 4 Blizzard forum post26 in topic 2274222: nominal 50 unspecified ore and 2 unspecified gems, one original, no cast count or item IDs. Recorded once as reference only; do not revisit or count as Refulgent Copper or as 10 completed casts without new source itemLinks/logger. Jacara April4 same forum and prior Honeybone/Cardinalai/Draggoth/MikiMM/JD3K/Looter sources intentionally not reimported.",
     "2026-11-08T01:13:03.096Z: New targeted name-based checks on Miststalker's Wristbands, Umbral Tin, Refulgent Copper, Brilliant Silver, Tranquility Bloom, Mana Lily/Sanguithorn, and Dawn Crystal disenchant during 2026 across Blizzard forums, Reddit, WoW profession guides and indexed Wowhead. No new exact input/output ID + original completed-cast/zero-bin distributions; avoid re-running until original logger evidence appears.",
-    "Run 2026-11-08T02:15:32.442Z: Rechecked by-item-name indexed Wowhead/Blizzard forum/Reddit/WoW-Professions/Method (272246, Umbral Tin, Copper, Silver, Tranquility Bloom); no new original verified rank-specific completed-cast and zero-inclusive material cohort. Cardinalai/Honeybone/Draggoth/NocD, old estimates, guide rates and duplicate Looter snapshots deliberately excluded. Pivotted to unrecorded Midnight 269992 noDE catalog identity."
+    "Run 2026-11-08T02:15:32.442Z: Rechecked by-item-name indexed Wowhead/Blizzard forum/Reddit/WoW-Professions/Method (272246, Umbral Tin, Copper, Silver, Tranquility Bloom); no new original verified rank-specific completed-cast and zero-inclusive material cohort. Cardinalai/Honeybone/Draggoth/NocD, old estimates, guide rates and duplicate Looter snapshots deliberately excluded. Pivotted to unrecorded Midnight 269992 noDE catalog identity.",
+    "2026-11-08T03:17Z: Distinct new 12.1.5 version-focused searches on Miststalker's Wristbands, Midnight DE, Umbral Tin, Refulgent Copper, Brilliant Silver and Midnight milling across indexed Wowhead/WoWDB, official Blizzard Armory/forum/notes, Reddit, Warcraft Wiki, Method and profession guides. No original per-output zero-inclusive processing log; new 315 worn-variant armory observation recorded without calling it a DE sample. 2026-10-03 Reddit M11 no-Multicraft claim is source corroboration, not a count. August 2026 1vknxyy ore/gem anecdote already excluded in M03b migration as not independently identifiable cohort; deliberately not reimported."
   ],
   "decisions_needed": [
     {
@@ -105,10 +123,10 @@
       "decision": "Confirm whether new guide-only disenchantable blue armor IDs 244586/237923 may be sampled for in-game material breakdown; do not promote to measured drop rate or definite generic eligibility before live client bonus/ilvl check. Mechanics guide asserts +40 skill from rare tool set (+18 rod) and 30-point root + matching 30-point rarity subtree; assess through existing M12/M13 without worker edits."
     }
   ],
-  "next_concrete_step": "Seek source-linked current 12.1.x saved-variable processing log with actual itemLink/bonus/ilvl (especially 272246), 237362 ore rank and 242608 unlock; obtain by-output completed casts/hits/zeros, histogram and Resourcefulness counts. Do not promote Jerek generic pre-hotfix anecdote to ItemDB probability.",
+  "next_concrete_step": "Seek a dated saved-variable craft-recording export or live disenchant test that includes 272246 itemLink/bonus/ilvl and gear rarity, and for 237362 exact ore/output IDs with actual casts/hits/zero histograms, refunds, skill and Tin-vestigator state. Review M11 only via Master with original client proc evidence.",
   "production_merge": false,
   "release": false,
-  "notifications": "quiet; owner on-demand only",
+  "notifications": "quiet; on demand only",
   "new_unverified_source_leads": [
     {
       "claim": "Secondary TheWoWDB claims 166 retail DE brackets, 27 in three recent expansions, ilvl 1-999 bands, independent of actual yield",
@@ -127,6 +145,12 @@
       "source": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=2",
       "published": "2026-04-04",
       "verification_required": "exact ore itemLink and rank, output IDs/quantities/rank, actual completed casts, refunds and April 2026 patch/hotfix context; otherwise reference only"
+    },
+    {
+      "claim": "2026-10-03 original player discussion says prospecting does not Multicraft; supports challenging likely M11, but no original proc sample.",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1wwd0w0/",
+      "published": "2026-10-03",
+      "verification_required": "Master source-check against official specialization tooltips or controlled proc logs before mechanics edit."
     }
   ]
 }
