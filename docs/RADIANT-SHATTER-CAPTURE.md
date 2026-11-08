@@ -67,3 +67,18 @@ gameplay batch is required merely to exercise these already captured cases.
 Other salvage recipes need their own verified definitions, input quantities
 and side-reagent support before sharing the path; this is not a wildcard
 approval of every item-processing spell.
+
+## Live verification
+
+The owner's next export identifies installed commit `9648ecf`, recorder
+revision 6 and four new successful Shatter operations. At measured Enchanting
+64 + 40 = 104, no specialization and no Concentration, four R1 shards produced
+12 R1 dust. Every operation has its own native receipt and matching inventory
+reconciliation; diagnostics, coverage gaps and strict exclusions are all zero.
+The source and review are in
+`research/integration/measured-captures/2026-11-07-radiant-shatter-v6-live-check/`.
+
+This is live confirmation of the repaired capture path. No Resourcefulness
+refund occurred in these four casts, so refund handling remains verified by
+the offline regression rather than this pilot. These R1-input observations
+are not a quality-chance estimate for R2 shards or a universal skill curve.
