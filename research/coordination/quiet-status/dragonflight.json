@@ -1,21 +1,23 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-08T03:33:47.288Z",
+  "updated_at": "2026-11-08T04:29:43.365Z",
   "branch": "implementation/five-agent-completion",
-  "status": "active_research_source_denominator_blocked",
+  "status": "active_research_no_new_original_cyclic_samples",
   "task_ids": [
     "T0020",
-    "T0019",
     "T0046",
+    "T0019",
     "T0041",
     "T0018",
-    "T0015"
+    "T0015",
+    "T0017",
+    "T0016",
+    "T0014"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore R1 189143 / R2 188658 and Serevite Ore 190394/190395/190396, Khaz'gorite 190312/190313/190314: unrecorded postlaunch source-original rank-specific completed-prospect operations, hits and 0-N outcome histograms",
-    "Prismatic Ore 194545: preserve existing original 80 completed prospects and Eternity Amber family-level 4 R3 units without inventing R1/R2 counts or per-output hits",
-    "Bubble Poppy 191467 / Saxifrage 191464/191465/191466: first-person 5-herb mills with refunded inputs accounted for, exact pigment output units, ranks and per-cast occurrence histograms",
-    "Unrepresented potential Amirdrassil gear DE input IDs 207120,207118,207123,210204,207115: original Looter numeric source cells not independently available"
+    "Prospect: Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314, Prismatic 194545: original output-specific castsWithDrop, finished operations with refunds, quality rank context and zero-inclusive cast histograms",
+    "Mill: Bubble Poppy 191467 => 198412/198413/198414; Saxifrage 191464/191465/191466 => 198418/198419/198420; Hochenblume 191460/191461/191462 and Writhebark: unrecorded rank-specific completed mills and output-hit/zero histograms",
+    "Wowhead item 207120/207118/207123 and other unrepresented gear: separate future Looter numeric source cells not verifiable in plain text"
   ],
   "newly_verified_fields": [],
   "newly_corroborated_fields": [],
@@ -32,7 +34,8 @@
     "research/v3/evidence/dragonflight/2026-11-08T0032-paywalled-worthit-export-numeric-triage.jsonl",
     "research/v3/evidence/dragonflight/2026-11-08T0141-four-unindexed-shaman-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-08T0241-four-original-looter-cohorts-and-numeric-source-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-08T0333-postlaunch-numeric-and-unindexed-gear-source-triage.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-08T0333-postlaunch-numeric-and-unindexed-gear-source-triage.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-08T0429-output-item-and-original-ledger-source-triage.jsonl"
   ],
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/1135bti",
@@ -40,15 +43,19 @@
     "https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620",
     "https://www.wowhead.com/item=207120/anguished-restraints",
     "https://www.wowhead.com/item=207118/elders-volcanic-wrap",
-    "https://warcraft.wiki.gg/wiki/Milling"
+    "https://warcraft.wiki.gg/wiki/Milling",
+    "https://www.wowhead.com/item=198418/blazing-pigment",
+    "https://www.wowhead.com/item=194545/prismatic-ore",
+    "https://www.reddit.com/r/woweconomy/comments/10me1e7",
+    "https://www.reddit.com/r/woweconomy/comments/10u5ao8"
   ],
-  "verified_commit_sha": "3394d8bc4f507c38ac164f3d8621f4b50df3bb87",
-  "commit_sha_scope": "Parent research commit SHA is verified at status-writing time; final commit SHA cannot be embedded in its own tree. Postcommit ref/file/diff readback required.",
+  "verified_commit_sha": "c809b1ff46838616872787a1bd8edb766ac100cb",
+  "commit_sha_scope": "Verified parent commit used for the atomic tree update; final commit SHA is established by post-commit readback because a commit cannot contain its own SHA.",
   "blockers": [
-    "Fresh postlaunch named forum and Reddit searches yield approximate nominal-ore rates, not original rank-specific completed-operation, per-material hit/0-N logs; known January studies and October beta cohorts excluded as duplicates.",
-    "Bubble Poppy and Saxifrage public milling guides are beta/reference, and original 1700-herb sample lacks actual completed-cast count after Resourcefulness recycling.",
-    "New exact gear candidates have accessible identities but item-side Looter operation/hit tables are JS-rendered and not independently retrievable; Firecrawl connected research credits: 0 remaining as directly checked.",
-    "No validated new numeric sample this run; retain all unknown numerator/denominator and per-output quantities as null."
+    "No new unindexed original cast-level source after output-item-first searches. Original public comments either repeat indexed studies or report nominal inputs without completed cast/outcome rows.",
+    "Resourcefulness-refunded ore/herbs prevent converting nominal inputs into completed operations; preserve denominators and P(hit) as unknown.",
+    "Raw Wowhead Looter per-material count tables for remaining Amirdrassil gear are JS-rendered; plain accessible Wowhead HTML exposes only item identity.",
+    "Original 2022 beta mechanic/rank reports cannot be treated as current Retail measured output probabilities."
   ],
   "exhausted_sources": [
     {
@@ -138,21 +145,44 @@
         "Warcraft Wiki named search: Elder's Volcanic Wrap and Twisting Shadow Claws source/patch/item versions (https://warcraft.wiki.gg/wiki/Elder%27s_Volcanic_Wrap , https://warcraft.wiki.gg/wiki/Twisting_Shadow_Claws ); item metadata only, no DE occurrence sample",
         "GitHub code search exact item IDs 207120/207118/207123/210204/207115 in Loot Liquidator Dragonflight evidence and public original disenchant datasets; no existing matching own evidence or discoverable original source counts"
       ]
+    },
+    {
+      "at": "2026-11-08T04:29:43.365Z",
+      "scope": "Dragonflight output-item-first prospect/pigment source lookup, alternative Writhebark route and original 100k R2 Draconium lead",
+      "reason": "No new independently measurable per-operation outputs. Known firsthand Aary, 10me1e7, 10u5ao8, superbondez, TheChisel and Khaz'gorite cohorts already in repository; no duplicate contribution.",
+      "whereLooked": [
+        "Wowhead Prismatic Ore 194545 source comment superbondez 80 completed prospects and TheChisel 1000 reports—both originals already recorded; no new material hit histograms (https://www.wowhead.com/item=194545/prismatic-ore)",
+        "Wowhead Eternity Amber rank output pages 192849 and 192851 by name; result search did not reveal original per-operation Amber hit/zero distribution",
+        "Wowhead Illimited Diamond R2/R3 output comment index for prospecting Draconium and Khaz'gorite by name; no unindexed rank-separated casts/hits",
+        "Reddit r/woweconomy original How much ore to prospect to get the correct drop rate (Feb 5 2023): 100000 R2 Draconium nominal ore asserted but exact output units and per-cast counts not given; same source already cited in existing repository (https://www.reddit.com/r/woweconomy/comments/10u5ao8)",
+        "Reddit r/woweconomy original What should I do with my Khaz'gorite Ore (Jan 20 2023) 100 R2 Khaz'gorite / 20 prospects no diamond, known original cohort already indexed (https://www.reddit.com/r/woweconomy/comments/10h6ccx)",
+        "Warcraft Wiki Category:Prospected items and prospecting identity references, not original measured cast tables (https://warcraft.wiki.gg/wiki/Category:Prospected_items)",
+        "MMO-Champion Dragonflight Beta Build 45480 reagent/prospecting change log, historical beta notes rather than actual operation outcomes (https://www.mmo-champion.com/content/10853-Dragonflight-Beta-Build-45480)",
+        "Scribd Pengu Dragonflight Goldmaking Sheet secondary recipe and leveling table, not original prospecting material histogram (https://es.scribd.com/document/653876162/Pengu-s-Dragonflight-Goldmaking-Sheet-1)",
+        "Wowhead Blazing Pigment 198418 source Aary rank-2/rank-3 100-herb batches and pigment quantities found, but same original numeric cohort already present in Dragonflight evidence (https://www.wowhead.com/item=198418/blazing-pigment)",
+        "Wowhead Serene Pigment 198412 and 198414 comments verify Bubble Poppy relationship, no first-person total quantity/cast distribution (https://www.wowhead.com/item=198412/serene-pigment)",
+        "Wowhead Flourishing Pigment 198415/198416 comments verify Writhebark relationship, no original cast/hit study (https://www.wowhead.com/item=198415/flourishing-pigment)",
+        "Wowhead Shimmering Pigment 198422/198423 comments verify Hochenblume relationship only, no per-cast material histogram (https://www.wowhead.com/item=198422/shimmering-pigment)",
+        "Reddit r/woweconomy Results from milling 10500 Hochenblume (Jan 27 2023) original 1500 R1 and 9000 R2 nominal herb totals plus Resourcefulness; study already indexed, actual completed mills after refunds not reported (https://www.reddit.com/r/woweconomy/comments/10me1e7)",
+        "Reddit r/woweconomy named searches for Writhebark 1000 mills and Saxifrage/Blazing Pigment and Bubble Poppy/Serene Pigment 2023 original output logs—no independent unindexed 0-N cast table",
+        "Blizzard US WoW forums named search Writhebark milling 1000 pigments and resourcefulness logs, no exact finished operations or hit table",
+        "Wowpedia Inscription techniques (Dragon Isles) identifies profession recipes, not firsthand pigment output cast study (https://wowpedia.fandom.com/wiki/Inscription_techniques)"
+      ]
     }
   ],
-  "next_concrete_step": "Acquire original rank-separated Dragonflight Prospecting Log cast-level rows for 189143/188658 and 190394/190395/190396 with explicit refunds, or a truly new postlaunch milling ledger for 191467/191464; if reliable original ore/herb logs remain unavailable, inspect Wowhead original item-side Looter numeric tables for unrepresented 207120/207118/207123/210204/207115 and record counts only once source cells can be verified. Escalate shared schema/queue changes to Master.",
+  "next_concrete_step": "Target new direct captured SavedVariables / first-party per-cast export of Dragon Isles Prospecting or Milling with rank, skill, refund and 0-N counts, or a source-original publicly accessible spreadsheet CSV; avoid repeating the indexed Wowhead/Reddit cohorts. Inspect item-side Looter numeric cells for still-unindexed gear only when genuine underlying table rows are retrievable.",
   "validation": {
     "prepared_jsonl_parse": "PASS",
-    "record_count": 3,
+    "record_count": 2,
     "drop_records": 0,
-    "searched_records": 3,
+    "searched_records": 2,
     "distinct_study_cohorts": 0,
-    "source_search_minimum": "PASS: each searched entry records 7+ named searches across 4+ independent sites",
+    "source_search_minimum": "PASS: each entry documents >=6 named searches across >=3 independent sites",
     "source_numbers_as_measurements": false,
     "unknown_casts_and_hit_histograms_preserved": true,
     "prior_cohorts_not_duplicated": true,
     "expected_changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-08T0333-postlaunch-numeric-and-unindexed-gear-source-triage.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-08T0429-output-item-and-original-ledger-source-triage.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "post_commit_readback": "PENDING_AT_STATUS_CREATION",
@@ -167,6 +197,6 @@
     "191467 Bubble Poppy and 191464/191465/191466 Saxifrage: Resourcefulness-adjusted operation denominators and per-output units/hits",
     "Amirdrassil item IDs 207120/207118/207123/210204/207115: Looter page table actual numerator and denominator unverified"
   ],
-  "verified_parent_sha": "3394d8bc4f507c38ac164f3d8621f4b50df3bb87",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-08T0333-postlaunch-numeric-and-unindexed-gear-source-triage.jsonl"
+  "verified_parent_sha": "c809b1ff46838616872787a1bd8edb766ac100cb",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-08T0429-output-item-and-original-ledger-source-triage.jsonl"
 }
