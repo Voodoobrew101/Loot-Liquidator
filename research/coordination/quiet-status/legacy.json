@@ -1,180 +1,199 @@
 {
   "role": "legacy",
-  "updated_at": "2026-11-08T01:50:44.647Z",
+  "updated_at": "2026-11-08T02:43:39.281Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Research-only: 11 new firsthand source-backed material rows from 8 original historical TBC/Cataclysm disenchant cohorts; historical item/build context retained. No new Warmaul, Cobalt, Fel Iron measured casts or current Retail eligibility. No calculated gold values, probabilities or zeros.",
+  "status": "Research-only: 12 original WotLK disenchant output rows (6 distinct firsthand cohorts; one complete 28-operation stack histogram), one dated 2009 hotfix, and a conflicting current Duskweave Belt 41543 no-disenchant database flag. Historical and current Retail evidence segregated; no changes to live addon, probability estimates, personal data or prices.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
+    "T0052",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995: original 2068 historical operations and four material hit rows already recorded; no new firsthand 24995 casts, build-specific eligibility, per-output quantity totals or full joint zero/stack histogram. WoWDB current scaled iLvl31 cannot-be-disenchanted conflict persists.",
-    "Burning Crusade comparable crafted armor: 21849 Netherweave Bracers -> 22445 Arcane Dust, 22447 Lesser Planar Essence, one new 70-completed-cast firsthand guild-bonus cohort (159 and 37 output units). This is an adjacent armor baseline, not a 24995 estimator.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: new independent completed prospect casts, per-gem positive hit counts, refunds and histograms still not recovered; preexisting source cohorts skipped.",
-    "Cataclysm historical cloth disenchant: source-specific 54473 Deathsilk Bracers, 54476 Deathsilk Cowl and 54481 Spiritmend Belt outputs 52555 Hypnotic Dust and 52718 Lesser Celestial Essence, eight distinct original cohorts across TBC and Cataclysm.",
-    "Token 45661 historical seven-reward mapping already recorded. No new live Retail use-created redemption and class variant evidence."
+    "Warmaul Legplates 24995 TBC historical 2068 operations remain without build/bonus/skill/true unit totals; no new direct 24995 operations or evidence. 22445=1559 hits, 22446=417, 22447=7 and 22449=48 are previously recorded and not re-imported.",
+    "New independent WotLK crafted uncommon cloth armor baseline, exact Duskweave Belt 41543 at historical item level 154: 28, 50 and 100 distinct original disenchants with 34054 Infinite Dust / 34055 Greater Cosmic Essence / 34052 Dream Shard source numbers.",
+    "Duskweave 28-cast report has complete per-output stacks/hits and source-backed material-specific zero bins. 50- and 100-cast reports provide total quantities only (not hit counts).",
+    "Frostwoven Belt 41522: six original casts with 34054 hit on each, positive range 1–2; Frostwoven Leggings 41519: ten items -> 36 units 34054; Frostwoven Shoulders 41513: nine items -> 21 units 34054, no per-output occurrence logs.",
+    "2009-10-22 official historical increase in Infinite Dust from disenchanting/shattering, no source magnitude. Current WoWDB marks scaled Duskweave Belt 41543 at item level 33 cannot be disenchanted, contradicting historical WotLK iLvl154 outcomes.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: independent completed-cast gem hit/zero histograms, refunds and modern context still unrecovered. Token 45661 seven-reward map already verified in prior evidence and not duplicated."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-22445-scott75-70-netherweave-bracers-bountiful",
-      "inputItemID": 21849,
-      "casts": 70,
-      "outputQuantities": [
+      "studyKey": "wowhead-41543-436760-28-disenchant-operations",
+      "inputItemID": 41543,
+      "historicalItemLevel": 154,
+      "casts": 28,
+      "outputs": [
         {
-          "outputItemID": 22445,
-          "totalQuantity": 159
+          "itemID": 34054,
+          "totalQuantity": 60,
+          "castsWithDrop": 20,
+          "histogram": {
+            "0": 8,
+            "2": 7,
+            "3": 8,
+            "4": 3,
+            "5": 2
+          }
         },
         {
-          "outputItemID": 22447,
-          "totalQuantity": 37
-        }
-      ],
-      "modifier": "level-23 guild Bountiful Bags",
-      "source": "https://www.wowhead.com/item=22445/arcane-dust"
-    },
-    {
-      "studyKey": "wowhead-52555-345030-40-deathsilk-cowls",
-      "inputItemID": 54476,
-      "casts": 40,
-      "outputQuantities": [
-        {
-          "outputItemID": 52555,
-          "totalQuantity": 75
+          "itemID": 34055,
+          "totalQuantity": 8,
+          "castsWithDrop": 7,
+          "histogram": {
+            "0": 21,
+            "1": 6,
+            "2": 1
+          }
         },
         {
-          "outputItemID": 52718,
-          "totalQuantity": 23
+          "itemID": 34052,
+          "totalQuantity": 1,
+          "castsWithDrop": 1,
+          "histogram": {
+            "0": 27,
+            "1": 1
+          }
         }
       ],
-      "source": "https://www.wowhead.com/item=52555/hypnotic-dust"
+      "source": "https://www.wowhead.com/wotlk/item=41543/duskweave-belt"
     },
     {
-      "studyKey": "wowhead-52555-367103-10-deathsilk-bracers",
-      "inputItemID": 54473,
-      "casts": 10,
-      "outputQuantities": [
+      "studyKey": "wowhead-41543-343290-50-disenchant-operations",
+      "inputItemID": 41543,
+      "casts": 50,
+      "outputs": [
         {
-          "outputItemID": 52555,
-          "totalQuantity": 20
+          "itemID": 34054,
+          "totalQuantity": 175
+        },
+        {
+          "itemID": 34055,
+          "totalQuantity": 22
+        },
+        {
+          "itemID": 34052,
+          "totalQuantity": 2
         }
       ],
-      "sourceReportedAveragePerCast": 2,
-      "source": "https://www.wowhead.com/item=52555/hypnotic-dust"
+      "source": "https://www.wowhead.com/wotlk/item=41543/duskweave-belt"
     },
     {
-      "studyKey": "wowhead-52555-audiobull-12-deathsilk-cowls",
-      "inputItemID": 54476,
-      "casts": 12,
-      "outputQuantities": [
+      "studyKey": "wowhead-41543-477375-100-disenchant-operations",
+      "inputItemID": 41543,
+      "casts": 100,
+      "outputs": [
         {
-          "outputItemID": 52555,
+          "itemID": 34054,
+          "totalQuantity": 396
+        },
+        {
+          "itemID": 34055,
+          "totalQuantity": 39
+        },
+        {
+          "itemID": 34052,
+          "totalQuantity": 5
+        }
+      ],
+      "source": "https://www.wowhead.com/wotlk/item=41543/duskweave-belt"
+    },
+    {
+      "studyKey": "wowhead-41522-244234-six-belts",
+      "inputItemID": 41522,
+      "casts": 6,
+      "outputs": [
+        {
+          "itemID": 34054,
+          "castsWithDrop": 6,
+          "minSeen": 1,
+          "maxSeen": 2
+        }
+      ],
+      "source": "https://www.wowhead.com/wotlk/item=41522/frostwoven-belt"
+    },
+    {
+      "studyKey": "wowhead-34054-988948-ten-frostwoven-leggings",
+      "inputItemID": 41519,
+      "sourceReportedItemsDisenchanted": 10,
+      "outputs": [
+        {
+          "itemID": 34054,
           "totalQuantity": 36
         }
       ],
-      "source": "https://www.wowhead.com/item=52555/hypnotic-dust"
+      "source": "https://www.wowhead.com/item=34054/infinite-dust"
     },
     {
-      "studyKey": "wowhead-52555-audiobull-12-deathsilk-bracers",
-      "inputItemID": 54473,
-      "casts": 12,
-      "outputQuantities": [
+      "studyKey": "wowhead-34054-cymre-nine-frostwoven-shoulders",
+      "inputItemID": 41513,
+      "sourceReportedItemsDisenchanted": 9,
+      "outputs": [
         {
-          "outputItemID": 52555,
-          "totalQuantity": 19
+          "itemID": 34054,
+          "totalQuantity": 21
         }
       ],
-      "source": "https://www.wowhead.com/item=52555/hypnotic-dust"
+      "source": "https://www.wowhead.com/item=34054/infinite-dust"
     },
     {
-      "studyKey": "wowhead-52555-1427818-40-spiritmend-belts-legion",
-      "inputItemID": 54481,
-      "casts": 40,
-      "outputQuantities": [
-        {
-          "outputItemID": 52555,
-          "totalQuantity": 29
-        }
-      ],
-      "sourceEra": "Legion as stated by commenter",
-      "source": "https://www.wowhead.com/item=52555/hypnotic-dust"
+      "type": "rateChange",
+      "date": "2009-10-22",
+      "outputItemID": 34054,
+      "method": "Disenchant",
+      "notes": "Also shattering; no measured magnitude",
+      "source": "https://warcraft.wiki.gg/wiki/Hotfixes/2009_Archive"
     },
     {
-      "studyKey": "wowhead-52555-zlurgh-500-spiritmend-belts",
-      "inputItemID": 54481,
-      "casts": 500,
-      "outputQuantities": [
-        {
-          "outputItemID": 52555,
-          "totalQuantity": 947
-        },
-        {
-          "outputItemID": 52718,
-          "totalQuantity": 368
-        }
-      ],
-      "source": "https://www.wowhead.com/item=52555/hypnotic-dust"
-    },
-    {
-      "studyKey": "wowhead-52555-abhorsen1988-90-deathsilk-bracers-wod",
-      "inputItemID": 54473,
-      "casts": 90,
-      "outputQuantities": [
-        {
-          "outputItemID": 52555,
-          "totalQuantity": 118
-        }
-      ],
-      "sourceEra": "Warlords of Draenor preparing for Legion",
-      "source": "https://www.wowhead.com/item=52555/hypnotic-dust"
+      "type": "noDisenchant",
+      "inputItemID": 41543,
+      "currentScaledItemLevel": 33,
+      "source": "https://www.wowdb.com/items/41543-duskweave-belt"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 11,
-    "distinct_original_studies": 8,
-    "source_stated_completed_disencasts_across_distinct_cohorts": 774,
-    "distinct_input_item_ids": [
-      21849,
-      54476,
-      54473,
-      54481
-    ],
-    "distinct_output_item_ids": [
-      22445,
-      22447,
-      52555,
-      52718
-    ],
-    "new_warmaul_completed_casts": 0,
-    "new_cobalt_feliron_completed_casts": 0,
-    "per_output_hit_counts_recovered": 0,
-    "per_cast_zero_outcomes_recovered": 0,
-    "prices_recorded": 0
+    "new_evidence_records": 14,
+    "drop_records": 12,
+    "dated_rate_changes": 1,
+    "noDisenchant_database_flags": 1,
+    "distinct_original_disenchant_cohorts": 6,
+    "source_stated_or_implied_completed_disencasts": 203,
+    "source_explicit_completed_casts": 184,
+    "source_reported_distinct_additional_item_operations_with_completed_disencasts_implied": 19,
+    "outputs_with_real_positive_hit_counts": 4,
+    "outputs_with_full_zero_inclusive_histograms": 3,
+    "number_of_gold_prices_recorded": 0,
+    "new_warmaul_casts": 0,
+    "new_cobalt_feliron_casts": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-08T0150-tbc-cataclysm-firsthand-disenchant.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T0150-tbc-cataclysm-firsthand-disenchant.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-08T0243-wotlk-duskweave-firsthand-disenchants.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T0243-wotlk-duskweave-firsthand-disenchants.jsonl",
+  "evidence_blob_sha": "330feed57100c5aeaccc7d823eb54361e6ca0a63",
   "sources": [
-    "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/item=52555/hypnotic-dust"
+    "https://www.wowhead.com/wotlk/item=41543/duskweave-belt",
+    "https://www.wowhead.com/wotlk/item=41522/frostwoven-belt",
+    "https://www.wowhead.com/item=34054/infinite-dust",
+    "https://warcraft.wiki.gg/wiki/Hotfixes/2009_Archive",
+    "https://www.wowdb.com/items/41543-duskweave-belt"
   ],
-  "verified_base_commit_sha": "46496cbc438726994a6a25f8655c5c170252de48",
-  "verified_commit_sha": "46496cbc438726994a6a25f8655c5c170252de48",
-  "commit_sha_note": "Commit hashes cannot be embedded in the same commit that creates them. This status contains the branch HEAD SHA fetched immediately before its atomic two-file commit. The published commit SHA and written files are verified by post-write readback.",
+  "verified_base_commit_sha": "8a7d7d6759a1ee88716a6e70e59bf9ca4d3e2818",
+  "verified_commit_sha": null,
+  "commit_sha_note": "The new commit SHA cannot be placed in the contents of the same commit that determines its hash. Evidence blob SHA above is directly verifiable. Following publish, verify branch HEAD and read-back both files, and use the GitHub branch history for the resulting actual commit SHA.",
   "blockers": [
-    "Warmaul Legplates 24995 historical 2068-operation cumulative Looter source remains without live modern bonus/version/skill and current Retail eligibility. Existing historic material hits do not imply current Retail DE support.",
-    "No original new Cobalt 36909 or Fel Iron 23424 completed-cast per-output hit logs surfaced; previous samples and token mapping were explicitly skipped to avoid duplication.",
-    "All new samples are historical. Some are from guild Bountiful Bags, unknown enchanting skills, and unconfirmed item-level/build variants; cannot extrapolate them to current game.",
-    "None of these newly sourced material totals has per-output positive-cast counts, zeros, or 0/1/2/... histograms.",
-    "Direct Wowhead JS page access is challenged; original comment text was verified in indexed page extracts, and raw addon SavedVariables/individual disenchants remain unavailable."
+    "Current Retail WoWDB 'Cannot be disenchanted' for 41543 (item level 33) conflicts with historical WotLK disenchant evidence (item level 154); do not apply historical results to live loot recommendations until player-tested build/item variant eligibility and API gating are checked.",
+    "28-cast Duskweave stack histogram is complete for each known output; does not imply game-wide no-output disenchants. Unknown patch/build and enchanting skill, with Oct 22 2009 dust hotfix causing historical before/after comparability questions.",
+    "50/100 Duskweave and 10/9 Frostwoven cohorts give totals but no 0/1/2/... stack histograms or positive output counts.",
+    "Previous Warmaul 24995, Cobalt 36909 and Fel Iron 23424 gaps persist; no new independent original completed casts found for them. Cannot infer rates from reference tables or nominal stack counts.",
+    "Master should review Oct 22 2009 rateChange ingestion and historical/current eligibility isolation; do not modify Master-owned shared files."
   ],
   "exhausted_sources": [
-    "Warmaul 24995 2068-cast cumulative Looter and 24992/24991 companion Looter cohorts already in 2026-11-07T1722; not duplicated.",
-    "Cobalt Ore 36909 24 unspecified stacks by Wowhead 814846, Fel Iron 23424 Thottbot 100/565 ores, and seven rewards for token 45661 already recorded; not repeated.",
-    "Runecloth Belt 13856 six-per-cast histogram and 20-belt Allakhazam totals already in 2026-11-06T1849; not duplicated.",
-    "Deathsilk Bracers 54473 930657, 1115451 and 1534817; Carnelian Spikes and 150 Deathsilk Bracers Rangiani preexisting records; not repeated.",
-    "Other already captured Netherweave Bracers 17-comment mixed batch 947919 and Jakebees 11-bracer, 16-dust; preserved without relabeling mixed greens as pure bracer outputs."
+    "Warmaul Legplates 24995 Looter 2068 and adjacent TBC 25003/30364 cohorts already recorded; no copied source reused.",
+    "Cobalt Ore 36909 Wowhead 814846 24 unspecified stacks, and Fel Iron Ore 23424 Thottbot 100/565-ore cohorts preexisting; no duplicate denominator.",
+    "Netherweave Boots 21853 13-cast exhaustive Thottbot dust/essence/shard histogram already duplicated in 2026-11-01T0837 and 2026-11-02T0140 evidence; skipped entirely.",
+    "Mithril Ore historical Kaliope per-cast test and Titanium Ore original commenter 407900 already recorded; skipped.",
+    "Existing 45661 seven-reward class token mapping, Cataclysm 52555 Deathsilk original studies, historical Saronite 36912 totals not repeated."
   ],
-  "next_concrete_step": "Target new original Warmaul 24995 current Retail disentchant test logs and historical Wowhead raw 0/1/2/... loot table with item bonus/build/skill; otherwise independent exact Cobalt Ore 36909 and Fel Iron Ore 23424 five-ore prospect completed-cast gem hit/zero histograms. Master review needed for legacy guild bonus and current DE eligibility, not an addon code change."
+  "next_concrete_step": "Seek new original Warmaul 24995 Retail eligibility/bonus test logs and item-level version; then new Cobalt 36909 and Fel Iron 23424 five-ore prospect finished casts with individual gem hit/zero histograms, refunds, expansion-era/build; isolate all historical Wrath 3.2.2 before/after dust cohorts and have Master review rateChange/no-DE conflict."
 }
