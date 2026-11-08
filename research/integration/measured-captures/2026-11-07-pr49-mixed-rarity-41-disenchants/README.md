@@ -16,8 +16,10 @@ There are no diagnostics, coverage gaps, truncation or dropped records. Strict
 staging accepts40 exact-context cohorts across the45 exported operations with
 zero exclusions. It preserves unknown native skill/operation stats for all new
 Disenchant contexts; specialization is measured as none. The earlier Shatter's
-skill104 is not silently assigned to later casts. Operator confirmation of the
-unchanged setup has been requested and can be recorded separately.
+skill104 is not silently assigned to later casts. The owner confirmed all41 casts
+remained at64+40=104, with no gear or specialization changes. That statement
+is recorded separately in intake-review.json and scoped to the41 new IDs;
+the original native export and strict staging remain unchanged.
 
 Keep every usable result. Unknown skill limits skill-effect comparisons, not
 the validity of captured input/output evidence. Do not pool these varied item
