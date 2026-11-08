@@ -34,7 +34,7 @@ batch merely because the recorder rejected them.
 
 Shatter diagnostics measure Enchanting **64 + bonus 0 = 64**, specialization
 none, zero Resourcefulness, no Concentration; their equipment snapshots have
-no items in Enchanting slots 21â€“23. Keep that profile separate from the earlier
+no items in Enchanting slots 21Ã¢â‚¬â€œ23. Keep that profile separate from the earlier
 104-skill Disenchant contexts. These are recorder attribution failures, not
 evidence that the game casts failed or the outputs were free.
 
