@@ -1,149 +1,150 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-08T12:05:47.663Z",
+  "updated_at": "2026-11-08T13:01:28.187Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Verified new exact-item Wowhead recipe-difficulty properties, compared against already-published Mana Lily Pigment rank mapping and source conflict; documented cross-file reference-family/admission hold. Research-only source check, no new samples, addon modifications or demonstrated gold-decision change.",
+  "status": "Research-only independent pinned source-unit audit: distinguished Midnight milling base per-craft yield, per-herb base, and spreadsheet scenario projection; wrote/re-read source note and updated dashboard from verified worker reports. No new current-Retail casts, gold decisions or tooltip tests.",
   "task_ids": [
     "T0045"
   ],
-  "task_ids_note": "T0045 is existing Midnight numerical milling context; worker ownership and queue unchanged. Coordinator performed an independent cross-source admission/gating audit, not a duplicate cast study or new task assignment.",
+  "task_ids_note": "Independent source-to-field contract review only; Midnight worker retains T0045 original-source quantitative collection. No queue, worker, branch or schedule modification.",
   "exact_gaps_targeted": [
-    "Current main research/mechanics/midnight-pigment-quality-ranks-2026-11-06.json already accepts ordered Mana Lily Pigment family [245867 R1, 245866 R2] for identity metadata, and database/reference-calculators.json retains that alternative family.",
-    "Current main database/research/skill-quality-rules.json holds Mana Lily quality-rule application for conflicting catalog rank labels; a separate second site calls 245866 Quality 1. Owner of runtime rule must decide whether retained hold remains warranted after primary in-client verification.",
-    "No source-stated per-output hit probability, quality-allocation probability, completed-cast histograms or source-proved numeric skill-threshold model for this family."
+    "T0045 Tranquility Bloom 236761/236767 -> Powder Pigment quality alternatives 245807/245808: pinned GoldAdvisor workbook model contains 13 per ten-herb operation, 1.3 per initial herb, and distinct 10626.311720 scenario projection for 703 planned operations; importing the projection as empirical yield/casts would conflate output, savings/stat context and sampling.",
+    "Research v3 draft summary retains a different 4.5-per-10-herb starting guess (not measured), factor 2.8889 below pinned 13 model; source hierarchy and modeled-vs-measured provenance must remain explicit, not blindly average candidates or claim current runtime bug.",
+    "Original Reddit aggregate 1000 R2 herbs -> 1473 unnamed pigments is a single previously transcribed source duplicated in a second file, with unknown per-output pigment rank/ID, actual completed cast denominator, refund reuse and skill. Cannot verify or calibrate Powder Pigment rate."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "current_exact_item_catalog_property_not_empirical_cast",
-      "item_id": 245867,
-      "name": "Mana Lily Pigment",
-      "wowhead_recipe_difficulty_bonus": 15,
-      "source": "https://www.wowhead.com/item=245867/mana-lily-pigment",
-      "game": "Retail",
-      "rank": "Existing research records R1; not newly established from recipe-difficulty property",
-      "measured_casts": 0
-    },
-    {
-      "kind": "current_exact_item_catalog_property_not_empirical_cast",
-      "item_id": 245866,
-      "name": "Mana Lily Pigment",
-      "wowhead_recipe_difficulty_bonus": 5,
-      "source": "https://www.wowhead.com/item=245866/mana-lily-pigment",
-      "game": "Retail",
-      "rank": "Existing research records R2; contested by Saddlebag",
-      "measured_casts": 0
-    },
-    {
-      "kind": "control_exact_item_properties",
-      "item_ids": [
+      "kind": "upstream_pinned_reference_not_observed",
+      "method": "Mill",
+      "input_item_ids": [
+        236761,
+        236767
+      ],
+      "output_rank_alternative_item_ids": [
         245807,
         245808
       ],
-      "name": "Powder Pigment",
-      "wowhead_recipe_difficulty_bonuses": [
-        15,
-        5
-      ],
-      "source_urls": [
-        "https://www.wowhead.com/item=245807/powder-pigment",
-        "https://www.wowhead.com/item=245808/powder-pigment"
-      ],
-      "effect": "Consistency comparator only; does not prove universal correlation or new ranked numeric outputs.",
+      "inputs_per_operation": 10,
+      "base_yield_per_operation": 13,
+      "base_yield_per_input_herb": 1.3,
+      "source": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/PricingDerivation.lua",
       "measured_casts": 0
+    },
+    {
+      "kind": "upstream_workbook_model_projection_not_observation",
+      "planned_initial_herbs": 7030,
+      "planned_operations": 703,
+      "scenario_output_total": 10626.31172,
+      "projected_units_per_planned_operation": 15.115663897581792,
+      "percent_above_unscaled_base": 16.274337673706096,
+      "workbook_projected_casts_observed": false,
+      "source": "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/Data/RecipesGenerated.lua"
+    },
+    {
+      "kind": "older_v3_provisional_baseline_comparison",
+      "old_starting_guess_per_operation": 4.5,
+      "source_model_per_operation": 13,
+      "ratio": 2.888888888888889,
+      "old_baseline_status": "starting guess; neither direct empirical nor present-live-engine verified",
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/output/summary.md"
+    },
+    {
+      "kind": "existing_single_firsthand_aggregate_not_new_cohort",
+      "input_item_id": 236767,
+      "nominal_initial_herbs": 1000,
+      "reported_unnamed_pigments": 1473,
+      "implied_units_per_initial_herb": 1.473,
+      "unknown_actual_completed_operations": true,
+      "unknown_output_item_id": true,
+      "duplicate_source_keys": [
+        "master-20261030-006",
+        "midnight-20261102-110519"
+      ],
+      "original_reddit_primary_not_reopened": true
     }
   ],
   "newly_verified_independent_cast_cohorts": 0,
   "new_gold_decisions_verified": 0,
   "new_tooltip_fields_runtime_verified": 0,
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-08T1202-mana-lily-pigment-rank-source-contract.md"
+    "research/v3/evidence/master/2026-11-08T1259-midnight-milling-base-vs-workbook-projection.md"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=245867/mana-lily-pigment",
-    "https://www.wowhead.com/item=245866/mana-lily-pigment",
-    "https://www.wowhead.com/item=245807/powder-pigment",
-    "https://www.wowhead.com/item=245808/powder-pigment",
-    "https://goldcap.gg/retail/us/items/245867",
-    "https://goldcap.gg/retail/us/items/245866",
-    "https://goldcap.gg/retail/eu/items/245867",
-    "https://goldcap.gg/retail/eu/items/245866",
-    "https://saddlebagexchange.com/wow/item-data/245866",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/mechanics/midnight-pigment-quality-ranks-2026-11-06.json",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/database/research/skill-quality-rules.json"
+    "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/Data/RecipesGenerated.lua",
+    "https://github.com/crystaltech/GoldAdvisorMidnight/blob/5b0b253c7039b2379942951166b0cbb41b525fe3/GoldAdvisorMidnight/PricingDerivation.lua",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/database/research/midnight-pigment-calculator-source.json",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/output/summary.md",
+    "https://www.reddit.com/r/woweconomy/comments/1rteoqr/comment/oaklwmu/"
   ],
-  "verified_commit_sha": "1bdba144a3437e1c6cc9e78f07d9c16fc351eaaa",
-  "verified_commit_sha_scope": "Coordinator-owned source-note commit created via GitHub and exact content read back at current research head; this is NOT a Lua/ItemDB compile or runtime test.",
-  "verified_evidence_blob_sha": "c46acd5cbf6ed85dcd080bb84cfec590c3239352",
-  "verified_dashboard_commit_sha": "391e19dda8699035f894aaaec8f5a0b1d83f5243",
-  "verified_dashboard_blob_sha": "d1c40ab4bbd31cd76a972bcc1e455860b6e398a3",
+  "verified_commit_sha": "52c4131316c267e777975d60b9af24331ccbb96a",
+  "verified_commit_sha_scope": "Coordinator new source-contract note commit, exact note read back from GitHub; not ItemDB or addon test.",
+  "verified_evidence_blob_sha": "e3816e54fa53158feaaeac6afcb5ee29c77d38a3",
+  "verified_dashboard_commit_sha": "380bffec9995a63ed601b4006fa0b3719120fd60",
+  "verified_dashboard_blob_sha": "63f19c211fd7fe2800048201d1f3b28b2d6bee66",
   "current_heads_at_read": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research_pre_status": "391e19dda8699035f894aaaec8f5a0b1d83f5243",
+    "research_pre_status": "380bffec9995a63ed601b4006fa0b3719120fd60",
     "three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "verified_worker_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-08T11:25:27.434Z",
-      "blob_sha": "afeb31d3a2fa42b12586fc0a28d50a2449d4675c",
-      "result": "Two Evercore crafted gear identity-only reference leads, no new observed disenchants."
+      "updated_at": "2026-11-08T12:45:38.617Z",
+      "blob_sha": "6d6b76b956a78cf1bdecff12d2f1684ba726abf3",
+      "report": "Three knowledge-point-only disenchant anecdotes; no new priced material-cast histograms."
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-08T11:32:20.638Z",
-      "blob_sha": "8cc5a678033ede08f3bee150888f8c59f44909be",
-      "result": "Two original 2023 Serevite workbook batches with eighteen rank-category output quantities; completed casts and hit distributions unknown."
+      "updated_at": "2026-11-08T12:39:48.354Z",
+      "blob_sha": "1a93ceb9d3d00c276a4c88a10dced722da874b2c",
+      "report": "Six cumulative gear cohorts / twelve occurrence records; no new prospect/mill 0-N data."
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-08T11:38:37.619Z",
-      "blob_sha": "33f61d1bf5ee8fc699d948ee6d8505dcdb9441c4",
-      "result": "Historical Sept 2024 1532-operation, skill141, three rank-specific Gleaming Shard means; no current Retail identity/patch eligibility."
+      "updated_at": "2026-11-08T12:31:20.830Z",
+      "blob_sha": "2b04942af1c6ad4bb633fc418e15d9d91055177d",
+      "report": "PTR rank-2 Storm Dust item-specific hits, live eligibility and quantity distributions unresolved."
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-08T11:45:59.075Z",
-      "blob_sha": "0e4e1bb97cf63f13816a3ddab097dcd567a725a9",
-      "result": "Eight exact item source-indexed disenchant eligibility references; no client confirmation or observed cast cohorts."
+      "updated_at": "2026-11-08T12:46:01.239Z",
+      "blob_sha": "1be8988ede4faf4425f07891be24195abef9135e",
+      "report": "Ten original historical 2.1.0 eligibility changes + one historical 1-cast Void Crystal anecdote; no current Retail proof."
     }
   ],
   "actual_automation_run_results": {
-    "checked_at_utc": "2026-11-08T12:05:20.174Z",
-    "midnight": "completed 2026-11-08T11:26:21.910565Z",
-    "dragonflight": "completed 2026-11-08T11:32:47.334736Z",
-    "war_within": "completed 2026-11-08T11:38:52.923960Z",
-    "legacy": "completed 2026-11-08T11:46:16.487727Z",
-    "source": "Automations private run detail reads; separate worker status file content was independently read."
+    "checked_at_utc": "2026-11-08T13:01:28.187Z",
+    "midnight": "completed 2026-11-08T12:46:11.895139Z",
+    "dragonflight": "completed 2026-11-08T12:40:21.436692Z",
+    "war_within": "completed 2026-11-08T12:31:52.163075Z",
+    "legacy": "completed 2026-11-08T12:46:32.456804Z",
+    "source": "Automations private recorded run results and independent repository worker quiet-status readbacks."
   },
   "ci_last_checked": {
-    "run_id": 42478479889,
-    "name": "Verify five-agent completion",
-    "head": "f7e18062a32651bbcd9bf79be168f4e66231298c",
+    "run_id": 42481783239,
     "status": "completed",
     "conclusion": "success",
-    "updated_at": "2026-11-08T12:04:12Z",
-    "scope": "Research completion workflow on coordinator dashboard checkpoint, not owner-protected addon runtime or in-game testing."
+    "head": "1c11b154313a8fb0b3a5ba57741b6619370edd35",
+    "scope": "Research completion on pre-coordinator research head only, not newly written notes or real addon/runtime tests."
   },
   "research_prs": {
     "22": "closed-unmerged (checked)",
     "23": "closed-unmerged (checked)",
-    "24": "closed-merged 2026-11-02T16:44:22Z (three-pass implementation, unchanged)",
-    "49": "open other-owner main-based PR, untouched"
+    "24": "already merged 2026-11-02 (protected three-pass owner; no action)"
   },
   "blockers": [
-    "Two publisher item-quality rank labels disagree; Blizzard client quality icon or exact primary item-quality API check not executed, so no automatic quality-rule unhold.",
-    "Wowhead +5/+15 Recipe Difficulty is a reagent attribute, not a measured outcome, input-rank guarantee, drop probability or generic deterministic rule.",
-    "No fresh verified completed Midnight 10-herb milling casts, per-output hit counts, zero-inclusive histograms, actual measured skill-conditioned quality allocation, or current character prices.",
-    "No actual offline Lua addon resolver, ItemDB compiler, synthetic-price economic evaluation, formatter, or WoW client run in this coordinator session."
+    "No independently verified current-patch complete 10-herb cast log with exact pigment rank/ID, input refunds and skill/spec; live current-Retail quantity cannot be validated from model/reference scenario.",
+    "Unknown exact workbook stat/refund formula and patch applicability for 10626.31172 projection; cannot derive Resourcefulness coefficients or per-operation empirical rate.",
+    "Reddit original page not reverified in this run; existing transcribed aggregate has unknown material identification and completed-cast count.",
+    "No owned-branch Lua ItemDB compile, offline synthetic-price valuation/formatter, current-character price, or in-game client test executed."
   ],
   "exhausted_sources": [
-    "Nov-6 existing main rank-family catalog and GoldCap vs Saddlebag conflict are prior reviewed evidence and not re-counted as new identities.",
-    "Kyzenbka Mana Lily line has output ID 245867 but no explicit repeated Mana Lily input denominator; earlier source reading not recreated as new numeric study.",
-    "GoldCap US/EU site variants belong to one catalog provider, not independent sampled datasets."
+    "Pinned GoldAdvisor 13/10 base already present in main source excerpt; treated as existing source candidate, not a new independent study.",
+    "Older v3 4.5/cast is a starting-guess estimate, not an observed measurement; no additional cast evidence recovered from that summary.",
+    "SeniorEmployment932 1473 aggregate material is one original Reddit source re-transcribed in two records; neither duplicate nor existing project note is a new study."
   ],
-  "next_concrete_step": "Request exact live in-game item-quality / item-ID corroboration of Mana Lily 245867 vs 245866; quality-rule implementation owner may then reconcile the held family gate with existing researched source mapping, add synthetic-price real resolver/tooltip regression, and only then propose scoped quality-rule change. Coordinator next selects a different unresolved numeric/identity gap in current queue and does not duplicate T0045 worker studies.",
-  "tests_executed": "Actual GitHub read of charter, three-pass plan/PASS-1, research v3 README/evidence schema/mechanics/queue/strategy/flags, prior coordinator/worker status, approved main quality-rule files and archived research; source-page inspection of exact GoldCap, Saddlebag and four Wowhead item IDs; live GitHub branch/PR/CI reads and four Automations recorded results; GitHub evidence note created, exact note readback verified, dashboard updated and readback verified. No code/unit test, estimate build, Lua/runtime tooltip test or WoW-client verification performed.",
-  "restricted_actions": "Changed only coordinator-owned new research/v3/evidence/master source note, coordinator-owned dashboard and coordinator quiet status on research branch. No main or protected three-pass writes, PR edits, queue/schedule changes, worker file edits, merges or release.",
-  "previous_status_blob_sha": "c7fda5159d0d5a2683da98339006eb25711422d5",
-  "dashboard_link_note": "Corrected relative source-note link in dashboard; source note and audit findings unchanged."
+  "next_concrete_step": "Midnight T0045 worker seeks an original in-game complete 10-herb mill export with exact 236761/236767 input rank, 245807/245808 item identity/rank, completed casts, per-output hits/positive stack histograms, Resourcefulness refunds, skill/spec and build. Integration owner independently validates base 13/craft ↔ 1.3/herb vs workbook-scenario-only fields in offline fixture, then synthetic-price actual tooltip on protected branch. Coordinator selects a different queued identity/numeric gap next run.",
+  "tests_executed": "Read current main/research/three-pass heads, owner charter and pass checkpoints, research v3 queue/schema/mechanics/strategy/flags, pinned upstream generated Recipe/PricingDerivation files, stored historical source record and output summary; JS arithmetic on explicit source fields; GitHub source note created and exact content readback verified; dashboard updated and readback verified; four actual worker run snapshots, four worker status readbacks, latest research CI and PRs #22/#23 read. No application/estimator/compiler/Lua/WoW test run.",
+  "restricted_actions": "Modified only coordinator-owned new research master evidence note, coordinator-owned research dashboard, coordinator own quiet-status on research branch. Did not edit original evidence, workers, master queue, PRs, main, protected addon integration, schedules, release, merges or closures.",
+  "previous_status_blob_sha": "f68b098bcdac640a094c7d73bb8f6a32634ff470"
 }
