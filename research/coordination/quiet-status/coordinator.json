@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-07T23:00:19.207Z",
+  "updated_at": "2026-11-08T00:03:36.368Z",
   "branch": "implementation/five-agent-completion",
-  "status": "research_only: verified original Warcanon Silvery per-mill mean arithmetic conflict (source 1.5801 versus 531/181=2.933701657) and source-specific Golden Sansam Sapphire 16/68 versus frozen reference .4775; research note/dashboard only, zero new casts or current Retail EV decisions",
+  "status": "research_only: source-verified Dragonflight 2-material cumulative Looter marginal counts force >=49 joint material co-occurrences across five reported item cohorts (conditional arithmetic); three source-reported 1–2 shard ranges exist only in notes, not minSeen/maxSeen; zero new casts, zero current Retail EV decisions.",
   "task_ids": [
     "COORD-MIDNIGHT-MULTICRAFT-SCOPE-20261107",
     "T0042",
@@ -59,7 +59,8 @@
     "COORD-ELEMENTIUM-382-DUPLICATE-STUDY-LINEAGE-20261107",
     "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107",
     "COORD-MIDNIGHT-PROSPECT-365-SKILL-GEAR-STATE-20261107",
-    "COORD-WARCANON-SOURCE-MEAN-QA-20261107"
+    "COORD-WARCANON-SOURCE-MEAN-QA-20261107",
+    "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108"
   ],
   "exact_gaps_targeted": [
     "M10/T0034: March 12 original player reports Resourcefulness hidden in Prospecting Crafting Details while ore refunds occur; actual per-operation nominal inputs, saved ore counts, effective stats/skill/build and cast-time reagent quality links are missing; no input-saving coefficient can be calibrated.",
@@ -1253,6 +1254,49 @@
       "golden_sansam_historical_unconditional_average": 0.23529411764705882,
       "frozen_reference_expected_units_per_mill": 0.4775,
       "remaining": "Current Retail equivalence, guild-perk scope/patch and source-conditional input ambiguity unresolved; do not import 1.5801 or mixed 425-herb cohort as source-specific current rates."
+    },
+    {
+      "task_id": "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108",
+      "kind": "derived_multi_material_cooccurrence_bounds_and_usable_conditional_range_not_structured",
+      "evidence_file": "research/v3/evidence/master/2026-11-08T0001-dragonflight-looter-multi-output-overlap-bounds.md",
+      "worker_file": "research/v3/evidence/dragonflight/20261107T2331-six-distinct-gear-looter-cohorts.jsonl",
+      "worker_blob_sha": "3efd64666573abbf0e11d037577181452657917a",
+      "reported_input_ids": [
+        200360,
+        200365,
+        200414,
+        200416,
+        200420
+      ],
+      "source_reported_completed_disenchants_over_five_items": 245,
+      "source_reported_material_occurrence_total": 294,
+      "derived_min_joint_occurrences": 49,
+      "derived_bounds_by_input": {
+        "200360": 11,
+        "200365": 3,
+        "200414": 15,
+        "200416": 13,
+        "200420": 7
+      },
+      "source_verified_conditional_range_missing_structured_fields": [
+        "dragonflight-20261107-990008",
+        "dragonflight-20261107-990010",
+        "dragonflight-20261107-990012"
+      ],
+      "reported_conditional_range": [
+        1,
+        2
+      ],
+      "original_source_tables_independently_reopened_for": [
+        200360,
+        200414,
+        200416
+      ],
+      "source_table_verification_pending_for": [
+        200365,
+        200420
+      ],
+      "unresolved": "Original joint event IDs, positive stack quantity histograms, source patch/bonus/skill, current Retail legal disenchanting and price/auction availability. Bound valid only if each per-material row shares exact N source-reported disenchant denominator. Source marginal counts cannot be normalized as disjoint outcome probabilities."
     }
   ],
   "newly_verified_fields_or_cohorts": [
@@ -3431,6 +3475,22 @@
       ],
       "evidence_file": "research/v3/evidence/master/2026-11-07T2258-warcanon-milling-source-mean-reconciliation.md",
       "evidence_commit": "c842b42f90c9d93ba75f6c4c347a8f42f0c70d7b"
+    },
+    {
+      "task_id": "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108",
+      "kind": "source_attributed_derived_joint_occurrence_lower_bounds_and_three_note_only_conditional_yield_ranges",
+      "derived_min_joint_operation_count": 49,
+      "material_hit_count": 294,
+      "reported_operations_from_worker": 245,
+      "source_reopened_examples": 3,
+      "conditional_range_records_await_worker_correction": 3,
+      "range_semantics": "positive-stack amount min1 max2, not 0-inclusive histogram or expected quantity",
+      "new_observed_casts": 0,
+      "new_independent_cohorts_measured_by_coordinator": 0,
+      "new_2026_retail_gold_ev_verified": 0,
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-08T0001-dragonflight-looter-multi-output-overlap-bounds.md",
+      "evidence_commit_sha": "e2615658e22642b57aa68bccc090b3a0c8a69f07",
+      "no_addon_or_tooltip_execution": true
     }
   ],
   "new_measured_cohorts_added_by_coordinator": 0,
@@ -3475,7 +3535,8 @@
     "research/v3/evidence/master/2026-11-07T2107-ceari-titanium-17-row-replacement-integrity.md",
     "research/v3/evidence/legacy/2026-11-07T2043-titanium-output-id-enrichment-adamantite-original.jsonl",
     "research/v3/evidence/master/2026-11-07T2203-midnight-prospecting-skill-quality-gate-gear-state.md",
-    "research/v3/evidence/master/2026-11-07T2258-warcanon-milling-source-mean-reconciliation.md"
+    "research/v3/evidence/master/2026-11-07T2258-warcanon-milling-source-mean-reconciliation.md",
+    "research/v3/evidence/master/2026-11-08T0001-dragonflight-looter-multi-output-overlap-bounds.md"
   ],
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/1rrn6of/resourcefulness_in_crushingprospecting/",
@@ -3616,17 +3677,20 @@
     "https://www.reddit.com/r/wow/comments/1sgvqjt/how_do_i_prospect_high_quality_ore_without/",
     "https://us.forums.blizzard.com/en/wow/t/ever-gonna-fix-horrible-gemdust-drop-rate/2316717",
     "https://www.wowhead.com/item=13466/sorrowmoss",
-    "https://www.wowhead.com/item=13464/golden-sansam"
+    "https://www.wowhead.com/item=13464/golden-sansam",
+    "https://www.wowhead.com/item=200360/chestwrap-of-the-waking-fist",
+    "https://www.wowhead.com/ptr/item=200414/virtuous-silver-breastplate",
+    "https://www.wowhead.com/item=200416/virtuous-silver-gauntlets"
   ],
   "verified_revisions_before_write": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
     "research_pre_evidence": "c53ae44dcefeffb68951070a7f75a72806514d5e",
-    "research_pre_status": "949011db9dae3134ad543b5021b86cf98a9dee4e",
+    "research_pre_status": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
     "protected_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_evidence_commit": "c842b42f90c9d93ba75f6c4c347a8f42f0c70d7b",
-    "research_dashboard_commit": "949011db9dae3134ad543b5021b86cf98a9dee4e"
+    "research_evidence_commit": "e2615658e22642b57aa68bccc090b3a0c8a69f07",
+    "research_dashboard_commit": "8949a59c142a23c68bf7979cf2d6361aaf72ee11"
   },
-  "commit_sha_when_verified": "949011db9dae3134ad543b5021b86cf98a9dee4e",
+  "commit_sha_when_verified": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
   "blockers": [
     "M10/T0034: firsthand reported hidden profession-UI Resourcefulness versus refunded ore lacks exact operation, rank, equipment, returned reagent amount and effective stat telemetry; cannot price uncalibrated savings as guaranteed.",
     "M11/T0033: actual 2026 Retail Prospect/Crush recipe craft-window Multicraft capability was not inspected in a WoW client; despite three agreeing public sources, stat formula/per-cast observed data unavailable. No multiplier/extra-gem output term can be licensed by this research.",
@@ -3676,7 +3740,8 @@
     "COORD-ELEMENTIUM-382-DUPLICATE-STUDY-LINEAGE-20261107: Distinct sourceKind/studyKey and /cata vs /ptr mirror route for the same original 382 Elementium prospects, plus different null-ID aggregate family names; no reviewed cross-study correction, v3 audit/compile or tooltip proof yet. Do not price rarity-aggregate as individual gems.",
     "COORD-CEARI-TITANIUM-17-REPLACEMENT-ID-QA-20261107: Original patch 3.3.3 is historical WotLK Classic; 40 derived five-ore equivalents, no verified completed click/refund ledger, material hit probabilities, zero histograms, cast-time ranks, exact player itemLink or current Retail eligibility. Compiler's replace filter inspected, but v3 recompile and addon valuation/tooltip NOT executed. Do not import this as new independent 40 casts or verified 2026 Retail EV.",
     "Midnight Prospecting quality evidence is two 2026 anecdotal recipe/character states, not cast logs: no exact ore/output quality itemLinks, recipe IDs, patch-pinned skill threshold proof, operation numbers, price/EV or client reproduction. Do not import 365 as a universal quality gate or interpret gear re-equip as an addon fix.",
-    "Warcanon source says 1.5801 Silvery per mill despite enumerating 531/181=2.933701657. Original patch/skill/guild perk and current Retail fidelity unknown; source means must not silently override verified quantities. Historical Golden Sansam 16/68 Sapphire units/mill materially differs from frozen reference 0.4775, but a current Retail rate/correct valuation is not verified."
+    "Warcanon source says 1.5801 Silvery per mill despite enumerating 531/181=2.933701657. Original patch/skill/guild perk and current Retail fidelity unknown; source means must not silently override verified quantities. Historical Golden Sansam 16/68 Sapphire units/mill materially differs from frozen reference 0.4775, but a current Retail rate/correct valuation is not verified.",
+    "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108: Per-operation joint outcomes, item bonuses, timestamps and actual live skill/spec needed before estimating correlation or a current Retail EV. Three positive-stack ranges exist in worker notes but minSeen/maxSeen are null; ask worker for source-preserving append-only structured field corrections, do not rewrite their file."
   ],
   "exhausted_sources": [
     "2026-11-07 M11 checked two independent current JC processing guide assertions, October 3 original player correction, and March 12 UI/refund firsthand comment. Do not re-audit as independent drop data; obtain actual game spell capability and per-cast refunds next.",
@@ -3711,7 +3776,8 @@
     "March 18 2026 Midnight launch disenchant original Reddit discussion inspected once; no event-level itemLink/quantity/patch ledger. Do not re-audit anecdotes as independent samples without primary item ID or later-build result.",
     "Ceari Titanium Ore historical original: 17 output rows already recorded and 16 identity-enriched by the Legacy worker. Repeated source auditing is exhausted unless an original itemLink, different original cohort, or actual Retail operations become available; no duplicate new study.",
     "April 09 r/wow 1sgvqjt and June 27 Blizzard forum 2316717 skill-display reports transcribed as a single source-scoped context guard. Re-searching those posts will not create new independent cast cohorts; request paired client skill/output logs instead.",
-    "Warcanon Sorrowmoss and Golden Sansam original Wowhead comments, frozen v3 13464/13466 Sapphire/Silvery estimates, and legacy TSM matRate/amountOfMats units were independently checked this run; do not repeatedly report this sample as a new cohort without patch-pinned current Retail evidence."
+    "Warcanon Sorrowmoss and Golden Sansam original Wowhead comments, frozen v3 13464/13466 Sapphire/Silvery estimates, and legacy TSM matRate/amountOfMats units were independently checked this run; do not repeatedly report this sample as a new cohort without patch-pinned current Retail evidence.",
+    "Dragonflight source tables for gear 200360, 200414 and 200416 were independently reopened only for their already-captured cumulative marginal counts and 1–2 Shard display ranges. Additional repeated page checks will not recover a joint event log or prove live 2026 eligibility; obtain raw logs/true source version instead."
   ],
   "decisions_needed": [
     {
@@ -3737,7 +3803,7 @@
       "issue": "Alias the First Flower t8lubc/Wowhead 4000-herb vector/TSM formula to one original study ID. Adjudicate source-claimed Mass Mill x200 separately; do not silently convert unknown event-level casts."
     }
   ],
-  "next_concrete_step": "Track source author error (1.5801 versus 531/181) as an identity/units conflict in any research-only importer QA; preserve 425-herb mixed input and 480-herb pure Sorrowmoss rounds and separate 68-mill Sansam sample. Prioritize current Retail 5-herb operation logs with output unit/hit/zero/skill/guild-perk and refund context, then protected three-pass owner may test synthetic-price actual-engine selection versus frozen .4775 Golden Sansam reference; no direct protected-branch changes.",
+  "next_concrete_step": "Request original per-disenchant joint output quantities (same-item, same-source cohort, 0-inclusive per-output stacks), gear bonus/patch/skill and exact material rank from original Looter export or opt-in Retail SavedVariables. Have Dragonflight worker append-only correct 200360/200414/200416 note-only positive-stack min1/max2 ranges; then protected three-pass integration owner can execute synthetic-price actual-engine/tooltip field propagation. Do not merge/modify owner implementation branch.",
   "validation_executed": {
     "at_utc": "2026-11-07T21:09:15.252Z",
     "source_pairwise_replacements_checked": 16,
@@ -3790,38 +3856,24 @@
   },
   "notifications": "none: owner requested on-demand updates only",
   "last_session": {
-    "task_id": "COORD-WARCANON-SOURCE-MEAN-QA-20261107",
-    "at_utc": "2026-11-07T23:00:19.207Z",
-    "evidence_file": "research/v3/evidence/master/2026-11-07T2258-warcanon-milling-source-mean-reconciliation.md",
-    "verified_evidence_commit_sha": "c842b42f90c9d93ba75f6c4c347a8f42f0c70d7b",
-    "verified_dashboard_commit_sha": "949011db9dae3134ad543b5021b86cf98a9dee4e",
-    "research_branch_prestatus_head": "949011db9dae3134ad543b5021b86cf98a9dee4e",
-    "worker_reports_at_utc": [
-      {
-        "role": "legacy",
-        "reported_at_utc": "2026-11-07T22:46:00.090Z",
-        "source": "research/coordination/quiet-status/legacy.json"
-      },
-      {
-        "role": "dragonflight",
-        "reported_at_utc": "2026-11-07T22:33:06.725Z",
-        "source": "research/coordination/quiet-status/dragonflight.json"
-      },
-      {
-        "role": "war-within",
-        "reported_at_utc": "2026-11-07T22:44:48.327Z",
-        "source": "research/coordination/quiet-status/war-within.json"
-      },
-      {
-        "role": "midnight",
-        "reported_at_utc": "2026-11-07T22:18:48.681Z",
-        "source": "research/coordination/quiet-status/midnight.json"
-      }
-    ],
-    "new_independent_casts": 0,
-    "new_verified_retail_gold_decisions": 0,
-    "actual_v3_compiler_or_addon_tests_executed": false,
-    "actual_client_tests_executed": false
+    "task_id": "COORD-DF-LOOTER-COOCCURRENCE-FIELD-GAP-20261108",
+    "at_utc": "2026-11-08T00:03:36.368Z",
+    "evidence_file": "research/v3/evidence/master/2026-11-08T0001-dragonflight-looter-multi-output-overlap-bounds.md",
+    "evidence_commit_sha": "e2615658e22642b57aa68bccc090b3a0c8a69f07",
+    "dashboard_commit_sha": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
+    "research_branch_prestatus_head": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
+    "derived_joint_overlap_lower_bound": 49,
+    "conditional_yield_range_fields_missing": 3,
+    "measured_new_casts": 0,
+    "new_retail_gold_decisions": 0,
+    "worker_reports_verified": 4,
+    "source_pages_reopened": 3,
+    "tests_not_executed": [
+      "compiler",
+      "addon",
+      "offline_valuation",
+      "live-WoW"
+    ]
   },
   "prior_checkpoint_verified_fields_or_cohorts": [
     {
@@ -4032,11 +4084,11 @@
     "research/v3/evidence/midnight/2026-11-06T0319-deck-and-trinket-base-de-exclusions.jsonl",
     "research/v3/evidence/war-within/2026-11-06T1332-four-distinct-epic-armor-looter-hits.jsonl"
   ],
-  "research_branch_head_read_before_write": "d24b7a8dfce1840bc27430030c9fc770177810b0",
+  "research_branch_head_read_before_write": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
   "research_branch_prewrite_head_verified_at_utc": "2026-11-07T20:03:14.107Z",
-  "verified_base_commit_sha": "6bf8363b5b2e1e4aa2c274d732dbcd127df580a9",
+  "verified_base_commit_sha": "8949a59c142a23c68bf7979cf2d6361aaf72ee11",
   "current_status_commit_sha": null,
-  "commit_sha_note": "Evidence commit c842b42 and dashboard commit 949011d independently returned from GitHub write. The status commit SHA cannot be embedded in its own hashed JSON; read branch head after this status write.",
+  "commit_sha_note": "Status file commit SHA is not self-attested (write returns SHA only after content is committed); evidence and dashboard commits plus read-back blob SHA are externally verified.",
   "last_checkpoint_validation": {
     "utc": "2026-11-07T04:01:11.389Z",
     "previous_status_commit_verified": "be6273c2a8c8c78bc4cf4562cd97e16cfc9075c4",
@@ -4053,29 +4105,21 @@
   "integration_branch_head_checked_before_write": "3d667d053db587c91401cfed7ecc56862b8340c9",
   "main_head_checked_before_write": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
   "session_validation": {
-    "at_utc": "2026-11-07T23:00:19.207Z",
-    "primary_sources_read": true,
-    "worker_primary_evidence_file_read": true,
-    "worker_role_reports_read": [
-      "legacy",
-      "dragonflight",
-      "war-within",
-      "midnight"
-    ],
-    "reference_compiled_estimates_read_at": "c53ae44dcefeffb68951070a7f75a72806514d5e",
-    "reference_legacy_gamedata_read": true,
-    "python_arithmetic_executed": true,
-    "research_compiler_executed": false,
-    "offline_synthetic_price_engine_executed": false,
-    "addon_tests_executed": false,
-    "live_wow_tests_executed": false,
-    "production_retail_coverage_increased": false,
-    "github_ci_observed": {
-      "run": 42422144915,
-      "head_sha": "c53ae44dcefeffb68951070a7f75a72806514d5e",
-      "conclusion": "success",
-      "scope": "pre-evidence research head only"
-    }
+    "at_utc": "2026-11-08T00:03:36.368Z",
+    "read_current_heads": true,
+    "worker_original_rows_compared": 13,
+    "two_material_groups_arithmetically_checked": 5,
+    "source_tables_independently_reopened": 3,
+    "source_structured_field_omissions_checked": 3,
+    "source_note_verified_blob_sha": "982e949ad6a6404f7a1441c72ba6a34c3100ae4b",
+    "dashboard_verified_blob_sha": "81058e971947cb57c36e78495910146be4c533e1",
+    "programmatic_marginal_overlap_checked": true,
+    "new_casts_observed": 0,
+    "new_current_retail_ev_decisions_verified": 0,
+    "v3_compiler_ran": false,
+    "synthetic_price_engine_ran": false,
+    "lua_addon_tests_ran": false,
+    "live_wow_client_checked": false
   },
   "dashboard_commit_sha_when_verified": "6bf8363b5b2e1e4aa2c274d732dbcd127df580a9",
   "actual_last_worker_readbacks_utc": {
@@ -4088,23 +4132,27 @@
   "worker_statuses_verified_in_this_session": [
     {
       "role": "legacy",
-      "reported_at_utc": "2026-11-07T22:46:00.090Z",
-      "source": "research/coordination/quiet-status/legacy.json"
+      "reported_at_utc": "2026-11-07T23:41:52.384Z",
+      "automation_status": "completed",
+      "last_run_at_utc": "2026-11-07T23:42:14.434146+00:00"
     },
     {
       "role": "dragonflight",
-      "reported_at_utc": "2026-11-07T22:33:06.725Z",
-      "source": "research/coordination/quiet-status/dragonflight.json"
+      "reported_at_utc": "2026-11-07T23:31:40.424Z",
+      "automation_status": "completed",
+      "last_run_at_utc": "2026-11-07T23:32:02.770493+00:00"
     },
     {
       "role": "war-within",
-      "reported_at_utc": "2026-11-07T22:44:48.327Z",
-      "source": "research/coordination/quiet-status/war-within.json"
+      "reported_at_utc": "2026-11-07T23:26:32.221Z",
+      "automation_status": "completed",
+      "last_run_at_utc": "2026-11-07T23:27:00.130600+00:00"
     },
     {
       "role": "midnight",
-      "reported_at_utc": "2026-11-07T22:18:48.681Z",
-      "source": "research/coordination/quiet-status/midnight.json"
+      "reported_at_utc": "2026-11-07T23:11:53.534Z",
+      "automation_status": "completed",
+      "last_run_at_utc": "2026-11-07T23:12:26.860203+00:00"
     }
   ],
   "branch_head_at_read": "c02b126d362a7990a1b92a3f6dacf3470022a7a0",
@@ -4192,6 +4240,13 @@
       }
     },
     "worker_schedules_changed": false,
-    "worker_results_reconciled_against_current_status": true
+    "worker_results_reconciled_against_current_status": true,
+    "checked_at_utc": "2026-11-08T00:03:36.368Z",
+    "workers_completed": 4,
+    "latest_ci_run": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42426418226",
+    "ci_conclusion": "success",
+    "ci_head_sha": "b6ce3dd1d85dae9d72c9821cfb8a575983804ffe",
+    "ci_validates_this_note": false,
+    "prs_22_23_status": "closed unmerged as of 2026-11-03; checked on 2026-11-08"
   }
 }
