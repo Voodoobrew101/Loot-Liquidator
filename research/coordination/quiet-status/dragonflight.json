@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
-  "updated_at": "2026-11-08T12:39:48.354Z",
+  "updated_at": "2026-11-08T13:39:02.685Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Six newly indexed original cumulative Wowhead Looter disenchant gear cohorts; 12 output occurrence records. No newly measured Dragonflight prospect or mill completed-cast/0-N histogram. Reuse and version-mixing remain unresolved.",
+  "status": "Six previously unindexed Dragonflight gear-item Looter cohorts added as 13 material occurrence rows; no new prospect/mill refund-aware per-cast histogram recovered. Research-only cumulative community data.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,156 +12,267 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore (189143,188658), Serevite Ore (190394/190395/190396), Khaz'gorite (190312/190313/190314), Prismatic Ore (194545): completed prospect counts, output-specific hits, refunds, 0-N histograms, ranked source mapping and patch/skill.",
-    "Dragonflight Bubble Poppy 191467 and Saxifrage 191464/191465/191466 milling: independent rank-mapped completed mills and per-output hit/zero histograms.",
-    "Dragonflight gear item-specific disenchanting (six newly indexed input IDs): source-native operation and material hit counts."
+    "Open T0020/T0019: Draconium Ore 189143/188658 missing rank-specific completed operation counts and per-output hit/zero histograms; do not map nominal ore units to completed casts under Resourcefulness.",
+    "Open T0046: Serevite Ore 190394/190395/190396 output-rank/epoch validation, exact completed casts and per-output hit counts.",
+    "Open T0041: Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545 original source rank/skill/patch, 0-N output occurrence histograms and resourcefulness denominators.",
+    "Open T0018/T0015: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 milling per-completed-cast 0-N output and herb refund logs.",
+    "Standing gear-disEnchant: six original item-specific Wowhead Looter gear sets, casts and per-output hit numerators, with patch/version/skill unresolved."
   ],
   "newly_verified_fields": [
-    "Wowhead community Looter casts and castsWithDrop (12 original material-occurrence rows; six distinct gear items).",
-    "Exact input item IDs and output IDs; positive Vibrant Shard stack range 1–2; publisher-rounded native percentages.",
-    "No newly measured output total quantities or per-cast 0-N histograms."
+    "Six newly checked item-side source-original Looter denominators (15, 37, 35, 29, 18, 31), summing to 165 item-reported disenchant operations across distinct inputs.",
+    "13 material-specific reported hit counts and publisher-rendered percentages; six exact input IDs and three material IDs cross-checked; positive-only stack sizes retained.",
+    "One source table has 1 Chromatic Dust hit with fixed two-item stack, allowing 2 observed units for that single occurrence only. No other totalQuantity invented."
   ],
   "newly_corroborated_fields": [],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-original-df-item-200424",
-      "inputItemID": 200424,
-      "inputName": "Boots of the Walking Mountain",
-      "casts": 16,
-      "outputs": [
+      "studyKey": "wowhead-looter-original-df-item-200379",
+      "inputItemID": 200379,
+      "inputName": "Treads of the Awakened",
+      "reportedDisenchants": 15,
+      "method": "Disenchant",
+      "outputRows": [
         {
           "outputItemID": 194124,
-          "castsWithDrop": 9,
-          "percentShown": 56
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 10,
+          "percentShown": 67,
+          "percentMeaning": "perCast",
+          "positiveStackRange": [
+            1,
+            2
+          ],
+          "totalQuantity": null
         },
         {
           "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
           "castsWithDrop": 9,
-          "percentShown": 56
+          "percentShown": 60,
+          "percentMeaning": "perCast",
+          "positiveStackRange": null,
+          "totalQuantity": null
         }
       ],
-      "source": "https://www.wowhead.com/item=200424/boots-of-the-walking-mountain"
+      "source": "https://www.wowhead.com/item=200379/treads-of-the-awakened",
+      "patch": null,
+      "skill": null,
+      "specialization": null,
+      "cohortEpoch": null
     },
     {
-      "studyKey": "wowhead-looter-original-df-item-207224",
-      "inputItemID": 207224,
-      "inputName": "Weyrnkeeper's Timeless Adorned Sash",
-      "casts": 18,
-      "outputs": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 9,
-          "percentShown": 50
-        },
+      "studyKey": "wowhead-looter-original-df-item-200381",
+      "inputItemID": 200381,
+      "inputName": "Crown of the Awakened",
+      "reportedDisenchants": 37,
+      "method": "Disenchant",
+      "outputRows": [
         {
           "outputItemID": 200113,
-          "castsWithDrop": 16,
-          "percentShown": 89
-        }
-      ],
-      "source": "https://www.wowhead.com/item=207224/weyrnkeepers-timeless-adorned-sash"
-    },
-    {
-      "studyKey": "wowhead-looter-original-df-item-200393",
-      "inputItemID": 200393,
-      "inputName": "Stormwing Harrier's Belt",
-      "casts": 44,
-      "outputs": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 28,
-          "percentShown": 64
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 26,
+          "percentShown": 70,
+          "percentMeaning": "perCast",
+          "positiveStackRange": null,
+          "totalQuantity": null
         },
         {
-          "outputItemID": 200113,
-          "castsWithDrop": 18,
-          "percentShown": 41
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 15,
+          "percentShown": 41,
+          "percentMeaning": "perCast",
+          "positiveStackRange": [
+            1,
+            2
+          ],
+          "totalQuantity": null
         }
       ],
-      "source": "https://www.wowhead.com/item=200393/stormwing-harriers-belt"
+      "source": "https://www.wowhead.com/item=200381/crown-of-the-awakened",
+      "patch": null,
+      "skill": null,
+      "specialization": null,
+      "cohortEpoch": null
     },
     {
-      "studyKey": "wowhead-looter-original-df-item-200395",
-      "inputItemID": 200395,
-      "inputName": "Stormwing Harrier's Plumage",
-      "casts": 40,
-      "outputs": [
+      "studyKey": "wowhead-looter-original-df-item-200380",
+      "inputItemID": 200380,
+      "inputName": "Gauntlets of the Awakened",
+      "reportedDisenchants": 35,
+      "method": "Disenchant",
+      "outputRows": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 26,
+          "percentShown": 74,
+          "percentMeaning": "perCast",
+          "positiveStackRange": null,
+          "totalQuantity": null
+        },
         {
           "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 19,
+          "percentShown": 54,
+          "percentMeaning": "perCast",
+          "positiveStackRange": [
+            1,
+            2
+          ],
+          "totalQuantity": null
+        }
+      ],
+      "source": "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened",
+      "patch": null,
+      "skill": null,
+      "specialization": null,
+      "cohortEpoch": null
+    },
+    {
+      "studyKey": "wowhead-looter-original-df-item-207251",
+      "inputItemID": 207251,
+      "inputName": "Benevolent Embersage's Sagacious Sash",
+      "reportedDisenchants": 29,
+      "method": "Disenchant",
+      "outputRows": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
           "castsWithDrop": 23,
-          "percentShown": 57
+          "percentShown": 79,
+          "percentMeaning": "perCast",
+          "positiveStackRange": [
+            1,
+            2
+          ],
+          "totalQuantity": null
         },
         {
           "outputItemID": 200113,
-          "castsWithDrop": 18,
-          "percentShown": 45
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 15,
+          "percentShown": 52,
+          "percentMeaning": "perCast",
+          "positiveStackRange": null,
+          "totalQuantity": null
         }
       ],
-      "source": "https://www.wowhead.com/item=200395/stormwing-harriers-plumage"
+      "source": "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash",
+      "patch": null,
+      "skill": null,
+      "specialization": null,
+      "cohortEpoch": null
     },
     {
-      "studyKey": "wowhead-looter-original-df-item-207229",
-      "inputItemID": 207229,
-      "inputName": "Weyrnkeeper's Timeless Treads",
-      "casts": 11,
-      "outputs": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 9,
-          "percentShown": 82
-        },
+      "studyKey": "wowhead-looter-original-df-item-202484",
+      "inputItemID": 202484,
+      "inputName": "Scalebands of Obsidian Secrets",
+      "reportedDisenchants": 18,
+      "method": "Disenchant",
+      "outputRows": [
         {
           "outputItemID": 200113,
-          "castsWithDrop": 3,
-          "percentShown": 27
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 13,
+          "percentShown": 72,
+          "percentMeaning": "perCast",
+          "positiveStackRange": null,
+          "totalQuantity": null
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 7,
+          "percentShown": 39,
+          "percentMeaning": "perCast",
+          "positiveStackRange": [
+            1,
+            2
+          ],
+          "totalQuantity": null
+        },
+        {
+          "outputItemID": 194123,
+          "outputName": "Chromatic Dust",
+          "castsWithDrop": 1,
+          "percentShown": 6,
+          "percentMeaning": "perCast",
+          "positiveStackRange": [
+            2,
+            2
+          ],
+          "totalQuantity": 2
         }
       ],
-      "source": "https://www.wowhead.com/item=207229/weyrnkeepers-timeless-treads"
+      "source": "https://www.wowhead.com/ptr/item=202484/scalebands-of-obsidian-secrets",
+      "patch": null,
+      "skill": null,
+      "specialization": null,
+      "cohortEpoch": null
     },
     {
-      "studyKey": "wowhead-looter-original-df-item-200387",
-      "inputItemID": 200387,
-      "inputName": "Stormwing Harrier's Cuirass",
-      "casts": 61,
-      "outputs": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 42,
-          "percentShown": 69
-        },
+      "studyKey": "wowhead-looter-original-df-item-207250",
+      "inputItemID": 207250,
+      "inputName": "Benevolent Embersage's Wristwraps",
+      "reportedDisenchants": 31,
+      "method": "Disenchant",
+      "outputRows": [
         {
           "outputItemID": 200113,
-          "castsWithDrop": 27,
-          "percentShown": 44
+          "outputName": "Resonant Crystal",
+          "castsWithDrop": 21,
+          "percentShown": 68,
+          "percentMeaning": "perCast",
+          "positiveStackRange": null,
+          "totalQuantity": null
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "castsWithDrop": 13,
+          "percentShown": 42,
+          "percentMeaning": "perCast",
+          "positiveStackRange": [
+            1,
+            2
+          ],
+          "totalQuantity": null
         }
       ],
-      "source": "https://www.wowhead.com/item=200387/stormwing-harriers-cuirass"
+      "source": "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
+      "patch": null,
+      "skill": null,
+      "specialization": null,
+      "cohortEpoch": null
     }
   ],
-  "new_numerical_measurements": 12,
+  "new_numerical_measurements": 13,
   "numerical_fields_improved": [
-    "casts",
+    "source-reported casts",
     "castsWithDrop",
-    "percentShown",
-    "positive Vibrant Shard minSeen/maxSeen"
+    "percentShown with publisher rounding",
+    "positive-stack minSeen/maxSeen where explicitly stated",
+    "single 2-unit Chromatic Dust occurrence for item 202484"
   ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/20261108T1239-six-new-gear-looter-cohorts.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-08T1339-six-unindexed-gear-disenchant-hits.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=200424/boots-of-the-walking-mountain",
-    "https://www.wowhead.com/item=207224/weyrnkeepers-timeless-adorned-sash",
-    "https://www.wowhead.com/item=200393/stormwing-harriers-belt",
-    "https://www.wowhead.com/item=200395/stormwing-harriers-plumage",
-    "https://www.wowhead.com/item=207229/weyrnkeepers-timeless-treads",
-    "https://www.wowhead.com/item=200387/stormwing-harriers-cuirass"
+    "https://www.wowhead.com/item=200379/treads-of-the-awakened",
+    "https://www.wowhead.com/item=200381/crown-of-the-awakened",
+    "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened",
+    "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash",
+    "https://www.wowhead.com/ptr/item=202484/scalebands-of-obsidian-secrets",
+    "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps"
   ],
-  "verified_commit_sha": "c918ca18830849cc33a37b198518540e93997df4",
-  "commit_sha_scope": "Branch parent SHA independently verified prior to new single atomic commit; current commit SHA cannot be self-embedded in the same commit. New commit SHA is verified by post-ref GitHub readback.",
+  "verified_commit_sha": "5f812b9fc4ac919aaf5d6e7ce9a67aed76da06b6",
+  "commit_sha_scope": "Verified branch head before this single new commit. The commit SHA cannot be embedded in its own status blob; verify committed SHA via GitHub after push.",
   "blockers": [
-    "No new source-original completed prospect/mill per-output zero-inclusive histogram or refund-aware denominator discovered beyond previously indexed studies.",
-    "Wowhead cumulative Looter counts may pool gear versions, patches and enchanter profiles; output stack quantity totals unknown.",
-    "One-commit self-referential SHA cannot be embedded inside its own committed status; verify current commit in GitHub commit history."
+    "Source-original per-output prospecting and milling completed-cast 0–N and Resourcefulness refund logs remain unavailable beyond already imported cohorts.",
+    "Wowhead community Looter tables are pooled and dated neither by expansion build nor by character; skill, specialization, item variants and live-eligibility are not established.",
+    "Per-output positive hit counts do not prove exclusive outcomes or operations with no outputs; source stacks of 1–2 do not furnish complete histogram/total quantity."
   ],
   "exhausted_sources": [
     {
@@ -372,50 +483,62 @@
         "GitHub public code search by named 'Saxifrage' + 'Blazing Pigment' + milling logs and 'Serevite Ore' raw cast csv: no new original full per-operation output/refund dataset surfaced.",
         "Warcraft Wiki named Dragon Isles milling/Khaz'gorite ore searches: recipe mechanics and identity references without new measured 0/1/2 outcome table."
       ]
+    },
+    {
+      "at": "2026-11-08T13:39:02.685Z",
+      "scope": "New prospect/mill source routes and dedupe check before gear follow-up",
+      "reason": "Public completed-cast prospecting CSV/GitHub/ProspectMate search returned tracker code without uploaded original logs; Writhebark Aary 968-herb 165+657 pigment cohort was found but ALREADY present in two existing v3 Dragonflight evidence files, so not re-imported. Refocused on six unindexed gear item Looter tables.",
+      "whereLooked": [
+        "ProspectMate and public GitHub Dragonflight original prospecting datasets (tracker implementation only, no exported per-cast samples)",
+        "Original Writhebark Aary 968 R2 herb / 165 R3 + 657 R2 pigment Wowhead item 191471; duplicate checked against v3 Dragonflight 2026-10-31T0727 and 2026-11-02T0739 evidence",
+        "Reddit Draconium prospecting / Bubble Poppy milling exact-cast original sheet search; no unindexed zero-inclusive sample",
+        "Wowhead six distinct gear-item Looter tables 200379/200381/200380/207251/202484/207250, plus GitHub research evidence dedupe by exact input IDs"
+      ]
     }
   ],
-  "next_concrete_step": "Seek an independently supplied Dragonflight ProspectMate/WorthIt/original in-game export preserving completed casts and per-output 0-N frequency with rank, skill/spec and Resourcefulness; have Master review pooled gear-version limitations before any integration.",
+  "next_concrete_step": "Obtain original downloadable rank/skill-labelled Dragonflight prospect/mill per-completed-operation exports with 0-N material histograms and Resourcefulness; keep gear Looter snapshots research-only until item-version and skill controls are known.",
   "validation": {
-    "jsonlRecords": 12,
-    "dropRecords": 12,
+    "jsonlRecords": 13,
+    "dropRecords": 13,
     "searchedRecords": 0,
     "uniqueIds": true,
     "jsonlParsed": true,
     "sourceNativeNumerators": true,
-    "zeroHistogramsNotInferred": true,
-    "quantitiesNotInferred": true,
-    "independentGearIDs": [
-      200424,
-      207224,
-      200393,
-      200395,
-      207229,
-      200387
+    "sourcePercentagesPreserved": true,
+    "outputItemIdsIndependentlyCrosschecked": true,
+    "uniqueNewInputIDs": [
+      200379,
+      200381,
+      200380,
+      207251,
+      202484,
+      207250
     ],
+    "zeroHistogramsNotInferred": true,
+    "unknownOutputTotalsNullExceptOneFixedTwoUnitOccurrence": true,
     "expectedChangedPaths": [
-      "research/v3/evidence/dragonflight/20261108T1239-six-new-gear-looter-cohorts.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-08T1339-six-unindexed-gear-disenchant-hits.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "branchParentSha": "c918ca18830849cc33a37b198518540e93997df4",
-    "branchLeaseRequired": true,
+    "branchParentSha": "5f812b9fc4ac919aaf5d6e7ce9a67aed76da06b6",
     "readbackPending": true
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
   "exact_gaps": [
-    "Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314, Prismatic 194545: exact input quality and newly sourced completed prospect casts, per-output castsWithDrop, quantities and zero-inclusive histograms, skill/spec/patch/refunds",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: original completed mills, ranked output identities/quantities, positive hit counts, 0-N histograms and Resourcefulness refunds"
+    "Draconium/Serevite/Khaz'gorite/Prismatic source-original completed-cast and per-output 0-N histograms with refund- and rank-aware denominators.",
+    "Bubble Poppy/Saxifrage original completed mills, pigment output units and per-output hit/0-N histograms, with skill and Resourcefulness."
   ],
-  "verified_parent_sha": "c918ca18830849cc33a37b198518540e93997df4",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261108T1239-six-new-gear-looter-cohorts.jsonl",
+  "verified_parent_sha": "5f812b9fc4ac919aaf5d6e7ce9a67aed76da06b6",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-08T1339-six-unindexed-gear-disenchant-hits.jsonl",
   "source_evidence_links": [
-    "https://www.wowhead.com/item=200424/boots-of-the-walking-mountain",
-    "https://www.wowhead.com/item=207224/weyrnkeepers-timeless-adorned-sash",
-    "https://www.wowhead.com/item=200393/stormwing-harriers-belt",
-    "https://www.wowhead.com/item=200395/stormwing-harriers-plumage",
-    "https://www.wowhead.com/item=207229/weyrnkeepers-timeless-treads",
-    "https://www.wowhead.com/item=200387/stormwing-harriers-cuirass"
+    "https://www.wowhead.com/item=200379/treads-of-the-awakened",
+    "https://www.wowhead.com/item=200381/crown-of-the-awakened",
+    "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened",
+    "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash",
+    "https://www.wowhead.com/ptr/item=202484/scalebands-of-obsidian-secrets",
+    "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps"
   ],
   "current_run_commit_sha": null
 }
