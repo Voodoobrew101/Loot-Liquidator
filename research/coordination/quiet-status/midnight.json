@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-08T21:22:34.484Z",
-  "status": "active; code-verified source-aggregation gap and actionable request for first-party per-cast log; no new independent observed current Midnight reagent-yield cohorts",
+  "updated_at": "2026-11-08T22:12:09.504Z",
+  "status": "active; new official Armory source confirms 272246 named wrist item is equipped at ilvl 305 (not merely base preview 206); no verified disenchant action or current material-yield cohort",
   "task_ids": [
     "T0049",
     "T0026",
@@ -11,65 +11,76 @@
     "T0003"
   ],
   "exact_gaps_targeted": [
-    "T0049/T0026: 272246 Miststalker's Wristbands source itemLink with actual ilvl 305 + bonus/build, successful-or-rejected disenchant, source rarity/slot, skill/spec and output IDs/quantities; WoWDB noDE versus cumulative Looter remains conflicting.",
-    "T0039/T0005: 237362/237363 Umbral Tin rank-specific 5-ore casts, actual completed casts, output 242606/242607/242610/242611/242786/242788 hits/zero bins/histograms and 242608 unlock; resourcefulness-aware consumed/refunded ore.",
-    "T0045: 236761 Tranquility Bloom 10-herb mills -> 245807 Powder Pigment with real completed casts, output quantity/hit histogram, rank/skill/refunds.",
-    "T0003: 237359/237361 Refulgent Copper and 237364/237365 Brilliant Silver independent rank-specific per-output cast logs."
+    "T0049/T0026: 272246 Miststalker's Wristbands actual *equipped* ilvl305 name/level now independently corroborated by two official Armory search-indexed profiles; still missing source 272246 itemLink+bonus at disenchant, success/failure, exact skill/spec, item version and outputs; WoWDB base noDE vs historic Looter eligibility remains unresolved.",
+    "T0039/T0005: 237362/237363 Umbral Tin 5-ore completed casts and rank-specific exact 242606/242607/242610/242611/242786/242788 material hits/zero-bin histograms, 242608/242712 Eversong unlock, resourcefulness refunds and true build.",
+    "T0045: 236761 Tranquility Bloom 10-herb mill -> Powder Pigment 245807 rank/skill-specific completed casts, hit/zero/histogram and resourcefulness.",
+    "T0003: 237359/237361 Refulgent Copper and 237364/237365 Brilliant Silver independent rank-specific output identities, castsWithDrop and histograms."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "tracking_schema_not_cohort",
-      "source": "https://github.com/brandanq2/disenchanting-advisor/blob/4a7903820d45262994ecd689dc4edbcf0235f8c8/Data/Tracking.lua",
-      "verified_fields": [
-        "expansionID",
-        "input quality",
-        "25-point skill-tier bucket",
-        "attempts",
-        "matTotals[outputItemID]",
-        "matCounts[outputItemID]"
-      ],
-      "persisted_source_item_id": false,
-      "persisted_cast_histogram": false,
-      "zero_inclusive_denominator": false,
-      "original_numeric_cohorts": 0
+      "kind": "current_live_equipped_item_identity_not_processing_cohort",
+      "inputItemID": 272246,
+      "inputName": "Miststalker's Wristbands",
+      "source": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/stormrage/kickinstuff/",
+      "corroboration": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/sargeras/chaiashka/",
+      "identity_lookup": "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
+      "independent_high_level_observation": "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/burning-legion/mistyk/",
+      "numeric_fields_advanced": {
+        "actual_equipped_itemLevel": 305,
+        "additional_equipped_itemLevel": 321,
+        "base_item_previewLevel": 206
+      },
+      "source_context": "indexed official live Armory character equipment + GamGem Blizzard API base item ID/quality; observed web index excerpts; actual character itemLink/bonus unavailable",
+      "original_numeric_processing_cohorts": 0,
+      "completed_casts": null,
+      "castsWithDrop": null,
+      "zero_outcomes": null,
+      "histogram": null,
+      "not_verified": [
+        "disenchant eligibility for scaled variant",
+        "item 272246 ID in raw equipment hyperlink",
+        "successful source-linked cast",
+        "bonus IDs and actual DE item level",
+        "skill/specialization",
+        "yield probabilities"
+      ]
     }
   ],
   "numeric_fields_advanced": [
-    "Audited open-source third-party tracker code: per-bucket attempts, matTotals and matCounts exist as SavedVariables fields, but NO original player numbers/public export were retrieved. No new measured material-yield counts, zero bins, conditional-yield ranges or actual 272246 eligible disenchants.",
-    "Source-code denominator warning: RecordResult requires recognized material, and matCounts loops over material entries; this pipeline cannot establish per-cast zeros/hits without independent event validation."
+    "272246 actual equipped ilvl 305 confirmed in two independent indexed official Blizzard Armory gear snapshots (Kickinstuff; Chaiashka), plus ilvl 321 independently seen (Mistyk). Base Blizzard item preview 206 is not the equipped level.",
+    "NO new original completed disenchants, per-output hit/zero histograms or material yields. 237362 prospecting and 236761 milling existing unknowns remain null."
   ],
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-08T2122-savedvariable-numeric-cohort-gap.jsonl"
+    "research/v3/evidence/midnight/2026-11-08T2212-armory-miststalker-305-reference.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-202611082122-001"
+    "midnight-20261108T2212-001"
   ],
   "source_links": [
-    "https://github.com/brandanq2/disenchanting-advisor/blob/4a7903820d45262994ecd689dc4edbcf0235f8c8/Data/Tracking.lua",
-    "https://github.com/brandanq2/disenchanting-advisor",
-    "https://www.curseforge.com/wow/addons/disenchanting-advisor",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
-    "https://www.wowhead.com/item=237362/umbral-tin-ore",
-    "https://www.wowhead.com/ru/item=245807"
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/stormrage/kickinstuff/",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/sargeras/chaiashka/",
+    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/eu/armory/character/burning-legion/mistyk/",
+    "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
+    "https://www.wowdb.com/items/272246-miststalkers-wristbands"
   ],
-  "verified_commit_sha": "68d99dd2179f19341afc7b9712fe65c52e1ece93",
-  "verified_commit_sha_scope": "Verified remote branch parent before atomic two-file research write. Self-referential SHA cannot be in its own commit file; verify new commit by read-back.",
-  "base_commit_sha_verified": "68d99dd2179f19341afc7b9712fe65c52e1ece93",
+  "verified_commit_sha": "a429147d624e6c8b9ebc9228d5195d0c77526cb4",
+  "verified_commit_sha_scope": "Verified remote branch HEAD before one atomic two-file commit; actual new SHA is not self-referenceable inside own status in same single commit; verify new branch commit separately via read-back.",
+  "base_commit_sha_verified": "a429147d624e6c8b9ebc9228d5195d0c77526cb4",
   "commit_readback": {
     "state": "pending postwrite verification",
-    "expected_evidence_path": "research/v3/evidence/midnight/2026-11-08T2122-savedvariable-numeric-cohort-gap.jsonl",
+    "expected_evidence_path": "research/v3/evidence/midnight/2026-11-08T2212-armory-miststalker-305-reference.jsonl",
     "expected_evidence_record_ids": [
-      "midnight-202611082122-001"
+      "midnight-20261108T2212-001"
     ],
     "expected_status_path": "research/coordination/quiet-status/midnight.json",
     "expected_total_records": 1,
-    "expected_parent_commit_sha": "68d99dd2179f19341afc7b9712fe65c52e1ece93"
+    "expected_parent_commit_sha": "a429147d624e6c8b9ebc9228d5195d0c77526cb4"
   },
   "blockers": [
-    "No new original post-hotfix actual gear-material cast log with complete input bonuses/build, slot, ilvl, spec, histogram and zero outcomes; 272246 ilvl305 eligible action still unverified.",
-    "No publicly posted user SavedVariables sample from the inspected third-party addon; its aggregate bucket omits input item, ilvl, slot and successful vs zero-output event identity, cannot resolve the numeric baseline alone.",
-    "No new independent 237362 rank-specific per-output operation/zero/histogram log or refund-aware actual casts; original Cardinalai totals are already recorded.",
-    "No new 236761 10-herb milling per-cast export; kyzenbka/Draggoth studies are already in repository, nominal herbs are not equal proven mills."
+    "Even with official live EQUIPPED ilvl305 for named 272246, no original successful or rejected disenchant action at that exact full 272246 itemLink+bonuses/current client build; WoWDB base record still says noDE. Search-indexed official Armory excerpts don't expose raw item identity or eligibility.",
+    "No new current-patch DE uncommon/rare/epic weapon/armor sample with original zero-inclusive per-output successful cast logs; available Looter rank/bonus/build/skill provenance remains incomplete and cumulative snapshots risk double-counting.",
+    "No new independently sourced 237362/237363 Umbral Tin rank-specific output 242606/242607/242610/242611/242786/242788 per-cast hits/zero histograms, nor diamond 242608/242712 conditional-unlock per-cast logs; previously recorded Cardinalai totals remain unchanged.",
+    "No current 236761 Tranquility Bloom 10-herb actual mill-level histogram or fresh independent 237359/237361 copper and 237364/237365 silver original cast exports; do not turn material totals/nominal batch equivalents into hits."
   ],
   "exhausted_sources": [
     "2026-11-08T08:18:39.754Z: New Evercore-goggles name-based source path, 4 item pages indexed on Wowhead PTR and LIVE WoWDB 244754 checked. Verified same Grimmella wording is copied across pages, not independent datasets. The known DE KP 5294/1607 Reddit 1s7nfcw and milling 1rteoqr/1rju9nm already exist in repo evidence and deliberately not reimported. No additional exact 272246 or rank-specific 237362/237363 original cast histogram found; do not recycle old source leads.",
@@ -85,7 +96,8 @@
     "2026-11-08T18:19:08.995Z: Refreshed five mandatory v3 instructions and current queue, inspected existing Miststalker 272246 variants, 237362/237363 Umbral Tin, existing Cardinalai/Honeybone/Diffracted original cohorts and Midnight milling reports. No NEW completed material-cast/zero-inclusive study; avoided duplicate sources. Distinct Tier 36 curio research line verified one-curio-for-one-token offer, Kirana's 20 source-linked base token choices and class groups; no raw vendor bonus/itemLinks.",
     "2026-11-08T19:14:46.848Z: Checked newly located 12.1 gear Looter pages 271435/271553/271556/271564/271565; existing 2026-11-02T0905, 2026-11-06T2020, 2026-11-07T0711 and 20261108T0618 evidence already holds same studies (including live-vs-PTR overlap). Reviewed source-specific Blizzard forums, Reddit profession reports, Oct/Nov hotfix links, Wowhead and independent profession guides for original casts; no novel actual material studies. Avoid this same cohort search in subsequent runs.",
     "2026-11-08T20:18:41.053Z: New name-based search lane tested Wowhead 272246 live scaled preview, WoWDB 272246 noDE catalog, GamGem 272246 Blizzard API synopsis, fresh Reddit/Blizzard forum discussions of epic DE and full-spec prospecting, and Method/wow-professions Midnight tables; verified existing Cardinalai/JD3K are old studies. Neither 272246 live 305 actual successful DE nor new 237362 output hit/zero histograms or 236761 milling raw casts found. No reuse of previously exhausted 12.1 Looter cohorts.",
-    "2026-11-08T21:22:34.484Z: Searched new open-source disenchant recorder acquisition lane at pinned brandanq2/DisenchantingAdvisor Data/Tracking.lua, public project and CurseForge; no actual SavedVariables, cohort, item-specific inputLink or per-operation output histories made available. Existing research/mechanics on main already referenced this addon; no reimport as new study. Concurrent targeted searches by named gear, Umbral Tin, Tranquility Bloom across Wowhead, Reddit, Blizzard forums, profession guides yielded no independent raw datasets. Do not revisit this exact source until a consented original player export is available."
+    "2026-11-08T21:22:34.484Z: Searched new open-source disenchant recorder acquisition lane at pinned brandanq2/DisenchantingAdvisor Data/Tracking.lua, public project and CurseForge; no actual SavedVariables, cohort, item-specific inputLink or per-operation output histories made available. Existing research/mechanics on main already referenced this addon; no reimport as new study. Concurrent targeted searches by named gear, Umbral Tin, Tranquility Bloom across Wowhead, Reddit, Blizzard forums, profession guides yielded no independent raw datasets. Do not revisit this exact source until a consented original player export is available.",
+    "2026-11-08T22:12:09.504Z: NEW direct-current identity lane: Indexed official Blizzard Retail Armory named Miststalker's Wristbands 305 on Kickinstuff and Chaiashka, and 321 on Mistyk, cross-linked to GamGem base item 272246/206. Primary Armory index snippets exposed actual equipped ilvl, unlike older query-forced Wowhead previews; live page detail can return 403 and full bonus itemLink remains unknown. This is NOT a new DE material cohort. Also checked new primary/material searches for completed 237362/236761 casts; no new unique source with hit/zero counts. Did not reimport Cardinalai, Honeybone, Looter, prehotfix or already recorded source-only data."
   ],
   "decisions_needed": [
     {
@@ -125,10 +137,10 @@
       "decision": "To obtain interpretable original disenchant studies from current tracker exports, request consented first-party raw operation-level collector fields: source full itemLink and actual ilvl/rarity/slot, build, current skill and spec nodes, each outcome itemID and stack quantity including zero bins, and an actual completed-cast counter. Third-party grouped SavedVariables is not zero-inclusive or per-input; do not treat it as an exact 272246 or skill-specific probability."
     }
   ],
-  "next_concrete_step": "Obtain original consented current-build per-operation DE event export (ideally 272246 ilvl305) with full itemLink and zero-inclusive materials; as alternate collect 237362 rank-specific prospect and 236761 ten-herb milling raw outputs. Avoid revisiting already indexed Looter and third-party source metadata without new actual samples.",
+  "next_concrete_step": "Seek consented player-supplied *actual 272246* ilvl305 full itemLink/bonus and successful/rejected live Disenchant event with all outcome itemIDs/quantities and skill/spec; second priority an original rank-specific 237362 prospect or 236761 mill exported per-operation zero-inclusive log.",
   "production_merge": false,
   "release": false,
-  "notifications": "quiet; on demand only",
+  "notifications": "quiet; on-demand only",
   "new_unverified_source_leads": [
     {
       "claim": "Secondary TheWoWDB claims 166 retail DE brackets, 27 in three recent expansions, ilvl 1-999 bands, independent of actual yield",
