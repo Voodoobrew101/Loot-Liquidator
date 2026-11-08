@@ -21,7 +21,7 @@ For each input ID with two material rows, let N be *source-reported* disenchants
 | 200414 | 82 | 50 | 47 | 97 | 15 |
 | 200416 | 85 | 58 | 40 | 98 | 13 |
 | 200420 | 28 | 19 | 16 | 35 | 7 |
-| **Five distinct input IDs** | **245** | **165** | **133** | **294** | **at least 49** |
+| **Five distinct input IDs** | **245** | **165** | **129** | **294** | **at least 49** |
 
 The sixth input (194394) has three distinct material hit counts 103+10+2=115 over 115 reported disenchants; those marginal totals alone do **not** force a joint outcome and must not be treated as a proof of mutually exclusive outputs.
 
