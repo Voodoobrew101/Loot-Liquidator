@@ -1,8 +1,8 @@
 {
   "role": "legacy",
-  "updated_at": "2026-11-08T15:45:01.632Z",
+  "updated_at": "2026-11-08T16:49:26.742Z",
   "branch": "implementation/five-agent-completion",
-  "status": "Ten source-backed records from original archived comments and a current WoWDB item flag: nine historic exact-item disenchant material rows across six described batches, plus an exact ID current live-database noDisenchant discrepancy. Cobalt and Fel Iron output-histogram gaps remain open; no fabricated rates, prices or zeros.",
+  "status": "12 NEW original item-specific historical disenchant records: three firsthand TBC material quantities (including Arcanoweave Boots 21867 -> Void Crystal 22450, 1 observed in 14 completed disenchant operations) and nine nonduplicated item-side cumulative Looter occurrence rows (one shared 40601 cohort with two outputs). No current-game item eligibility, no Cobalt/Fel Iron new casts, and no unmeasured zero outcomes inferred.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,191 +12,219 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 original historical TBC Looter 2068-cast cohort still has no per-hit output quantities, source build, bonus or current Retail eligible API test; source identifies current scaled noDisenchant contradiction.",
-    "Additional exact historical TBC weapon/disenchant outcome observations: The Sharp Cookie 30568 and weapons Khorium Plated Bludgeon 25122, Battle Star 25118, Blade of Retribution 31821; avoid treating similar item-level groups as directly exchangeable with 24995.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: missing verified independent completed prospect casts with exact per-output hits/zero-inclusive histograms, profession skill, patch and refund context.",
-    "Token 45661 Spaulders of the Wayward Vanquisher: existing seven-class reward IDs 45400/45339/45344/45369/45352/45359/45349 remain; no new unverified variants."
+    "Warmaul Legplates 24995 historical Looter 2068 completed events; material positive rows 22445=1559, 22446=417, 22447=7, 22449=48. Build, item-level/bonus, exact units/histograms, missing-output identity, source epoch and current Retail eligibility still unresolved; do not recycle snapshot.",
+    "Adjacent TBC armor/weapon numerical evidence 21867/29497/30000 and historic epic 33533/33469/33354/33283: source-completed batches or cumulative material-positive counts verified with exact output IDs 22450,22449,22445, but no direct interchangeable uncommon Warmaul mapping.",
+    "TBC-era item IDs 28241/30343/30349 and mixed-era 40601 item-side Looter show 22449 and 34053 with separate source cohorts; source build, variant, quantity/histogram and modern eligibility still unknown.",
+    "Cobalt 36909 and Fel Iron 23424: no new independent per-output hit histograms, completed-cast denominator and specializations; previously recorded Fel Iron 10 stacks / JC361 source not reimported.",
+    "Spaulders of the Wayward Vanquisher token 45661: seven existing class reward IDs 45400/45339/45344/45369/45352/45359/45349 retained; no invented redemptions or variants."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "tbc-cookie-thottbot-comment-removed-edit-three-de",
-      "inputItemID": 30568,
-      "itemLevel": 108,
-      "casts": 3,
+      "studyKey": "thottbot-arcanoweave-boots-14-de-one-void",
+      "inputItemID": 21867,
+      "itemLevel": 114,
+      "completedCasts": 14,
+      "outputs": [
+        {
+          "outputItemID": 22450,
+          "castsWithDrop": 1,
+          "totalQuantity": 1
+        }
+      ],
+      "source": "https://www.wowhead.com/tbc/item=21867/arcanoweave-boots",
+      "skill": null,
+      "patch": null
+    },
+    {
+      "studyKey": "thottbot-enchanted-clefthoof-boots-single-shard",
+      "inputItemID": 29497,
+      "itemLevel": 112,
+      "completedCasts": 1,
       "outputs": [
         {
           "outputItemID": 22449,
+          "castsWithDrop": 1,
           "totalQuantity": 1,
-          "castsWithDrop": 1
-        },
-        {
-          "outputItemID": 22446,
-          "totalQuantity": 4,
-          "castsWithDrop": null
+          "histogram": {
+            "1": 1
+          }
         }
       ],
-      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie",
-      "patch": null,
-      "skill": null
+      "source": "https://www.wowhead.com/tbc/item=29497/enchanted-clefthoof-boots"
     },
     {
-      "studyKey": "tbc-cookie-thottbot-comment-nerf-three-de",
-      "inputItemID": 30568,
+      "studyKey": "thottbot-mixologists-gloves-single-four-dust",
+      "inputItemID": 30000,
       "itemLevel": 108,
-      "casts": 3,
+      "completedCasts": 1,
       "outputs": [
         {
           "outputItemID": 22445,
+          "castsWithDrop": 1,
           "totalQuantity": 4,
-          "castsWithDrop": null
-        },
-        {
-          "outputItemID": 22446,
-          "totalQuantity": 1,
-          "castsWithDrop": 1
-        }
-      ],
-      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie",
-      "patch": null,
-      "skill": null
-    },
-    {
-      "studyKey": "tbc-cookie-thottbot-comment-last-three-shard-dust",
-      "inputItemID": 30568,
-      "itemLevel": 108,
-      "casts": 3,
-      "outputs": [
-        {
-          "outputItemID": 22449,
-          "totalQuantity": 1,
-          "castsWithDrop": 1
-        },
-        {
-          "outputItemID": 22445,
-          "totalQuantity": 2,
-          "castsWithDrop": 1
-        }
-      ],
-      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie",
-      "patch": null,
-      "skill": null
-    },
-    {
-      "studyKey": "tbc-khorium-bludgeon-allakhazam-monkey-single",
-      "inputItemID": 25122,
-      "itemLevel": 105,
-      "casts": 1,
-      "outputs": [
-        {
-          "outputItemID": 22445,
-          "totalQuantity": 3,
-          "castsWithDrop": 1,
           "histogram": {
-            "3": 1
+            "4": 1
           }
         }
       ],
-      "source": "https://www.wowhead.com/mop-classic/item=25122/khorium-plated-bludgeon",
-      "patch": null,
-      "skill": null
+      "source": "https://www.wowhead.com/tbc/item=30000/mixologists-gloves"
     },
     {
-      "studyKey": "tbc-battle-star-allakhazam-single",
-      "inputItemID": 25118,
-      "itemLevel": 93,
-      "casts": 1,
-      "outputs": [
-        {
-          "outputItemID": 22445,
-          "totalQuantity": 2,
-          "castsWithDrop": 1,
-          "histogram": {
-            "2": 1
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/mop-classic/item=25118/battle-star",
-      "patch": null,
-      "skill": null
+      "studyKey": "wowhead-33533-22450-looter-cumulative",
+      "inputItemID": 33533,
+      "historicalBuild": null,
+      "reportedLooterEvents": 10,
+      "outputItemID": 22450,
+      "castsWithDrop": 6,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/ptr/item=33533/avalanche-leggings"
     },
     {
-      "studyKey": "tbc-blade-retribution-allakhazam-single",
-      "inputItemID": 31821,
-      "itemLevel": 102,
-      "casts": 1,
-      "outputs": [
-        {
-          "outputItemID": 22446,
-          "totalQuantity": 2,
-          "castsWithDrop": 1,
-          "histogram": {
-            "2": 1
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/tbc/item=31821/blade-of-retribution",
-      "patch": null,
-      "skill": null
+      "studyKey": "wowhead-33469-22450-looter-cumulative",
+      "inputItemID": 33469,
+      "historicalBuild": null,
+      "reportedLooterEvents": 10,
+      "outputItemID": 22450,
+      "castsWithDrop": 9,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/ptr/item=33469/hauberk-of-the-empires-champion"
     },
     {
-      "inputItemID": 31821,
-      "itemLevel": 31,
-      "flag": "Cannot be disenchanted",
-      "sourceKind": "current-live-database-eligibility",
-      "casts": null,
-      "source": "https://www.wowdb.com/items/31821-blade-of-retribution",
-      "patch": null,
-      "build": null
+      "studyKey": "wowhead-33354-22450-looter-cumulative",
+      "inputItemID": 33354,
+      "historicalBuild": null,
+      "reportedLooterEvents": 10,
+      "outputItemID": 22450,
+      "castsWithDrop": 4,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/ptr-2/item=33354/wubs-cursed-hexblade"
+    },
+    {
+      "studyKey": "wowhead-33283-22450-looter-cumulative",
+      "inputItemID": 33283,
+      "historicalBuild": null,
+      "reportedLooterEvents": 10,
+      "outputItemID": 22450,
+      "castsWithDrop": 4,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/ptr-2/item=33283/amani-punisher"
+    },
+    {
+      "studyKey": "wowhead-28241-22449-looter-cumulative",
+      "inputItemID": 28241,
+      "historicalBuild": null,
+      "reportedLooterEvents": 7,
+      "outputItemID": 22449,
+      "castsWithDrop": 7,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=28241/medallion-of-the-horde"
+    },
+    {
+      "studyKey": "wowhead-30343-22449-looter-cumulative",
+      "inputItemID": 30343,
+      "historicalBuild": null,
+      "reportedLooterEvents": 15,
+      "outputItemID": 22449,
+      "castsWithDrop": 15,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/ptr-2/item=30343/medallion-of-the-horde"
+    },
+    {
+      "studyKey": "wowhead-30349-22449-looter-cumulative",
+      "inputItemID": 30349,
+      "historicalBuild": null,
+      "reportedLooterEvents": 37,
+      "outputItemID": 22449,
+      "castsWithDrop": 37,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/ptr/item=30349/medallion-of-the-alliance"
+    },
+    {
+      "studyKey": "wowhead-40601-disenchant-looter-cumulative",
+      "inputItemID": 40601,
+      "historicalBuild": null,
+      "reportedLooterEvents": 9,
+      "outputItemID": 22449,
+      "castsWithDrop": 6,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/ptr/item=40601/argent-dawn-banner"
+    },
+    {
+      "studyKey": "wowhead-40601-disenchant-looter-cumulative",
+      "inputItemID": 40601,
+      "historicalBuild": null,
+      "reportedLooterEvents": 9,
+      "outputItemID": 34053,
+      "castsWithDrop": 2,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/ptr/item=40601/argent-dawn-banner"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 10,
-    "new_historical_drop_records": 9,
-    "new_exact_id_noDisenchant_records": 1,
+    "new_evidence_records": 12,
+    "new_firsthand_item_specific_drop_records": 3,
+    "new_looter_output_occurrence_rows": 9,
     "new_distinct_input_item_ids": [
-      30568,
-      25122,
-      25118,
-      31821
+      21867,
+      29497,
+      30000,
+      33533,
+      33469,
+      33354,
+      33283,
+      28241,
+      30343,
+      30349,
+      40601
     ],
     "new_output_item_ids": [
       22445,
-      22446,
-      22449
+      22449,
+      22450,
+      34053
     ],
-    "source_narrated_completed_casts_summed_once_per_batch": 12,
-    "source_reported_output_units": 20,
-    "exact_positive_output_occurrences_across_rows": 7,
-    "one_cast_output_histograms": 3,
+    "source_narrated_completed_casts_summed_once_per_batch": 16,
+    "historical_cumulative_looter_disenchants_summed_once_per_distinct_item": 108,
+    "source_reported_output_units_from_firsthand": 6,
+    "cumulative_material_positive_event_rows": 90,
     "new_complete_zero_inclusive_histograms": 0,
     "new_fel_iron_or_cobalt_casts": 0,
     "new_verified_build_skill_or_patch_fields": 0,
     "gold_values": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-08T1545-tbc-sharp-cookie-weapon-de-and-live-conflict.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T1545-tbc-sharp-cookie-weapon-de-and-live-conflict.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-08T1649-tbc-original-void-shard-de-and-looter-cohorts.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T1649-tbc-original-void-shard-de-and-looter-cohorts.jsonl",
   "sources": [
-    "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie",
-    "https://www.wowhead.com/mop-classic/item=25122/khorium-plated-bludgeon",
-    "https://www.wowhead.com/mop-classic/item=25118/battle-star",
-    "https://www.wowhead.com/tbc/item=31821/blade-of-retribution",
-    "https://www.wowdb.com/items/31821-blade-of-retribution"
+    "https://www.wowhead.com/tbc/item=21867/arcanoweave-boots",
+    "https://www.wowhead.com/tbc/item=29497/enchanted-clefthoof-boots",
+    "https://www.wowhead.com/tbc/item=30000/mixologists-gloves",
+    "https://www.wowhead.com/ptr/item=33533/avalanche-leggings",
+    "https://www.wowhead.com/ptr/item=33469/hauberk-of-the-empires-champion",
+    "https://www.wowhead.com/ptr-2/item=33354/wubs-cursed-hexblade",
+    "https://www.wowhead.com/ptr-2/item=33283/amani-punisher",
+    "https://www.wowhead.com/item=28241/medallion-of-the-horde",
+    "https://www.wowhead.com/ptr-2/item=30343/medallion-of-the-horde",
+    "https://www.wowhead.com/ptr/item=30349/medallion-of-the-alliance",
+    "https://www.wowhead.com/ptr/item=40601/argent-dawn-banner"
   ],
-  "verified_base_commit_sha": "84b87e9fc8983ee1375407c713896a2c2c192ab1",
+  "verified_base_commit_sha": "ebc644660776f994ca3d62d42deb9c17e0a050ee",
   "verified_commit_sha": null,
-  "commit_sha_note": "Status is written in the same atomic commit as evidence. A Git commit cannot embed its own SHA without changing it; compare read-back Git branch head and both files to confirm the actual commit.",
+  "commit_sha_note": "Status and evidence are authored atomically. This status cannot contain its own final Git commit SHA (self-reference changes the SHA). The final branch read-back is the authority for verified commit SHA.",
   "blockers": [
-    "Warmaul 24995 remains historical-Looter-only; current WoWDB metadata says not disenchantable. No current-game Retail item bonus / API / build negative test.",
-    "Sharp Cookie historic sources were migrated from anonymous Thottbot comments, so unique author and historical patch/build cannot be independently established; batches kept distinct but possible cohort overlap is flagged.",
-    "Blade of Retribution 31821: conflicting historical Classic disenchant and current scaled noDisenchant flag; no actual in-game API attempt on current bonus variant.",
-    "Only single-operation observations have exact per-cast output histograms; three Cookie batch reports lack full occurrence histories and do not establish zero outcomes.",
-    "No new independent Cobalt 36909 or Fel Iron 23424 event-level prospects, source logs or current-patch skill data located."
+    "Warmaul 24995 original 2068-operation Looter table remains patch/bonus unpinned, with no positive-stack histogram or exact units; current scaled WoWDB says cannot be disenchanted. No live API attempt or verified eligible variant.",
+    "Nine new Looter rows are historical cumulative source entries, not 2026 Retail/PTR event logs: recorded build, item variants, cast semantics beyond table denominators and material quantities are unknown. Retired PvP trinkets and Zul'Aman epics must not be used as uncommon Warmaul priors.",
+    "Arcanoweave Boots 14-operation account reports only one Void Crystal and leaves other outputs/zero outcomes unresolved; no Enchanting skill stated.",
+    "Old Cobalt 24-stack, Fel Iron 10-stack JC361 and other prospecting totals already exist in prior evidence; no new independent click-by-click outcomes or refunds found.",
+    "40601 Looter outputs 22449 6/9 and 34053 2/9; ninth outcome unreported, not observed zero. All output quantities unknown."
   ],
   "exhausted_sources": [
     "Previously collected Warmaul 24995 Wowhead Looter 2068-operation snapshot and associated 22445/22446/22447/22449 occurrence rows not reimported; 37 unaccounted material rows not assumed zeros.",
     "Previously archived Cobalt 36909 24-stack report and Fel Iron 23424 100/565-ore Thottbot totals checked for duplicate lineage and not duplicated.",
-    "Previously verified token 45661 seven class rewards not reimported; no new independent reward variant or redemption IDs supported."
+    "Previously verified token 45661 seven class rewards not reimported; no new independent reward variant or redemption IDs supported.",
+    "Previously imported Wowhead Looter TBC armor 24744/25064/24831 and original Warmaul 24995 cumulative snapshots not recopied.",
+    "Thottbot 5 Netherweave Gloves 21851 -> Arcane Dust 22445 x9, Fel Leather Boots 25686 -> Large Prismatic Shard 22449 and Fel Iron JC361 10-stack anecdote were already recorded; no duplicate cohorts created.",
+    "No fresh exact source of Cobalt 36909 or Fel Iron 23424 per-output 0..N prospect histogram after new searches."
   ],
-  "next_concrete_step": "Recover original item-specific 24995/31821 Retail eligible-API test with actual bonuses, Enchanting skill and game build. Next locate independent Cobalt Ore 36909 or Fel Iron Ore 23424 per-output 0/1/2 event logs and verify refunds before any prospecting probability; no frozen gold EV.",
-  "previous_status_updated_at": "2026-11-08T14:44:57.950Z"
+  "next_concrete_step": "Seek a first-person current Retail Warmaul 24995 disenchant eligibility API/item-bonus/build test, then independently dated full per-output cast/quantity histogram for 24995. Follow Cobalt 36909 and Fel Iron 23424 per-cast prospecting CSV/SavedVariables with raw counts and refund accounting before promoting any modern rate.",
+  "previous_status_updated_at": "2026-11-08T15:45:01.632Z"
 }
