@@ -1,172 +1,139 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-08T10:15:09.600Z",
+  "updated_at": "2026-11-08T11:07:50.612Z",
   "branch": "implementation/five-agent-completion",
-  "status": "research_only: new static source-to-frozen-reference rank-alt gap for Midnight Eversong Diamond R2; verified source/output quality identities and exact compiled-reference omission, no newly observed casts, prices, client eligibility or tested current gold actions",
-  "task_ids": [
-    "T0039",
-    "T0005",
-    "T0026"
-  ],
+  "status": "New independently verified original-to-staged research Refine Crystalline Glass spell 1307462 input/output quality-ID inversion. Current main quality rules already correct; held/refining addon adapter unchanged. Research-only evidence note and source-verified dashboard committed.",
+  "task_ids": [],
   "exact_gaps_targeted": [
-    {
-      "category": "ranked_output_identity_not_propagated_to_reference",
-      "method": "Prospect",
-      "output_name": "Eversong Diamond",
-      "rank1_item_id": 242608,
-      "rank2_item_id": 242712,
-      "source": "current Retail commodity catalog labels quality ranks 1/2 and 2/2",
-      "current_frozen_reference": "database/reference-calculator-baselines.lua @ 3d667d053db587c91401cfed7ecc56862b8340c9; seven conditional entries id=242608, zero id=242712",
-      "impact": "conditional reference output rank-2 not represented in this frozen source; no claim of actual runtime failure or gold misvaluation"
-    },
-    {
-      "category": "missing_measured_rank_allocation",
-      "inputs": [
-        237359,
-        237361,
-        237362,
-        237363,
-        237364,
-        237365,
-        237366
-      ],
-      "output_rank1": 242608,
-      "output_rank2": 242712,
-      "missing": [
-        "source-original per-quality outputs per completed cast",
-        "per-output 0/N hits and histogram",
-        "skill and spec",
-        "refund basis",
-        "ore-specific unlock live applicability"
-      ],
-      "impact": "do not split rank-unknown conditional Diamond coefficient into both quality IDs or price an unmeasured rank distribution"
-    },
-    {
-      "category": "not_price_or_display_gap",
-      "facts": "Three-pass synthetic profile audit already shows all seven ordinary outputs valued; seven diamond components are conditional and excluded from live value. This is not a TSM price gap, nor proof that formatter dropped a supported measured field."
-    }
+    "Original master-20261030-007 and staged research/proposed/itemdb-curated-additions.json record retail12.1:refine:242786:242787:spell1307462 have input 242786/output 242787 reversed relative to live Tier1→Tier2 recipe and exact item quality IDs.",
+    "Preserve 10 per eligible learned recipe craft as modeled fixed nominal quantity, not observed casting outcomes; live WoW eligibility and prior PTR reagent mismatch (5+10 display) remain untested.",
+    "Do not price or import the reversed candidate; main four-method adapter currently excludes refining, so no present gameplay impact has been demonstrated."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "cross_source_rank_identity_crosscheck",
-      "source_kind": "Retail commodity catalog reference (not cast study)",
-      "material_item_ids": {
-        "rank1": 242608,
-        "rank2": 242712
-      },
-      "new_independent_studies": 0,
+      "kind": "original_vs_current_catalog_rank_identity",
+      "game": "WoW Retail Midnight",
+      "method": "Refine",
+      "spell_id": 1307462,
+      "input_item_id": 242787,
+      "input_item_rank": 1,
+      "inputs_per_legal_craft": 10,
+      "output_item_id": 242786,
+      "output_item_rank": 2,
+      "nominal_output_per_legal_craft": 1,
+      "source_kind": "live recipe + exact current commodity quality IDs, not measured cast data",
       "new_completed_casts": 0,
-      "measured_probability": null,
-      "measured_expected_quantity": null
+      "measured_hit_probability": null,
+      "empirical_expected_quantity": null,
+      "main_current_rule_already_correct": true
     },
     {
-      "kind": "frozen_reference_static_file_audit",
-      "file": "database/reference-calculator-baselines.lua",
-      "blob_sha": "52ce8aa9c25bcf43134306eaa6b089f38ad107c4",
-      "implementation_commit": "3d667d053db587c91401cfed7ecc56862b8340c9",
-      "id_242608_occurrences": 7,
-      "id_242712_occurrences": 0,
-      "interpretation": "static source output identity gap, not runtime validation"
-    },
-    {
-      "kind": "synthetic_audit_scope",
-      "source": "docs/usable-data-audit/summary.json",
-      "partial_profiles": [
-        "Prospect:237359:x5",
-        "Prospect:237361:x5",
-        "Prospect:237362:x5",
-        "Prospect:237363:x5",
-        "Prospect:237364:x5",
-        "Prospect:237365:x5",
-        "Prospect:237366:x5"
-      ],
-      "primary_actionable_coverage": null,
-      "gold_decisions_verified_this_run": 0,
-      "tooltips_verified_this_run": 0
+      "kind": "unadmitted_staged_research_mismatch",
+      "original_record_id": "master-20261030-007",
+      "original_blob_sha": "d67bfafd83a005a84ee2f5b2d2cce541cf868fd6",
+      "candidate_record_id": "retail12.1:refine:242786:242787:spell1307462",
+      "candidate_blob_sha": "af10e392b7e4fc26db131bbecfc073fb9cb92bfb",
+      "recorded_reversed_input_item_id": 242786,
+      "recorded_reversed_output_item_id": 242787,
+      "classification": "invalid input/output identity and rank direction, not price gap",
+      "main_quality_rules_blob_sha": "932ae2accd969e3cbfc1c6382ef0a7a374f8f065",
+      "current_retail_gold_decisions_verified": 0,
+      "current_retail_tooltip_regressions_verified": 0
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-08T1006-eversong-diamond-r2-reference-rank-gap.md"
+    "research/v3/evidence/master/2026-11-08T1105-crystalline-glass-refine-rank-identity-inversion.md"
   ],
-  "worker_evidence_compared": "research/v3/evidence/midnight/2026-11-08T0941-eversong-diamond-rank2-live-identity.jsonl; earlier v2 F004 same-name identity hold",
+  "worker_evidence_compared": "Read original master-20261030-007 and research/proposed Refine candidate; compared main Nov6 source-checked current quality mapping and two live GoldCap exact material IDs. Worker statuses independently read; workers own other tasks.",
   "source_links": [
-    "https://goldcap.gg/retail/us/items/242608",
-    "https://goldcap.gg/retail/us/items/242712",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/database/reference-calculator-baselines.lua",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/docs/usable-data-audit/summary.json",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-08T0941-eversong-diamond-rank2-live-identity.jsonl"
+    "https://www.wowdb.com/spells/1307462-refine-crystalline-glass-a-professions-chaticon",
+    "https://goldcap.gg/retail/us/items/242787",
+    "https://goldcap.gg/retail/us/items/242786",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/database/research/skill-quality-rules.json",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/docs/SKILL-YIELD-RESEARCH.md",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-10-30T2310-refine-recipes-glass-stone.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/proposed/itemdb-curated-additions.json"
   ],
-  "verified_commit_sha": "fcf96a9050d4a992c6498348b5431200184dd6e7",
-  "verified_commit_sha_scope": "New coordinator-owned research audit file was GitHub-created and independently read back; not a numeric cohort/compiled ItemDB change",
-  "verified_evidence_blob_sha": "ed788a3217e1530aa25f60f359d4a8e4bceb3305",
-  "verified_dashboard_commit_sha": "343b63623b72624b53d4e94e7c0f4cccf9b041db",
-  "verified_dashboard_blob_sha": "1b1d6398d9fd5b2ca73df19062505903b17da342",
+  "verified_commit_sha": "17cc60cd775879735e402502e3d0d5c00e077a10",
+  "verified_commit_sha_scope": "Coordinator-owned source audit file created on research branch and independently read back; GitHub research completion CI run 42474244476 passed this evidence-note commit (not addon tests).",
+  "verified_evidence_blob_sha": "d431a28a97a2b7254b5e9dbc0ee15ae0e19c0236",
+  "verified_dashboard_commit_sha": "9185c45b117ddbeddfb255c67e93e250fb21b77b",
+  "verified_dashboard_blob_sha": "fe27983f54477a9c65ce8aadf0c45fb605973ba9",
   "current_heads_at_read": {
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
-    "research_before_coordinator_audit": "73f9d6bc5ea0041431900a929f37fee06cb64056",
+    "research_pre_status": "9185c45b117ddbeddfb255c67e93e250fb21b77b",
     "three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "worker_reports_read": [
     {
       "role": "midnight",
-      "at_utc": "2026-11-08T09:41:29.824Z",
-      "blob_sha": "79bf2c278bc9a0e2324012a09e91963c353f3926",
-      "result": "R2 242712 source catalog identity; zero new measured casts",
-      "latest_automation": "new 10Z run in progress at peek, report pending"
+      "at_utc": "2026-11-08T10:17:39.384Z",
+      "blob_sha": "c249c37fdd9e1862c97884dc1f73877a8c3c4b2b",
+      "result": "Six new exact epic input item IDs with 12 same-name Dawn Crystal Looter cumulative reference rows, four live / two PTR, no verified independent raw 0-inclusive casts.",
+      "automation_latest": "completed 2026-11-08T10:17:55.649770Z"
     },
     {
       "role": "war-within",
-      "at_utc": "2026-11-08T09:33:51.416Z",
-      "blob_sha": "97d4dc65c4f4f028f24b04fba02faa90456c7937",
-      "result": "anniversary gear Looter occurrences, no rank/quantity closure"
+      "at_utc": "2026-11-08T10:26:27.896Z",
+      "blob_sha": "c14644bfaf3dd697503dd71d7727b34527f2d611",
+      "result": "13 exact-item R2 Storm Dust output-side reference rows; no per-output quantities or skill profile.",
+      "automation_latest": "completed 2026-11-08T10:26:45.020870Z"
     },
     {
       "role": "dragonflight",
-      "at_utc": "2026-11-08T09:43:49.340Z",
-      "blob_sha": "29d4ed9172383e5446f1fa01a9291b8663a05425",
-      "result": "seven item-side Looter cohorts, no original prospect/mill histogram"
+      "at_utc": "2026-11-08T10:43:32.145Z",
+      "blob_sha": "bf580456173ec9d57bcd0a03f59ce5cc551cdcee",
+      "result": "No new independently measured prospecting/milling cohort; prior seven source-specific gear Looter cohorts, no histograms.",
+      "automation_latest": "completed 2026-11-08T10:44:50.423072Z"
     },
     {
       "role": "legacy",
-      "at_utc": "2026-11-08T09:48:59Z",
-      "blob_sha": "3c612273e97b56d4dd6edaa94e216a8490b38adc",
-      "result": "five MoP Classic item-side Looter cohorts, not Retail proof"
+      "at_utc": "2026-11-08T11:01:32Z",
+      "blob_sha": "2e98876aae2d3f3bf4d8f49e1261fc28896658a5",
+      "result": "Thirty historical model-only 3.3.5 references, exact TBC/WotLK model context; no measured new casts or present Retail rate.",
+      "automation_latest": "completed 2026-11-08T11:03:16.515262Z"
     }
   ],
   "actual_automation_run_results": {
-    "checked_at_utc": "2026-11-08T10:14Z",
-    "midnight": "current run in_progress (previous finished 2026-11-08T09:41:45Z)",
-    "war_within": "previous completed 2026-11-08T09:34:28Z",
-    "dragonflight": "previous completed 2026-11-08T09:44:29Z",
-    "legacy": "previous completed 2026-11-08T09:50:34Z"
+    "checked_at_utc": "2026-11-08T11:07:50.612Z",
+    "midnight": "completed 2026-11-08T10:17:55.649770Z",
+    "war_within": "completed 2026-11-08T10:26:45.020870Z",
+    "dragonflight": "completed 2026-11-08T10:44:50.423072Z",
+    "legacy": "completed 2026-11-08T11:03:16.515262Z"
   },
   "ci_last_checked": {
-    "run_id": 42468862617,
+    "run_id": 42474295977,
     "name": "Verify five-agent completion",
-    "head": "73f9d6bc5ea0041431900a929f37fee06cb64056",
-    "status": "completed",
-    "conclusion": "success",
-    "scope": "pre-coordinator worker research head only, NOT new coordinator note/dashboard/status or current addon engine tests"
+    "head": "9185c45b117ddbeddfb255c67e93e250fb21b77b",
+    "status": "in_progress",
+    "conclusion": null,
+    "previous_verified_success": {
+      "run_id": 42474244476,
+      "head": "17cc60cd775879735e402502e3d0d5c00e077a10",
+      "status": "completed",
+      "conclusion": "success",
+      "scope": "research completion workflow on coordinator source-note commit; not real addon valuation, tooltip, or in-client test"
+    }
   },
   "research_prs": {
     "22": "closed-unmerged",
     "23": "closed-unmerged",
-    "24": "merged 2026-11-02 (three-pass addon implementation)",
-    "25": "closed-unmerged"
+    "24": "merged 2026-11-02, three-pass addon implementation",
+    "49": "open main-based addon PR owned by other team; not touched"
   },
   "blockers": [
-    "No source-original rank-2 prospecting itemLink with exactly identified input ore, rank, per-ore specialization unlock and completed-cast totals; the catalog rank identity is not a verified output-specific rate.",
-    "The frozen reference has only rank-1 ID 242608 for seven modeled Diamond conditional quantities; inserting 242712 without per-rank yield allocation could fabricate double value.",
-    "No owned permission to modify protected three-pass implementation; scoped engineering test/rank alternative mapping belongs to PR Director/addon owner.",
-    "No actual Retail character, price source or client-connected operation; synthetic audits do not establish live gold decisions."
+    "Historical source master-20261030-007 and staged Refine candidate remain inverted; owner/reviewer must create append-only correction and staged candidate normalization under disjoint engineering ownership rather than changing originals or coordinator-owned files.",
+    "Refine spell 1307462 is outside the supported current four-method adapter; recipe learned/bench/tools and PTR reagent variant require actual-client and exact runtime checks before economic admission.",
+    "No current real-price/character gold decision, full addon engine/tooltip synthetic-price result, or Lua tests have been run this coordinator turn."
   ],
   "exhausted_sources": [
-    "Historical Magma Thresher 199344 fish identity and prospecting special-batch caveat were already established in 2026-10-28 original audit; not counted as new finding.",
-    "Earlier 242712 ambiguous same-name identity recorded in October v2; current catalog quality disambiguation is worker research, coordinator added only new frozen-file propagation trace.",
-    "Prior Duskweave/Frostwoven/TWW cohort and archived reference topics remain previous checkpoints, not repeated as new progress."
+    "Prior Eversong Diamond 242712 rank discovery remains previous checkpoint, not repeated as new numeric result.",
+    "Historical TWW/Dragonflight/Legacy cumulative Looter table reports remain worker-owned and are not promoted here.",
+    "Old master and research/proposed Refine record 1307462 are existing source records, not new measured studies or casts."
   ],
-  "next_concrete_step": "Midnight worker T0039/T0005: get original exact per-rank Eversong Diamond output itemLinks, ore input quality and completed 0/N histograms with unlock, skill and refund context. Protected addon owner: review labeled rank-2 conditional unknown alternative without duplicating R1 expectation, then run actual offline resolver/formatter synthetic-price fixture before scoped PR change. Coordinator stays research-only, no new schedule/PR/merge.",
-  "tests_executed": "GitHub reads of current heads, owner's charter and three-pass checkpoint files, v3 readme/evidence schema/mechanics/strategy/queue/flags and four worker status files; original October v2 identity caveat; worker's rank2 source JSONL and two GoldCap catalog pages; independent static count of seven id=242608 and zero 242712 occurrences in 32,638-character frozen source; read three-pass summary's seven partial profiles and synthetic price boundary; checked four existing automation run statuses, PR 22-25 metadata and research CI; created research-only note and read it back, updated dashboard and read it back. No Lua, research estimator, compiler, actual valuation/tooltip synthetic fixture, in-client test, merge, release or new schedule.",
-  "restricted_actions": "Only research/v3/evidence/master coordinator note, research/coordination/RESEARCH-DASHBOARD.md and coordinator-owned quiet-status file modified on research branch. No worker status/evidence/history, strategy, queue, main, protected three-pass code, immutable snapshot, PRs or automations changed.",
-  "previous_status_blob_sha": "8531f5b98e72ff259fc114e76b6b1eef766440c9"
+  "next_concrete_step": "Research reviewer: create an additive identity correction superseding master-20261030-007, preserving original. Staged-refine engineering owner: normalize 10×242787 R1 -> 1×242786 R2 for spell 1307462, add ID-and-eligibility regression on isolated branch and run real offline engine/tooltip synthetic-price fixture before proposing any adapter import. Coordinator next selects a different queued unresolved original-source numeric gap; no queue/schedule/PR changes in this run.",
+  "tests_executed": "Verified original/live GoldCap rank1 and rank2 catalog entries, live WoWDB recipe description, main supported quality-rules and main SKILL-YIELD-RESEARCH; GitHub read of owner charter, v3 README/schema/mechanics/strategy/flags/queue and three-pass docs, current research/candidate files; actual automation peek for four worker runs and verified worker JSON reports; current branch heads/PR metadata/Actions status; GitHub created research note and read back exact content; updated dashboard and read back exact prefix. No local Lua, estimator, ItemDB compiler, synthetic valuation/tooltip fixture, or in-client tests executed.",
+  "restricted_actions": "Only new coordinator-owned research/v3/evidence/master note, research/coordination/RESEARCH-DASHBOARD.md and coordinator quiet-status file changed on research branch. Did not alter original/worker evidence, queue, policies, main, protected three-pass implementation branch, ItemDB snapshot, PRs, automations, merge or release.",
+  "previous_status_blob_sha": "c9a2a4b346395ae9cfc88302affea6a889038d3f",
+  "queue_task_note": "Independent coordinator source-integrity audit of existing original and staged candidate, not a claimed pre-existing T-series queue task; owner queue/worker assignments unchanged."
 }
