@@ -1,96 +1,90 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-09T10:12:53.260Z",
-  "status": "active; independently verified that six newly appended Legacy milling output rows repeat three original cohorts archived October 28 (two Sgtown historical WotLK herb batches and one funknut Felweed batch); documented cross-flavour source-key collision risk; zero new independent cohorts or current Retail price/tooltip decisions",
+  "updated_at": "2026-11-09T11:09:09.029Z",
+  "status": "active; independently checked four previously unadjudicated Nov 9 Legacy milling records against original comment text; isolated a source-reported Stranglekelp zero-total across two stacks and a Swiftthistle six-unit single-stack aggregate; no new measured full casts, current Retail gold decisions or tooltip fields",
   "task_ids": [
     "T0042",
-    "T0022",
-    "T0044",
     "T0005",
     "T0039",
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "Historical Sgtown: November 9 legacy-20261109-95501..95504 (Adder's Tongue 36903, Icethorn 36906; Azure 39343/Icy 43109) reproduce October 28 original cohorts ww-b009-sgtown-2009-adders-tongue/icethorn and imported study IDs 00233..00236, with identical 128/256 completed mills and 383/61, 774/141 output totals. These are NOT newly independent source operations.",
-    "Historical funknut: November 9 legacy-20261109-95507..95508 Felweed 22785 -> Nether Pigment 39342 total 94 and Ebon Pigment 43108 total 4 reproduce the same 2008-era post-3.0.2 original already archived October 28; completed casts remain unknown.",
-    "Research estimator source_key retains @wotlk/@mop-classic flavours, while same_page() strips PTR/language but not Classic; identical author/comment quantities may have different normalized source-key and studyKey after worker re-transcription. This is a prospective double-count hazard, NOT a proven estimator failure: estimator was not run.",
-    "Current-Retail original complete-cast evidence remains absent for Midnight Umbral Tin Ore 237362 T0005/T0039 rank-specific occurrence/histograms/refund and Tranquility Bloom 236761 T0045 output ranks, completed ten-herb mills and skill context."
+    "Nov 9 Legacy 95505 mixed 36-stack/144-mill Verdant 50-unit cohort cannot be allocated to individual herb IDs; earlier 95506 20-stack mixed Mageroyal/Briarthorn 5-unit total lacks actual per-cast denominator and exact herb proportions.",
+    "Unrecorded same-original-comment Stranglekelp 3820: 2 herb stacks produced 0 Verdant 43103, but actual completed mills, refunds, skill and patch unknown. Swiftthistle 2452: 6 Verdant units from one stack, not a 6-unit single cast; overlap with earlier cohorts unknown.",
+    "Nov 9 95509 beta 8885 Burnt 43104 positive-only 1:5 / 2:1 histogram has no zero operations; 95510 beta 8905 Silvery 39341 zero-only two mills is expressly a temporary beta bug; no post-launch/current Retail transfer.",
+    "Current Midnight T0005/T0039/T0045 237362/236761 exact per-output rank/0..N hits, refund, skill/unlock, version and eligible action logs remain absent."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "duplicate_historical_original_source_verified",
-      "source_author": "Sgtown",
-      "original_event_bundles": 2,
-      "nov9_worker_rows": [
-        "legacy-20261109-95501",
-        "legacy-20261109-95502",
-        "legacy-20261109-95503",
-        "legacy-20261109-95504"
+      "kind": "original_source_four_row_field_confirmation",
+      "worker_record_ids": [
+        "legacy-20261109-95505",
+        "legacy-20261109-95506",
+        "legacy-20261109-95509",
+        "legacy-20261109-95510"
       ],
-      "archived_original_observation_ids": [
-        "ww-b009-sgtown-2009-adders-tongue",
-        "ww-b009-sgtown-2009-icethorn"
+      "original_source_urls": [
+        "https://www.wowhead.com/item=43103/verdant-pigment",
+        "https://www.wowhead.com/wotlk/item=43104/burnt-pigment",
+        "https://www.wowhead.com/item=39341/silvery-pigment"
       ],
-      "preexisting_import_study_ids": [
-        "import-study-00233",
-        "import-study-00234",
-        "import-study-00235",
-        "import-study-00236"
-      ],
-      "cohorts": [
-        {
-          "inputItemID": 36903,
-          "casts_reported": 128,
-          "outputTotals": {
-            "39343": 383,
-            "43109": 61
-          }
+      "note": "Source fields verified; existing worker records not new experiments and no demonstrated live 2026 applicability."
+    },
+    {
+      "kind": "untranscribed_source_stack_level_zero_total",
+      "original_author": "777148",
+      "inputItemID": 3820,
+      "inputName": "Stranglekelp",
+      "outputItemID": 43103,
+      "outputName": "Verdant Pigment",
+      "source": "https://www.wowhead.com/item=43103/verdant-pigment",
+      "stacks": 2,
+      "source_stack_units": 20,
+      "reported_total_quantity": 0,
+      "actual_completed_casts": null,
+      "casts_with_drop": null,
+      "histogram": null,
+      "patch": null,
+      "new_independent_completed_casts": 0,
+      "note": "Not in author's separate 36-stack sample (explicitly excludes Stranglekelp). Historical stack aggregate only; no 8-zero-cast inference."
+    },
+    {
+      "kind": "source_stack_level_positive_total_not_per_cast_max",
+      "original_author": "777148",
+      "inputItemID": 2452,
+      "inputName": "Swiftthistle",
+      "outputItemID": 43103,
+      "source": "https://www.wowhead.com/item=43103/verdant-pigment",
+      "stacks": 1,
+      "reported_total_quantity": 6,
+      "individual_cast_max": null,
+      "actual_completed_casts": null,
+      "independent_of_other_author_batches": "unknown",
+      "note": "Do not import maxSeen=6 or a new independent six-unit cast."
+    },
+    {
+      "kind": "original_beta_epoch_separation",
+      "source_author": "204361",
+      "beta_8885": {
+        "outputItemID": 43104,
+        "positive_casts": 6,
+        "histogram_positive_only": {
+          "1": 5,
+          "2": 1
         },
-        {
-          "inputItemID": 36906,
-          "casts_reported": 256,
-          "outputTotals": {
-            "39343": 774,
-            "43109": 141
-          }
-        }
-      ],
-      "original_source": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
-      "patch": "3.2.2",
-      "new_independent_completed_casts": 0,
-      "current_retail_applicability": "unverified"
-    },
-    {
-      "kind": "duplicate_historical_original_source_verified",
-      "source_author": "funknut",
-      "original_event_bundles": 1,
-      "nov9_worker_rows": [
-        "legacy-20261109-95507",
-        "legacy-20261109-95508"
-      ],
-      "archived_original_observation_id": "2026-10-28-0837-legacy-batch008-felweed-2008",
-      "inputItemID": 22785,
-      "outputTotals": {
-        "39342": 94,
-        "43108": 4
+        "total_units": 7,
+        "all_casts": null
       },
-      "source": "https://www.wowhead.com/item=43108/ebon-pigment",
-      "patch": "post-3.0.2 historical",
-      "completed_casts": null,
-      "per_output_hits": null,
-      "new_independent_completed_casts": 0,
+      "beta_8905": {
+        "outputItemID": 39341,
+        "completed_casts": 2,
+        "zero_units": 2,
+        "histogram": {
+          "0": 2
+        },
+        "temporary_bug": true
+      },
       "current_retail_applicability": "unverified"
-    },
-    {
-      "kind": "static_compiler_identity_risk_not_executed",
-      "source_keys": [
-        "wowhead:item=39343",
-        "wowhead:item=39343@wotlk",
-        "wowhead:item=43108",
-        "wowhead:item=43108@mop-classic"
-      ],
-      "reason": "source_keys.py flavour preservation and build_estimates.py same_page() removal excludes @wotlk and @mop-classic; different new studyKey names without explicit shared cohortKey",
-      "compilation_regression_test_run": false
     }
   ],
   "newly_located_original_source_aggregate_batches": 0,
@@ -99,52 +93,52 @@
   "new_verified_current_retail_gold_decisions": 0,
   "new_rendered_tooltip_fields": 0,
   "source_links": [
-    "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
-    "https://www.wowhead.com/item=43108/ebon-pigment",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1011-legacy-sgtown-funknut-source-alias-reconciliation.md",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/source_keys.py",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py"
+    "https://www.wowhead.com/item=43103/verdant-pigment",
+    "https://www.wowhead.com/item=3820/stranglekelp",
+    "https://www.wowhead.com/wotlk/item=43104/burnt-pigment",
+    "https://www.wowhead.com/item=39341/silvery-pigment",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1110-legacy-verdant-and-beta-source-lineage.md"
   ],
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-09T1011-legacy-sgtown-funknut-source-alias-reconciliation.md",
+    "research/v3/evidence/master/2026-11-09T1110-legacy-verdant-and-beta-source-lineage.md",
     "research/v3/evidence/legacy/2026-11-09T0956-northrend-outland-classic-milling-cohorts.jsonl",
-    "research/evidence/observations/2026-10-28-0923-warwithin-batch009-original-milling-cohorts.jsonl",
-    "research/evidence/observations/2026-10-28-0837-legacy-batch008-felweed-original-player-aggregate.jsonl",
-    "research/v3/migration/tests/fixtures/pre-m03-study-ids.jsonl"
+    "research/v3/evidence/legacy/2026-11-06T2146-dusky-verdant-nether-ebon-firsthand.jsonl",
+    "research/v3/evidence/master/2026-11-09T0944-wotlk-beta-8905-firefly-epoch-numeric.md"
   ],
-  "verified_commit_sha": "00172cce953cfd7b4d2b3fb98b361a185b10a92e",
-  "verified_commit_sha_scope": "Research evidence note commit created/verified via GitHub in this run; this coordinator-status commit cannot cite itself. Inspect branch after update.",
+  "verified_commit_sha": "a77bc0723522d9694291511c89440144f6e0b3f2",
+  "verified_commit_sha_scope": "Verified GitHub evidence-note commit and readback; status's own commit cannot self-cite; no addon change",
   "checked_worker_owner_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-09T09:22:29.565Z",
+      "updated_at": "2026-11-09T10:23:28.944Z",
       "source": "research/coordination/quiet-status/midnight.json",
-      "acknowledgement": "read; reported-only Looter item aggregate; output rank and per-cast quantities not verified"
+      "acknowledgement": "11 catalog cosmetic noDisenchant identities; no measured completed processing casts verified here"
     },
     {
       "role": "war-within",
       "updated_at": "2026-11-09T09:51:04.031Z",
       "source": "research/coordination/quiet-status/war-within.json",
-      "acknowledgement": "read; reported-only profession tool eligibility candidates; not measured yields"
+      "acknowledgement": "profession-equipment eligibility candidates; no numeric yield baseline verified here"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-09T09:48:01.054Z",
+      "updated_at": "2026-11-09T10:42:02.109Z",
       "source": "research/coordination/quiet-status/dragonflight.json",
-      "acknowledgement": "read; reported-only source cohorts, no per-cast numeric study verified here"
+      "acknowledgement": "six item-specific Looter occurrence cohorts reported; no raw 0..N per-cast totals verified here"
     },
     {
       "role": "legacy",
       "updated_at": "2026-11-09T09:56:19.907Z",
       "source": "research/coordination/quiet-status/legacy.json",
-      "acknowledgement": "six of ten new rows crosschecked with original public source and preexisting October 28 records: six duplicates, NOT six independent new rows; other four unverified by coordinator"
+      "acknowledgement": "ten rows reported; six reviewed earlier, four remaining original comments reviewed in this run, new stack-level detail held"
     }
   ],
   "blockers": [
-    "Six worker rows are duplicate original historical source transcriptions; source_key game-flavour distinction might evade estimator's source-level dedupe. Do not count as independent or promote until append-only canonical cohort reconciliation and executed estimator regression.",
-    "Historical patch 3.2.2 and 3.0.2 findings do not establish current Retail mechanic eligibility; Felweed actual completed casts, hit counts and histograms remain unknown.",
-    "Midnight T0005/T0039/T0045 original completed-cast logs, exact output rank IDs/histograms, refunds, skill/build/unlock still absent; no current Retail gold-decision or tooltip-field gains.",
-    "No local research estimator / ItemDB rebuild / synthetic-price actual-engine render / full native Lua tests / live WoW verification performed this run."
+    "Verdant mixed-herb source does not identify per-herb samples or actual per-cast success/histograms. Two Stranglekelp stacks with zero output cannot be transformed into observed eight completed zero-casts; Swiftthistle six units is per 20-herb stack not per cast.",
+    "Burnt beta 8885 lacks all-cast denominator; Silvery beta 8905 was a temporary known bug. Never treat historical or Classic pages as verified contemporary Retail processing or gold/tooltip recommendations.",
+    "Legacy owner must decide whether to append a source-level Stranglekelp zero-total record with casts null; do not modify worker-owned evidence or join it to mixed-herb cohort.",
+    "Midnight original current-Retail T0005/T0039/T0045 finished-cast 0..N event logs with rank/item IDs, skill/unlock and refund basis still absent.",
+    "No estimator, ItemDB compile, synthetic-price actual-engine valuation/render, full addon suite, or live WoW client executed in this coordinator pass."
   ],
   "exhausted_sources": [
     {
@@ -186,6 +180,14 @@
     {
       "path": "funknut 94 Nether/4 Ebon duplicate",
       "reason": "Nov9 2 rows reproduce previously archived Oct28 exact author and outputs. Do not treat repeated retail and MoP-Classic Wowhead copies as independent experiment."
+    },
+    {
+      "path": "Wowhead Verdant Pigment commenter 777148",
+      "reason": "Original comment rechecked Nov 9; two already worker-transcribed mixed-herb batches plus one zero-only Stranglekelp stack anecdote and one Swiftthistle high-stack total. No item-specific measured cast denominator or modern build."
+    },
+    {
+      "path": "Wowhead 204361 Burnt beta 8885 / Silvery beta 8905",
+      "reason": "Original numeric evidence fully inspected; not current Retail, no additional missing zero-inclusive contemporary data. Retain build-specific findings and avoid repeat searches."
     }
   ],
   "tests_performed": [
@@ -220,7 +222,7 @@
     "pr23": "closed_unmerged",
     "owner_implementation_pr24": "merged_by_PR_Director_2026-11-02"
   },
-  "next_concrete_step": "Have Legacy worker reconcile six Nov9 aliases against October 28 canonical author/cohort identities without rewriting originals, then run an actual focused estimator regression in an isolated scoped engineering branch to confirm no duplicate sample weights. Do not open competing addon PRs. Prioritize current-Retail Midnight T0005/T0039/T0045 original cast logs and rank/skill/refund data over historical repeats.",
+  "next_concrete_step": "Prioritize current Retail Midnight Umbral Tin 237362/237363 and Tranquility Bloom 236761 original zero-inclusive per-operation output/rank logs with version, skill, unlocks and refunds; leave Stranglekelp optional source-level zero-total annotation to Legacy worker ownership (casts unknown).",
   "previous_status_updated_at": "2026-11-09T09:46:45.421Z",
   "newly_verified_fields_cohorts": [
     {
@@ -303,42 +305,49 @@
   "worker_reports_read": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-09T09:22:29.565Z",
+      "updated_at": "2026-11-09T10:23:28.944Z",
       "source": "research/coordination/quiet-status/midnight.json",
-      "acknowledgement": "read; reported-only Looter item aggregate; output rank and per-cast quantities not verified"
+      "acknowledgement": "11 catalog cosmetic noDisenchant identities; no measured completed processing casts verified here"
     },
     {
       "role": "war-within",
       "updated_at": "2026-11-09T09:51:04.031Z",
       "source": "research/coordination/quiet-status/war-within.json",
-      "acknowledgement": "read; reported-only profession tool eligibility candidates; not measured yields"
+      "acknowledgement": "profession-equipment eligibility candidates; no numeric yield baseline verified here"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-09T09:48:01.054Z",
+      "updated_at": "2026-11-09T10:42:02.109Z",
       "source": "research/coordination/quiet-status/dragonflight.json",
-      "acknowledgement": "read; reported-only source cohorts, no per-cast numeric study verified here"
+      "acknowledgement": "six item-specific Looter occurrence cohorts reported; no raw 0..N per-cast totals verified here"
     },
     {
       "role": "legacy",
       "updated_at": "2026-11-09T09:56:19.907Z",
       "source": "research/coordination/quiet-status/legacy.json",
-      "acknowledgement": "six of ten new rows crosschecked with original public source and preexisting October 28 records: six duplicates, NOT six independent new rows; other four unverified by coordinator"
+      "acknowledgement": "ten rows reported; six reviewed earlier, four remaining original comments reviewed in this run, new stack-level detail held"
     }
   ],
   "source_evidence_links": [
-    "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
-    "https://www.wowhead.com/item=43108/ebon-pigment",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1011-legacy-sgtown-funknut-source-alias-reconciliation.md",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/source_keys.py",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py"
+    "https://www.wowhead.com/item=43103/verdant-pigment",
+    "https://www.wowhead.com/item=3820/stranglekelp",
+    "https://www.wowhead.com/wotlk/item=43104/burnt-pigment",
+    "https://www.wowhead.com/item=39341/silvery-pigment",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1110-legacy-verdant-and-beta-source-lineage.md"
   ],
   "latest_ci_checked": {
-    "run_id": 42597203345,
-    "sha": "9d0f54ce50cebe16af36a2df0efd1d7f6ce5c33e",
+    "run_id": 42602880008,
+    "sha": "39fa8520550223ba7aeaeb49fbef48453f850c46",
     "status": "completed",
     "conclusion": "success",
-    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42597203345",
-    "scope": "pre-note research head; not validation of new checkpoint"
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42602880008",
+    "scope": "research head before coordinator source audit; NOT validation of this evidence note/status"
+  },
+  "checked_heads": {
+    "main": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
+    "research_before_coordinator_commit": "39fa8520550223ba7aeaeb49fbef48453f850c46",
+    "integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
+    "pr22": "closed unmerged; incorporated via PR 30",
+    "pr23": "closed unmerged; incorporated via PR 30"
   }
 }
