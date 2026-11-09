@@ -1,87 +1,100 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-09T19:06:47.740Z",
-  "status": "active; new Oct 21 2024 TWW Prospect All 1000-ore/200-queued-action source context distinguishes planned crafts from completed casts and Resourcefulness input refunds; no new measured output/cast or current Retail gold coverage",
+  "updated_at": "2026-11-09T20:05:21.704Z",
+  "status": "active; verified two previously unresolved original-source Storm Dust R2 snapshot duplicates (237867,245737) and exposed cross-group estimator admission risk; no new independent casts, gold decisions or rendered fields",
   "task_ids": [
-    "T0008",
-    "T0040",
+    "T0048",
     "T0005",
     "T0039",
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0008/T0040: TWW 2024 Aqirite 11,000/10,000 input ore source remains output-units-per-input; 2,200/2,000 derived five-ore operation equivalents are not confirmed completed success denominators. Oct 21 queue behavior is contextual evidence only, distinct from Oct 14 cohort.",
-    "T0008/T0040: Original Prospect All 1,000-input-ore queue reports 200 planned actions, with Resourcefulness returning ore without extending the same queue. Attempted versus successful cast status, refund count, bag-stack interruptions, build/skill/rank and output 0..N remain unobserved.",
-    "T0005/T0039/T0045: Independent post-hotfix current Midnight input-rank and material-rank linked 0..N output/hit/zero/refund/skill/build logs still missing."
+    "T0048: 237867 Oathsworn Defender's Breeches: 101 cumulative Looter indexed operations, 40 R2 Storm Dust occurrences appear verbatim in Nov 1 and Nov 9 worker files; original operation cohort/build, output totalQuantity, stack histogram and live eligibility remain unknown.",
+    "T0048: 245737 Ritualbreaker's Band: 215 cumulative indexed operations, 81 R2 Storm Dust occurrences duplicated verbatim Nov 1/Nov 9; same fields unknown. Historical Looter conflicts with WowDB Cannot be disenchanted catalog classification.",
+    "T0048: Nov 9 duplicate records assign nonnull gearGroup, routing broad TWW gear family instead of previous exact inputItemID; model-specific source identity must be tested across groups before admission, not presumed suppressed.",
+    "T0005/T0039/T0045: new independent current Midnight actual completed operation/rank linked 0..N outputs, refund counts, talent/skill, and build still missing; no new measured data found in source searches."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "historical_source_reported_queued_action_and_input_basis_not_cast_sample",
-      "dateOfSource": "2024-10-21/22",
-      "gameContext": "The War Within (historical; no 2026 Retail eligibility verification)",
-      "inputMethod": "Prospect All",
-      "initialStackOre": 1000,
-      "inputsPerQueuedAction": 5,
-      "queuedActionsSourceReported": 200,
-      "completedActionsObserved": null,
-      "resourcefulnessRefundsObserved": null,
-      "perMaterialObservedOutputs": null,
-      "sourceFinding": "A contemporaneous participant describes exactly 200 queued actions from 1,000 selected ore; returned ore remains but does not extend that queue. Separate commenter reports interruptions from wrong stack selection.",
-      "applicability": "source-indexed UI observation only; no independent current-build replication, no opportunity to infer 2200/2000 counted Aqirite operations or new numeric output yields",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1g8kbaq/",
-      "newIndependentCurrentRetailCasts": 0,
-      "newVerifiedCurrentRetailGoldDecisions": 0,
+      "kind": "same_published_cumulative_snapshot_verified_not_new_measured_cohort",
+      "inputItemID": 237867,
+      "inputName": "Oathsworn Defender's Breeches",
+      "outputItemID": 219947,
+      "outputRank": 2,
+      "reportedIndexedOperations": 101,
+      "reportedMaterialOccurrences": 40,
+      "previousRecordID": "war-within-20261101-1721-008",
+      "repeatedRecordID": "war-within-20261109-1825-004",
+      "independentObservedCastsAdded": 0
+    },
+    {
+      "kind": "same_published_cumulative_snapshot_verified_not_new_measured_cohort",
+      "inputItemID": 245737,
+      "inputName": "Ritualbreaker's Band",
+      "outputItemID": 219947,
+      "outputRank": 2,
+      "reportedIndexedOperations": 215,
+      "reportedMaterialOccurrences": 81,
+      "previousRecordID": "war-within-20261101-1721-010",
+      "repeatedRecordID": "war-within-20261109-1825-006",
+      "independentObservedCastsAdded": 0
+    },
+    {
+      "kind": "static_group_selection_risk_not_executed_runtime_result",
+      "explanation": "Old Nov 1 rows have gearGroup=null; new Nov 9 rows set nonnull broad gearGroup. Current build_estimates.key_of prefers gearGroup, and cross-group misplaced_copies compares same group_specificity, allowing a plausible double-admission path; not reproduced with running estimator.",
+      "newSupportedRetailGoldDecisions": 0,
       "newRenderedTooltipFields": 0
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-09T1905-tww-prospect-all-queue-refund-denominator.md"
+    "research/v3/evidence/master/2026-11-09T2000-tww-r2-stormdust-snapshot-group-gate.md"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1g8kbaq/",
-    "https://www.reddit.com/r/woweconomy/comments/1g350pq/",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1905-tww-prospect-all-queue-refund-denominator.md"
+    "https://www.wowhead.com/ptr/item=219947/storm-dust",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-01T1721-wowhead-r2-stormdust-item-cohorts.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T1825-eight-original-r2-dust-items.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T2000-tww-r2-stormdust-snapshot-group-gate.md"
   ],
-  "verified_commit_sha": "ac2ebddeb98f061e2431c5d5e6d4fc0aae2b8b7e",
-  "verified_commit_sha_scope": "New manager-only source context note was created and independently read back at ac2ebdde. This status update's own commit cannot be contained within itself.",
+  "verified_commit_sha": "ee6bac48354e352ca4ee37215be0c36353ebe55f",
+  "verified_commit_sha_scope": "Manager-only source comparison evidence note was committed at ee6bac and independently reread. This status update's own commit cannot be contained within itself.",
   "previous_verified_checkpoint": {
-    "updated_at": "2026-11-09T18:10:21.919Z",
-    "verified_commit_sha": "aaf233f54dcb43a78a6d99ce8524e10762db2910",
+    "updated_at": "2026-11-09T19:06:47.740Z",
+    "verified_commit_sha": "ac2ebddeb98f061e2431c5d5e6d4fc0aae2b8b7e",
     "evidence_files": [
-      "research/v3/evidence/master/2026-11-09T1808-tww-aug29-gem-buff-epoch-date-audit.md"
+      "research/v3/evidence/master/2026-11-09T1905-tww-prospect-all-queue-refund-denominator.md"
     ]
   },
   "checked_worker_owner_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-09T18:13:53.016Z",
-      "reported_status": "Reference pigment quality IDs and 236778 R1 x10 Mana Lily recipe; no new measured casts",
-      "sha": "b0bc4b2632d2f97e4f3cf940f0bd809636fc7313"
+      "updated_at": "2026-11-09T19:16:55.872Z",
+      "reported_status": "Source-backed prospecting Multicraft exclusion; no new measured casts; source-only mechanics update requires review",
+      "sha": "51034a23fdeadf96057a2c108c7c81dee2d90d87"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-09T18:40:50.248Z",
-      "reported_status": "Eight R2 Storm Dust Looter hit rows; identity/units/denominator remain incomplete",
+      "updated_at": "2026-11-09T19:32:43.431Z",
+      "reported_status": "Two catalog noDisenchant versus cumulative Looter source conflicts; new duplicate source audit; no new independent cast logs",
       "sha": null
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-09T18:41:59.717Z",
-      "reported_status": "207277 source has 47 cumulative item operations and material hits 33/25, no per-material quantities",
-      "sha": "19dab04b5411a7c4649c804cca63b047183b0a52"
+      "updated_at": "2026-11-09T19:31:06.466Z",
+      "reported_status": "Six distinct item-side indexed source gear cohorts, 12 hit rows, incomplete quantities/epoch; current rank-specific prospect/mill numeric gaps remain",
+      "sha": "92ff6034fe5ed3c14fb43a501a05da270a32fc89"
     },
     {
       "role": "legacy",
       "updated_at": "2026-11-09T18:47:50.157Z",
-      "reported_status": "Historical 3.3.5 TBC uncommon plate reference output identities, not Retail measured rates",
+      "reported_status": "Historical WotLK 3.3.5 four item output identities, reference only; no new independent measured Retail cohorts",
       "sha": null
     }
   ],
   "blockers": [
-    "Reddit original full-page browse was blocked; publicly indexed Oct 21–22 comments are readable, but this is source-reported UI context, not replicated 2026 Retail mechanics.",
-    "Oct 14 2024 Aqirite source lacks completed-operation receipts; Oct 21 historical Prospect All queue discussion does not fill the earlier cohort's missing cast denominator or material hit histogram.",
-    "Newly reported worker facts with no verified commit SHA are recorded as reports only, not independently accepted original cohorts.",
-    "Actual post-hotfix Midnight ore/herb per-operation material/rank 0..N and input refunds remain missing; no actual engine synthetic-price or client verification."
+    "No original source event IDs or collection date/build/bonus to establish distinct Looter casts; repeated public counts cannot create new independent study denominator.",
+    "Nov 9 TWW snapshot may be grouped broadly when old rows are input-specific; no estimator executed, cannot assert numeric double count or whether current compiled ItemDB/tooltip is affected.",
+    "237867 and 245737 WowDB cannot-disenchant classifications conflict with Looter historical counts; character-linked and build-specific live eligibility unavailable.",
+    "No new independent current Midnight rank/skill/unlock/refund-aware complete 0..N logs found; prior exhaustive sources remain exhausted."
   ],
   "exhausted_sources": [
     {
@@ -123,31 +136,36 @@
     {
       "path": "2024-10-21 r/woweconomy 1g8kbaq Prospect All queue discussion",
       "reason": "Original indexed comments yield only historical planned queue-versus-refund/UI stack behavior, not complete per-operation material observations; do not return to this thread without a new original log or firsthand reproduction."
+    },
+    {
+      "path": "Nov 1 and Nov 9 Wowhead PTR 219947 cumulative Looter source records 237867/245737",
+      "reason": "Identical dated transcriptions of the same publicly reported cumulative table statistics; 101/40 and 215/81, not two new sample cohorts. Do not re-audit until new original casts/patch evidence; retain both originals."
     }
   ],
-  "next_concrete_step": "Prioritize a first-party current Midnight T0005/T0039/T0045 complete ore/mill operation export with per-event itemLink/ranks/materials, 0..N and refund/skill/build; retain Oct 21 TWW UI queue context only for guarded validation of nominal-versus-completed denominator fields, not new rate estimation.",
+  "next_concrete_step": "Request reviewed scoped research-only estimator regression fixture combining Nov 1 exact-item and Nov 9 broad-gear duplicates for IDs 237867/245737, verify actual analyze() usage and single admission without changing protected implementation; meanwhile seek truly independent original current Midnight T0005/T0039/T0045 operation exports with rank/skill/0..N/refunds.",
   "validation": {
     "executed": [
-      "Read owner charter, protected three-pass plan/Pass 1, research v3 instructions/schema/mechanics/queue/strategy/flags, current coordinator checkpoint and four latest worker reports.",
-      "Read current main/research/protected implementation branch comparisons and exact research branch head; checked PR #22/#23 closed-unmerged, GitHub PR-triggered workflow/status lookup for pre-evidence research SHA (no success/failure returned).",
-      "Inspected publicly indexed original Oct 21 2024 TWW Prospect All thread and its discussion of queue limit, input refunds and bag-stack interruptions; compared existing Oct 14 TWW Aqirite original-study denominator caveat.",
-      "Created manager-only source-context evidence note ac2ebdde, fetched and independently verified exact note content."
+      "Read main charter, protected three-pass plan/Pass 1, research v3 README/schema/mechanics/queue/strategy/flags and existing coordinator/worker checkpoints.",
+      "Fetched original Nov 1 and Nov 9 source rows; programmatically compared item/output identities, report numerators and denominators, rank and source URL, including both previously unresolved IDs.",
+      "Inspected research v3 build_estimates.py key_of, study_identity, group_specificity, misplaced_copies and per-group seen dedupe statically; documented a cross-group admission risk, not a runtime result.",
+      "Committed evidence note ee6bac, fetched file and independently verified identifying content.",
+      "Read main/research/protected implementation ref heads; checked PR22/23 closed-unmerged and inspected recent Actions runs; no runs triggered."
     ],
     "not_executed": [
-      "Local Python research estimator or migration suite",
+      "Local research estimator/migration suite",
       "Native Lua suite",
       "Actual-engine synthetic-price tooltip/valuation probe",
-      "GitHub Actions workflow trigger",
+      "GitHub Actions workflow trigger for new head",
       "Live Retail character verification"
     ]
   },
   "protected_state": {
     "main_head_at_review": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
     "implementation_head_at_review": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_head_before_evidence": "7b42ec16bebe29dc37b297613f161953441982aa",
+    "research_head_before_evidence": "7595c251a1b558c7497431b5153e35e75b7f16be",
     "pr22": "closed unmerged",
     "pr23": "closed unmerged",
     "immutable_snapshot": "4df9ae8b1359d934828e4d0e6d39a9a4dba26fae"
   },
-  "change_scope": "manager-only evidence note and own quiet-status/coordinator.json; no dashboard rewrite this checkpoint, worker changes, addon, main, protected integration, PR, merge, release or schedule changes"
+  "change_scope": "Manager-only original-source comparison note and coordinator.json. Dashboard checkpoint update separately; no shared worker evidence/queue, addon, main, protected integration, PR, merge, release or schedule changes."
 }
