@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-09T06:33:48.203Z",
-  "status": "source_specific_two_rank2_dust_rows_and_current_eligibility_conflict_unresolved",
+  "updated_at": "2026-11-09T07:49:59.718Z",
+  "status": "verified_cumulative_ptr_looter_duplicate_identity_repair_no_new_independent_cohorts",
   "task_ids": [
     "T0048",
     "T0040",
@@ -13,68 +13,125 @@
     "T0012"
   ],
   "exact_gaps_targeted": [
+    "R2 Storm Dust 219947 PTR Looter cumulative source cohort duplicates were incorrectly re-entered after original canonical observations, risking extra cast/hit counts.",
+    "Late duplicate rows for gear 232745,232746,235149,245719,232736 had null input IDs even though original measurements already had identified inputs; normalized only these duplicates.",
+    "Late duplicate 238251 (19/50) and Gauntlets 232758 (34/93) re-entered original PTR material-source cohorts; prior canonical rows already contain identical counts.",
     "238251 Grateful Goblin's Blade: 219947 rank2 Storm Dust 19/50 cumulative PTR Looter occurrences versus WoWDB LIVE Cannot be disenchanted; no validated Retail DE bonus/patch",
-    "Gauntlets of Lost Inspiration: 219947 rank2 Storm Dust 34/93 cumulative PTR Looter occurrences; exact input ID unknown",
     "Bismuth 210931 Ironclaw 210937 Aqirite 210934 rank-unlock post-Oct25-2024 actual casts/hits/hist/refunds absent",
     "Mycobloom 210796/210797/210798 by-rank milling exact completed 10-herb casts, hit/zero/quantity histograms and skill/spec absent"
   ],
   "newly_verified_fields": {
-    "record_count": 3,
-    "drop_records": 2,
-    "noDisenchant_records": 1,
-    "items": [
+    "new_jsonl_records": 7,
+    "record_type": "drop/reference-only replacement (sourceKind reference, all numeric fields null)",
+    "input_id_repairs": [
+      232745,
+      232746,
+      235149,
+      245719,
+      232736,
+      238251,
+      232758
+    ],
+    "original_source_cohorts_deduplicated": 7,
+    "original_measured_casts_added": 0,
+    "newly_verified_numerical_fields": 0,
+    "preserved_original_cumulative_cohort_pairs": [
+      {
+        "inputItemID": 232745,
+        "outputItemID": 219947,
+        "source_reported_operations": 91,
+        "source_reported_occurrences": 35,
+        "canonical_record_id": "war-within-20261102-0629-003",
+        "duplicate_replaced_id": "war-within-202611082328-006"
+      },
+      {
+        "inputItemID": 232746,
+        "outputItemID": 219947,
+        "source_reported_operations": 75,
+        "source_reported_occurrences": 30,
+        "canonical_record_id": "war-within-20261102-0629-002",
+        "duplicate_replaced_id": "war-within-202611082328-007"
+      },
+      {
+        "inputItemID": 235149,
+        "outputItemID": 219947,
+        "source_reported_operations": 82,
+        "source_reported_occurrences": 30,
+        "canonical_record_id": "war-within-20261102-0629-007",
+        "duplicate_replaced_id": "war-within-202611082328-008"
+      },
+      {
+        "inputItemID": 245719,
+        "outputItemID": 219947,
+        "source_reported_operations": 55,
+        "source_reported_occurrences": 21,
+        "canonical_record_id": "war-within-20261102-0629-005",
+        "duplicate_replaced_id": "war-within-202611082328-009"
+      },
+      {
+        "inputItemID": 232736,
+        "outputItemID": 219947,
+        "source_reported_operations": 118,
+        "source_reported_occurrences": 45,
+        "canonical_record_id": "war-within-20261102-0629-006",
+        "duplicate_replaced_id": "war-within-202611082328-010"
+      },
       {
         "inputItemID": 238251,
         "outputItemID": 219947,
-        "casts": 50,
-        "castsWithDrop": 19,
-        "totalQuantity": null,
-        "histogram": null,
-        "eligibility": "conflicting"
+        "source_reported_operations": 50,
+        "source_reported_occurrences": 19,
+        "canonical_record_id": "war-within-20261102-0629-004",
+        "duplicate_replaced_id": "war-within-20261109-0633-001"
       },
       {
-        "inputItemID": null,
-        "inputName": "Gauntlets of Lost Inspiration",
+        "inputItemID": 232758,
         "outputItemID": 219947,
-        "casts": 93,
-        "castsWithDrop": 34,
-        "totalQuantity": null,
-        "histogram": null
+        "source_reported_operations": 93,
+        "source_reported_occurrences": 34,
+        "canonical_record_id": "war-within-20261102-0051-010",
+        "duplicate_replaced_id": "war-within-20261109-0633-002"
       }
     ],
     "new_current_build_measured_distributions": 0,
     "new_post_hotfix_ore_herb_cohorts": 0
   },
-  "newly_verified_cohorts": [
-    "Wowhead PTR cumulative material-side output 219947 from item 238251: 19 of 50 occurrence source counts; not player raw sample",
-    "Same output rank2 from Gauntlets of Lost Inspiration: 34 of 93 occurrence source counts, item ID unknown",
-    "Live WoWDB exact sword 238251 Cannot be disenchanted; eligibility conflict"
-  ],
+  "newly_verified_cohorts": [],
   "source_links": [
     "https://www.wowhead.com/ptr/item=219947/storm-dust",
+    "https://www.wowhead.com/item=232736/pendant-of-enduring-promise",
+    "https://www.wowhead.com/item=232745/apprentice-knights-belt",
+    "https://www.wowhead.com/item=232746/spaulders-of-lost-inspiration",
+    "https://www.wowhead.com/item=232758/gauntlets-of-lost-inspiration",
+    "https://github.com/ATTWoWAddon/AllTheThings/blob/9bcc9acb8004db4094f54bdba2c7070546bf853c/.contrib/.db/standard/02%20-%20Outdoor%20Zones/15%20Khaz%20Algar/Undermine/Quests.lua",
     "https://www.wowdb.com/items/238251-grateful-goblins-blade",
-    "https://warcraft.wiki.gg/wiki/Gauntlets_of_Lost_Inspiration"
+    "https://www.wowhead.com/item=245719/greaves-of-the-auditbreaker"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-09T0633-goblin-blade-gauntlets-de-conflict.jsonl"
+    "research/v3/evidence/war-within/2026-11-09T0749-ptr-r2-dust-cumulative-dedupe.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T0633-goblin-blade-gauntlets-de-conflict.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T0749-ptr-r2-dust-cumulative-dedupe.jsonl"
+  ],
+  "canonical_original_evidence": [
+    "research/v3/evidence/war-within/2026-11-02T0629-ptr-looter-input-id-replacements-and-tazavesh-eligibility.jsonl",
+    "research/v3/evidence/war-within/2026-11-02T0051-r2-dust-looter-and-eligibility-conflicts.jsonl"
   ],
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "One atomic Git commit contains evidence and this status; its own hash cannot appear in its own content (self-reference). Commit ID and read-back are verified from repository after push, and will be referenceable in next run.",
+  "verified_commit_sha_note": "Atomic commit stores new evidence and own status. A Git SHA cannot be embedded into the content of the same commit without self-reference. After pushing, the Git commit and both files must be read back; resulting commit SHA is available in GitHub and will be recorded in a later status refresh.",
+  "branch_parent_verified_before_commit": "8b2bfe4bb91af4129b0bc49604dae672531c94c2",
   "prior_verified_evidence_commit_sha": "637558f1c119b7612ddf826007e8f700f43c5bac",
   "blockers": [
-    "Live WoWDB noDisenchant for 238251 vs source PTR-ranked cumulative Wowhead Looter 19/50. No original per-player build, gear bonus, actual units or positive cast histograms.",
-    "Gauntlets input item ID, any current live eligibility and character effects unverified; unknown stays null.",
-    "No independently verified new post-hotfix prospecting/milling 0-inclusive per-cast original logs by ore/herb rank; previous sources exhausted, not repeated.",
-    "Only 3 genuinely new records found without re-importing earlier cumulative-source rows; 10-record target not met to avoid duplication/invention."
+    "No new original TWW by-rank prospecting/milling post-2024-10-25 per-cast item/output hit/zero/quantity histograms with player build, skill and refunds verified.",
+    "Wowhead PTR aggregated Looter pages do not expose original player study IDs, gameplay build, stack quantities or rank-specific live eligibility; 238251 has contradictory WoWDB noDisenchant flag.",
+    "Same source cohorts had been re-entered as though independent by later files. The seven latest copies were neutralized using replacement references; cross-repo/global duplicate audit remains Master-owned.",
+    "An unrelated web extraction service reached its daily credit cap; GitHub and search engine references were sufficient to independently verify exact item identities."
   ],
   "exhausted_sources": [
-    "Wowhead 219947 first 50 material-origin rows largely already represented in earlier 2026-11-02 and 2026-11-08 evidence (e.g. Pendant of Enduring Promise, Bracers of Riftsealer, Gauntlets absent); previous source cohorts not recopied.",
-    "Historical Reikah and 1040 Aqirite prospecting and LotzBoi Mycobloom references remain missing new post-hotfix measured histograms."
+    "Do not re-collect 219947 PTR cumulative first-page item rows: the 7 material-side rows reviewed are existing canonical cohorts, not new independent measurement.",
+    "Sep/Oct 2024 Reikah Ironclaw and Aqirite, Mycobloom LotzBoi and 1fdmzwy references are already imported, with missing post-hotfix per-cast logs."
   ],
-  "next_concrete_step": "Master to flag 238251 noDisenchant vs PTR Looter conflict and verify current in-game eligibility/bonusIDs; resolve Gauntlets of Lost Inspiration item ID. Prefer independent current-build per-cast logged disenchant and ore/herb prospect/milling 0/1/2+ stack/refund data; do not price from source snapshots.",
+  "next_concrete_step": "Research Master should retain canonical 2026-11-02T0629 and 2026-11-02T0051 Looter cohorts and verify estimator drops the seven duplicate record IDs through replaces. Next worker should seek genuinely independent post-Oct25-2024 prospecting or milling per-operation export with quality rank, character skill/spec, refunds and 0/1/2+ material histograms, or original TWW disenchant counts with real gear identity/build. No PTR pooled counts in live EV.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
