@@ -93,6 +93,7 @@ python3 tests/test_research_v3_baselines.py
 python3 tests/test_research_v3_precision.py
 python3 tests/test_research_v3_dedupe.py
 python3 tests/test_research_v3_snapshot.py
+python3 tests/test_retail_admission.py
 "$lua_bin" tests/test_research_v3_runtime.lua
 "$lua_bin" tests/test_numeric_refresh_tooltip.lua "$compiled_dir"
 "$lua_bin" tests/test_tooltip_preferences.lua
