@@ -465,7 +465,7 @@ function LL:EvaluateDisenchant(f,character)
     return {name='Disenchant',value=value,materials=model and model.materials,
         yieldModel=model,expansion=exp,expansionName=family and family.name,
         samples=model and model.personalStats and model.personalStats.total,
-        confidence=model and (model.valueConfidence or model.confidence) or 'unknown',partial=model and model.partial or nil,
+        confidence=model and not model.confidenceUnscored and (model.valueConfidence or model.confidence) or 'unknown',partial=model and model.partial or nil,
         source=model and model.source,method=model and model.source,
         note=reason or (model and model.warning),incompletePrices=model and model.partialPrice},reason
 end
@@ -597,7 +597,7 @@ function LL:ConversionOptions(f)
         local v={name=c.method,letter=MethodLetter(c.method),available=available,
             why=why or modelIssue,character=character,profession=c.profession,
             value=value,source=source,inputShort=insufficientCount,
-            confidence=yieldModel and (yieldModel.valueConfidence or yieldModel.confidence) or c.confidence or "verified-recipe",
+            confidence=yieldModel and (yieldModel.confidenceUnscored and "unknown" or (yieldModel.valueConfidence or yieldModel.confidence)) or c.confidence or "verified-recipe",
             partial=yieldModel and yieldModel.partial or nil,
             -- Only per-input observations, never shared expansion-wide candidates.
             estimate=yieldModel and yieldModel.personalStats and research or nil,
