@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T06:52:31.540Z",
-  "status": "11 append-only evidence rows: seven same-cohort identity-only replacements for previously unplaced Cobalt Ore 36909 gem IDs and four new first-person historical WotLK milling output totals from two distinct Nightflame batches. 0 additional measured completed operations, 0 hit counts/histograms, 0 new Warmaul 24995/Fel Iron 23424 casts. No probabilities, inferred zeros or gold EV.",
+  "updated_at": "2026-11-09T08:50:02.990Z",
+  "status": "14 new append-only evidence rows: five original PTR Violet/Ruby herb cohorts (10 output rows), three missing Indigo Pigment same-cohort output totals (identity and numeric enrichment only), and one independent beta 8885 40-completed-mill zero-inclusive Ruby histogram. No added Warmaul, Cobalt or Fel Iron casts. Historical PTR/beta only, no current Retail validity, fabricated chance, or gold EV.",
   "task_ids": [
     "T0047",
     "T0022",
@@ -11,114 +11,189 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995: original 2,068 historical reported Looter operations and output occurrences already represented; no fresh original per-click stacks, real current Retail positive eligibility, build or hotfix.",
-    "T0022 Cobalt Ore 36909: restored seven missing outputItemID values on a PREVIOUSLY recorded 180-ore/9-stack Strikk3r cohort; preserved material totals, no new operations or independent cohort; source remains without completed-cast or per-output positive hit counts.",
-    "T0044 Fel Iron Ore 23424: earlier single original Nightseye 23441 1-cast sample remains latest; no new distinct fully logged cohort.",
-    "Legacy milling: two independent original first-person Nightflame source batches: eight stacks of unspecified Northrend herbs -> Azure Pigment 39343 x80, Icy Pigment 43109 x10; separate four stacks Adder's Tongue 36903 -> 39343 x52 and 43109 x11; measured completed casts, hit counts and exact stack fullness unknown.",
-    "T0053 Spaulders of the Wayward Vanquisher 45661: historical complete 7-reward vendor mapping previously recorded, current Retail right-click rewards unresolved."
+    "T0047 Warmaul Legplates 24995: still no NEW item-specific per-cast counts, actual quantity hist, source build/bonus or current Retail in-game eligible disenchant. Existing cumulative 2068 source events not re-recorded.",
+    "T0022 Cobalt Ore 36909: previous nominal-stack totals/identity corrections intact, no new actual five-ore completed operations, per-output hits or zero hist.",
+    "T0044 Fel Iron Ore 23424: no new distinct completed prospect sample, per-gem zero histogram or modern valid build.",
+    "Historical Classic Violet tier herb milling: original PTR 180977 six positive-yield bins for Gromsblood 8846, Purple Lotus 8831, Sungrass 8838, Ghost Mushroom 8845, Arthas' Tears 8836 into Violet Pigment 39340 and Ruby Pigment 43106.",
+    "Historical Emerald-tier Indigo Pigment 43105: three exact original source quantity rows missing from already archived author 180977 Fadeleaf 3818, Goldthorn 3821, Khadgar's Whisker 3358 cohorts.",
+    "Beta WotLK Ruby Pigment 43106 zero-inclusive distribution 40 completed mills of unknown herb mix, from author 204361; historical build 8885 only."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "kind": "identity-only replacements",
-      "inputItemID": 36909,
-      "original_studyKey": "wowhead-cobalt-strikk3r-180-ore",
-      "prior_ids": [
-        "legacy-20261030-301",
-        "legacy-20261030-302",
-        "legacy-20261030-303",
-        "legacy-20261030-304",
-        "legacy-20261030-305",
-        "legacy-20261030-306",
-        "legacy-20261030-309"
+      "kind": "source original PTR per-cast positive-yield histogram",
+      "inputItemID": 8846,
+      "inputName": "Gromsblood",
+      "outputItemIDs": [
+        39340,
+        43106
       ],
-      "new_exact_output_ids": [
-        36926,
-        36920,
-        36932,
-        36917,
-        36923,
-        36929,
-        36927
+      "completed_casts": 6,
+      "positive_violet_casts": 6,
+      "violet_total": 20,
+      "ruby_total": 3,
+      "violet_positive_histogram": {
+        "2": 1,
+        "3": 2,
+        "4": 3
+      },
+      "source": "https://www.wowhead.com/cata/item=39340/violet-pigment",
+      "denominator_note": "Source explicit positive-yield bins match fully logged stack equivalents; zero outcomes not invented."
+    },
+    {
+      "kind": "source original PTR per-cast positive-yield histogram",
+      "inputItemID": 8831,
+      "inputName": "Purple Lotus",
+      "outputItemIDs": [
+        39340,
+        43106
       ],
-      "reported_total_quantities": [
-        14,
+      "completed_casts": 21,
+      "positive_violet_casts": 21,
+      "violet_total": 52,
+      "ruby_total": 3,
+      "violet_positive_histogram": {
+        "2": 11,
+        "3": 10
+      },
+      "source": "https://www.wowhead.com/cata/item=39340/violet-pigment",
+      "denominator_note": "Source explicit positive-yield bins match fully logged stack equivalents; zero outcomes not invented."
+    },
+    {
+      "kind": "source original PTR per-cast positive-yield histogram",
+      "inputItemID": 8838,
+      "inputName": "Sungrass",
+      "outputItemIDs": [
+        39340,
+        43106
+      ],
+      "completed_casts": 21,
+      "positive_violet_casts": 21,
+      "violet_total": 49,
+      "ruby_total": 8,
+      "violet_positive_histogram": {
+        "2": 14,
+        "3": 7
+      },
+      "source": "https://www.wowhead.com/cata/item=39340/violet-pigment",
+      "denominator_note": "Source explicit positive-yield bins match fully logged stack equivalents; zero outcomes not invented."
+    },
+    {
+      "kind": "source original PTR per-cast positive-yield histogram",
+      "inputItemID": 8845,
+      "inputName": "Ghost Mushroom",
+      "outputItemIDs": [
+        39340,
+        43106
+      ],
+      "completed_casts": 3,
+      "positive_violet_casts": 3,
+      "violet_total": 8,
+      "ruby_total": 2,
+      "violet_positive_histogram": {
+        "2": 1,
+        "3": 2
+      },
+      "source": "https://www.wowhead.com/cata/item=39340/violet-pigment",
+      "denominator_note": "Source explicit positive-yield bins match fully logged stack equivalents; zero outcomes not invented."
+    },
+    {
+      "kind": "source original PTR per-cast positive-yield histogram",
+      "inputItemID": 8836,
+      "inputName": "Arthas' Tears",
+      "outputItemIDs": [
+        39340,
+        43106
+      ],
+      "completed_casts": null,
+      "positive_violet_casts": 3,
+      "violet_total": 7,
+      "ruby_total": 1,
+      "violet_positive_histogram": {
+        "2": 2,
+        "3": 1
+      },
+      "source": "https://www.wowhead.com/cata/item=39340/violet-pigment",
+      "denominator_note": "1.5 reported stacks conflict with three positive outcomes; denominator null, histogram is positive-only."
+    },
+    {
+      "kind": "same-cohort missing output completion",
+      "inputs": [
+        3818,
+        3821,
+        3358
+      ],
+      "outputItemID": 43105,
+      "reported_quantities": [
+        1,
         10,
-        11,
-        5,
-        9,
-        5,
-        1
+        14
       ],
-      "cast_count": null,
-      "independent_new_cohorts": 0,
-      "source": "https://www.wowhead.com/it/item=36909/minerale-di-cobalto",
-      "identity_source": "https://www.wowinterface.com/downloads/info7514.html"
+      "prior_studyKeys": [
+        "wowhead-180977-ptr-fadeleaf-9",
+        "wowhead-180977-ptr-goldthorn-26",
+        "wowhead-180977-ptr-khadgar-22"
+      ],
+      "additional_independent_caster_cohorts": 0,
+      "source": "https://www.wowhead.com/cata/item=39339/emerald-pigment"
     },
     {
-      "kind": "new firsthand original herb milling totals",
-      "studyKey": "wowhead-nightflame-northrend-eight-unspecified-stacks",
+      "kind": "original beta build 8885 complete rare pigment histogram",
       "inputItemID": null,
-      "stacks": 8,
-      "totalQuantity": {
-        "39343": 80,
-        "43109": 10
+      "inputName": "Violet-tier herbs (unspecified)",
+      "outputItemID": 43106,
+      "completed_casts": 40,
+      "castsWithDrop": 17,
+      "totalQuantity": 19,
+      "histogram": {
+        "0": 23,
+        "1": 16,
+        "3": 1
       },
-      "casts": null,
-      "positive_casts": null,
-      "zeros": null,
-      "source": "https://www.wowhead.com/mop-classic/spell=51005/milling"
-    },
-    {
-      "kind": "new firsthand original herb milling totals",
-      "studyKey": "wowhead-nightflame-adder-four-stacks-follow-up",
-      "inputItemID": 36903,
-      "stacks": 4,
-      "totalQuantity": {
-        "39343": 52,
-        "43109": 11
-      },
-      "casts": null,
-      "positive_casts": null,
-      "zeros": null,
-      "source": "https://www.wowhead.com/mop-classic/spell=51005/milling"
+      "source": "https://www.wowhead.com/wotlk/item=43106/ruby-pigment"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 11,
-    "identity_only_replacements": 7,
-    "new_firsthand_output_quantity_rows": 4,
-    "new_independent_firsthand_cohorts": 2,
-    "new_actual_completed_cast_denominators": 0,
-    "new_per_output_positive_cast_counts": 0,
-    "new_zero_inclusive_histograms": 0,
-    "new_measured_warmaul_disenchants": 0,
-    "new_measured_cobalt_prospects": 0,
-    "new_measured_fel_iron_prospects": 0,
+    "new_evidence_records": 14,
+    "original_new_violet_herb_cohorts": 5,
+    "original_violet_herb_completed_casts": 51,
+    "original_violet_herb_positive_outcomes_with_unresolved_denominator": 3,
+    "source_backed_violet_units": 136,
+    "source_backed_ruby_units_violet_herbs": 17,
+    "same_cohort_indigo_rows": 3,
+    "same_cohort_indigo_units": 25,
+    "independent_new_beta_ruby_completed_casts": 40,
+    "independent_beta_ruby_positive_casts": 17,
+    "independent_beta_ruby_total_units": 19,
+    "independent_beta_ruby_zero_casts": 23,
+    "new_warmaul_disenchants": 0,
+    "new_cobalt_prospects": 0,
+    "new_fel_iron_prospects": 0,
     "nominal_equivalents_promoted_to_measured": 0,
     "gold_price_fields": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-09T0652-cobalt-identity-and-original-northrend-milling.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T0652-cobalt-identity-and-original-northrend-milling.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-09T0849-violet-ruby-indigo-ptr-numeric.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T0849-violet-ruby-indigo-ptr-numeric.jsonl",
   "sources": [
-    "https://www.wowhead.com/mop-classic/spell=51005/milling",
-    "https://www.wowhead.com/it/item=36909/minerale-di-cobalto",
-    "https://www.wowinterface.com/downloads/info7514.html"
+    "https://www.wowhead.com/cata/item=39340/violet-pigment",
+    "https://www.wowhead.com/cata/item=39339/emerald-pigment",
+    "https://www.wowhead.com/wotlk/item=43106/ruby-pigment"
   ],
-  "verified_base_commit_sha": "f787ef1fc538248d38b8833f72383497c551bcf3",
+  "verified_base_commit_sha": "1657f099a1d79509868d5e8d5d7994f66196ede3",
   "verified_commit_sha": null,
-  "commit_sha_note": "Atomic evidence+status commit: self SHA cannot be embedded in its own tree. Confirm actual commit SHA via branch-head and file read-back after committing.",
+  "commit_sha_note": "Atomic commit's own SHA cannot be embedded in its own tree. Verify new branch HEAD and both file read-backs after publishing.",
   "blockers": [
-    "Warmaul 24995 historical source has 2,068 cumulative Looter operations but lacks source-dated build/ilvl, per-click item output units/histograms and actual current Retail DE eligibility; WoWDB scaled version says Cannot be disenchanted.",
-    "Cobalt 36909 Strikk3r 180-ore source gives totals only, not actual five-ore completed casts or positive-output hits; seven identity-only replacements may not be counted as seven new cohorts.",
-    "Nightflame source supplies stack batches and exact pigment totals but does not name herb types for eight-stack study, log completed mills, provide zero-inclusive bins, skill or patch; no rate derivation permitted.",
-    "Fel Iron 23424 modern measured casts and current Retail version validation still missing.",
-    "Current Retail right-click token 45661 loot-specialization reward mapping unverified; historical vendor list previously archived."
+    "Warmaul 24995 historic Looter source 2,068 cumulative disenchants/1,559 Arcane Dust hits remains unversioned; modern scaled WoWDB item cannot be disenchanted and in-game bonus/eligibility unproven.",
+    "Cobalt 36909, Fel Iron 23424 and similar legacy item samples still lack new per-output positive cast counts and completed per-cast histograms.",
+    "All new Violet and Indigo rows are pre-live PTR; beta Ruby histogram is build 8885, not current Retail. Exact specific beta test dates, profession skills, characters and refunds unknown.",
+    "Arthas' Tears 8836 PTR comment reports 1.5 stacks (six nominal mills) but only three observed positive Violet outcomes; casts remain null. No zero assumption.",
+    "Beta 204361 Ruby histogram input item identities unspecified; do not attach aggregate results to any one herb."
   ],
   "exhausted_sources": [
-    "Original 24995 cumulative Wowhead Looter table, generic TBC models, and current scaled WoWDB eligibility: nothing new per-cast, versioned or item-specific; do not reingest.",
-    "Existing Cobalt 9-stack Strikk3r report and 24-stack RU study already recorded: output IDs now enriched only for Strikk3r; no new measured casts or histograms.",
-    "Sgtown 128/256-mill samples, killerpet milling means, Aenonar sample, Fel Iron first-hand cohorts, and 45661 historical vendor mapping already represented and excluded to prevent copies."
+    "Warmaul 24995 Wowhead cumulative Looter and WowDB modern scaled eligibility already audited; no fresh measured item-version evidence.",
+    "Cobalt Strikk3r 180 ore and RU 24 stacks and Fel Iron Thottbot 565 ore/first Nightseye remain previously represented; no duplicated cohorts.",
+    "Golden Pigment 39338 source commenter 180977 already recorded in 2026-11-07T2151, and Emerald Pigment 39339 positive hist already in 20261107T1447; only missing Indigo 43105 outputs recorded here.",
+    "No inference from PTR author 180977 into modern drop chances, and no transplant of 204361 beta 8885 mechanics into new builds."
   ],
-  "next_concrete_step": "Locate exact Warmaul 24995 current Retail bonus/version eligibility and original per-cast outcome export; next target Cobalt 36909 and Fel Iron 23424 completed prospect logs with per-gem positive/zero bins. For Nightflame two historical milling cohorts, seek actual mill count and individual herb identities. Preserve null denominators.",
-  "previous_status_updated_at": "2026-11-09T05:53:11.348Z"
+  "next_concrete_step": "Find original per-cast Warmaul 24995 item-suffix/build-linked DE recorder outcomes and Retail eligibility; then distinct Cobalt 36909/Fel Iron 23424 prospect logs. For Violet 8836, recover author's true 1.5-stack denominator versus 3 listed positive mills without imputing zero outputs. Preserve cohort keys for Indigo enrichment and isolate historical beta/PTR in estimator.",
+  "previous_status_updated_at": "2026-11-09T06:52:31.540Z"
 }
