@@ -1,42 +1,96 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-09T09:46:45.421Z",
-  "status": "active; verified a previously unrecorded build-8905 historical milling 12-operation/2-Firefly-Dust source aggregate and separated it from the already worker-recorded build-8885 Ruby cohort; no new verified current-Retail gold decisions or tooltip fields",
+  "updated_at": "2026-11-09T10:12:53.260Z",
+  "status": "active; independently verified that six newly appended Legacy milling output rows repeat three original cohorts archived October 28 (two Sgtown historical WotLK herb batches and one funknut Felweed batch); documented cross-flavour source-key collision risk; zero new independent cohorts or current Retail price/tooltip decisions",
   "task_ids": [
-    "T0053",
+    "T0042",
+    "T0022",
+    "T0044",
     "T0005",
     "T0039",
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "Legacy historical beta 8905: commenter 204361 explicitly reports 12 mills, 2 Firefly Dust units, approximate Violet/Ruby 75/25. Input herb IDs/proportions, Firefly output ID, exact hits, 0..N outcomes, skill and Retail compatibility remain unknown. No new per-item Retail rate.",
-    "Historical beta 8885 original commenter 204361 has 40 mills/17 Ruby-positive/19 Ruby units already recorded by Legacy worker; same author across different beta builds must not be pooled or treated as independent source corroboration.",
-    "Midnight T0005/T0039 Umbral Tin 237362 and related ranks still lack original completed-cast output IDs, occurrence zeros/histograms, saved reagent accounting and unlock/skill context.",
-    "Midnight T0045 Tranquility Bloom 236761/Powder Pigment 245807 still lacks independently recorded full completed 10-herb mill batches with exact ranks, refunds, per-output hits and 0..N yields."
+    "Historical Sgtown: November 9 legacy-20261109-95501..95504 (Adder's Tongue 36903, Icethorn 36906; Azure 39343/Icy 43109) reproduce October 28 original cohorts ww-b009-sgtown-2009-adders-tongue/icethorn and imported study IDs 00233..00236, with identical 128/256 completed mills and 383/61, 774/141 output totals. These are NOT newly independent source operations.",
+    "Historical funknut: November 9 legacy-20261109-95507..95508 Felweed 22785 -> Nether Pigment 39342 total 94 and Ebon Pigment 43108 total 4 reproduce the same 2008-era post-3.0.2 original already archived October 28; completed casts remain unknown.",
+    "Research estimator source_key retains @wotlk/@mop-classic flavours, while same_page() strips PTR/language but not Classic; identical author/comment quantities may have different normalized source-key and studyKey after worker re-transcription. This is a prospective double-count hazard, NOT a proven estimator failure: estimator was not run.",
+    "Current-Retail original complete-cast evidence remains absent for Midnight Umbral Tin Ore 237362 T0005/T0039 rank-specific occurrence/histograms/refund and Tranquility Bloom 236761 T0045 output ranks, completed ten-herb mills and skill context."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "source_duplicate_identity_verified_not_new_cohort",
-      "method": "Disenchant",
-      "inputItemID": 232758,
-      "inputName": "Gauntlets of Lost Inspiration",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "sourceURL": "https://www.wowhead.com/ptr/item=219947/storm-dust",
-      "originalRecordID": "war-within-20261102-0051-010",
-      "redundantRecordID": "war-within-20261109-0633-002",
-      "originalStudyKey": "wowhead-looter-219947-input-232758-cumulative",
-      "redundantStudyKey": "wowhead-ptr-219947-input-gauntlets-lost-inspiration-one-cumulative-table",
-      "firstRecordedSourceCasts": 93,
-      "firstRecordedMaterialHits": 34,
-      "duplicateObservedValues": {
-        "sourceCasts": 93,
-        "materialHits": 34
+      "kind": "duplicate_historical_original_source_verified",
+      "source_author": "Sgtown",
+      "original_event_bundles": 2,
+      "nov9_worker_rows": [
+        "legacy-20261109-95501",
+        "legacy-20261109-95502",
+        "legacy-20261109-95503",
+        "legacy-20261109-95504"
+      ],
+      "archived_original_observation_ids": [
+        "ww-b009-sgtown-2009-adders-tongue",
+        "ww-b009-sgtown-2009-icethorn"
+      ],
+      "preexisting_import_study_ids": [
+        "import-study-00233",
+        "import-study-00234",
+        "import-study-00235",
+        "import-study-00236"
+      ],
+      "cohorts": [
+        {
+          "inputItemID": 36903,
+          "casts_reported": 128,
+          "outputTotals": {
+            "39343": 383,
+            "43109": 61
+          }
+        },
+        {
+          "inputItemID": 36906,
+          "casts_reported": 256,
+          "outputTotals": {
+            "39343": 774,
+            "43109": 141
+          }
+        }
+      ],
+      "original_source": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+      "patch": "3.2.2",
+      "new_independent_completed_casts": 0,
+      "current_retail_applicability": "unverified"
+    },
+    {
+      "kind": "duplicate_historical_original_source_verified",
+      "source_author": "funknut",
+      "original_event_bundles": 1,
+      "nov9_worker_rows": [
+        "legacy-20261109-95507",
+        "legacy-20261109-95508"
+      ],
+      "archived_original_observation_id": "2026-10-28-0837-legacy-batch008-felweed-2008",
+      "inputItemID": 22785,
+      "outputTotals": {
+        "39342": 94,
+        "43108": 4
       },
-      "extraIndependentCasts": 0,
-      "newObservedOutputUnits": 0,
-      "currentRetailEligibility": "unknown",
-      "compilerDuplicateStatus": "not tested"
+      "source": "https://www.wowhead.com/item=43108/ebon-pigment",
+      "patch": "post-3.0.2 historical",
+      "completed_casts": null,
+      "per_output_hits": null,
+      "new_independent_completed_casts": 0,
+      "current_retail_applicability": "unverified"
+    },
+    {
+      "kind": "static_compiler_identity_risk_not_executed",
+      "source_keys": [
+        "wowhead:item=39343",
+        "wowhead:item=39343@wotlk",
+        "wowhead:item=43108",
+        "wowhead:item=43108@mop-classic"
+      ],
+      "reason": "source_keys.py flavour preservation and build_estimates.py same_page() removal excludes @wotlk and @mop-classic; different new studyKey names without explicit shared cohortKey",
+      "compilation_regression_test_run": false
     }
   ],
   "newly_located_original_source_aggregate_batches": 0,
@@ -45,55 +99,52 @@
   "new_verified_current_retail_gold_decisions": 0,
   "new_rendered_tooltip_fields": 0,
   "source_links": [
-    "https://www.wowhead.com/ptr/item=219947/storm-dust",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T0749-ptr-r2-dust-cumulative-dedupe.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-08T2328-ptr-r2-looter-unrecorded-item-cohorts.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T0633-goblin-blade-gauntlets-de-conflict.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-02T0629-ptr-looter-input-id-replacements-and-tazavesh-eligibility.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-02T0051-r2-dust-looter-and-eligibility-conflicts.jsonl"
+    "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+    "https://www.wowhead.com/item=43108/ebon-pigment",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1011-legacy-sgtown-funknut-source-alias-reconciliation.md",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/source_keys.py",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-09T0749-ptr-r2-dust-cumulative-dedupe.jsonl",
-    "research/v3/evidence/war-within/2026-11-08T2328-ptr-r2-looter-unrecorded-item-cohorts.jsonl",
-    "research/v3/evidence/war-within/2026-11-09T0633-goblin-blade-gauntlets-de-conflict.jsonl",
-    "research/v3/evidence/war-within/2026-11-02T0629-ptr-looter-input-id-replacements-and-tazavesh-eligibility.jsonl",
-    "research/v3/evidence/war-within/2026-11-02T0051-r2-dust-looter-and-eligibility-conflicts.jsonl",
-    "research/v3/evidence/master/2026-11-09T0944-wotlk-beta-8905-firefly-epoch-numeric.md"
+    "research/v3/evidence/master/2026-11-09T1011-legacy-sgtown-funknut-source-alias-reconciliation.md",
+    "research/v3/evidence/legacy/2026-11-09T0956-northrend-outland-classic-milling-cohorts.jsonl",
+    "research/evidence/observations/2026-10-28-0923-warwithin-batch009-original-milling-cohorts.jsonl",
+    "research/evidence/observations/2026-10-28-0837-legacy-batch008-felweed-original-player-aggregate.jsonl",
+    "research/v3/migration/tests/fixtures/pre-m03-study-ids.jsonl"
   ],
-  "verified_commit_sha": "43ce7621bc2d63e9cc6b6b88b5fc1377b7ae61ec",
-  "verified_commit_sha_scope": "Verified research parent used as new note/status/dashboard commit parent; resulting commit cannot cite itself. Read branch back after push.",
+  "verified_commit_sha": "00172cce953cfd7b4d2b3fb98b361a185b10a92e",
+  "verified_commit_sha_scope": "Research evidence note commit created/verified via GitHub in this run; this coordinator-status commit cannot cite itself. Inspect branch after update.",
   "checked_worker_owner_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-09T06:23:26.404Z",
+      "updated_at": "2026-11-09T09:22:29.565Z",
       "source": "research/coordination/quiet-status/midnight.json",
-      "acknowledgement": "reported only; no new source fields independently measured"
+      "acknowledgement": "read; reported-only Looter item aggregate; output rank and per-cast quantities not verified"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-09T06:33:48.203Z",
+      "updated_at": "2026-11-09T09:51:04.031Z",
       "source": "research/coordination/quiet-status/war-within.json",
-      "acknowledgement": "reported only; no new source fields independently measured"
+      "acknowledgement": "read; reported-only profession tool eligibility candidates; not measured yields"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-09T06:32:31.563Z",
+      "updated_at": "2026-11-09T09:48:01.054Z",
       "source": "research/coordination/quiet-status/dragonflight.json",
-      "acknowledgement": "reported only; no new source fields independently measured"
+      "acknowledgement": "read; reported-only source cohorts, no per-cast numeric study verified here"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-09T06:52:31.540Z",
+      "updated_at": "2026-11-09T09:56:19.907Z",
       "source": "research/coordination/quiet-status/legacy.json",
-      "acknowledgement": "reported only; no new source fields independently measured"
+      "acknowledgement": "six of ten new rows crosschecked with original public source and preexisting October 28 records: six duplicates, NOT six independent new rows; other four unverified by coordinator"
     }
   ],
   "blockers": [
-    "Historical WotLK beta 8905 author report is not current Retail evidence; no exact herb input identities, Firefly output ID/rank, raw per-cast histograms or source date.",
-    "The documented ~75%/~25% are approximate percentages only; assigning exact 9/12 or 3/12 hit counts would invent source observations.",
-    "Current Midnight T0005/T0039/T0045 yield/rank/refund/skill-unlock data gaps remain, so 0 new verified current-Retail actionable gold decisions and 0 newly rendered tooltip fields.",
-    "No estimator/compiled ItemDB/synthetic-price tooltip run or in-game client QA performed in this coordinator checkpoint."
+    "Six worker rows are duplicate original historical source transcriptions; source_key game-flavour distinction might evade estimator's source-level dedupe. Do not count as independent or promote until append-only canonical cohort reconciliation and executed estimator regression.",
+    "Historical patch 3.2.2 and 3.0.2 findings do not establish current Retail mechanic eligibility; Felweed actual completed casts, hit counts and histograms remain unknown.",
+    "Midnight T0005/T0039/T0045 original completed-cast logs, exact output rank IDs/histograms, refunds, skill/build/unlock still absent; no current Retail gold-decision or tooltip-field gains.",
+    "No local research estimator / ItemDB rebuild / synthetic-price actual-engine render / full native Lua tests / live WoW verification performed this run."
   ],
   "exhausted_sources": [
     {
@@ -127,218 +178,167 @@
     {
       "path": "Wowhead 204361 WotLK beta 8905 repeated Violet/Ruby comments",
       "reason": "Both mirrors reconciled to one 12-mill, 2-Firefly historical same-author source; no exact herb IDs/modern Retail bridge. Avoid repeated indexed searches without new original event logs."
+    },
+    {
+      "path": "Sgtown Azure/Icy source alias across Oct 28 and Nov 9",
+      "reason": "Nov9 4 rows reproduce 2009 original 128/256-mill cohorts imported as import-study-00233..00236. Do not collect again as independent."
+    },
+    {
+      "path": "funknut 94 Nether/4 Ebon duplicate",
+      "reason": "Nov9 2 rows reproduce previously archived Oct28 exact author and outputs. Do not treat repeated retail and MoP-Classic Wowhead copies as independent experiment."
     }
   ],
   "tests_performed": [
-    "Independently read canonical 2026-11-02 TWW 219947 records, 2026-11-08/09 duplicate rows, and all seven 2026-11-09T0749 replacement records and reconciled seven exact input item IDs and source hit/operation pairs.",
-    "Inspected current research/v3/tools/build_estimates.py load() for replaced-ID exclusion; this is static code review, not executed code.",
-    "Read current worker-owned quiet reports and observed GitHub Actions completed/success on exact pre-note research SHA."
+    "Independently opened original Wowhead WotLK Azure Pigment page and compared Sgtown 128/256 operations and 383/61, 774/141 units to 2026-11-09 Legacy worker evidence, Oct28 original observations and immutable pre-M03 study-ID fixture 00233..00236; exact match.",
+    "Independently opened original Wowhead retail Ebon Pigment page and compared funknut 94 Nether/4 Ebon with Nov9 worker rows and Oct28 original Felweed observation; exact match.",
+    "Read estimator build_estimates.py study_identity/source_key and source_keys.py normalize_url source; static source-key alias risk identified. No compiler executed.",
+    "Read current research role/queue/schema/mechanics/strategy, three-pass owner checkpoint, worker status paths; observed GitHub Actions completed/success on exact pre-note research branch SHA."
   ],
   "tests_not_performed": [
-    "Research estimator run or migrated/compiled ItemDB rebuild",
-    "Actual offline synthetic-price valuation and tooltip rendering",
-    "Lua/native addon regression suite",
-    "Live World of Warcraft or actual-character operation/eligibility tests"
+    "Regression execution of research estimator / migrated ItemDB compilation for duplicates",
+    "Offline price/valuation/tooltip rendering",
+    "Native Lua addon/CI tests initiated by coordinator",
+    "Live WoW or actual-character eligibility/skill verification"
   ],
   "branch_heads_checked": {
-    "research_parent": "17054e6fd74491cdb351f62f774f4792acf4b101",
-    "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
+    "research_parent": "00172cce953cfd7b4d2b3fb98b361a185b10a92e",
+    "research_pre_note": "9d0f54ce50cebe16af36a2df0efd1d7f6ce5c33e",
+    "main": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
     "protected_implementation": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "ci_parent": {
-    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42585553046",
-    "head_sha": "17054e6fd74491cdb351f62f774f4792acf4b101",
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42597203345",
+    "head_sha": "9d0f54ce50cebe16af36a2df0efd1d7f6ce5c33e",
     "status": "completed",
     "conclusion": "success",
-    "completed_at": "2026-11-09T08:23:32Z",
+    "completed_at": "2026-11-09T09:57:05Z",
     "applies_to_note_commit": false,
-    "note": "External GitHub Actions outcome read; coordinator did not run full local validation."
+    "note": "Observed existing CI on pre-note research head; not locally executed and not validation of current documentation commit."
   },
   "existing_research_prs": {
     "pr22": "closed_unmerged",
     "pr23": "closed_unmerged",
     "owner_implementation_pr24": "merged_by_PR_Director_2026-11-02"
   },
-  "next_concrete_step": "Prioritize current Retail original completed-cast event logs for Midnight T0005/T0039/T0045 (per-output itemLink/rank, 0..N and zero outcomes, actual operations, refunds and skill/unlock/build) and avoid repeated historical references. Keep beta 8905 mixed-herb 12/2 as isolated provenance only; worker reports are reported-only until independently verified.",
-  "previous_status_updated_at": "2026-11-09T07:08:50.440Z",
+  "next_concrete_step": "Have Legacy worker reconcile six Nov9 aliases against October 28 canonical author/cohort identities without rewriting originals, then run an actual focused estimator regression in an isolated scoped engineering branch to confirm no duplicate sample weights. Do not open competing addon PRs. Prioritize current-Retail Midnight T0005/T0039/T0045 original cast logs and rank/skill/refund data over historical repeats.",
+  "previous_status_updated_at": "2026-11-09T09:46:45.421Z",
   "newly_verified_fields_cohorts": [
     {
-      "kind": "same-source-alias_reconciliation_static_code_path",
-      "method": "Disenchant",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "original_source": "https://www.wowhead.com/ptr/item=219947/storm-dust",
-      "attribution": "An existing worker wrote seven replacement evidence rows; coordinator independently compared those rows to canonical Nov 2 rows and late duplicate source rows, and inspected builder load() code. No original new source observations.",
-      "mappings": [
+      "kind": "duplicate_historical_original_source_verified",
+      "source_author": "Sgtown",
+      "original_event_bundles": 2,
+      "nov9_worker_rows": [
+        "legacy-20261109-95501",
+        "legacy-20261109-95502",
+        "legacy-20261109-95503",
+        "legacy-20261109-95504"
+      ],
+      "archived_original_observation_ids": [
+        "ww-b009-sgtown-2009-adders-tongue",
+        "ww-b009-sgtown-2009-icethorn"
+      ],
+      "preexisting_import_study_ids": [
+        "import-study-00233",
+        "import-study-00234",
+        "import-study-00235",
+        "import-study-00236"
+      ],
+      "cohorts": [
         {
-          "inputItemID": 232745,
-          "inputName": "Apprentice Knight's Belt",
-          "canonical_record": "war-within-20261102-0629-003",
-          "late_duplicate": "war-within-202611082328-006",
-          "replacement": "war-within-20261109-0749-001",
-          "source_hits": 35,
-          "source_reported_operations": 91
+          "inputItemID": 36903,
+          "casts_reported": 128,
+          "outputTotals": {
+            "39343": 383,
+            "43109": 61
+          }
         },
         {
-          "inputItemID": 232746,
-          "inputName": "Spaulders of Lost Inspiration",
-          "canonical_record": "war-within-20261102-0629-002",
-          "late_duplicate": "war-within-202611082328-007",
-          "replacement": "war-within-20261109-0749-002",
-          "source_hits": 30,
-          "source_reported_operations": 75
-        },
-        {
-          "inputItemID": 235149,
-          "inputName": "Maniac Biker's Boots",
-          "canonical_record": "war-within-20261102-0629-007",
-          "late_duplicate": "war-within-202611082328-008",
-          "replacement": "war-within-20261109-0749-003",
-          "source_hits": 30,
-          "source_reported_operations": 82
-        },
-        {
-          "inputItemID": 245719,
-          "inputName": "Greaves of the Auditbreaker",
-          "canonical_record": "war-within-20261102-0629-005",
-          "late_duplicate": "war-within-202611082328-009",
-          "replacement": "war-within-20261109-0749-004",
-          "source_hits": 21,
-          "source_reported_operations": 55
-        },
-        {
-          "inputItemID": 232736,
-          "inputName": "Pendant of Enduring Promise",
-          "canonical_record": "war-within-20261102-0629-006",
-          "late_duplicate": "war-within-202611082328-010",
-          "replacement": "war-within-20261109-0749-005",
-          "source_hits": 45,
-          "source_reported_operations": 118
-        },
-        {
-          "inputItemID": 238251,
-          "inputName": "Grateful Goblin's Blade",
-          "canonical_record": "war-within-20261102-0629-004",
-          "late_duplicate": "war-within-20261109-0633-001",
-          "replacement": "war-within-20261109-0749-006",
-          "source_hits": 19,
-          "source_reported_operations": 50
-        },
-        {
-          "inputItemID": 232758,
-          "inputName": "Gauntlets of Lost Inspiration",
-          "canonical_record": "war-within-20261102-0051-010",
-          "late_duplicate": "war-within-20261109-0633-002",
-          "replacement": "war-within-20261109-0749-007",
-          "source_hits": 34,
-          "source_reported_operations": 93
+          "inputItemID": 36906,
+          "casts_reported": 256,
+          "outputTotals": {
+            "39343": 774,
+            "43109": 141
+          }
         }
       ],
-      "independently_new_cohorts": 0,
-      "new_original_completed_casts": 0,
-      "new_per_output_total_units": 0,
-      "new_histograms": 0,
-      "new_price_or_tooltip_fields": 0,
-      "statically_verified_behavior": "research/v3/tools/build_estimates.py load(): replaced={r['replaces'] for r in rows if r.get('replaces')}; rows filtered where id not in replaced; seven late source duplicates are referenced, original canonical records are not.",
-      "limitation": "Static source and logic inspection only, not executed estimator, compiled database, synthetic-price render, or real client verification."
+      "original_source": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+      "patch": "3.2.2",
+      "new_independent_completed_casts": 0,
+      "current_retail_applicability": "unverified"
     },
     {
-      "kind": "source_original_historical_beta_build8905_mixed_herb_numerical_aggregate",
-      "author": "Wowhead commenter 204361",
-      "beta_build": 8905,
-      "source_reported_completed_mills": 12,
-      "source_reported_firefly_dust_total_units": 2,
-      "source_approx_violet_occurrence_pct": 75,
-      "source_approx_ruby_occurrence_pct": 25,
-      "exact_violet_hit_count": null,
-      "exact_ruby_hit_count": null,
-      "firefly_hit_count": null,
-      "herb_input_item_ids": null,
-      "firefly_dust_output_item_id": null,
-      "source_stated_material_item_id": null,
-      "per_cast_histogram": null,
-      "source_urls": [
-        "https://www.wowhead.com/cata/item=39340/violet-pigment",
-        "https://www.wowhead.com/wotlk/item=43106/ruby-pigment"
+      "kind": "duplicate_historical_original_source_verified",
+      "source_author": "funknut",
+      "original_event_bundles": 1,
+      "nov9_worker_rows": [
+        "legacy-20261109-95507",
+        "legacy-20261109-95508"
       ],
-      "same_author_duplicate_mirror_urls": true,
-      "independent_from_8885_epoch": "separate beta build; same original author, different reported cast series; do not pool",
-      "newly_verified_modern_retail_eligible_cohorts": 0,
-      "verified_current_retail_expected_value": 0,
-      "new_actual_tooltip_fields": 0,
-      "note_path": "research/v3/evidence/master/2026-11-09T0944-wotlk-beta-8905-firefly-epoch-numeric.md",
-      "validation": "indexed original source passages and existing repository term checks; no estimator or runtime/client tests"
+      "archived_original_observation_id": "2026-10-28-0837-legacy-batch008-felweed-2008",
+      "inputItemID": 22785,
+      "outputTotals": {
+        "39342": 94,
+        "43108": 4
+      },
+      "source": "https://www.wowhead.com/item=43108/ebon-pigment",
+      "patch": "post-3.0.2 historical",
+      "completed_casts": null,
+      "per_output_hits": null,
+      "new_independent_completed_casts": 0,
+      "current_retail_applicability": "unverified"
+    },
+    {
+      "kind": "static_compiler_identity_risk_not_executed",
+      "source_keys": [
+        "wowhead:item=39343",
+        "wowhead:item=39343@wotlk",
+        "wowhead:item=43108",
+        "wowhead:item=43108@mop-classic"
+      ],
+      "reason": "source_keys.py flavour preservation and build_estimates.py same_page() removal excludes @wotlk and @mop-classic; different new studyKey names without explicit shared cohortKey",
+      "compilation_regression_test_run": false
     }
   ],
-  "commit_sha_scope": "Pre-checkpoint research branch HEAD. The new commit cannot embed its own SHA; read back the pushed branch head after publication.",
+  "commit_sha_scope": "Recorded verified evidence-note commit as parent; this status commit SHA must be checked after write; no addon, main, or three-pass branch changes.",
   "worker_reports_read": [
     {
       "role": "midnight",
       "updated_at": "2026-11-09T09:22:29.565Z",
-      "status": "active: 10 new non-overlapping live Season 2 epic armor Looter reference rows, zero new verified original per-cast yield cohorts",
-      "reported_only": true,
-      "task_ids": [
-        "T0026",
-        "T0049",
-        "T0005",
-        "T0039",
-        "T0045"
-      ]
+      "source": "research/coordination/quiet-status/midnight.json",
+      "acknowledgement": "read; reported-only Looter item aggregate; output rank and per-cast quantities not verified"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-09T08:43:35.598Z",
-      "status": "four_new_source_mapped_profession_tool_de_candidate_identities_no_new_measured_cast_cohorts",
-      "reported_only": true,
-      "task_ids": [
-        "T0048",
-        "T0040",
-        "T0009",
-        "T0010",
-        "T0011",
-        "T0007",
-        "T0008",
-        "T0032"
-      ]
+      "updated_at": "2026-11-09T09:51:04.031Z",
+      "source": "research/coordination/quiet-status/war-within.json",
+      "acknowledgement": "read; reported-only profession tool eligibility candidates; not measured yields"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-09T09:14:36.841Z",
-      "status": "Six newly indexed original Dragonflight gear disenchant item cohorts (12 material occurrence records); high-priority prospecting and milling cast-level gaps remain unclosed",
-      "reported_only": true,
-      "task_ids": [
-        "T0020",
-        "T0018",
-        "T0015",
-        "T0041",
-        "T0019",
-        "T0046"
-      ]
+      "updated_at": "2026-11-09T09:48:01.054Z",
+      "source": "research/coordination/quiet-status/dragonflight.json",
+      "acknowledgement": "read; reported-only source cohorts, no per-cast numeric study verified here"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-09T08:50:02.990Z",
-      "status": "14 new append-only evidence rows: five original PTR Violet/Ruby herb cohorts (10 output rows), three missing Indigo Pigment same-cohort output totals (identity and numeric enrichment only), and one independent beta 8885 40-completed-mill zero-inclusive Ruby histogram. No added Warmaul, Cobalt or Fel Iron casts. Historical PTR/beta only, no current Retail validity, fabricated chance, or gold EV.",
-      "reported_only": true,
-      "task_ids": [
-        "T0047",
-        "T0022",
-        "T0044",
-        "T0042",
-        "T0053"
-      ]
+      "updated_at": "2026-11-09T09:56:19.907Z",
+      "source": "research/coordination/quiet-status/legacy.json",
+      "acknowledgement": "six of ten new rows crosschecked with original public source and preexisting October 28 records: six duplicates, NOT six independent new rows; other four unverified by coordinator"
     }
   ],
   "source_evidence_links": [
-    "https://www.wowhead.com/cata/item=39340/violet-pigment",
-    "https://www.wowhead.com/wotlk/item=43106/ruby-pigment"
+    "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
+    "https://www.wowhead.com/item=43108/ebon-pigment",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1011-legacy-sgtown-funknut-source-alias-reconciliation.md",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/source_keys.py",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py"
   ],
   "latest_ci_checked": {
-    "run_id": 42592961974,
-    "sha": "43ce7621bc2d63e9cc6b6b88b5fc1377b7ae61ec",
+    "run_id": 42597203345,
+    "sha": "9d0f54ce50cebe16af36a2df0efd1d7f6ce5c33e",
     "status": "completed",
     "conclusion": "success",
-    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42592961974",
-    "scope": "previous research branch head; not validation of new coordinator documentation"
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42597203345",
+    "scope": "pre-note research head; not validation of new checkpoint"
   }
 }
