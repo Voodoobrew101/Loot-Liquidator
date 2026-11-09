@@ -362,19 +362,29 @@ function LL:TokenRedemptionCost(f,token,rewardID,current,character)
     if token.costsComplete==false or token.chainCostUnknown or token.candidateRewards then
         return {known=false,available=false,inputCount=1,reason=token.catalogNote or 'Complete redemption-chain costs not established'}
     end
-    if token.kind~='exchange' then return {known=true,available=true,value=0,inputCount=1} end
-    local costs=token.costs and token.costs[tostring(rewardID)]
-    if type(costs)~='table' or #costs==0 then
-        return {known=false,available=false,inputCount=1,reason='Exchange costs not established'}
+    local result={known=true,available=true,value=0,inputCount=token.kind=='exchange' and 0 or 1}
+    local char=self.db and self.db.characters and self.db.characters[character]
+    local level=current and Read(UnitLevel,'player') or (char and char.level)
+    -- Native use-level applies before opening too. Query the actual token
+    -- variant instead of inferring a requirement from its tier or name.
+    local info=C_Item and C_Item.GetItemInfo or GetItemInfo
+    if type(info)=='function' then
+        local ok,_,_,_,_,requiredLevel=pcall(info,f.link or f.id)
+        if ok and Number(requiredLevel) and requiredLevel>1
+            and (not Number(level) or level<requiredLevel) then
+            result.available=false;result.reason='Token requires level '..tostring(requiredLevel)
+        end
     end
-    local result={known=true,available=true,value=0,inputCount=0}
     local requirement=token.rewardRequirements and token.rewardRequirements[tostring(rewardID)]
     if requirement then
-        local char=self.db and self.db.characters and self.db.characters[character]
-        local level=current and Read(UnitLevel,'player') or (char and char.level)
         if requirement.unverified or (requirement.minimumLevel and (not Number(level) or level<requirement.minimumLevel)) then
             result.available=false;result.reason='Reward level, faction or inherited exchange requirements not verified for this character'
         end
+    end
+    if token.kind~='exchange' then return result end
+    local costs=token.costs and token.costs[tostring(rewardID)]
+    if type(costs)~='table' or #costs==0 then
+        return {known=false,available=false,inputCount=1,reason='Exchange costs not established'}
     end
     local counts=C_Item and C_Item.GetItemCount or GetItemCount
     for _,cost in ipairs(costs) do

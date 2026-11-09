@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Bounded, non-executing import of pinned AllTheThings Retail cost records.
 
-Only literal equipment leaf nodes in the archived inventory are parsed. Full
-Lua expressions, unsupported costs and conflicting variant costs stay held.
-Inherited/faction requirements remain unavailable until independently checked.
+Literal cost leaves and archived class-group tier structures are parsed without
+executing Lua. Expressions, unsupported costs and conflicting variants cannot
+be admitted. Tier source hashes and full family membership are checked too.
 """
 import hashlib
 import json
@@ -15,6 +15,13 @@ from evidence_to_baselines import lua as scalar_lua
 
 SOURCE = Path('database/research/att-exchanges-snapshot.json')
 OUTPUT = Path('database/att-token-baselines.lua')
+TIER_SOURCES = [
+    (Path('database/research/att-lost-snapshot.json'), 'att-tier7-source.lua', 40610, 40639),
+    (Path('database/research/att-wayward-snapshot.json'), 'att-tier8-source.lua', 45632, 45661),
+]
+TIER_CLASSES = {'WARRIOR': 1, 'PALADIN': 2, 'HUNTER': 3, 'ROGUE': 4,
+                'PRIEST': 5, 'DEATHKNIGHT': 6, 'SHAMAN': 7, 'MAGE': 8,
+                'WARLOCK': 9, 'DRUID': 11}
 
 
 def lua(value):
@@ -78,7 +85,82 @@ def parse_leaf(row):
             'line': row['line'], 'original': text}
 
 
+def parse_tier_source(raw):
+    """Read only literal class-group equipment leaves; never execute ATT Lua."""
+    lines = raw.splitlines()
+    rows, group, class_name = [], None, None
+    for offset, line in enumerate(lines):
+        match = re.fullmatch(r'(TIER_[A-Z_]+GROUPS) = \{', line)
+        if match:
+            group, class_name = match[1], None
+        match = re.fullmatch(r'\t([A-Z]+) = \{', line)
+        if match:
+            class_name = match[1]
+        if not re.match(r'\s*i\(', line):
+            continue
+        item = re.fullmatch(r'\t\ti\((\d+), \{\s*-- (.+)', line)
+        cost = re.fullmatch(r'\t\t\tcost = \{ \{ "i", (\d+), 1 \}, \},\s*-- (.+)',
+                            lines[offset + 1] if offset + 1 < len(lines) else '')
+        if (not item or not cost or not group or class_name not in TIER_CLASSES
+                or lines[offset + 2:offset + 3] != ['\t\t}),']):
+            raise ValueError('Unsupported tier equipment leaf at line ' + str(offset + 1))
+        rows.append({'itemID': int(item[1]), 'tokenID': int(cost[1]),
+                     'classID': TIER_CLASSES[class_name], 'rewardName': item[2],
+                     'tokenComment': cost[2], 'line': offset + 1,
+                     'lua': '\n'.join(lines[offset:offset + 3])})
+    if not rows:
+        raise ValueError('No tier equipment leaves')
+    return rows
+
+
+def build_tier_tokens(snapshot, source_file, first, last):
+    data = json.loads(snapshot.read_text(encoding='utf-8'))
+    raw_bytes = snapshot.with_name(source_file).read_bytes()
+    blob = hashlib.sha1(b'blob ' + str(len(raw_bytes)).encode() + b'\0' + raw_bytes).hexdigest()
+    if (data.get('gameMode') != 'Retail' or data.get('schemaVersion') != 1
+            or data.get('licenseSPDX') != 'MIT' or not data.get('revision')
+            or data.get('blobSHA') != blob
+            or data.get('sourceSHA256') != hashlib.sha256(raw_bytes).hexdigest()):
+        raise ValueError('Tier snapshot scope, attribution or source hash mismatch')
+    rows = parse_tier_source(raw_bytes.decode('utf-8'))
+    fields = ('itemID', 'tokenID', 'classID', 'rewardName', 'line', 'lua')
+    if ([{k: r[k] for k in fields} for r in rows]
+            != [{k: r[k] for k in fields} for r in data['rows']]):
+        raise ValueError('Tier snapshot rows do not match archived source')
+    grouped, rewards_seen = {}, set()
+    for row in rows:
+        if not first <= row['tokenID'] <= last or row['itemID'] in rewards_seen:
+            raise ValueError('Unexpected tier token or duplicate equipment reward')
+        rewards_seen.add(row['itemID'])
+        grouped.setdefault(row['tokenID'], []).append(row)
+    if set(grouped) != set(range(first, last + 1)):
+        raise ValueError('Tier family incomplete')
+    records = []
+    names = {t['tokenID']: t['name'] for t in data['tokens']}
+    for token, leaves in sorted(grouped.items()):
+        # The native Retail Use tooltip creates class/spec gear. ATT's literal
+        # one-token costs supply the outcome identities, not a proc distribution
+        # or a claim that every specialization outcome arrives together.
+        name = names[token]
+        wiki = 'https://warcraft.wiki.gg/wiki/' + name.replace(' ', '_')
+        records.append({'recordID': f'att-tier-token:{token}', 'tokenID': token,
+            'tokenName': name, 'kind': 'open', 'gameMode': 'Retail',
+            'requirements': {}, 'requirementsReviewed': False, 'rewardSelection': 'class',
+            'listComplete': True, 'evidenceStatus': 'RESEARCH_RELATIONSHIP',
+            'independentReview': 'NOT_REVIEWED', 'confidence0to100': 60,
+            'patchStartBuild': 1, 'patchEndBuild': 2147483647,
+            'sourceRevision': data['revision'], 'sourceOrigin': 'ATT',
+            'sourceURLs': [data['sourceURL'], wiki],
+            'licenseSPDX': 'MIT', 'licenseText': data['licenseText'],
+            'rewards': sorted(r['itemID'] for r in leaves),
+            'rewardClassMasks': {str(r['itemID']): 2 ** (r['classID'] - 1) for r in leaves},
+            'sourceEvidence': [{'line': r['line'], 'rewardID': r['itemID']} for r in leaves],
+            'sourceAssumption': 'Pinned tier equipment identities and class groups; Retail Use creates class/spec gear. Outcomes depend on class and loot specialization; no output probability is established.'})
+    return records
+
+
 def build(data=None):
+    include_tiers = data is None
     data = json.loads(SOURCE.read_text()) if data is None else data
     if data['gameMode'] != 'Retail' or data['licenseSPDX'] != 'MIT' or not data['revision']:
         raise ValueError('Only a pinned, attributed Retail source is supported')
@@ -123,16 +205,23 @@ def build(data=None):
                 'costs': costs, 'rewardClassMasks': masks, 'rewardRequirements': requirements,
                 'sourceEvidence': evidence,
                 'sourceAssumption': 'Pinned Retail equipment costs; base variants only; unsupported inherited requirements remain unavailable'})
+    if include_tiers:
+        for args in TIER_SOURCES:
+            records.extend(build_tier_tokens(*args))
     return records, held
 
 
 def render():
-    data = json.loads(SOURCE.read_text()); records, held = build(data)
+    data = json.loads(SOURCE.read_text()); records, held = build()
     return '-- Generated by tools/att_token_references.py; ATT MIT attribution retained.\nreturn ' + lua({
         'schemaVersion': 1, 'tokenRewards': records, 'held': held,
         'sourceManifest': {'repository': data['repository'], 'revision': data['revision'],
                            'sourceSHA256': hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
-                           'licenseSPDX': 'MIT', 'curioCostsEstablished': False},
+                           'licenseSPDX': 'MIT', 'curioCostsEstablished': False,
+                           'tierSources': [{'snapshot': str(path).replace('\\', '/'),
+                               'snapshotSHA256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                               'sourceSHA256': json.loads(path.read_text(encoding='utf-8'))['sourceSHA256']}
+                               for path, _, _, _ in TIER_SOURCES]},
         'licenseText': data['licenseText'],
         'curioEvidence': [{'tokenID': int(token), 'rewards': proof['rewards'],
                           'sourceURL': f"https://github.com/{data['repository']}/blob/{data['revision']}/db/Standard/Categories/Instances.lua",
@@ -147,4 +236,4 @@ if __name__ == '__main__':
     else:
         OUTPUT.write_text(output)
     records, held = build()
-    print(f'ATT REFERENCES: {len(records)} exchanges; {sum(len(r["rewards"]) for r in records)} reward/cost relationships; {len(held)} held')
+    print(f'ATT REFERENCES: {len(records)} token catalogs; {sum(len(r["rewards"]) for r in records)} reward relationships; {len(held)} held')
