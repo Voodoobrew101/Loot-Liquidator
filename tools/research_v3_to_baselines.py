@@ -254,8 +254,24 @@ def retail_admission(rows):
     """
     path = Path(__file__).resolve().parent.parent / 'database/research/retail-admission.json'
     policy = json.loads(path.read_text())
-    if policy['version'] != 1:
+    # A malformed policy must not silently turn a reviewed hold into admission.
+    # This validates policy structure, not the wider research row schema.
+    if not isinstance(policy, dict) or type(policy.get('version')) is not int or policy['version'] != 1:
         raise ValueError('Unsupported Retail admission policy version')
+    if not isinstance(policy.get('exclusions'), list):
+        raise ValueError('Retail admission exclusions must be a list')
+    for rule in policy['exclusions']:
+        if not isinstance(rule, dict):
+            raise ValueError('Retail admission exclusion must be an object')
+        for key in ('recordIDs', 'studyKeys'):
+            values = rule.get(key)
+            if not isinstance(values, list) or any(not isinstance(value, str) or not value.strip() for value in values):
+                raise ValueError('Retail admission ' + key + ' must be a list of nonempty strings')
+        if not rule['recordIDs'] and not rule['studyKeys']:
+            raise ValueError('Retail admission exclusion needs at least one identity')
+        for key in ('reason', 'review'):
+            if not isinstance(rule.get(key), str) or not rule[key].strip():
+                raise ValueError('Retail admission exclusion needs nonempty ' + key)
     admitted, excluded = [], Counter()
     for row in rows:
         match = next((rule for rule in policy['exclusions']
