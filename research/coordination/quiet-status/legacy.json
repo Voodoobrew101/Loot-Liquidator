@@ -1,139 +1,230 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-08T23:48:20.026Z",
-  "status": "Added six firsthand WotLK disenchant output records from three distinct original studies and four clearly labeled 3.2.2 conditional-yield model/prior rows; 40 Crystal Citrine Necklace, 6 Frostwoven Belt and 34 Reinforced Cobalt Helm item conversions described. No new measured Warmaul 24995, Cobalt 36909, or Fel Iron 23424 processing denominators or modern Retail eligibility.",
+  "updated_at": "2026-11-09T00:51:35.650Z",
+  "status": "11 source-verified Classic Mining deterministic recipe identity replacements (spell IDs, input/output IDs and fixed batch sizes) for missing original schema fields; zero new sampled disenchant, prospect or milling casts. Warmaul 24995, Cobalt 36909, Fel Iron 23424 and token 45661 original priority gaps remain open.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "T0052",
+    "T0029",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995: 2068 historical Looter operations remain without original per-stack histogram/total units, live bonus variant, build, skill or currently valid DE eligibility; historic TBC ilvl108 differs from scaled Retail ilvl31. Do not treat 37 unlisted outcomes as measured zero.",
-    "T0042 WotLK historical ilvl138 Crystal Citrine Necklace 43244, Frostwoven Belt 41522 and ilvl162 Reinforced Cobalt Helm 40957: recovered exact firsthand output units and six dust-positive belt casts; still lack zero-inclusive output histograms and measured profession context. Reinforced Cobalt 40956/40957/40958/40959 have only guide-derived 3.2.2 conditional output range as prior.",
-    "T0022 Cobalt Ore 36909: no new first-party completed prospect-cast denominators, output hits, zero outcomes or histograms; prior 24 nominal stack source not recounted.",
-    "T0044 Fel Iron Ore 23424: no new independent completed cast and per-gem hit histogram; prior nominal ore/stacks not reclassified.",
-    "T0052 TBC 25003 Bloodfist Legplates and 30364 Resonating Axe: historical Looter output units/stack bins and current-item eligible variant still unknown.",
-    "T0053 Spaulders of the Wayward Vanquisher token 45661: previously mapped class rewards not recopied; modern redemption path variants unverified."
+    "T0047 Warmaul Legplates 24995: cumulative 2068 historical Looter disenchants already have output-side positive stack histograms; source build/bonus/skill and current Retail item eligibility conflict still unresolved; no duplicate cohort recorded.",
+    "T0042 and T0022 Cobalt 36909: no new original completed prospect casts with named output hit counts, 0/1/... histograms or refunds; prior nominal ore data not reclassified.",
+    "T0044 Fel Iron 23424: no new firsthand prospect-click denominator or individual gem occurrence histogram; copied and nominal-stack sources not recounted.",
+    "T0029 Classic fixed-yield Mining recipe identity: eleven old records legacy-20261030-028 through -038 had absent exact recipe spell, input item and output item IDs; replaced with cited full record specifications, including Bronze output 2 and Dark Iron ore 8.",
+    "T0053 token 45661 Spaulders of the Wayward Vanquisher class reward variants/redemption not reconfirmed this run; avoid duplicate evidence."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-wotlk-43244-nanon-40-necklaces-original",
-      "inputItemID": 43244,
-      "inputName": "Crystal Citrine Necklace",
-      "itemLevelHistorical": 138,
-      "completedDisenchantsDescribed": 40,
-      "outputTotals": [
+      "recipeSpellID": 2657,
+      "recipeName": "Smelt Copper",
+      "inputItemID": 2770,
+      "inputName": "Copper Ore",
+      "inputsPerCast": 1,
+      "outputItemID": 2840,
+      "outputName": "Copper Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-028",
+      "source": "https://www.wowhead.com/spell=2657/smelt-copper",
+      "measuredCasts": null
+    },
+    {
+      "recipeSpellID": 3304,
+      "recipeName": "Smelt Tin",
+      "inputItemID": 2771,
+      "inputName": "Tin Ore",
+      "inputsPerCast": 1,
+      "outputItemID": 3576,
+      "outputName": "Tin Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-029",
+      "source": "https://ptr.wowdb.com/spells/3304-smelt-tin",
+      "measuredCasts": null
+    },
+    {
+      "recipeSpellID": 2659,
+      "recipeName": "Smelt Bronze",
+      "inputItemID": 2840,
+      "inputName": "Copper Bar",
+      "inputsPerCast": 1,
+      "outputItemID": 2841,
+      "outputName": "Bronze Bar",
+      "outputCount": 2,
+      "otherReagents": [
         {
-          "itemID": 34054,
-          "quantity": 49
-        },
-        {
-          "itemID": 34053,
-          "quantity": 3
-        },
-        {
-          "itemID": 34056,
-          "quantity": 9
+          "itemID": 3576,
+          "name": "Tin Bar",
+          "count": 1
         }
       ],
-      "hitCounts": null,
-      "source": "https://www.wowhead.com/wotlk/item=43244/crystal-citrine-necklace"
+      "replaces": "legacy-20261030-030",
+      "source": "https://www.wowhead.com/spell=2659/smelt-bronze",
+      "measuredCasts": null
     },
     {
-      "studyKey": "wowhead-wotlk-41522-244234-six-frostwoven-belts",
-      "inputItemID": 41522,
-      "inputName": "Frostwoven Belt",
-      "itemLevelHistorical": 138,
-      "casts": 6,
-      "outputItemID": 34054,
-      "castsWithDrop": 6,
-      "totalQuantity": null,
-      "minSeen": 1,
-      "maxSeen": 2,
-      "source": "https://www.wowhead.com/wotlk/item=41522/frostwoven-belt"
+      "recipeSpellID": 2658,
+      "recipeName": "Smelt Silver",
+      "inputItemID": 2775,
+      "inputName": "Silver Ore",
+      "inputsPerCast": 1,
+      "outputItemID": 2842,
+      "outputName": "Silver Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-031",
+      "source": "https://beta.wowdb.com/spells/2658-smelt-silver",
+      "measuredCasts": null
     },
     {
-      "studyKey": "wowhead-wotlk-40957-jabell4610-34-helms-original",
-      "inputItemID": 40957,
-      "inputName": "Reinforced Cobalt Helm",
-      "itemLevelHistorical": 162,
-      "sourceReportedConvertedHelms": 34,
-      "completedClicksDirectlyLogged": false,
-      "outputTotals": [
+      "recipeSpellID": 3307,
+      "recipeName": "Smelt Iron",
+      "inputItemID": 2772,
+      "inputName": "Iron Ore",
+      "inputsPerCast": 1,
+      "outputItemID": 3575,
+      "outputName": "Iron Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-032",
+      "source": "https://ptr.wowdb.com/spells/3307-smelt-iron",
+      "measuredCasts": null
+    },
+    {
+      "recipeSpellID": 3308,
+      "recipeName": "Smelt Gold",
+      "inputItemID": 2776,
+      "inputName": "Gold Ore",
+      "inputsPerCast": 1,
+      "outputItemID": 3577,
+      "outputName": "Gold Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-033",
+      "source": "https://www.wowdb.com/spells/3308-smelt-gold",
+      "measuredCasts": null
+    },
+    {
+      "recipeSpellID": 3569,
+      "recipeName": "Smelt Steel",
+      "inputItemID": 3575,
+      "inputName": "Iron Bar",
+      "inputsPerCast": 1,
+      "outputItemID": 3859,
+      "outputName": "Steel Bar",
+      "outputCount": 1,
+      "otherReagents": [
         {
-          "itemID": 34054,
-          "quantity": 86
-        },
-        {
-          "itemID": 34055,
-          "quantity": 17
+          "itemID": 3857,
+          "name": "Coal",
+          "count": 1
         }
       ],
-      "hitCounts": null,
-      "source": "https://www.wowhead.com/wotlk/item=40957/reinforced-cobalt-helm"
+      "replaces": "legacy-20261030-034",
+      "source": "https://www.wowdb.com/spells/3569-smelt-steel",
+      "measuredCasts": null
     },
     {
-      "sourceKind": "reference",
-      "patch": "3.2.2",
-      "inputItemIDs": [
-        40956,
-        40957,
-        40958,
-        40959
-      ],
-      "outputItemID": 34054,
-      "sourceSupportedConditionalYieldRange": [
-        4,
-        7
-      ],
-      "observedCasts": null,
-      "observedHistograms": null,
-      "source": "https://www.wowhead.com/wotlk/item=34054/infinite-dust"
+      "recipeSpellID": 10097,
+      "recipeName": "Smelt Mithril",
+      "inputItemID": 3858,
+      "inputName": "Mithril Ore",
+      "inputsPerCast": 1,
+      "outputItemID": 3860,
+      "outputName": "Mithril Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-035",
+      "source": "https://www.wowdb.com/spells/10097-smelt-mithril",
+      "measuredCasts": null
+    },
+    {
+      "recipeSpellID": 10098,
+      "recipeName": "Smelt Truesilver",
+      "inputItemID": 7911,
+      "inputName": "Truesilver Ore",
+      "inputsPerCast": 1,
+      "outputItemID": 6037,
+      "outputName": "Truesilver Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-036",
+      "source": "https://www.wowhead.com/spell=10098/smelt-truesilver",
+      "measuredCasts": null
+    },
+    {
+      "recipeSpellID": 14891,
+      "recipeName": "Smelt Dark Iron",
+      "inputItemID": 11370,
+      "inputName": "Dark Iron Ore",
+      "inputsPerCast": 8,
+      "outputItemID": 11371,
+      "outputName": "Dark Iron Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-037",
+      "source": "https://www.wowdb.com/spells/14891-smelt-dark-iron",
+      "measuredCasts": null
+    },
+    {
+      "recipeSpellID": 16153,
+      "recipeName": "Smelt Thorium",
+      "inputItemID": 10620,
+      "inputName": "Thorium Ore",
+      "inputsPerCast": 1,
+      "outputItemID": 12359,
+      "outputName": "Thorium Bar",
+      "outputCount": 1,
+      "otherReagents": null,
+      "replaces": "legacy-20261030-038",
+      "source": "https://www.wowhead.com/spell=16153/smelt-thorium",
+      "measuredCasts": null
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 10,
-    "firsthand_output_records": 6,
-    "model_prior_records": 4,
-    "distinct_firsthand_cohorts": 3,
-    "reported_completed_or_converted_disenchant_items": 80,
-    "ofWhichDirectlyStatedDisenchants": 46,
-    "ofWhichHelmConversionsReportedNotClickLogged": 34,
-    "firsthand_explicit_output_units": 164,
-    "belt_dust_hits": 6,
+    "new_evidence_records": 11,
+    "recipe_identity_replacements": 11,
+    "deterministic_output_count_per_cast_records": 11,
+    "new_measured_disenchant_casts": 0,
+    "new_measured_prospect_casts": 0,
     "new_Warmaul_24995_casts": 0,
     "new_Cobalt_36909_prospects": 0,
-    "new_Fel_Iron_23424_prospects": 0,
-    "model_records_count_as_casts": false
+    "new_Fel_Iron_23424_prospects": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-08T2348-wotlk-original-disenchants-cobalt-hotfix-priors.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-08T2348-wotlk-original-disenchants-cobalt-hotfix-priors.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-09T0051-classic-smelt-identity-replacements.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T0051-classic-smelt-identity-replacements.jsonl",
   "sources": [
-    "https://www.wowhead.com/wotlk/item=43244/crystal-citrine-necklace",
-    "https://www.wowhead.com/wotlk/item=41522/frostwoven-belt",
-    "https://www.wowhead.com/wotlk/item=40957/reinforced-cobalt-helm",
-    "https://www.wowhead.com/wotlk/item=34054/infinite-dust"
+    "https://www.wowhead.com/spell=2657/smelt-copper",
+    "https://ptr.wowdb.com/spells/3304-smelt-tin",
+    "https://www.wowhead.com/spell=2659/smelt-bronze",
+    "https://beta.wowdb.com/spells/2658-smelt-silver",
+    "https://ptr.wowdb.com/spells/3307-smelt-iron",
+    "https://www.wowdb.com/spells/3308-smelt-gold",
+    "https://www.wowdb.com/spells/3569-smelt-steel",
+    "https://www.wowdb.com/spells/10097-smelt-mithril",
+    "https://www.wowhead.com/spell=10098/smelt-truesilver",
+    "https://www.wowdb.com/spells/14891-smelt-dark-iron",
+    "https://www.wowhead.com/spell=16153/smelt-thorium"
   ],
-  "verified_base_commit_sha": "bf4e393443e2529adea5820f566c9fb827d11515",
+  "verified_base_commit_sha": "e4a106e4bee11d085e93183d68a6ec324c2ed819",
   "verified_commit_sha": null,
-  "commit_sha_note": "Evidence file and owner-status file are changed atomically by a single Git commit; its own final SHA cannot be embedded into the status it commits. Verify resulting SHA via branch read-back out of band.",
+  "commit_sha_note": "Evidence file and this status file are changed atomically in one Git commit; the resulting SHA cannot be embedded in its own content. Read back the branch commit SHA and both files after update.",
   "blockers": [
-    "Exact original Warmaul 24995 Looter hit stacks/units, era-specific bonus/build, and independently tested current Retail disenchant eligibility unavailable; the historical Looter outputs conflict with current WoWDB Cannot be disenchanted eligibility.",
-    "Independent Cobalt 36909 and Fel Iron 23424 prospect-click logs with per-gem hit counts, zero-inclusive histograms and refund accounting unavailable; do not convert nominal ore quantities or marketing sample sizes into casts.",
-    "WotLK 40957 34-helm batch describes converted items but does not provide a dated addon action log; WotLK Jagno 3.2.2 four-model records contain NO measured casts and are not current Retail reference eligibility.",
-    "Most original archived comments omit original publication date, full enchanting skill, specialization, item bonus IDs, modern Retail build and exact stack/zero outcomes.",
-    "No prices, inferred probabilities, gold EV, unverified zeros or estimator confidence written; no merges/releases/schedule or other workers files touched."
+    "Primary 24995 Looter per-cast raw logs, bonus/build/skill and present Retail eligibility not recovered; conflict between historical source DE outcomes and modern WoWDB Cannot be disenchanted remains.",
+    "New independent Cobalt/Fel Iron per-prospect operation logs/hit distributions and refund accounting not available; historical stacks and source-pooled marketing figures cannot be assigned invented denominators.",
+    "Recipe sources establish deterministic formula and IDs, but this run did not verify in-game live Retail character ability/trainer unlock or build compatibility; must remain historical recipe reference."
   ],
   "exhausted_sources": [
-    "Previously recorded historical Warmaul 24995 2068-operation Looter pool, positive stack references, WoWDB current eligibility conflict; no original per-cast extract recoverable from accessible pages.",
-    "Cobalt 36909 prior 24 nominal stacks and Fel Iron 23424 100/565 ore original sources were not recopied; first-party per-click output distribution still not found.",
-    "DalaGG Studios public WorthIt export index mentions 1000 Cobalt Ore and Fel Iron Ore prospecting items but does not display complete underlying cast/result logs; marketing totals not used as observations.",
-    "Previously documented token 45661 class reward mappings not recopied to avoid duplication."
+    "Historical Warmaul 24995 2068-operation Looter cohort and 2026-11-07 positive-stack enrichment already recorded; no new measurement or zero-outcome extraction.",
+    "Previously entered Cobalt 36909 original Strikk3r and Fel Iron 23424 original Thottbot sources were not duplicated.",
+    "Queue recipe records for Khorium, Saronite, Titansteel, Ghost Iron, Trillium and Hardened Elementium were already complete; skipped to avoid re-importing them.",
+    "Classic fixed smelting recipes source only enriches legacy-20261030-028..038; does not add stochastic outcomes."
   ],
-  "next_concrete_step": "Seek first-party historical Warmaul 24995 per-cast Looter/SavedVariables logs with patch, variant, output bin counts and actual in-game DE availability. For Cobalt/Fel Iron obtain original prospect-click saved variables and refunds rather than stacks. For 43244 and 40957 seek individual positive-stack outcomes, not source-derived mean-based hit probabilities.",
-  "previous_status_updated_at": "2026-11-08T22:53:31.844Z"
+  "next_concrete_step": "Collect original 24995 saved-variable/source Looter log with source build, item bonus, skill and true output stacks; acquire 36909/23424 prospect-click logs with full gem hit/zero distributions and refund accounting. Escalate Retail eligibility discrepancy for negative live/offline gate fixture via Master. Avoid redoing already compiled legacy deterministic smelts.",
+  "previous_status_updated_at": "2026-11-08T23:48:20.026Z"
 }
