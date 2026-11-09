@@ -1,145 +1,124 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T05:53:11.348Z",
-  "status": "Recovered 11 new first-person historical prospecting evidence rows across 6 independent small source/comment cohorts (Fel Iron Ore 23424 and Adamantite Ore 23425). Eight rows have exact input/output IDs; only one one-cast Nightseye 23441 observation has a source-supported positive-cast count and single-cast histogram. No newly verified Warmaul 24995, Cobalt 36909 or modern Retail sample; no inferred cast denominators, other-outcome zeros, probabilities, confidence or gold prices.",
+  "updated_at": "2026-11-09T06:52:31.540Z",
+  "status": "11 append-only evidence rows: seven same-cohort identity-only replacements for previously unplaced Cobalt Ore 36909 gem IDs and four new first-person historical WotLK milling output totals from two distinct Nightflame batches. 0 additional measured completed operations, 0 hit counts/histograms, 0 new Warmaul 24995/Fel Iron 23424 casts. No probabilities, inferred zeros or gold EV.",
   "task_ids": [
     "T0047",
     "T0022",
     "T0044",
     "T0042",
-    "T0051",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995 -> 22445/22446/22447/22449: original historical 2,068 cumulative Looter denominator/hits already archived; no new original per-click stack bins, completed cast log, exact game build, quality/level variant or modern Retail eligibility.",
-    "T0022 Cobalt Ore 36909: no new original actual completed prospecting denominator or per-output positive-hit histogram; old 24-stack historical source already recorded, no re-copy.",
-    "T0044 Fel Iron Ore 23424: three exact rare-gem material totals from separate historical five-stack comment (23438=2, 23440=2, 23441=1); an independent 2007 one-stack ambiguous 'Brill Draenite'=1; one NEW exact 5-ore completed first prospect yielded Nightseye 23441 x1 at Jewelcrafting 300.",
-    "T0051 Adamantite Ore 23425: independent 50-ore report (ten unspecified green gems, Living Ruby 23436 x2, Star of Elune 23438 x1); 2007 one-stack comment reports two unnamed rare gems; independent 150-ore report gives Nightseye 23441 x1 and Talasite 23437 x1.",
-    "T0053 Spaulders of the Wayward Vanquisher 45661: previously researched reward identities remain, no new independent Retail redemption/variant verification this run."
+    "T0047 Warmaul Legplates 24995: original 2,068 historical reported Looter operations and output occurrences already represented; no fresh original per-click stacks, real current Retail positive eligibility, build or hotfix.",
+    "T0022 Cobalt Ore 36909: restored seven missing outputItemID values on a PREVIOUSLY recorded 180-ore/9-stack Strikk3r cohort; preserved material totals, no new operations or independent cohort; source remains without completed-cast or per-output positive hit counts.",
+    "T0044 Fel Iron Ore 23424: earlier single original Nightseye 23441 1-cast sample remains latest; no new distinct fully logged cohort.",
+    "Legacy milling: two independent original first-person Nightflame source batches: eight stacks of unspecified Northrend herbs -> Azure Pigment 39343 x80, Icy Pigment 43109 x10; separate four stacks Adder's Tongue 36903 -> 39343 x52 and 43109 x11; measured completed casts, hit counts and exact stack fullness unknown.",
+    "T0053 Spaulders of the Wayward Vanquisher 45661: historical complete 7-reward vendor mapping previously recorded, current Retail right-click rewards unresolved."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "thottbot-adamantite-powder-five-stacks-fel-iron-rare-gems",
-      "inputItemID": 23424,
-      "reportedInput": "5 stacks",
-      "completedCasts": null,
-      "outputTotals": {
-        "23438": 2,
-        "23440": 2,
-        "23441": 1
+      "kind": "identity-only replacements",
+      "inputItemID": 36909,
+      "original_studyKey": "wowhead-cobalt-strikk3r-180-ore",
+      "prior_ids": [
+        "legacy-20261030-301",
+        "legacy-20261030-302",
+        "legacy-20261030-303",
+        "legacy-20261030-304",
+        "legacy-20261030-305",
+        "legacy-20261030-306",
+        "legacy-20261030-309"
+      ],
+      "new_exact_output_ids": [
+        36926,
+        36920,
+        36932,
+        36917,
+        36923,
+        36929,
+        36927
+      ],
+      "reported_total_quantities": [
+        14,
+        10,
+        11,
+        5,
+        9,
+        5,
+        1
+      ],
+      "cast_count": null,
+      "independent_new_cohorts": 0,
+      "source": "https://www.wowhead.com/it/item=36909/minerale-di-cobalto",
+      "identity_source": "https://www.wowinterface.com/downloads/info7514.html"
+    },
+    {
+      "kind": "new firsthand original herb milling totals",
+      "studyKey": "wowhead-nightflame-northrend-eight-unspecified-stacks",
+      "inputItemID": null,
+      "stacks": 8,
+      "totalQuantity": {
+        "39343": 80,
+        "43109": 10
       },
-      "source": "https://www.wowhead.com/wotlk/item=24243/adamantite-powder",
-      "hits": null,
+      "casts": null,
+      "positive_casts": null,
       "zeros": null,
-      "gameBuild": null
+      "source": "https://www.wowhead.com/mop-classic/spell=51005/milling"
     },
     {
-      "studyKey": "thottbot-adamantite-powder-fifty-ore-lucky-prospects",
-      "inputItemID": 23425,
-      "reportedOre": 50,
-      "completedCasts": null,
-      "outputTotals": {
-        "23436": 2,
-        "23438": 1,
-        "unidentified uncommon gems": 10
+      "kind": "new firsthand original herb milling totals",
+      "studyKey": "wowhead-nightflame-adder-four-stacks-follow-up",
+      "inputItemID": 36903,
+      "stacks": 4,
+      "totalQuantity": {
+        "39343": 52,
+        "43109": 11
       },
-      "source": "https://www.wowhead.com/wotlk/item=24243/adamantite-powder",
-      "hits": null,
+      "casts": null,
+      "positive_casts": null,
       "zeros": null,
-      "gameBuild": null
-    },
-    {
-      "studyKey": "kaliope-goody24-fel-iron-one-stack-20070121",
-      "inputItemID": 23424,
-      "reportedInput": "one stack",
-      "outputTotals": {
-        "Brill Draenite (unresolved ID)": 1
-      },
-      "completedCasts": null,
-      "source": "https://kaliope.wordpress.com/2007/01/18/mithril-prospecting/"
-    },
-    {
-      "studyKey": "kaliope-changed-adamantite-one-stack-20070125",
-      "inputItemID": 23425,
-      "reportedInput": "one stack",
-      "outputTotals": {
-        "unidentified rare gems": 2
-      },
-      "completedCasts": null,
-      "source": "https://kaliope.wordpress.com/2007/01/05/adamantite-prospecting-stats/"
-    },
-    {
-      "studyKey": "wowhead-nightseye-thorin-first-five-fel-iron-jc300",
-      "inputItemID": 23424,
-      "outputItemID": 23441,
-      "reportedOre": 5,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 1,
-      "minSeen": 1,
-      "maxSeen": 1,
-      "histogram": {
-        "0": 0,
-        "1": 1
-      },
-      "skill": "Jewelcrafting 300",
-      "source": "https://www.wowhead.com/item=23441/nightseye",
-      "gameBuild": null
-    },
-    {
-      "studyKey": "wowhead-nightseye-33892-adamantite-150ore-two-rares",
-      "inputItemID": 23425,
-      "reportedOre": 150,
-      "completedCasts": null,
-      "outputTotals": {
-        "23437": 1,
-        "23441": 1
-      },
-      "source": "https://www.wowhead.com/item=23441/nightseye",
-      "hits": null,
-      "zeros": null,
-      "gameBuild": null
+      "source": "https://www.wowhead.com/mop-classic/spell=51005/milling"
     }
   ],
   "numeric_summary": {
     "new_evidence_records": 11,
-    "new_independent_firsthand_cohorts": 6,
-    "new_exact_input_output_rows": 8,
-    "new_material_total_fields": 11,
-    "new_explicit_completed_prospect_operations": 1,
-    "new_per_output_positive_cast_fields": 1,
-    "new_zero_inclusive_single_material_histograms": 1,
+    "identity_only_replacements": 7,
+    "new_firsthand_output_quantity_rows": 4,
+    "new_independent_firsthand_cohorts": 2,
+    "new_actual_completed_cast_denominators": 0,
+    "new_per_output_positive_cast_counts": 0,
+    "new_zero_inclusive_histograms": 0,
     "new_measured_warmaul_disenchants": 0,
     "new_measured_cobalt_prospects": 0,
-    "new_gold_evidence_fields": 0,
-    "nominal_batch_casts_promoted_to_measured": 0
+    "new_measured_fel_iron_prospects": 0,
+    "nominal_equivalents_promoted_to_measured": 0,
+    "gold_price_fields": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-09T0553-fel-iron-adamantite-original-cohorts.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T0553-fel-iron-adamantite-original-cohorts.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-09T0652-cobalt-identity-and-original-northrend-milling.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T0652-cobalt-identity-and-original-northrend-milling.jsonl",
   "sources": [
-    "https://www.wowhead.com/wotlk/item=24243/adamantite-powder",
-    "https://www.wowhead.com/item=23441/nightseye",
-    "https://kaliope.wordpress.com/2007/01/18/mithril-prospecting/",
-    "https://kaliope.wordpress.com/2007/01/05/adamantite-prospecting-stats/"
+    "https://www.wowhead.com/mop-classic/spell=51005/milling",
+    "https://www.wowhead.com/it/item=36909/minerale-di-cobalto",
+    "https://www.wowinterface.com/downloads/info7514.html"
   ],
-  "verified_base_commit_sha": "4f598f086a80828941ae76b29d1acd06e0243df3",
+  "verified_base_commit_sha": "f787ef1fc538248d38b8833f72383497c551bcf3",
   "verified_commit_sha": null,
-  "commit_sha_note": "Evidence and this status are written in one atomic Git commit. Its own commit SHA cannot be embedded without altering it; separately verify target branch head and both file contents after ref update.",
+  "commit_sha_note": "Atomic evidence+status commit: self SHA cannot be embedded in its own tree. Confirm actual commit SHA via branch-head and file read-back after committing.",
   "blockers": [
-    "Warmaul 24995 original Looter 2,068-operation cumulative cohort has no exact individual cast outcomes, output quantities or historical build; currently scaled Retail version is flagged no-disenchant.",
-    "Cobalt 36909 still lacks original per-click positive-hit denominators and zero-inclusive histograms.",
-    "New five-stack and 50/150-ore historic reports do not record individual completed operations or gem-positive cast counts; leave casts and chance null, do not equate nominal batches to real casts.",
-    "Some historical reports have aggregated unidentified output names; exact IDs and source hotfix/skill remain unknown.",
-    "Only Nightseye 23441 single Fel Iron 5-ore attempt has a source-supported complete one-output histogram; it is very small and not current Retail validation."
+    "Warmaul 24995 historical source has 2,068 cumulative Looter operations but lacks source-dated build/ilvl, per-click item output units/histograms and actual current Retail DE eligibility; WoWDB scaled version says Cannot be disenchanted.",
+    "Cobalt 36909 Strikk3r 180-ore source gives totals only, not actual five-ore completed casts or positive-output hits; seven identity-only replacements may not be counted as seven new cohorts.",
+    "Nightflame source supplies stack batches and exact pigment totals but does not name herb types for eight-stack study, log completed mills, provide zero-inclusive bins, skill or patch; no rate derivation permitted.",
+    "Fel Iron 23424 modern measured casts and current Retail version validation still missing.",
+    "Current Retail right-click token 45661 loot-specialization reward mapping unverified; historical vendor list previously archived."
   ],
   "exhausted_sources": [
-    "Existing Warmaul 24995 cumulative Wowhead and WoWDB/historical item-level sources still do not expose exact original single-cast histograms; previously archived cohorts not re-ingested.",
-    "Existing Fel Iron 100/565 ore Thottbot reports and Tors 200-ore testimony are already represented; newly recovered sources are distinct archived comments.",
-    "Existing Adamantite Ore Gary13579, 485-ore and 40-ore Thottbot studies, and historical Wowhead pooled aggregate are already present. In particular the 40-ore comment was found in legacy 2026-10-30T2345 and intentionally excluded as a duplicate.",
-    "Kaliope original full Mithril/Adamantite numbered histograms are already recorded and were not copied.",
-    "Cobalt historic 24-stack report and old guide/model percentages were not recounted or promoted to measurements."
+    "Original 24995 cumulative Wowhead Looter table, generic TBC models, and current scaled WoWDB eligibility: nothing new per-cast, versioned or item-specific; do not reingest.",
+    "Existing Cobalt 9-stack Strikk3r report and 24-stack RU study already recorded: output IDs now enriched only for Strikk3r; no new measured casts or histograms.",
+    "Sgtown 128/256-mill samples, killerpet milling means, Aenonar sample, Fel Iron first-hand cohorts, and 45661 historical vendor mapping already represented and excluded to prevent copies."
   ],
-  "next_concrete_step": "Prioritize original Retail/live eligibility and raw complete Warmaul 24995 disenchant cast+stack logs, then unique original Cobalt 36909 and Fel Iron 23424 per-click operation logs with output bins. Verify item/variant build for historical evidence; preserve all absent denominators as null.",
-  "previous_status_updated_at": "2026-11-09T04:44:27.102Z"
+  "next_concrete_step": "Locate exact Warmaul 24995 current Retail bonus/version eligibility and original per-cast outcome export; next target Cobalt 36909 and Fel Iron 23424 completed prospect logs with per-gem positive/zero bins. For Nightflame two historical milling cohorts, seek actual mill count and individual herb identities. Preserve null denominators.",
+  "previous_status_updated_at": "2026-11-09T05:53:11.348Z"
 }
