@@ -1,7 +1,7 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-09T20:05:21.704Z",
-  "status": "active; verified two previously unresolved original-source Storm Dust R2 snapshot duplicates (237867,245737) and exposed cross-group estimator admission risk; no new independent casts, gold decisions or rendered fields",
+  "updated_at": "2026-11-09T21:05:06.600Z",
+  "status": "active; verified a new Dragonflight worker-sourced 10 green-weapon -> 25 Chromatic Dust original aggregate and flagged unproven broad gear-group context; static estimator trace only, no new independent manager casts or actual runtime gold/tooltip results",
   "task_ids": [
     "T0048",
     "T0005",
@@ -9,92 +9,89 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0048: 237867 Oathsworn Defender's Breeches: 101 cumulative Looter indexed operations, 40 R2 Storm Dust occurrences appear verbatim in Nov 1 and Nov 9 worker files; original operation cohort/build, output totalQuantity, stack histogram and live eligibility remain unknown.",
-    "T0048: 245737 Ritualbreaker's Band: 215 cumulative indexed operations, 81 R2 Storm Dust occurrences duplicated verbatim Nov 1/Nov 9; same fields unknown. Historical Looter conflicts with WowDB Cannot be disenchanted catalog classification.",
-    "T0048: Nov 9 duplicate records assign nonnull gearGroup, routing broad TWW gear family instead of previous exact inputItemID; model-specific source identity must be tested across groups before admission, not presumed suppressed.",
-    "T0005/T0039/T0045: new independent current Midnight actual completed operation/rank linked 0..N outputs, refund counts, talent/skill, and build still missing; no new measured data found in source searches."
+    "Dragonflight 10-weapon report: exact ten green weapon input IDs, era/build/bonus/ilvl, comment publish date, and whether they share one compatible Dragonflight uncommon-weapon context all unknown; source says maxed Draconic Disenchantment, not a generic untrained baseline.",
+    "Dragonflight 25 Chromatic Dust: an explicitly stated aggregate quantity from ten reported disenchant operations, but material hit/zero counts, per-cast quantity histogram, cooutputs and current prices absent. Preserve source arithmetic 25/10=2.5 contextual sample units, never invent P(hit) or complete EV.",
+    "Static research estimator path: build_estimates.key_of prioritizes gearGroup; worker-assigned expansion:'Dragonflight' with null item IDs could enter generic weapon-group output estimate despite missing source-verified input era. Does not prove current compiled/runtime use.",
+    "T0048 prior: exact-item versus broad gearGroup source-copy suppression for 237867/245737 remains unexecuted; previous source duplicate closure stands, no new sample.",
+    "T0005/T0039/T0045: current-patch Midnight rank/skill/unlock/refund-linked 0..N completed-operation output counts, hit distributions remain missing."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "same_published_cumulative_snapshot_verified_not_new_measured_cohort",
-      "inputItemID": 237867,
-      "inputName": "Oathsworn Defender's Breeches",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "reportedIndexedOperations": 101,
-      "reportedMaterialOccurrences": 40,
-      "previousRecordID": "war-within-20261101-1721-008",
-      "repeatedRecordID": "war-within-20261109-1825-004",
-      "independentObservedCastsAdded": 0
-    },
-    {
-      "kind": "same_published_cumulative_snapshot_verified_not_new_measured_cohort",
-      "inputItemID": 245737,
-      "inputName": "Ritualbreaker's Band",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "reportedIndexedOperations": 215,
-      "reportedMaterialOccurrences": 81,
-      "previousRecordID": "war-within-20261101-1721-010",
-      "repeatedRecordID": "war-within-20261109-1825-006",
-      "independentObservedCastsAdded": 0
-    },
-    {
-      "kind": "static_group_selection_risk_not_executed_runtime_result",
-      "explanation": "Old Nov 1 rows have gearGroup=null; new Nov 9 rows set nonnull broad gearGroup. Current build_estimates.key_of prefers gearGroup, and cross-group misplaced_copies compares same group_specificity, allowing a plausible double-admission path; not reproduced with running estimator.",
+      "kind": "independently_verified_original_comment_of_new_worker_source_not_new_manager_captured_study",
+      "recordID": "dragonflight-20261109-204001",
+      "source": "https://www.wowhead.com/profession-trait/insight-of-the-blue-68402",
+      "method": "Disenchant",
+      "inputDescription": "ten green weapons, unspecified item IDs, source epoch unknown",
+      "outputItemID": 194123,
+      "outputName": "Chromatic Dust",
+      "reportedCompletedOperations": 10,
+      "reportedTotalDustQuantity": 25,
+      "arithmeticObservedUnitsPerReportedOperation": 2.5,
+      "specialization": "Draconic Disenchantment maxed",
+      "sourcePublicationDate": null,
+      "sourceInputExpansionVerified": false,
+      "materialHitCasts": null,
+      "zeroInclusiveHistogram": null,
+      "newIndependentObservedCastsCollectedByManager": 0,
       "newSupportedRetailGoldDecisions": 0,
-      "newRenderedTooltipFields": 0
+      "newRuntimeTooltipFields": 0
+    },
+    {
+      "kind": "static_broad_gear_scope_risk_not_executed_estimator_or_live_failure",
+      "explanation": "Worker sets Dragonflight uncommon weapon gearGroup without source-identified weapon IDs or gear era; key_of uses it as grouped input. Hold applicability pending original weapon identity/epoch or documented group rule.",
+      "actualCompilerOrRuntimeTestExecuted": false
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-09T2000-tww-r2-stormdust-snapshot-group-gate.md"
+    "research/v3/evidence/master/2026-11-09T2102-df-pdpaul-ten-weapon-context-gate.md"
   ],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=219947/storm-dust",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-01T1721-wowhead-r2-stormdust-item-cohorts.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T1825-eight-original-r2-dust-items.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T2000-tww-r2-stormdust-snapshot-group-gate.md"
+    "https://www.wowhead.com/profession-trait/insight-of-the-blue-68402",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-09T2040-pdpaul-ten-green-weapons-25-dust.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T2102-df-pdpaul-ten-weapon-context-gate.md"
   ],
-  "verified_commit_sha": "ee6bac48354e352ca4ee37215be0c36353ebe55f",
-  "verified_commit_sha_scope": "Manager-only source comparison evidence note was committed at ee6bac and independently reread. This status update's own commit cannot be contained within itself.",
+  "verified_commit_sha": "52671972d8075016267899233279d570c367a82f",
+  "verified_commit_sha_scope": "The original-source context note was committed at d70020d595dac44518eb121238ec4efdc5663fc8 and reread; the research dashboard checkpoint was committed at 52671972d8075016267899233279d570c367a82f and reread. Current coordinator.json status commit cannot contain its own SHA.",
   "previous_verified_checkpoint": {
-    "updated_at": "2026-11-09T19:06:47.740Z",
-    "verified_commit_sha": "ac2ebddeb98f061e2431c5d5e6d4fc0aae2b8b7e",
+    "updated_at": "2026-11-09T20:05:21.704Z",
+    "verified_commit_sha": "ee6bac48354e352ca4ee37215be0c36353ebe55f",
     "evidence_files": [
-      "research/v3/evidence/master/2026-11-09T1905-tww-prospect-all-queue-refund-denominator.md"
+      "research/v3/evidence/master/2026-11-09T2000-tww-r2-stormdust-snapshot-group-gate.md"
     ]
   },
   "checked_worker_owner_reports": [
     {
-      "role": "midnight",
-      "updated_at": "2026-11-09T19:16:55.872Z",
-      "reported_status": "Source-backed prospecting Multicraft exclusion; no new measured casts; source-only mechanics update requires review",
-      "sha": "51034a23fdeadf96057a2c108c7c81dee2d90d87"
+      "role": "dragonflight",
+      "updated_at": "2026-11-09T20:40:16.287Z",
+      "reported_status": "New original Pdpaul 10 uncommon weapons -> 25 Chromatic Dust; group input IDs and epoch missing",
+      "sha": null,
+      "report_kind": "reported_by_worker_not_independent_pipeline_test"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-09T19:32:43.431Z",
-      "reported_status": "Two catalog noDisenchant versus cumulative Looter source conflicts; new duplicate source audit; no new independent cast logs",
+      "updated_at": "2026-11-09T20:31:36.956Z",
+      "reported_status": "Six historical Storm Dust snapshots revised to reference only; no new casts",
       "sha": null
     },
     {
-      "role": "dragonflight",
-      "updated_at": "2026-11-09T19:31:06.466Z",
-      "reported_status": "Six distinct item-side indexed source gear cohorts, 12 hit rows, incomplete quantities/epoch; current rank-specific prospect/mill numeric gaps remain",
-      "sha": "92ff6034fe5ed3c14fb43a501a05da270a32fc89"
+      "role": "midnight",
+      "updated_at": "2026-11-09T20:18:50.997Z",
+      "reported_status": "Same owner Evercore Shade 200 completions, 199 classified and one unknown; no new cohort",
+      "sha": "d9f5986375a5cb057346124695ab46643cdec769"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-09T18:47:50.157Z",
-      "reported_status": "Historical WotLK 3.3.5 four item output identities, reference only; no new independent measured Retail cohorts",
+      "updated_at": "2026-11-09T20:53:09.402Z",
+      "reported_status": "11 TBC Arcane Dust pooled historical source item hit/denominator entries; stack and epoch unknown",
       "sha": null
     }
   ],
   "blockers": [
-    "No original source event IDs or collection date/build/bonus to establish distinct Looter casts; repeated public counts cannot create new independent study denominator.",
-    "Nov 9 TWW snapshot may be grouped broadly when old rows are input-specific; no estimator executed, cannot assert numeric double count or whether current compiled ItemDB/tooltip is affected.",
-    "237867 and 245737 WowDB cannot-disenchant classifications conflict with Looter historical counts; character-linked and build-specific live eligibility unavailable.",
-    "No new independent current Midnight rank/skill/unlock/refund-aware complete 0..N logs found; prior exhaustive sources remain exhausted."
+    "Pdpaul comment gives 10 weapon operations and 25 Chromatic Dust but no input item IDs, gear origin/expansion, per-material hit distribution, complete cooutputs, publish/patch date or exact skill; no proof to support a generic Retail Dragonflight weapon estimate.",
+    "Original comment author had maxed Draconic Disenchantment: source profile cannot be treated as unspecialized baseline.",
+    "No estimator, compiler, synthetic-price offline runtime or tooltip tests executed in this review; production ItemDB admission of new worker source is not established.",
+    "Earlier 237867/245737 exact-item versus broad-gear duplicate estimator risk still awaits isolated executed regression.",
+    "Independent current Midnight 0..N completed-operation data with rank, skill, unlock and refund context remains missing."
   ],
   "exhausted_sources": [
     {
@@ -140,9 +137,13 @@
     {
       "path": "Nov 1 and Nov 9 Wowhead PTR 219947 cumulative Looter source records 237867/245737",
       "reason": "Identical dated transcriptions of the same publicly reported cumulative table statistics; 101/40 and 215/81, not two new sample cohorts. Do not re-audit until new original casts/patch evidence; retain both originals."
+    },
+    {
+      "path": "Pdpaul original Wowhead Insight of the Blue comment and indexed localized mirrors (Nov 9 2026 manager verification)",
+      "reason": "English original confirms 10 weapons, 25 dust and maxed Draconic Disenchantment but contains no specific input item IDs, source date/build or per-cast distribution; mirrors repeat the same comment, not new independent studies. Need linked item receipts/dated original logs rather than another mirror lookup."
     }
   ],
-  "next_concrete_step": "Request reviewed scoped research-only estimator regression fixture combining Nov 1 exact-item and Nov 9 broad-gear duplicates for IDs 237867/245737, verify actual analyze() usage and single admission without changing protected implementation; meanwhile seek truly independent original current Midnight T0005/T0039/T0045 operation exports with rank/skill/0..N/refunds.",
+  "next_concrete_step": "Seek identifiable Dragonflight/other-era weapon item links and dated original Pdpaul per-operation receipts before admitting his 10/25 aggregate to a broad gear group; concurrently request a scoped executed estimator test of 237867/245737 cross-group duplicated sources, without touching the three-pass addon implementation.",
   "validation": {
     "executed": [
       "Read main charter, protected three-pass plan/Pass 1, research v3 README/schema/mechanics/queue/strategy/flags and existing coordinator/worker checkpoints.",
@@ -167,5 +168,6 @@
     "pr23": "closed unmerged",
     "immutable_snapshot": "4df9ae8b1359d934828e4d0e6d39a9a4dba26fae"
   },
-  "change_scope": "Manager-only original-source comparison note and coordinator.json. Dashboard checkpoint update separately; no shared worker evidence/queue, addon, main, protected integration, PR, merge, release or schedule changes."
+  "change_scope": "Manager-only original-source comparison note and coordinator.json. Dashboard checkpoint update separately; no shared worker evidence/queue, addon, main, protected integration, PR, merge, release or schedule changes.",
+  "incidental_source_record_id": "dragonflight-20261109-204001 (new worker source outside an explicitly numbered Dragonflight DE task)"
 }
