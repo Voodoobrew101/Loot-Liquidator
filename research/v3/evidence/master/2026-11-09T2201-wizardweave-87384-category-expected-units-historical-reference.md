@@ -1,0 +1,20 @@
+# Coordinator original-source category/units audit — 2026-11-09 22:01 UTC
+
+**Disposition: historical reference arithmetic only; NO current Retail admission, new measured casts, gold recommendations, or rendered tooltip fields.** This resolves the units implied by a *new* Legacy worker-source transcription, not a new independent source study.
+
+## Original and evidence identity
+- Original first-person but approximate distribution: Wowhead contributor `87384`, [Greater Eternal Essence source](https://www.wowhead.com/wotlk/item=16203/greater-eternal-essence), discussing crafted **Wizardweave Turban 14130** disenchanting. The WotLK Classic URL is a historical comment mirror; the exact collection time, game build/flavour, bonus/item level, character skill, and sample size remain unknown. Do not treat the owner's MoP Classic illustration or this historical comment as current Retail evidence.
+- Worker-authored original records: `legacy-20261109-220001` (historical Illusion Dust **16204**) and `legacy-20261109-220002` (Greater Eternal Essence **16203**), [unchanged evidence](../legacy/2026-11-09T2151-classic-de-cast-hits-and-priors.jsonl). These two records describe **one** source model, not two independent studies; sourceKind=reference, casts=null, source rank/patch unverified. Item **16204** is not modern Rich Illusion Dust **156930**.
+- The commenter gives four **20%** outcome categories of dust quantities **2, 3, 4, 5** and two **10%** categories of essence quantities **2, 3**. These are claimed approximate category weights, not source-logged hit counts or calibrated live probabilities. Categories total 100% in the comment's own model.
+
+## Reproduced arithmetic (from source categories, *not* measured means)
+Assuming the six stated disenchant categories are mutually exclusive and exhaustive **within the commenter's historical reference model**:
+- Claimed dust-category mass: `4 × 0.20 = 0.80`; **implied reference expected dust units per described DE** `0.20 × (2 + 3 + 4 + 5) = 2.80`; conditional-on-dust reference quantity `2.80/0.80 = 3.50`. This **3.50 is conditional**, not unconditional.
+- Claimed essence-category mass: `2 × 0.10 = 0.20`; **implied reference expected essence units per described DE** `0.10 × (2 + 3) = 0.50`; conditional-on-essence reference quantity `0.50/0.20 = 2.50`.
+- Original's historical **illustrative** material prices 3g per dust and 15g per essence independently reproduce its own gross output value: `2.8 × 3g + 0.5 × 15g = 15.9g`. This tests the interpretation of the original numbers only; it is **NOT** a current price, net profit, or source independent of the six categories. Do not import the author's historical prices.
+- Source has **no** observed cast denominator, positive-hit histogram, live eligibility, modern rate, applicable character profile, independent error bounds, or confidence. Thus modern empirical P(hit) and current Retail E[units] are **unknown**.
+
+## Actual pipeline distinction and handoff
+The worker's two rows currently store `minSeen/maxSeen` with neither a per-cast scalar `averageShown` nor a trustworthy `percentMeaning=perCast`; current research estimator's `row_use` does not itself recover the **six-category reference distribution**. This is a *static source-to-field gap*, not an executed `analyze()` regression or a runtime omission demonstration. A scoped future research-only fixture should preserve six mutually exclusive categories and distinguish per-event reference E (2.8 / 0.5) from positive-conditional means (3.5 / 2.5), prohibit conversion to observed counts or current Retail, and test output IDs separately. This is lower priority than currently actionable Midnight rank-linked 0..N operations.
+
+**Execution performed:** direct read of both worker evidence rows, public original source, hand-derived categories and calculator check `0.8+0.2=1; 2.8×3+0.5×15=15.9`, static read of `build_estimates.py`; no estimator run, Lua/native tests, synthetic-price engine, client test or live price lookup. No originals or addon/implementation altered.
