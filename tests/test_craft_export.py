@@ -13,6 +13,49 @@ class CraftExportTests(unittest.TestCase):
     def setUp(self):
         self.page = json.loads(Path('/tmp/loot-craft-export.json').read_text())
 
+    def test_recycling_pilot_receipts_copy_and_stage_with_exact_contexts(self):
+        raw = json.loads(Path('/tmp/loot-recycling-capture-v3.json').read_text())
+        copied = json.loads(Path('/tmp/loot-recycling-popup.json').read_text())
+        self.assertEqual(copied, raw)
+        records, contexts, studies = validator.validate([copied])
+        self.assertEqual(len(records), 20)
+        self.assertTrue(all(r['method'] == 'Recycle' and r['nominalInputs'][0]['quantity'] == 5 for r in records))
+        self.assertEqual(sum(r['outputs'][0]['quantity'] for r in records), 44)
+        staged = validator.compile_baselines([copied])
+        self.assertEqual(staged['excludedCohorts'], [])
+        self.assertEqual(sum(b['operations'] for b in staged['baselines']), 20)
+        self.assertEqual(len(staged['baselines']), len({c['baseSkill'] for c in contexts.values()}))
+        self.assertFalse(staged['automaticMechanicsPromotion'])
+
+    def test_recycling_reconciliation_rejects_missing_cast_and_fabricated_counts(self):
+        original = json.loads(Path('/tmp/loot-recycling-popup.json').read_text())
+        for mutate, message in [
+            (lambda p: p['records'][0]['outputs'][0].update(quantity=99), 'receipts and outputs'),
+            (lambda p: p['records'][0]['resultMetadata'][0].update(quantity=99), 'receipts and outputs'),
+            (lambda p: p['records'][0]['bagReconciliation']['outputs'][0].update(quantity=99), 'Conflicting'),
+        ]:
+            page = copy.deepcopy(original)
+            mutate(page)
+            with self.assertRaisesRegex(ValueError, message): validator.validate([page])
+        page = copy.deepcopy(original)
+        page['records'].pop()
+        page['retainedRecords'] -= 1
+        with self.assertRaisesRegex(ValueError, 'Missing salvage reconciliation casts'):
+            validator.validate([page])
+
+    def test_actual_disenchant_capture_copied_from_native_popup_validates(self):
+        raw = json.loads(Path('/tmp/loot-disenchant-capture-v2.json').read_text())
+        copied = json.loads(Path('/tmp/loot-disenchant-popup.json').read_text())
+        self.assertEqual(copied, raw)
+        records, contexts, studies = validator.validate([copied])
+        self.assertEqual(len(records), 5)
+        self.assertEqual(records[0]['captureVersion'], 2)
+        self.assertEqual(records[0]['lootSlots'][0]['itemID'], 109693)
+        self.assertEqual(records[2]['inputs'][0]['itemLevel'], 280)
+        staged = validator.compile_baselines([copied])
+        self.assertEqual(len(staged['baselines']), 5)
+        self.assertEqual(staged['excludedCohorts'], [])
+
     def test_confirmed_zero_is_in_denominator_and_histogram(self):
         staged = validator.compile_baselines([self.page])
         self.assertEqual(len(staged['baselines']), 1)

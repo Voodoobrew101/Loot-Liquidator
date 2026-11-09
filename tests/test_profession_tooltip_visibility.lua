@@ -65,3 +65,18 @@ LL:AppendRecommendationTooltip(tip,{action='A',facts={id=1,classID=7},conversion
 local text=table.concat(tip.lines,'\n')
 assert(text:find('50 copper',1,true) and not text:find('500 copper',1,true),'available recipe stays visible')
 print('PASS: unavailable recipe filtering preserves the usable alternative')
+-- Verified salvage eligibility remains visible without stock or a researched
+-- price. It never grants access or becomes the recommended liquidation action.
+local recycling={name='Recycle',letter='R',profession='Engineering',eligibleInput=true,
+    available=false,why='Need 5 inputs for one Recycle operation',category='salvage-input'}
+text=render(recycling,2,false)
+assert(text:find('Recycle',1,true) and text:find('Insufficient Data',1,true))
+assert(text:find('Need 5 inputs',1,true),'unowned reagent explains availability')
+assert(recycling.value==nil and recycling.available==false)
+LL.db.professionTooltipProfiles={Engineering='@hide'}
+local hidden={lines={}}
+function hidden:AddLine(s)self.lines[#self.lines+1]=s end
+function hidden:AddDoubleLine(l,r)self.lines[#self.lines+1]=l..' | '..r end
+LL:AppendRecommendationTooltip(hidden,{action='A',facts={id=1,classID=7},conversionOptions={recycling}})
+assert(not table.concat(hidden.lines,'\n'):find('Recycle',1,true),'explicit profession hide is respected')
+print('PASS: Recycling shows verified eligibility and unknown yield without overriding access or hide preferences')

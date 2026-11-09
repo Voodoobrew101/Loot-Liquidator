@@ -8,7 +8,10 @@ local SPELLS={[13262]="Disenchant",[51005]="Mill",[31252]="Prospect",[382981]="M
 local MAX_RECORDS=2000
 local pending
 local request
+local RECORDER_REVISION=6
+local disenchantIntents,intentOrder={},{}
 local sessionStarted=false
+local recyclingReceipts,recyclingReceiptOrder={},{}
 local function finite(n) return type(n)=="number" and n==n and n>=0 and n<math.huge end
 local function integer(n) return finite(n) and n>0 and n%1==0 end
 local function secret(v) return issecretvalue and issecretvalue(v) end
@@ -30,7 +33,7 @@ local function quote(s)
         return ({['"']='\\"',['\\']='\\\\',['\n']='\\n',['\r']='\\r',['\t']='\\t'})[c] or ('\\u%04x'):format(c:byte())
     end)..'"'
 end
-local arrayFields={records=true,inputs=true,outputs=true,nominalInputs=true,materials=true,baselines=true,diagnostics=true,resultMetadata=true,sourceRecordIDs=true,expectedInputsConsumed=true,resourcesReturned=true,inputIdentity=true}
+local arrayFields={records=true,inputs=true,outputs=true,nominalInputs=true,materials=true,baselines=true,diagnostics=true,resultMetadata=true,sourceRecordIDs=true,expectedInputsConsumed=true,resourcesReturned=true,inputIdentity=true,operationIDs=true}
 local function json(v,forceArray)
     if type(v)=="string" then return quote(v) end
     if type(v)=="number" then assert(finite(v));return ('%.17g'):format(v) end
@@ -63,7 +66,7 @@ local function ledger(self)
         d.pausedStudies=type(d.pausedStudies)=="table" and d.pausedStudies or {}
         if active then
             if active.paused and active.character then d.pausedStudies[active.character]=d.activeStudy
-            else active.censored=true;active.coverageReason="Unclosed recording session" end
+            else active.censored=true;active.globalCoverageGap="Unclosed recording session";active.coverageReason=active.globalCoverageGap end
         end
         d.activeStudy=nil
         local me=self:CharacterKey()
@@ -71,11 +74,13 @@ local function ledger(self)
         d.pausedStudies[me]=nil
         if study then
             study.paused=nil
-            if study.build==build() and not study.censored and not study.truncated then
+            if study.build==build() and (not study.censored or (study.coverageVersion==2 and not study.globalCoverageGap)) and not study.truncated then
                 study.resumedAt=stamp();study.resumeCount=(study.resumeCount or 0)+1;d.activeStudy=id
             else
                 -- A new game build is a new sampling frame: close it cleanly, not censored.
-                study.closedAt=stamp();study.closedReason=study.closedReason or "Game build changed"
+                study.closedAt=stamp();study.closedReason=study.closedReason or
+                    (study.build~=build() and "Game build changed" or
+                    (study.truncated and "Recorded results were truncated" or "Study has unresolved coverage gaps"))
             end
         end
         active=d.activeStudy and d.studies[d.activeStudy]
@@ -93,17 +98,43 @@ function LL:StartCraftStudy(label)
     local d=ledger(self);d.sequence=d.sequence+1
     local id=tostring(self:CharacterKey())..":"..build()..":"..stamp()..":"..d.sequence
     d.studies[id]={label=type(label)=="string" and label:sub(1,80) or "Measured operations",startedAt=stamp(),
-        character=self:CharacterKey(),build=build(),truncated=false}
+        character=self:CharacterKey(),build=build(),truncated=false,coverageVersion=2,coverageGaps={},recorderRevision=RECORDER_REVISION}
     d.activeStudy=id
     if self.Invalidate then self:Invalidate() end
     return id
 end
+local function coverageGap(study,method,recipe,reason,operation)
+    if not study.censored then study.coverageVersion=2;study.coverageGaps=study.coverageGaps or {} end
+    study.censored=true
+    study.coverageReason=study.coverageReason or reason
+    study.coverageOperationID=study.coverageOperationID or operation
+    if study.coverageVersion==2 and METHODS[method] and integer(recipe) then
+        local key=method..":"..recipe
+        study.coverageGaps[key]=study.coverageGaps[key] or {reason=reason,operationID=operation}
+    else study.globalCoverageGap=study.globalCoverageGap or reason end
+end
+-- Stored contexts are immutable snapshots. Index their identities once per
+-- context table, rather than copying and serializing every saved profile on
+-- each cast. Keep the index out of SavedVariables; resetting/replacing a ledger
+-- naturally starts a new index and old ledgers can be garbage collected.
+local contextIndexes=setmetatable({}, {__mode="k"})
 local function contextID(self,context)
     local d=ledger(self);local signature=identity(context)
-    for id,c in pairs(d.contexts) do if identity(c)==signature then return id end end
-    local n=0 for _ in pairs(d.contexts) do n=n+1 end
-    if n>=256 then return nil end
-    local id="context:"..(n+1);d.contexts[id]=copy(context);return id
+    local index=contextIndexes[d.contexts]
+    if not index then
+        index={identities={},count=0}
+        for id,c in pairs(d.contexts) do
+            index.identities[identity(c)]=id;index.count=index.count+1
+        end
+        contextIndexes[d.contexts]=index
+    end
+    local existing=index.identities[signature]
+    if existing then return existing end
+    if index.count>=256 then return nil end
+    local id="context:"..(index.count+1)
+    d.contexts[id]=copy(context)
+    index.identities[signature]=id;index.count=index.count+1
+    return id
 end
 function LL:ValidateCraftObservation(r)
     if type(r)~="table" or not METHODS[r.method] or not integer(r.recipeID)
@@ -140,7 +171,8 @@ function LL:RecordCraftObservation(record)
             hyperlink=(item.classID==2 or item.classID==4) and item.hyperlink or nil}
     end
     local id=contextID(self,measured);if not id then return false,"Context capacity reached; export research before continuing" end
-    local r=copy(record);r.context=nil;r.contextID=id;r.schemaVersion=SCHEMA
+    local r=copy(record);r.context=nil;r.contextID=id;r.schemaVersion=SCHEMA;r.recorderRevision=RECORDER_REVISION
+    r.addonCommit=self.buildInfo and (self.buildInfo.headCommit or self.buildInfo.commit)
     r.studyID=d.activeStudy or self:StartCraftStudy();r.recordedAt=stamp()
     r.provenance={sampleKind="RAW_CAST_LOG",source="measured-addon-capture",independentReview="PENDING",
         numericTransformValidated=false,applyPolicy="NO_NUMERIC_TRANSFORM",registryContract="profession-mechanics/0.2"}
@@ -170,14 +202,20 @@ local function diff(before,after)
 end
 function LL:SnapshotCraftBags()
     if not C_Container or not C_Container.GetContainerNumSlots or not C_Container.GetContainerItemInfo then return nil end
-    local out={counts={},facts={},variants={}}
+    local out={counts={},facts={},variants={},variantCounts={},variantFacts={}}
     for bag=0,5 do for slot=1,(C_Container.GetContainerNumSlots(bag) or 0) do
         local i=C_Container.GetContainerItemInfo(bag,slot)
         if i and integer(i.itemID) and integer(i.stackCount or 1) then
             local id=i.itemID;out.counts[id]=(out.counts[id] or 0)+(i.stackCount or 1)
             local link=i.hyperlink or ("item:"..id)
             out.variants[id]=out.variants[id] or {};out.variants[id][link]=true
-            if not out.facts[id] then out.facts[id]=self.GetItemFacts and self:GetItemFacts(link,{count=i.stackCount or 1}) or {id=id,link=link} end
+            out.variantCounts[id]=out.variantCounts[id] or {}
+            out.variantCounts[id][link]=(out.variantCounts[id][link] or 0)+(i.stackCount or 1)
+            out.variantFacts[id]=out.variantFacts[id] or {}
+            if not out.variantFacts[id][link] then
+                out.variantFacts[id][link]=self.GetItemFacts and self:GetItemFacts(link,{count=i.stackCount or 1}) or {id=id,link=link}
+            end
+            if not out.facts[id] then out.facts[id]=out.variantFacts[id][link] end
         end
     end end
     return out
@@ -186,7 +224,41 @@ local function call(fn,...)
     if type(fn)~="function" then return nil end
     local ok,v=pcall(fn,...);return ok and v or nil
 end
+-- Read the actual loot before autoloot clears the window. Repeated READY / OPENED
+-- events describe the same slots, not extra casts. Bag deltas must still agree.
+function LL:CaptureResearchLoot()
+    local p=pending
+    if not p or p.method~="Disenchant" then return end
+    if p.lootClosed then p.interference="Multiple loot windows during capture";return end
+    local n=call(GetNumLootItems)
+    if not integer(n) or type(GetLootSlotInfo)~="function" or type(GetLootSlotLink)~="function" then return end
+    p.lootSlots=p.lootSlots or {}
+    for slot=1,n do
+        local ok,_,_,quantity=pcall(GetLootSlotInfo,slot)
+        local link=call(GetLootSlotLink,slot)
+        if ok and not secret(link) and type(link)=="string" and not secret(quantity) and integer(quantity) then
+            local id=tonumber(link:match("item:(%d+)"))
+            if integer(id) then
+                local previous=p.lootSlots[slot]
+                if previous and (previous.itemID~=id or previous.quantity~=quantity) then
+                    p.interference="Loot slot changed during capture";return
+                end
+                p.lootSlots[slot]={itemID=id,quantity=quantity,hyperlink=link}
+            end
+        end
+    end
+end
 local function describe(self,recipe)
+    local salvage=self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(recipe)
+    if salvage then
+        local ui=C_TradeSkillUI
+        if call(ui and ui.IsTradeSkillLinked) or call(ui and ui.IsTradeSkillGuild) or call(ui and ui.IsNPCCrafting) then return nil end
+        local info=call(ui and ui.GetRecipeInfo,recipe)
+        if type(info)=='table' and info.learned==true and info.disabled~=true and info.isSalvageRecipe==true then
+            return {method=salvage.method,salvage=copy(salvage)}
+        end
+        return nil
+    end
     local operations=self.ResearchProcessingRecipeOperations and self:ResearchProcessingRecipeOperations(recipe)
     local method
     for _,r in ipairs(operations or {}) do
@@ -286,32 +358,68 @@ local function allocatedInputs(p)
     if next(selected) then return nil end
     return expected
 end
+local function salvageCapture(p)
+    return p and p.description and p.description.salvage
+end
 function LL:BeginCraftCapture(guid,recipe)
     if type(guid)~="string" or not integer(recipe) then return false end
+    local description=describe(self,recipe)
+    -- This event stream includes ordinary player spells, not just tracked
+    -- profession operations. They must not finalize/discard a pending capture
+    -- or turn its known recipe gap into an unscoped study-wide overlap.
+    -- Real inventory interference is still checked by the bag/result matcher.
+    if not description then return false end
+    local preceding
     if pending then
         if pending.guid==guid then return true end
         local previous=pending
-        self:FinishCraftCapture(true)
+        -- Consecutive verified salvage results have individual server operation IDs,
+        -- but bag updates can span cast boundaries. Keep their typed receipts
+        -- until the whole sequence reconciles, rather than mixing two deltas.
+        if description.salvage and enabled(self,description.method) and salvageCapture(previous) and previous.recipe==recipe and previous.success
+            and #previous.results>0 and not previous.interference then
+            self:FinishCraftCapture(false)
+            if pending and #(previous.previousRecycling or {})<MAX_RECORDS-1 then
+                preceding=previous.previousRecycling or {}
+                previous.previousRecycling=nil
+                preceding[#preceding+1]=previous
+                pending=nil
+            end
+        else self:FinishCraftCapture(true) end
         -- A second cast before the previous result settles contaminates both
         -- operations. Keep a diagnostic gap rather than pooling their loot.
-        if pending or previous.finalCoverage~="complete" then
+        if not preceding and (pending or previous.finalCoverage~="complete") then
             local d=ledger(self);local study=d.activeStudy or self:StartCraftStudy()
-            d.studies[study].censored=true;pending=nil;return false
+            coverageGap(d.studies[study],description and description.method,recipe,"Overlapping cast has unresolved coverage",guid)
+            pending=nil;return false
         end
     end
-    local description=describe(self,recipe);if not description then return false end
     if not enabled(self,description.method) then if self.db then ledger(self).activeStudy=nil end;return false end
-    local before=self:SnapshotCraftBags();if not before then return false end
-    local d=ledger(self);if not d.activeStudy then self:StartCraftStudy() end
+    local before=self:SnapshotCraftBags()
+    if not before then
+        if preceding then pending=table.remove(preceding);pending.previousRecycling=preceding end
+        return false
+    end
+    local d=ledger(self)
+    local active=d.activeStudy and d.studies[d.activeStudy]
+    if active and active.censored
+        and (tonumber(active.recorderRevision) or 0)<RECORDER_REVISION
+        and not preceding then
+        self:StartCraftStudy('After recorder update')
+    end
+    if not d.activeStudy then self:StartCraftStudy() end
     d.confirmableEmpty=nil
     local hint=request and request.recipe==recipe and request.remaining>0 and clock()-request.at<120 and request or nil
     if hint and hint.orderID~=nil and hint.orderID~=0 then return false end -- customer/order inventory is not this character's bags
     local targetFacts=hint and hint.salvageInputID and before.facts[hint.salvageInputID]
+    local salvageInputs=description.salvage and self.ReadSalvageInputs and self:ReadSalvageInputs(recipe)
     local context=self:CaptureCraftContext(recipe,targetFacts,description.method,hint and hint.allocation,
         hint and hint.concentration,hint and hint.allocationItemGUID)
-    if hint then hint.remaining=hint.remaining-1 end
+    if hint then hint.remaining=hint.remaining-1;hint.at=clock() end
     pending={guid=guid,recipe=recipe,method=description.method,description=description,before=before,
-        request=copy(hint),context=copy(context),startedAt=stamp(),started=clock(),success=false,results={},resultKeys={}}
+        request=copy(hint),context=copy(context),startedAt=stamp(),started=clock(),success=false,results={},resultKeys={},
+        salvageInputVerified=salvageInputs and hint and salvageInputs[hint.salvageInputID]==true,
+        previousRecycling=preceding}
     if C_Timer and C_Timer.After then
         local p=pending;C_Timer.After(60,function()
             if pending==p and not p.success then
@@ -353,11 +461,39 @@ local function validateDelta(self,p,after)
     if #inputs==0 then return nil,"Inputs have not settled" end
     for _,item in ipairs(inputs) do
         local n=0 for _ in pairs(p.before.variants[item.itemID] or {}) do n=n+1 end
-        if n>1 then return nil,"Input item variants are ambiguous" end
+        if n>1 then
+            -- Multiple copies in bags are normal. Select the variant whose count
+            -- fell, rather than borrowing metadata from the first bag slot.
+            local before=p.before.variantCounts and p.before.variantCounts[item.itemID]
+            local later=after.variantCounts and after.variantCounts[item.itemID]
+            local chosen,consumed
+            if p.method=="Disenchant" and before and later then
+                for link,count in pairs(before) do
+                    local delta=count-(later[link] or 0)
+                    if delta>0 then
+                        if chosen then return nil,"Input item variants are ambiguous" end
+                        chosen,consumed=link,delta
+                    elseif delta<0 then return nil,"Input item variants are ambiguous" end
+                end
+                for link,count in pairs(later) do
+                    if count>(before[link] or 0) then return nil,"Input item variants are ambiguous" end
+                end
+            end
+            local f=chosen and p.before.variantFacts and p.before.variantFacts[item.itemID]
+                and p.before.variantFacts[item.itemID][chosen]
+            if consumed~=1 or not f then return nil,"Input item variants are ambiguous" end
+            p.disenchantInputFacts=f
+            inputs=itemVector(removed,{[item.itemID]=f})
+        end
     end
     if p.method=="Disenchant" then
-        local f=p.before.facts[inputs[1].itemID]
-        if next(returned) or #inputs~=1 or inputs[1].quantity~=1 or not self.EligibleDisenchant or not self:EligibleDisenchant(f) then return nil,"Unverified disenchant input" end
+        local f=p.disenchantInputFacts or p.before.facts[inputs[1].itemID]
+        -- A successful player cast plus one consumed gear item is evidence of
+        -- eligibility. Valuation exclusions (ignore list, old DB restrictions,
+        -- missing equipLoc) must not veto something the game just disenchanted.
+        if next(returned) or #inputs~=1 or inputs[1].quantity~=1 or not f
+            or (f.classID~=2 and f.classID~=4) then return nil,"Unverified disenchant input" end
+        p.disenchantInputFacts=f
     elseif p.method=="Mill" or p.method=="Prospect" then
         local f=p.before.facts[inputs[1].itemID]
         if not f then return nil,"Input metadata unavailable" end
@@ -398,6 +534,11 @@ local function validateDelta(self,p,after)
     if #p.results>0 then
         for id,n in pairs(added) do if resultCounts[id]~=n then return nil,"Craft result/bag delta mismatch" end end
         for id,n in pairs(resultCounts) do if added[id]~=n then return nil,"Craft result/bag delta mismatch" end end
+    elseif p.method=="Disenchant" and p.lootSlots and next(p.lootSlots) then
+        local loot={}
+        for _,slot in pairs(p.lootSlots) do loot[slot.itemID]=(loot[slot.itemID] or 0)+slot.quantity end
+        for id,n in pairs(added) do if loot[id]~=n then return nil,"Loot result/bag delta mismatch" end end
+        for id,n in pairs(loot) do if added[id]~=n then return nil,"Loot result/bag delta mismatch" end end
     else
         -- Stochastic loot must be a mapped possible output. Unknown materials
         -- remain a research diagnostic, never contaminate a priced baseline.
@@ -417,7 +558,13 @@ local function validateDelta(self,p,after)
         -- Accept only already catalogued DE materials from the same expansion,
         -- never arbitrary bag gains or results from another expansion.
         if p.method=='Disenchant' and p.lootClosed then
-            local expansion=p.before.facts[input].expansionID
+            local expansion=p.disenchantInputFacts.expansionID
+            -- Compatibility when the client/addon missed the loot snapshot:
+            -- identity candidates do not claim a yield or a rarity restriction.
+            local family=self.DisenchantTables and self.DisenchantTables[expansion]
+            for _,tier in pairs(family and family.quality or {}) do
+                for _,id in ipairs(tier.candidates or {}) do allowed[id]=true end
+            end
             for _,r in ipairs(self.ItemDB and self.ItemDB.processing or {}) do
                 if r.method=='Disenchant' and r.expansionID==expansion then
                     for _,m in ipairs(r.materials) do
@@ -434,28 +581,137 @@ local function validateDelta(self,p,after)
     return {inputs=inputs,outputs=itemVector(added,after.facts)}
 end
 local function diagnostic(self,p,reason)
+    local preceding=p.previousRecycling;p.previousRecycling=nil
+    for _,earlier in ipairs(preceding or {}) do diagnostic(self,earlier,reason) end
     local d=ledger(self);d.diagnostics=d.diagnostics or {}
     local after=self:SnapshotCraftBags()
     local removed,added={},{}
     if after and p.before then removed,added=diff(p.before,after) end
     d.diagnostics[#d.diagnostics+1]={operationID=p.guid,recipeID=p.recipe,method=p.method,reason=reason,at=stamp(),
+        recorderRevision=RECORDER_REVISION,addonCommit=self.buildInfo and (self.buildInfo.headCommit or self.buildInfo.commit),
+        castStartSeen=p.castStarted==true,spellTargeting=call(SpellIsTargeting),
+        studyID=d.activeStudy,startedAt=p.startedAt,endedAt=stamp(),successful=p.success==true,
         context=copy(p.context),netInputs=itemVector(removed,p.before and p.before.facts),
+        lootSlots=copy(p.lootSlots),
         observedOutputs=itemVector(added,after and after.facts),resultMetadata=copy(p.results),outputCoverage="unknown"}
     if #d.diagnostics>50 then table.remove(d.diagnostics,1) end
-    -- A successful but unattributed operation invalidates this study's sampling
-    -- coverage. Export still retains its diagnostic and raw confirmed casts.
+    -- Missing outcomes affect their recipe's denominator, not other recipes.
+    -- Persist the gap independently of the bounded diagnostic history.
     if p.success or p.uncertainCompletion then
         local study=d.activeStudy or self:StartCraftStudy()
-        d.studies[study].censored=true
+        coverageGap(d.studies[study],p.method,p.recipe,reason,p.guid)
+        if not d.studies[study].coverageNotified then
+            d.studies[study].coverageNotified=true
+            if print then print("|cff66ccffLoot Liquidator|r: "..tostring(p.method).." recipe "..tostring(p.recipe).." needs review: "..tostring(reason)..". Other recipes keep their coverage. Results are saved.") end
+        end
     end
 end
 function LL:AbandonCraftCapture(reason)
     if pending then diagnostic(self,pending,reason);pending=nil end
 end
+local function finishRecycling(self,p,after,final)
+    local label=p.method=='Recycle' and 'Recycling' or 'Salvage'
+    local casts={}
+    for _,earlier in ipairs(p.previousRecycling or {}) do casts[#casts+1]=earlier end
+    casts[#casts+1]=p
+    local nominal,net,produced,seen,parts={},{},{},{},{}
+    local reason
+    for _,cast in ipairs(casts) do
+        local id=cast.request and cast.request.salvageInputID
+        local guid=cast.request and cast.request.allocationItemGUID
+        local batch=cast.description.salvage and cast.description.salvage.inputCount
+        local facts=id and cast.before.facts[id]
+        local returns=reportedReturns(cast)
+        if not cast.success or cast.interference or not integer(id) or not integer(batch)
+            or type(guid)~='string' or guid=='' or not facts or not cast.salvageInputVerified
+            or not returns or #cast.results==0 then
+            reason=cast.interference or label..' needs a verified salvage target and craft result';break
+        end
+        local variants=0 for _ in pairs(cast.before.variants[id] or {}) do variants=variants+1 end
+        if variants~=1 then reason=label..' input item variants are ambiguous';break end
+        local refunded=returns[id] or 0
+        for returnedID in pairs(returns) do if returnedID~=id then reason='Unrelated '..label..' reagent return' end end
+        if reason or refunded>batch then reason=reason or 'Invalid '..label..' reagent return';break end
+        local outputs={}
+        local operation
+        for _,r in ipairs(cast.results) do
+            if not integer(r.operationID) or (operation and operation~=r.operationID)
+                or not integer(r.itemID) or not integer(r.quantity) or r.itemID==id then
+                reason='Ambiguous '..label..' result operation';break
+            end
+            operation=r.operationID
+            outputs[r.itemID]=(outputs[r.itemID] or 0)+r.quantity
+        end
+        if reason then break end
+        if seen[operation] then reason='Duplicate '..label..' result operation';break end
+        seen[operation]=true
+        nominal[id]=(nominal[id] or 0)+batch
+        net[id]=(net[id] or 0)+batch-refunded
+        for outputID,n in pairs(outputs) do produced[outputID]=(produced[outputID] or 0)+n end
+        parts[#parts+1]={cast=cast,inputs=itemVector({[id]=batch-refunded},cast.before.facts),
+            nominalInputs=itemVector({[id]=batch},cast.before.facts),outputs=itemVector(outputs,after.facts)}
+    end
+    local before=casts[1].before
+    local removed,added=diff(before,after)
+    if not reason then
+        local budget=copy(before.counts)
+        for _,part in ipairs(parts) do
+            local id=part.nominalInputs[1].itemID
+            if (budget[id] or 0)<part.nominalInputs[1].quantity then reason='Missing nominal '..label..' input batch';break end
+            budget[id]=budget[id]-part.inputs[1].quantity
+        end
+        for id,n in pairs(net) do
+            if produced[id] then reason=label..' input and output identities overlap'
+            elseif (removed[id] or 0)~=n then reason=label..' inputs have not reconciled' end
+        end
+        for id,n in pairs(removed) do if n~=(net[id] or 0) then reason='Unrelated '..label..' input change' end end
+        for id,n in pairs(produced) do if (added[id] or 0)~=n then reason=label..' outputs have not reconciled' end end
+        for id,n in pairs(added) do if n~=(produced[id] or 0) then reason='Unrelated '..label..' output change' end end
+    end
+    if reason then
+        if final then diagnostic(self,p,reason);pending=nil end
+        return false
+    end
+    -- Compact shared identity/count: the member records carry their own cast
+    -- IDs. Repeating a long GUID list in every record makes large exports grow
+    -- quadratically and can exceed the native copy/import limits.
+    local evidence={id=casts[1].guid,operations=#casts,
+        inputs=itemVector(removed,before.facts),outputs=itemVector(added,after.facts)}
+    -- All receipts have been matched to one exact aggregate inventory delta.
+    -- Per-cast outputs come from those receipts, not a division of bag totals.
+    p.previousRecycling=nil
+    local complete=true
+    for _,part in ipairs(parts) do
+        local cast=part.cast
+        local record={operationID=cast.guid,recipeID=cast.recipe,method=cast.method,successful=true,
+            character=self:CharacterKey(),build=build(),gameMode='RETAIL',context=cast.context,
+            inputs=part.inputs,nominalInputs=part.nominalInputs,outputs=part.outputs,outputCoverage='complete',
+            startedAt=cast.startedAt,endedAt=cast.completedAt,reconciledAt=stamp(),
+            durationSeconds=cast.completed-cast.started,
+            attribution='cast-result-batch-bag',captureVersion=3,resultMetadata=copy(cast.results),
+            allocation=cast.request.allocation,allocationItemGUID=cast.request.allocationItemGUID,
+            applyConcentration=cast.request.concentration,bagReconciliation=copy(evidence),
+            salvageTarget={itemID=part.nominalInputs[1].itemID,quantity=part.nominalInputs[1].quantity,
+                itemGUID=cast.request.allocationItemGUID,eligibilitySource='C_TradeSkillUI.GetSalvagableItemIDs'}}
+        local ok,why=self:RecordCraftObservation(record)
+        cast.finalCoverage=ok and 'complete' or 'unresolved'
+        if not ok then complete=false;diagnostic(self,cast,why)
+        else
+            recyclingReceipts[cast.operationID]=copy(cast.resultKeys)
+            recyclingReceiptOrder[#recyclingReceiptOrder+1]=cast.operationID
+            if #recyclingReceiptOrder>MAX_RECORDS then
+                recyclingReceipts[table.remove(recyclingReceiptOrder,1)]=nil
+            end
+        end
+    end
+    pending=nil
+    return complete
+end
 function LL:FinishCraftCapture(final)
     local p=pending;if not p or not p.success then return false end
     if p.interference then diagnostic(self,p,p.interference);pending=nil;return false end
     local after=self:SnapshotCraftBags();if not after then return false end
+    if salvageCapture(p) then return finishRecycling(self,p,after,final) end
     local result,reason=validateDelta(self,p,after)
     if not result then
         if final then diagnostic(self,p,reason);pending=nil end
@@ -467,11 +723,11 @@ function LL:FinishCraftCapture(final)
         build=build(),gameMode="RETAIL",context=p.context,inputs=result.inputs,outputs=result.outputs,
         nominalInputs=p.nominalInputs,outputCoverage=complete and "complete" or "unresolved",startedAt=p.startedAt,endedAt=stamp(),
         durationSeconds=clock()-p.started,attribution=p.lootClosed and "cast-loot-bag" or "cast-result-bag",
-        resultMetadata=copy(p.results),allocation=p.request and p.request.allocation,
+        resultMetadata=copy(p.results),lootSlots=copy(p.lootSlots),captureVersion=2,castStartSeen=p.castStarted==true,allocation=p.request and p.request.allocation,
         allocationItemGUID=p.request and p.request.allocationItemGUID,
         applyConcentration=p.request and p.request.concentration,zeroReason=not complete and "No authoritative empty-result signal" or nil}
     if p.method=='Disenchant' and result.inputs[1] then
-        local facts=p.before.facts[result.inputs[1].itemID]
+        local facts=p.disenchantInputFacts or p.before.facts[result.inputs[1].itemID]
         record.context=self:CaptureCraftContext(p.recipe,facts,p.method,nil,nil)
     end
     local ok,saved=self:RecordCraftObservation(record)
@@ -501,7 +757,27 @@ end
 function LL:CraftBaseline(studyID,contextRef,recipeID)
     local d=self.db and self.db.craftResearch;if not d then return nil end
     local study=d.studies[studyID]
-    if not study or study.censored or study.truncated then return nil,"Study has unresolved coverage gaps" end
+    if not study or study.truncated or study.globalCoverageGap then return nil,"Study has unresolved coverage gaps" end
+    local context=d.contexts[contextRef]
+    local method=context and context.method
+    if not method then
+        for _,r in ipairs(d.records) do
+            if r.studyID==studyID and r.contextID==contextRef and r.recipeID==recipeID then method=r.method;break end
+        end
+    end
+    local review
+    if study.censored then
+        if not method then return nil,"Unknown operation coverage" end
+        if study.coverageVersion==2 and type(study.coverageGaps)=="table" and next(study.coverageGaps) then
+            if study.coverageGaps[tostring(method)..":"..recipeID] then return nil,"Recipe has unresolved coverage gaps" end
+        else
+            review=self.ItemDB and self.ItemDB.captureCoverageReviews and self.ItemDB.captureCoverageReviews[studyID]
+            if not review or review.method~=method or review.recipeID~=recipeID
+                or review.coverageOperationID~=study.coverageOperationID or review.coverageReason~=study.coverageReason then
+                return nil,"Legacy study has unscoped coverage gaps"
+            end
+        end
+    end
     local base={schemaVersion=SCHEMA,sampleKind="RAW_CAST_LOG",referenceContextID=contextRef,recipeID=recipeID,
         studyID=studyID,materials={},operations=0,sourceRecordIDs={},status="EMPIRICAL_ESTIMATE",
         numericTransformValidated=false,applyPolicy="NO_NUMERIC_TRANSFORM"}
@@ -509,6 +785,7 @@ function LL:CraftBaseline(studyID,contextRef,recipeID)
     base.observationContext=copy(d.contexts[contextRef])
     local totals,inputTotals,signature={},{},nil
     for _,r in ipairs(d.records) do if r.studyID==studyID and r.contextID==contextRef and r.recipeID==recipeID then
+        if review and not review.operations[r.operationID] then return nil,"Operation is outside the reviewed legacy capture" end
         if r.outputCoverage~="complete" then return nil,"Unresolved output coverage" end
         local inputSignature=json(d.contexts[r.contextID].inputIdentity)
         if signature and signature~=inputSignature then return nil,"Different input batches or variants" end
@@ -670,27 +947,29 @@ function LL:GetRecordedProcessingEstimate(f,method,batch,recipeID)
             and #inputs==1 and inputs[1].itemID==f.id and inputs[1].quantity==batch
             and (method~='Disenchant' or disenchantInputMatches(inputs[1],f)) then
             checked[queryID]=true
-            -- Re-query the recorded allocation instead of substituting an empty
-            -- allocation. This only reads operation data; it never crafts.
-            local query=json({allocation=r.allocation,concentration=r.applyConcentration})
-            local current=queries[query]
-            if not current then
-                local allocationGUID=r.allocationItemGUID and self.FindSkillQualityTarget and self:FindSkillQualityTarget(f)
-                current=self:CaptureCraftContext(recipeID,f,method,r.allocation,r.applyConcentration,allocationGUID)
-                current.inputIdentity={{itemID=f.id,qualityRank=f.reagentQuality,rarity=f.quality,quantity=batch,
-                    itemLevel=(f.classID==2 or f.classID==4) and f.itemLevel or nil,
-                    hyperlink=(f.classID==2 or f.classID==4) and f.link or nil}}
-                queries[query]=current
-            end
-            local context=d.contexts[id]
-            -- Incomplete measurements remain exportable, never priced as matched.
-            local exact=current.effectiveSkill and current.specialization and current.skillLineID
-                and current.fieldStatus.equipment=="measured" and identity(context)==identity(current) and r.build==build()
-            if exact or self.ProjectPersonalEstimate then
-                local baseline=self:CraftBaseline(r.studyID,id,recipeID)
-                if baseline and baseline.method==method and #baseline.inputs==1
-                    and baseline.inputs[1].itemID==f.id and baseline.inputs[1].quantity==batch
-                    and (method~='Disenchant' or disenchantInputMatches(baseline.inputs[1],f)) then
+            -- Coverage can reject a cohort without any live profession/trait
+            -- API calls. Bag badges query this path for many items per cast.
+            local baseline=self:CraftBaseline(r.studyID,id,recipeID)
+            if baseline and baseline.method==method and #baseline.inputs==1
+                and baseline.inputs[1].itemID==f.id and baseline.inputs[1].quantity==batch
+                and (method~='Disenchant' or disenchantInputMatches(baseline.inputs[1],f)) then
+                -- Re-query the recorded allocation instead of substituting an empty
+                -- allocation. This only reads operation data; it never crafts.
+                local query=json({allocation=r.allocation,concentration=r.applyConcentration})
+                local current=queries[query]
+                if not current then
+                    local allocationGUID=r.allocationItemGUID and self.FindSkillQualityTarget and self:FindSkillQualityTarget(f)
+                    current=self:CaptureCraftContext(recipeID,f,method,r.allocation,r.applyConcentration,allocationGUID)
+                    current.inputIdentity={{itemID=f.id,qualityRank=f.reagentQuality,rarity=f.quality,quantity=batch,
+                        itemLevel=(f.classID==2 or f.classID==4) and f.itemLevel or nil,
+                        hyperlink=(f.classID==2 or f.classID==4) and f.link or nil}}
+                    queries[query]=current
+                end
+                local context=d.contexts[id]
+                -- Incomplete measurements remain exportable, never priced as matched.
+                local exact=current.effectiveSkill and current.specialization and current.skillLineID
+                    and current.fieldStatus.equipment=="measured" and identity(context)==identity(current) and r.build==build()
+                if exact or self.ProjectPersonalEstimate then
                     baseline.inputCount=batch;baseline.expectedInputCount=baseline.expectedInputsConsumed[1].expectedQuantity
                     baseline.patchBuild=r.build;baseline.effectiveSamples=baseline.operations;baseline.samples=baseline.operations
                     baseline.source="Measured personal cast log";baseline.observationContext=copy(context)
@@ -719,16 +998,59 @@ end
 function LL:GetLearnedDisenchantEstimate(f)
     return self:GetRecordedProcessingEstimate(f,"Disenchant",1,13262)
 end
+-- Build only the requested export snapshot. Older batches remain in SavedVariables.
+function LL:SnapshotRecordedResearch(latestOnly)
+    local d=self.db and self.db.craftResearch or {records={},contexts={},studies={},diagnostics={},droppedRecords=0}
+    if not latestOnly then return copy(d) end
+    local id=d.activeStudy
+    if not (id and d.studies[id]) then
+        local last=d.records[#d.records];id=last and last.studyID
+        if not id then
+            for candidate,study in pairs(d.studies) do
+                if not id or (study.startedAt or 0)>(d.studies[id].startedAt or 0) then id=candidate end
+            end
+        end
+    end
+    local out={records={},contexts={},studies={},diagnostics={},droppedRecords=d.droppedRecords or 0,
+        targetingActivations=d.targetingActivations or 0,exportScope='latest-batch',exportStudyID=id,
+        totalRetainedRecords=#d.records}
+    if id then
+        out.studies[id]=copy(d.studies[id])
+        for _,r in ipairs(d.records) do if r.studyID==id then
+            out.records[#out.records+1]=copy(r)
+            if r.contextID and not out.contexts[r.contextID] then out.contexts[r.contextID]=copy(d.contexts[r.contextID]) end
+        end end
+        for _,diagnostic in ipairs(d.diagnostics or {}) do
+            if diagnostic.studyID==id then out.diagnostics[#out.diagnostics+1]=copy(diagnostic) end
+        end
+    end
+    return out
+end
+-- Native lossless compression avoids rendering hundreds of thousands of JSON
+-- characters in the copy box. The payload remains portable zlib + base64.
+function LL:PackCraftExport(text)
+    local api=C_EncodingUtil
+    if not api or type(api.CompressString)~='function' or type(api.EncodeBase64)~='function' then return nil end
+    local ok,compressed=pcall(api.CompressString,text,1,2) -- documented Zlib / OptimizeForSize enums
+    if not ok or type(compressed)~='string' or compressed=='' then return nil end
+    local encoded;ok,encoded=pcall(api.EncodeBase64,compressed)
+    if not ok or type(encoded)~='string' or encoded=='' then return nil end
+    return json({schemaVersion='loot-liquidator.cast-transfer/1',encoding='zlib-base64',
+        uncompressedBytes=#text,payload=encoded})
+end
 function LL:ExportCraftResearch(page)
     local d=self.db and self.db.craftResearch or {records={},contexts={},studies={},droppedRecords=0}
+    local all=page=="all"
     page=math.max(1,math.floor(tonumber(page) or 1));local records,contexts={},{}
-    for i=(page-1)*25+1,math.min(page*25,#d.records) do
+    for i=all and 1 or (page-1)*25+1,all and #d.records or math.min(page*25,#d.records) do
         local r=copy(d.records[i]);records[#records+1]=r;contexts[r.contextID]=copy(d.contexts[r.contextID])
     end
     return json({schemaVersion=SCHEMA,registryContract="profession-mechanics/0.2",sampleKind="RAW_CAST_LOG",
-        artifactStatus="RESEARCH_ONLY_NOT_SHIPPED",page=page,pages=math.max(1,math.ceil(#d.records/25)),
+        artifactStatus="RESEARCH_ONLY_NOT_SHIPPED",page=page,pages=all and 1 or math.max(1,math.ceil(#d.records/25)),
         records=records,contexts=contexts,studies=d.studies,diagnostics=d.diagnostics or {},
-        retainedRecords=#d.records,droppedRecords=d.droppedRecords,automaticMechanicsPromotion=false})
+        retainedRecords=#d.records,droppedRecords=d.droppedRecords,automaticMechanicsPromotion=false,
+        exporterRecorderRevision=RECORDER_REVISION,targetingActivations=d.targetingActivations or 0,
+        exportScope=d.exportScope,exportStudyID=d.exportStudyID,totalRetainedRecords=d.totalRetainedRecords})
 end
 function LL:ExportCraftBaselines()
     local d=self.db and self.db.craftResearch;local baselines,seen={},{}
@@ -797,6 +1119,21 @@ function LL:CraftRecordingReport()
     return ("Craft research: %d complete, %d unresolved, %d evicted.\nExports are provisional observations, not verified mechanics.\n/ll debug craftexport [page]; /ll debug craftbaseline; /ll debug craftstudy LABEL; /ll debug craftzero\n%s"):
         format(complete,unresolved,d.droppedRecords,pending and "One cast awaits settled results." or "No pending cast.")
 end
+function LL:RecordingStatus()
+    local id,study=self:ActiveRecordingBatch()
+    local d=self.db and self.db.craftResearch or {records={}}
+    local complete,unresolved=0,0
+    for _,r in ipairs(d.records) do
+        if r.studyID==id then
+            if r.outputCoverage=="complete" then complete=complete+1 else unresolved=unresolved+1 end
+        end
+    end
+    local state=not study and "No active batch" or study.truncated and "Needs review: retained results were truncated" or (study.censored and study.coverageVersion==2 and not study.globalCoverageGap) and
+        "Needs review for some recipes; other recipes keep recording and remain usable" or study.censored and
+        ("Needs review: "..tostring(study.coverageReason or "Earlier recorder reported a coverage gap")) or
+        "Recording"
+    return ("%s\nCurrent batch: %d complete, %d unresolved.\nResults stay saved for export. Complete recipes without coverage gaps can be used independently."):format(state,complete,unresolved)
+end
 local schedule
 schedule=function()
     local p=pending
@@ -811,10 +1148,11 @@ schedule=function()
 end
 local frame=CreateFrame("Frame")
 for _,event in ipairs({"UNIT_SPELLCAST_SENT","UNIT_SPELLCAST_START","UNIT_SPELLCAST_SUCCEEDED","UNIT_SPELLCAST_FAILED",
-    "UNIT_SPELLCAST_INTERRUPTED","LOOT_CLOSED","BAG_UPDATE_DELAYED","TRADE_SKILL_ITEM_CRAFTED_RESULT",
+    "UNIT_SPELLCAST_INTERRUPTED","LOOT_READY","LOOT_OPENED","LOOT_CLOSED","BAG_UPDATE_DELAYED","TRADE_SKILL_ITEM_CRAFTED_RESULT",
     "TRADE_SHOW","MERCHANT_SHOW","MAIL_SHOW","BANKFRAME_OPENED","PLAYER_LOGOUT"}) do frame:RegisterEvent(event) end
 frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
     if pending and not enabled(LL,pending.method) then
+        if salvageCapture(pending) then LL:AbandonCraftCapture('Recording disabled with unsettled salvage results') end
         pending=nil
         if LL.db and LL.db.craftResearch then LL.db.craftResearch.activeStudy=nil end
     end
@@ -826,7 +1164,7 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
             local study=d.activeStudy and d.studies[d.activeStudy]
             if study and pending then
                 -- A cast still unsettled at logout leaves the batch's coverage unknown.
-                study.censored=true;study.coverageReason="Logged out while a cast was being recorded";d.activeStudy=nil
+                study.censored=true;study.globalCoverageGap="Logged out while a cast was being recorded";study.coverageReason=study.globalCoverageGap;d.activeStudy=nil
             elseif study then
                 study.paused=true;study.pausedAt=stamp()
             end
@@ -843,6 +1181,24 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
             pending.interference="Unsupported result kind";return
         end
         local key=tostring(r.operationID)..":"..tostring(r.itemGUID)..":"..r.itemID
+        if salvageCapture(pending) then
+            local old=recyclingReceipts[r.operationID]
+            if old then
+                if old[key]~=json(r) then pending.interference='Conflicting completed salvage result' end
+                return
+            end
+            for _,earlier in ipairs(pending.previousRecycling or {}) do
+                if earlier.operationID==r.operationID then
+                    local fingerprint=json(r)
+                    if earlier.resultKeys[key] and earlier.resultKeys[key]~=fingerprint then
+                        pending.interference='Conflicting duplicate salvage result'
+                    elseif not earlier.resultKeys[key] then
+                        earlier.resultKeys[key]=fingerprint;earlier.results[#earlier.results+1]=r
+                    end
+                    schedule();return
+                end
+            end
+        end
         if integer(r.operationID) then
             if pending.operationID and pending.operationID~=r.operationID then pending.interference="Multiple result operations" end
             pending.operationID=r.operationID
@@ -852,13 +1208,37 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
         if not pending.resultKeys[key] then pending.resultKeys[key]=fingerprint;pending.results[#pending.results+1]=r end
         schedule();return
     end
+    if event=="LOOT_READY" or event=="LOOT_OPENED" then LL:CaptureResearchLoot();return end
     if event=="LOOT_CLOSED" or event=="BAG_UPDATE_DELAYED" then
         if pending then pending.lastChange=clock();if event=="LOOT_CLOSED" then pending.lootClosed=true end;schedule() end;return
     end
     if unit~="player" then return end
     local guid,recipe=event=="UNIT_SPELLCAST_SENT" and b or a,event=="UNIT_SPELLCAST_SENT" and c or b
-    if event=="UNIT_SPELLCAST_SENT" or event=="UNIT_SPELLCAST_START" then LL:BeginCraftCapture(guid,recipe)
-    elseif not pending and event=="UNIT_SPELLCAST_SUCCEEDED" and LL.db and describe(LL,recipe) then
+    if recipe==13262 and event=="UNIT_SPELLCAST_SENT" then
+        if not enabled(LL,'Disenchant') then return end
+        -- Opening the targeting cursor is not a cast on an item. Do not force
+        -- a previous genuine cast to finish just because another was requested.
+        if type(guid)=='string' then
+            disenchantIntents[guid]=clock();intentOrder[#intentOrder+1]=guid
+            if #intentOrder>128 then disenchantIntents[table.remove(intentOrder,1)]=nil end
+        end
+        return
+    end
+    if recipe==13262 and event=="UNIT_SPELLCAST_SUCCEEDED"
+        and (not pending or pending.guid~=guid) and disenchantIntents[guid]
+        and clock()-disenchantIntents[guid]<60 and call(SpellIsTargeting)==true then
+        disenchantIntents[guid]=nil
+        local d=enabled(LL,'Disenchant') and ledger(LL)
+        if d then d.targetingActivations=(d.targetingActivations or 0)+1 end
+        return
+    end
+    if event=="UNIT_SPELLCAST_START" or event=="UNIT_SPELLCAST_FAILED" or event=="UNIT_SPELLCAST_INTERRUPTED" then
+        if guid then disenchantIntents[guid]=nil end
+    end
+    if event=="UNIT_SPELLCAST_SENT" or event=="UNIT_SPELLCAST_START" then
+        LL:BeginCraftCapture(guid,recipe)
+        if event=="UNIT_SPELLCAST_START" and pending and pending.guid==guid then pending.castStarted=true end
+    elseif (not pending or pending.guid~=guid) and event=="UNIT_SPELLCAST_SUCCEEDED" and LL.db and describe(LL,recipe) then
         local recorded=false
         for _,r in ipairs(ledger(LL).records) do if r.operationID==guid then recorded=true end end
         if not recorded and enabled(LL,describe(LL,recipe).method) then diagnostic(LL,{guid=guid,recipe=recipe,method=describe(LL,recipe).method,success=true},"Success without an isolated start snapshot") end
@@ -866,12 +1246,24 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
         if event=="UNIT_SPELLCAST_SUCCEEDED" then
             if not pending.success then
                 pending.success=true
+                pending.completedAt=stamp();pending.completed=clock()
                 if C_Timer and C_Timer.After then
                     local p=pending;C_Timer.After(13,function() if pending==p then LL:FinishCraftCapture(true) end end)
                 end
             end
             schedule()
-        else pending=nil end
+        else
+            local preceding=pending.previousRecycling
+            pending=nil
+            if preceding and #preceding>0 then
+                pending=table.remove(preceding);pending.previousRecycling=preceding
+                local restored=pending
+                schedule()
+                if C_Timer and C_Timer.After then
+                    C_Timer.After(13,function()if pending==restored then LL:FinishCraftCapture(true)end end)
+                end
+            end
+        end
     end
 end)
 -- Preserve public diagnostic entry points; capture itself uses the unified frame.

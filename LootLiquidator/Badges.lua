@@ -54,6 +54,7 @@ function LA:ClearButton(button)
     if not button then return end
     button.laLink = nil; button.laDecision = nil
     button.laBadgeFingerprint=nil
+    button.laBetterBagsData=nil
     activeButtons[button]=nil
     if button.laLetter then button.laLetter:Hide() end
 end
@@ -210,8 +211,10 @@ local function ProcessBadgeJobs()
             -- A pooled item button may have changed item, or its bank may
             -- have closed while it was queued. Never paint stale results.
             local current=job.data and job.data.itemInfo and job.data.itemInfo.itemLink
-            if (not job.data or current==job.link)
-                and (not button.IsVisible or button:IsVisible()) then
+            if (job.data and current~=job.link)
+                or BadgeFingerprint(job.link,job.data,job.context)~=job.fingerprint then
+                LA:ClearButton(button)
+            elseif not button.IsVisible or button:IsVisible() then
                 local t=BadgeTime()
                 local ctx=job.data and GetContext(job.data) or job.context or {}
                 ctx._LLFastBadge=true -- fast path for queued bag badges
@@ -254,6 +257,10 @@ local function QueueBetterBagsBadge(button,link,data,context,force)
         LA:ClearButton(button)
         return
     end
+    -- Keep the host's actual instance data for forced refreshes. Rebuilding an
+    -- identity from decision.facts.context loses the GUID and can substitute
+    -- derived binding flags, briefly hiding D on an unchanged item each cast.
+    if data then button.laBetterBagsData=data end
     local fingerprint=BadgeFingerprint(link,data,context)
     -- Do not re-evaluate the same instance when BetterBags repaints a section.
     if not force and button.laLink==link and button.laDecision
@@ -291,6 +298,7 @@ local function QueueBetterBagsBadge(button,link,data,context,force)
     -- Never show the old item's V/D/T while a pooled slot changes.
     if button.laLink~=link or button.laBadgeFingerprint~=fingerprint then
         LA:ClearButton(button)
+        button.laBetterBagsData=data
     end
     if not badgeTickScheduled then
         badgeTickScheduled=true
@@ -328,7 +336,10 @@ function LA:RequestBadgeRefresh()
         if not button.laBlizzardBag and not button.laGuildBank then
         local link=button.laLink
         local last=button.laDecision
-        if link and last then
+        local data=button.laBetterBagsData
+        if data then
+            QueueBetterBagsBadge(button,data.itemInfo and data.itemInfo.itemLink,data,nil,true)
+        elseif link and last then
             local context=last.facts and last.facts.context or {}
             QueueBetterBagsBadge(button,link,nil,context,true)
         end
@@ -639,7 +650,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             -- cannot conceal a usable option for the same method.
             local profession=option.profession or ({Disenchant="Enchanting",Mill="Inscription",Prospect="Jewelcrafting",Smelt="Mining"})[option.name]
             local selection=profession and LA.db.professionTooltipProfiles and LA.db.professionTooltipProfiles[profession]
-            if option.name and selection~="@hide" and (option.available~=false or selection=="@hypothetical") then
+            if option.name and selection~="@hide" and (option.available~=false or option.eligibleInput or selection=="@hypothetical") then
                 local previous=choices[option.name]
                 if not previous or (option.value and not previous.value)
                     or (option.value and previous.value
@@ -792,7 +803,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 -- Reuse the exact evaluated material model used to price this option.
                 local model=option.yieldModel
                 local hasMaterials=(model and model.materials and #model.materials>0)
-                if option.value or hasMaterials
+                if option.value or hasMaterials or option.eligibleInput
                     or ((option.category=="destroy" or option.category=="research-operation") and
                         (methodName=="Mill" or methodName=="Prospect"))
                     or (methodName=="Disenchant"
@@ -830,6 +841,9 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         two(label,"Insufficient Data",option.letter or "D")
                     end
                     ShowMaterials(option,model)
+                    if option.eligibleInput and option.available==false and option.why then
+                        tooltip:AddLine('  '..option.why,.83,.72,.59,true)
+                    end
                     if LA.ProfessionThresholdNotes and f and model and model.context
                         and LA.db.showProfessionThresholds~=false then
                         local notes=LA:ProfessionThresholdNotes(f,option,model.context)

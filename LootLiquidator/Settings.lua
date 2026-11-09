@@ -771,18 +771,28 @@ end
 local function Notify(message)
     if print and message then print("|cff66ccffLoot Liquidator|r: "..message) end
 end
-function LL:ShowRecordedResultsExport()
+function LL:ShowRecordedResultsExport(paged,allBatches)
     if not self.ExportRecordedResultsPage then return end
     -- A recording can finish while this window is open. Freeze one bounded
     -- snapshot so Previous/Next never shift casts between export pages.
-    local function snapshot(value)
-        if type(value)~='table' then return value end
-        local out={} for key,entry in pairs(value) do out[key]=snapshot(entry) end return out
+    local proxy=setmetatable({db={craftResearch=self:SnapshotRecordedResearch(not allBatches)}},{__index=self})
+    local limit=self.MaxCopyTextBytes or 65536
+    local function displayText(raw)
+        local literal=raw:gsub('|','\\u007c')
+        if #literal<=32768 then return literal end
+        return (self.PackCraftExport and self:PackCraftExport(raw)) or literal
     end
-    local proxy=setmetatable({db={craftResearch=snapshot(self.db and self.db.craftResearch)}},{__index=self})
     local function show(page)
-        local title,text,current,pages=proxy:ExportRecordedResultsPage(page)
+        local title,_,current,pages=proxy:ExportRecordedResultsPage(page)
+        local text=displayText(proxy:ExportCraftResearch(current))
         if self.ShowCopy then self:ShowCopy(title,text,{page=current,pages=pages,onPage=show}) end
+    end
+    if not paged then
+        local text=displayText(proxy:ExportCraftResearch("all"))
+        if #text<=limit then
+            if self.ShowCopy then self:ShowCopy(allBatches and "Recorded results - all batches" or "Recorded results - latest batch",text) end
+            return
+        end
     end
     show(1)
 end
@@ -855,39 +865,7 @@ function LL:RateProfileCharacterChoices()
     end
     return rows
 end
-function LL:AddRateProfileSettings(category,layout)
-    Section(layout,"Rates")
-    local mode=Settings.RegisterAddOnSetting(category,"LootLiquidator_rateProfile",
-        "rateProfile",self.db,"number","Show rates for",1)
-    local character=Settings.RegisterAddOnSetting(category,"LootLiquidator_rateProfileCharacter",
-        "rateProfileCharacter",self.db,"string","Character","")
-    for _,setting in ipairs({mode,character}) do
-        if setting.SetValueChangedCallback then
-            setting:SetValueChangedCallback(function()
-                if LL.Invalidate then LL:Invalidate("rateProfile") end
-                LL:UpdateAllAppearance()
-            end)
-        end
-    end
-    local modeInit=Settings.CreateDropdown(category,mode,function()
-        local out=Settings.CreateControlTextContainer()
-        out:Add(1,"Me","Use the skill of whoever would do the work: you, or the alt it can be sent to.")
-        out:Add(2,"A chosen alt","Always use the character picked below, as if they did the work.")
-        out:Add(3,"Simulated profile","Use the simulated skill and specialization saved for the character below (Professions pages).")
-        return out:GetData()
-    end,"Whose profession skill is used to estimate milling, prospecting, smelting and disenchanting results. This never changes who can actually do it.")
-    self:WithoutDropdownSteppers(modeInit)
-    local charInit=Settings.CreateDropdown(category,character,function()
-        local out=Settings.CreateControlTextContainer()
-        for _,row in ipairs(LL:RateProfileCharacterChoices()) do out:Add(row[1],row[2]) end
-        return out:GetData()
-    end,"The alt (or simulated profile) used when \"Show rates for\" is not \"Me\". Characters appear here after you log into them once.")
-    self:WithoutDropdownSteppers(charInit)
-    if charInit and charInit.SetParentInitializer then
-        charInit:SetParentInitializer(modeInit,function() return (LL.db.rateProfile or 1)~=1 end)
-    end
-    return modeInit,charInit
-end
+
 
 -- Settings are grouped by user intent, not by the Lua module providing them.
 -- Crucially each SavedVariables key is registered exactly once so existing
@@ -925,7 +903,16 @@ function LL:RegisterNativeSettings()
     Section(generalLayout,"General")
     Checkbox(general,"enabled","Enable Loot Liquidator",
         "Analyze items and recommend the most valuable available action.",true)
-    self:AddRateProfileSettings(general,generalLayout)
+    Section(generalLayout,"PRs & build")
+    local source,prs
+    if self.BuildSummary then source,prs=self:BuildSummary() end
+    Section(generalLayout,source or "Source details unavailable")
+    Section(generalLayout,prs or "PR information unavailable")
+    if CreateSettingsButtonInitializer and generalLayout and generalLayout.AddInitializer then
+        generalLayout:AddInitializer(CreateSettingsButtonInitializer("Build details","View details",function()
+            if LL.ShowCopy and LL.BuildDetails then LL:ShowCopy("PRs & build",LL:BuildDetails()) end
+        end,"Shows the source branch, exact commit, included PRs and GitHub build link.",false))
+    end
     Section(generalLayout,"Use the pages on the left for badge appearance, tooltips, pricing, and addon integrations.")
 
     -- B8a: native vertical page (was a hand-placed canvas).
@@ -979,8 +966,8 @@ function LL:RegisterNativeSettings()
         "Extra net gold over vendoring equipment required before an auction recommendation.",0,100,.05,0)
 
     -- B5b: the alts table is gone. Alts count automatically (the "Include
-    -- alts" switch and the transfer rule); "Show rates for" on the General
-    -- page picks whose skill is used. Simulated profiles live under this page.
+    -- alts" switch and the transfer rule). Profession-specific display and
+    -- simulated profiles live under this page; no hidden global rate override.
     local chars,charsLayout=Settings.RegisterVerticalLayoutSubcategory(general,"Professions (Simulated)")
     if chars then
         Settings.RegisterAddOnCategory(chars)
@@ -1018,8 +1005,15 @@ function LL:RegisterNativeSettings()
     -- B6a: buttons instead of slash commands for recorded results.
     if CreateSettingsButtonInitializer and researchLayout and researchLayout.AddInitializer then
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
-            "Export recorded results","Export",function() LL:ShowRecordedResultsExport() end,
-            "Opens your recorded results as text to copy (Ctrl+C). Use Previous and Next in the export window for additional pages.",false))
+            "Recording status","Show status",function()
+                if LL.ShowCopy and LL.RecordingStatus then LL:ShowCopy("Recording status",LL:RecordingStatus()) end
+            end,"Shows whether the current batch is recording cleanly, its complete/unresolved counts, and the reason it needs review.",false))
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Export latest batch","Export",function() LL:ShowRecordedResultsExport() end,
+            "Copy the latest batch and its evidence with Ctrl+C. Older batches stay in SavedVariables. Large exports use a compact lossless format.",false))
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Export latest batch as pages","Export pages",function() LL:ShowRecordedResultsExport(true) end,
+            "Copy smaller pages of the latest batch. Older batches stay saved.",false))
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Start new batch","Start new batch",function() LL:ConfirmStartNewBatch() end,
             "Count the next results you record as a new group, e.g. after changing gear or specialization.",false))

@@ -2,10 +2,12 @@
 from pathlib import Path
 import argparse
 import zipfile
+from stamp_build_info import stamp
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('output', type=Path, help='Output ZIP path, for example dist/LootLiquidator-test.zip')
 args = parser.parse_args()
+stamp()
 
 root=Path('LootLiquidator')
 manifest=root/'LootLiquidator.toc'

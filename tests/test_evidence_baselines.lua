@@ -25,9 +25,10 @@ for _,m in ipairs(record.materials) do
     local f=m.dropChance
     ok(f.confidence==LL:RateConfidence(f.value*f.samples,f.samples),'confidence port matches for '..m.id)
 end
--- Nothing else changed: the real database has no evidence records yet.
+-- Only this synthetic fixture supplies numerical evidence here. Direct cast
+-- identities are compiled separately and must never become numeric baselines.
 local count=0
-for _,r in ipairs(LL.ItemDB.processing) do if r.recordID:match('^evidence:') then count=count+1 end end
+for _,r in ipairs(LL.ItemDB.processing) do if r.recordID:match('^evidence:') and not r.observationOnly then count=count+1 end end
 ok(count==3,'only the three fixture records are evidence records')
 local units,published
 for _,r in ipairs(LL.ItemDB.processing) do
