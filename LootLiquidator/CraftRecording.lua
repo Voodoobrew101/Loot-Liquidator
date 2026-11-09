@@ -33,7 +33,7 @@ local function quote(s)
         return ({['"']='\\"',['\\']='\\\\',['\n']='\\n',['\r']='\\r',['\t']='\\t'})[c] or ('\\u%04x'):format(c:byte())
     end)..'"'
 end
-local arrayFields={records=true,inputs=true,outputs=true,nominalInputs=true,materials=true,baselines=true,diagnostics=true,resultMetadata=true,sourceRecordIDs=true,expectedInputsConsumed=true,resourcesReturned=true,inputIdentity=true,operationIDs=true}
+local arrayFields={records=true,inputs=true,outputs=true,nominalInputs=true,materials=true,baselines=true,diagnostics=true,resultMetadata=true,sourceRecordIDs=true,expectedInputsConsumed=true,resourcesReturned=true,inputIdentity=true,operationIDs=true,allocationEntries=true,schematicSlots=true,allowedReagents=true}
 local function json(v,forceArray)
     if type(v)=="string" then return quote(v) end
     if type(v)=="number" then assert(finite(v));return ('%.17g'):format(v) end
@@ -248,6 +248,68 @@ function LL:CaptureResearchLoot()
         end
     end
 end
+-- Diagnostic-only allowlist. Never feed this lossy, bounded view into capture
+-- validation. Omitted/invalid values are explicit, not guessed allocations.
+-- Limits bound traversal and saved/exported size independently of native input.
+local function diagnosticState(v)
+    if secret(v) then return 'secret' end
+    return v==nil and 'missing' or type(v)
+end
+local function diagnosticNumber(out,key,v)
+    local state=diagnosticState(v)
+    if state=='number' then
+        if not finite(v) then state='negative-or-nonfinite'
+        elseif v>2147483647 then state='out-of-range'
+        else out[key]=v;return end
+    end
+    out[key..'Status']=state
+end
+local function diagnosticArray(source,key,limit,entry)
+    local out={state=diagnosticState(source)}
+    if out.state~='table' then return out end
+    out[key]={}
+    for i=1,limit do
+        local value=rawget(source,i)
+        if not secret(value) and value==nil then return out end
+        out[key][i]=entry(value)
+    end
+    local overflow=rawget(source,limit+1)
+    out.truncated=secret(overflow) or overflow~=nil
+    return out
+end
+local function diagnosticReagent(v)
+    local out={state=diagnosticState(v)}
+    if out.state=='table' then diagnosticNumber(out,'itemID',rawget(v,'itemID')) end
+    return out
+end
+local function diagnosticAllocation(allocation)
+    return diagnosticArray(allocation,'allocationEntries',16,function(a)
+        local out={state=diagnosticState(a)}
+        if out.state=='table' then
+            diagnosticNumber(out,'dataSlotIndex',rawget(a,'dataSlotIndex'))
+            diagnosticNumber(out,'quantity',rawget(a,'quantity'))
+            out.reagent=diagnosticReagent(rawget(a,'reagent'))
+        end
+        return out
+    end)
+end
+local function diagnosticSchematic(schematic)
+    local out={state=diagnosticState(schematic)}
+    if out.state~='table' then return out end
+    out.slots=diagnosticArray(rawget(schematic,'reagentSlotSchematics'),'schematicSlots',16,function(slot)
+        local item={state=diagnosticState(slot)}
+        if item.state=='table' then
+            diagnosticNumber(item,'dataSlotIndex',rawget(slot,'dataSlotIndex'))
+            diagnosticNumber(item,'quantityRequired',rawget(slot,'quantityRequired'))
+            local required=rawget(slot,'required')
+            if diagnosticState(required)=='boolean' then item.required=required
+            else item.requiredStatus=diagnosticState(required) end
+            item.reagents=diagnosticArray(rawget(slot,'reagents'),'allowedReagents',8,diagnosticReagent)
+        end
+        return item
+    end)
+    return out
+end
 local function describe(self,recipe)
     local salvage=self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(recipe)
     if salvage then
@@ -280,7 +342,7 @@ local function describe(self,recipe)
     local info=call(ui and ui.GetRecipeInfo,recipe)
     local schematic=call(ui and ui.GetRecipeSchematic,recipe,false)
     if type(info)=='table' and info.learned==true and type(schematic)=='table' and schematic.recipeID==recipe and not schematic.isRecraft then
-        return {method=method or 'Craft',schematic=copy(schematic)}
+        return {method=method or 'Craft',schematic=copy(schematic),diagnosticSchematic=diagnosticSchematic(schematic)}
     end
 end
 -- Exact recipe/input context takes priority over old expansion-wide hints.
@@ -307,7 +369,7 @@ end
 -- A secure post-hook observes the player's actual request; it never calls a
 -- crafting API or changes its arguments. Missing allocations remain unknown.
 function LL:ObserveCraftRequest(recipe,numCasts,allocation,recipeLevel,orderID,concentration)
-    request={recipe=recipe,remaining=integer(numCasts) and numCasts or 1,allocation=copy(allocation),
+    request={diagnosticAllocation=diagnosticAllocation(allocation),recipe=recipe,remaining=integer(numCasts) and numCasts or 1,allocation=copy(allocation),
         recipeLevel=recipeLevel,orderID=orderID,concentration=concentration,at=clock()}
 end
 if hooksecurefunc and C_TradeSkillUI and type(C_TradeSkillUI.CraftRecipe)=="function" then
@@ -330,11 +392,11 @@ if hooksecurefunc and C_TradeSkillUI and type(C_TradeSkillUI.CraftSalvage)=="fun
 end
 local function allocatedInputs(p)
     local schematic=p.description.schematic
-    if not schematic then return nil end
+    if not schematic then return nil,'missing-schematic' end
     local allocation=p.request and p.request.allocation
     local selected={}
     for _,a in ipairs(allocation or {}) do
-        if not integer(a.dataSlotIndex) or not a.reagent or not integer(a.reagent.itemID) or not integer(a.quantity) then return nil end
+        if not integer(a.dataSlotIndex) or not a.reagent or not integer(a.reagent.itemID) or not integer(a.quantity) then return nil,'invalid-allocation-entry' end
         local slot=selected[a.dataSlotIndex] or {};selected[a.dataSlotIndex]=slot
         slot[a.reagent.itemID]=(slot[a.reagent.itemID] or 0)+a.quantity
     end
@@ -346,16 +408,16 @@ local function allocatedInputs(p)
             local total=0
             for id,n in pairs(items) do
                 local allowed=false for _,r in ipairs(slot.reagents or {}) do if r.itemID==id then allowed=true end end
-                if not allowed then return nil end
+                if not allowed then return nil,'item-not-in-slot' end
                 total=total+n;expected[id]=(expected[id] or 0)+n
             end
-            if slot.required and total~=slot.quantityRequired then return nil end
+            if slot.required and total~=slot.quantityRequired then return nil,'required-quantity-mismatch' end
         elseif slot.required then
-            if #slot.reagents~=1 or not slot.reagents[1].itemID or not integer(slot.quantityRequired) then return nil end
+            if #slot.reagents~=1 or not slot.reagents[1].itemID or not integer(slot.quantityRequired) then return nil,'unallocated-required-slot' end
             local id=slot.reagents[1].itemID;expected[id]=(expected[id] or 0)+slot.quantityRequired
         end
     end
-    if next(selected) then return nil end
+    if next(selected) then return nil,'unmatched-allocation-slot' end
     return expected
 end
 local function salvageCapture(p)
@@ -420,6 +482,10 @@ function LL:BeginCraftCapture(guid,recipe)
         request=copy(hint),context=copy(context),startedAt=stamp(),started=clock(),success=false,results={},resultKeys={},
         salvageInputVerified=salvageInputs and hint and salvageInputs[hint.salvageInputID]==true,
         previousRecycling=preceding}
+    if description.method=='Craft' and not description.salvage and not description.conversion then
+        pending.craftAllocation={version=1,requestState=hint and 'observed' or 'missing-or-expired',
+            allocation=hint and hint.diagnosticAllocation or diagnosticAllocation(nil),schematic=description.diagnosticSchematic}
+    end
     if C_Timer and C_Timer.After then
         local p=pending;C_Timer.After(60,function()
             if pending==p and not p.success then
@@ -511,7 +577,7 @@ local function validateDelta(self,p,after)
             for _,extra in ipairs(c.extraReagents or {}) do expected[extra.id]=extra.amount end
             for _,supply in ipairs(c.vendorSupplies or {}) do expected[supply.id]=supply.amount end
         else
-            expected=allocatedInputs(p)
+            expected,p.allocationFailure=allocatedInputs(p)
             if not expected then return nil,"Unknown reagent allocation" end
         end
         for id in pairs(returned) do if not expected[id] then return nil,"Unverified reagent return" end end
@@ -587,7 +653,11 @@ local function diagnostic(self,p,reason)
     local after=self:SnapshotCraftBags()
     local removed,added={},{}
     if after and p.before then removed,added=diff(p.before,after) end
-    d.diagnostics[#d.diagnostics+1]={operationID=p.guid,recipeID=p.recipe,method=p.method,reason=reason,at=stamp(),
+    local allocation=copy(p.craftAllocation)
+    -- A parser discriminator is meaningful only for this exact final reason.
+    -- An earlier transient validation attempt must not mislabel interference.
+    if allocation and reason=='Unknown reagent allocation' then allocation.failure=p.allocationFailure end
+    d.diagnostics[#d.diagnostics+1]={craftAllocation=allocation,operationID=p.guid,recipeID=p.recipe,method=p.method,reason=reason,at=stamp(),
         recorderRevision=RECORDER_REVISION,addonCommit=self.buildInfo and (self.buildInfo.headCommit or self.buildInfo.commit),
         castStartSeen=p.castStarted==true,spellTargeting=call(SpellIsTargeting),
         studyID=d.activeStudy,startedAt=p.startedAt,endedAt=stamp(),successful=p.success==true,
