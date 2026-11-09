@@ -1,4 +1,4 @@
-# T0020 / Dragonflight disenchant: Pdpaul's 10-weapon aggregate is source-real, but generic gear identity remains unverified
+# Dragonflight disenchant: Pdpaul's 10-weapon aggregate is source-real, but generic gear identity remains unverified
 
 Reviewed 2026-11-09T21:02:46Z UTC. **Original-source text verification and research estimator static trace only; no actual estimator, ItemDB, Lua, tooltip or WoW-client execution.** This review is new to the 2026-11-09T2040 Dragonflight worker submission; it does not replace that worker's append-only record.
 
