@@ -1,102 +1,49 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T13:47:18.635Z",
-  "status": "Two new unindexed gear original Wowhead Looter item-side material occurrence cohorts captured (four drop rows); one priority ore/herb search ledger entry; no new prospect/mill cast histograms.",
+  "updated_at": "2026-11-09T16:33:37.995Z",
+  "status": "Completed new CraftSim raw-export feasibility/source search. No new Dragonflight prospecting, milling, or disenchanting numerical cohort; original per-cast hit/zero/refund data still absent. Current CraftSim JSON export is aggregate-only.",
   "task_ids": [
     "T0020",
     "T0018",
     "T0015",
     "T0041",
-    "T0019"
+    "T0019",
+    "T0046"
   ],
   "exact_gaps_targeted": [
-    "Dragonflight Draconium (189143,188658), Serevite, Khaz'gorite and Prismatic prospect original completed casts, refunds, 0-N material histograms; new first-person measurements not found.",
-    "Bubble Poppy (191467) and Saxifrage (191464) milling rank-specific output and refund-aware casts, hit counts and per-material histograms; still missing.",
-    "New gear output-occurrence source counts: 207187 and 207229 to 194124 Vibrant Shard and 200113 Resonant Crystal; missing current patch/build and character context."
+    "Draconium Ore 189143 R1/188658 R2 and Serevite Ore 190395 R1/190396 R2/190394 R3: independently source-original per-completed-prospect output hits and 0/1/2/... histograms with Resourcefulness saved ore and skill/spec/build.",
+    "Khaz'gorite Ore 190312/190313/190314 and Prismatic Ore 194545 prospecting: independently verifiable completed operations, material output identity/ranks and source-original 0-N histograms.",
+    "Bubble Poppy 191467 and Saxifrage 191464 milling: original rank-separated pigment totals, per-output hit counts, quantity histograms and refunds; remove ambiguity between nominal herbs and actual finished mills.",
+    "NEW acquisition blocker: current CraftSim CraftSessionData:GetJSON excludes craftResults event arrays despite per-session craftResults retained internally, so standard aggregate JSON export cannot supply the missing per-cast histograms."
   ],
   "newly_verified_fields": {
-    "record_count": 4,
-    "distinct_original_cohorts": 2,
-    "new_numerical_measurements": 4,
-    "source_kind": "Cumulative item-specific Wowhead Looter material occurrence records, weak because original event ledger/patch unknown",
-    "measured_casts": {
-      "207187": 26,
-      "207229": 11
-    },
-    "castsWithDrop": "4 source-reported material occurrence hit counts; no output yield quantities",
-    "percentShown": "Four original site-rounded per-operation occurrence percentages",
-    "totalQuantity": null,
-    "histogram": null,
-    "input_ids": [
-      207187,
-      207229
+    "record_count": 0,
+    "distinct_original_cohorts": 0,
+    "new_numerical_measurements": 0,
+    "numeric_fields_improved": [],
+    "research_only_source_code_finding": "Current CraftSim CraftLog.lua accumulates craftResults per session, but CraftSessionData.lua GetJSON exports only aggregate numCrafts/totalItems/totalSavedReagents/craftRecipeData, not individual craftResults. No player Dragonflight dataset recovered.",
+    "source_kind": "searched; original repository code used to assess prospective evidence, NOT measured gameplay evidence",
+    "input_ids_targeted": [
+      189143,
+      188658,
+      190395,
+      190396,
+      190394,
+      190312,
+      190313,
+      190314,
+      194545,
+      191467,
+      191464
     ],
-    "output_ids": [
-      194124,
-      200113
-    ],
-    "caveat": "Source count denominators are item-side cumulative observations, not fully independently validated raw cast histories or current-patch estimates."
+    "output_ids_improved": []
   },
-  "newly_verified_cohorts": [
-    {
-      "inputItemID": 207187,
-      "inputName": "Zealous Pyreknight's Flameguards",
-      "reported_operations": 26,
-      "output_material_hits": [
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 16,
-          "percentShown": 62,
-          "minSeen": null,
-          "maxSeen": null
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 14,
-          "percentShown": 54,
-          "minSeen": 1,
-          "maxSeen": 2
-        }
-      ],
-      "source": "https://www.wowhead.com/ptr/item=207187/zealous-pyreknights-flameguards?bonus=7981",
-      "source_mode": "Original indexed Wowhead item-side PTR Looter occurrence table",
-      "raw_source_verified": false,
-      "patch": null
-    },
-    {
-      "inputItemID": 207229,
-      "inputName": "Weyrnkeeper's Timeless Treads",
-      "reported_operations": 11,
-      "output_material_hits": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 9,
-          "percentShown": 82,
-          "minSeen": 1,
-          "maxSeen": 2
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 3,
-          "percentShown": 27,
-          "minSeen": null,
-          "maxSeen": null
-        }
-      ],
-      "source": "https://www.wowhead.com/item=207229/weyrnkeepers-timeless-treads",
-      "source_mode": "Original indexed Wowhead item-side live Looter occurrence table",
-      "raw_source_verified": false,
-      "patch": null
-    }
-  ],
-  "new_numerical_measurements": 4,
-  "numerical_fields_improved": [
-    "Two source-reported gear-specific operation denominators: 207187=26, 207229=11 (different items, not duplicate cohorts).",
-    "Four per-material occurrence counts: 207187→200113 16/26, →194124 14/26; 207229→194124 9/11, →200113 3/11; source-rounded percentages 62,54,82,27. No source quantity totals/histograms.",
-    "Exact input IDs 207187 and 207229; output IDs 194124 and 200113. No new ore/mill numerical closure."
-  ],
+  "newly_verified_cohorts": [],
+  "new_numerical_measurements": 0,
+  "numerical_fields_improved": [],
   "evidence_files": [
+    "research/v3/evidence/dragonflight/2026-11-09T1633-craftsim-export-sample-gap.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1347-two-new-gear-and-priority-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1235-five-unindexed-amirdrassil-looter.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1147-five-amirdrassil-looter-cohorts.jsonl",
@@ -176,14 +123,17 @@
     "https://goldcap.gg/retail/us/items/190314",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/evidence/observations/2026-10-28-1328-dragonflight-batch013-source-only.md",
     "https://www.curseforge.com/wow/addons/prospectmate",
-    "https://addons.wago.io/addons/prospectmate"
+    "https://addons.wago.io/addons/prospectmate",
+    "https://github.com/derfloh205/CraftSim/blob/main/Modules/CraftLog/CraftLog.lua",
+    "https://github.com/derfloh205/CraftSim/blob/main/Classes/CraftSessionData.lua",
+    "https://github.com/derfloh205/CraftSim/blob/main/CraftSim.toc"
   ],
-  "verified_commit_sha": "b976bffe316e6bbc02585b05b0746145381bf693",
-  "commit_sha_scope": "Verified parent SHA of this run's branch head; cannot embed resulting commit SHA in its own status file (self-referential). Commit is independently verified by branch head and readback after updating ref.",
+  "verified_commit_sha": "142992b8681f08ab2ec001c688e2213e402a5a46",
+  "commit_sha_scope": "The self-contained status file holds the verified parent branch SHA; the resulting new commit SHA cannot be stored inside its own blob without an additional commit. Validate the new commit separately by branch head, fetch_file readback and compare_commits.",
   "blockers": [
-    "No fresh original Draconium/Serevite/Khaz'gorite/Prismatic prospect or Bubble Poppy/Saxifrage mill completed-cast raw ledger, refunded-input counts, 0-inclusive material histogram, or skill/build-controlled modern validation.",
-    "Wowhead Looter cumulative material occurrences have unknown original client upload overlap, timestamp, skill, game patch, processing-time gear bonus, positive-stack distribution, zero-all-output casts. PTR page 207187 is not evidence of live drop eligibility.",
-    "Only two unindexed source gear cohorts identified after excluding numerous existing historic and recent gear samples; 10 real records target not reached without duplicate cohorts."
+    "No new firsthand Dragonflight per-output completed-cast, positive-hit, zero-inclusive histogram, refund-aware or patch/skill-controlled study; prior player cohorts recognized and not duplicated.",
+    "Current CraftSim session JSON export aggregates total outputs/saved reagents and craft counts but omits raw craftResults. Unmodified public addon source and its described export cannot establish 2023 rank-separated cast-by-cast material outcomes, even if a user supplies summary JSON.",
+    "No public contributor-owned Dragonflight per-operation CraftSim/ProspectMate SavedVariables or source spreadsheet made available; historical original game build/skill/spec/bonus/Resourcefulness event ledgers remain unknown."
   ],
   "exhausted_sources": [
     {
@@ -545,19 +495,37 @@
         "wow-professions.com Dragon Isles inscription guide: recipe/reference ranges, not an independent player sample",
         "us.forums.blizzard.com: named original Draconium and Bubble Poppy results queries, no novel per-output cast/histogram cohort"
       ]
+    },
+    {
+      "at": "2026-11-09T16:33:37.995Z",
+      "scope": "CraftSim raw Dragonflight prospecting/milling event export feasibility and independently unindexed source-original ore/herb studies",
+      "reason": "Current CraftSim GetJSON omits raw per-operation craftResults. No new original Dragonflight player data export or 0-N rank-specific study, and known 2022/23 originals were recognized as already indexed.",
+      "whereLooked": [
+        "Reddit r/woweconomy: name-first query for Dragonflight Draconium Ore and Serevite Ore original prospecting spreadsheets with per-cast gem outcomes; original 2022-23 Jallfo/Bugy/Xenastro/109bytz/108782r studies already indexed; no unindexed 0-N material event log.",
+        "Reddit r/woweconomy: searched Khaz'gorite Ore and Prismatic Ore per-completed-prospect data with refund histories; original 10h6ccx and superbondez sample already indexed; no new independent raw operation rows.",
+        "Reddit r/woweconomy: searched original Dragonflight Bubble Poppy, Saxifrage and Hochenblume herb milling result spreadsheets with per-mill pigment output; original Aary and 10me1e7 historical results already indexed, no previously unseen operation-level histogram.",
+        "GitHub derfloh205/CraftSim, https://github.com/derfloh205/CraftSim/blob/main/Modules/CraftLog/CraftLog.lua : inspected current Craft Log implementation; distinguishes TRADE_SKILL_CRAFT_BEGIN, UNIT_SPELLCAST_SUCCEEDED and TRADE_SKILL_ITEM_CRAFTED_RESULT events, maintains craftCount and a per-session CraftResult collection. No original public Dragonflight ore/herb player events discovered.",
+        "GitHub derfloh205/CraftSim, https://github.com/derfloh205/CraftSim/blob/main/Classes/CraftSessionData.lua : inspected current JSON export; GetJSON exports numCrafts, totalItems, totalSavedReagents and craftRecipeData, NOT craftResults/per-operation output arrays. Aggregated CraftSim JSON alone therefore cannot reconstruct 0/1/2 material hit histograms; a raw session event export would be necessary. This is a tool-data limitation, not a Dragonflight measurement.",
+        "GitHub derfloh205/CraftSim, https://github.com/derfloh205/CraftSim/blob/main/CraftSim.toc : checked SavedVariables CraftSimDB and code provenance, not evidence of historical player's sampled sessions or ability to recover 2023 per-cast logs from current files.",
+        "CurseForge ProspectMate, https://www.curseforge.com/wow/addons/prospectmate : checked Dragonflight legacy recipe tracking and instructions to reset data on profession-stat changes, but no published original player SavedVariables export for target ranked ores/herbs.",
+        "Wowhead Dragon Isles Prospecting, https://www.wowhead.com/spell=374627/dragon-isles-prospecting : original Bugy ore averages are per ore input and previously represented; do not reinterpret as castsWithDrop.",
+        "Wowhead Amirdrassil Drakestalker's Trophy Pauldrons, https://www.wowhead.com/item=207140/drakestalkers-trophy-pauldrons : item identity and enchantability shown; current accessible source did not expose an independently verifiable Looter numerator/denominator, so no gear hit-count record created.",
+        "Method Dragonflight pigment source mapping, https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment : guide documents output families/skill context, not an original completed-mill rank-separated numeric cohort.",
+        "Warcraft Wiki Dragonflight prospect/disenchant reference, https://warcraft.wiki.gg/wiki/Disenchanting_tables : explicitly historical general tables (pre-Battle for Azeroth), not a valid original Dragonflight item-specific numerical sample."
+      ]
     }
   ],
-  "next_concrete_step": "Acquire independent original Dragonflight prospecting/milling SavedVariables or spreadsheet containing input rank/ID, finished casts/refunds and per-output 0-N histogram; avoid historical duplicated original studies. Verify Wowhead Looter 207187/207229 sample provenance, processing-time bonus and patch before estimator use.",
+  "next_concrete_step": "Identify an original player willing to share a historical Dragonflight event-level CraftSim/ProspectMate SavedVariables snapshot or original prospecting/milling spreadsheet; obtain raw per-craft output ID/quantity, completed casts, saved ore/herbs and rank/skill/build. Validate whether the historical addon version actually retains raw events before treating a CraftSim JSON summary as a histogram source.",
   "validation": {
-    "precommit": "PASS: 4 drop records have all 35 fields, one searched record has required fields and six name-first site searches, all 5 IDs unique; source numerator <= denominator and exact source percentages; no invented quantity totals/zero histograms/rates/gold. Dedup checked against indexed main and current recent Dragonflight evidence.",
-    "postcommit": "Pending independent new commit readback and changed-path verification.",
-    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T1347-two-new-gear-and-priority-search.jsonl; research/coordination/quiet-status/dragonflight.json"
+    "precommit": "PASS: one new searched JSONL record with 11 named targeted site/code checks across Reddit, GitHub, CurseForge, Wowhead, Method and Warcraft Wiki. No fabricated casts, hit counts, yield totals, probabilities, output ranks or prices; known original sources deduplicated. New source-code observation verified from current upstream files.",
+    "postcommit": "External branch readback and two-path commit comparison required after ref update; result cannot be encoded into this same commit without self-reference.",
+    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T1633-craftsim-export-sample-gap.jsonl; research/coordination/quiet-status/dragonflight.json"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "b976bffe316e6bbc02585b05b0746145381bf693",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T1347-two-new-gear-and-priority-search.jsonl",
+  "verified_parent_sha": "142992b8681f08ab2ec001c688e2213e402a5a46",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T1633-craftsim-export-sample-gap.jsonl",
   "current_run_commit_sha": null,
-  "newly_verified_fields_cohorts": 2
+  "newly_verified_fields_cohorts": 0
 }
