@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T21:43:18.312Z",
-  "status": "No newly independent, estimator-eligible Dragonflight ore/herb or gear numeric cohort this run. One new source-search JSONL record: a December 2023 100k-nominal Serevite/gem-crushing original is outside the supported drop method and prior originals were deduplicated. Completed-cast prospect/mill 0-N histograms remain unresolved.",
+  "updated_at": "2026-11-09T22:41:45.703Z",
+  "status": "Four previously unindexed Dragonflight item-side Wowhead Looter disenchant cohorts recorded: 12 material occurrence rows for 202529, 202530, 202526 and 202553. Each carries a material-specific positive occurrence numerator and actual item-side operations denominator; pooled version/source patch and per-output quantity/zero histograms remain unknown. Priority ore and herb source searches still have no new validated refund-aware per-operation histogram.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,20 +12,153 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019/T0046: Draconium Ore 189143 (R1) and 188658 (R2), Serevite ranks 190394/190395/190396, Khaz'gorite ranks 190312/190313/190314 and Prismatic Ore 194545: independent completed casts, output-specific per-cast positive hit counts, zero bins, quantity histograms, refunded reagent accounting, skill/spec and exact date/build.",
-    "T0018/T0015/T0041: Bubble Poppy 191467 to Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 to Blazing Pigment 198418/198419/198420: independently measured per-mill outputs with exact rank, completed casts, Resourcefulness context, per-output 0-N bins."
+    "T0020/T0019/T0046: Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314, Prismatic 194545: independent rank-aware completed casts, material hit counts, refund handling, 0-N histograms and skill/spec/build still absent.",
+    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 per-mill output 198412/198413/198414 and 198418/198419/198420, exact input rank, true completed casts and material histograms remain unresolved.",
+    "T0041 secondary: new individual Dragonflight gear itemID 202529,202530,202526,202553 -> Resonant Crystal 200113, Vibrant Shard 194124, Chromatic Dust 194123: source item-side casts, material positive hit counts, displayed percent and some observed positive unit ranges now recorded; per-output total units, zero bins, game build and skill/spec remain unknown."
   ],
   "newly_verified_fields": {
-    "record_count": 0,
-    "distinct_original_cohorts": 0,
-    "new_numerical_measurements": 0,
-    "numeric_fields_improved": [],
-    "source_access_verified": "Original 2023-12-27 r/woweconomy 18sd8ly GEM-CRUSH results examined and excluded from Prospect/Mill/Disenchant records; indexed source duplicates confirmed by original study URL on repository; scanned new named searches across six sites."
+    "record_count": 12,
+    "distinct_original_cohorts": 4,
+    "new_numerical_measurements": 12,
+    "numeric_fields_improved": [
+      "inputItemID and outputItemID per material",
+      "per-item completed disenchant operations count",
+      "castsWithDrop per output item",
+      "original displayed per-operation occurrence percentages and some explicitly displayed positive yield ranges"
+    ],
+    "source_access_verified": "Four distinct item-side Wowhead Looter Disenchanting tables inspected directly, source numerators and denominators transcribed; no prior v3 branch search result for exact input IDs. Collection date and bonus-variant conditions unknown."
   },
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [],
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "wowhead-looter-202529-20261109-snapshot",
+      "inputItemID": 202529,
+      "inputName": "Wristwraps of the Sinister Savant",
+      "casts": 110,
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 66,
+          "percentShown": 60,
+          "minSeen": null,
+          "maxSeen": null
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 50,
+          "percentShown": 45,
+          "minSeen": 1,
+          "maxSeen": 2
+        },
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 4,
+          "percentShown": 4,
+          "minSeen": 1,
+          "maxSeen": 3
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr/item=202529/wristwraps-of-the-sinister-savant"
+    },
+    {
+      "studyKey": "wowhead-looter-202530-20261109-snapshot",
+      "inputItemID": 202530,
+      "inputName": "Skullstrap of the Sinister Savant",
+      "casts": 97,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 59,
+          "percentShown": 61,
+          "minSeen": 1,
+          "maxSeen": 2
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 48,
+          "percentShown": 49,
+          "minSeen": null,
+          "maxSeen": null
+        },
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 2,
+          "percentShown": 2,
+          "minSeen": 2,
+          "maxSeen": 2
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr-2/item=202530/skullstrap-of-the-sinister-savant?bonus=7982"
+    },
+    {
+      "studyKey": "wowhead-looter-202526-20261109-snapshot",
+      "inputItemID": 202526,
+      "inputName": "Kinslayer's Gaiters",
+      "casts": 14,
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 9,
+          "percentShown": 64,
+          "minSeen": null,
+          "maxSeen": null
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 5,
+          "percentShown": 36,
+          "minSeen": 2,
+          "maxSeen": 2
+        },
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 1,
+          "percentShown": 7,
+          "minSeen": 2,
+          "maxSeen": 2
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr-2/item=202526/kinslayers-gaiters"
+    },
+    {
+      "studyKey": "wowhead-looter-202553-20261109-snapshot",
+      "inputItemID": 202553,
+      "inputName": "Underlight Conjurer's Treads",
+      "casts": 107,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 61,
+          "percentShown": 57,
+          "minSeen": 1,
+          "maxSeen": 2
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 57,
+          "percentShown": 53,
+          "minSeen": null,
+          "maxSeen": null
+        },
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 7,
+          "percentShown": 7,
+          "minSeen": 1,
+          "maxSeen": 2
+        }
+      ],
+      "source": "https://www.wowhead.com/item=202553/underlight-conjurers-treads?bonus=6652:9332:1491&class=8&ilvl=434&spec=64"
+    }
+  ],
+  "new_numerical_measurements": 12,
+  "numerical_fields_improved": [
+    "inputItemID and outputItemID per material",
+    "per-item completed disenchant operations count",
+    "castsWithDrop per output item",
+    "original displayed per-operation occurrence percentages and some explicitly displayed positive yield ranges"
+  ],
   "evidence_files": [
+    "research/v3/evidence/dragonflight/2026-11-09T2241-four-aberrous-gear-original-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T2142-original-processing-source-triage.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T2040-pdpaul-ten-green-weapons-25-dust.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1931-six-unindexed-vault-gear-looter-hits.jsonl",
@@ -48,6 +181,10 @@
     "research/v3/evidence/dragonflight/2026-11-09T0440-prospectmate-cast-export-search.jsonl"
   ],
   "source_links": [
+    "https://www.wowhead.com/ptr/item=202529/wristwraps-of-the-sinister-savant",
+    "https://www.wowhead.com/ptr-2/item=202530/skullstrap-of-the-sinister-savant?bonus=7982",
+    "https://www.wowhead.com/ptr-2/item=202526/kinslayers-gaiters",
+    "https://www.wowhead.com/item=202553/underlight-conjurers-treads?bonus=6652:9332:1491&class=8&ilvl=434&spec=64",
     "https://www.reddit.com/r/woweconomy/comments/18sd8ly",
     "https://www.wowhead.com/item=198412/serene-pigment",
     "https://www.wowhead.com/item=198418/blazing-pigment",
@@ -131,12 +268,12 @@
     "https://www.wowhead.com/profession-trait/insight-of-the-blue-68402",
     "https://goldcap.gg/retail/us/items/194123"
   ],
-  "verified_commit_sha": "8091b71ea5761df2607ef229149cde3d95e805d8",
-  "commit_sha_scope": "Verified evidence-file commit 8091b71ea5761df2607ef229149cde3d95e805d8; this status is updated in a subsequent contents-API commit so it can accurately name the read-back verified evidence SHA. Status-update commit will be different. This is not an integration/production merge.",
+  "verified_commit_sha": "910927ce1be086cfc49537848e53d5d46eed355b",
+  "commit_sha_scope": "Evidence-file commit SHA after exact GitHub readback. Quiet-status metadata update has a separate contents-API SHA so the status can truthfully name the previously verified evidence commit.",
   "blockers": [
-    "No independent new Dragonflight per-completed-operation ore/mill hit and 0-N quantity histogram was located. Unverified actual cast count, refund reprocessing, ore/herb rank, output rank and skill/spec/build prevent numeric chance inference.",
-    "Dec 2023 original post r/woweconomy/18sd8ly gives gem-crushing dust quantities after ore prospecting, but gem crushing has no supported v3 drop method. Recording it as prospecting would conflate two operations; no schema changed.",
-    "Previously indexed originals (Lazy Goldmaker 40k nominal Serevite/R3 Diamonds, Reddit zjh0d0 ambiguous Prismatic zero, Bugy/Jallfo/Xenastro ore tables, Aary Saxifrage, zru4kh four-crystal M+ DE) must not be duplicated or counted as fresh studies."
+    "Priority ore/mill completed-operation 0-N distributions still not verified. Nominal ore/herb input count, refunded reagents, output rank and historical game build cannot substitute for operation-level histograms.",
+    "Four new item-side Looter cohorts have sampled per-material positive occurrences but no total material quantities, complete 0-N stack histograms, exact disenchant skill/specialization or game build; pooled bonus variants may be mixed.",
+    "Previously indexed prospecting originals and existing Looter item cohorts excluded; never count a newer cumulative snapshot of the same source as an independent study."
   ],
   "exhausted_sources": [
     {
@@ -566,29 +703,27 @@
       ]
     }
   ],
-  "next_concrete_step": "Target a previously unseen actual 2023 Dragon Isles ProspectMate/CraftSim SavedVariables per-operation log or linked player spreadsheet with input/output rank IDs and 0/1/2+ histograms, especially R1 Draconium 189143 and Bubble Poppy 191467. Do not rerun historically exhausted named web table searches or import gem-crushing averages as prospecting. Ask Master to scope gem crushing only if a separate processing-method schema is authorized.",
+  "next_concrete_step": "Find previously unpublished original Dragon Isles ProspectMate/CraftSim output-event export with input/output rank, refund-aware actual casts, and 0-N histogram for Draconium Ore 189143, Prismatic Ore 194545 or Bubble Poppy 191467; secondarily seek raw stack-size distributions for the four newly indexed gear IDs. Do not reuse old indexed originals.",
   "validation": {
-    "precommit": "PASS: new JSONL parsed with required searched fields; >=6 named searches across >=3 sites and ten distinct source-specific checks. New source 18sd8ly classified as gem crushing, not 0-N prospecting; old LazyGoldmaker, Prismatic zero, Bugy/Aary, DE originals deduped; no invented numeric outcomes.",
-    "postcommit": "PASS: exact GitHub branch readback after evidence commit 8091b71ea5761df2607ef229149cde3d95e805d8; one JSONL record, id dragonflight-20261109-214201, type searched and 10 whereLooked entries. Commit diff touched only new dragonflight evidence JSONL.",
-    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T2142-original-processing-source-triage.jsonl; research/coordination/quiet-status/dragonflight.json"
+    "precommit": "PASS: 12 distinct JSONL drop records across four original item-side cohorts; all mandatory keys present; checked actual source Looter material counts and reported percentage semantics; output IDs independently crosschecked; source kinds and unknown fields preserved; exact-input-code search found no existing matching Dragonflight v3 evidence.",
+    "postcommit": "PASS: evidence commit 910927ce1be086cfc49537848e53d5d46eed355b read back by commit pin; parsed 12 valid JSONL lines matching submitted content; changed path research/v3/evidence/dragonflight/2026-11-09T2241-four-aberrous-gear-original-looter-cohorts.jsonl only.",
+    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T2241-four-aberrous-gear-original-looter-cohorts.jsonl; research/coordination/quiet-status/dragonflight.json"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
   "verified_parent_sha": "1c222551d4ebd8397ce350ce0d93d76a9bb0ba14",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T2142-original-processing-source-triage.jsonl",
-  "current_run_commit_sha": "8091b71ea5761df2607ef229149cde3d95e805d8",
-  "newly_verified_fields_cohorts": 0,
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T2241-four-aberrous-gear-original-looter-cohorts.jsonl",
+  "current_run_commit_sha": "910927ce1be086cfc49537848e53d5d46eed355b",
+  "newly_verified_fields_cohorts": 4,
   "last_source_search": {
-    "performed_at": "2026-11-09T21:43:18.312Z",
-    "priority_source_findings": "New original December 2023 gem-crush source checked; data in unsupported processing method. Verified existing LazyGoldmaker R2 Serevite and zjh0d0 Prismatic zero reports are already indexed (some duplicated) and not new cohorts. No novel 0-N per-material completed prospect/mill log.",
+    "performed_at": "2026-11-09T22:41:45.703Z",
+    "priority_source_findings": "Original ore prospecting/milling per-output 0-N histograms still not recovered; prioritized new numeric evidence via four previously unrecorded item-side gear disenchants with actual occurrence numerators and denominators, not prior copied studies.",
     "source_sites": [
       "reddit.com",
       "wowhead.com",
-      "method.gg",
       "warcraft.wiki.gg",
-      "us.forums.blizzard.com",
-      "thelazygoldmaker.com",
+      "method.gg",
       "github.com"
     ]
   }
