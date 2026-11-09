@@ -1,83 +1,59 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-09T12:35:43.830Z",
-  "status": "new_original_historical_tww_disenchant_rank_unit_shares_and_pooled_average_verified_not_cast_probabilities",
+  "updated_at": "2026-11-09T13:37:06.827Z",
+  "status": "new_verified_tww_milling_fish_input_identity_and_source_reported_3_pigment_units_no_cast_denominator",
   "task_ids": [
-    "T0048",
-    "T0040",
-    "T0009",
     "T0010",
     "T0011",
+    "T0012",
+    "T0040",
+    "T0009",
     "T0007",
     "T0008",
-    "T0012",
-    "T0032"
+    "T0048"
   ],
   "exact_gaps_targeted": [
-    "Historical Sep 9 2024 uncommon TWW disenchant Storm Dust output-rank pooled-unit share and all-rank mean unrepresented in War Within worker evidence",
-    "Exact rarity and item-ID/ilvl/armor-vs-weapon split, completion counts, castsWithDrop, zero-inclusive histograms, 1..N stack distributions, profession gear and build still missing",
-    "Still missing post-Oct25-2024 rank/skill/unlock/resourcefulness-resolved Bismuth 210930-210932, Ironclaw 210936-210938, Aqirite 210933-210935 prospecting and Mycobloom 210796-210798 milling completed-cast histograms"
+    "Newly indexed TWW alternate milling input Specular Rainbowfish 220141, not present in prior War Within evidence search, with Nacreous Pigment output identity and one source-reported 3-unit result.",
+    "Priority post-2024-10-25 rank/skill/unlock-resolved Bismuth 210930/210931/210932, Ironclaw 210936/210937/210938 and Aqirite 210933/210934/210935 completed-prospect cohorts still lack independent zero-inclusive output histograms.",
+    "Mycobloom 210796/210797/210798 per-rank milling skill/refund basis, completed operations and 0..N conditional histograms remain unknown; gear disenchant version/eligibility conflicts remain open."
   ],
   "newly_verified_fields": {
-    "studyKey": "reddit-1fc2j1m-20240909-max-green-de-rank-share",
-    "source_date": "2024-09-09",
-    "method": "Disenchant",
-    "inputItemID": null,
-    "input_quality": "uncommon",
-    "input_kind": null,
-    "output_rank1_id": 219946,
-    "rank1_unit_share_percent": 35.42,
-    "output_rank2_id": 219947,
-    "rank2_unit_share_percent": 44.28,
-    "output_rank3_id": 219948,
-    "rank3_unit_share_percent": 20.3,
-    "all_ranks_pooled_reported_average_units_per_disenchant": 2.85,
-    "specialization": "60 points in green disenchanting",
+    "method": "Mill",
+    "inputItemID": 220141,
+    "inputName": "Specular Rainbowfish",
+    "outputName": "Nacreous Pigment",
+    "outputItemID": null,
+    "outputRank": null,
+    "outputQuantityReportedInOriginalComment": 3,
     "casts": null,
     "castsWithDrop": null,
-    "totalQuantity": null,
-    "zero_outcomes": null,
     "per_cast_histogram": null,
-    "independent_new_measured_cast_cohorts": 0,
-    "new_measured_hit_probabilities": 0,
-    "note": "Source percentages are distribution of output material units, NOT measured P(hit) per cast; 2.85 pooled mean is not a rank-specific mean."
+    "inputsPerCast": null,
+    "source_original_comment_author": "Golgoth",
+    "source_original_comment_date": null,
+    "independent_wiki_confirmation": true,
+    "measured_hit_probability": false,
+    "output_quality_specificity": "unknown",
+    "note": "3 is the anecdotal number of pigment units, NOT an estimated average or reliable completed-cast denominator."
   },
-  "newly_verified_cohorts": [
-    {
-      "studyKey": "reddit-1fc2j1m-20240909-max-green-de-rank-share",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1fc2j1m",
-      "rank_specific_output_item_ids": [
-        219946,
-        219947,
-        219948
-      ],
-      "material_unit_shares_percent": [
-        35.42,
-        44.28,
-        20.3
-      ],
-      "pooled_mean_units_per_disenchant": 2.85,
-      "observed_cast_denominator": null,
-      "zero_inclusive_histogram": null,
-      "independent_full_logged_cast_cohort": false
-    }
-  ],
+  "newly_verified_cohorts": [],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1fc2j1m"
+    "https://www.wowhead.com/item=220141/specular-rainbowfish",
+    "https://warcraft.wiki.gg/wiki/Nacreous_Pigment"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-09T1235-green-de-original-rank-share.jsonl"
+    "research/v3/evidence/war-within/2026-11-09T1336-rainbowfish-milling-identity.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T1235-green-de-original-rank-share.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T1336-rainbowfish-milling-identity.jsonl"
   ],
-  "prior_verified_evidence_commit_sha": "c2bc32fad0fe0864d92bc7e2d57a66bad3279212",
+  "prior_verified_evidence_commit_sha": "b08e8fca53728d85352a389bd84f3f6533149493",
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "This status is included in the SAME single commit as evidence and cannot embed its own resulting SHA. Commit/tree HEAD and both blob read-backs are verified independently after ref update; SHA is recorded in execution result.",
+  "verified_commit_sha_note": "Same atomic Git commit updates source JSONL and own status. A commit cannot include its own resulting SHA within committed content; retrieve exact SHA from commit/read-back result and branch HEAD after the atomic push.",
   "blockers": [
-    "Original September 2024 author's tracking did not include casts count, full item IDs, full 0..N histograms, stack totals, source-specific ilvl/armor vs weapon, build or Resourcefulness; no probability/conditional-yield estimator fields advanced",
-    "Rank percentages describe shares of total dust units, not rank-specific per-cast positive occurrences. They must NOT enter a P(drop) model.",
-    "Historically version-scoped reports may not represent current live Retail material yields, and March 2026 posts sometimes describe new Midnight processing, not TWW."
+    "Author's Wowhead comment reports 3 pigment units but no explicit completed-operation count, output rank/item ID, cast histogram, fish batch size, skill/spec, date, Resourcefulness/refund policy or build. All remain null.",
+    "No new original complete 0..N measured TWW post-hotfix ore/herb processing cohort despite by-name searches; pre-hotfix Reddit Aqirite/Ironclaw and existing Mycobloom/Luredrop anecdotal yield records are already represented.",
+    "Raw Wowhead Looter HTML extraction unavailable in current connector session; cumulative PTR outputs and current Retail eligibility conflict, and must not be conflated."
   ],
   "exhausted_sources": [
     "Do not re-collect cumulative 219947 PTR Storm Dust Looter rows already deduplicated in 2026-11-09T0749 source file.",
@@ -110,15 +86,19 @@
     {
       "scope": "2026-11-09 original TWW prospecting/milling and green disenchant by-name searches",
       "reason": "Existing Sep 2024 Aqirite (1fisfkn/1f83cnd), Oct 2024 milling (1fdmzwy), Sep 2024 DE (1fkhr8j/1fpswuz/1f9qado) and 7,652 Pioneer cuffs (1g9l8t8) are already present in worker evidence, not new independent cohorts. March 2026 enchanting and milling posts discuss Midnight and are not mapped to TWW."
+    },
+    {
+      "scope": "2026-11-09 current original TWW ore/prospect and milling source search",
+      "reason": "Searches across Reddit, Wowhead, Warcraft Wiki, Method and Blizzard forums returned already-recorded 2024 Aqirite/Ironclaw and Mycobloom/Luredrop cohorts or no raw posthotfix 0..N logs; did not reinsert duplicate cohorts. Found a new alternative Specular Rainbowfish mill source instead."
     }
   ],
-  "next_concrete_step": "Seek author primary raw log behind the Sep 9 2024 35.42/44.28/20.30% Storm Dust share to recover exact 0..N histograms, rank item IDs/casts, 558 vs 561 weapon/armor breakdown, skill/tools and count basis. Resume true post-Oct25 2024 ore/herb rank-by-unlock cohort search; do not reuse old Looter snapshots.",
-  "current_run_evidence_records": 4,
+  "next_concrete_step": "Recover exact itemID/quality rank of Nacreous Pigment from one Specular Rainbowfish, fish-input mill recipe count, actual completed operations and skill/spec/version from original player report; prioritize new post-Oct-25 2024 prospecting/milling per-rank cast logs and TWW gear disenchant eligibility.",
+  "current_run_evidence_records": 2,
   "current_run_new_independent_measured_cohorts": 0,
-  "current_run_new_identities": 0,
+  "current_run_new_identities": 1,
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
-  "current_run_new_historical_source_fields": 4
+  "current_run_new_historical_source_fields": 1
 }
