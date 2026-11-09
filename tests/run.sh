@@ -54,6 +54,7 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_token_catalog.lua "$compiled_dir"
 "$lua_bin" tests/test_token_value_pipeline.lua
 "$lua_bin" tests/test_token_transmog_priority.lua
+"$lua_bin" tests/test_wayward_tokens.lua
 python3 tests/test_token_import.py "$compiled_dir"
 
 "$lua_bin" tests/test_frozen_tsm.lua

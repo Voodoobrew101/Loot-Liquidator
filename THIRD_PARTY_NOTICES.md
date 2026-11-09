@@ -3,6 +3,13 @@
 Upstream: https://github.com/ATTWoWAddon/AllTheThings
 License inspected at revision b540d841c2d3e26850ea4e00b0ec7bd3e4ec1215.
 
+The Lost and Wayward token research additionally archives the shared Tier 7 and
+Tier 8 structures at revision 4a95eab7696e74a929996eefd2f6890890e26efe in
+database/research/att-tier7-source.lua and att-tier8-source.lua. Their source
+snapshots retain original rows, hashes and MIT attribution; derived reward
+records carry the notice in the generated ItemDB. They remain unreviewed
+research relationships. No upstream Lua is executed by the importer.
+
 ATT research exports remain unreviewed source snapshots. No complete ATT catalog
 or ATT implementation is bundled by this change. Preserve this attribution and
 license when publishing derived material. ATT-derived approved token records
