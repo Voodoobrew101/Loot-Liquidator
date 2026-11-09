@@ -1,78 +1,96 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-09T19:16:55.872Z",
-  "status": "active; new independently corroborated negative processing mechanic (Midnight prospecting cannot Multicraft); no new original yield cohort, estimator hold retained",
+  "updated_at": "2026-11-09T20:18:50.997Z",
+  "status": "active; owner-confirmed 104-skill 200 completed disenchants reconciled with 199 classified and 1 unknown output; reference-only, no estimator promotion",
   "task_ids": [
-    "T0033",
+    "T0026",
+    "T0049",
     "T0039",
     "T0005",
     "T0001",
-    "T0026",
-    "T0049",
     "T0003",
-    "T0002"
+    "T0002",
+    "T0033"
   ],
   "exact_gaps_targeted": [
-    "T0033: mechanics.md M11 currently says prospecting Multicraft applies (likely); three independent 2026 Midnight guide sources explicitly say prospecting/crushing cannot Multicraft. Needs Master M11 review/correction; do not modify shared mechanics file.",
-    "T0005/T0039: Umbral Tin 237362 4000 ore original Cardinalai shows 30 Eversong Diamond and 597 Glass, 911 Stone, 39.6% Resourcefulness; source does not report actual completed casts. 4000/5 = 800 nominal ore equivalents, NOT verified completed casts; per-output hit counts, histograms, actual refunds and rank remain unknown. Original v3 records midnight-20261030-003..009 correctly have casts=null; queue wording '800 completed' requires Master review.",
-    "T0026/T0049: Miststalker's Wristbands item 272246 live ilvl305/bonus-enabled disenchant receipt still unknown; PTR selected ilvl305 and ilvl318 queries are not confirmed successful in-game disenchant receipts.",
-    "T0001/T0002/T0003: independent current-epoch rank-specific original prospecting receipts for Umbral Tin R2 237363, Brilliant Silver 237365 and Refulgent Copper 237359 remain missing; milling 10-herb zero-inclusive cohorts remain missing."
+    "T0026: existing owner PR49 104-skill Evercore Shade 244752 ilvl165 batch has 200 owner-confirmed completed DE casts, 199 native classified results and one unclassified result; full-batch output totals/zero-inclusive histograms still missing, strict baseline staging excludes.",
+    "T0049: Miststalker's Wristbands 272246 successful Retail ilvl305 itemLink and material receipt remain unverified; avoid treating selected PTR ilvl or Looter table as live eligibility.",
+    "T0039/T0005: Umbral Tin Ore 237362 / rank2 237363 requires independent original per-cast output IDs, hit counts, zeros and refunds; Cardinalai's 4000 ore / 5 = 800 nominal operations, not proved completed casts.",
+    "T0003/T0002/T0001: Refulgent Copper 237359 and Brilliant Silver 237365 rank-specific current-hotfix original processing receipts and Midnight milling 10-herb complete output cohorts remain missing.",
+    "T0033: prospecting Multicraft rule M11 requires Master adjudication; current three contemporary guide sources reject it."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "type": "mechanics-source",
-      "taskID": "T0033",
-      "method": "Prospect",
-      "inputItemIDs": [
-        237362,
-        237363,
-        237359,
-        237361,
-        237364,
-        237365,
-        237366
+      "type": "existing-cohort-source-reconciliation",
+      "taskID": "T0026",
+      "studyKey": "owner-pr49-104-skill-200-confirmed-one-unclassified",
+      "method": "Disenchant",
+      "inputItemID": 244752,
+      "inputName": "Evercore Shade",
+      "itemLevel": 165,
+      "outputItemIDs": [
+        243602,
+        243603
       ],
-      "inputIDScope": "Scope list of previously-known Midnight ore variants; quoted guides do not give new exact itemID-specific processing observations",
-      "mechanic": "Multicraft does not apply to Midnight Prospecting or Crushing (source-backed guides, pending Master M11 adoption)",
-      "sources": [
-        "https://www.icy-veins.com/wow/professions-jewelcrafting-stats",
-        "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
-        "https://dving.net/guides/wow-midnight-jewelcrafting-guide"
+      "outputRanks": [
+        1,
+        2
       ],
-      "observedCompletedCasts": null,
-      "observedMulticraftProcs": null
+      "operatorConfirmedCompletedCasts": 200,
+      "nativeClassifiedCasts": 199,
+      "unclassifiedCompletedResults": 1,
+      "knownClassifiedOutputUnits": {
+        "243602": 179,
+        "243603": 20
+      },
+      "fullBatchOutputQuantities": null,
+      "fullBatchCastsWithDrop": null,
+      "fullBatchZeroInclusiveHistograms": null,
+      "baseSkill": 64,
+      "bonusSkill": 40,
+      "effectiveSkill": 104,
+      "specialization": "none",
+      "unchangedGearAndSkill": true,
+      "source": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-104-skill-199-casts/reviewed-comparison.json",
+      "sourceREADME": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-104-skill-199-casts/README.md",
+      "captureSHA256": "de62ae600c5de44d5c7d30e572ad1d900693091b85e0f25d306de48481b51b65",
+      "isNewIndependentCohort": false,
+      "admittedToEstimator": false,
+      "strictCaptureStagingExcludes": true
     }
   ],
   "numeric_fields_advanced": {
-    "newOriginalCompletedCasts": 0,
-    "newCastsWithDrop": 0,
+    "newIndependentCompletedCasts": 0,
+    "existingOriginalCohortCompletedCastsNowOwnerConfirmed": 200,
+    "classifiedExistingOriginalReceiptsSourceReconciled": 199,
+    "knownPartialR1OutputUnits": 179,
+    "knownPartialR2OutputUnits": 20,
+    "newFullBatchOutputTotalQuantities": 0,
+    "newFullBatchCastsWithDrop": 0,
     "newZeroInclusiveHistograms": 0,
-    "newTotalOutputQuantities": 0,
     "newEmpiricalProbabilities": 0,
-    "newVerifiedMechanicExclusions": 1,
-    "newSourceOnlyRecords": 1,
+    "newSourceOnlyRecords": 2,
     "estimatorStudyRowsAdmitted": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-09T1916-prospecting-multicraft-exclusion-source.jsonl"
+    "research/v3/evidence/midnight/2026-11-09T2018-owner-skill104-complete-batch-review.jsonl"
   ],
   "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-09T1614-rod-transition-23-completed-source-ops.jsonl",
   "evidence_record_ids": [
-    "midnight-20261109-1916-001"
+    "midnight-20261109-201801",
+    "midnight-20261109-201802"
   ],
   "source_links": [
-    "https://www.icy-veins.com/wow/professions-jewelcrafting-stats",
-    "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
-    "https://dving.net/guides/wow-midnight-jewelcrafting-guide",
-    "https://www.wowhead.com/spell=1231127/midnight-prospecting",
-    "https://www.wowhead.com/item=237362/umbral-tin-ore"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-104-skill-199-casts/reviewed-comparison.json",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/b6610848604f68f8f3b40834397b79ce53eb8fb5/research/integration/measured-captures/2026-11-07-pr49-104-skill-199-casts/README.md"
   ],
   "blockers": [
-    "Master-only mechanics.md M11 change required: existing 'likely applies' contradicted by Icy Veins, Wow-Professions and Dving; do not silently apply Mulitcraft in predictions.",
-    "No new independent current-patch original 0-inclusive processing cohort: item IDs/ranks, skill/spec, per-operation cast count, hits, totalQuantity, refund details and histograms missing.",
-    "Original Cardinalai 4000-ore study has 39.6% Resourcefulness; actual completed casts not given, so 800 is nominal 5-ore equivalents, not a proved denominator; existing evidence casts null must remain null.",
-    "272246 ilvl305 successful disenchant (true itemLink and output by build) remains unresolved; mixed live/PTR Looter data cannot validate it.",
-    "Original owner PR49 Evercore captures remain RESEARCH_ONLY_NOT_SHIPPED/NO_NUMERIC_TRANSFORM; no overlap or regression to measured study estimates."
+    "200 owner-confirmed completed attempts include one unclassified native result; the two known output totals are partial, not complete per-200 denominators or full-batch material histograms.",
+    "Source strict staging excludes four 104-skill contexts because of persisted Disenchant:13262 capture gap; Master review required before any estimator/production promotion.",
+    "No source-supported causal effect per profession skill or specialization from 405 prior 82-skill and 200 owner-confirmed 104-skill operations; do not treat descriptive comparison as a skill coefficient.",
+    "272246 current Retail successful ilvl305 disenchant and exact bonus-linked itemLink still missing.",
+    "Independent post-hotfix rank-specific 237362/237363 prospect and Midnight milling cast-by-cast source with output zeros, quantity histograms, unlock and Resourcefulness remain missing.",
+    "Mechanics.md M11 still lists prospecting Multicraft likely applies; multiple contemporary guides disagree, requires Master review."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -89,12 +107,13 @@
     "2026-11-09 2026-11-09T16:14:29.037Z: Newly sampled named Umbral Tin/Refulgent Copper/Eversong Diamond/Tranquility Bloom prospecting/milling search results across guide and community sources; no independently new current-patch 0-inclusive per-operation cohort or verified skill/refund export found. Prior Cardinalai/Honeybone/Draggoth and Looter samples not recopied. Owner's separate rod-transition raw source adds exactly 23 previously unrecorded Midnight-worker per-context source events; no new gameplay captures.",
     "2026-11-09T17:13:28.604Z: New nonduplicate rank-2 item-identity lane: checked Eversong Diamond 242712 via GoldCap, ore-specific nodes via wow-professions, exact rank2 herb item IDs via GoldCap/TSM and 10-herb Midnight recipe via Method; no original new 0-inclusive output cohort. Do not repeat this identity lane without new source containing actual casts/variant outcomes.",
     "2026-11-09T18:13:53.016Z: Nonduplicate targeted pigment-rank identity check verified explicit GoldCap US output-rank item IDs across all four herb families (notably reversed 245867/245866 Mana Lily and 245865/245864 Sanguithorn), cross-checked Icy Veins and Warcraft Wiki for family provenance. Name-based fresh disenchanting/Umbral Tin/copper/silver/Tranquility Bloom original-cohort searches across Reddit, Blizzard forum, Wowhead, WoWDB, Icy Veins, Method and profession guides found no independent new 0-inclusive per-cast source. Excluded pre-indexed Cardinalai, Honeybone, Draggoth, kyzenbka, SeniorEmployment932, Insomnist 5294, Looter, owner PR49 and approximate prospecting calculator as duplicates. Do not repeat generic 2026 guide and broad reddit/forum search lanes without fresh primary export.",
-    "2026-11-09T19:16:55.872Z: New mechanics M11 targeted lane cross-checked 2026 Midnight Icy Veins JC stats, wow-professions JC specialization, Dving JC guide, Wowhead profession guide, Blizzard forums and r/woweconomy firsthand Resourcefulness discussion. Three independent current guide sources explicitly reject Multicraft on prospecting/crushing. No direct verified positive Multicraft proc, nor novel current build per-cast numeric yield export in sampled searches; repeated Cardinalai, Honeybone, Looter and owner PR49 cohorts deliberately excluded. Next step Master adjudication and direct game recipe-stat inspection."
+    "2026-11-09T19:16:55.872Z: New mechanics M11 targeted lane cross-checked 2026 Midnight Icy Veins JC stats, wow-professions JC specialization, Dving JC guide, Wowhead profession guide, Blizzard forums and r/woweconomy firsthand Resourcefulness discussion. Three independent current guide sources explicitly reject Multicraft on prospecting/crushing. No direct verified positive Multicraft proc, nor novel current build per-cast numeric yield export in sampled searches; repeated Cardinalai, Honeybone, Looter and owner PR49 cohorts deliberately excluded. Next step Master adjudication and direct game recipe-stat inspection.",
+    "2026-11-09T20:18:50.997Z: Revisited only primary source lineage for *existing* owner PR49 skill104 batch, distinct from previously indexed 82-skill 405 native successes. New operator-confirmed 200 completed denominator, 199 classified result identities, one missing output; no new independent cohort and no estimator promotion. Already indexed HeadtripVee, JD3K, Cardinalai, Honeybone, Draggoth and Looter samples not recopied. Source-only reconciliation is complete; revisit only if missing result reconstructed or Master's strict staging decision changes."
   ],
-  "next_concrete_step": "Master: correct/review mechanics.md M11 to 'prospecting does not Multicraft' based on independent Icy Veins/Wow-Professions/Dving guides, with direct in-game recipe-stat check; also correct queue T0005/T0039 wording so Cardinalai 4000/5=800 is nominal equivalent with 39.6% Resourcefulness, not verified completed casts. Worker next seek a new original post-hotfix 237362/237363 per-cast export incl hits/zeros/quality/skill/refunds or a 272246 ilvl305 true itemLink and material receipt.",
-  "previous_verified_commit_sha": "b0bc4b2632d2f97e4f3cf940f0bd809636fc7313",
-  "verified_commit_sha": "51034a23fdeadf96057a2c108c7c81dee2d90d87",
-  "verified_commit_sha_scope": "Precommit branch head; new commit's own SHA cannot appear in its committed content without an extra commit. New final SHA is verified externally by read-back in this run.",
-  "base_commit_sha_verified": "51034a23fdeadf96057a2c108c7c81dee2d90d87",
-  "commit_readback": "PENDING final post-commit branch-head and evidence/status read-back"
+  "next_concrete_step": "Master: reconcile native Disenchant:13262 gap and preserve owner-confirmed 200 total vs 199 classified for 244752 at ilvl165/effective skill104; do not normalize partial 199 into a 200-point rate. Worker: obtain new nonduplicate completed-cast ilvl305 272246 disenchant log or rank-specific 237362/237363 prospect and 10-herb mill export with per-cast zero/quantity outcomes and refund/skill context.",
+  "previous_verified_commit_sha": "51034a23fdeadf96057a2c108c7c81dee2d90d87",
+  "verified_commit_sha": "d9f5986375a5cb057346124695ab46643cdec769",
+  "verified_commit_sha_scope": "Precommit branch head because a commit cannot contain its own final SHA in content without another commit; final SHA verified externally via branch and file readback.",
+  "base_commit_sha_verified": "d9f5986375a5cb057346124695ab46643cdec769",
+  "commit_readback": "PENDING post-commit branch head and evidence/status byte-for-byte readback"
 }
