@@ -1,3 +1,5 @@
+> **Historical alpha6 migration plan, not current runtime instructions.** At main `b6610848604f68f8f3b40834397b79ce53eb8fb5` (verified 2026-11-09), live ATT integration and its slash commands are retired and ATT is absent from OptionalDeps. Do not install ATT or run the old scan/export commands below for current QA. Runtime uses the standalone token catalog and Blizzard APIs; pinned ATT source imports are build-time research, not a live dependency. See [current Retail QA](retail-qa.md) and the [patch-data inventory](../AFTER_PATCH.md). The original plan below is preserved without implying its historical retirement gates were all verified in a live client.
+
 # Replace ATT with reviewed LootLiquidator data
 
 The target is a standalone LootLiquidator catalog. ATT remains an optional research fallback until the relevant coverage is defined and verified. Alpha6 does not claim all ATT data has been gathered, and ships zero invented/approved real token entries.
