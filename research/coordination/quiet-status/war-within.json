@@ -1,42 +1,39 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-09T14:48:06.770Z",
-  "status": "new_unindexed_original_325_operation_tww_trinket_de_cumulative_source_captured_rank_ids_missing_quarantined",
+  "updated_at": "2026-11-09T15:36:09.457Z",
+  "status": "new_original_tww_shield_126_operation_disenchant_source_quarantined_rank_ids_unknown",
   "task_ids": [
     "T0048",
     "T0040",
+    "T0009",
     "T0007",
     "T0008",
-    "T0009",
     "T0010",
     "T0011",
     "T0012"
   ],
   "exact_gaps_targeted": [
-    "T0048: newly discovered Fungal Friend Flute 215171 aggregated 325-operation disenchants: 8 material-quality rows have observed occurrence counts, but exact output rank/item IDs, player skill and processing version remain unknown. Three family-only placeholders preserve the original table without supplying numeric rank-probability estimates.",
-    "T0040/T0007/T0008/T0009: post-2024-10-25 Bismuth 210930/210931/210932, Ironclaw 210936/210937/210938, Aqirite 210933/210934/210935 per-rank completed-cast/zero-inclusive histograms still missing.",
-    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 milling by skill/rank/refunds still lacks independently counted operations and histograms."
+    "T0048: Cured Terracotta Shield 219798 original 126 reported disenchant operations and 5 source quality rows, with exact rank-to-output-item IDs not exposed; 3 family placeholders avoid fabricated hit probabilities.",
+    "T0040/T0007/T0008/T0009: Bismuth 210930/210931/210932, Ironclaw 210936/210937/210938, Aqirite 210933/210934/210935 post-2024-10-25 rank-specific measured completed casts, zero-inclusive histograms, skill/unlock and refund basis remain unresolved.",
+    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 independent rank/skill-specific milling cast logs, output totals, no-drop outcomes and per-cast histograms remain unresolved."
   ],
   "newly_verified_fields": {
     "method": "Disenchant",
-    "inputItemID": 215171,
-    "inputName": "Fungal Friend Flute",
-    "source_reported_completed_operations": 325,
-    "source_row_count": 8,
+    "inputItemID": 219798,
+    "inputName": "Cured Terracotta Shield",
+    "source_reported_completed_operations": 126,
+    "source_row_count": 5,
     "source_rank_specific_occurrence_counts_by_family": {
-      "Refulgent Crystal": [
-        100,
-        43,
-        20
-      ],
       "Storm Dust": [
-        90,
-        33,
-        8
+        102,
+        1
       ],
       "Gleaming Shard": [
-        21,
-        6
+        18,
+        1
+      ],
+      "Refulgent Crystal": [
+        3
       ]
     },
     "outputItemIDs": null,
@@ -44,40 +41,40 @@
     "castsWithDrop_by_exact_rank": null,
     "totalQuantity": null,
     "zero_inclusive_histograms": null,
-    "source_displayed_storm_dust_stack_range": "1-3, not a measured histogram",
-    "source_context": "Wowhead 12.1.7 PTR indexed page; observation collection patch/build unknown",
+    "source_displayed_storm_dust_stack_range": "1-3 (first row) and 3 (second row), not measured per-cast histograms",
+    "source_context": "Wowhead 12.1.7 PTR indexed page, actual original Looter build/time/eligibility unknown",
     "allowed_estimator_numeric_advancement": false,
-    "note": "Raw occurrences held in row notes only because quality row item IDs are not visible; do not collapse rank-specific occurrence counts into a pooled family P(hit)."
+    "notes": "Preserve distinct unlinked quality rows in source notes, not as rank-specific numeric fields."
   },
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-fungal-friend-flute-215171-cumulative-325",
-      "inputItemID": 215171,
-      "source": "https://www.wowhead.com/ptr/item=215171/fungal-friend-flute",
-      "reported_operations": 325,
+      "studyKey": "wowhead-looter-cured-terracotta-shield-219798-cumulative-126",
+      "inputItemID": 219798,
+      "source": "https://www.wowhead.com/ptr/item=219798/cured-terracotta-shield?bonus=11128%3A11054&ilvl=490&spec=72",
+      "reported_operations": 126,
       "recorded_family_placeholders": 3,
-      "raw_quality_rows": 8,
+      "raw_quality_rows": 5,
       "exact_rank_counts_quarantined": true,
       "unique_original_source": true
     }
   ],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=215171/fungal-friend-flute"
+    "https://www.wowhead.com/ptr/item=219798/cured-terracotta-shield?bonus=11128%3A11054&ilvl=490&spec=72"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-09T1448-fungal-friend-looter-ranks-unresolved.jsonl"
+    "research/v3/evidence/war-within/2026-11-09T1536-cured-terracotta-shield-looter-source-rows.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T1448-fungal-friend-looter-ranks-unresolved.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T1536-cured-terracotta-shield-looter-source-rows.jsonl"
   ],
-  "prior_verified_evidence_commit_sha": "b08e8fca53728d85352a389bd84f3f6533149493",
+  "prior_verified_evidence_commit_sha": "49cc116c01eaab169edef101a791366c7a5760bf",
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "Evidence file and own status are committed atomically, so the new commit SHA cannot be embedded in the same commit's status JSON without changing that SHA. Verify actual SHA via GitHub commit and branch HEAD read-back.",
+  "verified_commit_sha_note": "The evidence and status are committed atomically; this new commit cannot contain its own SHA without changing it. The commit SHA and branch HEAD are verified separately by GitHub read-back.",
   "blockers": [
-    "Eight distinct rank-specific Looter output rows have 100/43/20 Refulgent Crystal, 90/33/8 Storm Dust and 21/6 Gleaming Shard occurrence counts per 325 source-reported gear operations, but the accessible page strips output item links and rank labels; raw HTML access unavailable, so castsWithDrop for each identified output item ID remains null.",
-    "No exact total unit quantities, per-cast 0..N stacks/histograms, completed-case build/hotfix/date, source player profession skill/spec, input trinket bonus/ilvl versions, or current Retail eligibility. PTR cumulative source does not establish current-game probability.",
-    "Review of existing worker files revealed the same Specular Rainbowfish 220141 -> 3 Nacreous Pigment original Golgoth report already appeared in 20261106T0130 and 2026-11-09T1336 files; do NOT treat them as two cohorts. Master should deduplicate source lineage without rewriting those historical files.",
-    "Independent posthotfix TWW Bismuth/Ironclaw/Aqirite and herb milling per-rank operation logs still not recovered."
+    "Raw output quality rank/item ID links are absent from accessible Wowhead item page text, so 102/1 dust, 18/1 shard, and 3 crystal source occurrence counts cannot be mapped to exact material item IDs or used to calculate per-rank chances.",
+    "Original source does not specify raw histogram/zeros, material total units, input version/bonuses across 126 operations, skill, specialization, source build/hotfix, collection date, Resourcefulness/refund basis or current Retail eligibility. Page's PTR index is not evidence these were PTR-cast outcomes.",
+    "Original raw HTML extraction could not be attempted through connected scraping service because its credits were exhausted; indexed page provided family-only source text.",
+    "Still missing original post-hotfix, rank- and unlock-aware Bismuth/Ironclaw/Aqirite and Khaz Algar milling per-cast logs."
   ],
   "exhausted_sources": [
     "Do not re-collect cumulative 219947 PTR Storm Dust Looter rows already deduplicated in 2026-11-09T0749 source file.",
@@ -118,9 +115,13 @@
     {
       "scope": "2026-11-09 Fungal Friend Flute Wowhead source and TWW by-name source follow-up",
       "reason": "Fungal Friend Flute 215171 was absent from GitHub v3 evidence index, so 325 completed source-reported operations and eight output occurrence rows are new. Only family placeholder rows were admitted because individual raw item IDs/ranks could not be extracted; no fabricated zero or probabilities. Existing Reikah/PeaEsk/FireEmblem01/2024 Mycobloom studies remain deduplicated."
+    },
+    {
+      "scope": "2026-11-09 Cured Terracotta Shield 219798 source family rows",
+      "reason": "Item was not present in repository code-search index; verified new 126-operation source and five material occurrences. The indexed table drops row link/rank IDs; no defensible rank mapping or 0/1/2/3 histogram. Need original HTML or author log; do not rescrape same source until capability improves."
     }
   ],
-  "next_concrete_step": "Recover Fungal Friend Flute 215171 original Wowhead Looter raw HTML row links (all 8 exact output item IDs/ranks), 0/1/2/3 positive-stack distributions and game version/player skill; then append rank-resolved replacement rows naming the 3 placeholder IDs in replaces or request Master if replacement semantics require a schema change. Continue searching fresh post-Oct25 2024 rank-aware ore/herb processing casts. Ask Master to exclude duplicate Rainbowfish Golgoth source.",
+  "next_concrete_step": "Retrieve source HTML for Cured Terracotta Shield 219798 and map all five disenchanted output rows to individual 219946/219947/219948, 219949/219950/219951, 219952/219954/219955 material IDs and quality ranks; recover 0..N histograms, skill, build, version and date before replacing family placeholder rows. Seek genuinely original posthotfix ore/herb logs rather than duplicating old Reddit cohorts.",
   "current_run_evidence_records": 3,
   "current_run_new_independent_measured_cohorts": 1,
   "current_run_new_identities": 1,
@@ -128,5 +129,5 @@
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
-  "current_run_new_historical_source_fields": 9
+  "current_run_new_historical_source_fields": 6
 }
