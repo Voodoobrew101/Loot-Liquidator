@@ -1,290 +1,178 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T12:53:40.221Z",
-  "status": "13 new source-backed rows from 6 original item-specific historical disenchant cohorts: two TBC firsthand reports (one confirmed single DE), and 11 MoP Classic pooled Looter output-hit rows over 246 reported item-level DE events across four distinct original input cohorts. None of the new source samples establishes modern Retail eligibility or original Warmaul 24995 measured yield units.",
+  "updated_at": "2026-11-09T14:02:24.215Z",
+  "status": "10 newly sourced historical Disenchant eligibility/rate/mapping change facts from 6 patch epochs (7 exact item IDs, one vendor group, two expansion-wide mechanics). No new completed Warmaul 24995 disenchant casts, Cobalt 36909 or Fel Iron 23424 prospects; no output units, hit counts, zero bins or histogram measurements newly verified.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "T0052",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995 historical TBC iLvl 108: original 2068 Looter events and output hits previously archived; this run found no new exact-item completed cast trace, original positive-bin stack histogram, item bonus/version, skill or current Retail eligibility.",
-    "T0042/T0052 new matching-adjacent TBC armor 24979 item level 102 and weapon 25122 item level 105 firsthand Arcane Dust item identity/quantity; original Reaver number of disenchanted gear items unknown, one Khorium mace confirmed.",
-    "T0042 new separate Classic source-era armor/shield and weapon controls iLvl 27/30/35: item-specific reported total disenchants and output positive occurrence counts from direct historical Looter tables. Not TBC iLvl108 or current Retail.",
-    "T0022 Cobalt Ore 36909: no new separately verified per-output castsWithDrop, zero-inclusive histogram, precise source version or complete independently counted clicks.",
-    "T0044 Fel Iron Ore 23424: historical batches already archived; no newly verified independent completed-click and zero-inclusive material histogram.",
-    "T0053 token 45661: prior 7 class reward IDs archived; no newly verified modern use-version/token changes."
+    "T0047 Warmaul Legplates (24995): historical iLvl108 and archived Looter 2068 events versus scaled current item version and existing cannot-DE data; item bonus, current gate, original 0/1/... histogram and raw output units still unresolved.",
+    "T0042 TBC item eligibility source-version dates: 28109, 28108, 13508 (0-charge restriction), 30901, 30894; Ogri'la vendor quality group; broad patch 2.0.1 skill gate and 7.3.5 material mapping.",
+    "T0022 Cobalt Ore 36909: independent complete prospect cast counts, output hits and zero-inclusive gem histogram still absent.",
+    "T0044 Fel Iron Ore 23424: independent new prospect casts and per-gem positive/zero histograms absent.",
+    "T0053 Spaulders of the Wayward Vanquisher 45661: seven historical class reward IDs already archived; no new verified redemption/variant identifiers."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-allakhazam-25122-monkey-one-de-3-arcane",
-      "inputItemID": 25122,
-      "inputName": "Khorium Plated Bludgeon",
-      "source_item_level": 105,
-      "source_game_version": "TBC-era original comment on MoP Classic item page",
-      "item_kind": "one-hand mace",
-      "reported_completed_disencasts": 1,
-      "outputs": [
-        {
-          "outputItemID": 22445,
-          "outputName": "Arcane Dust",
-          "material_positive_occurrences": 1,
-          "totalQuantity": 3,
-          "minSeen": 3,
-          "maxSeen": 3,
-          "histogram": {
-            "3": 1
-          }
-        }
-      ],
-      "source": "https://www.wowhead.com/mop-classic/item=25122/khorium-plated-bludgeon",
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
+      "type": "rateChange",
+      "date": "2006-12-05",
+      "patch": "2.0.1",
+      "method": "Disenchant",
+      "affects": "All disenchantable equipment (minimum Enchanting skill gate)",
+      "source": "https://warcraft.wiki.gg/wiki/Disenchant",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
     },
     {
-      "studyKey": "wowhead-allakhazam-24979-5-arcane-dust-original",
-      "inputItemID": 24979,
-      "inputName": "Reaver Legplates",
-      "source_item_level": 102,
-      "source_game_version": "TBC-era original comment on TBC Classic item page",
-      "item_kind": "plate legs",
-      "reported_completed_disencasts": null,
-      "outputs": [
-        {
-          "outputItemID": 22445,
-          "outputName": "Arcane Dust",
-          "material_positive_occurrences": null,
-          "totalQuantity": 5,
-          "minSeen": null,
-          "maxSeen": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/tbc/item=24979/reaver-legplates",
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
+      "type": "rateChange",
+      "date": "2007-09-25",
+      "patch": "2.2.0",
+      "method": "Disenchant",
+      "affects": "Essence Infused Mushroom (item 28109), Outland trinket",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_2.2.0",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
     },
     {
-      "studyKey": "wowhead-mopclassic-looter-6675-14-20261109",
-      "inputItemID": 6675,
-      "inputName": "Tempered Bracers",
-      "source_item_level": 27,
-      "source_game_version": "MoP Classic indexed Wowhead Looter cumulative table",
-      "item_kind": "mail wrist",
-      "reported_completed_disencasts": 14,
-      "outputs": [
-        {
-          "outputItemID": 11083,
-          "outputName": "Soul Dust",
-          "material_positive_occurrences": 10,
-          "totalQuantity": null,
-          "minSeen": 1,
-          "maxSeen": 2,
-          "histogram": null
-        },
-        {
-          "outputItemID": 11082,
-          "outputName": "Greater Astral Essence",
-          "material_positive_occurrences": 4,
-          "totalQuantity": null,
-          "minSeen": 1,
-          "maxSeen": 2,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/mop-classic/item=6675/tempered-bracers",
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
+      "type": "rateChange",
+      "date": "2007-09-25",
+      "patch": "2.2.0",
+      "method": "Disenchant",
+      "affects": "Power Infused Mushroom (item 28108), Outland trinket",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_2.2.0",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
     },
     {
-      "studyKey": "wowhead-mopclassic-looter-1276-40-20261109",
-      "inputItemID": 1276,
-      "inputName": "Fire Hardened Buckler",
-      "source_item_level": 27,
-      "source_game_version": "MoP Classic indexed Wowhead Looter cumulative table",
-      "item_kind": "off-hand shield",
-      "reported_completed_disencasts": 40,
-      "outputs": [
-        {
-          "outputItemID": 11083,
-          "outputName": "Soul Dust",
-          "material_positive_occurrences": 29,
-          "totalQuantity": null,
-          "minSeen": 1,
-          "maxSeen": 2,
-          "histogram": null
-        },
-        {
-          "outputItemID": 11082,
-          "outputName": "Greater Astral Essence",
-          "material_positive_occurrences": 9,
-          "totalQuantity": null,
-          "minSeen": 1,
-          "maxSeen": 2,
-          "histogram": null
-        },
-        {
-          "outputItemID": 11084,
-          "outputName": "Large Glimmering Shard",
-          "material_positive_occurrences": 2,
-          "totalQuantity": null,
-          "minSeen": null,
-          "maxSeen": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/mop-classic/item=1276/fire-hardened-buckler",
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
+      "type": "rateChange",
+      "date": "2007-09-25",
+      "patch": "2.2.0",
+      "method": "Disenchant",
+      "affects": "Eye of Arachnida (item 13508) ONLY after depletion of all three charges",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_2.2.0",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
     },
     {
-      "studyKey": "wowhead-mopclassic-looter-9535-43-20261109",
-      "inputItemID": 9535,
-      "inputName": "Fire-Welded Bracers",
-      "source_item_level": 30,
-      "source_game_version": "MoP Classic indexed Wowhead Looter cumulative table",
-      "item_kind": "mail wrist",
-      "reported_completed_disencasts": 43,
-      "outputs": [
-        {
-          "outputItemID": 11083,
-          "outputName": "Soul Dust",
-          "material_positive_occurrences": 30,
-          "totalQuantity": null,
-          "minSeen": 1,
-          "maxSeen": 2,
-          "histogram": null
-        },
-        {
-          "outputItemID": 11082,
-          "outputName": "Greater Astral Essence",
-          "material_positive_occurrences": 11,
-          "totalQuantity": null,
-          "minSeen": 1,
-          "maxSeen": 2,
-          "histogram": null
-        },
-        {
-          "outputItemID": 11084,
-          "outputName": "Large Glimmering Shard",
-          "material_positive_occurrences": 2,
-          "totalQuantity": null,
-          "minSeen": null,
-          "maxSeen": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/mop-classic/item=9535/fire-welded-bracers",
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
+      "type": "rateChange",
+      "date": "2007-11-13",
+      "patch": "2.3.0",
+      "method": "Disenchant",
+      "affects": "Boundless Agony (item 30901), epic dagger",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_2.3.0",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
     },
     {
-      "studyKey": "wowhead-mopclassic-looter-2044-149-20261109",
-      "inputItemID": 2044,
-      "inputName": "Crescent of Forlorn Spirits",
-      "source_item_level": 35,
-      "source_game_version": "MoP Classic indexed Wowhead Looter cumulative table",
-      "item_kind": "one-hand axe",
-      "reported_completed_disencasts": 149,
-      "outputs": [
-        {
-          "outputItemID": 11134,
-          "outputName": "Lesser Mystic Essence",
-          "material_positive_occurrences": 103,
-          "totalQuantity": null,
-          "minSeen": 1,
-          "maxSeen": 2,
-          "histogram": null
-        },
-        {
-          "outputItemID": 11083,
-          "outputName": "Soul Dust",
-          "material_positive_occurrences": 23,
-          "totalQuantity": null,
-          "minSeen": 2,
-          "maxSeen": 5,
-          "histogram": null
-        },
-        {
-          "outputItemID": 11138,
-          "outputName": "Small Glowing Shard",
-          "material_positive_occurrences": 23,
-          "totalQuantity": null,
-          "minSeen": null,
-          "maxSeen": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/mop-classic/item=2044/crescent-of-forlorn-spirits",
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
+      "type": "rateChange",
+      "date": "2007-11-13",
+      "patch": "2.3.0",
+      "method": "Disenchant",
+      "affects": "Ogri'la Faction Vendor: superior and epic quality rewards (group, individual itemIDs not enumerated)",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_2.3.0",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
+    },
+    {
+      "type": "rateChange",
+      "date": "2008-03-25",
+      "patch": "2.4.0",
+      "method": "Disenchant",
+      "affects": "Blue Suede Shoes (item 30894), epic cloth feet from Mount Hyjal",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_2.4.0",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
+    },
+    {
+      "type": "rateChange",
+      "date": "2009-08-04",
+      "patch": "3.2.0",
+      "method": "Disenchant",
+      "affects": "Green Woolen Vest (item 2582), cloth chest",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_3.2.0_(undocumented_changes)",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
+    },
+    {
+      "type": "rateChange",
+      "date": "2010-03-23",
+      "patch": "3.3.3",
+      "method": "Disenchant",
+      "affects": "Gnomish Cloaking Device (item 4397), engineering trinket",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_3.3.3_(undocumented_changes)",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
+    },
+    {
+      "type": "rateChange",
+      "date": "2018-01-16",
+      "patch": "7.3.5",
+      "method": "Disenchant",
+      "affects": "All Disenchant output-material identity groups: expansion of the input equipment rather than raw item level",
+      "source": "https://warcraft.wiki.gg/wiki/Enchanting",
+      "measured_casts": null,
+      "measured_hit_count": null,
+      "measured_output_units": null
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 13,
-    "distinct_original_input_item_cohorts": 6,
-    "source_reported_unique_classic_item_disencasts": 246,
-    "new_confirmed_tbc_single_item_casts": 1,
-    "tbc_raw_positive_arcane_dust_units": [
-      {
-        "inputItemID": 25122,
-        "outputItemID": 22445,
-        "totalQuantity": 3
-      },
-      {
-        "inputItemID": 24979,
-        "outputItemID": 22445,
-        "totalQuantity": 5,
-        "casts": null
-      }
+    "new_evidence_records": 10,
+    "new_historical_patch_groups": 6,
+    "new_exact_item_eligibility_ids": [
+      28109,
+      28108,
+      13508,
+      30901,
+      30894,
+      2582,
+      4397
     ],
-    "classic_positive_hit_rows": 11,
-    "measured_zero_bins": 0,
-    "measured_complete_joint_histograms": 0,
-    "new_warmaul_24995_casts": 0,
-    "new_cobalt_36909_prospects": 0,
-    "new_feliron_23424_prospects": 0,
-    "gold_price_fields": 0
+    "new_measured_completed_disencasts": 0,
+    "new_measured_prospects": 0,
+    "new_measured_zeros": 0,
+    "new_measured_histograms": 0,
+    "gold_ev_fields": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-09T1253-tbc-original-and-classic-item-looter.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T1253-tbc-original-and-classic-item-looter.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-09T1402-historical-disenchant-eligibility-and-mapping.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T1402-historical-disenchant-eligibility-and-mapping.jsonl",
   "sources": [
-    "https://www.wowhead.com/mop-classic/item=25122/khorium-plated-bludgeon",
-    "https://www.wowhead.com/tbc/item=24979/reaver-legplates",
-    "https://www.wowhead.com/mop-classic/item=6675/tempered-bracers",
-    "https://www.wowhead.com/mop-classic/item=1276/fire-hardened-buckler",
-    "https://www.wowhead.com/mop-classic/item=9535/fire-welded-bracers",
-    "https://www.wowhead.com/mop-classic/item=2044/crescent-of-forlorn-spirits"
+    "https://warcraft.wiki.gg/wiki/Disenchant",
+    "https://warcraft.wiki.gg/wiki/Patch_2.2.0",
+    "https://warcraft.wiki.gg/wiki/Patch_2.3.0",
+    "https://warcraft.wiki.gg/wiki/Patch_2.4.0",
+    "https://warcraft.wiki.gg/wiki/Patch_3.2.0_(undocumented_changes)",
+    "https://warcraft.wiki.gg/wiki/Patch_3.3.3_(undocumented_changes)",
+    "https://warcraft.wiki.gg/wiki/Enchanting"
   ],
-  "verified_base_commit_sha": "386bd292720c9992dc62e0c804fbef50b2135a8a",
+  "verified_base_commit_sha": "f9dda5801e2bc8f97afc7acd7ca9cfd6379e729c",
   "verified_commit_sha": null,
-  "commit_sha_note": "A commit cannot contain its own SHA. This file and the JSONL were committed atomically; commit SHA and remote HEAD verified externally in the run after publication.",
+  "commit_sha_note": "A commit cannot embed its own SHA. Evidence and own status are committed atomically; verify the published commit and both files by reading the branch after ref publication.",
   "blockers": [
-    "Original Warmaul Legplates 24995 historical vs current scaled iLvl31 and live disenchant eligibility conflict is still unresolved. No original 24995 full source cast trace, conditional stack frequencies, raw totals or source build/spec.",
-    "Cobalt 36909 / Fel Iron 23424 independent full 5-ore prospect output-positive/zero histograms remain unavailable in new sources. Earlier nominal stack batches are not real completed casts.",
-    "Looter source collection epoch, underlying original individual logs, live Retail item versions, output units and zeros unavailable. Classic source-era cohorts are not directly transferable to Retail.",
-    "Reaver Legplates 24979 archived commenter uses plural 'them': exact number of actual DE casts unknown, so no denominator assigned."
+    "No original completed-cast versioned Warmaul 24995 output histogram or live Retail eligible disenchant test; historical eligible states must not override current no-DE source.",
+    "Cobalt and Fel Iron sources rechecked by item name but no new independent correctly denominated multi-output cast trace or original histograms located.",
+    "3.2 and 3.3.3 item changes are labeled undocumented historical reports; Gnomish Cloaking Device conflicts with present Classic no-DE.",
+    "Patch 2.3 Ogri'la rewards are a source-defined group with no complete per-item IDs; Master must resolve before any item-level gate."
   ],
   "exhausted_sources": [
-    "No new usable 24995, Cobalt or Fel Iron measured-log results from targeted by-name web lookups; earlier original guides, denominators and copied cohort paths already archived, deliberately not duplicated.",
-    "GitHub code search checked each of the six new input item names for previously filed legacy evidence and found no duplicate original source cohort; results for Reaver were only contextual item mentions rather than the exact archived Allakhazam comment."
+    "Warmaul Legplates, Cobalt Ore and Fel Iron Ore: searched existing original Wowhead/Thottbot and archived v3 cohorts; no new complete casts, positive-stack histograms or source-build context.",
+    "Historical TBC patch notes 2.0.1, 2.2.0, 2.3.0, 2.4.0 and WotLK 3.2.0, 3.3.3 plus Legion 7.3.5 examined for genuinely unrecorded identity/rule breaks; no repeated 2.1.0 patch records.",
+    "Github repository code-search by exact new seven item names did not surface already-filed legacy item-specific rateChange rows; this is provenance not current-game validation.",
+    "Firecrawl primary Wowhead raw HTML lookup unavailable due connection credits; no invented source logs."
   ],
-  "next_concrete_step": "Seek original 24995 source Looter pctstack export or an in-game Retail DE recorder capturing bonus/build and completed-cast per-output histograms. For 36909/23424 request independent source-author completed prospects with five-ore batches and zero-bin logs; do not convert nominal ore/stack equivalents into measured casts. Continue the next unique TBC iLvl100-110 armor/weapon first-person material-output reports, deduping by original commenter and itemID.",
-  "previous_status_updated_at": "2026-11-09T11:59:38.429Z"
+  "next_concrete_step": "Ask Master to apply 7.3.5 expansion-version precedence and 2.0.1 skill-gating in historical-vs-Retail reconciling, and to investigate 4397 version conflict. Next find Warmaul 24995 per-stack original Looter export or retail completed-cast recorder; seek independent 5-ore click logs and 0/1/2 histograms for 36909 and 23424. Avoid exhausted primary cohorts, duplicates and calculating gold.",
+  "previous_status_updated_at": "2026-11-09T12:53:40.221Z"
 }
