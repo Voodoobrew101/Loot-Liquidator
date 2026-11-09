@@ -1,7 +1,7 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-09T07:08:50.440Z",
-  "status": "active; confirmed previously imported 232758 Gauntlets of Lost Inspiration PTR source counts were transcribed again under a different studyKey and null input ID; duplicate evidence hold, not new casts or current Retail valuation",
+  "updated_at": "2026-11-09T08:30:13.057Z",
+  "status": "active; independently reconciled seven worker-owned PTR Storm Dust R2 duplicate source aliases with original numeric records and static v3 estimator replaced-ID exclusion; no new independent casts, yield units, supported prices, live gold recommendations or tooltip fields",
   "task_ids": [
     "T0048",
     "T0040",
@@ -10,10 +10,11 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "TWW 232758 / Storm Dust R2 219947: 34 material hits in 93 cumulative source operations appear in both Nov 2 and Nov 9 evidence with different studyKeys and newer null inputItemID; canonicalize source cohort without deleting originals.",
-    "Determining whether current v3 estimator/compiled ItemDB double-counts repeated 232758 cumulative sources requires an actual ingestion/estimator and synthetic-price tooltip test, not an assumed failure.",
-    "Original PTR source lacks positive-stack quantities, output 0..N histogram, source epoch, input bonus/build, character spec, current Retail eligibility and market prices.",
-    "Midnight T0005/T0039/T0045 remain highest new numerical priorities: completed-operation 0..N output logs, ranked itemLinks, unlock/skill, refunds, epoch."
+    "TWW Storm Dust R2 output 219947: seven late duplicate source rows (items 232745, 232746, 235149, 245719, 232736, 238251, 232758) are now neutralized via seven evidence replacements. Their canonical Nov 2 source-reported operation/hit numerators remain; this checkpoint independently confirmed links and ID-specific row matches.",
+    "The estimator's load() statically removes rows referenced by replaces, but no estimator build, candidate v3 import, synthetic-price offline valuation or actual tooltip render was executed by coordinator; this is not proof of end-to-end exclusion.",
+    "The same PTR source still lacks independent original player events, positive-stack unit totals/histograms, character build/skill/bonus/rank, current Retail disenchant eligibility and market prices; source-hit ratios are not measured unconditional output quantities.",
+    "Midnight T0005/T0039: 237362 Umbral Tin rank-mapped completed-event output hits, zeros, 0..N unit histograms, refunds, current build and ore-specific unlock remain unknown.",
+    "Midnight T0045: Tranquility Bloom 236761 -> Powder Pigment 245807 original 10-herb completed mill count, input ranks, Resourcefulness refund accounting and per-output 0..N histograms remain unknown."
   ],
   "newly_verified_fields_or_cohorts": [
     {
@@ -47,15 +48,21 @@
   "new_rendered_tooltip_fields": 0,
   "source_links": [
     "https://www.wowhead.com/ptr/item=219947/storm-dust",
-    "https://www.wowhead.com/de/item=232758/stulpen-der-verlorenen-inspiration",
-    "https://www.wowhead.com/quest=83446/cease-and-desist"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T0749-ptr-r2-dust-cumulative-dedupe.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-08T2328-ptr-r2-looter-unrecorded-item-cohorts.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T0633-goblin-blade-gauntlets-de-conflict.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-02T0629-ptr-looter-input-id-replacements-and-tazavesh-eligibility.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-02T0051-r2-dust-looter-and-eligibility-conflicts.jsonl"
   ],
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-09T0707-tww-gauntlets-232758-repeated-cumulative-cohort.md",
-    "research/v3/evidence/war-within/2026-11-02T0051-r2-dust-looter-and-eligibility-conflicts.jsonl",
-    "research/v3/evidence/war-within/2026-11-09T0633-goblin-blade-gauntlets-de-conflict.jsonl"
+    "research/v3/evidence/war-within/2026-11-09T0749-ptr-r2-dust-cumulative-dedupe.jsonl",
+    "research/v3/evidence/war-within/2026-11-08T2328-ptr-r2-looter-unrecorded-item-cohorts.jsonl",
+    "research/v3/evidence/war-within/2026-11-09T0633-goblin-blade-gauntlets-de-conflict.jsonl",
+    "research/v3/evidence/war-within/2026-11-02T0629-ptr-looter-input-id-replacements-and-tazavesh-eligibility.jsonl",
+    "research/v3/evidence/war-within/2026-11-02T0051-r2-dust-looter-and-eligibility-conflicts.jsonl"
   ],
-  "verified_commit_sha": "507ca20a3f205b0b52c2f12d91cfd29117e04753",
+  "verified_commit_sha": "17054e6fd74491cdb351f62f774f4792acf4b101",
   "verified_commit_sha_scope": "Verified research parent used as new note/status/dashboard commit parent; resulting commit cannot cite itself. Read branch back after push.",
   "checked_worker_owner_reports": [
     {
@@ -84,10 +91,9 @@
     }
   ],
   "blockers": [
-    "Source count 34/93 repeats exactly; no independent raw per-character cohort; 219947 count measures material-positive events, not output units or any overall empty-dis-enchant rate.",
-    "No executed v3 estimator/deduplication or synthetic-price tooltip probe in this coordinator run, so doubled economics are a risk, not a demonstrated runtime error.",
-    "Current Retail gear bonus/version and disenchant eligibility, player specialization and material quantity distribution unresolved.",
-    "Full original rank-specific itemLink/operation-level log, source collection epoch, current price context unavailable."
+    "No original player per-click positive material unit histograms, source patch/bonus/build, completed-cast identities or current Retail gear eligibility to promote 219947 PTR aggregate into supported live gold decisions.",
+    "Static replacement-ID load code does not establish end-to-end importer dedupe or real tooltip/valuation correctness without running the research estimator and synthetic-price fixture.",
+    "No new original zero-inclusive Midnight T0005/T0039/T0045 prospecting/milling operations with exact rank, skill, unlock and Resourcefulness refunds; conditional and occurrence probabilities remain unknown."
   ],
   "exhausted_sources": [
     {
@@ -113,37 +119,152 @@
     {
       "path": "Gauntlets of Lost Inspiration 219947 repeated PTR snapshot",
       "reason": "Nov 9 34/93 sample already transcribed on Nov 2 with exact inputID 232758; not an independent new data source. Future work needs original logs/eligibility, not another cumulative page snapshot."
+    },
+    {
+      "path": "Seven duplicated 219947 PTR cumulative source snapshots and existing SeniorEmployment932 1473-pigment source",
+      "reason": "Nov 8/9 Storm Dust duplicates are now neutralized and original 7 canonical 2026-11-02 source cohorts retained; repeated PTR listings are not independent. SeniorEmployment932 March 2026 Tranquility Bloom pigment report already archived as master-20261030-006; do not collect again without raw completed-mill or material-rank evidence."
     }
   ],
   "tests_performed": [
-    "Verified current branch heads and checked source-file readback at research parent 507ca20a3f205b0b52c2f12d91cfd29117e04753; main 1a0494aaa9c27918899e7ac74c555ade0bf474c9 and integration 3d667d053db587c91401cfed7ecc56862b8340c9",
-    "Read charter, three-pass plan/checkpoint, v3 schema, README, mechanics, queue, strategy and flags; worker status reports.",
-    "Compared war-within-20261102-0051-010 and war-within-20261109-0633-002 source URL, item name, output rank, 34/93 count, absent original output units and differing studyKeys.",
-    "Independent item ID 232758-to-name corroboration via Wowhead German item catalog and original Nov 2 source file.",
-    "Reviewed current research branch GitHub Actions run 42575763653: completed/success at checked parent."
+    "Independently read canonical 2026-11-02 TWW 219947 records, 2026-11-08/09 duplicate rows, and all seven 2026-11-09T0749 replacement records and reconciled seven exact input item IDs and source hit/operation pairs.",
+    "Inspected current research/v3/tools/build_estimates.py load() for replaced-ID exclusion; this is static code review, not executed code.",
+    "Read current worker-owned quiet reports and observed GitHub Actions completed/success on exact pre-note research SHA."
   ],
   "tests_not_performed": [
-    "Research estimator or compiler rebuild",
-    "Actual offline ItemDB gold valuation and tooltip rendering",
-    "Local Lua tests",
-    "World of Warcraft live client test"
+    "Research estimator run or migrated/compiled ItemDB rebuild",
+    "Actual offline synthetic-price valuation and tooltip rendering",
+    "Lua/native addon regression suite",
+    "Live World of Warcraft or actual-character operation/eligibility tests"
   ],
   "branch_heads_checked": {
-    "research_parent": "507ca20a3f205b0b52c2f12d91cfd29117e04753",
+    "research_parent": "17054e6fd74491cdb351f62f774f4792acf4b101",
     "main": "1a0494aaa9c27918899e7ac74c555ade0bf474c9",
     "protected_implementation": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "ci_parent": {
-    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42575763653",
-    "head_sha": "507ca20a3f205b0b52c2f12d91cfd29117e04753",
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42585553046",
+    "head_sha": "17054e6fd74491cdb351f62f774f4792acf4b101",
     "status": "completed",
     "conclusion": "success",
-    "applies_to_note_commit": false
+    "completed_at": "2026-11-09T08:23:32Z",
+    "applies_to_note_commit": false,
+    "note": "External GitHub Actions outcome read; coordinator did not run full local validation."
   },
   "existing_research_prs": {
     "pr22": "closed_unmerged",
     "pr23": "closed_unmerged",
-    "owner_implementation_pr24": "merged_by_PR_Director_prior_to_this_run"
+    "owner_implementation_pr24": "merged_by_PR_Director_2026-11-02"
   },
-  "next_concrete_step": "Research-only follow-up: review/flag canonical source alias for 232758 34/93 vs duplicate null-ID 34/93; do not change worker originals or Three-Pass addon branch. Ask existing validation owner to test actual dedupe/valuation with synthetic prices. Continue seeking new Midnight T0005/T0039/T0045 0..N raw event logs with exact rank, skill, refunds and build."
+  "next_concrete_step": "Keep the seven worker-owned replacements and canonical Nov 2 rows intact. Have existing research-only validation owner run estimator/load and ID-alias dedupe regression, and have protected three-pass implementation owner verify output-item 219947 synthetic-price offline valuation/tooltip behavior only on their authorized branch. For next independent research seek Midnight T0005/T0039/T0045 by-operation original output/link/0..N histograms, skill/unlock, refund/recipe and source epoch; do not import PTR cumulative hits as live character EV.",
+  "previous_status_updated_at": "2026-11-09T07:08:50.440Z",
+  "newly_verified_fields_cohorts": [
+    {
+      "kind": "same-source-alias_reconciliation_static_code_path",
+      "method": "Disenchant",
+      "outputItemID": 219947,
+      "outputRank": 2,
+      "original_source": "https://www.wowhead.com/ptr/item=219947/storm-dust",
+      "attribution": "An existing worker wrote seven replacement evidence rows; coordinator independently compared those rows to canonical Nov 2 rows and late duplicate source rows, and inspected builder load() code. No original new source observations.",
+      "mappings": [
+        {
+          "inputItemID": 232745,
+          "inputName": "Apprentice Knight's Belt",
+          "canonical_record": "war-within-20261102-0629-003",
+          "late_duplicate": "war-within-202611082328-006",
+          "replacement": "war-within-20261109-0749-001",
+          "source_hits": 35,
+          "source_reported_operations": 91
+        },
+        {
+          "inputItemID": 232746,
+          "inputName": "Spaulders of Lost Inspiration",
+          "canonical_record": "war-within-20261102-0629-002",
+          "late_duplicate": "war-within-202611082328-007",
+          "replacement": "war-within-20261109-0749-002",
+          "source_hits": 30,
+          "source_reported_operations": 75
+        },
+        {
+          "inputItemID": 235149,
+          "inputName": "Maniac Biker's Boots",
+          "canonical_record": "war-within-20261102-0629-007",
+          "late_duplicate": "war-within-202611082328-008",
+          "replacement": "war-within-20261109-0749-003",
+          "source_hits": 30,
+          "source_reported_operations": 82
+        },
+        {
+          "inputItemID": 245719,
+          "inputName": "Greaves of the Auditbreaker",
+          "canonical_record": "war-within-20261102-0629-005",
+          "late_duplicate": "war-within-202611082328-009",
+          "replacement": "war-within-20261109-0749-004",
+          "source_hits": 21,
+          "source_reported_operations": 55
+        },
+        {
+          "inputItemID": 232736,
+          "inputName": "Pendant of Enduring Promise",
+          "canonical_record": "war-within-20261102-0629-006",
+          "late_duplicate": "war-within-202611082328-010",
+          "replacement": "war-within-20261109-0749-005",
+          "source_hits": 45,
+          "source_reported_operations": 118
+        },
+        {
+          "inputItemID": 238251,
+          "inputName": "Grateful Goblin's Blade",
+          "canonical_record": "war-within-20261102-0629-004",
+          "late_duplicate": "war-within-20261109-0633-001",
+          "replacement": "war-within-20261109-0749-006",
+          "source_hits": 19,
+          "source_reported_operations": 50
+        },
+        {
+          "inputItemID": 232758,
+          "inputName": "Gauntlets of Lost Inspiration",
+          "canonical_record": "war-within-20261102-0051-010",
+          "late_duplicate": "war-within-20261109-0633-002",
+          "replacement": "war-within-20261109-0749-007",
+          "source_hits": 34,
+          "source_reported_operations": 93
+        }
+      ],
+      "independently_new_cohorts": 0,
+      "new_original_completed_cass": null,
+      "new_original_completed_casts": 0,
+      "new_per_output_total_units": 0,
+      "new_histograms": 0,
+      "new_price_or_tooltip_fields": 0,
+      "statically_verified_behavior": "research/v3/tools/build_estimates.py load(): replaced={r['replaces'] for r in rows if r.get('replaces')}; rows filtered where id not in replaced; seven late source duplicates are referenced, original canonical records are not.",
+      "limitation": "Static source and logic inspection only, not executed estimator, compiled database, synthetic-price render, or real client verification."
+    }
+  ],
+  "commit_sha_scope": "This verified_commit_sha is the verified pre-checkpoint research branch HEAD. Git commit SHA of a commit cannot be embedded in that same commit; read back the new HEAD after this status publication.",
+  "worker_reports_read": [
+    {
+      "role": "midnight",
+      "updated_at": "2026-11-09T08:22:59.107Z",
+      "reported": "8 new PTR item-side Looter references; no new original per-cast material units/histograms",
+      "not_coordinator_measured": true
+    },
+    {
+      "role": "war-within",
+      "updated_at": "2026-11-09T07:49:59.718Z",
+      "reported": "7 source-alias numeric-neutral replacements; independently verified their actual evidence rows and original numeric source rows",
+      "not_coordinator_measured": true
+    },
+    {
+      "role": "dragonflight",
+      "updated_at": "2026-11-09T07:40:34.390Z",
+      "reported": "5 new distinct gear-side cumulative sources; context and per-output units/histograms unverified",
+      "not_coordinator_measured": true
+    },
+    {
+      "role": "legacy",
+      "updated_at": "2026-11-09T06:52:31.540Z",
+      "reported": "7 Cobalt identity-only replacements and 2 historical milling output-total cohorts; no new completed-cast counts",
+      "not_coordinator_measured": true
+    }
+  ]
 }
