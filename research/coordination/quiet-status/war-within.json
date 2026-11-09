@@ -1,254 +1,134 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-09T18:40:50.248Z",
-  "status": "eight_new_distinct_original_item_r2_storm_dust_looter_hit_rows_no_independent_ranked_cast_export",
+  "updated_at": "2026-11-09T19:32:43.431Z",
+  "status": "active_source_conflict_and_duplicate_cohort_audit_no_new_independent_cast_log",
   "task_ids": [
     "T0048",
     "T0040",
     "T0009",
+    "T0008",
     "T0010",
     "T0011",
-    "T0008",
     "T0007",
     "T0012"
   ],
   "exact_gaps_targeted": [
-    "R2 Storm Dust 219947 original-input TWW uncommon/quest/PvP armor and weapon identity-specific hit counts, not yet present on worker branch: inputs 217133, unknown Boreal Glaive ID, 232757, 237867, 237876, 245737, 245727, 232739",
-    "All input items still lack measured output stack histograms, total material units, zero outcomes with verified per-cast log, bonus IDs, skill/spec and actual hotfix/build",
-    "Priority TWW post-2024-10-25 ranked Bismuth/Ironclaw/Aqirite prospecting, unlock/refund basis, and Mycobloom R1/R2/R3 per-rank milling raw casts remain unfilled"
+    "Resolve T0048 current Retail disenchant eligibility for exact item variants 229150 Lamplighter's Splitter and 238249 Boreal Greatsword, versus earlier cumulative Wowhead Looter indexed DE reports.",
+    "Correct dedup interpretation: 2026-11-09T1825 eight Storm Dust R2 records include at least six verbatim prior source/item/output cohorts already present in Nov2 worker evidence. Do not double-count; source original IDs must be reconciled by Master before compiling estimates.",
+    "Obtain new independent post-2024-10-25 completed, rank-specific prospecting/milling casts for 210931 Bismuth, 210936/210937 Ironclaw, 210933/210934 Aqirite, 210796/210797/210798 Mycobloom, with exact outputs, 0-inclusive per-cast histograms, zero outcomes, skill/spec, unlock, Resourcefulness and refund basis."
   ],
-  "newly_verified_fields": {
-    "method": "Disenchant",
-    "outputItemID": 219947,
-    "outputRank": 2,
-    "sourceKind": "cumulative_anonymous_Wowhead_Looter",
-    "sourceUrl": "https://www.wowhead.com/ptr/item=219947/storm-dust",
-    "per_input_item_hits_and_denominators": [
+  "newly_verified_fields": [
+    {
+      "type": "noDisenchant",
+      "itemID": 229150,
+      "itemName": "Lamplighter's Splitter",
+      "source": "https://www.wowdb.com/items/229150-lamplighters-splitter",
+      "source_categorical_claim": "Cannot be disenchanted",
+      "catalog_added_patch": "11.0.2",
+      "catalog_added_build": 55789,
+      "conflicting_previous_study_ids": [
+        "war-within-20261101-120009",
+        "war-within-20261101-120010",
+        "war-within-20261101-120011",
+        "war-within-20261101-120012"
+      ],
+      "original_indexed_casts": 37,
+      "live_eligibility_confirmed": false
+    },
+    {
+      "type": "noDisenchant",
+      "itemID": 238249,
+      "itemName": "Boreal Greatsword",
+      "source": "https://www.wowdb.com/items/238249-boreal-greatsword",
+      "source_categorical_claim": "Cannot be disenchanted",
+      "catalog_added_patch": "11.1.0",
+      "catalog_added_build": 58819,
+      "conflicting_previous_study_ids": [
+        "war-within-20261101-120034",
+        "war-within-20261101-120035",
+        "war-within-20261101-120036",
+        "war-within-20261101-120037"
+      ],
+      "original_indexed_casts": 112,
+      "live_indexed_casts": 111,
+      "live_eligibility_confirmed": false
+    }
+  ],
+  "newly_verified_cohorts": [],
+  "current_run_new_independent_measured_cohorts": 0,
+  "current_run_evidence_records": 2,
+  "current_run_new_categorical_identity_fields": 2,
+  "source_links": [
+    "https://www.wowdb.com/items/229150-lamplighters-splitter",
+    "https://www.wowdb.com/items/238249-boreal-greatsword",
+    "https://www.wowhead.com/item=238249/boreal-greatsword",
+    "https://www.wowhead.com/item=229150/lamplighters-splitter"
+  ],
+  "dedupe_audit": {
+    "suspect_file": "research/v3/evidence/war-within/2026-11-09T1825-eight-original-r2-dust-items.jsonl",
+    "confirmed_repeated_original_cohorts": [
       {
-        "inputName": "Algari Competitor's Leather Wristwraps",
         "inputItemID": 217133,
-        "kind": "armor",
-        "castsWithDrop": 15,
-        "indexed_operations": 24
+        "cumulative_hits": "15/24",
+        "previous_record": "war-within-20261102-0424-001"
       },
       {
-        "inputName": "Boreal Glaive",
-        "inputItemID": null,
-        "kind": "weapon",
-        "castsWithDrop": 19,
-        "indexed_operations": 31
-      },
-      {
-        "inputName": "Green Knight's Chestplate",
         "inputItemID": 232757,
-        "kind": "armor",
-        "castsWithDrop": 36,
-        "indexed_operations": 90
+        "cumulative_hits": "36/90",
+        "previous_record": "war-within-20261102-0424-005"
       },
       {
-        "inputName": "Oathsworn Defender's Breeches",
-        "inputItemID": 237867,
-        "kind": "armor",
-        "castsWithDrop": 40,
-        "indexed_operations": 101
-      },
-      {
-        "inputName": "Eco-Stabilizer's Cinch",
         "inputItemID": 237876,
-        "kind": "armor",
-        "castsWithDrop": 30,
-        "indexed_operations": 77
+        "cumulative_hits": "30/77",
+        "previous_record": "war-within-20261102-0424-006"
       },
       {
-        "inputName": "Ritualbreaker's Band",
-        "inputItemID": 245737,
-        "kind": "armor",
-        "castsWithDrop": 81,
-        "indexed_operations": 215
-      },
-      {
-        "inputName": "Voidmarket Negotiator's Grips",
-        "inputItemID": 245727,
-        "kind": "armor",
-        "castsWithDrop": 23,
-        "indexed_operations": 62
-      },
-      {
-        "inputName": "Sash of Lost Inspiration",
         "inputItemID": 232739,
-        "kind": "armor",
-        "castsWithDrop": 109,
-        "indexed_operations": 295
+        "cumulative_hits": "109/295",
+        "previous_record": "war-within-20261102-0424-007"
+      },
+      {
+        "inputItemID": 245727,
+        "cumulative_hits": "23/62",
+        "previous_record": "war-within-20261102-0051-004"
+      },
+      {
+        "inputItemID": 235660,
+        "cumulative_hits": "19/31",
+        "previous_record": "war-within-20261102-0629-001",
+        "note": "Earlier replacement already resolved Boreal Glaive exact item ID; Nov9 null-ID record is a regression in source identity, not fresh data."
       }
     ],
-    "measured_independent_firsthand_cohorts": 0,
-    "totalQuantity": null,
-    "histogram": null,
-    "minSeen": null,
-    "maxSeen": null,
-    "verified_zero_outcomes": null,
-    "skill": null,
-    "specialization": null,
-    "resourcefulness_or_refund_basis": null,
-    "actual_source_collection_patch": null
+    "unresolved_possible_duplicate_input_ids": [
+      237867,
+      245737
+    ],
+    "action": "Master to review suppression/corrections; source file not rewritten, and no new duplicate 219947 drop records emitted"
   },
-  "newly_verified_cohorts": [
-    {
-      "inputName": "Algari Competitor's Leather Wristwraps",
-      "inputItemID": 217133,
-      "outputItemID": 219947,
-      "castsWithDrop": 15,
-      "indexed_operations": 24,
-      "provenance": "distinct_input_item_subset_of_same_cumulative_wowhead_looter_table_not_independent_fresh_studies"
-    },
-    {
-      "inputName": "Boreal Glaive",
-      "inputItemID": null,
-      "outputItemID": 219947,
-      "castsWithDrop": 19,
-      "indexed_operations": 31,
-      "provenance": "distinct_input_item_subset_of_same_cumulative_wowhead_looter_table_not_independent_fresh_studies"
-    },
-    {
-      "inputName": "Green Knight's Chestplate",
-      "inputItemID": 232757,
-      "outputItemID": 219947,
-      "castsWithDrop": 36,
-      "indexed_operations": 90,
-      "provenance": "distinct_input_item_subset_of_same_cumulative_wowhead_looter_table_not_independent_fresh_studies"
-    },
-    {
-      "inputName": "Oathsworn Defender's Breeches",
-      "inputItemID": 237867,
-      "outputItemID": 219947,
-      "castsWithDrop": 40,
-      "indexed_operations": 101,
-      "provenance": "distinct_input_item_subset_of_same_cumulative_wowhead_looter_table_not_independent_fresh_studies"
-    },
-    {
-      "inputName": "Eco-Stabilizer's Cinch",
-      "inputItemID": 237876,
-      "outputItemID": 219947,
-      "castsWithDrop": 30,
-      "indexed_operations": 77,
-      "provenance": "distinct_input_item_subset_of_same_cumulative_wowhead_looter_table_not_independent_fresh_studies"
-    },
-    {
-      "inputName": "Ritualbreaker's Band",
-      "inputItemID": 245737,
-      "outputItemID": 219947,
-      "castsWithDrop": 81,
-      "indexed_operations": 215,
-      "provenance": "distinct_input_item_subset_of_same_cumulative_wowhead_looter_table_not_independent_fresh_studies"
-    },
-    {
-      "inputName": "Voidmarket Negotiator's Grips",
-      "inputItemID": 245727,
-      "outputItemID": 219947,
-      "castsWithDrop": 23,
-      "indexed_operations": 62,
-      "provenance": "distinct_input_item_subset_of_same_cumulative_wowhead_looter_table_not_independent_fresh_studies"
-    },
-    {
-      "inputName": "Sash of Lost Inspiration",
-      "inputItemID": 232739,
-      "outputItemID": 219947,
-      "castsWithDrop": 109,
-      "indexed_operations": 295,
-      "provenance": "distinct_input_item_subset_of_same_cumulative_wowhead_looter_table_not_independent_fresh_studies"
-    }
-  ],
-  "source_links": [
-    "https://www.wowhead.com/ptr/item=219947/storm-dust",
-    "https://www.wowhead.com/item=217133",
-    "https://www.wowhead.com/item=232757",
-    "https://www.wowhead.com/item=237867",
-    "https://www.wowhead.com/item=237876",
-    "https://www.wowhead.com/item=245737",
-    "https://www.wowhead.com/item=245727",
-    "https://www.wowhead.com/item=232739"
-  ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-09T1825-eight-original-r2-dust-items.jsonl"
+    "research/v3/evidence/war-within/2026-11-09T1932-wowdb-disenc-eligibility-conflicts.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T1825-eight-original-r2-dust-items.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T1932-wowdb-disenc-eligibility-conflicts.jsonl"
   ],
-  "prior_verified_evidence_commit_sha": "8bfadcaca52eaffbb7e002a61cfd4fb83d13946d",
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "One atomic evidence-plus-status commit cannot record its own SHA without changing its SHA. Prior worker commit verified; verify new branch commit via read-back after ref update.",
+  "verified_commit_sha_note": "Single atomic commit includes its own status file; embedding that same commit SHA would change the commit hash. Commit SHA must be verified independently by branch read-back and can be cited in the next status update.",
   "blockers": [
-    "These eight source-indexed per-item counts are from a single cumulative anonymized Wowhead Looter listing, not eight independent new per-cast log studies. Collection date/patch, item quality and enchant skill/spec missing.",
-    "R2 Storm Dust 219947 hits do not state output stack quantity or per-cast histograms; zero outcome counts not independently established and remain unknown. Do not derive P(hit) for item groups from these different source-item denominators.",
-    "Boreal Glaive exact item ID not verified; left null. Source item-side URLs/bonus IDs needed; current Retail eligibility unknown.",
-    "No new current-era post-hotfix ore-rank milling/prospecting numeric cast log was located. Existing Reikah, 1fdmzwy, 1f83cnd are already represented and not reimported."
+    "No independent original current TWW rank-specific prospecting/milling 0..N log with precise skill, ranks, unlock and refund basis located; original historical studies already imported or exhausted.",
+    "WowDB's cannot-disenchant statement conflicts with Wowhead Looter source counts. No character itemLink bonus IDs, in-game cast receipt or source collection patch; do not treat categorical evidence as a verified live-processing rule.",
+    "Anonymous cumulative Wowhead Looter source changed Boreal Greatsword (238249) indexed counts from 112 to 111. Never treat snapshots as independent new cohorts.",
+    "Current/stale 219947 PTR cohorts include at least six duplicates against earlier Nov2 evidence; previous Nov9 status had incorrectly classified them as newly verified.",
+    "External Firecrawl MCP research unavailable due to credit exhaustion; public web and connected GitHub remained available."
   ],
   "exhausted_sources": [
-    "Do not re-collect cumulative 219947 PTR Storm Dust Looter rows already deduplicated in 2026-11-09T0749 source file.",
-    "Existing 2024 Reikah Ironclaw/Aqirite, Mycobloom LotzBoi/Reddit 1fdmzwy, pre-hotfix Aqirite original 1f83cnd, and 2024 sample 1g350pq already recorded.",
-    "This run searched new by-name source queries and Wowhead profession tool pages; no unrecorded original 0/1/2+ measured histogram established.",
-    {
-      "scope": "2026-11-09 indexed Wowhead TWW epic gear Looter cohorts",
-      "reason": "Common Lamplighter, Greatlynx, Hexflame, Lucent, Gatecrasher, Scavenger and TWW tier cohorts examined here were already recorded on branch; rejected to prevent duplicate cohort inflation"
-    },
-    {
-      "scope": "TWW wowhead profession tools 10 unique identities",
-      "reason": "Item-specific disenchant related-section identity only; cannot create measured numerical estimates from indexing; move to fresh original casts"
-    },
-    {
-      "scope": "2026-11-09 further R2 Storm Dust output-index entries",
-      "reason": "Identified same 219947 item-origin samples already in 2026-11-08T1026 and T2328 files; excluded duplicates for 245715,237870,245735,237872,245736,235621,237938,237883,237880,237877,245731,245706,245720 and others."
-    },
-    {
-      "scope": "Current TWW rank-specific prospecting/milling sources",
-      "reason": "Old reddit Aqirite (1f83cnd,1g350pq), Reikah Ironclaw, and Mycobloom 1fdmzwy are pre-hotfix and already present; no new raw denominators or skill-specified histograms recovered."
-    },
-    {
-      "scope": "2026-11-09 TWW numeric by-name follow-up across Reddit, Blizzard forums and Wowhead",
-      "reason": "Re-read post-hotfix 600 R1 Ironclaw, June 2025 Orbinid/Blessing Blossom 1,500-herb report, Reikah and Mycobloom historical cohorts and Sept 2024 green-DE tables; all independently represented already or lack output histograms. Did not reinsert duplicates."
-    },
-    {
-      "scope": "Maniac Biker's Legguards identity",
-      "reason": "Resolved null inputItemID through Wowhead Renegotiations quest reward direct link; prior source record replaced, no duplicate 34/95 numeric cohort"
-    },
-    {
-      "scope": "2026-11-09 original TWW prospecting/milling and green disenchant by-name searches",
-      "reason": "Existing Sep 2024 Aqirite (1fisfkn/1f83cnd), Oct 2024 milling (1fdmzwy), Sep 2024 DE (1fkhr8j/1fpswuz/1f9qado) and 7,652 Pioneer cuffs (1g9l8t8) are already present in worker evidence, not new independent cohorts. March 2026 enchanting and milling posts discuss Midnight and are not mapped to TWW."
-    },
-    {
-      "scope": "2026-11-09 current original TWW ore/prospect and milling source search",
-      "reason": "Searches across Reddit, Wowhead, Warcraft Wiki, Method and Blizzard forums returned already-recorded 2024 Aqirite/Ironclaw and Mycobloom/Luredrop cohorts or no raw posthotfix 0..N logs; did not reinsert duplicate cohorts. Found a new alternative Specular Rainbowfish mill source instead."
-    },
-    {
-      "scope": "2026-11-09 Fungal Friend Flute Wowhead source and TWW by-name source follow-up",
-      "reason": "Fungal Friend Flute 215171 was absent from GitHub v3 evidence index, so 325 completed source-reported operations and eight output occurrence rows are new. Only family placeholder rows were admitted because individual raw item IDs/ranks could not be extracted; no fabricated zero or probabilities. Existing Reikah/PeaEsk/FireEmblem01/2024 Mycobloom studies remain deduplicated."
-    },
-    {
-      "scope": "2026-11-09 Cured Terracotta Shield 219798 source family rows",
-      "reason": "Item was not present in repository code-search index; verified new 126-operation source and five material occurrences. The indexed table drops row link/rank IDs; no defensible rank mapping or 0/1/2/3 histogram. Need original HTML or author log; do not rescrape same source until capability improves."
-    },
-    "2026-11-09 current: rechecked original 2024 Aqirite reddit 1g350pq/1f83cnd and R2 Storm Dust PTR index; neither yields a new independent per-cast cohort, and existing rows overlap prior evidence",
-    "2026-11-09 current: Cured Terracotta 219798 output family row does not expose verifiable rank-qualified material IDs; no repeat source record created",
-    {
-      "scope": "2026-11-09 run ore/prospect and milling plus DE original follow-up",
-      "reason": "New by-name searches on Reddit, official Blizzard profession discussion and Wowhead mostly surface previously recorded Aqirite, Ironclaw, Mycobloom and stacked Wowhead Looter cohorts; no independent per-output cast or histograms. Searched alternatives in WoWDB for new exact source-only eligibility identities, no duplicate source sample import."
-    },
-    {
-      "scope": "2026-11-09 new R2 Storm Dust 219947 PTR Looter source-side 8 input items",
-      "reason": "Excluded already-recorded Breeches of the Auditbreaker and Locket of the Final Purge (2026-11-08T1231); existing Astral Censer, Shoulderguards, Maniac Biker, 2026-11-08 PTR inputs and previously indexed rows not duplicated. No new original unpooled author cast log."
-    },
-    {
-      "scope": "2026-11-09 by-name post-2024 prospecting/milling searches",
-      "reason": "Independent post-2024-10-25 TWW ranked cast logs with zero/hit histograms not available in search results; no recycled pre-hotfix Reikah/Aqirite and Mycobloom reddit cohorts."
-    }
+    "Original 2024 Aqirite 1f83cnd/1g350pq, Reikah Ironclaw, Mycobloom 1fdmzwy are already in evidence. No repeated import.",
+    "2026-11-09 R2 219947 PTR output-side cumulative table duplicates Nov2 original item cohorts for 217133,232757,237876,232739,245727,235660.",
+    "Live Wowhead 238249 item-side cumulation is the same growing source, not a new independent sample; existing 112-count cohorts kept unchanged.",
+    "Other TWW 233262 Laundered Handwraps WoWDB noDE already in 2026-11-02T1420-laundered-eligibility-conflicts.jsonl, therefore excluded."
   ],
-  "next_concrete_step": "Find item-side exact ID for Boreal Glaive, validate per-cast denominator/item bonus and live game disenchant eligibility for indexed R2 Storm Dust inputs; higher-priority seek independent post-2024-10-25 ranked Bismuth/Ironclaw/Aqirite or Mycobloom cast export with output 0..N histograms and Resourcefulness basis.",
-  "current_run_evidence_records": 8,
-  "current_run_new_independent_measured_cohorts": 0,
-  "current_run_new_identities": 7,
+  "next_concrete_step": "Master/PR Director review six repeated 219947 source cohorts and 235660 identity correction; seek live itemLink bonus/version and actual disenchant receipt for 229150 and 238249, then independently sourced posthotfix rank-specific Bismuth/Ironclaw/Aqirite/Mycobloom cast logs.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
-  "validation_bypass": false,
-  "current_run_new_historical_source_fields": 8
+  "validation_bypass": false
 }
