@@ -1,3 +1,11 @@
+## Coordinator source-units checkpoint — 2026-11-09T13:07:25.382Z
+
+**New reviewable unit/denominator issue (not a new cohort):** Original [September 9, 2024 source](https://www.reddit.com/r/woweconomy/comments/1fc2j1m) says R1 35.42%, R2 44.28%, R3 20.30%, and pooled mean **2.85** dust per DE; it does **not** specify whether the percentages divide *disenchant events* or *output units*. New worker records [001–004](../../research/v3/evidence/war-within/2026-11-09T1235-green-de-original-rank-share.jsonl) call them material-unit shares without an explicit source denominator. **Do not use 2.85 × rank percent as an accepted rank mean or P(hit)** until original author/raw tracking clarifies units. If *unit shares* were confirmed, only *conditional candidates* 1.00947/1.26198/0.57855 per DE would follow; they are not admitted data. Worker original untouched. [Detailed audit](../v3/evidence/master/2026-11-09T1307-tww-green-de-share-denominator-audit.md).
+
+New independent Retail casts **0**, current gold actions **0**, rendered tooltip fields **0**. Pre-note research head `19da10c531c7`; [CI succeeded at that head](https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42620796592) before this note. Latest owner reports actually read: Midnight 12:28:13Z, TWW 12:35:43Z, Dragonflight 12:35:24Z, Legacy 12:53:40Z; nothing inferred after those timestamps. Protected three-pass branch unchanged; no test-run, addon change, merge, release or new schedule. Next: source share denominator/author tracker, then Midnight rank-linked true 0..N logs.
+
+---
+
 ## Coordinator boundary audit — new MoP Classic Looter evidence (verified 2026-11-09T12:08:09.064Z)
 
 **New source-applicability finding, not new Retail numerical coverage:** Legacy's [Nov 9 evidence](../v3/evidence/legacy/2026-11-09T1159-mopclassic-armor-weapon-looter-hitcounts.jsonl) contains **16 material-positive occurrence rows** across **five MoP Classic item-specific Looter cohorts**: input IDs **6503 (246), 3400 (95), 17046 (15), 2954 (208), 6194 (27)**, totalling **591 source-reported item-level processing operations**. Counts identify historical Classic-page material hits only; none supplies modern Retail build/eligibility, complete output units, 0..N histograms, suffix/rank, skill or refunds. This is **not 591 independent current Retail observations**.

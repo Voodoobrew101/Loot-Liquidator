@@ -1,130 +1,105 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-09T12:07:43.764Z",
-  "status": "active; new context/identity admission risk validated by readback and static estimator inspection; 16 new MoP Classic evidence rows are not validated Retail gold evidence; no fresh Retail numeric cohort or tooltip result",
+  "updated_at": "2026-11-09T13:07:25.382Z",
+  "status": "active; adjudicated newly added TWW green-DE rank percentages: primary text does not establish material-unit vs per-event denominator; no new Retail numeric cohort or runtime result",
   "task_ids": [
-    "T0042",
-    "T0047",
+    "T0048",
+    "T0040",
     "T0005",
     "T0039",
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "New Nov 9 Legacy T0042: 16 MoP Classic cumulative disenchant output-occurrence rows across 5 input IDs 6503,3400,17046,2954,6194; source build, modern Retail applicability, source-item variants, complete per-cast units/histograms and skill remain unknown.",
-    "Research compiler accepts drops with castsWithDrop from MoP Classic page URLs without an explicit game-flavor gate; future rebuild could promote historical Classic hit fractions to Retail provisional expected quantities.",
-    "Current Retail Midnight T0005/T0039/T0045 still lacks original 237362/237363 and 236761 rank-linked 0..N completed-operation logs, refunds, skill/spec/unlocks and client build."
+    "New 2026-11-09T1235 TWW source Reddit 1fc2j1m: percentages 35.42/44.28/20.30 lack a defined numerator/denominator; worker notes assume material-unit shares without explicit primary confirmation.",
+    "Historical source pooled 2.85 dust units per disenchant, but no exact gear input IDs, real completed-operation count, rank-specific totals, positive/zero histograms, equipment skill or current-patch eligibility.",
+    "Midnight T0005/T0039/T0045 exact ranks and true 0..N per-operation output/refund/skill/build logs still absent."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "new_worker_source_records_eligibility_audit",
-      "new_records": 16,
-      "original_item_specific_source_cohorts": 5,
-      "input_item_ids": [
-        6503,
-        3400,
-        17046,
-        2954,
-        6194
+      "kind": "source_unit_ambiguity_not_new_casts",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1fc2j1m",
+      "worker_evidence": "research/v3/evidence/war-within/2026-11-09T1235-green-de-original-rank-share.jsonl",
+      "source_reported_rank_percentages": [
+        35.42,
+        44.28,
+        20.3
       ],
-      "source_reported_operations_by_input": {
-        "2954": 208,
-        "3400": 95,
-        "6194": 27,
-        "6503": 246,
-        "17046": 15
-      },
-      "source_reported_operations_sum": 591,
-      "per_item_positive_hit_row_sum_matches_reported_operations": true,
-      "original_source_kind": "mop-classic Wowhead Looter cumulative item pages",
-      "source_context": "Classic not verified Retail",
-      "actual_new_retail_completed_casts": 0,
-      "measured_total_output_units": 0,
-      "measured_per_cast_histograms": 0,
-      "retail_promotion": false
-    },
-    {
-      "kind": "static_estimator_flavor_boundary_risk",
-      "source": "research/v3/tools/build_estimates.py",
-      "source_lines": [
-        "82-97",
-        "722-763",
-        "300-327",
-        "893-947"
+      "source_reported_pooled_mean_units_per_de": 2.85,
+      "sum_rank_percentages": 100,
+      "share_denominator": "unknown; could be operation frequency or material units",
+      "rank_expected_units_validated": false,
+      "hypothetical_rank_expected_units_only_if_material_unit_share": [
+        1.00947,
+        1.26198,
+        0.57855
       ],
-      "file_epoch_control": "No explicit Retail-vs-Classic admission filter in currently read estimator; all 16 rows have sourceKind=study, positive hit counts, and no corrections exclusions",
-      "compiled_runtime_impact": "potential only: existing pinned 1180 estimates do not contain five inputs; no estimator execution or live addon impact demonstrated",
-      "example": "6503->10940 source occurrence 179/246 and positive range 4-6 would permit provisional P*midpoint=~3.6382 Classic-context units only"
+      "observed_cast_denominator": null,
+      "measured_rank_units": null,
+      "measured_histograms": null,
+      "independently_new_current_Retail_casts": 0,
+      "verified_new_current_Retail_gold_decisions": 0,
+      "rendered_tooltip_fields": 0
     }
   ],
-  "verified_commit_sha": "5f81c2799cac9a2ccc2841d85e605e43405c28b4",
-  "verified_commit_sha_scope": "Evidence-note commit only, independently verified by exact GitHub commit diff and file readback; coordinator status/dashboard commit cannot self-cite.",
-  "source_links": [
-    "https://www.wowhead.com/mop-classic/item=6503/harlequin-robes",
-    "https://www.wowhead.com/mop-classic/item=3400/lucine-longsword",
-    "https://www.wowhead.com/mop-classic/item=17046/gutterblade",
-    "https://www.wowhead.com/mop-classic/item=2954/night-watch-pantaloons",
-    "https://www.wowhead.com/mop-classic/item=6194/barreling-reaper",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1205-mop-classic-looter-retail-context-gate.md"
-  ],
+  "verified_commit_sha": "19da10c531c7f935dfb6e3761d46c06524af34cf",
+  "verified_commit_sha_scope": "The pre-audit GitHub research head containing worker JSONL; a commit cannot self-cite its own SHA. Post-commit SHA and file readback must be verified separately.",
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-09T1205-mop-classic-looter-retail-context-gate.md",
-    "research/v3/evidence/legacy/2026-11-09T1159-mopclassic-armor-weapon-looter-hitcounts.jsonl"
+    "research/v3/evidence/master/2026-11-09T1307-tww-green-de-share-denominator-audit.md",
+    "research/v3/evidence/war-within/2026-11-09T1235-green-de-original-rank-share.jsonl"
+  ],
+  "source_links": [
+    "https://www.reddit.com/r/woweconomy/comments/1fc2j1m",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T1307-tww-green-de-share-denominator-audit.md"
   ],
   "checked_worker_owner_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-09T11:19:24.316Z",
-      "status": "No new primary numeric 0..N cohort reported; video/transcript searches exhausted."
+      "updated_at": "2026-11-09T12:28:13.142Z",
+      "status": "Tier36 reference item-level brackets, not new completed processing casts"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-09T11:24:18.405Z",
-      "status": "Original quest-reward item identity correction; unknown skill, quantity and source build."
+      "updated_at": "2026-11-09T12:35:43.830Z",
+      "status": "Original historical 2.85 pooled DE mean and ambiguous percent denominator"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-09T11:47:27.900Z",
-      "status": "Five distinct Amirdrassil item-side Looter cohorts reported, no source-original cast histogram."
+      "updated_at": "2026-11-09T12:35:24.182Z",
+      "status": "Five original item-specific cumulative DE Looter cohorts; no 0..N histograms"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-09T11:59:38.429Z",
-      "status": "16 historical MoP Classic material-occurrence rows across 5 item cohorts; explicitly not Retail evidence."
+      "updated_at": "2026-11-09T12:53:40.221Z",
+      "status": "TBC original single DE and MoP Classic cumulative sources; not current Retail samples"
     }
   ],
   "blockers": [
-    "Game-flavor, original client build, item bonus/suffix and modern Retail eligibility cannot be recovered from Classic aggregate pages. All 16 rows are source-context restricted; no Retail rates supported.",
-    "Current estimator lacks an explicit source-flavor eligibility gate. Avoid importing these rows into a Retail model until a scoped reviewed correction/test exists; this coordinator cannot alter shared estimator or protected three-pass branch.",
-    "Current Retail Midnight rank-linked complete-cast 0..N logs and input-refund/skill/unlock version profiles unavailable.",
-    "No estimator rebuild, actual-engine synthetic-price valuation/tooltip render, Lua addon tests, or actual WoW client execution by coordinator."
+    "Historical percentages' underlying material-unit versus rank-event basis is not explicitly stated; no source workbook/raw log/author clarification recovered.",
+    "Current exact input gear IDs/ilvl/tool skill/patch and rank-specific observed totals unavailable; cannot admit rank E into current per-item Retail gold EV.",
+    "No true current Midnight 0..N prospecting/milling cohorts with exact item rank, spec, resourcefulness and version.",
+    "No estimator, ItemDB compile, actual synthetic-price renderer, native Lua test or live game validation performed in this run."
   ],
   "exhausted_sources": [
     {
-      "path": "Midnight Umbral Tin / Tranquility Bloom named public search",
-      "reason": "This run surfaced only already recorded Cardinalai, Honeybone and Warcraftable observations or guides without new completed-cast hit distributions; did not duplicate studies."
+      "path": "Original Reddit TWW green-DE 1fc2j1m indexed thread and exact numeric source queries",
+      "reason": "Primary indexed thread text gives percentages and pooled average but never specifies denominator; secondary exact quote searches returned the same original or unrelated pages; do not recast as independent studies."
     },
     {
-      "path": "Legacy Nov 9 MoP Classic Looter pages",
-      "reason": "Five cumulative Classic tables provide source-level positive hits but no original client era, refund-aware per-cast units, zero-inclusive histograms or Retail eligibility; no new Retail study."
-    },
-    {
-      "path": "Prior original source reviews",
-      "reason": "Earlier coordinator exhaustion records and original evidence remain in previous coordinator.json Git history and research dashboard; do not repeat archived studies."
+      "path": "Original previously archived TWW 1fspqym 5x1000/18300 studies",
+      "reason": "Already present in 2026-11-01T0921 worker evidence; not new independent rows and do not resolve 1fc2j1m's denominator."
     }
   ],
   "validation": {
     "executed": [
-      "Read 16 JSONL rows; grouped 5 input IDs with source denominators 246,95,15,208,27 and verified per-group sum of material hits equals each denominator.",
-      "Compared all 16 record IDs to current corrections.jsonl: no exclusions/overrides.",
-      "Read current 1180-result research/v3/output/estimates.json: five input IDs absent.",
-      "Inspected current estimator source: load, apply_corrections, group admission, hit counts and provisional yield path.",
-      "Created new evidence note and independently verified GitHub commit changed only that note with exact file readback.",
-      "Checked latest worker owner quiet-status files and branch/CI/PR snapshot (not re-executing their work)."
+      "Read primary 2024-09-09 original-thread indexed text; matched numbers and context to all four Nov9 worker evidence rows.",
+      "Confirmed percent arithmetic 35.42+44.28+20.30=100.00 and conditional 2.85 times share only under explicit material-unit assumption.",
+      "Checked existing 1fspqym source in repository code index and rejected as previously archived; reviewed all four current worker reports and exact branch heads."
     ],
     "not_executed": [
-      "Complete research estimator or ItemDB compiler",
-      "Native Lua addon and synthetic-price actual-engine valuation/tooltip tests",
-      "Retail in-game QA"
+      "Estimator rebuild",
+      "Actual-engine synthetic-price valuation or tooltip",
+      "Native addon Lua suite",
+      "Actual WoW client QA"
     ],
     "new_independent_retail_casts": 0,
     "new_verified_retail_gold_decisions": 0,
@@ -132,22 +107,22 @@
   },
   "branch_heads_checked": {
     "main": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
-    "research_before_note": "12fef918b295b7acda8f2f088d4951f2bb9fd1a7",
+    "research_before_note": "19da10c531c7f935dfb6e3761d46c06524af34cf",
     "protected_implementation": "3d667d053db587c91401cfed7ecc56862b8340c9"
   },
   "ci_last_checked": {
-    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42613353861",
-    "head_sha": "12fef918b295b7acda8f2f088d4951f2bb9fd1a7",
+    "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42620796592",
+    "head_sha": "19da10c531c7f935dfb6e3761d46c06524af34cf",
     "conclusion": "success",
-    "note": "Existing research-head CI, not run by coordinator; before evidence-note commit, does not validate this note or Retail valuation."
+    "note": "Pre-note research CI only; does not validate this new evidence note or any actual Retail tooltip."
   },
   "existing_research_prs": {
     "22": "closed_unmerged",
     "23": "closed_unmerged"
   },
-  "next_concrete_step": "On an authorized disjoint engineering branch, test and gate MoP Classic study records at the Research→Retail estimator/ItemDB boundary without deleting historical evidence or suppressing valid Retail evidence; meanwhile maintain T0005/T0039/T0045 original 0..N rank/skill/refund/build-source priority; no competing snapshot or protected three-pass changes.",
+  "next_concrete_step": "Ask TWW owning worker/validator to recover source author tracking basis before assigning ranks to pooled 2.85; independently prioritize current Midnight T0005/T0039/T0045 raw zero-inclusive rank/skill/refund/build logs. Keep protected three-pass implementation untouched.",
   "previous_status": {
-    "updated_at": "2026-11-09T11:09:09.029Z",
-    "blob_sha": "1527fe2f06b4c63631f7694f0ca0f50713c7d000"
+    "updated_at": "2026-11-09T12:07:43.764Z",
+    "blob_sha": "eb92d4e907ecaf90448d5973857859709965de44"
   }
 }
