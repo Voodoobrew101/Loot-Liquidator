@@ -114,6 +114,46 @@ def load_staged(paths=STAGED):
     return staged
 
 
+def has_consistent_direct_enumeration(group):
+    """Only replace candidate-only fallback, never reconcile competing source lists.
+
+    Completeness is a source claim, not an approval or an eligibility guarantee.
+    Null-only cost/variant notes may accompany a list; partial or conflicting
+    identity claims cannot establish that staged fallback has been superseded.
+    """
+    complete = []
+    observed = []
+    named_ids = {}
+    for row in group:
+        rewards = row.get('rewards')
+        if not rewards:
+            if row.get('listComplete') is True:
+                return False
+            continue
+        if not isinstance(rewards, list):
+            return False
+        ids = []
+        for reward in rewards:
+            if not isinstance(reward, dict):
+                return False
+            item_id = reward.get('itemID')
+            if type(item_id) is not int or item_id <= 0 or item_id == row.get('tokenItemID'):
+                return False
+            name = norm(reward.get('name'))
+            if name and name in named_ids and named_ids[name] != item_id:
+                return False
+            if name:
+                named_ids[name] = item_id
+            ids.append(item_id)
+        if len(ids) != len(set(ids)):
+            return False
+        observed.append(set(ids))
+        if row.get('listComplete') is True:
+            complete.append(set(ids))
+    return bool(complete) and all(ids == complete[0] for ids in complete) and all(
+        ids <= complete[0] for ids in observed)
+
+
 def build_tokens(snapshot, revision, staged=None):
     staged = load_staged() if staged is None else staged
     notes = Counter()
@@ -137,6 +177,7 @@ def build_tokens(snapshot, revision, staged=None):
         group = by_token[token_id]
         exchange = any(r.get('howRedeemed') == 'vendor' for r in group)
         stage = staged.get(token_id, {'sources': [], 'byName': {}})
+        direct_enumeration = stage.get('candidateOnly') and has_consistent_direct_enumeration(group)
         # name -> {itemID: set(urls)}
         claims = defaultdict(lambda: defaultdict(set))
         token_urls, complete = set(), False
@@ -151,8 +192,9 @@ def build_tokens(snapshot, revision, staged=None):
                     claims[key][w['itemID']].add(url or f"record:{r.get('id')}")
                 else:
                     claims[key]  # name known, ID unknown so far
-        for key, (item_id, urls) in stage['byName'].items():
-            claims[key][item_id].update(urls or stage['sources'][:1] or ['staged-list'])
+        if not direct_enumeration:
+            for key, (item_id, urls) in stage['byName'].items():
+                claims[key][item_id].update(urls or stage['sources'][:1] or ['staged-list'])
         rewards, weakest = [], 99
         for key in sorted(claims):
             ids = claims[key]
@@ -198,7 +240,10 @@ def build_tokens(snapshot, revision, staged=None):
             record['listComplete'] = False
             record['confidence0to100'] = 20
             record['candidateRewards'] = True
-            record['sourceAssumption'] = 'Possible rewards from staged season membership; exact vendor list and complete costs unverified'
+            record['sourceAssumption'] = (
+                'Source-enumerated possible direct rewards; vendor inventory, eligibility and complete costs unverified'
+                if direct_enumeration else
+                'Possible rewards from staged season membership; exact vendor list and complete costs unverified')
         records.append(record)
     return records, notes, conflicts
 
