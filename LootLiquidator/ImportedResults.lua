@@ -324,9 +324,16 @@ function LL:ImportedEvidenceRecords(indexKey)
                 for _,id in ipairs(ids) do
                     local m=set.materials[id]
                     local c=chanceConfidence(m.drops,set.casts)
-                    local function field(v) return {value=v,confidence=c,status="observed",samples=set.casts} end
+                    -- Preserve the existing ordinal selection weight, but do not
+                    -- call drop-rate precision confidence in a quantity or bound.
+                    local function field(v,probability)
+                        return {value=v,confidence=probability and c or nil,
+                            evidenceScore=c,confidenceUnscored=not probability or nil,
+                            confidenceBasis=probability and 'drop-rate-normal-approximation-5pp' or nil,
+                            status="observed",samples=set.casts}
+                    end
                     r.materials[#r.materials+1]={id=id,expectedQuantity=field(m.total/set.casts),
-                        dropChance=field(m.drops/set.casts),minQuantity=field(m.min),maxQuantity=field(m.max)}
+                        dropChance=field(m.drops/set.casts,true),minQuantity=field(m.min),maxQuantity=field(m.max)}
                 end
                 if #r.materials>0 then
                     -- Index category results once. Looking up the sampled item

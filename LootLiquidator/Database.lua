@@ -412,12 +412,19 @@ function LL:ResearchProcessingOperations(f)
     end)
     return operations
 end
+-- Imported quantity fields retain their historical ordinal weight separately
+-- from unknown statistical confidence. This is compatibility, not calibration.
+local function evidenceScore(field)
+    if finite(field.evidenceScore) then return field.evidenceScore end
+    return field.confidence
+end
 -- A confidence score is an ordinal evidence-quality score, not a posterior.
 -- Sample saturation and provenance class are independent conservative discounts.
 function LL:EvidenceReliability(field,record)
     if not field or field.value==nil or field.status=='unknown' or field.status=='contradictory' then return 0 end
     -- A value with no stated confidence is weak, not worthless (owner decision 1).
-    local stated=finite(field.confidence) and field.confidence>0 and field.confidence or UNKNOWN_CONFIDENCE
+    local rawScore=evidenceScore(field)
+    local stated=finite(rawScore) and rawScore>0 and rawScore or UNKNOWN_CONFIDENCE
     local score=math.min(1,stated/100)
     local n=field.samples or (record and record.samples)
     local unknownSize=field.sampleSizeKnown==false
@@ -438,7 +445,8 @@ function LL:EvidenceCasts(field,record)
     if not field or field.value==nil or field.status=='unknown' or field.status=='contradictory' then return 0,false end
     local n=field.samples or (record and record.samples)
     if finite(n) and n>0 then return n,true end
-    local stated=finite(field.confidence) and field.confidence>0 and field.confidence or UNKNOWN_CONFIDENCE
+    local rawScore=evidenceScore(field)
+    local stated=finite(rawScore) and rawScore>0 and rawScore or UNKNOWN_CONFIDENCE
     local class=({verified=1,measured=1,observed=1,provisional=.6,modeled=.25,historical=.4})[field.status] or 0
     return LL.PRIOR_CASTS*math.min(1,stated/100)*class,false
 end
@@ -866,7 +874,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                     -- Legacy now blends in at its (low) source weight instead of only filling gaps.
                     if staleRecord[r] then
                         weight=weight*STALE_FACTOR
-                        metadata.confidence=math.floor((metadata.confidence or 0)*.5+.5)
+                        metadata.confidence=metadata.confidence and math.floor(metadata.confidence*.5+.5)
+                        if metadata.evidenceScore then metadata.evidenceScore=math.floor(metadata.evidenceScore*.5+.5) end
                     end
                     -- A per-cast chance for another batch size is a different quantity
                     -- (not a weak version of this one); the mean still converts.
@@ -884,7 +893,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
                                 b.derivedMean=true;b.filled='average';b.meanBasis=m.derivedExpected.assumption
                                 result.filledFigures=true;result.provisional=true
                             end
-                            local c=(metadata.confidence or 0)>0 and metadata.confidence or UNKNOWN_CONFIDENCE
+                            if metadata.confidenceUnscored then
+                                b.confidenceUnscored=true;result.confidenceUnscored=true
+                            end
+                            local score=evidenceScore(metadata)
+                            local c=(score or 0)>0 and score or UNKNOWN_CONFIDENCE
                             acc.confidence=(acc.confidence or 0)+c*weight
                         end
                         if metadata.workingEstimate then b.workingEstimate=true;result.workingEstimate=true;result.provisional=true end
