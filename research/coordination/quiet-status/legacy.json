@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T11:19:59.088Z",
-  "status": "11 source-backed positive-hit records from six previously unrepresented item-specific Wowhead Looter disenchant cohorts (161 reported item-level operations in total). No new Warmaul 24995, Cobalt 36909, or Fel Iron 23424 measured observations. Historical/version-confounded observations only; no fabricated zeros, direct yield totals, rates, patches, skill or gold EV.",
+  "updated_at": "2026-11-09T11:59:38.429Z",
+  "status": "16 new source-backed MoP Classic item-specific Looter material-positive occurrence rows from 5 original input item cohorts, 591 reported disenchant events total. This is historical low-level armor/weapon control evidence only; no newly verified Warmaul/Cobalt/Fel Iron casts, per-cast material units, joint outcomes, or current Retail eligibility.",
   "task_ids": [
     "T0047",
     "T0022",
@@ -11,27 +11,38 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995 and historical TBC rarity/level: sought original cast-by-cast outputs, per-output hit/zero counts, patches and modern eligibility; old 2,068-event mixed-era Looter cohort and several model priors already archived, no new 24995 denominator. New Looter additions are lower-level Classic gear/weapon controls, not direct Warmaul matches.",
-    "T0022 Cobalt Ore 36909: no new cast-by-cast per-gem observations; copied chart/model percentages and prior mined-not-prospected samples excluded.",
-    "T0044 Fel Iron Ore 23424: prior 100-/565-ore Thottbot and other original cohorts already present in repo; not duplicated. New complete prospective cast logs still missing.",
-    "T0042 six independent gear-input Looter disenchant cohorts, new measured positive hits and explicit item-specific denominators (no per-cast joint log): 186057, 3761, 16724, 16725, 22090, 3565.",
-    "T0053 Spaulders 45661: seven historical class reward IDs already documented in prior evidence; new Retail use-based reward IDs remain unverified; avoided duplicating historical token."
+    "T0047 24995 Warmaul Legplates / same iLvl108 TBC gear: original Looter 2068 reported item-level operations but source build, quality/suffix, true material totals, per-cast histograms/zeros and actual current Retail eligibility remain unresolved. No fresh source-complete sample found.",
+    "T0022 36909 Cobalt Ore: original source-level item-output unit totals are already archived but no independently documented positive-cast counts, zero bins or full five-ore cast logs found.",
+    "T0044 23424 Fel Iron Ore: prior original 100-ore and 565-ore Thottbot studies plus distinct later cohorts already archived; did not recopy samples or infer real casts from nominal ore stacks.",
+    "T0042 newly recorded independent low-level Classic 6503, 3400, 17046, 2954, 6194 item-specific positive-hit totals, preserving armor/weapon type, historical source iLvl and missing context.",
+    "T0053 45661 Spaulders of the Wayward Vanquisher: existing seven historical class reward IDs and old redemption already recorded; modern loot-specialization use variants remain unresolved."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
-      "studyKey": "wowhead-wotlk-186057-looter-seven-disenchants",
-      "inputItemID": 186057,
-      "inputName": "Communal Warmaul",
-      "source_itemLevel": 52,
-      "source": "https://www.wowhead.com/wotlk/item=186057/communal-warmaul",
-      "source_game_version": "WotLK Classic",
-      "reported_disenchant_operations": 7,
+      "studyKey": "wowhead-mopclassic-looter-6503-246-20261109",
+      "inputItemID": 6503,
+      "inputName": "Harlequin Robes",
+      "source": "https://www.wowhead.com/mop-classic/item=6503/harlequin-robes",
+      "source_game_version": "MoP Classic item page; actual observed client build not reported",
+      "source_itemLevel": 22,
+      "item_type": "cloth chest",
+      "reported_disencasts": 246,
       "outputs": [
         {
-          "outputItemID": 16202,
-          "outputName": "Lesser Eternal Essence",
-          "positive_casts": 6,
+          "outputItemID": 10940,
+          "outputName": "Strange Dust",
+          "positive_casts": 179,
+          "source_conditional_range": [
+            4,
+            6
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 10998,
+          "outputName": "Lesser Astral Essence",
+          "positive_casts": 43,
           "source_conditional_range": [
             1,
             2
@@ -40,12 +51,66 @@
           "zero_histogram": null
         },
         {
-          "outputItemID": 11176,
-          "outputName": "Dream Dust",
-          "positive_casts": 1,
+          "outputItemID": 10978,
+          "outputName": "Small Glimmering Shard",
+          "positive_casts": 24,
+          "source_conditional_range": null,
+          "totalQuantity": null,
+          "zero_histogram": null
+        }
+      ],
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "hotfix": null
+    },
+    {
+      "studyKey": "wowhead-mopclassic-looter-3400-95-20261109",
+      "inputItemID": 3400,
+      "inputName": "Lucine Longsword",
+      "source": "https://www.wowhead.com/mop-classic/item=3400/lucine-longsword",
+      "source_game_version": "MoP Classic item page; actual observed client build not reported",
+      "source_itemLevel": 25,
+      "item_type": "one-hand sword",
+      "reported_disencasts": 95,
+      "outputs": [
+        {
+          "outputItemID": 10939,
+          "outputName": "Greater Magic Essence",
+          "positive_casts": 67,
           "source_conditional_range": [
-            3,
-            3
+            1,
+            2
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 10940,
+          "outputName": "Strange Dust",
+          "positive_casts": 11,
+          "source_conditional_range": [
+            4,
+            6
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 10978,
+          "outputName": "Small Glimmering Shard",
+          "positive_casts": 9,
+          "source_conditional_range": null,
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 10998,
+          "outputName": "Lesser Astral Essence",
+          "positive_casts": 8,
+          "source_conditional_range": [
+            1,
+            2
           ],
           "totalQuantity": null,
           "zero_histogram": null
@@ -57,19 +122,65 @@
       "hotfix": null
     },
     {
-      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
-      "studyKey": "wowhead-mopclassic-3761-looter-twentyeight-disenchants",
-      "inputItemID": 3761,
-      "inputName": "Deadskull Shield",
-      "source_itemLevel": 32,
-      "source": "https://www.wowhead.com/mop-classic/item=3761/deadskull-shield",
-      "source_game_version": "MoP Classic",
-      "reported_disenchant_operations": 28,
+      "studyKey": "wowhead-mopclassic-looter-17046-15-20261109",
+      "inputItemID": 17046,
+      "inputName": "Gutterblade",
+      "source": "https://www.wowhead.com/mop-classic/item=17046/gutterblade",
+      "source_game_version": "MoP Classic item page; actual observed client build not reported",
+      "source_itemLevel": 31,
+      "item_type": "one-hand axe",
+      "reported_disencasts": 15,
+      "outputs": [
+        {
+          "outputItemID": 11134,
+          "outputName": "Lesser Mystic Essence",
+          "positive_casts": 10,
+          "source_conditional_range": [
+            1,
+            2
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 11083,
+          "outputName": "Soul Dust",
+          "positive_casts": 4,
+          "source_conditional_range": [
+            2,
+            5
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 11138,
+          "outputName": "Small Glowing Shard",
+          "positive_casts": 1,
+          "source_conditional_range": null,
+          "totalQuantity": null,
+          "zero_histogram": null
+        }
+      ],
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "hotfix": null
+    },
+    {
+      "studyKey": "wowhead-mopclassic-looter-2954-208-20261109",
+      "inputItemID": 2954,
+      "inputName": "Night Watch Pantaloons",
+      "source": "https://www.wowhead.com/mop-classic/item=2954/night-watch-pantaloons",
+      "source_game_version": "MoP Classic item page; actual observed client build not reported",
+      "source_itemLevel": 33,
+      "item_type": "cloth legs",
+      "reported_disencasts": 208,
       "outputs": [
         {
           "outputItemID": 11083,
           "outputName": "Soul Dust",
-          "positive_casts": 20,
+          "positive_casts": 161,
           "source_conditional_range": [
             2,
             5
@@ -80,7 +191,7 @@
         {
           "outputItemID": 11134,
           "outputName": "Lesser Mystic Essence",
-          "positive_casts": 6,
+          "positive_casts": 39,
           "source_conditional_range": [
             1,
             2
@@ -91,7 +202,7 @@
         {
           "outputItemID": 11138,
           "outputName": "Small Glowing Shard",
-          "positive_casts": 2,
+          "positive_casts": 8,
           "source_conditional_range": null,
           "totalQuantity": null,
           "zero_histogram": null
@@ -103,113 +214,41 @@
       "hotfix": null
     },
     {
-      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
-      "studyKey": "wowhead-retail-16724-looter-sixtyfive-disenchants",
-      "inputItemID": 16724,
-      "inputName": "Lightforge Gauntlets",
-      "source_itemLevel": 13,
-      "source": "https://www.wowhead.com/item=16724/lightforge-gauntlets",
-      "source_game_version": "Retail page",
-      "reported_disenchant_operations": 65,
+      "studyKey": "wowhead-mopclassic-looter-6194-27-20261109",
+      "inputItemID": 6194,
+      "inputName": "Barreling Reaper",
+      "source": "https://www.wowhead.com/mop-classic/item=6194/barreling-reaper",
+      "source_game_version": "MoP Classic item page; actual observed client build not reported",
+      "source_itemLevel": 32,
+      "item_type": "one-hand axe",
+      "reported_disencasts": 27,
       "outputs": [
         {
-          "outputItemID": 14344,
-          "outputName": "Large Brilliant Shard",
-          "positive_casts": 62,
-          "source_conditional_range": null,
-          "totalQuantity": null,
-          "zero_histogram": null
-        }
-      ],
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
-    },
-    {
-      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
-      "studyKey": "wowhead-retail-16725-looter-twentytwo-disenchants",
-      "inputItemID": 16725,
-      "inputName": "Lightforge Boots",
-      "source_itemLevel": 13,
-      "source": "https://www.wowhead.com/item=16725/lightforge-boots",
-      "source_game_version": "Retail page",
-      "reported_disenchant_operations": 22,
-      "outputs": [
-        {
-          "outputItemID": 14344,
-          "outputName": "Large Brilliant Shard",
-          "positive_casts": 6,
-          "source_conditional_range": null,
-          "totalQuantity": null,
-          "zero_histogram": null
-        }
-      ],
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
-    },
-    {
-      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
-      "studyKey": "wowhead-mopclassic-22090-looter-twentyfour-disenchants",
-      "inputItemID": 22090,
-      "inputName": "Soulforge Gauntlets",
-      "source_itemLevel": null,
-      "source": "https://www.wowhead.com/mop-classic/item=22090/soulforge-gauntlets",
-      "source_game_version": "MoP Classic",
-      "reported_disenchant_operations": 24,
-      "outputs": [
-        {
-          "outputItemID": 20725,
-          "outputName": "Nexus Crystal",
-          "positive_casts": 22,
-          "source_conditional_range": null,
+          "outputItemID": 11134,
+          "outputName": "Lesser Mystic Essence",
+          "positive_casts": 21,
+          "source_conditional_range": [
+            1,
+            2
+          ],
           "totalQuantity": null,
           "zero_histogram": null
         },
         {
-          "outputItemID": 14343,
-          "outputName": "Small Brilliant Shard",
-          "positive_casts": 2,
-          "source_conditional_range": [
-            4,
-            4
-          ],
-          "totalQuantity": null,
-          "zero_histogram": null
-        }
-      ],
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "hotfix": null
-    },
-    {
-      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
-      "studyKey": "wowhead-ptr-3565-looter-fifteen-disenchants",
-      "inputItemID": 3565,
-      "inputName": "Beerstained Gloves",
-      "source_itemLevel": 10,
-      "source": "https://www.wowhead.com/ptr/item=3565/beerstained-gloves",
-      "source_game_version": "12.1.7 PTR page",
-      "reported_disenchant_operations": 15,
-      "outputs": [
-        {
-          "outputItemID": 10940,
-          "outputName": "Strange Dust",
-          "positive_casts": 7,
+          "outputItemID": 11083,
+          "outputName": "Soul Dust",
+          "positive_casts": 3,
           "source_conditional_range": [
             3,
-            3
+            5
           ],
           "totalQuantity": null,
           "zero_histogram": null
         },
         {
-          "outputItemID": 10939,
-          "outputName": "Greater Magic Essence",
-          "positive_casts": 6,
+          "outputItemID": 11138,
+          "outputName": "Small Glowing Shard",
+          "positive_casts": 3,
           "source_conditional_range": null,
           "totalQuantity": null,
           "zero_histogram": null
@@ -222,11 +261,11 @@
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 11,
-    "distinct_input_item_ids": 6,
-    "distinct_aggregated_looter_cohorts": 6,
-    "source_reported_item_level_disencasts": 161,
-    "per_output_hits_rows": 11,
+    "new_evidence_records": 16,
+    "distinct_input_item_ids": 5,
+    "distinct_original_item_specific_looter_cohorts": 5,
+    "source_reported_item_level_disencasts": 591,
+    "positive_hit_rows": 16,
     "measured_per_cast_histograms": 0,
     "measured_zero_outcomes": 0,
     "measured_total_output_quantities": 0,
@@ -235,34 +274,28 @@
     "new_feliron_23424_prospects": 0,
     "price_fields": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-09T1119-looter-original-classic-armor-weapons.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T1119-looter-original-classic-armor-weapons.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-09T1159-mopclassic-armor-weapon-looter-hitcounts.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T1159-mopclassic-armor-weapon-looter-hitcounts.jsonl",
   "sources": [
-    "https://www.wowhead.com/wotlk/item=186057/communal-warmaul",
-    "https://www.wowhead.com/mop-classic/item=3761/deadskull-shield",
-    "https://www.wowhead.com/item=16724/lightforge-gauntlets",
-    "https://www.wowhead.com/item=16725/lightforge-boots",
-    "https://www.wowhead.com/mop-classic/item=22090/soulforge-gauntlets",
-    "https://www.wowhead.com/ptr/item=3565/beerstained-gloves"
+    "https://www.wowhead.com/mop-classic/item=6503/harlequin-robes",
+    "https://www.wowhead.com/mop-classic/item=3400/lucine-longsword",
+    "https://www.wowhead.com/mop-classic/item=17046/gutterblade",
+    "https://www.wowhead.com/mop-classic/item=2954/night-watch-pantaloons",
+    "https://www.wowhead.com/mop-classic/item=6194/barreling-reaper"
   ],
-  "verified_base_commit_sha": "8d4e2b2ceb7d1cfad67d771cc57ac371bdcda65b",
+  "verified_base_commit_sha": "f182cffbe623107703ed3aae86f8e2e475d276fb",
   "verified_commit_sha": null,
-  "commit_sha_note": "The final Git commit cannot contain its own SHA in a file within that commit. The branch head and both owned files are read back after a single atomic commit; verified SHA is confirmed externally.",
+  "commit_sha_note": "The new commit cannot contain its own SHA. Read-back verification of both files and resulting branch head is performed after the atomic commit; SHA confirmed in tool result.",
   "blockers": [
-    "Warmaul Legplates 24995 historic old Looter lacks raw per-cast stacks, 0 outcomes, source client/build/suffix, and verified modern Retail eligibility. No new Warmaul source-complete sample obtained.",
-    "Cobalt 36909 / Fel Iron 23424 still lack independent original per-gem hit counts and zero-inclusive per-cast histograms, despite previous source totals.",
-    "All six new Looter tables lack raw cast-level joint distributions, true total material units, exact player skill, specialization, contemporaneous build and refunds. No unlisted events were classified as zero.",
-    "New lower-level Classic item cohorts are not matched TBC ilvl108 gear, and Retail/PTR/MoP Classic/WotLK Classic item versions must not be pooled as one rate.",
-    "Spaulders 45661 modern spec-selected reward item IDs still need current live verification; previous historical vendor data preserved.",
-    "Firecrawl direct original-page extractor unavailable due connected credit exhaustion; evidence grounded in search-indexed original Wowhead Looter tables."
+    "No authenticated original Warmaul 24995 individual disenchant trace, per-output item totals/hits histograms with zeros, source game build or exact item version; historical 2068 Looter and current WoWDB no-DE flag must not be treated as comparable.",
+    "No new Cobalt 36909 or Fel Iron 23424 independent completed prospecting logs with per-material hits, zero-inclusive histograms, skill, patch and refunds.",
+    "New MoP Classic cumulative Looter data provides per-output positive hit counts and denominator only; totals, cast-level histograms, source collection epochs and modern Retail item applicability remain unknown. Counts from source page are historical data, not current-Retail measured rates."
   ],
   "exhausted_sources": [
-    "Warmaul 24995 old Looter cumulative counts and evowow ambiguous 7500/2200/300 weights (not operations): previously audited, not duplicated.",
-    "Fel Iron 23424 Wowhead 100-ore and 565-ore original Thottbot cohorts (already documented in repository; no new copies).",
-    "Cobalt 36909 historical table rates are modeled priors, not newly measured per-gem hit/zero data.",
-    "Wowhead Arcane Dust commenter 16088 147 rings is already recorded twice with unclear actual disenchants and mixed ring IDs; not recopied.",
-    "Original Reddit/Wowhead prospecting Saronite 30-stack and 420-cast reports already represented; not recopied."
+    "Rechecked current Wowhead 24995 item page, WotLK and Cata Classic counterparts, legacy WoWWiki reference, WoWDB current eligibility and Evowow prior weights; all already incorporated in earlier evidence without raw per-cast audit.",
+    "Revisited original Wowhead Cobalt 36909 Strikk3r / historical beta comments and Fel Iron 23424 Thottbot originals; no new denominators, per-cast histograms or independently usable cohorts beyond already filed originals.",
+    "45661 historical reward mapping already complete in earlier legacy evidence, current use-based class variant IDs still absent."
   ],
-  "next_concrete_step": "Recover original raw per-cast 24995 Warmaul Legplates and matching ilvl108 armor/weapon disenchant output records (including build/suffix and zeros); then independent Cobalt Ore 36909 and Fel Iron Ore 23424 five-ore per-prospect item-specific gem hits and zero-inclusive histograms; collect live Retail token 45661 class/spec outcomes only after primary numeric gaps.",
-  "previous_status_updated_at": "2026-11-09T09:56:19.907Z"
+  "next_concrete_step": "Prioritize original uncropped Wowhead Looter 24995 pctstack/hits export or a Retail in-game exact-item/bonus DE recorder before any numeric import; then seek original five-ore Cobalt 36909 / Fel Iron 23424 cast logs. If source paths remain exhausted, select the next open T0042 original item-specific cohort and dedupe by ID and original study key.",
+  "previous_status_updated_at": "2026-11-09T11:19:59.088Z"
 }
