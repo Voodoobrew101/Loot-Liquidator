@@ -25,3 +25,22 @@ jobs:
         with:
           name: LootLiquidator-test
           path: dist/LootLiquidator-test.zip
+  lupa-shim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install embedded and native Lua 5.1
+        run: |
+          python3 -m pip install 'lupa==2.8'
+          sudo apt-get update -qq && sudo apt-get install -y lua5.1
+      - name: Test checked-in wrapper subprocess contracts
+        env:
+          NATIVE_LUA51: /usr/bin/lua5.1
+        run: python3 tests/test_lua51_shim.py -v
+      - name: Run full suite with checked-in embedded Lua wrappers
+        run: PATH="$PWD/tools/lua51-shim:$PATH" bash tests/run.sh
