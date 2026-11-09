@@ -1,23 +1,23 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-09T08:43:35.598Z",
-  "status": "four_new_source_mapped_profession_tool_de_candidate_identities_no_new_measured_cast_cohorts",
+  "updated_at": "2026-11-09T09:51:04.031Z",
+  "status": "ten_new_source_mapped_tww_profession_equipment_de_eligibility_candidates_no_measured_yield_baseline",
   "task_ids": [
     "T0048",
     "T0040",
+    "T0007",
+    "T0008",
     "T0009",
     "T0010",
     "T0011",
-    "T0007",
-    "T0008",
+    "T0012",
     "T0032"
   ],
   "exact_gaps_targeted": [
-    "Unrecorded exact profession equipment disenchant eligibility IDs 222481 Proficient Pickaxe, 222483 Proficient Needle Set, 222480 Proficient Sickle and 221795 Bismuth Miner's Headgear; sources support indexed eligibility but no baseline yield",
-    "Storm Dust 219946/219947/219948 from TWW profession tools: Roo42uk comment states green pickaxes yield Storm Dust, but output rank and exact disenchanted pickaxe ID are unknown",
-    "Original TWW disenchanting gear-by-quality/armor/weapon/skill casts and per-material hit/zero/quantity histograms remain incomplete",
-    "Post-2024-10-25 Bismuth 210931 Ironclaw 210936/210937 and Aqirite 210933/210934 prospecting per-output completed cast/hit/zero/histograms and profession build remain absent",
-    "Mycobloom 210796/210797/210798 10-herb rank-specific milling completed operations, refunds and histograms still missing"
+    "Disenchant eligibility and unverified output baselines for profession equipment outside armor/weapon classification",
+    "Original casts/hits/total-output/zeros/histograms by green/blue/epic, armor/weapon type, skill and source build remain missing",
+    "Post-2024-10-25 Bismuth/Ironclaw/Aqirite ore-rank-by-unlock prospecting hit and output histograms remain missing",
+    "Khaz Algar herb/rank milling per-output original completed-cast cohorts remain missing"
   ],
   "newly_verified_fields": {
     "new_jsonl_records": 4,
@@ -45,11 +45,16 @@
   },
   "newly_verified_cohorts": [],
   "source_links": [
-    "https://www.wowhead.com/item=219946/storm-dust",
-    "https://www.wowhead.com/item=222481/proficient-pickaxe",
-    "https://www.wowhead.com/item=222483/proficient-needle-set",
-    "https://www.wowhead.com/item=222480/proficient-sickle",
-    "https://www.wowhead.com/item=221795/bismuth-miners-headgear"
+    "https://www.wowhead.com/ptr/item=222482/proficient-skinning-knife",
+    "https://www.wowhead.com/item=221799/miners-bismuth-hoard",
+    "https://www.wowhead.com/item=222573/lightweight-scribes-quill",
+    "https://www.wowhead.com/ptr/item=222575/hasty-alchemists-mixing-rod",
+    "https://www.wowhead.com/ptr/item=221790/bismuth-fisherfriend",
+    "https://www.wowhead.com/ptr-2/item=224114/runed-bismuth-rod",
+    "https://www.wowhead.com/ptr-2/item=221797/bismuth-fueled-samophlange",
+    "https://www.wowhead.com/ptr/item=222494/artisan-blacksmiths-hammer",
+    "https://www.wowhead.com/item=224116/runed-null-stone-rod",
+    "https://www.wowhead.com/es/item=224115/vara-de-colmillof%C3%A9rreo-con-runas"
   ],
   "evidence_files": [
     "research/v3/evidence/war-within/2026-11-09T0843-khaz-algar-profession-tool-de-eligibility.jsonl"
@@ -62,19 +67,100 @@
   "branch_parent_verified_before_commit": "7770ac252b8c0753a8b08074d458941287e2fadc",
   "prior_verified_evidence_commit_sha": "637558f1c119b7612ddf826007e8f700f43c5bac",
   "blockers": [
-    "No new verified independent current-build TWW prospecting or milling post-hotfix rank-specific per-operation output histograms found; previously queued 2024 Reddit cohorts have unresolved refunds/casts or were already imported.",
-    "New profession tool rows are identity/eligibility references, not proven original material-yield cohorts: missing individual output ID/rank, measured casts/quantities, skill/spec and in-game build.",
-    "Wowhead indexed 'Disenchanting (3)' is not 3 actual operations; source-indexed current-game eligibility for profession accessories needs an in-game check before authoritative addon recommendations.",
-    "External content-extraction service daily credit cap prevented raw Wowhead HTML access; indexed pages and firsthand comments remained accessible."
+    "Wowhead indexed Disenchanting (3) is a related-output count, not a cast count or a confirmed original yield study; in-game DE eligibility (including BoP tools) needs testing",
+    "Exact per-cast disenchant reagent identities/quantities, rarity/slot and character skill/spec, raw denominators, probabilities and patch epochs remain unavailable",
+    "Rank/unlock-specific post-hotfix prospecting and milling raw casts/histograms still unavailable; do not extrapolate from old pooled studies",
+    "Independent raw-Wowhead access was unavailable through connected web scraper because of a daily credits exhaustion; indexed public search snippets remain reference only"
   ],
   "exhausted_sources": [
     "Do not re-collect cumulative 219947 PTR Storm Dust Looter rows already deduplicated in 2026-11-09T0749 source file.",
     "Existing 2024 Reikah Ironclaw/Aqirite, Mycobloom LotzBoi/Reddit 1fdmzwy, pre-hotfix Aqirite original 1f83cnd, and 2024 sample 1g350pq already recorded.",
-    "This run searched new by-name source queries and Wowhead profession tool pages; no unrecorded original 0/1/2+ measured histogram established."
+    "This run searched new by-name source queries and Wowhead profession tool pages; no unrecorded original 0/1/2+ measured histogram established.",
+    {
+      "scope": "2026-11-09 indexed Wowhead TWW epic gear Looter cohorts",
+      "reason": "Common Lamplighter, Greatlynx, Hexflame, Lucent, Gatecrasher, Scavenger and TWW tier cohorts examined here were already recorded on branch; rejected to prevent duplicate cohort inflation"
+    },
+    {
+      "scope": "TWW wowhead profession tools 10 unique identities",
+      "reason": "Item-specific disenchant related-section identity only; cannot create measured numerical estimates from indexing; move to fresh original casts"
+    }
   ],
-  "next_concrete_step": "Seek an original current-build disenchant log for each exact profession-tool ID, especially 222483 and 222481, with output quality item ID, counts, castsWithDrop, 0/1/2+ stacks, enchanting skill/spec, build and zero outcomes; clarify whether profession accessories require a new gearGroup.kind through Master. In parallel continue T0048 original gear cohorts and post-Oct25 Ironclaw/Bismuth/Aqirite and Mycobloom per-cast exports. Do not promote reference eligibility into measured EV.",
+  "next_concrete_step": "Obtain an original >0 completed-cast profession-tool disenchant test with item 222482 or 221799 (exact output IDs and rank, cast histogram, skill/spec/build, eligibility); otherwise seek new post-2024-10-25 ore-rank by Gem Finding unlock raw prospecting cohorts and rank-specific milling casts. Preserve zero/hit denominators as null until source verified.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
-  "validation_bypass": false
+  "validation_bypass": false,
+  "newly_verified_fields_cohorts": {
+    "source_mapped_item_identities": [
+      {
+        "inputItemID": 222482,
+        "inputName": "Proficient Skinning Knife",
+        "kind": "Skinning Tool",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 221799,
+        "inputName": "Miner's Bismuth Hoard",
+        "kind": "Mining Accessory",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 222573,
+        "inputName": "Lightweight Scribe's Quill",
+        "kind": "Inscription Tool",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 222575,
+        "inputName": "Hasty Alchemist's Mixing Rod",
+        "kind": "Alchemy Tool",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 221790,
+        "inputName": "Bismuth Fisherfriend",
+        "kind": "Fishing Tool",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 224114,
+        "inputName": "Runed Bismuth Rod",
+        "kind": "Enchanting Tool",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 221797,
+        "inputName": "Bismuth-Fueled Samophlange",
+        "kind": "Engineering Tool",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 222494,
+        "inputName": "Artisan Blacksmith's Hammer",
+        "kind": "Blacksmithing Tool",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 224116,
+        "inputName": "Runed Null Stone Rod",
+        "kind": "Enchanting Tool",
+        "indexed_disenchant_related_section": true
+      },
+      {
+        "inputItemID": 224115,
+        "inputName": "Runed Ironclaw Rod",
+        "kind": "Enchanting Tool",
+        "indexed_disenchant_related_section": true
+      }
+    ],
+    "new_measured_cast_cohorts": 0,
+    "new_numeric_baseline_fields": 0,
+    "output_ids_confirmed": 0,
+    "all_unmeasured_fields": null
+  },
+  "evidence_file": "research/v3/evidence/war-within/2026-11-09T0951-ten-profession-equipment-de-index-identities.jsonl",
+  "commit_sha_note": "The SHA of the commit containing this status file cannot be embedded in the same commit without a self-referential hash; check the git commit and read-back result. The next run may record this commit's verified SHA.",
+  "current_run_evidence_records": 10,
+  "current_run_source_only_identity_records": 10,
+  "current_run_new_measured_cohorts": 0
 }
