@@ -1,48 +1,36 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T16:33:37.995Z",
-  "status": "Completed new CraftSim raw-export feasibility/source search. No new Dragonflight prospecting, milling, or disenchanting numerical cohort; original per-cast hit/zero/refund data still absent. Current CraftSim JSON export is aggregate-only.",
+  "updated_at": "2026-11-09T17:41:10.415Z",
+  "status": "New original Xenastro workbook Start Here source-view access verified; its ore-rank percentages are gem-distribution shares, not P(hit) per completed cast. No newly measured prospecting, milling or disenchanting cohort.",
   "task_ids": [
     "T0020",
-    "T0018",
-    "T0015",
-    "T0041",
     "T0019",
-    "T0046"
+    "T0041",
+    "T0046",
+    "T0018",
+    "T0015"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143 R1/188658 R2 and Serevite Ore 190395 R1/190396 R2/190394 R3: independently source-original per-completed-prospect output hits and 0/1/2/... histograms with Resourcefulness saved ore and skill/spec/build.",
-    "Khaz'gorite Ore 190312/190313/190314 and Prismatic Ore 194545 prospecting: independently verifiable completed operations, material output identity/ranks and source-original 0-N histograms.",
-    "Bubble Poppy 191467 and Saxifrage 191464 milling: original rank-separated pigment totals, per-output hit counts, quantity histograms and refunds; remove ambiguity between nominal herbs and actual finished mills.",
-    "NEW acquisition blocker: current CraftSim CraftSessionData:GetJSON excludes craftResults event arrays despite per-session craftResults retained internally, so standard aggregate JSON export cannot supply the missing per-cast histograms."
+    "T0020/T0019 Dragonflight prospecting: Draconium Ore IDs 189143 (R1), 188658 (R2), 190311 (R3), known requested gem output IDs 192837-192844. Xenastro original workbook Start Here gives gem distribution shares but not R1 original cohort or per-operation hits, zero-inclusive material histograms or actual cast denominators.",
+    "T0046/T0041 Serevite Ore IDs 190395 (R1), 190396 (R2), 190394 (R3), Khaz'gorite Ore 190312/190313/190314 (R1/R2/R3), Prismatic Ore 194545: actual completed prospects, refund-adjusted input consumption and material ID/rank-specific outputs, castsWithDrop and histograms still unknown.",
+    "T0018/T0015 milling Bubble Poppy R1 item 191467 => Serene Pigment 198412/198413/198414 and Saxifrage R1 191464 => Blazing Pigment 198418/198419/198420: exact completed mills, output ranks, per-output quantity/hits/0-N histogram, refund/skill/spec and epoch still unknown.",
+    "Historical Xenastro Prospecting Log rows 28/33/39/54/62 cannot be directly inspected through current Google gviz Start Here view; original reported Quantity can include gross ore and Resourcefulness refund ambiguity. Never divide nominal ore by five to claim measured completed operations or treat gem composition percentages as P(hit)."
   ],
   "newly_verified_fields": {
     "record_count": 0,
     "distinct_original_cohorts": 0,
     "new_numerical_measurements": 0,
     "numeric_fields_improved": [],
-    "research_only_source_code_finding": "Current CraftSim CraftLog.lua accumulates craftResults per session, but CraftSessionData.lua GetJSON exports only aggregate numCrafts/totalItems/totalSavedReagents/craftRecipeData, not individual craftResults. No player Dragonflight dataset recovered.",
-    "source_kind": "searched; original repository code used to assess prospective evidence, NOT measured gameplay evidence",
-    "input_ids_targeted": [
-      189143,
-      188658,
-      190395,
-      190396,
-      190394,
-      190312,
-      190313,
-      190314,
-      194545,
-      191467,
-      191464
-    ],
-    "output_ids_improved": []
+    "source_access_verified": "Xenastro original Google workbook accessible via gviz HTML as Start Here worksheet only; Prospecting Log not retrieved",
+    "original_percentage_semantics": "Source's labeled distribution columns sum to 100% across gem categories for each input ore/rank; not chance of at least one output in a prospect",
+    "illustrative_reported_source_values": "Eternity Amber quality 2: Q2 Serevite distribution 36.43%, Q2 Draconium distribution 34.02%; neither is cast-level P(hit)"
   },
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [],
   "evidence_files": [
+    "research/v3/evidence/dragonflight/2026-11-09T1741-xenastro-original-workbook-tab-access.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1633-craftsim-export-sample-gap.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1347-two-new-gear-and-priority-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1235-five-unindexed-amirdrassil-looter.jsonl",
@@ -60,6 +48,8 @@
     "research/v3/evidence/dragonflight/2026-11-09T0440-prospectmate-cast-export-search.jsonl"
   ],
   "source_links": [
+    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
+    "https://www.reddit.com/r/woweconomy/comments/10vz6jh",
     "https://www.wowhead.com/ptr/item=207187/zealous-pyreknights-flameguards?bonus=7981",
     "https://www.wowhead.com/item=207229/weyrnkeepers-timeless-treads",
     "https://www.wowhead.com/item=207222/weyrnkeepers-timeless-ornamented-cloak",
@@ -128,12 +118,12 @@
     "https://github.com/derfloh205/CraftSim/blob/main/Classes/CraftSessionData.lua",
     "https://github.com/derfloh205/CraftSim/blob/main/CraftSim.toc"
   ],
-  "verified_commit_sha": "142992b8681f08ab2ec001c688e2213e402a5a46",
-  "commit_sha_scope": "The self-contained status file holds the verified parent branch SHA; the resulting new commit SHA cannot be stored inside its own blob without an additional commit. Validate the new commit separately by branch head, fetch_file readback and compare_commits.",
+  "verified_commit_sha": "8bfadcaca52eaffbb7e002a61cfd4fb83d13946d",
+  "commit_sha_scope": "Verified branch parent SHA recorded before atomic write. Resulting commit cannot embed its own SHA into the same status blob; verify final commit SHA by post-write branch and file readback.",
   "blockers": [
-    "No new firsthand Dragonflight per-output completed-cast, positive-hit, zero-inclusive histogram, refund-aware or patch/skill-controlled study; prior player cohorts recognized and not duplicated.",
-    "Current CraftSim session JSON export aggregates total outputs/saved reagents and craft counts but omits raw craftResults. Unmodified public addon source and its described export cannot establish 2023 rank-separated cast-by-cast material outcomes, even if a user supplies summary JSON.",
-    "No public contributor-owned Dragonflight per-operation CraftSim/ProspectMate SavedVariables or source spreadsheet made available; historical original game build/skill/spec/bonus/Resourcefulness event ledgers remain unknown."
+    "No original Dragonflight random-processing completed-operation-by-material 0-N event histograms with author-verified ore/herb quality, per-material output IDs, castsWithDrop, output totals, Resourcefulness refunds, skill/specialization and observed patch/build; known studies remain deduplicated.",
+    "The current public Xenastro Google spreadsheet reader returns only Start Here distribution/reference percentages. A Prospecting Log worksheet gid/direct CSV or original author raw export is required to verify the original row-level event/refund interpretation.",
+    "Historical 2022-23 beta and Inspiration-era source distributions are not a verified 2026 Retail patch-calibrated sample; output composition percentages must not be treated as per-cast material hit probabilities."
   ],
   "exhausted_sources": [
     {
@@ -513,19 +503,36 @@
         "Method Dragonflight pigment source mapping, https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment : guide documents output families/skill context, not an original completed-mill rank-separated numeric cohort.",
         "Warcraft Wiki Dragonflight prospect/disenchant reference, https://warcraft.wiki.gg/wiki/Disenchanting_tables : explicitly historical general tables (pre-Battle for Azeroth), not a valid original Dragonflight item-specific numerical sample."
       ]
+    },
+    {
+      "at": "2026-11-09T17:41:10.415Z",
+      "scope": "New original Xenastro workbook Start Here direct access and Prospecting Log worksheet retrieval with name-first ore/milling studies",
+      "reason": "Original workbook reference-distribution percentages recovered and their semantics checked; attempted direct source log tab returned only Start Here. No new raw completed-cast or material-specific zero/hit ledger; prior Reddit originals and rank mappings already indexed and deliberately excluded.",
+      "whereLooked": [
+        "Original Xenastro spreadsheet at https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit, directly read Start Here via Google gviz HTML through a source-page scraper; labeled gem-distribution percentages, not per-completed-cast hit rates.",
+        "Google gviz named Prospecting Log sheet query at the same original workbook: response resolved back to Start Here; could not independently inspect original per-operation log row details or raw cast records.",
+        "reddit.com/r/woweconomy: name-first Draconium Ore prospecting original log/spreadsheet search, with y3e8ek, 10i63zb and Xenastro 10vz6jh recognized as previously indexed studies.",
+        "reddit.com/r/woweconomy: Serevite Ore rank-specific diamond prospecting and original 0-N output search; zzyjzu, zez5sj, 1135bti and 108782r authors already indexed and not copied.",
+        "reddit.com/r/woweconomy: Khaz'gorite Ore and Prismatic Ore original completed-cast observations; 10h6ccx and superbondez original Prismatic cohort already present.",
+        "wowhead.com: Dragon Isles Prospecting spell 374627, Prismatic Ore, Saxifrage/Blazing Pigment and Bubble Poppy/Serene Pigment named sources; original summarized averages and Aary historic herb reports already recorded, no new operation histogram.",
+        "us.forums.blizzard.com: named Prismatic Ore prospecting and ranked-gem observations, source-level 5-ore mechanics and anecdotes only, no new exact material-by-cast log.",
+        "method.gg: Dragonflight named Bubble Poppy and Saxifrage pigment guides; output-family mapping only, no original measured 0/1/2 per-mill count distribution.",
+        "goldcap.gg: Draconium, Serevite, Khaz'gorite, Bubble Poppy and Saxifrage rank-to-item-ID checks; ranks were already corroborated in existing 2026-11-09T0235 research and not new evidence.",
+        "github.com/Voodoobrew101/Loot-Liquidator: checked historical original Xenastro row 28/52 source files and v3 indexed original Reddit 1135bti; no new independent cohort or unseen numerical denominator."
+      ]
     }
   ],
-  "next_concrete_step": "Identify an original player willing to share a historical Dragonflight event-level CraftSim/ProspectMate SavedVariables snapshot or original prospecting/milling spreadsheet; obtain raw per-craft output ID/quantity, completed casts, saved ore/herbs and rank/skill/build. Validate whether the historical addon version actually retains raw events before treating a CraftSim JSON summary as a histogram source.",
+  "next_concrete_step": "Recover the original Xenastro workbook Prospecting Log worksheet gid or author-exported CSV and verify rows 28/33/39/54/62 with completion events, ore input rank/item IDs, exact material output IDs/quantities, Resourcefulness refund quantities and skill/patch. If unavailable seek original Dragonflight player event-level prospecting or milling data export; do not promote Start Here reference-percent distributions to measured hit chances.",
   "validation": {
-    "precommit": "PASS: one new searched JSONL record with 11 named targeted site/code checks across Reddit, GitHub, CurseForge, Wowhead, Method and Warcraft Wiki. No fabricated casts, hit counts, yield totals, probabilities, output ranks or prices; known original sources deduplicated. New source-code observation verified from current upstream files.",
-    "postcommit": "External branch readback and two-path commit comparison required after ref update; result cannot be encoded into this same commit without self-reference.",
-    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T1633-craftsim-export-sample-gap.jsonl; research/coordination/quiet-status/dragonflight.json"
+    "precommit": "PASS: one new searched JSONL record; original workbook Start Here viewed and 10 named/source-specific verification checks recorded. Genuine 6+ named searches across 3+ sources performed. No new measured cohort, no fabricated casts, hit counts, output totals, zeros, per-cast histograms, source confidence, frozen gold prices or chances. JSONL parsed.",
+    "postcommit": "Pending external commit, file and two-path readback; verified after ref update outside committed status blob.",
+    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T1741-xenastro-original-workbook-tab-access.jsonl; research/coordination/quiet-status/dragonflight.json"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "142992b8681f08ab2ec001c688e2213e402a5a46",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T1633-craftsim-export-sample-gap.jsonl",
+  "verified_parent_sha": "8bfadcaca52eaffbb7e002a61cfd4fb83d13946d",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T1741-xenastro-original-workbook-tab-access.jsonl",
   "current_run_commit_sha": null,
   "newly_verified_fields_cohorts": 0
 }
