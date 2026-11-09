@@ -771,6 +771,12 @@ end
 local function Notify(message)
     if print and message then print("|cff66ccffLoot Liquidator|r: "..message) end
 end
+function LL:ShowHeldDisenchantStatus()
+    local n=self:HeldDisenchantResultsCount()
+    local message=('%d imported Disenchant results are held for reference only and do not affect estimates. They remain in SavedVariables; back up that file to preserve them. Imported-data export is not available in this window.'):format(n)
+    Notify(message)
+    return n,message
+end
 function LL:ShowRecordedResultsExport(paged,allBatches)
     if not self.ExportRecordedResultsPage then return end
     -- A recording can finish while this window is open. Freeze one bounded
@@ -830,7 +836,7 @@ LL.RunImportFromPopup=RunImport
 function LL:ShowImportResultsDialog()
     if not StaticPopupDialogs or not StaticPopup_Show then return false end
     StaticPopupDialogs.LOOTLIQUIDATOR_IMPORT_RESULTS=StaticPopupDialogs.LOOTLIQUIDATOR_IMPORT_RESULTS or {
-        text="Import results from another player\n\nPaste the text from their Export button (one page at a time), then click Import.",
+        text="Import results from another player\n\nPaste the text from their Export button (one page at a time), then click Import. Disenchant results are retained for reference only and do not affect estimates, including previously imported results.",
         button1="Import",button2=CANCEL or "Cancel",hasEditBox=true,editBoxWidth=350,maxLetters=0,maxBytes=0,
         timeout=0,whileDead=true,hideOnEscape=true,preferredIndex=3,
         OnShow=function(popup) local box=PopupEditBox(popup);if box then box:SetText("");box:SetFocus() end end,
@@ -1023,7 +1029,10 @@ function LL:RegisterNativeSettings()
         -- B7: import another player's export as a separate source.
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Import results","Import",function() LL:ShowImportResultsDialog() end,
-            "Paste results another player exported. They are checked for damaged or impossible values and kept separate from your own results, with their own confidence (weight: Database & Accuracy > Imported results).",false))
+            "Disenchant imports (including older saved imports) are held for reference only and do not affect estimates. Paste results another player exported. They are checked for damaged or impossible values and kept separate from your own results, with their own confidence (weight: Database & Accuracy > Imported results).",false))
+        researchLayout:AddInitializer(CreateSettingsButtonInitializer(
+            "Held Disenchant imports","Show status",function() LL:ShowHeldDisenchantStatus() end,
+            "Old and new imported Disenchant results are retained in SavedVariables for reference only. They do not affect estimates. There is no imported-data export window; back up SavedVariables to preserve this archive.",false))
         researchLayout:AddInitializer(CreateSettingsButtonInitializer(
             "Remove imported results","Remove",function() LL:ConfirmClearImportedResults() end,
             "Remove everything you imported. Your own recorded results are not touched. Asks first.",false))
