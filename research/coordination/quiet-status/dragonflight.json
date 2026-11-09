@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T20:40:16.287Z",
-  "status": "One newly recovered original Dragonflight-era disenchant observation: ten uncommon weapons yielded 25 Chromatic Dust (194123), with no observed material hit histogram; priority ore and milling per-cast datasets remain unresolved.",
+  "updated_at": "2026-11-09T21:43:18.312Z",
+  "status": "No newly independent, estimator-eligible Dragonflight ore/herb or gear numeric cohort this run. One new source-search JSONL record: a December 2023 100k-nominal Serevite/gem-crushing original is outside the supported drop method and prior originals were deduplicated. Completed-cast prospect/mill 0-N histograms remain unresolved.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,47 +12,21 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Open T0020/T0019/T0046: Draconium Ore 189143 and 188658; Serevite 190394/190395/190396; Khaz'gorite 190312/190313/190314; Prismatic Ore 194545 — quality-verified true completed prospect casts, refunded inputs, rank-specific output IDs, material hit counts and zero-inclusive quantity histograms are still missing.",
-    "Open T0018/T0015/T0041: Bubble Poppy 191467 to Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 to Blazing Pigment 198418/198419/198420 — completed milling casts, observed material totals and per-output zero/hit/quantity distributions remain unresolved.",
-    "Standing Dragonflight disenchant evidence: original Pdpaul 10 green-weapon disenchants yield 25 Chromatic Dust 194123; individual source weapon item IDs, item/character properties, per-material hits/zeros, stack histogram, patch date and skill remain unknown."
+    "T0020/T0019/T0046: Draconium Ore 189143 (R1) and 188658 (R2), Serevite ranks 190394/190395/190396, Khaz'gorite ranks 190312/190313/190314 and Prismatic Ore 194545: independent completed casts, output-specific per-cast positive hit counts, zero bins, quantity histograms, refunded reagent accounting, skill/spec and exact date/build.",
+    "T0018/T0015/T0041: Bubble Poppy 191467 to Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 to Blazing Pigment 198418/198419/198420: independently measured per-mill outputs with exact rank, completed casts, Resourcefulness context, per-output 0-N bins."
   ],
   "newly_verified_fields": {
-    "record_count": 1,
-    "distinct_original_cohorts": 1,
-    "new_numerical_measurements": 1,
-    "numeric_fields_improved": [
-      "unspecified 10 uncommon green weapon disenchants → Chromatic Dust item 194123: 10 source-stated operations, totalQuantity=25; no castsWithDrop, zeros, hit histogram or rank verified"
-    ],
-    "source_access_verified": "Firsthand Pdpaul Wowhead Insight of the Blue comment quoted by multiple localized source pages; Chromatic Dust output identity item 194123 independently cross-checked against GoldCap"
+    "record_count": 0,
+    "distinct_original_cohorts": 0,
+    "new_numerical_measurements": 0,
+    "numeric_fields_improved": [],
+    "source_access_verified": "Original 2023-12-27 r/woweconomy 18sd8ly GEM-CRUSH results examined and excluded from Prospect/Mill/Disenchant records; indexed source duplicates confirmed by original study URL on repository; scanned new named searches across six sites."
   },
-  "newly_verified_cohorts": [
-    {
-      "studyKey": "wowhead-pdpaul-insight-blue-ten-green-weapons",
-      "method": "Disenchant",
-      "inputItemID": null,
-      "inputName": "unidentified green weapons",
-      "inputQuality": "uncommon",
-      "casts": 10,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "outputName": "Chromatic Dust",
-          "totalQuantity": 25,
-          "castsWithDrop": null,
-          "histogram": null
-        }
-      ],
-      "source": "https://www.wowhead.com/profession-trait/insight-of-the-blue-68402",
-      "sourceOriginal": true,
-      "exactGamePatch": null,
-      "sourceStudyDate": null
-    }
-  ],
-  "new_numerical_measurements": 1,
-  "numerical_fields_improved": [
-    "Chromatic Dust 194123: 25 materials from 10 green-weapon disenchants in an original Pdpaul source; aggregation only, not a P(hit) or rank-specific estimate."
-  ],
+  "newly_verified_cohorts": [],
+  "new_numerical_measurements": 0,
+  "numerical_fields_improved": [],
   "evidence_files": [
+    "research/v3/evidence/dragonflight/2026-11-09T2142-original-processing-source-triage.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T2040-pdpaul-ten-green-weapons-25-dust.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1931-six-unindexed-vault-gear-looter-hits.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T1841-lunar-wristwraps-looter-and-priority-search.jsonl",
@@ -74,6 +48,10 @@
     "research/v3/evidence/dragonflight/2026-11-09T0440-prospectmate-cast-export-search.jsonl"
   ],
   "source_links": [
+    "https://www.reddit.com/r/woweconomy/comments/18sd8ly",
+    "https://www.wowhead.com/item=198412/serene-pigment",
+    "https://www.wowhead.com/item=198418/blazing-pigment",
+    "https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment",
     "https://www.wowhead.com/ptr-2/item=200420/virtuous-silver-faulds",
     "https://www.wowhead.com/item=200388/stormwing-harriers-sabatons",
     "https://www.wowhead.com/ptr-2/item=200390/stormwing-harriers-skullmask",
@@ -153,14 +131,31 @@
     "https://www.wowhead.com/profession-trait/insight-of-the-blue-68402",
     "https://goldcap.gg/retail/us/items/194123"
   ],
-  "verified_commit_sha": "5aa5d6767f8395119afcf9b43acbe08d491b4c5a",
-  "commit_sha_scope": "Evidence JSONL commit verified by exact branch readback. Status updated by a separate contents-API commit because an atomic multi-path tree SHA was unavailable from the connected GitHub interface; do not mistake evidence SHA for the status update commit.",
+  "verified_commit_sha": "8091b71ea5761df2607ef229149cde3d95e805d8",
+  "commit_sha_scope": "Verified evidence-file commit 8091b71ea5761df2607ef229149cde3d95e805d8; this status is updated in a subsequent contents-API commit so it can accurately name the read-back verified evidence SHA. Status-update commit will be different. This is not an integration/production merge.",
   "blockers": [
-    "Priority Dragonflight ore/herb samples still lack independently verified per-completed-cast 0-N material histograms, Resourcefulness refunds, sample epoch, rank-specific gem/pigment hit counts and true cast denominators.",
-    "New primary green-weapon cohort states 10 operations and 25 Chromatic Dust only. Exact input item IDs, origin/ilevel, date/build, skill and output-specific hit/zero count are not supplied; no gold prices or inferred chances recorded.",
-    "Previously inspected Xenastro original Prospecting Log worksheet remains inaccessible; its gem-distribution percentages are shares, not per-completed-cast hit rates. The November 2024 ~600 Writhebark zero-Resonant Crystal cohort is already indexed and was not duplicated."
+    "No independent new Dragonflight per-completed-operation ore/mill hit and 0-N quantity histogram was located. Unverified actual cast count, refund reprocessing, ore/herb rank, output rank and skill/spec/build prevent numeric chance inference.",
+    "Dec 2023 original post r/woweconomy/18sd8ly gives gem-crushing dust quantities after ore prospecting, but gem crushing has no supported v3 drop method. Recording it as prospecting would conflate two operations; no schema changed.",
+    "Previously indexed originals (Lazy Goldmaker 40k nominal Serevite/R3 Diamonds, Reddit zjh0d0 ambiguous Prismatic zero, Bugy/Jallfo/Xenastro ore tables, Aary Saxifrage, zru4kh four-crystal M+ DE) must not be duplicated or counted as fresh studies."
   ],
   "exhausted_sources": [
+    {
+      "at": "2026-11-09T21:43:18.312Z",
+      "scope": "2023/2024 postlaunch original Dragonflight prospecting/milling numerical search with newly inspected 10.2 gem-crush lead",
+      "reason": "Newly inspected Dec 2023 100k nominal Serevite source reports gem crushing, not per-ore prospective hits; other source originals already v3-indexed, reference-only, or historic live-enchanting bug; no independent completed-operation outcome/histogram obtained.",
+      "whereLooked": [
+        "https://www.reddit.com/r/woweconomy/comments/18sd8ly original 2023 Dec Q2 Serevite ore and gem-crushing; outside Prospect/Mill/Disenchant method",
+        "https://www.reddit.com/r/wow/comments/zru4kh original December 2022 per-item 4-crystal M+ DE reported, already in Dragonflight v3 evidence",
+        "https://www.reddit.com/r/woweconomy/comments/zjh0d0 Prismatic >250 without Khaz source already indexed",
+        "https://www.wowhead.com/item=192869/illimited-diamond original Bugy / neoslayyer cohorts already indexed",
+        "https://www.wowhead.com/item=198412/serene-pigment Bubble Poppy correspondence only",
+        "https://www.wowhead.com/item=198418/blazing-pigment Saxifrage Aary cohort already indexed",
+        "https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment qualitative milling identity only",
+        "https://warcraft.wiki.gg/wiki/Milling 5-herb baseline recipe without study",
+        "https://us.forums.blizzard.com/en/wow/t/wrong-item-from-disenchanted-ring/1499715 historic cross-expansion output defect, not live baseline",
+        "https://thelazygoldmaker.com/i-prospected-40-000-serevite-ore-so-you-dont-have-to/ source pre-indexed twice, deduplicated"
+      ]
+    },
     {
       "at": "2026-11-09T18:41:59.717Z",
       "scope": "New Dragonflight named ore/herb processing per-operation numerical evidence",
@@ -571,28 +566,30 @@
       ]
     }
   ],
-  "next_concrete_step": "Seek genuinely new Dragonflight ore/herb SavedVariables or original completed-cast log with per-output 0/1/2+ bins and quality/rank/spec/refund controls; separately locate original Pdpaul cast screenshot or named weapon item breakdown if available. Do not repeat prior indexed 1go5h2b Writhebark or 2023 Jallfo/Xenastro/Serevite sources.",
+  "next_concrete_step": "Target a previously unseen actual 2023 Dragon Isles ProspectMate/CraftSim SavedVariables per-operation log or linked player spreadsheet with input/output rank IDs and 0/1/2+ histograms, especially R1 Draconium 189143 and Bubble Poppy 191467. Do not rerun historically exhausted named web table searches or import gem-crushing averages as prospecting. Ask Master to scope gem crushing only if a separate processing-method schema is authorized.",
   "validation": {
-    "precommit": "PASS: one new JSONL drop record parsed and fields validated; ten explicit disenchant operations, Chromatic Dust 194123 material total 25, P(hit)/histogram/skill/patch unknown. Independent 194123 output identity checked. Existing Reddit Writhebark ~600 zero-crystal cohort detected on research branch and deliberately excluded as duplicate.",
-    "postcommit": "PASS: evidence JSONL commit 5aa5d6767f8395119afcf9b43acbe08d491b4c5a read back exactly from branch. Status file readback independently after this update; source and all null unknowns preserved.",
-    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T2040-pdpaul-ten-green-weapons-25-dust.jsonl; research/coordination/quiet-status/dragonflight.json"
+    "precommit": "PASS: new JSONL parsed with required searched fields; >=6 named searches across >=3 sites and ten distinct source-specific checks. New source 18sd8ly classified as gem crushing, not 0-N prospecting; old LazyGoldmaker, Prismatic zero, Bugy/Aary, DE originals deduped; no invented numeric outcomes.",
+    "postcommit": "PASS: exact GitHub branch readback after evidence commit 8091b71ea5761df2607ef229149cde3d95e805d8; one JSONL record, id dragonflight-20261109-214201, type searched and 10 whereLooked entries. Commit diff touched only new dragonflight evidence JSONL.",
+    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T2142-original-processing-source-triage.jsonl; research/coordination/quiet-status/dragonflight.json"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "4201d3b5b1feba93df5b86b0cc6443965cb5e019",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T2040-pdpaul-ten-green-weapons-25-dust.jsonl",
-  "current_run_commit_sha": "5aa5d6767f8395119afcf9b43acbe08d491b4c5a",
-  "newly_verified_fields_cohorts": 1,
+  "verified_parent_sha": "1c222551d4ebd8397ce350ce0d93d76a9bb0ba14",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T2142-original-processing-source-triage.jsonl",
+  "current_run_commit_sha": "8091b71ea5761df2607ef229149cde3d95e805d8",
+  "newly_verified_fields_cohorts": 0,
   "last_source_search": {
-    "performed_at": "2026-11-09T20:40:16.287Z",
-    "priority_source_findings": "Fresh name-first Dragonflight Draconium/Serevite/Khaz'gorite/Prismatic prospecting and Bubble Poppy/Saxifrage milling searches found no new original 0-N cast logs. After excluding already indexed 2024 Writhebark and historical ore/mill original studies, recovered an unindexed original 10-weapon/25-Chromatic-Dust disenchant cohort.",
+    "performed_at": "2026-11-09T21:43:18.312Z",
+    "priority_source_findings": "New original December 2023 gem-crush source checked; data in unsupported processing method. Verified existing LazyGoldmaker R2 Serevite and zjh0d0 Prismatic zero reports are already indexed (some duplicated) and not new cohorts. No novel 0-N per-material completed prospect/mill log.",
     "source_sites": [
+      "reddit.com",
       "wowhead.com",
-      "reddit.com/r/woweconomy",
+      "method.gg",
+      "warcraft.wiki.gg",
       "us.forums.blizzard.com",
-      "github.com",
-      "goldcap.gg"
+      "thelazygoldmaker.com",
+      "github.com"
     ]
   }
 }
