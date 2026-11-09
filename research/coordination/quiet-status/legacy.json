@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T14:02:24.215Z",
-  "status": "10 newly sourced historical Disenchant eligibility/rate/mapping change facts from 6 patch epochs (7 exact item IDs, one vendor group, two expansion-wide mechanics). No new completed Warmaul 24995 disenchant casts, Cobalt 36909 or Fel Iron 23424 prospects; no output units, hit counts, zero bins or histogram measurements newly verified.",
+  "updated_at": "2026-11-09T15:28:50.323Z",
+  "status": "14 newly recorded primary-source Legion prospecting outputs: murban patch 7.1.5 220 Leystone 123918 mass casts over 4400 ore with 13 exact material IDs/total units; independently Lizzia 500 Felslate 123919 yielding 14 Chaotic Spinel 130175, casts unknown. Historical-only evidence; no new Warmaul 24995/Cobalt 36909/Fel Iron 23424 actual casts or per-cast zero histograms.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -11,168 +11,148 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates (24995): historical iLvl108 and archived Looter 2068 events versus scaled current item version and existing cannot-DE data; item bonus, current gate, original 0/1/... histogram and raw output units still unresolved.",
-    "T0042 TBC item eligibility source-version dates: 28109, 28108, 13508 (0-charge restriction), 30901, 30894; Ogri'la vendor quality group; broad patch 2.0.1 skill gate and 7.3.5 material mapping.",
-    "T0022 Cobalt Ore 36909: independent complete prospect cast counts, output hits and zero-inclusive gem histogram still absent.",
-    "T0044 Fel Iron Ore 23424: independent new prospect casts and per-gem positive/zero histograms absent.",
-    "T0053 Spaulders of the Wayward Vanquisher 45661: seven historical class reward IDs already archived; no new verified redemption/variant identifiers."
+    "Warmaul Legplates 24995 historical vs current scaled disenchant eligibility, exact version+build and individual raw cast/zero histograms still unknown; archived 2068 Looter cohort not repeated.",
+    "Cobalt Ore 36909 independent correctly denominated prospecting hits/zero histograms missing.",
+    "Fel Iron Ore 23424 actual per-output casts/hits/zero histories missing.",
+    "Historical Legion Leystone Ore 123918 mass 20-ore cohort and Felslate 123919 one-output quantity rescue; no transfer to current Retail or 5-ore casts.",
+    "Wayward Vanquisher 45661 full historical class reward IDs already archived; no new redemption variants."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "rateChange",
-      "date": "2006-12-05",
-      "patch": "2.0.1",
-      "method": "Disenchant",
-      "affects": "All disenchantable equipment (minimum Enchanting skill gate)",
-      "source": "https://warcraft.wiki.gg/wiki/Disenchant",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
+      "studyKey": "wowhead-murban-715-leystone-4400ore-220-mass-prospects",
+      "inputItemID": 123918,
+      "method": "Prospect",
+      "patch": "7.1.5",
+      "casts": 220,
+      "inputsPerCast": 20,
+      "totalOre": 4400,
+      "outputs": [
+        {
+          "outputItemID": 129100,
+          "outputName": "Gem Chip",
+          "totalQuantity": 880
+        },
+        {
+          "outputItemID": 130172,
+          "outputName": "Sangrite",
+          "totalQuantity": 29
+        },
+        {
+          "outputItemID": 130175,
+          "outputName": "Chaotic Spinel",
+          "totalQuantity": 27
+        },
+        {
+          "outputItemID": 130176,
+          "outputName": "Skystone",
+          "totalQuantity": 54
+        },
+        {
+          "outputItemID": 130174,
+          "outputName": "Azsunite",
+          "totalQuantity": 64
+        },
+        {
+          "outputItemID": 130173,
+          "outputName": "Deep Amber",
+          "totalQuantity": 52
+        },
+        {
+          "outputItemID": 130177,
+          "outputName": "Queen's Opal",
+          "totalQuantity": 53
+        },
+        {
+          "outputItemID": 130183,
+          "outputName": "Shadowruby",
+          "totalQuantity": 9
+        },
+        {
+          "outputItemID": 130179,
+          "outputName": "Eye of Prophecy",
+          "totalQuantity": 8
+        },
+        {
+          "outputItemID": 130180,
+          "outputName": "Dawnlight",
+          "totalQuantity": 5
+        },
+        {
+          "outputItemID": 130182,
+          "outputName": "Maelstrom Sapphire",
+          "totalQuantity": 12
+        },
+        {
+          "outputItemID": 130178,
+          "outputName": "Furystone",
+          "totalQuantity": 7
+        },
+        {
+          "outputItemID": 130181,
+          "outputName": "Pandemonite",
+          "totalQuantity": 2
+        }
+      ],
+      "source": "https://www.wowhead.com/de/spell=225904/massensondierung-von-teufelsschiefer",
+      "castsWithDrop": null,
+      "zeroOutcomes": null,
+      "histogram": null,
+      "notes": "13 output records from ONE original study; locale mirrors deduplicated."
     },
     {
-      "type": "rateChange",
-      "date": "2007-09-25",
-      "patch": "2.2.0",
-      "method": "Disenchant",
-      "affects": "Essence Infused Mushroom (item 28109), Outland trinket",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.2.0",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
-    },
-    {
-      "type": "rateChange",
-      "date": "2007-09-25",
-      "patch": "2.2.0",
-      "method": "Disenchant",
-      "affects": "Power Infused Mushroom (item 28108), Outland trinket",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.2.0",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
-    },
-    {
-      "type": "rateChange",
-      "date": "2007-09-25",
-      "patch": "2.2.0",
-      "method": "Disenchant",
-      "affects": "Eye of Arachnida (item 13508) ONLY after depletion of all three charges",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.2.0",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
-    },
-    {
-      "type": "rateChange",
-      "date": "2007-11-13",
-      "patch": "2.3.0",
-      "method": "Disenchant",
-      "affects": "Boundless Agony (item 30901), epic dagger",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.3.0",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
-    },
-    {
-      "type": "rateChange",
-      "date": "2007-11-13",
-      "patch": "2.3.0",
-      "method": "Disenchant",
-      "affects": "Ogri'la Faction Vendor: superior and epic quality rewards (group, individual itemIDs not enumerated)",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.3.0",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
-    },
-    {
-      "type": "rateChange",
-      "date": "2008-03-25",
-      "patch": "2.4.0",
-      "method": "Disenchant",
-      "affects": "Blue Suede Shoes (item 30894), epic cloth feet from Mount Hyjal",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.4.0",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
-    },
-    {
-      "type": "rateChange",
-      "date": "2009-08-04",
-      "patch": "3.2.0",
-      "method": "Disenchant",
-      "affects": "Green Woolen Vest (item 2582), cloth chest",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_3.2.0_(undocumented_changes)",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
-    },
-    {
-      "type": "rateChange",
-      "date": "2010-03-23",
-      "patch": "3.3.3",
-      "method": "Disenchant",
-      "affects": "Gnomish Cloaking Device (item 4397), engineering trinket",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_3.3.3_(undocumented_changes)",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
-    },
-    {
-      "type": "rateChange",
-      "date": "2018-01-16",
-      "patch": "7.3.5",
-      "method": "Disenchant",
-      "affects": "All Disenchant output-material identity groups: expansion of the input equipment rather than raw item level",
-      "source": "https://warcraft.wiki.gg/wiki/Enchanting",
-      "measured_casts": null,
-      "measured_hit_count": null,
-      "measured_output_units": null
+      "studyKey": "wowhead-lizzia-felslate-500ore-chaoticspinel14",
+      "inputItemID": 123919,
+      "grossOre": 500,
+      "outputItemID": 130175,
+      "totalQuantity": 14,
+      "casts": null,
+      "inputsPerCast": null,
+      "source": "https://www.wowhead.com/item=130175/chaotic-spinel",
+      "castsWithDrop": null,
+      "zeroOutcomes": null,
+      "histogram": null,
+      "notes": "One independent author; recipe type and actual operations unknown."
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 10,
-    "new_historical_patch_groups": 6,
-    "new_exact_item_eligibility_ids": [
-      28109,
-      28108,
-      13508,
-      30901,
-      30894,
-      2582,
-      4397
-    ],
-    "new_measured_completed_disencasts": 0,
-    "new_measured_prospects": 0,
-    "new_measured_zeros": 0,
+    "new_evidence_records": 14,
+    "new_original_cohorts": 2,
+    "explicit_completed_mass_prospects": 220,
+    "explicit_leystone_input_units": 4400,
+    "explicit_felslate_input_units": 500,
+    "source_reported_leystone_output_units": 1202,
+    "source_reported_felslate_chaoticspinel_units": 14,
+    "new_measured_warmaul_disenchant_casts": 0,
+    "new_measured_cobalt_casts": 0,
+    "new_measured_fel_iron_casts": 0,
+    "new_measured_per_output_hit_counts": 0,
+    "new_measured_zero_outcomes": 0,
     "new_measured_histograms": 0,
-    "gold_ev_fields": 0
+    "added_gold_values": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-09T1402-historical-disenchant-eligibility-and-mapping.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T1402-historical-disenchant-eligibility-and-mapping.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-09T1528-legion-original-murban-leystone-lizzia-felslate.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T1528-legion-original-murban-leystone-lizzia-felslate.jsonl",
   "sources": [
-    "https://warcraft.wiki.gg/wiki/Disenchant",
-    "https://warcraft.wiki.gg/wiki/Patch_2.2.0",
-    "https://warcraft.wiki.gg/wiki/Patch_2.3.0",
-    "https://warcraft.wiki.gg/wiki/Patch_2.4.0",
-    "https://warcraft.wiki.gg/wiki/Patch_3.2.0_(undocumented_changes)",
-    "https://warcraft.wiki.gg/wiki/Patch_3.3.3_(undocumented_changes)",
-    "https://warcraft.wiki.gg/wiki/Enchanting"
+    "https://www.wowhead.com/de/spell=225904/massensondierung-von-teufelsschiefer",
+    "https://www.wowhead.com/item=130175/chaotic-spinel",
+    "https://www.wowhead.com/spell=225902/mass-prospect-leystone"
   ],
-  "verified_base_commit_sha": "f9dda5801e2bc8f97afc7acd7ca9cfd6379e729c",
+  "verified_base_commit_sha": null,
   "verified_commit_sha": null,
-  "commit_sha_note": "A commit cannot embed its own SHA. Evidence and own status are committed atomically; verify the published commit and both files by reading the branch after ref publication.",
+  "commit_sha_note": "One atomic Git commit cannot embed its own resulting SHA; externally verify published branch SHA and both files by read-back.",
   "blockers": [
-    "No original completed-cast versioned Warmaul 24995 output histogram or live Retail eligible disenchant test; historical eligible states must not override current no-DE source.",
-    "Cobalt and Fel Iron sources rechecked by item name but no new independent correctly denominated multi-output cast trace or original histograms located.",
-    "3.2 and 3.3.3 item changes are labeled undocumented historical reports; Gnomish Cloaking Device conflicts with present Classic no-DE.",
-    "Patch 2.3 Ogri'la rewards are a source-defined group with no complete per-item IDs; Master must resolve before any item-level gate."
+    "Current Retail Warmaul 24995 item-variant disenchant eligibility unknown; historical pooled Looter totals must not be repeated.",
+    "No newly discovered independent Cobalt 36909 or Fel Iron 23424 per-click gem logs with per-output hit and zero counts.",
+    "Murban's 7.1.5 20-ore mass recipe cannot be treated as 5-ore standard or modern Retail rates.",
+    "Lizzia did not report recipe mode or true completed casts; no derived denominator or probability filled.",
+    "No per-cast positives or zero bins, no player skill, gear, spec, build or independent refund accounting."
   ],
   "exhausted_sources": [
-    "Warmaul Legplates, Cobalt Ore and Fel Iron Ore: searched existing original Wowhead/Thottbot and archived v3 cohorts; no new complete casts, positive-stack histograms or source-build context.",
-    "Historical TBC patch notes 2.0.1, 2.2.0, 2.3.0, 2.4.0 and WotLK 3.2.0, 3.3.3 plus Legion 7.3.5 examined for genuinely unrecorded identity/rule breaks; no repeated 2.1.0 patch records.",
-    "Github repository code-search by exact new seven item names did not surface already-filed legacy item-specific rateChange rows; this is provenance not current-game validation.",
-    "Firecrawl primary Wowhead raw HTML lookup unavailable due connection credits; no invented source logs."
+    "Warmaul/TBC armors and Cobalt/Fel Iron old known Wowhead/Thottbot source pages rechecked; no new current version-correct cast table.",
+    "Original Deckven 3200-Felslate and user 1341638 113 mass-Felslate/228 mass-Leystone cohorts already archived; explicitly excluded as repeated research.",
+    "Multilingual Wowhead murban excerpts are identical and not independent.",
+    "Reddit 2016 anonymous pooled Felslate rare totals had no gem-type IDs or cast logs and an archived transcription conflict; did not treat as measured output or chance."
   ],
-  "next_concrete_step": "Ask Master to apply 7.3.5 expansion-version precedence and 2.0.1 skill-gating in historical-vs-Retail reconciling, and to investigate 4397 version conflict. Next find Warmaul 24995 per-stack original Looter export or retail completed-cast recorder; seek independent 5-ore click logs and 0/1/2 histograms for 36909 and 23424. Avoid exhausted primary cohorts, duplicates and calculating gold.",
-  "previous_status_updated_at": "2026-11-09T12:53:40.221Z"
+  "next_concrete_step": "Seek a source-version-matched Warmaul Legplates 24995 current Retail or historical per-click disenchant export with output histogram, and primary 5-ore Cobalt 36909/Fel Iron 23424 item-specific gem histograms. Keep historical mass Leystone and nominal Felslate source cohorts separate; ask Research Master before numeric schema/estimator changes.",
+  "previous_status_updated_at": "2026-11-09T14:02:24.215Z"
 }
