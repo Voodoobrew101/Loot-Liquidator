@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-09T00:17:09.332Z",
-  "status": "active; seven newly unindexed Midnight gear source tables, 15 source-level numeric reference rows; zero new independent verified original yield cohorts",
+  "updated_at": "2026-11-09T01:18:32.708Z",
+  "status": "active; new potential consented original-log acquisition sources identified; no new independent numeric baseline cohorts",
   "task_ids": [
     "T0026",
     "T0049",
@@ -11,10 +11,9 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026: new gear 275547 (rare off-hand), 271546/271565/271563/271544/271549/271545 (epic armor) Wowhead cumulative source-reported counts/hits; actual DE event logs, material rank IDs, gear bonus/ilvl, build, skill, specialist, conditional stack sizes and zeros remain absent.",
-    "T0049: 272246 Miststalker's Wristbands equipped ilvl305 confirmed earlier, but eligibility vs Looter aggregation, exact bonus itemLink and actual DE results still unverified.",
-    "T0039/T0005: Umbral Tin Ore 237362/237363; output 242606/242607/242610/242611/242786/242788 and Eversong Diamond 242608/242712 rank-specific original per-operation 0/1/2 histograms absent.",
-    "T0003: Refulgent Copper 237359/237361, Brilliant Silver 237364/237365, and T0045: 236761->245807 still lack new independent current-patch original completed cast and zero-inclusive logs."
+    "272246 Miststalker's Wristbands live ilvl305+ full bonus itemLink, actual successful DE, input/output ranks, skill/spec/build, positive/zero cast ledger",
+    "237362/237363 Umbral Tin rank-specific completed prospect casts and output hit/zero histograms; Eversong Diamond unlock and refunds",
+    "237359/237361 Refulgent Copper, 237364/237365 Brilliant Silver, 236761 Tranquility Bloom and other Midnight milling original per-operation result logs"
   ],
   "newly_verified_fields_or_cohorts": [
     {
@@ -235,70 +234,35 @@
       "raw_zero_histogram": null
     }
   ],
-  "numeric_fields_advanced": [
-    "Seven distinct previously unindexed Wowhead item-specific cumulative source tables; 15 rank-unresolved, reference-only rows with source-stated operation totals and per-material row occurrence numerators. Source items: 275547, 271546, 271565, 271563, 271544, 271549, 271545. No independent firsthand measured totalQuantity/cast histogram or actual gear ilvl added."
-  ],
+  "numeric_fields_advanced": [],
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-09T0017-s2-de-looter-distinct-source-rows.jsonl"
+    "research/v3/evidence/midnight/2026-11-09T0118-public-collector-original-log-gap.jsonl"
   ],
   "evidence_record_ids": [
-    "midnight-20261109-001",
-    "midnight-20261109-002",
-    "midnight-20261109-003",
-    "midnight-20261109-004",
-    "midnight-20261109-005",
-    "midnight-20261109-006",
-    "midnight-20261109-007",
-    "midnight-20261109-008",
-    "midnight-20261109-009",
-    "midnight-20261109-010",
-    "midnight-20261109-011",
-    "midnight-20261109-012",
-    "midnight-20261109-013",
-    "midnight-20261109-014",
-    "midnight-20261109-015"
+    "midnight-20261109-0118-001"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=275547/preyhunters-lantern?bonus=12819",
-    "https://www.wowhead.com/ptr/item=271546/skull-of-the-damned-necrolyte",
-    "https://www.wowhead.com/item=271565/primal-leywardens-manashapers",
-    "https://www.wowhead.com/item=271563/primal-leywardens-tailored-legwraps",
-    "https://www.wowhead.com/item=271544/spires-of-the-damned-necrolyte",
-    "https://www.wowhead.com/item=271549/damned-necrolytes-rattling-robes",
-    "https://www.wowhead.com/item=271545/damned-necrolytes-leg-bindings"
+    "https://www.curseforge.com/wow/addons/ka0s-loot-history",
+    "https://www.curseforge.com/wow/addons/playfulls"
   ],
-  "verified_commit_sha": "5a784dbece8de72358ce8d8f0b4f34138e8d6326",
-  "verified_commit_sha_scope": "Current remote parent branch HEAD verified before write; self-referential resulting SHA cannot be stored inside same commit. Read resulting commit and both files back after push.",
-  "base_commit_sha_verified": "5a784dbece8de72358ce8d8f0b4f34138e8d6326",
+  "verified_commit_sha": "8f8c399b3aa55bd9baeecb4105d9428ed5421dc9",
+  "verified_commit_sha_scope": "Remote branch HEAD verified immediately before constructing this run's atomic single commit; it is the parent SHA, not the (self-referential) SHA of the commit containing this status. New commit SHA is verified by remote post-write readback.",
+  "base_commit_sha_verified": "8f8c399b3aa55bd9baeecb4105d9428ed5421dc9",
   "commit_readback": {
     "state": "pending remote post-write readback",
-    "expected_evidence_path": "research/v3/evidence/midnight/2026-11-09T0017-s2-de-looter-distinct-source-rows.jsonl",
+    "expected_parent_commit_sha": "8f8c399b3aa55bd9baeecb4105d9428ed5421dc9",
+    "expected_evidence_path": "research/v3/evidence/midnight/2026-11-09T0118-public-collector-original-log-gap.jsonl",
     "expected_evidence_record_ids": [
-      "midnight-20261109-001",
-      "midnight-20261109-002",
-      "midnight-20261109-003",
-      "midnight-20261109-004",
-      "midnight-20261109-005",
-      "midnight-20261109-006",
-      "midnight-20261109-007",
-      "midnight-20261109-008",
-      "midnight-20261109-009",
-      "midnight-20261109-010",
-      "midnight-20261109-011",
-      "midnight-20261109-012",
-      "midnight-20261109-013",
-      "midnight-20261109-014",
-      "midnight-20261109-015"
+      "midnight-20261109-0118-001"
     ],
-    "expected_status_path": "research/coordination/quiet-status/midnight.json",
-    "expected_total_records": 15,
-    "expected_parent_commit_sha": "5a784dbece8de72358ce8d8f0b4f34138e8d6326"
+    "expected_total_records": 1,
+    "expected_status_path": "research/coordination/quiet-status/midnight.json"
   },
   "blockers": [
-    "No independent event-level disenchant logs for seven new references, nor gear ilvl/bonus at exact processing time or material-rank ID; Wowhead mutable base-item cumulative source only. Reference rows excluded from study counts.",
-    "Miststalker's Wristbands 272246 official Armory ilvl305 does not establish eligibility; WoWDB noDE vs 140 Looter report unresolved.",
-    "Umbral Tin Ore 237362/237363 lacks rank-specific output ID original measured hit counts, missing zeros/histograms, gem unlock-specific sample and Resourcefulness processing basis.",
-    "Refulgent Copper and Brilliant Silver, and Tranquility Bloom 236761->245807 still lack independent zero-inclusive current patch processing logs and known completed cast/refunds."
+    "All targeted new raw cast/hit/zero studies unavailable in public sources inspected; prior Cardinalai, JD3K, Stormwarning and WoWhead cumulative snapshots already indexed and deliberately not reimported.",
+    "New third-party loggers advertise processing-source attribution and/or day/build tagging, but no author-approved player export or verified completed-cast/input itemLink/skill pairing. Without event-by-event input to outputs mapping and zero events, output totals cannot establish drop probabilities.",
+    "272246 equipped official Armory ilvl305 does not establish its disenchant eligibility; source page base-item noDE versus Wowhead Looter remains unresolved.",
+    "237362/237363 rank-specific output hits/refund provenance, Eversong Diamond unlock, and 236761 ten-herb milling stack distributions remain unknown."
   ],
   "exhausted_sources": [
     "2026-11-08T08:18:39.754Z: New Evercore-goggles name-based source path, 4 item pages indexed on Wowhead PTR and LIVE WoWDB 244754 checked. Verified same Grimmella wording is copied across pages, not independent datasets. The known DE KP 5294/1607 Reddit 1s7nfcw and milling 1rteoqr/1rju9nm already exist in repo evidence and deliberately not reimported. No additional exact 272246 or rank-specific 237362/237363 original cast histogram found; do not recycle old source leads.",
@@ -317,7 +281,8 @@
     "2026-11-08T21:22:34.484Z: Searched new open-source disenchant recorder acquisition lane at pinned brandanq2/DisenchantingAdvisor Data/Tracking.lua, public project and CurseForge; no actual SavedVariables, cohort, item-specific inputLink or per-operation output histories made available. Existing research/mechanics on main already referenced this addon; no reimport as new study. Concurrent targeted searches by named gear, Umbral Tin, Tranquility Bloom across Wowhead, Reddit, Blizzard forums, profession guides yielded no independent raw datasets. Do not revisit this exact source until a consented original player export is available.",
     "2026-11-08T22:12:09.504Z: NEW direct-current identity lane: Indexed official Blizzard Retail Armory named Miststalker's Wristbands 305 on Kickinstuff and Chaiashka, and 321 on Mistyk, cross-linked to GamGem base item 272246/206. Primary Armory index snippets exposed actual equipped ilvl, unlike older query-forced Wowhead previews; live page detail can return 403 and full bonus itemLink remains unknown. This is NOT a new DE material cohort. Also checked new primary/material searches for completed 237362/236761 casts; no new unique source with hit/zero counts. Did not reimport Cardinalai, Honeybone, Looter, prehotfix or already recorded source-only data.",
     "2026-11-08T23:10:40.733Z: Distinct new official Blizzard Profession forum thread 2270729 (ForKalimdor March12) recovered firsthand 500 Brilliant Silver Ore purchased/prospected with maxed prospecting tree, but no exact casts, output units, ranks, refund observations or live era. Earlier indexed David111 x10 pigment-for-x10 herbs, kyzenbka, r/woweconomy 1rju9nm, GoldCap ranks, Armory 272246, Cardinalai and Honeybone were explicitly deduplicated, not re-recorded. New cross-site searches (Reddit, Wowhead, Blizzard, Method, Icy Veins, profession guides) yielded no other original current-build completed cast/0..N output histogram. Don't repeat ForKalimdor without a firsthand raw result export.",
-    "2026-11-09T00:17:09.332Z: FRESH NAME-based Looter discovery for new 12.1 epic gear and rare Preyhunter's Lantern found seven distinct source tables absent in repo; tested and excluded existing 248077/248066/251251/248064/248059 and 271555 plus already indexed Cardinalai, Jacara, kyzenbka, Miststalker, and Golden City Baton. Do not repeat these 7 mutable base-item snapshots as independent original casts; next seek first-person per-cast SavedVariables with itemLink+materials and source environment."
+    "2026-11-09T00:17:09.332Z: FRESH NAME-based Looter discovery for new 12.1 epic gear and rare Preyhunter's Lantern found seven distinct source tables absent in repo; tested and excluded existing 248077/248066/251251/248064/248059 and 271555 plus already indexed Cardinalai, Jacara, kyzenbka, Miststalker, and Golden City Baton. Do not repeat these 7 mutable base-item snapshots as independent original casts; next seek first-person per-cast SavedVariables with itemLink+materials and source environment.",
+    "2026-11-09T01:18:32.708Z: NEW public-original-SavedVariables/CSV collection lane: exact-name GitHub/Gist (Miststalker's Wristbands, Umbral Tin, Eversong Diamond), Wago.io, CurseForge, site-restricted Reddit and Blizzard searches. Found Ka0s Loot History (processing-source CSV) and Playfulls (day/build-tagged local disenchant records), but zero publicly shared raw player cohorts. No source numbers invented. Do not repeat without consented CSV/SavedVariables and input-action join verification."
   ],
   "decisions_needed": [
     {
@@ -357,7 +322,7 @@
       "decision": "To obtain interpretable original disenchant studies from current tracker exports, request consented first-party raw operation-level collector fields: source full itemLink and actual ilvl/rarity/slot, build, current skill and spec nodes, each outcome itemID and stack quantity including zero bins, and an actual completed-cast counter. Third-party grouped SavedVariables is not zero-inclusive or per-input; do not treat it as an exact 272246 or skill-specific probability."
     }
   ],
-  "next_concrete_step": "Obtain verified player event-level disenchant log for actual 272246 ilvl305 gear or seven newly cataloged items; require input itemLink bonus+ilvl, spell success/failure, output itemIDs+ranks, stack histogram, skill/specialization and build; alternatively seek true 237362 rank-specific original prospect log or 236761 mill log before any new reference-only table.",
+  "next_concrete_step": "Master to assess whether a consented Ka0s Loot History CSV or Playfulls SavedVariables can provide event-level provenance; verify input itemLink+bonus+ilvl, completed operation count, material output ID/rank/quantity including zeros, build/skill/spec and Resourcefulness refunds. Otherwise switch to a newly published original 237362/237363 prospect or 236761 mill log; do not re-index existing source cohorts.",
   "production_merge": false,
   "release": false,
   "notifications": "quiet; on-demand only",
@@ -393,5 +358,7 @@
       "verification_required": "Collect in-game successful-or-rejected disenchant with full itemLink/bonus/ilvl305, client build and linked reagent result, or comparable source export. Do not equate a selectable scaled tooltip or character equipped gear with proof of a DE."
     }
   ],
-  "next": "New independently sourced 272246 DE event with bonus and outcome or 237362 and 236761 zero-inclusive per-operation logs; avoid repeated search-only/no-output reference loops."
+  "next": "New independently sourced 272246 DE event with bonus and outcome or 237362 and 236761 zero-inclusive per-operation logs; avoid repeated search-only/no-output reference loops.",
+  "newly_verified_fields_cohorts": [],
+  "new_original_measured_cohorts": 0
 }
