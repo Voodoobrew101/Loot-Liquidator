@@ -84,6 +84,7 @@ python3 tests/test_recipe_coverage.py
 "$lua_bin" tests/test_disenchant_gaps.lua
 python3 tests/test_token_research.py
 python3 tests/test_token_research_s2.py
+python3 tests/test_token_staged_fallback.py
 python3 tests/test_evidence_check.py
 python3 tests/test_evidence_baselines.py
 python3 tools/evidence_to_baselines.py tests/fixtures/evidence-v3 "$compiled_dir/fixture-baselines.lua" >/dev/null
