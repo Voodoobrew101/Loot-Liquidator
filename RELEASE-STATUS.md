@@ -1,4 +1,18 @@
-# Consolidated test candidate
+# Current main and release gates
+
+Verified 2026-11-09 against [main b6610848604f68f8f3b40834397b79ce53eb8fb5](https://github.com/Voodoobrew101/Loot-Liquidator/commit/b6610848604f68f8f3b40834397b79ce53eb8fb5). The addon manifest and Core version are **0.12.19**. This is a source-tree version, not a claim that a release/tag or CurseForge upload exists.
+
+- Main includes PR49's retained capture inventory and PR50's Wrath token mappings. Runtime token lookup uses the standalone ItemDB catalog and Blizzard collection APIs; installing ATT is not required.
+- The bundled v3 research snapshot is pinned to `4df9ae8b1359d934828e4d0e6d39a9a4dba26fae` in [SNAPSHOT.json](database/research/v3-snapshot/SNAPSHOT.json). The immutable research audit reference checked on 2026-11-09 is `8e845ab46cc55ba93828b39fe0073fb302d2f59a`; its newer evidence is not automatically shipped or approved for numeric use. This is a dated reference, not a promise to track the moving branch head.
+- PRs [51](https://github.com/Voodoobrew101/Loot-Liquidator/pull/51), [52](https://github.com/Voodoobrew101/Loot-Liquidator/pull/52), [53](https://github.com/Voodoobrew101/Loot-Liquidator/pull/53), [54](https://github.com/Voodoobrew101/Loot-Liquidator/pull/54), [55](https://github.com/Voodoobrew101/Loot-Liquidator/pull/55) and [56](https://github.com/Voodoobrew101/Loot-Liquidator/pull/56) are open and unmerged at this checkpoint. Their salvage-import support, Retail evidence guard, cohort audit, held Disenchant imports, Craft diagnostics and curio guard must not be described as current-main functionality. Recheck their exact heads and integration before testing a combined candidate.
+- Owner review and targeted [Retail QA](docs/retail-qa.md) remain open. Automated tests and package construction do not establish live client behavior, empirical applicability, approval to merge, or approval to release. Each merge/release needs the owner's separate decision.
+- Use [AFTER_PATCH.md](AFTER_PATCH.md) for the current generator inventory and validation procedure. Record the exact tested commit, client build, source/profile settings and results, including skipped checks.
+
+## Historical October 30 candidate checkpoint
+
+The text below is preserved as historical evidence, not current instructions or current main status. Its alpha labels, branch pins, v0.9.70 references, ATT migration gates and final merge directions describe that earlier candidate only; they do not authorize actions now.
+
+### Consolidated test candidate
 
 October 30 repository review: PR #13 reconciles current research at 8954d24 with
 the earlier aca72a4 mechanics export and repairs nested-context/array serialization
