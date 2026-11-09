@@ -82,6 +82,8 @@ python3 tests/test_recipe_coverage.py
 "$lua_bin" tools/audit_profession_scaling.lua
 
 "$lua_bin" tests/test_disenchant_gaps.lua
+python3 tests/test_token_source_applicability.py
+python3 tests/test_token_source_compiler.py "$lua_bin"
 python3 tests/test_token_research.py
 python3 tests/test_token_research_s2.py
 python3 tests/test_evidence_check.py
