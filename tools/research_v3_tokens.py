@@ -114,10 +114,45 @@ def load_staged(paths=STAGED):
     return staged
 
 
+def token_admission(rows):
+    """Apply reviewed source-identity holds before any token claims or replacements.
+
+    Keep raw evidence intact. A historical vendor row is not current Retail
+    redemption evidence; neither names, URLs, dates nor vendor modes identify a
+    hold automatically. New identities require their own applicability review.
+    """
+    path = Path(__file__).resolve().parent.parent / 'database/research/token-admission.json'
+    policy = json.loads(path.read_text())
+    if (not isinstance(policy, dict) or type(policy.get('version')) is not int
+            or policy['version'] != 1 or not isinstance(policy.get('exclusions'), list)):
+        raise ValueError('Invalid token admission policy')
+    held = {}
+    for rule in policy['exclusions']:
+        if (not isinstance(rule, dict) or not isinstance(rule.get('recordIDs'), list)
+                or not rule['recordIDs'] or not isinstance(rule.get('file'), str)
+                or not rule['file'].strip() or rule['file'].startswith('/')
+                or '..' in rule['file'].split('/') or not isinstance(rule.get('reason'), str)
+                or not rule['reason'].strip() or not isinstance(rule.get('reviewEvidence'), list)
+                or not rule['reviewEvidence']
+                or not all(https(url) for url in rule['reviewEvidence'])):
+            raise ValueError('Invalid token admission exclusion')
+        for record_id in rule['recordIDs']:
+            if not isinstance(record_id, str) or not record_id.strip() or (rule['file'], record_id) in held:
+                raise ValueError('Invalid or duplicate token admission record ID')
+            held[(rule['file'], record_id)] = rule['reason']
+    admitted, notes = [], Counter()
+    for row in rows:
+        reason = held.get((row.get('_file'), row.get('id'))) if isinstance(row.get('id'), str) else None
+        if reason:
+            notes['token admission: ' + reason] += 1
+        else:
+            admitted.append(row)
+    return admitted, notes
+
+
 def build_tokens(snapshot, revision, staged=None):
     staged = load_staged() if staged is None else staged
-    notes = Counter()
-    rows = load_rows(snapshot)
+    rows, notes = token_admission(load_rows(snapshot))
     excluded = excluded_ids(snapshot)
     replaced = {r.get('replaces') for r in rows if r.get('replaces')}
     by_token = defaultdict(list)
