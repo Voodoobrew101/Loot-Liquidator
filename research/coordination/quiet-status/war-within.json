@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-09T02:35:17.376Z",
-  "status": "new_source_specific_ptr_looter_hits_provisional_no_new_per_cast_yield",
+  "updated_at": "2026-11-09T03:33:49.647Z",
+  "status": "new_cumulative_looter_priest_warlock_epic_hits_and_conflicting_eligibility_provisional",
   "task_ids": [
     "T0048",
     "T0040",
@@ -12,101 +12,112 @@
     "T0007"
   ],
   "exact_gaps_targeted": [
-    "T0048 newly retrieved source-specific TWW disenchant output occurrences for Fungal Friend Flute 215171 (trinket) and Cured Terracotta Shield 219798 (shield) with unique shared input denominators",
-    "T0048 unresolved exact output quality-rank item IDs for Storm Dust, Gleaming Shard and Refulgent Crystal (multiple same-name rows in source), skill, build/variant, and unit stacks per hit",
-    "T0040/T0009/T0008/T0007 post-2024-10-25 rank/skill-controlled Bismuth 210931, Ironclaw 210937 and Aqirite 210934 original operations/hits/histograms still lacking",
-    "T0010/T0011 Mycobloom 210796/210797 rank-specific original mill completed casts and 0..N distributions still lacking"
+    "T0048 additional source-item output occurrences for epic cloth feet 212085, epic cloth shoulders 237698, and epic cloth legs 237699 with source-specific completed-item denominator",
+    "T0048 conflict: WoWDB 212086 claims cannot disenchant while Wowhead 212086 lists disenchanting entries; item bonus/refund status unverified",
+    "T0048 linked exact Refulgent Crystal rank output IDs, completed original player casts, skill/spec/build/Resourcefulness and positive-stack units still null",
+    "T0040/T0009/T0008/T0007 Bismuth 210931, Ironclaw 210937, Aqirite 210934 prospecting by input rank/unlock and T0010/T0011 Mycobloom 210796/210797 milling per-cast positive/zero histograms still open"
   ],
   "newly_verified_fields": {
-    "record_count": 13,
-    "type": "drop",
+    "record_count": 10,
+    "type_counts": {
+      "drop": 9,
+      "noDisenchant": 1
+    },
     "input_item_ids": [
-      215171,
-      219798
+      212085,
+      237698,
+      237699
     ],
+    "eligibility_conflict_item_id": 212086,
     "output_names": [
-      "Storm Dust",
-      "Gleaming Shard",
       "Refulgent Crystal"
     ],
     "output_item_ids_verified": [],
     "numerical_fields": [
-      "source-reported item-disenc​​hant denominator",
-      "per-displayed-output-row occurrence numerator (castsWithDrop), NOT totalQuantity"
+      "source-reported cumulative source-item disenchant denominator",
+      "row-specific displayed output occurrence numerator, NOT totalQuantity or independently measured hit rate"
     ],
     "source_reported_cumulative_item_operations": {
-      "215171": 325,
-      "219798": 126
+      "212085": 142,
+      "237698": 145,
+      "237699": 145
     },
     "source_row_occurrences": {
-      "215171": [
-        100,
-        90,
-        43,
-        33,
-        21,
-        20,
-        8,
-        6
+      "212085": [
+        68,
+        49,
+        24
       ],
-      "219798": [
-        102,
-        18,
-        3,
-        1,
-        1
+      "237698": [
+        77,
+        45,
+        22
+      ],
+      "237699": [
+        80,
+        48,
+        17
       ]
     },
     "independent_original_player_cohorts_verified": 0,
-    "numeric_baseline_fields_advanced": [
-      "item-specific source-reported numerator and shared denominator (candidate, source-mode only)"
-    ],
     "per_cast_histograms_verified": 0,
     "measured_total_output_quantities": 0
   },
   "newly_verified_cohorts": [
     {
-      "input_item_id": 215171,
-      "input_name": "Fungal Friend Flute",
+      "input_item_id": 212085,
+      "input_name": "Living Luster's Boots",
       "sample_origin": "Wowhead cumulative item-side Looter table",
-      "shared_casts": 325,
-      "display_rows": 8,
+      "shared_casts": 142,
+      "display_rows": 3,
       "original_player_studies_unknown": true
     },
     {
-      "input_item_id": 219798,
-      "input_name": "Cured Terracotta Shield",
+      "input_item_id": 237698,
+      "input_name": "Inquisitor's Gaze of Madness",
       "sample_origin": "Wowhead cumulative item-side Looter table",
-      "shared_casts": 126,
-      "display_rows": 5,
+      "shared_casts": 145,
+      "display_rows": 3,
+      "original_player_studies_unknown": true
+    },
+    {
+      "input_item_id": 237699,
+      "input_name": "Inquisitor's Leggings of Madness",
+      "sample_origin": "Wowhead cumulative item-side Looter table",
+      "shared_casts": 145,
+      "display_rows": 3,
       "original_player_studies_unknown": true
     }
   ],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=215171/fungal-friend-flute",
-    "https://www.wowhead.com/ptr-2/item=219798/cured-terracotta-shield?bonus=11128%3A11054&ilvl=490&spec=72"
+    "https://www.wowhead.com/ptr-2/item=212085/living-lusters-boots",
+    "https://www.wowhead.com/item=237698/inquisitors-gaze-of-madness",
+    "https://www.wowhead.com/fr/item=237699/jambieres-de-folie-de-l-inquisitrice",
+    "https://www.wowdb.com/items/212086-living-lusters-raiment",
+    "https://www.wowhead.com/item=212086/living-lusters-raiment"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-09T0235-new-tww-trinket-shield-looter-hit-cohorts.jsonl"
+    "research/v3/evidence/war-within/2026-11-09T0333-new-tww-priest-warlock-looter-hits-and-eligibility.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T0235-new-tww-trinket-shield-looter-hit-cohorts.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-09T0333-new-tww-priest-warlock-looter-hits-and-eligibility.jsonl"
   ],
-  "verified_commit_sha": "af055fc85b57c76b74a9a7c591914fb4ba9a1329",
-  "verified_commit_sha_meaning": "Verified branch parent SHA recorded before the atomic evidence-and-status commit; current commit SHA cannot be embedded within its own tracked status file.",
-  "last_verified_branch_parent_sha": "af055fc85b57c76b74a9a7c591914fb4ba9a1329",
+  "verified_commit_sha": "7539901c4d3db8fc1f69faf5ebb28a7584ecfa86",
+  "verified_commit_sha_meaning": "Verified branch parent SHA before atomic commit; self-referential own commit SHA cannot be written into own tracked JSON file.",
+  "last_verified_branch_parent_sha": "7539901c4d3db8fc1f69faf5ebb28a7584ecfa86",
   "blockers": [
-    "Wowhead Looter item-side tables are cumulative anonymous submissions, not original dated player logs: collection build, patches, eligibility, bonus/quality variants, skill, specialization and Resourcefulness basis unverified.",
-    "Repeated same-name Storm Dust, Gleaming Shard and Refulgent Crystal rows cannot be assigned rank/item ID from indexed text; outputItemID/outputRank intentionally null. Row hits cannot be combined across ranks until linked IDs are retrieved.",
-    "No total output quantities, completed cast-level individual histograms, verified zeros, or current retail API eligibility; source-mode only, not suitable for live gold EV.",
-    "No newly verified post-hotfix ore/herb original per-cast 0/1/2/... cohorts; earlier PeaEsk, Reikah, Aqirite 1g350pq, Mycobloom LotzBoi/1fdmzwy remain insufficient."
+    "Wowhead Looter cumulative output occurrences are not original dated controlled player studies; source tables omit per-cast output units, zeros, min/max, histograms, bonus variants, skill, spec and refund basis.",
+    "All nine Refulgent Crystal rows have unresolved rank and linked exact output IDs; repeated name does not establish shared rank and rows must not be combined.",
+    "WoWDB 212086 no-disenchant assertion conflicts with Wowhead disenchanting section; verify live item variant/refund state before enabling/disabling DE.",
+    "No new controlled post-hotfix prospecting 210931/210937/210934 or milling 210796/210797 cohorts with raw per-cast logs; unknowns remain null."
   ],
   "exhausted_sources": [
     "Aqirite 1g350pq Oct 14 2024 skill/rank cohorts already have 14 original-source correcting records 2026-11-02T0216; do not duplicate or treat pre-hotfix aggregate averages as hit probabilities.",
     "Previous rank-2 Mycobloom 1fdmzwy and LotzBoi ranges, Oct 2024 Ironclaw Reikah cohorts, and Wowhead Looter 229157 drop rows are already filed; this run added a separate eligibility observation, not another cumulative count.",
-    "PeaEsk rank-two prospecting \"100\" sample, Mycobloom 1fdmzwy / LotzBoi averages and Reikah historical ore batches already in evidence; no new post-2024-10-25 cast-level logs found in this run."
+    "PeaEsk rank-two prospecting \"100\" sample, Mycobloom 1fdmzwy / LotzBoi averages and Reikah historical ore batches already in evidence; no new post-2024-10-25 cast-level logs found in this run.",
+    "Already-recorded cumulative item tables 212049, 212051, 211997, 211999, 212058, 237615, 237700, 229141 were deduplicated and not refiled."
   ],
-  "next_concrete_step": "Capture raw linked output item IDs and ranks plus player-specific build/bonus provenance for 215171 and 219798, then original per-cast output stacks; seek post-2024-10-25 rank/skill/refund-separated Bismuth, Ironclaw, Aqirite prospecting or Khaz Algar milling logs. Keep ambiguous output ranks and zeros null.",
+  "next_concrete_step": "Seek verified output rank IDs and original first-person logs with casts, zero outcomes, total units and histograms by rank/skill; prioritize post-hotfix Bismuth 210931/Ironclaw 210937/Aqirite 210934 prospecting and Mycobloom 210796/210797 milling. Verify WowDB 212086 conflicting eligibility against live bonus/refund state.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
