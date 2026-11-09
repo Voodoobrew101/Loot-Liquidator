@@ -1,0 +1,25 @@
+# Coordinator follow-through: four unadjudicated Nov 9 Legacy milling rows and a source-level zero observation
+
+Verified against original public Wowhead comment text on 2026-11-09 UTC. Scope: original-source identity/units and numeric field availability, **not** additional original gameplay observations, addon changes or current Retail conversion approval.
+
+## Two different samples in commenter 777148's Verdant Pigment post
+
+Original: https://www.wowhead.com/item=43103/verdant-pigment (comment by 777148).
+
+- `legacy-20261109-95505`: the writer explicitly reports **36 complete 20-herb stacks** of mixed level-20–35 herbs **excluding Stranglekelp**, **144 finished mills**, and **50 total Verdant Pigment 43103 units**. Thus 144 completed mixed-herb milling operations and 50 units are source-attested; **there is no composition per herb and no Verdant-positive-cast count**. Do not assign all 50 units or 144 mills to Mageroyal, Briarthorn, Swiftthistle, or Stranglekelp individually. This source is not an additional copy of the four previously recorded sheppeyescapee item-specific aggregates.
+- `legacy-20261109-95506`: the *same author* describes an **earlier, separate 20-stack Mageroyal/Briarthorn mix** yielding **5 total Verdant units**. The input proportion and actual completed operations were not reported; 20 stacks must **not** be converted into an observed click denominator or merged into the 144-mill sample. A derived nominal 20×20/5=80 five-herb equivalents, if ever displayed as context, is **not** 80 observed casts.
+- **Additional source datum absent from these two worker rows:** the author says **two stacks of Stranglekelp produced zero Verdant Pigment**. Stranglekelp is **item 3820** (https://www.wowhead.com/item=3820/stranglekelp). This is a separate herb-specific zero-total anecdote because the 36-stack sample expressly excluded Stranglekelp and the earlier purchased batch lists only Mageroyal/Briarthorn. The source establishes **0 units across two 20-herb stacks** but does **not** disclose the actual completed-click/refund denominator, contemporaneous date, patch or character conditions. In particular, do not fabricate an 8-cast zero histogram, a current Retail zero rate or a measured per-cast probability.
+- The same post mentions **6 Verdant units from one 20-herb stack of Swiftthistle (2452)**. This is a **stack aggregate**, not a six-unit single-mill outcome or valid maxSeen=6 per cast. Its possible overlap with the author's other batches is unknown; **do not count it as an independent study**.
+
+## Two separate temporary beta observations from commenter 204361
+
+- `legacy-20261109-95509` at https://www.wowhead.com/wotlk/item=43104/burnt-pigment: **beta build 8885** has six **Burnt-positive** milling events, with five reporting one unit each and one reporting two (seven units total). This supports a **positive-only** histogram {1:5,2:1}, not six complete attempts or the comment's approximate 40–50% as exact measured P(hit). The number of zero-producing attempts, exact herb identities and total mills are unknown.
+- `legacy-20261109-95510` at https://www.wowhead.com/item=39341/silvery-pigment: author explicitly says **beta build 8905** had **two completed mills with no Silvery Pigment**, while one Iridescent Pollen appeared during that experience. For Silvery alone, two zero outcomes and `{0:2}` are directly reported; the same author describes this as a **temporary beta bug**. This must not become a post-launch/current Retail Silvery baseline, nor be pooled with build 8885 or the author's separate 8905 twelve-mill Firefly Dust cohort (recorded in the existing master audit) as independent combined mills. Exact herbs are unknown.
+
+## Disposition
+
+The four previously unadjudicated Nov 9 worker lines are consistent with the accessible original comments **at source field level**. The extra Stranglekelp zero-total and Swiftthistle one-stack high observation are **newly isolated source facts at stack granularity**, not appended worker measurements or validated Retail yields. Distinguish **observed pigment units**, **positive outcome counts**, **completed attempts**, **herbs/stack**, **source-period version**, and **modern eligibility**; these quantities cannot be substituted for one another.
+
+The preceding coordinator checkpoint already showed the other six Nov 9 Legacy lines were repeated historic cohorts. This follow-through has **0 newly performed game experiments; 0 new independent confirmed completed casts; 0 newly actionable 2026 Retail gold decisions; 0 newly rendered tooltip fields**. No research estimator, ItemDB compile or actual-engine synthetic-price / tooltip suite was run. Worker evidence files, migration originals, three-pass implementation and addon code remain untouched.
+
+Next: if an original-source zero-only Stranglekelp unit record is desired, have the Legacy owner append it **with null casts and explicit stack-level evidence and originalSource**; do not invent zero-cast histograms. Keep T0005/T0039/T0045 first for current Retail evidence requiring exact output ranks, 0..N events, skill/unlock, version, and refunds.
