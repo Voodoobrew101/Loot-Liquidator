@@ -32,16 +32,103 @@ local function plain(v)
     if type(v)~='table' then return v end
     local result={} for k,x in pairs(v) do result[k]=plain(x) end return result
 end
-local function signature(v)
+local function signature(v,legacy)
+    -- Lua 5.1 tostring rounds doubles; preserve every native numeric bit in
+    -- grouping and profile equality. Persisted seen IDs still deduplicate imports.
+    if type(v)=='number' and not legacy then return 'number:'..(v==0 and '0' or string.format('%.17g',v)) end
     if type(v)~='table' then return type(v)..':'..tostring(v) end
     local keys={} for k in pairs(v) do keys[#keys+1]=k end
     table.sort(keys,function(a,b)return tostring(a)<tostring(b) end)
     local result={}
     for _,k in ipairs(keys) do
-        local key,value=signature(k),signature(v[k])
+        local key,value=signature(k,legacy),signature(v[k],legacy)
         result[#result+1]=#key..':'..key..#value..':'..value
     end
     return '{'..table.concat(result)..'}'
+end
+-- Reconcile a partial upgrade only when both aggregate memberships are complete
+-- and disjoint. Never infer per-cast outputs from overlapping or damaged history.
+local function mergeDisjointSalvage(target,legacy)
+    local seen={}
+    for _,set in ipairs({target,legacy}) do
+        if not integer(set.casts,1,MAX_SEEN) or not integer(set.consumed,0)
+            or type(set.sourceRecordIDs)~='table' or #set.sourceRecordIDs~=set.casts
+            or type(set.materials)~='table' then return false end
+        local count=0
+        for k,id in pairs(set.sourceRecordIDs) do
+            if not integer(k,1,set.casts) or type(id)~='string' or id=='' or seen[id] then return false end
+            seen[id]=true;count=count+1
+        end
+        if count~=set.casts or set.consumed>set.casts*set.inputCount then return false end
+        for id,m in pairs(set.materials) do
+            if not integer(id) or type(m)~='table' or not integer(m.drops,1,set.casts)
+                or not integer(m.total,m.drops) or not integer(m.min,1,MAX_PER_MATERIAL)
+                or not integer(m.max,m.min,MAX_PER_MATERIAL) or not integer(m.quality,1,5)
+                or m.total<m.drops*m.min or m.total>m.drops*m.max then return false end
+            local other=target.materials[id]
+            if other and other.quality~=m.quality then return false end
+        end
+    end
+    if target.casts+legacy.casts>MAX_SEEN then return false end
+    for id,m in pairs(legacy.materials) do
+        local n=target.materials[id]
+        if n then
+            n.drops=n.drops+m.drops;n.total=n.total+m.total
+            n.min=math.min(n.min,m.min);n.max=math.max(n.max,m.max)
+        else target.materials[id]=plain(m) end
+    end
+    for _,id in ipairs(legacy.sourceRecordIDs) do target.sourceRecordIDs[#target.sourceRecordIDs+1]=id end
+    target.casts=target.casts+legacy.casts;target.consumed=target.consumed+legacy.consumed
+    return true
+end
+local function sameSalvageContext(a,b)
+    return a.salvage and b.salvage and a.studyID==b.studyID
+        and a.recipeID==b.recipeID and a.method==b.method
+        and a.inputItemID==b.inputItemID and a.inputCount==b.inputCount
+        and a.inputQualityRank==b.inputQualityRank and a.build==b.build
+        and a.applyConcentration==b.applyConcentration
+        and signature(a.allocation)==signature(b.allocation)
+        and signature(a.observationContext)==signature(b.observationContext)
+end
+-- Verify the complete encoded key, treating the embedded cohort as opaque. Its
+-- recipe/input/rank components are bounded integers and unchanged by precision.
+-- This avoids guessing context IDs that are absent from saved aggregate fields.
+local function exactPartnerKey(key,set)
+    if type(key)~='string' or not set.salvage or type(set.observationContext)~='table' then return nil end
+    local length,offset=key:match('^salvage:{8:number:1(%d+):()')
+    length=tonumber(length)
+    if not length or length>#key then return nil end
+    local value=key:sub(offset,offset+length-1)
+    if value:sub(1,7)~='string:' then return nil end
+    local cohort=value:sub(8)
+    if key~='salvage:'..signature({cohort,signature(set.observationContext,true)},true) then return nil end
+    local exact='salvage:'..signature({cohort,signature(set.observationContext)})
+    return exact~=key and exact or nil
+end
+local function reconcileSavedPairs(sets)
+    local changed,held,groups=false,{},{}
+    -- Group first, then mutate. Two old signed-zero keys can share one canonical
+    -- identity even before an exact-key aggregate has ever been imported.
+    for legacyKey,legacy in pairs(sets) do
+        local key=exactPartnerKey(legacyKey,legacy)
+        if key then
+            groups[key]=groups[key] or {}
+            groups[key][#groups[key]+1]=legacyKey
+        end
+    end
+    for key,legacyKeys in pairs(groups) do
+        table.sort(legacyKeys)
+        local targetKey=sets[key] and key or legacyKeys[1]
+        local target=sets[targetKey]
+        for _,legacyKey in ipairs(legacyKeys) do
+            local legacy=sets[legacyKey]
+            if legacyKey~=targetKey and legacy and sameSalvageContext(target,legacy) then
+                if mergeDisjointSalvage(target,legacy) then sets[legacyKey]=nil;changed=true
+                else held[targetKey]=true;held[legacyKey]=true end
+            end
+        end
+    end
+    return changed,held
 end
 local function measuredProfile(context)
     local result=plain(context)
@@ -332,6 +419,13 @@ local function salvageCasts(self,data)
         local cohort=signature({r.character,cast.build,r.studyID,r.contextID,r.recipeID,cast.input,input.qualityRank,r.applyConcentration})
         measured.keys[cohort]=measured.keys[cohort] or ('salvage:'..signature({cohort,measured.identity}))
         cast.storageKey=measured.keys[cohort]
+        local legacyCohort=signature({r.character,cast.build,r.studyID,r.contextID,r.recipeID,cast.input,input.qualityRank,r.applyConcentration},true)
+        measured.legacyKeys=measured.legacyKeys or {}
+        if not measured.legacyKeys[legacyCohort] then
+            measured.legacyIdentity=measured.legacyIdentity or signature(measured.value,true)
+            measured.legacyKeys[legacyCohort]='salvage:'..signature({legacyCohort,measured.legacyIdentity},true)
+        end
+        cast.legacyStorageKey=measured.legacyKeys[legacyCohort]
         return nil
     end
     for i,r in ipairs(data.records) do
@@ -441,6 +535,7 @@ function LL:ImportRecordedResults(text,label)
             return false,'Import history is full. Remove imported results before adding more verified salvage results.',counts
         end end
     end
+    local migrationChecked={}
     for _,cast in ipairs(clean) do
         local inputKey=cast.gearKey or tostring(cast.input)
         -- Partial category metadata is still useful as a physical scope guard;
@@ -452,6 +547,26 @@ function LL:ImportRecordedResults(text,label)
         local key=cast.method..":"..inputKey..":"..cast.batch..":"..cast.build
         if cast.salvage then key=cast.storageKey end
         local set=d.sets[key]
+        if cast.salvage and cast.legacyStorageKey~=key and not migrationChecked[key] then
+            migrationChecked[key]=true
+            local legacy=d.sets[cast.legacyStorageKey]
+            -- Upgrade a single existing aggregate only after exact native identity
+            -- verification. Rounded legacy-key collisions must not pool profiles.
+            if legacy and legacy.salvage and legacy.studyID==cast.studyID
+                and legacy.recipeID==cast.recipeID and legacy.method==cast.method
+                and legacy.inputItemID==cast.input and legacy.inputCount==cast.batch
+                and legacy.inputQualityRank==cast.inputQualityRank and legacy.build==cast.build
+                and legacy.applyConcentration==cast.applyConcentration
+                and signature(legacy.allocation)==signature(cast.allocation)
+                and signature(legacy.observationContext)==signature(cast.observationContext) then
+                if not set then
+                    set=legacy;d.sets[key]=legacy;d.sets[cast.legacyStorageKey]=nil
+                elseif set~=legacy and sameSalvageContext(set,legacy)
+                    and mergeDisjointSalvage(set,legacy) then
+                    d.sets[cast.legacyStorageKey]=nil
+                end
+            end
+        end
         if not set then
             set={method=cast.method,inputItemID=not cast.gearKey and cast.input or nil,gearKey=cast.gearKey,
                 expansionID=cast.expansionID,inputRarity=cast.inputRarity,inputClassID=cast.inputClassID,
@@ -548,6 +663,8 @@ function LL:ImportedEvidenceRecords(indexKey,f,option,ctx)
     if type(d)~="table" or type(d.sets)~="table" then return nil end
     local current=build()
     if not self._importedIndex or self._importedIndex.build~=current then
+        local changed,held=reconcileSavedPairs(d.sets)
+        if changed then self._importedRevision=(self._importedRevision or 0)+1 end
         local index={build=current}
         for key,set in pairs(d.sets) do
             local category=set.method=="Disenchant" and disenchantCategory(set.expansionID,set.inputRarity,set.inputClassID)
@@ -563,13 +680,23 @@ function LL:ImportedEvidenceRecords(indexKey,f,option,ctx)
                     -- Results from another game build count for less (stale), never zero.
                     obsolete=set.build~=current or nil,materials={}}
                 if salvage then
-                    r.recipeID=set.recipeID;r.studyID=set.studyID;r.referenceContextID=set.referenceContextID
+                    r.recipeID=set.recipeID;r.studyID=set.studyID
+                    -- Normalize only the query identity so legacy/new independent
+                    -- studies can share their exact retained native context. Keep
+                    -- the original saved identifier intact as historical provenance.
+                    r.savedReferenceContextID=set.referenceContextID
+                    r.referenceContextID=type(set.observationContext)=='table' and
+                        ('imported-salvage:'..signature({set.recipeID,set.inputItemID,
+                            set.inputQualityRank,set.build,signature(measuredProfile(set.observationContext))}))
+                        or set.referenceContextID
                     r.inputQualityRank=set.inputQualityRank;r.targetBuild=set.build
                     r.expectedInputCount=set.consumed/set.casts
                     r.observationContext=set.observationContext;r.allocation=set.allocation
                     r.applyConcentration=set.applyConcentration;r.sourceRecordIDs=set.sourceRecordIDs
                     r.fixedReference=false;r.salvage=true
-                    r.baselineStatus='Measured imported salvage cohort; exact matching context required'
+                    r.legacyProfileConflict=held[key] or nil
+                    r.baselineStatus=held[key] and 'Held: legacy profile aggregates require original raw exports to reconcile'
+                        or 'Measured imported salvage cohort; exact matching context required'
                 end
                 if category then
                     r.memberInputItemIDs={}
@@ -603,7 +730,7 @@ function LL:ImportedEvidenceRecords(indexKey,f,option,ctx)
     local eligible,queries={},{}
     for _,record in ipairs(records) do
         if not record.salvage then eligible[#eligible+1]=record
-        elseif option and ctx and not ctx.simulated and not ctx.stale and ctx.character==self:CharacterKey()
+        elseif not record.legacyProfileConflict and option and ctx and not ctx.simulated and not ctx.stale and ctx.character==self:CharacterKey()
             and record.recipeID==option.recipeID and record.inputCount==option.inputCount
             and record.inputQualityRank==f.reagentQuality and tostring(record.targetBuild)==current
             and self.CaptureCraftContext and self.FindSkillQualityTarget then
