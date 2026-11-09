@@ -1,110 +1,46 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-09T18:13:53.016Z",
-  "status": "active; eight source-verified pigment output quality IDs plus exact rank-1 Mana Lily milling and rank-1/rank-2 Umbral Tin recipe input IDs; source-only identity/batch records, no new original completed yield cohort",
+  "updated_at": "2026-11-09T19:16:55.872Z",
+  "status": "active; new independently corroborated negative processing mechanic (Midnight prospecting cannot Multicraft); no new original yield cohort, estimator hold retained",
   "task_ids": [
-    "T0045",
+    "T0033",
     "T0039",
     "T0005",
     "T0001",
     "T0026",
     "T0049",
-    "T0003"
+    "T0003",
+    "T0002"
   ],
   "exact_gaps_targeted": [
-    "T0045: distinguish output quality IDs 245807 R1/245808 R2 Powder Pigment, 245803 R1/245804 R2 Argentleaf Pigment, 245867 R1/245866 R2 Mana Lily Pigment and 245865 R1/245864 R2 Sanguithorn Pigment. These are catalog/reference identities, not measured outputs.",
-    "T0045: input 236778 Mana Lily R1, recipe 1269575, 10 herbs/cast; only recipe eligibility verified.",
-    "T0039/T0005/T0001: exact Umbral Tin 237362 R1 and 237363 R2, spell 1231127, 5 ore/operation; need original rank-specific complete casts, each 0-inclusive material histogram, output yields, skill/spec, and refunded ore. No per-output observed numeric cohort added.",
-    "T0026/T0049: Miststalker's Wristbands 272246 generic ilvl206 vs scaled ilvl305 DE eligibility conflict unchanged; need live itemLink with bonus/build and successful DE receipt."
+    "T0033: mechanics.md M11 currently says prospecting Multicraft applies (likely); three independent 2026 Midnight guide sources explicitly say prospecting/crushing cannot Multicraft. Needs Master M11 review/correction; do not modify shared mechanics file.",
+    "T0005/T0039: Umbral Tin 237362 4000 ore original Cardinalai shows 30 Eversong Diamond and 597 Glass, 911 Stone, 39.6% Resourcefulness; source does not report actual completed casts. 4000/5 = 800 nominal ore equivalents, NOT verified completed casts; per-output hit counts, histograms, actual refunds and rank remain unknown. Original v3 records midnight-20261030-003..009 correctly have casts=null; queue wording '800 completed' requires Master review.",
+    "T0026/T0049: Miststalker's Wristbands item 272246 live ilvl305/bonus-enabled disenchant receipt still unknown; PTR selected ilvl305 and ilvl318 queries are not confirmed successful in-game disenchant receipts.",
+    "T0001/T0002/T0003: independent current-epoch rank-specific original prospecting receipts for Umbral Tin R2 237363, Brilliant Silver 237365 and Refulgent Copper 237359 remain missing; milling 10-herb zero-inclusive cohorts remain missing."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "type": "reference-only quality crosswalk",
-      "method": "Mill",
-      "inputFamilies": [
-        "Tranquility Bloom",
-        "Argentleaf",
-        "Mana Lily",
-        "Sanguithorn"
-      ],
-      "outputRankMappings": [
-        {
-          "family": "Tranquility Bloom",
-          "outputItemID": 245807,
-          "outputRank": 1
-        },
-        {
-          "family": "Tranquility Bloom",
-          "outputItemID": 245808,
-          "outputRank": 2
-        },
-        {
-          "family": "Argentleaf",
-          "outputItemID": 245803,
-          "outputRank": 1
-        },
-        {
-          "family": "Argentleaf",
-          "outputItemID": 245804,
-          "outputRank": 2
-        },
-        {
-          "family": "Mana Lily",
-          "outputItemID": 245867,
-          "outputRank": 1
-        },
-        {
-          "family": "Mana Lily",
-          "outputItemID": 245866,
-          "outputRank": 2
-        },
-        {
-          "family": "Sanguithorn",
-          "outputItemID": 245865,
-          "outputRank": 1
-        },
-        {
-          "family": "Sanguithorn",
-          "outputItemID": 245864,
-          "outputRank": 2
-        }
-      ],
-      "sources": [
-        "https://goldcap.gg/retail/us/items/245807",
-        "https://goldcap.gg/retail/us/items/245808",
-        "https://goldcap.gg/retail/us/items/245803",
-        "https://goldcap.gg/retail/us/items/245804",
-        "https://goldcap.gg/retail/us/items/245867",
-        "https://goldcap.gg/retail/us/items/245866",
-        "https://goldcap.gg/retail/us/items/245865",
-        "https://goldcap.gg/retail/us/items/245864"
-      ],
-      "sourceNote": "Icy Veins and Warcraft Wiki establish herb family; GoldCap establishes per-ID rank. Not first-hand milling captures."
-    },
-    {
-      "type": "recipe",
-      "method": "Mill",
-      "inputItemID": 236778,
-      "inputName": "Mana Lily",
-      "inputRank": 1,
-      "recipeSpellID": 1269575,
-      "inputsPerCast": 10,
-      "measuredCasts": null
-    },
-    {
-      "type": "recipe",
+      "type": "mechanics-source",
+      "taskID": "T0033",
       "method": "Prospect",
       "inputItemIDs": [
         237362,
-        237363
+        237363,
+        237359,
+        237361,
+        237364,
+        237365,
+        237366
       ],
-      "inputRanks": [
-        1,
-        2
+      "inputIDScope": "Scope list of previously-known Midnight ore variants; quoted guides do not give new exact itemID-specific processing observations",
+      "mechanic": "Multicraft does not apply to Midnight Prospecting or Crushing (source-backed guides, pending Master M11 adoption)",
+      "sources": [
+        "https://www.icy-veins.com/wow/professions-jewelcrafting-stats",
+        "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
+        "https://dving.net/guides/wow-midnight-jewelcrafting-guide"
       ],
-      "recipeSpellID": 1231127,
-      "inputsPerCast": 5,
-      "measuredCasts": null
+      "observedCompletedCasts": null,
+      "observedMulticraftProcs": null
     }
   ],
   "numeric_fields_advanced": {
@@ -113,67 +49,30 @@
     "newZeroInclusiveHistograms": 0,
     "newTotalOutputQuantities": 0,
     "newEmpiricalProbabilities": 0,
-    "referenceOnlyOutputRankIDs": [
-      245807,
-      245808,
-      245803,
-      245804,
-      245867,
-      245866,
-      245865,
-      245864
-    ],
-    "newRankAwareRecipeInputIDs": [
-      236778,
-      237362,
-      237363
-    ],
-    "newReferenceOnlyRecords": 8,
-    "newRecipeRecords": 3,
+    "newVerifiedMechanicExclusions": 1,
+    "newSourceOnlyRecords": 1,
     "estimatorStudyRowsAdmitted": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-09T1813-pigment-rank-crosswalk-and-tin-batches.jsonl"
+    "research/v3/evidence/midnight/2026-11-09T1916-prospecting-multicraft-exclusion-source.jsonl"
   ],
   "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-09T1614-rod-transition-23-completed-source-ops.jsonl",
   "evidence_record_ids": [
-    "midnight-20261109-1813-001",
-    "midnight-20261109-1813-002",
-    "midnight-20261109-1813-003",
-    "midnight-20261109-1813-004",
-    "midnight-20261109-1813-005",
-    "midnight-20261109-1813-006",
-    "midnight-20261109-1813-007",
-    "midnight-20261109-1813-008",
-    "midnight-20261109-1813-009",
-    "midnight-20261109-1813-010",
-    "midnight-20261109-1813-011"
+    "midnight-20261109-1916-001"
   ],
   "source_links": [
-    "https://www.icy-veins.com/wow/professions-inscription",
-    "https://warcraft.wiki.gg/wiki/Mana_Lily_Pigment",
-    "https://warcraft.wiki.gg/wiki/Argentleaf_Pigment",
-    "https://warcraft.wiki.gg/wiki/Sanguithorn_Pigment",
-    "https://warcraft.wiki.gg/wiki/Powder_Pigment",
-    "https://goldcap.gg/retail/us/items/245807",
-    "https://goldcap.gg/retail/us/items/245808",
-    "https://goldcap.gg/retail/us/items/245803",
-    "https://goldcap.gg/retail/us/items/245804",
-    "https://goldcap.gg/retail/us/items/245867",
-    "https://goldcap.gg/retail/us/items/245866",
-    "https://goldcap.gg/retail/us/items/245865",
-    "https://goldcap.gg/retail/us/items/245864",
-    "https://goldcap.gg/retail/us/items/236778",
-    "https://goldcap.gg/retail/eu/items/237362",
-    "https://goldcap.gg/retail/eu/items/237363",
-    "https://www.wowhead.com/spell=1231127/midnight-prospecting"
+    "https://www.icy-veins.com/wow/professions-jewelcrafting-stats",
+    "https://www.wow-professions.com/midnight/jewelcrafting-specialization-guide-and-builds",
+    "https://dving.net/guides/wow-midnight-jewelcrafting-guide",
+    "https://www.wowhead.com/spell=1231127/midnight-prospecting",
+    "https://www.wowhead.com/item=237362/umbral-tin-ore"
   ],
   "blockers": [
-    "No new uncensored primary 2026 Midnight disenchant or ore/herb processing cohort with exact itemLink, skill/spec, source build, completed operations, hits/zeros, measured material amounts and per-cast histograms.",
-    "Eight pigment-rank reference rows are catalog identities only; per-cast quantity and input-to-output quality transition require observations, not GoldCap market or guides.",
-    "Umbral Tin rank-specific prospecting has recipe identity but lacks source-original completed cast+output evidence; do not derive chance from 800-cast Cardinalai quantity totals or refunds.",
-    "Miststalker's Wristbands 272246 live eligibility, bonus/ilvl305 and Looter-vs-WoWDB conflict remain unresolved.",
-    "Existing primary owner Evercore/PR49 capture restrictions NO_NUMERIC_TRANSFORM and Master integration authority unchanged."
+    "Master-only mechanics.md M11 change required: existing 'likely applies' contradicted by Icy Veins, Wow-Professions and Dving; do not silently apply Mulitcraft in predictions.",
+    "No new independent current-patch original 0-inclusive processing cohort: item IDs/ranks, skill/spec, per-operation cast count, hits, totalQuantity, refund details and histograms missing.",
+    "Original Cardinalai 4000-ore study has 39.6% Resourcefulness; actual completed casts not given, so 800 is nominal 5-ore equivalents, not a proved denominator; existing evidence casts null must remain null.",
+    "272246 ilvl305 successful disenchant (true itemLink and output by build) remains unresolved; mixed live/PTR Looter data cannot validate it.",
+    "Original owner PR49 Evercore captures remain RESEARCH_ONLY_NOT_SHIPPED/NO_NUMERIC_TRANSFORM; no overlap or regression to measured study estimates."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -189,12 +88,13 @@
     "2026-11-09T15:18:23.524Z: New independently measured owner PR49 primary-intake lane (source pinnings 2026-11-07-pr49-82-skill-194-update and 2026-11-07-pr49-82-skill-200-additional and 104-skill reviewed comparison). Prior 97-cast snapshot is subset of 194, distinct 200-cast follow-up verified by 394 unique source operation IDs. 104-skill missing classified result barred from point estimates. Other owner recycled older 75/108/172 overlap exports intentionally excluded; next run must not reimport this cohort.",
     "2026-11-09 2026-11-09T16:14:29.037Z: Newly sampled named Umbral Tin/Refulgent Copper/Eversong Diamond/Tranquility Bloom prospecting/milling search results across guide and community sources; no independently new current-patch 0-inclusive per-operation cohort or verified skill/refund export found. Prior Cardinalai/Honeybone/Draggoth and Looter samples not recopied. Owner's separate rod-transition raw source adds exactly 23 previously unrecorded Midnight-worker per-context source events; no new gameplay captures.",
     "2026-11-09T17:13:28.604Z: New nonduplicate rank-2 item-identity lane: checked Eversong Diamond 242712 via GoldCap, ore-specific nodes via wow-professions, exact rank2 herb item IDs via GoldCap/TSM and 10-herb Midnight recipe via Method; no original new 0-inclusive output cohort. Do not repeat this identity lane without new source containing actual casts/variant outcomes.",
-    "2026-11-09T18:13:53.016Z: Nonduplicate targeted pigment-rank identity check verified explicit GoldCap US output-rank item IDs across all four herb families (notably reversed 245867/245866 Mana Lily and 245865/245864 Sanguithorn), cross-checked Icy Veins and Warcraft Wiki for family provenance. Name-based fresh disenchanting/Umbral Tin/copper/silver/Tranquility Bloom original-cohort searches across Reddit, Blizzard forum, Wowhead, WoWDB, Icy Veins, Method and profession guides found no independent new 0-inclusive per-cast source. Excluded pre-indexed Cardinalai, Honeybone, Draggoth, kyzenbka, SeniorEmployment932, Insomnist 5294, Looter, owner PR49 and approximate prospecting calculator as duplicates. Do not repeat generic 2026 guide and broad reddit/forum search lanes without fresh primary export."
+    "2026-11-09T18:13:53.016Z: Nonduplicate targeted pigment-rank identity check verified explicit GoldCap US output-rank item IDs across all four herb families (notably reversed 245867/245866 Mana Lily and 245865/245864 Sanguithorn), cross-checked Icy Veins and Warcraft Wiki for family provenance. Name-based fresh disenchanting/Umbral Tin/copper/silver/Tranquility Bloom original-cohort searches across Reddit, Blizzard forum, Wowhead, WoWDB, Icy Veins, Method and profession guides found no independent new 0-inclusive per-cast source. Excluded pre-indexed Cardinalai, Honeybone, Draggoth, kyzenbka, SeniorEmployment932, Insomnist 5294, Looter, owner PR49 and approximate prospecting calculator as duplicates. Do not repeat generic 2026 guide and broad reddit/forum search lanes without fresh primary export.",
+    "2026-11-09T19:16:55.872Z: New mechanics M11 targeted lane cross-checked 2026 Midnight Icy Veins JC stats, wow-professions JC specialization, Dving JC guide, Wowhead profession guide, Blizzard forums and r/woweconomy firsthand Resourcefulness discussion. Three independent current guide sources explicitly reject Multicraft on prospecting/crushing. No direct verified positive Multicraft proc, nor novel current build per-cast numeric yield export in sampled searches; repeated Cardinalai, Honeybone, Looter and owner PR49 cohorts deliberately excluded. Next step Master adjudication and direct game recipe-stat inspection."
   ],
-  "next_concrete_step": "Seek actual current-build player itemLink+bonus/ilvl and successfully disenchanted Miststalker's Wristbands 272246 receipt; or independent 237362/237363 itemLink-specific prospecting export with actual completed 5-ore operations, outputs/zeros/refunds and Tin-vestigator state. Check newly explicit quality ID crosswalk in Master importer/estimator but do not modify shared files or extrapolate reference-only rows.",
-  "previous_verified_commit_sha": "4f8d063a858d4386180ff2f59640e35785f7036c",
-  "verified_commit_sha": "b0bc4b2632d2f97e4f3cf940f0bd809636fc7313",
-  "verified_commit_sha_scope": "Precommit branch head only. New final commit SHA cannot be embedded in its own committed status without a second commit. Verify final branch SHA externally in run.",
-  "base_commit_sha_verified": "b0bc4b2632d2f97e4f3cf940f0bd809636fc7313",
-  "commit_readback": "PENDING external post-commit head and file hash read-back verification"
+  "next_concrete_step": "Master: correct/review mechanics.md M11 to 'prospecting does not Multicraft' based on independent Icy Veins/Wow-Professions/Dving guides, with direct in-game recipe-stat check; also correct queue T0005/T0039 wording so Cardinalai 4000/5=800 is nominal equivalent with 39.6% Resourcefulness, not verified completed casts. Worker next seek a new original post-hotfix 237362/237363 per-cast export incl hits/zeros/quality/skill/refunds or a 272246 ilvl305 true itemLink and material receipt.",
+  "previous_verified_commit_sha": "b0bc4b2632d2f97e4f3cf940f0bd809636fc7313",
+  "verified_commit_sha": "51034a23fdeadf96057a2c108c7c81dee2d90d87",
+  "verified_commit_sha_scope": "Precommit branch head; new commit's own SHA cannot appear in its committed content without an extra commit. New final SHA is verified externally by read-back in this run.",
+  "base_commit_sha_verified": "51034a23fdeadf96057a2c108c7c81dee2d90d87",
+  "commit_readback": "PENDING final post-commit branch-head and evidence/status read-back"
 }
