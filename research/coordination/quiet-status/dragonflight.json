@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T09:48:01.054Z",
-  "status": "Five previously unindexed original Dragonflight item-side disenchant Looter cohorts: 10 output occurrence rows; original prospect/mill 0–N histograms still unavailable",
+  "updated_at": "2026-11-09T10:42:02.109Z",
+  "status": "Six previously unindexed item-specific Dragonflight disenchant Looter cohorts: 12 original material occurrence rows (2 PTR mirrors); no new ore/herb 0-N cast histogram",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,141 +12,170 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "189143/188658 Draconium, 190394/190395/190396 Serevite, 190312/190313/190314 Khaz'gorite, 194545 Prismatic Ore: refund-aware completed prospect counts, material hit denominators, zero and 0–N histograms, quality rank, skill/patch remain missing.",
-    "191467 Bubble Poppy and 191464/191465/191466 Saxifrage mill output rank, caster skill/refunds, castsWithDrop, 0–N pigment histograms still missing.",
-    "Five new exact gear inputs 200350/200347/200344/200345/200346 lack validated raw individual disenchant event series, joint material outcomes, output quantity totals and item bonus/build provenance."
+    "Draconium ore 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545: new measured refund-aware completed prospect casts, castsWithDrop and material 0-N histograms not found.",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466: dated completed mill casts and pigment output rank/zero-inclusive histograms unavailable.",
+    "Gear 209919,209923,207267,207211,207250,207251: Looter source timing, item bonus/build, per-hit output unit totals and raw zero-inclusive material histograms not verifiable, including PTR-origin item pages."
   ],
   "newly_verified_fields": {
-    "record_count": 10,
-    "distinct_original_cohorts": 5,
-    "new_numerical_measurements": 10,
-    "source_kind": "First-party Wowhead original item-page cumulative Looter count tables retrieved from indexed page text; direct HTML/raw event log not retrievable; quality/patch/bonus unspecified",
+    "record_count": 12,
+    "distinct_original_cohorts": 6,
+    "new_numerical_measurements": 12,
+    "source_kind": "Indexed original item-specific cumulative Wowhead Looter material occurrence table, not raw/dated player event log",
     "measured_casts": {
-      "200344": 31,
-      "200345": 34,
-      "200346": 37,
-      "200347": 35,
-      "200350": 11
+      "207211": 29,
+      "207250": 31,
+      "207251": 29,
+      "207267": 44,
+      "209919": 42,
+      "209923": 30
     },
-    "castsWithDrop": "Ten explicitly reported individual material occurrence hit counts (one per output), each tied to source-reported operation count",
-    "percentShown": "Ten source-rounded displayed per-operation percentages preserved verbatim",
+    "castsWithDrop": "12 source-reported per-material occurrence hits",
+    "percentShown": "12 source-rounded percentages copied without recomputation",
     "totalQuantity": null,
     "histogram": null,
     "output_ids": [
+      194123,
       194124,
       200113
     ],
-    "caveat": "Undated cumulative crowd-submitted samples may mix patch/versions. Multiple material occurrences can co-occur; 1–2 Shard range is positive stack span, not a zero-inclusive histogram."
+    "caveat": "Two item pages indexed via PTR. Cumulative Looter snapshots may mix versions and show jointly overlapping materials; do not equate material hit-count with quantity or zero-cast evidence."
   },
   "newly_verified_cohorts": [
     {
-      "inputItemID": 200350,
-      "inputName": "Skybound Avenger's Cape",
-      "reported_operations": 11,
+      "inputItemID": 209919,
+      "inputName": "Chartreuse Champion's Bulwark",
+      "reported_operations": 42,
+      "output_material_hits": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 36,
+          "percentShown": 86
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 13,
+          "percentShown": 31
+        }
+      ],
+      "source": "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
+      "source_mode": "Live Wowhead indexed cumulative Looter table",
+      "raw_source_verified": false,
+      "patch": null
+    },
+    {
+      "inputItemID": 209923,
+      "inputName": "Chartreuse Champion's Blade",
+      "reported_operations": 30,
+      "output_material_hits": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 27,
+          "percentShown": 90
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 4,
+          "percentShown": 13
+        }
+      ],
+      "source": "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
+      "source_mode": "Live Wowhead indexed cumulative Looter table",
+      "raw_source_verified": false,
+      "patch": null
+    },
+    {
+      "inputItemID": 207267,
+      "inputName": "Devout Ashdevil's Fiendcloak",
+      "reported_operations": 44,
       "output_material_hits": [
         {
           "outputItemID": 200113,
-          "castsWithDrop": 7,
+          "castsWithDrop": 28,
           "percentShown": 64
         },
         {
           "outputItemID": 194124,
-          "castsWithDrop": 5,
-          "percentShown": 45
+          "castsWithDrop": 21,
+          "percentShown": 48
         }
       ],
-      "source": "https://www.wowhead.com/item=200350/skybound-avengers-cape",
+      "source": "https://www.wowhead.com/ptr/item=207267/devout-ashdevils-fiendcloak",
+      "source_mode": "PTR Wowhead indexed Looter mirror; actual live-version cohort provenance unverified",
       "raw_source_verified": false,
       "patch": null
     },
     {
-      "inputItemID": 200347,
-      "inputName": "Skybound Avenger's Ailerons",
-      "reported_operations": 35,
+      "inputItemID": 207211,
+      "inputName": "Greatwolf Outcast's Footpads",
+      "reported_operations": 29,
       "output_material_hits": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 21,
-          "percentShown": 60
-        },
         {
           "outputItemID": 200113,
           "castsWithDrop": 18,
-          "percentShown": 51
+          "percentShown": 62
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 12,
+          "percentShown": 41
         }
       ],
-      "source": "https://www.wowhead.com/item=200347/skybound-avengers-ailerons",
+      "source": "https://www.wowhead.com/ptr/item=207211/greatwolf-outcasts-footpads",
+      "source_mode": "PTR Wowhead indexed Looter mirror; actual live-version cohort provenance unverified",
       "raw_source_verified": false,
       "patch": null
     },
     {
-      "inputItemID": 200344,
-      "inputName": "Skybound Avenger's Grips",
+      "inputItemID": 207250,
+      "inputName": "Benevolent Embersage's Wristwraps",
       "reported_operations": 31,
       "output_material_hits": [
         {
-          "outputItemID": 194124,
+          "outputItemID": 200113,
           "castsWithDrop": 21,
           "percentShown": 68
         },
         {
-          "outputItemID": 200113,
+          "outputItemID": 194124,
           "castsWithDrop": 13,
           "percentShown": 42
         }
       ],
-      "source": "https://www.wowhead.com/item=200344/skybound-avengers-grips",
+      "source": "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
+      "source_mode": "Live Wowhead indexed cumulative Looter table",
       "raw_source_verified": false,
       "patch": null
     },
     {
-      "inputItemID": 200345,
-      "inputName": "Skybound Avenger's Visor",
-      "reported_operations": 34,
+      "inputItemID": 207251,
+      "inputName": "Benevolent Embersage's Sagacious Sash",
+      "reported_operations": 29,
       "output_material_hits": [
         {
           "outputItemID": 194124,
-          "castsWithDrop": 29,
-          "percentShown": 85
+          "castsWithDrop": 23,
+          "percentShown": 79
         },
         {
           "outputItemID": 200113,
-          "castsWithDrop": 17,
-          "percentShown": 50
+          "castsWithDrop": 15,
+          "percentShown": 52
         }
       ],
-      "source": "https://www.wowhead.com/item=200345/skybound-avengers-visor",
-      "raw_source_verified": false,
-      "patch": null
-    },
-    {
-      "inputItemID": 200346,
-      "inputName": "Skybound Avenger's Legguards",
-      "reported_operations": 37,
-      "output_material_hits": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 24,
-          "percentShown": 65
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 18,
-          "percentShown": 49
-        }
-      ],
-      "source": "https://www.wowhead.com/item=200346/skybound-avengers-legguards",
+      "source": "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash",
+      "source_mode": "Live Wowhead indexed cumulative Looter table",
       "raw_source_verified": false,
       "patch": null
     }
   ],
-  "new_numerical_measurements": 10,
+  "new_numerical_measurements": 12,
   "numerical_fields_improved": [
-    "Five newly indexed original item-specific disenchant count denominators (148 cumulative reported operations across different exact item IDs; does not mean 148 dated fully audited raw logs)",
-    "Ten original material per-output occurrence/hit counts for 194124 Vibrant Shard and 200113 Resonant Crystal",
-    "Ten originally rounded per-cast material-hit percentages; positive shard stack min/max 1–2 where directly displayed, no unit totals or zero histograms"
+    "Six newly indexed original per-item cumulative Looter reported disenchant denominators (205 operations over distinct gear IDs, not individually audited cast logs).",
+    "Twelve material-specific source occurrence counts and twelve independently preserved rounded per-operation material percentages; sourced conditional positive stack ranges where displayed.",
+    "Exact observed output identities 194123 Chromatic Dust, 194124 Vibrant Shard, 200113 Resonant Crystal; no output quantity, 0-N histogram, skill or build fields inferred."
   ],
   "evidence_files": [
+    "research/v3/evidence/dragonflight/2026-11-09T1042-six-unindexed-item-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T0948-five-skybound-gear-looter-hits.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T0914-six-original-gear-looter-hits.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T0740-five-original-gear-de-hits.jsonl",
@@ -159,6 +188,12 @@
     "research/v3/evidence/dragonflight/2026-11-09T0440-prospectmate-cast-export-search.jsonl"
   ],
   "source_links": [
+    "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
+    "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
+    "https://www.wowhead.com/ptr/item=207267/devout-ashdevils-fiendcloak",
+    "https://www.wowhead.com/ptr/item=207211/greatwolf-outcasts-footpads",
+    "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
+    "https://www.wowhead.com/item=207251/benevolent-embersages-sagacious-sash",
     "https://www.wowhead.com/item=200350/skybound-avengers-cape",
     "https://www.wowhead.com/item=200347/skybound-avengers-ailerons",
     "https://www.wowhead.com/item=200344/skybound-avengers-grips",
@@ -206,12 +241,12 @@
     "https://www.curseforge.com/wow/addons/prospectmate",
     "https://addons.wago.io/addons/prospectmate"
   ],
-  "verified_commit_sha": "934dc8704e0b18b1c7313e6ab5740b1a503e23ac",
-  "commit_sha_scope": "Both verified_commit_sha and verified_parent_sha are the verified PRE-RUN branch parent. Own new commit SHA cannot be embedded self-referentially in same Git tree; post-push independent GitHub ref and file readback attest new commit.",
+  "verified_commit_sha": "224bd05f313192b093274e25e0d1cc9f64858b2b",
+  "commit_sha_scope": "Verified SHA identifies the precommit branch parent. It is impossible to embed a new commit's own SHA in its own tree; postcommit independent ref/file readback verifies new commit.",
   "blockers": [
-    "No unindexed original Dragonflight priority ore prospecting or ranked herb milling material-by-completed-cast 0/1/2+ histogram or refund-aware operation counts despite six new name-first searches across six source sites.",
-    "Wowhead Looter gear 200350/200347/200344/200345/200346 pooled submissions lack date/patch, actual disenchant-time item version, individual outcome overlap, per-output quantities/zero-inclusive histogram, skill and specialization; direct HTML obstructed by anti-bot.",
-    "Source page tooltip version/bonsai query is not historical disenchant-time version; later PTR mirrors or accumulating same item pages cannot be treated as independent studies. Output material URLs/quality should receive manual raw HTML/API verification before use."
+    "No unindexed original completed-cast/zero-inclusive per-material histogram for Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Dragonflight pigment milling; earlier historical source originals already indexed.",
+    "Six undated cumulative Wowhead Looter tables lack raw event-level operation/quantity logs, source character skills/specializations, collection patch/bonus ID and joint outcome distribution; 207211/207267 captured from PTR mirror, not verified as live-era processing eligibility.",
+    "Per-material occurrence percentages cannot reveal material quantity, per-output zero-inclusive distributions, or whether any single disenchant produced no materials; output table source HTML link IDs not directly audited."
   ],
   "exhausted_sources": [
     {
@@ -723,19 +758,32 @@
         "wow-professions.com Dragon Isles Inscription: Bubble Poppy five-herb milling 2–5 pigment reference table, not a measured player cohort",
         "Warcraft Wiki: Saxifrage and Blazing Pigment milling identities/mechanics, no original completed-cast series"
       ]
+    },
+    {
+      "at": "2026-11-09T10:42:02.109Z",
+      "scope": "New name-first original per-cast prospect/mill source search",
+      "reason": "Six fresh targeted domain queries found already indexed original historical Reddit work or non-observational references only; numeric gains instead from six unindexed distinct item-side Looter cohorts",
+      "whereLooked": [
+        "site:reddit.com/r/woweconomy Draconium Ore prospecting spreadsheets casts 2023",
+        "site:us.forums.blizzard.com/en/wow Bubble Poppy milling pigments",
+        "site:wowhead.com Khaz'gorite Ore prospecting per prospect",
+        "site:warcraft.wiki.gg Saxifrage milling pigment",
+        "site:wow-professions.com Serevite Ore Prospecting Illimited",
+        "site:reddit.com/r/woweconomy Prismatic Ore prospecting results 2023"
+      ]
     }
   ],
-  "next_concrete_step": "Target original Dragonflight prospecting/milling SavedVariables/ProspectMate exports with dated per-material cast sequence and refunded inputs; audit five gear Looter original material hyperlink IDs/item-version/patch and any 1–2 shard positive-stack histograms before estimator handoff. Do not count next Looter cumulative refresh as independent.",
+  "next_concrete_step": "Seek independent first-party Dragonflight prospect/mill saved-variable export with dated completed casts, rank-specific material occurrence/0–N histograms and Resourcefulness refunds; validate raw Wowhead item-side Looter HTML and historical item bonus/build for these six gear cohorts before estimator integration.",
   "validation": {
-    "precommit": "PASS: 10 drop rows + one searched row parse as JSONL, all 35 required drop keys, 11 unique record IDs, five unique source item cohorts absent from 198 pre-run Dragonflight evidence JSONL files, hit counts <= each item's Looter operation denominator, exact source-rounded percentages, source quotes, known output IDs, all missing totals/zero histograms null, six named searches across six sites. No prices.",
-    "postcommit": "Pending independent branch readback and changed-path validation after atomic commit.",
-    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T0948-five-skybound-gear-looter-hits.jsonl; research/coordination/quiet-status/dragonflight.json"
+    "precommit": "PASS 12 drop rows and one searched row JSONL-valid; all 35 drop keys; 13 unique IDs; six exact input IDs absent from GitHub searchable source index and previous own-status new cohort list; reported material hit <= per-item operations; all 12 displayed percentages within nearest-rounded source count; raw source numeric snippets independently cross-checked against indexed Wowhead live/PTR item pages. Source collection dates, build, quantity and histogram remain null; no prices.",
+    "postcommit": "Pending independent branch ref, evidence readback and commit path verification",
+    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T1042-six-unindexed-item-looter-cohorts.jsonl; research/coordination/quiet-status/dragonflight.json"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "934dc8704e0b18b1c7313e6ab5740b1a503e23ac",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T0948-five-skybound-gear-looter-hits.jsonl",
+  "verified_parent_sha": "224bd05f313192b093274e25e0d1cc9f64858b2b",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T1042-six-unindexed-item-looter-cohorts.jsonl",
   "current_run_commit_sha": null,
-  "newly_verified_fields_cohorts": 5
+  "newly_verified_fields_cohorts": 6
 }
