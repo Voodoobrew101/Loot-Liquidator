@@ -75,6 +75,7 @@ python3 tests/test_compact_transfer.py
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
 "$lua_bin" tests/test_salvage_imports.lua
+"$lua_bin" tests/test_import_target_lookup.lua
 "$lua_bin" tests/test_counts_model.lua
 "$lua_bin" tests/test_transmog_alts.lua
 "$lua_bin" tests/test_appearance_collection.lua

@@ -601,13 +601,18 @@ function LL:ImportedEvidenceRecords(indexKey,f,option,ctx)
     local records=self._importedIndex[indexKey]
     if not records or not f then return records end
     local eligible,queries={},{}
+    -- Every record in this call checks the same item facts. Reuse even a
+    -- missing target within this query, but verify inventory again next call.
+    local targetChecked,guid=false,nil
     for _,record in ipairs(records) do
         if not record.salvage then eligible[#eligible+1]=record
         elseif option and ctx and not ctx.simulated and not ctx.stale and ctx.character==self:CharacterKey()
             and record.recipeID==option.recipeID and record.inputCount==option.inputCount
             and record.inputQualityRank==f.reagentQuality and tostring(record.targetBuild)==current
             and self.CaptureCraftContext and self.FindSkillQualityTarget then
-            local guid=self:FindSkillQualityTarget(f)
+            if not targetChecked then
+                guid=self:FindSkillQualityTarget(f);targetChecked=true
+            end
             if guid then
                 local query=signature({record.recipeID,record.method,record.allocation,record.applyConcentration,guid})
                 local live=queries[query]
