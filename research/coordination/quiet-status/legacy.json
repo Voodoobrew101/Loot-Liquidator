@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T09:56:19.907Z",
-  "status": "10 source-backed legacy milling evidence rows from six distinct firsthand source batches (Sgtown two Northrend cohorts each with two materials, 777148 two mixed-herb batches, funknut one Felweed batch with two materials, and two historical 204361 beta-only material observations). 528 explicitly completed mills in 2009 source cohorts plus 2 beta attempts; no new measured Warmaul/Cobalt/Fel Iron casts. All reference estimates and unknown denominators excluded; no gold prices.",
+  "updated_at": "2026-11-09T11:19:59.088Z",
+  "status": "11 source-backed positive-hit records from six previously unrepresented item-specific Wowhead Looter disenchant cohorts (161 reported item-level operations in total). No new Warmaul 24995, Cobalt 36909, or Fel Iron 23424 measured observations. Historical/version-confounded observations only; no fabricated zeros, direct yield totals, rates, patches, skill or gold EV.",
   "task_ids": [
     "T0047",
     "T0022",
@@ -11,161 +11,258 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995: original 2,068 cumulative old Looter events remain preexisting, item-version/bonus, 22445/22446/22449 per-cast stack distributions and modern Retail eligibility unresolved; no duplicated rows.",
-    "T0022 Cobalt Ore 36909: previous identity-only gem IDs remain, still no independent confirmed per-gem positive-cast/zero distributions from completed prospects.",
-    "T0044 Fel Iron Ore 23424: prior raw gem sources preserved, no new independent source-complete histograms or current eligibility.",
-    "T0042 legacy milling: newfound first-person 2009-11-23 Sgtown 128 Adder's Tongue / 256 Icethorn actual mills with exact Azure/Icy totals; first-person Verdant mixed-herb 144 mills; 3.0.2 Felweed outputs; original beta positive-only and source-attested zero-only distributions.",
-    "T0053 Spaulders token 45661: historical seven-item class-reward mapping already archived under 2026-11-07T2341; modern use-based specialization reward remains unverified, no duplicated historical token row."
+    "T0047 Warmaul Legplates 24995 and historical TBC rarity/level: sought original cast-by-cast outputs, per-output hit/zero counts, patches and modern eligibility; old 2,068-event mixed-era Looter cohort and several model priors already archived, no new 24995 denominator. New Looter additions are lower-level Classic gear/weapon controls, not direct Warmaul matches.",
+    "T0022 Cobalt Ore 36909: no new cast-by-cast per-gem observations; copied chart/model percentages and prior mined-not-prospected samples excluded.",
+    "T0044 Fel Iron Ore 23424: prior 100-/565-ore Thottbot and other original cohorts already present in repo; not duplicated. New complete prospective cast logs still missing.",
+    "T0042 six independent gear-input Looter disenchant cohorts, new measured positive hits and explicit item-specific denominators (no per-cast joint log): 186057, 3761, 16724, 16725, 22090, 3565.",
+    "T0053 Spaulders 45661: seven historical class reward IDs already documented in prior evidence; new Retail use-based reward IDs remain unverified; avoided duplicating historical token."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "kind": "original first-person, same-cast paired output totals",
-      "studyKey": "wowhead-sgtown-20091123-adder-128mills",
-      "inputItemID": 36903,
-      "outputItemIDs": [
-        39343,
-        43109
+      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
+      "studyKey": "wowhead-wotlk-186057-looter-seven-disenchants",
+      "inputItemID": 186057,
+      "inputName": "Communal Warmaul",
+      "source_itemLevel": 52,
+      "source": "https://www.wowhead.com/wotlk/item=186057/communal-warmaul",
+      "source_game_version": "WotLK Classic",
+      "reported_disenchant_operations": 7,
+      "outputs": [
+        {
+          "outputItemID": 16202,
+          "outputName": "Lesser Eternal Essence",
+          "positive_casts": 6,
+          "source_conditional_range": [
+            1,
+            2
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 11176,
+          "outputName": "Dream Dust",
+          "positive_casts": 1,
+          "source_conditional_range": [
+            3,
+            3
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        }
       ],
-      "completed_casts": 128,
-      "herbs_used": 640,
-      "output_total_quantities": {
-        "39343": 383,
-        "43109": 61
-      },
-      "source": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
-      "source_date": "2009-11-23",
-      "patch": "3.2.2",
-      "per_output_hits": null,
-      "zero_histograms": null
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "hotfix": null
     },
     {
-      "kind": "original first-person, same-cast paired output totals",
-      "studyKey": "wowhead-sgtown-20091123-icethorn-256mills",
-      "inputItemID": 36906,
-      "outputItemIDs": [
-        39343,
-        43109
+      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
+      "studyKey": "wowhead-mopclassic-3761-looter-twentyeight-disenchants",
+      "inputItemID": 3761,
+      "inputName": "Deadskull Shield",
+      "source_itemLevel": 32,
+      "source": "https://www.wowhead.com/mop-classic/item=3761/deadskull-shield",
+      "source_game_version": "MoP Classic",
+      "reported_disenchant_operations": 28,
+      "outputs": [
+        {
+          "outputItemID": 11083,
+          "outputName": "Soul Dust",
+          "positive_casts": 20,
+          "source_conditional_range": [
+            2,
+            5
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 11134,
+          "outputName": "Lesser Mystic Essence",
+          "positive_casts": 6,
+          "source_conditional_range": [
+            1,
+            2
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 11138,
+          "outputName": "Small Glowing Shard",
+          "positive_casts": 2,
+          "source_conditional_range": null,
+          "totalQuantity": null,
+          "zero_histogram": null
+        }
       ],
-      "completed_casts": 256,
-      "herbs_used": 1280,
-      "output_total_quantities": {
-        "39343": 774,
-        "43109": 141
-      },
-      "source": "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
-      "source_date": "2009-11-23",
-      "patch": "3.2.2",
-      "per_output_hits": null,
-      "zero_histograms": null
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "hotfix": null
     },
     {
-      "kind": "original first-person, mixed herbs 144 actual mills",
-      "studyKey": "wowhead-777148-farmed-mixed-36complete-stacks-144mills",
-      "inputItemID": null,
-      "outputItemID": 43103,
-      "completed_casts": 144,
-      "totalQuantity": 50,
-      "source": "https://www.wowhead.com/item=43103/verdant-pigment"
-    },
-    {
-      "kind": "original first-person, separate mixed herb stack batch, no measured operations",
-      "studyKey": "wowhead-777148-earlier-purchased-mageroyal-briarthorn-20stacks",
-      "inputItemIDs": [
-        785,
-        2450
+      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
+      "studyKey": "wowhead-retail-16724-looter-sixtyfive-disenchants",
+      "inputItemID": 16724,
+      "inputName": "Lightforge Gauntlets",
+      "source_itemLevel": 13,
+      "source": "https://www.wowhead.com/item=16724/lightforge-gauntlets",
+      "source_game_version": "Retail page",
+      "reported_disenchant_operations": 65,
+      "outputs": [
+        {
+          "outputItemID": 14344,
+          "outputName": "Large Brilliant Shard",
+          "positive_casts": 62,
+          "source_conditional_range": null,
+          "totalQuantity": null,
+          "zero_histogram": null
+        }
       ],
-      "outputItemID": 43103,
-      "completed_casts": null,
-      "totalQuantity": 5,
-      "source": "https://www.wowhead.com/item=43103/verdant-pigment"
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "hotfix": null
     },
     {
-      "kind": "original first-person Felweed shared two-material total without casts",
-      "studyKey": "wowhead-funknut-post-302-felweed-only",
-      "inputItemID": 22785,
-      "outputItemIDs": [
-        39342,
-        43108
+      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
+      "studyKey": "wowhead-retail-16725-looter-twentytwo-disenchants",
+      "inputItemID": 16725,
+      "inputName": "Lightforge Boots",
+      "source_itemLevel": 13,
+      "source": "https://www.wowhead.com/item=16725/lightforge-boots",
+      "source_game_version": "Retail page",
+      "reported_disenchant_operations": 22,
+      "outputs": [
+        {
+          "outputItemID": 14344,
+          "outputName": "Large Brilliant Shard",
+          "positive_casts": 6,
+          "source_conditional_range": null,
+          "totalQuantity": null,
+          "zero_histogram": null
+        }
       ],
-      "completed_casts": null,
-      "output_total_quantities": {
-        "39342": 94,
-        "43108": 4
-      },
-      "patch": "3.0.2",
-      "source": "https://www.wowhead.com/mop-classic/item=43108/ebon-pigment"
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "hotfix": null
     },
     {
-      "kind": "source-positive-only beta build 8885 histogram; total denominator unknown",
-      "studyKey": "wowhead-204361-beta8885-burnt-six-positive-casts",
-      "inputItemID": null,
-      "outputItemID": 43104,
-      "completed_casts": null,
-      "positive_casts": 6,
-      "totalQuantity": 7,
-      "histogram": {
-        "1": 5,
-        "2": 1
-      },
-      "source": "https://www.wowhead.com/wotlk/item=43104/burnt-pigment"
+      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
+      "studyKey": "wowhead-mopclassic-22090-looter-twentyfour-disenchants",
+      "inputItemID": 22090,
+      "inputName": "Soulforge Gauntlets",
+      "source_itemLevel": null,
+      "source": "https://www.wowhead.com/mop-classic/item=22090/soulforge-gauntlets",
+      "source_game_version": "MoP Classic",
+      "reported_disenchant_operations": 24,
+      "outputs": [
+        {
+          "outputItemID": 20725,
+          "outputName": "Nexus Crystal",
+          "positive_casts": 22,
+          "source_conditional_range": null,
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 14343,
+          "outputName": "Small Brilliant Shard",
+          "positive_casts": 2,
+          "source_conditional_range": [
+            4,
+            4
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        }
+      ],
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "hotfix": null
     },
     {
-      "kind": "source-measured beta 8905 zero-inclusive two-cast material anomaly",
-      "studyKey": "wowhead-204361-beta8905-silvery-zero-two-mills",
-      "inputItemID": null,
-      "outputItemID": 39341,
-      "completed_casts": 2,
-      "positive_casts": 0,
-      "totalQuantity": 0,
-      "histogram": {
-        "0": 2
-      },
-      "source": "https://www.wowhead.com/wotlk/item=39341/silvery-pigment"
+      "kind": "original Wowhead Looter aggregate of completed disenchant events; positive occurrence counts only",
+      "studyKey": "wowhead-ptr-3565-looter-fifteen-disenchants",
+      "inputItemID": 3565,
+      "inputName": "Beerstained Gloves",
+      "source_itemLevel": 10,
+      "source": "https://www.wowhead.com/ptr/item=3565/beerstained-gloves",
+      "source_game_version": "12.1.7 PTR page",
+      "reported_disenchant_operations": 15,
+      "outputs": [
+        {
+          "outputItemID": 10940,
+          "outputName": "Strange Dust",
+          "positive_casts": 7,
+          "source_conditional_range": [
+            3,
+            3
+          ],
+          "totalQuantity": null,
+          "zero_histogram": null
+        },
+        {
+          "outputItemID": 10939,
+          "outputName": "Greater Magic Essence",
+          "positive_casts": 6,
+          "source_conditional_range": null,
+          "totalQuantity": null,
+          "zero_histogram": null
+        }
+      ],
+      "skill": null,
+      "specialization": null,
+      "build": null,
+      "hotfix": null
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 10,
-    "distinct_source_cohorts": 7,
-    "distinct_source_authors": 4,
-    "actual_completed_mills_sgtown": 384,
-    "actual_completed_mills_verdant_mixed": 144,
-    "source_measured_beta_mills": 2,
-    "nominal_purchased_stacks_promoted_to_casts": 0,
-    "source_positive_only_beta_burnt_casts": 6,
-    "source_based_beta_silvery_zero_casts": 2,
-    "new_warmaul_disenchants": 0,
-    "new_cobalt_prospects": 0,
-    "new_fel_iron_prospects": 0,
+    "new_evidence_records": 11,
+    "distinct_input_item_ids": 6,
+    "distinct_aggregated_looter_cohorts": 6,
+    "source_reported_item_level_disencasts": 161,
+    "per_output_hits_rows": 11,
+    "measured_per_cast_histograms": 0,
+    "measured_zero_outcomes": 0,
+    "measured_total_output_quantities": 0,
+    "new_warmaul_24995_casts": 0,
+    "new_cobalt_36909_prospects": 0,
+    "new_feliron_23424_prospects": 0,
     "price_fields": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-09T0956-northrend-outland-classic-milling-cohorts.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T0956-northrend-outland-classic-milling-cohorts.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-09T1119-looter-original-classic-armor-weapons.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-09T1119-looter-original-classic-armor-weapons.jsonl",
   "sources": [
-    "https://www.wowhead.com/wotlk/item=39343/azure-pigment",
-    "https://www.wowhead.com/item=43103/verdant-pigment",
-    "https://www.wowhead.com/mop-classic/item=43108/ebon-pigment",
-    "https://www.wowhead.com/wotlk/item=43104/burnt-pigment",
-    "https://www.wowhead.com/wotlk/item=39341/silvery-pigment",
-    "https://redmine.rising-gods.de/issues/4563",
-    "https://repos.wowace.com/wow/reagentmaker/file/17844b0b88c1/data.lua"
+    "https://www.wowhead.com/wotlk/item=186057/communal-warmaul",
+    "https://www.wowhead.com/mop-classic/item=3761/deadskull-shield",
+    "https://www.wowhead.com/item=16724/lightforge-gauntlets",
+    "https://www.wowhead.com/item=16725/lightforge-boots",
+    "https://www.wowhead.com/mop-classic/item=22090/soulforge-gauntlets",
+    "https://www.wowhead.com/ptr/item=3565/beerstained-gloves"
   ],
-  "verified_base_commit_sha": "575d023e7ad6ad2f905d836168e35c9ba2d5b2d2",
+  "verified_base_commit_sha": "8d4e2b2ceb7d1cfad67d771cc57ac371bdcda65b",
   "verified_commit_sha": null,
-  "commit_sha_note": "Single atomic commit updating evidence file plus owned status. A Git commit cannot embed its own SHA within its own tree; final verified commit SHA is confirmed by reading back the branch head and both files, not embedded here.",
+  "commit_sha_note": "The final Git commit cannot contain its own SHA in a file within that commit. The branch head and both owned files are read back after a single atomic commit; verified SHA is confirmed externally.",
   "blockers": [
-    "Warmaul Legplates 24995 old 2,068 Looter sample still lacks patch/suffix, true per-material unit histograms, and verified present-day Retail disenchant eligibility.",
-    "No new completed Cobalt Ore 36909 or Fel Iron Ore 23424 prospects with per-gem positive and zero histograms.",
-    "Sgtown output totals do not enumerate per-cast events or hit counts for Azure or Icy; 777148 144 mills mixes herb species, so cannot be attributed individually.",
-    "Funknut Felweed patch3.0.2 output batch lacks herb input count/denominator; purchased 20-stack Verdant batch cannot be converted into observed casts.",
-    "204361 beta 8885 Burnt histogram reports only six POSITIVE outcome events, total cast denominator remains unknown; 8905 Silvery output zeros were a transient reported beta bug, not normal or current Retail drop rates.",
-    "No source reports live-game specialization/skill/stat effects or resourcefulness refunds for new cohorts."
+    "Warmaul Legplates 24995 historic old Looter lacks raw per-cast stacks, 0 outcomes, source client/build/suffix, and verified modern Retail eligibility. No new Warmaul source-complete sample obtained.",
+    "Cobalt 36909 / Fel Iron 23424 still lack independent original per-gem hit counts and zero-inclusive per-cast histograms, despite previous source totals.",
+    "All six new Looter tables lack raw cast-level joint distributions, true total material units, exact player skill, specialization, contemporaneous build and refunds. No unlisted events were classified as zero.",
+    "New lower-level Classic item cohorts are not matched TBC ilvl108 gear, and Retail/PTR/MoP Classic/WotLK Classic item versions must not be pooled as one rate.",
+    "Spaulders 45661 modern spec-selected reward item IDs still need current live verification; previous historical vendor data preserved.",
+    "Firecrawl direct original-page extractor unavailable due connected credit exhaustion; evidence grounded in search-indexed original Wowhead Looter tables."
   ],
   "exhausted_sources": [
-    "Warmaul 24995 Wowhead cumulative Looter, Evowow opaque source weights, modern WowDB scaled item conflict previously audited; no re-recording.",
-    "Cobalt Strikk3r 180 ore and RU nominal stack sources previously corrected, no new complete measured source.",
-    "Fel Iron prior Thottbot/Kaliope/2007 one-cast Nightseye original studies previously recorded, not duplicated.",
-    "Already-recorded milling: 180977 Golden/Emerald/Violet PTR, 204361 Ruby beta8885 40 mills, killerpet aggregate Northrend, Warcanon Silvery/Sapphire, rmmoreira/Aenonar Adder's Tongue, rollocola 22,000 Ancient Lichen, sheppeyescapee Classic herbs, other prior Cataclysm/Pandaria sources."
+    "Warmaul 24995 old Looter cumulative counts and evowow ambiguous 7500/2200/300 weights (not operations): previously audited, not duplicated.",
+    "Fel Iron 23424 Wowhead 100-ore and 565-ore original Thottbot cohorts (already documented in repository; no new copies).",
+    "Cobalt 36909 historical table rates are modeled priors, not newly measured per-gem hit/zero data.",
+    "Wowhead Arcane Dust commenter 16088 147 rings is already recorded twice with unclear actual disenchants and mixed ring IDs; not recopied.",
+    "Original Reddit/Wowhead prospecting Saronite 30-stack and 420-cast reports already represented; not recopied."
   ],
-  "next_concrete_step": "Seek verified actual item-specific Warmaul 24995 suffix/build and current Retail eligibility (not additional cumulative Looter rescrapes); then Cobalt 36909 and Fel Iron 23424 independent true five-ore cast-by-cast logs with non-hit counts. For newly captured 2009 Sgtown input 36903/36906 cohorts, recover raw per-cast Azure 39343 and Icy 43109 positive/zero histograms from original SavedVariables or logs; avoid overlapping killerpet table and version-mismatched beta cohorts.",
-  "previous_status_updated_at": "2026-11-09T08:50:02.990Z"
+  "next_concrete_step": "Recover original raw per-cast 24995 Warmaul Legplates and matching ilvl108 armor/weapon disenchant output records (including build/suffix and zeros); then independent Cobalt Ore 36909 and Fel Iron Ore 23424 five-ore per-prospect item-specific gem hits and zero-inclusive histograms; collect live Retail token 45661 class/spec outcomes only after primary numeric gaps.",
+  "previous_status_updated_at": "2026-11-09T09:56:19.907Z"
 }
