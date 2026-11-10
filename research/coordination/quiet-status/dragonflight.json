@@ -1,28 +1,29 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-10T01:44:09.835Z",
-  "status": "active; new independent prospecting/milling study not found; code-verified ProspectMate saved data is cumulative and unsuitable for zero/hit histograms or completed-cast denominators",
+  "updated_at": "2026-11-10T02:51:38.535Z",
+  "status": "active; new firsthand R2 Serevite Resourcefulness context recorded as reference only; no new eligible output-per-completed-cast prospect/mill cohort",
   "task_ids": [
     "T0020",
-    "T0046",
-    "T0019",
-    "T0041",
     "T0018",
-    "T0015"
+    "T0015",
+    "T0041",
+    "T0019",
+    "T0046"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019: Draconium Ore input IDs 189143 and 188658 to gem output IDs 192837-192844: completed operation counts, individual output ranks/hits, actual refund accounting and 0-N outcome histograms still missing.",
-    "T0046/T0041: Serevite Ore input IDs 190394/190395/190396, Khaz'gorite (rank/ID to reconfirm) and Prismatic Ore 194545 to gem/diamond outputs 192869/192870/192871 and 192849/192850/192851: unresolved source rank mapping, deduplicated completed casts and exact output hit/zero distributions.",
-    "T0018/T0015: Bubble Poppy 191467 to Serene Pigment 198412/198413/198414; Saxifrage 191464 to Blazing Pigment 198418/198419/198420: original rank-specific mill count, quantity/hits per output and resourcefulness account still missing.",
-    "Newly resolved export feasibility: ProspectMate v2.0.4 records cumulative input material consumed and material output totals only, not durable operation-level results or per-material hit/zero histograms. No Dragonflight character sample was supplied by its source repository."
+    "Draconium Ore 189143/188658 ranked prospect per-output hit and 0-N histograms",
+    "Serevite Ore 190394/190395/190396 exact rank IDs, 5-ore prospects versus refunded ore and completed casts",
+    "Khaz'gorite and Prismatic Ore 194545 per-rank output counts and full 0-N histograms",
+    "Bubble Poppy 191467 and Saxifrage 191464 original pigment-per-completed-mill counts, rank and skill/spec/patch"
   ],
-  "newly_verified_fields": [],
+  "newly_verified_fields": [
+    "Serevite Ore R2 first-person 2023-02-03 nominal 10,000 ore, Resourcefulness 17.9% and stated 0.26 ore saved per prospect; source URL https://www.reddit.com/r/woweconomy/comments/10s9ol9",
+    "Serevite Ore R2 estimated roughly one unranked Illimited Diamond per 1,000 nominal ore as author's recollection only; reference evidence, not a measured cohort or cast rate"
+  ],
   "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [
-    "None; no new measured source. Verified the current ProspectMate export cannot answer per-operation hit/zero questions."
-  ],
+  "new_numerical_measurements": [],
+  "numerical_fields_improved": [],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-10T0144-prospectmate-raw-cast-export-gap.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T2337-four-new-item-looter-cohorts.jsonl",
@@ -47,7 +48,8 @@
     "research/v3/evidence/dragonflight/2026-11-09T0143-writhebark-post-tww-zero-crystal.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T0235-ore-rank-audit-and-cast-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T0440-prospectmate-cast-export-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-10T0034-three-amirdrassil-gear-looter-hits.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-10T0034-three-amirdrassil-gear-looter-hits.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-10T0251-serevite-refunds-and-original-source-triage.jsonl"
   ],
   "source_links": [
     "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
@@ -142,14 +144,16 @@
     "https://goldcap.gg/retail/us/items/194123",
     "https://www.wowhead.com/item=207278/cincture-of-lunar-communion",
     "https://www.wowhead.com/item=207283/poulaines-of-lunar-communion",
-    "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape"
+    "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape",
+    "https://www.reddit.com/r/woweconomy/comments/10s9ol9",
+    "https://www.reddit.com/r/woweconomy/comments/10u5ao8"
   ],
-  "verified_commit_sha": "348d2bfb3363ae09806b62234b852fc1dc6876a2",
-  "commit_sha_scope": "verified_commit_sha identifies verified pre-write parent HEAD; the new commit cannot self-embed its own SHA; final readback verifies new branch HEAD and both owned files.",
+  "verified_commit_sha": "6ee4c1ecfd91ea4acbe3b6a8c6bb26a0e51bdd9a",
+  "commit_sha_scope": "verified_commit_sha and verified_parent_sha denote the fetched parent SHA before write; a commit SHA cannot be embedded in itself. Current HEAD must be verified after push externally.",
   "blockers": [
-    "Public original measured Dragonflight prospecting and milling records lack material-by-operation counts, zeros, exact item quality ranks, skill/spec context and Resourcefulness-adjusted actual cast denominators.",
-    "ProspectMate main v2.0.4 saves aggregate material consumed/produced only, not per-operation 0-N outcomes or craft counts; current CraftSim JSON likewise omits raw per-operation craftResults. Need original raw-event data, not an unaugmented SavedVariables aggregate.",
-    "No new independent player sample found this run across six named queries and code review; do not import guide averages or historical copied cohorts as measured."
+    "All newly inspected prospect/mill first-person numeric sources report nominal ore inputs, resource savings, or approximate gem rate without raw output hit counts or actual completed-operation logs.",
+    "Serevite/Draconium quality-rank item ID correspondence is not independently confirmed from authoritative game tooltip/API in this run.",
+    "Earlier original ore samples and gear Looter records already indexed; copying would inflate independent-study coverage."
   ],
   "exhausted_sources": [
     {
@@ -593,44 +597,66 @@
         "github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua: directly inspected PM.State.results, CommitSession(), SmartProspectorDB.reagents; saved rows keep cumulative consumed input and cumulative output totals, not per-operation results or completed craft counts",
         "github.com/Urutseg/ProspectMate/blob/main/ProspectMate.toc: directly verified SmartProspectorDB SavedVariables name; no stand-alone published original Dragonflight saved variable data"
       ]
+    },
+    {
+      "at": "2026-11-10T02:51:38.535Z",
+      "scope": "New R2 Serevite ore refund math source and R2 Draconium nominal-input anecdote vs original pigment/ore cast ledgers",
+      "reason": "Original posts have numeric Resourcefulness context but lack new measured output-by-cast samples; all rank-specific outputs, zero histograms and patch-homogeneous cast denominators remain unknown; other historical cohorts already indexed.",
+      "whereLooked": [
+        "reddit.com/r/woweconomy/comments/10s9ol9 — Serevite Ore R2 firsthand Resourcefulness sample; no per-output measured casts",
+        "reddit.com/r/woweconomy/comments/10u5ao8 — Draconium Ore R2 >100,000 nominal inputs anecdote, no output counts",
+        "wowhead.com/spell=374627/dragon-isles-prospecting — Serevite/Draconium/Khaz'gorite original numerical table already indexed, no new independent cohort",
+        "wowhead.com/item=194545/prismatic-ore — TheChisel, Hotfor and superbondez historical originals already indexed; no novel per-output 0-N casts",
+        "us.forums.blizzard.com/en/wow — Bubble Poppy milling results named search, no original result ledger",
+        "eu.forums.blizzard.com/en/wow — Saxifrage milling pigments named search, no original result ledger",
+        "mmo-champion.com — Khaz'gorite Ore prospecting results named search, no original result table",
+        "warcraft.wiki.gg/wiki/Draconium_Ore — identity/ref-only page, no original completed prospect sample",
+        "wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight — 5-herb/2–5-pigment guide reference, no original pigment occurrences",
+        "github.com — Dragon Isles Prospecting CSV event log name search yielded no original released raw sample"
+      ]
     }
   ],
-  "next_concrete_step": "Source a genuine saved raw event stream or request an independent event-level Dragon Isles Prospecting/Milling capture from a player, not a default ProspectMate/CraftSim aggregate export: per spell-success operation, output item/quality ID+units, consumed/refunded input/quality count, skill, specialization and game build. Prioritize Draconium 189143/188658 and Serevite 190396, then Bubble Poppy 191467 and Saxifrage 191464. Preserve original cohort boundaries; leave unavailable source denominators and histograms null.",
+  "next_concrete_step": "Obtain original event-by-event R2 Serevite/Draconium Prospect and Bubble Poppy/Saxifrage Mill logs with actual completed operations, output item IDs/ranks/hits/quantities/zeros, Resourcefulness refund ledger, specialization/skill and patch. In absence of these, keep all cast denominators and probabilities unknown.",
   "validation": {
-    "jsonl_records": 1,
+    "jsonl_records": 2,
+    "drop_records": 1,
+    "reference_drop_records": 1,
     "searched_records": 1,
-    "drop_records": 0,
     "all_jsonl_rows_parsed": true,
-    "search_count": 8,
+    "search_count": 10,
     "distinct_search_domains": 8,
     "source_numeric_cohorts_added": 0,
     "unknown_numeric_fields_unmodified": true,
     "source_originals_deduplicated": true,
     "changed_paths_expected": [
-      "research/v3/evidence/dragonflight/2026-11-10T0144-prospectmate-raw-cast-export-gap.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-10T0251-serevite-refunds-and-original-source-triage.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "post_write_branch_readback": "pending"
+    "post_write_branch_readback": "to be checked following push"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "348d2bfb3363ae09806b62234b852fc1dc6876a2",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T0144-prospectmate-raw-cast-export-gap.jsonl",
+  "verified_parent_sha": "6ee4c1ecfd91ea4acbe3b6a8c6bb26a0e51bdd9a",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T0251-serevite-refunds-and-original-source-triage.jsonl",
   "current_run_commit_sha": null,
   "newly_verified_fields_cohorts": [],
   "last_source_search": {
-    "performed_at": "2026-11-10T01:44:09.835Z",
-    "priority_source_findings": "No unindexed numerical casts/hits/zeros for prospecting or milling; original code confirms ProspectMate SavedVariables totals cannot reconstruct 0-N per-operation histograms.",
+    "performed_at": "2026-11-10T02:51:38.535Z",
+    "priority_source_findings": "One firsthand Feb-2023 Serevite R2 Resourcefulness and approximate diamond-yield reference found; no nonduplicate confirmed per-cast output study, zeros or histograms.",
     "source_sites": [
-      "mmo-champion.com",
-      "github.com",
-      "eu.forums.blizzard.com",
       "reddit.com",
-      "curseforge.com",
-      "wowinterface.com"
+      "wowhead.com",
+      "us.forums.blizzard.com",
+      "eu.forums.blizzard.com",
+      "mmo-champion.com",
+      "warcraft.wiki.gg",
+      "wow-professions.com",
+      "github.com"
     ],
-    "new_source_items": [],
-    "source_code_reference": "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua"
+    "new_source_items": [
+      "https://www.reddit.com/r/woweconomy/comments/10s9ol9",
+      "https://www.reddit.com/r/woweconomy/comments/10u5ao8"
+    ]
   }
 }
