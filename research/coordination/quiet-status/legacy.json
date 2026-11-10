@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-10T09:49:22.125Z",
-  "status": "Read all current v3 instructions/mechanics/queue on research branch. Expanded first-person historical-source search and checked previously archived legacy cohorts before import. No NEW independent numeric cast cohort, material hit/zero histogram or 45661 reward identity passed source-ID and deduplication gates. Two historical-version reliability findings captured; no new evidence JSONL to prevent duplicate or ambiguous output records.",
+  "updated_at": "2026-11-10T10:41:58.270Z",
+  "status": "Checked current v3 rules and queued Warmaul/Cobalt/Fel Iron/TBC sources for independent casts. No new primary completed-cast or hit/zero cohort identified. Corrected one previously archived Saronite 11-stack source (12 output rows): 44 had been recorded as measured casts although it was only a nominal full-stack equivalent; the corrected replacements preserve every source-reported gem total and set casts to null. No price, production, queue, schedule, or other-worker files changed.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -13,16 +13,95 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 historical 2068 reported disenchant operations -> 22445=1559 hits, 22446=417, 22447=7, 22449=48; total units, full stack histogram, unaccounted 37 operations, game build/bonus/skill and 2026 Retail eligibility remain unverified.",
-    "Historical Warmaul reference conflict: 2007-era WoWWiki lists Arcane Dust 22445 at 22% and Greater Planar Essence 22446 at 75%, reversing relative frequencies of existing Wowhead positive-hit cohorts and Evowow weights; reference-only numbers cannot supersede the original cast table.",
-    "Cobalt Ore 36909: independent completed prospects, output hit counts/zeros/histograms for common gems 36917/36920/36923/36926/36929/36932 and rarer 36918/36921/36924/36927/36930/36933 still unavailable; avoid 24-stack/180-ore cohort replay and six 2.5 per-output provisional priors.",
-    "Fel Iron Ore 23424: original historical reports of 100 and 565 ore already recorded; skill conflict: Kaliope's Jan 18-19 2007 firsthand testing says prospectable at jewelcrafting 290, vs later Classic guides/addon reference 275. Exact patch/version required; no additional verified gem cast histogram recovered.",
-    "Runecloth Headband 13866: existing 400 and 43 completed disenchants, no new per-output hit histograms; preserve separate cohorts and historic/current dust item identity.",
-    "Spaulders of the Wayward Vanquisher 45661: all seven Valorous reward IDs and Retail use/loot-specialization redemption already present in legacy-20261101-216; historical vendor redemption is a different pathway, not new output."
+    "Warmaul Legplates 24995 2068 historical Looter disenchants: output 22445=1559 positive hits / 5638 reconstructed units, 22446=417 / 695, 22447=7 / 19, 22449=48 / 48; reconstructed positive-only stack histograms already archived, but no proven 0-bin, item bonus/build/skill, independent per-item events or verified 2026 live eligibility.",
+    "Current Retail Warmaul 24995 item-level/DE eligibility disagreement (historical TBC iLvl108 skill275, live Wowhead iLvl14, other scaled snapshots iLvl31; WoWDB cannot disenchant) still unverified on actual client.",
+    "Cobalt Ore 36909 lacks new independent completed prospect counts and per-gem hit/zero histogram for gems 36917/36920/36923/36926/36929/36932 and rare 36918/36921/36924/36927/36930/36933; avoid recycling pre-existing 180-ore and 24-stack originals or the six 2.5-unit priors.",
+    "Fel Iron Ore 23424 original 100-ore and 565-ore cohorts already captured; new completed casts/hit/zero histograms and verifiable 2007 skill 290-versus-275 patch context absent.",
+    "Saronite Ore 36912 original author 390549 recorded 11 stacks and exact gem quantities at JC400; earlier evidence legacy-20261031-1250..1261 improperly treated a conditional 44 five-ore batch equivalent as real casts. Twelve replacement records now set casts=null without adding a cohort.",
+    "Token 45661 seven class reward mappings and current redemption are already archived; no new variant/identity verified."
   ],
-  "newly_verified_fields_cohorts": [],
+  "newly_verified_fields_cohorts": [
+    {
+      "kind": "measurement_basis_correction",
+      "studyKey": "wowhead-prospect-spell-390549-11stacks-saronite",
+      "source": "https://www.wowhead.com/mx/spell=31252/prospectar",
+      "original_source_comment": "390549",
+      "inputItemID": 36912,
+      "inputName": "Saronite Ore",
+      "reported_stacks": 11,
+      "formerly_assumed_casts": 44,
+      "corrected_casts": null,
+      "jewelcrafting_skill": 400,
+      "output_totals_unchanged": [
+        {
+          "outputItemID": 36926,
+          "totalQuantity": 13
+        },
+        {
+          "outputItemID": 36929,
+          "totalQuantity": 10
+        },
+        {
+          "outputItemID": 36932,
+          "totalQuantity": 8
+        },
+        {
+          "outputItemID": 36923,
+          "totalQuantity": 7
+        },
+        {
+          "outputItemID": 36920,
+          "totalQuantity": 6
+        },
+        {
+          "outputItemID": 36917,
+          "totalQuantity": 5
+        },
+        {
+          "outputItemID": 36924,
+          "totalQuantity": 3
+        },
+        {
+          "outputItemID": 36918,
+          "totalQuantity": 2
+        },
+        {
+          "outputItemID": 36930,
+          "totalQuantity": 2
+        },
+        {
+          "outputItemID": 36921,
+          "totalQuantity": 1
+        },
+        {
+          "outputItemID": 36933,
+          "totalQuantity": 1
+        },
+        {
+          "outputItemID": 36927,
+          "totalQuantity": 1
+        }
+      ],
+      "replaces": [
+        "legacy-20261031-1250",
+        "legacy-20261031-1251",
+        "legacy-20261031-1252",
+        "legacy-20261031-1253",
+        "legacy-20261031-1254",
+        "legacy-20261031-1255",
+        "legacy-20261031-1256",
+        "legacy-20261031-1257",
+        "legacy-20261031-1258",
+        "legacy-20261031-1259",
+        "legacy-20261031-1260",
+        "legacy-20261031-1261"
+      ],
+      "actual_new_independent_cohorts": 0,
+      "note": "The linked firsthand author reported eleven stacks, never 44 completed prospect actions. Counts/ore per stack/refunds/zeros/patch remain unknown."
+    }
+  ],
   "numeric_summary": {
-    "new_evidence_records": 0,
+    "new_evidence_records": 12,
     "new_completed_disenchant_casts": 0,
     "new_completed_prospect_casts": 0,
     "new_material_hit_counts": 0,
@@ -30,32 +109,31 @@
     "new_output_IDs": 0,
     "new_gold_values": 0,
     "new_independent_source_cohorts": 0,
-    "new_source_reliability_warnings": 2,
-    "new_historical_skill_conflicts": 1
+    "new_source_reliability_warnings": 1,
+    "new_historical_skill_conflicts": 1,
+    "new_corrective_records": 12,
+    "replaced_old_records": 12,
+    "casts_removed_from_measured_denominator": "44 presumed casts across one 12-output Saronite cohort, not 528 distinct operations"
   },
-  "evidence_file": null,
-  "evidence_file_url": null,
+  "evidence_file": "research/v3/evidence/legacy/2026-11-10T1041-saronite-11stack-cast-basis-corrections.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-10T1041-saronite-11stack-cast-basis-corrections.jsonl",
   "sources": [
-    "https://wowwiki-archive.fandom.com/wiki/Warmaul_Legplates",
-    "https://wotlk.evowow.com/?item=24995",
-    "https://kaliope.wordpress.com/2007/01/18/jc-prospecting-levels-for-ore/",
-    "https://kaliope.wordpress.com/2007/01/18/mithril-prospecting/",
-    "https://www.wowhead.com/item=13866/runecloth-headband",
-    "https://www.wowhead.com/item=45661/spaulders-of-the-wayward-vanquisher",
-    "https://warcraft.wiki.gg/wiki/Spaulders_of_the_Wayward_Vanquisher",
-    "https://www.wow-professions.com/tbc/prospecting",
-    "https://www.wow-professions.com/wotlk/prospecting-table-wotlk-classic",
-    "https://www.mmo-champion.com/threads/605873-PTR-Brilliant-Glass-Test-Results"
+    "https://www.wowhead.com/mx/spell=31252/prospectar",
+    "https://www.wowhead.com/wotlk/spell=31252/prospecting",
+    "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
+    "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
+    "https://warcraft.wiki.gg/wiki/Fel_Iron_Ore",
+    "https://www.reddit.com/r/classicwow/comments/p71mrp"
   ],
-  "verified_base_commit_sha": "6a370ba6c767b96a95b013e321b7dc409146088a",
+  "verified_base_commit_sha": "8f9dfd699c4d33cdb9537d04d36c37efac8d657e",
   "verified_commit_sha": null,
-  "commit_sha_note": "One-commit status-only update. The resulting Git commit SHA cannot be included in its own tracked status blob. Follow commit with independent branch/file read-back. No new evidence JSONL: mined candidate first-person 2007 Mithril 20-cast full histograms and Ulduar 45661 seven rewards were already in legacy evidence; 2007 goody24 Fel Iron 'Brill Draenite' output is unresolved shorthand for a crafted-looking gem, not an exact ID; a PTR Brilliant Glass 300-operation test is a different processing method and cannot be imported as Fel Iron prospecting.",
+  "commit_sha_note": "Single atomic commit includes one append-only corrective evidence JSONL file and this status update. Its own SHA cannot be embedded in its tracked status blob without changing that SHA. Verify externally by reading branch ref, commit diff and both files after updating.",
   "blockers": [
-    "Original Warmaul 24995 Looter raw events, positive-stack quantities, full zero-inclusive material histogram, build/skill and 2026 live item eligibility unavailable. Historic WoWWiki 22/75 dust/essence reference percentages conflict with 1559/417 positive-hit observations; version/source lineage must be resolved by Master before revised EV.",
-    "Cobalt 36909 and Fel Iron 23424 completed-cast logs with output IDs and per-cast 0/1/2 frequencies remain unavailable beyond previously recorded samples.",
-    "2007 original prospecting reports item 23424 jewelcrafting skill 290, whereas current TBC sources document 275; historical skill threshold and patch applicability need Master reconciliation.",
-    "Goody24's January 2007 one-stack Fel Iron result '1 Brill Draenite' has ambiguous material identity and unknown completed cast count. Do not map to Golden Draenite ID without source evidence.",
-    "Previously stored Kaliope 20 numbered Mithril 3858 prospects and all seven 45661 reward IDs are already recorded; no duplicate cohorts/rewards created."
+    "No independent Warmaul 24995 bonus/build-specific, current Retail in-game disenchant log, zero-inclusive histogram or explicit historical sampling dates; positive Looter bins are not proven complementary zeros.",
+    "No independent Cobalt 36909 or Fel Iron 23424 first-person source with new actual completed casts and per-output hit/miss histogram; prior published cohorts and guide priors are already recorded.",
+    "Historical 2007 Fel Iron required Jewelcrafting skill 290 versus modern source 275 and the Warmaul 22%/75% dust/essence wiki reversal need Master version/source reconciliation.",
+    "Saronite author 390549's 11 stacks are not a physical 44-cast log; no exact ore count per stack or refunds. Replacements preserve totals but cannot support a measured per-cast yield.",
+    "Spaulders of the Wayward Vanquisher 45661 seven reward IDs already known; no independent new variant or redemption verification."
   ],
   "exhausted_sources": [
     {
@@ -140,12 +218,24 @@
         "https://wowwiki-archive.fandom.com/wiki/Warmaul_Legplates"
       ],
       "reason": "Kaliope Mithril 20 individual cast histograms duplicated legacy-20261031-1301..1306, goody24 Thorium already legacy-20261031-2801..2805, Runecloth 400/43 samples and 45661 complete token already archived. Brilliant Glass PTR 300 opening outcomes not direct Fel Iron prospects. New primary 2007 Fel Iron required-skill conflict and historical Warmaul reference reversal preserved in status only."
+    },
+    {
+      "lookingFor": "Distinct original Warmaul/Cobalt/Fel Iron numerical source in Wowhead historic spell comment mirrors, Classic Reddit sample threads and historical prospecting addon pages",
+      "whereLooked": [
+        "https://www.wowhead.com/mx/spell=31252/prospectar",
+        "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
+        "https://www.reddit.com/r/classicwow/comments/p71mrp",
+        "https://www.curseforge.com/wow/addons/prospect-me",
+        "https://github.com/parnic/breakables",
+        "https://repos.wowace.com/wow/reagentmaker/file/tip/ProspectingData.lua?style=paper"
+      ],
+      "reason": "No distinct source-backed new Cobalt/Fel Iron/Warmaul counted operations and per-output zeros. Comment 390549's 11-stack Saronite original had already been archived, but its nominal-equivalent denominator needed correction; derived mapping tables or alternate spell locales are not new cohorts."
     }
   ],
-  "next_concrete_step": "Seek NEW first-person Retail item-variant disenchant recorder export for Warmaul 24995 with exact bonus IDs, patch, skill and 0/1/2 stack histogram; otherwise search independent Fel Iron/Cobalt per-cast SavedVariables outside already exhausted Wowhead/blog sources. Ask Master to reconcile pre-2.1 Fel Iron JC skill 290 vs 275 and historically reversed Warmaul dust/essence reference figures; leave core mechanics/queue untouched.",
-  "previous_status_updated_at": "2026-11-10T08:49:11.616Z",
-  "last_evidence_file": "research/v3/evidence/legacy/2026-11-10T0600-tbc-scaled-disenchant-eligibility.jsonl",
-  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-10T0600-tbc-scaled-disenchant-eligibility.jsonl",
+  "next_concrete_step": "Seek first-person contemporary Retail Warmaul 24995 variant/bonus-ID disenchant and loot capture (including unavailable action) or novel Cobalt 36909/Fel Iron 23424 per-click SavedVariables exports not among exhausted indexed pages. Ask Master to reconcile the Fel Iron historic skill 290/275 split, historical Warmaul reversal, and to audit source-derived batch equivalents in other legacy rows.",
+  "previous_status_updated_at": "2026-11-10T09:49:22.125Z",
+  "last_evidence_file": "research/v3/evidence/legacy/2026-11-10T1041-saronite-11stack-cast-basis-corrections.jsonl",
+  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-10T1041-saronite-11stack-cast-basis-corrections.jsonl",
   "source_reliability_findings": [
     {
       "source": "https://wowinterface.com/downloads/info9751-ProspectStats.html",
