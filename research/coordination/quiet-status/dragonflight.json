@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-10T00:46:38.296Z",
-  "status": "active; six new item-specific pooled Dragonflight disenchant occurrence rows in three previously unindexed Amirdrassil gear cohorts; priority prospecting and milling per-cast gaps remain unresolved",
+  "updated_at": "2026-11-10T01:44:09.835Z",
+  "status": "active; new independent prospecting/milling study not found; code-verified ProspectMate saved data is cumulative and unsuitable for zero/hit histograms or completed-cast denominators",
   "task_ids": [
     "T0020",
     "T0046",
@@ -12,141 +12,19 @@
     "T0015"
   ],
   "exact_gaps_targeted": [
-    "Priority T0020/T0019: Draconium Ore 189143/188658 still needs rank-resolved original completed casts, gemstone IDs, material hit counts and refund context.",
-    "Priority T0046/T0041: Serevite 190394/190395/190396, Khaz'gorite and Prismatic prospecting still need rank-resolved original histograms, zero outcomes and P(hit) per completed cast.",
-    "Priority T0018/T0015: Bubble Poppy 191467 and Saxifrage 191464 milling still need independently verified cast denominators, specialization, pigments by rank, total units and zero outcomes.",
-    "Gear evidence follow-up: Wowhead item-side source outputs for IDs 207278, 207283, 207249; each has per-output hit numerators and a shared item-level denominator but unknown output quantities and build context."
+    "T0020/T0019: Draconium Ore input IDs 189143 and 188658 to gem output IDs 192837-192844: completed operation counts, individual output ranks/hits, actual refund accounting and 0-N outcome histograms still missing.",
+    "T0046/T0041: Serevite Ore input IDs 190394/190395/190396, Khaz'gorite (rank/ID to reconfirm) and Prismatic Ore 194545 to gem/diamond outputs 192869/192870/192871 and 192849/192850/192851: unresolved source rank mapping, deduplicated completed casts and exact output hit/zero distributions.",
+    "T0018/T0015: Bubble Poppy 191467 to Serene Pigment 198412/198413/198414; Saxifrage 191464 to Blazing Pigment 198418/198419/198420: original rank-specific mill count, quantity/hits per output and resourcefulness account still missing.",
+    "Newly resolved export feasibility: ProspectMate v2.0.4 records cumulative input material consumed and material output totals only, not durable operation-level results or per-material hit/zero histograms. No Dragonflight character sample was supplied by its source repository."
   ],
-  "newly_verified_fields": [
-    {
-      "inputItemID": 207278,
-      "outputItemID": 200113,
-      "casts": 48,
-      "castsWithDrop": 30,
-      "percentShown": 63,
-      "positiveStackRange": null
-    },
-    {
-      "inputItemID": 207278,
-      "outputItemID": 194124,
-      "casts": 48,
-      "castsWithDrop": 29,
-      "percentShown": 60,
-      "positiveStackRange": [
-        1,
-        2
-      ]
-    },
-    {
-      "inputItemID": 207283,
-      "outputItemID": 194124,
-      "casts": 62,
-      "castsWithDrop": 44,
-      "percentShown": 71,
-      "positiveStackRange": [
-        1,
-        2
-      ]
-    },
-    {
-      "inputItemID": 207283,
-      "outputItemID": 200113,
-      "casts": 62,
-      "castsWithDrop": 36,
-      "percentShown": 58,
-      "positiveStackRange": null
-    },
-    {
-      "inputItemID": 207249,
-      "outputItemID": 200113,
-      "casts": 35,
-      "castsWithDrop": 27,
-      "percentShown": 77,
-      "positiveStackRange": null
-    },
-    {
-      "inputItemID": 207249,
-      "outputItemID": 194124,
-      "casts": 35,
-      "castsWithDrop": 19,
-      "percentShown": 54,
-      "positiveStackRange": [
-        1,
-        2
-      ]
-    }
-  ],
-  "newly_verified_cohorts": [
-    {
-      "method": "Disenchant",
-      "inputItemID": 207278,
-      "inputName": "Cincture of Lunar Communion",
-      "completedDisenchantObservations": 48,
-      "outputs": [
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 30,
-          "percentShown": 63
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 29,
-          "percentShown": 60
-        }
-      ],
-      "source": "https://www.wowhead.com/item=207278/cincture-of-lunar-communion",
-      "dedupeKey": "wowhead-looter-207278-20261110-single-original-item-side-snapshot",
-      "limitations": "Looter pooled clients; actual source dates, item bonus/ilvl, skill/specialization, per-output quantities and full histograms unknown."
-    },
-    {
-      "method": "Disenchant",
-      "inputItemID": 207283,
-      "inputName": "Poulaines of Lunar Communion",
-      "completedDisenchantObservations": 62,
-      "outputs": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 44,
-          "percentShown": 71
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 36,
-          "percentShown": 58
-        }
-      ],
-      "source": "https://www.wowhead.com/item=207283/poulaines-of-lunar-communion",
-      "dedupeKey": "wowhead-looter-207283-20261110-single-original-item-side-snapshot",
-      "limitations": "Looter pooled clients; actual source dates, item bonus/ilvl, skill/specialization, per-output quantities and full histograms unknown."
-    },
-    {
-      "method": "Disenchant",
-      "inputItemID": 207249,
-      "inputName": "Benevolent Embersage's Featherdrape",
-      "completedDisenchantObservations": 35,
-      "outputs": [
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 27,
-          "percentShown": 77
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 19,
-          "percentShown": 54
-        }
-      ],
-      "source": "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape",
-      "dedupeKey": "wowhead-looter-207249-20261110-single-original-item-side-snapshot",
-      "limitations": "Looter pooled clients; actual source dates, item bonus/ilvl, skill/specialization, per-output quantities and full histograms unknown."
-    }
-  ],
-  "new_numerical_measurements": 6,
+  "newly_verified_fields": [],
+  "newly_verified_cohorts": [],
+  "new_numerical_measurements": 0,
   "numerical_fields_improved": [
-    "6 castsWithDrop observations with shared item-specific Looter denominator across 3 new gear inputs; positive stack bounds where shown",
-    "No new prospecting or milling numerical fields"
+    "None; no new measured source. Verified the current ProspectMate export cannot answer per-operation hit/zero questions."
   ],
   "evidence_files": [
+    "research/v3/evidence/dragonflight/2026-11-10T0144-prospectmate-raw-cast-export-gap.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T2337-four-new-item-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T2241-four-aberrous-gear-original-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T2142-original-processing-source-triage.jsonl",
@@ -172,6 +50,9 @@
     "research/v3/evidence/dragonflight/2026-11-10T0034-three-amirdrassil-gear-looter-hits.jsonl"
   ],
   "source_links": [
+    "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
+    "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.toc",
+    "https://www.curseforge.com/wow/addons/prospectmate",
     "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
     "https://www.wowhead.com/ptr-2/item=202484/scalebands-of-obsidian-secrets",
     "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
@@ -253,7 +134,6 @@
     "https://goldcap.gg/retail/us/items/190313",
     "https://goldcap.gg/retail/us/items/190314",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/evidence/observations/2026-10-28-1328-dragonflight-batch013-source-only.md",
-    "https://www.curseforge.com/wow/addons/prospectmate",
     "https://addons.wago.io/addons/prospectmate",
     "https://github.com/derfloh205/CraftSim/blob/main/Modules/CraftLog/CraftLog.lua",
     "https://github.com/derfloh205/CraftSim/blob/main/Classes/CraftSessionData.lua",
@@ -264,11 +144,12 @@
     "https://www.wowhead.com/item=207283/poulaines-of-lunar-communion",
     "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape"
   ],
-  "verified_commit_sha": "8e11378fad49cca1cfaaef1e7ddbef88c6808078",
-  "commit_sha_scope": "verified_commit_sha is the actual pre-write parent branch HEAD, not the new same-commit SHA. Both evidence and this status will be committed atomically, so the resulting SHA cannot be self-referential in this JSON.",
+  "verified_commit_sha": "348d2bfb3363ae09806b62234b852fc1dc6876a2",
+  "commit_sha_scope": "verified_commit_sha identifies verified pre-write parent HEAD; the new commit cannot self-embed its own SHA; final readback verifies new branch HEAD and both owned files.",
   "blockers": [
-    "Open ore/herb tasks still lack an original correctly rank-identified per-cast processing export with zero-inclusive histograms, castsWithDrop and actual completed casts after Resourcefulness.",
-    "Wowhead Looter summaries aggregate unknown builds, gear bonuses/rarity, player skills, specialization and date; per-output positive stack ranges are not per-cast quantity distributions. No current-Retail drop probability inferred."
+    "Public original measured Dragonflight prospecting and milling records lack material-by-operation counts, zeros, exact item quality ranks, skill/spec context and Resourcefulness-adjusted actual cast denominators.",
+    "ProspectMate main v2.0.4 saves aggregate material consumed/produced only, not per-operation 0-N outcomes or craft counts; current CraftSim JSON likewise omits raw per-operation craftResults. Need original raw-event data, not an unaugmented SavedVariables aggregate.",
+    "No new independent player sample found this run across six named queries and code review; do not import guide averages or historical copied cohorts as measured."
   ],
   "exhausted_sources": [
     {
@@ -697,96 +578,59 @@
         "github.com/Voodoobrew101/Loot-Liquidator: checked historical original Xenastro row 28/52 source files and v3 indexed original Reddit 1135bti; no new independent cohort or unseen numerical denominator."
       ]
     },
-    "This run's open Draconium/Serevite/Khaz'gorite/Prismatic/Bubble Poppy/Saxifrage searches across r/woweconomy originals, Wowhead item/comments, Blizzard forums and guide mirrors returned previously indexed overlapping cohorts or qualitative references; no new completed-cast table. Do not repeat identical searches next cycle."
+    "This run's open Draconium/Serevite/Khaz'gorite/Prismatic/Bubble Poppy/Saxifrage searches across r/woweconomy originals, Wowhead item/comments, Blizzard forums and guide mirrors returned previously indexed overlapping cohorts or qualitative references; no new completed-cast table. Do not repeat identical searches next cycle.",
+    {
+      "at": "2026-11-10T01:44:09.835Z",
+      "scope": "New off-path original player data search: MMO-Champion, GitHub public saved-variable samples, EU Blizzard, Reddit, CurseForge and Wowinterface; original ProspectMate Lua aggregator inspected",
+      "reason": "No new exact item-level numeric dataset or cast histogram. ProspectMate source demonstrates only persistent cumulative per-input .consumed and per-output .results totals; session result data discarded, no completed cast log. This source is not an observed study. Avoid repeating this addon as a raw-cast export candidate.",
+      "whereLooked": [
+        "mmo-champion.com: searched Khaz'gorite Ore prospecting original results with numerical sample, no attributable per-cast ore/rank output log surfaced",
+        "github.com: searched Serevite Ore ProspectMateDB/ProspectingTrackerDB original exported sample; no published saved character casts or gem-by-operation histogram",
+        "eu.forums.blizzard.com: searched Draconium Ore prospecting gem statistics; no distinct completed-prospect source table found",
+        "reddit.com/r/woweconomy: searched Bubble Poppy Dragonflight milling raw pigment results; historical Aary/Hochenblume sources were already indexed, no new Bubble Poppy cast log",
+        "curseforge.com/wow/addons: searched Dragonflight prospecting and milling tracker exports; ProspectMate describes aggregate personal outcomes without original published Dragonflight sample",
+        "wowinterface.com: searched Saxifrage milling statistics addon and raw player log; no original material-by-mill zero/hit histogram",
+        "github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua: directly inspected PM.State.results, CommitSession(), SmartProspectorDB.reagents; saved rows keep cumulative consumed input and cumulative output totals, not per-operation results or completed craft counts",
+        "github.com/Urutseg/ProspectMate/blob/main/ProspectMate.toc: directly verified SmartProspectorDB SavedVariables name; no stand-alone published original Dragonflight saved variable data"
+      ]
+    }
   ],
-  "next_concrete_step": "Follow T0020/T0046 original ore ranks and obtain independent full ProspectMate/CraftSim SavedVariables per-cast exports for Draconium 189143/188658 or R2 Serevite 190396, then Bubble Poppy 191467; validate actual completed casts, refund-adjusted batch count, per-output IDs, hit counts and 0-N histograms.",
+  "next_concrete_step": "Source a genuine saved raw event stream or request an independent event-level Dragon Isles Prospecting/Milling capture from a player, not a default ProspectMate/CraftSim aggregate export: per spell-success operation, output item/quality ID+units, consumed/refunded input/quality count, skill, specialization and game build. Prioritize Draconium 189143/188658 and Serevite 190396, then Bubble Poppy 191467 and Saxifrage 191464. Preserve original cohort boundaries; leave unavailable source denominators and histograms null.",
   "validation": {
-    "jsonl_records": 6,
-    "distinct_original_gear_cohorts": 3,
+    "jsonl_records": 1,
+    "searched_records": 1,
+    "drop_records": 0,
     "all_jsonl_rows_parsed": true,
-    "casts_with_drop_leq_casts": true,
-    "source_percentages_preserved": true,
-    "missing_total_quantity_is_null": true,
-    "missing_histograms_are_null": true,
-    "post_write_branch_readback": "verification performed after write; see branch tree/commit history"
+    "search_count": 8,
+    "distinct_search_domains": 8,
+    "source_numeric_cohorts_added": 0,
+    "unknown_numeric_fields_unmodified": true,
+    "source_originals_deduplicated": true,
+    "changed_paths_expected": [
+      "research/v3/evidence/dragonflight/2026-11-10T0144-prospectmate-raw-cast-export-gap.jsonl",
+      "research/coordination/quiet-status/dragonflight.json"
+    ],
+    "post_write_branch_readback": "pending"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "8e11378fad49cca1cfaaef1e7ddbef88c6808078",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T0034-three-amirdrassil-gear-looter-hits.jsonl",
+  "verified_parent_sha": "348d2bfb3363ae09806b62234b852fc1dc6876a2",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T0144-prospectmate-raw-cast-export-gap.jsonl",
   "current_run_commit_sha": null,
-  "newly_verified_fields_cohorts": [
-    {
-      "inputItemID": 207278,
-      "outputItemID": 200113,
-      "casts": 48,
-      "castsWithDrop": 30,
-      "percentShown": 63,
-      "positiveStackRange": null
-    },
-    {
-      "inputItemID": 207278,
-      "outputItemID": 194124,
-      "casts": 48,
-      "castsWithDrop": 29,
-      "percentShown": 60,
-      "positiveStackRange": [
-        1,
-        2
-      ]
-    },
-    {
-      "inputItemID": 207283,
-      "outputItemID": 194124,
-      "casts": 62,
-      "castsWithDrop": 44,
-      "percentShown": 71,
-      "positiveStackRange": [
-        1,
-        2
-      ]
-    },
-    {
-      "inputItemID": 207283,
-      "outputItemID": 200113,
-      "casts": 62,
-      "castsWithDrop": 36,
-      "percentShown": 58,
-      "positiveStackRange": null
-    },
-    {
-      "inputItemID": 207249,
-      "outputItemID": 200113,
-      "casts": 35,
-      "castsWithDrop": 27,
-      "percentShown": 77,
-      "positiveStackRange": null
-    },
-    {
-      "inputItemID": 207249,
-      "outputItemID": 194124,
-      "casts": 35,
-      "castsWithDrop": 19,
-      "percentShown": 54,
-      "positiveStackRange": [
-        1,
-        2
-      ]
-    }
-  ],
+  "newly_verified_fields_cohorts": [],
   "last_source_search": {
-    "performed_at": "2026-11-09T23:37:55.487Z",
-    "priority_source_findings": "No new independent Dragonflight ore/mill completed-operation source; new result this run was four deduplicated gear Looter item-side numerator/denominator tables. Prior original ore/mill sites already exhausted per earlier detailed entries; not reinterpreted as measured.",
+    "performed_at": "2026-11-10T01:44:09.835Z",
+    "priority_source_findings": "No unindexed numerical casts/hits/zeros for prospecting or milling; original code confirms ProspectMate SavedVariables totals cannot reconstruct 0-N per-operation histograms.",
     "source_sites": [
-      "wowhead.com",
-      "github.com"
+      "mmo-champion.com",
+      "github.com",
+      "eu.forums.blizzard.com",
+      "reddit.com",
+      "curseforge.com",
+      "wowinterface.com"
     ],
-    "new_source_items": [
-      209937,
-      202484,
-      209919,
-      209923
-    ]
+    "new_source_items": [],
+    "source_code_reference": "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua"
   }
 }
