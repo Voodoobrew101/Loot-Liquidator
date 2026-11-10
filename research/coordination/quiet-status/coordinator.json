@@ -1,76 +1,96 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-10T11:08:41.352Z",
-  "status": "active; inspected original raw 387-row Excel matrix; verified advertised 104 empirical per-five quantity rows cannot be reproduced from main worksheet (no expected-quantity field or extra-column values); 212 source-stated probability entries include 20 approximate Midnight entries; research-only provenance/rank gate; no new measured cohorts or priceable EV",
+  "updated_at": "2026-11-10T12:10:48.977Z",
+  "status": "active; verified complete Retail catalog quality-ID crosswalks for Dragonflight Serevite, Draconium and Khaz'gorite Ore (9 identities; six not previously verified in the coordinator checkpoint, three rechecked), preserving original input-rank scope; no new observed processing cohorts, numerical yields, prices or actionable Retail decisions; research-only",
   "task_ids": [
-    "T0002",
-    "T0006",
-    "T0039",
-    "T0046"
+    "T0046",
+    "T0020",
+    "T0041"
   ],
   "exact_gaps_targeted": [
-    "Original 2026-10-27 Excel workbook Coverage tab claims 104 rows with empirical per-five output quantity, but 387-row Prospecting matrix has no Expected Quantity column and all extra columns M:S blank. Locate source-original quantity table, worksheet, or earlier revision; do not invent 104 rates.",
-    "Retain and audit 212 source-stated probability cells separately from observed casts: 20 approximate Midnight percentages, remaining historical reference figures with source-game-flavor and rank/epoch provenance unverified; never promote the cited MoP Classic worksheet to Retail evidence.",
-    "Rank-generic source mappings do not specify variant-specific applicability: 190396 is Serevite R2 and 190311 is Draconium R3, while the matrix labels their family as R1/R2/R3. Verify exact input/output variant before pricing; 128 listed Legion/Shadowlands/Dragonflight/TWW output mappings have no probability or yield.",
-    "Unresolved earlier Brilliant Silver example H1:H7 /2000 numerators vs separately projected E7=1000 scenario, raw source identity, ore-specific Diamond unlock and at-cast itemLinks. No new measured sample identified."
+    "Dragonflight source-to-input rank mapping for Serevite 190395 R1/190396 R2/190394 R3, Draconium 189143 R1/188658 R2/190311 R3, Khaz'gorite 190312 R1/190313 R2/190314 R3. Original source rows may not specify at-cast input itemLink, bonus and exact original game epoch; catalog identity alone does not confer cohort eligibility.",
+    "Original 2022 Jallfo Dragonflight JC spreadsheet's six quality-3 scenarios need source-linked input item variants, output rank IDs and compatible source version. Its already documented 222 projected EXPECTED formulas share $F$7 instead of per-profile scenario counts, and skill/source bonuses conflict; do not treat projected figures as empirical per-cast observations.",
+    "R2 Serevite / R2 Draconium studies: independently verify source original item quality/rank, nominal ore versus counted casts and Resourcefulness refunds, event outputs, overlap with already pinned cohort records, and source date/patch before any supported priceable mean or synthetic-price runtime test."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "source_field_integrity",
-      "source": "https://docs.google.com/spreadsheets/d/11kVrPOVY0Jei3xmBL1q_I9fsFAl3QY6d/edit",
-      "raw_file_bytes": 39167,
-      "source_rows_checked": 387,
-      "summary_claimed_expected_quantity_rows": 104,
-      "actual_expected_quantity_column_present": false,
-      "populated_extra_fields_M_to_S": 0,
-      "source_stated_probability_rows": 212,
-      "approximate_midnight_probability_rows": 20,
-      "populated_min_rows": 212,
-      "populated_max_rows": 190,
-      "unpriced_identity_only_rows_in_legion_shadowlands_dragonflight_tww": 128,
-      "original_cast_cohorts": 0,
-      "priceable_unconditional_expected_quantities": 0
+      "kind": "input_quality_catalog_identity",
+      "family": "Serevite Ore",
+      "quality_to_item_id": {
+        "1": 190395,
+        "2": 190396,
+        "3": 190394
+      },
+      "sources": [
+        "https://goldcap.gg/retail/us/items/190395",
+        "https://goldcap.gg/retail/us/items/190396",
+        "https://goldcap.gg/retail/us/items/190394"
+      ],
+      "new_to_coordinator_checkpoint": 1,
+      "previously_verified_or_partial": 2,
+      "measured_cohorts": 0
     },
     {
-      "kind": "rank_identity_catalog_check",
-      "input_variants": [
-        {
-          "id": 190396,
-          "name": "Serevite Ore",
-          "rank": 2,
-          "source": "https://goldcap.gg/retail/us/items/190396"
-        },
-        {
-          "id": 190311,
-          "name": "Draconium Ore",
-          "rank": 3,
-          "source": "https://goldcap.gg/retail/eu/items/190311"
-        }
+      "kind": "input_quality_catalog_identity",
+      "family": "Draconium Ore",
+      "quality_to_item_id": {
+        "1": 189143,
+        "2": 188658,
+        "3": 190311
+      },
+      "sources": [
+        "https://goldcap.gg/retail/kr/items/189143",
+        "https://goldcap.gg/retail/kr/items/188658",
+        "https://goldcap.gg/retail/kr/items/190311"
       ],
-      "meaning": "reference variant IDs do not authenticate the workbook's all-rank numeric scope"
+      "new_to_coordinator_checkpoint": 2,
+      "previously_verified_or_partial": 1,
+      "measured_cohorts": 0
+    },
+    {
+      "kind": "input_quality_catalog_identity",
+      "family": "Khaz'gorite Ore",
+      "quality_to_item_id": {
+        "1": 190312,
+        "2": 190313,
+        "3": 190314
+      },
+      "sources": [
+        "https://goldcap.gg/retail/us/items/190312",
+        "https://goldcap.gg/retail/us/items/190313",
+        "https://goldcap.gg/retail/us/items/190314"
+      ],
+      "new_to_coordinator_checkpoint": 3,
+      "previously_verified_or_partial": 0,
+      "measured_cohorts": 0
     }
   ],
   "newly_verified_numeric_studies": 0,
   "actionable_retail_gold_decisions_added": 0,
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-10T1105-excel-prospecting-matrix-column-rank-audit.md"
+    "research/v3/evidence/master/2026-11-10T1208-dragonflight-ore-rank-id-family-mapping.md"
   ],
   "source_links": [
-    "https://docs.google.com/spreadsheets/d/11kVrPOVY0Jei3xmBL1q_I9fsFAl3QY6d/edit",
+    "https://goldcap.gg/retail/us/items/190395",
     "https://goldcap.gg/retail/us/items/190396",
-    "https://goldcap.gg/retail/eu/items/190311",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/docs/usable-data-audit/source-inventory.json"
+    "https://goldcap.gg/retail/us/items/190394",
+    "https://goldcap.gg/retail/kr/items/189143",
+    "https://goldcap.gg/retail/kr/items/188658",
+    "https://goldcap.gg/retail/kr/items/190311",
+    "https://goldcap.gg/retail/us/items/190312",
+    "https://goldcap.gg/retail/us/items/190313",
+    "https://goldcap.gg/retail/us/items/190314",
+    "https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/reviews/2026-11-02-dragonflight-jc-workbook-context.md"
   ],
-  "verified_commit_sha": "c0e96960c0c5271d0a0e18961aa4b5596f3cd096",
-  "verified_commit_sha_scope": "Evidence note and owned dashboard verified via GitHub read-back at c0e96960; this subsequent status-file commit cannot contain its own hash.",
+  "verified_commit_sha": "af054f618444107d501617ecb145aef4a7889b5c",
+  "verified_commit_sha_scope": "Original identity evidence at ffdaf87b9978da405dba0378cabb5cc8bca7cc5a committed and read back; coordinator-owned dashboard checkpoint committed at af054f618444107d501617ecb145aef4a7889b5c. This following coordinator status-file commit cannot contain its own hash.",
   "blockers": [
-    "The raw Excel workbook source summary reports 104 empirical expected-quantity rows but the actual primary matrix contains no Expected Quantity per 5 Ore data; no separate originating tab/earlier quantity source has been identified. Without original values, not usable for gold EV.",
-    "212 published/approx percentages lack row-level original study identity and flavor/epoch; 20 Midnight guide-like approximate percentages are not measured successes and cannot be assigned fabricated casts or confidence.",
-    "Modern single-input item IDs are quality variants, not all ranks; missing rank-specific input and output variants, profession skill/spec and unlock context.",
-    "Current integration source inventory omits workbook but manager must not edit integration branch; 128 identity-only rows do not establish valuation coverage.",
-    "Original Brilliant Silver H/2000 numeric basis and 1000-cast projection still unresolved; no new observed casts or independent study.",
-    "No Lua/unit/compiler/actual engine/tooltip or live-character verification executed."
+    "Catalog quality-ID crosswalk does not verify original 2022 spreadsheet or historic Reddit contributor at-cast itemLink/bonusID, patch, skill, specialization and input quality; no source-original rank-linked event receipts were newly recovered.",
+    "Workbook outputs include many only named/rank-qualified families without exact output item IDs; Jallfo estimates and quality skill thresholds have already documented inconsistent formulas/context. No independently verified per-operation outputs, hits, histograms or exact refund-adjusted denominators added here.",
+    "Known current Midnight T0005/T0039/T0045 zero-inclusive per-output histograms and Silver sheet 2000-versus-1000 source denominator remain missing; do not invent counts or keep recrawling exhausted sites.",
+    "Integration branch is owned by three-pass implementation; no addon or ItemDB writes from coordinator, and no player character, engine/tooltip or synthetic-price validation was executed in this run."
   ],
   "exhausted_sources": [
     "Original 930224 and Thottbot Runecloth Headband comments already recorded on 2026-11-06; different Wowhead item/locale/flavour URLs are not fresh studies.",
@@ -90,50 +110,50 @@
   "checked_worker_owner_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-10T10:12:48Z",
-      "finding": "two equipped-item variants, no new original measured processing cohort; manager read only"
+      "updated_at": "2026-11-10T11:14:12.763Z",
+      "finding": "10 official Armory equipped scaled item variants 272246, no actual disenchant yield or eligibility cast; worker report read only"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-10T10:27:16.852Z",
-      "finding": "source-confirmed five ore input per prospect for two ores; no new material-output cohort; manager read only"
+      "updated_at": "2026-11-10T11:27:11.914Z",
+      "finding": "3 conditionally capped weekly/catch-up Enchanting knowledge items 227659/227661/227662, not general disenchant gold outputs; worker report read only"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-10T10:36:39.507Z",
-      "finding": "new source angles, no new original completed-cast measurements; manager read only"
+      "updated_at": "2026-11-10T11:37:28.866Z",
+      "finding": "original TWW-era approximate 600 disenchants of 200641 reported zero 200113; exact completed casts unknown, not an accepted measured denominator; worker report read only"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-10T10:41:58.270Z",
-      "finding": "corrected Saronite 11-stack source: 44 nominal-equivalent casts withdrawn across 12 output records, no new measured cohort; manager read only"
+      "updated_at": "2026-11-10T11:43:59.848Z",
+      "finding": "1000 Adamantite ore /5 nominal operation equivalents no exact completed casts; duplicate Runecloth/Warmaul references reclassified; worker report read only"
     }
   ],
   "validation": {
     "executed": [
-      "Refreshed main b6610848604f68f8f3b40834397b79ce53eb8fb5, research eeaccd33bdbd84caca928b734f6457abb34c7d4b and integration 3d667d053db587c91401cfed7ecc56862b8340c9; checked latest actual Actions research run 42801363040 success on pre-manager head eeaccd33, integration run 41484262496 success on 3d667d05, PR #51 remains open.",
-      "Read charter, three-pass plan and PASS-1, current v3 README/evidence schema/queue/mechanics/strategy and coordinator/worker quiet statuses; read prior Silver/Excel source note to avoid duplicate source claims.",
-      "Downloaded actual 39,167-byte Excel workbook through connected Drive and imported with artifact_tool; inspected all values of Prospecting matrix!A2:S388 and Coverage!A2:F13. Reproduced 387, 212, 212, 190, 20, 0 field counts.",
-      "Cross-checked 190396 and 190311 quality identities against current item catalogs and source URLs.",
-      "Committed evidence and dashboard in c0e96960, verified both by fresh GitHub read-back; status update follows on current research branch."
+      "Refreshed GitHub heads: main b6610848604f68f8f3b40834397b79ce53eb8fb5, research 98ed0ccf106ef37344a29066aa6d12f832d71777 before manager commits, integration 3d667d053db587c91401cfed7ecc56862b8340c9; PR22/23 closed unmerged, PR51 open unmerged.",
+      "Checked research Actions run 42809876621 successful on pre-manager research 98ed0ccf, and earlier integration Actions 41484262496 successful on 3d667d05; neither constitutes test execution on this manager revision.",
+      "Read main owner charter, integration 3-pass plan/PASS-1/source-inventory, research README/evidence-format/mechanics/queue/strategy/flags, previous manager status and prior workbook/source-integrity notes; inspected four actual worker status files.",
+      "Used connected original Dragonflight spreadsheet's bounded native values and formulas to reconfirm input-quality profile and avoid re-claiming already-documented expected formula inconsistency; checked nine Retail catalog ID/quality pages.",
+      "Committed original master evidence note at ffdaf87b9978da405dba0378cabb5cc8bca7cc5a and confirmed content read-back; committed coordinator-owned dashboard at af054f618444107d501617ecb145aef4a7889b5c."
     ],
     "not_executed": [
-      "Observed World of Warcraft casts, in-game material drops, player/client eligibility validation",
-      "New Lua 5.1 tests, compiler/estimator rebuild, synthetic-price engine or tooltip validation",
-      "New GitHub Actions run on this manager status revision, no release or merge"
+      "New independent observed player casts or counts, character eligibility, current live-WoW validation",
+      "Addon Lua/unit/CI rebuild, estimator/compiler, actual synthetic-price economic engine and tooltip rendering tests",
+      "Worker task file changes, new schedules, addon/integration/main writes, PR merges/closures or releases"
     ]
   },
   "protected_state": {
     "main_head_at_review": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
-    "research_head_before_status_update": "c0e96960c0c5271d0a0e18961aa4b5596f3cd096",
+    "research_head_before_status_update": "af054f618444107d501617ecb145aef4a7889b5c",
     "integration_head_at_review": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "immutable_snapshot": "4df9ae8b1359d934828e4d0e6d39a4dba26fae",
     "research_only": true,
-    "ci": "Research Actions success 42801363040 on pre-manager eeaccd33, does not certify new evidence/status; integration Actions success 41484262496 on 3d667d05.",
-    "pr22_pr23": "closed unmerged, no changes",
-    "pr24": "merged previously, no changes",
-    "pr51": "open unmerged, no changes"
+    "ci": "Research Actions 42809876621 passed on pre-manager 98ed0ccf, not a validation of evidence/dashboard/coordinator revisions; integration Actions 41484262496 passed on 3d667d05.",
+    "pr22_pr23": "closed/unmerged",
+    "pr24": "previously merged by PR Director",
+    "pr51": "open/unmerged"
   },
-  "next_concrete_step": "Seek distinct original earlier XLSX revision/worksheet or source export containing the 104 claimed empirical per-five expected quantities. If absent, retain 104 as unsupported coverage-summary metadata (not data). Reconcile remaining source-to-output rows only after exact rank/flavor/epoch provenance and check any genuinely usable gaps against the frozen ItemDB and actual synthetic-price engine on the separately owned integration track. Continue T0002/T0006/T0039 raw Silver denominator and cast identity work without duplicate studies; no other branch, schedules, merges or addon edits.",
+  "next_concrete_step": "Verify source-original quality-specific R2 Serevite (190396) and R2 Draconium (188658) inputs and any corresponding historical ore-only material totals or receipts, dedupe cohorts by original identifiers, preserve nominal-ore versus completed-cast and refund units, then coordinate protected integration owner's actual synthetic-price resolver/tooltip checks only once usable fields and character scope are supported.",
   "newly_verified_original_source_aggregates": 0
 }
