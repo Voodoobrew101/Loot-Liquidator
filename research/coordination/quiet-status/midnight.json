@@ -1,15 +1,13 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-10T06:14:30.434Z",
-  "status": "active; two nonduplicate firsthand reference-only reports: one source-reported staff disenchant yielding one rank-2 Dawn Crystal (input identity unknown), and 500 nominal Brilliant Silver Ore processed (no output receipt). Zero new estimator-eligible measured current-build cohorts.",
+  "updated_at": "2026-11-10T07:16:23.833Z",
+  "status": "active; one new firsthand item-specific disenchant restoration-ledger source for 251085 (two material requirements); zero new estimator-eligible cohorts. Actual at-cast ilvl, material rank and per-operation full loot are unknown.",
   "task_ids": [
     "T0026",
-    "T0049",
     "T0039",
     "T0005",
     "T0003",
-    "T0002",
-    "T0045"
+    "T0002"
   ],
   "exact_gaps_targeted": [
     "Midnight armor/weapon rarity- and ilvl-specific disenchant original completed cast/output receipts; Miststalker's Wristbands 272246 at-cast ilvl305 versus generic206",
@@ -20,35 +18,32 @@
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "recordID": "midnight-20261110-061401",
-      "kind": "firsthand-reference-only",
+      "recordID": "midnight-20261110-071401",
+      "kind": "firsthand-restoration-ledger-reference-only",
       "method": "Disenchant",
-      "inputItemID": null,
-      "inputName": "unidentified best-in-slot staff",
-      "sourceReportedCompletedOperations": 1,
+      "inputItemID": 251085,
       "outputItemID": null,
       "outputName": "Dawn Crystal",
-      "outputRank": 2,
-      "totalQuantity": 1,
-      "castsWithDrop": 1,
-      "positiveHistogram": {
-        "1": 1
-      },
-      "source": "https://www.reddit.com/r/woweconomy/comments/1vv7ktl/weekly_i_screwed_up_saturday/",
+      "outputRank": null,
+      "sourceReportedOperations": 1,
+      "restorationRequiredUnits": 1,
+      "castsWithDrop": null,
+      "itemLevelAtCast": null,
+      "source": "https://us.forums.blizzard.com/en/wow/t/item-restore-issue-w-prof-item-as-cost/2308765",
       "estimatorEligible": false
     },
     {
-      "recordID": "midnight-20261110-061402",
-      "kind": "firsthand-reference-only",
-      "method": "Prospect",
-      "inputItemID": null,
-      "inputName": "Brilliant Silver Ore, rank unstated",
-      "nominalInputOre": 500,
-      "completedCasts": null,
+      "recordID": "midnight-20261110-071402",
+      "kind": "firsthand-restoration-ledger-reference-only",
+      "method": "Disenchant",
+      "inputItemID": 251085,
+      "outputItemID": 267654,
+      "outputName": "Swirling Arcane Essence",
+      "sourceReportedOperations": 1,
+      "restorationRequiredUnits": 1,
       "castsWithDrop": null,
-      "outputQuantity": null,
-      "specialization": "Proficient Prospector, Prospector Pro and all four sub-branches maxed (author's words)",
-      "source": "https://us.forums.blizzard.com/en/wow/t/can-you-profit-from-prospecting/2270729",
+      "itemLevelAtCast": null,
+      "source": "https://us.forums.blizzard.com/en/wow/t/item-restore-issue-w-prof-item-as-cost/2308765",
       "estimatorEligible": false
     }
   ],
@@ -58,29 +53,35 @@
     "newEstimatorEligibleHitCounts": 0,
     "newZeroInclusiveMaterialHistograms": 0,
     "newCurrentBuildSkillRankSeparatedCohorts": 0,
-    "newSourceReportedOneOffCompletedDisenchantsWithoutInputID": 1,
-    "newSourceReportedDawnCrystalRank2UnitsWithoutSourceItemID": 1,
-    "newNominalSilverOreInputsWithoutCastLedger": 500
+    "newSourceReportedSingleItemDisenchants": 1,
+    "newSourceReportedRestorationRequiredDawnCrystalUnits": 1,
+    "newSourceReportedRestorationRequiredSwirlingArcaneEssenceUnits": 1,
+    "newVerifiedInputItemIDs": [
+      251085
+    ],
+    "newVerifiedOutputItemIDs": [
+      267654
+    ]
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-10T0614-original-staff-de-and-silver-nominal-reference.jsonl"
+    "research/v3/evidence/midnight/2026-11-10T0714-mantle-dark-devotion-restoration-ledger.jsonl"
   ],
   "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-10T0515-rare-de-variant-identity-and-refine-links.jsonl",
   "evidence_record_ids": [
-    "midnight-20261110-061401",
-    "midnight-20261110-061402"
+    "midnight-20261110-071401",
+    "midnight-20261110-071402"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1vv7ktl/weekly_i_screwed_up_saturday/",
-    "https://us.forums.blizzard.com/en/wow/t/can-you-profit-from-prospecting/2270729"
+    "https://us.forums.blizzard.com/en/wow/t/item-restore-issue-w-prof-item-as-cost/2308765",
+    "https://www.wowhead.com/item=251085/mantle-of-dark-devotion",
+    "https://www.wowhead.com/item=267654/swirling-arcane-essence"
   ],
   "blockers": [
-    "Original Aug22 staff event shows one rank-2 Dawn Crystal from one disenchant, but no input item ID, quality, ilvl, patch, skill/spec or linked output ID. Reference only; cannot assign to the Midnight gear tables.",
-    "March12 Brilliant Silver experiment reports 500 nominal ore and maxed talent nodes but no explicit completed prospect casts, refund ledger, ore rank or actual output identities/quantities. The March31 rate change also forbids pooling it with later results.",
-    "No new current-patch 272246 item-at-cast ilvl305 bonus link and successful disenchant receipt; WowDB generic206 noDE versus 140 item-side Looter counts remains unresolved.",
-    "No new rank-specific 237362 Tin / 237359 Copper completed-cast 0/1/2+ output histograms or 236761 milling 10-herb cast/refund logs.",
-    "Earlier glass-refining item rank-direction conflict remains for Master; do not resolve by assumption.",
-    "Git commit cannot self-reference its eventual SHA in the committed status; status stores previously verified ancestor, final head is separately checked after publication."
+    "2026-05-15 Raven source is an item-restoration requirement ledger, not a recorded raw DE event. The exact material restoration costs (1 Dawn Crystal, 1 Swirling Arcane Essence) do not establish output quality, other outcomes or a full hit/zero distribution; both lines are reference-only.",
+    "251085 base catalog rare versus scaled epic gear variant means source itemID alone does not give item-at-cast rarity/ilvl/bonus; current-item inspection cannot recover the destroyed item's link.",
+    "252? Not assumed: output Dawn Crystal rank/linked item ID absent, no current-build 272246 successful DE receipt; no new rank-separated 237362 Tin, Copper, Silver or 236761 milling raw logs.",
+    "Prior source lanes already exhausted: Cardinalai, Honeybone, Looter cumulative snapshots, owner PR49, MrNoobyy, SeniorEmployment932 and Aug22 staff anecdote not duplicated.",
+    "Atomic commit cannot contain its own eventual SHA; verified_commit_sha stores prepublication observed branch head, and final commit SHA must be validated externally."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -108,25 +109,27 @@
     "2026-11-10T03:17:21.209Z: New independent 12.1.5/current patch targeted raw-output lane using named Umbral Tin Ore, Tranquility Bloom, Powder Pigment and Radiant Shard searches across Reddit, Wowhead and Blizzard forums; found no new original full-cast cohort. Heart of Wind 250256 restoration source verified as already indexed and prior 1/1 material yield was source-unsupported; append-only replacement corrects eligibility-only status. Avoid repeating this fresh name/site set absent a player export.",
     "2026-11-10T04:13:56.080Z: Novel source-author lane: Reddit MrNoobyy first-person Midnight profession market account states approximate 66% rank2 Dawn Crystal under 100 enchanting/max-tree/rare gear (no casts); Blizzard commenters Teishoku Mar26 tentatively ~50% generic rank2 and Aug17 distinct blue-gear final-node side materials Bright Linen/Tranquility Bloom (no receipts). Searched rare output, Umbral Tin, 272246, copper, prospecting and milling across Reddit, US/EU Blizzard forums, Wowhead, WoWDB and guide sites. EU Honeybone Apr19/22 posts and Cardinalai 800 Umbral Tin are already indexed; excluded as duplicate; no new 0-inclusive source.",
     "2026-11-10T05:16:41.583Z: NEW independent 272246 live equipped player-gear lane: 305 Hero1/6 from Guilds of WoW and 321 Hero6/6 from WowAudit, cross-checked Wowhead generic base206 and live variant. New Shard Supplier 107647 branch from Wowhead vs previous forum last-blue-node bonus claim, Bright Linen 236963/236965 rank catalogs, and two source-ID fixed refining recipes. Searches also rechecked rare DE receipts, Umbral Tin per-output hits, Copper and 10-herb milling; no genuinely new completed per-operation sample. Existing Cardinalai, Honeybone, Looter, owner PR49, prior variant PTR and published source recipes not repooled. Do not return to those exact pages absent an actual itemLink cast/receipt; next choose fresh player-export lane.",
-    "2026-11-10T06:14:30.434Z: Distinct FIRSTHAND lead search: Aug22 r/woweconomy accidental best-in-slot staff -> one R2 Dawn Crystal; input identity and profession absent, do not reimport absent at-cast itemLink. Distinct Mar12 ForKalimdor firsthand 500 Brilliant Silver nominal ore with fully maxed prospecting branches but no output data, pre Mar31 hotfix; do not derive 100 casts. Scanned named Midnight disenchanting, Umbral Tin, Refulgent Copper and Tranquility Bloom 2026 content across Reddit, US Blizzard forums, Wowhead, Warcraft Wiki, wow-professions and Method; no original current-build zero-inclusive histograms. Old Cardinalai/Honeybone/JD3K/Looter/PR49 and copied milling totals not duplicated."
+    "2026-11-10T06:14:30.434Z: Distinct FIRSTHAND lead search: Aug22 r/woweconomy accidental best-in-slot staff -> one R2 Dawn Crystal; input identity and profession absent, do not reimport absent at-cast itemLink. Distinct Mar12 ForKalimdor firsthand 500 Brilliant Silver nominal ore with fully maxed prospecting branches but no output data, pre Mar31 hotfix; do not derive 100 casts. Scanned named Midnight disenchanting, Umbral Tin, Refulgent Copper and Tranquility Bloom 2026 content across Reddit, US Blizzard forums, Wowhead, Warcraft Wiki, wow-professions and Method; no original current-build zero-inclusive histograms. Old Cardinalai/Honeybone/JD3K/Looter/PR49 and copied milling totals not duplicated.",
+    "2026-11-10T07:16:23.833Z: Fresh item-specific restoration-evidence lane: 2026-05-22 Raven original Blizzard thread establishes one destroyed Mantle of Dark Devotion with 1 Dawn Crystal + 1 Swirling Arcane Essence restoration requirements; source item 251085 and knowledge item 267654 catalog IDs cross-checked. Separate March14 Inscription conversation contained only prior-indexed SeniorEmployment932 and an ambiguous '2000 twilight/~3000 pigment' test lacking a verifiable herb/item identity, so excluded. Additional distinct name-based 2026 player prospect/milling/disenchant searches across Reddit, Blizzard EU/US, Wowhead, Warcraft Wiki and guide sites yielded no new cast-level output ledger. Do not revisit Raven or FortuneWooden8308 absent direct at-cast receipts."
   ],
-  "next_concrete_step": "Obtain the original player's best-in-slot staff itemLink and complete disenchant receipt from Aug22 firsthand operation, or ForKalimdor's 500-ore silver output ledger+ore rank/refunds; prioritize new 272246 at-cast ilvl305 receipt, 237362/237359 rank-separated per-output histograms or 236761 ten-herb mill operations. No source-only references to be promoted.",
+  "next_concrete_step": "Seek Raven's May15 item-restoration screenshot/raw event plus 251085 at-cast itemLink (to resolve rare-base versus epic variant), or a new 272246 ilvl305 successful disenchant with material receipt; then obtain independently sourced rank-specific 237362 per-cast 0/1/2 histograms and 236761 ten-herb mill export. Keep all restoration references out of numeric estimates.",
   "previous_verified_commit_sha": "65c751280488f1e5df13ec86d2e3ad0722f47023",
-  "verified_commit_sha": "65c751280488f1e5df13ec86d2e3ad0722f47023",
-  "verified_commit_sha_scope": "Predecessor verified commit only, not current atomic commit (which cannot reference its own SHA).",
-  "base_commit_sha_verified": "ae5086579dd705d42fd33df44724021e872b3a25",
-  "commit_readback": "Pending independent GitHub read-back of both files and final branch commit after publishing.",
+  "verified_commit_sha": "0d60a853c92ff627aa62ca7f34f61c0e46392498",
+  "verified_commit_sha_scope": "Observed branch head immediately before atomic evidence+status publication; current commit SHA cannot self-reference. Final commit and both files are read back separately.",
+  "base_commit_sha_verified": "0d60a853c92ff627aa62ca7f34f61c0e46392498",
+  "commit_readback": "Pending immediate post-publication verification against final branch head (commit cannot self-reference).",
   "verified_evidence_commit_sha": "65c751280488f1e5df13ec86d2e3ad0722f47023",
   "exact_gaps": [
-    "Midnight armor/weapon rarity- and ilvl-specific disenchant original completed cast/output receipts; Miststalker's Wristbands 272246 at-cast ilvl305 versus generic206",
-    "Unidentified staff -> R2 Dawn Crystal firsthand operation: source input item ID, rank/build, skill and other output receipt",
-    "Brilliant Silver Ore 237364/237365 quality-specific completed casts and observed output material quantities for source's 500 nominal ore",
-    "Umbral Tin Ore 237362 rank-specific prospecting per-output hits/zeros and Eversong Diamond unlock",
-    "Refulgent Copper 237359 and Tranquility Bloom 236761 original current-build per-cast results"
+    "251085 Mantle of Dark Devotion accidental May 15 disenchant: confirm full raw loot receipt, gear-at-cast itemLink/quality/ilvl/bonus, Dawn Crystal output rank, skill/specialization, hotfix context",
+    "272246 Miststalker's Wristbands: player at-cast itemLink ilvl305 vs catalog generic206; completed successful DE and material receipt",
+    "237362 Umbral Tin R1, 237363 R2: per-material completed-cast 0/1/2+ histograms, known output IDs, rank, refund and unlock state",
+    "237359/237361 Refulgent Copper and 237364/237365 Brilliant Silver: post-hotfix original completed-cast hit ledgers, input ranks and refunds",
+    "236761 Tranquility Bloom: ten-herb-per-cast original milling, exact Powder Pigment IDs, per-cast quantities and resourcefulness log"
   ],
   "source_evidence_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1vv7ktl/weekly_i_screwed_up_saturday/",
-    "https://us.forums.blizzard.com/en/wow/t/can-you-profit-from-prospecting/2270729",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-10T0614-original-staff-de-and-silver-nominal-reference.jsonl"
+    "https://us.forums.blizzard.com/en/wow/t/item-restore-issue-w-prof-item-as-cost/2308765",
+    "https://www.wowhead.com/item=251085/mantle-of-dark-devotion",
+    "https://www.wowhead.com/item=267654/swirling-arcane-essence",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-10T0714-mantle-dark-devotion-restoration-ledger.jsonl"
   ]
 }
