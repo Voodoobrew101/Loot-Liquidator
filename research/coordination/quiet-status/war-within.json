@@ -1,84 +1,90 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-10T10:27:16.852Z",
-  "status": "active; first-hand 2025 prospect batch-size corroborations for two ores; no new independent measured processing cohorts; 2025 numeric-result searches documented without fabricated probabilities",
+  "updated_at": "2026-11-10T11:27:11.914Z",
+  "status": "active; identified 3 distinct conditional Khaz Algar disenchant knowledge outputs and weekly/catch-up gates; no new rank-specific measured ordinary processing cohorts",
   "task_ids": [
+    "T0032",
+    "T0048",
     "T0009",
     "T0008",
     "T0007",
     "T0040",
     "T0010",
     "T0011",
-    "T0012",
-    "T0048"
+    "T0012"
   ],
   "exact_gaps_targeted": [
-    "Ironclaw Ore rank-unresolved: March 2025 in-client 'Requires 5 Ironclaw Ore' despite interrupted auto-prospect; need rank-specific completed-operation and refund basis.",
-    "Aqirite rank-unresolved: May 2025 participant reports 2,800 Aqirite requiring five at a time; this is not a measured 560-cast outcome cohort.",
-    "No newly confirmed post-2024-10-25 Bismuth/Ironclaw/Aqirite ore-rank output hits/zero distributions, no Khaz Algar herb/rank milling ledger, and no TWW gear/skill/rarity/armor/weapon controlled DE histogram."
+    "Conditional weekly disenchant outputs 227659 (+1 knowledge, up to 5 weekly), 227661 (+4 knowledge, up to 1 weekly after five), and 227662 (catch-up +1 knowledge after weekly prerequisites), rather than universal Storm Dust/Shard/Crystal yields.",
+    "No direct measured TWW gear rarity/armor/weapon/skill operation cohorts for these conditional items; exact eligible input gear IDs, contemporaneous build, profession skill, specialization, zero counts and 0..N stacks remain null.",
+    "Current post-Oct-25 2024 Bismuth 210931, Ironclaw 210937, Aqirite 210934 and Khaz Algar herb-rank milling completed-operation output histograms remain missing."
   ],
   "newly_verified_fields": [
     {
-      "type": "recipe",
-      "method": "Prospect",
-      "inputName": "Ironclaw Ore",
-      "inputItemID": null,
-      "inputRank": null,
-      "inputsPerCast": 5,
-      "sourceDate": "2025-03-21",
-      "sourceURL": "https://us.forums.blizzard.com/en/wow/t/prospecting-ore-on-jeweler-keeps-stopping/2080583",
-      "actualCompletedCasts": null,
+      "type": "condition",
+      "method": "Disenchant",
+      "outputItemID": 227659,
+      "outputName": "Fleeting Arcane Manifestation",
+      "weeklyItemLimit": 5,
+      "knowledgePerItem": 1,
+      "sourceURL": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+      "completedCasts": null,
       "castsWithDrop": null,
-      "totalOutput": null,
       "histogram": null
     },
     {
-      "type": "recipe",
-      "method": "Prospect",
-      "inputName": "Aqirite",
-      "inputItemID": null,
-      "inputRank": null,
-      "inputsPerCast": 5,
-      "sourceDate": "2025-05-27",
-      "sourceURL": "https://us.forums.blizzard.com/en/wow/t/jc-prospecting-not-working-properly/1934709",
-      "nominalOreMentioned": 2800,
-      "actualCompletedCasts": null,
+      "type": "condition",
+      "method": "Disenchant",
+      "outputItemID": 227661,
+      "outputName": "Gleaming Telluric Crystal",
+      "weeklyItemLimit": 1,
+      "knowledgePerItem": 4,
+      "requiresAfter": "five 227659 weekly items",
+      "sourceURL": "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
+      "completedCasts": null,
       "castsWithDrop": null,
-      "totalOutput": null,
+      "histogram": null
+    },
+    {
+      "type": "condition",
+      "method": "Disenchant",
+      "outputItemID": 227662,
+      "outputName": "Shimmering Dust",
+      "knowledgePerItem": 1,
+      "requires": "Weekly Enchanting quest, five 227659, one 227661, two weekly treasures, unearned catch-up entitlement",
+      "sourceURL": "https://www.wow-professions.com/guides/the-war-within/weekly-profession-knowledge-points",
+      "completedCasts": null,
+      "castsWithDrop": null,
       "histogram": null
     }
   ],
   "newly_verified_cohorts": [],
   "current_run_new_independent_measured_cohorts": 0,
-  "current_run_evidence_records": 5,
-  "current_run_recipe_records": 2,
-  "current_run_searched_records": 3,
+  "current_run_evidence_records": 3,
+  "current_run_condition_records": 3,
   "source_links": [
-    "https://us.forums.blizzard.com/en/wow/t/prospecting-ore-on-jeweler-keeps-stopping/2080583",
-    "https://us.forums.blizzard.com/en/wow/t/jc-prospecting-not-working-properly/1934709",
-    "https://www.reddit.com/r/woweconomy/comments/1g8kbaq",
-    "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
-    "https://eu.forums.blizzard.com/en/wow/t/disenchanting-shard-quality/565405"
+    "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+    "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
+    "https://www.wowhead.com/item=227662/shimmering-dust",
+    "https://www.wow-professions.com/guides/the-war-within/weekly-profession-knowledge-points",
+    "https://eu.forums.blizzard.com/en/wow/t/no-kp-for-enchanting/542108"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-10T1027-2025-batch-controls-and-numeric-gaps.jsonl"
+    "research/v3/evidence/war-within/2026-11-10T1127-conditional-enchanting-knowledge.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-10T1027-2025-batch-controls-and-numeric-gaps.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-10T1127-conditional-enchanting-knowledge.jsonl"
   ],
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "The commit contains evidence and status atomically; its own SHA cannot be embedded in its content. Branch-head and file read-backs are performed after ref update.",
+  "verified_commit_sha_note": "Evidence and status are committed atomically; a commit cannot embed its own SHA. Read-back will check branch and files after ref update.",
   "blockers": [
-    "2025 searched sources provide recipe/partial-stack/interruption facts but no new per-output completed-operation/hit/stack sample. Never use 2800 Aqirite or 1000 queued ore as an observed denominator.",
-    "Input ore quality/rank, source item ID, skill and specialization are not present in the firsthand 5-ore statements.",
-    "Original per-cast post-hotfix prospecting, milling, and gear DE operation logs remain unavailable in checked sources.",
-    "At least two older reported TWW prospecting cohorts have pre-2024-10-25 hotfix epochs; do not coalesce with later mechanics."
+    "The source's approximate per-rarity catch-up percentages are not linked to counts, precise item IDs, skill, patch, a control group or per-cast histograms; do not use them as measured hit probabilities.",
+    "Weekly/catch-up outputs are conditional and require Master to review placement under conditional outputs; do not pool into normal DE gold EV.",
+    "No original post-hotfix TWW ore/herb/gear 0..N measured cohorts were discovered from the newly targeted conditional/weekly sources."
   ],
   "exhausted_sources": [
-    "2025 named searches across official Blizzard forums, r/woweconomy, Wowhead, and Method for post-hotfix per-output Ironclaw/Aqirite/Bismuth samples; documented as searched evidence, not rerun as new samples.",
-    "2025 indexed Mycobloom and TWW disenchant threads with anecdotal amounts but no source-original denominators. Older PeaEsk and 1g350pq/1fisfkn/1fdmzwy cohorts deliberately not reused."
+    "Avoid repeating the previous 2026-11-10T1027 2025 indexed Ironclaw/Aqirite/Bismuth, Mycobloom, DE searches; original ranked post-hotfix cast-level logs remain unavailable."
   ],
-  "next_concrete_step": "Find addon-exported or spreadsheet-level 2025+ ranked 5-ore/10-herb completed operation logs with actual 0..N stacks, rank, item IDs, skill/spec, epoch and Resourcefulness; prioritize 210937/210934/210931, 210796/210797/210798, and T0048 gear; do not repeat these exhausted indexed source queries.",
+  "next_concrete_step": "Request Master integration review of three weekly/catch-up knowledge output gates; obtain verified actual eligible item IDs and conditional 0..N gear DE logs with weekly quest/completion flags, skill, spec, ilvl and game build. Return to queued 210937/210934/210931 prospect and Khaz Algar milling exact cast-level logs without duplicating older cohorts.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
