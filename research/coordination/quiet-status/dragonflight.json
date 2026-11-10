@@ -1,30 +1,137 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-10T03:36:25.916Z",
-  "status": "active; secondary-source Draconium and Serevite complete three-rank ID crosscheck, no new independent measured prospect/mill cast ledger; primary API validation required",
+  "updated_at": "2026-11-10T04:35:40.180Z",
+  "status": "active; 3 previously unindexed Dragonflight gear Looter item-side cohorts with occurrence denominators; no novel ranked ore/herb per-cast histogram",
   "task_ids": [
     "T0020",
-    "T0018",
-    "T0015",
+    "T0046",
     "T0041",
     "T0019",
-    "T0046"
+    "T0018",
+    "T0015"
   ],
   "exact_gaps_targeted": [
-    "T0046 Serevite Ore rank mapping 190395=R1, 190396=R2, 190394=R3: secondary GitHub README + GoldCap agree; authoritative live Blizzard item/tooltip still missing",
-    "T0046/T0020/T0019 Draconium Ore rank mapping 189143=R1, 188658=R2, 190311=R3: GoldCap secondary item pages agree internally, authoritative API still missing",
-    "T0041 Draconium, Serevite, Khaz'gorite, Prismatic 194545 per-output hits and zero-inclusive 0-N histograms not published in independently eligible original cohort",
-    "T0018/T0015 Bubble Poppy 191467 and Saxifrage 191464 pigment-per-completed-mill counts, skill/spec and Resourcefulness refunds absent"
+    "T0020/T0046 Draconium Ore 189143/188658/190311 and Serevite Ore 190395/190396/190394 rank identities and original ranked material-by-cast source",
+    "T0041 Khaz'gorite Ore and Prismatic Ore 194545 original per-output 0/1/2+ histograms, completed casts/refund ledger and source epoch",
+    "T0018/T0015 Bubble Poppy 191467 and Saxifrage 191464 per-completed-mill pigment counts/skill",
+    "Gear fallback: exact inputs 194401,194406,202463 and exact output hits for 194123/194124/200113, still missing per-cast histograms, units, skill and build"
   ],
   "newly_verified_fields": [
-    "NEW secondary-source rank corroboration Serevite Ore R1=190395, R2=190396, R3=190394 by separate original open-source GitHub README and GoldCap item pages, not an official tooltip",
-    "NEW combined Draconium Ore three-rank secondary item-page mapping R1=189143, R2=188658, R3=190311 from GoldCap; R3 190311 now explicitly checked",
-    "All identified first-person numerical ore processing originals already represented in repository, not copied"
+    "NEW item-side Looter source original input 194401: 191 disenchant observations, Chromatic Dust 194123 173 hits/91% displayed, Vibrant Shard 194124 13 hits/7%, Resonant Crystal 200113 5 hits/3%",
+    "NEW input 194406: 77 observations, outputs 194123 66 hits/86%; 194124 11/14%; 200113 1/1.3%",
+    "NEW input 202463: 25 observations, output 194124 15/60%, 200113 11/44%, 194123 3/12%; material hits can co-occur",
+    "Percentages are rounded Wowhead per-input-operation occurrence shares, not material yield averages; no actual 0-N event histograms or total quantities"
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": [],
-  "numerical_fields_improved": [],
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "wowhead-looter-194401-20261110-item-side-original-snapshot",
+      "inputItemID": 194401,
+      "casts": 191,
+      "outputs": [
+        {
+          "itemID": 194123,
+          "castsWithDrop": 173,
+          "percentShown": 91
+        },
+        {
+          "itemID": 194124,
+          "castsWithDrop": 13,
+          "percentShown": 7
+        },
+        {
+          "itemID": 200113,
+          "castsWithDrop": 5,
+          "percentShown": 3
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118"
+    },
+    {
+      "studyKey": "wowhead-looter-194406-20261110-item-side-original-snapshot",
+      "inputItemID": 194406,
+      "casts": 77,
+      "outputs": [
+        {
+          "itemID": 194123,
+          "castsWithDrop": 66,
+          "percentShown": 86
+        },
+        {
+          "itemID": 194124,
+          "castsWithDrop": 11,
+          "percentShown": 14
+        },
+        {
+          "itemID": 200113,
+          "castsWithDrop": 1,
+          "percentShown": 1.3
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr/item=194406/stingerproof-helmet"
+    },
+    {
+      "studyKey": "wowhead-looter-202463-20261110-item-side-original-snapshot",
+      "inputItemID": 202463,
+      "casts": 25,
+      "outputs": [
+        {
+          "itemID": 194124,
+          "castsWithDrop": 15,
+          "percentShown": 60
+        },
+        {
+          "itemID": 200113,
+          "castsWithDrop": 11,
+          "percentShown": 44
+        },
+        {
+          "itemID": 194123,
+          "castsWithDrop": 3,
+          "percentShown": 12
+        }
+      ],
+      "source": "https://www.wowhead.com/item=202463/lingering-phantoms-stompers?bonus=6652:7977:9334:1498:8767&class=6&ilvl=441&spec=250"
+    }
+  ],
+  "new_numerical_measurements": [
+    {
+      "inputItemID": 194401,
+      "casts": 191,
+      "outputHits": {
+        "194123": 173,
+        "194124": 13,
+        "200113": 5
+      }
+    },
+    {
+      "inputItemID": 194406,
+      "casts": 77,
+      "outputHits": {
+        "194123": 66,
+        "194124": 11,
+        "200113": 1
+      }
+    },
+    {
+      "inputItemID": 202463,
+      "casts": 25,
+      "outputHits": {
+        "194123": 3,
+        "194124": 15,
+        "200113": 11
+      }
+    }
+  ],
+  "numerical_fields_improved": [
+    "inputItemID",
+    "outputItemID",
+    "casts",
+    "castsWithDrop",
+    "percentShown",
+    "percentMeaning",
+    "minSeen/maxSeen when displayed"
+  ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-10T0144-prospectmate-raw-cast-export-gap.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T2337-four-new-item-looter-cohorts.jsonl",
@@ -51,7 +158,8 @@
     "research/v3/evidence/dragonflight/2026-11-09T0440-prospectmate-cast-export-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-10T0034-three-amirdrassil-gear-looter-hits.jsonl",
     "research/v3/evidence/dragonflight/2026-11-10T0251-serevite-refunds-and-original-source-triage.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-10T0335-rank-map-crosscheck-and-raw-operation-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-10T0335-rank-map-crosscheck-and-raw-operation-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-10T0435-three-original-gear-disenchant-cohorts.jsonl"
   ],
   "source_links": [
     "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
@@ -149,14 +257,17 @@
     "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape",
     "https://www.reddit.com/r/woweconomy/comments/10s9ol9",
     "https://www.reddit.com/r/woweconomy/comments/10u5ao8",
-    "https://github.com/t-mart/wow-auction/blob/master/README.md"
+    "https://github.com/t-mart/wow-auction/blob/master/README.md",
+    "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118",
+    "https://www.wowhead.com/item=202463/lingering-phantoms-stompers?bonus=6652:7977:9334:1498:8767&class=6&ilvl=441&spec=250"
   ],
-  "verified_commit_sha": "ca6745146eba40252955337d848c0bae138561ce",
-  "commit_sha_scope": "These fields denote the fetched parent SHA before the write because a commit cannot contain its own SHA. Check post-write branch HEAD externally.",
+  "verified_commit_sha": "2a9084f498a7f2104f27fa0e1fe6fd3e3e25bb64",
+  "commit_sha_scope": "verified_commit_sha and verified_parent_sha identify the fetched parent before this commit; the generated commit cannot contain its own SHA. Verified head/diff after push externally.",
   "blockers": [
-    "Measured Dragonflight ore/herb per-material completed-operation denominators, castsWithDrop and 0-N histograms remain absent from newly located original studies; nominal input counts cannot replace actual completed casts with Resourcefulness.",
-    "Serevite/Draconium rank-to-item IDs corroborated only by secondary sources; authoritative game tooltip or Blizzard API item result is still missing.",
-    "Independent post-historical patch cohort with specialization/skill, ranks, materials and Resourcefulness refund log not found."
+    "No new original completed-cast Dragonflight ore/herb material hit/zero histogram with ranks, skill, specialization, actual consumed inputs and Resourcefulness refunds.",
+    "Wowhead Looter item-page cohort timestamps, actual bonus/ilvl/build, player skill/specialization and per-cast material unit/0-N histograms unavailable; source page variant and display options do not imply sample patch.",
+    "Rank quality mapping for Serevite/Draconium and output gem ranks still lacks authoritative in-game tooltip/API validation.",
+    "Optional third-party scraper currently has insufficient credits; indexed Wowhead text search remains usable."
   ],
   "exhausted_sources": [
     {
@@ -633,21 +744,36 @@
         "GoldCap item-specific ranked Serevite and Draconium Ore: https://goldcap.gg/retail/us/items/190395 ; https://goldcap.gg/retail/us/items/190396 ; https://goldcap.gg/retail/us/items/190394 ; https://goldcap.gg/retail/us/items/189143 ; https://goldcap.gg/retail/us/items/188658 ; https://goldcap.gg/retail/us/items/190311",
         "Independent GitHub README item rank explanation https://github.com/t-mart/wow-auction/blob/master/README.md explicitly names 190395 Serevite R1, 190396 R2, 190394 R3; scraped/cache interpretation not authoritative live API"
       ]
+    },
+    {
+      "at": "2026-11-10T04:35:40.180Z",
+      "scope": "New name-first original prospecting/milling 0-N counts plus unindexed Wowhead gear source search",
+      "reason": "No novel original completed-cast ore/herb material histogram; duplicate 2022-23 sources and current repository item-side Looter snapshots excluded; three new source-original item-side gear cohorts located, nine numeric per-output occurrence records.",
+      "whereLooked": [
+        "reddit.com/r/woweconomy: name-first Draconium Ore and Serevite Ore original prospecting spreadsheets/result tables and per-cast logs; already represented 2022–23 first-person cohorts only",
+        "reddit.com/r/woweconomy: name-first Khaz'gorite Ore and Prismatic Ore ranked original prospects, zero/hit/2+ materials and refund events; prior originals already indexed",
+        "wowhead.com: named Dragon Isles Prospecting/Prismatic Ore original comments and ranked ore pages; previously indexed historical observations; new original gear Looter source tables for 194401, 194406, 202463 separately recorded",
+        "wow-professions.com: Dragon Isles herb milling batch and output reference guides, not sampled per-completed-cast pigment histograms",
+        "us.forums.blizzard.com: named Bubble Poppy milling measured outcomes and per-operation data; no novel raw pigment result ledger",
+        "warcraft.wiki.gg: named Saxifrage and Bubble Poppy mill output mappings; reference facts only, not source-original cast samples",
+        "github.com: named Draconium Ore prospecting result CSV/export, Serevite Ore rank-specific logs; no new public original player event data",
+        "wowhead.com: independent unused item name and ID candidates Field Scout's Boots (194383), Expedition Guard's Helm (194380), Nokhud Reaver Chestplate (197639), Doomsayer's Greatsword (194395), Lurking Specter's Edgeband (202494), Underlight Conjurer's Treads (202553) were excluded as existing evidence cohorts"
+      ]
     }
   ],
-  "next_concrete_step": "Ask Master to obtain/verify Blizzard official item-quality tooltip/API for 190395/190396/190394 and 189143/188658/190311 before any rank-specific importer correction. Independently acquire event-by-event Draconium/Serevite/Prismatic prospect and Bubble Poppy/Saxifrage mill data with completed cast counts, material IDs/ranks, 0-N outcomes, refunds and spec/skill/build; otherwise preserve nulls.",
+  "next_concrete_step": "Prioritize new original Draconium/Serevite/Khaz'gorite/Prismatic prospect and Bubble Poppy/Saxifrage mill per-operation logs with 0-N material histogram, item rank, skill/spec/patch and refunded input; ask Master for authoritative ore-rank API crosscheck. For these three gear cohorts, seek raw Looter positive-stack frequencies and original item-version conditions without recapturing same snapshots.",
   "validation": {
-    "jsonl_records": 1,
+    "jsonl_records": 10,
+    "drop_records": 9,
     "searched_records": 1,
-    "drop_records": 0,
-    "source_numeric_cohorts_added": 0,
-    "independent_name_searches": 6,
-    "distinct_domains": 6,
+    "new_original_gear_cohorts": 3,
     "all_jsonl_rows_parsed": true,
-    "known_original_studies_deduplicated": true,
-    "unknown_numeric_fields_preserved": true,
+    "unique_record_ids": true,
+    "source_original_dedupe_name_and_id": true,
+    "original_unresolved_fields_null": true,
+    "checked_material_hit_leq_casts": true,
     "changed_paths_expected": [
-      "research/v3/evidence/dragonflight/2026-11-10T0335-rank-map-crosscheck-and-raw-operation-search.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-10T0435-three-original-gear-disenchant-cohorts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "post_write_branch_readback": "pending"
@@ -655,29 +781,53 @@
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "ca6745146eba40252955337d848c0bae138561ce",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T0335-rank-map-crosscheck-and-raw-operation-search.jsonl",
+  "verified_parent_sha": "2a9084f498a7f2104f27fa0e1fe6fd3e3e25bb64",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T0435-three-original-gear-disenchant-cohorts.jsonl",
   "current_run_commit_sha": null,
-  "newly_verified_fields_cohorts": [],
+  "newly_verified_fields_cohorts": [
+    {
+      "itemID": 194401,
+      "casts": 191,
+      "materialIDs": [
+        194123,
+        194124,
+        200113
+      ]
+    },
+    {
+      "itemID": 194406,
+      "casts": 77,
+      "materialIDs": [
+        194123,
+        194124,
+        200113
+      ]
+    },
+    {
+      "itemID": 202463,
+      "casts": 25,
+      "materialIDs": [
+        194124,
+        200113,
+        194123
+      ]
+    }
+  ],
   "last_source_search": {
-    "performed_at": "2026-11-10T03:36:25.916Z",
-    "priority_source_findings": "Three-rank Serevite and Draconium ore identity crosscheck with secondary sources; no new independent per-cast numerical cohort.",
+    "performed_at": "2026-11-10T04:35:40.180Z",
+    "priority_source_findings": "Nine original Looter material hit counts in three gear cohorts; no novel ore/mill complete-cast material histogram.",
     "source_sites": [
       "reddit.com",
       "wowhead.com",
+      "wow-professions.com",
       "us.forums.blizzard.com",
       "warcraft.wiki.gg",
-      "github.com",
-      "goldcap.gg"
+      "github.com"
     ],
     "new_source_items": [
-      "https://github.com/t-mart/wow-auction/blob/master/README.md",
-      "https://goldcap.gg/retail/us/items/190395",
-      "https://goldcap.gg/retail/us/items/190396",
-      "https://goldcap.gg/retail/us/items/190394",
-      "https://goldcap.gg/retail/us/items/189143",
-      "https://goldcap.gg/retail/us/items/188658",
-      "https://goldcap.gg/retail/us/items/190311"
+      "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118",
+      "https://www.wowhead.com/ptr/item=194406/stingerproof-helmet",
+      "https://www.wowhead.com/item=202463/lingering-phantoms-stompers?bonus=6652:7977:9334:1498:8767&class=6&ilvl=441&spec=250"
     ]
   }
 }
