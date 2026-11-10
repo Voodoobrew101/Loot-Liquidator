@@ -1,14 +1,15 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-10T10:41:58.270Z",
-  "status": "Checked current v3 rules and queued Warmaul/Cobalt/Fel Iron/TBC sources for independent casts. No new primary completed-cast or hit/zero cohort identified. Corrected one previously archived Saronite 11-stack source (12 output rows): 44 had been recorded as measured casts although it was only a nominal full-stack equivalent; the corrected replacements preserve every source-reported gem total and set casts to null. No price, production, queue, schedule, or other-worker files changed.",
+  "updated_at": "2026-11-10T11:43:59.848Z",
+  "status": "Corrected 12 FiveSpice Adamantite 23425 rows: 1,000 ore / 5 was a nominal 200-cast equivalent, not independently logged completed prospects; 12 output totals preserved with casts=null. Reclassified 4 duplicate Runecloth Headband 13866 and Communal Warmaul 186057 historical source rows as non-study reference replacements to avoid double counting earlier originals. Seven 186057 Looter operations remain solely in the earlier original cohort. No new Warmaul 24995, Cobalt 36909 or Fel Iron 23424 measured casts or independently verified cohorts identified; no production, queue, main, other worker, validation, price or schedule changes.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
     "T0050",
+    "T0051",
     "T0052",
     "T0053"
   ],
@@ -17,91 +18,118 @@
     "Current Retail Warmaul 24995 item-level/DE eligibility disagreement (historical TBC iLvl108 skill275, live Wowhead iLvl14, other scaled snapshots iLvl31; WoWDB cannot disenchant) still unverified on actual client.",
     "Cobalt Ore 36909 lacks new independent completed prospect counts and per-gem hit/zero histogram for gems 36917/36920/36923/36926/36929/36932 and rare 36918/36921/36924/36927/36930/36933; avoid recycling pre-existing 180-ore and 24-stack originals or the six 2.5-unit priors.",
     "Fel Iron Ore 23424 original 100-ore and 565-ore cohorts already captured; new completed casts/hit/zero histograms and verifiable 2007 skill 290-versus-275 patch context absent.",
-    "Saronite Ore 36912 original author 390549 recorded 11 stacks and exact gem quantities at JC400; earlier evidence legacy-20261031-1250..1261 improperly treated a conditional 44 five-ore batch equivalent as real casts. Twelve replacement records now set casts=null without adding a cohort.",
-    "Token 45661 seven class reward mappings and current redemption are already archived; no new variant/identity verified."
+    "Token 45661 seven class reward mappings and current redemption are already archived; no new variant/identity verified.",
+    "Adamantite Ore 23425 FiveSpice 2021 batch: original author reported 1,000 ore and 12 exact gem totals, not count of 200 completed prospect clicks; had false 200 denominator in legacy-20261101-154001..154012.",
+    "Runecloth Headband 13866 Greater Eternal Essence 16203: 14 crafted headbands and 8 essence units (comment 930224) do not imply 14 disenchants. Historical Thottbot one positive two-unit outcome is already archived.",
+    "Communal Warmaul 186057: 7 cumulative Looter disenchants, hits 16202=6, 11176=1 are in old 2026-11-06 original; 2026-11-10 duplicate mirror was not a new seven-event cohort. Displayed fixed stack 3 for 11176 is not a measured per-event histogram."
   ],
   "newly_verified_fields_cohorts": [
     {
       "kind": "measurement_basis_correction",
-      "studyKey": "wowhead-prospect-spell-390549-11stacks-saronite",
-      "source": "https://www.wowhead.com/mx/spell=31252/prospectar",
-      "original_source_comment": "390549",
-      "inputItemID": 36912,
-      "inputName": "Saronite Ore",
-      "reported_stacks": 11,
-      "formerly_assumed_casts": 44,
-      "corrected_casts": null,
-      "jewelcrafting_skill": 400,
-      "output_totals_unchanged": [
+      "inputItemID": 23425,
+      "inputName": "Adamantite Ore",
+      "studyKey": "xpoff-fivespice-20210104-adamantite-1000-ore",
+      "source": "https://xpoff.com/posts/1257082/",
+      "inputOreReported": 1000,
+      "nominalFiveOreEquivalents": 200,
+      "correctedCompletedCasts": null,
+      "originalRecords": [
+        "legacy-20261101-154001",
+        "legacy-20261101-154002",
+        "legacy-20261101-154003",
+        "legacy-20261101-154004",
+        "legacy-20261101-154005",
+        "legacy-20261101-154006",
+        "legacy-20261101-154007",
+        "legacy-20261101-154008",
+        "legacy-20261101-154009",
+        "legacy-20261101-154010",
+        "legacy-20261101-154011",
+        "legacy-20261101-154012"
+      ],
+      "outputTotalsPreserved": [
         {
-          "outputItemID": 36926,
+          "outputItemID": 23440,
           "totalQuantity": 13
         },
         {
-          "outputItemID": 36929,
-          "totalQuantity": 10
-        },
-        {
-          "outputItemID": 36932,
-          "totalQuantity": 8
-        },
-        {
-          "outputItemID": 36923,
+          "outputItemID": 23436,
           "totalQuantity": 7
         },
         {
-          "outputItemID": 36920,
-          "totalQuantity": 6
+          "outputItemID": 23441,
+          "totalQuantity": 8
         },
         {
-          "outputItemID": 36917,
+          "outputItemID": 23439,
           "totalQuantity": 5
         },
         {
-          "outputItemID": 36924,
-          "totalQuantity": 3
+          "outputItemID": 23438,
+          "totalQuantity": 9
         },
         {
-          "outputItemID": 36918,
-          "totalQuantity": 2
+          "outputItemID": 23437,
+          "totalQuantity": 4
         },
         {
-          "outputItemID": 36930,
-          "totalQuantity": 2
+          "outputItemID": 23117,
+          "totalQuantity": 42
         },
         {
-          "outputItemID": 36921,
-          "totalQuantity": 1
+          "outputItemID": 23077,
+          "totalQuantity": 39
         },
         {
-          "outputItemID": 36933,
-          "totalQuantity": 1
+          "outputItemID": 23079,
+          "totalQuantity": 34
         },
         {
-          "outputItemID": 36927,
-          "totalQuantity": 1
+          "outputItemID": 21929,
+          "totalQuantity": 31
+        },
+        {
+          "outputItemID": 23112,
+          "totalQuantity": 30
+        },
+        {
+          "outputItemID": 23107,
+          "totalQuantity": 40
         }
       ],
-      "replaces": [
-        "legacy-20261031-1250",
-        "legacy-20261031-1251",
-        "legacy-20261031-1252",
-        "legacy-20261031-1253",
-        "legacy-20261031-1254",
-        "legacy-20261031-1255",
-        "legacy-20261031-1256",
-        "legacy-20261031-1257",
-        "legacy-20261031-1258",
-        "legacy-20261031-1259",
-        "legacy-20261031-1260",
-        "legacy-20261031-1261"
+      "newIndependentCohorts": 0
+    },
+    {
+      "kind": "dedupe_correction",
+      "inputItemIDs": [
+        13866,
+        186057
       ],
-      "actual_new_independent_cohorts": 0,
-      "note": "The linked firsthand author reported eleven stacks, never 44 completed prospect actions. Counts/ore per stack/refunds/zeros/patch remain unknown."
+      "outputItemIDs": [
+        16203,
+        16202,
+        11176
+      ],
+      "duplicateRecords": [
+        "legacy-20261110-24701",
+        "legacy-20261110-24702",
+        "legacy-20261110-24703",
+        "legacy-20261110-24704"
+      ],
+      "canonicalEarlierRecords": [
+        "legacy-20261106-004101",
+        "legacy-20261106-004102",
+        "legacy-20261106-601",
+        "legacy-20261106-602"
+      ],
+      "nominalHeadbandsCrafted": 14,
+      "observedCraftsNotDisenchants": true,
+      "communalLooterCastsInCanonicalCohort": 7,
+      "newIndependentCohorts": 0
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 12,
+    "new_evidence_records": 16,
     "new_completed_disenchant_casts": 0,
     "new_completed_prospect_casts": 0,
     "new_material_hit_counts": 0,
@@ -109,31 +137,35 @@
     "new_output_IDs": 0,
     "new_gold_values": 0,
     "new_independent_source_cohorts": 0,
-    "new_source_reliability_warnings": 1,
-    "new_historical_skill_conflicts": 1,
-    "new_corrective_records": 12,
-    "replaced_old_records": 12,
-    "casts_removed_from_measured_denominator": "44 presumed casts across one 12-output Saronite cohort, not 528 distinct operations"
+    "new_corrective_records": 16,
+    "replaced_old_records": 16,
+    "casts_removed_from_measured_denominator": "200 nominal five-ore equivalents from one 12-output Adamantite cohort; 14 unconfirmed headband operations from a duplicate; 7 cumulative Communal Warmaul operations no longer duplicated. Do not multiply row count by these cohorts."
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-10T1041-saronite-11stack-cast-basis-corrections.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-10T1041-saronite-11stack-cast-basis-corrections.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-10T1143-false-cast-and-duplicate-cohort-replacements.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-10T1143-false-cast-and-duplicate-cohort-replacements.jsonl",
   "sources": [
     "https://www.wowhead.com/mx/spell=31252/prospectar",
     "https://www.wowhead.com/wotlk/spell=31252/prospecting",
     "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
     "https://warcraft.wiki.gg/wiki/Cobalt_Ore",
     "https://warcraft.wiki.gg/wiki/Fel_Iron_Ore",
-    "https://www.reddit.com/r/classicwow/comments/p71mrp"
+    "https://www.reddit.com/r/classicwow/comments/p71mrp",
+    "https://xpoff.com/posts/1257082/",
+    "https://www.wowhead.com/ptr/item=16203/greater-eternal-essence",
+    "https://www.wowhead.com/tbc/item=186057/communal-warmaul",
+    "https://dalaggstudios.com/worthit-exports"
   ],
-  "verified_base_commit_sha": "8f9dfd699c4d33cdb9537d04d36c37efac8d657e",
+  "verified_base_commit_sha": "626e6a7c746ba04795415755aa75aa888c0f7efb",
   "verified_commit_sha": null,
-  "commit_sha_note": "Single atomic commit includes one append-only corrective evidence JSONL file and this status update. Its own SHA cannot be embedded in its tracked status blob without changing that SHA. Verify externally by reading branch ref, commit diff and both files after updating.",
+  "commit_sha_note": "Single atomic commit writes only this status blob and one worker-owned corrective evidence JSONL. Commit SHA cannot be embedded in its own tracked blob without creating another commit; validate via branch head and file read-back.",
   "blockers": [
     "No independent Warmaul 24995 bonus/build-specific, current Retail in-game disenchant log, zero-inclusive histogram or explicit historical sampling dates; positive Looter bins are not proven complementary zeros.",
     "No independent Cobalt 36909 or Fel Iron 23424 first-person source with new actual completed casts and per-output hit/miss histogram; prior published cohorts and guide priors are already recorded.",
     "Historical 2007 Fel Iron required Jewelcrafting skill 290 versus modern source 275 and the Warmaul 22%/75% dust/essence wiki reversal need Master version/source reconciliation.",
-    "Saronite author 390549's 11 stacks are not a physical 44-cast log; no exact ore count per stack or refunds. Replacements preserve totals but cannot support a measured per-cast yield.",
-    "Spaulders of the Wayward Vanquisher 45661 seven reward IDs already known; no independent new variant or redemption verification."
+    "Spaulders of the Wayward Vanquisher 45661 seven reward IDs already known; no independent new variant or redemption verification.",
+    "Fel Iron and Cobalt independent new source search still lacks material hit/zero event logs; DalaGG 1000-ore WorthIt export is a profit-model configuration, not independent logged measured casts.",
+    "FiveSpice original thread link is not supplied; xpoff post 1257082 is a first-person repost and may duplicate an inaccessible earlier report.",
+    "Master review needed for importer dedupe semantics across Classic/PTR mirrors; these sourceKind=reference replacements are not independent cohorts."
   ],
   "exhausted_sources": [
     {
@@ -230,12 +262,24 @@
         "https://repos.wowace.com/wow/reagentmaker/file/tip/ProspectingData.lua?style=paper"
       ],
       "reason": "No distinct source-backed new Cobalt/Fel Iron/Warmaul counted operations and per-output zeros. Comment 390549's 11-stack Saronite original had already been archived, but its nominal-equivalent denominator needed correction; derived mapping tables or alternate spell locales are not new cohorts."
+    },
+    {
+      "lookingFor": "Novel Warmaul 24995, Cobalt 36909, Fel Iron 23424 measured outcomes after prior exhaustive searches; avoid repeating reference-only guides or reused old cohorts",
+      "whereLooked": [
+        "https://www.wowhead.com/it/item=36909/minerale-di-cobalto",
+        "https://www.wowhead.com/cata/fr/item=23424/minerai-de-gangrefer",
+        "https://dalaggstudios.com/worthit-exports",
+        "https://www.wow-professions.com/tbc/disenchanting-tables",
+        "https://www.reddit.com/r/classicwow/comments/p71mrp",
+        "https://www.wowhead.com/tbc/ko/item=23425"
+      ],
+      "reason": "No new source-backed per-cast 24995/36909/23424 cohort. Multisite guides, indexed old comments, and WorthIt exports do not supply new physical cast logs; switched to correcting known false-denominator and mirrored-study duplicates."
     }
   ],
-  "next_concrete_step": "Seek first-person contemporary Retail Warmaul 24995 variant/bonus-ID disenchant and loot capture (including unavailable action) or novel Cobalt 36909/Fel Iron 23424 per-click SavedVariables exports not among exhausted indexed pages. Ask Master to reconcile the Fel Iron historic skill 290/275 split, historical Warmaul reversal, and to audit source-derived batch equivalents in other legacy rows.",
-  "previous_status_updated_at": "2026-11-10T09:49:22.125Z",
-  "last_evidence_file": "research/v3/evidence/legacy/2026-11-10T1041-saronite-11stack-cast-basis-corrections.jsonl",
-  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-10T1041-saronite-11stack-cast-basis-corrections.jsonl",
+  "next_concrete_step": "Seek previously unindexed first-person SavedVariables/log exports with counted completed prospect actions and outcome 0..N bins for Cobalt 36909/Fel Iron 23424 and current Retail variant/bonus-specific Warmaul Legplates 24995; request Master to verify replacement and sourceKind dedupe before estimator acceptance and review 2021 FiveSpice original-thread identity.",
+  "previous_status_updated_at": "2026-11-10T10:41:58.270Z",
+  "last_evidence_file": "research/v3/evidence/legacy/2026-11-10T1143-false-cast-and-duplicate-cohort-replacements.jsonl",
+  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-10T1143-false-cast-and-duplicate-cohort-replacements.jsonl",
   "source_reliability_findings": [
     {
       "source": "https://wowinterface.com/downloads/info9751-ProspectStats.html",
