@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-10T10:36:39.507Z",
-  "status": "active; investigated new domain/format source angles, no NEW independent completed-cast Dragonflight source or item ID correction",
+  "updated_at": "2026-11-10T11:37:28.866Z",
+  "status": "active; one new original low-certainty post-Dragonflight numeric negative observation; primary Dragonflight ore/mill hit counts still unclosed",
   "task_ids": [
     "T0020",
     "T0046",
@@ -14,16 +14,48 @@
     "T0016"
   ],
   "exact_gaps_targeted": [
-    "Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314 and Prismatic 194545: no new independent ranked input/output measured completed casts, castsWithDrop, 0-N histograms or Resourcefulness-refund ledger.",
-    "Bubble Poppy 191467 -> Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 -> Blazing Pigment 198418/198419/198420: no new original per-output completed-mill, refunded input or zero-event distribution.",
-    "Dragonflight gear -> Chromatic Dust 194123, Vibrant Shard 194124, Resonant Crystal 200113: no new independent input-variant-identified raw material stack occurrence histogram."
+    "Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314, Prismatic 194545: no new exact-rank per-completed-cast prospecting hits/zeros/histograms or refunds.",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466: no new first-person mill-by-output completed denominators/zero histograms.",
+    "Enchanted Writhebark Wand 200641 -> Resonant Crystal 200113: original reports zero from approximately 600 disenchants in Nov 2024 TWW era, exact denominator, variant/patch unknown; historical non-pooled weak negative sample."
   ],
-  "newly_verified_fields": [],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": [],
-  "numerical_fields_improved": [],
+  "newly_verified_fields": [
+    "Post-Dragonflight source-original reported zero Resonant Crystal 200113 output in approximate 600 Enchanted Writhebark Wand 200641 disenchant attempts; explicit zero is reported, exact casts unknown and null.",
+    "Wand item ID 200641 independently corroborated by TSM retail item listing; exact processing variant/bonus remains unknown."
+  ],
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "reddit-1go5h2b-writhebark-approx600-post-df",
+      "inputItemID": 200641,
+      "outputItemID": 200113,
+      "original": "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
+      "reportedApproxCasts": 600,
+      "verifiedExactCasts": null,
+      "castsWithDrop": 0,
+      "totalQuantity": 0,
+      "epoch": "2024-11 The War Within; NOT Dragonflight release",
+      "confidence": "weak; anecdotal approximate denominator"
+    }
+  ],
+  "new_numerical_measurements": [
+    {
+      "inputItemID": 200641,
+      "outputItemID": 200113,
+      "casts": null,
+      "reportedApproxCasts": 600,
+      "castsWithDrop": 0,
+      "totalQuantity": 0,
+      "rank": null,
+      "sourceKind": "study",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
+      "epoch": "post-Dragonflight"
+    }
+  ],
+  "numerical_fields_improved": [
+    "New original negative outcome report 200641→200113: castsWithDrop=0 and totalQuantity=0, but actual completed casts=null; not valid as exact-N P(hit) cohort."
+  ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-10T1034-new-sites-no-original-event-log.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-10T1034-new-sites-no-original-event-log.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-10T1137-writhebark-post-df-zero-crystal.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385",
@@ -32,15 +64,16 @@
     "https://www.reddit.com/r/woweconomy/comments/126wl17",
     "https://www.wowhead.com/item=194545/prismatic-ore",
     "https://goldcap.gg/retail/us/items/190312",
-    "https://www.curseforge.com/wow/addons/prospectmate"
+    "https://www.curseforge.com/wow/addons/prospectmate",
+    "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
+    "https://tradeskillmaster.com/retail/us/items/200641"
   ],
-  "verified_commit_sha": "0c72746646338f09e2cecdffbb77c400b3d3e7c8",
-  "commit_sha_scope": "Verified research branch parent at atomic tree construction; current own commit SHA cannot be embedded in its own content without self-reference. Read back actual child SHA and changed paths after ref update.",
+  "verified_commit_sha": "6989458f76e38c3d56c19578232fa354e7461d6e",
+  "commit_sha_scope": "parent branch HEAD verified immediately before this run; cannot embed this run's resulting Git SHA into the very same commit",
   "blockers": [
-    "No novel first-person Dragonflight cast-level output table, resourcefulness refund log, per-material 0-N distribution or numeric hit numerator was found in the new domain/format searches.",
-    "Indexed Jallfo beta, Bugy, ar_rules, Khaz'gorite 20-prospect, Aary and superbondez original cohorts are not independent from duplicate summaries or mirrors.",
-    "Original player's post-Dragonflight-addon SavedVariables snapshots were not published as cast-by-cast logs; market quality pages cannot substitute for primary measured drop/rank identity.",
-    "Unknown per-output hit counts and no-outcome rates remain null; nominal input totals are not completed casts when Resourcefulness can apply."
+    "No new precise Dragonflight-era ore/herb completed-cast, per-output 0-N histogram, skill/rank-specific observed numerator or Resourcefulness refund ledger located.",
+    "2024 source reports ~600 wands and no crystals; exact denominator/variants/patch are unverified, game mechanics may differ after the expansion; cannot use to calibrate Dragonflight-era drop probabilities.",
+    "Known Jallfo, Xenastro, Bugy, Aary and earlier Reddit cohorts remain duplicated across guide mirrors; do not promote nominal inputs to completed operations."
   ],
   "exhausted_sources": [
     {
@@ -631,39 +664,66 @@
         "CurseForge ProspectMate: prospecting/milling saved aggregate tracker supports old recipes but provides no public original per-operation Dragonflight corpus, already inspected code lineage (https://www.curseforge.com/wow/addons/prospectmate).",
         "Reddit 2022-23 Dragonflight disenchant green/rare gear material output counts name-first source searches returned qualitative discussion or previously captured Wowhead Looter cumulative item sources, no distinct source-original stack histogram (https://www.reddit.com/r/wow/comments/zsnvw7)."
       ]
+    },
+    {
+      "at": "2026-11-10T11:37:28.866Z",
+      "scope": "New name-first cross-domain ore/mill output ledgers plus 2024 Dragon Isles enchanting reports",
+      "reason": "No novel complete original prospect/mill output distribution; one novel historical/post-expansion approximately-600-wand zero-crystal source was recorded with denominator unknown.",
+      "whereLooked": [
+        "Reddit r/woweconomy: 'Draconium Ore prospecting 2023 spreadsheet results csv 1000 10000' and 'Serevite Ore prospecting 2024 dataset actual casts' — no new original finished-prospect material-hit log beyond previously indexed cohorts.",
+        "Reddit / Wowhead: 'Khaz'gorite Ore prospecting 2023 2024 1000 results spreadsheet' and 'Prismatic Ore prospecting experiment 100 1000 results loot count' — no new per-output 0-N original histogram.",
+        "Reddit r/woweconomy: 'Bubble Poppy milling 1000 2023 Serene Pigment output results numbers' — no new first-person mill-by-mill pigment count.",
+        "Reddit and Wowhead guides: 'Saxifrage mill 500 1000 Blazing Pigment results samples' — no novel complete mill sample beyond known Aary.",
+        "Blizzard WoW forums: 'Dragonflight disenchanted 100 crystals' and 'draconic disenchantment disenchanted 1000' — anecdotal mechanics and preexisting reports, not new verified per-input output histograms.",
+        "Warcraft Wiki 'Disenchanting tables' — explicitly pre-Battle for Azeroth legacy estimates, not Dragonflight completed-cast data (https://warcraft.wiki.gg/wiki/Disenchanting_tables).",
+        "CurseForge ProspectMate addon — aggregated tracker, no published Dragonflight per-cast 0-N raw corpus (https://www.curseforge.com/wow/addons/prospectmate).",
+        "TradeSkillMaster item page — exact 200641 wand identity, not a source of drop probabilities (https://tradeskillmaster.com/retail/us/items/200641)."
+      ]
     }
   ],
-  "next_concrete_step": "Seek an independently published first-person Dragonflight per-craft event stream/CSV or direct author original workbook beyond the already-indexed Jallfo/Xenastro/ProspectMate sources, with exact ranks, refunds, per-output zeros and original cohort IDs; otherwise find as-yet-unindexed source-original item-side disenchant sample.",
+  "next_concrete_step": "Pursue original 2023–24 Dragonflight per-event SavedVariables/CSV sheets absent prior indexed cohorts or verify the 2024 Writhebark wand original character item variant and exact completed DE count; never derive probabilities from reported ~600 alone.",
   "validation": {
     "evidence_jsonl_valid": true,
-    "evidence_record_count": 1,
+    "evidence_record_count": 2,
     "evidence_searched_minimum_met": true,
-    "search_checks": 12,
+    "search_checks": 15,
     "source_site_count": 6,
     "precommit_paths": [
-      "research/v3/evidence/dragonflight/2026-11-10T1034-new-sites-no-original-event-log.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-10T1137-writhebark-post-df-zero-crystal.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "notes": "No new numerical drop/denominator fields, no restating duplicates as novel studies; verified commit and two-path readback pending."
+    "notes": "Read-back validation after push is performed separately; status records verified parent SHA because commits cannot self-reference their own SHA."
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "0c72746646338f09e2cecdffbb77c400b3d3e7c8",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T1034-new-sites-no-original-event-log.jsonl",
+  "verified_parent_sha": "6989458f76e38c3d56c19578232fa354e7461d6e",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T1137-writhebark-post-df-zero-crystal.jsonl",
   "current_run_commit_sha": null,
-  "newly_verified_fields_cohorts": [],
+  "newly_verified_fields_cohorts": [
+    {
+      "inputItemID": 200641,
+      "outputItemID": 200113,
+      "casts": null,
+      "castsWithDrop": 0,
+      "totalQuantity": 0,
+      "source_url": "https://www.reddit.com/r/woweconomy/comments/1go5h2b",
+      "limitation": "~600 only, 2024 TWW era"
+    }
+  ],
   "last_source_search": {
-    "performed_at": "2026-11-10T10:36:39.507Z",
-    "priority_source_findings": "No new original Dragonflight ore/herb per-cast hit count or histogram. Khaz'gorite 190312/190313/190314 quality ranks corroborated secondarily, not a new numeric cohort; Jallfo test was October 12 2022 beta.",
+    "performed_at": "2026-11-10T11:37:28.866Z",
+    "priority_source_findings": "No new independent exact per-cast Dragonflight ore/herb sample; first-person ~600-wand zero-crystal TWW-era observation only, with exact casts null.",
     "source_sites": [
-      "wowhead.com",
       "reddit.com",
-      "thelazygoldmaker.com",
+      "wowhead.com",
+      "us.forums.blizzard.com",
       "warcraft.wiki.gg",
-      "goldcap.gg",
-      "curseforge.com"
+      "curseforge.com",
+      "tradeskillmaster.com"
     ],
-    "new_source_items": []
+    "new_source_items": [
+      "200641 -> 200113: 0 reported, approximately 600 unknown-exact completed DE casts"
+    ]
   }
 }
