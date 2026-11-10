@@ -1,152 +1,150 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-09T23:37:55.487Z",
-  "status": "Ten previously unindexed source-reported Dragonflight Looter disenchant material occurrence rows across four distinct item-side gear cohorts (209937, 202484, 209919, 209923) committed and exact-JSONL readback validated. New material-specific castsWithDrop denominators and displayed positive stack ranges, but no actual ore/mill cast-level 0-N histograms or reliable sampled game build/profession spec.",
+  "updated_at": "2026-11-10T00:46:38.296Z",
+  "status": "active; six new item-specific pooled Dragonflight disenchant occurrence rows in three previously unindexed Amirdrassil gear cohorts; priority prospecting and milling per-cast gaps remain unresolved",
   "task_ids": [
     "T0020",
-    "T0019",
     "T0046",
+    "T0019",
+    "T0041",
     "T0018",
-    "T0015",
-    "T0017",
-    "T0041"
+    "T0015"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019/T0046: Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314 and Prismatic 194545 prospecting: original per-quality complete cast and material 0-N histograms remain absent; do not treat refunded ore/input counts as casts.",
-    "T0018/T0015/T0017/T0041: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 milling to exact family material IDs 198412/198413/198414 and 198418/198419/198420: actual per-mill hits, amounts, skill, rank, Resourcefulness remain unresolved.",
-    "T0041 secondary: original item-side gear 209937,202484,209919,209923 to Dragonflight materials 194123/194124/200113 now has exact input/output IDs, original item-specific operation denominators, per-material hits, displayed percentages and positive stack-range bounds; measured total unit quantities, 0-N distributions, disenchanted bonus versions, skill, specialization and game build remain unknown."
+    "Priority T0020/T0019: Draconium Ore 189143/188658 still needs rank-resolved original completed casts, gemstone IDs, material hit counts and refund context.",
+    "Priority T0046/T0041: Serevite 190394/190395/190396, Khaz'gorite and Prismatic prospecting still need rank-resolved original histograms, zero outcomes and P(hit) per completed cast.",
+    "Priority T0018/T0015: Bubble Poppy 191467 and Saxifrage 191464 milling still need independently verified cast denominators, specialization, pigments by rank, total units and zero outcomes.",
+    "Gear evidence follow-up: Wowhead item-side source outputs for IDs 207278, 207283, 207249; each has per-output hit numerators and a shared item-level denominator but unknown output quantities and build context."
   ],
-  "newly_verified_fields": {
-    "record_count": 10,
-    "distinct_original_cohorts": 4,
-    "new_numerical_measurements": 10,
-    "numeric_fields_improved": [
-      "exact gear input item IDs",
-      "output item ID identities 194123/194124/200113",
-      "reported pooled item-specific disenchant operation denominator per cohort",
-      "per-output reported positive occurrence count (castsWithDrop)",
-      "source displayed material occurrence percentages preserved literally",
-      "positive unit ranges where shown, but not stack histograms"
-    ],
-    "source_access_verified": "Original item-side Wowhead Looter tables visible in indexed source excerpts, crosschecked name/denominator/numerator/range. Exact input-ID GitHub code searches returned no existing matching v3 evidence for 209937,202484,209919,209923. On direct page fetch JavaScript removed the numeric table, so external search-indexed original page text is the accessible numerical witness; independent rendered HTML was NOT verified."
-  },
-  "newly_verified_cohorts": [
+  "newly_verified_fields": [
     {
-      "studyKey": "wowhead-looter-209937-20261109-original-item-side-snapshot",
-      "inputItemID": 209937,
-      "inputName": "Chartreuse Champion's Gavel",
-      "casts": 55,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 39,
-          "percentShown": 71,
-          "minSeen": 1,
-          "maxSeen": 5
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 16,
-          "percentShown": 29,
-          "minSeen": 1,
-          "maxSeen": 3
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 2,
-          "percentShown": 4,
-          "minSeen": 1,
-          "maxSeen": 2
-        }
-      ],
-      "source": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel"
+      "inputItemID": 207278,
+      "outputItemID": 200113,
+      "casts": 48,
+      "castsWithDrop": 30,
+      "percentShown": 63,
+      "positiveStackRange": null
     },
     {
-      "studyKey": "wowhead-looter-202484-20261109-original-item-side-snapshot",
-      "inputItemID": 202484,
-      "inputName": "Scalebands of Obsidian Secrets",
-      "casts": 18,
-      "outputs": [
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 13,
-          "percentShown": 72,
-          "minSeen": null,
-          "maxSeen": null
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 7,
-          "percentShown": 39,
-          "minSeen": 1,
-          "maxSeen": 2
-        },
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 1,
-          "percentShown": 6,
-          "minSeen": 2,
-          "maxSeen": 2
-        }
-      ],
-      "source": "https://www.wowhead.com/ptr-2/item=202484/scalebands-of-obsidian-secrets"
+      "inputItemID": 207278,
+      "outputItemID": 194124,
+      "casts": 48,
+      "castsWithDrop": 29,
+      "percentShown": 60,
+      "positiveStackRange": [
+        1,
+        2
+      ]
     },
     {
-      "studyKey": "wowhead-looter-209919-20261109-original-item-side-snapshot",
-      "inputItemID": 209919,
-      "inputName": "Chartreuse Champion's Bulwark",
-      "casts": 42,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 36,
-          "percentShown": 86,
-          "minSeen": 1,
-          "maxSeen": 3
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 13,
-          "percentShown": 31,
-          "minSeen": null,
-          "maxSeen": null
-        }
-      ],
-      "source": "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark"
+      "inputItemID": 207283,
+      "outputItemID": 194124,
+      "casts": 62,
+      "castsWithDrop": 44,
+      "percentShown": 71,
+      "positiveStackRange": [
+        1,
+        2
+      ]
     },
     {
-      "studyKey": "wowhead-looter-209923-20261109-original-item-side-snapshot",
-      "inputItemID": 209923,
-      "inputName": "Chartreuse Champion's Blade",
-      "casts": 30,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 27,
-          "percentShown": 90,
-          "minSeen": 1,
-          "maxSeen": 5
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 4,
-          "percentShown": 13,
-          "minSeen": 1,
-          "maxSeen": 2
-        }
-      ],
-      "source": "https://www.wowhead.com/item=209923/chartreuse-champions-blade"
+      "inputItemID": 207283,
+      "outputItemID": 200113,
+      "casts": 62,
+      "castsWithDrop": 36,
+      "percentShown": 58,
+      "positiveStackRange": null
+    },
+    {
+      "inputItemID": 207249,
+      "outputItemID": 200113,
+      "casts": 35,
+      "castsWithDrop": 27,
+      "percentShown": 77,
+      "positiveStackRange": null
+    },
+    {
+      "inputItemID": 207249,
+      "outputItemID": 194124,
+      "casts": 35,
+      "castsWithDrop": 19,
+      "percentShown": 54,
+      "positiveStackRange": [
+        1,
+        2
+      ]
     }
   ],
-  "new_numerical_measurements": 10,
+  "newly_verified_cohorts": [
+    {
+      "method": "Disenchant",
+      "inputItemID": 207278,
+      "inputName": "Cincture of Lunar Communion",
+      "completedDisenchantObservations": 48,
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 30,
+          "percentShown": 63
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 29,
+          "percentShown": 60
+        }
+      ],
+      "source": "https://www.wowhead.com/item=207278/cincture-of-lunar-communion",
+      "dedupeKey": "wowhead-looter-207278-20261110-single-original-item-side-snapshot",
+      "limitations": "Looter pooled clients; actual source dates, item bonus/ilvl, skill/specialization, per-output quantities and full histograms unknown."
+    },
+    {
+      "method": "Disenchant",
+      "inputItemID": 207283,
+      "inputName": "Poulaines of Lunar Communion",
+      "completedDisenchantObservations": 62,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 44,
+          "percentShown": 71
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 36,
+          "percentShown": 58
+        }
+      ],
+      "source": "https://www.wowhead.com/item=207283/poulaines-of-lunar-communion",
+      "dedupeKey": "wowhead-looter-207283-20261110-single-original-item-side-snapshot",
+      "limitations": "Looter pooled clients; actual source dates, item bonus/ilvl, skill/specialization, per-output quantities and full histograms unknown."
+    },
+    {
+      "method": "Disenchant",
+      "inputItemID": 207249,
+      "inputName": "Benevolent Embersage's Featherdrape",
+      "completedDisenchantObservations": 35,
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 27,
+          "percentShown": 77
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 19,
+          "percentShown": 54
+        }
+      ],
+      "source": "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape",
+      "dedupeKey": "wowhead-looter-207249-20261110-single-original-item-side-snapshot",
+      "limitations": "Looter pooled clients; actual source dates, item bonus/ilvl, skill/specialization, per-output quantities and full histograms unknown."
+    }
+  ],
+  "new_numerical_measurements": 6,
   "numerical_fields_improved": [
-    "exact gear input item IDs",
-    "output item ID identities 194123/194124/200113",
-    "reported pooled item-specific disenchant operation denominator per cohort",
-    "per-output reported positive occurrence count (castsWithDrop)",
-    "source displayed material occurrence percentages preserved literally",
-    "positive unit ranges where shown, but not stack histograms"
+    "6 castsWithDrop observations with shared item-specific Looter denominator across 3 new gear inputs; positive stack bounds where shown",
+    "No new prospecting or milling numerical fields"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-09T2337-four-new-item-looter-cohorts.jsonl",
@@ -170,7 +168,8 @@
     "research/v3/evidence/dragonflight/2026-11-09T0038-prospect-mill-numeric-gap-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T0143-writhebark-post-tww-zero-crystal.jsonl",
     "research/v3/evidence/dragonflight/2026-11-09T0235-ore-rank-audit-and-cast-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-09T0440-prospectmate-cast-export-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-09T0440-prospectmate-cast-export-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-10T0034-three-amirdrassil-gear-looter-hits.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
@@ -260,14 +259,16 @@
     "https://github.com/derfloh205/CraftSim/blob/main/Classes/CraftSessionData.lua",
     "https://github.com/derfloh205/CraftSim/blob/main/CraftSim.toc",
     "https://www.wowhead.com/profession-trait/insight-of-the-blue-68402",
-    "https://goldcap.gg/retail/us/items/194123"
+    "https://goldcap.gg/retail/us/items/194123",
+    "https://www.wowhead.com/item=207278/cincture-of-lunar-communion",
+    "https://www.wowhead.com/item=207283/poulaines-of-lunar-communion",
+    "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape"
   ],
-  "verified_commit_sha": "f4861704c8df5fb8c483ef32037a104ea7affdcb",
-  "commit_sha_scope": "Exact-source evidence-file commit SHA read back from implementation/five-agent-completion. Quiet-status file is committed separately through GitHub contents API to name the evidence SHA truthfully.",
+  "verified_commit_sha": "8e11378fad49cca1cfaaef1e7ddbef88c6808078",
+  "commit_sha_scope": "verified_commit_sha is the actual pre-write parent branch HEAD, not the new same-commit SHA. Both evidence and this status will be committed atomically, so the resulting SHA cannot be self-referential in this JSON.",
   "blockers": [
-    "Priority prospecting/milling original zero-inclusive per-output material histograms, actual completed casts after Resourcefulness savings, rank/skill/spec and post-hotfix game build remain missing; no new eligible ore/mill cohort this run.",
-    "Four item-side gear Looter tables report positive outcome occurrence counts but not per-output total units, full histograms, zero-operation outcome counts, sampled item bonus/quality/build or character skill/spec; material events may co-occur. Indexed page summaries, not directly rendered JavaScript Looter tables, carried the numeric evidence.",
-    "202484 source is a PTR page view only, not proof that contributing Looter data were recorded on PTR or apply to current retail; original cumulative site cohorts are not independent by individual output row."
+    "Open ore/herb tasks still lack an original correctly rank-identified per-cast processing export with zero-inclusive histograms, castsWithDrop and actual completed casts after Resourcefulness.",
+    "Wowhead Looter summaries aggregate unknown builds, gear bonuses/rarity, player skills, specialization and date; per-output positive stack ranges are not per-cast quantity distributions. No current-Retail drop probability inferred."
   ],
   "exhausted_sources": [
     {
@@ -695,21 +696,85 @@
         "goldcap.gg: Draconium, Serevite, Khaz'gorite, Bubble Poppy and Saxifrage rank-to-item-ID checks; ranks were already corroborated in existing 2026-11-09T0235 research and not new evidence.",
         "github.com/Voodoobrew101/Loot-Liquidator: checked historical original Xenastro row 28/52 source files and v3 indexed original Reddit 1135bti; no new independent cohort or unseen numerical denominator."
       ]
-    }
+    },
+    "This run's open Draconium/Serevite/Khaz'gorite/Prismatic/Bubble Poppy/Saxifrage searches across r/woweconomy originals, Wowhead item/comments, Blizzard forums and guide mirrors returned previously indexed overlapping cohorts or qualitative references; no new completed-cast table. Do not repeat identical searches next cycle."
   ],
-  "next_concrete_step": "Find original new Dragon Isles ProspectMate/CraftSim SavedVariables or independent addon exports containing exact ore/herb input rank, actual operation count after Resourcefulness, output item IDs, castsWithDrop and zero-inclusive 0-N quantity histograms for Draconium 189143 / Prismatic 194545 / Bubble Poppy 191467; otherwise source-verify positive stack distributions for the new gear IDs without counting another snapshot.",
+  "next_concrete_step": "Follow T0020/T0046 original ore ranks and obtain independent full ProspectMate/CraftSim SavedVariables per-cast exports for Draconium 189143/188658 or R2 Serevite 190396, then Bubble Poppy 191467; validate actual completed casts, refund-adjusted batch count, per-output IDs, hit counts and 0-N histograms.",
   "validation": {
-    "precommit": "PASS: ten lines across 4 gear studies, unique record IDs, exact source table numerators/denominators and literal percentages, all fields present, observed positive ranges only; independently checked GitHub search found no prior exact-input v3 evidence; other candidate IDs discarded as already indexed.",
-    "postcommit": "PASS: evidence f4861704c8df5fb8c483ef32037a104ea7affdcb read back at branch ref, parsed exactly 10 JSONL records and contents compared byte-derived JSON to submitted records; one evidence path newly created.",
-    "write_scope": "research/v3/evidence/dragonflight/2026-11-09T2337-four-new-item-looter-cohorts.jsonl; research/coordination/quiet-status/dragonflight.json"
+    "jsonl_records": 6,
+    "distinct_original_gear_cohorts": 3,
+    "all_jsonl_rows_parsed": true,
+    "casts_with_drop_leq_casts": true,
+    "source_percentages_preserved": true,
+    "missing_total_quantity_is_null": true,
+    "missing_histograms_are_null": true,
+    "post_write_branch_readback": "verification performed after write; see branch tree/commit history"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "1c222551d4ebd8397ce350ce0d93d76a9bb0ba14",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-09T2337-four-new-item-looter-cohorts.jsonl",
-  "current_run_commit_sha": "f4861704c8df5fb8c483ef32037a104ea7affdcb",
-  "newly_verified_fields_cohorts": 4,
+  "verified_parent_sha": "8e11378fad49cca1cfaaef1e7ddbef88c6808078",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-10T0034-three-amirdrassil-gear-looter-hits.jsonl",
+  "current_run_commit_sha": null,
+  "newly_verified_fields_cohorts": [
+    {
+      "inputItemID": 207278,
+      "outputItemID": 200113,
+      "casts": 48,
+      "castsWithDrop": 30,
+      "percentShown": 63,
+      "positiveStackRange": null
+    },
+    {
+      "inputItemID": 207278,
+      "outputItemID": 194124,
+      "casts": 48,
+      "castsWithDrop": 29,
+      "percentShown": 60,
+      "positiveStackRange": [
+        1,
+        2
+      ]
+    },
+    {
+      "inputItemID": 207283,
+      "outputItemID": 194124,
+      "casts": 62,
+      "castsWithDrop": 44,
+      "percentShown": 71,
+      "positiveStackRange": [
+        1,
+        2
+      ]
+    },
+    {
+      "inputItemID": 207283,
+      "outputItemID": 200113,
+      "casts": 62,
+      "castsWithDrop": 36,
+      "percentShown": 58,
+      "positiveStackRange": null
+    },
+    {
+      "inputItemID": 207249,
+      "outputItemID": 200113,
+      "casts": 35,
+      "castsWithDrop": 27,
+      "percentShown": 77,
+      "positiveStackRange": null
+    },
+    {
+      "inputItemID": 207249,
+      "outputItemID": 194124,
+      "casts": 35,
+      "castsWithDrop": 19,
+      "percentShown": 54,
+      "positiveStackRange": [
+        1,
+        2
+      ]
+    }
+  ],
   "last_source_search": {
     "performed_at": "2026-11-09T23:37:55.487Z",
     "priority_source_findings": "No new independent Dragonflight ore/mill completed-operation source; new result this run was four deduplicated gear Looter item-side numerator/denominator tables. Prior original ore/mill sites already exhausted per earlier detailed entries; not reinterpreted as measured.",
