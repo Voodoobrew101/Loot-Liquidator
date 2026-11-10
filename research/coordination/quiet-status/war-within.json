@@ -1,90 +1,159 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-10T11:27:11.914Z",
-  "status": "active; identified 3 distinct conditional Khaz Algar disenchant knowledge outputs and weekly/catch-up gates; no new rank-specific measured ordinary processing cohorts",
+  "updated_at": "2026-11-10T12:25:30.303Z",
+  "status": "active; one newly identified cumulative 87-operation Wowhead DE item cohort, output ranks unresolved; seven new exact-item WoWDB no-disenchant flags; no confirmed post-hotfix rank-specific 0..N cohorts",
   "task_ids": [
-    "T0032",
     "T0048",
+    "T0040",
     "T0009",
     "T0008",
     "T0007",
-    "T0040",
     "T0010",
     "T0011",
     "T0012"
   ],
   "exact_gaps_targeted": [
-    "Conditional weekly disenchant outputs 227659 (+1 knowledge, up to 5 weekly), 227661 (+4 knowledge, up to 1 weekly after five), and 227662 (catch-up +1 knowledge after weekly prerequisites), rather than universal Storm Dust/Shard/Crystal yields.",
-    "No direct measured TWW gear rarity/armor/weapon/skill operation cohorts for these conditional items; exact eligible input gear IDs, contemporaneous build, profession skill, specialization, zero counts and 0..N stacks remain null.",
-    "Current post-Oct-25 2024 Bismuth 210931, Ironclaw 210937, Aqirite 210934 and Khaz Algar herb-rank milling completed-operation output histograms remain missing."
+    "229141 Lamplighter Elite's Polearm: one 87-operation DE cohort, Gleaming Shard occurrences 48/87,22/87,15/87 and Refulgent Crystal 2/87, each output item ID/rank unresolved; per-cast stacks, skill/spec, variant and build missing.",
+    "Seven exact TWW gear eligibility IDs 229132,219202,237776,237778,237789,237777,237466: WoWDB template flags only, not live player gate.",
+    "Post-2024-10-25 prospecting 210931/210937/210934 and Khaz Algar rank milling still lack independently measured post-hotfix cast-level histograms."
   ],
   "newly_verified_fields": [
     {
-      "type": "condition",
+      "type": "drop",
       "method": "Disenchant",
-      "outputItemID": 227659,
-      "outputName": "Fleeting Arcane Manifestation",
-      "weeklyItemLimit": 5,
-      "knowledgePerItem": 1,
-      "sourceURL": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
-      "completedCasts": null,
-      "castsWithDrop": null,
-      "histogram": null
+      "inputItemID": 229141,
+      "inputName": "Lamplighter Elite's Polearm",
+      "sourceOperations": 87,
+      "outputRows": [
+        {
+          "row": 1,
+          "outputName": "Gleaming Shard",
+          "outputItemID": null,
+          "castsWithDrop": 48
+        },
+        {
+          "row": 2,
+          "outputName": "Gleaming Shard",
+          "outputItemID": null,
+          "castsWithDrop": 22
+        },
+        {
+          "row": 3,
+          "outputName": "Gleaming Shard",
+          "outputItemID": null,
+          "castsWithDrop": 15
+        },
+        {
+          "row": 4,
+          "outputName": "Refulgent Crystal",
+          "outputItemID": null,
+          "castsWithDrop": 2
+        }
+      ],
+      "totalQuantity": null,
+      "histogram": null,
+      "skill": null,
+      "gameBuild": null
     },
     {
-      "type": "condition",
-      "method": "Disenchant",
-      "outputItemID": 227661,
-      "outputName": "Gleaming Telluric Crystal",
-      "weeklyItemLimit": 1,
-      "knowledgePerItem": 4,
-      "requiresAfter": "five 227659 weekly items",
-      "sourceURL": "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
-      "completedCasts": null,
-      "castsWithDrop": null,
-      "histogram": null
+      "type": "noDisenchant",
+      "itemID": 229132,
+      "itemName": "Lamplighter Elite's Ritual Knife",
+      "databaseMode": "Beta",
+      "sourceURL": "https://beta.wowdb.com/items/229132-lamplighter-elites-ritual-knife",
+      "liveEligibilityVerified": false
     },
     {
-      "type": "condition",
-      "method": "Disenchant",
-      "outputItemID": 227662,
-      "outputName": "Shimmering Dust",
-      "knowledgePerItem": 1,
-      "requires": "Weekly Enchanting quest, five 227659, one 227661, two weekly treasures, unearned catch-up entitlement",
-      "sourceURL": "https://www.wow-professions.com/guides/the-war-within/weekly-profession-knowledge-points",
-      "completedCasts": null,
-      "castsWithDrop": null,
-      "histogram": null
+      "type": "noDisenchant",
+      "itemID": 219202,
+      "itemName": "Lamplighter's Mercy",
+      "databaseMode": "live",
+      "sourceURL": "https://www.wowdb.com/items/219202-lamplighters-mercy",
+      "liveEligibilityVerified": false
+    },
+    {
+      "type": "noDisenchant",
+      "itemID": 237776,
+      "itemName": "Nightfall Executioner's Halberd",
+      "databaseMode": "live",
+      "sourceURL": "https://www.wowdb.com/items/237776-nightfall-executioners-halberd",
+      "liveEligibilityVerified": false
+    },
+    {
+      "type": "noDisenchant",
+      "itemID": 237778,
+      "itemName": "Nightfall Executioner's Greatsword",
+      "databaseMode": "live",
+      "sourceURL": "https://www.wowdb.com/items/237778-nightfall-executioners-greatsword",
+      "liveEligibilityVerified": false
+    },
+    {
+      "type": "noDisenchant",
+      "itemID": 237789,
+      "itemName": "Nightfall Curseblade's Warglaive",
+      "databaseMode": "live",
+      "sourceURL": "https://www.wowdb.com/items/237789-nightfall-curseblades-warglaive",
+      "liveEligibilityVerified": false
+    },
+    {
+      "type": "noDisenchant",
+      "itemID": 237777,
+      "itemName": "Nightfall Shadowalker's Bulwark",
+      "databaseMode": "Beta",
+      "sourceURL": "https://beta.wowdb.com/items/237777-nightfall-shadowalkers-bulwark",
+      "liveEligibilityVerified": false
+    },
+    {
+      "type": "noDisenchant",
+      "itemID": 237466,
+      "itemName": "Nightfall Executioner's Legguards",
+      "databaseMode": "Beta",
+      "sourceURL": "https://beta.wowdb.com/items/237466-nightfall-executioners-legguards",
+      "liveEligibilityVerified": false
     }
   ],
-  "newly_verified_cohorts": [],
-  "current_run_new_independent_measured_cohorts": 0,
-  "current_run_evidence_records": 3,
-  "current_run_condition_records": 3,
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "wowhead-looter-229141-snapshot-20261110",
+      "inputItemID": 229141,
+      "sourceReportedOperations": 87,
+      "materialRows": 4,
+      "independentCohorts": 1,
+      "sourceURL": "https://www.wowhead.com/item=229141/lamplighter-elites-polearm",
+      "uncertainties": "Cumulative sample date, material output rank IDs, raw stack amounts, variant and current eligibility unknown."
+    }
+  ],
+  "current_run_new_independent_measured_cohorts": 1,
+  "current_run_evidence_records": 11,
+  "current_run_condition_records": 0,
   "source_links": [
-    "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
-    "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
-    "https://www.wowhead.com/item=227662/shimmering-dust",
-    "https://www.wow-professions.com/guides/the-war-within/weekly-profession-knowledge-points",
-    "https://eu.forums.blizzard.com/en/wow/t/no-kp-for-enchanting/542108"
+    "https://www.wowhead.com/item=229141/lamplighter-elites-polearm",
+    "https://beta.wowdb.com/items/229132-lamplighter-elites-ritual-knife",
+    "https://www.wowdb.com/items/219202-lamplighters-mercy",
+    "https://www.wowdb.com/items/237776-nightfall-executioners-halberd",
+    "https://www.wowdb.com/items/237778-nightfall-executioners-greatsword",
+    "https://www.wowdb.com/items/237789-nightfall-curseblades-warglaive",
+    "https://beta.wowdb.com/items/237777-nightfall-shadowalkers-bulwark",
+    "https://beta.wowdb.com/items/237466-nightfall-executioners-legguards"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-10T1127-conditional-enchanting-knowledge.jsonl"
+    "research/v3/evidence/war-within/2026-11-10T1225-lamplighter-polearm-and-eligibility-ids.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-10T1127-conditional-enchanting-knowledge.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-10T1225-lamplighter-polearm-and-eligibility-ids.jsonl"
   ],
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "Evidence and status are committed atomically; a commit cannot embed its own SHA. Read-back will check branch and files after ref update.",
+  "verified_commit_sha_note": "Evidence and status are committed atomically. A commit cannot embed its own SHA. After branch update, read-back checks evidence and status at the actual SHA.",
   "blockers": [
-    "The source's approximate per-rarity catch-up percentages are not linked to counts, precise item IDs, skill, patch, a control group or per-cast histograms; do not use them as measured hit probabilities.",
-    "Weekly/catch-up outputs are conditional and require Master to review placement under conditional outputs; do not pool into normal DE gold EV.",
-    "No original post-hotfix TWW ore/herb/gear 0..N measured cohorts were discovered from the newly targeted conditional/weekly sources."
+    "Accessible Wowhead text shows counts but not output item-anchor IDs, output ranks or pctstack. Do not map Gleaming Shard rows to 219949/219950/219951 based on assumed row order.",
+    "Looter is cumulative, with unknown source dates, build, disenchanted variants and profession skill, not a current Retail baseline.",
+    "WoWDB quick-info is metadata rather than direct game test; three item observations were found only on Beta. No rank-specific post-hotfix complete 0..N cohort this run."
   ],
   "exhausted_sources": [
-    "Avoid repeating the previous 2026-11-10T1027 2025 indexed Ironclaw/Aqirite/Bismuth, Mycobloom, DE searches; original ranked post-hotfix cast-level logs remain unavailable."
+    "Do not repeat previously flagged 52 PeaEsk archival duplicates in 2026-11-10T0924.",
+    "Current text snapshot of Wowhead 229141 does not expose raw output item IDs or stack multiplicities; target original DOM/pctstack or a directly exported log."
   ],
-  "next_concrete_step": "Request Master integration review of three weekly/catch-up knowledge output gates; obtain verified actual eligible item IDs and conditional 0..N gear DE logs with weekly quest/completion flags, skill, spec, ilvl and game build. Return to queued 210937/210934/210931 prospect and Khaz Algar milling exact cast-level logs without duplicating older cohorts.",
+  "next_concrete_step": "Master review 229141 as provisional rank-unresolved output rows; seek original Wowhead raw item anchors, stack distributions and eligible gear variant. Target first-party post-Oct-25 TWW 210931/210937/210934 per-cast logs with refund basis, skill/spec and measured 0..N outcomes.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
