@@ -1,12 +1,12 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-10T02:31:42.002Z",
-  "status": "active; new firsthand, independent, source-reported 20/45/3 disenchant operation references for conditional Enchanting KP only; no saleable material yield histogram, eligible baseline cohort, or estimator promotion",
+  "updated_at": "2026-11-10T03:17:21.209Z",
+  "status": "active; corrected non-measured Heart of Wind 250256 restoration inference; no independent new completed per-output prospecting/milling/disenchant cohorts",
   "task_ids": [
     "T0026",
     "T0049",
-    "T0039",
     "T0005",
+    "T0039",
     "T0045",
     "T0003"
   ],
@@ -18,41 +18,26 @@
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "recordID": "midnight-20261110-0201",
-      "type": "original_research_reference_conditional_knowledge",
-      "method": "Disenchant",
-      "inputItemID": null,
-      "outputItemID": 267654,
-      "outputName": "Swirling Arcane Essence",
-      "reportedCompletedOperations": 20,
-      "reportedOutputUnits": 1,
-      "sourceAuthor": "k2blader",
-      "published": "2026-06-10",
-      "estimatorEligible": false
-    },
-    {
-      "recordID": "midnight-20261110-0202",
-      "type": "original_research_reference_conditional_knowledge",
-      "method": "Disenchant",
-      "inputItemID": 239672,
-      "inputName": "Courtly Robes",
-      "outputItemID": null,
-      "reportedCompletedOperations": 45,
-      "reportedCatchupKnowledgeRewards": 19,
-      "sourceAuthor": "TheBat",
-      "published": "2026-06-11",
-      "estimatorEligible": false
-    },
-    {
-      "recordID": "midnight-20261110-0203",
-      "type": "original_research_reference_conditional_knowledge",
-      "method": "Disenchant",
-      "inputItemID": null,
-      "outputItemID": null,
-      "reportedCompletedOperations": 3,
-      "reportedKnowledgeItemNonhits": 3,
-      "sourceAuthor": "Faethor",
-      "published": "2026-06-13",
+      "recordID": "midnight-20261110-031701",
+      "type": "append_only_source_measurement_correction",
+      "inputItemID": 250256,
+      "priorRecordID": "midnight-20261106-101401",
+      "source": "https://us.forums.blizzard.com/en/wow/t/unable-to-restore-item-using-item-restoration-webpage/2299311",
+      "invalidatedFields": [
+        "casts",
+        "totalQuantity",
+        "castsWithDrop",
+        "histogram",
+        "sourceKind:study"
+      ],
+      "correctedValues": {
+        "casts": null,
+        "totalQuantity": null,
+        "castsWithDrop": null,
+        "histogram": null,
+        "sourceKind": "reference"
+      },
+      "independentNewCohorts": 0,
       "estimatorEligible": false
     }
   ],
@@ -69,7 +54,7 @@
     "newVerifiedGoldProbabilities": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-10T0230-firsthand-knowledge-censored-disenchants.jsonl"
+    "research/v3/evidence/midnight/2026-11-10T0317-restoration-denominator-correction.jsonl"
   ],
   "recent_prior_evidence_file": "research/v3/evidence/midnight/20261110T0114-reversible-plume-exchange.jsonl",
   "evidence_record_ids": [
@@ -83,10 +68,9 @@
     "https://www.wowhead.com/item=267654/swirling-arcane-essence"
   ],
   "blockers": [
-    "All three new firsthand observations are conditioned on weekly/catch-up profession-knowledge items, NOT auctionable disenchant reagents. They do not provide gear-quality-linked source material yields, itemLink/bonus/build/skill context, or saleable material zero-inclusive histograms.",
-    "272246 live actual itemLink at disenchant and spell outcome needed to adjudicate WoWDB noDE vs cumulative Wowhead Looter; generic itemLevel previews (206/305) are not at-cast evidence.",
-    "237362 original per-output hits/zeros and Resourcefulness refund accounting, plus rank-specific Silver/Copper and actual 10-herb Tranquility mill logs, not found in independent current source lane.",
-    "Repository connector supports single-file contents commits but does not expose Git tree SHA or atomic multi-file commit: this run required separate sequential evidence and quiet-status commits, violating the preferred one-commit packaging without touching unauthorized files."
+    "Raw original 250256 material event was not supplied; restoration inventory and costs cannot be used as a measured reagent yield or hit count.",
+    "No new independent zero-inclusive current-patch 272246 disenchants, 237362 prospecting, 236761 milling or 237359 copper completed casts found after named multi-site searches.",
+    "Git commit cannot embed its own SHA in a tracked status file; previous verified SHA retained below, new commit must be read back after atomic publication."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -110,13 +94,24 @@
     "2026-11-09T23:10:39.476Z: NEW official Blizzard Mar 13/18 hotfix lane and March18 firsthand Reddit r/wow direct-witness thread examined. Captured official 10-79/80-90 Crate of Battlefield Goods material bracket plus 259349 fix and five censored independent pre-hotfix anecdotal DE receipts; no post-fix or current-season original per-material histograms. Do not return to this thread/source for numeric estimates absent direct raw player item links/logs.",
     "2026-11-10T00:19:09.770Z: Focused current rank-specific prospect/milling and 272246 complete source lanes still lack new independent operation-level data; old Cardinalai/Honeybone/Draggoth/Wowhead Looter/owner PR49 already indexed, not duplicated. Cross-checked previously recorded WoWDB noDE files (Oct31, Nov6, Nov8, Nov9) and excluded source-known 249296/249286/250452/250461/250462/249913/249283/249920. Added 11 distinct new LIVE catalog-only item flags from named WoWDB pages, 12.0.0 build 63534; future work must seek live variant eligibility rather than mass-catalog transcription.",
     "2026-11-10T01:14:51.434Z: New item-link source lane on 260235/249806 reverse trinket use verified using live WoWDB, Wowhead, Warcraft Wiki and Wow4noobs; independent current GamGem 272246 top-key wearer census checked, confirming equipped item identity only. Searched fresh named 272246 disenchant/live variant and 236761/245807 Tranquility milling by name across Wowhead, WoWDB, Blizzard, Reddit, GamGem and Warcraft Wiki; no first-person complete cast/material histogram. All Cardinalai, Honeybone, Draggoth, kyzenbka, Looter and owner PR49 reports are pre-indexed and were not recopied. Avoid converting WoWhead tab counts, selected bonuses, nominal herbs or resourcefulness refunds to operations.",
-    "2026-11-10T02:31:42.002Z: New independently authored Midnight Enchanting conditional-KP firsthand forum path June 10–13 (k2blader, TheBat, Faethor). Exact 20,45,3 source operations transcribed as reference-only, not pooled; one output 267654 and crafted input 239672 identity cross-checked. Material drop hit/zero datasets absent. Other already indexed Cardinalai/Honeybone/Draggoth/Insomnist/Kestevavild/PR49 and WoWhead Looter cohorts deliberately not recopied. Do not revisit this thread unless new original saleable-material item receipts appear."
+    "2026-11-10T02:31:42.002Z: New independently authored Midnight Enchanting conditional-KP firsthand forum path June 10–13 (k2blader, TheBat, Faethor). Exact 20,45,3 source operations transcribed as reference-only, not pooled; one output 267654 and crafted input 239672 identity cross-checked. Material drop hit/zero datasets absent. Other already indexed Cardinalai/Honeybone/Draggoth/Insomnist/Kestevavild/PR49 and WoWhead Looter cohorts deliberately not recopied. Do not revisit this thread unless new original saleable-material item receipts appear.",
+    "2026-11-10T03:17:21.209Z: New independent 12.1.5/current patch targeted raw-output lane using named Umbral Tin Ore, Tranquility Bloom, Powder Pigment and Radiant Shard searches across Reddit, Wowhead and Blizzard forums; found no new original full-cast cohort. Heart of Wind 250256 restoration source verified as already indexed and prior 1/1 material yield was source-unsupported; append-only replacement corrects eligibility-only status. Avoid repeating this fresh name/site set absent a player export."
   ],
-  "next_concrete_step": "Acquire original live itemLink and at-cast ilvl/build+material outputs for Miststalker's Wristbands 272246; independent original rank-specific per-cast output/zero/refund ledger from Umbral Tin 237362 or Tranquility Bloom 236761. Ask Master about source-schema for conditional bound Knowledge item source-only versus saleable material and recommend atomic multi-file GitHub write support.",
-  "previous_verified_commit_sha": "25ad42f28de382aa7a661be9e3f2a8bdbef05e6b",
+  "next_concrete_step": "Seek original current-build at-cast itemLink and per-operation material log for 272246; acquire independent complete 237362 rank-specific prospecting or 236761 10-herb milling export with zeros, hits, refunds, skill and unlock. Confirm Master sees 250256 corrected replacement in next estimator rebuild.",
+  "previous_verified_commit_sha": "864c8d4408cd84a210e7042dde4418717499a960",
   "verified_commit_sha": "864c8d4408cd84a210e7042dde4418717499a960",
-  "verified_commit_sha_scope": "Evidence file commit and file content read-back verified. Git commits cannot embed their own SHA; status update is a distinct sequential contents API commit because connector exposes no root tree SHA or atomic multi-file write.",
+  "verified_commit_sha_scope": "Prior read-back SHA only. The current atomic evidence+status commit's own SHA cannot be recorded inside itself; verify with GitHub commit and file read-back after publication.",
   "base_commit_sha_verified": "25ad42f28de382aa7a661be9e3f2a8bdbef05e6b",
-  "commit_readback": "Evidence commit 864c8d4408cd84a210e7042dde4418717499a960 verified with direct file read and branch file equality; separate status commit needs post-write read-back.",
-  "verified_evidence_commit_sha": "864c8d4408cd84a210e7042dde4418717499a960"
+  "commit_readback": "Pending the current atomic GitHub commit and subsequent remote read-back.",
+  "verified_evidence_commit_sha": "864c8d4408cd84a210e7042dde4418717499a960",
+  "exact_gaps": [
+    "250256 mythic original itemLink/bonuses/actual ilvl, completed cast and attributable output absent; formerly measured 1/1 Crystal restoration inference now explicitly corrected",
+    "272246 actual at-cast itemLink ilvl/build and output receipt vs WoWDB noDE base identity",
+    "237362 rank-specific prospecting 242606/242607/242610/242611/242786/242788 per-output castsWithDrop, zero histograms, ore refunds, skill and unlock",
+    "236761 ten-herb milling -> 245807 per-cast pigment histogram, casts, zeros and skill; Refulgent Copper 237359 independent casts"
+  ],
+  "source_evidence_links": [
+    "https://us.forums.blizzard.com/en/wow/t/unable-to-restore-item-using-item-restoration-webpage/2299311",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-10T0317-restoration-denominator-correction.jsonl"
+  ]
 }
