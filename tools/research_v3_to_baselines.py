@@ -59,6 +59,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from evidence_to_baselines import lua, rate_confidence, NOT_BASELINE_FACTOR  # noqa: E402
+from research_v3_reference_ranges import preserve_reference_range  # noqa: E402
 import research_v3_tokens  # noqa: E402  C4b3: token reward lists ride along with every refresh
 import research_v3_no_disenchant  # noqa: E402  D1c4: no-disenchant flags ride along too
 
@@ -248,7 +249,7 @@ def counts(estimate):
 
 def build(snapshot):
     module = load_calculator(snapshot)
-    rows = resolve_ranked_outputs(module.load())
+    rows = resolve_ranked_outputs(preserve_reference_range(module.load()))
     # Their published run (all rows) only supplies the amount range per cast (e.g. 1-2 gems),
     # which reference rows often state and studies rarely do. A range is not a yield figure.
     published, _ = module.build(rows)
