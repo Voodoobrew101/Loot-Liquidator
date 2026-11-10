@@ -1,8 +1,8 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-10T05:05:08.180Z",
-  "status": "active; independently cross-checked War Within Lamplighter Elite's Polearm source occurrence rows against six verified catalog family-rank item identities; per-row rank identity and quantities still unverified; zero new measured casts or live Retail gold decisions",
+  "updated_at": "2026-11-10T06:11:57.277Z",
+  "status": "active; independently verified that all five Nov-10 TWW PTR Storm Dust / WoWDB no-DE worker records repeat prior original source identities; source-duplication guard, not new measured casts or Retail gold decisions",
   "task_ids": [
     "T0048",
     "T0020",
@@ -11,95 +11,76 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0048: input 229141 Lamplighter Elite's Polearm, Wowhead 87 cumulative DE observations; same-name Gleaming Shard rows 48/22/15 hits and Refulgent Crystal 2 hits have no direct rank/itemID output links, totalQuantity/histograms, sample build, item bonus or skill.",
-    "Family rank options are distinct Retail catalog IDs but cannot be mapped to four source rows: Gleaming R1/R2/R3=219949/219950/219951; Refulgent Crystal R1/R2/R3=219952/219954/219955.",
-    "T0020 cross-method guard: Dragonflight 194406 78 output occurrence hits among 77 DE operations and 202463 29 hits among 25 operations; occurrence counts do not generally partition operations or imply output unit totals.",
-    "T0005/T0039/T0045 remain higher-priority missing current Midnight per-operation and per-output zero-inclusive ranked 0..N and refund/skill/unlock ledgers for Umbral Tin 237362 and Tranquility Bloom 236761; no new sample found during this source identity QA."
+    "T0048: new war-within-20261110-0528-001 source PTR 12.1.7 217133→219947 15/24 matches older war-within-20261102-0424-001; same cumulative source, not 24 new independent operations.",
+    "T0048: new war-within-20261110-0528-002 source PTR 12.1.7 230373→219947 5/7 matches older war-within-20261101-2215-001; changed studyKey must not bypass original-cohort dedupe.",
+    "T0048: new war-within-20261110-0528-003/-004/-005 WoWDB noDE 245707/245708/245709 match older war-within-20261101-1819-008/-009/-004 (same source URLs and exact base IDs); 245709 PTR 24/34 vs live no-DE contradiction still unresolved.",
+    "T0005/T0039/T0045: current Midnight Umbral Tin 237362 prospecting and Tranquility Bloom 236761 milling still lack rank-linked zero-inclusive per-operation and refund/skill/unlock context; no new original outcome study here."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "catalog item-rank alternative identity cross-check, NOT per-source ranked-output mapping",
-      "targetInputItemID": 229141,
-      "candidateFamilies": [
-        {
-          "name": "Gleaming Shard",
-          "rankToItemID": {
-            "1": 219949,
-            "2": 219950,
-            "3": 219951
-          },
-          "threeDistinctOriginalRowHits": [
-            48,
-            22,
-            15
-          ]
-        },
-        {
-          "name": "Refulgent Crystal",
-          "rankToItemID": {
-            "1": 219952,
-            "2": 219954,
-            "3": 219955
-          },
-          "originalRowHits": 2
-        }
-      ],
-      "sourceReportedOperations": 87,
-      "sumMaterialOccurrenceHits": 87,
-      "mappedSpecificSourceRows": 0,
-      "perOutputUnitTotals": null,
-      "measuredNewCasts": 0,
-      "originalStudyIDs": [
-        "war-within-20261110-0429-001",
-        "war-within-20261110-0429-002",
-        "war-within-20261110-0429-003",
-        "war-within-20261110-0429-004"
-      ]
+      "kind": "original-cohort identity duplicate crosscheck, not new casts",
+      "newID": "war-within-20261110-0528-001",
+      "oldID": "war-within-20261102-0424-001",
+      "inputItemID": 217133,
+      "outputItemID": 219947,
+      "sourceReportedOperations": 24,
+      "sourceMaterialHits": 15,
+      "newIndependentOperations": 0
     },
     {
-      "kind": "independently checked arithmetic of existing Dragonflight worker originals, NOT new experiments",
-      "examples": [
-        {
-          "inputItemID": 194406,
-          "operations": 77,
-          "materialOccurrenceHits": 78,
-          "excessOverOperations": 1
-        },
-        {
-          "inputItemID": 202463,
-          "operations": 25,
-          "materialOccurrenceHits": 29,
-          "excessOverOperations": 4
-        }
-      ],
-      "inferredDistinctCooccurringCastCount": null,
+      "kind": "original-cohort identity duplicate crosscheck, not new casts",
+      "newID": "war-within-20261110-0528-002",
+      "oldID": "war-within-20261101-2215-001",
+      "inputItemID": 230373,
+      "outputItemID": 219947,
+      "sourceReportedOperations": 7,
+      "sourceMaterialHits": 5,
       "newIndependentOperations": 0
+    },
+    {
+      "kind": "repeat catalog noDisenchant evidence",
+      "recordPairs": [
+        [
+          "war-within-20261110-0528-003",
+          "war-within-20261101-1819-008",
+          245707
+        ],
+        [
+          "war-within-20261110-0528-004",
+          "war-within-20261101-1819-009",
+          245708
+        ],
+        [
+          "war-within-20261110-0528-005",
+          "war-within-20261101-1819-004",
+          245709
+        ]
+      ],
+      "newIndependentEligibleItemEvidence": 0,
+      "buildAndRealCharacterEligibilityStillUnknown": true
     }
   ],
   "newly_verified_numeric_studies": 0,
   "actionable_retail_gold_decisions_added": 0,
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-10T0504-warwithin-de-rank-family-identity-and-occurrence-guard.md"
+    "research/v3/evidence/master/2026-11-10T0611-tww-cumulative-ptr-and-vow-original-cohort-duplicate-guard.md"
   ],
   "source_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-10T0504-warwithin-de-rank-family-identity-and-occurrence-guard.md",
-    "https://www.wowhead.com/item=229141/lamplighter-elites-polearm",
-    "https://goldcap.gg/retail/us/items/219949",
-    "https://www.wowhead.com/item=219950/gleaming-shard",
-    "https://goldcap.gg/retail/us/items/219951",
-    "https://goldcap.gg/retail/tw/items/219952",
-    "https://goldcap.gg/retail/tw/items/219954",
-    "https://goldcap.gg/retail/us/items/219955",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-10T0429-lamplighter-elite-polearm-original-looter.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-10T0435-three-original-gear-disenchant-cohorts.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-10T0611-tww-cumulative-ptr-and-vow-original-cohort-duplicate-guard.md",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-10T0528-r2-stormdust-pvp-exiled-vow-eligibility.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-01T2215-wowhead-r2-dust-gear-cohorts.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-02T0424-r2-stormdust-ptr-additional-gear.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-01T1819-wowdb-disenchant-eligibility-conflicts.jsonl",
+    "https://www.wowhead.com/ptr/item=219947/storm-dust",
+    "https://www.wowdb.com/items/245709-shoulderguards-of-the-exiled-vow"
   ],
-  "verified_commit_sha": "06d98ac7cbf7f31344f415ea7fd90eff839a3355",
-  "verified_commit_sha_scope": "Manager evidence note created at d6741d186e892c2f6c4ee026481b5e0efcd4f764; manager-owned dashboard checkpoint committed at 06d98ac7cbf7f31344f415ea7fd90eff839a3355; this JSON update is a subsequent commit, so it cannot embed its own SHA before publication.",
+  "verified_commit_sha": "0d0601dba977b053950594922f22cd0e6e354cb5",
+  "verified_commit_sha_scope": "Manager evidence note created in 21e2bc3c1811ce59f56016c4f1c511ab3ac25dee; dashboard updated 0d0601dba977b053950594922f22cd0e6e354cb5; current status JSON is subsequently committed and cannot embed its own commit SHA prior to publication.",
   "blockers": [
-    "Original Wowhead rendered Looter table omits material itemLink/quality ID for each of the three Gleaming Shard rows and Crystal row. Six catalog rank candidates do not identify which reported row corresponds to which rank.",
-    "Item variants/bonus/ilvl, observation date and build, player profession skill/spec, output stack quantities/conditional yields and exact co-occurrence/zero histogram remain absent. Cannot price hit counts as material unit means or claim current Retail eligibility.",
-    "Historical TBC Classic Adamantite 48,315 ore source reported by Legacy is not current Retail and lacks completed casts; source QA only; no import.",
-    "No actual WoW-client tests, offline estimator/compiler, tooltip rendering, valuation pricing or Lua suite run in this coordinator checkpoint."
+    "Cumulative PTR item-side/output-side Looter snapshots may be recopied under new studyKey; original event identity, dates, builds, gear bonuses, skill, per-hit stack quantities and histogram absent. Do not count 15/24 and 5/7 as independent new source studies or as output units.",
+    "Live WoWDB 245709 no-disenchant vs PTR Looter 24/34 remains unresolved without version-matched in-game actual itemLink/bonus eligibility.",
+    "Current Midnight prospect/mill quality-linked 0-N outputs and refunds remain missing; worker qualitative/context records do not supply their denominators.",
+    "No estimator/compiler/actual tooltip valuation or live client tests were run; CI success mentioned was pre-manager research branch head."
   ],
   "exhausted_sources": [
     "Original 930224 and Thottbot Runecloth Headband comments already recorded on 2026-11-06; different Wowhead item/locale/flavour URLs are not fresh studies.",
@@ -109,50 +90,55 @@
     "Reversible Plume public catalog price variants compared; no matching transformed actual itemLink or player vendor log. Do not repeat site price-only searches absent variant-matched input.",
     "Original historical Pyrite 52183 Cata Wowhead 836908, 750879 and 125795 comments now reopened and matched; repeated localized/flavour mirrors or 40610 old study are not new independent samples. Source itself does not supply 80-ore/15-prospect reconciliation or at-cast Chimera's Eye itemLink.",
     "Original 229141 Wowhead rendered item-side table independently checked; it only shows three same-name Gleaming Shard output rows 48/22/15 and Crystal 2 without raw output ID links, rank labels, stack totals or build. Do not re-search the same summary as an independent cohort; obtain raw links or player exports.",
-    "Rank candidate catalogs identify valid family alternatives, not observed four source-row identity; looking up more price-only mirrors will not close the output-ID mapping without the raw source."
+    "Rank candidate catalogs identify valid family alternatives, not observed four source-row identity; looking up more price-only mirrors will not close the output-ID mapping without the raw source.",
+    "TWW PTR output-side source https://www.wowhead.com/ptr/item=219947/storm-dust inputs 217133 and 230373: same cumulative 15/24 and 5/7 already indexed Nov 2/Nov 1; re-recording on Nov 10 did not create independent outcomes.",
+    "WoWDB noDE source pages 245707/245708/245709: already indexed Nov 1 exactly, so Nov 10 recitations do not create new eligibility identities."
   ],
   "checked_worker_owner_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-10T04:13:56.080Z",
-      "finding": "qualitative rank/spec references, no newly measured casts/histograms",
-      "reported_commit_sha": "864c8d4408cd84a210e7042dde4418717499a960",
-      "source": "repository worker-owned status; no independent test"
+      "updated_at": "2026-11-10T05:16:41.583Z",
+      "finding": "two fixed refining recipe links and output-rank alternatives; no new measured casts; recipe 1307462 reverse-ID issue was already documented by coordinator Nov 8",
+      "source": "worker quiet status, original worker evidence read; no new independent sample"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-10T04:30:03.606Z",
-      "finding": "229141 87-operation Looter source; output IDs and units null",
-      "reported_commit_sha": null,
-      "source": "repository worker-owned status and original JSONL independently read"
+      "updated_at": "2026-11-10T05:28:16Z",
+      "finding": "two purported new source input cohorts and three noDE flags; coordinator matched all five with older identical originals",
+      "source": "worker quiet status plus direct original file comparison"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-10T04:35:40.180Z",
-      "finding": "three original item-side Looter reports with occurrence counts; no per-cast histograms",
-      "reported_commit_sha": "2a9084f498a7f2104f27fa0e1fe6fd3e3e25bb64",
-      "source": "repository worker-owned status and original JSONL independently read"
+      "updated_at": "2026-11-10T05:42:09.957Z",
+      "finding": "four new cumulative item-side gear occurrence reports, no stack units/zero-inclusive histograms; not revalidated this run",
+      "source": "worker quiet status"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-10T04:42:08.825Z",
-      "finding": "13 TBC Classic Adamantite material totals, no completed-cast count or current Retail validation",
-      "reported_commit_sha": null,
-      "source": "repository worker-owned status; no independent source validation on this run"
+      "updated_at": "2026-11-10T06:00:26.605Z",
+      "finding": "11 noDE scaled identity flags, no new measured casts; not revalidated this run",
+      "source": "worker quiet status"
     }
   ],
   "validation": {
     "executed": [
-      "Fetched adopted manager charter from main, three-pass integration plan/pass1, research v3 README/schema/mechanics/queue/strategy/flags and previous coordinator.",
-      "Read exact three branch head SHAs: main b6610848604f68f8f3b40834397b79ce53eb8fb5; research 2c5b78240c62be32ccdb853d8c7e3b28be7f00cd before manager commits; integration 3d667d053db587c91401cfed7ecc56862b8340c9.",
-      "Read worker status files with timestamps, and original War Within/Dragonflight source JSONL records without editing worker materials.",
-      "Independently opened original 229141 Wowhead item Looter table and external item ID catalogs for all rank candidates; arithmetic verified by direct numeric comparison.",
-      "Created manager-only source note at d6741d186e892c2f6c4ee026481b5e0efcd4f764, then prepended manager-only dashboard checkpoint at 06d98ac7cbf7f31344f415ea7fd90eff839a3355."
+      "Fetched current main, research and three-pass branch heads, charter and integration plan/PASS-1, research v3 schema/mechanics/queue/strategy/flags and coordinator/dashboard.",
+      "Read War Within Nov 10 five JSONL rows and exact older Nov 1/Nov 2 source originals; compared exact source URLs, input/output IDs, numerator/denominator and noDE base item IDs; verified five repeat claims.",
+      "Read original Dragonflight native JC YIELD CALCULATOR spreadsheet with formulas and contrasted finding with already-published Nov 2 review, avoiding a duplicate study/audit claim.",
+      "Read all four workers' quiet-status reports; checked PR 22/23 states and actual workflow completion on exact pre-manager head."
     ],
     "not_executed": [
-      "No compiler, ItemDB rebuild, actual offline valuation/tooltip execution, in-game client test, original player cast export or acceptance of an observed yield.",
-      "No PR mutations, merges, releases, schedules, research worker file rewrites, main or three-pass implementation edits."
-    ]
+      "estimator rebuild",
+      "Lua/addon/tooltip tests",
+      "synthetic-pricing valuation",
+      "live-WoW client verification"
+    ],
+    "verified_pre_note_research_ci": {
+      "head_sha": "b875f6e67cb02e8ef34ce5944924a06830dc3797",
+      "run_id": 42765648211,
+      "conclusion": "success",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/42765648211"
+    }
   },
   "protected_state": {
     "main_head_at_review": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
@@ -163,5 +149,5 @@
     "ci": "Not independently run/revalidated on this new note; no green status is claimed.",
     "pr22_pr23": "Per previous verified checkpoint closed unmerged; no PR mutation in this run."
   },
-  "next_concrete_step": "Have T0048 owner recover original linked Wowhead Looter material item IDs or a fully timestamped in-game itemLink+DE export for 229141, preserving three same-name source rows and Crystal. Do not map ID by row order or infer exclusive outcomes. Manager next seek a genuinely independent current-Midnight rank-identified 0-inclusive Umbral Tin / Tranquility Bloom source rather than repeating exhausted catalog pages."
+  "next_concrete_step": "Preserve worker ownership: seek append-only original-study alias/replaces annotations for 217133 15/24 and 230373 5/7 and duplicate noDE 245707/8/9; only then run dedupe regression on isolated branch with reviewer ownership. Focus actual new current-Midnight T0005/T0039/T0045 zero-inclusive per-output and refund logs; for 245709 seek variant/build-matched client evidence rather than repeating PTR/catalog pages."
 }
