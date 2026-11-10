@@ -1,134 +1,108 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-10T05:28:16Z",
-  "status": "active; two new rank-2 Storm Dust cumulative source item cohorts plus three WoWDB no-disenchant identity records; source build and live eligibility unverified",
+  "updated_at": "2026-11-10T06:26:50.938Z",
+  "status": "active; four existing milling recipe records corrected with source-verified spell ID 444181 and batch 10; no new independently measured drop cohort",
   "task_ids": [
-    "T0048",
-    "T0009",
     "T0010",
     "T0011",
+    "T0012",
+    "T0009",
     "T0007",
     "T0008",
     "T0040"
   ],
   "exact_gaps_targeted": [
-    "T0048: source-attributed R2 Storm Dust 219947 positive occurrences for 217133 leather wrist armor (15/24) and 230373 offhand (5/7), with exact input IDs and source-rank identity.",
-    "T0048: WoWDB cannot-disenchant eligibility for three Exiled Vow shoulders 245707/245708/245709; 245709 conflicts with a PTR Wowhead output-side Looter row (24/34 for 219947).",
-    "T0009/T0007/T0008/T0040: independent post-2024-10-25 Ironclaw 210937, Bismuth 210931, Aqirite 210934 rank-separated completed operation and 0/1/2 histogram data still absent.",
-    "T0010/T0011: Mycobloom 210796/210797 modern per-rank completed 10-herb milling casts and refund logs still absent."
+    "T0010/T0011/T0012: previous Mycobloom 210796 recipe mapping lacked recipeSpellID; now source-verified Khaz Algar Milling spell 444181 and x10 batch; no material yield/hit counts advanced.",
+    "Khaz Algar Milling input identity corrections for Luredrop 210799, Orbinid 210802 and Blessing Blossom 210805 from previous source mapping.",
+    "T0009/T0007/T0008/T0040: current post-2024-10-25 completed operation, gem/pebble/glass hits, zero bins, skill/spec and refunded ore basis not found."
   ],
   "newly_verified_fields": [
     {
-      "inputItemID": 217133,
-      "inputName": "Algari Competitor's Leather Wristwraps",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "method": "Disenchant",
-      "casts": 24,
-      "castsWithDrop": 15,
+      "inputItemID": 210796,
+      "inputName": "Mycobloom",
+      "outputName": "Nacreous Pigment",
+      "method": "Mill",
+      "recipeSpellID": 444181,
+      "inputsPerCast": 10,
+      "replaces": "war-within-20261101-2101",
+      "source": "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+      "measuredCasts": null,
+      "castsWithDrop": null,
       "totalQuantity": null,
-      "histogram": null,
-      "source_snapshot": "PTR 12.1.7 cumulative"
+      "histogram": null
     },
     {
-      "inputItemID": 230373,
-      "inputName": "Astral Aspirant's Censer",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "method": "Disenchant",
-      "casts": 7,
-      "castsWithDrop": 5,
+      "inputItemID": 210799,
+      "inputName": "Luredrop",
+      "outputName": "Luredrop Pigment",
+      "method": "Mill",
+      "recipeSpellID": 444181,
+      "inputsPerCast": 10,
+      "replaces": "war-within-20261101-2102",
+      "source": "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+      "measuredCasts": null,
+      "castsWithDrop": null,
       "totalQuantity": null,
-      "histogram": null,
-      "source_snapshot": "PTR 12.1.7 cumulative"
+      "histogram": null
     },
     {
-      "itemID": 245707,
-      "sourceClaim": "Cannot be disenchanted",
-      "source": "WoWDB",
-      "sourcePatch": "11.2.0 build 61476"
+      "inputItemID": 210802,
+      "inputName": "Orbinid",
+      "outputName": "Orbinid Pigment",
+      "method": "Mill",
+      "recipeSpellID": 444181,
+      "inputsPerCast": 10,
+      "replaces": "war-within-20261101-2103",
+      "source": "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+      "measuredCasts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null
     },
     {
-      "itemID": 245708,
-      "sourceClaim": "Cannot be disenchanted",
-      "source": "WoWDB",
-      "sourcePatch": "11.2.0 build 61476"
-    },
-    {
-      "itemID": 245709,
-      "sourceClaim": "Cannot be disenchanted",
-      "source": "WoWDB",
-      "sourcePatch": "11.2.0 build 61476"
+      "inputItemID": 210805,
+      "inputName": "Blessing Blossom",
+      "outputName": "Blossom Pigment",
+      "method": "Mill",
+      "recipeSpellID": 444181,
+      "inputsPerCast": 10,
+      "replaces": "war-within-20261101-2104",
+      "source": "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+      "measuredCasts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null
     }
   ],
-  "newly_verified_cohorts": [
-    {
-      "studyKey": "wowhead-ptr-12-1-7-looter-217133-r2dust-cumulative",
-      "inputItemID": 217133,
-      "inputName": "Algari Competitor's Leather Wristwraps",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "casts": 24,
-      "castsWithDrop": 15,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "specialization": null,
-      "observationBuild": null,
-      "refundBasis": null,
-      "independence": "single cumulative Wowhead output-side item cohort; possible overlap with other Wowhead snapshots; not date-confirmed independent measurements"
-    },
-    {
-      "studyKey": "wowhead-ptr-12-1-7-looter-230373-r2dust-cumulative",
-      "inputItemID": 230373,
-      "inputName": "Astral Aspirant's Censer",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "casts": 7,
-      "castsWithDrop": 5,
-      "totalQuantity": null,
-      "histogram": null,
-      "skill": null,
-      "specialization": null,
-      "observationBuild": null,
-      "refundBasis": null,
-      "independence": "single cumulative Wowhead output-side item cohort; possible overlap with other Wowhead snapshots; not date-confirmed independent measurements"
-    }
-  ],
+  "newly_verified_cohorts": [],
   "current_run_new_independent_measured_cohorts": 0,
-  "current_run_new_independent_source_item_cohorts": 2,
+  "current_run_new_independent_source_item_cohorts": 0,
   "current_run_evidence_records": 5,
   "source_links": [
-    "https://www.wowhead.com/ptr/item=219947/storm-dust",
-    "https://www.wowhead.com/item=217133/algari-competitors-leather-wristwraps",
-    "https://www.wowhead.com/item=230373/astral-aspirants-censer",
-    "https://www.wowdb.com/items/245707-shoulderpads-of-the-exiled-vow",
-    "https://www.wowdb.com/items/245708-epaulets-of-the-exiled-vow",
-    "https://www.wowdb.com/items/245709-shoulderguards-of-the-exiled-vow"
+    "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+    "https://www.wowhead.com/item=224805/blossom-pigment",
+    "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+    "https://www.wowhead.com/spell=434018/algari-prospecting"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-10T0528-r2-stormdust-pvp-exiled-vow-eligibility.jsonl"
+    "research/v3/evidence/war-within/2026-11-10T0626-khaz-algar-mill-spell-identity-and-queue-search.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-10T0528-r2-stormdust-pvp-exiled-vow-eligibility.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-10T0626-khaz-algar-mill-spell-identity-and-queue-search.jsonl"
   ],
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "Evidence and own status committed atomically in one commit, so self-referential commit SHA cannot be stored within own status; verify ref head and exact blob read-back after push.",
+  "verified_commit_sha_note": "Atomic single commit includes status and evidence; own commit SHA cannot be embedded in its own blob without changing SHA. Verify externally with GitHub ref head and blob read-back.",
   "blockers": [
-    "The two numeric rows are cumulative PTR Looter source snippets, not independently dated completed in-game logs; no observed patch, bonus, profession skill/specialization, or per-cast outputs. Source rows may overlap live Looter submissions. Avoid current live baseline inference.",
-    "219947 rank-2 output identity confirmed from the parent output ID, but original Looter input-side per-output links, total units and zero-inclusive per-cast histograms remain unavailable.",
-    "WoWDB marks 245709 cannot be disenchanted while PTR Wowhead 219947 output-side includes a 24-of-34 historical row. Must reconcile actual version/build/item eligibility before adding any measured drop for 245709.",
-    "Current epoch original rank-specific Ironclaw/Bismuth/Aqirite prospect and Khaz Algar mill complete cast ledgers still unavailable."
+    "Original current-era per-rank ore/herb operation logs with completed casts, castsWithDrop, zeros, histograms, skill/specialization, build and refund basis remain missing. No source justifies probability/EV updates.",
+    "Corrections are recipe spell identity and deterministic batch size only, not newly measured output frequencies. Historical LotzBoi guide covers herb-to-pigment family, not output quality IDs.",
+    "WoWDB identifies the milling recipe and input batch but not a character-specific Resourcefulness refund or measured sample."
   ],
   "exhausted_sources": [
-    "2025-04-25 and 2025-05-03 r/woweconomy 1k78h4v: pooled projected rank-2 ore gems, no original per-ore per-cast ledger.",
-    "2025-03-31 r/woweconomy 1jnvht8: unsized original output ledger despite 600 R1 Ironclaw ore mentioned.",
-    "2025-03-15 r/woweconomy 1jc2ya5: Mycobloom rank/skill questions without outcomes.",
-    "January 20 2025 Canadiatv prospect spreadsheet inaccessible behind membership.",
-    "Wowhead PTR output-side rank2 Storm Dust page 219947 exposes four original rows, but other two were previously recorded (Boreal Glaive) or contradict live eligibility (245709); do not reimport 245709 as measured live source.",
-    "November 10 2026 name-based Reddit/Blizzard/wow-professions searches for independent posthotfix rank-specific cast/histogram logs returned old estimates and operation explanations, not new logs. The Storm Dust PTR source was used instead for new exact numeric row identities."
+    "Posthotfix Bismuth/Ironclaw/Aqirite rank-specific original hit/0..N histograms: Reddit r/woweconomy 1g350pq, 1fisfkn, Wowhead Algari Prospecting, Blizzard forums; same pre-hotfix/nominal studies previously reviewed.",
+    "Mycobloom per-rank 10-herb casts/hits: r/woweconomy 1fdmzwy, official Sep 2024 Mycobloom bulk-milling report, Method leveling guide, Wowhead LotzBoi guide; existing average and guide sources do not include per-rank raw cast ledger.",
+    "Search queries included 'TWW prospecting results Ironclaw Ore 5000 gem yield', 'TWW aqirite prospecting post hotfix 2024', 'milled Mycobloom pigments 100', 'Khaz Algar milling measured outcomes' across Reddit, Blizzard forums, Wowhead, Method, Warcraft Wiki and WoWDB."
   ],
-  "next_concrete_step": "Resolve 245709 PTR 24/34 versus WoWDB non-disenchantable (build/bonus vs time), retrieve original non-PTR 217133 and 230373 item-side Looter rows and source-date/build for separate output materials and zero-inclusive histograms; seek new post-2024-10-25 ore/herb per-rank operation exports.",
+  "next_concrete_step": "Seek an actual 2024-10-25-or-later player addon export for 210931/210937/210934 with sample post time, rank, recorded completed casts and 0..N per-output histogram; otherwise ask Master for original source outreach, then source-match skill/rank-separated 210796/210797 milling logs.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
