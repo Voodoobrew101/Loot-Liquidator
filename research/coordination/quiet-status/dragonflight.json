@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T00:37:03.944Z",
-  "status": "active; 5 new distinct base-item Wowhead Looter cumulative DE cohorts (12 material occurrence rows), ore/milling original per-cast 0-N histogram gaps still open",
+  "updated_at": "2026-11-13T01:36:18.610Z",
+  "status": "active; 10 weak cumulative Looter material-occurrence rows (9 distinct Dragonflight base gear items); no new original per-cast ore/mill histograms",
   "task_ids": [
     "T0020",
     "T0018",
@@ -14,270 +14,288 @@
     "T0016"
   ],
   "exact_gaps_targeted": [
-    "Dragonflight Draconium 189143/188658; Serevite 190394/190395/190396; Khaz'gorite and Prismatic Ore 194545: no new original rank-checked per-completed-cast gem hit/zero histograms with Resourcefulness refunds.",
-    "Dragonflight Bubble Poppy 191467 and Saxifrage 191464/191465/191466: no new rank-specific mill 0/1/2 pigment histograms or directly verified completed-cast totals.",
-    "Five previously unrepresented Dragonflight gear base-item cumulative Wowhead Looter Disenchant tables, exact IDs 200272,200394,200386,194389,194406 and materials 194123/194124/200113; low certainty without source cast-ledger/epoch."
+    "Dragonflight Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic Ore 194545: missing new output-specific observed 0/1/2 completed-prospect histograms with refund/skill/rank context.",
+    "Dragonflight Bubble Poppy 191467 and Saxifrage 191464/191465/191466: missing independent current-patch completed-mill denominators and pigment output hit/zero histograms.",
+    "Nine unindexed Dragonflight base gear IDs 200328,207135,204424,202592,207155,202659,202613,207138,202604; Wowhead Looter occurrence table count/denominator, not observed output unit or per-cast histogram."
   ],
   "newly_verified_fields": [
-    "Five distinct previously unindexed base gear item IDs mapped to 12 exact material output IDs via independent Wowhead item identity pages.",
-    "Source-displayed item-side Looter denominator N and material-specific occurrence numerators preserved with integer/decimal source percentages and unclear percent semantics.",
-    "No prospecting/milling current-patch operation histogram, output total unit or profession skill/variant/bonus verification found; material zero-counts intentionally null."
+    "One live item-side original Wowhead Looter table: 200328 disenchanted 161 times, Resonant Crystal 200113 96 out of 161 (60%), Vibrant Shard 194124 92 out of 161 (57%).",
+    "Eight source-original Wowhead material-side 'Disenchanted from' Looter table rows: exact gear base input ID, 200113 output ID, site-reported denominator, material occurrence counter and displayed percentage. Source provenance is material-side, not individually read item-side disenchant event ledger.",
+    "No cast-by-cast material hits, total unit quantities, zero-output outcomes, stack distribution, gear rank/bonus, source epoch, skill, specialization or Resourcefulness independently verified. castsWithDrop, histogram and totalQuantity intentionally null."
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-item-200272-cumulative",
-      "inputItemID": 200272,
-      "inputName": "Keratin-Reinforced Boots",
-      "source": "https://www.wowhead.com/item=200272/keratin-reinforced-boots",
-      "sourceRendering": "live",
-      "sourceReportedDisenchants": 63,
+      "studyKey": "wowhead-looter-item-200328-cumulative",
+      "inputItemID": 200328,
+      "inputName": "Draconic Hierophant's Britches",
+      "reportedDenominator": 161,
+      "source": "https://www.wowhead.com/item=200328/draconic-hierophants-britches",
+      "sourceRendering": "item-side live",
       "outputs": [
         {
-          "outputItemID": 194123,
+          "outputItemID": 200113,
+          "sourceOccurrences": 96,
+          "percentShown": 60
+        },
+        {
+          "outputItemID": 194124,
+          "sourceOccurrences": 92,
+          "percentShown": 57
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-207135-cumulative",
+      "inputItemID": 207135,
+      "inputName": "Eternal Sentinel's Cord",
+      "reportedDenominator": 79,
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
+      "sourceRendering": "material-side live",
+      "outputs": [
+        {
+          "outputItemID": 200113,
           "sourceOccurrences": 59,
-          "percentShown": 94
-        },
-        {
-          "outputItemID": 194124,
-          "sourceOccurrences": 4,
-          "percentShown": 6
+          "percentShown": 75
         }
-      ]
+      ],
+      "independentlyMeasuredHits": false
     },
     {
-      "studyKey": "wowhead-looter-item-200394-cumulative",
-      "inputItemID": 200394,
-      "inputName": "Stormwing Harrier's Wristguards",
-      "source": "https://www.wowhead.com/item=200394/stormwing-harriers-wristguards",
-      "sourceRendering": "live",
-      "sourceReportedDisenchants": 26,
+      "studyKey": "wowhead-looter-item-204424-cumulative",
+      "inputItemID": 204424,
+      "inputName": "Crechebound Soldier's Boots",
+      "reportedDenominator": 86,
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
+      "sourceRendering": "material-side live",
       "outputs": [
         {
-          "outputItemID": 194124,
-          "sourceOccurrences": 18,
+          "outputItemID": 200113,
+          "sourceOccurrences": 59,
           "percentShown": 69
-        },
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 13,
-          "percentShown": 50
         }
-      ]
+      ],
+      "independentlyMeasuredHits": false
     },
     {
-      "studyKey": "wowhead-looter-item-200386-cumulative",
-      "inputItemID": 200386,
-      "inputName": "Shroud of the Awakened",
-      "source": "https://www.wowhead.com/ptr/item=200386/shroud-of-the-awakened",
-      "sourceRendering": "PTR",
-      "sourceReportedDisenchants": 17,
+      "studyKey": "wowhead-looter-item-202592-cumulative",
+      "inputItemID": 202592,
+      "inputName": "Unyielding Goliath's Burgonet",
+      "reportedDenominator": 77,
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
+      "sourceRendering": "material-side live",
       "outputs": [
         {
           "outputItemID": 200113,
-          "sourceOccurrences": 11,
+          "sourceOccurrences": 52,
+          "percentShown": 68
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-207155-cumulative",
+      "inputItemID": 207155,
+      "inputName": "Eldermoss Gauntlets",
+      "reportedDenominator": 83,
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
+      "sourceRendering": "material-side live",
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "sourceOccurrences": 56,
+          "percentShown": 67
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-202659-cumulative",
+      "inputItemID": 202659,
+      "inputName": "Shackles of the Shadowed Bastille",
+      "reportedDenominator": 84,
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
+      "sourceRendering": "material-side live",
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "sourceOccurrences": 56,
+          "percentShown": 67
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-202613-cumulative",
+      "inputItemID": 202613,
+      "inputName": "Zaqali Chaos Grapnel",
+      "reportedDenominator": 82,
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
+      "sourceRendering": "material-side live",
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "sourceOccurrences": 55,
+          "percentShown": 67
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-207138-cumulative",
+      "inputItemID": 207138,
+      "inputName": "Aerwynn's Ritual Sarong",
+      "reportedDenominator": 80,
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
+      "sourceRendering": "material-side live",
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "sourceOccurrences": 53,
+          "percentShown": 66
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-202604-cumulative",
+      "inputItemID": 202604,
+      "inputName": "Boulder-Tossing Bands",
+      "reportedDenominator": 100,
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
+      "sourceRendering": "material-side live",
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "sourceOccurrences": 65,
           "percentShown": 65
-        },
-        {
-          "outputItemID": 194124,
-          "sourceOccurrences": 7,
-          "percentShown": 41
         }
-      ]
-    },
-    {
-      "studyKey": "wowhead-looter-item-194389-cumulative",
-      "inputItemID": 194389,
-      "inputName": "Brush-Clearing Axe",
-      "source": "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "sourceRendering": "PTR",
-      "sourceReportedDisenchants": 77,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "sourceOccurrences": 69,
-          "percentShown": 90
-        },
-        {
-          "outputItemID": 194124,
-          "sourceOccurrences": 7,
-          "percentShown": 9
-        },
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 1,
-          "percentShown": 1.3
-        }
-      ]
-    },
-    {
-      "studyKey": "wowhead-looter-item-194406-cumulative",
-      "inputItemID": 194406,
-      "inputName": "Stingerproof Helmet",
-      "source": "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
-      "sourceRendering": "PTR",
-      "sourceReportedDisenchants": 77,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "sourceOccurrences": 66,
-          "percentShown": 86
-        },
-        {
-          "outputItemID": 194124,
-          "sourceOccurrences": 11,
-          "percentShown": 14
-        },
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 1,
-          "percentShown": 1.3
-        }
-      ]
+      ],
+      "independentlyMeasuredHits": false
     }
   ],
   "new_numerical_measurements": [
     {
-      "inputItemID": 200272,
-      "outputItemID": 194123,
-      "casts": 63,
-      "castsWithDrop": 59,
+      "inputItemID": 200328,
+      "outputItemID": 200113,
+      "casts": 161,
+      "sourceReportedOccurrences": 96,
+      "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 94,
+      "percentShown": 60,
       "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200272/keratin-reinforced-boots",
-      "cohort": "wowhead-looter-item-200272-cumulative"
+      "source": "https://www.wowhead.com/item=200328/draconic-hierophants-britches"
     },
     {
-      "inputItemID": 200272,
+      "inputItemID": 200328,
       "outputItemID": 194124,
-      "casts": 63,
-      "castsWithDrop": 4,
+      "casts": 161,
+      "sourceReportedOccurrences": 92,
+      "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 6,
+      "percentShown": 57,
       "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200272/keratin-reinforced-boots",
-      "cohort": "wowhead-looter-item-200272-cumulative"
+      "source": "https://www.wowhead.com/item=200328/draconic-hierophants-britches"
     },
     {
-      "inputItemID": 200394,
-      "outputItemID": 194124,
-      "casts": 26,
-      "castsWithDrop": 18,
+      "inputItemID": 207135,
+      "outputItemID": 200113,
+      "casts": 79,
+      "sourceReportedOccurrences": 59,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "percentShown": 75,
+      "percentMeaning": "unclear",
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+    },
+    {
+      "inputItemID": 204424,
+      "outputItemID": 200113,
+      "casts": 86,
+      "sourceReportedOccurrences": 59,
+      "castsWithDrop": null,
       "totalQuantity": null,
       "percentShown": 69,
       "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200394/stormwing-harriers-wristguards",
-      "cohort": "wowhead-looter-item-200394-cumulative"
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
     },
     {
-      "inputItemID": 200394,
+      "inputItemID": 202592,
       "outputItemID": 200113,
-      "casts": 26,
-      "castsWithDrop": 13,
+      "casts": 77,
+      "sourceReportedOccurrences": 52,
+      "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 50,
+      "percentShown": 68,
       "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200394/stormwing-harriers-wristguards",
-      "cohort": "wowhead-looter-item-200394-cumulative"
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
     },
     {
-      "inputItemID": 200386,
+      "inputItemID": 207155,
       "outputItemID": 200113,
-      "casts": 17,
-      "castsWithDrop": 11,
+      "casts": 83,
+      "sourceReportedOccurrences": 56,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "percentShown": 67,
+      "percentMeaning": "unclear",
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+    },
+    {
+      "inputItemID": 202659,
+      "outputItemID": 200113,
+      "casts": 84,
+      "sourceReportedOccurrences": 56,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "percentShown": 67,
+      "percentMeaning": "unclear",
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+    },
+    {
+      "inputItemID": 202613,
+      "outputItemID": 200113,
+      "casts": 82,
+      "sourceReportedOccurrences": 55,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "percentShown": 67,
+      "percentMeaning": "unclear",
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+    },
+    {
+      "inputItemID": 207138,
+      "outputItemID": 200113,
+      "casts": 80,
+      "sourceReportedOccurrences": 53,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "percentShown": 66,
+      "percentMeaning": "unclear",
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+    },
+    {
+      "inputItemID": 202604,
+      "outputItemID": 200113,
+      "casts": 100,
+      "sourceReportedOccurrences": 65,
+      "castsWithDrop": null,
       "totalQuantity": null,
       "percentShown": 65,
       "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/ptr/item=200386/shroud-of-the-awakened",
-      "cohort": "wowhead-looter-item-200386-cumulative"
-    },
-    {
-      "inputItemID": 200386,
-      "outputItemID": 194124,
-      "casts": 17,
-      "castsWithDrop": 7,
-      "totalQuantity": null,
-      "percentShown": 41,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/ptr/item=200386/shroud-of-the-awakened",
-      "cohort": "wowhead-looter-item-200386-cumulative"
-    },
-    {
-      "inputItemID": 194389,
-      "outputItemID": 194123,
-      "casts": 77,
-      "castsWithDrop": 69,
-      "totalQuantity": null,
-      "percentShown": 90,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "cohort": "wowhead-looter-item-194389-cumulative"
-    },
-    {
-      "inputItemID": 194389,
-      "outputItemID": 194124,
-      "casts": 77,
-      "castsWithDrop": 7,
-      "totalQuantity": null,
-      "percentShown": 9,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "cohort": "wowhead-looter-item-194389-cumulative"
-    },
-    {
-      "inputItemID": 194389,
-      "outputItemID": 200113,
-      "casts": 77,
-      "castsWithDrop": 1,
-      "totalQuantity": null,
-      "percentShown": 1.3,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "cohort": "wowhead-looter-item-194389-cumulative"
-    },
-    {
-      "inputItemID": 194406,
-      "outputItemID": 194123,
-      "casts": 77,
-      "castsWithDrop": 66,
-      "totalQuantity": null,
-      "percentShown": 86,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
-      "cohort": "wowhead-looter-item-194406-cumulative"
-    },
-    {
-      "inputItemID": 194406,
-      "outputItemID": 194124,
-      "casts": 77,
-      "castsWithDrop": 11,
-      "totalQuantity": null,
-      "percentShown": 14,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
-      "cohort": "wowhead-looter-item-194406-cumulative"
-    },
-    {
-      "inputItemID": 194406,
-      "outputItemID": 200113,
-      "casts": 77,
-      "castsWithDrop": 1,
-      "totalQuantity": null,
-      "percentShown": 1.3,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
-      "cohort": "wowhead-looter-item-194406-cumulative"
+      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
     }
   ],
   "numerical_fields_improved": [
-    "Five distinct original item-side Wowhead Looter cumulative base-item cohorts, 12 material-specific reported occurrence numerators and source denominators (sum of base-item reported disenchant samples 260, NOT 12 independent samples).",
-    "Exact input IDs 200272/200394/200386/194389/194406 and output IDs 194123/194124/200113. Reported percentage as displayed, not P(hit). No new 0-N output histogram or original ore/mill cast ledger."
+    "Nine distinct original source Looter base-item denominators and ten material-specific source occurrences/percentages preserved as reported, without converting occurrence to measured per-completed-cast hit chance.",
+    "200328 material occurrences 96+92 exceed 161 operations; multi-output co-occurrence possible; no fabricated zeros or mutually exclusive probabilities."
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-10T1034-new-sites-no-original-event-log.jsonl",
     "research/v3/evidence/dragonflight/2026-11-10T1137-writhebark-post-df-zero-crystal.jsonl",
     "research/v3/evidence/dragonflight/2026-11-10T1242-eight-new-item-looter-hits.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-12T1635-five-unindexed-gear-looter-cohorts.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-12T1635-five-unindexed-gear-looter-cohorts.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-13T0136-original-looter-and-priority-numeric-search.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385",
@@ -306,14 +324,16 @@
     "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
     "https://www.wowhead.com/item=194123",
     "https://www.wowhead.com/item=194124",
-    "https://www.wowhead.com/item=200113"
+    "https://www.wowhead.com/item=200113",
+    "https://www.wowhead.com/item=200328/draconic-hierophants-britches",
+    "https://www.wowhead.com/item=200113/resonant-crystal"
   ],
-  "verified_commit_sha": "7db84b10d3bab84f34d2c01b2c0a79e43d0da43c",
-  "commit_sha_scope": "Verified parent branch HEAD before this commit; a single atomic commit cannot store its own SHA in its own committed JSON without changing that SHA.",
+  "verified_commit_sha": "f8f8ea32b9ba73aa5d9ad53b0d3708ab18f97cd3",
+  "commit_sha_scope": "Verified parent research branch HEAD immediately before this atomic evidence/status commit; a committed JSON file cannot self-reference its own commit SHA without changing that SHA. New commit to be validated by a post-write readback.",
   "blockers": [
-    "All current source-original Dragonflight prospecting/milling per-output 0/1/2 completed-operation hit, zero and stack histograms remain missing. Prior source families are already indexed and not counted anew.",
-    "Wowhead Looter material-specific occurrences are cumulative per base-item across unknown patch/character/bonus configurations; not an original per-player finished-cast ledger. No independent per-output total quantities or positive-stack histograms, and no safe P(hit)/zero-output derivation.",
-    "PTR view for 200386/194389/194406 is not evidence of source original sample patch/build or current live eligibility; no quality rank, skill, specialization, resourcefulness or per-bonus item state verified."
+    "No newly discovered source-original Dragonflight prospecting or milling per-completed-operation 0/1/2 per-output histograms. Only previously captured historical original source families appeared across 6+ named searches on three+ domains.",
+    "New Wowhead Looter site numerators are cumulative material occurrences; castsWithDrop cannot be independently determined from site counter semantics, and exact output total units, rank, patch, bonus/skill/spec and zero-outcome counts remain null.",
+    "Eight new gear rows originate from the material-side 'Disenchanted from' index; site did not show matching per-item Looter tables during individual lookups. Treat as weak source-side historical evidence, not validated current game probabilities."
   ],
   "exhausted_sources": [
     {
@@ -950,9 +970,24 @@
         "Blizzard WoW forums: named Dragonflight Draconium/Serevite/Kha'z gorite mining/prospecting discussions, no independent verified processing histogram; mining Perception observations are not prospecting outcomes.",
         "GitHub repository original and v3 Dragonflight evidence search for each of new gear IDs (200272, 200394, 200386, 194389, 194406) and source-comment families, plus previous ore/herb studies; no matching existing item-specific v3 gear cohort for these five IDs."
       ]
+    },
+    {
+      "at": "2026-11-13T01:36:18.610Z",
+      "scope": "Novel Dragonflight ranked prospect/mill completed-cast and per-output 0/1/2 event histograms",
+      "reason": "Six+ named searches across Reddit, Blizzard forums, Wowhead, Warcraft Wiki, and GitHub retrieved previously indexed Jallfo, Serevite zzyjzu and Khazgorite 10h6ccx sources or irrelevant references; redirected to nine unindexed gear Looter base items.",
+      "whereLooked": [
+        "reddit.com/r/woweconomy: 'Draconium Ore prospects spreadsheet results 2024' — same 2022-23 original studies previously indexed, no new per-cast ledger.",
+        "reddit.com/r/woweconomy: 'Bubble Poppy mill pigment 100' — no original independent completed-operation result table.",
+        "us.forums.blizzard.com: 'Saxifrage milling results pigments' — no new named-ore ranked per-cast histogram.",
+        "wowhead.com: 'Khaz'gorite Ore prospected histogram gem' — previously indexed 100-input/20-prospect zero-diamond original, no new output-specific distribution.",
+        "warcraft.wiki.gg: 'Prismatic Ore prospecting Illimited results' — process description/reference only, no per-cast original sample.",
+        "github.com: 'Dragonflight prospecting log Draconium Serevite operations CSV' — unrelated addon and auction export repos, no original cast-event dataset.",
+        "wowhead.com/item=200113/resonant-crystal: source-original material-index Looter 'Disenchanted from' numeric table, only cumulative gear occurrences rather than prospect/mill histograms.",
+        "wowhead.com/item=200328/draconic-hierophants-britches: item-side 161 disenchant Looter observations with two material-specific occurrence counts, no individual operation ledger."
+      ]
     }
   ],
-  "next_concrete_step": "Locate a source-original Dragonflight ore or herb player addon cast-by-cast CSV or complete saved-variable export (Draconium 189143 preferred, Bubble Poppy 191467 next) with actual casts, per-output 0/1/2 yield stacks and Resourcefulness refund reconciliation; request Master review Looter occurrence semantics separately before numerical estimate import.",
+  "next_concrete_step": "Locate an original per-operation Dragonflight ore or herb event ledger with rank, actual consumed/completed casts, output-specific hit/zero/stack counts and Resourcefulness refunds; independently audit material-index Looter numerator semantics before using as P(hit); avoid cumulative snapshot double counting.",
   "validation": {
     "evidence_jsonl_valid": true,
     "evidence_record_count": 13,
