@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T19:37:08.990Z",
-  "status": "searched_primary_numeric_gaps_no_new_independent_cast_cohort_secondary_khaz_rank_map_crosschecked",
+  "updated_at": "2026-11-13T20:31:35.940Z",
+  "status": "priority_numeric_sources_search_completed_no_new_independent_measurements",
   "task_ids": [
     "T0020",
     "T0019",
@@ -12,39 +12,33 @@
     "T0015"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143 (R1) and 188658 (R2), Serevite Ore 190394/190395/190396 and Khaz'gorite Ore 190312/190313/190314: original rank-confirmed Prospect 0-N per-output material histograms, verified casts and Resourcefulness refund ledgers absent",
-    "Prismatic Ore 194545 original per-material output occurrence histogram (including Eternity Amber family rank/item identity) still absent",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: exact-rank Mill completed cast denominators, output item IDs, Resourcefulness refund ledgers and pigment zero-inclusive histograms absent",
-    "Cross-check quality rank-to-exact-item-ID for Khaz'gorite ores in two distinct secondary commodity data providers"
+    "Prospect Draconium Ore 189143 R1 and 188658 R2, Serevite Ore 190394/190395/190396, Khaz'gorite Ore 190312/190313/190314: original completed prospects, output-by-rank hits/zeros and Resourcefulness refund ledgers unknown",
+    "Prospect Prismatic Ore 194545: original zero-inclusive per-output Eternity Amber 192849/192850/192851 histogram unknown; linked historical 80-cast original already indexed",
+    "Mill Bubble Poppy 191467 and Saxifrage 191464/191465/191466: new rank-qualified 0-N output histograms for Serene Pigment 198412/198413/198414 and Blazing Pigment 198418/198419/198420 missing",
+    "Gear Disenchant historical sampled hits may be cumulative, without patch/skill/refund metadata; require raw positive-stack outcomes and source lineage"
   ],
-  "newly_verified_fields": [
-    "Secondary concordant item-ID/quality-rank mapping only (not authoritative item tooltip and not new cast data): Khaz'gorite Ore 190312=R1, 190313=R2, 190314=R3, checked independently on GoldCap and WoW Price Hub."
-  ],
+  "newly_verified_fields": [],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-13T1937-khaz-rank-source-crosscheck-numeric-gap.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-13T2031-alternative-original-source-triage.jsonl"
   ],
   "source_links": [
-    "https://goldcap.gg/retail/us/items/190312",
-    "https://goldcap.gg/retail/us/items/190313",
-    "https://goldcap.gg/retail/us/items/190314",
-    "https://wowpricehub.com/us/commodity/item/Khaz%27gorite%20Ore-190312",
-    "https://wowpricehub.com/us/illidan/item/Khaz%27gorite%20Ore-190313",
-    "https://wowpricehub.com/us/commodity/item/Khaz%27gorite%20Ore-190314",
-    "https://www.wowhead.com/item=192870/illimited-diamond",
-    "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://www.wowhead.com/item=198418/blazing-pigment",
-    "https://www.wowhead.com/item=198412/serene-pigment"
+    "https://www.reddit.com/r/woweconomy/comments/17n69p8",
+    "https://www.reddit.com/r/woweconomy/comments/zkay8v",
+    "https://www.reddit.com/r/woweconomy/comments/10h6ccx",
+    "https://us.forums.blizzard.com/en/wow/t/saxifrage-and-blaze-pigment/2213682",
+    "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
+    "https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment"
   ],
-  "verified_commit_sha": "0cefa67f240448ba3ee17f169f0f31211626923f",
-  "commit_sha_scope": "This is the immediately verified PRE-COMMIT parent SHA, not the new commit SHA. In a single atomic commit a file cannot self-reference its final commit SHA; verify the new SHA and both changed paths via branch readback after updating the ref.",
+  "verified_commit_sha": "16d908d57a3191d5a628601ecc818eb44957cb1c",
+  "commit_sha_scope": "Latest verified branch HEAD before this single atomic evidence+status commit. New commit SHA can only be verified after publication/read-back, not self-referenced inside the commit.",
   "blockers": [
-    "No new independent original per-completed-cast prospect/mill 0-N results; most findable historical datasets are already in the repository and must not be counted twice.",
-    "Only secondary market pages corroborate Khaz'gorite rank-to-ID mapping; current client/Blizzard item-tooltip confirmation missing.",
-    "Wowhead nether tooltip unavailable from browser; Firecrawl connector quota exhausted, so no rich Looter or item tooltip scrape this run.",
-    "Prospect/mill castsWithDrop, full yield histogram, actual input refunds, skill/build/patch and current-Retail applicability remain unknown; no production estimator edits requested."
+    "No independently new original per-completed-cast 0-N prospect/milling cohorts found on new source channels; previously captured original studies must not be imported twice.",
+    "Quality-rank identity is sourced only from third-party catalogs or prior code; authoritative Blizzard/in-game tooltip confirmation still missing.",
+    "Original Resourcefulness refunds, specialization and patch/build for most historical datasets not published; numerator/castsWithDrop must remain null.",
+    "Public source APIs and searchable forums expose summary prose but not verifiable event-level profession logs."
   ],
   "exhausted_sources": [
     {
@@ -430,231 +424,84 @@
         "GoldCap Serevite Ore ID mapping still concordant with prior secondary records: 190395 R1, 190396 R2, 190394 R3: https://goldcap.gg/retail/us/items/190395 ; https://goldcap.gg/retail/us/items/190396 ; https://goldcap.gg/retail/us/items/190394",
         "Wowhead item tooltip endpoint direct names 190394/190395/190396 and Khaz 190312/190313/190314 inaccessible in browser; Firecrawl scrape couldn't execute because service account credits exhausted; this does not disprove mapping: https://nether.wowhead.com/tooltip/item/190312"
       ]
+    },
+    {
+      "at": "2026-11-13T20:31:35.940Z",
+      "path": "2026-11-13 alternative original-public-export/2023 Prismatic and 2022 beta Disenchant source triage",
+      "reason": "New searches across public code, 2023 Prismatic follow-up, EU/US Blizzard forums, MMO-Champion, Wowhead and named guides offered only already indexed original cohorts or qualitative identities; no novel completed-cast 0-N result table.",
+      "whereLooked": [
+        "GitHub public indexed repositories: name-first 'Dragonflight Draconium Ore prospecting csv' and 'Draconium Illimited Diamond prospect sample' looking for original publicly exportable SavedVariables/CSV, none verified",
+        "Reddit r/woweconomy named Prismatic Ore Khaz'gorite prospect results, historical thread https://www.reddit.com/r/woweconomy/comments/17n69p8 ; source-only approx data already indexed, no direct per-completed-cast material ledger",
+        "Reddit r/woweconomy named Serevite Ore distribution, 1000 R2 historical original https://www.reddit.com/r/woweconomy/comments/zkay8v ; already filed and must not duplicate",
+        "Reddit r/woweconomy named Draconium and Khaz'gorite Ore output samples, originals https://www.reddit.com/r/woweconomy/comments/10i63zb and https://www.reddit.com/r/woweconomy/comments/10h6ccx ; previously indexed, not novel",
+        "US Blizzard WoW forums name-first 'Saxifrage Blazing Pigment sample' https://us.forums.blizzard.com/en/wow/t/saxifrage-and-blaze-pigment/2213682 ; later player-housing pigment/dye question, not an original milled operation log",
+        "EU Blizzard WoW forums name-first 'Draconium Serevite prospecting diamond results' ; no original 0-N cast-level rank-separated table retrieved",
+        "MMO-Champion name-first 'Bubble Poppy milling pigments result' ; no original completed-cast transcript retrieved",
+        "Wowhead named Dragon Isles Prospecting spell https://www.wowhead.com/spell=374627 and Blazing Pigment https://www.wowhead.com/item=198418 ; Bugy/Aary previous original studies already recorded, no novel raw per-cast data",
+        "WoW-Professions named Bubble Poppy/Saxifrage milling https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight ; recipe-only 5-herb and 2-5-pigment reference, not measured casts",
+        "Warcraft Wiki named Dragonflight Pigment page https://warcraft.wiki.gg/wiki/Pigment ; output-family identity only, no 0-N experiment",
+        "Method named Dragonflight mill-pigment identity guide https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment ; herb relation and skill discussion without measured denominator",
+        "Reddit r/woweconomy named independent Dragonflight disenchant original 500-item numeric posts: 2022 beta Surveyor's Cloth Bands 500 casts/608 dust/252 shards https://www.reddit.com/r/woweconomy/comments/ymruks ; already indexed, no additional postlaunch original cohort"
+      ]
     }
   ],
-  "next_concrete_step": "Seek a fresh original rank- and build-qualified prospect/mill addon export with per-output 0-N outcomes, completed operation counters and separate Resourcefulness ledger; for T0046 obtain official Blizzard item API or live in-game tooltip quality indicator to confirm 190312/190313/190314 and 190394/190395/190396 before Master review.",
+  "next_concrete_step": "Obtain a newly posted or directly shared original Dragonflight ProspectMate/CraftSim SavedVariables CSV or cast-by-cast material ledger explicitly recording completed operations, resourcefulness input refunds, rank, skill/spec and patch for R1 Draconium, R2 Serevite, Prismatic Ore or Bubble Poppy/Saxifrage. Do not repeat known 2022–23 original threads absent new raw attachments.",
   "validation": {
-    "format": "18 well-formed JSONL records (17 drop, 1 searched); 17 source-percent inferred per-material histograms have exact sum equal source Looter disenchant operations; positive bins sum to hits and weighted bins equal material units; all unknown fields explicit null",
-    "readback": "pending immediately after publication",
+    "format": "1 JSONL searched record, all required common/searched fields present and all unknowns explicit null; no invented numeric outputs",
+    "readback": "post-commit external verification required; verify branch head, JSONL, and exact paths",
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-13T1836-seven-gear-positive-stack-histograms.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-13T2031-alternative-original-source-triage.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "parent_branch_sha": "cb3b00fad3a59c622e5ec3e3c922b1cb3359cd4e"
+    "parent_branch_sha": "16d908d57a3191d5a628601ecc818eb44957cb1c"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "cb3b00fad3a59c622e5ec3e3c922b1cb3359cd4e",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T1836-seven-gear-positive-stack-histograms.jsonl",
+  "verified_parent_sha": "16d908d57a3191d5a628601ecc818eb44957cb1c",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T2031-alternative-original-source-triage.jsonl",
   "current_run_commit_sha": null,
-  "newly_verified_fields_cohorts": [
-    {
-      "inputItemID": 202513,
-      "inputName": "Mantle of the Autumn Blaze",
-      "source": "https://www.wowhead.com/item=202513/mantle-of-the-autumn-blaze",
-      "source_reported_disenchants": 88,
-      "outputItemIDs": [
-        194123,
-        194124,
-        200113
-      ],
-      "output_occurrences": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 5
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 59
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 45
-        }
-      ]
-    },
-    {
-      "inputItemID": 202514,
-      "inputName": "Pants of the Autumn Blaze",
-      "source": "https://www.wowhead.com/item=202514/pants-of-the-autumn-blaze",
-      "source_reported_disenchants": 78,
-      "outputItemIDs": [
-        194123,
-        194124,
-        200113
-      ],
-      "output_occurrences": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 2
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 50
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 44
-        }
-      ]
-    },
-    {
-      "inputItemID": 202515,
-      "inputName": "Bough of the Autumn Blaze",
-      "source": "https://www.wowhead.com/item=202515/bough-of-the-autumn-blaze",
-      "source_reported_disenchants": 74,
-      "outputItemIDs": [
-        194123,
-        194124,
-        200113
-      ],
-      "output_occurrences": [
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 1
-        },
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 53
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 36
-        }
-      ]
-    },
-    {
-      "inputItemID": 202516,
-      "inputName": "Handguards of the Autumn Blaze",
-      "source": "https://www.wowhead.com/item=202516/handguards-of-the-autumn-blaze",
-      "source_reported_disenchants": 78,
-      "outputItemIDs": [
-        194124,
-        200113
-      ],
-      "output_occurrences": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 56
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 38
-        }
-      ]
-    },
-    {
-      "inputItemID": 207275,
-      "inputName": "Devout Ashdevil's Razorhide",
-      "source": "https://www.wowhead.com/item=207275/devout-ashdevils-razorhide",
-      "source_reported_disenchants": 143,
-      "outputItemIDs": [
-        194124,
-        200113
-      ],
-      "output_occurrences": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 86
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 84
-        }
-      ]
-    },
-    {
-      "inputItemID": 207279,
-      "inputName": "Shoulderguardians of Lunar Communion",
-      "source": "https://www.wowhead.com/item=207279/shoulderguardians-of-lunar-communion",
-      "source_reported_disenchants": 171,
-      "outputItemIDs": [
-        194124,
-        200113
-      ],
-      "output_occurrences": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 112
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 99
-        }
-      ]
-    },
-    {
-      "inputItemID": 207280,
-      "inputName": "Leggings of Lunar Communion",
-      "source": "https://www.wowhead.com/item=207280/leggings-of-lunar-communion",
-      "source_reported_disenchants": 168,
-      "outputItemIDs": [
-        194124,
-        200113
-      ],
-      "output_occurrences": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 102
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 87
-        }
-      ]
-    }
-  ],
-  "last_source_search": "2026-11-13T18:36:45.063Z",
+  "newly_verified_fields_cohorts": [],
+  "last_source_search": "2026-11-13T20:31:35.940Z",
   "exact_gaps": [
-    "Prospect Draconium/Serevite/Khaz'gorite/Prismatic: no per-output original completed-operation histograms",
-    "Mill Bubble Poppy/Saxifrage: no 0-N event ledgers or resourcefulness-reconciled actual mills"
+    "No new rank-qualified Prospect material 0-N original events",
+    "No new Mill pigment 0-N original events",
+    "No new independent gear disenchant histogram cohort"
   ],
-  "evidence_record_count": 18,
-  "evidence_content_format": "17 source percent-derived disenchant material 0-N histograms and one searched audit",
+  "evidence_record_count": 1,
+  "evidence_content_format": "searched only: no measured numeric result",
   "current_run": {
-    "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T1836-seven-gear-positive-stack-histograms.jsonl",
-    "record_count": 18,
-    "record_type": "drop + searched",
-    "new_numeric_studies": 7,
-    "source_derived_histograms": 17,
+    "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T2031-alternative-original-source-triage.jsonl",
+    "record_count": 1,
+    "record_type": "searched",
+    "new_numeric_studies": 0,
+    "source_derived_histograms": 0,
     "original_individual_event_ledgers": 0,
     "validated_jsonl": true,
     "source_urls": [
-      "https://www.wowhead.com/item=202513/mantle-of-the-autumn-blaze",
-      "https://www.wowhead.com/item=202514/pants-of-the-autumn-blaze",
-      "https://www.wowhead.com/item=202515/bough-of-the-autumn-blaze",
-      "https://www.wowhead.com/item=202516/handguards-of-the-autumn-blaze",
-      "https://www.wowhead.com/item=207275/devout-ashdevils-razorhide",
-      "https://www.wowhead.com/item=207279/shoulderguardians-of-lunar-communion",
-      "https://www.wowhead.com/item=207280/leggings-of-lunar-communion"
+      "https://www.reddit.com/r/woweconomy/comments/17n69p8"
     ],
     "exact_input_ids": [
-      202513,
-      202514,
-      202515,
-      202516,
-      207275,
-      207279,
-      207280
+      189143,
+      188658,
+      190394,
+      190395,
+      190396,
+      190312,
+      190313,
+      190314,
+      194545,
+      191467,
+      191464,
+      191465,
+      191466
     ],
-    "output_ids_improved": [
-      194123,
-      194124,
-      200113
-    ],
-    "numerical_fields_improved": [
-      "casts",
-      "castsWithDrop",
-      "minSeen",
-      "maxSeen",
-      "histogram (source-percent reconstructed per material)",
-      "totalQuantity (source-percent weighted reconstruction)"
-    ],
+    "output_ids_improved": [],
+    "numerical_fields_improved": [],
     "priority_gaps_unchanged": true
   },
   "new_reference_only_rows": 0,
   "new_reference_only_input_item_ids": [],
-  "validated_at": "2026-11-13T18:36:45.063Z",
-  "last_search_scope": "Named novel source hunt across Reddit, Wowhead, Blizzard forums, Warcraft Wiki, GitHub and profession guides; original Wowhead Looter raw Disenchanting listviews of seven separate gear items supplied complete per-material stack distribution reconstruction."
+  "validated_at": "2026-11-13T20:31:35.940Z",
+  "last_search_scope": "Alternative public GitHub original export, 2023 Prismatic discussion, 2022 beta DE, EU/US Blizzard forums, MMO-Champion, Wowhead and milling profession guides"
 }
