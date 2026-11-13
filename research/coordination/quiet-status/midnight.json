@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-13T22:16:45.503Z",
-  "status": "active; new primary-source and public collector check exhausted for current numeric gaps; no independently measured eligible yield cohorts",
+  "updated_at": "2026-11-13T23:15:25.005Z",
+  "status": "active; newly inspected independent Midnight collector/export pathway; no original per-operation yield cohort or newly measured probabilities",
   "task_ids": [
     "T0026",
     "T0049",
@@ -12,14 +12,34 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026/T0049: Miststalker's Wristbands 272246 (base 206, live ilvl305) lacks exact character/itemLink bonus, successful disenchant event, skill/spec, build, and per-output zero-inclusive material outcomes.",
-    "T0039/T0005: Umbral Tin Ore 237362 rank-specific per-output Eversong Diamond 242608/242712 occurrence, castsWithDrop, output rank, conditional yield bins, true completed casts vs nominal ore/refunds, specialization and pre/post March 31 hotfix context.",
-    "T0003/T0002: Refulgent Copper 237359/237361 and Brilliant Silver 237364/237365 cast-level outputs by ore rank, skill and patch.",
-    "T0045: Tranquility Bloom 236761 -> Powder Pigment 245807 true ten-herb mill events, total units, hit/zero counts and histogram."
+    "T0026/T0049: exact successful 272246 Miststalker's Wristbands ilvl305 itemLink/bonus/build, skill/spec and zero-inclusive per-output disenchant event still unavailable; base 206 noDisenchant conflict open.",
+    "T0039/T0005: rank-1 Umbral Tin Ore 237362 vs rank-2 237363 actual completed prospects and output-specific Eversong Diamond 242608/242712 and gem hit/zero histograms; refund context unavailable.",
+    "T0003/T0002: rank-paired Refulgent Copper 237359/237361 and Brilliant Silver 237364/237365 per-output hit/total units by build, skill/spec, unlock.",
+    "T0045: rank-paired Tranquility Bloom 236761/236767, other Midnight herbs, Powder Pigment 245807/245808 exact ten-herb completed mills and zero-inclusive outcomes."
   ],
   "newly_verified_fields_or_cohorts": {
-    "evidence_classification": "Three source-exhaustion records; no new standalone measured yield cohort, item identity pair, recipe or rank mapping; previous findings remain unchanged.",
+    "evidence_classification": "One new source-check record, independently inspected 2026 Midnight-compatible public collector and static recipe-data export; source-only; no independent original measured operation cohort or newly unknown output identity.",
     "original_completed_operation_cohorts": 0,
+    "newly_source_correlated_recipe_spell_ids": [
+      1231127,
+      1269575
+    ],
+    "newly_source_correlated_input_item_ids": [
+      237359,
+      237361,
+      237362,
+      237363,
+      237364,
+      237365,
+      236761,
+      236767,
+      236770,
+      236771,
+      236776,
+      236777,
+      236778,
+      236779
+    ],
     "new_exact_input_item_ids": [],
     "new_exact_output_item_ids": [],
     "casts": null,
@@ -27,7 +47,7 @@
     "totalQuantity": null,
     "zero_outcome_count": null,
     "histogram": null,
-    "source_only_notes": "New publicly browsable Blizzard Apr28 Heart of Wind restoration testimony lacks attributable at-disenchant material ledger; Reddit Mar14 source explicitly lost its 100k-ore raw data; new public Github Enchantrix collector code has no player export. Earlier indexed firsthand Reddit pigment range and prospect studies excluded as duplicates."
+    "source_only_notes": "ProspectMate collector SmartProspectorDB v3 saves consumed + results aggregate per input only. It does not persist per-cast operations, zeros, material occurrence, skill/spec/patch or refunds. Koodattu mapping static data contains salvage slot inputQuantity 1 and generic output 262908 for all herb inputs; do not infer gameplay batch sizes or output yields."
   },
   "numeric_fields_advanced": {
     "new_exact_input_item_ids": [],
@@ -39,30 +59,28 @@
     "newly_verified_probabilities": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-13T2216-primary-cast-source-check.jsonl"
+    "research/v3/evidence/midnight/2026-11-13T2315-prospectmate-aggregate-collector-check.jsonl"
   ],
   "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-13T2016-s2-gear-looter-source-identity.jsonl",
   "evidence_record_ids": [
-    "midnight-20261113-2216-001",
-    "midnight-20261113-2216-002",
-    "midnight-20261113-2216-003"
+    "midnight-20261113-2315-001"
   ],
   "source_links": [
-    "https://us.forums.blizzard.com/en/wow/t/unable-to-restore-item-using-item-restoration-webpage/2299311",
-    "https://www.reddit.com/r/woweconomy/comments/1rtqxbr/any_prospecting_sheet_out_there/",
-    "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
-    "https://www.reddit.com/r/woweconomy/comments/1rju9nm/engineering_bugged/",
-    "https://github.com/gOOvER/AuctioneerReforged",
-    "https://www.wowhead.com/item=237362/umbral-tin-ore"
+    "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua",
+    "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/README.MD",
+    "https://www.curseforge.com/wow/addons/prospectmate",
+    "https://github.com/Koodattu/wow-addon-dev/blob/5d5295d6f09d6bdbf5ac4590c81b9d064d6a482a/PRE-Data-Export/parsed/salvage_input_output_map.json",
+    "https://github.com/Koodattu/wow-profession-profit-calculation/blob/384b5b0f0a1a79a3eab89aa9a050393cdba55baf/game-data-parsed/salvaging_config_manual.json"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One atomic evidence+status commit; own commit SHA cannot be written inside its own committed JSON without a second commit. Verified via branch and file read-back following update.",
+  "commit_note": "One atomic research-evidence+status commit; self SHA cannot be committed inside own status file without a second commit. Verified by branch SHA and file contents after ref update.",
   "blockers": [
-    "No new independent current-build at-cast material receipt or accessible exported SavedVariables ledger. Existing WoWhead Looter item tables are mutable cumulative references without verified at-cast build, level or complete material outcomes.",
-    "Explicit 100k-ore community claim states raw data were not saved; guide-derived prospecting calculator is not an original sample. Unspecified ore ranks/refunds prevent recovering complete operation histograms.",
-    "Current 272246 scaled ilvl305 successful disenchant plus original individual output remains unverified; PTR/base noDisenchant conflict unresolved.",
-    "Original rank-specific Tin/Copper/Silver prospecting and ten-herb milling zero-inclusive operation datasets remain absent."
+    "Current 272246 ilvl305 at-disenchant successful operation and corresponding output item/amount/zero ledger plus skill/spec/build still missing; base 206 noDisenchant flag conflicts with mutable Looter aggregate.",
+    "No independent rank-specific completed cast, per-output hit/zero/stack histogram and Resourcefulness ledger for Umbral Tin 237362/237363, Copper 237359/237361 or Silver 237364/237365; earlier Cardinalai/Honeybone original totals already indexed.",
+    "ProspectMate 2026 retail collector only exposes aggregates consumed and outputs, not original completed operation counts or per-event outcomes. No publicly indexed raw SmartProspectorDB dataset found; consumed units may reflect Resourcefulness and cannot become casts.",
+    "Midnight Milling 236761/236767 -> 245807/245808 raw per-cast results including zeros and skill/spec/refunds remain missing. Koodattu static generic output map is not a measured cohort.",
+    "Firecrawl research connector was out of daily credits for this run; used public GitHub connector and web search instead."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -119,9 +137,10 @@
     "2026-11-13T19:16:58.707Z: Fresh named direct-index searches for original Miststalker's Wristbands, Umbral Tin, Eversong Diamond, Copper, Silver and milling per-cast sources and distinct raid gear item-side pages; no new player event ledger. Excluded already indexed Cardinalai, Honeybone, owner PR49, earlier Primal Sentry's 249983/249986/249987/249988/249989/249991, Reflux Reflector 251202 and prior Relentless Rider's 249966–249973. NEW seven source snapshots 249985,260374,271565,271567,271564,271563,271562 logged reference-only; LIVE/PTR variants may overlap. No same snapshots should be rescraped without original per-event receipts.",
     "2026-11-13T20:16:18.915Z: Checked names 272246, Umbral Tin Ore, Eversong Diamond, Refulgent Copper, Brilliant Silver and Tranquility Bloom for new 0-inclusive raw event ledgers across indexed Reddit, Wowhead, Blizzard community forums and profession guides; Cardinalai, Honeybone, Insomnist KP n=5294, krathalan and earlier owner PR49 already indexed; no new independent current-patch hit/zero cohort. Distinct LIVE hunter 271492/271493 and druid 271527/271529 item-side Looter and PTR 12.1.7 mage 250062 added reference-only (do not reimport same mutable snapshots).",
     "2026-11-13T21:17:42.580Z: Searched item names Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom and Midnight profession outputs across Reddit r/woweconomy, Blizzard US/EU forums, Wowhead, Wow-Professions, Warcraft Wiki and GoldCap. Reused Cardinalai, Honeybone, 5294 KP and earlier Looter item-side snapshots excluded. New nonduplicate current identity finding: GoldCap item IDs Eversong Diamond rank1 242608 and rank2 242712 with linked retail commodity inventories. Previously treated as same-name ID ambiguity in v2; now source-only rank mapping, not at-cast proof. Avoid re-fetching these unchanged ranks as new cohorts.",
-    "2026-11-13T22:16:45.503Z: Distinct primary-export lane checked new Apr28 Blizzard Heart of Wind restoration inventory testimony, Mar14 r/woweconomy 100k ore report (author explicitly lost raw data), guide-hardcoded Apr15 prospecting calculator, and public AuctioneerReforged/Enchantrix collector source code; also indexed Wowhead 272246/237362 item pages and old Mar3 milling 11-15 pigment report. No new independent 0-inclusive processing cohort. Earlier Heart of Wind, Cardinalai, JD3K, older 11-15 pigment report, and owner PR49 not recopied. No per-operation numeric field advanced."
+    "2026-11-13T22:16:45.503Z: Distinct primary-export lane checked new Apr28 Blizzard Heart of Wind restoration inventory testimony, Mar14 r/woweconomy 100k ore report (author explicitly lost raw data), guide-hardcoded Apr15 prospecting calculator, and public AuctioneerReforged/Enchantrix collector source code; also indexed Wowhead 272246/237362 item pages and old Mar3 milling 11-15 pigment report. No new independent 0-inclusive processing cohort. Earlier Heart of Wind, Cardinalai, JD3K, older 11-15 pigment report, and owner PR49 not recopied. No per-operation numeric field advanced.",
+    "2026-11-13T23:15:25.005Z: New independently discovered ProspectMate June17 2026 GitHub/CurseForge collector lane, plus Koodattu public static salvage mapping. Name-based saved-variable searches across GitHub, Reddit, Wago, CurseForge; original source code read line-by-line. Collector saved variables only aggregate consumed/results, no per-cast event ledger; no public sample, no zero/1/2 bins. Koodattu 'inputQuantity':1 is static salvage selector and output 262908 repeats all herb records; do not count as gameplay result or per-cast input. Existing Cardinalai, Honeybone, Draggoth, Looter, owner PR49 studies deliberately not reimported. Revisit only with new firsthand raw export."
   ],
-  "next_concrete_step": "Seek newly public raw player-originating SavedVariables/CSV or at-cast game screenshots for 272246 scaled DE and 237362 R1/R2 prospecting, recording exact input/output ranks, completed operations and per-output 0/1/2 bins before any estimator use. Avoid repeating checked forum author, spreadsheet and source pages without new attachments.",
+  "next_concrete_step": "Seek consented original per-event combat/profession receipt capture for 272246 ilvl305 or exact 237362 ore-rank and 236761 herb-rank prospect/mill events; ask Master (via status, no shared write) to request/add event-level export schema with actual completed casts, output IDs/stack histograms, 0-outcome rows, skill/spec/build, itemLink bonuses and Resourcefulness refunds. Do not reinterpret aggregate SmartProspectorDB totals as completed casts.",
   "verified_base_commit_sha": "500bfd86714339a7e04e42a916dba8f119054dc2",
   "next": "Get official live-client/Blizzard item API confirmation of rank1 242608 and rank2 242712 and original player at-cast output receipts with exact ore/rank, Tin-vestigator state, completed operations, output rank, refunds and per-material zero-inclusive distributions. If unavailable, pivot to unindexed first-person gear DE event ledger rather than repeat same commodity listings.",
   "base_commit_sha": "b46e27f3cbc5b29bad6910640b319756bc598c75"
