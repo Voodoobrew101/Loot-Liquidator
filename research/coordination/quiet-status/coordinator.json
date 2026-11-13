@@ -1,85 +1,100 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T15:08:58.477Z",
-  "status": "active; catalog-corroborated three TWW Refulgent Crystal rank identities; original per-source Looter material-row link identity still missing; no new casts or priced gold decisions",
+  "updated_at": "2026-11-13T16:08:17.040Z",
+  "status": "active; independently crosschecked 17 original Dragonflight Looter material hits across 8 gear IDs; verified nonexclusive occurrence lower bounds; input context and yield units still unresolved; no new casts or current gold decisions",
   "task_ids": [
-    "T0048",
+    "T0041",
+    "T0020",
+    "T0019",
+    "T0018",
+    "T0015",
     "T0005",
     "T0039",
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0048: Distinguish rank1 ID 219952, rank2 ID 219954, rank3 ID 219955; mapping now supported by source-labeled Retail item catalogs, but original epic gear source Looter rows for 229258/212069/211999/212085 do not expose which rank/item ID each 18/8/7,72/41/21,32/5/3,68/49/24 row represents.",
-    "T0048: Source epoch, exact gear itemLink/bonus/ilvl, profession skill/spec, output quantities/histograms and eligible current Retail action remain unknown; rankless occurrence rows cannot be priced individually as if mapped.",
-    "T0005/T0039/T0045: New independent current Midnight ore/herb input-rank matched completed casts, per-output hits/quantity and zero-inclusive 0/1/2+ histograms with real input refunds/saved materials remain missing."
+    "T0041 Dragonflight 8 item-side original Looter cohorts: source hit counts and material identities now source-crosschecked; need event-level input gear bonus/build/skill, per-output stack quantities and co-occurrence/zero histograms for actionable current Retail valuation",
+    "Cross-source classification: undated Looter positive occurrence is not independently observed current-player completed-cast distribution; v3 estimator sourceKind=study with castsWithDrop currently treats counts as measured chance when admitted",
+    "T0005/T0039/T0045 independent current Midnight output rank, hit counts/zero-inclusive histograms, 10-herb milling and Resourcefulness input savings remain missing"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "kind": "static-retail-catalog-reagent-quality-identity-not-cast-cohort",
-      "expansion": "The War Within",
-      "material": "Refulgent Crystal",
-      "rank_to_item_id": {
-        "1": 219952,
-        "2": 219954,
-        "3": 219955
-      },
-      "legacy_main_source": "database/sources/ResearchDB.lua epic rarity quality[4].candidates; source list not itself rank ordering",
-      "cohort_source_linkage_verified": false,
-      "probability": null,
-      "output_units": null,
-      "source_measured_casts": 0,
-      "new_independent_cohorts": 0,
-      "current_gold_decision_verified": false
+      "kind": "original-source crosscheck of previously worker-reported historical source aggregates",
+      "input_item_ids": [
+        200414,
+        200416,
+        200420,
+        202484,
+        207195,
+        207196,
+        207197,
+        207202
+      ],
+      "source_record_count": 17,
+      "source_reported_shared_item_denominator_sum": 325,
+      "source_reported_material_occurrences_sum": 376,
+      "excess_positive_material_occurrences": 51,
+      "lower_bound_crystal_shard_cooccurrence_if_event_aligned": 50,
+      "all_17_percentages_round_correctly": true,
+      "source_indexed_tables_checked": 8,
+      "output_ids": [
+        200113,
+        194124,
+        194123
+      ],
+      "new_independent_source_studies": 0,
+      "new_coordinator_observed_casts": 0,
+      "per_cast_material_total_units": null,
+      "per_cast_zero_histogram": null,
+      "real_character_gold_decisions": 0
     }
   ],
   "newly_verified_numeric_studies": 0,
   "newly_observed_completed_casts": 0,
   "newly_verified_current_gold_decisions": 0,
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-13T1504-tww-refulgent-crystal-output-rank-identity.md"
+    "research/v3/evidence/master/2026-11-13T1606-dragonflight-eight-looter-cohorts-overlap-and-source-recheck.md"
   ],
   "source_links": [
-    "https://goldcap.gg/retail/us/items/219952",
-    "https://goldcap.gg/retail/tw/items/219954",
-    "https://goldcap.gg/retail/us/items/219955",
-    "https://www.wowhead.com/item=219952/refulgent-crystal",
-    "https://www.wowhead.com/item=219954/refulgent-crystal",
-    "https://www.wowhead.com/item=219955/refulgent-crystal",
-    "https://www.wowhead.com/item=229258/gale-sovereigns-bracers",
-    "https://www.wowhead.com/item=212069/hexflame-covens-shawl"
+    "https://www.wowhead.com/item=200414/virtuous-silver-breastplate",
+    "https://www.wowhead.com/item=200416/virtuous-silver-gauntlets",
+    "https://www.wowhead.com/ptr/item=200420/virtuous-silver-faulds",
+    "https://www.wowhead.com/ptr/item=202484/scalebands-of-obsidian-secrets",
+    "https://www.wowhead.com/item=207195/shroud-of-the-risen-nightmare",
+    "https://www.wowhead.com/item=207196/vambraces-of-the-risen-nightmare",
+    "https://www.wowhead.com/item=207197/seal-of-the-risen-nightmare",
+    "https://www.wowhead.com/item=207202/graveboots-of-the-risen-nightmare"
   ],
-  "evidence_commit_sha": null,
-  "dashboard_commit_sha": null,
-  "verified_commit_sha": "1f578139c8018a0502108578580dba65e47563ee",
-  "verified_commit_sha_scope": "Parent branch head verified immediately before this atomic coordinator commit; new commit SHA must be checked after publication and cannot self-reference.",
+  "verified_commit_sha": "c8c97c34683892fffbca5022eef748d736460b86",
+  "verified_commit_sha_scope": "Parent research branch head verified before atomic commit; new commit SHA not self-referential, verify published branch head separately.",
   "checked_worker_owner_reports": [
     {
       "role": "legacy",
-      "updated_at": "2026-11-13T14:59:47.735Z",
-      "finding": "11 new source-reported historical result rows, two selected positive single-cast events; not representative current Retail rate."
+      "updated_at": "2026-11-13T15:56:14.205Z",
+      "finding": "9 LIVE WoWDB catalog noDisenchant flags plus 1 historical conditional stack observation; no new per-operation cohort"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-13T14:47:56.608Z",
-      "finding": "One cumulative item 200339 55-operation source, two material-specific hit ratios, missing stack units; ore/mill rank histograms missing."
+      "updated_at": "2026-11-13T15:34:51.557Z",
+      "finding": "8 distinct item IDs / 17 Looter material hit rows; exact original source indexes independently compared by manager"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-13T14:28:50.513Z",
-      "finding": "13 cumulative-gear disenchant occurrence rows across five inputs; four Crystal cohorts remain output-rank unresolved; linked R2 Storm Dust item catalog source."
+      "updated_at": "2026-11-13T15:26:16.751Z",
+      "finding": "4 source-reported epic cohorts, 12 Crystal hit rows; ranks/quantity missing"
     },
     {
       "role": "midnight",
-      "updated_at": "2026-11-13T14:22:24.443Z",
-      "finding": "Two skill/spec firsthand qualitative reports; no new estimator-eligible casts."
+      "updated_at": "2026-11-13T15:20:17.640Z",
+      "finding": "5 gear Looter snapshots (10 reference rows), no original current-patch per-cast yield cohorts"
     }
   ],
   "blockers": [
-    "Four War Within epic gear Looter item-side source pages do not expose original rank-specific output href IDs in current text/html web extraction; no row-to-rank attribution until captured from original source or recorded addon export.",
-    "No per-output unit totals, histograms, build/itemLink, skill or source publication epoch for rankless T0048 rows; even a verified rank ID dictionary does not establish per-rank conditional quantity or actionable price recommendation.",
-    "No original new current Midnight prospect/mill zero-inclusive per-cast, output-rank and refund cohort. Existing prior sources must not be duplicated.",
-    "No actual standalone code checkout; no estimator/compiler/Lua or synthetic-price engine/tooltip execution by this coordinator. No current character professions, gear/transfer context or live WoW test."
+    "Original Looter aggregates lack recorded source itemLink bonuses, player build, version/date, skill/spec, joint material output stacks, zeros and independently identified current Retail applicability.",
+    "Without output unit totals or safe explicitly labeled conditional-yield assumption, cannot calculate defensible current expected net gold per disenchant; website hit counts are not unit totals.",
+    "Original Midnight independent rank/zero/refund prospect/mill operations not found; previously exhausted copies are not fresh cohorts.",
+    "Coordinator could inspect repository compiler source and perform in-memory arithmetic but did not run offline compiler, Lua addon tests, actual synthetic-price engine/tooltip, or live client."
   ],
   "exhausted_sources": [
     "Named current-search queries for new Umbral Tin prospect and Tranquility Bloom 10-herb per-cast logs surfaced already indexed Cardinalai, Draggoth/kyzenbka and guide material only. No independent zero-inclusive raw ledger; avoid repeat absent a new player export.",
@@ -87,29 +102,31 @@
     "Guide 244586 versus catalog source conflict exhausts currently accessible static eligibility; PTR Wowhead related tables cannot replace an original cast with build/bonus/skill.",
     "Original 200339 English and German Wowhead indexes are one Looter sample and show no dated per-operation stack histograms; do not rescrape locale mirror as second study.",
     "Imgur fOTeoFs album could not expose its original 1000-ore prospect screenshot through web text; alternative connected extraction was unavailable due transient provider credit exhaustion. Keep as an unverified original lead, not a measured cohort.",
-    "For 229258/212069 original Wowhead item pages, current plain HTML exposes metadata but not JS-dependent material-row href IDs. Retail GoldCap catalog provides item ID↔rank identity only, not row mapping, measured yields or patch-specific source conditions. Do not infer ranking from the listed 18/8/7 and 72/41/21 counts."
+    "For 229258/212069 original Wowhead item pages, current plain HTML exposes metadata but not JS-dependent material-row href IDs. Retail GoldCap catalog provides item ID↔rank identity only, not row mapping, measured yields or patch-specific source conditions. Do not infer ranking from the listed 18/8/7 and 72/41/21 counts.",
+    "Nov 13 eight Dragonflight Looter item-side tables 200414/200416/200420/202484/207195/207196/207197/207202 have now been source-crosschecked; re-reading site mirrors would duplicate the same cumulative sample, not reveal player events or stack histograms."
   ],
   "validation": {
     "executed": [
-      "Read main owner charter and protected PASS-1, research README/schema/mechanics/queue/strategy/flags, latest coordinator checkpoint/dashboard at research head 1f578139c8018a0502108578580dba65e47563ee; read all four worker quiet-status reports.",
-      "Cross-checked three Refulgent Crystal rank/item IDs from Retail item catalog pages; checked existing main generated ResearchDB.lua candidate list and its epic rarity context, not a rank4 material.",
-      "Inspected item-side 229258 and 212069 Wowhead source page web text for original output row links; not available in JS-free view, no unsupported identification inferred.",
-      "Refreshed main b661084, integration 3d667d0, research parent branch head and PR22/23 closed-unmerged status; checked GitHub Actions run 43448114087 success at research parent."
+      "Read main owner charter, protected three-pass plan/PASS-1, research README/schema/mechanics/queue/strategy/flags and manager checkpoint/dashboard; read four latest worker status reports.",
+      "Fetched current branch heads for main, research and integration, inspected current recent Actions run at research head, read PR22/23 closed/unmerged metadata.",
+      "Read 17 JSONL rows and independently compared original indexed Wowhead Looter output names/numerators/denominators for all 8 item IDs.",
+      "Executed in-memory exact integer/rounded percentage and pairwise inclusion-exclusion bounds: 325 denominators, 376 positive output occurrences, 51 extras, at least 50 conditional Crystal-Shard same-operation intersections.",
+      "Inspected research/v3/tools/build_estimates.py field-admission and chance confidence/label code; identified semantic risk, did not run compiler."
     ],
     "not_executed": [
-      "No original controlled or new completed casts, output totals, hit probabilities, zeros, histograms, skill coefficients, rank-to-Looter-row mapping or current gold recommendations established.",
-      "No offline estimator/compiler/Lua/synthetic price actual resolver/formatter, no live WoW, no current price or eligibility validation.",
-      "No main/implementation/worker/queue/strategy/flag/PR/schedule/snapshot production modifications, merges, closures or release."
+      "No original player casts/new source study, output quantities/histograms, skill scaling or current market/character eligibility confirmed.",
+      "No local checkout, estimator execution, Lua regression, actual-offline engine/render fixture, or live WoW validation.",
+      "No changes to main/implementation/snapshot, workers, queue, strategy, PRs, schedules or releases."
     ]
   },
   "protected_state": {
     "main_head_at_review": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
-    "research_head_before_manager_work": "1f578139c8018a0502108578580dba65e47563ee",
+    "research_head_before_manager_work": "c8c97c34683892fffbca5022eef748d736460b86",
     "integration_head_at_review": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "immutable_snapshot": "4df9ae8b1359d934828e4d0e6d39a9a4dba26fae",
-    "prewrite_research_ci": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43448114087",
-    "prewrite_research_ci_scope": "success on 1f578139 worker head, not post-manager research audit nor actual addon/client",
+    "prewrite_research_ci": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43457625342",
+    "prewrite_research_ci_scope": "success on c8c97c3 worker head, not this coordinator audit or live addon",
     "research_only": true
   },
-  "next_concrete_step": "T0048 War Within owner: capture the original cumulative Looter output href/item ID per Crystal row for epic gear 229258/212069/211999/212085, plus gear bonus/build, per-cast quantity/zero/refund and skill; do not assign ranks by occurrence sorting. Then continue original current Midnight T0005/T0039/T0045 rank/zero/refund ledgers, not recycled guide/copy sources."
+  "next_concrete_step": "Ask Dragonflight worker original sample/exports for 200414/200416/200420/202484/207195/207196/207197/207202 linking actual item bonus/build to simultaneous output stacks/zeros; preserve nonexclusive outputs. Continue independent Midnight T0005/T0039/T0045 input rank/zero/refund observations, without duplicate Looter or guide searches."
 }
