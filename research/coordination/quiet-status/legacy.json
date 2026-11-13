@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T01:45:55.636Z",
-  "status": "Corrected 12 pre-existing Elementium Ore (52185) output rows to their true first-person Wowhead author 581155 rather than adjacent unrelated commenter jjhilly; separated explicitly computed 500/5=100 nominal prospects from independently verified physical casts. Preserved original output quantities (150 units across 12 IDs), added no new cohort, no new observed casts, hits, zeros, histograms or gold values. Warmaul 24995, Cobalt 36909, Fel Iron 23424 and Titanium 36910 original per-cast gaps remain unresolved. No production, queue, other worker, PR, CI or schedules modified.",
+  "updated_at": "2026-11-13T02:51:39.052Z",
+  "status": "Added eight first-person historical WotLK milling output records from five distinct batches, including exactly 56 explicitly reported completed mills and two material totals from 3760 herb inputs. Exact Warmaul 24995, Cobalt 36909, Fel Iron 23424 and Titanium 36910 per-output completed-cast/zero histograms remain unresolved; no reference priors promoted to measured. No production, queue, other worker, PR, CI or schedules changed.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,145 +12,126 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 (T0047), historical Arcane Dust 22445, Greater Planar Essence 22446, Lesser Planar Essence 22447, Large Prismatic Shard 22449: no new independent completed casts, per-output quantity histograms, item variant/build/skill or current eligibility proof.",
-    "Cobalt Ore 36909 (T0022), Fel Iron Ore 23424 (T0044), Titanium Ore 36910 (T0021): no novel independent physical cast logs, hit counts, zeros or resourcefulness/refund provenance found.",
-    "Elementium Ore 52185 first-person original author identity correction and cast-basis clarification: 12 existing amounts incorrectly attributed to jjhilly, actually comment by 581155; source's 500 ore =100 prospects is arithmetic rather than verified operation ledger."
+    "Warmaul Legplates 24995 (T0047) and same TBC rarity/ilvl DE groups: no newly independently logged completed disenchants, all-output per-cast histograms, actual item/build/skill and current Retail eligibility.",
+    "Cobalt Ore 36909 (T0022), Fel Iron Ore 23424 (T0044), Titanium Ore 36910 (T0021): no new independently completed prospecting logs with per-output positive hits, zeros, quantities and refund provenance.",
+    "Legacy milling standing task (T0042): recover original author quantitative Adder's Tongue 36903, Deadnettle 37921, Tiger Lily 36904 input/output units and distinguish explicitly counted operations from herb/stack-derived equivalents."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "kind": "append_only_provenance_and_nominal_cast_correction_not_new_cohort",
-      "method": "Prospect",
-      "inputItemID": 52185,
-      "inputName": "Elementium Ore",
-      "studyKey": "wowhead-elementium-581155-500ore-original-corrected",
-      "sourceAuthor": "581155",
-      "erroneousPriorAuthor": "jjhilly",
-      "replaces": [
-        "legacy-20261102-0937001",
-        "legacy-20261102-0937002",
-        "legacy-20261102-0937003",
-        "legacy-20261102-0937004",
-        "legacy-20261102-0937005",
-        "legacy-20261102-0937006",
-        "legacy-20261102-0937007",
-        "legacy-20261102-0937008",
-        "legacy-20261102-0937009",
-        "legacy-20261102-0937010",
-        "legacy-20261102-0937011",
-        "legacy-20261102-0937012"
-      ],
-      "source": "https://www.wowhead.com/mop-classic/pt/item=52185/minerio-de-elementio",
-      "reportedOre": 500,
-      "reportedStacks": 25,
-      "sourceStatedNominalProspects": 100,
-      "verifiedCompletedCasts": null,
-      "preservedTotalMaterialUnits": 150,
-      "newObservedMaterialUnits": 0,
-      "outputs": [
-        {
-          "outputItemID": 52195,
-          "outputName": "Amberjewel",
-          "totalQuantity": 3
-        },
-        {
-          "outputItemID": 52194,
-          "outputName": "Demonseye",
-          "totalQuantity": 4
-        },
-        {
-          "outputItemID": 52192,
-          "outputName": "Dream Emerald",
-          "totalQuantity": 6
-        },
-        {
-          "outputItemID": 52193,
-          "outputName": "Ember Topaz",
-          "totalQuantity": 8
-        },
-        {
-          "outputItemID": 52190,
-          "outputName": "Inferno Ruby",
-          "totalQuantity": 5
-        },
-        {
-          "outputItemID": 52191,
-          "outputName": "Ocean Sapphire",
-          "totalQuantity": 5
-        },
-        {
-          "outputItemID": 52177,
-          "outputName": "Carnelian",
-          "totalQuantity": 21
-        },
-        {
-          "outputItemID": 52179,
-          "outputName": "Alicite",
-          "totalQuantity": 20
-        },
-        {
-          "outputItemID": 52182,
-          "outputName": "Jasper",
-          "totalQuantity": 17
-        },
-        {
-          "outputItemID": 52178,
-          "outputName": "Zephyrite",
-          "totalQuantity": 21
-        },
-        {
-          "outputItemID": 52181,
-          "outputName": "Hessonite",
-          "totalQuantity": 19
-        },
-        {
-          "outputItemID": 52180,
-          "outputName": "Nightstone",
-          "totalQuantity": 21
-        }
-      ],
+      "studyKey": "wowhead-icy-azurefireice-adder-3760-input-herbs",
+      "inputItemID": 36903,
+      "reportedInputHerbs": 3760,
+      "outputQuantities": {
+        "39343": 1136,
+        "43109": 213
+      },
+      "reportedCompletedCasts": null,
+      "nominalFiveHerbEquivalents": 752,
       "castsWithDrop": null,
-      "zeroOutcomes": null,
+      "zeros": null,
       "histogram": null,
-      "skill": null,
-      "build": null,
-      "patch": null,
-      "refunds": null,
-      "notes": "Original comment listed separately from jjhilly on independently indexed page. Full batch may have been processed, but click/operation counts not independently logged. The later combined 260-equivalent comment copies this original cohort; no duplication."
+      "source": "https://www.wowhead.com/cata/cn/item=43109",
+      "newOriginalCohort": true
+    },
+    {
+      "studyKey": "wowhead-icy-85618-deadnettle-24mills",
+      "inputItemID": 37921,
+      "reportedInputHerbs": 120,
+      "reportedCompletedCasts": 24,
+      "skill": "420 Inscription",
+      "outputQuantities": {
+        "43109": 3
+      },
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/cata/cn/item=43109",
+      "newOriginalCohort": true
+    },
+    {
+      "studyKey": "wowhead-milling-nightflame-eight-unspecified-stacks",
+      "inputItemID": null,
+      "inputName": "Unspecified lower-level Northrend herbs",
+      "reportedStacks": 8,
+      "reportedCompletedCasts": null,
+      "outputQuantities": {
+        "39343": 80,
+        "43109": 10
+      },
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/wotlk/ru/spell=51005",
+      "newOriginalCohort": true
+    },
+    {
+      "studyKey": "wowhead-milling-nightflame-four-adder-stacks-update",
+      "inputItemID": 36903,
+      "reportedStacks": 4,
+      "reportedCompletedCasts": null,
+      "outputQuantities": {
+        "39343": 52,
+        "43109": 11
+      },
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/wotlk/ru/spell=51005",
+      "newOriginalCohort": true
+    },
+    {
+      "studyKey": "wowhead-milling-352479-tigerlily-32mills",
+      "inputItemID": 36904,
+      "reportedStacks": 8,
+      "reportedCompletedCasts": 32,
+      "outputQuantities": {
+        "43109": 3
+      },
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/wotlk/ru/spell=51005",
+      "newOriginalCohort": true
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 12,
-    "source_corrections": 12,
-    "new_original_independent_cohorts": 0,
-    "new_exact_input_output_quantity_records": 0,
-    "new_source_reported_material_units": 0,
-    "preserved_existing_material_units": 150,
+    "new_evidence_records": 8,
+    "new_original_independent_cohorts": 5,
+    "new_exact_input_output_quantity_records": 6,
+    "new_exact_input_output_material_units": 1418,
+    "new_unresolved_input_output_quantity_records": 2,
+    "new_unresolved_input_material_units": 90,
+    "new_total_reported_material_units": 1508,
+    "new_explicitly_reported_completed_mills": 56,
     "new_completed_disenchant_casts": 0,
     "new_completed_prospect_casts": 0,
-    "new_material_hit_counts": 0,
+    "new_castsWithDrop": 0,
     "new_zero_inclusive_histograms": 0,
     "new_gold_values": 0,
-    "cast_denominator_note": "100 prospect equivalents from 500/5 entered as casts=null; former 100 counted-cast weight not independently demonstrated. Raw 12 material totals unchanged."
+    "nominal_counts_excluded": "3760 herbs/5=752 prospective equivalents and 4/8 stack estimates never entered as observed casts"
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-13T0145-elementium-581155-author-cast-basis-replacements.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0145-elementium-581155-author-cast-basis-replacements.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-13T0251-wotlk-firsthand-milling-quantities.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0251-wotlk-firsthand-milling-quantities.jsonl",
   "sources": [
     "https://www.wowhead.com/mop-classic/pt/item=52185/minerio-de-elementio",
     "https://www.wowhead.com/cata/item=52185/elementium-ore",
     "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
     "https://www.wowhead.com/wotlk/item=36909/cobalt-ore",
     "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/wotlk/item=36910/titanium-ore"
+    "https://www.wowhead.com/wotlk/item=36910/titanium-ore",
+    "https://www.wowhead.com/cata/cn/item=43109",
+    "https://www.wowhead.com/wotlk/ru/spell=51005",
+    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/tbc/item=23424/fel-iron-ore"
   ],
-  "verified_base_commit_sha": "0636373fc1e332f0c73e7d49922e086cd1eb7979",
+  "verified_base_commit_sha": "0963143820c56dce171943d4fcb84eaddc1d478a",
   "verified_commit_sha": null,
-  "commit_sha_note": "Atomic commit contains one new legacy evidence JSONL and legacy status JSON only. Its own commit hash cannot be embedded inside itself; post-commit branch-head and read-back verification occur externally.",
+  "commit_sha_note": "One atomic commit contains one new legacy evidence JSONL and legacy status JSON. Its own SHA cannot be embedded in the commit itself; externally verify branch head and both paths after updating.",
   "blockers": [
-    "No new original Warmaul 24995 current Retail-specific disenchants by item variant/build/skill with physical casts, output totalQuantity, material-specific hit counts, zeros or 0-N histograms; historical Looter cumulative sample is not independent.",
-    "No new independent Cobalt 36909 or Fel Iron 23424 source-backed per-cast measured hit/miss/histogram series, nor refunded-input and profession skill ledger.",
-    "Elementium 52185 original 581155 source reports 25 stacks (500 ore) and an arithmetic 100-prospect equivalent but has no separately recorded completed clicks, 0-N outcomes, specialization, skill, patch or refund ledger.",
-    "Original 581155 author was masked by erroneous adjacent-comment attribution as jjhilly in preexisting 12 evidence rows; these replacements correct identity but add no statistical sample.",
-    "Existing 24995 historical output identities are version-ambiguous versus modern WoWDB no-disenchant flag; Master/PR Director review required before current-game transfer."
+    "Warmaul Legplates 24995 historic 2068-Looter occurrence table still lacks independent 0-N stack histogram, quantity sums and version/build/skill; modern WoWDB no-disenchant eligibility conflicts with historical Looter, must not transfer to live Retail without validation.",
+    "Cobalt 36909 and Fel Iron 23424 have only previously archived original sample cohorts without new source-backed per-material hit/miss/zero histograms; no corroborating current Retail casts or refund ledgers.",
+    "Fresh Azure/Icy milling source observations lack per-output castsWithDrop and zero-inclusive histograms; azurefireice 3760 is herb inputs, not 3760 completed mills; Nightflame stack counts are not completed cast counts; unspecified first 8 stacks cannot map exact herb ID.",
+    "Token 45661 reward IDs already previously archived; no new class reward variants independently verified this run."
   ],
   "exhausted_sources": [
     {
@@ -288,10 +269,10 @@
       "reason": "Searches returned prior archived original cohorts or guides without new independently logged physical cast counts. Elementium commenters 581155 and 745730 were deduplicated against earlier 100-equivalent source and Workher's later cumulative cohort. A new source attribution correction was possible; no recycled measurements counted as new."
     }
   ],
-  "next_concrete_step": "Find new original Warmaul 24995 in-game Retail item-instance experiment or SavedVariables event log showing build/bonus, eligible input, completed actual disenchants and 22445/22446/22447/22449 per-output 0..N histograms. Next source firsthand Cobalt 36909 and Fel Iron 23424 original per-cast operation exports with refunds/skill and verified IDs; avoid re-reading archived Elementium and duplicated Looter cohorts.",
-  "previous_status_updated_at": "2026-11-13T00:42:10.324Z",
-  "last_evidence_file": "research/v3/evidence/legacy/2026-11-10T1249-elementium-three-original-quantity-cohorts.jsonl",
-  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-10T1249-elementium-three-original-quantity-cohorts.jsonl",
+  "next_concrete_step": "Prioritize original player in-game Warmaul 24995 Retail item-instance disenchant export with all 22445/22446/22447/22449 per-cast yields, ilvl/bonus, build, skill and eligibility. For Cobalt 36909 and Fel Iron 23424 obtain new independent raw per-cast prospect logs. For historical Adder's Tongue 36903 request azurefireice's source dataset with verified operations, 0-N histograms, and version; do not assume 3760/5 real casts.",
+  "previous_status_updated_at": "2026-11-13T01:45:55.636Z",
+  "last_evidence_file": "research/v3/evidence/legacy/2026-11-13T0251-wotlk-firsthand-milling-quantities.jsonl",
+  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0251-wotlk-firsthand-milling-quantities.jsonl",
   "source_reliability_findings": [
     {
       "source": "https://wowinterface.com/downloads/info9751-ProspectStats.html",
