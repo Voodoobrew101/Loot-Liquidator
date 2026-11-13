@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T01:36:18.610Z",
-  "status": "active; 10 weak cumulative Looter material-occurrence rows (9 distinct Dragonflight base gear items); no new original per-cast ore/mill histograms",
+  "updated_at": "2026-11-13T02:36:58.201Z",
+  "status": "active; 14 weak, newly indexed cumulative item-side Looter material-occurrence rows across seven Dragonflight gear base items; no new independent ore/mill cast histograms",
   "task_ids": [
     "T0020",
     "T0018",
@@ -14,161 +14,173 @@
     "T0016"
   ],
   "exact_gaps_targeted": [
-    "Dragonflight Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic Ore 194545: missing new output-specific observed 0/1/2 completed-prospect histograms with refund/skill/rank context.",
-    "Dragonflight Bubble Poppy 191467 and Saxifrage 191464/191465/191466: missing independent current-patch completed-mill denominators and pigment output hit/zero histograms.",
-    "Nine unindexed Dragonflight base gear IDs 200328,207135,204424,202592,207155,202659,202613,207138,202604; Wowhead Looter occurrence table count/denominator, not observed output unit or per-cast histogram."
+    "Draconium Ore 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic Ore 194545: no new rank-specific measured per-completed-prospect material zero/1/2 histogram with Resourcefulness-aware denominator",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466 and Hochenblume milling: no new independent current-patch 0/1/2 pigment outcomes or skill/refund-aware completed-mill cast denominators",
+    "Seven separate Dragonflight base gear item IDs 200388/200389/200391/200326/200382/200387/200380 have source cumulative Looter occurrence rows but no raw operation event ledger, source-player ranks/skill/build, exact per-material total units or stack histograms"
   ],
   "newly_verified_fields": [
-    "One live item-side original Wowhead Looter table: 200328 disenchanted 161 times, Resonant Crystal 200113 96 out of 161 (60%), Vibrant Shard 194124 92 out of 161 (57%).",
-    "Eight source-original Wowhead material-side 'Disenchanted from' Looter table rows: exact gear base input ID, 200113 output ID, site-reported denominator, material occurrence counter and displayed percentage. Source provenance is material-side, not individually read item-side disenchant event ledger.",
-    "No cast-by-cast material hits, total unit quantities, zero-output outcomes, stack distribution, gear rank/bonus, source epoch, skill, specialization or Resourcefulness independently verified. castsWithDrop, histogram and totalQuantity intentionally null."
+    "Seven distinct source-original Wowhead item-side Looter base-item disenchant denominators with 14 output-material occurrence numerators and 14 original displayed percentages (identity: 194124 Vibrant Shard, 200113 Resonant Crystal)",
+    "Original site renderings: 5 live pages and 2 12.1.7 PTR pages; PTR cannot establish live eligibility. Source percentages are of unclear event semantics, not independently observed P(hit).",
+    "All source denominator/hit/percentage pairs retained as unnormalized reported facts, with castsWithDrop, material output units, zero counts, histogram, skill/spec, collected-date and sample patch left null."
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-item-200328-cumulative",
-      "inputItemID": 200328,
-      "inputName": "Draconic Hierophant's Britches",
-      "reportedDenominator": 161,
-      "source": "https://www.wowhead.com/item=200328/draconic-hierophants-britches",
-      "sourceRendering": "item-side live",
+      "studyKey": "wowhead-looter-item-200388-cumulative",
+      "inputItemID": 200388,
+      "inputName": "Stormwing Harrier's Sabatons",
+      "source": "https://www.wowhead.com/item=200388/stormwing-harriers-sabatons",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 39,
       "outputs": [
         {
           "outputItemID": 200113,
-          "sourceOccurrences": 96,
-          "percentShown": 60
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 26,
+          "percentShown": 67
         },
         {
           "outputItemID": 194124,
-          "sourceOccurrences": 92,
-          "percentShown": 57
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 17,
+          "percentShown": 44
         }
       ],
       "independentlyMeasuredHits": false
     },
     {
-      "studyKey": "wowhead-looter-item-207135-cumulative",
-      "inputItemID": 207135,
-      "inputName": "Eternal Sentinel's Cord",
-      "reportedDenominator": 79,
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
-      "sourceRendering": "material-side live",
+      "studyKey": "wowhead-looter-item-200389-cumulative",
+      "inputItemID": 200389,
+      "inputName": "Stormwing Harrier's Handguards",
+      "source": "https://www.wowhead.com/ptr/item=200389/stormwing-harriers-handguards",
+      "sourceRendering": "12.1.7 PTR",
+      "sourceReportedDisenchants": 59,
       "outputs": [
         {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 36,
+          "percentShown": 61
+        },
+        {
           "outputItemID": 200113,
-          "sourceOccurrences": 59,
-          "percentShown": 75
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 33,
+          "percentShown": 56
         }
       ],
       "independentlyMeasuredHits": false
     },
     {
-      "studyKey": "wowhead-looter-item-204424-cumulative",
-      "inputItemID": 204424,
-      "inputName": "Crechebound Soldier's Boots",
-      "reportedDenominator": 86,
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
-      "sourceRendering": "material-side live",
+      "studyKey": "wowhead-looter-item-200391-cumulative",
+      "inputItemID": 200391,
+      "inputName": "Stormwing Harrier's Greaves",
+      "source": "https://www.wowhead.com/item=200391/stormwing-harriers-greaves",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 67,
       "outputs": [
         {
           "outputItemID": 200113,
-          "sourceOccurrences": 59,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 45,
+          "percentShown": 67
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 31,
+          "percentShown": 46
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-200326-cumulative",
+      "inputItemID": 200326,
+      "inputName": "Draconic Hierophant's Grips",
+      "source": "https://www.wowhead.com/item=200326/draconic-hierophants-grips",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 162,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 100,
+          "percentShown": 62
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 90,
+          "percentShown": 56
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-200382-cumulative",
+      "inputItemID": 200382,
+      "inputName": "Legguards of the Awakened",
+      "source": "https://www.wowhead.com/ptr/item=200382/legguards-of-the-awakened",
+      "sourceRendering": "12.1.7 PTR",
+      "sourceReportedDisenchants": 36,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 22,
+          "percentShown": 61
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 19,
+          "percentShown": 53
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-200387-cumulative",
+      "inputItemID": 200387,
+      "inputName": "Stormwing Harrier's Cuirass",
+      "source": "https://www.wowhead.com/item=200387/stormwing-harriers-cuirass",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 61,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 42,
           "percentShown": 69
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 27,
+          "percentShown": 44
         }
       ],
       "independentlyMeasuredHits": false
     },
     {
-      "studyKey": "wowhead-looter-item-202592-cumulative",
-      "inputItemID": 202592,
-      "inputName": "Unyielding Goliath's Burgonet",
-      "reportedDenominator": 77,
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
-      "sourceRendering": "material-side live",
+      "studyKey": "wowhead-looter-item-200380-cumulative",
+      "inputItemID": 200380,
+      "inputName": "Gauntlets of the Awakened",
+      "source": "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 35,
       "outputs": [
         {
           "outputItemID": 200113,
-          "sourceOccurrences": 52,
-          "percentShown": 68
-        }
-      ],
-      "independentlyMeasuredHits": false
-    },
-    {
-      "studyKey": "wowhead-looter-item-207155-cumulative",
-      "inputItemID": 207155,
-      "inputName": "Eldermoss Gauntlets",
-      "reportedDenominator": 83,
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
-      "sourceRendering": "material-side live",
-      "outputs": [
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 26,
+          "percentShown": 74
+        },
         {
-          "outputItemID": 200113,
-          "sourceOccurrences": 56,
-          "percentShown": 67
-        }
-      ],
-      "independentlyMeasuredHits": false
-    },
-    {
-      "studyKey": "wowhead-looter-item-202659-cumulative",
-      "inputItemID": 202659,
-      "inputName": "Shackles of the Shadowed Bastille",
-      "reportedDenominator": 84,
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
-      "sourceRendering": "material-side live",
-      "outputs": [
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 56,
-          "percentShown": 67
-        }
-      ],
-      "independentlyMeasuredHits": false
-    },
-    {
-      "studyKey": "wowhead-looter-item-202613-cumulative",
-      "inputItemID": 202613,
-      "inputName": "Zaqali Chaos Grapnel",
-      "reportedDenominator": 82,
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
-      "sourceRendering": "material-side live",
-      "outputs": [
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 55,
-          "percentShown": 67
-        }
-      ],
-      "independentlyMeasuredHits": false
-    },
-    {
-      "studyKey": "wowhead-looter-item-207138-cumulative",
-      "inputItemID": 207138,
-      "inputName": "Aerwynn's Ritual Sarong",
-      "reportedDenominator": 80,
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
-      "sourceRendering": "material-side live",
-      "outputs": [
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 53,
-          "percentShown": 66
-        }
-      ],
-      "independentlyMeasuredHits": false
-    },
-    {
-      "studyKey": "wowhead-looter-item-202604-cumulative",
-      "inputItemID": 202604,
-      "inputName": "Boulder-Tossing Bands",
-      "reportedDenominator": 100,
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal",
-      "sourceRendering": "material-side live",
-      "outputs": [
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 65,
-          "percentShown": 65
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 19,
+          "percentShown": 54
         }
       ],
       "independentlyMeasuredHits": false
@@ -176,126 +188,185 @@
   ],
   "new_numerical_measurements": [
     {
-      "inputItemID": 200328,
+      "inputItemID": 200388,
       "outputItemID": 200113,
-      "casts": 161,
-      "sourceReportedOccurrences": 96,
+      "sourceReportedDisenchants": 39,
+      "sourceReportedOccurrences": 26,
+      "percentShown": 67,
+      "percentMeaning": "unclear",
       "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 60,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200328/draconic-hierophants-britches"
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200388/stormwing-harriers-sabatons"
     },
     {
-      "inputItemID": 200328,
+      "inputItemID": 200388,
       "outputItemID": 194124,
-      "casts": 161,
-      "sourceReportedOccurrences": 92,
+      "sourceReportedDisenchants": 39,
+      "sourceReportedOccurrences": 17,
+      "percentShown": 44,
+      "percentMeaning": "unclear",
       "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 57,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200328/draconic-hierophants-britches"
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200388/stormwing-harriers-sabatons"
     },
     {
-      "inputItemID": 207135,
-      "outputItemID": 200113,
-      "casts": 79,
-      "sourceReportedOccurrences": 59,
+      "inputItemID": 200389,
+      "outputItemID": 194124,
+      "sourceReportedDisenchants": 59,
+      "sourceReportedOccurrences": 36,
+      "percentShown": 61,
+      "percentMeaning": "unclear",
       "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 75,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+      "histogram": null,
+      "source": "https://www.wowhead.com/ptr/item=200389/stormwing-harriers-handguards"
     },
     {
-      "inputItemID": 204424,
+      "inputItemID": 200389,
       "outputItemID": 200113,
-      "casts": 86,
-      "sourceReportedOccurrences": 59,
+      "sourceReportedDisenchants": 59,
+      "sourceReportedOccurrences": 33,
+      "percentShown": 56,
+      "percentMeaning": "unclear",
       "castsWithDrop": null,
       "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/ptr/item=200389/stormwing-harriers-handguards"
+    },
+    {
+      "inputItemID": 200391,
+      "outputItemID": 200113,
+      "sourceReportedDisenchants": 67,
+      "sourceReportedOccurrences": 45,
+      "percentShown": 67,
+      "percentMeaning": "unclear",
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200391/stormwing-harriers-greaves"
+    },
+    {
+      "inputItemID": 200391,
+      "outputItemID": 194124,
+      "sourceReportedDisenchants": 67,
+      "sourceReportedOccurrences": 31,
+      "percentShown": 46,
+      "percentMeaning": "unclear",
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200391/stormwing-harriers-greaves"
+    },
+    {
+      "inputItemID": 200326,
+      "outputItemID": 194124,
+      "sourceReportedDisenchants": 162,
+      "sourceReportedOccurrences": 100,
+      "percentShown": 62,
+      "percentMeaning": "unclear",
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200326/draconic-hierophants-grips"
+    },
+    {
+      "inputItemID": 200326,
+      "outputItemID": 200113,
+      "sourceReportedDisenchants": 162,
+      "sourceReportedOccurrences": 90,
+      "percentShown": 56,
+      "percentMeaning": "unclear",
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200326/draconic-hierophants-grips"
+    },
+    {
+      "inputItemID": 200382,
+      "outputItemID": 194124,
+      "sourceReportedDisenchants": 36,
+      "sourceReportedOccurrences": 22,
+      "percentShown": 61,
+      "percentMeaning": "unclear",
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/ptr/item=200382/legguards-of-the-awakened"
+    },
+    {
+      "inputItemID": 200382,
+      "outputItemID": 200113,
+      "sourceReportedDisenchants": 36,
+      "sourceReportedOccurrences": 19,
+      "percentShown": 53,
+      "percentMeaning": "unclear",
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/ptr/item=200382/legguards-of-the-awakened"
+    },
+    {
+      "inputItemID": 200387,
+      "outputItemID": 194124,
+      "sourceReportedDisenchants": 61,
+      "sourceReportedOccurrences": 42,
       "percentShown": 69,
       "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
-    },
-    {
-      "inputItemID": 202592,
-      "outputItemID": 200113,
-      "casts": 77,
-      "sourceReportedOccurrences": 52,
       "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 68,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200387/stormwing-harriers-cuirass"
     },
     {
-      "inputItemID": 207155,
+      "inputItemID": 200387,
       "outputItemID": 200113,
-      "casts": 83,
-      "sourceReportedOccurrences": 56,
+      "sourceReportedDisenchants": 61,
+      "sourceReportedOccurrences": 27,
+      "percentShown": 44,
+      "percentMeaning": "unclear",
       "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 67,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200387/stormwing-harriers-cuirass"
     },
     {
-      "inputItemID": 202659,
+      "inputItemID": 200380,
       "outputItemID": 200113,
-      "casts": 84,
-      "sourceReportedOccurrences": 56,
+      "sourceReportedDisenchants": 35,
+      "sourceReportedOccurrences": 26,
+      "percentShown": 74,
+      "percentMeaning": "unclear",
       "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 67,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened"
     },
     {
-      "inputItemID": 202613,
-      "outputItemID": 200113,
-      "casts": 82,
-      "sourceReportedOccurrences": 55,
+      "inputItemID": 200380,
+      "outputItemID": 194124,
+      "sourceReportedDisenchants": 35,
+      "sourceReportedOccurrences": 19,
+      "percentShown": 54,
+      "percentMeaning": "unclear",
       "castsWithDrop": null,
       "totalQuantity": null,
-      "percentShown": 67,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
-    },
-    {
-      "inputItemID": 207138,
-      "outputItemID": 200113,
-      "casts": 80,
-      "sourceReportedOccurrences": 53,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "percentShown": 66,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
-    },
-    {
-      "inputItemID": 202604,
-      "outputItemID": 200113,
-      "casts": 100,
-      "sourceReportedOccurrences": 65,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "percentShown": 65,
-      "percentMeaning": "unclear",
-      "source": "https://www.wowhead.com/item=200113/resonant-crystal"
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened"
     }
   ],
   "numerical_fields_improved": [
-    "Nine distinct original source Looter base-item denominators and ten material-specific source occurrences/percentages preserved as reported, without converting occurrence to measured per-completed-cast hit chance.",
-    "200328 material occurrences 96+92 exceed 161 operations; multi-output co-occurrence possible; no fabricated zeros or mutually exclusive probabilities."
+    "Seven previously unindexed gear-specific source denominators, 14 original material occurrence counts and reported percentages, covering 459 source-reported base-item disenchants (not distinct independently verified completed-operation ledgers).",
+    "No new per-cast measured probabilities, output total units or histograms; 14 cumulative rows are provisional weak evidence, not reliable active tooltip baselines."
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-10T1034-new-sites-no-original-event-log.jsonl",
     "research/v3/evidence/dragonflight/2026-11-10T1137-writhebark-post-df-zero-crystal.jsonl",
     "research/v3/evidence/dragonflight/2026-11-10T1242-eight-new-item-looter-hits.jsonl",
     "research/v3/evidence/dragonflight/2026-11-12T1635-five-unindexed-gear-looter-cohorts.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-13T0136-original-looter-and-priority-numeric-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-13T0136-original-looter-and-priority-numeric-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-13T0236-seven-unique-gear-looter-cohorts.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385",
@@ -326,14 +397,22 @@
     "https://www.wowhead.com/item=194124",
     "https://www.wowhead.com/item=200113",
     "https://www.wowhead.com/item=200328/draconic-hierophants-britches",
-    "https://www.wowhead.com/item=200113/resonant-crystal"
+    "https://www.wowhead.com/item=200113/resonant-crystal",
+    "https://www.wowhead.com/item=200388/stormwing-harriers-sabatons",
+    "https://www.wowhead.com/ptr/item=200389/stormwing-harriers-handguards",
+    "https://www.wowhead.com/item=200391/stormwing-harriers-greaves",
+    "https://www.wowhead.com/item=200326/draconic-hierophants-grips",
+    "https://www.wowhead.com/ptr/item=200382/legguards-of-the-awakened",
+    "https://www.wowhead.com/item=200387/stormwing-harriers-cuirass",
+    "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened"
   ],
-  "verified_commit_sha": "f8f8ea32b9ba73aa5d9ad53b0d3708ab18f97cd3",
-  "commit_sha_scope": "Verified parent research branch HEAD immediately before this atomic evidence/status commit; a committed JSON file cannot self-reference its own commit SHA without changing that SHA. New commit to be validated by a post-write readback.",
+  "verified_commit_sha": "01fd4c5cc1cea6c19d318d21e4a622f94304b085",
+  "commit_sha_scope": "Verified evidence commit SHA (first of two serial GitHub contents writes). Because the connected GitHub app does not expose a base Git tree object, an atomic two-file commit could not be made; the second commit updates only this status JSON. Readback checks both paths and preserves concurrent work.",
   "blockers": [
-    "No newly discovered source-original Dragonflight prospecting or milling per-completed-operation 0/1/2 per-output histograms. Only previously captured historical original source families appeared across 6+ named searches on three+ domains.",
-    "New Wowhead Looter site numerators are cumulative material occurrences; castsWithDrop cannot be independently determined from site counter semantics, and exact output total units, rank, patch, bonus/skill/spec and zero-outcome counts remain null.",
-    "Eight new gear rows originate from the material-side 'Disenchanted from' index; site did not show matching per-item Looter tables during individual lookups. Treat as weak source-side historical evidence, not validated current game probabilities."
+    "No new independent source-original Dragonflight prospecting or milling completed-cast event histograms by ore/herb and output ID; previously exhausted famous Reddit/Wowhead sources not reimported.",
+    "Wowhead Looter material occurrence numerator semantics and per-cast event identity remain unverified; sums of material rows can exceed gear disenchant denominator, and material unit totals, per-hit stack sizes and material-zero counts unknown.",
+    "Two new source index pages (200389 and 200382) were rendered as 12.1.7 PTR; game build/time and disenchant-time gear quality, item bonus and enchanting skill unspecified. Do not treat as current live or measured per-cast outcomes.",
+    "Research-only weak site cumulative evidence; request source event logs before downstream promotion."
   ],
   "exhausted_sources": [
     {
@@ -985,163 +1064,208 @@
         "wowhead.com/item=200113/resonant-crystal: source-original material-index Looter 'Disenchanted from' numeric table, only cumulative gear occurrences rather than prospect/mill histograms.",
         "wowhead.com/item=200328/draconic-hierophants-britches: item-side 161 disenchant Looter observations with two material-specific occurrence counts, no individual operation ledger."
       ]
+    },
+    {
+      "at": "2026-11-13T02:36:58.201Z",
+      "scope": "New original rank-aware Dragonflight prospect/mill per-material completed-cast histograms; pivot after known original-source dedupe",
+      "reason": "Named source searches repeated already indexed originals (Bugy/Xenastro/Jallfo/TheChisel/superbondez) or found no per-cast source event ledger. Seven separate unindexed original item-side Looter gear cohorts were recorded, preserving uncertainty.",
+      "whereLooked": [
+        "Reddit r/woweconomy: named Draconium, Serevite, Khaz'gorite and Prismatic original prospect outcomes; historical original studies already in research evidence",
+        "Wowhead: Dragon Isles Prospecting/Prismatic Ore and name-specific Bubble Poppy, Saxifrage, Hochenblume item comments; no new source per-cast event histograms; historical studies deduplicated",
+        "Blizzard US WoW forums: named ore quality and herb milling output logs/Refunds; no new original histograms with completed casts",
+        "wow-professions.com, Warcraft Wiki and guides for Dragon Isles prospect/mill recipe/mechanics only, not measured cast log",
+        "GitHub existing research/v3/evidence/dragonflight and status by exact input IDs: seven target gear base IDs not in prior Dragonflight drop records, names from original Wowhead item pages"
+      ]
     }
   ],
-  "next_concrete_step": "Locate an original per-operation Dragonflight ore or herb event ledger with rank, actual consumed/completed casts, output-specific hit/zero/stack counts and Resourcefulness refunds; independently audit material-index Looter numerator semantics before using as P(hit); avoid cumulative snapshot double counting.",
+  "next_concrete_step": "Find source-original Dragonflight rank-aware completed-cast event ledger or addon export by name, including resourcefulness refunds, zero/positive per-material histograms, exact gem/pigment IDs and quality, skill/spec/build. For the seven new Looter cohorts verify numerator/denominator/stack semantics and gear-version at each operation, and exclude PTR from live estimates until checked.",
   "validation": {
     "evidence_jsonl_valid": true,
-    "evidence_record_count": 13,
-    "numeric_records": 12,
-    "unique_gear_inputs": 5,
-    "source_reported_gear_disenchants": 260,
+    "evidence_record_count": 14,
+    "numeric_records": 14,
+    "unique_gear_inputs": 7,
+    "source_reported_gear_disenchants": 459,
     "original_ore_mill_histograms_found": 0,
-    "evidence_searched_minimum_met": true,
-    "search_checks": 9,
+    "evidence_search_priority_followed": true,
     "source_site_count": 5,
-    "checked_item_in_prior_default_index_and_recent_branch_files": true,
-    "precommit_paths": [
-      "research/v3/evidence/dragonflight/2026-11-12T1635-five-unindexed-gear-looter-cohorts.jsonl",
-      "research/coordination/quiet-status/dragonflight.json"
-    ],
+    "unique_exact_item_input_output_pairs": true,
+    "source_reported_occurrence_only": true,
+    "percentages_preserved": true,
+    "provisional_only": true,
     "id_unique": true,
-    "preserved_source_percentages": true,
-    "provisional_only": true
+    "expected_paths": [
+      "research/v3/evidence/dragonflight/2026-11-13T0236-seven-unique-gear-looter-cohorts.jsonl",
+      "research/coordination/quiet-status/dragonflight.json"
+    ]
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "7db84b10d3bab84f34d2c01b2c0a79e43d0da43c",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-12T1635-five-unindexed-gear-looter-cohorts.jsonl",
-  "current_run_commit_sha": null,
+  "verified_parent_sha": "be61fdf07d482c1534a2d2ee9a637782fac4656f",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T0236-seven-unique-gear-looter-cohorts.jsonl",
+  "current_run_commit_sha": "01fd4c5cc1cea6c19d318d21e4a622f94304b085",
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-looter-item-200272-cumulative",
-      "inputItemID": 200272,
-      "inputName": "Keratin-Reinforced Boots",
-      "source": "https://www.wowhead.com/item=200272/keratin-reinforced-boots",
+      "studyKey": "wowhead-looter-item-200388-cumulative",
+      "inputItemID": 200388,
+      "inputName": "Stormwing Harrier's Sabatons",
+      "source": "https://www.wowhead.com/item=200388/stormwing-harriers-sabatons",
       "sourceRendering": "live",
-      "sourceReportedDisenchants": 63,
+      "sourceReportedDisenchants": 39,
       "outputs": [
         {
-          "outputItemID": 194123,
-          "sourceOccurrences": 59,
-          "percentShown": 94
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 26,
+          "percentShown": 67
         },
         {
           "outputItemID": 194124,
-          "sourceOccurrences": 4,
-          "percentShown": 6
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 17,
+          "percentShown": 44
         }
-      ]
+      ],
+      "independentlyMeasuredHits": false
     },
     {
-      "studyKey": "wowhead-looter-item-200394-cumulative",
-      "inputItemID": 200394,
-      "inputName": "Stormwing Harrier's Wristguards",
-      "source": "https://www.wowhead.com/item=200394/stormwing-harriers-wristguards",
-      "sourceRendering": "live",
-      "sourceReportedDisenchants": 26,
+      "studyKey": "wowhead-looter-item-200389-cumulative",
+      "inputItemID": 200389,
+      "inputName": "Stormwing Harrier's Handguards",
+      "source": "https://www.wowhead.com/ptr/item=200389/stormwing-harriers-handguards",
+      "sourceRendering": "12.1.7 PTR",
+      "sourceReportedDisenchants": 59,
       "outputs": [
         {
           "outputItemID": 194124,
-          "sourceOccurrences": 18,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 36,
+          "percentShown": 61
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 33,
+          "percentShown": 56
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-200391-cumulative",
+      "inputItemID": 200391,
+      "inputName": "Stormwing Harrier's Greaves",
+      "source": "https://www.wowhead.com/item=200391/stormwing-harriers-greaves",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 67,
+      "outputs": [
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 45,
+          "percentShown": 67
+        },
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 31,
+          "percentShown": 46
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-200326-cumulative",
+      "inputItemID": 200326,
+      "inputName": "Draconic Hierophant's Grips",
+      "source": "https://www.wowhead.com/item=200326/draconic-hierophants-grips",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 162,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 100,
+          "percentShown": 62
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 90,
+          "percentShown": 56
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-200382-cumulative",
+      "inputItemID": 200382,
+      "inputName": "Legguards of the Awakened",
+      "source": "https://www.wowhead.com/ptr/item=200382/legguards-of-the-awakened",
+      "sourceRendering": "12.1.7 PTR",
+      "sourceReportedDisenchants": 36,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 22,
+          "percentShown": 61
+        },
+        {
+          "outputItemID": 200113,
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 19,
+          "percentShown": 53
+        }
+      ],
+      "independentlyMeasuredHits": false
+    },
+    {
+      "studyKey": "wowhead-looter-item-200387-cumulative",
+      "inputItemID": 200387,
+      "inputName": "Stormwing Harrier's Cuirass",
+      "source": "https://www.wowhead.com/item=200387/stormwing-harriers-cuirass",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 61,
+      "outputs": [
+        {
+          "outputItemID": 194124,
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 42,
           "percentShown": 69
         },
         {
           "outputItemID": 200113,
-          "sourceOccurrences": 13,
-          "percentShown": 50
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 27,
+          "percentShown": 44
         }
-      ]
+      ],
+      "independentlyMeasuredHits": false
     },
     {
-      "studyKey": "wowhead-looter-item-200386-cumulative",
-      "inputItemID": 200386,
-      "inputName": "Shroud of the Awakened",
-      "source": "https://www.wowhead.com/ptr/item=200386/shroud-of-the-awakened",
-      "sourceRendering": "PTR",
-      "sourceReportedDisenchants": 17,
+      "studyKey": "wowhead-looter-item-200380-cumulative",
+      "inputItemID": 200380,
+      "inputName": "Gauntlets of the Awakened",
+      "source": "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened",
+      "sourceRendering": "live",
+      "sourceReportedDisenchants": 35,
       "outputs": [
         {
           "outputItemID": 200113,
-          "sourceOccurrences": 11,
-          "percentShown": 65
+          "outputName": "Resonant Crystal",
+          "sourceOccurrences": 26,
+          "percentShown": 74
         },
         {
           "outputItemID": 194124,
-          "sourceOccurrences": 7,
-          "percentShown": 41
+          "outputName": "Vibrant Shard",
+          "sourceOccurrences": 19,
+          "percentShown": 54
         }
-      ]
-    },
-    {
-      "studyKey": "wowhead-looter-item-194389-cumulative",
-      "inputItemID": 194389,
-      "inputName": "Brush-Clearing Axe",
-      "source": "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "sourceRendering": "PTR",
-      "sourceReportedDisenchants": 77,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "sourceOccurrences": 69,
-          "percentShown": 90
-        },
-        {
-          "outputItemID": 194124,
-          "sourceOccurrences": 7,
-          "percentShown": 9
-        },
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 1,
-          "percentShown": 1.3
-        }
-      ]
-    },
-    {
-      "studyKey": "wowhead-looter-item-194406-cumulative",
-      "inputItemID": 194406,
-      "inputName": "Stingerproof Helmet",
-      "source": "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet",
-      "sourceRendering": "PTR",
-      "sourceReportedDisenchants": 77,
-      "outputs": [
-        {
-          "outputItemID": 194123,
-          "sourceOccurrences": 66,
-          "percentShown": 86
-        },
-        {
-          "outputItemID": 194124,
-          "sourceOccurrences": 11,
-          "percentShown": 14
-        },
-        {
-          "outputItemID": 200113,
-          "sourceOccurrences": 1,
-          "percentShown": 1.3
-        }
-      ]
+      ],
+      "independentlyMeasuredHits": false
     }
   ],
-  "last_source_search": {
-    "performed_at": "2026-11-13T00:37:03.944Z",
-    "priority_source_findings": "No novel completed-cast prospect/mill material histogram; five previously unrepresented original Looter item-side occurrence tables were found, not actual per-player cast-ledger data.",
-    "source_sites": [
-      "reddit.com",
-      "wowhead.com",
-      "warcraft.wiki.gg",
-      "us.forums.blizzard.com",
-      "github.com"
-    ],
-    "new_source_urls": [
-      "https://www.wowhead.com/item=200272/keratin-reinforced-boots",
-      "https://www.wowhead.com/item=200394/stormwing-harriers-wristguards",
-      "https://www.wowhead.com/ptr/item=200386/shroud-of-the-awakened",
-      "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet"
-    ],
-    "source_lookups": 9
-  }
+  "last_source_search": "2026-11-13T02:36:58.201Z"
 }
