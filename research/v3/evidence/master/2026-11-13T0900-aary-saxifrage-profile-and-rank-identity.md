@@ -1,6 +1,6 @@
 # Dragonflight Saxifrage — original Aary profile fields, rank identities and source cohorts
 
-Reviewed UTC: 2026-11-13 09:00–09:12 UTC  
+Reviewed UTC: 2026-11-13 09:00–09:06 UTC  
 Task: `COORD-DF-SAXIFRAGE-AARY-PROFILE-RANK-20261113`  
 Scope: research-only original-source/context audit; no new observed casts, duplicate study, import, Lua/test, or supported gold valuation.
 
