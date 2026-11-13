@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T02:51:39.052Z",
-  "status": "Added eight first-person historical WotLK milling output records from five distinct batches, including exactly 56 explicitly reported completed mills and two material totals from 3760 herb inputs. Exact Warmaul 24995, Cobalt 36909, Fel Iron 23424 and Titanium 36910 per-output completed-cast/zero histograms remain unresolved; no reference priors promoted to measured. No production, queue, other worker, PR, CI or schedules changed.",
+  "updated_at": "2026-11-13T03:49:34.547Z",
+  "status": "One newly recovered, firsthand October 2008 WotLK prelaunch PTR study: 10 distinct exact input/output quantity records across five Outland herbs, totaling 530 input herbs and 342 output pigments. All completed-mill counts, per-output hits, zeros and histograms unknown. Warmaul 24995, Cobalt 36909 and Fel Iron 23424 search gaps remain unresolved. Other workers, shared queue/dashboard, production, PRs, CI and schedules untouched.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,126 +12,159 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 (T0047) and same TBC rarity/ilvl DE groups: no newly independently logged completed disenchants, all-output per-cast histograms, actual item/build/skill and current Retail eligibility.",
-    "Cobalt Ore 36909 (T0022), Fel Iron Ore 23424 (T0044), Titanium Ore 36910 (T0021): no new independently completed prospecting logs with per-output positive hits, zeros, quantities and refund provenance.",
-    "Legacy milling standing task (T0042): recover original author quantitative Adder's Tongue 36903, Deadnettle 37921, Tiger Lily 36904 input/output units and distinguish explicitly counted operations from herb/stack-derived equivalents."
+    "T0047 Warmaul Legplates 24995 / TBC armor-weapon group: original item-specific current game disenchant logs, 0-N materials 22445/22446/22447/22449, per-cast completed operations, actual build/item level, eligibility, skill and bonuses still unknown; historical Looter snapshot retained separately.",
+    "T0022 Cobalt Ore 36909 and T0044 Fel Iron Ore 23424: new independent actual completed prospects, 0-N per-gem outcomes and refund logs still not sourced; existing historical ore/stack totals must remain separate.",
+    "T0042 legacy milling standing task: new original test-realm Outland herb study reports input quantities and both pigment totals for Felweed 22785, Ragveil 22787, Ancient Lichen 22790, Netherbloom 22791, Nightmare Vine 22792, but no completed operations or zero-inclusive histograms."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-icy-azurefireice-adder-3760-input-herbs",
-      "inputItemID": 36903,
-      "reportedInputHerbs": 3760,
+      "studyKey": "kaliope-20081009-wotlk-ptr-outland-five-herbs",
+      "inputItemID": 22785,
+      "inputName": "Felweed",
+      "sourceInputHerbs": 170,
       "outputQuantities": {
-        "39343": 1136,
-        "43109": 213
+        "39342": 81,
+        "43108": 11
       },
+      "sourcePerHerbQuantityPercentages": {
+        "39342": 47.6,
+        "43108": 6.5
+      },
+      "sourceHerbalismGatheringThreshold": 300,
       "reportedCompletedCasts": null,
-      "nominalFiveHerbEquivalents": 752,
       "castsWithDrop": null,
       "zeros": null,
       "histogram": null,
-      "source": "https://www.wowhead.com/cata/cn/item=43109",
-      "newOriginalCohort": true
+      "sourceKind": "original-first-person-ptr-study",
+      "dataEpoch": "WotLK pre-release PTR October 2008, build unknown",
+      "source": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
     },
     {
-      "studyKey": "wowhead-icy-85618-deadnettle-24mills",
-      "inputItemID": 37921,
-      "reportedInputHerbs": 120,
-      "reportedCompletedCasts": 24,
-      "skill": "420 Inscription",
+      "studyKey": "kaliope-20081009-wotlk-ptr-outland-five-herbs",
+      "inputItemID": 22787,
+      "inputName": "Ragveil",
+      "sourceInputHerbs": 60,
       "outputQuantities": {
-        "43109": 3
+        "39342": 32,
+        "43108": 6
       },
-      "castsWithDrop": null,
-      "zeros": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/cata/cn/item=43109",
-      "newOriginalCohort": true
-    },
-    {
-      "studyKey": "wowhead-milling-nightflame-eight-unspecified-stacks",
-      "inputItemID": null,
-      "inputName": "Unspecified lower-level Northrend herbs",
-      "reportedStacks": 8,
+      "sourcePerHerbQuantityPercentages": {
+        "39342": 53,
+        "43108": 10
+      },
+      "sourceHerbalismGatheringThreshold": 325,
       "reportedCompletedCasts": null,
-      "outputQuantities": {
-        "39343": 80,
-        "43109": 10
-      },
       "castsWithDrop": null,
       "zeros": null,
       "histogram": null,
-      "source": "https://www.wowhead.com/wotlk/ru/spell=51005",
-      "newOriginalCohort": true
+      "sourceKind": "original-first-person-ptr-study",
+      "dataEpoch": "WotLK pre-release PTR October 2008, build unknown",
+      "source": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
     },
     {
-      "studyKey": "wowhead-milling-nightflame-four-adder-stacks-update",
-      "inputItemID": 36903,
-      "reportedStacks": 4,
+      "studyKey": "kaliope-20081009-wotlk-ptr-outland-five-herbs",
+      "inputItemID": 22790,
+      "inputName": "Ancient Lichen",
+      "sourceInputHerbs": 120,
+      "outputQuantities": {
+        "39342": 72,
+        "43108": 14
+      },
+      "sourcePerHerbQuantityPercentages": {
+        "39342": 60,
+        "43108": 11.6
+      },
+      "sourceHerbalismGatheringThreshold": 340,
       "reportedCompletedCasts": null,
-      "outputQuantities": {
-        "39343": 52,
-        "43109": 11
-      },
       "castsWithDrop": null,
       "zeros": null,
       "histogram": null,
-      "source": "https://www.wowhead.com/wotlk/ru/spell=51005",
-      "newOriginalCohort": true
+      "sourceKind": "original-first-person-ptr-study",
+      "dataEpoch": "WotLK pre-release PTR October 2008, build unknown",
+      "source": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
     },
     {
-      "studyKey": "wowhead-milling-352479-tigerlily-32mills",
-      "inputItemID": 36904,
-      "reportedStacks": 8,
-      "reportedCompletedCasts": 32,
+      "studyKey": "kaliope-20081009-wotlk-ptr-outland-five-herbs",
+      "inputItemID": 22791,
+      "inputName": "Netherbloom",
+      "sourceInputHerbs": 80,
       "outputQuantities": {
-        "43109": 3
+        "39342": 44,
+        "43108": 12
       },
+      "sourcePerHerbQuantityPercentages": {
+        "39342": 55,
+        "43108": 15
+      },
+      "sourceHerbalismGatheringThreshold": 350,
+      "reportedCompletedCasts": null,
       "castsWithDrop": null,
       "zeros": null,
       "histogram": null,
-      "source": "https://www.wowhead.com/wotlk/ru/spell=51005",
-      "newOriginalCohort": true
+      "sourceKind": "original-first-person-ptr-study",
+      "dataEpoch": "WotLK pre-release PTR October 2008, build unknown",
+      "source": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
+    },
+    {
+      "studyKey": "kaliope-20081009-wotlk-ptr-outland-five-herbs",
+      "inputItemID": 22792,
+      "inputName": "Nightmare Vine",
+      "sourceInputHerbs": 100,
+      "outputQuantities": {
+        "39342": 56,
+        "43108": 14
+      },
+      "sourcePerHerbQuantityPercentages": {
+        "39342": 56,
+        "43108": 14
+      },
+      "sourceHerbalismGatheringThreshold": 365,
+      "reportedCompletedCasts": null,
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "sourceKind": "original-first-person-ptr-study",
+      "dataEpoch": "WotLK pre-release PTR October 2008, build unknown",
+      "source": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/"
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 8,
-    "new_original_independent_cohorts": 5,
-    "new_exact_input_output_quantity_records": 6,
-    "new_exact_input_output_material_units": 1418,
-    "new_unresolved_input_output_quantity_records": 2,
-    "new_unresolved_input_material_units": 90,
-    "new_total_reported_material_units": 1508,
-    "new_explicitly_reported_completed_mills": 56,
+    "new_evidence_records": 10,
+    "new_original_independent_cohorts": 1,
+    "new_input_herb_batches": 5,
+    "new_input_herb_units": 530,
+    "new_exact_input_output_quantity_records": 10,
+    "new_exact_input_output_material_units": 342,
+    "new_nether_pigment_39342_units": 285,
+    "new_ebon_pigment_43108_units": 57,
+    "new_explicit_completed_mills": 0,
     "new_completed_disenchant_casts": 0,
     "new_completed_prospect_casts": 0,
     "new_castsWithDrop": 0,
     "new_zero_inclusive_histograms": 0,
     "new_gold_values": 0,
-    "nominal_counts_excluded": "3760 herbs/5=752 prospective equivalents and 4/8 stack estimates never entered as observed casts"
+    "nominal_counts_excluded": "530 source-stated herbs / 5 = 106 theoretical milling equivalents; actual completed actions were NOT reported, so casts remains null."
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-13T0251-wotlk-firsthand-milling-quantities.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0251-wotlk-firsthand-milling-quantities.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-13T0348-kaliope-ptr-milling-primary.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0348-kaliope-ptr-milling-primary.jsonl",
   "sources": [
-    "https://www.wowhead.com/mop-classic/pt/item=52185/minerio-de-elementio",
-    "https://www.wowhead.com/cata/item=52185/elementium-ore",
-    "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/wotlk/item=36909/cobalt-ore",
-    "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-    "https://www.wowhead.com/wotlk/item=36910/titanium-ore",
-    "https://www.wowhead.com/cata/cn/item=43109",
-    "https://www.wowhead.com/wotlk/ru/spell=51005",
-    "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
-    "https://www.wowhead.com/tbc/item=23424/fel-iron-ore"
+    "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/",
+    "https://www.wowhead.com/item=22785/felweed",
+    "https://www.wowhead.com/item=22787/ragveil",
+    "https://www.wowhead.com/item=22790/ancient-lichen",
+    "https://www.wowhead.com/item=22791/netherbloom",
+    "https://www.wowhead.com/item=22792/nightmare-vine",
+    "https://www.wowhead.com/item=39342/nether-pigment",
+    "https://www.wowhead.com/item=43108/ebon-pigment"
   ],
-  "verified_base_commit_sha": "0963143820c56dce171943d4fcb84eaddc1d478a",
+  "verified_base_commit_sha": "3f7b2878b45d63f33f0aceed61accd2e80819d2a",
   "verified_commit_sha": null,
-  "commit_sha_note": "One atomic commit contains one new legacy evidence JSONL and legacy status JSON. Its own SHA cannot be embedded in the commit itself; externally verify branch head and both paths after updating.",
+  "commit_sha_note": "Atomic research commit updates only one NEW legacy JSONL file and this legacy status file. Its resulting commit SHA cannot be embedded in the same commit without changing its hash; verify branch head and both blobs after the commit.",
   "blockers": [
-    "Warmaul Legplates 24995 historic 2068-Looter occurrence table still lacks independent 0-N stack histogram, quantity sums and version/build/skill; modern WoWDB no-disenchant eligibility conflicts with historical Looter, must not transfer to live Retail without validation.",
-    "Cobalt 36909 and Fel Iron 23424 have only previously archived original sample cohorts without new source-backed per-material hit/miss/zero histograms; no corroborating current Retail casts or refund ledgers.",
-    "Fresh Azure/Icy milling source observations lack per-output castsWithDrop and zero-inclusive histograms; azurefireice 3760 is herb inputs, not 3760 completed mills; Nightflame stack counts are not completed cast counts; unspecified first 8 stacks cannot map exact herb ID.",
-    "Token 45661 reward IDs already previously archived; no new class reward variants independently verified this run."
+    "Warmaul 24995 source-specific current Retail eligibility conflicts with historic TBC Looter materials. No independently verified completed disenchants and 0-N yield histograms from an exact build/item variant.",
+    "Cobalt 36909 and Fel Iron 23424: previously archived original studies are reused/cumulative or lack per-output completed-cast hit and zero distributions. No new physical prospecting operation ledger this run.",
+    "New Kaliope PTR original has exact 530 herb input and 342 material-unit totals, not verified 106 completed mills. Item-level and Inscription skill, exact PTR build, refunds, per-output positive hits and zeros all absent.",
+    "Author dated test Tuesday October 7, 2008 only approximately; pre-release PTR rate evidence must not be promoted to current Retail probabilities."
   ],
   "exhausted_sources": [
     {
@@ -267,12 +300,22 @@
         "https://www.reddit.com/r/woweconomy/"
       ],
       "reason": "Searches returned prior archived original cohorts or guides without new independently logged physical cast counts. Elementium commenters 581155 and 745730 were deduplicated against earlier 100-equivalent source and Workher's later cumulative cohort. A new source attribution correction was possible; no recycled measurements counted as new."
+    },
+    {
+      "lookingFor": "Novel direct original Warmaul 24995/Cobalt 36909/Fel Iron 23424 per-operation physical hits and zeros beyond prior archived cohorts",
+      "whereLooked": [
+        "https://wotlk.evowow.com/?item=24995",
+        "https://www.wowhead.com/item=43109/icy-pigment",
+        "https://www.wowhead.com/wotlk/spell=31252/prospecting",
+        "https://www.wowhead.com/mop-classic/item=72092/ghost-iron-ore"
+      ],
+      "reason": "Indexed priority results repeat historical reference weights or already archived original cohorts; instead followed a novel direct 2008 source into independent five-herb output totals. Do not infer 24995 reference weights as casts or repeated Ghost Iron 1500 ore as a new cohort."
     }
   ],
-  "next_concrete_step": "Prioritize original player in-game Warmaul 24995 Retail item-instance disenchant export with all 22445/22446/22447/22449 per-cast yields, ilvl/bonus, build, skill and eligibility. For Cobalt 36909 and Fel Iron 23424 obtain new independent raw per-cast prospect logs. For historical Adder's Tongue 36903 request azurefireice's source dataset with verified operations, 0-N histograms, and version; do not assume 3760/5 real casts.",
-  "previous_status_updated_at": "2026-11-13T01:45:55.636Z",
-  "last_evidence_file": "research/v3/evidence/legacy/2026-11-13T0251-wotlk-firsthand-milling-quantities.jsonl",
-  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0251-wotlk-firsthand-milling-quantities.jsonl",
+  "next_concrete_step": "For T0047 acquire source-original Warmaul Legplates 24995 item-instance disenchant log, bonus/item level/patch, all outputs and 0-N stacks; for T0022/T0044 obtain distinct current build raw completed Cobalt 36909 and Fel Iron 23424 prospect logs. For the 2008 Kaliope prelaunch PTR cohorts seek tester raw click-level logs/refunds and exact build; if missing, preserve source totals with casts null and prelaunch separation.",
+  "previous_status_updated_at": "2026-11-13T02:51:39.052Z",
+  "last_evidence_file": "research/v3/evidence/legacy/2026-11-13T0348-kaliope-ptr-milling-primary.jsonl",
+  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0348-kaliope-ptr-milling-primary.jsonl",
   "source_reliability_findings": [
     {
       "source": "https://wowinterface.com/downloads/info9751-ProspectStats.html",
@@ -323,6 +366,26 @@
       ],
       "comparison": "existing cumulative Looter positive hits 22445=1559/2068 and 22446=417/2068; wiki reference appears reversed compared with Looter, not same sampling basis; never label reference percentages as measured",
       "newDropStudy": false
+    },
+    {
+      "source": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/",
+      "originalAuthor": "Kaliope",
+      "publication": "2008-10-09",
+      "reportedCollection": "around 2008-10-07, uncertain",
+      "environment": "prelaunch WotLK PTR",
+      "inputIDs": [
+        22785,
+        22787,
+        22790,
+        22791,
+        22792
+      ],
+      "outputIDs": [
+        39342,
+        43108
+      ],
+      "sourceMeasure": "raw herb inputs and yielded material units; source percentages per herb, not occurrence probabilities",
+      "actualCastsKnown": false
     }
   ]
 }
