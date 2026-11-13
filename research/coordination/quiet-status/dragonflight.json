@@ -1,17 +1,15 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T13:41:17.797Z",
-  "status": "new_item_side_looter_cohort_and_reference_only_material_rows_ore_mill_histograms_unresolved",
+  "updated_at": "2026-11-13T14:47:56.608Z",
+  "status": "five_new_item_side_disenchant_cohorts_ore_and_milling_zero_histograms_still_unresolved",
   "task_ids": [
     "T0020",
     "T0019",
     "T0046",
     "T0041",
     "T0018",
-    "T0015",
-    "T0017",
-    "T0016"
+    "T0015"
   ],
   "exact_gaps_targeted": [
     "Draconium Ore 189143/188658 and Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314, Prismatic Ore 194545: original item/rank-specific prospecting zero-inclusive completed-cast output histogram with resourcefulness accounting remains missing",
@@ -43,10 +41,9 @@
   "verified_commit_sha": "29f38b90688445eeb7ee79ed7fab0cca03b6b80c",
   "commit_sha_scope": "Parent branch SHA verified before one-commit publication; self-referential new SHA cannot be recorded within the same commit; validate published SHA from GitHub history.",
   "blockers": [
-    "No NEW original quality-specific 0/1/2+ prospect/mill material histograms or Resourcefulness-adjusted completed casts; known primary cohorts already represented.",
-    "200339 Looter sample snapshot lacks output stack histograms, item bonus/version, skill and sampling build; counts of different materials can overlap, not proof of zero-output operations.",
-    "Nine material-side Crystal 200113 cohorts provide exact occurrence numerator/denominator from Wowhead index only; item-side original page corroboration, full output stack totals and temporal sample identity missing; retained as reference-only.",
-    "Saxifrage input quality/ID conflict remains Master-owned T0015/T0046 metadata issue."
+    "Priority ore/herb input-output 0/1/2+ completed-cast histograms remain unresolved despite separate source searches and existing original studies; deduplicate before using any new study.",
+    "Current gear item-side Looter samples provide cumulative hit occurrence only; site PTR navigation is not a sampled patch epoch. Source page rendering can omit dynamic tables, and screenshots/source event logs, gear item bonus/build and skill/spec are missing. Do not calculate units or overall zero-operation counts.",
+    "Do not import historic item-level effects or promote current site aggregate observations to current-Midnight live rates; Master owns runtime integration and Saxifrage quality-mapping conflict."
   ],
   "exhausted_sources": [
     {
@@ -366,69 +363,182 @@
       ]
     }
   ],
-  "next_concrete_step": "Prioritize unindexed original Dragonflight ore/herb event logs or author spreadsheets with material-by-cast 0/1/2 histograms. For item 200339 obtain underlying Wowhead Looter material stack histogram and sampling bonus/build, and independently verify 9 Crystal material-side occurrence tables against their item-side sources before considering measured integration. Master alone handles shared queue and production estimator.",
+  "next_concrete_step": "Find genuinely new original Dragon Isles ore/herb per-operation logs or downloadable original spreadsheet with explicit rank, completed casts, Resourcefulness refunds, outputs/zero bins. Verify the five item-side Looter cohorts from original table HTML/event exports, build/bonus and skill before estimator integration; Master reviews shared changes.",
   "validation": {
-    "format": "12 JSONL objects parsed, all required per-type fields present, 12 unique IDs, hit counts <= casts, unknown histogram/quantity left null",
+    "format": "11 independently parsed JSONL rows; all 35 required per-type fields present; unique IDs; castsWithDrop<=casts; unknown histograms and quantities null",
     "readback": "pending publication",
-    "changed_paths": "pending publication"
+    "changed_paths": [
+      "research/v3/evidence/dragonflight/2026-11-13T1450-five-distinct-gear-looter-occurrences.jsonl",
+      "research/coordination/quiet-status/dragonflight.json"
+    ],
+    "parent_branch_sha": "7f9eb7545c011b6628a360ac5b29e07474054e66"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "29f38b90688445eeb7ee79ed7fab0cca03b6b80c",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261113T1341-looter-200339-and-material-side-crosschecks.jsonl",
+  "verified_parent_sha": "7f9eb7545c011b6628a360ac5b29e07474054e66",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T1450-five-distinct-gear-looter-occurrences.jsonl",
   "current_run_commit_sha": null,
-  "newly_verified_fields_cohorts": [],
+  "newly_verified_fields_cohorts": [
+    {
+      "inputItemID": 202508,
+      "outputItemIDs": [
+        194124,
+        200113,
+        194123
+      ],
+      "reported_item_disenchants": 14,
+      "reported_material_hits": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 7,
+          "percentShown": 50
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 5,
+          "percentShown": 36
+        },
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 2,
+          "percentShown": 14
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr-2/item=202508/footpads-of-the-vermillion-forge",
+      "confidence_note": "source-indexed cumulative Looter observations; not patch- or skill-qualified"
+    },
+    {
+      "inputItemID": 200411,
+      "outputItemIDs": [
+        194124,
+        200113
+      ],
+      "reported_item_disenchants": 17,
+      "reported_material_hits": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 11,
+          "percentShown": 65
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 10,
+          "percentShown": 59
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr/item=200411/girdle-of-the-haunted-frostbrood",
+      "confidence_note": "source-indexed cumulative Looter observations; not patch- or skill-qualified"
+    },
+    {
+      "inputItemID": 200361,
+      "outputItemIDs": [
+        194124,
+        200113
+      ],
+      "reported_item_disenchants": 20,
+      "reported_material_hits": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 12,
+          "percentShown": 60
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 10,
+          "percentShown": 50
+        }
+      ],
+      "source": "https://www.wowhead.com/ptr/item=200361/gaiters-of-the-waking-fist",
+      "confidence_note": "source-indexed cumulative Looter observations; not patch- or skill-qualified"
+    },
+    {
+      "inputItemID": 207184,
+      "outputItemIDs": [
+        194124,
+        200113
+      ],
+      "reported_item_disenchants": 11,
+      "reported_material_hits": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 7,
+          "percentShown": 64
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 6,
+          "percentShown": 55
+        }
+      ],
+      "source": "https://www.wowhead.com/item=207184/molten-vanguards-greatboots",
+      "confidence_note": "source-indexed cumulative Looter observations; not patch- or skill-qualified"
+    },
+    {
+      "inputItemID": 200375,
+      "outputItemIDs": [
+        194124,
+        200113
+      ],
+      "reported_item_disenchants": 11,
+      "reported_material_hits": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 8,
+          "percentShown": 73
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 3,
+          "percentShown": 27
+        }
+      ],
+      "source": "https://www.wowhead.com/item=200375/vault-delvers-utility-belt",
+      "confidence_note": "source-indexed cumulative Looter observations; not patch- or skill-qualified"
+    }
+  ],
   "last_source_search": "2026-11-13T13:41:17.797Z",
   "exact_gaps": [
-    "Draconium 189143 R1, 188658 R2, 190311 R3 and Serevite 190395 R1, 190396 R2, 190394 R3: no NEW original source by exact input/output rank, completed-cast counts, per-output castsWithDrop, zero bins or histogram after deduping known source studies",
-    "Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545: no new original 0/1/2+ per-cast outputs with verified rank-specific identity, skill, patch and resourcefulness refunds",
-    "Bubble Poppy 191467/191468/191469 to Serene Pigment 198412/198413/198414, Saxifrage 191464/191465/191466 to Blazing Pigment 198418/198419/198420: unverified current operation histograms, player stats, refund accounting; 2025 housing dye pigment is NOT a Dragon Isles random milling result"
+    "Draconium Ore 189143/188658/190311, Serevite Ore 190395/190396/190394, Khaz'gorite Ore 190312/190313/190314, Prismatic Ore 194545: no new independent rank-specific completed cast/output-hit/zero-bin histogram",
+    "Bubble Poppy 191467/191468/191469 and Saxifrage 191464/191465/191466: no novel resourcefulness-reconciled complete material-by-mill histograms",
+    "New gear item IDs 202508,200411,200361,207184,200375: material hit counts now indexed, but independent original sampling period, gear bonus/build, skill, total units, and 0/1/2+ histograms still unknown"
   ],
-  "evidence_record_count": 12,
-  "evidence_content_format": "JSONL; 2 original item-side drop rows sourceKind=study; 9 material-side occurrence rows sourceKind=reference; 1 searched audit",
+  "evidence_record_count": 11,
+  "evidence_content_format": "JSONL; 11 item-side occurrence rows sourceKind=study from five distinct gear input IDs; no zero-inclusive 0/1/2+ distributions",
   "current_run": {
-    "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T1231-independent-numeric-archive-triage.jsonl",
-    "record_count": 1,
-    "record_type": "searched",
-    "new_numeric_studies": 0,
+    "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T1450-five-distinct-gear-looter-occurrences.jsonl",
+    "record_count": 11,
+    "record_type": "drop",
+    "new_numeric_studies": 5,
     "original_completed_cast_histograms": 0,
     "validated_jsonl": true,
     "source_urls": [
-      "https://www.reddit.com/r/woweconomy/comments/18sd8ly",
-      "https://www.reddit.com/r/woweconomy/comments/y3e8ek",
-      "https://www.wowhead.com/item=194545/prismatic-ore",
-      "https://www.wowhead.com/item=192869/illimited-diamond",
-      "https://www.wowhead.com/item=198412/serene-pigment",
-      "https://www.wowhead.com/item=198420/blazing-pigment",
-      "https://imgur.com/gallery/carnagias-cheat-sheet-guide-wow-dragonflight-chart-milling-herbs-pigments-R0v6eYB",
-      "https://us.forums.blizzard.com/en/wow/t/saxifrage-and-blaze-pigment/2213682",
-      "https://www.wowhead.com/item=262655/red-dye-pigment",
-      "https://warcraft.wiki.gg/wiki/Draconium_Ore"
+      "https://www.wowhead.com/ptr-2/item=202508/footpads-of-the-vermillion-forge",
+      "https://www.wowhead.com/ptr/item=200411/girdle-of-the-haunted-frostbrood",
+      "https://www.wowhead.com/ptr/item=200361/gaiters-of-the-waking-fist",
+      "https://www.wowhead.com/item=207184/molten-vanguards-greatboots",
+      "https://www.wowhead.com/item=200375/vault-delvers-utility-belt"
     ],
-    "searched_sites": 6,
+    "searched_sites": 5,
     "exact_input_ids": [
-      189143,
-      188658,
-      190311,
-      190394,
-      190395,
-      190396,
-      190312,
-      190313,
-      190314,
-      194545,
-      191467,
-      191468,
-      191469,
-      191464,
-      191465,
-      191466
+      202508,
+      200411,
+      200361,
+      207184,
+      200375
     ],
-    "output_ids_improved": [],
-    "numerical_fields_improved": [],
-    "new_legacy_lead": "2023 Q2 Serevite 100k prospect/crushing mention (not measured outcome)",
-    "distinct_conversion_caution": "2025-2026 Midnight housing dye recipe using Dragonflight herbs is deterministic, not the Dragon Isles random Mill recipe"
+    "output_ids_improved": [
+      194123,
+      194124,
+      200113
+    ],
+    "numerical_fields_improved": [
+      "casts",
+      "castsWithDrop",
+      "percentShown (per item-side occurrence, source-rounded)"
+    ],
+    "validation_caveats": "Five new item-side Wowhead Looter cumulative occurrence tables, NOT per-output quantity totals or random-processing histogram; source timing/patch/skill/bonus unverified; verified no duplicate in Nov 8–13 branch evidence and current default-branch code search.",
+    "priority_gaps_unchanged": true
   },
   "new_reference_only_rows": 9,
   "new_reference_only_input_item_ids": [
