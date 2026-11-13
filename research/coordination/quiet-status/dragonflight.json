@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T20:31:35.940Z",
-  "status": "priority_numeric_sources_search_completed_no_new_independent_measurements",
+  "updated_at": "2026-11-13T21:45:18.410Z",
+  "status": "independent_numeric_data_not_found_after_alternative_source_search",
   "task_ids": [
     "T0020",
     "T0019",
@@ -12,33 +12,31 @@
     "T0015"
   ],
   "exact_gaps_targeted": [
-    "Prospect Draconium Ore 189143 R1 and 188658 R2, Serevite Ore 190394/190395/190396, Khaz'gorite Ore 190312/190313/190314: original completed prospects, output-by-rank hits/zeros and Resourcefulness refund ledgers unknown",
-    "Prospect Prismatic Ore 194545: original zero-inclusive per-output Eternity Amber 192849/192850/192851 histogram unknown; linked historical 80-cast original already indexed",
-    "Mill Bubble Poppy 191467 and Saxifrage 191464/191465/191466: new rank-qualified 0-N output histograms for Serene Pigment 198412/198413/198414 and Blazing Pigment 198418/198419/198420 missing",
-    "Gear Disenchant historical sampled hits may be cumulative, without patch/skill/refund metadata; require raw positive-stack outcomes and source lineage"
+    "Draconium 189143 R1 / 188658 R2 / 190311 R3, Serevite 190395 R1 / 190396 R2 / 190394 R3 and Khaz'gorite 190312 R1 / 190313 R2 / 190314 R3 prospecting: no new independent original completed-cast material hits/0-N histograms, Resourcefulness or patch skill profile",
+    "Prismatic Ore 194545 -> Eternity Amber 192849 R1 / 192850 R2 / 192851 R3: historical 80-cast original already present, no independently new material-hit or zero outcomes",
+    "Bubble Poppy 191467 -> Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 -> Blazing Pigment 198418/198419/198420: completed-mill denominator, refund and original 0-N material histograms missing",
+    "Gear disenchanting (e.g. Resonant Crystal 200113, Vibrant Shard 194124 and Chromatic Dust 194123) still lacks new exact input-item and original patch/skill/positive-stack counts from alternative EU forum source"
   ],
   "newly_verified_fields": [],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-13T2031-alternative-original-source-triage.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-13T2145-alternative-original-data-source-hunt.jsonl"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/17n69p8",
-    "https://www.reddit.com/r/woweconomy/comments/zkay8v",
-    "https://www.reddit.com/r/woweconomy/comments/10h6ccx",
-    "https://us.forums.blizzard.com/en/wow/t/saxifrage-and-blaze-pigment/2213682",
-    "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
-    "https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment"
+    "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+    "https://eu.forums.blizzard.com/en/wow/t/tired-of-disenchanting-purple-items-and-receiving-a-blue-shards/421614",
+    "https://www.wowhead.com/item=198418/blazing-pigment",
+    "https://www.curseforge.com/wow/addons/prospectmate"
   ],
-  "verified_commit_sha": "16d908d57a3191d5a628601ecc818eb44957cb1c",
-  "commit_sha_scope": "Latest verified branch HEAD before this single atomic evidence+status commit. New commit SHA can only be verified after publication/read-back, not self-referenced inside the commit.",
+  "verified_commit_sha": "f8b8124b02e5a6194b056c95b03fcd48f0738af7",
+  "commit_sha_scope": "Verified parent branch HEAD before this one atomic evidence+status commit; new commit SHA is verified after publication/readback (cannot self-reference commit SHA).",
   "blockers": [
-    "No independently new original per-completed-cast 0-N prospect/milling cohorts found on new source channels; previously captured original studies must not be imported twice.",
-    "Quality-rank identity is sourced only from third-party catalogs or prior code; authoritative Blizzard/in-game tooltip confirmation still missing.",
-    "Original Resourcefulness refunds, specialization and patch/build for most historical datasets not published; numerator/castsWithDrop must remain null.",
-    "Public source APIs and searchable forums expose summary prose but not verifiable event-level profession logs."
+    "No novel independent rank-qualified 0-N material prospect/mill datasets after fresh alternate-source search; all usable original Reddit/Wowhead cohorts found are indexed already.",
+    "EU 2023 disenchant anecdote gives only 1 crystal after an unspecified number of items, no input ID or countable denominator.",
+    "Magma Thresher extra original prospecting comment reports only 1,000 nominal fish and historic value; no output IDs/quantities or completed-operation count.",
+    "Historical stat/spec/build/refund conditions and official item-rank tooltip mappings unverified for source-specific cohorts; Firecrawl source scraping currently has zero credits."
   ],
   "exhausted_sources": [
     {
@@ -443,35 +441,53 @@
         "Method named Dragonflight mill-pigment identity guide https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment ; herb relation and skill discussion without measured denominator",
         "Reddit r/woweconomy named independent Dragonflight disenchant original 500-item numeric posts: 2022 beta Surveyor's Cloth Bands 500 casts/608 dust/252 shards https://www.reddit.com/r/woweconomy/comments/ymruks ; already indexed, no additional postlaunch original cohort"
       ]
+    },
+    {
+      "at": "2026-11-13T21:45:18.410Z",
+      "scope": "Alternative 2023 original fish prospecting cohort, Feb 2023 EU disenchant anecdote and named multi-site source-table search",
+      "reason": "Firsthand new-sounding results have only nominal inputs, ambiguous 'many' operations or pricing, and previously indexed 2022/2023 source studies. No independent cast-normalized material histogram or item-ID matched numerator.",
+      "whereLooked": [
+        "Reddit r/woweconomy: 'Serevite Ore prospecting 2023 original cast outcome histogram' — https://www.reddit.com/r/woweconomy/comments/1135bti ; new-looking Feb 2023 R3 complaint is already indexed on research branch; approx diamond count, no original completed operations",
+        "Reddit r/woweconomy: 'Results from prospecting large quantities of Serevite Ore' — https://www.reddit.com/r/woweconomy/comments/zzyjzu ; original 28,000 ore study already indexed; commenter 1,000 Magma Thresher report has nominal fish count plus gold valuation, not output quantities/casts/histogram",
+        "Reddit r/woweconomy: 'Draconium Ore prospected 400k Serevite original spreadsheet' — https://www.reddit.com/r/woweconomy/comments/10i63zb ; author reports raw input 400k and 591 diamonds but known original cumulative cohort, output hit ledger unavailable",
+        "Reddit r/woweconomy: 'Serevite Ore prospecting 12000 rank 2 gem counts' — https://www.reddit.com/r/woweconomy/comments/zez5sj ; original ar_rules cohort already indexed, denominators/refunds cannot be reconstructed",
+        "EU Blizzard WoW forums: 'Dragonflight disenchanting 380 389 ilvl Resonant Crystal count' — https://eu.forums.blizzard.com/en/wow/t/tired-of-disenchanting-purple-items-and-receiving-a-blue-shards/421614 ; poster reports one crystal after many items, no exact item IDs, number of operations, stack histogram or spec",
+        "Wowhead: 'Dragon Isles Prospecting Draconium Ore Serevite Ore Khazgorite Ore original table' — https://www.wowhead.com/spell=374627/dragon-isles-prospecting ; Bugy named numeric table is already indexed, no new original rank-specific per-cast hit series",
+        "Wowhead: 'Bubble Poppy milling Serene Pigment sample' — https://www.wowhead.com/item=198412/serene-pigment ; herb-to-pigment identity only, no 0-N material sample",
+        "Wowhead: 'Saxifrage milling Blazing Pigment results' — https://www.wowhead.com/item=198418/blazing-pigment ; Aary R2/R3 100-herb comparison already indexed, completed mills and refunds unknown",
+        "Warcraft Wiki: 'Prismatic Ore prospecting Eternity Amber' — https://warcraft.wiki.gg/wiki/Prismatic_Ore ; conditional/item background and rare intermediate, not original output distribution",
+        "CurseForge: 'ProspectMate Dragonflight ore mill original tracked results export' — https://www.curseforge.com/wow/addons/prospectmate ; tool capability and tracking description, no public raw SavedVariables dataset or observed quality-separated completed casts"
+      ]
     }
   ],
-  "next_concrete_step": "Obtain a newly posted or directly shared original Dragonflight ProspectMate/CraftSim SavedVariables CSV or cast-by-cast material ledger explicitly recording completed operations, resourcefulness input refunds, rank, skill/spec and patch for R1 Draconium, R2 Serevite, Prismatic Ore or Bubble Poppy/Saxifrage. Do not repeat known 2022–23 original threads absent new raw attachments.",
+  "next_concrete_step": "Obtain independently new source-original rank/skill/patch-labelled prospect or milling operation SavedVariables/CSV (not another indexed WoWhead/Reddit snapshot) with completed casts, saved input quantity, output item IDs/hits/0-N bins; if none accessible, seek source-original item-specific Dragonflight DE positive stack tables. Avoid revisiting 1135bti, zzyjzu, Bugy, Aary or older known samples without new raw attachment.",
   "validation": {
-    "format": "1 JSONL searched record, all required common/searched fields present and all unknowns explicit null; no invented numeric outputs",
-    "readback": "post-commit external verification required; verify branch head, JSONL, and exact paths",
+    "format": "One searched JSONL record with complete common/searched fields and explicit null for unknowns; genuine >=6 name-first searches across >=3 site families; no fabricated numeric fields",
+    "readback": "post-commit verification required: read back exact JSONL and status and check changed paths",
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-13T2031-alternative-original-source-triage.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-13T2145-alternative-original-data-source-hunt.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "parent_branch_sha": "16d908d57a3191d5a628601ecc818eb44957cb1c"
+    "parent_branch_sha": "f8b8124b02e5a6194b056c95b03fcd48f0738af7"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "16d908d57a3191d5a628601ecc818eb44957cb1c",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T2031-alternative-original-source-triage.jsonl",
+  "verified_parent_sha": "f8b8124b02e5a6194b056c95b03fcd48f0738af7",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T2145-alternative-original-data-source-hunt.jsonl",
   "current_run_commit_sha": null,
   "newly_verified_fields_cohorts": [],
-  "last_source_search": "2026-11-13T20:31:35.940Z",
+  "last_source_search": "2026-11-13T21:45:18.410Z",
   "exact_gaps": [
-    "No new rank-qualified Prospect material 0-N original events",
-    "No new Mill pigment 0-N original events",
-    "No new independent gear disenchant histogram cohort"
+    "Draconium 189143 R1 / 188658 R2 / 190311 R3, Serevite 190395 R1 / 190396 R2 / 190394 R3 and Khaz'gorite 190312 R1 / 190313 R2 / 190314 R3 prospecting: no new independent original completed-cast material hits/0-N histograms, Resourcefulness or patch skill profile",
+    "Prismatic Ore 194545 -> Eternity Amber 192849 R1 / 192850 R2 / 192851 R3: historical 80-cast original already present, no independently new material-hit or zero outcomes",
+    "Bubble Poppy 191467 -> Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 -> Blazing Pigment 198418/198419/198420: completed-mill denominator, refund and original 0-N material histograms missing",
+    "Gear disenchanting (e.g. Resonant Crystal 200113, Vibrant Shard 194124 and Chromatic Dust 194123) still lacks new exact input-item and original patch/skill/positive-stack counts from alternative EU forum source"
   ],
   "evidence_record_count": 1,
   "evidence_content_format": "searched only: no measured numeric result",
   "current_run": {
-    "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T2031-alternative-original-source-triage.jsonl",
+    "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T2145-alternative-original-data-source-hunt.jsonl",
     "record_count": 1,
     "record_type": "searched",
     "new_numeric_studies": 0,
@@ -479,14 +495,18 @@
     "original_individual_event_ledgers": 0,
     "validated_jsonl": true,
     "source_urls": [
-      "https://www.reddit.com/r/woweconomy/comments/17n69p8"
+      "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+      "https://eu.forums.blizzard.com/en/wow/t/tired-of-disenchanting-purple-items-and-receiving-a-blue-shards/421614",
+      "https://www.wowhead.com/item=198418/blazing-pigment",
+      "https://www.curseforge.com/wow/addons/prospectmate"
     ],
     "exact_input_ids": [
       189143,
       188658,
-      190394,
+      190311,
       190395,
       190396,
+      190394,
       190312,
       190313,
       190314,
@@ -502,6 +522,6 @@
   },
   "new_reference_only_rows": 0,
   "new_reference_only_input_item_ids": [],
-  "validated_at": "2026-11-13T20:31:35.940Z",
-  "last_search_scope": "Alternative public GitHub original export, 2023 Prismatic discussion, 2022 beta DE, EU/US Blizzard forums, MMO-Champion, Wowhead and milling profession guides"
+  "validated_at": "2026-11-13T21:45:18.410Z",
+  "last_search_scope": "Independent source provenance check on novel-ish Magma Thresher and EU disenchant anecdotes; alternate source web searches across Reddit, EU Blizzard forum, Wowhead, Warcraft Wiki, CurseForge"
 }
