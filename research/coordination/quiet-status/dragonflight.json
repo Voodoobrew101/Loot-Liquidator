@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T06:31:02.939Z",
-  "status": "searched_new_TSM_2023_processing_data_lineage_no_original_numeric_cohort",
+  "updated_at": "2026-11-13T07:34:58.422Z",
+  "status": "original_savedvariable_export_avenue_checked_no_new_completed_cast_cohort",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,12 +12,12 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Prospect Draconium 189143/188658, Serevite 190395/190396/190394, Khaz'gorite 190312/190313/190314 and Prismatic 194545: no new original rank-resolved operation/hit/zero/histogram/refund records",
-    "Mill Bubble Poppy 191467 and Saxifrage 191464/191465/191466: no new original per-output completed-mill 0-N pigment sample",
-    "TSM Dragonflight 4.13 archived averaged processing reference: original per-input/output cohort counts and build/rank/stat sampling unexposed"
+    "Prospect: Draconium 189143/188658/190311, Serevite 190395/190396/190394, Khaz'gorite 190312/190313/190314, Prismatic 194545: original rank-resolved output IDs, complete cast/Resourcefulness and per-material 0-N results still absent.",
+    "Mill: Bubble Poppy 191467 and Saxifrage 191464/191465/191466: original per-completed-mill pigment hit counts and 0-N distributions still absent.",
+    "ProspectMate public source persists net consumed reagent and total output, but not operation counts or 0/1/2+ output frequency, making source-only averages ineligible as measured material per-cast rates."
   ],
   "newly_verified_fields": [
-    "Historical provenance: TradeSkillMaster 4.13 release dated 2023-07-11 explicitly says Dragonflight milling, prospecting and disenchanting rates were updated from aggregated data with varying profession equipment and knowledge; NO new numeric measured field verified."
+    "Independent source-code verification, not a numeric study: Urutseg/ProspectMate.lua tracks Dragon Isles Prospecting spell 374627 and Milling spell 382981; persists item-ID-keyed cumulative consumed input and produced quantity only; explicit per-cast denominators, zero events, histograms and profession profile are absent."
   ],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
@@ -32,7 +32,8 @@
     "research/v3/evidence/dragonflight/2026-11-13T0334-three-new-gear-looter-and-prospect-mill-gap.jsonl",
     "research/v3/evidence/dragonflight/2026-11-13T0440-five-unindexed-vault-gear-looter.jsonl",
     "research/v3/evidence/dragonflight/2026-11-13T0536-distinct-gear-crystal-reference-counts.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-13T0631-tsm-raw-rate-ledger-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-13T0631-tsm-raw-rate-ledger-search.jsonl",
+    "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
@@ -54,14 +55,16 @@
     "https://www.wowhead.com/item=200401/calderas-of-infused-earth",
     "https://www.wowhead.com/item=200403/cuffs-of-infused-earth",
     "https://tradeskillmaster.com/news/4-13-dragonflight-958",
-    "https://www.reddit.com/r/woweconomy/comments/19apvo5"
+    "https://www.reddit.com/r/woweconomy/comments/19apvo5",
+    "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
+    "https://www.curseforge.com/wow/addons/prospectmate"
   ],
-  "verified_commit_sha": "b93fa3e452ef8f9535414ac287b3c72829e50e4a",
-  "commit_sha_scope": "Verified PRE-COMMIT branch parent only; final commit SHA is read back after commit, cannot be self-stored in this same single commit.",
+  "verified_commit_sha": "6944c488d6920b8db5e34948378eebce5fd64bc3",
+  "commit_sha_scope": "Latest refreshed parent SHA verified from branch immediately before this run's one-commit push; current commit SHA verified only after the push (cannot embed its self SHA atomically).",
   "blockers": [
-    "No publicly exposed original TSM 4.13 rank-separated 2023 processing tables or operation-level log; only published claim of rate-table updates.",
-    "Current per-output completed casts, Resourcefulness refunds, castsWithDrop/0-N histograms, individual output ranks and old/new build comparability remain unverified.",
-    "Known Jallfo, Xenastro, Aary, Bugy, ar_rules, superbondez, TheChisel, Hotfor and historical disenchant anecdotes are already indexed; do not recopy as independent sources."
+    "No newly exposed original independent Draconium/Serevite/Khaz'gorite/Prismatic prospect or Bubble Poppy/Saxifrage mill rank-and-output resolved 0-N dataset with completed cast count, Resourcefulness and build.",
+    "ProspectMate open-source saved-variable format aggregates net consumed input and total output and does not store actual completed casts/zero-inclusive histograms; no public original saved-variable sample found.",
+    "Existing original Bugy, Jallfo, Ursallena, ar_rules, Aary, Xenastro, superbondez and TheChisel cohorts already indexed; cannot recopy as independent observations."
   ],
   "exhausted_sources": [
     {
@@ -261,19 +264,37 @@
         "MMO-Champion searches Prismatic Ore prospecting results and Bubble Poppy milling pigment histograms: no original completed-operation dataset surfaced",
         "Reddit r/woweconomy Jan 25 2023 disenchant zero-crystal epics (https://www.reddit.com/r/woweconomy/comments/10ldfo5): existing independent cohorts in research/v3/evidence/dragonflight/2026-11-08T0538-postpatch-disenchant-firsthand-cohorts.jsonl, not recopied"
       ]
+    },
+    {
+      "at": "2026-11-13T07:34:58.422Z",
+      "path": "ProspectMate public Dragonflight event log / saved-variable data avenue",
+      "reason": "Inspected actual 2026 source code and public GitHub file/issue listings: only net reagent consumption + cumulative output quantities are stored, not per-operation histories, castsWithDrop or zero bins; no publicly shared original player data found. Do not treat model aggregates as measured per-cast sample.",
+      "whereLooked": [
+        "CurseForge official ProspectMate listing (https://www.curseforge.com/wow/addons/prospectmate): names Dragonflight-era older recipes as trackable, but displays no player sample, casts or material yield table.",
+        "GitHub Urutseg/ProspectMate ProspectMate.lua (https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua): searched Dragon Isles Prospecting / Milling spells and actual SmartProspectorDB schema. DB stores per-reagent net consumed and cumulative per-output quantity; no persisted completed-cast counter, output-specific hit count, zero bin or event histogram.",
+        "GitHub Urutseg/ProspectMate README.MD and public issue/file listings (https://github.com/Urutseg/ProspectMate): no publicly committed saved-variable specimen or numerical study, only source code and development PR.",
+        "GitHub cross-repository code search: 'SmartProspectorDB' and 'ProspectMateDB' sample tables; only addon implementation surfaced, no independently released Dragonflight character save with Draconium Ore or Saxifrage data.",
+        "Reddit r/woweconomy name searches for 'Draconium Ore prospected data spreadsheet', 'Serevite Ore prospected gems 2023', and 'Khazgorite Ore original completed prospect output' resurfaced historical original Jallfo, Bugy, Ursallena, ar_rules and 10i63zb cohorts already in research, not a new cohort (https://www.reddit.com/r/woweconomy/comments/zez5sj).",
+        "Reddit r/woweconomy name searches 'Bubble Poppy milled 1000 pigment' and 'Saxifrage milled Blazing Pigment 100' exposed old Aary result on Wowhead (https://www.wowhead.com/item=198418/blazing-pigment); previously indexed author, without original per-mill 0-N histogram.",
+        "Wowhead named Dragon Isles Prospecting spell original Bugy table (https://www.wowhead.com/spell=374627/dragon-isles-prospecting): published per-ore averages and nominal ore quantities, prior indexed original, not material hit histograms or refunded completed casts.",
+        "Blizzard US/EU forum name searches for Draconium Ore prospecting completed casts and Saxifrage milling outcome counts: no new original event-series surfaced.",
+        "Warcraft Wiki named Prismatic Ore original item identity page (https://warcraft.wiki.gg/wiki/Prismatic_Ore): describes unlock/use rather than measured prospect output operations.",
+        "GitHub general public search for 'Saxifrage Blazing Pigment milling casts', 'Dragon Isles Milling pigment output sample' and 'Draconium Ore prospecting results': no source-original publicly committed input/output operation log."
+      ]
     }
   ],
-  "next_concrete_step": "Target an original downloadable 2023-24 Dragonflight saved-variable craft log/TSM rate export with completed Prospect/Mill operations, material IDs, 0-N histograms, refunds, build/stat/skill and original author; skip the exhausted public TSM 4.13 release blog and already-indexed cohorts.",
+  "next_concrete_step": "Seek a NEW original player-uploaded Dragonflight per-operation event stream from another addon/logger (including recipe ID, each operation output itemID+quantity, zero, consumed/refunded ore, and skill/spec/build), not ProspectMate's cumulative SmartProspectorDB or already-indexed 2022-23 Reddit/Wowhead cohorts. Otherwise log a new, distinct source avenue only.",
   "validation": {
     "evidence_jsonl_valid": true,
     "evidence_record_count": 1,
     "searched_records": 1,
     "new_independent_numeric_cohorts": 0,
-    "site_count_for_search": 6,
+    "site_count_for_search": 5,
     "unknown_fields_not_promoted": true,
     "duplicate_originals_excluded": true,
+    "source_code_inspected": true,
     "changed_paths_expected": [
-      "research/v3/evidence/dragonflight/2026-11-13T0631-tsm-raw-rate-ledger-search.jsonl",
+      "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "production_changed": false
@@ -281,192 +302,28 @@
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "b93fa3e452ef8f9535414ac287b3c72829e50e4a",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T0631-tsm-raw-rate-ledger-search.jsonl",
+  "verified_parent_sha": "6944c488d6920b8db5e34948378eebce5fd64bc3",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl",
   "current_run_commit_sha": null,
   "newly_verified_fields_cohorts": [
-    {
-      "inputItemID": 195514,
-      "inputName": "Treacherous Totem Wraps",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 48,
-      "sourceReportedItemDenominator": 64,
-      "percentShown": 75,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 202585,
-      "inputName": "Coattails of the Rightful Heir",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 109,
-      "sourceReportedItemDenominator": 165,
-      "percentShown": 66,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 207121,
-      "inputName": "Vesture of the Smoldering Serpent",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 109,
-      "sourceReportedItemDenominator": 166,
-      "percentShown": 66,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 202598,
-      "inputName": "Cuirass of Meticulous Mixture",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 61,
-      "sourceReportedItemDenominator": 94,
-      "percentShown": 65,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 207272,
-      "inputName": "Devout Ashdevil's Grimhorns",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 101,
-      "sourceReportedItemDenominator": 156,
-      "percentShown": 65,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 207157,
-      "inputName": "Smoldering Chevalier's Greatbelt",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 75,
-      "sourceReportedItemDenominator": 116,
-      "percentShown": 65,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 202600,
-      "inputName": "Reanimator's Wicked Cassock",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 131,
-      "sourceReportedItemDenominator": 206,
-      "percentShown": 64,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 202577,
-      "inputName": "Seal of the Defiant Hordes",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 54,
-      "sourceReportedItemDenominator": 84,
-      "percentShown": 64,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 204409,
-      "inputName": "Heatbinder's Burning Slippers",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 102,
-      "sourceReportedItemDenominator": 162,
-      "percentShown": 63,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 204392,
-      "inputName": "Treads of Fractured Realities",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 107,
-      "sourceReportedItemDenominator": 170,
-      "percentShown": 63,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 202593,
-      "inputName": "Unstable Vial Handlers",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 140,
-      "sourceReportedItemDenominator": 224,
-      "percentShown": 63,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    },
-    {
-      "inputItemID": 193523,
-      "inputName": "Vibrant Wildercloth Headcover",
-      "outputItemID": 200113,
-      "outputName": "Resonant Crystal",
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "sourceReportedMaterialOccurrences": 92,
-      "sourceReportedItemDenominator": 147,
-      "percentShown": 63,
-      "sourceKind": "reference",
-      "completedCastsVerified": false,
-      "castsWithDropVerified": false,
-      "totalQuantityVerified": false,
-      "histogramVerified": false
-    }
+    "Independent source-code verification, not a numeric study: Urutseg/ProspectMate.lua tracks Dragon Isles Prospecting spell 374627 and Milling spell 382981; persists item-ID-keyed cumulative consumed input and produced quantity only; explicit per-cast denominators, zero events, histograms and profession profile are absent."
   ],
-  "last_source_search": "2026-11-13T05:36:48.394Z",
+  "last_source_search": {
+    "at": "2026-11-13T07:34:58.422Z",
+    "focus": "ProspectMate 2023-26 saved-variable format / public player data, plus new name-first Dragonflight data queries",
+    "whereLooked": [
+      "CurseForge official ProspectMate listing (https://www.curseforge.com/wow/addons/prospectmate): names Dragonflight-era older recipes as trackable, but displays no player sample, casts or material yield table.",
+      "GitHub Urutseg/ProspectMate ProspectMate.lua (https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua): searched Dragon Isles Prospecting / Milling spells and actual SmartProspectorDB schema. DB stores per-reagent net consumed and cumulative per-output quantity; no persisted completed-cast counter, output-specific hit count, zero bin or event histogram.",
+      "GitHub Urutseg/ProspectMate README.MD and public issue/file listings (https://github.com/Urutseg/ProspectMate): no publicly committed saved-variable specimen or numerical study, only source code and development PR.",
+      "GitHub cross-repository code search: 'SmartProspectorDB' and 'ProspectMateDB' sample tables; only addon implementation surfaced, no independently released Dragonflight character save with Draconium Ore or Saxifrage data.",
+      "Reddit r/woweconomy name searches for 'Draconium Ore prospected data spreadsheet', 'Serevite Ore prospected gems 2023', and 'Khazgorite Ore original completed prospect output' resurfaced historical original Jallfo, Bugy, Ursallena, ar_rules and 10i63zb cohorts already in research, not a new cohort (https://www.reddit.com/r/woweconomy/comments/zez5sj).",
+      "Reddit r/woweconomy name searches 'Bubble Poppy milled 1000 pigment' and 'Saxifrage milled Blazing Pigment 100' exposed old Aary result on Wowhead (https://www.wowhead.com/item=198418/blazing-pigment); previously indexed author, without original per-mill 0-N histogram.",
+      "Wowhead named Dragon Isles Prospecting spell original Bugy table (https://www.wowhead.com/spell=374627/dragon-isles-prospecting): published per-ore averages and nominal ore quantities, prior indexed original, not material hit histograms or refunded completed casts.",
+      "Blizzard US/EU forum name searches for Draconium Ore prospecting completed casts and Saxifrage milling outcome counts: no new original event-series surfaced.",
+      "Warcraft Wiki named Prismatic Ore original item identity page (https://warcraft.wiki.gg/wiki/Prismatic_Ore): describes unlock/use rather than measured prospect output operations.",
+      "GitHub general public search for 'Saxifrage Blazing Pigment milling casts', 'Dragon Isles Milling pigment output sample' and 'Draconium Ore prospecting results': no source-original publicly committed input/output operation log."
+    ]
+  },
   "exact_gaps": [
     "Draconium Ore 189143 and 188658 gem outputs 192837-192844: genuine skill/rank separated completed prospects/refunds, castsWithDrop/zero/histograms absent",
     "Serevite Ore 190394/190395/190396 and Khaz'gorite Ore 190312/190313/190314: exact rank mapping and completed casts with individual diamond/gem IDs/histograms absent",
@@ -477,13 +334,13 @@
   "evidence_record_count": 1,
   "evidence_content_format": "JSONL: 1 searched entry, no measured numerical rows",
   "current_run": {
-    "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T0631-tsm-raw-rate-ledger-search.jsonl",
+    "evidence_file": "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl",
     "record_count": 1,
     "record_type": "searched",
     "new_numeric_studies": 0,
     "original_completed_cast_histograms": 0,
     "validated_jsonl": true,
-    "source_url": "https://tradeskillmaster.com/news/4-13-dragonflight-958",
-    "searched_sites": 6
+    "source_url": "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
+    "searched_sites": 5
   }
 }
