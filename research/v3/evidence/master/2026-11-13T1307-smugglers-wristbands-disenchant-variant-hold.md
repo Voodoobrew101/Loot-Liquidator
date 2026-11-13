@@ -1,0 +1,24 @@
+# T0026 — Midnight crafted rare Wristbands 244586: economic-guide DE suggestion versus item-level eligibility metadata
+
+Checked 2026-11-13T13:11:14.066Z UTC. This is a research-only independent source/identity/eligibility audit. It is **not** a new drop cohort, per-output chance/expected-quantity measurement, client test, or addon defect confirmation.
+
+## Sources inspected and exact scope
+
+1. The **current Midnight Enchanting specialization guide** by WoW-Professions explicitly lists **Smuggler's Leather Wristbands** under **Blue gear (Radiant Shard)**, as a possible cheap Leatherworking item for disenchanting. Source: https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds . This is a **guide-level recipe/action suggestion** only, not an actual completed cast or a measured Radiant Shard amount. The other listed blue options cannot be treated as equivalent independent observations.
+2. The independently accessed **WoWDB LIVE item page** for input **244586** states **"Cannot be disenchanted"** under Quick Info, records initial addition in patch **12.0.0, build 63534**, and shows a displayed **item level 197** version. Source: https://www.wowdb.com/items/244586-smugglers-leather-wristbands . This is a **catalog/base-item flag**, not a client spell-target check for all crafted/bonus/upgrade variants in November 2026.
+3. An independently accessed **Wowhead 12.1.5 PTR** item view for **244586** shows **item-level 44 and 165 displays**, and search-indexed item relationships include **"Disenchanting (3)"**. Source: https://www.wowhead.com/ptr-2/item=244586/smugglers-leather-wristbands . The rendered HTML is JavaScript-dependent; those relationship labels alone do **not** expose actual source itemLink/bonus/build, output stack quantities, successful casts or rank-linked material IDs. Do not read "(3)" as three experiments or three output units.
+4. Distinct rank/item identities for potential Radiant Shard outputs remain **243602** and **243603**, both named Radiant Shard on Wowhead; none of the three sources above establishes which one any particular craft variant yields. Sources: https://www.wowhead.com/item=243602/radiant-shard and https://www.wowhead.com/item=243603/radiant-shard .
+
+## Field-by-field disposition
+
+- **Input identity**: 244586/Smuggler's Leather Wristbands, same exact base item across sources; **different displayed versions/ilvl/patch contexts**, not evidence that every bonus-qualified craft shares an eligibility flag.
+- **Processing eligibility**: **CONFLICTING** independent catalog vs guide; one catalog says no DE and a current guide recommends DE. The Wowhead PTR related table is not an operation. Do **not** treat the guide as proof that the currently owned item is actionable, nor suppress every variant solely on an undated unqualified no-DE flag.
+- **Output identity / rank / quantity / chance / conditional range**: **UNKNOWN** for this input. "Blue gear (Radiant Shard)" supports **material family as guide context only**. It does not identify item 243602 or 243603, a one-shard fixed yield, probabilities, sample counts, or independent raw observations.
+- **Economic calculation**: **NOT VERIFIED**. No craft input prices, validated item-level eligibility, character Enchanting skill, output rank, exact output units, market fees, or live-action decision was established here. Synthetic pricing was **not** executed. Reference guidance can remain explicitly labeled informational and cannot override a verified variant-specific prohibition.
+- **Source overlap**: Midnight worker's same-run 16 crafted-gear guide reference rows already capture this guide item. This audit is **independent verification of the specific contradictory sources and variant issue**, not a 17th worker study or duplicate receipt. Worker evidence stays owned by Midnight.
+
+## Concrete research handoff / safeguards
+
+T0026 worker, within its own scope, should obtain one original **current Retail** successful or rejected Disenchant operation of a **specific 244586 itemLink with full bonuses, crafted quality, resulting ilvl, client build, character skill/spec and exact output itemLinks/quantities**. Preserve rejection as eligibility evidence but not a zero-yield cast. Compare exact variant against both WoWDB LIVE 197 and Wowhead PTR 44/165 display before changing the eligibility rule. Route a reviewable synthetic-price **positive/negative eligibility fixture** to the existing addon implementation owner only after source match; do not modify implementation/usable-data-tooltips, main or immutable snapshot.
+
+**Measured new casts/hits/histograms:** 0. **Gold decisions, actual addon engine/formatter tests, live WoW tests:** 0. **Originals changed or duplicated:** 0. **Worker acknowledgments:** none inferred.
