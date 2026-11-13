@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T12:31:25.155Z",
-  "status": "new_archive_and_housing-recipe-disambiguation_no_independent_completed_cast_distribution",
+  "updated_at": "2026-11-13T13:41:17.797Z",
+  "status": "new_item_side_looter_cohort_and_reference_only_material_rows_ore_mill_histograms_unresolved",
   "task_ids": [
     "T0020",
     "T0019",
@@ -14,31 +14,39 @@
     "T0016"
   ],
   "exact_gaps_targeted": [
-    "Draconium 189143 R1, 188658 R2, 190311 R3 and Serevite 190395 R1, 190396 R2, 190394 R3: no NEW original source by exact input/output rank, completed-cast counts, per-output castsWithDrop, zero bins or histogram after deduping known source studies",
-    "Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545: no new original 0/1/2+ per-cast outputs with verified rank-specific identity, skill, patch and resourcefulness refunds",
-    "Bubble Poppy 191467/191468/191469 to Serene Pigment 198412/198413/198414, Saxifrage 191464/191465/191466 to Blazing Pigment 198418/198419/198420: unverified current operation histograms, player stats, refund accounting; 2025 housing dye pigment is NOT a Dragon Isles random milling result"
+    "Draconium Ore 189143/188658 and Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314, Prismatic Ore 194545: original item/rank-specific prospecting zero-inclusive completed-cast output histogram with resourcefulness accounting remains missing",
+    "Bubble Poppy 191467/191468/191469 and Saxifrage 191464/191465/191466: rank-specific finished milling casts, pigment output hits/stack totals, zero histograms and profession build remain missing",
+    "Unverified Dragonflight gear Looter outputs: exact item 200339 -> Vibrant Shard 194124 (34/55 item disenchants) and Resonant Crystal 200113 (28/55) sample epoch, item bonuses, skill, stack yields, simultaneous-output overlap; nine more material-side item cohorts need original item-side corroboration"
   ],
-  "newly_verified_fields": [],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [],
+  "newly_verified_fields": [
+    "Wowhead item-side 200339 Scalesworn Cultist's Girdle: reported completed disenchants casts=55, Vibrant Shard 194124 castsWithDrop=34, Resonant Crystal 200113 castsWithDrop=28; source displayed occurrence percents 62 and 51; no per-cast item quantities."
+  ],
+  "newly_verified_cohorts": [
+    "Single cumulative Wowhead item-side cohort: input item 200339, 55 original item reports, two output-specific occurrence rows 194124 and 200113; one studyKey, not independent material cohorts"
+  ],
+  "new_numerical_measurements": 2,
+  "numerical_fields_improved": [
+    "casts=55, castsWithDrop=34 for 200339→194124",
+    "casts=55, castsWithDrop=28 for 200339→200113"
+  ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-13T1231-independent-numeric-archive-triage.jsonl"
+    "research/v3/evidence/dragonflight/20261113T1341-looter-200339-and-material-side-crosschecks.jsonl"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+    "https://www.wowhead.com/item=200339/scalesworn-cultists-girdle",
+    "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
+    "https://www.reddit.com/r/woweconomy/comments/zkay8v",
     "https://www.reddit.com/r/woweconomy/comments/108782r",
-    "https://us.forums.blizzard.com/en/wow/t/massive-profession-advantage-from-racial-bonuses/1484679",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
     "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://warcraft.wiki.gg/wiki/Milling"
+    "https://www.wowhead.com/item=198418/blazing-pigment"
   ],
-  "verified_commit_sha": "aaa63ce632f35785d9220bc75c5152ca1c11762f",
-  "commit_sha_scope": "verified_parent_sha is the branch head verified before this one-commit publication; new commit SHA is verifiable via Git history, cannot be embedded as a self-reference in the same commit",
+  "verified_commit_sha": "29f38b90688445eeb7ee79ed7fab0cca03b6b80c",
+  "commit_sha_scope": "Parent branch SHA verified before one-commit publication; self-referential new SHA cannot be recorded within the same commit; validate published SHA from GitHub history.",
   "blockers": [
-    "No newly accessible original Serevite/Draconium/Khaz'gorite/Prismatic completed-cast per-output 0/1/2+ histograms; public 2022-23 source studies are already represented and cannot be counted twice.",
-    "No novel Bubble Poppy/Saxifrage mill histograms with completed operations, herb ranks, profession profile, output-rank IDs and Resourcefulness refunds.",
-    "Original numeric workbooks either provide aggregates, inaccessible screenshots or already indexed samples; no source-verified complete event ledger; T0015's Saxifrage input rank mismatch needs Master to modify shared queue."
+    "No NEW original quality-specific 0/1/2+ prospect/mill material histograms or Resourcefulness-adjusted completed casts; known primary cohorts already represented.",
+    "200339 Looter sample snapshot lacks output stack histograms, item bonus/version, skill and sampling build; counts of different materials can overlap, not proof of zero-output operations.",
+    "Nine material-side Crystal 200113 cohorts provide exact occurrence numerator/denominator from Wowhead index only; item-side original page corroboration, full output stack totals and temporal sample identity missing; retained as reference-only.",
+    "Saxifrage input quality/ID conflict remains Master-owned T0015/T0046 metadata issue."
   ],
   "exhausted_sources": [
     {
@@ -339,58 +347,46 @@
         "Warcraft Wiki (Draconium Ore): https://warcraft.wiki.gg/wiki/Draconium_Ore ; ore source/crafting identity and patch origin without sample operation log.",
         "GitHub source search by named Serevite, Draconium and Saxifrage plus ProspectMate saved variables: public processing tools/guides and aggregated samples only; no new original completed-cast event ledger with source-verified refund reconciliation."
       ]
+    },
+    {
+      "at": "2026-11-13T13:41:17.797Z",
+      "scope": "Name-first ore and herb finished-operation event-level source hunt; prior originals deduplicated",
+      "reason": "No new independent prospect/mill outcome histogram. Existing Reddit zkay8v and 108782r, Prismatic superbondez and Saxifrage Aary studies are already indexed; new item-side DE source recorded separately.",
+      "whereLooked": [
+        "Reddit r/woweconomy name-first: Draconium Ore original prospecting output 0/1/2 histogram / actual casts; Bugy and Xenastro original cohorts already indexed",
+        "Reddit r/woweconomy name-first: Serevite Ore quality-specific prospecting logs; 2022 zkay8v 1,000-completed-cast source already indexed twice, no new independent series",
+        "Reddit r/woweconomy name-first: Khaz'gorite Ore prospecting independent 0-N outcomes; 10h6ccx 20-cast no-diamond cohort already recorded",
+        "Wowhead Dragon Isles Prospecting: Draconium Ore/Prismatic Ore original studies; superbondez 80-cast Prismatic study already indexed",
+        "Wowhead Blazing Pigment and Saxifrage: Aary herb nominal-input data previously indexed; no new completed-mill per-cast distribution",
+        "Reddit r/woweconomy: Bubble Poppy milling original Serene Pigment output histograms; no raw operation ledger surfaced",
+        "Blizzard US World of Warcraft forums: Saxifrage and Bubble Poppy milling item-rank/Resourcefulness cast history; no original cast table surfaced",
+        "Warcraft Wiki Milling and Dragon Isles Prospecting: recipe/identity background only, not player-generated results",
+        "wow-professions.com Dragon Isles Jewelcrafting and Inscription guides: batch/quality descriptions only, no original per-cast output series",
+        "GitHub public Dragonflight prospecting/milling CSV spreadsheet searches: prior cohorts already indexed, no novel source-original 0-N event ledger"
+      ]
     }
   ],
-  "next_concrete_step": "Stop repeating indexed original Reddit/Wowhead 2022-23 samples. Seek an original public Dragon Isles processing event log or spreadsheet from a new author with exact per-cast rows (including zeros and rank/item IDs), and distinguish 2025 housing dye milling recipes; request Master to reconcile Saxifrage T0015 rank mismatch and queue/estimator-only shared changes.",
+  "next_concrete_step": "Prioritize unindexed original Dragonflight ore/herb event logs or author spreadsheets with material-by-cast 0/1/2 histograms. For item 200339 obtain underlying Wowhead Looter material stack histogram and sampling bonus/build, and independently verify 9 Crystal material-side occurrence tables against their item-side sources before considering measured integration. Master alone handles shared queue and production estimator.",
   "validation": {
-    "evidence_jsonl_valid": true,
-    "evidence_record_count": 1,
-    "searched_records": 1,
-    "new_independent_numeric_cohorts": 0,
-    "site_count_for_search": 6,
-    "source_links_visited": true,
-    "unknown_fields_not_promoted": true,
-    "duplicate_originals_excluded": true,
-    "changed_paths_expected": [
-      "research/v3/evidence/dragonflight/2026-11-13T1231-independent-numeric-archive-triage.jsonl",
-      "research/coordination/quiet-status/dragonflight.json"
-    ],
-    "production_changed": false,
-    "jsonl_parse": "verified before commit: one JSON object line",
-    "record_count": 1,
-    "duplicate_cohorts": "none added; searched-only"
+    "format": "12 JSONL objects parsed, all required per-type fields present, 12 unique IDs, hit counts <= casts, unknown histogram/quantity left null",
+    "readback": "pending publication",
+    "changed_paths": "pending publication"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "verified_parent_sha": "aaa63ce632f35785d9220bc75c5152ca1c11762f",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T1231-independent-numeric-archive-triage.jsonl",
+  "verified_parent_sha": "29f38b90688445eeb7ee79ed7fab0cca03b6b80c",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261113T1341-looter-200339-and-material-side-crosschecks.jsonl",
   "current_run_commit_sha": null,
   "newly_verified_fields_cohorts": [],
-  "last_source_search": {
-    "at": "2026-11-13T12:31:25.155Z",
-    "focus": "Distinct 2023 public economy spreadsheet, 2022 beta cohort, 2023 public milling chart and newer 2025 housing-dye pigment disambiguation; no novel actual cast event ledger",
-    "whereLooked": [
-      "Reddit r/woweconomy (original 'Dragonflight 10.2 Crushing/Prospecting Profit equation', 2023-12-27): https://www.reddit.com/r/woweconomy/comments/18sd8ly ; author mentions 100k Q2 Serevite as an input experiment and proposed a crushing/prospecting price equation, but no item-by-cast outcome table, zeros or independently downloadable raw rows in the public post; this cannot supply verified P(hit).",
-      "Reddit r/woweconomy (original 2022 Dragonflight beta three-character test): https://www.reddit.com/r/woweconomy/comments/y3e8ek ; highest-quality 5000 Serevite and 5000 Draconium per character, but prelaunch beta and already reviewed by repository, not a new postlaunch independent study; no newly accessible zero-inclusive histogram.",
-      "Wowhead (Prismatic Ore comments): https://www.wowhead.com/item=194545/prismatic-ore ; superbondez 80 completed prospects, TheChisel Serevite upstream 1000 and Hotfor mixed-rank Draconium totals are already indexed; no new independent per-output hits.",
-      "Wowhead (Illimited Diamond comments): https://www.wowhead.com/item=192869/illimited-diamond ; neoslayyer's 35 R3 Draconium, 150 R2 Draconium, 1000 R2 Serevite and 100 Khaz'gorite input cohorts appear in older repository observations and the import dedupe ledger; no fresh denominator or 0/1/2 rows.",
-      "Wowhead (Serene Pigment Bubble Poppy identity): https://www.wowhead.com/item=198412/serene-pigment ; comments map Bubble Poppy to Serene Pigment variants, but no firsthand actual completed mills, output quantities, zeros or linked original workbook.",
-      "Wowhead (Blazing Pigment Saxifrage identity): https://www.wowhead.com/item=198420/blazing-pigment ; comments map Saxifrage to Blazing Pigment variants without an independent rank-qualified yield histogram.",
-      "Imgur (Carnagias Dragonflight milling herb/pigment chart, published 2023-04-06): https://imgur.com/gallery/carnagias-cheat-sheet-guide-wow-dragonflight-chart-milling-herbs-pigments-R0v6eYB ; public chart is a reference mapping, not an original operation-by-operation result set.",
-      "Blizzard forum (Saxifrage and blaze pigment, 2025-12-11): https://us.forums.blizzard.com/en/wow/t/saxifrage-and-blaze-pigment/2213682 ; discussing housing dye pigment versus normal Dragon Isles Blazing Pigment, no cast/output measurement.",
-      "Wowhead (Red Dye Pigment housing recipe): https://www.wowhead.com/item=262655/red-dye-pigment ; Midnight housing pigment recipe uses Dragonflight raw herbs in a distinct deterministic conversion; do not misclassify it as historical random Dragonflight milling evidence.",
-      "Warcraft Wiki (Draconium Ore): https://warcraft.wiki.gg/wiki/Draconium_Ore ; ore source/crafting identity and patch origin without sample operation log.",
-      "GitHub source search by named Serevite, Draconium and Saxifrage plus ProspectMate saved variables: public processing tools/guides and aggregated samples only; no new original completed-cast event ledger with source-verified refund reconciliation."
-    ]
-  },
+  "last_source_search": "2026-11-13T13:41:17.797Z",
   "exact_gaps": [
     "Draconium 189143 R1, 188658 R2, 190311 R3 and Serevite 190395 R1, 190396 R2, 190394 R3: no NEW original source by exact input/output rank, completed-cast counts, per-output castsWithDrop, zero bins or histogram after deduping known source studies",
     "Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545: no new original 0/1/2+ per-cast outputs with verified rank-specific identity, skill, patch and resourcefulness refunds",
     "Bubble Poppy 191467/191468/191469 to Serene Pigment 198412/198413/198414, Saxifrage 191464/191465/191466 to Blazing Pigment 198418/198419/198420: unverified current operation histograms, player stats, refund accounting; 2025 housing dye pigment is NOT a Dragon Isles random milling result"
   ],
-  "evidence_record_count": 1,
-  "evidence_content_format": "JSONL: one searched record; zero new original numeric studies, no fabricated zero bins/rates",
+  "evidence_record_count": 12,
+  "evidence_content_format": "JSONL; 2 original item-side drop rows sourceKind=study; 9 material-side occurrence rows sourceKind=reference; 1 searched audit",
   "current_run": {
     "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T1231-independent-numeric-archive-triage.jsonl",
     "record_count": 1,
@@ -433,5 +429,18 @@
     "numerical_fields_improved": [],
     "new_legacy_lead": "2023 Q2 Serevite 100k prospect/crushing mention (not measured outcome)",
     "distinct_conversion_caution": "2025-2026 Midnight housing dye recipe using Dragonflight herbs is deterministic, not the Dragon Isles random Mill recipe"
-  }
+  },
+  "new_reference_only_rows": 9,
+  "new_reference_only_input_item_ids": [
+    207135,
+    195514,
+    195501,
+    203584,
+    194309,
+    193508,
+    202268,
+    200139,
+    207271
+  ],
+  "validated_at": null
 }
