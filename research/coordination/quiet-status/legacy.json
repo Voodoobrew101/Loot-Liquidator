@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T03:49:34.547Z",
-  "status": "One newly recovered, firsthand October 2008 WotLK prelaunch PTR study: 10 distinct exact input/output quantity records across five Outland herbs, totaling 530 input herbs and 342 output pigments. All completed-mill counts, per-output hits, zeros and histograms unknown. Warmaul 24995, Cobalt 36909 and Fel Iron 23424 search gaps remain unresolved. Other workers, shared queue/dashboard, production, PRs, CI and schedules untouched.",
+  "updated_at": "2026-11-13T04:44:51.721Z",
+  "status": "new-source-backed-historical-quantity-cohorts",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,9 +12,9 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995 / TBC armor-weapon group: original item-specific current game disenchant logs, 0-N materials 22445/22446/22447/22449, per-cast completed operations, actual build/item level, eligibility, skill and bonuses still unknown; historical Looter snapshot retained separately.",
-    "T0022 Cobalt Ore 36909 and T0044 Fel Iron Ore 23424: new independent actual completed prospects, 0-N per-gem outcomes and refund logs still not sourced; existing historical ore/stack totals must remain separate.",
-    "T0042 legacy milling standing task: new original test-realm Outland herb study reports input quantities and both pigment totals for Felweed 22785, Ragveil 22787, Ancient Lichen 22790, Netherbloom 22791, Nightmare Vine 22792, but no completed operations or zero-inclusive histograms."
+    "T0047 Warmaul Legplates 24995->22445/22446/22447/22449: separate actual disenchant casts/hits, histograms, build-specific live eligibility, item level, skill and patch.",
+    "T0022 Cobalt Ore 36909 and T0044 Fel Iron Ore 23424: original distinct finished prospect operations, per-gem hits, zeros, refunded inputs, version.",
+    "T0042 fallback: independent original legacy prospecting batches with exact item/material IDs and quantities where the higher-priority searches yield only duplicates."
   ],
   "newly_verified_fields_cohorts": [
     {
@@ -129,42 +129,48 @@
     }
   ],
   "numeric_summary": {
-    "new_evidence_records": 10,
-    "new_original_independent_cohorts": 1,
-    "new_input_herb_batches": 5,
-    "new_input_herb_units": 530,
-    "new_exact_input_output_quantity_records": 10,
-    "new_exact_input_output_material_units": 342,
-    "new_nether_pigment_39342_units": 285,
-    "new_ebon_pigment_43108_units": 57,
-    "new_explicit_completed_mills": 0,
+    "new_evidence_records": 28,
+    "new_original_independent_cohorts": 4,
+    "new_input_ore_batches": 4,
+    "new_input_ore_units": 35000,
+    "new_exact_input_output_quantity_records": 28,
+    "new_exact_material_output_units": 11458,
+    "outputs_by_item": {
+      "173108": 3429,
+      "173109": 3463,
+      "173110": 3500,
+      "173170": 290,
+      "173171": 277,
+      "173172": 259,
+      "173173": 240
+    },
+    "new_measured_completed_prospect_casts": 0,
     "new_completed_disenchant_casts": 0,
-    "new_completed_prospect_casts": 0,
     "new_castsWithDrop": 0,
     "new_zero_inclusive_histograms": 0,
     "new_gold_values": 0,
-    "nominal_counts_excluded": "530 source-stated herbs / 5 = 106 theoretical milling equivalents; actual completed actions were NOT reported, so casts remains null."
+    "nominal_counts_excluded": "Mass-prospect uses 20 ore per action, but 35,000 source ore inputs do not independently log the 1,750 nominal operations. casts remains null."
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-13T0348-kaliope-ptr-milling-primary.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0348-kaliope-ptr-milling-primary.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-13T0444-shadowlands-laestrite-four-original-cohorts.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0444-shadowlands-laestrite-four-original-cohorts.jsonl",
   "sources": [
-    "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/",
-    "https://www.wowhead.com/item=22785/felweed",
-    "https://www.wowhead.com/item=22787/ragveil",
-    "https://www.wowhead.com/item=22790/ancient-lichen",
-    "https://www.wowhead.com/item=22791/netherbloom",
-    "https://www.wowhead.com/item=22792/nightmare-vine",
-    "https://www.wowhead.com/item=39342/nether-pigment",
-    "https://www.wowhead.com/item=43108/ebon-pigment"
+    "https://www.wowhead.com/item=171828/laestrite-ore",
+    "https://www.wowhead.com/item=173109/angerseye",
+    "https://www.wowhead.com/item=173108/oriblase",
+    "https://www.wowhead.com/item=173110/umbryl",
+    "https://www.wowhead.com/item=173170/essence-of-rebirth",
+    "https://www.wowhead.com/item=173171/essence-of-torment",
+    "https://www.wowhead.com/item=173172/essence-of-servitude",
+    "https://www.wowhead.com/item=173173/essence-of-valor"
   ],
-  "verified_base_commit_sha": "3f7b2878b45d63f33f0aceed61accd2e80819d2a",
+  "verified_base_commit_sha": "020751a09cd90067302c8e9720e764eb5b736696",
   "verified_commit_sha": null,
-  "commit_sha_note": "Atomic research commit updates only one NEW legacy JSONL file and this legacy status file. Its resulting commit SHA cannot be embedded in the same commit without changing its hash; verify branch head and both blobs after the commit.",
+  "commit_sha_note": "The verified resulting SHA is read back after atomic branch update; embedding the SHA within its own commit would create a self-reference.",
   "blockers": [
-    "Warmaul 24995 source-specific current Retail eligibility conflicts with historic TBC Looter materials. No independently verified completed disenchants and 0-N yield histograms from an exact build/item variant.",
-    "Cobalt 36909 and Fel Iron 23424: previously archived original studies are reused/cumulative or lack per-output completed-cast hit and zero distributions. No new physical prospecting operation ledger this run.",
-    "New Kaliope PTR original has exact 530 herb input and 342 material-unit totals, not verified 106 completed mills. Item-level and Inscription skill, exact PTR build, refunds, per-output positive hits and zeros all absent.",
-    "Author dated test Tuesday October 7, 2008 only approximately; pre-release PTR rate evidence must not be promoted to current Retail probabilities."
+    "Warmaul Legplates 24995 historical Looter item-based totals are not independently verified against current Retail item version or direct casts, exact per-output quantities and zero-inclusive histograms.",
+    "Cobalt 36909 and Fel Iron 23424 originals remain missing distinct material-specific completed casts and hit/miss outcome ledgers; never promote guide percentages to measured chance.",
+    "New Laestrite 171828 reports are exact first-person totals, but nominal ore/20 action equivalents are not physical operation ledgers. No recorded castsWithDrop, zero outcomes, stack histograms, refunds or specialization; patch epochs differ and should not be combined without review.",
+    "Some Laestrite reports give only last-update date, not collection date; current Retail application is not verified."
   ],
   "exhausted_sources": [
     {
@@ -310,12 +316,23 @@
         "https://www.wowhead.com/mop-classic/item=72092/ghost-iron-ore"
       ],
       "reason": "Indexed priority results repeat historical reference weights or already archived original cohorts; instead followed a novel direct 2008 source into independent five-herb output totals. Do not infer 24995 reference weights as casts or repeated Ghost Iron 1500 ore as a new cohort."
+    },
+    {
+      "lookingFor": "Novel Warmaul/Cobalt/Fel Iron completed-cast records, and genuinely unarchived measured legacy reports instead of old copied item tables",
+      "whereLooked": [
+        "https://www.wowhead.com/item=24995/warmaul-legplates",
+        "https://www.wowhead.com/wotlk/item=36909/cobalt-ore",
+        "https://www.wowhead.com/tbc/item=23424/fel-iron-ore",
+        "https://www.reddit.com/r/classicwow/comments/ospt2y/",
+        "https://kaliope.wordpress.com/2007/01/18/mithril-prospecting/"
+      ],
+      "reason": "Priority results surfaced historic previously archived Looter/cast studies or guide priors only. New distinct first-person 4-cohort Laestrite ore output totals found in source Wowhead comments; original cohorts identified by different author, batch and patch; no duplicate source cohort reused."
     }
   ],
-  "next_concrete_step": "For T0047 acquire source-original Warmaul Legplates 24995 item-instance disenchant log, bonus/item level/patch, all outputs and 0-N stacks; for T0022/T0044 obtain distinct current build raw completed Cobalt 36909 and Fel Iron 23424 prospect logs. For the 2008 Kaliope prelaunch PTR cohorts seek tester raw click-level logs/refunds and exact build; if missing, preserve source totals with casts null and prelaunch separation.",
-  "previous_status_updated_at": "2026-11-13T02:51:39.052Z",
-  "last_evidence_file": "research/v3/evidence/legacy/2026-11-13T0348-kaliope-ptr-milling-primary.jsonl",
-  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0348-kaliope-ptr-milling-primary.jsonl",
+  "next_concrete_step": "Seek a new Warmaul 24995 original item-instance in-game DE export with bonus/ilvl/build and per-cast outputs. For Cobalt 36909/Fel Iron 23424 find raw prospect operation ledgers with material hits/zeros. For these four new Laestrite original comment cohorts find SavedVariables/log exports to verify actual mass-prospect completions, refunds and per-output 0..N histograms before estimating probabilities.",
+  "previous_status_updated_at": "2026-11-13T04:44:51.721Z",
+  "last_evidence_file": "research/v3/evidence/legacy/2026-11-13T0444-shadowlands-laestrite-four-original-cohorts.jsonl",
+  "last_evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T0444-shadowlands-laestrite-four-original-cohorts.jsonl",
   "source_reliability_findings": [
     {
       "source": "https://wowinterface.com/downloads/info9751-ProspectStats.html",
@@ -387,5 +404,105 @@
       "sourceMeasure": "raw herb inputs and yielded material units; source percentages per herb, not occurrence probabilities",
       "actualCastsKnown": false
     }
+  ],
+  "newly_verified_fields_or_cohorts": [
+    {
+      "originalAuthor": "tragicmuffin",
+      "sourceURL": "https://www.wowhead.com/item=171828/laestrite-ore",
+      "studyKey": "wowhead-laestrite-tragicmuffin-5000-20201129",
+      "inputItemID": 171828,
+      "sourceOreInputs": 5000,
+      "outputQuantities": {
+        "173108": 536,
+        "173109": 506,
+        "173110": 454,
+        "173170": 31,
+        "173171": 44,
+        "173172": 38,
+        "173173": 40
+      },
+      "reportedJCskill": "100",
+      "patch": "9.0.2",
+      "reportedCasts": null,
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "measurement": "original first-person output-unit totals; source percentages per ore are not occurrence chances"
+    },
+    {
+      "originalAuthor": "superbondez",
+      "sourceURL": "https://www.wowhead.com/item=171828/laestrite-ore",
+      "studyKey": "wowhead-laestrite-superbondez-5000-20201211",
+      "inputItemID": 171828,
+      "sourceOreInputs": 5000,
+      "outputQuantities": {
+        "173108": 503,
+        "173109": 460,
+        "173110": 532,
+        "173170": 35,
+        "173171": 41,
+        "173172": 46,
+        "173173": 30
+      },
+      "reportedJCskill": "100",
+      "patch": "9.0.2",
+      "reportedCasts": null,
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "measurement": "original first-person output-unit totals; source percentages per ore are not occurrence chances"
+    },
+    {
+      "originalAuthor": "Elbryan",
+      "sourceURL": "https://www.wowhead.com/item=171828/laestrite-ore",
+      "studyKey": "wowhead-laestrite-elbryan-20000-20210211",
+      "inputItemID": 171828,
+      "sourceOreInputs": 20000,
+      "outputQuantities": {
+        "173108": 1940,
+        "173109": 2058,
+        "173110": 2053,
+        "173170": 190,
+        "173171": 159,
+        "173172": 137,
+        "173173": 141
+      },
+      "reportedJCskill": "100",
+      "patch": null,
+      "reportedCasts": null,
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "measurement": "original first-person output-unit totals; source percentages per ore are not occurrence chances"
+    },
+    {
+      "originalAuthor": "Kinky",
+      "sourceURL": "https://www.wowhead.com/item=171828/laestrite-ore",
+      "studyKey": "wowhead-laestrite-kinky-5000-920",
+      "inputItemID": 171828,
+      "sourceOreInputs": 5000,
+      "outputQuantities": {
+        "173108": 450,
+        "173109": 439,
+        "173110": 461,
+        "173170": 34,
+        "173171": 33,
+        "173172": 38,
+        "173173": 29
+      },
+      "reportedJCskill": "100",
+      "patch": "9.2.0",
+      "reportedCasts": null,
+      "castsWithDrop": null,
+      "zeros": null,
+      "histogram": null,
+      "measurement": "original first-person output-unit totals; source percentages per ore are not occurrence chances"
+    }
+  ],
+  "newly_verified_fields": [
+    "Laestrite Ore 171828 original independent reported 5,000/5,000/20,000/5,000 ore input batches",
+    "Exact source output total quantities for gems 173109,173108,173110 and essences 173170,173172,173171,173173",
+    "Shadowlands Jewelcrafting skill 100 in all four reports; distinct 9.0.2, 9.2.0, and explicitly dated 2021-02-11 version evidence",
+    "No output hit counts, zero-cast histograms or confirmed completed prospect casts available"
   ]
 }
