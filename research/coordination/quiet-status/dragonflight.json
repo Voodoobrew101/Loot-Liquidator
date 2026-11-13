@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T07:34:58.422Z",
-  "status": "original_savedvariable_export_avenue_checked_no_new_completed_cast_cohort",
+  "updated_at": "2026-11-13T08:37:13.778Z",
+  "status": "rank_identity_discrepancy_to_master_no_new_independent_cast_cohort",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,12 +12,14 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Prospect: Draconium 189143/188658/190311, Serevite 190395/190396/190394, Khaz'gorite 190312/190313/190314, Prismatic 194545: original rank-resolved output IDs, complete cast/Resourcefulness and per-material 0-N results still absent.",
-    "Mill: Bubble Poppy 191467 and Saxifrage 191464/191465/191466: original per-completed-mill pigment hit counts and 0-N distributions still absent.",
-    "ProspectMate public source persists net consumed reagent and total output, but not operation counts or 0/1/2+ output frequency, making source-only averages ineligible as measured material per-cast rates."
+    "Draconium 189143/R1,188658/R2,190311/R3 plus Serevite/Khaz'gorite/Prismatic 194545: no NEW independent refund-aware completed-cast per-output hit/zero histogram.",
+    "Saxifrage 191464/R1,191465/R2,191466/R3 and Bubble Poppy 191467/R1 milling: no NEW measured per-completed-mill outputs/zeros.",
+    "Master review requested: queue T0015 item 191464=R1, while its Aary rationale describes R2 Saxifrage (191465)."
   ],
   "newly_verified_fields": [
-    "Independent source-code verification, not a numeric study: Urutseg/ProspectMate.lua tracks Dragon Isles Prospecting spell 374627 and Milling spell 382981; persists item-ID-keyed cumulative consumed input and produced quantity only; explicit per-cast denominators, zero events, histograms and profession profile are absent."
+    "Cross-provider Saxifrage identity: 191464=rank1,191465=rank2,191466=rank3 (GoldCap; R1 corroborated by WoW Price Hub); Aary original R2 comment is on item 191465.",
+    "Independent Draconium identity cross-check: 189143=rank1,188658=rank2,190311=rank3 (GoldCap; identity only).",
+    "Alternative addon tracker avenue checked: Prospect Me/Grindstone predate Dragonflight; xanMortarPestle provides action helper not original per-cast data."
   ],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
@@ -33,7 +35,8 @@
     "research/v3/evidence/dragonflight/2026-11-13T0440-five-unindexed-vault-gear-looter.jsonl",
     "research/v3/evidence/dragonflight/2026-11-13T0536-distinct-gear-crystal-reference-counts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-13T0631-tsm-raw-rate-ledger-search.jsonl",
-    "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl"
+    "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-13T0836-saxifrage-rank-and-alternate-tracker-search.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
@@ -57,14 +60,30 @@
     "https://tradeskillmaster.com/news/4-13-dragonflight-958",
     "https://www.reddit.com/r/woweconomy/comments/19apvo5",
     "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
-    "https://www.curseforge.com/wow/addons/prospectmate"
+    "https://www.curseforge.com/wow/addons/prospectmate",
+    "https://goldcap.gg/fr/retail/eu/items/191464",
+    "https://goldcap.gg/retail/kr/items/191465",
+    "https://goldcap.gg/retail/us/items/191466",
+    "https://wowpricehub.com/eu/commodity/item/Saxifrage-191464",
+    "https://www.wowhead.com/ptr/item=191465/saxifrage",
+    "https://goldcap.gg/retail/kr/items/189143",
+    "https://goldcap.gg/retail/kr/items/188658",
+    "https://goldcap.gg/retail/kr/items/190311",
+    "https://www.curseforge.com/wow/addons/prospect-me",
+    "https://www.curseforge.com/wow/addons/grindstone",
+    "https://www.curseforge.com/wow/addons/xanmortarpestle",
+    "https://www.reddit.com/r/woweconomy/comments/zez5sj",
+    "https://www.reddit.com/r/woweconomy/comments/10i63zb",
+    "https://www.reddit.com/r/woweconomy/comments/10h6ccx",
+    "https://www.reddit.com/r/woweconomy/comments/zkay8v",
+    "https://us.forums.blizzard.com/en/wow/t/draconium-ore/1420126"
   ],
   "verified_commit_sha": "6944c488d6920b8db5e34948378eebce5fd64bc3",
   "commit_sha_scope": "Latest refreshed parent SHA verified from branch immediately before this run's one-commit push; current commit SHA verified only after the push (cannot embed its self SHA atomically).",
   "blockers": [
-    "No newly exposed original independent Draconium/Serevite/Khaz'gorite/Prismatic prospect or Bubble Poppy/Saxifrage mill rank-and-output resolved 0-N dataset with completed cast count, Resourcefulness and build.",
-    "ProspectMate open-source saved-variable format aggregates net consumed input and total output and does not store actual completed casts/zero-inclusive histograms; no public original saved-variable sample found.",
-    "Existing original Bugy, Jallfo, Ursallena, ar_rules, Aary, Xenastro, superbondez and TheChisel cohorts already indexed; cannot recopy as independent observations."
+    "No independent Dragonflight prospect/mill raw event ledger with per-completed-cast per-output 0/1/2+ histograms, Resourcefulness refunds, skill/spec and build.",
+    "Aary's published 1.7k R2 Saxifrage nominal-herb outcomes are NOT new; recorded in existing evidence. Caution: queue T0015 maps R2 rationale to rank1 item 191464, Master review needed.",
+    "Alternative tracked datasets not published: Prospect Me last version 2017, Grindstone May 2022, one-click xanMortarPestle no numerical cohort."
   ],
   "exhausted_sources": [
     {
@@ -281,20 +300,39 @@
         "Warcraft Wiki named Prismatic Ore original item identity page (https://warcraft.wiki.gg/wiki/Prismatic_Ore): describes unlock/use rather than measured prospect output operations.",
         "GitHub general public search for 'Saxifrage Blazing Pigment milling casts', 'Dragon Isles Milling pigment output sample' and 'Draconium Ore prospecting results': no source-original publicly committed input/output operation log."
       ]
+    },
+    {
+      "at": "2026-11-13T08:37:13.778Z",
+      "scope": "Alternative public Dragonflight cast trackers, new name-first study sources and Saxifrage rank conflict check",
+      "reason": "No original new operation-level output cohort. Public alternate add-ons predating Dragonflight or action-only; existing cohorts indexed. Independent primary+price metadata expose Saxifrage queue R1/R2 mismatch.",
+      "whereLooked": [
+        "Reddit r/woweconomy name searches 'Draconium Ore prospecting results spreadsheet 2023', 'Prismatic Ore casts', 'Serevite Ore original 1000 prospects distribution' and 'Khaz'gorite ore 100 prospects'; historic studies already indexed (e.g. https://www.reddit.com/r/woweconomy/comments/zez5sj and https://www.reddit.com/r/woweconomy/comments/10h6ccx), not new experiments.",
+        "Reddit r/woweconomy named Saxifrage 'milled pigment 2000', Bubble Poppy 'milling Serene Pigment 1000', and Dragonflight prospecting addons original cast logs; no new public event-ledger (https://www.reddit.com/r/woweconomy/comments/zkay8v).",
+        "Blizzard US WoW forums named Draconium prospecting result threads and Bubble Poppy completed milling experiment; Draconium-ore topic discusses mining only (https://us.forums.blizzard.com/en/wow/t/draconium-ore/1420126).",
+        "Wowhead Aary firsthand R2 Saxifrage milling comment on exact item 191465 (https://www.wowhead.com/ptr/item=191465/saxifrage): primary numeric pigment totals already in repository, no independent completed-mill ledger or 0-N histogram.",
+        "GoldCap per-item identity pages: Saxifrage 191464 rank 1, 191465 rank 2, 191466 rank 3; verified rank mapping, no raw milling outputs (https://goldcap.gg/fr/retail/eu/items/191464 ; https://goldcap.gg/retail/kr/items/191465 ; https://goldcap.gg/retail/us/items/191466).",
+        "WoW Price Hub Saxifrage 191464 directly labels TIER_1 (https://wowpricehub.com/eu/commodity/item/Saxifrage-191464), agrees with GoldCap and contradicts any use of 191464 as rank 2.",
+        "GoldCap per-item Draconium rank pages 189143 rank 1, 188658 rank 2, 190311 rank 3; previously known identity, no new completed casts (https://goldcap.gg/retail/kr/items/189143 ; https://goldcap.gg/retail/kr/items/188658 ; https://goldcap.gg/retail/kr/items/190311).",
+        "CurseForge alternate original process-tracker route Prospect Me (https://www.curseforge.com/wow/addons/prospect-me), final 2017 release predates Dragonflight; no public actual game-era samples.",
+        "CurseForge Grindstone (https://www.curseforge.com/wow/addons/grindstone), final 2022 release predates Dragonflight; no first-person histogram export.",
+        "CurseForge xanMortarPestle (https://www.curseforge.com/wow/addons/xanmortarpestle), one-click helper discontinued 2022; no observable historic per-output Dragonflight event histogram.",
+        "GitHub public code/source-name searches Draconium Ore + casts, Saxifrage milling results and Dragon Isles Prospecting histogram: no published original event-series found; ProspectMate's aggregate-only saved-variable model separately exhausted in prior run."
+      ]
     }
   ],
-  "next_concrete_step": "Seek a NEW original player-uploaded Dragonflight per-operation event stream from another addon/logger (including recipe ID, each operation output itemID+quantity, zero, consumed/refunded ore, and skill/spec/build), not ProspectMate's cumulative SmartProspectorDB or already-indexed 2022-23 Reddit/Wowhead cohorts. Otherwise log a new, distinct source avenue only.",
+  "next_concrete_step": "Master to check T0015 queue source/rank linkage and any imported Aary Saxifrage records against item 191465 (R2), keeping shared edits under Master. For new numeric priority seek previously unpublished Dragonflight client cast-by-cast saved variable specimens with output item ID+quantity, per-op zero, refund and skill/build; do not revisit exhausted original Reddit/Wowhead cohorts.",
   "validation": {
     "evidence_jsonl_valid": true,
     "evidence_record_count": 1,
     "searched_records": 1,
     "new_independent_numeric_cohorts": 0,
-    "site_count_for_search": 5,
+    "site_count_for_search": 7,
     "unknown_fields_not_promoted": true,
     "duplicate_originals_excluded": true,
-    "source_code_inspected": true,
+    "rank_crosscheck": true,
+    "source_links_visited": true,
     "changed_paths_expected": [
-      "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-13T0836-saxifrage-rank-and-alternate-tracker-search.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "production_changed": false
@@ -303,7 +341,7 @@
   "merge_performed": false,
   "release_performed": false,
   "verified_parent_sha": "6944c488d6920b8db5e34948378eebce5fd64bc3",
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-13T0836-saxifrage-rank-and-alternate-tracker-search.jsonl",
   "current_run_commit_sha": null,
   "newly_verified_fields_cohorts": [
     "Independent source-code verification, not a numeric study: Urutseg/ProspectMate.lua tracks Dragon Isles Prospecting spell 374627 and Milling spell 382981; persists item-ID-keyed cumulative consumed input and produced quantity only; explicit per-cast denominators, zero events, histograms and profession profile are absent."
@@ -334,13 +372,20 @@
   "evidence_record_count": 1,
   "evidence_content_format": "JSONL: 1 searched entry, no measured numerical rows",
   "current_run": {
-    "evidence_file": "research/v3/evidence/dragonflight/20261113T0734-prospectmate-source-only-cast-gap.jsonl",
+    "evidence_file": "research/v3/evidence/dragonflight/2026-11-13T0836-saxifrage-rank-and-alternate-tracker-search.jsonl",
     "record_count": 1,
     "record_type": "searched",
     "new_numeric_studies": 0,
     "original_completed_cast_histograms": 0,
     "validated_jsonl": true,
-    "source_url": "https://github.com/Urutseg/ProspectMate/blob/main/ProspectMate.lua",
-    "searched_sites": 5
+    "source_urls": [
+      "https://goldcap.gg/fr/retail/eu/items/191464",
+      "https://goldcap.gg/retail/kr/items/191465",
+      "https://goldcap.gg/retail/us/items/191466",
+      "https://wowpricehub.com/eu/commodity/item/Saxifrage-191464",
+      "https://www.wowhead.com/ptr/item=191465/saxifrage"
+    ],
+    "searched_sites": 7,
+    "master_queue_identity_warning": "T0015 lists 191464 (R1) but Aary R2 is 191465"
   }
 }
