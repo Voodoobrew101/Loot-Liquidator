@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-13T00:27:34.972Z",
-  "status": "active; new source-displayed disenchant occurrence rows and unresolved eligibility flags; no new completed per-rank prospect/mill histogram",
+  "updated_at": "2026-11-13T01:30:43.031Z",
+  "status": "active; extracted original HTML rank-resolved cumulative Looter counts/one-unit stack bounds for TWW epic plate disenchanting; all output ranks verified; no new ranked ore/herb raw logs",
   "task_ids": [
     "T0048",
     "T0040",
@@ -11,78 +11,216 @@
     "T0008"
   ],
   "exact_gaps_targeted": [
-    "Original TWW epic plate armor disenchant item-specific cast denominators and material-row positive occurrences for 211995 and 211990",
-    "WoWDB no-disenchant eligibility flags on Entombed Seraph Paladin tier gear 211991,211992,211993,211994,211995,211996; source disagreement for 211995",
-    "Still missing post-Oct-2024 Bismuth/Ironclaw/Aqirite completed casts and per-output hits/zeros/histograms, and Mycobloom herb/rank actual milling logs"
+    "Original Wowhead Looter raw HTML `disenchanting` data (not search index) for 211995 and 211990: formerly null Refulgent Crystal output item IDs/ranks, stack amounts, per-output units and zero-inclusive counts",
+    "Five unrecorded original item-side cumulative disenchant cohorts for Entombed Seraph Paladin epic plate: 211991 211992 211993 211994 211996",
+    "Remaining: post-Oct25 2024 Bismuth/Ironclaw/Aqirite rank-specific prospecting actual completed casts/0..N histograms and Khaz Algar milling by herb quality/skill"
   ],
   "newly_verified_fields": [
-    "211995 original Wowhead Looter item-side count casts=81; three distinct displayed Refulgent Crystal rows: castsWithDrop 56,15,9; outputItemID/outputRank/totalQuantity/histogram null",
-    "211990 original Wowhead Looter item-side count casts=74; three distinct displayed Refulgent Crystal rows: castsWithDrop 37,25,9; outputItemID/outputRank/totalQuantity/histogram null",
-    "WoWDB source-catalog noDisenchant flags item IDs 211991,211992,211993,211994,211995,211996; NOT verified live Retail eligibility"
+    "211995 (81 source-reported operations): 219952 rank1 56 hits/56 units histogram {0:25,1:56}; 219954 rank2 15/15 {0:66,1:15}; 219955 rank3 9/9 {0:72,1:9}; 3 replacements",
+    "211990 (74 operations): 219952 rank1 37/37 {0:37,1:37}; 219954 rank2 25/25 {0:49,1:25}; 219955 rank3 9/9 {0:65,1:9}; 3 replacements",
+    "211991 (198 operations): 219952 114/114, 219954 51/51, 219955 30/30; all positive stack=[1,1] verified",
+    "211992 (186 operations): 219952 108/108, 219954 49/49, 219955 27/27; all positive stack=[1,1] verified",
+    "211993 (207 operations): 219952 117/117, 219954 51/51, 219955 38/38; all positive stack=[1,1] verified",
+    "211994 (186 operations): 219952 115/115, 219954 48/48, 219955 22/22; all positive stack=[1,1] verified",
+    "211996 (205 operations): 219952 112/112, 219954 59/59, 219955 32/32; all positive stack=[1,1] verified"
   ],
   "newly_verified_cohorts": [
     {
       "inputItemID": 211995,
+      "inputName": "Entombed Seraph's Sabatons",
       "method": "Disenchant",
       "casts": 81,
-      "per_named_unranked_material_row_hits": [
+      "outputItemIDs": [
+        219952,
+        219954,
+        219955
+      ],
+      "castsWithDrop": [
         56,
         15,
         9
       ],
+      "stackBounds": [
+        1,
+        1
+      ],
+      "zeroOutcomeBasis": "per material: source `outof - count`, using source exact one-unit stack bounds",
       "studyKey": "wowhead-looter-211995-cumulative-item-source-20261113",
-      "source": "https://www.wowhead.com/item=211995/entombed-seraphs-sabatons",
-      "output_ids_and_ranks": "unknown"
+      "source": "https://www.wowhead.com/item=211995"
     },
     {
       "inputItemID": 211990,
+      "inputName": "Entombed Seraph's Waistguard",
       "method": "Disenchant",
       "casts": 74,
-      "per_named_unranked_material_row_hits": [
+      "outputItemIDs": [
+        219952,
+        219954,
+        219955
+      ],
+      "castsWithDrop": [
         37,
         25,
         9
       ],
+      "stackBounds": [
+        1,
+        1
+      ],
+      "zeroOutcomeBasis": "per material: source `outof - count`, using source exact one-unit stack bounds",
       "studyKey": "wowhead-looter-211990-cumulative-item-source-20261113",
-      "source": "https://www.wowhead.com/item=211990/entombed-seraphs-waistguard?bonus=10877%3A40%3A10356%3A8095%3A10298%3A1537%3A10255&spec=66",
-      "output_ids_and_ranks": "unknown"
+      "source": "https://www.wowhead.com/item=211990"
+    },
+    {
+      "inputItemID": 211991,
+      "inputName": "Entombed Seraph's Plumes",
+      "method": "Disenchant",
+      "casts": 198,
+      "outputItemIDs": [
+        219952,
+        219954,
+        219955
+      ],
+      "castsWithDrop": [
+        114,
+        51,
+        30
+      ],
+      "stackBounds": [
+        1,
+        1
+      ],
+      "zeroOutcomeBasis": "per material: source `outof - count`, using source exact one-unit stack bounds",
+      "studyKey": "wowhead-looter-211991-cumulative-item-source-20261113",
+      "source": "https://www.wowhead.com/item=211991"
+    },
+    {
+      "inputItemID": 211992,
+      "inputName": "Entombed Seraph's Greaves",
+      "method": "Disenchant",
+      "casts": 186,
+      "outputItemIDs": [
+        219952,
+        219954,
+        219955
+      ],
+      "castsWithDrop": [
+        108,
+        49,
+        27
+      ],
+      "stackBounds": [
+        1,
+        1
+      ],
+      "zeroOutcomeBasis": "per material: source `outof - count`, using source exact one-unit stack bounds",
+      "studyKey": "wowhead-looter-211992-cumulative-item-source-20261113",
+      "source": "https://www.wowhead.com/item=211992"
+    },
+    {
+      "inputItemID": 211993,
+      "inputName": "Entombed Seraph's Casque",
+      "method": "Disenchant",
+      "casts": 207,
+      "outputItemIDs": [
+        219952,
+        219954,
+        219955
+      ],
+      "castsWithDrop": [
+        117,
+        51,
+        38
+      ],
+      "stackBounds": [
+        1,
+        1
+      ],
+      "zeroOutcomeBasis": "per material: source `outof - count`, using source exact one-unit stack bounds",
+      "studyKey": "wowhead-looter-211993-cumulative-item-source-20261113",
+      "source": "https://www.wowhead.com/item=211993"
+    },
+    {
+      "inputItemID": 211994,
+      "inputName": "Entombed Seraph's Castigation",
+      "method": "Disenchant",
+      "casts": 186,
+      "outputItemIDs": [
+        219952,
+        219954,
+        219955
+      ],
+      "castsWithDrop": [
+        115,
+        48,
+        22
+      ],
+      "stackBounds": [
+        1,
+        1
+      ],
+      "zeroOutcomeBasis": "per material: source `outof - count`, using source exact one-unit stack bounds",
+      "studyKey": "wowhead-looter-211994-cumulative-item-source-20261113",
+      "source": "https://www.wowhead.com/item=211994"
+    },
+    {
+      "inputItemID": 211996,
+      "inputName": "Entombed Seraph's Breastplate",
+      "method": "Disenchant",
+      "casts": 205,
+      "outputItemIDs": [
+        219952,
+        219954,
+        219955
+      ],
+      "castsWithDrop": [
+        112,
+        59,
+        32
+      ],
+      "stackBounds": [
+        1,
+        1
+      ],
+      "zeroOutcomeBasis": "per material: source `outof - count`, using source exact one-unit stack bounds",
+      "studyKey": "wowhead-looter-211996-cumulative-item-source-20261113",
+      "source": "https://www.wowhead.com/item=211996"
     }
   ],
-  "current_run_new_independent_measured_cohorts": 2,
-  "current_run_evidence_records": 12,
-  "current_run_condition_records": 0,
+  "current_run_new_item_specific_cohorts": 5,
+  "current_run_enriched_existing_cohorts": 2,
+  "current_run_evidence_records": 21,
+  "current_run_replaced_rows": 6,
   "source_links": [
-    "https://www.wowhead.com/item=211995/entombed-seraphs-sabatons",
-    "https://www.wowhead.com/item=211990/entombed-seraphs-waistguard?bonus=10877%3A40%3A10356%3A8095%3A10298%3A1537%3A10255&spec=66",
-    "https://www.wowdb.com/items/211995-entombed-seraphs-sabatons",
-    "https://www.wowdb.com/items/211991-entombed-seraphs-plumes",
-    "https://www.wowdb.com/items/211992-entombed-seraphs-greaves",
-    "https://www.wowdb.com/items/211993-entombed-seraphs-casque",
-    "https://www.wowdb.com/items/211994-entombed-seraphs-castigation",
-    "https://www.wowdb.com/items/211996-entombed-seraphs-breastplate"
+    "https://www.wowhead.com/item=211995",
+    "https://www.wowhead.com/item=211990",
+    "https://www.wowhead.com/item=211991",
+    "https://www.wowhead.com/item=211992",
+    "https://www.wowhead.com/item=211993",
+    "https://www.wowhead.com/item=211994",
+    "https://www.wowhead.com/item=211996"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-13T0027-entombed-seraph-looter-and-eligibility.jsonl"
+    "research/v3/evidence/war-within/2026-11-13T0129-entombed-seraph-source-html-rank-stack.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-13T0027-entombed-seraph-looter-and-eligibility.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-13T0129-entombed-seraph-source-html-rank-stack.jsonl"
   ],
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "One atomic commit contains both evidence and status. It cannot contain its own SHA without changing the SHA. Parent d7965a4b792053f4ca1caa20902f1f9dcfd09b13 was checked on remote; resulting commit SHA must be read from GitHub branch/commit after update.",
+  "verified_commit_sha_note": "Single atomic commit includes evidence and this status; a commit cannot embed its own SHA. Verify GitHub branch ref, commit SHA and file read-back after update; do not write second commit just to embed SHA.",
+  "verified_source_parent_sha": "7a329a300dc9e48f076668b9bc5724e00805a481",
   "blockers": [
-    "Wowhead indexed Looter rows do not expose individual output item IDs or rank links or stack-histogram data; never infer crystal ranks from row order or counts.",
-    "Sources provide cumulative item counts, not controlled skill/rarity experiments; sample date, patch, item bonus/ilvl and profession skill/specialization are unknown.",
-    "WoWDB 'Cannot be disenchanted' for 211995 directly conflicts with Wowhead Looter occurrence records; exact present-day Retail and gear variant cannot be decided from source alone.",
-    "No new original rank-separated Bismuth/Ironclaw/Aqirite prospecting or Khaz Algar herb milling raw logs with completed operation denominators/refunds/0..N output histograms found."
+    "All seven samples are cumulative, anonymous Wowhead Looter item-side tables (not date-stamped controlled experiments). Unknown sample patch/build, item bonus or ilvl variants, profession skill/specializations, source character count, Resourcefulness/refunds and cohort timing remain null.",
+    "WoWDB source-catalog noDisenchant flags for 211991, 211992, 211993, 211994, 211995, 211996 conflict with actual indexed Looter outcomes for those IDs; no current Retail in-game test confirms eligibility. Preserve both observations; no current-build recommendation should be inferred.",
+    "WoWDB cannot-disenchant source not checked for 211990 in this run; eligibility unresolved even though cumulative Looter table shows reported operations.",
+    "No post-2024-10-25 original per-ore-rank prospect or per-herb-rank mill casts with resourcefulness and per-output hit histogram recovered in this run."
   ],
   "exhausted_sources": [
-    "Previously reviewed 52 PeaEsk archival prospecting duplicates remain exhausted; do not re-record.",
-    "This run examined many previously recorded Nov 6-10 Wowhead epic armor studies (e.g. 211999, 212069, 212080, 229266, 237639, 237698, 237700, 237703) and excluded duplicates rather than inflating new cohorts.",
-    "Live/indexed Wowhead text for 237706/237608/237607/237610 preserves Looter occurrence numerators only; need original DOM or exported per-operation source for ranks and stacks.",
-    "2026-11-13: Known Oct 2024 source cohorts 1g350pq, 1f83cnd, 1fdmzwy and 2024-10-15 Reikah are already in corpus; duplicate rechecks not imported as new cohorts.",
-    "2026-11-13: Existing Wowhead Looter 212058,212026,237612,229286 are already in prior worker evidence; rejected as duplicates."
+    "Previously imported 2024 1g350pq and 1fdmzwy ore/mill averages and earlier Reikah/PeaEsk samples were not counted again.",
+    "2026-11-13 original Wowhead HTML resolves earlier 211995/211990 search-index ambiguity; do not keep searching the indexed text to recover IDs now known.",
+    "Older author/source cohorts may overlap new per-item cumulative tables by player, but no identified duplicate input-item sample exists; preserve each item cohort separately and avoid treating each material row as an independent cohort."
   ],
-  "next_concrete_step": "Acquire actual source Listview output hyperlinks and pctstack for input IDs 211995 and 211990 to resolve exact 219952/219954/219955 row mappings and conditional 0/1/2 histograms without assuming rank order; test current live eligibility on item-bonus variant, then return to post-October-2024 ranked ore/herb operation logs.",
+  "next_concrete_step": "Have Master resolve explicit Wowhead Looter observed disenchants vs WoWDB prohibited flags on the same gear IDs with live Retail bonus/variant tests; independently seek post-2024-10-25 measured cast/histogram ore and herb samples with skill/spec/refunds; do not promote cumulative Looter samples to current-build baselines without eligibility review.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
