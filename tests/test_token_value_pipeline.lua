@@ -222,8 +222,9 @@ LL.db.characters['Pal-Realm'].professions={Enchanting=true}
 LL.db.includeVerifiedAlts=false
 synthetic.rewards={271466,900003};synthetic.rewardSelection='choice'
 synthetic.rewardLinks={['271466']='item:271466:exactvariant'}
+local unscoredDE=false
 LL.EvaluateDisenchant=function(self,facts)
-    return {value=facts.id==271466 and 100*G or 20*G,yieldModel={confidence=60}}
+    return {value=facts.id==271466 and 100*G or 20*G,yieldModel={confidence=60,confidenceUnscored=unscoredDE or nil}}
 end
 LL._enchantCache=nil;LL:Invalidate()
 r=LL:Evaluate('item:900002',{isSoulbound=true})
@@ -235,6 +236,17 @@ assert(r.why=='Open it, then disenchant Paladin Gloves',r.why)
 text=render(r)
 assert(text:find('Open, then vendor Alternative Paladin Reward',1,true))
 assert(text:find('Open, then disenchant Paladin Gloves',1,true))
+
+-- Token quotes retain value/choice while omitting unscored DE confidence.
+local scoredToken=r
+assert(scoredToken.tokenPiece.disenchantConfidence==60)
+unscoredDE=true;LL:Invalidate()
+r=LL:Evaluate('item:900002',{isSoulbound=true})
+assert(r.action==scoredToken.action and r.tokenQuote.value==scoredToken.tokenQuote.value)
+assert(r.tokenQuote.piece.itemID==scoredToken.tokenQuote.piece.itemID)
+assert(r.tokenPiece.disenchantConfidence==nil,'unknown confidence is absent, not zero')
+assert(not render(r):find('Confidence 60%',1,true),'token tooltip must not leak internal score')
+unscoredDE=false;LL:Invalidate()
 
 -- Exchanges preserve each alternative's own costs and token quantity.
 exchange.rewards={271466,900003};exchange.costsComplete=true
