@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T06:50:19.620Z",
-  "status": "active; searched fresh original sources, added new weak/strong independent legacy disenchant source observations, kept historical and current Retail item validity separate; no new Warmaul Legplates 24995 or Cobalt/Fel Iron completed casts",
+  "updated_at": "2026-11-14T07:50:49.728Z",
+  "status": "active; added distinct original Wowhead Looter item-specific hit counts for 5 legacy gear items and verified 2 historical TBC disenchant-eligibility patch changes; zero new Warmaul, Cobalt, Fel Iron completed-cast datasets; no prices/estimated probabilities",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,152 +12,200 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995: original historical 2068 Looter snapshots, 22445/22446/22447/22449 positive stack frequencies and current scaled-item disenchant eligibility remain unresolved; no copied cohort added.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: no independently sourced new prospect cast/hit/zero logs; original 24-stacks Cobalt and 100/565 Fel Iron ore reports already recorded, not duplicated.",
-    "TBC armor/weapon historical DE: additional firsthand exact Gossamer Belt 7526 -> Dream Dust 11176 single completed result; Netherweave Boots 21853 -> Greater Planar Essence 22446 quantity 6 across unknown number of boots; other historical mixed-input dungeon material pools, no denominator.",
-    "Historical Netherweave Pants 21852: player-supported positive-yield 22445 and 22446 ranges only, explicitly reference/prior, no probability."
+    "Warmaul Legplates 24995 historical 2068 cumulative Looter disenchants still lack original table export, exact stack totals/histograms, actual build/item bonus or modern live eligibility; do not recycle 1559/417/7/48 row hits.",
+    "Adjacent classic gear 2032 and 4745: exact item-specific cumulative Looter cast denominators, material-hit counts and positive stack ranges added; Classic/MoP Classic copy contexts are historical, not validated current Retail.",
+    "Cataclysm Galardell 55775/55739/55712: historic Looter counts and per-output hit counts added; historical level ~318 vs scaled current level 15; no modern eligibility/patch/source version.",
+    "Burning Crusade patch 2.1.0 (2007-05-22) historical disenchant eligibility changed for Ironscale War Cloak 27550 and Gladiator's Endgame 28346; do not infer current applicability.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: no NEW independently recorded completed prospect casts, per-output hit counts, or 0/1/2 histograms. Old 24-stack Cobalt and 100/565-ore Fel Iron cohorts intentionally not duplicated.",
+    "Spaulders of the Wayward Vanquisher 45661: full class reward list previously sourced; no new verified variants or vendor redemptions, intentionally not recopied."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-gossamer-belt-allakhazam-one-dream-dust",
-      "inputItemID": 7526,
-      "outputItemIDs": [
-        11176
-      ],
-      "completedCasts": 1,
-      "castsWithDrop": {
-        "11176": 1
+      "studyKey": "wowhead-looter-galardell-cord-55775-344-snapshot",
+      "inputItemID": 55775,
+      "inputName": "Galardell Cord",
+      "source": "https://www.wowhead.com/item=55775/galardell-cord",
+      "looterReportedDisenchants": 344,
+      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
+      "perOutputHits": {
+        "52555": 271,
+        "52719": 68
       },
-      "totalQuantity": {
-        "11176": 1
-      },
-      "histogram": {
-        "11176": {
-          "1": 1
-        }
-      },
-      "source": "https://www.wowhead.com/wotlk/item=7526/gossamer-belt"
-    },
-    {
-      "studyKey": "wowhead-planar-864648-unspecified-boots-six-essences",
-      "inputItemID": 21853,
-      "outputItemIDs": [
-        22446
-      ],
-      "completedCasts": null,
-      "totalQuantity": {
-        "22446": 6
-      },
-      "source": "https://www.wowhead.com/mop-classic/item=22446/greater-planar-essence"
-    },
-    {
-      "studyKey": "wowhead-arcane-omgbanana-shattered-halls-normal-one-run",
-      "inputItemID": null,
-      "outputItemIDs": [
-        22445,
-        22446
-      ],
-      "completedCasts": null,
-      "totalQuantity": {
-        "22445": 28,
-        "22446": 8
-      },
-      "source": "https://www.wowhead.com/item=22445/arcane-dust"
-    },
-    {
-      "studyKey": "wowhead-arcane-theqiw-mana-tombs-mixed-one-run",
-      "inputItemID": null,
-      "outputItemIDs": [
-        22447,
-        22445,
-        22448
-      ],
-      "completedCasts": null,
-      "totalQuantity": {
-        "22445": 15,
-        "22447": 14,
-        "22448": 6
-      },
-      "source": "https://www.wowhead.com/item=22445/arcane-dust"
-    },
-    {
-      "studyKey": "wowhead-arcane-sercankd-shadow-labyrinth-mixed-run",
-      "inputItemID": null,
-      "outputItemIDs": [
-        22445,
-        22449,
-        22446,
-        22450
-      ],
-      "completedCasts": null,
-      "totalQuantity": {
-        "22445": 46,
-        "22446": 10,
-        "22449": 10,
-        "22450": 2
-      },
-      "source": "https://www.wowhead.com/item=22445/arcane-dust"
-    },
-    {
-      "studyKey": "wowhead-planar-893008-netherweave-pants-nonsampled-yield-prior",
-      "inputItemID": 21852,
-      "outputItemIDs": [
-        22446,
-        22445
-      ],
-      "referenceOnly": true,
-      "sourceClaimedPositiveRanges": {
-        "22445": [
+      "positiveStackRanges": {
+        "52555": [
           2,
-          4
+          5
         ],
-        "22446": [
+        "52719": [
+          2,
+          3
+        ]
+      },
+      "zeroOutcomes": null,
+      "totalUnits": null,
+      "perOutputHistograms": null
+    },
+    {
+      "studyKey": "wowhead-looter-galardell-handwraps-55739-386-snapshot",
+      "inputItemID": 55739,
+      "inputName": "Galardell Handwraps",
+      "source": "https://www.wowhead.com/item=55739/galardell-handwraps",
+      "looterReportedDisenchants": 386,
+      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
+      "perOutputHits": {
+        "52555": 291,
+        "52719": 89
+      },
+      "positiveStackRanges": {
+        "52555": [
+          2,
+          5
+        ],
+        "52719": [
+          2,
+          3
+        ]
+      },
+      "zeroOutcomes": null,
+      "totalUnits": null,
+      "perOutputHistograms": null
+    },
+    {
+      "studyKey": "wowhead-looter-galardell-wristwraps-55712-367-snapshot",
+      "inputItemID": 55712,
+      "inputName": "Galardell Wristwraps",
+      "source": "https://www.wowhead.com/item=55712/galardell-wristwraps",
+      "looterReportedDisenchants": 367,
+      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
+      "perOutputHits": {
+        "52555": 263,
+        "52719": 99
+      },
+      "positiveStackRanges": {
+        "52555": [
+          2,
+          5
+        ],
+        "52719": [
+          2,
+          3
+        ]
+      },
+      "zeroOutcomes": null,
+      "totalUnits": null,
+      "perOutputHistograms": null
+    },
+    {
+      "studyKey": "wowhead-mop-classic-looter-gallan-cuffs-2032-224-snapshot",
+      "inputItemID": 2032,
+      "inputName": "Gallan Cuffs",
+      "source": "https://www.wowhead.com/mop-classic/item=2032/gallan-cuffs",
+      "looterReportedDisenchants": 224,
+      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
+      "perOutputHits": {
+        "11135": 30,
+        "11137": 186,
+        "11139": 8
+      },
+      "positiveStackRanges": {
+        "11135": [
+          1,
+          2
+        ],
+        "11137": [
           1,
           2
         ]
       },
-      "source": "https://www.wowhead.com/mop-classic/item=22446/greater-planar-essence"
+      "zeroOutcomes": null,
+      "totalUnits": null,
+      "perOutputHistograms": null
+    },
+    {
+      "studyKey": "wowhead-mop-classic-looter-war-rider-bracers-4745-18-snapshot",
+      "inputItemID": 4745,
+      "inputName": "War Rider Bracers",
+      "source": "https://www.wowhead.com/mop-classic/item=4745/war-rider-bracers",
+      "looterReportedDisenchants": 18,
+      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
+      "perOutputHits": {
+        "11135": 4,
+        "11137": 14
+      },
+      "positiveStackRanges": {
+        "11135": [
+          1,
+          2
+        ],
+        "11137": [
+          1,
+          2
+        ]
+      },
+      "zeroOutcomes": null,
+      "totalUnits": null,
+      "perOutputHistograms": null
+    }
+  ],
+  "newly_verified_rate_changes": [
+    {
+      "inputItemID": 27550,
+      "inputName": "Ironscale War Cloak",
+      "date": "2007-05-22",
+      "patch": "2.1.0",
+      "change": "can now be disenchanted",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_2.1.0"
+    },
+    {
+      "inputItemID": 28346,
+      "inputName": "Gladiator's Endgame",
+      "date": "2007-05-22",
+      "patch": "2.1.0",
+      "change": "can no longer be disenchanted",
+      "source": "https://warcraft.wiki.gg/wiki/Patch_2.1.0"
     }
   ],
   "numeric_summary": {
     "newEvidenceRows": 13,
-    "firsthandRows": 11,
-    "referenceOnlyRows": 2,
-    "distinctOriginalSourceCohorts": 6,
-    "completedDisenchantsIndependentlyVerified": 1,
-    "warmaul24995NewCompletedCasts": 0,
-    "cobaltOre36909NewProspectCasts": 0,
-    "felIronOre23424NewProspectCasts": 0,
-    "goldEVAdded": 0,
-    "fabricatedZeroOutcomes": 0
+    "dropRows": 11,
+    "rateChangeRows": 2,
+    "distinctOriginalLooterItemCohorts": 5,
+    "sourceReportedCumulativeDisenchantsAcrossDistinctItems": 1339,
+    "newVerifiedWarmaul24995Casts": 0,
+    "newVerifiedCobaltOre36909Casts": 0,
+    "newVerifiedFelIronOre23424Casts": 0,
+    "newZeroOutcomesMeasured": 0,
+    "newMeasuredTotalQuantities": 0,
+    "pricesRecorded": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0650-additional-original-disenchant-tbc-classic.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0650-additional-original-disenchant-tbc-classic.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/20261114T0750-new-looter-classic-cata-and-tbc-eligibility.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/20261114T0750-new-looter-classic-cata-and-tbc-eligibility.jsonl",
   "sources": [
-    "https://www.wowhead.com/wotlk/item=7526/gossamer-belt",
-    "https://www.wowhead.com/mop-classic/item=22446/greater-planar-essence",
-    "https://www.wowhead.com/item=22445/arcane-dust"
+    "https://www.wowhead.com/item=55775/galardell-cord",
+    "https://www.wowhead.com/item=55739/galardell-handwraps",
+    "https://www.wowhead.com/item=55712/galardell-wristwraps",
+    "https://www.wowhead.com/mop-classic/item=2032/gallan-cuffs",
+    "https://www.wowhead.com/mop-classic/item=4745/war-rider-bracers",
+    "https://warcraft.wiki.gg/wiki/Patch_2.1.0"
   ],
-  "verified_base_commit_sha": "a0e9ba19f257e81a05190439083cc9ce0022ac7d",
+  "verified_base_commit_sha": "ef156e0678685e57d7414e887f861e1407a31a02",
   "verified_commit_sha": null,
-  "commit_sha_note": "Evidence and status are committed together exactly once. A status file cannot contain the SHA of its own containing Git commit without changing that SHA. Final commit SHA and evidence/status readback must be confirmed out of band.",
+  "commit_sha_note": "An in-commit status file cannot contain its own enclosing commit SHA; verification of final commit and readback occurs immediately after writing.",
   "blockers": [
-    "No primary independent Warmaul 24995 per-cast output stack quantities/histograms or current Retail live eligibility.",
-    "No new verified source-dated current Retail 36909 or 23424 per-cast prospect data, denominator/hit counts/zero histograms.",
-    "Most new material pools cover unidentified multiple gear inputs and one dungeon run, not a count of completed disenchants; do not use them to estimate probabilities or to assert material-specific gear outputs.",
-    "Netherweave Boots six-essence anecdote lacks number of boots/operations and conversion status; no casts assigned.",
-    "User-authorized worker schema has no first-class source-era/build or measured-vs-reference positive-stack range field; request extension/validation through Master instead of inventing fields."
+    "Warmaul Legplates original cumulative Wowhead Looter row/export still unavailable for per-cast stack histogram or source build; current WoWDB has conflicting non-disenchantable flag on scaled version.",
+    "New Cobalt and Fel Iron source-specific completed-cast/hit datasets absent. Nominal ore/5 equivalences are not counted as real casts.",
+    "Cumulative Wowhead Looter table counts may mix versions/patches. These are sourced snapshots with unknown data date, actual source build, item bonus IDs and caster skill. Cross-output missing rows are not established zeros.",
+    "Historical Galardell level-318 vs current level-15 scaled items require item variant gate and Master review before any numeric importer promotion.",
+    "No first-class source-build/era or Looter-cumulative-basis fields in current schema. Request changes via Master; source context retained in notes.",
+    "Historical TBC patch 2.1.0 changes cannot establish present-day Retail eligibility."
   ],
   "exhausted_sources": [
-    "45661 token full reward list already sourced in legacy-20261101-216; not duplicated.",
-    "Existing Netherweave Boots, Green Silken Shoulders, Arcanoweave Boots, and Wizardweave Robe firsthand cohorts already captured; not copied.",
-    "Warmaul historical cumulative Looter 2068 source not reopened as independent measurement; older 24995 source sample not recycled.",
-    "Existing recent Netherweave Bracers, The Sharp Cookie, Reaver Legplates and Fel Iron Ore 100/565/5-stack samples deduplicated; no reused numeric cohort.",
-    "Horned Cobalt Helm 40955 and Shadowmight Ring 43249 source comments newly added; other mirrored Wowhead language and era copies of same comments are not distinct studies.",
-    "Warmaul 24995 historical cumulative Looter and Evowow opaque weights: not repeated as studies.",
-    "Fel Iron 100/565 ore original studies and Cobalt 24-stack original studies already indexed; not copied.",
-    "Wowhead Arcane Dust author 16088 (147 rings), 509750 (10 belts), Scott75 (70 bracers), Jakebees (BfA 9 greens and 11 bracers) already committed in earlier evidence; confirmed deduplication and excluded.",
-    "TBC Netherweave Bracers commenter 947919 material pool 28 Arcane Dust includes two unidentified greens, so cannot be assigned solely to 17 bracers; existing null total was correctly preserved."
+    "Warmaul 24995 2068 cumulative Looter cohort and opaque Evowow weights already represented; no duplicate.",
+    "Cobalt Ore 36909 existing 24-stack Russian commenter and Fel Iron Ore 23424 100/565 ore Thottbot cohorts already captured; not copied.",
+    "Mithril Ore Kaliope per-cast histograms and Tontons BfA ore prospecting previously captured; not copied.",
+    "Spaulders of Wayward Vanquisher 45661 full basic token list already recorded.",
+    "Mirrored Wowhead PTR, locale or other game-version pages displaying identical Galardell Looter totals are same source snapshots, not new cohorts.",
+    "Firecrawl source extraction unavailable owing to daily external-service credit exhaustion; direct search-index HTML tables were used instead."
   ],
-  "next_concrete_step": "Find firsthand item-specific Warmaul 24995 or matching TBC uncommon ilvl102-120 armor/weapon per-cast raw DE logs with patch and suffix, or new Cobalt/Fel Iron raw prospect addon exports. Ask Master to gate mixed-input, build-unknown and source-claimed prior observations before numeric importer and to preserve DE eligibility negative fixtures."
+  "next_concrete_step": "Acquire direct original 24995 Warmaul item-level/bonus/build keyed DE log or full historical Looter histogram/export and live eligibility negative fixture; otherwise seek independent 36909/23424 prospect raw SavedVariables with completed cast denominator and 0/1/2 output histograms. Ask Master for version/era and cumulative-Looter schema safeguards before importer promotion."
 }
