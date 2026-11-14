@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T06:39:05.210Z",
-  "status": "active; new independent prospect/mill completed-cast data not found after cross-site search; Serevite rank ID mapping rechecked without claiming novel empirical cohort",
+  "updated_at": "2026-11-14T07:36:49.508Z",
+  "status": "active; alternate 2023/post-beta and German original data search completed; no new independent per-cast numeric cohort",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,60 +12,31 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore rank 1 189143, rank 2 188658 and rank 3 190311: first-party per-output completed casts, hit/zero counts and 0-N histograms, specializations and refund ledger absent",
-    "Serevite Ore rank 1 190395, rank 2 190396 and rank 3 190394: exact item-rank identity rechecked; first-party per-output casts/hits/zeros/histogram with Resourcefulness still absent",
-    "Khaz'gorite Ore 190312/190313/190314 and Prismatic Ore 194545 -> Eternity Amber 192849/192850/192851: current-patch original output-rank-specific completed-operation histogram absent",
-    "Bubble Poppy 191467 -> Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 -> Blazing Pigment 198418/198419/198420: controlled actual completed mills, per-output hit/zero counts, refunds and 0-N histograms absent",
-    "Dragonflight gear disenchanting: existing historical item-specific hits and Pdpaul 10-weapon 25-dust total have unresolved gear IDs/patch, stack histograms and per-material hits"
+    "Prospect Draconium Ore 189143/188658/190311; Serevite Ore 190395/190396/190394; Khaz'gorite Ore 190312/190313/190314; Prismatic Ore 194545: lack new first-party quality-separated completed operations, material-specific hits, zero bins or 0-N yield histograms",
+    "Mill Bubble Poppy 191467/191468/191469 -> Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 -> Blazing Pigment 198418/198419/198420: no independent completed-mill event logs with exact rank/refunds/positive-stack histograms",
+    "Dragonflight disenchanting positive-stack histogram and gear identity still secondary to ore and herb operation-denominator gaps"
   ],
-  "newly_verified_fields": [
-    {
-      "method": "identity_crosscheck",
-      "inputName": "Serevite Ore",
-      "itemRanks": [
-        {
-          "itemID": 190395,
-          "rank": 1
-        },
-        {
-          "itemID": 190396,
-          "rank": 2
-        },
-        {
-          "itemID": 190394,
-          "rank": 3
-        }
-      ],
-      "sources": [
-        "https://goldcap.gg/retail/us/items/190395",
-        "https://goldcap.gg/retail/us/items/190396",
-        "https://goldcap.gg/retail/eu/items/190394",
-        "https://github.com/t-mart/wow-auction/blob/master/README.md"
-      ],
-      "notes": "Verified against current explicit rank labels; already documented in prior repo research, therefore not counted as a newly discovered cohort or independent numeric measurement."
-    }
-  ],
+  "newly_verified_fields": [],
   "newly_verified_cohorts": [],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-14T0638-new-source-and-rank-gap-audit.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-14T0735-distinct-postbeta-source-check.jsonl"
   ],
   "source_links": [
-    "https://goldcap.gg/retail/us/items/190395",
-    "https://goldcap.gg/retail/us/items/190396",
-    "https://goldcap.gg/retail/eu/items/190394",
-    "https://github.com/t-mart/wow-auction/blob/master/README.md",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
-    "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://www.wowhead.com/item=198418/blazing-pigment"
+    "https://www.reddit.com/r/woweconomy/comments/18sd8ly",
+    "https://www.goldgoblin.net/berufe/inschriftenkunde/inschriftenkunde-der-dracheninseln/",
+    "https://tradeskillmaster.com/news/4-13-dragonflight-958",
+    "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
+    "https://www.wowhead.com/item=191469/bubble-poppy",
+    "https://www.reddit.com/r/woweconomy/comments/10me1e7"
   ],
-  "verified_commit_sha": "eae5b587648896ca331218eb66a82d0e7bd88bf7",
-  "commit_sha_scope": "Evidence commit read back and verified; quiet-status file is a separate subsequent metadata commit because this connector uses path-scoped content writes.",
+  "verified_commit_sha": "78c8966068322cff91863d417d68870bf54a6cdc",
+  "commit_sha_scope": "Parent verified at run start. Current run's atomic evidence+status commit SHA cannot be embedded in its own Git tree; read branch head for this run's SHA.",
   "blockers": [
-    "No new independent original rank-resolved completed-cast 0-N prospecting or milling dataset was located; all quantitative historical studies reviewed in this run match already-indexed source lineages",
-    "Resourcefulness refund and reprocessing counts are missing from nominal ore/herb observations; cannot infer operations, zeros or P(hit) from gross inputs or output quantities",
-    "Prismatic Ore and gear disenchanting output rank/gear variant/build/skill attribution and positive-stack histograms remain unverified; no fake confidence or numerical promotion"
+    "No new original per-material output stack/zero histogram. Newly encountered large Serevite ore experiment concerns Crushing without reported outputs, not Prospect.",
+    "Nominal inputs plus Resourcefulness reprocessing cannot be converted to completed casts without actual event ledger.",
+    "All historical first-person prospect/mill numeric sources recovered in this search were already indexed; no duplicate cohorts recorded."
   ],
   "exhausted_sources": [
     {
@@ -621,38 +592,54 @@
         "CurseForge, by name Dragonflight ProspectMate recorded processing exports: https://www.curseforge.com/wow/addons/prospectmate (tracking tool described, no accessible raw saved-variable/export cohort)",
         "Wowhead economy report, by name original highest quality Draconium/Serevite tests: https://www.wowhead.com/news/dragonflight-jewelcrafting-analysis-wowhead-economy-weekly-wrap-up-249-329385 (Jallfo beta 3x5000 per ore source workbook already in repo research, not independent new live data)"
       ]
+    },
+    {
+      "at": "2026-11-14T07:36:49.508Z",
+      "scope": "Alternative original Dragon Isles 2023/post-beta prospect/mill data and German profession pages; 10.2 Crushing disambiguation",
+      "reason": "No eligible new original per-completed-cast numeric sample; 100k Serevite source only Crushing and earlier sources already indexed",
+      "whereLooked": [
+        "Reddit: Serevite Ore 2023 patch 10.2 original (https://www.reddit.com/r/woweconomy/comments/18sd8ly); author reports 100,000 Q2 Serevite inputs CRUSHED, not prospecting, and supplies no gem conversion outcomes or per-operation histogram",
+        "US Blizzard forums: Draconium Ore/Serevite Ore racial prospect testing (https://us.forums.blizzard.com/en/wow/t/massive-profession-advantage-from-racial-bonuses/1484679); copy of original https://www.reddit.com/r/woweconomy/comments/109bytz, already indexed; gross ore cohorts, no fresh cast ledger",
+        "German GoldGoblin: by-name Blasenmohn/Steinbrich Dragon Isles Mahlen (https://www.goldgoblin.net/berufe/inschriftenkunde/inschriftenkunde-der-dracheninseln/); 5-herb recipe, not actual outcome-by-cast data",
+        "WoW-Professions: by-name Bubble Poppy/Saxifrage Mill (https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight); guide reports 2–5 pigment reference range, no original histogram",
+        "Wowhead: Bubble Poppy item (https://www.wowhead.com/item=191469/bubble-poppy); Serene Pigment identity comments, no denominator/total quantity measurements",
+        "Wowhead: Blazing Pigment item (https://www.wowhead.com/item=198419/blazing-pigment); Saxifrage output-family identity without controlled casts/hit count",
+        "Reddit: 10,500 nominal Hochenblume milling with 35% Resourcefulness (https://www.reddit.com/r/woweconomy/comments/10me1e7); original already recorded, outputs totals only, zero counts and reprocessed casts unknown",
+        "Reddit: Jallfo 2022 beta named Draconium and Serevite prospect testing (https://www.reddit.com/r/woweconomy/comments/y3e8ek); original 5,000 nominal rank-3 ore/character data already indexed, beta era",
+        "TradeSkillMaster: Dragonflight prospect/mill/disenchant rates 4.13 (https://tradeskillmaster.com/news/4-13-dragonflight-958); 2023 release notes acknowledge gathered data but disclose no raw cohorts or outcome distribution",
+        "Wowhead: Dragon Isles Prospecting original Bugy averages (https://www.wowhead.com/spell=374627/dragon-isles-prospecting); historical ore-normalized output means already indexed, rank and completed casts unproven",
+        "Reddit: original Draenei Serevite/Draconium prospecting (https://www.reddit.com/r/woweconomy/comments/109bytz); existing overlapping author cohorts, no new per-output cast-event samples"
+      ]
     }
   ],
-  "next_concrete_step": "Seek original rank-separated Dragonflight SavedVariables/event exports or archived full spreadsheets disclosing completed cast counts, input/output item IDs and ranks, per-output zero/1/2+ stacks, skill, specialization, build and Resourcefulness refunds. If only previously imported cohorts recur, do not duplicate them; request new player-recorded samples through Master.",
+  "next_concrete_step": "Pursue genuinely unindexed primary addon SavedVariables/event exports or original cast logs with exact item/rank IDs, skill, build, Resourcefulness refunds and per-output zero/1/2+ bins; request new sample collection through Master if unavailable.",
   "validation": {
     "jsonl_parse": true,
     "record_count": 1,
     "searched_records": 1,
     "measured_drop_records": 0,
-    "where_looked_count": 13,
+    "where_looked_count": 11,
     "where_looked_sites": [
       "reddit.com",
-      "wowhead.com",
       "us.forums.blizzard.com",
+      "goldgoblin.net",
       "wow-professions.com",
-      "goldcap.gg",
-      "github.com",
-      "curseforge.com"
+      "wowhead.com",
+      "tradeskillmaster.com"
     ],
     "unique_record_ids": true,
     "unproved_fields_left_null": true,
     "no_copied_cohorts": true,
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-14T0638-new-source-and-rank-gap-audit.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-14T0735-distinct-postbeta-source-check.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "verified_parent_sha": "566b39da52938275905a9d0bad14cd4cd7ab95f4",
-    "evidence_blob_sha": "c8679126493573ff5a818fb0593cfb32d85d05d1",
-    "post_commit_readback": "Evidence JSONL fetched and parsed; evidence commit file-path readback passed. Status readback pending."
+    "verified_parent_sha": "78c8966068322cff91863d417d68870bf54a6cdc",
+    "post_commit_readback": "pending"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T0638-new-source-and-rank-gap-audit.jsonl",
-  "verified_parent_sha": "566b39da52938275905a9d0bad14cd4cd7ab95f4"
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T0735-distinct-postbeta-source-check.jsonl",
+  "verified_parent_sha": "78c8966068322cff91863d417d68870bf54a6cdc"
 }
