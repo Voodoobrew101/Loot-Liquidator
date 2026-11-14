@@ -1,3 +1,11 @@
+## Coordinator T0048/T0052 — rankless TWW Crystal collision and historical ten-robe denominator — 2026-11-14T04:07Z
+
+**New source-verified identity/numeric checkpoint; no newly measured current Retail casts or gold decisions.** Original indexed Wowhead pages corroborate [212017](https://www.wowhead.com/item=212017/lightless-scavengers-bonegirdle) **35 item disenchants with three Refulgent Crystal appearance counts 21/12/2** and [212043](https://www.wowhead.com/ptr/item=212043/gatecrashers-armguards) **27 with 17/6/4**. Original output rank hyperlinks remain unrecovered despite three distinct quality item IDs 219952/219954/219955. Static estimator flow maps each site's three rankless same-name rows to one family key and can suppress later material rows as `duplicateRowInStudy`; **not executed through compiler or tooltip**, and equal summed appearances do not prove exclusive outcomes.
+
+Independently checked legacy worker's [Netherweave Robe 21854 original comment](https://www.wowhead.com/tbc/item=21854/netherweave-robe): **10 historical completed disenchants**, Greater Planar Essence 22446 per-output **{0:5, 1:2, 2:3}**, **8 units**. This is TBC Classic history, not Retail baseline/eligibility; no live prices. Also confirmed 25122 one original 3-Arcane-Dust outcome; Halaa 30568 commenter identity remains ambiguous. [Full scoped original-source/static-code audit](../v3/evidence/master/20261114T0407-tww-rankless-crystal-identity-and-original-robe-ten-cast-check.md). Highest priority: current Midnight T0005/T0039/T0045 authentic 0..N rank-specific event logs, and output-linked TWW material IDs (no guess from row order). No changes to workers, main, PRs or protected integration.
+
+---
+
 ## Coordinator T0041/T0046 — original T2 Serevite identity and new gear catalog conflict — 2026-11-14T03:03Z
 
 **New exact-ID source finding, not new observed casts or gold decisions.** The original [2022 GoldGoblin 50,000-T2-Serevite prospect article](https://www.goldgoblin.net/gold-verdienen-mit-sondieren/) explicitly links T2 **190396** (T1 190395; T3 190394) and states **201 T2 processing skill**. Purchased 50,000 ore is not a verified completed-cast count, and 650k purchase/770k sales are historical prices, not Retail EV. Its output screenshot could not be accurately read.
