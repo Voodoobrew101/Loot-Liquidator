@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-13T23:15:25.005Z",
-  "status": "active; newly inspected independent Midnight collector/export pathway; no original per-operation yield cohort or newly measured probabilities",
+  "updated_at": "2026-11-14T00:18:31.237Z",
+  "status": "active; one new unique rare-weapon Wowhead Looter reference-only item-side snapshot; no original per-event cohort or estimator-eligible yield evidence",
   "task_ids": [
     "T0026",
     "T0049",
@@ -18,69 +18,86 @@
     "T0045: rank-paired Tranquility Bloom 236761/236767, other Midnight herbs, Powder Pigment 245807/245808 exact ten-herb completed mills and zero-inclusive outcomes."
   ],
   "newly_verified_fields_or_cohorts": {
-    "evidence_classification": "One new source-check record, independently inspected 2026 Midnight-compatible public collector and static recipe-data export; source-only; no independent original measured operation cohort or newly unknown output identity.",
+    "evidence_classification": "Single mutable LIVE item-side source snapshot, four display rows for one input gear; reference-only, NOT original independent event cohort.",
     "original_completed_operation_cohorts": 0,
-    "newly_source_correlated_recipe_spell_ids": [
-      1231127,
-      1269575
+    "new_exact_input_item_ids": [
+      251255
     ],
-    "newly_source_correlated_input_item_ids": [
-      237359,
-      237361,
-      237362,
-      237363,
-      237364,
-      237365,
-      236761,
-      236767,
-      236770,
-      236771,
-      236776,
-      236777,
-      236778,
-      236779
-    ],
-    "new_exact_input_item_ids": [],
     "new_exact_output_item_ids": [],
+    "source_reported_gear_item_id": 251255,
+    "source_reported_disencchants": 117,
+    "source_reported_material_occurrence_rows": [
+      {
+        "outputName": "Eversinging Dust",
+        "hits": 98,
+        "stackDisplay": "1-3",
+        "rank": null
+      },
+      {
+        "outputName": "Radiant Shard",
+        "hits": 15,
+        "rank": null
+      },
+      {
+        "outputName": "Dawn Crystal",
+        "hits": 3,
+        "rank": null
+      },
+      {
+        "outputName": "Eversinging Dust",
+        "hits": 1,
+        "stackDisplay": "2",
+        "rank": null
+      }
+    ],
     "casts": null,
     "castsWithDrop": null,
     "totalQuantity": null,
     "zero_outcome_count": null,
     "histogram": null,
-    "source_only_notes": "ProspectMate collector SmartProspectorDB v3 saves consumed + results aggregate per input only. It does not persist per-cast operations, zeros, material occurrence, skill/spec/patch or refunds. Koodattu mapping static data contains salvage slot inputQuantity 1 and generic output 262908 for all herb inputs; do not infer gameplay batch sizes or output yields."
+    "source_only_notes": "Item 251255 is absent from indexed repository file search and from earlier owned status source lists. Its live Wowhead 117 Looter table rows are one cumulative source with unknown actual variant, linked material IDs, output ranks, per-event output zeros and at-cast context. Do not promote row counts to independent field-measured probabilities or double-count repeated dust rows."
   },
   "numeric_fields_advanced": {
-    "new_exact_input_item_ids": [],
+    "new_exact_input_item_ids": [
+      251255
+    ],
     "new_exact_output_item_ids": [],
     "newly_verified_completed_casts": 0,
     "newly_verified_castsWithDrop": 0,
     "newly_verified_totalQuantity": 0,
     "newly_verified_histogram_bins": 0,
-    "newly_verified_probabilities": 0
+    "newly_verified_probabilities": 0,
+    "source_only_display_counts": [
+      98,
+      15,
+      3,
+      1
+    ],
+    "source_only_denominator": 117
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-13T2315-prospectmate-aggregate-collector-check.jsonl"
+    "research/v3/evidence/midnight/2026-11-14T0018-sanctum-greatsword-de-source-snapshot.jsonl"
   ],
   "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-13T2016-s2-gear-looter-source-identity.jsonl",
   "evidence_record_ids": [
-    "midnight-20261113-2315-001"
+    "midnight-20261114-0018-001",
+    "midnight-20261114-0018-002",
+    "midnight-20261114-0018-003",
+    "midnight-20261114-0018-004"
   ],
   "source_links": [
-    "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua",
-    "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/README.MD",
-    "https://www.curseforge.com/wow/addons/prospectmate",
-    "https://github.com/Koodattu/wow-addon-dev/blob/5d5295d6f09d6bdbf5ac4590c81b9d064d6a482a/PRE-Data-Export/parsed/salvage_input_output_map.json",
-    "https://github.com/Koodattu/wow-profession-profit-calculation/blob/384b5b0f0a1a79a3eab89aa9a050393cdba55baf/game-data-parsed/salvaging_config_manual.json"
+    "https://www.wowhead.com/item=251255/recovered-sanctum-greatsword",
+    "https://www.wowhead.com/item=243599/eversinging-dust",
+    "https://www.wowhead.com/item=243602/radiant-shard"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One atomic research-evidence+status commit; self SHA cannot be committed inside own status file without a second commit. Verified by branch SHA and file contents after ref update.",
+  "commit_note": "Atomic evidence+status commit: own commit SHA cannot be embedded inside its own contents in a single commit; verified against branch HEAD and file read-back after publishing.",
   "blockers": [
-    "Current 272246 ilvl305 at-disenchant successful operation and corresponding output item/amount/zero ledger plus skill/spec/build still missing; base 206 noDisenchant flag conflicts with mutable Looter aggregate.",
-    "No independent rank-specific completed cast, per-output hit/zero/stack histogram and Resourcefulness ledger for Umbral Tin 237362/237363, Copper 237359/237361 or Silver 237364/237365; earlier Cardinalai/Honeybone original totals already indexed.",
-    "ProspectMate 2026 retail collector only exposes aggregates consumed and outputs, not original completed operation counts or per-event outcomes. No publicly indexed raw SmartProspectorDB dataset found; consumed units may reflect Resourcefulness and cannot become casts.",
-    "Midnight Milling 236761/236767 -> 245807/245808 raw per-cast results including zeros and skill/spec/refunds remain missing. Koodattu static generic output map is not a measured cohort.",
-    "Firecrawl research connector was out of daily credits for this run; used public GitHub connector and web search instead."
+    "Original 272246 Miststalker's Wristbands ilvl305 successful disenchant itemLink/bonus/skill/spec/build/output ledger still missing; item 251255 displayed ilvl44/227 cannot substitute at-cast ilvl.",
+    "Item 251255 Wowhead 117-item mutable aggregate lacks output linked IDs/ranks, independent event-level zero and positive-stack histograms, actual item level/bonus, skill/spec and patch epoch; do not promote to measured cohort.",
+    "Rank-specific Umbral Tin 237362/237363, Refulgent Copper 237359/237361, Brilliant Silver 237364/237365 prospect outputs and Eversong Diamond 242608/242712 still lack independently new original event-level hits/zero histograms and refunds.",
+    "Midnight milling 236761/236767 -> Powder Pigment 245807/245808 complete event-level receipts, ranks, and refund context remain absent; prior pooled totals cannot be converted to casts."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -138,10 +155,11 @@
     "2026-11-13T20:16:18.915Z: Checked names 272246, Umbral Tin Ore, Eversong Diamond, Refulgent Copper, Brilliant Silver and Tranquility Bloom for new 0-inclusive raw event ledgers across indexed Reddit, Wowhead, Blizzard community forums and profession guides; Cardinalai, Honeybone, Insomnist KP n=5294, krathalan and earlier owner PR49 already indexed; no new independent current-patch hit/zero cohort. Distinct LIVE hunter 271492/271493 and druid 271527/271529 item-side Looter and PTR 12.1.7 mage 250062 added reference-only (do not reimport same mutable snapshots).",
     "2026-11-13T21:17:42.580Z: Searched item names Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom and Midnight profession outputs across Reddit r/woweconomy, Blizzard US/EU forums, Wowhead, Wow-Professions, Warcraft Wiki and GoldCap. Reused Cardinalai, Honeybone, 5294 KP and earlier Looter item-side snapshots excluded. New nonduplicate current identity finding: GoldCap item IDs Eversong Diamond rank1 242608 and rank2 242712 with linked retail commodity inventories. Previously treated as same-name ID ambiguity in v2; now source-only rank mapping, not at-cast proof. Avoid re-fetching these unchanged ranks as new cohorts.",
     "2026-11-13T22:16:45.503Z: Distinct primary-export lane checked new Apr28 Blizzard Heart of Wind restoration inventory testimony, Mar14 r/woweconomy 100k ore report (author explicitly lost raw data), guide-hardcoded Apr15 prospecting calculator, and public AuctioneerReforged/Enchantrix collector source code; also indexed Wowhead 272246/237362 item pages and old Mar3 milling 11-15 pigment report. No new independent 0-inclusive processing cohort. Earlier Heart of Wind, Cardinalai, JD3K, older 11-15 pigment report, and owner PR49 not recopied. No per-operation numeric field advanced.",
-    "2026-11-13T23:15:25.005Z: New independently discovered ProspectMate June17 2026 GitHub/CurseForge collector lane, plus Koodattu public static salvage mapping. Name-based saved-variable searches across GitHub, Reddit, Wago, CurseForge; original source code read line-by-line. Collector saved variables only aggregate consumed/results, no per-cast event ledger; no public sample, no zero/1/2 bins. Koodattu 'inputQuantity':1 is static salvage selector and output 262908 repeats all herb records; do not count as gameplay result or per-cast input. Existing Cardinalai, Honeybone, Draggoth, Looter, owner PR49 studies deliberately not reimported. Revisit only with new firsthand raw export."
+    "2026-11-13T23:15:25.005Z: New independently discovered ProspectMate June17 2026 GitHub/CurseForge collector lane, plus Koodattu public static salvage mapping. Name-based saved-variable searches across GitHub, Reddit, Wago, CurseForge; original source code read line-by-line. Collector saved variables only aggregate consumed/results, no per-cast event ledger; no public sample, no zero/1/2 bins. Koodattu 'inputQuantity':1 is static salvage selector and output 262908 repeats all herb records; do not count as gameplay result or per-cast input. Existing Cardinalai, Honeybone, Draggoth, Looter, owner PR49 studies deliberately not reimported. Revisit only with new firsthand raw export.",
+    "2026-11-14T00:18:31.237Z: Checked new live 251255 Recovered Sanctum Greatsword Wowhead Looter 117 item-side aggregate (98/15/3/1 across four displayed rows) and deduplicated already captured 251251/251254/251258/251259/248064/248074/248076 and previously surveyed 272246, 237362, 237359/237361, 237364/237365 and Powder Pigment sources. GitHub repository code search returned no 251255 occurrence, but source table itself provides neither actual itemLink variant nor a new original per-event output cohort. Do not scrape 251255 again as independent evidence without new cast logs."
   ],
-  "next_concrete_step": "Seek consented original per-event combat/profession receipt capture for 272246 ilvl305 or exact 237362 ore-rank and 236761 herb-rank prospect/mill events; ask Master (via status, no shared write) to request/add event-level export schema with actual completed casts, output IDs/stack histograms, 0-outcome rows, skill/spec/build, itemLink bonuses and Resourcefulness refunds. Do not reinterpret aggregate SmartProspectorDB totals as completed casts.",
-  "verified_base_commit_sha": "500bfd86714339a7e04e42a916dba8f119054dc2",
-  "next": "Get official live-client/Blizzard item API confirmation of rank1 242608 and rank2 242712 and original player at-cast output receipts with exact ore/rank, Tin-vestigator state, completed operations, output rank, refunds and per-material zero-inclusive distributions. If unavailable, pivot to unindexed first-person gear DE event ledger rather than repeat same commodity listings.",
-  "base_commit_sha": "b46e27f3cbc5b29bad6910640b319756bc598c75"
+  "next_concrete_step": "Seek original 272246 ilvl305 completed DE receipt or 237362 ore-rank and 236761 herb-rank client event export; validate source-linked output material IDs and skill/spec/actual game build. Avoid rescraping 251255 Looter snapshot unless there is new source lineage or original per-event logs; tell Master via status if exporter schema/event-level zero tracking is required.",
+  "verified_base_commit_sha": "1ef790d684d27b5c2d54e029fdb8f40d86d22467",
+  "next": "Seek original 272246 ilvl305 completed DE receipt or 237362 ore-rank and 236761 herb-rank client event export; validate source-linked output material IDs and skill/spec/actual game build. Avoid rescraping 251255 Looter snapshot unless there is new source lineage or original per-event logs; tell Master via status if exporter schema/event-level zero tracking is required.",
+  "base_commit_sha": "1ef790d684d27b5c2d54e029fdb8f40d86d22467"
 }
