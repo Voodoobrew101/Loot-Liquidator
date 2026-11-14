@@ -1,0 +1,25 @@
+# T0039/T0005: Eversong Diamond exact-ID and quality-price identity gate (2026-11-14T07:05Z)
+
+**Scope:** research-only source/compiled-field audit. No live character testing, newly measured casts, estimator run, tooltip run, auction valuation run, addon import, or addon branch mutation.
+
+## New checked identities and conflict
+
+- **242608** and **242712** are separately indexed **Eversong Diamond** *uncut crafting reagents*, with precisely the same extracted Wowhead reagent description: "Acquired by Jewelcrafters when prospecting Midnight ore." These are distinct source item IDs, **not proof of a given item's output in an actual prospect cast**: [242608](https://www.wowhead.com/item=242608/eversong-diamond), [242712](https://www.wowhead.com/item=242712/eversong-diamond).
+- Two separately enumerated Retail auction commodity identities are live: [GoldCap 242608](https://goldcap.gg/retail/us/items/242608) labels **Quality rank 1 of 2**; [GoldCap 242712](https://goldcap.gg/retail/us/items/242712) labels **Quality rank 2 of 2**. A separately hosted [Saddlebag Exchange 242712](https://saddlebagexchange.com/wow/item-data/242712) explicitly labels **Quality 2**. [TSM 242608](https://tradeskillmaster.com/retail/us/items/242608) and [TSM 242712](https://tradeskillmaster.com/retail/us/items/242712) independently provide separate item-level market entries (without defining source rank). This is corroboration of distinct economic item identities, not a measured production frequency. Catalog operators may share original game-data feeds; do **not** count five pages as independent experiments.
+- **Conflict retained:** [WoW-Professions Midnight Jewelcrafting Guide](https://www.wow-professions.com/midnight/jewelcrafting-guide) and [dving guide](https://dving.net/guides/wow-midnight-jewelcrafting-guide) explicitly call *uncut* Eversong Diamond quality-less. They conflict with the two currently indexed rank-labeled commodities. These guides are contextual references, not decisive exact-link/patch evidence. The Midnight worker first flagged the disagreement in `research/v3/evidence/midnight/2026-11-14T0611-quality-rank-source-conflict.jsonl`; this audit does not count the worker's sources as a new experiment.
+
+## Exact integration snapshot gap (read-only verification)
+
+At integration head `3d667d053db587c91401cfed7ecc56862b8340c9`, retrieved:
+- `database/sources/ReferenceData.lua` blob `e47143ee72be8e9fd3128ebad62e364774608c4f`: exact literal **242608 appears 35 times; 242712 appears zero times** in its 810,166-character textual source. Presence includes a prior `midnight-low:237359:242608:...` claim; not a proven correct rank assignment.
+- `database/reference-calculator-baselines.lua` blob `52ce8aa9c25bcf43134306eaa6b089f38ad107c4`: **242608 appears 7 times, 242712 zero times**. Diamond coefficients there are modeled unlock-conditional base values, not raw observations.
+- `database/research-v3-baselines.lua` blob `ae953ffde49a27c0270408d0facbf6d96ee7955c`: neither exact text occurs; this does not exclude a family-only record or a dynamic external price source.
+- These are **static exact-ID searches**, *not* executed resolver/tooltip tests and not proof that no other runtime path can represent or price the quality-2 item. Do not write into the protected integration branch during its three-pass work.
+
+## Economic importance and safe admission gate
+
+The commodity listings maintain separate markets by item ID, so attaching a 242608 estimate/price to 242712, or assigning an unknown-quality prospect output unconditionally to either, can materially distort an economic decision. Do **not** copy market prices into conversion yield evidence or assume the price ratio is stable. Do **not** double-count the same family output as two simultaneous guaranteed yields. The March 31, 2026 hotfix, ore-specific Diamond unlock, output quality/skill, recipe, Resourcefulness and actual event context still matter.
+
+**Disposition:** Treat `242608` and `242712` as source-corroborated **candidate quality-separated family members**, with catalog ranks 1/2 and an explicitly conflicting quality-less guide claim. Keep existing supported **family/unknown-rank expected quantity** and conditional unlock information visible/priceable under owner policy; do **not** assign a rank-specific occurrence probability, expected output allocation, skill curve, or observed sample on these sources alone. Verify exact live item links and returned item IDs from separate ranked Prospect operations, or current authoritative client item-quality metadata, before promoting rank-specific processing rates. On a disjoint engineering review, test both item IDs with distinct synthetic prices in actual resolver/formatter to see if the quality-2 output is absent, mispriced, or correctly handled by family fallback. The integration branch, worker evidence, and immutable `4df9ae8` remain unchanged.
+
+**New measured Retail casts:** 0. **New validated current gold decisions:** 0. **Executed offline/in-client tests:** 0. **New verified context:** exact two-ID marketplace/rank conflict and static adapter omission of 242712.
