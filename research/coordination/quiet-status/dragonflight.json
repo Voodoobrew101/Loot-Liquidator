@@ -1,137 +1,50 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T15:38:17.840Z",
-  "status": "active; five previously unindexed original Wowhead gear-item aggregate Looter cohorts, 11 per-material occurrence rows; high-priority ore and milling per-completed-cast histograms still unresolved",
+  "updated_at": "2026-11-14T16:39:53.971Z",
+  "status": "active; new firsthand source-specific 2-diamond Prismatic Ore event documented as selected-only; no complete sampled prospecting or milling cohort verified",
   "task_ids": [
+    "T0041",
+    "T0046",
     "T0020",
     "T0018",
-    "T0015",
-    "T0041",
-    "T0019",
-    "T0046"
+    "T0015"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143 R1/188658 R2/190311 R3; Serevite Ore 190395 R1/190396 R2/190394 R3; Khaz'gorite 190312/190313/190314; Prismatic Ore 194545: no new original source per-output 0..N histograms, true completed-cast/rank/refund logs",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: no new rank-matched completed mill/hit/total pigment histogram with Resourcefulness reconciliation",
-    "Dragonflight disenchanting gear 194406,194389,194394,207135,195514: source-specific Looter hit numerators/denominators newly found; historical item variant, output-positive multiplicity, skill/build and current Retail eligibility unverified"
+    "Prismatic Ore 194545 -> Illimited Diamond family: test whether a single prospect can return two diamonds; rank and event denominator unresolved",
+    "Draconium Ore 189143/188658, Serevite 190394/190395/190396 and Khaz'gorite ore: completed-operation per-output 0..N histogram, exact quality rank, skill/spec, resourcefulness and dated patch remain unknown",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: rank-separated 0..N mill outcomes, completed casts, refunds and patch remain unknown"
   ],
   "newly_verified_fields": [
-    "Five unique named Dragonflight input item identities independently deduped against repository: 194406, 194389, 194394, 207135, 195514",
-    "Eleven source-reported material occurrences for 194123 Chromatic Dust, 194124 Vibrant Shard, 200113 Resonant Crystal, each retaining original denominator, row-hit numerator and displayed percent without equating percentage to confirmed current P(hit)",
-    "Source-visible positive output stack ranges 1-3, 1-2, 1-5, 1-3 and one positive 2-stack crystal at 194389; unknown remaining per-cast histograms and totals null",
-    "PTR 12.1.7 page context distinguished from unknown original Looter observation patch/build; Stingerproof 66+11+1 exceeds 77 source-reported item operations so no inferred all-material zero count"
+    "First-person February 28, 2023 recollection: a single Prismatic Ore prospect produced 2 diamonds in one event; source contains no total trial population",
+    "Input identity Prismatic Ore 194545 from existing T0041 source map; output is Illimited Diamond FAMILY only, exact output item ID and quality rank unknown",
+    "Reported two-unit positive event retained as totalQuantity=2 and maxSeen=2, but casts, castsWithDrop, zero outcomes, histogram, probabilities, output rank, skill, Resourcefulness and patch all null; no denominator or chance established"
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-df-item-194406-cumulative-20261114",
-      "inputItemID": 194406,
-      "inputName": "Stingerproof Helmet",
-      "sourceReportedItemDenominator": 77,
-      "outputItemIDs": [
-        194123,
-        194124,
-        200113
-      ],
-      "sourceReportedCastsWithDrop": [
-        66,
-        11,
-        1
-      ],
-      "percentShown": [
-        86,
-        14,
-        1.3
-      ],
-      "source": "https://www.wowhead.com/ptr/item=194406/stingerproof-helmet",
-      "limitations": "Cumulative Wowhead Looter, unknown actual patch/quality/skill/build/refunds/individual histograms; not validated for current Retail. Same item rows share one cohort."
-    },
-    {
-      "studyKey": "wowhead-looter-df-item-194389-cumulative-20261114",
-      "inputItemID": 194389,
-      "inputName": "Brush-Clearing Axe",
-      "sourceReportedItemDenominator": 77,
-      "outputItemIDs": [
-        194123,
-        194124,
-        200113
-      ],
-      "sourceReportedCastsWithDrop": [
-        69,
-        7,
-        1
-      ],
-      "percentShown": [
-        90,
-        9,
-        1.3
-      ],
-      "source": "https://www.wowhead.com/ptr/item=194389/brush-clearing-axe",
-      "limitations": "Cumulative Wowhead Looter, unknown actual patch/quality/skill/build/refunds/individual histograms; not validated for current Retail. Same item rows share one cohort."
-    },
-    {
-      "studyKey": "wowhead-looter-df-item-194394-cumulative-20261114",
-      "inputItemID": 194394,
-      "inputName": "Persistent Threat Cleaver",
-      "sourceReportedItemDenominator": 115,
-      "outputItemIDs": [
-        194123,
-        194124,
-        200113
-      ],
-      "sourceReportedCastsWithDrop": [
-        103,
-        10,
-        2
-      ],
-      "percentShown": [
-        90,
-        9,
-        1.7
-      ],
-      "source": "https://www.wowhead.com/ptr/item=194394/persistent-threat-cleaver",
-      "limitations": "Cumulative Wowhead Looter, unknown actual patch/quality/skill/build/refunds/individual histograms; not validated for current Retail. Same item rows share one cohort."
-    },
-    {
-      "studyKey": "wowhead-looter-df-item-207135-cumulative-20261114",
-      "inputItemID": 207135,
-      "inputName": "Eternal Sentinel's Cord",
-      "sourceReportedItemDenominator": 79,
-      "outputItemIDs": [
-        200113
-      ],
-      "sourceReportedCastsWithDrop": [
-        59
-      ],
-      "percentShown": [
-        75
-      ],
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "limitations": "Cumulative Wowhead Looter, unknown actual patch/quality/skill/build/refunds/individual histograms; not validated for current Retail. Same item rows share one cohort."
-    },
-    {
-      "studyKey": "wowhead-looter-df-item-195514-cumulative-20261114",
-      "inputItemID": 195514,
-      "inputName": "Treacherous Totem Wraps",
-      "sourceReportedItemDenominator": 64,
-      "outputItemIDs": [
-        200113
-      ],
-      "sourceReportedCastsWithDrop": [
-        48
-      ],
-      "percentShown": [
-        75
-      ],
-      "source": "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
-      "limitations": "Cumulative Wowhead Looter, unknown actual patch/quality/skill/build/refunds/individual histograms; not validated for current Retail. Same item rows share one cohort."
+      "kind": "selected-firsthand-positive-event-not-representative-cohort",
+      "studyKey": "reddit-rwow-11dxvmw-prismatic-anecdote-20230228",
+      "inputItemID": 194545,
+      "outputItemID": null,
+      "outputName": "Illimited Diamond",
+      "sourceReportedUnitsInOneSelectedEvent": 2,
+      "casts": null,
+      "castsWithDrop": null,
+      "source": "https://www.reddit.com/r/wow/comments/11dxvmw"
     }
   ],
-  "new_numerical_measurements": 11,
+  "new_numerical_measurements": [
+    {
+      "inputItemID": 194545,
+      "outputItemID": null,
+      "outputFamily": "Illimited Diamond",
+      "selectedEventQuantity": 2,
+      "source": "https://www.reddit.com/r/wow/comments/11dxvmw",
+      "warning": "One selected positive event; not an independent probability/average estimate"
+    }
+  ],
   "numerical_fields_improved": [
-    "11 source-reported per-output hit-count numerators and their 5 item-level denominators; no full empirical 0..N distribution",
-    "11 original displayed percentages retained as unclear semantics, not independently established probabilities",
-    "Five source-visible positive stack ranges (one 2-stack material event supports exactly 2 quantity) without inventing other totals"
+    "Positive-event stack size 2 independently source-reported for Prismatic Ore -> Illimited Diamond family, not representative per-cast count; all rate fields null"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-14T0933-independent-source-gap-search.jsonl",
@@ -140,7 +53,8 @@
     "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T1336-firsthand-inkwell-and-numeric-search.jsonl",
     "research/v3/evidence/dragonflight/20261114T1432-wind-band-2022-bug-originals.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-14T1538-five-distinct-gear-looter-numeric-cohorts.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-14T1538-five-distinct-gear-looter-numeric-cohorts.jsonl",
+    "research/v3/evidence/dragonflight/20261114T1639-prismatic-two-diamond-single-event.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/item=194347/expedition-researchers-hood",
@@ -161,16 +75,16 @@
     "https://www.wowhead.com/ptr/item=194394/persistent-threat-cleaver",
     "https://www.wowhead.com/ptr/item=200113/resonant-crystal",
     "https://www.wowhead.com/item=207135/eternal-sentinels-cord",
-    "https://www.wowhead.com/item=195514/treacherous-totem-wraps"
+    "https://www.wowhead.com/item=195514/treacherous-totem-wraps",
+    "https://www.reddit.com/r/wow/comments/11dxvmw"
   ],
-  "verified_commit_sha": "04b6a06d454bbe5e57acd3535aa46ed6f0e2def8",
-  "commit_sha_scope": "Verified branch parent SHA at evidence-write time; this single commit cannot include its own resulting SHA in its own content. Post-write commit SHA and changed paths verified by GitHub readback externally to the status blob.",
+  "verified_commit_sha": "7719b4daad82ff2eef57f035594541eb8497984e",
+  "commit_sha_scope": "verified_commit_sha identifies the refreshed and inspected PARENT only. This same commit cannot contain its own SHA; final commit SHA must be verified separately by GitHub readback.",
   "blockers": [
-    "No new independent live/dated current-version original 0..N material-output histograms or refund-reconciled operation ledgers for Dragonflight Draconium, Serevite, Khaz'gorite or Prismatic prospecting and Bubble Poppy/Saxifrage milling",
-    "Original Xenastro ranked Draconium prospecting workbook rows still not independently accessible; previous numeric studies already indexed and not duplicated",
-    "Wowhead cumulative Looter source pages contain source-reported row numerators and item denominators, but do not establish source collection patch/build, skill/spec, full positive-stack histograms, game-item variant, or independent current-game eligibility",
-    "Looter table for Stingerproof Helmet reports 78 total material-row hits from 77 item operations; it would be invalid to infer all-material operation zeros from row subtraction",
-    "PTR 12.1.7 indexing cannot establish that disenchants occurred on PTR 12.1.7 or are eligible on current Retail; isolate from production recommendation until reviewed"
+    "Prismatic Ore Illimited Diamond event has no sampled cohort denominator, per-cast histogram, talent/stat snapshot, timestamp of actual event or rank-specific output ID; strictly exclude anecdote from probability and average baselines until Master review",
+    "No new complete, independent zero-inclusive 0..N ore/herb output histogram or refund-reconciled operation ledger; existing originals and archived studies must not be double-counted",
+    "Draconium/Serevite/Khaz'gorite rank-specific original worksheets still cannot be independently accessed; prior numerical cohorts remain recorded",
+    "Wowhead cumulative Looter gear sources remain undocumented for actual patch/build, skill/spec, full stack histogram and live-item eligibility"
   ],
   "exhausted_sources": [
     {
@@ -858,30 +772,22 @@
       ]
     }
   ],
-  "next_concrete_step": "Prioritize owner-exported or source-original per-completed-cast 0..N ore/herb logs with refund/skill/quality and patch annotations (Xenastro raw worksheet if available); separately obtain dated Looter raw item logs/stack counts and current live eligibility for 194406,194389,194394,207135,195514. Request Master vet source-epoch and dedupe before valuation.",
+  "next_concrete_step": "Ask Master to consider selected-event handling for a two-unit Prismatic/Illimited Diamond outcome without converting it into P(hit) or an average. Seek an original, dated 0..N per-completed-operation prospecting or milling log with rank, skill/spec and refund ledger; identify diamond quality item ID before valuation.",
   "validation": {
-    "jsonl_parse": true,
-    "record_count": 11,
-    "measured_drop_records": 11,
-    "searched_records": 0,
-    "unique_record_ids": true,
-    "all_required_fields_present": true,
-    "independent_input_item_count": 5,
-    "original_source_rows": 11,
-    "source_kind": "Wowhead cumulative Looter reported item/material counts; not controlled experiments",
-    "existing_repo_name_and_ID_dedupe": true,
-    "actual_cast_epoch_unknown": true,
-    "zero_histograms_unknown_null": true,
-    "real_source_percent_semantics_preserved": "unclear",
-    "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-14T1538-five-distinct-gear-looter-numeric-cohorts.jsonl",
+    "newJsonlLines": 1,
+    "sourceDirectQuoteVerified": true,
+    "jsonParsed": true,
+    "sourceClass": "firsthand selected event (not unbiased sample)",
+    "noNewChanceOrConfidence": true,
+    "pathsPlanned": [
+      "research/v3/evidence/dragonflight/20261114T1639-prismatic-two-diamond-single-event.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "post_commit_readback": "pending; checked after branch-ref update"
+    "commitAndReadback": "pending at time status JSON blob created"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T1538-five-distinct-gear-looter-numeric-cohorts.jsonl",
-  "verified_parent_sha": "04b6a06d454bbe5e57acd3535aa46ed6f0e2def8"
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261114T1639-prismatic-two-diamond-single-event.jsonl",
+  "verified_parent_sha": "7719b4daad82ff2eef57f035594541eb8497984e"
 }
