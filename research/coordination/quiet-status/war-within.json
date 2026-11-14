@@ -1,107 +1,89 @@
 {
   "role": "war-within",
   "agent": "war-within",
-  "updated_at": "2026-11-14T16:33:08.873Z",
-  "status": "active; newly verified three TWW Enchanting weekly/catch-up output identities and conditional gates, plus rarity-specific source-only catch-up percentages; zero controlled ordinary disenchant or ore/herb yield cohorts",
+  "updated_at": "2026-11-14T17:33:44.697Z",
+  "status": "active; 2 previously documented firsthand zero-output cohorts now have source-supported exact castsWithDrop=0 and zero-inclusive per-cast histograms; 0 new independent measured studies",
   "task_ids": [
     "T0048",
-    "T0040",
     "T0009",
-    "T0010",
-    "T0011",
+    "T0040",
     "T0007",
     "T0008",
+    "T0010",
+    "T0011",
     "T0012"
   ],
   "exact_gaps_targeted": [
-    "T0048: TWW gear disenchant secondary catch-up output IDs and gating by weekly state / gear rarity; primary output material histograms, item variant, gear armor/weapon splits and skill remain unmeasured",
-    "T0009/T0007/T0008/T0040: Bismuth 210930/210931, Ironclaw 210936/210937 and Aqirite 210933/210934 post-hotfix per-output controlled cast denominators/zero-inclusive histograms still unknown",
-    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 per-rank input and Nacreous Pigment 222618/222619/222620 per-cast measured output distributions still unknown"
+    "T0048: original 2024-09-21 10-green TWW disenchant cohort's rank-3 Storm Dust 219948 zero-hit histogram; current rarity/armor/weapon/skill breakdown still missing",
+    "T0009/T0040: original Raven11 20-cast rank-1 Ironclaw 210936 -> Extravagant Emerald 212505 explicit zero; rank unknown, incomplete positive outputs, build/refund basis missing",
+    "T0007/T0008/T0010/T0011/T0012: post-hotfix Bismuth 210930/210931, Ironclaw 210936/210937, Aqirite 210933/210934 and Mycobloom 210796/210797/210798 per-output exact cast denominators, positive-hit histograms and Resourcefulness basis remain unmeasured"
   ],
   "newly_verified_fields": [
     {
-      "outputItemID": 227662,
-      "outputName": "Shimmering Dust",
-      "method": "Disenchant",
-      "type": "condition",
-      "gate": "weekly quest + 5x227659 + 1x227661 + 225230 + 225231, with remaining catch-up allowance",
-      "rarityReferences": "uncommon ~10%, rare ~50%, epic 100% conditional statement",
-      "denominators": null
-    },
-    {
-      "outputItemID": 227659,
-      "outputName": "Fleeting Arcane Manifestation",
-      "method": "Disenchant",
-      "weeklyReportedCap": 5,
-      "sourceKind": "condition",
-      "measuredCasts": null
-    },
-    {
-      "outputItemID": 227661,
-      "outputName": "Gleaming Telluric Crystal",
-      "method": "Disenchant",
-      "weeklyReportedCap": 1,
-      "sourceKind": "condition",
-      "measuredCasts": null
-    },
-    {
-      "inputItemID": 222833,
-      "outputItemID": 227662,
-      "method": "Disenchant",
-      "sourceReportedPercentRange": "45-50% approximately",
-      "exactCasts": null,
-      "hits": null,
-      "zeroOutcomes": null,
-      "sourceKind": "reference"
-    },
-    {
       "inputItemID": null,
-      "outputItemID": 227662,
-      "gearRarity": "rare",
-      "sourceReportedPercentRange": "52-55% approximately",
-      "sourceReportedOperations": "about 400",
-      "exactCasts": null,
-      "hits": null,
-      "zeroOutcomes": null,
-      "sourceKind": "study"
+      "gearRarity": "uncommon",
+      "outputItemID": 219948,
+      "outputName": "Storm Dust",
+      "outputRank": 3,
+      "casts": 10,
+      "castsWithDrop": 0,
+      "zeroOutcomes": 10,
+      "histogram": {
+        "0": 10
+      },
+      "source": "https://eu.forums.blizzard.com/en/wow/t/somethings-not-right-with-disenchanting-talents/538682",
+      "replaces": "war-within-20261102-1620-012"
+    },
+    {
+      "inputItemID": 210936,
+      "inputRank": 1,
+      "outputItemID": 212505,
+      "outputName": "Extravagant Emerald",
+      "outputRank": null,
+      "casts": 20,
+      "castsWithDrop": 0,
+      "zeroOutcomes": 20,
+      "histogram": {
+        "0": 20
+      },
+      "source": "https://www.wowhead.com/item=212495/radiant-ruby",
+      "replaces": "war-within-20261101-021719"
     }
   ],
   "newly_verified_cohorts": 0,
   "numerical_fields_advanced": [
-    "source-only approximate Shimmering Dust per-rarity percent claims 10/50/100 (NOT measured baselines)",
-    "firsthand rough 52–55% rare and 45–50% exact 222833 cuff catch-up chance ranges (not measured exact percent fields)"
+    "219948: confirmed 0/10 rank-3 Storm Dust hits and {0:10} histogram from original 10-green DE cohort; not an independent study",
+    "212505: confirmed 0/20 Extravagant Emerald hits and {0:20} histogram from original rank-1 Ironclaw cohort; output quality unreported"
   ],
   "controlled_measured_cohorts_added": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-14T1633-enchanting-catchup-knowledge-gates.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/20261114T1733-explicit-zero-histogram-corrections.jsonl",
   "evidence_source_links": [
-    "https://www.wow-professions.com/guides/the-war-within/weekly-profession-knowledge-points",
-    "https://www.wowhead.com/item=227662/shimmering-dust",
-    "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
-    "https://www.wowdb.com/items/227661-gleaming-telluric-crystal",
-    "https://www.wowhead.com/item=225230/crystalline-repository",
-    "https://www.wowhead.com/item=225231/powdered-fulgurance"
+    "https://eu.forums.blizzard.com/en/wow/t/somethings-not-right-with-disenchanting-talents/538682",
+    "https://www.wowhead.com/item=212495/radiant-ruby",
+    "https://www.reddit.com/r/woweconomy/comments/1g8kbaq"
   ],
-  "original_cohort_basis": "Guide's few-hundred disenchants are unstratified and represented only as excluded reference percentages; CodisJ1286's ~400 blues and Hukilau's undated cuffs are independent firsthand qualitative reports, not complete denominator/hit cohorts. Exact Cuffs ID 222833 is previously independently verified. Existing FireEmblem01 350-rank1 Bismuth, August 29 gem hotfix, 7,652-cuff and Desolate Talus exchanges were identified as already indexed and deliberately not rerecorded.",
+  "original_cohort_basis": "Both rows use `replaces`, matching existing exact original cohorts and not adding study denominators. Source explicitly states zero rank-3 dust in 10 greens and zero emerald in 20 R1 Ironclaw casts. Preserve old positive output totals and unknown hit counts unchanged. Original Raven11 cohort occurs in 2026-10-30 and 2026-11-01 evidence files; same 20 casts must be deduplicated by original author/source.",
   "blockers": [
-    "No independently verified new post-2024-10-25 per-rank ore and herb completed-operation logs with exact refund accounting or 0..N histograms.",
-    "Catch-up Shimmering Dust observations require weekly gate and trailing allowance; reported percentages are approximate with no controlled denominators, no skill/spec or build, no armor/weapon breakout.",
-    "Guide and Wowhead follow-up descriptions do not prove current Retail disenchant eligibility for exact item/bonus variants; not ordinary tradeable materials and not gold EV.",
-    "TWW historical gem-rate August 29 and late October hotfix records already exist; shared rate-change summary has conflicting chronology and can only be reconciled by Master. No shared file was edited."
+    "No independently verified new post-2024-10-25 ore or herb per-quality output with exact completed-cast, hit, refund and positive stack histogram data.",
+    "Original Raven11 cohort duplicated in 2026-10-30 and 2026-11-01 append-only files; corrected row replaces later duplicate only, Master must ensure importer dedupes the two underlying original studies.",
+    "Gear sample reports only green rarity, not exact input item IDs, armor/weapon subgroup, item version, current build or skill; 2024-09-21 R3 dust zero cannot be promoted to current Retail EV.",
+    "Original Ironclaw emerald non-drop covers the entire unspecified output-quality family; source does not report exact gemstone rank, date or refunds. Do not equate this early-era zero with a modern current-build guaranteed impossibility."
   ],
   "exhausted_sources": [
-    "Previously indexed FireEmblem01 350 R1 Bismuth/23 glass/55 pebbles/22 amber, Reikah, Raven11, Elfshinobi1, Aug 29 gem-rate hotfix, Oct 25/30 hotfix, Desolate Talus exchanges and Reddit 1fdmzwy were explicitly deduplicated.",
-    "2025 Reddit 1jnvht8 600 Ironclaw/117 prospects gives no per-output IDs or counts.",
-    "2024-2025 Mycobloom pigment, Ironclaw, Aqirite and Bismuth result searches on Reddit, Blizzard forums, Wowhead, guides yielded no fresh exact post-hotfix completed-cast/zero-inclusive output cohorts this run."
+    "2024 sources Reikah, PeaEsk, Raven11 positive outputs, prior 1g350pq, 1fkhr8j and May/June milling references already indexed as studies: not duplicated.",
+    "2025 prospecting/milling Reddit 1jnvht8 contains only 600 R1 Ironclaw consumed / 117 prospects with no gem IDs or totals; no basis to add a new gem yield row.",
+    "2024-10-21 r/woweconomy 1g8kbaq confirms 1000-ore stack queues 200 prospect crafts and Resourcefulness refunds leave surplus unprocessed; useful denominator caution, but no new material yield cohort or duplicate recipe record was added."
   ],
-  "next_concrete_step": "Locate dated, controlled posthotfix TWW casts from original addon exports: ore-rank item IDs with 5-ore operations, input refunds, each gemstone/byproduct output-rank IDs and 0..N histograms; and 10-herb Mycobloom mills with exact quality/skill. For DE weekly knowledge isolate 227662 from tradeable material EV and request exact item ID, date and eligible state if original 2025 commenter logs are available.",
+  "next_concrete_step": "Source original post-Oct-25-2024 live or addon logs for specific 210936/210937, 210933/210934, 210930/210931, 210796/210797/210798 by quality with complete casts vs net inputs, every output rank ID, 0..N stack histogram and skill/spec; seek exact gear variant/build for disenchanting. Ask Master to deconflict multiple legacy Raven11 studyKeys before estimate import.",
   "verified_commit_sha": null,
-  "commit_sha_note": "This status and evidence are committed atomically; a commit cannot contain its own SHA. After push, independent branch/file read-back verifies commit externally.",
+  "commit_sha_note": "Two-file atomic research commit cannot embed its own SHA in its own status payload. SHA and read-back are verified externally after fast-forward; see GitHub branch history.",
   "source_branch": "implementation/five-agent-completion",
-  "base_head_sha": "3da5931ce9403ef4b9f85ab4d8d7f8af9004dd93",
+  "base_head_sha": "090f30950d086c880068e20904c27fb9038fa1f8",
   "prohibited_actions_not_taken": [
     "no merge",
     "no release",
-    "no changes to other workers, shared dashboard, shared rate list or prior evidence files",
-    "no inferred observed probabilities/casts/zeros/confidence/gold EV"
+    "no shared or other-agent edits",
+    "no new schedules",
+    "no invented denominators, probabilities, ranks, refunds or gold EV"
   ]
 }
