@@ -269,6 +269,33 @@ local function salvageDefinition(self,r)
     local definition=self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(r.recipeID)
     if definition and definition.method==r.method then return definition end
 end
+local function salvageStudyKey(character,buildID,studyID)
+    return signature({character,buildID,studyID})
+end
+local function salvageCoverage(self,study)
+    local gaps=study.coverageGaps
+    if (study.censored~=nil and type(study.censored)~='boolean')
+        or (study.truncated~=nil and type(study.truncated)~='boolean')
+        or (study.globalCoverageGap~=nil and (type(study.globalCoverageGap)~='string' or study.globalCoverageGap==''))
+        or (study.coverageVersion~=nil and not integer(study.coverageVersion))
+        or (gaps~=nil and not object(gaps)) then return nil end
+    local coverage={recipes={}}
+    coverage.global=study.truncated or study.globalCoverageGap~=nil
+        or (study.censored and (study.coverageVersion~=2 or not gaps or not next(gaps)))
+    for key,gap in pairs(gaps or {}) do
+        local method,recipeID=key:match('^(%a+):([1-9]%d*)$')
+        if not method or not object(gap) or type(gap.reason)~='string' or gap.reason==''
+            or (gap.operationID~=nil and (type(gap.operationID)~='string' or gap.operationID=='')) then return nil end
+        if salvageDefinition(self,{method=method,recipeID=tonumber(recipeID)}) then coverage.recipes[key]=true end
+    end
+    return coverage
+end
+local function coverageHeld(coverage,recipeKey)
+    return coverage and (coverage.global or coverage.recipes[recipeKey])
+end
+local function savedSalvageStudyKey(set)
+    return salvageStudyKey(set.observationContext.character,set.build,set.studyID)
+end
 local function checkRecord(self,r)
     if not object(r) then return nil,"damaged" end
     if r.outputCoverage~="complete" then return nil,"incomplete" end
@@ -317,7 +344,7 @@ end
 -- shared inventory reconciliation must survive import before any counts enter
 -- a cohort. Legacy four-method imports retain their existing contract.
 local function salvageCasts(self,data)
-    local result,batches,nativeIDs,castIDs,cohorts,contexts={},{},{},{},{},{}
+    local result,batches,nativeIDs,castIDs,cohorts,contexts,studies={},{},{},{},{},{},{}
     local function vector(items,zero)
         if not array(items) then return nil end
         local values={}
@@ -335,6 +362,8 @@ local function salvageCasts(self,data)
         if data.artifactStatus~='RESEARCH_ONLY_NOT_SHIPPED' or data.registryContract~='profession-mechanics/0.2'
             or data.automaticMechanicsPromotion~=false or r.schemaVersion~=SCHEMA or r.gameMode~='RETAIL'
             or type(r.character)~='string' or r.character=='' or #r.character>160
+            or type(r.studyID)~='string' or r.studyID=='' or #r.studyID>200
+            or type(r.contextID)~='string' or r.contextID=='' or #r.contextID>200
             or not object(context) or not object(study) or context.character~=r.character or study.character~=r.character
             or study.build~=r.build or context.recipeID~=r.recipeID or context.method~=r.method
             or context.profileKind~='measured' or context.simulated~=false or context.profession~=def.profession
@@ -356,9 +385,8 @@ local function salvageCasts(self,data)
         if not object(provenance) or provenance.sampleKind~='RAW_CAST_LOG'
             or provenance.numericTransformValidated~=false or provenance.applyPolicy~='NO_NUMERIC_TRANSFORM'
             or provenance.independentReview~='PENDING' then return 'damaged' end
-        if study.truncated or study.globalCoverageGap then return 'incomplete' end
-        if study.censored and (study.coverageVersion~=2 or not object(study.coverageGaps)
-            or not next(study.coverageGaps) or study.coverageGaps[r.method..':'..r.recipeID]) then return 'incomplete' end
+        if studies[study]==nil then studies[study]=salvageCoverage(self,study) or false end
+        if not studies[study] then return 'damaged' end
         local nominal,net=vector(r.nominalInputs),vector(r.inputs,true)
         local input=r.nominalInputs and r.nominalInputs[1]
         if not nominal or not net or #r.nominalInputs~=1 or #r.inputs~=1
@@ -413,7 +441,9 @@ local function salvageCasts(self,data)
         cast.expansionID=def.expansionID;cast.consumed=net[cast.input]
         cast.allocation=plain(r.allocation);cast.applyConcentration=r.applyConcentration
         cast.sourceCharacter=r.character;cast.nativeID=table.concat({r.character,cast.build,r.recipeID,operation},':')
-        cast.cohortKey=table.concat({r.studyID,r.contextID,r.recipeID},':')
+        cast.studyKey=salvageStudyKey(r.character,cast.build,r.studyID)
+        cast.recipeKey=r.method..':'..r.recipeID
+        cast.coverage=studies[study]
         cast.batchKey=table.concat({r.studyID,r.method,r.recipeID,evidence.id},':')
         cast.reconciliation=evidence
         local cohort=signature({r.character,cast.build,r.studyID,r.contextID,r.recipeID,cast.input,input.qualityRank,r.applyConcentration})
@@ -434,7 +464,7 @@ local function salvageCasts(self,data)
             if cast then reason=validate(r,cast) end
             result[i]={cast=cast,reason=reason}
             local cohort=type(r.studyID)=='string' and type(r.contextID)=='string'
-                and table.concat({r.studyID,r.contextID,r.recipeID},':')
+                and signature({r.character,r.build,r.studyID,r.contextID,r.recipeID})
             if cohort then
                 cohorts[cohort]=cohorts[cohort] or {members={}}
                 local group=cohorts[cohort];group.members[#group.members+1]=i
@@ -468,12 +498,46 @@ local function salvageCasts(self,data)
         end
     end
     -- An invalid member cannot leave a positive-only remainder of its cohort.
+    local warnings={}
     for _,cohort in pairs(cohorts) do
         local invalid=cohort.invalid
         for _,i in ipairs(cohort.members) do invalid=invalid or result[i].reason end
-        if invalid then for _,i in ipairs(cohort.members) do result[i].reason=invalid end end
+        for _,i in ipairs(cohort.members) do
+            local entry=result[i]
+            local cast=entry.cast
+            -- A surviving reconciled batch can carry a coverage update even
+            -- when truncation removed part of a different batch in this cohort.
+            if not entry.reason and coverageHeld(cast.coverage,cast.recipeKey) then
+                warnings[cast.storageKey]=cast;entry.reason='incomplete'
+            end
+            if invalid then entry.reason=invalid end
+        end
     end
-    return result,missingBatch
+    return result,missingBatch,warnings
+end
+
+local function updateSalvageCoverage(d,warnings)
+    local updated=0
+    if not next(warnings) then return updated end
+    -- Require a reconciled batch in a previously imported exact cohort. A
+    -- truncated export may contain none of the earlier cast IDs.
+    for key,set in pairs(d.sets) do
+        if set.salvage and type(set.observationContext)=='table' then
+            local studyKey=savedSalvageStudyKey(set)
+            local cast=warnings[key] or warnings[exactPartnerKey(key,set)]
+            if cast and cast.studyKey==studyKey then
+                d.salvageCoverageHolds=d.salvageCoverageHolds or {}
+                local hold=d.salvageCoverageHolds[studyKey] or {recipes={}}
+                d.salvageCoverageHolds[studyKey]=hold
+                if cast.coverage.global and not hold.global then
+                    hold.global=true;updated=updated+1
+                elseif not hold.global and not hold.recipes[cast.recipeKey] then
+                    hold.recipes[cast.recipeKey]=true;updated=updated+1
+                end
+            end
+        end
+    end
+    return updated
 end
 
 -- DE imports are evidence archives, not yield estimates. No reviewed runtime
@@ -598,11 +662,8 @@ function LL:ImportRecordedResults(text,label)
         end
     end
     local d=store(self)
-    local salvage,missingBatch=salvageCasts(self,data)
-    if missingBatch then
-        return false,'This export omits members of a shared salvage batch. Use the complete Export recorded results document (or its compact export), rather than one split page. Nothing was imported.'
-    end
-    local counts={retainedOnly=0,updatedHolds=0,accepted=0,damaged=0,incomplete=0,unsupported=0,duplicate=0,own=0}
+    local salvage,missingBatch,salvageWarnings=salvageCasts(self,data)
+    local counts={retainedOnly=0,updatedHolds=0,updatedSalvageHolds=0,accepted=0,damaged=0,incomplete=0,unsupported=0,duplicate=0,own=0}
     local clean,inPaste,archives,attempts,attemptConflicts={},{},{},{},{}
     for i,r in ipairs(data.records) do
         if object(r) and r.method=='Disenchant' and archiveID(r.operationID) then
@@ -613,6 +674,8 @@ function LL:ImportRecordedResults(text,label)
         local entry=salvage[i]
         local cast,reason
         if entry then cast,reason=entry.cast,entry.reason else cast,reason=checkRecord(self,r) end
+        if cast and cast.salvage and not reason and d.salvageCoverageHolds
+            and coverageHeld(d.salvageCoverageHolds[cast.studyKey],cast.recipeKey) then reason='incomplete' end
         if reason then cast=nil end
         if cast and cast.method=='Disenchant' then
             local archive=disenchantArchive(data,r,cast)
@@ -630,11 +693,25 @@ function LL:ImportRecordedResults(text,label)
     if counts.damaged>0 and counts.damaged>=math.max(2,total*.2) then
         return false,("%d of %d results had impossible values, so this text looks damaged or edited. Nothing was imported."):format(counts.damaged,total),counts
     end
+    local function invalidate()
+        self._importedIndex=nil;self._importedRevision=(self._importedRevision or 0)+1
+        if self.Invalidate then self:Invalidate('evidence') end
+    end
+    local function updateCoverage()
+        counts.updatedSalvageHolds=updateSalvageCoverage(d,salvageWarnings)
+        return counts.updatedSalvageHolds>0 and ' Affected salvage results are now held for incomplete coverage and do not affect estimates.' or ''
+    end
+    if missingBatch then
+        local notice=updateCoverage()
+        if notice~='' then invalidate() end
+        return notice~='','This export omits members of a shared salvage batch. Use the complete Export recorded results document (or its compact export), rather than one split page. No new casts were imported.'..notice,counts
+    end
     if d.seenCount+#clean>MAX_SEEN then
         for _,cast in ipairs(clean) do if cast.salvage then
             return false,'Import history is full. Remove imported results before adding more verified salvage results.',counts
         end end
     end
+    local salvageNotice=updateCoverage()
     for _,set in pairs(d.sets) do
         local old=set.disenchantArchive
         if old then
@@ -753,25 +830,24 @@ function LL:ImportRecordedResults(text,label)
     end
     if counts.accepted==0 then
         local detail=counts.duplicate+counts.own>0 and " They were already imported (or are your own)." or ""
-        if counts.updatedHolds>0 then
-            self._importedIndex=nil;self._importedRevision=(self._importedRevision or 0)+1
-            if self.Invalidate then self:Invalidate('evidence') end
-            return true,'No new casts. Updated held Disenchant evidence warnings; it still cannot affect estimates.',counts
+        if counts.updatedHolds>0 or counts.updatedSalvageHolds>0 then
+            invalidate()
+            local disenchantNotice=counts.updatedHolds>0 and ' Updated held Disenchant evidence warnings; it still cannot affect estimates.' or ''
+            return true,'No new casts.'..disenchantNotice..salvageNotice,counts
         end
         return false,"No usable results found in that text."..detail,counts
     end
     d.imports[#d.imports+1]={importedAt=time and time() or 0,label=type(label)=="string" and label:sub(1,80) or nil,
         casts=counts.accepted,skipped=total-counts.accepted}
     if #d.imports>200 then table.remove(d.imports,1) end
-    self._importedIndex=nil;self._importedRevision=(self._importedRevision or 0)+1
-    if self.Invalidate then self:Invalidate("evidence") end
+    invalidate()
     local skipped=total-counts.accepted
     if counts.retainedOnly>0 then
         return true,('Retained %d Disenchant results for reference only; they do not affect estimates. Imported %d other results. Skipped %d.'):format(
-            counts.retainedOnly,counts.accepted-counts.retainedOnly,skipped),counts
+            counts.retainedOnly,counts.accepted-counts.retainedOnly,skipped)..salvageNotice,counts
     end
     return true,("Imported %d results.%s They count as a separate source (Imported results) with their own confidence."):format(
-        counts.accepted,skipped>0 and (" Skipped %d (incomplete, unsupported, damaged or already imported)."):format(skipped) or ""),counts
+        counts.accepted,skipped>0 and (" Skipped %d (incomplete, unsupported, damaged or already imported)."):format(skipped) or "")..salvageNotice,counts
 end
 
 -- Matching native measurements can change without changing the cached generic
@@ -852,7 +928,9 @@ function LL:ImportedEvidenceRecords(indexKey,f,option,ctx)
             local salvage=set.salvage and salvageDefinition(self,{method=set.method,recipeID=set.recipeID})
             -- Includes old persisted DE sets: their erased profile cannot be
             -- reconstructed. Never silently let them fall back to broad rates.
-            if set.method~='Disenchant' and (SUPPORTED[set.method] or salvage) and integer(set.casts) and (category or integer(set.inputItemID)) and integer(set.inputCount) then
+            local incomplete=salvage and d.salvageCoverageHolds and type(set.observationContext)=='table'
+                and coverageHeld(d.salvageCoverageHolds[savedSalvageStudyKey(set)],set.method..':'..set.recipeID)
+            if not incomplete and set.method~='Disenchant' and (SUPPORTED[set.method] or salvage) and integer(set.casts) and (category or integer(set.inputItemID)) and integer(set.inputCount) then
                 local r={recordID="imported:"..key,studyID="imported:"..key,sourceKey="imported",source="Imported results",
                     method=set.method,inputItemID=not category and set.inputItemID or nil,gearKey=category,
                     expansionID=set.expansionID,inputRarity=set.inputRarity,inputClassID=set.inputClassID,

@@ -87,6 +87,7 @@ echo "e81277e142acca3f9a44e21146e5b1690b5adf1db584793f61cc1f279b7110b4  tests/fi
 "$lua_bin" tests/test_counts_model.lua
 "$lua_bin" tests/test_transmog_alts.lua
 "$lua_bin" tests/test_appearance_collection.lua
+"$lua_bin" tests/test_salvage_refund_blend.lua
 python3 tests/test_craft_export.py
 python3 tests/test_recipe_coverage.py
 "$lua_bin" tools/audit_profession_scaling.lua
