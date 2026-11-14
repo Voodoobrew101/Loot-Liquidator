@@ -1,3 +1,13 @@
+## Coordinator T0041/T0046 — original T2 Serevite identity and new gear catalog conflict — 2026-11-14T03:03Z
+
+**New exact-ID source finding, not new observed casts or gold decisions.** The original [2022 GoldGoblin 50,000-T2-Serevite prospect article](https://www.goldgoblin.net/gold-verdienen-mit-sondieren/) explicitly links T2 **190396** (T1 190395; T3 190394) and states **201 T2 processing skill**. Purchased 50,000 ore is not a verified completed-cast count, and 650k purchase/770k sales are historical prices, not Retail EV. Its output screenshot could not be accurately read.
+
+**Worker-source math and new eligibility block:** Reviewed the Dragonflight [02:43Z ten material rows](../v3/evidence/dragonflight/2026-11-14T0243-four-gear-looter-and-ore-lead.jsonl): four distinct historical cumulative gear tables report **154 operations and 173 output appearances**, **at least 19 appearance excesses** if per-item denominators match; not independently witnessed multi-output events. Six source-listed stack intervals require reference-range rather than observed-extrema provenance. Independently opened [LIVE WoWDB 202553](https://www.wowdb.com/items/202553-underlight-conjurers-treads), which says **Cannot be disenchanted**, conflicting with the historical 107-operation Looter table. Current in-game eligibility, at-cast bonus, individual material quantities and zero-inclusive distributions remain unresolved. No estimator, addon, gold fixture or live WoW tests performed. [Full original-source and arithmetic audit](../v3/evidence/master/2026-11-14T0303-df-new-gear-overlap-and-serevite-source-rank.md).
+
+**Next:** recover image or raw logged original 190396 T2 outputs and actual completed operations/refunds; get 202553 exact variant/build/eligibility. Midnight T0005/T0039/T0045 current-patch rank-separated numeric events remain higher priority. Worker reports are evidence inputs, not acknowledgments; no agent/main/PR/integration/schedule edits.
+
+---
+
 ## Coordinator T0041/T0046 — new DF gear source-range provenance and three catalog eligibility conflicts — 2026-11-14T02:08Z
 
 **New verified source/math checkpoint; no new observed Retail casts or priced actions.** Independently matched five worker-listed gear Looter tables (200386, 200379, 200380, 200381, 194406): **181 source-reported item disenchants / 201 material appearances**, implying **at least 20 overlapping-appearance excesses** under shared per-item denominators, not observed joint events. The sixth current-worker input **200394** is an existing identical 26-operation cumulative cohort with a different studyKey; do not recount it.
