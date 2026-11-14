@@ -1,0 +1,30 @@
+# Manager audit: Raven11 rank-unspecified Crushed Gemstones, one 20-cast cohort (2026-11-14 UTC)
+
+**Scope:** Research identity and downstream selection QA for T0009/T0040, not a new source study, new cast cohort, importer correction, Retail 2026 eligibility result, or Lua runtime test. Research worker owns all existing originals and future append-only corrections.
+
+## Original source checked
+
+The [original Raven11 Wowhead comment on Radiant Ruby](https://www.wowhead.com/item=212495/radiant-ruby) was reopened. The author states **20 stacks of 5 (100 rank-1 Ironclaw Ore)** and exactly these output **units**: Handful of Pebbles **25**, Radiant Rubies **11**, Glittering Glass **3**, **Crushed Gemstones 2**, Ostentatious Onyx **1**; explicitly **zero emeralds**. Specialization: 20 Shaping, 25 Gem Finding, 20 Emerald, 20 Ruby, zero remaining Shaping points. The post does **not** identify the Crushed Gemstones *quality*, event-by-event hits, positive stacks, refunds, exact client build, source date, or input-character skill. These are 20 completed prospect operations, not 20 independent datasets. The two Crushed Gemstones are **2 total units / 20 completed casts = 0.1 unconditional units/cast for rank-unspecified Crushed Gemstones**, **not** 10% P(hit), nor 0.1 units of rank 3.
+
+[Retail item 213221](https://goldcap.gg/retail/us/items/213221) explicitly denotes Crushed Gemstones **quality 3**; [213219](https://goldcap.gg/retail/us/items/213219) is quality 1. Neither precise quality is stated by Raven11. Prices on those pages are not imported as original outcomes.
+
+## Four copies of the same underlying evidence, with conflicting identity
+
+- Original `research/v3/evidence/war-within/2026-10-30T1818-rank2-prospect-studies-hotfixes.jsonl`, rows `war-within-20261030-014..019`, includes `-017` with output ID **null**, name **Crushed Gemstones**, 2 units / 20 casts.
+- `research/v3/evidence/war-within/2026-11-01T0217-rank2-prospecting-and-wowhead-cohorts.jsonl`, `war-within-20261101-021714..021719`, includes `-021717` with **outputItemID=213221** despite the source **not stating Q3**, 2 units / 20 casts. This is an **unsupported quality-specific identity assignment**, not a second 2-unit Q3 sample.
+- `research/v3/evidence/war-within/2026-11-03T2020-r1-ironclaw-raven11.jsonl`, `war-within-20261103-2020-001..005`, repeats the five positive output quantities, with the Crushed row `-004` using **ID null**, name **Crushed Gemstones (rank unspecified)**; the different literal name hinders same-output matching.
+- New `research/v3/evidence/war-within/20261114T1733-explicit-zero-histogram-corrections.jsonl` row `war-within-20261114-1733-002` correctly adds **zero emerald hits / 20 operations** via `replaces=war-within-20261101-021719`. It is the **same Raven11 cohort**; the corrected emerald zero does not revalidate or assign a rank to the Crushed output. The prior `-021719` row is suppressed by the estimator's `load()` replacement rule.
+
+## Reviewed estimator/compiled-state issue
+
+The current `research/v3/tools/build_estimates.py` has explicit same-source fingerprints (`study_vector`, `study_identity` around 506–615), same-output suppression (`same_output` around 622–668) and group keys (`key_of` around 188–203). These are **static code-path observations**, not a full estimator rerun. Source-normalized study vectors can relate the Raven11 copies, but cross-group duplicate exclusion requires matching `item_token` output names. `Crushed Gemstones` versus `Crushed Gemstones (rank unspecified)` do not match; rank-3 output ID `213221` and family-level output may therefore both be eligible as separate estimates for **the same two physical units**. An evidence candidate with rank unknown must not be promoted to Q3 through a copied record, even if the current compiler places it.
+
+The checked-in `research/v3/output/estimates.json` is **stale** (last changed November 1, 2026, commit `207c069e`), and shows `Prospect/210936/213221` with **average=0.1**, `chance=0.1` marked estimated, **20 effective casts**. Its 0.1 average matches the source's two units over 20 operations, **but assigning those units to Q3 is unsupported**. That old output predates November 3 family-label copy and the November 14 zero correction; it **cannot** be claimed as a present dual-count regression, a current production ItemDB result, or a real-character gold decision. The absence of a current recompiled artifact is a test blocker.
+
+## Requested owner-boundary-safe follow-up
+
+1. **TWW worker:** append a targeted correcting record or authorized correction mapping for **`war-within-20261101-021717`**, neutralizing unsourced Q3 `213221`; preserve two rank-unspecified Crushed units and the original row. Normalize copy labels/cohort identity in a reviewed correction layer, not by editing original JSONL or inventing three output-rank allocations. Review older `-017` and newer `-004` as **one** 20-cast source, and keep the new zero-emerald histogram.
+2. **Research engineering/reviewer (disjoint from owner three-pass branch):** add a fixture with Raven11's four transcriptions and one `replaces` row; run `build_estimates.py` and its source-usage checks after correction to prove that exactly **2 / 20 expected rank-unspecified units** are admitted **once**, with **Q3-specific quantity and P(hit) unknown**, and no family-plus-rank double count. Check separate conditional Emerald unlocking; do not infer an item-quality distribution.
+3. **Owner implementation branch:** no direct changes from this audit; any future admission must be validated through source-to-tooltip pipeline and synthetic pricing, not asserted here. Priority remains current Midnight post-March-31 measured, rank-linked, zero-inclusive outputs and refund data for T0005/T0039/T0045.
+
+No local Python compiler, Lua/tooltip, synthetic-price valuation, current in-game client, or CI test was executed for this research note. Existing worker originals, main, integration branch, PRs and schedules remain untouched.
