@@ -1,152 +1,134 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T07:07:17.705Z",
-  "status": "active; completed source corroboration and static quality-ID gap audit; no new Retail processing cohort or executed economic test",
+  "updated_at": "2026-11-14T08:09:18.744Z",
+  "status": "active; corrected source-gap classification from preserved firsthand R2 Eversong Diamond results; no new cast cohort, validated EV or runtime test",
   "task_ids": [
     "T0005",
     "T0039",
+    "T0045",
     "MIDNIGHT-DIAMOND-RANK-IDENTITY"
   ],
-  "task_id_scope": "Coordinator-owned review of worker's 06:11Z quality conflict; no assignment or change to Midnight worker scope",
+  "task_id_scope": "Coordinator-owned original-source/record reconciliation; worker task ownership unchanged",
   "exact_gaps_targeted": [
-    "Eversong Diamond 242608 versus 242712 uncut material identity, claimed quality ranks, and conflicting quality-less profession-guide descriptions",
-    "Whether static integration source/calculator has an exact 242712 ID and a safely priced rank-specific Prospecting route",
-    "Distinguish family-unknown-rank mean from rank-specific output probability and external market price; verify real itemLinks before promotion"
+    "Contradiction between prior broad statement 'no original rank-linked diamond prospect source' and existing 2026-07-03 firsthand R2 output rows",
+    "Separate source-stated output rank from catalog-inferred 242712 item ID and real prospect result itemLink",
+    "Keep missing completed casts, output hit/zero histogram, per-character skill/spec, unlock, and Resourcefulness distinct from source-observed total quantities"
   ],
   "newly_verified_fields": [
     {
-      "field": "distinct_eversong_uncut_reagent_item_ids",
-      "itemIDs": [
-        242608,
-        242712
-      ],
-      "source": "Wowhead live item pages",
-      "claimedProspectSource": true,
-      "actualProspectItemLinkSeen": false
-    },
-    {
-      "field": "quality_rank_catalog_labels",
-      "candidates": [
+      "field": "existing_first_person_r2_diamond_results",
+      "new_cohorts": false,
+      "original_source_date": "2026-07-03",
+      "author": "Stormwarning",
+      "records": [
         {
-          "itemID": 242608,
-          "marketCatalogQuality": 1
+          "id": "midnight-20261031-191103",
+          "inputItemID": 237361,
+          "inputRank": 2,
+          "gatheredOre": 67,
+          "outputName": "Eversong Diamond",
+          "sourceStatedOutputRank": 2,
+          "sourceStatedOutputUnits": 1,
+          "assignedOutputItemID": 242712,
+          "itemIDBasis": "external quality catalog inference; no original result itemLink",
+          "casts": null,
+          "perOutputHits": null
         },
         {
-          "itemID": 242712,
-          "marketCatalogQuality": 2
+          "id": "midnight-20261031-191108",
+          "inputItemID": 237365,
+          "inputRank": 2,
+          "gatheredOre": 66,
+          "outputName": "Eversong Diamond",
+          "sourceStatedOutputRank": 2,
+          "sourceStatedOutputUnits": 1,
+          "assignedOutputItemID": 242712,
+          "itemIDBasis": "external quality catalog inference; no original result itemLink",
+          "casts": null,
+          "perOutputHits": null
         }
       ],
-      "scope": "Retail commodity listings; two separate IDs independently priced, not a measured production distribution",
-      "conflict": "Two current profession guides call uncut Eversong Diamond quality-less"
+      "provenance": "already-preserved 2026-10-31 worker file; counted once as one author, not two newly independent cohorts"
     },
     {
-      "field": "integration_static_exact_id_coverage",
-      "head": "3d667d053db587c91401cfed7ecc56862b8340c9",
-      "files": [
-        {
-          "path": "database/sources/ReferenceData.lua",
-          "blob": "e47143ee72be8e9fd3128ebad62e364774608c4f",
-          "literal242608Count": 35,
-          "literal242712Count": 0
-        },
-        {
-          "path": "database/reference-calculator-baselines.lua",
-          "blob": "52ce8aa9c25bcf43134306eaa6b089f38ad107c4",
-          "literal242608Count": 7,
-          "literal242712Count": 0
-        },
-        {
-          "path": "database/research-v3-baselines.lua",
-          "blob": "ae953ffde49a27c0270408d0facbf6d96ee7955c",
-          "literal242608Count": 0,
-          "literal242712Count": 0
-        }
-      ],
-      "runtimeAbsenceProved": false
+      "field": "source_character_conditions",
+      "value": "original says one miner and two Jewelcrafters; July 14 follow-up confirms specs not listed, correctly specialized but no numerical stats, ore-to-character assignment or itemLinks"
+    },
+    {
+      "field": "prior_gap_wording",
+      "value": "too broad: first-person rank-two outputs exist; precise unresolved fields are authenticated itemLink, per-cast 0..N, actual consumed/refunded inputs, skill/unlock and current-patch transfer"
     }
   ],
   "newly_verified_cohorts": [],
-  "new_verified_current_gold_decisions": 0,
   "new_independent_measured_current_retail_casts": 0,
+  "new_verified_current_gold_decisions": 0,
   "evidence_files": [
-    "research/v3/evidence/master/20261114T0705-midnight-eversong-two-item-identity-and-quality-valuation-gate.md"
+    "research/v3/evidence/master/20261114T0810-existing-july-rank2-diamond-firsthand-source-reconciliation.md"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=242608/eversong-diamond",
-    "https://www.wowhead.com/item=242712/eversong-diamond",
-    "https://goldcap.gg/retail/us/items/242608",
+    "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248",
+    "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248/11",
     "https://goldcap.gg/retail/us/items/242712",
-    "https://saddlebagexchange.com/wow/item-data/242712",
-    "https://tradeskillmaster.com/retail/us/items/242608",
-    "https://tradeskillmaster.com/retail/us/items/242712",
-    "https://www.wow-professions.com/midnight/jewelcrafting-guide",
-    "https://dving.net/guides/wow-midnight-jewelcrafting-guide"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-10-31T1911-stormwarning-r2-prospecting.jsonl"
   ],
-  "verified_commit_sha": "4d87c3bddc4467ccfc0edf7f30d478b872e5bd5d",
-  "verified_commit_sha_scope": "Evidence commit 3e2318be272d659a2186a1154e84698c05c07bcb and dashboard commit 4d87c3bddc4467ccfc0edf7f30d478b872e5bd5d independently returned by GitHub; status's own resulting commit cannot be embedded in itself.",
+  "verified_commit_sha": "99f7fe7d7f16fbcf29f863e6c217ffc91ae31253",
+  "verified_commit_sha_scope": "New original-source audit commit 21e5701df2fea4c45ecc9e327100fc988e15a3ac and dashboard update commit 99f7fe7d7f16fbcf29f863e6c217ffc91ae31253 returned by GitHub; cannot embed the status's own resulting commit in this status file.",
   "blockers": [
-    "No actual 2026 in-game Prospect result itemLink, 242608-vs-242712 quality metadata or rank-specific completed-cast distribution; market item IDs do not establish output proportions.",
-    "Two profession guides call uncut Eversong Diamonds quality-less despite two distinct rank-labeled commodity item IDs; game client source and patch applicability unresolved.",
-    "Existing calculator only carries 242608 in exact-ID textual source; family unknown-rank fallback and any dynamic prices have not been run through the resolver/formatter with synthetic divergent prices.",
-    "Current 237362/237363, 237359, 237365 and milling T0045 zero-inclusive casts, skill, output rank, unlock and refunds remain unresolved by existing workers."
+    "No firsthand in-game 2026 result itemLink proves 242712 or ties 242608 and 242712 to particular quality/prospect event, even though R2 is explicitly stated by the author.",
+    "No R2 experiment completed-cast denominator, per-output hits/zeros, 0..N histogram, consumed-vs-gathered ore ledger, refunds, ore-to-Jewelcrafter profile, skill/unlock; two Jewelcrafters used.",
+    "Reference profession guides say the uncut diamond is quality-less, conflicting with source-described rank 2 and rank-labeled commodity IDs; scope/patch changes unresolved.",
+    "Current worker gaps remain 237362/237363, 237359/237365 and milling 236761 skill/rank/zero-inclusive outcomes; no authoritative in-client event stream."
   ],
   "exhausted_sources": [
-    "Two Wowhead live item pages and GoldCap/TSM Retail individual commodity catalogs checked for exact ID identity, not usable as observed Prospect yields; don't repeat these catalog pages as new studies.",
-    "WoW-Professions and dving narrative quality-less guides compared once with explicitly contrary rank-labeled catalogs; guide text alone cannot resolve modern in-client material rank.",
-    "Protected integration 3d667d0's exact-ID literal counts checked without rerunning existing pass-3 offline tests; subsequent work needs runtime/real-game validation, not another textual scan.",
-    "Original Magma Thresher 500-fish January 2023 report discovered in source search but confirmed already audited in master 2026-11-09/10; deliberately not duplicated."
+    "Stormwarning original July 3 rank-2 two-output report and July 14 follow-up: already archived in October 31 worker evidence; revisit only for a linked raw export or new first-person itemLink, not a duplicate study.",
+    "Prior Wowhead/GoldCap/TSM catalog-only comparisons and guide quality-less claims exhausted for source identity; market listings are not empirical Prospect results.",
+    "Prior coordinator source audit for five Crystalline Glass rank/ID errors checked; existing correction belongs to implementation review, not a new finding this checkpoint."
   ],
   "worker_checkpoints_read": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-14T06:11:30.224Z",
-      "acknowledgment": "not requested or inferred"
+      "updated_at": "2026-11-14T07:13:38.512Z",
+      "acknowledgment": "not requested/inferred"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-14T06:39:05.210Z",
-      "acknowledgment": "not requested or inferred"
+      "updated_at": "2026-11-14T07:36:49.508Z",
+      "acknowledgment": "not requested/inferred"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-14T06:25:30.981Z",
-      "acknowledgment": "not requested or inferred"
+      "updated_at": "2026-11-14T07:30:10.994Z",
+      "acknowledgment": "not requested/inferred"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-14T06:50:19.620Z",
-      "acknowledgment": "not requested or inferred"
+      "updated_at": "2026-11-14T07:50:49.728Z",
+      "acknowledgment": "not requested/inferred"
     }
   ],
   "validation": {
-    "original_wowhead_item_reagent_descriptions_checked": true,
-    "separate_goldcap_quality_catalog_labels_checked": true,
-    "separate_TSM_item_level_markets_checked": true,
-    "independent_saddlebag_242712_quality_label_checked": true,
-    "contradictory_jewelcrafting_guide_claims_checked": true,
-    "integration_source_text_exact_id_search_executed": true,
-    "original_reddit_500_fish_sample_reimported": false,
+    "original_blizzard_forum_post_and_followup_read": true,
+    "existing_exact_worker_records_verified": true,
+    "prior_2026_11_09_coordinator_source_audit_compared": true,
+    "no_new_study_or_numeric_rate_admitted": true,
     "actual_addon_valuation_or_tooltip_test_executed": false,
     "synthetic_price_offline_test_executed": false,
     "local_lua_tests_executed": false,
     "current_retail_client_test_executed": false,
-    "newly_admitted_output_rates": 0,
-    "new_observed_carbons_or_counts": 0,
-    "CI_triggered_by_coordinator": false,
-    "CI_read_before_research": "GitHub Verify five-agent completion run 43568274817 successful on prior research head b0808a99445ea961f9e5ff9515d654732c8003f7; not evidence of new coordinator files",
-    "original_evidence_left_append_only": true
+    "compiled_ItemDB_changed": false,
+    "new_verified_retail_expected_quantities": 0,
+    "new_gold_decisions": 0,
+    "verified_pr_states": "#22 and #23 closed and unmerged; no mutation",
+    "prior_ci_check": "research Verify five-agent completion 43573001487 success on pre-coordinator head 6035292bf083ace44bc9351555966bde53b79f50; not verification of this new checkpoint",
+    "CI_triggered_by_coordinator": false
   },
   "protected_state": {
     "main_head_at_read": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
     "integration_head_at_read": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_head_before_work": "b0808a99445ea961f9e5ff9515d654732c8003f7",
-    "research_head_before_status_write": "4d87c3bddc4467ccfc0edf7f30d478b872e5bd5d",
+    "research_head_at_start": "6035292bf083ace44bc9351555966bde53b79f50",
     "immutable_snapshot": "4df9ae8b1359d934828e4d0e6d39a9a4dba26fae",
-    "prs_22_23": "closed unmerged; left untouched",
-    "integration_pr24": "merged historically; implementation branch remains protected and unchanged this run",
-    "other_open_prs": "13,14,51-66 confirmed; no mutation",
     "addon_main_workers_integration_schedules_merges_releases_untouched": true
   },
-  "next_concrete_step": "Get post-hotfix authentic prospecting itemLink for 242608 and/or 242712 including ore ID/rank, skill, unlock and actual completed/returned inputs; use isolated engineering review with distinct synthetic prices to test ItemDB family fallback and exact quality-price routing before any rank-specific promotion. Prioritize zero-inclusive event logs for T0005/T0039/T0045; workers keep their own source ownership."
+  "next_concrete_step": "Request original post-hotfix R2 Diamond 242712 prospect result itemLink + ore rank and actual consumed/refunded and completed 0..N cast event logs, character skill and ore unlock. Use the implementation owner's existing branch for divergent-rank synthetic-price valuation/tooltip QA; do not duplicate Stormwarning or import rank probabilities."
 }
