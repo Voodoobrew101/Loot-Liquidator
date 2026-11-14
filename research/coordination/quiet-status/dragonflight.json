@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T11:31:04.102Z",
-  "status": "active; alternative-language/ore-rank source search yielded no unindexed prospecting or milling completed-cast cohorts; retained dedupe and identity evidence",
+  "updated_at": "2026-11-14T12:32:30.069Z",
+  "status": "active; four new first-party item-side Wowhead Looter cumulative gear disenchant cohorts (11 material-occurrence rows) recorded after ore/milling original-source search produced no fresh cohorts",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,37 +12,96 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143 R1, 188658 R2, 190311 R3 prospect outputs: completed casts, per-output hits/0-N histograms and refunds unknown",
-    "Serevite Ore 190395 R1,190396 R2,190394 R3; Khaz'gorite Ore 190312 R1,190313 R2,190314 R3: source-original output by rank/cast/zero counts unknown",
-    "Prismatic Ore 194545: by-output castsWithDrop/zero/histogram, independent quality rank observations unknown",
-    "Bubble Poppy 191467 R2, Saxifrage 191464/191465/191466, Hochenblume: completed-mill casts, refunds, per-material event histograms unknown"
+    "Draconium Ore 189143 R1 / 188658 R2 / 190311 R3: completed prospect operations by ore quality, hit/zero histograms and resourcefulness refund ledgers still missing",
+    "Serevite Ore 190395/190396/190394 and Khaz'gorite Ore 190312/190313/190314: independent rank-specific prospecting 0-N result studies missing",
+    "Prismatic Ore 194545: original measured per-gem hit/zero histograms still missing; avoid double counting superbondez",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466 and Hochenblume milling: completed casts, refunds and per-pigment histograms missing",
+    "Gear inputs 194347, 202467, 207269, 197999: Wowhead Looter item/version/patch/skill and original raw operation/stack outcome data missing"
   ],
-  "newly_verified_fields": [],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [],
+  "newly_verified_fields": [
+    "11 item-specific source-reported material appearances per denominator (castsWithDrop)",
+    "four observed Looter disenchant denominators 619,31,52,564",
+    "11 rounded source percentShown entries; shown material stack ranges where present",
+    "exact input/output item IDs crosschecked against named item pages"
+  ],
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "wowhead-looter-original-gear-194347-observed-20261114",
+      "inputItemID": 194347,
+      "casts": 619,
+      "material_hit_counts": {
+        "194123": 266,
+        "194124": 333,
+        "200113": 32
+      },
+      "source": "https://www.wowhead.com/item=194347/expedition-researchers-hood",
+      "limitations": "cumulative Looter dataset; not fully independent character-level experimental cohort; no totalQuantity/0-N histogram"
+    },
+    {
+      "studyKey": "wowhead-looter-original-gear-202467-observed-20261114",
+      "inputItemID": 202467,
+      "casts": 31,
+      "material_hit_counts": {
+        "194123": 2,
+        "194124": 14,
+        "200113": 17
+      },
+      "source": "https://www.wowhead.com/ptr-2/item=202467/faulds-of-the-cinderwolf",
+      "limitations": "cumulative Looter dataset; not fully independent character-level experimental cohort; no totalQuantity/0-N histogram"
+    },
+    {
+      "studyKey": "wowhead-looter-original-gear-207269-observed-20261114",
+      "inputItemID": 207269,
+      "casts": 52,
+      "material_hit_counts": {
+        "194124": 31,
+        "200113": 31
+      },
+      "source": "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
+      "limitations": "cumulative Looter dataset; not fully independent character-level experimental cohort; no totalQuantity/0-N histogram"
+    },
+    {
+      "studyKey": "wowhead-looter-original-gear-197999-observed-20261114",
+      "inputItemID": 197999,
+      "casts": 564,
+      "material_hit_counts": {
+        "194123": 265,
+        "194124": 287,
+        "200113": 27
+      },
+      "source": "https://www.wowhead.com/item=197999/windswept-hood",
+      "limitations": "cumulative Looter dataset; not fully independent character-level experimental cohort; no totalQuantity/0-N histogram"
+    }
+  ],
+  "new_numerical_measurements": 11,
+  "numerical_fields_improved": [
+    "casts",
+    "castsWithDrop",
+    "percentShown",
+    "percentMeaning",
+    "minSeen/maxSeen where reported by source"
+  ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-14T0933-independent-source-gap-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T1035-independent-public-log-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-14T1131-alternative-language-primary-data-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-14T1131-alternative-language-primary-data-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl"
   ],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/prospectmate",
-    "https://www.reddit.com/r/woweconomy/comments/yyqb82",
-    "https://www.reddit.com/r/woweconomy/comments/zjh0d0",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
-    "https://www.wowhead.com/item=191465/saxifrage",
-    "https://goldcap.gg/retail/us/items/188658",
-    "https://goldcap.gg/retail/us/items/190312",
-    "https://www.wowhead.com/cn/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620"
+    "https://www.wowhead.com/item=194347/expedition-researchers-hood",
+    "https://www.wowhead.com/ptr-2/item=202467/faulds-of-the-cinderwolf",
+    "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
+    "https://www.wowhead.com/item=197999/windswept-hood",
+    "https://www.wowhead.com/item=194123/chromatic-dust",
+    "https://www.wowhead.com/item=194124/vibrant-shard",
+    "https://www.wowhead.com/item=200113/resonant-crystal"
   ],
-  "verified_commit_sha": "8d4c471f0612e36aae7d595972a12d434c8adb79",
-  "commit_sha_scope": "verified pre-run parent; commit SHA cannot self-reference in a single commit; post-commit verified by readback",
+  "verified_commit_sha": "9e553b9b1b613310d84e559fe158dc5cd5bfdbeb",
+  "commit_sha_scope": "verified pre-run parent: single commit cannot contain its own final SHA; new commit and content readback separately verified afterward",
   "blockers": [
-    "No new source-original rank-specific completed-cast + refund ledger for Dragon Isles prospecting/milling found on newly searched multilingual/name-first sources",
-    "Independent old Magic/Mystic item numerical comments already copied into v3 multiple times; no additional independent cohort verified",
-    "Historical beta milling 2–5 evenly distributed is reference/model, not modern retail outcome measurements",
-    "Actual per-output positive-stack histogram and zero observations remain unknown"
+    "Original prospecting and milling completed-cast/rank/refund/zero-inclusive histogram data not found after fresh name-first cross-site searches; no repeated historical cohorts copied",
+    "New Wowhead Looter gear tables expose pooled positive material appearance counts, not material total units or exact per-dis-enchant 0-N event distributions; the data may span versions/builds and uploaders; material hits may co-occur",
+    "Live Wowhead web-open hides JavaScript-loaded Looter tables, but web search index exposes numeric table; source pages and exact item identities cross-checked. Independent DOM or raw export verification remains pending."
   ],
   "exhausted_sources": [
     {
@@ -690,35 +749,33 @@
       ]
     }
   ],
-  "next_concrete_step": "Seek uncopied player-owned full cast-event export or linked original experiment spreadsheet (modern Dragonflight prospect and mill), explicitly tracking per-operation outputs/zeros, refunds, exact ore/herb rank, spec, skill and build; avoid recorded Jallfo/Bugy/Aary/superbondez/Kenthenerd sources unless new original data is supplied.",
+  "next_concrete_step": "Locate rank/skill-aware primary Dragon Isles prospecting or milling log (per completed operation including zero-result stacks, refunds and build). For these four gear items, obtain non-cumulative original WoW Looter raw operations or separate per-item snapshots before treating future tables as independent.",
   "validation": {
     "jsonl_parse": true,
-    "record_count": 1,
-    "measured_drop_records": 0,
-    "searched_records": 1,
-    "where_looked_count": 12,
+    "record_count": 11,
+    "measured_drop_records": 11,
+    "searched_records": 0,
+    "unique_record_ids": true,
+    "distinct_new_input_cohorts": 4,
     "where_looked_sites": [
+      "reddit.com",
       "wowhead.com",
       "wow-professions.com",
-      "warcraft.wiki.gg",
-      "reddit.com",
-      "goldcap.gg",
-      "curseforge.com",
-      "wowgold.hk"
+      "warcraft.wiki.gg"
     ],
-    "unique_record_ids": true,
-    "source_original_cohorts": 0,
-    "unproved_fields_left_null": true,
-    "no_copied_cohorts": true,
+    "source_tables_reported_denominators": true,
+    "total_quantity_unknown_null": true,
+    "zero_histograms_unknown_null": true,
+    "patch_and_skill_unknown_null": true,
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-14T1131-alternative-language-primary-data-search.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "post_commit_readback": "pending (single-commit self-reference limitation)"
+    "post_commit_readback": "pending (single-commit SHA cannot self-reference)"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T1131-alternative-language-primary-data-search.jsonl",
-  "verified_parent_sha": "8d4c471f0612e36aae7d595972a12d434c8adb79"
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl",
+  "verified_parent_sha": "9e553b9b1b613310d84e559fe158dc5cd5bfdbeb"
 }
