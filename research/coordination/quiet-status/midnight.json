@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-14T06:11:30.224Z",
-  "status": "active; new source conflict for Eversong Diamond output ranks and original UI caution for Dawn Crystal restoration rank; zero new measured cast cohorts",
+  "updated_at": "2026-11-14T07:13:38.512Z",
+  "status": "active; new cross-source School of Gems alternative diamond sourcing conflict; zero new prospect/disenchant/mill measured operation cohorts",
   "task_ids": [
     "T0026",
     "T0049",
@@ -11,28 +11,39 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026/T0049: Miststalker's Wristbands item 272246 actual ilvl305 equipped identity established previously; original at-cast DE itemLink/bonus, materials, profession details and completed operation still unavailable.",
-    "T0026: Midnight epic DE Looter rows often omit Dawn Crystal material rank; restoration web UI itself can omit this rank, so do not guess 243605 versus 243606.",
-    "T0039/T0005: Umbral Tin Ore 237362/237363 per-output hits/zeros/quantity histograms, conditional Eversong Diamond 242608/242712 actual rank and unlock.",
-    "T0003/T0045: 237359 Refulgent Copper and 236761 Midnight herb milling zero-inclusive original operation exports."
+    "T0026/T0049: Miststalker's Wristbands 272246 real ilvl305 variant established earlier, but exact successful DE input itemLink/bonuses at cast and material stack receipt missing; generic 206 not a substitute.",
+    "T0039/T0005: Umbral Tin Ore 237362 rank-specific Eversong Diamond 242608/242712 hits/zeros/histogram, skill/unlock, refunds and completed casts still needed.",
+    "T0003/T0045: Refulgent Copper Ore 237359 and Tranquility Bloom 236761 independent exact per-cast output histograms still missing.",
+    "NEW Eversong Diamond 242608/242712 alternate School of Gems 245648 drop is asserted by wiki diamond page but unconfirmed by eight-gem container contents list; must not be used to infer per-ore drop probabilities."
   ],
   "newly_verified_fields_or_cohorts": {
-    "kind": "source-conflict/provenance-only",
-    "referenced_input_ids": [
+    "kind": "conflicting-secondary-source plus direct-but-non-prospecting first-person container quantities",
+    "queried_input_item_ids": [
       272246,
       237362,
-      237363
+      237363,
+      237359,
+      237364,
+      237365,
+      236761
     ],
-    "referenced_output_ids": [
+    "new_container_item_id": 245648,
+    "relevant_output_item_ids": [
       242608,
-      242712,
-      243605,
-      243606
+      242712
     ],
-    "new_detail_1": "GoldCap two separate Eversong Diamond quality-ranked IDs contradict two guides describing uncut diamonds as quality-less",
-    "new_detail_2": "Blizzard forum 2299311 Apr30: disenchant item restoration UI can hide required Dawn Crystal quality rank",
-    "existing_ilvl305_equipped_identity": "Previously indexed, not new proof of a DE operation",
-    "new_original_completed_cohorts": 0
+    "exact_firsthand_unassigned_output_quantities": {
+      "Flawless Sanguine Garnet": 2,
+      "Flawless Amani Lapis": 1,
+      "Flawless Harandar Peridot": 2,
+      "Flawless Tenebrous Amethyst": 1,
+      "Amani Lapis": 5
+    },
+    "exact_output_rank_ids": "not supplied in original comment; do not infer from names",
+    "original_container_open_denominator": null,
+    "original_observed_diamond_hits": null,
+    "new_estimator_eligible_cohorts": 0,
+    "direct_source_disagreement": "Wiki Eversong Diamond lists School of Gems, but wiki School of Gems contents omit diamond and Wowhead asks if ever seen"
   },
   "numeric_fields_advanced": {
     "new_original_completed_casts": 0,
@@ -41,36 +52,32 @@
     "new_zero_outcome_counts": 0,
     "new_per_cast_histograms": 0,
     "new_empirical_probabilities": 0,
-    "comment": "No new measured yield denominator or independent player event. Newly documented ambiguity affects rank provenance, not input/output quantity."
+    "comment": "Ianto's 5 output item quantities are a container opening report without a stated number of containers, are not Prospect/Mill/Disenchant operations and do not advance ore processing estimator fields."
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-14T0611-quality-rank-source-conflict.jsonl"
+    "research/v3/evidence/midnight/2026-11-14T0713-school-of-gems-diamond-identity-conflict.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-14T0515-luminant-sabatons-source-only.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-14T0611-quality-rank-source-conflict.jsonl",
   "evidence_record_ids": [
-    "midnight-20261114-0611-001",
-    "midnight-20261114-0611-002"
+    "midnight-20261114-0713-001"
   ],
   "source_links": [
-    "https://www.wow-professions.com/midnight/jewelcrafting-guide",
-    "https://dving.net/guides/wow-midnight-jewelcrafting-guide",
-    "https://goldcap.gg/retail/us/items/242608",
-    "https://goldcap.gg/retail/us/items/242712",
+    "https://warcraft.wiki.gg/wiki/Eversong_Diamond",
+    "https://warcraft.wiki.gg/wiki/School_of_Gems",
+    "https://www.wowhead.com/item=245648/school-of-gems",
+    "https://www.wowdb.com/spells/1230893-school-of-gems",
     "https://www.wowhead.com/item=242608/eversong-diamond",
-    "https://www.wowhead.com/item=242712/eversong-diamond",
-    "https://us.forums.blizzard.com/en/wow/t/unable-to-restore-item-using-item-restoration-webpage/2299311",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
-    "https://worldofwarcraft.blizzard.com/en-us/worldsoul/us/armory/character/doomhammer/talons/"
+    "https://www.wowhead.com/item=242712/eversong-diamond"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One atomic commit holds new JSONL and midnight quiet status. New commit SHA cannot be in its own hashed content without second commit. Verified parent is recorded; inspect remote branch + both files to verify resulting SHA.",
+  "commit_note": "One atomic research commit contains one new midnight JSONL and own midnight status. Self SHA intentionally null because inserting commit SHA into tracked content requires an extra commit. Verify GitHub branch head and both blobs after ref update.",
   "blockers": [
-    "No original 272246 ilvl305 successful DE material receipt; player-equipped ilvl305 does not prove disenchant eligibility.",
-    "No source-linked exact Dawn Crystal quality output in referenced item restoration UI; material rank may be hidden.",
-    "Eversong Diamond 242608/242712 commodity-rank labels conflict with two profession guides calling uncut diamond quality-less; requires Master or original in-game material-link validation.",
-    "237362/237363 prospecting and 237359 copper, 237365 silver, 236761 milling still lack new independent per-cast hits, zeros, quantities, refund and build data.",
-    "Indexed Cardinalai, Honeybone, owner PR49, prior Raven restoration, earlier 272246 ilvl305 armory, MrNoobyy r2 crystal estimate and Wowhead Looter aggregates intentionally not reimported."
+    "No at-cast itemLink+bonus, current game build, profession stats or material receipt for Miststalker's Wristbands 272246 at actual ilvl305.",
+    "No original rank-specific 237362 completed-cast output hits/zeros/histograms or Diamond 242608/242712 event and ore unlock source; refund and rank conditions unknown.",
+    "No independently new 237359/237365 prospect or 236761 milling per-operation cohort/zero ledger.",
+    "School of Gems 245648 alternate diamond path is only an uncorroborated secondary statement, contradicted by its own contents page and unconfirmed in eyewitness comments; do not promote it to a numeric chance.",
+    "No authorized OpenContainer evidence method in present schema; request through Master only. No need to modify shared files."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -135,10 +142,11 @@
     "2026-11-14T03:16:35.798Z: NEW distinct Corewright's Zappers 251204 PTR 12.1.0 Wowhead cumulative Looter item table, 46 source-reported item-side events and four separate rows (Radiant Shard 17 and 3; Dawn Crystal 16 and 9); recorded once as reference-only. Search across Blizzard, Wowhead, Reddit and profession guides for 272246 at-cast ilvl305, Tin 237362/237363, Copper 237359, Silver 237365, milling 236761 did not locate fresh original 0-inclusive exports; existing Cardinalai, Honeybone and previously indexed Looter snapshots excluded. Do not reindex 251204 without independent raw source, output material links, ranks and itemLink/bonus.",
     "2026-11-14T04:13:47.435Z: Compared freshly by-name Midnight DE/Prospect/Mill sources across WoW-Professions, Wowhead, Blizzard US/EU forums, r/woweconomy and wiki/guide index. Previously indexed Cardinalai, Honeybone, Krathalan 145/45, owner PR49 and Looter aggregates deliberately not reimported. NEW original WoW-Professions editor 'few hundred disenchanting attempts' yields only approximate conditional Glimmering Powder 267653 rarity percentages 10/50/100 and weekly catch-up prerequisite; exact denominators/hits/zeros cannot be recovered from guide. Do not revisit until author supplies a raw rarity-stratified export.",
     "2026-11-14T05:15:27.248Z: Checked named original Midnight gear/prospect/mill cohorts via WoWhead, Blizzard forums, Reddit, WoW-Professions and Warcraft Wiki. Previously indexed 248066 Malicious Skullcracker source (prior midnight-20261101-009/010) and 249957, 249961/249960/249956 Looter item pages excluded; other existing Cardinalai/Honeybone/5294KP/PR49 not reused. NEW unindexed LIVE 249963 Sabatons item-side dual Dawn Crystal rows preserved as reference-only; no fresh player-level cast+zero export. Do not rescrape 249963 absent raw source ledger.",
-    "2026-11-14T06:11:30.224Z: New cross-source comparison: GoldCap 242608/242712 labels two Eversong Diamond ranks, in tension with WoW-Professions and Dving quality-less guide wording. New Apr30 Blizzard customer restoration thread 2299311 says Dawn Crystal quality rank required for item restore is hidden by web UI; original poster's successful retry is not a new measured disenchant event. Earlier ilvl305 armory, Raven May22 restore, Cardinalai/Honeybone and Looter snapshots already indexed. No new complete per-cast cohort for 272246, 237362, 237359, 236761. Do not recycle these webpages without original exact itemLinks, outputs and operation ledger."
+    "2026-11-14T06:11:30.224Z: New cross-source comparison: GoldCap 242608/242712 labels two Eversong Diamond ranks, in tension with WoW-Professions and Dving quality-less guide wording. New Apr30 Blizzard customer restoration thread 2299311 says Dawn Crystal quality rank required for item restore is hidden by web UI; original poster's successful retry is not a new measured disenchant event. Earlier ilvl305 armory, Raven May22 restore, Cardinalai/Honeybone and Looter snapshots already indexed. No new complete per-cast cohort for 272246, 237362, 237359, 236761. Do not recycle these webpages without original exact itemLinks, outputs and operation ledger.",
+    "2026-11-14T07:13:38.512Z: NEW source conflict not previously indexed: Warcraft Wiki Eversong Diamond page alleges alternative School of Gems 245648 drop, while wiki School of Gems page lists 8 non-diamond raw-gem families and Wowhead obsidiangel explicitly seeks a witnessed diamond. Wowhead Ianto firsthand container result lists 2 Flawless Sanguine Garnet, 1 Flawless Amani Lapis, 2 Flawless Harandar Peridot, 1 Flawless Tenebrous Amethyst, 5 Amani Lapis; no input-open count, exact item-rank links or observed diamond. This is an Alchemy container, NOT ore prospecting; do not count as independent prospect or estimate a diamond drop. Master schema concern only if OpenContainer yields are desired. Revisit only with exact original opening event(s) and item links. Fresh searches: wiki, Wowhead, WoWDB, Reddit, Blizzard US/EU, Icy Veins."
   ],
-  "next_concrete_step": "Seek an original itemLink-complete 272246 ilvl305 successful current Retail DE receipt or rank-identified 237362/237363 per-cast prospect log including hits, zeros, refund and unlock. Ask Master to adjudicate 242608/242712 Eversong Diamond rank conflict with in-game links.",
-  "verified_base_commit_sha": "15e7b607ee327bcd34782c8cf1f5b96ca5ac11f4",
-  "next": "Primary current Retail operation export with itemLinks, ranks, casts, zero bins, spec and refunds; Master resolve diamond rank discrepancy.",
-  "base_commit_sha": "15e7b607ee327bcd34782c8cf1f5b96ca5ac11f4"
+  "next_concrete_step": "Seek first-person export with 272246 ilvl305 at-cast bonus link and output stacks; next 237362 rank/prospect CSV with complete casts, hits, zeros, Resourcefulness and diamond unlock. Ask Master to adjudicate contradictory 245648 School of Gems diamond claim or authorize OpenContainer method only if independent event receipts appear.",
+  "verified_base_commit_sha": "2bc1102c64dba7dae2b939cebda8c089603a8f33",
+  "next": "Seek first-person export with 272246 ilvl305 at-cast bonus link and output stacks; next 237362 rank/prospect CSV with complete casts, hits, zeros, Resourcefulness and diamond unlock. Ask Master to adjudicate contradictory 245648 School of Gems diamond claim or authorize OpenContainer method only if independent event receipts appear.",
+  "base_commit_sha": "2bc1102c64dba7dae2b939cebda8c089603a8f33"
 }
