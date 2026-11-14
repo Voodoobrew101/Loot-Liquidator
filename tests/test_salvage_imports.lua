@@ -5,6 +5,12 @@ local function check(v,m)assert(v,m);checks=checks+1 end
 local function eq(a,b,m)check(a==b,(m or 'mismatch')..': '..tostring(a)..' ~= '..tostring(b))end
 local function near(a,b,m)check(type(a)=='number' and math.abs(a-b)<1e-9,m)end
 local function copy(v)if type(v)~='table' then return v end local n={} for k,x in pairs(v)do n[k]=copy(x)end return setmetatable(n,getmetatable(v))end
+local function savedVariables(v)
+ if type(v)=='number' then return tonumber(('%.16g'):format(v)) end
+ if type(v)~='table' then return v end
+ local saved={} for k,x in pairs(v) do saved[k]=savedVariables(x) end
+ return saved
+end
 GetTime=function()return 0 end;time=function()return 2000000 end
 GetBuildInfo=function()return '12.1.5','70783','',120105 end
 CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()end}end
@@ -132,10 +138,37 @@ for _,r2 in ipairs(independent.records)do
  r2.studyID=originalStudy..'-independent';r2.operationID=r2.operationID..'-independent'
  r2.bagReconciliation.id=r2.operationID;r2.bagReconciliation.outputs[1].quantity=6
  r2.outputs[1].quantity=6;r2.resultMetadata[1].quantity=6;r2.resultMetadata[1].operationID=r2.resultMetadata[1].operationID+10
+ r2.inputs[1].quantity=0;r2.bagReconciliation.inputs=setmetatable({},arrayMeta)
+ r2.resultMetadata[1].resourcesReturned=setmetatable({{reagent={itemID=243602},quantity=1}},arrayMeta)
 end
 check(import(independent),'independent matching cohort admitted separately')
 f,option,ctx=setup(shatter);model=assert(LL:ComputeEvidenceModel(f,option,nil,1,ctx))
 near(model.materials[1].expectedQuantity,4.5,'both independent same-profile studies contribute')
+near(model.expectedInputCount,.5,'both cohorts contribute to consumption before reload')
+local function reloadImports()
+ LL.db.importedResults=savedVariables(LL.db.importedResults)
+ LL._importedIndex=nil;LL._processingModelCache=nil;LL._importedRevision=nil
+end
+local exactSpeed=liveContext.operationStats[2].ratingPct
+reloadImports()
+local roundedSpeed=tonumber(('%.16g'):format(exactSpeed))
+check(roundedSpeed~=exactSpeed,'fixture exercises the real WoW save precision loss')
+for _,set in pairs(LL.db.importedResults.sets) do
+ eq(set.observationContext.operationStats[2].ratingPct,roundedSpeed,'SavedVariables rounds the stored native stat')
+end
+model=assert(LL:ResolveEvidenceModel(f,option,nil,1))
+near(model.expectedInputCount,.5,'refund blend survives a SavedVariables round trip')
+near(model.materials[1].expectedQuantity,4.5,'output blend survives a SavedVariables round trip')
+liveContext.operationStats[2].ratingPct=roundedSpeed
+eq(LL:ResolveEvidenceModel(f,option,nil,1),nil,'a distinct live double still fails exact profile matching')
+liveContext.operationStats[2].ratingPct=exactSpeed
+local savedSet=next(LL.db.importedResults.sets)
+local originalContext=LL.db.importedResults.sets[savedSet].observationContext
+LL.db.importedResults.sets[savedSet].observationContext=copy(originalContext)
+LL.db.importedResults.sets[savedSet].observationContext.operationStats[2].ratingPct=exactSpeed+.001
+LL._importedIndex=nil
+eq(#LL:ImportedEvidenceRecords('Craft:243602',f,option,ctx),1,'arbitrary saved changes are held, not repaired from the key')
+LL.db.importedResults.sets[savedSet].observationContext=originalContext;LL._importedIndex=nil
 local imported=LL:ImportedEvidenceRecords('Craft:243602');eq(#imported,2);eq(imported[1].referenceContextID,imported[2].referenceContextID)
 -- Later coverage changes are scoped to the original study and recipe, across
 -- all its profiles. The hold survives a reload and stale complete re-exports.
@@ -180,7 +213,7 @@ eq(LL:ImportedResultsCount(),savedCasts,'held casts remain in saved results')
 near(assert(LL:ResolveEvidenceModel(f,option,nil,1)).materials[1].expectedQuantity,6,'late gap invalidates cached combined valuation')
 f,option,ctx=setup(alternate);eq(LL:ResolveEvidenceModel(f,option,nil,1),nil,'other profile of the same study and recipe held')
 f,option,ctx=setup(sameStudyRecycling);check(LL:ResolveEvidenceModel(f,option,nil,1),'other salvage recipe remains eligible')
-LL.db.importedResults=copy(LL.db.importedResults);LL._importedIndex=nil
+reloadImports()
 f,option,ctx=setup(shatter)
 imported=assert(LL:ImportedEvidenceRecords('Craft:243602'));eq(#imported,1,'saved hold re-applied after reload')
 eq(imported[1].studyID,originalStudy..'-independent','independent profile study remains eligible')

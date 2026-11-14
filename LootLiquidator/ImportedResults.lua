@@ -81,6 +81,77 @@ local function mergeDisjointSalvage(target,legacy)
     target.casts=target.casts+legacy.casts;target.consumed=target.consumed+legacy.consumed
     return true
 end
+local function readSignature(text)
+    -- SavedVariables can round numeric table fields. Recover exact values
+    -- from the original length-delimited context string in the aggregate key.
+    local nodes=0
+    local function read(value,depth)
+        nodes=nodes+1
+        if nodes>8200 or depth>26 then return nil end
+        if value:sub(1,1)=='{' and value:sub(-1)=='}' then
+            local entries,pos={},2
+            local function field()
+                local digits=value:match('^(%d+):',pos)
+                local size=digits and tonumber(digits)
+                if not size or size>#value-pos-#digits then return nil end
+                local start=pos+#digits+1
+                pos=start+size
+                return read(value:sub(start,pos-1),depth+1)
+            end
+            while pos<#value do
+                local key=field()
+                if (type(key)~='string' and type(key)~='number') or entries[key]~=nil then return nil end
+                local child=field()
+                if child==nil then return nil end
+                entries[key]=child
+            end
+            if pos==#value then return entries end
+        elseif value:sub(1,7)=='string:' then return value:sub(8)
+        elseif value=='boolean:true' then return true
+        elseif value=='boolean:false' then return false
+        elseif value:sub(1,7)=='number:' then
+            local number=tonumber(value:sub(8))
+            if number and number==number and math.abs(number)<math.huge then return number end
+        end
+    end
+    return read(text,0)
+end
+
+local function sameSavedObservation(exact,saved)
+    if type(exact)~=type(saved) then return false end
+    if type(exact)=='number' then
+        -- The client writes 16 significant digits. Match the original key against
+        -- its own saved form. Live profile comparisons still use exact doubles.
+        return exact==saved or tonumber(string.format('%.16g',exact))==saved
+    end
+    if type(exact)~='table' then return exact==saved end
+    for k,v in pairs(exact) do if not sameSavedObservation(v,saved[k]) then return false end end
+    for k in pairs(saved) do if exact[k]==nil then return false end end
+    return true
+end
+
+local function restoreSalvageContext(key,set)
+    local saved=set.observationContext
+    if type(key)~='string' or #key>262144 or key:sub(1,8)~='salvage:' or type(saved)~='table' then return false end
+    local parts=readSignature(key:sub(9))
+    if type(parts)~='table' or type(parts[1])~='string' or type(parts[2])~='string'
+        or key~='salvage:'..signature({parts[1],parts[2]}) then return false end
+    if parts[2]==signature(saved) then return true end
+    local exact=readSignature(parts[2])
+    if type(exact)~='table' then return false end
+    if signature(exact)~=parts[2] then
+        -- Rounded legacy keys carry no additional precision to restore.
+        return parts[2]==signature(saved,true)
+    end
+    local cohort=readSignature(parts[1])
+    if type(cohort)~='table' or type(cohort[4])~='string'
+        or parts[1]~=signature({saved.character,set.build,set.studyID,cohort[4],set.recipeID,
+            set.inputItemID,set.inputQualityRank,set.applyConcentration})
+        or not sameSavedObservation(exact,saved) then return false end
+    set.observationContext=exact
+    return true
+end
+
 local function sameSalvageContext(a,b)
     return a.salvage and b.salvage and a.studyID==b.studyID
         and a.recipeID==b.recipeID and a.method==b.method
@@ -90,9 +161,8 @@ local function sameSalvageContext(a,b)
         and signature(a.allocation)==signature(b.allocation)
         and signature(a.observationContext)==signature(b.observationContext)
 end
--- Verify the complete encoded key, treating the embedded cohort as opaque. Its
--- recipe/input/rank components are bounded integers and unchanged by precision.
--- This avoids guessing context IDs that are absent from saved aggregate fields.
+
+-- Legacy keys can be paired only when their complete saved context agrees.
 local function exactPartnerKey(key,set)
     if type(key)~='string' or not set.salvage or type(set.observationContext)~='table' then return nil end
     local length,offset=key:match('^salvage:{8:number:1(%d+):()')
@@ -110,7 +180,11 @@ local function reconcileSavedPairs(sets)
     -- Group first, then mutate. Two old signed-zero keys can share one canonical
     -- identity even before an exact-key aggregate has ever been imported.
     for legacyKey,legacy in pairs(sets) do
-        local key=exactPartnerKey(legacyKey,legacy)
+        local key
+        if type(legacy)=='table' and legacy.salvage then
+            if restoreSalvageContext(legacyKey,legacy) then key=exactPartnerKey(legacyKey,legacy)
+            else held[legacyKey]=true end
+        end
         if key then
             groups[key]=groups[key] or {}
             groups[key][#groups[key]+1]=legacyKey
@@ -123,7 +197,7 @@ local function reconcileSavedPairs(sets)
         for _,legacyKey in ipairs(legacyKeys) do
             local legacy=sets[legacyKey]
             if legacyKey~=targetKey and legacy and sameSalvageContext(target,legacy) then
-                if mergeDisjointSalvage(target,legacy) then sets[legacyKey]=nil;changed=true
+                if not held[targetKey] and mergeDisjointSalvage(target,legacy) then sets[legacyKey]=nil;changed=true
                 else held[targetKey]=true;held[legacyKey]=true end
             end
         end
@@ -754,6 +828,7 @@ function LL:ImportRecordedResults(text,label)
         if cast.salvage and cast.legacyStorageKey~=key and not migrationChecked[key] then
             migrationChecked[key]=true
             local legacy=d.sets[cast.legacyStorageKey]
+            local exactReady=not set or restoreSalvageContext(key,set)
             -- Upgrade a single existing aggregate only after exact native identity
             -- verification. Rounded legacy-key collisions must not pool profiles.
             if legacy and legacy.salvage and legacy.studyID==cast.studyID
@@ -765,7 +840,7 @@ function LL:ImportRecordedResults(text,label)
                 and signature(legacy.observationContext)==signature(cast.observationContext) then
                 if not set then
                     set=legacy;d.sets[key]=legacy;d.sets[cast.legacyStorageKey]=nil
-                elseif set~=legacy and sameSalvageContext(set,legacy)
+                elseif exactReady and set~=legacy and sameSalvageContext(set,legacy)
                     and mergeDisjointSalvage(set,legacy) then
                     d.sets[cast.legacyStorageKey]=nil
                 end
@@ -955,7 +1030,7 @@ function LL:ImportedEvidenceRecords(indexKey,f,option,ctx)
                     r.applyConcentration=set.applyConcentration;r.sourceRecordIDs=set.sourceRecordIDs
                     r.fixedReference=false;r.salvage=true
                     r.legacyProfileConflict=held[key] or nil
-                    r.baselineStatus=held[key] and 'Held: legacy profile aggregates require original raw exports to reconcile'
+                    r.baselineStatus=held[key] and 'Held: saved profile or aggregate identity could not be verified'
                         or 'Measured imported salvage cohort; exact matching context required'
                 end
                 if category then
