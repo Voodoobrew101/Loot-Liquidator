@@ -24,6 +24,7 @@ local shatter=assert(LL.DecodeImportJSON(read('2026-11-07-radiant-shatter-v6-liv
 local arrayMeta=getmetatable(shatter.records)
 local function json(v)
  if type(v)=='string'then return '"'..v:gsub('[%z\1-\31\\"]',function(c)return ({['"']='\\"',['\\']='\\\\',['\n']='\\n',['\r']='\\r',['\t']='\\t'})[c] or ('\\u%04x'):format(c:byte())end)..'"'end
+ if type(v)=='number'then return ('%.17g'):format(v)end
  if type(v)~='table'then return tostring(v)end
  local out={}
  if getmetatable(v)==arrayMeta then for i,x in ipairs(v)do out[i]=json(x)end return '['..table.concat(out,',')..']'end
