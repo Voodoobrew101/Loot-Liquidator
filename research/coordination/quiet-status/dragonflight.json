@@ -1,28 +1,27 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T21:31:13.391Z",
-  "status": "active; targeted original prospecting/milling source checks produced no new independent zero-inclusive numeric cohort; provenance/dedupe documented",
+  "updated_at": "2026-11-14T22:34:39.944Z",
+  "status": "active; fresh 2023 original-processing lead and 10.2 item-side tables triaged; no unindexed independently measurable ore/mill cohort recovered",
   "task_ids": [
     "T0020",
     "T0041",
     "T0018",
-    "T0017",
     "T0015",
     "T0019",
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore rank-specific original casts, per-output IDs/hits/0-N histogram: 189143 and 188658",
-    "Serevite Ore rank-specific prospecting 190394/190395/190396 and Khaz'gorite Ore original casts and refunds",
-    "Prismatic Ore 194545 original 80-prospect table: no 0-N stack histogram, specialization or zero-hit counts",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466/191467 rank-specific per-completed-mill pigment hit/quantity distributions"
+    "Draconium Ore 189143 R1, 188658 R2 and 190311 R3: original per-output hit/quantity and zero-inclusive completed prospect distributions",
+    "Serevite Ore 190395 R1, 190396 R2, 190394 R3; Khaz'gorite Ore 190312/190313/190314: Resourcefulness-adjusted original cast/hit/zero ledgers",
+    "Prismatic Ore 194545: existing 80 completed-prospect source lacks output hit counts/0-N histograms",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: actual completed mills, quality ID, pigment hit/output-quantity histograms"
   ],
   "newly_verified_fields": [],
   "newly_verified_cohorts": 0,
   "new_numerical_measurements": [],
   "numerical_fields_improved": [
-    "None this run; previously indexed historical primary reports deduplicated, and their denominator/zero-outcome uncertainty preserved."
+    "None: fresh discovered 100k R2 Serevite mention describes crushing rather than prospecting and supplies no results; existing 10.1/10.2 gear disenchant occurrences deduplicated by original item source."
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-14T0933-independent-source-gap-search.jsonl",
@@ -37,7 +36,8 @@
     "research/v3/evidence/dragonflight/2026-11-14T1832-seven-unique-vault-gear-looter-hits.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T1939-source-original-worksheet-and-cast-ledger-check.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T2036-seven-item-looter-hit-tables.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-14T2131-source-cohort-search-audit.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-14T2131-source-cohort-search-audit.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-14T2234-unindexed-original-cohort-triage.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/item=194347/expedition-researchers-hood",
@@ -83,15 +83,16 @@
     "https://www.wowhead.com/ptr-2/item=192869/illimited-diamond",
     "https://www.wowhead.com/ptr-2/item=194545/prismatic-ore",
     "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
-    "https://www.goldgoblin.net/berufe/inschriftenkunde/inschriftenkunde-der-dracheninseln/"
+    "https://www.goldgoblin.net/berufe/inschriftenkunde/inschriftenkunde-der-dracheninseln/",
+    "https://www.reddit.com/r/woweconomy/comments/18sd8ly"
   ],
-  "verified_commit_sha": "40cb19db682eb5202419062103bcb76e65905e9e",
-  "commit_sha_scope": "This field identifies the branch commit verified immediately before the atomic one-commit evidence+status write; a Git commit cannot contain its own SHA. The new one-commit SHA must be verified from GitHub branch and file read-back after this write.",
+  "verified_commit_sha": "886fa1450f078654e3b2c22c9feecb6f44ec3258",
+  "commit_sha_scope": "Recorded SHA is the verified branch parent immediately before this atomic commit; a Git commit cannot embed its own resulting SHA. Verify newly created SHA and both changed paths against GitHub after ref update.",
   "blockers": [
-    "No newly accessible independent zero-inclusive 0..N material histogram or refund-aware actual completed-cast ledger for Dragonflight prospecting/milling; prior original studies already indexed and must not be double-counted.",
-    "Original Xenastro rank-separated spreadsheet and its operation-level cast/refund records still inaccessible; no full verification of input quality IDs 190394/190395/190396, 188658/189143.",
-    "Prismatic Ore 194545 original 80-prospect study gives per-material quantities but not per-material castsWithDrop or observed zeros; cannot infer material-hit probabilities.",
-    "Existing cumulative Wowhead disenchant Looter frequencies are not per-stack quantity histograms, and may pool versions/builds."
+    "No newly independently auditable completed-cast 0-N/stack outcome histogram for prioritized Dragonflight ore prospecting or herb milling, after source-original and duplicate checks.",
+    "Xenastro original rank-2 Draconium workbook cells, refunded-input counts and skill/build context unavailable for independent review.",
+    "Cumulative Wowhead item-side Looter sources for checked Dragonflight gear are already recorded and cannot be counted again as independent cohorts.",
+    "2023 100k quality-2 Serevite mention is crushing, not prospecting, and contains no source numbers."
   ],
   "exhausted_sources": [
     {
@@ -865,20 +866,38 @@
         "GoldGoblin guide: German Dragon Isles Inscription milling descriptions, only qualitative output-family mapping: https://www.goldgoblin.net/berufe/inschriftenkunde/inschriftenkunde-der-dracheninseln/",
         "GitHub repository code search for names and original-study slugs 'i-prospected-40-000-serevite', '109bytz', '1135bti', '16 gold pigment', '1000 Magma Thresher'; confirmed already represented in existing Dragonflight research: https://github.com/Voodoobrew101/Loot-Liquidator/tree/implementation/five-agent-completion/research/v3/evidence/dragonflight"
       ]
+    },
+    {
+      "at": "2026-11-14T22:34:39.944Z",
+      "scope": "Novel 2023 bulk Serevite processing lead and 10.1/10.2 original gear sample deduplication plus name-first ore/mill multi-site search",
+      "reason": "No independent newly quantified ore/mill completed-cast history; 100k Serevite report was crushing without output data; Looter candidates match prior source evidence",
+      "whereLooked": [
+        "Reddit r/woweconomy by-name 'Dragonflight Bubble Poppy milling 1000 2000 pigment personal results': https://www.reddit.com/r/woweconomy/ — search exposed only known Aary/Jallfo-era accounts, not new completed mills",
+        "Reddit r/woweconomy by-name 'Saxifrage milling 1000 herbs 2023 recorded pigment test Resourcefulness screenshots': https://www.reddit.com/r/woweconomy/ — earlier Aary 1700 nominal R2 Saxifrage source already indexed",
+        "Reddit r/woweconomy by-name 'Draconium Ore prospecting 10000 complete attempts raw CSV spreadsheet unique source 2023': https://www.reddit.com/r/woweconomy/comments/y3e8ek — Jallfo original October 2022 beta worksheet already indexed",
+        "Reddit r/woweconomy by-name 'Serevite Ore 100000 quality 2 original spreadsheet': https://www.reddit.com/r/woweconomy/comments/18sd8ly — December 2023 commenter said 100k Q2 Serevite was CRUSHED, not prospected; no outputs or completed-cast ledger published in visible discussion",
+        "Wowhead French Dragon Isles Prospecting 'prospection îles aux Dragons' per-ore averages: https://www.wowhead.com/fr/spell=374627/prospection-des-%C3%AEles-aux-dragons — original Bugy 2000-ore and 100 Khaz'gorite historical tables already recorded; quantity-per-ore averages not per-operation hit counts",
+        "Wowhead by-name Prismatic Ore 194545 and Saxifrage 191465/191466: https://www.wowhead.com/item=194545/prismatic-ore ; https://www.wowhead.com/item=191465/saxifrage — original superbondez 80-prospect and Aary milling cohorts already indexed, no 0-N outcomes",
+        "Blizzard forums by-name 'Draconium Ore prospecting results 10000': https://us.forums.blizzard.com/en/wow/ — no original rank-specific per-operation numeric sample surfaced",
+        "Blizzard forums by-name 'Saxifrage milling pigments results': https://us.forums.blizzard.com/en/wow/ — no new per-mill raw totals/zeros surfaced",
+        "Warcraft Wiki by-name 'Bubble Poppy milling results casts': https://warcraft.wiki.gg/wiki/Bubble_Poppy — no original measured 0/1/2+ pigment histogram surfaced",
+        "GitHub by-name 'Draconium Ore prospecting csv result': https://github.com/search?q=Draconium+Ore+prospecting+csv&type=code — no independent operation log surfaced",
+        "Wowhead newly retrieved 10.1 and 10.2 gear Looter tables: inputs 202494, 209921, 209892, 209884, 209893, 209928, 209907 and 202492; every item ID found in pre-existing Dragonflight evidence on GitHub repository search; cumulative snapshot duplicate, not independent cohorts https://www.wowhead.com/ptr/item=209921/spirited-stags-branch"
+      ]
     }
   ],
-  "next_concrete_step": "Try unindexed primary addon cast export/CSV with verified Dragonflight ore quality variants and Resourcefulness refund timestamps; if recovered, capture each completed operation and per-output zeros, verify independent study identity against original sources before creating drop records. Do not repeat the 2023 known cohorts.",
+  "next_concrete_step": "Seek a source-original Dragonflight prospect/mill addon CSV or explicit completed-cast spreadsheet not yet indexed (prefer rank + profession skill + refund timestamps and 0/1/2+ output rows). Avoid prior Bugy, Jallfo, Aary, superbondez and 10.2 cumulative Looter snapshots.",
   "validation": {
-    "status": "prepared for atomic commit; GitHub branch/file read-back follows",
+    "status": "pre-commit JSONL parse pass; await atomic branch update and read-back",
     "newEvidenceRecords": 0,
     "searchedRecords": 1,
     "jsonlParse": "pass",
     "scope": "one new dragonflight evidence file plus own quiet-status JSON only",
-    "checkedAt": "2026-11-14T21:31:13.391Z"
+    "checkedAt": "2026-11-14T22:34:39.944Z"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T2131-source-cohort-search-audit.jsonl",
-  "verified_parent_sha": "40cb19db682eb5202419062103bcb76e65905e9e"
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T2234-unindexed-original-cohort-triage.jsonl",
+  "verified_parent_sha": "886fa1450f078654e3b2c22c9feecb6f44ec3258"
 }
