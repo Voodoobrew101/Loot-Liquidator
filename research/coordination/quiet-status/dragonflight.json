@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T13:36:48.177Z",
-  "status": "active; one newly located historical single-item firsthand disenchant outcome recorded; no independent new prospecting/milling histograms",
+  "updated_at": "2026-11-14T14:32:35.502Z",
+  "status": "active; two firsthand historical 2022 wrong-expansion disenchant events rescued and item identity independently mapped; no NEW current-eligible prospecting/milling histograms",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,37 +12,68 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143 R1 / 188658 R2 / 190311 R3: missing independent rank-specific completed-cast gem hit/zero histogram and refunds",
-    "Serevite Ore 190395 R1 / 190396 R2 / 190394 R3, Khaz'gorite Ore 190312/190313/190314 and Prismatic Ore 194545: measured per-rank per-material 0-N series absent",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: completed mills, output material hit/zero counts, pigment quantity histograms and refund ledgers absent",
-    "Everflowing Inkwell 200940 -> Chromatic Dust 194123: only one original firsthand event, quantity, patch, character skill and wider outcome distribution absent"
+    "Draconium 189143 R1/188658 R2/190311 R3, Serevite 190395 R1/190396 R2/190394 R3, Khaz'gorite 190312/190313/190314 and Prismatic 194545: independent current-context output per-cast hit/zero/stack histograms and refund ledgers still absent",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466 and other herbs: independent rank-specific full completed mill cast/quantity/zero histograms not recovered",
+    "Historical Dec 2022 Dragonflight disenchant bug for Wind Generating Band 200141: original source confirms two independently reported anomalous 1-cast 2-material outcomes; original game build/skill, item drop-source mismatch and production applicability unresolved"
   ],
   "newly_verified_fields": [
-    "Independent original author Lazey reports one disenchant of Everflowing Inkwell 200940 yielding Chromatic Dust 194123; one witnessed event and one material appearance, quantity unknown"
+    "Wind Generating Band exact input item ID 200141 from German Wowhead name and Warcraft Wiki, but reporter ilvl369 differs current item reference ilvl350",
+    "Two different first-person authors (Demonchibix Dec 10, Brandon47 Dec 12 2022) each described ONE disenchant of Wind Generating Band, each yielding 1 Sacred Shard 172231 and 2 Soul Dust 172230",
+    "Each original single event: casts=1, castsWithDrop=1 per observed output, totalQuantity 1/2 respectively; positive-only histograms {'1':1}, {'2':1}, not broader distribution",
+    "Exact sources and historical reported bug state confirmed; neither event is legitimate current Retail Dragonflight processing baseline"
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-lazey-200940-single-disenchant",
-      "inputItemID": 200940,
-      "outputItemID": 194123,
+      "studyKey": "blizzard-forum-1440624-demonchibix-20221210",
+      "inputItemID": 200141,
+      "outputItemIDs": [
+        172231,
+        172230
+      ],
       "casts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/item=200940/everflowing-inkwell",
-      "limitations": "One singular anecdote only, not a multi-cast study. No dust units, patch, quality, zero outcomes or population probability; distinct from Kenthenerd compiled reference."
+      "castsWithDropPerOutput": [
+        1,
+        1
+      ],
+      "totalQuantityPerOutput": [
+        1,
+        2
+      ],
+      "source": "https://us.forums.blizzard.com/en/wow/t/disenchanting-dragonflight-gear-and-recieving-shadowlands-materials/1440624",
+      "limitations": "Historical 2022 anomalous bug outcome; do not use as normal/current baseline; no independently observed full random distribution, build, skill or spec."
+    },
+    {
+      "studyKey": "blizzard-forum-1440624-brandon47-20221212",
+      "inputItemID": 200141,
+      "outputItemIDs": [
+        172231,
+        172230
+      ],
+      "casts": 1,
+      "castsWithDropPerOutput": [
+        1,
+        1
+      ],
+      "totalQuantityPerOutput": [
+        1,
+        2
+      ],
+      "source": "https://us.forums.blizzard.com/en/wow/t/disenchanting-dragonflight-gear-and-recieving-shadowlands-materials/1440624",
+      "limitations": "Historical 2022 anomalous bug outcome; do not use as normal/current baseline; no independently observed full random distribution, build, skill or spec."
     }
   ],
-  "new_numerical_measurements": 1,
+  "new_numerical_measurements": 2,
   "numerical_fields_improved": [
-    "one firsthand completed disenchant event (source singular)",
-    "one material occurrence, not a population P(hit)"
+    "two firsthand one-completed-disenchant event denominators; material quantities 1 Sacred Shard +2 Soul Dust each",
+    "four author-by-material positive hit observations and positive-only one-event histogram entries; NOT population 0-N hit probabilities"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-14T0933-independent-source-gap-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T1035-independent-public-log-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T1131-alternative-language-primary-data-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-14T1336-firsthand-inkwell-and-numeric-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-14T1336-firsthand-inkwell-and-numeric-search.jsonl",
+    "research/v3/evidence/dragonflight/20261114T1432-wind-band-2022-bug-originals.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/item=194347/expedition-researchers-hood",
@@ -53,15 +84,21 @@
     "https://www.wowhead.com/item=194124/vibrant-shard",
     "https://www.wowhead.com/item=200113/resonant-crystal",
     "https://www.wowhead.com/item=200940/everflowing-inkwell",
-    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit"
+    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
+    "https://us.forums.blizzard.com/en/wow/t/disenchanting-dragonflight-gear-and-recieving-shadowlands-materials/1440624",
+    "https://www.wowhead.com/de/item=200141/windgeneratorband",
+    "https://www.wowhead.com/item=172231/sacred-shard",
+    "https://www.wowhead.com/item=172230/soul-dust"
   ],
-  "verified_commit_sha": "5eb73a39aae424ebf6c8deb41c550f332bba5f66",
-  "commit_sha_scope": "Verified parent branch head; own new commit cannot self-reference its SHA; final new commit verified by separate readback after ref update",
+  "verified_commit_sha": "3941c3e34e05c6a8e331869d44da4fd8d6fa8ec3",
+  "commit_sha_scope": "Verified parent branch head before this one-commit write; commit cannot self-reference its own SHA; final commit and readback verified externally after branch ref update.",
   "blockers": [
     "Draconium/Serevite/Khaz'gorite/Prismatic prospecting and Dragonflight milling missing original independent source logs with completed operations and full 0-N material outcomes",
     "Xenastro original Google workbook rows not retrievable during this run; existing cited study not duplicated",
     "New one-event Everflowing Inkwell report lacks dust total, per-output multiplicity histogram, build and skill; cannot support a measured population prospecting/milling baseline",
-    "Wowhead Looter item tables are dynamically rendered; current original non-cumulative dumps not independently available"
+    "Wowhead Looter item tables are dynamically rendered; current original non-cumulative dumps not independently available",
+    "2022 wrong-expansion Wind Generating Band events MUST BE EXCLUDED from live Dragonflight/prod baseline; ingestion requires Master review or targeted exclusion, since historical accidental Shadowlands material outputs do not establish normal loot tables.",
+    "Xenastro original 2023 prospecting workbook raw row export inaccessible; completed casts/hits/refunds unknown."
   ],
   "exhausted_sources": [
     {
@@ -727,9 +764,29 @@
         "thelazygoldmaker.com/i-prospected-40-000-serevite-ore-so-you-dont-have-to: existing 8000-cast source already indexed, no independent follow-on",
         "github.com/markgravity/wow-tsm-addon LibTSM/Data/Prospect.lua: copied reference rates and item mappings, not source-original completed operations"
       ]
+    },
+    {
+      "at": "2026-11-14T14:32:35.502Z",
+      "scope": "New Dragonflight name-first original prospect/mill log search; historical wrong-expansion disenchants rescued from old irregular notes",
+      "reason": "No independent new rank-matched completed-cast prospecting/milling histograms; original Xenastro workbook inaccessible, Jallfo and large Reddit cohorts already imported, no duplication; the two independently authored 2022 bug reports were converted to source-linked historical anomaly records only",
+      "whereLooked": [
+        "Reddit r/woweconomy name-first Draconium/Serevite prospect original 2023 sheets and 2022 beta; existing Jallfo cohort: https://www.reddit.com/r/woweconomy/comments/y3e8ek",
+        "Reddit r/woweconomy Draconium and Serevite actual output and skill Jan 2023 source: https://www.reddit.com/r/woweconomy/comments/10i63zb",
+        "Reddit r/woweconomy Serevite large-study source known: https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+        "Reddit r/woweconomy Draconium rank2 original specialized cast outcomes already indexed: https://www.reddit.com/r/woweconomy/comments/109bytz",
+        "Reddit r/woweconomy Khaz'gorite and Prismatic original outcomes: https://www.reddit.com/r/woweconomy/comments/10h6ccx",
+        "Wowhead Draconium Ore and Dragon Isles Prospecting comment-side original numeric/cohort review: https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
+        "Wowhead Prismatic Ore original superbondez 80-completed prospects known: https://www.wowhead.com/item=194545/prismatic-ore",
+        "Warcraft Wiki by-name Draconium Ore, Serevite Ore, Khaz'gorite Ore, Saxifrage and Bubble Poppy: reference descriptions, no unindexed original 0-N outcome logs; https://warcraft.wiki.gg/wiki/Prospect",
+        "WoW-Professions Dragon Isles Jewelcrafting/Inscription guides: recipe and batch guidance, not independent prospect/mill 0-N studies; https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
+        "Original Xenastro Draconium rank-2 prospecting log spreadsheet rows 28,33,39,54,62: https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit ; underlying rows inaccessible in available retrieval",
+        "Original 2022 Jallfo beta results worksheet was read for duplicate check: https://docs.google.com/spreadsheets/d/1B_CjPU0AUlJkbogauPTdo0W4dUZiP1hxZ8KMZX7qp3Q/edit ; existing v3 2026-11-02T1430 rows, not independent new cohorts",
+        "Blizzard WoW official forum searches for named Bubble Poppy and Saxifrage completed mills and ore prospecting result histories; no unindexed source-original 0-N outcomes: https://us.forums.blizzard.com/en/wow/",
+        "GitHub named Dragonflight Serevite/Draconium original log, Jallfo and source comments search; current repo prior research only: https://github.com/Voodoobrew101/Loot-Liquidator"
+      ]
     }
   ],
-  "next_concrete_step": "Find genuinely new author-original rank-aware Dragon Isles prospecting or milling 0-N per-completed-operation export (including refunds and build); prioritize retrieving original Xenastro workbook rows and unpublished independent addon logs over repeating old threads. Verify independent item/version identity for any later Looter numeric table before using it.",
+  "next_concrete_step": "Prioritize independent CURRENT-context ore/herb per-completed-cast 0-N logs with refund reconciliation; obtain Xenastro original 2023 rows when accessible, or new addon-export ledger, and request Master exclusion of 2022 Wind Generating Band Shadowlands bug outcomes from normal valuation import.",
   "validation": {
     "jsonl_parse": true,
     "record_count": 2,
