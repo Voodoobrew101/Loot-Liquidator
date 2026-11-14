@@ -1,211 +1,245 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T07:50:49.728Z",
-  "status": "active; added distinct original Wowhead Looter item-specific hit counts for 5 legacy gear items and verified 2 historical TBC disenchant-eligibility patch changes; zero new Warmaul, Cobalt, Fel Iron completed-cast datasets; no prices/estimated probabilities",
+  "updated_at": "2026-11-14T08:45:26.502Z",
+  "status": "active; verified six new independent historical Looter item-specific disenchant hit-count snapshots and two new WoWDB LIVE TBC item eligibility flags; no new Warmaul/Cobalt/Fel Iron completed-cast studies; no prices or fabricated measured probabilities",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
+    "T0021",
     "T0052",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 historical 2068 cumulative Looter disenchants still lack original table export, exact stack totals/histograms, actual build/item bonus or modern live eligibility; do not recycle 1559/417/7/48 row hits.",
-    "Adjacent classic gear 2032 and 4745: exact item-specific cumulative Looter cast denominators, material-hit counts and positive stack ranges added; Classic/MoP Classic copy contexts are historical, not validated current Retail.",
-    "Cataclysm Galardell 55775/55739/55712: historic Looter counts and per-output hit counts added; historical level ~318 vs scaled current level 15; no modern eligibility/patch/source version.",
-    "Burning Crusade patch 2.1.0 (2007-05-22) historical disenchant eligibility changed for Ironscale War Cloak 27550 and Gladiator's Endgame 28346; do not infer current applicability.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: no NEW independently recorded completed prospect casts, per-output hit counts, or 0/1/2 histograms. Old 24-stack Cobalt and 100/565-ore Fel Iron cohorts intentionally not duplicated.",
-    "Spaulders of the Wayward Vanquisher 45661: full class reward list previously sourced; no new verified variants or vendor redemptions, intentionally not recopied."
+    "Warmaul Legplates item 24995: still lacks source-era keyed raw 2068-cast Looter table/export, output total units, genuine 0/1/2 histograms, historical skill and patch, and current Retail DE eligibility player/API verification; preexisting 1559/417/7/48 hit counts NOT recopied.",
+    "Six newly identified distinct historical original Looter cohorts: item-specific completed-operation denominators, material IDs, per-output positive hit counts and source-positive stack ranges on Classic and Classic-mirror items; NO original client build or source data date and no modern eligibility validation.",
+    "Cobalt Ore 36909, Fel Iron Ore 23424: no new prospecting casts/hit histograms. Existing nominal 24-stack Cobalt and old Fel Iron cohorts explicitly not recopied.",
+    "TBC scaled items 25027 and 25024: LIVE WoWDB says Cannot be disenchanted at displayed item level 32; historical TBC gear-group mappings cannot be used as actual current Retail eligibility without client check.",
+    "Token 45661 previously recorded full class rewards; no additional confirmed variants or redemption changes this run."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-looter-galardell-cord-55775-344-snapshot",
-      "inputItemID": 55775,
-      "inputName": "Galardell Cord",
-      "source": "https://www.wowhead.com/item=55775/galardell-cord",
-      "looterReportedDisenchants": 344,
-      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
+      "studyKey": "wowhead-mop-classic-looter-17778-30-20261114",
+      "inputItemID": 17778,
+      "inputName": "Sagebrush Girdle",
+      "source": "https://www.wowhead.com/mop-classic/item=17778",
+      "sourceEra": "mop-classic",
+      "historicalDisplayedItemLevel": 37,
+      "sourceReportedCumulativeDisenchants": 30,
       "perOutputHits": {
-        "52555": 271,
-        "52719": 68
+        "11175": 6,
+        "11176": 22,
+        "11178": 2
       },
       "positiveStackRanges": {
-        "52555": [
+        "11175": [
+          1,
+          2
+        ],
+        "11176": [
+          1,
+          2
+        ]
+      },
+      "exactMaterialQuantity": null,
+      "zeroOutcomes": null,
+      "histograms": null,
+      "originalBuild": null
+    },
+    {
+      "studyKey": "wowhead-mop-classic-looter-10746-26-20261114",
+      "inputItemID": 10746,
+      "inputName": "Runesteel Vambraces",
+      "source": "https://www.wowhead.com/mop-classic/item=10746",
+      "sourceEra": "mop-classic",
+      "historicalDisplayedItemLevel": 50,
+      "sourceReportedCumulativeDisenchants": 26,
+      "perOutputHits": {
+        "11175": 3,
+        "11176": 22,
+        "11178": 1
+      },
+      "positiveStackRanges": {
+        "11175": [
+          1,
+          2
+        ],
+        "11176": [
+          1,
+          2
+        ]
+      },
+      "exactMaterialQuantity": null,
+      "zeroOutcomes": null,
+      "histograms": null,
+      "originalBuild": null
+    },
+    {
+      "studyKey": "wowhead-retail-looter-12963-430-20261114",
+      "inputItemID": 12963,
+      "inputName": "Blademaster Leggings",
+      "source": "https://www.wowhead.com/item=12963",
+      "sourceEra": "unspecified cumulative Looter",
+      "historicalDisplayedItemLevel": 13,
+      "sourceReportedCumulativeDisenchants": 430,
+      "perOutputHits": {
+        "14344": 425
+      },
+      "positiveStackRanges": {
+        "14344": [
+          1,
+          2
+        ]
+      },
+      "exactMaterialQuantity": null,
+      "zeroOutcomes": null,
+      "histograms": null,
+      "originalBuild": null
+    },
+    {
+      "studyKey": "wowhead-wotlk-looter-186057-7-20261114",
+      "inputItemID": 186057,
+      "inputName": "Communal Warmaul",
+      "source": "https://www.wowhead.com/wotlk/item=186057",
+      "sourceEra": "wotlk",
+      "historicalDisplayedItemLevel": 52,
+      "sourceReportedCumulativeDisenchants": 7,
+      "perOutputHits": {
+        "11176": 1,
+        "16202": 6
+      },
+      "positiveStackRanges": {
+        "11176": [
+          3,
+          3
+        ],
+        "16202": [
+          1,
+          2
+        ]
+      },
+      "exactMaterialQuantity": {
+        "11176": 3
+      },
+      "zeroOutcomes": null,
+      "histograms": null,
+      "originalBuild": null
+    },
+    {
+      "studyKey": "wowhead-mop-classic-looter-15824-138-20261114",
+      "inputItemID": 15824,
+      "inputName": "Astoria Robes",
+      "source": "https://www.wowhead.com/mop-classic/item=15824",
+      "sourceEra": "mop-classic",
+      "historicalDisplayedItemLevel": 59,
+      "sourceReportedCumulativeDisenchants": 138,
+      "perOutputHits": {
+        "14344": 1,
+        "16203": 26,
+        "16204": 111
+      },
+      "positiveStackRanges": {
+        "16203": [
+          1,
+          2
+        ],
+        "16204": [
+          1,
+          2
+        ]
+      },
+      "exactMaterialQuantity": null,
+      "zeroOutcomes": null,
+      "histograms": null,
+      "originalBuild": null
+    },
+    {
+      "studyKey": "wowhead-mop-classic-looter-11906-43-20261114",
+      "inputItemID": 11906,
+      "inputName": "Beastsmasher",
+      "source": "https://www.wowhead.com/mop-classic/item=11906",
+      "sourceEra": "mop-classic",
+      "historicalDisplayedItemLevel": 55,
+      "sourceReportedCumulativeDisenchants": 43,
+      "perOutputHits": {
+        "11176": 9,
+        "16202": 34
+      },
+      "positiveStackRanges": {
+        "11176": [
           2,
           5
         ],
-        "52719": [
-          2,
-          3
-        ]
-      },
-      "zeroOutcomes": null,
-      "totalUnits": null,
-      "perOutputHistograms": null
-    },
-    {
-      "studyKey": "wowhead-looter-galardell-handwraps-55739-386-snapshot",
-      "inputItemID": 55739,
-      "inputName": "Galardell Handwraps",
-      "source": "https://www.wowhead.com/item=55739/galardell-handwraps",
-      "looterReportedDisenchants": 386,
-      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
-      "perOutputHits": {
-        "52555": 291,
-        "52719": 89
-      },
-      "positiveStackRanges": {
-        "52555": [
-          2,
-          5
-        ],
-        "52719": [
-          2,
-          3
-        ]
-      },
-      "zeroOutcomes": null,
-      "totalUnits": null,
-      "perOutputHistograms": null
-    },
-    {
-      "studyKey": "wowhead-looter-galardell-wristwraps-55712-367-snapshot",
-      "inputItemID": 55712,
-      "inputName": "Galardell Wristwraps",
-      "source": "https://www.wowhead.com/item=55712/galardell-wristwraps",
-      "looterReportedDisenchants": 367,
-      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
-      "perOutputHits": {
-        "52555": 263,
-        "52719": 99
-      },
-      "positiveStackRanges": {
-        "52555": [
-          2,
-          5
-        ],
-        "52719": [
-          2,
-          3
-        ]
-      },
-      "zeroOutcomes": null,
-      "totalUnits": null,
-      "perOutputHistograms": null
-    },
-    {
-      "studyKey": "wowhead-mop-classic-looter-gallan-cuffs-2032-224-snapshot",
-      "inputItemID": 2032,
-      "inputName": "Gallan Cuffs",
-      "source": "https://www.wowhead.com/mop-classic/item=2032/gallan-cuffs",
-      "looterReportedDisenchants": 224,
-      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
-      "perOutputHits": {
-        "11135": 30,
-        "11137": 186,
-        "11139": 8
-      },
-      "positiveStackRanges": {
-        "11135": [
-          1,
-          2
-        ],
-        "11137": [
+        "16202": [
           1,
           2
         ]
       },
+      "exactMaterialQuantity": null,
       "zeroOutcomes": null,
-      "totalUnits": null,
-      "perOutputHistograms": null
-    },
-    {
-      "studyKey": "wowhead-mop-classic-looter-war-rider-bracers-4745-18-snapshot",
-      "inputItemID": 4745,
-      "inputName": "War Rider Bracers",
-      "source": "https://www.wowhead.com/mop-classic/item=4745/war-rider-bracers",
-      "looterReportedDisenchants": 18,
-      "sourceEra": "historical cumulative Looter snapshot; source builds unknown",
-      "perOutputHits": {
-        "11135": 4,
-        "11137": 14
-      },
-      "positiveStackRanges": {
-        "11135": [
-          1,
-          2
-        ],
-        "11137": [
-          1,
-          2
-        ]
-      },
-      "zeroOutcomes": null,
-      "totalUnits": null,
-      "perOutputHistograms": null
+      "histograms": null,
+      "originalBuild": null
     }
   ],
-  "newly_verified_rate_changes": [
+  "newly_verified_eligibility": [
     {
-      "inputItemID": 27550,
-      "inputName": "Ironscale War Cloak",
-      "date": "2007-05-22",
-      "patch": "2.1.0",
-      "change": "can now be disenchanted",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.1.0"
+      "itemID": 25027,
+      "itemName": "Warlord's Iron-Legplates",
+      "databaseFlag": "Cannot be disenchanted",
+      "itemLevel": 32,
+      "url": "https://www.wowdb.com/items/25027-warlords-iron-legplates"
     },
     {
-      "inputItemID": 28346,
-      "inputName": "Gladiator's Endgame",
-      "date": "2007-05-22",
-      "patch": "2.1.0",
-      "change": "can no longer be disenchanted",
-      "source": "https://warcraft.wiki.gg/wiki/Patch_2.1.0"
+      "itemID": 25024,
+      "itemName": "Warlord's Iron-Breastplate",
+      "databaseFlag": "Cannot be disenchanted",
+      "itemLevel": 32,
+      "url": "https://www.wowdb.com/items/25024-warlords-iron-breastplate"
     }
   ],
   "numeric_summary": {
-    "newEvidenceRows": 13,
-    "dropRows": 11,
-    "rateChangeRows": 2,
-    "distinctOriginalLooterItemCohorts": 5,
-    "sourceReportedCumulativeDisenchantsAcrossDistinctItems": 1339,
+    "newEvidenceRows": 16,
+    "dropRows": 14,
+    "noDisenchantRows": 2,
+    "distinctOriginalLooterItemCohorts": 6,
+    "sourceReportedCumulativeDisenchantsAcrossDistinctItems": 674,
     "newVerifiedWarmaul24995Casts": 0,
-    "newVerifiedCobaltOre36909Casts": 0,
-    "newVerifiedFelIronOre23424Casts": 0,
-    "newZeroOutcomesMeasured": 0,
-    "newMeasuredTotalQuantities": 0,
+    "newVerifiedCobalt36909Casts": 0,
+    "newVerifiedFelIron23424Casts": 0,
+    "newPerCastZeroHistograms": 0,
+    "newExactTotalQuantityUnits": 3,
     "pricesRecorded": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/20261114T0750-new-looter-classic-cata-and-tbc-eligibility.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/20261114T0750-new-looter-classic-cata-and-tbc-eligibility.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/20261114T0845-classic-looter-hits-and-tbc-no-de.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/20261114T0845-classic-looter-hits-and-tbc-no-de.jsonl",
   "sources": [
-    "https://www.wowhead.com/item=55775/galardell-cord",
-    "https://www.wowhead.com/item=55739/galardell-handwraps",
-    "https://www.wowhead.com/item=55712/galardell-wristwraps",
-    "https://www.wowhead.com/mop-classic/item=2032/gallan-cuffs",
-    "https://www.wowhead.com/mop-classic/item=4745/war-rider-bracers",
-    "https://warcraft.wiki.gg/wiki/Patch_2.1.0"
+    "https://www.wowhead.com/mop-classic/item=17778",
+    "https://www.wowhead.com/mop-classic/item=10746",
+    "https://www.wowhead.com/item=12963",
+    "https://www.wowhead.com/wotlk/item=186057",
+    "https://www.wowhead.com/mop-classic/item=15824",
+    "https://www.wowhead.com/mop-classic/item=11906",
+    "https://www.wowdb.com/items/25027-warlords-iron-legplates",
+    "https://www.wowdb.com/items/25024-warlords-iron-breastplate"
   ],
-  "verified_base_commit_sha": "ef156e0678685e57d7414e887f861e1407a31a02",
+  "verified_base_commit_sha": "0981e9c4e5dc0b9d0ae1faad390372099bef9590",
   "verified_commit_sha": null,
-  "commit_sha_note": "An in-commit status file cannot contain its own enclosing commit SHA; verification of final commit and readback occurs immediately after writing.",
+  "commit_sha_note": "An atomic commit cannot contain its own commit SHA in the status blob. Branch ref commit and both changed paths are verified by subsequent readback; status records the verified parent.",
   "blockers": [
-    "Warmaul Legplates original cumulative Wowhead Looter row/export still unavailable for per-cast stack histogram or source build; current WoWDB has conflicting non-disenchantable flag on scaled version.",
-    "New Cobalt and Fel Iron source-specific completed-cast/hit datasets absent. Nominal ore/5 equivalences are not counted as real casts.",
-    "Cumulative Wowhead Looter table counts may mix versions/patches. These are sourced snapshots with unknown data date, actual source build, item bonus IDs and caster skill. Cross-output missing rows are not established zeros.",
-    "Historical Galardell level-318 vs current level-15 scaled items require item variant gate and Master review before any numeric importer promotion.",
-    "No first-class source-build/era or Looter-cumulative-basis fields in current schema. Request changes via Master; source context retained in notes.",
-    "Historical TBC patch 2.1.0 changes cannot establish present-day Retail eligibility."
+    "No original Warmaul 24995 0/1/2 disenchants, build-keyed data, player-validated 2026 Retail eligibility or raw Looter histogram found.",
+    "Cobalt 36909 and Fel Iron 23424 lack new independent actual completed-cast denominator and output hit/quantity histograms; never infer from nominal ore/stack totals.",
+    "Six cumulative Wowhead Looter snapshots have unknown contributing patches, game builds, character skill, per-hit quantity histograms, item bonus IDs and source data dates; they are historical reference cohorts, not present-day live DE guarantees.",
+    "Blademaster Leggings Looter 425 listed positive results of 430 disenchants does not prove five zero-yield casts or identify other outcomes.",
+    "Historical Classic material IDs (e.g. Dream Dust 11176) require version-specific gating before any compiled/current Retail use.",
+    "Firecrawl external service has zero credits this billing period; primary Wowhead and WoWDB public search-index texts were accessible without it."
   ],
   "exhausted_sources": [
-    "Warmaul 24995 2068 cumulative Looter cohort and opaque Evowow weights already represented; no duplicate.",
-    "Cobalt Ore 36909 existing 24-stack Russian commenter and Fel Iron Ore 23424 100/565 ore Thottbot cohorts already captured; not copied.",
-    "Mithril Ore Kaliope per-cast histograms and Tontons BfA ore prospecting previously captured; not copied.",
-    "Spaulders of Wayward Vanquisher 45661 full basic token list already recorded.",
-    "Mirrored Wowhead PTR, locale or other game-version pages displaying identical Galardell Looter totals are same source snapshots, not new cohorts.",
-    "Firecrawl source extraction unavailable owing to daily external-service credit exhaustion; direct search-index HTML tables were used instead."
+    "Warmaul 24995 existing 2068 cumulative Looter snapshot, templated Evowow reference weights and 2026 WoWDB no-DE flag are already in evidence; skipped duplicated observations.",
+    "Kefra 50 Runecloth Belt and madag 83 Runecloth Belt and 5-belt exact histogram studies already recorded under 2026-11-01/02 legacy evidence; did not duplicate.",
+    "Other locale/PTR/MoP-Classic mirrors with identical item-specific Looter cumulative counts are not independent samples.",
+    "Old Cobalt 24-stack and Fel Iron 100/565 ore reports previously captured; not re-imported."
   ],
-  "next_concrete_step": "Acquire direct original 24995 Warmaul item-level/bonus/build keyed DE log or full historical Looter histogram/export and live eligibility negative fixture; otherwise seek independent 36909/23424 prospect raw SavedVariables with completed cast denominator and 0/1/2 output histograms. Ask Master for version/era and cumulative-Looter schema safeguards before importer promotion."
+  "next_concrete_step": "Prioritize exact 24995 item bonus/era/version keyed original Looter export and player-validated current Retail no-DE gate; second, request per-operation 0/1/2/3 output tables or SavedVariables for Cobalt 36909 and Fel Iron 23424 with cast basis and refunds; consult Master for original-build/era fields and guards before any importer promotion."
 }
