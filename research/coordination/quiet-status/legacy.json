@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T02:49:29.114Z",
-  "status": "active; 10 new original-source records, including 8 independently described completed disenchants (3 Halaani 30597, one Battle Star 25118, 4 Classic item-specific singles); 2 Wizardweave source-estimated rates and one Rough Bronze nominal 10-craft report; NO new Warmaul 24995 casts, no new Cobalt/Fel Iron casts, no live Retail baseline transfer",
+  "updated_at": "2026-11-14T03:48:17.069Z",
+  "status": "active; 10 new source-backed historical disenchant output records covering four original item IDs, with 14 fully enumerated or directly reported independent completed DE operations plus three separate 3-item Halaa reports; no Warmaul 24995 casts or current-Retail transfer",
   "task_ids": [
     "T0047",
     "T0052",
@@ -13,166 +13,163 @@
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995 original Wowhead 2068-event raw ledger, output hit stacks, zero-inclusive histogram, current Retail eligibility and source version still unavailable; no fabricated chances",
-    "T0052 historical uncommon TBC one-handed Battle Star 25118 historical item level 93 yielded 2 Arcane Dust 22445 in one original cast; Halaani Claymore 30597 historical item level 114 had three explicitly described casts yielding Arcane Dust 22445 and Greater Planar Essence 22446, full material-specific per-event histograms",
-    "T0050 classic uncommon Wizardweave Turban 14130 historical item level 61 recorded source-estimated percent-by-stack priors for 16204 and 16203; no cast denominator",
-    "Additional standalone historical Classic inputs 2865, 3039, 14149, 18374, 13961 to output 10978 and 20725; nominal crafted input totals distinct from completed casts",
-    "T0022/T0044 original Cobalt 36909 and Fel Iron 23424 per-batch cast and hit histograms still absent; prior original cohorts not duplicated",
-    "T0053 token 45661 previously indexed class rewards; no newly sourced variants or changes"
+    "T0047 Warmaul Legplates 24995 original per-cast ledger: still no new source-verified completed casts, zero-inclusive 22445/22446/22449 histograms, gear variants, build or current Retail eligibility.",
+    "T0052 adjacent TBC uncommon iLvl105 weapon Khorium Plated Bludgeon 25122 -> Arcane Dust 22445, one original DE, 3 units and one 3-stack; and iLvl111 armor Netherweave Robe 21854 -> Greater Planar Essence 22446, ten original DEs with full 0/1/2 histogram for essence.",
+    "T0052 Halaa iLvl108 thrown weapon The Sharp Cookie 30568 original source report cohorts: 3+3+3 completed item-specific disenchants, Arcane Dust 22445, Greater Planar Essence 22446, Large Prismatic Shard 22449 and one unnamed essence output; some stack/hit fields stay unknown.",
+    "Classic transition single rare dagger Verimonde's Last Resort 22688 -> Small Prismatic Shard 22448. Removed Retail item; source post-patch game version not established.",
+    "T0022/T0044 Cobalt Ore 36909 and Fel Iron Ore 23424: no new original hit/zero histograms or verified independent casts; existing cumulative and copied studies not duplicated.",
+    "T0053 Spaulders of the Wayward Vanquisher token 45661 class rewards: no newly verified identity or variant findings this run."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-30597-11197-three-specific-halaani-disencasts",
-      "inputItemID": 30597,
-      "historicalItemLevel": 114,
-      "historicalQuality": "uncommon",
-      "historicalKind": "weapon",
+      "studyKey": "wowhead-25122-allakhazam-monkey-3-dust",
+      "inputItemID": 25122,
+      "outputItemID": 22445,
+      "completedCasts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 3,
+      "histogram": {
+        "3": 1
+      },
+      "historicalItemLevel": 105,
+      "source": "https://www.wowhead.com/tbc/item=25122/khorium-plated-bludgeon"
+    },
+    {
+      "studyKey": "wowhead-21854-128008-ten-robes-essence-stacks",
+      "inputItemID": 21854,
+      "outputItemID": 22446,
+      "completedCasts": 10,
+      "castsWithDrop": 5,
+      "totalQuantity": 8,
+      "histogram": {
+        "0": 5,
+        "1": 2,
+        "2": 3
+      },
+      "historicalItemLevel": 111,
+      "source": "https://www.wowhead.com/tbc/item=21854/netherweave-robe"
+    },
+    {
+      "studyKey": "wowhead-30568-thottbot-comment-three-shard-four-essence",
+      "inputItemID": 30568,
       "completedCasts": 3,
       "outputs": [
         {
-          "outputItemID": 22445,
-          "castsWithDrop": 2,
-          "totalQuantity": 7,
-          "histogram": {
-            "0": 1,
-            "2": 1,
-            "5": 1
+          "outputItemID": 22449,
+          "castsWithDrop": 1,
+          "totalQuantity": 1,
+          "positiveHistogram": {
+            "1": 1
           }
         },
         {
           "outputItemID": 22446,
-          "castsWithDrop": 1,
-          "totalQuantity": 1,
-          "histogram": {
-            "0": 2,
-            "1": 1
-          }
+          "castsWithDrop": null,
+          "totalQuantity": 4
         }
       ],
-      "source": "https://www.wowhead.com/cata/item=30597/halaani-claymore"
+      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie"
     },
     {
-      "studyKey": "wowhead-tbc-25118-allakhazam-two-arcane-one-cast",
-      "inputItemID": 25118,
-      "historicalItemLevel": 93,
-      "outputItemID": 22445,
+      "studyKey": "wowhead-30568-thottbot-comment-three-cookies-four-dust-one-essence",
+      "inputItemID": 30568,
+      "completedCasts": 3,
+      "outputs": [
+        {
+          "outputItemID": 22445,
+          "castsWithDrop": null,
+          "totalQuantity": 4
+        },
+        {
+          "outputItemID": 22446,
+          "castsWithDrop": 1,
+          "totalQuantity": 1
+        }
+      ],
+      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie"
+    },
+    {
+      "studyKey": "wowhead-30568-thottbot-last-three-item-specific",
+      "inputItemID": 30568,
+      "completedCasts": 3,
+      "outputs": [
+        {
+          "outputItemID": 22449,
+          "castsWithDrop": 1,
+          "totalQuantity": 1
+        },
+        {
+          "outputItemID": 22445,
+          "castsWithDrop": 1,
+          "totalQuantity": 2
+        },
+        {
+          "outputItemID": null,
+          "castsWithDrop": 1,
+          "totalQuantity": null
+        }
+      ],
+      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie"
+    },
+    {
+      "studyKey": "wowhead-22448-allakhazam-verimonde-one-prepatch-shard",
+      "inputItemID": 22688,
+      "outputItemID": 22448,
       "completedCasts": 1,
       "castsWithDrop": 1,
-      "totalQuantity": 2,
-      "positiveHistogram": {
-        "2": 1
+      "totalQuantity": 1,
+      "histogram": {
+        "1": 1
       },
-      "source": "https://www.wowhead.com/tbc/item=25118/battle-star"
-    },
-    {
-      "studyKey": "wowhead-16203-87384-wizardweave-turban-subjective-rates",
-      "inputItemID": 14130,
-      "historicalItemLevel": 61,
-      "sourceKind": "reference",
-      "completedCasts": null,
-      "outputMaterialIDs": [
-        16204,
-        16203
-      ],
-      "sourceReportedStacks": {
-        "16203": {
-          "2": "10%",
-          "3": "10%"
-        },
-        "16204": {
-          "2": "20%",
-          "3": "20%",
-          "4": "20%",
-          "5": "20%"
-        }
-      },
-      "source": "https://www.wowhead.com/item=16203/greater-eternal-essence"
-    },
-    {
-      "studyKey": "wowhead-10978-allakhazam-rough-bronze-10-crafted-four-shards",
-      "inputItemID": 2865,
-      "outputItemID": 10978,
-      "nominalCraftedInputs": 10,
-      "completedCasts": null,
-      "totalQuantity": 4,
-      "skill": "Enchanting below 50",
-      "source": "https://www.wowhead.com/mop-classic/item=10978/small-glimmering-shard"
-    },
-    {
-      "inputOutputOriginals": [
-        {
-          "inputItemID": 3039,
-          "outputItemID": 10978,
-          "completedCasts": 1,
-          "totalQuantity": 1
-        },
-        {
-          "inputItemID": 14149,
-          "outputItemID": 10978,
-          "completedCasts": 1,
-          "totalQuantity": 1
-        },
-        {
-          "inputItemID": 18374,
-          "outputItemID": 20725,
-          "completedCasts": 1,
-          "totalQuantity": null
-        },
-        {
-          "inputItemID": 13961,
-          "outputItemID": 20725,
-          "completedCasts": 1,
-          "totalQuantity": 1
-        }
-      ],
-      "sources": [
-        "https://www.wowhead.com/mop-classic/item=10978/small-glimmering-shard",
-        "https://www.wowhead.com/mop-classic/item=20725/nexus-crystal"
-      ]
+      "historicalItemLevel": 66,
+      "source": "https://www.wowhead.com/tbc/item=22448/small-prismatic-shard"
     }
   ],
   "numeric_summary": {
     "newEvidenceRows": 10,
-    "uniqueCompletedDisenchantOperations": 8,
-    "halanniCompletedCasts": 3,
-    "battleStarCompletedCasts": 1,
-    "classicsCompletedCasts": 4,
-    "warmaulNewCompletedCasts": 0,
-    "felIronNewCompletedCasts": 0,
-    "cobaltNewCompletedCasts": 0,
-    "measuredArcaneDustUnits": 9,
-    "measuredGreaterPlanarEssenceUnits": 1,
-    "sourceEstimateOnlyRows": 2,
-    "nominalCraftingDenominatorRows": 1,
-    "unmeasuredZerosInvented": 0,
-    "liveRetailClaims": 0
+    "originalItemIDs": [
+      25122,
+      21854,
+      30568,
+      22688
+    ],
+    "outputItemIDsConfirmed": [
+      22445,
+      22446,
+      22449,
+      22448
+    ],
+    "uniqueOriginalCompletedCastsAcrossDistinctComments": 21,
+    "warmaul24995NewCompletedCasts": 0,
+    "cobalt36909NewCompletedCasts": 0,
+    "felIron23424NewCompletedCasts": 0,
+    "newEstimatedChances": 0,
+    "newGoldEV": 0,
+    "unverifiedZeroBucketsInvented": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0249-halaani-tbc-and-classic-originals.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0249-halaani-tbc-and-classic-originals.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0348-sharp-cookie-netherweave-and-originals.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0348-sharp-cookie-netherweave-and-originals.jsonl",
   "sources": [
-    "https://www.wowhead.com/cata/item=30597/halaani-claymore",
-    "https://www.wowhead.com/tbc/item=25118/battle-star",
-    "https://www.wowhead.com/item=16203/greater-eternal-essence",
-    "https://www.wowhead.com/mop-classic/item=10978/small-glimmering-shard",
-    "https://www.wowhead.com/mop-classic/item=20725/nexus-crystal"
+    "https://www.wowhead.com/tbc/item=25122/khorium-plated-bludgeon",
+    "https://www.wowhead.com/tbc/item=21854/netherweave-robe",
+    "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie",
+    "https://www.wowhead.com/tbc/item=22448/small-prismatic-shard"
   ],
-  "verified_base_commit_sha": "a8e4ceb8af5d605d5d51e1edd88baa65670c35e1",
+  "verified_base_commit_sha": "9024126632579593be85034d2f4bd2ca49e9dd05",
   "verified_commit_sha": null,
-  "commit_sha_note": "Evidence file and this status are written in one atomic Git commit. That commit SHA cannot be embedded into its own content without changing it; verify resulting SHA using commit GET and read-back at pinned SHA after moving ref.",
+  "commit_sha_note": "Evidence file and status are atomic within one Git commit. Own final SHA cannot be embedded in its own self-hashed content; verify returned SHA, tree/file identities and pinned read-back after ref update. No separate second status commit.",
   "blockers": [
-    "Warmaul 24995 cumulative 2068-event source ledger and exact original source game build, item variants and per-material stack totals still inaccessible; no new exact Warmaul casts",
-    "Halaani 30597 historical iLvl114 and Battle Star 25118 iLvl93 do not imply current Retail scaled item disenchantability; no client build/skill/specialization provided",
-    "Wizardweave percentage table is approximate personal-rate prior with zero source-reported completed casts; cannot enter measured drop chance, cast confidence or zero-outcome histogram",
-    "Rough Bronze commenter crafted 10 pairs but did not provide a 10-event disenchant ledger; do not equate crafted quantity to completed casts",
-    "Flamescarred comments are possibly duplicate copied accounts of the same item outcome; indexed as one firsthand event only; output quantity unspecified",
-    "Independent Cobalt/Fel Iron prospects with per-cast hit/zero histograms and item-specific Warmaul original events not found in this run"
+    "No independently verified completed Warmaul 24995 events, exact raw stack histograms or original game build.",
+    "All Halaa Sharp Cookie 30568 comments were migrated under the generic Thottbot author, so different historical comments may overlap by real player; treat each reported cohort as distinct comments but independence not conclusively established.",
+    "Third cookie in last trio yielded 'usual essence', but the exact output item ID/quantity was not stated; ID intentionally null.",
+    "History-only source versions and enchanting skill unknown; none of these results prove current Retail disenchant eligibility or modern amounts.",
+    "No new independent original Cobalt 36909 / Fel Iron 23424 prospecting hit logs or source code for 45661 new variants."
   ],
   "exhausted_sources": [
-    "Existing Warmaul scaled live no-disenchant metadata and cumulative Looter 2068 event counts were already in queue/evidence; no rerun/duplicate records",
-    "Existing Fel Iron 565 ore Thottbot and Cobalt Russian 24-stack sample and historical models already indexed; no repeated copy",
-    "Existing Netherweave Belt 10->25 Arcane Dust, Boots 13-cast breakdown, Fel Leather Boots 7/8 shards and Arcanoweave Boots 14->1 Void Crystal already recorded; intentionally skipped",
-    "Archived original Nexus Crystal page repeats almost-identical Flamescarred Shoulders claim; counted once, not as independent operations",
-    "No gold EV calculated or stored"
+    "Prior 7057 Green Silken Shoulders 22/10/2 cast cohorts already indexed in 2026-11-01 classic-histograms; not copied.",
+    "Prior Netherweave Boots 21853, Netherweave Gloves 21851, Halaani 30597, Battle Star 25118, and Avenging Blades 30599 original samples already indexed; not copied.",
+    "Existing Fel Iron 100/565 nominal ore and Cobalt prior studies previously indexed; no double-counted operations.",
+    "Adjacent two Allakhazam comments on Verimonde's Last Resort likely repeat same event; indexed one single completed cast only."
   ],
-  "next_concrete_step": "Seek another independent original event-by-event TBC uncommon plate ilvl102-120 disenchant log, ideally Warmaul Legplates 24995 with 0/1/2/3+ stack outcomes and source build/suffix, then original per-batch Fel Iron 23424 and Cobalt 36909 prospecting hit counts; request schema/tool changes via Master rather than adding unsupported fields."
+  "next_concrete_step": "Recover event-level Warmaul Legplates 24995 raw recorder with suffix, classic-era item level 108, 22445/22446/22449 0-N histograms and build, then independent Fel Iron 23424/Cobalt 36909 per-five-ore completed prospecting cohorts. Ask Master for any schema/tool changes."
 }
