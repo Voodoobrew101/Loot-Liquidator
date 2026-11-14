@@ -1,205 +1,171 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T04:47:33.475Z",
-  "status": "active; 19 original-source legacy evidence rows (14 processing, 5 eligibility); six directly reported single-item completed disenchants, three Fel Iron and three Adamantite original-output records with unverified cast basis; no Warmaul 24995 new completed casts and no new zero-inclusive multi-cast log",
+  "updated_at": "2026-11-14T05:43:57.586Z",
+  "status": "active; 13 new firsthand WotLK historical disenchant output records from six independently attributable commenters, with directly enumerated 12 Helm casts and 20 Helm casts, plus 40 and 120 Ring casts; item-level and version caveats remain; no new Warmaul 24995 log, no live Retail eligibility determination",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
     "T0052",
+    "T0050",
     "T0053",
-    "T0051"
+    "T0021"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995: no independent original per-cast ledger, current Retail negative fixture, skill/build, suffix, true output totals or 0..N histograms; do not reuse 2068 cumulative Looter snapshot.",
-    "T0052 adjacent TBC and Classic armor/weapon: original Warbringer's Belt 14943 -> Vision Dust 11137, Blackforge Girdle 6425 -> Small Radiant Shard 11177, Short Ash Bow 3039 -> Small Glimmering Shard 10978, Lesser Wizard's Robe 5766 -> Soul Dust 11083, historical Imbued Netherweave Tunic 21862 -> Large Prismatic 22449 / Void Crystal 22450, Belt of Shrunken Heads 20213 -> Nexus Crystal 20725; pre-scaling item level, source build, profile not recovered.",
-    "T0044 Fel Iron Ore 23424 -> Star of Elune 23438, Dawnstone 23440, Nightseye 23441: 5 historical stacks and exact 2/2/1 total gems but completed clicks and hits unknown.",
-    "T0051 Adamantite Ore 23425 -> Living Ruby 23436 x2, Star of Elune 23438 x1, and 10 unidentified green gem units from 50 historical ore; no completed cast ledger.",
-    "T0022 Cobalt Ore 36909: no new original completed casts or per-output hit counts, existing 24-stack and reference sources not duplicated.",
-    "T0053 Spaulders of the Wayward Vanquisher 45661: seven reward IDs already captured in legacy-20261101-216 (45400/45339/45344/45369/45352/45359/45349); no duplicative token record."
+    "T0047 Warmaul Legplates 24995: historical 2068 Looter snapshots not repeated; missing original per-cast log, build, current Retail DE eligibility, source gear variant, exact output quantities/histograms.",
+    "T0042 nearby earlier expansion DE numeric gap: Horned Cobalt Helm 40955 -> Infinite Dust 34054 and Greater Cosmic Essence 34055; two distinct original cohorts with 12 and 20 completed operations; 12-cast study has 10 dust hits and 2 essence hits, positive essence histogram 1:1,2:1; 20-cast study has totals 122 dust and 4 essence but hit buckets absent.",
+    "T0042 Reinforced Cobalt Helm 40957 -> 34054 x86 and 34055 x17 from 34 *crafted* helms; completed disenchant operations NOT explicitly logged.",
+    "T0042 Shadowmight Ring 43249 -> 34054/34055/34052; one 40-DE cohort with exact totals 106/14/2; a separate 100-crafted report with 13 dust stacks (units unknown), 25 essences, 7 shards; an independent 120-DE cohort with conditional dust-positive mean 5.12, unconditional dust mean only stated >4.",
+    "T0022 Cobalt Ore 36909 and T0044 Fel Iron Ore 23424: prospecting remains unresolved despite distinct Cobalt-gear disenchant inputs; no new ore prospected casts or per-output gem hit counts.",
+    "T0053 Spaulders of the Wayward Vanquisher 45661 full reward identities already recorded in legacy-20261101-216; deliberately not duplicated."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-small-radiant-allakhazam-warbringers-belt-one-visiondust",
-      "inputItemID": 14943,
-      "outputItemID": 11137,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 2,
-      "histogram": {
-        "2": 1
+      "studyKey": "wowhead-40955-114044-12-enumerated-de",
+      "inputItemID": 40955,
+      "outputItemIDs": [
+        34054,
+        34055
+      ],
+      "completedCasts": 12,
+      "observedOutputHits": {
+        "34054": 10,
+        "34055": 2
       },
-      "historicalItemLevel": 42,
-      "source": "https://www.wowhead.com/tbc/item=11177/small-radiant-shard"
-    },
-    {
-      "studyKey": "wowhead-blackforge-girdle-allakhazam-one-small-radiant",
-      "inputItemID": 6425,
-      "outputItemID": 11177,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 1,
-      "histogram": {
-        "1": 1
+      "totalQuantity": {
+        "34054": null,
+        "34055": 3
       },
-      "historicalItemLevel": 44,
-      "source": "https://www.wowhead.com/wotlk/item=6425/blackforge-girdle"
-    },
-    {
-      "studyKey": "wowhead-small-glimmering-allakhazam-short-ash-bow-one",
-      "inputItemID": 3039,
-      "outputItemID": 10978,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 1,
-      "histogram": {
-        "1": 1
-      },
-      "historicalItemLevel": 23,
-      "source": "https://www.wowhead.com/tbc/item=10978/small-glimmering-shard"
-    },
-    {
-      "studyKey": "wowhead-small-glimmering-allakhazam-rough-bronze-ten-crafted-four-shards",
-      "inputItemID": 2865,
-      "outputItemID": 10978,
-      "completedCasts": null,
-      "itemsCrafted": 10,
-      "totalQuantity": 4,
-      "skill": "less than 50",
-      "source": "https://www.wowhead.com/tbc/item=10978/small-glimmering-shard"
-    },
-    {
-      "studyKey": "wowhead-lesser-wizards-robe-liriell-one-soul-dust",
-      "inputItemID": 5766,
-      "outputItemID": 11083,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 1,
-      "histogram": {
-        "1": 1
-      },
-      "historicalItemLevel": 27,
-      "source": "https://www.wowhead.com/tbc/item=5766/lesser-wizards-robe"
-    },
-    {
-      "studyKey": "wowhead-void-crystal-allakhazam-imbued-tunic-single",
-      "inputItemID": 21862,
-      "outputItemID": 22450,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/tbc/item=22450/void-crystal"
-    },
-    {
-      "studyKey": "wowhead-belt-of-shrunken-heads-thottbot-one-nexus",
-      "inputItemID": 20213,
-      "outputItemID": 20725,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": null,
-      "source": "https://www.wowhead.com/tbc/item=20213/belt-of-shrunken-heads"
-    },
-    {
-      "studyKey": "wowhead-adamantite-powder-thottbot-five-feliron-stacks-three-rare-gems",
-      "inputItemID": 23424,
-      "reportedOreStacks": 5,
-      "completedCasts": null,
-      "outputQuantities": [
-        {
-          "itemID": 23438,
-          "totalQuantity": 2
-        },
-        {
-          "itemID": 23440,
-          "totalQuantity": 2
-        },
-        {
-          "itemID": 23441,
-          "totalQuantity": 1
+      "positiveHistogram": {
+        "34055": {
+          "1": 1,
+          "2": 1
         }
-      ],
-      "source": "https://www.wowhead.com/cata/fr/item=24243/poudre-dadamantite"
+      },
+      "source": "https://www.wowhead.com/wotlk/item=40955/horned-cobalt-helm"
     },
     {
-      "studyKey": "wowhead-adamantite-powder-thottbot-50adamantite-two-livingruby-one-star",
-      "inputItemID": 23425,
-      "reportedOreUnits": 50,
+      "studyKey": "wowhead-40955-thalor19-20-explicit-de",
+      "inputItemID": 40955,
+      "outputItemIDs": [
+        34054,
+        34055
+      ],
+      "completedCasts": 20,
+      "totalQuantity": {
+        "34054": 122,
+        "34055": 4
+      },
+      "source": "https://www.wowhead.com/wotlk/item=40955/horned-cobalt-helm"
+    },
+    {
+      "studyKey": "wowhead-40957-jabell4610-34-crafted-mats",
+      "inputItemID": 40957,
+      "outputItemIDs": [
+        34054,
+        34055
+      ],
+      "craftedItems": 34,
       "completedCasts": null,
-      "outputs": [
-        {
-          "itemID": 23436,
-          "totalQuantity": 2
-        },
-        {
-          "itemID": 23438,
-          "totalQuantity": 1
-        },
-        {
-          "itemID": null,
-          "name": "unspecified green gems",
-          "totalQuantity": 10
-        }
-      ],
-      "source": "https://www.wowhead.com/cata/fr/item=24243/poudre-dadamantite"
+      "totalQuantity": {
+        "34054": 86,
+        "34055": 17
+      },
+      "source": "https://www.wowhead.com/wotlk/item=40957/reinforced-cobalt-helm"
     },
     {
-      "noDisenchantItemIDs": [
-        20406,
-        20407,
-        20408,
-        11288,
-        6119
+      "studyKey": "wowhead-43249-themercenary-40-disencrafts",
+      "inputItemID": 43249,
+      "outputItemIDs": [
+        34054,
+        34055,
+        34052
       ],
-      "basis": "historical per-item reference/firsthand claims, not measured zero-yield casts"
+      "completedCasts": 40,
+      "totalQuantity": {
+        "34052": 2,
+        "34054": 106,
+        "34055": 14
+      },
+      "source": "https://www.wowhead.com/wotlk/item=43249/shadowmight-ring"
+    },
+    {
+      "studyKey": "wowhead-43249-125208-100-crafted-unspecified-de",
+      "inputItemID": 43249,
+      "outputItemIDs": [
+        34054,
+        34055,
+        34052
+      ],
+      "craftedItems": 100,
+      "completedCasts": null,
+      "dustReportedStacks": 13,
+      "dustUnits": null,
+      "totalQuantity": {
+        "34052": 7,
+        "34054": null,
+        "34055": 25
+      },
+      "source": "https://www.wowhead.com/wotlk/item=43249/shadowmight-ring"
+    },
+    {
+      "studyKey": "wowhead-43249-220069-120-explicit-de-conditional-dust",
+      "inputItemID": 43249,
+      "outputItemID": 34054,
+      "completedCasts": 120,
+      "sourceReportedUnconditionalAverage": "more than 4 dust units per cast",
+      "sourceReportedPositiveHitConditionalAverage": 5.12,
+      "totalQuantity": null,
+      "castsWithDrop": null,
+      "source": "https://www.wowhead.com/wotlk/item=43249/shadowmight-ring"
     }
   ],
   "numeric_summary": {
-    "newEvidenceRows": 19,
-    "processingRows": 14,
-    "eligibilityRows": 5,
-    "confirmedSingleItemCompletedDisenchants": 6,
+    "newEvidenceRows": 13,
+    "distinctOriginalSourceCohorts": 6,
+    "directlyAttestedCompletedDisenchants": 192,
+    "craftedButNotVerifiedAsCompleted": 134,
     "warmaul24995NewCompletedCasts": 0,
-    "cobalt36909NewCompletedCasts": 0,
-    "felIron23424NewCompletedCasts": 0,
-    "independentFelIronNominalBatchCohorts": 1,
-    "unknownHistogramsInvented": 0,
-    "newGoldEV": 0
+    "cobaltOre36909NewProspectCasts": 0,
+    "felIron23424NewProspectCasts": 0,
+    "disenchantOutputMaterialIDsAdvanced": [
+      34054,
+      34055,
+      34052
+    ],
+    "goldEVAdded": 0,
+    "fabricatedZeroOutcomes": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0445-warbringer-feliron-and-classic-de-originals.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0445-warbringer-feliron-and-classic-de-originals.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0542-wotlk-cobalt-gear-disenchant-originals.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0542-wotlk-cobalt-gear-disenchant-originals.jsonl",
   "sources": [
-    "https://www.wowhead.com/tbc/item=11177/small-radiant-shard",
-    "https://www.wowhead.com/wotlk/item=6425/blackforge-girdle",
-    "https://www.wowhead.com/tbc/item=10978/small-glimmering-shard",
-    "https://www.wowhead.com/tbc/item=5766/lesser-wizards-robe",
-    "https://www.wowhead.com/tbc/item=21862/imbued-netherweave-tunic",
-    "https://www.wowhead.com/tbc/item=22450/void-crystal",
-    "https://www.wowhead.com/tbc/item=20213/belt-of-shrunken-heads",
-    "https://www.wowhead.com/cata/fr/item=24243/poudre-dadamantite",
-    "https://www.wowhead.com/tbc/item=20407/twilight-cultist-robe",
-    "https://www.wowhead.com/tbc/item=20408/twilight-cultist-cowl",
-    "https://www.wowhead.com/tbc/item=20406/twilight-cultist-mantle",
-    "https://www.wowhead.com/tbc/item=11288/greater-magic-wand",
-    "https://www.wowhead.com/tbc/item=6119/neophytes-robe"
+    "https://www.wowhead.com/wotlk/item=40955/horned-cobalt-helm",
+    "https://www.wowhead.com/wotlk/item=40957/reinforced-cobalt-helm",
+    "https://www.wowhead.com/wotlk/item=43249/shadowmight-ring",
+    "https://www.wowhead.com/item=34054/infinite-dust",
+    "https://www.wowhead.com/item=34055/greater-cosmic-essence",
+    "https://www.wowhead.com/item=34052/dream-shard"
   ],
-  "verified_base_commit_sha": "7d981cfeab6e17d5128dd814aba60b7fb73e02d2",
+  "verified_base_commit_sha": "0e9690e97aa205516fc6ce1160150a3eed7a4ad3",
   "verified_commit_sha": null,
-  "commit_sha_note": "One Git commit contains status and new evidence atomically. Own final commit SHA cannot be written inside its own self-hashed status file; returned SHA, pinned fetch readback and branch ref are verified independently. No separate status commit.",
+  "commit_sha_note": "Evidence and status committed atomically once. Self-containing SHA impossible in Git-hashed status without a second commit; final commit SHA and file readback verified out of band.",
   "blockers": [
-    "No original Warmaul Legplates 24995 independent per-cast recorder or build; 2068-row cumulative Looter cohort and item-level-31 WoWDB no-disenchant conflict remain unresolved.",
-    "Current Retail item/bonus eligibility and correct source build/skill are unverified for all historical Classic/TBC disenchant reports.",
-    "Fel Iron five stacks, Adamantite fifty ore and crafted Rough Bronze Leggings do not provide directly logged completed-cast denominators; do not treat nominal equivalents as measured.",
-    "No newly measured per-output Cobalt Ore 36909 or Fel Iron Ore 23424 prospect hits or zero-inclusive histograms.",
-    "Archival commenters share generic Allakhazam/Thottbot labels; distinct text comments counted as source observations, not proof of different real-world player identities.",
-    "Imbued Netherweave Tunic reports conflict in output type across distinct commenters; both preserved without statistical pooling or inferred guarantees."
+    "No independent Warmaul Legplates 24995 complete-cast positive-stack/histogram source, dated build/suffix or live Retail eligibility; original 2068-cohort source remains unverified.",
+    "WotLK firsthand commenter dates, game patch/hotfix and character Enchanting skill unknown; current Retail item levels are scaled. 3.2.2 Infinite Dust hotfix and 3.0.8 crafted-item recipe cost change constrain direct pooling of different-era cohorts.",
+    "Horned 12-cast dust total units unknown despite 10 positive hits; positive 3/4/5 buckets unspecified. Horned 20-cast per-output hits unknown. Reinforced 34 and Shadowmight 100 give only crafted count, not completed DE counts.",
+    "Shadowmight 120 study says >4 dust per cast and 5.12 dust only conditional on dust-positive casts; no exact unconditional dust mean or output total; schema cannot capture conditional mean numerically without a Master-approved extension.",
+    "Original Cobalt and Fel Iron ore prospecting chance/zero histogram gaps remain; these are disenchant evidence using Cobalt-crafted gear, NOT Cobalt Ore prospecting observations."
   ],
   "exhausted_sources": [
     "Warmaul 24995 historical cumulative Looter and Evowow opaque weight references already captured; no re-recording.",
     "Fel Iron 100/565 ore reports, eight-stack anonymous blue, and Cobalt 24-stack RU report already indexed; not duplicated.",
     "45661 token full reward list already sourced in legacy-20261101-216; not duplicated.",
-    "Existing Netherweave Boots, Green Silken Shoulders, Arcanoweave Boots, and Wizardweave Robe firsthand cohorts already captured; not copied."
+    "Existing Netherweave Boots, Green Silken Shoulders, Arcanoweave Boots, and Wizardweave Robe firsthand cohorts already captured; not copied.",
+    "Warmaul historical cumulative Looter 2068 source not reopened as independent measurement; older 24995 source sample not recycled.",
+    "Existing recent Netherweave Bracers, The Sharp Cookie, Reaver Legplates and Fel Iron Ore 100/565/5-stack samples deduplicated; no reused numeric cohort.",
+    "Horned Cobalt Helm 40955 and Shadowmight Ring 43249 source comments newly added; other mirrored Wowhead language and era copies of same comments are not distinct studies."
   ],
-  "next_concrete_step": "Seek original per-cast Warmaul 24995 Looter/recorder dump with actual build, suffix and material-stack histogram; then independent Fel Iron 23424/Cobalt 36909 player logs with explicit successful five-ore clicks, per-output hits and zero outcomes. Hand importer/eligibility schema changes to Master."
+  "next_concrete_step": "Seek original Warmaul 24995 per-cast source/export with patch, exact bonus and output stacks plus Retail eligibility. If still unavailable, find new independent Cobalt Ore 36909/Fel Iron Ore 23424 player prospecting click logs with output hit/zero histograms. Ask Master to model source-reported conditional positive-hit average (43249/34054=5.12) separately from unconditional mean and to gate WotLK 3.2.2 hotfix cohorts by build."
 }
