@@ -1,163 +1,137 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T01:01:53.482Z",
-  "status": "active; 11 new source-backed legacy disenchant material rows from 6 distinct input cohorts; 81 explicitly completed DE operations across four cohorts and 2 further 100-item reported tests without verified cast logs; no new Warmaul Legplates events",
+  "updated_at": "2026-11-14T01:52:22.405Z",
+  "status": "active; 10 new evidence records (3 original observed DE cohorts, 2 reference-only identity rows, 5 WoWDB live eligibility flags); 5 completed mixed or item-specific historical casts, no new Warmaul 24995 casts; no schema or production changes",
   "task_ids": [
     "T0047",
-    "T0042",
     "T0052",
+    "T0042",
     "T0044",
     "T0022",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "24995 Warmaul Legplates ilvl108 historical TBC uncommon plate: original Looter complete disenchant casts, 0-N per-material stack histogram, skill, epoch, active build still unavailable",
-    "Nearby ilvl102-111 Burning Crusade armor disenchants: new exact input 21852 Netherweave Pants, 21854 Netherweave Robe and 21849 Netherweave Bracers with source-authored outputs; 33 explicit non-GP outcomes and 33 Arcane Dust-positive outcomes in 34-pants cohort",
-    "TBC mixed-item field study from Zaxxis Raiders: seven actually disenchanted greens, input IDs and gear kinds not logged",
-    "Fel Iron 23424 / Cobalt 36909: no independently new prospect raw casts/hit counts/zero-inclusive stack histograms located this run; older 565-ore Fel Iron and 180-ore Cobalt are already in repository, their nominal batch counts must not be promoted to measurements",
-    "Wayward Vanquisher token 45661: already tracked reward identity; no independent new variant/redemption IDs verified"
+    "T0047 Warmaul Legplates 24995 original complete-cast/event ledger, zero-inclusive material histograms, skill and build remain absent; 24993/24996/24997 same Warmaul scaled Retail eligibility flags now indexed",
+    "T0052 matching Outland uncommon armor: Reaver Legplates 24979 one verified positive five-Arcane-Dust cast; Bloodfist Girdle 24998 scaled metadata only; two further unidentified/mixed rare inputs cannot be assigned an exact item group",
+    "Rare TBC necklace 24114 corroborated Large Prismatic Shard 22449 and Void Crystal 22450 as historical possible outputs, without an outcome denominator or probabilities",
+    "Mixologist's Gloves 30000 current WoWDB no-disenchant flag independently contradicts earlier historical one-cast 22445 quantity 4; do not override original source with later scaled version",
+    "Fel Iron Ore 23424 and Cobalt Ore 36909 original prospecting completed casts, hit counts, and zero-inclusive histograms remain open; none newly verified",
+    "Wayward Vanquisher token 45661 seven class reward IDs already in 2026-11-01 source; no new independently confirmed variants or vendor redemption changes"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-21852-70404-30-pants-de",
-      "inputItemID": 21852,
+      "studyKey": "wowhead-tbc-24979-allakhazam-one-five-arcane",
+      "inputItemID": 24979,
       "itemLevelHistorical": 102,
-      "completedCasts": 30,
-      "outputs": [
-        {
-          "itemID": 22446,
-          "totalQuantity": 14
-        },
-        {
-          "itemID": 22445,
-          "totalQuantity": 71
-        }
-      ],
-      "outcomeHits": null
+      "outputItemID": 22445,
+      "completedCasts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 5,
+      "positiveHistogram": {
+        "5": 1
+      },
+      "source": "https://www.wowhead.com/tbc/item=24979/reaver-legplates"
     },
     {
-      "studyKey": "wowhead-21852-124141-34-pants-de",
-      "inputItemID": 21852,
-      "itemLevelHistorical": 102,
-      "completedCasts": 34,
-      "outputs": [
-        {
-          "itemID": 22446,
-          "totalQuantity": 1,
-          "castsWithDrop": 1,
-          "histogram": {
-            "0": 33,
-            "1": 1
-          }
-        },
-        {
-          "itemID": 22445,
-          "totalQuantity": null,
-          "castsWithDrop": 33
-        }
-      ]
-    },
-    {
-      "studyKey": "wowhead-21854-128008-10-robe-de",
-      "inputItemID": 21854,
-      "itemLevelHistorical": 111,
-      "completedCasts": 10,
-      "outputs": [
-        {
-          "itemID": 22446,
-          "totalQuantity": 8,
-          "castsWithDrop": 5,
-          "positiveStackHistogram": {
-            "1": 2,
-            "2": 3
-          }
-        }
-      ]
-    },
-    {
-      "studyKey": "wowhead-21852-darkmagi91-100-pants-de-test",
-      "inputItemID": 21852,
-      "reportedItemsTested": 100,
-      "verifiedCompletedCasts": null,
-      "outputs": [
-        {
-          "itemID": 22445,
-          "totalQuantity": 190
-        },
-        {
-          "itemID": 22447,
-          "totalQuantity": 45,
-          "identityNote": "Lesser Essences resolved contextually; exact item ID not explicitly linked by author"
-        }
-      ]
-    },
-    {
-      "studyKey": "wowhead-21852-darkmagi91-100-bracers-de-test",
-      "inputItemID": 21849,
-      "reportedItemsTested": 100,
-      "verifiedCompletedCasts": null,
-      "outputs": [
-        {
-          "itemID": 22445,
-          "totalQuantity": 165
-        },
-        {
-          "itemID": 22447,
-          "totalQuantity": 158,
-          "identityNote": "Lesser Essences resolved contextually; exact item ID not explicitly linked by author"
-        }
-      ]
-    },
-    {
-      "studyKey": "wowhead-npc18875-76534-seven-mixed-zaxxis-greens",
+      "studyKey": "wowhead-tbc-npc20614-30294-one-unidentified-robe-five-arcane",
       "inputItemID": null,
-      "completedCasts": 7,
-      "outputs": [
-        {
-          "itemID": 22445,
-          "totalQuantity": 12
-        },
-        {
-          "itemID": 22446,
-          "totalQuantity": 4
-        }
+      "exactInputIdentity": "unknown green BoE robe",
+      "outputItemID": 22445,
+      "completedCasts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 5,
+      "positiveHistogram": {
+        "5": 1
+      },
+      "source": "https://www.wowhead.com/tbc/npc=20614/razaani-spell-thief"
+    },
+    {
+      "studyKey": "wowhead-tbc-22448-thottbot-zg-three-rare-blue-disencasts",
+      "inputItemID": null,
+      "exactInputIdentity": "three unidentified Zul'Gurub rare blues",
+      "outputItemID": 22448,
+      "completedCasts": 3,
+      "castsWithDrop": 3,
+      "totalQuantity": 3,
+      "positiveHistogram": {
+        "1": 3
+      },
+      "source": "https://www.wowhead.com/tbc/item=22448/small-prismatic-shard"
+    },
+    {
+      "studyKey": "wowhead-tbc-24114-kaztal-historical-output-identity",
+      "inputItemID": 24114,
+      "outputItemIDs": [
+        22449,
+        22450
       ],
-      "exactInputIDs": "unknown"
+      "completedCasts": null,
+      "totalQuantities": null,
+      "sourceKind": "reference",
+      "source": "https://www.wowhead.com/tbc/item=24114/braided-eternium-chain"
+    },
+    {
+      "itemIDs": [
+        24993,
+        24996,
+        24997,
+        24998,
+        30000
+      ],
+      "observation": "current WoWDB cannot be disenchanted",
+      "completedCasts": null,
+      "sourceKind": "live database metadata",
+      "sourceURLs": [
+        "https://www.wowdb.com/items/24993-warmaul-gloves",
+        "https://www.wowdb.com/items/24996-warmaul-epaulets",
+        "https://www.wowdb.com/items/24997-warmaul-vambraces",
+        "https://www.wowdb.com/items/24998-bloodfist-girdle",
+        "https://www.wowdb.com/items/30000-mixologists-gloves"
+      ]
     }
   ],
   "numeric_summary": {
-    "newEvidenceRows": 11,
-    "distinctNewCohorts": 6,
-    "verifiedCompletedCastsUnique": 81,
-    "authorReportedAdditionalInputItems": 200,
-    "additionalLoggedCastsFromTestItems": null,
+    "newEvidenceRows": 10,
+    "verifiedCompletedCastsUnique": 5,
+    "measuredArcaneDustQuantityNew": 10,
+    "measuredSmallPrismaticShardQuantityNew": 3,
     "warmaulNewMeasuredCasts": 0,
     "felIronNewMeasuredCasts": 0,
     "cobaltNewMeasuredCasts": 0,
-    "materialZerosInExplicitPantsCohort": 33
+    "unmeasuredZerosInvented": 0,
+    "referenceOnlyRows": 2,
+    "liveEligibilityFlags": 5
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0101-tbc-netherweave-robe-pants-original-disentangle.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0101-tbc-netherweave-robe-pants-original-disentangle.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0152-reaver-warmaul-eligibility-originals.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0152-reaver-warmaul-eligibility-originals.jsonl",
   "sources": [
-    "https://www.wowhead.com/item=21852/netherweave-pants",
-    "https://www.wowhead.com/tbc/item=21854/netherweave-robe",
-    "https://www.wowhead.com/tbc/npc=18875/zaxxis-raider"
+    "https://www.wowhead.com/tbc/item=24979/reaver-legplates",
+    "https://www.wowhead.com/tbc/npc=20614/razaani-spell-thief",
+    "https://www.wowhead.com/tbc/item=22448/small-prismatic-shard",
+    "https://www.wowhead.com/tbc/item=24114/braided-eternium-chain",
+    "https://www.wowdb.com/items/24993-warmaul-gloves",
+    "https://www.wowdb.com/items/24996-warmaul-epaulets",
+    "https://www.wowdb.com/items/24997-warmaul-vambraces",
+    "https://www.wowdb.com/items/24998-bloodfist-girdle",
+    "https://www.wowdb.com/items/30000-mixologists-gloves"
   ],
-  "verified_base_commit_sha": "ca5423d599d7f975793063909832204c41589bc7",
+  "verified_base_commit_sha": "c7b388782ea5bddd69b37e2c440f66d08a854573",
   "verified_commit_sha": null,
-  "commit_sha_note": "Status and evidence are committed atomically once; Git commit SHA cannot self-reference inside its own committed status blob. Verify final branch head by reading commit and files after ref update.",
+  "commit_sha_note": "Evidence and this status file are committed atomically once; the self-referential commit hash cannot be embedded in its own content. Verify resulting commit SHA by commit GET and read-back of both files.",
   "blockers": [
-    "24995 original Looter event log unavailable; existing large historical hit counts are not completed-cast denominators",
-    "Patch/build/skills/specialization/refunds absent from all new community samples; two 100-item tests not independent cast logs",
-    "Darkmagi91's output wording 'Lesser Essences' omits linked material item IDs; mapped contextual 22447 must be verified independently",
-    "Original reported 2007-era apparent Greater Planar vs contemporary 'Lesser Essences' item output may be a patch-epoch difference; no official hotfix evidence, do not pool cohorts",
-    "No price, gold EV, confidence or unmeasured outcome probability included"
+    "Original Warmaul Legplates 24995 Looter 2068-event ledger is not available, so previously listed output hits are not a new complete-cast denominator; no 0-N histogram or new hit counts",
+    "One robe and three Zul'Gurub rares have no exact item ID or item-level; cannot apply to named Warmaul cohort",
+    "Braided Eternium Chain has documented output identities but no independent counts, denominators, or original build; no measured chances, zeros or confidence",
+    "Original sample reports lack enchanting skill, spec, build, hotfix, and refund context; outputs were not converted into any gold prices",
+    "WoWDB live metadata is a database claim rather than an in-game attempt, and conflicts with historical TBC classic disenchanting; don't merge epochs",
+    "Original token 45661 complete reward list already recorded, no new token metadata"
   ],
   "exhausted_sources": [
-    "Warmaul 24995 Wowhead TBC/WotLK comment threads: no raw event ledger or confirmed new completed casts",
-    "Fel Iron Ore 23424 Thottbot 100/565 ore and Cobalt Ore 36909 old firsthand comments: historical cohorts already indexed in previous legacy evidence; no independent new logs",
-    "Netherweave Bracers 21849 old 332 craft, 100 DE, 70 DE and seven-bracer samples previously indexed; did not re-import, even though novel darkmagi91 independent 100-bracer sample is retained"
+    "Mixologist's Gloves historical Thottbot one-cast 4 Arcane Dust already exists in 2026-11-08T1649 file; only new live eligibility conflict added, historical cast not re-imported",
+    "Netherweave Bracers/Boots/Pants and Sharp Cookie original cohorts already represented across older evidence; no copied cohorts added",
+    "Original Warmaul Legplates data search failed to produce raw event ledger; model percentage sources are historical priors, not observed casts",
+    "Cobalt and Fel Iron previous studies already indexed; avoided duplicate prospecting reference-only rows"
   ],
-  "next_concrete_step": "Recover original Warmaul 24995 Looter 2068 event ledger or a genuinely new primary 102-120 uncommon armor/weapon DE complete-cast 0-N log; independently verify darkmagi91's 'Lesser Essences' output ID and date/build before compiling separate historical and later epochs."
+  "next_concrete_step": "Find independent full disenchant outcome logs for original Warmaul 24995 or other ilvl102-120 TBC uncommon plate, including item suffix and full 0-N material stack histogram; then seek Fel Iron/Cobalt original per-batch logs rather than republishing model priors."
 }
