@@ -312,11 +312,8 @@ function run(root, options={}) {
         dfReport.failed+" failed; "+dfReport.cases.filter(x=>x.result==="FAIL")
           .map(x=>x.name+": "+x.detail).join("; ")+"; exit="+dfChild.status);
     console.log("PASS: F005 DF milling native 16/16 strict fail-closed gate (independent acceptance remains separate)");
-    // F002 staged native F003 anytime QA. Both independent F005 suites run on
-    // every build. The old, source-pinned model is explicitly quarantined for
-    // eight known nested-context defects; all other failures fail closed.
-    // Any model change requires a matching manifest and clean 13/13 result.
-    // This staged allowance is NOT a model acceptance or economic promotion.
+    // Run both pinned F005 anytime suites on every build. The repaired model
+    // must pass both in full. It remains a research-only preview.
     const anytimeManifestPath=path.join(root,"research/models/v2/midnight_rare_gem_anytime_e_bounds_v1.json");
     if(!fs.existsSync(anytimeManifestPath))
       throw Error("Required F003 anytime model manifest missing");
@@ -338,15 +335,13 @@ function run(root, options={}) {
       {file:"test_f005_anytime_typed_context_snapshot_integrity.js",
        suite:"F005_ANYTIME_TYPED_CONTEXT_SNAPSHOT_INTEGRITY",count:13}
     ];
-    // The independent F005 suites are a trust boundary. Pin both reviewed
-    // fixture Git blobs so edits cannot silently weaken the known-failure
-    // quarantine or turn an unreviewed model into a green native gate.
-    // A changed fixture requires fresh independent QA and an explicit re-pin.
+    // Pin the F005 fixture blobs so edits cannot silently weaken either gate.
+    // The NaN/Infinity assertion correction and its re-pin need review together.
     const reviewedAnytimeFixtureBlobs=Object.freeze({
       "test_f005_midnight_anytime_context_lineage.js":
         "fbb838e348429d6deed741060fe992ead560190b",
       "test_f005_anytime_typed_context_snapshot_integrity.js":
-        "2e64ba46af242740c7a44ecf6bb204ae1345c112"
+        "ea7d1abd82fbeb5da7dc33f942c4b8035f0dd2e3"
     });
     for(const spec of anytimeSpecs) {
       const fixture=path.join(root,"research/tests/v2",spec.file);
@@ -357,25 +352,13 @@ function run(root, options={}) {
       if(fixtureBlob!==reviewedAnytimeFixtureBlobs[spec.file])
         throw Error("F005 anytime fixture changed without independent review and gate re-pin: "+spec.file);
     }
-    // The model remains a research-only preview regardless of fixture outcome.
-    // A manifest changing this policy cannot be silently accepted by CI.
+    // Keep the model in research preview irrespective of the fixture result.
     if(!anytimeManifest.outputSemantics ||
        anytimeManifest.outputSemantics.economicUse!=="PREVIEW_ONLY" ||
        anytimeManifest.outputSemantics.normalizedVerified!==false ||
        anytimeManifest.outputSemantics.confidence!==0 ||
        anytimeManifest.outputSemantics.liveEVChanged!==false)
       throw Error("F003 anytime model preview-only economic isolation changed");
-    const knownBrokenModelBlob="55e4c0a23ef2403cef97d46d8590a52c09bbe2e9";
-    const knownNestedFailures=new Set([
-      "nested specialization source mutation cannot rewrite returned provenance",
-      "nested gear source mutation cannot rewrite returned provenance",
-      "nested unlocks source mutation cannot rewrite returned provenance",
-      "NaN specialization must not be admitted into serialized context",
-      "Infinity gear must not be admitted into serialized context",
-      "function unlocks must not be silently erased by JSON serialization",
-      "distinct nonfinite specialization values must not share a context key",
-      "nested undefined profession field must not silently disappear"
-    ]);
     for(const spec of anytimeSpecs) {
       const fixture=path.join(root,"research/tests/v2",spec.file);
       if(!fs.existsSync(fixture)) throw Error("Required independent F005 anytime fixture missing: "+spec.file);
@@ -393,38 +376,10 @@ function run(root, options={}) {
          report.cases.filter(c=>c.result==="FAIL").length!==report.failed)
         throw Error("Malformed or changed independent F005 anytime result: "+spec.file);
       const failedNames=report.cases.filter(c=>c.result==="FAIL").map(c=>c.name);
-      const staged=spec.count===13 && anytimeModelBlob===knownBrokenModelBlob &&
-        anytimeManifest.status.startsWith("PROPOSED_");
-      // F003 v1.0.2 now rejects both nonfinite inputs, as the independent
-      // fixture's other assertions require. The fixture also demands that
-      // those rejected inputs produce different serialized context keys.
-      // Those contracts contradict each other. Quarantine ONLY that exact
-      // independently documented assertion on the exact proposed model and
-      // already pinned F005 fixture; never count it as a model pass.
-      // Any other failure, model edit, fixture edit, or accepted status fails.
-      const contradictoryAssertion="distinct nonfinite specialization values must not share a context key";
-      const repairedButFixtureContradictory=spec.count===13 &&
-        anytimeModelBlob==="f0dbe1892d83f3c9297b1cdcd2d6365971161e74" &&
-        anytimeManifest.status.startsWith("PROPOSED_");
-      if(staged) {
-        if(failedNames.length!==knownNestedFailures.size ||
-           failedNames.some(name=>!knownNestedFailures.has(name)) ||
-           child.status!==1)
-          throw Error("F005 anytime pinned-model failure set changed: "+JSON.stringify(failedNames));
-        console.log("QUARANTINED: independent native F005 anytime nested 5/13; 8 exact known defects, model SHA pinned, no acceptance");
-      } else if(repairedButFixtureContradictory) {
-        if(report.passed!==12 || report.failed!==1 ||
-           failedNames.length!==1 || failedNames[0]!==contradictoryAssertion ||
-           child.status!==1)
-          throw Error("F005 anytime repaired-model unexpected failure set: "+
-            JSON.stringify(failedNames)+"; exit="+child.status);
-        console.log("QUARANTINED: F005 anytime 12/13; one contradictory independent fixture assertion, exact model/fixture pinned, no acceptance");
-      } else {
-        if(report.failed!==0 || child.status!==0)
-          throw Error("F005 anytime native strict "+spec.count+"/"+spec.count+" gate failed: "+
-            failedNames.join("; ")+"; exit="+child.status);
-        console.log("PASS: independent native F005 anytime strict "+spec.count+"/"+spec.count+" (research-only)");
-      }
+      if(report.failed!==0 || child.status!==0)
+        throw Error("F005 anytime native strict "+spec.count+"/"+spec.count+" gate failed: "+
+          failedNames.join("; ")+"; exit="+child.status);
+      console.log("PASS: native F005 anytime strict "+spec.count+"/"+spec.count+" (research-only)");
     }
     // F002: execute F005's independent Dragonflight prospecting joint-cast
     // adversarial fixture under native Node on every research build. The current
