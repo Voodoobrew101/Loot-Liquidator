@@ -1,320 +1,163 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-13T23:43:25.226Z",
-  "status": "16 new original-comment item-specific historical disenchant observations, each with one directly stated completed cast, output hit and exact positive yield. No newly confirmed Retail Warmaul 24995 casts, per-material zero outcomes, or estimated probabilities.",
+  "updated_at": "2026-11-14T01:01:53.482Z",
+  "status": "active; 11 new source-backed legacy disenchant material rows from 6 distinct input cohorts; 81 explicitly completed DE operations across four cohorts and 2 further 100-item reported tests without verified cast logs; no new Warmaul Legplates events",
   "task_ids": [
     "T0047",
     "T0042",
-    "T0022",
-    "T0044",
     "T0052",
+    "T0044",
+    "T0022",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Priority Warmaul Legplates 24995: original 2068-operation Wowhead Looter raw ledger, historical or current bonus/ilvl, full cast totals, output stack histogram, build/skill and zero outcomes remain unavailable.",
-    "Recovered firsthand 1-cast historical disenchant outputs for matched TBC gear 31821,25122,25948,25288 (historical item levels 99-105) and earlier item-level legacy gear 20723,19509,11882,15288; keep epoch and item-specific variants separate.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424 prospecting revisited. Original source-denominator / per-output hits / zero-inclusive per-cast logs still not discovered without duplicating earlier Thottbot/Strikk3r cohorts.",
-    "Token Spaulders of the Wayward Vanquisher 45661 rewards already recorded; no duplicate evidence."
+    "24995 Warmaul Legplates ilvl108 historical TBC uncommon plate: original Looter complete disenchant casts, 0-N per-material stack histogram, skill, epoch, active build still unavailable",
+    "Nearby ilvl102-111 Burning Crusade armor disenchants: new exact input 21852 Netherweave Pants, 21854 Netherweave Robe and 21849 Netherweave Bracers with source-authored outputs; 33 explicit non-GP outcomes and 33 Arcane Dust-positive outcomes in 34-pants cohort",
+    "TBC mixed-item field study from Zaxxis Raiders: seven actually disenchanted greens, input IDs and gear kinds not logged",
+    "Fel Iron 23424 / Cobalt 36909: no independently new prospect raw casts/hit counts/zero-inclusive stack histograms located this run; older 565-ore Fel Iron and 180-ore Cobalt are already in repository, their nominal batch counts must not be promoted to measurements",
+    "Wayward Vanquisher token 45661: already tracked reward identity; no independent new variant/redemption IDs verified"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "id": "legacy-20261113-34001",
-      "inputItemID": 31821,
-      "outputItemID": 22446,
-      "historicalItemLevel": 102,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 2,
-      "positiveStackHistogram": {
-        "2": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=31821/blade-of-retribution"
+      "studyKey": "wowhead-21852-70404-30-pants-de",
+      "inputItemID": 21852,
+      "itemLevelHistorical": 102,
+      "completedCasts": 30,
+      "outputs": [
+        {
+          "itemID": 22446,
+          "totalQuantity": 14
+        },
+        {
+          "itemID": 22445,
+          "totalQuantity": 71
+        }
+      ],
+      "outcomeHits": null
     },
     {
-      "id": "legacy-20261113-34002",
-      "inputItemID": 25122,
-      "outputItemID": 22445,
-      "historicalItemLevel": 105,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 3,
-      "positiveStackHistogram": {
-        "3": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=25122/khorium-plated-bludgeon"
+      "studyKey": "wowhead-21852-124141-34-pants-de",
+      "inputItemID": 21852,
+      "itemLevelHistorical": 102,
+      "completedCasts": 34,
+      "outputs": [
+        {
+          "itemID": 22446,
+          "totalQuantity": 1,
+          "castsWithDrop": 1,
+          "histogram": {
+            "0": 33,
+            "1": 1
+          }
+        },
+        {
+          "itemID": 22445,
+          "totalQuantity": null,
+          "castsWithDrop": 33
+        }
+      ]
     },
     {
-      "id": "legacy-20261113-34003",
-      "inputItemID": 25948,
-      "outputItemID": 22447,
-      "historicalItemLevel": 99,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 3,
-      "positiveStackHistogram": {
-        "3": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=25948/girdle-of-the-penitent"
+      "studyKey": "wowhead-21854-128008-10-robe-de",
+      "inputItemID": 21854,
+      "itemLevelHistorical": 111,
+      "completedCasts": 10,
+      "outputs": [
+        {
+          "itemID": 22446,
+          "totalQuantity": 8,
+          "castsWithDrop": 5,
+          "positiveStackHistogram": {
+            "1": 2,
+            "2": 3
+          }
+        }
+      ]
     },
     {
-      "id": "legacy-20261113-34004",
-      "inputItemID": 25288,
-      "outputItemID": 22447,
-      "historicalItemLevel": 99,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 2,
-      "positiveStackHistogram": {
-        "2": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=25288/conjurers-wand"
+      "studyKey": "wowhead-21852-darkmagi91-100-pants-de-test",
+      "inputItemID": 21852,
+      "reportedItemsTested": 100,
+      "verifiedCompletedCasts": null,
+      "outputs": [
+        {
+          "itemID": 22445,
+          "totalQuantity": 190
+        },
+        {
+          "itemID": 22447,
+          "totalQuantity": 45,
+          "identityNote": "Lesser Essences resolved contextually; exact item ID not explicitly linked by author"
+        }
+      ]
     },
     {
-      "id": "legacy-20261113-34005",
-      "inputItemID": 20723,
-      "outputItemID": 16203,
-      "historicalItemLevel": 62,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 3,
-      "positiveStackHistogram": {
-        "3": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=20723/branns-trusty-pick"
+      "studyKey": "wowhead-21852-darkmagi91-100-bracers-de-test",
+      "inputItemID": 21849,
+      "reportedItemsTested": 100,
+      "verifiedCompletedCasts": null,
+      "outputs": [
+        {
+          "itemID": 22445,
+          "totalQuantity": 165
+        },
+        {
+          "itemID": 22447,
+          "totalQuantity": 158,
+          "identityNote": "Lesser Essences resolved contextually; exact item ID not explicitly linked by author"
+        }
+      ]
     },
     {
-      "id": "legacy-20261113-34006",
-      "inputItemID": 20723,
-      "outputItemID": 16203,
-      "historicalItemLevel": 62,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 3,
-      "positiveStackHistogram": {
-        "3": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=20723/branns-trusty-pick"
-    },
-    {
-      "id": "legacy-20261113-34007",
-      "inputItemID": 20723,
-      "outputItemID": 16203,
-      "historicalItemLevel": 62,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 2,
-      "positiveStackHistogram": {
-        "2": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=20723/branns-trusty-pick"
-    },
-    {
-      "id": "legacy-20261113-34008",
-      "inputItemID": 19509,
-      "outputItemID": 11177,
-      "historicalItemLevel": 41,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 1,
-      "positiveStackHistogram": {
-        "1": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=19509/dusty-mail-boots"
-    },
-    {
-      "id": "legacy-20261113-34009",
-      "inputItemID": 19509,
-      "outputItemID": 11137,
-      "historicalItemLevel": 41,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 3,
-      "positiveStackHistogram": {
-        "3": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=19509/dusty-mail-boots"
-    },
-    {
-      "id": "legacy-20261113-34010",
-      "inputItemID": 11882,
-      "outputItemID": 14344,
-      "historicalItemLevel": 56,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 1,
-      "positiveStackHistogram": {
-        "1": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=11882/outrider-leggings"
-    },
-    {
-      "id": "legacy-20261113-34011",
-      "inputItemID": 11882,
-      "outputItemID": 14344,
-      "historicalItemLevel": 56,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 1,
-      "positiveStackHistogram": {
-        "1": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=11882/outrider-leggings"
-    },
-    {
-      "id": "legacy-20261113-34012",
-      "inputItemID": 11882,
-      "outputItemID": 16203,
-      "historicalItemLevel": 56,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 1,
-      "positiveStackHistogram": {
-        "1": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=11882/outrider-leggings"
-    },
-    {
-      "id": "legacy-20261113-34013",
-      "inputItemID": 11882,
-      "outputItemID": 16204,
-      "historicalItemLevel": 56,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 2,
-      "positiveStackHistogram": {
-        "2": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=11882/outrider-leggings"
-    },
-    {
-      "id": "legacy-20261113-34014",
-      "inputItemID": 15288,
-      "outputItemID": 16203,
-      "historicalItemLevel": null,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 3,
-      "positiveStackHistogram": {
-        "3": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=15288/blasthorn-bow"
-    },
-    {
-      "id": "legacy-20261113-34015",
-      "inputItemID": 15288,
-      "outputItemID": 16203,
-      "historicalItemLevel": null,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 3,
-      "positiveStackHistogram": {
-        "3": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=15288/blasthorn-bow"
-    },
-    {
-      "id": "legacy-20261113-34016",
-      "inputItemID": 15288,
-      "outputItemID": 16204,
-      "historicalItemLevel": null,
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 2,
-      "positiveStackHistogram": {
-        "2": 1
-      },
-      "sourceKind": "study",
-      "sourceUrl": "https://www.wowhead.com/tbc/item=15288/blasthorn-bow"
+      "studyKey": "wowhead-npc18875-76534-seven-mixed-zaxxis-greens",
+      "inputItemID": null,
+      "completedCasts": 7,
+      "outputs": [
+        {
+          "itemID": 22445,
+          "totalQuantity": 12
+        },
+        {
+          "itemID": 22446,
+          "totalQuantity": 4
+        }
+      ],
+      "exactInputIDs": "unknown"
     }
   ],
   "numeric_summary": {
-    "newEvidenceRecords": 16,
-    "newlyReportedCompletedCasts": 16,
-    "newlyReportedOutputHits": 16,
-    "newlyReportedOutputUnits": 35,
-    "zeroInclusiveHistograms": 0,
-    "measuredZeroOutcomes": null,
-    "distinctInputIDs": [
-      31821,
-      25122,
-      25948,
-      25288,
-      20723,
-      19509,
-      11882,
-      15288
-    ],
-    "distinctOutputIDs": [
-      22446,
-      22445,
-      22447,
-      16203,
-      11177,
-      11137,
-      14344,
-      16204
-    ],
-    "sourceKind": "study",
-    "populationChanceEstimated": false,
-    "freezeGoldEV": false
+    "newEvidenceRows": 11,
+    "distinctNewCohorts": 6,
+    "verifiedCompletedCastsUnique": 81,
+    "authorReportedAdditionalInputItems": 200,
+    "additionalLoggedCastsFromTestItems": null,
+    "warmaulNewMeasuredCasts": 0,
+    "felIronNewMeasuredCasts": 0,
+    "cobaltNewMeasuredCasts": 0,
+    "materialZerosInExplicitPantsCohort": 33
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-13T2343-tbc-classic-item-specific-firsthand-disenchants.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-13T2343-tbc-classic-item-specific-firsthand-disenchants.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0101-tbc-netherweave-robe-pants-original-disentangle.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0101-tbc-netherweave-robe-pants-original-disentangle.jsonl",
   "sources": [
-    "https://www.wowhead.com/tbc/item=31821/blade-of-retribution",
-    "https://www.wowhead.com/tbc/item=25122/khorium-plated-bludgeon",
-    "https://www.wowhead.com/tbc/item=25948/girdle-of-the-penitent",
-    "https://www.wowhead.com/tbc/item=25288/conjurers-wand",
-    "https://www.wowhead.com/tbc/item=20723/branns-trusty-pick",
-    "https://www.wowhead.com/tbc/item=19509/dusty-mail-boots",
-    "https://www.wowhead.com/tbc/item=11882/outrider-leggings",
-    "https://www.wowhead.com/tbc/item=15288/blasthorn-bow"
+    "https://www.wowhead.com/item=21852/netherweave-pants",
+    "https://www.wowhead.com/tbc/item=21854/netherweave-robe",
+    "https://www.wowhead.com/tbc/npc=18875/zaxxis-raider"
   ],
-  "verified_base_commit_sha": "b7ab90b07f7f191d6009b1f3025fd7811d773539",
+  "verified_base_commit_sha": "ca5423d599d7f975793063909832204c41589bc7",
   "verified_commit_sha": null,
-  "commit_sha_note": "Evidence file and own status committed atomically; a commit SHA cannot be embedded into that same commit. Verify commit and both blobs by GitHub API read-back.",
+  "commit_sha_note": "Status and evidence are committed atomically once; Git commit SHA cannot self-reference inside its own committed status blob. Verify final branch head by reading commit and files after ref update.",
   "blockers": [
-    "The original Warmaul Legplates 24995 Looter per-event and item-variant log is still inaccessible, so source 2068 operations and apparent 37 unlisted event types cannot be independently confirmed. Do not infer any zero outcomes.",
-    "Historical wowhead item-comment observations are selected positive anecdotes, not representative probability samples. Unknown patch, skill, specialization, equipment affixes and modern Retail disenchant eligibility require Master adjudication before release.",
-    "Firecrawl account exhausted its daily credits for direct dynamic-page inspection, reset reported 2026-11-14T15:51:09Z. Ordinary web search remained available; this is transient.",
-    "Independent Cobalt 36909, Fel Iron 23424 zero-inclusive per-cast samples and refund evidence still missing; previous available originals already imported."
+    "24995 original Looter event log unavailable; existing large historical hit counts are not completed-cast denominators",
+    "Patch/build/skills/specialization/refunds absent from all new community samples; two 100-item tests not independent cast logs",
+    "Darkmagi91's output wording 'Lesser Essences' omits linked material item IDs; mapped contextual 22447 must be verified independently",
+    "Original reported 2007-era apparent Greater Planar vs contemporary 'Lesser Essences' item output may be a patch-epoch difference; no official hotfix evidence, do not pool cohorts",
+    "No price, gold EV, confidence or unmeasured outcome probability included"
   ],
   "exhausted_sources": [
-    {
-      "lookingFor": "New independent primary Warmaul 24995 per-cast numeric dump",
-      "whereLooked": [
-        "https://www.wowhead.com/item=24995/warmaul-legplates",
-        "https://www.wowhead.com/mop-classic/item=24995/warmaul-legplates",
-        "https://wotlk.evowow.com/?item=24995"
-      ],
-      "reason": "Only existing compiled/historical pooled or opaque model output, no original 2068-operation event file."
-    },
-    {
-      "lookingFor": "Independent Cobalt 36909 and Fel Iron 23424 per-cast gemstone occurrence and zero histograms",
-      "whereLooked": [
-        "https://www.wowhead.com/wotlk/item=36909/cobalt-ore",
-        "https://www.wowhead.com/wotlk/item=23424/fel-iron-ore",
-        "https://www.wowhead.com/tbc/spell=31252/prospecting",
-        "https://www.wow-professions.com/wotlk/prospecting-table-wotlk-classic"
-      ],
-      "reason": "Found prior recorded Strikk3r and Thottbot original cohorts, patch-model reference rates, unspecified eight/ten-stack anecdotes; no new full hit/zero ledger. No duplicate source snapshot added."
-    }
+    "Warmaul 24995 Wowhead TBC/WotLK comment threads: no raw event ledger or confirmed new completed casts",
+    "Fel Iron Ore 23424 Thottbot 100/565 ore and Cobalt Ore 36909 old firsthand comments: historical cohorts already indexed in previous legacy evidence; no independent new logs",
+    "Netherweave Bracers 21849 old 332 craft, 100 DE, 70 DE and seven-bracer samples previously indexed; did not re-import, even though novel darkmagi91 independent 100-bracer sample is retained"
   ],
-  "next_concrete_step": "Retrieve Warmaul Legplates 24995 original 2068-operation Looter HTML/API or in-game saved variables including item variant/build, then obtain fresh matched TBC level 99-105 armor/weapon multi-cast ledgers and Cobalt/Fel Iron zero-inclusive prospecting outputs. Master reviews selected one-cast historical anecdotes before estimator use."
+  "next_concrete_step": "Recover original Warmaul 24995 Looter 2068 event ledger or a genuinely new primary 102-120 uncommon armor/weapon DE complete-cast 0-N log; independently verify darkmagi91's 'Lesser Essences' output ID and date/build before compiling separate historical and later epochs."
 }
