@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T12:32:30.069Z",
-  "status": "active; four new first-party item-side Wowhead Looter cumulative gear disenchant cohorts (11 material-occurrence rows) recorded after ore/milling original-source search produced no fresh cohorts",
+  "updated_at": "2026-11-14T13:36:48.177Z",
+  "status": "active; one newly located historical single-item firsthand disenchant outcome recorded; no independent new prospecting/milling histograms",
   "task_ids": [
     "T0020",
     "T0018",
@@ -12,80 +12,37 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143 R1 / 188658 R2 / 190311 R3: completed prospect operations by ore quality, hit/zero histograms and resourcefulness refund ledgers still missing",
-    "Serevite Ore 190395/190396/190394 and Khaz'gorite Ore 190312/190313/190314: independent rank-specific prospecting 0-N result studies missing",
-    "Prismatic Ore 194545: original measured per-gem hit/zero histograms still missing; avoid double counting superbondez",
-    "Bubble Poppy 191467, Saxifrage 191464/191465/191466 and Hochenblume milling: completed casts, refunds and per-pigment histograms missing",
-    "Gear inputs 194347, 202467, 207269, 197999: Wowhead Looter item/version/patch/skill and original raw operation/stack outcome data missing"
+    "Draconium Ore 189143 R1 / 188658 R2 / 190311 R3: missing independent rank-specific completed-cast gem hit/zero histogram and refunds",
+    "Serevite Ore 190395 R1 / 190396 R2 / 190394 R3, Khaz'gorite Ore 190312/190313/190314 and Prismatic Ore 194545: measured per-rank per-material 0-N series absent",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: completed mills, output material hit/zero counts, pigment quantity histograms and refund ledgers absent",
+    "Everflowing Inkwell 200940 -> Chromatic Dust 194123: only one original firsthand event, quantity, patch, character skill and wider outcome distribution absent"
   ],
   "newly_verified_fields": [
-    "11 item-specific source-reported material appearances per denominator (castsWithDrop)",
-    "four observed Looter disenchant denominators 619,31,52,564",
-    "11 rounded source percentShown entries; shown material stack ranges where present",
-    "exact input/output item IDs crosschecked against named item pages"
+    "Independent original author Lazey reports one disenchant of Everflowing Inkwell 200940 yielding Chromatic Dust 194123; one witnessed event and one material appearance, quantity unknown"
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-original-gear-194347-observed-20261114",
-      "inputItemID": 194347,
-      "casts": 619,
-      "material_hit_counts": {
-        "194123": 266,
-        "194124": 333,
-        "200113": 32
-      },
-      "source": "https://www.wowhead.com/item=194347/expedition-researchers-hood",
-      "limitations": "cumulative Looter dataset; not fully independent character-level experimental cohort; no totalQuantity/0-N histogram"
-    },
-    {
-      "studyKey": "wowhead-looter-original-gear-202467-observed-20261114",
-      "inputItemID": 202467,
-      "casts": 31,
-      "material_hit_counts": {
-        "194123": 2,
-        "194124": 14,
-        "200113": 17
-      },
-      "source": "https://www.wowhead.com/ptr-2/item=202467/faulds-of-the-cinderwolf",
-      "limitations": "cumulative Looter dataset; not fully independent character-level experimental cohort; no totalQuantity/0-N histogram"
-    },
-    {
-      "studyKey": "wowhead-looter-original-gear-207269-observed-20261114",
-      "inputItemID": 207269,
-      "casts": 52,
-      "material_hit_counts": {
-        "194124": 31,
-        "200113": 31
-      },
-      "source": "https://www.wowhead.com/item=207269/devout-ashdevils-fanged-sash",
-      "limitations": "cumulative Looter dataset; not fully independent character-level experimental cohort; no totalQuantity/0-N histogram"
-    },
-    {
-      "studyKey": "wowhead-looter-original-gear-197999-observed-20261114",
-      "inputItemID": 197999,
-      "casts": 564,
-      "material_hit_counts": {
-        "194123": 265,
-        "194124": 287,
-        "200113": 27
-      },
-      "source": "https://www.wowhead.com/item=197999/windswept-hood",
-      "limitations": "cumulative Looter dataset; not fully independent character-level experimental cohort; no totalQuantity/0-N histogram"
+      "studyKey": "wowhead-lazey-200940-single-disenchant",
+      "inputItemID": 200940,
+      "outputItemID": 194123,
+      "casts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": null,
+      "source": "https://www.wowhead.com/item=200940/everflowing-inkwell",
+      "limitations": "One singular anecdote only, not a multi-cast study. No dust units, patch, quality, zero outcomes or population probability; distinct from Kenthenerd compiled reference."
     }
   ],
-  "new_numerical_measurements": 11,
+  "new_numerical_measurements": 1,
   "numerical_fields_improved": [
-    "casts",
-    "castsWithDrop",
-    "percentShown",
-    "percentMeaning",
-    "minSeen/maxSeen where reported by source"
+    "one firsthand completed disenchant event (source singular)",
+    "one material occurrence, not a population P(hit)"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-14T0933-independent-source-gap-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T1035-independent-public-log-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T1131-alternative-language-primary-data-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-14T1336-firsthand-inkwell-and-numeric-search.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/item=194347/expedition-researchers-hood",
@@ -94,14 +51,17 @@
     "https://www.wowhead.com/item=197999/windswept-hood",
     "https://www.wowhead.com/item=194123/chromatic-dust",
     "https://www.wowhead.com/item=194124/vibrant-shard",
-    "https://www.wowhead.com/item=200113/resonant-crystal"
+    "https://www.wowhead.com/item=200113/resonant-crystal",
+    "https://www.wowhead.com/item=200940/everflowing-inkwell",
+    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit"
   ],
-  "verified_commit_sha": "9e553b9b1b613310d84e559fe158dc5cd5bfdbeb",
-  "commit_sha_scope": "verified pre-run parent: single commit cannot contain its own final SHA; new commit and content readback separately verified afterward",
+  "verified_commit_sha": "5eb73a39aae424ebf6c8deb41c550f332bba5f66",
+  "commit_sha_scope": "Verified parent branch head; own new commit cannot self-reference its SHA; final new commit verified by separate readback after ref update",
   "blockers": [
-    "Original prospecting and milling completed-cast/rank/refund/zero-inclusive histogram data not found after fresh name-first cross-site searches; no repeated historical cohorts copied",
-    "New Wowhead Looter gear tables expose pooled positive material appearance counts, not material total units or exact per-dis-enchant 0-N event distributions; the data may span versions/builds and uploaders; material hits may co-occur",
-    "Live Wowhead web-open hides JavaScript-loaded Looter tables, but web search index exposes numeric table; source pages and exact item identities cross-checked. Independent DOM or raw export verification remains pending."
+    "Draconium/Serevite/Khaz'gorite/Prismatic prospecting and Dragonflight milling missing original independent source logs with completed operations and full 0-N material outcomes",
+    "Xenastro original Google workbook rows not retrievable during this run; existing cited study not duplicated",
+    "New one-event Everflowing Inkwell report lacks dust total, per-output multiplicity histogram, build and skill; cannot support a measured population prospecting/milling baseline",
+    "Wowhead Looter item tables are dynamically rendered; current original non-cumulative dumps not independently available"
   ],
   "exhausted_sources": [
     {
@@ -747,35 +707,50 @@
         "Wowhead by-name Prismatic Ore and Dragon Isles Prospecting, https://www.wowhead.com/item=194545/prismatic-ore ; https://www.wowhead.com/spell=374627/dragon-isles-prospecting : original 80-cast superbondez/Bugy samples already indexed; no independent per-material event histogram",
         "Wowgold.hk by-name Draconium/Serevite Illimited Diamond prospecting, https://wowgold.hk/guides/illimited-diamond : rate estimate attributed loosely to community, no raw study/sample/rank; not new measured evidence"
       ]
+    },
+    {
+      "at": "2026-11-14T13:36:48.177Z",
+      "scope": "New name-first Dragonflight processing-original search and separate single-event Mystic disenchant source",
+      "reason": "Public original ore/milling studies surfaced previously imported cohorts; no unindexed raw completion/refund/0-N output export or per-material histogram. One independent firsthand one-item disenchant outcome is new, but insufficient to estimate a population drop rate.",
+      "whereLooked": [
+        "reddit.com/r/woweconomy: named Draconium Ore prospecting 1000/10000 original cast-by-cast gem logs; old 10u5ao8 and 10i63zb cohorts already indexed",
+        "reddit.com/r/woweconomy: named Serevite Ore R3 original 8000 operations, 40000 ores and resourcefulness refunds (pre-existing original, not recopied)",
+        "reddit.com/r/woweconomy: named Khaz'gorite Ore prospect rank 2 and 0-1 diamond counts (existing 10h6ccx source)",
+        "reddit.com/r/woweconomy: Bubble Poppy and Saxifrage milling raw pigments per operation and zero/cast histories",
+        "wowhead.com/item=194545/prismatic-ore: original superbondez, Hotfor and TheChisel comments, no new source-original 0-N histograms",
+        "wowhead.com/item=192869/illimited-diamond: ranked prospect comments, no new independent 0-N cast workbook",
+        "wowhead.com/item=200940/everflowing-inkwell: separately sourced Lazey firsthand singular disenchant, recorded in this file",
+        "warcraft.wiki.gg: Dragon Isles Prospecting and ranked ore item/recipe identity guides, not original measured logs",
+        "wow-professions.com: Dragon Isles Inscription/Jewelcrafting named milling and prospecting guide recipes; reference not experiments",
+        "us.forums.blizzard.com/en/wow: named Dragonflight prospecting and Bubble Poppy/Saxifrage completed-cast study searches",
+        "docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit: original Xenastro source link not retrievable in current session",
+        "thelazygoldmaker.com/i-prospected-40-000-serevite-ore-so-you-dont-have-to: existing 8000-cast source already indexed, no independent follow-on",
+        "github.com/markgravity/wow-tsm-addon LibTSM/Data/Prospect.lua: copied reference rates and item mappings, not source-original completed operations"
+      ]
     }
   ],
-  "next_concrete_step": "Locate rank/skill-aware primary Dragon Isles prospecting or milling log (per completed operation including zero-result stacks, refunds and build). For these four gear items, obtain non-cumulative original WoW Looter raw operations or separate per-item snapshots before treating future tables as independent.",
+  "next_concrete_step": "Find genuinely new author-original rank-aware Dragon Isles prospecting or milling 0-N per-completed-operation export (including refunds and build); prioritize retrieving original Xenastro workbook rows and unpublished independent addon logs over repeating old threads. Verify independent item/version identity for any later Looter numeric table before using it.",
   "validation": {
     "jsonl_parse": true,
-    "record_count": 11,
-    "measured_drop_records": 11,
-    "searched_records": 0,
+    "record_count": 2,
+    "measured_drop_records": 1,
+    "searched_records": 1,
     "unique_record_ids": true,
-    "distinct_new_input_cohorts": 4,
-    "where_looked_sites": [
-      "reddit.com",
-      "wowhead.com",
-      "wow-professions.com",
-      "warcraft.wiki.gg"
-    ],
-    "source_tables_reported_denominators": true,
+    "all_required_fields_present": true,
+    "primary_single_event_verified": true,
+    "source_original_not_copied": true,
     "total_quantity_unknown_null": true,
     "zero_histograms_unknown_null": true,
     "patch_and_skill_unknown_null": true,
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-14T1336-firsthand-inkwell-and-numeric-search.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "post_commit_readback": "pending (single-commit SHA cannot self-reference)"
+    "post_commit_readback": "pending; verify separately after commit"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T1232-four-original-gear-looter-cohorts.jsonl",
-  "verified_parent_sha": "9e553b9b1b613310d84e559fe158dc5cd5bfdbeb"
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-14T1336-firsthand-inkwell-and-numeric-search.jsonl",
+  "verified_parent_sha": "5eb73a39aae424ebf6c8deb41c550f332bba5f66"
 }
