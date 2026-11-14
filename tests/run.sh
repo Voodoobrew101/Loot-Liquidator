@@ -83,6 +83,7 @@ python3 tests/test_disenchant_import_archive.py
 # Frozen code-only PR51 baseline, independent of Git history or network access.
 echo "e81277e142acca3f9a44e21146e5b1690b5adf1db584793f61cc1f279b7110b4  tests/fixtures/pr51/ImportedResults.lua" | sha256sum -c -
 "$lua_bin" tests/test_native_profile_precision.lua tests/fixtures/pr51/ImportedResults.lua
+"$lua_bin" tests/test_import_target_lookup.lua
 "$lua_bin" tests/test_counts_model.lua
 "$lua_bin" tests/test_transmog_alts.lua
 "$lua_bin" tests/test_appearance_collection.lua
