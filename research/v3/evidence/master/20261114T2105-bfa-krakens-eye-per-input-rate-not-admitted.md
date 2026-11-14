@@ -1,0 +1,28 @@
+# BfA Kraken's Eye: direct numerator/input source rate omitted by v3 estimator (2026-11-14 21:05Z)
+
+**Scope:** New manager source-to-field audit of the legacy worker's 20:51Z records. Original observations and the owner implementation branch remain untouched. This is a historical Retail-source audit, **not** a modern Retail operation test, actual gold-price check, independent drop-chance measurement, or new experimental cohort.
+
+## Original-source verification and units
+
+Reopened the [Retail Kraken's Eye item comments](https://www.wowhead.com/item=153706/krakens-eye) and matched the *original author statements* against [worker-owned records](../legacy/2026-11-14T2051-firsthand-bfa-kraken-titanium-prospect.jsonl):
+
+| Record | Original author and statements | Independently derivable source-specific material yield | Must remain unknown |
+|---|---|---|---|
+| `legacy-20261114-206` | alphageekyvr: **335 Monelite Ore processed -> 26 Kraken's Eyes**, posted as *a couple days after patch 8.1.5* | `26 / 335 = 0.0776119403` **Kraken's Eye units per reported ore input**, or `26 * 5 / 335 = 0.3880597015` units per **nominal five-ore equivalent** | Exact completed operation count, refunds/reused ore, cast-by-cast presence, conditional positive stack size, skill/spec, current Retail rate, exact date |
+| `legacy-20261114-201` | Paperclips: **500 Platinum Ore -> 1 Kraken's Eye** | `1 / 500 = 0.002` units per reported ore input, or `1 * 5 / 500 = 0.01` per **nominal five-ore equivalent** | Date/epoch, actual casts, probability, positive stack sizes, build, refund handling, skill |
+ 
+These are **output-unit/input-unit ratios**, not measured hit probabilities, not 67 or 100 logged completed prospects, and not verified present-day means. The BfA 8.1.5 source applies only to Monelite and an author-asserted historical epoch; the undated Platinum observation is a different item/source and must not be pooled into a common per-item estimate. The original comments also contain Tontons' *already archived* before/after reference tables; no duplicate Tontons study has been created here. The original comments match the worker's stated 335/26 and 500/1 integers exactly.
+
+A separate provenance cross-check on [Retail Titanium Ore](https://www.wowhead.com/item=36910/titanium-ore) verifies the **same comment #351270** reproduced by the [MoP Classic view](https://www.wowhead.com/mop-classic/item=36910/titanium-ore): one explicit five-ore Titanium prospect yielded *Dark Jade, Huge Citrine, Titanium Powder* simultaneously. Three distinct **positive output occurrences in one shared operation**, with **all three quantities unknown**, remain valid **historical Retail-origin commenter** context, not three independent casts and not a MoP Classic source rate. The cited Classic page is only a mirror; canonical Retail page should be the source link in an append-only legacy-worker correction. No modern build inferred.
+
+## Verified v3 source-to-estimate gap (static code read)
+
+At [`research/v3/tools/build_estimates.py`](../../tools/build_estimates.py), `row_use()` lines 281-295 obtains a usable denominator only from `casts` or `inputsProcessed`. Lines 311-321 then **drop `totalQuantity` when neither exists**, reporting `totalWithoutCasts`. New worker records 201/206 have `casts:null`, `inputsProcessed` absent, `totalQuantity:1/26` and `averageShown:null`. Their directly derivable **per-reported-input unit rate therefore has no estimator path** in these records. This is **usable-but-not-imported quantity**, separately from still-unknown `P(hit)` and unsupported present-day applicability.
+
+The current `unit_average()` at lines 253-263 supports source-labeled `averageShown` with `averagePer:"input"` and proper unit conversion. However, merely inserting that normalized number as a `study` is **not a complete fix**: `row_use()` lines 316-318 substitutes `SMALL_STUDY_CASTS=20` for absent casts, and `analyze()` lines 827-950 can label the resulting average `measured`, report effective study casts, and derive a chance from the midpoint range. This would overclaim denominator and unknown chance. A correction must distinguish *reported input quantity* from *observed completed casts*, and a valid unit mean from observed probability.
+
+**Acceptance fixture for owner-owned integration, not run:** With distinct synthetic Kraken's Eye prices, evaluate the historical 335-Monelite and 500-Platinum cases separately; assert 26/335 and 1/500 priced only when character/epoch/eligibility assumptions permit, the numeric `chance` remains unknown absent independent P data, no invented `20`/67/100 sampled casts or rank/skill claims, no double-counting with Tontons and no copied MoP Classic rate. Preserve raw numerator/denominator and two source URLs. If current character applicability is unknown, keep an explicit historical-only reason instead of asserting live recommendations.
+
+**Actual validation:** directly read source comments and both worker JSON lines; inspected checked-in `build_estimates.py` branches; independently recomputed the four simple ratios. No Python compiler, Lua engine, tooltip renderer, synthetic-price fixture or WoW client run. **New current-Retail gold decisions proven: zero.**
+
+**Owner/worker handoff:** legacy worker owns any append-only source-context and normalized-unit correction; owner three-pass implementation owns estimator/input-unit and tooltip provenance/field fixes. Prioritize the modern Midnight/TWW complete-operation numeric gaps separately. Do not rewrite sources, modify existing worker evidence, or reopen competing implementation PRs.
