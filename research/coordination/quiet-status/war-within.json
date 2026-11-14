@@ -1,87 +1,107 @@
 {
   "role": "war-within",
   "agent": "war-within",
-  "updated_at": "2026-11-14T15:29:13.988Z",
-  "status": "active; recovered one original fish-milling quantity and a separately sourced identity, plus one low-confidence rank-3 DE percentage reference; no live controlled baseline",
+  "updated_at": "2026-11-14T16:33:08.873Z",
+  "status": "active; newly verified three TWW Enchanting weekly/catch-up output identities and conditional gates, plus rarity-specific source-only catch-up percentages; zero controlled ordinary disenchant or ore/herb yield cohorts",
   "task_ids": [
+    "T0048",
+    "T0040",
+    "T0009",
     "T0010",
     "T0011",
-    "T0012",
-    "T0040",
-    "T0048",
-    "T0009",
+    "T0007",
     "T0008",
-    "T0007"
+    "T0012"
   ],
   "exact_gaps_targeted": [
-    "T0010/T0011/T0012: Mycobloom ranks 210796, 210797, 210798 -> Nacreous Pigment output rank-specific casts/hits/refund/skill still absent",
-    "Standing TWW milling: previously unplaced Specular Rainbowfish 220141 -> Nacreous Pigment 222618 identity and one source-reported quantity of 3",
-    "T0048: rank-3 Storm Dust 219948 from uncommon disenchants lacks controlled completed casts, source game epoch, output stack histogram and input gear IDs",
-    "T0007/T0008/T0009/T0040: Bismuth 210931, Aqirite 210934 and Ironclaw 210937 post-2024-10-25 ore-rank castsWithDrop and full per-cast histograms remain absent"
+    "T0048: TWW gear disenchant secondary catch-up output IDs and gating by weekly state / gear rarity; primary output material histograms, item variant, gear armor/weapon splits and skill remain unmeasured",
+    "T0009/T0007/T0008/T0040: Bismuth 210930/210931, Ironclaw 210936/210937 and Aqirite 210933/210934 post-hotfix per-output controlled cast denominators/zero-inclusive histograms still unknown",
+    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 per-rank input and Nacreous Pigment 222618/222619/222620 per-cast measured output distributions still unknown"
   ],
   "newly_verified_fields": [
     {
-      "inputItemID": 220141,
-      "inputName": "Specular Rainbowfish",
-      "outputItemID": 222618,
-      "outputName": "Nacreous Pigment",
-      "sourceReportedTotalQuantity": 3,
-      "casts": null,
-      "castsWithDrop": null,
-      "sourceKind": "study",
-      "studyKey": "wowhead-golgoth-specular-rainbowfish-pigment",
-      "limitation": "fish mill consumes unspecified quantity; report is a quantity anecdote, not an operation-normalized study"
+      "outputItemID": 227662,
+      "outputName": "Shimmering Dust",
+      "method": "Disenchant",
+      "type": "condition",
+      "gate": "weekly quest + 5x227659 + 1x227661 + 225230 + 225231, with remaining catch-up allowance",
+      "rarityReferences": "uncommon ~10%, rare ~50%, epic 100% conditional statement",
+      "denominators": null
     },
     {
-      "inputItemID": 220141,
-      "outputItemID": 222618,
-      "method": "Mill",
-      "sourceKind": "recipe",
-      "limitation": "independent Wiki eligibility corroboration; no batch size or output quantity"
+      "outputItemID": 227659,
+      "outputName": "Fleeting Arcane Manifestation",
+      "method": "Disenchant",
+      "weeklyReportedCap": 5,
+      "sourceKind": "condition",
+      "measuredCasts": null
+    },
+    {
+      "outputItemID": 227661,
+      "outputName": "Gleaming Telluric Crystal",
+      "method": "Disenchant",
+      "weeklyReportedCap": 1,
+      "sourceKind": "condition",
+      "measuredCasts": null
+    },
+    {
+      "inputItemID": 222833,
+      "outputItemID": 227662,
+      "method": "Disenchant",
+      "sourceReportedPercentRange": "45-50% approximately",
+      "exactCasts": null,
+      "hits": null,
+      "zeroOutcomes": null,
+      "sourceKind": "reference"
     },
     {
       "inputItemID": null,
-      "outputItemID": 219948,
-      "outputRank": 3,
-      "sourceReportedPercent": 80,
-      "sourceKind": "reference",
-      "limitation": "undated, uncontrolled author estimate, no denominator; P(hit) and per-cast distribution unverified"
+      "outputItemID": 227662,
+      "gearRarity": "rare",
+      "sourceReportedPercentRange": "52-55% approximately",
+      "sourceReportedOperations": "about 400",
+      "exactCasts": null,
+      "hits": null,
+      "zeroOutcomes": null,
+      "sourceKind": "study"
     }
   ],
   "newly_verified_cohorts": 0,
   "numerical_fields_advanced": [
-    "fish->pigment source-reported 3-unit output",
-    "R3 Storm Dust 80% author-reported reference only, no denominator"
+    "source-only approximate Shimmering Dust per-rarity percent claims 10/50/100 (NOT measured baselines)",
+    "firsthand rough 52–55% rare and 45–50% exact 222833 cuff catch-up chance ranges (not measured exact percent fields)"
   ],
   "controlled_measured_cohorts_added": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-14T1528-fish-milling-and-r3-dust-source-gaps.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/2026-11-14T1633-enchanting-catchup-knowledge-gates.jsonl",
   "evidence_source_links": [
-    "https://www.wowhead.com/item=220141/specular-rainbowfish",
-    "https://warcraft.wiki.gg/wiki/Nacreous_Pigment",
-    "https://www.wowhead.com/item=219948/storm-dust"
+    "https://www.wow-professions.com/guides/the-war-within/weekly-profession-knowledge-points",
+    "https://www.wowhead.com/item=227662/shimmering-dust",
+    "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+    "https://www.wowdb.com/items/227661-gleaming-telluric-crystal",
+    "https://www.wowhead.com/item=225230/crystalline-repository",
+    "https://www.wowhead.com/item=225231/powdered-fulgurance"
   ],
-  "original_cohort_basis": "Golgoth single anecdotal fish-milling quantity, independent Warcraft Wiki identity corroboration, and Pwofese undated qualitative DE reference. No overlapping original cohorts with previously indexed TWW numeric studies found in repository name/ID searches.",
+  "original_cohort_basis": "Guide's few-hundred disenchants are unstratified and represented only as excluded reference percentages; CodisJ1286's ~400 blues and Hukilau's undated cuffs are independent firsthand qualitative reports, not complete denominator/hit cohorts. Exact Cuffs ID 222833 is previously independently verified. Existing FireEmblem01 350-rank1 Bismuth, August 29 gem hotfix, 7,652-cuff and Desolate Talus exchanges were identified as already indexed and deliberately not rerecorded.",
   "blockers": [
-    "No new independent 2025+ rank-specific posthotfix Bismuth/Ironclaw/Aqirite or Mycobloom per-cast telemetry with exact denominators, 0..N stack histograms, skill/spec and refunded inputs found.",
-    "Specular Rainbowfish author does not state fish per cast, operation count, pigment quality from actual event, profession conditions or patch; do not estimate EV or P(hit).",
-    "Pwofese's R3 Storm Dust percentage is subjective and undated; no input gear IDs, denominator, measured hits or game build; sourceKind reference prevents study-count inflation.",
-    "Historical Wowhead PTR DE Looter cohorts have unresolved live-client disenchant eligibility and source epoch conflicts."
+    "No independently verified new post-2024-10-25 per-rank ore and herb completed-operation logs with exact refund accounting or 0..N histograms.",
+    "Catch-up Shimmering Dust observations require weekly gate and trailing allowance; reported percentages are approximate with no controlled denominators, no skill/spec or build, no armor/weapon breakout.",
+    "Guide and Wowhead follow-up descriptions do not prove current Retail disenchant eligibility for exact item/bonus variants; not ordinary tradeable materials and not gold EV.",
+    "TWW historical gem-rate August 29 and late October hotfix records already exist; shared rate-change summary has conflicting chronology and can only be reconciled by Master. No shared file was edited."
   ],
   "exhausted_sources": [
-    "Already indexed reddit 1fdmzwy Mycobloom averages and 1g350pq Aqirite rank studies; no raw histograms on follow-up.",
-    "Already indexed Oct-2024 prospecting PeaEsk Algari spell comments and Sept 2024 Reikah/Ironclaw studies; no independent post-hotfix operation logs.",
-    "2025 TWW milling/prospecting Reddit and Blizzard forum keyword searches; no new completed per-output denominators.",
-    "Previously indexed 1g8kbaq resourcefulness 200-cast queue mechanics and existing Wowhead Looter material tables; duplicate sources skipped."
+    "Previously indexed FireEmblem01 350 R1 Bismuth/23 glass/55 pebbles/22 amber, Reikah, Raven11, Elfshinobi1, Aug 29 gem-rate hotfix, Oct 25/30 hotfix, Desolate Talus exchanges and Reddit 1fdmzwy were explicitly deduplicated.",
+    "2025 Reddit 1jnvht8 600 Ironclaw/117 prospects gives no per-output IDs or counts.",
+    "2024-2025 Mycobloom pigment, Ironclaw, Aqirite and Bismuth result searches on Reddit, Blizzard forums, Wowhead, guides yielded no fresh exact post-hotfix completed-cast/zero-inclusive output cohorts this run."
   ],
-  "next_concrete_step": "Obtain the original retail fish-milling event screenshot/log to identify exact pigment rank and consumed fish batch size, then prioritize post-Oct25 independently logged ore-rank 5-ore prospecting and Mycobloom 10-herb milling 0..N per-cast counts; ask source authors for skill/spec/refunds if direct exports become available.",
+  "next_concrete_step": "Locate dated, controlled posthotfix TWW casts from original addon exports: ore-rank item IDs with 5-ore operations, input refunds, each gemstone/byproduct output-rank IDs and 0..N histograms; and 10-herb Mycobloom mills with exact quality/skill. For DE weekly knowledge isolate 227662 from tradeable material EV and request exact item ID, date and eligible state if original 2025 commenter logs are available.",
   "verified_commit_sha": null,
-  "commit_sha_note": "This status and evidence are committed atomically; a commit cannot include its own SHA. Verified SHA is established by post-push branch and file read-back.",
+  "commit_sha_note": "This status and evidence are committed atomically; a commit cannot contain its own SHA. After push, independent branch/file read-back verifies commit externally.",
   "source_branch": "implementation/five-agent-completion",
-  "base_head_sha": "6da6104fc40c43338ea0cd40e955e4941d44f4ab",
+  "base_head_sha": "3da5931ce9403ef4b9f85ab4d8d7f8af9004dd93",
   "prohibited_actions_not_taken": [
     "no merge",
     "no release",
-    "no changes to other workers, shared dashboard or prior evidence files",
-    "no invented quantities, hit probabilities, or gold EV"
+    "no changes to other workers, shared dashboard, shared rate list or prior evidence files",
+    "no inferred observed probabilities/casts/zeros/confidence/gold EV"
   ]
 }
