@@ -113,6 +113,8 @@ reject(function(p)p.records[1].allocation.extra=true end,'unsupported side alloc
 reject(function(p)p.studies[p.records[1].studyID].truncated=true end,'truncated study')
 reject(function(p)p.studies[p.records[1].studyID].globalCoverageGap='uncertain'end,'global gap')
 reject(function(p)local s=p.studies[p.records[1].studyID];s.censored=true;s.coverageGaps['Craft:1280394']={reason='unmatched'}end,'same recipe gap')
+reject(function(p)p.studies[p.records[1].studyID].coverageGaps['Craft:1280394']={reason='unmatched'}end,'same recipe gap without censored flag')
+reject(function(p)local s=p.studies[p.records[1].studyID];s.censored=false;s.coverageGaps['Craft:1280394']={reason='unmatched'}end,'same recipe gap with false censored flag')
 reject(function(p)for _,r in ipairs(p.records)do r.recipeID=987654 end end,'arbitrary Craft remains unsupported')
 reject(function(p)for _,r in ipairs(p.records)do r.method='Recycle'end end,'crossed method/recipe')
 -- An unrelated scoped failure cannot censor good Shatter receipts.
@@ -134,6 +136,65 @@ check(import(independent),'independent matching cohort admitted separately')
 f,option,ctx=setup(shatter);model=assert(LL:ComputeEvidenceModel(f,option,nil,1,ctx))
 near(model.materials[1].expectedQuantity,4.5,'both independent same-profile studies contribute')
 local imported=LL:ImportedEvidenceRecords('Craft:243602');eq(#imported,2);eq(imported[1].referenceContextID,imported[2].referenceContextID)
+-- Later coverage changes are scoped to the original study and recipe, across
+-- all its profiles. The hold survives a reload and stale complete re-exports.
+local function laterRecords(source,suffix,offset)
+ local result=copy(source)
+ for _,cast in ipairs(result.records)do
+  cast.operationID=cast.operationID..suffix;cast.bagReconciliation.id=cast.bagReconciliation.id..suffix
+  for _,receipt in ipairs(cast.resultMetadata)do receipt.operationID=receipt.operationID+offset end
+ end
+ return result
+end
+local function studyOf(source)return source.studies[source.records[1].studyID]end
+local alternate=laterRecords(shatter,'-alternate-profile',10000)
+local sourceContext=alternate.records[1].contextID
+alternate.contexts[sourceContext..'-alternate']=alternate.contexts[sourceContext]
+alternate.contexts[sourceContext]=nil
+local profile=alternate.contexts[sourceContext..'-alternate']
+profile.effectiveSkill=profile.effectiveSkill+1
+for _,cast in ipairs(alternate.records)do cast.contextID=sourceContext..'-alternate' end
+check(import(alternate),'same study has a second saved profile')
+local sameStudyRecycling=laterRecords(recycling,'-shared-study',20000)
+local recyclingStudy=sameStudyRecycling.records[1].studyID
+sameStudyRecycling.studies[originalStudy]=sameStudyRecycling.studies[recyclingStudy]
+sameStudyRecycling.studies[recyclingStudy]=nil
+for _,cast in ipairs(sameStudyRecycling.records)do cast.studyID=originalStudy end
+check(import(sameStudyRecycling),'different salvage recipe in same study')
+near(assert(LL:ResolveEvidenceModel(f,option,nil,1)).materials[1].expectedQuantity,4.5,'combined model cached before later gap')
+local lateGap=copy(shatter)
+studyOf(lateGap).coverageGaps['Craft:1280394']={reason='Inputs have not settled'}
+local malformed=copy(lateGap);studyOf(malformed).coverageGaps['Craft:1280394']={}
+eq(import(malformed),false,'malformed gap does not revoke saved results')
+local wrongCohort=copy(lateGap)
+wrongCohort.contexts[sourceContext].effectiveSkill=profile.effectiveSkill
+eq(import(wrongCohort),false,'unverified context does not revoke saved results')
+local unresolved=copy(lateGap)
+for _,cast in ipairs(unresolved.records)do cast.bagReconciliation.operations=2 end
+eq(import(unresolved),false,'unreconciled rows cannot revoke saved results')
+near(assert(LL:ResolveEvidenceModel(f,option,nil,1)).materials[1].expectedQuantity,4.5,'failed proof leaves warmed cache intact')
+local savedCasts=LL:ImportedResultsCount()
+ok,msg,count=import(lateGap);check(ok,msg);eq(count.accepted,0);eq(count.updatedSalvageHolds,1);eq(count.incomplete,4)
+eq(LL:ImportedResultsCount(),savedCasts,'held casts remain in saved results')
+near(assert(LL:ResolveEvidenceModel(f,option,nil,1)).materials[1].expectedQuantity,6,'late gap invalidates cached combined valuation')
+f,option,ctx=setup(alternate);eq(LL:ResolveEvidenceModel(f,option,nil,1),nil,'other profile of the same study and recipe held')
+f,option,ctx=setup(sameStudyRecycling);check(LL:ResolveEvidenceModel(f,option,nil,1),'other salvage recipe remains eligible')
+LL.db.importedResults=copy(LL.db.importedResults);LL._importedIndex=nil
+f,option,ctx=setup(shatter)
+imported=assert(LL:ImportedEvidenceRecords('Craft:243602'));eq(#imported,1,'saved hold re-applied after reload')
+eq(imported[1].studyID,originalStudy..'-independent','independent profile study remains eligible')
+local stale=laterRecords(shatter,'-stale',30000)
+ok,msg,count=import(stale);eq(ok,false);eq(count.incomplete,4,'stale complete export cannot add to a held cohort')
+
+-- A verified later export can report truncation after every original receipt
+-- has been evicted. It still identifies the retained exact source cohort.
+local truncated=laterRecords(shatter,'-new-after-eviction',40000)
+studyOf(truncated).truncated=true
+truncated.records[1].bagReconciliation.operations=2
+ok,msg,count=import(truncated);check(ok,msg);eq(count.accepted,0);eq(count.updatedSalvageHolds,1)
+f,option,ctx=setup(sameStudyRecycling);eq(LL:ResolveEvidenceModel(f,option,nil,1),nil,'verified truncation holds other salvage recipes in the study')
+f,option,ctx=setup(shatter)
+near(assert(LL:ResolveEvidenceModel(f,option,nil,1)).materials[1].expectedQuantity,6,'truncation does not cross study identity')
 -- Multiple genuine output packets may sum to one item; identical duplicate
 -- packets are ambiguous and must not become additional measured output.
 LL:ClearImportedResults();page=copy(shatter)

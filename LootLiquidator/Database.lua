@@ -650,6 +650,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     include(f.id) -- preserved source studies and documented item exceptions
     if option.name=='Disenchant' then include(gearKey(f)) end
     local eligible,transformed,hasExpected,staleRecord={},{},{},{}
+    local hasEligibleSalvage=false
     for _,r in ipairs(records) do
         -- Input rarity can change on the same gear item ID (for example an
         -- upgraded Courtly Wrists). Mechanics must never normalize away that
@@ -669,7 +670,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             and (not r.inputQualityRank or r.inputQualityRank==ctx.inputQuality)
             and (not r.expansionID or r.expansionID==f.expansionID) then
             local ok,stale=contextEligible(r,ctx,build,model,self.ItemDB.mechanicRules)
-            if ok then eligible[#eligible+1]=r;staleRecord[r]=stale or nil end
+            if ok then
+                eligible[#eligible+1]=r;staleRecord[r]=stale or nil
+                hasEligibleSalvage=hasEligibleSalvage or r.salvage==true
+            end
         end
         end
     end
@@ -780,6 +784,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         result.adjustment='measured character context / unadjusted'
     end
     local bins,studySeen,outputReasons={},{},{}
+    local consumptionSum,consumptionWeight,consumptionIncomplete=0,0,false
+    local contributingSalvage=false
     for _,r in ipairs(eligible) do
         for _,m in ipairs(r.materials) do outputReasons[m.id]=outputReasons[m.id] or unavailableReason(r,m) end
     end
@@ -791,26 +797,27 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             and r.patchBuild==anchor.patchBuild and same(r.referenceConditions,anchor.referenceConditions)
     end
     for _,r in ipairs(eligible) do
+        local compatible=sameContext(r)
         if anchor.isDisenchantCategory and r.sourceKey==anchor.sourceKey and r.inputItemID
             and not itemCategoryException(r) then
             result.excludedSources[#result.excludedSources+1]=r.sourceKey..': source study represented by disenchant category'
-        elseif not sameContext(r) and not r.fixedReference then
+        elseif not compatible and not r.fixedReference then
             result.excludedSources[#result.excludedSources+1]=r.sourceKey..': reference context cannot be normalized'
         else
             -- Build a model, then apply the preserved PR #4 adapter exactly once.
             local model=transformed[r] or sourceModel(self,f,option,r)
             if r==anchor and model.adjustment then result.adjustment=model.adjustment end
             if model.referenceApplicability=='unverified-reference' then result.unverifiedReference=true end
-            if r==anchor and model.expectedInputCount~=nil then
-                result.expectedInputCount=model.expectedInputCount*batch/r.inputCount
+            if r==anchor then
+                if model.expectedInputCount~=nil and not r.salvage then
+                    result.expectedInputCount=model.expectedInputCount*batch/r.inputCount
+                end
+                if model.mechanicsApplied then result.duration=model.duration end
             end
             if model.mechanicsApplied then
                 result.adjustment=model.adjustment or 'character-adjusted';result.mechanicsApplied=true
-                if r==anchor then
-                    result.expectedInputCount=model.expectedInputCount and model.expectedInputCount*batch/r.inputCount
-                    result.duration=model.duration
-                end
             end
+            local acceptedMeanWeight=0
             for i,m in ipairs(model.materials) do
                 local original=r.materials[i]
                 local id=m.id
@@ -881,6 +888,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                         acc.minimum=math.min(acc.minimum or v,v);acc.maximum=math.max(acc.maximum or v,v)
                         acc.sum=acc.sum+v*weight;acc.weight=acc.weight+weight
                         if field=='expectedQuantity' then
+                            if hasEligibleSalvage then acceptedMeanWeight=math.max(acceptedMeanWeight,weight) end
                             if model.operationUnverified then result.operationUnverified=true end
                             if m.derivedExpected then
                                 b.derivedMean=true;b.filled='average';b.meanBasis=m.derivedExpected.assumption
@@ -927,7 +935,23 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 end
                 end -- reference family already covered
             end
+            -- Use the strongest accepted mean weight once per cohort. Refunds
+            -- are per cast, so additional cooutputs do not add refund evidence.
+            if acceptedMeanWeight>0 then
+                contributingSalvage=contributingSalvage or r.salvage==true
+                local consumed=model.expectedInputCount
+                if compatible and finite(consumed) and consumed<=r.inputCount then
+                    consumptionSum=consumptionSum+(consumed/r.inputCount)*acceptedMeanWeight
+                    consumptionWeight=consumptionWeight+acceptedMeanWeight
+                else
+                    consumptionIncomplete=true
+                end
+            end
         end
+    end
+    if contributingSalvage then
+        -- Price output only when any contributor has unknown net consumption.
+        result.expectedInputCount=not consumptionIncomplete and batch*(consumptionSum/consumptionWeight) or nil
     end
     local totalContribution,confidenceTotal=0,0
     for _,b in pairs(bins) do
