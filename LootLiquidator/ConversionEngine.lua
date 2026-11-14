@@ -575,7 +575,10 @@ function LL:ConversionOptions(f)
         -- Price stochastic processing only from the resolved ItemDB/personal
         -- evidence model. EV already includes zero-result operations and chance.
         local yieldModel,modelIssue
-        if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or c.method=="Recycle" or (research and dataMode~=3) then
+        local salvage=c.salvage and self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(processingRecipe)
+        local verifiedSalvage=salvage and salvage.method==c.method and salvage.inputCount==inputCount
+        if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or c.method=="Recycle"
+            or verifiedSalvage or (research and dataMode~=3) then
             local displayOption={name=c.method,inputCount=inputCount,
                 recipeID=processingRecipe,character=character}
             local current=self.CharacterKey and self:CharacterKey()

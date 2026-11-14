@@ -633,7 +633,7 @@ function LL:BorrowFromSibling(f,option,mode,ctx)
     end
     return nil,pending
 end
-function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
+function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRecords)
     local build=GetBuildInfo and select(2,GetBuildInfo())
     local records,seenRecords={},{}
     local function include(input)
@@ -641,7 +641,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow)
         for _,record in ipairs(self._evidenceIndex and self._evidenceIndex[option.name..':'..tostring(input)] or {}) do
             if not seenRecords[record] then records[#records+1]=record;seenRecords[record]=true end
         end
-        for _,record in ipairs(self.ImportedEvidenceRecords and self:ImportedEvidenceRecords(option.name..':'..tostring(input)) or {}) do
+        local imports=input==f.id and importedRecords
+            or (self.ImportedEvidenceRecords and self:ImportedEvidenceRecords(option.name..':'..tostring(input),f,option,ctx))
+        for _,record in ipairs(imports or {}) do
             if not seenRecords[record] then records[#records+1]=record;seenRecords[record]=true end
         end
     end
@@ -1029,6 +1031,8 @@ local function fingerprint(value)
 end
 function LL:ResolveEvidenceModel(f,option,personal,mode)
     local ctx=self.ProcessingPlayerConditions and self:ProcessingPlayerConditions(f,option.name,option.recipeID,option.character) or {}
+    local importedContext,importedRecords
+    if self.ImportedSalvageContextKey then importedContext,importedRecords=self:ImportedSalvageContextKey(f,option,ctx) end
     local build=GetBuildInfo and select(2,GetBuildInfo())
     local key=table.concat({tostring(f.id),tostring(f.quality),tostring(f.classID),tostring(f.expansionID),
         tostring(option.name),tostring(option.inputCount),tostring(option.recipeID),tostring(option.character),
@@ -1040,13 +1044,14 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
         tostring(userWeight(self,'legacy',mode)),tostring(userWeight(self,'imported',mode)),
         tostring(userWeight(self,'reference',mode)),tostring(self._importedRevision),
         tostring(self.ItemDB and self.ItemDB.modelRevision),fingerprint(personal and personal.materials),
-        tostring(self.ItemDB and self.ItemDB.specializationRevision),fingerprint(personal and personal.projectionRules)},'|')
+        tostring(self.ItemDB and self.ItemDB.specializationRevision),fingerprint(personal and personal.projectionRules),
+        tostring(importedContext)},'|')
     self._processingModelCache=self._processingModelCache or {count=0}
     self._processingModelCache.count=self._processingModelCache.count or 0
     local cached=self._processingModelCache[key]
     if cached then return cached.model,cached.reason end
     if self._processingModelCache.count>=512 then self._processingModelCache={count=0} end
-    local model,reason,retry=self:ComputeEvidenceModel(f,option,personal,mode,ctx)
+    local model,reason,retry=self:ComputeEvidenceModel(f,option,personal,mode,ctx,nil,importedRecords)
     if model and self.ApplySkillQualityModel then model=self:ApplySkillQualityModel(f,option,model,ctx) end
     if model and self.ApplySpecializationEffects then model=self:ApplySpecializationEffects(f,option,model,ctx) end
     if model and self.ApplySyntheticBenchmark then model=self:ApplySyntheticBenchmark(f,option,model,ctx) end

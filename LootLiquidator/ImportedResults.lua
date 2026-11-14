@@ -27,6 +27,39 @@ end
 local JSON_NULL,JSON_OBJECT,JSON_ARRAY={},{},{}
 local function object(v) return type(v)=="table" and getmetatable(v)==JSON_OBJECT end
 local function array(v) return type(v)=="table" and getmetatable(v)==JSON_ARRAY end
+local function plain(v)
+    if v==JSON_NULL then return nil end
+    if type(v)~='table' then return v end
+    local result={} for k,x in pairs(v) do result[k]=plain(x) end return result
+end
+local function signature(v)
+    if type(v)~='table' then return type(v)..':'..tostring(v) end
+    local keys={} for k in pairs(v) do keys[#keys+1]=k end
+    table.sort(keys,function(a,b)return tostring(a)<tostring(b) end)
+    local result={}
+    for _,k in ipairs(keys) do
+        local key,value=signature(k),signature(v[k])
+        result[#result+1]=#key..':'..key..#value..':'..value
+    end
+    return '{'..table.concat(result)..'}'
+end
+local function measuredProfile(context)
+    local result=plain(context)
+    result.character=nil;result.observed=nil;result.previousSnapshot=nil
+    result.inputExpansionID=nil;result.inputIdentity=nil
+    return result
+end
+local function boundedContext(context)
+    local nodes,characters=0,0
+    local function visit(v)
+        nodes=nodes+1
+        if type(v)=='string' then characters=characters+#v end
+        if nodes>4096 or characters>65536 then return false end
+        if type(v)=='table' then for k,x in pairs(v) do if not visit(k) or not visit(x) then return false end end end
+        return true
+    end
+    return visit(context) and plain(context) or nil
+end
 local function decode(text)
     local pos,len=1,#text
     local function fail(msg) error(msg.." (character "..pos..")",0) end
@@ -145,10 +178,15 @@ end
 LL.DecodeImportJSON=decodeTransfer
 
 -- Returns a clean cast {method,input,batch,build,outputs={[id]=qty}} or nil, why.
-local function checkRecord(r)
+local function salvageDefinition(self,r)
+    local definition=self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(r.recipeID)
+    if definition and definition.method==r.method then return definition end
+end
+local function checkRecord(self,r)
     if not object(r) then return nil,"damaged" end
     if r.outputCoverage~="complete" then return nil,"incomplete" end
-    if not SUPPORTED[r.method] then return nil,"unsupported" end
+    local salvage=salvageDefinition(self,r)
+    if not SUPPORTED[r.method] and not salvage then return nil,"unsupported" end
     if r.successful~=true or type(r.operationID)~="string" or r.operationID=="" or #r.operationID>160 then return nil,"damaged" end
     local inputs=r.nominalInputs
     if inputs==nil then inputs=r.inputs end
@@ -182,9 +220,166 @@ local function checkRecord(r)
     local b=r.build
     if type(b)=="number" then b=tostring(b) end
     if type(b)~="string" or not (b:match("^%d+$") or b=="unknown") then return nil,"damaged" end
-    return {id=r.operationID,method=r.method,input=input,batch=batch,build=b,outputs=outputs,
+    return {id=r.operationID,method=r.method,input=input,batch=batch,build=b,outputs=outputs,salvage=salvage and true or nil,
         expansionID=expansion,inputRarity=rarity,inputClassID=classID,
         gearKey=r.method=="Disenchant" and disenchantCategory(expansion,rarity,classID) or nil}
+end
+
+-- Additional methods use the recorder's exact, verified salvage contract. A
+-- positive result alone is insufficient: all native receipts and the complete
+-- shared inventory reconciliation must survive import before any counts enter
+-- a cohort. Legacy four-method imports retain their existing contract.
+local function salvageCasts(self,data)
+    local result,batches,nativeIDs,castIDs,cohorts,contexts={},{},{},{},{},{}
+    local function vector(items,zero)
+        if not array(items) then return nil end
+        local values={}
+        for _,item in ipairs(items) do
+            if not object(item) or not integer(item.itemID) or not integer(item.quantity,zero and 0 or 1)
+                or values[item.itemID]~=nil then return nil end
+            values[item.itemID]=item.quantity
+        end
+        return values
+    end
+    local function validate(r,cast)
+        local def=salvageDefinition(self,r)
+        local context=object(data.contexts) and data.contexts[r.contextID]
+        local study=object(data.studies) and data.studies[r.studyID]
+        if data.artifactStatus~='RESEARCH_ONLY_NOT_SHIPPED' or data.registryContract~='profession-mechanics/0.2'
+            or data.automaticMechanicsPromotion~=false or r.schemaVersion~=SCHEMA or r.gameMode~='RETAIL'
+            or type(r.character)~='string' or r.character=='' or #r.character>160
+            or not object(context) or not object(study) or context.character~=r.character or study.character~=r.character
+            or study.build~=r.build or context.recipeID~=r.recipeID or context.method~=r.method
+            or context.profileKind~='measured' or context.simulated~=false or context.profession~=def.profession
+            or context.inputExpansionID~=def.expansionID or not integer(context.skillLineID)
+            or not integer(context.baseSkill,0) or not integer(context.bonusSkill,0) or not integer(context.effectiveSkill,0)
+            or type(context.specialization)~='string' or context.specialization==''
+            or not array(context.operationStats) or not object(context.equipment)
+            or not object(context.fieldStatus) or context.fieldStatus.equipment~='measured'
+            or type(r.applyConcentration)~='boolean' or context.applyConcentration~=r.applyConcentration
+            or not object(r.allocation) or next(r.allocation) then return 'damaged' end
+        local measured=contexts[context]
+        if measured==nil then
+            local value=boundedContext(context)
+            measured=value and {value=value,profile=signature(measuredProfile(value)),identity=signature(value),keys={}} or false
+            contexts[context]=measured
+        end
+        if not measured then return 'damaged' end
+        local provenance=r.provenance
+        if not object(provenance) or provenance.sampleKind~='RAW_CAST_LOG'
+            or provenance.numericTransformValidated~=false or provenance.applyPolicy~='NO_NUMERIC_TRANSFORM'
+            or provenance.independentReview~='PENDING' then return 'damaged' end
+        if study.truncated or study.globalCoverageGap then return 'incomplete' end
+        if study.censored and (study.coverageVersion~=2 or not object(study.coverageGaps)
+            or not next(study.coverageGaps) or study.coverageGaps[r.method..':'..r.recipeID]) then return 'incomplete' end
+        local nominal,net=vector(r.nominalInputs),vector(r.inputs,true)
+        local input=r.nominalInputs and r.nominalInputs[1]
+        if not nominal or not net or #r.nominalInputs~=1 or #r.inputs~=1
+            or cast.batch~=def.inputCount or net[cast.input]==nil or net[cast.input]>cast.batch
+            or input.expansionID~=def.expansionID or not integer(input.qualityRank,1,5)
+            or not array(context.inputIdentity) or #context.inputIdentity~=1 or not object(context.inputIdentity[1])
+            or context.inputIdentity[1].itemID~=cast.input or context.inputIdentity[1].quantity~=cast.batch
+            or context.inputIdentity[1].qualityRank~=input.qualityRank then return 'damaged' end
+        local target=r.salvageTarget
+        if r.attribution~='cast-result-batch-bag' or r.captureVersion~=3 or not object(target)
+            or target.itemID~=cast.input or target.quantity~=cast.batch or type(target.itemGUID)~='string'
+            or target.itemGUID=='' or target.itemGUID~=r.allocationItemGUID
+            or target.eligibilitySource~='C_TradeSkillUI.GetSalvagableItemIDs'
+            or not array(r.resultMetadata) or #r.resultMetadata==0 or #r.resultMetadata>MAX_OUTPUTS then return 'damaged' end
+        local typed,operation,refunds,returnSignature={}
+        local receiptSeen={}
+        local quality={}
+        for _,receipt in ipairs(r.resultMetadata) do
+            if not object(receipt) or not integer(receipt.operationID,1,9007199254740991) or not integer(receipt.itemID)
+                or not integer(receipt.quantity,1,MAX_PER_MATERIAL) or receipt.itemID==cast.input
+                or type(receipt.itemGUID)~='string' or receipt.itemGUID==''
+                or (operation and operation~=receipt.operationID) then return 'damaged' end
+            local receiptKey=signature(receipt)
+            if receiptSeen[receiptKey] then return 'damaged' end
+            receiptSeen[receiptKey]=true
+            operation=receipt.operationID;typed[receipt.itemID]=(typed[receipt.itemID] or 0)+receipt.quantity
+            if receipt.resourcesReturned~=nil then
+                if not array(receipt.resourcesReturned) then return 'damaged' end
+                local sig=signature(receipt.resourcesReturned)
+                if returnSignature and returnSignature~=sig then return 'damaged' end
+                if not returnSignature then
+                    returnSignature=sig;refunds=0
+                    for _,returned in ipairs(receipt.resourcesReturned) do
+                        if not object(returned) or not object(returned.reagent) or returned.reagent.itemID~=cast.input
+                            or not integer(returned.quantity,1,cast.batch) then return 'damaged' end
+                        refunds=refunds+returned.quantity
+                    end
+                end
+            end
+        end
+        if signature(typed)~=signature(cast.outputs) or net[cast.input]~=cast.batch-(refunds or 0) then return 'damaged' end
+        for _,material in ipairs(r.outputs) do
+            if not integer(material.qualityRank,1,5) then return 'damaged' end
+            quality[material.itemID]=material.qualityRank
+        end
+        local evidence=r.bagReconciliation
+        if not object(evidence) or type(evidence.id)~='string' or evidence.id==''
+            or not integer(evidence.operations,1,MAX_RECORDS) or not vector(evidence.inputs) or not vector(evidence.outputs) then return 'damaged' end
+        cast.recipeID=r.recipeID;cast.studyID=r.studyID;cast.contextID=r.contextID
+        cast.observationContext=measured.value;cast.profileKey=measured.profile
+        cast.inputQualityRank=input.qualityRank;cast.outputQualities=quality
+        cast.expansionID=def.expansionID;cast.consumed=net[cast.input]
+        cast.allocation=plain(r.allocation);cast.applyConcentration=r.applyConcentration
+        cast.sourceCharacter=r.character;cast.nativeID=table.concat({r.character,cast.build,r.recipeID,operation},':')
+        cast.cohortKey=table.concat({r.studyID,r.contextID,r.recipeID},':')
+        cast.batchKey=table.concat({r.studyID,r.method,r.recipeID,evidence.id},':')
+        cast.reconciliation=evidence
+        local cohort=signature({r.character,cast.build,r.studyID,r.contextID,r.recipeID,cast.input,input.qualityRank,r.applyConcentration})
+        measured.keys[cohort]=measured.keys[cohort] or ('salvage:'..signature({cohort,measured.identity}))
+        cast.storageKey=measured.keys[cohort]
+        return nil
+    end
+    for i,r in ipairs(data.records) do
+        if object(r) and salvageDefinition(self,r) then
+            local cast,reason=checkRecord(self,r)
+            if cast then reason=validate(r,cast) end
+            result[i]={cast=cast,reason=reason}
+            local cohort=type(r.studyID)=='string' and type(r.contextID)=='string'
+                and table.concat({r.studyID,r.contextID,r.recipeID},':')
+            if cohort then
+                cohorts[cohort]=cohorts[cohort] or {members={}}
+                local group=cohorts[cohort];group.members[#group.members+1]=i
+                group.invalid=group.invalid or reason
+            end
+            if cast and not reason then
+                if castIDs[cast.id] then
+                    result[i].reason='damaged';result[castIDs[cast.id]].reason='damaged'
+                end
+                castIDs[cast.id]=i
+                local batch=batches[cast.batchKey] or {members={},inputs={},outputs={},ids={},evidence=cast.reconciliation}
+                batches[cast.batchKey]=batch;batch.members[#batch.members+1]=i;batch.ids[cast.id]=true
+                if signature(batch.evidence)~=signature(cast.reconciliation) or nativeIDs[cast.nativeID] then batch.invalid=true end
+                if nativeIDs[cast.nativeID] then result[nativeIDs[cast.nativeID]].reason='damaged' end
+                nativeIDs[cast.nativeID]=i
+                batch.inputs[cast.input]=(batch.inputs[cast.input] or 0)+cast.consumed
+                for id,n in pairs(cast.outputs) do batch.outputs[id]=(batch.outputs[id] or 0)+n end
+            end
+        end
+    end
+    local missingBatch=false
+    for _,batch in pairs(batches) do
+        for id,n in pairs(batch.inputs) do if n==0 then batch.inputs[id]=nil end end
+        if #batch.members<batch.evidence.operations or not batch.ids[batch.evidence.id] then
+            missingBatch=true
+            for _,i in ipairs(batch.members) do result[i].reason='incomplete' end
+        elseif batch.invalid or #batch.members~=batch.evidence.operations
+            or signature(batch.inputs)~=signature(vector(batch.evidence.inputs))
+            or signature(batch.outputs)~=signature(vector(batch.evidence.outputs)) then
+            for _,i in ipairs(batch.members) do result[i].reason='damaged' end
+        end
+    end
+    -- An invalid member cannot leave a positive-only remainder of its cohort.
+    for _,cohort in pairs(cohorts) do
+        local invalid=cohort.invalid
+        for _,i in ipairs(cohort.members) do invalid=invalid or result[i].reason end
+        if invalid then for _,i in ipairs(cohort.members) do result[i].reason=invalid end end
+    end
+    return result,missingBatch
 end
 
 local function store(self)
@@ -208,21 +403,43 @@ function LL:ImportRecordedResults(text,label)
         return false,"That text is not a Loot Liquidator results export. Nothing was imported."
     end
     if #data.records>MAX_RECORDS then return false,"That export has too many results for one page. Nothing was imported." end
-    local own={}
-    for _,r in ipairs(self.db.craftResearch and self.db.craftResearch.records or {}) do own[r.operationID]=true end
+    local own,ownNative={},{}
+    for _,r in ipairs(self.db.craftResearch and self.db.craftResearch.records or {}) do
+        own[r.operationID]=true
+        if salvageDefinition(self,r) then
+            for _,receipt in ipairs(r.resultMetadata or {}) do
+                if integer(receipt.operationID,1,9007199254740991) then
+                    ownNative[table.concat({r.character,r.build,r.recipeID,receipt.operationID},':')]=true
+                end
+            end
+        end
+    end
     local d=store(self)
+    local salvage,missingBatch=salvageCasts(self,data)
+    if missingBatch then
+        return false,'This export omits members of a shared salvage batch. Use the complete Export recorded results document (or its compact export), rather than one split page. Nothing was imported.'
+    end
     local counts={accepted=0,damaged=0,incomplete=0,unsupported=0,duplicate=0,own=0}
     local clean,inPaste={},{}
-    for _,r in ipairs(data.records) do
-        local cast,reason=checkRecord(r)
-        if cast and (d.seen[cast.id] or inPaste[cast.id]) then cast,reason=nil,"duplicate"
-        elseif cast and own[cast.id] then cast,reason=nil,"own" end
+    for i,r in ipairs(data.records) do
+        local entry=salvage[i]
+        local cast,reason
+        if entry then cast,reason=entry.cast,entry.reason else cast,reason=checkRecord(self,r) end
+        if reason then cast=nil end
+        if cast and (d.seen[cast.id] or inPaste[cast.id]
+            or (cast.nativeID and d.nativeSeen and d.nativeSeen[cast.nativeID])) then cast,reason=nil,"duplicate"
+        elseif cast and (own[cast.id] or (cast.nativeID and ownNative[cast.nativeID])) then cast,reason=nil,"own" end
         if cast then clean[#clean+1]=cast;inPaste[cast.id]=true else counts[reason]=counts[reason]+1 end
     end
     -- A paste with many impossible values is treated as damaged or fake as a whole.
     local total=#data.records
     if counts.damaged>0 and counts.damaged>=math.max(2,total*.2) then
         return false,("%d of %d results had impossible values, so this text looks damaged or edited. Nothing was imported."):format(counts.damaged,total),counts
+    end
+    if d.seenCount+#clean>MAX_SEEN then
+        for _,cast in ipairs(clean) do if cast.salvage then
+            return false,'Import history is full. Remove imported results before adding more verified salvage results.',counts
+        end end
     end
     for _,cast in ipairs(clean) do
         local inputKey=cast.gearKey or tostring(cast.input)
@@ -233,19 +450,34 @@ function LL:ImportRecordedResults(text,label)
             inputKey=inputKey..":"..tostring(cast.expansionID)..":"..tostring(cast.inputRarity)..":"..tostring(cast.inputClassID)
         end
         local key=cast.method..":"..inputKey..":"..cast.batch..":"..cast.build
+        if cast.salvage then key=cast.storageKey end
         local set=d.sets[key]
         if not set then
             set={method=cast.method,inputItemID=not cast.gearKey and cast.input or nil,gearKey=cast.gearKey,
                 expansionID=cast.expansionID,inputRarity=cast.inputRarity,inputClassID=cast.inputClassID,
                 inputCount=cast.batch,build=cast.build,casts=0,materials={},memberInputItemIDs={}}
+            if cast.salvage then
+                set.salvage=true;set.recipeID=cast.recipeID;set.studyID=cast.studyID
+                set.referenceContextID='imported-salvage:'..signature({cast.recipeID,cast.input,
+                    cast.inputQualityRank,cast.build,cast.profileKey})
+                set.observationContext=cast.observationContext;set.inputQualityRank=cast.inputQualityRank
+                set.allocation=cast.allocation;set.applyConcentration=cast.applyConcentration
+                set.consumed=0;set.sourceRecordIDs={}
+            end
             d.sets[key]=set
         end
         set.memberInputItemIDs=set.memberInputItemIDs or {}
         set.memberInputItemIDs[cast.input]=true
         set.casts=set.casts+1
+        if cast.salvage then
+            set.consumed=set.consumed+cast.consumed
+            set.sourceRecordIDs[#set.sourceRecordIDs+1]=cast.id
+            d.nativeSeen=d.nativeSeen or {};d.nativeSeen[cast.nativeID]=true
+        end
         for id,qty in pairs(cast.outputs) do
             local m=set.materials[id] or {drops=0,total=0};set.materials[id]=m
             m.drops=m.drops+1;m.total=m.total+qty
+            if cast.salvage then m.quality=cast.outputQualities[id] end
             m.min=math.min(m.min or qty,qty);m.max=math.max(m.max or qty,qty)
         end
         if d.seenCount<MAX_SEEN then d.seen[cast.id]=true;d.seenCount=d.seenCount+1 end
@@ -263,6 +495,23 @@ function LL:ImportRecordedResults(text,label)
     local skipped=total-counts.accepted
     return true,("Imported %d results.%s They count as a separate source (Imported results) with their own confidence."):format(
         counts.accepted,skipped>0 and (" Skipped %d (incomplete, unsupported, damaged or already imported)."):format(skipped) or ""),counts
+end
+
+-- Matching native measurements can change without changing the cached generic
+-- profession context. Recheck this small eligibility fingerprint before using
+-- a cached economic model, including cached missing-data answers.
+function LL:ImportedSalvageContextKey(f,option,ctx)
+    local key=option.name..':'..tostring(f.id)
+    local records=self:ImportedEvidenceRecords(key)
+    local present=false
+    for _,record in ipairs(records or {}) do if record.salvage then present=true;break end end
+    if not present then return nil end
+    local included={}
+    local eligible=self:ImportedEvidenceRecords(key,f,option,ctx) or {}
+    for _,record in ipairs(eligible) do included[record]=true end
+    local matches={}
+    for i,record in ipairs(records) do if record.salvage and included[record] then matches[#matches+1]=i end end
+    return table.concat(matches,','),eligible
 end
 
 function LL:ImportedResultsCount()
@@ -294,7 +543,7 @@ LL.ImportChanceConfidence=chanceConfidence
 
 -- Evidence records in the same shape as ItemDB/legacy records. Fixed reference:
 -- the other player's skill is unknown, so these are never character-adjusted.
-function LL:ImportedEvidenceRecords(indexKey)
+function LL:ImportedEvidenceRecords(indexKey,f,option,ctx)
     local d=self.db and self.db.importedResults
     if type(d)~="table" or type(d.sets)~="table" then return nil end
     local current=build()
@@ -303,7 +552,8 @@ function LL:ImportedEvidenceRecords(indexKey)
         for key,set in pairs(d.sets) do
             local category=set.method=="Disenchant" and disenchantCategory(set.expansionID,set.inputRarity,set.inputClassID)
             category=category and category==set.gearKey and category or nil
-            if SUPPORTED[set.method] and integer(set.casts) and (category or integer(set.inputItemID)) and integer(set.inputCount) then
+            local salvage=set.salvage and salvageDefinition(self,{method=set.method,recipeID=set.recipeID})
+            if (SUPPORTED[set.method] or salvage) and integer(set.casts) and (category or integer(set.inputItemID)) and integer(set.inputCount) then
                 local r={recordID="imported:"..key,studyID="imported:"..key,sourceKey="imported",source="Imported results",
                     method=set.method,inputItemID=not category and set.inputItemID or nil,gearKey=category,
                     expansionID=set.expansionID,inputRarity=set.inputRarity,inputClassID=set.inputClassID,
@@ -312,6 +562,15 @@ function LL:ImportedEvidenceRecords(indexKey)
                     patchBuild=set.build,fixedReference=true,referenceConditions={},provisional=true,
                     -- Results from another game build count for less (stale), never zero.
                     obsolete=set.build~=current or nil,materials={}}
+                if salvage then
+                    r.recipeID=set.recipeID;r.studyID=set.studyID;r.referenceContextID=set.referenceContextID
+                    r.inputQualityRank=set.inputQualityRank;r.targetBuild=set.build
+                    r.expectedInputCount=set.consumed/set.casts
+                    r.observationContext=set.observationContext;r.allocation=set.allocation
+                    r.applyConcentration=set.applyConcentration;r.sourceRecordIDs=set.sourceRecordIDs
+                    r.fixedReference=false;r.salvage=true
+                    r.baselineStatus='Measured imported salvage cohort; exact matching context required'
+                end
                 if category then
                     r.memberInputItemIDs={}
                     for id in pairs(set.memberInputItemIDs or {}) do
@@ -325,7 +584,7 @@ function LL:ImportedEvidenceRecords(indexKey)
                     local m=set.materials[id]
                     local c=chanceConfidence(m.drops,set.casts)
                     local function field(v) return {value=v,confidence=c,status="observed",samples=set.casts} end
-                    r.materials[#r.materials+1]={id=id,expectedQuantity=field(m.total/set.casts),
+                    r.materials[#r.materials+1]={id=id,quality=m.quality,expectedQuantity=field(m.total/set.casts),
                         dropChance=field(m.drops/set.casts),minQuantity=field(m.min),maxQuantity=field(m.max)}
                 end
                 if #r.materials>0 then
@@ -339,5 +598,30 @@ function LL:ImportedEvidenceRecords(indexKey)
         end
         self._importedIndex=index
     end
-    return self._importedIndex[indexKey]
+    local records=self._importedIndex[indexKey]
+    if not records or not f then return records end
+    local eligible,queries={},{}
+    for _,record in ipairs(records) do
+        if not record.salvage then eligible[#eligible+1]=record
+        elseif option and ctx and not ctx.simulated and not ctx.stale and ctx.character==self:CharacterKey()
+            and record.recipeID==option.recipeID and record.inputCount==option.inputCount
+            and record.inputQualityRank==f.reagentQuality and tostring(record.targetBuild)==current
+            and self.CaptureCraftContext and self.FindSkillQualityTarget then
+            local guid=self:FindSkillQualityTarget(f)
+            if guid then
+                local query=signature({record.recipeID,record.method,record.allocation,record.applyConcentration,guid})
+                local live=queries[query]
+                if live==nil then
+                    live=self:CaptureCraftContext(record.recipeID,f,record.method,record.allocation,record.applyConcentration,guid)
+                    queries[query]=type(live)=='table' and live or false
+                end
+                if type(live)=='table' and live.effectiveSkill~=nil and live.specialization~=nil
+                    and live.fieldStatus and live.fieldStatus.equipment=='measured'
+                    and signature(measuredProfile(live))==signature(measuredProfile(record.observationContext)) then
+                    eligible[#eligible+1]=record
+                end
+            end
+        end
+    end
+    return eligible
 end
