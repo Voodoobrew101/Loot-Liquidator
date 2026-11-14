@@ -1,245 +1,143 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T08:45:26.502Z",
-  "status": "active; verified six new independent historical Looter item-specific disenchant hit-count snapshots and two new WoWDB LIVE TBC item eligibility flags; no new Warmaul/Cobalt/Fel Iron completed-cast studies; no prices or fabricated measured probabilities",
+  "updated_at": "2026-11-14T09:51:28.636Z",
+  "status": "active; 12 new original legacy outcome records across seven independent author/item cohorts, four explicitly completed one-cast outcomes; Warmaul 24995 and Cobalt 36909 new raw operations still unresolved; historic item totals not masqueraded as casts",
   "task_ids": [
     "T0047",
     "T0042",
-    "T0022",
     "T0044",
-    "T0021",
-    "T0052",
+    "T0022",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates item 24995: still lacks source-era keyed raw 2068-cast Looter table/export, output total units, genuine 0/1/2 histograms, historical skill and patch, and current Retail DE eligibility player/API verification; preexisting 1559/417/7/48 hit counts NOT recopied.",
-    "Six newly identified distinct historical original Looter cohorts: item-specific completed-operation denominators, material IDs, per-output positive hit counts and source-positive stack ranges on Classic and Classic-mirror items; NO original client build or source data date and no modern eligibility validation.",
-    "Cobalt Ore 36909, Fel Iron Ore 23424: no new prospecting casts/hit histograms. Existing nominal 24-stack Cobalt and old Fel Iron cohorts explicitly not recopied.",
-    "TBC scaled items 25027 and 25024: LIVE WoWDB says Cannot be disenchanted at displayed item level 32; historical TBC gear-group mappings cannot be used as actual current Retail eligibility without client check.",
-    "Token 45661 previously recorded full class rewards; no additional confirmed variants or redemption changes this run."
+    "Warmaul Legplates 24995 historical 2068-cast Looter snapshot remains without raw source histogram, exact summed item outputs, source-era item bonus/ilvl/build/skill, per-output zero bins, or player-validated present-day Retail eligibility; no duplicate recorded.",
+    "Fel Iron Ore 23424: newly verified 1 prospect operation at Jewelcrafting 300 yielding 1 Nightseye 23441 (1 output hit); no other results or zero outcomes asserted. This is insufficient for a meaningful measured chance.",
+    "Adamantite Ore 23425: author reports 150 nominal ore and 1 Nightseye 23441 + 1 Talasite 23437; counted casts and per-output hit bins unknown (do not count 150/5 equivalents as completed casts).",
+    "Three distinct TBC item-specific, one-cast disenchant observations added for Chain of Glowing Tendrils 29815, Stormfury Totem 31031, Ancient Draenei Arcane Relic 31615; old patch/build, skill and scaled Retail eligibility unknown.",
+    "Two independent historical biocyte item-specific cohorts: 1382 Azure Silk Cloaks 7053 and 491 Hillman's Shoulders 4251, with six raw material totals; no per-cast outcome counts, casting logs, client build or current Retail validation. Typo Hitman´s Shoulders reconciled using the primary Hillman's item page.",
+    "Cobalt 36909 remains without NEW independently observed completed casts/histograms; token 45661 reward mapping and variants unchanged."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-mop-classic-looter-17778-30-20261114",
-      "inputItemID": 17778,
-      "inputName": "Sagebrush Girdle",
-      "source": "https://www.wowhead.com/mop-classic/item=17778",
-      "sourceEra": "mop-classic",
-      "historicalDisplayedItemLevel": 37,
-      "sourceReportedCumulativeDisenchants": 30,
-      "perOutputHits": {
-        "11175": 6,
-        "11176": 22,
-        "11178": 2
+      "studyKey": "wowhead-tbc-nightseye-thorin-one-feliron-prospect",
+      "inputItemID": 23424,
+      "outputItemID": 23441,
+      "casts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 1,
+      "histogram": {
+        "1": 1
       },
-      "positiveStackRanges": {
-        "11175": [
-          1,
-          2
-        ],
-        "11176": [
-          1,
-          2
-        ]
-      },
-      "exactMaterialQuantity": null,
-      "zeroOutcomes": null,
-      "histograms": null,
-      "originalBuild": null
+      "skill": "Jewelcrafting 300",
+      "source": "https://www.wowhead.com/tbc/item=23441/nightseye"
     },
     {
-      "studyKey": "wowhead-mop-classic-looter-10746-26-20261114",
-      "inputItemID": 10746,
-      "inputName": "Runesteel Vambraces",
-      "source": "https://www.wowhead.com/mop-classic/item=10746",
-      "sourceEra": "mop-classic",
-      "historicalDisplayedItemLevel": 50,
-      "sourceReportedCumulativeDisenchants": 26,
-      "perOutputHits": {
-        "11175": 3,
-        "11176": 22,
-        "11178": 1
+      "studyKey": "wowhead-tbc-nightseye-33892-150-adamantite-ore",
+      "inputItemID": 23425,
+      "inputsReported": 150,
+      "casts": null,
+      "outputs": {
+        "23437": 1,
+        "23441": 1
       },
-      "positiveStackRanges": {
-        "11175": [
-          1,
-          2
-        ],
-        "11176": [
-          1,
-          2
-        ]
-      },
-      "exactMaterialQuantity": null,
-      "zeroOutcomes": null,
-      "histograms": null,
-      "originalBuild": null
+      "perOutputHits": null,
+      "source": "https://www.wowhead.com/tbc/item=23441/nightseye"
     },
     {
-      "studyKey": "wowhead-retail-looter-12963-430-20261114",
-      "inputItemID": 12963,
-      "inputName": "Blademaster Leggings",
-      "source": "https://www.wowhead.com/item=12963",
-      "sourceEra": "unspecified cumulative Looter",
-      "historicalDisplayedItemLevel": 13,
-      "sourceReportedCumulativeDisenchants": 430,
-      "perOutputHits": {
-        "14344": 425
-      },
-      "positiveStackRanges": {
-        "14344": [
-          1,
-          2
-        ]
-      },
-      "exactMaterialQuantity": null,
-      "zeroOutcomes": null,
-      "histograms": null,
-      "originalBuild": null
+      "studyKey": "wowhead-tbc-glowing-tendrils-ryoohkieevee-void-one",
+      "inputItemID": 29815,
+      "outputItemID": 22450,
+      "casts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 1,
+      "source": "https://www.wowhead.com/tbc/item=29815/chain-of-glowing-tendrils"
     },
     {
-      "studyKey": "wowhead-wotlk-looter-186057-7-20261114",
-      "inputItemID": 186057,
-      "inputName": "Communal Warmaul",
-      "source": "https://www.wowhead.com/wotlk/item=186057",
-      "sourceEra": "wotlk",
-      "historicalDisplayedItemLevel": 52,
-      "sourceReportedCumulativeDisenchants": 7,
-      "perOutputHits": {
-        "11176": 1,
-        "16202": 6
-      },
-      "positiveStackRanges": {
-        "11176": [
-          3,
-          3
-        ],
-        "16202": [
-          1,
-          2
-        ]
-      },
-      "exactMaterialQuantity": {
-        "11176": 3
-      },
-      "zeroOutcomes": null,
-      "histograms": null,
-      "originalBuild": null
+      "studyKey": "wowhead-tbc-stormfury-totem-34923-void-one",
+      "inputItemID": 31031,
+      "outputItemID": 22450,
+      "casts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 1,
+      "source": "https://www.wowhead.com/tbc/item=31031/stormfury-totem"
     },
     {
-      "studyKey": "wowhead-mop-classic-looter-15824-138-20261114",
-      "inputItemID": 15824,
-      "inputName": "Astoria Robes",
-      "source": "https://www.wowhead.com/mop-classic/item=15824",
-      "sourceEra": "mop-classic",
-      "historicalDisplayedItemLevel": 59,
-      "sourceReportedCumulativeDisenchants": 138,
-      "perOutputHits": {
-        "14344": 1,
-        "16203": 26,
-        "16204": 111
-      },
-      "positiveStackRanges": {
-        "16203": [
-          1,
-          2
-        ],
-        "16204": [
-          1,
-          2
-        ]
-      },
-      "exactMaterialQuantity": null,
-      "zeroOutcomes": null,
-      "histograms": null,
-      "originalBuild": null
+      "studyKey": "wowhead-tbc-draenei-arcane-relic-allakhazam-planar-one",
+      "inputItemID": 31615,
+      "outputItemID": 22446,
+      "casts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 1,
+      "source": "https://www.wowhead.com/tbc/item=31615/ancient-draenei-arcane-relic"
     },
     {
-      "studyKey": "wowhead-mop-classic-looter-11906-43-20261114",
-      "inputItemID": 11906,
-      "inputName": "Beastsmasher",
-      "source": "https://www.wowhead.com/mop-classic/item=11906",
-      "sourceEra": "mop-classic",
-      "historicalDisplayedItemLevel": 55,
-      "sourceReportedCumulativeDisenchants": 43,
-      "perOutputHits": {
-        "11176": 9,
-        "16202": 34
+      "studyKey": "wowhead-tbc-souldust-biocyte-1382-azure-silk-cloaks",
+      "inputItemID": 7053,
+      "sourceReportedItems": 1382,
+      "casts": null,
+      "outputs": {
+        "11083": 3679,
+        "11084": 68,
+        "11134": 412
       },
-      "positiveStackRanges": {
-        "11176": [
-          2,
-          5
-        ],
-        "16202": [
-          1,
-          2
-        ]
-      },
-      "exactMaterialQuantity": null,
-      "zeroOutcomes": null,
-      "histograms": null,
-      "originalBuild": null
-    }
-  ],
-  "newly_verified_eligibility": [
-    {
-      "itemID": 25027,
-      "itemName": "Warlord's Iron-Legplates",
-      "databaseFlag": "Cannot be disenchanted",
-      "itemLevel": 32,
-      "url": "https://www.wowdb.com/items/25027-warlords-iron-legplates"
+      "perOutputHits": null,
+      "source": "https://www.wowhead.com/tbc/item=11083/soul-dust"
     },
     {
-      "itemID": 25024,
-      "itemName": "Warlord's Iron-Breastplate",
-      "databaseFlag": "Cannot be disenchanted",
-      "itemLevel": 32,
-      "url": "https://www.wowdb.com/items/25024-warlords-iron-breastplate"
+      "studyKey": "wowhead-tbc-hillmans-shoulders-biocyte-491-original",
+      "inputItemID": 4251,
+      "sourceReportedItems": 491,
+      "casts": null,
+      "outputs": {
+        "11082": 360,
+        "11083": 564,
+        "11084": 14
+      },
+      "perOutputHits": null,
+      "source": "https://www.wowhead.com/tbc/item=4251/hillmans-shoulders"
     }
   ],
   "numeric_summary": {
-    "newEvidenceRows": 16,
-    "dropRows": 14,
-    "noDisenchantRows": 2,
-    "distinctOriginalLooterItemCohorts": 6,
-    "sourceReportedCumulativeDisenchantsAcrossDistinctItems": 674,
-    "newVerifiedWarmaul24995Casts": 0,
-    "newVerifiedCobalt36909Casts": 0,
-    "newVerifiedFelIron23424Casts": 0,
-    "newPerCastZeroHistograms": 0,
-    "newExactTotalQuantityUnits": 3,
-    "pricesRecorded": 0
+    "newEvidenceRows": 12,
+    "independentOriginalAuthorItemCohorts": 7,
+    "newWarmaul24995Casts": 0,
+    "newCobalt36909Casts": 0,
+    "newFelIron23424CompletedCasts": 1,
+    "newTBCItemSpecificDisenchantCasts": 3,
+    "sourceConfirmedCompletedCastsOverall": 4,
+    "adamantiteOreInputsReported": 150,
+    "azureSilkCloakItemsReported": 1382,
+    "hillmansShouldersItemsReported": 491,
+    "cannotVerifyThoseItemCountsAsCompletedCasts": true,
+    "perOutputOneCastHistograms": 4,
+    "allSourceAmountsRecordedWithoutPrices": true
   },
-  "evidence_file": "research/v3/evidence/legacy/20261114T0845-classic-looter-hits-and-tbc-no-de.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/20261114T0845-classic-looter-hits-and-tbc-no-de.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-14T0951-original-feliron-classic-and-tbc-disenchants.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T0951-original-feliron-classic-and-tbc-disenchants.jsonl",
   "sources": [
-    "https://www.wowhead.com/mop-classic/item=17778",
-    "https://www.wowhead.com/mop-classic/item=10746",
-    "https://www.wowhead.com/item=12963",
-    "https://www.wowhead.com/wotlk/item=186057",
-    "https://www.wowhead.com/mop-classic/item=15824",
-    "https://www.wowhead.com/mop-classic/item=11906",
-    "https://www.wowdb.com/items/25027-warlords-iron-legplates",
-    "https://www.wowdb.com/items/25024-warlords-iron-breastplate"
+    "https://www.wowhead.com/tbc/item=23441/nightseye",
+    "https://www.wowhead.com/tbc/item=29815/chain-of-glowing-tendrils",
+    "https://www.wowhead.com/tbc/item=31031/stormfury-totem",
+    "https://www.wowhead.com/tbc/item=31615/ancient-draenei-arcane-relic",
+    "https://www.wowhead.com/tbc/item=11083/soul-dust",
+    "https://www.wowhead.com/tbc/item=4251/hillmans-shoulders"
   ],
-  "verified_base_commit_sha": "0981e9c4e5dc0b9d0ae1faad390372099bef9590",
+  "verified_base_commit_sha": "980660f7683ebfa91d887de132e217735dc0c926",
   "verified_commit_sha": null,
-  "commit_sha_note": "An atomic commit cannot contain its own commit SHA in the status blob. Branch ref commit and both changed paths are verified by subsequent readback; status records the verified parent.",
+  "commit_sha_note": "This status and the evidence file are placed in ONE atomic Git commit. A Git commit cannot contain its own SHA within a file of that commit; commit and two file paths must be verified by readback.",
   "blockers": [
-    "No original Warmaul 24995 0/1/2 disenchants, build-keyed data, player-validated 2026 Retail eligibility or raw Looter histogram found.",
-    "Cobalt 36909 and Fel Iron 23424 lack new independent actual completed-cast denominator and output hit/quantity histograms; never infer from nominal ore/stack totals.",
-    "Six cumulative Wowhead Looter snapshots have unknown contributing patches, game builds, character skill, per-hit quantity histograms, item bonus IDs and source data dates; they are historical reference cohorts, not present-day live DE guarantees.",
-    "Blademaster Leggings Looter 425 listed positive results of 430 disenchants does not prove five zero-yield casts or identify other outcomes.",
-    "Historical Classic material IDs (e.g. Dream Dust 11176) require version-specific gating before any compiled/current Retail use.",
-    "Firecrawl external service has zero credits this billing period; primary Wowhead and WoWDB public search-index texts were accessible without it."
+    "Original Warmaul Legplates 24995 Looter raw source (per-cast 0/1/2 yield data, build/variant, item quality/level and current-game eligibility) remains inaccessible; no new raw Warmaul samples.",
+    "Cobalt 36909 has no new authentic cast/hit/zero histograms; old 24-stack snapshot not recopied.",
+    "Fel Iron 23424 newly has one firsthand prospect with an actual denominator; all other outcome distributions and real probability precision remain unknown.",
+    "Biocyte item totals 1382/491 were not promoted to completed casts; no source-era date or player build, and Classic materials have changed in modern Retail.",
+    "All new TBC item-specific DE casts are historical comments and cannot independently authorize live Midnight Retail disenchanting."
   ],
   "exhausted_sources": [
-    "Warmaul 24995 existing 2068 cumulative Looter snapshot, templated Evowow reference weights and 2026 WoWDB no-DE flag are already in evidence; skipped duplicated observations.",
-    "Kefra 50 Runecloth Belt and madag 83 Runecloth Belt and 5-belt exact histogram studies already recorded under 2026-11-01/02 legacy evidence; did not duplicate.",
-    "Other locale/PTR/MoP-Classic mirrors with identical item-specific Looter cumulative counts are not independent samples.",
-    "Old Cobalt 24-stack and Fel Iron 100/565 ore reports previously captured; not re-imported."
+    "Warmaul Legplates original 2068 cumulative Looter hits and Evowow reference weights already preserved, not copied again.",
+    "Prior Cobalt 24-stack and Fel Iron 100/565-ore comments previously preserved; no duplicate cohorts.",
+    "Nightseye pages expose mining sources as well as prospecting: only explicitly prospected original comments admitted.",
+    "Original biocyte Hillman's Shoulders comments on Soul Dust and item 4251 are one report, not independently pooled samples."
   ],
-  "next_concrete_step": "Prioritize exact 24995 item bonus/era/version keyed original Looter export and player-validated current Retail no-DE gate; second, request per-operation 0/1/2/3 output tables or SavedVariables for Cobalt 36909 and Fel Iron 23424 with cast basis and refunds; consult Master for original-build/era fields and guards before any importer promotion."
+  "next_concrete_step": "Request original, build/bonus keyed item 24995 disenchant log or client SavedVariables with full zero-inclusive per-material histograms, plus current Retail eligibility check. For Cobalt 36909 and Fel Iron 23424 seek true per-operation prospect export (input, output hits, stack amounts, refund/reprocess, skill and patch) rather than nominal ore counts; coordinate any schema/castsBasis changes with Master, not workers."
 }
