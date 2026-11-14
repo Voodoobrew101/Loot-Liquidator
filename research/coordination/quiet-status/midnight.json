@@ -1,165 +1,86 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-14T12:18:22.053Z",
-  "status": "active; two previously unindexed cumulative Dawn Crystal item-side Looter tables saved reference-only; no new eligible current-patch cast cohort",
+  "updated_at": "2026-11-14T13:18:47.662Z",
+  "status": "active; two distinct original March 8 firsthand disenchant operation groups preserved as historical reference-only; no current-patch material yield cohort",
   "task_ids": [
     "T0026",
     "T0049",
-    "T0039",
     "T0005",
+    "T0039",
     "T0003",
-    "T0045",
-    "T0034"
+    "T0045"
   ],
   "exact_gaps_targeted": [
-    "249972 Relentless Rider's Stompers PTR 12.1.5 and 249965 Relentless Rider's Drape live: source-declared Looter table denominator and Dawn Crystal occurrence rows; no original player-cast ledger, at-cast variant/skill, rank-specific output IDs or stack units",
-    "272246 Miststalker's Wristbands: ilvl305 equipped variant vs WoWDB base206 noDE and 140 Wowhead Looter source conflict, actual successful disenchants and live build missing",
-    "237362/237363 Umbral Tin Ore rank-linked output 242606/242607/242610/242611 and Eversong Diamond 242608 occurrence/unlock, completed casts, per-output hits/zeros, skill, resourcefulness",
-    "237359/237361 Refulgent Copper, 237364/237365 Brilliant Silver, 236761 Tranquility Bloom -> 245807 Powder Pigment (and remaining Midnight milling): independent current-patch operation logs"
+    "Firsthand rare crafted gear group (5 completed operations) vs one Darkmoon deck (1 completed operation), March 8 2026: missing source item IDs/ilvl/kind, player skill/spec, output item IDs/quantities, rare KP item positive-hit count, zero-inclusive histogram, game patch",
+    "272246 Miststalker's Wristbands actual ilvl305/bonus successful DE vs base 206 Cannot Disenchant and aggregate Wowhead 140 table: unresolved",
+    "237362/237363 Umbral Tin Ore, Eversong Diamond unlock and R1/R2 output ranks, 237359/237361 Copper, 237364/237365 Silver: per-output hits/zero casts/refunds and rank-aware completed-cast ledger missing",
+    "236761 Tranquility Bloom and other Midnight ten-herb mill inputs: original pigment positive/zero histograms and output rank/quantity missing"
   ],
   "newly_verified_fields_or_cohorts": {
-    "kind": "Two unindexed Wowhead item-side cumulative disenchant reference tables (not player-original measured cohorts)",
-    "items": [
+    "sourceKind": "reference",
+    "sourceDate": "2026-03-08",
+    "sourceURL": "https://www.reddit.com/r/woweconomy/comments/1ro8ber/whats_the_midnight_version_of_darkmoon_decks_for/",
+    "author": "u/Ok-Necessary1396",
+    "groups": [
       {
-        "inputItemID": 249972,
-        "inputName": "Relentless Rider's Stompers",
-        "sourceRealm": "12.1.5 PTR",
-        "wowheadReportedDisenchants": 14,
-        "outputName": "Dawn Crystal",
-        "rows": [
-          {
-            "row": 1,
-            "occurrencesReported": 9,
-            "percentDisplayed": 64,
-            "outputItemID": null
-          },
-          {
-            "row": 2,
-            "occurrencesReported": 5,
-            "percentDisplayed": 36,
-            "outputItemID": null
-          }
-        ],
-        "sourceKind": "reference",
-        "completedCasts": null,
-        "castsWithDrop": null,
-        "totalQuantity": null,
-        "zeroCasts": null,
-        "atCastItemLevel": null,
-        "skill": null,
-        "specialization": null
+        "inputItemID": null,
+        "inputName": "Five unidentified rare crafted items",
+        "reportedCompletedDisenchants": 5,
+        "outputItemID": null,
+        "outputName": "rare Enchanting KP item (unidentified)",
+        "positiveOperations": null,
+        "authorImpressionPercent": 100,
+        "percentMeasured": false,
+        "zeroOutcomes": null,
+        "outputQuantity": null
       },
       {
-        "inputItemID": 249965,
-        "inputName": "Relentless Rider's Drape",
-        "sourceRealm": "live Wowhead",
-        "wowheadReportedDisenchants": 27,
-        "outputName": "Dawn Crystal",
-        "rows": [
-          {
-            "row": 1,
-            "occurrencesReported": 14,
-            "percentDisplayed": 52,
-            "outputItemID": null
-          },
-          {
-            "row": 2,
-            "occurrencesReported": 12,
-            "percentDisplayed": 44,
-            "outputItemID": null
-          }
-        ],
-        "sourceKind": "reference",
-        "completedCasts": null,
-        "castsWithDrop": null,
-        "totalQuantity": null,
-        "zeroCasts": null,
-        "atCastItemLevel": null,
-        "skill": null,
-        "specialization": null,
-        "warning": "Two listed row counts sum to 26 not 27; missing row is not evidence of a zero-material outcome."
+        "inputItemID": null,
+        "inputName": "One unidentified Darkmoon deck",
+        "reportedCompletedDisenchants": 1,
+        "outputItemID": null,
+        "outputName": "Epic Shard (unverified material identity)",
+        "positiveOperations": 1,
+        "zeroOutcomes": null,
+        "outputQuantity": null
       }
     ],
-    "milling_capture_observation": {
-      "repository": "bughatti/voidprof",
-      "codeSha": "69c03e4be7ee0aaa5aefbedf9a557561a770cc7e",
-      "codePath": "Planner.lua",
-      "codeLines": "362-447",
-      "inputItemIDs": [
-        236761,
-        236767,
-        236776,
-        236777,
-        236770,
-        236771,
-        236778,
-        236779
-      ],
-      "pigmentItemIDs": [
-        245807,
-        245808,
-        245803,
-        245804,
-        245865,
-        245864,
-        245867,
-        245866
-      ],
-      "spellID": 1269575,
-      "nominalHerbsPerMill": 10,
-      "modelFallbackPerHerb": 1.2,
-      "observation": "VoidProfDB millYield samples net herb inventory changes and positive pigment deltas after a spell success, retaining only if herb decline >=10 and pigment out >0. This is not a per-cast zero-inclusive series; Resourcefulness could change herb net losses. 1.2 is explicit estimate; not an independent measured study."
-    },
     "newCurrentPatchEstimatorEligibleCohorts": 0
   },
   "numeric_fields_advanced": {
-    "new_unindexed_source_only_input_item_ids": [
-      249965,
-      249972
-    ],
-    "new_unindexed_source_only_rows": 4,
-    "source_reported_table_denominators": [
-      27,
-      14
-    ],
-    "source_reported_positive_row_counts": [
-      14,
-      12,
-      9,
-      5
-    ],
-    "new_original_completed_casts": 0,
-    "new_original_castsWithDrop": 0,
-    "new_totalQuantity": 0,
-    "new_zero_outcome_counts": 0,
-    "new_per_cast_histograms": 0,
-    "new_verified_output_rank_ids": 0,
-    "new_empirical_probabilities": 0,
-    "notes": "Reported reference table counts preserved only as notes, not promoted to casts, castsWithDrop, output quantity or study confidence; row percentages kept exactly as source."
+    "newOriginalFirsthandSourceGroups": 2,
+    "explicitCompletedOperations": 6,
+    "sourceReportedRareGearOperations": 5,
+    "sourceReportedDeckOperations": 1,
+    "reportedPositiveDeckMaterialOperations": 1,
+    "rareKnowledgeHitCount": null,
+    "zeroOutcomeCounts": null,
+    "materialOutputQuantity": null,
+    "perCastHistogram": null,
+    "exactOutputItemIDs": null,
+    "authorImpressionPercentRareKnowledgeItem": 100,
+    "empiricalProbabilityMeasured": false,
+    "currentPatchMaterialYieldCohorts": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/20261114T1216-unindexed-de-looter-reference.jsonl"
+    "research/v3/evidence/midnight/2026-11-14T1318-rare-kp-deck-firsthand.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-14T1114-primary-wand-disenchant-anomaly.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261114T1216-unindexed-de-looter-reference.jsonl",
   "evidence_record_ids": [
-    "midnight-20261114-1216-001",
-    "midnight-20261114-1216-002",
-    "midnight-20261114-1216-003",
-    "midnight-20261114-1216-004"
+    "midnight-20261114-1318-001",
+    "midnight-20261114-1318-002"
   ],
   "source_links": [
-    "https://www.wowhead.com/ptr-2/item=249972/relentless-riders-stompers",
-    "https://www.wowhead.com/item=249965/relentless-riders-drape",
-    "https://github.com/bughatti/voidprof/blob/69c03e4be7ee0aaa5aefbedf9a557561a770cc7e/Planner.lua#L362-L447"
+    "https://www.reddit.com/r/woweconomy/comments/1ro8ber/whats_the_midnight_version_of_darkmoon_decks_for/"
   ],
-  "commit_sha": "60f3b41391f0b6d22aadf1d020cb6a917df64ab4",
-  "verified_commit_sha": "60f3b41391f0b6d22aadf1d020cb6a917df64ab4",
-  "commit_note": "Evidence file committed and exactly read back on branch as 60f3b41391f0b6d22aadf1d020cb6a917df64ab4. The GitHub connector's file-contents writes create commits separately; this own-status update is a second metadata-only commit, not a claimed atomic one-commit transaction. No changes elsewhere, no merge/release.",
+  "commit_sha": null,
+  "verified_commit_sha": null,
+  "commit_note": "One atomic Git commit contains the new evidence JSONL and midnight quiet-status; Git's content-addressed commit SHA cannot be embedded in that same commit's file without a self-reference. Commit hash and read-back must be verified externally after ref update. No merge/release.",
   "blockers": [
-    "249972 PTR and 249965 live Looter cumulative tables lack per-output item IDs/quality-rank links, player-original casting receipts, bonus/ilvl at cast, patch, skill, spec, output quantities and zero-inclusive histograms; never promote to current Retail estimator.",
-    "272246 original successful disenchant identity and live build still unresolved; base cannot-DE conflict remains.",
-    "237362/237363 Umbral Tin, 237359/237361 Copper and 237364/237365 Silver have no new rank-linked castWithDrop, zero-inclusive histograms and refund-aware operation export.",
-    "236761 Tranquility Bloom and other herbs lack new completed 10-herb cast ledger; external VoidProf source explicitly filters out zero-output runs and models net herb deltas, so its aggregate yield should not be treated as original per-cast captures."
+    "March 8 eyewitness rare crafted-item sample has five completed operations, but 'seem 100%' is not a measured five-hit ledger and does not name the rare Enchanting KP item or other material drops.",
+    "Single Darkmoon deck shard report lacks exact deck ID, material item ID/rank, stack quantity, skill, specialization and at-cast bonus/build; cannot identify as Dawn Crystal.",
+    "272246 actual successful ilvl305 DE itemLink/bonus/patch remains missing; WowDB base cannot-DE disagrees with cumulative Wowhead source.",
+    "237362/237363 Umbral Tin and other Midnight ore R1/R2 prospects and 236761 and other ten-herb mills have no independent current-patch zero-inclusive, refund-aware raw per-operation export."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -230,10 +151,11 @@
     "2026-11-14T09:14:05.781Z: NEW non-overlapping Miststalker's Wristbands source-provenance lane: current Wowhead 12.1.5 Labyrinth Myth 2/6 gear vendor listing links item 272246 directly; ATT's independent 12.1.0–12.2.0 Delve completion dataset and GearPath loot codex establish exact Delves origin absent from GamGem's Adventure Guide boss list. 3 Mythical Soul Fragments via Tier 8+ weekly Labyrinth quest is acquisition currency, not DE numerator/denominator. Distinct WoWhead indexed variant ilvl318 and prior armory-equipped ilvl305 not tied to original at-cast successful disenchants; WoWDB base cannot-DE conflict unresolved. Searched named 272246 and Umbral Tin/Copper/Silver/Tranquility evidence across GitHub, Wowhead, WoWDB, GamGem, GearPath, Strategic, Blizzard forums and Reddit; excluded previously indexed Cardinalai, Joe, Honeybone, Draggoth, Looter, own PR49 and armory census. Do not re-scan gear-acquisition guides without a new disenchant receipt or itemLink.",
     "2026-11-14T10:19:45.177Z: Fresh 2026 named source search across live/PTR Wowhead, WoWDB, Reddit r/woweconomy, CurseForge addon release log, Warcraft Wiki, TSM and Blizzard bug forum (full URLs in research/v3/evidence/midnight/2026-11-14T1019-primary-cast-and-id-audit.jsonl). NEW independent author release 2026-03-02 documents Sanguithorn/Mana Lily mapping bug but lacks actual corrected IDs or yields; historical 11–15 pigment range already in midnight-20261030-601, historical 1473 from 1000 r2 Tranquility Bloom transcribed twice (20261103-0210-001/1310-001), estimator source-vector fingerprint dedupe checked; DO NOT reimport or treat either as new cast data. No 0-inclusive complete current Retail original cohort. Revisit only with actual new CSV/itemLink receipt.",
     "2026-11-14T11:14:25.852Z: New independent historical original forum 2274188 authors NBI-3354470 (Mar17) and Hellequin-1037065 (Mar19): two single completed wrong-expansion wand disenchants yielding named Refulgent Crystal 219955, item 259349 identified only for second. No itemLink/bonus/skill or quantity beyond named output; no current baseline evidence. Compared official March18 already indexed hotfix, 272246 ilvl305 and current Umbral Tin 237362, Copper 237359, Silver 237365 and milling 236761 in Reddit, Blizzard forums, WoWhead, WoW-Professions and existing queue. Do not rescan original forum unless actual game event timing/itemLink, stacked material totals or variant receipt arrives. Prior Cardinalai/Honeybone/Looter snapshots not recopied.",
-    "2026-11-14T12:18:22.053Z: Fresh named searches for 272246 Miststalker's Wristbands, Umbral Tin Ore 237362, Refulgent Copper 237359, Brilliant Silver 237365 and Tranquility Bloom 236761 across Wowhead live/PTR, Reddit, Blizzard community forums, Method, Warcraft Wiki and Wow-Professions found no NEW independently verified current-patch player-original per-cast output/refund/zero ledger. Prior Cardinalai, Honeybone, Draggoth, 5294KP and own PR49 not duplicated. New unindexed references: PTR 249972 9/14+5/14 and LIVE 249965 14/27+12/27 (not complete source casts). Separate new VoidProf Planner.lua 362-447 code lineage lacks zero outcomes by design; do not retrieve VoidProfDB.millYield as a valid zero-inclusive study or repeat these two mutable Wowhead tables without raw player operation IDs."
+    "2026-11-14T12:18:22.053Z: Fresh named searches for 272246 Miststalker's Wristbands, Umbral Tin Ore 237362, Refulgent Copper 237359, Brilliant Silver 237365 and Tranquility Bloom 236761 across Wowhead live/PTR, Reddit, Blizzard community forums, Method, Warcraft Wiki and Wow-Professions found no NEW independently verified current-patch player-original per-cast output/refund/zero ledger. Prior Cardinalai, Honeybone, Draggoth, 5294KP and own PR49 not duplicated. New unindexed references: PTR 249972 9/14+5/14 and LIVE 249965 14/27+12/27 (not complete source casts). Separate new VoidProf Planner.lua 362-447 code lineage lacks zero outcomes by design; do not retrieve VoidProfDB.millYield as a valid zero-inclusive study or repeat these two mutable Wowhead tables without raw player operation IDs.",
+    "2026-11-14T13:18:47.662Z: New unindexed original March 8 2026 r/woweconomy commenter u/Ok-Necessary1396 identified through distinct Darkmoon-deck/KP lane: five blue crafted-item DE operations (author impression 100% rare KP, uncounted hits) and one deck producing unnamed Epic Shard; source does not report specific material ID/quantity or zero-inclusive ledger. Compared same thread's other anecdotal commenters and named modern gear/Tin/Copper/Silver/milling data searches on Reddit, Blizzard forums, Wowhead and profession guides; existing Cardinalai/Honeybone, WoW-Professions powder trials, Looter and wrong-expansion wand receipts excluded. New GoldAdvisorMidnight public repository and Lazy Goldmaker spreadsheet index provide tools/estimates, not accessible independent primary cast exports. Do not repeat this six-operation cohort as another study unless author provides actual itemLinks and output receipt."
   ],
-  "next_concrete_step": "Obtain first-party addon SavedVariables log or timestamped gameplay receipt linking exact source gear itemLink/ilvl, player Enchanting skill/spec and material rank/quantities; for prospect/mill demand per-success cast event with zeros and Resourcefulness return deltas. Request from Master an uncensored independent source or approved capture schema, not guessed rates.",
-  "verified_base_commit_sha": "d578f14616556178e07bdf9894c6c73d76ecf1f8",
-  "next": "Obtain first-person complete 272246 ilvl305 itemLink+bonuses and finished DE output receipt; then ask original 237362/237359/237365 prospect and 236761 mill authors for zero-inclusive CSV with actual completed operations, skill, output rank and refund flags. Never revisit the same cached guides or census absent changed primary evidence.",
-  "base_commit_sha": "d578f14616556178e07bdf9894c6c73d76ecf1f8"
+  "next_concrete_step": "Seek original author operation log for five rares (gear item links, 5 per-event output receipts) and exact Darkmoon deck/material ID; obtain independent 272246 ilvl305 successful cast receipt and 237362 R1/R2 per-cast prospect/mill export. Do not convert apparent 100% or shard nickname to estimator values.",
+  "verified_base_commit_sha": "de4ff7b95e461610e2b64da54b1268a94707a646",
+  "next": "Seek original author operation log for five rares (gear item links, 5 per-event output receipts) and exact Darkmoon deck/material ID; obtain independent 272246 ilvl305 successful cast receipt and 237362 R1/R2 per-cast prospect/mill export. Do not convert apparent 100% or shard nickname to estimator values.",
+  "base_commit_sha": "de4ff7b95e461610e2b64da54b1268a94707a646"
 }
