@@ -19,6 +19,7 @@ python3 tools/capture_observations.py --check
 python3 tools/recycling_capture_baselines.py --check
 python3 tests/test_build_info.py
 python3 tests/test_capture_observations.py
+python3 tests/test_skill82_cohort_audit.py
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
 python3 tools/reference_calculators.py --check
 python3 tools/skill_quality_to_rules.py --check
