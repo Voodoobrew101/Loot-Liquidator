@@ -1,136 +1,165 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-14T21:06:56.350Z",
-  "status": "active; independently verified two historical BfA Kraken's Eye output/input ratios and source-to-estimator omission; no new current-Retail gold decision or measured probability",
+  "updated_at": "2026-11-14T22:03:30.769Z",
+  "status": "active; verified six new historical item-ID source transcriptions for bookkeeping, independently confirmed LIVE 24831 no-disenchant contradiction, and identified four unusable Classic skill-only condition records; no newly verified current Retail economic decision",
   "task_ids": [
+    "T0047",
     "T0042",
-    "T0021",
-    "T0005",
-    "T0039",
-    "T0045"
+    "T0044",
+    "T0049",
+    "T0026",
+    "T0040"
   ],
-  "task_id_scope": "Coordinator-owned research provenance/estimator gate audit only; legacy worker owns original BfA/Titanium evidence and append-only corrections; owner three-pass branch owns addon implementation. No worker schedules or other status files edited.",
+  "task_id_scope": "Coordinator-owned source/estimator/eligibility admission audit only. Legacy worker owns original records and corrections; owner three-pass integration owns addon changes and tests. Other agents retain schedules and ownership.",
   "exact_gaps_targeted": [
-    "Retail original source supplies 335 Monelite Ore processed -> 26 Kraken's Eye outputs after historical patch 8.1.5; worker record legacy-20261114-206 has totalQuantity 26 and source input units only in notes, casts unknown, and no averageShown. v3 row_use() rejects its totalQuantity as totalWithoutCasts; a valid per-input quantity cannot currently reach the v3 estimator by this record.",
-    "Independent historical original Paperclips 500 Platinum Ore -> 1 Kraken's Eye (legacy-20261114-201), same input-unit-only omission, epoch unknown. These two different ore types and epochs must not be pooled.",
-    "Naive restoration as averageShown/averagePer=input without distinct source reliability labels makes row_use() substitute 20 fictitious effective study casts; analyze() may derive P(hit) and present a measured-looking average although casts/zeros and positive-stack sizes are not observed.",
-    "Verified identical historical Titanium comment #351270 present at original Retail Wowhead page and MoP Classic mirror; source URL could misleadingly suggest Classic study. One actual five-ore operation reports three simultaneously present materials, no quantities; no 2026 Retail applicability.",
-    "Higher-priority current-build Midnight/TWW 0..N outputs, source rank/character state, refunded ore and actual complete-operation samples remain unresolved; did not re-search exhausted leads."
+    "Six newly worker-transcribed historic per-input Arcane Dust 22445 occurrence rows for 25064,24831,24878,25048,25041,25005 have castsWithDrop/casts but no output quantities or positive-stack histograms, and no reliable source collection build/epoch, item variant or skill. JS Looter table itself not independently re-extracted; retain as archival anonymous counts, not current-calibrated observations.",
+    "24831 Nexus-Strider Greaves has historical source-reported Arcane Dust 1486/1876 despite current WoWDB LIVE explicitly marking item Cannot be disenchanted at scaled ilvl30. Historical WotLK Classic item ilvl90 differs. No live client variant validation; current Retail action should remain eligibility-gated.",
+    "Four Classic minimum DE skill records are tagged type=condition with null outputItemID. V3 load_conditions skips them and non_drop_usage returns condition:incomplete; these should be preserved as historic eligibility metadata, not current Retail material unlocks.",
+    "sourceKind study on cumulative historic Looter rows can produce large apparent empirical confidence and provisional yield=1 estimate without observed per-positive quantity; not an independently validated modern gold value.",
+    "Highest-priority post-hotfix Midnight/TWW output/rank/refund/zero-inclusive completed-operation evidence still absent; no exhausted Looter re-scrape."
   ],
   "newly_verified_fields": [
     {
-      "kind": "historical source quantity per reported input",
-      "record_id": "legacy-20261114-206",
-      "inputItemID": 152512,
-      "outputItemID": 153706,
-      "source_reported_input_ore": 335,
-      "source_reported_output_units": 26,
-      "output_units_per_reported_ore": 0.07761194029850746,
-      "output_units_per_nominal_five_ore": 0.3880597014925373,
-      "source_epoch": "author says days after 8.1.5",
-      "source_verified_from_original": true,
-      "observed_casts": null,
-      "hit_probability": null,
-      "positive_yield_histogram": null,
-      "skill": null,
-      "game_build": null,
-      "current_retail_applicable": null
-    },
-    {
-      "kind": "historical source quantity per reported input",
-      "record_id": "legacy-20261114-201",
-      "inputItemID": 152513,
-      "outputItemID": 153706,
-      "source_reported_input_ore": 500,
-      "source_reported_output_units": 1,
-      "output_units_per_reported_ore": 0.002,
-      "output_units_per_nominal_five_ore": 0.01,
-      "source_verified_from_original": true,
-      "source_epoch": null,
-      "observed_casts": null,
-      "hit_probability": null,
-      "positive_yield_histogram": null,
-      "current_retail_applicable": null
-    },
-    {
-      "kind": "provenance mirror identity",
-      "records": [
-        "legacy-20261114-208",
-        "legacy-20261114-209",
-        "legacy-20261114-210"
+      "kind": "historical_worker_source_record_internal_arithmetic",
+      "origin": "Legacy worker JSONL transcriptions, original JS counts not independently source-verified",
+      "source_item_ids": [
+        25064,
+        24831,
+        24878,
+        25048,
+        25041,
+        25005
       ],
-      "inputItemID": 36910,
-      "source_comment_id": "351270",
-      "original_retail_url": "https://www.wowhead.com/item=36910/titanium-ore",
-      "mirror_url": "https://www.wowhead.com/mop-classic/item=36910/titanium-ore",
-      "completed_prospects_in_one_cohort": 1,
-      "output_ids_positive": [
-        36932,
-        36929,
-        46849
+      "source_reported_total_operations_across_distinct_items": 22304,
+      "source_reported_arcane_dust_positive_across_distinct_items": 17353,
+      "per_input_items": [
+        {
+          "inputItemID": 25064,
+          "outputItemID": 22445,
+          "sourceReportedHits": 1859,
+          "sourceReportedDenominator": 2346
+        },
+        {
+          "inputItemID": 24831,
+          "outputItemID": 22445,
+          "sourceReportedHits": 1486,
+          "sourceReportedDenominator": 1876
+        },
+        {
+          "inputItemID": 24878,
+          "outputItemID": 22445,
+          "sourceReportedHits": 1846,
+          "sourceReportedDenominator": 2378
+        },
+        {
+          "inputItemID": 25048,
+          "outputItemID": 22445,
+          "sourceReportedHits": 3715,
+          "sourceReportedDenominator": 4780
+        },
+        {
+          "inputItemID": 25041,
+          "outputItemID": 22445,
+          "sourceReportedHits": 3752,
+          "sourceReportedDenominator": 4848
+        },
+        {
+          "inputItemID": 25005,
+          "outputItemID": 22445,
+          "sourceReportedHits": 4695,
+          "sourceReportedDenominator": 6076
+        }
       ],
-      "output_quantities": null,
-      "current_retail_eligibility": null
+      "cross_item_pooled_probability": null,
+      "measured_material_quantity": null,
+      "current_retail_applicability": null
     },
     {
-      "kind": "v3 source-to-estimator static code defect",
-      "file": "research/v3/tools/build_estimates.py",
-      "code_blob_sha": "0b09b553fef4214af8aaa93f1c85061956643711",
-      "reason": "totalWithoutCasts on numerator-only rows; synthetic 20 effective casts with averageShown/no casts; opportunity for unsourced P and measured-label overclaim",
-      "runtime_test_executed": false
+      "kind": "independently_verified_live_database_eligibility_conflict",
+      "itemID": 24831,
+      "live_source": "https://www.wowdb.com/items/24831-nexus-strider-greaves",
+      "live_text": "Cannot be disenchanted",
+      "live_display_ilvl": 30,
+      "classic_source": "https://www.wowhead.com/wotlk/item=24831/nexus-strider-greaves",
+      "classic_display_ilvl": 90,
+      "game_client_verified": false
+    },
+    {
+      "kind": "static_estimator_schema_exclusion",
+      "recordIDs": [
+        "legacy-20261114-2157-008",
+        "legacy-20261114-2157-009",
+        "legacy-20261114-2157-010",
+        "legacy-20261114-2157-011"
+      ],
+      "recorded_historical_classic_skill_values": [
+        225,
+        225,
+        275,
+        275
+      ],
+      "outputItemID": null,
+      "estimator_result_reason": "condition:incomplete",
+      "current_retail_condition_imported": false
     }
   ],
   "newly_verified_cohorts": [],
-  "new_source_observed_casts": 0,
+  "new_original_cast_observations_by_coordinator": 0,
   "new_verified_current_gold_decisions": 0,
   "evidence_files": [
-    "research/v3/evidence/master/20261114T2105-bfa-krakens-eye-per-input-rate-not-admitted.md"
+    "research/v3/evidence/master/20261114T2201-legacy-arcane-live-nonde-and-classic-condition-admission.md"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=153706/krakens-eye",
-    "https://www.wowhead.com/item=36910/titanium-ore",
-    "https://www.wowhead.com/mop-classic/item=36910/titanium-ore",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T2051-firsthand-bfa-kraken-titanium-prospect.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-14T2157-new-tbc-arcane-dust-looter-and-classic-skill.jsonl",
+    "https://www.wowhead.com/ptr/item=22445/arcane-dust",
+    "https://www.wowdb.com/items/24831-nexus-strider-greaves",
+    "https://www.wowhead.com/wotlk/item=24831/nexus-strider-greaves",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py"
   ],
-  "verified_commit_sha": "6941004c65bc50c4faf8efe4c3e35754f0fccb79",
-  "verified_commit_sha_scope": "Manager evidence file GitHub create read back at blob 831f82e7afa4a38ce3a8112f11284e5ae54209df. Own coordinator status commit cannot self-reference.",
-  "verified_dashboard_commit_sha": "7a9e071115a82b66dabd4c58456f40d8acb8e4de",
-  "verified_dashboard_commit_sha_scope": "Research dashboard checkpoint prepended and independently fetched at blob 3b6b0770fb401205eb9555e6c541e2e6bd381e8e.",
+  "verified_commit_sha": "7d0c8b237fb64a4239fd23c147842937d4cfb861",
+  "verified_commit_sha_scope": "Manager evidence note created and read back at blob 18c0f2682d94a8ff947143f5a42f855cac5124f0; own coordinator quiet status cannot self-reference.",
+  "verified_dashboard_commit_sha": "02e77155cdde28680620be04f134c280bca553b0",
+  "verified_dashboard_commit_sha_scope": "Dashboard checkpoint prepended and read back at blob fc2c94e8f6be255cb77bbd924c88e67bc0e84c7f.",
   "checkpoints_read": {
-    "midnight": "2026-11-14T20:11:59.460Z, no current numerical cohort",
-    "war-within": "2026-11-14T20:32:09.894Z, gear identity, no new process histogram",
-    "dragonflight": "2026-11-14T20:39:09.268Z, 14 cumulative Looter source occurrences, not calibrated chance",
-    "legacy": "2026-11-14T20:51:52.849Z, 12 historical firsthand output rows"
+    "legacy": "2026-11-14T21:49:29.100Z, six historical source transcriptions, one LIVE noDE, four historical Classic skill-only records; original evidence independently fetched",
+    "war-within": "2026-11-14T21:27:45.272Z, private Dec 2024 source sheet lead, no numeric cohort",
+    "dragonflight": "2026-11-14T21:31:13.391Z, no new independent numeric cohort",
+    "midnight": "2026-11-14T21:09:47.218Z, no new 2026 current-build numeric cohort"
   },
   "github_state_checked": {
     "main": "12ae8e8b04f8597cce4f96a0ef5c5c2c347f7f34",
-    "research_head_before_writes": "73c152ab8cb2e07f6d215af28cd7aa58fcf415ff",
-    "research_manager_dashboard_commit": "7a9e071115a82b66dabd4c58456f40d8acb8e4de",
+    "research_head_before_manager_writes": "53cc1086d72355259279255c6b1aa09b0644d271",
     "three_pass_integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_ci_run": 43639745996,
+    "research_ci_run": 43644843416,
+    "research_ci_head": "53cc1086d72355259279255c6b1aa09b0644d271",
     "research_ci_conclusion": "success",
-    "research_ci_scope": "at pre-manager head 73c152a, not manager updates, no runtime/UI tests",
+    "research_ci_scope": "Research CI passed on prior worker head; manager evidence/dashboard/status commits not separately tested by workflow during this run.",
     "pull_requests": "#22 and #23 closed unmerged; no PR action"
   },
   "blockers": [
-    "No direct completed-cast count, per-output 0..N histogram, refunds/reused inputs, profession/skill, or calibrated P for the original BfA reports; source means normalize per reported input only.",
-    "Current v3 estimator either drops the numerator (casts null) or, if averageShown is simply added, substitutes artificial study cast weight and a chance estimate. Needs scoped code/data representation fix in owner integration; do not alter worker evidence or addon branch here.",
-    "Current 2026 Retail eligibility/rates and item variants unverified, original source dates incomplete; not a real-character price outcome."
+    "Exact six Looter numeric pairs are worker source transcriptions from JS table not directly machine-readable for independent numeric source verification; original upload build/variant/source independence not available.",
+    "Arcane Dust per-hit stack quantities, alternatives/other materials, original exact completed operation logs, skill and 2026 Retail applicability unknown.",
+    "WoWDB LIVE item noDE needs actual in-client variant check to establish all modern itemLink/bonus profiles; never assert client verification.",
+    "Classic minimum skills lack direct 2026 applicability; null-output condition schema is intentionally unused by v3 estimator."
   ],
   "exhausted_sources": [
-    "No repeat of previously archived Tontons BfA study, Titanium kuraiummei 144-prospect PTR study or legacy Warmaul/Cobalt/Fel Iron exhausted searches.",
-    "Read the two immediately relevant original Wowhead Retail pages and the worker's newly committed 12-row original file; no redundant new experiment recorded."
+    "Previously audited eight source-item Arcane Dust Looter rows remain in separate first audit; this run parsed only the new six and checked no overlap with the eight, not a repeat of the former batch.",
+    "Original Wowhead PTR Arcane Dust readable comments and current LIVE WoWDB item 24831 checked once; no repeated exhausted Looter numeric extraction search.",
+    "Prior BfA Kraken's Eye, TBC Arcane Dust initial eight, Titanium original, old Cobalt/Fel Iron exhausted lanes not reopened."
   ],
   "tests_actually_executed": [
-    "Independent exact-source comparisons and arithmetic",
-    "Static v3 estimator code-path review"
+    "Connected GitHub branch/PR/CI and worker checkpoint reads",
+    "Parsed new 11-row JSONL, validated six distinct input IDs and counts against each row, checked disjointness from previous eight, and calculated exact itemwise ratios using JavaScript",
+    "Read current LIVE WoWDB no-disenchant item 24831 and WotLK Classic item variant/ilvl",
+    "Static research/v3/tools/build_estimates.py read of load_conditions, non_drop_usage, row_use and chance/quantity selection",
+    "GitHub evidence and dashboard read-back verification"
   ],
   "tests_not_executed": [
-    "Compiler",
-    "Lua add-on valuation",
-    "Synthetic-price offline rendering",
-    "Live WoW"
+    "Direct Looter JS numeric source table extraction",
+    "Python research compiler",
+    "Synthetic-price Lua/addon resolver/tooltip",
+    "Live WoW in-client action",
+    "Live price research"
   ],
-  "next_concrete_step": "Ask the legacy worker, through its normal queue/report ownership only, to preserve source input-unit denominators and canonical Retail URL via append-only records; in owner-owned three-pass review fixture 335->26 and 500->1 separately as historical per-input quantity, P and positive range unknown, no 20 fictitious casts, eligibility/price source gated. Continue independent post-hotfix Midnight/TWW complete-operation logs rather than exhausted historical searches."
+  "next_concrete_step": "Legacy worker retains append-only source ownership; await original source upload epoch, per-hit yield histogram and actual Retail itemLink eligibility for 24831 only if new evidence appears. In owner-owned integration, test noDE gate and historical-only Classic condition exclusion under distinct synthetic prices. Prioritize new 12.1.5 Midnight/TWW complete-operation rank/skill/refund output logs, not repeat historical Looter searches."
 }
