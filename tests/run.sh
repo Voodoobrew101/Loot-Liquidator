@@ -19,6 +19,7 @@ python3 tools/capture_observations.py --check
 python3 tools/recycling_capture_baselines.py --check
 python3 tests/test_build_info.py
 python3 tests/test_capture_observations.py
+python3 tests/test_skill82_cohort_audit.py
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
 python3 tools/reference_calculators.py --check
 python3 tools/skill_quality_to_rules.py --check
@@ -61,6 +62,9 @@ python3 tests/test_token_import.py "$compiled_dir"
 "$lua_bin" tests/test_profession_projection.lua
 "$lua_bin" tests/test_research_profiles.lua "$compiled_dir"
 "$lua_bin" tests/test_craft_recording.lua
+"$lua_bin" tests/test_craft_allocation_diagnostics.lua
+"$lua_bin" tests/test_craft_allocation_compatibility.lua
+python3 tests/test_craft_allocation_diagnostics.py
 "$lua_bin" tests/test_recorder_lookup.lua
 "$lua_bin" tests/test_recycling.lua
 "$lua_bin" tests/test_radiant_shatter.lua
@@ -74,16 +78,26 @@ python3 tests/test_compact_transfer.py
 "$lua_bin" tests/test_disenchant_recording_categories.lua
 "$lua_bin" tests/test_craft_operations.lua
 "$lua_bin" tests/test_imported_results.lua
+"$lua_bin" tests/test_salvage_imports.lua
+python3 tests/test_disenchant_import_archive.py
+# Frozen code-only PR51 baseline, independent of Git history or network access.
+echo "e81277e142acca3f9a44e21146e5b1690b5adf1db584793f61cc1f279b7110b4  tests/fixtures/pr51/ImportedResults.lua" | sha256sum -c -
+"$lua_bin" tests/test_native_profile_precision.lua tests/fixtures/pr51/ImportedResults.lua
+"$lua_bin" tests/test_import_target_lookup.lua
 "$lua_bin" tests/test_counts_model.lua
 "$lua_bin" tests/test_transmog_alts.lua
 "$lua_bin" tests/test_appearance_collection.lua
+"$lua_bin" tests/test_salvage_refund_blend.lua
 python3 tests/test_craft_export.py
 python3 tests/test_recipe_coverage.py
 "$lua_bin" tools/audit_profession_scaling.lua
 
 "$lua_bin" tests/test_disenchant_gaps.lua
+python3 tests/test_token_source_applicability.py
+python3 tests/test_token_source_compiler.py "$lua_bin"
 python3 tests/test_token_research.py
 python3 tests/test_token_research_s2.py
+python3 tests/test_token_staged_fallback.py
 python3 tests/test_evidence_check.py
 python3 tests/test_evidence_baselines.py
 python3 tools/evidence_to_baselines.py tests/fixtures/evidence-v3 "$compiled_dir/fixture-baselines.lua" >/dev/null
@@ -92,7 +106,12 @@ python3 tools/evidence_to_baselines.py tests/fixtures/evidence-v3 "$compiled_dir
 python3 tests/test_research_v3_baselines.py
 python3 tests/test_research_v3_precision.py
 python3 tests/test_research_v3_dedupe.py
+python3 tests/test_research_v3_reference_ranges.py
 python3 tests/test_research_v3_snapshot.py
+python3 tests/test_retail_admission.py
+python3 tests/test_anniversary_admission.py
+python3 tests/test_dragonflight_admission.py
+python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_research_v3_runtime.lua
 "$lua_bin" tests/test_numeric_refresh_tooltip.lua "$compiled_dir"
 "$lua_bin" tests/test_tooltip_preferences.lua

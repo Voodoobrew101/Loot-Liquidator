@@ -711,8 +711,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                             or type(m.conditionalExpectedQuantity)=='number' and (UnitsText(m.conditionalExpectedQuantity)..' conditional') or 'average unavailable')
                     end
                     -- Optional per-material confidence (A3), off by default.
-                    if LA.db.showMaterialConfidence==true and not model.syntheticBenchmark and type(m.confidence)=="number" then
-                        left=left..(" (%d%%)"):format(m.confidence)
+                    if LA.db.showMaterialConfidence==true and not model.syntheticBenchmark then
+                        if m.confidenceUnscored or model.confidenceUnscored then
+                            left=left.." (Confidence unscored)"
+                        elseif type(m.confidence)=="number" then
+                            left=left..(" (%d%%)"):format(m.confidence)
+                        end
                     end
                     local net=m.netExpectedValue
                     local amount=net~=nil and LA:Money(net/batch) or "unknown"

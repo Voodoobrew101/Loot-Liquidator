@@ -545,7 +545,8 @@ function LL:TokenPieceQuote(f,token)
                         if good and estimate and Number(estimate.value) then
                             quote.disenchant=(estimate.value-cost.value)/cost.inputCount
                             quote.disenchantModel=estimate.yieldModel
-                            local confidence=estimate.yieldModel and (estimate.yieldModel.valueConfidence or estimate.yieldModel.confidence)
+                            local confidence=estimate.yieldModel and not estimate.yieldModel.confidenceUnscored
+                                and (estimate.yieldModel.valueConfidence or estimate.yieldModel.confidence)
                             quote.disenchantConfidence=type(confidence)=='number' and math.min(confidence,token.catalogConfidence or confidence) or nil
                             quote.disenchantAvailable=cost.available and (not missing or choice)
                         end

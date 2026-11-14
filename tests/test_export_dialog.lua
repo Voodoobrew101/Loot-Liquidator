@@ -117,11 +117,13 @@ eq(source.contexts.ctx.equipment[2],texture)
 eq(select(3,LL:ExportRecordedResultsPage(999)),3,'explicit pages clamp to final page')
 eq(select(3,LL:ExportRecordedResultsPage()),1,'legacy no-argument next-page export still wraps')
 
--- The strict import path accepts the exact copy field, not a separately rebuilt
--- or pre-sanitized test payload. Original hyperlink identity survives decoding.
+-- The strict import path reads the exact copy field, not a rebuilt payload.
+-- This rendering-only fixture deliberately lacks a native measured profile;
+-- decoding preserves its links, but the importer must now reject its metadata.
 local recipient=setmetatable({db={},Invalidate=function()end},{__index=LL})
 local ok,message,count=recipient:ImportRecordedResults(text)
-check(ok,message);eq(count.accepted,25,'copied JSON remains a valid research import')
+check(not ok,'rendering-only fixture cannot become measured evidence');eq(count.damaged,25,'missing native metadata rejected')
+eq(count.accepted,0,'no legacy fallback for malformed native contexts')
 
 LL:ShowRecordedResultsExport(true)
 local f=assert(LL.copyDialog)

@@ -59,6 +59,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from evidence_to_baselines import lua, rate_confidence, NOT_BASELINE_FACTOR  # noqa: E402
+from research_v3_reference_ranges import preserve_reference_range  # noqa: E402
 import research_v3_tokens  # noqa: E402  C4b3: token reward lists ride along with every refresh
 import research_v3_no_disenchant  # noqa: E402  D1c4: no-disenchant flags ride along too
 
@@ -246,9 +247,49 @@ def counts(estimate):
     return max(a - 0.5, 0.0), max(a + b - 1.0, 0.0)
 
 
+def retail_admission(rows):
+    """Quarantine reviewed cohorts before any numeric/range use; never edit evidence.
+
+    Classic mirror URLs alone do not identify a Classic observation. Exclusions
+    require a reviewed identity; renamed copies sharing its studyKey stay excluded.
+    """
+    path = Path(__file__).resolve().parent.parent / 'database/research/retail-admission.json'
+    policy = json.loads(path.read_text())
+    # A malformed policy must not silently turn a reviewed hold into admission.
+    # This validates policy structure, not the wider research row schema.
+    if not isinstance(policy, dict) or type(policy.get('version')) is not int or policy['version'] != 1:
+        raise ValueError('Unsupported Retail admission policy version')
+    if not isinstance(policy.get('exclusions'), list):
+        raise ValueError('Retail admission exclusions must be a list')
+    for rule in policy['exclusions']:
+        if not isinstance(rule, dict):
+            raise ValueError('Retail admission exclusion must be an object')
+        for key in ('recordIDs', 'studyKeys'):
+            values = rule.get(key)
+            if not isinstance(values, list) or any(not isinstance(value, str) or not value.strip() for value in values):
+                raise ValueError('Retail admission ' + key + ' must be a list of nonempty strings')
+        if not rule['recordIDs'] and not rule['studyKeys']:
+            raise ValueError('Retail admission exclusion needs at least one identity')
+        for key in ('reason', 'review'):
+            if not isinstance(rule.get(key), str) or not rule[key].strip():
+                raise ValueError('Retail admission exclusion needs nonempty ' + key)
+    admitted, excluded = [], Counter()
+    for row in rows:
+        match = next((rule for rule in policy['exclusions']
+                      if row.get('id') in rule['recordIDs']
+                      or row.get('studyKey') in rule['studyKeys']), None)
+        if match:
+            excluded['Retail admission: ' + match['reason']] += 1
+        else:
+            admitted.append(row)
+    return admitted, excluded
+
+
 def build(snapshot):
     module = load_calculator(snapshot)
-    rows = resolve_ranked_outputs(module.load())
+    rows = resolve_ranked_outputs(preserve_reference_range(module.load()))
+    total = len(rows)
+    rows, admission_notes = retail_admission(rows)
     # Their published run (all rows) only supplies the amount range per cast (e.g. 1-2 gems),
     # which reference rows often state and studies rarely do. A range is not a yield figure.
     published, _ = module.build(rows)
@@ -265,7 +306,7 @@ def build(snapshot):
         e['range'], e['rangeSource'] = ranges.get((e['method'], e['input'], e['outputItemID']),
                                                   (e['range'], e['rangeSource']))
     batches = batch_sizes(counted, module, names)
-    notes = Counter()
+    notes = Counter(admission_notes)
     groups = defaultdict(list)
     # D1c2: which items each (method, input) already has rank-specific figures for.
     known_outputs = defaultdict(set)
@@ -336,7 +377,7 @@ def build(snapshot):
         else:
             row['inputItemID'] = int(key)
         records.append(row)
-    return records, notes, len(rows), len(counted), unplaced
+    return records, notes, total, len(counted), unplaced
 
 
 def field(value, confidence, samples, status):

@@ -1,10 +1,28 @@
 #!/usr/bin/env python3
-# Minimal "luac5.1 -p FILE..." (syntax check only) using lupa.
-import sys, lupa.lua51 as l
-L = l.LuaRuntime()
-chk = L.eval("function(p) local f, e = loadfile(p); return e end")
-bad = 0
-for p in [a for a in sys.argv[1:] if a != "-p"]:
-    e = chk(p)
-    if e: sys.stderr.write("luac5.1: %s\n" % e); bad = 1
-sys.exit(bad)
+"""Syntax-check files/stdin only; does not produce bytecode."""
+import os
+import sys
+
+import lupa.lua51 as lua51
+
+
+def main():
+    args = sys.argv[1:]
+    if not args or args[0] != "-p" or any(
+        arg.startswith("-") and arg != "-" for arg in args[1:]
+    ):
+        sys.stderr.write("luac5.1 shim: usage: luac5.1 -p [FILE|- ...]\n")
+        return 1
+    runtime = lua51.LuaRuntime(encoding=None)
+    check = runtime.eval(b"function(path) local f, err = loadfile(path); return err end")
+    bad = 0
+    for path in args[1:] or ["-"]:
+        error = check(None if path == "-" else os.fsencode(path))
+        if error is not None:
+            sys.stderr.buffer.write(b"luac5.1: " + error + b"\n")
+            bad = 1
+    return bad
+
+
+if __name__ == "__main__":
+    sys.exit(main())
