@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-14T09:21:42.518Z",
-  "status": "active; corrected six duplicate cumulative rank-2 Storm Dust Looter rows from prior run; no new independent controlled yield cohorts",
+  "updated_at": "2026-11-14T10:27:32.397Z",
+  "status": "active; three new original TWW disenchant cohorts identify 108 Weavercloth Alchemist's Robe operations and conditional Shimmering Dust catch-up; no new post-hotfix ore/herb hit histograms",
   "task_ids": [
     "T0048",
     "T0040",
@@ -14,117 +14,90 @@
     "T0032"
   ],
   "exact_gaps_targeted": [
-    "T0048: duplicate provenance for rank-2 Storm Dust 219947 from six cumulative source-item rows falsely treated as fresh in the 2026-11-14T0828 file",
-    "T0048: Maniac Biker's Legguards 235148 identity erroneously left null in 2026-11-14T0828 despite previously verified 2026-11-09T1123; now restored without new cohort",
-    "T0048: unknown source collection epoch/build, item-link bonuses, live Retail disenchantability, real casts, output units, per-cast 0..N histograms, enchanting skill/specialization",
-    "T0040/T0007/T0008/T0009: post-2024-10-25 rank-specific Bismuth 210931, Ironclaw 210936/210937, Aqirite 210933/210934 raw prospect casts and output hits remain unavailable",
-    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 batch-10 milling per-output histograms, skill/spec and Resourcefulness refunds remain unavailable"
+    "T0048: new 222845 Weavercloth Alchemist's Robe -> pooled Storm Dust (rank unknown) and conditional 227662 Shimmering Dust; source reports 108 destroyed accessories, 303 pooled Storm Dust units and 14 catch-up knowledge dust units, but no positive cast counts or per-rank material histograms",
+    "T0048: independent 150 mixed-item disenchant cohort reports 27 Shimmering Dust (input ID/rarity unknown); separate 45 Darkmoon Deck operations all have Shimmering Dust (specific deck ID/rarity and quantity per cast unknown)",
+    "T0040/T0007/T0008/T0009: Bismuth 210930/210931, Ironclaw 210936/210937, Aqirite 210933/210934 still missing independent post-2024-10-25 output-per-cast data and rank-specific hit/zero histograms",
+    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 still missing current 10-herb per-rank/skill/spec/refund histograms",
+    "T0048: Boreal Rifle 232446, Lamplighter's Splitter 229150, Laundered Cape 237126 and Handwraps 233262 remaining item/rank-specific underlying cumulative Wowhead capture epoch and per-cast histograms remain unknown"
   ],
-  "newly_verified_fields": [],
-  "newly_verified_cohorts": [],
-  "new_independent_numeric_cohorts": 0,
-  "independent_new_operations": 0,
-  "current_run_evidence_records": 6,
-  "current_run_numeric_evidence_records": 0,
-  "duplicate_source_rows_neutralized": 6,
-  "duplicate_replacements": [
+  "newly_verified_fields": [
     {
-      "duplicate_record": "war-within-20261114-0828-001",
-      "replacement_record": "war-within-20261114-0921-001",
-      "canonical_existing_record": "war-within-20261101-2215-010",
-      "inputItemID": 232756,
-      "outputItemID": 219947,
-      "reported_source_hit_count": 58,
-      "reported_source_item_operations": 158,
-      "source_kind": "reference-not-study"
+      "studyKey": "wowhead-222845-tastemaker-108-robes",
+      "inputItemID": 222845,
+      "inputName": "Weavercloth Alchemist's Robe",
+      "method": "Disenchant",
+      "casts": 108,
+      "stormDustOutputItemID": null,
+      "stormDustTotalQuantity": 303,
+      "shimmeringDustOutputItemID": 227662,
+      "shimmeringDustTotalQuantity": 14,
+      "castsWithDrop": null,
+      "materialRank": null,
+      "source": "https://www.wowhead.com/item=222845/weavercloth-alchemists-robe"
     },
     {
-      "duplicate_record": "war-within-20261114-0828-002",
-      "replacement_record": "war-within-20261114-0921-002",
-      "canonical_existing_record": "war-within-20261101-2215-008",
-      "inputItemID": 237938,
-      "outputItemID": 219947,
-      "reported_source_hit_count": 40,
-      "reported_source_item_operations": 107,
-      "source_kind": "reference-not-study"
+      "studyKey": "wowhead-227662-saereya-150-mixed-items",
+      "inputItemID": null,
+      "casts": 150,
+      "outputItemID": 227662,
+      "totalQuantity": 27,
+      "castsWithDrop": null,
+      "source": "https://www.wowhead.com/item=227662/shimmering-dust"
     },
     {
-      "duplicate_record": "war-within-20261114-0828-003",
-      "replacement_record": "war-within-20261114-0921-003",
-      "canonical_existing_record": "war-within-20261102-0051-009",
-      "inputItemID": 245731,
-      "outputItemID": 219947,
-      "reported_source_hit_count": 16,
-      "reported_source_item_operations": 45,
-      "source_kind": "reference-not-study"
+      "studyKey": "wowhead-227662-mogens-45-darkmoon-decks",
+      "inputItemID": null,
+      "casts": 45,
+      "outputItemID": 227662,
+      "totalQuantity": null,
+      "castsWithDrop": 45,
+      "source": "https://www.wowhead.com/item=227662/shimmering-dust"
     },
     {
-      "duplicate_record": "war-within-20261114-0828-004",
-      "replacement_record": "war-within-20261114-0921-004",
-      "canonical_existing_record": "war-within-20261102-0051-007",
-      "inputItemID": 245720,
-      "outputItemID": 219947,
-      "reported_source_hit_count": 33,
-      "reported_source_item_operations": 95,
-      "source_kind": "reference-not-study"
-    },
-    {
-      "duplicate_record": "war-within-20261114-0828-005",
-      "replacement_record": "war-within-20261114-0921-005",
-      "canonical_existing_record": "war-within-20261109-1123-001",
-      "inputItemID": 235148,
-      "outputItemID": 219947,
-      "reported_source_hit_count": 34,
-      "reported_source_item_operations": 95,
-      "source_kind": "reference-not-study"
-    },
-    {
-      "duplicate_record": "war-within-20261114-0828-006",
-      "replacement_record": "war-within-20261114-0921-006",
-      "canonical_existing_record": "war-within-20261102-0051-008",
-      "inputItemID": 237880,
-      "outputItemID": 219947,
-      "reported_source_hit_count": 40,
-      "reported_source_item_operations": 112,
-      "source_kind": "reference-not-study"
+      "method": "Disenchant",
+      "outputItemID": 227662,
+      "outputName": "Shimmering Dust",
+      "conditionalOn": "Enchanting weekly profession-knowledge drops completed and catch-up knowledge deficit",
+      "source": "https://www.wowhead.com/guide/professions/knowledge-points"
     }
   ],
-  "newly_verified_metadata": [
-    {
-      "field": "existing identity restored, not a newly discovered fact",
-      "inputItemID": 235148,
-      "inputName": "Maniac Biker's Legguards",
-      "original_identity_record": "war-within-20261109-1123-001",
-      "source": "https://www.wowhead.com/item=235148/maniac-bikers-legguards"
-    }
+  "newly_verified_cohorts": [
+    "wowhead-222845-tastemaker-108-robes",
+    "wowhead-227662-saereya-150-mixed-items",
+    "wowhead-227662-mogens-45-darkmoon-decks"
   ],
+  "new_independent_numeric_cohorts": 3,
+  "independent_new_operations": 303,
+  "current_run_evidence_records": 5,
+  "current_run_numeric_evidence_records": 4,
+  "duplicate_source_rows_neutralized": 0,
+  "duplicate_replacements": [],
+  "newly_verified_metadata": [],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=219947/storm-dust",
-    "https://www.wowhead.com/quest=84381/renegotiations",
-    "https://www.wowhead.com/item=235148/maniac-bikers-legguards",
-    "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-    "https://www.reddit.com/r/woweconomy/comments/1fvhzy0"
+    "https://www.wowhead.com/item=222845/weavercloth-alchemists-robe",
+    "https://www.wowhead.com/item=227662/shimmering-dust",
+    "https://www.wowhead.com/guide/professions/knowledge-points"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-14T0921-six-r2-stormdust-cumulative-dedupe.jsonl"
+    "research/v3/evidence/war-within/2026-11-14T1027-weavercloth-de-shimmering-knowledge.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-14T0921-six-r2-stormdust-cumulative-dedupe.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-14T1027-weavercloth-de-shimmering-knowledge.jsonl"
   ],
-  "verified_source_parent_sha": "032592e573dcffa4fc21935005ea33cb190c3543",
+  "verified_source_parent_sha": "cf02da898d33f51a413919438a9907148ad77230",
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "Content-addressed commit cannot include its own SHA in its own status payload. Read back branch SHA and both files after publish.",
+  "verified_commit_sha_note": "A self-referential commit SHA cannot be embedded into the status file in the same one-commit transaction; verify commit externally by fetching the branch SHA and evidence/status files after ref update.",
   "blockers": [
-    "No new independently controlled TWW post-hotfix disenchant, milling or prospecting per-cast hit/quantity distributions found; community samples report nominal inputs or pooled outputs without the requested operation/histogram fields.",
-    "Several Wowhead PTR Looter cumulative item rows are already present in 2026-11-01 and 2026-11-02 evidence. Keep canonical cohorts only, not duplicate source snapshots.",
-    "Historical PTR cumulative source lacks dated underlying collection, modern live eligibility or skill/spec/resourcefulness data. No direct current drop EV may be inferred."
+    "Original sources do not supply quality-separated 219946/219947/219948 Storm Dust quantities, source-date/build, enchant skill/spec, castsWithDrop for 108-robe material outputs, zero outcomes, histograms, or individual material stack sizes.",
+    "Shimmering Dust 227662 is conditional personal profession Knowledge, not a normal liquidatable disenchant reagent. Sources lack current individual eligibility, weekly/catch-up progress and positive-cast histogram; do not use in unconditional EV.",
+    "Original Darkmoon Deck source specifies 45 disenchant events but not exact item ID, deck edition, quantity per cast or underlying source epoch. No independent new post-2024-10-25 ore/herb yield logs recovered."
   ],
   "exhausted_sources": [
-    "Cross-checked all six latest source rows against earlier original evidence files 2026-11-01T2215, 2026-11-02T0051 and 2026-11-09T1123; every latest row duplicates an existing cohort.",
-    "Rechecked 2024 and 2025 prospect/mill source leads through Reddit, Wowhead, Blizzard forums and Warcraft Wiki; no new fully specified per-cast cohort; avoid re-importing already recorded originals.",
-    "Earlier rank-2 Storm Dust and Maniac Biker identity searches are exhausted as new evidence paths; focus on independent cast logs and previously unsampled gear, not recycling cumulative snapshots."
+    "Re-checked targeted Bismuth, Ironclaw, Aqirite and Mycobloom original data opportunities including r/woweconomy 1f83cnd, 1fisfkn, 1fdmzwy, 1l3uqnw, 1jnvht8 and Blizzard forums 1968257: previously recorded cohorts or missing rank-specific per-cast hit logs; no duplicate records created.",
+    "Wowhead cumulative gear tables and old source notes do not report enchanting skill, bonus-version, live eligibility or per-cast 0..N counts; avoided copying previously recorded cumulative snapshots.",
+    "Newly identified Wowhead firsthand sources Tastemaker, Saereya and Mogens are separate original authors, not a rerun of the 505-Darkmoon-Deck crystalline study."
   ],
-  "next_concrete_step": "Seek a genuinely independent post-Oct-25-2024 TWW ore/herb cohort with downloadable original raw per-cast operations and skill/rank/refund context. For T0048, seek per-item positive stack histograms with sample epoch and live eligibility; verify against canonical study keys before evidence write.",
+  "next_concrete_step": "Seek a source-linked original addon CSV/log for post-2024-10-25 Ironclaw 210937, Aqirite 210934, Bismuth 210931 or Mycobloom 210796/210797 with per-cast quantities, ranks, skill, specialization and Resourcefulness refunds. For DE, recover underlying per-rank 222845 Storm Dust stack results and avoid conditional 227662 in unconditional baseline.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
