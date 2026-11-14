@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-14T12:30:50.908Z",
-  "status": "active; new firsthand pre-hotfix conditional prospecting reference, not a measured current-yield cohort",
+  "updated_at": "2026-11-14T13:33:28.624Z",
+  "status": "active; new source-identified Crushed Gemstones 20-point rank gates plus firsthand historical 40/40 Amber failure, reference-only; zero new measured post-hotfix numeric cohorts",
   "task_ids": [
     "T0032",
     "T0040",
@@ -14,77 +14,119 @@
     "T0048"
   ],
   "exact_gaps_targeted": [
-    "T0032: previously unresolved passive Crushed Gemstones from Khaz Algar ore: firsthand source now supports an approximate 30-knowledge-point entry-path account and approximate per-input yield, but exact node, input/quality IDs and post-hotfix applicability remain unverified",
-    "T0040/T0009/T0008/T0007: post-2024-10-25 Bismuth 210930/210931/210932, Ironclaw 210936/210937/210938, Aqirite 210933/210934/210935 actual ore-rank per-output castsWithDrop/0..N histogram and Resourcefulness-adjusted completed operations",
-    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 per-rank 10-herb completed casts, 222618/222619 pigment outputs, zero observations and skill/spec"
+    "T0032: replace unspecified ore-rank Crushed Gemstones unlock with source-stated Gem Finding 20/40 gate and input-rank-to-output-rank mapping for Bismuth/Aqirite/Ironclaw",
+    "T0032/T0040: isolate pre-2024-10-25 Gem Finding 40/40 zero EXTRA Amber report from normal Amber drops and from future post-hotfix baselines",
+    "T0040/T0009/T0008/T0007: need post-2024-10-25 completed ore-rank-specific prospects with 0/1/2/... material histograms, input refunds, skill/unlocks",
+    "T0010/T0011/T0012: need per-rank Mycobloom source-logged mill operations and 222618/222619 per-cast outputs"
   ],
   "newly_verified_fields": [
     {
-      "studyKey": "blizzard-eu-533588-ereios-20240902-passive-crushed-gemstones",
       "method": "Prospect",
-      "inputItemID": null,
-      "inputRank": null,
-      "outputItemID": null,
-      "outputName": "Crushed Gemstones",
-      "outputRank": null,
-      "sourceKind": "reference",
-      "sourceReportedApproximateOutputPer100Ore": 3,
-      "averageShown": 0.03,
-      "averagePer": "input",
-      "averageBasis": "3/100; source says roughly",
+      "inputItemIDs": [
+        210930,
+        210933,
+        210936
+      ],
+      "outputItemID": 213219,
+      "outputRank": 1,
+      "requires": "Gem Finding 20/40; ore-quality-matched",
       "casts": null,
       "castsWithDrop": null,
       "totalQuantity": null,
-      "zeroOutcomes": null,
-      "minSeen": null,
-      "maxSeen": null,
       "histogram": null,
-      "skill": null,
-      "resourcefulness": null,
-      "dataDate": null
+      "sourceKind": "condition reference"
+    },
+    {
+      "method": "Prospect",
+      "inputItemIDs": [
+        210931,
+        210934,
+        210937
+      ],
+      "outputItemID": 213220,
+      "outputRank": 2,
+      "requires": "Gem Finding 20/40; ore-quality-matched",
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "sourceKind": "condition reference"
+    },
+    {
+      "method": "Prospect",
+      "inputItemIDs": [
+        210932,
+        210935,
+        210938
+      ],
+      "outputItemID": 213221,
+      "outputRank": 3,
+      "requires": "Gem Finding 20/40; ore-quality-matched",
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "sourceKind": "condition reference"
+    },
+    {
+      "method": "Prospect",
+      "inputItemID": null,
+      "inputName": "Aqirite rank unknown",
+      "outputItemID": 212498,
+      "reportingDate": "2024-09-03",
+      "sourceReportedInputOre": 5000,
+      "sourceReportedExtraAmber": 0,
+      "baseAmberCount": null,
+      "completedCasts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "sourceKind": "reference prehotfix negative"
     }
   ],
   "newly_verified_cohorts": [
-    "blizzard-eu-533588-ereios-20240902-passive-crushed-gemstones"
+    "blizzard-forum-1942494-eddiezato-20240903-aqirite-40kp-no-extra-amber"
   ],
   "new_independent_numeric_cohorts": 0,
   "independent_new_operations": 0,
-  "current_run_evidence_records": 2,
-  "current_run_numeric_evidence_records": 1,
+  "current_run_evidence_records": 4,
+  "current_run_numeric_evidence_records": 0,
   "newly_verified_metadata": [
-    "Original forum author Ereios dated 2024-09-02 reports approximate 3 Crushed Gemstones per 100 ore via a passive unlocked by investing roughly 30 knowledge points along the prospecting path; direct gem Crushing is a separate process",
-    "Crushed Gemstones exist at distinct item IDs 213219 (R1), 213220 (R2), 213221 (R3); original author gave no item quality, so no per-rank observation was assigned",
-    "Blizzard's 2024-10-25 Jewelcrafting prospecting hotfix is already in research/v3/rate-changes.jsonl; this Sept 2 reference is pre-hotfix and must not be silently used as current-P/E"
+    "Gem Finding 20/40 explicitly unlocks ore-quality-matched Crushed Gemstones in dated 2024 guide, corroborated by German profession guide; output rank item IDs confirmed separately via catalog",
+    "Original Sep 3 2024 author Eddiezato observed 0 EXTRA Amber among 5,000 Aqirite ore at Gem Finding 40/40, but completed casts and base Ambers remain unknown, and Oct 25 hotfix changes applicability",
+    "Overgear gem-specific 10/20 Null Stone nodes describe EXTRA gem byproducts, not baseline eligibility; don't create output-gating condition rows for them until Master designs a modifier-aware schema"
   ],
   "source_links": [
-    "https://eu.forums.blizzard.com/en/wow/t/jewlecrafting-in-tww-crushed-gemstones-are-a-problem/533588",
+    "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
+    "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-4040-gem-finding-broken-no-ambers/1942494",
+    "https://www.goldgoblin.net/berufe/juwelierskunst/juwelierskunst-von-khaz-algar/",
     "https://goldcap.gg/retail/us/items/213219",
-    "https://goldcap.gg/retail/tw/items/213220",
-    "https://goldcap.gg/retail/us/items/213221"
+    "https://goldcap.gg/retail/us/items/213220",
+    "https://goldcap.gg/retail/us/items/213221",
+    "https://worldofwarcraft.blizzard.com/en-us/news/24148555/hotfixes-october-25-2024"
   ],
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-14T1230-original-crushed-gemstones-prospecting.jsonl"
+    "research/v3/evidence/war-within/2026-11-14T1333-gemfinding-rank-gates-and-amber-negative.jsonl"
   ],
   "evidence_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-14T1230-original-crushed-gemstones-prospecting.jsonl"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-14T1333-gemfinding-rank-gates-and-amber-negative.jsonl"
   ],
-  "verified_source_parent_sha": "1d7372699696d2e912812a53c4d1e8e2fafc291c",
+  "verified_source_parent_sha": "d02b96bebcb1dd6ab966b3c323e703e73d84f229",
   "verified_commit_sha": null,
-  "verified_commit_sha_note": "One-commit evidence+status transaction cannot self-reference its own SHA. Parent and resulting commit/read-back are checked externally after guarded ref update.",
+  "verified_commit_sha_note": "The evidence file and status are written atomically in one commit; that commit's SHA cannot be encoded in its own status without changing the SHA. Verified by external ref and read-back immediately following guarded branch update.",
   "blockers": [
-    "The original single-person post says roughly 3 gemstones per 100 ore, without an actual number of completed operations or real-world denominators, precise rank/ore/material item IDs, zero-inclusive event histogram, source-game build, Resourcefulness basis or tool/spec values; no measured hit probability or output rank inferred.",
-    "The 30 knowledge points refer to the author's path into the passive, not a verified final talent-node threshold or documented source rank.",
-    "No independently verified post-Oct-25-2024 matched per-cast ore/herb study was found; old 2024 study cohorts and Looter PTR tables were not recycled or inflated.",
-    "New 2025 profession commentary mentions final Uncommon Utilitarian node improving additional disenchant dust, but record schema has no separate output-quantity talent modifier; request review through Master, do not misrepresent base Storm Dust as unlock-only."
+    "No new original post-Oct-25-2024 rank-specific completed-operation sample with zero-inclusive histogram found across researched sources. Do not promote guide ranks or historical 40/40 bug to current EV.",
+    "Source's 5000 ore is raw input amount, not independently logged completed operations; the explicit zero is bonus-only, not zero baseline Ambivalent Amber. All denominator and total-material fields remain null.",
+    "Overgear Null Stone 10-point nodes and per-gem 20-point extra-quantity bonuses describe modifiers on existing eligible outputs (Method documents base Null Stone gems). Current condition schema cannot express additive bonus without gating all drops; request modifier schema through Master, no synthetic drop records.",
+    "Guide's baseline ore/spec paragraphs contain apparent inconsistencies vs Method's ore mapping; new records use only the corroborated Gem Finding 20-point rank-matched Crushed Gemstones passive."
   ],
   "exhausted_sources": [
-    "Previously imported Reddit Aqirite 1f83cnd, R1/R2 Aqirite 1g350pq, Ironclaw 1fisfkn and Sept 2024 Mycobloom 1fdmzwy are already represented and pre-hotfix; not reused.",
-    "Sep 2024 Reddit 1f8pc9q green gear R1/R2/R3 Storm Dust averages already present in 2026-11-02T0124; not duplicated.",
-    "March 31 2025 r/woweconomy 1jnvht8 reports 117 prospect clicks but no output counts or ore/savings ledger, so not a valid new drop study.",
-    "April 25 2025 r/woweconomy 1k78h4v 8% R2 ore relative value is not original per-output counts and fixed historical gold EV is irrelevant.",
-    "Source 533588 also describes direct gem Crushing requiring gems/Bismuth, a distinct process outside allowed Prospect/Mill/Disenchant/Smelt methods, intentionally not coded as a Prospect recipe."
+    "Prehotfix Reddit studies 1f83cnd,1fisfkn,1g350pq and 1fdmzwy already imported/recorded; not duplicated.",
+    "2025 prospecting profitability comments 1l91chl and 1k78h4v contain gold outcomes, not per-output casts/hits.",
+    "2024 Mycobloom 1fvhzy0 mixes milling with ink/cipher crafting and contains no rank-separated pigment output log.",
+    "Current Wowhead PTR cumulative Looter disenchant hits and live WoWDB eligibility conflicts already recorded, not independent post-hotfix samples.",
+    "2024 German/Overgear profession guides provide unlock wording, not output counts."
   ],
-  "next_concrete_step": "Seek in-game original prospecting event logs after 2024-10-25 with ore rank/item IDs, purchased vs actually consumed/reprocessed, number of completed casts, Crushed Gemstones output quality (213219/213220/213221), exact unlocking node, full per-cast outputs and explicit zero outcomes. Prioritize T0009/T0008/T0010 first; otherwise ask Master for a modifier schema covering Uncommon Utilitarian's quantity bonus without gating all Storm Dust.",
+  "next_concrete_step": "Seek first-hand post-Oct-25-2024 processing exports with exact ore/herb rank and item IDs, completed casts, per-cast zeros/stack histograms, output ranks, character skill/spec, refunded and re-used input ledger; request Master separately to support extra-byproduct/quantity talent modifiers without incorrectly gating baseline gems or Amber.",
   "one_commit_per_run": true,
   "production_merge": false,
   "release": false,
