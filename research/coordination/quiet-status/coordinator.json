@@ -1,28 +1,28 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T11:08:19.225Z",
-  "status": "active; new cross-source Dragon Isles Prospecting spell-identity field for historical Magma Thresher 199344; special-fish batch and current Retail applicability held",
+  "updated_at": "2026-11-14T12:00:12.791Z",
+  "status": "active; resolved exact historical WotLK beta-only output identity Poisonous Ivy Berries 43557; explicitly held from live Retail valuation",
   "task_ids": [],
-  "task_id_scope": "Manager original-source method/recipe identity reconciliation for Dragonflight Prospect:199344; worker queue unchanged",
+  "task_id_scope": "Manager source-identity reconciliation of already-recorded legacy-20261114-481014; no new queue task or worker assignment",
   "exact_gaps_targeted": [
-    "199344 Magma Thresher historical fish: existing worker recipe dragonflight-20261031-20010 identified named Dragon Isles Prospecting but recipeSpellID was null; crosslink named spell 374627",
-    "Whether canonical 374627 salvage spell actually accepts fish 199344 and consumes 5 fish per cast remains unverified; source text specifically states 5 ore",
-    "199344 completed fish casts, output-quality linked item IDs, material hits/0-N histograms, Resourcefulness and present-day client eligibility remain unknown",
-    "Higher-impact Midnight T0005/T0039/T0045 rank-specific per-operation outputs, refunds, skill/unlocks and processing availability remain unresolved"
+    "Legacy row legacy-20261114-481014 had historical WotLK beta build 8905 Poisonous Ivy Berries output item ID null; independently identify without rewriting worker source",
+    "Preserve build-specific removal/eligibility: distinguish beta-only ID 43557 from a usable live Retail output",
+    "Original eight dusky-tier mills and four total berry units do not identify herb inputs, positive output casts, 0/1/2 histograms, skill/build/refunds",
+    "Current priority Midnight T0005/T0039/T0045 completed cast/quality/rank/refund evidence remains missing"
   ],
   "newly_verified_fields": [
     {
-      "field": "canonical named Dragon Isles Prospecting spell identity",
-      "recipeName": "Dragon Isles Prospecting",
-      "recipeSpellID": 374627,
-      "source": "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
-      "method": "Prospect",
-      "existingInputItemID": 199344,
-      "fishAssociationSource": "https://warcraft.wiki.gg/wiki/Magma_Thresher",
-      "fishSpecificSpellInputApplicabilityVerified": false,
-      "fishInputsPerCast": null,
-      "note": "Warcraft Wiki names the profession spell as a reagent for this fish; Wowhead explicitly identifies the named spell ID 374627 and five-ore salvage amount; cannot promote five fish or live character eligibility."
+      "field": "original historical beta-only output item identity",
+      "outputName": "Poisonous Ivy Berries",
+      "outputItemID": 43557,
+      "sourceRecord": "legacy-20261114-481014",
+      "sourceBuild": "Wrath beta 8905",
+      "liveRetailEligibility": false,
+      "originalCasts": 8,
+      "originalOutputTotal": 4,
+      "castsWithDrop": null,
+      "note": "ID verified from separately indexed historical item record; no new cohort, no current Retail production use"
     }
   ],
   "newly_verified_cohorts": [],
@@ -30,22 +30,20 @@
   "new_independent_measured_current_retail_casts": 0,
   "new_verified_current_gold_decisions": 0,
   "evidence_files": [
-    "research/v3/evidence/master/20261114T1106-df-magma-thresher-prospecting-spell-identity.md"
+    "research/v3/evidence/master/20261114T1200-wotlk-beta-poisonous-ivy-berries-output-id-hold.md"
   ],
   "source_links": [
-    "https://warcraft.wiki.gg/wiki/Magma_Thresher",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
-    "https://www.wowhead.com/item=199344/magma-thresher",
-    "https://www.wowhead.com/spell=393067/magma-thresherl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261114T1106-df-magma-thresher-prospecting-spell-identity.md"
+    "https://www.wowhead.com/wotlk/item=39334/dusky-pigment",
+    "https://www.wowhead.com/wotlk/item=43557/poisonous-ivy-berries",
+    "https://warcraft.wiki.gg/wiki/Poisonous_Ivy_Berries",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261114T1200-wotlk-beta-poisonous-ivy-berries-output-id-hold.md"
   ],
-  "verified_commit_sha": "8d68298bfb54e9f24b257599623699626302c508",
-  "verified_commit_sha_scope": "Separate evidence-note creation commit; verified by fetch_file readback. Later checkpoint commit cannot contain its own SHA.",
+  "verified_commit_sha": "7999c7b95c5a702f12adc3a22da5fff106149330",
+  "verified_commit_sha_scope": "Verified evidence-note creation commit with exact repository readback; dashboard updated separately at e40a4bfe3651724b705fe7a7b6d3ff6166349b3f. Status commit cannot encode its own hash.",
   "blockers": [
-    "No primary spell-input table or current client receipt yet proves that 199344 is eligible for spell 374627, or how many fish one operation consumes; tooltip description's 5-ore value is not fish validation",
-    "No verified fish completed casts, per-output zero-inclusive results/histograms, refund ledger, linked item quality IDs, and current-build/skill context; existing January 2023 500-fish aggregate remains nominal input only",
-    "Source-numbered fish consumption unknown prevents reliable per-cast EV and price comparison; do not change pass-2 implementation branch or existing worker records",
-    "Midnight current-patch high-impact numeric/probability/rank/refund gaps remain absent"
+    "No source-specific herb item IDs, zero-inclusive output histogram or output-positive cast count for the original beta row; source 4 units / 8 mills does not equal 4 hit casts",
+    "Historical removed output must remain out of current Retail valuation and current-client data despite search indexing; current-client capability not verified",
+    "No current Midnight completed-cast/quality/refund ledger for T0005/T0039/T0045, so no new supported live gold decision"
   ],
   "exhausted_sources": [
     "Exact item ID 235148 now independently found via live Wowhead + pinned ATT quest 84381 + SimulationCraft; no repeat identity search needed absent conflicting original variant",
@@ -53,56 +51,52 @@
     "Prior Stormwarning 2026 R2 Eversong Diamond original and follow-up already reconciled; await new event-level primary data only",
     "Existing Magma Thresher Dragonflight worker file (MystSpecimen, Badwulf, Reddit zzyjzu) already compared; do not count those studies again",
     "Original January 2023 Magma Thresher 500-fish Reddit report now inventoried; do not repeatedly rediscover it without new raw logs or author clarifications",
-    "Warcraft Wiki fish-to-Dragon Isles Prospecting link and Wowhead spell 374627 identity now crosschecked; repeat only with fish-specific spell-input/client evidence"
+    "Warcraft Wiki fish-to-Dragon Isles Prospecting link and Wowhead spell 374627 identity now crosschecked; repeat only with fish-specific spell-input/client evidence",
+    "Poisonous Ivy Berries original commenter 204361 and item-index ID 43557 now crosschecked and classified removed WotLK beta output; do not search again without new contradictory primary build evidence"
   ],
   "worker_checkpoints_read": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-14T10:19:45.177Z",
-      "acknowledgment": "not requested/inferred",
-      "reported_new_cohorts": 0
+      "updated_at": "2026-11-14T11:14:25.852Z",
+      "acknowledgment": "not requested/inferred"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-14T10:27:32.397Z",
-      "acknowledgment": "not requested/inferred",
-      "reported_new_cohorts": 3
+      "updated_at": "2026-11-14T11:26:18.162Z",
+      "acknowledgment": "not requested/inferred"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-14T10:35:21.400Z",
-      "acknowledgment": "not requested/inferred",
-      "reported_new_cohorts": 0
+      "updated_at": "2026-11-14T11:31:04.102Z",
+      "acknowledgment": "not requested/inferred"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-14T10:47:45.305Z",
-      "acknowledgment": "not requested/inferred",
-      "reported_new_cohorts": 2
+      "updated_at": "2026-11-14T11:51:14.088Z",
+      "acknowledgment": "not requested/inferred"
     }
   ],
   "validation": {
-    "source_wiki_magma_thresher_reagent_for_named_profession_spell": true,
-    "independent_named_spell_374627_and_salvage_ore_value_5_read": true,
-    "fish_batch_size_verified": false,
-    "historical_worker_original_recipe_20010_read": true,
+    "source_historical_output_identity_crosschecked": true,
+    "source_wotlk_beta_removed_classification_checked": true,
+    "worker_original_cohort_read": true,
+    "evidence_note_readback_verified": true,
+    "dashboard_readback_verified": true,
     "new_independent_numeric_cohorts": 0,
-    "imported_new_numeric_rates": false,
     "actual_addon_valuation_or_tooltip_test_executed": false,
     "synthetic_price_offline_test_executed": false,
     "lua_tests_executed": false,
     "live_retail_client_test_executed": false,
     "compiled_ItemDB_changed": false,
-    "evidence_note_readback_verified": true,
-    "prior_research_CI": "Verify five-agent completion run 43586966308 successful on previous dc68a3718de24bd5c45c798ef8960f82d9f598dd before new manager note; not new note/checkpoint test",
-    "verified_pr_states": "PRs #22/#23 closed unmerged; no PR changes made"
+    "research_CI_last_observed": "Verify five-agent completion run 43591985375 successful for pre-manager head 370f535eff57d4f1f7df794cc194c98df410b165; no test against this new manager change",
+    "pr22_pr23": "closed unmerged; no operations taken"
   },
   "protected_state": {
     "main_head_at_read": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
     "integration_head_at_read": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_head_before_status_update": "8d68298bfb54e9f24b257599623699626302c508",
+    "research_head_before_writes": "370f535eff57d4f1f7df794cc194c98df410b165",
     "immutable_snapshot": "4df9ae8b1359d934828e4d0e6d39a4dba26fae",
     "addon_main_workers_integration_schedules_merges_releases_untouched": true
   },
-  "next_concrete_step": "Dragonflight worker to verify 199344 in actual 374627 input table or live fish-targeted operation and recover consumed fish per cast, refunds, source output itemLinks/ranks, completed cast counts; append correction rather than rewriting original. Keep current-patch Midnight T0005/T0039/T0045 per-operation rank/refund data highest priority and don't promote fish to valuation until validated."
+  "next_concrete_step": "Legacy worker may append same-study item-ID correction for source row legacy-20261114-481014 with outputItemID 43557 and explicit beta-8905-only exclusion; no worker-original rewrite. Main research emphasis remains new source-original Midnight T0005/T0039/T0045 per-cast ranked outputs, refunds and skill context (not unverified inferred denominators)."
 }
