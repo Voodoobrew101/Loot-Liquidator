@@ -1,153 +1,173 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-14T01:03:50.740Z",
-  "status": "research-only five-source Dragonflight Looter audit: six independently corroborated source-listed positive-stack display intervals on existing rows, plus seven mathematically required possible co-appearances across three source cohorts; zero new independent current Retail casts, measured E, price decisions or live addon validations",
+  "updated_at": "2026-11-14T02:11:41.401Z",
+  "status": "active; research-only independent five-source Dragonflight gear count/range audit and static estimator provenance check; 181 source-reported item operations / 201 material appearances, conditional overlap-excess >=20; three present-catalog eligibility conflicts; no new independent completed Retail player casts, actual gold recommendations, measured means or runtime verification",
   "task_ids": [
     "T0041",
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Five newly worker-captured exact Dragonflight gear inputs 200272, 200362, 200366, 200367, 200368 have 10 source material occurrence rows, but six useful source-listed stack-display intervals were not represented in their per-event minSeen/maxSeen fields (correctly null because the intervals are not observed extrema).",
-    "Three Waking Fist source tables 200362,200366,200367 have nonexclusive output hits whose sums exceed item-operation denominators: 24/20,15/13,15/14. Cohort joint event identities, source epoch/bonus, rank, skills, measured output totals and current Retail eligibility remain unresolved.",
-    "Source-linked bonus/selected-ilvl preview and 12.1.5 vs 12.1.7 PTR mirrors are not independent cohorts or authenticated at-disenchant item variants. Raw Looter source output-linked IDs and completed 0..N receipt ledgers not retrieved."
+    "Five distinct Dragonflight item-side Looter tables 200386, 200379, 200380, 200381 and 194406 lack original 0..N per-event output stack histograms, at-cast itemLinks/bonus, build/patch, profession skill/spec and independent uploader cohort ledgers; historical source counts are useful but not unconditional current-Retail EV.",
+    "Seven worker rows for 200394, 200386, 200379, 200380, 200381 and 194406 map source-listed positive-stack intervals 1–2/1–3 into minSeen/maxSeen, even though schema reserves those fields for per-cast observed extrema; static estimator uses them to label observedRange and derive P(hit)*midpoint provisional yield.",
+    "200394 26-operation source sample is a repeated original 2026-11-13 cumulative table under a different studyKey; its numeric 18/26 Shard and 13/26 Crystal rows must not be counted as independent cohorts.",
+    "Current LIVE WoWDB catalog for exact IDs 200379, 200380 and 200381 says Cannot be disenchanted despite older same-ID Wowhead Looter cumulative reports; original bonus/epoch and current client eligibility remain unknown.",
+    "Higher priority current-patch Midnight T0005/T0039/T0045 original input/output rank, per-operation hit/zero/quantity/refund/skill/unlock histories still missing."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "kind": "six source-reported reference/display stack intervals, not measured extrema or independent observations",
-      "source_worker_file": "research/v3/evidence/dragonflight/20261114T0043-five-unindexed-df-gear-looter-counts.jsonl",
-      "worker_blob_sha": "561d67a2469ae7eb0fbb3de1c769139772cf931a",
-      "original_item_sources_read": 5,
-      "source_item_ids": [
-        200272,
-        200362,
-        200366,
-        200367,
-        200368
-      ],
-      "historical_item_operations_reported_already_in_worker_file": 120,
-      "occurrence_rows_already_in_worker_file": 10,
-      "verified_new_reference_display_intervals": [
+      "kind": "source_cumulative_counts",
+      "basis": "source-reported anonymous Wowhead Looter tables; not independent player studies or 2026 client events",
+      "items": [
         {
-          "item": 200272,
-          "output": 194123,
-          "range": [
-            1,
-            3
-          ]
+          "inputItemID": 200386,
+          "reportedOperations": 17,
+          "outputHits": {
+            "194124": 7,
+            "200113": 11
+          },
+          "overlapExcess": 1
         },
         {
-          "item": 200272,
-          "output": 194124,
-          "range": [
-            1,
-            2
-          ]
+          "inputItemID": 200379,
+          "reportedOperations": 15,
+          "outputHits": {
+            "194124": 10,
+            "200113": 9
+          },
+          "overlapExcess": 4
         },
         {
-          "item": 200362,
-          "output": 194124,
-          "range": [
-            1,
-            2
-          ]
+          "inputItemID": 200380,
+          "reportedOperations": 35,
+          "outputHits": {
+            "194124": 19,
+            "200113": 26
+          },
+          "overlapExcess": 10
         },
         {
-          "item": 200366,
-          "output": 194124,
-          "range": [
-            1,
-            2
-          ]
+          "inputItemID": 200381,
+          "reportedOperations": 37,
+          "outputHits": {
+            "194124": 15,
+            "200113": 26
+          },
+          "overlapExcess": 4
         },
         {
-          "item": 200367,
-          "output": 194124,
-          "range": [
-            1,
-            2
-          ]
-        },
-        {
-          "item": 200368,
-          "output": 194124,
-          "range": [
-            1,
-            2
-          ]
+          "inputItemID": 194406,
+          "reportedOperations": 77,
+          "outputHits": {
+            "194123": 66,
+            "194124": 11,
+            "200113": 1
+          },
+          "overlapExcess": 1
         }
       ],
-      "inclusion_exclusion_lower_bound_joint_appearances_if_source_denominators_shared": {
-        "200362": 4,
-        "200366": 2,
-        "200367": 1
-      },
-      "known_same_source_mirrors": [
-        "200366 PTR 12.1.5/PTR 12.1.7 same 13/8/7",
-        "200368 PTR and selected-ilvl395 live preview same 10/7/3"
+      "sourceReportedOperationsTotal": 181,
+      "sourceMaterialAppearancesTotal": 201,
+      "minimumAppearanceExcessUnderSharedDenominators": 20
+    },
+    {
+      "kind": "seven_source_listed_positive_stack_ranges_not_directly_observed_histograms",
+      "pairs": [
+        "200394->194124:1-2",
+        "200386->194124:1-2",
+        "200379->194124:1-2",
+        "200380->194124:1-2",
+        "200381->194124:1-2",
+        "194406->194123:1-3",
+        "194406->194124:1-2"
       ],
-      "new_independent_numeric_cohorts": 0,
-      "newly_observed_completed_casts": 0,
-      "newly_verified_unconditional_expected_quantities": 0,
-      "newly_validated_character_gold_decisions": 0
+      "displayProvenance": "reference/source-listed; minSeen/maxSeen should not automatically imply measured extrema"
+    },
+    {
+      "kind": "independent_original_cohort_duplicate",
+      "inputItemID": 200394,
+      "reportedOperations": 26,
+      "materialHits": {
+        "194124": 18,
+        "200113": 13
+      },
+      "note": "2026-11-13 and 2026-11-14 worker rows repeat same original source; no extra cohort"
+    },
+    {
+      "kind": "catalog_eligibility_conflict",
+      "itemIDs": [
+        200379,
+        200380,
+        200381
+      ],
+      "basis": "current static LIVE WoWDB metadata says cannot be disenchanted; no verified current-client attempt"
     }
   ],
   "newly_verified_numeric_studies": 0,
   "newly_observed_completed_casts": 0,
   "newly_verified_current_gold_decisions": 0,
   "evidence_files": [
-    "research/v3/evidence/master/2026-11-14T0104-df-five-gear-looter-source-ranges-overlap-and-cohort-scope.md"
+    "research/v3/evidence/master/2026-11-14T0208-df-rank-range-provenance-and-overlap-audit.md"
   ],
   "source_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/20261114T0043-five-unindexed-df-gear-looter-counts.jsonl",
-    "https://www.wowhead.com/item=200272/keratin-reinforced-boots",
-    "https://www.wowhead.com/item=200362/palms-of-the-waking-fist",
-    "https://www.wowhead.com/ptr/item=200366/girdle-of-the-waking-fist",
-    "https://www.wowhead.com/item=200367/cuffs-of-the-waking-fist",
-    "https://www.wowhead.com/ptr/item=200368/drape-of-the-waking-fist",
-    "https://www.wowhead.com/ptr-2/item=200366/girdle-of-the-waking-fist",
-    "https://www.wowhead.com/item=200368/drape-of-the-waking-fist?bonus=6652%3A8943%3A9344%3A1478%3A8767&class=10&ilvl=395&spec=269"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-14T0136-six-distinct-gear-looter-counts.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-13T2234-seven-gear-looter-hits.jsonl",
+    "https://www.wowhead.com/ptr/item=200386/shroud-of-the-awakened",
+    "https://www.wowhead.com/item=200379/treads-of-the-awakened",
+    "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened",
+    "https://www.wowhead.com/item=200381/crown-of-the-awakened",
+    "https://www.wowhead.com/ptr/item=194406/stingerproof-helmet",
+    "https://www.wowhead.com/item=200394/stormwing-harriers-wristguards",
+    "https://www.wowdb.com/items/200379-treads-of-the-awakened",
+    "https://www.wowdb.com/items/200380-gauntlets-of-the-awakened",
+    "https://www.wowdb.com/items/200381-crown-of-the-awakened"
   ],
-  "verified_commit_sha": "8148e502eeb097674cf8a006d4583113697550bb",
-  "verified_commit_sha_scope": "Evidence 5ec0c9dbea9370e30cdb93a2c996564668e39dcc read back as blob fbdd2b2130ab5a819a474870104f5c2d8c32c9ae. Dashboard 8148e502eeb097674cf8a006d4583113697550bb read back as blob 05b9a93be723204e1a57c32aba8f5f387acce691. This JSON cannot self-reference its own final commit SHA.",
+  "verified_commit_sha": "df4329d3274e64c8df451f9b6eae4dbb91a13d3b",
+  "verified_commit_sha_scope": "Verified on branch by read-back: master evidence note and research dashboard only. Coordinator status is committed afterward and must be confirmed separately.",
   "blockers": [
-    "Only indexed Wowhead Looter pages were independently read; dynamic raw row link IDs, at-event item links, bonus and original build/time are unavailable. The preview's item level is not evidence of at-cast item level.",
-    "Original 0..N histograms, positive stack totals, independence of source uploads, current character skill/spec and 2026 Retail disenchant legality not validated.",
-    "Six source-listed intervals are only reference/display provenance and source-arithmetic bounds; measured E and a present-character price model require further validation. Do not promote to observed minSeen/maxSeen.",
-    "No source-to-compiled-to-tool-tip synthetic-price probe or live client verification performed. Current Midnight T0005/T0039/T0045 event/refund/rank gaps remain higher economic priority."
+    "No original source 0..N event-level material ledgers, denominators for independently controlled modern samples, raw stack quantities, source character skill/spec or at-cast version/bonus.",
+    "Three live catalog item IDs conflict with historical cumulative DE tables; source epoch, exact original variants and present-character eligibility are unverified.",
+    "Seven source-listed positive-stack intervals have ambiguous observed-versus-reference provenance; do not certify field-level observed extrema or present-character expected quantity.",
+    "Static code and arithmetic checks only: no Python estimator, native Lua suite, actual offline synthetic-price valuation/tooltip, or live WoW client testing performed by coordinator.",
+    "Current Midnight rank/zero/refund/unlock gaps T0005/T0039/T0045 have no new independent operation logs."
   ],
   "exhausted_sources": [
-    "200366 PTR 12.1.5 and PTR 12.1.7 return the same 13 event /8+7 hits cumulative table and cannot be counted as two independent trials.",
-    "200368 PTR and selected bonus/ilvl395 live preview return identical 10 event /7+3 hits; URL variants do not identify at-cast player conditions.",
-    "All five indexed item tables lack event-level source ledger, so repeated text searches of these same snapshots cannot resolve true 0-count or measured expected units."
+    "The 200394 Nov 13 and Nov 14 equal 26-operation Looter tables are one original indexed source; repeated URLs/different studyKeys are not new cohorts.",
+    "194406 PTR 12.1.5 and 12.1.7 indexed pages mirror the same 77-event 66/11/1 material rows; do not count additional cohort.",
+    "Five indexed Looter tables provide displayed stacks but not actual source event receipts, original build/skill/itemLink; repeating identical source snapshots cannot resolve zero-inclusive histograms."
   ],
   "validation": {
-    "executed": [
-      "Reviewed main b6610848604f68f8f3b40834397b79ce53eb8fb5, research prewrite ca5423d599d7f975793063909832204c41589bc7 and protected integration 3d667d053db587c91401cfed7ecc56862b8340c9; read charter, three-pass plan/PASS-1, research v3 README/evidence format/mechanics/queue/strategy/flags, latest coordinator and all four worker status files.",
-      "Checked actual GitHub Actions Verify five-agent completion run 43536142668 completed success on prewrite research ca5423d; did not claim CI for new research-only manager commits.",
-      "Checked PR #22/#23 closed unmerged, #24 merged, and #52/#65 open; no PR action performed.",
-      "Parsed all 10 worker rows, checked five indexed original item-side Looter tables, checked separate output item ID catalogs, and arithmetically validated conditional overlap bounds and source stack-display intervals.",
-      "Committed one research-only manager evidence note and dashboard checkpoint; both blob contents and commit HEAD independently read back."
+    "readback_of_prior_commit": true,
+    "evidence_sha": "df4329d3274e64c8df451f9b6eae4dbb91a13d3b",
+    "audited_source_tables": 5,
+    "original_duplicate_caught": "200394 26 reported operations, duplicate source across two worker files",
+    "source_operations": 181,
+    "source_output_appearances": 201,
+    "conditional_overlap_excess": 20,
+    "source_display_intervals_reclassified": 7,
+    "static_estimators_read": [
+      "research/v3/tools/build_estimates.py",
+      "research/v3/tools/source_keys.py"
     ],
-    "not_executed": [
-      "No new independent observed experiments, completed player casts, joint-source receipts or zero-inclusive histograms created.",
-      "No Python estimator execution, native Lua or addon suite, offline valuation/render, live character prices, or WoW client test.",
-      "No edit to main, immutable source snapshot, protected integration branch, original worker evidence/status files, shared queue/flags/strategy, PRs or schedules."
-    ]
+    "actual_engine_or_tooltip_tests_executed": false,
+    "estimator_executed": false,
+    "native_lua_tests_executed": false,
+    "live_client_tests_executed": false,
+    "newly_verified_real_gold_decisions": 0,
+    "ci_claim": "GitHub workflow completion on prior research head a2de40d was success, run 43543136132; no CI claim made for this new evidence/status commit"
   },
   "protected_state": {
     "main_head_at_review": "b6610848604f68f8f3b40834397b79ce53eb8fb5",
-    "research_head_before_manager_work": "ca5423d599d7f975793063909832204c41589bc7",
-    "research_evidence_commit": "5ec0c9dbea9370e30cdb93a2c996564668e39dcc",
-    "research_dashboard_commit": "8148e502eeb097674cf8a006d4583113697550bb",
+    "research_head_before_manager_work": "a2de40d21e8132966c611974bece56f88ef5c605",
+    "research_evidence_and_dashboard_commit": "df4329d3274e64c8df451f9b6eae4dbb91a13d3b",
     "integration_head_at_review": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "immutable_snapshot": "4df9ae8b1359d934828e4d0e6d39a9a4dba26fae",
-    "prewrite_ci_sha": "ca5423d599d7f975793063909832204c41589bc7",
-    "prewrite_ci_result": "completed success",
-    "prewrite_ci_url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43536142668",
-    "research_only": true,
+    "prior_head_ci_sha": "a2de40d21e8132966c611974bece56f88ef5c605",
+    "prior_head_ci_result": "completed success",
+    "prior_head_ci_url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43543136132",
     "prs_22_23": "closed unmerged; untouched",
-    "three_pass_integration": "PR #24 merged historically; branch and main untouched"
+    "addon_main_and_workers_unchanged_by_coordinator": true,
+    "merges_releases_and_schedules_untouched": true
   },
-  "next_concrete_step": "Preserve the six independently source-listed stack intervals as labeled reference/display context for a reviewed disjoint importer; obtain original source-linked output items, exact at-cast itemLink/bonus and per-event joint 0..N histograms for five DF Looter tables without duplicate PTR cohorts. Prioritize current Midnight T0005/T0039/T0045 rank-specific completed prospect/mill events, refunds and skill/unlock before any new gold-EV assertions."
+  "next_concrete_step": "Get original exact at-event 0..N output and itemLink/bonus/build ledger for disputed Dragonflight 200379/200380/200381; preserve seven source-only 1–2/1–3 range labels without miscalling extrema in future reviewed importer. Maintain worker ownership. Prioritize current Midnight T0005/T0039/T0045 original complete rank-specific prospect/mill operations with saved-input refunds, skill and unlock state."
 }
