@@ -64,10 +64,11 @@ check('function unlocks must not be silently erased by JSON serialization',()=>{
  const c=ctx();c.professionContext.unlocks=()=>true;
  assert.throws(()=>analyze(c),/CONTEXT|PROFESSION|SERIAL/);
 });
-check('distinct nonfinite specialization values must not share a context key',()=>{
- const a=ctx(),b=ctx();a.professionContext.specialization=NaN;
- b.professionContext.specialization=Infinity;
- assert.notEqual(analyze(a).typedContextKey,analyze(b).typedContextKey);
+check('NaN and Infinity specialization must both be rejected before creating a context key',()=>{
+ for(const value of [NaN,Infinity]){
+  const c=ctx();c.professionContext.specialization=value;
+  assert.throws(()=>analyze(c),/CONTEXT|PROFESSION|FINITE|SERIAL/);
+ }
 });
 check('nested undefined profession field must not silently disappear',()=>{
  const c=ctx();c.professionContext.gear={stat:10,unknown:undefined};
