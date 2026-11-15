@@ -1,136 +1,109 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-15T09:07:35.171Z",
-  "status": "Research-only new Xenastro R2 cohort refund source-to-consumer metadata propagation gap documented and dashboard updated; no new Retail gold decision or new independent measured cohort.",
+  "updated_at": "2026-11-15T10:11:14.491Z",
+  "status": "Research-only verified 10x unit mislabel in two 2024 Mycobloom R2 Nacreous source rows; evidence and dashboard committed/read back, no new original cohort, no current Retail gold decision or addon runtime verification.",
   "task_ids": [
-    "T0020",
-    "T0019",
-    "T0039",
-    "T0045",
+    "T0010",
+    "T0011",
     "T0009",
-    "T0010"
+    "T0039",
+    "T0045"
   ],
   "exact_gaps_targeted": [
-    "Four Jan–Feb 2023 Xenastro Draconium Ore 188658 R2 source workbook rows have one reported Ore Refund quantity per source cohort; 2026-11-15 DF same-cohort replacements retain the return field only on one of each cohort's 8/9 output rows in free-text stats.",
-    "The other 31 output rows in the four cohorts lack refund metadata, and all 35 original output rows have no structured inputsRefunded. Preserve input savings as source-cohort data, not a material output quantity or duplicate savings per output.",
-    "Original Quantity (including 8543, not a multiple of 5) is source-reported ore units, not documented completed cast count or unambiguously purchased/processed ore. Refund reprocessing remains unknown.",
-    "Higher-priority current-build Midnight T0039/T0045 and TWW T0009/T0010 still need rank, skill, unlock, refund, original completed operations and zero-inclusive quantities."
+    "Original Sept 10, 2024 Reddit Mycobloom source reports R2 Nacreous pigment 1.15 (R1 herb) and 1.35 (R2 herb) per gross herb, but existing v3 worker records war-within-20261030-301/302 declare averagePer='cast' despite inputsPerCast=10.",
+    "Current v3 unit_average() retains 1.15/1.35 per full craft when averagePer='cast'; source's own 100 crafts/1000 R2 herbs/1350 pigments illustration fixes dimensional units at 13.5 per nominal ten-herb craft, 11.5 for R1.",
+    "Original records' inputItemID/outputItemID null and unknown actual per-rank completed operation counts, skill/spec, source refund processing and patch bridge still block modern live rank-specific 210796/210797 to 222619 gold recommendation.",
+    "Higher current-patch numeric gaps remain Midnight T0039/T0045 and The War Within T0009/T0010 actual operation-level output rank, skill/unlock, zero-hit and refund ledgers."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "inputItemID": 188658,
-      "inputRank": 2,
-      "sourceWorkbookRow": 28,
-      "sourceQuantityOre": 8543,
-      "sourceOreRefundUnits": 126,
-      "sourceReportedRefundToQuantityRatio": 0.014748917242186585,
-      "originalOutputRows": 8,
-      "newlyAnnotatedRows": 1,
-      "originalOutputQuantityUnchanged": true
+      "recordID": "war-within-20261030-301",
+      "inputRank": 1,
+      "outputRank": 2,
+      "inputsPerCast": 10,
+      "sourceRatePerGrossHerb": 1.15,
+      "storedRatePerCast": 1.15,
+      "sourceNormalizedNominalRatePerCast": 11.5,
+      "unitUnderstatementFactor": 10,
+      "sourceCohortNew": false
     },
     {
-      "inputItemID": 188658,
+      "recordID": "war-within-20261030-302",
       "inputRank": 2,
-      "sourceWorkbookRow": 52,
-      "sourceQuantityOre": 15000,
-      "sourceOreRefundUnits": 893,
-      "sourceReportedRefundToQuantityRatio": 0.059533333333333334,
-      "originalOutputRows": 9,
-      "newlyAnnotatedRows": 1,
-      "originalOutputQuantityUnchanged": true
-    },
-    {
-      "inputItemID": 188658,
-      "inputRank": 2,
-      "sourceWorkbookRow": 54,
-      "sourceQuantityOre": 13000,
-      "sourceOreRefundUnits": 883,
-      "sourceReportedRefundToQuantityRatio": 0.06792307692307692,
-      "originalOutputRows": 9,
-      "newlyAnnotatedRows": 1,
-      "originalOutputQuantityUnchanged": true
-    },
-    {
-      "inputItemID": 188658,
-      "inputRank": 2,
-      "sourceWorkbookRow": 62,
-      "sourceQuantityOre": 13000,
-      "sourceOreRefundUnits": 735,
-      "sourceReportedRefundToQuantityRatio": 0.05653846153846154,
-      "originalOutputRows": 9,
-      "newlyAnnotatedRows": 1,
-      "originalOutputQuantityUnchanged": true
+      "outputRank": 2,
+      "inputsPerCast": 10,
+      "sourceRatePerGrossHerb": 1.35,
+      "storedRatePerCast": 1.35,
+      "sourceNormalizedNominalRatePerCast": 13.5,
+      "unitUnderstatementFactor": 10,
+      "sourceCohortNew": false
     }
   ],
   "numeric_fields_advanced": {
     "new_original_measured_cohorts": 0,
-    "new_current_Retail_completed_casts": 0,
-    "newly_independently_verified_original_XLSX_cells_this_run": 0,
-    "existing_source_cohorts_join_verified": 4,
-    "original_output_rows_accounted_for": 35,
-    "original_output_rows_missing_new_refund_context": 31,
-    "refund_facts_newly_discovered": 0,
-    "refund_facts_static_source_joins_verified": 4,
-    "source_reported_refund_units_total": 2637,
-    "source_reported_quantity_ore_total": 49543,
-    "new_current_Retail_gold_decisions": 0
+    "new_verified_current_Retail_completed_casts": 0,
+    "number_of_existing_rows_unit_error_verified": 2,
+    "source_normalized_rate_per_nominal_cast": [
+      11.5,
+      13.5
+    ],
+    "new_corrections_committed": 0,
+    "new_live_gold_decisions": 0
   },
   "evidence_files": [
-    "research/v3/evidence/master/20261115T0905-xenastro-r2-refund-cohort-propagation-gate.md"
+    "research/v3/evidence/master/20261115T1008-mycobloom-rank-unit-normalization-gate.md"
   ],
-  "evidence_blob_sha": "aab53763fe044413455af0b1d94fa4a67dad9843",
+  "evidence_blob_sha": "3233c5d753f544a541d379c6ab648904d2abc28f",
   "source_links": [
-    "https://drive.google.com/file/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/view",
-    "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-10-30T2027-xenastro-draconium-five-log-rows.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-15T0837-xenastro-original-r2-ore-refunds.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261115T0905-xenastro-r2-refund-cohort-propagation-gate.md"
+    "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-10-30T1852-mycobloom-rank-yields-ironclaw.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261115T1008-mycobloom-rank-unit-normalization-gate.md",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py"
   ],
-  "verified_commit_sha": "952db8551a00910e91d464b9f704664177dccf3c",
-  "dashboard_verified_commit_sha": "1a05faeae0aeeaf39dcafb73633245f661264d47",
-  "verified_commit_sha_scope": "Evidence commit independently fetched by GitHub readback blob aab53763; dashboard commit independently fetched by GitHub readback blob 53baea3a. Cannot self-reference coordinator status commit.",
+  "verified_commit_sha": "67e620be3ac83dd7a4a22884d0ffb135b015f68e",
+  "dashboard_verified_commit_sha": "bbc309d68b1d003c5860e6568aa213518b67c032",
+  "verified_commit_sha_scope": "Evidence commit verified by blob readback 3233c5d; dashboard commit verified by readback blob 7640b6b; cannot self-reference subsequent coordinator-status commit.",
   "checks_actually_performed": [
-    "Refreshed main db80e43, owner integration 3d667d0 and research e823479 worker pre-manager head; read adopted charter and owner three-pass plan/PASS-1, research README/schema/mechanics/queue/strategy/flags, research manager/worker checkpoints and current CI/PR state.",
-    "Compared original 44-row Oct 30 Xenastro source transcription and four new Nov 15 DF same-cohort replacements by exact replaces ID, studyKey, input rank, original output quantity. All four join and unchanged totals verified.",
-    "Executed direct JavaScript assertions to count original grouped output rows 8/9/9/9, new refund metadata on just four rows, 31 sibling output rows unchanged, and parse exact 126/893/883/735 ore-return quantities from worker source-transcriptions.",
-    "Verified arithmetic 2637 source Ore Refund / 49543 original Quantity; row 28 Quantity 8543 modulo five equals three, so source Quantity is not an integer cast count under simple five-ore batching.",
-    "Static-read current estimator load()/row_use() and M03 proposed schema: stats-only Ore Refund not read as inputsRefunded, no automatic supported net cost; not a demonstrated current addon UI bug.",
-    "Committed research-only evidence 952db85 and readback aab5376; updated manager dashboard 1a05fae and readback 53baea3; did not modify worker originals."
+    "Refreshed main db80e43, research c6d9aee pre-manager, owner three-pass 3d667d0; read owner's adopted charter/three-pass plan/PASS-1, v3 README/schema/mechanics/queue/strategy/flags, prior manager status/dashboard and four worker checkpoints.",
+    "Read original Sept 10 2024 Reddit author example; independently derived 1.35 pigment/gross herb × 10 input herbs/cast = 13.5 per nominal cast, 100 × 13.5 = 1350; R1 1.15 × 10 = 11.5.",
+    "Read actual two untouched worker JSONL records and current build_estimates.py unit_average()/row_use()/CORRECTABLE; verified averagePer='cast' as stored and averagePer='input' supported without inventing cast counts.",
+    "Read corrections.jsonl at blob 80f37db; no correction for existing records 301/302. Prior 2026-10-29 source note understood gross-herb units, so not counted as new evidence.",
+    "Executed direct JavaScript assertions on two fetched records for rank, batch, factor-ten mismatch, author's 1350/100 worked example, and math-only gross 100 copper synthetic price comparison: 115/135 vs 1150/1350 copper.",
+    "Committed research-only evidence 67e620b, fetched exact blob 3233c5d, updated manager dashboard bbc309d and verified blob 7640b6b."
   ],
   "not_performed": [
-    "No new direct original XLSX cell inspection: use earlier Nov 14 manager audit and Nov 15 worker original-source inspection; new result is the independently verified cross-file source-cohort field propagation gap.",
-    "No Python compilation, addon/Lua runtime, synthetic-price valuation or live WoW client tests in this run; no CI result is claimed for these manager changes.",
-    "No main, owner-controlled integration, worker evidence or status, queue, flags, PR merges/closes/releases, source history, schedules or addon changes."
+    "No edit to originals, shared corrections, flags, worker queue/status, addon or main/owner integration branch; no merges/PRs/releases/schedules.",
+    "No new original XLSX inspection required for this separate original Reddit row; no fresh Python compiler, actual addon offline valuation/tooltip, WoW client, or CI on manager commits."
   ],
   "worker_checkpoints_read": {
-    "legacy": "2026-11-15T08:52:52.509Z: Cobalt/Fel Iron original source exports locked; no independently verified completed casts",
-    "dragonflight": "2026-11-15T08:37:02.167Z: four same-cohort Xenastro R2 refund source transcriptions",
-    "war_within": "2026-11-15T08:21:11.879Z: Algari Rifle 223548 reference aggregate with material rank/histogram missing",
-    "midnight": "2026-11-15T08:17:24.522Z: five item-side Devouring Reaver references with Dawn Crystal ID/rank unresolved"
+    "legacy": "2026-11-15T09:55:22.143Z: historical TBC source rows, no current in-client Warmaul eligibility",
+    "dragonflight": "2026-11-15T09:40:00.448Z: three previously unindexed Xenastro R3 batches, mixed pooled output and refund context",
+    "war_within": "2026-11-15T09:26:30.441Z: anniversary gear 224748/224744 mixed-era Looter rows, unknown rank/variant",
+    "midnight": "2026-11-15T09:16:49.146Z: six dual-row anonymous Dawn Crystal gear references, unresolved output identity"
   },
   "github_state_checked": {
     "main": "db80e43ae29ee19141a3c9ff6ab6bda034c49d90",
     "owner_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_pre_manager": "e82347955e70874cb1a5d78c6f3e49dbab397931",
-    "evidence_commit": "952db8551a00910e91d464b9f704664177dccf3c",
-    "dashboard_commit": "1a05faeae0aeeaf39dcafb73633245f661264d47",
-    "research_PRS": "#22 and #23 closed unmerged; neither touched",
+    "research_pre_manager": "c6d9aee0440e899ef16711f92e569bed2c9c6269",
+    "evidence_commit": "67e620be3ac83dd7a4a22884d0ffb135b015f68e",
+    "dashboard_commit": "bbc309d68b1d003c5860e6568aa213518b67c032",
+    "research_PRs": "#22 and #23 closed unmerged and untouched",
     "CI_before_manager_changes": {
-      "run_id": 43696559922,
-      "head_sha": "e82347955e70874cb1a5d78c6f3e49dbab397931",
+      "run_id": 43701569684,
+      "head_sha": "c6d9aee0440e899ef16711f92e569bed2c9c6269",
       "conclusion": "success"
     }
   },
   "blockers": [
-    "The source worksheet Quantity column's purchase vs processed basis and whether refunded ore was reprocessed are not independently resolved; these numeric return units are not a per-cast probability or Retail cost coefficient.",
-    "Output quantities remain pooled green/blue/epic quality results rather than material-specific item IDs, so no exact current Retail rank-priced expected value can be derived.",
-    "Current compiler does not read free-text Ore Refund; a future coherent input savings path needs source-qualified cohort metadata plus a no-double-counting regression in reviewed engineering.",
-    "Current Retail patch/skill, item eligibility and per-output completed-operation ledger remain unavailable."
+    "Original author reports 20k+ combined herbs but no per-rank source cast count, full event logs, zero outcomes, rank-specific character skill/spec, refunds or current-patch equivalence.",
+    "Current v3 worker raw rows mislabel mean unit and have null exact input/output IDs; corrected source-units should not automatically pass runtime/source selection or be deemed live Retail usable.",
+    "A separate reviewed correction needs to set the two averagePer fields to 'input' without modifying append-only originals; subsequent compiler and actual offline tooltip/regression must demonstrate no double-counting and maintain price/eligibility restrictions.",
+    "No original source for new current-patch full prospective TWW/Midnight operation-level data was recovered in this run."
   ],
   "exhausted_sources": [
-    "Xenastro original Jan/Feb 2023 XLSX was previously inspected in full by manager Nov 14 and worker Nov 15; do not request the same eight refunds again as new studies. This run audited new downstream representation only.",
-    "DalaGG historical Cobalt/Fel Iron 2023 export previews remain locked per Legacy's 08:52 verified status; do not import counts from titles.",
-    "Do not repeat already reviewed historical Warmaul Looter, Ancient Lichen, Adamantite, Dragonflight Looter duplicate or Bismuth source identity checks absent new original event data."
+    "Do not count Sept 2024 Mycobloom author or Oct 29 original-source erratum as new independent numerical cohorts; this run exposes a later stored-schema regression.",
+    "Do not redo Xenastro, historical Warmaul/Adamantite/Ancient Lichen, DF Looter duplicates or known unopenable DalaGG exports absent new original receipts.",
+    "Do not seek source's absent 20k+ batch allocations again via mirrors; require truly new operation-level exports or complete first-party measurement."
   ],
-  "next_concrete_step": "Owner-controlled three-pass team can add a small source-qualified 4-cohort/35-output-row typed-input-return no-duplication fixture without changing worker originals; coordinator research priority remains NEW actual current-patch rank-specific complete prospect/mill/DE event ledgers (Midnight T0039/T0045; TWW T0009/T0010), including skill/unlock and returned/reprocessed inputs."
+  "next_concrete_step": "In isolated reviewed research corrections, reclassify averagePer='input' for records war-within-20261030-301 and -302 (originals unchanged), add explicit per-10 batch numerical fixture and run compiler + actual offline tooltip synthetic-price regression before any use; research workers continue new current-patch T0039/T0045 and T0009/T0010 rank/skill/zero/refund original logs."
 }
