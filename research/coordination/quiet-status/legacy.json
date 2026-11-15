@@ -1,49 +1,173 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-15T08:52:52.509Z",
-  "status": "new_original-source-leads-locked_no_new_measured_numbers",
+  "updated_at": "2026-11-15T09:55:22.143Z",
+  "status": "new_source-backed_TBC_item-specific_observations_mixed-run-totals_uncounted",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "T0051",
+    "T0052",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995: no new live Retail item-variant eligible completed disenchant casts, true zero-inclusive per-output histograms, or build and skill provenance; historical Looter 2068 operations are already recorded",
-    "Cobalt Ore 36909: possible 2023 Retail source lead found but not readable; output IDs, completed casts, per-gem hits/zeros and quality-specific per-cast yields still unverified",
-    "Fel Iron Ore 23424: possible 2023 Retail source lead found but not readable; independent completed cast and per-gem hit/zero counts still unverified",
-    "Spaulders of the Wayward Vanquisher 45661: no new reward IDs, variants or confirmed modern redemption evidence beyond existing seven-class record"
+    "Warmaul Legplates 24995: direct Retail bonus/build eligible DE operations, material hit counts and true zero-inclusive item-specific histograms still absent; previously recorded cumulative historical Looter is not new evidence",
+    "Comparable TBC uncommon armor/weapon historical group: source-specific completed casts and quantities for Halaa thrown weapon 30568, Blade of Retribution 31821, and unidentified uncommon robe, without pooling with Warmaul",
+    "Cobalt Ore 36909: no new independent completed prospects, per-gem hit counts or zeros",
+    "Fel Iron Ore 23424: no new independent completed prospects, per-gem hit counts or zeros",
+    "Wayward Vanquisher token 45661: existing seven-class-reward identity complete in legacy-20261101-216; no newly verified modern variant redemption"
   ],
-  "newly_verified_fields_cohorts": [],
+  "newly_verified_fields_cohorts": [
+    {
+      "studyKey": "allakhazam-blade-of-retribution-one-de-2gpe",
+      "inputItemID": 31821,
+      "outputItemID": 22446,
+      "completedCasts": 1,
+      "castsWithDrop": 1,
+      "totalQuantity": 2,
+      "histogram": {
+        "2": 1
+      },
+      "source": "https://www.wowhead.com/tbc/item=31821/blade-of-retribution"
+    },
+    {
+      "studyKey": "thottbot-sharp-cookie-three-de-shard-four-essences",
+      "inputItemID": 30568,
+      "completedCasts": 3,
+      "outputs": [
+        {
+          "id": 22449,
+          "totalQuantity": 1,
+          "castsWithDrop": 1
+        },
+        {
+          "id": 22446,
+          "totalQuantity": 4,
+          "castsWithDrop": null
+        }
+      ],
+      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie"
+    },
+    {
+      "studyKey": "thottbot-sharp-cookie-three-bought-four-dust-one-essence",
+      "inputItemID": 30568,
+      "completedCasts": null,
+      "itemsPurchased": 3,
+      "outputs": [
+        {
+          "id": 22445,
+          "totalQuantity": 4
+        },
+        {
+          "id": 22446,
+          "totalQuantity": 1
+        }
+      ],
+      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie"
+    },
+    {
+      "studyKey": "thottbot-sharp-cookie-last-three-distinct-outcomes",
+      "inputItemID": 30568,
+      "completedCasts": 3,
+      "outputs": [
+        {
+          "id": 22449,
+          "castsWithDrop": 1,
+          "totalQuantity": 1
+        },
+        {
+          "id": 22445,
+          "castsWithDrop": 1,
+          "totalQuantity": 2
+        },
+        {
+          "id": 22446,
+          "castsWithDrop": 1,
+          "totalQuantity": null
+        }
+      ],
+      "source": "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie"
+    },
+    {
+      "studyKey": "wowhead-30294-razaani-unknown-green-robe-one-de",
+      "inputItemID": null,
+      "completedCasts": 1,
+      "outputItemID": 22445,
+      "castsWithDrop": 1,
+      "totalQuantity": 5,
+      "source": "https://www.wowhead.com/tbc/npc=20614/razaani-spell-thief"
+    },
+    {
+      "studyKey": "wowhead-theqiw-one-mana-tombs-mixed-gear-run",
+      "inputItemID": null,
+      "casts": null,
+      "outputTotals": {
+        "22445": 15,
+        "22447": 14,
+        "22448": 6
+      },
+      "source": "https://www.wowhead.com/item=22445/arcane-dust"
+    },
+    {
+      "studyKey": "wowhead-sercankd-single-shadow-labyrinth-mixed-gear-run",
+      "inputItemID": null,
+      "casts": null,
+      "outputTotals": {
+        "22445": 46,
+        "22446": 10,
+        "22449": 10,
+        "22450": 2
+      },
+      "source": "https://www.wowhead.com/item=22445/arcane-dust"
+    }
+  ],
   "numeric_summary": {
-    "new_records": 2,
-    "new_independent_firsthand_cohorts": 0,
-    "new_reference_priors": 0,
-    "new_exact_input_ids": [],
-    "new_exact_output_ids": [],
-    "new_verified_completed_casts": 0,
-    "new_output_hit_counts": 0,
+    "new_records": 16,
+    "new_distinct_source_comment_cohorts": 7,
+    "new_specific_itemID_pairings": [
+      {
+        "input": 31821,
+        "output": 22446
+      },
+      {
+        "input": 30568,
+        "output": 22445
+      },
+      {
+        "input": 30568,
+        "output": 22446
+      },
+      {
+        "input": 30568,
+        "output": 22449
+      }
+    ],
+    "new_verified_completed_casts": 8,
+    "new_verified_casts_basis": "1 Blade 31821 + 3 one Sharp Cookie comment + 3 separate Sharp Cookie comment + 1 unknown robe; sources are historical and not current Retail",
+    "new_source_supported_item_specific_hit_counts": 5,
     "new_zero_histograms": 0,
-    "record_type": "searched only; no new measured outcomes"
+    "unmeasured_purchased_cookie_items": 3,
+    "mixed_run_cohorts_without_cast_denominator": 2,
+    "no_new_cobalt_feliron_warmaul_casts": true
   },
-  "evidence_file": "research/v3/evidence/legacy/202611150852-retail-prospecting-locked-original-leads.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/202611150852-retail-prospecting-locked-original-leads.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-15T0955-tbc-halaa-firsthand-and-mixed-gear-observations.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-15T0955-tbc-halaa-firsthand-and-mixed-gear-observations.jsonl",
   "source_urls": [
-    "https://www.patreon.com/posts/77852044",
-    "https://www.patreon.com/posts/77851973",
-    "https://dalaggstudios.com/worthit-exports"
+    "https://www.wowhead.com/tbc/item=31821/blade-of-retribution",
+    "https://www.wowhead.com/tbc/item=30568/the-sharp-cookie",
+    "https://www.wowhead.com/tbc/npc=20614/razaani-spell-thief",
+    "https://www.wowhead.com/item=22445/arcane-dust"
   ],
-  "verified_base_commit_sha": "1584231758d77b77e68971759e7453acff36f4ac",
+  "verified_base_commit_sha": "28aef33ebee6995dac5f0ee2df197a9d6a4ce190",
   "verified_commit_sha": null,
-  "commit_note": "One atomic commit contains this worker's one new searched JSONL file and legacy quiet status. A committed status cannot self-reference its own SHA; post-push read-back verifies both files and commit.",
+  "commit_note": "One atomic commit contains this worker's one new JSONL evidence file plus legacy quiet status. Its SHA cannot be embedded self-referentially in the same commit; verify the branch commit and both paths through GitHub read-back after ref update.",
   "blockers": [
-    "Warmaul 24995 current live WoWDB item level 31 says Cannot be disenchanted, while historic TBC iLvl108 and pooled Wowhead 2068-operation Looter outputs are not current Retail eligible game casts.",
-    "2023 Jan 28 DalaGG Retail WorthIt prospecting export posts for Cobalt and Fel Iron are locked; the previews provide no true operations, gem identities/counts/hits/histograms, refund, skill or patch. Titles alone may be nominal valuation examples, not studies.",
-    "No independent new raw gem-hit or zero-bin results appeared in original Wowhead comments, Warcraft Wiki, Wow-Professions and Psynister; these contain older cohort copies/starting priors.",
-    "Build-specific live Warmaul eligibility and export-level Cobalt/Fel Iron source denominator/histogram are still unavailable."
+    "Warmaul 24995 current scaled Retail WoWDB ilvl 31 reportedly has Cannot be disenchanted while historic TBC item level 108 shows disenchant outputs; no actual current-game variant/API eligibility test",
+    "Cobalt 36909 and Fel Iron 23424 accessible originals provide quantities or nominal ore but not new actual per-output hits, histograms, build/refund or completed casts; 2023 DalaGG exports remain access-locked",
+    "The Sharp Cookie Thottbot comments are anonymous: distinct comments are distinguished but ultimate contributor independence cannot be proved; one cohort reports three weapons purchased, not three completed casts",
+    "Mixed-gear dungeon-run totals provide no input item IDs, rarity distribution, completed casts or item-specific probabilities; must not enter item-specific live numeric baselines",
+    "Historical observed TBC source comments have no date, patch, in-client eligibility, ench skill or item bonus IDs"
   ],
   "exhausted_sources": [
     {
@@ -71,10 +195,19 @@
         "Psynister's Notebook"
       ],
       "why": "Existing Thottbot copies and reference percentages, not new complete cast-by-cast outcomes; sources inspected without re-adding duplicate cohorts"
+    },
+    {
+      "target": "Cobalt and Fel Iron original cast-by-cast source search this run",
+      "where": [
+        "Wowhead/Classic item comments",
+        "Reddit r/classicwow and r/woweconomy",
+        "Warcraft Wiki / Legacy of Warcraft tables"
+      ],
+      "why": "No new attributable completed casts or 0/1/2 bins; repeated Thottbot originals and game-data prior tables were not duplicated"
     }
   ],
-  "next_concrete_step": "Seek publicly available actual Retail (build-labelled) raw addon exports or firsthand 0/1/2 histograms for Cobalt 36909 and Fel Iron 23424. The dated DalaGG original is a lead only and would require authorized raw export access plus proof it recorded actual operations. Seek live Warmaul 24995 specific bonus/build CanDisenchant result and actual casts. Do not guess zeros.",
-  "gold_ev_policy": "No frozen gold prices or EV; addon uses live prices.",
+  "next_concrete_step": "Prioritize a current Retail in-client Warmaul 24995 item instance/bonus ID and CanDisenchant check, then collect actual completed disenchants/hit-and-zero histograms; for Cobalt 36909 and Fel Iron 23424 locate new publicly accessible SavedVariables raw prospect logs with operation IDs and refund/build context. Keep historic weapon cohorts separate by source comment, no price snapshots.",
+  "gold_ev_policy": "No frozen gold prices or gold EV; addon computes EV using live prices.",
   "new_source_leads": [
     {
       "target": "Cobalt Ore",
