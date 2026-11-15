@@ -359,15 +359,20 @@ def build_field_support(module, rows, names):
                 cohorts[cohort][field].extend(options)
 
         selected = defaultdict(list)
-        for fields in cohorts.values():
+        counted_cohorts = defaultdict(set)
+        for cohort, fields in cohorts.items():
             for field, options in fields.items():
                 observation = choose_observation(options)
                 if observation is not None:
                     selected[field].append(observation)
+                    if observation.casts and field in ('dropChance', 'expectedQuantity'):
+                        counted_cohorts[field].add(cohort)
                 else:
                     notes[f'conflicting {field} in one cohort'] += 1
         supports = {field: support for field, observations in selected.items()
                     if (support := combine(field, observations, notes)) is not None}
+        for field, cohort_ids in counted_cohorts.items():
+            supports[field]['_countedCohorts'] = cohort_ids
         if supports:
             estimates.append({'method': method, 'input': item, 'outputItemID': output, 'inputsPerCast': batch,
                               'conditional': requires is not None, 'requires': requires,

@@ -188,7 +188,14 @@ def resolve_replacements(rows, module, notes):
                 notes['replacement names an unavailable source file'] += 1
                 continue
         if len(candidates) == 1:
-            removed.add(id(candidates[0]))
+            candidate = candidates[0]
+            old_input, new_input = candidate.get('inputItemID'), replacement.get('inputItemID')
+            if (candidate.get('method') != replacement.get('method')
+                    or (old_input is not None and new_input is not None and old_input != new_input)):
+                held.add(id(replacement))
+                notes['replacement method or input does not match source'] += 1
+            else:
+                removed.add(id(candidate))
         elif len(candidates) > 1:
             scoped = [row for row in candidates if replacement_scope_matches(row, replacement)]
             matched = [row for row in scoped if same_replacement_source(row, replacement, module)]
@@ -453,7 +460,9 @@ def build(snapshot):
             if 'heldDropChance' in m:
                 notes['+expected quantity kept; conflicting occurrence held'] += 1
             if 'heldExpectedQuantity' in m:
-                notes['+occurrence kept; conflicting provisional expected quantity held'] += 1
+                notes['+occurrence kept; conflicting expected quantity held'] += 1
+            if m.get('samplingVariation'):
+                notes['+occurrence and quantity retained within sample variation tolerance'] += 1
         record_id = f'evidence:v3:{method}:{key}:x{per_cast}'
         row = {
             'recordID': record_id, 'studyID': record_id, 'sourceKey': 'itemdb', 'method': method,
@@ -525,6 +534,35 @@ def bound_field(estimates, name, select):
     return unknown()
 
 
+def counted_cohorts(estimates, name):
+    return {cohort for estimate in estimates
+            for cohort in estimate['fieldSupport'].get(name, {}).get('_countedCohorts', ())}
+
+
+def sampling_compatible(occurrence, quantity, boundary, estimates):
+    """A bounded diagnostic for slightly different estimates from different cast pools."""
+    if occurrence['status'] != 'measured' or quantity['status'] != 'measured':
+        return False
+    p, q = occurrence['value'], quantity['value'] / boundary
+    n_p, n_q = occurrence['samples'], quantity['samples']
+    if not (0 < p <= 1 and 0 < q <= 1 and min(n_p, n_q) >= 2):
+        return False
+    p_cohorts = counted_cohorts(estimates, 'dropChance')
+    q_cohorts = counted_cohorts(estimates, 'expectedQuantity')
+    if not p_cohorts or not q_cohorts or p_cohorts == q_cohorts:
+        return False
+    # Compare on the occurrence scale. The Bernoulli proxy and fixed caps
+    # avoid interpreting a small discrepancy as a proof of a common population.
+    error = math.sqrt(p * (1 - p) / n_p + q * (1 - q) / n_q)
+    return abs(p - q) <= min(0.01, 0.1 * max(p, q), 2 * error) + 1e-9
+
+
+def support_strength(field):
+    if field['sampleSizeKnown']:
+        return 2, field['samples'], field['status'] == 'measured'
+    return 1, field.get('reportedCasts', 0), False
+
+
 def material(item, estimates):
     occurrence = numeric_field(estimates, 'dropChance')
     quantity = numeric_field(estimates, 'expectedQuantity')
@@ -543,15 +581,20 @@ def material(item, estimates):
            'minQuantity': lower, 'maxQuantity': upper}
     if estimates[0].get('rankIDs'):
         out['rankIDs'] = estimates[0]['rankIDs']
-    if p is not None and e is not None and (
-            (p == 0 and e > 0) or (e == 0 and p > 0) or e + 1e-9 < p * (lo or 1)
-            or (hi is not None and e > p * hi + 1e-9)):
-        # Preserve both source figures. Independently supported E supplies valuation;
-        # an observed P takes precedence over a conflicting reported mean without measured support.
-        if occurrence['status'] == 'measured' and quantity['status'] != 'measured':
+    if p is not None and e is not None:
+        boundary = None
+        if e + 1e-9 < p * (lo or 1):
+            boundary = lo or 1
+        elif hi is not None and e > p * hi + 1e-9:
+            boundary = hi
+        zero_conflict = (p == 0) != (e == 0)
+        if not zero_conflict and boundary is not None and sampling_compatible(occurrence, quantity, boundary, estimates):
+            out['samplingVariation'] = True
+            boundary = None
+        if (zero_conflict or boundary is not None) and support_strength(occurrence) > support_strength(quantity):
             out['heldExpectedQuantity'] = quantity
             out['expectedQuantity'] = unknown(block_inference=True)
-        else:
+        elif zero_conflict or boundary is not None:
             out['heldDropChance'] = occurrence
             out['dropChance'] = unknown(block_inference=True)
     if p is None and e is not None:

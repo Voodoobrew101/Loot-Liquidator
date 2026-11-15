@@ -1,6 +1,7 @@
 """S21: preserve distinct material totals while counting copied cohorts once."""
 import sys
 import unittest
+from collections import Counter
 
 sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3
@@ -8,6 +9,28 @@ from research_v3_evidence import build_field_support
 
 
 class MaterialIdentityTests(unittest.TestCase):
+    def test_lone_replacement_cannot_delete_an_unrelated_reused_id(self):
+        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        original = dict(id='reused', method='Prospect', inputItemID=194545, outputItemID=192851)
+        for changes in ({'method': 'Disenchant'}, {'inputItemID': 190311}):
+            replacement = dict(original, id='repair', replaces='reused')
+            replacement.update(changes)
+            notes = Counter()
+            self.assertEqual(v3.resolve_replacements([original, replacement], module, notes), [original])
+            self.assertEqual(notes, {'replacement method or input does not match source': 1})
+
+    def test_lone_replacement_can_enrich_or_correct_item_identity(self):
+        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        original = dict(id='original', method='Prospect', inputItemID=None, inputName='Prismatic',
+                        outputItemID=192849, outputName='Eternity Amber')
+        correction = dict(original, id='correction', replaces='original', inputItemID=194545,
+                          inputName='Prismatic Ore', outputItemID=192851)
+        for same_input in (False, True):
+            source = dict(original, inputItemID=correction['inputItemID']) if same_input else original
+            notes = Counter()
+            self.assertEqual(v3.resolve_replacements([source, correction], module, notes), [correction])
+            self.assertFalse(notes)
+
     def test_cohort_key_links_an_unlabelled_copy_but_not_independent_studies(self):
         def row(study, cohort=None, total=5, source='https://www.reddit.com/r/woweconomy/comments/zkay8v'):
             return dict(id=study, studyKey=study, _file=study + '.jsonl',

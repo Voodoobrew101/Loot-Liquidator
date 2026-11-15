@@ -61,6 +61,26 @@ LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=1,classID=7},
 text=table.concat(tip.lines,'\n')
 assert(text:find('chance '..m.chanceConfidence..'%, quantity support 80%',1,true),text)
 
+local separateCasts=record(.228,.229,1,1)
+separateCasts.recordID='evidence:v3:Prospect:1:x5'
+separateCasts.fieldSpecificEvidence=true
+local observations=separateCasts.materials[1]
+observations.dropChance.samples=4000
+observations.dropChance.sampleSizeKnown=true
+observations.expectedQuantity.samples=4040
+observations.expectedQuantity.sampleSizeKnown=true
+observations.samplingVariation=true
+model=assert(resolve(separateCasts))
+m=model.materials[1]
+assert(math.abs(m.chance-.229)<1e-12 and math.abs(m.expectedQuantity-.228)<1e-12
+    and m.samplingVariation and not m.inconsistentFields,'a small sampling gap retains both estimates')
+assert(math.abs(LL:ValueProcessingModel(model,0,true)-4.56)<1e-12,'valuation uses the independently measured mean')
+observations.samplingVariation=nil
+assert(not LL:ValidateItemDB(LL.ItemDB),'an unmarked same-source mismatch still fails validation')
+observations.samplingVariation=true
+observations.expectedQuantity.value=.19
+assert(not LL:ValidateItemDB(LL.ItemDB),'a mark cannot excuse a larger contradiction')
+
 rates.dropChance={status='unknown',confidence=0,inferenceBlocked=true}
 rates.heldDropChance={value=.25,status='measured',confidence=60,samples=20}
 model=assert(resolve(independent))

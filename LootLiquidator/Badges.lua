@@ -733,6 +733,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         if m.unavailableReason then tooltip:AddLine('    '..m.unavailableReason,.90,.72,.45,true) end
                         if m.derivedMean then tooltip:AddLine('    Estimated average: probability times conditional yield midpoint',.70,.75,.82,true) end
                         if m.inconsistentFields then tooltip:AddLine('    Source range retained; selected average and chance disagree with it',.90,.72,.45,true) end
+                        if m.samplingVariation then tooltip:AddLine('    Drop chance and average use different sets of casts',.70,.75,.82,true) end
                         for _,rank in ipairs(m.rankReferences or {}) do
                             local fields={}
                             if rank.chance~=nil then fields[#fields+1]='chance '..ChanceText(rank.chance) end

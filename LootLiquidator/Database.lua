@@ -169,6 +169,25 @@ end
 function LL:ResetEvidenceSources()
     for key,d in pairs(defaults) do self:SetEvidenceSource(key,d[1],d[2]) end
 end
+local function violatedYieldBound(chance,mean,minimum,maximum)
+    if chance==nil or mean==nil then return nil end
+    if minimum and mean+1e-9<chance*minimum then return minimum end
+    if maximum and mean>chance*maximum+1e-9 then return maximum end
+end
+local function validSamplingVariation(record,material,bound)
+    local chance,mean=material.dropChance,material.expectedQuantity
+    if not (bound and record.fieldSpecificEvidence==true and record.sourceKey=='itemdb'
+        and record.recordID:match('^evidence:v3:') and material.samplingVariation==true
+        and chance.status=='measured' and mean.status=='measured' and chance.sampleSizeKnown==true
+        and mean.sampleSizeKnown==true and finite(chance.samples) and chance.samples>=2
+        and finite(mean.samples) and mean.samples>=2) then return false end
+    local p,q=chance.value,mean.value/bound
+    if p<=0 or q<=0 or q>1 then return false end
+    -- The importer marks separately sampled fields. Check the same tolerance
+    -- here before allowing both numbers through the database validator.
+    local uncertainty=2*math.sqrt(p*(1-p)/chance.samples+q*(1-q)/mean.samples)
+    return math.abs(p-q)<=math.min(.01,.1*math.max(p,q),uncertainty)+1e-9
+end
 function LL:ValidateItemDB(db)
     if type(db)~='table' or db.schemaVersion~=1 or type(db.processing)~='table' then
         return false,'Unsupported itemdb schema'
@@ -210,7 +229,13 @@ function LL:ValidateItemDB(db)
             local p,e,lo,hi=m.dropChance.value,m.expectedQuantity.value,m.minQuantity.value,m.maxQuantity.value
             if (p and p>1) or (lo and (lo<1 or lo%1~=0)) or (hi and (hi<1 or hi%1~=0))
                 or (lo and hi and lo>hi) or (e==0 and p and p>0)
-                or (e and p and lo and hi and (e+1e-9<p*lo or e>p*hi+1e-9)) then
+                or (r.fieldSpecificEvidence and p==0 and e and e>0) then
+                return false,'Contradictory probability/quantity fields'
+            end
+            local bound
+            if r.fieldSpecificEvidence then bound=violatedYieldBound(p,e,lo or 1,hi)
+            elseif lo and hi then bound=violatedYieldBound(p,e,lo,hi) end
+            if (bound or m.samplingVariation~=nil) and not validSamplingVariation(r,m,bound) then
                 return false,'Contradictory probability/quantity fields'
             end
         end
@@ -915,6 +940,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 b.fieldSpecificEvidence=b.fieldSpecificEvidence or r.fieldSpecificEvidence
                 b.chanceInferenceBlocked=b.chanceInferenceBlocked or original.dropChance.inferenceBlocked
                 b.quantityInferenceBlocked=b.quantityInferenceBlocked or original.expectedQuantity.inferenceBlocked
+                if original.samplingVariation and r.inputCount==batch then b.samplingEvidence=original end
                 if m.conditionalExpectedQuantity~=nil then
                     b.conditionalExpectedQuantity=m.conditionalExpectedQuantity*batch/r.inputCount
                     b.conditionalRequirement=m.conditionalRequirement
@@ -1041,8 +1067,14 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             b.chance=p and p.sum/p.weight
             b.chanceConfidence=p and math.floor(p.confidence/p.weight+.5)
         end
-        if b.chance and b.expectedQuantity and b.minQuantity and b.maxQuantity
-            and (b.expectedQuantity+1e-9<b.chance*b.minQuantity or b.expectedQuantity>b.chance*b.maxQuantity+1e-9) then
+        local observed=b.samplingEvidence
+        b.samplingEvidence=nil
+        if observed and b.chance and b.expectedQuantity and math.abs(b.chance-observed.dropChance.value)<=1e-9
+            and math.abs(b.expectedQuantity-observed.expectedQuantity.value)<=1e-9
+            and b.minQuantity==observed.minQuantity.value and b.maxQuantity==observed.maxQuantity.value then
+            b.samplingVariation=true
+        elseif b.minQuantity and b.maxQuantity
+            and violatedYieldBound(b.chance,b.expectedQuantity,b.minQuantity,b.maxQuantity) then
             -- A disagreement is useful evidence. Retain the named source's
             -- range instead of silently replacing observed bounds with '?'.
             b.inconsistentFields=true;result.fieldConflict=true

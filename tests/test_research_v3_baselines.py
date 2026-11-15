@@ -73,6 +73,32 @@ ok(m['dropChance']['inferenceBlocked'] and m['heldDropChance']['value'] == .5,
    'held conflicting occurrence stays auditable and is not inferred again')
 near(m['expectedQuantity']['value'], .1, 'contradictory occurrence does not erase directly supported mean')
 
+one = support(1, 40)
+independent = {'dropChance': support(.4, 1000, hits=400, _countedCohorts={'hits'}),
+               'expectedQuantity': support(.401, 1000, total=401, _countedCohorts={'units'}),
+               'minQuantity': one, 'maxQuantity': one}
+m = v3.material(5, [{'fieldSupport': independent}])
+ok(m['samplingVariation'] and 'heldDropChance' not in m and 'heldExpectedQuantity' not in m,
+   'small deviation from distinct sampled cohorts retains both values and observed bounds')
+near(m['dropChance']['value'], .4, 'sampling tolerance never changes measured chance')
+near(m['expectedQuantity']['value'], .401, 'sampling tolerance never changes measured mean')
+same_casts = dict(independent, expectedQuantity=support(.401, 1000, total=401, _countedCohorts={'hits'}))
+m = v3.material(5, [{'fieldSupport': same_casts}])
+ok('samplingVariation' not in m and 'heldDropChance' in m, 'same cohort retains strict arithmetic')
+wide_conflict = dict(independent, expectedQuantity=support(.25, 20, total=5, _countedCohorts={'units'}))
+m = v3.material(5, [{'fieldSupport': wide_conflict}])
+ok('samplingVariation' not in m and m['expectedQuantity']['inferenceBlocked'] and m['heldExpectedQuantity']['samples'] == 10,
+   'large discrepancy retains better supported occurrence and archives the weaker mean')
+near(m['dropChance']['value'], .4, 'better supported occurrence remains active')
+zero_conflict = dict(independent, dropChance=support(0, 1000, hits=0, _countedCohorts={'hits'}),
+                     expectedQuantity=support(.001, 1000, total=1, _countedCohorts={'units'}))
+m = v3.material(5, [{'fieldSupport': zero_conflict}])
+ok('samplingVariation' not in m and 'heldDropChance' in m, 'zero chance with positive reported mean remains strict')
+weak_quantity = dict(independent, expectedQuantity=support(.401, 0, 'provisional', reportedCasts=1000))
+m = v3.material(5, [{'fieldSupport': weak_quantity}])
+ok('samplingVariation' not in m and 'heldExpectedQuantity' in m,
+   'an uncounted reported mean does not qualify for sampling tolerance')
+
 # ---- the real build
 # D1c5: the pinned calculator matches correction paths exactly. Windows paths
 # must be normalized before corrections, or excluded/conditional studies return.
@@ -102,7 +128,7 @@ for r in records:
         p, e, lo, hi = (mat[field].get('value') for field in ('dropChance', 'expectedQuantity', 'minQuantity', 'maxQuantity'))
         ok(p is None or 0 <= p <= 1 and f['samples'] >= 0, f'{r["recordID"]}:{mat["id"]} chance')
         ok(lo is None or hi is None or 1 <= lo <= hi, f'{r["recordID"]}:{mat["id"]} range')
-        ok(e is None or p is None or lo is None or hi is None or p*lo - 1e-9 <= e <= p*hi + 1e-9,
+        ok(mat.get('samplingVariation') or e is None or p is None or lo is None or hi is None or p*lo - 1e-9 <= e <= p*hi + 1e-9,
            f'{r["recordID"]}:{mat["id"]} exposed average in range')
 by_id = {r['recordID']: r for r in records}
 
@@ -133,6 +159,13 @@ osmenite = {batch: {m['id']: m for m in by_id[f'evidence:v3:Prospect:168185:x{ba
             for batch in (5, 20)}
 ok(osmenite[5]['expectedQuantity']['samples'] > osmenite[20]['expectedQuantity']['samples'] > 0,
    'Osmenite source denominators are distinct across batches')
+ok(osmenite[5]['samplingVariation'] and osmenite[20]['dropChance']['status'] == 'unknown',
+   'five-input Osmenite preserves separately sampled occurrence without inventing 20-input occurrence')
+ok(all(m['dropChance']['status'] == 'measured' and m.get('samplingVariation')
+       for m in by_id['evidence:v3:Prospect:168185:x5']['materials']),
+   'all seven five-input Osmenite occurrence estimates survive the source sampling differences')
+near(osmenite[5]['dropChance']['value'], 0.228625, 'Osmenite occurrence preserved')
+near(osmenite[5]['expectedQuantity']['value'], 0.22772277, 'Osmenite measured mean preserved')
 adamantite = {m['id']: m for m in by_id['evidence:v3:Prospect:23425:x5']['materials']}[23437]
 near(adamantite['expectedQuantity']['value'], 0.037876, 'Adamantite measured mean survives', 1e-6)
 near(adamantite['heldDropChance']['samples'], 7, 'small conflicting hit-count study retained in held evidence')
