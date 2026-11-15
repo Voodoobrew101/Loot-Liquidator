@@ -1,140 +1,139 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-15T05:00:52.874Z",
-  "status": "Completed and committed research-only original-source/estimator-provenance audit for historical Ancient Lichen milling. Independently confirmed original Kaliope 2008 PTR context, source-matched new 22,000-herb rollocola totals, a usable per-input quantity proxy with unknown completed casts, and misleading checked-in cast/average evidence labels. 0 new source experiments, 0 verified 2026 Retail gold decisions, no addon or compiler execution.",
+  "updated_at": "2026-11-15T06:08:31.512Z",
+  "status": "Completed research-only original-source versus v3 identity/denominator audit of Legacy's 15 new 2011 mixed-input material rows. Two separate historical pooled cohorts verified against original text; no exact ore/gear output allocation, new completed-cast observation, usable individual-item valuation or current Retail gold decision. Evidence and dashboard committed; no compiler/runtime tests.",
   "task_ids": [
-    "T0042"
+    "T0042",
+    "T0045",
+    "T0039"
   ],
   "exact_gaps_targeted": [
-    "Kaliope 2008 Ancient Lichen 22790 original explicitly PTR; v3 checked-in output reports 24 studyCasts and averageSource=measured though source reported 120 herbs rather than 24 completed milling operations; exact PTR build and observed cast count unknown.",
-    "New 2026-11-15T0449 worker rollocola source reports 22000 Ancient Lichen input herbs and source totals Nether Pigment 39342 x13289, Ebon Pigment 43108 x2337; v3 total-only field with no casts/inputsProcessed maps to totalWithoutCasts under current row_use, preventing derived per-input quantity admission without reviewed source-denominator typing.",
-    "Rollocola's historical original comment is mirrored on MoP Classic, WotLK Classic and Cataclysm Classic Wowhead pages; one author/cohort only, observation flavour and build not established by mirror URL.",
-    "Existing present-estimator chance estimates are derived, not measured; preserve chance/zero-inclusive ranges unknown and no current Retail character eligibility."
+    "2011-08-03 original prospecting receipt combines 300 Elementium Ore 52185 with 180 Obsidium Ore 53038 and 12 pooled gem outputs; lacks ore-specific allocations, completed operation denominator, per-material hit counts/zeros, quality, character conditions and current build.",
+    "2011-08-05 source pools DE materials from 1 Gallant Flamberge, 1 Bladefist Dagger and 2 Mighty Gauntlets; lacks gear-specific material allocations or logged per-input DE receipts.",
+    "v3 key_of() maps inputItemID:null mixed names to family:Mixed... instead of an actionable item; the unplaced counter can be misleading. row_use() statically predicts totalWithoutCasts for each of the 15 totals. No fresh actual compiler or tooltip execution."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "type": "historical_source_context",
-      "source": "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/",
-      "inputItemID": 22790,
-      "sourceReportedHerbs": 120,
-      "sourceReportedNetherPigment": 72,
-      "sourceReportedEbonPigment": 14,
-      "confirmedMode": "2008 PTR",
-      "exactSampleDate": "uncertain, author tentatively says October 7",
-      "sourceReportedCompletedCasts": null,
-      "nominalFiveHerbEquivalents": 24,
-      "previousFiveHerbProxy": {
-        "Nether": 3,
-        "Ebon": 0.5833333333333334
+      "type": "historical_source_reconciliation_no_new_experiments",
+      "original_source": "https://beyondthenumbers2011.blogspot.com/2011/08/making-gold-with-holy-trinity-alchemy.html",
+      "source_date": "2011-08-03",
+      "study_key": "beyondthenumbers-20110803-elementium-obsidium-mixed-original",
+      "input_items": {
+        "52185": 300,
+        "53038": 180
       },
-      "newIndependentCohorts": 0
+      "source_reported_output_materials": {
+        "52177": 16,
+        "52178": 22,
+        "52179": 21,
+        "52180": 22,
+        "52181": 24,
+        "52182": 12,
+        "52190": 4,
+        "52191": 5,
+        "52192": 3,
+        "52193": 2,
+        "52194": 6,
+        "52195": 1
+      },
+      "pooled_gem_units": 138,
+      "rare_units": 21,
+      "uncommon_units": 117,
+      "nominal_5_ore_equivalents": 96,
+      "aggregate_gems_per_nominal_equivalent": 1.4375,
+      "original_source_lists_item_names_not_numeric_ids": true,
+      "per_input_output_allocation": null,
+      "completed_casts": null,
+      "casts_with_drop": null,
+      "zero_inclusive_histograms": null,
+      "current_retail_eligibility_verified": false,
+      "new_independent_cohorts_by_manager": 0
     },
     {
-      "type": "new_worker_original_source_normalization",
-      "workerEvidenceFile": "research/v3/evidence/legacy/2026-11-15T0449-outland-lichen-and-zg-originals.jsonl",
-      "source": "https://www.wowhead.com/mop-classic/item=43108/ebon-pigment",
-      "inputItemID": 22790,
-      "herbsReported": 22000,
-      "sourceOutputTotals": {
-        "39342": 13289,
-        "43108": 2337
+      "type": "historical_source_reconciliation_no_new_experiments",
+      "original_source": "https://beyondthenumbers2011.blogspot.com/2011/08/making-gold-with-enchanting.html",
+      "source_date": "2011-08-05",
+      "study_key": "beyondthenumbers-20110805-four-purchased-gear-mixed-de-original",
+      "purchased_gear_quantities": {
+        "Gallant Flamberge of the Tiger": 1,
+        "Bladefist Dagger of the Beast": 1,
+        "Mighty Gauntlets of the Monkey": 2
       },
-      "nominalFiveHerbEquivalents": 4400,
-      "sourceDerivedUnitsPerHerb": {
-        "39342": 0.6040454545454546,
-        "43108": 0.10622727272727273
+      "pooled_material_quantities": {
+        "16203": 1,
+        "16204": 5,
+        "52719": 2
       },
-      "sourceDerivedUnitsPerFiveInputEquivalent": {
-        "39342": 3.0202272727272725,
-        "43108": 0.5311363636363636
-      },
-      "casts": null,
-      "castsWithDrop": null,
-      "sourceExperimentByManager": false,
-      "currentPatchVerified": false
-    },
-    {
-      "type": "checked_in_v3_source_to_estimator_discrepancy",
-      "inputItemID": 22790,
-      "output39342": {
-        "studyCasts": 24,
-        "average": 3,
-        "averageSource": "measured",
-        "chance": 1,
-        "chanceSource": "estimated",
-        "provisionalValuation": false
-      },
-      "output43108": {
-        "studyCasts": 24,
-        "average": 0.5625,
-        "averageSource": "measured",
-        "chance": 0.2812,
-        "chanceSource": "estimated",
-        "provisionalValuation": false
-      },
-      "projectedWorkerUsage": "totalWithoutCasts",
-      "freshCompilerExecuted": false
+      "source_pooled_material_units": 8,
+      "exact_gear_to_output_allocation": null,
+      "observed_per_item_casts": null,
+      "character_skill": null,
+      "current_retail_eligibility_verified": false,
+      "new_independent_cohorts_by_manager": 0
     }
   ],
-  "new_independent_current_retail_cohorts": 0,
-  "new_verified_current_gold_decisions": 0,
-  "new_worker_numerical_promotions": 0,
+  "numeric_fields_advanced": {
+    "new_independent_retail_cohorts": 0,
+    "new_verified_current_gold_decisions": 0,
+    "new_exact_item_expected_yields": 0,
+    "provenance_qualified_pooled_material_receipts": 15,
+    "original_study_cohorts_reviewed": 2,
+    "new_runtime_coverage_claims": 0
+  },
   "evidence_files": [
-    "research/v3/evidence/master/20261115T0459-ancient-lichen-ptr-herb-normalization-gate.md"
+    "research/v3/evidence/master/20261115T0608-cata-mixed-basket-identity-and-denominator-gate.md"
   ],
-  "evidence_blob_sha": "aac09bd8d974b9d67d30f8e24ff1c0ecd086c512",
-  "verified_commit_sha": "979aa75a6fea9d9f3a477884f478875826d529cf",
-  "verified_commit_sha_scope": "Evidence committed/read-back at 979aa75; dashboard committed/read-back at 0fa72927992c09af0c45ba2fb0d01eaaefc7672d, blob 9518d6b57c44a2ec54a87299a2c55e89a3bb8c2d. Own status commit SHA cannot be self-referenced.",
+  "evidence_blob_sha": "1f9d647f8829406b3def1e5fa81d61990c6e8ca1",
   "source_links": [
-    "https://kaliope.wordpress.com/2008/10/09/inscription-a-look-at-pigment-drop-rates-for-milling/",
-    "https://www.wowhead.com/mop-classic/item=43108/ebon-pigment",
-    "https://www.wowhead.com/wotlk/item=43108/ebon-pigment",
-    "https://www.wowhead.com/cata/item=43108/ebon-pigment",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-15T0449-outland-lichen-and-zg-originals.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261115T0459-ancient-lichen-ptr-herb-normalization-gate.md"
+    "https://beyondthenumbers2011.blogspot.com/2011/08/making-gold-with-holy-trinity-alchemy.html",
+    "https://beyondthenumbers2011.blogspot.com/2011/08/making-gold-with-enchanting.html",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-15T0548-mixed-cata-prospect-and-disenchant-originals.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261115T0608-cata-mixed-basket-identity-and-denominator-gate.md"
   ],
+  "verified_commit_sha": "8d2ee970aaf5ddf5a014368b0411804542bc9c36",
+  "verified_commit_sha_scope": "Evidence initially added at 85ecda03 and corrected for source item-ID provenance at 8d2ee970 (readback blob 1f9d647). Dashboard checkpoint committed at 9ea85804 (readback blob 4a9705). This status commit cannot self-reference its own SHA.",
   "checks_actually_performed": [
-    "Refreshed main/research/owner integration GitHub ref SHAs, fetched manager charter, three-pass plan/pass-1, research v3 README, format, mechanics, queue/strategy/flags, prior status/dashboard, and all four worker status files.",
-    "Reviewed latest worker research commits, exact legacy evidence, original Kaliope post and author's PTR-context comment and original rollocola mirrored Wowhead comment.",
-    "Read v3 estimator key_of, row_use, study dedupe, current checked-in estimates.json for input 22790, prior input-count source reconciliation and import-study-00227/00228 fixture.",
-    "Calculated 13289/22000 and 2337/22000 exact source-derived quantities and prior 72/120 and 14/120, did not assert measured casts or hit probabilities.",
-    "Read active PR list (none); directly fetched PRs #22/#23 (closed unmerged); read eight latest Actions entries, latest research worker-head run 43678436355 completed success before manager commits.",
-    "Committed research-only source QA evidence at 979aa75 and remote-read-back sha aac09b; updated dashboard at 0fa729 and read-back sha 9518d6."
+    "Refreshed main, research and owner three-pass branch commit SHAs; read owner charter, three-pass plan/PASS-1, v3 README/schema/mechanics/queue/strategy/flags, prior coordinator status and dashboard.",
+    "Read all four latest worker quiet statuses and new Legacy/Midnight evidence; checked current open PR collection and direct #22/#23 closure state, and recent Actions runs by exact head SHA.",
+    "Reopened original 2011-08-03/2011-08-05 articles; compared each worker name/quantity against original source text and distinguished source names from worker-provided numeric item IDs.",
+    "Deterministic JavaScript read of all 15 JSONL rows to verify unique record IDs, group studies, source-reported pooled material-unit sums (138,8) and 480/5=96 nominal equivalents; no invented hits or probabilities.",
+    "Inspected v3 key_of(), row_use(), analyze() lines; disposition reported as static code-path prediction, not an executed v3 build or unused report.",
+    "Created research-only evidence file (85ecda03), qualified source ID provenance (8d2ee970), and updated coordinator-owned dashboard (9ea85804); remote readback verified each final blob."
   ],
   "not_performed": [
-    "Fresh v3 Python compiler, compiled-output regeneration, migration regression, Lua addon runtime, offline synthetic-price rendering, current-character live WoW validation",
-    "CI on new manager evidence/dashboard/status commits",
-    "Worker task edits/assignments, addon or integration snapshot changes, main edit, PR open/merge/closure, production release or schedule changes"
+    "Fresh Python v3 compiler, unused-report regeneration, migration tests, addon Lua engine or tooltip, offline synthetic-price gold census, WoW client test",
+    "Manager-commit CI validation, new statistical calibration or measured current-patch study",
+    "Editing worker evidence/queue/strategy/flags, owner's integration, main, PRs, releases, or any schedules"
   ],
   "checkpoints_read": {
-    "legacy": "2026-11-15T04:49:33.670Z Ancient Lichen 22000-herb raw output quantities and historical ZG rare observations",
-    "dragonflight": "2026-11-15T04:37:44.534Z nine new item-side source tables; no new controlled ore/herb cast histograms",
-    "war_within": "2026-11-15T04:28:17.229Z five new epic item-side cohorts with rank/eligibility still unverified",
-    "midnight": "2026-11-15T04:13:33.597Z anomalous ilvl24 Darkmoon deck event; no new current baseline"
+    "legacy": "2026-11-15T05:47:08.290Z 15 source name/quantity lines, two distinct 2011 mixed-basket original cohorts",
+    "dragonflight": "2026-11-15T05:34:10.572Z 10 reference-only hit rows from four cumulative gear tables, no controlled current prospect/mill cohort",
+    "war_within": "2026-11-15T05:21:12.930Z 11 rank-2 Refulgent Crystal reference item tables, no item-specific complete quantity/rank/eligibility proof",
+    "midnight": "2026-11-15T05:14:41.988Z three new reference-only rare shard / Powder Pigment contexts, no completed mill denominator or current character valuation"
   },
   "github_state_checked": {
-    "main": "cf09e2056c5aea813bece883709415d374babaf4",
-    "owner_three_pass_integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_before_manager_note": "2112bce4edffc6db09bfc3a96744001629f5300f",
-    "research_evidence_commit": "979aa75a6fea9d9f3a477884f478875826d529cf",
-    "research_dashboard_commit": "0fa72927992c09af0c45ba2fb0d01eaaefc7672d",
-    "research_PRs": "#22/#23 closed unmerged; untouched",
+    "main": "db80e43ae29ee19141a3c9ff6ab6bda034c49d90",
+    "research_before_manager": "0c5d74345429a591a77ca64e94774e5758dde61e",
+    "research_after_evidence_correction": "8d2ee970aaf5ddf5a014368b0411804542bc9c36",
+    "owner_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9",
+    "research_PRs": "#22 and #23 closed unmerged, untouched; no open pull requests in collection at read time",
     "CI": {
-      "run_id": 43678436355,
-      "head_sha": "2112bce4edffc6db09bfc3a96744001629f5300f",
+      "run_id": 43682568452,
+      "head_sha": "0c5d74345429a591a77ca64e94774e5758dde61e",
       "conclusion": "success",
-      "scope": "pre-manager worker-head verification only"
+      "scope": "pre-manager research head only; not CI evidence for this manager note or status"
     }
   },
   "blockers": [
-    "Original rollocola completed-operation denominator and refund/processed-versus-purchased semantics are not explicit; no zero-inclusive per-output histograms, true P(hit), profession skill or exact patch.",
-    "Kaliope samples source-verified as historical PTR, not present Retail; currently labeled as measured 24 casts in stored estimates, requiring no-loss provenance rectification.",
-    "Any promotion of source-derived per-input yields to tooltip needs owner-controlled source selection, non-overwrite of stronger current evidence and synthetic-price runtime fixture.",
-    "No current-build original source connecting historical Ancient Lichen yields to 2026 Retail gameplay."
+    "The two original source articles do not publish per-input original receipts or per-operation logs; aggregate materials cannot determine ItemDB per-ore or per-gear EV.",
+    "Numeric item IDs are from the worker transcription rather than explicit IDs in 2011 article text; current character build, rank, skill, refund/reprocessing and actual per-cast outcomes absent.",
+    "No source or supported mechanic justifies assigning either pooled rate to an individual modern Retail item.",
+    "Manager's v3/compiler and owner-controlled actual engine/tooltip fixtures were not run; actual runtime field changes and CI on manager commits unknown."
   ],
   "exhausted_sources": [
-    "Did not revisit prior TWW exact-item and rank-alternative audit, Warmaul arithmetic, Prismatic cross-version identities, or previously inaccessible Dragonflight workbook.",
-    "Did not duplicate the same rollocola comments across Wowhead Classic mirrors or claim the existing Kaliope 120-herb cohort as a newly measured study."
+    "Original two August 2011 blog articles were source-reconciled; no ore- or gear-separated underlying log, no new historical sample; do not re-search this same two-article lane without a primary event export.",
+    "Did not repeat prior Ancient Lichen denominator, Warmaul 12-row ID collision, Prismatic duplicate, TWW exact gear, or Dragonflight workbook audit.",
+    "Did not ask workers to duplicate existing Elementium-only studies or assign new tasks beyond existing owned queue."
   ],
-  "next_concrete_step": "On research-only isolated review branch, propose a no-loss fixture/corrective provenance contract for input-equivalent versus observed casts (Kaliope 120 herbs/24 equivalents), and source-qualified input-processing interpretation for rollocola 22000-herb totals. Require actual compiler/unused/price-and-tooltip tests before any supported provenance or numeric promotion. Leave owner's three-pass branch untouched."
+  "next_concrete_step": "Prioritize independent current-build completed-operation receipts for Midnight T0045 (Tranquility Bloom 236761 to Powder Pigment 245807) and T0039 (rank-specific Tin/prospect and milling hit/zero histograms), with exact source itemLink, batch, output-rank, skill/unlock and refunds. Only revisit historical mixed Cata material receipts if a new original source explicitly separates inputs; do not allocate from the same pooled articles. Any supported gold/tooltip promotion belongs to owner's three-pass integration with actual synthetic-price engine tests."
 }
