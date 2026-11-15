@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewType": "independent-code-review",
+  "reviewDate": "2026-11-15",
+  "pullRequest": "https://github.com/Voodoobrew101/Loot-Liquidator/pull/72",
+  "scope": "Dragonflight prospecting Frontier scenario snapshot and input validation",
+  "verdict": "PASS_SCOPED_SNAPSHOT_REPAIR",
+  "reviewerRole": "Separate reviewer who did not author the model, manifest, or regression changes",
+  "sourcePins": {
+    "research/tools/models_v2/df_prospect_decision_frontier_v1.js": "6ed12499bb287e684a4e7b2831e7eca1a61513f6",
+    "research/models/v2/df_prospect_decision_frontier_v1.json": "cb15082f324bc5ec1435e01f23df0dad6ee1a76a",
+    "research/tests/test_df_frontier_array_repair.js": "7f2716da47c171818dd9fd4fd904035383929cbd",
+    "research/tools/working_native_df_frontier_array_preflight.js": "c43ea554dbde303bcd074d677d86ec6d75e9e389",
+    "research/tests/v2/test_f005_df_frontier_v101_array_snapshot_repair_20261030.js": "14ad7d0693ee9e1bda43b7352854188972a8fb8d"
+  },
+  "execution": {
+    "environment": "Native Node.js v26.13.0 on Windows",
+    "independentCases": {
+      "passed": 13,
+      "failed": 0,
+      "acceptedControls": [
+        "Plain and frozen two-output scenarios each preserve both entries, return 17 synthetic gold, and select the alternative."
+      ],
+      "rejectedBeforeCallback": [
+        "Empty output array",
+        "Accessor on an array element",
+        "Accessor on an output record field",
+        "Output array proxy that shrinks",
+        "Output array proxy that shrinks and regrows",
+        "Transparent output-record proxy",
+        "Output-record proxy that replaces a sibling while preserving array length",
+        "Output-record proxy that leaves the array shortened",
+        "Output-record proxy that shrinks and restores array length with a different sibling",
+        "Output-record proxy that reenters evaluation before replacing a sibling",
+        "Scenario proxy that replaces an output while returning the same array reference"
+      ],
+      "callbackInvocationsInNegativeCases": 0
+    },
+    "authorRegressionReplay": {
+      "passed": 23,
+      "failed": 0,
+      "preflightSelfTestPassed": true
+    }
+  },
+  "findings": [
+    "Initial PR model blob 190f2d4b94e2079eacbd413bc793e60e2b494bee rejected direct array proxies while accepting nested and top-level record proxies. In the independent synthetic control, replacing a sibling changed 17 gold and an alternative-wins scenario to 107 gold and a prospect-wins scenario. The reentrant variant returned 124 gold.",
+    "The reviewed model rejects proxies before record reflection, takes values from validated own data descriptors, and keeps the plain and frozen controls preview-only at confidence zero.",
+    "The historical F005 fixture retains its original Git blob. The author regression and this separately executed review are separate records."
+  ],
+  "reproduction": {
+    "script": "research/coordination/v2/reviews/20261115-pr72-frontier-snapshot-independent-code-review.js",
+    "scriptGitBlob": "b1a416ce4fa5bcf4ed96bf3a61dc907920e09175",
+    "commandFromRepositoryRoot": "node research/coordination/v2/reviews/20261115-pr72-frontier-snapshot-independent-code-review.js",
+    "commandFromAnyDirectory": "node \"<absolute path to>/20261115-pr72-frontier-snapshot-independent-code-review.js\"",
+    "provenance": "The runner preserves the cases from the recovered original review script. It adds pin checks, explicit expectations and per-case output for replay. The original recorded execution and verdict are unchanged."
+  },
+  "limitations": {
+    "currentRetailHoldouts": 0,
+    "economicUse": "PREVIEW_ONLY",
+    "normalizedVerified": false,
+    "modelAccepted": false,
+    "evidencePromotions": 0,
+    "confidencePromotions": 0,
+    "economicPromotions": 0,
+    "liveEconomicBehaviorVerified": false,
+    "hostedActionsExecutionCoveredByThisRecord": false
+  }
+}

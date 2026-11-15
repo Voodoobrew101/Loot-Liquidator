@@ -5,13 +5,14 @@ on:
     branches: [implementation/five-agent-completion]
 jobs:
   research-candidate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
-      - uses: actions/setup-python@v5
+          package-manager-cache: false
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: python -m pip install 'jsonschema==4.26.0'
@@ -60,14 +61,10 @@ jobs:
         # Do not use this research preview for EV, recommendations or release.
         continue-on-error: true
         run: node research/tools/working_native_emitted_lua_preflight.js
-      - name: F002 TWW milling negative-QA native replay self-test
+      - name: War Within milling regression guard self-test
         run: node research/tools/working_native_tww_accounting_preflight.js --self-test
-      - name: Research-only F005 TWW milling 37-case negative-QA native replay (informational)
-        # The independent F005 fixture currently reports 32 PASS and five
-        # actionable F003 model defects. The F002 runner recognizes exactly
-        # those five failures; it does not reclassify them as passing cases.
-        # F003 owns the model repair, F005 owns independent acceptance.
-        continue-on-error: true
+      - name: Check both War Within milling suites for new regressions
+        # Report remaining known defects and fail on new failures or invalid results.
         run: node research/tools/working_native_tww_accounting_preflight.js
       - name: F002 DF milling v1.0.1 52-case native preflight self-test
         run: node research/tools/working_native_df_milling_attestation_preflight.js --self-test
@@ -79,23 +76,15 @@ jobs:
         # No confidence, expected-quantity or economic promotion.
         continue-on-error: true
         run: node research/tools/working_native_df_milling_attestation_preflight.js
-      - name: F002 Dragonflight Prismatic stage-identity negative-QA self-test
-        # Self-test is mandatory but does not pin the model: F003 can repair it
-        # without blocking the main research pipeline on a stale F002 pin.
+      - name: F002 Dragonflight Prismatic stage-identity replay self-test
         run: node research/tools/working_native_df_prismatic_identity_preflight.js --self-test
-      - name: Research-only F005 Prismatic stage-identity native negative QA (informational)
-        # Exact F005 finding: 40/43 pass, three incorrect 192880 references.
-        # The runner rejects unexpected failures and model/source changes;
-        # detecting the known defect is NOT independent model acceptance.
-        continue-on-error: true
+      - name: Research-only F005 Prismatic stage-identity native 43-case replay
+        # Verify the repaired source identities with 43 synthetic cases.
         run: node research/tools/working_native_df_prismatic_identity_preflight.js
-      - name: F002 DF frontier 21-case native negative-QA self-test
+      - name: Dragonflight Frontier regression runner self-test
         run: node research/tools/working_native_df_frontier_array_preflight.js --self-test
-      - name: Research-only F005 DF frontier array snapshot negative QA (informational)
-        # Two known dynamic-length defects remain F003-owned. Source-pinned
-        # replay is not acceptance; any new failure or source change fails closed.
-        # No working/evidence/economic promotion from this diagnostic.
-        continue-on-error: true
+      - name: Dragonflight Frontier array repair regression (research only)
+        # The historical F005 fixture and its review remain source-pinned.
         run: node research/tools/working_native_df_frontier_array_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: F002 exact gap-to-priority identity and preview coverage contract
