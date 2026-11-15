@@ -1,7 +1,7 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-15T12:11:40.999Z",
-  "status": "Created scoped research-only draft PR #74 holding nine explicit MoP Classic Looter rows from current Retail numeric v3 estimates; preserved original evidence. Four original-source/actual compiler Python CI tests and five-agent/main compatibility workflows passed at final PR head; 13 unrelated legacy migration regression failures remain, so PR is draft and not merge-ready. No current Retail measured numeric cohort, real-world gold action or actual WoW client/tooltip validation claimed.",
+  "updated_at": "2026-11-15T13:06:17.975Z",
+  "status": "Verified Falynn 20-cast historical Runecloth Headband cohort had Bountiful Bags guild perk (missing from recorded context); independent 35-cast zero-shard cohort has unknown perk. Audited two-row P=0 versus positive E incompatibility and correction allowlist; manager evidence and dashboard committed, but no full v3 compiler/addon synthetic-price test or new Retail gold decision. Draft PR #74 untouched; its 13 migration regressions remain.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -16,12 +16,27 @@
     "RM004"
   ],
   "exact_gaps_targeted": [
+    "New original-source context gate: Legacy Falynn Runecloth Headband 13866 20 DE row IDs legacy-20261115-1245-024..026 explicitly have historical Bountiful Bags guild perk; stats=null in transcriptions. Independent 2025 Moritussum 13866 LBS row 027 has 35 reported DE and 0 shard hits. Unknown same-patch/perk comparability; do not pool as current unmodified Retail rates.",
     "Nine 2026-11-15 Legacy MoP Classic item-side Looter rows legacy-20261115-1047001..1047009, 6 input gear item IDs (29327,29344,29345,29328,29326,29325), 551 source-reported unique operations are not demonstrated Retail observations; v3 estimator previously admitted them as studies.",
     "Source-preserving file-scoped exclusion instead of rewriting originals; separate legacy-20261115-1047010 TBC one-cast first-person source remains distinct and is not thereby validated as Retail.",
     "Latest newly reported Legacy Wicked Leather Headband 15086 source (15 JSONL rows, 6 historical comment cohorts; 15+20+3=38 independently stated completed disenchants across 3 cohorts) lacks exact current Retail variant/skill/patch and full output histograms.",
     "Still open: Midnight T0039/T0045 and TWW T0009/T0010 exact rank, completed operation, per-output zero/hit/quantity, skill/unlock, refund and patch/application context; three new TWW named crystal ranks lack source-linked output IDs."
   ],
   "newly_verified_fields_or_cohorts": [
+    {
+      "finding": "Falynn historical Bountiful Bags cohort qualifier from original author edit and Cataclysm perk description",
+      "inputItemID": 13866,
+      "outputItemID": 14344,
+      "originalFalynnCompletedDisenchants": 20,
+      "originalFalynnShardTotalUnits": 2,
+      "knownGuildPerk": "Bountiful Bags (historical)",
+      "laterMoritussumCompletedDisenchants": 35,
+      "laterShardHits": 0,
+      "modernRetailCompatibleCohortsVerified": 0,
+      "exactContextCorrectionSupportedByCurrentAllowlist": false,
+      "fixture": "two-record arithmetic only P=0/35 and E=2/55>0; not full actual build",
+      "sourceVerified": true
+    },
     {
       "finding": "Classic source-flavor admission quarantine",
       "source_rows_held": 9,
@@ -54,13 +69,15 @@
     "new_verified_chance_or_mean": 0,
     "new_current_retail_gold_decisions": 0,
     "scoped_classic_source_rows_held": 9,
-    "source_only_historic_completed_casts_newly_reported_by_legacy_worker": 38
+    "source_only_historic_completed_casts_newly_reported_by_legacy_worker": 38,
+    "new_verified_historical_context_qualifiers_this_run": 1
   },
   "evidence_files": [
     "research/v3/evidence/master/20261115T1108-mop-classic-looter-flavor-admission-gate.md",
     "research/v3/evidence/legacy/2026-11-15T1047-tbc-ilvl97-rare-armor-looter-and-original.jsonl",
     "research/v3/evidence/legacy/2026-11-15T1151-wicked-leather-independent-observations.jsonl",
-    "tests/test_research_v3_flavor_admission.py"
+    "tests/test_research_v3_flavor_admission.py",
+    "research/v3/evidence/master/20261115T1303-falynn-bountiful-bags-cohort-scope-and-zero-chance-audit.md"
   ],
   "source_links": [
     "https://github.com/Voodoobrew101/Loot-Liquidator/pull/74",
@@ -69,11 +86,15 @@
     "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43712286856",
     "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43712286916",
     "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43712286924",
-    "https://www.wowhead.com/mop-classic/item=29325/flesh-beasts-metal-greaves"
+    "https://www.wowhead.com/mop-classic/item=29325/flesh-beasts-metal-greaves",
+    "https://www.wowhead.com/ptr/item=16203/greater-eternal-essence",
+    "https://www.wowhead.com/cata/spell=83966/bountiful-bags",
+    "https://www.wowhead.com/item=14344/large-brilliant-shard",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/commit/a997f43b5087114a2de27c215d423f41eebdfe50"
   ],
-  "verified_commit_sha": "68802609b7bd9bdfc4d2e9c9ed88a01867439752",
-  "verified_commit_sha_scope": "Scoped PR #74 final branch commit and exact GitHub CI head read back; not merged. Dashboard commit 14db4d434579469d72f73387404daecdb8314a46 verified via write result; this status commit cannot self-reference.",
-  "dashboard_verified_commit_sha": "14db4d434579469d72f73387404daecdb8314a46",
+  "verified_commit_sha": "a997f43b5087114a2de27c215d423f41eebdfe50",
+  "verified_commit_sha_scope": "Readback verified master-only evidence note commit, with research source blob 6dc945410f81d646e1a3b71e66e8c471adfe6346; dashboard commit 89b5701aec64e307a277fd788a8e711985aafffd. Status commit cannot self-reference. PR #74 head remains 68802609; no merge.",
+  "dashboard_verified_commit_sha": "89b5701aec64e307a277fd788a8e711985aafffd",
   "evidence_blob_sha": "c953c32036c47ab2d7f9ad183522f8902deeb210",
   "corrections_blob_sha": "cfe34db3ec73ef439be186fba258c7ed2ab18ad9",
   "test_blob_sha": "4ceb156ebd4f25b2fc83ef0e73734d639e9c79d1",
@@ -86,23 +107,26 @@
     "Actual GitHub Actions run 43712286856 executed four Python regression tests PASS including two build() passes comparing entire effective corpus with Classic rows re-admitted in-memory, asserting delta scope. Five-agent completion 43712286916 success; Research compatibility with main 43712286924 success.",
     "Verify v3 migration run 43712286856 has 13 migration-suite failures (same count on prior scoped branch CI run 43711911247); captured exact failing test names and posted PR draft CI checkpoint. Kept draft; did not hide or bypass failures.",
     "Reviewed latest workers: Legacy 11:51Z, Dragonflight 11:40Z, TWW 11:22Z, Midnight 11:19Z, without fabricating acknowledgments.",
-    "Updated only coordinator-owned dashboard on shared research branch at commits a55d259 and 14db4d4, preserving previous content."
+    "Updated only coordinator-owned dashboard on shared research branch at commits a55d259 and 14db4d4, preserving previous content.",
+    "2026-11-15 13:03Z: Reopened original Wowhead Falynn edited statement and independent archived Bountiful Bags spell description; verified 20-cast 32/6/2 numeric source and 35-cast 0-hit 2025 independent source. Confirmed 10 guarded JS source-shape, same-key, correction-path and no Disenchant rate-change assertions; calculated only an isolated two-row P=0/E=2/55 compatibility contradiction, not full compiler output.",
+    "Created/read back master source-context audit note a997f43; updated coordinator-owned dashboard 89b5701. Current five-agent workflow 43717154335 in progress at dashboard head, so no final-head CI conclusion claimed. GitHub main/db80e43, owner three-pass/3d667d0, research/89b5701, draft PR74/68802609 checked."
   ],
   "not_performed": [
     "No local repository clone, local Python v3 compiler run, uncommitted output regeneration, actual addon valuation or tooltip render with synthetic prices, real WoW client test or production release.",
-    "No mutation of original/worker-owned evidence, queues, flags, worker status, research roles, main, owner three-pass integration, other PRs, or scheduled automations. No merge or closure."
+    "No mutation of original/worker-owned evidence, queues, flags, worker status, research roles, main, owner three-pass integration, other PRs, or scheduled automations. No merge or closure.",
+    "No fresh full build_estimates.py build(), full-corpus compatibility, actual Lua engine valuation/tooltip at synthetic prices, live WoW client, or CI result at latest manager-owned head; CI in progress at checkpoint."
   ],
   "worker_checkpoints_read": {
-    "legacy": "2026-11-15T11:51:50.337Z: Wicked Leather historical source observations, 38 explicit old operations, Retail variant unknown.",
-    "dragonflight": "2026-11-15T11:40:15.560Z: no independent numeric cast cohort, seven repeat source pools de-duplicated.",
-    "war_within": "2026-11-15T11:22:18.502Z: 11 reference-only rows across 7 gear cohorts; no original 0..N histograms.",
-    "midnight": "2026-11-15T11:19:55.937Z: one negative search record; no original new numeric cohort."
+    "legacy": "2026-11-15T12:45:42.859Z: 30 new records, 10 historic DE cohorts, 12 Fel Iron exact output units, one token; Falynn perk not captured in structured stats",
+    "dragonflight": "2026-11-15T12:37:08.927Z: 7 source-item Looter reference-only cohorts, no measured quantity",
+    "war_within": "2026-11-15T12:30:54.290Z: 12 distinct R2 crystal Looter reference-only cohorts, no measured quantity",
+    "midnight": "2026-11-15T12:12:11.762Z: claimed 200 completed DE operations, source item/material IDs not supplied"
   },
   "github_state_checked": {
     "main": "db80e43ae29ee19141a3c9ff6ab6bda034c49d90",
     "owner_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_initial": "0f9b8948f5af77e6dddbc991994c728ea1616705",
-    "dashboard_last_commit": "14db4d434579469d72f73387404daecdb8314a46",
+    "research_initial": "12504291e6b3243b72b0745636d9d73d7ab4cd79",
+    "dashboard_last_commit": "89b5701aec64e307a277fd788a8e711985aafffd",
     "research_only_pr": 74,
     "research_only_pr_draft": true,
     "research_only_pr_head": "68802609b7bd9bdfc4d2e9c9ed88a01867439752",
@@ -124,9 +148,23 @@
         "name": "Research compatibility with main",
         "conclusion": "success"
       }
+    ],
+    "current_research_pre_status": "89b5701aec64e307a277fd788a8e711985aafffd",
+    "current_research_ci": [
+      {
+        "id": 43717154335,
+        "head": "89b5701aec64e307a277fd788a8e711985aafffd",
+        "conclusion": "in_progress at checkpoint"
+      },
+      {
+        "id": 43715489269,
+        "head": "12504291e6b3243b72b0745636d9d73d7ab4cd79",
+        "conclusion": "success (prior worker head)"
+      }
     ]
   },
   "blockers": [
+    "Falynn historic Bountiful Bags-positive output and 2025 no-shard item-side cohort have unverified comparable patch/skill/perk scope; current correction allowlist does not support structured stats. Two-row arithmetic P=0,E>0 is not a full-corpus observed regression; requires actual compiler regression then scoped fix.",
     "Draft PR #74 is not integration-ready: the broader migration workflow has 13 failing tests about stale committed migration outputs, missing percentMeaning and conflicted duplicate source identities. A separate reviewed repair is needed; do not bypass tests.",
     "No evidence bridging Classic-only 293xx Looter outcomes to current Retail gear variants, patch and skill/profession conditions.",
     "No actual synthetic-price addon engine/tooltip proof on an isolated real source fixture or live WoW client QA for research branch outputs.",
@@ -135,7 +173,8 @@
   "exhausted_sources": [
     "Do not re-harvest the nine Classic rows or add their 551 Classic page-reported operations to Retail sample counts; original source flavor proof must change first.",
     "Legacy 15086 Thottbot/Allakhazam mirrors are historical, not fresh Retail casts. Keep 32 mathematically inferred comments and 10 purchased items out of completed-cast denominators.",
-    "Current indexed DF live/PTR copies and older Midnight Cardinalai/Honeybone original reports should not be recycled as independent numeric cohorts."
+    "Current indexed DF live/PTR copies and older Midnight Cardinalai/Honeybone original reports should not be recycled as independent numeric cohorts.",
+    "Falynn 20-item Runecloth Headband original and Moritussum 35-item 2025 zero-shard source now identity/context checked; do not re-harvest them as new independent current Retail casts without new primary context."
   ],
-  "next_concrete_step": "PR Director review of scoped draft #74 after separate migration CI remediation; check actual source-to-offline-valuation/tooltip at synthetic prices before any merge/promotion. Keep Midnight T0039/T0045 and TWW T0009/T0010 workers on new original rank+completed operation+per-output hits/zero/refund+skill/patch logs; don't reissue exhausted searches or change schedules."
+  "next_concrete_step": "Preserve original Falynn 20/32/6/2 with historical Bountiful Bags-positive qualifier; review minimal append-only context correction/compatibility guard and execute actual full-corpus build + 13866/14344 zero-chance/positive-E regression, followed by real offline synthetic-price addon render only on a compatible profile. No change to draft PR #74/owner three-pass branch. Workers continue independent original source rank/zero/hit/refund/skill logs for Midnight T0039/T0045 and TWW T0009/T0010."
 }
