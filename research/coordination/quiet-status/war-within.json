@@ -1,8 +1,8 @@
 {
   "role": "war-within",
   "agent": "war-within",
-  "updated_at": "2026-11-15T06:31:47.418Z",
-  "status": "Added 3 new reference-only original item-side TWW epic disenchant cohorts (IDs 237618,237619,237706), 186 source-reported disenchants with 9 unranked Refulgent Crystal occurrence rows. Documented 2 PTR non-disenchantability conflicts. No controlled current-patch material quantity, complete histogram, or EV cohort verified.",
+  "updated_at": "2026-11-15T07:24:30.377Z",
+  "status": "Two previously unindexed TWW item-side Looter cohorts documented as 12 reference-only material occurrence rows: Fungal Friend Flute (215171, source denominator 325, 8 rows) and Nisa's Spare Cloak (229069, denominator 76, 4 rows). No controlled rank-specific measured yields, stack units, zeros, or production-ready EV verified.",
   "task_ids": [
     "T0048",
     "T0040",
@@ -12,158 +12,132 @@
     "T0008"
   ],
   "exact_gaps_targeted": [
-    "T0048: inputs 237618/237619/237706 -> 3 source-listed Refulgent Crystal rows each; output rank IDs, positive stack counts, 0-outcome histogram, original build and item bonus, skill/spec/refund missing.",
-    "T0048: WoWDB PTR 11.2.0 build #61476 flags 237618/237619 cannot be disenchanted; contradictory cumulative Wowhead Looter, requires Retail variant verification.",
-    "T0040/T0009/T0008: post-2024-10-25 Bismuth 210930/210931, Ironclaw 210936/210937, Aqirite 210933/210934 by rank/unlock/refund operation logs, output hit and 0..N per-cast histograms still missing.",
-    "T0010/T0011: Mycobloom 210796/210797 -> Nacreous Pigment 222619 per-rank completed mills/positive hit histograms/skill/refund basis still missing."
+    "T0048: 215171 Fungal Friend Flute -> Refulgent Crystal/Storm Dust/Gleaming Shard, 8 source rows, source-reported 325 gear disenchants; output quality IDs, gear variant, quantities and 0-outcome histogram unknown.",
+    "T0048: 229069 Nisa's Spare Cloak -> Gleaming Shard/Storm Dust, 4 source rows, source-reported 76 gear disenchants; output quality IDs, original sample patch and 0-outcome histogram unknown.",
+    "T0009/T0040/T0008: post-2024-10-25 rank-specific Ironclaw/Bismuth/Aqirite completed prospects with per-output positive-hit/0-1-2 histograms, skills/specializations/refunds still absent.",
+    "T0010/T0011: Mycobloom 210796/210797 -> Nacreous Pigment 222619 completed-mill counts/histograms by rank and skill/refund still absent."
   ],
   "newly_verified_fields": [
     {
-      "inputItemID": 237618,
-      "inputName": "Cuisses of the Lucent Battalion",
-      "inputKind": "epic plate legs",
+      "inputItemID": 215171,
+      "inputName": "Fungal Friend Flute",
       "method": "Disenchant",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "sourceReportedOperations": 68,
-      "sourceReportedUnrankedMaterialOccurrences": [
-        37,
-        17,
-        12
+      "outputRows": [
+        {
+          "outputName": "Refulgent Crystal",
+          "hits": [
+            100,
+            43,
+            20
+          ]
+        },
+        {
+          "outputName": "Storm Dust",
+          "hits": [
+            90,
+            33,
+            8
+          ]
+        },
+        {
+          "outputName": "Gleaming Shard",
+          "hits": [
+            21,
+            6
+          ]
+        }
       ],
+      "sourceReportedOperations": 325,
       "sourceKind": "reference",
+      "outputItemIDs": null,
+      "outputRanks": null,
       "totalQuantity": null,
       "zeroOutcomes": null,
       "histogram": null,
-      "minSeen": null,
-      "maxSeen": null,
       "skill": null,
       "specialization": null,
       "build": null,
-      "resourcefulnessRefundBasis": null,
-      "eligibilityConflict": true
+      "resourcefulnessRefundBasis": null
     },
     {
-      "inputItemID": 237619,
-      "inputName": "Lightmane of the Lucent Battalion",
-      "inputKind": "epic plate head",
+      "inputItemID": 229069,
+      "inputName": "Nisa's Spare Cloak",
       "method": "Disenchant",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "sourceReportedOperations": 73,
-      "sourceReportedUnrankedMaterialOccurrences": [
-        37,
-        18,
-        14
+      "outputRows": [
+        {
+          "outputName": "Gleaming Shard",
+          "hits": [
+            45,
+            14,
+            10
+          ]
+        },
+        {
+          "outputName": "Storm Dust",
+          "hits": [
+            6
+          ]
+        }
       ],
+      "sourceReportedOperations": 76,
       "sourceKind": "reference",
+      "outputItemIDs": null,
+      "outputRanks": null,
       "totalQuantity": null,
       "zeroOutcomes": null,
       "histogram": null,
-      "minSeen": null,
-      "maxSeen": null,
       "skill": null,
       "specialization": null,
       "build": null,
-      "resourcefulnessRefundBasis": null,
-      "eligibilityConflict": true
-    },
-    {
-      "inputItemID": 237706,
-      "inputName": "Dying Star's Waistlight",
-      "inputKind": "epic cloth waist",
-      "method": "Disenchant",
-      "outputName": "Refulgent Crystal",
-      "outputItemID": null,
-      "outputRank": null,
-      "sourceReportedOperations": 45,
-      "sourceReportedUnrankedMaterialOccurrences": [
-        20,
-        17,
-        8
-      ],
-      "sourceKind": "reference",
-      "totalQuantity": null,
-      "zeroOutcomes": null,
-      "histogram": null,
-      "minSeen": null,
-      "maxSeen": null,
-      "skill": null,
-      "specialization": null,
-      "build": null,
-      "resourcefulnessRefundBasis": null,
-      "eligibilityConflict": false
+      "resourcefulnessRefundBasis": null
     }
   ],
-  "newly_verified_cohorts": 3,
+  "newly_verified_cohorts": 2,
   "controlled_measured_cohorts_added": 0,
-  "reference_only_cohorts_added": 3,
+  "reference_only_cohorts_added": 2,
   "numerical_fields_advanced": [
-    "237618 -> Refulgent Crystal unspecified rank/ID row 1: 37 source occurrences out of 68 individual item disenchants (uncontrolled reference, no stack units or zeros)",
-    "237618 -> Refulgent Crystal unspecified rank/ID row 2: 17 source occurrences out of 68 individual item disenchants (uncontrolled reference, no stack units or zeros)",
-    "237618 -> Refulgent Crystal unspecified rank/ID row 3: 12 source occurrences out of 68 individual item disenchants (uncontrolled reference, no stack units or zeros)",
-    "237619 -> Refulgent Crystal unspecified rank/ID row 1: 37 source occurrences out of 73 individual item disenchants (uncontrolled reference, no stack units or zeros)",
-    "237619 -> Refulgent Crystal unspecified rank/ID row 2: 18 source occurrences out of 73 individual item disenchants (uncontrolled reference, no stack units or zeros)",
-    "237619 -> Refulgent Crystal unspecified rank/ID row 3: 14 source occurrences out of 73 individual item disenchants (uncontrolled reference, no stack units or zeros)",
-    "237706 -> Refulgent Crystal unspecified rank/ID row 1: 20 source occurrences out of 45 individual item disenchants (uncontrolled reference, no stack units or zeros)",
-    "237706 -> Refulgent Crystal unspecified rank/ID row 2: 17 source occurrences out of 45 individual item disenchants (uncontrolled reference, no stack units or zeros)",
-    "237706 -> Refulgent Crystal unspecified rank/ID row 3: 8 source occurrences out of 45 individual item disenchants (uncontrolled reference, no stack units or zeros)"
+    "215171: 325 source-reported item disenchants; Crystal hits 100/43/20, Dust hits 90/33/8, Shard hits 21/6 (all unranked/unmapped material rows).",
+    "229069: 76 source-reported item disenchants; Shard hits 45/14/10 and Dust hits 6 (all unranked/unmapped material rows)."
   ],
   "newly_verified_source_leads": [
     {
-      "source": "https://www.wowhead.com/ptr/item=237618/cuisses-of-the-lucent-battalion",
-      "finding": "Exact input 237618, 68 cumulative item disenchant source denominator, rows 37/17/12, without quality-rank item IDs or quantities."
+      "source": "https://www.wowhead.com/item=215171/fungal-friend-flute",
+      "originalItemID": 215171,
+      "sourceReportedOperations": 325,
+      "outputRows": 8
     },
     {
-      "source": "https://www.wowhead.com/ptr/item=237619/lightmane-of-the-lucent-battalion?bonus=13444",
-      "finding": "Exact input 237619, 73 cumulative item disenchant source denominator, rows 37/18/14, without quality-rank item IDs or quantities."
-    },
-    {
-      "source": "https://www.wowhead.com/ptr-2/item=237706/dying-stars-waistlight",
-      "finding": "Exact input 237706, 45 cumulative item disenchant source denominator, rows 20/17/8, without quality-rank item IDs or quantities."
-    },
-    {
-      "source": "https://ptr.wowdb.com/items/237618-cuisses-of-the-lucent-battalion",
-      "finding": "PTR build #61476 says item 237618 cannot be disenchanted, conflicting with Looter."
-    },
-    {
-      "source": "https://ptr.wowdb.com/items/237619-lightmane-of-the-lucent-battalion",
-      "finding": "PTR build #61476 says item 237619 cannot be disenchanted, conflicting with Looter."
+      "source": "https://www.wowhead.com/item=229069/nisas-spare-cloak",
+      "originalItemID": 229069,
+      "sourceReportedOperations": 76,
+      "outputRows": 4
     }
   ],
-  "evidence_file": "research/v3/evidence/war-within/2026-11-15T0631-unranked-epic-crystal-cohorts.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/20261115T0724-fungal-flute-nisa-original-looter.jsonl",
   "evidence_source_links": [
-    "https://www.wowhead.com/ptr/item=237618/cuisses-of-the-lucent-battalion",
-    "https://ptr.wowdb.com/items/237618-cuisses-of-the-lucent-battalion",
-    "https://www.wowhead.com/ptr/item=237619/lightmane-of-the-lucent-battalion?bonus=13444",
-    "https://ptr.wowdb.com/items/237619-lightmane-of-the-lucent-battalion",
-    "https://www.wowhead.com/ptr-2/item=237706/dying-stars-waistlight"
+    "https://www.wowhead.com/item=215171/fungal-friend-flute",
+    "https://www.wowhead.com/item=229069/nisas-spare-cloak"
   ],
-  "original_cohort_basis": "3 independent original Wowhead item-side cumulative gear IDs; 68+73+45=186 source-reported gear operations counted once. Row counts share each denominator, and Wowhead Live/PTR mirrors do not constitute independent cohorts. All numeric rows are reference only, with unknown output rank and no current-patch model confidence.",
+  "original_cohort_basis": "Two distinct original item IDs from two item-side cumulative Wowhead Looter tables, 325+76=401 source-reported gear disenchants, counted once per item rather than once per output row. PTR/live mirrors and changing snapshots of same item are NOT independent. Reference-only; mixed gear bonus/quality possible.",
   "blockers": [
-    "Three same-name Refulgent Crystal output rows per item lack original output hyperlink/rank IDs 219952/219954/219955, plus total stack units, zero buckets, min/max, complete histograms.",
-    "Source collection epoch/game build, item bonus, skill/spec, refund basis and live eligibility unresolved; displayed PTR version not cohort sample patch.",
-    "WoWDB PTR #61476 cannot-disenchant for 237618,237619 contradicts Looter; no numerical Retail DE recommendation or gold EV can safely follow.",
-    "Still no source-verified post-Oct25 2024 Bismuth/Ironclaw/Aqirite/Mycobloom controlled per-cast ranked hits/histograms."
+    "Output labels repeat across material qualities while search-index extraction omits exact output IDs; same-name rows cannot be mapped to 219946-219948, 219949-219951 or 219952/219954/219955 without original hyperlinks.",
+    "Both tables lack quantities per positive cast, source collection build/epoch, gear bonus and observed character skill/spec/refund status; cannot convert row hit counts into current-patch controlled yield baselines or 0 counts.",
+    "Original source page is JavaScript-rendered: search-indexed table is visible, but public direct HTML omits Looter table. Independent direct raw HTML retrieval unavailable this run.",
+    "Still no controlled post-Oct-2024 ore/herb rank/skill operation-level logs for TWW prospecting/milling."
   ],
   "exhausted_sources": [
-    "2026-11-15: Followed prospecting by ore and herb name across Reddit, Wowhead, Blizzard forums and profession guides; known PeaEsk R2 and 50k mixed-ore Adreymar sources were already archived, so no re-recording.",
-    "2026-11-15: The indexed Live WoWhead R2 Refulgent Crystal material-output table supplies denominators and occurrences only; direct page dynamically omits linked item IDs, positive stack distributions and sample epoch. Item names were mapped through independently indexed exact item pages.",
-    "2026-11-15: Rank-2 Aqirite/Ironclaw Apr 2025 100k-ore economic projection is hypothetical, not a controlled per-cast dataset.",
-    "2026-11-15: Rechecked Reddit/Blizzard/Wowhead TWW prospecting/milling original source leads; historical pre-hotfix cohorts 1fisfkn and 1fdmzwy already archived; no fresh original completed-cast histogram found.",
-    "2026-11-15: Dedupe excluded previously captured Lucent item cohorts 237616,237621,237622 (2026-11-08T2130), 237617 (2026-11-13T2231), 237620 (2026-11-02T1523)."
+    "Name-targeted search of Ironclaw Ore, Mycobloom, Aqirite, Bismuth across WoW economy forum and guides surfaced previously archived pre-hotfix cohorts 1fisfkn, 1f83cnd and no new controlled per-cast histograms.",
+    "Reviewed recent source-indexed item-side and prior War Within evidence examples; neither 215171 nor 229069 appeared in current accessible GitHub code search or targeted recent evidence checks.",
+    "Firecrawl raw-HTML source extraction unavailable due connected app credit exhaustion; do not infer output rank from table ordering."
   ],
-  "next_concrete_step": "Resolve actual source row hyperlinks/pctstack for 237618/237619/237706 and retail bonus-specific disenchant eligibility first; continue scouting new post-hotfix ore/herb raw per-cast exports by rank/skill/unlock/refund, keeping unknown fields null.",
+  "next_concrete_step": "Recover original Looter HTML output hyperlink IDs, stack-size distributions and source sample-epoch for item 215171 and 229069; seek ranked post-hotfix Khaz Algar ore/herb raw per-cast exports with skill/spec/refund fields, avoiding existing September 2024 duplicates.",
   "verified_commit_sha": null,
-  "commit_sha_note": "One Git commit updates evidence and status atomically; embedding this new commit SHA in its own status file would require another commit. Verify final SHA and both paths by independent branch/file read-back.",
+  "commit_sha_note": "Status and new JSONL are created atomically in one commit. This file cannot embed the SHA of that same commit without a prohibited second commit; read back both paths and branch head to verify the SHA outside the committed file.",
   "source_branch": "implementation/five-agent-completion",
   "prohibited_actions_not_taken": [
-    "no production merge/release",
-    "no schema/CI bypass",
-    "no other workers or shared dashboard edited",
-    "no assumed chances/zeros/quantity confidence or frozen gold EV",
-    "no schedule created"
+    "no merge or release",
+    "no other worker/shared dashboard edits",
+    "no confidence or zero count imputed",
+    "no schedules created"
   ]
 }
