@@ -7,11 +7,23 @@ local SPELLS={[13262]="Disenchant",[51005]="Mill",[31252]="Prospect",[382981]="M
     [444181]="Mill",[434018]="Prospect",[1269575]="Mill",[1231127]="Prospect"}
 local MAX_RECORDS=2000
 local pending
+local captureSequence=0
 local request
 local RECORDER_REVISION=6
 local disenchantIntents,intentOrder={},{}
 local sessionStarted=false
 local recyclingReceipts,recyclingReceiptOrder={},{}
+-- A timer only needs the capture's identity. Closing over the capture itself
+-- keeps its full bag snapshot alive even after the cast is recorded.
+local function afterPending(delay,callback)
+    if not (C_Timer and C_Timer.After) then return false end
+    local captureID=pending.captureID
+    C_Timer.After(delay,function()
+        local p=pending
+        if p and p.captureID==captureID then callback(p) end
+    end)
+    return true
+end
 local function finite(n) return type(n)=="number" and n==n and n>=0 and n<math.huge end
 local function integer(n) return finite(n) and n>0 and n%1==0 end
 local function secret(v) return issecretvalue and issecretvalue(v) end
@@ -478,7 +490,8 @@ function LL:BeginCraftCapture(guid,recipe)
     local context=self:CaptureCraftContext(recipe,targetFacts,description.method,hint and hint.allocation,
         hint and hint.concentration,hint and hint.allocationItemGUID)
     if hint then hint.remaining=hint.remaining-1;hint.at=clock() end
-    pending={guid=guid,recipe=recipe,method=description.method,description=description,before=before,
+    captureSequence=captureSequence+1
+    pending={captureID=captureSequence,guid=guid,recipe=recipe,method=description.method,description=description,before=before,
         request=copy(hint),context=copy(context),startedAt=stamp(),started=clock(),success=false,results={},resultKeys={},
         salvageInputVerified=salvageInputs and hint and salvageInputs[hint.salvageInputID]==true,
         previousRecycling=preceding}
@@ -486,13 +499,12 @@ function LL:BeginCraftCapture(guid,recipe)
         pending.craftAllocation={version=1,requestState=hint and 'observed' or 'missing-or-expired',
             allocation=hint and hint.diagnosticAllocation or diagnosticAllocation(nil),schematic=description.diagnosticSchematic}
     end
-    if C_Timer and C_Timer.After then
-        local p=pending;C_Timer.After(60,function()
-            if pending==p and not p.success then
-                p.uncertainCompletion=true;self:AbandonCraftCapture("No cast completion evidence")
-            end
-        end)
-    end
+    afterPending(60,function(p)
+        if not p.success then
+            p.uncertainCompletion=true
+            self:AbandonCraftCapture("No cast completion evidence")
+        end
+    end)
     return true
 end
 local function reportedReturns(p)
@@ -1204,17 +1216,20 @@ function LL:RecordingStatus()
         "Recording"
     return ("%s\nCurrent batch: %d complete, %d unresolved.\nResults stay saved for export. Complete recipes without coverage gaps can be used independently."):format(state,complete,unresolved)
 end
-local schedule
-schedule=function()
+local function schedule()
     local p=pending
-    if not p or not p.success or p.scheduled or not C_Timer or not C_Timer.After then return end
-    p.scheduled=true
-    C_Timer.After(1.25,function()
-        if pending==p then
-            p.scheduled=false
-            if p.lastChange and clock()-p.lastChange<.75 then schedule() else LL:FinishCraftCapture(false) end
+    if not p or not p.success or p.scheduled then return end
+    p.scheduled=afterPending(1.25,function(current)
+        current.scheduled=false
+        if current.lastChange and clock()-current.lastChange<.75 then
+            schedule()
+        else
+            LL:FinishCraftCapture(false)
         end
     end)
+end
+local function finishPending()
+    LL:FinishCraftCapture(true)
 end
 local frame=CreateFrame("Frame")
 for _,event in ipairs({"UNIT_SPELLCAST_SENT","UNIT_SPELLCAST_START","UNIT_SPELLCAST_SUCCEEDED","UNIT_SPELLCAST_FAILED",
@@ -1317,9 +1332,7 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
             if not pending.success then
                 pending.success=true
                 pending.completedAt=stamp();pending.completed=clock()
-                if C_Timer and C_Timer.After then
-                    local p=pending;C_Timer.After(13,function() if pending==p then LL:FinishCraftCapture(true) end end)
-                end
+                afterPending(13,finishPending)
             end
             schedule()
         else
@@ -1327,11 +1340,8 @@ frame:SetScript("OnEvent",function(_,event,unit,a,b,c)
             pending=nil
             if preceding and #preceding>0 then
                 pending=table.remove(preceding);pending.previousRecycling=preceding
-                local restored=pending
                 schedule()
-                if C_Timer and C_Timer.After then
-                    C_Timer.After(13,function()if pending==restored then LL:FinishCraftCapture(true)end end)
-                end
+                afterPending(13,finishPending)
             end
         end
     end

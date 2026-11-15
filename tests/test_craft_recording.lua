@@ -251,4 +251,46 @@ check(s6:BeginCraftCapture('cast-at-logout',13262),'capture started')
 emit('PLAYER_LOGOUT')
 check(s6.db.craftResearch.studies[castBatch].censored,'pending cast at logout censors');eq(s6.db.craftResearch.activeStudy,nil)
 local s7=session(clone(s6.db));eq(s7:ActiveRecordingBatch(),nil,'censored batch is not resumed')
+-- Finished casts must release their bag snapshots before the scheduled
+-- timeouts fire, even when consecutive crafts finish one another.
+frames={};timers={}
+local bulk=session(freshDB())
+bulk.CaptureCraftContext=function(self,recipe,_,method)
+ return {character=self:CharacterKey(),recipeID=recipe,method=method,profileKind='measured',simulated=false}
+end
+local snapshots=setmetatable({}, {__mode='k'})
+bulk.SnapshotCraftBags=function()
+ local snapshot=clone(bags)
+ snapshots[snapshot]=true
+ return snapshot
+end
+local castCount=40
+bags=bag({[10]=castCount*5,[20]=1})
+for i=1,castCount do
+ local guid='bulk-'..i
+ sent(guid)
+ bags=bag({[10]=castCount*5-i*5,[20]=i+1})
+ success(guid)
+ emit('TRADE_SKILL_ITEM_CRAFTED_RESULT',{itemID=20,quantity=1,itemGUID='bulk-item-'..i,operationID=i})
+ advance(.5)
+end
+advance(1.3)
+eq(bulk:RecordedResultsCount(),castCount,'all bulk results were recorded')
+check(#timers>0,'the obsolete timeout callbacks have not run yet')
+collectgarbage('collect')
+eq(next(snapshots),nil,'finished craft snapshots must be collectable before timers expire')
+advance(60)
+eq(bulk:RecordedResultsCount(),castCount,'old timeout callbacks cannot affect later results')
+-- An interrupted capture releases its snapshot, and its timeout cannot affect
+-- a later capture even when the cast GUID is reused.
+bags=bag({[10]=5})
+sent('reused-guid');advance(10)
+emit('UNIT_SPELLCAST_INTERRUPTED','player','reused-guid',1231127)
+collectgarbage('collect')
+eq(next(snapshots),nil,'interrupted craft snapshots are collectable')
+sent('reused-guid');advance(50.1)
+eq(bulk:StartCraftStudy('while a cast is pending'),nil,'an old timeout cannot end a new capture')
+advance(10)
+local bulkDiagnostics=bulk.db.craftResearch.diagnostics
+eq(bulkDiagnostics[#bulkDiagnostics].reason,'No cast completion evidence','a genuine timeout still records the coverage gap')
 print('PASS: '..checks..' cast-recorder assertions (events, zeros, delayed loot, coverage, generic crafting, baseline and engine)')
