@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-15T21:16:50.030Z",
-  "status": "New independent March 19 firsthand source reports unchanged Midnight Milling recipe difficulty 505 despite other Inscription difficulty tuning; no original per-cast material yield cohort. Reference-only, not a live-12.1.5 threshold.",
+  "updated_at": "2026-11-15T22:14:30.256Z",
+  "status": "New, original 2026-10-04 Goblinomics Salvage recorder acquisition lead verified from author changelog and GitHub README; no public original 0-inclusive cast ledger or estimator-eligible yield fields.",
   "task_ids": [
     "T0026",
     "T0005",
@@ -11,19 +11,21 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026: 272246 Miststalker's Wristbands at-cast variant/itemLevel305 vs generic206; uncommon/rare/epic armor/weapon DE with exact material IDs, build, spec, skill, histograms/zeros.",
-    "T0005/T0039: Umbral Tin Ore 237362 rank2/237363 rank1 and Eversong Diamond 242608 unlock; castsWithDrop/0..N by 242606,242607,242610,242611,242786,242788; keep refunds separate.",
-    "T0003/T0002/T0045: Refulgent Copper 237359, Brilliant Silver 237365 and Tranquility Bloom 236761 milling rank-specific original completed casts and outputs.",
-    "NEW source check for T0045: March 19 2026 Midnight Milling recipe difficulty claimed 505 (potential skill/rank interpretation; source did not report casts)."
+    "T0026: Midnight DE 272246 scaled ilvl305 versus generic206; itemLink/bonus, gear rarity/kind, skill/spec/build and zero-inclusive per-output material histogram still absent.",
+    "T0005/T0039: Umbral Tin Ore 237362 and 237363 rank-specific per-output hits/zeros by material ID including Eversong Diamond 242608 unlock, Resourcefulness refunds and completed cast denominator.",
+    "T0003/T0002/T0045: Refulgent Copper Ore 237359; Brilliant Silver Ore 237365 and Tranquility Bloom 236761 milling original per-cast rank/skill outputs.",
+    "NEW evidence-acquisition avenue: Goblinomics Workshop > Salvage local SavedVariables potentially contains per-item DE frequencies and processed materials, plus prospecting and milling; need original author/player export and source schema before any numeric assertion."
   ],
   "newly_verified_fields_or_cohorts": {
     "new_original_completed_cast_cohorts": 0,
     "new_estimator_eligible_material_numeric_fields": 0,
-    "new_independent_recipe_difficulty_source_claims": 1,
-    "reported_milling_recipe_difficulty": 505,
-    "claim_date": "2026-03-19",
-    "claim_scope": "Midnight Inscription milling; pre-12.1, not verified current-client",
-    "caveat": "Not an operation outcome, probability, yield, item-level, or original cast cohort. No current live threshold inferred."
+    "new_firstparty_salvage_data_acquisition_leads": 1,
+    "original_author_salvage_feature_date": "2026-10-04",
+    "latest_verified_addon_release_date": "2026-11-08",
+    "latest_supported_retail_client_patch": "12.1.5",
+    "explicitly_documented_capabilities": "Workshop Salvage aggregates per-input disenchant frequency and material returns; GitHub README also names milling/prospecting; local SavedVariables",
+    "missing_original_player_export": true,
+    "caveat": "Addon feature documentation is NOT observed player data, an event-zero ledger, current-patch item outcome or numeric drop-rate measurement."
   },
   "numeric_fields_advanced": {
     "new_measured_cohorts": 0,
@@ -35,28 +37,29 @@
     "skill": null,
     "specialization": null,
     "build": null,
-    "recipeDifficultyReference": 505,
-    "recipeDifficultySourceDate": "2026-03-19",
-    "batchSizeIndependentMechanicsReference": 10
+    "inputRank": null,
+    "outputRank": null,
+    "resourcefulnessRefunds": null
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-15T2116-milling-505-difficulty-source.jsonl"
+    "research/v3/evidence/midnight/2026-11-15T2214-goblinomics-salvage-original-export-lead.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261115T2021-rank-refinement-fixed-recipes.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-15T2116-milling-505-difficulty-source.jsonl",
   "evidence_record_ids": [
-    "midnight-20261115-2116-001"
+    "midnight-20261115-2214-001"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1ry2ffv/recipe_difficulty_tuning_with_no_warning/",
-    "https://us.forums.blizzard.com/en/wow/t/is-perfect-milling-intended-to-be-a-trap/2362528"
+    "https://www.curseforge.com/wow/addons/goblinomics-gold-economy-suite-and-tracker/files/9518152",
+    "https://github.com/xLN1995/goblinomics/blob/main/README.md",
+    "https://www.curseforge.com/wow/addons/goblinomics-gold-economy-suite-and-tracker"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Atomic one-commit write of one new Midnight evidence file plus own quiet-status file. Self-referential commit SHA cannot be embedded in the same signed tree; confirm actual SHA by branch-head and file read-back, reported outside JSON.",
+  "commit_note": "Prepared atomic one-commit update of one new Midnight evidence JSONL and own quiet-status file. Self-referential commit SHA cannot be embedded in that commit; verify final SHA via branch read-back and report outside JSON.",
   "blockers": [
-    "Still no original 2026-11 zero-inclusive casts/material output records for 272246 scaled variant DE, Umbral Tin 237362 completed-cast hit histograms, rank-specific copper/silver prospects, or Tranquility Bloom 236761 milling.",
-    "Reported 505 is one March 2026 player's stated recipe difficulty, without recipe spell ID or client export; later September separate calculation was only projected. No proof it remains correct in 12.1.5 or changes material yields; Master must review any runtime model.",
-    "Unknown input/output rank IDs, casts, material totals, hit/zero histograms, actual profession skill/spec and refunds remain null; avoid counting skill/difficulty as yield data."
+    "No publicly available original Goblinomics user SavedVariables or character-specific Salvage export; source text does not document per-cast zeros, bonus/itemLinks, skill/spec or quality-rank tracking. Do not treat aggregated frequency as raw outcome histogram.",
+    "No new measured rank-specific zero-inclusive 272246 DE or 237362/237359/237365 prospect or 236761 milling samples; exact input/output IDs and measured 0/1/2+ histograms remain unverified.",
+    "Original owner/data author consent is needed before use of private SavedVariables. Avoid reading or sharing private player economic/character data without authorization."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -160,10 +163,11 @@
     "2026-11-15T18:19:25.102Z: New capture-oriented named searches on Reddit, US Blizzard professions forums, Wowhead, wow-professions and CurseForge for Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom and original 12.1.5 logs. Newly identified invokegaming Disenchanting Advisor Feb23 publication claims per-skill observed DE data, but release has no public owner CSV/operation ledger; source https://www.curseforge.com/wow/addons/disenchanting-advisor and https://www.reddit.com/r/wow/comments/1rctzli/. Previously recorded Cardinalai/JD3K/Honeybone/Looter/PR49 observations were not duplicated. Skip public release recheck unless independent downloadable player samples emerge.",
     "2026-11-15T19:13:15.683Z: Independent 272246 base-vs-selected variant source triangulation: GamGem Blizzard item-API 2026-11-07 base ilvl206 Epic Leather; Wowhead live item selector ilvl305 bonus6652:13696:12841:13662; WoWDB LIVE 12.1.0 base Cannot be disenchanted. Live at-cast 305 successful disenchant receipt not found, existing pooled 140 Looter rows midnight-20261101-090701..905 not repeated. Cross-site named original operation-log searches for 272246/237362/237359/237365/236761 through Reddit, Blizzard forums, Wowhead, WoWDB, GamGem and profession guides found no new original 0-inclusive current-build material cohort. New independent EnchantLens advertises successful DE result recording; no public SavedVariables export. Do not reopen static tooltip/catalog pages without at-cast evidence.",
     "2026-11-15T20:21:04.953Z: Run sought unindexed primary DE/Prospect/Mill numeric cohorts via by-name searches of Midnight gear, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, and Tranquility Bloom across Reddit, US Blizzard professions forums, Wowhead LIVE, WoW-Professions, Warcraft Wiki and contemporary patch pages. Prior Cardinalai/Honeybone/Stormwarning/HeadtripVee/Draggoth and item-restoration Heart of Wind threads already indexed and not recopied. NEW Live 12.1 trainer data isolated 1307462 and 1307466 as unindexed fixed rank-upgrade crafting conversions: glass 10 R1=>1 R2, stone 18 R1=>1 R2, with rank IDs checked against item catalogs; pre-release PTR quantities 5/10 differ. No original player 0-inclusive 12.1.5 cast cohort; do not search these two recipes again without a live mechanical change.",
-    "2026-11-15T21:16:50.030Z: Distinct NEW u/genobeam March19 'Recipe difficulty tuning with no warning' report yielded milling difficulty claim 505, corroborating but not duplicating Sep26 projected threshold. Checked current 12.1.5 hotfix/page references, 2026 player Milling and DE forum reports, named Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom material searches across Reddit, Blizzard, Wowhead/Wiki. March Tranquility 1473/1000 source already indexed in prior quiet-status; March wrong-expansion wand 2274188/2268773 already indexed in 20261113T0514; excluded duplicates. New 505 source does not supply completed casts, materials or per-cast denominators; do not repeat this source without independent live game trace. No current patch yield cohort."
+    "2026-11-15T21:16:50.030Z: Distinct NEW u/genobeam March19 'Recipe difficulty tuning with no warning' report yielded milling difficulty claim 505, corroborating but not duplicating Sep26 projected threshold. Checked current 12.1.5 hotfix/page references, 2026 player Milling and DE forum reports, named Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom material searches across Reddit, Blizzard, Wowhead/Wiki. March Tranquility 1473/1000 source already indexed in prior quiet-status; March wrong-expansion wand 2274188/2268773 already indexed in 20261113T0514; excluded duplicates. New 505 source does not supply completed casts, materials or per-cast denominators; do not repeat this source without independent live game trace. No current patch yield cohort.",
+    "2026-11-15T22:14:30.256Z: New primary-source Goblinomics Salvage acquisition lane found: Oct 4 2026 original xLN release notes describe per-item disenchant counts and material returns, Nov 8 12.1.5 supported, GitHub README states prospecting/milling too, local SavedVariables. Searched named DE, Umbral Tin, Refulgent Copper, Brilliant Silver and Tranquility across Reddit, Blizzard forums, Wowhead/WoWDB, Method, WoW-Professions, CurseForge and GitHub; old Cardinalai/Honeybone/Draggoth/Looter sources recognized and not duplicated. No original player SavedVariables or 0-inclusive event cohorts published. Do not re-open product changelog without an original export or genuinely new source-code evidence."
   ],
-  "next_concrete_step": "Obtain original SavedVariables or screen-recorded per-cast 272246 ilvl305 equipment link/bonus and disenchant result, and rank-labeled 237362/237359/237365/236761 casts including zeros, skill/spec, output IDs and resourcefulness; request Master review of 505 source as mechanics-only historical context.",
-  "verified_base_commit_sha": "57a671d53ebbc6068ed0759c6a0ea5c1fb6e2b60",
-  "next": "Obtain original SavedVariables or screen-recorded per-cast 272246 ilvl305 equipment link/bonus and disenchant result, and rank-labeled 237362/237359/237365/236761 casts including zeros, skill/spec, output IDs and resourcefulness; request Master review of 505 source as mechanics-only historical context.",
-  "base_commit_sha": "57a671d53ebbc6068ed0759c6a0ea5c1fb6e2b60"
+  "next_concrete_step": "Check original Goblinomics Salvage source-data schema and look for a willing author's/player's redacted original 12.1.5 SavedVariables including 272246 itemLink/ilvl, rank-labeled 237362/237359/237365 and 236761 processed events with zeros and refunds; obtain actual cast receipts before numeric record. Otherwise switch to uninvestigated Midnight identity or official mechanics gaps.",
+  "verified_base_commit_sha": "72a1090ed7d48d281d91a2389d1d7bbaf37ce881",
+  "next": "Check original Goblinomics Salvage source-data schema and look for a willing author's/player's redacted original 12.1.5 SavedVariables including 272246 itemLink/ilvl, rank-labeled 237362/237359/237365 and 236761 processed events with zeros and refunds; obtain actual cast receipts before numeric record. Otherwise switch to uninvestigated Midnight identity or official mechanics gaps.",
+  "base_commit_sha": "72a1090ed7d48d281d91a2389d1d7bbaf37ce881"
 }
