@@ -1,71 +1,80 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-15T22:29:04.254Z",
-  "status": "two-new-reference-only-r2-refulgent-crystal-pvp-gear-cohorts; controlled-baseline-not-established",
+  "updated_at": "2026-11-15T23:25:58.240Z",
+  "status": "two-new-class-verified-priest-pvp-refulgent-crystal-r2-reference-rows; no-new-controlled-numerical-baseline",
   "task_ids": [
     "T0048",
     "T0040",
     "T0009",
-    "T0008",
-    "T0007",
     "T0010",
     "T0011",
+    "T0008",
+    "T0007",
     "T0012"
   ],
   "exact_gaps_targeted": [
-    "Source-reported quality-2 Refulgent Crystal 219954 disenchants for previously unrecorded exact PvP gear input IDs 218488 and 218732",
-    "Still missing: addon-imported disenchant live-eligible rarity/armor/weapon/skill cohorts with controlled output totals and per-cast distributions",
-    "Still missing: post-2024-10-25 rank/skill/unlock-specific Bismuth, Ironclaw, Aqirite prospecting and Khaz Algar herb milling complete per-cast output histograms"
+    "Previously unresolved exact class-specific item IDs for the original output-side rank-2 Refulgent Crystal 219954 Looter rows: Forged Gladiator's Shawl Priest and Forged Gladiator's Silk Belt Priest",
+    "Remaining: controlled rarity/armor/weapon/skill-specific disenchant operation data with per-material output quantity histograms and game-build eligibility",
+    "Remaining: post-2024-10-25 Bismuth/Ironclaw/Aqirite prospecting and Khaz Algar herb milling output hit-count/zero-inclusive per-cast datasets with rank/skill/unlock/refund basis"
   ],
   "newly_verified_fields": [
     {
-      "inputItemID": 218488,
-      "inputName": "Forged Gladiator's Silk Trousers",
+      "inputItemID": 218497,
+      "inputName": "Forged Gladiator's Shawl",
       "outputItemID": 219954,
       "outputRank": 2,
-      "sourceReportedDisenchantOperations": 18,
-      "sourceReportedCastsWithDrop": 16,
+      "sourceReportedDisenchantOperations": 15,
+      "sourceReportedCastsWithDrop": 15,
       "sourceKind": "reference",
-      "inputIdentityLink": "https://www.wowhead.com/item=218488/forged-gladiators-silk-trousers"
+      "inputIdentityLink": "https://www.wowhead.com/item=218497/forged-gladiators-shawl",
+      "totalQuantity": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "originalDataDate": null
     },
     {
-      "inputItemID": 218732,
-      "inputName": "Forged Gladiator's Bulwark",
+      "inputItemID": 218492,
+      "inputName": "Forged Gladiator's Silk Belt",
       "outputItemID": 219954,
       "outputRank": 2,
       "sourceReportedDisenchantOperations": 17,
-      "sourceReportedCastsWithDrop": 14,
+      "sourceReportedCastsWithDrop": 12,
       "sourceKind": "reference",
-      "inputIdentityLink": "https://www.wowhead.com/item=218732/forged-gladiators-bulwark"
+      "inputIdentityLink": "https://www.wowhead.com/item=218492/forged-gladiators-silk-belt",
+      "totalQuantity": null,
+      "histogram": null,
+      "skill": null,
+      "specialization": null,
+      "originalDataDate": null
     }
   ],
   "newly_verified_cohorts": [
-    "wowhead-looter-output-219954-input-218488-cumulative",
-    "wowhead-looter-output-219954-input-218732-cumulative"
+    "wowhead-looter-output-219954-input-218497-cumulative",
+    "wowhead-looter-output-219954-input-218492-cumulative"
   ],
-  "evidence_file": "research/v3/evidence/war-within/2026-11-15T2229-r2-refulgent-crystal-pvp-looter.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/2026-11-15T2325-priest-pvp-crystal-ids.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-15T2229-r2-refulgent-crystal-pvp-looter.jsonl"
+    "research/v3/evidence/war-within/2026-11-15T2325-priest-pvp-crystal-ids.jsonl"
   ],
   "evidence_source_links": [
     "https://www.wowhead.com/ptr/item=219954/refulgent-crystal",
-    "https://www.wowhead.com/item=218488/forged-gladiators-silk-trousers",
-    "https://www.wowhead.com/item=218732/forged-gladiators-bulwark"
+    "https://www.wowhead.com/item=218497/forged-gladiators-shawl",
+    "https://www.wowhead.com/item=218492/forged-gladiators-silk-belt"
   ],
   "verified_commit_sha": null,
-  "verification": "Evidence and this status are intended for one atomic commit. The commit SHA cannot be embedded in its own file without a second commit; read-back of the pushed commit and both paths is verified externally after ref update.",
+  "verification": "Both files are written in one atomic commit. The final commit SHA cannot be embedded inside its own committed status file without a second commit; the pushed SHA and both file contents are verified by read-back after the branch ref update.",
   "blockers": [
-    "Source is a 12.1.7 PTR output-side cumulative anonymous Looter table, not dated original live Retail logs; original patch, date, ilvl and item bonus variants unknown.",
-    "PvP vendor equipment may have eligibility/refund restrictions. The output-side reference does not establish current live-eligible disenchanting of those exact variants.",
-    "No totalQuantity, zero-inclusive 0/1/2/... per-cast histogram, min/max stack, profession skill/spec, batch/refund basis, independent cast verification, or original-submitter identity; reference-only values cannot establish gold EV or controlled baseline.",
-    "No independently sourced post-Oct-25-2024 ore/herb rank-specific completed-cast datasets with per-output hit counts and zero inclusive histograms recovered from current named source checks."
+    "Original Wowhead Looter observations are anonymous cumulative sample; source table does not provide individual events, contributor, date/patch/build, bonus/ilvl, character Enchanting skill/specialization or refund eligibility.",
+    "Even though 219954 hit-count denominators are displayed, total output quantities and per-cast stack distributions remain unknown. The 12.1.7 PTR page version is NOT the underlying observations' patch; current-live viability not established.",
+    "Output-side source does not establish per-cast overall no-output events, nor probabilities for other output ranks. Records retained reference-only to avoid invented confidence and live gold EV.",
+    "Unrecorded post-Oct-25-2024 ore/herb original per-cast logs still needed. No safe novel complete prospecting/milling cohort obtained this run."
   ],
   "exhausted_sources": [
-    "Previously catalogued output-side rank-2 Storm Dust and Gleaming Shard cumulative cohorts were not reharvested; existing named items already have reference records.",
-    "Names and direct original-player cast logs for Bismuth, Ironclaw, Aqirite and Mycobloom remain unverified by current Reddit/forum/profession-guide searches; no fabricated 0 outcomes or rates.",
-    "Forged Gladiator's Shawl and Silk Belt rows are visible in the same 219954 output table, but exact Priest variant input item IDs were not independently verified and therefore not recorded."
+    "Previously recorded PvP Silk Trousers 218488 and Bulwark 218732 were not reharvested; same original output Looter table, not independent studies.",
+    "Repeat searches of historically exhausted Bismuth, Ironclaw, Aqirite and Mycobloom source anecdotes avoided in accordance with owner directive."
   ],
-  "next_concrete_step": "Recover original dated add-on per-cast exports for post-2024-10-25 TWW Bismuth/Ironclaw/Aqirite prospecting or Mycobloom milling with exact rank/skill/unlock/refund context; obtain item-side original Looter stacks, game-build/bonus, eligibility and 0..N distributions for 218488/218732 before using any numeric recommendation.",
+  "next_concrete_step": "Recover dated player-owned export with fully enumerated 0/1/2/... outcomes and enchant skill/spec/build and refund context for The War Within processing; inspect Priest 218497/218492 item-side linked material IDs and stack histograms only if original snapshots can be clearly deduplicated against output-side cumulative table.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false
