@@ -27,6 +27,9 @@ python3 tools/import_profession_catalog.py --check
 python3 tools/specialization_effects.py --check
 python3 tools/att_token_references.py --check
 python3 tests/test_att_token_references.py
+python3 tests/test_legacy_gear_tokens.py
+python3 tests/test_legacy_omni_tokens.py
+python3 tests/test_modern_gear_tokens.py
 python3 tests/test_reference_calculators.py
 python3 tests/test_skill_quality_pipeline.py
 python3 tests/test_midnight_enchanting_import.py
@@ -56,6 +59,8 @@ python3 tests/validate_package.py
 "$lua_bin" tests/test_token_value_pipeline.lua
 "$lua_bin" tests/test_token_transmog_priority.lua
 "$lua_bin" tests/test_wayward_tokens.lua
+"$lua_bin" tests/test_castle_nathria_tokens.lua
+"$lua_bin" tests/test_sepulcher_tokens.lua
 python3 tests/test_token_import.py "$compiled_dir"
 
 "$lua_bin" tests/test_frozen_tsm.lua

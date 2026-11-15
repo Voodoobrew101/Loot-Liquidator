@@ -166,11 +166,25 @@ LL.db.characters['War-Realm'].altMethods={D=false};LL:Invalidate()
 r=LL:Evaluate('item:270913',{verifiedWarbound=true,isBound=true})
 assert(r.action~='D','disabled alt disenchant stays disabled')
 
--- Catalog curiosity paths remain informative, including intermediate tokens.
+-- A sourced cost survives flattening without claiming live merchant access.
+local documentedCurios={[206046]=65,[225634]=65,[228819]=65,[237602]=20,[249367]=20,[270909]=20}
 for _,id in ipairs({210947,206046,249367,270909,228819,237602,225634}) do
     local token=LL:TokenInfo({id=id,classID=15,equipLoc=''})
-    assert(token and token.kind=='exchange' and token.costsComplete==false,'curio relationship retained: '..id)
-    assert(not LL:TokenRedemptionCost({id=id},token,token.rewards[1],true).available)
+    assert(token and token.kind=='exchange','curio relationship retained: '..id)
+    local cost=LL:TokenRedemptionCost({id=id},token,token.rewards[1],true)
+    assert(not cost.available)
+    if documentedCurios[id] then
+        assert(token.costsComplete and #token.directRewards==documentedCurios[id] and #token.rewards==65)
+        assert(token.merchantName and cost.known and cost.inputCount==1 and cost.value==0)
+        assert(LL:TokenRewardCollectionState(token,token.rewards[1])==nil,'contextless curio cannot assume variant')
+        local mythic=LL:TokenInfo({id=id,classID=15,equipLoc='',link='item:'..id..':::::::::::6:0'})
+        local normal=LL:TokenInfo({id=id,classID=15,equipLoc='',link='item:'..id..':::::::::::3:0'})
+        local key=tostring(token.rewards[1])
+        assert(mythic.rewardSources[key] and normal.rewardSources[key] and mythic.rewardSources[key]~=normal.rewardSources[key],
+            'curio reward sources resolve from the actual difficulty')
+    else
+        assert(token.costsComplete==false and not cost.known)
+    end
     for _,reward in ipairs(token.rewards) do assert(not LL._tokenRewardIndex[reward],'intermediate token is resolved to its gear') end
 end
 local att

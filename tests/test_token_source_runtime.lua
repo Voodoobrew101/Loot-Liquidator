@@ -37,6 +37,7 @@ for id,r in pairs(guarded) do
     else
         assert(equal(r,original[id]),'Unrelated compiled token changed '..id)
     end
+    original[id]=nil
 end
-assert(count==307 and changes==3)
-print('TOKEN SOURCE RUNTIME: 307 catalog records; three regressions; all unrelated entries equal')
+assert(next(original)==nil and changes==3)
+print('TOKEN SOURCE RUNTIME: '..count..' catalog records; three regressions; all unrelated entries equal')

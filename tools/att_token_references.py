@@ -12,8 +12,13 @@ import re
 import sys
 
 from evidence_to_baselines import lua as scalar_lua
+from att_legacy_gear import SOURCE as LEGACY_GEAR_SOURCE, build_legacy_gear
+from att_legacy_omni import SOURCE as LEGACY_OMNI_SOURCE, build_legacy_omni
+from att_modern_gear import SOURCE as MODERN_GEAR_SOURCE, build_modern_gear
+from raid_curio_references import SOURCE as CURIO_SOURCE, build_curio_proofs
 
 SOURCE = Path('database/research/att-exchanges-snapshot.json')
+NATHRIA_SOURCE = Path('database/research/att-castle-nathria-snapshot.json')
 OUTPUT = Path('database/att-token-baselines.lua')
 TIER_SOURCES = [
     (Path('database/research/att-lost-snapshot.json'), 'att-tier7-source.lua', 40610, 40639),
@@ -159,6 +164,68 @@ def build_tier_tokens(snapshot, source_file, first, last):
     return records
 
 
+def build_nathria_tokens(data, held):
+    tokens = data['tokens']
+    if (data['schemaVersion'] != 1 or data['gameMode'] != 'Retail'
+            or data['repository'] != 'ATTWoWAddon/AllTheThings' or data['licenseSPDX'] != 'MIT'
+            or not re.fullmatch(r'[0-9a-f]{40}', data['revision'])
+            or set(tokens) != {str(token) for token in range(183888, 183900)}):
+        raise ValueError('Invalid Castle Nathria snapshot scope')
+    variants = {token: {context: {} for context in entry['contexts']} for token, entry in tokens.items()}
+    evidence = {token: [] for token in tokens}
+    requirements = {}
+    leaf = re.compile(r's\((\d+),(\d+),\{b=1,cost=(\{.*\}),customCollect=a\[(30[89]|31[01])\],'
+                      r'f=\d+,lvl=(\d+)(?:,modID=(6|85))?\}\)')
+    cost = re.compile(r'\{"i",(18389[0-9]|18388[89])\.([0-9]{3}),1\}')
+    for row in data['rows']:
+        match = leaf.fullmatch(row['lua'])
+        if not match:
+            raise ValueError(f"Unsupported Castle Nathria reward leaf at {row['line']}")
+        source_id, reward, costs, covenant, level, mythic = match.groups()
+        matches = list(cost.finditer(costs))
+        if not matches or costs != '{' + ','.join(entry.group() for entry in matches) + '}':
+            raise ValueError(f"Unsupported Castle Nathria exchange cost at {row['line']}:{row['column']}")
+        requirement = {'covenantID': data['covenants'][covenant]['id'], 'minimumLevel': int(level)}
+        if requirements.setdefault(reward, requirement) != requirement:
+            raise ValueError(f'Conflicting Castle Nathria requirements for reward {reward}')
+        for entry in matches:
+            token, raw_context = entry.groups()
+            context = str(int(raw_context))
+            if context not in variants[token]:
+                if (token, context) != ('183895', '4'):
+                    raise ValueError(f'Unknown Castle Nathria exchange context {token}.{raw_context}')
+                held.append({'tokenID': int(token), 'rewardID': int(reward), 'line': row['line'], 'column': row['column'],
+                             'reason': 'ATT lists the low-tier item context for a high-tier token'})
+                continue
+            if (tokens[token]['contexts'][context]['raidDifficultyID'] == 16) != bool(mythic):
+                raise ValueError(f'Castle Nathria reward variant disagrees with its exchange: {reward}')
+            by_reward = variants[token][context]
+            if reward in by_reward:
+                raise ValueError(f'Duplicate Castle Nathria reward {token}.{raw_context}: {reward}')
+            by_reward[reward] = int(source_id)
+            evidence[token].append({'line': row['upstreamLine'], 'rewardID': int(reward),
+                                    'sourceID': int(source_id), 'itemContext': int(context)})
+    records = []
+    url = f"https://github.com/{data['repository']}/blob/{data['revision']}/{data['path']}"
+    for token, by_context in sorted(variants.items()):
+        rewards = sorted({int(reward) for sources in by_context.values() for reward in sources})
+        if len(by_context) != 4 or not all(by_context.values()) or not rewards:
+            raise ValueError(f'Incomplete Castle Nathria token family: {token}')
+        records.append({'recordID': f'att-nathria-token:{token}', 'tokenID': int(token),
+                        'tokenName': tokens[token]['name'], 'gameMode': 'Retail', 'kind': 'exchange',
+                        'requirements': {}, 'requirementsReviewed': False,
+                        'rewardSelection': 'choice', 'costsComplete': False, 'listComplete': False,
+                        'evidenceStatus': 'RESEARCH_RELATIONSHIP', 'independentReview': 'NOT_REVIEWED',
+                        'confidence0to100': 60, 'patchStartBuild': 1, 'patchEndBuild': 2147483647,
+                        'sourceRevision': data['revision'], 'sourceOrigin': 'ATT',
+                        'sourceURLs': [url, data['sourceReleaseURL']], 'licenseSPDX': 'MIT',
+                        'licenseText': data['licenseText'], 'rewards': rewards, 'rewardVariants': by_context,
+                        'rewardRequirements': {str(reward): requirements[str(reward)] for reward in rewards},
+                        'sourceEvidence': evidence[token],
+                        'sourceAssumption': 'Covenant equipment sources by token item context. Exchange availability and economics were not checked at a live merchant.'})
+    return records
+
+
 def build(data=None):
     include_tiers = data is None
     data = json.loads(SOURCE.read_text()) if data is None else data
@@ -208,21 +275,30 @@ def build(data=None):
     if include_tiers:
         for args in TIER_SOURCES:
             records.extend(build_tier_tokens(*args))
+        records.extend(build_nathria_tokens(json.loads(NATHRIA_SOURCE.read_text(encoding='utf-8')), held))
+        for build_gear in (build_legacy_gear, build_legacy_omni, build_modern_gear):
+            new_records, new_holds = build_gear()
+            records.extend(new_records)
+            held.extend(new_holds)
     return records, held
 
 
 def render():
     data = json.loads(SOURCE.read_text()); records, held = build()
+    proofs = build_curio_proofs()
     return '-- Generated by tools/att_token_references.py; ATT MIT attribution retained.\nreturn ' + lua({
         'schemaVersion': 1, 'tokenRewards': records, 'held': held,
         'sourceManifest': {'repository': data['repository'], 'revision': data['revision'],
                            'sourceSHA256': hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
-                           'licenseSPDX': 'MIT', 'curioCostsEstablished': False,
+                           'licenseSPDX': 'MIT',
+                           'nathriaSnapshotSHA256': hashlib.sha256(NATHRIA_SOURCE.read_bytes()).hexdigest(),
+                           'gearSnapshots': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                                             for p in (LEGACY_GEAR_SOURCE, LEGACY_OMNI_SOURCE, MODERN_GEAR_SOURCE, CURIO_SOURCE)},
                            'tierSources': [{'snapshot': str(path).replace('\\', '/'),
                                'snapshotSHA256': hashlib.sha256(path.read_bytes()).hexdigest(),
                                'sourceSHA256': json.loads(path.read_text(encoding='utf-8'))['sourceSHA256']}
                                for path, _, _, _ in TIER_SOURCES]},
-        'licenseText': data['licenseText'],
+        'licenseText': data['licenseText'], 'curioCosts': proofs,
         'curioEvidence': [{'tokenID': int(token), 'rewards': proof['rewards'],
                           'sourceURL': f"https://github.com/{data['repository']}/blob/{data['revision']}/db/Standard/Categories/Instances.lua",
                           'sourceRevision': data['revision']} for token, proof in sorted(data['midnightTierProof'].items())]}) + '\n'
@@ -234,6 +310,6 @@ if __name__ == '__main__':
         if not OUTPUT.exists() or OUTPUT.read_text() != output:
             sys.exit('ATT token references stale: run python3 tools/att_token_references.py')
     else:
-        OUTPUT.write_text(output)
+        OUTPUT.write_text(output, encoding='utf-8', newline='\n')
     records, held = build()
     print(f'ATT REFERENCES: {len(records)} token catalogs; {sum(len(r["rewards"]) for r in records)} reward relationships; {len(held)} held')

@@ -22,11 +22,16 @@ end
 -- An uncollected item source must not hide a visual learned from another item.
 -- Query all sources of this exact appearance without changing wardrobe filters;
 -- class-filtered source lists can confirm ownership but cannot prove absence.
-function LL:AppearanceCollectionState(link)
+function LL:AppearanceCollectionState(link,sourceID)
     local collection=C_TransmogCollection
-    if not collection or type(collection.GetItemInfo)~="function" then return nil end
-    local ok,appearanceID,sourceID=pcall(collection.GetItemInfo,link)
-    if not ok then return nil end
+    if not collection then return nil end
+    local appearanceID
+    if not SafeNumber(sourceID) then
+        if type(collection.GetItemInfo)~="function" then return nil end
+        local ok,appearance,source=pcall(collection.GetItemInfo,link)
+        if not ok then return nil end
+        appearanceID,sourceID=appearance,source
+    end
     if not SafeNumber(sourceID) and not SafeNumber(appearanceID) then return nil end
     local function info(fn,id)
         if type(fn)~='function' or not SafeNumber(id) then return nil end
@@ -96,39 +101,91 @@ local function AppearanceMissing(link)
     if collected==nil then return nil,sourceID end
     return not collected,sourceID
 end
+local ITEM_CONTEXT_PATTERN='^'..string.rep('[^:]*:',11)..'(%d+)'
+local function ItemContext(link)
+    if type(link)~='string' then return '' end
+    local itemString=link:match('item:([%d:%-]+)')
+    if not itemString then return '' end
+    return itemString:match(ITEM_CONTEXT_PATTERN) or ''
+end
+
+function LL:TokenRewardCollectionState(token,id)
+    local source=token.rewardSources and token.rewardSources[tostring(id)]
+    if source then return self:AppearanceCollectionState(nil,source) end
+    if token.variantScoped then return nil end
+    return self:AppearanceCollectionState(self:TokenRewardLink(token,id))
+end
+
+local function HasAppearance(token,id)
+    local requirement=token.rewardRequirements and token.rewardRequirements[tostring(id)]
+    return not requirement or requirement.hasAppearance~=false
+end
+
 local function RefreshMissing(data,now)
-    if now-(data._appearanceAt or -100)<5 then return end
-    local missing=false
+    -- A candidate stays pending until the catalog changes, even after its
+    -- known appearances load. Only retry transient pending results eagerly.
+    if (not data.appearancePending or data.candidateRewards)
+        and now-(data._appearanceAt or -100)<5 then return end
+    local missing,pending=false,false
     for _,id in ipairs(data.rewards) do
-        local link=LL.TokenRewardLink and LL:TokenRewardLink(data,id) or ("item:"..id)
-        if AppearanceMissing(link)==true then missing=true;break end
+        if HasAppearance(data,id) then
+            local collected=LL:TokenRewardCollectionState(data,id)
+            if collected==false then missing=true;break end
+            if collected==nil then pending=true end
+        end
     end
     data.possibleMissingAppearance=missing
+    data.appearancePending=data.protectCollection and (pending or data.candidateRewards) or nil
     data._appearanceAt=now
 end
-local function FlattenRewards(self,record,seen,depth)
-    if depth>4 or seen[record.tokenID] then return {},{},true end
+local function MergeRequirements(parent,child)
+    if not parent then return child end
+    if not child then return parent end
+    local out={}
+    for key,value in pairs(child) do out[key]=value end
+    for key,value in pairs(parent) do
+        if out[key]==nil then out[key]=value
+        elseif key=='minimumLevel' then out[key]=math.max(out[key],value)
+        elseif key=='hasAppearance' then out[key]=out[key] and value
+        elseif out[key]~=value then out.unverified=true end
+    end
+    return out
+end
+local function FlattenRewards(self,record,context,build,seen,depth)
+    if depth>4 or seen[record.tokenID] then return {},true end
     seen[record.tokenID]=true
-    local rewards,links,unknown,added={},{},false,{}
+    local leaves,unknown={},false
+    local sources=record.rewardVariants and record.rewardVariants[context] or record.rewardSources
     for _,id in ipairs(record.rewards or {}) do
+        local key=tostring(id)
+        local requirement=record.rewardRequirements and record.rewardRequirements[key]
+        local mask=record.rewardClassMasks and record.rewardClassMasks[key]
         local child
         for _,candidate in ipairs(self._tokenRewardIndex and self._tokenRewardIndex[id] or {}) do
-            local build=GetBuildInfo and tonumber((select(2,GetBuildInfo())))
             if build and build>=candidate.patchStartBuild and build<=candidate.patchEndBuild then child=candidate;break end
         end
         if child then
-            local sub,subLinks,incomplete=FlattenRewards(self,child,seen,depth+1)
-            unknown=unknown or incomplete or child.kind=='exchange'
-            for _,reward in ipairs(sub) do
-                if not added[reward] then rewards[#rewards+1]=reward;added[reward]=true end
-                links[tostring(reward)]=subLinks[tostring(reward)]
+            local sub,incomplete=FlattenRewards(self,child,context,build,seen,depth+1)
+            unknown=unknown or incomplete or child.kind=='exchange' or child.costsComplete==false
+                or child.candidateRewards
+            for reward,leaf in pairs(sub) do
+                if not leaves[reward] then
+                    local childRequirement=leaf.requirement
+                    if child.candidateRewards then
+                        childRequirement=MergeRequirements({unverified=true},childRequirement)
+                    end
+                    leaves[reward]={link=leaf.link,source=leaf.source,mask=leaf.mask,
+                        requirement=MergeRequirements(requirement,childRequirement),step=id}
+                end
             end
-        elseif not added[id] then rewards[#rewards+1]=id;added[id]=true end
-        if record.rewardLinks and record.rewardLinks[tostring(id)] then links[tostring(id)]=record.rewardLinks[tostring(id)] end
+        else
+            -- Prefer a direct route when a source lists the same final reward twice.
+            leaves[id]={link=record.rewardLinks and record.rewardLinks[key],
+                source=sources and sources[key],mask=mask,requirement=requirement,step=id}
+        end
     end
     seen[record.tokenID]=nil
-    table.sort(rewards)
-    return rewards,links,unknown
+    return leaves,unknown
 end
 function LL:StandaloneTokenInfo(f)
     if not f or not SafeNumber(f.id) or not NonEquippableSlot(f.equipLoc) then return nil end
@@ -140,19 +197,35 @@ function LL:StandaloneTokenInfo(f)
             and build and build>=r.patchStartBuild and build<=r.patchEndBuild
             and (r.inputClassID==nil or f.classID==r.inputClassID)
             and self:ValidateTokenCatalog({r}) then
-            local data=tokenCache[f.id]
+            local variants=r.rewardVariants or r.finalRewardVariants
+            local context=variants and ItemContext(f.link)
+            local rewardSources=context and variants[context]
+            local cacheKey=context and (f.id..':'..(rewardSources and context or '')) or f.id
+            local data=tokenCache[cacheKey]
             if not data or data._catalogRecord~=r or data._catalogBuild~=build then
-                local rewards,links,chainCostUnknown=FlattenRewards(self,r,{},0)
+                local leaves,chainCostUnknown=FlattenRewards(self,r,context,build,{},0)
+                local rewards,links,sources,masks,requirements,costs={},{},{},{},{},{}
+                for id,leaf in pairs(leaves) do
+                    local key=tostring(id)
+                    rewards[#rewards+1]=id
+                    links[key],sources[key],masks[key],requirements[key]=leaf.link,leaf.source,leaf.mask,leaf.requirement
+                    if r.finalRewardVariants then sources[key]=rewardSources and rewardSources[key] end
+                    costs[key]=r.costs and r.costs[tostring(leaf.step)]
+                end
+                table.sort(rewards)
                 local reviewed=r.independentReview=='APPROVED'
-                data={rewards=rewards,kind=r.kind,costs=r.costs,standalone=true,
+                data={rewards=rewards,kind=r.kind,costs=costs,directRewards=r.rewards,
+                    standalone=true,merchantName=r.merchantName,
                     rewardLinks=links,rewardSelection=r.rewardSelection,costsComplete=r.costsComplete,
+                    variantScoped=variants~=nil,rewardSources=sources,
+                    protectCollection=r.protectCollection or variants~=nil,
                     chainCostUnknown=chainCostUnknown,candidateRewards=r.candidateRewards,catalogNote=r.sourceAssumption,
-                    rewardClassMasks=r.rewardClassMasks,rewardRequirements=r.rewardRequirements,
+                    rewardClassMasks=masks,rewardRequirements=requirements,
                     recordID=r.recordID,_catalogRecord=r,_catalogBuild=build,
                     catalogConfidence=r.confidence0to100,catalogReviewed=reviewed,
                     source=reviewed and 'Loot Liquidator reviewed reward catalog (possible outcomes; probabilities unknown)'
                         or 'Loot Liquidator research reward list, not yet reviewed (possible outcomes; probabilities unknown)'}
-                tokenCache[f.id]=data
+                tokenCache[cacheKey]=data
             end
             RefreshMissing(data,(GetTime and GetTime()) or 0)
             return data
@@ -240,7 +313,6 @@ function LL:TokenClassSummary(token)
     local groups,lookup={},{}
     local info=C_Item and C_Item.GetItemInfo or GetItemInfo
     local icons=C_Item and C_Item.GetItemIconByID or GetItemIcon
-    local collection=C_TransmogCollection
     for _,id in ipairs(token.rewards) do
         local rewardLink=self:TokenRewardLink(token,id)
         local cls=SingleClassFromMask((self.ItemClassMasks and self.ItemClassMasks[id])
@@ -266,18 +338,16 @@ function LL:TokenClassSummary(token)
             local ok,value=pcall(icons,id)
             if ok and (type(value)=="number" or type(value)=="string") then icon=value end
         end
-        local appearance
-        if collection and type(collection.GetItemInfo)=="function" then
-            local ok,a=pcall(collection.GetItemInfo,rewardLink)
-            if ok then appearance=a end
-        end
-        local collected=self:AppearanceCollectionState(rewardLink)
+        local collected,_,appearance
+        if HasAppearance(token,id) then collected,_,appearance=self:TokenRewardCollectionState(token,id) end
         local row={id=id,name=name or "Reward loading",link=link,icon=icon,collected=collected}
         group.ids[#group.ids+1]=id
         group.rows[#group.rows+1]=row
         local key=(SafeNumber(appearance) and "a"..appearance) or ("i"..id)
-        if group.looks[key]==nil then group.looks[key]=collected==true and 2 or (collected==false and 1 or 0)
-        elseif collected==true then group.looks[key]=2 end
+        if HasAppearance(token,id) then
+            if group.looks[key]==nil then group.looks[key]=collected==true and 2 or (collected==false and 1 or 0)
+            elseif collected==true then group.looks[key]=2 end
+        end
     end
     for _,group in ipairs(groups) do
         group.title=ClassSetName(group.rows)
@@ -300,7 +370,7 @@ end
 -- liquidation value: an exchange may consume other equipment or currency.
 -- Unlike TSM market quotes, GetItemInfo's sellPrice is the real NPC price.
 function LL:TokenBestVendorReward(token)
-    if not token or type(token.rewards)~="table" then return nil end
+    if not token or token.variantScoped or type(token.rewards)~="table" then return nil end
     local info=C_Item and C_Item.GetItemInfo or GetItemInfo
     if type(info)~="function" then return nil end
     local best
@@ -328,6 +398,23 @@ local function Read(fn,...)
     if type(fn)~='function' then return nil end
     local ok,n=pcall(fn,...)
     return ok and Number(n) and n or nil
+end
+local function RewardRequirementAllows(self,requirement,current,character)
+    if not requirement then return true end
+    local char=self.db and self.db.characters and self.db.characters[character]
+    local level=current and Read(UnitLevel,'player') or (char and char.level)
+    if requirement.unverified or (requirement.minimumLevel and (not Number(level) or level<requirement.minimumLevel)) then
+        return false,'Reward level or exchange requirements need verification'
+    end
+    if requirement.covenantID then
+        local covenant=current and Read(C_Covenants and C_Covenants.GetActiveCovenantID)
+        if covenant~=requirement.covenantID then return false,'Requires the matching active Covenant' end
+    end
+    if requirement.faction then
+        local faction=current and UnitFactionGroup and UnitFactionGroup('player') or (char and char.faction)
+        if faction~=requirement.faction then return false,'Requires the matching faction' end
+    end
+    return true
 end
 local function CanDisenchantFor(self,current,character)
     if self.AltMethodEnabled and not self:AltMethodEnabled(character,'D') then return false end
@@ -376,10 +463,11 @@ function LL:TokenRedemptionCost(f,token,rewardID,current,character)
         end
     end
     local requirement=token.rewardRequirements and token.rewardRequirements[tostring(rewardID)]
-    if requirement then
-        if requirement.unverified or (requirement.minimumLevel and (not Number(level) or level<requirement.minimumLevel)) then
-            result.available=false;result.reason='Reward level, faction or inherited exchange requirements not verified for this character'
-        end
+    local allowed,reason=RewardRequirementAllows(self,requirement,current,character)
+    if not allowed then result.available=false;result.reason=reason end
+    if token.merchantName then
+        result.available=false
+        result.reason='Confirm the matching difficulty offer at '..token.merchantName
     end
     if token.kind~='exchange' then return result end
     local costs=token.costs and token.costs[tostring(rewardID)]
@@ -426,15 +514,9 @@ function LL:TokenAppearanceEligibility(token,rewardID,current,character)
     if token.candidateRewards then
         return false,token.catalogNote or 'Reward relationship not established'
     end
+    if not HasAppearance(token,rewardID) then return false end
     local requirement=token.rewardRequirements and token.rewardRequirements[tostring(rewardID)]
-    if requirement then
-        local char=self.db and self.db.characters and self.db.characters[character]
-        local level=current and Read(UnitLevel,'player') or (char and char.level)
-        if requirement.unverified or (requirement.minimumLevel and (not Number(level) or level<requirement.minimumLevel)) then
-            return false,'Reward level, faction or inherited exchange requirements not verified for this character'
-        end
-    end
-    return true
+    return RewardRequirementAllows(self,requirement,current,character)
 end
 
 function LL:TokenRewardPermitsClass(token,id,class)
@@ -453,6 +535,13 @@ function LL:TokenRewardLink(token,id)
     -- IDs from a token to unrelated gear or pass an ID query off as that variant.
     local link=token.rewardLinks and token.rewardLinks[tostring(id)]
     if type(link)=='string' and tonumber(link:match('item:(%d+)'))==id then return link,true end
+    local source=token.rewardSources and token.rewardSources[tostring(id)]
+    local lookup=C_TransmogCollection and C_TransmogCollection.GetAppearanceSourceInfo
+    if source and type(lookup)=='function' then
+        local ok,info=pcall(lookup,source)
+        link=ok and type(info)=='table' and info.itemLink
+        if type(link)=='string' and tonumber(link:match('item:(%d+)'))==id then return link,false end
+    end
     return 'item:'..id,false
 end
 
@@ -476,7 +565,7 @@ local function recipients(self,f)
 end
 
 function LL:TokenPieceQuote(f,token)
-    if not token or type(token.rewards)~='table' or #token.rewards==0 then return nil end
+    if not token or token.variantScoped or type(token.rewards)~='table' or #token.rewards==0 then return nil end
     local info=C_Item and C_Item.GetItemInfo or GetItemInfo
     if type(info)~='function' then return nil end
     local people=recipients(self,f)
@@ -631,7 +720,7 @@ end
 local eventFrame=CreateFrame and CreateFrame("Frame")
 if eventFrame and eventFrame.RegisterEvent then
     for _,event in ipairs({'TRANSMOG_COLLECTION_UPDATED','TRANSMOG_COLLECTION_SOURCE_ADDED',
-        'TRANSMOG_COLLECTION_SOURCE_REMOVED','TRANSMOG_COLLECTION_ITEM_UPDATE'}) do
+        'TRANSMOG_COLLECTION_SOURCE_REMOVED','TRANSMOG_COLLECTION_ITEM_UPDATE','COVENANT_CHOSEN'}) do
         pcall(eventFrame.RegisterEvent,eventFrame,event)
     end
     eventFrame:SetScript("OnEvent",function()

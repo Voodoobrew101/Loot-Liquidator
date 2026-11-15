@@ -255,9 +255,15 @@ function LL:ValidateTokenCatalog(records)
         if (r.costsComplete~=nil and type(r.costsComplete)~='boolean')
             or (reviewed and r.costsComplete==false)
             or (r.rewardSelection~=nil and r.rewardSelection~='choice' and r.rewardSelection~='class')
+            or (r.protectCollection~=nil and type(r.protectCollection)~='boolean')
+            or (r.merchantName~=nil and (type(r.merchantName)~='string' or r.merchantName==''))
             or (r.rewardLinks~=nil and type(r.rewardLinks)~='table') then return false,'Invalid token redemption metadata' end
         if (r.rewardClassMasks~=nil and type(r.rewardClassMasks)~='table')
-            or (r.rewardRequirements~=nil and type(r.rewardRequirements)~='table') then return false,'Invalid reward eligibility metadata' end
+            or (r.rewardRequirements~=nil and type(r.rewardRequirements)~='table')
+            or (r.rewardVariants~=nil and type(r.rewardVariants)~='table')
+            or (r.finalRewardVariants~=nil and (r.rewardVariants~=nil or r.kind~='exchange'
+                or type(r.finalRewardVariants)~='table'))
+            or (r.rewardSources~=nil and type(r.rewardSources)~='table') then return false,'Invalid reward eligibility metadata' end
         seen[r.recordID]=true
         local urls={}
         for _,url in ipairs(r.sourceURLs) do
@@ -283,6 +289,9 @@ function LL:ValidateTokenCatalog(records)
             local requirement=r.rewardRequirements and r.rewardRequirements[tostring(id)]
             if requirement~=nil and (type(requirement)~='table'
                 or (requirement.minimumLevel~=nil and not positive(requirement.minimumLevel))
+                or (requirement.covenantID~=nil and (not positive(requirement.covenantID) or requirement.covenantID>4))
+                or (requirement.faction~=nil and requirement.faction~='Alliance' and requirement.faction~='Horde')
+                or (requirement.hasAppearance~=nil and type(requirement.hasAppearance)~='boolean')
                 or (requirement.unverified~=nil and type(requirement.unverified)~='boolean')) then return false,'Invalid reward requirements' end
             if r.kind=='exchange' and (reviewed or r.costsComplete~=false) then
                 local costs=type(r.costs)=='table' and r.costs[tostring(id)]
@@ -296,6 +305,21 @@ function LL:ValidateTokenCatalog(records)
                     if cost.kind=='item' and cost.id==r.tokenID then hasToken=true end
                 end
                 if not hasToken then return false,'Exchange cost does not contain its token' end
+            end
+        end
+        for id,source in pairs(r.rewardSources or {}) do
+            if type(id)~='string' or not rewards[tonumber(id)] or not positive(source) then
+                return false,'Invalid token reward appearance source'
+            end
+        end
+        for context,sources in pairs(r.rewardVariants or r.finalRewardVariants or {}) do
+            if type(context)~='string' or not context:match('^[1-9]%d*$') or type(sources)~='table'
+                or not next(sources) then return false,'Invalid token reward variant' end
+            for id,source in pairs(sources) do
+                if type(id)~='string' or not id:match('^[1-9]%d*$') or not positive(source)
+                    or (not r.finalRewardVariants and not rewards[tonumber(id)]) then
+                    return false,'Invalid token reward appearance source'
+                end
             end
         end
     end

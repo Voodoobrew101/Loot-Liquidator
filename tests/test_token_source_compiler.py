@@ -34,7 +34,7 @@ with tempfile.TemporaryDirectory(prefix='ll-token-epoch-') as folder:
         subprocess.run([lua_bin, 'tools/compile_itemdb.lua', str(out), 'database/evidence-baselines.lua', str(baseline), 'database/disenchant-category-baselines.lua'], cwd=ROOT, check=True, capture_output=True)
         compiled[label] = out
     # A future refresh containing ONLY these held rows must not change any byte
-    # of today's compiled database, including all 307 tokens and ATT class masks.
+    # of today's compiled database, including all tokens and ATT class masks.
     if compiled['guarded'].read_bytes() != (ROOT / 'LootLiquidator/ItemDBRuntime.lua').read_bytes():
         raise AssertionError('Guarded exact-source fixture changed compiled database')
     subprocess.run([lua_bin, 'tests/test_token_source_runtime.lua', str(compiled['guarded']), str(compiled['original'])], cwd=ROOT, check=True)
