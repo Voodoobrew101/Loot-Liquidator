@@ -1,164 +1,112 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-15T03:06:10.474Z",
-  "status": "Research-only Prismatic v2-v3 same-source reconciliation and historical TBC 2.4.3 modeled conditional-stack field-loss/generic gear-group key audit. Zero newly independent current Retail studies, gold decisions, or addon/runtime changes.",
+  "updated_at": "2026-11-15T04:09:13.973Z",
+  "status": "Completed research-only static source-to-estimator audit of five new TWW Living Weapon disenchant item-side cohorts: known exact gear IDs lost behind gearGroup, and 14 distinct rank-unknown crystal source rows collapse to one family group. No new independent source sample, current-character gold decision, addon write or runtime test.",
   "task_ids": [
-    "T0020",
-    "T0046",
-    "T0047",
-    "T0052",
     "T0048",
-    "T0026"
+    "T0040"
   ],
   "exact_gaps_targeted": [
-    "Dragonflight v3 new 2026-11-15T0235 25-diamond/1000 Prismatic Ore source duplicates existing immutable v2 2026-10-30 F004 source lineage; v2 ID=192880 was pre-corrected to 194545, matching new v3. Prevent cross-corpus double study if imported together.",
-    "2026-11-15T0244 Legacy TBC 2.4.3 12 reference model rows preserve result probability and conditional stack-size (2–5, 1–2) only as quoted strings, leaving typed modeled yield absent.",
-    "v3 build_estimates.py key_of() gear group omits itemLevelRange; potential future pooling of incompatible historical item-level intervals, no current collision proven.",
-    "Current patch exact input itemLink bonus/skill, eligibility, output quantity rank, completed operation histogram and refunded input counts still missing."
+    "Known inputItemID 237607/237608/237609/237611/237612 is overridden whenever source also contains gearGroup in v3 build_estimates.py key_of(); all 14 newest source rows produce one generic gear group key rather than five exact-item keys.",
+    "Refulgent Crystal source rows lack outputItemID/outputRank and have duplicate outputName across rank alternatives; rank cannot be assigned by Looter display order or priced as separate quality material.",
+    "Reference-only rows carry castsWithDrop but no percentShown, totalQuantity, averageShown or positive stack histogram; v3 analyzer reference prior selection does not use hit-only reference rows. Field admission remains blocked without a defensible unconditional expectation and source-matched rank ID.",
+    "2026 Retail at-cast itemLink/bonus/skill, exact source build and 0-inclusive per-material output quantity/refund records remain unknown; 237611 source is indexed PTR 12.1.5 according to worker."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "type": "preexisting_cohort_identity_reconciliation",
-      "source": "https://www.reddit.com/r/woweconomy/comments/108782r",
-      "v2Cohort": "B-prismatic-1000",
-      "v3RecordID": "dragonflight-20261115-9501",
-      "inputItemID": 194545,
-      "oldIncorrectItemID": 192880,
-      "reportedNominalOre": 1000,
-      "reportedDiamonds": 25,
-      "newIndependentCohorts": 0,
-      "observedCasts": null,
-      "castHits": null,
-      "qualityRanks": null,
-      "verifiedAsExistingEvidence": true
+      "type": "preexisting_worker_cohort_key_projection",
+      "verifiedBy": "manager static source/code comparison; not new original source observations",
+      "workerEvidenceFile": "research/v3/evidence/war-within/2026-11-15T0319-living-weapon-epic-de-looter.jsonl",
+      "sourceReportedOperationsPerItem": {
+        "237607": 12,
+        "237608": 22,
+        "237609": 23,
+        "237611": 24,
+        "237612": 8
+      },
+      "sourceReportedOperationsAcrossItems": 89,
+      "reportedMaterialOccurrenceRows": 14,
+      "sourceItemIDs": 5,
+      "distinctCompilerKeysUnderCurrentKeyOf": 1,
+      "rankOutputIDUnknown": true,
+      "newIndependentStudies": 0
     },
     {
-      "type": "historical_patch_243_source_model_conditional_quantity",
-      "scope": "uncommon armor historical item levels 102–120",
-      "method": "Disenchant",
-      "probabilityIsGameDataModel": true,
-      "inputsPerCast": null,
-      "outputs": [
-        {
-          "itemID": 22445,
-          "modelProbability": 0.75,
-          "modelConditionalQuantity": [
-            2,
-            5
-          ],
-          "modelExpectedUnitsBounds": [
-            1.5,
-            3.75
-          ],
-          "modelMidpointProxy": 2.625
-        },
-        {
-          "itemID": 22446,
-          "modelProbability": 0.22,
-          "modelConditionalQuantity": [
-            1,
-            2
-          ],
-          "modelExpectedUnitsBounds": [
-            0.22,
-            0.44
-          ],
-          "modelMidpointProxy": 0.33
-        },
-        {
-          "itemID": 22449,
-          "modelProbability": 0.03,
-          "modelConditionalQuantity": [
-            1,
-            1
-          ],
-          "modelExpectedUnitsBounds": [
-            0.03,
-            0.03
-          ],
-          "modelMidpointProxy": 0.03
-        }
-      ],
-      "newObservedCasts": 0,
-      "sourceReferenceOnly": true
+      "type": "compiler_reference_field_admission_static",
+      "referenceRowsWithOnlyHitsAndCasts": 14,
+      "usableReferencePriorRowsFromTheseInputs": 0,
+      "expectedUnusedCode": "reference:noUsableValue",
+      "compilerExecuted": false,
+      "sourceEvidenceOnly": true
     },
     {
-      "type": "static_estimator_gaps",
-      "scenario": "stand-alone TBC armor Arcane Dust reference",
-      "sourcedModelExpectedLower": 1.5,
-      "sourcedModelExpectedUpper": 3.75,
-      "codePathWithMissingTypedRange": 0.75,
-      "codeExecuted": false,
-      "gearGroupLevelBandDiscardedByKey": true,
-      "realCurrentRetailImpactUnverified": true
+      "type": "checked_in_estimates_snapshot_presence",
+      "matchByFiveExactItemIDsOrCollapsedGenericKey": 0,
+      "independentRebuildPerformed": false
     }
   ],
   "new_independent_current_retail_cohorts": 0,
   "new_verified_current_gold_decisions": 0,
   "new_worker_numerical_promotions": 0,
   "evidence_files": [
-    "research/v3/evidence/master/20261115T0304-prismatic-lineage-and-tbc243-reference-range-gates.md"
+    "research/v3/evidence/master/20261115T0407-tww-exact-input-gear-group-and-rank-identity-gates.md"
   ],
-  "evidence_blob_sha": "7f3b0be64864e2bbf15761a5609679b329d638dc",
-  "verified_commit_sha": "d617bec5bc6fe54fda3a496927038ba430124732",
-  "verified_commit_sha_scope": "Manager research-only evidence note commit verified by remote file readback; dashboard updated separately c2b3a04ae3441c2ec7b42a7f56f79586fdecb990, readback blob 986f8ad6622d97ce647811b43a9f55c4f13020ac; status commit cannot include its own SHA.",
+  "evidence_blob_sha": "d938c1ff8f7db16045e26bc6fc38c851f40a7eee",
+  "verified_commit_sha": "1f4f6f0ac77114445c7082a6ed9e1cb20c1c98ea",
+  "verified_commit_sha_scope": "Evidence note commit checked by remote readback; coordinator dashboard updated separately at c3cbdde06874f81bae0d99d19ebea839b5da9039, blob fec88d7edbe8ad7517403b186e83fb094d655124. This own status update cannot embed its resulting commit SHA.",
   "source_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261115T0304-prismatic-lineage-and-tbc243-reference-range-gates.md",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/evidence/v2/2026-10-30T2028Z-F004-df-two-stage-diamond-denominators.json",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/evidence/v2/2026-10-30T2130Z-F004-df-prismatic-identity-and-primary-ore-cohorts.json",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-15T0235-prismatic-comment-and-original-histogram-check.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-15T0244-tbc-243-game-data-rarity-level-reference.jsonl",
-    "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html",
-    "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://warcraft.wiki.gg/wiki/Prismatic_Ore"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261115T0407-tww-exact-input-gear-group-and-rank-identity-gates.md",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/war-within/2026-11-15T0319-living-weapon-epic-de-looter.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/tools/build_estimates.py",
+    "https://www.wowhead.com/item=237607/living-weapons-chain",
+    "https://www.wowhead.com/item=237608/living-weapons-ramparts",
+    "https://www.wowhead.com/item=237609/living-weapons-legs",
+    "https://www.wowhead.com/item=237611/living-weapons-grips",
+    "https://www.wowhead.com/item=237612/living-weapons-boots"
   ],
   "checks_actually_performed": [
-    "Verified current main, research, owner integration SHA and #22/#23 PR state; read last three actual research CI run results.",
-    "Read charter, integration plan/pass-1, v3 README/evidence schema/mechanics/queue/strategy/flags, prior coordinator status and dashboard.",
-    "Read 02:19/02:27/02:36/02:44 UTC worker status and latest Dragonflight/Legacy source records.",
-    "Read immutable v2 F004 source, existing v2 Prismatic item identity correction and original catalog; directly opened historical TBC 2.4.3 source reference table.",
-    "Traced v3 build_estimates.py load/key_of/row_use/analyze source; arithmetic verified modeled P(result) times quantity bounds. No inference of observed probabilities.",
-    "Created source/identity QA evidence note commit d617bec5; independently read note blob back; dashboard updated commit c2b3a04, beginning read back."
+    "Fetched current main, research and owner three-pass integration heads; read main charter, owner plan/pass-1, v3 README/evidence-format/mechanics/queue/strategy/flags, master role, prior manager checkpoint/dashboard and worker reports.",
+    "Checked current PR #22/#23 are closed and unmerged; searched open PRs; read last eight actual GitHub Actions workflow entries and latest worker-head success run 43674165795.",
+    "Parsed all 14 latest TWW reference records and projected current key_of() against exact source fields: 5 input items -> 1 source group key; counted 89 source-reported operations across distinct inputs.",
+    "Traced actual v3 estimator key_of, row_use, reference prior and unused reasons; fetched checked-in estimates.json and checked absence of exact/generic matching entries without claiming it was rebuilt.",
+    "Created research-only evidence note at commit 1f4f6f0, fetched it back at blob d938c1f; updated dashboard c3cbdde and read back its blob fec88d7e."
   ],
   "not_performed": [
-    "Python v3 compiler",
-    "Lua or offline price/tooltip runtime",
-    "actual WoW client",
-    "CI on manager note/dashboard/status changes",
-    "worker assignments or evidence edits",
-    "owner integration branch writes",
-    "new PR, merge, release, schedules"
+    "Original WoWhead Looter page independent re-open (worker evidence used as documented)",
+    "Python v3 compiler, deterministic regression tests, Lua addon runtime, synthetic-price valuation or rendered tooltip",
+    "Actual WoW client or character-profession eligibility test",
+    "CI on manager evidence/dashboard/status commits",
+    "Worker task or evidence edits, owner three-pass integration branch writes, any main edit, PR opening/merge/closure, releases or schedules"
   ],
   "checkpoints_read": {
-    "legacy": "2026-11-15T02:44:44.475Z: TBC 2.4.3 source model reference rows, 0 observed casts",
-    "dragonflight": "2026-11-15T02:36:39.810Z: 25/1,000 Prismatic source now reconciled with v2",
-    "war_within": "2026-11-15T02:27:08.630Z: 147-operation 219208 cumulative Looter reference, rank unknown; 230373 PTR-vs-live eligibility conflict",
-    "midnight": "2026-11-15T02:19:18.601Z: 1,400 nominal ore mixed prospect/crush source without output counts"
+    "legacy": "2026-11-15T03:50:48.175Z Titanium PTR partial positive bin; no complete histogram or current controlled Retail batch",
+    "dragonflight": "2026-11-15T03:37:43.824Z nine Looter candidates deduplicated; original ranked workbook still inaccessible",
+    "war_within": "2026-11-15T03:19:41.403Z 5 Living Weapon source items, 14 reference rows, 89 source-reported operations; not live source-qualified",
+    "midnight": "2026-11-15T03:15:30.804Z March21 prehotfix source observations, no current-patch per-output measured casts"
   },
   "github_state_checked": {
     "main": "12ae8e8b04f8597cce4f96a0ef5c5c2c347f7f34",
     "owner_three_pass_integration": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_pre_manager": "af4edbe59161bd2fd18a01fd1e8f6231a5b41783",
-    "research_manager_note": "d617bec5bc6fe54fda3a496927038ba430124732",
-    "research_manager_dashboard": "c2b3a04ae3441c2ec7b42a7f56f79586fdecb990",
-    "research_PRS": "#22/#23 closed unmerged; no mutations",
+    "research_before_manager_note": "76b2cdc1c85e52384926f0b98839c3bdac662cdd",
+    "research_manager_evidence": "1f4f6f0ac77114445c7082a6ed9e1cb20c1c98ea",
+    "research_manager_dashboard": "c3cbdde06874f81bae0d99d19ebea839b5da9039",
+    "research_PRs": "#22/#23 closed, unmerged (direct metadata read); no mutation",
     "CI": {
-      "run_id": 43669205263,
-      "head_sha": "af4edbe59161bd2fd18a01fd1e8f6231a5b41783",
+      "run_id": 43674165795,
+      "head_sha": "76b2cdc1c85e52384926f0b98839c3bdac662cdd",
       "conclusion": "success",
-      "scope": "pre-manager research worker commit only"
+      "scope": "worker-head research validation only, before manager commits"
     }
   },
   "blockers": [
-    "No original 0..N per-operation, skill/refund-aware 2026 Retail inputs and material-rank outputs to support new gold decisions.",
-    "The Prismatic historical source's actual completed casts and game-era output ranks remain unknown; v2 and v3 must not be double-counted.",
-    "Historical 2.4.3 modeled conditional stack sizes lack structured fields and item-level band falls out of gearGroup key; no current character eligibility/model applicability.",
-    "Owner three-pass branch reserved; no authorized changes to addon data, engine, token or tooltip."
+    "No identified rank/item ID for the separate same-name Refulgent Crystal alternatives; cannot map source counts to independent material prices.",
+    "No source-verified unconditional per-material units/0-inclusive stack distributions or current build, item-level, profession skill and character eligibility.",
+    "The v3 exact-item grouping contract would need a reviewed no-loss fixture to avoid damage to historical generic gear-group estimates.",
+    "Owner three-pass branch is reserved for combined addon source-to-tooltip integration; no write without owner-controlled coordination."
   ],
   "exhausted_sources": [
-    "The 25/1,000 Prismatic first-person Reddit comment was already present in v2 F004 and source-memory; no duplicate source search or study count.",
-    "The superbondez 400-ore/80-prospect Prismatic sample was already indexed in prior F004 and was not recopied.",
-    "The source model 2.4.3 is a historical game-data reference rather than an eligible current Retail study; did not repeat the Warmaul cumulative Looter audits."
+    "Did not repeat earlier Prismatic v2-v3 identity searches, modeled TBC range audits, or known original Xenastro spreadsheet access failures.",
+    "Did not recopy worker's cumulative anonymous Looter tables as new independent studies."
   ],
-  "next_concrete_step": "Use reviewed disjoint engineering branch to prototype typed modeled conditional range and scoped historical gear level band with no-loss source fixture; coordinate owner three-pass offline synthetic-price acceptance without changing its branch. Preserve Prismatic cohort lineage across v2/v3, and direct ongoing workers toward genuine new current Retail cast/quantity/rank/refund logs."
+  "next_concrete_step": "Propose an isolated, reviewable exact-item-over-gearGroup v3 compiler identity fixture preserving generic group fallback and unknown-rank alternatives, then verify delta on original source records with no-loss unused and estimator outputs; owner three-pass implementation must separately confirm actual supported synthetic-price/tooltip mapping after original crystal IDs and per-cast quantities are established."
 }
