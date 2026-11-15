@@ -4,7 +4,7 @@
 
 ## Original source A: two ores, one inseparable gem receipt
 
-The [August 3, 2011 original blog post](https://beyondthenumbers2011.blogspot.com/2011/08/making-gold-with-holy-trinity-alchemy.html) says it began with **300 Elementium Ore (52185)** and **180 Obsidium Ore (53038)**, and then prospected *all the ore*, listing one pooled gem receipt **before** transmuting, crafting jewelry or disenchanting. The source does not split gem quantities by ore. Legacy IDs `legacy-20261115-91701..91712` retain exactly these initial results:
+The [August 3, 2011 original blog post](https://beyondthenumbers2011.blogspot.com/2011/08/making-gold-with-holy-trinity-alchemy.html) says it began with **300 Elementium Ore (52185)** and **180 Obsidium Ore (53038)**, and then prospected *all the ore*, listing one pooled gem receipt **before** transmuting, crafting jewelry or disenchanting. The source does not split gem quantities by ore. Legacy IDs `legacy-20261115-91701..91712` retain these original item-name and quantity pairs, with numeric item IDs inherited from the worker transcription (the 2011 blog lists names, not item IDs):
 
 | Source material ID | Original item | Pooled material units |
 | --- | --- | ---: |
@@ -38,6 +38,6 @@ At current research head `0c5d74345429a591a77ca64e94774e5758dde61e`, `research/v
 
 ## Verification performed and limits
 
-Performed: opened original August 3 and August 5 2011 articles; read back worker source JSONL and all 15 rows; cross-checked each source-given quantity and ID against the two original source listings; recomputed 21+117=138, 300+180=480 and 480/5=96 in a deterministic JavaScript check; reviewed `key_of`, `row_use`, `analyze` and current queue T0042; checked current branch/PR/Actions heads and all worker quiet statuses. Not performed: new gameplay observations, current Retail source validation, full v3 Python compiler/unused-report generation, local addon tests, actual Lua or synthetic-price tooltip test, or CI on this manager commit.
+Performed: opened original August 3 and August 5 2011 articles; read back worker source JSONL and all 15 rows; cross-checked each original source-given item-name/quantity pair against the worker's item-ID transcription (IDs not independently supplied by the original articles); recomputed 21+117=138, 300+180=480 and 480/5=96 in a deterministic JavaScript check; reviewed `key_of`, `row_use`, `analyze` and current queue T0042; checked current branch/PR/Actions heads and all worker quiet statuses. Not performed: new gameplay observations, current Retail source validation, full v3 Python compiler/unused-report generation, local addon tests, actual Lua or synthetic-price tooltip test, or CI on this manager commit.
 
 **Priority:** seek source-separated 52185 / 53038 prospect receipts or exact-item DE operation logs only if original records exist; do not request another copy of these two articles. Preserve higher-priority contemporary Midnight T0045/T0039 and TWW rank/eligibility gaps; leave all worker files, owner integration, PRs, main and schedules alone.
