@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-15T12:12:11.762Z",
-  "status": "One new independent first-person report documents 200 completed crafted Engineering disenchant operations, but no identifiable input item or per-material outcomes. Reference-only, no estimator-ready Midnight cohort.",
+  "updated_at": "2026-11-15T13:19:35.028Z",
+  "status": "Found one previously unindexed live Wowhead rare-warglaive item-side DE Looter cohort: 44 source-reported items, 33/9/2 occurrence rows. Three reference-only rows, no independently recovered raw event- or rank-resolved yield cohort.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -12,53 +12,70 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026: Miststalker's Wristbands 272246 at-cast ilvl305+bonus-specific successful DE, true material ranks, gear quality/slot, skill/spec/build.",
-    "T0005/T0039: Umbral Tin Ore 237362 versus 237363, per-output 242606/242607/242610/242611/242608 actual cast hits and 0..N histogram, Eversong Diamond per-ore unlock, item/rank, Resourcefulness refund ledger.",
-    "T0003/T0002/T0045: Refulgent Copper 237359, Brilliant Silver 237365 and ten-herb milling original current-patch complete-operation counts, output units and zero outcomes."
+    "T0026: new rare weapon 248072 site-reported disenchant count and same-name Dust output ambiguity; independent at-cast original output item IDs/bonus/skill still missing.",
+    "T0026/T0049: Miststalker's Wristbands 272246 live ilvl305 variant successful material receipt versus generic ilvl206 preview remains unverified.",
+    "T0005/T0039: Umbral Tin Ore 237362 material-specific ranked hits and per-cast 0/1/2 histogram, Diamond 242608 unlock state and refund ledger.",
+    "T0003/T0002/T0045: Refulgent Copper 237359, Brilliant Silver 237365 and Midnight milling 236761 current-patch original yield and zero-inclusive casts."
   ],
   "newly_verified_fields_or_cohorts": {
     "new_original_complete_cast_cohorts": 0,
     "new_verified_output_item_ids": 0,
     "new_measured_chance_denominators": 0,
     "new_numeric_baseline_fields": 0,
-    "firsthand_operation_count_only_reports": 1,
-    "source_reported_completed_disenchants": 200,
-    "note": "The only newly verified number is the author's 200 successful disenchant operations; output material quantities, ranked IDs and per-output denominators are missing. Do not classify as a measured drop cohort."
+    "new_reference_looter_item_inputs": 1,
+    "new_reference_looter_output_rows": 3,
+    "new_source_reported_operations": 44,
+    "source_reported_hits_by_row": [
+      33,
+      9,
+      2
+    ],
+    "note": "Previously unindexed 248072 item-side Wowhead Looter live snapshot, not independently verified cast ledger. 12.1.5 PTR shared snapshot 43, 32/9/2, not additive. Both Dust rows lack separate output IDs/ranks."
   },
   "numeric_fields_advanced": {
-    "casts": "200 original first-person operations; unidentified Engineering inputs, reference-only",
-    "castsWithDrop": null,
+    "inputItemID": 248072,
+    "inputName": "Cultist's Pillaged Glaive",
+    "casts": "44 anonymous pooled source-reported operations (not independent original event log)",
+    "castsWithDrop": {
+      "Eversinging Dust row1": 33,
+      "Radiant Shard row2": 9,
+      "Eversinging Dust row3": 2
+    },
     "totalQuantity": null,
     "histogram": null,
+    "zero_outcomes": null,
+    "outputItemID": null,
+    "outputRank": null,
     "minSeen": null,
     "maxSeen": null,
-    "inputRank": null,
     "skill": null,
-    "specialization": "disenchanting knowledge points maxed (no numeric skill)",
+    "specialization": null,
     "resourcefulness": null,
     "new_measured_cohorts": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/20261115T1210-original-200-engineering-disenchants.jsonl"
+    "research/v3/evidence/midnight/20261115T1319-cultists-glaive-live-looter-rank-holds.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261115T1119-original-cast-ledger-source-audit.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261115T1210-original-200-engineering-disenchants.jsonl",
   "evidence_record_ids": [
-    "midnight-20261115-121001"
+    "midnight-20261115-130101",
+    "midnight-20261115-130102",
+    "midnight-20261115-130103"
   ],
   "source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1tbj37l/why_wow_professions_feel_less_rewarding_over_time/",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
-    "https://www.wowhead.com/item=237362/umbral-tin-ore"
+    "https://www.wowhead.com/item=248072/cultists-pillaged-glaive",
+    "https://www.wowhead.com/ptr-2/item=248072/cultists-pillaged-glaive",
+    "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One evidence JSONL and the agent-owned quiet-status JSON are staged in the same atomic Git tree/commit. Commit SHA cannot self-reference its own content; verify branch head, evidence blob and status blob after publishing.",
+  "commit_note": "Atomic single Git commit updates this status and one new evidence JSONL. A file cannot include its own commit SHA without changing that SHA; branch commit and content will be independently read-back verified after publication.",
   "blockers": [
-    "New original 200-Disenchant author report gives no exact Engineering input item ID, quality, at-cast ilvl, raw output material ID or quantity/hit histogram. Reference-only; cannot estimate any per-material chance from the reported 200.",
-    "272246 requires successful ilvl305 source itemLink+bonus, actual material output and skill/spec; current generic base ilvl206 and Looter output tallies do not prove variant eligibility.",
-    "Umbral Tin 237362 original 800-cast family output totals lack per-output 242606/242607/242610/242611/242608 cast hits, 0..N histogram, ore rank, unlock and Resourcefulness event accounting.",
-    "No independently new current-patch original complete per-cast yield log for Refulgent Copper 237359, Brilliant Silver 237365 or Midnight ten-herb milling 236761.",
-    "Prior Wowhead Looter snapshots and author cohorts may overlap; remain reference-only without original event IDs, build/skill and linked output ranks."
+    "248072 source 44 has anonymous cumulative Looter provenance, missing source itemLink/bonus/at-cast ilvl, actual output rank-specific IDs, material quantities, per-cast histogram, skill/spec and patch. Do not promote it as a measured cohort or treat 44 minus hits as overall DE zeros.",
+    "272246 item 305 actual at-cast DE and base206 discrepancy remain without original successful material receipt.",
+    "237362 Cardinalai 800 cast totals remain family-level with output 242606/242607/242610/242611/242786/242788 per-output hits and zero histograms unknown; 242608 ore unlock and resourcefulness ledger absent.",
+    "No independent new current-patch original per-cast material yield log located for Refulgent Copper 237359, Brilliant Silver 237365 or Midnight milling 236761.",
+    "Known 1smgllg nezroy rough post-hotfix prospect estimates already indexed by Master as reference, not re-entered; named gear 248064,248066,248068,248059,251251 already on research branch; excluded to prevent duplication."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -153,9 +170,10 @@
     "2026-11-15T09:16:49.146Z: By-name search across live/PTR Wowhead Looter item tables found previously unindexed six item identities 275219,260370,275227,250051,250050,250054, but no independently verified original operation ledger; 12 positive-hit same-name Dawn Crystal rows saved as reference only. LIVE and PTR overlap not counted independently. Previous Cardinalai, Honeybone, Draggoth, owner PR49, Black Talon and Devouring Reaver sources not duplicated; do not reharvest these snapshots absent raw material IDs/at-cast receipts. Primary 272246,237362,237359,237365 and milling zeros still missing.",
     "2026-11-15T10:13:17.873Z: Checked a NEW PandaKingJ primary comment on live Wowhead Flawless Tenebrous Amethyst 242611; one firsthand source-only common-Umbral-Tin occurrence, no cohort denominator. Named source checks this run across WoWhead, Reddit, Blizzard forums, Method, profession guides, and historical original research found JD3K, Cardinalai, Honeybone, Joe, Stormwarning, kyzenbka, and 272246 previews already recorded; not duplicated. Do not revisit PandaKingJ without original per-cast item link/operation counts.",
     "2026-11-15T11:19:55.937Z: Queried six+ item-name/source-specific searches over Blizzard US/EU forums, Reddit, Wowhead, Method and WoW-Professions for original completed disenchant/prospect/mill ledgers. Previously indexed Cardinalai June10 800-cast Umbral Tin, Honeybone Apr19/22 same-author Copper, kyzenbka 1000-herb, JD3K 50-ore, PandaKingJ occurrence and 272246 selected preview retained without duplicating records. No NEW at-cast zero-inclusive current-Retail material sample. Do not repeat these searches without a fresh player export/itemLink. One searched record: midnight-20261115-111901.",
-    "2026-11-15T12:12:11.762Z: Fresh original-source lane in r/woweconomy 1tbj37l commenter My_Uneducated_Guess (May 13 2026) explicitly reports crafting and disenchanting 200 Engineering gear pieces with maxed disenchanting KP and mixed materials including silver-quality shards, later shattered. New reported completed-operation count only; input item ID, per-material hits/totals/zeros, at-cast spec/build and output rank are absent. SourceKind reference; neither 200 independent material-hit rolls nor 200 current-build outcomes. Separate targeted by-name web searches for live 272246, 237362, 237359, 237365, 236761, public numeric spreadsheets/addon exports and original loot studies found only prior-indexed JD3K, Cardinalai, Honeybone, Stormwarning, kyzenbka, 5294-KP, PTR Looter material tables; did not duplicate them. Revisit new commenter only if they supply raw itemLink/loot list."
+    "2026-11-15T12:12:11.762Z: Fresh original-source lane in r/woweconomy 1tbj37l commenter My_Uneducated_Guess (May 13 2026) explicitly reports crafting and disenchanting 200 Engineering gear pieces with maxed disenchanting KP and mixed materials including silver-quality shards, later shattered. New reported completed-operation count only; input item ID, per-material hits/totals/zeros, at-cast spec/build and output rank are absent. SourceKind reference; neither 200 independent material-hit rolls nor 200 current-build outcomes. Separate targeted by-name web searches for live 272246, 237362, 237359, 237365, 236761, public numeric spreadsheets/addon exports and original loot studies found only prior-indexed JD3K, Cardinalai, Honeybone, Stormwarning, kyzenbka, 5294-KP, PTR Looter material tables; did not duplicate them. Revisit new commenter only if they supply raw itemLink/loot list.",
+    "2026-11-15T13:19:35.028Z: Newly checked previously unindexed live Wowhead Cultist's Pillaged Glaive 248072 44 pooled item-side Looter outputs 33/9/2 (two separately labelled Dust rows). PTR 43 32/9/2 is same mutable feed, not second cohort. Checked Reddit 1smgllg and 1rrn6of (already indexed), 1rx9nvh historic cross-era wand (already indexed), and named Wowhead Midnight rare weapons 248064/248066/248068/248059/251251 (already indexed). Targeted original-cast searches over Reddit, Blizzard US/EU forum, WoWhead, wow-professions and current item names; no independent raw zero-inclusive prospect/DE/mill sample. Do not reharvest 248072 without linked output rank IDs or original export."
   ],
-  "next_concrete_step": "Recover original author My_Uneducated_Guess's 200-DE Engineering recipe/item ID and pre-shatter per-operation saved-variable output ledger (not merely profit), or independently captured current-Retail 272246/237362/237359/237365/236761 casts with exact itemLinks, per-output 0..N bins, skill/spec, rank, build and Resourcefulness refunds.",
+  "next_concrete_step": "Recover 248072 source row href/output quality and actual at-cast item bonus/skill, or original player export; prioritize 272246 actual ilvl305 source itemLink and 237362 original 800-prospect per-output event hits/zeros before any estimator promotion. Seek new independent 12.1.5 original cast ledger for 237359/237365/236761.",
   "verified_base_commit_sha": "fbf10a76220f35fd24241a63e7331045f71c955c",
   "next": "Recover original author My_Uneducated_Guess's 200-DE Engineering recipe/item ID and pre-shatter per-operation saved-variable output ledger (not merely profit), or independently captured current-Retail 272246/237362/237359/237365/236761 casts with exact itemLinks, per-output 0..N bins, skill/spec, rank, build and Resourcefulness refunds.",
   "base_commit_sha": "fbf10a76220f35fd24241a63e7331045f71c955c"
