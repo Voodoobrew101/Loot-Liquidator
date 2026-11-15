@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-15T01:33:48.391Z",
-  "status": "active; four previously unindexed original Wowhead Looter gear item-side cohorts recorded (10 hit-count rows), no new ore/mill 0..N output log",
+  "updated_at": "2026-11-15T02:36:39.810Z",
+  "status": "active; one new firsthand Prismatic Ore diamond-quantity cohort recovered, exact per-completed-cast histogram still missing",
   "task_ids": [
     "T0020",
     "T0046",
@@ -12,117 +12,40 @@
     "T0015"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143/188658 ranked prospecting hit/zero histograms and refund-reconciled completed casts",
-    "Serevite Ore 190395/190396/190394 and Khaz'gorite Ore 190312/190313/190314 source-rank casts/hits, separate from nominal ore",
-    "Prismatic Ore 194545 and Saxifrage 191464/191465/191466, Bubble Poppy 191467/191468/191469 raw per-output cast histograms",
-    "New Dragonflight disenchant item inputs 202463,202535,207274,207213; specific original Looter output hit denominators recovered, but actual item bonuses, skill/spec, source patch and units still unknown"
+    "Prismatic Ore 194545 → Illimited Diamond: firsthand report preserves 1000 nominal ore and 25 output units but missing exact quality-ranked outputItemID, source completed casts, refund tally and material hits/histogram",
+    "Draconium 189143/188658, Serevite 190395/190396/190394, Khaz'gorite 190312/190313/190314: missing raw rank-specific prospect completion and material output logs",
+    "Bubble Poppy 191467/191468/191469 and Saxifrage 191464/191465/191466: missing measured rank-specific mill denominators and per-pigment 0/1/2+ histograms"
   ],
   "newly_verified_fields": [
-    "Four source-reported item-specific Looter denominators (25,124,70,24) with exact input item IDs and named gear; source notes Mythic tooltip is not cohort-specific",
-    "Ten source-reported material-positive counts and their displayed original percentages for 194124,200113,194123; all exact output IDs from existing validated mapping",
-    "Visible source output descriptors for 1-2 quantity stacks on selected Shard/Dust rows; no per-cast distributions or measured total item units verified"
+    "Source-original 2023 Prismatic Ore input item identity 194545 and nominal ore quantity 1,000 (NOT completed casts)",
+    "Illimited Diamond reported quantity 25; output rank and ID unspecified, null preserved",
+    "Verified comment is a separate contributor/cohort from the parent thread's indexed Serevite 8000-prospect table"
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 202463,
-      "inputName": "Lingering Phantom's Stompers",
-      "reportedDisenchants": 25,
-      "materialRows": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 15,
-          "percentShown": 60
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 11,
-          "percentShown": 44
-        },
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 3,
-          "percentShown": 12
-        }
-      ],
-      "source": "https://www.wowhead.com/item=202463/lingering-phantoms-stompers",
-      "sourceKind": "Wowhead Looter cumulative, collection/bonus unverified"
-    },
-    {
-      "inputItemID": 202535,
-      "inputName": "Sandals of the Sinister Savant",
-      "reportedDisenchants": 124,
-      "materialRows": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 72,
-          "percentShown": 58
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 69,
-          "percentShown": 56
-        },
-        {
-          "outputItemID": 194123,
-          "castsWithDrop": 2,
-          "percentShown": 1.6
-        }
-      ],
-      "source": "https://www.wowhead.com/item=202535/sandals-of-the-sinister-savant",
-      "sourceKind": "Wowhead Looter cumulative, collection/bonus unverified"
-    },
-    {
-      "inputItemID": 207274,
-      "inputName": "Devout Ashdevil's Slippers",
-      "reportedDisenchants": 70,
-      "materialRows": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 43,
-          "percentShown": 61
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 39,
-          "percentShown": 56
-        }
-      ],
-      "source": "https://www.wowhead.com/item=207274/devout-ashdevils-slippers",
-      "sourceKind": "Wowhead Looter cumulative, collection/bonus unverified"
-    },
-    {
-      "inputItemID": 207213,
-      "inputName": "Blazing Dreamstalker's Staghide",
-      "reportedDisenchants": 24,
-      "materialRows": [
-        {
-          "outputItemID": 194124,
-          "castsWithDrop": 17,
-          "percentShown": 71
-        },
-        {
-          "outputItemID": 200113,
-          "castsWithDrop": 9,
-          "percentShown": 38
-        }
-      ],
-      "source": "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
-      "sourceKind": "Wowhead Looter cumulative, collection/bonus unverified"
+      "inputItemID": 194545,
+      "inputName": "Prismatic Ore",
+      "inputRank": null,
+      "nominalInputQuantity": 1000,
+      "outputItemID": null,
+      "outputName": "Illimited Diamond",
+      "outputRank": null,
+      "totalQuantity": 25,
+      "casts": null,
+      "castsWithDrop": null,
+      "source": "https://www.reddit.com/r/woweconomy/comments/108782r",
+      "dataDate": null,
+      "patch": null,
+      "sourceKind": "first-person comment; separate study, missing operations"
     }
   ],
   "new_numerical_measurements": [
-    "202463: 25 item-side Looter disenchants; outputs 194124 15/25 (60% displayed); 200113 11/25 (44% displayed); 194123 3/25 (12% displayed)",
-    "202535: 124 item-side Looter disenchants; outputs 194124 72/124 (58% displayed); 200113 69/124 (56% displayed); 194123 2/124 (1.6% displayed)",
-    "207274: 70 item-side Looter disenchants; outputs 194124 43/70 (61% displayed); 200113 39/70 (56% displayed)",
-    "207213: 24 item-side Looter disenchants; outputs 194124 17/24 (71% displayed); 200113 9/24 (38% displayed)"
+    "Firsthand original Jan 10 2023 commenter: 1000 Prismatic Ore → 25 Illimited Diamonds; source does not identify diamond quality or rank-separated item ID; unknown casts and Resourcefulness prevent rate calculation"
   ],
   "numerical_fields_improved": [
-    "inputItemID",
-    "outputItemID",
-    "casts (source-reported item counts)",
-    "castsWithDrop (source-reported material occurrences)",
-    "percentShown with perCast item-count meaning",
-    "source-reported output stack descriptors as min/max (NOT a histogram)"
+    "inputItemID:194545",
+    "input nominal quantity:1000 (notes, not casts)",
+    "totalQuantity:25 (family output only)"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-14T0933-independent-source-gap-search.jsonl",
@@ -141,7 +64,8 @@
     "research/v3/evidence/dragonflight/2026-11-14T2234-unindexed-original-cohort-triage.jsonl",
     "research/v3/evidence/dragonflight/2026-11-14T2339-client-ore-rank-identity-and-cast-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-15T0034-original-numeric-and-looter-dedupe-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-15T0133-four-new-gear-looter-cohorts.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-15T0133-four-new-gear-looter-cohorts.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-15T0235-prismatic-comment-and-original-histogram-check.jsonl"
   ],
   "source_links": [
     "https://www.wowhead.com/item=202463/lingering-phantoms-stompers",
@@ -151,13 +75,12 @@
     "https://www.reddit.com/r/woweconomy/comments/108782r",
     "https://www.wowhead.com/item=198418/blazing-pigment"
   ],
-  "verified_commit_sha": "337817081941970901cc3f7c49a3e64ee3e02c58",
-  "commit_sha_scope": "Pre-update branch head verified via GitHub (parent). Atomic commit cannot contain its own SHA; post-ref new commit SHA verified externally via readback.",
+  "verified_commit_sha": "32d4be2322ab5d74d8bb2856ecb7c6ffc2785d67",
+  "commit_sha_scope": "Evidence file commit SHA verified via post-commit GitHub branch head and file readback; status update follows separately because only single-file GitHub contents writes are available.",
   "blockers": [
-    "High-priority Dragonflight Draconium/Serevite/Khaz'gorite/Prismatic Ore prospecting and herb milling still lack independent per-output completed-cast hits, 0/1/2+ histograms and refund logs",
-    "Looter data may pool game patches, bonus/item levels and character skill/spec; source collection epoch and raw positive-stack histograms unavailable",
-    "Source material-hit counts across a single gear cohort sum above item-side disenchants; no claim of mutually exclusive outcomes or overall zero operations",
-    "The original Xenastro Google worksheet remains unreadable via accessible sources; Firecrawl retrieval blocked by external connector credits, not evidence of missing rows"
+    "Independent per-output completed casts, material-positive hits, zero outcomes and 0/1/2+ distributions still unverified for Draconium, Serevite, Khaz'gorite, Prismatic and Dragonflight milling",
+    "1,000 Prismatic ore in the new firsthand cohort is nominal input count, not completed casts; Resourcefulness refunds and gem quality ID unknown",
+    "Original Xenastro workbook row data still inaccessible, so its cohort cannot be independently transformed into a cast/hit table"
   ],
   "exhausted_sources": [
     {
@@ -997,32 +920,41 @@
         "Warcraft Wiki, Khaz'gorite Ore raw item lookup: https://warcraft.wiki.gg/wiki/Khaz%27gorite_Ore (identity, not a measured prospecting outcome cohort)",
         "WoW-Professions Dragon Isles Inscription, Saxifrage/Bubble Poppy five-herb milling guidance: https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight (not a measured original outcome cohort)"
       ]
+    },
+    {
+      "at": "2026-11-15T02:36:39.810Z",
+      "scope": "Distinct source-original Prismatic diamond-unit anecdote versus missing Dragonflight ore/herb material-0..N completed-cast logs",
+      "reason": "New firsthand original family-level output total found, but other named searches returned known originals, translated copies or guides without unindexed completed-operation material hit tables; no duplicate data assigned to 2023 Serevite parent thread.",
+      "whereLooked": [
+        "Reddit r/woweconomy: Prismatic Ore 1000 output, Serevite 8k 2023 thread (https://www.reddit.com/r/woweconomy/comments/108782r)",
+        "Reddit r/woweconomy: Khaz'gorite Ore and Prismatic Ore 2023 post without exact event log (https://www.reddit.com/r/woweconomy/comments/17n69p8)",
+        "Wowhead Illimited Diamond original commenter cross-check (https://www.wowhead.com/item=192869/illimited-diamond)",
+        "Blizzard forums name-first Saxifrage pigment milling result searches (https://us.forums.blizzard.com/en/wow/)",
+        "Warcraft Wiki named Khaz'gorite Ore item/prospecting identity (https://warcraft.wiki.gg/wiki/Khaz%27gorite_Ore)",
+        "WoW-Professions Dragon Isles inscription milling guide (https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight)",
+        "GitHub name-first prospect/mill saved variable CSV output searches, no public original 0..N event ledger"
+      ]
     }
   ],
-  "next_concrete_step": "Search previously unindexed character-authored Dragonflight craft-event exports for exact finished casts, ore/herb rank IDs, output quantities and Resourcefulness; audit 202463/202535/207274/207213 original Wowhead bonus/version/skill and positive-stack histograms before Master considers any estimator import.",
+  "next_concrete_step": "Find a genuinely new source-original Dragon Isles saved-variable/crafting log that records successful prospect/mill operations with refunds and per-output stacks; resolve Illimited Diamond quality item ID and source profile for the newly found Prismatic 1000→25 cohort before any numeric estimator use.",
   "validation": {
-    "status": "preflight JSONL parsed; post-commit readback required",
-    "checkedAt": "2026-11-15T01:33:48.391Z",
-    "jsonlParse": "pass",
-    "realRecords": 10,
-    "searchedRecords": 1,
-    "uniqueInputIDs": [
-      202463,
-      202535,
-      207274,
-      207213
+    "jsonl_parsed": true,
+    "record_count": 2,
+    "drop_records": 1,
+    "searched_records": 1,
+    "source_original_deduped_against_known_Serevite_tables": true,
+    "unknown_denominators_preserved": true,
+    "evidence_readback_sha": "63acd3b1d76e34f7b9a814cb6be797c6b32df68a",
+    "evidence_commit_sha": "32d4be2322ab5d74d8bb2856ecb7c6ffc2785d67",
+    "changed_paths_expected": [
+      "research/v3/evidence/dragonflight/2026-11-15T0235-prismatic-comment-and-original-histogram-check.jsonl",
+      "research/coordination/quiet-status/dragonflight.json"
     ],
-    "uniqueOutputIDs": [
-      194123,
-      194124,
-      200113
-    ],
-    "duplicateCheck": "No matches for 4 candidates in default-branch GitHub code search or 16 latest branch evidence files; source cohorts are unique by input item ID, but Looter collection period unknown",
-    "scope": "new Dragonflight JSONL and own quiet-status JSON only"
+    "notes": "1 distinct original family quantity, not a cast-rate or material-hit distribution"
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-15T0133-four-new-gear-looter-cohorts.jsonl",
-  "verified_parent_sha": "337817081941970901cc3f7c49a3e64ee3e02c58"
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-15T0235-prismatic-comment-and-original-histogram-check.jsonl",
+  "verified_parent_sha": "32d4be2322ab5d74d8bb2856ecb7c6ffc2785d67"
 }
