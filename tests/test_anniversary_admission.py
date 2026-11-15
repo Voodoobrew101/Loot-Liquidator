@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import json
+from collections import Counter
 from pathlib import Path
 import sys
 import unittest
@@ -35,7 +36,7 @@ class AnniversaryAdmissionTests(unittest.TestCase):
         self.assertEqual({r['inputItemID']: r['casts'] for r in source},
                          {224744: 32, 224745: 199, 224747: 53})
 
-    def test_both_passes_hold_rows_without_mutation_or_item_blacklist(self):
+    def test_both_evidence_paths_hold_rows_without_mutation_or_item_blacklist(self):
         source = rows()
         control = copy.deepcopy(source[1])
         control.update(id='independent-same-item-study', studyKey='independent-same-item-study')
@@ -43,16 +44,15 @@ class AnniversaryAdmissionTests(unittest.TestCase):
         loaded = source + [control]
         before = copy.deepcopy(loaded)
         module = v3.load_calculator(SNAPSHOT)
-        build = module.build
-        calls = []
-        def observe(data):
-            calls.append(copy.deepcopy(data))
-            return build(data)
-        with patch.object(module, 'load', return_value=loaded), patch.object(module, 'build', side_effect=observe), patch.object(v3, 'load_calculator', return_value=module):
+        with (patch.object(module, 'load', return_value=loaded),
+              patch.object(v3, 'load_calculator', return_value=module),
+              patch.object(v3, 'reference_ranges', wraps=v3.reference_ranges) as ranges,
+              patch.object(v3, 'build_field_support', wraps=v3.build_field_support) as supports):
             records, notes, total, counted, _ = v3.build(SNAPSHOT)
-        self.assertEqual(len(calls), 2)
-        for call in calls:
-            self.assertEqual(call, [control])
+        ranges.assert_called_once()
+        supports.assert_called_once()
+        self.assertEqual(ranges.call_args.args[0], [control])
+        self.assertEqual(supports.call_args.args[1], [control])
         self.assertEqual((total, counted), (17, 1))
         self.assertEqual(sum(notes.values()), 16)
         self.assertEqual([r['inputItemID'] for r in records], [224744])
@@ -64,14 +64,17 @@ class AnniversaryAdmissionTests(unittest.TestCase):
             records, *_ = v3.build(SNAPSHOT)
         self.assertEqual(records, [])
 
-    def test_reachable_regression_is_three_priced_records_without_gate(self):
+    def test_bypassing_gate_exposes_three_held_occurrence_records(self):
         module = v3.load_calculator(SNAPSHOT)
-        with patch.object(module, 'load', return_value=rows()), patch.object(v3, 'load_calculator', return_value=module), patch.object(v3, 'retail_admission', side_effect=lambda data: (data, {})):
+        with (patch.object(module, 'load', return_value=rows()),
+              patch.object(v3, 'load_calculator', return_value=module),
+              patch.object(v3, 'retail_admission', side_effect=lambda data: (data, Counter()))):
             records, *_ = v3.build(SNAPSHOT)
         self.assertEqual({r['inputItemID'] for r in records}, {224744, 224745, 224747})
-        self.assertTrue(all(any(m['expectedQuantity'].get('value', 0) > 0
-                            for m in r['materials'] if m['expectedQuantity'].get('value') is not None)
-                            for r in records))
+        for record in records:
+            self.assertTrue(any(m['dropChance'].get('value', 0) > 0 for m in record['materials']))
+            for material in record['materials']:
+                self.assertEqual(material['expectedQuantity']['status'], 'unknown')
 
     def test_each_identity_independently_holds_renamed_and_malformed_copy(self):
         for missing in (None, '', [], {}, 0, False, ['not-an-identity']):

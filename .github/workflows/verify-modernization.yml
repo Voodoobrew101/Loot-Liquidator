@@ -8,9 +8,9 @@ permissions:
   contents: read
 jobs:
   lua51:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Install Lua 5.1
@@ -21,17 +21,17 @@ jobs:
         run: python3 tools/stamp_build_info.py
       - name: Build isolated test addon ZIP
         run: python3 tools/package_addon.py dist/LootLiquidator-test.zip
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: LootLiquidator-test
           path: dist/LootLiquidator-test.zip
   lupa-shim:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - name: Install embedded and native Lua 5.1

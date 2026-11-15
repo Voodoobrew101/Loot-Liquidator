@@ -10,6 +10,7 @@ from collections import Counter, defaultdict
 import csv
 import hashlib
 import json
+from math import isclose
 from pathlib import Path
 import shutil
 import subprocess
@@ -127,10 +128,35 @@ def make_ledger(data):
     return rows
 
 
+# Reviewed occurrence-only source rows in the original audit. The November 1
+# legacy 1240, Midnight 1715 and TWW 1721 evidence files have no verified batch
+# quantities for these items. The old importer used an assumed one-unit stack.
+REVIEWED_SINGLE_UNIT_ASSUMPTIONS = {
+    25159, 217133, 225374, 232734, 232735, 232739, 232757, 237867, 237876,
+    237934, 245718, 245721, 245737, 257203, 272239, 272241, 272242, 272244,
+}
+
+
+def retained_chance_only(probe, previous, price):
+    materials = probe.get('materials') or []
+    prior_value = previous.get('valueCopperPerInput')
+    if not (probe['state'] == 'no_value' and probe['method'] == 'Disenchant' and probe['inputCount'] == 1
+            and probe['input'] in REVIEWED_SINGLE_UNIT_ASSUMPTIONS and materials and prior_value is not None and price):
+        return False
+    return (all(m.get('chance') is not None and m.get('chanceCasts', 0) > 0
+                and all(m.get(field) is None for field in ('expectedQuantity', 'minQuantity', 'maxQuantity'))
+                for m in materials)
+            and isclose(sum(m['chance'] for m in materials) * price, prior_value, rel_tol=1e-9))
+
+
 def report(data, baseline):
     probes = data['probes']
     previous = {p['key']: p for p in baseline.get('probes', [])}
     compiled = data['compiled']['processing']
+    lost_values = [p for p in probes if p['state'] not in ('value', 'partial_value')
+                   and previous.get(p['key'], {}).get('state') in ('value', 'partial_value')]
+    retained = {p['key'] for p in lost_values
+                if retained_chance_only(p, previous[p['key']], data['probeProfile'].get('priceCopperPerMaterial'))}
     return {
         'methodology': 'source-to-tooltip/1', 'profile': data['probeProfile'],
         'primary_actionable_coverage': None,
@@ -154,8 +180,8 @@ def report(data, baseline):
             and previous.get(p['key'], {}).get('state') == 'no_model'],
         'newly_complete_profiles': [p['key'] for p in probes if p['state'] == 'value'
             and previous.get(p['key'], {}).get('state') == 'partial_value'],
-        'regressed_numeric_profiles': [p['key'] for p in probes if p['state'] not in ('value', 'partial_value')
-            and previous.get(p['key'], {}).get('state') in ('value', 'partial_value')],
+        'reviewed_chance_only_profiles': sorted(retained),
+        'regressed_numeric_profiles': [p['key'] for p in lost_values if p['key'] not in retained],
         'remaining_no_model': [{'key': p['key'], 'reason': p.get('reason')} for p in probes if p['state'] == 'no_model'],
         'remaining_partial_profiles': [p['key'] for p in probes if p['state'] == 'partial_value'],
         'runtime_errors': [p for p in probes if p['state'] == 'runtime_error'],

@@ -5,13 +5,13 @@ on:
     branches: [implementation/five-agent-completion]
 jobs:
   research-candidate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: python -m pip install 'jsonschema==4.26.0'
@@ -63,6 +63,9 @@ jobs:
       - name: F002 TWW milling negative-QA native replay self-test
         run: node research/tools/working_native_tww_accounting_preflight.js --self-test
       - name: Research-only F005 TWW milling 37-case negative-QA native replay (informational)
+        # The pinned live replays belong to the research branch. Addon PRs
+        # still run their self-tests and the mandatory compiler checks below.
+        if: github.ref == 'refs/heads/implementation/five-agent-completion' || github.base_ref == 'implementation/five-agent-completion'
         # The independent F005 fixture currently reports 32 PASS and five
         # actionable F003 model defects. The F002 runner recognizes exactly
         # those five failures; it does not reclassify them as passing cases.
@@ -84,6 +87,7 @@ jobs:
         # without blocking the main research pipeline on a stale F002 pin.
         run: node research/tools/working_native_df_prismatic_identity_preflight.js --self-test
       - name: Research-only F005 Prismatic stage-identity native negative QA (informational)
+        if: github.ref == 'refs/heads/implementation/five-agent-completion' || github.base_ref == 'implementation/five-agent-completion'
         # Exact F005 finding: 40/43 pass, three incorrect 192880 references.
         # The runner rejects unexpected failures and model/source changes;
         # detecting the known defect is NOT independent model acceptance.
@@ -92,6 +96,7 @@ jobs:
       - name: F002 DF frontier 21-case native negative-QA self-test
         run: node research/tools/working_native_df_frontier_array_preflight.js --self-test
       - name: Research-only F005 DF frontier array snapshot negative QA (informational)
+        if: github.ref == 'refs/heads/implementation/five-agent-completion' || github.base_ref == 'implementation/five-agent-completion'
         # Two known dynamic-length defects remain F003-owned. Source-pinned
         # replay is not acceptance; any new failure or source change fails closed.
         # No working/evidence/economic promotion from this diagnostic.

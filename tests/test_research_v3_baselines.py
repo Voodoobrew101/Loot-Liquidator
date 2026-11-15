@@ -1,14 +1,9 @@
-"""D1c: research team v3 results -> ItemDB baselines (tools/research_v3_to_baselines.py).
-
-Runs against the pinned snapshot database/research/v3-snapshot/, so results are fixed until
-the snapshot is refreshed on purpose. Checks that only real studies are counted (no TSM or
-reference starting guesses, no copy of the addon's own old disenchant tables), that the
-research team's own numbers come through unchanged, and that blended operations are left out.
-"""
+"""Check partial research fields and batch-scoped support against the pinned snapshot."""
 import json
 import sys
 sys.dont_write_bytecode = True  # never leave cache files in the repo or snapshot
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3  # noqa: E402
@@ -38,33 +33,71 @@ for path in info['paths']:
 ok(v3.gear_key('gear:The War Within:uncommon:weapon') == 'gear:10:2:weapon', 'gear names map to numbers')
 ok(v3.gear_key('gear:11:4:armor') == 'gear:11:4:armor', 'numeric gear keys pass through')
 ok(v3.gear_key('gear:Midnight:rare:trinket') is None, 'gear key must end in armor or weapon')
-ok(v3.counts({'simulation': {'chanceBeta': [10.5, 90.5]}}) == (10.0, 100.0), 'beta parameters back to counts')
 
-# A chance worked out from an average carries half confidence; the average stays measured.
-m = v3.material(5, [{'simulation': {'chanceBeta': [50.5, 50.5]}, 'chanceSource': 'estimated',
-                     'averageSource': 'measured', 'rangeSource': 'reference', 'average': 0.75,
-                     'range': [1, 2], 'studyCasts': 200.0}])
-near(m['dropChance']['value'], 0.5, 'derived chance = average / middle of range')
-ok(m['dropChance']['status'] == 'provisional' and m['expectedQuantity']['status'] == 'measured', 'statuses')
-ok(m['dropChance']['confidence'] == eb.rate_confidence(25, 50) // 2, 'derived chance at half confidence')
-near(m['expectedQuantity']['samples'], 100.0, 'average counts its own casts (x0.5 until scaling rules)')
+def support(value, casts, status='measured', **counts):
+    return {'value': value, 'casts': casts, 'status': status, **counts}
 
-# Fixed positive yields must survive serialization as a consistent pair.
-# Real new cohorts have 2/41 hits returning exactly two units (4/41 mean).
-for hits, casts, units in [(2, 41, 2), (3, 29, 2), (3, 41, 3), (1, 44, 2), (1, 3, 3)]:
-    exact = v3.material(5, [{'simulation': {'chanceBeta': [hits + .5, casts - hits + .5]},
-        'chanceSource': 'measured', 'averageSource': 'measured', 'rangeSource': 'observed',
-        'average': hits * units / casts, 'range': [units, units], 'studyCasts': casts}])
-    p, e = exact['dropChance']['value'], exact['expectedQuantity']['value']
-    ok(p * units - 1e-9 <= e <= p * units, 'serialized fixed yield stays inside probability bounds')
-    near(e, hits * units / casts, 'fixed yield retains source precision', 1e-10)
 
-derived = v3.material(5, [{'simulation': {'chanceBeta': [1500.5, 500.5]},
-    'chanceSource': 'measured', 'averageSource': 'estimated', 'rangeSource': 'observed',
-    'average': 3, 'range': [2, 6], 'studyCasts': 2000}])
-ok(derived['expectedQuantity']['status'] == 'provisional', 'midpoint mean is never marked measured')
-ok(derived['expectedQuantity']['confidence'] == derived['dropChance']['confidence'] // 2,
-   'large hit counts do not give a guessed average full occurrence confidence')
+quantity = support(.75, 200, total=150)
+occurrence = support(.5, 10, hits=5)
+lo, hi = support(1, 3), support(2, 5)
+m = v3.material(5, [{'fieldSupport': {'expectedQuantity': quantity, 'dropChance': occurrence,
+                                    'minQuantity': lo, 'maxQuantity': hi}}])
+near(m['expectedQuantity']['value'], .75, 'direct mean retained')
+near(m['dropChance']['value'], .5, 'direct chance retained')
+near(m['expectedQuantity']['samples'], 100, 'average uses its own casts')
+near(m['dropChance']['samples'], 5, 'chance uses its own casts')
+near(m['minQuantity']['samples'], 1.5, 'range support stays independent')
+ok(m['expectedQuantity']['confidence'] == eb.quality_score(100), 'expected quantity receives its own score')
+ok(m['dropChance']['confidence'] == eb.rate_confidence(2.5, 5), 'drop chance score uses observed occurrences')
+ok(m['expectedQuantity']['independentConfidence'], 'mark independently supported mean for runtime')
+m = v3.material(5, [{'fieldSupport': {'expectedQuantity': quantity, 'minQuantity': lo, 'maxQuantity': hi}}])
+ok(m['dropChance']['status'] == 'unknown' and m['dropChance']['inferenceBlocked'],
+   'mean and observed bounds do not establish a drop chance')
+m = v3.material(5, [{'fieldSupport': {'dropChance': occurrence, 'minQuantity': lo, 'maxQuantity': hi}}])
+ok(m['expectedQuantity']['status'] == 'unknown' and 'inferenceBlocked' not in m['expectedQuantity'],
+   'measured chance and positive bounds allow only runtime modeled expectation')
+m = v3.material(5, [{'fieldSupport': {'dropChance': occurrence}}])
+ok(m['expectedQuantity']['status'] == 'unknown' and m['expectedQuantity']['inferenceBlocked'],
+   'chance without positive stack bounds does not establish a mean')
+m = v3.material(5, [{'fieldSupport': {'expectedQuantity': support(.7, 0, 'provisional')}}])
+ok(m['expectedQuantity']['samples'] == 0 and not m['expectedQuantity']['sampleSizeKnown'],
+   'published mean without a denominator carries no measured casts')
+m = v3.material(5, [{'fieldSupport': {'expectedQuantity': support(.7, 0, 'provisional', reportedCasts=1146)}}])
+ok(m['expectedQuantity']['reportedCasts'] == 1146 and m['expectedQuantity']['samples'] == 0
+   and m['expectedQuantity']['status'] == 'provisional' and m['expectedQuantity']['confidence'] == 40,
+   'rounded published mean preserves reported operations outside its measured count')
+m = v3.material(5, [{'fieldSupport': {'dropChance': occurrence,
+                                    'expectedQuantity': support(.1, 200, total=20)}}])
+ok(m['dropChance']['inferenceBlocked'] and m['heldDropChance']['value'] == .5,
+   'held conflicting occurrence stays auditable and is not inferred again')
+near(m['expectedQuantity']['value'], .1, 'contradictory occurrence does not erase directly supported mean')
+
+one = support(1, 40)
+independent = {'dropChance': support(.4, 1000, hits=400, _countedCohorts={'hits'}),
+               'expectedQuantity': support(.401, 1000, total=401, _countedCohorts={'units'}),
+               'minQuantity': one, 'maxQuantity': one}
+m = v3.material(5, [{'fieldSupport': independent}])
+ok(m['samplingVariation'] and 'heldDropChance' not in m and 'heldExpectedQuantity' not in m,
+   'small deviation from distinct sampled cohorts retains both values and observed bounds')
+near(m['dropChance']['value'], .4, 'sampling tolerance never changes measured chance')
+near(m['expectedQuantity']['value'], .401, 'sampling tolerance never changes measured mean')
+same_casts = dict(independent, expectedQuantity=support(.401, 1000, total=401, _countedCohorts={'hits'}))
+m = v3.material(5, [{'fieldSupport': same_casts}])
+ok('samplingVariation' not in m and 'heldDropChance' in m, 'same cohort retains strict arithmetic')
+wide_conflict = dict(independent, expectedQuantity=support(.25, 20, total=5, _countedCohorts={'units'}))
+m = v3.material(5, [{'fieldSupport': wide_conflict}])
+ok('samplingVariation' not in m and m['expectedQuantity']['inferenceBlocked'] and m['heldExpectedQuantity']['samples'] == 10,
+   'large discrepancy retains better supported occurrence and archives the weaker mean')
+near(m['dropChance']['value'], .4, 'better supported occurrence remains active')
+zero_conflict = dict(independent, dropChance=support(0, 1000, hits=0, _countedCohorts={'hits'}),
+                     expectedQuantity=support(.001, 1000, total=1, _countedCohorts={'units'}))
+m = v3.material(5, [{'fieldSupport': zero_conflict}])
+ok('samplingVariation' not in m and 'heldDropChance' in m, 'zero chance with positive reported mean remains strict')
+weak_quantity = dict(independent, expectedQuantity=support(.401, 0, 'provisional', reportedCasts=1000))
+m = v3.material(5, [{'fieldSupport': weak_quantity}])
+ok('samplingVariation' not in m and 'heldExpectedQuantity' in m,
+   'an uncounted reported mean does not qualify for sampling tolerance')
 
 # ---- the real build
 # D1c5: the pinned calculator matches correction paths exactly. Windows paths
@@ -85,29 +118,30 @@ for r in rows:
         ok(not v3.is_counted(r, module), 'reference values and the old addon tables are never counted')
         break
 ok(all(r['recordID'].startswith('evidence:v3:') and r['sourceKey'] == 'itemdb' and r['supersedesResearch']
+       and r['fieldSpecificEvidence']
        for r in records), 'record IDs and source')
 ok(len({r['recordID'] for r in records}) == len(records), 'record IDs unique')
 for r in records:
     ok(('inputItemID' in r) != ('gearKey' in r), f'{r["recordID"]}: one input key')
     for mat in r['materials']:
         f = mat['dropChance']
-        ok(f['status'] != 'unknown' and 0 <= f['value'] <= 1 and f['samples'] > 0, f'{r["recordID"]}:{mat["id"]} chance')
-        lo, hi, e = mat['minQuantity']['value'], mat['maxQuantity']['value'], mat['expectedQuantity'].get('value')
-        ok(1 <= lo <= hi, f'{r["recordID"]}:{mat["id"]} range')
-        ok(e is None or f['value'] * lo - 1e-9 <= e <= f['value'] * hi + 1e-9, f'{r["recordID"]}:{mat["id"]} average in range')
+        p, e, lo, hi = (mat[field].get('value') for field in ('dropChance', 'expectedQuantity', 'minQuantity', 'maxQuantity'))
+        ok(p is None or 0 <= p <= 1 and f['samples'] >= 0, f'{r["recordID"]}:{mat["id"]} chance')
+        ok(lo is None or hi is None or 1 <= lo <= hi, f'{r["recordID"]}:{mat["id"]} range')
+        ok(mat.get('samplingVariation') or e is None or p is None or lo is None or hi is None or p*lo - 1e-9 <= e <= p*hi + 1e-9,
+           f'{r["recordID"]}:{mat["id"]} exposed average in range')
 by_id = {r['recordID']: r for r in records}
 
-# Saronite Ore (the owner's reference tooltip): matches the research team's published estimate
-# (chance from average / middle of 1-2, half confidence), from real studies only.
+# Saronite Ore has independently measured expected quantity without occurrence counts.
 sar = by_id['evidence:v3:Prospect:36912:x5']
 gem = {m['id']: m for m in sar['materials']}[36917]
-near(gem['expectedQuantity']['value'], 0.1792, 'Saronite -> Bloodstone average', 1e-4)
-near(gem['dropChance']['value'], 0.1195, 'Saronite -> Bloodstone chance', 1e-4)
-ok(gem['dropChance']['confidence'] == 50, 'Saronite -> Bloodstone confidence')
+near(gem['expectedQuantity']['value'], 0.1798, 'Saronite -> Bloodstone average', 1e-4)
+ok(gem['dropChance']['status'] == 'unknown', 'Saronite -> Bloodstone chance unavailable')
 
-# Aqirite rank 1: measured chances straight from the 1,040-prospect study family.
+# Aqirite rank 1 reports output units per 1,000 input ore, without occurrence counts.
 aq = {m['id']: m for m in by_id['evidence:v3:Prospect:210933:x5']['materials']}
-near(aq[213398]['dropChance']['value'], 0.5209, 'Aqirite -> 213398 chance', 1e-4)
+near(aq[213398]['expectedQuantity']['value'], 0.5195, 'Aqirite -> 213398 reported mean', 1e-4)
+ok(aq[213398]['dropChance']['status'] == 'unknown', 'units per ore are not per-cast hit counts')
 
 # D1c6: the 1,000-prospect R2 Serevite study names Ysemerald R3 (5 gems)
 # and Neltharite R3 (8 gems), but some copies swapped the item numbers.
@@ -119,11 +153,50 @@ near(serevite[192861]['expectedQuantity']['samples'], 500, 'corrected study coun
 
 # Gear group written with names by a worker becomes the addon's numeric key.
 ok('evidence:v3:Disenchant:gear:10:2:weapon:x1' in by_id, 'War Within green weapons from a worker study')
-# Battle for Azeroth herbs mix 5-herb and 20-herb studies: left out, never blended.
-ok('evidence:v3:Mill:152506:x5' not in by_id and 'evidence:v3:Mill:152506:x20' not in by_id, 'mixed batch sizes left out')
-ok(notes['studies mix batch sizes (e.g. milling and mass milling)'] > 0, 'mixed batch sizes reported')
+# Retain both observed batch units, without carrying P(hit) across them.
+ok('evidence:v3:Mill:152506:x5' in by_id and 'evidence:v3:Mill:152506:x20' in by_id, 'mixed milling batches remain separate')
+osmenite = {batch: {m['id']: m for m in by_id[f'evidence:v3:Prospect:168185:x{batch}']['materials']}[168191]
+            for batch in (5, 20)}
+ok(osmenite[5]['expectedQuantity']['samples'] > osmenite[20]['expectedQuantity']['samples'] > 0,
+   'Osmenite source denominators are distinct across batches')
+ok(osmenite[5]['samplingVariation'] and osmenite[20]['dropChance']['status'] == 'unknown',
+   'five-input Osmenite preserves separately sampled occurrence without inventing 20-input occurrence')
+ok(all(m['dropChance']['status'] == 'measured' and m.get('samplingVariation')
+       for m in by_id['evidence:v3:Prospect:168185:x5']['materials']),
+   'all seven five-input Osmenite occurrence estimates survive the source sampling differences')
+near(osmenite[5]['dropChance']['value'], 0.228625, 'Osmenite occurrence preserved')
+near(osmenite[5]['expectedQuantity']['value'], 0.22772277, 'Osmenite measured mean preserved')
+adamantite = {m['id']: m for m in by_id['evidence:v3:Prospect:23425:x5']['materials']}[23437]
+near(adamantite['expectedQuantity']['value'], 0.037876, 'Adamantite measured mean survives', 1e-6)
+near(adamantite['heldDropChance']['samples'], 7, 'small conflicting hit-count study retained in held evidence')
 ok(notes['conditional drop (needs an unlock the addon cannot check yet)'] > 0, 'conditional drops reported')
 ok(not any(isinstance(m['id'], str) for r in records for m in r['materials']), 'no family outputs')
+
+# Rank-family fallback must only test overlap within the candidate's own operation.
+def row(id, **values):
+    return dict(type='drop', sourceKind='study', id=id, studyKey=id,
+                _file=f'research/v3/evidence/fixture/{id}.jsonl',
+                source={'url': f'https://www.wowhead.com/item=222845#comments:id={id}'}, **values)
+
+
+fixture = [
+    row('1234567', method='Mill', inputItemID=900001, inputsPerCast=5, outputName='Nacreous Pigment',
+        casts=100, totalQuantity=203),
+    row('1234568', method='Mill', inputItemID=900001, inputsPerCast=20, outputName='Nacreous Pigment',
+        outputItemID=222618, outputRank=1, casts=30, totalQuantity=56),
+    row('1234569', method='Disenchant', inputItemID=222845, outputName='Storm Dust (all quality ranks pooled)',
+        casts=108, totalQuantity=303),
+]
+with patch.object(module, 'load', return_value=fixture), patch.object(v3, 'load_calculator', return_value=module):
+    candidate, _, _, _, _ = v3.build(SNAPSHOT)
+fixture_material = {r['recordID']: r['materials'][0] for r in candidate}
+pooled = fixture_material['evidence:v3:Mill:900001:x5']
+ok(pooled['rankIDs'] == [222618, 222619, 222620], 'another batch exact rank does not suppress a pooled mean')
+ok('rankIDs' not in fixture_material['evidence:v3:Mill:900001:x20'], 'exact rank remains exact at its own batch size')
+storm_dust = fixture_material['evidence:v3:Disenchant:222845:x1']
+ok(storm_dust['rankIDs'] == [219946, 219947, 219948], 'explicit pooled Storm Dust maps to the three verified ranks')
+near(storm_dust['expectedQuantity']['value'], 303 / 108, 'keep quantity from all ranks without assigning rank yields')
+ok(storm_dust['dropChance']['status'] == 'unknown', 'pooled units alone do not give occurrence')
 
 # C4b3: token reward lists from the v3 notes. Pinned numbers may move after a refresh, on purpose.
 import research_v3_tokens as vt  # noqa: E402

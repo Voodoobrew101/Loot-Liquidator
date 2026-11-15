@@ -10,15 +10,18 @@ sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3
 from evidence_to_baselines import lua
 
+def field(value, samples, **counts):
+    return {'value': value, 'casts': samples, 'status': 'measured', **counts}
+
+
 records = []
 for index, (hits, casts, stack) in enumerate([(2, 41, 2), (3, 29, 2), (3, 41, 3),
                                               (1, 44, 2), (4, 31, 2)]):
-    material = v3.material(100 + index, [{
-        'simulation': {'chanceBeta': [hits + .5, casts - hits + .5]},
-        'chanceSource': 'measured', 'averageSource': 'measured',
-        'rangeSource': 'observed', 'average': hits * stack / casts,
-        'range': [stack, stack], 'studyCasts': casts,
-    }])
+    material = v3.material(100 + index, [{'fieldSupport': {
+        'dropChance': field(hits / casts, casts, hits=hits),
+        'expectedQuantity': field(hits * stack / casts, casts, total=hits * stack),
+        'minQuantity': field(stack, hits), 'maxQuantity': field(stack, hits),
+    }}])
     assert abs(material['dropChance']['value'] - hits / casts) < 1e-12
     assert abs(material['expectedQuantity']['value'] - hits * stack / casts) < 1e-12
     material.pop('_casts')

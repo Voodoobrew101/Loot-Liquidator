@@ -6,17 +6,22 @@ local first=assert(source:find('local PREVIEW_ITEMS = {}',1,true))
 local last=assert(source:find('PreviewPanel=function()',first,true))
 local factory=assert(loadstring('local LL=...\n'..source:sub(first,last-1)..'\nreturn PREVIEW_ITEMS,SampleDecision'))
 local rows,decision=factory(LL)
-assert(#rows==5,'all curated studies must remain complete and confident')
+assert(#rows==5,'all curated studies must still provide complete measured examples')
+local records={}
+for _,record in ipairs(LL.ItemDB.processing) do records[record.recordID]=record end
 for _,row in ipairs(rows) do
     local d=decision(row)
     assert(d.converted==row.convert and d.converted>0,'conversion header price')
-    assert(d.conversion.confidence>=85)
-    local total=0
-    for _,m in ipairs(d.conversion.yieldModel.materials) do
-        assert(m.confidence>=85 and m.chance and m.minQuantity and m.maxQuantity)
+    local total,support=0,100
+    for i,m in ipairs(d.conversion.yieldModel.materials) do
+        local original=records[row.source].materials[i]
+        assert(m.id==original.id and m.confidence==original.expectedQuantity.confidence)
+        assert(m.chanceConfidence==original.dropChance.confidence and m.chance and m.minQuantity and m.maxQuantity)
         assert(m.expectedQuantity and m.unitPrice and m.netExpectedValue)
         total=total+m.netExpectedValue
+        support=math.min(support,m.confidence)
     end
+    assert(d.conversion.confidence==support,'the preview uses quantity support to score its quoted value')
     assert(math.abs(total/row.inputCount-row.convert)<.00001,'material prices reconcile with conversion total')
 end
-print('preview samples: 5 complete high-confidence studies passed')
+print('preview samples: 5 complete measured studies with separate scores passed')

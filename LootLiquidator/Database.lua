@@ -169,6 +169,25 @@ end
 function LL:ResetEvidenceSources()
     for key,d in pairs(defaults) do self:SetEvidenceSource(key,d[1],d[2]) end
 end
+local function violatedYieldBound(chance,mean,minimum,maximum)
+    if chance==nil or mean==nil then return nil end
+    if minimum and mean+1e-9<chance*minimum then return minimum end
+    if maximum and mean>chance*maximum+1e-9 then return maximum end
+end
+local function validSamplingVariation(record,material,bound)
+    local chance,mean=material.dropChance,material.expectedQuantity
+    if not (bound and record.fieldSpecificEvidence==true and record.sourceKey=='itemdb'
+        and record.recordID:match('^evidence:v3:') and material.samplingVariation==true
+        and chance.status=='measured' and mean.status=='measured' and chance.sampleSizeKnown==true
+        and mean.sampleSizeKnown==true and finite(chance.samples) and chance.samples>=2
+        and finite(mean.samples) and mean.samples>=2) then return false end
+    local p,q=chance.value,mean.value/bound
+    if p<=0 or q<=0 or q>1 then return false end
+    -- The importer marks separately sampled fields. Check the same tolerance
+    -- here before allowing both numbers through the database validator.
+    local uncertainty=2*math.sqrt(p*(1-p)/chance.samples+q*(1-q)/mean.samples)
+    return math.abs(p-q)<=math.min(.01,.1*math.max(p,q),uncertainty)+1e-9
+end
 function LL:ValidateItemDB(db)
     if type(db)~='table' or db.schemaVersion~=1 or type(db.processing)~='table' then
         return false,'Unsupported itemdb schema'
@@ -210,7 +229,13 @@ function LL:ValidateItemDB(db)
             local p,e,lo,hi=m.dropChance.value,m.expectedQuantity.value,m.minQuantity.value,m.maxQuantity.value
             if (p and p>1) or (lo and (lo<1 or lo%1~=0)) or (hi and (hi<1 or hi%1~=0))
                 or (lo and hi and lo>hi) or (e==0 and p and p>0)
-                or (e and p and lo and hi and (e+1e-9<p*lo or e>p*hi+1e-9)) then
+                or (r.fieldSpecificEvidence and p==0 and e and e>0) then
+                return false,'Contradictory probability/quantity fields'
+            end
+            local bound
+            if r.fieldSpecificEvidence then bound=violatedYieldBound(p,e,lo or 1,hi)
+            elseif lo and hi then bound=violatedYieldBound(p,e,lo,hi) end
+            if (bound or m.samplingVariation~=nil) and not validSamplingVariation(r,m,bound) then
                 return false,'Contradictory probability/quantity fields'
             end
         end
@@ -550,7 +575,8 @@ local function sourceModel(self,f,option,r)
         -- Resolve supported P(hit) x conditional yield before anchor selection.
         -- Previously an all-missing-mean record was rejected before this could
         -- run. This is a modeled expectation, never another measured study.
-        if not m.conditionalReference and self:EvidenceReliability(m.expectedQuantity,r)==0
+        if not m.conditionalReference and not m.expectedQuantity.inferenceBlocked
+            and self:EvidenceReliability(m.expectedQuantity,r)==0
             and self:EvidenceReliability(m.dropChance,r)>0
             and ((material.chance==0) or
                 (self:EvidenceReliability(m.minQuantity,r)>0 and self:EvidenceReliability(m.maxQuantity,r)>0)) then
@@ -681,7 +707,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     end
     include(f.id) -- preserved source studies and documented item exceptions
     if option.name=='Disenchant' then include(gearKey(f)) end
-    local eligible,transformed,hasExpected,staleRecord={},{},{},{}
+    local eligible,transformed,hasExpected,staleRecord,partialStrength={},{},{},{},{}
     local hasEligibleSalvage=false
     for _,r in ipairs(records) do
         -- Input rarity can change on the same gear item ID (for example an
@@ -692,7 +718,15 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         local model=sourceModel(self,f,option,r)
         local hasMean=false
         for i,material in ipairs(model.materials) do
-            if self:EvidenceReliability(modelMetadata(r.materials[i],material,'expectedQuantity','expectedQuantity'),r)>0 then hasMean=true;break end
+            local original=r.materials[i]
+            if self:EvidenceReliability(modelMetadata(original,material,'expectedQuantity','expectedQuantity'),r)>0 then
+                hasMean=true;break
+            elseif r.fieldSpecificEvidence and (not option.inputCount or option.inputCount==r.inputCount) then
+                partialStrength[r]=math.max(partialStrength[r] or 0,
+                    self:EvidenceReliability(modelMetadata(original,material,'dropChance','chance'),r),
+                    self:EvidenceReliability(original.minQuantity,r),
+                    self:EvidenceReliability(original.maxQuantity,r))
+            end
         end
         transformed[r]=model
         hasExpected[r]=hasMean
@@ -753,7 +787,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
     -- The anchor fixes the reference context. Within the best source, pick the
     -- strongest evidence so a low-confidence guess (working estimate or stale
     -- record) can never push real measurements of another context out.
-    local anchor,anchorStrength,anchorSpecificity,anchorExactInput,anchorCategoryRank
+    local anchor,anchorStrength,anchorSpecificity,anchorExactInput,anchorCategoryRank,anchorExactBatch
     for _,r in ipairs(eligible) do
         if hasExpected[r] and (not anchor or sourcePriority[r.sourceKey]==sourcePriority[anchor.sourceKey]) then
             local strength=0
@@ -767,6 +801,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             -- separate rather than lending one another probabilities or means.
             local specificity=(r.inputRarity~=nil and 1 or 0)+(r.inputClassID~=nil and 1 or 0)
             local exactInput=r.inputItemID==f.id and 1 or 0
+            local exactBatch=r.inputCount==option.inputCount and 1 or 0
             -- Ordinary disenchant studies describe a physical gear category.
             -- The preserved exact-item source rows must not override the
             -- category aggregate or count a study for a second time. An item
@@ -782,8 +817,24 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             if not anchor or categoryRank>anchorCategoryRank
                 or (categoryRank==anchorCategoryRank and (exactInput>anchorExactInput
                     or (exactInput==anchorExactInput and (specificity>anchorSpecificity
-                        or (specificity==anchorSpecificity and strength>anchorStrength))))) then
-                anchor,anchorStrength,anchorSpecificity,anchorExactInput,anchorCategoryRank=r,strength,specificity,exactInput,categoryRank
+                        or (specificity==anchorSpecificity and (exactBatch>anchorExactBatch
+                            or (exactBatch==anchorExactBatch and strength>anchorStrength))))))) then
+                anchor,anchorStrength,anchorSpecificity=r,strength,specificity
+                anchorExactInput,anchorCategoryRank,anchorExactBatch=exactInput,categoryRank,exactBatch
+            end
+        end
+    end
+    local partialOnly=false
+    if not anchor then
+        -- A scoped occurrence or range can still describe an operation whose
+        -- expected return is unknown. It cannot anchor a priced comparison.
+        for _,r in ipairs(eligible) do
+            local strength=(partialStrength[r] or 0)*(staleRecord[r] and STALE_FACTOR or 1)
+            local exactInput=r.inputItemID==f.id and 1 or 0
+            if strength>0 and (not anchor or exactInput>anchorExactInput
+                or (exactInput==anchorExactInput and strength>anchorStrength)) then
+                anchor,anchorStrength,anchorExactInput=r,strength,exactInput
+                partialOnly=true
             end
         end
     end
@@ -886,6 +937,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                     rankIDs=original.rankIDs, -- D1c2: rank unknown, priced at the cheapest rank
                     fields={},contributions={},sourceEstimates={}};bins[id]=b
                 if #rankReferences>0 then b.rankReferences=rankReferences end
+                b.fieldSpecificEvidence=b.fieldSpecificEvidence or r.fieldSpecificEvidence
+                b.chanceInferenceBlocked=b.chanceInferenceBlocked or original.dropChance.inferenceBlocked
+                b.quantityInferenceBlocked=b.quantityInferenceBlocked or original.expectedQuantity.inferenceBlocked
+                if original.samplingVariation and r.inputCount==batch then b.samplingEvidence=original end
                 if m.conditionalExpectedQuantity~=nil then
                     b.conditionalExpectedQuantity=m.conditionalExpectedQuantity*batch/r.inputCount
                     b.conditionalRequirement=m.conditionalRequirement
@@ -893,6 +948,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 end
                 b.sourceEstimates[r.sourceKey]={expectedQuantity=m.expectedQuantity,dropChance=m.chance,
                     minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,sourceConflict=original.sourceConflict,
+                    heldDropChance=original.heldDropChance,heldExpectedQuantity=original.heldExpectedQuantity,
                     inputCount=r.inputCount,originalTSM=original.originalTSM,
                     recordID=r.recordID,studyID=r.studyID,
                     appliedRule=m.appliedProfessionRule or m.appliedExpectationRule}
@@ -920,7 +976,11 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                         local acc=b.fields[field] or {sum=0,weight=0};b.fields[field]=acc
                         acc.minimum=math.min(acc.minimum or v,v);acc.maximum=math.max(acc.maximum or v,v)
                         acc.sum=acc.sum+v*weight;acc.weight=acc.weight+weight
+                        local score=evidenceScore(metadata)
+                        local c=(score or 0)>0 and score or UNKNOWN_CONFIDENCE
+                        acc.confidence=(acc.confidence or 0)+c*weight
                         if field=='expectedQuantity' then
+                            b.independentQuantityConfidence=b.independentQuantityConfidence or metadata.independentConfidence
                             if hasEligibleSalvage then acceptedMeanWeight=math.max(acceptedMeanWeight,weight) end
                             if model.operationUnverified then result.operationUnverified=true end
                             if m.derivedExpected then
@@ -930,9 +990,6 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                             if metadata.confidenceUnscored then
                                 b.confidenceUnscored=true;result.confidenceUnscored=true
                             end
-                            local score=evidenceScore(metadata)
-                            local c=(score or 0)>0 and score or UNKNOWN_CONFIDENCE
-                            acc.confidence=(acc.confidence or 0)+c*weight
                         end
                         if metadata.workingEstimate then b.workingEstimate=true;result.workingEstimate=true;result.provisional=true end
                         if staleRecord[r] then b.staleEvidence=true;result.staleEvidence=true;result.provisional=true end
@@ -949,7 +1006,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                                 or metadata.status=='modeled' or metadata.status=='historical'
                             -- C1b: the chance becomes casts and drops for the counts model,
                             -- scaled by the source weight (and STALE_FACTOR when stale).
-                            local casts=self:EvidenceCasts(metadata,r)
+                            local casts=r.fieldSpecificEvidence and metadata.sampleSizeKnown==false
+                                and 0 or self:EvidenceCasts(metadata,r)
                             local w=userWeight(self,r.sourceKey,mode)*(staleRecord[r] and STALE_FACTOR or 1)
                             if casts>0 and v<=1 then
                                 b.chanceSources=b.chanceSources or {}
@@ -965,10 +1023,12 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 end
                 -- Conditional bounds belong to one named source, never an average.
                 local lo,hi=m.minQuantity,m.maxQuantity
-                if not b.boundsSource and lo and hi and r.inputCount==batch
-                    and self:EvidenceReliability(original.minQuantity,r)>0
-                    and self:EvidenceReliability(original.maxQuantity,r)>0 then
-                    b.minQuantity=lo;b.maxQuantity=hi;b.boundsSource=r.source
+                if r.inputCount==batch and (not b.minQuantity or not b.maxQuantity) then
+                    lo=self:EvidenceReliability(original.minQuantity,r)>0 and lo or nil
+                    hi=self:EvidenceReliability(original.maxQuantity,r)>0 and hi or nil
+                    if (lo and hi) or (not b.boundsSource and r.fieldSpecificEvidence and (lo or hi)) then
+                        b.minQuantity=lo;b.maxQuantity=hi;b.boundsSource=r.source
+                    end
                 end
                 end -- reference family already covered
             end
@@ -1005,9 +1065,16 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             b.chance=counts.chance;b.chanceCasts=counts.casts;b.chanceConfidence=counts.confidence
         else
             b.chance=p and p.sum/p.weight
+            b.chanceConfidence=p and math.floor(p.confidence/p.weight+.5)
         end
-        if b.chance and b.expectedQuantity and b.minQuantity and b.maxQuantity
-            and (b.expectedQuantity+1e-9<b.chance*b.minQuantity or b.expectedQuantity>b.chance*b.maxQuantity+1e-9) then
+        local observed=b.samplingEvidence
+        b.samplingEvidence=nil
+        if observed and b.chance and b.expectedQuantity and math.abs(b.chance-observed.dropChance.value)<=1e-9
+            and math.abs(b.expectedQuantity-observed.expectedQuantity.value)<=1e-9
+            and b.minQuantity==observed.minQuantity.value and b.maxQuantity==observed.maxQuantity.value then
+            b.samplingVariation=true
+        elseif b.minQuantity and b.maxQuantity
+            and violatedYieldBound(b.chance,b.expectedQuantity,b.minQuantity,b.maxQuantity) then
             -- A disagreement is useful evidence. Retain the named source's
             -- range instead of silently replacing observed bounds with '?'.
             b.inconsistentFields=true;result.fieldConflict=true
@@ -1016,7 +1083,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         -- Fill a missing average from the chance, or a missing chance from the
         -- average (middle of the quantity range). Filled figures count at half
         -- confidence (FILLED_CONFIDENCE_FACTOR).
-        if (b.chance==nil)~=(b.expectedQuantity==nil) then
+        if (b.chance==nil and b.expectedQuantity~=nil and not b.chanceInferenceBlocked)
+            or (b.expectedQuantity==nil and b.chance~=nil and not b.quantityInferenceBlocked) then
             local chance,average,filled=self:FillChanceOrAverage(b.chance,b.expectedQuantity,b.minQuantity,b.maxQuantity)
             if filled=='average' and b.chanceConfidence then
                 b.expectedQuantity=average;b.filled='average';result.filledFigures=true
@@ -1036,6 +1104,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 b.confidence=math.floor(math.min(stated or 0,counts and counts.confidence*LL.FILLED_CONFIDENCE_FACTOR or (stated or 0))+.5)
             elseif b.filled=='average' then
                 b.confidence=math.floor(b.chanceConfidence*LL.FILLED_CONFIDENCE_FACTOR+.5)
+            elseif b.independentQuantityConfidence then
+                b.confidence=stated
             elseif counts and stated then
                 -- The value comes from the average, so never above its own stated confidence.
                 b.confidence=math.min(counts.confidence,stated)
@@ -1056,6 +1126,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         if not e then b.unavailableReason=b.conditionalRequirement and ('Requires '..b.conditionalRequirement..'; conditional estimate excluded from current value')
             or outputReasons[b.id] or 'Average unavailable for this source/character context' end
         b.fields=nil;b.contributions=nil;b.chanceSources=nil;b.chanceContributions=nil
+        b.chanceInferenceBlocked=nil;b.quantityInferenceBlocked=nil
         result.materials[#result.materials+1]=b
     end
     for key,v in pairs(result.sources) do result.sources[key]=v/math.max(1,totalContribution) end
@@ -1063,7 +1134,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         result.personalStats={total=personal.samples or 0,effectiveSamples=personal.effectiveSamples or personal.samples or 0}
     end
     table.sort(result.materials,function(a,b) return a.id<b.id end)
-    if totalContribution==0 then return nil,'Insufficient Data: expected quantities unknown' end
+    if totalContribution==0 then
+        if not partialOnly then return nil,'Insufficient Data: expected quantities unknown' end
+        result.confidenceUnscored=true
+    end
     -- Conservative score of the actual contributing field evidence, not slider values.
     result.confidence=math.min(100,math.floor(confidenceTotal/math.max(1,totalContribution)+.5))
     if result.conflictingMeans then

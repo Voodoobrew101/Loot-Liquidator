@@ -2,7 +2,9 @@
 import copy
 import hashlib
 import json
+from collections import Counter
 from pathlib import Path
+from shutil import copytree
 import sys
 import tempfile
 import unittest
@@ -25,15 +27,21 @@ def rows(all_rows=False):
     return out if all_rows else [r for r in out if r['id'] in IDS]
 
 def build(data, bypass=False, observe=None):
-    module=v3.load_calculator(SNAPSHOT)
-    original=module.build
-    def checked(data):
-        if observe is not None: observe.append(copy.deepcopy(data))
-        return original(data)
-    with patch.object(module,'load',return_value=data), patch.object(module,'build',side_effect=checked), patch.object(v3,'load_calculator',return_value=module):
+    module = v3.load_calculator(SNAPSHOT)
+    with (patch.object(module, 'load', return_value=data),
+          patch.object(v3, 'load_calculator', return_value=module),
+          patch.object(v3, 'reference_ranges', wraps=v3.reference_ranges) as ranges,
+          patch.object(v3, 'build_field_support', wraps=v3.build_field_support) as supports):
         if bypass:
-            with patch.object(v3,'retail_admission',side_effect=lambda rs:(rs,{})): return v3.build(SNAPSHOT)
-        return v3.build(SNAPSHOT)
+            with patch.object(v3, 'retail_admission', side_effect=lambda rs: (rs, Counter())):
+                result = v3.build(SNAPSHOT)
+        else:
+            result = v3.build(SNAPSHOT)
+    if observe is not None:
+        ranges.assert_called_once()
+        supports.assert_called_once()
+        observe.update(reference_ranges=ranges.call_args.args[0], field_support=supports.call_args.args[1])
+    return result
 
 class DragonflightAdmissionTests(unittest.TestCase):
     def test_source_identity(self):
@@ -71,10 +79,10 @@ class DragonflightAdmissionTests(unittest.TestCase):
         control['source']['url']='https://example.invalid/independent-synthetic-test'
         for r in source:
             r.update(minSeen=50,maxSeen=100,totalQuantity=9000)
-        before=copy.deepcopy(source+[control]);calls=[]
+        before=copy.deepcopy(source+[control]);calls={}
         actual=build(source+[control],observe=calls)[0]
         self.assertEqual(actual,build([control])[0])
-        self.assertEqual(calls,[[control],[control]])
+        self.assertEqual(calls, {'reference_ranges': [control], 'field_support': [control]})
         self.assertEqual(source+[control],before)
         self.assertEqual(actual[0]['materials'][0]['expectedQuantity']['value'],2)
 
@@ -82,8 +90,8 @@ class DragonflightAdmissionTests(unittest.TestCase):
         for kind in ('study','reference','tsm-table','compiled-research',None):
             source=rows()
             for r in source:r['sourceKind']=kind
-            calls=[];self.assertEqual(build(source,observe=calls)[0],[])
-            self.assertEqual(calls,[[],[]])
+            calls={};self.assertEqual(build(source,observe=calls)[0],[])
+            self.assertEqual(calls, {'reference_ranges': [], 'field_support': []})
 
     def test_independent_same_material_and_unrelated_rows_preserved(self):
         source=rows(True)
@@ -103,14 +111,15 @@ class DragonflightAdmissionTests(unittest.TestCase):
             self.assertEqual(v3.retail_admission([different])[0],[different])
 
     def test_loader_replacement_precedes_admission_documented_limit(self):
-        module=v3.load_calculator(SNAPSHOT)
         control=dict(rows()[0],id='independent',studyKey='independent')
         replacement=dict(rows()[1],replaces='independent')
         with tempfile.TemporaryDirectory(prefix='ll-df-admission-') as tmp:
-            root=Path(tmp);evidence=root/'evidence';evidence.mkdir()
+            root = Path(tmp)
+            evidence = root/'research/v3/evidence'
+            evidence.mkdir(parents=True)
+            copytree(SNAPSHOT/'research/v3/tools', evidence.parent/'tools')
             (evidence/'fixture.jsonl').write_text('\n'.join(json.dumps(r) for r in [control,replacement])+'\n')
-            with patch.object(module,'EVIDENCE',str(evidence)),patch.object(module,'ROOT',str(root)):
-                loaded=module.load()
+            loaded = v3.load_calculator(root).load()
         self.assertEqual([r['id'] for r in loaded],[replacement['id']])
         self.assertEqual(v3.retail_admission(loaded)[0],[])
         # No claim that the policy restores the independently replaced row.

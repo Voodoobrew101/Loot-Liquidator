@@ -6,6 +6,7 @@ import tarfile
 import tempfile
 import types
 import unittest
+from collections import Counter
 from unittest.mock import patch
 
 sys.path.insert(0, 'tools')
@@ -68,6 +69,33 @@ class SnapshotTests(unittest.TestCase):
                     v3.load_calculator(root)
                 self.assertIs(sys.modules['source_keys'], caller)
                 self.assertEqual(sys.path, old_path)
+
+    def test_pinned_replacement_preserves_the_unrelated_prospecting_id(self):
+        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        rows = module.load()
+        reused = 'war-within-20261101-004'
+        originals = [row for row in rows if row.get('id') == reused]
+        replacement = [row for row in rows if row.get('replaces') == reused]
+        self.assertEqual(len(originals), 1)
+        self.assertEqual(originals[0]['method'], 'Prospect')
+        self.assertEqual(originals[0]['inputName'], 'Bismuth')
+        self.assertEqual(replacement[0]['method'], 'Disenchant')
+        self.assertGreaterEqual(module.evidence_load_notes['+replacement resolved by source and item scope'], 10)
+
+    def test_ambiguous_replacement_holds_only_the_conflicting_scope(self):
+        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        source = {'url': 'https://www.wowhead.com/item=232446/boreal-rifle'}
+        first = {'id': 'shared', '_file': 'research/v3/evidence/first.jsonl', 'type': 'drop',
+                 'method': 'Disenchant', 'inputItemID': 232446, 'outputItemID': 219949, 'source': source}
+        second = dict(first, _file='research/v3/evidence/second.jsonl')
+        unrelated = dict(first, _file='research/v3/evidence/unrelated.jsonl', method='Prospect')
+        replacement = dict(first, id='changed', _file='research/v3/evidence/correction.jsonl', replaces='shared')
+        notes = Counter()
+        self.assertEqual(v3.resolve_replacements([first, second, unrelated, replacement], module, notes), [unrelated])
+        self.assertEqual(notes['ambiguous evidence replacement held'], 1)
+        explicit = dict(replacement, replacesFile=first['_file'].replace('/', '\\'))
+        self.assertEqual(v3.resolve_replacements([first, second, unrelated, explicit], module, Counter()),
+                         [second, unrelated, explicit])
 
 
 if __name__ == '__main__':

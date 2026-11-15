@@ -9,28 +9,26 @@ research/v3/tools/build_estimates.py. This tool:
                 rate changes and the calculator itself) from their branch into a pinned
                 snapshot, database/research/v3-snapshot/, and records the commit in
                 database/research/v3-snapshot/SNAPSHOT.json. Their files are never edited.
-  2. (default)  runs THEIR calculator on that snapshot, unchanged, with two kinds of rows
-                left out of the counts (still used to match item names to IDs):
+  2. (default)  uses the snapshot's identity and scope rules to calculate each field from its
+                own evidence. Two kinds of rows stay out of the counts:
                   * reference values (sourceKind tsm-table / compiled-research / reference):
                     TSM's old table is not used for yields (owner decision 3), and the
                     compiled research rows are already in ItemDB;
                   * imported/gamedata-disenchant.jsonl: the addon's own old disenchant tables,
                     which already ship as the "Legacy" source.
-                So every number comes from real studies only, and nothing is counted twice.
-                Applies versioned, in-memory identity corrections (never edits the snapshot).
-                Then it writes database/research-v3-baselines.lua: ordinary "itemdb" records
-                whose fields carry the weighted cast counts, so the addon's own counting math
-                (LL:CountsEstimate / LL:RateConfidence) sets the confidence.
+                In-memory identity corrections preserve the snapshot. Output records carry
+                separate weighted sample counts for occurrence, mean, and observed bounds.
+                Published estimates without denominators can remain provisional with zero
+                observed samples. Per-cast occurrence and bounds require their own batch size;
+                supported mean units can be converted across known batch sizes.
 
-Each record says supersedesResearch=true: tools/compile_itemdb.lua then drops the older
-research rows ("research:..." records from database/research/itemdb.lua) for the same method
-and input, because v3 already contains the studies behind them (it imported them). Those rows
-stay in the source file and are listed in ItemDB.buildReport.researchSuperseded.
+Each record says supersedesResearch=true so tools/compile_itemdb.lua can suppress duplicate
+older research for fields covered by v3. Older rows stay in the source file.
 
 Left out, with the reason in the report (nothing is deleted from the research data):
   * conditional drops (need a specialization unlock or skill; the addon can't tell yet);
-  * "family:<name>" inputs or outputs (quality rank unknown: no item ID to price or match);
-  * inputs whose batch size (inputs per cast) the records don't state.
+  * inputs without an unambiguous ItemDB identity;
+  * output families that lack a verified item list or overlap an existing exact-rank result.
 Samples are not known to be at the minimum skill, so, like tools/evidence_to_baselines.py,
 they count at NOT_BASELINE_FACTOR until scaling rules exist (owner decision 16).
 
@@ -49,6 +47,7 @@ Usage:
 """
 import importlib.util
 import json
+import math
 import subprocess
 import sys
 sys.dont_write_bytecode = True  # never leave cache files in the repo or snapshot
@@ -58,7 +57,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from evidence_to_baselines import lua, rate_confidence, NOT_BASELINE_FACTOR  # noqa: E402
+from evidence_to_baselines import lua, quality_score, rate_confidence, NOT_BASELINE_FACTOR  # noqa: E402
+from research_v3_evidence import build_field_support  # noqa: E402
 from research_v3_reference_ranges import preserve_reference_range  # noqa: E402
 import research_v3_tokens  # noqa: E402  C4b3: token reward lists ride along with every refresh
 import research_v3_no_disenchant  # noqa: E402  D1c4: no-disenchant flags ride along too
@@ -76,6 +76,7 @@ EXPANSIONS = {'classic': 0, 'the burning crusade': 1, 'burning crusade': 1, 'wra
 QUALITIES = {'common': 1, 'uncommon': 2, 'rare': 3, 'epic': 4}
 LEGACY_COPY = 'imported/gamedata-disenchant.jsonl'
 IDENTITY_CORRECTION = 'same-output-token/1 (S21: equal totals do not identify a material)'
+PROVISIONAL_SUPPORT_SCORE = 20
 
 
 # ---- 1. snapshot
@@ -129,8 +130,87 @@ def resolve_ranked_outputs(rows, path=None):
     return resolved
 
 
-# ---- 2. run their calculator on real studies only
+# ---- 2. load the pinned identity and scope rules
+def normalized_text(value):
+    return value.strip().casefold() if isinstance(value, str) else ''
+
+
+def replacement_scope_matches(left, right):
+    if (left.get('type'), left.get('method')) != (right.get('type'), right.get('method')):
+        return False
+    for side in ('input', 'output'):
+        left_id, right_id = (row.get(side + 'ItemID') for row in (left, right))
+        left_rank, right_rank = (row.get(side + 'Rank') for row in (left, right))
+        if left_rank is not None and right_rank is not None and left_rank != right_rank:
+            return False
+        if left_id is not None and right_id is not None:
+            if left_id != right_id:
+                return False
+        else:
+            names = [normalized_text(row.get(side + 'Name')) for row in (left, right)]
+            if names[0] and names[0] == names[1]:
+                continue
+            if side != 'input' or not left.get('gearGroup') or left.get('gearGroup') != right.get('gearGroup'):
+                return False
+    return True
+
+
+def original_source(row):
+    source = row.get('source')
+    return row.get('originalSource') or (source.get('url') if isinstance(source, dict) else None)
+
+
+def same_replacement_source(left, right, module):
+    sources = [original_source(row) for row in (left, right)]
+    if not all(isinstance(source, str) and source for source in sources) or module.source_key(left) != module.source_key(right):
+        return False
+    authors = [normalized_text(source.get('author')) for source in (left.get('source'), right.get('source'))
+               if isinstance(source, dict)]
+    return len(authors) < 2 or not all(authors) or authors[0] == authors[1]
+
+
+def resolve_replacements(rows, module, notes):
+    by_id = defaultdict(list)
+    for row in rows:
+        if isinstance(row.get('id'), str):
+            by_id[row['id']].append(row)
+    removed, held = set(), set()
+    for replacement in rows:
+        target = replacement.get('replaces')
+        if not isinstance(target, str) or not target:
+            continue
+        candidates = [row for row in by_id[target] if row is not replacement]
+        declared_file = replacement.get('replacesFile')
+        if isinstance(declared_file, str) and declared_file:
+            candidates = [row for row in candidates if row['_file'] == declared_file.replace('\\', '/')]
+            if not candidates:
+                held.add(id(replacement))
+                notes['replacement names an unavailable source file'] += 1
+                continue
+        if len(candidates) == 1:
+            candidate = candidates[0]
+            old_input, new_input = candidate.get('inputItemID'), replacement.get('inputItemID')
+            if (candidate.get('method') != replacement.get('method')
+                    or (old_input is not None and new_input is not None and old_input != new_input)):
+                held.add(id(replacement))
+                notes['replacement method or input does not match source'] += 1
+            else:
+                removed.add(id(candidate))
+        elif len(candidates) > 1:
+            scoped = [row for row in candidates if replacement_scope_matches(row, replacement)]
+            matched = [row for row in scoped if same_replacement_source(row, replacement, module)]
+            if len(matched) == 1:
+                removed.add(id(matched[0]))
+                notes['+replacement resolved by source and item scope'] += 1
+            else:
+                held.update(id(row) for row in (matched or scoped))
+                held.add(id(replacement))
+                notes['ambiguous evidence replacement held'] += 1
+    return [row for row in rows if id(row) not in removed and id(row) not in held]
+
+
 def load_calculator(snapshot):
+    snapshot = Path(snapshot).resolve()
     path = snapshot / 'research' / 'v3' / 'tools' / 'build_estimates.py'
     spec = importlib.util.spec_from_file_location('ll_research_v3_build_estimates', path)
     module = importlib.util.module_from_spec(spec)
@@ -159,6 +239,32 @@ def load_calculator(snapshot):
         ])
 
     module.apply_corrections = portable_corrections
+    module.evidence_load_notes = Counter()
+
+    def scoped_load():
+        rows = []
+        notes = Counter()
+        for evidence_path in sorted((snapshot / 'research' / 'v3' / 'evidence').rglob('*.jsonl')):
+            if not evidence_path.is_file():
+                continue
+            relative = evidence_path.relative_to(snapshot).as_posix()
+            with evidence_path.open(encoding='utf-8') as stream:
+                for line in stream:
+                    if not line.strip():
+                        continue
+                    try:
+                        row = json.loads(line)
+                    except json.JSONDecodeError:
+                        row = None
+                    if isinstance(row, dict):
+                        rows.append(dict(row, _file=relative))
+                    else:
+                        notes['malformed evidence row'] += 1
+        scoped = resolve_replacements(rows, module, notes)
+        module.evidence_load_notes = notes
+        return module.apply_corrections(scoped)
+
+    module.load = scoped_load
     if hasattr(module, 'study_vectors') and hasattr(module, 'study_identity'):
         original_vectors = module.study_vectors
         original_identity = module.study_identity
@@ -227,24 +333,26 @@ def gear_key(text):
     return f'gear:{exp}:{quality}:{parts[3]}'
 
 
-def batch_sizes(rows, module, names):
-    """Most common inputs-per-cast stated for each (method, input) by counted study rows."""
-    seen = defaultdict(Counter)
+def supported_bound(value):
+    return type(value) in (int, float) and 1 <= value <= 2**53 - 1 and value % 1 == 0
+
+
+def reference_ranges(rows, module, names):
+    """Original positive bounds by exact operation, usable as a provisional range only."""
+    ranges = defaultdict(dict)
     for r in rows:
-        if r.get('type') != 'drop' or not isinstance(module.num(r.get('inputsPerCast')), (int, float)):
+        if r.get('type') != 'drop' or r.get('sourceKind') not in module.REFERENCE_KINDS:
             continue
         key = module.key_of(r, names)
-        if key:
-            seen[(key[0], key[1])][r['inputsPerCast']] += 1
-    # Their calculator groups by input only, so studies of different operations (e.g.
-    # 5-herb milling and 20-herb mass milling) are blended. Such inputs are left out.
-    return {k: (c.most_common(1)[0][0] if len(c) == 1 else 'mixed') for k, c in seen.items()}
-
-
-def counts(estimate):
-    """Weighted (drops, casts) behind their chance, from their own beta parameters."""
-    a, b = estimate['simulation']['chanceBeta']
-    return max(a - 0.5, 0.0), max(a + b - 1.0, 0.0)
+        batch = module.row_unit(r) if key else None
+        if not key or not supported_bound(batch):
+            continue
+        bounds = ranges[(*key, int(batch))]
+        for raw, field_name, select in (('minSeen', 'minQuantity', min), ('maxSeen', 'maxQuantity', max)):
+            value = r.get(raw)
+            if supported_bound(value):
+                bounds[field_name] = select(bounds.get(field_name, value), value)
+    return ranges
 
 
 def retail_admission(rows):
@@ -290,29 +398,20 @@ def build(snapshot):
     rows = resolve_ranked_outputs(preserve_reference_range(module.load()))
     total = len(rows)
     rows, admission_notes = retail_admission(rows)
-    # Their published run (all rows) only supplies the amount range per cast (e.g. 1-2 gems),
-    # which reference rows often state and studies rarely do. A range is not a yield figure.
-    published, _ = module.build(rows)
-    ranges = {(e['method'], e['input'], e['outputItemID']): (e['range'], e['rangeSource']) for e in published}
-    names = module.name_maps(rows)            # learn names from every row ...
+    names = module.name_maps(rows)
     counted = [r for r in rows if is_counted(r, module)]
     families = load_families()
-    for name, ids in families.items():        # D1c2: a name that is one single, unranked item
+    for name, ids in families.items():
         if len(ids) == 1:
             names.setdefault(name, ids[0])
-    module.name_maps = lambda _rows: names    # ... but count real studies only
-    results, unplaced = module.build(counted)
-    for e in results:
-        e['range'], e['rangeSource'] = ranges.get((e['method'], e['input'], e['outputItemID']),
-                                                  (e['range'], e['rangeSource']))
-    batches = batch_sizes(counted, module, names)
-    notes = Counter(admission_notes)
+    ranges = reference_ranges(rows, module, names)
+    results, evidence_notes, unplaced = build_field_support(module, counted, names)
+    notes = module.evidence_load_notes + admission_notes + evidence_notes
     groups = defaultdict(list)
-    # D1c2: which items each (method, input) already has rank-specific figures for.
     known_outputs = defaultdict(set)
     for e in results:
-        if isinstance(e['outputItemID'], int) and e['studies'] > 0 and not e['conditional']:
-            known_outputs[(e['method'], e['input'])].add(e['outputItemID'])
+        if isinstance(e['outputItemID'], int) and supported_bound(e['inputsPerCast']) and not e['conditional']:
+            known_outputs[(e['method'], e['input'], int(e['inputsPerCast']))].add(e['outputItemID'])
     for e in results:
         if e['method'] not in SUPPORTED:
             notes['method not built into ItemDB yet'] += 1
@@ -320,11 +419,17 @@ def build(snapshot):
         if e['conditional']:
             notes['conditional drop (needs an unlock the addon cannot check yet)'] += 1
             continue
+        per_cast = e['inputsPerCast']
+        if not supported_bound(per_cast):
+            notes['batch size (inputs per cast) not stated'] += 1
+            continue
+        scope = (e['method'], e['input'], e['outputItemID'], int(per_cast))
+        e['referenceRanges'] = ranges.get(scope, {})
         if not isinstance(e['outputItemID'], int):
             ids = families.get(str(e['outputItemID']).replace('family:', '', 1).strip().lower())
             if ids and len(ids) == 1:
                 e['outputItemID'] = ids[0]
-            elif ids and known_outputs[(e['method'], e['input'])] & set(ids):
+            elif ids and known_outputs[(e['method'], e['input'], int(per_cast))] & set(ids):
                 notes['rank unknown, but this input already has figures for the ranks'] += 1
                 continue
             elif ids:   # D1c2: priced at the cheapest rank that has a price (runtime)
@@ -342,31 +447,27 @@ def build(snapshot):
             if not key:
                 notes['gear group not recognised'] += 1
                 continue
-            per_cast = 1
         else:
             key = e['input']
-            per_cast = 1 if e['method'] == 'Disenchant' else batches.get((e['method'], e['input']))
-            if per_cast is None:
-                notes['batch size (inputs per cast) not stated'] += 1
-                continue
-            if per_cast == 'mixed':
-                notes['studies mix batch sizes (e.g. milling and mass milling)'] += 1
-                continue
-        if e['studies'] == 0:
-            notes['no real study (starting guess only)'] += 1
-            continue
-        groups[(e['method'], key, per_cast)].append(e)
+        groups[(e['method'], key, int(per_cast))].append(e)
     records = []
-    for (method, key, per_cast), estimates in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1])):
+    for (method, key, per_cast), estimates in sorted(groups.items()):
         by_output = {}
         for e in estimates:   # a gear group written two ways (names / numbers) adds up
             by_output.setdefault(e['outputItemID'], []).append(e)
         materials = [material(item, es) for item, es in sorted(by_output.items())]
+        for m in materials:
+            if 'heldDropChance' in m:
+                notes['+expected quantity kept; conflicting occurrence held'] += 1
+            if 'heldExpectedQuantity' in m:
+                notes['+occurrence kept; conflicting expected quantity held'] += 1
+            if m.get('samplingVariation'):
+                notes['+occurrence and quantity retained within sample variation tolerance'] += 1
         record_id = f'evidence:v3:{method}:{key}:x{per_cast}'
         row = {
             'recordID': record_id, 'studyID': record_id, 'sourceKey': 'itemdb', 'method': method,
             'profession': SUPPORTED[method], 'inputCount': per_cast, 'provisional': True,
-            'supersedesResearch': True,
+            'supersedesResearch': True, 'fieldSpecificEvidence': True,
             'samples': round(max(m['_casts'] for m in materials), 4),
             'source': 'research team v3 (research/v3 on implementation/five-agent-completion)',
             'baselineStatus': 'real studies only; samples not known to be at minimum skill count at half weight (no scaling rules yet)',
@@ -380,63 +481,129 @@ def build(snapshot):
     return records, notes, total, len(counted), unplaced
 
 
-def field(value, confidence, samples, status):
-    if value is None:
-        return {'status': 'unknown', 'confidence': 0}
-    return {'value': value, 'status': status, 'confidence': confidence, 'samples': samples}
+def unknown(*, block_inference=False):
+    result = {'status': 'unknown', 'confidence': 0}
+    if block_inference:
+        result['inferenceBlocked'] = True
+    return result
+
+
+def numeric_field(estimates, name):
+    support = [e['fieldSupport'][name] for e in estimates if name in e['fieldSupport']]
+    if not support:
+        return unknown()
+    counted = [f for f in support if f['casts'] > 0]
+    casts = sum(f['casts'] for f in counted)
+    effective_casts = casts * NOT_BASELINE_FACTOR
+    reported_casts = 0
+    if counted:
+        numerator = 'hits' if name == 'dropChance' else 'total'
+        total = sum(f[numerator] for f in counted)
+        value = total / casts
+        confidence = (rate_confidence(total * NOT_BASELINE_FACTOR, effective_casts)
+                      if name == 'dropChance' else quality_score(effective_casts))
+    else:
+        values = [f['value'] for f in support]
+        if not math.isclose(min(values), max(values), abs_tol=1e-9):
+            return unknown(block_inference=True)
+        value, confidence = values[0], PROVISIONAL_SUPPORT_SCORE
+        reported_casts = max(f.get('reportedCasts', 0) for f in support)
+        if reported_casts:
+            confidence = max(1, quality_score(reported_casts * NOT_BASELINE_FACTOR) // 2)
+    result = {'value': value, 'confidence': confidence, 'samples': round(effective_casts, 4),
+              'sampleSizeKnown': bool(counted),
+              'status': 'measured' if counted and all(f['status'] == 'measured' for f in counted) else 'provisional'}
+    if name == 'expectedQuantity':
+        result.update(independentConfidence=True, confidenceBasis='Ordinal expected quantity source support')
+        if reported_casts:
+            result.update(reportedCasts=reported_casts, confidenceBasis='Ordinal source support for a reported mean')
+    return result
+
+
+def bound_field(estimates, name, select):
+    support = [e['fieldSupport'][name] for e in estimates if name in e['fieldSupport']]
+    if support:
+        chosen = select(support, key=lambda f: f['value'])
+        casts = chosen['casts'] * NOT_BASELINE_FACTOR
+        return {'value': chosen['value'], 'status': chosen['status'], 'samples': round(casts, 4),
+                'sampleSizeKnown': casts > 0, 'confidence': quality_score(casts) if casts > 0 else PROVISIONAL_SUPPORT_SCORE}
+    references = [e['referenceRanges'][name] for e in estimates if name in e.get('referenceRanges', {})]
+    if references:
+        return {'value': select(references), 'status': 'provisional', 'samples': 0, 'sampleSizeKnown': False,
+                'confidence': PROVISIONAL_SUPPORT_SCORE}
+    return unknown()
+
+
+def counted_cohorts(estimates, name):
+    return {cohort for estimate in estimates
+            for cohort in estimate['fieldSupport'].get(name, {}).get('_countedCohorts', ())}
+
+
+def sampling_compatible(occurrence, quantity, boundary, estimates):
+    """A bounded diagnostic for slightly different estimates from different cast pools."""
+    if occurrence['status'] != 'measured' or quantity['status'] != 'measured':
+        return False
+    p, q = occurrence['value'], quantity['value'] / boundary
+    n_p, n_q = occurrence['samples'], quantity['samples']
+    if not (0 < p <= 1 and 0 < q <= 1 and min(n_p, n_q) >= 2):
+        return False
+    p_cohorts = counted_cohorts(estimates, 'dropChance')
+    q_cohorts = counted_cohorts(estimates, 'expectedQuantity')
+    if not p_cohorts or not q_cohorts or p_cohorts == q_cohorts:
+        return False
+    # Compare on the occurrence scale. The Bernoulli proxy and fixed caps
+    # avoid interpreting a small discrepancy as a proof of a common population.
+    error = math.sqrt(p * (1 - p) / n_p + q * (1 - q) / n_q)
+    return abs(p - q) <= min(0.01, 0.1 * max(p, q), 2 * error) + 1e-9
+
+
+def support_strength(field):
+    if field['sampleSizeKnown']:
+        return 2, field['samples'], field['status'] == 'measured'
+    return 1, field.get('reportedCasts', 0), False
 
 
 def material(item, estimates):
-    drops = casts = qty = qty_casts = 0.0
-    chance_measured = average_measured = range_observed = True
-    lo = hi = None
-    for e in estimates:
-        lo = e['range'][0] if lo is None else min(lo, e['range'][0])
-        hi = e['range'][1] if hi is None else max(hi, e['range'][1])
-    mid = (lo + hi) / 2
-    for e in estimates:
-        d, n = counts(e)
-        if e['chanceSource'] == 'estimated':
-            # Their chance = average / middle of the range; redo it with the published range
-            # (their own rule, strategy S5). n is already their halved count for a derived chance.
-            d = min(1.0, e['average'] / mid) * n
-        drops += d * NOT_BASELINE_FACTOR
-        casts += n * NOT_BASELINE_FACTOR
-        nq = (e['studyCasts'] if e['averageSource'] == 'measured' else n) * NOT_BASELINE_FACTOR
-        qty += e['average'] * nq
-        qty_casts += nq
-        chance_measured &= e['chanceSource'] == 'measured'
-        average_measured &= e['averageSource'] == 'measured'
-        range_observed &= e['rangeSource'] == 'observed'
-    rank_ids = estimates[0].get('rankIDs')
-    chance = min(1.0, drops / casts) if casts > 0 else None
-    average = qty / qty_casts if qty_casts > 0 else None
-    # The addon refuses an average outside chance x min .. chance x max; then it fills the
-    # average from the chance itself (at half confidence) instead. Allow for rounding.
-    if average is not None and chance is not None:
-        if chance * lo * (1 - 1e-3) - 1e-6 <= average <= chance * hi * (1 + 1e-3) + 1e-6:
-            average = min(max(average, chance * lo), chance * hi)
+    occurrence = numeric_field(estimates, 'dropChance')
+    quantity = numeric_field(estimates, 'expectedQuantity')
+    lower = bound_field(estimates, 'minQuantity', min)
+    upper = bound_field(estimates, 'maxQuantity', max)
+    p, e, lo, hi = (field.get('value') for field in (occurrence, quantity, lower, upper))
+    if lo is not None and hi is not None and lo > hi:
+        if lower['status'] == upper['status']:
+            lower = upper = unknown()
+        elif lower['status'] == 'measured':
+            upper = unknown()
         else:
-            average = None
-    confidence = rate_confidence(drops, casts)
-    if not chance_measured:
-        confidence //= 2   # a chance worked out from an average: half confidence (their S5, our C1b)
-    # A precise occurrence count does not measure the average stack. Match
-    # the runtime's half-confidence policy for a mean derived from a range.
-    quantity_confidence = confidence if average_measured else confidence // 2
-    casts_r = round(casts, 4)
-    extra = {'rankIDs': rank_ids} if rank_ids else {}
-    return {
-        **extra,
-        'id': item, '_casts': casts,
-        'dropChance': field(chance, confidence, casts_r,
-                            'measured' if chance_measured else 'provisional'),
-        'expectedQuantity': field(average, quantity_confidence, round(qty_casts, 4),
-
-                                  'measured' if average_measured else 'provisional'),
-        'minQuantity': field(lo, confidence, casts_r, 'measured' if range_observed else 'provisional'),
-        'maxQuantity': field(hi, confidence, casts_r, 'measured' if range_observed else 'provisional'),
-    }
+            lower = unknown()
+        lo, hi = lower.get('value'), upper.get('value')
+    out = {'id': item, 'dropChance': occurrence, 'expectedQuantity': quantity,
+           'minQuantity': lower, 'maxQuantity': upper}
+    if estimates[0].get('rankIDs'):
+        out['rankIDs'] = estimates[0]['rankIDs']
+    if p is not None and e is not None:
+        boundary = None
+        if e + 1e-9 < p * (lo or 1):
+            boundary = lo or 1
+        elif hi is not None and e > p * hi + 1e-9:
+            boundary = hi
+        zero_conflict = (p == 0) != (e == 0)
+        if not zero_conflict and boundary is not None and sampling_compatible(occurrence, quantity, boundary, estimates):
+            out['samplingVariation'] = True
+            boundary = None
+        if (zero_conflict or boundary is not None) and support_strength(occurrence) > support_strength(quantity):
+            out['heldExpectedQuantity'] = quantity
+            out['expectedQuantity'] = unknown(block_inference=True)
+        elif zero_conflict or boundary is not None:
+            out['heldDropChance'] = occurrence
+            out['dropChance'] = unknown(block_inference=True)
+    if p is None and e is not None:
+        out['dropChance']['inferenceBlocked'] = True
+    if e is None and p != 0 and (lo is None or hi is None):
+        out['expectedQuantity']['inferenceBlocked'] = True
+    out['_casts'] = max(occurrence.get('samples', 0), quantity.get('samples', 0),
+                        lower.get('samples', 0), upper.get('samples', 0))
+    return out
 
 
 def render(records, snapshot, tokens=(), no_disenchant=()):
@@ -486,14 +653,14 @@ def main(argv):
     no_de, no_de_notes = research_v3_no_disenchant.build_no_disenchant(snapshot)
     text = render(records, snapshot, tokens, no_de)
     if '--check' in argv:
-        if not output.exists() or output.read_text() != text:
+        if not output.exists() or output.read_text(encoding='utf-8') != text:
             print(f'{output} is out of date: run python3 tools/research_v3_to_baselines.py')
             return 1
         print(summary(records, notes, total, counted, unplaced).splitlines()[0])
         print(research_v3_tokens.summary(tokens, token_notes, conflicts).splitlines()[0])
         print(research_v3_no_disenchant.summary(no_de, no_de_notes).splitlines()[0])
         return 0
-    output.write_text(text)
+    output.write_text(text, encoding='utf-8', newline='\n')
     print(summary(records, notes, total, counted, unplaced))
     print(research_v3_tokens.summary(tokens, token_notes, conflicts))
     print(research_v3_no_disenchant.summary(no_de, no_de_notes))

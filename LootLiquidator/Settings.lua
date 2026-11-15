@@ -197,6 +197,7 @@ local previewPanels=setmetatable({}, {__mode="k"})
 -- Curated, complete ItemDB studies; prices alone are illustrative. Copy fields
 -- into preview rows so previews never mutate research records or saved data.
 local PREVIEW_ITEMS = {}
+local previewMeasured={measured=true,observed=true,verified=true}
 for _,sample in ipairs({
     {id=2447,name="Peacebloom",method="Mill",action="A",auction=20000,value=16200},
     {id=765,name="Silverleaf",method="Mill",action="M",auction=12000,value=18000},
@@ -215,10 +216,12 @@ for _,sample in ipairs({
                     minQuantity="minQuantity",maxQuantity="maxQuantity"}) do
                     local field=material[source]
                     if type(field)~="table" or type(field.value)~="number"
-                        or (field.confidence or 0)<85 then complete=false;break end
+                         or not previewMeasured[field.status] then complete=false;break end
                     output[target]=field.value
-                    output.confidence=math.min(output.confidence or 100,field.confidence)
                 end
+                 output.confidence=material.expectedQuantity.confidence
+                 output.chanceConfidence=material.dropChance.confidence
+                 output.fieldSpecificEvidence=record.fieldSpecificEvidence
                 confidence=math.min(confidence,output.confidence or 0)
                 outputs[#outputs+1]=output
             end
@@ -254,7 +257,8 @@ local function SampleDecision(row)
         outputs[#outputs+1]={id=material.id,chance=material.chance,
             expectedQuantity=material.expectedQuantity,
             minQuantity=material.minQuantity,maxQuantity=material.maxQuantity,
-            confidence=material.confidence,unitPrice=price,expectedValue=price*material.expectedQuantity,
+             confidence=material.confidence,chanceConfidence=material.chanceConfidence,
+             fieldSpecificEvidence=material.fieldSpecificEvidence,unitPrice=price,expectedValue=price*material.expectedQuantity,
             netExpectedValue=price*material.expectedQuantity*(1-fee),
             illustrative=true}
     end
