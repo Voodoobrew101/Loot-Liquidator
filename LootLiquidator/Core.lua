@@ -696,6 +696,12 @@ function LA:Evaluate(link, context)
             and "Missing appearance usable on current character"
             or "Missing appearance usable on enabled alt "..transmogRecipient.displayName)
             or "Appearance missing from collection (not just this source)"
+    elseif tokenInfo and tokenInfo.protectCollection and collectingEnabled
+        and (tokenInfo.possibleMissingAppearance or tokenInfo.appearancePending)
+        and (action=="V" or action=="Q") and not Ignored(self,f.id,"P") then
+        action,tokenQuote="Q",nil
+        reason=tokenInfo.possibleMissingAppearance and "Possible missing appearance. Check the reward requirements"
+            or "Token difficulty or reward collection status is unavailable"
     end
     -- An item missing from the token catalog is not a token.
     -- Never turn an ordinary quest or miscellaneous item into a Q badge.

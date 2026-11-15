@@ -10,6 +10,14 @@ snapshots retain original rows, hashes and MIT attribution; derived reward
 records carry the notice in the generated ItemDB. They remain unreviewed
 research relationships. No upstream Lua is executed by the importer.
 
+The Castle Nathria covenant token snapshot records equipment cost leaves and
+item creation contexts from the AllTheThings 5.4.8 Retail database. It retains
+the release revision, source checksums, original rows, and MIT attribution.
+
+The additional legacy and modern gear snapshots preserve AllTheThings 5.4.8
+Retail token and appearance rows. Raid curio costs cite separate merchant
+documentation and use AllTheThings tier rows for difficulty-specific appearances.
+
 ATT research exports remain unreviewed source snapshots. No complete ATT catalog
 or ATT implementation is bundled by this change. Preserve this attribution and
 license when publishing derived material. ATT-derived approved token records

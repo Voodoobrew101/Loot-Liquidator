@@ -8,6 +8,10 @@ sys.path.insert(0, 'tools')
 import att_token_references as att
 
 
+def build_original_holds(held):
+    return {row['rewardID'] for row in held if row.get('tokenID') == 183895}
+
+
 class ATTReferences(unittest.TestCase):
     def test_live_snapshot_costs_keep_consumed_gear_and_attribution(self):
         records, held = att.build()
@@ -18,7 +22,7 @@ class ATTReferences(unittest.TestCase):
         self.assertEqual(tokens[52029]['rewardClassMasks']['51286'], 4)
         self.assertTrue(all(r['sourceRevision'] and r['sourceOrigin']=='ATT' and 'Permission is hereby granted' in r['licenseText'] for r in records))
         self.assertTrue(all(r['independentReview']=='NOT_REVIEWED' for r in records))
-        self.assertEqual(held, [])
+        self.assertEqual(build_original_holds(held), {174315, 177870})
 
     def test_macros_and_fractional_costs_are_never_executed(self):
         for cost in ['{{"i",123,evil()}}', '{{"i",123,1.5}}', '{{"i",123,0}}']:
@@ -51,7 +55,24 @@ class ATTReferences(unittest.TestCase):
         self.assertIn(46142, tokens[45642]['rewards'])
         self.assertIn(46145, tokens[45657]['rewards'])
         self.assertIn(45339, tokens[45661]['rewards'])
-        self.assertEqual(held, [])
+        self.assertEqual(build_original_holds(held), {174315, 177870})
+
+    def test_castle_nathria_cost_variants_are_alternatives(self):
+        data = json.loads(att.NATHRIA_SOURCE.read_text(encoding='utf-8'))
+        held = []
+        records = att.build_nathria_tokens(data, held)
+        self.assertEqual([r['tokenID'] for r in records], list(range(183888, 183900)))
+        self.assertEqual({r['tokenID'] for r in held}, {183895})
+        self.assertEqual({r['rewardID'] for r in held}, {174315, 177870})
+        zenith = records[2]
+        self.assertEqual(zenith['rewardVariants']['3']['184272'], 115589)
+        self.assertEqual(zenith['rewardVariants']['6']['184272'], 115590)
+        self.assertFalse(zenith['costsComplete'])
+        self.assertNotIn('costs', zenith)
+        row = next(row for row in data['rows'] if '183890.004' in row['lua'])
+        row['lua'] = row['lua'].replace('183890.004,1', '183890.004,2')
+        with self.assertRaisesRegex(ValueError, 'Unsupported Castle Nathria exchange cost'):
+            att.build_nathria_tokens(data, [])
 
     def test_tier_source_expressions_and_additional_costs_rejected(self):
         raw = Path('database/research/att-tier8-source.lua').read_text(encoding='utf-8')

@@ -425,9 +425,38 @@ local tokenCandidates={}
 local att=assert(loadfile('database/att-token-baselines.lua'))()
 assert(att.schemaVersion==1,'Unsupported pinned ATT reference schema')
 db.attSourceManifest=att.sourceManifest
+local curioCosts={}
+for _,proof in ipairs(att.curioCosts or {}) do curioCosts[proof.tokenID]=proof end
+local establishedCurioCosts={}
+if db.attSourceManifest then db.attSourceManifest.curioCostsEstablished=establishedCurioCosts end
 for _,r in ipairs(type(research.tokenRewards)=='table' and research.tokenRewards or {}) do tokenCandidates[#tokenCandidates+1]=r end
 do
     local v3tokens=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))().tokenRewards
+    local v3byID={}
+    for _,r in ipairs(v3tokens or {}) do v3byID[r.tokenID]=r end
+    local verifiedCurios={}
+    for tokenID,proof in pairs(curioCosts) do
+        local curio=v3byID[tokenID]
+        if curio and curio.kind=='exchange' then
+            local agrees=true
+            if #proof.rewards==#proof.finalRewards then
+                agrees=contextIdentity(curio.rewards)==contextIdentity(proof.finalRewards)
+            else
+                for slotID,expected in pairs(proof.slotRewards) do
+                    local slot=v3byID[tonumber(slotID)]
+                    local prior=proof.slotAlternatives[slotID]
+                    if not slot or slot.kind~='open' or slot.candidateRewards
+                        or (contextIdentity(slot.rewards)~=contextIdentity(expected)
+                            and (not prior or contextIdentity(slot.rewards)~=contextIdentity(prior))) then
+                        agrees=false;break
+                    end
+                end
+            end
+            if agrees then
+                verifiedCurios[tokenID]=proof
+            end
+        end
+    end
     for _,r in ipairs(type(v3tokens)=='table' and v3tokens or {}) do
         assert(type(r)=='table' and tostring(r.recordID):match('^v3token:') and r.independentReview~='APPROVED',
             'Research v3 token lists must use v3token: IDs and are never pre-approved')
@@ -443,9 +472,35 @@ do
                 end
             end
         end
+        local proof=verifiedCurios[r.tokenID]
+        if proof then
+            r=deepCopy(r)
+            r.rewards=proof.rewards
+            if #proof.rewards==#proof.finalRewards then r.rewardVariants=proof.contexts
+            else r.finalRewardVariants=proof.contexts end
+            r.protectCollection,r.costsComplete,r.candidateRewards=true,true,nil
+            r.merchantName,r.costs=proof.merchantName,{}
+            r.sourceOrigin,r.licenseSPDX,r.licenseText='ATT','MIT',att.licenseText
+            r.additionalSourceRevision=proof.sourceRevision
+            local sources={}
+            for _,url in ipairs(r.sourceURLs) do sources[url]=true end
+            for _,url in ipairs(proof.sourceURLs) do
+                if not sources[url] then r.sourceURLs[#r.sourceURLs+1]=url;sources[url]=true end
+            end
+            for _,id in ipairs(r.rewards) do
+                r.costs[tostring(id)]={{kind='item',id=r.tokenID,quantity=proof.quantity}}
+            end
+            r.sourceAssumption='Published one-curio merchant cost and matching raid tier appearances. Live merchant access and exact gold values are unverified.'
+            table.insert(establishedCurioCosts,r.tokenID)
+        elseif curioCosts[r.tokenID] then
+            r=deepCopy(r)
+            r.protectCollection,r.candidateRewards=true,true
+            r.sourceAssumption='Published vendor evidence conflicts with the shipped reward IDs; check the current merchant.'
+        end
         tokenCandidates[#tokenCandidates+1]=r
     end
 end
+table.sort(establishedCurioCosts)
 for _,r in ipairs(att.tokenRewards or {}) do tokenCandidates[#tokenCandidates+1]=r end
 db.buildReport.tokenRewardsFromResearchV3=0
 for index,r in ipairs(tokenCandidates) do

@@ -1568,32 +1568,31 @@ function LL:TokenTransmogRecipient(f,token)
         local tokenAllowed=self:ItemPermitsClass(f.id,candidate.class)
         if tokenAllowed~=false then
             for _,rewardID in ipairs(token.rewards) do
-                -- Class-specific appearances must only be assigned to eligible
-                -- recipients. Unknown class masks are not proof of eligibility.
                 local rewardAllowed
                 if self.TokenRewardPermitsClass then rewardAllowed=self:TokenRewardPermitsClass(token,rewardID,candidate.class)
                 else rewardAllowed=self:ItemPermitsClass(rewardID,candidate.class) end
-                if rewardAllowed==true then
-                    local rewardLink=self.TokenRewardLink and self:TokenRewardLink(token,rewardID) or ("item:"..rewardID)
-                    local collected=self:AppearanceCollectionState(rewardLink)
+                if rewardAllowed==true or (token.variantScoped and candidate.current and rewardAllowed~=false) then
+                    local collected,source
+                    if self.TokenRewardCollectionState then collected,source=self:TokenRewardCollectionState(token,rewardID)
+                    else
+                        local rewardLink=self.TokenRewardLink and self:TokenRewardLink(token,rewardID) or ("item:"..rewardID)
+                        collected,source=self:AppearanceCollectionState(rewardLink)
+                    end
                     -- Keep missing looks for an eligible recipient even when
                     -- their other exchange items or currency are not on hand.
                     -- Economic quotes retain their immediate-cost checks.
                     local usable=self.TokenAppearanceEligibility
                         and self:TokenAppearanceEligibility(token,rewardID,candidate.current,candidate.key)
                     if token.kind=='exchange' and self.AltMethodEnabled and not self:AltMethodEnabled(candidate.key,'X') then usable=false end
-                    if candidate.current and C_TransmogCollection
-                        and type(C_TransmogCollection.GetItemInfo)=="function"
+                    local nativeUsable
+                    if candidate.current and type(source)=="number" and source>0 and C_TransmogCollection
                         and type(C_TransmogCollection.GetAppearanceInfoBySource)=="function" then
-                        local ok,_,source=pcall(C_TransmogCollection.GetItemInfo,rewardLink)
-                        if ok and type(source)=="number" and source>0 then
-                            local good,info=pcall(C_TransmogCollection.GetAppearanceInfoBySource,source)
-                            if good and type(info)=="table" and info.appearanceIsUsable==false then
-                                usable=false
-                            end
-                        end
+                        local ok,info=pcall(C_TransmogCollection.GetAppearanceInfoBySource,source)
+                        if ok and type(info)=="table" then nativeUsable=info.appearanceIsUsable end
                     end
-                    if collected==false and usable then
+                    if collected==false and usable and nativeUsable~=false
+                        and (not token.variantScoped or nativeUsable==true
+                            or (not candidate.current and rewardAllowed==true)) then
                             return {name=candidate.key,displayName=ShortName(candidate.key),
                                 class=candidate.class,classLabel=self:AltClassLabel(candidate.class),
                                 current=candidate.current,rewardID=rewardID,

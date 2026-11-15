@@ -948,7 +948,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
     if compactToken then
         local groups=LA:TokenClassSummary(token)
         if #groups>0 then
-            tooltip:AddLine("Class sets",.68,.82,1,true)
+            tooltip:AddLine(token.recordID and token.recordID:find('^att%-nathria%-')
+                and "Covenant rewards" or (token.protectCollection and "Gear rewards" or "Class sets"),.68,.82,1,true)
             local bestRecipient
             for _,group in ipairs(groups) do
                 -- A token reward belonging to another class is not necessarily
@@ -971,7 +972,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 local status=("%d/%d"):format(group.collected,group.count)
                 if group.unknown>0 then status=status.." (collection pending)" end
                 local className=group.title
-                if className=="Equipment set" then className=(group.className or "Other").." equipment" end
+                if token.protectCollection and group.class=="UNKNOWN" then className="Equipment appearances"
+                elseif className=="Equipment set" then className=(group.className or "Other").." equipment" end
                 local left=("%s%s|r %s|cffa788dd%s|r"):format(
                     actionColor,letter=='Q' and 'Review' or letter,icon,className)
                 if tooltip.AddDoubleLine then
@@ -986,7 +988,7 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
             -- valuation of an unpriced exchange chain.
             local recipient=decision.transmogRecipient or bestRecipient
             if recipient and recipient.rewardID then
-                local item=LLTokenRewardLabel(recipient.rewardID)
+                local item=LLTokenRewardLabel(LA:TokenRewardLink(token,recipient.rewardID))
                 if item then
                     local who=recipient.current and "current character"
                         or (recipient.displayName or "eligible alt")
@@ -1009,7 +1011,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                 end
             end
         end
-        if detail>=2 and showResearch then
+        if token.protectCollection and decision.action=="Q" and decision.why then
+            tooltip:AddLine(decision.why,.72,.70,.76,true)
+        end
+        if token.merchantName and token.costsComplete and detail>=2 then
+            tooltip:AddLine("Exchange one curio at "..token.merchantName,.72,.70,.76,true)
+        elseif detail>=2 and showResearch and not token.costsComplete then
             tooltip:AddLine(token.kind=="exchange"
                 and "Exchange may require additional items or currency"
                 or "Reward quantities or chances not verified",.72,.70,.76,true)
