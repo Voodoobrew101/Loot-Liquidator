@@ -10,7 +10,7 @@ function check(ok,code){if(!ok)throw Error(code);}
 function finiteNonnegative(x){return typeof x==="number"&&Number.isFinite(x)&&x>=0;}
 
 function record(x,allowed,required){
- check(x!==null&&typeof x==="object"&&!Array.isArray(x)&&Object.getPrototypeOf(x)===Object.prototype,"PLAIN_RECORD");
+ check(x!==null&&typeof x==="object"&&!isProxy(x)&&!Array.isArray(x)&&Object.getPrototypeOf(x)===Object.prototype,"PLAIN_RECORD");
  const keys=Reflect.ownKeys(x);check(keys.every(k=>typeof k==="string"&&allowed.includes(k)),"UNEXPECTED_FIELD");
  for(const k of keys){const d=Object.getOwnPropertyDescriptor(x,k);check(d&&d.enumerable&&"value"in d,"ACCESSOR_OR_HIDDEN_FIELD");}
  for(const k of required)check(Object.prototype.hasOwnProperty.call(x,k),"REQUIRED_FIELD_"+k);
@@ -19,11 +19,7 @@ function record(x,allowed,required){
 function snapshotRecord(x,allowed,required){
  record(x,allowed,required);
  const out={};
- for(const k of Reflect.ownKeys(x)){
-  const d=Object.getOwnPropertyDescriptor(x,k);
-  for(let i=0;i<3;i++)check(Object.is(x[k],d.value),"UNSTABLE_FIELD_"+k);
-  out[k]=d.value;
- }
+ for(const k of Reflect.ownKeys(x))out[k]=Object.getOwnPropertyDescriptor(x,k).value;
  return Object.freeze(out);
 }
 function snapshotOutputs(a){

@@ -61,11 +61,10 @@ jobs:
         # Do not use this research preview for EV, recommendations or release.
         continue-on-error: true
         run: node research/tools/working_native_emitted_lua_preflight.js
-      - name: F002 TWW milling v1.0.1 native replay self-test
+      - name: War Within milling regression guard self-test
         run: node research/tools/working_native_tww_accounting_preflight.js --self-test
-      - name: Research-only F005 TWW milling v1.0.1 15-case native replay
-        # Seven cases pass and eight known model defects block integration.
-        # The replay fails on source or result drift.
+      - name: Check both War Within milling suites for new regressions
+        # Report remaining known defects and fail on new failures or invalid results.
         run: node research/tools/working_native_tww_accounting_preflight.js
       - name: F002 DF milling v1.0.1 52-case native preflight self-test
         run: node research/tools/working_native_df_milling_attestation_preflight.js --self-test
@@ -80,12 +79,12 @@ jobs:
       - name: F002 Dragonflight Prismatic stage-identity replay self-test
         run: node research/tools/working_native_df_prismatic_identity_preflight.js --self-test
       - name: Research-only F005 Prismatic stage-identity native 43-case replay
-        # Verify the repaired source identities and preserve the Retail holdout.
+        # Verify the repaired source identities with 43 synthetic cases.
         run: node research/tools/working_native_df_prismatic_identity_preflight.js
-      - name: F002 DF frontier 21-case native replay self-test
+      - name: Dragonflight Frontier regression runner self-test
         run: node research/tools/working_native_df_frontier_array_preflight.js --self-test
-      - name: Research-only F005 DF frontier array snapshot native 21-case replay
-        # Check the source-pinned array repair and preserve the Retail holdout.
+      - name: Dragonflight Frontier array repair regression (research only)
+        # The historical F005 fixture and its review remain source-pinned.
         run: node research/tools/working_native_df_frontier_array_preflight.js
       - run: node research/tools/run_completion_pipeline.js --check
       - name: F002 exact gap-to-priority identity and preview coverage contract
