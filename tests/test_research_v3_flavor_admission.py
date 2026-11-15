@@ -52,5 +52,23 @@ class ClassicRetailAdmissionTests(unittest.TestCase):
         # this patch does not automatically promote it to Retail.
 
 
+    def test_actual_compiler_change_is_scoped_to_six_classic_inputs(self):
+        # Synthetic pre-correction comparison: re-admit ONLY the nine original
+        # archive rows in memory, never rewrite the append-only files.
+        effective = estimator.load()
+        classic_originals = [r for r in self.original if r["id"] in HELD]
+        before, _ = estimator.build(effective + classic_originals)
+        after, _ = estimator.build(effective)
+        key = lambda v: (v["method"], v["input"], str(v["outputItemID"]))
+        old = {key(v): v for v in before}
+        new = {key(v): v for v in after}
+        different = [k for k in old.keys() | new.keys() if old.get(k) != new.get(k)]
+        scoped_inputs = {str(r["inputItemID"]) for r in classic_originals}
+        unscoped = [k for k in different if k[1] not in scoped_inputs]
+        self.assertFalse(unscoped, f"Unexpected collateral estimator changes: {unscoped[:8]}")
+        # No absolute delta or change in Retail gold is claimed here: this is
+        # compiler-level parity against an intentionally inadmissible baseline.
+
+
 if __name__ == "__main__":
     unittest.main()
