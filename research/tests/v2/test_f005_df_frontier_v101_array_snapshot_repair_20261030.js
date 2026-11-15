@@ -11,7 +11,7 @@ const root=path.resolve(__dirname,"../../..");
 const frontierPath=path.join(root,"research/tools/models_v2/df_prospect_decision_frontier_v1.js");
 const stagePath=path.join(root,"research/tools/models_v2/df_historical_diamond_denominator_stage_guard_v1.js");
 const sha=p=>{const b=fs.readFileSync(p);return crypto.createHash("sha1").update("blob "+b.length+"\0").update(b).digest("hex");};
-const FRONTIER_BLOB="483842ab580808cbd9d9c130d26781b59d2e6ee4";
+const FRONTIER_BLOB="190f2d4b94e2079eacbd413bc793e60e2b494bee";
 const STAGE_BLOB="2c9005e1d7be6df68d5631a418fbae95a144f6e7";
 const key=frontier.TARGETS[0].stableKey,key2=frontier.TARGETS[1].stableKey;
 const base=()=>({inputItemID:188658,snapshotDate:"2026-10-30",scenarioSourceID:"F005-synthetic-array-snapshot",policy:"SCENARIO_ONLY",nominalInputPerCast:5,costGoldPerCast:3,depositGoldPerCast:0,alternativeNetGoldPerCast:6,feeRate:0.05,otherRevenueGoldPerCast:0,otherRevenueBasis:"EXCLUDES_SELECTED_OUTPUTS",costBasis:"GROSS_NO_REFUNDS",outputs:[{stableKey:key,priceGold:10,eLower:0.5,eUpper:1}]});
@@ -21,7 +21,7 @@ function run(){
  test("frontier exact Git blob",()=>sha(frontierPath)===FRONTIER_BLOB);
  test("stage exact Git blob",()=>sha(stagePath)===STAGE_BLOB);
  test("previous frontier 27-case repair",()=>{const r=previousFrontier.run();return r.total===27&&r.passed===27&&r.failed===0;});
- test("previous Prismatic identity 43-case repair",()=>{const r=previousStage.run();return r.total===43&&r.passed===43&&r.failed===0;});
+ test("previous Prismatic identity 43-case repair",()=>{const r=previousStage.run();return r.tests.length===43&&r.passed===43&&r.failed===0;});
  test("frontier self-test",()=>frontier.selfTest().passed===4039);
  test("stage self-test",()=>stage.selfTest().passed===28);
  test("stage corrected identity",()=>stage.SOURCE.secondStage.inputItemID===194545&&stage.analyze().secondStage.inputItemID===194545);
@@ -52,7 +52,7 @@ function run(){
  test("reject invalid date",()=>rejects(()=>frontier.evaluateScenario({...base(),snapshotDate:"2026-02-30"})));
  test("unknown upper remains indeterminate",()=>{const b=base();b.outputs[0].eUpper=null;const r=frontier.evaluateScenario(b);return r.upperNetGoldPerCompletedCast===null&&r.scenarioDecision==="INDETERMINATE";});
  const passed=tests.filter(t=>t.status==="PASS").length;
- return {suite:"F005_DF_FRONTIER_REPAIR_AND_ARRAY_SNAPSHOT",frontierGitBlob:FRONTIER_BLOB,stageGitBlob:STAGE_BLOB,assertions:tests.length,passed,failed:tests.length-passed,tests,expectedOutstanding:["reject output array length shrink 1 to 0 after dense validation","reject output array length shrink 2 to 1 after dense validation"],economicPromotions:0,independentRetailHoldouts:0,verdict:passed===tests.length?"CONDITIONAL_PASS_SYNTHETIC_ONLY":"FAIL_F003_ARRAY_SNAPSHOT_INTEGRITY"};
+ return {suite:"F005_DF_FRONTIER_REPAIR_AND_ARRAY_SNAPSHOT",frontierGitBlob:FRONTIER_BLOB,stageGitBlob:STAGE_BLOB,assertions:tests.length,passed,failed:tests.length-passed,tests,economicPromotions:0,independentRetailHoldouts:0,verdict:passed===tests.length?"CONDITIONAL_PASS_SYNTHETIC_ONLY":"FAIL_F003_ARRAY_SNAPSHOT_INTEGRITY"};
 }
 module.exports={run};
 if(require.main===module){const r=run();console.log(JSON.stringify(r,null,2));if(r.failed)process.exitCode=1;}

@@ -1,6 +1,7 @@
 "use strict";
 /* F003 research-only scenario frontier for 38 priority-102 Dragonflight prospecting E gaps.
    No live EV/recommendation, no TSM data rewrite, no tooltip-only fallback. */
+const {types:{isProxy}}=require("node:util");
 const MODEL_ID="df-prospect-decision-frontier-v1.0.0";
 const POLICY=Object.freeze({"confidence":0,"economicUse":"PREVIEW_ONLY","normalizedVerified":false,"liveEconomicEligible":false,"tooltipOnlyEligible":false});
 const TARGETS=Object.freeze([{"stableKey":"tsm:prospect:188658:192837:L1174","inputItemID":188658,"outputItemID":192837},{"stableKey":"tsm:prospect:188658:192838:L1175","inputItemID":188658,"outputItemID":192838},{"stableKey":"tsm:prospect:188658:192839:L1176","inputItemID":188658,"outputItemID":192839},{"stableKey":"tsm:prospect:188658:192840:L1177","inputItemID":188658,"outputItemID":192840},{"stableKey":"tsm:prospect:188658:192841:L1178","inputItemID":188658,"outputItemID":192841},{"stableKey":"tsm:prospect:188658:192842:L1179","inputItemID":188658,"outputItemID":192842},{"stableKey":"tsm:prospect:188658:192843:L1180","inputItemID":188658,"outputItemID":192843},{"stableKey":"tsm:prospect:188658:192844:L1181","inputItemID":188658,"outputItemID":192844},{"stableKey":"tsm:prospect:188658:192845:L1182","inputItemID":188658,"outputItemID":192845},{"stableKey":"tsm:prospect:188658:192846:L1183","inputItemID":188658,"outputItemID":192846},{"stableKey":"tsm:prospect:188658:192847:L1184","inputItemID":188658,"outputItemID":192847},{"stableKey":"tsm:prospect:188658:192848:L1185","inputItemID":188658,"outputItemID":192848},{"stableKey":"tsm:prospect:188658:192849:L1186","inputItemID":188658,"outputItemID":192849},{"stableKey":"tsm:prospect:188658:192850:L1187","inputItemID":188658,"outputItemID":192850},{"stableKey":"tsm:prospect:188658:192851:L1188","inputItemID":188658,"outputItemID":192851},{"stableKey":"tsm:prospect:188658:192852:L1189","inputItemID":188658,"outputItemID":192852},{"stableKey":"tsm:prospect:188658:192853:L1190","inputItemID":188658,"outputItemID":192853},{"stableKey":"tsm:prospect:188658:192855:L1191","inputItemID":188658,"outputItemID":192855},{"stableKey":"tsm:prospect:188658:192856:L1192","inputItemID":188658,"outputItemID":192856},{"stableKey":"tsm:prospect:188658:192857:L1193","inputItemID":188658,"outputItemID":192857},{"stableKey":"tsm:prospect:188658:192858:L1194","inputItemID":188658,"outputItemID":192858},{"stableKey":"tsm:prospect:188658:192859:L1195","inputItemID":188658,"outputItemID":192859},{"stableKey":"tsm:prospect:188658:192860:L1196","inputItemID":188658,"outputItemID":192860},{"stableKey":"tsm:prospect:188658:192861:L1197","inputItemID":188658,"outputItemID":192861},{"stableKey":"tsm:prospect:188658:192862:L1198","inputItemID":188658,"outputItemID":192862},{"stableKey":"tsm:prospect:188658:192863:L1199","inputItemID":188658,"outputItemID":192863},{"stableKey":"tsm:prospect:188658:192865:L1200","inputItemID":188658,"outputItemID":192865},{"stableKey":"tsm:prospect:188658:192866:L1201","inputItemID":188658,"outputItemID":192866},{"stableKey":"tsm:prospect:188658:192867:L1202","inputItemID":188658,"outputItemID":192867},{"stableKey":"tsm:prospect:188658:192868:L1203","inputItemID":188658,"outputItemID":192868},{"stableKey":"tsm:prospect:188658:192869:L1204","inputItemID":188658,"outputItemID":192869},{"stableKey":"tsm:prospect:189143:192837:L1212","inputItemID":189143,"outputItemID":192837},{"stableKey":"tsm:prospect:189143:192838:L1213","inputItemID":189143,"outputItemID":192838},{"stableKey":"tsm:prospect:189143:192839:L1214","inputItemID":189143,"outputItemID":192839},{"stableKey":"tsm:prospect:189143:192840:L1215","inputItemID":189143,"outputItemID":192840},{"stableKey":"tsm:prospect:189143:192841:L1216","inputItemID":189143,"outputItemID":192841},{"stableKey":"tsm:prospect:189143:192842:L1217","inputItemID":189143,"outputItemID":192842},{"stableKey":"tsm:prospect:189143:192843:L1218","inputItemID":189143,"outputItemID":192843}].map(x=>Object.freeze(x)));
@@ -26,19 +27,18 @@ function snapshotRecord(x,allowed,required){
  return Object.freeze(out);
 }
 function snapshotOutputs(a){
- dense(a);
+ check(Array.isArray(a)&&!isProxy(a)&&Object.getPrototypeOf(a)===Array.prototype,"DENSE_ARRAY");
+ const length=a.length,keys=Reflect.ownKeys(a);
+ check(length>0,"DENSE_ARRAY");
+ check(keys.length===length+1&&keys.includes("length"),"ARRAY_EXTRA_OR_HOLE");
  const out=[];
- for(let i=0;i<a.length;i++){
+ for(let i=0;i<length;i++){
   const d=Object.getOwnPropertyDescriptor(a,String(i));
-  for(let j=0;j<3;j++)check(Object.is(a[i],d.value),"UNSTABLE_OUTPUT_ARRAY");
+  check(d&&d.enumerable&&"value"in d,"ARRAY_ACCESSOR_OR_HOLE");
   out.push(snapshotRecord(d.value,["stableKey","priceGold","eLower","eUpper"],["stableKey","priceGold","eLower","eUpper"]));
  }
+ check(a.length===length,"UNSTABLE_OUTPUT_ARRAY");
  return Object.freeze(out);
-}
-function dense(a){
- check(Array.isArray(a)&&Object.getPrototypeOf(a)===Array.prototype&&a.length>0,"DENSE_ARRAY");
- const keys=Reflect.ownKeys(a);check(keys.length===a.length+1&&keys.includes("length"),"ARRAY_EXTRA_OR_HOLE");
- for(let i=0;i<a.length;i++){const d=Object.getOwnPropertyDescriptor(a,String(i));check(d&&d.enumerable&&"value"in d,"ARRAY_ACCESSOR_OR_HOLE");}
 }
 
 function dateOnly(x){
