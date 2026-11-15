@@ -1,11 +1,9 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-15T20:21:04.953Z",
-  "status": "NEW fixed Live 12.1 Midnight JC rank-refining source identities and deterministic batch quantities: 242787 R1 Crystalline Glass x10 -> 242786 R2 x1 (spell 1307462), and 242788 R1 Dusk-Shrouded Stone x18 -> 242789 R2 x1 (spell 1307466). No new player-original disenchant/prospect/mill yield cohort or per-output hits. Exchange schema's vendor/use-only semantics require Master review for workbench recipes before any production import.",
+  "updated_at": "2026-11-15T21:16:50.030Z",
+  "status": "New independent March 19 firsthand source reports unchanged Midnight Milling recipe difficulty 505 despite other Inscription difficulty tuning; no original per-cast material yield cohort. Reference-only, not a live-12.1.5 threshold.",
   "task_ids": [
-    "T0024",
     "T0026",
-    "T0049",
     "T0005",
     "T0039",
     "T0003",
@@ -13,38 +11,19 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0024: new LIVE 12.1.0 fixed crafting conversions: Crystalline Glass rank1 242787 x10 -> rank2 242786 x1 via 1307462; Dusk-Shrouded Stone rank1 242788 x18 -> rank2 242789 x1 via 1307466; prior PTR claimed 5:1 and 10:1, respectively. Confirm current recipe category and Master-approved import mapping before addon eligibility.",
-    "T0049/T0026: 272246 Miststalker's Wristbands ilvl305 bonus variant actual successful Disenchant receipt, output item ID/quantity/skill/spec/build; ilvl206 base tooltip and 140 pooled Looter observations not eligible as independent casts.",
-    "T0005/T0039: 237362 Umbral Tin 800-cast Cardinalai per-output 242606/242607/242610/242611/242786/242788 completed hits and zero bins; 242608 Eversong Diamond unlock and ore rank; refunds separated.",
-    "T0003/T0002/T0045: 237359 Refulgent Copper, 237365 Brilliant Silver, and 236761 Tranquility Bloom raw rank-identified 0-inclusive per-cast Prospect/Mill outputs."
+    "T0026: 272246 Miststalker's Wristbands at-cast variant/itemLevel305 vs generic206; uncommon/rare/epic armor/weapon DE with exact material IDs, build, spec, skill, histograms/zeros.",
+    "T0005/T0039: Umbral Tin Ore 237362 rank2/237363 rank1 and Eversong Diamond 242608 unlock; castsWithDrop/0..N by 242606,242607,242610,242611,242786,242788; keep refunds separate.",
+    "T0003/T0002/T0045: Refulgent Copper 237359, Brilliant Silver 237365 and Tranquility Bloom 236761 milling rank-specific original completed casts and outputs.",
+    "NEW source check for T0045: March 19 2026 Midnight Milling recipe difficulty claimed 505 (potential skill/rank interpretation; source did not report casts)."
   ],
   "newly_verified_fields_or_cohorts": {
     "new_original_completed_cast_cohorts": 0,
     "new_estimator_eligible_material_numeric_fields": 0,
-    "new_rank_refining_fixed_recipe_records": 2,
-    "crafting_conversions": [
-      {
-        "recipeSpellID": 1307462,
-        "inputItemID": 242787,
-        "inputRank": 1,
-        "inputCount": 10,
-        "outputItemID": 242786,
-        "outputRank": 2,
-        "outputCount": 1,
-        "method": "Midnight Jewelcrafting refining"
-      },
-      {
-        "recipeSpellID": 1307466,
-        "inputItemID": 242788,
-        "inputRank": 1,
-        "inputCount": 18,
-        "outputItemID": 242789,
-        "outputRank": 2,
-        "outputCount": 1,
-        "method": "Midnight Jewelcrafting refining"
-      }
-    ],
-    "caveat": "Live fixed recipe quantities are not probabilistic disenchant/prospect/mill observations. Do not apply older PTR 5:1 or 10:1 costs to LIVE recipes. Requires Master schema review because exchange.where defines only vendor/use, not tradeskill craft."
+    "new_independent_recipe_difficulty_source_claims": 1,
+    "reported_milling_recipe_difficulty": 505,
+    "claim_date": "2026-03-19",
+    "claim_scope": "Midnight Inscription milling; pre-12.1, not verified current-client",
+    "caveat": "Not an operation outcome, probability, yield, item-level, or original cast cohort. No current live threshold inferred."
   },
   "numeric_fields_advanced": {
     "new_measured_cohorts": 0,
@@ -56,51 +35,28 @@
     "skill": null,
     "specialization": null,
     "build": null,
-    "verified_fixed_inputsPerConversion": [
-      10,
-      18
-    ],
-    "verified_fixed_outputsPerConversion": [
-      1,
-      1
-    ],
-    "verified_rank_ids": [
-      [
-        242787,
-        242786
-      ],
-      [
-        242788,
-        242789
-      ]
-    ]
+    "recipeDifficultyReference": 505,
+    "recipeDifficultySourceDate": "2026-03-19",
+    "batchSizeIndependentMechanicsReference": 10
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/20261115T2021-rank-refinement-fixed-recipes.jsonl"
+    "research/v3/evidence/midnight/2026-11-15T2116-milling-505-difficulty-source.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-15T1913-miststalker-scaled-variant-source-guard.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261115T2021-rank-refinement-fixed-recipes.jsonl",
   "evidence_record_ids": [
-    "midnight-20261115-2021-001",
-    "midnight-20261115-2021-002"
+    "midnight-20261115-2116-001"
   ],
   "source_links": [
-    "https://www.wowhead.com/spell=1307462/refine-crystalline-glass",
-    "https://www.wowhead.com/spell=1307466/refine-dusk-shrouded-stone",
-    "https://www.wow-professions.com/news/midnight-patch-12-1-knowledge-point-reset",
-    "https://www.wowhead.com/guide/midnight/professions/jewelcrafting-overview-trainer-locations-recipes-tools",
-    "https://goldcap.gg/retail/us/items/242786",
-    "https://tradeskillmaster.com/retail/us/items/242787",
-    "https://goldcap.gg/retail/us/items/242788",
-    "https://goldcap.gg/retail/kr/items/242789",
-    "https://us.forums.blizzard.com/en/wow/t/new-recipes-in-121/2318513"
+    "https://www.reddit.com/r/woweconomy/comments/1ry2ffv/recipe_difficulty_tuning_with_no_warning/",
+    "https://us.forums.blizzard.com/en/wow/t/is-perfect-milling-intended-to-be-a-trap/2362528"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Single atomic commit includes exactly one new Midnight evidence JSONL and this own quiet-status file. SHA cannot appear in its own content without circularity; verified SHA recorded externally through commit + branch read-back.",
+  "commit_note": "Atomic one-commit write of one new Midnight evidence file plus own quiet-status file. Self-referential commit SHA cannot be embedded in the same signed tree; confirm actual SHA by branch-head and file read-back, reported outside JSON.",
   "blockers": [
-    "Original current-build zero-inclusive player operation logs still missing for 272246 variant DE, 237362 tin 800-cast per-output hits/zeros and 237359/237365 prospect and 236761 milling; no new measured cohort.",
-    "Current 12.1 rank-refining recipes are Jewelcrafting crafting operations; v3 exchange.where is documented for use/vendor and recipe.method has no Refine. Master must approve a category/validation/import path before production use; worker left shared schema and files untouched.",
-    "Earlier PTR 5:1 glass and 10:1 stone conversion predictions are not live 12.1 quantities; do not pool these versions or calculate EV/prices in research."
+    "Still no original 2026-11 zero-inclusive casts/material output records for 272246 scaled variant DE, Umbral Tin 237362 completed-cast hit histograms, rank-specific copper/silver prospects, or Tranquility Bloom 236761 milling.",
+    "Reported 505 is one March 2026 player's stated recipe difficulty, without recipe spell ID or client export; later September separate calculation was only projected. No proof it remains correct in 12.1.5 or changes material yields; Master must review any runtime model.",
+    "Unknown input/output rank IDs, casts, material totals, hit/zero histograms, actual profession skill/spec and refunds remain null; avoid counting skill/difficulty as yield data."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -203,10 +159,11 @@
     "2026-11-15T17:19:55.169Z: New 12.1.5 post-Oct13 targeted source lane: seven item-name queries across Reddit r/woweconomy, US/EU Blizzard forums and Wowhead for 272246, 237362, 237359, 237365, Tranquility Bloom and Sanguithorn, plus guide/page checks. Only new independent David111 undated source claim '10 pigments for 10 herbs' on Wowhead Midnight Inscription leveling guide, with unidentified input/output and absent sample. Added source-only reference; do not infer any 236761/245807 family outcome, measured per-cast mean or historical/current patch denominator. Existing Cardinalai/Honeybone/Draggoth/Wowhead Looter studies not recopied. Do not repeat this 12.1.5 search lane unless player loot/cast export materializes.",
     "2026-11-15T18:19:25.102Z: New capture-oriented named searches on Reddit, US Blizzard professions forums, Wowhead, wow-professions and CurseForge for Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom and original 12.1.5 logs. Newly identified invokegaming Disenchanting Advisor Feb23 publication claims per-skill observed DE data, but release has no public owner CSV/operation ledger; source https://www.curseforge.com/wow/addons/disenchanting-advisor and https://www.reddit.com/r/wow/comments/1rctzli/. Previously recorded Cardinalai/JD3K/Honeybone/Looter/PR49 observations were not duplicated. Skip public release recheck unless independent downloadable player samples emerge.",
     "2026-11-15T19:13:15.683Z: Independent 272246 base-vs-selected variant source triangulation: GamGem Blizzard item-API 2026-11-07 base ilvl206 Epic Leather; Wowhead live item selector ilvl305 bonus6652:13696:12841:13662; WoWDB LIVE 12.1.0 base Cannot be disenchanted. Live at-cast 305 successful disenchant receipt not found, existing pooled 140 Looter rows midnight-20261101-090701..905 not repeated. Cross-site named original operation-log searches for 272246/237362/237359/237365/236761 through Reddit, Blizzard forums, Wowhead, WoWDB, GamGem and profession guides found no new original 0-inclusive current-build material cohort. New independent EnchantLens advertises successful DE result recording; no public SavedVariables export. Do not reopen static tooltip/catalog pages without at-cast evidence.",
-    "2026-11-15T20:21:04.953Z: Run sought unindexed primary DE/Prospect/Mill numeric cohorts via by-name searches of Midnight gear, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, and Tranquility Bloom across Reddit, US Blizzard professions forums, Wowhead LIVE, WoW-Professions, Warcraft Wiki and contemporary patch pages. Prior Cardinalai/Honeybone/Stormwarning/HeadtripVee/Draggoth and item-restoration Heart of Wind threads already indexed and not recopied. NEW Live 12.1 trainer data isolated 1307462 and 1307466 as unindexed fixed rank-upgrade crafting conversions: glass 10 R1=>1 R2, stone 18 R1=>1 R2, with rank IDs checked against item catalogs; pre-release PTR quantities 5/10 differ. No original player 0-inclusive 12.1.5 cast cohort; do not search these two recipes again without a live mechanical change."
+    "2026-11-15T20:21:04.953Z: Run sought unindexed primary DE/Prospect/Mill numeric cohorts via by-name searches of Midnight gear, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, and Tranquility Bloom across Reddit, US Blizzard professions forums, Wowhead LIVE, WoW-Professions, Warcraft Wiki and contemporary patch pages. Prior Cardinalai/Honeybone/Stormwarning/HeadtripVee/Draggoth and item-restoration Heart of Wind threads already indexed and not recopied. NEW Live 12.1 trainer data isolated 1307462 and 1307466 as unindexed fixed rank-upgrade crafting conversions: glass 10 R1=>1 R2, stone 18 R1=>1 R2, with rank IDs checked against item catalogs; pre-release PTR quantities 5/10 differ. No original player 0-inclusive 12.1.5 cast cohort; do not search these two recipes again without a live mechanical change.",
+    "2026-11-15T21:16:50.030Z: Distinct NEW u/genobeam March19 'Recipe difficulty tuning with no warning' report yielded milling difficulty claim 505, corroborating but not duplicating Sep26 projected threshold. Checked current 12.1.5 hotfix/page references, 2026 player Milling and DE forum reports, named Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom material searches across Reddit, Blizzard, Wowhead/Wiki. March Tranquility 1473/1000 source already indexed in prior quiet-status; March wrong-expansion wand 2274188/2268773 already indexed in 20261113T0514; excluded duplicates. New 505 source does not supply completed casts, materials or per-cast denominators; do not repeat this source without independent live game trace. No current patch yield cohort."
   ],
-  "next_concrete_step": "Ask Master to classify 12.1 refining crafting conversions (not vendor/use), implement only reviewed recipe-aware eligibility if in scope; meanwhile pursue consented original 272246 scaled-ilvl DE receipts and 237362/237359/237365/236761 rank-resolved 0-inclusive player-cast exports with skill/build/refunds.",
-  "verified_base_commit_sha": "f502cafb7bb5e758b08f295a0163cbca230e2f3b",
-  "next": "Obtain original 0-inclusive player processing logs, avoid further static/catalog re-harvesting; Master review fixed crafting conversion import semantics.",
-  "base_commit_sha": "f502cafb7bb5e758b08f295a0163cbca230e2f3b"
+  "next_concrete_step": "Obtain original SavedVariables or screen-recorded per-cast 272246 ilvl305 equipment link/bonus and disenchant result, and rank-labeled 237362/237359/237365/236761 casts including zeros, skill/spec, output IDs and resourcefulness; request Master review of 505 source as mechanics-only historical context.",
+  "verified_base_commit_sha": "57a671d53ebbc6068ed0759c6a0ea5c1fb6e2b60",
+  "next": "Obtain original SavedVariables or screen-recorded per-cast 272246 ilvl305 equipment link/bonus and disenchant result, and rank-labeled 237362/237359/237365/236761 casts including zeros, skill/spec, output IDs and resourcefulness; request Master review of 505 source as mechanics-only historical context.",
+  "base_commit_sha": "57a671d53ebbc6068ed0759c6a0ea5c1fb6e2b60"
 }
