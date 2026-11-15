@@ -705,6 +705,8 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                         left=left..(m.minQuantity==m.maxQuantity
                             and (" [%d]"):format(m.minQuantity)
                             or (" [%d-%d]"):format(m.minQuantity,m.maxQuantity))
+                     elseif m.minQuantity then left=left..(" [min seen: %d]"):format(m.minQuantity)
+                     elseif m.maxQuantity then left=left..(" [max seen: %d]"):format(m.maxQuantity)
                     else left=left.." [yield unavailable]" end
                     if LA.db.showAverageQuantity==true then
                         left=left.."  "..(type(m.expectedQuantity)=='number' and UnitsText(m.expectedQuantity)
@@ -712,7 +714,12 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                     end
                     -- Optional per-material confidence (A3), off by default.
                     if LA.db.showMaterialConfidence==true and not model.syntheticBenchmark then
-                        if m.confidenceUnscored or model.confidenceUnscored then
+                        if m.fieldSpecificEvidence and not m.confidenceUnscored then
+                            local scores={}
+                            if type(m.chanceConfidence)=="number" then scores[#scores+1]=("chance %d%%"):format(m.chanceConfidence) end
+                            if type(m.confidence)=="number" then scores[#scores+1]=("quantity support %d%%"):format(m.confidence) end
+                            if #scores>0 then left=left.." ("..table.concat(scores,", ")..")" end
+                        elseif m.confidenceUnscored or model.confidenceUnscored then
                             left=left.." (Confidence unscored)"
                         elseif type(m.confidence)=="number" then
                             left=left..(" (%d%%)"):format(m.confidence)
@@ -740,6 +747,13 @@ function LA:AppendRecommendationTooltip(tooltip,decision)
                                     tostring(estimate.minQuantity or '?'),tostring(estimate.maxQuantity or '?'),
                                     UnitsText(estimate.expectedQuantity)),.65,.68,.76,true)
                                 if estimate.sourceConflict then tooltip:AddLine('    Source fields disagree; original values preserved',1,.68,.3,true) end
+                                local heldChance,heldMean=estimate.heldDropChance,estimate.heldExpectedQuantity
+                                if heldChance and type(heldChance.value)=='number' then
+                                    tooltip:AddLine('    Conflicting source chance: '..ChanceText(heldChance.value)..' (excluded from estimate)',.90,.72,.45,true)
+                                end
+                                if heldMean and type(heldMean.value)=='number' then
+                                    tooltip:AddLine('    Conflicting source average: '..UnitsText(heldMean.value)..' (excluded from estimate)',.90,.72,.45,true)
+                                end
                                 if estimate.appliedRule then tooltip:AddLine('    Profession rule: '..estimate.appliedRule,.65,.68,.76,true) end
                             end
                         end

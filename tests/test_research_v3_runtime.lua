@@ -12,27 +12,46 @@ local function ok(cond,label) assert(cond,label);passed=passed+1 end
 ok(LL:InitializeItemDB() and not LL.itemDBError,LL.itemDBError)
 ok(LL:ValidateItemDB(LL.ItemDB),'shipped ItemDB validates')
 local v3,covered,count={}, {},0
+local function outputKey(r,m)
+    return table.concat({r.method,r.inputItemID or r.gearKey,r.inputCount,m.id},':')
+end
+local fields={'dropChance','expectedQuantity','minQuantity','maxQuantity'}
+local measured={measured=true,observed=true,verified=true}
 for _,r in ipairs(LL.ItemDB.processing) do
     if r.recordID:match('^evidence:v3:') then
         count=count+1;v3[r.recordID]=r
-        for _,m in ipairs(r.materials) do covered[r.method..':'..tostring(r.inputItemID or r.gearKey)..':'..m.id]=r.recordID end
-        -- The Python confidence port matches LL:RateConfidence (halved when the chance was worked out from an average).
         for _,m in ipairs(r.materials) do
+            covered[outputKey(r,m)]=m
             local f=m.dropChance
-            local full=LL:RateConfidence(f.value*f.samples,f.samples)
-            ok(f.confidence==full or (f.status=='provisional' and f.confidence==math.floor(full/2)),
-                'confidence port for '..r.recordID..':'..m.id)
+            if f.value and f.samples and f.samples>0 then
+                ok(f.confidence==LL:RateConfidence(f.value*f.samples,f.samples),
+                    'confidence port for '..r.recordID..':'..m.id)
+            end
+            if m.expectedQuantity.value then
+                ok(m.expectedQuantity.independentConfidence,'quantity confidence uses its own evidence')
+            end
         end
     end
 end
 ok(count>50,'research v3 records ship')
--- No double counting: no older research row for a material v3 covers survives ...
+-- Complete exact-cohort replacements supersede the legacy rows; a different batch,
+-- broader rank group or a missing/weaker field cannot replace a scoped observation.
 for _,r in ipairs(LL.ItemDB.processing) do
     if r.recordID:match('^research:') then
+        local allCovered=true
         for _,m in ipairs(r.materials) do
-            ok(not covered[r.method..':'..tostring(r.inputItemID or r.gearKey)..':'..m.id],
-                'older row '..r.recordID..' would count v3 studies twice')
+            local replacement=covered[outputKey(r,m)]
+            if not replacement or replacement.rankIDs or m.conditionalReference then allCovered=false;break end
+            for _,field in ipairs(fields) do
+                local old,new=m[field],replacement[field]
+                if old.value~=nil and old.status~='unknown' and old.status~='contradictory'
+                    and (new.value==nil or new.status=='unknown' or new.status=='contradictory'
+                        or (measured[old.status] and not measured[new.status])) then
+                    allCovered=false;break
+                end
+            end
         end
+        ok(not allCovered,'fully superseded research row survives: '..r.recordID)
     end
 end
 -- ... and nothing is lost: every replaced row names a v3 record that exists.

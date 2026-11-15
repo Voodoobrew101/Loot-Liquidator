@@ -18,33 +18,41 @@ def rows(name):
 
 
 class AdmissionTests(unittest.TestCase):
-    def test_real_rows_cannot_reach_either_estimator_pass(self):
+    def test_real_rows_cannot_reach_field_support_or_reference_ranges(self):
         original = rows('mop-looter.jsonl')
         self.assertEqual(len(original), 16)
         self.assertEqual(len({r['inputItemID'] for r in original}), 5)
         retail = copy.deepcopy(original[0])
-        retail.update(id='retail-control', studyKey='independent-retail-control', inputItemID=999001)
+        retail.update(id='retail-control', studyKey='independent-retail-control', inputItemID=999001,
+                      minSeen=None, maxSeen=None)
         retail['source']['url'] = 'https://www.wowhead.com/item=999001'
         historical = copy.deepcopy(retail)
         historical.update(id='historical-control', studyKey='original-era-control', inputItemID=999002)
         historical['source']['url'] = 'https://www.wowhead.com/mop-classic/item=999002'
         historical['notes'] = 'Original-era historical study mirrored on Classic item page.'
-        loaded = original + [retail, historical]
+        reference = dict(retail, id='reference-control', studyKey='independent-reference-control',
+                         sourceKind='reference', minSeen=3, maxSeen=7)
+        quarantined_reference = dict(reference, id='quarantined-reference', studyKey=original[0]['studyKey'],
+                                     minSeen=1, maxSeen=99)
+        loaded = original + [retail, historical, reference, quarantined_reference]
         before = copy.deepcopy(loaded)
         module = v3.load_calculator(SNAPSHOT)
-        original_build = module.build
-        calls = []
-        def checked_build(data):
-            calls.append([r['id'] for r in data])
-            return original_build(data)
-        with patch.object(module, 'load', return_value=loaded), patch.object(module, 'build', side_effect=checked_build), patch.object(v3, 'load_calculator', return_value=module):
+        with (patch.object(module, 'load', return_value=loaded),
+              patch.object(v3, 'load_calculator', return_value=module),
+              patch.object(v3, 'reference_ranges', wraps=v3.reference_ranges) as ranges,
+              patch.object(v3, 'build_field_support', wraps=v3.build_field_support) as supports):
             records, notes, total, counted, _ = v3.build(SNAPSHOT)
-        self.assertEqual(len(calls), 2)  # published ranges AND counted yields
-        for call in calls:
-            self.assertEqual(set(call), {'retail-control', 'historical-control'})
+        self.assertEqual(ranges.call_count, 1)
+        self.assertEqual(supports.call_count, 1)
+        self.assertCountEqual([r['id'] for r in ranges.call_args.args[0]],
+                              ['retail-control', 'historical-control', 'reference-control'])
+        self.assertCountEqual([r['id'] for r in supports.call_args.args[1]],
+                              ['retail-control', 'historical-control'])
         self.assertEqual({r['inputItemID'] for r in records}, {999001, 999002})
-        self.assertEqual((total, counted), (18, 2))
-        self.assertEqual(sum(notes.values()), 16)
+        material = next(r for r in records if r['inputItemID'] == 999001)['materials'][0]
+        self.assertEqual((material['minQuantity']['value'], material['maxQuantity']['value']), (3, 7))
+        self.assertEqual((total, counted), (20, 2))
+        self.assertEqual(sum(notes.values()), 17)
         self.assertEqual(loaded, before)
 
     def test_renamed_cohort_copy_is_still_quarantined(self):

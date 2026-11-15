@@ -14,8 +14,9 @@ assert(LL:InitializeItemDB())
 local option={name='Disenchant',inputCount=1,recipeID=13262}
 local model=assert(LL:ComputeEvidenceModel({id=-1,expansionID=1,quality=3,classID=4},option,nil,1,{}))
 local m=model.materials[1]
-assert(m.derivedMean and math.abs(m.expectedQuantity-1/268)<1e-12,'derive supported expectation before choosing an anchor')
-assert(LL:ValueProcessingModel(model,0,true)>0)
+assert(math.abs(m.chance-1/268)<1e-12 and m.expectedQuantity==nil,
+    'one observed hit in the shipped study gives a chance, not a supported unit count')
+assert(LL:ValueProcessingModel(model,0,true)==nil)
 local source=LL._evidenceIndex['Disenchant:gear:1:3:armor'][1].materials[1]
 assert(source.expectedQuantity.value==nil and source.expectedQuantity.status=='unknown','source field remains immutable')
 local fish=assert(LL:ComputeEvidenceModel({id=199344,classID=7,expansionID=9},{name='Prospect',inputCount=5},nil,1,{}))
@@ -26,8 +27,8 @@ local function record(e,p,lo,hi)
     return {recordID='synthetic',sourceKey='itemdb',studyID='synthetic',source='synthetic',method='Prospect',
         inputItemID=1,inputCount=5,materials={{id=2,expectedQuantity=field(e),dropChance=field(p),minQuantity=field(lo),maxQuantity=field(hi)}}}
 end
-local function resolve(r)
-    LL.ItemDB={schemaVersion=1,processing={r}};LL.LegacyDB=nil;assert(LL:InitializeItemDB())
+local function resolve(r,other)
+    LL.ItemDB={schemaVersion=1,processing={r,other}};LL.LegacyDB=nil;assert(LL:InitializeItemDB())
     return LL:ComputeEvidenceModel({id=1},{name='Prospect',inputCount=5},nil,1,{})
 end
 model=assert(resolve(record(nil,.24,1,1)))
@@ -42,4 +43,58 @@ LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=1,classID=7},co
 local text=table.concat(tip.lines,'\n')
 assert(text:find('chance unavailable',1,true) and text:find('yield unavailable',1,true) and text:find('40',1,true),text)
 assert(not text:find('range ?',1,true),'field unknowns have explicit labels')
+
+local independent=record(2,.5,2,6)
+independent.fieldSpecificEvidence=true
+local rates=independent.materials[1]
+rates.dropChance.samples=10
+rates.expectedQuantity.samples=100
+rates.expectedQuantity.independentConfidence=true
+model=assert(resolve(independent))
+m=model.materials[1]
+assert(m.chanceConfidence==LL:RateConfidence(5,10) and m.confidence==80,
+    'drop counts do not cap confidence in an independently measured mean')
+LL.db.showMaterialConfidence=true
+tip.lines={}
+LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=1,classID=7},
+    conversionOptions={{name='Prospect',letter='P',value=40,yieldModel=model}}})
+text=table.concat(tip.lines,'\n')
+assert(text:find('chance '..m.chanceConfidence..'%, quantity support 80%',1,true),text)
+
+rates.dropChance={status='unknown',confidence=0,inferenceBlocked=true}
+rates.heldDropChance={value=.25,status='measured',confidence=60,samples=20}
+model=assert(resolve(independent))
+assert(model.materials[1].chance==nil and LL:ValueProcessingModel(model,0,true)==40,
+    'the measured mean can be valued without inventing chance from the range')
+LL.db.showResearchDetails=true
+tip.lines={}
+LL:AppendRecommendationTooltip(tip,{action='P',count=5,facts={id=1,classID=7},
+    conversionOptions={{name='Prospect',letter='P',value=40,yieldModel=model}}})
+text=table.concat(tip.lines,'\n')
+assert(text:find('Conflicting source chance: 25% (excluded from estimate)',1,true),text)
+LL.db.showResearchDetails=false
+rates.heldDropChance=nil
+
+rates.dropChance={value=.5,status='measured',confidence=60,samples=20}
+rates.expectedQuantity={status='unknown',confidence=0,inferenceBlocked=true}
+model=assert(resolve(independent))
+assert(model.materials[1].chance==.5 and model.materials[1].expectedQuantity==nil
+    and LL:ValueProcessingModel(model,0,true)==nil,'occurrence-only evidence remains visible without a gold figure')
+
+local rangeOnly=record(nil,nil,2,nil)
+rangeOnly.fieldSpecificEvidence=true
+model=assert(resolve(rangeOnly))
+assert(model.materials[1].minQuantity==2 and model.materials[1].maxQuantity==nil
+    and LL:ValueProcessingModel(model,0,true)==nil,'a single observed bound remains usable without a gold figure')
+
+local exact=record(2,.5,2,6)
+exact.fieldSpecificEvidence=true
+exact.materials[1].expectedQuantity.samples=10
+local larger=record(15,.9,1,20)
+larger.recordID='larger';larger.studyID='larger'
+larger.fieldSpecificEvidence=true;larger.inputCount=20
+larger.materials[1].expectedQuantity.samples=400
+model=assert(resolve(larger,exact))
+assert(model.materials[1].chance==.5 and model.materials[1].expectedQuantity==2,
+    'an exact batch takes precedence over a stronger different-batch distribution')
 print('PASS: supported probability/range anchors, source immutability, per-input references, zero/unknown and field-level tooltip reasons')

@@ -554,20 +554,28 @@ end
 -- D1c: the research team's v3 results (tools/research_v3_to_baselines.py, real
 -- studies only) arrive the same way. v3 already contains the studies behind the
 -- older "research:" rows (it imported them), so a v3 record with
--- supersedesResearch replaces those rows for the same method, input and
--- material instead of counting the same studies twice. A row whose material v3
--- does not carry (e.g. an unlock-only gem) is kept. The replaced rows stay in
+-- supersedesResearch replaces rows only when v3 covers the same operation,
+-- output and fields. A partial import must not remove an older source that
+-- supplies a different batch or a usable field that v3 is missing. Replaced rows stay in
 -- database/research/itemdb.lua and are listed in buildReport.researchSuperseded.
 -- arg[3] lets tests compile a fixture file instead.
 local v3=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))()
 assert(v3.schemaVersion==1 and type(v3.processing)=='table','Unsupported research v3 baseline schema')
 db.researchV3Manifest={revision=v3.sourceRevision,branch=v3.sourceBranch}
+local researchFields={'dropChance','expectedQuantity','minQuantity','maxQuantity'}
+local function researchOutputKey(record,material)
+    return table.concat({record.method,record.inputItemID or record.gearKey,record.inputCount,material.id},':')
+end
+local function hasResearchValue(field)
+    return field.value~=nil and field.status~='unknown' and field.status~='contradictory'
+end
+local measuredResearch={measured=true,observed=true,verified=true}
 local superseding={}
 for _,r in ipairs(v3.processing) do
     assert(r.recordID:match('^evidence:v3:'),'Research v3 baselines must use evidence:v3: record IDs')
     if r.supersedesResearch then
         for _,m in ipairs(r.materials) do
-            superseding[r.method..':'..tostring(r.inputItemID or r.gearKey)..':'..m.id]=r.recordID
+            superseding[researchOutputKey(r,m)]={recordID=r.recordID,material=m}
         end
     end
 end
@@ -575,9 +583,15 @@ local function supersededBy(r)
     if not r.recordID:match('^research:') then return nil end
     local by
     for _,m in ipairs(r.materials) do
-        local found=superseding[r.method..':'..tostring(r.inputItemID or r.gearKey)..':'..m.id]
-        if not found then return nil end -- keep any row carrying a material v3 lacks
-        by=found
+        local found=superseding[researchOutputKey(r,m)]
+        if not found then return nil end
+        if found.material.rankIDs or m.conditionalReference then return nil end
+        for _,field in ipairs(researchFields) do
+            local old,new=m[field],found.material[field]
+            if hasResearchValue(old) and (not hasResearchValue(new)
+                or (measuredResearch[old.status] and not measuredResearch[new.status])) then return nil end
+        end
+        by=found.recordID
     end
     return by
 end
@@ -690,10 +704,36 @@ for id in pairs(restrictionSource.ItemRestrictions or {}) do restrictions.noDise
 table.sort(restrictions.noDisenchant)
 for id,method in pairs(restrictionSource.DB2Processable or {}) do restrictions.processable[id]=method end
 -- D1c4: items the research team's v3 notes say can't be disenchanted
--- (tools/research_v3_no_disenchant.py). Only ADDED, as researchNoDisenchant, for
--- items the game-file list lacks; a game-file entry is never removed or changed.
+-- (tools/research_v3_no_disenchant.py). An item-page observation does not
+-- establish an item-wide restriction when actual disenchant evidence exists.
+-- The DB2 restrictions remain authoritative.
 local gameNoDE={} for _,id in ipairs(restrictions.noDisenchant) do gameNoDE[id]=true end
+local function observedPositiveDisenchant(record,material)
+    if record.sourceKind=='direct-player-cast-observation' and (record.observedOperations or 0)>0 then
+        for units,count in pairs(material.observedPositiveQuantityHistogram or {}) do
+            if (tonumber(units) or 0)>0 and count>0 then return true end
+        end
+    end
+    for _,name in ipairs(researchFields) do
+        local field=material[name]
+        if hasResearchValue(field) and field.value>0
+            and (measuredResearch[field.status] or (field.sampleSizeKnown and (field.samples or 0)>0)) then return true end
+    end
+    return false
+end
+local observedDisenchant={}
+for _,r in ipairs(primary) do
+    if r.method=='Disenchant' and r.inputItemID and r.sourceKey=='itemdb' then
+        for _,m in ipairs(r.materials) do
+            if observedPositiveDisenchant(r,m) then
+                observedDisenchant[r.inputItemID]=observedDisenchant[r.inputItemID] or r.recordID
+                break
+            end
+        end
+    end
+end
 restrictions.researchNoDisenchant={}
+db.buildReport.researchNoDisenchantConflicts={}
 local researchNoDESeen={}
 for _,r in ipairs(type(v3.noDisenchant)=='table' and v3.noDisenchant or {}) do
     local id=r.itemID
@@ -703,10 +743,16 @@ for _,r in ipairs(type(v3.noDisenchant)=='table' and v3.noDisenchant or {}) do
     assert(sourced,'research no-disenchant record '..id..' needs an https source')
     if not gameNoDE[id] and not researchNoDESeen[id] then
         researchNoDESeen[id]=true
-        restrictions.researchNoDisenchant[#restrictions.researchNoDisenchant+1]=id
+        if observedDisenchant[id] then
+            local conflicts=db.buildReport.researchNoDisenchantConflicts
+            conflicts[#conflicts+1]={itemID=id,sourceURLs=r.sourceURLs,disenchantRecordID=observedDisenchant[id]}
+        else
+            restrictions.researchNoDisenchant[#restrictions.researchNoDisenchant+1]=id
+        end
     end
 end
 table.sort(restrictions.researchNoDisenchant)
+table.sort(db.buildReport.researchNoDisenchantConflicts,function(a,b) return a.itemID<b.itemID end)
 if #restrictions.researchNoDisenchant>0 then
     print(('Research v3 added %d no-disenchant item(s) the game-file list lacks'):format(#restrictions.researchNoDisenchant))
 end

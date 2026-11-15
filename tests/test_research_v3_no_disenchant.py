@@ -1,8 +1,8 @@
 """D1c4: research v3 "noDisenchant" records -> ItemDB.restrictions (add only).
 
-Unit checks on a small temporary snapshot, then checks on the pinned real snapshot and the
-shipped ItemDBRuntime.lua: every game-file no-disenchant entry is still there, research adds
-only items the game-file list lacks, and every added item is backed by a v3 record.
+Unit checks on a small temporary snapshot, then checks on the pinned snapshot and the
+shipped ItemDBRuntime.lua: authoritative restrictions are intact and research-only
+claims either ship or have a logged conflict with actual disenchant evidence.
 """
 import json
 import re
@@ -63,8 +63,8 @@ with tempfile.TemporaryDirectory() as folder:
 real, _ = nd.build_no_disenchant(Path('database/research/v3-snapshot'))
 ok(len(real) > 100, 'the research team has recorded no-disenchant items')
 src = Path('database/sources/DB2Restrictions.lua').read_text()
-runtime = [l for l in Path('LootLiquidator/ItemDBRuntime.lua').read_text().splitlines()
-           if l.startswith('LL.ItemDB.restrictions=')]
+compiled = Path('LootLiquidator/ItemDBRuntime.lua').read_text()
+runtime = [l for l in compiled.splitlines() if l.startswith('LL.ItemDB.restrictions=')]
 ok(len(runtime) == 1, 'one restrictions line')
 line = runtime[0]
 
@@ -75,10 +75,12 @@ def ids_in(key):
 
 
 game, added = ids_in('noDisenchant'), ids_in('researchNoDisenchant')
+held = set(map(int, re.findall(r'\["disenchantRecordID"\]="[^"]+",\["itemID"\]=(\d+),\["sourceURLs"\]=', compiled)))
 block = src[src.index('for _,itemID in ipairs({') + len('for _,itemID in ipairs({'):]
 game_source = {int(x) for x in re.findall(r'\d+', block[:block.index('})')])}
 ok(game_source and game == game_source, 'every game-file no-disenchant entry ships unchanged')
 ok(added and not (added & game), 'research adds only items the game-file list lacks')
-ok(added == {r['itemID'] for r in real} - game, 'every research item ships, nothing else')
+ok(held and not (held & added) and not (held & game), 'conflicting research claims are recorded without enabling a hard denial')
+ok(added | held == {r['itemID'] for r in real} - game, 'every research item is either added or held')
 print(f'RESEARCH V3 NO-DISENCHANT TESTS: {passed} passed, 0 failed; {len(added)} added, '
       f'{len({r["itemID"] for r in real} & game)} already in the game-file list')

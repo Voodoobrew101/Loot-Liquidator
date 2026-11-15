@@ -103,7 +103,7 @@ if arg[2]=='--probe' then
             probe.operationUnverified=model.operationUnverified
             for _,m in ipairs(model.materials) do
                 probe.materials[#probe.materials+1]={id=m.id,rankIDs=m.rankIDs,expectedQuantity=m.expectedQuantity,
-                    chance=m.chance,minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,
+                    chance=m.chance,chanceCasts=m.chanceCasts,minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,
                     netExpectedValue=m.netExpectedValue,referenceFallback=m.referenceFallback,
                     conditionalExpectedQuantity=m.conditionalExpectedQuantity,conditionalExpectedValue=m.conditionalExpectedValue,
                     unavailableReason=m.unavailableReason,derivedMean=m.derivedMean,meanBasis=m.meanBasis,

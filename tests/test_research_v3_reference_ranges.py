@@ -149,14 +149,20 @@ class ReferenceRangeTests(unittest.TestCase):
         u = usage[id(target(fixed))]
         self.assertFalse(u['used']); self.assertTrue(u['range'])
         self.assertEqual(u['reason'], 'reference:noUsableValue')
-        calls = []; original = module.build
-        def observe(rows):
-            calls.append(copy.deepcopy(rows)); return original(rows)
-        with patch.object(module, 'load', return_value=rr), patch.object(module, 'build', side_effect=observe), patch.object(adapter, 'load_calculator', return_value=module):
-            adapter.build(PIN)
-        self.assertEqual(len(calls), 2)
-        self.assertEqual(target(calls[0])['minSeen'], 2)
-        self.assertNotIn(TARGET, {r['id'] for r in calls[1]})
+        independent = dict(target(rr), id='independent-fixture', studyKey='independent-fixture',
+                           source={'url': 'https://www.wowhead.com/item=13866#comments:id=1234567'},
+                           sourceKind='study', replaces=None, casts=14, castsWithDrop=3, totalQuantity=None)
+        with patch.object(module, 'load', return_value=rr + [independent]), patch.object(adapter, 'load_calculator', return_value=module):
+            records, _, _, _, _ = adapter.build(PIN)
+        record = next(r for r in records if r['recordID'] == 'evidence:v3:Disenchant:13866:x1')
+        material = next(m for m in record['materials'] if m['id'] == 16203)
+        self.assertEqual(material['minQuantity']['value'], 2)
+        self.assertEqual(material['maxQuantity']['value'], 2)
+        self.assertEqual(material['minQuantity']['samples'], 0)
+        self.assertFalse(material['minQuantity']['sampleSizeKnown'])
+        self.assertEqual(material['minQuantity']['status'], 'provisional')
+        self.assertEqual(material['dropChance']['samples'], 7)
+        self.assertIsNone(material['expectedQuantity'].get('value'))
         self.assertEqual(target(rr)['minSeen'], None)
 
     def test_consumed_pin_noop_and_fixture_quote(self):

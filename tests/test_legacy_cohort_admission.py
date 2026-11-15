@@ -3,7 +3,9 @@ import copy
 import hashlib
 import itertools
 import json
+from collections import Counter
 from pathlib import Path
+from shutil import copytree
 import sys
 import tempfile
 import unittest
@@ -29,14 +31,20 @@ def rows():
 
 def build(data, bypass=False, observe=None):
     mod = v3.load_calculator(SNAPSHOT)
-    original = mod.build
-    def checked(rr):
-        if observe is not None: observe.append(copy.deepcopy(rr))
-        return original(rr)
-    with patch.object(mod, 'load', return_value=data), patch.object(mod, 'build', side_effect=checked), patch.object(v3, 'load_calculator', return_value=mod):
+    with (patch.object(mod, 'load', return_value=data),
+          patch.object(v3, 'load_calculator', return_value=mod),
+          patch.object(v3, 'reference_ranges', wraps=v3.reference_ranges) as ranges,
+          patch.object(v3, 'build_field_support', wraps=v3.build_field_support) as supports):
         if bypass:
-            with patch.object(v3, 'retail_admission', side_effect=lambda rr:(rr, {})): return v3.build(SNAPSHOT)[0]
-        return v3.build(SNAPSHOT)[0]
+            with patch.object(v3, 'retail_admission', side_effect=lambda rr: (rr, Counter())):
+                result = v3.build(SNAPSHOT)
+        else:
+            result = v3.build(SNAPSHOT)
+    if observe is not None:
+        ranges.assert_called_once()
+        supports.assert_called_once()
+        observe.update(reference_ranges=ranges.call_args.args[0], field_support=supports.call_args.args[1])
+    return result[0]
 
 def material(records, item, output):
     return next(m for r in records if r.get('inputItemID') == item for m in r['materials'] if m['id'] == output)
@@ -84,9 +92,12 @@ class LegacyCohortAdmissionTests(unittest.TestCase):
             self.assertLess(a['dropChance']['confidence'],b['dropChance']['confidence'])
         b=material(before,186057,11176);a=material(after,186057,11176)
         self.assertEqual(b['expectedQuantity']['status'],'measured')
-        self.assertEqual(a['expectedQuantity']['status'],'provisional')
-        self.assertAlmostEqual(b['expectedQuantity']['value'],a['expectedQuantity']['value'])
-        self.assertEqual(a['expectedQuantity']['samples'],3.5)
+        self.assertAlmostEqual(b['expectedQuantity']['value'], 3/7)
+        self.assertEqual(b['expectedQuantity']['samples'], 3.5)
+        self.assertEqual(a['expectedQuantity']['status'], 'unknown')
+        self.assertNotIn('samples', a['expectedQuantity'])
+        self.assertNotIn('value', a['expectedQuantity'])
+        self.assertEqual((a['minQuantity']['value'], a['maxQuantity']['value']), (3, 3))
 
     def test_id_or_key_global_aliases_and_unrelated_control(self):
         for source in [r for r in rows() if r['id'] in IDS]:
@@ -103,9 +114,10 @@ class LegacyCohortAdmissionTests(unittest.TestCase):
         control['source']['url']='https://example.invalid/control'
         for kind in ('study','reference','tsm-table','compiled-research',None):
             held=[dict(r,sourceKind=kind,minSeen=50,maxSeen=100,totalQuantity=9000) for r in sources]
-            data=held+[control];before=copy.deepcopy(data);calls=[]
+            data=held+[control];before=copy.deepcopy(data);calls={}
             self.assertEqual(build(data,observe=calls),build([control]))
-            self.assertEqual(calls,[[control],[control]]);self.assertEqual(data,before)
+            self.assertEqual(calls, {'reference_ranges': [control], 'field_support': [control]})
+            self.assertEqual(data,before)
 
     def test_policy_order_permutations_preserve_other_holds(self):
         policy=json.loads(POLICY.read_text());rr=rows()
@@ -121,21 +133,23 @@ class LegacyCohortAdmissionTests(unittest.TestCase):
             with patch.object(Path,'read_text',read):self.assertEqual(v3.retail_admission(rr),expected)
 
     def test_loader_corrections_before_gate_and_replacement_limit(self):
-        mod=v3.load_calculator(SNAPSHOT);source=next(r for r in rows() if r['id']=='legacy-20261110-24701')
+        source=next(r for r in rows() if r['id']=='legacy-20261110-24701')
         with tempfile.TemporaryDirectory(prefix='ll-legacy-admission-') as tmp:
             root=Path(tmp);ev=root/'research/v3/evidence';ev.mkdir(parents=True)
+            copytree(SNAPSHOT/'research/v3/tools', ev.parent/'tools')
+            mod = v3.load_calculator(root)
             (ev/'rows.jsonl').write_text(json.dumps(source)+'\n')
             fixes=root/'research/v3/corrections.jsonl'
             fixes.write_text(json.dumps({'recordID':source['id'],'field':'casts','value':None})+'\n')
-            with patch.object(mod,'ROOT',str(root)),patch.object(mod,'EVIDENCE',str(ev)):
-                loaded=mod.load();self.assertIsNone(loaded[0]['casts']);self.assertTrue(loaded[0]['_corrected'])
-                self.assertEqual(v3.retail_admission(loaded)[0],[])
-                # Loader replacement runs first; gate does not restore an independent replaced row.
-                independent=dict(source,id='independent',studyKey='independent')
-                replacement=dict(source,replaces='independent')
-                (ev/'rows.jsonl').write_text('\n'.join(map(json.dumps,[independent,replacement]))+'\n')
-                loaded=mod.load();self.assertEqual([r['id'] for r in loaded],[source['id']])
-                self.assertEqual(v3.retail_admission(loaded)[0],[])
+            loaded = mod.load()
+            self.assertIsNone(loaded[0]['casts']);self.assertTrue(loaded[0]['_corrected'])
+            self.assertEqual(v3.retail_admission(loaded)[0],[])
+            # Loader replacement runs first; gate does not restore an independent replaced row.
+            independent=dict(source,id='independent',studyKey='independent')
+            replacement=dict(source,replaces='independent')
+            (ev/'rows.jsonl').write_text('\n'.join(map(json.dumps,[independent,replacement]))+'\n')
+            loaded=mod.load();self.assertEqual([r['id'] for r in loaded],[source['id']])
+            self.assertEqual(v3.retail_admission(loaded)[0],[])
 
     def test_24702_24705_originals_and_unrelated_rows_survive(self):
         rr=rows();kept,_=v3.retail_admission(rr);keptids={r['id'] for r in kept}
