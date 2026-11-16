@@ -1,107 +1,75 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-16T04:24:26.247Z",
-  "status": "completed-cast-provenance-backfill-two-historical-aqirite-ranks-no-new-independent-yield-cohorts",
+  "updated_at": "2026-11-16T05:30:45.168Z",
+  "status": "method-identity-gap-verified-no-new-independent-numeric-baseline",
   "task_ids": [
-    "T0008",
+    "T0010",
+    "T0011",
+    "T0012",
     "T0040",
     "T0009",
     "T0007",
-    "T0010",
-    "T0011",
+    "T0008",
     "T0048"
   ],
   "exact_gaps_targeted": [
-    "T0008: 14 original 2024-10-14 Aqirite (R1 210933; R2 210934) rows lacked a structured distinction between independently logged completed casts and operations inferred from ore input counts.",
-    "T0040: Post-2024-10-25 Bismuth 210930/210931/210932, Ironclaw 210936/210937/210938 and Aqirite 210933/210934/210935 output-by-output hits/zero-inclusive histograms remain missing.",
-    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 by-rank measured mills, output 222618/222619/222620 rank, per-output hits/zero histograms and refund basis are missing.",
-    "T0048: controlled TWW uncommon/rare/epic gear disenchant by exact item/rarity/kind/skill with item-specific output stack distributions and live-build eligibility."
+    "T0010/T0011/T0012: determine whether 2025-2026 10-herb Mycobloom housing dye conversions can fill addon-imported null ordinary Khaz Algar milling baseline; source says no, a separate housing craft system",
+    "T0040/T0009/T0007/T0008: post-2024-10-25 Bismuth, Ironclaw and Aqirite per-rank actual completed casts, per-output hits, zeros, stack histograms, skill, unlock and refund data remain unavailable in reviewed originals",
+    "T0048: dated current Retail disenchant per-rarity armor/weapon/skill per-output unit histogram and item bonus/eligibility remain unavailable"
   ],
   "newly_verified_fields": [
     {
-      "kind": "structured-cast-basis-correction",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
-      "sourcePublished": "2024-10-14",
-      "inputItemID": 210933,
-      "inputRank": 1,
-      "sourceStatedInputsProcessed": 11000,
-      "inputsPerCast": 5,
-      "arithmeticCasts": 2200,
-      "castsBasis": "countedFromInputs",
-      "sourceStatesRefundsNotReprospected": true,
-      "inputsRefunded": null,
-      "originalStudyKey": "reddit-1g350pq-aqirite-r1",
-      "correctionRecords": 7,
-      "outputItemIDs": [
-        212511,
-        212495,
-        212508,
-        212505,
-        213219,
-        213399,
-        213398
+      "kind": "method-scope-exclusion",
+      "source": "https://worldofwarcraft.blizzard.com/en-gb/news/24295382",
+      "corroboration": "https://www.wowhead.com/item=262628/teal-dye-pigment",
+      "inputItemIDs": [
+        210796,
+        210797,
+        210798
       ],
-      "castsWithDrop": null,
-      "perOutputZeroHistograms": null
-    },
-    {
-      "kind": "structured-cast-basis-correction",
-      "source": "https://www.reddit.com/r/woweconomy/comments/1g350pq",
-      "sourcePublished": "2024-10-14",
-      "inputItemID": 210934,
-      "inputRank": 2,
-      "sourceStatedInputsProcessed": 10000,
-      "inputsPerCast": 5,
-      "arithmeticCasts": 2000,
-      "castsBasis": "countedFromInputs",
-      "sourceStatesRefundsNotReprospected": true,
-      "inputsRefunded": null,
-      "originalStudyKey": "reddit-1g350pq-aqirite-r2",
-      "correctionRecords": 7,
-      "outputItemIDs": [
-        212511,
-        212495,
-        212508,
-        212505,
-        213220,
-        213399,
-        213398
+      "separateHousingDyeOutputIDs": [
+        274469,
+        274474
       ],
-      "castsWithDrop": null,
-      "perOutputZeroHistograms": null
+      "normalMillingOutputIDs": [
+        222618,
+        222619,
+        222620
+      ],
+      "sourceStatedHousingHerbInputCount": 10,
+      "ordinaryMillingMeasuredYield": null,
+      "patch": "12.1.0",
+      "conclusion": "Herb-to-housing-dye recipe at Housing Dye Station (Alchemy/Inscription), NOT ordinary Khaz Algar Mill -> Nacreous Pigment; previous housing salvage was also distinct from Mill."
     }
   ],
   "newly_verified_cohorts": [],
-  "newly_verified_reference_rows": 0,
   "new_estimator_eligible_numeric_yield_records": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-16T0424-aqirite-rank-cast-provenance-corrections.jsonl",
+  "newly_verified_reference_rows": 0,
+  "new_original_source_leads": 1,
+  "evidence_file": "research/v3/evidence/war-within/2026-11-16T0530-housing-dye-not-milling-boundary.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-16T0424-aqirite-rank-cast-provenance-corrections.jsonl"
+    "research/v3/evidence/war-within/2026-11-16T0530-housing-dye-not-milling-boundary.jsonl"
   ],
   "evidence_source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1g350pq",
-    "https://www.wowhead.com/spell=434018/algari-prospecting"
+    "https://worldofwarcraft.blizzard.com/en-gb/news/24295382",
+    "https://www.wowhead.com/item=262628/teal-dye-pigment",
+    "https://www.wowhead.com/item=274469/brown-housing-dye",
+    "https://www.wowhead.com/item=274474/white-housing-dye",
+    "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/"
   ],
   "verified_commit_sha": null,
-  "verification": "The 14 entries in this run replace, rather than independently duplicate, 14 existing outputs from two original Aqirite cohorts. This single atomic Git commit includes evidence JSONL and worker-only quiet status. Its own eventual SHA cannot be embedded in the status file without a second commit; commit SHA and branch/file read-back verified externally after writing.",
+  "verification": "An atomic single Git commit carries the evidence JSONL and only this worker's quiet-status file. Because a commit cannot contain its own SHA, verified_commit_sha is null in the committed status; actual commit SHA, branch ref and file contents must be checked after the commit and reported externally.",
   "blockers": [
-    "Original Oct 14 2024 source supplies per-1,000-ore averaged output units, not original per-cast material hit counts, zero-inclusive histograms, actual ore refunds, numerical skill, or dated game build. Arithmetic 2200/2000 operations must not be misidentified as a player action log.",
-    "Rank-1/2 Aqirite reports predate Oct 16/25 2024 prospecting changes and cannot fill post-hotfix EV baselines.",
-    "No newly validated primary-source post-Oct25 controlled per-item TWW gear disenchant, ranked ore prospecting or herb milling cohort with complete hit and stack distribution was found in this pass."
+    "No independently verified post-2024-10-25 TWW ranked ore/herb output cast log with per-output zero-inclusive histograms, build, skill/spec and Resourcefulness accounting was recovered this run.",
+    "Source HTML for some Wowhead Looter per-stack details could not be accessed through the connected browser resource, which exhausted its daily credits; no histogram or output rank was guessed.",
+    "The 12.1 housing-dye recipe mechanic is a distinct action and cannot be imported as Mill data; a future supported conversion method would require Master/schema approval."
   ],
   "exhausted_sources": [
-    "Previously imported/captured 2024 Reikah rank-1 ore datasets and 2024 Aqirite Reddit 1g350pq averages lack per-output hits; not re-recorded.",
-    "Existing PeaEsk rank-2 100 Ironclaw/Bismuth/Aqirite source has ambiguous denominator; no duplicate records.",
-    "Existing Mycobloom R1/R2 per-herb average sources and LotzBoi ranges lack completed mills; not rewritten as measured min/max.",
-    "Earlier Tomasz December 2024 original Google Sheets post is already a source lead and the sheet remains unshared; not duplicated.",
-    "Other Wowhead live/PTR Looter disenchant references from prior files are pooled, undated, skill-uncontrolled; no false current-cast measurements inserted.",
-    "The 2024-10-14 Reddit 1g350pq Aqirite rows were already documented; now their missing castsBasis and nominal input-count derivation are explicitly corrected; do not count as a new sample."
+    "Earlier 2024 Reikah/PeaEsk/Aqirite averages, 2025 Tomasz private Google worksheet and undated Mycobloom guides were already documented and not duplicated.",
+    "Newly checked 2025 housing-dye descriptions, Blizzard 12.1 update, Wowhead named dye identities, Method standard milling guide and Warcraft Wiki establish method mismatch, not a numeric yield study."
   ],
-  "next_concrete_step": "Prioritize an independent post-Oct-25-2024 ranked Ironclaw/Aqirite/Bismuth prospecting raw operation export with completed operations, per-output hits, 0/1/2+ distribution, exact gem/byproduct ranks, skill/specialization, and resourcefulness consumed/refunded; if absent, seek original TWW gear-DE item-side Looter histograms not already present, preserving reference-only separation.",
+  "next_concrete_step": "Seek previously unrecorded primary original 2025 post-hotfix Bismuth/Ironclaw/Aqirite R1/R2/R3 or Mycobloom R1/R2/R3 cast log (ideally addon-exported), with exact output item/rank IDs, completed action count, positive/zero histograms, skill/specializations and consumed versus refunded inputs. Do not revisit housing dyes for standard mill yield.",
   "production_merge": false,
   "release": false,
-  "validation_bypass": false,
-  "new_original_source_leads": 0,
-  "corrected_existing_records": 14,
-  "corrected_original_cohorts": 2
+  "validation_bypass": false
 }
