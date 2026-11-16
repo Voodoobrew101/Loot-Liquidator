@@ -1,42 +1,46 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-15T23:33:46.056Z",
-  "status": "Completed name-first prospect/mill source-original and duplicate-lineage check. No new independent numerical study or 0–N operation histogram; two searched audit records added without inferred casts/hits, zero events, estimates or prices.",
+  "updated_at": "2026-11-16T00:35:32.519Z",
+  "status": "Recorded two previously unindexed dated original Xenastro R3 Draconium ore prospecting workbook batches (18 rank-pooled quantity records); no completed-cast denominators or material-hit histograms inferred.",
   "task_ids": [
     "T0020",
-    "T0046",
     "T0019",
-    "T0041",
-    "T0018",
-    "T0015",
-    "T0017"
+    "T0041"
   ],
   "exact_gaps_targeted": [
-    "Prospect: Dragonflight Draconium 189143/188658/190311, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314 and Prismatic 194545 lack a new independently checked exact-rank, completed-operation material hit/zero histogram and Resourcefulness refund reconciliation.",
-    "Mill: Bubble Poppy 191467/191468/191469, Saxifrage 191464/191465/191466, Hochenblume 191460/191461/191462, Writhebark 191470/191471/191472 lack a new independently verified completed-operation per-pigment 0–N ledger."
+    "Draconium Ore Q3 item 190311: original batches CSV row 58 (2023-01-29, nominal 15000 ore) and CSV row 64 (2023-02-05, nominal 19000 ore), exact green/blue rank-pooled and Illimited Diamond ranked material quantity outputs; casts and per-output hit histograms unknown",
+    "Serevite, Khaz'gorite, Prismatic, Bubble Poppy/Saxifrage: independent original per-completed-operation hit and zero-outcome histograms remain missing"
   ],
-  "newly_verified_fields": [],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [],
+  "newly_verified_fields": [
+    "Xenastro Prospecting Log CSV row 58: 9 rank-pooled output totalQuantity cells; Skill 283; Input Q3 Draconium 190311; Inspiration .198; Resourcefulness .306; refund blank; collection 2023-01-29",
+    "Xenastro Prospecting Log CSV row 64: 9 rank-pooled output totalQuantity cells; Skill 283; Input Q3 Draconium 190311; Inspiration .198; Resourcefulness .306; refund blank; collection 2023-02-05"
+  ],
+  "newly_verified_cohorts": [
+    "xenastro-original-prospecting-log-draconium-r3-csvrow-58-2023-01-29",
+    "xenastro-original-prospecting-log-draconium-r3-csvrow-64-2023-02-05"
+  ],
+  "new_numerical_measurements": 18,
+  "numerical_fields_improved": [
+    "totalQuantity (9 output ranks per original batch)",
+    "collection date",
+    "reported skill/inspiration/resourcefulness",
+    "nominal input quantity contextualized as non-denominator"
+  ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-15T2333-original-ore-mill-source-dedup.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-16T0035-xenastro-original-two-draconium-r3-batches.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=191471/writhebark",
-    "https://www.reddit.com/r/woweconomy/comments/108782r",
-    "https://www.reddit.com/r/woweconomy/comments/10i63zb",
-    "https://www.reddit.com/r/woweconomy/comments/10me1e7",
-    "https://www.reddit.com/r/woweconomy/comments/10h6ccx"
+    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
+    "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/"
   ],
-  "verified_commit_sha": "6f450bb7043393f0dd885c9ac76477ff526574ed",
-  "commit_sha_scope": "Verified branch parent before this run's single commit; commit cannot embed its own new SHA, new commit read back externally.",
+  "verified_commit_sha": "5ee1fc2d5ad86497bd05413d6ef8f544b3c9d130",
+  "commit_sha_scope": "Verified branch head before composing this one commit; new commit SHA cannot be embedded in its own contents, verify externally after branch update.",
   "blockers": [
-    "No access to primary per-completed-cast rank-specific 0–N prospecting/milling event logs; prior original examples are nominal ore/herb totals or averages.",
-    "Resourcefulness refunded inputs make naive nominal-input / batch-size counts unreliable; exact completed casts, material hits and zero outcomes unknown.",
-    "Xenastro/Jallfo historical public Google Sheet rows still not independently fetched; Firecrawl connected source unavailable in this run due external account credit exhaustion (no retry).",
-    "Quality rank, skill/specialization, patch/build and origin cohort identity needed before rank-specific estimator promotion."
+    "Original 2023 author workbook has pooled green and blue gem totals, not single output IDs or operation-level material incidence.",
+    "No measured completed casts or castsWithDrop/histograms, and ore Quantity is nominal; refunded quantities are blank for these batches, not zeros.",
+    "Character specialization and exact patch/build not stated; old Inspiration-era rates not directly transferable to current Retail.",
+    "Source data belongs to two distinct dated sessions from one author, not two independent authors."
   ],
   "exhausted_sources": [
     {
@@ -1158,46 +1162,47 @@
       ]
     }
   ],
-  "next_concrete_step": "Change search strategy rather than repeating exhausted 2022–23 posts: seek raw addon SavedVariables/CSV or owner-published Xenastro/Jallfo per-event worksheet via directly available read-only source, then cross-check by original study ID and capture separate completed casts/refunds/per-output 0–N histograms.",
+  "next_concrete_step": "Seek original completed-operation SavedVariables/CSV by ore name with explicit Resourcefulness refund and 0-N output-count logs, or new independently measured modern batches; then resume Bubble Poppy/Saxifrage milling hit-denominators.",
   "validation": {
-    "preflight": "18 source/attempt entries across Reddit, Wowhead, Blizzard forums, Warcraft Wiki, GitHub, wow-professions; two searched entries each have >=6 named targets across >=3 sites; cross-checked Aary 968 inputs and Reddit 108782r already in repository.",
+    "preflight": "Read v3 README, evidence format, mechanics, worker and open Dragonflight queue; checked past Xenastro batch IDs and extracted original XLSX Prospecting Log; validated 18 source-cell values by row/column.",
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-15T2333-original-ore-mill-source-dedup.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-16T0035-xenastro-original-two-draconium-r3-batches.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "record_count": 2,
-    "record_type": "searched",
-    "independent_measured_cohorts": 0,
-    "source_semantics": "No probability, exact casts, zero outcomes, histogram or confidence inferred",
+    "record_count": 18,
+    "distinct_original_batches": 2,
+    "independent_authors": 1,
+    "source_semantics": "Ranked material units only; casts, hit counts, zero-operation histograms, rates and confidence unknown",
     "readback": "pending",
     "production_untouched": true
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-15T2333-original-ore-mill-source-dedup.jsonl",
-  "verified_parent_sha": "6f450bb7043393f0dd885c9ac76477ff526574ed",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0035-xenastro-original-two-draconium-r3-batches.jsonl",
+  "verified_parent_sha": "5ee1fc2d5ad86497bd05413d6ef8f544b3c9d130",
   "agent": "dragonflight",
-  "controlled_measured_cohorts_added": 0,
-  "material_occurrence_records_added": 0,
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-15T2333-original-ore-mill-source-dedup.jsonl",
+  "controlled_measured_cohorts_added": 2,
+  "material_occurrence_records_added": 18,
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0035-xenastro-original-two-draconium-r3-batches.jsonl",
   "evidence_source_links": [
-    "https://www.wowhead.com/item=191471/writhebark",
-    "https://www.reddit.com/r/woweconomy/comments/108782r",
-    "https://www.reddit.com/r/woweconomy/comments/10i63zb",
-    "https://www.reddit.com/r/woweconomy/comments/10me1e7",
-    "https://www.reddit.com/r/woweconomy/comments/10h6ccx"
+    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
+    "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/"
   ],
-  "original_cohort_basis": "No new source-original cohort. Previously observed Aary Writhebark 968 nominal inputs -> 657 R2 / 165 R3 pigments already recorded as dragonflight-20261031-10005/10006, and Reddit 108782r Draconium/Serevite cohort previously indexed. No duplicate added.",
-  "numerical_fields_advanced": [],
-  "duplicate_cohort_review": "Owner status did not list these five item IDs in prior recorded numerical cohort summaries; without full 293-file cross-archive exact-ID index, treat duplicate-exclusion as provisional and ask Master to crosscheck before compiler use.",
+  "original_cohort_basis": "Two distinct original author-dated 2023 Excel Prospecting Log rows 58 and 64; prior indexed rows 28, 31, 33-35, 40-43, 46-47, 50-56, 60-63, 65 checked. No overlap with indexed rows in known v3 Xenastro batch files.",
+  "numerical_fields_advanced": [
+    "totalQuantity (9 output ranks per original batch)",
+    "collection date",
+    "reported skill/inspiration/resourcefulness",
+    "nominal input quantity contextualized as non-denominator"
+  ],
+  "duplicate_cohort_review": "Exact row-index and original collection date distinct from previously indexed Xenastro rows; full repository archival duplicate index not independently exhausted; Master should verify before compilation.",
   "newly_verified_source_relationships": [
-    "Confirmed Writhebark Aary 968-input comment is the same original cohort as dragonflight-20261031-10005/10006; excluded from new numeric rows."
+    "Read original Office XLSX content through connected Drive fetch, including original Prospecting Log sheet; identifies 2 previously unindexed dated batches by row number."
   ],
   "exact_gaps": [
-    "Prospect: Draconium 189143/188658/190311; Serevite 190394/190395/190396; Khaz'gorite 190312/190313/190314; Prismatic Ore 194545 still lack independent rank-mapped per-completed-cast 0/1/2+ material counts, Resourcefulness refund ledger and verified epoch.",
-    "Mill: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 lack original completed mill denominator, pigment-specific occurrence histograms and refund-aware sampling.",
-    "New gear 207269/207274/207250 (live Looter) and 207204/207256 (PTR Looter): material hits/denominators available, but total material units, per-positive-stack histograms, character specialization/skill, bonuses/ilvl, exact operation dates, contributor identity/overlap and live applicability for PTR pages remain unknown."
+    "Draconium Ore Q3 item 190311: original batches CSV row 58 (2023-01-29, nominal 15000 ore) and CSV row 64 (2023-02-05, nominal 19000 ore), exact green/blue rank-pooled and Illimited Diamond ranked material quantity outputs; casts and per-output hit histograms unknown",
+    "Serevite, Khaz'gorite, Prismatic, Bubble Poppy/Saxifrage: independent original per-completed-operation hit and zero-outcome histograms remain missing"
   ],
-  "pooled_material_quantity_rows_added": 0
+  "pooled_material_quantity_rows_added": 12
 }
