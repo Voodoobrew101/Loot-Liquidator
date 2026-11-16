@@ -1,68 +1,109 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T00:03:34.213Z",
-  "status": "Original-source identity audit: 31/31 pinned ereduns EnchantedItemTypes material tuples verified across 15 distinct historical Classic level/weapon/armor groups; current research key_of collapses them to five keys. New 18 worker rows add 80 material-positive events and 133 units, not completed operations. No new Retail 2026 gold action, numeric expected yield, actual tooltip check or live QA.",
+  "updated_at": "2026-11-16T01:04:32.359Z",
+  "status": "Verified NEW independent astroid 21-row Classic Enchantrix original-source tuples; eight distinct level-specific armor groups collapse to 11 estimator group/output keys (six collisions). Historical positive-only units, not completed casts, probability, modern Retail EV or actual tooltip coverage.",
   "task_ids": [
     "T0047",
-    "T0053",
-    "T0042"
+    "T0042",
+    "T0053"
   ],
   "exact_gaps_targeted": [
-    "15 historical Classic ilvl-specific uncommon gear groups (57-65) encode 31 output material tuples; research key_of(gearGroup) omits itemLevelRange and collapses 15 original group identities to five estimator input/output keys",
-    "Nine new groups contain 18 material rows: 80 material-positive occurrences and 133 total material units, but no completed DE operation denominator, separate 0-output ledger, build/itemLink/bonus, skill/specialization or current Retail validity",
-    "Potential same-contributor duplicate lineage: source EnchantedItemTypes group aggregates may overlap EnchantedLocal records and must not be counted as independent studies"
+    "Eight level-specific Classic uncommon armor groups (41,43,46,47,51,54,55,56) / 21 source material tuples; compiler key_of omits gearGroup.itemLevelRange, collapsing six same-output keys across levels",
+    "21 source rows record 457 positive material occurrences and 1133 material units, but no complete completed-operation denominator or zero-inclusive per-cast histogram; output expected units/chance remain unpriced/unknown",
+    "Possible overlap between source EnchantedItemTypes aggregates and 415 EnchantedLocal entries; cannot declare independent study counts without disjoint original casts",
+    "Need original current-build exact-item/variant per-operation DE outcomes and character skill/spec, especially T0047 Warmaul Legplates 24995, before current Retail valuation"
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "source-integrity-verification-not-new-study",
-      "new_groups": 9,
-      "new_material_rows": 18,
-      "source_positive_material_occurrences": 80,
-      "source_material_units": 133,
+      "kind": "source-original-integrity",
+      "source_contributor": "astroid",
+      "groups": 8,
+      "material_rows": 21,
+      "tuple_comparisons_passed": 21,
+      "source_positive_material_occurrences": 457,
+      "source_material_units": 1133,
       "completed_operations": null,
-      "zero_outcomes": null
+      "zero_outcomes": null,
+      "unconditional_expected_quantity": null,
+      "probability": null
     },
     {
-      "kind": "aggregate-deduplicated-original-groups",
-      "all_groups": 15,
-      "all_material_rows": 31,
-      "source_positive_material_occurrences": 218,
-      "source_material_units": 503,
-      "original_estimator_keys": 5,
-      "completed_operations": null,
-      "occurrence_probability": null,
-      "unconditional_expected_quantity": null
-    },
-    {
-      "kind": "compiler-static-identity-check",
-      "file": "research/v3/tools/build_estimates.py",
-      "function": "key_of",
-      "missing_key_component": "gearGroup.itemLevelRange",
-      "effect": "distinct historical level cohorts share five group/output keys; potential overgeneralization only if eligible cohorts later supplied"
+      "kind": "static-estimator-key-audit",
+      "original_level_groups": 8,
+      "reduced_input_output_keys": 11,
+      "collision_keys": 6,
+      "collapsed_tuple_distinctions": 10,
+      "collisions": [
+        {
+          "outputItemID": 11137,
+          "levels": [
+            41,
+            43
+          ]
+        },
+        {
+          "outputItemID": 11174,
+          "levels": [
+            41,
+            43
+          ]
+        },
+        {
+          "outputItemID": 11175,
+          "levels": [
+            46,
+            47
+          ]
+        },
+        {
+          "outputItemID": 11176,
+          "levels": [
+            46,
+            47,
+            51,
+            54,
+            55
+          ]
+        },
+        {
+          "outputItemID": 11177,
+          "levels": [
+            41,
+            43
+          ]
+        },
+        {
+          "outputItemID": 16202,
+          "levels": [
+            51,
+            54,
+            55
+          ]
+        }
+      ]
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/20261116T0001-ereduns-15-groups-identity-and-unit-audit.md"
+    "research/v3/evidence/master/20261116T0104-astroid-armor-source-identity-audit.md"
   ],
   "worker_source_evidence": [
-    "research/v3/evidence/legacy/2026-11-15T2346-ereduns-uncommon-armor-and-weapons.jsonl",
-    "research/v3/evidence/legacy/2026-11-15T2251-original-ereduns-classic-groups-scott75-bracers.jsonl"
+    "research/v3/evidence/legacy/2026-11-16T0040-astroid-original-classic-armor-hits.jsonl"
   ],
   "source_links": [
-    "https://github.com/alex-berliner/wow_classic_de_table/blob/27797f18f8f34bfc19c74635aba337864ca1f65c/dbfiles/ereduns_log.lua"
+    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/astroid.lua"
   ],
   "source_blob_shas": {
-    "new_worker": "e9703d676e11f836bb6f167e6ada43dcc067d7bb",
-    "prior_worker": "fae6046911c6c9c4c4a91ecf414d7d1a55573a23",
+    "original": "9468de29626ccaf2462458df1b5a148b4c5cbdf0",
+    "worker": "98e56b47f1c01321029e474a320f4d41f32d7db7",
     "estimator": "0b09b553fef4214af8aaa93f1c85061956643711"
   },
-  "verified_commit_sha": "dbf77751d5d39e54d05dd637cbdf88709db8b942",
-  "verified_commit_sha_scope": "Evidence and RESEARCH-DASHBOARD were committed together at dbf77751 and re-read at exact commit; this subsequent coordinator-only status commit does not self-reference its own SHA.",
+  "verified_commit_sha": "1d61511746a9f6dc7457b356ec0d12fbd5a3570e",
+  "verified_commit_sha_scope": "This is the verified research branch source snapshot before the coordinator's atomic evidence/dashboard/status commit. The resulting commit cannot self-reference its own SHA; verify it externally afterward.",
   "actual_checks": {
-    "pinned_original_source_transcription_assertions_passed": 31,
-    "distinct_original_level_groups_verified": 15,
-    "current_estimator_keys_verified_from_source": 5,
+    "pinned_source_row_comparisons_passed": 21,
+    "distinct_source_groups": 8,
+    "estimator_colliding_keys": 6,
     "in_memory_javascript_checks": true,
     "python_compiler_tests_run": false,
     "lua_addon_tests_run": false,
@@ -71,22 +112,16 @@
   },
   "git_state_checked": {
     "main": "5dd5aa2f7f05656e7580ea744f657209db59a195",
-    "research_base": "dbf77751d5d39e54d05dd637cbdf88709db8b942",
+    "research_base": "1d61511746a9f6dc7457b356ec0d12fbd5a3570e",
     "owner_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "prs": {
-      "22": "closed unmerged (checked)",
-      "23": "closed unmerged (checked)",
-      "74": "open draft (checked)"
+      "22": "closed unmerged",
+      "23": "closed unmerged",
+      "74": "open draft"
     },
-    "research_evidence_commit_ci": {
-      "run": 43778029096,
-      "status": "in_progress",
-      "conclusion": null,
-      "checked_at": "2026-11-16T00:03:34.561Z"
-    },
-    "parent_ci": {
-      "run": 43776589585,
-      "head_sha": "3b2a617ab2dbd489aaa43bdf4afc39c2c3fb07e1",
+    "research_base_ci": {
+      "run": 43781832247,
+      "head_sha": "1d61511746a9f6dc7457b356ec0d12fbd5a3570e",
       "status": "completed",
       "conclusion": "success"
     }
@@ -94,44 +129,48 @@
   "worker_reports_verified": [
     {
       "role": "legacy",
-      "updated_at": "2026-11-15T23:46:02.783Z",
-      "status": "new-distinct-ereduns-classic-uncommon-armor-and-weapon-raw-material-hit-quantity-groups",
-      "evidence_file": "research/v3/evidence/legacy/2026-11-15T2346-ereduns-uncommon-armor-and-weapons.jsonl",
-      "verified_commit_sha": null
+      "updated_at": "2026-11-16T00:40:59.196Z",
+      "status": "new-distinct-astroid-original-classic-uncommon-armor-hit-and-unit-groups",
+      "evidence_file": "research/v3/evidence/legacy/2026-11-16T0040-astroid-original-classic-armor-hits.jsonl",
+      "verified_commit_sha": null,
+      "report_blob_sha": "a699f48f54b886753df366f06fe4b09a575185d6"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-15T23:33:46.056Z",
-      "status": "Completed name-first prospect/mill source-original and duplicate-lineage check. No new independent numerical study or 0–N operation histogram; two searched audit records added without inferred casts/hits, zero events, estimates or prices.",
-      "evidence_file": "research/v3/evidence/dragonflight/2026-11-15T2333-original-ore-mill-source-dedup.jsonl",
-      "verified_commit_sha": "6f450bb7043393f0dd885c9ac76477ff526574ed"
+      "updated_at": "2026-11-16T00:35:32.519Z",
+      "status": "Recorded two previously unindexed dated original Xenastro R3 Draconium ore prospecting workbook batches (18 rank-pooled quantity records); no completed-cast denominators or material-hit histograms inferred.",
+      "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0035-xenastro-original-two-draconium-r3-batches.jsonl",
+      "verified_commit_sha": "5ee1fc2d5ad86497bd05413d6ef8f544b3c9d130",
+      "report_blob_sha": "a8804118407709a8b28995163167ce62e5ce2c59"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-15T23:25:58.240Z",
-      "status": "two-new-class-verified-priest-pvp-refulgent-crystal-r2-reference-rows; no-new-controlled-numerical-baseline",
-      "evidence_file": "research/v3/evidence/war-within/2026-11-15T2325-priest-pvp-crystal-ids.jsonl",
-      "verified_commit_sha": null
+      "updated_at": "2026-11-16T00:27:31.967Z",
+      "status": "16-new-rank-identified-historical-11.2-Ommit-exchanges; no-new-controlled-numeric-yield-cohort; rotating-vendor-rates-excluded-from-live-estimates",
+      "evidence_file": "research/v3/evidence/war-within/20261116T0027-ranked-ommit-historical-exchanges.jsonl",
+      "verified_commit_sha": null,
+      "report_blob_sha": "112a5b3b1c2facf0ecb4dcdf7e584b9525d0eed3"
     },
     {
       "role": "midnight",
-      "updated_at": "2026-11-15T23:14:11.775Z",
-      "status": "New original-code verification: Goblinomics captures per-operation disenchant input/output ItemKeys and timestamps, but silently omits empty-output casts; UI coalesces variants and trade-skill salvage can aggregate multiple operations. No new measured material-yield cohort.",
-      "evidence_file": "research/v3/evidence/midnight/2026-11-15T2314-goblinomics-raw-capture-constraints.jsonl",
-      "verified_commit_sha": null
+      "updated_at": "2026-11-16T00:15:23.743Z",
+      "status": "New independent source-code exclusion: GatherBuffs disenchant action totals are conditional on positive tracked loot, not completed zero-inclusive events; no new original numeric cast cohorts.",
+      "evidence_file": "research/v3/evidence/midnight/20261116T0015-gatherbuffs-loot-window-denominator-audit.jsonl",
+      "verified_commit_sha": null,
+      "report_blob_sha": "7e19d37cc2a77c7e9391be06e505a14c89f5ec15"
     }
   ],
   "blockers": [
-    "Original Enchantrix observations do not supply completed operation denominators, per-cast 0/1/2 histograms, date/patch/build or real-character identity; total units / positive material events do not imply unconditional gold value.",
-    "Current key_of intentionally suppresses gearGroup.itemLevelRange; importing level-varying data without preservation/compatibility verification may blend incompatible cohorts.",
-    "Historical Classic item-level outputs cannot be called current Retail outcome evidence or priced as validated current-character estimates; source EnchantedLocal overlap is unresolved.",
-    "Owner's three-pass integration branch and addon fields are out of scope for this research-only audit; exact-head CI for evidence was running at last check."
+    "Original astroid Enchantrix counters have no zero-inclusive cast denominator, per-output conditional quantity histogram, precise patch/build, item-link variant, character profile or current Retail validity.",
+    "The research estimator omits gearGroup.itemLevelRange; currently total-only rows cannot form estimates. Do not combine item levels or import same-contributor per-item and grouped views without study-level deduplication.",
+    "Owner three-pass addon branch is owned elsewhere; no additive research-only source should be declared a shipped tooltip/gold recommendation."
   ],
   "exhausted_sources": [
+    "The pinned astroid EnchantedItemTypes entries for these eight groups were read and compared exhaustively. The final :0 field is not a cast-zero count; do not rescan as new independent measured casts.",
+    "The same astroid EnchantedLocal item view is one contributor's potentially overlapping cache; further copies of these group tuples are not independent studies.",
     "Source EnchantedItemTypes itself was inspected for all 15 targeted historical groups; stored trailing :0 is not a zero-outcome count and no completed-operation denominator is present. Do not reharvest the same file as new casts.",
-    "Group and per-item EnchantedLocal views are one contributor's archive and may overlap; do not double count or relabel its old cache timestamps as observed outcome dates.",
-    "Prior coordinator 21849 Bountiful Bags source, Ghost Iron/Adder's Tongue old Enchantrix logs and the same six earlier Classic groups are not new independent cohorts here."
+    "Group and per-item EnchantedLocal views are one contributor's archive and may overlap; do not double count or relabel its old cache timestamps as observed outcome dates."
   ],
-  "next_concrete_step": "Prioritize a dated current-Retail, build/skill/itemLink-tagged original player export with complete DE cast successes, material unit histograms and zero bins for an actionable item; separately validate a level-preserving group key regression in an isolated research-only branch before proposing any historical cohort admission. No addon changes, merges or new schedules.",
-  "notification_policy": "owner on-demand only; Dot owns monitoring"
+  "next_concrete_step": "Obtain and verify an original current-Retail patch/build, skill/spec, itemLink/bonus, all-casts-and-zeros per-operation DE export for a supported item (start with T0047 if eligible); separately propose an isolated source-level test for level-preserving gearGroup estimator keys before any admission. No main/addon changes or competing PRs.",
+  "notification_policy": "owner on-demand only; Dot owns progress monitoring"
 }
