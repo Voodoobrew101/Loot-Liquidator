@@ -1,86 +1,62 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-16T21:27:03.594Z",
-  "status": "Reviewed current branch research instructions, queue and prior worker evidence; added two NEW reference-only TWW Handful of Pebbles prospecting output identity sources and one original 2025 Ironclaw prospect-all operation-denominator caveat; no new measured estimator-eligible yields.",
+  "updated_at": "2026-11-16T22:22:24.054Z",
+  "status": "Read current branch queue and research rules; corrected one existing reference-only TWW prospecting output identity (Pebbles -> Onyx item 212511); no new measured yield cohorts or estimator-eligible numeric rates.",
   "task_ids": [
+    "T0032",
     "T0040",
     "T0009",
     "T0008",
-    "T0007",
     "T0010",
     "T0011",
-    "T0032",
     "T0048"
   ],
   "exact_gaps_targeted": [
-    "213398 Handful of Pebbles prospectability and outputs: exact 212498 Ambivalent Amber firsthand identity and Ostentatious Onyx wiki eligibility, without per-cast rates or confirmed Onyx item ID.",
-    "March 21, 2025 Ironclaw Ore Prospect All interrupted after 2 operations; intended ore count versus actual completed casts unresolved; 210936/210937 input rank not shown.",
-    "Post-2024-hotfix ranked Bismuth 210930/210931, Ironclaw 210936/210937, Aqirite 210933/210934 and Mycobloom 210796/210797/210798 still lack new independent current, skill-controlled completed casts with per-output totalQuantity/castsWithDrop/zero-inclusive histograms.",
-    "T0048 existing gear disenchant reference cohorts still lack verified raw material stacks/player skill/real patch build; no duplicate Looter pages imported."
+    "Original TWW Handful of Pebbles item 213398 -> Ostentatious Onyx output record had outputItemID null; resolve exact item ID without inferring drop rate or recreating prior cohort.",
+    "Bismuth ranks 210930/210931, Ironclaw 210936/210937, Aqirite 210933/210934 and Mycobloom 210796/210797/210798 still lack new independent post-hotfix rank-and-skill-specific per-operation histograms, completed casts, output totals, and refund basis.",
+    "T0048 TWW gear disenchant PTR Looter pools remain source-mode/duplicate/eligibility-limited; skill, game build, output stack histograms and actual live applicability remain unresolved."
   ],
   "newly_verified_fields": [
     {
+      "method": "Prospect",
       "inputItemID": 213398,
       "inputName": "Handful of Pebbles",
-      "method": "Prospect",
-      "outputItemID": 212498,
-      "outputName": "Ambivalent Amber",
-      "source": "https://www.wowhead.com/item=213398/handful-of-pebbles",
-      "type": "reference-only identity",
+      "outputItemID": 212511,
+      "outputName": "Ostentatious Onyx",
+      "type": "reference-only exact output ID correction",
+      "replaces": "war-within-20261116-2127-002",
       "casts": null,
       "castsWithDrop": null,
       "totalQuantity": null,
-      "hitProbability": null
-    },
-    {
-      "inputItemID": 213398,
-      "inputName": "Handful of Pebbles",
-      "method": "Prospect",
-      "outputItemID": null,
-      "outputName": "Ostentatious Onyx",
+      "outputRank": null,
+      "histogram": null,
       "source": "https://warcraft.wiki.gg/wiki/Ostentatious_Onyx",
-      "type": "reference-only wiki eligible output, item ID unconfirmed",
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null
-    },
-    {
-      "inputItemID": null,
-      "inputName": "Ironclaw Ore (rank unreported)",
-      "reportedCompletedConsecutiveOperationsBeforeStop": 2,
-      "reportedOn": "2025-03-21",
-      "source": "https://us.forums.blizzard.com/en/wow/t/prospecting-ore-on-jeweler-keeps-stopping/2080583",
-      "qualification": "UI interruption anecdote only, not a yield cohort or measured final completed operations"
+      "idVerification": "https://tradeskillmaster.com/retail/us/items/212511"
     }
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-16T2127-pebble-prospect-identity-and-cast-stop.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/2026-11-16T2222-pebbles-onyx-exact-output-id.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-16T2127-pebble-prospect-identity-and-cast-stop.jsonl"
+    "research/v3/evidence/war-within/2026-11-16T2222-pebbles-onyx-exact-output-id.jsonl"
   ],
   "evidence_source_links": [
-    "https://www.wowhead.com/item=213398/handful-of-pebbles",
-    "https://www.wowhead.com/item=212498/ambivalent-amber",
     "https://warcraft.wiki.gg/wiki/Ostentatious_Onyx",
-    "https://www.wowhead.com/profession-trait/onyx-98661",
-    "https://us.forums.blizzard.com/en/wow/t/prospecting-ore-on-jeweler-keeps-stopping/2080583"
+    "https://tradeskillmaster.com/retail/us/items/212511",
+    "https://www.wowhead.com/profession-trait/onyx-98661"
   ],
   "verified_commit_sha": null,
-  "verification": "Atomic single commit will include one new evidence JSONL and this agent's quiet-status file; a commit SHA cannot be embedded in its own content; verify branch-head/commit/readback externally after update.",
+  "verification": "Commit SHA cannot be placed inside the same commit's status JSON without changing its SHA. Commit/branch-head and read-back checks are performed externally after atomic commit; status file records evidence file and source provenance.",
   "blockers": [
-    "No original post-hotfix per-output ore/herb yield distribution with exact hit and zero counts; cannot promote reference mappings into estimator.",
-    "Pebbles to Amber comments claim 'always' without a controlled operation denominator; do not infer probability.",
-    "Warcraft Wiki Pebbles to Onyx reference has no direct output item ID, numeric cohort, specialization level or game build; skip guessed outputItemID.",
-    "Ironclaw Prospect All interruption affects whether source-stated ore budget equals completed operations; rank, refunds and output totals unknown."
+    "No original rank-controlled per-cast 0/1/2/... output histograms for current-era TWW milling/prospecting located; do not promote identity-only mapping to measured rate.",
+    "Pebbles Onyx specialization node is relevant, but original source does not state profession points, minimum skill, operation count, refunds, output quality or game build.",
+    "Previously identified 2024 pre-hotfix and PTR pooled cohorts cannot substitute for post-hotfix live game distributions; multiple Looter snapshots overlap."
   ],
   "exhausted_sources": [
-    "Mar 2025 Ironclaw stop report is a workflow bug, not yield evidence; revisit only with original per-operation logs.",
-    "Existing 2024 Raven11 Ironclaw 20-cast cohort, Reddit 1040 Aqirite post and Sep 2024 Mycobloom averages are already represented, not new independent studies.",
-    "Prior Nov16 2025 Ironclaw ore 600/117 operations Reddit reference lacks per-output yields; not re-recorded.",
-    "Wowhead prospect result byproduct comments are undated and do not supply histograms."
+    "Warcraft Wiki Pebbles/Onyx reference provides eligibility, not an experimental denominator; new exact Onyx ID independently verified on TSM, no additional usable numeric yield.",
+    "Raven11/2024 Ironclaw reports, September 2024 Aqirite totals, Reddit Mycobloom reference averages, 2025 interrupted Prospect All anecdote and Wowhead PTR pooled Looter counts were previously recorded; not copied or re-counted."
   ],
-  "next_concrete_step": "Seek owner-supplied or original author per-cast processing logs from 2025 onward, especially Ironclaw Ore and Aqirite per quality rank, with batch, actual completed operations, positive hit counts, zero-inclusive histograms, player skill/spec, patch and Resourcefulness/refund basis; verify Ostentatious Onyx linked item ID and trait gating independently before importer use.",
+  "next_concrete_step": "Seek original current-era rank-specific TWW prospect/mill/addon exports giving exact completed operations, per-output hits and zero-inclusive per-cast histograms, quality, skill/spec, actual consumed vs refunded ore/herbs and hotfix build; prioritize 210937, 210934 and Mycobloom 210796/210797. Reconcile output-identity and unlock on original source before numerical import.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
