@@ -1,77 +1,62 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-16T06:32:11.106Z",
-  "status": "new-firsthand-identity-and-ranked-input-leads-no-measured-yield-baseline",
+  "updated_at": "2026-11-16T09:39:13.784Z",
+  "status": "new-source-batch-denominator-conflict-not-estimator-eligible",
   "task_ids": [
-    "T0048",
-    "T0009",
-    "T0040",
-    "T0007",
-    "T0008",
     "T0010",
     "T0011",
-    "T0012"
+    "T0012",
+    "T0040",
+    "T0009",
+    "T0008",
+    "T0048"
   ],
   "exact_gaps_targeted": [
-    "T0048: firsthand green Blacksmithing pickaxe disenchant to Storm Dust with missing exact source itemID/output rank, per-cast loot quantities, skill/spec and itemLink",
-    "T0009/T0040: March 31 2025 R1 Ironclaw 210936 600-ore original post; no actual completed casts, material outputs, hit/zero histogram, unlock/refund/patch details",
-    "T0007/T0008/T0010/T0011/T0012: independently dated current and post-hotfix Bismuth/Aqirite/Mycobloom ranked finished-cast outputs and zero-inclusive distributions still missing"
+    "T0010/T0011/T0012: batch denominator discrepancy for Khaz Algar Milling spell 444181 when interpreting historical Mycobloom rank-specific pigment study quantities",
+    "T0040/T0009/T0008: post-2024-10-25 completed ore prospect casts and 0-inclusive per-output histograms for Bismuth 210931, Ironclaw 210937 and Aqirite 210934 still lack new original logs",
+    "T0048: gear-dis-enchant skill/rarity/rank-conditioned direct output-stack histograms still need original controlled casts rather than historical PTR cumulative Looter overlaps"
   ],
   "newly_verified_fields": [
     {
-      "kind": "firsthand-output-family-and-possible-source-identity",
-      "inputItemID": null,
-      "candidateItemID": 222481,
-      "candidateItemName": "Proficient Pickaxe",
-      "candidateIdentityConfirmedByOriginal": false,
-      "outputItemID": null,
-      "outputName": "Storm Dust",
-      "outputRank": null,
-      "source": "https://www.wowhead.com/item=219946/storm-dust",
-      "identityGuide": "https://www.wow-professions.com/guides/profession-equipment-guide",
-      "status": "reference-only"
-    },
-    {
-      "kind": "dated-original-ranked-input-quantity-lead",
-      "inputItemID": 210936,
-      "inputRank": 1,
-      "nominalInputOresReported": 600,
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "histogram": null,
-      "source": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-      "sourceDate": "2025-03-31",
-      "status": "searched-original-without-yields"
+      "kind": "secondary-guide-source-denominator-contradiction",
+      "recipeSpellID": 444181,
+      "recipeName": "Khaz Algar Milling",
+      "guideNominalCraftQuantity": 35,
+      "guideHerbMaterials": 175,
+      "guideObservedInputsPerCast": null,
+      "primarySpellStatedInputsPerCast": 10,
+      "primarySpellEffectValue": 10,
+      "newlyVerifiedMeasuredCasts": null,
+      "source": "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
+      "originalDate": "2025-02-24",
+      "primarySpellSource": "https://www.wowdb.com/spells/444181-khaz-algar-milling",
+      "status": "source-discrepancy-for-master-review-not-new-live-recipe"
     }
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "newly_verified_reference_rows": 1,
-  "new_original_source_leads": 2,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-16T0632-pickaxe-r1-ironclaw-original-gaps.jsonl",
+  "new_original_source_leads": 1,
+  "evidence_file": "research/v3/evidence/war-within/2026-11-16T0939-milling-shopping-list-denominator-conflict.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-16T0632-pickaxe-r1-ironclaw-original-gaps.jsonl"
+    "research/v3/evidence/war-within/2026-11-16T0939-milling-shopping-list-denominator-conflict.jsonl"
   ],
   "evidence_source_links": [
-    "https://www.wowhead.com/item=219946/storm-dust",
-    "https://www.wowhead.com/item=222481/proficient-pickaxe",
-    "https://www.wow-professions.com/guides/profession-equipment-guide",
-    "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
-    "https://us.forums.blizzard.com/en/wow/t/jc-prospecting-not-working-properly/1934709"
+    "https://www.wowhead.com/guide/the-war-within/professions/inscription-leveling",
+    "https://www.wowdb.com/spells/444181-khaz-algar-milling"
   ],
   "verified_commit_sha": null,
-  "verification": "One atomic commit contains exactly one new worker evidence JSONL and this worker's quiet-status file. A commit cannot contain its own SHA, so verified_commit_sha remains null inside the commit; actual commit and branch/file readback are independently verified after writing.",
+  "verification": "One atomic commit updates exactly this worker's quiet-status and one new worker JSONL. Self-referential verified_commit_sha is null inside the same commit; commit/tree/branch and both file read-back are independently checked after ref move.",
   "blockers": [
-    "The firsthand pickaxe comment omits exact input itemLink and Storm Dust quality rank: item 222481 is an independently identified candidate only.",
-    "The 2025 R1 Ironclaw report specifies 600 ore, not independently counted completed operations, output IDs, hit counts, output totals or zero outcomes. No controlled yield baseline can be derived.",
-    "No fresh independently verifiable R1/R2/R3 ore or herb per-cast zero-inclusive histogram with skill/spec and Resourcefulness accounting was found."
+    "Wowhead 2025-02-24 leveling table does not state 5 inputs per actual mill; discrepancy could be a planning error. Do not alter confirmed spell-444181 batch 10 or infer cast counts from its shopping list.",
+    "Independent post-hotfix per-cast Bismuth, Ironclaw, Aqirite or Mycobloom rank-separated 0/1/2... distributions with source skill/spec and Resourcefulness refund basis were not obtained.",
+    "No fresh original controlled disenchant output stack histogram/gear build to supersede existing shared Wowhead PTR cumulative cohorts."
   ],
   "exhausted_sources": [
-    "The Oct 2024 Reikah/PeaEsk, Sept 2024 Mycobloom, 50k mixed ore glass, 1700 Shatter/185 refund, and recent housing-dye method leads are already documented; none was duplicated.",
-    "Current targeted 2025 rank1 Ironclaw original report, Wowhead gear source comment, Blizzard professions thread, Method, WoW-Professions and Warcraft Wiki lack eligible per-cast distributions."
+    "Rechecked dated Wowhead TWW Inscription leveling and overview, WoWDB spell effect and existing branch recipe rows to isolate a new source discrepancy; old Mycobloom 2024 averages and TWW ore 2024 studies were not duplicated.",
+    "Current name-specific searches across Wowhead, Reddit, WoW-Professions and Warcraft Wiki did not supply newly verifiable completed-cast hit histograms; no repeated searched-only records added."
   ],
-  "next_concrete_step": "Follow original March 31 2025 Ironclaw commenter for raw input-rank/ore quantity, completed cast count and output logs; independently identify the exact green pickaxe in Roo42uk's first-person DE and confirm 219946/219947/219948 rank with an itemLink and skill; otherwise change targets to a new post-hotfix per-cast addon export.",
+  "next_concrete_step": "Request Master to adjudicate historical Wowhead leveling-list 35 crafts/175 herbs against explicit spell 444181 x10 without changing recipe. For yield gaps seek newly published original raw per-cast addon exports with rank, unlock, skill/spec, refunded inputs and 0/1/2 histograms rather than repeated 2024 forum sources or cumulative PTR Looter tables.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false
