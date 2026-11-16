@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T06:33:43.422Z",
-  "status": "Targeted source-original prospecting/milling search completed; no new independent measurable output cohorts or completed-cast histograms, no rates inferred.",
+  "updated_at": "2026-11-16T08:53:57.811Z",
+  "status": "One previously unindexed base-item Wowhead Looter Dragonflight disenchant cohort recorded (10 item operations; two output occurrence counts); new ore/herb original source search found no additional raw per-cast or zero-inclusive histograms.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,36 +13,45 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143/188658 exact rank-aware completed cast/output ID tables and Xenastro row-level source",
-    "Serevite Ore 190394/190395/190396 official quality item mapping and Resourcefulness-adjusted completed casts",
-    "Khaz'gorite Ore and Prismatic Ore 194545 exact output-rank, per-output castsWithDrop and 0/1/2+ histograms",
-    "Bubble Poppy 191467 and Saxifrage 191464 completed mills by output quality, refund and specialization context"
+    "Draconium Ore 189143/188658, Serevite Ore all rank IDs and Khaz'gorite/Prismatic Ore 194545 raw completed-cast vs refunded nominal input",
+    "Bubble Poppy 191467 and Saxifrage 191464 original completed mills and rank-resolved pigment 0/1/2+ outcomes",
+    "Previously unindexed Lurking Specter's Tabi 202499 item-specific disenchant material occurrence counts"
   ],
-  "newly_verified_fields": [],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": [],
-  "numerical_fields_improved": [],
+  "newly_verified_fields": [
+    "Lurking Specter's Tabi inputItemID 202499, 10 item-specific Wowhead Looter disenchants",
+    "Vibrant Shard outputItemID 194124: 9 of 10 item occurrences (source displayed 90%)",
+    "Resonant Crystal outputItemID 200113: 4 of 10 item occurrences (source displayed 40%)"
+  ],
+  "newly_verified_cohorts": [
+    "wowhead-looter-dragonflight-202499-cumulative-20261116 (one item-specific cumulative pool, not independent per-material cohorts)"
+  ],
+  "new_numerical_measurements": [
+    "202499 -> 194124: casts 10, castsWithDrop 9, percentShown 90; totalQuantity null",
+    "202499 -> 200113: casts 10, castsWithDrop 4, percentShown 40; totalQuantity null"
+  ],
+  "numerical_fields_improved": [
+    "2 per-output castsWithDrop and 2 source-displayed occurrence percentages for one newly indexed disenchant input, without fabricating units or per-operation stack histograms"
+  ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-16T0633-original-rank-cast-ledger-triage.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-16T0853-tabi-hits-and-original-log-search.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0633-original-rank-cast-ledger-triage.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0633-original-rank-cast-ledger-triage.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0853-tabi-hits-and-original-log-search.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0853-tabi-hits-and-original-log-search.jsonl",
   "source_links": [
-    "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://www.wowhead.com/de/item=191465/steinbrich",
-    "https://www.reddit.com/r/woweconomy/comments/10s9ol9",
-    "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
-    "https://us.forums.blizzard.com/en/wow/t/unable-to-prospect-prismatic-ore/1480672"
+    "https://www.wowhead.com/item=202499/lurking-specters-tabi",
+    "https://www.reddit.com/r/woweconomy/comments/10i63zb",
+    "https://www.reddit.com/r/woweconomy/comments/zzyjzu",
+    "https://warcraft.wiki.gg/wiki/Prismatic_Ore",
+    "https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight"
   ],
-  "verified_parent_sha": "4fe62514ef43b645e5499de79be54cb40eaeef9f",
-  "verified_commit_sha": "4fe62514ef43b645e5499de79be54cb40eaeef9f",
-  "commit_sha_scope": "Both SHA fields are the read-back verified parent branch commit before this one atomic evidence+status commit; embedding this new commit's own SHA inside its own content would be circular. New SHA is independently verified via GitHub commit and file readback after the ref update.",
+  "verified_parent_sha": "825252d1d48cb9cf70ae55af5774097a940c5dfe",
+  "verified_commit_sha": "825252d1d48cb9cf70ae55af5774097a940c5dfe",
+  "commit_sha_scope": "These SHA fields identify the branch parent independently read back before the atomic evidence+status commit; the new commit cannot embed its own SHA in its content without a circular hash. The subsequent GitHub commit/readback result supplies the resulting verified SHA.",
   "blockers": [
-    "No NEW first-person rank-resolved per-output completed-cast/hit/zero histogram for Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Bubble Poppy/Saxifrage milling.",
-    "Resourcefulness refund/input accounting absent from original ore and herb reports; nominal input/5 cannot substitute a verified operation denominator.",
-    "Authoritative Blizzard source tooltip/item API remains unavailable for contested historical Serevite/Draconium/Prismatic Amber rank-to-item ID mapping; secondary item displays do not establish primary identity.",
-    "Original Xenastro Google Sheets raw event rows remain unavailable; do not recopy known pooled source totals.",
-    "Newly encountered Prismatic Ore forum complaint and 2023 Serevite Resourcefulness post do not supply material output measurements; older source evidence already covers refund statistic."
+    "No new first-person rank-resolved 0/1/2+ completed-cast ore/herb output histograms; previously published sources overlap the existing studies.",
+    "Historical ore/herb source input counts are nominal and may include Resourcefulness refunds, so actual cast denominators and zeros cannot be inferred.",
+    "Lurking Specter's Tabi material output unit totals, skill, item version/bonus, data collection patch, and joint-hit/zero histograms are not reported by the cumulative Looter table.",
+    "Xenastro linked original per-event worksheet and independently checked historical ore-rank native item links remain unavailable."
   ],
   "exhausted_sources": [
     {
@@ -1222,23 +1231,39 @@
         "Warcraft Wiki name-first Prismatic Ore / Dragon Isles prospecting: source mechanics and item identities, no quality-specific raw material-by-cast histogram.",
         "Method Dragonflight milling guide named Bubble Poppy/Saxifrage (https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment): herb-to-pigment correspondence only; no new numerator, zero-bin or full rank-separated source results."
       ]
+    },
+    {
+      "at": "2026-11-16T08:53:57.811Z",
+      "scope": "Original-source name-first Dragonflight prospecting/milling histograms, item-cumulative Looter deduplication and alternate lead",
+      "reason": "No newly verified raw output-event ore/herb ledger; old original samples already indexed. Item-side 202499 not surfaced in current own status, recent November 6-16 evidence scans or branch-independent search; two material occurrences newly recorded.",
+      "whereLooked": [
+        "Reddit r/woweconomy name-first 'Draconium Ore prospecting results spreadsheet histogram' — checked original https://www.reddit.com/r/woweconomy/comments/10i63zb and https://www.reddit.com/r/woweconomy/comments/y3e8ek ; historic original 2022-23 author studies already indexed, zero per-material cast histograms unpublished.",
+        "Reddit r/woweconomy name-first 'Serevite Ore rank 2 3 prospecting 2022 samples' — https://www.reddit.com/r/woweconomy/comments/zzyjzu : old 69,000 nominal R2 and 34,917 nominal R3 ore sample already represented; saved inputs and casts unknown.",
+        "Reddit r/woweconomy name-first 'Khaz'gorite Ore original prospects 20 zeros' — https://www.reddit.com/r/woweconomy/comments/10h6ccx : previously indexed rank2 twenty-prospect no-diamond report, not new per-gem histogram.",
+        "Warcraft Wiki name-first 'Prismatic Ore prospecting outputs' — https://warcraft.wiki.gg/wiki/Prismatic_Ore : item mechanics only, not an independent 0/1/2+ output study.",
+        "Blizzard forums name-first 'Bubble Poppy milling 1000 pigment results' — no original completed mills, output hit counts or zero-inclusive histogram returned; no unpublished claim promoted.",
+        "Blizzard forums name-first 'Saxifrage milled 1000 pigment' — no new original rank-separated pigment operation count dataset retrieved.",
+        "Wow-Professions named 'Serevite Ore prospecting data' and Dragon Isles Inscription guide https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight : method/recipe reference only, not a firsthand material histogram.",
+        "Method name-first 'Bubble Poppy Saxifrage pigment milling results' https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment : qualitative source correspondence, not measured counts.",
+        "Wowhead item original 'Prismatic Ore' https://www.wowhead.com/item=194545/prismatic-ore : superbondez source 80 prospects already indexed, duplicate copies intentionally excluded."
+      ]
     }
   ],
-  "next_concrete_step": "Locate a published raw original Dragonflight per-operation event export/worksheet (e.g. Xenastro underlying Prospecting Log) with output item links and resourcefulness operations; independently confirm quality ranks from native tooltip/item API, then add source-derived completed casts/hits/0-N bins only.",
+  "next_concrete_step": "Retrieve original per-cast event row worksheet for ranked Draconium or Serevite/Prismatic prospecting, including exact output item hyperlinks and Resourcefulness refunds; test alternate Saxifrage/Bubble Poppy raw mills. For newly indexed 202499 seek item version/patch and stack-size histograms, do not infer zero operations from summed hits.",
   "validation": {
-    "source_review": "Primary Wowhead Prismatic and Saxifrage comments, original Reddit material/Resourcefulness evidence, Blizzard forum five-ore minimum, and official-adjacent profession recipe table checked; new numeric denominator and hit histogram absent.",
-    "prior_cohort_check": "Bugy, Xenastro, Aary, superbondez and rank2 Khaz'gorite prior indexed origin cohorts checked; locale mirrors excluded.",
-    "record_count": 1,
-    "numeric_records": 0,
+    "source_review": "Wowhead Lurking Specter's Tabi original item-side Disenchanting tab 10 disenchants, 9 Shard and 4 Crystal occurrences; 90%/40% as displayed. Independent ore/herb search across Reddit, Blizzard forums, Warcraft Wiki, Wow-Professions, Method and Wowhead.",
+    "prior_cohort_check": "Known recent item IDs 207250,207274,207256,207223,207224,207213,202529,207249 were found already indexed via direct branch evidence readback; excluded. Candidate 202499 absent from main search and inspected 2026-11-06 through 2026-11-16 evidence; earliest branch files unindexed not exhaustively scanned.",
+    "record_count": 3,
+    "numeric_records": 2,
     "searched_records": 1,
-    "distinct_input_cohorts": 0,
+    "distinct_input_cohorts": 1,
     "cast_level_ore_or_herb_histograms_added": 0,
     "missing_fields_remain_null": true,
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-16T0633-original-rank-cast-ledger-triage.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-16T0853-tabi-hits-and-original-log-search.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "readback": "pending connector fetch of new commit and files",
+    "readback": "pending immediate post-commit connector verification",
     "production_untouched": true
   },
   "production_changed": false,
