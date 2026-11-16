@@ -1,187 +1,160 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-16T20:19:16.083Z",
-  "status": "Recovered exact LIVE WoWhead Looter raw HTML material IDs/ranks and source count/outof for 6 distinct epic cloth items (12 source rows). This newly resolves previous ambiguous same-name Dawn Crystal rows for 250055 and 250058-250061, plus unindexed 250063. Reference-only: no new independently measured zero-inclusive yield cohort, totalQuantity, histogram, at-cast ilvl, build, skill or spec.",
+  "updated_at": "2026-11-16T21:21:51.431Z",
+  "status": "Source-originality audit: six previously unindexed Midnight Monk gear input IDs 250010,250011,250012,250014,250015,250017 checked against existing indexed evidence; 12 Wowhead Looter Dawn Crystal output-row reference holds captured (4 LIVE and 2 PTR pages). The source's item-specific operation counts and two named output occurrence-hit counts are reported, not a player-completed zero-inclusive yield cohort. No new independent current-patch numeric study, no per-cast material quantities/histograms, rank-linked output IDs or at-cast item levels/skill/spec verified.",
   "task_ids": [
     "T0026",
+    "T0049",
     "T0039",
     "T0005",
     "T0003",
-    "T0049",
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026 ambiguous same-name Dawn Crystal 243605 rank1 vs 243606 rank2 linked row IDs for 250055, 250058, 250059, 250060, 250061, and new 250063",
-    "272246 Miststalker's Wristbands displayed ilvl 305 vs generic 206: original actual disenchant receipt missing",
-    "237362 Umbral Tin prospecting exact rank, 242608 conditional Eversong Diamond unlock, per-output castsWithDrop and 0-inclusive histogram absent",
-    "237359 Refulgent Copper, 237365 Brilliant Silver, 236761 Tranquility Bloom milling original current-patch operation ledgers absent"
+    "T0026: exact input-item and source-count/outof row identity for previously unindexed epic Monk wrists/belt/legs/head/feet/cloak; preserve LIVE vs PTR separation",
+    "T0049: Miststalker's Wristbands 272246 live ilvl305 at-cast successful disenchant eligibility remains unknown",
+    "T0039/T0005: Umbral Tin Ore 237362 individual per-material cast hits/zero bins and rank + Eversong Diamond unlock/refunds unknown",
+    "T0003/T0045: 237359 Refulgent Copper, 237365 Brilliant Silver, 236761 Tranquility Bloom and other milling current-patch original zero-inclusive operation logs remain missing"
   ],
   "newly_verified_fields_or_cohorts": {
-    "source_type": "First-party Wowhead Looter LIVE base-item raw HTML, id=disenchanting Listview; item cache qualityTier 1/2",
-    "itemRows": [
+    "type": "source-reported-reference-only",
+    "distinctNewInputItemIDs": [
+      250010,
+      250011,
+      250012,
+      250014,
+      250015,
+      250017
+    ],
+    "outputFamily": "Dawn Crystal",
+    "exactOutputItemIDsAndRanksVerified": false,
+    "sourceReportedDisenchants": [
       {
-        "inputItemID": 250055,
-        "inputName": "Voidbreaker's Encryption",
-        "sourceReportedDisenchants": 73,
-        "rank1": {
-          "outputItemID": 243605,
-          "castsWithDrop": 33
-        },
-        "rank2": {
-          "outputItemID": 243606,
-          "castsWithDrop": 37
-        }
+        "inputItemID": 250010,
+        "sourceVersion": "ptr-2",
+        "count": 13,
+        "outputRowOneHits": 8,
+        "outputRowTwoHits": 4
       },
       {
-        "inputItemID": 250058,
-        "inputName": "Voidbreaker's Leyline Nexi",
-        "sourceReportedDisenchants": 87,
-        "rank1": {
-          "outputItemID": 243605,
-          "castsWithDrop": 40
-        },
-        "rank2": {
-          "outputItemID": 243606,
-          "castsWithDrop": 46
-        }
+        "inputItemID": 250011,
+        "sourceVersion": "live",
+        "count": 14,
+        "outputRowOneHits": 7,
+        "outputRowTwoHits": 5
       },
       {
-        "inputItemID": 250059,
-        "inputName": "Voidbreaker's Britches",
-        "sourceReportedDisenchants": 134,
-        "rank1": {
-          "outputItemID": 243605,
-          "castsWithDrop": 71
-        },
-        "rank2": {
-          "outputItemID": 243606,
-          "castsWithDrop": 60
-        }
+        "inputItemID": 250012,
+        "sourceVersion": "live",
+        "count": 8,
+        "outputRowOneHits": 5,
+        "outputRowTwoHits": 3
       },
       {
-        "inputItemID": 250060,
-        "inputName": "Voidbreaker's Veil",
-        "sourceReportedDisenchants": 133,
-        "rank1": {
-          "outputItemID": 243605,
-          "castsWithDrop": 62
-        },
-        "rank2": {
-          "outputItemID": 243606,
-          "castsWithDrop": 69
-        }
+        "inputItemID": 250014,
+        "sourceVersion": "ptr",
+        "count": 27,
+        "outputRowOneHits": 16,
+        "outputRowTwoHits": 10
       },
       {
-        "inputItemID": 250061,
-        "inputName": "Voidbreaker's Gloves",
-        "sourceReportedDisenchants": 109,
-        "rank1": {
-          "outputItemID": 243605,
-          "castsWithDrop": 58
-        },
-        "rank2": {
-          "outputItemID": 243606,
-          "castsWithDrop": 48
-        }
+        "inputItemID": 250015,
+        "sourceVersion": "live",
+        "count": 28,
+        "outputRowOneHits": 18,
+        "outputRowTwoHits": 10
       },
       {
-        "inputItemID": 250063,
-        "inputName": "Voidbreaker's Robe",
-        "sourceReportedDisenchants": 132,
-        "rank1": {
-          "outputItemID": 243605,
-          "castsWithDrop": 62
-        },
-        "rank2": {
-          "outputItemID": 243606,
-          "castsWithDrop": 62
-        }
+        "inputItemID": 250017,
+        "sourceVersion": "live",
+        "count": 15,
+        "outputRowOneHits": 9,
+        "outputRowTwoHits": 4
       }
     ],
-    "numeric_lineage": "12 source-row identities/occurrence counts from 6 item pages; identical mutable Looter snapshots compared across URL bonus variants, no independent player event cohorts",
-    "validatedRankIdentities": {
-      "243605": 1,
-      "243606": 2
-    },
-    "primaryOriginalZeroInclusiveYieldCohorts": 0
+    "originalCompletedCurrentPatchPlayerCohorts": 0,
+    "zeroInclusiveHistograms": 0,
+    "atCastIlvlOrSpecProof": 0,
+    "directItemIDsCheckedForEarlierDuplicateEvidence": true
   },
   "numeric_fields_advanced": {
     "rawSourceTablesChecked": 6,
     "distinctInputItemIDs": [
-      250055,
-      250058,
-      250059,
-      250060,
-      250061,
-      250063
+      250010,
+      250011,
+      250012,
+      250014,
+      250015,
+      250017
     ],
-    "linkedOutputItemIDs": [
-      243605,
-      243606
-    ],
-    "exactRankMappings": 12,
     "sourceReportedOperationCounts": [
       {
-        "inputItemID": 250055,
-        "disenchants": 73
+        "inputItemID": 250010,
+        "sourceVersion": "ptr-2",
+        "disenchants": 13
       },
       {
-        "inputItemID": 250058,
-        "disenchants": 87
+        "inputItemID": 250011,
+        "sourceVersion": "live",
+        "disenchants": 14
       },
       {
-        "inputItemID": 250059,
-        "disenchants": 134
+        "inputItemID": 250012,
+        "sourceVersion": "live",
+        "disenchants": 8
       },
       {
-        "inputItemID": 250060,
-        "disenchants": 133
+        "inputItemID": 250014,
+        "sourceVersion": "ptr",
+        "disenchants": 27
       },
       {
-        "inputItemID": 250061,
-        "disenchants": 109
+        "inputItemID": 250015,
+        "sourceVersion": "live",
+        "disenchants": 28
       },
       {
-        "inputItemID": 250063,
-        "disenchants": 132
+        "inputItemID": 250017,
+        "sourceVersion": "live",
+        "disenchants": 15
       }
     ],
     "sourceReportedPerOutputHits": [
       {
-        "inputItemID": 250055,
-        "rank1": 33,
-        "rank2": 37
+        "inputItemID": 250010,
+        "firstUnresolvedDawnCrystalRow": 8,
+        "secondUnresolvedDawnCrystalRow": 4
       },
       {
-        "inputItemID": 250058,
-        "rank1": 40,
-        "rank2": 46
+        "inputItemID": 250011,
+        "firstUnresolvedDawnCrystalRow": 7,
+        "secondUnresolvedDawnCrystalRow": 5
       },
       {
-        "inputItemID": 250059,
-        "rank1": 71,
-        "rank2": 60
+        "inputItemID": 250012,
+        "firstUnresolvedDawnCrystalRow": 5,
+        "secondUnresolvedDawnCrystalRow": 3
       },
       {
-        "inputItemID": 250060,
-        "rank1": 62,
-        "rank2": 69
+        "inputItemID": 250014,
+        "firstUnresolvedDawnCrystalRow": 16,
+        "secondUnresolvedDawnCrystalRow": 10
       },
       {
-        "inputItemID": 250061,
-        "rank1": 58,
-        "rank2": 48
+        "inputItemID": 250015,
+        "firstUnresolvedDawnCrystalRow": 18,
+        "secondUnresolvedDawnCrystalRow": 10
       },
       {
-        "inputItemID": 250063,
-        "rank1": 62,
-        "rank2": 62
+        "inputItemID": 250017,
+        "firstUnresolvedDawnCrystalRow": 9,
+        "secondUnresolvedDawnCrystalRow": 4
       }
     ],
+    "sourceReportedDataOnly": true,
     "newIndependentCurrentPatchCohorts": 0,
     "newPerCastHistograms": 0,
-    "newTotalMaterialQuantities": 0,
-    "castsWithDropAreSourceReportedNotEventVerified": true
+    "newTotalMaterialQuantities": 0
   },
   "evidence_files": [
     "research/v3/evidence/midnight/20261116T0320-retail-processing-export-source-gap.jsonl",
@@ -199,39 +172,39 @@
     "research/v3/evidence/midnight/2026-11-16T1714-original-de-restoration-receipts.jsonl",
     "research/v3/evidence/midnight/2026-11-16T1820-four-ptr-de-looter-identity-holds.jsonl",
     "research/v3/evidence/midnight/2026-11-16T1927-firsthand-DE-KP-source-holds.jsonl",
-    "research/v3/evidence/midnight/20261116T2019-ranked-dawn-crystal-looter-rawhtml.jsonl"
+    "research/v3/evidence/midnight/20261116T2019-ranked-dawn-crystal-looter-rawhtml.jsonl",
+    "research/v3/evidence/midnight/20261116T2121-six-monk-gear-looter-count-holds.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-16T1927-firsthand-DE-KP-source-holds.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261116T2019-ranked-dawn-crystal-looter-rawhtml.jsonl",
   "evidence_record_ids": [
-    "midnight-20261116-2501",
-    "midnight-20261116-2502",
-    "midnight-20261116-2503",
-    "midnight-20261116-2504",
-    "midnight-20261116-2505",
-    "midnight-20261116-2506",
-    "midnight-20261116-2507",
-    "midnight-20261116-2508",
-    "midnight-20261116-2509",
-    "midnight-20261116-2510",
-    "midnight-20261116-2511",
-    "midnight-20261116-2512"
+    "midnight-20261116-2601",
+    "midnight-20261116-2602",
+    "midnight-20261116-2603",
+    "midnight-20261116-2604",
+    "midnight-20261116-2605",
+    "midnight-20261116-2606",
+    "midnight-20261116-2607",
+    "midnight-20261116-2608",
+    "midnight-20261116-2609",
+    "midnight-20261116-2610",
+    "midnight-20261116-2611",
+    "midnight-20261116-2612"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=250055/voidbreakers-encryption",
-    "https://www.wowhead.com/item=250058/voidbreakers-leyline-nexi",
-    "https://www.wowhead.com/item=250059/voidbreakers-britches",
-    "https://www.wowhead.com/item=250060/voidbreakers-veil",
-    "https://www.wowhead.com/item=250061/voidbreakers-gloves",
-    "https://www.wowhead.com/item=250063/voidbreakers-robe"
+    "https://www.wowhead.com/ptr-2/item=250010/windwrap-of-ra-dens-chosen?bonus=12798:3161&ilvl=276&spec=270",
+    "https://www.wowhead.com/item=250011/strikeguards-of-ra-dens-chosen",
+    "https://www.wowhead.com/item=250012/stormsigil-of-ra-dens-chosen",
+    "https://www.wowhead.com/ptr/item=250014/swiftsweepers-of-ra-dens-chosen",
+    "https://www.wowhead.com/item=250015/fearsome-visage-of-ra-dens-chosen",
+    "https://www.wowhead.com/item=250017/storm-crashers-of-ra-dens-chosen?bonus=6652:12798:13440:3161&class=10&ilvl=276&spec=269"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Both owned files submitted in a single atomic Git tree+commit. The new commit SHA cannot be embedded in the committed status JSON without changing that commit recursively; verify external branch head/committed blobs.",
+  "commit_note": "One atomic Git tree commit contains only newly added Midnight evidence JSONL and the Midnight quiet-status JSON; self-embedding the resulting commit SHA in that same commit is not possible. Read-back verified branch commit SHA is established externally after updating the branch.",
   "blockers": [
-    "Looter raw count/outof are mutable pooled source reports; material hit counts for the two ranks are not necessarily disjoint. Do not treat unaccounted operations as zero-yield, or count this snapshot again as an independent study.",
-    "item cache links resolve Dawn Crystal 243605 qualityTier1 and 243606 qualityTier2, but original player per-cast full bonus/ilvl/build, skill/spec, complete material quantities/histograms and refunds are absent.",
-    "272246 305 real disenchant eligibility remains unverified; 237362 original per-output hit/zero histories and Copper/Silver/Mill current-patch ledgers still missing.",
-    "Firecrawl raw-HTML connected source exhausted its credits after the sixth item page; already retrieved observations are preserved without retries."
+    "All six pages display two Dawn Crystal output rows but extracted item-table text omits the original linked material IDs/ranks; do not assign 243605/243606 from row order without raw source link evidence.",
+    "All source counts are mutable pooled item-side Wowhead Looter snapshots; different LIVE/PTR versions can overlap. Source numbers are not audited, independent player per-cast histories, and missing row hits do not prove overall zero-yield operations.",
+    "No new independently recorded 12.1.5 current Retail per-cast gear/prospecting/milling original cohort, no item-level/bonus/skill/specialization output/zero/refund logs; 272246 at-cast ilvl305 disenchant eligibility and 237362 gem hit and diamond unlock outcomes remain unresolved."
   ],
   "exhausted_sources": [
     "2026-11-14T06:11:30.224Z: New cross-source comparison: GoldCap 242608/242712 labels two Eversong Diamond ranks, in tension with WoW-Professions and Dving quality-less guide wording. New Apr30 Blizzard customer restoration thread 2299311 says Dawn Crystal quality rank required for item restore is hidden by web UI; original poster's successful retry is not a new measured disenchant event. Earlier ilvl305 armory, Raven May22 restore, Cardinalai/Honeybone and Looter snapshots already indexed. No new complete per-cast cohort for 272246, 237362, 237359, 236761. Do not recycle these webpages without original exact itemLinks, outputs and operation ledger.",
@@ -294,10 +267,11 @@
     "2026-11-16 2026-11-16T17:14:39.445Z: New by-name checks across Blizzard US/EU forums, Reddit r/woweconomy and r/wow, Wowhead, Warcraft Wiki, WoWDB, GitHub and profession guides found no 12.1.5 at-cast current player ledger for 272246/237362/237359/237365/236761; distinct May22 first-person named gear restored-material receipt and Wowhead veteran-epic restoration comment recovered instead. Do not re-index May15 251085 or Lampshadesx without rank/bonus-at-cast logs; previously indexed Cardinalai, kyzenbka and 2026-04-28 Heart of Wind not recopied.",
     "2026-11-16T18:20:33.539Z: Novel by-name 2026-11-16 checks across Wowhead live/PTR, Reddit r/woweconomy, Blizzard US forum, Warcraft Wiki, WoWDB and GitHub repository index: no independently exported current 12.1.5 per-cast gear/prospect/mill log or 272246 305 actual DE receipt. Newly unindexed item-side PTR Looter tables 250062,249957,248076,251259 retained source reported hits but NOT as measured primary cohorts; no rescan of prior Cardinalai, Honeybone, 251085 restore, 248059/248064/248066 or PocketCFO July seed. Follow up with itemLink and material-linked actual player outputs before promoting.",
     "2026-11-16T19:27:53.301Z: NEW unindexed first-person original Blizzard forum 2314547 replies: k2blader June10 20 DE/1 Swirling Arcane Essence, Reikah June10 rare 25 DE/zero catch-up, TheBat June11 45 Courtly Robes 239672 DE with 19 claimed catch-up, Faethor June13 3 epics/zero KP item. All 4 are NON-material side outputs and reference only; guide independent M13 corroboration https://www.wowhead.com/guide/midnight/professions/enchanting-specializations. Current T0026/T0049/T0005/T0039/T0003/T0045 searches on Reddit, US/EU Blizzard, Wowhead and profession guides found no independently verified current-patch per-cast material 0-inclusive cohort. NocD, Jerek, Cardinalai, Honeybone, Draggoth, 5294KP already in prior evidence/status and excluded.",
-    "2026-11-16T20:19:16.083Z: Verified distinct raw LIVE Wowhead base-item Looter tables 250055,250058,250059,250060,250061,250063 and exact material row IDs (243605/243606); multiple variant URLs share aggregate and PTR snapshots overlap. No new independent player cohorts/zero bins; do not recrawl these six mutable snapshots unless a source change or per-cast event export appears. Researched named DE/Umbral Tin/Copper/Silver/milling across Wowhead, Reddit, Blizzard, Wiki and current profession guides; no new current-patch original event ledger."
+    "2026-11-16T20:19:16.083Z: Verified distinct raw LIVE Wowhead base-item Looter tables 250055,250058,250059,250060,250061,250063 and exact material row IDs (243605/243606); multiple variant URLs share aggregate and PTR snapshots overlap. No new independent player cohorts/zero bins; do not recrawl these six mutable snapshots unless a source change or per-cast event export appears. Researched named DE/Umbral Tin/Copper/Silver/milling across Wowhead, Reddit, Blizzard, Wiki and current profession guides; no new current-patch original event ledger.",
+    "2026-11-16T21:21:51.431Z: Fresh named-source original yield hunt for Miststalker's Wristbands 272246, Umbral Tin Ore 237362, Refulgent Copper Ore 237359, Brilliant Silver Ore 237365, and Tranquility Bloom 236761 across Reddit, Blizzard, Wowhead and profession guides yielded only previously indexed GamGem/WoWDB selected-ilvl vs base conflict, Cardinalai/JD3K/Draggoth estimates and guide/Reddit data. Do not duplicate them. Separate Wowhead item-side named searches uncovered unindexed Monk gear items 250010/250011/250012/250014/250015/250017. Existing branch/default-repo source checks found no owned Midnight evidence on these item IDs. 250010 and 250014 selected sources are PTR, not current Retail; their 13/8/4 and 27/16/10 records are reference only. LIVE inputs 250011 14/7/5; 250012 8/5/3; 250015 28/18/10; 250017 15/9/4 are pooled occurrence references. Sources in new evidence JSONL. Distinct indexed 249961, 250057, 250018 and other snapshots were excluded; no independent 0-inclusive original cohort was discovered."
   ],
-  "next_concrete_step": "Request Master correction mapping for prior same-name Dawn Crystal rows 250055 and 250058-250061 using independently checked source link IDs 243605 rank1 / 243606 rank2, without double-counting. Seek a genuine player per-cast export with itemLink/bonuses, skill/spec, zero outputs, and 237362 gem hit histograms; 272246 ilvl305 actual operation eligibility.",
-  "verified_base_commit_sha": "ac1527375a60673983a57d1f2502bbcd66f84190",
+  "next_concrete_step": "Seek original player-exported disenchant receipts for 250010-250017 and 272246 with exact itemLink bonuses, source output material IDs/rank, ilvl at cast, skill/spec, per-cast quantities and zero events, and original live 237362 rank/diamond-unlock gem logs. Do not promote the Looter reference rows or merge PTR into Retail until verified.",
+  "verified_base_commit_sha": "c0d195b2d5eb38b74da0e8240f684a0cb5e58cf7",
   "next": "Request Master correction mapping for prior same-name Dawn Crystal rows 250055 and 250058-250061 using independently checked source link IDs 243605 rank1 / 243606 rank2, without double-counting. Seek a genuine player per-cast export with itemLink/bonuses, skill/spec, zero outputs, and 237362 gem hit histograms; 272246 ilvl305 actual operation eligibility.",
-  "base_commit_sha": "ac1527375a60673983a57d1f2502bbcd66f84190"
+  "base_commit_sha": "c0d195b2d5eb38b74da0e8240f684a0cb5e58cf7"
 }
