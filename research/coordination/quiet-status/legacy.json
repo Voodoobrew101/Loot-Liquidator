@@ -1,160 +1,114 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T03:56:08.657Z",
-  "status": "committed-original-spiritmend-40-casts-and-tbc-243-game-data-prior-version-reconciliation",
+  "updated_at": "2026-11-16T04:46:29.693Z",
+  "status": "committed-original-ozzieem-cobalt-40-saronite-56-enchantrix-prospect-counters",
   "task_ids": [
     "T0047",
+    "T0022",
     "T0042",
     "T0044",
-    "T0052",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995: independently pin patch-2.4.3 uncommon armor iLvl102-120 source-derived output IDs and modeled percentages to a known historical epoch; compare with current Retail no-DE and mixed 2,068-event Looter outcome pool, with unverified version and hit histogram.",
-    "Historical uncommon armor iLvl81-99 and weapon iLvl80-99, rare iLvl100-117, epic iLvl105-164: versioned game-data identity/quantity bands. All are historical model priors, NOT fresh measured cohorts.",
-    "New original 40-cast Spiritmend Belt 54481 disenchant -> Hypnotic Dust 52555 x29, independent of 27 dust from instance resets in the same author comment.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424 still missing robust per-output completed-cast hits and zero-inclusive histograms. Token 45661 previously mapped; no duplication."
+    "Warmaul Legplates 24995: seek original raw disenchant event-stack outcomes and exact historical/current item build and eligibility, not a duplicated cumulative 2068-event Looter snapshot.",
+    "Cobalt Ore 36909: independent original per-ore Enchantrix counter for 40 recorded prospect operations, 7 material output IDs with unit totals; per-output hit counts and 0/1/2 histograms remain missing.",
+    "Saronite Ore 36912: distinct original Enchantrix counter for 56 prospect operations, 10 material output IDs with unit totals; not merged with prior separate historical Saronite cohorts.",
+    "Fel Iron Ore 23424: no newly supported completed-cast hits or zero-inclusive distributions this run; previous RIKU6 and Thottbot cohorts remain separately recorded.",
+    "Spaulders of the Wayward Vanquisher 45661: already investigated in previous runs; skipped rather than duplicating an identity-only token record."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-hypnoticdust-spiritmendbelt-40-de-29dust-original",
-      "method": "Disenchant",
-      "inputItemID": 54481,
-      "outputItemID": 52555,
-      "casts": 40,
-      "totalQuantity": 29,
+      "studyKey": "github-ozzieem-prospectedlocal-36909-40",
+      "method": "Prospect",
+      "inputItemID": 36909,
+      "inputName": "Cobalt Ore",
+      "detectedProspectOperations": 40,
+      "inputsPerCast": 5,
+      "outputTotalQuantities": {
+        "36917": 10,
+        "36918": 2,
+        "36920": 14,
+        "36923": 6,
+        "36926": 10,
+        "36929": 13,
+        "36932": 2
+      },
       "castsWithDrop": null,
-      "patch": null,
-      "build": null
+      "histogram": null,
+      "sourceKind": "study",
+      "rawSaveVariable": "ProspectedLocal[36909]"
     },
     {
-      "studyKey": "legacyofwarcraft-tbc243-uncommon-armor-102-120",
-      "sourceKind": "reference",
-      "patch": "2.4.3",
-      "quality": "uncommon",
-      "itemLevelRange": "102-120",
-      "modelOutputIDs": [
-        22445,
-        22446,
-        22449
-      ],
-      "modelPercentShown": [
-        75,
-        22,
-        3
-      ],
-      "quantityRanges": [
-        "2-5",
-        "1-2",
-        "1"
-      ]
-    },
-    {
-      "studyKey": "legacyofwarcraft-tbc243-uncommon-weapon-102-120",
-      "sourceKind": "reference",
-      "patch": "2.4.3",
-      "modelOutputIDs": [
-        22446,
-        22445,
-        22449
-      ],
-      "modelPercentShown": [
-        75,
-        22,
-        3
-      ],
-      "quantityRanges": [
-        "1-2",
-        "2-5",
-        "1"
-      ]
-    },
-    {
-      "studyKey": "legacyofwarcraft-tbc243-uncommon-armor-81-99",
-      "sourceKind": "reference",
-      "patch": "2.4.3",
-      "modelOutputIDs": [
-        22445,
-        22447,
-        22448
-      ],
-      "modelPercentShown": [
-        75,
-        22,
-        3
-      ]
-    },
-    {
-      "studyKey": "legacyofwarcraft-tbc243-uncommon-weapon-80-99",
-      "sourceKind": "reference",
-      "patch": "2.4.3",
-      "modelOutputIDs": [
-        22447,
-        22445,
-        22448
-      ],
-      "modelPercentShown": [
-        75,
-        22,
-        3
-      ]
-    },
-    {
-      "studyKey": "legacyofwarcraft-tbc243-rare-armor-and-weapons-100-117",
-      "sourceKind": "reference",
-      "patch": "2.4.3",
-      "modelOutputIDs": [
-        22449,
-        22450
-      ],
-      "modelPercentShown": [
-        99.5,
-        0.5
-      ]
-    },
-    {
-      "studyKey": "legacyofwarcraft-tbc243-epic-armor-and-weapons-105-164",
-      "sourceKind": "reference",
-      "patch": "2.4.3",
-      "modelOutputIDs": [
-        22450
-      ],
-      "modelPercentShown": [
-        100
-      ]
+      "studyKey": "github-ozzieem-prospectedlocal-36912-56",
+      "method": "Prospect",
+      "inputItemID": 36912,
+      "inputName": "Saronite Ore",
+      "detectedProspectOperations": 56,
+      "inputsPerCast": 5,
+      "outputTotalQuantities": {
+        "36917": 24,
+        "36920": 28,
+        "36921": 1,
+        "36923": 24,
+        "36924": 1,
+        "36926": 16,
+        "36929": 29,
+        "36930": 3,
+        "36932": 18,
+        "36933": 1
+      },
+      "castsWithDrop": null,
+      "histogram": null,
+      "sourceKind": "study",
+      "rawSaveVariable": "ProspectedLocal[36912]"
     }
   ],
   "numeric_summary": {
-    "new_records": 16,
-    "new_original_studies": 1,
-    "new_completed_disenchant_casts": 40,
-    "new_measured_output_totals": 1,
-    "new_output_hit_counts": 0,
-    "new_zero_histograms": 0,
-    "new_model_reference_rows": 15,
+    "new_records": 17,
+    "new_original_account_input_cohorts": 2,
+    "detected_prospect_operations_cobalt": 40,
+    "detected_prospect_operations_saronite": 56,
+    "new_output_total_quantity_fields": 17,
+    "new_output_hit_count_fields": 0,
+    "new_zero_histogram_fields": 0,
     "warmaul_24995_new_measured_casts": 0,
-    "cobalt_36909_new_measured_casts": 0,
     "feliron_23424_new_measured_casts": 0
   },
   "source_urls": [
-    "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html",
-    "https://www.wowhead.com/item=52555/hypnotic-dust",
-    "https://www.wowhead.com/tbc/item=24995/warmaul-legplates"
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/EVIAN/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/HASKINA/SavedVariables/Enchantrix.lua"
   ],
-  "evidence_file": "research/v3/evidence/legacy/20261116T0356-tbc243-game-data-and-spiritmend-original.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/20261116T0356-tbc243-game-data-and-spiritmend-original.jsonl",
-  "verified_base_commit_sha": "10fd14beb087d78bac04912038322fe5b1694146",
+  "original_source_blob_sha": "237c16bb26b63edbeb6cc8f733ffd149e0d514fb",
+  "evidence_file": "research/v3/evidence/legacy/20261116T0446-ozzieem-cobalt-saronite-verified-local-counters.jsonl",
+  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/20261116T0446-ozzieem-cobalt-saronite-verified-local-counters.jsonl",
+  "verified_base_commit_sha": "b27cb61e8b1d6f7c1befe1588751cfec6b833738",
   "verified_commit_sha": null,
-  "commit_note": "Single atomic Git commit contains exactly one new legacy JSONL file plus this role-owned status file. Git commit hash cannot be self-referentially stored within this same status blob; verify branch HEAD and both file hashes by independent read-back.",
+  "commit_note": "The exact single Git commit includes this role-owned status and exactly one new legacy evidence JSONL. A same-commit status JSON cannot contain its own resulting Git SHA without a self-referential hash cycle; verify final commit SHA, branch head and contents independently via GitHub fetch/read-back.",
   "blockers": [
-    "Warmaul 24995 historical Looter 2,068 events lacks original raw per-event positive-stack histogram, measured output totals, build/bonus/skill and current Retail eligibility. Patch2.4.3 game-data group model does NOT include 22447 for iLvl108 whereas mixed Looter aggregate lists 7 lesser-planar hits; do not treat as equivalent epochs.",
-    "Game-data percentages 75/22/3 and rare 99.5/0.5 are model priors only; 11,018 eligible item templates across game are NOT disenchant casts. No measured chance, missing zeros or sample size was invented.",
-    "Spiritmend 54481 original 40 disenchants supply total units only; no per-cast hits, zeros or source build. A separate 27 Hypnotic Dust from instance runs is not attributed to those belts.",
-    "Cobalt 36909 and Fel Iron 23424 still lack high-confidence original per-cast distributions; exact Warmaul eligible gate unchanged.",
-    "HTML rendering on Wowhead does not expose Warmaul raw per-cast data; optional browser extraction provider denied due temporary credit exhaustion. No transfer from neighboring BC gear."
+    "Warmaul 24995 still lacks original event-level positive-stack histograms, exact material-unit totals, independently established Looter patch/build, per-item bonus IDs, live eligible variant, skill and modern Retail eligibility; historical 22445/22446/22447/22449 pool cannot be assumed current.",
+    "Source Enchantrix ProspectedLocal.total counters are detected processing operations, not per-output castsWithDrop; material counters are summed units; no zero-inclusive output histograms can be reconstructed from these totals.",
+    "OZZIEEM, EVIAN and HASKINA saved-variable snapshots contain identical Cobalt/Saronite counters in different account folders, so only one source cohort is recorded per input. Character attribution and whether snapshots were shared or copied are unknown.",
+    "Cobalt/Saronite source game build, patch/hotfix, character skill, specialization, refund behavior and live Retail applicability are unknown; no source-supported measurement of per-output probability, zero count, quality-conditional yield, or bonus IDs.",
+    "Fel Iron 23424 remains under-sampled for per-output positive-cast counts, with no new measured cohort this run."
   ],
   "exhausted_sources": [
+    {
+      "target": "Duplicate OZZIEEM source snapshots in same repository",
+      "where": [
+        "WTF/Account/EVIAN/SavedVariables/Enchantrix.lua",
+        "WTF/Account/HASKINA/SavedVariables/Enchantrix.lua"
+      ],
+      "why": "Cobalt 40 and Saronite 56 counters, material IDs and unit totals match OZZIEEM exactly; mirrors excluded, not independently sampled."
+    },
+    {
+      "target": "Previously committed original OZZIEEM Adder's Tongue 36903 milling",
+      "where": [
+        "research/v3/evidence/legacy/2026-11-15T2143-original-ghostiron-adderstongue-logs.jsonl"
+      ],
+      "why": "703 mills with outputs 39343 and 43109 already recorded; not repeated."
+    },
     {
       "target": "Additional Warmaul 24995 original per-cast evidence",
       "where": [
@@ -173,6 +127,6 @@
       "why": "Checked against repository legacy files: existing historical Fel Iron 100/565 ore, Runecloth Belt 4/5/50/70 and Brown Linen 54/73/75/2086 cohorts already recorded; skipped to avoid duplicate cohorts."
     }
   ],
-  "next_concrete_step": "Secure an in-game Warmaul 24995 original item variant with actual disenchant eligibility, build/bonus/skill and zero-inclusive raw casts; alternatively locate original Looter stack-frequency export. Seek genuine new Cobalt 36909 and Fel Iron 23424 material hit-count studies. Keep patch2.4.3 model separate from measured historic/current Retail evidence.",
-  "gold_ev_policy": "Gold EV is computed by addon from live prices; no frozen prices or gold values in evidence."
+  "next_concrete_step": "Find a source-produced zero-inclusive per-operation Cobalt 36909 or Fel Iron 23424 prospect export (with output hits and material stack sizes), then secure Warmaul 24995 current-item eligibility and source-build-matched event-level disenchant output logs; preserve older historical model-only priors separately.",
+  "gold_ev_policy": "Live addon computes gold EV from current prices. No fixed prices or gold EV entered into research."
 }
