@@ -1,119 +1,106 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T08:40:29.611Z",
-  "status": "Research-only independent source reconciliation: 62/62 in-memory row/schema/histogram assertions passed; two additional unimported old-comment source leads relative to latest Legacy JSONL (three itemized boot DE, one approximate 120-bracer shuffle). Zero new supported current-Retail gold decisions; owner integration and worker files untouched.",
+  "updated_at": "2026-11-16T11:28:38.112Z",
+  "status": "Research-only source/identity progress: new WoWDB LIVE 25003 noDisenchant reference located; 4 of latest Legacy's 10 noDE flags reproduce identical old item+URL sources; 25/25 targeted JSONL assertions passed. No new measured current-Retail processing cohort or proven gold decision. Addon integration and worker lanes untouched.",
   "task_ids": [
     "T0042",
-    "T0039",
-    "T0026"
+    "T0047",
+    "T0039"
   ],
   "exact_gaps_targeted": [
-    "T0042: Netherweave Boots 21853 original Allakhazam distinct three completed disenchants Arcane Dust x4,x4,x3; not present in 08:35 Legacy worker JSONL; original player independence, game build, current Retail eligibility and whole-evidence duplication remain unverified.",
-    "T0042: Netherweave Bracers 21849 original 85599 120-bracer shuffle comment has 2 Small Prismatic Shards, Lesser Planar Essence convertible to 19 Greater Planar Essences and about 180 Arcane Dust. Individual completed DE ledger, exact unconverted LPE units, distinct cohort identity, present build/character and market prices unknown.",
-    "T0042: Legacy worker 13-boot histograms describe 13 reported completed DE and 7/5/1 material-positive results with units 27/6/1. No separately supplied zero bins; four-boot 3/3/3/4 Dust comment is distinct. 332 crafted bracers is not a 332-disenchant denominator, and 'lesser nether essence' output ID remains ambiguous.",
-    "T0039: Current-patch Retail Midnight Umbral Tin Ore 237362 / Copper 237359 remains missing source-identified rank/skill/unlock/refund zero-inclusive per-output completed-operation records."
+    "T0042: Bloodfist Legplates 25003 current WoWDB LIVE static noDisenchant reference and ilvl32 was missing from the four targeted Legacy original files. It needs archive-wide dedupe and real Retail itemLink/bonus/eligibility validation before runtime action gating.",
+    "T0042/T0047: latest Legacy 25007, 25009, 25010, 25011 noDE rows have identical source URL+item IDs as 2026-11-07; do not count these four as independent new evidence or eligible-gold coverage.",
+    "T0042: 25001/25004/25005 have prior WotLK3.3.5 disenchant reference-table outputs conflicting in era and item-instance eligibility with 2026 static noDE flags; do not infer rates or globally blacklist without variant checks.",
+    "T0039: Midnight 237362/237359 current-patch source-identified rank/skill/unlock/refund zero-inclusive per-output completed-operation logs still missing."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "new-source-lead-not-newly-imported",
-      "inputItemID": 21853,
-      "outputItemID": 22445,
-      "source_original_comment": "Allakhazam three-boots",
-      "source_reported_completed_disenchants": 3,
-      "source_reported_itemized_units": [
-        4,
-        4,
-        3
+      "kind": "new-standalone-reference-source-lead-not-a-live-operation",
+      "inputItemID": 25003,
+      "inputName": "Bloodfist Legplates",
+      "sourceKind": "WoWDB-LIVE-static-item-metadata",
+      "itemLevel": 32,
+      "slot": "Legs",
+      "armor": "Plate",
+      "noDisenchantFlag": true,
+      "reportedCompletedDisenchantOperations": null,
+      "verifiedRetailItemInstanceEligibility": false,
+      "source": "https://www.wowdb.com/items/25003-bloodfist-legplates"
+    },
+    {
+      "kind": "source-identity-deduplication-not-new-observations",
+      "originalFile": "research/v3/evidence/legacy/2026-11-16T1112-bloodfist-conqueror-eligibility-willow.jsonl",
+      "previousFile": "research/v3/evidence/legacy/2026-11-07T0547-tbc-scaled-conqueror-armor-weapons.jsonl",
+      "repeatedInputItemIDs": [
+        25007,
+        25009,
+        25010,
+        25011
       ],
-      "source_reported_total_units": 11,
-      "positive_stack_bins": {
-        "3": 1,
-        "4": 2
-      },
-      "full_zero_inclusive_raw_log": false,
-      "current_retail_applicability_verified": false,
-      "source": "https://www.wowhead.com/tbc/item=21853/netherweave-boots"
+      "identicalItemAndSourceURL": true,
+      "newOriginalCohorts": 0
     },
     {
-      "kind": "new-source-lead-relative-to-worker-file-only",
-      "inputItemID": 21849,
-      "reportedBracers": 120,
-      "verified_completed_disenchant_events": null,
-      "outputApproximateArcaneDust": 180,
-      "reportedSmallPrismaticShards": 2,
-      "reportedGreaterPlanarEssenceEquivalent": 19,
-      "exactLesserPlanarEssenceCount": null,
-      "source": "https://www.wowhead.com/wotlk/item=21849/netherweave-bracers"
-    },
-    {
-      "kind": "reconciled-existing-worker-histograms-not-new-measurements",
-      "inputItemID": 21853,
-      "completedDissenchantsReported": 13,
-      "outputItemIDs": [
+      "kind": "historical-reference-epoch-conflict",
+      "historicalInputIDs": [
+        25001,
+        25004,
+        25005,
+        25013
+      ],
+      "sourcePatch": "3.3.5",
+      "historicalMaterialOutputIDs": [
         22445,
         22446,
         22449
       ],
-      "castsWithOutput": [
-        7,
-        5,
-        1
-      ],
-      "observedOutputUnits": [
-        27,
-        6,
-        1
-      ],
-      "positiveHistogramsVerified": 3,
-      "source": "https://www.wowhead.com/tbc/item=21853/netherweave-boots"
+      "weights": "uninterpreted-template-weights",
+      "measuredCasts": null,
+      "modernLiveEligibilityProven": false
     }
   ],
   "new_current_retail_gold_decisions": 0,
   "evidence_files": [
-    "research/v3/evidence/master/20261116T0840-netherweave-original-comment-reconciliation.md"
+    "research/v3/evidence/master/20261116T1126-scaled-bloodfist-conqueror-nonde-dedupe-and-25003-source.md"
   ],
   "worker_source_evidence": [
-    "research/v3/evidence/legacy/2026-11-16T0835-original-netherweave-de-histograms.jsonl"
+    "research/v3/evidence/legacy/2026-11-16T1112-bloodfist-conqueror-eligibility-willow.jsonl",
+    "research/v3/evidence/legacy/2026-11-07T0547-tbc-scaled-conqueror-armor-weapons.jsonl",
+    "research/v3/evidence/legacy/2026-11-13T1556-scaled-tbc-no-disenchant-and-gloves-yield.jsonl",
+    "research/v3/evidence/legacy/2026-11-09T1847-tbc-bloodfist-conqueror-reference-mappings.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/tbc/item=21853/netherweave-boots",
-    "https://www.wowhead.com/wotlk/item=21849/netherweave-bracers"
+    "https://www.wowdb.com/items/25003-bloodfist-legplates",
+    "https://www.wowdb.com/items/25011-conquerors-legplates",
+    "https://bootybaybroker.com/item/25003/bloodfist-legplates/us/eitrigg"
   ],
-  "verified_commit_sha": "752e799c8f171cd26ff0832d0eda1f0a10e8dfea",
-  "verified_commit_sha_scope": "Evidence created at 650da54da7cb8627f11b2bd77d6490141d2c8e4b; dashboard committed and content read back at 752e799c8f171cd26ff0832d0eda1f0a10e8dfea. This status commit cannot include its own SHA; verify postwrite.",
+  "verified_commit_sha": "823dd1a0393b35867ceec51841ab550efc6f4db3",
+  "verified_commit_sha_scope": "Evidence+dashboard single Git-Data commit; both new blob SHA values verified by fetch_file from research branch. This status file is a separate later commit and cannot include its own SHA.",
   "actual_checks": {
-    "bounded_js_row_schema_histogram_contract": {
-      "passed": 62,
+    "source_jsonl_identity_contract": {
+      "passed": 25,
       "failed": 0,
-      "source_blob": "54ad379cfac2a5db7910f617b326ca85e3bda757",
-      "estimator_blob": "0b09b553fef4214af8aaa93f1c85061956643711"
+      "method": "GitHub connector original JSONL parsed by JavaScript; exact key/source URL/epoch cross-file checks"
     },
-    "source_comment_pages_retrieved": 3,
-    "source_line_count": 13,
-    "distinct_worker_original_comment_keys": 6,
-    "additional_original_comment_leads_relative_to_latest_worker_jsonl": 2,
+    "source_pages_independently_opened": 2,
+    "source_page_verification": "WoWDB LIVE 25003 and 25011 static metadata; neither page is in-game observed disenchant",
     "python_compiler": false,
     "lua_runtime_or_tooltips": false,
     "offline_synthetic_price_engine": false,
     "live_wow": false,
     "ci": {
-      "research_prewrite_sha": "8c3dd8400e2b077344ca2fb02b60c50c2d2b6a7f",
-      "research_prewrite_url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43832433712",
-      "research_prewrite_conclusion": "success",
-      "manager_evidence_sha": "650da54da7cb8627f11b2bd77d6490141d2c8e4b",
-      "manager_evidence_workflow": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43832941877",
-      "manager_evidence_conclusion": "success",
-      "manager_dashboard_sha": "752e799c8f171cd26ff0832d0eda1f0a10e8dfea",
-      "manager_dashboard_workflow": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43833007438",
-      "manager_dashboard_conclusion_at_check": "in_progress",
-      "status_exact_head_ci": "not_yet_checked"
+      "evidence_commit_sha": "823dd1a0393b35867ceec51841ab550efc6f4db3",
+      "workflow_url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43857868777",
+      "status_at_check": "in_progress",
+      "conclusion": null,
+      "status_commit_exact_head_ci": "not_yet_checked"
     }
   },
   "git_state_checked": {
     "main_sha": "5dd5aa2f7f05656e7580ea744f657209db59a195",
     "three_pass_integration_sha": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_after_dashboard_sha": "752e799c8f171cd26ff0832d0eda1f0a10e8dfea",
+    "research_verified_evidence_dashboard_sha": "823dd1a0393b35867ceec51841ab550efc6f4db3",
     "pr22": "closed_unmerged",
     "pr23": "closed_unmerged",
     "pr74": "open_draft"
@@ -121,36 +108,38 @@
   "actual_worker_statuses": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-16T07:27:01.424Z",
-      "finding": "5 mutable live reference gear cohorts, ranks/operation logs unverified"
+      "updated_at": "2026-11-16T11:21:13.860Z",
+      "finding": "new Retail capture/expansion provenance, no new complete material-yield cohort"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-16T06:32:11.106Z",
-      "finding": "R1 Ironclaw and pickaxe source leads, no measured yield"
+      "updated_at": "2026-11-16T10:32:08.986Z",
+      "finding": "Algari Rifle rankless Looter and conditional Shimmering Dust references only"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-16T06:33:43.422Z",
-      "finding": "no new measured complete cohort"
+      "updated_at": "2026-11-16T10:43:57.292Z",
+      "finding": "no new independent numeric batch; API rank-identity limitation documented"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-16T08:35:06.775Z",
-      "finding": "13 original output records across six historical comment keys, detailed 13-boot positive bins"
+      "updated_at": "2026-11-16T11:11:14.754Z",
+      "finding": "10 static noDE entries (four repeat old source identities) and one historical Willow positive cast; no new current Retail numeric EV"
     }
   ],
   "blockers": [
-    "Neither new source candidate proves current Retail game epoch/eligible item variation, character context or present-patch drop rates.",
-    "Three-boot comment is separate text, but anonymous author independence and archive duplication require verification before estimator admission.",
-    "120 bracers is a reported craft/shuffle quantity, not a directly counted zero-inclusive set of completed disenchants; Dust is approximate and unconverted LPE quantity unknown.",
-    "Compiler source lacks histogram handling; full offline estimator and actual tooltip/synthetic-price proof not run. Never infer outcome zeros or a current Retail valuation."
+    "25003 static WoWDB metadata does not demonstrate live client/item-instance noDisenchant; all bonus/variant/build behavior unverified.",
+    "Targeted source comparison covered only 4 Legacy files, not full archive. Require global original-source dedupe before new worker material.",
+    "Four latest noDE flags are same item/source as previous records; do not inflate unique evidence count.",
+    "3.3.5 reference template weights have no measured casts/chances/expected quantities and cannot be converted to live Retail EV.",
+    "Current Retail 237362/237359 per-output cast/hit/zero/skill/quality/refund original source logs remain absent."
   ],
   "exhausted_sources": [
     "2026-11-16 manager reviewed original 21853 four- and thirteen-boot positive-bin comments and 21849 332-craft/100-completed-DE/7-event comments; do not recrawl these unchanged for missing cast event logs.",
     "2026-11-16 new 3-boot and 120-bracer comments are now extracted and need cross-file archive deduplication, not another same-page reread.",
-    "Prior coordinator exhausted original Thottbot Adamantite/Titanium, OZZIEEM duplicate counters, PocketCFO accepted-run denominators and Serevite anonymous 2022 anecdotes; no recrawl absent new first-party operations."
+    "Prior coordinator exhausted original Thottbot Adamantite/Titanium, OZZIEEM duplicate counters, PocketCFO accepted-run denominators and Serevite anonymous 2022 anecdotes; no recrawl absent new first-party operations.",
+    "Do not ask Legacy to repeat the 25007/25009/25010/25011 WoWDB flags or re-open the four exact same pages without new item-instance/version evidence."
   ],
-  "next_concrete_step": "For Legacy T0042, first deduplicate original Allakhazam 21853 3-operation 4/4/3 Dust and 85599 21849 ~120-bracer quantities against existing originals, then ask Legacy worker to append only genuinely uncovered source records in its own evidence lane. Keep historical scope provisional. Prioritize independently logged present Retail Midnight T0039 completed operations/hits/zeros/ranks/refunds and source-verified eligibility, rather than re-summarizing archival comments.",
-  "notification_policy": "Owner wants only on-demand updates; Dot owns monitoring; do not send routine chat, cross-chat pings or narrative dashboards."
+  "next_concrete_step": "Check all archive originals for prior 25003 reference before proposing one minimal Legacy-owned append-only item identity. If absent, preserve the new WoWDB link as an eligibility reference only; request exact 2026 Retail itemLink/bonus and successful/failed DE attempt before runtime gating. Continue higher-impact Midnight T0039 zero-inclusive current-patch ranked operation/result logs. No worker scheduling or owner-branch changes.",
+  "notification_policy": "Owner wants only on-demand updates; Dot owns monitoring; no routine chat or cross-chat pings."
 }
