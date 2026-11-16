@@ -1,9 +1,10 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-15T23:14:11.775Z",
-  "status": "New original-code verification: Goblinomics captures per-operation disenchant input/output ItemKeys and timestamps, but silently omits empty-output casts; UI coalesces variants and trade-skill salvage can aggregate multiple operations. No new measured material-yield cohort.",
+  "updated_at": "2026-11-16T00:15:23.743Z",
+  "status": "New independent source-code exclusion: GatherBuffs disenchant action totals are conditional on positive tracked loot, not completed zero-inclusive events; no new original numeric cast cohorts.",
   "task_ids": [
     "T0026",
+    "T0049",
     "T0039",
     "T0005",
     "T0003",
@@ -11,22 +12,27 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026: Miststalker's Wristbands 272246 at-cast actual ilvl305/bonus, rarity, skill/spec/build and all zero-inclusive material histograms still unknown; raw per-cast input key can retain bonus, UI row cannot.",
-    "T0039/T0005: Umbral Tin Ore 237362 and 237363 per-rank completed-cast/output-hit/zero and 242608 Eversong Diamond unlock outcomes still absent; Goblinomics crafting batches may aggregate operations.",
-    "T0003/T0002/T0045: Refulgent Copper Ore 237359, Brilliant Silver Ore 237365 and Tranquility Bloom 236761 need original per-cast event yield by output rank, profession context and refund data.",
-    "NEW verified input-data blocker: Goblinomics `Disenchant.Flush` loses empty-output operations entirely; `CraftTracker.Flush` rejects no-result buffers, so raw craft records cannot establish 0-inclusive completed cast denominators without independent success-event ledger."
+    "T0026/T0049: Miststalker's Wristbands 272246 live bonus-selected ilvl305 successful disenchant receipt, at-cast gear quality/build/skill/spec and zero-inclusive per-output material histograms missing.",
+    "T0039/T0005: Umbral Tin Ore 237362/237363 per-rank completed casts, 242606/242607/242610/242611/242786/242788 per-output hits, amounts and zero bins; Eversong Diamond 242608 unlock outcome and refunds missing.",
+    "T0003/T0002/T0045: Refulgent Copper Ore 237359, Brilliant Silver Ore 237365 and Tranquility Bloom 236761 require raw, rank/skill/spec/patch-controlled output by completed operation.",
+    "NEW denominator limitation: GatherBuffs session.gatherCounts.enchanting is conditional on recognized positive loot window output, so cannot supply independent completed cast counts or zeros."
   ],
   "newly_verified_fields_or_cohorts": {
     "new_original_completed_cast_cohorts": 0,
     "new_estimator_eligible_material_numeric_fields": 0,
-    "source_code_verified": true,
-    "raw_saved_variables_table": "GoblinomicsWorkshopDB.crafts",
-    "disenchant_capture": "one saved record per non-empty completed disenchant with input ItemKey (variant when available), timestamp, character key, output ItemKeys and quantities, crafts=1, incomplete flag",
-    "trade_skill_capture": "crafts can exceed 1; outputs aggregated per record",
-    "zero_output_casts_dropped": true,
-    "ui_collapses_bonus_variants": true,
-    "actual_skill_specialization_build_captured": false,
-    "synthetic_tests_not_real_studies": true
+    "new_original_source_code_verified": true,
+    "upstream_repository": "barnpusher/gatherbuffs",
+    "file": "Modules/Profit.lua",
+    "source_blob_sha": "c17312646ed71c179c67a8229af283235381dcdb",
+    "release_context": "0.99.19 / 2026-04-22 / Retail 12.0.5",
+    "published_per_profession_action_counter": true,
+    "zero_inclusive_completed_cast_counter": false,
+    "counter_requires_positive_recognized_tracking": true,
+    "bag_delta_fallback_requires_positive_output": true,
+    "persists_aggregated_items_by_base_itemID": true,
+    "per_cast_histogram": false,
+    "actual_input_variant_ilvl_skill_spec_patch_captured": false,
+    "independent_current_live_12_1_5_receipts": false
   },
   "numeric_fields_advanced": {
     "new_measured_cohorts": 0,
@@ -43,26 +49,24 @@
     "resourcefulnessRefunds": null
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-15T2314-goblinomics-raw-capture-constraints.jsonl"
+    "research/v3/evidence/midnight/20261116T0015-gatherbuffs-loot-window-denominator-audit.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-15T2214-goblinomics-salvage-original-export-lead.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-15T2314-goblinomics-raw-capture-constraints.jsonl",
   "evidence_record_ids": [
-    "midnight-20261115-2314-001"
+    "midnight-20261116-0015-001"
   ],
   "source_links": [
-    "https://github.com/xLN1995/goblinomics/blob/main/Modules/Workshop/Disenchant.lua",
-    "https://github.com/xLN1995/goblinomics/blob/main/Modules/Workshop/CraftTracker.lua",
-    "https://github.com/xLN1995/goblinomics/blob/main/Modules/Workshop/Salvage.lua",
-    "https://github.com/xLN1995/goblinomics/blob/main/spec/workshop/disenchant_spec.lua",
-    "https://github.com/xLN1995/goblinomics/blob/main/spec/workshop/salvage_spec.lua"
+    "https://github.com/barnpusher/gatherbuffs/blob/main/Modules/Profit.lua",
+    "https://www.curseforge.com/wow/addons/gatherbuffs/files/7967869",
+    "https://www.curseforge.com/wow/addons/gathervalue"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One atomic commit includes one new Midnight evidence JSONL and only this Midnight quiet status; self-referential final commit SHA intentionally null inside commit, to be verified by branch readback.",
+  "commit_note": "One atomic commit contains exactly one newly owned Midnight JSONL and one owned Midnight quiet status file; self-referential final commit SHA is null, with verified branch readback reported by run.",
   "blockers": [
-    "Zero-output disenchants and no-result crafting buffers are omitted from Goblinomics Workshop capture; even raw SavedVariables lack full 0-inclusive denominator without independent cast-success events.",
-    "Salvage UI rows coalesce item variants (272246 ilvl/bonus); exported raw `crafts` data required. Profession `crafts` may aggregate outcomes and not preserve individual cast histograms.",
-    "No original public player SavedVariables/export with 272246/237362/237359/237365/236761 results, 242608 unlock, observed output IDs/quality, contemporaneous skill/spec/build or current patch event traces. Consent needed before requesting private player data."
+    "No new independent zero-inclusive observed player cast ledger for 272246 at ilvl305 or 237362/237363, 237359, 237365, 236761 with exact output item/rank, skill, specialization, hotfix and refunds.",
+    "GatherBuffs count depends on tracked recognized positive loot and has no per-cast/input variant detail; its action counts cannot be used for unbiased completed-cast denominators.",
+    "Goblinomics similarly discards empty-output results and may aggregate craft batches; cannot infer missing zeros or use published addon marketing as measured samples."
   ],
   "exhausted_sources": [
     "2026-11-09T05:20:27.654Z: New 12.1/12.1.5 catalog noDE identity lane, six ID/source pairs cross-checked against repository index and not present in owned evidence (281056/268265/268250/281029 LIVE, 281235/271638 PTR). Rechecked named Midnight prospecting/disenchanting/milling sources across Reddit, Blizzard, Wowhead, profession guides; zero new independent current material cast histograms. Existing Cardinalai, Honeybone, Stormwarning, JD3K, Looter and other copied snapshots deliberately not duplicated. Do not treat these six base catalog flags as verified live variant bans.",
@@ -168,10 +172,11 @@
     "2026-11-15T20:21:04.953Z: Run sought unindexed primary DE/Prospect/Mill numeric cohorts via by-name searches of Midnight gear, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, and Tranquility Bloom across Reddit, US Blizzard professions forums, Wowhead LIVE, WoW-Professions, Warcraft Wiki and contemporary patch pages. Prior Cardinalai/Honeybone/Stormwarning/HeadtripVee/Draggoth and item-restoration Heart of Wind threads already indexed and not recopied. NEW Live 12.1 trainer data isolated 1307462 and 1307466 as unindexed fixed rank-upgrade crafting conversions: glass 10 R1=>1 R2, stone 18 R1=>1 R2, with rank IDs checked against item catalogs; pre-release PTR quantities 5/10 differ. No original player 0-inclusive 12.1.5 cast cohort; do not search these two recipes again without a live mechanical change.",
     "2026-11-15T21:16:50.030Z: Distinct NEW u/genobeam March19 'Recipe difficulty tuning with no warning' report yielded milling difficulty claim 505, corroborating but not duplicating Sep26 projected threshold. Checked current 12.1.5 hotfix/page references, 2026 player Milling and DE forum reports, named Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom material searches across Reddit, Blizzard, Wowhead/Wiki. March Tranquility 1473/1000 source already indexed in prior quiet-status; March wrong-expansion wand 2274188/2268773 already indexed in 20261113T0514; excluded duplicates. New 505 source does not supply completed casts, materials or per-cast denominators; do not repeat this source without independent live game trace. No current patch yield cohort.",
     "2026-11-15T22:14:30.256Z: New primary-source Goblinomics Salvage acquisition lane found: Oct 4 2026 original xLN release notes describe per-item disenchant counts and material returns, Nov 8 12.1.5 supported, GitHub README states prospecting/milling too, local SavedVariables. Searched named DE, Umbral Tin, Refulgent Copper, Brilliant Silver and Tranquility across Reddit, Blizzard forums, Wowhead/WoWDB, Method, WoW-Professions, CurseForge and GitHub; old Cardinalai/Honeybone/Draggoth/Looter sources recognized and not duplicated. No original player SavedVariables or 0-inclusive event cohorts published. Do not re-open product changelog without an original export or genuinely new source-code evidence.",
-    "2026-11-15T23:14:11.775Z: NEW independent source-code audit of Goblinomics raw Salvage capture using pinned upstream Disenchant.lua, Salvage.lua, CraftTracker.lua and both specs. Zero-output disenchant casts are discarded, multi-cast profession batches are aggregated, UI rows coalesce item variants, and actual skill/spec/build are not captured in reviewed record structure. Public Github/Reddit/CurseForge/Blizzard by-name original-export searches found no player source; do not repeat repository schema audit absent code revision or public player export. Never treat synthetic test fixtures or SavedVariables aggregates as 0-inclusive measured cohorts."
+    "2026-11-15T23:14:11.775Z: NEW independent source-code audit of Goblinomics raw Salvage capture using pinned upstream Disenchant.lua, Salvage.lua, CraftTracker.lua and both specs. Zero-output disenchant casts are discarded, multi-cast profession batches are aggregated, UI rows coalesce item variants, and actual skill/spec/build are not captured in reviewed record structure. Public Github/Reddit/CurseForge/Blizzard by-name original-export searches found no player source; do not repeat repository schema audit absent code revision or public player export. Never treat synthetic test fixtures or SavedVariables aggregates as 0-inclusive measured cohorts.",
+    "2026-11-16T00:15:23.743Z: NEW original source-code audit of barnpusher/GatherBuffs Profit.lua (blob c17312646ed71c179c67a8229af283235381dcdb): loot-window based `session.gatherCounts.enchanting` increments only for recognized positive tracked output and can omit no-loot/filtered events; session totals collapse output item variants and carry no at-cast input ID/bonus/ilvl, rank, skill or spec. v0.99.19 release claimed per-action tracking for 12.0.5, not an independent zero-inclusive current-12.1.5 denominator. Additional by-name Reddit, Blizzard, Wowhead, CurseForge/GitHub searches for 272246, Umbral Tin, Copper, Silver and Tranquility Bloom found no new original cast ledger. No measured samples or source repeats. Do not revisit this GatherBuffs implementation without new code/recording schema or original player data."
   ],
-  "next_concrete_step": "Seek consenting owner-provided redacted raw Goblinomics WorkshopDB.crafts or a different current 12.1.5 recorder with both successful spellcast event ledger and per-cast loot, and correlate input bonus/ilvl and spec; do not infer missing zeros from Goblinomics. Otherwise pursue a genuinely unindexed Midnight official mechanics or item identity gap.",
-  "verified_base_commit_sha": "71407933b6a2129900fa871fa8b0368f35d2cf0d",
-  "next": "Seek consenting owner-provided redacted raw Goblinomics WorkshopDB.crafts or a different current 12.1.5 recorder with both successful spellcast event ledger and per-cast loot, and correlate input bonus/ilvl and spec; do not infer missing zeros from Goblinomics. Otherwise pursue a genuinely unindexed Midnight official mechanics or item identity gap.",
-  "base_commit_sha": "71407933b6a2129900fa871fa8b0368f35d2cf0d"
+  "next_concrete_step": "Seek a recorder that independently captures successful spellcast IDs/inputs with all zero-output events and linked per-cast output ItemKeys and player skill/spec/build (or a deidentified original player event log) for 272246 at-cast ilvl305 and 237362 800 casts; do not infer missing zeros from Goblinomics or GatherBuffs aggregate counters. Prioritize novel direct measurements, not another tracker marketing page.",
+  "verified_base_commit_sha": "f9c29248a7b67cb124541eff4d3b2f9955552af7",
+  "next": "Seek a recorder that independently captures successful spellcast IDs/inputs with all zero-output events and linked per-cast output ItemKeys and player skill/spec/build (or a deidentified original player event log) for 272246 at-cast ilvl305 and 237362 800 casts; do not infer missing zeros from Goblinomics or GatherBuffs aggregate counters. Prioritize novel direct measurements, not another tracker marketing page.",
+  "base_commit_sha": "f9c29248a7b67cb124541eff4d3b2f9955552af7"
 }
