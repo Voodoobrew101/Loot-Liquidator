@@ -1,8 +1,8 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T02:40:28.009Z",
-  "status": "Two previously unindexed Dragonflight gear item-side Looter occurrence tables captured (5 numeric rows, 2 gear inputs); no independent prospecting/milling operation-histogram source found.",
+  "updated_at": "2026-11-16T03:38:42.466Z",
+  "status": "11 novel cumulative Dragonflight gear-disenchant material-occurrence rows across four previously unindexed item IDs; no novel completed prospect/mill ledger or zero-inclusive histogram recovered.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -11,38 +11,59 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Original Draconium/Serevite/Khaz'gorite/Prismatic ore completed prospects with Resourcefulness refund-adjusted input cohorts and material 0–N histograms",
-    "Original Bubble Poppy/Saxifrage 5-herb milling completed casts and separate pigment rank output hits",
-    "Dragonflight gear-specific disenchant material occurrence denominators not previously indexed"
+    "Draconium/Serevite/Khaz'gorite/Prismatic prospecting: original completed casts versus nominal ore, Resourcefulness refunds, 0-N material histograms, and independent exact output ranks",
+    "Bubble Poppy/Saxifrage milling: rank-specific observed completed casts and pigment hit/quantity histograms",
+    "Unindexed Dragonflight item-specific disenchant material occurrences with known displayed denominators"
   ],
   "newly_verified_fields": [
-    "209937 Chartreuse Champion's Gavel: 55 reported disenchant attempts; 194123 Chromatic Dust 39 hits (71% displayed), 194124 Vibrant Shard 16 (29%), 200113 Resonant Crystal 2 (4%)",
-    "209942 Fearless Faerie's Kris: 13 reported item disenchants; 194123 Chromatic Dust 9 hits (69%), 194124 Vibrant Shard 4 (31%); PTR mirror only"
+    "197999 Windswept Hood: 564 item-side Looter disenchant operations; 194124 Vibrant Shard 287/564 (51% displayed); 194123 Chromatic Dust 265/564 (47% displayed); 200113 Resonant Crystal 27/564 (5% displayed)",
+    "197656 Shikaar Scout Pauldrons: 90 item-side Looter disenchant operations; 194123 Chromatic Dust 87/90 (97% displayed); 194124 Vibrant Shard 4/90 (4% displayed)",
+    "194347 Expedition Researcher's Hood: 619 item-side Looter disenchant operations; 194124 Vibrant Shard 333/619 (54% displayed); 194123 Chromatic Dust 266/619 (43% displayed); 200113 Resonant Crystal 32/619 (5% displayed)",
+    "194401 Expedition Guard's Chestguard: 191 item-side Looter disenchant operations; 194123 Chromatic Dust 173/191 (91% displayed); 194124 Vibrant Shard 13/191 (7% displayed); 200113 Resonant Crystal 5/191 (3% displayed)"
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-dragonflight-item-209937-cumulative-20261116",
-      "inputItemID": 209937,
-      "casts": 55,
-      "source": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel"
+      "studyKey": "wowhead-looter-dragonflight-item-197999-cumulative-20261116",
+      "inputItemID": 197999,
+      "casts": 564,
+      "source": "https://www.wowhead.com/item=197999/windswept-hood",
+      "ptr_mirror_only": false
     },
     {
-      "studyKey": "wowhead-looter-dragonflight-item-209942-cumulative-20261116",
-      "inputItemID": 209942,
-      "casts": 13,
-      "source": "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris"
+      "studyKey": "wowhead-looter-dragonflight-item-197656-cumulative-20261116",
+      "inputItemID": 197656,
+      "casts": 90,
+      "source": "https://www.wowhead.com/item=197656/shikaar-scout-pauldrons",
+      "ptr_mirror_only": false
+    },
+    {
+      "studyKey": "wowhead-looter-dragonflight-item-194347-cumulative-20261116",
+      "inputItemID": 194347,
+      "casts": 619,
+      "source": "https://www.wowhead.com/item=194347/expedition-researchers-hood",
+      "ptr_mirror_only": false
+    },
+    {
+      "studyKey": "wowhead-looter-dragonflight-item-194401-cumulative-20261116",
+      "inputItemID": 194401,
+      "casts": 191,
+      "source": "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118",
+      "ptr_mirror_only": true
     }
   ],
   "new_numerical_measurements": [
-    "209937 Chartreuse Champion's Gavel: 55 reported disenchant attempts; 194123 Chromatic Dust 39 hits (71% displayed), 194124 Vibrant Shard 16 (29%), 200113 Resonant Crystal 2 (4%)",
-    "209942 Fearless Faerie's Kris: 13 reported item disenchants; 194123 Chromatic Dust 9 hits (69%), 194124 Vibrant Shard 4 (31%); PTR mirror only"
+    "197999: 194124=287 hits/564 reported operations (51% displayed), 194123=265 hits/564 reported operations (47% displayed), 200113=27 hits/564 reported operations (5% displayed)",
+    "197656: 194123=87 hits/90 reported operations (97% displayed), 194124=4 hits/90 reported operations (4% displayed)",
+    "194347: 194124=333 hits/619 reported operations (54% displayed), 194123=266 hits/619 reported operations (43% displayed), 200113=32 hits/619 reported operations (5% displayed)",
+    "194401: 194123=173 hits/191 reported operations (91% displayed), 194124=13 hits/191 reported operations (7% displayed), 200113=5 hits/191 reported operations (3% displayed)"
   ],
   "numerical_fields_improved": [
-    "5 direct source item-hit numerator rows, denominators 55/13 and original displayed percentages; no output totalQuantity or inferred probability"
+    "11 source-reported per-material hit counts and displayed percentages, in four original cumulative item-page cohorts with denominators 564/90/619/191; not output unit totals, measured probabilities for other items, or event histograms"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0131-xenastro-unindexed-serevite-r2-r3.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-16T0240-two-new-emerald-dream-looter-and-numeric-gap-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-16T0240-two-new-emerald-dream-looter-and-numeric-gap-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-16T0337-four-unindexed-gear-looter-counts.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
@@ -50,14 +71,19 @@
     "https://goldcap.gg/retail/us/items/190396",
     "https://goldcap.gg/retail/eu/items/190394",
     "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
-    "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris"
+    "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris",
+    "https://www.wowhead.com/item=197999/windswept-hood",
+    "https://www.wowhead.com/item=197656/shikaar-scout-pauldrons",
+    "https://www.wowhead.com/item=194347/expedition-researchers-hood",
+    "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118"
   ],
-  "verified_commit_sha": "65ee6a0bf4e88203f4138c6cf32d5fa01bc91847",
-  "commit_sha_scope": "Verified parent branch head at staging; this one-commit status file cannot self-reference its own commit SHA; verify new SHA via post-push GitHub readback.",
+  "verified_commit_sha": "3c6bb4abba2d0bd588b31bf22f2d47f8b5b39fde",
+  "commit_sha_scope": "Verified parent research branch head at staging. A status file inside its own Git commit cannot contain that future commit hash without another commit; read back new commit and branch SHA after push.",
   "blockers": [
-    "No new original Dragonflight prospect/mill independent completed-cast, hit-count or zero-inclusive histogram dataset located in current name-first cross-site search",
-    "Wowhead Looter gear tables are cumulative, with unknown individual contributor overlap, collection era, source item bonus and per-material item-unit totals",
-    "209942 appears only on a PTR mirror; not proof of current live-game processing"
+    "Priority Draconium, Serevite, Khaz'gorite and Prismatic ore prospecting original completed-cast/0-N histogram source is still absent; nominal ore and Resourcefulness refunds cannot safely yield verified casts.",
+    "Bubble Poppy/Saxifrage rank-specific completed mill counts and pigment hit/zero histograms still unknown.",
+    "Wowhead Looter pages are cumulative pooled contributors: contributor overlap, raw event logs, collection dates, gear bonus versions, skill/spec and material unit totals absent. 194401 source is PTR-mirror only.",
+    "Firecrawl original Google Sheets workbook scrape unavailable due exhausted connected Firecrawl credits; other search and Github reads performed."
   ],
   "exhausted_sources": [
     {
@@ -1191,6 +1217,20 @@
         "WoW-Professions name-first Bubble Poppy milling per-cast distributions: https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight — recipe/2–5 pigment range, no measured 0–N histogram",
         "Wowhead name-first Dragon Isles Prospecting comments: https://www.wowhead.com/spell=374627/dragon-isles-prospecting — original Bugy reference averages, no new verified castsWithDrop",
         "Warcraft Wiki name-first Draconium Ore prospecting reference: https://warcraft.wiki.gg/wiki/Draconium_Ore — identity/mechanics only, not new original event data"
+      ]
+    },
+    {
+      "at": "2026-11-16T03:38:42.467Z",
+      "scope": "New name-first Dragonflight raw per-operation prospect/mill ledger versus previously unindexed 10.0.0 quest-gear disenchant cohorts",
+      "reason": "Genuine cross-site named searches did not yield a NEW independent 0–N prospect or milling operation ledger; re-found already indexed Reddit, Wowhead and archived workbook cohorts. New item-side Looter gear numerators were independently inspectable and were recorded instead.",
+      "whereLooked": [
+        "Reddit original r/woweconomy named Draconium Ore and Serevite Ore prospecting logs: known 108782r, 10i63zb, 10u5ao8 and zkay8v are already represented; no new cast ledger",
+        "Reddit original r/woweconomy named Prismatic Ore and Khaz'gorite Ore prospecting distributions: only indexed studies and 20-cast negative Khaz sample surfaced",
+        "Reddit and WoW forums named Bubble Poppy milling result histograms: no new standalone completed-operation series",
+        "Wowhead item/comments named Saxifrage and Blazing Pigment milling samples: Aary original known and previously represented",
+        "WoW-Professions Dragon Isles Inscription milling guide: batch reference only (https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight)",
+        "GitHub public code and export search by names Draconium Ore, Serevite Ore, Dragonflight Prospecting Log: no new public raw CSV/JSON event ledger",
+        "Wowhead named Dragonflight item-side Disenchanting pages found four previously unindexed gear cohort tables, preserved in this run's file"
       ]
     }
   ],
