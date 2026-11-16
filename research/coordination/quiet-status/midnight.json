@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-16T07:27:01.424Z",
-  "status": "Five previously unindexed LIVE Wowhead epic-armor item identities; 10 rank-unresolved Dawn Crystal hit rows captured as reference-only. No independent zero-inclusive raw current-game cohort.",
+  "updated_at": "2026-11-16T08:39:50.110Z",
+  "status": "Five newly located gear-side Looter source identities with 10 rank-unresolved Dawn Crystal rows; 3 LIVE and 2 PTR, all reference-only. No new original zero-inclusive yield cohort.",
   "task_ids": [
     "T0026",
     "T0005",
@@ -11,58 +11,107 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026: 249956,250049,249955,249953,249951 have pooled LIVE epic-armor source-reported item-side outcomes but lack output ID/rank, original at-cast event ledger, item bonus/ilvl, spec/skill, patch and histograms.",
-    "272246 Miststalker's Wristbands true ilvl305 vs base 206: no measured live disenchant receipt tied to a real selected 305 itemLink.",
-    "T0005/T0039: 237362 Umbral Tin (242606,242607,242610,242611,242786,242788 and conditional Diamond 242608) still needs per-material hits/zeros/histograms, ore rank, skill, Tin-vestigator unlock, refund and patch.",
-    "T0003/T0002/T0045: 237359 Refulgent Copper, 237365 Brilliant Silver, 236761/236770 and other milling need original rank-specific current-patch completed casts and per-output histograms."
+    "T0026: 250004,250006 (PTR); 250007,250009,250019 (LIVE): missing Dawn Crystal output IDs/ranks, at-cast ilvl/bonus/rarity, source event logs, completed-cast zeros, per-cast unit histograms, skill/spec and build.",
+    "272246 Miststalker's Wristbands: actual at-cast 305 ilvl disenchant result not confirmed; generic 206 base tooltip cannot establish successful eligibility.",
+    "T0005/T0039: 237362 Umbral Tin rank-specific 242606/242607/242610/242611/242786/242788 and conditional 242608 Eversong Diamond still lack original per-output hits/zeros/histograms, output quality, Tin-vestigator unlock, skill/spec/refund/build.",
+    "T0003/T0002/T0045: 237359 Copper, 237365 Silver and Midnight milling have no new independent 0-inclusive live per-cast logs."
   ],
   "newly_verified_fields_or_cohorts": {
-    "kind": "new_mutable_live_item_side_Looter_source_rows_reference_only",
+    "kind": "wowhead_mutable_item_side_reference_only",
     "source_snapshot_date": "2026-11-16",
-    "source_kind": "reference",
     "new_primary_player_cohorts": 0,
     "gear_item_ids": [
-      249956,
-      250049,
-      249955,
-      249953,
-      249951
+      250004,
+      250006,
+      250007,
+      250009,
+      250019
     ],
-    "source_reported_disenchant_operations_per_item": {
-      "249951": 17,
-      "249953": 19,
-      "249955": 16,
-      "249956": 35,
-      "250049": 82
-    },
-    "source_reported_positive_output_rows": 10,
-    "row_counts": {
-      "249951": [
-        11,
-        5
-      ],
-      "249953": [
-        10,
-        6
-      ],
-      "249955": [
-        9,
-        7
-      ],
-      "249956": [
-        19,
-        15
-      ],
-      "250049": [
-        50,
-        28
-      ]
-    },
-    "output_rank_and_id": null,
-    "actual_item_level_at_cast": null,
-    "game_build_at_cast": null,
-    "distinct_original_player_event_ledger": false,
-    "duplicated_source_copy_counted": false
+    "source_kind": "reference",
+    "source_builds": [
+      {
+        "item_id": 250004,
+        "site": "PTR 12.1.7"
+      },
+      {
+        "item_id": 250006,
+        "site": "PTR 12.1.7"
+      },
+      {
+        "item_id": 250007,
+        "site": "LIVE"
+      },
+      {
+        "item_id": 250009,
+        "site": "LIVE"
+      },
+      {
+        "item_id": 250019,
+        "site": "LIVE"
+      }
+    ],
+    "source_reported_disenchant_operations": [
+      {
+        "item_id": 250004,
+        "reported_count": 11
+      },
+      {
+        "item_id": 250006,
+        "reported_count": 20
+      },
+      {
+        "item_id": 250007,
+        "reported_count": 13
+      },
+      {
+        "item_id": 250009,
+        "reported_count": 16
+      },
+      {
+        "item_id": 250019,
+        "reported_count": 19
+      }
+    ],
+    "source_reported_positive_row_hits": [
+      {
+        "item_id": 250004,
+        "row_hits": [
+          7,
+          3
+        ]
+      },
+      {
+        "item_id": 250006,
+        "row_hits": [
+          10,
+          9
+        ]
+      },
+      {
+        "item_id": 250007,
+        "row_hits": [
+          8,
+          4
+        ]
+      },
+      {
+        "item_id": 250009,
+        "row_hits": [
+          9,
+          6
+        ]
+      },
+      {
+        "item_id": 250019,
+        "row_hits": [
+          12,
+          7
+        ]
+      }
+    ],
+    "new_distinct_positive_material_rows": 10,
+    "all_output_ids_and_ranks": null,
+    "at_cast_ilvl_skill_spec_patch": null
   },
   "numeric_fields_advanced": {
     "new_primary_full_event_casts": 0,
@@ -72,51 +121,47 @@
     "new_exact_output_rank_ids": 0,
     "new_live_272246_ilvl305_receipts": 0,
     "new_237362_hits": 0,
-    "new_LIVE_source_reported_epic_armor_disenchant_denominators": 5,
-    "new_reference_only_hit_rows": 10,
-    "positive_row_hits_by_item": {
-      "249951": 16,
-      "249953": 16,
-      "249955": 16,
-      "249956": 34,
-      "250049": 78
-    },
-    "missing_outcome_rows_NOT_zero_events": true
+    "new_reference_only_item_denominators": 5,
+    "new_reference_only_positive_hit_rows": 10,
+    "reference_item_operations_reported": 79,
+    "reference_positive_occurrence_rows": 75,
+    "missing_rows_NOT_zero_casts": true
   },
   "evidence_files": [
     "research/v3/evidence/midnight/20261116T0320-retail-processing-export-source-gap.jsonl",
     "research/v3/evidence/midnight/20261116T0419-four-gear-looter-source-identity.jsonl",
     "research/v3/evidence/midnight/202611160520-1215-percast-ledger-search-gap.jsonl",
     "research/v3/evidence/midnight/2026-11-16T0615-three-armor-ptr-looter-reference-holds.jsonl",
-    "research/v3/evidence/midnight/2026-11-16T0727-five-live-epic-looter-identity-holds.jsonl"
+    "research/v3/evidence/midnight/2026-11-16T0727-five-live-epic-looter-identity-holds.jsonl",
+    "research/v3/evidence/midnight/2026-11-16T0839-five-epic-armor-looter-reference-holds.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-16T0615-three-armor-ptr-looter-reference-holds.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-16T0727-five-live-epic-looter-identity-holds.jsonl",
   "evidence_record_ids": [
-    "midnight-20261116-1100",
-    "midnight-20261116-1101",
-    "midnight-20261116-1102",
-    "midnight-20261116-1103",
-    "midnight-20261116-1104",
-    "midnight-20261116-1105",
-    "midnight-20261116-1106",
-    "midnight-20261116-1107",
-    "midnight-20261116-1108",
-    "midnight-20261116-1109"
+    "midnight-20261116-1200",
+    "midnight-20261116-1201",
+    "midnight-20261116-1202",
+    "midnight-20261116-1203",
+    "midnight-20261116-1204",
+    "midnight-20261116-1205",
+    "midnight-20261116-1206",
+    "midnight-20261116-1207",
+    "midnight-20261116-1208",
+    "midnight-20261116-1209"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=249956/luminant-verdicts-greatmantle?bonus=6652:13335:12803:3164&ilvl=279&spec=66",
-    "https://www.wowhead.com/item=250049/blind-oaths-seraphguards",
-    "https://www.wowhead.com/item=249955/night-enders-breastplate?bonus=13336:40:13575:12794",
-    "https://www.wowhead.com/item=249953/night-enders-fists",
-    "https://www.wowhead.com/item=249951/night-enders-chausses?bonus=12791"
+    "https://www.wowhead.com/ptr/item=250004/venom-casks-of-the-grim-jest",
+    "https://www.wowhead.com/ptr/item=250006/masquerade-of-the-grim-jest",
+    "https://www.wowhead.com/item=250007/sleight-of-hand-of-the-grim-jest",
+    "https://www.wowhead.com/item=250009/fantastic-finery-of-the-grim-jest",
+    "https://www.wowhead.com/item=250019/leafdrape-of-the-luminous-bloom"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Single atomic commit will include this status update and exactly one new JSONL. Cryptographic commit SHA cannot self-reference itself; verify HEAD and file content externally after ref update.",
+  "commit_note": "Atomic single commit carries both this status and exactly one new evidence JSONL. This status cannot self-contain the SHA of its own commit; parent SHA stored as verified base, final SHA checked independently after ref update.",
   "blockers": [
-    "Five new LIVE Wowhead aggregate tables have counts but not original contributor/event logs, linked output ranks/IDs, per-cast material quantities, actual at-cast ilvl/bonus, character skill/spec, hotfix date, or complete zero outcomes; two same-label Dawn Crystal rows must remain separate.",
-    "No 272246 ilvl305 verified current Retail disenchant event; base 206 item identity and selected 305 tooltip are not an at-cast receipt.",
-    "No new current-patch zero-inclusive 237362 Umbral Tin/242608 Eversong Diamond, 237359 Copper, 237365 Silver, or 10-herb milling sample; output histograms and refunds remain unknown."
+    "Reference Wowhead item-side Looter counts lack original item links and output IDs/ranks; no independent per-operation zero/quantity event, actual gear ilvl/bonus, professional skill/spec, historical patch, or event provenance.",
+    "PTR source evidence for 250004/250006 is not current 12.1.5 live loot proof.",
+    "Unresolved 272246 ilvl305 eligibility vs generic ilvl206 and no zero-inclusive 237362/237359/237365/milling rank-specific original per-cast ledgers."
   ],
   "exhausted_sources": [
     "2026-11-14T06:11:30.224Z: New cross-source comparison: GoldCap 242608/242712 labels two Eversong Diamond ranks, in tension with WoW-Professions and Dving quality-less guide wording. New Apr30 Blizzard customer restoration thread 2299311 says Dawn Crystal quality rank required for item restore is hidden by web UI; original poster's successful retry is not a new measured disenchant event. Earlier ilvl305 armory, Raven May22 restore, Cardinalai/Honeybone and Looter snapshots already indexed. No new complete per-cast cohort for 272246, 237362, 237359, 236761. Do not recycle these webpages without original exact itemLinks, outputs and operation ledger.",
@@ -168,10 +213,11 @@
     "2026-11-16T04:19:18.749Z: NEW independent Wowhead Looter item-page source lane: live 248076 Golden City Baton 58 disenchants (Dust 44, Shard 13, separately labelled Dust 1); PTR12.1.7 249957 Luminant Verdict's Cuffs 31 (two Dawn Crystal same-label 15/14); live 249963 Luminant Verdict's Sabatons 40 (two same-label Dawn Crystal 27/13); PTR12.1.5 251259 Recovered Sanctum Bow 24 (Dust 20, Shard 3, Crystal 1). Source indices are mutable aggregates without output item IDs/ranks, true at-cast item-level, skill/spec/game build, zero-output operation confirmation, material-unit totals or histograms. LIVE/PTR copies not treated independently. Previously indexed 249948/249960, 251258/251254, 248062/248068, Cardinalai, Honeybone, PocketCFO not recopied. Do not recheck these four snapshots until actual source links/itemLink/player operation logs emerge.",
     "2026-11-16T05:20:09.662Z: New targeted exact at-cast source/quality search (10 name/ID+context queries across Reddit, Blizzard forums, Wowhead, GitHub) found no new independent 12.1.5 full-operation material log; previously recorded Cardinalai/Honeybone/Diffracted/Draggoth/kyzenbka/PocketCFO/Looter/272246 tooltips not recopied. Independent compatibility check Vystery/CraftShuffle has per-event DEBench but targets WoW Forever only (interface16001), Somora/EasyDisenchant is Retail processor UI with no published output cohorts, GoldAdvisorMidnight public docs track craft history but disclose no 237362/272246 at-cast data. This precise tool/search lane is exhausted without an original Retail player export; do not revisit without new 12.1.5 log or code changes.",
     "2026-11-16T06:15:20.617Z: New unindexed Wowhead 12.1.0/12.1.5 PTR item-side Looter tables checked for 251204, 251202 and 250052 (11 source-reported material rows). Same-label outputs lack output IDs/ranks, each source contains mutable pooled hits, no original at-cast live build/ilvl, skill/spec, zero or refund ledger. Same source snapshots on selected bonus/ilvl URLs are not new independent studies. Do not reharvest without original event data or linked output IDs.",
-    "2026-11-16T07:27:01.424Z: Investigated fresh LIVE (not PTR) Looter item-side pages for 249956, 250049, 249955, 249953, 249951; recorded 10 source-reported same-name material occurrence rows once per base item. Compared earlier indexed Luminant Verdict, Blind Oath, Night Ender and previous research identities; did not duplicate 249947/249949/249952/249957/249959-249964, 250050/250051/250052/250054, Cardinalai, Honeybone or PocketCFO. Multiple item bonus URLs and PTR point to mutable aggregates, not independent cohorts; do not reharvest without original at-cast output IDs/bonus and event ledger. Named checks for 272246, 237362, Copper, Silver and 10-herb milling across Wowhead, Reddit and Blizzard provided no fresh raw zero-inclusive original sample."
+    "2026-11-16T07:27:01.424Z: Investigated fresh LIVE (not PTR) Looter item-side pages for 249956, 250049, 249955, 249953, 249951; recorded 10 source-reported same-name material occurrence rows once per base item. Compared earlier indexed Luminant Verdict, Blind Oath, Night Ender and previous research identities; did not duplicate 249947/249949/249952/249957/249959-249964, 250050/250051/250052/250054, Cardinalai, Honeybone or PocketCFO. Multiple item bonus URLs and PTR point to mutable aggregates, not independent cohorts; do not reharvest without original at-cast output IDs/bonus and event ledger. Named checks for 272246, 237362, Copper, Silver and 10-herb milling across Wowhead, Reddit and Blizzard provided no fresh raw zero-inclusive original sample.",
+    "2026-11-16T08:39:50.110Z: New by-name Wowhead LIVE/PTR Looter source identity search identified 250004 Venom Casks of the Grim Jest PTR11(7/3), 250006 Masquerade of the Grim Jest PTR20(10/9), 250007 Sleight of Hand of the Grim Jest LIVE13(8/4), 250009 Fantastic Finery of the Grim Jest LIVE16(9/6), 250019 Leafdrape of the Luminous Bloom LIVE19(12/7), 10 distinct source-row positives recorded reference-only. Checked 250036 against earlier v3 evidence (already indexed), 250022/250001/250003 and 249965/250060 against historic notes/queue (already indexed) and excluded; alternate PTR/LIVE and selected bonus variants not counted again. By-name raw sources for Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Midnight milling still no novel independent complete event ledger. Do not reharvest these five mutable tables without original source event records/material links."
   ],
-  "next_concrete_step": "Find one independent live Retail SavedVariables/per-cast source export with exact itemLink bonus/ilvl, processing action, output item ID/rank, skill/spec, true zero events and refund states for 272246 ilvl305; alternatively original rank-tagged 237362 800-cast player log with per-output hit counts and Tin-vestigator unlock. Avoid pooled Wowhead Looter tables until original events become available.",
-  "verified_base_commit_sha": "90d276f4f8edfb3e09d857df7759c25484734c8f",
-  "next": "Obtain original 272246 ilvl305 at-cast DE event or 237362 rank-specific zero-inclusive prospect log with output IDs/hits/refunds.",
-  "base_commit_sha": "90d276f4f8edfb3e09d857df7759c25484734c8f"
+  "next_concrete_step": "Obtain new primary Retail 12.1.5 at-cast 272246 ilvl305 DE event with input itemLink, material item ID/rank, actual skill/spec and successful action; next secure 237362 original per-cast 800-operation player log for exact output hit/zero distributions and Tin-vestigator unlock.",
+  "verified_base_commit_sha": "752e799c8f171cd26ff0832d0eda1f0a10e8dfea",
+  "next": "Seek new 272246 live at-cast ilvl305 receipt or original rank-tagged 237362 zero-inclusive prospect operation export.",
+  "base_commit_sha": "752e799c8f171cd26ff0832d0eda1f0a10e8dfea"
 }
