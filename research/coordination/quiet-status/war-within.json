@@ -1,9 +1,10 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-16T15:18:40.669Z",
-  "status": "Two exact input-item IDs resolved in existing PTR cumulative Storm Dust R2 cohorts; reference-only replacement records, no new independent measured retail yields.",
+  "updated_at": "2026-11-16T15:51:48.391Z",
+  "status": "Two newly sourced weekly Khaz Algar disenchant knowledge conditions and two distinct Lavisaur conditional original observations; no new estimator-eligible ordinary material yield baseline.",
   "task_ids": [
     "T0048",
+    "T0032",
     "T0040",
     "T0009",
     "T0010",
@@ -11,77 +12,85 @@
     "T0008"
   ],
   "exact_gaps_targeted": [
-    "Previously name-only PTR Looter source rows: Mantle of the Exiled Vow 23 occurrences/50 reported item operations and Maniac Biker's Boots 30/82, rank 2 Storm Dust 219947; source identity now matched to live Wowhead item pages/quest reward links.",
-    "Mantle of the Exiled Vow 245710 conflicts with prior WoWDB noDisenchant claim; live Retail eligibility and version-specific bonus/hotfix cannot be inferred from PTR cumulative telemetry.",
-    "Boreal Glaive remains exact input ID null (19/31 source row); player-specific TWW DE per-cast stack histograms remain absent.",
-    "Post-2024-10-25 ranked Bismuth/Ironclaw/Aqirite prospecting and Khaz Algar milling complete operation + hit/zero/refund ledgers remain missing."
+    "Conditional disenchant knowledge drops needed explicit output identities, weekly caps and sequence: Fleeting Arcane Manifestation 227659 and Gleaming Telluric Crystal 227661. These are not tradeable standard disenchant materials.",
+    "New original first-person Lavisaur subcohorts: about 20 green disenchant operations with one Fleeting item, then four consecutive epic Darkmoon Deck disenchants with positive Fleeting drops. Approximate input and weekly conditioning prevent unconditional probability inference.",
+    "Outstanding ordinary gold-output gaps: post-2024-10-25 per-rank Bismuth/Ironclaw/Aqirite prospecting and Khaz Algar milling complete cast/output/zero/refund ledgers, and current-build gear rarity/weapon/armor disenchant histograms."
   ],
   "newly_verified_fields": [
     {
-      "kind": "identity-only-cumulative-PTR-reference",
-      "inputItemID": 245710,
-      "inputName": "Mantle of the Exiled Vow",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "sourceReportedOperations": 50,
-      "castsWithDrop": 23,
-      "totalQuantity": null,
-      "zeros": null,
-      "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=219947/storm-dust",
-      "inputIdentitySource": "https://www.wowhead.com/item=245710/mantle-of-the-exiled-vow",
-      "questSource": "https://www.wowhead.com/quest=85022/priest-of-the-old-ways",
-      "replaces": "war-within-20261116-1338-009",
-      "eligibility": "conflicted-WoWDB-noDisenchant"
+      "kind": "weekly-conditional-output",
+      "outputItemID": 227659,
+      "outputName": "Fleeting Arcane Manifestation",
+      "method": "Disenchant",
+      "perWeekCap": 5,
+      "knowledgePerItem": 1,
+      "requiresSkill": null,
+      "source": "https://www.wowhead.com/guide/professions/knowledge-points"
     },
     {
-      "kind": "identity-only-cumulative-PTR-reference",
-      "inputItemID": 235149,
-      "inputName": "Maniac Biker's Boots",
-      "outputItemID": 219947,
-      "outputRank": 2,
-      "sourceReportedOperations": 82,
-      "castsWithDrop": 30,
+      "kind": "weekly-conditional-output",
+      "outputItemID": 227661,
+      "outputName": "Gleaming Telluric Crystal",
+      "method": "Disenchant",
+      "perWeekCap": 1,
+      "knowledgePerItem": 4,
+      "sequenceReportedAfterItemID": 227659,
+      "sequenceReportedAfterCount": 5,
+      "sequenceSource": "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
+      "weeklyCapSource": "https://www.wowhead.com/guide/professions/knowledge-points"
+    },
+    {
+      "kind": "original-reference-weekly-subcohort",
+      "outputItemID": 227659,
+      "inputName": "Epic Darkmoon Decks (unnamed)",
+      "casts": 4,
+      "castsWithDrop": 4,
       "totalQuantity": null,
-      "zeros": null,
       "histogram": null,
-      "source": "https://www.wowhead.com/ptr/item=219947/storm-dust",
-      "inputIdentitySource": "https://www.wowhead.com/item=235149/maniac-bikers-boots",
-      "questSource": "https://www.wowhead.com/quest=84381/renegotiations",
-      "replaces": "war-within-20261116-1338-010"
+      "source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation"
+    },
+    {
+      "kind": "original-reference-weekly-subcohort",
+      "outputItemID": 227659,
+      "inputName": "Green uncommon gear (unnamed)",
+      "casts": null,
+      "sourceApproximateCasts": "about 20",
+      "totalQuantity": 1,
+      "castsWithDrop": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation"
     }
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "newly_verified_reference_rows": 2,
-  "newly_verified_condition_rows": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-16T1518-two-ptr-r2-dust-input-id-corrections.jsonl",
+  "newly_verified_condition_rows": 2,
+  "evidence_file": "research/v3/evidence/war-within/2026-11-16T155148-weekly-tww-de-knowledge-conditional-originals.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-16T1518-two-ptr-r2-dust-input-id-corrections.jsonl"
+    "research/v3/evidence/war-within/2026-11-16T155148-weekly-tww-de-knowledge-conditional-originals.jsonl"
   ],
   "evidence_source_links": [
-    "https://www.wowhead.com/ptr/item=219947/storm-dust",
-    "https://www.wowhead.com/item=245710/mantle-of-the-exiled-vow",
-    "https://www.wowhead.com/quest=85022/priest-of-the-old-ways",
-    "https://www.wowhead.com/item=235149/maniac-bikers-boots",
-    "https://www.wowhead.com/quest=84381/renegotiations"
+    "https://www.wowhead.com/guide/professions/knowledge-points",
+    "https://www.wowhead.com/item=227661/gleaming-telluric-crystal",
+    "https://www.wowhead.com/item=227659/fleeting-arcane-manifestation",
+    "https://us.forums.blizzard.com/en/wow/t/item-restoring-with-fleeting-arcane-manifestation-does-not-appear-to-allow-character-to-regain-that-point/2039198"
   ],
   "verified_commit_sha": null,
-  "verification": "One commit must include status and evidence atomically; because of git content-addressing, the file cannot contain its own commit SHA. The actual final branch commit and 2-file diff are read-back checked separately.",
+  "verification": "Evidence JSONL and own status are stored in a single Git commit. The status file cannot contain that commit's own SHA (content-addressed cycle); final branch SHA and two-file diff must be verified independently after update.",
   "blockers": [
-    "No post-hotfix independent complete raw casts and per-material hits/zeros for TWW ranked ores and herbs; generic ore-input totals and copied retrospective tables are insufficient.",
-    "PTR 12.1.7 cumulative Wowhead Looter source table does not establish live-Retail version, player skill, specialization, bonus variants, actual output stack totals or per-cast zeros; no measured confidence can be assigned.",
-    "245710 disenchanted-from appearance conflicts with prior WoWDB noDisenchant reference; live-game test and build/variant identification required.",
-    "Boreal Glaive original PTR row still has no independently verified exact item ID; item quest page dynamic reward links did not expose DH-specific reward in this run."
+    "No original current-ranked TWW prospecting/milling controlled cast-level logs with confirmed finished operations, material quantities, per-material hit counts, zero bins, skill/spec and refund reprocessing basis were located in fresh targeted name searches.",
+    "The Lavisaur 20-green quantity is approximate, Darkmoon Deck item IDs are unreported, the conditional 4-hit subcohort is selected within weekly-capped knowledge drops, and neither subcohort is estimator-eligible.",
+    "Firsthand sequence for Gleaming Telluric Crystal is not an official claim of deterministic availability for every patch; weekly quests/state and per-cast chance remain unknown.",
+    "Existing Wowhead PTR cumulative Storm Dust item cohorts have overlapping historical snapshots and possible noDisenchant conflicts. This run does not re-import or merge them."
   ],
   "exhausted_sources": [
-    "Repeated original 2024 ore totals and existing copied Looter cohorts were not re-added as independent research.",
-    "Targeted web searches found no new rank-separated post-2024-10-25 prospecting/milling raw logs with skill, refund and 0..N histograms.",
-    "Boreal Glaive name search and Expanding the Plan quest page did not surface a verified item ID; did not guess."
+    "Already recorded TWW historical 2024 Reikah, PeaEsk, Aqirite ranks, LotzBoi milling ranges, and duplicate PTR Looter cohorts were not copied into new research.",
+    "Fresh queries targeting original ranked ore and herb 2025 cast logs produced guides or previously recorded reports, not post-hotfix raw hit/zero/histogram source data.",
+    "Boreal Glaive exact ID remains unresolved; no unsupported mapping was added."
   ],
-  "next_concrete_step": "Find Boreal Glaive exact item ID from an explicit live item/quest link; then isolate 245710 PTR Looter vs WoWDB noDisenchant variant/build conflict. Keep pursuit of original post-Oct25 ranked prospecting and milling cast-level exports; never import reference-only cumulative PTR rows into gold EV.",
+  "next_concrete_step": "Locate independently sourced post-2024-10-25 per-cast ranked ore/herb processing exports and current-build rarity/armor/weapon disenchant logs; find confirmed in-game item ID for Boreal Glaive and clarify PTR-vs-live eligibility. Do not use weekly profession knowledge observations in gold EV.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
-  "previous_verified_commit_sha": "c68a6b51ebba30c7be91063c3f50a98d74d87b30"
+  "previous_verified_commit_sha": "f6056b52b24088044a6342d40ec07b71264da323"
 }
