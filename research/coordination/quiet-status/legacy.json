@@ -1,126 +1,119 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T20:52:34.154Z",
-  "status": "new-primary-legacy-milling-totals-and-historical-beta-ruby-hit-histogram-no-new-warmaul-cobalt-feliron-measured-casts",
+  "updated_at": "2026-11-16T21:51:34.011Z",
+  "status": "22 firsthand Classic Beta 70374 per-item completed disenchant operations with 12 exact weapon IDs; 16 positive-material and 4 explicitly zero group rows; Warmaul/Cobalt/Fel Iron measured gaps still open",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "standing-legacy-milling"
+    "standing-legacy-disenchant-originals"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 -> 22445/22446/22447/22449 modern eligible disenchant operation log and version-specific output hits/units/histograms remains unverified; 2068 cumulative Looter dataset is historical and not replayed.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424 need independent original current-eligible completed prospecting events, refund-aware denominators and per-output hits/0-1-N histograms; previous Thottbot and OZZIEEM source families excluded as already recorded.",
-    "Rescued original 22,000 Ancient Lichen 22790 -> 13,289 Nether Pigment 39342 and 2,337 Ebon Pigment 43108 units, casts unrecorded.",
-    "Rescued four exact herb item IDs 785/2450/2452/2453 each with separately reported Dusky 39334 and Verdant 43103 pigment units.",
-    "Rescued 144 completed mixed-herb mills -> 50 Verdant Pigment units, an earlier separate mixed 20-stack session -> 5 units, and independent beta 8885 40-mill -> Ruby Pigment 43106 event histogram."
+    "Warmaul Legplates 24995 historic 2068-operation cumulative Looter cohort already includes original stack histograms, but modern scaled Retail no-disenchant conflict, source epoch, bonus IDs, per-cast skill and live eligibility remain unresolved; did not duplicate original cohort.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: no new independent current eligible per-event prospecting outcomes; prior Thottbot, Riku6, Russian Wowhead, OZZIEEM cohorts and reference percentage tables already logged; no repeated evidence.",
+    "New legacy numerical gap: independently located 2026-10-15 Classic Beta build 70374 original bug report with 22 individually enumerated green-weapon disenchant outcomes across 12 exact input IDs, enchanting skill range 56-60. Source observes a systematic 21-30 weapon essence mismatch and explicitly zero Astral/Soul Dust/Large Glimmering results in two groups."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-rollocola-ancientlichen-22000-prepatch",
-      "inputItemID": 22790,
-      "inputUnits": 22000,
-      "completedCasts": null,
-      "outputQuantities": [
-        {
-          "id": 39342,
-          "quantity": 13289
-        },
-        {
-          "id": 43108,
-          "quantity": 2337
-        }
+      "studyKey": "forever-bugs-351-classic-beta-build70374-20261013to15",
+      "source": "https://github.com/ClassicWoWCommunity/forever-bugs/issues/351",
+      "sourceCreatedUTC": "2026-10-15T20:21:58Z",
+      "gameBuild": "70374",
+      "gameVersion": "Classic Beta PvP, Horde (not live Retail)",
+      "reportedEnchantingSkill": "56-60",
+      "actualCompletedDisenchants": 22,
+      "distinctInputIDs": [
+        4568,
+        789,
+        15211,
+        2848,
+        3039,
+        2850,
+        7956,
+        3491,
+        7957,
+        15249,
+        7958,
+        15212
       ],
-      "source": "https://www.wowhead.com/cata/item=43108/ebon-pigment"
-    },
-    {
-      "studyKey": "wowhead-sheppeyescapee-hillsbrad-panda-addon-classic-herbs",
-      "exactHerbInputCounts": {
-        "785": 284,
-        "2450": 273,
-        "2452": 114,
-        "2453": 58
-      },
-      "completedCasts": null,
-      "outputQuantitiesByInput": [
-        {
-          "39334": 134,
-          "43103": 15,
-          "input": 785
-        },
-        {
-          "39334": 134,
-          "43103": 9,
-          "input": 2450
-        },
-        {
-          "39334": 52,
-          "43103": 5,
-          "input": 2452
-        },
-        {
-          "39334": 32,
-          "43103": 5,
-          "input": 2453
-        }
+      "observedOutputIDs": [
+        10939,
+        10940,
+        10978
       ],
-      "source": "https://www.wowhead.com/cata/item=43103/verdant-pigment"
-    },
-    {
-      "studyKey": "wowhead-777148-mixed-lowlevel-herbs-144mills",
-      "completedCasts": 144,
-      "inputItemID": null,
-      "outputItemID": 43103,
-      "totalQuantity": 50,
-      "castsWithDrop": null,
-      "source": "https://www.wowhead.com/cata/item=43103/verdant-pigment"
-    },
-    {
-      "studyKey": "wowhead-777148-earlier-mageroyal-briarthorn-20stacks",
-      "completedCasts": null,
-      "reportedStacks": 20,
-      "outputItemID": 43103,
-      "totalQuantity": 5,
-      "source": "https://www.wowhead.com/cata/item=43103/verdant-pigment"
-    },
-    {
-      "studyKey": "wowhead-204361-rubypigment-beta8885-40mills",
-      "completedCasts": 40,
-      "outputItemID": 43106,
-      "totalQuantity": 19,
-      "castsWithDrop": 17,
-      "histogram": {
-        "0": 23,
-        "1": 16,
-        "3": 1
+      "explicitZeroOutputIDs": [
+        10998,
+        11082,
+        11083,
+        11084
+      ],
+      "distinctItemMaterialRows": 16,
+      "explicitGroupZeroRows": 4,
+      "cohortOverlap": "The two group-level zero material rows/bands re-use the 22 individually listed weapon casts; not additive.",
+      "outputEventSummaryByBand": {
+        "21-25": {
+          "casts": 13,
+          "hits": {
+            "10939": 6,
+            "10940": 6,
+            "10978": 1
+          },
+          "explicitZeros": {
+            "10998": 13
+          }
+        },
+        "26-30": {
+          "casts": 9,
+          "hits": {
+            "10939": 9
+          },
+          "explicitZeros": {
+            "11082": 9,
+            "11083": 9,
+            "11084": 9
+          }
+        }
       },
-      "inputItemID": null,
-      "gameBuild": "beta 8885",
-      "source": "https://www.wowhead.com/cata/item=43106/ruby-pigment"
+      "refunds": "not stated; no nominal-batch denominator used",
+      "sourceValidation": "Original reporter states auto-collected item-level and individual loot-window results; source is an open issue pending approval, not independently confirmed."
     }
   ],
   "numeric_summary": {
-    "new_records": 13,
-    "distinct_original_source_cohorts": 5,
-    "rows_with_explicit_completed_casts": 2,
-    "total_explicit_completed_casts_from_separate_cohorts": 184,
-    "new_zero_inclusive_per_material_histograms": 1,
-    "firsthand_per_herb_output_rows": 8,
-    "added_source_supported_input_item_ids": [
-      22790,
-      785,
-      2450,
-      2452,
-      2453
+    "new_records": 20,
+    "independent_original_source_cohorts": 1,
+    "actual_completed_disenchants": 22,
+    "individual_input_items": 12,
+    "rows_with_completed_cast_denominators": 20,
+    "positive_item_material_rows": 16,
+    "explicit_group_zero_rows": 4,
+    "event_level_histograms": 16,
+    "firsthand_built_client": "70374",
+    "exact_input_item_ids": [
+      4568,
+      789,
+      15211,
+      2848,
+      3039,
+      2850,
+      7956,
+      3491,
+      7957,
+      15249,
+      7958,
+      15212
     ],
-    "added_source_supported_output_item_ids": [
-      39342,
-      43108,
-      39334,
-      43103,
-      43106
+    "exact_positive_output_item_ids": [
+      10939,
+      10940,
+      10978
+    ],
+    "exact_explicit_absent_output_item_ids": [
+      10998,
+      11082,
+      11083,
+      11084
     ],
     "new_warmaul_24995_completed_disenchants": 0,
     "new_cobalt_36909_completed_prospects": 0,
@@ -128,23 +121,20 @@
     "no_prices_frozen": true,
     "copied_cohorts_deduplicated": true
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-16T2049-ancientlichen-verdant-ruby-original-logs.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-16T2149-classic-beta-70374-original-disencasts.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/cata/item=43108/ebon-pigment",
-    "https://www.wowhead.com/cata/item=43103/verdant-pigment",
-    "https://www.wowhead.com/cata/item=43106/ruby-pigment"
+    "https://github.com/ClassicWoWCommunity/forever-bugs/issues/351"
   ],
-  "verified_base_commit_sha": "4f476ff06bbac85c3ee99d66ea11f60ab3b27116",
+  "verified_base_commit_sha": "481dbed4fac9efb599550883f3b5ba314c7497f8",
   "verified_commit_sha": null,
-  "commit_note": "Only one Git tree commit created for the one new JSONL and the legacy-owned status. A Git commit cannot put its own SHA into an immutable status blob; final commit SHA and file read-back verified separately.",
+  "commit_note": "Single Git commit will add exactly one new legacy JSONL evidence file and update this legacy-only status. Immutable commit SHA cannot be self-embedded in the same commit; verify final SHA and read-back independently after branch update.",
   "blockers": [
-    "Ancient Lichen 22k herbs is an item-unit count, not a report of 4400 completed mills or Ebon hit counts; pre-patch exact build and refund handling unknown.",
-    "Sheppeyescapee reports per-herb gathered/milled quantities but not completed 5-herb operation counts; do not turn herb totals into measured casts.",
-    "777148 144 mills mix several herb IDs; cannot attribute those counts to a specific input item. Earlier 20 stacks are separate, number of completed mills unknown.",
-    "Ruby 8885 beta report yields complete per-material stack histogram but never identifies which violet-tier herb(s) were processed; no modern patch transfer.",
-    "Warmaul 24995 current Retail WoWDB 'Cannot be disenchanted' conflicts historical DE output table, character/bonus IDs and modern active eligibility must be tested.",
-    "Cobalt 36909 previous OZZIEEM 40 prospect counter with output totals lacks hits and per-event hist; Fel Iron 23424 old studies lack current eligible test and modern denominator.",
-    "Ulduar token 45661 exact seven class reward IDs already documented in legacy-20261101-216; no duplicate evidence added."
+    "New 22-operation results are from 2026 Classic Beta PvP build 70374; reporter flags an apparent bug and the issue is still open, so do NOT apply the observed Greater Magic Essence yield to live Retail or historical TBC/Classic tables.",
+    "Exact enchanting skill reported as 56-60 across the 22 operations, but individual cast skill, item bonuses, specialization, and patch beyond build are unavailable.",
+    "Four per-group absent-material histograms cover the SAME 22 individual operations; never aggregate 13+9 again as independent casts.",
+    "No new direct Warmaul 24995 eligible player operation; historical Wowhead 2068 cumulative Looter sample conflicts with current scaled 'cannot disenchant' identity and patch 2.4.3 game-data group reference.",
+    "No new independent modern completed Cobalt 36909 or Fel Iron 23424 event outcomes with per-output hits, zeros, skill, and live-build refund context.",
+    "Token 45661 class reward IDs previously covered; no duplicate token record generated."
   ],
   "exhausted_sources": [
     {
@@ -170,8 +160,22 @@
         "https://warcraft.wiki.gg/wiki/Spaulders_of_the_Wayward_Vanquisher"
       ],
       "why": "Existing legacy-20261101-216 includes 7 class-specific exact reward IDs and redemption; duplicated record would be wasted."
+    },
+    {
+      "target": "Previously covered historical Warmaul TBC game-data source",
+      "where": [
+        "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html"
+      ],
+      "why": "Full patch 2.4.3 rarity/ilvl model already recorded in legacy evidence Nov 13 and Nov 15. Deliberately avoided identical priors."
+    },
+    {
+      "target": "Titanium Ore 2022 1000-ore Reddit sample",
+      "where": [
+        "https://www.reddit.com/r/woweconomy/comments/s6bfrl"
+      ],
+      "why": "Confirmed already recorded in legacy/2026-11-06T1245; not re-added."
     }
   ],
-  "next_concrete_step": "Find fresh original current Retail Warmaul 24995 eligible bonus/ilvl disenchant recorder with completed cast/stack histogram and enchanting skill; next obtain independent Cobalt 36909 and Fel Iron 23424 exact per-output event histories, then request Master to review era-conditioned applicability of historical 8885 pigment evidence. Do not add historical/prior prices.",
-  "gold_ev_policy": "Addon alone computes gold EV using live item prices; no historical gold values recorded."
+  "next_concrete_step": "Confirm if the Classic Beta build 70374 disenchant bug was fixed by a dated build/hotfix and obtain a separate post-fix 21-30 weapon caster log with zero-inclusive histograms. Continue prioritizing a live Retail Warmaul 24995 eligible exact-bonus test and independently sourced Cobalt 36909 / Fel Iron 23424 per-cast gem event logs. Refer any version-gate/schema correction to Master.",
+  "gold_ev_policy": "No gold values in evidence; addon computes EV from live prices only."
 }
