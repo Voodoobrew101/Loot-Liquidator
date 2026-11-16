@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T10:43:57.292Z",
-  "status": "Searched additional name-based primary Dragonflight prospecting/milling avenues; no new independent numeric cohort or per-output completed-cast/hit/zero histogram. Existing published samples are duplicates of indexed original studies; 2023-24 Blizzard API issue confirms reagent rank inaccessible through item API.",
+  "updated_at": "2026-11-16T11:59:05.321Z",
+  "status": "Five previously unindexed Dragonflight item-side Wowhead Looter cohorts, 12 output-material occurrence records, committed and read-back verified; rank-specific ore and milling completed-cast/hit/zero histograms remain unavailable.",
   "task_ids": [
     "T0020",
     "T0019",
@@ -13,39 +13,182 @@
     "T0015"
   ],
   "exact_gaps_targeted": [
-    "Prospect Draconium 189143 R1 / 188658 R2 / 190311 R3 → diamond 192869/192870/192871 and other gems: new original completed casts, output hits, nonzero quantities and per-output histograms absent.",
-    "Prospect Serevite 190395 R1 / 190396 R2 / 190394 R3, Khaz'gorite 190312/190313/190314, Prismatic Ore 194545: require exact rank-mapped output IDs, original operation counts and 0/1/2+ output distributions; existing source inputs are often nominal and refunded.",
-    "Mill Bubble Poppy 191467 → Serene Pigment 198412/198413/198414 and Saxifrage 191464/191465/191466 → Blazing Pigment 198418/198419/198420: missing finished mill operation counts, rank-specific hits and histograms."
+    "T0020/T0019: Draconium Ore 189143 and 188658 rank-specific prospecting castsWithDrop, 0/1/2+ material stacks and Resourcefulness refunds",
+    "T0046: Serevite Ore 190394/190395/190396 quality-to-ID mapping; exact per-rank original casts, hit and zero denominators",
+    "T0041: Khaz'gorite Ore and Prismatic Ore 194545 original per-output histograms and rank-resolved studies",
+    "T0018/T0015: Bubble Poppy 191467 and Saxifrage 191464 completed milling operations, pigment hits and 0/1/2+ histograms",
+    "Gear disenchanting: previously unindexed original Wowhead Looter item-side operation/hit numerators for 198041, 194065, 204461, 207222, 194375; output 194123/194124/200113; patch, total units and histograms remain unknown"
   ],
   "newly_verified_fields": [
-    "Official Blizzard developer-forum discussion dated 2023-05-05 with 2024 follow-up documents that the public item API did not expose the difference between ranked Dragonflight crafting reagents; this is a provenance/mapping limitation, not a newly verified output rank or numerical yield."
+    "Five original item-specific Wowhead cumulative Looter operation denominators: 59, 61, 692, 13, 43 disenchant operations, associated with exact gear input IDs",
+    "Twelve source-reported castsWithDrop per-material occurrences and original rounded reported percentages; percentMeaning=perCast (Looter item operations)",
+    "Per-row material identity is exact: Chromatic Dust 194123, Vibrant Shard 194124, Resonant Crystal 200113",
+    "Unobserved output-unit totals, 0/1/2+ histograms, input item version, skill/specialization and patch remain null"
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [],
+  "newly_verified_cohorts": [
+    {
+      "inputItemID": 198041,
+      "inputName": "Khaz'gorite Fabric Cutters Left Blade",
+      "casts": 59,
+      "outputOccurrences": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 37,
+          "percentShown": 63
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 33,
+          "percentShown": 56
+        }
+      ],
+      "source": "https://www.wowhead.com/item=198041/khazgorite-fabric-cutters-left-blade",
+      "sourceKind": "cumulative anonymous Wowhead Looter; input item version, provenance of individual uploads and independent reporter cohorts unknown",
+      "totalQuantity": null,
+      "materialZeroHistogram": null,
+      "patch": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "inputItemID": 194065,
+      "inputName": "Khaz'gorite Fabric Cutters Right Blade",
+      "casts": 61,
+      "outputOccurrences": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 40,
+          "percentShown": 66
+        },
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 29,
+          "percentShown": 48
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 1,
+          "percentShown": 1.6
+        }
+      ],
+      "source": "https://www.wowhead.com/item=194065/khazgorite-fabric-cutters-right-blade",
+      "sourceKind": "cumulative anonymous Wowhead Looter; input item version, provenance of individual uploads and independent reporter cohorts unknown",
+      "totalQuantity": null,
+      "materialZeroHistogram": null,
+      "patch": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "inputItemID": 204461,
+      "inputName": "Shalkeel's Remembrance",
+      "casts": 692,
+      "outputOccurrences": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 653,
+          "percentShown": 94
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 58,
+          "percentShown": 8
+        }
+      ],
+      "source": "https://www.wowhead.com/item=204461/shalkeels-remembrance",
+      "sourceKind": "cumulative anonymous Wowhead Looter; input item version, provenance of individual uploads and independent reporter cohorts unknown",
+      "totalQuantity": null,
+      "materialZeroHistogram": null,
+      "patch": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "inputItemID": 207222,
+      "inputName": "Weyrnkeeper's Timeless Ornamented Cloak",
+      "casts": 13,
+      "outputOccurrences": [
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 9,
+          "percentShown": 69
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 7,
+          "percentShown": 54
+        }
+      ],
+      "source": "https://www.wowhead.com/item=207222/weyrnkeepers-timeless-ornamented-cloak",
+      "sourceKind": "cumulative anonymous Wowhead Looter; input item version, provenance of individual uploads and independent reporter cohorts unknown",
+      "totalQuantity": null,
+      "materialZeroHistogram": null,
+      "patch": null,
+      "skill": null,
+      "specialization": null
+    },
+    {
+      "inputItemID": 194375,
+      "inputName": "Explorer's Short Sword",
+      "casts": 43,
+      "outputOccurrences": [
+        {
+          "outputItemID": 194123,
+          "castsWithDrop": 35,
+          "percentShown": 81
+        },
+        {
+          "outputItemID": 194124,
+          "castsWithDrop": 6,
+          "percentShown": 14
+        },
+        {
+          "outputItemID": 200113,
+          "castsWithDrop": 2,
+          "percentShown": 5
+        }
+      ],
+      "source": "https://www.wowhead.com/item=194375/explorers-short-sword",
+      "sourceKind": "cumulative anonymous Wowhead Looter; input item version, provenance of individual uploads and independent reporter cohorts unknown",
+      "totalQuantity": null,
+      "materialZeroHistogram": null,
+      "patch": null,
+      "skill": null,
+      "specialization": null
+    }
+  ],
+  "new_numerical_measurements": 12,
+  "numerical_fields_improved": [
+    "casts",
+    "castsWithDrop",
+    "percentShown",
+    "percentMeaning",
+    "inputItemID",
+    "outputItemID"
+  ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-16T1042-independent-prospect-mill-ledger-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-16T1042-independent-prospect-mill-ledger-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-16T1155-five-new-gear-looter-cohorts.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T1042-independent-prospect-mill-ledger-search.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T1042-independent-prospect-mill-ledger-search.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T1155-five-new-gear-looter-cohorts.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T1155-five-new-gear-looter-cohorts.jsonl",
   "source_links": [
-    "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://www.wowhead.com/item=192869/illimited-diamond",
-    "https://www.wowhead.com/item=191465/saxifrage",
-    "https://www.reddit.com/r/woweconomy/comments/108782r",
-    "https://www.reddit.com/r/woweconomy/comments/zkay8v",
-    "https://us.forums.blizzard.com/en/blizzard/t/dragonflight-items-api-endpoint-item-quality/43038"
+    "https://www.wowhead.com/item=198041/khazgorite-fabric-cutters-left-blade",
+    "https://www.wowhead.com/item=194065/khazgorite-fabric-cutters-right-blade",
+    "https://www.wowhead.com/item=204461/shalkeels-remembrance",
+    "https://www.wowhead.com/item=207222/weyrnkeepers-timeless-ornamented-cloak",
+    "https://www.wowhead.com/item=194375/explorers-short-sword"
   ],
-  "verified_parent_sha": "6ff50e8d55586544130e18976854094da9604879",
-  "verified_commit_sha": null,
-  "commit_sha_scope": "Single atomic evidence+status commit. New commit SHA cannot be embedded in own content without altering its SHA; SHA is verified post-push by reading the branch head and files.",
+  "verified_parent_sha": "22508c0b58db483e60f66498e4e82b6b21dca021",
+  "verified_commit_sha": "e39b34935ac2305b926b2bcc03d3543bf5789a21",
+  "commit_sha_scope": "Evidence commit e39b34935ac2305b926b2bcc03d3543bf5789a21 independently read-back verified; own status is a subsequent status-only commit (GitHub connector only supports one file per contents-API commit).",
   "blockers": [
-    "No independent newly measured Dragonflight prospecting or milling cohort yielded material-specific castsWithDrop, totalQuantity plus verified completed-cast denominator, zero-outcome log or histogram.",
-    "All returned known Reddit/Wowhead samples already present in existing provenance; repetitions excluded by original authors and original source keys.",
-    "Public Blizzard item API lacks authoritative ranked crafting reagent metadata per 2023-24 developer discussion; Serevite and gem rank identities cannot be promoted from secondary sites.",
-    "Resourcefulness returns prevent interpreting nominal ore/herb input totals as logged completed casts; Xenastro workbook exact per-cast event rows remain inaccessible.",
-    "Jallfo 2022 beta source has conflicting +63 vs +83 rank-3 ore skill bonus; no independent validation yet."
+    "No newly found independent ore/herb prospecting or milling per-output 0/1/2+ histogram or verified Resourcefulness-adjusted completed-operation ledger.",
+    "Source-backed Looter observations are cumulative anonymous item-level tables, not controlled single-character studies; publication epoch, patch/build, actual gear version, item bonus, skill/specialization and complete outcome correlations unavailable.",
+    "Gear output totalQuantity and raw material-specific 0/1/2+ stack histograms remain unknown; overlapping output hits must not be assumed independent or mutually exclusive.",
+    "Looter item 204461 reportedly underwent an item-quality change, so cumulative history can mix source item versions.",
+    "Serevite reagent rank/API mapping and original Jallfo +63 versus +83 prospecting skill contradiction remain unverified."
   ],
   "exhausted_sources": [
     {
@@ -1279,44 +1422,54 @@
       ]
     }
   ],
-  "next_concrete_step": "Seek unpublished original player craft-event logs or new distinct postlaunch source authors for ranked Draconium and Bubble Poppy first. Obtain explicit material-per-operation 0/1/2+ columns and Resourcefulness refund handling, and request authoritative rank display verification from an in-game item tooltip before mapping source-only ranks. Do not reuse exhausted Reddit and Wowhead authors.",
+  "next_concrete_step": "Seek new independent original Draconium and Bubble Poppy material-by-completed-operation event logs (including Resourcefulness refunds and rank-verified output item IDs); source-review original Wowhead Looter raw stack distribution/bonus and epoch for the five new item cohorts before any Master-approved importer use. Do not reindex known Reddit/Wowhead authors.",
   "validation": {
-    "jsonl_records": 1,
+    "jsonl_records": 12,
     "JSON_parse": true,
-    "record_type": "searched",
-    "independent_numeric_cohorts": 0,
+    "record_type": "drop",
+    "source_kind": "study",
+    "independent_item_specific_looter_cohorts": 5,
+    "raw_event_histograms_available": false,
     "exact_input_ids": [
-      189143,
-      188658,
-      190311,
-      190395,
-      190396,
-      190394,
-      190312,
-      190313,
-      190314,
-      194545,
-      191467,
-      191464,
-      191465,
-      191466
+      198041,
+      194065,
+      204461,
+      207222,
+      194375
     ],
     "exact_output_ids": [
-      192869,
-      192870,
-      192871,
-      198412,
-      198413,
-      198414,
-      198418,
-      198419,
-      198420
+      194123,
+      194124,
+      200113
     ],
+    "casts_by_input_id": {
+      "194065": 61,
+      "194375": 43,
+      "198041": 59,
+      "204461": 692,
+      "207222": 13
+    },
+    "numeric_fields_improved": [
+      "casts",
+      "castsWithDrop",
+      "percentShown"
+    ],
+    "unknown_fields_preserved_as_null": [
+      "totalQuantity",
+      "histogram",
+      "minSeen",
+      "maxSeen",
+      "skill",
+      "specialization",
+      "patch"
+    ],
+    "evidence_commit_sha": "e39b34935ac2305b926b2bcc03d3543bf5789a21",
+    "evidence_read_back_verified": true,
     "changed_path_allowlist": [
-      "research/v3/evidence/dragonflight/2026-11-16T1042-independent-prospect-mill-ledger-search.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-16T1155-five-new-gear-looter-cohorts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "source_dedupe": "known-originals-only-not-reimported"
+    "source_dedupe": "Five distinct item-specific Wowhead pages not present in prior own-status exhausted-source name/ID references; anonymous cumulative uploads may span epochs."
   },
   "production_changed": false,
   "merge_performed": false,
