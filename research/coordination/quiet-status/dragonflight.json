@@ -1,49 +1,63 @@
 {
   "role": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T01:31:55.171Z",
-  "status": "Recorded two new original Xenastro Serevite R2/R3 dated prospect batches; 18 source-ranked material quantity cells, no verified completed casts or material-hit histograms.",
+  "updated_at": "2026-11-16T02:40:28.009Z",
+  "status": "Two previously unindexed Dragonflight gear item-side Looter occurrence tables captured (5 numeric rows, 2 gear inputs); no independent prospecting/milling operation-histogram source found.",
   "task_ids": [
-    "T0046",
+    "T0020",
+    "T0018",
     "T0041",
-    "T0020"
+    "T0019",
+    "T0046"
   ],
   "exact_gaps_targeted": [
-    "Serevite Q3 190394 original 2023-01-29 workbook row 57; 13000 nominal ore, 2075 reported ore units refunded, pooled ranked material quantities",
-    "Serevite Q2 190396 original 2023-01-31 workbook row 59; 26000 nominal ore, 1507 refunded, pooled ranked material quantities",
-    "Draconium, Khaz'gorite, Prismatic prospecting and milling still need per-completed-cast 0/1/2+ histograms"
+    "Original Draconium/Serevite/Khaz'gorite/Prismatic ore completed prospects with Resourcefulness refund-adjusted input cohorts and material 0–N histograms",
+    "Original Bubble Poppy/Saxifrage 5-herb milling completed casts and separate pigment rank output hits",
+    "Dragonflight gear-specific disenchant material occurrence denominators not previously indexed"
   ],
   "newly_verified_fields": [
-    "CSV row 57 Serevite Q3 190394: nine original totalQuantity cells, skill 283, Inspiration 0.198, Resourcefulness 0.306, ore refund 2075",
-    "CSV row 59 Serevite Q2 190396: nine original totalQuantity cells, skill 250, Inspiration 0.368, Resourcefulness 0.133, ore refund 1507"
+    "209937 Chartreuse Champion's Gavel: 55 reported disenchant attempts; 194123 Chromatic Dust 39 hits (71% displayed), 194124 Vibrant Shard 16 (29%), 200113 Resonant Crystal 2 (4%)",
+    "209942 Fearless Faerie's Kris: 13 reported item disenchants; 194123 Chromatic Dust 9 hits (69%), 194124 Vibrant Shard 4 (31%); PTR mirror only"
   ],
   "newly_verified_cohorts": [
-    "xenastro-original-prospecting-log-serevite-r3-csvrow-57-2023-01-29",
-    "xenastro-original-prospecting-log-serevite-r2-csvrow-59-2023-01-31"
+    {
+      "studyKey": "wowhead-looter-dragonflight-item-209937-cumulative-20261116",
+      "inputItemID": 209937,
+      "casts": 55,
+      "source": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel"
+    },
+    {
+      "studyKey": "wowhead-looter-dragonflight-item-209942-cumulative-20261116",
+      "inputItemID": 209942,
+      "casts": 13,
+      "source": "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris"
+    }
   ],
-  "new_numerical_measurements": 18,
+  "new_numerical_measurements": [
+    "209937 Chartreuse Champion's Gavel: 55 reported disenchant attempts; 194123 Chromatic Dust 39 hits (71% displayed), 194124 Vibrant Shard 16 (29%), 200113 Resonant Crystal 2 (4%)",
+    "209942 Fearless Faerie's Kris: 13 reported item disenchants; 194123 Chromatic Dust 9 hits (69%), 194124 Vibrant Shard 4 (31%); PTR mirror only"
+  ],
   "numerical_fields_improved": [
-    "18 original rank-specific material-unit totalQuantity cells (pooled for green/blue gem species)",
-    "original logged refund units and nominal ore quantities expressly not actual-cast denominators",
-    "dated skill, Inspiration and Resourcefulness profiles",
-    "independently corroborated Serevite ore quality-to-item IDs"
+    "5 direct source item-hit numerator rows, denominators 55/13 and original displayed percentages; no output totalQuantity or inferred probability"
   ],
   "evidence_files": [
-    "research/v3/evidence/dragonflight/2026-11-16T0131-xenastro-unindexed-serevite-r2-r3.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-16T0131-xenastro-unindexed-serevite-r2-r3.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-16T0240-two-new-emerald-dream-looter-and-numeric-gap-search.jsonl"
   ],
   "source_links": [
     "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
     "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/",
     "https://goldcap.gg/retail/us/items/190396",
-    "https://goldcap.gg/retail/eu/items/190394"
+    "https://goldcap.gg/retail/eu/items/190394",
+    "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
+    "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris"
   ],
-  "verified_commit_sha": "44b416a1ffcbd8360243fae6d5b196421f36b8fb",
-  "commit_sha_scope": "Verified precommit branch head; new commit SHA cannot be embedded in its own content. Confirm by readback after push.",
+  "verified_commit_sha": "65ee6a0bf4e88203f4138c6cf32d5fa01bc91847",
+  "commit_sha_scope": "Verified parent branch head at staging; this one-commit status file cannot self-reference its own commit SHA; verify new SHA via post-push GitHub readback.",
   "blockers": [
-    "Pooled green/blue material family totals cannot be attributed to individual gem item IDs.",
-    "Nominal input and refunded ore units do not establish actual completed casts or per-output hit counts; no zero-inclusive per-cast histogram.",
-    "Original January 2023 data without exact patch, specialization or refund-reprocessing ledger; not a modern Retail estimate.",
-    "Two distinct original batches are from one author; no independent author-level replication."
+    "No new original Dragonflight prospect/mill independent completed-cast, hit-count or zero-inclusive histogram dataset located in current name-first cross-site search",
+    "Wowhead Looter gear tables are cumulative, with unknown individual contributor overlap, collection era, source item bonus and per-material item-unit totals",
+    "209942 appears only on a PTR mirror; not proof of current live-game processing"
   ],
   "exhausted_sources": [
     {
@@ -1163,48 +1177,65 @@
         "Warcraft Wiki named Milling/Dragon Isles herb mechanics: https://warcraft.wiki.gg/wiki/Milling — generic batch/recipe information, not a first-person material sample",
         "wow-professions.com Dragon Isles Inscription named milling guide results: https://www.wow-professions.com/guides/wow-inscription-leveling-guide — guide quantities/recipe context, no original event-ledger"
       ]
+    },
+    {
+      "at": "2026-11-16T02:40:28.009Z",
+      "scope": "name-first original ore/herb cast-ledger and duplicate-aware outdoor gear item-side search",
+      "reason": "No unindexed original prospect/mill material event ledger; two outdoor-gear input cohorts found with directly reported material occurrences; exclude already-indexed 209919/209923/209892/209893/209921/209904/207214/207215 etc",
+      "whereLooked": [
+        "Reddit r/woweconomy name-first Draconium Ore original prospect-cast histograms: https://www.reddit.com/r/woweconomy/ — original Xenastro and 2022/23 threads resurface, no new zero-inclusive operation ledger",
+        "Reddit r/woweconomy name-first Khaz'gorite Ore original rank-specific prospecting per-output cast events: https://www.reddit.com/r/woweconomy/comments/10h6ccx — prior-indexed cohort, no new independent histogram",
+        "Blizzard US forums name-first Serevite Ore prospecting Resourcefulness-adjusted actual cast counts: https://us.forums.blizzard.com/en/wow/ — no new original zero-inclusive per-cast table",
+        "Blizzard EU forums name-first Saxifrage milling completed casts and output tally: https://eu.forums.blizzard.com/en/wow/ — no new original mill outcome sequence",
+        "Wowhead name-first Prismatic Ore original prospecting material-hit cohorts: https://www.wowhead.com/item=194545/prismatic-ore — old indexed original comment tables only",
+        "WoW-Professions name-first Bubble Poppy milling per-cast distributions: https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight — recipe/2–5 pigment range, no measured 0–N histogram",
+        "Wowhead name-first Dragon Isles Prospecting comments: https://www.wowhead.com/spell=374627/dragon-isles-prospecting — original Bugy reference averages, no new verified castsWithDrop",
+        "Warcraft Wiki name-first Draconium Ore prospecting reference: https://warcraft.wiki.gg/wiki/Draconium_Ore — identity/mechanics only, not new original event data"
+      ]
     }
   ],
-  "next_concrete_step": "Find genuinely independent completed-operation per-output logs or saved variable exports for Khaz'gorite/Prismatic and Bubble Poppy/Saxifrage, with refunded-input accounting and 0-N outcomes.",
+  "next_concrete_step": "Prioritize a new independent raw player prospect/mill CSV or addon SavedVariables export with actual completed operations and refund reconciliation; independently verify 209937/209942 original Looter event logs, stack yields, rank, bonus and build before estimator inclusion.",
   "validation": {
-    "preflight": "Read current v3 README, evidence-format, mechanics, worker and Dragonflight queue; retrieved author XLSX Prospecting Log from original sheet, checked raw source-cell arithmetic and prior Xenastro identifiers, verified input rank identities with separate indexed sources.",
+    "preflight": "Refreshed research branch and read current v3 README, evidence-format, mechanics, worker instructions and Dragonflight queue; checked source tables and existing source/cohort identifiers; validated 6 JSONL objects before committing.",
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-16T0131-xenastro-unindexed-serevite-r2-r3.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-16T0240-two-new-emerald-dream-looter-and-numeric-gap-search.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "record_count": 18,
-    "distinct_original_batches": 2,
-    "independent_authors": 1,
-    "source_semantics": "Actual material-unit quantities only; completed casts, material hit counts, probability and histograms all null",
-    "readback": "pending separate post-commit verification; self SHA cannot be stored inside same commit",
+    "record_count": 6,
+    "numeric_records": 5,
+    "searched_records": 1,
+    "distinct_gear_input_cohorts": 2,
+    "material_unit_totals": null,
+    "completed_casts_for_prospect_or_mill": null,
+    "source_semantics": "Direct original Wowhead cumulative input-side hits; counts are per-input occurrence indicators, not per-cast material item totals.",
+    "readback": "new commit verification follows after branch write (cannot self-reference commit hash)",
     "production_untouched": true
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0131-xenastro-unindexed-serevite-r2-r3.jsonl",
-  "verified_parent_sha": "44b416a1ffcbd8360243fae6d5b196421f36b8fb",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0240-two-new-emerald-dream-looter-and-numeric-gap-search.jsonl",
+  "verified_parent_sha": "65ee6a0bf4e88203f4138c6cf32d5fa01bc91847",
   "agent": "dragonflight",
   "controlled_measured_cohorts_added": 2,
-  "material_occurrence_records_added": 18,
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0131-xenastro-unindexed-serevite-r2-r3.jsonl",
+  "material_occurrence_records_added": 5,
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0240-two-new-emerald-dream-looter-and-numeric-gap-search.jsonl",
   "evidence_source_links": [
-    "https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit",
-    "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/"
+    "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
+    "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris"
   ],
-  "original_cohort_basis": "Xenastro original XLSX Prospecting Log dated and numbered CSV rows 57 and 59; unique rank-separated January 2023 sessions, same author.",
+  "original_cohort_basis": "Two distinct base gear inputs on cumulative Wowhead Looter; individual player contributor cohorts cannot be separated from pooled item-side data.",
   "numerical_fields_advanced": [
-    "18 material-unit cells by six pooled gem rank-family and three exact diamond rank items",
-    "original logged refunds 2075/1507 ore units (not cast denominators)",
-    "skill/inspiration/resourcefulness and original timestamps"
+    "5 direct source item-hit numerator rows, denominators 55/13 and original displayed percentages; no output totalQuantity or inferred probability"
   ],
-  "duplicate_cohort_review": "Compared known prior Xenastro source-file cohort keys before adding CSV rows 57 and 59; full aggregate/dedup check by Master still required before estimator.",
+  "duplicate_cohort_review": "Excluded known prior indexed first-person ore studies and cumulative outdoor gear item inputs from targeted evidence scans; 209937 and 209942 absent from previous current agent status; Master should perform full source-lineage dedup.",
   "newly_verified_source_relationships": [
-    "Original XLSX first-party prospect log rows 57 and 59, matched separately to independent Serevite item-rank reference entries."
+    "209937 live Wowhead item-side table, not the PTR duplicate snapshot",
+    "209942 PTR/PTR-2 localized mirrors share the same item-specific Looter table, not independent cohorts"
   ],
   "exact_gaps": [
-    "Serevite Q3 190394 row57 and Q2 190396 row59: completed cast denominator and per-output hit histogram unknown",
-    "Other Dragonflight ore/herb 0/1/2+ per-cast numerical baselines unresolved."
+    "Prospect/mill completed casts, per-output castsWithDrop, 0–N histograms, skill/spec, patch and refund reprocessing still unverified",
+    "New Looter cohorts 209937 and 209942 lack original timestamps, per-hit units, stack histograms, skill, item bonuses and actual live-build provenance; 209942 source PTR only"
   ],
   "pooled_material_quantity_rows_added": 12
 }
