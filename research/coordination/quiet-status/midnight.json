@@ -1,55 +1,89 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-16T12:40:17.477Z",
-  "status": "New independently inspectable Forever-only collector sample schema; no original Retail Midnight numeric yield cohort.",
+  "updated_at": "2026-11-16T13:22:00.809Z",
+  "status": "Three novel primary-forum-source partial ore/gem count observations (two firsthand, one explicitly secondhand), all unresolved input/output IDs and reference-only; novel Enchantrix Retail/Forever capture semantics checked. No new estimator-eligible item-specific 12.1.5 yield cohort.",
   "task_ids": [
     "T0026",
     "T0049",
     "T0039",
     "T0005",
     "T0003",
-    "T0002"
+    "T0045"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands: original current-Retail actual-ilvl305 eligible and successful disenchant itemLink with output vector, skill/spec, build and 0-inclusive operation receipt remains missing.",
-    "237362 Umbral Tin Ore: rank-specific per-material 242606/242607/242610/242611/242786/242788 exact hits, histograms, refunds, and 242608 Tin-vestigator unlock state remain missing for reported 800 cast source.",
-    "237359 Refulgent Copper, 237365 Brilliant Silver and 236761 Tranquility Bloom: patch-matched original completed operations with output quantities/hits/zero bins and Resourcefulness net use remain missing.",
-    "Retail collector acquisition: whether Disenchantry v1.2.6 Retail records any item-specific or per-event sample; separate observed Forever-only schema must not be imported as Retail evidence."
+    "T0026/T0049: 272246 Miststalker's Wristbands at-cast selected ilvl305 successful disenchant itemLink, build, skill/spec, output IDs/ranks, zero outcome remains unconfirmed; base 206/noDE discrepancy unresolved.",
+    "T0039/T0005/T0003: 237362 Umbral Tin/237359 Copper and related ore current 12.1.5 rank-specific completed casts, hits/zeros, material IDs, per-cast distribution and refunds remain unavailable.",
+    "T0045: Midnight 10-herb milling current exact pigment ranks, completed casts and zero-inclusive per-output histograms unavailable.",
+    "New non-poolable historical anonymous-ore gem-count contrast from March22/April4 Blizzard professions discussion; ore ID/rank and gem composition not stated."
   ],
   "newly_verified_fields_or_cohorts": {
-    "kind": "external_consumer_source_code_schema_only_not_original_retail_yields",
-    "new_primary_player_cohorts": 0,
-    "new_estimator_eligible_yields": 0,
-    "source_repository": "velibkolay/CraftWise",
-    "source_file": "CraftWise/Disenchant.lua",
-    "observed_forever_only_key_fields": [
-      "clientVersion",
-      "clientBuild",
-      "itemID",
-      "quality",
-      "baseItemLevel",
-      "classID",
-      "normal_or_salvager"
+    "kind": "new_partial_historical_primary_forum_numbers_and_recorder_logic_reference_only",
+    "new_primary_full_event_cohorts": 0,
+    "new_estimator_eligible_yield_cohorts": 0,
+    "reports": [
+      {
+        "source": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222",
+        "author": "Jacara",
+        "date": "2026-03-22",
+        "reported_ore": 400,
+        "reported_total_unspecified_gems": 6,
+        "gear": "rank-5 blue",
+        "specialization": "maxed prospecting",
+        "casts": null,
+        "inputItemID": null,
+        "outputItemID": null,
+        "source_kind": "firsthand-reference-only"
+      },
+      {
+        "source": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222",
+        "author": "guildmate via Jacara",
+        "date": "2026-03-22",
+        "reported_ore": 100,
+        "reported_total_unspecified_gems": 10,
+        "gear": null,
+        "specialization": "not unlocked reportedly",
+        "casts": null,
+        "inputItemID": null,
+        "outputItemID": null,
+        "source_kind": "secondhand-reference-only"
+      },
+      {
+        "source": "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=2",
+        "author": "Jerek",
+        "date": "2026-04-04",
+        "reported_ore": 50,
+        "reported_total_unspecified_gems": 2,
+        "casts": null,
+        "inputItemID": null,
+        "outputItemID": null,
+        "source_kind": "firsthand-reference-only-after-March31"
+      }
     ],
-    "observed_forever_only_aggregate_fields": [
-      "count",
-      "materials[materialID].total",
-      "materials[materialID].hits",
-      "materials[materialID].min",
-      "materials[materialID].max"
-    ],
-    "crucial_scope": "Third-party reader explicitly says Forever-only; cannot verify Retail addon v1.2.6 data collection from that."
+    "code_audit": "EnxMain.lua SaveDisenchant called on every loot output (not gated to disenchant), and EnxStorage.lua SaveProspect/SaveMilling aggregate LOOT_OPENED occurrences and item totals, not proven at-cast logs."
   },
   "numeric_fields_advanced": {
     "new_primary_full_event_casts": 0,
     "new_zero_inclusive_player_cohorts": 0,
-    "new_total_material_units": 0,
-    "new_verified_histograms": 0,
-    "new_exact_output_rank_ids": 0,
+    "new_rank_verified_item_specific_material_totals": 0,
+    "new_histograms": 0,
+    "new_output_rank_ids": 0,
     "new_live_272246_ilvl305_receipts": 0,
     "new_237362_hits": 0,
-    "forever_only_schema_key_dimensions_documented": 7,
-    "forever_only_aggregate_metrics_documented": 5
+    "new_unassigned_historical_gem_reported_totals": [
+      {
+        "ore_reported": 400,
+        "gems_reported": 6
+      },
+      {
+        "ore_reported": 100,
+        "gems_reported": 10
+      },
+      {
+        "ore_reported": 50,
+        "gems_reported": 2
+      }
+    ],
+    "reason_not_eligible": "Output names/IDs, input ore rank/ID and verified completed-cast operations all absent. Two firsthand; one secondhand."
   },
   "evidence_files": [
     "research/v3/evidence/midnight/20261116T0320-retail-processing-export-source-gap.jsonl",
@@ -61,24 +95,30 @@
     "research/v3/evidence/midnight/2026-11-16T0916-six-epic-leather-looter-reference-holds.jsonl",
     "research/v3/evidence/midnight/2026-11-16T1058-five-live-epic-gearside-de-holds.jsonl",
     "research/v3/evidence/midnight/2026-11-16T1121-retail-de-capture-and-expansion-identity.jsonl",
-    "research/v3/evidence/midnight/2026-11-16T1238-forever-only-collector-schema-limits.jsonl"
+    "research/v3/evidence/midnight/2026-11-16T1238-forever-only-collector-schema-limits.jsonl",
+    "research/v3/evidence/midnight/2026-11-16T1320-partial-prospecting-contrasts-and-capture-audit.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-16T1121-retail-de-capture-and-expansion-identity.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-16T1238-forever-only-collector-schema-limits.jsonl",
   "evidence_record_ids": [
-    "midnight-20261116-1600"
+    "midnight-20261116-1901",
+    "midnight-20261116-1902",
+    "midnight-20261116-1903",
+    "midnight-20261116-1904"
   ],
   "source_links": [
-    "https://github.com/velibkolay/CraftWise/blob/main/CraftWise/Disenchant.lua",
-    "https://github.com/glholland/Flipper/blob/main/NOTICE",
-    "https://www.curseforge.com/wow/addons/disenchantry/files/9621564"
+    "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222",
+    "https://us.forums.blizzard.com/en/wow/t/prospectingcrushing-needs-a-huge-buff/2274222?page=2",
+    "https://github.com/NoobyGains/Auctioneer-Forever/blob/main/Enchantrix/EnxMain.lua",
+    "https://github.com/NoobyGains/Auctioneer-Forever/blob/main/Enchantrix/EnxStorage.lua",
+    "https://github.com/NoobyGains/Auctioneer-Forever/blob/main/Enchantrix/Enchantrix.toc"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One atomic commit changes exactly one new Midnight evidence file and own quiet-status/midnight.json. Status cannot embed its own commit SHA without self-reference; independently verify ref/commit/evidence after push.",
+  "commit_note": "Single atomic Git commit updates one new Midnight evidence JSONL and own quiet-status/midnight.json. Embedding this commit's hash in its own content is self-referential; SHA is verified separately by post-push read-back. No changes to any other path.",
   "blockers": [
-    "CraftWise's documented per-item samples explicitly concern Forever, not Retail; source data of Retail Disenchantry v1.2.6 inaccessible. Need actual Retail code/sample or player-confirmed original event log.",
-    "272246 item variant: base noDisenchant vs 140 Looter hit snapshot conflict; no at-cast ilvl305 actual success event/bonus/skill.",
-    "No new original zero-inclusive Retail 12.1.5 item-output ledgers for 237362, 237359, 237365 or 236761; previously indexed Cardinalai, Honeybone, Insomnist and Reddit pigment studies excluded."
+    "New 400/6, 100/10, 50/2 reports identify neither actual ore item/rank nor any gem output IDs, and do not establish completed operation counts; one report is hearsay. Do not feed these into estimator or confuse pre/post 2026-03-31 cohorts.",
+    "Enchantrix public source has no published actual original 12.1.5 player SavedVariables; generic prospect/mill event totals are not demonstrated to include all zero/failed events or actual refund/skill/bonus data.",
+    "Need 272246 actual ilvl305 at-cast DE event, and independent 237362 rank-specific per-output hits, stack histograms, skill/spec and Resourcefulness ledger; no new production-ready values."
   ],
   "exhausted_sources": [
     "2026-11-14T06:11:30.224Z: New cross-source comparison: GoldCap 242608/242712 labels two Eversong Diamond ranks, in tension with WoW-Professions and Dving quality-less guide wording. New Apr30 Blizzard customer restoration thread 2299311 says Dawn Crystal quality rank required for item restore is hidden by web UI; original poster's successful retry is not a new measured disenchant event. Earlier ilvl305 armory, Raven May22 restore, Cardinalai/Honeybone and Looter snapshots already indexed. No new complete per-cast cohort for 272246, 237362, 237359, 236761. Do not recycle these webpages without original exact itemLinks, outputs and operation ledger.",
@@ -135,10 +175,11 @@
     "2026-11-16T09:18:12.428Z: NEW unindexed LIVE 250005/250015/250018 and PTR12.1.7 250013/250016/250025 Wowhead item-side Looter records (153 pooled item disenchants, 12 positive rows/146 occurrence hits); no original player per-cast zero-inclusive operation/material event exports, actual at-cast ilvl/bonus, skill/spec, output IDs/ranks or dated collection build. LIVE bonus variants and PTR alternate snapshots are overlapping mutable source views and were excluded. Previously indexed 250004/250006/250007/250009/250019 and Cardinalai/Honeybone/PocketCFO 237362/237359/237365 original studies not recopied. Do not reharvest six tables without original material link/individual event logs.",
     "2026-11-16T10:58:56.139Z: New by-name targeted WOWHEAD LIVE/PTR gear Looter identity search found previously unindexed item IDs 250056,249966,250062,249967,249969. Cross-version snapshots overlap (250056 PTR40 vs LIVE42, 250062 PTR50 vs LIVE52, 249967 PTR16/17 vs LIVE18); retained one LIVE snapshot per item as reference only. Named recheck on 272246, Umbral Tin, Eversong Diamond, Copper, Silver, Midnight milling across Wowhead, WoWDB, Reddit, Warcraft Wiki, profession guides yielded earlier Cardinalai and catalog references but no NEW original zero-inclusive player-cast cohort. Do not recheck these five mutable tables without original output item links and per-event receipts.",
     "2026-11-16T11:21:13.860Z: NEW non-duplicative collector/identity path checked: Retail-supported x_Raven_x Disenchantry 1.2.6 (Nov15) author page explicitly tracks per-character session/lifetime source quality and recovered-material totals, but no shared per-cast raw CSV/event receipt or skill/spec/bonus/build; CurseForge Disenchanty/Classic-only DETracker and Reddit Ka0s loot history are not actual Midnight DE cohorts. Independently, March2 DisenchantValue 1.2.0 changelog documents TWW/Midnight item-level overlap and expacID fallback fix; neither establishes 272246 ilvl305 actual DE. Cross-checked Wowhead selected 305/catalog, WoWDB base Cannot DE, GamGem preview and profession sources; no NEW 0-inclusive independent original cast sample for 272246, 237362, 237359/237365, 236761. New source IDs and URL provenance saved in research/v3/evidence/midnight/2026-11-16T1121-retail-de-capture-and-expansion-identity.jsonl; do not recast addon screenshots/downloads or the prior Cardinalai/Honeybone/kyzenbka/David111 cohorts as fresh measurements.",
-    "2026-11-16T12:40:17.477Z: NEW independent cross-repository audit: CraftWise Disenchant.lua explicitly labels DisenchantryDB.disenchantSamples as account-wide and Forever-only, with key clientVersion:build:itemID:quality:baseItemLevel:classID:normal|salvager and aggregate count plus material totals/hits/min/max; cannot infer Retail v1.2.6 stores equivalent data. Source code confirms sampled build-scoping on Forever and no proven itemLink bonus/skill/spec/0-inclusive event sequence. By-name searches for 272246, Umbral Tin 237362, Copper/Silver and milling on GitHub, CurseForge, Reddit, Wowhead and Blizzard yielded existing indexed reports or non-raw estimates; no independently new measured yield cohorts. Do not re-use Forever sample data or already-indexed Cardinalai/5294KP/1473 pigment studies."
+    "2026-11-16T12:40:17.477Z: NEW independent cross-repository audit: CraftWise Disenchant.lua explicitly labels DisenchantryDB.disenchantSamples as account-wide and Forever-only, with key clientVersion:build:itemID:quality:baseItemLevel:classID:normal|salvager and aggregate count plus material totals/hits/min/max; cannot infer Retail v1.2.6 stores equivalent data. Source code confirms sampled build-scoping on Forever and no proven itemLink bonus/skill/spec/0-inclusive event sequence. By-name searches for 272246, Umbral Tin 237362, Copper/Silver and milling on GitHub, CurseForge, Reddit, Wowhead and Blizzard yielded existing indexed reports or non-raw estimates; no independently new measured yield cohorts. Do not re-use Forever sample data or already-indexed Cardinalai/5294KP/1473 pigment studies.",
+    "2026-11-16T13:22:00.809Z: New distinct March22/April4 original Blizzard thread primary numeric reports 400 ore/6 unidentified gems, secondhand 100 ore/10 unidentified gems, 50 ore/2 unidentified gems, but input ore names/ranks and output gem IDs all absent; kept reference only and not pooled across March31 buff. New code audit of Auctioneer-Forever Enchantrix Retail-targeted EnxMain/EnxStorage shows SaveDisenchant invoked in milling/prospect loot handler and prospect/mill aggregate LOOT_OPENED, not validated full event ledger. Named research on Blizzard, Reddit, Wowhead, Github, CurseForge, WarcraftWiki found no novel complete zero-inclusive 12.1.5 player log. Do not recast partial forum totals as 237362 data, or reuse generic Enchantrix aggregate as completed casts absent raw exported events."
   ],
-  "next_concrete_step": "Seek primary Retail 12.1.5 Disenchantry v1.2.6 code/SavedVariables or volunteer original per-event data, explicitly separate from Forever DisenchantryDB.disenchantSamples; if unavailable prioritize new 272246 actual ilvl305 disenchant receipt or Cardinalai 237362 rank-specific raw hit/histogram/refund export. Never promote Forever pooled samples to Midnight.",
-  "verified_base_commit_sha": "d4336b1e100d2f9b2614f4edbad121f1b3ec0940",
-  "next": "Seek primary Retail 12.1.5 Disenchantry v1.2.6 code/SavedVariables or volunteer original per-event data, explicitly separate from Forever DisenchantryDB.disenchantSamples; if unavailable prioritize new 272246 actual ilvl305 disenchant receipt or Cardinalai 237362 rank-specific raw hit/histogram/refund export. Never promote Forever pooled samples to Midnight.",
-  "base_commit_sha": "d4336b1e100d2f9b2614f4edbad121f1b3ec0940"
+  "next_concrete_step": "Find original Retail 12.1.5 at-cast saved-variable/loot-transaction export with exact input itemLink/bonus+ilvl, game build, skill/spec/unlock, net reagent consumption/refund and every output including zeros; prioritize 272246 ilvl305 live DE and 237362 exact ore ranks. Source-only forum anonymous ore gem counts must remain excluded until item identities obtained.",
+  "verified_base_commit_sha": "ebae78180da5daca6646c9c7eab623297e3bfb17",
+  "next": "Find original Retail 12.1.5 at-cast saved-variable/loot-transaction export with exact input itemLink/bonus+ilvl, game build, skill/spec/unlock, net reagent consumption/refund and every output including zeros; prioritize 272246 ilvl305 live DE and 237362 exact ore ranks. Source-only forum anonymous ore gem counts must remain excluded until item identities obtained.",
+  "base_commit_sha": "ebae78180da5daca6646c9c7eab623297e3bfb17"
 }
