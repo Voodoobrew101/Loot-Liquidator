@@ -1,79 +1,69 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-15T23:03:45.577Z",
-  "status": "Verified a newly added historical Netherweave Bracers quantity cohort with era-specific Bountiful Bags confound and six Classic gear-level cohorts collapsing to three estimator keys. 65+1 source/static JS checks passed; no new current Retail gold decisions or live validation.",
+  "updated_at": "2026-11-16T00:03:34.213Z",
+  "status": "Original-source identity audit: 31/31 pinned ereduns EnchantedItemTypes material tuples verified across 15 distinct historical Classic level/weapon/armor groups; current research key_of collapses them to five keys. New 18 worker rows add 80 material-positive events and 133 units, not completed operations. No new Retail 2026 gold action, numeric expected yield, actual tooltip check or live QA.",
   "task_ids": [
-    "T0042",
     "T0047",
-    "T0053"
+    "T0053",
+    "T0042"
   ],
   "exact_gaps_targeted": [
-    "Netherweave Bracers 21849: distinguish 70 source-completed historical disenchants and unconditional material units from unidentified per-output hit counts; historical Bountiful Bags bonus removed in Retail patch 6.0.2",
-    "Original Enchantrix ilvl 60-65 uncommon armor: retain six distinct source group identities; current research key_of omits itemLevelRange and collapses 13 group/output rows to three estimates keys",
-    "Current Retail 21849 build/skill/itemLink/bonus and zero-inclusive 0–N output ledger absent; no current addon recommendation validated"
+    "15 historical Classic ilvl-specific uncommon gear groups (57-65) encode 31 output material tuples; research key_of(gearGroup) omits itemLevelRange and collapses 15 original group identities to five estimator input/output keys",
+    "Nine new groups contain 18 material rows: 80 material-positive occurrences and 133 total material units, but no completed DE operation denominator, separate 0-output ledger, build/itemLink/bonus, skill/specialization or current Retail validity",
+    "Potential same-contributor duplicate lineage: source EnchantedItemTypes group aggregates may overlap EnchantedLocal records and must not be counted as independent studies"
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "source": "Scott75 original Wowhead Arcane Dust comment",
-      "inputItemID": 21849,
-      "completedOperations": 70,
-      "outputItemID": 22445,
-      "totalQuantity": 159,
-      "historicalUnconditionalUnitsPerOperation": 2.2714285714285714,
-      "castsWithDrop": null,
-      "gameBuild": null,
-      "sourceModifier": "Bountiful Bags active; 15%-nominal extra materials; removed from Retail patch 6.0.2"
+      "kind": "source-integrity-verification-not-new-study",
+      "new_groups": 9,
+      "new_material_rows": 18,
+      "source_positive_material_occurrences": 80,
+      "source_material_units": 133,
+      "completed_operations": null,
+      "zero_outcomes": null
     },
     {
-      "source": "same original study",
-      "inputItemID": 21849,
-      "completedOperations": 70,
-      "outputItemID": 22447,
-      "totalQuantity": 37,
-      "historicalUnconditionalUnitsPerOperation": 0.5285714285714286,
-      "castsWithDrop": null,
-      "gameBuild": null
+      "kind": "aggregate-deduplicated-original-groups",
+      "all_groups": 15,
+      "all_material_rows": 31,
+      "source_positive_material_occurrences": 218,
+      "source_material_units": 503,
+      "original_estimator_keys": 5,
+      "completed_operations": null,
+      "occurrence_probability": null,
+      "unconditional_expected_quantity": null
     },
     {
-      "source": "ereduns original Enchantrix file",
-      "sixItemLevelGroups": [
-        "60:2:4",
-        "61:2:4",
-        "62:2:4",
-        "63:2:4",
-        "64:2:4",
-        "65:2:4"
-      ],
-      "sourceOutputRows": 13,
-      "positiveMaterialOccurrences": 138,
-      "sourceMaterialUnits": 370,
-      "completedEventCounts": null,
-      "normalizedKeys": 3
+      "kind": "compiler-static-identity-check",
+      "file": "research/v3/tools/build_estimates.py",
+      "function": "key_of",
+      "missing_key_component": "gearGroup.itemLevelRange",
+      "effect": "distinct historical level cohorts share five group/output keys; potential overgeneralization only if eligible cohorts later supplied"
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/20261115T2301-netherweave-perk-and-classic-ilvl-identity-audit.md"
+    "research/v3/evidence/master/20261116T0001-ereduns-15-groups-identity-and-unit-audit.md"
   ],
   "worker_source_evidence": [
+    "research/v3/evidence/legacy/2026-11-15T2346-ereduns-uncommon-armor-and-weapons.jsonl",
     "research/v3/evidence/legacy/2026-11-15T2251-original-ereduns-classic-groups-scott75-bracers.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=22445/arcane-dust",
-    "https://www.wowhead.com/cata/spell=83966/bountiful-bags",
-    "https://warcraft.wiki.gg/wiki/Bountiful_Bags",
     "https://github.com/alex-berliner/wow_classic_de_table/blob/27797f18f8f34bfc19c74635aba337864ca1f65c/dbfiles/ereduns_log.lua"
   ],
   "source_blob_shas": {
-    "worker": "fae6046911c6c9c4c4a91ecf414d7d1a55573a23",
-    "ereduns": "146b8ca7d3d86cc4615dc3b19495eb4d35f9a269",
+    "new_worker": "e9703d676e11f836bb6f167e6ada43dcc067d7bb",
+    "prior_worker": "fae6046911c6c9c4c4a91ecf414d7d1a55573a23",
     "estimator": "0b09b553fef4214af8aaa93f1c85061956643711"
   },
-  "verified_commit_sha": "ccab350a6bee5277502a6b58666354f5ba45f296",
-  "verified_commit_sha_scope": "Research-only source audit, dashboard and coordinator evidence at ccab350a6 were pushed and each of three file blob SHAs read back against the exact commit. This new status-only commit will not include its own SHA.",
+  "verified_commit_sha": "dbf77751d5d39e54d05dd637cbdf88709db8b942",
+  "verified_commit_sha_scope": "Evidence and RESEARCH-DASHBOARD were committed together at dbf77751 and re-read at exact commit; this subsequent coordinator-only status commit does not self-reference its own SHA.",
   "actual_checks": {
-    "in_memory_js_source_contract_assertions_passed": 65,
-    "separate_key_collision_assertions_passed": 1,
+    "pinned_original_source_transcription_assertions_passed": 31,
+    "distinct_original_level_groups_verified": 15,
+    "current_estimator_keys_verified_from_source": 5,
+    "in_memory_javascript_checks": true,
     "python_compiler_tests_run": false,
     "lua_addon_tests_run": false,
     "offline_valuation_rendering_run": false,
@@ -81,62 +71,67 @@
   },
   "git_state_checked": {
     "main": "5dd5aa2f7f05656e7580ea744f657209db59a195",
-    "research_base": "c9222eb2baf0cf3199cc0b9c98080d2620dcef2e",
+    "research_base": "dbf77751d5d39e54d05dd637cbdf88709db8b942",
     "owner_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "prs": {
-      "22": "closed unmerged",
-      "23": "closed unmerged",
-      "24": "merged",
-      "74": "open draft"
+      "22": "closed unmerged (checked)",
+      "23": "closed unmerged (checked)",
+      "74": "open draft (checked)"
     },
-    "research_base_ci": {
-      "run": 43771706195,
+    "research_evidence_commit_ci": {
+      "run": 43778029096,
+      "status": "in_progress",
+      "conclusion": null,
+      "checked_at": "2026-11-16T00:03:34.561Z"
+    },
+    "parent_ci": {
+      "run": 43776589585,
+      "head_sha": "3b2a617ab2dbd489aaa43bdf4afc39c2c3fb07e1",
       "status": "completed",
       "conclusion": "success"
-    },
-    "audit_head_ci": {
-      "workflow_run": 43772726696,
-      "checked_status": "in_progress",
-      "checked_at": "2026-11-15T23:05Z"
     }
   },
   "worker_reports_verified": [
     {
       "role": "legacy",
-      "updated_at": "2026-11-15T22:52:29.675Z",
-      "automation_run": "completed",
-      "source_commit": "c9222eb2"
+      "updated_at": "2026-11-15T23:46:02.783Z",
+      "status": "new-distinct-ereduns-classic-uncommon-armor-and-weapon-raw-material-hit-quantity-groups",
+      "evidence_file": "research/v3/evidence/legacy/2026-11-15T2346-ereduns-uncommon-armor-and-weapons.jsonl",
+      "verified_commit_sha": null
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-15T22:40:27.044Z",
-      "automation_run": "completed",
-      "source_commit": "13908c8b"
+      "updated_at": "2026-11-15T23:33:46.056Z",
+      "status": "Completed name-first prospect/mill source-original and duplicate-lineage check. No new independent numerical study or 0–N operation histogram; two searched audit records added without inferred casts/hits, zero events, estimates or prices.",
+      "evidence_file": "research/v3/evidence/dragonflight/2026-11-15T2333-original-ore-mill-source-dedup.jsonl",
+      "verified_commit_sha": "6f450bb7043393f0dd885c9ac76477ff526574ed"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-15T22:29:04.254Z",
-      "automation_run": "completed",
-      "source_commit": "12a9aec8"
+      "updated_at": "2026-11-15T23:25:58.240Z",
+      "status": "two-new-class-verified-priest-pvp-refulgent-crystal-r2-reference-rows; no-new-controlled-numerical-baseline",
+      "evidence_file": "research/v3/evidence/war-within/2026-11-15T2325-priest-pvp-crystal-ids.jsonl",
+      "verified_commit_sha": null
     },
     {
       "role": "midnight",
-      "updated_at": "2026-11-15T22:14:30.256Z",
-      "automation_run": "completed",
-      "source_commit": "055ba7c6"
+      "updated_at": "2026-11-15T23:14:11.775Z",
+      "status": "New original-code verification: Goblinomics captures per-operation disenchant input/output ItemKeys and timestamps, but silently omits empty-output casts; UI coalesces variants and trade-skill salvage can aggregate multiple operations. No new measured material-yield cohort.",
+      "evidence_file": "research/v3/evidence/midnight/2026-11-15T2314-goblinomics-raw-capture-constraints.jsonl",
+      "verified_commit_sha": null
     }
   ],
   "blockers": [
-    "The Scott75 70-cast cohort is historically Bountiful-Bags-enhanced; exact proc events and game build/date unavailable; current Retail use not proven.",
-    "Thirteen original Classic group rows have per-material positive hits and units but no completed-cast denominators; exact item-level groups are absent from estimator key.",
-    "No post-removal build/skill/itemLink/zero-inclusive 21849 disenchant event ledger, current AH price context, actual engine/tooltip comparison or live WoW test.",
-    "Research-only PR #74 remains draft and existing v3 migration failures are not addressed by this audit."
+    "Original Enchantrix observations do not supply completed operation denominators, per-cast 0/1/2 histograms, date/patch/build or real-character identity; total units / positive material events do not imply unconditional gold value.",
+    "Current key_of intentionally suppresses gearGroup.itemLevelRange; importing level-varying data without preservation/compatibility verification may blend incompatible cohorts.",
+    "Historical Classic item-level outputs cannot be called current Retail outcome evidence or priced as validated current-character estimates; source EnchantedLocal overlap is unresolved.",
+    "Owner's three-pass integration branch and addon fields are out of scope for this research-only audit; exact-head CI for evidence was running at last check."
   ],
   "exhausted_sources": [
-    "Do not recopy Scott75's single 70-disENCHANT comment as independent output cohorts or use his server price averages as modern AH prices.",
-    "Do not resample the same ereduns EnchantedLocal and EnchantedItemTypes source views as independent evidence or interpret trailing :0 as zero outcomes.",
-    "Prior coordinator audit of Ghost Iron 72092 / Adder's Tongue 36903 original archives already exhausted for new denominator/zero data."
+    "Source EnchantedItemTypes itself was inspected for all 15 targeted historical groups; stored trailing :0 is not a zero-outcome count and no completed-operation denominator is present. Do not reharvest the same file as new casts.",
+    "Group and per-item EnchantedLocal views are one contributor's archive and may overlap; do not double count or relabel its old cache timestamps as observed outcome dates.",
+    "Prior coordinator 21849 Bountiful Bags source, Ghost Iron/Adder's Tongue old Enchantrix logs and the same six earlier Classic groups are not new independent cohorts here."
   ],
-  "next_concrete_step": "Locate a first-person, dated Retail post-6.0.2 or 2026 build-tagged 21849 operation/receipt ledger including Bountiful Bags state, input variant, skill, dust/essence/shard stack quantities, per-output hits and zero bins. In disjoint research-only engineering branch test level-specific gearGroup key retention against exact compiler compatibility before any import or PR; no addon changes.",
+  "next_concrete_step": "Prioritize a dated current-Retail, build/skill/itemLink-tagged original player export with complete DE cast successes, material unit histograms and zero bins for an actionable item; separately validate a level-preserving group key regression in an isolated research-only branch before proposing any historical cohort admission. No addon changes, merges or new schedules.",
   "notification_policy": "owner on-demand only; Dot owns monitoring"
 }
