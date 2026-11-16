@@ -1,74 +1,77 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-16T05:30:45.168Z",
-  "status": "method-identity-gap-verified-no-new-independent-numeric-baseline",
+  "updated_at": "2026-11-16T06:32:11.106Z",
+  "status": "new-firsthand-identity-and-ranked-input-leads-no-measured-yield-baseline",
   "task_ids": [
-    "T0010",
-    "T0011",
-    "T0012",
-    "T0040",
+    "T0048",
     "T0009",
+    "T0040",
     "T0007",
     "T0008",
-    "T0048"
+    "T0010",
+    "T0011",
+    "T0012"
   ],
   "exact_gaps_targeted": [
-    "T0010/T0011/T0012: determine whether 2025-2026 10-herb Mycobloom housing dye conversions can fill addon-imported null ordinary Khaz Algar milling baseline; source says no, a separate housing craft system",
-    "T0040/T0009/T0007/T0008: post-2024-10-25 Bismuth, Ironclaw and Aqirite per-rank actual completed casts, per-output hits, zeros, stack histograms, skill, unlock and refund data remain unavailable in reviewed originals",
-    "T0048: dated current Retail disenchant per-rarity armor/weapon/skill per-output unit histogram and item bonus/eligibility remain unavailable"
+    "T0048: firsthand green Blacksmithing pickaxe disenchant to Storm Dust with missing exact source itemID/output rank, per-cast loot quantities, skill/spec and itemLink",
+    "T0009/T0040: March 31 2025 R1 Ironclaw 210936 600-ore original post; no actual completed casts, material outputs, hit/zero histogram, unlock/refund/patch details",
+    "T0007/T0008/T0010/T0011/T0012: independently dated current and post-hotfix Bismuth/Aqirite/Mycobloom ranked finished-cast outputs and zero-inclusive distributions still missing"
   ],
   "newly_verified_fields": [
     {
-      "kind": "method-scope-exclusion",
-      "source": "https://worldofwarcraft.blizzard.com/en-gb/news/24295382",
-      "corroboration": "https://www.wowhead.com/item=262628/teal-dye-pigment",
-      "inputItemIDs": [
-        210796,
-        210797,
-        210798
-      ],
-      "separateHousingDyeOutputIDs": [
-        274469,
-        274474
-      ],
-      "normalMillingOutputIDs": [
-        222618,
-        222619,
-        222620
-      ],
-      "sourceStatedHousingHerbInputCount": 10,
-      "ordinaryMillingMeasuredYield": null,
-      "patch": "12.1.0",
-      "conclusion": "Herb-to-housing-dye recipe at Housing Dye Station (Alchemy/Inscription), NOT ordinary Khaz Algar Mill -> Nacreous Pigment; previous housing salvage was also distinct from Mill."
+      "kind": "firsthand-output-family-and-possible-source-identity",
+      "inputItemID": null,
+      "candidateItemID": 222481,
+      "candidateItemName": "Proficient Pickaxe",
+      "candidateIdentityConfirmedByOriginal": false,
+      "outputItemID": null,
+      "outputName": "Storm Dust",
+      "outputRank": null,
+      "source": "https://www.wowhead.com/item=219946/storm-dust",
+      "identityGuide": "https://www.wow-professions.com/guides/profession-equipment-guide",
+      "status": "reference-only"
+    },
+    {
+      "kind": "dated-original-ranked-input-quantity-lead",
+      "inputItemID": 210936,
+      "inputRank": 1,
+      "nominalInputOresReported": 600,
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
+      "sourceDate": "2025-03-31",
+      "status": "searched-original-without-yields"
     }
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
-  "newly_verified_reference_rows": 0,
-  "new_original_source_leads": 1,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-16T0530-housing-dye-not-milling-boundary.jsonl",
+  "newly_verified_reference_rows": 1,
+  "new_original_source_leads": 2,
+  "evidence_file": "research/v3/evidence/war-within/2026-11-16T0632-pickaxe-r1-ironclaw-original-gaps.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-16T0530-housing-dye-not-milling-boundary.jsonl"
+    "research/v3/evidence/war-within/2026-11-16T0632-pickaxe-r1-ironclaw-original-gaps.jsonl"
   ],
   "evidence_source_links": [
-    "https://worldofwarcraft.blizzard.com/en-gb/news/24295382",
-    "https://www.wowhead.com/item=262628/teal-dye-pigment",
-    "https://www.wowhead.com/item=274469/brown-housing-dye",
-    "https://www.wowhead.com/item=274474/white-housing-dye",
-    "https://www.reddit.com/r/wow/comments/1pa98qw/player_housing_herbs/"
+    "https://www.wowhead.com/item=219946/storm-dust",
+    "https://www.wowhead.com/item=222481/proficient-pickaxe",
+    "https://www.wow-professions.com/guides/profession-equipment-guide",
+    "https://www.reddit.com/r/woweconomy/comments/1jnvht8",
+    "https://us.forums.blizzard.com/en/wow/t/jc-prospecting-not-working-properly/1934709"
   ],
   "verified_commit_sha": null,
-  "verification": "An atomic single Git commit carries the evidence JSONL and only this worker's quiet-status file. Because a commit cannot contain its own SHA, verified_commit_sha is null in the committed status; actual commit SHA, branch ref and file contents must be checked after the commit and reported externally.",
+  "verification": "One atomic commit contains exactly one new worker evidence JSONL and this worker's quiet-status file. A commit cannot contain its own SHA, so verified_commit_sha remains null inside the commit; actual commit and branch/file readback are independently verified after writing.",
   "blockers": [
-    "No independently verified post-2024-10-25 TWW ranked ore/herb output cast log with per-output zero-inclusive histograms, build, skill/spec and Resourcefulness accounting was recovered this run.",
-    "Source HTML for some Wowhead Looter per-stack details could not be accessed through the connected browser resource, which exhausted its daily credits; no histogram or output rank was guessed.",
-    "The 12.1 housing-dye recipe mechanic is a distinct action and cannot be imported as Mill data; a future supported conversion method would require Master/schema approval."
+    "The firsthand pickaxe comment omits exact input itemLink and Storm Dust quality rank: item 222481 is an independently identified candidate only.",
+    "The 2025 R1 Ironclaw report specifies 600 ore, not independently counted completed operations, output IDs, hit counts, output totals or zero outcomes. No controlled yield baseline can be derived.",
+    "No fresh independently verifiable R1/R2/R3 ore or herb per-cast zero-inclusive histogram with skill/spec and Resourcefulness accounting was found."
   ],
   "exhausted_sources": [
-    "Earlier 2024 Reikah/PeaEsk/Aqirite averages, 2025 Tomasz private Google worksheet and undated Mycobloom guides were already documented and not duplicated.",
-    "Newly checked 2025 housing-dye descriptions, Blizzard 12.1 update, Wowhead named dye identities, Method standard milling guide and Warcraft Wiki establish method mismatch, not a numeric yield study."
+    "The Oct 2024 Reikah/PeaEsk, Sept 2024 Mycobloom, 50k mixed ore glass, 1700 Shatter/185 refund, and recent housing-dye method leads are already documented; none was duplicated.",
+    "Current targeted 2025 rank1 Ironclaw original report, Wowhead gear source comment, Blizzard professions thread, Method, WoW-Professions and Warcraft Wiki lack eligible per-cast distributions."
   ],
-  "next_concrete_step": "Seek previously unrecorded primary original 2025 post-hotfix Bismuth/Ironclaw/Aqirite R1/R2/R3 or Mycobloom R1/R2/R3 cast log (ideally addon-exported), with exact output item/rank IDs, completed action count, positive/zero histograms, skill/specializations and consumed versus refunded inputs. Do not revisit housing dyes for standard mill yield.",
+  "next_concrete_step": "Follow original March 31 2025 Ironclaw commenter for raw input-rank/ore quantity, completed cast count and output logs; independently identify the exact green pickaxe in Roo42uk's first-person DE and confirm 219946/219947/219948 rank with an itemLink and skill; otherwise change targets to a new post-hotfix per-cast addon export.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false
