@@ -1,73 +1,70 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T03:15:01.578Z",
-  "status": "Research-only independently checked 11 new worker source rows (five historical cohorts, 264 completed DE operations): exact original Netherweave item/output identity and era conflict, with 93 guarded in-memory source/unit assertions passed. No new measured current-Retail yield, supported present-character gold EV or addon changes.",
+  "updated_at": "2026-11-16T04:10:15.473Z",
+  "status": "Research-only independently reconciled 16 new Legacy rows: 15 historical BC-2.4.3 model-only outputs plus one source-reported 40-Spiritmend-Belt / 29-Hypnotic-Dust Legion-era cohort. Found two itemLevelRange key collisions and three combined-kind schema mismatches; 176/176 guarded in-memory checks passed. No new measured current Retail gold EV or addon changes.",
   "task_ids": [
     "T0047",
-    "T0052",
-    "T0053"
+    "T0042",
+    "T0039"
   ],
   "exact_gaps_targeted": [
-    "Historical Netherweave Pants 21852 (30/34/100 disenchants) differing Arcane Dust units and Greater-vs-Lesser Planar Essence source outcomes: source build/character and item bonus unresolved, not safe to blindly pool as modern Retail equivalence.",
-    "Netherweave Bracers 21849 (100 completed disenchants): distinguish 165 Dust units and 158 Lesser Planar Essence units from per-output hit counts, rank/patch and current Retail eligibility.",
-    "34 Pants records: 33 dust-positive disenchants but unknown Arcane Dust *unit total*; do not reinterpret occurrence count as stack quantity.",
-    "Fel Iron Ore 23424: 5 unsized source stacks gave 2/2/1 rare gem units but unknown ore inputs and completed prospecting casts; no observed P(hit)."
+    "Uncommon historical BC 2.4.3 armor Arcane Dust 22445 81-99 vs 102-120 share compiler key; same for weapon 80-99 vs 102-120, despite different positive 2-3 versus 2-5 material-unit ranges.",
+    "Rare/epic modeled armor-and-weapons 100-117 / 105-164 represented with non-schema gearGroup.kind; safe group-level identity and current Retail applicability are unresolved.",
+    "Spiritmend Belt 54481 reported 40 completed Legion-era disenchant actions yielded 29 Hypnotic Dust 52555 units; 27 dust from ten Bastion of Twilight resets is separate and cannot be treated as DE output.",
+    "Spiritmend per-output hits, zeros, histogram, other materials, exact build, item version, skill and present Retail eligibility remain unknown; don't misdate as Cataclysm patch simply because reagent family is Cataclysm.",
+    "Current-patch Midnight T0039 Umbral Tin 237362 still lacks original per-output 0-inclusive casts/hit histograms; no re-harvest of already indexed Cardinalai or PocketCFO."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "manager-reverification-of-new-worker-cohorts",
-      "source": "legacy 2026-11-16T02:46:50.663Z",
-      "distinct_completed_de_cohorts": 4,
-      "distinct_prospect_cohorts_with_unknown_casts": 1,
-      "worker_new_rows_independently_checked": 11,
-      "completed_historical_de_operations": 264,
-      "independent_new_cohorts_added_by_manager": 0,
-      "observed_current_retail_casts_added_by_manager": 0
+      "kind": "manager_source_contract_reconciliation",
+      "source_worker_role": "legacy",
+      "source_worker_updated_at": "2026-11-16T03:56:08.657Z",
+      "worker_rows_checked": 16,
+      "historical_reference_model_output_rows": 15,
+      "model_gear_categories": 6,
+      "independently_collected_new_material_cohorts": 0,
+      "source_original_40_cast_cohorts_checked": 1,
+      "model_percent_chances_not_measured": true
     },
     {
-      "kind": "source-identified-historical-quantities",
-      "inputItemID": 21852,
-      "source_pants_30_dust_per_cast": 2.3666666666666667,
-      "source_pants_100_dust_per_cast": 1.9,
-      "source_pants_30_greater_planar_essence_ID": 22446,
-      "source_pants_100_lesser_planar_essence_ID": 22447,
-      "source_epochs_safely_poolable": false,
-      "patch_difference_proven": false
+      "kind": "research_estimator_group_identity_gate",
+      "compiled_key_range_collisions_in_new_worker_file": 2,
+      "unsupported_combined_gear_kind_rows": 3,
+      "script_sha": "0b09b553fef4214af8aaa93f1c85061956643711"
     },
     {
-      "kind": "recording-units-gate",
-      "inputItemID": 21852,
-      "reported_completed_disenchants": 34,
-      "arcane_dust_positive_outcomes": 33,
-      "arcane_dust_total_units": null
-    },
-    {
-      "kind": "fel-iron-cast-denominator-gate",
-      "inputItemID": 23424,
-      "source_stack_count": 5,
-      "casts": null,
-      "rare_gem_units": 5
+      "kind": "historical_firsthand_quantity",
+      "inputItemID": 54481,
+      "outputItemID": 52555,
+      "source_reported_completed_disenchants": 40,
+      "source_reported_dust_units": 29,
+      "source_reported_unconditional_units_per_operation": 0.725,
+      "observed_castsWithDrop": null,
+      "other_27_dust_are_separate_dungeon_resets": true,
+      "source_self_described_game_epoch": "Legion expansion",
+      "verified_game_build": null,
+      "measured_current_retail_operations_added_by_manager": 0
     }
   ],
   "evidence_files": [
-    "research/v3/evidence/master/20261116T0312-netherweave-original-epoch-and-units-gate.md"
+    "research/v3/evidence/master/20261116T0408-tbc243-gear-range-key-and-spiritmend-source-epoch-gate.md"
   ],
   "worker_source_evidence": [
-    "research/v3/evidence/legacy/2026-11-16T0246-netherweave-de-feliron-originals.jsonl"
+    "research/v3/evidence/legacy/20261116T0356-tbc243-game-data-and-spiritmend-original.jsonl"
   ],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=21852/netherweave-pants",
-    "https://www.wowhead.com/it/item=21852/pantaloni-di-telafatua",
-    "https://www.wowhead.com/wotlk/item=24243/adamantite-powder",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261116T0312-netherweave-original-epoch-and-units-gate.md"
+    "https://legacyofwarcraft.com/db/tbc/professions/disenchanting.html",
+    "https://www.wowhead.com/item=52555/hypnotic-dust",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261116T0408-tbc243-gear-range-key-and-spiritmend-source-epoch-gate.md"
   ],
-  "verified_commit_sha": "4c83f579c5c3f6f1b6f8613642f4a3e7977f5d43",
-  "verified_commit_sha_scope": "Read back the newly created manager-owned audit at current research branch head before status write; status cannot self-reference its final commit SHA.",
+  "verified_commit_sha": "ad33c48d89c7ae947c45e7b811a5fab63becb54b",
+  "verified_commit_sha_scope": "Manager-owned audit file committed at ad33c48 and read back from research head before status write; status/dashboard may add subsequent commits.",
   "actual_checks": {
-    "guarded_in_memory_javascript_source_row_checks_passed": 93,
+    "guarded_in_memory_javascript_source_and_contract_assertions_passed": 176,
     "failed": 0,
-    "original_comment_pages_read": true,
+    "original_published_model_table_checked": true,
+    "original_wowhead_comment_checked": true,
     "python_estimator_tests_run": false,
     "lua_addon_tests_run": false,
     "offline_valuation_rendering_run": false,
@@ -75,7 +72,7 @@
   },
   "git_state_checked": {
     "main": "5dd5aa2f7f05656e7580ea744f657209db59a195",
-    "research_pre_status_write": "4c83f579c5c3f6f1b6f8613642f4a3e7977f5d43",
+    "research_pre_status_write": "ad33c48d89c7ae947c45e7b811a5fab63becb54b",
     "owner_three_pass": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "prs": {
       "22": "closed unmerged",
@@ -83,55 +80,66 @@
       "24": "merged",
       "74": "open draft"
     },
-    "research_original_worker_head_ci": {
-      "run": 43794226091,
-      "head_sha": "60ca1caf76c3bf990d0d4c1e2c3236f7dbbc0af6",
+    "exact_head_ci_before_audit": {
+      "run": 43801076771,
+      "head_sha": "0f6e9218040a06f91f3f3fdac81fe7069e7ffef7",
       "status": "completed",
       "conclusion": "success"
     },
-    "new_commits_ci_status": "not yet checked; do not inherit original worker-head success"
+    "new_commits_ci_status": "not yet checked; previous exact-head success not inherited"
   },
   "worker_reports_verified": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-16T02:25:46.292Z",
-      "status": "NEW conditional Midnight disenchant identity and source-only counts: 3 weekly/catch-up Knowledge items and 7 reference-only source observations; no unconditional 0-inclusive material yield cohort or measured P(hit).",
-      "evidence_file": "research/v3/evidence/midnight/20261116T0225-weekly-kp-conditional-de.jsonl",
+      "updated_at": "2026-11-16T03:20:30.867Z",
+      "status": "No new measured zero-inclusive Midnight yield cohort; verified a distinct Retail processing export acquisition lead (Forever Stats 0.63.0); prior samples deduplicated.",
+      "evidence_files": [
+        "research/v3/evidence/midnight/20261116T0125-pocketcfo-original-processing-aggregates.jsonl",
+        "research/v3/evidence/midnight/20261116T0225-weekly-kp-conditional-de.jsonl",
+        "research/v3/evidence/midnight/20261116T0320-retail-processing-export-source-gap.jsonl"
+      ],
       "source_report": "research/coordination/quiet-status/midnight.json"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-16T02:28:09.944Z",
-      "status": "12-new-reference-only-epic-armor-Refulgent-Crystal-Looter-rows;no-controlled-estimator-eligible-yield",
-      "evidence_file": "research/v3/evidence/war-within/20261116T0228-epic-armor-crystal-looter-reference.jsonl",
+      "updated_at": "2026-11-16T03:27:05.321Z",
+      "status": "two-original-numeric-denominator-source-leads-no-material-yield-data-no-estimator-eligible-cohort",
+      "evidence_files": [
+        "research/v3/evidence/war-within/20261116T0327-ranked-ore-original-operation-leads.jsonl"
+      ],
       "source_report": "research/coordination/quiet-status/war-within.json"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-16T02:40:28.009Z",
-      "status": "Two previously unindexed Dragonflight gear item-side Looter occurrence tables captured (5 numeric rows, 2 gear inputs); no independent prospecting/milling operation-histogram source found.",
-      "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T0240-two-new-emerald-dream-looter-and-numeric-gap-search.jsonl",
+      "updated_at": "2026-11-16T03:38:42.466Z",
+      "status": "11 novel cumulative Dragonflight gear-disenchant material-occurrence rows across four previously unindexed item IDs; no novel completed prospect/mill ledger or zero-inclusive histogram recovered.",
+      "evidence_files": [
+        "research/v3/evidence/dragonflight/2026-11-16T0131-xenastro-unindexed-serevite-r2-r3.jsonl",
+        "research/v3/evidence/dragonflight/2026-11-16T0240-two-new-emerald-dream-looter-and-numeric-gap-search.jsonl",
+        "research/v3/evidence/dragonflight/2026-11-16T0337-four-unindexed-gear-looter-counts.jsonl"
+      ],
       "source_report": "research/coordination/quiet-status/dragonflight.json"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-16T02:46:50.663Z",
-      "status": "committed-independent-netherweave-disenchant-cohorts-and-feliron-rare-gem-units",
-      "evidence_file": "research/v3/evidence/legacy/2026-11-16T0246-netherweave-de-feliron-originals.jsonl",
+      "updated_at": "2026-11-16T03:56:08.657Z",
+      "status": "committed-original-spiritmend-40-casts-and-tbc-243-game-data-prior-version-reconciliation",
+      "evidence_files": [],
       "source_report": "research/coordination/quiet-status/legacy.json"
     }
   ],
   "blockers": [
-    "Historical commenters reported a possible nerf without verifiable dates, patch/build, itemLink/bonus or profession context. The modern item page is not contemporaneous processing evidence.",
-    "The observed 30/34/100 Pants cohorts do not all measure the same output class; current Retail present-character conversion applicability remains unverified.",
-    "No zero-inclusive item-specific stack/hit ledger for current Retail Netherweave input identity; no independent current live values and no synthetic-price/tooltip test were run.",
-    "Fel Iron source five stacks lack source stack size, casts or complete listed common gems.",
-    "Owner integration branch remains owner-controlled; coordinator must not change its addon data, valuation or tooltips."
+    "The 2.4.3 table is model-generated historical game data, not observed player casts and not present Retail method eligibility. Exact modeled per-hit quantity ranges live in notes, not measured min/max fields.",
+    "Evidence schema allows only armor or weapon kind, whereas three new rows encode combined armor-and-weapons; compiler currently omits itemLevelRange in gearGroup key and can pool distinct range units.",
+    "Spiritmend direct source self-identifies as a Legion expansion anecdote; no exact patch/build, gear bonus, skill/spec, per-output occurrence or full 40-operation event ledger. The 27 dust from dungeon runs cannot be attributed to the 40 belts.",
+    "No new current-Retail original zero-inclusive per-cast material sample; source-only historical findings cannot advance current-character gold coverage.",
+    "Research-only audit not validated with actual estimator execution or synthetic-price renderer. Owner integration branch remains untouched."
   ],
   "exhausted_sources": [
     "The pinned PocketCFO 2026-10-16 starter seed and source service were audited for the selected 15 profiles; their aggregate storage does not contain rejected attempts or raw per-operation events. Do not rescan these as a new independent player sample.",
-    "Original 70404/tarsakh/darkmagi91 Netherweave comments and Thottbot Fel Iron five-stack text have been independently checked this run; further mirror re-reads of unchanged historical comments will not provide patch, skill, actual unit stacks or current Retail eligibility."
+    "Original 70404/tarsakh/darkmagi91 Netherweave comments and Thottbot Fel Iron five-stack text have been independently checked this run; further mirror re-reads of unchanged historical comments will not provide patch, skill, actual unit stacks or current Retail eligibility.",
+    "The 2.4.3 LegacyOfWarcraft model and original Hypnotic Dust 1427818 comment were independently checked in this run; re-reading unchanged table/comment will not yield current build/skill, measured histograms, original event logs or proof of Retail eligibility."
   ],
-  "next_concrete_step": "Prioritize source-identified post-era itemLink/build/ilvl + 0/1/2+ output stacks for Netherweave 21849/21852 and actual completed prospect denominators for Fel Iron 23424; if raw logs are unavailable, leave conditional/historical evidence separate and advance to an unexhausted current-patch queue gap (especially Midnight T0039), not mirror rereads.",
+  "next_concrete_step": "Use a disjoint research-only test/validation branch for preserving gearGroup.itemLevelRange and explicit combined armor+weapon handling without inflating model priors; pursue fresh original build/variant-tagged Retail 54481 / Warmaul or higher-impact Midnight T0039 zero-inclusive per-material cast evidence. Do not duplicate already checked BC table/Spiritmend text.",
   "notification_policy": "owner on-demand only; Dot owns progress monitoring"
 }
