@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T20:41:48.582Z",
-  "status": "Draconium rank-to-item-ID mapping source-corroborated; no new independent processing numeric cohort or material 0-N histogram.",
+  "updated_at": "2026-11-16T21:45:50.974Z",
+  "status": "Six newly indexed direct Wowhead item-side disenchant material occurrence rows from three distinct source cumulatives; prospecting/milling raw 0-N cast logs remain unavailable.",
   "task_ids": [
     "T0020",
     "T0019",
@@ -16,16 +16,56 @@
     "T0016"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore quality IDs 189143/188658/190311 confirmed against a second named provider, while actual quality-specific completed prospecting casts/hit/quantity histograms remain unknown.",
-    "Draconium/Serevite/Khaz'gorite/Prismatic prospecting: no new distinct original 0-N material outcomes, castsWithDrop or Resourcefulness-adjusted operation logs.",
-    "Bubble Poppy/Saxifrage/Hochenblume milling: no new independently verified original completed-operation material histograms or rank-separated hit totals."
+    "Draconium R1/R2/R3=189143/188658/190311, Serevite and Khaz'gorite ranks, and Prismatic 194545 prospecting: no new original per-completed-operation output histograms, refunds, or material hit counts.",
+    "Bubble Poppy 191467, Saxifrage 191464 and other Dragonflight herb milling: no new original completed-mill 0-N outputs by rank, skill or specialization.",
+    "New limited cumulative disenchant material occurrences on gear IDs 209919, 209923 and 207249, with outputs 194123, 194124 and 200113; output unit totals, variant-specific patch and skill unknown."
   ],
   "newly_verified_fields": [
-    "Independent GoldCap item page corroboration of existing Draconium Ore rank mapping: R1=189143, R2=188658, R3=190311 (mapping previously in database/research/input-ranks.json, so not newly discovered)."
+    "209919: source-reported 42 disenchant events; Chromatic Dust 194123 36/42 (86% shown), Vibrant Shard 194124 13/42 (31% shown).",
+    "209923: source-reported 30 disenchant events; Chromatic Dust 194123 27/30 (90% shown), Vibrant Shard 194124 4/30 (13% shown).",
+    "207249: source-reported 35 disenchant events; Resonant Crystal 200113 27/35 (77% shown), Vibrant Shard 194124 19/35 (54% shown)."
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [],
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "wowhead-looter-dragonflight-209919-cumulative",
+      "inputItemID": 209919,
+      "outputs": [
+        194123,
+        194124
+      ],
+      "denominator": 42,
+      "source": "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
+      "limitation": "unversioned anonymous cumulative item-side occurrence counts, not per-output quantity histogram"
+    },
+    {
+      "studyKey": "wowhead-looter-dragonflight-209923-cumulative",
+      "inputItemID": 209923,
+      "outputs": [
+        194123,
+        194124
+      ],
+      "denominator": 30,
+      "source": "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
+      "limitation": "unversioned anonymous cumulative item-side occurrence counts, not per-output quantity histogram"
+    },
+    {
+      "studyKey": "wowhead-looter-dragonflight-207249-cumulative",
+      "inputItemID": 207249,
+      "outputs": [
+        200113,
+        194124
+      ],
+      "denominator": 35,
+      "source": "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape",
+      "limitation": "unversioned anonymous cumulative item-side occurrence counts, not per-output quantity histogram"
+    }
+  ],
+  "new_numerical_measurements": 6,
+  "numerical_fields_improved": [
+    "casts (source-reported item-side cumulative disenchant operations)",
+    "castsWithDrop (material-occurrence counts)",
+    "percentShown (source-displayed percent)"
+  ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-16T1042-independent-prospect-mill-ledger-search.jsonl",
@@ -37,26 +77,25 @@
     "research/v3/evidence/dragonflight/2026-11-16T1734-six-novel-gear-looter-occurrences.jsonl",
     "research/v3/evidence/dragonflight/2026-11-16T1847-five-amirdrassil-gear-looter-hit-tables.jsonl",
     "research/v3/evidence/dragonflight/2026-11-16T1934-five-new-amirdrassil-looter-gear-hits.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-16T2041-draconium-rank-corroboration-and-numeric-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-16T2041-draconium-rank-corroboration-and-numeric-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-16T2145-unindexed-gear-looter-and-priority-log-search.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T2041-draconium-rank-corroboration-and-numeric-search.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T2041-draconium-rank-corroboration-and-numeric-search.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-16T2145-unindexed-gear-looter-and-priority-log-search.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-16T2145-unindexed-gear-looter-and-priority-log-search.jsonl",
   "source_links": [
-    "https://goldcap.gg/retail/kr/items/189143",
-    "https://goldcap.gg/retail/kr/items/188658",
-    "https://goldcap.gg/retail/kr/items/190311",
+    "https://www.wowhead.com/item=209919/chartreuse-champions-bulwark",
+    "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
+    "https://www.wowhead.com/item=207249/benevolent-embersages-featherdrape",
     "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
-    "https://www.reddit.com/r/woweconomy/comments/10i63zb",
-    "https://www.reddit.com/r/woweconomy/comments/zjh0d0"
+    "https://www.reddit.com/r/woweconomy/comments/17n69p8"
   ],
-  "verified_parent_sha": "665654ad07d76f71420f1734e687747e569cbfcf",
-  "verified_commit_sha": "665654ad07d76f71420f1734e687747e569cbfcf",
-  "commit_sha_scope": "verified_commit_sha denotes pre-run parent, NOT this self-referential commit; read-back post-publish commit and two changed paths separately verified.",
+  "verified_parent_sha": "8ab625971175ff662c3889ea02007fdb40508bb9",
+  "verified_commit_sha": "8ab625971175ff662c3889ea02007fdb40508bb9",
+  "commit_sha_scope": "verified_commit_sha is the pre-run confirmed parent (the new commit cannot contain its own hash). Verify actual published commit by reading branch ref and changed paths after publication.",
   "blockers": [
-    "No new original quality-resolved prospecting or milling castsWithDrop, 0–N histograms or refund-adjusted completed-operation ledgers in this run.",
-    "Rank identities are source-corroborated only; do not infer numerical yields or P(hit) from nominal ore totals or converted averages.",
-    "Wiki original source cited in repository could not be fetched directly (HTTP 403); cross-check is between GoldCap and prior repository reference, not a new independent client tooltip.",
-    "Historic Wowhead/Reddit cohorts identified during search are already indexed; do not import again."
+    "No independent controlled, quality-resolved and refund-adjusted ore/prospect or herb/mill complete-cast 0-N histograms found.",
+    "Wowhead item-side Looter data are anonymous, cumulative and may mix patch/variant/skill contributors; no output-unit totals, zero distributions or true current-build probabilities can be inferred.",
+    "Already indexed source cohorts, PTR mirrors and nominal-ore anecdotal reports are not new measurements."
   ],
   "exhausted_sources": [
     {
@@ -1374,22 +1413,22 @@
         "Wowhead output-first Bubble Poppy and Saxifrage milling pigment/log searches; no independent 0-N operation ledger",
         "Wowhead, Reddit and independent blog Draconium/Serevite/Prismatic original material histogram searches; no unindexed validated source"
       ]
+    },
+    {
+      "at": "2026-11-16T21:45:50.974Z",
+      "scope": "Focused unindexed source-original prospecting and milling histogram search plus Dragonflight gear item-side deduplication",
+      "reason": "New source-original processing cohorts were not obtained; distinct gear-side material occurrence cumulatives were retained instead.",
+      "sources": [
+        "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
+        "https://www.wowhead.com/item=194545/prismatic-ore",
+        "https://www.reddit.com/r/woweconomy/comments/17n69p8",
+        "https://www.reddit.com/r/woweconomy/comments/1135bti",
+        "https://warcraft.wiki.gg/wiki/Prismatic_Ore"
+      ]
     }
   ],
-  "next_concrete_step": "Seek a never-before-indexed Dragonflight client export with real cast timestamps, output item/quality IDs, stack counts, skill/spec and Resourcefulness refunds for one Draconium or rank-specific Bubble Poppy/Saxifrage sample; if source provides only nominal inputs, leave casts and hit counters null.",
-  "validation": {
-    "jsonl_rows": 10,
-    "parse_success": true,
-    "unique_ids": true,
-    "source_count": 5,
-    "each_material_hits_lte_casts": true,
-    "all_unknown_numerical_omissions_explicit_null": true,
-    "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-16T1847-five-amirdrassil-gear-looter-hit-tables.jsonl",
-      "research/coordination/quiet-status/dragonflight.json"
-    ],
-    "source_dedupe": "Five distinct base gear input IDs; checked current main repository code-search, branch Nov13-16 evidence and recent author status. Prior Risen Nightmare 207195/196/197, Weyrnkeeper 207223/229, repeated 207256 and PTR mirrors excluded. Earlier branch files outside index may still merit post-integration lineage QA; no claim of independent single-person cohorts."
-  },
+  "next_concrete_step": "Seek genuinely unpublished original 2022–23 prospect/mill cast-by-cast raw exports or user-supplied logs with ore/herb rank, skill, inputs actually consumed, Resourcefulness refunds and material outcome event tables; do not revisit indexed Bugy/Xenastro/Jallfo/Aary samples or the same cumulative Wowhead mirrors.",
+  "validation": "Pre-publish: seven JSONL lines parsed, six drops with unique IDs and three distinct cumulative gear study keys, exact paths constrained to one new Dragonflight evidence JSONL and this worker status JSON. Post-publish Git ref/read-back verification required.",
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false
