@@ -1,97 +1,122 @@
 {
   "role": "coordinator",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T11:28:38.112Z",
-  "status": "Research-only source/identity progress: new WoWDB LIVE 25003 noDisenchant reference located; 4 of latest Legacy's 10 noDE flags reproduce identical old item+URL sources; 25/25 targeted JSONL assertions passed. No new measured current-Retail processing cohort or proven gold decision. Addon integration and worker lanes untouched.",
+  "updated_at": "2026-11-16T12:17:36.948Z",
+  "status": "Research-only correction: 25003 WoWDB noDE reference already existed twice in November 1/2 evidence alongside one 5,419-operation historical cumulative Looter source; latest Legacy 25012/25013/25022/25025 static flags repeat exact prior item+URL. 52 candidate-file scan and 28/28 bounded JS assertions. No new current-Retail numeric/eligibility proof or gold decisions.",
   "task_ids": [
     "T0042",
     "T0047",
     "T0039"
   ],
   "exact_gaps_targeted": [
-    "T0042: Bloodfist Legplates 25003 current WoWDB LIVE static noDisenchant reference and ilvl32 was missing from the four targeted Legacy original files. It needs archive-wide dedupe and real Retail itemLink/bonus/eligibility validation before runtime action gating.",
-    "T0042/T0047: latest Legacy 25007, 25009, 25010, 25011 noDE rows have identical source URL+item IDs as 2026-11-07; do not count these four as independent new evidence or eligible-gold coverage.",
-    "T0042: 25001/25004/25005 have prior WotLK3.3.5 disenchant reference-table outputs conflicting in era and item-instance eligibility with 2026 static noDE flags; do not infer rates or globally blacklist without variant checks.",
-    "T0039: Midnight 237362/237359 current-patch source-identified rank/skill/unlock/refund zero-inclusive per-output completed-operation logs still missing."
+    "T0042: Archive check falsifies prior 'new 25003 source lead' classification: duplicate original source already in 2026-11-01 and 2026-11-02 Legacy JSONLs; earlier Wowhead 5419-operation cumulative source conflicts in unknown historical variant context.",
+    "T0042/T0047: Of latest ten Legacy 2026-11-16T1150 static noDE entries, IDs 25012,25013,25022,25025 have earlier exact URL+item IDs. Six IDs 25014..25019 not found in 52 filename-filtered candidates; not claimed unique across 263-file archive.",
+    "T0047: 25025 historical 5136-operation cumulative Wowhead Looter source includes URL ?bonus=6654 but source does not independently prove real at-cast player bonus, epoch, skill or modern availability; base WoWDB LIVE item level 32 says noDE.",
+    "T0039: No contemporary zero-inclusive per-output completed-operation hit/histogram, quality/skill/unlock, material IDs or Resourcefulness refund evidence for Midnight 237362 and 237359."
   ],
   "newly_verified_fields_or_cohorts": [
     {
-      "kind": "new-standalone-reference-source-lead-not-a-live-operation",
+      "kind": "deduplication-correction-not-new-source",
       "inputItemID": 25003,
-      "inputName": "Bloodfist Legplates",
-      "sourceKind": "WoWDB-LIVE-static-item-metadata",
-      "itemLevel": 32,
-      "slot": "Legs",
-      "armor": "Plate",
-      "noDisenchantFlag": true,
-      "reportedCompletedDisenchantOperations": null,
-      "verifiedRetailItemInstanceEligibility": false,
-      "source": "https://www.wowdb.com/items/25003-bloodfist-legplates"
+      "originalStaticRecordIDs": [
+        "legacy-20261101-11109",
+        "legacy-20261102-110003"
+      ],
+      "exactSourceURL": "https://www.wowdb.com/items/25003-bloodfist-legplates",
+      "newIndependentSources": 0
     },
     {
-      "kind": "source-identity-deduplication-not-new-observations",
-      "originalFile": "research/v3/evidence/legacy/2026-11-16T1112-bloodfist-conqueror-eligibility-willow.jsonl",
-      "previousFile": "research/v3/evidence/legacy/2026-11-07T0547-tbc-scaled-conqueror-armor-weapons.jsonl",
-      "repeatedInputItemIDs": [
-        25007,
-        25009,
-        25010,
-        25011
+      "kind": "previous-cumulative-looter-cohort-not-new-retail-casts",
+      "inputItemID": 25003,
+      "studyKey": "wowhead-looter-retail-25003-cumulative-20261101",
+      "sourceReportedOperations": 5419,
+      "outputPositiveHits": [
+        {
+          "outputItemID": 22445,
+          "castsWithDrop": 3920
+        },
+        {
+          "outputItemID": 22446,
+          "castsWithDrop": 1190
+        },
+        {
+          "outputItemID": 22449,
+          "castsWithDrop": 157
+        },
+        {
+          "outputItemID": 22447,
+          "castsWithDrop": 100
+        }
       ],
-      "identicalItemAndSourceURL": true,
-      "newOriginalCohorts": 0
+      "totalQuantities": "all unknown",
+      "epoch": "unknown",
+      "modernEligibilityProven": false
     },
     {
-      "kind": "historical-reference-epoch-conflict",
-      "historicalInputIDs": [
-        25001,
-        25004,
-        25005,
-        25013
+      "kind": "four-existing-static-noDE-identity-duplicates",
+      "latestFile": "research/v3/evidence/legacy/2026-11-16T1150-tbc-scaled-plate-live-nonde-identity.jsonl",
+      "repeatedItemAndSourceURLIDs": [
+        25012,
+        25013,
+        25022,
+        25025
       ],
-      "sourcePatch": "3.3.5",
-      "historicalMaterialOutputIDs": [
-        22445,
-        22446,
-        22449
-      ],
-      "weights": "uninterpreted-template-weights",
-      "measuredCasts": null,
-      "modernLiveEligibilityProven": false
+      "candidateFilesChecked": 52,
+      "legacyJsonlTotal": 263
+    },
+    {
+      "kind": "source-version-eligibility-conflict-not-measured-current-result",
+      "inputItemID": 25025,
+      "previousLooterSource": "https://www.wowhead.com/item=25025/warlords-iron-gauntlets?bonus=6654",
+      "previousSourceReportedOperations": 5136,
+      "sourcePositiveHits": {
+        "22445": 3973,
+        "22446": 976,
+        "22449": 140
+      },
+      "rawAtCastBonusProven": false,
+      "liveWoWDBBaseNoDEURL": "https://www.wowdb.com/items/25025-warlords-iron-gauntlets"
     }
   ],
   "new_current_retail_gold_decisions": 0,
   "evidence_files": [
-    "research/v3/evidence/master/20261116T1126-scaled-bloodfist-conqueror-nonde-dedupe-and-25003-source.md"
+    "research/v3/evidence/master/20261116T1214-scaled-plate-preexisting-source-dedupe-and-bonus-scope.md"
   ],
   "worker_source_evidence": [
-    "research/v3/evidence/legacy/2026-11-16T1112-bloodfist-conqueror-eligibility-willow.jsonl",
-    "research/v3/evidence/legacy/2026-11-07T0547-tbc-scaled-conqueror-armor-weapons.jsonl",
-    "research/v3/evidence/legacy/2026-11-13T1556-scaled-tbc-no-disenchant-and-gloves-yield.jsonl",
-    "research/v3/evidence/legacy/2026-11-09T1847-tbc-bloodfist-conqueror-reference-mappings.jsonl"
+    "research/v3/evidence/legacy/2026-11-01T1644-matching-tbc-armor-weapon-looter.jsonl",
+    "research/v3/evidence/legacy/2026-11-01T1936-warmaul-retail-eligibility-conflicts-arcanoweave-boots.jsonl",
+    "research/v3/evidence/legacy/2026-11-02T1042-tbc-scaled-gear-disenchant-eligibility.jsonl",
+    "research/v3/evidence/legacy/2026-11-13T1646-tbc-looter-positive-stack-quantities.jsonl",
+    "research/v3/evidence/legacy/2026-11-16T1150-tbc-scaled-plate-live-nonde-identity.jsonl"
   ],
   "source_links": [
     "https://www.wowdb.com/items/25003-bloodfist-legplates",
-    "https://www.wowdb.com/items/25011-conquerors-legplates",
-    "https://bootybaybroker.com/item/25003/bloodfist-legplates/us/eitrigg"
+    "https://www.wowdb.com/items/25025-warlords-iron-gauntlets",
+    "https://www.wowhead.com/item=25025/warlords-iron-gauntlets?bonus=6654"
   ],
-  "verified_commit_sha": "823dd1a0393b35867ceec51841ab550efc6f4db3",
-  "verified_commit_sha_scope": "Evidence+dashboard single Git-Data commit; both new blob SHA values verified by fetch_file from research branch. This status file is a separate later commit and cannot include its own SHA.",
+  "verified_commit_sha": "148c70309747b5873aae4e6477f87cd8da4242ba",
+  "verified_commit_sha_scope": "Audit and manager-owned research dashboard committed together, both blob SHAs read-back verified on research branch. Status is a separate later commit and cannot self-report its final commit SHA.",
   "actual_checks": {
-    "source_jsonl_identity_contract": {
-      "passed": 25,
+    "source_original_jsonl_identity_contract": {
+      "passed": 28,
       "failed": 0,
-      "method": "GitHub connector original JSONL parsed by JavaScript; exact key/source URL/epoch cross-file checks"
+      "method": "GitHub connector source JSONL parsed, source ID and original URL duplicates, cumulative Looter identity and positive-histogram quantity checks in bounded JavaScript"
+    },
+    "candidate_archive_scan": {
+      "read_files": 52,
+      "candidate_files": 52,
+      "total_legacy_jsonl": 263,
+      "scope": "filename-selected scaled, eligibility, Bloodfist, Conqueror or Looter; not an archive-complete uniqueness proof"
     },
     "source_pages_independently_opened": 2,
-    "source_page_verification": "WoWDB LIVE 25003 and 25011 static metadata; neither page is in-game observed disenchant",
+    "source_page_verification": "2026-11-16 WoWDB LIVE 25003 and 25025 show static item-level-32 noDE flag; no client operation",
     "python_compiler": false,
     "lua_runtime_or_tooltips": false,
     "offline_synthetic_price_engine": false,
     "live_wow": false,
     "ci": {
-      "evidence_commit_sha": "823dd1a0393b35867ceec51841ab550efc6f4db3",
-      "workflow_url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43857868777",
+      "evidence_dashboard_sha": "148c70309747b5873aae4e6477f87cd8da4242ba",
+      "workflow_url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/43864981781",
       "status_at_check": "in_progress",
       "conclusion": null,
       "status_commit_exact_head_ci": "not_yet_checked"
@@ -100,7 +125,8 @@
   "git_state_checked": {
     "main_sha": "5dd5aa2f7f05656e7580ea744f657209db59a195",
     "three_pass_integration_sha": "3d667d053db587c91401cfed7ecc56862b8340c9",
-    "research_verified_evidence_dashboard_sha": "823dd1a0393b35867ceec51841ab550efc6f4db3",
+    "research_prewrite_sha": "1650026c97c1fa57789399191ea209a37bd6c29c",
+    "research_verified_evidence_dashboard_sha": "148c70309747b5873aae4e6477f87cd8da4242ba",
     "pr22": "closed_unmerged",
     "pr23": "closed_unmerged",
     "pr74": "open_draft"
@@ -109,37 +135,37 @@
     {
       "role": "midnight",
       "updated_at": "2026-11-16T11:21:13.860Z",
-      "finding": "new Retail capture/expansion provenance, no new complete material-yield cohort"
+      "finding": "Retail collector/version provenance; no new zero-inclusive cast/material source"
     },
     {
       "role": "war-within",
       "updated_at": "2026-11-16T10:32:08.986Z",
-      "finding": "Algari Rifle rankless Looter and conditional Shimmering Dust references only"
+      "finding": "Algari Rifle rankless Looter and Shimmering Dust weekly unlock/source references"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-16T10:43:57.292Z",
-      "finding": "no new independent numeric batch; API rank-identity limitation documented"
+      "updated_at": "2026-11-16T11:59:05.321Z",
+      "finding": "five previously unindexed gear Looter source cohorts with twelve material hits, patch and quantities unknown"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-16T11:11:14.754Z",
-      "finding": "10 static noDE entries (four repeat old source identities) and one historical Willow positive cast; no new current Retail numeric EV"
+      "updated_at": "2026-11-16T11:50:11.240Z",
+      "finding": "ten new-row base WoWDB static noDE IDs, four prior identical original item+URL identities found by coordinator"
     }
   ],
   "blockers": [
-    "25003 static WoWDB metadata does not demonstrate live client/item-instance noDisenchant; all bonus/variant/build behavior unverified.",
-    "Targeted source comparison covered only 4 Legacy files, not full archive. Require global original-source dedupe before new worker material.",
-    "Four latest noDE flags are same item/source as previous records; do not inflate unique evidence count.",
-    "3.3.5 reference template weights have no measured casts/chances/expected quantities and cannot be converted to live Retail EV.",
-    "Current Retail 237362/237359 per-output cast/hit/zero/skill/quality/refund original source logs remain absent."
+    "Source 25003 already existed; prior manager status claiming a new static source was inaccurate; follow the original studyKey/URL rather than count new evidence.",
+    "The filename-selected scan did not inspect all 263 Legacy JSONLs. Other duplicates among 25014..25019 are possible; no archive completeness claim.",
+    "WoWDB current scaled metadata differs from historic cumulative item-side Looter; original item instance bonus, build, skill and current runtime eligibility unknown.",
+    "Historical 5419 and 5136 pooled reported operations may span builds/variants; absence of current source conditions precludes using them as present Retail gold decisions.",
+    "Midnight 237362/237359 per-cast/hit/0-inclusive histogram/rank/refund source remains unavailable."
   ],
   "exhausted_sources": [
-    "2026-11-16 manager reviewed original 21853 four- and thirteen-boot positive-bin comments and 21849 332-craft/100-completed-DE/7-event comments; do not recrawl these unchanged for missing cast event logs.",
-    "2026-11-16 new 3-boot and 120-bracer comments are now extracted and need cross-file archive deduplication, not another same-page reread.",
-    "Prior coordinator exhausted original Thottbot Adamantite/Titanium, OZZIEEM duplicate counters, PocketCFO accepted-run denominators and Serevite anonymous 2022 anecdotes; no recrawl absent new first-party operations.",
-    "Do not ask Legacy to repeat the 25007/25009/25010/25011 WoWDB flags or re-open the four exact same pages without new item-instance/version evidence."
+    "Do not reopen identical 25003 WoWDB LIVE item-level-32 noDE page as a 'new' source: archived twice already before November 16.",
+    "Do not recopy 25012,25013,25022,25025 exact WoWDB URLs from November 16 source: earlier versions are already saved.",
+    "Do not recrawl the same 25025 cumulative Wowhead Looter snapshot as independent cohorts; it is 5136 evolving historical reports, not a new player dataset.",
+    "Previous coordinator exhausted Netherweave comments, original Thottbot comments, OZZIEEM counters, PocketCFO accepted-run denominators, and Serevite 2022 anecdotes without modern zero-inclusive casts."
   ],
-  "next_concrete_step": "Check all archive originals for prior 25003 reference before proposing one minimal Legacy-owned append-only item identity. If absent, preserve the new WoWDB link as an eligibility reference only; request exact 2026 Retail itemLink/bonus and successful/failed DE attempt before runtime gating. Continue higher-impact Midnight T0039 zero-inclusive current-patch ranked operation/result logs. No worker scheduling or owner-branch changes.",
-  "notification_policy": "Owner wants only on-demand updates; Dot owns monitoring; no routine chat or cross-chat pings."
+  "next_concrete_step": "Do not add duplicate 25003 noDE reference. Request actual 2026 Retail itemLink/bonus/ilvl/skill/build with witnessed success or failure before any noDE gate change. Prioritize obtaining a current-patch original Midnight T0039 prospect/mill 237362 or 237359 zero-inclusive per-output log, output IDs/ranks, talent/unlock and Resourcefulness refund basis. On separate worker-owned lanes, preserve source epochs and avoid repeated extracts.",
+  "notification_policy": "Owner wants on-demand only. Dot owns monitoring; no routine outbound summaries, new schedules, merges, releases or addon edits."
 }
