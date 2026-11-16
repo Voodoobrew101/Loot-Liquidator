@@ -1,136 +1,154 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-16T06:50:23.345Z",
-  "status": "committed-five-independent-original-prospecting-cohorts-fourteen-material-quantity-rows-one-verified-feliron-prospect",
+  "updated_at": "2026-11-16T08:35:06.775Z",
+  "status": "13-original-TBC-disenchant-material-rows-including-complete-positive-stack-bins-legacy-research-only",
   "task_ids": [
     "T0047",
     "T0042",
     "T0044",
     "T0022",
-    "T0021",
-    "T0051"
+    "T0053"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 (T0047): searched prior exhausted original pooled Looter cohort and current scaled-item eligibility; no new measured Warmaul cast/histogram or patch identity; 22445/22446/22447/22449 retained as historical only.",
-    "Fel Iron Ore 23424 (T0044): recovered a new single directly countable five-ore operation at Jewelcrafting 300 -> Nightseye 23441 x1 (1/1 reported positive), and a distinct historical five-STACK source reporting Star of Elune 23438 x2, Dawnstone 23440 x2, Nightseye 23441 x1; five stacks is not five casts.",
-    "Cobalt Ore 36909 (T0022): no new independent completed operation/zero-inclusive histogram after previously exhausted source searches; left historical source-only totals unchanged.",
-    "Adamantite Ore 23425 (T0051): two original historical source reports, 50 ore -> Living Ruby 23436 x2 and Star of Elune 23438 x1; 150 ore -> Nightseye 23441 x1, Talasite 23437 x1; completed-cast counts and per-output incidence unknown.",
-    "Titanium Ore 36910 (T0042/T0021): original one-stack comment reports quantities Bloodstone 36917 x1, Dark Jade 36932 x2, Huge Citrine 36929 x3, Sun Crystal 36920 x1, Forest Emerald 36933 x1, Titanium Powder 46849 x4; stack size/operations/hits unknown."
+    "T0047 Warmaul Legplates 24995: no new Warmaul item-specific event log; existing historical 2,068 Looter operations and 22445/22446/22447/22449 hit counts remain unverified for current Retail; item-level/bonus/eligibility unresolved.",
+    "T0042 TBC matching uncommon armor: NEW separate 21849 bracer original tally sources at 332 CRAFTS, 100 completed DE, and seven completed DE; preserve craft-versus-cast boundary.",
+    "T0042 TBC matching ilvl108 uncommon armor 21853: 13-operation complete positive stack bins with material IDs 22445/22446/22449, and distinct four-operation all-dust 22445 stack bins. No invented per-output zeros.",
+    "T0042 TBC crafted ilvl114 armor 21867: 14 completed disenchant operations with one source-reported Void Crystal 22450, other material counts unknown.",
+    "T0022 Cobalt Ore 36909 and T0044 Fel Iron Ore 23424: no new original zero-inclusive modern logs; original historical sources already exhausted, no duplicated observations.",
+    "T0053 45661: seven historical class-specific reward IDs and vendor exchange already recorded in legacy-20261107-234113. Modern tooltip 'Use' loot-specialization wording does not establish actual outcome IDs; no new token record copied."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "wowhead-thottbot-adamantitepowder-feliron-5stacks",
-      "inputItemID": 23424,
+      "studyKey": "wowhead-21849-original-53050-332-crafted",
+      "inputItemID": 21849,
+      "reportedCrafts": 332,
       "completedCasts": null,
-      "nominalStacks": 5,
       "outputTotals": {
-        "23438": 2,
-        "23440": 2,
-        "23441": 1
+        "22445": 621,
+        "22447": 181,
+        "22448": 13
       },
       "outputHits": null,
-      "zeroOutcomes": null,
-      "source": "https://www.wowhead.com/tbc/item=24243/adamantite-powder"
+      "source": "https://www.wowhead.com/tbc/item=21849/netherweave-bracers"
     },
     {
-      "studyKey": "wowhead-nightseye-thorin-first-five-feliron",
-      "inputItemID": 23424,
-      "completedCasts": 1,
-      "inputsPerCast": 5,
-      "jewelcraftingSkill": 300,
+      "studyKey": "wowhead-21849-aliasdan-original-100-de",
+      "inputItemID": 21849,
+      "completedCasts": 100,
       "outputTotals": {
-        "23441": 1
+        "22445": 190,
+        "22447": 47,
+        "22448": 4
       },
+      "outputHits": null,
+      "source": "https://www.wowhead.com/tbc/item=21849/netherweave-bracers"
+    },
+    {
+      "studyKey": "thottbot-21849-original-seven-6dust-one-essence",
+      "inputItemID": 21849,
+      "completedCasts": 7,
       "outputHits": {
-        "23441": 1
+        "22445": 6,
+        "unknown_lesser_nether_essence": 1
       },
-      "observedPositiveHistogram": {
-        "23441": {
+      "outputTotals": {
+        "22445": null,
+        "unknown_lesser_nether_essence": 2
+      },
+      "outputIdentityUnverified": true,
+      "source": "https://www.wowhead.com/tbc/item=21849/netherweave-bracers"
+    },
+    {
+      "studyKey": "thottbot-21853-13-boot-complete-positive-bins",
+      "inputItemID": 21853,
+      "completedCasts": 13,
+      "outputHits": {
+        "22445": 7,
+        "22446": 5,
+        "22449": 1
+      },
+      "outputTotals": {
+        "22445": 27,
+        "22446": 6,
+        "22449": 1
+      },
+      "positiveStackHistograms": {
+        "22445": {
+          "3": 2,
+          "4": 4,
+          "5": 1
+        },
+        "22446": {
+          "1": 4,
+          "2": 1
+        },
+        "22449": {
           "1": 1
         }
       },
       "zeroOutcomes": null,
-      "source": "https://www.wowhead.com/tbc/item=23441/nightseye"
+      "source": "https://www.wowhead.com/tbc/item=21853/netherweave-boots"
     },
     {
-      "studyKey": "wowhead-thottbot-adamantitepowder-50ore",
-      "inputItemID": 23425,
-      "reportedInputOre": 50,
-      "completedCasts": null,
-      "nominalFiveOreEquivalent": 10,
+      "studyKey": "thottbot-21853-four-boot-dust-bins",
+      "inputItemID": 21853,
+      "completedCasts": 4,
+      "outputHits": {
+        "22445": 4
+      },
       "outputTotals": {
-        "23436": 2,
-        "23438": 1
+        "22445": 13
+      },
+      "positiveStackHistograms": {
+        "22445": {
+          "3": 3,
+          "4": 1
+        }
+      },
+      "zeroOutcomes": null,
+      "source": "https://www.wowhead.com/tbc/item=21853/netherweave-boots"
+    },
+    {
+      "studyKey": "thottbot-21867-fourteen-boot-one-void",
+      "inputItemID": 21867,
+      "completedCasts": 14,
+      "outputTotals": {
+        "22450": 1
       },
       "outputHits": null,
       "zeroOutcomes": null,
-      "source": "https://www.wowhead.com/tbc/item=24243/adamantite-powder"
-    },
-    {
-      "studyKey": "wowhead-nightseye-33892-adamantite-150ore",
-      "inputItemID": 23425,
-      "reportedInputOre": 150,
-      "completedCasts": null,
-      "nominalFiveOreEquivalent": 30,
-      "outputTotals": {
-        "23437": 1,
-        "23441": 1
-      },
-      "outputHits": null,
-      "zeroOutcomes": null,
-      "source": "https://www.wowhead.com/tbc/item=23441/nightseye"
-    },
-    {
-      "studyKey": "wowhead-titanium-powder-224763-one-stack",
-      "inputItemID": 36910,
-      "reportedStacks": 1,
-      "completedCasts": null,
-      "nominalFiveOreEquivalent": null,
-      "outputTotals": {
-        "36917": 1,
-        "36920": 1,
-        "36929": 3,
-        "36932": 2,
-        "36933": 1,
-        "46849": 4
-      },
-      "outputHits": null,
-      "zeroOutcomes": null,
-      "source": "https://www.wowhead.com/cata/item=46849/titanium-powder"
+      "source": "https://www.wowhead.com/tbc/item=21867/arcanoweave-boots"
     }
   ],
   "numeric_summary": {
-    "new_records": 14,
-    "new_original_cohorts": 5,
-    "new_confirmed_processing_operations": 1,
-    "new_material_total_quantity_fields": 14,
-    "new_hit_count_fields": 1,
-    "new_positive_stack_histograms": 1,
-    "new_zero_histogram_fields": 0,
+    "new_records": 13,
+    "new_original_comment_cohorts": 6,
+    "completed_disenchant_operations_explicitly_reported_across_distinct_comments": 138,
+    "craft_count_not_completed_disenchants": 332,
+    "new_material_total_quantity_fields": 12,
+    "new_direct_positive_hit_count_fields": 6,
+    "new_positive_histogram_fields": 4,
+    "new_explicit_zero_histogram_fields": 0,
     "warmaul_24995_new_measured_casts": 0,
     "cobalt_36909_new_measured_casts": 0,
-    "feliron_23424_new_measured_casts": 1,
-    "adamantite_23425_new_measured_casts": 0,
-    "titanium_36910_new_measured_casts": 0
+    "feliron_23424_new_measured_casts": 0
   },
   "source_urls": [
-    "https://www.wowhead.com/tbc/item=24243/adamantite-powder",
-    "https://www.wowhead.com/tbc/item=23441/nightseye",
-    "https://www.wowhead.com/cata/item=46849/titanium-powder"
+    "https://www.wowhead.com/tbc/item=21849/netherweave-bracers",
+    "https://www.wowhead.com/tbc/item=21853/netherweave-boots",
+    "https://www.wowhead.com/tbc/item=21867/arcanoweave-boots"
   ],
-  "original_source_blob_sha": null,
-  "evidence_file": "research/v3/evidence/legacy/2026-11-16T0648-feliron-adamantite-titanium-original-comments.jsonl",
-  "evidence_file_url": "https://github.com/Voodoobrew101/Loot-Liquidator/blob/74df5cff99389bce9fdfd762960e742b26cf1eca/research/v3/evidence/legacy/2026-11-16T0648-feliron-adamantite-titanium-original-comments.jsonl",
-  "verified_base_commit_sha": "0d5905a67184a2469f8339a718c6bbe95f4f5441",
-  "verified_commit_sha": "74df5cff99389bce9fdfd762960e742b26cf1eca",
-  "commit_note": "Evidence commit 74df5cff99389bce9fdfd762960e742b26cf1eca was read-back verified with 14 complete drop records, five study keys and one observed cast. The accessible GitHub connector does not expose the branch root tree SHA required for a safe atomic two-file Git-object commit; a separate status-only commit is used instead of replacing the branch tree. This creates two commits, not the requested one; preserves prior branch files and other workers.",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-16T0835-original-netherweave-de-histograms.jsonl",
+  "verified_base_commit_sha": "e3f08d0b16e8a4b89cd0ed76e431ad785f37cf2e",
+  "verified_commit_sha": null,
+  "commit_note": "One atomic new evidence/status commit intended. Its own cryptographic SHA cannot be embedded in its own contents; actual commit SHA and read-back are verified after ref update and available in run history. Status verified_commit_sha is therefore null rather than fabricated.",
   "blockers": [
-    "Warmaul 24995 item-specific Looter cumulative 2,068 historical DE casts have no original event log, output unit totals, 0/1/2 stacks, build, skill or version eligibility. Retail WoWDB scaled item level 31 'Cannot be disenchanted' conflicts with old TBC level 108 pool; no new Warmaul current Retail eligible cast.",
-    "Cobalt Ore 36909 still lacks original zero-inclusive per-material prospect histograms and verified current Retail operation counts; historic 24-stack and other counters not re-copied.",
-    "Fel Iron original first-five prospect gives one Nightseye positive cast only (insufficient for general probability or zero-rate inference); five-stack comment and both Adamantite ore-count cohorts lack completed casts.",
-    "Titanium single-stack historical comment reports output quantities but neither input stack size nor completed operations/hits, so do not infer four prospects or modern rate.",
-    "Original Thottbot source dates, patch/build, refunds, stat/specialization and overlap of anonymous historical accounts are not independently recoverable."
+    "Warmaul 24995 original individual events, 0/1/2-stack bins, output total quantities, at-cast version/bonus/skill/hotfix and current live disenchant eligibility still unavailable.",
+    "Cobalt 36909 and Fel Iron 23424 independent current Retail completed operations and zero-inclusive per-material histograms remain unknown.",
+    "332 Netherweave Bracers is only an explicit craft count, not verified completed DE count, so cannot be a weighted observed chance denominator.",
+    "Seven-bracer original comment calls its non-dust material 'lesser nether essence', ambiguous between spell/material identities. Exact output item ID intentionally null.",
+    "Historical item page iLvl 93/108/114 does not establish current item variant or live eligibility; anonymous Thottbot contributor identities/cross-cohort overlaps unverified."
   ],
   "exhausted_sources": [
     {
@@ -186,8 +204,17 @@
         "https://www.wowhead.com/item=36909/cobalt-ore"
       ],
       "why": "No independent source raw 0/1/2 events or modern build/eligibility; previously captured Looter and guide tables left unchanged. Searched adjacent original player comments on Fel Iron, Adamantite, Titanium instead."
+    },
+    {
+      "target": "This run Warmaul 24995 and Cobalt/Fel Iron source review",
+      "where": [
+        "https://www.wowhead.com/item=24995/warmaul-legplates",
+        "https://www.wowhead.com/wotlk/item=36909/cobalt-ore",
+        "https://www.wowhead.com/tbc/item=23424/fel-iron-ore"
+      ],
+      "why": "No new original item-24995 cast ledger or Cobalt/Fel Iron zero-inclusive event log; did not recopy exhausted reports."
     }
   ],
-  "next_concrete_step": "Secure original addon-export per-operation disenchant outcomes for 24995 at a stated game build, or zero-inclusive Cobalt/Fel Iron/Titanium prospect log with material hit counts and stack sizes; keep unmeasured sample sizes null. Obtain separate current Retail Warmaul eligibility test. Do not recopy any of five newly recorded cohort keys.",
-  "gold_ev_policy": "Runtime live price inputs in addon only; evidence contains no frozen gold prices or EV."
+  "next_concrete_step": "Find original per-operation 24995 Warmaul recording with at-cast item link/build and material quantities, or independently logged Cobalt/Fel Iron zero-inclusive prospect events; validate 21853 13-cast original positive histogram against modern item variant before any runtime import. Request any schema corrections through Master; no production edits.",
+  "gold_ev_policy": "No stored prices or gold EV; addon calculates EV from live prices."
 }
