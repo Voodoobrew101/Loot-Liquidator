@@ -62,11 +62,11 @@ class MaterialIdentityTests(unittest.TestCase):
         names = live.name_maps(rows)
         vectors, _, pooled = live.study_vectors(rows)
         dropped = live.misplaced_copies(rows, names, vectors, pooled)
-        self.assertEqual(dropped, {id(second): 'copy:caseVariantGroup'})
+        self.assertEqual(dropped, {id(second): 'duplicateStudy'})
         # Missing cast denominators cannot be priced as observed means.
         estimated, _, usage = live.analyze(rows)
         self.assertFalse(any(e.get('averageSource') == 'measured' for e in estimated))
-        self.assertEqual(usage[id(second)]['reason'], 'copy:caseVariantGroup')
+        self.assertEqual(usage[id(second)]['reason'], 'duplicateStudy')
         # An explicitly different material quality cannot be merged.
         ranked = [row('a.jsonl', 'one-source-a', 'Pigment', 1),
                   row('b.jsonl', 'one-source-b', 'pigment', 2)]
