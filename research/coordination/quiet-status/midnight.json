@@ -1,36 +1,31 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-17T22:23:52.973Z",
-  "status": "NEW identity + original event-export discovery only: independently sourced Midnight-era item 263472 flagged no-disenchant in WoWDB; independent Wowhead base item level differs, so no actual at-cast item level. Discovered Retail EzDisenchant v1.1.7 CSV/TXT history export source for potential firsthand sample acquisition; no example rows or raw Midnight material outcomes. No new measured, complete-cast yield cohort, conditional histogram, or estimated probability introduced.",
+  "updated_at": "2026-11-17T23:20:36.671Z",
+  "status": "New original-study provenance lead only: ProfitProphet Aug 2026 claims externally sourced prospect rates (21 ores) and milling rates (23 herbs), but its release notes do not publish underlying samples or prove Midnight item-ID/rank coverage. No new independent at-cast numeric yield cohort, hits, zeros or histogram.",
   "task_ids": [
     "T0026",
     "T0005",
     "T0039",
     "T0003",
-    "T0002",
-    "T0025"
+    "T0002"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands: actual in-client disenchant itemLink including bonus IDs, at-cast ilvl 305 vs generic 206, skill/build, complete material event and zero context",
-    "237362 Umbral Tin: rank-linked inputs 237362/237363 and outputs 242606/242607/242610/242611/242786/242788, 242608 unlock, per-cast hits/zeros, actual completed casts, Resourcefulness refunds",
-    "237359 Refulgent Copper and 237365 Brilliant Silver: independently counted current-build quality-specific prospect outcomes",
-    "Midnight milling: actual 10-herb cast ledgers with itemID, per-output hit/zero histogram and skill",
-    "New source-acquisition feasibility: EzDisenchant Retail 12.1.5 500-entry per-character history and CSV/TXT export; real row schema/event consistency not yet verified"
+    "272246 Miststalker's Wristbands: observed scaled variant itemLink including ilvl, bonus and genuine at-disenchant outputs; selected ilvl305 remains preview only",
+    "237362/237363 Umbral Tin: rank-specific output IDs 242606/242607/242610/242611/242786/242788 plus 242608 ore-specific Diamond unlock; original hit/zero histograms, actual complete casts and refunds",
+    "237359 Refulgent Copper and 237365 Brilliant Silver: original current-patch rank-specific prospecting receipts; no third-party model-rate substitution",
+    "236761 Tranquility Bloom and other Midnight herbs: actual 10-herb completed mills and per-output zero-inclusive quantity histograms",
+    "New source lineage: ProfitProphet v2.10.2 Aug 25 claims 21-ore,23-herb externally sourced rates, but actual source URLs and exact Midnight inclusion not published in examined release"
   ],
   "newly_verified_fields_or_cohorts": {
     "new_independent_completed_cast_cohorts": 0,
     "new_zero_inclusive_histograms": 0,
-    "new_no_disenchant_catalog_item_ids": [
-      263472
-    ],
-    "new_release_export_history_candidate": "EzDisenchant 1.1.7, Retail 12.1.5, Nov 15 2026",
-    "candidate_history_cap_per_character": 500,
-    "candidate_export_formats": [
-      "CSV",
-      "TXT"
-    ],
-    "candidate_export_record_schema_verified": false,
-    "at_cast_item_level_verified": false
+    "new_item_ID_to_yield_mappings_verified": 0,
+    "new_ore_herb_study_source_provenance_lead": "ProfitProphet v2.10.2 release notes, 2026-08-25, distributed in Aug 26 v2.10.3 file",
+    "source_reported_ore_family_table_count": 21,
+    "source_reported_herb_family_table_count": 23,
+    "source_original_study_links_present": false,
+    "specific_midnight_items_verified_in_tables": false,
+    "original_cast_denom_verified": false
   },
   "numeric_fields_advanced": {
     "newMeasuredCompleteCohorts": 0,
@@ -41,34 +36,27 @@
     "newVerifiedActualAtCastItemLevels": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/20261117T2223-eversong-nonde-and-de-export-acquisition.jsonl"
+    "research/v3/evidence/midnight/2026-11-17T2320-profitprophet-source-origin-hold.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-17T2124-305-bonus-and-player-ledger-acquisition-holds.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261117T2223-eversong-nonde-and-de-export-acquisition.jsonl",
   "evidence_record_ids": [
-    "midnight-20261117-222352-01",
-    "midnight-20261117-222352-02"
+    "midnight-20261117-2320-001"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:12841:13662&ilvl=305&spec=102",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
-    "https://www.reddit.com/r/woweconomy/comments/1xhilw6/i_made_a_crafting_profit_addon_that_works_without/",
-    "https://www.reddit.com/r/u_MerchantClassGaming/comments/1xhr4ow/is_milling_herbs_in_wow_worth_it/",
-    "https://www.wowdb.com/items/263472-eversong-greatsword",
-    "https://www.wowhead.com/item=263472/eversong-greatsword",
-    "https://www.curseforge.com/wow/addons/ezdisenchant/files/9635154"
+    "https://www.curseforge.com/wow/addons/profitprophet/files/8736365",
+    "https://www.curseforge.com/wow/addons/profitprophet/files/9007250",
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652:13696:12841:13662&ilvl=305&spec=102"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One atomic commit changes only the one new Midnight JSONL and this worker-owned quiet status. Current commit SHA cannot be placed inside itself; verified externally by read-back after ref advancement.",
+  "commit_note": "One atomic commit changes only a new Midnight JSONL and this worker-owned quiet status. Own new commit SHA cannot be embedded into itself; it is separately verified by read-back after ref advancement.",
   "blockers": [
-    "272246 item 305 preview/bonuses are verifiable tooltip context only, never observed on an actual DE with material output, skill or build; base 206 cannot be used as at-cast item level",
-    "237362 original 800-cast Umbral Tin source lacks per-output hit/zero histograms, rank-linked output item IDs, actual source event rows and refund split",
-    "242608 requires ore-specific Eversong Diamond unlock; no original tin/copper/silver conditional event ledger and timing",
-    "Midnight milling available reports remain nominal herb aggregates or approximate outputs, not independent current-build zero-inclusive 10-herb operations",
-    "Goldsmith public crafting History is not proof of processing-result SavedVariables; PocketCFO marketing shows tracking but no public original row-level export",
-    "No firsthand complete-cast numeric observation for 272246, 237362, 237359, 237365 or Midnight mills recovered this run; probability and per-output zeros remain null",
-    "EzDisenchant v1.1.7 advertises CSV/TXT history but sample exported bytes, exact columns, positive/negative collection handling, itemLink/bonus, ilvl, build and skill fields are unknown",
-    "WoWDB flags item 263472 no-disenchant with 415 item level while Wowhead shows 73 catalog level; actual in-client eligibility and at-cast item level not tested"
+    "ProfitProphet's 21 ores/23 herbs refer to source rate tables, not sample sizes; no original sample file, independent provenance, per-item hit counts, zero histograms, hotfix timing or proof of current Midnight-specific inputs supplied",
+    "272246 base vs selected 305 ilvl discrepancy not connected to any original at-cast itemLink/bonus/skill/build/material receipt",
+    "237362 Cardinalai 800-cast current-era source has global units only, missing per-output cast hit counts/zero histograms, rank-linked output identities and refund event history",
+    "242608 Eversong Diamond ore-specific unlock and skill not established for any new measured current-patch study",
+    "237359/237365 lack new independent rank-specific zero-inclusive prospecting sample, and Midnight herbs lack 10-herb at-cast histograms",
+    "Previously identified EzDisenchant CSV/TXT, Goldsmith and PocketCFO pathways still have no publicly verified original at-cast sample file"
   ],
   "exhausted_sources": [
     "2026-11-16T21:21:51.431Z: Fresh named-source original yield hunt for Miststalker's Wristbands 272246, Umbral Tin Ore 237362, Refulgent Copper Ore 237359, Brilliant Silver Ore 237365, and Tranquility Bloom 236761 across Reddit, Blizzard, Wowhead and profession guides yielded only previously indexed GamGem/WoWDB selected-ilvl vs base conflict, Cardinalai/JD3K/Draggoth estimates and guide/Reddit data. Do not duplicate them. Separate Wowhead item-side named searches uncovered unindexed Monk gear items 250010/250011/250012/250014/250015/250017. Existing branch/default-repo source checks found no owned Midnight evidence on these item IDs. 250010 and 250014 selected sources are PTR, not current Retail; their 13/8/4 and 27/16/10 records are reference only. LIVE inputs 250011 14/7/5; 250012 8/5/3; 250015 28/18/10; 250017 15/9/4 are pooled occurrence references. Sources in new evidence JSONL. Distinct indexed 249961, 250057, 250018 and other snapshots were excluded; no independent 0-inclusive original cohort was discovered.",
@@ -94,10 +82,11 @@
     "2026-11-17T17:12:16.401Z: Direct LIVE Wowhead embedded Looter tables for 272246,250055,250058,250059,250060,250061,275218 now independently read: each fixed positive-stack value recorded as a correction to the original owned row, not a fresh cohort. Source has no at-cast itemLink, bonus, profession skill, per-player export or zero-inclusive event stream; do not re-harvest these seven pages until real new source-level event/variant data appears.",
     "2026-11-17T19:17:06.427Z: New named item-side LIVE Wowhead source 248072 Cultist's Pillaged Glaive (44 pooled DE; Eversinging Dust 33/44, Radiant Shard 9/44, different Eversinging Dust 2/44). Cross-checked repository code search found no 248072 or item-name prior evidence; existing 248064/248074/248076/248077, 251255, 251258 are previously indexed. PTR same item 43 pooled 32/9/2 is overlapping snapshot, not a new cohort. By-name targeted study searches for 272246, Umbral Tin 237362, Refulgent Copper 237359, Brilliant Silver 237365 and Tranquility Bloom 236761 across Wowhead, Reddit, Blizzard forums and profession guides only resurfaced previously indexed Cardinalai, Honeybone, Insomnist and SeniorEmployment932 cohorts; no new source-original 0-inclusive current-patch prospect/mill/DE export. Do not revisit this source without actual player input/output receipts.",
     "2026-11-17T20:18:39.241Z: By-name across Reddit r/woweconomy, US Blizzard Retail forums, Wowhead gear/ore pages, Method, WoW-Professions and 2026 Retail patch notes yielded no NEW completed-cast source-original current-patch gear DE, tin/copper/silver prospecting or Midnight milling histogram. Distinct new FortuneWooden8308 Reddit 1rteoqr 2k nominal/~3k ambiguous pigment reference found; earlier SeniorEmployment932 1k->1473 already indexed. Avoid replay of broad exhausted sources without new player receipts. WoW Forever patch notes are wrong mode.",
-    "2026-11-17T21:24:01.568Z: distinct late-Oct-2026 addon-original-export lane: Goldsmith author r/woweconomy/1xhilw6 documents persistent Goldsmith.lua and lack of export button; PocketCFO creator r/u_MerchantClassGaming/1xhr4ow advertises per-mill tracking without publishing raw zero-inclusive receipt file. No publicly linked input/output event CSV. Selected Wowhead 272246 ilvl305 bonus=6652:13696:12841:13662 is preview-only; no source-linked real player at-cast evidence. Avoid repeating these generic addon descriptions unless source-original event export emerges."
+    "2026-11-17T21:24:01.568Z: distinct late-Oct-2026 addon-original-export lane: Goldsmith author r/woweconomy/1xhilw6 documents persistent Goldsmith.lua and lack of export button; PocketCFO creator r/u_MerchantClassGaming/1xhr4ow advertises per-mill tracking without publishing raw zero-inclusive receipt file. No publicly linked input/output event CSV. Selected Wowhead 272246 ilvl305 bonus=6652:13696:12841:13662 is preview-only; no source-linked real player at-cast evidence. Avoid repeating these generic addon descriptions unless source-original event export emerges.",
+    "2026-11-17T23:20:36.671Z: Searched newly noticed ProfitProphet 2026-08-25 source-derived processing table claim (CurseForge Aug26 v2.10.3 file) by named Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom across publisher changelog, GitHub, Reddit and Blizzard; no public underlying study links/cast data. 21 ores/23 herbs counts are table coverage, not casts; no numeric results duplicated from previously indexed Cardinalai, Honeybone, Looter or 272246 selected tooltip. Recheck only if original credited rate studies or an author-permitted raw processing ledger appears."
   ],
-  "next_concrete_step": "Retrieve a player/author-permitted sample EzDisenchant 1.1.7 CSV/TXT and verify input itemLink/bonus, observed completed disenchant and material outputs per row, zeros, timestamps, build and specialization before admitting any measured cohort; prioritize item 272246. For prospect/mill, seek 237362 and 10-herb zero-inclusive operation ledgers with quality IDs and refund accounting.",
-  "verified_base_commit_sha": "ec57f2262dbfcc7d9ed8d61364b9c7f5e134125e",
-  "next": "Retrieve a player/author-permitted sample EzDisenchant 1.1.7 CSV/TXT and verify input itemLink/bonus, observed completed disenchant and material outputs per row, zeros, timestamps, build and specialization before admitting any measured cohort; prioritize item 272246. For prospect/mill, seek 237362 and 10-herb zero-inclusive operation ledgers with quality IDs and refund accounting.",
-  "base_commit_sha": "ec57f2262dbfcc7d9ed8d61364b9c7f5e134125e"
+  "next_concrete_step": "Trace ProfitProphet Aug 25 2026 v2.10.2 underlying cited ore/herb study URLs or obtain an author-permitted raw measured sample; establish exactly whether 237362/237359/237365 and 236761 are included, with per-operation itemIDs, input rank, completed casts, hits, zeros, refunds, skill/spec, hotfix dates. Separately continue original scaled itemLink+material receipts for disenchant item 272246; EzDisenchant CSV/TXT schema still unverified.",
+  "verified_base_commit_sha": "ca9fa155e9332be8062b57e018bedbc0841fda3c",
+  "next": "Trace ProfitProphet Aug 25 2026 v2.10.2 underlying cited ore/herb study URLs or obtain an author-permitted raw measured sample; establish exactly whether 237362/237359/237365 and 236761 are included, with per-operation itemIDs, input rank, completed casts, hits, zeros, refunds, skill/spec, hotfix dates. Separately continue original scaled itemLink+material receipts for disenchant item 272246; EzDisenchant CSV/TXT schema still unverified.",
+  "base_commit_sha": "ca9fa155e9332be8062b57e018bedbc0841fda3c"
 }
