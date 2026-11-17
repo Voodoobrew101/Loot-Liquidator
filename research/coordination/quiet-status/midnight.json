@@ -1,52 +1,56 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-17T05:19:31.499Z",
-  "status": "Nine previously unindexed live catalog non-disenchant identities (item-level-1 cosmetic appearances) recorded; no independent current Retail per-cast disenchant, prospect or mill yield cohort. Catalog labels are not substituted for actual 272246 at-cast eligibility.",
+  "updated_at": "2026-11-17T06:16:17.258Z",
+  "status": "Four previously unindexed live BoE non-cosmetic armor no-disenchant catalog identities (base 22/selected 201) verified; new 12.1.5 Kith'ix epic gear eligibility-vs-Looter contradiction documented. No independent current Retail per-cast yield cohort.",
   "task_ids": [
     "T0026",
     "T0049",
-    "T0005",
+    "T0025",
     "T0039",
+    "T0005",
     "T0003",
     "T0002",
-    "T0045",
-    "T0025"
+    "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026/T0049: actual 272246 ilvl 305/bonus-at-cast gear material receipt vs generic 206 catalog; skill/spec/build and 0-inclusive per-output histograms absent",
-    "T0005/T0039: 237362 rank-specific 5-ore prospect original completed casts vs nominal ore/batch with Resourcefulness refunds; 242608 conditional Eversong Diamond and 242606/242607/242610/242611/242786/242788 hits/zero bins absent",
-    "T0003/T0002/T0045: independent 237359 Refulgent Copper, 237365 Brilliant Silver, 236761 Tranquility Bloom original cast/histogram/skill/rank/yield evidence",
-    "T0025: independently verify and index catalog no-disenchant item identities without confusing cosmetic exclusions for gear-specific live DE proof"
+    "T0026/T0049: new noDE ordinary BoE armor 258858/258862/258856/258865 versus selected ilvl 201; 281056 Kith'ix WoWDB base noDE versus Wowhead live pooled Disenchanting (2); actual at-cast live input bonus/ilvl/skill/spec/output remain unknown",
+    "T0026/T0049: Miststalker's Wristbands 272246 selected 305 vs generic 206 remains unresolved by a real original successful disenchant receipt",
+    "T0005/T0039: 237362 Umbral Tin prospect at-cast material IDs/ranks, refund-adjusted completed casts, Eversong Diamond 242608 unlock, hit and zero histograms still missing",
+    "T0003/T0002/T0045: 237359 Refulgent Copper, 237365 Brilliant Silver and 236761 Tranquility Bloom independent numeric cast and conditional yield sources still missing"
   ],
   "newly_verified_fields_or_cohorts": {
-    "type": "live-catalog-noDisenchant-identity-only",
+    "type": "live-catalog-noncosmetic-BoE-noDisenchant-identity-plus-12.1.5-Looter-catalog-conflict",
     "inputItemIDs": [
-      279428,
-      258720,
-      258681,
-      258695,
-      258697,
-      258722,
-      258712,
-      258706,
-      258685
+      258858,
+      258862,
+      258856,
+      258865
     ],
-    "inputItemType": "item-level-1 Warband cosmetic appearance",
-    "liveCatalogNoDisenchantIdentities": 9,
+    "baseIlvl": 22,
+    "selectedCatalogIlvl": 201,
+    "newNoDisenchantCatalogIdentities": 4,
+    "raidEligibilityConflictInputIDs": [
+      281056,
+      281235
+    ],
+    "raidAdditionalSearchedIDs": [
+      281238,
+      281236,
+      281239
+    ],
+    "raidLiveWowheadRelatedLabel": "Disenchanting (2) for 281056 and 281235; source-related entry count, NOT two casts",
+    "raidWoWDBBaseClaim": "281056 Cannot be disenchanted, live 12.1.5 base item",
     "materialYieldCohorts": 0,
-    "sourceKinds": "Wowhead live quick facts (8); WoWDB live quick info (1)",
-    "source_links": [
-      "https://www.wowhead.com/item=279428/midnight-gloomcap",
-      "https://www.wowhead.com/item=258720/elaborate-charcoal-mageweave-belt",
-      "https://www.wowhead.com/item=258681/elaborate-ruby-mageweave-headband",
-      "https://www.wowhead.com/item=258695/elaborate-charcoal-mageweave-chestwrap",
-      "https://www.wowhead.com/item=258697/elaborate-ruby-mageweave-chestpiece",
-      "https://www.wowhead.com/item=258722/elaborate-ruby-mageweave-belt",
-      "https://www.wowhead.com/item=258712/elaborate-charcoal-mageweave-leggings",
-      "https://www.wowhead.com/fr/item=258706/gants-en-tisse-mage-rubis-%C3%A9labor%C3%A9",
-      "https://www.wowdb.com/items/258685-elaborate-ruby-mageweave-vestments"
+    "sources": [
+      "https://www.wowhead.com/item=258858/threadbare-crown",
+      "https://www.wowhead.com/item=258862/threadbare-vestments",
+      "https://www.wowhead.com/item=258856/threadbare-mantle",
+      "https://www.wowhead.com/item=258865/brittle-breastplate",
+      "https://www.wowhead.com/item=281056/sanctified-knights-phoenixblade",
+      "https://www.wowhead.com/item=281235/voidweavers-leggings",
+      "https://www.wowdb.com/items/281056-sanctified-knights-phoenixblade"
     ],
-    "notes": "Nine input IDs newly confirmed not already in Midnight worker evidence index; no observed disenchant cast or quantity evidence. Explicit catalog nonDE restriction applies to cosmetic identity only."
+    "notes": "WoWhead nonDE identity-only; never infer a level-201 actual cast. The 12.1.5 raid source contradiction remains unresolved; no Looter paired raw operation/itemLink material receipt."
   },
   "numeric_fields_advanced": {
     "newIndependentCurrentPatchCohorts": 0,
@@ -56,43 +60,37 @@
     "newPerCastHistograms": 0,
     "newZeroBins": 0,
     "newConditionalDiamondHits": 0,
-    "newNoDisenchantInputIDs": 9,
+    "newNoDisenchantInputIDs": 4,
     "newMaterialYieldNumericFields": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-17T0518-catalog-cosmetic-nonde-items.jsonl"
+    "research/v3/evidence/midnight/2026-11-17T0616-nonde-threadbare-and-raid-source-gap.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-17T0415-wristband-preview-variant-not-cast-audit.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-17T0518-catalog-cosmetic-nonde-items.jsonl",
   "evidence_record_ids": [
-    "midnight-20261117-cosnode-01",
-    "midnight-20261117-cosnode-02",
-    "midnight-20261117-cosnode-03",
-    "midnight-20261117-cosnode-04",
-    "midnight-20261117-cosnode-05",
-    "midnight-20261117-cosnode-06",
-    "midnight-20261117-cosnode-07",
-    "midnight-20261117-cosnode-08",
-    "midnight-20261117-cosnode-09"
+    "midnight-20261117-06thread-01",
+    "midnight-20261117-06thread-02",
+    "midnight-20261117-06thread-03",
+    "midnight-20261117-06thread-04",
+    "midnight-20261117-06raid-01"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=279428/midnight-gloomcap",
-    "https://www.wowhead.com/item=258720/elaborate-charcoal-mageweave-belt",
-    "https://www.wowhead.com/item=258681/elaborate-ruby-mageweave-headband",
-    "https://www.wowhead.com/item=258695/elaborate-charcoal-mageweave-chestwrap",
-    "https://www.wowhead.com/item=258697/elaborate-ruby-mageweave-chestpiece",
-    "https://www.wowhead.com/item=258722/elaborate-ruby-mageweave-belt",
-    "https://www.wowhead.com/item=258712/elaborate-charcoal-mageweave-leggings",
-    "https://www.wowhead.com/fr/item=258706/gants-en-tisse-mage-rubis-%C3%A9labor%C3%A9",
-    "https://www.wowdb.com/items/258685-elaborate-ruby-mageweave-vestments"
+    "https://www.wowhead.com/item=258858/threadbare-crown",
+    "https://www.wowhead.com/item=258862/threadbare-vestments",
+    "https://www.wowhead.com/item=258856/threadbare-mantle",
+    "https://www.wowhead.com/item=258865/brittle-breastplate",
+    "https://www.wowhead.com/item=281056/sanctified-knights-phoenixblade",
+    "https://www.wowhead.com/item=281235/voidweavers-leggings",
+    "https://www.wowdb.com/items/281056-sanctified-knights-phoenixblade"
   ],
-  "commit_sha": "3368eb40bbd13a200341e4a99660d61cb9bd2172",
-  "verified_commit_sha": "3368eb40bbd13a200341e4a99660d61cb9bd2172",
-  "commit_note": "Evidence commit 3368eb40bbd13a200341e4a99660d61cb9bd2172 confirmed by fetch_file read-back. GitHub connector contents API cannot atomically modify the new evidence file and own status in one commit; this status update is a second metadata-only commit, an explicit deviation from one-commit-per-run rule. No other worker/shared research file touched.",
+  "commit_sha": null,
+  "verified_commit_sha": null,
+  "commit_note": "Status and evidence are written together in exactly one atomic Git commit. The new commit SHA cannot be embedded in the commit's own status content without circular dependency; SHA and read-back verification are reported by the run after publishing. No later status-only commit, no other files.",
   "blockers": [
-    "No independent post-hotfix current-Retail original at-cast input/output report giving material-ID/rank, completed cast denominators, per-output zero bins, 0/1/2+ histograms, skill/spec/build or Resourcefulness refund ledger for 272246, 237362, 237359, 237365, 236761.",
-    "Miststalker's Wristbands 272246 selected-preview ilvl 305 vs generic ilvl 206 and catalog cannot-DE conflict still unresolved by an actual eligible 272246 successful operation.",
-    "Nine new noDE flags belong to cosmetic appearances, not ordinary uncommon/rare/epic gear. Do not generalize eligibility or invent numeric drop rates.",
-    "Atomic two-path single-commit write unavailable via connected GitHub contents interface; this run's evidence and status have separate commits."
+    "No source-at-cast 272246 actual ilvl305 successful Retail disenchant receipt; base206 catalogue flags and selected tooltips not a measured cast.",
+    "No 237362/237359/237365/236761 zero-inclusive original player per-output casts/histograms, rank IDs, refund denominator or specialization/build log.",
+    "12.1.5 live raid gear 281056 / 281235 Wowhead Looter-related sections lack original operation exports; 281056 WoWDB base catalog noDE conflicts with Wowhead Looter without variant evidence.",
+    "Commit SHA cannot be self-written into a file inside that same single commit; verified separately post-push."
   ],
   "exhausted_sources": [
     "2026-11-14T06:11:30.224Z: New cross-source comparison: GoldCap 242608/242712 labels two Eversong Diamond ranks, in tension with WoW-Professions and Dving quality-less guide wording. New Apr30 Blizzard customer restoration thread 2299311 says Dawn Crystal quality rank required for item restore is hidden by web UI; original poster's successful retry is not a new measured disenchant event. Earlier ilvl305 armory, Raven May22 restore, Cardinalai/Honeybone and Looter snapshots already indexed. No new complete per-cast cohort for 272246, 237362, 237359, 236761. Do not recycle these webpages without original exact itemLinks, outputs and operation ledger.",
@@ -164,10 +162,11 @@
     "2026-11-17T02:10:33.393Z: Unindexed PTR Wowhead item-side Recovered Sanctum Bow 251259 shows 24 pooled source-reported disenchant events with Eversinging Dust 20, Radiant Shard 3, Dawn Crystal 1; PTR WoWDB base says Cannot be disenchanted. Live WoWhead preview does not verify source-at-cast or item bonus. Three reference-only rows; no individual original operation or rank-linked output. Existing indexed Recovered Sanctum Hatchet 251251, Sword 251254, Pole 251258, Greatsword 251255 and earlier 272246/Stornwarning/Cardinalai sources intentionally not re-entered. New current patch primary cohort 0; revisit 251259 only with player event logs.",
     "2026-11-17T03:09:31.497Z: Searched new item-name and source-specific leads for 272246 Miststalker's Wristbands, 237362 Umbral Tin Ore, 237359 Refulgent Copper, 237365 Brilliant Silver, 236761 Tranquility Bloom across current WoWhead LIVE/PTR, Blizzard US/EU forums, Reddit r/woweconomy, Warcraft Wiki and profession guides. No new original zero-inclusive Retail 12.1.5 ledger. Found distinct unindexed LIVE item-side 260371 12 reported disenchants (Dawn Crystal 9 and 3) with overlapping PTR 11 (9 and 2); only LIVE reference saved, PTR not duplicated. Prior Cardinalai/Honeybone/kyzenbka, selected 272246 preview and 251251/251255/251258 catalog sources already indexed and not recopied. Do not reharvest 260371 until actual material rank links or source-at-cast SavedVariables emerge.",
     "2026-11-17T04:15:12.158Z: New identity-only check of item 272246 selected tooltip bonus strings at 276/279/282/295/308/315; indexed base206 and 'Disenchanting (5)' category still contradict WoWDB base cannotDE and do not prove 5 individual successful DE casts. By-name search over Wowhead/WoWDB/GamGem, Reddit, Blizzard forums, Method and Warcraft Wiki for 272246/237362/237359/237365/236761 original zero-inclusive casts finds known Cardinalai/partial guide values only; previously indexed Goblinomics raw code audit not copied. Revisit previews only upon original actual disenchanted itemLink/bonus and output event evidence.",
-    "2026-11-17T05:19:31.499Z: Searched distinct current-Retail original source lanes for 272246 actual DE, 237362/237359/237365 cast/hits, and 236761 milling on Reddit r/woweconomy, Blizzard US forums, Wowhead, WowDB, Warcraft Wiki and profession guides. Only previously indexed Cardinalai/Honeybone/Draggoth/kyzenbka, selected-tool-tip, published partial guide probabilities and ambiguous source-reference material appeared; not duplicated. Followed a new live catalog no-disenchant cosmetic-ID lane, recorded 9 distinct new item IDs from explicit Wowhead/WoWDB cannot-DE labels. No new measured material yield cohort; do not confuse cosmetic flags with scaled-gear gameplay or repeat original source searches without fresh player exports."
+    "2026-11-17T05:19:31.499Z: Searched distinct current-Retail original source lanes for 272246 actual DE, 237362/237359/237365 cast/hits, and 236761 milling on Reddit r/woweconomy, Blizzard US forums, Wowhead, WowDB, Warcraft Wiki and profession guides. Only previously indexed Cardinalai/Honeybone/Draggoth/kyzenbka, selected-tool-tip, published partial guide probabilities and ambiguous source-reference material appeared; not duplicated. Followed a new live catalog no-disenchant cosmetic-ID lane, recorded 9 distinct new item IDs from explicit Wowhead/WoWDB cannot-DE labels. No new measured material yield cohort; do not confuse cosmetic flags with scaled-gear gameplay or repeat original source searches without fresh player exports.",
+    "2026-11-17T06:16:17.258Z: NEW Kith'ix 12.1.5 item-specific 281056/281235/281238/281236/281239 searches across Wowhead live/PTR, WoWDB, Warcraft Wiki, GamGem, Reddit, Blizzard forums found current gear identities but no raw completed DE material receipt. Wowhead 281056/281235 lists related Disenchanting (2) while WoWDB base 281056 says cannotDE; unresolved and not imported as numeric. Separate newly indexed ordinary BoE Threadbare Crown 258858, Vestments 258862, Mantle 258856 and Brittle Breastplate 258865 live Wowhead explicit cannotDE, selected level201 / base22. Do not revisit these pages without direct in-game receipt/bonus or original Looter raw export; zero independent material-yield cohorts."
   ],
-  "next_concrete_step": "Pursue original Retail 12.1.5 player-at-cast output/itemLink logs for 272246 bonus/real ilvl 305/skill/spec; rank-specific 237362,237359,237365 per-output hit/zero histograms with refunds; and 236761 10-herb milling original casts. When none appear, avoid recycling published estimates and prioritize source-new item identity/eligibility exceptions.",
-  "verified_base_commit_sha": "05e0fb708188e9f91c42df7d33990b683f6b4530",
-  "next": "Pursue original Retail 12.1.5 player-at-cast output/itemLink logs for 272246 bonus/real ilvl 305/skill/spec; rank-specific 237362,237359,237365 per-output hit/zero histograms with refunds; and 236761 10-herb milling original casts. When none appear, avoid recycling published estimates and prioritize source-new item identity/eligibility exceptions.",
-  "base_commit_sha": "05e0fb708188e9f91c42df7d33990b683f6b4530"
+  "next_concrete_step": "Obtain new independent live 12.1.5 raw actual disenchant itemLink/bonus/skill/loot receipts for Kith'ix 281056/281235 and 272246, rather than catalog/Looter selector claims. Seek source-new 237362 output-by-output 0-inclusive logs, then 237359/237365 and 236761 original per-cast data; keep rank, unlock and Resourcefulness unknown where unreported.",
+  "verified_base_commit_sha": "44d987385d1e612532df5b47d9c4eff8a9a15d9c",
+  "next": "Obtain new independent live 12.1.5 raw actual disenchant itemLink/bonus/skill/loot receipts for Kith'ix 281056/281235 and 272246, rather than catalog/Looter selector claims. Seek source-new 237362 output-by-output 0-inclusive logs, then 237359/237365 and 236761 original per-cast data; keep rank, unlock and Resourcefulness unknown where unreported.",
+  "base_commit_sha": "44d987385d1e612532df5b47d9c4eff8a9a15d9c"
 }
