@@ -210,6 +210,21 @@ for _,r in ipairs(actual.ItemDB.processing) do
         local g=groups[r.referenceContextID] or {};groups[r.referenceContextID]=g;g[#g+1]=r
     end
 end
+-- v3 research supersedes older rows for the inputs it covers and can correct an
+-- output's item ID. An older output may disappear only when v3 has that input
+-- without that output; any other missing co-output is a real loss.
+local v3Outputs={}
+for _,r in ipairs(actual.ItemDB.processing) do
+    if tostring(r.recordID):find('^evidence:v3:') then
+        local key=tostring(r.method)..':'..tostring(r.inputItemID)
+        local set=v3Outputs[key] or {};v3Outputs[key]=set
+        for _,m in ipairs(r.materials or {}) do set[m.id]=true end
+    end
+end
+local function supersededByV3(row)
+    local set=v3Outputs[tostring(row.method)..':'..tostring(row.inputItemID)]
+    return set~=nil and not set[row.materials[1].id]
+end
 local verifiedActual=false
 for _,rows in pairs(groups) do
     if #rows>=2 then
@@ -220,7 +235,7 @@ for _,rows in pairs(groups) do
             {name=r.method,inputCount=r.inputCount,recipeID=r.recipeID},nil,1,c)
         if result then
             local outputs={} for _,out in ipairs(result.materials) do outputs[out.id]=true end
-            for _,row in ipairs(rows) do check(outputs[row.materials[1].id],'actual compiled cooutput lost') end
+            for _,row in ipairs(rows) do check(outputs[row.materials[1].id] or supersededByV3(row),'actual compiled cooutput lost') end
             verifiedActual=true;break
         end
     end

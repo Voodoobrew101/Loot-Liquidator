@@ -1,0 +1,111 @@
+name: Refresh research automatically
+# Every 6 hours: if the research branch has new commits, copy them into the pinned
+# snapshot, rebuild ItemDB and run every addon test.
+#   pass -> commit to main, bump the addon version and publish a downloadable build.
+#   fail -> nothing ships; the attempt goes to branch automation/research-refresh and an
+#           issue labelled research-refresh-failed explains what broke.
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+  actions: write
+concurrency:
+  group: research-refresh
+  cancel-in-progress: false
+env:
+  RESEARCH_BRANCH: implementation/five-agent-completion
+jobs:
+  refresh:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Is there new research?
+        id: check
+        run: |
+          git fetch --quiet origin "$RESEARCH_BRANCH"
+          head=$(git rev-parse "origin/$RESEARCH_BRANCH")
+          pinned=$(python3 -c "import json;print(json.load(open('database/research/v3-snapshot/SNAPSHOT.json'))['commit'])")
+          echo "head=$head" >> "$GITHUB_OUTPUT"
+          if [ "$head" = "$pinned" ]; then
+            echo "Research unchanged at ${head:0:12}; nothing to do."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Research moved ${pinned:0:12} -> ${head:0:12}."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-python@v6
+        if: steps.check.outputs.changed == 'true'
+        with:
+          python-version: '3.12'
+      - name: Install Lua 5.1
+        if: steps.check.outputs.changed == 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
+      - name: Refresh snapshot and rebuild ItemDB
+        shell: bash
+        id: build
+        if: steps.check.outputs.changed == 'true'
+        run: bash tools/refresh_research.sh "origin/$RESEARCH_BRANCH" 2>&1 | tee refresh.log
+      - name: Run all addon tests
+        shell: bash
+        id: tests
+        if: steps.check.outputs.changed == 'true'
+        run: bash tests/run.sh 2>&1 | tee tests.log
+      - name: Commit to main
+        shell: bash
+        if: steps.check.outputs.changed == 'true' && success()
+        env:
+          HEAD_SHA: ${{ steps.check.outputs.head }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          patch=$(sed -n 's/^## Version: [0-9]*\.[0-9]*\.\([0-9]*\)$/\1/p' LootLiquidator/LootLiquidator.toc)
+          VERSION_PATCH=$((patch + 1)) python3 tools/update_addon_version.py
+          git add -A database LootLiquidator research/evidence
+          git diff --cached --quiet && { echo 'No file changes.'; exit 0; }
+          git commit -q -m "Refresh research to ${HEAD_SHA:0:12}" -m "Automatic refresh: all addon tests passed."
+          # main may have moved during the run; generated files are rebuilt above, so rebase.
+          git pull --quiet --rebase origin main
+          git push origin HEAD:main
+      - name: Publish downloadable build
+        if: steps.check.outputs.changed == 'true' && success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run distribution.yml --ref main -f publish=true
+      - name: Report failure
+        shell: bash
+        if: steps.check.outputs.changed == 'true' && failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ steps.check.outputs.head }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -q -B automation/research-refresh
+          git add -A database LootLiquidator research/evidence
+          git commit -q -m "Failed research refresh to ${HEAD_SHA:0:12} (not shipped)" || true
+          git push -f origin automation/research-refresh
+          gh label create research-refresh-failed --color B60205 \
+            --description 'Automatic research refresh broke a rule; nothing shipped' 2>/dev/null || true
+          {
+            echo "The automatic research refresh to \`${HEAD_SHA:0:12}\` failed, so nothing shipped."
+            echo "Players keep the last good build. The attempted refresh is on branch \`automation/research-refresh\`."
+            echo
+            echo "Run: $RUN_URL"
+            echo
+            echo '```'
+            tail -n 60 tests.log 2>/dev/null || tail -n 60 refresh.log 2>/dev/null || echo 'No log captured.'
+            echo '```'
+          } > body.md
+          open=$(gh issue list --label research-refresh-failed --state open --json number -q '.[0].number')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body-file body.md
+          else
+            gh issue create --title 'Automatic research refresh failed' --label research-refresh-failed --body-file body.md
+          fi

@@ -5,12 +5,14 @@ from collections import Counter
 
 sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3
+from pathlib import Path as _Path
+GOLDEN = _Path('tests/fixtures/research-golden/v3-snapshot')  # frozen research; live data changes on every refresh
 from research_v3_evidence import build_field_support
 
 
 class MaterialIdentityTests(unittest.TestCase):
     def test_lone_replacement_cannot_delete_an_unrelated_reused_id(self):
-        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        module = v3.load_calculator(GOLDEN)
         original = dict(id='reused', method='Prospect', inputItemID=194545, outputItemID=192851)
         for changes in ({'method': 'Disenchant'}, {'inputItemID': 190311}):
             replacement = dict(original, id='repair', replaces='reused')
@@ -20,7 +22,7 @@ class MaterialIdentityTests(unittest.TestCase):
             self.assertEqual(notes, {'replacement method or input does not match source': 1})
 
     def test_lone_replacement_can_enrich_or_correct_item_identity(self):
-        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        module = v3.load_calculator(GOLDEN)
         original = dict(id='original', method='Prospect', inputItemID=None, inputName='Prismatic',
                         outputItemID=192849, outputName='Eternity Amber')
         correction = dict(original, id='correction', replaces='original', inputItemID=194545,
@@ -39,7 +41,7 @@ class MaterialIdentityTests(unittest.TestCase):
                         outputName='Ysemerald', outputRank=3, casts=1000,
                         totalQuantity=total, cohortKey=cohort)
 
-        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        module = v3.load_calculator(GOLDEN)
         labelled, copy = row('labelled', 'first'), row('copy')
         changed = row('changed', total=6)
         other_source = row('other-source', source='https://www.reddit.com/r/woweconomy/comments/other')
@@ -60,7 +62,7 @@ class MaterialIdentityTests(unittest.TestCase):
         self.assertNotEqual(identity(copy), identity(second))
 
     def test_equal_nonzero_totals_are_not_material_identity(self):
-        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        module = v3.load_calculator(GOLDEN)
         amber = dict(outputName='Eternity Amber', outputItemID=None, totalQuantity=4)
         diamond = dict(outputName='Illimited Diamond', outputItemID=192870, totalQuantity=4)
         self.assertFalse(module.same_output(amber, diamond, {}))
@@ -68,7 +70,7 @@ class MaterialIdentityTests(unittest.TestCase):
         self.assertFalse(module.same_output(amber, dict(diamond, totalQuantity=0), {}))
 
     def test_real_duplicated_eighty_cast_cohort_retains_both_materials(self):
-        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        module = v3.load_calculator(GOLDEN)
         rows = module.load()
         # Two verbatim recordings of superbondez's 39-output Prismatic study.
         originals = [r for r in rows if r.get('id') == 'dragonflight-20261031-50044']
@@ -86,7 +88,7 @@ class MaterialIdentityTests(unittest.TestCase):
         self.assertIsNone(originals[0]['outputItemID'])
 
     def test_import_restores_family_without_changing_diamond(self):
-        records = v3.build(v3.DEFAULT_SNAPSHOT)[0]
+        records = v3.build(GOLDEN)[0]
         record = next(r for r in records if r['recordID'] == 'evidence:v3:Prospect:194545:x5')
         outputs = {m['id']: m for m in record['materials']}
         amber, diamond = outputs[192849], outputs[192870]
@@ -98,7 +100,7 @@ class MaterialIdentityTests(unittest.TestCase):
         self.assertAlmostEqual(diamond['expectedQuantity']['value'], 0.05)
 
     def test_runecloth_headband_classic_mirrors_share_the_same_five_casts(self):
-        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        module = v3.load_calculator(GOLDEN)
         same_source = [
             ('wowhead-illusiondust-1115352-runecloth-headband-5', 'mop-classic',
              ('legacy-20261108-001', 'legacy-20261108-002')),
@@ -123,7 +125,7 @@ class MaterialIdentityTests(unittest.TestCase):
         self.assertEqual((occurrence[16204]['hits'], occurrence[16204]['casts']), (4, 5))
 
     def test_magma_thresher_needs_a_verified_prospect_batch(self):
-        module = v3.load_calculator(v3.DEFAULT_SNAPSHOT)
+        module = v3.load_calculator(GOLDEN)
         source = {'url': 'https://www.wowhead.com/item=199344#comments:id=1234567', 'author': 'Test'}
         rough = dict(id='rough', _file='rough.jsonl', studyKey='same-source', method='Prospect', type='drop',
                      sourceKind='study', inputItemID=199344, outputItemID=192849, casts=20,

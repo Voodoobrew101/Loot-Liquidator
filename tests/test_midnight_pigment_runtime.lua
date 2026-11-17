@@ -1,3 +1,4 @@
+-- ItemDB comes from the frozen research copy: live research changes on every refresh.
 -- Actual archived calculator -> generated ItemDB -> quality selection/value.
 -- The 13-unit source is a model, not a measured chance or cast histogram.
 local checks=0
@@ -9,7 +10,7 @@ time=function() return 100 end
 CreateFrame=function() return {RegisterEvent=function()end,SetScript=function()end} end
 local LL={db={characters={Player={}},source_personal_enabled=false,source_imported_enabled=false,
     tooltipDetail=3,showAverageQuantity=true,professionTooltipProfiles={Inscription='@hypothetical'}}}
-assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',LL)
+assert(loadfile('tests/fixtures/research-golden/ItemDBRuntime.lua'))('LL',LL)
 for _,name in ipairs({'ProfessionModels.lua','Database.lua','Professions.lua','ConversionEngine.lua','Badges.lua'}) do
     assert(loadfile('LootLiquidator/'..name))('LL',LL)
 end

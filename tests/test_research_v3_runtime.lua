@@ -1,3 +1,4 @@
+-- ItemDB comes from the frozen research copy: live research changes on every refresh.
 -- D1c end to end on the shipped database: research v3 baselines are valid ItemDB
 -- records, nothing is counted twice, nothing is lost, and the addon values them.
 local LL={}
@@ -5,7 +6,7 @@ CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()en
 GetBuildInfo=function()return '12.1.5','123456','Oct 29 2026',120105 end
 GetTime=function()return 100 end
 for _,file in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua','ConversionEngine.lua'}) do
-    assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
+    assert(loadfile(file=='ItemDBRuntime.lua' and 'tests/fixtures/research-golden/ItemDBRuntime.lua' or 'LootLiquidator/'..file))('LootLiquidator',LL)
 end
 local passed=0
 local function ok(cond,label) assert(cond,label);passed=passed+1 end

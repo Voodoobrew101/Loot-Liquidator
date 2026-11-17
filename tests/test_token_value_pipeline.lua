@@ -55,6 +55,10 @@ GetMoney=function()return 10000000 end
 UnitLevel=function()return 90 end
 C_CurrencyInfo={GetCurrencyInfo=function()return {quantity=100}end}
 assert(LL:InitializeItemDB(),LL.itemDBError)
+-- These scenarios test token routing with real catalog IDs, not item eligibility.
+-- Research can later mark a reward "cannot be disenchanted" (271457 was, Nov 2026),
+-- so clear that flag for the three rewards used here.
+for _,id in ipairs({271457,271466,271475}) do LL.ItemRestrictions[id]=nil end
 local function render(decision)
     local tip={lines={}}
     function tip:AddLine(text)self.lines[#self.lines+1]=text end
