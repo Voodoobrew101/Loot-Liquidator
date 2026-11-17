@@ -1,7 +1,7 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-17T11:15:39.144Z",
-  "status": "Research-only original-source case-variant deduplication guard proposed in draft PR #75; 1 existing March 2026 Tranquility Bloom source is transcribed twice, no original batch denominator or pigment rank validated. No new gold decisions or independent experiments; exact-head CI not yet all passing.",
+  "updated_at": "2026-11-17T11:16:25.695Z",
+  "status": "Draft PR #75 source-identity/case-variant dedupe guard published and read back; final-head five-agent research completion CI passed, v3 migration failed 13 independent report/source checks and compatibility-with-main failed merge conflicts. No new measured cast, output quality, conversion EV or current Retail gold decision. PR remains draft, no addon changes.",
   "task_ids": [
     "T0045 (Midnight original casts/yield, worker retained ownership)",
     "S7/S17 (manager research-only cohort identity engineering PR #75)"
@@ -32,20 +32,30 @@
   "verified_commit_sha": "0930b64092cd4614e272135b3ecdfcda1bb32360",
   "verified_commit_sha_scope": "Exact draft PR #75 final source/test commit, branch read-back verified; not a research target merge or shipped addon snapshot.",
   "actual_checks": {
-    "kind": "GitHub source/test readback and GitHub Actions on exact PR #75 SHA; no local tests claimed",
-    "new_test": "test_case_variant_unknown_family_is_one_original",
-    "local_compiler_executed": false,
+    "kind": "GitHub Actions on exact latest draft PR #75 head (no locally run compiler/Lua/engine or live WoW)",
+    "github_final_head": "0930b64092cd4614e272135b3ecdfcda1bb32360",
+    "github_research_completion": {
+      "run_id": 44072229499,
+      "conclusion": "success"
+    },
+    "github_v3_migration": {
+      "run_id": 44072229721,
+      "conclusion": "failure",
+      "failure_count": 13,
+      "notes": "committed generated migration reports stale vs fresh regenerated output, original-source provenance/supersession and prose-date/source data checks, two unresolved identical ranked-source conflicts; new reason-vocabulary mismatch from earlier candidate was corrected"
+    },
+    "github_compatibility_main": {
+      "run_id": 44072230058,
+      "conclusion": "failure",
+      "cause": "git merge conflict in .github/workflows/verify-five-agent-completion.yml and tests/test_research_v3_dedupe.py; addon test suite not reached"
+    },
+    "compiler_executed_locally": false,
     "native_lua_tests_executed_locally": false,
     "actual_engine_tooltip_executed_locally": false,
-    "live_wow_executed": false,
-    "github_completion_previous_head": "success on c074469b98dbd9c2b0e98d9c1f067413d2f9be25, before taxonomy adjustment",
-    "github_latest_head": "0930b64092cd4614e272135b3ecdfcda1bb32360",
-    "github_latest_migration": "in_progress as of checkpoint creation",
-    "github_latest_compatibility": "failure due conflicting .github/workflows/verify-five-agent-completion.yml and tests/test_research_v3_dedupe.py when current main is merged in CI; not an addon test result",
-    "migration_previous_head": "failure including pre-existing stale generated report/identity conflicts and one introduced reason-vocabulary mismatch, latter removed by new commit; retest pending"
+    "live_wow_executed": false
   },
   "git_state_checked": {
-    "timestamp_utc": "2026-11-17T11:15:39.144Z",
+    "timestamp_utc": "2026-11-17T11:16:25.695Z",
     "main_sha": "5dd5aa2f7f05656e7580ea744f657209db59a195",
     "research_prewrite_sha": "9fb8934d9cc126aa94ddc6c106eae9c82a820b33",
     "owner_implementation_sha": "3d667d053db587c91401cfed7ecc56862b8340c9",
@@ -83,16 +93,15 @@
     }
   ],
   "blockers": [
-    "Current main compatibility CI fails merge conflict in .github/workflows/verify-five-agent-completion.yml and tests/test_research_v3_dedupe.py; review across branches, do not overwrite main or owner addon branch",
-    "Latest research migration report had 15 failures on prior head, including stale committed derived report and separate source lineage conflicts; latest head results not yet confirmed",
-    "No independent new completed-cast/zero-inclusive pigment distribution, input net consumption, pigment item ID/rank or current Retail character eligibility; cannot claim useful gold valuation",
-    "PR #75 is draft and still requires CI/review; original worker evidence unchanged"
+    "Exact latest-head research completion CI PASS does not supersede 13 FAILs in v3 migration (stale derived reports, original lineage and source integrity checks)",
+    "Compatibility-with-main CI fails before tests from merges in .github/workflows/verify-five-agent-completion.yml and tests/test_research_v3_dedupe.py; needs isolated branch reconciliation; PR #75 stays draft",
+    "Tranquility Bloom original purchased versus consumed input, completed mill operation denominator, pigment exact ID/rank, skill and per-cast distribution remain unknown; no supported current Retail value"
   ],
   "exhausted_sources": [
     "Already indexed original Reddit 1rteoqr is two transcriptions of one anecdote; do not request it again or infer 100 casts from 1,000 purchased herbs",
     "Prior named-item and SaveVariables searches in current worker reports remain nonnumeric; seek true event receipts/exports instead"
   ],
-  "next_concrete_step": "Review PR #75's final-head completion and migration CI; reconcile main/research merge-conflict and failing research migration reports only on scoped review branches, then have PR Director decide. Midnight T0045 continues seeking direct consumption/receipt and per-output quality/hit/zero data; do not count duplicate anecdotes.",
+  "next_concrete_step": "On isolated review branches, reconcile existing research/main CI conflicts and 13 migration failures without touching main/owner integration or overwriting worker sources; PR Director only decides merge/closure of draft PR #75. Midnight T0045 independently seeks original input net consumption and zero-inclusive ranked output receipts.",
   "previous_verified_manager_audit": {
     "evidence_file": "research/v3/evidence/master/20261117T1008-tranquility-r2-1473-crossfile-cohort-duplicate.md",
     "commit_sha": "55e14bca7dfd5616208c62ff86656840797558db"
