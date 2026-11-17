@@ -1,121 +1,142 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-17T13:03:34.243Z",
-  "status": "Research-only exact ingredient identity/processing association reviewed: Dragonflight Magma Thresher 199344 is listed as a Jewelcrafting Dragon Isles Prospecting reagent. Still no verified fish-specific batch or current Retail eligibility; the owner already has labeled per-input synthetic reference probes. 11/11 stored-probe assertions passed. No independent new samples, measured probabilities, supported live gold decisions, addon changes or client testing.",
+  "updated_at": "2026-11-17T14:08:16.151Z",
+  "status": "New source-confirmed deterministic Retail-item identity/exchange candidate: 3 Light Illusion Dust 16204 -> 1 Rich Illusion Dust 156930 (spell 262119), and reverse 1 Rich -> 3 Light (262120). Patch 7.3.5 material split distinguishes historical 16204 Runecloth Headband hits from owner current synthetic 156930 yield; current character exchange availability and market profitability untested. Evidence note committed/read back, dashboard updated. 11/11 bounded stored-evidence assertions passed. No new casts, measured probabilities, direct addon changes, new validated live gold decisions or client tests.",
   "task_ids": [
-    "Manager QA: Prospect:199344:x1/x5 source reagent and input-batch/eligibility boundary",
-    "T0020/T0041 Dragonflight identity/recipe context (worker owned; unchanged)",
-    "T0005/T0039/T0045 Midnight numeric priorities (worker owned; unchanged)"
+    "T0050 — legacy Runecloth Headband output identity, actual historical epoch and per-hit quantity gate (worker-owned)",
+    "T0005/T0039 — current Umbral Tin rank/hit/zero/refund (worker-owned; highest gold priority)",
+    "T0045 — Midnight Tranquility Bloom 10-herb original numeric mill (worker-owned)"
   ],
   "exact_gaps_targeted": [
-    "Reagent association: item 199344 Magma Thresher explicitly appears in Warcraft Wiki's Dragon Isles Prospecting recipe reagent list, corroborated by Wowhead item identity; owner PASS-2 already knew item name and held per-input reference values",
-    "Input 199344 remains unverified for a specific current-build prospectable fish recipe and actual fish count per operation; generic Dragon Isles Prospecting 374627's five-ore text is not fish-specific batch proof",
-    "Prior owner source-to-tooltip offline simulated records Prospect:199344:x1 and :x5 expose 14 reference fallback material pools but state eligibility not tested; synthetic output values must not be labeled real-character returns",
-    "Missing independently measured fish prospect operations/hits/zeros/output-rank/skill/build/refunds; no current-market price or net-gold decision verified"
+    "Verified two distinct spell+item identities 262119 (Light 16204 x3 -> Rich 156930 x1) and 262120 (Rich 156930 x1 -> Light 16204 x3); repository indexed code search for both spell IDs returned no hits but cannot establish absence in all generated data",
+    "Owner stored offline resolver fixture Disenchant:13866:x1 lists Rich 156930 E=3.5, essence 16203 E=0.5686, shard 14344 E=0.04, and does NOT list historical 16204; source profile not real-character eligible",
+    "New worker-original 5-Headband historical outcome 4/5 16204 Light and 1/5 16203 Greater Eternal Essence with unknown positive-stack quantities, date/build and current live transfer; must not replace stored 156930 expectation",
+    "Potential independently priced reversible item-use conversion excluded from current demonstrated synthetic 13866 DE valuation; do not invent eligibility or treat cycles as additive gold"
   ],
   "newly_verified_fields_or_cohorts": {
-    "kind": "Item-to-Jewelcrafting-Prospecting reagent relationship corroboration from source, not a numerical experimental cohort",
-    "inputItemID": 199344,
-    "inputName": "Magma Thresher",
-    "flavour": "Retail Dragonflight",
-    "processingAssociation": "Jewelcrafting > Dragon Isles Prospecting",
-    "associationSource": "https://warcraft.wiki.gg/wiki/Magma_Thresher",
-    "itemConfirmation": "https://www.wowhead.com/item=199344/magma-thresher",
-    "exactConsumedBatch": null,
-    "characterEligibilityVerified": false,
-    "existingSyntheticProfiles": [
-      "Prospect:199344:x1",
-      "Prospect:199344:x5"
-    ],
-    "representativeMaterialRankAlternatives": [
-      192837,
-      192838,
-      192839
-    ],
-    "representativeModeledExpectedUnitsByNominalInput": [
-      0.0281,
-      0.1405
-    ],
-    "artificialOutputPriceCopper": 100,
-    "representativeModeledOutputValueCopper": [
-      2.81,
-      14.05
-    ],
+    "kind": "Fixed deterministic item-use conversion item/spell identity verified by source, not a new experimental study or shipped addon implementation",
+    "inputItemID": 16204,
+    "outputItemID": 156930,
+    "inputCount": 3,
+    "outputCount": 1,
+    "spellID": 262119,
+    "reverse": {
+      "inputItemID": 156930,
+      "outputItemID": 16204,
+      "inputCount": 1,
+      "outputCount": 3,
+      "spellID": 262120
+    },
+    "historicalNameChange": {
+      "itemID": 16204,
+      "before": "Illusion Dust",
+      "after": "Light Illusion Dust",
+      "patch": "7.3.5",
+      "source": "https://warcraft.wiki.gg/wiki/Light_Illusion_Dust"
+    },
+    "ownerStoredSynthetic": {
+      "key": "Disenchant:13866:x1",
+      "richID": 156930,
+      "richExpectedQuantity": 3.5,
+      "oldLightID": 16204,
+      "oldLightInFixture": false,
+      "eligibilityTested": false
+    },
     "independentNewStudies": 0,
     "verifiedNewCasts": 0,
-    "newChanceOrStackHistograms": 0,
-    "newSupportedRetailGoldDecisions": 0
+    "newProbabilityOrHistogram": 0,
+    "newSupportedCurrentRetailGoldDecisions": 0
   },
-  "evidence_file": "research/v3/evidence/master/20261117T1255-magma-thresher-prospecting-item-to-ingredient-batch-gate.md",
+  "evidence_file": "research/v3/evidence/master/20261117T1406-illusion-dust-bidirectional-conversion-and-headband-epoch-gate.md",
   "source_links": [
-    "https://warcraft.wiki.gg/wiki/Magma_Thresher",
-    "https://www.wowhead.com/item=199344/magma-thresher",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
+    "https://www.wowhead.com/spell=262119/rich-illusion-dust",
+    "https://www.wowhead.com/spell=262120/light-illusion-dust",
+    "https://warcraft.wiki.gg/wiki/Patch_7.3.5_%28undocumented_changes%29",
+    "https://warcraft.wiki.gg/wiki/Light_Illusion_Dust",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-17T1351-runecloth-wizardweave-original-cast-identity.jsonl",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/docs/usable-data-audit/runtime-probes.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/docs/usable-data-audit/PASS-2.md",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261117T1255-magma-thresher-prospecting-item-to-ingredient-batch-gate.md",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/commit/40d0117c0a07e46beb5e8f5046aaddef2958c2a4"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/commit/ec912c958503640e98acd1247cfca0b9598274cb"
   ],
-  "verified_commit_sha": "40d0117c0a07e46beb5e8f5046aaddef2958c2a4",
-  "verified_commit_sha_scope": "manager new source-link audit file committed and read back; status-file update commit necessarily cannot refer to itself",
-  "dashboard_update_commit_sha": "fcdbc875382e087b744abb27dfc9a87d172859b9",
+  "verified_commit_sha": "ec912c958503640e98acd1247cfca0b9598274cb",
+  "verified_commit_sha_scope": "New source note committed/read back; does not reference its own coordinator status commit",
+  "dashboard_update_commit_sha": "ceea7b77997731160aebb8853d5dcdcf3d6606b4",
   "actual_checks": {
-    "kind": "11 bounded JavaScript stored offline-probe JSON and owner summary identity/unit/assertion checks",
+    "kind": "11 bounded JS assertions against stored worker original, owner previously executed offline fixture and current queue; arithmetic item-use synthetic example",
     "assertions_passed": 11,
     "assertions_failed": 0,
-    "offlineProbeSources": "docs/usable-data-audit/runtime-probes.jsonl and summary.json on owner branch 3d667d0",
-    "offlineProbesExecutedByManager": false,
-    "pythonCompilerExecutedLocally": false,
-    "nativeLuaTestsExecutedLocally": false,
-    "newEngineOrTooltipExecutedLocally": false,
-    "liveWoWExecuted": false,
-    "githubFinalHeadCIResult": "not verified; no new code/engine modifications in this run"
+    "worker_blob_sha": "b769c891e9ead89a1a7bb942d73fae59f0b0e983",
+    "owner_stored_probe_blob_sha": "534b970d475d75e54b1d5bc4777e807384814372",
+    "compiler_executed": false,
+    "native_lua_tests_executed": false,
+    "addon_engine_or_formatter_executed": false,
+    "live_wow_executed": false,
+    "github_existing_CI_recent": [
+      {
+        "sha": "ceea7b77997731160aebb8853d5dcdcf3d6606b4",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44099678291"
+      },
+      {
+        "sha": "ec912c958503640e98acd1247cfca0b9598274cb",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44099554845"
+      },
+      {
+        "sha": "dfafed1414f0916d8fc05ed02900e7e2b73fe4ca",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44097020078"
+      }
+    ],
+    "github_final_head_CI": "No final-head CI conclusion yet at checkpoint; do not equate prior worker CI with status commit CI"
   },
   "git_state_checked": {
-    "at": "2026-11-17T13:03:34.243Z",
+    "at": "2026-11-17T14:08:16.151Z",
     "main_sha": "5dd5aa2f7f05656e7580ea744f657209db59a195",
-    "research_prewrite_sha": "fcdbc875382e087b744abb27dfc9a87d172859b9",
+    "research_prewrite_sha": "dfafed1414f0916d8fc05ed02900e7e2b73fe4ca",
+    "research_after_evidence_and_dashboard_sha": "ceea7b77997731160aebb8853d5dcdcf3d6606b4",
     "owner_integration_sha": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "immutable_snapshot_sha": "4df9ae8b1359d934828e4d0e6d39a9a4dba26fae",
     "pr22": "closed unmerged",
     "pr23": "closed unmerged",
     "pr24": "merged by others Nov 2",
-    "pr74": "open draft; unchanged",
-    "pr75": "open draft; unchanged"
+    "pr74": "open draft unchanged",
+    "pr75": "open draft unchanged"
   },
   "latest_worker_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-17T12:10:13.377Z",
-      "report": "12 source catalog no-DE item identities; no independent modern numeric cohort"
+      "updated_at": "2026-11-17T13:14:47.285Z",
+      "report": "Ten LIVE base-item noDE catalog labels; no completed client DE or new numeric yield"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-17T12:22:20.111Z",
-      "report": "six original historical reference entries/3 threads; no current material output hit-zero histograms"
+      "updated_at": "2026-11-17T13:27:48.252Z",
+      "report": "Ten PTR tier noDE source labels; live eligibility unverified, no new numeric yields"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-17T12:37:00.737Z",
-      "report": "no new independent rank-specific prospecting/milling per-cast histogram; searched entry, not a new quantitative study"
+      "updated_at": "2026-11-17T13:41:20.284Z",
+      "report": "202481 original gear Looter N31 and three occurrence counters, not exact material 0-N histograms"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-17T12:37:46.915Z",
-      "report": "12 gem material quantities for one first-hand historical 1755-nominal-ore Obsidium cohort; 351 nominal batch equivalents not measured casts"
+      "updated_at": "2026-11-17T13:51:48.900Z",
+      "report": "Ten original historical DE evidence rows, including 5 Headband positive-hit evidence; independent modern legality unknown"
     }
   ],
   "blockers": [
-    "Specific current Retail fish recipe, fish consumption/batch size, character eligibility and output provenance not confirmed; do not convert five-ore generic spell quantity into five fish",
-    "Stored per-input reference values are not measured fish yields, occurrence probabilities or final current Retail recommendations; output ranks remain alternatives",
-    "No independent current-context zero-inclusive casts/log, updated output quality distributions or live/client eligibility for 199344",
-    "No new Lua/estimator/engine/client test run; research branch CI on new checkpoint not claimed"
+    "Current game-client eligibility and item-version/character applicability of two-way item-use effects not independently verified; historical 7.3.5 changes may impact current source mapping",
+    "No current sale prices or addon route/cycle detection measured; synthetic 100c output fixture cannot justify a gold decision",
+    "Historical 5-Headband 16204 hits have no per-positive quantity or verified game build; cannot promote to current Rich 156930 expectancy"
   ],
   "exhausted_sources": [
-    "Item flavor text 'looks to be Prospectable' alone is insufficient and cannot replace reagent-for evidence",
-    "Generic Dragon Isles Prospecting 374627 five-ore label is not proof of fish-specific batch",
-    "Owner PASS-2 already resolved source item name/per-input reference availability; do not recycle as newly recovered rates"
+    "Historical 'Illusion Dust' is not the same supported output identity as current Rich 156930 without epoch-specific source validation",
+    "Legacy 400/43-cast Headband studies already queued T0050; do not resubmit as new cohorts",
+    "Generic source spell display split 2+1 reagent does not mean a two-light-unit recipe"
   ],
-  "next_concrete_step": "Owner integration reviewer (not manager) should verify exact fish-specific 199344 current Retail recipe/input consumption and character eligibility in an authoritative recipe/actual-client, then use real input market price and output rank pricing in a bounded actual resolver/valuation/formatter fixture; manager keeps Midnight T0005/T0039 237362 rank-aware zero/hit/refund logs highest numeric priority, followed by T0045 Tranquility Bloom. Do not alter workers/owner addon.",
-  "permissions_boundary": "Manager-only research/v3/evidence/master original-source note, research/coordination/RESEARCH-DASHBOARD.md and quiet-status/coordinator.json; no edits to main, owner integration branch, worker records, original spreadsheet, PR state, schedules or releases."
+  "next_concrete_step": "Research-only follow-up: verify current client applicability/availability and item-use access for the 16204<->156930 3:1/1:3 spells; evaluate whether pinned ItemDB already has exchange relationship outside indexed files. In any future isolated implementation, prevent reciprocal conversion arbitrage loops and compare net real prices. Keep worker T0050 epoch/stack reconciling and prioritize current-patch T0005/T0039 Umbral Tin 0-N+refunding then T0045 Tranquility mills; do not change owner addon branch.",
+  "permissions_boundary": "Only master evidence note, manager dashboard and coordinator JSON changed on research branch. No worker files, original studies, main, owner branch, snapshots, PR lifecycle, jobs or release changed."
 }
