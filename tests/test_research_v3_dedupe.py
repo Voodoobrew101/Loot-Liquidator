@@ -2,6 +2,8 @@
 import sys
 import unittest
 
+sys.path.insert(0, 'research/v3/tools')
+
 sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3
 
@@ -43,6 +45,38 @@ class MaterialIdentityTests(unittest.TestCase):
         self.assertEqual(amber['expectedQuantity']['status'], 'measured')
         self.assertEqual(amber['dropChance']['status'], 'provisional')
         self.assertAlmostEqual(diamond['expectedQuantity']['value'], 0.05)
+
+    def test_case_variant_unknown_family_is_one_original(self):
+        # The March 15 Tranquility Bloom report was transcribed twice with
+        # different study keys and capitalization, not two experiments.
+        import build_estimates as live
+        def row(file, key, name, rank=None):
+            return dict(_file=file, studyKey=key, type='drop', sourceKind='study',
+                        method='Mill', inputName='Tranquility Bloom', inputRank=2,
+                        outputName=name, outputRank=rank, outputItemID=None,
+                        source={'url': 'https://www.reddit.com/r/woweconomy/comments/1rteoqr/'},
+                        casts=None, totalQuantity=1473, inputsPerCast=None)
+        first = row('research/v3/evidence/midnight/a.jsonl', 'one-source-a', 'Pigment (unspecified)')
+        second = row('research/v3/evidence/midnight/b.jsonl', 'one-source-b', 'pigment (unspecified)')
+        rows = [first, second]
+        names = live.name_maps(rows)
+        vectors, _, pooled = live.study_vectors(rows)
+        dropped = live.misplaced_copies(rows, names, vectors, pooled)
+        self.assertEqual(dropped, {id(second): 'copy:caseVariantGroup'})
+        # Missing cast denominators cannot be priced as observed means.
+        estimated, _, usage = live.analyze(rows)
+        self.assertFalse(any(e.get('averageSource') == 'measured' for e in estimated))
+        self.assertEqual(usage[id(second)]['reason'], 'copy:caseVariantGroup')
+        # An explicitly different material quality cannot be merged.
+        ranked = [row('a.jsonl', 'one-source-a', 'Pigment', 1),
+                  row('b.jsonl', 'one-source-b', 'pigment', 2)]
+        v2, _, p2 = live.study_vectors(ranked)
+        self.assertFalse(live.misplaced_copies(ranked, live.name_maps(ranked), v2, p2))
+        # Numbered independent batches are protected even with equal totals.
+        batches = [row('a.jsonl', 'same-batch-1', 'Pigment (unspecified)'),
+                   row('a.jsonl', 'same-batch-2', 'pigment (unspecified)')]
+        vb, _, pb = live.study_vectors(batches)
+        self.assertFalse(live.misplaced_copies(batches, live.name_maps(batches), vb, pb))
 
 
 if __name__ == '__main__':
