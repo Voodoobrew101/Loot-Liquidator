@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-17T06:34:14.134Z",
-  "status": "11 previously unindexed Wowhead source-reported Dragonflight gear disenchant material-occurrence entries from 4 item-side tables; no new independent ore/herb complete-cast or 0-inclusive output histogram. Looter percentages remain ambiguous and are NOT verified drop probabilities.",
+  "updated_at": "2026-11-17T07:39:10.403Z",
+  "status": "12 new source-reported Dragonflight gear material-occurrence rows in six previously unindexed item-side Looter cohorts; no newly verified prospective/mill actual-cast hit/zero histogram; gear can-disenchant remains a separately unverified eligibility claim.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,64 +13,55 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic Ore 194545: missing independently recorded completed prospect casts, Resourcefulness refunds, quality/skill-specific material hits and 0-N histograms.",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: missing independent per-cast pigment zeros, material hit counts and refund-aware batches.",
-    "Four previously unindexed gear item-side source tables: anonymous aggregate operations/occurrences only; disenchant-time item version, skill, skill spec, actual total material units and per-cast zeros missing."
+    "Original Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite, Prismatic 194545 completed 5-ore prospects and per-output hit/zero histograms remain unverified.",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466 and Hochenblume milling lacks per-mill original 0/1/2+ material outcomes, refunds, skill/spec, exact contemporary game build.",
+    "Six unindexed gear source tables report only cumulative item-wide disenchant N and material occurrence K with unknown event independence, stack-unit totals, profession profile, bonuses and zero-inclusive histograms. Two tier items have a separate can-disenchant eligibility contradiction in WoWDB."
   ],
   "newly_verified_fields": [
-    "Four source item identities/IDs 202484 Scalebands of Obsidian Secrets, 202438 Manteau of the Onyx Crucible, 202445 Ironstriders of the Onyx Crucible and 202553 Underlight Conjurer's Treads.",
-    "Output identities 200113 Resonant Crystal, 194124 Vibrant Shard, 194123 Chromatic Dust, exact item-side reported material occurrence K, denominator N and displayed rounded percent copied independently by table row.",
-    "Observed source-positive stack min/max where shown; source N/K not asserted verified distinct material-hit completed casts; no per-cast 0-N histograms or total quantity established."
+    "Six exact gear input identities/IDs: 194417,207250,200378,200380,200381,200382, and three separately confirmed Dragonflight reagent identities 194123,194124,200113.",
+    "Twelve Wowhead original item-side output rows with source-reported aggregate N, material occurrence K and exact displayed percent; N/K are not independently verified per-output completed-operation hits.",
+    "Positive-only quantity ranges where shown. No independent material totalQuantity, completed-cast measured castsWithDrop, zero-inclusive histogram, skill, specialization, original patch/build or quality variant."
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 202484,
-      "inputName": "Scalebands of Obsidian Secrets",
-      "source": "https://www.wowhead.com/ptr/item=202484/scalebands-of-obsidian-secrets",
-      "source_reported_disenchants": 18,
+      "inputItemID": 194417,
+      "inputName": "Vault Guard's Talon",
+      "source": "https://www.wowhead.com/item=194417/vault-guards-talon",
+      "source_reported_disenchants": 11,
       "output_occurrences": [
-        {
-          "itemID": 200113,
-          "numerator": 13,
-          "percentShown": 72,
-          "positiveOnlyRange": null
-        },
-        {
-          "itemID": 194124,
-          "numerator": 7,
-          "percentShown": 39,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
-        },
         {
           "itemID": 194123,
-          "numerator": 1,
-          "percentShown": 6,
+          "numerator": 10,
+          "percentShown": 91,
           "positiveOnlyRange": [
             2,
-            2
+            3
           ]
+        },
+        {
+          "itemID": 194124,
+          "numerator": 1,
+          "percentShown": 9,
+          "positiveOnlyRange": null
         }
       ]
     },
     {
-      "inputItemID": 202438,
-      "inputName": "Manteau of the Onyx Crucible",
-      "source": "https://www.wowhead.com/item=202438/manteau-of-the-onyx-crucible",
-      "source_reported_disenchants": 29,
+      "inputItemID": 207250,
+      "inputName": "Benevolent Embersage's Wristwraps",
+      "source": "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
+      "source_reported_disenchants": 31,
       "output_occurrences": [
         {
           "itemID": 200113,
-          "numerator": 17,
-          "percentShown": 59,
+          "numerator": 21,
+          "percentShown": 68,
           "positiveOnlyRange": null
         },
         {
           "itemID": 194124,
-          "numerator": 16,
-          "percentShown": 55,
+          "numerator": 13,
+          "percentShown": 42,
           "positiveOnlyRange": [
             1,
             2
@@ -79,14 +70,83 @@
       ]
     },
     {
-      "inputItemID": 202445,
-      "inputName": "Ironstriders of the Onyx Crucible",
-      "source": "https://www.wowhead.com/item=202445/ironstriders-of-the-onyx-crucible",
-      "source_reported_disenchants": 34,
+      "inputItemID": 200378,
+      "inputName": "Hauberk of the Awakened",
+      "source": "https://www.wowhead.com/item=200378/hauberk-of-the-awakened?bonus=9003",
+      "source_reported_disenchants": 41,
       "output_occurrences": [
         {
           "itemID": 194124,
+          "numerator": 27,
+          "percentShown": 66,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "itemID": 200113,
           "numerator": 21,
+          "percentShown": 51,
+          "positiveOnlyRange": null
+        }
+      ]
+    },
+    {
+      "inputItemID": 200380,
+      "inputName": "Gauntlets of the Awakened",
+      "source": "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened",
+      "source_reported_disenchants": 35,
+      "output_occurrences": [
+        {
+          "itemID": 200113,
+          "numerator": 26,
+          "percentShown": 74,
+          "positiveOnlyRange": null
+        },
+        {
+          "itemID": 194124,
+          "numerator": 19,
+          "percentShown": 54,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "inputItemID": 200381,
+      "inputName": "Crown of the Awakened",
+      "source": "https://www.wowhead.com/item=200381/crown-of-the-awakened",
+      "source_reported_disenchants": 37,
+      "output_occurrences": [
+        {
+          "itemID": 200113,
+          "numerator": 26,
+          "percentShown": 70,
+          "positiveOnlyRange": null
+        },
+        {
+          "itemID": 194124,
+          "numerator": 15,
+          "percentShown": 41,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "inputItemID": 200382,
+      "inputName": "Legguards of the Awakened",
+      "source": "https://www.wowhead.com/item=200382/legguards-of-the-awakened?bonus=40:7977:8827:8968:1481:8767&ilvl=79&spec=1467",
+      "source_reported_disenchants": 37,
+      "output_occurrences": [
+        {
+          "itemID": 194124,
+          "numerator": 23,
           "percentShown": 62,
           "positiveOnlyRange": [
             1,
@@ -95,60 +155,19 @@
         },
         {
           "itemID": 200113,
-          "numerator": 14,
-          "percentShown": 41,
+          "numerator": 19,
+          "percentShown": 51,
           "positiveOnlyRange": null
-        },
-        {
-          "itemID": 194123,
-          "numerator": 1,
-          "percentShown": 3,
-          "positiveOnlyRange": [
-            2,
-            2
-          ]
-        }
-      ]
-    },
-    {
-      "inputItemID": 202553,
-      "inputName": "Underlight Conjurer's Treads",
-      "source": "https://www.wowhead.com/item=202553/underlight-conjurers-treads",
-      "source_reported_disenchants": 107,
-      "output_occurrences": [
-        {
-          "itemID": 194124,
-          "numerator": 61,
-          "percentShown": 57,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
-        },
-        {
-          "itemID": 200113,
-          "numerator": 57,
-          "percentShown": 53,
-          "positiveOnlyRange": null
-        },
-        {
-          "itemID": 194123,
-          "numerator": 7,
-          "percentShown": 7,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
         }
       ]
     }
   ],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [
-    "Source-only disenchant item-wide N=18,29,34,107 (not independently audited actual completed casts)",
-    "Material occurrences K for exact output IDs 200113,194124,194123; no verified castsWithDrop",
-    "Source-rounded percentages as displayed with percentMeaning=unclear",
-    "Positive-only stack ranges; totalQuantity and actual zero bins remain null"
+    "Source-only cumulative disenchant counts N=11,31,41,35,37,37, one observed aggregate per distinct gear base item not independent lab measurements.",
+    "Twelve material occurrence numerators K for exact output IDs 194123/194124/200113; no claim K=castsWithDrop.",
+    "Twelve source-displayed percentages with percentMeaning=unclear, no inferred probability.",
+    "Positive-only stack min/max, where given; totalQuantity, zero-bin and histograms remain null."
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -171,23 +190,26 @@
     "research/v3/evidence/dragonflight/2026-11-17T0336-five-live-item-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T0430-six-unindexed-gear-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/20261117T0538-five-new-item-looter-source-counts.jsonl",
-    "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl"
+    "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-17T0739-six-unindexed-gear-looter-rows.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-17T0739-six-unindexed-gear-looter-rows.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-17T0739-six-unindexed-gear-looter-rows.jsonl",
   "source_links": [
-    "https://www.wowhead.com/ptr/item=202484/scalebands-of-obsidian-secrets",
-    "https://www.wowhead.com/item=202438/manteau-of-the-onyx-crucible",
-    "https://www.wowhead.com/item=202445/ironstriders-of-the-onyx-crucible",
-    "https://www.wowhead.com/item=202553/underlight-conjurers-treads"
+    "https://www.wowhead.com/item=194417/vault-guards-talon",
+    "https://www.wowhead.com/item=207250/benevolent-embersages-wristwraps",
+    "https://www.wowhead.com/item=200378/hauberk-of-the-awakened?bonus=9003",
+    "https://www.wowhead.com/item=200380/gauntlets-of-the-awakened",
+    "https://www.wowhead.com/item=200381/crown-of-the-awakened",
+    "https://www.wowhead.com/item=200382/legguards-of-the-awakened?bonus=40:7977:8827:8968:1481:8767&ilvl=79&spec=1467"
   ],
-  "verified_parent_sha": "fb6ccd124f083b11dd13f3a8c509b5f1a6749d56",
+  "verified_parent_sha": "9bf0f27b7b0f9f89c57391eac681d45be4ca3f0c",
   "verified_commit_sha": null,
-  "commit_sha_scope": "A commit cannot contain its own SHA in the tracked JSON status without changing that SHA; this status points to verified parent. Atomic new commit SHA and read-back confirmed externally.",
+  "commit_sha_scope": "Atomic commit cannot include its own SHA in the tracked status without changing that SHA. This JSON preserves the verified parent; actual new commit SHA is verified by GitHub ref and file read-back externally.",
   "blockers": [
-    "No independently inspectable current or historical first-person refunded-input-aware per-output 0/1/2+ prospect/mill operation ledger; original ore/milling references already deduplicated.",
-    "Wowhead Looter anonymously pooled rolling N/K material occurrence values do not verify individual material-hit operations, material co-occurrence, client epoch, source player skill, item variants or zero-inclusive event histograms.",
-    "Source-positive stack ranges are not observed total quantities; source K for outputs can sum beyond N."
+    "No independently inspectable unindexed first-person ore/herb per-completed-cast 0-N event ledger with refund reconciliation; original data reappeared as copies, not new cohorts.",
+    "Anonymous Wowhead Looter item totals and output occurrences lack source build, item bonuses, profession specialization and verified joint drop identities; cannot interpret shown percent as measured P(hit).",
+    "WowDB marks legacy tier Hauberk of the Awakened 200378 and Gauntlets of the Awakened 200380 as not disenchanted while Wowhead has historical item-side disenchant occurrence tables. Current eligibility unresolved; no production inference."
   ],
   "exhausted_sources": [
     {
@@ -1612,24 +1634,40 @@
         "method.gg"
       ],
       "details_in": "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl"
+    },
+    {
+      "at": "2026-11-17T07:39:10.403Z",
+      "scope": "Current-run name-first prospective/mill event-ledger search and deduplicated new item-side Dragonflight gear",
+      "reason": "No new independent ore/herb event ledger; historical cohort mirrors and already indexed item-side base IDs excluded. Kept six item IDs not present in current original Dragonflight evidence filename index or status and verified source N/K rows; denied rate conversion.",
+      "whereLooked": [
+        "Reddit r/woweconomy by name: 'Draconium Ore prospecting casts spreadsheet': historical Jallfo and Xenastro cohorts already indexed; no new per-output zero-inclusive events.",
+        "US Blizzard forums by name: 'Serevite Ore prospecting results casts Resourcefulness': no new verified raw completed-cast ledger.",
+        "Wowhead by name: 'Khaz'gorite Ore prospecting Illimited Diamond 20 casts': previously indexed anecdotes and Bugy source tables.",
+        "Wowhead by name: 'Prismatic Ore prospected 400 80 prospects': superbondez original already indexed, no novel output-hit series.",
+        "Reddit r/woweconomy by name: 'Bubble Poppy milling pigment results': no independent refunded-operation 0-N histogram.",
+        "Wow-Professions by name: 'Saxifrage milling sample yield': guide correlations, not original per-cast observations.",
+        "GitHub public code by name: 'Dragonflight Serevite prospecting csv histogram': no separately inspectable new player export.",
+        "Method guide and Warcraft Wiki by name: 'Bubble Poppy and Saxifrage milling': recipe/identity reference, not measured modern cast-level yields."
+      ]
     }
   ],
-  "next_concrete_step": "Find a first-person addon export/spreadsheet recording actual completed 5-input prospects or mills, refunded inputs, rank/quality, skill/spec, output item identities and per-output 0-N outcomes for Draconium 189143 and Bubble Poppy 191467; do not re-import already indexed guide/Reddit cohorts.",
+  "next_concrete_step": "Acquire an original addon CSV/spreadsheet with per-cast zero-inclusive outputs, output units and refunded inputs for rank-specific Draconium 189143 and Bubble Poppy 191467; independently check whether source Looter tier gear IDs 200378/200380 can actually be disenchanted.",
   "validation": {
-    "jsonl_parse": "passed in worker",
-    "expected_records": 12,
-    "source_reported_drop_rows": 11,
+    "jsonl_parse": "passed in memory; external readback required",
+    "expected_records": 13,
+    "source_reported_drop_rows": 12,
     "searched_rows": 1,
     "all_required_drop_fields_present": true,
     "source_probabilities_interpreted": false,
-    "commit_readback": "pending",
+    "source_dedup": "main code search, branch status and 21 recent branch evidence files checked",
+    "commit_readback": "pending until ref update",
     "allowed_paths": [
-      "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-17T0739-six-unindexed-gear-looter-rows.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ]
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 11
+  "new_source_reported_numeric_rows": 12
 }
