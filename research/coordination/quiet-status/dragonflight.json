@@ -2,37 +2,108 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-17T09:35:42.607Z",
-  "status": "Added 11 new source-reported item-side disenchant material occurrence rows from five distinct Dragonflight gear input IDs; no independently measured new prospecting/milling per-output cast histograms, output quantities or validated material P(hit).",
+  "updated_at": "2026-11-17T10:35:39.139Z",
+  "status": "Verified five previously unindexed Dragonflight exact gear input Looter tables with 13 original source-reported material occurrence rows and five item-level aggregate N counts. No newly independently verified prospecting/milling completed-operation distribution or P(hit).",
   "task_ids": [
     "T0020",
-    "T0018",
-    "T0015",
-    "T0041",
     "T0019",
-    "T0046"
+    "T0046",
+    "T0041",
+    "T0018",
+    "T0015"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019/T0046: Draconium 189143/188658, Serevite 190395/190396/190394 and Khaz'gorite 190312/190313/190314 still lack original exact-rank completed-cast per-output 0-N histograms and refunds.",
-    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464 still lack independent actual completed mills, per-output hit counts, source-original zero outcomes and 0-N distribution.",
-    "Prismatic Ore 194545: independent original operations by rank/skill, ore quality and per-output 0-N material histograms remain unverified; do not duplicate superbondez/TheChisel cohort.",
-    "Five previously unindexed exact Dragonflight gear inputs 209923/209942/207240/198028/200343: anonymous Wowhead cumulative Looter item N and material K/printed percentages, unknown original event epoch, overlapping contributor populations and individual per-material event ledger."
+    "Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314, Prismatic Ore 194545: new original source completed-cast and zero-inclusive per-material distribution by exact input/output rank and refund ledger not found during this run.",
+    "Bubble Poppy 191467 and Saxifrage 191464: new independently reported completed mills, per-rank hit counts, zero outcomes and histogram not found; previously indexed Aary/Saxifrage and Bugy/Xenastro/Prismatic studies not duplicated.",
+    "New original item-side pooled disenchant numerical N/K rows for previously unindexed exact gear 197999/194347/194389/200272/194420; unknown event epoch and whether material K is count of unique operations."
   ],
   "newly_verified_fields": [
-    "Exact original gear input IDs 209923, 209942, 207240, 198028, 200343 and outputs 194123 Chromatic Dust, 194124 Vibrant Shard, 200113 Resonant Crystal.",
-    "Five distinct Wowhead item-side source-reported overall disenchant Ns 30,13,15,124,12; eleven original material row occurrence K and display percentages.",
-    "Positive-only displayed material stack ranges where present; castsWithDrop, totalQuantity, zero counts and histograms remain null."
+    "Exact original gear input IDs 197999,194347,194389,200272,194420; material output IDs 194123 Chromatic Dust,194124 Vibrant Shard,200113 Resonant Crystal.",
+    "Original Wowhead item-side cumulative reported input disenchant N values 564,619,77,63,5 (five different item pages; not cross-item cast ledger).",
+    "13 directly copied material row K occurrence counts and printed percentage figures; source positive-only display ranges preserved.",
+    "No independently verified castsWithDrop, zero-inclusive histograms, per-output total units, profession skill/spec, patch or independent completed-operation denominators."
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 209923,
-      "inputName": "Chartreuse Champion's Blade",
-      "source": "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
-      "source_reported_disenchants": 30,
+      "inputItemID": 197999,
+      "inputName": "Windswept Hood",
+      "source": "https://www.wowhead.com/item=197999/windswept-hood",
+      "source_reported_disenchants": 564,
+      "output_occurrences": [
+        {
+          "itemID": 194124,
+          "outputName": "Vibrant Shard",
+          "numerator": 287,
+          "percentShown": 51,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "itemID": 194123,
+          "outputName": "Chromatic Dust",
+          "numerator": 265,
+          "percentShown": 47,
+          "positiveOnlyRange": [
+            2,
+            3
+          ]
+        },
+        {
+          "itemID": 200113,
+          "outputName": "Resonant Crystal",
+          "numerator": 27,
+          "percentShown": 5,
+          "positiveOnlyRange": null
+        }
+      ]
+    },
+    {
+      "inputItemID": 194347,
+      "inputName": "Expedition Researcher's Hood",
+      "source": "https://www.wowhead.com/item=194347/expedition-researchers-hood",
+      "source_reported_disenchants": 619,
+      "output_occurrences": [
+        {
+          "itemID": 194124,
+          "outputName": "Vibrant Shard",
+          "numerator": 333,
+          "percentShown": 54,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "itemID": 194123,
+          "outputName": "Chromatic Dust",
+          "numerator": 266,
+          "percentShown": 43,
+          "positiveOnlyRange": [
+            1,
+            3
+          ]
+        },
+        {
+          "itemID": 200113,
+          "outputName": "Resonant Crystal",
+          "numerator": 32,
+          "percentShown": 5,
+          "positiveOnlyRange": null
+        }
+      ]
+    },
+    {
+      "inputItemID": 194389,
+      "inputName": "Brush-Clearing Axe",
+      "source": "https://www.wowhead.com/item=194389/brush-clearing-axe",
+      "source_reported_disenchants": 77,
       "output_occurrences": [
         {
           "itemID": 194123,
-          "numerator": 27,
+          "outputName": "Chromatic Dust",
+          "numerator": 69,
           "percentShown": 90,
           "positiveOnlyRange": [
             1,
@@ -41,54 +112,47 @@
         },
         {
           "itemID": 194124,
-          "numerator": 4,
-          "percentShown": 13,
+          "outputName": "Vibrant Shard",
+          "numerator": 7,
+          "percentShown": 9,
           "positiveOnlyRange": [
             1,
             2
           ]
-        }
-      ]
-    },
-    {
-      "inputItemID": 209942,
-      "inputName": "Fearless Faerie's Kris",
-      "source": "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris",
-      "source_reported_disenchants": 13,
-      "output_occurrences": [
-        {
-          "itemID": 194123,
-          "numerator": 9,
-          "percentShown": 69,
-          "positiveOnlyRange": [
-            1,
-            5
-          ]
         },
-        {
-          "itemID": 194124,
-          "numerator": 4,
-          "percentShown": 31,
-          "positiveOnlyRange": null
-        }
-      ]
-    },
-    {
-      "inputItemID": 207240,
-      "inputName": "Mystic Heron's Feathered Mantle",
-      "source": "https://www.wowhead.com/ptr/item=207240/mystic-herons-feathered-mantle",
-      "source_reported_disenchants": 15,
-      "output_occurrences": [
         {
           "itemID": 200113,
-          "numerator": 12,
-          "percentShown": 80,
-          "positiveOnlyRange": null
+          "outputName": "Resonant Crystal",
+          "numerator": 1,
+          "percentShown": 1.3,
+          "positiveOnlyRange": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "inputItemID": 200272,
+      "inputName": "Keratin-Reinforced Boots",
+      "source": "https://www.wowhead.com/item=200272/keratin-reinforced-boots",
+      "source_reported_disenchants": 63,
+      "output_occurrences": [
+        {
+          "itemID": 194123,
+          "outputName": "Chromatic Dust",
+          "numerator": 59,
+          "percentShown": 94,
+          "positiveOnlyRange": [
+            1,
+            3
+          ]
         },
         {
           "itemID": 194124,
+          "outputName": "Vibrant Shard",
           "numerator": 4,
-          "percentShown": 27,
+          "percentShown": 6,
           "positiveOnlyRange": [
             1,
             2
@@ -97,66 +161,34 @@
       ]
     },
     {
-      "inputItemID": 198028,
-      "inputName": "Sleet Shined Skullguard",
-      "source": "https://www.wowhead.com/ptr/item=198028/sleet-shined-skullguard",
-      "source_reported_disenchants": 124,
+      "inputItemID": 194420,
+      "inputName": "Blacktalon Blade",
+      "source": "https://www.wowhead.com/item=194420/blacktalon-blade",
+      "source_reported_disenchants": 5,
       "output_occurrences": [
         {
-          "itemID": 194124,
-          "numerator": 65,
-          "percentShown": 52,
+          "itemID": 194123,
+          "outputName": "Chromatic Dust",
+          "numerator": 4,
+          "percentShown": 80,
           "positiveOnlyRange": [
             1,
-            2
-          ]
-        },
-        {
-          "itemID": 194123,
-          "numerator": 57,
-          "percentShown": 46,
-          "positiveOnlyRange": [
-            2,
             3
           ]
         },
         {
           "itemID": 200113,
-          "numerator": 4,
-          "percentShown": 3,
+          "outputName": "Resonant Crystal",
+          "numerator": 1,
+          "percentShown": 20,
           "positiveOnlyRange": null
-        }
-      ]
-    },
-    {
-      "inputItemID": 200343,
-      "inputName": "Skybound Avenger's Boots",
-      "source": "https://www.wowhead.com/ptr/item=200343/skybound-avengers-boots",
-      "source_reported_disenchants": 12,
-      "output_occurrences": [
-        {
-          "itemID": 200113,
-          "numerator": 10,
-          "percentShown": 83,
-          "positiveOnlyRange": null
-        },
-        {
-          "itemID": 194124,
-          "numerator": 3,
-          "percentShown": 25,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
         }
       ]
     }
   ],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [
-    "Five original item-side cumulative disenchant N values",
-    "Eleven source-reported per-material occurrence K and printed percentages",
-    "Positive-only material stack quantity range where shown; no new independently verified per-material cast denominators, 0/1/2 histogram or totalQuantity"
+    "Five new item-level source-reported disenchant N values, thirteen material K occurrences, thirteen printed percentages, positive-only row range where shown; all not independently validated cast-hit/probability datasets."
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -182,24 +214,25 @@
     "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T0739-six-unindexed-gear-looter-rows.jsonl",
     "research/v3/evidence/dragonflight/20261117T0839-four-new-gear-looter-source-counts.jsonl",
-    "research/v3/evidence/dragonflight/20261117T0935-five-new-gear-looter-source-rows.jsonl"
+    "research/v3/evidence/dragonflight/20261117T0935-five-new-gear-looter-source-rows.jsonl",
+    "research/v3/evidence/dragonflight/20261117T1035-five-new-gear-looter-original-rows.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261117T0935-five-new-gear-looter-source-rows.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/20261117T0935-five-new-gear-looter-source-rows.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261117T1035-five-new-gear-looter-original-rows.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/20261117T1035-five-new-gear-looter-original-rows.jsonl",
   "source_links": [
-    "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
-    "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris",
-    "https://www.wowhead.com/ptr/item=207240/mystic-herons-feathered-mantle",
-    "https://www.wowhead.com/ptr/item=198028/sleet-shined-skullguard",
-    "https://www.wowhead.com/ptr/item=200343/skybound-avengers-boots"
+    "https://www.wowhead.com/item=197999/windswept-hood",
+    "https://www.wowhead.com/item=194347/expedition-researchers-hood",
+    "https://www.wowhead.com/item=194389/brush-clearing-axe",
+    "https://www.wowhead.com/item=200272/keratin-reinforced-boots",
+    "https://www.wowhead.com/item=194420/blacktalon-blade"
   ],
-  "verified_parent_sha": "914b3cd84e1e0b420a93af040c1774c9bb946ed6",
+  "verified_parent_sha": "c08c6140ee7a9f8452de071cbc2ada9e10363b1b",
   "verified_commit_sha": null,
-  "commit_sha_scope": "One atomic commit contains both evidence and status, so its self SHA cannot be stored in its own status content; verify head and changed paths after push.",
+  "commit_sha_scope": "One atomic commit writes evidence and status, so its own SHA cannot be present in status content; GitHub commit/read-back verifies the final SHA and changed paths after ref move.",
   "blockers": [
-    "No new independent completed-cast, zero-inclusive and Resourcefulness-refund-aware per-output histograms for Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Bubble Poppy/Saxifrage milling; already-indexed historical studies and model priors were not recopied.",
-    "Wowhead item-side Looter material K and percentages are not independently validated material castsWithDrop or per-cast item quantities. Unknown original event epochs, gear versions, character skills/specs and multi-material or overlapping contributor semantics.",
-    "All gear measured totalQuantity, per-material positive stack histograms, zero outcomes and current live eligibility remain unknown; no P(hit), gold, or confidence computed."
+    "No new first-party, rank-specific, refund-aware completed-cast per-output 0/1/2/... datasets for Draconium, Serevite, Khaz'gorite, Prismatic Ore, Bubble Poppy or Saxifrage; already documented Bugy, Xenastro, Aary and superbondez were not recopied.",
+    "Wowhead aggregate item N and material K are cumulative anonymously pooled Looter observations with unknown event epoch, versions, skills/specs and contributor overlap; no independently verified material cast-hit semantics, total quantities, zero-inclusive histograms or current live-patch eligibility.",
+    "Source-listed positive-only material stack ranges cannot establish frequency distributions or unreported zero outcomes; no probability, frozen price or confidence inferred."
   ],
   "exhausted_sources": [
     {
@@ -1671,7 +1704,7 @@
       ]
     }
   ],
-  "next_concrete_step": "Seek a new original per-completed-cast export or histograms for Draconium Ore rank 1 item 189143 and rank 2 188658, then Bubble Poppy 191467/Saxifrage 191464 with original refund records; confirm any skill, recipe/batch, patch/build and per-output 0/1/2 units before estimator handoff.",
+  "next_concrete_step": "Seek new original Dragonflight per-completed-operation XLS/export or Looter event-level series for named prospecting ore and Bubble Poppy/Saxifrage, verifying ranked item IDs and Resourcefulness; do not recycle exhausted cohorts; only then escalate itemdb/estimator changes to Master.",
   "validation": {
     "jsonl_parse": "passed in memory",
     "expected_records": 12,
