@@ -1,142 +1,140 @@
 {
   "role": "coordinator",
-  "updated_at": "2026-11-17T14:08:16.151Z",
-  "status": "New source-confirmed deterministic Retail-item identity/exchange candidate: 3 Light Illusion Dust 16204 -> 1 Rich Illusion Dust 156930 (spell 262119), and reverse 1 Rich -> 3 Light (262120). Patch 7.3.5 material split distinguishes historical 16204 Runecloth Headband hits from owner current synthetic 156930 yield; current character exchange availability and market profitability untested. Evidence note committed/read back, dashboard updated. 11/11 bounded stored-evidence assertions passed. No new casts, measured probabilities, direct addon changes, new validated live gold decisions or client tests.",
+  "updated_at": "2026-11-17T15:04:12.099Z",
+  "status": "New exact Retail item-use conversion identities independently source-confirmed: 3 Lesser Eternal Essence 16202 -> 1 Greater Eternal Essence 16203 (spell 20039), and 1 Greater -> 3 Lesser (spell 20040). Original source explains spell 20039's deceptive two-reagent display (third consumed by item use). Matched 3 already valued DE material profiles in owner's previously saved synthetic resolver fixture; candidate downstream value alternative, NOT newly verified in-client action, drop-rate evidence, or an addon fix. Evidence and dashboard committed/read back. 18/18 bounded fixture assertions passed. Research-only; no new addon changes or WoW tests.",
   "task_ids": [
-    "T0050 — legacy Runecloth Headband output identity, actual historical epoch and per-hit quantity gate (worker-owned)",
-    "T0005/T0039 — current Umbral Tin rank/hit/zero/refund (worker-owned; highest gold priority)",
-    "T0045 — Midnight Tranquility Bloom 10-herb original numeric mill (worker-owned)"
+    "Manager source-to-valuation candidate — Eternal Essence item-use, no worker numeric task reassignment",
+    "T0005/T0039 — Midnight Umbral Tin 237362 original output-quality/hit/0-N/refunds (worker-owned, first priority)",
+    "T0045 — Tranquility Bloom original ten-herb milling numerators/denominators/rank (worker-owned)",
+    "T0047/T0051/T0053 — legacy source/era numerical follow-ups (worker-owned)"
   ],
   "exact_gaps_targeted": [
-    "Verified two distinct spell+item identities 262119 (Light 16204 x3 -> Rich 156930 x1) and 262120 (Rich 156930 x1 -> Light 16204 x3); repository indexed code search for both spell IDs returned no hits but cannot establish absence in all generated data",
-    "Owner stored offline resolver fixture Disenchant:13866:x1 lists Rich 156930 E=3.5, essence 16203 E=0.5686, shard 14344 E=0.04, and does NOT list historical 16204; source profile not real-character eligible",
-    "New worker-original 5-Headband historical outcome 4/5 16204 Light and 1/5 16203 Greater Eternal Essence with unknown positive-stack quantities, date/build and current live transfer; must not replace stored 156930 expectation",
-    "Potential independently priced reversible item-use conversion excluded from current demonstrated synthetic 13866 DE valuation; do not invent eligibility or treat cycles as additive gold"
+    "Retail 16202 on-use effect -> 16203: input is three Lesser, not the spell display's two Lesser (first consumed on item use); reciprocal effect 16203 -> three 16202",
+    "Owner stored offline fixture Disenchant:13856:x1 already values 16202 E=0.3648; Disenchant:13866:x1 values 16203 E=0.5686; Disenchant:14128:x1 values 16203 E=0.8095, but none lists its converted counterpart as a simultaneous DE yield",
+    "No demonstrated separate current-character exchange quote / price comparison for these stored DE yields; actual live availability, AH spreads, fees, stack size and trading remain unknown",
+    "Reversible item-use actions must not be counted as extra DE outputs or allowed to create infinite valuation cycles"
   ],
   "newly_verified_fields_or_cohorts": {
-    "kind": "Fixed deterministic item-use conversion item/spell identity verified by source, not a new experimental study or shipped addon implementation",
-    "inputItemID": 16204,
-    "outputItemID": 156930,
-    "inputCount": 3,
-    "outputCount": 1,
-    "spellID": 262119,
+    "kind": "Fixed source-stated bidirectional use conversion item/spell identities; 0 newly observed processing casts",
+    "forward": {
+      "inputItemID": 16202,
+      "inputQuantity": 3,
+      "outputItemID": 16203,
+      "outputQuantity": 1,
+      "spellID": 20039
+    },
     "reverse": {
-      "inputItemID": 156930,
-      "outputItemID": 16204,
-      "inputCount": 1,
-      "outputCount": 3,
-      "spellID": 262120
+      "inputItemID": 16203,
+      "inputQuantity": 1,
+      "outputItemID": 16202,
+      "outputQuantity": 3,
+      "spellID": 20040
     },
-    "historicalNameChange": {
-      "itemID": 16204,
-      "before": "Illusion Dust",
-      "after": "Light Illusion Dust",
-      "patch": "7.3.5",
-      "source": "https://warcraft.wiki.gg/wiki/Light_Illusion_Dust"
-    },
-    "ownerStoredSynthetic": {
-      "key": "Disenchant:13866:x1",
-      "richID": 156930,
-      "richExpectedQuantity": 3.5,
-      "oldLightID": 16204,
-      "oldLightInFixture": false,
-      "eligibilityTested": false
-    },
-    "independentNewStudies": 0,
-    "verifiedNewCasts": 0,
-    "newProbabilityOrHistogram": 0,
-    "newSupportedCurrentRetailGoldDecisions": 0
+    "sourceReagentDisplayCorrection": "Spell 20039 displays 2 additional Lesser reagents, but source comment confirms 1 initial item-use Lesser is destroyed separately, total 3 input units.",
+    "ownerSavedSyntheticProfiles": [
+      {
+        "key": "Disenchant:13856:x1",
+        "materialID": 16202,
+        "expectedQuantity": 0.3648
+      },
+      {
+        "key": "Disenchant:13866:x1",
+        "materialID": 16203,
+        "expectedQuantity": 0.5686,
+        "conditionalGrossUpsideAtArtificial100cEach": 113.72
+      },
+      {
+        "key": "Disenchant:14128:x1",
+        "materialID": 16203,
+        "expectedQuantity": 0.8095,
+        "conditionalGrossUpsideAtArtificial100cEach": 161.9
+      }
+    ],
+    "newIndependentStudies": 0,
+    "newObservedCasts": 0,
+    "newMeasuredProbabilities": 0,
+    "newValidatedCurrentRetailGoldDecisions": 0
   },
-  "evidence_file": "research/v3/evidence/master/20261117T1406-illusion-dust-bidirectional-conversion-and-headband-epoch-gate.md",
+  "evidence_file": "research/v3/evidence/master/20261117T1501-eternal-essence-conversion-three-profile-valuation-gate.md",
   "source_links": [
-    "https://www.wowhead.com/spell=262119/rich-illusion-dust",
-    "https://www.wowhead.com/spell=262120/light-illusion-dust",
-    "https://warcraft.wiki.gg/wiki/Patch_7.3.5_%28undocumented_changes%29",
-    "https://warcraft.wiki.gg/wiki/Light_Illusion_Dust",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-17T1351-runecloth-wizardweave-original-cast-identity.jsonl",
+    "https://www.wowhead.com/item=16202/lesser-eternal-essence",
+    "https://www.wowhead.com/spell=20039/greater-eternal-essence",
+    "https://www.wowhead.com/item=16203/greater-eternal-essence",
+    "https://www.wowhead.com/spell=20040/lesser-eternal-essence",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/usable-data-tooltips/docs/usable-data-audit/runtime-probes.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/commit/ec912c958503640e98acd1247cfca0b9598274cb"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/commit/975411f6df150eb42fbe13210064e76b6dbb7fc7"
   ],
-  "verified_commit_sha": "ec912c958503640e98acd1247cfca0b9598274cb",
-  "verified_commit_sha_scope": "New source note committed/read back; does not reference its own coordinator status commit",
-  "dashboard_update_commit_sha": "ceea7b77997731160aebb8853d5dcdcf3d6606b4",
+  "verified_commit_sha": "975411f6df150eb42fbe13210064e76b6dbb7fc7",
+  "verified_commit_sha_scope": "Manager original-source note committed and read back; not a claimed final coordinator or addon commit.",
+  "dashboard_update_commit_sha": "7839cd099b6a7b41331413122323971144b91cfd",
   "actual_checks": {
-    "kind": "11 bounded JS assertions against stored worker original, owner previously executed offline fixture and current queue; arithmetic item-use synthetic example",
-    "assertions_passed": 11,
+    "kind": "18 JS assertions after parsing all 367 previously generated owner synthetic resolver/formatter records; source spell/item pages separately checked online",
+    "assertions_passed": 18,
     "assertions_failed": 0,
-    "worker_blob_sha": "b769c891e9ead89a1a7bb942d73fae59f0b0e983",
-    "owner_stored_probe_blob_sha": "534b970d475d75e54b1d5bc4777e807384814372",
+    "ownerSavedProbeBlobSHA": "534b970d475d75e54b1d5bc4777e807384814372",
     "compiler_executed": false,
     "native_lua_tests_executed": false,
     "addon_engine_or_formatter_executed": false,
     "live_wow_executed": false,
-    "github_existing_CI_recent": [
+    "github_research_CI_at_checkpoint": [
       {
-        "sha": "ceea7b77997731160aebb8853d5dcdcf3d6606b4",
+        "sha": "975411f6df150eb42fbe13210064e76b6dbb7fc7",
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44099678291"
+        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44109761934"
       },
       {
-        "sha": "ec912c958503640e98acd1247cfca0b9598274cb",
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44099554845"
-      },
-      {
-        "sha": "dfafed1414f0916d8fc05ed02900e7e2b73fe4ca",
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44097020078"
+        "sha": "7839cd099b6a7b41331413122323971144b91cfd",
+        "status": "in_progress",
+        "conclusion": null,
+        "url": "https://github.com/Voodoobrew101/Loot-Liquidator/actions/runs/44109888617"
       }
     ],
-    "github_final_head_CI": "No final-head CI conclusion yet at checkpoint; do not equate prior worker CI with status commit CI"
+    "github_final_status_commit_CI": "Unknown until CI on the new coordinator-only status commit completes"
   },
   "git_state_checked": {
-    "at": "2026-11-17T14:08:16.151Z",
+    "at": "2026-11-17T15:04:12.099Z",
     "main_sha": "5dd5aa2f7f05656e7580ea744f657209db59a195",
-    "research_prewrite_sha": "dfafed1414f0916d8fc05ed02900e7e2b73fe4ca",
-    "research_after_evidence_and_dashboard_sha": "ceea7b77997731160aebb8853d5dcdcf3d6606b4",
+    "research_pre_status_sha": "7839cd099b6a7b41331413122323971144b91cfd",
     "owner_integration_sha": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "immutable_snapshot_sha": "4df9ae8b1359d934828e4d0e6d39a9a4dba26fae",
     "pr22": "closed unmerged",
     "pr23": "closed unmerged",
-    "pr24": "merged by others Nov 2",
-    "pr74": "open draft unchanged",
+    "pr24": "merged by others",
     "pr75": "open draft unchanged"
   },
   "latest_worker_reports": [
     {
       "role": "midnight",
-      "updated_at": "2026-11-17T13:14:47.285Z",
-      "report": "Ten LIVE base-item noDE catalog labels; no completed client DE or new numeric yield"
+      "updated_at": "2026-11-17T14:13:56.945Z",
+      "report": "Ten additional LIVE base-item noDE catalog labels, no independent new numeric yield or client attempt"
     },
     {
       "role": "war-within",
-      "updated_at": "2026-11-17T13:27:48.252Z",
-      "report": "Ten PTR tier noDE source labels; live eligibility unverified, no new numeric yields"
+      "updated_at": "2026-11-17T14:33:16.397Z",
+      "report": "Nine LIVE and one BETA template noDE labels, seven conflict with historical Looter; no independent modern prospect/mill cohort"
     },
     {
       "role": "dragonflight",
-      "updated_at": "2026-11-17T13:41:20.284Z",
-      "report": "202481 original gear Looter N31 and three occurrence counters, not exact material 0-N histograms"
+      "updated_at": "2026-11-17T14:43:41.196Z",
+      "report": "New original event-logger search returned no independent cohort; avoided five already indexed cumulative Looter copies"
     },
     {
       "role": "legacy",
-      "updated_at": "2026-11-17T13:51:48.900Z",
-      "report": "Ten original historical DE evidence rows, including 5 Headband positive-hit evidence; independent modern legality unknown"
+      "updated_at": "2026-11-17T14:47:49.362Z",
+      "report": "Two independent historical Adamantite aggregate source records; nominal inputs, not verified completed casts/output IDs"
     }
   ],
   "blockers": [
-    "Current game-client eligibility and item-version/character applicability of two-way item-use effects not independently verified; historical 7.3.5 changes may impact current source mapping",
-    "No current sale prices or addon route/cycle detection measured; synthetic 100c output fixture cannot justify a gold decision",
-    "Historical 5-Headband 16204 hits have no per-positive quantity or verified game build; cannot promote to current Rich 156930 expectancy"
+    "Current Retail character availability/eligibility for 20039/20040 not proven by the displayed sources; no in-client use tests",
+    "No live account prices, inventory quantities, required cooldowns or AH fee/deposit comparison; synthetic 100-copper example cannot validate a gold decision",
+    "Unknown whether another addon exchange adapter already handles these actions; token ledger negative is a narrow check, not exhaustive",
+    "Midnight per-output 0-N/rank/refund original evidence and T0045 herb denominator remain unresolved"
   ],
   "exhausted_sources": [
-    "Historical 'Illusion Dust' is not the same supported output identity as current Rich 156930 without epoch-specific source validation",
-    "Legacy 400/43-cast Headband studies already queued T0050; do not resubmit as new cohorts",
-    "Generic source spell display split 2+1 reagent does not mean a two-light-unit recipe"
+    "Do not present two-reagent spell display for 20039 as full craft cost; original confirms third item consumed first",
+    "Do not count historical lesser/greater material hits as new independent modern conversion studies or rerun existing worker investigations"
   ],
-  "next_concrete_step": "Research-only follow-up: verify current client applicability/availability and item-use access for the 16204<->156930 3:1/1:3 spells; evaluate whether pinned ItemDB already has exchange relationship outside indexed files. In any future isolated implementation, prevent reciprocal conversion arbitrage loops and compare net real prices. Keep worker T0050 epoch/stack reconciling and prioritize current-patch T0005/T0039 Umbral Tin 0-N+refunding then T0045 Tranquility mills; do not change owner addon branch.",
-  "permissions_boundary": "Only master evidence note, manager dashboard and coordinator JSON changed on research branch. No worker files, original studies, main, owner branch, snapshots, PR lifecycle, jobs or release changed."
+  "next_concrete_step": "Continue priority new current-patch Umbral Tin 237362 exact output rank/castsWithDrop/0-N/refund original logs (T0005/T0039), then Tranquility Bloom exact completed mills and net 10-herb input (T0045); defer any Eternal Essence runtime quotation until isolated owner-approved integration review verifies actual item-use/eligibility/fees/inventory and cycle detection. No engineering branch overlap.",
+  "permissions_boundary": "Only manager master evidence note, manager-owned RESEARCH-DASHBOARD.md, coordinator.json on research branch changed. No original study, worker files, research queue, main, owner integration, PR merge/closure, schedules, or release touched."
 }
