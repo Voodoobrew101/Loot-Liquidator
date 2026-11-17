@@ -679,7 +679,7 @@ def misplaced_copies(rows, names, vectors, pooled):
                      for o, ok in pairs):
                 # S7/S17: case-only unknown-ID family labels are one original,
                 # not two estimates. Respect explicit rank, batch and source identities.
-                out[id(r)] = "copy:caseVariantGroup"
+                out[id(r)] = "duplicateStudy"
     return out
 
 
@@ -694,7 +694,7 @@ NON_DROP_TYPES = ("exchange", "token", "recipe", "noDisenchant", "rateChange", "
 REASON_CODES = frozenset(
     {code for _, code in USE_REASONS}
     | {"condition:incomplete", "conditional:unlockFalse", "conditional:unlockUnstated", "copy:pooledStudy",
-       "copy:vaguerGroup", "copy:caseVariantGroup", "duplicateRowInStudy", "duplicateStudy", "reference:noUsableValue",
+       "copy:vaguerGroup", "duplicateRowInStudy", "duplicateStudy", "reference:noUsableValue",
        "reference:otherUnit", "reference:priorSuperseded", "type:missing", "type:unknown",
        "unplaced:noInput", "unplaced:noMethod", "unplaced:noOutput"}
     | {"type:" + t for t in NON_DROP_TYPES})
