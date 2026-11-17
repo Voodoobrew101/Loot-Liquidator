@@ -1,96 +1,144 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-17T06:43:40.031Z",
-  "status": "active — 10 source-verified original Mithril Ore output-quantity records from two independent commenters; Warmaul/Cobalt/Fel Iron cast-hit blockers remain open",
+  "updated_at": "2026-11-17T07:46:10.762Z",
+  "status": "active — 35 original gear-to-material evidence rows from two independent archived player SavedVariables files; positive material hits/units directly verified, no full item disenchant denominator; Warmaul/Cobalt/Fel Iron gaps remain open",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
+    "T0052",
     "T0053",
-    "standing-legacy-prospecting"
+    "standing-legacy-disenchant"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 -> Arcane Dust 22445, Greater Planar Essence 22446, Lesser Planar Essence 22447, Large Prismatic Shard 22449: original per-hit quantities/histograms, exact source era/bonus/build and live Retail DE eligibility still unverified",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: new original completed-cast denominators and per-output hit/zero histograms still unavailable after targeted source checks",
-    "Original Mithril Ore 3858 prospecting studies: seven output identities and totals from 200-ore report, three output identities and totals from independent 20-ore report; completed actual cast logs and build not reported"
+    "Warmaul Legplates 24995 historical 2068-item Looter cohort -> 22445/22446/22447/22449: source build, conditional per-hit stack histograms and quantities, 37 unaccounted operations, current Retail exact item/bonus DE eligibility all unresolved",
+    "Burning Crusade same-era specific uncommon armor/weapon item signatures: new public locally recorded positive-material occurrences and quantities for 22445 Arcane Dust, 22446 Greater Planar Essence, 22447 Lesser Planar Essence; rare-gear 22448 Small Prismatic Shard and 22449 Large Prismatic Shard",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424 original per-output hit/zero histograms missing despite previously collected 40/29 Cobalt and 48 Fel Iron Enchantrix prospecting operation totals",
+    "Ulduar 45661 historical seven class rewards already collected; modern Use-by-loot-specialization item ID/variant verification unresolved"
   ],
   "newly_verified_fields_cohorts": [
-    "Original Wowhead commenter 610726: Mithril Ore 3858 reported as one 200-ore stack prospected; Aquamarine 7909 x14, Citrine 3864 x15, Star Ruby 7910 x15, Blue Sapphire 12361 x2, Large Opal 12799 x2, Azerothian Diamond 12800 x1, Huge Emerald 12364 x1. Separately mined gem units excluded.",
-    "Independent Wowhead commenter FuryWar: Mithril Ore 3858, 20 ore prospected; Aquamarine 7909 x2, Citrine 3864 x3, Huge Emerald 12364 x1.",
-    "Both report raw material totals without completed-cast logs, per-material occurrence counts, zeros or histograms; forty and four possible five-ore batch equivalents are nominal only, NEVER stored as measured casts."
+    "Original RIKU6 archived EnchantedLocal: 30 exact gear/variant-to-material rows; source stores positive material occurrences and aggregate material quantities (not full completed disenchant denominators). Source https://github.com/Daniel-D-Salas/wowInterface/blob/bc54cd8ea7f83e21f84d146975259c18a653c944/WTF/Account/RIKU6/SavedVariables/Enchantrix.lua",
+    "Original OZZIEEM archived EnchantedLocal: 5 additional exact gear/variant-to-material rows, including 31221 -> Large Prismatic Shard 22449 1 occurrence/1 unit. Source https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua",
+    "Source interpretation corroborated by Enchantrix/EnxStorage.lua saveDisenchant(), which writes reagentID:1:count:0 per detected material and merges per item signature. One hit allows exactly one observed conditional stack amount; multi-hit total does not give a histogram.",
+    "Within ozzieem repository EVIAN, HASKINA and OZZIEEM snapshots overlap heavily and share identical Cobalt 40-prospect counts. These are NOT independent sampled player cohorts; only OZZIEEM item/variant rows not previously submitted were used in new evidence.",
+    "Current 45661 token -> 45400,45339,45344,45369,45352,45359,45349 is already fully covered by original historical record legacy-20261107-234113, not reintroduced as new data."
   ],
   "numeric_summary": {
-    "new_records": 10,
-    "distinct_original_comment_cohorts": 2,
-    "input_item_ids": [
-      3858
+    "new_records": 35,
+    "source_account_snapshots_counted": 2,
+    "source_paths": [
+      "https://github.com/Daniel-D-Salas/wowInterface/blob/bc54cd8ea7f83e21f84d146975259c18a653c944/WTF/Account/RIKU6/SavedVariables/Enchantrix.lua",
+      "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua"
     ],
-    "output_item_ids": [
-      7909,
-      3864,
-      7910,
-      12361,
-      12799,
-      12800,
-      12364
-    ],
-    "raw_input_ore_reported_by_cohort": {
-      "wowhead-aquamarine-610726-mithril-200ore": 200,
-      "wowhead-aquamarine-furywar-mithril-20ore": 20
-    },
-    "output_quantity_by_cohort": {
-      "wowhead-aquamarine-610726-mithril-200ore": {
-        "3864": 15,
-        "7909": 14,
-        "7910": 15,
-        "12361": 2,
-        "12364": 1,
-        "12799": 2,
-        "12800": 1
+    "output_by_material": {
+      "22445": {
+        "rows": 19,
+        "positive_material_occurrences": 20,
+        "total_units": 51,
+        "distinct_input_signatures": 19
       },
-      "wowhead-aquamarine-furywar-mithril-20ore": {
-        "3864": 3,
-        "7909": 2,
-        "12364": 1
+      "22446": {
+        "rows": 3,
+        "positive_material_occurrences": 3,
+        "total_units": 5,
+        "distinct_input_signatures": 3
+      },
+      "22447": {
+        "rows": 9,
+        "positive_material_occurrences": 11,
+        "total_units": 27,
+        "distinct_input_signatures": 9
+      },
+      "22448": {
+        "rows": 3,
+        "positive_material_occurrences": 3,
+        "total_units": 3,
+        "distinct_input_signatures": 3
+      },
+      "22449": {
+        "rows": 1,
+        "positive_material_occurrences": 1,
+        "total_units": 1,
+        "distinct_input_signatures": 1
       }
     },
-    "source_logged_completed_casts": null,
-    "per_output_casts_with_drop": null,
-    "zero_outcomes_observed": null,
+    "input_item_ids": [
+      24074,
+      24075,
+      24078,
+      24599,
+      24604,
+      24605,
+      24625,
+      24705,
+      24708,
+      24742,
+      24743,
+      24810,
+      24813,
+      24846,
+      25033,
+      25035,
+      25045,
+      25048,
+      25071,
+      25184,
+      25272,
+      25274,
+      25295,
+      25298,
+      25300,
+      25323,
+      25717,
+      29938,
+      29946,
+      31145,
+      31221
+    ],
+    "output_item_ids": [
+      22445,
+      22446,
+      22447,
+      22448,
+      22449
+    ],
+    "per_material_positive_event_counts": "directly source-stated",
+    "per_material_total_units": "directly source-stated",
+    "complete_item_disenchant_cast_counts": null,
+    "material_zero_counts": null,
     "zero_inclusive_histograms": null,
-    "nominal_five_ore_batch_equivalents_for_context": {
-      "610726": 40,
-      "FuryWar": 4
-    },
+    "skill": null,
+    "specialization": null,
     "build": null,
-    "jewelcrafting_skill": null
+    "item_quality_and_ilvl": null
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-17T0643-mithril-two-original-prospecting-cohorts.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-17T0746-original-tbc-gear-material-positive-events.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/item=7909/aquamarine"
+    "https://github.com/Daniel-D-Salas/wowInterface/blob/bc54cd8ea7f83e21f84d146975259c18a653c944/WTF/Account/RIKU6/SavedVariables/Enchantrix.lua",
+    "https://github.com/ozzieem/WoW_3.3.5_Addons/blob/0337b2b7be836229254771a9e573059dbf5e51b4/WTF/Account/OZZIEEM/SavedVariables/Enchantrix.lua",
+    "https://github.com/TrinityCore/wow_335a_addons/blob/4c551c5cdb8937ddc8f7c87d936549b3e7dc0b7a/Enchantrix/Enchantrix/EnxStorage.lua"
   ],
-  "verified_base_commit_sha": "ae93444cac3c29d8f79c7908d26b95d4141e7dc5",
+  "verified_base_commit_sha": "6b51126ba7eb46ece0451c93c290f855e6e44ac2",
   "verified_commit_sha": null,
-  "commit_note": "Evidence and status committed together; the file cannot contain SHA of its own commit without recursively changing that SHA. New branch head and evidence/status read-back verified separately after publishing.",
+  "commit_note": "One commit contains new evidence and this status atomically; a file cannot contain the SHA of its own commit. Branch ref and both files are fetched after publishing for separate read-back verification. No merge or production changes.",
   "blockers": [
-    "No additional original Warmaul 24995 per-cast material units, output histograms, 37 unaccounted historical operations clarification, or Retail item variant eligibility test; do not infer missing bins as zeros",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424 original sources remain without independent current-build completed-cast/hit/zero logs; no new measured chance denominators",
-    "New Mithril commenters provide total gem quantities but only ore-input counts; actual completed operation logs, bonus processing/refunds, individual output hits, skill, patch and build all unknown",
-    "All linked Wowhead localized item pages reproduce historic comments. Neither commenter is verified as current Retail; no transfer to live recommendations without source applicability review",
-    "No gold EV was captured; any dynamic values remain the addon's responsibility"
+    "No original Warmaul 24995 per-event raw logs, item-level/bonus and build identifiers or experimentally verified current Retail disenchant eligibility; historical 2068 Looter results and current WoWDB no-DE conflict",
+    "A material-positive Enchantrix aggregate is NOT an item-completed-cast log: casts, zeros, all outcome types and cross-output joint distribution cannot be inferred from rows. No invented hits, absent bins or rate model.",
+    "Unknown historic gear item quality/ilvl/suffix significance and character enchanting skill; cannot group into a verified current Retail rarity/ilvl bucket",
+    "Existing Cobalt 36909 and Fel Iron 23424 prospecting totals remain without source-logged per-output occurrence or zero histograms; did not duplicate previously recorded cohorts",
+    "Historical 45661 token mapping is complete, but modern Use loot-specialization output selection and variants remain unverified",
+    "No gold EV stored; addon computes prices dynamically"
   ],
   "exhausted_sources": [
-    "Warmaul Legplates 24995 original Wowhead Looter and current WoWDB conflicting applicability remain without new source-version resolution",
-    "Cobalt Ore 36909 original Strikk3r 180-ore and RU 24-stack comments already recorded; no duplicate evidence added",
-    "Fel Iron Ore 23424 original 565-ore Thottbot and 8-stack single rare-gem reports already recorded; no duplicate evidence added",
-    "Forever stress-test 30 Brown Linen gear, Forever Arcane Salvager 100 greens and independent beta results already in 2026-11-16T2250; not re-recorded",
-    "Runecloth Headband Dethblo/697275 10-disenchant historical comment already in 2026-11-02T1441; not re-recorded",
-    "Ghost Iron Ore 72092 historical Antonim/Raivyn/1150532 cohorts already in 2026-10-31T0640; not re-recorded"
+    "Previously recorded Warmaul 24995 Wowhead Looter cumulative 2068 cohort, reference weights and current WoWDB conflict provide no additional verified material-unit histograms or current eligible casts",
+    "Previously recorded Strikk3r/RU Cobalt ore totals, original Fel Iron Thottbot 565-ore, RIKU6 29/48 and OZZIEEM 40 prospect totals remain deficient in per-material hits/zeros",
+    "Do not treat EVIAN/HASKINA/OZZIEEM overlapping local SavedVariables as three independent cohorts",
+    "Historical Wayward Vanquisher token 45661 seven-reward vendor mapping already recorded; no duplicate token written"
   ],
-  "next_concrete_step": "Seek dated item-specific full per-operation logs/SavedVariables with measured casts, hits, zero bins, skill/patch/bonus/eligibility for Warmaul 24995 and Cobalt 36909 or Fel Iron 23424. Reconcile Mithril 3858 comment builds and acquire independent per-output castsWithDrop before any runtime baseline admission.",
-  "gold_ev_policy": "Do not store gold values in evidence; addon calculates gold expected value from live prices.",
-  "previous_status_updated_at": "2026-11-17T05:45:31.212Z",
-  "previous_evidence_file": "research/v3/evidence/legacy/2026-11-17T0545-firsthand-tbc-and-classic-single-disenchants.jsonl"
+  "next_concrete_step": "Seek nonaggregated dated disenchant operation logs with full item signatures, bonus IDs, source ilvl/rarity/skill/build and per-event material counts for 24995 or same TBC rarity/level groups; seek retail actual eligibility and negative fixture through Master. Seek independent Cobalt 36909 / Fel Iron 23424 per-prospect output histograms or fully detailed SavedVariables exports; keep absent data unknown.",
+  "gold_ev_policy": "Gold expected value calculated by Loot Liquidator from live prices, never stored in evidence.",
+  "previous_status_updated_at": "2026-11-17T06:43:40.031Z",
+  "previous_evidence_file": "research/v3/evidence/legacy/2026-11-17T0643-mithril-two-original-prospecting-cohorts.jsonl"
 }
