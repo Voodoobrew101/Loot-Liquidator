@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-17T05:38:02.956Z",
-  "status": "11 new source-reported Dragonflight disenchant material occurrence rows from 5 distinct Wowhead gear item-side tables; independent original ore/herb per-operation histogram and actual completed-cast denominators remain missing. Source counts are NOT verified drop probabilities.",
+  "updated_at": "2026-11-17T06:34:14.134Z",
+  "status": "11 previously unindexed Wowhead source-reported Dragonflight gear disenchant material-occurrence entries from 4 item-side tables; no new independent ore/herb complete-cast or 0-inclusive output histogram. Looter percentages remain ambiguous and are NOT verified drop probabilities.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,148 +13,142 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143/188658, Serevite Ore 190394/190395/190396, Khaz'gorite and Prismatic Ore 194545: rank/skill/refund/patch-conditioned per-output 0-N events and verified completed casts missing.",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: independent pigment hit/zero and batch-normalized per-cast originals missing.",
-    "New gear 194386, 194378, 200375, 194347, 200377: source-only aggregated disenchant operations/occurrence numerators; distinct event-ledger, skill, output quantity total and exact collection patch missing."
+    "Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic Ore 194545: missing independently recorded completed prospect casts, Resourcefulness refunds, quality/skill-specific material hits and 0-N histograms.",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: missing independent per-cast pigment zeros, material hit counts and refund-aware batches.",
+    "Four previously unindexed gear item-side source tables: anonymous aggregate operations/occurrences only; disenchant-time item version, skill, skill spec, actual total material units and per-cast zeros missing."
   ],
   "newly_verified_fields": [
-    "Input IDs 194386 Expedition Mercenary's Mace, 194378 Explorer's Belt Knife, 200375 Vault Delver's Utility Belt, 194347 Expedition Researcher's Hood, 200377 Vault Delver's Camouflage; all live Wowhead item names.",
-    "Output IDs 194123 Chromatic Dust, 194124 Vibrant Shard, 200113 Resonant Crystal in 11 source table rows; individual raw K/N counts preserved in JSONL notes.",
-    "Source-reported item-wide disenchant counts 15,22,11,619,6, corresponding per-output source rounded percent and where displayed positive-only 1-2,1-3,1-4 stack ranges.",
-    "No independently verified output castsWithDrop, totalQuantity, zero outcomes or 0-N histogram; ambiguous percentages explicitly marked unclear."
+    "Four source item identities/IDs 202484 Scalebands of Obsidian Secrets, 202438 Manteau of the Onyx Crucible, 202445 Ironstriders of the Onyx Crucible and 202553 Underlight Conjurer's Treads.",
+    "Output identities 200113 Resonant Crystal, 194124 Vibrant Shard, 194123 Chromatic Dust, exact item-side reported material occurrence K, denominator N and displayed rounded percent copied independently by table row.",
+    "Observed source-positive stack min/max where shown; source N/K not asserted verified distinct material-hit completed casts; no per-cast 0-N histograms or total quantity established."
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 194386,
-      "inputName": "Expedition Mercenary's Mace",
-      "source": "https://www.wowhead.com/item=194386/expedition-mercenarys-mace",
-      "source_reported_disenchants": 15,
+      "inputItemID": 202484,
+      "inputName": "Scalebands of Obsidian Secrets",
+      "source": "https://www.wowhead.com/ptr/item=202484/scalebands-of-obsidian-secrets",
+      "source_reported_disenchants": 18,
       "output_occurrences": [
         {
-          "itemID": 194123,
-          "numerator": 14,
-          "percentShown": 93,
-          "positiveOnlyRange": [
-            1,
-            3
-          ]
+          "itemID": 200113,
+          "numerator": 13,
+          "percentShown": 72,
+          "positiveOnlyRange": null
         },
         {
           "itemID": 194124,
+          "numerator": 7,
+          "percentShown": 39,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "itemID": 194123,
           "numerator": 1,
+          "percentShown": 6,
+          "positiveOnlyRange": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "inputItemID": 202438,
+      "inputName": "Manteau of the Onyx Crucible",
+      "source": "https://www.wowhead.com/item=202438/manteau-of-the-onyx-crucible",
+      "source_reported_disenchants": 29,
+      "output_occurrences": [
+        {
+          "itemID": 200113,
+          "numerator": 17,
+          "percentShown": 59,
+          "positiveOnlyRange": null
+        },
+        {
+          "itemID": 194124,
+          "numerator": 16,
+          "percentShown": 55,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "inputItemID": 202445,
+      "inputName": "Ironstriders of the Onyx Crucible",
+      "source": "https://www.wowhead.com/item=202445/ironstriders-of-the-onyx-crucible",
+      "source_reported_disenchants": 34,
+      "output_occurrences": [
+        {
+          "itemID": 194124,
+          "numerator": 21,
+          "percentShown": 62,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "itemID": 200113,
+          "numerator": 14,
+          "percentShown": 41,
+          "positiveOnlyRange": null
+        },
+        {
+          "itemID": 194123,
+          "numerator": 1,
+          "percentShown": 3,
+          "positiveOnlyRange": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "inputItemID": 202553,
+      "inputName": "Underlight Conjurer's Treads",
+      "source": "https://www.wowhead.com/item=202553/underlight-conjurers-treads",
+      "source_reported_disenchants": 107,
+      "output_occurrences": [
+        {
+          "itemID": 194124,
+          "numerator": 61,
+          "percentShown": 57,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        },
+        {
+          "itemID": 200113,
+          "numerator": 57,
+          "percentShown": 53,
+          "positiveOnlyRange": null
+        },
+        {
+          "itemID": 194123,
+          "numerator": 7,
           "percentShown": 7,
-          "positiveOnlyRange": null
-        }
-      ]
-    },
-    {
-      "inputItemID": 194378,
-      "inputName": "Explorer's Belt Knife",
-      "source": "https://www.wowhead.com/item=194378/explorers-belt-knife",
-      "source_reported_disenchants": 22,
-      "output_occurrences": [
-        {
-          "itemID": 194123,
-          "numerator": 20,
-          "percentShown": 91,
-          "positiveOnlyRange": [
-            1,
-            4
-          ]
-        },
-        {
-          "itemID": 194124,
-          "numerator": 2,
-          "percentShown": 9,
-          "positiveOnlyRange": null
-        }
-      ]
-    },
-    {
-      "inputItemID": 200375,
-      "inputName": "Vault Delver's Utility Belt",
-      "source": "https://www.wowhead.com/item=200375/vault-delvers-utility-belt",
-      "source_reported_disenchants": 11,
-      "output_occurrences": [
-        {
-          "itemID": 194124,
-          "numerator": 8,
-          "percentShown": 73,
           "positiveOnlyRange": [
             1,
             2
           ]
-        },
-        {
-          "itemID": 200113,
-          "numerator": 3,
-          "percentShown": 27,
-          "positiveOnlyRange": null
-        }
-      ]
-    },
-    {
-      "inputItemID": 194347,
-      "inputName": "Expedition Researcher's Hood",
-      "source": "https://www.wowhead.com/item=194347/expedition-researchers-hood",
-      "source_reported_disenchants": 619,
-      "output_occurrences": [
-        {
-          "itemID": 194124,
-          "numerator": 333,
-          "percentShown": 54,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
-        },
-        {
-          "itemID": 194123,
-          "numerator": 266,
-          "percentShown": 43,
-          "positiveOnlyRange": [
-            1,
-            3
-          ]
-        },
-        {
-          "itemID": 200113,
-          "numerator": 32,
-          "percentShown": 5,
-          "positiveOnlyRange": null
-        }
-      ]
-    },
-    {
-      "inputItemID": 200377,
-      "inputName": "Vault Delver's Camouflage",
-      "source": "https://www.wowhead.com/item=200377/vault-delvers-camouflage",
-      "source_reported_disenchants": 6,
-      "output_occurrences": [
-        {
-          "itemID": 194124,
-          "numerator": 4,
-          "percentShown": 67,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
-        },
-        {
-          "itemID": 200113,
-          "numerator": 3,
-          "percentShown": 50,
-          "positiveOnlyRange": null
         }
       ]
     }
   ],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [
-    "Source-only disenchant count denominators 15/22/11/619/6; independently verified completed casts unknown",
-    "Raw source material-occurrence numerator K captured per output (not asserted distinct hit casts)",
-    "Rounded source percentages exactly preserved with percentMeaning=unclear",
-    "Positive-only min-max observed stack ranges, no inferred total units, zeros or event histograms"
+    "Source-only disenchant item-wide N=18,29,34,107 (not independently audited actual completed casts)",
+    "Material occurrences K for exact output IDs 200113,194124,194123; no verified castsWithDrop",
+    "Source-rounded percentages as displayed with percentMeaning=unclear",
+    "Positive-only stack ranges; totalQuantity and actual zero bins remain null"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -176,24 +170,24 @@
     "research/v3/evidence/dragonflight/2026-11-17T0242-three-gear-looter-and-serevite-rank.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T0336-five-live-item-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T0430-six-unindexed-gear-looter-cohorts.jsonl",
-    "research/v3/evidence/dragonflight/20261117T0538-five-new-item-looter-source-counts.jsonl"
+    "research/v3/evidence/dragonflight/20261117T0538-five-new-item-looter-source-counts.jsonl",
+    "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261117T0538-five-new-item-looter-source-counts.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/20261117T0538-five-new-item-looter-source-counts.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
   "source_links": [
-    "https://www.wowhead.com/item=194386/expedition-mercenarys-mace",
-    "https://www.wowhead.com/item=194378/explorers-belt-knife",
-    "https://www.wowhead.com/item=200375/vault-delvers-utility-belt",
-    "https://www.wowhead.com/item=194347/expedition-researchers-hood",
-    "https://www.wowhead.com/item=200377/vault-delvers-camouflage"
+    "https://www.wowhead.com/ptr/item=202484/scalebands-of-obsidian-secrets",
+    "https://www.wowhead.com/item=202438/manteau-of-the-onyx-crucible",
+    "https://www.wowhead.com/item=202445/ironstriders-of-the-onyx-crucible",
+    "https://www.wowhead.com/item=202553/underlight-conjurers-treads"
   ],
-  "verified_parent_sha": "46fc4237c3b11348f6c131420f70cdbd98ed1a92",
+  "verified_parent_sha": "fb6ccd124f083b11dd13f3a8c509b5f1a6749d56",
   "verified_commit_sha": null,
-  "commit_sha_scope": "The SHA of the commit containing this tracked status cannot self-reference without changing that SHA; verify the committed branch head externally after the atomic commit. No second status-fixup commit permitted.",
+  "commit_sha_scope": "A commit cannot contain its own SHA in the tracked JSON status without changing that SHA; this status points to verified parent. Atomic new commit SHA and read-back confirmed externally.",
   "blockers": [
-    "No unindexed original cast-level or refund-aware ore/herb drop/zero histogram; 2022-2023 original studies already indexed and deduplicated.",
-    "Wowhead anonymous rolling cumulative Looter item-side tables are not independent experimental cohorts; output occurrence K out of reported disenchants N cannot establish completed-cast P(hit), output co-occurrence, or current-build validity.",
-    "Unknown output total units, exact zero outcomes, player skill/specialization and source patch; counts sometimes sum beyond reported operations (194347, 200377)."
+    "No independently inspectable current or historical first-person refunded-input-aware per-output 0/1/2+ prospect/mill operation ledger; original ore/milling references already deduplicated.",
+    "Wowhead Looter anonymously pooled rolling N/K material occurrence values do not verify individual material-hit operations, material co-occurrence, client epoch, source player skill, item variants or zero-inclusive event histograms.",
+    "Source-positive stack ranges are not observed total quantities; source K for outputs can sum beyond N."
   ],
   "exhausted_sources": [
     {
@@ -1605,9 +1599,22 @@
         "Reddit r/woweconomy named Bubble Poppy milling per-operation pigment hits/zero counts, no fresh original log: https://www.reddit.com/r/woweconomy/",
         "Wow-Professions named Saxifrage milling pigment yield guide; method reference is not a measured completed-cast study: https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight"
       ]
+    },
+    {
+      "at": "2026-11-17T06:34:14.134Z",
+      "source_group": "new full-cast search; historical original dedupe",
+      "result": "All rediscovered pre-2024 ore/mill source cohorts previously indexed; no newly inspectable event ledger.",
+      "sites": [
+        "reddit.com",
+        "wowhead.com",
+        "us.forums.blizzard.com",
+        "github.com",
+        "method.gg"
+      ],
+      "details_in": "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl"
     }
   ],
-  "next_concrete_step": "Seek an independently inspectable first-person player export of actual complete prospects/mills (rank, batch, skill, spec, Resourcefulness refunds, each per-output 0-N histogram) for Draconium 189143 and Bubble Poppy 191467. Only then compute source-labeled probabilities downstream; do not reuse the same Wowhead Looter cumulative sources.",
+  "next_concrete_step": "Find a first-person addon export/spreadsheet recording actual completed 5-input prospects or mills, refunded inputs, rank/quality, skill/spec, output item identities and per-output 0-N outcomes for Draconium 189143 and Bubble Poppy 191467; do not re-import already indexed guide/Reddit cohorts.",
   "validation": {
     "jsonl_parse": "passed in worker",
     "expected_records": 12,
@@ -1617,7 +1624,7 @@
     "source_probabilities_interpreted": false,
     "commit_readback": "pending",
     "allowed_paths": [
-      "research/v3/evidence/dragonflight/20261117T0538-five-new-item-looter-source-counts.jsonl",
+      "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ]
   },
