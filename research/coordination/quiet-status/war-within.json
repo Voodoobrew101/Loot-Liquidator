@@ -1,34 +1,122 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-17T01:27:29.550Z",
-  "status": "Verified 9 new rank-specific conditional Prospect identity edges for Shaping > Gem Finding 20/40: each of Bismuth, Aqirite, and Ironclaw Ore ranks 1/2/3 maps to same-quality Crushed Gemstones ranks 1/2/3 (213219/213220/213221), condition only. No measured yields, cast-hit probabilities, or estimator-eligible numeric cohorts.",
+  "updated_at": "2026-11-17T02:30:33.761Z",
+  "status": "Added 18 reference-only TWW milling identity/recipe records: six previously null herb-rank input IDs for Luredrop, Orbinid and Blessing Blossom (ranks 2/3), plus 12 rank-specific pigment output IDs spanning Mycobloom, Luredrop, Orbinid and Blessing Blossom. No independent observed operations or estimator-eligible numeric yield cohorts.",
   "task_ids": [
-    "T0032",
+    "T0010",
+    "T0011",
+    "T0012",
     "T0040",
     "T0007",
     "T0008",
     "T0009",
-    "T0010",
-    "T0011",
     "T0048"
   ],
   "exact_gaps_targeted": [
-    "T0032: Gem Finding rank-20 Crushed Gemstones bonus had output null in source-only war-within-20261030-410/411; resolve 9 distinct ore-rank/output-rank item identity edges with explicit skill unlock, but no numeric probabilities.",
-    "T0040/T0007/T0008/T0009: no independent post-2024-10-25 ranked Bismuth 210930-210932, Aqirite 210933-210935 or Ironclaw 210936-210938 per-cast histograms, verified casts, skill/spec and refunds.",
-    "T0010/T0011: Mycobloom 210796/210797 milling 222619 retains unknown completed casts, per-output hit counts and per-cast histograms.",
-    "T0048: original Wowhead item 212087 and source Looter HTML data cannot be fetched due transient Firecrawl daily-credit exhaustion. Existing cohorts not rerecorded."
+    "Six ungrounded R2/R3 input item-ID positions in prior LotzBoi milling-reference rows: Luredrop 210800/210801; Orbinid 210803/210804; Blessing Blossom 210806/210807, resolved as separate reference recipe identities without rewriting original rows.",
+    "T0010/T0011/T0012/T0040: Nacreous 222618/222619/222620; Luredrop 222612/222613/222614; Orbinid 224802/224801/224800; Blossom 224805/224804/224803 pigment rank identity matrix, not a fixed input-rank-to-output-rank rule.",
+    "T0007/T0008/T0009/T0048 numeric gaps remain open: independent TWW disenchant/prospect/mill completed casts, per-output hit histograms, build, skill/spec and net consumption."
   ],
   "newly_verified_fields": [
     {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210930,
-      "inputName": "Bismuth (rank 1)",
-      "outputItemID": 213219,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
+      "type": "recipe",
+      "method": "Mill",
+      "inputItemID": 210800,
+      "inputName": "Luredrop",
+      "inputRank": 2,
+      "inputsPerCast": 10,
+      "recipeSpellID": null,
+      "sourceItemURL": "https://goldcap.gg/retail/us/items/210800",
+      "sourceRecipeURL": "https://www.wow-professions.com/the-war-within/khaz-algar-inscription-leveling-guide",
+      "sourceBatchURL": "https://www.wowhead.com/item=224805/blossom-pigment",
+      "casts": null
+    },
+    {
+      "type": "recipe",
+      "method": "Mill",
+      "inputItemID": 210801,
+      "inputName": "Luredrop",
+      "inputRank": 3,
+      "inputsPerCast": 10,
+      "recipeSpellID": null,
+      "sourceItemURL": "https://goldcap.gg/retail/us/items/210801",
+      "sourceRecipeURL": "https://www.wow-professions.com/the-war-within/khaz-algar-inscription-leveling-guide",
+      "sourceBatchURL": "https://www.wowhead.com/item=224805/blossom-pigment",
+      "casts": null
+    },
+    {
+      "type": "recipe",
+      "method": "Mill",
+      "inputItemID": 210803,
+      "inputName": "Orbinid",
+      "inputRank": 2,
+      "inputsPerCast": 10,
+      "recipeSpellID": null,
+      "sourceItemURL": "https://goldcap.gg/retail/us/items/210803",
+      "sourceRecipeURL": "https://www.wow-professions.com/the-war-within/khaz-algar-inscription-leveling-guide",
+      "sourceBatchURL": "https://www.wowhead.com/item=224805/blossom-pigment",
+      "casts": null
+    },
+    {
+      "type": "recipe",
+      "method": "Mill",
+      "inputItemID": 210804,
+      "inputName": "Orbinid",
+      "inputRank": 3,
+      "inputsPerCast": 10,
+      "recipeSpellID": null,
+      "sourceItemURL": "https://goldcap.gg/retail/us/items/210804",
+      "sourceRecipeURL": "https://www.wow-professions.com/the-war-within/khaz-algar-inscription-leveling-guide",
+      "sourceBatchURL": "https://www.wowhead.com/item=224805/blossom-pigment",
+      "casts": null
+    },
+    {
+      "type": "recipe",
+      "method": "Mill",
+      "inputItemID": 210806,
+      "inputName": "Blessing Blossom",
+      "inputRank": 2,
+      "inputsPerCast": 10,
+      "recipeSpellID": null,
+      "sourceItemURL": "https://goldcap.gg/retail/us/items/210806",
+      "sourceRecipeURL": "https://www.wow-professions.com/the-war-within/khaz-algar-inscription-leveling-guide",
+      "sourceBatchURL": "https://www.wowhead.com/item=224805/blossom-pigment",
+      "casts": null
+    },
+    {
+      "type": "recipe",
+      "method": "Mill",
+      "inputItemID": 210807,
+      "inputName": "Blessing Blossom",
+      "inputRank": 3,
+      "inputsPerCast": 10,
+      "recipeSpellID": null,
+      "sourceItemURL": "https://goldcap.gg/retail/us/items/210807",
+      "sourceRecipeURL": "https://www.wow-professions.com/the-war-within/khaz-algar-inscription-leveling-guide",
+      "sourceBatchURL": "https://www.wowhead.com/item=224805/blossom-pigment",
+      "casts": null
+    },
+    {
+      "type": "reference-only output identity",
+      "method": "Mill",
+      "inputName": "Mycobloom",
+      "outputName": "Nacreous Pigment",
+      "outputRanks": [
+        {
+          "rank": 1,
+          "itemID": 222618
+        },
+        {
+          "rank": 2,
+          "itemID": 222619
+        },
+        {
+          "rank": 3,
+          "itemID": 222620
+        }
+      ],
+      "source": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+      "itemCatalog": "https://goldcap.gg/retail/us/items/",
       "casts": null,
       "castsWithDrop": null,
       "totalQuantity": null,
@@ -36,15 +124,26 @@
       "histogram": null
     },
     {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210931,
-      "inputName": "Bismuth (rank 2)",
-      "outputItemID": 213220,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
+      "type": "reference-only output identity",
+      "method": "Mill",
+      "inputName": "Luredrop",
+      "outputName": "Luredrop Pigment",
+      "outputRanks": [
+        {
+          "rank": 1,
+          "itemID": 222612
+        },
+        {
+          "rank": 2,
+          "itemID": 222613
+        },
+        {
+          "rank": 3,
+          "itemID": 222614
+        }
+      ],
+      "source": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+      "itemCatalog": "https://goldcap.gg/retail/us/items/",
       "casts": null,
       "castsWithDrop": null,
       "totalQuantity": null,
@@ -52,15 +151,26 @@
       "histogram": null
     },
     {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210932,
-      "inputName": "Bismuth (rank 3)",
-      "outputItemID": 213221,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
+      "type": "reference-only output identity",
+      "method": "Mill",
+      "inputName": "Orbinid",
+      "outputName": "Orbinid Pigment",
+      "outputRanks": [
+        {
+          "rank": 1,
+          "itemID": 224802
+        },
+        {
+          "rank": 2,
+          "itemID": 224801
+        },
+        {
+          "rank": 3,
+          "itemID": 224800
+        }
+      ],
+      "source": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+      "itemCatalog": "https://goldcap.gg/retail/us/items/",
       "casts": null,
       "castsWithDrop": null,
       "totalQuantity": null,
@@ -68,95 +178,26 @@
       "histogram": null
     },
     {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210933,
-      "inputName": "Aqirite (rank 1)",
-      "outputItemID": 213219,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "zeroOutcomes": null,
-      "histogram": null
-    },
-    {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210934,
-      "inputName": "Aqirite (rank 2)",
-      "outputItemID": 213220,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "zeroOutcomes": null,
-      "histogram": null
-    },
-    {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210935,
-      "inputName": "Aqirite (rank 3)",
-      "outputItemID": 213221,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "zeroOutcomes": null,
-      "histogram": null
-    },
-    {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210936,
-      "inputName": "Ironclaw Ore (rank 1)",
-      "outputItemID": 213219,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "zeroOutcomes": null,
-      "histogram": null
-    },
-    {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210937,
-      "inputName": "Ironclaw Ore (rank 2)",
-      "outputItemID": 213220,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
-      "casts": null,
-      "castsWithDrop": null,
-      "totalQuantity": null,
-      "zeroOutcomes": null,
-      "histogram": null
-    },
-    {
-      "type": "condition",
-      "method": "Prospect",
-      "inputItemID": 210938,
-      "inputName": "Ironclaw Ore (rank 3)",
-      "outputItemID": 213221,
-      "outputName": "Crushed Gemstones",
-      "requires": "Shaping > Gem Finding 20/40",
-      "source": "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-      "sourceKind": "reference-only condition",
+      "type": "reference-only output identity",
+      "method": "Mill",
+      "inputName": "Blessing Blossom",
+      "outputName": "Blossom Pigment",
+      "outputRanks": [
+        {
+          "rank": 1,
+          "itemID": 224805
+        },
+        {
+          "rank": 2,
+          "itemID": 224804
+        },
+        {
+          "rank": 3,
+          "itemID": 224803
+        }
+      ],
+      "source": "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+      "itemCatalog": "https://goldcap.gg/retail/us/items/",
       "casts": null,
       "castsWithDrop": null,
       "totalQuantity": null,
@@ -166,32 +207,46 @@
   ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-17T0127-gem-finding-crushed-by-ore-rank.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/2026-11-17T0230-tww-milling-rank-identity.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-17T0127-gem-finding-crushed-by-ore-rank.jsonl"
+    "research/v3/evidence/war-within/2026-11-17T0230-tww-milling-rank-identity.jsonl"
   ],
   "evidence_source_links": [
-    "https://overgear.com/guides/wow/the-war-within-jewelcrafting-guide/",
-    "https://goldcap.gg/retail/us/items/213219",
-    "https://goldcap.gg/retail/us/items/213220",
-    "https://goldcap.gg/retail/us/items/213221",
-    "https://us.forums.blizzard.com/en/wow/t/tww-jewelcrafting-shaping-and-prospecting/1958770"
+    "https://www.method.gg/guides/the-war-within-herb-milling-and-pigment-guide",
+    "https://www.wow-professions.com/the-war-within/khaz-algar-inscription-leveling-guide",
+    "https://www.wowhead.com/item=224805/blossom-pigment",
+    "https://goldcap.gg/retail/us/items/210800",
+    "https://goldcap.gg/retail/us/items/210801",
+    "https://goldcap.gg/retail/us/items/210803",
+    "https://goldcap.gg/retail/us/items/210804",
+    "https://goldcap.gg/retail/us/items/210806",
+    "https://goldcap.gg/retail/us/items/210807",
+    "https://goldcap.gg/retail/us/items/222618",
+    "https://goldcap.gg/retail/us/items/222619",
+    "https://goldcap.gg/retail/us/items/222620",
+    "https://goldcap.gg/retail/us/items/222612",
+    "https://goldcap.gg/retail/us/items/222613",
+    "https://goldcap.gg/retail/us/items/222614",
+    "https://goldcap.gg/retail/us/items/224802",
+    "https://goldcap.gg/retail/us/items/224801",
+    "https://goldcap.gg/retail/us/items/224800",
+    "https://goldcap.gg/retail/us/items/224805",
+    "https://goldcap.gg/retail/us/items/224804",
+    "https://goldcap.gg/retail/us/items/224803"
   ],
   "verified_commit_sha": null,
-  "verification": "Commit hash cannot be embedded within a JSON file committed by that same hash without invalidating its content hash. This run verifies commit hash and both persisted files by GitHub read-back and branch-head check after one atomic commit. No merge/release/validation bypass.",
+  "verification": "One atomic Git commit stores this file and this worker-only status. Because a Git commit cannot contain its own SHA in its committed status file, verified_commit_sha stays null; fetch commit SHA and check evidence/status read-back and branch HEAD externally after writing.",
   "blockers": [
-    "No source-supplied independent completed cast counts, output occurrence/zero bins, per-cast material histograms, rank-specific skill/spec or refunds for TWW ore/herb gaps; conditional identification cannot be used as drop chance.",
-    "Source says Crushed Gemstones quality matches ore but gives no probability, quantity, build or operation context; rank-specific source identity links are reference-only.",
-    "Firecrawl raw Wowhead 212087 source fetch failed from transient connected-app credit exhaustion (daily reset 2026-11-17T15:51:09.724Z), so per-stack Looter HTML cannot be audited this run.",
-    "The existing 2026-11-01 Raven11 Ironclaw R1 210936 -> Crushed Gemstones 213221 row has no explicitly stated output rank; 213221 is rank3 while guide says Gem Finding bonus matches ore rank. Cannot correct earlier study output ID without original item's full tooltip; request Master lineage review rather than infer a correction."
+    "No independent source provides verified post-Oct25 2024 complete TWW milling/prospecting cast logs with per-output hits, observed zero bins, histograms, input ranks, skill/spec, build and Resourcefulness/refund accounting.",
+    "The pigment item-quality ranks establish distinct item IDs, not a measured yield, fixed linkage to herb input rank or universal skill threshold. No sample-derived probabilities or confidence added.",
+    "T0048 Wowhead raw Looter stack HTML still unverified; connected Firecrawl credits exhausted until 2026-11-17T15:51:09.724Z; don't infer totals/zero bins from occurrence counts.",
+    "Previous Luredrop/Orbinid/Blossom reference records label +101/+202 milling bonuses as input-rank 2/3; their rank interpretation is not proven by that commenter. New recipe records verify ingredient IDs separately and do not mutate or silently reinterpret the prior records."
   ],
   "exhausted_sources": [
-    "Older 2024 pre-hotfix Ironclaw/Aqirite Reikah/PeaEsk rank reports and source-per-input averages were already imported; no repeat or new cohorts.",
-    "Existing war-within-20261030-409 already describes Gem Finding rank40 Ambivalent Amber bonus and official Oct 2024 hotfix; did not rerecord it as new data.",
-    "2024-10-22 7652 Pioneer's Cloth Cuffs original Reddit source and Sep 2024 Gleaming Shatter studies already in prior agent evidence; not duplicated.",
-    "Raven11 20 cast Ironclaw R1 source already covered by 2026-11-01T0217, including output Crushed Gemstones 2 units of unresolved quality."
+    "Previously recorded pre-Oct 2024 Reikah/PeaEsk/Raven11 prospecting and historical Reddit milling averages are not new independent cohorts and were not reimported.",
+    "LotzBoi commentary contains reference-only milling quantity ranges, not raw observed cast histograms. Reused solely to document 10-herb reference batch, no copies of ranges."
   ],
-  "next_concrete_step": "Find original client or source tooltip capture for Crushed Gemstones output 213219/220/221 on rank-specific Bismuth/Aqirite/Ironclaw with Gem Finding 20 points, then obtain post-Oct25 ranked 0/1/2 prospect cast histories and post-hotfix ten-herb milling logs including refunded inputs. Ask Master to review 2026-11-01T0217 Raven11 R1 -> item 213221 discrepancy without overwriting original; inspect original Wowhead Looter stacks when transient credit limit clears.",
+  "next_concrete_step": "Obtain per-herb, per-input-rank post-Oct25 TWW milling logs including completed ten-herb casts, per-quality pigment item IDs/hits/zeros, 0..N histograms, skill/spec and Resourcefulness basis. For prospecting seek equivalent Bismuth/Aqirite/Ironclaw rank-and-unlock logs; for disenchant revisit native Looter stacks only when raw HTML accessible. Ask Master to review older skill-to-input-rank assumptions separately.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false
