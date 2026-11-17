@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-17T22:34:15.004Z",
-  "status": "Priority Dragonflight numeric/original-source search completed; no novel independent cast-denominated prospecting or milling cohort. Third-party Draconium R3 identity cross-checked; no probability inferred.",
+  "updated_at": "2026-11-17T23:41:13.172Z",
+  "status": "One newly uncovered Dragonflight 10.2 gear-item Wowhead Looter pooled table indexed: 209935 with 28 reported item-specific disenchant operations, separate 23/28 Chromatic Dust and 5/28 Vibrant Shard occurrence counts; original ore/milling per-output cast histograms still missing.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,26 +13,64 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143 R1 / 188658 R2 / 190311 R3, Serevite Ore 190395 R1 / 190396 R2 / 190394 R3, Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545: original completed prospect casts, gem ranks, 192869/192870/192871 Illimited Diamond hits and zero bins, independent profile/build, Resourcefulness refunds and original cohort identity.",
-    "Bubble Poppy 191467/191468/191469 -> Serene Pigment 198412/198413/198414; Saxifrage 191464/191465/191466 -> Blazing Pigment 198418/198419/198420: source-recorded completed mills, material units, positive hits and per-cast 0/1/2+ histograms, not nominal herbs.",
-    "Serevite 190394/190395/190396 third-party rank-label disagreement requires authoritative live tooltip/Blizzard item lookup before unconditional quality-aware numeric model."
+    "Prospect Draconium 189143/188658/190311, Serevite 190395/190396/190394, Khaz'gorite 190312/190313/190314, Prismatic 194545: material-specific finished cast hits, 0-N histograms, source rank/skill/patch, refunds",
+    "Bubble Poppy 191467 and Saxifrage 191464: rank-separated mills with completed operations, per-material pigment units, 0-N, resourcefulness",
+    "Dragonflight gear disenchant occurrence data: find previously unindexed exact item 209935 source and recover hit counts; original game build, item-version/bonus, skill, full material units/stack histograms still missing"
   ],
   "newly_verified_fields": [
     {
-      "field": "Draconium Ore quality rank identity, third-party item listing only",
-      "mapping": {
-        "188658": 2,
-        "189143": 1,
-        "190311": 3
-      },
-      "source": "https://goldcap.gg/retail/us/items/190311",
-      "measurement": false,
-      "review": "No authoritative client tooltip; do not treat as numeric drop data"
+      "field": "Source-reported input item identity and cumulative operations",
+      "inputItemID": 209935,
+      "inputName": "Spirited Stag's Handaxe",
+      "sourceReportedDisenchants": 28,
+      "source": "https://www.wowhead.com/item=209935/spirited-stags-handaxe",
+      "measurementClass": "Wowhead Looter cumulative pooled table; original game build and sample period unknown"
+    },
+    {
+      "field": "Chromatic Dust material occurrence row",
+      "inputItemID": 209935,
+      "outputItemID": 194123,
+      "casts": 28,
+      "castsWithDrop": 23,
+      "percentShown": 82,
+      "sourceStackRange": [
+        1,
+        5
+      ],
+      "totalQuantity": null,
+      "histogram": null
+    },
+    {
+      "field": "Vibrant Shard material occurrence row",
+      "inputItemID": 209935,
+      "outputItemID": 194124,
+      "casts": 28,
+      "castsWithDrop": 5,
+      "percentShown": 18,
+      "sourceStackRange": [
+        1,
+        2
+      ],
+      "totalQuantity": null,
+      "histogram": null
     }
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
-  "numerical_fields_improved": [],
+  "newly_verified_cohorts": [
+    {
+      "inputItemID": 209935,
+      "inputName": "Spirited Stag's Handaxe",
+      "sourceKind": "Wowhead Looter pooled cumulative item snapshot (not independent player-run sample)",
+      "reportedOperations": 28,
+      "reportedMaterialOccurrenceRows": 2,
+      "source": "https://www.wowhead.com/item=209935/spirited-stags-handaxe",
+      "studyKey": "wowhead-de-209935-pooled-snapshot-20261117-2340"
+    }
+  ],
+  "new_numerical_measurements": 2,
+  "numerical_fields_improved": [
+    "209935 -> 194123: 23/28 source-reported material occurrence hits, displayed 82%, positive stack range 1-5 (not quantity histogram)",
+    "209935 -> 194124: 5/28 source-reported material occurrence hits, displayed 18%, positive stack range 1-2 (not quantity histogram)"
+  ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-16T1042-independent-prospect-mill-ledger-search.jsonl",
@@ -70,10 +108,11 @@
     "research/v3/evidence/dragonflight/2026-11-17T1929-public-addon-export-and-cast-ledger-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T2030-new-numeric-origin-source-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T2135-raw-operations-and-original-identity-triage.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-17T2234-pigment-originals-and-draconium-rank-identity.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-17T2234-pigment-originals-and-draconium-rank-identity.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-17T2234-pigment-originals-and-draconium-rank-identity.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-17T2234-pigment-originals-and-draconium-rank-identity.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl",
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/10i63zb",
     "https://www.reddit.com/r/woweconomy/comments/zkay8v",
@@ -125,16 +164,18 @@
     "https://www.reddit.com/r/woweconomy/comments/10b7zbb",
     "https://warcraft.wiki.gg/wiki/Pigment",
     "https://goldcap.gg/retail/us/items/190311",
-    "https://goldcap.gg/retail/us/items/190394"
+    "https://goldcap.gg/retail/us/items/190394",
+    "https://www.wowhead.com/item=209935/spirited-stags-handaxe"
   ],
-  "verified_parent_sha": "8d6eb44a32695b9f4dfdf8e8f648edea6c61693f",
+  "verified_parent_sha": "7238b9a8f0cf4b0e60e7e615a4b18bc948f92d0b",
   "verified_commit_sha": null,
-  "commit_sha_scope": "New own commit cannot contain its SHA inside its own status blob (content hash self-reference); verify published commit and changed paths externally after branch update.",
+  "commit_sha_scope": "One atomic commit contains the new JSONL and status; its own SHA cannot appear inside its status blob without a content-hash self-reference. New commit and final changed paths are verified by read-back after update.",
   "blockers": [
     "No new original independently measured Dragonflight material-level finished-cast histogram found for targeted ore/herb processing; already indexed studies do not disclose per-output 0/1/2+ events.",
     "Nominal ore/herb totals, sample percentages, prerelease model estimates and pooled output units cannot establish completed casts or P(hit) under resourcefulness refund/reprocessing.",
     "2022 beta character skill/rank studies and 2023 commenter data are old, duplicated cohorts in the evidence archive; not independent new 2026 Retail observations.",
-    "Wowhead and alternative item directory search did not resolve authoritative quality labels for Serevite 190394/190395/190396."
+    "Wowhead and alternative item directory search did not resolve authoritative quality labels for Serevite 190394/190395/190396.",
+    "Wowhead Looter 209935 cumulative counts do not expose data epoch, original build, variant, player skill, material units or positive-stack histograms. Other output hits may co-occur; summed material hits are not unique outcome counts."
   ],
   "exhausted_sources": [
     {
@@ -1805,28 +1846,44 @@
         "YouTube searches by name 'Draconium Ore prospecting 1000 results' and 'Bubble Poppy milling pigments results': no independently viewable player-published complete cast-by-cast output ledger",
         "Blizzard US/EU forum searches by name 'Saxifrage milled pigments' and 'Serevite Ore prospected results': no novel exact-rank source with completed casts, per-output positive hits and zero bins"
       ]
+    },
+    {
+      "at": "2026-11-17T23:41:13.172Z",
+      "scope": "Distinct named original Draconium/Serevite/Khaz'gorite/Prismatic prospecting and Bubble Poppy/Saxifrage milling source log triage",
+      "reason": "No new independently sourced 0-N raw prospect/mill event ledger; archived author samples already indexed; avoided re-counting prior cohorts and treating Resourcefulness-refunded ores as finished casts.",
+      "whereLooked": [
+        "Reddit r/woweconomy name-first Draconium Ore prospecting and original completed-cast outcomes: Bugy/Xenastro/10i63zb/10u5ao8 originals already indexed; no new skill/rank/refund-aware 0–N event ledger (https://www.reddit.com/r/woweconomy/comments/10i63zb)",
+        "Reddit r/woweconomy name-first Serevite Ore and Khaz'gorite Ore 2022–2023 source outcomes: ar_rules 26k nominal inputs, 1000 Serevite casts and 20 Khaz'gorite casts already indexed, no fresh independent named-output event histograms (https://www.reddit.com/r/woweconomy/comments/10h6ccx)",
+        "Wowhead Dragon Isles Prospecting and Illimited Diamond original comments: Bugy's pooled averages are prior evidence, no precise hits/zero/stack counts per quality-ranked Draconium, Serevite, Khaz'gorite input (https://www.wowhead.com/spell=374627/dragon-isles-prospecting)",
+        "Wowhead Prismatic Ore 194545 original comments: TheChisel/Hotfor/superbondez samples recognized as previous indexed originals, no newly independent material-by-cast raw event table (https://www.wowhead.com/item=194545/prismatic-ore)",
+        "Wowhead Bubble Poppy and Serene Pigment / Saxifrage and Blazing Pigment named comments: recipe/output family or Aary nominal-herb totals, not new completion/refund-separated mill histograms (https://www.wowhead.com/item=191467/bubble-poppy ; https://www.wowhead.com/item=198420/blazing-pigment)",
+        "Warcraft Wiki named Dragon Isles Prismatic Ore / Prospecting / Pigment families: recipe and item reference, not original raw reported per-cast output events (https://warcraft.wiki.gg/wiki/Pigment)",
+        "WoW-Professions Dragon Isles Inscription and Jewelcrafting named milling/prospecting guide: batch-size/skill references only, no independent full cast/mill outcome sheet (https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight)",
+        "GitHub repo name-first Dragonflight ProspectMate SavedVariables / original Draconium and Serevite csv cast-log search: found addon descriptions and existing copied rate models, not publicly attributable independent source of 0/1/2+ observations (https://github.com/search?q=Dragonflight+prospecting+cast+log&type=code)",
+        "Xenastro original Prospecting Log linked Google spreadsheet rows 28,33,39,54,62: direct worksheet row values not retrievable, do not convert 44 pooled gems into individual outputs or completed casts (https://docs.google.com/spreadsheets/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/edit)"
+      ]
     }
   ],
-  "next_concrete_step": "Find newly published or author-provided original Dragonflight ProspectMate SavedVariables or a direct per-operation prospect/mill log with input IDs/ranks, finished operation count, refunded ore/herbs, source build, named outputs and 0/1/2+ histogram; do not re-index previously exhausted Bugy/Jallfo/Aary/TheChisel/neoslayyer studies. Have Master review Serevite rank conflict via authoritative live item tooltip.",
+  "next_concrete_step": "Obtain original Xenastro 2023 Prospecting Log spreadsheet raw rows or independently attributable ProsperMate/SavedVariables per-operation export with verified quality-ranked input, real casts/refunds, output material IDs, 0/1/2+ histograms and skill/build. Before estimator use, Master should review Wowhead Looter cumulative snapshot overlap and exact live-version eligibility for 209935.",
   "validation": {
-    "record_count": 1,
-    "real_numeric_records": 0,
+    "record_count": 3,
+    "real_numeric_records": 2,
+    "unique_source_input_items": 1,
     "jsonl_parse": "pass",
     "schema_required_fields": "pass",
-    "searches_by_name": 12,
+    "source_hits_bounds": "pass",
+    "searches_by_name": 9,
     "distinct_sites": [
-      "wowhead.com",
       "reddit.com",
+      "wowhead.com",
       "warcraft.wiki.gg",
+      "wow-professions.com",
       "github.com",
-      "goldcap.gg",
-      "youtube.com",
-      "us.forums.blizzard.com",
-      "eu.forums.blizzard.com"
+      "docs.google.com"
     ],
     "duplicate_cohorts_added": 0,
     "changed_paths_planned": [
-      "research/v3/evidence/dragonflight/2026-11-17T2234-pigment-originals-and-draconium-rank-identity.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "post_commit_readback": "pending"
@@ -1834,5 +1891,5 @@
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 0
+  "new_source_reported_numeric_rows": 2
 }
