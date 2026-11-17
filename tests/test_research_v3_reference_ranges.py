@@ -13,7 +13,7 @@ sys.path.insert(0, 'tools')
 import research_v3_to_baselines as adapter
 import research_v3_reference_ranges as repair
 FIXTURE = Path('tests/fixtures/legacy-reference-range')
-PIN = Path('database/research/v3-snapshot')
+PIN = Path('tests/fixtures/research-golden/v3-snapshot')  # frozen research; live data changes on every refresh
 TARGET = 'legacy-20261110-24914'
 CANONICAL = 'legacy-20261106-004102'
 

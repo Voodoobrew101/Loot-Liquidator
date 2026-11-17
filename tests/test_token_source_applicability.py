@@ -128,8 +128,19 @@ class SourceApplicability(unittest.TestCase):
         actual = tokens.build_tokens(snapshot, 'same-revision', staged)
         with patch.object(tokens, 'token_admission', side_effect=lambda rows: (rows, Counter())):
             expected = tokens.build_tokens(snapshot, 'same-revision', staged)
-        self.assertEqual(actual, expected)
-        self.assertEqual(len(actual[0]), 237)
+        # Research refreshes add records; the policy may then hold some out. Every
+        # difference must come from a record the reviewed policy names.
+        excluded = {rid for entry in POLICY['exclusions'] for rid in entry['recordIDs']}
+        kept = {row['recordID']: row for row in actual[0]}
+        for row in expected[0]:
+            mine = kept.get(row['recordID'])
+            if mine == row:
+                continue
+            dropped = set(row.get('researchRecordIDs', [])) - set((mine or {}).get('researchRecordIDs', []))
+            self.assertTrue(dropped and dropped <= excluded, row['recordID'])
+        self.assertTrue(set(kept) <= {row['recordID'] for row in expected[0]})
+        self.assertEqual(actual[2], expected[2])  # notes counts may include held-out rows
+        self.assertGreaterEqual(len(actual[0]), 237)
 
     def test_invalid_policy_fails_closed(self):
         malformed = [None, [], {}, {'version': True, 'exclusions': []},

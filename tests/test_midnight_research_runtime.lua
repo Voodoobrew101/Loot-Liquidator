@@ -1,3 +1,4 @@
+-- ItemDB comes from the frozen research copy: live research changes on every refresh.
 -- Numerical fixtures exercise the real evidence selector and tooltip renderer.
 -- Units/cast and casts-with-a-drop are independent measurements.
 local checks=0
@@ -170,7 +171,7 @@ LL.db.showAverageQuantity=true
 -- Finally exercise the real generated record, after the evidence builder and
 -- native ItemDB compiler have run, rather than only these controlled fixtures.
 local shipped={}
-assert(loadfile('LootLiquidator/ItemDBRuntime.lua'))('LL',shipped)
+assert(loadfile('tests/fixtures/research-golden/ItemDBRuntime.lua'))('LL',shipped)
 local native
 for _,r in ipairs(shipped.ItemDB.processing) do
     if r.inputItemID==239671 and r.inputRarity==3 and r.inputClassID==4 then

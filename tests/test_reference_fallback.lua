@@ -1,9 +1,10 @@
+-- ItemDB comes from the frozen research copy: live research changes on every refresh.
 local LL={}
 CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()end}end
 GetBuildInfo=function()return '12.1.5','123456','',120105 end
 GetTime=function()return 100 end
 for _,name in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua','ConversionEngine.lua','Badges.lua'}) do
-    assert(loadfile('LootLiquidator/'..name))('LootLiquidator',LL)
+    assert(loadfile(name=='ItemDBRuntime.lua' and 'tests/fixtures/research-golden/ItemDBRuntime.lua' or 'LootLiquidator/'..name))('LootLiquidator',LL)
 end
 LL.db={tooltipDetail=3,showAverageQuantity=true,source_legacy_enabled=false,
     source_personal_enabled=false,source_imported_enabled=false}

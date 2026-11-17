@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / 'tools'))
 import research_v3_tokens as tokens
 
 FIXTURES = ROOT / 'tests/fixtures/curio-direct-enumeration'
-PINNED = ROOT / 'database/research/v3-snapshot'
+PINNED = ROOT / 'tests/fixtures/research-golden/v3-snapshot'  # frozen research; live data changes on every refresh
 MANIFEST = json.loads((FIXTURES / 'manifest.json').read_text())
 STAGED = tokens.load_staged([ROOT / path for path in tokens.STAGED])
 

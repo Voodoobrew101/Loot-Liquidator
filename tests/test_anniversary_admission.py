@@ -12,7 +12,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3
 
-SNAPSHOT = Path('database/research/v3-snapshot')
+SNAPSHOT = Path('tests/fixtures/research-golden/v3-snapshot')  # frozen research; live data changes on every refresh
 FIXTURE = Path('tests/fixtures/retail-admission/anniversary-held.jsonl')
 SHA256 = '7e3cd720753be660e92fddb53c58b2a2039295389d2dd36a34168d2ce85582e5'
 

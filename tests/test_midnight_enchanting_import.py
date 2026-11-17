@@ -13,7 +13,10 @@ import evidence_check
 class MidnightEnchantingImportTests(unittest.TestCase):
     def setUp(self):
         self.review = json.loads(importer.SOURCE.read_text())
-        self.existing = importer.snapshot_lineages()
+        # Logic tests use the snapshot minus the reviewed studies, so they keep
+        # exercising the importer after the research team records those studies too.
+        self.snapshot = importer.snapshot_lineages()
+        self.existing = self.snapshot - set(importer.REVIEWED_SCOPES)
 
     def test_counted_units_do_not_turn_into_probabilities_or_ranges(self):
         records, skipped = importer.build(self.review, self.existing)
@@ -54,7 +57,7 @@ class MidnightEnchantingImportTests(unittest.TestCase):
             importer.build(review, self.existing)
 
     def test_generated_native_evidence_is_current(self):
-        records, _ = importer.build(self.review, self.existing)
+        records, _ = importer.build(self.review, self.snapshot)
         self.assertEqual(json.loads(importer.OUTPUT.read_text()), records)
 
 

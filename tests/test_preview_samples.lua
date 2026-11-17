@@ -6,7 +6,8 @@ local first=assert(source:find('local PREVIEW_ITEMS = {}',1,true))
 local last=assert(source:find('PreviewPanel=function()',first,true))
 local factory=assert(loadstring('local LL=...\n'..source:sub(first,last-1)..'\nreturn PREVIEW_ITEMS,SampleDecision'))
 local rows,decision=factory(LL)
-assert(#rows==5,'all curated studies must still provide complete measured examples')
+-- Research refreshes can make a curated item incomplete; the panel skips those.
+assert(#rows>=3,'at least three curated studies must still provide complete measured examples')
 local records={}
 for _,record in ipairs(LL.ItemDB.processing) do records[record.recordID]=record end
 for _,row in ipairs(rows) do

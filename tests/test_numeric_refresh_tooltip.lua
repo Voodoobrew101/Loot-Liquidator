@@ -1,3 +1,4 @@
+-- ItemDB comes from the frozen research copy: live research changes on every refresh.
 -- New real evidence must reach the actual engine and tooltip. Prices here are
 -- deterministic test prices (100 copper per material), never live quotations.
 local LL={}
@@ -5,7 +6,7 @@ CreateFrame=function()return {RegisterEvent=function()end,SetScript=function()en
 GetBuildInfo=function()return '12.1.5','123456','Oct 29 2026',120105 end
 GetTime=function()return 100 end
 for _,file in ipairs({'ItemDBRuntime.lua','ProfessionModels.lua','Database.lua','ConversionEngine.lua','Badges.lua'}) do
-    assert(loadfile('LootLiquidator/'..file))('LootLiquidator',LL)
+    assert(loadfile(file=='ItemDBRuntime.lua' and 'tests/fixtures/research-golden/ItemDBRuntime.lua' or 'LootLiquidator/'..file))('LootLiquidator',LL)
 end
 LL.db={source_itemdb_enabled=true,source_personal_enabled=false,source_legacy_enabled=false,
     tooltipDetail=3,showTooltipExplanations=true,showAverageQuantity=true,processingModes={D=1}}

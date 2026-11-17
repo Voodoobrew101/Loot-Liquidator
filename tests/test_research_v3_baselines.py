@@ -9,7 +9,8 @@ sys.path.insert(0, 'tools')
 import research_v3_to_baselines as v3  # noqa: E402
 import evidence_to_baselines as eb  # noqa: E402
 
-SNAPSHOT = Path('database/research/v3-snapshot')
+SNAPSHOT = Path('tests/fixtures/research-golden/v3-snapshot')  # frozen research; live data changes on every refresh
+LIVE = v3.DEFAULT_SNAPSHOT
 passed = 0
 
 
@@ -218,6 +219,10 @@ ok(not conflicts, 'no source conflicts in this snapshot')
 ok(all(t['sourceURLs'] and all(u.startswith('https://') for u in t['sourceURLs']) for t in tokens), 'every list has https sources')
 
 # The committed file is current.
-no_de, _ = v3.research_v3_no_disenchant.build_no_disenchant(SNAPSHOT)  # D1c4
-ok(v3.render(records, SNAPSHOT, tokens, no_de) == v3.DEFAULT_OUTPUT.read_text(), 'database/research-v3-baselines.lua is current')
+# The committed file is built from the live snapshot, not the frozen test copy.
+live_records = v3.build(LIVE)[0]
+live_revision = json.loads((LIVE / 'SNAPSHOT.json').read_text())['commit']
+live_tokens = vt.build_tokens(LIVE, live_revision)[0]
+no_de, _ = v3.research_v3_no_disenchant.build_no_disenchant(LIVE)  # D1c4
+ok(v3.render(live_records, LIVE, live_tokens, no_de) == v3.DEFAULT_OUTPUT.read_text(), 'database/research-v3-baselines.lua is current')
 print(f'RESEARCH V3 BASELINE TESTS: {passed} passed, 0 failed; {len(records)} records')
