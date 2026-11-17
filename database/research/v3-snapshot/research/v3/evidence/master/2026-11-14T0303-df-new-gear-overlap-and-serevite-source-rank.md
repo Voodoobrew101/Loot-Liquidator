@@ -1,0 +1,36 @@
+# T0041/T0046 — newly reported Dragonflight gear overlap, exact-ID applicability, and original Serevite rank lead
+
+Verified via GitHub worker-source read and independently opened public catalog/original article on 2026-11-14T03:03:07.891Z. This is a **research-only source/identity and arithmetic audit**, not new experimental casts, actual addon valuation/rendering, or in-client eligibility.
+
+## Exact worker source and recomputed counts
+
+Worker-owned source: [14 Nov 02:43Z Dragonflight source rows](../dragonflight/2026-11-14T0243-four-gear-looter-and-ore-lead.jsonl), original 10 reported `drop` rows, four distinct item-side cumulative Looter tables. No worker source was edited. Counts below **derive from those preserved source-reported values**, which could not be independently reopened as Looter numerators in readable JavaScript-stripped Wowhead views.
+
+| Exact gear ID | Source-reported operations | Output-material occurrence rows (hit counts) | Reported material appearances | Appearance excess above denominator |
+| --- | ---: | --- | ---: | ---: |
+| 194417 | 11 | 194123: 10/11 (2–3 source-listed positive stack range); 194124: 1/11 | 11 | 0 |
+| 194378 | 22 | 194123: 20/22 (1–4 source-listed positive stack range); 194124: 2/22 | 22 | 0 |
+| 202553 | 107 | 194124: 61/107 (1–2 source-listed positive stack range); 200113: 57/107; 194123: 7/107 (1–2 source-listed positive stack range) | 125 | 18 |
+| 202526 | 14 | 200113: 9/14; 194124: 5/14 (2–2 source-listed positive stack range); 194123: 1/14 (2–2 source-listed positive stack range) | 15 | 1 |
+| **Total: 4 original cumulative tables** | **154** | **10 material rows; 6 source-listed positive-stack intervals** | **173** | **19** |
+
+If every output row for an item shares the original item's `casts` denominator, material hit totals above the denominator imply **at least 19 extra appearances**, NOT 19 observed joint-output casts. In particular, 202553 has 125 material occurrences over 107 reported disenchantings (18 appearance excess); 202526 has 15 over 14 (1 excess). The 194417 and 194378 appearances equal their respective denominators; equality **does not establish** no all-zero outcomes, exclusivity, or complete material reporting. Output quantities, 0..N distributions, cast patch/bonus, original uploader identities, independence and character skill remain unknown.
+
+Six worker fields set `minSeen/maxSeen` to source-displayed positive stack intervals. The links do not expose a raw per-operation histogram or certify those endpoints were seen by the reported sample; preserve them as **source/reference display ranges**, not measured empirical extrema. The fields have already been shown by static estimator review in the [previous manager audit](2026-11-14T0208-df-rank-range-provenance-and-overlap-audit.md) to feed a provisional midpoint EV and an observed-range label. This new set extends the same import/provenance review boundary, without altering original data or integration code.
+
+## Independently opened exact-ID catalog/applicability finding
+
+- [WoWDB LIVE 202553 Underlight Conjurer's Treads](https://www.wowdb.com/items/202553-underlight-conjurers-treads) explicitly says **"Cannot be disenchanted"** for base 202553; lists historical Patch 10.1.0 and a Mage cloth feet item. The worker's [selected Wowhead bonus query](https://www.wowhead.com/item=202553/underlight-conjurers-treads?bonus=6652%3A9332%3A1491&class=8&ilvl=434&spec=64) reports a cumulative 107 source operations but does not prove the original at-cast bonus, source epoch or present-client eligibility. The JavaScript/text view did not expose its Looter rows. This is a **new explicit current catalog versus historical Looter applicability conflict**, not proof of failed live-client attempts.
+- [Wowhead PTR 12.1.5 exact 202526](https://www.wowhead.com/ptr-2/item=202526/kinslayers-gaiters) identifies a Demon Hunter leather set item and PTR-context page. It does not prove the historical material table was recorded on PTR or that current Retail disenchanting is allowed. [194417](https://www.wowhead.com/item=194417/vault-guards-talon) and [194378](https://www.wowhead.com/item=194378/explorers-belt-knife) exact IDs were independently corroborated as dagger items on current Wowhead text pages, **not** numerically recounted source operations.
+
+**Disposition:** Preserve original Looter aggregates and source display intervals as candidate evidence; hold current-character disenchant action/EV on disputed 202553 and unknown PTR/bonus applicability until direct itemLink, era and eligibility evidence. Do not turn material row occurrence fractions into output quantities or simultaneous exclusive outcomes.
+
+## Original high-volume Serevite prospect lead — exact rank ID independently resolved
+
+The original [GoldGoblin Dragonflight prospecting article](https://www.goldgoblin.net/gold-verdienen-mit-sondieren/) was last updated **2022-12-09** and explicitly states a 50,000 **rank-2** Serevite Ore purchase and prospecting example. Its **linked ore item identities**, not a name-based rank guess, are [T1 190395](https://www.wowhead.com/de/item=190395/sereviterz), [T2 **190396**](https://www.wowhead.com/de/item=190396/sereviterz), [T3 190394](https://www.wowhead.com/de/item=190394/sereviterz). The author states resulting character processing skill **168 / 201 / 234** for T1/T2/T3 respectively; T2 skill **201** is the source-specific scenario, not a general rule/coefficient.
+
+The 2022 article lists **50,000 purchased** T2 ore, **650,000 gold** purchase cost, about **770,000 gold** sale receipts, and **120,000 gold** historical gross difference. These are original source-reported historical purchase/sale economics, **not modern character market prices, gold EV, output quantities, or 10,000 proven completed casts**. Resourcefulness/saved inputs, at-cast source recipe/skill conditions, actual completed operations, and positive/zero output quantities remain unverified. The article's image "Ergebnis Sondierung" is linked as [the source image](https://www.goldgoblin.net/wp-content/uploads/2022/12/Ergebnis-Sondierung.jpg) but numeric image read/download was unavailable in this run, so **zero screenshot material quantities were transcribed or guessed**. Do not duplicate the original study or infer a measured yield from the price difference.
+
+## Scope and next step
+
+Most direct potentially useful new data is the validated **T2 ore item ID 190396 and source skill 201** as the exact candidate identity/profile for any future readable screenshot/log; no newly validated current-priced conversion outputs. Acquire original screenshot with accurate material item/count/rank transcription and independently reconciled completed casts/refunds before conditional EV; seek present-version exact event/itemLink evidence for disputed 202553; keep current-patch Midnight T0005/T0039/T0045 full per-operation rank/hit/quantity/zero/refund/unlock studies at top priority. No main, addon integration, worker evidence, PR, release, or schedule modification. This audit performed GitHub source inspection, independent browser source reads and arithmetic assertions only; no estimator, Python/Lua suite, native synthetic-price rendering or live WoW check.

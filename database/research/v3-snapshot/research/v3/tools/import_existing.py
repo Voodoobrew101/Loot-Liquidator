@@ -166,6 +166,16 @@ def migrated(rel, ref):
     return {"path": rel, "sha256": file_sha(rel), "recordRef": ref}
 
 
+def gamedata_source():
+    """Historical source location before/after main's addon consolidation.
+
+    The archive preserves the exact original bytes; the current compiled addon
+    is never a migration input. Synthetic old-layout fixtures still use root.
+    """
+    archived = "research/legacy-addon-v0.9.70/GameData.lua"
+    return archived if os.path.isfile(os.path.join(ROOT, archived)) else "GameData.lua"
+
+
 def derivation(field, formula, assumption=None):
     return {"field": field, "formula": formula, "assumption": assumption}
 
@@ -606,7 +616,8 @@ DE_KIND = {"personal-observed-pooled": "personal-pooled",
 
 
 def import_gamedata():
-    s = open(os.path.join(ROOT, "GameData.lua"), encoding="utf-8").read()
+    source = gamedata_source()
+    s = open(os.path.join(ROOT, source), encoding="utf-8").read()
     de, recipes, tokens = [], [], []
     for m in re.finditer(r'^gd\.disenchant\[(\d+)\]\[(\d+)\]\["(armor|weapon)"\]=', s, re.M):
         exp, quality, kind = int(m.group(1)), int(m.group(2)), m.group(3)
@@ -643,7 +654,7 @@ def import_gamedata():
                 dv.append(derivation("totalQuantity", f"round(expectedQuantity x samples, 3) = round({e:g} x {samples:g}, 3)",
                                      "expectedQuantity is the pooled mean per item"))
             rec["derivations"] = dv or None
-            rec["migratedFrom"] = migrated("GameData.lua", f"line {line_of(s, m.start())}; gd.disenchant[{exp}][{quality}][\"{kind}\"] output {o.get('id')}")
+            rec["migratedFrom"] = migrated(source, f"line {line_of(s, m.start())}; gd.disenchant[{exp}][{quality}][\"{kind}\"] output {o.get('id')}")
     for m in re.finditer(r"^gd\.smelt\[(\d+)\]=", s, re.M):
         e, _ = parse_lua(s, m.end())
         ins = e.get("inputs") or []
@@ -655,7 +666,7 @@ def import_gamedata():
             inputsPerCast=ins[0]["amount"] if ins else None,
             otherReagents=[{"itemID": x["id"], "name": None, "count": x["amount"]} for x in ins[1:]] or None,
             outputItemID=e.get("output"), outputName=None, outputCount=e.get("outputCount")))
-        recipes[-1]["migratedFrom"] = migrated("GameData.lua", f"line {line_of(s, m.start())}; gd.smelt[{m.group(1)}]")
+        recipes[-1]["migratedFrom"] = migrated(source, f"line {line_of(s, m.start())}; gd.smelt[{m.group(1)}]")
     by_token, token_lines = {}, {}
     for m in re.finditer(r"^gd\.tokens\[(\d+)\]\[#gd\.tokens\[\d+\]\+1\]=", s, re.M):
         e, _ = parse_lua(s, m.end())
@@ -668,7 +679,7 @@ def import_gamedata():
             tokenItemID=tid, tokenName=None,
             rewards=[{"itemID": x.get("rewardID"), "name": None, "classes": None} for x in rewards],
             howRedeemed="unknown", vendor=None, cost=None, listComplete=None))
-        tokens[-1]["migratedFrom"] = migrated("GameData.lua", f"line {token_lines[tid]}; gd.tokens[{tid}]")
+        tokens[-1]["migratedFrom"] = migrated(source, f"line {token_lines[tid]}; gd.tokens[{tid}]")
     return de, recipes, tokens
 
 
@@ -701,7 +712,8 @@ def import_gamedata_tables():
     numbers equal it. Only missing rows are imported, as sourceKind `reference`: a starting guess, never
     study casts. Their chance is a Poisson/proxy model in GameData (probabilityBasis says NOT MEASURED),
     so only the average is carried; the chance stays in notes."""
-    s = open(os.path.join(ROOT, "GameData.lua"), encoding="utf-8").read()
+    source = gamedata_source()
+    s = open(os.path.join(ROOT, source), encoding="utf-8").read()
     idx = itemdb_index()
     f = lambda x: None if x[0] is False else x[0]  # noqa: E731
     report = {"tsmRetail": {"rows": 0, "present": 0, "presentValuesDiffer": [], "missing": []},
@@ -768,7 +780,7 @@ def import_gamedata_tables():
             rec["recordedOn"] = M03_DATE
             rec["castsBasis"] = None
             rec["derivations"] = None
-            rec["migratedFrom"] = migrated("GameData.lua", ref)
+            rec["migratedFrom"] = migrated(source, ref)
             records.append(rec)
     return records, report
 
@@ -807,20 +819,24 @@ NEW_SOURCES = {
     "reddit:zzyjzu": ("import", "Jan 2 2023 comment: ~28,000 R3 Serevite, 24 R3 Illimited Diamonds (the Jan 9 comment in the "
                                 "same thread is a copy of agent-held reddit 108782r and is skipped)"),
     "reddit:1fb0vv5": ("import", "Luredrop milling: 11 to 17 pigment from each milling, as the author saw it"),
-    "reddit:1smgllg": ("import", "calculator-thread commenter's approximate per-prospect rates (under 5,000 ore in all)"),
     "wow-professions.com/tbc/prospecting": ("import", "published TBC prospecting chance table: reference rows not already in v3"),
     "wowhead:spell=190385": ("import", "Wowhead comment 516803: six WoD herbs, 2,000 each, mass-milled, Cerulean Pigment totals"),
+    # Reconciled 2026-11-02: 1smgllg's 17 approximate, cast-unknown reference
+    # rows are already preserved by the Midnight worker; reimporting its v2
+    # shorthand would duplicate the source as a pseudo-study. 1fvhzy0 has
+    # existing pooled-herb records. At the reviewed 331a905 baseline y3e8ek
+    # also has actual Jallfo workbook rows (143001..143222), added AFTER the
+    # earlier search-only record. Search logs alone never establish holdings.
+    # Keep historical mappers, but retire these reviewed registry decisions.
     # skipped: same cohort already held under another URL
     "wowhead:item=192870": ("skip", "Bugy's two 2,000-ore Draconium cohorts (3 and 8 Illimited Diamonds): the same author's table is "
                                     "held by the dragonflight agent under wowhead spell=374627 (S17 copy)"),
     # skipped: qualitative, mechanics, UI or economics claims without output quantities
     "reddit:1fdvkmy": ("skip", "a commenter's proposed 30% Resourcefulness return, no measured outputs"),
     "reddit:1g8kbaq": ("skip", "Prospect All queue behaviour (1,000-ore stack queues 200 casts); mechanics, no outputs"),
-    "reddit:y3e8ek": ("skip", "2022 original discussion of the Dragonflight beta, qualitative"),
     "wowhead:news=recent-prospecting-changes-wowhead-economy-weekly-wrap-up-351-349956@ptr":
         ("skip", "news coverage of the Oct 2024 prospecting hotfix; rate-change context"),
     "reddit:10s9ol9": ("skip", "Resourcefulness saved-ore rate (mechanics), no outputs"),
-    "reddit:1fvhzy0": ("skip", "pigment multipliers (x1.52, x1.49) and a multi-stage cipher count; no base yield or outputs per mill"),
     "reddit:1jc2ya5": ("skip", "qualitative rank-versus-yield discussion"),
     "reddit:1v5esk0": ("skip", "crushing rate forecast (dust per gem); the author's 100,000 ore and 13,000 gems are not a processed batch"),
     "reddit:1vknxyy": ("skip", "same author repeats the crushing rate; no cohort"),
@@ -932,11 +948,15 @@ class Holdings:
                     r = json.loads(line)
                 except json.JSONDecodeError:
                     continue
-                if isinstance(r, dict):
+                if isinstance(r, dict) and r.get("type") != "searched":
                     rows.append((rel, r))
                     self.text.append(line.lower())
         rows += [("evidence/imported (this run)", r) for r in prior_rows]
         for rel, r in rows:
+            # A search log only records a lead/failed search. It is not a held
+            # observation and must not suppress an import from that source.
+            if r.get("type") == "searched":
+                continue
             if r.get("type") == "recipe":
                 self.recipes.setdefault(r.get("recipeSpellID"), []).append(r)
             s = r.get("source") if isinstance(r.get("source"), dict) else {}
@@ -1352,10 +1372,41 @@ def import_historical(prior_rows):
     prefixes = {"historical-archive-cohorts.jsonl": "import-archive", "v2-report-cohorts.jsonl": "import-v2report",
                 "leads-cohorts.jsonl": "import-lead", "submission-cohorts.jsonl": "import-submission",
                 "legacy-milling-cohorts.jsonl": "import-legmill"}
-    for name, rows in families.items():
-        for i, r in enumerate(rows, 1):
-            r["id"] = f"{prefixes[name]}-{i:05d}"
+    registry = os.path.join(ROOT, "research", "v3", "migration", "manifest", "historical-import-ids.jsonl")
+    pins = []
+    if os.path.exists(registry):
+        with open(registry, encoding="utf-8") as fh:
+            pins = [json.loads(line) for line in fh if line.strip()]
+    assign_historical_ids(families, prefixes, pins)
     return families, report
+
+
+def assign_historical_ids(families, prefixes, pins):
+    """Historical IDs belong to source records, not their current list position.
+
+    A held-source supersession can remove earlier rows. Never renumber surviving
+    rows into those IDs (corrections and lineage may still refer to them).
+    The frozen migration registry is copied from the existing pinned-ID fixture.
+    A new mapping requires a reviewed registry entry; tiny fixture repos without
+    a registry retain sequential IDs.
+    """
+    def key(name, path, ref, study):
+        return name, path, ref, study
+    registered = {key(p["file"], p["path"], p["recordRef"], p["studyKey"]): p["id"] for p in pins}
+    if len(registered) != len(pins) or len(set(registered.values())) != len(pins):
+        raise ValueError("Duplicate historical ID registry entry")
+    seen = set()
+    for name, rows in families.items():
+        for i, row in enumerate(rows, 1):
+            origin = row["migratedFrom"]
+            record = key(name, origin["path"], origin["recordRef"], row["studyKey"])
+            if pins and record not in registered:
+                raise ValueError("Unregistered historical source record: " + repr(record))
+            rid = registered.get(record, f"{prefixes[name]}-{i:05d}")
+            if rid in seen:
+                raise ValueError("Repeated historical source record: " + rid)
+            seen.add(rid)
+            row["id"] = rid
 
 
 def write(name, rows):

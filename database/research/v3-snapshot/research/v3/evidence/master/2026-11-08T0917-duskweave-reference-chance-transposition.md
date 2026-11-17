@@ -1,0 +1,19 @@
+# Duskweave Belt 41543: archive probability transposition and yield-scope discrepancy
+Verified coordinator source comparison: 2026-11-08T09:17Z. Research-only original-source QA for Legacy queue T0042 / T0050; **no new independent casts collected**.
+
+## Newly detected contradiction across original/reference pages
+- The archived **WoWWiki Duskweave Belt** item table gives **Infinite Dust 34054: 2–5, 22%**, **Greater Cosmic Essence 34055: 1–2, 75%**, **Dream Shard: 1, 3%**. [Archive](https://wowwiki-archive.fandom.com/wiki/Duskweave_Belt). This apparent *chance-column reversal* for armor is not source-validated current Retail data.
+- The separate Warcraft Wiki [Disenchanting tables](https://warcraft.wiki.gg/wiki/Disenchanting_tables) give the old item-level 152–200 generic group **Infinite Dust: 75%, 4–7**, **Greater Cosmic Essence: 22%, 1–2**, **Dream Shard: 3%, 1**. Warcraft Wiki's [Disenchanting](https://warcraft.wiki.gg/wiki/Disenchanting) page separately states old uncommon armor generally produces dust about 75% and essence about 20–22%. **The dust quantity range also disagrees with both the item page and the observed belt-specific range; do not splice these contexts/patches.**
+- On the independent archived [Wowhead WotLK Duskweave Belt page](https://www.wowhead.com/wotlk/item=41543/duskweave-belt) the 49-belt comment is displayed under author **zetapoo**. The new worker evidence `legacy-20261108-9701/-9702` identifies the original source by numeric author `180353`; preserve that original stored identifier but map the visible contributor display name as an alias, not a separate cohort.
+
+## Independently checked source arithmetic, not fresh measurements
+The existing **single** zetapoo/180353 historical 49-belt account reports positive-stack counts: dust 1×3, 2×10, 3×11, 4×10, 5×3; essence 1×6 and 2×6.
+- Dust: 37 positive operations, 111 units, observed sample P(hit)=37/49 = **75.51%**, conditional mean 111/37 = **3**, unconditional expected units per historical operation 111/49 = **2.2653061224**.
+- Essence: 12 positive operations, 18 units, sample P(hit)=12/49 = **24.49%**, conditional mean 18/12 = **1.5**, unconditional expected units 18/49 = **0.3673469388**.
+- Sum of the separately listed positive-operation marginal counts is 49, but this arithmetic **alone** does not identify cross-material co-occurrence or prove zero shard outcomes; no invented shard denominator or probability. Numbers already recorded by Legacy, and **not** additional casts.
+- This historical observed sample supports the **dust-majority** interpretation and is qualitatively inconsistent with the archived item page's dust 22% / essence 75% labeling; it cannot prove a universal rate, patch-independent drop model or present-day Retail application.
+
+## Disposition and next field-level action
+**Reference-table provenance and chance inversion risk**, plus old bracket-versus-belt yield range conflict. Before any item-specific compilation, the authorized legacy evidence owner should check whether the inverted archived page was imported as a current probability or provisional rate, explicitly version and distinguish table context, retain source candidates separately, and use a derived *historical* 49-cast expectation only in an applicable historical cohort. Correction must be append-only/linked; do **not** modify worker originals, reinterpret an old WowWiki item entry as current Retail, sum alternative reference tables, or write addon snapshots. Current Retail eligibility, character skill/patch, prices and actual tooltip tests remain unverified.
+
+Verified primary/readable cross-checks: [Wowhead WotLK original comments](https://www.wowhead.com/wotlk/item=41543/duskweave-belt), [WoWWiki archive item](https://wowwiki-archive.fandom.com/wiki/Duskweave_Belt), [Warcraft Wiki old tables](https://warcraft.wiki.gg/wiki/Disenchanting_tables), [Warcraft Wiki general notes](https://warcraft.wiki.gg/wiki/Disenchanting).

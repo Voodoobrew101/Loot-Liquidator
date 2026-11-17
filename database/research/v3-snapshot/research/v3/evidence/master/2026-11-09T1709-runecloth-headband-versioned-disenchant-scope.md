@@ -1,0 +1,25 @@
+# T0050 — Runecloth Headband 13866: version-dependent disenchant evidence scope
+
+**Review UTC:** 2026-11-09T17:10:04.609Z  
+**Disposition:** ORIGINAL-SOURCE CONTEXT CHECK / NO NUMERIC TRANSFORM / RESEARCH ONLY. This is a source-era/eligibility gap clarification, **not** a newly observed Retail cohort, current Retail recipe confirmation, accepted yield rate, or tooltip regression.
+
+## Original source facts independently checked
+
+1. The current public Retail [Runecloth Headband item 13866 page](https://www.wowhead.com/item=13866/runecloth-headband) identifies item 13866 as an equippable cloth head item, displays **item level 13** and required level 23 in its current unbonused item view. It does not establish the bonus IDs, historical item levels, character profession skill, or completed disenchant outcomes for either archived study.
+2. The same item's original *vikn* comment explicitly says **400 headbands disenchanted** and gives reported **per-headband averages**: **3.5 Rich Illusion Dust**, **0.04 Large Brilliant Shard**, **0.6 Greater Eternal Essence**. These are **not hit probabilities, measured raw material totals, output stack histograms or build/skill-tagged 2026 observations**. Already correctly preserved as three rows in `research/v3/evidence/legacy/2026-11-01T0935-outland-disenchant-and-runecloth-originals.jsonl` (IDs `legacy-20261101-411..413`), under one `studyKey`.
+3. Independent *urbanmonkey83* comment, also on [item 13866](https://www.wowhead.com/item=13866/runecloth-headband), gives **43 headbands**, **14 Greater Eternal Essence units** and **58 unnamed dust units**. The 58 dust have **no proven output item ID**. Already separately preserved in IDs `legacy-20261101-414..415`; never assign them automatically to item 156930 or 16204.
+4. On the [Rich Illusion Dust 156930 page](https://www.wowhead.com/item=156930/rich-illusion-dust), commenter *Zulatomten* describes **Shadowlands-prepatch** item scaling: greens above character level 25 and items **such as Runecloth Headband at item level 29 or above** produced **Outland rather than old-world enchanting materials**. This is a **source-claimed old-era rule**, not proof of current Retail behavior; in particular the present item 13866 page now displays ilvl **13** (base item) rather than the 29+ context of that comment. The two contexts cannot be collapsed into a timeless headband yield profile.
+5. A separate older *MoarHeroisms* comment on [item 13866](https://www.wowhead.com/item=13866/runecloth-headband) uses historical chance × conditional-stack factors (**0.75 × 3.5** for dust). The later 400-headband source reports **3.5 as a per-headband average**. The comments are **not a shared experiment**; never multiply vikn's unconditional average by the unrelated older 75% chance or substitute a Classic calculator distribution.
+
+## Disposition / exact unresolved identity and numeric fields
+
+- **Known:** Retail catalog input ID **13866**; source-linked material candidate IDs **156930**, **14344**, **16203** for the 400-headband record; completed source denominator **400**, reported unconditional per-headband averages, distinct **43**-operation cohort with 14 essence and 58 unidentified dust; published dates **not provided**.
+- **Unknown:** original build/patch/bonus IDs, live character level and enchanting skill, input actual item level at each DE, source-era recipe/eligibility, raw per-material totals and observed hit counts, any per-cast zero/stack histogram, modern Retail version applicability, present-bag gold recommendation or rendered tooltip.
+- **Classification:** `identity/era-context conflict + historical means usable only in a labeled, provenance-scoped conditional reference`, not `no evidence`, not missing-market-price, and not measured live Retail coverage. Respect the 4df9ae8 immutable snapshot and the protected implementation branch.
+- **Worker coordination:** Legacy T0050 original records remain worker-owned and untouched. Highest-value next action is original or current Retail **itemLink+bonus+ilvl, character skill, client build, DE outcome item IDs, and source-complete casts** for 13866. Do not ask workers to re-copy 400/43 existing studies. Keep current-patch Midnight T0005/T0039/T0045 higher priority for actionable gold.
+
+## Actual validation and limitations
+
+Executed: independent read of the publicly indexed current item 13866 page and 156930 source comments, exact readback of archived five original worker evidence rows, and comparison of old-vs-current item-level contexts. Not executed: any game-client disenchant, Lua test, estimator rebuild, synthetic-price valuation/render, current item-bonus resolver, or source date verification. **New casts 0; supported current Retail gold decisions 0; rendered tooltip fields 0.**
+
+Sources: https://www.wowhead.com/item=13866/runecloth-headband ; https://www.wowhead.com/item=156930/rich-illusion-dust ; https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/2026-11-01T0935-outland-disenchant-and-runecloth-originals.jsonl

@@ -1,0 +1,37 @@
+# T0041/T0046 — new Dragonflight gear-source row/range provenance and eligibility checkpoint
+
+Verified at 2026-11-14T02:09:57.750Z UTC. Research-only **source and static numeric audit**; no newly observed player casts, fully observed histograms, real-character valuation, or executed Lua/estimator tests.
+
+## Source documents checked
+- Worker-owned original rows: [2026-11-14 01:36 six distinct gear Looter records](../dragonflight/2026-11-14T0136-six-distinct-gear-looter-counts.jsonl), 13 `drop` rows plus one `searched` record. The **200394** rows repeat an original 26-operation snapshot already archived as [2026-11-13 22:34 seven-gear file](../dragonflight/2026-11-13T2234-seven-gear-looter-hits.jsonl), which has the same 18/26 and 13/26 material counts. This is **one original cumulative table**, not an independent 26 added casts. The new table includes a 1–2 source-displayed interval absent from the old transcription.
+- Independently retrieved readable indexed source tables: [Shroud 200386 PTR](https://www.wowhead.com/ptr/item=200386/shroud-of-the-awakened) 11/17 Crystal, 7/17 Shard; [Treads 200379 LIVE](https://www.wowhead.com/item=200379/treads-of-the-awakened) 10/15 Shard, 9/15 Crystal; [Gauntlets 200380 LIVE](https://www.wowhead.com/item=200380/gauntlets-of-the-awakened) 26/35 Crystal, 19/35 Shard; [Crown 200381 LIVE](https://www.wowhead.com/item=200381/crown-of-the-awakened) 26/37 Crystal, 15/37 Shard; [Stingerproof 194406 PTR 12.1.7](https://www.wowhead.com/ptr/item=194406/stingerproof-helmet) 66/77 Dust, 11/77 Shard, 1/77 Crystal. [194406 PTR 12.1.5](https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet) displays the same 77/66/11/1, a **mirror**, not another cohort. [200394 LIVE](https://www.wowhead.com/item=200394/stormwing-harriers-wristguards) independently repeats the 26/18/13 counts.
+- These links show item names and source table counts, **not independently recoverable underlying raw event/stack logs or linked output item IDs**. Worker material IDs (Chromatic Dust 194123, Vibrant Shard 194124, Resonant Crystal 200113) must retain their original source/identity provenance. They are not newly authenticated item links from the Looter table.
+
+## New numeric field and overlap check
+Five **new-to-this-manager-checkpoint** distinct item tables (200386/200379/200380/200381/194406) sum to 181 source-reported item operations and 201 material appearances (11 material rows). Per-input appearance totals and the minimum same-operation co-appearance excess, *conditional on one shared original denominator for the displayed material rows*, are:
+
+| Input ID | Reported item operations | Material appearances | Minimum co-appearance excess |
+| --- | ---: | ---: | ---: |
+| 200386 | 17 | 11+7 = 18 | 1 |
+| 200379 | 15 | 10+9 = 19 | 4 |
+| 200380 | 35 | 26+19 = 45 | 10 |
+| 200381 | 37 | 26+15 = 41 | 4 |
+| 194406 | 77 | 66+11+1 = 78 | 1 |
+| **Five-source total** | **181** | **201** | **20** |
+
+The 20 figure counts *excess material appearances above the number of operations*, not 20 independently observed joint events or an estimated total-zero count. For two-output cohorts it lower-bounds intersecting positive events; for the three-output cohort it is an overlap-excess bound and does not recover the three-way joint distribution. The previously audited 200394 has another 5 excess appearances (31-26) and **must not be added as a new cohort**.
+
+Seven worker lines set `minSeen/maxSeen` from source-displayed **1–2** or **1–3** table ranges: 200394→194124, 200386→194124, 200379→194124, 200380→194124, 200381→194124, 194406→194123 and 194406→194124. The source text establishes **source-listed stack intervals**, not a verifiable raw stack histogram or that those endpoints were actually seen in these 26/17/15/35/37/77 sampled operations. In [evidence-format.md](../../evidence-format.md), `minSeen/maxSeen` specifically mean amounts **seen in one cast**. Preserve intervals in a separate clearly labeled source-reference field/review correction; do not rewrite worker originals or silently promote them to observed extrema. This is a **provenance classification issue**, not a reason to hide the ranges in tooltips.
+
+## Static estimator sensitivity, not a runtime test
+[build_estimates.py](../../tools/build_estimates.py) lines 751–761 copies non-null study `minSeen/maxSeen` into `slo/shi` **before** study deduplication; lines 785–791 take their midpoint; lines 909–911 create a **provisional** `average = P(hit) × midpoint` when no measured total exists; lines 940–947 label `rangeSource="observed"` whenever `slo/shi` is present, even when the source only showed a reference interval. Thus an as-yet-unvalidated interval can affect a provisional priced expected quantity and carry an observed-range label. As an arithmetic example, on 200380 Shard 19/35: yield-1 gives 0.542857 units/operation; a 1–2 midpoint yields 0.814286. On 194406 Dust 66/77: yield-1 gives 0.857143; a 1–3 midpoint gives 1.714286. **Neither is a measured observed mean**. Owner policy permits defensible labeled provisional assumptions, but requires transparent range provenance. The estimator has NOT been rebuilt here.
+
+Source normalization [source_keys.py](../../tools/source_keys.py) strips Wowhead item slugs, and estimator `study_identity` (lines 608–615) fingerprints source/input/casts/vector, so the two 200394 copies have identical stated count vectors despite differing study keys. The code is intended to deduplicate their numeric sample; **no actual estimator execution has verified its current disposition**. Retain the duplicated-original guard for any future importer, and inspect compiled `unused.json` before claiming absence of double-counting.
+
+## Three new exact-ID LIVE catalog applicability conflicts
+[WoWDB LIVE 200379](https://www.wowdb.com/items/200379-treads-of-the-awakened), [200380](https://www.wowdb.com/items/200380-gauntlets-of-the-awakened) and [200381](https://www.wowdb.com/items/200381-crown-of-the-awakened) explicitly say **Cannot be disenchanted** for the current displayed base IDs, whereas the matched Wowhead source tables list **15 / 35 / 37** historical item-side disenchants. These catalog flags are not live-client attempted casts. Exact original bonus/itemLink, actual source time/build, reward variants, skill/spec and current item eligibility remain missing; **do not convert these disputed tables into an unconditional Retail Disenchant recommendation or gold EV.**
+
+## Disposition / requested next
+- **Usable source fields:** matched item IDs, original cumulative appearances, six source-table denominators, seven *source-listed* ranges, provenance and arithmetic nonexclusivity guards.
+- **Not usable as observed fields:** per-cast 0..N counts, independent repeated cohorts, actual observed extrema, source event date, current-character eligibility, verified output stack totals, rank-specific conditional yield, or gold-price decisions.
+- **Next:** review original-source interval-to-`minSeen` mapping without changing worker originals; obtain exact at-event bonus/build and full per-event receipt ledger for 200379/200380/200381, otherwise prioritize current-patch Midnight T0005/T0039/T0045 0-inclusive output quantity, rank, unlock and refund records. Let the three-pass addon owner decide any separate integration correction. No main, protected implementation branch, immutable snapshot, PRs, workers or schedules touched.

@@ -620,9 +620,30 @@ def group_specificity(key):
 
 
 def same_output(r, o, ids):
-    """Same material, or (for a relabeled copy) the same non-zero numbers under another label."""
-    return (item_token(r, "outputItemID", "outputName", ids) == item_token(o, "outputItemID", "outputName", ids)
-            or any(row_numbers(r)))
+    """S21: cross-group copy suppression requires the same normalized output identity.
+
+    Equal nonzero totals are not an identity: a prospect can produce four Amber
+    and four Diamonds in the same cohort. Name/ID aliases are normalized by
+    item_token(); source-level relabelled-copy reporting stays in study_vectors().
+    """
+    left = item_token(r, "outputItemID", "outputName", ids)
+    right = item_token(o, "outputItemID", "outputName", ids)
+    if not (left and right and left == right):
+        return False
+    # S26: a shared material name is not proof that two quality ranks are one
+    # output. In particular, Looter tables may contain same-name rank rows,
+    # and a family-only transcription must not erase a distinct ranked row.
+    li, ri = r.get("outputItemID"), o.get("outputItemID")
+    if li is not None and ri is not None and str(li) != str(ri):
+        return False
+    lr, rr = r.get("outputRank"), o.get("outputRank")
+    if lr is not None and rr is not None and lr != rr:
+        return False
+    if (lr is None) != (rr is None):
+        # An exact matching item ID is sufficient even when one copy omitted
+        # the rank annotation; a name-only match is not.
+        return li is not None and ri is not None and str(li) == str(ri)
+    return True
 
 
 def misplaced_copies(rows, names, vectors, pooled):

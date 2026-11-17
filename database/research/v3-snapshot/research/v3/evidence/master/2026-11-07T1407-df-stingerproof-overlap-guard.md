@@ -1,0 +1,15 @@
+# Dragonflight Stingerproof Helmet: marginal-hit overlap guard (research only)
+
+**Audit UTC:** 2026-11-07T14:07:43.057Z  
+**Verified preceding research head:** `666f36a21e866cd9187f4f8b5fdf2483ebbd18be`  
+**Queue:** T0020; cross-cutting estimator/source interpretation.
+
+**Original source:** https://www.wowhead.com/ptr/item=194406/stingerproof-helmet (also https://www.wowhead.com/ptr-2/item=194406/stingerproof-helmet). Source is the item-side Looter disenchant table; its present PTR page and crawl date do not establish data collection patch or live Retail eligibility. **Existing worker transcription:** `research/v3/evidence/dragonflight/2026-11-07T1333-four-original-gear-looter-cohorts.jsonl` (study `wowhead-looter-original-df-item-194406`). Do not treat this cross-check as an independent second cohort.
+
+Direct original-source table and worker evidence both state **77** source-reported disenchant entries, with material-positive marginal counts **66** Chromatic Dust (194123), **11** Vibrant Shard (194124), and **1** Resonant Crystal (200113). Exact material totals, per-cast joint outcomes, character skill, bonus/version and operation-level histograms are absent. Source displays stack **ranges 1–3 dust, 1–2 shard**, not measured average quantities; the crystal entry displays no stack range.
+
+**New source-condition guard:** 66 + 11 + 1 = **78**, which **exceeds the shared 77-operation denominator**. The marginal fractions 66/77, 11/77 and 1/77 cannot all form a mutually exclusive three-way categorical distribution. This could mean material co-occurrence, cumulative-item Looter aggregation/instrumentation differences, or a conflicting source entry; no raw per-operation export distinguishes these possibilities. Dust+shard summing to 77 alone does **not** prove every operation yielded exactly one of them, because overlaps may coexist with omissions. Never coerce 78 hits into 78 completed operations, renormalize all output fractions to sum to one, or invent a no-output denominator.
+
+**Independent control:** https://www.wowhead.com/ptr/item=194389/brush-clearing-axe displays 77 entries (69 dust, 7 shard, 1 crystal), summing to 77. Its result does not resolve the other item's co-occurrence/identity uncertainty, and it remains a separate item cohort.
+
+**Disposition:** New original-source cross-check and safety constraint, **not** new casts, measured yield, current-patch probability, proof of an estimator defect or verified gold decision. Keep original worker rows untouched. If a lower-bound **provisional yield-1** is used in a future valuation, label its assumptions and field uncertainty; do not conflate it with measured conditional output quantity. Next, run a disjoint research-only estimate/selection regression for counts exceeding source operations and seek direct 194406 event exports with output item links, joint outcomes, stack totals, skill, item bonus and build. Do not write to the protected three-pass addon branch; no production, release, merge or live-game test here.

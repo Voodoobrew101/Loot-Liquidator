@@ -1,0 +1,21 @@
+# Original-source reference eligibility: Bloodfist/Conqueror 25003 and duplicate flags — 2026-11-16T11:26:59.634Z
+
+Scope: Research Manager T0042/T0047, source/identity QA only. This is not a completed Retail disenchant event, a live-client test, an addon import, or a newly validated gold action.
+
+## New identity/source lead
+
+[WoWDB LIVE: Bloodfist Legplates, item 25003](https://www.wowdb.com/items/25003-bloodfist-legplates), retrieved 2026-11-16, explicitly states **"Cannot be disenchanted"**, **item level 32**, **uncommon plate legs**, and required level 26. Its item ID/name/level match the separate currently indexed [Retail auction item identity](https://bootybaybroker.com/item/25003/bloodfist-legplates/us/eitrigg), but the auction listing does NOT establish enchant eligibility. WoWDB is static current-reference metadata, not proof that a particular itemLink/bonus/level instance failed a live disenchant. Do not mark prior 3.3.5 scaled item-group models invalid for their original era. Keep noDisenchant sourceKind=reference/condition-unverified until current Retail C_Item/GetItemInfo/C_TradeSkillUI or player-attempt proof as applicable.
+
+## Exact cross-file duplicate reconciliation
+
+The latest Legacy 2026-11-16T1112 worker source has **10** `noDisenchant` rows among 11 records, for item IDs `25001,25002,25004,25005,25006,25007,25008,25009,25010,25011`. Earlier [Legacy 2026-11-07T0547](../legacy/2026-11-07T0547-tbc-scaled-conqueror-armor-weapons.jsonl) already has **identical item-and-source-url noDisenchant reference flags** for **25007, 25009, 25010, 25011**. These four repeated assertions must not be counted as independent original discoveries or four more supported decisions. The 2026-11-07 file also includes **25012**; [Legacy 2026-11-13T1556](../legacy/2026-11-13T1556-scaled-tbc-no-disenchant-and-gloves-yield.jsonl) already includes **25013**. Across these three targeted files, item **25003** was the sole missing identity among **25001 through 25013 inclusive**; it is now sourced here for manager triage, **not** appended into the worker-owned Legacy lane. Do a repository-wide deduplication before asking a worker to add it, because this is a targeted four-file audit, not proof all other evidence files lack it.
+
+The older [Legacy 2026-11-09T1847 WotLK 3.3.5 template](../legacy/2026-11-09T1847-tbc-bloodfist-conqueror-reference-mappings.jsonl) already has 12 `drop` reference rows spread across 25001, 25004, 25005, 25013. It lists Arcane Dust 22445, Greater Planar Essence 22446 and Large Prismatic Shard 22449 with historical, uninterpreted table weights; no measured casts, hits or quantities. In particular 25001/25004/25005 have BOTH historical eligible output reference and modern noDE metadata, which is an **epoch/item-instance eligibility conflict**; never blend the historical weights into a modern Retail yield or silently apply the static noDE flag to all bonus/variant contexts.
+
+The eleventh new Legacy row is an independent **historical Willow Cape 6542 → Strange Dust 10940, 1 source-reported completed disenchant / 1 positive outcome** with total quantity unknown. This is not a source for modern Retail rate assumptions.
+
+## Executed reproducible bounded checks
+
+A GitHub-connector JavaScript JSONL parser compared all four linked original evidence files and ran **25/25 passing assertions**, including unique ID set, missing 25003, four exact URL/ID repeats, 25012/25013 presence, reference-only nature of 12 WotLK records and Willow's unmeasured quantity. This is an in-memory identity/schema audit only: no Python estimate compiler, actual Lua resolver/renderer, synthetic-price test, Excel inspection, CI execution, or live WoW run. The WoWDB 25003 page was opened separately as source text; source content was not silently treated as an observed operation.
+
+**Impact:** zero new proven modern Retail gold decisions; one new potentially material eligibility identity to gate future runtime coverage; four non-independent reference rows caught before counting. **Next:** Legacy T0042 should dedupe 25003 against all original files and preserve exact itemLink/bonus/build + current live eligibility if available; otherwise hold as labeled reference. Research T0039 current-patch original cast/hit/zero/quality/skill/refund logs remain the higher-priority numeric gap.
