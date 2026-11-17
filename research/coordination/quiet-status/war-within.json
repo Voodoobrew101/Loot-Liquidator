@@ -1,136 +1,104 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-17T11:30:00.025Z",
-  "status": "Added three original, separate September 2024 uncommon disenchant cohorts (687 mixed greens, 297 blacksmith hammers, 1,000 self-crafted greens; 2,984 total source-reported operations across independent authors), one original four-output single-cast Null Stone prospect, and one approximate pooled 50,000-ore Glittering Glass reference. Historical/non-current build and unidentified equipment inputs restrict estimator eligibility.",
+  "updated_at": "2026-11-17T12:22:20.111Z",
+  "status": "Six original first-hand historical TWW evidence rows from three independent source threads: three output-quality unit shares and one pooled disenchant average (same author/cohort), one 5,000-Aqirite no-extra-bonus-Ambivalent-Amber observation, and one 13-prospect/four-gem pooled report. All reference-only; no new material-specific measured cast/hit series or current-build estimator-eligible yields.",
   "task_ids": [
     "T0048",
+    "T0032",
     "T0040",
-    "T0007",
     "T0008",
+    "T0007",
     "T0009",
     "T0010",
     "T0011"
   ],
   "exact_gaps_targeted": [
-    "T0048: source-reported TWW uncommon-enchanting skill-versus-rank unit totals for 687/297/1000 original disenchant cohorts; exact gear IDs, slot/ilvl and per-rank castsWithDrop remain null",
-    "T0040/T0007-0009: a single actual 210939 Null Stone prospect yielding four specified output item IDs 212495/212505/213398/213399, plus 50k-ore pooled 213399 reference average; original specific Bismuth/Ironclaw/Aqirite rank-split hit distributions remain absent",
-    "T0010/T0011: post-2024 Mycobloom output/rank-specific completed mill/hit histograms still unavailable; no duplicated old samples"
+    "T0048: rarity/skill-specific historical green-disenchant output quality shares (219946/219947/219948) and pooled 2.85 dust units per cast; per-rank drop occurrence denominator, total sample size, gear family/ilvl remain null",
+    "T0032/T0008/T0040: Aqirite Gem Finding 40/40 author reports no additional Ambivalent Amber from 5,000 ore on Sep 3 2024; does not imply zero baseline amber or provide completed casts/bonus-event histogram",
+    "T0040: independent original report of 13 prospect operations yielding four gems of two unidentified types, with input ore and output identity unreported",
+    "T0007/T0009/T0010/T0011: current-era ranked ore/herb completed-cast and hit-count histograms remain unresolved"
   ],
   "newly_verified_fields": [
     {
+      "studyKey": "reddit-1fc2j1m-20240909-maxgreen-uncommon-shares",
       "method": "Disenchant",
-      "studyKey": "reddit-1f9qado-original-op-687",
-      "inputItemID": null,
-      "gearGroup": "TWW uncommon mixed greens",
-      "operations": 687,
-      "outputTotals": {
-        "219946": 927,
-        "219947": 738,
-        "219948": 298
-      },
-      "skill": "72/100 with gear",
-      "castsWithDrop": null,
-      "histogram": null,
-      "source": "https://www.reddit.com/r/woweconomy/comments/1f9qado"
-    },
-    {
-      "method": "Disenchant",
-      "studyKey": "reddit-1f9qado-blood-elf-297-hammers",
-      "inputItemID": null,
-      "unverifiedCandidateInputID": 222486,
-      "operations": 297,
-      "outputTotals": {
-        "219946": 264,
-        "219947": 439,
-        "219948": 348
-      },
-      "skill": "105+40 Blood Elf, max uncommon tree",
-      "castsWithDrop": null,
-      "histogram": null,
-      "source": "https://www.reddit.com/r/woweconomy/comments/1f9qado"
-    },
-    {
-      "method": "Disenchant",
-      "studyKey": "reddit-1f9qado-crafted-1000-greens",
-      "inputItemID": null,
-      "operations": 1000,
-      "outputTotals": {
-        "219946": 783,
-        "219947": 1072,
-        "219948": 1062
-      },
-      "skill": "105 with tools, max green tree",
-      "castsWithDrop": null,
-      "histogram": null,
-      "source": "https://www.reddit.com/r/woweconomy/comments/1f9qado"
-    },
-    {
-      "method": "Prospect",
-      "inputItemID": 210939,
-      "inputName": "Null Stone",
-      "inputsPerCast": 5,
-      "operations": 1,
-      "outputIDs": [
-        212495,
-        212505,
-        213398,
-        213399
+      "outputItemIDs": [
+        219946,
+        219947,
+        219948
       ],
-      "totalQuantityEach": 1,
-      "castsWithDropEach": 1,
-      "histogramEach": {
-        "1": 1
-      },
-      "source": "https://www.wowhead.com/spell=434018/algari-prospecting"
-    },
-    {
-      "method": "Prospect",
-      "inputItemID": null,
-      "outputItemID": 213399,
-      "author": "Adreymar",
-      "originalOreCountApproximate": 50000,
-      "averageShown": 80,
-      "averagePer": "1000 inputs",
-      "caster": "maxed jeweler, max Resourcefulness",
-      "source": "https://www.wowhead.com/item=213399/glittering-glass",
+      "outputRanks": [
+        1,
+        2,
+        3
+      ],
+      "percentShown": [
+        35.42,
+        44.28,
+        20.3
+      ],
+      "percentMeaning": "output-unit rank share, not per-cast P(hit)",
+      "averageShown": 2.85,
+      "averagePer": "cast",
       "casts": null,
       "castsWithDrop": null,
-      "histogram": null,
-      "sourceKind": "reference"
+      "sourceKind": "reference",
+      "source": "https://www.reddit.com/r/woweconomy/comments/1fc2j1m"
+    },
+    {
+      "studyKey": "blizzard-forum-1942494-eddiezato-5000-aqirite-extra-amber",
+      "method": "Prospect",
+      "inputName": "Aqirite rank unknown",
+      "oreInputCount": 5000,
+      "extraGemFindingAmberObserved": 0,
+      "outputItemID": 212498,
+      "casts": null,
+      "totalQuantity": null,
+      "castsWithDrop": null,
+      "cohortDate": "2024-09-03",
+      "source": "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-4040-gem-finding-broken-no-ambers/1942494"
+    },
+    {
+      "studyKey": "blizzard-forum-1949373-wickdgamr-13-prospects",
+      "method": "Prospect",
+      "casts": 13,
+      "pooledGemQuantity": 4,
+      "numberOfGemKinds": 2,
+      "outputItemID": null,
+      "castsWithDrop": null,
+      "source": "https://us.forums.blizzard.com/en/wow/t/jewel-crafting-requires-so-much/1949373"
     }
   ],
   "newly_verified_cohorts": [
-    "reddit-1f9qado-original-op-687",
-    "reddit-1f9qado-blood-elf-297-hammers",
-    "reddit-1f9qado-crafted-1000-greens",
-    "wowhead-algari-prospecting-DobberSH-one-nullstone-cast"
+    "reddit-1fc2j1m-20240909-maxgreen-uncommon-shares",
+    "blizzard-forum-1942494-eddiezato-5000-aqirite-extra-amber",
+    "blizzard-forum-1949373-wickdgamr-13-prospects"
   ],
   "new_estimator_eligible_numeric_yield_records": 0,
-  "evidence_file": "research/v3/evidence/war-within/20261117T1130-original-de-rank-cohorts-nullstone-prospect.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/20261117T1222-tww-rank-shares-amber-bonus-originals.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/20261117T1130-original-de-rank-cohorts-nullstone-prospect.jsonl"
+    "research/v3/evidence/war-within/20261117T1222-tww-rank-shares-amber-bonus-originals.jsonl"
   ],
   "evidence_source_links": [
-    "https://www.reddit.com/r/woweconomy/comments/1f9qado",
-    "https://www.wowhead.com/spell=434018/algari-prospecting",
-    "https://www.wowhead.com/item=213399/glittering-glass",
-    "https://www.wowhead.com/item=222486/proficient-blacksmiths-hammer"
+    "https://www.reddit.com/r/woweconomy/comments/1fc2j1m",
+    "https://us.forums.blizzard.com/en/wow/t/jewelcrafting-4040-gem-finding-broken-no-ambers/1942494",
+    "https://us.forums.blizzard.com/en/wow/t/jewel-crafting-requires-so-much/1949373",
+    "https://worldofwarcraft.blizzard.com/en-gb/news/24134803/hotfixes-august-29-2024"
   ],
   "verified_commit_sha": null,
-  "verification": "One atomic Git commit adds the new worker-owned evidence JSONL and updates only war-within quiet-status. The SHA of a commit cannot be truthfully embedded inside its own committed content. Verify the new branch ref and both files with an independent post-write read-back.",
+  "verification": "New evidence and own quiet-status are included in exactly one Git commit; the commit's own SHA cannot be embedded truthfully in its content. Independently verify target ref/commit and both files after the atomic branch update.",
   "blockers": [
-    "Original disenchant cohorts are September 2024 historical data; current build, exact input IDs/bonus, gear kinds/ilvl and drop occurrence histograms unknown. No conversion of output unit totals to P(hit).",
-    "687-green snapshot is transcribed in same-thread third-party comment from OP's spreadsheet and may be cumulatively updated; treat as one snapshot not an additional later OP independent cohort.",
-    "Blacksmith hammer suspected ID 222486 is unverified; do not assert it as exact source input.",
-    "One Null Stone cast is a single observation only; no current live build/skill/Resourcefulness and no zero outcomes for unlisted output materials.",
-    "Glittering Glass 50k ore is approximate and pooled; 80/1000 is reference not item/rank-specific measured yield; original exact cast/ore quality/refund basis unknown.",
-    "TWW dedicated post-Oct25 prospecting, post-hotfix milling and precise DE skill/rarity/armor/weapon denominators remain open."
+    "Output-quality percentages are proportions of units, not per-operation material occurrence chance. Rank-specific sample sizes and hit histograms not given.",
+    "Aqirite 5000-ore result is explicitly no EXTRA 40/40 bonus Amber, not a zero-output baseline. Ore rank, refunded/reprocessed basis, and total completed casts unknown; old 2024 hotfix epoch.",
+    "13-prospect report lacks input ore ID/rank and output gem IDs/ranks; no exact per-output units or hit counts.",
+    "No original current-build raw exports resolving Bismuth/Ironclaw/Aqirite rank/unlock or Mycobloom post-hotfix 0/1/2 histograms."
   ],
   "exhausted_sources": [
-    "Previously collected Reikah Oct 2024 prehotfix Ironclaw, PeaEsk rank2 100-ore original tests and Mycobloom reddit 1fdmzwy already archived; not re-recorded.",
-    "Prior June 2025 1500-herb milling reference and PTR output-side disenchant Looter cohort lines intentionally not duplicated."
+    "Existing 1f9qado 687/297/1000 green DE cohorts already in earlier worker evidence; not duplicated.",
+    "Existing 1f3qf96 6/100/535 green-DE cohorts, 1fspqym block studies, 1f1l4i2 500-operation cohorts, and null-stone original single-cast already archived; not repeated.",
+    "Existing original Aqirite 11k/10k and Ironclaw pre-hotfix cohorts, Reddit 1fvhzy0 mixed milling chain, and old PeaEsk/raven11 observations already captured; no invented follow-on casts."
   ],
-  "next_concrete_step": "Find source-author raw exports/sheets for 687/297/1000 disenchant cohorts to resolve actual item 222486 versus alternative hammers, per-cast 0/1/2 bins, exact gear bonus, and collected-game date; seek fresh independent post-Oct25 2024 rank-separated ore/herb numeric casts, including refunds and skill.",
+  "next_concrete_step": "Seek original raw material-level exports for Sep 2024 rank-share percentages (complete cast denominator, skill and item-level kinds); seek post-Oct 25 2024 independent ranked ore and milling logs with explicit input/refund consumption and 0/1/2/3 histograms, not pooled projections.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false
