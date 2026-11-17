@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-17T00:09:30.661Z",
-  "status": "New source-linked 12.1.7 PTR-only pooled Dawn Crystal output-row identities for gear 260370 and 260374; NOT a new independent current-12.1.5 cohort or verified at-cast ilvl. Zero new measured samples; 4 reference-only rows retained with explicit shared-pool/variant caveats.",
+  "updated_at": "2026-11-17T01:12:51.378Z",
+  "status": "New global Disenchant spell 13262 cross-version aggregate contamination audit: no independent Retail 12.1.5 source-at-cast gear/ore/herb material cohort, no new numerical baseline. The pooled multi-era and PTR Looter totals are excluded from the estimator; older cited originals are not duplicated.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -12,37 +12,19 @@
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "T0026: original Midnight epic/rare/uncommon 12.1.5 item-specific disenchant material, ilvl, build, skill/spec and 0-inclusive histograms; two PTR identities 260370/260374 are NOT live evidence.",
-    "T0049: 272246 actual disenchant-time ilvl and eligibility; catalog 206 vs selected 305/321 cannot prove the source Looter table cohort.",
-    "T0005/T0039: 237362 rank-specific completed prospects and per-output hit, zero and quantity distributions; Eversong Diamond 242608 unlock, School-of-Gems disambiguation, refunds.",
-    "T0003/T0002/T0045: independent cast-level evidence for 237359,237365 and Midnight 10-herb milling 236761."
+    "T0026/T0049: 272246 itemLink/bonus, actual disenchant-time ilvl 305 versus catalog 206 and character skill/spec; separate item-level gear rarity/armor/weapon 0-inclusive histograms",
+    "T0005/T0039: Umbral Tin 237362 prospecting exact output IDs 242606/242607/242610/242611/242786/242788 and conditional 242608, per-output cast hits, zero counts, rank, skill, refund and unlock",
+    "T0003/T0002: Refulgent Copper 237359 and Brilliant Silver 237365 independent current-patch completed casts with per-material yield histograms and Resourcefulness",
+    "T0045: Tranquility Bloom 236761 → Powder Pigment 245807 and Midnight herb mills, 10-herb batch completed casts, output ranks/hits/zeros"
   ],
   "newly_verified_fields_or_cohorts": {
-    "type": "new-ptr-reference-only-epic-source-rows",
+    "type": "source-exclusion-audit",
     "newOriginalCurrentPatchMaterialCohorts": 0,
-    "newAtCastGearItemLevelOrDisenchantEligibility": 0,
-    "newPerOutputHitHistograms": 0,
-    "newExactInputOutputRankMaterialCountStudies": 0,
-    "newUnindexedBaseItemIdentities": [
-      260370,
-      260374
-    ],
-    "newReferenceOnlySourceRows": 4,
-    "sourceReportedSnapshotNotIndependentCasts": {
-      "260370": 9,
-      "260374": 9
-    },
-    "sourceReportedMaterialRowHits": {
-      "260370": [
-        7,
-        2
-      ],
-      "260374": [
-        7,
-        2
-      ]
-    },
-    "sourceOverlapWarning": "Both PTR item pages show the same 7/2 dual Dawn Crystal row split, so they cannot be assumed independent or assigned rank IDs."
+    "newExactOutputRankMaterialStudies": 0,
+    "newGearItemlevelAtDisenchantReceipts": 0,
+    "newMaterialHitOrZeroHistograms": 0,
+    "sourceIdentityChecked": "spell=13262 global Looter table is not a 272246 source original or current-build per-material cohort",
+    "excludedPooledCrossExpansionLiveAndPTRTables": true
   },
   "numeric_fields_advanced": {
     "newIndependentCurrentPatchCohorts": 0,
@@ -53,37 +35,30 @@
     "newZeroBins": 0,
     "newConditionalDiamondHits": 0,
     "currentBuildMaterialSamplesAdded": 0,
-    "newReferenceOnlySourceRows": 4,
-    "sourceOnlyPooledHitCountLabels": [
-      7,
-      2
-    ],
-    "sourceOnlyPooledTotalCountLabels": [
-      9,
-      9
-    ]
+    "newReferenceOnlySourceRows": 0
   },
   "evidence_files": [
-    "research/v3/evidence/midnight/20261117T0009-ptr-epic-gear-looter-identity-holds.jsonl"
+    "research/v3/evidence/midnight/20261117T0112-spell-aggregate-cast-source-exclusion.jsonl"
   ],
   "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-16T2222-source-original-operations-gap.jsonl",
   "evidence_record_ids": [
-    "midnight-20261117-260370-1",
-    "midnight-20261117-260370-2",
-    "midnight-20261117-260374-1",
-    "midnight-20261117-260374-2"
+    "midnight-20261117-0910"
   ],
   "source_links": [
-    "https://www.wowhead.com/ptr/item=260370/visage-of-unseen-truths",
-    "https://www.wowhead.com/ptr/item=260374/primal-spark-pauldrons"
+    "https://www.wowhead.com/spell=13262/disenchant",
+    "https://www.wowhead.com/ptr/spell=13262/disenchanted-items",
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
+    "https://www.wowhead.com/item=237362/umbral-tin-ore",
+    "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "One atomic evidence+status commit; this JSON cannot embed its own new SHA. Verify resulting branch head and both files independently; exact SHA is reported externally.",
+  "commit_note": "One atomic evidence+own-status commit will be read back against branch head. A file cannot embed its own newly created commit SHA without an additional commit.",
   "blockers": [
-    "PTR 12.1.7 Looter pages 260370 and 260374 share exact 9/7/2 aggregate rows with no output rank IDs or per-player raw provenance; these are not independent live Retail 12.1.5 cohorts.",
-    "Item 272246 lacks itemLink/bonus/actual ilvl/client disenchant receipt; 206 base record, selected ilvl305 and current selected Hero ilvl321 cannot establish at-cast eligibility.",
-    "No new original cast-by-cast Retail data for Umbral Tin 237362, Copper 237359, Silver 237365 or 10-herb milling 236761: per-material zero bins, units, specialty skill and Resourcefulness refunds missing."
+    "No new original source-at-cast Retail gear 272246 eligible variant / ilvl / output material receipts; generic 206 and displayed 305 do not resolve disenchant eligibility.",
+    "No independent current-patch primary per-material completed casts with rank-linked output IDs/zero bins for 237362, 237359, 237365, or 236761.",
+    "Global spell 13262 Looter aggregated rows cross game era, item ilvl and PTR/live and cannot be used as a normalized per-input or per-character study.",
+    "Original Cardinalai, Stormwarning and Thorium rounded-percent sources were already indexed; no repeat count added."
   ],
   "exhausted_sources": [
     "2026-11-14T06:11:30.224Z: New cross-source comparison: GoldCap 242608/242712 labels two Eversong Diamond ranks, in tension with WoW-Professions and Dving quality-less guide wording. New Apr30 Blizzard customer restoration thread 2299311 says Dawn Crystal quality rank required for item restore is hidden by web UI; original poster's successful retry is not a new measured disenchant event. Earlier ilvl305 armory, Raven May22 restore, Cardinalai/Honeybone and Looter snapshots already indexed. No new complete per-cast cohort for 272246, 237362, 237359, 236761. Do not recycle these webpages without original exact itemLinks, outputs and operation ledger.",
@@ -150,10 +125,11 @@
     "2026-11-16T21:21:51.431Z: Fresh named-source original yield hunt for Miststalker's Wristbands 272246, Umbral Tin Ore 237362, Refulgent Copper Ore 237359, Brilliant Silver Ore 237365, and Tranquility Bloom 236761 across Reddit, Blizzard, Wowhead and profession guides yielded only previously indexed GamGem/WoWDB selected-ilvl vs base conflict, Cardinalai/JD3K/Draggoth estimates and guide/Reddit data. Do not duplicate them. Separate Wowhead item-side named searches uncovered unindexed Monk gear items 250010/250011/250012/250014/250015/250017. Existing branch/default-repo source checks found no owned Midnight evidence on these item IDs. 250010 and 250014 selected sources are PTR, not current Retail; their 13/8/4 and 27/16/10 records are reference only. LIVE inputs 250011 14/7/5; 250012 8/5/3; 250015 28/18/10; 250017 15/9/4 are pooled occurrence references. Sources in new evidence JSONL. Distinct indexed 249961, 250057, 250018 and other snapshots were excluded; no independent 0-inclusive original cohort was discovered.",
     "2026-11-16T22:22:59.777Z: Targeted by-name source originality pass on 272246, 237362/242608, 237359/237365 and 236761/245807 across Reddit, Blizzard forums, Wowhead, Warcraft Wiki, WoWDB and GitHub: no NEW complete current-patch per-cast Retail material log. Existing Cardinalai/Honeybone/JD3K/kyzenbka, previous 272246 live vs PTR tooltip conflict and already-indexed Wowhead M13 specialization guide were excluded. School of Gems can supply 242608 independent of prospecting (Warcraft Wiki), so cannot attribute all diamonds to ore; await original input-coupled at-cast logs before revisiting this search footprint.",
     "2026-11-16T23:14:19.535Z: NEW unindexed LIVE Wowhead Looter reference tables 251255 rare Recovered Sanctum Greatsword (117 total table label; separate Eversinging Dust 98 and 1, Radiant Shard 15, Dawn Crystal 3) and 250019 epic Leafdrape of the Luminous Bloom (19 table label; two same-name Dawn Crystal rows 12 and 7). Raw output-linked IDs/ranks, at-cast ilvl/build/skill/spec and event zeros absent. Same item selected-bonus and PTR mirror are not independent cohorts. Prior indexed 251254/251258/251251, 248076, 250021/250022/250027, old Cardinalai/Honeybone/JD3K/kyzenbka results intentionally excluded. By-name searches of 272246, Umbral Tin, Copper, Silver, Tranquility Bloom and related output families over Wowhead, Reddit, Blizzard forums, Warcraft Wiki, WoW-Professions and GitHub again supplied no fresh original current-build per-cast event export. Do not revisit these two tables until original material links, identified per-player export or newer source original receipts; don't recycle exhausted other sources.",
-    "2026-11-17T00:09:30.661Z: Reviewed two not-yet-indexed 12.1.7 PTR Looter gear sources (260370, 260374), both have exactly 9 pooled item DE and duplicate 7/2 same-name Dawn Crystal source rows. Not source-original event exports; do NOT repeat their selected versions or treat them as separate measured cohorts without original itemLink/output-linked events. Name-based original-source searches across Reddit, US/EU Blizzard forums, Wowhead, profession guides, Warcraft Wiki, WoWDB and GitHub again found indexed Cardinalai/Honeybone/JD3K/kyzenbka/PocketCFO or guide estimates only, no new current-build 0-inclusive log for 272246/237362/237359/237365/236761. Do not retry this footprint until new player ledger is found."
+    "2026-11-17T00:09:30.661Z: Reviewed two not-yet-indexed 12.1.7 PTR Looter gear sources (260370, 260374), both have exactly 9 pooled item DE and duplicate 7/2 same-name Dawn Crystal source rows. Not source-original event exports; do NOT repeat their selected versions or treat them as separate measured cohorts without original itemLink/output-linked events. Name-based original-source searches across Reddit, US/EU Blizzard forums, Wowhead, profession guides, Warcraft Wiki, WoWDB and GitHub again found indexed Cardinalai/Honeybone/JD3K/kyzenbka/PocketCFO or guide estimates only, no new current-build 0-inclusive log for 272246/237362/237359/237365/236761. Do not retry this footprint until new player ledger is found.",
+    "2026-11-17T01:12:51.378Z: Source trap: WoWhead global Disenchant spell=13262 mixed-era pooled Looter and PTR mirror is not a per-item 272246 current-build cohort. New exact name searches across WoWhead, Reddit, Blizzard forums, profession guides and addon directory did not yield independent raw 12.1.5 cast logs; Cardinalai, Stormwarning, Thorium 200-craft claim, existing 272246 armory/tooltip/looter sources excluded as prior indexed. Do not revisit broad spell aggregate absent original item-coupled logs."
   ],
-  "next_concrete_step": "Find new original Retail 12.1.5 exported DE/prospect/mill events with exact input itemLink at-cast ilvl, rank-linked output IDs, per-cast zeros/units, actual completed casts vs refunded inputs and character build/skill/spec. Resolve 272246 305 eligibility by client proof; preserve source originals and request collector/schema change through Master if required.",
-  "verified_base_commit_sha": "01125ab5e3859ded874ce527e5f5f4264c8d8631",
-  "next": "Find new original Retail 12.1.5 exported DE/prospect/mill events with exact input itemLink at-cast ilvl, rank-linked output IDs, per-cast zeros/units, actual completed casts vs refunded inputs and character build/skill/spec. Resolve 272246 305 eligibility by client proof; preserve source originals and request collector/schema change through Master if required.",
-  "base_commit_sha": "01125ab5e3859ded874ce527e5f5f4264c8d8631"
+  "next_concrete_step": "Acquire itemized 12.1.5 retail SavedVariables/raw receipts from original players: input itemLink with bonus and ilvl (272246), completed casts, outputID/rank and per-cast 0/1/2 bins, profession skill/KP/unlock, actual ore consumed vs refunded. Do not continue global spell or already exhausted guide/source recrawls.",
+  "verified_base_commit_sha": "04490afedd53297cba4f8911373e8c9b24bc9d12",
+  "next": "Acquire itemized 12.1.5 retail SavedVariables/raw receipts from original players: input itemLink with bonus and ilvl (272246), completed casts, outputID/rank and per-cast 0/1/2 bins, profession skill/KP/unlock, actual ore consumed vs refunded. Do not continue global spell or already exhausted guide/source recrawls.",
+  "base_commit_sha": "04490afedd53297cba4f8911373e8c9b24bc9d12"
 }
