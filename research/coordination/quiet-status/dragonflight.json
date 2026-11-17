@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-17T08:39:13.286Z",
-  "status": "11 new exact Dragonflight gear-material Looter rows from four previously unindexed item cohorts; all source counts and displayed percents preserved as source reports, not independently verified material-per-completed-cast probabilities. No new rank-specific prospecting/milling 0-N outcome ledger.",
+  "updated_at": "2026-11-17T09:35:42.607Z",
+  "status": "Added 11 new source-reported item-side disenchant material occurrence rows from five distinct Dragonflight gear input IDs; no independently measured new prospecting/milling per-output cast histograms, output quantities or validated material P(hit).",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,33 +13,99 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019: Draconium Ore item 189143/188658 lacks independent per-output 0-N actual-completed-cast cohort with ore quality, skill, specialization and refunded inputs.",
-    "T0046: Serevite 190394/190395/190396 quality rank provenance and individual per-completed-prospect material event denominators remain unverified.",
-    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464 per-output actual completed mill counts, zeros and stack histograms still missing.",
-    "Four new distinct base-item Dragonflight gear DE pools 202484, 202553, 202529, 200365: only anonymous original Wowhead item-side cumulative source counts, no exact event epoch, material hit or 0-inclusive stack ledger."
+    "T0020/T0019/T0046: Draconium 189143/188658, Serevite 190395/190396/190394 and Khaz'gorite 190312/190313/190314 still lack original exact-rank completed-cast per-output 0-N histograms and refunds.",
+    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464 still lack independent actual completed mills, per-output hit counts, source-original zero outcomes and 0-N distribution.",
+    "Prismatic Ore 194545: independent original operations by rank/skill, ore quality and per-output 0-N material histograms remain unverified; do not duplicate superbondez/TheChisel cohort.",
+    "Five previously unindexed exact Dragonflight gear inputs 209923/209942/207240/198028/200343: anonymous Wowhead cumulative Looter item N and material K/printed percentages, unknown original event epoch, overlapping contributor populations and individual per-material event ledger."
   ],
   "newly_verified_fields": [
-    "Four exact original gear input IDs 202484/202553/202529/200365 and output material IDs 194123 Chromatic Dust, 194124 Vibrant Shard, 200113 Resonant Crystal.",
-    "Four distinct original anonymous Wowhead Looter item-side N: 18, 107, 110, 20, and eleven per-material printed K/pct rows.",
-    "Preserved original percentages and source-reported positive-stack min/max; all material castsWithDrop, totalQuantity, histograms, skill, original patch/build and specialization null."
+    "Exact original gear input IDs 209923, 209942, 207240, 198028, 200343 and outputs 194123 Chromatic Dust, 194124 Vibrant Shard, 200113 Resonant Crystal.",
+    "Five distinct Wowhead item-side source-reported overall disenchant Ns 30,13,15,124,12; eleven original material row occurrence K and display percentages.",
+    "Positive-only displayed material stack ranges where present; castsWithDrop, totalQuantity, zero counts and histograms remain null."
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 202484,
-      "inputName": "Scalebands of Obsidian Secrets",
-      "source": "https://www.wowhead.com/item=202484/scalebands-of-obsidian-secrets",
-      "source_reported_disenchants": 18,
+      "inputItemID": 209923,
+      "inputName": "Chartreuse Champion's Blade",
+      "source": "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
+      "source_reported_disenchants": 30,
+      "output_occurrences": [
+        {
+          "itemID": 194123,
+          "numerator": 27,
+          "percentShown": 90,
+          "positiveOnlyRange": [
+            1,
+            5
+          ]
+        },
+        {
+          "itemID": 194124,
+          "numerator": 4,
+          "percentShown": 13,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "inputItemID": 209942,
+      "inputName": "Fearless Faerie's Kris",
+      "source": "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris",
+      "source_reported_disenchants": 13,
+      "output_occurrences": [
+        {
+          "itemID": 194123,
+          "numerator": 9,
+          "percentShown": 69,
+          "positiveOnlyRange": [
+            1,
+            5
+          ]
+        },
+        {
+          "itemID": 194124,
+          "numerator": 4,
+          "percentShown": 31,
+          "positiveOnlyRange": null
+        }
+      ]
+    },
+    {
+      "inputItemID": 207240,
+      "inputName": "Mystic Heron's Feathered Mantle",
+      "source": "https://www.wowhead.com/ptr/item=207240/mystic-herons-feathered-mantle",
+      "source_reported_disenchants": 15,
       "output_occurrences": [
         {
           "itemID": 200113,
-          "numerator": 13,
-          "percentShown": 72,
+          "numerator": 12,
+          "percentShown": 80,
           "positiveOnlyRange": null
         },
         {
           "itemID": 194124,
-          "numerator": 7,
-          "percentShown": 39,
+          "numerator": 4,
+          "percentShown": 27,
+          "positiveOnlyRange": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "inputItemID": 198028,
+      "inputName": "Sleet Shined Skullguard",
+      "source": "https://www.wowhead.com/ptr/item=198028/sleet-shined-skullguard",
+      "source_reported_disenchants": 124,
+      "output_occurrences": [
+        {
+          "itemID": 194124,
+          "numerator": 65,
+          "percentShown": 52,
           "positiveOnlyRange": [
             1,
             2
@@ -47,95 +113,37 @@
         },
         {
           "itemID": 194123,
-          "numerator": 1,
-          "percentShown": 6,
+          "numerator": 57,
+          "percentShown": 46,
           "positiveOnlyRange": [
             2,
-            2
-          ]
-        }
-      ]
-    },
-    {
-      "inputItemID": 202553,
-      "inputName": "Underlight Conjurer's Treads",
-      "source": "https://www.wowhead.com/item=202553/underlight-conjurers-treads",
-      "source_reported_disenchants": 107,
-      "output_occurrences": [
-        {
-          "itemID": 194124,
-          "numerator": 61,
-          "percentShown": 57,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
-        },
-        {
-          "itemID": 200113,
-          "numerator": 57,
-          "percentShown": 53,
-          "positiveOnlyRange": null
-        },
-        {
-          "itemID": 194123,
-          "numerator": 7,
-          "percentShown": 7,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
-        }
-      ]
-    },
-    {
-      "inputItemID": 202529,
-      "inputName": "Wristwraps of the Sinister Savant",
-      "source": "https://www.wowhead.com/ptr/item=202529/wristwraps-of-the-sinister-savant",
-      "source_reported_disenchants": 110,
-      "output_occurrences": [
-        {
-          "itemID": 200113,
-          "numerator": 66,
-          "percentShown": 60,
-          "positiveOnlyRange": null
-        },
-        {
-          "itemID": 194124,
-          "numerator": 50,
-          "percentShown": 45,
-          "positiveOnlyRange": [
-            1,
-            2
-          ]
-        },
-        {
-          "itemID": 194123,
-          "numerator": 4,
-          "percentShown": 4,
-          "positiveOnlyRange": [
-            1,
             3
           ]
+        },
+        {
+          "itemID": 200113,
+          "numerator": 4,
+          "percentShown": 3,
+          "positiveOnlyRange": null
         }
       ]
     },
     {
-      "inputItemID": 200365,
-      "inputName": "Mantle of the Waking Fist",
-      "source": "https://www.wowhead.com/ptr/item=200365/mantle-of-the-waking-fist",
-      "source_reported_disenchants": 20,
+      "inputItemID": 200343,
+      "inputName": "Skybound Avenger's Boots",
+      "source": "https://www.wowhead.com/ptr/item=200343/skybound-avengers-boots",
+      "source_reported_disenchants": 12,
       "output_occurrences": [
         {
           "itemID": 200113,
-          "numerator": 15,
-          "percentShown": 75,
+          "numerator": 10,
+          "percentShown": 83,
           "positiveOnlyRange": null
         },
         {
           "itemID": 194124,
-          "numerator": 8,
-          "percentShown": 40,
+          "numerator": 3,
+          "percentShown": 25,
           "positiveOnlyRange": [
             1,
             2
@@ -146,9 +154,9 @@
   ],
   "new_numerical_measurements": 0,
   "numerical_fields_improved": [
-    "Source-reported cumulative item disenchant N for four new gear inputs",
-    "Source-reported material occurrences K and printed percentages on eleven input/output ID pairs",
-    "Positive-only stack ranges where displayed; no new measured material-specific hit denominators or 0-N histograms"
+    "Five original item-side cumulative disenchant N values",
+    "Eleven source-reported per-material occurrence K and printed percentages",
+    "Positive-only material stack quantity range where shown; no new independently verified per-material cast denominators, 0/1/2 histogram or totalQuantity"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -173,23 +181,25 @@
     "research/v3/evidence/dragonflight/20261117T0538-five-new-item-looter-source-counts.jsonl",
     "research/v3/evidence/dragonflight/20261117T0634-four-unindexed-gear-source-counts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T0739-six-unindexed-gear-looter-rows.jsonl",
-    "research/v3/evidence/dragonflight/20261117T0839-four-new-gear-looter-source-counts.jsonl"
+    "research/v3/evidence/dragonflight/20261117T0839-four-new-gear-looter-source-counts.jsonl",
+    "research/v3/evidence/dragonflight/20261117T0935-five-new-gear-looter-source-rows.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261117T0839-four-new-gear-looter-source-counts.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/20261117T0839-four-new-gear-looter-source-counts.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261117T0935-five-new-gear-looter-source-rows.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/20261117T0935-five-new-gear-looter-source-rows.jsonl",
   "source_links": [
-    "https://www.wowhead.com/item=202484/scalebands-of-obsidian-secrets",
-    "https://www.wowhead.com/item=202553/underlight-conjurers-treads",
-    "https://www.wowhead.com/ptr/item=202529/wristwraps-of-the-sinister-savant",
-    "https://www.wowhead.com/ptr/item=200365/mantle-of-the-waking-fist"
+    "https://www.wowhead.com/item=209923/chartreuse-champions-blade",
+    "https://www.wowhead.com/ptr/item=209942/fearless-faeries-kris",
+    "https://www.wowhead.com/ptr/item=207240/mystic-herons-feathered-mantle",
+    "https://www.wowhead.com/ptr/item=198028/sleet-shined-skullguard",
+    "https://www.wowhead.com/ptr/item=200343/skybound-avengers-boots"
   ],
-  "verified_parent_sha": "f9e1d94dbe9fa535d52794ada71538209d63834d",
+  "verified_parent_sha": "914b3cd84e1e0b420a93af040c1774c9bb946ed6",
   "verified_commit_sha": null,
-  "commit_sha_scope": "Exact new self-commit SHA cannot be embedded into itself in an atomic one-commit update; verify branch head and changed paths after push.",
+  "commit_sha_scope": "One atomic commit contains both evidence and status, so its self SHA cannot be stored in its own status content; verify head and changed paths after push.",
   "blockers": [
-    "No new independent source-original refund-aware rank-conditioned Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Bubble Poppy/Saxifrage milling event ledger; earlier indexed historic studies were not recopied.",
-    "Wowhead Looter cumulative item-side observations have unknown original event epoch/patch, skill/spec, item version, individual contributor overlap and per-material completed-cast denominators; do not interpret the displayed material occurrence percent as measured P(hit).",
-    "Source samples lack verified zero-inclusive histograms, per-material total item units and current live eligibility/quality bonus provenance."
+    "No new independent completed-cast, zero-inclusive and Resourcefulness-refund-aware per-output histograms for Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Bubble Poppy/Saxifrage milling; already-indexed historical studies and model priors were not recopied.",
+    "Wowhead item-side Looter material K and percentages are not independently validated material castsWithDrop or per-cast item quantities. Unknown original event epochs, gear versions, character skills/specs and multi-material or overlapping contributor semantics.",
+    "All gear measured totalQuantity, per-material positive stack histograms, zero outcomes and current live eligibility remain unknown; no P(hit), gold, or confidence computed."
   ],
   "exhausted_sources": [
     {
@@ -1645,9 +1655,23 @@
         "Blizzard US forum indexed name-first Draconium Ore prospecting casts/resourcefulness and Bubble Poppy milling results, no independently inspectable output-specific 0-N table https://us.forums.blizzard.com/en/wow/",
         "WoW-Professions indexed name-first Khaz'gorite Ore prospecting output results, reference yield guides not original cast logs https://www.wow-professions.com/"
       ]
+    },
+    {
+      "at": "2026-11-17T09:35:42.607Z",
+      "scope": "New original Dragonflight prospecting/milling per-cast event evidence search",
+      "reason": "Fresh named prospecting/milling searches produced previously indexed original studies, locked exports or guide priors, not an independent rank-conditioned actual-cast zero-inclusive 0-N ledger. Do not re-record overlapping 8,000 Serevite, superbondez Prismatic, Aary milling or beta Liqourice5 prior.",
+      "whereLooked": [
+        "Reddit r/woweconomy: Draconium Ore original prospects and Xenastro spreadsheet; original published summaries without full new per-output completed-cast outcome ledger",
+        "Wowhead: Prismatic Ore 194545 and Draconium Ore prospecting primary comments; same earlier-indexed originals",
+        "Blizzard forums: Serevite Ore prospecting skill and refunds; no independent new rank-separated 0-N logs",
+        "wow-professions.com: Bubble Poppy and Saxifrage milling profession summaries, recipe facts not independent completed-cast log",
+        "Warcraft Wiki: Dragon Isles prospecting/milling item and recipe identity, not event-level samples",
+        "GitHub/public worksheets: original Draconium prospecting exports and DalaGG WorthIt studies; no public independent per-output full cast log recovered",
+        "Wowhead item-side gear Looter tables: five distinct input items added in current file as cumulative source reports"
+      ]
     }
   ],
-  "next_concrete_step": "Recover original Dragonflight raw addon CSV/spreadsheet with one row per completed operation, material IDs/quantities, zero outcomes and refunded ore/herb inputs for Draconium 189143/188658, Bubble Poppy 191467 and Saxifrage 191464; verify exact source Looter material hit semantics and event patch/build before promoting results.",
+  "next_concrete_step": "Seek a new original per-completed-cast export or histograms for Draconium Ore rank 1 item 189143 and rank 2 188658, then Bubble Poppy 191467/Saxifrage 191464 with original refund records; confirm any skill, recipe/batch, patch/build and per-output 0/1/2 units before estimator handoff.",
   "validation": {
     "jsonl_parse": "passed in memory",
     "expected_records": 12,
