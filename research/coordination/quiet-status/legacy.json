@@ -1,83 +1,132 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-18T09:55:26.814Z",
-  "status": "One previously unrecorded firsthand historical Cataclysm disenchant cohort: Deathsilk Belt 54471, 20 explicitly completed item disenchants, zero essence-family positive outcomes in all 20. Exact essence output item ID not stated; no additional measured Warmaul 24995, Cobalt 36909 or Fel Iron 23424 casts.",
+  "updated_at": "2026-11-18T10:54:06.610Z",
+  "status": "Three independent original historical item-specific disenchant cohorts verified: 50 completed Black Mageweave Vest (9998) disenchants with three exact material quantity and hit totals, a separate four-vest cast report with unspecified dust stack, and one Inscribed Leather Gloves (2988) cast yielding two Strange Dust. No new Warmaul, Cobalt or Fel Iron cast-level distributions; historical Classic/TBC items are not verified Retail applicable.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "T0050",
     "T0053",
     "legacy-standing-originals"
   ],
   "exact_gaps_targeted": [
-    "Item 24995 Warmaul Legplates: no distinct raw per-cast output quantity, zero-bin histogram, build, item instance or current Retail disenchant eligibility beyond existing 2068 historical Looter cohort.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: new independent complete original per-output 0–N prospect histograms remain missing.",
-    "Deathsilk Belt 54471: commenter 388442 supports exactly 20 completed DEs with zero unspecified essence outputs; source does not specify #52718, dust quantity, item instance, build, actual skill or specialization.",
-    "Token 45661 exact class reward variants and redemption still require primary validation."
+    "Warmaul Legplates 24995: existing 2068 historical Looter operations lack per-event 0–N stacks, exact material unit totals, dated client build/skill, variant and current Retail disenchant eligibility.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: no new original completed prospecting denominators matched to per-output hit/zero histograms, quantities and refunds.",
+    "Original Black Mageweave Vest 9998: Kefra's measured 50 ops add 11137/11174/11177 totals/hits; unknown positive quantity histograms, operation patch and current Retail ilvl12 applicability.",
+    "Token 45661 is already represented by older 7-reward research and ATT snapshot; do not duplicate without genuinely new source lineage."
   ],
   "newly_verified_fields_cohorts": [
     {
       "recordType": "drop",
-      "inputItemID": 54471,
-      "inputName": "Deathsilk Belt",
-      "method": "Disenchant",
-      "completedCasts": 20,
-      "outputFamily": "Essences — source did not specify exact material ID",
-      "outputItemID": null,
-      "castsWithDrop": 0,
-      "totalQuantity": 0,
-      "zeroInclusiveHistogram": {
-        "0": 20
-      },
-      "sourceKind": "study",
-      "sourceURL": "https://www.wowhead.com/cata/item=54471/deathsilk-belt",
-      "sourceAuthor": "388442",
-      "actualSkill": null,
-      "historicalEligibilityRequirementClaim": 425,
+      "studyKey": "wowhead-tbc-9998-kefra-50vest-disenchants",
+      "inputItemID": 9998,
+      "inputName": "Black Mageweave Vest",
+      "completedCasts": 50,
+      "inputItemLevelHistorical": 41,
+      "sourceAuthor": "Kefra",
+      "outputs": [
+        {
+          "outputItemID": 11137,
+          "totalQuantity": 123,
+          "castsWithDrop": 33
+        },
+        {
+          "outputItemID": 11174,
+          "totalQuantity": 18,
+          "castsWithDrop": 13
+        },
+        {
+          "outputItemID": 11177,
+          "totalQuantity": 4,
+          "castsWithDrop": 4,
+          "minSeen": 1,
+          "maxSeen": 1
+        }
+      ],
+      "histograms": null,
+      "sourceURL": "https://www.wowhead.com/tbc/item=9998/black-mageweave-vest",
       "gameBuild": null,
-      "sourcePublished": null,
-      "patch": null,
-      "note": "One first-person author and one cohort across all Wowhead expansion mirrors; the claimed 75/25 reference split is not measured."
+      "skill": null,
+      "patch": null
+    },
+    {
+      "recordType": "drop",
+      "studyKey": "wowhead-tbc-9998-anonymous-thottbot-4vest-chrommagus",
+      "inputItemID": 9998,
+      "outputItemID": 11137,
+      "completedCasts": 4,
+      "totalQuantity": null,
+      "castsWithDrop": null,
+      "sourceURL": "https://www.wowhead.com/tbc/item=9998/black-mageweave-vest",
+      "sourceAuthor": "Thottbot (anonymous)",
+      "note": "Stack size unknown; no nominal conversion."
+    },
+    {
+      "recordType": "drop",
+      "studyKey": "wowhead-tbc-2988-allakhazam-original-one-cast-two-strangedust",
+      "inputItemID": 2988,
+      "outputItemID": 10940,
+      "completedCasts": 1,
+      "totalQuantity": 2,
+      "castsWithDrop": 1,
+      "histogram": {
+        "2": 1
+      },
+      "sourceURL": "https://www.wowhead.com/tbc/item=2988/inscribed-leather-gloves",
+      "sourceAuthor": "Allakhazam (anonymous)"
     }
   ],
   "numeric_summary": {
-    "new_records": 1,
-    "new_study_records": 1,
-    "new_distinct_completed_de_cohorts": 1,
-    "new_measured_processing_casts": 20,
+    "new_records": 5,
+    "new_study_records": 5,
+    "new_distinct_completed_de_cohorts": 3,
+    "new_measured_processing_casts": 55,
     "new_warmaul_24995_casts": 0,
     "new_cobalt_36909_casts": 0,
     "new_fel_iron_23424_casts": 0,
-    "new_measured_output_hit_counts": {
-      "54471:essence_family_unidentified": 0
+    "new_known_output_hits": {
+      "9998:11137": 33,
+      "9998:11174": 13,
+      "9998:11177": 4,
+      "2988:10940": 1
     },
-    "new_measured_zero_histograms": 1,
     "new_source_measured_material_unit_totals": {
-      "54471:essence_family_unidentified": 0
+      "9998:11137": 123,
+      "9998:11174": 18,
+      "9998:11177": 4,
+      "2988:10940": 2
     },
     "new_source_supported_input_IDs": [
-      54471
+      9998,
+      2988
     ],
-    "new_verified_output_IDs": [],
+    "new_verified_output_IDs": [
+      11137,
+      11174,
+      11177,
+      10940
+    ],
     "new_gold_ev_evidence": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-18T0955-deathsilk-belt-20zero-essences.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-18T1054-mageweave-vest-primary-casts.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/cata/item=54471/deathsilk-belt",
-    "https://www.wowhead.com/tbc/item=31821/blade-of-retribution",
-    "https://www.wowhead.com/item=52555/hypnotic-dust"
+    "https://www.wowhead.com/tbc/item=9998/black-mageweave-vest",
+    "https://www.wowhead.com/tbc/item=2988/inscribed-leather-gloves",
+    "https://www.wowhead.com/tbc/item=11137/vision-dust",
+    "https://www.wowhead.com/tbc/item=11174/lesser-nether-essence",
+    "https://www.wowhead.com/tbc/item=11177/small-radiant-shard",
+    "https://www.wowhead.com/tbc/item=10940/strange-dust"
   ],
-  "verified_base_commit_sha": "5975b94139a9e3cfb102fc2db2f0042fe58866e5",
+  "verified_base_commit_sha": "09f7b04fcfe4e99a199a60a76d4b048ee7dbb97d",
   "verified_commit_sha": null,
-  "commit_note": "Exactly one original new legacy JSONL evidence file and this worker's status committed atomically, never other files. Self-referential new commit SHA cannot be embedded in its own commit; verify actual commit SHA by remote branch head and readback.",
+  "commit_note": "One atomic commit with one new legacy JSONL evidence file and legacy quiet-status only. Commit SHA cannot be included in its own tree because of self-reference; verify branch head and read-back externally.",
   "blockers": [
-    "Warmaul Legplates 24995: already recorded 2068 historical Looter operations still lack source-raw 0–N output stacks, exact material unit totals, dated client build, personal skill and Retail eligibility.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: previously studied sources and original Enchantrix exports do not supply novel fully identified per-material output hit/zero histograms with completed-operation denominators.",
-    "Deathsilk Belt 54471: the source reports zero essences in 20 completed casts but does not identify a specific essence ID; source's asserted 75/25 split is conjectural, not a measured drop rate; dust output data absent.",
-    "Token 45661 exact complete class rewards and redemptions pending. Existing historical cohorts may have mirrored duplicates; do not record them anew."
+    "Warmaul 24995 historical Looter 2068 has unverified dated build, bonus and current Retail disenchant eligibility, no per-event stack unit total/histogram.",
+    "Cobalt 36909/Fel Iron 23424 previously studied original ore samples cannot establish new zero-inclusive per-gem casts or refunded-input denominator.",
+    "Black Mageweave Vest 9998 50 operations provide hits and units, not per-positive quantity histograms, player skill or current Retail eligibility. Thottbot four-vest source says only 'a stack', quantity unknown.",
+    "No newly verified token 45661 reward IDs beyond the existing seven; previous source already recorded."
   ],
   "exhausted_sources": [
     {
@@ -280,7 +329,17 @@
         "Independent Doometh Saronite 10000-prospect, myrmideon Saronite 30-stack, and Deathsilk Cowl 40-/100-cast Wowhead original cohorts compared against existing evidence; all already recorded, not double-counted.",
         "New previously unrecorded first-person Deathsilk Belt 54471 original commenter 388442: 20 completed disenchants, zero essence-family drops, source https://www.wowhead.com/cata/item=54471/deathsilk-belt. Retained as one distinct original cohort."
       ]
+    },
+    {
+      "lookingFor": "2026-11-18 new Warmaul 24995 and Cobalt 36909/Fel Iron 23424 per-event originals after prior sources exhausted; newly inspected Black Mageweave Vest and Inscribed Leather Gloves originals",
+      "whereLooked": [
+        "Existing Warmaul 24995/Cobalt 36909/Fel Iron 23424 name/source gap checks plus README queue/history; no new independent 0-N original event export; existing pooled cohorts explicitly not duplicated",
+        "TBC Classic Wowhead Black Mageweave Vest 9998 original Kefra 50 completed source with output hits and totals, separate Thottbot 4 completed with unspecified dust stack: https://www.wowhead.com/tbc/item=9998/black-mageweave-vest",
+        "TBC Classic original Inscribed Leather Gloves 2988 Allakhazam one DE yielding exactly 2 Strange Dust: https://www.wowhead.com/tbc/item=2988/inscribed-leather-gloves",
+        "GitHub code search prior 9998/Black Mageweave Vest/Kefra 50vest/2988/Inscribed Leather Gloves shows no matching previous item-specific cohorts; Kefra's separate Runecloth Belt cohort preserved",
+        "Do not re-use already recorded Wicked Leather Bracers, Netherweave Tunic, Avenging Blades, Thorium Blades, Black Mageweave Gloves and other original studies exposed during search."
+      ]
     }
   ],
-  "next_concrete_step": "Seek a novel original 24995 ilvl108 TBC uncommon armor or matched weapon completed DE log with zero-inclusive material IDs and source build; then explicitly attributable Cobalt 36909 and Fel Iron 23424 prospect exports. Preserve 54471 essence-family outputItemID=null pending firsthand ID identification; do not infer dust or measured rate from comment's expectation. Ask Master to review schema handling for source-stated zero of an unidentified material family."
+  "next_concrete_step": "Seek truly new original BC ilvl108 Warmaul 24995 completed disenchant event log and source version, then Cobalt 36909/Fel Iron 23424 saved-variable per-event exports, avoiding previously exhausted Wowhead/Thottbot and Enchantrix accounts. Validate classic item-instance applicability before Retail import."
 }
