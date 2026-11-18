@@ -1,176 +1,131 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-18T03:48:35.031Z",
-  "status": "One original archived Thottbot comment verifies two distinct historical completed disenchant operations: Imbued Netherweave Robe 21861 and Imbued Netherweave Tunic 21862, each one Large Prismatic Shard 22449 (one cast, one hit, one unit each, positive histogram 1:1). Also 11 previously unrecorded exact-ID historical no-disenchant flags from Classic/WotLK catalogs. No new Warmaul 24995, Cobalt 36909, or Fel Iron 23424 measured casts, output totals or histograms. Historical version scope only; no current live Retail validation.",
+  "updated_at": "2026-11-18T04:43:25.401Z",
+  "status": "Recovered ten nonduplicate historical Classic/TBC disenchant evidence rows from six original Wowhead commenters: two firsthand Black Mageweave Gloves cohorts (42 and 16 completed item disenchants), one 20-White-Bandit-Mask crafted-output tally with three exact material-unit totals, two further mask craft/approximate outcome reports, and one original pooled cloth-stack model kept as reference. None supplies a verified per-material hit denominator/histogram or modern Retail eligibility; no new Warmaul 24995, Cobalt 36909 or Fel Iron 23424 casts.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "T0021",
     "T0053",
-    "legacy-standing-noDisenchant"
+    "legacy-standing-originals"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 TBC historical item-level 108 vs scaled current item-level 31 no-DE conflict; original reported 2068 events and 22445/22446/22447/22449 hits lack independently inspected 0-N quantities, complete rows, build, skill and contemporary live eligibility",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424 original physical prospect counts/output-hit distributions/zero-inclusive stack histograms remain missing; nominal ore or stack equivalents not treated as casts",
-    "New unique original two-item Thottbot cast report: 21861 and 21862 each produced 1x 22449, two separate one-cast denominators, individual positive histograms; no joint per-output negative assumptions",
-    "Historical no-DE flags for 5092,21040,2615,5110,5238,2612,2618,40018,5239,2617,6144 kept exact-ID and version scoped"
+    "Warmaul Legplates 24995: historical 2068 cumulative Looter entries and 22445/22446/22447/22449 hits remain unverified for actual per-cast output quantities/histograms, patch, build, skill and current Retail eligibility",
+    "Cobalt Ore 36909: no new independently documented completed prospects, original per-gem hits, zero-inclusive histograms or exact version/skill; do not reinterpret nominal ore equivalents as casts",
+    "Fel Iron Ore 23424: no new distinct completed prospect per-output hits/histograms beyond preexisting original 20-cast and ore-equivalent cohorts",
+    "New independent Classic/TBC original craft-versus-disenchant baselines for Black Mageweave Gloves 10003 and White Bandit Mask 10008, both historical ilvl43 vs scaled current ilvl12, not eligible-for-Retail proof"
   ],
   "newly_verified_fields_cohorts": [
     {
-      "type": "drop",
-      "original_report": "Thottbot archived commenter; one comment and two distinct original casts",
-      "source": "https://www.wowhead.com/wotlk/item=21861/imbued-netherweave-robe",
-      "outputItemID": 22449,
-      "outputName": "Large Prismatic Shard",
-      "inputs": [
-        {
-          "inputItemID": 21861,
-          "inputName": "Imbued Netherweave Robe",
-          "casts": 1,
-          "castsWithDrop": 1,
-          "totalQuantity": 1,
-          "minSeen": 1,
-          "maxSeen": 1,
-          "histogram": {
-            "1": 1
-          }
-        },
-        {
-          "inputItemID": 21862,
-          "inputName": "Imbued Netherweave Tunic",
-          "casts": 1,
-          "castsWithDrop": 1,
-          "totalQuantity": 1,
-          "minSeen": 1,
-          "maxSeen": 1,
-          "histogram": {
-            "1": 1
-          }
-        }
+      "source": "https://www.wowhead.com/item=11137/vision-dust",
+      "original_author": "1066284",
+      "studyKey": "wowhead-vision-1066284-black-mageweave-gloves-42",
+      "inputItemID": 10003,
+      "outputItemIDs": [
+        11137
       ],
-      "patch": null,
-      "skill": null,
-      "currentRetailValidation": false
+      "verified_completed_casts": 42,
+      "additional_nonDust_mention": 3,
+      "totalQuantity": null,
+      "castsWithDrop": null,
+      "zero_histogram": null
     },
     {
-      "type": "noDisenchant",
-      "itemID": 5092,
-      "itemName": "Charred Razormane Wand",
-      "source": "https://www.wowhead.com/wotlk/item=5092/charred-razormane-wand",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
+      "source": "https://www.wowhead.com/item=11137/vision-dust",
+      "original_author": "Pegleg",
+      "studyKey": "wowhead-vision-pegleg-16-black-mageweave-gloves",
+      "inputItemID": 10003,
+      "outputItemIDs": [
+        11137,
+        11174
+      ],
+      "verified_completed_casts": 16,
+      "exact_essence_units_11174": 2,
+      "dust_quantity": "approximately three stacks; unit count unknown",
+      "castsWithDrop": null,
+      "zero_histogram": null
     },
     {
-      "type": "noDisenchant",
-      "itemID": 21040,
-      "itemName": "Narain's Robe",
-      "source": "https://www.wowhead.com/classic/item=21040/narains-robe",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
+      "source": "https://www.wowhead.com/item=11174/lesser-nether-essence",
+      "original_author": "1001850",
+      "studyKey": "wowhead-lesser-nether-1001850-20-white-bandit-masks",
+      "inputItemID": 10008,
+      "outputTotals": {
+        "11137": 33,
+        "11174": 16,
+        "11177": 1
+      },
+      "original_crafted_items": 20,
+      "verified_completed_casts": null,
+      "castsWithDrop": null,
+      "zero_histogram": null
     },
     {
-      "type": "noDisenchant",
-      "itemID": 2615,
-      "itemName": "Chromatic Robe",
-      "source": "https://www.wowhead.com/classic/item=2615/chromatic-robe",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
+      "source": "https://www.wowhead.com/item=11137/vision-dust",
+      "original_author": "1129489",
+      "inputItemID": 10008,
+      "original_crafted_items": 120,
+      "reported_dust": "17 stacks; units and casts unknown",
+      "verified_completed_casts": null
     },
     {
-      "type": "noDisenchant",
-      "itemID": 5110,
-      "itemName": "Dalaran Wizard's Robe",
-      "source": "https://www.wowhead.com/classic/item=5110/dalaran-wizards-robe",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
+      "source": "https://www.wowhead.com/item=10008/white-bandit-mask",
+      "original_author": "979581",
+      "inputItemID": 10008,
+      "original_crafted_items": 30,
+      "reported_dust": "around 80, nonexact",
+      "verified_completed_casts": null
     },
     {
-      "type": "noDisenchant",
-      "itemID": 5238,
-      "itemName": "Pitchwood Wand",
-      "source": "https://www.wowhead.com/wotlk/item=5238/pitchwood-wand",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
-    },
-    {
-      "type": "noDisenchant",
-      "itemID": 2612,
-      "itemName": "Plain Robe",
-      "source": "https://www.wowhead.com/classic/item=2612/plain-robe",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
-    },
-    {
-      "type": "noDisenchant",
-      "itemID": 2618,
-      "itemName": "Silver Dress Robes",
-      "source": "https://www.wowhead.com/classic/item=2618/silver-dress-robes",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
-    },
-    {
-      "type": "noDisenchant",
-      "itemID": 40018,
-      "itemName": "Wand of Onyx",
-      "source": "https://www.wowhead.com/wotlk/item=40018/wand-of-onyx",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
-    },
-    {
-      "type": "noDisenchant",
-      "itemID": 5239,
-      "itemName": "Blackbone Wand",
-      "source": "https://www.wowhead.com/wotlk/item=5239/blackbone-wand",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
-    },
-    {
-      "type": "noDisenchant",
-      "itemID": 2617,
-      "itemName": "Burning Robes",
-      "source": "https://www.wowhead.com/classic/item=2617/burning-robes",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
-    },
-    {
-      "type": "noDisenchant",
-      "itemID": 6144,
-      "itemName": "Neophyte's Robe",
-      "source": "https://www.wowhead.com/tbc/item=6144/neophytes-robe",
-      "scope": "Historical catalog no-DE exact-ID flag; no current Retail test"
+      "source": "https://www.wowhead.com/item=10008/white-bandit-mask",
+      "original_author": "aprildawn567",
+      "inputItemID": 10008,
+      "reference_only": true,
+      "reported_per_cloth_stack": {
+        "11137": 13,
+        "11174": 3
+      },
+      "measured_number_of_stacks": null,
+      "verified_completed_casts": null
     }
   ],
   "numeric_summary": {
-    "new_noDisenchant_records": 11,
-    "unique_exact_input_item_ids": 13,
-    "new_drop_records": 2,
-    "new_completed_disencasts": 2,
-    "new_completed_prospects": 0,
-    "new_castsWithDrop": 2,
-    "new_totalQuantity_units": 2,
-    "new_histograms": 2,
+    "new_evidence_records": 10,
+    "new_drop_records": 10,
+    "new_measured_study_rows": 8,
+    "new_reference_prior_rows": 2,
+    "independent_named_original_authors": 6,
+    "new_explicit_completed_disencasts": 58,
+    "distinct_cast_cohorts_with_verified_denominator": 2,
+    "new_exact_output_quantity_units": 52,
+    "new_exact_output_totals": 4,
+    "new_castsWithDrop": 0,
+    "new_zero_inclusive_histograms": 0,
     "new_measured_probabilities": 0,
     "warmaul_24995_new_measured_casts": 0,
     "cobalt_36909_new_measured_casts": 0,
     "feliron_23424_new_measured_casts": 0,
-    "notes": "Positive one-cast shard result is independently supported by quoted first-person comment for each different item; recorded as two operations from one author, not a two-author sample. Catalog no-DE flags never count as attempted disenchants. No inferred zeros, gold or frozen prices."
+    "notes": "Unique completed casts 42 + 16, with Pegleg's two output rows sharing same 16 disenchants; 52 exact units =2 Lesser Nether (Pegleg) +16 Lesser Nether +33 Vision Dust +1 Small Radiant (1001850). Mask 20/30/120 are crafted units only; no inferred completed operations; pooled model reference only; no frozen gold or invented zeros."
   },
-  "evidence_file": "research/v3/evidence/legacy/20261118T0348-imbued-robe-and-classic-no-de.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-18T0443-independent-classic-gloves-masks-originals.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/wotlk/item=21861/imbued-netherweave-robe",
-    "https://www.wowhead.com/wotlk/item=5092/charred-razormane-wand",
-    "https://www.wowhead.com/classic/item=21040/narains-robe",
-    "https://www.wowhead.com/classic/item=2615/chromatic-robe",
-    "https://www.wowhead.com/classic/item=5110/dalaran-wizards-robe",
-    "https://www.wowhead.com/wotlk/item=5238/pitchwood-wand",
-    "https://www.wowhead.com/classic/item=2612/plain-robe",
-    "https://www.wowhead.com/classic/item=2618/silver-dress-robes",
-    "https://www.wowhead.com/wotlk/item=40018/wand-of-onyx",
-    "https://www.wowhead.com/wotlk/item=5239/blackbone-wand",
-    "https://www.wowhead.com/classic/item=2617/burning-robes",
-    "https://www.wowhead.com/tbc/item=6144/neophytes-robe"
+    "https://www.wowhead.com/item=11137/vision-dust",
+    "https://www.wowhead.com/item=11174/lesser-nether-essence",
+    "https://www.wowhead.com/item=10008/white-bandit-mask",
+    "https://www.wowhead.com/classic/item=10003/black-mageweave-gloves",
+    "https://www.wowhead.com/classic-ptr/item=10008/white-bandit-mask"
   ],
-  "verified_base_commit_sha": "e1ae6e179d4807025d1053a597091a1382001ad9",
+  "verified_base_commit_sha": "3f511352704c5eb474a2a5f7de0b34e3d998d490",
   "verified_commit_sha": null,
-  "commit_note": "One Git Data commit updates exactly this legacy quiet-status file and one new legacy evidence JSONL. Its own commit SHA cannot self-embed without cyclical hashing; read back branch head and files separately.",
+  "commit_note": "One Git Data commit writes exactly one new legacy evidence JSONL and this legacy quiet-status file. A commit cannot contain its own SHA inside one of its own files without a circular hash; verify final commit/head and both files externally after ref update.",
   "blockers": [
-    "Warmaul 24995 remains version-ambiguous historical cumulative Looter record with incomplete output quantity/histograms and current no-DE catalog flag; live item-instance testing required",
-    "Cobalt 36909 / Fel Iron 23424 missing new verified original full per-cast output-hit/zero ledger, not an arithmetic ore-equivalent",
-    "New two-cast TBC report lacks build, user skill, actual item-instance level, other material outcomes and modern Retail eligibility",
-    "11 additional noDisenchant are historical catalog eligibility flags, not current live Retail player attempted actions"
+    "Warmaul 24995 current Retail no-DE catalog and historical TBC iLvl108/now scaled ilvl31 conflicts unresolved; no independent per-hit stack ledger, 0-N histogram, character skill or build",
+    "Cobalt 36909 / Fel Iron 23424 missing new per-cast gem hit-count and zero-inclusive histogram exports; prior ore-equivalent studies already documented",
+    "New Classic gloves 10003 and mask 10008 studies are historical ilvl43 versus scaled Retail ilvl12; no current live eligibility test",
+    "20, 30 and 120 masks in additional firsthand accounts refer to crafts, not independently verified completed disenchant casts; no recasting nominal counts as actual denominator",
+    "aprildawn567 historical per-cloth-stack averages remain reference-only: raw finished-operation and per-output hit counts unknown"
   ],
   "exhausted_sources": [
     {
@@ -326,7 +281,18 @@
         "https://www.wowhead.com/wotlk/item=21861/imbued-netherweave-robe — one newly independently verified Thottbot author with exactly two separate completed rare-chest sharding casts; same person not duplicate two authors",
         "Exact historical Wowhead Classic/WotLK non-disenchant catalog flags for 11 item IDs; name+ID repository search found no authored same-ID evidence for these"
       ]
+    },
+    {
+      "lookingFor": "Previously unrecorded first-person measured Warmaul 24995, Cobalt 36909, Fel Iron 23424 versus independent Classic glove/mask cohorts",
+      "whereLooked": [
+        "Priority named Warmaul 24995, Cobalt 36909 and Fel Iron 23424 searches: only already recorded historical Looter and nominal ore studies; no independent new complete event log",
+        "Distinct original Wowhead Vision Dust commenter 1066284 and Pegleg: Black Mageweave Gloves 10003 dated patch/skill unavailable, two independent physical cast cohorts",
+        "Original Lesser Nether Essence commenter 1001850: 20 crafted White Bandit Masks 10008 and 3 exact output totals; actual completed DE count not documented",
+        "Original White Bandit Mask commenters 979581 and aprildawn567 and Vision Dust commenter 1129489: approximate craft totals vs pooled per-cloth-stack reference, no physical cast ledger",
+        "Original Black Mageweave Headband commenters 324456 and 500383 found already authored in research/v3, excluded to avoid duplicate 40/15-cast cohorts",
+        "Independent prior Black Mageweave Gloves FlayOnDarkIron, Darkbain and White Bandit Mask VBishop/633256/253863/353567 already authored, not re-recorded"
+      ]
     }
   ],
-  "next_concrete_step": "Seek original timestamped Warmaul Legplates 24995 addon saved-variable per-event disenchant ledger with build/item level/bonus and every output/zero; then distinct actual Cobalt 36909 and Fel Iron 23424 per-gem event exports. Ask Master to review cross-era eligibility before shipping historical-to-Retail no-DE rules."
+  "next_concrete_step": "Find an original version-dated Warmaul Legplates 24995 per-event DE recorder export, then real Cobalt 36909/Fel Iron 23424 per-gem 0–N logs and build/skill; preserve original classic ilvl43 vs scaled live ilvl12 separation for 10003/10008. Ask Master before altering schema or importing historical eligibility to Retail."
 }
