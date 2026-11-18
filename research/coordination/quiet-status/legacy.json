@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-18T07:47:02.672Z",
-  "status": "Ten new original WotLK jewelry disenchant evidence records from archived firsthand comments: Sun Rock Ring 42337 (80 completed casts, material totals), Bloodstone Band 42336 (40 completed casts with conditional dust range, plus independent original unit tallies and uncounted conditional ranges), and one explicitly unverified Abyss Crystal anecdote. No new Warmaul/Cobalt/Fel Iron measured casts, material hits, zero outcomes, or per-cast histograms.",
+  "updated_at": "2026-11-18T08:55:35.302Z",
+  "status": "Four new legacy evidence rows: three source-measured output records in ONE independent 500-completed-disenchant WotLK Classic Stoneguard Band 43248 cohort (2095 Infinite Dust 34054 units /381 positive casts; 163 Greater Cosmic Essence 34055 units /106 positive casts; 13 Dream Shard 34052 units /13 positive casts), plus one distinct original Enchantrix archive checked and confirmed empty. No new Warmaul 24995, Cobalt 36909 or Fel Iron 23424 cast-level measurement.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -12,158 +12,87 @@
     "legacy-standing-originals"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995: original 2,068 historical DE Looter sample still lacks output totalQuantity, stack histogram, current Retail eligibility, actual patch/build and spell/skill.",
-    "Fel Iron Ore 23424 and Cobalt Ore 36909: no new original completed prospect event logs with per-output hit/zero histograms; nominal ore stacks remain unconverted.",
-    "Historical WotLK gear disenchant identity and rarity/ilvl conditional yields: Sun Rock Ring 42337 (WotLK item level 138); Bloodstone Band 42336 (WotLK item level 138). Verify actual cast versions and Bloodstone 125208 unnamed essence/shard identities.",
-    "Token 45661 full class/variant redemption completeness unchanged."
+    "Warmaul Legplates 24995: historical Looter 2068 denominator still lacks original material unit histograms, actual ilvl/variant by cast, build and current Retail eligibility.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: no new independent completed prospect ledger with exact per-gem output hits and zero outcomes.",
+    "Stoneguard Band 43248: one previously unrecorded historic WotLK Classic self-reported 500-cast cohort with exact 3 material unit totals and positive cast counts; cannot transfer its results to current Retail.",
+    "Token 45661: full class reward variant identities and redemption remain unresolved."
   ],
   "newly_verified_fields_cohorts": [
     {
       "recordType": "drop",
-      "inputItemID": 42337,
-      "inputName": "Sun Rock Ring",
-      "casts": 80,
-      "castBasis": "explicit completed disenchant operations",
+      "inputItemID": 43248,
+      "inputName": "Stoneguard Band",
+      "historicCatalogItemLevel": 162,
+      "quality": "uncommon",
+      "casts": 500,
+      "castBasis": "source says crafted and disenchanted 500 rings; 381+106+13 mutually exclusive material-positive outcomes",
       "outputItemIDs": [
         34054,
-        34056,
-        34053
+        34055,
+        34052
       ],
       "materialUnitTotals": {
-        "34053": 2,
-        "34054": 77,
-        "34056": 33
+        "34052": 13,
+        "34054": 2095,
+        "34055": 163
       },
-      "castsWithDrop": null,
-      "perOutputHistogram": null,
-      "sourceURL": "https://www.wowhead.com/wotlk/item=42337/sun-rock-ring",
-      "sourceAuthor": "141811",
-      "studyKey": "wowhead-42337-141811-original-80de",
-      "caveat": "Source displayed 96%/42%/2.5% are units per 80 inputs, not measured material hit rates."
-    },
-    {
-      "recordType": "drop",
-      "inputItemID": 42336,
-      "inputName": "Bloodstone Band",
-      "casts": null,
-      "materialUnitTotals": {
-        "34054": 118,
-        "source-unlinked-small-shard": 3,
-        "source-unlinked-lesser-essence": 27
+      "castsWithDrop": {
+        "34052": 13,
+        "34054": 381,
+        "34055": 106
       },
-      "sourceURL": "https://www.wowhead.com/wotlk/item=42336/bloodstone-band",
-      "sourceAuthor": "125208",
-      "caveat": "Completed cast denominator and actual material IDs for two shortened names not verified. Do not borrow author's 100 Shadowmight Ring study denominator."
-    },
-    {
-      "recordType": "drop",
-      "inputItemID": 42336,
-      "inputName": "Bloodstone Band",
-      "casts": 40,
-      "castBasis": "explicit completed disenchant operations",
-      "outputItemIDs": [
-        34054
-      ],
-      "conditionalUnitsRange": {
-        "34054": [
-          2,
-          3
-        ]
-      },
-      "castsWithDrop": null,
-      "sourceURL": "https://www.wowhead.com/wotlk/item=42336/bloodstone-band",
-      "sourceAuthor": "19080",
-      "caveat": "Conditional range not 40 material hits, no output totals."
-    },
-    {
-      "recordType": "drop",
-      "inputItemID": 42336,
-      "inputName": "Bloodstone Band",
-      "casts": null,
-      "outputItemIDs": [
-        34054,
-        34056
-      ],
-      "conditionalUnitsRanges": {
-        "34054": [
-          1,
-          2
-        ],
-        "34056": [
-          1,
-          2
-        ]
-      },
-      "sourceURL": "https://www.wowhead.com/wotlk/item=42336/bloodstone-band",
-      "sourceAuthor": "scampor",
-      "caveat": "Anecdotal prior version, no measured denominator or hit frequency."
-    },
-    {
-      "recordType": "reference",
-      "inputItemID": 42336,
-      "inputName": "Bloodstone Band",
-      "casts": null,
-      "claimedOutputItemIDs": [
-        34057
-      ],
-      "sourceURL": "https://www.wowhead.com/wotlk/item=42336/bloodstone-band",
-      "sourceAuthor": "Biggiesmall",
-      "caveat": "Unverified anomalous Abyss Crystal testimony, approximate cohort and zero usable measured rate; exclude from estimator."
+      "perOutputZeroBins": null,
+      "perCastHistograms": null,
+      "studyKey": "mmowts-20240316-stoneguard-band-original-500-de",
+      "sourceURL": "https://www.mmowts.com/news/wotlk-classic-best-strategy-to-get-richer-while-afking-disenchant-stoneguard-band",
+      "sourcePublished": "2024-03-16",
+      "caveat": "Self-reported first-person test on promotional site; raw event export, game build, skill, specialization, actual in-game ilvl not present. All 3 rows share 500 casts, NOT 1500."
     }
   ],
   "numeric_summary": {
-    "new_records": 10,
-    "new_distinct_explicit_completed_de_cohorts": 2,
-    "new_measured_processing_casts": 120,
+    "new_records": 4,
+    "new_study_records": 3,
+    "new_search_exhaustion_records": 1,
+    "new_distinct_completed_de_cohorts": 1,
+    "new_measured_processing_casts": 500,
     "new_warmaul_24995_casts": 0,
     "new_cobalt_36909_casts": 0,
     "new_fel_iron_23424_casts": 0,
-    "new_measured_output_hit_counts": 0,
+    "new_measured_output_hit_counts": {
+      "43248:34054": 381,
+      "43248:34055": 106,
+      "43248:34052": 13
+    },
     "new_measured_zero_histograms": 0,
     "new_positive_stack_histograms": 0,
     "new_source_measured_material_unit_totals": {
-      "42337:34054": 77,
-      "42337:34056": 33,
-      "42337:34053": 2,
-      "42336:34054": 118
+      "43248:34054": 2095,
+      "43248:34055": 163,
+      "43248:34052": 13
     },
-    "new_source_measured_unresolved_identity_unit_totals": {
-      "42336:Small Shard": 3,
-      "42336:Lesser Essence": 27
-    },
-    "new_conditional_range_records": 3,
-    "new_unverified_abyss_crystal_anomaly": 1,
     "new_source_supported_input_IDs": [
-      42337,
-      42336
+      43248
     ],
     "new_verified_output_IDs": [
       34054,
-      34056,
-      34053
-    ],
-    "new_certain_source_output_IDs": [
-      34054,
-      34056,
-      34053
+      34055,
+      34052
     ],
     "new_gold_ev_evidence": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-18T0741-sunrock-bloodstone-firsthand-raw-results.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-18T0854-stoneguard-band-500-completed-de-cohort.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/wotlk/item=42337/sun-rock-ring",
-    "https://www.wowhead.com/wotlk/item=42336/bloodstone-band"
+    "https://www.mmowts.com/news/wotlk-classic-best-strategy-to-get-richer-while-afking-disenchant-stoneguard-band",
+    "https://github.com/mmathias01/WoWza/blob/b209e3f8faae341d99b9c007d28365935fff1f62/WTF/Account/SWEETDOC/SavedVariables/Enchantrix.lua"
   ],
-  "verified_base_commit_sha": "f4f08189bc46aa9405ad7ca14622b30b045cbe39",
+  "verified_base_commit_sha": "b300b0122dfa78a8ee895a4b4a4bd28167e73ec8",
   "verified_commit_sha": null,
-  "commit_note": "This status is committed atomically with its evidence file. Current commit SHA cannot be embedded into its own tracked content; verify committed SHA by read-back.",
+  "commit_note": "Both status and one new legacy JSONL file committed atomically. A tracked file cannot contain its own new commit SHA without changing that commit; external commit/read-back verification required.",
   "blockers": [
-    "Warmaul Legplates 24995: no new item-specific original fully measured stack histograms or Retail actual disenchant eligibility. Source's 2068 historical Looter denominator has unaccounted outcomes and is not current Retail proof.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: no new source-verified completed per-cast prospect ledgers with gem occurrence and zero histograms.",
-    "Original WotLK comments do not provide game build, hotfix timestamp, profession skill, specialization or input variant; pre-/post-hotfix jewelry dust ranges must not be pooled.",
-    "Bloodstone Band 125208 calls outputs 'Small Shard' and 'Lesser Essence' with no exact linked material identity; ID left null until primary verification.",
-    "Bloodstone Band Biggiesmall claims an Abyss Crystal from approximate 1000 operations; anomalous and unverified, intentionally sourceKind reference and excluded from numeric model.",
-    "45661 token reward variants/redemption not newly resolved."
+    "Warmaul 24995: no newly verified per-cast output quantities, occurrence zeros, original build/hotfix, or current Retail eligibility.",
+    "Cobalt 36909 and Fel Iron 23424: no new independent per-cast prospecting output and zero histograms; original powder reports are patch scoped.",
+    "Stoneguard 43248 MMOWTS sample self-reported 500 WotLK Classic disenchants; no source-raw per-cast histogram, equipment bonus, profession skill, specialization or game build. Its 381/106/13 output hits are reported but complete zero-bin ledger was not independently recorded.",
+    "Token 45661 full variant reward/redemption questions remain."
   ],
   "exhausted_sources": [
     {
@@ -350,7 +279,13 @@
         "Multiple original TBC disenchant comment searches on Wowhead (Arcane Dust, Netherweave Boots, Arcanoweave Boots, Netherweave Robe, Thick Draenic Boots) resolved to previously recorded cohorts; no double-count",
         "WoWDB LIVE TBC raid Onslaught and Lightbringer exact item-level/eligible flags; 11 independently linked records; additional Warden's Hauberk original Wowhead player comment"
       ]
+    },
+    {
+      "lookingFor": "Uninspected Enchantrix personal SavedVariables primary DE/prospect counters in SWEETDOC archived account",
+      "whereLooked": [
+        "https://github.com/mmathias01/WoWza/blob/b209e3f8faae341d99b9c007d28365935fff1f62/WTF/Account/SWEETDOC/SavedVariables/Enchantrix.lua — all three personal processing tables empty; no casts measured"
+      ]
     }
   ],
-  "next_concrete_step": "Seek original item 24995 in-game source recorder/0-N stack data and current Retail eligibility, then Cobalt 36909/Fel Iron 23424 logged prospect casts. Validate Bloodstone 125208 shortened material IDs against source links; do not transfer WotLK Classic source rates to modern Retail. Master owns any schema changes."
+  "next_concrete_step": "Seek new original zero-inclusive TBC ilvl108 uncommon armor item 24995 event journal or matched 102–120 armor/weapon cohort with actual item IDs, outcomes, skill/build; then prospect 36909 and 23424 exact source-cast logs. Do not reharvest this 500-ring MMOWTS cohort or empty SWEETDOC account. Keep token 45661 identity gap distinct and request tool/schema changes from Master."
 }
