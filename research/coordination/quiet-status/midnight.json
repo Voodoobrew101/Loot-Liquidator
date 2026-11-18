@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-18T01:13:21.440Z",
-  "status": "New source-code-verified Retail loot CSV pathway captures separate material gain and bag-derived input loss rows, but cannot independently recover source-at-cast 272246 ilvl305 or zero-inclusive per-operation histograms. No new independent gameplay cohort.",
+  "updated_at": "2026-11-18T02:18:50.489Z",
+  "status": "New original first-person but approximate Glimmering Powder 267653 knowledge catch-up rates by green/blue/epic gear quality are captured as reference-only and explicitly gated. No new independent material-yield completed-cast cohort for 272246, 237362, 237359, 237365 or milling.",
   "task_ids": [
     "T0026",
     "T0039",
@@ -10,65 +10,76 @@
     "T0002"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands: client-observed successful DE source gear itemLink with selected actual ilvl305 and modifiers, skill/spec and exact output material rank",
-    "237362 Umbral Tin Ore: original 800 completed-cast Cardinalai aggregate has family output units but no per-rank output hit counts, zeros, histograms, Resourcefulness events or confirmed Eversong Diamond unlock",
-    "237359 Refulgent Copper and 237365 Brilliant Silver: independent post-hotfix rank-aware cast-output ledgers missing",
-    "236761 Tranquility Bloom: per-completed 10-herb milling original pigment quantities including misses absent",
-    "Ka0s Loot History 1.5.0 CSV lineage: source-attributed gains and inventory losses are possible; one-to-one source item/bonus ↔ each cast remains unproven; 60-second coalescing can mask per-cast distributions"
+    "Midnight uncommon/rare/epic gear Disenchant conditioning and non-material catch-up output identity 267653",
+    "Pending actual 272246 Miststalker's Wristbands ilvl305 disenchant itemLink+output+skill/build receipt",
+    "Pending 237362 Umbral Tin rank-specific 0/1/2 per-output histograms and 242608 Eversong Diamond unlock-at-cast",
+    "Pending 237359 Refulgent Copper, 237365 Brilliant Silver, and 236761 10-herb milling original cast logs"
   ],
-  "newly_verified_fields_or_cohorts": {
-    "new_independent_completed_cast_cohorts": 0,
-    "new_zero_inclusive_histograms": 0,
-    "ka0s_loothistory_version": "1.5.0",
-    "ka0s_retail_listing_version": "12.1.0",
-    "ka0s_csv_exposes_item_id": true,
-    "ka0s_csv_exposes_output_quantity": true,
-    "ka0s_csv_exposes_ts_date_time": true,
-    "ka0s_csv_exposes_dir_kind_source": true,
-    "ka0s_csv_exposes_item_level": true,
-    "ka0s_csv_exposes_bonus_aware_wowhead_link": true,
-    "ka0s_output_attribution_disentchant_milling_prospecting": true,
-    "ka0s_bag_input_out_reason_deconstruct": true,
-    "ka0s_out_input_link_derived_from_surviving_holdings": true,
-    "ka0s_input_exact_item_link_preserved_after_last_disappears": false,
-    "ka0s_csv_per_cast_guid": false,
-    "ka0s_csv_raw_itemlink": false,
-    "ka0s_same_key_reconciler_coalesce_seconds": 60,
-    "ka0s_original_player_current_retail_csv_found": false,
-    "ka0s_actual_12_1_5_client_validation": false
-  },
-  "numeric_fields_advanced": {
-    "newMeasuredCompleteCohorts": 0,
-    "newCompletedCastDenominators": 0,
-    "newPerOutputHitCounts": 0,
-    "newObservedZeroOutcomes": 0,
-    "newVerifiedPerCastHistograms": 0,
-    "newVerifiedActualAtCastItemLevels": 0
-  },
+  "newly_verified_fields_or_cohorts": [
+    "Glimmering Powder output ID 267653 independently matched to Wowhead; WoW-Professions author explicitly reports a few hundred total disenchants without per-quality denominator",
+    "Three source-reported approximate quality-group chance figures: uncommon ~10%, rare ~50%, epic 100% ('always 1'); no exact hits/denominator; recorded as sourceKind=reference rather than exact measured study",
+    "Catch-up gate requires weekly trainer quest, 5 Swirling Arcane Essence, 1 Brimming Mana Shard, two weekly zone treasure items and behind-cap status (guide-reported)",
+    "No new independently quantified current-patch tradable disenchant material baseline cohort"
+  ],
+  "numeric_fields_advanced": [
+    {
+      "outputItemID": 267653,
+      "inputGroup": "Midnight uncommon gear (armor/weapon not split)",
+      "percentShown": 10,
+      "meaning": "approximate guide report per disenchant",
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "sourceKind": "reference"
+    },
+    {
+      "outputItemID": 267653,
+      "inputGroup": "Midnight rare gear (armor/weapon not split)",
+      "percentShown": 50,
+      "meaning": "approximate guide report per disenchant",
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "sourceKind": "reference"
+    },
+    {
+      "outputItemID": 267653,
+      "inputGroup": "Midnight epic gear (armor/weapon not split)",
+      "percentShown": 100,
+      "meaning": "guide says always 1; no sample denominator",
+      "casts": null,
+      "castsWithDrop": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "minSeen": 1,
+      "maxSeen": 1,
+      "sourceKind": "reference"
+    }
+  ],
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-18T0112-ka0s-loot-history-csv-lineage.jsonl"
+    "research/v3/evidence/midnight/2026-11-18T0217-glimmering-powder-catchup-rates.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-18T0017-original-export-schema-limits.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-18T0112-ka0s-loot-history-csv-lineage.jsonl",
   "evidence_record_ids": [
-    "midnight-20261118-003"
+    "midnight-20261118-004",
+    "midnight-20261118-005",
+    "midnight-20261118-006",
+    "midnight-20261118-007"
   ],
   "source_links": [
-    "https://github.com/tusharsaxena/LootHistory/blob/master/modules/Export.lua",
-    "https://github.com/tusharsaxena/LootHistory/blob/master/modules/Collector.lua",
-    "https://github.com/tusharsaxena/LootHistory/blob/master/modules/Attribution.lua",
-    "https://github.com/tusharsaxena/LootHistory/blob/master/modules/Reconciler.lua",
-    "https://github.com/tusharsaxena/LootHistory/blob/master/core/Ledger.lua",
-    "https://www.curseforge.com/wow/addons/ka0s-loot-history"
+    "https://www.wow-professions.com/midnight/enchanting-guide",
+    "https://www.wowhead.com/item=267653/glimmering-powder"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Single atomic commit of one fresh Midnight JSONL and own quiet status. Self-referential SHA cannot be embedded in same commit; branch read-back verification recorded in execution result.",
+  "commit_note": "Committed as one atomic Git tree change including evidence and status. Commit self-SHA intentionally not embedded in its own contents; GitHub read-back records authoritative commit SHA.",
   "blockers": [
-    "No publicly linked original Retail 12.1.5 player export or client validation; new Ka0s 1.5.0 code only, tested for reported 12.1.0 game version",
-    "Ka0s loot output entries and derived bag-loss DECONSTRUCT ledger are NOT provably pairable per cast, particularly simultaneous outputs or repeated same-key gains within 60 seconds",
-    "Ka0s input itemLink after last copy removed falls back to plain itemID; exact 272246 scaled 305-ilvl at-disenchant bonus cannot be established from CSV alone",
-    "No rank-specific Umbral Tin 237362 output hit counts, zeros, histograms or verified at-cast Eversong Diamond unlock; Cardinalai totals remain unmodified",
-    "No new independently measured current patch 237359 Refulgent Copper, 237365 Brilliant Silver or 236761 Tranquility Bloom zero-inclusive cast ledger"
+    "No publicly released 2026 original completed-cast per-material output+zero+refund receipts for 272246, 237362, 237359, 237365 or 236761",
+    "Glimmering Powder 267653 study is approximate/quality-grouped and source lacks per-quality cast counts, equipment ilvl/build/skill/spec and original player ledger; do not promote to exact probability",
+    "Glimmering Powder is catch-up knowledge only and must not enter normal gold EV baseline",
+    "Ka0s Loot History 1.5.0 data collection would need a voluntary original per-cast annotated export and verified spell/itemLink context"
   ],
   "exhausted_sources": [
     "2026-11-16T21:21:51.431Z: Fresh named-source original yield hunt for Miststalker's Wristbands 272246, Umbral Tin Ore 237362, Refulgent Copper Ore 237359, Brilliant Silver Ore 237365, and Tranquility Bloom 236761 across Reddit, Blizzard, Wowhead and profession guides yielded only previously indexed GamGem/WoWDB selected-ilvl vs base conflict, Cardinalai/JD3K/Draggoth estimates and guide/Reddit data. Do not duplicate them. Separate Wowhead item-side named searches uncovered unindexed Monk gear items 250010/250011/250012/250014/250015/250017. Existing branch/default-repo source checks found no owned Midnight evidence on these item IDs. 250010 and 250014 selected sources are PTR, not current Retail; their 13/8/4 and 27/16/10 records are reference only. LIVE inputs 250011 14/7/5; 250012 8/5/3; 250015 28/18/10; 250017 15/9/4 are pooled occurrence references. Sources in new evidence JSONL. Distinct indexed 249961, 250057, 250018 and other snapshots were excluded; no independent 0-inclusive original cohort was discovered.",
@@ -97,10 +108,11 @@
     "2026-11-17T21:24:01.568Z: distinct late-Oct-2026 addon-original-export lane: Goldsmith author r/woweconomy/1xhilw6 documents persistent Goldsmith.lua and lack of export button; PocketCFO creator r/u_MerchantClassGaming/1xhr4ow advertises per-mill tracking without publishing raw zero-inclusive receipt file. No publicly linked input/output event CSV. Selected Wowhead 272246 ilvl305 bonus=6652:13696:12841:13662 is preview-only; no source-linked real player at-cast evidence. Avoid repeating these generic addon descriptions unless source-original event export emerges.",
     "2026-11-17T23:20:36.671Z: Searched newly noticed ProfitProphet 2026-08-25 source-derived processing table claim (CurseForge Aug26 v2.10.3 file) by named Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore, Tranquility Bloom across publisher changelog, GitHub, Reddit and Blizzard; no public underlying study links/cast data. 21 ores/23 herbs counts are table coverage, not casts; no numeric results duplicated from previously indexed Cardinalai, Honeybone, Looter or 272246 selected tooltip. Recheck only if original credited rate studies or an author-permitted raw processing ledger appears.",
     "2026-11-18T00:17:13.284Z: NEW source-code examination: Craft Resume public CSV exporter yields per-session disenchant totals and aggregate output item ID/quality/units, but no per-operation itemLink or output bins; not a numeric dataset. EzDisenchant 1.1.7 history cap 500 and CSV/TXT confirmed but export structure/current player data absent. Do not reopen general addon listings; only obtain a real permissioned source-tied export or in-game controlled one-input-per-session trial.",
-    "2026-11-18T01:13:21.440Z: NEW acquisition path audited: Ka0s Loot History 1.5.0 public Github Attribution/Collector/Export/Reconciler/Ledger source and CurseForge listing, not previously in Midnight quiet status. CSV gives individual source-tagged material gains and bag-derived deconstruct losses, but same-key rows coalesce for 60s and no stable per-cast grouping, lost-item original bonus or live 12.1.5 source receipts. Original-by-name prospect/mill/DE search footprints already exhausted (Cardinalai/Honeybone/kyzenbka/selected 272246); no repeat data imported. Revisit Ka0s only on supplied original user export or controlled one-cast screenshot/test; avoid promoting raw bag losses to completed operations."
+    "2026-11-18T01:13:21.440Z: NEW acquisition path audited: Ka0s Loot History 1.5.0 public Github Attribution/Collector/Export/Reconciler/Ledger source and CurseForge listing, not previously in Midnight quiet status. CSV gives individual source-tagged material gains and bag-derived deconstruct losses, but same-key rows coalesce for 60s and no stable per-cast grouping, lost-item original bonus or live 12.1.5 source receipts. Original-by-name prospect/mill/DE search footprints already exhausted (Cardinalai/Honeybone/kyzenbka/selected 272246); no repeat data imported. Revisit Ka0s only on supplied original user export or controlled one-cast screenshot/test; avoid promoting raw bag losses to completed operations.",
+    "2026-11-18T02:18:50.489Z: By-name original 272246/237362/237359/237365/236761 search across Reddit, US Blizzard forums, Wowhead, profession guides and nonduplicated public spreadsheet keywords: no independent current-patch zero-inclusive tradable-material cohort; known Cardinalai/Honeybone/kyzenbka and Looter results excluded. NEW first-person WoW-Professions guide reports rounded knowledge catch-up Glimmering Powder 267653 figures by gear quality, no casts; kept as reference-only. Do not revisit until original raw receipts, changed game mechanics or guide update."
   ],
-  "next_concrete_step": "Obtain a voluntary real Retail 12.1.5 Ka0s Loot History 1.5.0 History CSV and contemporaneous original gear/ore inputLink+bonus+ilvl/skill/spec/build capture; isolate sequential single casts to defeat 60s key coalescing and independently verify completed spell, zero-output, refund and output material rank; only then derive 272246/237362/237359/237365/236761 study rows. Otherwise source-match new original player-export data rather than revisit exhausted indexed pages.",
-  "verified_base_commit_sha": "4511606eeca3e6e4a56858414a725c6aaa4589b2",
-  "next": "Obtain a voluntary real Retail 12.1.5 Ka0s Loot History 1.5.0 History CSV and contemporaneous original gear/ore inputLink+bonus+ilvl/skill/spec/build capture; isolate sequential single casts to defeat 60s key coalescing and independently verify completed spell, zero-output, refund and output material rank; only then derive 272246/237362/237359/237365/236761 study rows. Otherwise source-match new original player-export data rather than revisit exhausted indexed pages.",
-  "base_commit_sha": "4511606eeca3e6e4a56858414a725c6aaa4589b2"
+  "next_concrete_step": "Seek a permissioned in-game complete 12.1.5 raw disenchant operation ledger with source itemLink+ilvl/bonus/skill/spec and material outputs for 272246, or rank-linked 237362/237359/237365 prospecting 0-N output histograms; avoid refreshing already exhausted public reposts. Keep 267653 catch-up reference excluded from gold EV.",
+  "verified_base_commit_sha": "7a862f369fee41a687d8b09a296bb275e503324a",
+  "next": "Original player-level source-at-cast receipts for 272246 or 237362/237359/237365/236761; see next_concrete_step.",
+  "base_commit_sha": "7a862f369fee41a687d8b09a296bb275e503324a"
 }
