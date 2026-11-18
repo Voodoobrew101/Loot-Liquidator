@@ -1,105 +1,113 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-18T20:50:38.811Z",
-  "status": "Three previously unindexed original first-person single-item completed disenchant casts recovered for legacy weapons (29910, 10704, 10652), with exact output IDs and observed per-cast stack quantities. Three completed operations, ten total material units, positive stack histograms. Warmaul 24995 and Cobalt/Fel Iron prospecting original 0-N histories remain unfilled; existing cumulative data not duplicated.",
+  "updated_at": "2026-11-18T21:45:45.290Z",
+  "status": "Recovered seven distinct first-person historical disenchant cohorts (109 completed physical operations) in 14 new exact item/output JSONL rows. Verified explicit material-specific lattice zero results in 7 casts; two Classic 30- and 53-cast studies report raw output totals. No new Warmaul/Cobalt/Fel Iron 0-N original event logs; duplicate legacy cohorts excluded.",
   "task_ids": [
     "T0047",
     "T0022",
     "T0044",
     "T0042",
-    "standing-original-weapon-casts"
+    "T0053",
+    "standing-original-shadowlands-classic-disenchants"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 -> Arcane Dust 22445, Greater Planar Essence 22446, Lesser Planar Essence 22447, Large Prismatic Shard 22449: independent timed original completed DE ledger, output hits, quantity histograms, item bonus/patch and modern eligibility remain missing; historical 2068 Looter denominator not recopied.",
-    "Cobalt Ore 36909 -> original independent completed prospects/368xx gem hit counts, zero/yield histogram, real operation basis/patch/refunds absent; prior ore-equivalent cohorts not recopied.",
-    "Fel Iron Ore 23424 -> original independently attributable completed prospect per-gem hits, 0-N histogram, skill/refund/version absent; old 100-/565-ore reports not recopied.",
-    "Independent historical weapon disenchant source rescue for inputs 29910,10704,10652 and outputs 22447,11176; old imported era and current Retail cannot be equated."
+    "Warmaul Legplates 24995 -> 22445/22446/22447/22449: no new primary event-level cast ledger/hit histograms; 2068 prior cumulative Looter reports are not first-person and cannot be transported across historic ilvl108 vs live scaling without version match.",
+    "Cobalt Ore 36909 -> Wrath gem outputs: old nominal ore cohorts already indexed; no new independent completed five-ore physical casts, per-gem hit and zero event histograms, refunds or dated game build.",
+    "Fel Iron Ore 23424 -> TBC gems: old 100- and 565-ore cohorts already indexed; no new independent completed prospect event counts, per-gem histograms or refund notes.",
+    "New Shadowlands special disenchantable Thrumming Powerstone 190336 -> Soul Dust 172230 and Unformed Lattice 189153: 13 independently reported completed casts across five original commenters, a verified 7-operation zero-lattice subset, additional no-histogram yield ranges.",
+    "New historic Classic Silk Headband 7050 (30 physical casts) and Crimson Silk Vest 7058 (53 physical casts) -> original Soul Dust 11083, Lesser Mystic Essence 11134, Small Glowing Shard 11138, all raw source quantities; per-material hits and 0-N histograms unavailable."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "recordID": "legacy-20261118-205091",
-      "studyKey": "original-wowhead-migrated-29910-staff-one-cast",
-      "source": "https://www.wowhead.com/tbc/item=29910/the-staff-of-twin-worlds",
-      "inputItemID": 29910,
-      "inputName": "The Staff of Twin Worlds",
-      "outputItemID": 22447,
-      "outputName": "Lesser Planar Essence",
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 3,
-      "positiveStackHistogram": {
-        "3": 1
-      },
-      "sourceVersion": "historical migrated first-person comment; game build unknown"
+      "inputItemID": 190336,
+      "inputName": "Thrumming Powerstone",
+      "outputIDs": [
+        172230,
+        189153
+      ],
+      "originalCohorts": 5,
+      "completedCasts": 13,
+      "confirmedSoulDustUnitsWithKnownTotals": 17,
+      "confirmedLatticeUnits": 3,
+      "explicitZeroLatticeCasts": 7,
+      "reportedDustStackRanges": "1x4;2 casts of 2, 2 casts of 3, seven with 2–4 (unknown totals), 1x3",
+      "skillObserved": "Shadowlands Enchanting 1/115 only for Gerotora",
+      "source": "https://www.wowhead.com/item=190336/thrumming-powerstone",
+      "limitations": "Soul Dust for seven casts not summed; no current Retail patch/eligibility validation; Wowhead cumulative provider count excluded"
     },
     {
-      "recordID": "legacy-20261118-205092",
-      "studyKey": "original-wowhead-migrated-10704-chillnail-one-cast",
-      "source": "https://www.wowhead.com/classic/item=10704/chillnail-splinter",
-      "inputItemID": 10704,
-      "inputName": "Chillnail Splinter",
-      "outputItemID": 11176,
-      "outputName": "Dream Dust",
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 2,
-      "positiveStackHistogram": {
-        "2": 1
-      },
-      "sourceVersion": "historical migrated first-person comment; game build unknown"
+      "inputItemID": 7050,
+      "inputName": "Silk Headband",
+      "outputIDs": [
+        11083,
+        11134,
+        11138
+      ],
+      "completedCasts": 30,
+      "totalQuantities": [
+        85,
+        6,
+        2
+      ],
+      "source": "https://www.wowhead.com/item=11083/soul-dust",
+      "sourceAuthor": "Cutthroat",
+      "limitations": "No hit counts, output stack histograms, patch, skill or modern item equivalence"
     },
     {
-      "recordID": "legacy-20261118-205093",
-      "studyKey": "original-wowhead-migrated-10652-mountain-one-cast",
-      "source": "https://www.wowhead.com/classic/item=10652/will-of-the-mountain-giant",
-      "inputItemID": 10652,
-      "inputName": "Will of the Mountain Giant",
-      "outputItemID": 11176,
-      "outputName": "Dream Dust",
-      "completedCasts": 1,
-      "castsWithDrop": 1,
-      "totalQuantity": 5,
-      "positiveStackHistogram": {
-        "5": 1
-      },
-      "sourceVersion": "historical migrated first-person comment; game build unknown"
+      "inputItemID": 7058,
+      "inputName": "Crimson Silk Vest",
+      "outputIDs": [
+        11083,
+        11134,
+        11138
+      ],
+      "completedCasts": 53,
+      "totalQuantities": [
+        142,
+        13,
+        7
+      ],
+      "source": "https://www.wowhead.com/item=11083/soul-dust",
+      "sourceAuthor": "pherkier",
+      "limitations": "No hit counts, output stack histograms, patch, skill; author's informal 80% dust success not treated as measured"
     }
   ],
   "numeric_summary": {
-    "newOriginalCohorts": 3,
-    "distinctInputItemIDs": [
-      29910,
-      10704,
-      10652
+    "newOriginalCohorts": 7,
+    "completedPhysicalDisenchants": 109,
+    "records": 14,
+    "newInputItemIDs": [
+      190336,
+      7050,
+      7058
     ],
-    "exactOutputItemIDs": [
-      22447,
-      11176
+    "newOutputItemIDs": [
+      172230,
+      189153,
+      11083,
+      11134,
+      11138
     ],
-    "completedCasts": 3,
-    "confirmedOutputUnits": 10,
-    "positiveOutputHits": 3,
-    "zeroOutcomes": "not independently observed",
-    "newWarmaulCasts": 0,
-    "newCobaltProspects": 0,
-    "newFelIronProspects": 0,
-    "estimatedChances": null,
-    "estimatedGoldEV": null
+    "knownMaterialUnitsExcludingUnquantifiedSevenCastDust": 275,
+    "verifiedMaterialSpecificZeroCasts": 7,
+    "newCompletedCastsForPriorityWarmaulCobaltFelIron": 0
   },
-  "evidence_file": "research/v3/evidence/legacy/2026-11-18T2050-three-original-weapon-disenchants.jsonl",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-18T2145-powerstone-classic-primary-casts.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/tbc/item=29910/the-staff-of-twin-worlds",
-    "https://www.wowhead.com/classic/item=10704/chillnail-splinter",
-    "https://www.wowhead.com/classic/item=10652/will-of-the-mountain-giant"
+    "https://www.wowhead.com/item=190336/thrumming-powerstone",
+    "https://www.wowhead.com/item=11083/soul-dust",
+    "https://www.wowhead.com/item=189153/unformed-lattice",
+    "https://www.wowhead.com/classic/item=7050/silk-headband",
+    "https://www.wowhead.com/classic/spell=8791/crimson-silk-vest"
   ],
-  "verified_base_commit_sha": "d5f32b2cc7a452f019ddc0533eaf032fed398f3d",
+  "verified_base_commit_sha": "15befcc5610fb0ecbe822e6174f57ec1892f3515",
   "verified_commit_sha": null,
-  "commit_note": "Atomic one-commit write of one new legacy evidence JSONL and this own quiet status; the resulting commit SHA cannot be embedded within the same commit without circular self-reference. Read-back verification of branch head and both content files follows publishing.",
+  "commit_note": "Exactly one Git commit planned for evidence JSONL plus this worker-owned status. Git commit SHA cannot self-reference in its own tree; branch ref and read-back verified after write.",
   "blockers": [
-    "Warmaul 24995: original completed material-zero/hit/quantity histogram and source build/current Retail eligibility not recovered.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: independent original per-output completed prospect cast/hit/zero/refund ledgers not recovered.",
-    "Three new historical weapon comments omit character skill/spec, original date/build and current Retail eligibility; their positive stack histogram is only one observed positive cast each, no population probabilities or global zeros."
+    "Original event logs and full per-material 0-N histograms for 24995/36909/23424 still unavailable; source-epoch game item versions differ, so no current Retail rate claims.",
+    "Thrumming Powerstone comments not dated or client-build identified, and commenter Gerotora's 7 dust-positive operations have source-supported per-cast range 2–4 but no total or histogram; one lattice-negative outcome count source explicit.",
+    "One source browsing channel requires JavaScript to inspect Looter raw HTML; independent hosted browser provider lacked credits this run. No fabricated data or inferred missing zeros."
   ],
   "exhausted_sources": [
     {
@@ -402,72 +410,71 @@
         "Historical original comments on The Staff of Twin Worlds, Chillnail Splinter and Will of the Mountain Giant: 3 distinct previously unauthored physical item outcome reports",
         "Excluded already authored The Sharp Cookie 30568, Black Mageweave Vest 9998, Gossamer Belt 7526, Totemic Staff 25494, Windshear Leggings 12041 and Runecloth Belt 13856 original cohorts"
       ]
+    },
+    {
+      "lookingFor": "2026-11-18 novel Warmaul Legplates, Cobalt Ore, Fel Iron Ore event-level originals and distinct early-game historical disenchants",
+      "whereLooked": [
+        "Warmaul Legplates item by name: TBC/WotLK Classic iLvl108 vs modern WoWhead scaled iLvl14 and variable versions; historical 2068 Looter reference and TBC same-band prior cohorts already indexed, no new first-person per-cast log",
+        "Cobalt Ore and Fel Iron Ore item names on Wowhead TBC/WotLK and historical forum examples: all source-attributed 180-/100-/565-ore and nominal casts already recorded; excluded duplicate snapshots and mining outcomes",
+        "Ulduar Spaulders of the Wayward Vanquisher 45661: previously recorded original seven-class reward mapping, not copied",
+        "Rechecked existing first-person Wizardweave Turban 1Beachcomber, Black Mageweave Gloves 42 DE, Shrouded Cloth Bracers five 20-cast batches, Nightscape Headband 74 DE, Duskweave Belt 28/50/100: already indexed, excluded",
+        "New original independent source: https://www.wowhead.com/item=190336/thrumming-powerstone — five original comment cohorts, Soul Dust 172230 and Lattice 189153; seven real negative lattice results with profession skill 1/115",
+        "New original independent source: https://www.wowhead.com/item=11083/soul-dust — Cutthroat 30 Silk Headband and pherkier 53 Crimson Silk Vest original studies, total material units by exact legacy IDs",
+        "Repository name/commenter-based search for Thrumming Powerstone, Cutthroat and pherkier returned no matching previously authored cohorts; 14 new material rows; no price inputs saved"
+      ]
     }
   ],
-  "next_concrete_step": "Seek original Warmaul 24995 independently timed physical cast exports and current Retail version/eligibility. For Cobalt 36909 and Fel Iron 23424 seek raw 5-ore prospect event exports with per-output 0-N histograms and material IDs, plus any refunds; do not copy earlier nominal equivalent cohorts. For new weapon singletons, collect further independent same-era casts before assigning chance or transfer to Retail.",
+  "next_concrete_step": "Continue source-original Warmaul 24995 (TBC ilvl108 versus scaled current item build) per-event cast export and current Retail eligibility; Cobalt 36909/Fel Iron 23424 completed five-ore prospect event exports with output hits and zeros, and refund accounting. Independently date the Thrumming Powerstone comments and reconcile their item-level-17/bonus lattice condition; recover per-output castsWithDrop for the new 30/53 Classic samples; retain old original cohorts without pooling into Retail.",
   "exact_gaps": [
     {
       "inputItemID": 24995,
-      "inputName": "Warmaul Legplates",
-      "requestedOutputIDs": [
+      "outputIDs": [
         22445,
         22446,
         22447,
         22449
       ],
       "newCompletedCasts": 0,
-      "remaining": "Original 0-N physical cast ledger, current Retail item build/version and eligibility unknown"
+      "remaining": "Full original 0-N player event ledger; patch/build/bonus, current Retail eligibility and output quantities"
     },
     {
       "inputItemID": 36909,
-      "inputName": "Cobalt Ore",
       "newCompletedCasts": 0,
-      "remaining": "Completed five-ore prospects with per-output hit/zero and conditional stack histogram missing"
+      "remaining": "Actual completed 5-ore prospects, material-specific hits/zeros/histograms and Resourcefulness"
     },
     {
       "inputItemID": 23424,
-      "inputName": "Fel Iron Ore",
       "newCompletedCasts": 0,
-      "remaining": "Independent original 0-N prospect and refund ledger missing"
+      "remaining": "Actual completed prospect events, per-gem hit/zero histogram and input/refund accounting"
     },
     {
-      "inputItemID": 29910,
-      "inputName": "The Staff of Twin Worlds",
-      "outputItemIDs": [
-        22447
+      "inputItemID": 190336,
+      "outputIDs": [
+        172230,
+        189153
       ],
-      "newCompletedCasts": 1,
-      "newlyVerifiedTotalQuantity": 3,
-      "newlyVerifiedPositiveStackHistogram": {
-        "3": 1
-      },
-      "remaining": "Independent repeat casts, game build/skill and current Retail eligibility unknown"
+      "completedCasts": 13,
+      "remaining": "Historical patch and skill for other commenters, specific 7-cast Soul Dust quantities and any Retail applicability"
     },
     {
-      "inputItemID": 10704,
-      "inputName": "Chillnail Splinter",
-      "outputItemIDs": [
-        11176
+      "inputItemID": 7050,
+      "outputIDs": [
+        11083,
+        11134,
+        11138
       ],
-      "newCompletedCasts": 1,
-      "newlyVerifiedTotalQuantity": 2,
-      "newlyVerifiedPositiveStackHistogram": {
-        "2": 1
-      },
-      "remaining": "Independent repeat casts, game build/skill and current Retail eligibility unknown"
+      "completedCasts": 30,
+      "remaining": "Per-output hits/0-N histogram and modern material conversions"
     },
     {
-      "inputItemID": 10652,
-      "inputName": "Will of the Mountain Giant",
-      "outputItemIDs": [
-        11176
+      "inputItemID": 7058,
+      "outputIDs": [
+        11083,
+        11134,
+        11138
       ],
-      "newCompletedCasts": 1,
-      "newlyVerifiedTotalQuantity": 5,
-      "newlyVerifiedPositiveStackHistogram": {
-        "5": 1
-      },
-      "remaining": "Independent repeat casts, game build/skill and current Retail eligibility unknown"
+      "completedCasts": 53,
+      "remaining": "Per-output hits/0-N histogram and modern material conversions"
     }
   ]
 }
