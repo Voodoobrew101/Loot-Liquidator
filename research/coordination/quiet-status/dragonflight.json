@@ -2,31 +2,74 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-18T11:31:14.475Z",
-  "status": "No newly verified independent Dragonflight per-output completed-cast or raw numeric source. Conducted new quality-rank, 2024 Prismatic-concentration, multilingual-comment and original-author dedupe checks; only already-indexed studies and reference/bug context surfaced.",
+  "updated_at": "2026-11-18T12:38:28.775Z",
+  "status": "Three distinct first-person Serevite/Illimited Diamond original-comment observations recovered from an unindexed January 3-4 2023 r/woweconomy thread: two one-stack unit totals (5 and 1 R3 diamonds) and one rank-3 1-per-1000-input reported average. No completed-cast denominator, hit counts or histograms verified.",
   "task_ids": [
-    "T0020",
     "T0046",
-    "T0041",
+    "T0020",
     "T0019",
+    "T0041",
     "T0018",
     "T0015"
   ],
   "exact_gaps_targeted": [
-    "Draconium Ore 189143/188658 and Serevite Ore 190394/190395/190396: original source item quality mapping, actual completed casts, per-output totalQuantity and hit/zero/1/2+ histograms, refunded/reprocessed inputs and source epoch.",
-    "Khaz'gorite Ore and Prismatic Ore 194545: original exact input/output item IDs and rank, final completed-cast denominators, per-output occurrences and stack histogram.",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466: rank-controlled actual 5-herb mill casts, individual 198412-198414 and 198418-198420 pigment hits/stack totals and refunds.",
-    "Individual gear 197649/197654 and further historic Dragonflight DE: raw Looter material-count tables, skill/spec/patch and outcome histograms unavailable in static page."
+    "T0046: 1k nominal Serevite input samples -> R3 Illimited Diamond 192871 exact output unit totals; input quality and R3 ore ID mapping differ by commenters; no cast-normalized P(hit).",
+    "T0020/T0019/T0041: Draconium 189143/188658 and Serevite 190394/190395/190396 original operation ledger and quality rank linkage, refund/reprocessing, 0-1-2 outcome histograms.",
+    "T0018/T0015: Bubble Poppy/Saxifrage milling by rank 5-herb completed casts and original per-output 0-N pigment histograms; no new sample.",
+    "Khaz'gorite/Prismatic prospecting 194545: independently logged exact ore rank, produced ranked gems and actual operations missing."
   ],
   "newly_verified_fields": [
-    "No new independent measured numeric fields or novel ranked original cohort; no cast probabilities added.",
-    "New negative provenance check: the July 25, 2024 Prismatic Ore concentration report describes two quality-rank upgrades only, not itemized original drop data.",
-    "Public GitHub exact original-author queries cross-checked duplicate historical Wowhead commenters before import."
+    "Original Jan 3 2023 separate firsthand Serevite batches: 1,000 nominal ore -> 5 rank-3 Illimited Diamond units (ID 192871); first one-stack run of another commenter -> 1 rank-3 diamond unit. Input rank unknown in both, actual completed cast count unknown.",
+    "Third separate 2023 first-person commenter reports a rank-3 Serevite average of one R3 Illimited Diamond per 1,000 nominal ore (averageShown 1, averagePer '1000 inputs'); sample size unstated. R3 Serevite item ID 190394 supported by independent GoldCap quality display (secondary).",
+    "All three independent original comments share one Reddit thread but distinct studyKeys, do not pool the first commenter's subsequent unspecified batches and do not turn output totals into castsWithDrop.",
+    "No output zeros, per-cast 0-1-2 histogram, refunded ore count, or true operation denominator verified."
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
+  "newly_verified_cohorts": [
+    {
+      "studyKey": "reddit-102436o-five-r3-from-one-stack",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": 192871,
+      "outputRank": 3,
+      "totalQuantity": 5,
+      "averageShown": null,
+      "averagePer": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "originalSource": "https://www.reddit.com/r/woweconomy/comments/102436o"
+    },
+    {
+      "studyKey": "reddit-102436o-one-r3-per-1k-r3-average",
+      "inputItemID": 190394,
+      "inputRank": 3,
+      "outputItemID": 192871,
+      "outputRank": 3,
+      "totalQuantity": null,
+      "averageShown": 1,
+      "averagePer": "1000 inputs",
+      "casts": null,
+      "castsWithDrop": null,
+      "originalSource": "https://www.reddit.com/r/woweconomy/comments/102436o"
+    },
+    {
+      "studyKey": "reddit-102436o-one-r3-first-1k",
+      "inputItemID": null,
+      "inputRank": null,
+      "outputItemID": 192871,
+      "outputRank": 3,
+      "totalQuantity": 1,
+      "averageShown": null,
+      "averagePer": null,
+      "casts": null,
+      "castsWithDrop": null,
+      "originalSource": "https://www.reddit.com/r/woweconomy/comments/102436o"
+    }
+  ],
+  "new_numerical_measurements": 3,
   "numerical_fields_improved": [
-    "None; all new material IDs/denominators/histograms would be conjectural without raw event data."
+    "Two original 1k-input Serevite comment cohorts have specific R3 Illimited Diamond unit totals 5 and 1 (not hit counts).",
+    "One separate R3 Serevite commenter-reported baseline average 1 R3 Illimited Diamond per 1000 ore; no total sample size.",
+    "Output item 192871/rank 3 verified against named GoldCap rank-3 listing; input item 190394=rank 3 secondarily corroborated but not Blizzard official tooltip."
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -78,10 +121,11 @@
     "research/v3/evidence/dragonflight/2026-11-18T0838-original-raid-disenchant-and-priority-cast-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-18T0939-original-green-weapon-and-six-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-18T1035-new-source-identity-and-cast-ledger-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-18T1131-independent-cast-ledger-and-multilingual-dedupe-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-18T1131-independent-cast-ledger-and-multilingual-dedupe-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-18T1238-serevite-weekly-original-cohorts.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1131-independent-cast-ledger-and-multilingual-dedupe-search.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1131-independent-cast-ledger-and-multilingual-dedupe-search.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1238-serevite-weekly-original-cohorts.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1238-serevite-weekly-original-cohorts.jsonl",
   "source_links": [
     "https://us.forums.blizzard.com/en/wow/t/draconic-disenchantment-shadow-nerf/1425714",
     "https://www.wowhead.com/ptr/item=195184/bronze-tower",
@@ -97,16 +141,19 @@
     "https://www.wowhead.com/item=194545/prismatic-ore",
     "https://us.forums.blizzard.com/en/wow/t/concentration-and-prospecting/1901868",
     "https://www.wowhead.com/item=198418/blazing-pigment",
-    "https://github.com/t-mart/wow-auction/blob/master/README.md"
+    "https://github.com/t-mart/wow-auction/blob/master/README.md",
+    "https://www.reddit.com/r/woweconomy/comments/102436o",
+    "https://goldcap.gg/retail/kr/items/190394",
+    "https://goldcap.gg/retail/us/items/192871"
   ],
-  "verified_parent_sha": "b99ef083e714b56cc9b20682dc594425c8aacdc2",
-  "verified_commit_sha": "b99ef083e714b56cc9b20682dc594425c8aacdc2",
-  "commit_sha_scope": "This field names the verified pre-run parent at write time. A Git commit cannot include its own SHA within its tracked content; read-back of the resulting commit and exact changed paths is verified after pushing.",
+  "verified_parent_sha": "5be2f79fe8e7536acab915a625f70200d438fd36",
+  "verified_commit_sha": "5be2f79fe8e7536acab915a625f70200d438fd36",
+  "commit_sha_scope": "This tracked status names the verified parent head at write time; self-referential Git commit SHA cannot be stored in the same commit. Exact resulting commit and changed paths are independently verified after ref update.",
   "blockers": [
-    "No newly verified original per-output 0/1/2+ Dragonflight ore/herb histogram or Resourcefulness-refund-aware actual completed-cast denominator.",
-    "Live authority-grade Serevite item rank-to-ID tooltips 190394/190395/190396 are inaccessible; documented rank mapping is secondary, not new direct verification.",
-    "Wowhead historic Looter table for Nokhud 197649 and 197654 is dynamically rendered; connected dynamic extractor temporarily out of credits, so material hits remain unknown.",
-    "Existing Xenastro original spreadsheet still cannot be independently fetched to verify pooled gem row identities or the operation ledger."
+    "No confirmed actual prospect cast denominators, material hit counts, zero outcomes, input resourcefulness-refund handling or 0/1/2+ histograms for these Serevite observations.",
+    "Two exact nominal 1000-ore batches have unspecified ore rank; secondary rank-3 item-ID mapping for third observation is not a Blizzard API/tooltip confirmation.",
+    "Xenastro original worksheet inaccessible for direct original row/cast verification; independent Dragonflight milling operation ledger still missing.",
+    "Historic Wowhead gear Looter dynamically rendered counts inaccessible with available browser extraction; Firecrawl credit allowance exhausted until its stated reset."
   ],
   "exhausted_sources": [
     {
@@ -1991,24 +2038,43 @@
         "YouTube name-first Draconium Ore prospecting and Bubble Poppy milling descriptions with 1000/10000-cast logs: no independently inspectable numbered per-cast result ledger surfaced via search",
         "Wowhead Nokhud Reaver Legplates 197649 and Shoulderguards 197654 historical disenchanting: original dynamic Looter numeric source table still not retrievable from accessible static index: https://www.wowhead.com/item=197649/nokhud-reaver-legplates and https://www.wowhead.com/item=197654/nokhud-reaver-shoulderguards"
       ]
+    },
+    {
+      "at": "2026-11-18T12:38:28.775Z",
+      "scope": "Serevite original first-person small-batch provenance; Draconium/Khaz'gorite/Prismatic and Bubble Poppy/Saxifrage cast/histogram search across web indexes",
+      "reason": "New 3-comment original cohort recovered from previously unindexed January 2023 weekly Reddit thread. No per-output hit/zero histogram or refund-aware cast ledger, and no new milling histogram. Repeat existing Aary, Bugy, ar_rules, Xenastro and original raid Looter cohorts excluded.",
+      "whereLooked": [
+        "Reddit r/woweconomy 102436o Jan 2023 weekly discussion: new 5-R3-in-one-1k, one-R3-in-first-1k, and reported 1-per-1k R3 average (https://www.reddit.com/r/woweconomy/comments/102436o)",
+        "Reddit r/woweconomy original 1135bti Feb 2023 Serevite nerf thread: previously searched, existing 1.3m approximate report not reimported (https://www.reddit.com/r/woweconomy/comments/1135bti)",
+        "Reddit r/woweconomy Draconium 10i63zb, Khaz'gorite 10h6ccx, Prismatic 108782r: original studies already indexed, no new output histograms",
+        "Wowhead Illimited Diamond 192870 Bugy averages and related ore comments: earlier original cohorts, no new cast identities (https://www.wowhead.com/item=192870/illimited-diamond)",
+        "Wowhead Saxifrage 191465 Aary and Serene/Blazing pigment original comments: prior sample, no new mill casts (https://www.wowhead.com/item=191465/saxifrage)",
+        "Blizzard US WoW forums 2023 Serevite and Draconium original racial skills and named herb 5-mill tests: no new per-cast result table",
+        "WoW-Professions Dragon Isles Inscription/Jewelcrafting named ore and herb guides: reference-only recipes, no new measured hit data (https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight)",
+        "Warcraft Wiki Dragon Isles Prospect/Milling and Khaz'gorite ore rank pages: recipe mechanics only, no new primary cohorts (https://warcraft.wiki.gg/wiki/Prospect)",
+        "MMO-Champion original 2023 Draconium prospect experiment queries: no independent event ledger surfaced",
+        "GitHub public Dragonflight CSV and Serevite Ore prospecting dump searches: no independent raw castsWithDrop/histogram event log",
+        "Firecrawl connected dynamic Wowhead Looter attempt for Nokhud Reaver Legplates 197649: credit limit blocked request, not an empty numeric source."
+      ]
     }
   ],
-  "next_concrete_step": "Use a newly available original player CSV/SavedVariables export or Xenastro original worksheet/download and independently verify item ranks plus actual completed casts after refunds; resolve raw Wowhead Looter item-table sources for Nokhud 197649/197654 only when rendered numerical tables become accessible. Do not revisit the same indexed source family without a new access method.",
+  "next_concrete_step": "Trace original Reddit comment permalinks/authors when a reliable Reddit JSON view is available; obtain 2023 1k-ore batches' actual completed operations/refunds and identity/rank from original player logs; locate new Bubble Poppy/Saxifrage raw per-cast milling worksheet rather than requery exhausted guides.",
   "validation": {
-    "record_count": 1,
-    "real_drop_rows": 0,
-    "searched_rows": 1,
-    "independent_source_cohorts": 0,
+    "record_count": 3,
+    "real_drop_rows": 3,
+    "searched_rows": 0,
+    "independent_source_cohorts": 3,
     "all_required_record_keys_verified": true,
     "nonexistent_zero_outcomes_not_inferred": true,
-    "duplicate_source_cohorts_excluded": true,
+    "source_original_one_thread_distinct_comments": true,
+    "estimator_eligible_hit_histograms": 0,
     "changed_paths_expected": [
-      "research/v3/evidence/dragonflight/2026-11-18T1131-independent-cast-ledger-and-multilingual-dedupe-search.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-18T1238-serevite-weekly-original-cohorts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ]
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 0
+  "new_source_reported_numeric_rows": 3
 }
