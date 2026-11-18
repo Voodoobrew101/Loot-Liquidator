@@ -1,0 +1,32 @@
+# ProspectMate original-source persisted aggregate and output-coverage gate — 2026-11-17T22:02Z
+
+**Research-only source-code audit.** No new empirical Retail conversion cohort, current-character validation, observed probability, output expectation, price or tooltip field was established. Do not import source-code bookkeeping as game observations.
+
+## Reproducible source pin
+
+- Public addon original: [Urutseg/ProspectMate](https://github.com/Urutseg/ProspectMate), **main** at [2d8d2f2a268fef68d9cae6996c4cc5ede7db622b](https://github.com/Urutseg/ProspectMate/commit/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b), source `ProspectMate.lua` blob `2e15542a54a31c546275cdf488a69d24edad0a06`. This is the inspected GitHub main source, **not independently verified as identical to the distributed v2.0.3 zip**.
+- [ProspectMate.lua#L1-L20](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L1-L20): `PM.DB_VERSION=3`, 2.5 s session timeout; includes Midnight prospecting spell 1231127 and milling 1269575 and Dragonflight methods.
+- [#L370-L409](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L370-L409) and [#L605-L638](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L605-L638): saved `SmartProspectorDB.reagents[inputID]` consists of accumulated `consumed` and `results[outputID]`. Every session commits **net item-count decreases** and positive material totals, without persisted individual session/cast rows, per-output zeros, source build, skill, specialization, timestamp, or item quality context.
+- [#L570-L603](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L570-L603): `consumed` is inventory delta, not independently counted completed casts, nominal ore/herb input or refund savings; `results` may merge event counts and tracked inventory deltas.
+- [#L612-L628](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L612-L628): all produced outputs of one session are added to **each** consumed reagent row if more than one tracked reagent decreased. This is a conditional cross-input attribution/duplicate-output risk, not evidence it happened in any saved character file.
+- [#L186-L194](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L186-L194), [#L239-L240](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L239-L240), [#L558-L566](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L558-L566): bag-delta output fallback enumerates `PM.Data.resultItems`, including Midnight pigments but **omitting** sample ordinary gem IDs 242606 and 242608. A `TRADE_SKILL_ITEM_CRAFTED_RESULT` handler [#L719-L724](https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua#L719-L724) may still capture additional outputs, so source-code omission **does not prove** a particular real operation was unrecorded. It means a complete output vector cannot be inferred from an arbitrary saved aggregate alone.
+
+## Exact field classification / acceptance gate
+
+| Candidate field from user-supplied `SmartProspectorDB` | Classification | Required before quantitative use |
+|---|---|---|
+| Numeric input/output item IDs and positive aggregated `results` quantity | Potential **historical personal/reference aggregate quantity**, not an independent study until original owner provenance and data/patch context established | Original file, version, single-input session scope, source item identity/rank, exact unit definitions, output completeness, cohort boundary |
+| `consumed` net inventory decrease | Source-specified **net items spent**; neither nominal batch input nor finished cast count | Distinguish Resourcefulness refunds, additional stock changes, possible multiple captured reagents, production per actual cast |
+| Per-cast `casts`, per-output `castsWithDrop`, 0..N histogram, observed `P(hit)` | **Absent in persisted schema**, must remain unknown | Separate genuine event-level logfile/export and completed-cast denominator |
+| Conditional gold expected quantity from total outputs/input | **Not automatically admitted** as per-cast EV; at best profile-scoped quantity/net-input ratio under tested capture assumptions, after source identity + eligibility verified | Same-patch condition, price rank, batch, refund/consumption basis, output coverage, no double attribution |
+| Midnight gem absence in a saved `results` row | **Not measured zero**; may reflect tracked fallback list or missing event | Confirm event capture and complete outcome accounting first |
+
+Owner policy still permits usable properly identified numeric reference averages even if chance/range are unknown; this audit **does not impose a blanket exclusion** on personal/imported data. Do not invent a per-cast output rate from net-consumption aggregate or infer null outputs as zero.
+
+**Reproducible check actually run:** 20/20 bounded in-process JavaScript source-text assertions, including committed accumulation semantics, lack of saved per-operation fields, presence of both Midnight processing spells and the gem-vs-pigment bag-fallback gap. No native Lua, Python compiler, saved character data, actual addon renderer, market-price engine, WoW client, or published package binary executed.
+
+## Research workflow disposition
+
+This is a **new source schema / missing-output diagnostic**, not a new yield sample or previously requested duplicate original study. If a real user-supplied `SmartProspectorDB` appears, do a bounded, consented per-file identity/unit review before any import or gold inference. Prefer genuine zero-inclusive single-operation exports for existing worker-owned T0005/T0039 (Umbral Tin 237362) and T0045 (10-herb milling); workers retain their schedules and evidence ownership. Do not edit `implementation/usable-data-tooltips`, immutable `4df9ae8`, or existing PRs.
+
+Research head before evidence commit: `c98e57304b2750aecf63607096604f8f07921aba`; main `888c5ba0582de3f802cbff08fece88a448ac22db`; owner integration `3d667d053db587c91401cfed7ecc56862b8340c9`. PRs #22/#23 are closed unmerged; #74/#75/#77 are open research PRs. No merge or release.
