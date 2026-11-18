@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-18T02:24:35.316Z",
-  "status": "12 new reference-only cumulative Wowhead PTR disenchant rows across three previously unindexed TWW-era item IDs (one 11.1 epic and two mixed-era 11.0.5 anniversary gear); exact item row occurrences preserved, no estimator-eligible rates.",
+  "updated_at": "2026-11-18T03:25:06.704Z",
+  "status": "10 new source-row, reference-only mixed-era 11.0.5 anniversary disenchant records for two distinct unindexed armor/offhand item IDs; no estimator-eligible or current Retail yield.",
   "task_ids": [
     "T0048",
     "T0040",
@@ -13,88 +13,73 @@
     "T0012"
   ],
   "exact_gaps_targeted": [
-    "T0048: Confessor's Unshakable Faulds 229330: 90 source-reported disenchant operations; three Refulgent Crystal same-name rows with 52/29/8 occurrence hits; original material rank IDs and positive stack totals missing",
-    "T0048: Stolen Stormwind Helmet 224758: 25 source-reported operations; six mixed TWW and legacy material rows with 11/8/4/3/2/2 occurrence hits; TWW Storm Dust output rank IDs missing and live game eligibility not tested",
-    "T0048: Heroes' Bonescythe Gauntlets 227246: 13 source-reported operations; 6 and 4 separate Refulgent Crystal rows and 3 Abyss Crystal occurrences; mixed-era anniversary item, material rank and original item variant unknown",
-    "T0040/T0007/T0008/T0009/T0010/T0011/T0012: original posthotfix ranked Bismuth, Ironclaw, Aqirite and Mycobloom completed cast histograms still not published"
+    "T0048: Pirate Captain's Girdle 224753 plate armor — 82 source-reported disenchants and five output rows (37/28/13/6/4); mixed TWW Storm Dust versus legacy material, ranks/zero-inclusive histogram and actual retail eligibility unresolved.",
+    "T0048: Cookie's Special Flavors 224756 offhand — 34 source-reported disenchants and five output rows (13/10/7/4/3); mixed TWW Storm Dust versus legacy material, ranks/zero-inclusive histogram and actual retail eligibility unresolved.",
+    "T0040/T0007/T0008/T0009/T0010/T0011/T0012: original ranked post-hotfix prospect/milling event logs with measured hits and 0-inclusive output histograms remain absent."
   ],
   "newly_verified_fields": [
-    "229330 Confessor's Unshakable Faulds: source PTR input item ID, reported Disenchant operation count 90, 3 source rows by original displayed order, occurrence hits [52,29,8], source link https://www.wowhead.com/ptr/item=229330/confessors-unshakable-faulds; output ranks cannot be linked; no material quantities beyond displayed positive-stack range",
-    "224758 Stolen Stormwind Helmet: source PTR input item ID, reported Disenchant operation count 25, 6 source rows by original displayed order, occurrence hits [11,8,4,3,2,2], source link https://www.wowhead.com/ptr/item=224758/stolen-stormwind-helmet; output ranks cannot be linked; no material quantities beyond displayed positive-stack range",
-    "227246 Heroes' Bonescythe Gauntlets: source PTR input item ID, reported Disenchant operation count 13, 3 source rows by original displayed order, occurrence hits [6,4,3], source link https://www.wowhead.com/ptr/item=227246/heroes-bonescythe-gauntlets; output ranks cannot be linked; no material quantities beyond displayed positive-stack range"
+    "224753 Pirate Captain's Girdle, 11.0.5 Classic Timewalking plate waist: 82 Looter operations; 3 Storm Dust rows hits [37,13,4], positive stacks 1–3 each but unknown output rank/item IDs; Large Brilliant Shard 14344 row 28 hits, 1–3; Greater Eternal Essence 16203 row 6 hits, 3 shown.",
+    "224756 Cookie's Special Flavors, 11.0.5 Classic Timewalking offhand: 34 Looter operations; 3 Storm Dust rows hits [13,10,4], positive stacks 1–3 each but unknown output rank/item IDs; Large Brilliant Shard 14344 row 7 hits, 1–3; Greater Eternal Essence 16203 row 3 hits, 3 shown."
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 229330,
-      "source": "https://www.wowhead.com/ptr/item=229330/confessors-unshakable-faulds",
-      "cumulativeReportedOperations": 90,
+      "inputItemID": 224753,
+      "source": "https://www.wowhead.com/item=224753/pirate-captains-girdle",
+      "cumulativeReportedOperations": 82,
       "rowHitCounts": [
-        52,
-        29,
-        8
-      ],
-      "studyKey": "wowhead-looter-ptr-cumulative-item-229330-rank-links-unresolved",
-      "sourceKind": "reference",
-      "estimatorEligible": false
-    },
-    {
-      "inputItemID": 224758,
-      "source": "https://www.wowhead.com/ptr/item=224758/stolen-stormwind-helmet",
-      "cumulativeReportedOperations": 25,
-      "rowHitCounts": [
-        11,
-        8,
-        4,
-        3,
-        2,
-        2
-      ],
-      "studyKey": "wowhead-looter-ptr-cumulative-item-224758-rank-links-unresolved",
-      "sourceKind": "reference",
-      "estimatorEligible": false
-    },
-    {
-      "inputItemID": 227246,
-      "source": "https://www.wowhead.com/ptr/item=227246/heroes-bonescythe-gauntlets",
-      "cumulativeReportedOperations": 13,
-      "rowHitCounts": [
+        37,
+        28,
+        13,
         6,
+        4
+      ],
+      "studyKey": "wowhead-looter-live-cumulative-item-224753-rank-links-unresolved",
+      "sourceKind": "reference",
+      "estimatorEligible": false
+    },
+    {
+      "inputItemID": 224756,
+      "source": "https://www.wowhead.com/item=224756/cookies-special-flavors",
+      "cumulativeReportedOperations": 34,
+      "rowHitCounts": [
+        13,
+        10,
+        7,
         4,
         3
       ],
-      "studyKey": "wowhead-looter-ptr-cumulative-item-227246-rank-links-unresolved",
+      "studyKey": "wowhead-looter-live-cumulative-item-224756-rank-links-unresolved",
       "sourceKind": "reference",
       "estimatorEligible": false
     }
   ],
   "new_estimator_eligible_numeric_yield_records": 0,
-  "new_reference_only_numeric_records": 12,
+  "new_reference_only_numeric_records": 10,
   "new_search_only_records": 0,
-  "evidence_file": "research/v3/evidence/war-within/20261118T0224-new-epic-and-anniversary-de-looter-held.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/20261118T0325-anniversary-mixed-de-looter-new-inputs.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/20261118T0224-new-epic-and-anniversary-de-looter-held.jsonl"
+    "research/v3/evidence/war-within/20261118T0325-anniversary-mixed-de-looter-new-inputs.jsonl"
   ],
   "evidence_source_links": [
-    "https://www.wowhead.com/ptr/item=229330/confessors-unshakable-faulds",
-    "https://www.wowhead.com/ptr/item=224758/stolen-stormwind-helmet",
-    "https://www.wowhead.com/ptr/item=227246/heroes-bonescythe-gauntlets"
+    "https://www.wowhead.com/item=224753/pirate-captains-girdle",
+    "https://www.wowhead.com/item=224756/cookies-special-flavors"
   ],
   "verified_commit_sha": null,
-  "verification": "One atomic commit contains evidence plus own status; no Git commit can embed its own final SHA. Verify resulting SHA against branch and re-fetch both files after writing; commit SHA is in repository history and automation read-back.",
+  "verification": "One atomic commit will carry own status and one new JSONL. Final commit SHA cannot be embedded inside that commit; GitHub commit and exact file read-back used to verify externally.",
   "blockers": [
-    "Wowhead table strips output-row item links in web text; 229330 and 227246 repeated Refulgent Crystal, 224758 Storm Dust rows cannot safely be assigned distinct 219952/219954/219955 or 219946/219947/219948 rank IDs.",
-    "All rows are anonymous cumulative PTR-derived item-specific tables, not deduplicated time-stamped first-person Retail cohorts; original game build/bonus variants and true eligibility remain unverified.",
-    "Anniversary 224758/227246 cross-era material outcomes require special validation against mixed Retail disenchant mechanics; strictly held as reference, no current gold EV or measured yield model.",
-    "No original complete post-2024-hotfix per-cast castsWithDrop, zero-inclusive outputs, skill/specializations, quality rank and resourcefulness/refund basis for Bismuth/Ironclaw/Aqirite or ranked Khaz Algar milling."
+    "Anonymous cumulative Wowhead Looter rows do not show linked output IDs for same-name ranked Storm Dust, per-cast positive stack histograms or zeros, source sessions, full itemLink, build, profession stats/refund context.",
+    "Classic Timewalking anniversary 11.0.5 items mix TWW Storm Dust and legacy enchanting materials; current Retail eligibility and material-selection rules are not established, so evidence held reference-only and cannot be used for gold EV or confidence.",
+    "No new independent explicit completed-cast per-material hits/0–N histograms with item ranks and build for Bismuth, Ironclaw, Aqirite and Khaz Algar herbs."
   ],
   "exhausted_sources": [
     "Previously recorded Oct 2024 Reikah ranked Ironclaw, Reddit original Aqirite rank comparisons, and Mycobloom guide/comment sources still contain no new posted per-cast histograms; do not recycle.",
-    "Candidate 229240,237706,237690,237718,237620,237610,237608,237607,237613,237700 and 237618 PTR cohort identities already appear in GitHub evidence index and were rejected as repeated studies."
+    "Candidate 229240,237706,237690,237718,237620,237610,237608,237607,237613,237700 and 237618 PTR cohort identities already appear in GitHub evidence index and were rejected as repeated studies.",
+    "At 2026-11-18T03:25:06.704Z, TWW ranked Ironclaw/Aqirite/Mycobloom searches revisited published Reikah, Reddit 1g350pq, Reddit 1fdmzwy and 1f83cnd; these are already indexed source cohorts, no independent new original posthotfix 0-inclusive per-cast export. Wowhead newly found 224753 and 224756 were absent from GitHub indexed evidence and are recorded only as mixed-era reference."
   ],
-  "next_concrete_step": "Recover raw Wowhead Looter linked material IDs and positive-stack per-row distributions for 229330, 224758, 227246; flag anniversary mixed-era provenance for Master review before any estimator import. Continue independent original post-Oct25-2024 rank+skill+refund-segregated ore/herb cast exports.",
+  "next_concrete_step": "Obtain original Retail per-item disenchant event exports and exact Looter material rank links for 224753/224756; do not promote mixed-era observations without version/eligibility audit. Prefer independent post-Oct25-2024 Bismuth/Ironclaw/Aqirite and ranked herb milling samples with castsWithDrop, zeros, skill/unlock/refund basis.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
-  "parent_commit_sha": "792219000f96f71647c8309f9816f5e251be0520",
+  "parent_commit_sha": "38d34801f2f4e86e8e97afb045b24080b2f5f8b7",
   "new_noDisenchant_identity_records": 0
 }
