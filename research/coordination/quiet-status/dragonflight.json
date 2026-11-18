@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-18T18:37:34.986Z",
-  "status": "Five previously unindexed Dragonflight gear-item Looter samples yielded 12 source-reported output-occurrence rows; no new independent Draconium/Serevite/Khaz'gorite/Prismatic prospect or milling finished-cast histogram.",
+  "updated_at": "2026-11-18T19:34:00.740Z",
+  "status": "Seven not-yet-indexed Dragonflight gear-item Wowhead Looter sources now yield 14 source-reported disenchant material occurrence rows; prospecting/milling original cast-level histograms remain unavailable.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -15,138 +15,169 @@
     "standing-disenchant"
   ],
   "exact_gaps_targeted": [
-    "Draconium 189143/188658/190311, Serevite 190395/190396/190394, Khaz'gorite 190312/190313/190314, Prismatic 194545 prospecting: rank-specific original casts, per-output material hits and 0-N histograms remain unresolved.",
-    "Bubble Poppy 191467, Saxifrage 191464/191465/191466 and Hochenblume 191462 milling: same raw per-output cast/quantity and Resourcefulness gaps remain.",
-    "New item-level gear disenchant source occurrences for 207179,207276,202528,207250,202546 -> materials 194123,194124,200113; original client-event timestamps, patch, skill and 0-inclusive output stack histograms remain missing."
+    "Draconium Ore 189143 R1 /188658 R2 /190311 R3, Serevite 190395 R1/190396 R2/190394 R3, Khaz'gorite 190312/190313/190314 and Prismatic 194545: independent original rank-specific completed-cast hits, 0-N histograms, and refunded input accounting missing.",
+    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466 milling: source-original completed mills, material counts/hits, zero results, quality-rank and refund reconciliations missing.",
+    "New disenchant item-specific cumulative Looter sample 207193/207211/207186/207213/207204/207206/207202 to material IDs 194124 and 200113. Raw timestamped player event records, bonus mix, skill/spec and stack histograms unverified."
   ],
   "newly_verified_fields": [
-    "Source-reported cumulative Looter disenchant denominators for five distinct gear IDs: 207179=12, 207276=82, 202528=114, 207250=31, 202546=85.",
-    "12 source-reported per-material occurrence counts and original rounded display percentages for materials 194123 Chromatic Dust, 194124 Vibrant Shard, 200113 Resonant Crystal.",
-    "Source display positive-stack ranges 1-2 for Vibrant Shard and 1-3 for Chromatic Dust; no total unit yield or zero-inclusive histogram."
+    "Provider-reported source denominators and material occurrence counts (7 item cohorts, 14 outcome rows)",
+    "Original displayed percentage in each source's context; positive shard stack range 1–2 where shown"
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 207179,
-      "inputName": "Molten Vanguard's Chains",
-      "source": "https://www.wowhead.com/ptr-2/item=207179/molten-vanguards-chains?bonus=9814",
-      "reportedDisenchants": 12,
-      "outputMaterialItemIDs": [
-        194124,
-        200113
-      ],
-      "reportedMaterialOccurrences": [
-        {
-          "itemID": 194124,
-          "count": 10
-        },
+      "source": "https://www.wowhead.com/item=207193/zealous-pyreknights-dreamstompers",
+      "inputItemID": 207193,
+      "inputName": "Zealous Pyreknight's Dreamstompers",
+      "reportedDisenchants": 38,
+      "outputs": [
         {
           "itemID": 200113,
-          "count": 2
-        }
-      ],
-      "notes": "Provider cumulative Looter table, not independently verified raw player-cast ledger."
-    },
-    {
-      "inputItemID": 207276,
-      "inputName": "Cloak of Lunar Communion",
-      "source": "https://www.wowhead.com/item=207276/cloak-of-lunar-communion",
-      "reportedDisenchants": 82,
-      "outputMaterialItemIDs": [
-        194124,
-        200113
-      ],
-      "reportedMaterialOccurrences": [
-        {
-          "itemID": 194124,
-          "count": 54
-        },
-        {
-          "itemID": 200113,
-          "count": 47
-        }
-      ],
-      "notes": "Provider cumulative Looter table, not independently verified raw player-cast ledger."
-    },
-    {
-      "inputItemID": 202528,
-      "inputName": "Shawl of the Sinister Savant",
-      "source": "https://www.wowhead.com/item=202528/shawl-of-the-sinister-savant",
-      "reportedDisenchants": 114,
-      "outputMaterialItemIDs": [
-        200113,
-        194124,
-        194123
-      ],
-      "reportedMaterialOccurrences": [
-        {
-          "itemID": 200113,
-          "count": 71
+          "name": "Resonant Crystal",
+          "occurrences": 27,
+          "percentShown": 71
         },
         {
           "itemID": 194124,
-          "count": 57
-        },
-        {
-          "itemID": 194123,
-          "count": 8
+          "name": "Vibrant Shard",
+          "occurrences": 18,
+          "percentShown": 47
         }
       ],
-      "notes": "Provider cumulative Looter table, not independently verified raw player-cast ledger."
+      "limitations": "Cumulative source Looter, no independent player event log"
     },
     {
-      "inputItemID": 207250,
-      "inputName": "Benevolent Embersage's Wristwraps",
-      "source": "https://www.wowhead.com/ptr/item=207250/benevolent-embersages-wristwraps",
+      "source": "https://www.wowhead.com/ptr/item=207211/greatwolf-outcasts-footpads?bonus=7980",
+      "inputItemID": 207211,
+      "inputName": "Greatwolf Outcast's Footpads",
+      "reportedDisenchants": 29,
+      "outputs": [
+        {
+          "itemID": 200113,
+          "name": "Resonant Crystal",
+          "occurrences": 18,
+          "percentShown": 62
+        },
+        {
+          "itemID": 194124,
+          "name": "Vibrant Shard",
+          "occurrences": 12,
+          "percentShown": 41
+        }
+      ],
+      "limitations": "Cumulative source Looter, no independent player event log"
+    },
+    {
+      "source": "https://www.wowhead.com/item=207186/zealous-pyreknights-banner",
+      "inputItemID": 207186,
+      "inputName": "Zealous Pyreknight's Banner",
+      "reportedDisenchants": 43,
+      "outputs": [
+        {
+          "itemID": 200113,
+          "name": "Resonant Crystal",
+          "occurrences": 25,
+          "percentShown": 58
+        },
+        {
+          "itemID": 194124,
+          "name": "Vibrant Shard",
+          "occurrences": 22,
+          "percentShown": 51
+        }
+      ],
+      "limitations": "Cumulative source Looter, no independent player event log"
+    },
+    {
+      "source": "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+      "inputItemID": 207213,
+      "inputName": "Blazing Dreamstalker's Staghide",
+      "reportedDisenchants": 24,
+      "outputs": [
+        {
+          "itemID": 194124,
+          "name": "Vibrant Shard",
+          "occurrences": 17,
+          "percentShown": 71
+        },
+        {
+          "itemID": 200113,
+          "name": "Resonant Crystal",
+          "occurrences": 9,
+          "percentShown": 38
+        }
+      ],
+      "limitations": "Cumulative source Looter, no independent player event log"
+    },
+    {
+      "source": "https://www.wowhead.com/ptr/item=207204/greatwolf-outcasts-chainweave",
+      "inputItemID": 207204,
+      "inputName": "Greatwolf Outcast's Chainweave",
+      "reportedDisenchants": 23,
+      "outputs": [
+        {
+          "itemID": 194124,
+          "name": "Vibrant Shard",
+          "occurrences": 15,
+          "percentShown": 65
+        },
+        {
+          "itemID": 200113,
+          "name": "Resonant Crystal",
+          "occurrences": 9,
+          "percentShown": 39
+        }
+      ],
+      "limitations": "Cumulative source Looter, no independent player event log"
+    },
+    {
+      "source": "https://www.wowhead.com/ptr/item=207206/greatwolf-outcasts-sigil-belt",
+      "inputItemID": 207206,
+      "inputName": "Greatwolf Outcast's Sigil Belt",
       "reportedDisenchants": 31,
-      "outputMaterialItemIDs": [
-        200113,
-        194124
-      ],
-      "reportedMaterialOccurrences": [
-        {
-          "itemID": 200113,
-          "count": 21
-        },
+      "outputs": [
         {
           "itemID": 194124,
-          "count": 13
+          "name": "Vibrant Shard",
+          "occurrences": 21,
+          "percentShown": 68
+        },
+        {
+          "itemID": 200113,
+          "name": "Resonant Crystal",
+          "occurrences": 17,
+          "percentShown": 55
         }
       ],
-      "notes": "Provider cumulative Looter table, not independently verified raw player-cast ledger."
+      "limitations": "Cumulative source Looter, no independent player event log"
     },
     {
-      "inputItemID": 202546,
-      "inputName": "Underlight Conjurer's Cape",
-      "source": "https://www.wowhead.com/ptr/item=202546/underlight-conjurers-cape",
-      "reportedDisenchants": 85,
-      "outputMaterialItemIDs": [
-        194124,
-        200113,
-        194123
-      ],
-      "reportedMaterialOccurrences": [
+      "source": "https://www.wowhead.com/ptr/item=207202/graveboots-of-the-risen-nightmare",
+      "inputItemID": 207202,
+      "inputName": "Graveboots of the Risen Nightmare",
+      "reportedDisenchants": 36,
+      "outputs": [
         {
           "itemID": 194124,
-          "count": 55
+          "name": "Vibrant Shard",
+          "occurrences": 21,
+          "percentShown": 58
         },
         {
           "itemID": 200113,
-          "count": 44
-        },
-        {
-          "itemID": 194123,
-          "count": 8
+          "name": "Resonant Crystal",
+          "occurrences": 19,
+          "percentShown": 53
         }
       ],
-      "notes": "Provider cumulative Looter table, not independently verified raw player-cast ledger."
+      "limitations": "Cumulative source Looter, no independent player event log"
     }
   ],
-  "new_numerical_measurements": "12 new source-reported Wowhead Looter material occurrence rows across 5 distinct gear item cohorts, with 5 source-reported operation denominators, 12 per-output occurrences and rounded percentages; zero independent new ore/herb original completed-operation histograms.",
+  "new_numerical_measurements": "14 provider-reported output-material occurrences from 7 previously unindexed gear item cohorts; no independent new prospect or mill 0-N source histogram.",
   "numerical_fields_improved": [
-    "casts (source-reported disenchant occurrences, five input cohorts)",
-    "castsWithDrop (12 item/output occurrence counts)",
-    "percentShown (12 original rounded provider display percentages; probability semantics limited)",
-    "minSeen/maxSeen (positive stack ranges where displayed)"
+    "casts (7 separate item-level source-reported disenchant denominators)",
+    "castsWithDrop (14 output occurrence counts, provider cumulative)",
+    "percentShown (14 source rounded percentages, not an independently calibrated rate)",
+    "minSeen/maxSeen (1–2 for shards, observed positive stack range only)"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -205,24 +236,28 @@
     "research/v3/evidence/dragonflight/2026-11-18T1543-three-df-looter-gear-tables.jsonl",
     "research/v3/evidence/dragonflight/2026-11-18T1632-seven-unindexed-looter-denominators.jsonl",
     "research/v3/evidence/dragonflight/2026-11-18T1736-rank-identity-and-original-numeric-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-18T1837-five-unindexed-raid-looter-counts.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-18T1837-five-unindexed-raid-looter-counts.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-18T1934-seven-new-tier-set-de-looter-cohorts.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1837-five-unindexed-raid-looter-counts.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1837-five-unindexed-raid-looter-counts.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1934-seven-new-tier-set-de-looter-cohorts.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1934-seven-new-tier-set-de-looter-cohorts.jsonl",
   "source_links": [
-    "https://www.wowhead.com/ptr-2/item=207179/molten-vanguards-chains?bonus=9814",
-    "https://www.wowhead.com/item=207276/cloak-of-lunar-communion",
-    "https://www.wowhead.com/item=202528/shawl-of-the-sinister-savant",
-    "https://www.wowhead.com/ptr/item=207250/benevolent-embersages-wristwraps",
-    "https://www.wowhead.com/ptr/item=202546/underlight-conjurers-cape"
+    "https://www.wowhead.com/item=207193/zealous-pyreknights-dreamstompers",
+    "https://www.wowhead.com/ptr/item=207211/greatwolf-outcasts-footpads?bonus=7980",
+    "https://www.wowhead.com/item=207186/zealous-pyreknights-banner",
+    "https://www.wowhead.com/item=207213/blazing-dreamstalkers-staghide",
+    "https://www.wowhead.com/ptr/item=207204/greatwolf-outcasts-chainweave",
+    "https://www.wowhead.com/ptr/item=207206/greatwolf-outcasts-sigil-belt",
+    "https://www.wowhead.com/ptr/item=207202/graveboots-of-the-risen-nightmare",
+    "https://github.com/t-mart/wow-auction/blob/master/README.md"
   ],
-  "verified_parent_sha": "ba999d3cbad1cd816b073339b5f6ce86f898479b",
-  "verified_commit_sha": "ba999d3cbad1cd816b073339b5f6ce86f898479b",
-  "commit_sha_scope": "The status stores the verified parent SHA because embedding its own child commit SHA in a single immutable commit is self-referential. Confirm the resulting commit from current branch head and change read-back.",
+  "verified_parent_sha": "3043d752bd78b6b788246925a0c0f2156a4da80a",
+  "verified_commit_sha": "3043d752bd78b6b788246925a0c0f2156a4da80a",
+  "commit_sha_scope": "Parent SHA will be set to verified branch head used in this commit; child self-hash cannot be embedded in its own content.",
   "blockers": [
-    "No new original completed-operation Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Bubble Poppy/Saxifrage milling ledger with per-output 0-N histogram, source-rank identity and Resourcefulness refund accounting.",
-    "Five new gear cohorts are only Wowhead cumulative Looter source counts; raw individual operations, collection dates/patches, item bonus variants, profession stats and total material unit counts are unverified.",
-    "Displayed Looter output occurrence ratios can overlap per gear item; do not assume mutually exclusive outcomes or calculate zero outcomes from their sums."
+    "No new original completed-cast and output-specific 0-N histograms for Draconium/Serevite/Khaz'gorite/Prismatic prospecting or Bubble Poppy/Saxifrage milling. Ore input quality, skill/spec and Resourcefulness refunds not jointly recorded.",
+    "Seven new gear samples are cumulative Wowhead Looter counts, not independent firsthand exact-version event logs; provider snapshot epoch, patch, skill/spec, total material units and zero/cross-output joint occurrences are unverified.",
+    "Source output occurrences per item can overlap, so do not infer exclusive outcomes or zero-operation histograms. Serevite rank map has independent developer secondary corroboration but not Blizzard-item API verification."
   ],
   "exhausted_sources": [
     {
@@ -2206,27 +2241,20 @@
       ]
     }
   ],
-  "next_concrete_step": "Request/locate source-original Xenastro 2023 Prospecting Log worksheet exported per cast (not just 700k-ore historical aggregates), and original Dragonflight crafting SavedVariables or Inscription mill logs with exact rank and Resourcefulness. For item 207179/207276/202528/207250/202546, verify independent Looter event sample provenance/version and positive-stack histograms before estimator use.",
+  "next_concrete_step": "Search unindexed source-original 2022–2023 Dragon Isles Prospecting and Milling SavedVariables/event logs or an accessible original workbook with item-rank IDs, completed operations, outputs per cast and Resourcefulness accounting; resolve direct Blizzard item rank mapping and provider Looter provenance before model adoption.",
   "validation": {
-    "record_count": 13,
-    "real_drop_rows": 12,
-    "searched_rows": 1,
-    "name_first_search_checks": 8,
-    "distinct_sites_checked": 6,
-    "distinct_looter_input_cohorts": 5,
-    "source_reported_material_occurrence_rows": 12,
-    "new_independent_ore_mill_histograms": 0,
-    "unknown_probabilities_unmodified": true,
-    "duplicate_source_cohorts_not_reimported": true,
-    "source_kind_qualified": "Looter pooled provider reports, not standalone player study",
-    "paths_expected": [
-      "research/v3/evidence/dragonflight/2026-11-18T1837-five-unindexed-raid-looter-counts.jsonl",
+    "source_rows": 14,
+    "unique_gear_cohorts": 7,
+    "jsonl_rows": 15,
+    "jsonl_parse": "pre-write local JS JSON parse and required field checks passed",
+    "source_semantics": "provider cumulative occurrences; no derived probabilities or units",
+    "changed_paths_expected": [
+      "research/v3/evidence/dragonflight/2026-11-18T1934-seven-new-tier-set-de-looter-cohorts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
-    ],
-    "single_commit_expected": true
+    ]
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 12
+  "new_source_reported_numeric_rows": 14
 }
