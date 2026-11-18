@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-17T23:41:13.172Z",
-  "status": "One newly uncovered Dragonflight 10.2 gear-item Wowhead Looter pooled table indexed: 209935 with 28 reported item-specific disenchant operations, separate 23/28 Chromatic Dust and 5/28 Vibrant Shard occurrence counts; original ore/milling per-output cast histograms still missing.",
+  "updated_at": "2026-11-18T00:40:21.394Z",
+  "status": "One newly found Dragonflight 10.1 gear-item Wowhead Looter cumulative source snapshot (202546 Underlight Conjurer's Cape): 85 item-specific reported operations, three separate material-occurrence rows (55,44,8 hits). No new independent prospect/mill completed-cast histograms; identity, skill and patch eligibility gaps remain.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,63 +13,70 @@
     "T0046"
   ],
   "exact_gaps_targeted": [
-    "Prospect Draconium 189143/188658/190311, Serevite 190395/190396/190394, Khaz'gorite 190312/190313/190314, Prismatic 194545: material-specific finished cast hits, 0-N histograms, source rank/skill/patch, refunds",
-    "Bubble Poppy 191467 and Saxifrage 191464: rank-separated mills with completed operations, per-material pigment units, 0-N, resourcefulness",
-    "Dragonflight gear disenchant occurrence data: find previously unindexed exact item 209935 source and recover hit counts; original game build, item-version/bonus, skill, full material units/stack histograms still missing"
+    "Draconium Ore 189143/188658/190311, Serevite Ore 190395/190396/190394, Khaz'gorite Ore 190312/190313/190314, Prismatic Ore 194545: actual completed prospects after Resourcefulness, 0-N material-wise count histograms, rank/skill/spec/build",
+    "Bubble Poppy 191467 and Saxifrage 191464: actual completed mill denominators, per-pigment 0-N and quantity totals with herb ranks and refunded herbs",
+    "202546 Underlight Conjurer's Cape: new Wowhead Looter item-side 85-cast snapshot, per-material hit counts; no source original event epoch, version/bonus, skill or exact stack histograms"
   ],
   "newly_verified_fields": [
     {
-      "field": "Source-reported input item identity and cumulative operations",
-      "inputItemID": 209935,
-      "inputName": "Spirited Stag's Handaxe",
-      "sourceReportedDisenchants": 28,
-      "source": "https://www.wowhead.com/item=209935/spirited-stags-handaxe",
-      "measurementClass": "Wowhead Looter cumulative pooled table; original game build and sample period unknown"
-    },
-    {
-      "field": "Chromatic Dust material occurrence row",
-      "inputItemID": 209935,
-      "outputItemID": 194123,
-      "casts": 28,
-      "castsWithDrop": 23,
-      "percentShown": 82,
-      "sourceStackRange": [
-        1,
-        5
-      ],
-      "totalQuantity": null,
-      "histogram": null
-    },
-    {
-      "field": "Vibrant Shard material occurrence row",
-      "inputItemID": 209935,
+      "field": "Looter material occurrence (not material quantity)",
+      "inputItemID": 202546,
       "outputItemID": 194124,
-      "casts": 28,
-      "castsWithDrop": 5,
-      "percentShown": 18,
+      "casts": 85,
+      "castsWithDrop": 55,
+      "percentShown": 65,
       "sourceStackRange": [
         1,
         2
       ],
       "totalQuantity": null,
-      "histogram": null
+      "histogram": null,
+      "source": "https://www.wowhead.com/ptr/item=202546/underlight-conjurers-cape"
+    },
+    {
+      "field": "Looter material occurrence (not material quantity)",
+      "inputItemID": 202546,
+      "outputItemID": 200113,
+      "casts": 85,
+      "castsWithDrop": 44,
+      "percentShown": 52,
+      "sourceStackRange": null,
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/ptr/item=202546/underlight-conjurers-cape"
+    },
+    {
+      "field": "Looter material occurrence (not material quantity)",
+      "inputItemID": 202546,
+      "outputItemID": 194123,
+      "casts": 85,
+      "castsWithDrop": 8,
+      "percentShown": 9,
+      "sourceStackRange": [
+        1,
+        3
+      ],
+      "totalQuantity": null,
+      "histogram": null,
+      "source": "https://www.wowhead.com/ptr/item=202546/underlight-conjurers-cape"
     }
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 209935,
-      "inputName": "Spirited Stag's Handaxe",
-      "sourceKind": "Wowhead Looter pooled cumulative item snapshot (not independent player-run sample)",
-      "reportedOperations": 28,
-      "reportedMaterialOccurrenceRows": 2,
-      "source": "https://www.wowhead.com/item=209935/spirited-stags-handaxe",
-      "studyKey": "wowhead-de-209935-pooled-snapshot-20261117-2340"
+      "inputItemID": 202546,
+      "inputName": "Underlight Conjurer's Cape",
+      "sourceKind": "Wowhead Looter cumulative item-side pooled snapshot; not independent player-controlled game run",
+      "reportedOperations": 85,
+      "reportedMaterialOccurrenceRows": 3,
+      "source": "https://www.wowhead.com/ptr/item=202546/underlight-conjurers-cape",
+      "studyKey": "wowhead-de-202546-cumulative-snapshot-20261118"
     }
   ],
-  "new_numerical_measurements": 2,
+  "new_numerical_measurements": 3,
   "numerical_fields_improved": [
-    "209935 -> 194123: 23/28 source-reported material occurrence hits, displayed 82%, positive stack range 1-5 (not quantity histogram)",
-    "209935 -> 194124: 5/28 source-reported material occurrence hits, displayed 18%, positive stack range 1-2 (not quantity histogram)"
+    "202546 -> 194124: 55/85 source-reported material occurrences, displayed 65%, totalQuantity/histogram unknown",
+    "202546 -> 200113: 44/85 source-reported material occurrences, displayed 52%, totalQuantity/histogram unknown",
+    "202546 -> 194123: 8/85 source-reported material occurrences, displayed 9%, totalQuantity/histogram unknown"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -109,10 +116,11 @@
     "research/v3/evidence/dragonflight/2026-11-17T2030-new-numeric-origin-source-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T2135-raw-operations-and-original-identity-triage.jsonl",
     "research/v3/evidence/dragonflight/2026-11-17T2234-pigment-originals-and-draconium-rank-identity.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-18T0040-underlight-cape-numeric-and-ore-mill-original-gap.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-18T0040-underlight-cape-numeric-and-ore-mill-original-gap.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-18T0040-underlight-cape-numeric-and-ore-mill-original-gap.jsonl",
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/10i63zb",
     "https://www.reddit.com/r/woweconomy/comments/zkay8v",
@@ -165,11 +173,13 @@
     "https://warcraft.wiki.gg/wiki/Pigment",
     "https://goldcap.gg/retail/us/items/190311",
     "https://goldcap.gg/retail/us/items/190394",
-    "https://www.wowhead.com/item=209935/spirited-stags-handaxe"
+    "https://www.wowhead.com/item=209935/spirited-stags-handaxe",
+    "https://www.wowhead.com/ptr/item=202546/underlight-conjurers-cape",
+    "https://www.wowhead.com/item=202546/underlight-conjurers-cape"
   ],
-  "verified_parent_sha": "7238b9a8f0cf4b0e60e7e615a4b18bc948f92d0b",
+  "verified_parent_sha": "8f7699dcd4eeb1e01ad8900f5ea336060c564b64",
   "verified_commit_sha": null,
-  "commit_sha_scope": "One atomic commit contains the new JSONL and status; its own SHA cannot appear inside its status blob without a content-hash self-reference. New commit and final changed paths are verified by read-back after update.",
+  "commit_sha_scope": "The status and the new evidence are committed atomically. The status file cannot contain its own resulting commit SHA without a second commit; parent_sha records the observed branch head. Confirm pushed commit SHA externally in readback.",
   "blockers": [
     "No new original independently measured Dragonflight material-level finished-cast histogram found for targeted ore/herb processing; already indexed studies do not disclose per-output 0/1/2+ events.",
     "Nominal ore/herb totals, sample percentages, prerelease model estimates and pooled output units cannot establish completed casts or P(hit) under resourcefulness refund/reprocessing.",
@@ -1864,10 +1874,10 @@
       ]
     }
   ],
-  "next_concrete_step": "Obtain original Xenastro 2023 Prospecting Log spreadsheet raw rows or independently attributable ProsperMate/SavedVariables per-operation export with verified quality-ranked input, real casts/refunds, output material IDs, 0/1/2+ histograms and skill/build. Before estimator use, Master should review Wowhead Looter cumulative snapshot overlap and exact live-version eligibility for 209935.",
+  "next_concrete_step": "Recover original Xenastro 2023 Prospecting Log rows 28,33,39,54,62 or independent Dragonflight in-game prospect/mill per-operation export with authentic rank, recipe/batch, completed casts/refunds, output item IDs and 0-N histograms. Before estimator eligibility, Master must verify Looter pooled snapshot overlap, original game patch/item bonus and per-hit unit stack distribution for 202546.",
   "validation": {
-    "record_count": 3,
-    "real_numeric_records": 2,
+    "record_count": 4,
+    "real_numeric_records": 3,
     "unique_source_input_items": 1,
     "jsonl_parse": "pass",
     "schema_required_fields": "pass",
@@ -1878,12 +1888,12 @@
       "wowhead.com",
       "warcraft.wiki.gg",
       "wow-professions.com",
-      "github.com",
-      "docs.google.com"
+      "us.forums.blizzard.com",
+      "github.com"
     ],
     "duplicate_cohorts_added": 0,
     "changed_paths_planned": [
-      "research/v3/evidence/dragonflight/2026-11-17T2341-spirited-stags-handaxe-and-prospect-mill-gap.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-18T0040-underlight-cape-numeric-and-ore-mill-original-gap.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "post_commit_readback": "pending"
@@ -1891,5 +1901,5 @@
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 2
+  "new_source_reported_numeric_rows": 3
 }
