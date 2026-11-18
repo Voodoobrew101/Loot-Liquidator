@@ -1,47 +1,44 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-18T04:18:16.726Z",
-  "status": "Three newly checked live Wowhead catalog no-disenchant identities for Midnight Stained mail items 258849/258854/258853. No new primary measured gear DE, ore prospect or milling cast cohort; 0-inclusive output histograms remain unavailable.",
+  "updated_at": "2026-11-18T05:26:50.908Z",
+  "status": "Two newly identified PTR-only no-disenchant item IDs (128442, 283472) recorded as catalog references. No independent original completed-cast disenchant/prospect/milling material cohort or rank-specific histogram was located; no live eligibility inferred.",
   "task_ids": [
-    "T0025",
     "T0026",
-    "T0039",
     "T0005",
     "T0003",
-    "T0002"
+    "T0002",
+    "T0025"
   ],
   "exact_gaps_targeted": [
-    "Catalog no-disenchant eligibility for Midnight Stained mail armor base items 258849, 258854, 258853; contrast base level 22 and selected example level 201 without asserting actual at-cast eligibility",
-    "Missing original 272246 Miststalker's Wristbands completed disenchant material receipt with selected ilvl305, bonus string, build, gear quality, skill and specialization",
-    "237362/237363 Umbral Tin, 237359 Refulgent Copper, 237365 Brilliant Silver and 236761 milling per-cast completed operations, output rank IDs, castsWithDrop, zeros/histograms, refunds and Eversong Diamond 242608 specialization unlock"
+    "New 12.1.5-era PTR-only no-disenchant identity for item 128442 (sword) and 283472 (cosmetic feet); source pages are not live client tests",
+    "272246 Miststalker's Wristbands actual ilvl 305/bonus at DE cast still absent; no gear-quality/skill/spec-linked receipt",
+    "237362/237363 Umbral Tin Ore, 237359 Refulgent Copper, 237365 Brilliant Silver and Midnight herb milling lack per-output completed casts, observed zero/hit histograms, output rank IDs and resourcefulness context"
   ],
   "newly_verified_fields_or_cohorts": [
-    "Live Wowhead catalog flags 'Cannot be disenchanted' for Stained Headguard 258849, Stained Pauldrons 258854 and Stained Sabatons 258853",
-    "Each original item page lists base item level 22 and a selected level-scaled preview at item level 201. These are base item identities and catalog eligibility flags, not original player DE yields or tests",
-    "No new numeric material yield cohort; no measured original completed casts, input-linked material histograms or output ranks"
+    "PTR item page for 128442 Felblaze Sword explicitly displays Cannot be disenchanted and item level 1; added in 12.1.5",
+    "PTR item page for 283472 Steel-Plated Cushion Boots explicitly displays Cannot be disenchanted, item level 1, and warband cosmetic feet classification; added in 12.1.5",
+    "No new measured material yield or eligibility test. Original 272246 and ore cast counts remain unverified in this run."
   ],
   "numeric_fields_advanced": [],
   "evidence_files": [
-    "research/v3/evidence/midnight/20261118T0418-stained-mail-catalog-node.jsonl"
+    "research/v3/evidence/midnight/20261118T0526-ptr-nonde-and-skill-source.jsonl"
   ],
-  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261118T0315-lazy-disenchanter-event-log-source-gap.jsonl",
+  "recent_prior_evidence_file": "research/v3/evidence/midnight/20261118T0418-stained-mail-catalog-node.jsonl",
   "evidence_record_ids": [
-    "midnight-20261118-009",
-    "midnight-20261118-010",
-    "midnight-20261118-011"
+    "midnight-20261118-012",
+    "midnight-20261118-013"
   ],
   "source_links": [
-    "https://www.wowhead.com/item=258849",
-    "https://www.wowhead.com/item=258854",
-    "https://www.wowhead.com/item=258853"
+    "https://www.wowhead.com/ptr/item=128442/felblaze-sword",
+    "https://www.wowhead.com/ptr/item=283472/steel-plated-cushion-boots"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Evidence and own quiet status submitted together in one Git commit. The final commit SHA cannot be written inside itself; verify SHA, branch ref, and both files by GitHub read-back.",
+  "commit_note": "Two blobs (one fresh evidence file and own quiet status) in one commit. Commit SHA cannot be embedded in itself; GitHub commit and branch SHA will be verified after ref update.",
   "blockers": [
-    "No original completed-cast source-linked material ledger found for 272246/237362/237359/237365/236761; published original samples lack per-output 0/1/2 histogram and multiple output rank IDs",
-    "Original firsthand Reddit Insomnist 1s7nfcw disenchant KP count study is already indexed in midnight 2026-11-01T1812; cannot duplicate it or convert bound knowledge drop frequencies to saleable material yields",
-    "Catalog 'Cannot be disenchanted' flags for 258849/258854/258853 do not establish actual scaled bonus variant eligibility or client-build test"
+    "No source-original zero-inclusive per-cast 12.1.5 material yield ledger for gear 272246 or ore/herbs 237362/237359/237365/236761",
+    "New 128442 and 283472 records are PTR-only, not evidence that a live player obtained these items or attempted Disenchant; cannot affect production eligibility without later confirmation",
+    "Per-output castsWithDrop/zero histograms, output material links/ranks, actual gear bonus, skill/spec, epoch and refunds are not recovered"
   ],
   "exhausted_sources": [
     "2026-11-16T21:21:51.431Z: Fresh named-source original yield hunt for Miststalker's Wristbands 272246, Umbral Tin Ore 237362, Refulgent Copper Ore 237359, Brilliant Silver Ore 237365, and Tranquility Bloom 236761 across Reddit, Blizzard, Wowhead and profession guides yielded only previously indexed GamGem/WoWDB selected-ilvl vs base conflict, Cardinalai/JD3K/Draggoth estimates and guide/Reddit data. Do not duplicate them. Separate Wowhead item-side named searches uncovered unindexed Monk gear items 250010/250011/250012/250014/250015/250017. Existing branch/default-repo source checks found no owned Midnight evidence on these item IDs. 250010 and 250014 selected sources are PTR, not current Retail; their 13/8/4 and 27/16/10 records are reference only. LIVE inputs 250011 14/7/5; 250012 8/5/3; 250015 28/18/10; 250017 15/9/4 are pooled occurrence references. Sources in new evidence JSONL. Distinct indexed 249961, 250057, 250018 and other snapshots were excluded; no independent 0-inclusive original cohort was discovered.",
@@ -73,10 +70,11 @@
     "2026-11-18T01:13:21.440Z: NEW acquisition path audited: Ka0s Loot History 1.5.0 public Github Attribution/Collector/Export/Reconciler/Ledger source and CurseForge listing, not previously in Midnight quiet status. CSV gives individual source-tagged material gains and bag-derived deconstruct losses, but same-key rows coalesce for 60s and no stable per-cast grouping, lost-item original bonus or live 12.1.5 source receipts. Original-by-name prospect/mill/DE search footprints already exhausted (Cardinalai/Honeybone/kyzenbka/selected 272246); no repeat data imported. Revisit Ka0s only on supplied original user export or controlled one-cast screenshot/test; avoid promoting raw bag losses to completed operations.",
     "2026-11-18T02:18:50.489Z: By-name original 272246/237362/237359/237365/236761 search across Reddit, US Blizzard forums, Wowhead, profession guides and nonduplicated public spreadsheet keywords: no independent current-patch zero-inclusive tradable-material cohort; known Cardinalai/Honeybone/kyzenbka and Looter results excluded. NEW first-person WoW-Professions guide reports rounded knowledge catch-up Glimmering Powder 267653 figures by gear quality, no casts; kept as reference-only. Do not revisit until original raw receipts, changed game mechanics or guide update.",
     "2026-11-18T03:15:01.451Z: Novel search lane Lazy Disenchanter (Retail, Krathe) checked by exact name via CurseForge project and file, plus original export/SavedVariables searches across GitHub, Reddit, Wago and WoWInterface. Public 12.0.7 description shows per-item input/material/quality persistent logs but not raw player events, current build or 0-inclusive outcome ledger. Do NOT repeat addon listing without a source-original SavedVariables/log or compatibility/schema check; known Cardinalai, Honeybone, original Wowhead Looter and 272246 tooltip lanes remain exhausted.",
-    "2026-11-18T04:18:16.726Z: New distinct live Midnight Stained mail item Quick Facts at https://www.wowhead.com/item=258849 , /item=258854 and /item=258853 explicitly state Cannot be disenchanted (base ilvl 22, preview ilvl 201); no source-original operations. GitHub code searches for 258849/258854/258853 in repo returned no evidence match on indexed default-branch corpus; new catalog-only records created. Broader rare disenchant sample https://www.reddit.com/r/woweconomy/comments/1s7nfcw already recorded in midnight/2026-11-01T1812 and excluded. No new independent zero-inclusive original DE/prospect/mill cohort. Do not recycle these source pages without actual successful/failed disenchants plus variant-at-cast logs."
+    "2026-11-18T04:18:16.726Z: New distinct live Midnight Stained mail item Quick Facts at https://www.wowhead.com/item=258849 , /item=258854 and /item=258853 explicitly state Cannot be disenchanted (base ilvl 22, preview ilvl 201); no source-original operations. GitHub code searches for 258849/258854/258853 in repo returned no evidence match on indexed default-branch corpus; new catalog-only records created. Broader rare disenchant sample https://www.reddit.com/r/woweconomy/comments/1s7nfcw already recorded in midnight/2026-11-01T1812 and excluded. No new independent zero-inclusive original DE/prospect/mill cohort. Do not recycle these source pages without actual successful/failed disenchants plus variant-at-cast logs.",
+    "2026-11-18T05:26:50.908Z: Targeted distinct PTR 12.1.5 identity lane for Felblaze Sword 128442 and Steel-Plated Cushion Boots 283472 yields explicit no-disenchant catalog flags only; not live at-cast tests. Item-name search for 272246, Umbral Tin, Refulgent Copper, Brilliant Silver and Tranquility Bloom plus new original Reddit sources provided no independent 0-inclusive material ledger. Known original Cardinalai/Honeybone/kyzenbka, Looter gear and previously indexed 1s7nfcw/1tbj37l source data were not recopied. Do not repeat new PTR catalog pages without live eligible itemLink or at-cast evidence."
   ],
-  "next_concrete_step": "Secure original per-operation player addon or saved-game export linking gear full itemLink/bonus/actual ilvl and output item ID/rank to completed disenchants (including zeros) on 272246; or independently source 237362/237363 individual prospect outcomes with Eversong 242608 unlock, ore quality, refunds, skill/spec, and per-material hit histogram. Avoid further repeated catalog scraping unless new numeric primary data arises.",
-  "verified_base_commit_sha": "975c9029aeeef5fa7789be305b0f26215b6a68ba",
-  "next": "Seek an original player-level per-cast record; see next_concrete_step.",
-  "base_commit_sha": "975c9029aeeef5fa7789be305b0f26215b6a68ba"
+  "next_concrete_step": "Obtain source-original, consented per-operation Retail 12.1.5 player itemLink and resulting item ID/rank stacks for 272246, including effective ilvl/bonus, skill/spec and zeros; alternatively a 237362 5-ore actual-cast 0/1/2 ledger that separates Resourcefulness refunds and ore rank/Eversong 242608 unlock. Do not promote PTR-only catalog to live build.",
+  "verified_base_commit_sha": "08ead0df8621b64beb6190f0724dd439e6664d7e",
+  "next": "Next per-operation original source; no new prior probabilities.",
+  "base_commit_sha": "08ead0df8621b64beb6190f0724dd439e6664d7e"
 }
