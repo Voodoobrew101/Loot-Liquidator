@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-18T13:26:28.045Z",
-  "status": "Current open-queue source gap checked across independent 2025 forums, 2024 original datasets and current Wowhead/Method references. No new original rank/build/refund-qualified cast histogram, no new estimator-eligible numeric yields; one deduplicated searched evidence record.",
+  "updated_at": "2026-11-18T14:22:53.373Z",
+  "status": "Five newly source-verified TWW fixed-price Artisan's Acuity vendor exchanges; no original rank/skill/refund-qualified processing cast cohort found and no estimator-eligible yield advanced.",
   "task_ids": [
     "T0040",
     "T0009",
@@ -10,35 +10,49 @@
     "T0011",
     "T0012",
     "T0048",
-    "T0007"
+    "T0007",
+    "standing-exchanges"
   ],
   "exact_gaps_targeted": [
-    "T0040/T0009/T0008/T0007: ranked Bismuth 210930/210931/210932, Ironclaw 210936/210937/210938, Aqirite 210933/210934/210935: finished prospect counts, output IDs/rank, castsWithDrop, 0..N histograms and Resourcefulness/refund-reuse basis after 2024-10-25 remain unverified.",
-    "T0010/T0011/T0012: Mycobloom 210796/210797/210798 -> Nacreous Pigment 222618/222619: exact 10-herb completed mills, input rank, output rank, totals, 0..N per-cast outcomes and skill remain missing; known amounts are reference or per-herb averages, not measured P(hit).",
-    "T0048: Lightless Scavenger's Footpads 212022 46-de sample has 21/19/4 same-name Refulgent Crystal hit rows but underlying output item IDs 219952/219954/219955, stack counts and build context cannot be assigned safely."
+    "T0040/T0009/T0008/T0007: ranked Ironclaw (210936/210937/210938), Aqirite (210933/210934/210935), Bismuth (210930/210931/210932) still lack independent post-2024-10-25 completed casts, hit counts, rank-specific 0..N output histograms and refund/re-prospect context.",
+    "T0010/T0011/T0012: Mycobloom (210796/210797/210798) -> Nacreous Pigment (222618/222619) still lacks skill/spec/rank/refund-qualified completed 10-herb mills and per-output cast histograms.",
+    "T0048: exact item 212022 -> Refulgent Crystal 219952/219954/219955 original 46-operation cohort has 21/19/4 hit rows, but unresolved original material rank links, per-hit stack quantities and skill/build; not estimator-ready.",
+    "Standing exchange: five unrecorded 600 Artisan's Acuity -> one Satchel fixed vendor item identity trades at Lyrendal, Dornogal."
   ],
-  "newly_verified_fields": [],
+  "newly_verified_fields": [
+    "210814 x600 -> 227675 x1 (Satchel of Surplus Herbs) fixed vendor purchase from Lyrendal, Dornogal; variable bag contents excluded",
+    "210814 x600 -> 227676 x1 (Satchel of Surplus Ore) fixed vendor purchase from Lyrendal, Dornogal; variable bag contents excluded",
+    "210814 x600 -> 227681 x1 (Satchel of Surplus Leather) fixed vendor purchase from Lyrendal, Dornogal; variable bag contents excluded",
+    "210814 x600 -> 227682 x1 (Satchel of Surplus Cloth) fixed vendor purchase from Lyrendal, Dornogal; variable bag contents excluded",
+    "210814 x600 -> 228337 x1 (Satchel of Surplus Dust) fixed vendor purchase from Lyrendal, Dornogal; variable bag contents excluded"
+  ],
   "newly_verified_cohorts": [],
   "new_estimator_eligible_numeric_yield_records": 0,
   "new_reference_only_numeric_records": 0,
   "new_token_identity_records": 0,
-  "new_search_only_records": 1,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-18T1326-posthotfix-original-cast-histogram-search.jsonl",
+  "new_search_only_records": 0,
+  "evidence_file": "research/v3/evidence/war-within/2026-11-18T1422-artisans-acuity-satchel-vendor-exchanges.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-18T1326-posthotfix-original-cast-histogram-search.jsonl"
+    "research/v3/evidence/war-within/2026-11-18T1422-artisans-acuity-satchel-vendor-exchanges.jsonl"
   ],
   "evidence_source_links": [
-    "https://eu.forums.blizzard.com/en/wow/t/disenchanting-shard-quality/565405",
-    "https://www.reddit.com/r/woweconomy/comments/1f9qado",
-    "https://www.method.gg/guides/the-war-within-inscription-profession-leveling-guide",
-    "https://www.wowhead.com/guide/the-war-within/professions/inscription-overview"
+    "https://www.wowhead.com/item=227675/satchel-of-surplus-herbs",
+    "https://warcraft.wiki.gg/wiki/Satchel_of_Surplus_Herbs",
+    "https://www.wowhead.com/item=227676/satchel-of-surplus-ore",
+    "https://warcraft.wiki.gg/wiki/Satchel_of_Surplus_Ore",
+    "https://www.wowhead.com/item=227681/satchel-of-surplus-leather",
+    "https://warcraft.wiki.gg/wiki/Satchel_of_Surplus_Leather",
+    "https://www.wowhead.com/item=227682/satchel-of-surplus-cloth",
+    "https://warcraft.wiki.gg/wiki/Satchel_of_Surplus_Cloth",
+    "https://www.wowhead.com/item=228337/satchel-of-surplus-dust",
+    "https://warcraft.wiki.gg/wiki/Satchel_of_Surplus_Dust"
   ],
   "verified_commit_sha": null,
-  "verification": "One new searched JSONL + worker-only status in one atomic commit. Commit SHA is verified by ref/blob/diff read-back after commit; cannot self-embed commit SHA in its own committed status blob.",
+  "verification": "One new worker-only evidence JSONL and worker-only quiet-status JSON in one commit; SHA cannot be self-embedded in its own committed status. Branch head, evidence blob, status blob and changed paths will be verified after update.",
   "blockers": [
     "No independently verified post-2024-10-25 original per-output cast histogram paired with explicit completed-operation denominators and rank/refund/skill context in this source set; historical study results are already indexed and must not be duplicated.",
     "Raw Wowhead Looter HTML output-row rank links for 212022 cannot be recovered from accessible index; the 46-cast sample remains reference-only with rank-null outputs.",
-    "Firecrawl current balance on 2026-11-18: 0 credits (verified), so source raw-HTML recovery via that connector is unavailable in this billing period."
+    "No independently verified new rank/skill/refund-qualified TWW operation log in checked original sources; 600-Acuity satchel opening distributions are VARIABLE and unsupported as fixed exchange results."
   ],
   "exhausted_sources": [
     "2026-11-18T07:26Z: targeted name-based Reddit, Wowhead, Blizzard, Warcraft Wiki, Method, Icy Veins checks of 2024/2025 Bismuth/Ironclaw/Aqirite prospecting, Khaz Algar Mycobloom milling and Darkmoon Deck DE returned previously indexed studies without independently verifiable rank-and-build-qualified completed casts and 0..N per-output histograms; source-specific token Mark of the Spelunker Supreme 226206 had no matching indexed research record.",
@@ -48,17 +62,23 @@
     "2026-11-18T10:32:23.218Z: By-name research checked known TWW ore/herb DE material studies (Reikah, PeaEsk, Raven11, LotzBoi, WoWhead Looter and community r/woweconomy threads) without new cast-complete posthotfix rank/resourcefulness logs. NEW two ORIGINAL Wowhead authors searched for by exact comment text and names against GitHub index to avoid overlap: TheGlasscannon (6 restored epic knowledge outcomes) and Tocket (200 Crushing/1748 units). Tocket original not corroborated by new raw Reddit/Blizzard/Wiki/Method/YouTube per-cast logs. Neither source supports unconditional material EV.",
     "2026-11-18T11:28:06.555Z: By-name web searches for TWW ore/mill/DE source tables and original item-side Wowhead outcomes re-encountered heavily indexed Ironclaw/Aqirite/Mycobloom and Lamplighter/Nerub-ar Looter cohorts; exact item 212022 had no GitHub code-index result and unique first-hand item-side 46-operation source. Other tested candidates 212085/212080/211995/212058/211981/212043/212017/237693/237675/237684/229131/229143 were previously indexed and were NOT duplicated.",
     "2026-11-18T12:26:17.043Z: New targeted search across Reddit r/woweconomy, Blizzard forums, Wowhead item/spell/looter pages, Method and related TWW ore/herb studies did not find fresh post-Oct25 rank-and-build-complete cast/hit histograms. New 2024-10-21 original qualitative max-KP Amber comment is NOT a measured cohort; known Reikah, PeaEsk, Eddiezato, LotzBoi, Lucent/Lightless item-side tables already indexed and excluded.",
-    "2026-11-18T13:26:28.045Z: Name-based targeted 2025/2026 original operation-log queries across Reddit, Blizzard EU/US forums, Method and Wowhead; original March 2025 shard-quality and Sept 2024 r/woweconomy rank-share threads are already indexed, not new. The Aug 2024 Wowhead 10-herb approximate pigment reference and Method milling plan do not give per-cast histograms. No verified new source; do not repeat these leads."
+    "2026-11-18T13:26:28.045Z: Name-based targeted 2025/2026 original operation-log queries across Reddit, Blizzard EU/US forums, Method and Wowhead; original March 2025 shard-quality and Sept 2024 r/woweconomy rank-share threads are already indexed, not new. The Aug 2024 Wowhead 10-herb approximate pigment reference and Method milling plan do not give per-cast histograms. No verified new source; do not repeat these leads.",
+    "2026-11-18T14:22:53.373Z: 6+ by-name cross-site searches on Reddit, Wowhead, Blizzard forums, Method, Warcraft Wiki and WoW-Professions for post-hotfix ore prospecting, Mycobloom milling and disenchant 0..N histograms returned known historical/pooled or reference-only study cohorts; no new independent complete, skill/rank/refund-qualified operation log. New standing-task Lyrendal vendor cost data instead yielded five exact fixed trade identities. Do not mistake the satchel comment samples for processing cast data."
   ],
-  "next_concrete_step": "Obtain a NEW independent raw addon export from a post-2024-10-25 TWW skilled prospector/miller with completed 10-herb mills or 5-ore prospects by exact rank ID and per-output 0..N casts, plus time/build/spec/Resourcefulness refunded and reprocessed inputs. Separately recover item 212022 raw Looter HTML row links to map 21/19/4 rank identities without double-counting the cumulative cohort.",
+  "next_concrete_step": "Acquire an independent post-2024-10-25 TWW original prospect/mill addon export with item rank IDs, completed casts, per-output 0..N histograms, skill/spec/build, and Resourcefulness refund/re-processing basis. Recover original item-212022 Looter HTML item-rank links separately. Satchel openings require a separate variable-loot schema requested through Master, not exchange yield inference.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
-  "parent_commit_sha": "5ae4271466cdda5c4a97574fa4c2d5d8af8603de",
+  "parent_commit_sha": "18afd039a5a8c326691fecc079b85e39fefcab8b",
   "new_no_disenchant_records": 0,
   "numeric_fields_advanced": [],
   "evidence_record_ids": [
-    "war-within-20261118-1326-001"
+    "war-within-20261118-1422-001",
+    "war-within-20261118-1422-002",
+    "war-within-20261118-1422-003",
+    "war-within-20261118-1422-004",
+    "war-within-20261118-1422-005"
   ],
-  "new_reference_only_qualitative_records": 0
+  "new_reference_only_qualitative_records": 0,
+  "new_exchange_records": 5
 }
