@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-18T15:43:03.241Z",
-  "status": "Three newly unindexed Dragonflight item-level Wowhead Looter cumulative disenchanting tables (seven source-reported output incidence rows); original ore/mill completed-cast evidence still missing.",
+  "updated_at": "2026-11-18T16:34:26.163Z",
+  "status": "Seven newly unindexed Dragonflight item-specific cumulative Wowhead Looter tables yielded 18 material-occurrence count rows; original prospecting/milling zero-inclusive cast datasets still unresolved.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -14,101 +14,119 @@
     "standing-disenchant"
   ],
   "exact_gaps_targeted": [
-    "Priority T0020/T0019/T0046: Draconium ore IDs 188658/189143, Serevite ranks 190394/190395/190396, Khaz'gorite and Prismatic 194545 need original 0-N prospect outcome histograms and correct skill/refund/quality context.",
-    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 need completed-operation output-by-rank pigment and zero/1/2 histograms.",
-    "Secondary disenchanting: source-reported cumulative Looter occurrences for three original gear item IDs, with actual original operation dates and per-stack material totals unresolved."
+    "T0020/T0019/T0046: Draconium 188658/189143 and Serevite 190394/190395/190396 (plus Khaz'gorite and Prismatic 194545) lack new independent cast/0-N output data; Xenastro workbook original logs inaccessible via public web, known firsthand posts deduplicated.",
+    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 original completed casts, pigment-by-rank quantities and 0/1/2 histograms remain unresolved.",
+    "Secondary original 7 DF gear items 197999,194347,198028,209937,209927,202467,194388 have cumulative source-reported Looter output occurrence counts; stack totals, patch/build, bonus and skill remain unknown."
   ],
   "newly_verified_fields": [
-    "194401 Expedition Guard's Chestguard: 194123 Chromatic Dust 173/191 source-report occurrences (91% displayed; per-stack display 1-3)",
-    "194401 Expedition Guard's Chestguard: 194124 Vibrant Shard 13/191 source-report occurrences (7% displayed)",
-    "194401 Expedition Guard's Chestguard: 200113 Resonant Crystal 5/191 source-report occurrences (3% displayed)",
-    "194374 Explorers' League Rifle: 194123 Chromatic Dust 34/41 source-report occurrences (83% displayed; per-stack display 1-5)",
-    "194374 Explorers' League Rifle: 194124 Vibrant Shard 7/41 source-report occurrences (17% displayed; per-stack display 1-2)",
-    "198024 Bramble Chain Bracers: 194123 Chromatic Dust 89/96 source-report occurrences (93% displayed; per-stack display 1-3)",
-    "198024 Bramble Chain Bracers: 194124 Vibrant Shard 7/96 source-report occurrences (7% displayed; per-stack display 1-2)"
+    "input 197999 -> output 194124: source reports 564 item-level disenchants and 287 material occurrences, 51% displayed, positive stack display 1-2",
+    "input 197999 -> output 194123: source reports 564 item-level disenchants and 265 material occurrences, 47% displayed, positive stack display 2-3",
+    "input 197999 -> output 200113: source reports 564 item-level disenchants and 27 material occurrences, 5% displayed",
+    "input 194347 -> output 194124: source reports 619 item-level disenchants and 333 material occurrences, 54% displayed, positive stack display 1-2",
+    "input 194347 -> output 194123: source reports 619 item-level disenchants and 266 material occurrences, 43% displayed, positive stack display 1-3",
+    "input 194347 -> output 200113: source reports 619 item-level disenchants and 32 material occurrences, 5% displayed",
+    "input 198028 -> output 194124: source reports 124 item-level disenchants and 65 material occurrences, 52% displayed, positive stack display 1-2",
+    "input 198028 -> output 194123: source reports 124 item-level disenchants and 57 material occurrences, 46% displayed, positive stack display 2-3",
+    "input 198028 -> output 200113: source reports 124 item-level disenchants and 4 material occurrences, 3% displayed",
+    "input 209937 -> output 194123: source reports 55 item-level disenchants and 39 material occurrences, 71% displayed, positive stack display 1-5",
+    "input 209937 -> output 194124: source reports 55 item-level disenchants and 16 material occurrences, 29% displayed, positive stack display 1-3",
+    "input 209937 -> output 200113: source reports 55 item-level disenchants and 2 material occurrences, 4% displayed, positive stack display 1-2",
+    "input 209927 -> output 194123: source reports 438 item-level disenchants and 362 material occurrences, 83% displayed, positive stack display 1-3",
+    "input 209927 -> output 194124: source reports 438 item-level disenchants and 107 material occurrences, 24% displayed",
+    "input 202467 -> output 200113: source reports 31 item-level disenchants and 17 material occurrences, 55% displayed",
+    "input 202467 -> output 194124: source reports 31 item-level disenchants and 14 material occurrences, 45% displayed, positive stack display 1-2",
+    "input 202467 -> output 194123: source reports 31 item-level disenchants and 2 material occurrences, 6% displayed, positive stack display 1-3",
+    "input 194388 -> output 194123: source reports 8 item-level disenchants and 8 material occurrences, 100% displayed, positive stack display 1-3"
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-looter-item-194401-cumulative",
-      "inputItemID": 194401,
-      "inputName": "Expedition Guard's Chestguard",
+      "inputItemID": 197999,
+      "inputName": "Windswept Hood",
+      "source": "https://www.wowhead.com/item=197999/windswept-hood",
+      "provider_reported_disencants": 564,
+      "outputItemIDs": [
+        194124,
+        194123,
+        200113
+      ],
+      "notes": "cumulative, no original per-cast event log"
+    },
+    {
+      "inputItemID": 194347,
+      "inputName": "Expedition Researcher's Hood",
+      "source": "https://www.wowhead.com/item=194347/expedition-researchers-hood",
+      "provider_reported_disencants": 619,
+      "outputItemIDs": [
+        194124,
+        194123,
+        200113
+      ],
+      "notes": "cumulative, no original per-cast event log"
+    },
+    {
+      "inputItemID": 198028,
+      "inputName": "Sleet Shined Skullguard",
+      "source": "https://www.wowhead.com/ptr/item=198028/sleet-shined-skullguard",
+      "provider_reported_disencants": 124,
+      "outputItemIDs": [
+        194124,
+        194123,
+        200113
+      ],
+      "notes": "cumulative, no original per-cast event log"
+    },
+    {
+      "inputItemID": 209937,
+      "inputName": "Chartreuse Champion's Gavel",
+      "source": "https://www.wowhead.com/ptr-2/item=209937/chartreuse-champions-gavel",
+      "provider_reported_disencants": 55,
       "outputItemIDs": [
         194123,
         194124,
         200113
       ],
-      "casts": 191,
-      "castsWithDrop": [
-        {
-          "itemID": 194123,
-          "count": 173
-        },
-        {
-          "itemID": 194124,
-          "count": 13
-        },
-        {
-          "itemID": 200113,
-          "count": 5
-        }
-      ],
-      "source": "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118",
-      "sourceLimitations": "Cumulative Looter listing only; no raw timestamps, version, skill, total units or zero-inclusive original event log"
+      "notes": "cumulative, no original per-cast event log"
     },
     {
-      "studyKey": "wowhead-looter-item-194374-cumulative",
-      "inputItemID": 194374,
-      "inputName": "Explorers' League Rifle",
+      "inputItemID": 209927,
+      "inputName": "Summer Soother's Slippers",
+      "source": "https://www.wowhead.com/ptr-2/item=209927/summer-soothers-slippers",
+      "provider_reported_disencants": 438,
       "outputItemIDs": [
         194123,
         194124
       ],
-      "casts": 41,
-      "castsWithDrop": [
-        {
-          "itemID": 194123,
-          "count": 34
-        },
-        {
-          "itemID": 194124,
-          "count": 7
-        }
-      ],
-      "source": "https://www.wowhead.com/item=194374/explorers-league-rifle",
-      "sourceLimitations": "Cumulative Looter listing only; no raw timestamps, version, skill, total units or zero-inclusive original event log"
+      "notes": "cumulative, no original per-cast event log"
     },
     {
-      "studyKey": "wowhead-looter-item-198024-cumulative",
-      "inputItemID": 198024,
-      "inputName": "Bramble Chain Bracers",
+      "inputItemID": 202467,
+      "inputName": "Faulds of the Cinderwolf",
+      "source": "https://www.wowhead.com/ptr/item=202467/faulds-of-the-cinderwolf",
+      "provider_reported_disencants": 31,
       "outputItemIDs": [
-        194123,
-        194124
+        200113,
+        194124,
+        194123
       ],
-      "casts": 96,
-      "castsWithDrop": [
-        {
-          "itemID": 194123,
-          "count": 89
-        },
-        {
-          "itemID": 194124,
-          "count": 7
-        }
+      "notes": "cumulative, no original per-cast event log"
+    },
+    {
+      "inputItemID": 194388,
+      "inputName": "Obsidian Guardian's Cleaver",
+      "source": "https://www.wowhead.com/ptr-2/item=194388/obsidian-guardians-cleaver",
+      "provider_reported_disencants": 8,
+      "outputItemIDs": [
+        194123
       ],
-      "source": "https://www.wowhead.com/es/item=198024/brazales-de-anillas-de-zarzas",
-      "sourceLimitations": "Cumulative Looter listing only; no raw timestamps, version, skill, total units or zero-inclusive original event log"
+      "notes": "cumulative, no original per-cast event log"
     }
   ],
-  "new_numerical_measurements": "7 source-reported material-incidence rows from three previously unindexed cumulative item-level Looter tables; these are not new original firsthand cast logs or zero-inclusive histograms.",
+  "new_numerical_measurements": "18 source-reported material occurrence rows across 7 unindexed gear-level Looter cumulative cohorts. No new original independent prospect/mill cast ledger or measured output totalQuantity; provider counts are not fresh independent player-run studies.",
   "numerical_fields_improved": [
-    "input 194401 -> output 194123: reported operations 191, hits 173, source displayed percent 91",
-    "input 194401 -> output 194124: reported operations 191, hits 13, source displayed percent 7",
-    "input 194401 -> output 200113: reported operations 191, hits 5, source displayed percent 3",
-    "input 194374 -> output 194123: reported operations 41, hits 34, source displayed percent 83",
-    "input 194374 -> output 194124: reported operations 41, hits 7, source displayed percent 17",
-    "input 198024 -> output 194123: reported operations 96, hits 89, source displayed percent 93",
-    "input 198024 -> output 194124: reported operations 96, hits 7, source displayed percent 7"
+    "source-reported item-specific disenchant denominator",
+    "per-material source-reported occurrence count",
+    "original rounded source percentage with meaning",
+    "source-displayed positive stack range when available"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -164,26 +182,27 @@
     "research/v3/evidence/dragonflight/2026-11-18T1238-serevite-weekly-original-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-18T1336-six-waking-fist-looter-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-18T1434-eight-unique-df-gear-looter-occurrences.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-18T1543-three-df-looter-gear-tables.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-18T1543-three-df-looter-gear-tables.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-18T1632-seven-unindexed-looter-denominators.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1543-three-df-looter-gear-tables.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1543-three-df-looter-gear-tables.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1632-seven-unindexed-looter-denominators.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-18T1632-seven-unindexed-looter-denominators.jsonl",
   "source_links": [
-    "https://www.wowhead.com/ptr-2/item=194401/expedition-guards-chestguard?ilvl=118",
-    "https://www.wowhead.com/item=194374/explorers-league-rifle",
-    "https://www.wowhead.com/es/item=198024/brazales-de-anillas-de-zarzas",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
-    "https://www.wowhead.com/item=194545/prismatic-ore",
-    "https://www.reddit.com/r/woweconomy/comments/108782r",
-    "https://www.reddit.com/r/woweconomy/comments/10me1e7"
+    "https://www.wowhead.com/item=197999/windswept-hood",
+    "https://www.wowhead.com/item=194347/expedition-researchers-hood",
+    "https://www.wowhead.com/ptr/item=198028/sleet-shined-skullguard",
+    "https://www.wowhead.com/ptr-2/item=209937/chartreuse-champions-gavel",
+    "https://www.wowhead.com/ptr-2/item=209927/summer-soothers-slippers",
+    "https://www.wowhead.com/ptr/item=202467/faulds-of-the-cinderwolf",
+    "https://www.wowhead.com/ptr-2/item=194388/obsidian-guardians-cleaver"
   ],
-  "verified_parent_sha": "dc956f84015587530f0e51110dc8346eb4e9211f",
-  "verified_commit_sha": "dc956f84015587530f0e51110dc8346eb4e9211f",
-  "commit_sha_scope": "The SHA embedded in this status is the verified parent before the new commit, because a commit cannot embed its own hash; the created commit SHA is verified independently after ref update.",
+  "verified_parent_sha": "8457e06e55723c57da097f67627087602b63fea7",
+  "verified_commit_sha": "8457e06e55723c57da097f67627087602b63fea7",
+  "commit_sha_scope": "Self-referential commit SHA cannot be stored inside its own commit; this field identifies the verified immediate parent at authoring time. Verify created commit separately via branch head/read-back.",
   "blockers": [
-    "Original Dragonflight prospect/mill author-exported casts and zero-inclusive output histograms remain unavailable. Public Bugy prospecting table is already indexed; original Reddit/Prismatic cohorts likewise deduplicated, not re-recorded.",
-    "Wowhead Looter cumulative table rows carry provider-reported item-level denominators/occurrences, no source event timestamps, exact gear versions, output stack quantities or character skill; linked PTR item pages do not prove live processing rates.",
-    "Historical gear rarity and retroactive item scaling may change observed yields; no source-separated patch/build or original bonus IDs for these three cohorts."
+    "Original Serevite/Draconium/Khaz'gorite/Prismatic prospect and Bubble Poppy/Saxifrage mill author-exported completed casts, 0-N histograms, refunds and skill/rank context still missing; previously indexed firsthand results intentionally not duplicated.",
+    "Wowhead Looter cumulative tables are provider-reported counts, not a source-separated dated firsthand cast transcript; direct page HTML lacks the JavaScript table. Output quantity totals, patch, item-version bonus, skill/spec and cohort overlap unverified.",
+    "PTR catalog mirrors must not be equated to historical event epoch or current live eligibility; rows are research-only."
   ],
   "exhausted_sources": [
     {
@@ -2134,28 +2153,28 @@
       ]
     }
   ],
-  "next_concrete_step": "Prioritize original Xenastro linked Prospecting Log row exports and source-linked per-output Serevite/Draconium/Khaz'gorite cast counts; require original 0/1/2+ histograms and Resourcefulness information before any measured per-cast chance. If unavailable, search distinct first-person milling output/cast logs (Bubble Poppy/Saxifrage). For Looter, recover original item version/bonus and material stack units before production import.",
+  "next_concrete_step": "Find original independent Dragonflight ore/herb cast-level exports (including Xenastro raw Prospecting Log) with exact rank IDs, completed operations and Resourcefulness refunds; seek per-material 0/1/2+ histograms. Review new item-specific Looter rows with original client data before runtime promotion.",
   "validation": {
-    "record_count": 7,
-    "real_drop_rows": 7,
+    "record_count": 18,
+    "real_drop_rows": 18,
     "searched_rows": 0,
-    "independent_source_cohorts": 3,
-    "all_required_record_keys_verified": true,
+    "independent_provider_item_cohorts": 7,
     "source_reported_operation_denominators": true,
     "source_reported_output_occurrences": true,
     "source_reported_stack_ranges": true,
-    "original_event_ledger_verified": false,
-    "total_quantity_inferred": false,
-    "unreported_zeros_inferred": false,
+    "primary_firsthand_cast_ledger_verified": false,
     "eligible_prospect_mill_hit_histograms": 0,
+    "unreported_zeros_inferred": false,
+    "total_quantity_inferred": false,
+    "source_HTML_table_verification": false,
     "changed_paths_expected": [
-      "research/v3/evidence/dragonflight/2026-11-18T1543-three-df-looter-gear-tables.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-18T1632-seven-unindexed-looter-denominators.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "notes": "Three original item IDs not found in indexed existing Dragonflight evidence or 2026-11-17/18 source files checked. PTR mirror not live eligibility. Rates copied as rounded source percentages only."
+    "notes": "Unique Dragonflight item IDs searched in repository evidence index before recording; no matches for these seven IDs. Provider percentages preserved exactly, no inferred material-unit sums."
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 7
+  "new_source_reported_numeric_rows": 18
 }
