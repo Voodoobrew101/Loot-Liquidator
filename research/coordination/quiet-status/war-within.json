@@ -1,41 +1,29 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-19T19:24:21.291Z",
-  "status": "Corrected provenance date: Blizzard's Bismuth/Aqirite/Ironclaw prospecting gem-rate hotfix was August 29, 2024, not October 16. Source-entry date verified directly from the official running list. No newly measured casts or drops.",
+  "updated_at": "2026-11-19T20:28:20.361Z",
+  "status": "Verified two previously unrecorded TWW 11.1 live-Wowhead nondisenchantable cosmetic item identities; no new measured operation counts, per-output hit/zero histograms, or gold EV. Existing prospect/milling/disenchant source avenues yielded no independent eligible cast cohort; no recycled K'aresh ore exchanges.",
   "task_ids": [
-    "T0009",
+    "T0048",
     "T0040",
+    "T0009",
     "T0008",
-    "T0007",
     "T0010",
     "T0011",
-    "T0048"
+    "T0027"
   ],
   "exact_gaps_targeted": [
-    "2024-08-29: authoritative prospecting gem-rate epoch for Bismuth 210930-210932, Aqirite 210933-210935, Ironclaw 210936-210938; shared rate-changes.jsonl currently identifies this same official event as 2024-10-16 because the running article page title is Oct16.",
-    "T0009/T0040/T0008/T0007: per-output completed casts, hit histograms and refund-adjusted denominators from post-2024-10-25 rank-specific ore samples remain unavailable.",
-    "T0010/T0011: Mycobloom 210796-210798, pigments 222618/222619 lack new counted cast/zero histograms with skill and Resourcefulness.",
-    "T0048: Boreal Rifle 232446 and Lamplighter's Splitter 229150 latest unique bonus-qualified DE cast distributions remain unresolved."
+    "T0048: historical TWW item-level disenchant eligibility and source identity; two distinct warband-bound cosmetic non-DE item IDs verified",
+    "T0009/T0008/T0040: ranked Bismuth 210930-210932, Aqirite 210933-210935, Ironclaw 210936-210938 remain missing contemporary original per-output completed casts, hit/zero histogram, Resourcefulness/spec/rank",
+    "T0010/T0011: Mycobloom 210796/210797/210798 remain missing herb/rank and skill-qualified per-mill zero-inclusive histograms"
   ],
   "newly_verified_fields": {
     "new_processing_numeric_fields": 0,
     "new_independent_completed_cast_cohorts": 0,
-    "corrected_official_rate_change_date_from": "2024-10-16",
-    "corrected_official_rate_change_date_to": "2024-08-29",
-    "affected_input_ids": [
-      210930,
-      210931,
-      210932,
-      210933,
-      210934,
-      210935,
-      210936,
-      210937,
-      210938
+    "new_no_disenchant_item_ids": [
+      235575,
+      235624
     ],
-    "new_rate_change_events": 0,
-    "new_reverified_rate_change_event_dates": 1,
-    "source_kind": "Official Blizzard hotfix entry dated August 29 within October 16 titled running list",
+    "new_eligibility_source_kind": "Retail Wowhead explicit Cannot be disenchanted quick facts (patch 11.1 items)",
     "new_gold_EV": false
   },
   "newly_verified_cohorts": [],
@@ -43,19 +31,20 @@
   "new_reference_only_numeric_records": 0,
   "new_token_identity_records": 0,
   "new_search_only_records": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-19T1924-aug29-prospect-epoch-correction.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/2026-11-19T2028-two-verified-cosmetic-de-exclusions.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-19T1924-aug29-prospect-epoch-correction.jsonl"
+    "research/v3/evidence/war-within/2026-11-19T2028-two-verified-cosmetic-de-exclusions.jsonl"
   ],
   "evidence_source_links": [
-    "https://news.blizzard.com/en-us/article/24134803/hotfixes-october-16-2024"
+    "https://www.wowhead.com/item=235575/forest-dwellers-garden-cap",
+    "https://www.wowhead.com/item=235624/sapphire-scale-treads"
   ],
   "verified_commit_sha": null,
-  "verification": "Evidence+own status committed in one git-tree commit; self-reference SHA cannot be stored in that same commit. Verify branch head, changed-file paths, and exact remote source bytes afterward.",
+  "verification": "One atomic commit writes new evidence JSONL and only this worker quiet status; SHA cannot self-reference its own commit. Remote read-back and branch-head lease verification are performed after ref update.",
   "blockers": [
-    "Master must correct the shared research/v3/rate-changes.jsonl entry; this worker may only append its own evidence and update its quiet status. This record is NOT a second rate buff.",
-    "No newly verified original post-Oct25 complete ranked processing cast/hit/zero series; do not claim a measured probability or magnitude.",
-    "An earlier 247704 Reshii Mantle noDisenchant record appears in 2026-11-18T2124 and was re-added in 2026-11-19T1829. Master should deduplicate; no additional record added for it here."
+    "No new independent contemporary per-cast TWW DE/Prospect/Mill cohort with completed operations, 0-N histogram, skill/spec, rank and refunds; keep estimator fields null",
+    "Candidate K'aresh ranked ore and Resonating Stone vendor conversions in Neryssa's 2025 mining guide are ALREADY indexed in three older TWW evidence files (Oct30/Oct31/Nov01); deliberately NOT re-recorded.",
+    "Cosmetic noDisenchant items do not establish equipable gear variant outcomes or current future-patch eligibility."
   ],
   "exhausted_sources": [
     "2026-11-19T01:24:57.773Z: Current worker queue and old source inventory cross-checked. Targeted name-based research for Ironclaw Ore, Aqirite, Bismuth, Khaz Algar herbs and disenchant cast histograms returned no original independently new posthotfix operation/hit logs; PeaEsk on Algari Prospecting and DobberSH on Null Stone are already indexed. The original 1g9l8t8 cloth cuffs cohort is already indexed and only missing per-cast input count was completed; no repeated cast sample.",
@@ -76,22 +65,25 @@
     "2026-11-19T16:22:05.674Z: Distinct new search avenue: 2025 Patch 11.2 K'aresh Om'mit and mining-vendor exchange. Firecrawl original HTML of Wowhead Neryssa guide yields 16 item-ID-exact quality-specific herb exchange rows (239690/691/692 and 240194). Om'mit Wowhead player comment explicitly notes daily changing costs, so source-derived historical quantities require a dynamic-rate warning and are NOT eligible as guaranteed present-day gold conversions. No newly measured prospect/mill/disenchant player cast denominator was found in nonrecycled original searches.",
     "2026-11-19T17:24:42.829Z: New by-name 2025 Bismuth/Ironclaw/Aqirite prospecting, Mycobloom milling and Khaz Algar DE hit/stack histogram searches spanned Reddit (1jnvht8, 1k78h4v, 1fisfkn, 1g350pq, 1f83cnd), Blizzard EU/US, Wowhead, Method, Warcraft Wiki and WoW-Professions. 2024 rank cohorts and Carynara ten greens were verified ALREADY INDEXED by original cohort ID; no new estimator-grade numeric outputs. Novel Nov 11 2025 Teishoku source describes final Uncommon Utilitarian node raising additional dust but no measured coefficient; keep source only and refer schema issue to Master.",
     "2026-11-19T18:29:59.272Z: Distinct by-name original studies for Ironclaw/Aqirite/Bismuth posthotfix, Mycobloom mills and 232446/229150 disenchants searched across Wowhead, Method, Reddit r/woweconomy, Blizzard US forums and WoW-Professions; reached previously indexed Sept/Oct 2024 cohorts and qualitative guides, not independent completed casts/zeros/histograms. Newly identified previously unindexed PTR no-DE item IDs 227208,233063,237130,243344,247704; avoid resampling these five. No current live confirmation.",
-    "2026-11-19T19:24:21.291Z: Examined original dated Blizzard hotfix entry, unlike previous pooled result searches. Prior no-DE Delver and Radiant Echoes item identities were already recorded in 2026-10-31 worker evidence, so avoided duplicate source-only records. Posthotfix original new operation datasets remain unavailable. The material new finding is an erroneous 2024-10-16 cut point caused by the later running-article title; source text sits at August 29."
+    "2026-11-19T19:24:21.291Z: Examined original dated Blizzard hotfix entry, unlike previous pooled result searches. Prior no-DE Delver and Radiant Echoes item identities were already recorded in 2026-10-31 worker evidence, so avoided duplicate source-only records. Posthotfix original new operation datasets remain unavailable. The material new finding is an erroneous 2024-10-16 cut point caused by the later running-article title; source text sits at August 29.",
+    "2026-11-19T20:28:20.361Z: Refreshed README/evidence-format/mechanics/worker/queue; reconfirmed Ironclaw/Aqirite/Bismuth/Mycobloom and 824-green/20k TWW DE original sources already indexed. Searched recent numeric/original source avenues and historical Neryssa K'aresh vendor table; latter already in 2026-10-30T2022/2026-10-31T1216/2026-11-01T0116, NOT novel. Found two otherwise absent explicit Retail Wowhead no-DE identity facts 235575/235624."
   ],
-  "next_concrete_step": "Ask Master to re-date and deduplicate the official prospecting rate-change entry to Aug 29 2024, then reclassify historical cohorts (pre-Aug29, Aug29-Oct24, Oct25+). Next collect new post-Oct25 Bismuth/Ironclaw/Aqirite/Mycobloom per-cast player logs with rank, skill/spec, refunds and histograms.",
+  "next_concrete_step": "Pursue NEW independent post-2025-02-21 TWW prospect byproduct and unlock source logs with per-rank counts/hits/zeros (ranked Bismuth/Ironclaw/Aqirite) or raw Looter original DE item histograms; avoid duplicated Desolate Talus vendor source, already archived.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
-  "parent_commit_sha": "07e22789ea92677f7fe242fdf56b279c0bccef70",
-  "new_no_disenchant_records": 0,
+  "parent_commit_sha": "8537535c2458b93d67c9aff327f7227db4dd9026",
+  "new_no_disenchant_records": 2,
   "numeric_fields_advanced": [],
   "evidence_record_ids": [
-    "war-within-20261119-1924-001"
+    "war-within-20261119-2028-001",
+    "war-within-20261119-2028-002"
   ],
-  "new_reference_only_qualitative_records": 1,
+  "new_reference_only_qualitative_records": 0,
   "new_exchange_records": 0,
   "newly_verified_fields_or_cohorts": [
-    "Official August 29, 2024 Bismuth/Aqirite/Ironclaw gem-rate change (previous shared event mislabeled October 16); nine affected rank-specific IDs and quality-scaling explicitly noted."
+    "235575 Forest Dweller's Garden Cap: explicit Cannot be disenchanted; no processing yield.",
+    "235624 Sapphire Scale Treads: explicit Cannot be disenchanted; no processing yield."
   ],
   "exact_gaps": [
     "TWW ore ranks 210930-210938 lack new qualified current-regime per-cast output histograms.",
@@ -100,11 +92,11 @@
     "November 2025 source states skill-node-based extra dust but additive bonus semantics are not representable with existing conditional-output field without gating baseline."
   ],
   "source_links": [
-    "https://news.blizzard.com/en-us/article/24134803/hotfixes-october-16-2024",
-    "https://www.warcrafttavern.com/wow/news/the-war-within-hotfixes-for-august-29-jewelcrafting-prospecting-buff-bug-fixes-galore"
+    "https://www.wowhead.com/item=235575/forest-dwellers-garden-cap",
+    "https://www.wowhead.com/item=235624/sapphire-scale-treads"
   ],
   "commit_sha": null,
-  "base_commit_sha": "07e22789ea92677f7fe242fdf56b279c0bccef70",
-  "next": "Master needs hotfix-date correction to partition historical numeric cohorts; pursue new distinct cast exports, not more duplicated copied rate records.",
+  "base_commit_sha": "8537535c2458b93d67c9aff327f7227db4dd9026",
+  "next": "Pursue NEW independent post-2025-02-21 TWW prospect byproduct and unlock source logs with per-rank counts/hits/zeros (ranked Bismuth/Ironclaw/Aqirite) or raw Looter original DE item histograms; avoid duplicated Desolate Talus vendor source, already archived.",
   "evidence_source_urls_verified": true
 }
