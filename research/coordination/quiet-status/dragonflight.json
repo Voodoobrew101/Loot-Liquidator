@@ -2,8 +2,8 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-19T00:30:14.265Z",
-  "status": "Recovered one previously unindexed firsthand Dragonflight item-specific disenchant result: 200942 Vibrant Emulsion -> 194124 Vibrant Shard x2 from one stated completed operation, Enchanting skill 27; priority prospect/mill raw histograms remain unavailable and not synthesized.",
+  "updated_at": "2026-11-19T01:29:31.764Z",
+  "status": "New firsthand 2023 pre-hotfix single-operation Dragonflight gear disenchant and Blizzard Feb 6 2023 cross-expansion material correction; no newly independent priority ore/mill completed-cast 0-N histograms.",
   "task_ids": [
     "T0020",
     "T0018",
@@ -13,34 +13,41 @@
     "standing-disenchant"
   ],
   "exact_gaps_targeted": [
-    "Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314 and Prismatic Ore 194545 prospecting lack reliably sourced per-output completed-cast zero-inclusive histograms and refunds.",
-    "Bubble Poppy 191467 and Saxifrage 191464/191465/191466 original milling datasets still lack independent rank-specific completed operations and hit histograms.",
-    "Newly found single-operation disenchant of 200942 provides one positive material stack but is not representative of rate by itself."
+    "Draconium 188658/189143, Serevite 190394/190395/190396, Khaz'gorite 190312/190313/190314 and Prismatic 194545: missing independently sourced output-specific completed-cast 0-N histograms with actual refunds",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466: missing completed mill sample with exact rank and Resourcefulness tracking",
+    "Historical Prismatic Diamond Loop 203670 produced Shadowlands material before a dated 2023-02-06 Blizzard disenchant hotfix; ensure before/after processing rates never pooled"
   ],
   "newly_verified_fields": [
-    "Original commenter Chestapples: Vibrant Emulsion 200942, Vibrant Shard 194124, one completed DE, totalQuantity=2, castsWithDrop=1, histogram={'2':1}, Enchanting skill reported 27; no patch or specialization verified."
+    "2023-01-25 firsthand 203670 -> 172232 Eternal Crystal singular x1, one operation and one hit (historical 10.0.5 only)",
+    "2023-02-06 Blizzard explicit correction: 203670 should disenchant into Dragonflight materials; no current rate/quantity supplied",
+    "Independent item identity Prismatic Diamond Loop 203670 and Eternal Crystal 172232 cross-checked; neither source supplies skill or specialization."
   ],
   "newly_verified_cohorts": [
     {
-      "studyKey": "wowhead-chestapples-200942-de-single",
-      "inputItemID": 200942,
-      "outputItemID": 194124,
+      "studyKey": "blizzardforum-spicymilkbag-prismatic-loop-20230125",
+      "inputItemID": 203670,
+      "outputItemID": 172232,
       "casts": 1,
-      "totalQuantity": 2,
       "castsWithDrop": 1,
-      "source": "https://www.wowhead.com/item=200942/vibrant-emulsion",
-      "limitations": "single historical eyewitness operation; not an inferred population probability"
+      "totalQuantity": 1,
+      "histogram": {
+        "1": 1
+      },
+      "source": "https://us.forums.blizzard.com/en/wow/t/wrong-item-from-disenchanted-ring/1499715",
+      "epoch": "2023-01-25 pre-2023-02-06 hotfix",
+      "limitations": "Only one historical firsthand event; not live estimator eligible"
     }
   ],
-  "new_numerical_measurements": "One independently attributed single disenchant event: 200942 -> 194124 x2, one completed operation, one positive hit, exactly one observed 2-unit stack (Chestapples).",
+  "new_numerical_measurements": "One independently attributed historic single completed disenchant: 203670 -> 172232 x1 before Feb 6 hotfix. No newly independent prospecting/milling cast histograms.",
   "numerical_fields_improved": [
-    "inputItemID=200942",
-    "outputItemID=194124",
+    "inputItemID=203670",
+    "outputItemID=172232",
     "casts=1",
-    "totalQuantity=2",
     "castsWithDrop=1",
-    "histogram={'2':1}",
-    "skill=27 reported"
+    "totalQuantity=1",
+    "histogram={'1':1}",
+    "historical dataDate=2023-01-25",
+    "official processing-material change date=2023-02-06"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -105,24 +112,28 @@
     "research/v3/evidence/dragonflight/2026-11-18T2129-bugy-original-linked-ore-quality-corrections.jsonl",
     "research/v3/evidence/dragonflight/2026-11-18T2235-independent-event-ledger-candidate-dedupe.jsonl",
     "research/v3/evidence/dragonflight/2026-11-18T2333-original-workbook-dedupe-and-priority-cast-search.jsonl",
-    "research/v3/evidence/dragonflight/20261119T0030-vibrant-emulsion-and-priority-search.jsonl"
+    "research/v3/evidence/dragonflight/20261119T0030-vibrant-emulsion-and-priority-search.jsonl",
+    "research/v3/evidence/dragonflight/20261119T0129-prismatic-diamond-loop-de-hotfix.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261119T0030-vibrant-emulsion-and-priority-search.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/20261119T0030-vibrant-emulsion-and-priority-search.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/20261119T0129-prismatic-diamond-loop-de-hotfix.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/20261119T0129-prismatic-diamond-loop-de-hotfix.jsonl",
   "source_links": [
-    "https://www.wowhead.com/item=200942/vibrant-emulsion",
-    "https://www.wowhead.com/spell=374627/dragon-isles-prospecting",
-    "https://www.wowhead.com/item=198412/serene-pigment",
-    "https://news.blizzard.com/en-us/article/23876529/dragonflight-making-it-with-professions"
+    "https://us.forums.blizzard.com/en/wow/t/wrong-item-from-disenchanted-ring/1499715",
+    "https://us.forums.blizzard.com/en/wow/t/wow-hotfixes-updated-march-20/1498636",
+    "https://www.wowhead.com/item=203670/prismatic-diamond-loop",
+    "https://goldcap.gg/retail/us/items/172232",
+    "Reddit r/woweconomy Draconium Ore prospecting spreadsheet counts by name; checked https://www.reddit.com/r/woweconomy/comments/y3e8ek (original Jallfo already indexed), https://www.reddit.com/r/woweconomy/comments/10i63zb (Serevite 400k + Draconium 30k nominal, already indexed)",
+    "Reddit r/woweconomy Serevite Ore completed operation histograms by name; https://www.reddit.com/r/woweconomy/comments/zzyjzu (known source and independent 28k-Q3 comment previously logged)",
+    "Reddit r/woweconomy Khaz'gorite Ore prospecting 1000 results by name; https://www.reddit.com/r/woweconomy/comments/10h6ccx (100 R2 ore no diamond in 20 casts, already indexed)"
   ],
-  "verified_parent_sha": "61dcbc33fbd5fe824f8a91ca422d63b5185a573c",
+  "verified_parent_sha": "1f24fa9921664baee12c3753b84300f4bfff7e15",
   "verified_commit_sha": null,
-  "commit_sha_scope": "One commit includes a new Dragonflight JSONL and this Dragonflight-only quiet-status. Own new commit SHA cannot be self-referenced inside its own tree; verify after branch update.",
+  "commit_sha_scope": "One commit includes just new Dragonflight evidence and own quiet status. Current commit cannot be self-referenced inside its own tree; verify commit SHA and paths by read-back after ref update.",
   "blockers": [
-    "Prospecting/milling: no new independent actual-completed-cast per-output histograms for target Dragonflight ores/herbs; collected results overlap existing original cohorts.",
-    "Single-event disenchant sample gives no reliable general drop probability, and postlaunch comment date/patch/build, exact character specialization, plus possible parallel materials remain unknown.",
-    "Historical nominal ore denominators cannot be treated as actual completed prospects when Resourcefulness can refund inputs; original sources often do not disclose refunds.",
-    "Rank-specific Serevite/Draconium/Khaz'gorite input IDs require authoritative live-quality and source-epoch linkage before pooled outputs can be interpreted."
+    "No new original per-completed-operation zero-inclusive histograms for Dragonflight priority ores and herbs.",
+    "Pre-hotfix 203670→172232 cannot be pooled with corrected output family after 2023-02-06; output quality skill and live state unknown.",
+    "Single reported indefinite article ('an eternal crystal') supports 1 observed unit but not a reliable population chance; no raw log independent verification.",
+    "Resourcefulness refunds and input-rank IDs unavailable for most historical ore/herb source aggregates."
   ],
   "exhausted_sources": [
     {
@@ -2168,14 +2179,29 @@
         "Blizzard official Dragonflight making it with professions, named Milling/Prospecting: https://news.blizzard.com/en-us/article/23876529/dragonflight-making-it-with-professions (recipe UI behavior only, no output sample)",
         "Wowhead Vibrant Emulsion by name: https://www.wowhead.com/item=200942/vibrant-emulsion (one novel independent individual disenchant recorded separately in this file)"
       ]
+    },
+    {
+      "at": "2026-11-19T01:29:31.764Z",
+      "scope": "New named item-source search for raw ore/mill 0-N operations and historical Prismatic Diamond Loop disenchant bug",
+      "reason": "No new independent ore/mill completed-operation histogram; original forum 203670 one-event report and official Feb 6 2023 correction recorded without claiming modern applicability.",
+      "whereLooked": [
+        "Reddit r/woweconomy Draconium Ore prospecting spreadsheet counts by name; checked https://www.reddit.com/r/woweconomy/comments/y3e8ek (original Jallfo already indexed), https://www.reddit.com/r/woweconomy/comments/10i63zb (Serevite 400k + Draconium 30k nominal, already indexed)",
+        "Reddit r/woweconomy Serevite Ore completed operation histograms by name; https://www.reddit.com/r/woweconomy/comments/zzyjzu (known source and independent 28k-Q3 comment previously logged)",
+        "Reddit r/woweconomy Khaz'gorite Ore prospecting 1000 results by name; https://www.reddit.com/r/woweconomy/comments/10h6ccx (100 R2 ore no diamond in 20 casts, already indexed)",
+        "Wowhead Dragon Isles Prospecting Draconium/Serevite/Khaz'gorite averages and skill profiles: https://www.wowhead.com/spell=374627/dragon-isles-prospecting ; original table previously recorded, column ratios not cast-hit tables",
+        "Wowhead Prismatic Ore original 80-prospect superbondez cohort https://www.wowhead.com/item=194545/prismatic-ore ; existing historical study, no new 0-N log",
+        "Wowhead Saxifrage original 1700 rank-two herb/mill Aary source https://www.wowhead.com/item=191465/saxifrage ; Resourcefulness refunds prevent inferred completed mill count, already indexed",
+        "Blizzard WoW forum named Bubble Poppy / Saxifrage milling pigment results and 1000-ore output logs; no separate usable operation-level sample in results",
+        "GitHub code-index web searches for named Dragonflight/Draconium prospecting or Serevite Ore prospecting original JSON logs; no independently dated raw 0-N operation table surfaced"
+      ]
     }
   ],
-  "next_concrete_step": "Seek first-person, per-cast SavedVariables/addon exports for Draconium/Serevite/Khaz'gorite/Prismatic and Bubble Poppy/Saxifrage with rank and Resourcefulness. Cross-check Chestapples single DE against original dated comment and any future independent 200942 sample; do not assign a general chance from n=1.",
+  "next_concrete_step": "Seek novel player SavedVariables with operation-level 0/1/2+ Dragonflight prospecting/milling logs; query original 2023 raid/gear DE experiments with explicit item IDs and post-Feb-6 epochs before further inclusion.",
   "validation": {
-    "precommit": "JSONL two lines parse; drop count=1, searched count=1; no invented probabilities; only new file + own status path intended.",
-    "readback": "pending",
+    "precommit": "Three valid JSONL records: one original single-cast drop with one known stack, one official processing-material hotfix, one source-search trace. Dates/sources independently crosschecked; no computed probabilities, prices or invented missing data.",
+    "readback": "pending until commit and branch readback",
     "changed_paths": [
-      "research/v3/evidence/dragonflight/20261119T0030-vibrant-emulsion-and-priority-search.jsonl",
+      "research/v3/evidence/dragonflight/20261119T0129-prismatic-diamond-loop-de-hotfix.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ]
   },
