@@ -1,77 +1,89 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-19T13:47:46.414Z",
-  "status": "Verified a NEW original 16-completed-prospect Titanium Ore (36910) cohort: 8 Titanium Powder (46849) units and 4 additional epic gems with unspecified exact IDs, no per-output hit or zero histogram. Recorded historically phase-gated Wrath Classic Titanium prospect availability (2022-10-06 disabled; 3.4.2 released 2023-06-20) and 10 Titanium Powder -> 1 Dalaran Jewelcrafter's Token (historic item 41596, modern currency representation differs), plus 2022 Smelt Titansteel cooldown fix. No new Warmaul 24995, Cobalt 36909, or Fel Iron 23424 event-level evidence; no measured probability or confidence assigned.",
+  "updated_at": "2026-11-19T14:48:47.312Z",
+  "status": "Added two independent source-reported historical WoD disenchant cohorts, one explicitly reference-only average, and an official November 25, 2014 hotfix context. Five rare ilvl-630 item disenchants each yielded 8–12 Draenic Dust (109693), five material-positive operations. A separate 40-ring Blackrock Band source reports six Luminous Shard (111245) units, not verified six hit casts. Earlier 10.5 Draenic Dust per ring is an unweighted source-reported prior with unknown sample size. Priority Warmaul 24995/Cobalt 36909/Fel Iron 23424 event-level ledgers remain blocked; no probabilities, refunds, or prices invented.",
   "task_ids": [
     "T0047",
     "T0022",
     "T0044",
     "T0042",
-    "T0021",
+    "T0050",
     "T0053",
-    "T0029"
+    "T0021"
   ],
   "exact_gaps_targeted": [
-    "T0047 Warmaul Legplates 24995 historic TBC versus Retail eligibility, original completed-cast/material positive and zero histograms remain missing",
-    "T0022 Cobalt Ore 36909 firsthand independent completed per-gem events and source build remain missing",
-    "T0044 Fel Iron Ore 23424 distinct complete casts, outcome hit/zero ledgers and post-removal powder epoch remain missing",
-    "T0021 Titanium Ore 36910 original 255922 16 completed operations and 8 powder, 4 unspecified epic gems; 2022 and 2023 Classic phase distinction",
-    "T0053 token 45661 historical 7-class rewards previously captured without proof of current Retail use mapping",
-    "T0029 original Wrath Classic 46849 x10 -> historical 41596 token exchange; phase-gated"
+    "T0047 24995 Warmaul: original completed cast-by-material 0-N and historical-versus-modern eligibility not resolved",
+    "T0022 36909 Cobalt: per-material completed cast hits and zeros still unknown",
+    "T0044 23424 Fel Iron: distinct original real-cast per-gem ledger remains unknown",
+    "T0042 standing historical disenchant baseline: fresh WoD 109693 rare vs shard data and official 2014 hotfix",
+    "T0050 13866 Runecloth Headband modern/historic dust identity not advanced",
+    "T0053 45661 seven-class original token rewards already recorded; no duplicate"
   ],
   "newly_verified_fields_cohorts": {
-    "newDistinctFirsthandCohorts": 1,
-    "sourceCommentID": "255922",
-    "inputItemIDs": [
-      36910,
-      46849
+    "newDistinctFirsthandCohorts": 2,
+    "numberOfNewEvidenceRows": 4,
+    "sourceAuthors": [
+      "lordlight",
+      "Scii"
     ],
+    "inputItemIDs": [],
     "outputItemIDs": [
-      46849,
-      41596
+      109693,
+      111245
     ],
-    "completedProspectOperationsFromOriginalSource": 16,
-    "confirmedTitaniumPowderUnits": 8,
-    "sourceReportedUnidentifiedEpicGemUnits": 4,
-    "newVerifiedOutputHitCounts": 0,
-    "newVerifiedMaterialZeroHistograms": 0,
-    "newVerifiedGoldValues": 0,
-    "historicalExchange": {
-      "giveItemID": 46849,
-      "giveCount": 10,
-      "getItemID": 41596,
-      "getCount": 1,
-      "questID": 14103,
-      "modernCurrencyID": 61
+    "lordlight": {
+      "reportedCompletedDisenchantCasts": 5,
+      "inputQuality": "rare (blue)",
+      "inputItemLevel": 630,
+      "outputItemID": 109693,
+      "outputPositiveCasts": 5,
+      "perPositiveOutputMin": 8,
+      "perPositiveOutputMax": 12,
+      "totalQuantity": null
     },
-    "originalWrathClassicPhaseDates": [
-      "2022-10-06",
-      "2023-06-20"
-    ],
-    "specifiedReturnPatch": "3.4.2",
-    "originalSmeltCooldownHotfixDate": "2022-09-01",
-    "rateChangeRecords": 3,
-    "recordCount": 6
+    "sciiFollowup": {
+      "reportedCompletedDisenchantCasts": 40,
+      "inputItemName": "Blackrock Band rings, 3 variants",
+      "inputHistoricalItemLevel": 585,
+      "outputItemID": 111245,
+      "shardOutputUnits": 6,
+      "shardPositiveCasts": null,
+      "zeroOutcomes": null
+    },
+    "sciiEarlierReference": {
+      "inputItemName": "Blackrock Band rings",
+      "outputItemID": 109693,
+      "sourceReportedAverageDustPerRing": 10.5,
+      "sampleSize": null,
+      "overlapWithFollowup": "unknown",
+      "sourceKind": "reference"
+    },
+    "hotfix": {
+      "date": "2014-11-25",
+      "change": "WoD rare-blue disenchant dust-versus-shard rate and enchanter dust quantity; no numeric rate"
+    },
+    "newConfirmedPriorityItemCompletedCasts": 0,
+    "newVerifiedZeroHistograms": 0,
+    "newGoldEVValues": 0
   },
-  "numeric_summary": "One firsthand source-reported 16 completed Titanium Ore 36910 prospects yielded 8 Titanium Powder 46849 units plus 4 unspecified epic gems (NOT four known gem IDs or four hit casts). One historical exchange 46849 x10 -> 41596 x1 via quest 14103. Three dated context changes: 2022-09-01 Titansteel cooldown fix, 2022-10-06 Titanium prospect suspension, 2023-06-20 patch 3.4.2 release/reopening. All material-specific castsWithDrop, zero counts, stack histograms, profession skill/spec and exact epic output IDs null or unknown; priority 24995/36909/23424 numerical fields advanced by 0.",
-  "evidence_file": "research/v3/evidence/legacy/20261119T1347Z-wrath-titanium-16cast-phase-and-exchange.jsonl",
+  "numeric_summary": "Historical WoD: author lordlight 5 reported rare-quality ilvl630 item disenchants, all yielded 109693 in 8–12 units per item; exact total unknown. Independent author Scii reported 40 crafted Blackrock Band item disenchants and six 111245 material units; per-material hit casts unknown. Scii's earlier 10.5 109693/ring is a reference-only average with unknown denominator, not a second independent counted sample. Official Blizzard November 25 2014 rate-change context, with no rates stated. 24995,36909,23424 newly completed-cast rows: zero.",
+  "evidence_file": "research/v3/evidence/legacy/20261119T1448Z-wod-draenic-dust-originals-and-hotfix.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/wotlk/quest=14103/titanium-powder",
-    "https://warcraft.wiki.gg/wiki/Titanium_Powder_%28quest%29",
-    "https://warcraft.wiki.gg/wiki/Patch_3.4.2",
-    "https://worldofwarcraft.blizzard.com/en-us/news/23800887/hotfixes-october-7-2022",
-    "https://www.reddit.com/r/classicwow/comments/14iycdq"
+    "https://www.wowhead.com/item=109693/draenic-dust",
+    "https://worldofwarcraft.blizzard.com/en-gb/news/16561638",
+    "https://warcraft.wiki.gg/wiki/Hotfixes/2014_Archive"
   ],
-  "verified_base_commit_sha": "3d5140e80d31cdd212eeb57e9e926095d39136ad",
-  "verified_commit_sha": "3d5140e80d31cdd212eeb57e9e926095d39136ad",
-  "commit_note": "The status file records the verified parent commit because a commit cannot embed its own SHA; after publishing, read-back verify the new commit SHA and both exact file contents. No merge/release/production change.",
+  "verified_base_commit_sha": "ee378604fa9e561defea53745741aed1c27949b8",
+  "verified_commit_sha": "ee378604fa9e561defea53745741aed1c27949b8",
+  "commit_note": "This atomic one-commit status includes the checked parent SHA, because its own yet-to-be-created commit SHA cannot be embedded self-referentially. Verify new SHA and exact evidence/status contents by fetching the resulting commit and files after moving ref.",
   "blockers": [
-    "No new original Warmaul Legplates (24995) current Retail eligible completed disenchant with per-output hit/zero/quantity histogram and patch/skill/ilvl; old Looter cohort is not new.",
-    "No new distinct Cobalt Ore 36909 or Fel Iron Ore 23424 player per-event ledger after dedupe; previous 180-, 100-, and 565-ore cohorts are not re-entered.",
-    "New original 255922 Titanium report names four epic gems only as a pooled family; exact individual gem IDs, per-material hit counts/zero outcomes, skill, specialization and game-build not stated.",
-    "Historical Titanium Powder reward is 41596 as a legacy item; modern token may be currency 61, and current Retail quest eligibility is not established.",
-    "Official patch note promises restoration with 3.4.2 and release chronology aligns with 2023 firsthand prospecting; do not extrapolate to Retail or assign new yield probabilities."
+    "No independent first-person current-Retail 24995 completed disenchants and linked outcome stack/hit/zero histograms; original 2068-operation Looter cumulative snapshot is already indexed and historical item-level versions disagree.",
+    "Cobalt 36909 prior 180-ore/Russian 24-stack data have no new independent per-output hit/zero export; no repeat.",
+    "Fel Iron 23424 prior original 100-/565-ore and Thottbot five-stack sources already indexed; no repeat.",
+    "Five WoD rare 630 items remain unidentified; 8–12 per positive item is an observed range, not an exhaustive stack histogram or numeric average.",
+    "Scii 40 Blackrock Band rings mix three possible input item IDs; 6 shard units do not establish 6 hits, individual stack sizes, 0-bin histogram or dust totals; earlier 10.5 dust/ring baseline may overlap.",
+    "Historical November 2014 rate-change and ring reports cannot be applied uncritically to current Retail item versions."
   ],
   "exhausted_sources": [
     {
@@ -541,13 +553,24 @@
         "Titanium Powder original quest 14103 Wowhead historical commenter 255922 separately reports 16 completed prospects and eight powders plus four unnamed epic gems, not in existing legacy authored source ID search",
         "Blizzard official October 6 2022 historical Titanium Ore prospect disabling note and September 1 Smelt Titansteel cooldown fix, Warcraft Wiki June 20 2023 patch 3.4.2 release and Titanium Powder historical quest exchange"
       ]
+    },
+    {
+      "lookingFor": "Current run novel priority 24995/36909/23424 original completed-event data and unindexed historic WoD firsthand disenchant comparison",
+      "whereLooked": [
+        "Warmaul Legplates original Evowow 108 ilvl and current 31 ilvl; opaque reference table and already-indexed 2068 Looter outputs not duplicated.",
+        "Cobalt Ore 36909 named WoWhead WotLK, historical 180-ore and 24-stack comments already indexed; no distinct per-gem physical 0-N ledger.",
+        "Fel Iron Ore 23424 name-specific Wowhead/Thottbot studies: 100/565-ore and five-stack rare-gem comments previously preserved; no duplicate casts.",
+        "https://www.wowhead.com/item=109693/draenic-dust: independently named first-person lordlight and Scii original comments; code-search dedup of 'lordlight', '5 ilvl 630 blues', 'Blackrock Band', '10.5 dust' yielded no matching original authored records.",
+        "https://worldofwarcraft.blizzard.com/en-gb/news/16561638: official November 25, 2014 historic Enchanting hotfix; no numeric rate supplied.",
+        "Other candidates Elementium original 382, Fel Iron five-stacks, Saronite 1100, Adamantite 48315, and Spiritmend 40 already authored, skipped."
+      ]
     }
   ],
-  "next_concrete_step": "Prioritize independent 24995 actual game-version DE test or original complete operation ledger, then 36909 and 23424 raw 0-N prospect events. For legacy Legion ratios recover spreadsheet raw cast logs and whether pods/seed recycling was included; avoid assigning source-stated percentages as observed per-cast probability.",
+  "next_concrete_step": "Find a new original, independently version-verified 24995 completed Retail disenchant export with per-output stack counts. Then seek 36909 and 23424 per-cast gem results; for WoD seek the three Blackrock Band exact ring IDs, Scii's unedited raw 40-ring ledger and whether 111245 stacks were >1, avoiding source epoch mixing.",
   "exact_gaps": [
-    "24995 Warmaul: existing 2068-operation Looter hit-only cohort can't verify current game or physical events",
-    "36909 Cobalt: 180-ore aggregate source has no per-output cast hit/zero data",
-    "23424 Fel Iron: historical 100-/565-ore reports and 2007 priors already recorded, no new per-event casts",
-    "Legion 2020/2021 input-herb ratio sources have no actual mill counts and need seed/pod disambiguation before P(hit)"
+    "24995 Warmaul: no new physical or current-build DE event log and skill/ilvl",
+    "36909 Cobalt: no first-person per-gem hits/zeros",
+    "23424 Fel Iron: no first-person independent per-gem hits/zeros",
+    "WoD 2014 109693 and 111245: no exact rare blue input IDs, ring variants, 40-cast histogram or player skill"
   ]
 }
