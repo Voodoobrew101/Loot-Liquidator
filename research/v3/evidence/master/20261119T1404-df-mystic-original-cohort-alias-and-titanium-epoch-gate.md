@@ -1,0 +1,35 @@
+# 2026-11-19 14:04 UTC — Mystic four-original alias gate; 16-operation Titanium source and epoch boundary
+
+**Research-only manager QA; no new Retail tooltip/valuation change.** Checked current research head `e52d4bd17ab0bdbb4c6e08f5c00c809e3c0d6cd9`, main `0dc7c0269a2a5cce9ed21179d3bfdbf24d44834b`, owner implementation `3d667d053db587c91401cfed7ecc56862b8340c9`. Nothing on main/owner implementation altered. This review does not treat existing synthetic-price output as a newly run or live-character test.
+
+## 1. Four November Dragonflight "new original" Mystic disenchant records are October originals in another file
+
+The 2026-11-19 13:36 worker evidence [new transcription](../dragonflight/2026-11-19T1336-mystic-disenchant-original-casts-and-priority-search.jsonl) has these exact already-archived [2026-10-31 original observations](../dragonflight/2026-10-31T1730-refining-mystic-disenchants.jsonl):
+
+| Item -> material | October original ID | November re-transcription ID | One source-reported event |
+|---|---|---|---|
+| Valiant Hammer 200945 -> Resonant Crystal 200113 | dragonflight-20261031-173019 | dragonflight-20261119-1336001 | 1 DE; 2 units |
+| Whispering Band 200943 -> Vibrant Shard 194124 | dragonflight-20261031-173018 | dragonflight-20261119-1336002 | 1 DE; 3 units |
+| Seal of Order 200941 -> Chromatic Dust 194123 | dragonflight-20261031-173015 | dragonflight-20261119-1336003 | 1 DE; 2 units |
+| Carving of Awakening 200947 -> Chromatic Dust 194123 | dragonflight-20261031-173016 | dragonflight-20261119-1336004 | 1 DE; 4 units |
+
+For each pair, author, exact source URL, method, input/output IDs, `casts=1`, `castsWithDrop=1`, output total, positive-stack histogram, and rank-null state match exactly. Different record IDs and differently spelled `studyKey` do **not** create independent cohorts. These are **four total events, not eight**. The `source_key` + numerical study-vector fingerprint in `research/v3/tools/build_estimates.py` is designed to deduplicate these copies (lines ~481, 578-615 and 808-812); a post-November full estimator rebuild was **not** run here. Preserve both original files; a future reviewed duplicate/alias correction should pin the lineage if any output changes on regeneration.
+
+Original comments independently opened through public index:
+- https://www.wowhead.com/item=200945/valiant-hammer — Senkrads two crystals.
+- https://www.wowhead.com/item=200943/whispering-band — acemindu three shards, contradicting Kenthenerd's *reference* 1–2 range.
+- https://www.wowhead.com/item=200941/seal-of-order and https://www.wowhead.com/item=200947/carving-of-awakening — shaner1990 two/four dust, and **explicit** Insight of the Blue + Draconic Disenchantment specialization (already recorded in BOTH October and November original rows; no new specialization finding).
+
+The **existing pinned** `research/v3/output/estimates.json` (blob `15ae8c5b7f7b2587ceff1dcd3e8b9d13d4351d1e`) already has one effective cast, one study, and mean 2/3/2/4 respectively for these exact item/material pairs. Whispering Band's range is **[1,3] already**, rather than the uncited reference-only [1,2]. The owner's **previously generated** `docs/usable-data-audit/runtime-probes.jsonl` (blob `534b970d475d75e54b1d5bc4777e807384814372`) has actual-engine synthetic 100-copper-per-material results: 200/300/200/400 copper and the expected material means/tooltip lines. **This run did not execute that engine.** Its tooltip says 100% from each one positive historical event at low confidence; this is a within-sample proportion, **not** proof of universal present-day Retail P(hit). Do not promote four duplicates as four new cohorts, rerun studies to rediscover them or overwrite stronger prior evidence.
+
+## 2. Genuinely additional original historical Titanium 16-prospect aggregate
+
+Legacy [2026-11-19 13:47 source file](../legacy/20261119T1347Z-wrath-titanium-16cast-phase-and-exchange.jsonl) holds **one** original 255922 source-reported cohort, split into two output records, at https://www.wowhead.com/wotlk/quest=14103/titanium-powder . The original comment, additionally visible at https://www.wowhead.com/quest=14103/titanium-powder , is dated **2009-07-13 (patch 3.1.3)**. Four 20-ore stacks divided into five-ore prospects = the author's explicit **16 completed prospects**: **8 Titanium Powder 46849 units** and **4 epic-gem units with no distinct gem identities**. Direct source arithmetic gives 0.5 powder units per cast and 0.25 **pooled unidentified** epic gems per cast. Neither is measured output P(hit), hit histogram or conditional yield; no invented gem IDs, skill, quality, zeros or current patch.
+
+The worker's source also records a historical 10-powder -> Dalaran Jewelcrafter's Token exchange and 2022 Wrath Classic phase gates; modern Retail quest/vendor reward semantics and current availability **remain unverified**. Do not promote this 2009 cohort or the 2022/2023 Wrath Classic gating to a current Retail expected value or eligibility. The powder-only historical aggregate can be a separately labeled source candidate when epoch/input/availability are supported; avoid double counting the same 16 operations under the second output row. The named Epic gems are not four independent item-specific chance rows. Do not confuse the 2023 5,000-*nominal-ore* classic cohort with this 16-*completed-operation* original.
+
+## Validation / exact dispositions
+
+**59/59 bounded connector-backed JavaScript assertions passed**, comparing October/November rows, original numeric identities, pinned compiled estimates, existing generated synthetic probes and Titanium internal field consistency; source files were fetched at blobs `49899113f803b0a6edf6932a584762f71fa22293`, `2835284b06e7521d78458520db5b796118883634`, `4d75d8812484229984f696380cd31dc311529980`, estimator source `0b09b553fef4214af8aaa93f1c85061956643711`. Four original Wowhead comments and Titanium 255922 report independently corroborated through public indexing. This is a bounded source/static audit only: **no new Python estimator run, native Lua addon suite, offline synthetic-priced rendering run, current-character eligibility check, or live WoW test**. The owner three-pass branch, immutable `4df9ae8` snapshot and worker originals remained untouched.
+
+**Task ownership / next:** Existing Dragonflight T0020/T0018/T0015/T0041/T0019/T0046 remain with Dragonflight worker. Record four new transcriptions as *same original source cohorts*; prefer unused source identities and new actual refund/skill/rank/zero-inclusive events rather than rediscovering those four. Legacy T0022/T0044/T0042/T0047 original-source work remains with Legacy. Higher gold priority still current-patch Midnight 237362/236761 and TWW 210930/210936/210933 and 222833 scopes, with output rank, observed completed casts, refunds, eligibility and 0..N histograms. Actual offline price/tooltip regression on any *new admitted* source remains required from the protected integration owner or a disjoint reviewed engineering lane; no addon snapshot/PR, merge, release or new schedule initiated.
