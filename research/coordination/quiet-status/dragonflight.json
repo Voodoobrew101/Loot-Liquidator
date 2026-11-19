@@ -2,122 +2,128 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-19T16:39:14.974Z",
-  "status": "15 new item-specific Dragonflight disenchant material occurrence-count rows (five separate gear inputs) with exact item/material IDs, provider sample denominators and reported counts; no new prospecting/milling 0-N event ledger.",
+  "updated_at": "2026-11-19T17:33:47.193Z",
+  "status": "11 new weak Wowhead Looter material-occurrence rows for four distinct Dragonflight gear inputs; original prospecting/milling per-cast 0-N histograms still missing.",
   "task_ids": [
     "T0020",
-    "T0046",
     "T0018",
     "T0015",
     "T0041",
+    "T0019",
+    "T0046",
     "standing-disenchant"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019/T0046: Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic 194545 still lack rank-specific true completed prospect casts, per-output 0-N/hits and Resourcefulness refunds",
-    "T0018/T0015/T0041: Bubble Poppy 191467, Saxifrage 191464/191465/191466, Hochenblume and Writhebark remain short on independently novel per-cast pigment hit/zero histograms and skill/spec",
-    "Standing numeric disenchant: unindexed gear 198035,198007,194395,209937,197691 now have material-side source occurrences but no actual output unit totals/stack histograms or date/skill/bonus context"
+    "Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic 194545: no independently verified completed prospects/Resourcefulness-adjusted denominators and per-output 0-N castsWithDrop histograms",
+    "Bubble Poppy 191467, Saxifrage 191464/191465/191466, Hochenblume: no fresh source-original postlaunch per-cast pigment hits, zeros, ranks and skill",
+    "Newly identified disenchant input IDs 198041/194065/202481/202526: exact material counts from cumulative provider table, but no source-author event ledger, quantity histograms, sample epoch or skill"
   ],
   "newly_verified_fields": [
-    "198035 Archer's Decorated Bow: Looter reports 29 DE, Vibrant Shard 194124 18/29 (62%), Chromatic Dust 194123 9/29 (31%), Resonant Crystal 200113 3/29 (10%)",
-    "198007 Large Brass Cleaver: 80 DE, 194124 56/80 (70%), 194123 22/80 (28%), 200113 3/80 (4%)",
-    "194395 Doomsayer's Greatsword: 53 DE, 194123 45/53 (85%), 194124 6/53 (11%), 200113 2/53 (4%)",
-    "209937 Chartreuse Champion's Gavel: 55 DE, 194123 39/55 (71%), 194124 16/55 (29%), 200113 2/55 (4%)",
-    "197691 Amaa's Golden Mace: 14 DE, 194124 9/14 (64%), 194123 4/14 (29%), 200113 1/14 (7%)",
-    "These are cumulative Wowhead material occurrences, NOT independent per-cast hit-confirmed 0-N histograms, not material total quantities or measured P(hit). Source %-meaning unclear."
+    "198041 Khaz'gorite Fabric Cutters Left Blade -> 194123 Chromatic Dust: source 37 out of 59, displayed 63%, count semantics and 0-N output units unverified",
+    "198041 Khaz'gorite Fabric Cutters Left Blade -> 194124 Vibrant Shard: source 33 out of 59, displayed 56%, count semantics and 0-N output units unverified",
+    "194065 Khaz'gorite Fabric Cutters Right Blade -> 194124 Vibrant Shard: source 40 out of 61, displayed 66%, count semantics and 0-N output units unverified",
+    "194065 Khaz'gorite Fabric Cutters Right Blade -> 194123 Chromatic Dust: source 29 out of 61, displayed 48%, count semantics and 0-N output units unverified",
+    "194065 Khaz'gorite Fabric Cutters Right Blade -> 200113 Resonant Crystal: source 1 out of 61, displayed 1.6%, count semantics and 0-N output units unverified",
+    "202481 Ashen Predator's Chasers -> 194124 Vibrant Shard: source 18 out of 31, displayed 58%, count semantics and 0-N output units unverified",
+    "202481 Ashen Predator's Chasers -> 200113 Resonant Crystal: source 17 out of 31, displayed 55%, count semantics and 0-N output units unverified",
+    "202481 Ashen Predator's Chasers -> 194123 Chromatic Dust: source 2 out of 31, displayed 6%, count semantics and 0-N output units unverified",
+    "202526 Kinslayer's Gaiters -> 200113 Resonant Crystal: source 9 out of 14, displayed 64%, count semantics and 0-N output units unverified",
+    "202526 Kinslayer's Gaiters -> 194124 Vibrant Shard: source 5 out of 14, displayed 36%, count semantics and 0-N output units unverified",
+    "202526 Kinslayer's Gaiters -> 194123 Chromatic Dust: source 1 out of 14, displayed 7%, count semantics and 0-N output units unverified"
   ],
   "newly_verified_cohorts": [
     {
-      "inputItemID": 198035,
-      "inputName": "Archer's Decorated Bow",
-      "source": "https://www.wowhead.com/item=198035/archers-decorated-bow",
-      "provider_disencanted_uses": 29,
+      "inputItemID": 198041,
+      "inputName": "Khaz'gorite Fabric Cutters Left Blade",
+      "source": "https://www.wowhead.com/ptr/item=198041/khazgorite-fabric-cutters-left-blade",
+      "provider_disencanted_uses": 59,
+      "outputItemIDs": [
+        194123,
+        194124
+      ],
+      "source_occurrences": [
+        37,
+        33
+      ],
+      "source_percentages": [
+        63,
+        56
+      ],
+      "caution": "Cumulative provider Looter report; unknown game patch, profiler, bonus/ilvl, independent completed hits and output quantity histograms; PTR not live validation"
+    },
+    {
+      "inputItemID": 194065,
+      "inputName": "Khaz'gorite Fabric Cutters Right Blade",
+      "source": "https://www.wowhead.com/item=194065/khazgorite-fabric-cutters-right-blade",
+      "provider_disencanted_uses": 61,
       "outputItemIDs": [
         194124,
         194123,
         200113
+      ],
+      "source_occurrences": [
+        40,
+        29,
+        1
+      ],
+      "source_percentages": [
+        66,
+        48,
+        1.6
+      ],
+      "caution": "Cumulative provider Looter report; unknown game patch, profiler, bonus/ilvl, independent completed hits and output quantity histograms; PTR not live validation"
+    },
+    {
+      "inputItemID": 202481,
+      "inputName": "Ashen Predator's Chasers",
+      "source": "https://www.wowhead.com/ptr/item=202481/ashen-predators-chasers",
+      "provider_disencanted_uses": 31,
+      "outputItemIDs": [
+        194124,
+        200113,
+        194123
       ],
       "source_occurrences": [
         18,
-        9,
-        3
-      ],
-      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
-    },
-    {
-      "inputItemID": 198007,
-      "inputName": "Large Brass Cleaver",
-      "source": "https://www.wowhead.com/item=198007/large-brass-cleaver",
-      "provider_disencanted_uses": 80,
-      "outputItemIDs": [
-        194124,
-        194123,
-        200113
-      ],
-      "source_occurrences": [
-        56,
-        22,
-        3
-      ],
-      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
-    },
-    {
-      "inputItemID": 194395,
-      "inputName": "Doomsayer's Greatsword",
-      "source": "https://www.wowhead.com/item=194395/doomsayers-greatsword",
-      "provider_disencanted_uses": 53,
-      "outputItemIDs": [
-        194123,
-        194124,
-        200113
-      ],
-      "source_occurrences": [
-        45,
-        6,
+        17,
         2
       ],
-      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
+      "source_percentages": [
+        58,
+        55,
+        6
+      ],
+      "caution": "Cumulative provider Looter report; unknown game patch, profiler, bonus/ilvl, independent completed hits and output quantity histograms; PTR not live validation"
     },
     {
-      "inputItemID": 209937,
-      "inputName": "Chartreuse Champion's Gavel",
-      "source": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
-      "provider_disencanted_uses": 55,
-      "outputItemIDs": [
-        194123,
-        194124,
-        200113
-      ],
-      "source_occurrences": [
-        39,
-        16,
-        2
-      ],
-      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
-    },
-    {
-      "inputItemID": 197691,
-      "inputName": "Amaa's Golden Mace",
-      "source": "https://www.wowhead.com/item=197691/amaas-golden-mace",
+      "inputItemID": 202526,
+      "inputName": "Kinslayer's Gaiters",
+      "source": "https://www.wowhead.com/ptr-2/item=202526/kinslayers-gaiters",
       "provider_disencanted_uses": 14,
       "outputItemIDs": [
+        200113,
         194124,
-        194123,
-        200113
+        194123
       ],
       "source_occurrences": [
         9,
-        4,
+        5,
         1
       ],
-      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
+      "source_percentages": [
+        64,
+        36,
+        7
+      ],
+      "caution": "Cumulative provider Looter report; unknown game patch, profiler, bonus/ilvl, independent completed hits and output quantity histograms; PTR not live validation"
     }
   ],
-  "new_numerical_measurements": "15 Looter reported per-material occurrence-count rows for five independent input item IDs, with 5 distinct provider denominators. Historical aggregated rows, unknown event-level provenance.",
+  "new_numerical_measurements": "11 source-reported material occurrence counts, displayed percentages, and four cumulative reported disenchant use denominators; NOT 11 independent player-authored cohorts nor new validated P(hit) or unconditional unit EV",
   "numerical_fields_improved": [
     "inputItemID",
     "outputItemID",
-    "casts (provider reported)",
-    "castsWithDrop (provider reported occurrence count only)",
+    "provider-reported casts",
+    "provider-reported material occurrences saved under castsWithDrop with disclaimer",
     "percentShown with percentMeaning=unclear"
   ],
   "evidence_files": [
@@ -199,24 +205,24 @@
     "research/v3/evidence/dragonflight/2026-11-19T1336-mystic-disenchant-original-casts-and-priority-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-19T1442-primal-storm-single-disenchant-and-original-cast-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-19T1544-2023-rare-weapon-prior-and-original-cast-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-19T1733-four-new-gear-looter-and-numeric-gap-search.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-19T1733-four-new-gear-looter-and-numeric-gap-search.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-19T1733-four-new-gear-looter-and-numeric-gap-search.jsonl",
   "source_links": [
-    "https://www.wowhead.com/item=198035/archers-decorated-bow",
-    "https://www.wowhead.com/item=198007/large-brass-cleaver",
-    "https://www.wowhead.com/item=194395/doomsayers-greatsword",
-    "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
-    "https://www.wowhead.com/item=197691/amaas-golden-mace"
+    "https://www.wowhead.com/ptr/item=198041/khazgorite-fabric-cutters-left-blade",
+    "https://www.wowhead.com/item=194065/khazgorite-fabric-cutters-right-blade",
+    "https://www.wowhead.com/ptr/item=202481/ashen-predators-chasers",
+    "https://www.wowhead.com/ptr-2/item=202526/kinslayers-gaiters"
   ],
-  "verified_parent_sha": "9f9f422ed56e73384cfa302686c113dd05ff45d3",
-  "verified_commit_sha": null,
-  "commit_sha_scope": "New commit SHA cannot appear in its own tracked content; read-back verification is performed after ref update.",
+  "verified_parent_sha": "0373e77a02977aed9a4c98b917c5efdc592e34a8",
+  "verified_commit_sha": "0373e77a02977aed9a4c98b917c5efdc592e34a8",
+  "commit_sha_scope": "verified_commit_sha identifies refreshed parent branch HEAD, not this new commit; self-referential SHA cannot be encoded into same content-addressed commit. Current run SHA verified after write in execution result.",
   "blockers": [
-    "No independently newly sourced Dragonflight original ore or herb operation-level 0/1/2 histograms, exact rank-specific completed casts/hit zeros or saved-input refunds",
-    "New Wowhead item-specific material occurrence counts do not supply output total quantities, stack distributions, exact skill/spec, item version at disenchant, sampled patch or independent cohort identities; rounded % not P(hit)",
-    "Material occurrences can sum above source denominator (198035 30 vs 29, 198007 81 vs 80, 209937 57 vs 55). Never force exclusive outcome partitions or treat the mismatch as an error/zero."
+    "No truly independent completed-cast prospecting or milling source with per-material 0-N histogram, skill/spec, build and Resourcefulness refund trace",
+    "Four new Wowhead cumulative disenchant item rows lack raw operation events, total units, stack distribution, independent period/patch and player profile",
+    "PTR indexes may contain historical data but not prove historical build or current live eligibility; source occurrence semantics unvalidated"
   ],
   "exhausted_sources": [
     {
@@ -2536,26 +2542,40 @@
         "Hochenblume Shimmering Pigment mill spreadsheet results; existing historical beta source https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620",
         "Saxifrage source-original milling output study; Aary original already indexed on https://www.wowhead.com/item=198418/blazing-pigment"
       ]
+    },
+    {
+      "at": "2026-11-19T17:33:47.193Z",
+      "scope": "Fresh named Dragonflight prospecting/milling completed-operation histogram search followed by unindexed gear Looter study inventory",
+      "reason": "Six distinct source searches across five site families yielded guide mappings, original already indexed nominal ore studies, and anecdotes rather than new source-original operation histograms. Four unindexed gear sources have exact count rows, preserved as weak provider records.",
+      "whereLooked": [
+        "Reddit r/woweconomy: by-name Draconium Ore prospecting per-cast 0/1/2 histogram; https://www.reddit.com/r/woweconomy/comments/1135bti shows unsized anecdote, not material-wise completed-cast ledger",
+        "Reddit r/woweconomy: by-name Serevite Ore and Prismatic Ore original spreadsheet Resourcefulness; https://www.reddit.com/r/woweconomy/comments/zzyjzu original already indexed, nominal ore and pooled yields not independent castsWithDrop",
+        "Official Blizzard WoW forums: by-name Khaz'gorite Ore prospecting 1000-cast trial; search returned unrelated Aqirite bug https://us.forums.blizzard.com/en/wow/t/prospecting-bug/1929785, no new Dragonflight event ledger",
+        "Wowhead: by-name Bubble Poppy milling 100 casts Serene Pigment https://www.wowhead.com/item=198414/serene-pigment identifies material source but no measured mill histograms",
+        "Method profession guides: by-name Saxifrage milling Blazing Pigment 0/1/2 yield; https://www.method.gg/guides/what-dragonflight-herbs-do-you-need-to-mill-to-get-each-pigment is mapping, not sampled numerics",
+        "GitHub public code: by-name Hochenblume milling Shimmering Pigment experiment CSV; no original downloadable zero-inclusive completed-operation log surfaced"
+      ]
     }
   ],
-  "next_concrete_step": "Obtain original DF 0-N per-cast prospect/mill exports with rank/refunds; separately validate Wowhead gear material occurrence semantics, output unit totals, player profiles and source snapshot overlap before any estimator promotion.",
+  "next_concrete_step": "Seek original exports preserving per-output 0-N prospect/mill cast events (completed cast, exact rank, refunds, skill, specialization). For the four new gear IDs verify Looter provider event meaning, per-hit quantity and rank/bonus/build before estimating P(hit), and detect PTR/live snapshot overlaps.",
   "validation": {
-    "jsonl_records": 16,
+    "jsonl_records": 12,
     "jsonl_parsed": true,
-    "source_record_rows": 15,
+    "source_record_rows": 11,
     "searched_rows": 1,
-    "distinct_input_items": 5,
+    "distinct_input_items": 4,
     "reported_de_denominators": [
-      "198035:29",
-      "198007:80",
-      "194395:53",
-      "209937:55",
-      "197691:14"
+      "198041:59",
+      "194065:61",
+      "202481:31",
+      "202526:14"
     ],
-    "source_searches": 8,
-    "sites": 4,
+    "source_searches": 6,
+    "sites": 5,
+    "all_required_drop_fields_present": true,
+    "unique_record_ids": true,
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-19T1733-four-new-gear-looter-and-numeric-gap-search.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "commit_checked": false
@@ -2563,6 +2583,6 @@
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 15,
+  "new_source_reported_numeric_rows": 11,
   "identity_corrections": 0
 }
