@@ -1,57 +1,56 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-19T13:19:08.567Z",
-  "status": "New Nov 8 Goblinomics 1.3.0 release and public capture-path checked; no new original player yield cohort, new numeric fields, or current Retail 12.1.5 at-cast receipt. No estimates/production changes.",
+  "updated_at": "2026-11-19T14:19:21.148Z",
+  "status": "Examined CraftSim current source-level exporter and March 28 Tranquility Bloom early-stop source; new data-integrity/acquisition blockers verified, but no new measured Midnight 12.1.5 material yield cohort or numeric counts. No estimate or production change.",
   "task_ids": [
     "T0049",
     "T0026",
-    "T0005",
     "T0039",
+    "T0005",
     "T0003",
     "T0002",
     "T0045"
   ],
   "exact_gaps_targeted": [
-    "272246 actual ilvl305 and complete bonus itemLink at disenchant event, live eligibility versus base no-DE",
-    "237362 rank-specific 5-ore completed prospects, 242608 diamond unlocked at each event, per-output hits/zeros and output rank",
-    "237359 and 237365 true completed prospects vs nominal ore and Resourcefulness refunds, per-output histograms",
-    "236761 10-herb milling completed operations, per-output pigments and zero histograms",
-    "Nov 8 Goblinomics v1.3.0 release checked for public original player event exports; none published"
+    "272246 selected ilvl305 vs base206: actual bonus-linked item disenchant success, outputs and source-at-cast profession info absent",
+    "237362 Umbral Tin: output rank IDs 242606/242607/242610/242611/242786/242788 and 242608 unlock-at-cast vs completed-cast hits, zeros, histograms and refunds",
+    "237359 copper and 237365 silver: independent original rank-linked completed prospecting and individual output distributions",
+    "236761 Tranquility Bloom -> 245807 Powder Pigment: observed completed mills vs queued batches and split-stack failures; pigment hits/zeros and refund history",
+    "CraftSim 2026 current source capture path lacks user-accessible raw JSON operation export"
   ],
   "newly_verified_fields_or_cohorts": [
-    "Goblinomics v1.3.0 (released 2026-11-08, Retail 12.1.5 support) changes are WoW Forever adaptation and connector behavior, not public independent at-cast material evidence.",
-    "No new verified exact numeric material counts, completed casts, hits, per-output zeros, histograms, ranges or modeled EV; source-check only."
+    "At CraftSim pinned e15fb18, UI Export Data is labelled WIP and its JSON action is commented out (UI.lua 213-224); current session JSON serializer omits per-craft event list (CraftSessionData.lua 59-69).",
+    "CraftSim registers UNIT_SPELLCAST_SUCCEEDED to count completed operations and TRADE_SKILL_ITEM_CRAFTED_RESULT to capture output, but no actual permissioned player session data published. This is implementation-only evidence, not measured yields.",
+    "March 28 2026 first-person Blizzard forum reports split-stack Tranquility Bloom auto-milling can halt after one queued combine; unconfirmed in current client, with no numeric material outcome.",
+    "No new measured 272246/237362/237359/237365/236761 cohort; zero outcome/hit or rank/skill observations remain unknown."
   ],
   "numeric_fields_advanced": [
-    "None. No new measured field this run. Documented new Nov 8 original-source avenue exhaustion, not an empirical study."
+    "None: no verified new casts, castsWithDrop, output units, zeros, histograms, conditional yields, profession skill/bonus or refund counts. The confirmed data-integrity findings do not become numeric baselines."
   ],
   "evidence_files": [
-    "research/v3/evidence/midnight/2026-11-19T1319-goblinomics-v130-release-cohort-check.jsonl"
+    "research/v3/evidence/midnight/2026-11-19T1419-craftsim-live-export-and-milling-stop.jsonl"
   ],
   "recent_prior_evidence_file": "research/v3/evidence/midnight/2026-11-19T0919-three-live-catalog-disenchant-eligibility-holds.jsonl",
   "evidence_record_ids": [
-    "midnight-20261119-1319-001"
+    "midnight-20261119-1419-001"
   ],
   "source_links": [
-    "https://www.curseforge.com/wow/addons/goblinomics-gold-economy-suite-and-tracker/files/9518152",
-    "https://github.com/xLN1995/goblinomics",
-    "https://github.com/xLN1995/goblinomics/blob/main/Modules/Workshop/Disenchant.lua",
-    "https://github.com/xLN1995/goblinomics/blob/main/Modules/Workshop/Salvage.lua",
-    "https://github.com/Urutseg/ProspectMate/blob/2d8d2f2a268fef68d9cae6996c4cc5ede7db622b/ProspectMate.lua",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
-    "https://www.wowhead.com/item=237362/umbral-tin-ore",
-    "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/",
-    "https://us.forums.blizzard.com/en/wow/t/prospecting-needs-buff/2280780",
-    "https://www.method.gg/guides/midnight-jewelcrafting-profession-guide"
+    "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Modules/CraftLog/UI.lua",
+    "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Modules/CraftLog/CraftLog.lua",
+    "https://github.com/derfloh205/CraftSim/blob/e15fb18c1004b2f373ee3247b2ade0b917fbea69/Classes/CraftSessionData.lua",
+    "https://us.forums.blizzard.com/en/wow/t/milling-tranquility-bloom-bug/2281630",
+    "https://warcraft.wiki.gg/wiki/Powder_Pigment",
+    "https://www.reddit.com/r/woweconomy/comments/1shgk2l/prospecting_how_to_make_gold/"
   ],
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Atomic research commit contains this status and one new JSONL file. Its own SHA cannot be stored in itself without invalidating the SHA; actual read-back SHA will be verified through the repository after publishing.",
+  "commit_note": "One atomic commit contains a new Midnight evidence JSONL and this status. The SHA of this commit cannot appear inside its own committed status without changing that SHA; verify final actual SHA by GitHub read-back after ref publication.",
   "blockers": [
-    "No released or permissioned zero-inclusive player-at-cast event export found from Goblinomics v1.3.0 despite Retail 12.1.5 support; source code and documentation contain no measured cohort.",
-    "272246 selected ilvl305 tooltip, armory level and Looter table do not prove current-game at-cast bonus/eligibility; base database reports Cannot be disenchanted.",
-    "237362 previous 800 completed prospects are family-level material totals with no per-output rank-linked castsWithDrop/0..N histogram or unlock evidence; do not infer them.",
-    "Copper 237359/Silver 237365/Tranquility Bloom 236761 lacked fresh actual cast ledger, output IDs and refund history; no denominator extrapolation."
+    "Still no original current Retail 12.1.5 per-operation gear DE or ore/herb raw output, exact material IDs/ranks, zero outcomes, or profession conditions; source code and advice are not cohorts.",
+    "272246 ilvl305 selected tooltip does not prove real in-game at-cast bonus/eligibility; base 206 item remains marked Cannot be disenchanted at WoWDB.",
+    "237362 known 800 completed prospects provide material family totals only, not castsWithDrop/output rank histograms, 242608 unlock-at-cast, or input refund chronology.",
+    "236761 historical split-stack early-stop behavior makes converting planned 10-herb batches into completed casts unsafe without spellcast events; this bug has not been reconfirmed in Retail 12.1.5.",
+    "CraftSim public Craft Log UI exporter is disabled WIP; in-memory session event data has not been supplied by a player."
   ],
   "exhausted_sources": [
     "2026-11-16T21:21:51.431Z: Fresh named-source original yield hunt for Miststalker's Wristbands 272246, Umbral Tin Ore 237362, Refulgent Copper Ore 237359, Brilliant Silver Ore 237365, and Tranquility Bloom 236761 across Reddit, Blizzard, Wowhead and profession guides yielded only previously indexed GamGem/WoWDB selected-ilvl vs base conflict, Cardinalai/JD3K/Draggoth estimates and guide/Reddit data. Do not duplicate them. Separate Wowhead item-side named searches uncovered unindexed Monk gear items 250010/250011/250012/250014/250015/250017. Existing branch/default-repo source checks found no owned Midnight evidence on these item IDs. 250010 and 250014 selected sources are PTR, not current Retail; their 13/8/4 and 27/16/10 records are reference only. LIVE inputs 250011 14/7/5; 250012 8/5/3; 250015 28/18/10; 250017 15/9/4 are pooled occurrence references. Sources in new evidence JSONL. Distinct indexed 249961, 250057, 250018 and other snapshots were excluded; no independent 0-inclusive original cohort was discovered.",
@@ -115,22 +114,25 @@
     "2026-11-19T10:20:48.587Z: New October 4 Goblinomics 1.0.1/1.0.2 Retail changelog describes per-item DE count/material tracking, but no public raw SavedVariables or zero-inclusive event export; CurseForge Goldsmith salvage feature likewise no raw studies. Name-focused searches by 272246/237362/237359/237365/236761 across Reddit, Blizzard forums, Wowhead, profession guides and software release pages produced no unindexed current-patch per-operation cohort. Existing 275219 (Nov15 LIVE), 251204 (Nov2 PTR), Cardinalai/Honeybone/MikiMM/Kestevavild and Looter content excluded. Do not repeat these source descriptions unless consented raw logs or source-original per-cast data emerge.",
     "2026-11-19T11:18:04.912Z: Independent DisenchantValue v1.2.0 (Mar2 Retail) primary-family heuristic excluded as nonmeasured; linked Wowhead 250055 & 272246 preview, Powder Pigment, Reddit resourcefulness, official armory, and Disenchanting Advisor/Shattersight code examined; no new 0-inclusive item-linked results. Avoid these exact source paths absent original player raw logs.",
     "2026-11-19T12:14:39.846Z: By-name fresh-source checks for Miststalker's Wristbands, Umbral Tin Ore, Refulgent Copper Ore, Brilliant Silver Ore and Tranquility Bloom across official Blizzard Armory, Wowhead, WoWDB, Reddit, current profession guides and GitHub revealed no NEW original per-cast current Retail output ledger. Armory 305-equipped previews and NoobyGains Enchantrix aggregator already documented in prior Midnight evidence and intentionally not repeated. Fresh distinct item 283481 PTR cosmetic staff noDE label retained separately as catalog-only; avoid implying live verified DE eligibility or yields.",
-    "2026-11-19T13:19:08.567Z: NEW November 8 Goblinomics v1.3.0 Retail 12.1.5 release checked against author xLN1995's current public code and named 272246/237362 ore, original Reddit, Blizzard forums, Method and ProspectMate lanes. v1.3.0's new features are WoW Forever compatibility / connector startup fixes, no published raw 12.1.5 player SavedVariables, per-cast operation receipts or 0-inclusive material distributions. Already recorded Nov15 Goblinomics code censoring and Nov13 ProspectMate aggregate data model NOT re-recorded as studies. Historical Cardinalai/Honeybone/MikiMM/kyzenbka/Looter sources deliberately excluded; next source must be original permissioned at-cast export."
+    "2026-11-19T13:19:08.567Z: NEW November 8 Goblinomics v1.3.0 Retail 12.1.5 release checked against author xLN1995's current public code and named 272246/237362 ore, original Reddit, Blizzard forums, Method and ProspectMate lanes. v1.3.0's new features are WoW Forever compatibility / connector startup fixes, no published raw 12.1.5 player SavedVariables, per-cast operation receipts or 0-inclusive material distributions. Already recorded Nov15 Goblinomics code censoring and Nov13 ProspectMate aggregate data model NOT re-recorded as studies. Historical Cardinalai/Honeybone/MikiMM/kyzenbka/Looter sources deliberately excluded; next source must be original permissioned at-cast export.",
+    "2026-11-19T14:19:21.148Z: New Midnight-specific CraftSim source audit at e15fb18: current export UI is WIP/commented out, session GetJSON serializes aggregate metrics but omits per-operation craftResults; source has event counting but no published original player export. Independently first-person Mar 28 2026 Blizzard Tranquility Bloom split-stack report establishes historical auto-mill stop after one queued operation, not a current-build cast sample. Compared named Reddit ore prospects (1smgllg,1shgk2l,1s57j68), official Blizzard forum 2281630, Warcraft Wiki 10-herb recipe, Icy Veins and Wowhead existing Cardinalai; no new zero-inclusive independent 12.1.5 cohort. Avoid repeating code/guide searches; next ask for consented actual raw per-event logs."
   ],
-  "next_concrete_step": "Obtain consented original current Retail GoblinomicsWorkshopDB.crafts (uncensored source-completeness verified), or independent one-input-at-a-time observed raw itemLinks, loot/event receipts and zero-operation ledger for 272246 at-cast real 305, 237362/237359/237365 prospecting and 236761 milling. Retain exact 242608 unlock-at-cast, output rank IDs, actual cast counts and refunds.",
-  "verified_base_commit_sha": "09e022626cfbcd8a730869468f662d008e9f356a",
-  "next": "Obtain consented original current Retail GoblinomicsWorkshopDB.crafts (uncensored source-completeness verified), or independent one-input-at-a-time observed raw itemLinks, loot/event receipts and zero-operation ledger for 272246 at-cast real 305, 237362/237359/237365 prospecting and 236761 milling. Retain exact 242608 unlock-at-cast, output rank IDs, actual cast counts and refunds.",
-  "base_commit_sha": "09e022626cfbcd8a730869468f662d008e9f356a",
+  "next_concrete_step": "Obtain permissioned contemporaneous Retail 12.1.5 raw player operations (direct itemLink/bonus/ilvl, successful cast GUID/recipe, output linked ID/rank and quantity, zero events, input quality, actual reagent refunds, skill/spec/unlock; preferably controlled single-input tests). For Tranquility Bloom 236761 verify completion count from successful mill events rather than queued amount when stacks are split. Master only can request changes to a reviewed collection/export tool; no worker schema/tool edit.",
+  "verified_base_commit_sha": "3edd47f69880b11508903b69f3663e82791564bb",
+  "next": "Obtain permissioned contemporaneous Retail 12.1.5 raw player operations (direct itemLink/bonus/ilvl, successful cast GUID/recipe, output linked ID/rank and quantity, zero events, input quality, actual reagent refunds, skill/spec/unlock; preferably controlled single-input tests). For Tranquility Bloom 236761 verify completion count from successful mill events rather than queued amount when stacks are split. Master only can request changes to a reviewed collection/export tool; no worker schema/tool edit.",
+  "base_commit_sha": "3edd47f69880b11508903b69f3663e82791564bb",
   "exact_gaps": [
-    "272246 actual ilvl305 and complete bonus itemLink at disenchant event, live eligibility versus base no-DE",
-    "237362 rank-specific 5-ore completed prospects, 242608 diamond unlocked at each event, per-output hits/zeros and output rank",
-    "237359 and 237365 true completed prospects vs nominal ore and Resourcefulness refunds, per-output histograms",
-    "236761 10-herb milling completed operations, per-output pigments and zero histograms",
-    "Nov 8 Goblinomics v1.3.0 release checked for public original player event exports; none published"
+    "272246 selected ilvl305 vs base206: actual bonus-linked item disenchant success, outputs and source-at-cast profession info absent",
+    "237362 Umbral Tin: output rank IDs 242606/242607/242610/242611/242786/242788 and 242608 unlock-at-cast vs completed-cast hits, zeros, histograms and refunds",
+    "237359 copper and 237365 silver: independent original rank-linked completed prospecting and individual output distributions",
+    "236761 Tranquility Bloom -> 245807 Powder Pigment: observed completed mills vs queued batches and split-stack failures; pigment hits/zeros and refund history",
+    "CraftSim 2026 current source capture path lacks user-accessible raw JSON operation export"
   ],
   "newly_verified_fields": [
-    "Goblinomics v1.3.0 (released 2026-11-08, Retail 12.1.5 support) changes are WoW Forever adaptation and connector behavior, not public independent at-cast material evidence.",
-    "No new verified exact numeric material counts, completed casts, hits, per-output zeros, histograms, ranges or modeled EV; source-check only."
+    "At CraftSim pinned e15fb18, UI Export Data is labelled WIP and its JSON action is commented out (UI.lua 213-224); current session JSON serializer omits per-craft event list (CraftSessionData.lua 59-69).",
+    "CraftSim registers UNIT_SPELLCAST_SUCCEEDED to count completed operations and TRADE_SKILL_ITEM_CRAFTED_RESULT to capture output, but no actual permissioned player session data published. This is implementation-only evidence, not measured yields.",
+    "March 28 2026 first-person Blizzard forum reports split-stack Tranquility Bloom auto-milling can halt after one queued combine; unconfirmed in current client, with no numeric material outcome.",
+    "No new measured 272246/237362/237359/237365/236761 cohort; zero outcome/hit or rank/skill observations remain unknown."
   ],
   "newly_verified_cohorts": []
 }
