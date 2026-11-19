@@ -1,64 +1,134 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-19T01:48:20.823Z",
-  "status": "Recovered one newly unindexed historical Allakhazam 7-disenchant source: 3 Greater Nether Essence 11175 output-positive casts and 4 Dream Dust 11176 positive casts; uncertain source input identity (Rose Colored Goggles 10503 only candidate), exact output quantities/build unknown. No newly verified priority Warmaul 24995, Cobalt 36909 or Fel Iron 23424 event-level numerical evidence.",
+  "updated_at": "2026-11-19T02:48:44.300Z",
+  "status": "Recovered 11 non-duplicate original legacy disenchant evidence rows from five historical first-person sources: 265 pooled Cataclysm crafted-item disenchants, 18 Stonecore green-item disenchants, 10 Classic unspecified-gear disenchants with a verified material-specific Greater Nether Essence zero, and two denominator-unknown Cataclysm quest-reward accounts. No new Warmaul 24995, Cobalt 36909 or Fel Iron 23424 first-person operation ledger.",
   "task_ids": [
     "T0047",
     "T0042",
     "T0022",
     "T0044",
-    "T0021",
-    "standing-older-gear-reference-identity-rescue",
-    "T0053"
+    "standing-legacy-original-source-rescue"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995: obtain original Looter 2068 sample rows with 22445/22446/22447/22449 completed hit/quantity histograms, actual build, item suffix, enchanting skill and Retail eligibility; 37 unaccounted listed hits are NOT zero-output.",
-    "Cobalt Ore 36909: 5-ore completed operation ledger, gem exact output IDs and material-specific 0/1/2 histograms, not nominal 180-ore/5 casts.",
-    "Fel Iron Ore 23424: independent original prospect cast denominators and output hit counts; distinguish pre/post 2.1 guaranteed-gem change.",
-    "Secondary token 45661: only after verifying existing recorded class rewards and redemption without duplicating records."
+    "Warmaul Legplates 24995 (T0047): need original item-specific 2068 Looter raw per-stack material hits, patch and physical Retail 24995+suffix bonus item-instance DE eligibility; no new independent casts.",
+    "Cobalt Ore 36909 (T0022): need completed 5-ore cast/hit counts and material-specific 0-N histograms; do not reuse 180-ore or static tables.",
+    "Fel Iron Ore 23424 (T0044): need independent primary completed-cast/rare hit counts, version/pre-post 2.1 cohort and 0-N event ledgers; 100/565-ore sources already recorded.",
+    "New independent mixed Cataclysm and Classic original material totals without falsely assigning individual input identity, guild perk, or input-quality-specific output chance."
   ],
   "newly_verified_fields_cohorts": [
     {
-      "studyKey": "allakhazam-greater-nether-rose-glasses-seven",
-      "inputItemID": null,
-      "inputIdentityCandidateID": 10503,
-      "sourceInputUncertain": true,
-      "completedCasts": 7,
+      "studyKey": "wowhead-500383-nightstone-hessonite-round-2-265",
+      "inputItemIDs": [
+        52309,
+        52308
+      ],
+      "casts": 265,
+      "outputs": [
+        {
+          "itemID": 52555,
+          "totalQuantity": 496
+        },
+        {
+          "itemID": 52718,
+          "totalQuantity": 188
+        },
+        {
+          "itemID": 52721,
+          "totalQuantity": 34
+        }
+      ],
+      "qualification": "Mixed jewelry, unknown partition and rare procs; distinct from first 36-craft round",
+      "source": "https://www.wowhead.com/cata/item=52309/nightstone-choker"
+    },
+    {
+      "studyKey": "wowhead-1059575-stonecore-3runs-18greens",
+      "casts": 18,
+      "outputs": [
+        {
+          "itemID": 52555,
+          "totalQuantity": 25
+        },
+        {
+          "itemID": 52718,
+          "totalQuantity": 17
+        }
+      ],
+      "qualification": "Mixed unnamed Stonecore greens; four blues excluded",
+      "source": "https://www.wowhead.com/item=52555/hypnotic-dust"
+    },
+    {
+      "studyKey": "wowhead-thottbot-11175-anonymous-10level41-45-items",
+      "casts": 10,
       "outputs": [
         {
           "itemID": 11175,
-          "castsWithDrop": 3,
-          "totalQuantity": null
+          "castsWithDrop": 0,
+          "totalQuantity": 0,
+          "materialSpecificZeros": 10
         },
         {
-          "itemID": 11176,
-          "castsWithDrop": 4,
-          "totalQuantity": null
+          "itemID": 11178,
+          "castsWithDrop": 1,
+          "totalQuantity": 1
         }
       ],
-      "exactNumericalAdvances": "3 versus 4 positive output casts; original post date/patch, material stack quantities, zero-inclusive 0/1/2 histograms and exact input ID unknown.",
-      "source": "https://www.wowhead.com/classic/item=11175/greater-nether-essence"
+      "qualification": "Anon source, unknown gear IDs and exact item level. No overall zero disenchant",
+      "source": "https://www.wowhead.com/wotlk/item=11175/greater-nether-essence"
+    },
+    {
+      "studyKey": "wowhead-cywang86-hyjal-quest-armor-inventory-totals",
+      "casts": null,
+      "outputs": [
+        {
+          "itemID": 52555,
+          "totalQuantity": 35
+        },
+        {
+          "itemID": 52718,
+          "totalQuantity": 61
+        }
+      ],
+      "qualification": "Quest reward item count unknown, version uncertain; no chance denominator",
+      "source": "https://www.wowhead.com/cata/item=52555/hypnotic-dust"
+    },
+    {
+      "studyKey": "wowhead-psathyanhome-approximately-75quests-prehotfix",
+      "casts": null,
+      "outputs": [
+        {
+          "itemID": 52718,
+          "totalQuantity": null,
+          "sourceApproximate": 45
+        },
+        {
+          "itemID": 52555,
+          "totalQuantity": null,
+          "sourceApproximate": 21
+        }
+      ],
+      "qualification": "Loose estimates intentionally not encoded as numeric totals",
+      "source": "https://www.wowhead.com/cata/item=52718/lesser-celestial-essence"
     }
   ],
-  "numeric_summary": "One newly indexed original 7-completed-operation historical Classic gear disenchant cohort, with verified exact output IDs 11175 and 11176, per-output positive-cast counts 3 and 4 (no per-output total units, no input item ID). Priority targets 24995/36909/23424: zero new measured denominators or output totals.",
-  "evidence_file": "research/v3/evidence/legacy/20261119T0148Z-rose-goggles-and-priority-source-audit.jsonl",
+  "numeric_summary": "11 source-traceable records, five independent original author/cohort accounts. Fully completed physical casts: 265 mixed JC rings/necklaces + 18 greens + 10 anonymous Classic gear = 293 (across three independent cohorts). Exact material totals: 52555 +496 and +25 and +35 in distinct cohorts; 52718 +188 and +17 and +61; 52721 +34; 11175 zero units and zero material-positive casts among 10; 11178 one positive cast, one unit. Approximate 45/21 reported separately as text, not measured exact totals. No progress for priority input IDs 24995/36909/23424.",
+  "evidence_file": "research/v3/evidence/legacy/20261119T0248Z-cata-jewelry-and-original-zero-cohorts.jsonl",
   "source_urls": [
-    "https://wowwiki-archive.fandom.com/wiki/Murkblood_Avenger%27s_Legplates",
-    "https://wowwiki-archive.fandom.com/wiki/Quest:Whelps_of_the_Wyrmcult",
-    "https://wowwiki-archive.fandom.com/wiki/Quest:Thwart_the_Dark_Conclave",
-    "https://wowwiki-archive.fandom.com/wiki/Quest:The_Sigil_of_Krasus",
-    "https://www.wowhead.com/classic/item=11175/greater-nether-essence",
-    "https://www.wowhead.com/classic/item=10503/rose-colored-goggles"
+    "https://www.wowhead.com/cata/item=52309/nightstone-choker",
+    "https://www.wowhead.com/item=52555/hypnotic-dust",
+    "https://www.wowhead.com/wotlk/item=11175/greater-nether-essence",
+    "https://www.wowhead.com/cata/item=52555/hypnotic-dust",
+    "https://www.wowhead.com/cata/item=52718/lesser-celestial-essence"
   ],
-  "verified_base_commit_sha": "691e4ea049b60c878fd7040aa373805302b5f1c5",
+  "verified_base_commit_sha": "14b46a159829d82f1bd329a00b98aeeec3e3a54b",
   "verified_commit_sha": null,
-  "commit_note": "Status and one new JSONL published together as a single Git commit; current commit SHA cannot self-embed in status without a second commit; readback SHA verified after publishing.",
+  "commit_note": "One atomic Git commit updates the single new legacy JSONL and only legacy quiet-status; status intentionally records precommit base SHA, because self-embedding final commit SHA requires a prohibited second commit. The completed commit/ref and file blob SHAs will be independently verified by readback.",
   "blockers": [
-    "Exact source input ID uncertain: player says 'rose colored glasses or whatever' (candidate 10503 not independently proven); exclude from item-specific Retail inference.",
-    "Warmaul 24995 original Wowhead Looter HTML/build/quantity histogram unavailable; 2068 total and material hits are old cumulative data and remain unverified from raw table.",
-    "Cobalt 36909 and Fel Iron 23424 lack new independently verified complete prospect castsWithDrop and quantity histograms; ore batches are nominal, no invented zero observations.",
-    "External Firecrawl browser collector currently credit-limited; no retry, used accessible primary page excerpts instead."
+    "Priority Warmaul 24995 original Looter 2068 raw output stack tables and item-variant modern Retail completed-DE export unavailable; cannot infer zeros from missing material hits.",
+    "Priority Cobalt Ore 36909 and Fel Iron Ore 23424 have no fresh independent primary cast/hit/zero log beyond previously captured historic batches.",
+    "Five recovered sources concern other older processing: mixed 52309/52308 uncommon/rare inputs lack per-input and rarity attribution; Classic 10 disenchants source leaves input item IDs unspecified; quest reward cohorts have no denominators or original dates.",
+    "Several historical source comments predate significant Cataclysm December 13 hotfix and may mention Bountiful Bags; do not use as modern Retail measured rates.",
+    "Original comment 500383 already has first-round 36-craft cohort in repository; only newly located second-round 265 cohort recorded to prevent overlap."
   ],
   "exhausted_sources": [
     {
@@ -403,13 +473,25 @@
         "Current GitHub code search by each of seven exact item IDs found no existing legacy evidence rows."
       ]
     },
-    "2026-11-19: audited original classic Greater Nether Essence Allakhazam comment and checked target Wowhead/Warcraft Wiki model sources. Prior Forever stress/beta cohorts (reddit 1xc29vk) and Arcane Salvager 100-cast pool (reddit 1x3c863) are already in legacy 2026-11-16T2250 and were deliberately not duplicated; Rose Colored Goggles candidate not verified."
+    "2026-11-19: audited original classic Greater Nether Essence Allakhazam comment and checked target Wowhead/Warcraft Wiki model sources. Prior Forever stress/beta cohorts (reddit 1xc29vk) and Arcane Salvager 100-cast pool (reddit 1x3c863) are already in legacy 2026-11-16T2250 and were deliberately not duplicated; Rose Colored Goggles candidate not verified.",
+    {
+      "lookingFor": "2026-11-19 original per-event Warmaul 24995, Cobalt 36909 and Fel Iron 23424 source logs after previous source exhaustion; alternative new historical 265-craft jewelry/18-green/10-classic-item originals",
+      "whereLooked": [
+        "Warmaul Legplates WotLK original and Evowow 108-item-level, modern WoWDB scaled item; preexisting 2068-count Looter and opaque reference weights are not novel measured completed casts",
+        "Cobalt Ore WotLK prospecting named sources and wiki; repeated 180-ore pooled and percent guides lack novel per-material 0-N operation histograms",
+        "Fel Iron Ore original TBC / MoP Classic named comments and patch 2.1 prose; previously recorded 100- and 565-ore cohorts not copied",
+        "Unique 500383 second 265 jewelry round on https://www.wowhead.com/cata/item=52309/nightstone-choker : did not re-import prior 36 craft sample; full mixed outputs separately captured",
+        "Original 1059575 Stonecore 18 greens / 3 runs on https://www.wowhead.com/item=52555/hypnotic-dust ; did not count four BoE blues as disenchants",
+        "Thottbot anonymous 10 level41-45 greens original on https://www.wowhead.com/wotlk/item=11175/greater-nether-essence : positive shard and material-specific zero",
+        "Prehotfix Hyjal commenters cywang86 and psathyanhome distinct authors, no completed DE denominator; approximate amounts held outside numeric totals"
+      ]
+    }
   ],
-  "next_concrete_step": "Find current Retail in-game 24995 full bonus-ID+item-level+completed-DE export or 2068 original Looter HTML with per-output stack histograms and patch; then new 36909/23424 prospect saved-variable logs with output hit counts. Verify ambiguous 10503 input identity with original author/source snapshot before estimator admission.",
+  "next_concrete_step": "Seek first-person Retail 24995 bonus-ID/item-level eligibility recorder or raw historical 2068 Looter row HTML for 22445/22446/22449, then unindexed Cobalt 36909 and Fel Iron 23424 Enchantrix per-event SavedVariables exports. For new 265 Cataclysm JC cohort, recover input/quality breakdown and source date; preserve independent 36-craft round.",
   "exact_gaps": [
-    "Warmaul Legplates 24995: obtain original Looter 2068 sample rows with 22445/22446/22447/22449 completed hit/quantity histograms, actual build, item suffix, enchanting skill and Retail eligibility; 37 unaccounted listed hits are NOT zero-output.",
-    "Cobalt Ore 36909: 5-ore completed operation ledger, gem exact output IDs and material-specific 0/1/2 histograms, not nominal 180-ore/5 casts.",
-    "Fel Iron Ore 23424: independent original prospect cast denominators and output hit counts; distinguish pre/post 2.1 guaranteed-gem change.",
-    "Secondary token 45661: only after verifying existing recorded class rewards and redemption without duplicating records."
+    "Warmaul Legplates 24995 (T0047): need original item-specific 2068 Looter raw per-stack material hits, patch and physical Retail 24995+suffix bonus item-instance DE eligibility; no new independent casts.",
+    "Cobalt Ore 36909 (T0022): need completed 5-ore cast/hit counts and material-specific 0-N histograms; do not reuse 180-ore or static tables.",
+    "Fel Iron Ore 23424 (T0044): need independent primary completed-cast/rare hit counts, version/pre-post 2.1 cohort and 0-N event ledgers; 100/565-ore sources already recorded.",
+    "New independent mixed Cataclysm and Classic original material totals without falsely assigning individual input identity, guild perk, or input-quality-specific output chance."
   ]
 }
