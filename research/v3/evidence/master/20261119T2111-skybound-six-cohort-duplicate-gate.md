@@ -4,10 +4,10 @@
 
 ## Reproducible source-record comparison
 
-The newly archived [2026-11-19 20:39 UTC worker source rows](../../dragonflight/2026-11-19T2039-skybound-avenger-gear-looter-occurrences.jsonl) claim 12 new material-occurrence rows across six item IDs. Exact field-by-field comparison with two **earlier** append-only original files proves **12/12 are already recorded**:
+The newly archived [2026-11-19 20:39 UTC worker source rows](../dragonflight/2026-11-19T2039-skybound-avenger-gear-looter-occurrences.jsonl) claim 12 new material-occurrence rows across six item IDs. Exact field-by-field comparison with two **earlier** append-only original files proves **12/12 are already recorded**:
 
-- Ten rows for item IDs **200344, 200345, 200346, 200347 and 200350** match the [2026-11-09 original source file](../../dragonflight/2026-11-09T0948-five-skybound-gear-looter-hits.jsonl) with identical input/output item IDs, method, reported operations, hits, percent, units, rank nullability and missing quantities.
-- Two rows for item **200343** match the [2026-11-16 original source file](../../dragonflight/2026-11-16T1311-new-boots-slippers-looter-and-cast-search.jsonl) on the same fields.
+- Ten rows for item IDs **200344, 200345, 200346, 200347 and 200350** match the [2026-11-09 original source file](../dragonflight/2026-11-09T0948-five-skybound-gear-looter-hits.jsonl) with identical input/output item IDs, method, reported operations, hits, percent, units, rank nullability and missing quantities.
+- Two rows for item **200343** match the [2026-11-16 original source file](../dragonflight/2026-11-16T1311-new-boots-slippers-looter-and-cast-search.jsonl) on the same fields.
 - **All 12 newer rows use a different studyKey** (prefix `wowhead-looter-df-item-` instead of `wowhead-looter-original-df-item-`). Visor/legguards link to `/ptr/` and carry a `?bonus=` query in the newer file, while the earlier original used live URLs. These are **alternate URLs for the same item-side Wowhead Looter cumulative rows**, not independent player outcomes. The source-key normalization code strips the query and canonicalizes PTR variants; the estimator's `study_identity` additionally fingerprints source, input rank, casts and all output rows. This makes duplicate suppression the intended behavior; actual estimator/compiled ItemDB output was **not run or asserted** in this check.
 - The original [Wowhead Visor item-side results](https://www.wowhead.com/ptr/item=200345/skybound-avengers-visor?bonus=9003) were additionally spot-checked from accessible indexed source text: Vibrant Shard **29/34** and Resonant Crystal **17/34**, matching both files. One current item page can expose a PTR label without establishing the patch of the underlying uploads.
 
