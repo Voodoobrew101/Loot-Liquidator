@@ -2,29 +2,123 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-19T15:44:31.905Z",
-  "status": "Three historical March 2023 crafted rare-weapon disenchant prior values recorded as reference-only; no new measured prospect/mill operation histograms found.",
+  "updated_at": "2026-11-19T16:39:14.974Z",
+  "status": "15 new item-specific Dragonflight disenchant material occurrence-count rows (five separate gear inputs) with exact item/material IDs, provider sample denominators and reported counts; no new prospecting/milling 0-N event ledger.",
   "task_ids": [
     "T0020",
+    "T0046",
     "T0018",
     "T0015",
     "T0041",
-    "T0019",
-    "T0046"
+    "standing-disenchant"
   ],
   "exact_gaps_targeted": [
-    "T0020/T0019/T0046: Draconium (189143,188658), Serevite (190394,190395,190396), Khaz'gorite and Prismatic Ore (194545): original rank-verified completed casts/hits/zero histograms/refunds missing",
-    "T0018/T0015/T0041: Bubble Poppy 191467 and Saxifrage 191464/191465/191466 pigment completed mills/hit histograms missing",
-    "Standing disenchanting: 2023 reference-only crafted rare weapon estimates 194123/194124/200113 lack raw 0-N data"
+    "T0020/T0019/T0046: Draconium 189143/188658, Serevite 190394/190395/190396, Khaz'gorite and Prismatic 194545 still lack rank-specific true completed prospect casts, per-output 0-N/hits and Resourcefulness refunds",
+    "T0018/T0015/T0041: Bubble Poppy 191467, Saxifrage 191464/191465/191466, Hochenblume and Writhebark remain short on independently novel per-cast pigment hit/zero histograms and skill/spec",
+    "Standing numeric disenchant: unindexed gear 198035,198007,194395,209937,197691 now have material-side source occurrences but no actual output unit totals/stack histograms or date/skill/bonus context"
   ],
   "newly_verified_fields": [
-    "Historical dated source 2023-03-28: author model average Chromatic Dust 194123 2.2 units per rare weapon disenchant and Vibrant Shard 194124 1.2 units/cast at maxed Draconic Disenchantment",
-    "Author's stated Resonant Crystal 200113 chance approximately 1/33 per disenchant (prior only, NOT 1 measured hit/33 casts)"
+    "198035 Archer's Decorated Bow: Looter reports 29 DE, Vibrant Shard 194124 18/29 (62%), Chromatic Dust 194123 9/29 (31%), Resonant Crystal 200113 3/29 (10%)",
+    "198007 Large Brass Cleaver: 80 DE, 194124 56/80 (70%), 194123 22/80 (28%), 200113 3/80 (4%)",
+    "194395 Doomsayer's Greatsword: 53 DE, 194123 45/53 (85%), 194124 6/53 (11%), 200113 2/53 (4%)",
+    "209937 Chartreuse Champion's Gavel: 55 DE, 194123 39/55 (71%), 194124 16/55 (29%), 200113 2/55 (4%)",
+    "197691 Amaa's Golden Mace: 14 DE, 194124 9/14 (64%), 194123 4/14 (29%), 200113 1/14 (7%)",
+    "These are cumulative Wowhead material occurrences, NOT independent per-cast hit-confirmed 0-N histograms, not material total quantities or measured P(hit). Source %-meaning unclear."
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": 0,
+  "newly_verified_cohorts": [
+    {
+      "inputItemID": 198035,
+      "inputName": "Archer's Decorated Bow",
+      "source": "https://www.wowhead.com/item=198035/archers-decorated-bow",
+      "provider_disencanted_uses": 29,
+      "outputItemIDs": [
+        194124,
+        194123,
+        200113
+      ],
+      "source_occurrences": [
+        18,
+        9,
+        3
+      ],
+      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
+    },
+    {
+      "inputItemID": 198007,
+      "inputName": "Large Brass Cleaver",
+      "source": "https://www.wowhead.com/item=198007/large-brass-cleaver",
+      "provider_disencanted_uses": 80,
+      "outputItemIDs": [
+        194124,
+        194123,
+        200113
+      ],
+      "source_occurrences": [
+        56,
+        22,
+        3
+      ],
+      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
+    },
+    {
+      "inputItemID": 194395,
+      "inputName": "Doomsayer's Greatsword",
+      "source": "https://www.wowhead.com/item=194395/doomsayers-greatsword",
+      "provider_disencanted_uses": 53,
+      "outputItemIDs": [
+        194123,
+        194124,
+        200113
+      ],
+      "source_occurrences": [
+        45,
+        6,
+        2
+      ],
+      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
+    },
+    {
+      "inputItemID": 209937,
+      "inputName": "Chartreuse Champion's Gavel",
+      "source": "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
+      "provider_disencanted_uses": 55,
+      "outputItemIDs": [
+        194123,
+        194124,
+        200113
+      ],
+      "source_occurrences": [
+        39,
+        16,
+        2
+      ],
+      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
+    },
+    {
+      "inputItemID": 197691,
+      "inputName": "Amaa's Golden Mace",
+      "source": "https://www.wowhead.com/item=197691/amaas-golden-mace",
+      "provider_disencanted_uses": 14,
+      "outputItemIDs": [
+        194124,
+        194123,
+        200113
+      ],
+      "source_occurrences": [
+        9,
+        4,
+        1
+      ],
+      "caution": "Wowhead cumulative Looter snapshot; no independent author timestamps/cast-by-cast data"
+    }
+  ],
+  "new_numerical_measurements": "15 Looter reported per-material occurrence-count rows for five independent input item IDs, with 5 distinct provider denominators. Historical aggregated rows, unknown event-level provenance.",
   "numerical_fields_improved": [
-    "Two source-stated reference expected quantities per cast plus source's approximate crystal chance, without any increased measured casts or confidence"
+    "inputItemID",
+    "outputItemID",
+    "casts (provider reported)",
+    "castsWithDrop (provider reported occurrence count only)",
+    "percentShown with percentMeaning=unclear"
   ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-16T0949-original-beta-skill-conflict-and-cast-search.jsonl",
@@ -104,22 +198,25 @@
     "research/v3/evidence/dragonflight/2026-11-19T124431-eternity-amber-rank-source-and-cast-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-19T1336-mystic-disenchant-original-casts-and-priority-search.jsonl",
     "research/v3/evidence/dragonflight/2026-11-19T1442-primal-storm-single-disenchant-and-original-cast-search.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-19T1544-2023-rare-weapon-prior-and-original-cast-search.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-19T1544-2023-rare-weapon-prior-and-original-cast-search.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl"
   ],
-  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-19T1544-2023-rare-weapon-prior-and-original-cast-search.jsonl",
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-19T1544-2023-rare-weapon-prior-and-original-cast-search.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl",
   "source_links": [
-    "https://thelazygoldmaker.com/the-enchanting-shuffle-is-goldmaking-that-anyone-can-get-into",
-    "https://docs.google.com/spreadsheets/d/1-4NULbe1ORe8Iq7zYbEwlqKs6R8yYTA7uGed1_vVOE4/edit",
-    "https://www.reddit.com/r/woweconomy/comments/10u5ao8",
-    "https://www.reddit.com/r/woweconomy/comments/zkay8v"
+    "https://www.wowhead.com/item=198035/archers-decorated-bow",
+    "https://www.wowhead.com/item=198007/large-brass-cleaver",
+    "https://www.wowhead.com/item=194395/doomsayers-greatsword",
+    "https://www.wowhead.com/item=209937/chartreuse-champions-gavel",
+    "https://www.wowhead.com/item=197691/amaas-golden-mace"
   ],
-  "verified_parent_sha": "260857621616945a6d1af39d23831ce42ab9c9e0",
+  "verified_parent_sha": "9f9f422ed56e73384cfa302686c113dd05ff45d3",
   "verified_commit_sha": null,
-  "commit_sha_scope": "Own commit SHA cannot be embedded in same commit; parent SHA recorded and new commit is read-back checked externally.",
+  "commit_sha_scope": "New commit SHA cannot appear in its own tracked content; read-back verification is performed after ref update.",
   "blockers": [
-    "No new source-first completed-cast Dragonflight ore/herb raw event ledger and Resourcefulness-aware 0-N output histograms",
-    "Historical Lazy Goldmaker 2023 disenchant calculator gives model assumptions, no original casts/gear item IDs or skill/build-specific observed output totals"
+    "No independently newly sourced Dragonflight original ore or herb operation-level 0/1/2 histograms, exact rank-specific completed casts/hit zeros or saved-input refunds",
+    "New Wowhead item-specific material occurrence counts do not supply output total quantities, stack distributions, exact skill/spec, item version at disenchant, sampled patch or independent cohort identities; rounded % not P(hit)",
+    "Material occurrences can sum above source denominator (198035 30 vs 29, 198007 81 vs 80, 209937 57 vs 55). Never force exclusive outcome partitions or treat the mismatch as an error/zero."
   ],
   "exhausted_sources": [
     {
@@ -2424,19 +2521,41 @@
         "Wow Professions: Dragon Isles Inscription 5-herb milling/2-5 pigment range (https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight); no original 0-N sample",
         "The Lazy Goldmaker: 2023 Dragonflight rare-weapon disenchant model (https://thelazygoldmaker.com/the-enchanting-shuffle-is-goldmaking-that-anyone-can-get-into) and linked author calculator (https://docs.google.com/spreadsheets/d/1-4NULbe1ORe8Iq7zYbEwlqKs6R8yYTA7uGed1_vVOE4/edit); assumptions but no source operation log"
       ]
+    },
+    {
+      "at": "2026-11-19T16:39:14.974Z",
+      "scope": "Novel first-party source material-side Looter gear datasets after ore/mill targeted cohort search",
+      "reason": "Eight name-first prospecting/milling queries across distinct site families surfaced only previously indexed original studies or non-numeric guides. Pivoted to five item-specific Wowhead gear Looter cumulative tables not present in prior quiet-status source inventory.",
+      "whereLooked": [
+        "Draconium Ore prospecting cast/gem original spreadsheet (non-Reddit sites); results include WoW-Professions jewelcrafting leveling reference https://www.wowhead.com/guide/professions/jewelcrafting/leveling-dragonflight, not an observed 0-N ledger",
+        "Khaz'gorite Ore 200 prospects gemstone study; original discussions repeat previously indexed sample https://www.reddit.com/r/woweconomy/comments/10h6ccx",
+        "Bubble Poppy 100-herb Serene Pigment milling logs; guides only https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
+        "Writhebark Flourishing Pigment original milling results; same 5-herb reference guide, no independent per-cast logs https://www.wow-professions.com/guides/dragon-isles-inscription-leveling-guide-dragonflight",
+        "Prismatic Ore raw Khaz'gorite and gem outcomes; known first-person >250 zero-Khaz report https://www.reddit.com/r/woweconomy/comments/zjh0d0",
+        "Serevite Ore prospecting Blizzard forum original-sample queries; official forum results were not a new operation-level export https://us.forums.blizzard.com/en/wow/t/massive-profession-advantage-from-racial-bonuses/1484679",
+        "Hochenblume Shimmering Pigment mill spreadsheet results; existing historical beta source https://www.wowhead.com/news/crafting-work-orders-are-here-wowhead-economy-weekly-wrap-up-251-329620",
+        "Saxifrage source-original milling output study; Aary original already indexed on https://www.wowhead.com/item=198418/blazing-pigment"
+      ]
     }
   ],
-  "next_concrete_step": "Seek distinct firsthand Dragonflight prospecting or milling addon event exports (per-operation 0-N outcomes plus refunds) and exact rank identities; keep historical weapon prior separate from measured baseline pending Master assessment.",
+  "next_concrete_step": "Obtain original DF 0-N per-cast prospect/mill exports with rank/refunds; separately validate Wowhead gear material occurrence semantics, output unit totals, player profiles and source snapshot overlap before any estimator promotion.",
   "validation": {
-    "jsonl_records": 4,
+    "jsonl_records": 16,
     "jsonl_parsed": true,
-    "reference_rows": 3,
+    "source_record_rows": 15,
     "searched_rows": 1,
-    "real_new_cohorts": 0,
-    "source_searches": 12,
-    "sites": 6,
+    "distinct_input_items": 5,
+    "reported_de_denominators": [
+      "198035:29",
+      "198007:80",
+      "194395:53",
+      "209937:55",
+      "197691:14"
+    ],
+    "source_searches": 8,
+    "sites": 4,
     "changed_paths": [
-      "research/v3/evidence/dragonflight/2026-11-19T1544-2023-rare-weapon-prior-and-original-cast-search.jsonl",
+      "research/v3/evidence/dragonflight/2026-11-19T1637-five-unindexed-weapons-looter-counts.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
     "commit_checked": false
@@ -2444,6 +2563,6 @@
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 3,
+  "new_source_reported_numeric_rows": 15,
   "identity_corrections": 0
 }
