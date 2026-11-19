@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-19T20:52:07.964Z",
-  "status": "11 newly transcribed nonduplicate source-reported Wowhead Looter material-hit rows (four item cohorts); none establishes audited physical casts, zeros, material totals or modern Retail eligibility. Priority Warmaul, Cobalt and Fel Iron physical-event gaps remain open.",
+  "updated_at": "2026-11-19T21:42:40.378Z",
+  "status": "Transcribed 28 new independently attributable historical Classic Enchantrix positive-hit/quantity rows from aure.lua, across 13 uncommon item-level/slot groups. No source-audited completed casts or 0-N histograms; Warmaul 24995, Cobalt 36909 and Fel Iron 23424 gaps remain unresolved.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -10,224 +10,284 @@
     "T0044"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 and matched BC rarity/ilevel gear: need original per-event disenchant output quantities, 0-N histograms, completed cast ledger, build/skill and Retail eligibility; existing Warmaul pooled 2068 source already indexed",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424: need independent completed prospect denominators, per-gem hits and 0-N event histograms; existing 180-ore, 24-stack, 100-/565-ore cohorts not recopied",
-    "Secondary legacy item-specific weapon and armor disenchant input/output identity and source-reported aggregate hits with honest epoch separation"
+    "Warmaul Legplates 24995 TBC uncommon plate DE: original completed casts, individual output item IDs/quantity histograms, 0-N outcomes, build/skill/current Retail eligibility still unknown despite existing pooled Looter cohort",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: independently attributable completed prospects and per-gem hit/zero quantity histograms remain unavailable; prior 180-ore and 100-/565-ore studies not duplicated",
+    "New 2020 original contributor Classic armor/weapon item-level 55-63 Enchantrix grouped positive hit counts and material totals; no guessed trial counts or live Retro/Modern equivalence"
   ],
   "newly_verified_fields_cohorts": {
-    "newEvidenceRows": 11,
-    "newDropRows": 11,
-    "newDistinctSourceCohorts": 4,
-    "inputItemIDs": [
-      25145,
-      4122,
-      15457,
-      1561
+    "newEvidenceRows": 28,
+    "newDropRows": 28,
+    "newDistinctSourceCohorts": 13,
+    "originalContributor": "aure.lua",
+    "sourceProvenance": "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/aure.lua",
+    "sourceFields": [
+      "outputItemID",
+      "outputName",
+      "castsWithDrop (positive Enchantrix observations)",
+      "totalQuantity",
+      "historical Classic item level",
+      "uncommon quality",
+      "armor/weapon type"
     ],
+    "inputItemIDs": [],
     "outputItemIDs": [
-      22447,
-      22445,
-      22448,
-      11135,
-      11137,
-      11139,
-      11083,
-      11082,
-      11084,
-      10940,
-      10938
+      11176,
+      14343,
+      14344,
+      16202,
+      16203,
+      16204
     ],
-    "studies": [
+    "perGroup": [
       {
-        "inputItemID": 25145,
-        "inputName": "Wisdom Blade",
-        "sourceShownItemLevel": 14,
-        "quality": "uncommon",
-        "kind": "one-hand sword",
-        "sourceReportedDisenchants": 221,
-        "perOutput": [
+        "group": "55:2:4",
+        "kind": "armor",
+        "itemLevel": 55,
+        "outputs": [
           {
-            "outputItemID": 22447,
-            "outputName": "Lesser Planar Essence",
-            "sourceReportedCastsWithDrop": 167,
-            "conditionalStackRange": [
-              2,
-              3
-            ],
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 14343,
+            "castsWithDrop": 3,
+            "totalQuantity": 3
           },
           {
-            "outputItemID": 22445,
-            "outputName": "Arcane Dust",
-            "sourceReportedCastsWithDrop": 44,
-            "conditionalStackRange": [
-              2,
-              3
-            ],
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 16202,
+            "castsWithDrop": 10,
+            "totalQuantity": 15
           },
           {
-            "outputItemID": 22448,
-            "outputName": "Small Prismatic Shard",
-            "sourceReportedCastsWithDrop": 3,
-            "conditionalStackRange": null,
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 11176,
+            "castsWithDrop": 39,
+            "totalQuantity": 127
           }
-        ],
-        "sourceBuild": null,
-        "sourceSkill": null,
-        "notes": "The item was added in Cataclysm 4.0.1 but first player-obtainable via Warlords salvage; NOT a true original TBC drop. 2026 PTR scaled ilvl14; Wowhead other catalogue reports ilvl30. Do not assign historical TBC level 14."
+        ]
       },
       {
-        "inputItemID": 4122,
-        "inputName": "Bookmaker's Scepter",
-        "sourceShownItemLevel": 37,
-        "quality": "uncommon",
-        "kind": "one-hand mace",
-        "sourceReportedDisenchants": 188,
-        "perOutput": [
+        "group": "56:2:2",
+        "kind": "weapon",
+        "itemLevel": 56,
+        "outputs": [
           {
-            "outputItemID": 11135,
-            "outputName": "Greater Mystic Essence",
-            "sourceReportedCastsWithDrop": 126,
-            "conditionalStackRange": [
-              1,
-              2
-            ],
-            "totalQuantity": null,
-            "histogram": null
-          },
-          {
-            "outputItemID": 11137,
-            "outputName": "Vision Dust",
-            "sourceReportedCastsWithDrop": 51,
-            "conditionalStackRange": [
-              1,
-              2
-            ],
-            "totalQuantity": null,
-            "histogram": null
-          },
-          {
-            "outputItemID": 11139,
-            "outputName": "Large Glowing Shard",
-            "sourceReportedCastsWithDrop": 11,
-            "conditionalStackRange": null,
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 16204,
+            "castsWithDrop": 1,
+            "totalQuantity": 2
           }
-        ],
-        "sourceBuild": null,
-        "sourceSkill": null,
-        "notes": "TBC/classic item historical ilvl37 uncommon independently checked against legacyofwarcraft.com/db/tbc/item/4122.html. Wowhead MoP Classic Looter aggregate, event patch unreported."
+        ]
       },
       {
-        "inputItemID": 15457,
-        "inputName": "Desert Shoulders",
-        "sourceShownItemLevel": 28,
-        "quality": "uncommon",
-        "kind": "cloth shoulders",
-        "sourceReportedDisenchants": 247,
-        "perOutput": [
+        "group": "56:2:4",
+        "kind": "armor",
+        "itemLevel": 56,
+        "outputs": [
           {
-            "outputItemID": 11083,
-            "outputName": "Soul Dust",
-            "sourceReportedCastsWithDrop": 190,
-            "conditionalStackRange": [
-              1,
-              2
-            ],
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 16203,
+            "castsWithDrop": 2,
+            "totalQuantity": 4
           },
           {
-            "outputItemID": 11082,
-            "outputName": "Greater Astral Essence",
-            "sourceReportedCastsWithDrop": 49,
-            "conditionalStackRange": [
-              1,
-              2
-            ],
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 14344,
+            "castsWithDrop": 1,
+            "totalQuantity": 1
           },
           {
-            "outputItemID": 11084,
-            "outputName": "Large Glimmering Shard",
-            "sourceReportedCastsWithDrop": 8,
-            "conditionalStackRange": null,
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 16204,
+            "castsWithDrop": 30,
+            "totalQuantity": 48
           }
-        ],
-        "sourceBuild": null,
-        "sourceSkill": null,
-        "notes": "TBC/classic item historical ilvl28 uncommon independently checked against legacyofwarcraft.com/db/tbc/item/15457.html. Wowhead MoP Classic Looter aggregate, event patch unreported."
+        ]
       },
       {
-        "inputItemID": 1561,
-        "inputName": "Harvester's Robe",
-        "sourceShownItemLevel": 15,
-        "quality": "uncommon",
-        "kind": "cloth chest",
-        "sourceReportedDisenchants": 576,
-        "perOutput": [
+        "group": "57:2:4",
+        "kind": "armor",
+        "itemLevel": 57,
+        "outputs": [
           {
-            "outputItemID": 10940,
-            "outputName": "Strange Dust",
-            "sourceReportedCastsWithDrop": 468,
-            "conditionalStackRange": [
-              1,
-              2
-            ],
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 16203,
+            "castsWithDrop": 3,
+            "totalQuantity": 4
           },
           {
-            "outputItemID": 10938,
-            "outputName": "Lesser Magic Essence",
-            "sourceReportedCastsWithDrop": 108,
-            "conditionalStackRange": [
-              1,
-              2
-            ],
-            "totalQuantity": null,
-            "histogram": null
+            "outputItemID": 14344,
+            "castsWithDrop": 1,
+            "totalQuantity": 1
+          },
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 14,
+            "totalQuantity": 19
           }
-        ],
-        "sourceBuild": null,
-        "sourceSkill": null,
-        "notes": "TBC/classic item historical ilvl15 uncommon independently checked against legacyofwarcraft.com/db/tbc/item/1561.html. Wowhead MoP Classic Looter aggregate, event patch unreported."
+        ]
+      },
+      {
+        "group": "58:2:2",
+        "kind": "weapon",
+        "itemLevel": 58,
+        "outputs": [
+          {
+            "outputItemID": 16203,
+            "castsWithDrop": 1,
+            "totalQuantity": 2
+          },
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 1,
+            "totalQuantity": 2
+          }
+        ]
+      },
+      {
+        "group": "58:2:4",
+        "kind": "armor",
+        "itemLevel": 58,
+        "outputs": [
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 10,
+            "totalQuantity": 15
+          },
+          {
+            "outputItemID": 16203,
+            "castsWithDrop": 6,
+            "totalQuantity": 10
+          }
+        ]
+      },
+      {
+        "group": "59:2:4",
+        "kind": "armor",
+        "itemLevel": 59,
+        "outputs": [
+          {
+            "outputItemID": 16203,
+            "castsWithDrop": 2,
+            "totalQuantity": 3
+          },
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 8,
+            "totalQuantity": 11
+          }
+        ]
+      },
+      {
+        "group": "60:2:2",
+        "kind": "weapon",
+        "itemLevel": 60,
+        "outputs": [
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 2,
+            "totalQuantity": 3
+          },
+          {
+            "outputItemID": 16203,
+            "castsWithDrop": 2,
+            "totalQuantity": 2
+          }
+        ]
+      },
+      {
+        "group": "60:2:4",
+        "kind": "armor",
+        "itemLevel": 60,
+        "outputs": [
+          {
+            "outputItemID": 14344,
+            "castsWithDrop": 1,
+            "totalQuantity": 1
+          },
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 6,
+            "totalQuantity": 7
+          }
+        ]
+      },
+      {
+        "group": "61:2:2",
+        "kind": "weapon",
+        "itemLevel": 61,
+        "outputs": [
+          {
+            "outputItemID": 16203,
+            "castsWithDrop": 1,
+            "totalQuantity": 2
+          }
+        ]
+      },
+      {
+        "group": "61:2:4",
+        "kind": "armor",
+        "itemLevel": 61,
+        "outputs": [
+          {
+            "outputItemID": 16203,
+            "castsWithDrop": 1,
+            "totalQuantity": 3
+          },
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 8,
+            "totalQuantity": 27
+          }
+        ]
+      },
+      {
+        "group": "62:2:4",
+        "kind": "armor",
+        "itemLevel": 62,
+        "outputs": [
+          {
+            "outputItemID": 16203,
+            "castsWithDrop": 1,
+            "totalQuantity": 2
+          },
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 5,
+            "totalQuantity": 15
+          },
+          {
+            "outputItemID": 14344,
+            "castsWithDrop": 1,
+            "totalQuantity": 1
+          }
+        ]
+      },
+      {
+        "group": "63:2:4",
+        "kind": "armor",
+        "itemLevel": 63,
+        "outputs": [
+          {
+            "outputItemID": 16203,
+            "castsWithDrop": 1,
+            "totalQuantity": 2
+          },
+          {
+            "outputItemID": 16204,
+            "castsWithDrop": 1,
+            "totalQuantity": 4
+          }
+        ]
       }
-    ],
-    "newPriorityItem24995PhysicalCasts": 0,
-    "newCobaltCompletedProspectCasts": 0,
-    "newFelIronCompletedProspectCasts": 0,
-    "verifiedZeroOutputEvents": 0,
-    "newGoldEVValues": 0
+    ]
   },
-  "numeric_summary": "New nonduplicate original page-specific Looter rows: 25145 n=221: 22447=167 (2–3),22445=44 (2–3),22448=3 (range unspecified), 7 unmatched reports. 4122 n=188: 11135=126 (1–2),11137=51 (1–2),11139=11. 15457 n=247: 11083=190 (1–2),11082=49 (1–2),11084=8. 1561 n=576: 10940=468 (1–2),10938=108 (1–2). Numbers are source-reported cumulative hits, NOT material quantities. No individual 0-N histograms or physical cast audit. No measured zeros.",
-  "evidence_file": "research/v3/evidence/legacy/2026-11-19T2051-wisdom-classic-looter-counts.jsonl",
+  "numeric_summary": "55:2:4 armor: 14343 hits=3 units=3, 16202 hits=10 units=15, 11176 hits=39 units=127; 56:2:2 weapon: 16204 hits=1 units=2; 56:2:4 armor: 16203 hits=2 units=4, 14344 hits=1 units=1, 16204 hits=30 units=48; 57:2:4 armor: 16203 hits=3 units=4, 14344 hits=1 units=1, 16204 hits=14 units=19; 58:2:2 weapon: 16203 hits=1 units=2, 16204 hits=1 units=2; 58:2:4 armor: 16204 hits=10 units=15, 16203 hits=6 units=10; 59:2:4 armor: 16203 hits=2 units=3, 16204 hits=8 units=11; 60:2:2 weapon: 16204 hits=2 units=3, 16203 hits=2 units=2; 60:2:4 armor: 14344 hits=1 units=1, 16204 hits=6 units=7; 61:2:2 weapon: 16203 hits=1 units=2; 61:2:4 armor: 16203 hits=1 units=3, 16204 hits=8 units=27; 62:2:4 armor: 16203 hits=1 units=2, 16204 hits=5 units=15, 14344 hits=1 units=1; 63:2:4 armor: 16203 hits=1 units=2, 16204 hits=1 units=4. All casts=null; histograms=null; no recorded zero observations; no implied yields or EV.",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-19T2142-aure-original-classic-raw-groups.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/ptr/item=25145/wisdom-blade",
-    "https://www.wowhead.com/mop-classic/item=4122/bookmakers-scepter",
-    "https://www.wowhead.com/mop-classic/item=15457/desert-shoulders",
-    "https://www.wowhead.com/mop-classic/item=1561/harvesters-robe",
-    "https://legacyofwarcraft.com/db/tbc/item/4122.html",
-    "https://legacyofwarcraft.com/db/tbc/item/15457.html",
-    "https://legacyofwarcraft.com/db/tbc/item/1561.html"
+    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/aure.lua",
+    "https://www.wowhead.com/tbc/item=24995/warmaul-legplates",
+    "https://www.wowhead.com/wotlk/item=36909/cobalt-ore",
+    "https://www.wowhead.com/tbc/item=23424/fel-iron-ore"
   ],
-  "verified_base_commit_sha": "cad46e1554419ae7a72a14d72b201d94d5348cdf",
+  "verified_base_commit_sha": "12e26f199ffd45afed4ad83869d6d9bb48f891e4",
   "verified_commit_sha": null,
-  "commit_note": "Single atomic commit will contain evidence plus this status. Exact new commit SHA cannot be self-embedded in its own content; read-back verification available at the resulting GitHub commit and immutable blob URLs.",
+  "commit_note": "Atomic tree commit created with one new legacy JSONL and only legacy.json; the new commit SHA cannot be embedded inside its own content. Read-back verification performed after ref update.",
   "blockers": [
-    "No fresh verified original individual Warmaul 24995, Cobalt 36909 or Fel Iron 23424 per-event material histogram, patch, item bonus or skill ledger. Exclude prior exhausted studies.",
-    "Wowhead Looter aggregated counts do not prove original client build, modern Retail eligibility, or that full listed output categories sum to all outcomes; 25145 has 7 unmatched reports, not zero outcomes.",
-    "Firecrawl browser integration returned an insufficient-credit error on 2026-11-19; web search indexed public item-page tables remain accessible.",
-    "Original uploaded per-event Wowhead Looter logs, source skill/spec/build and per-output total units unavailable."
+    "No genuinely new attributable completed casts / per-cast histograms for Warmaul 24995, Cobalt 36909 or Fel Iron 23424 after named-item search. Previously indexed source samples intentionally not repeated.",
+    "Original aure.lua EnchantedItemTypes supplies positive output hits and total quantities but NOT an independently audited number of completed disenchant operations or explicit zero outcomes. Stored trailing :0 is not a zero count.",
+    "aure.lua Classic 2020 historical item levels 55–63 cannot be promoted as current Retail item-level or build-specific disenchant eligibility; skill/spec/build and per-cast histograms absent.",
+    "Original per-item EnchantedLocal and compiled detable.csv can overlap the same underlying casts; both deliberately excluded from this run to prevent double-counting."
   ],
   "exhausted_sources": [
     {
@@ -770,7 +830,17 @@
         "GitHub repo search original item IDs, exact item names and studyKeys: no existing authored hit cohort for 25145/4122/15457/1561 in live research path",
         "Existing 25159,25494,29325,186057 Looter cohorts found in repo and deliberately excluded as duplicates"
       ]
+    },
+    {
+      "lookingFor": "Independent original 24995 Warmaul Legplates, 36909 Cobalt Ore and 23424 Fel Iron Ore completed-operation logs vs original raw nonduplicated Classic evidence (2026-11-19)",
+      "whereLooked": [
+        "Name-based Wowhead TBC/WotLK sources for Warmaul Legplates, Cobalt Ore, Fel Iron Ore returned previously recorded Looter/nominal-ore cohorts, no new actual per-event outputs",
+        "Original archived Fel Iron vs Cobalt prospecting guides and comments cross-checked: source rates, not newly confirmed per-cast zeros/histograms",
+        "Wowhead Arcane Dust 22445 and Azure Pigment 39343 player comments had Netherweave Belt 10/25, 30-stack Saronite myrmideon and rmmoreira two-ore milling data already authored in repository; not duplicated",
+        "GitHub-original alex-berliner/wow_classic_de_table/dbfiles/aure.lua distinct from previously authored ereduns, astroid, dmitry, eoghal, lavasalesman, alex logs; raw grouped positive hits and quantities accepted once",
+        "Classic grouped source fields do not give actual zero disenchants or audited per-operation denominators, so no simulated casts/histogram produced"
+      ]
     }
   ],
-  "next_concrete_step": "Find and archive original WoWhead Looter per-uploader event exports/0-N histogram and build for newly indexed 25145,4122,15457,1561; then prioritize a genuinely new independent 24995/36909/23424 event ledger and test actual Retail item-instance eligibility before use. Request source-era admission rule changes through Master, not the evidence file."
+  "next_concrete_step": "Return first to 24995 original current Retail item-instance client test and historical 0–N event export; independently seek 36909/23424 original saved-variable prospect event ledgers. For Classic, additional previously untranscribed standalone Enchantrix contributors can add positive hit/unit totals only, with casts remaining null and compilation dedupe gated by provenance; request any estimator/schema admission changes through Master."
 }
