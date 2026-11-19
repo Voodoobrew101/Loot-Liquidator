@@ -1,0 +1,32 @@
+# TWW three-curio fixed-vendor cost / redemption-stage admission audit
+UTC review: 2026-11-19T01:07:53.937Z
+Scope: research-only source/identity check. No addon, compiler, production or original research edits.
+
+## New actionable source-to-compiler gap
+
+The War Within worker's `research/v3/evidence/war-within/20261119T0026-tier-curio-exact-exchanges.jsonl` contributes 15 *fixed exchange* statements (three distinct curio inputs × five vendor offers), not fifteen measured stochastic processing cohorts. Exact records are one curio consumed for one vendor-selected reward, with `requirements:null` (unknown rather than permission for all classes):
+
+- Nerub-ar Palace: Web-Wrapped Curio `225634` ×1 -> `212005, 212003, 212002, 212001, 212000` ×1 each, Kir'xal; five Death Knight-piece alternatives.
+- Liberation of Undermine: Excessively Bejeweled Curio `228819` ×1 -> `229298, 229296, 229301, 229299, 229297` ×1 each, Kari Bridgeblaster; five Monk-piece alternatives.
+- Manaforge Omega: Hungering Void Curio `237602` ×1 -> `237581, 237585, 237589, 237593, 237597` ×1 each, Acquirer Ba'theom; five Dreadful *intermediate class-family token* alternatives (Death Knight / Demon Hunter / Warlock), not final armor.
+
+The source and pinned catalog already identify **20** distinct Manaforge intermediate tokens: five gear slots × four class families, exact IDs `237581` through `237600`. The Acquirer Ba'theom vendor reference supports the four-family tier-token selection. The latest **15-row worker exchange file** explicitly records five Dreadful offers and does **not** enumerate the other 15 direct cost edges: `237582, 237583, 237584, 237586, 237587, 237588, 237590, 237591, 237592, 237594, 237595, 237596, 237598, 237599, 237600`. This is a **field-admission / incomplete cost-edge transcription gap**, NOT fifteen new observed studies, NOT a claim that the identities are missing from all prior evidence, and NOT confirmation of current-character eligibility.
+
+The owner's immutable `4df9ae8b1359d934828e4d0e6d39a9a4dba26fae` token snapshot, as represented in `implementation/usable-data-tooltips/docs/usable-data-audit/token-ledger.json`, already lists `237602` with **85 reward IDs**: 20 immediate intermediate-token vendor options and their **65 distinct transitive class-specific armor possibilities**. This combined reachability set must never be interpreted as 85 directly purchasable pieces, 85 independent reward draws, or 85 times the input value. Each intermediate's separate `open` redemption has three or four class-specific armor outputs. Example: `237581` is Dreadful Voidglass Contaminant, and its direct wearable candidates are `237631` (Death Knight), `237694` (Demon Hunter), `237703` (Warlock). A valid valuation/tooltip must preserve the staged `curio -> chosen class token -> eligible class gear` graph and consume the cost **once** per redemption, subject to character and variant checks. The current ledger marks `225634`, `228819`, and `237602` as `costsComplete:false` and explicitly withholds available redemption actions. Those guards must not be bypassed by cost-source presence alone.
+
+## Source trail and evidence identity
+
+- Exact new worker evidence: `research/v3/evidence/war-within/20261119T0026-tier-curio-exact-exchanges.jsonl` (source pages https://warcraft.wiki.gg/wiki/Kir%27xal ; https://warcraft.wiki.gg/wiki/Kari_Bridgeblaster ; https://warcraft.wiki.gg/wiki/Acquirer_Ba%27theom ).
+- Prior complete stage-one/stage-two identity set: `research/v3/evidence/war-within/2026-10-31T2323-manaforge-omega-tier-tokens.jsonl`, 20 intermediate named token records + class-family child outcomes.
+- Additional independent source confirmation of distinct staged Manaforge redemption: https://www.wowhead.com/ptr-2/news/roll-for-tertiary-stats-with-dimensius-omni-tokens-in-manaforge-omega-377408 (published 2025-06-23, PTR context; confirms a curio buys tier tokens, not preformed gear), and https://www.wowhead.com/npc=248304/acquirer-batheom (live NPC catalog source, exact cost/item variant still subject to verification). Undermine vendor source: https://www.wowhead.com/ptr-2/news/curio-vendor-in-liberation-of-undermine-trade-curios-from-gallywix-for-tier-364020 (2025-01-19 PTR context). Original wiki/vendor pages are not current-client testing.
+- Existing owner integration check: `docs/usable-data-audit/token-ledger.json` at `implementation/usable-data-tooltips` head `3d667d053db587c91401cfed7ecc56862b8340c9`, which remains untouched. Source catalog still pins `4df9ae8`; cost fields are incomplete.
+
+## Validation actually executed
+
+**264 / 264 bounded in-process JavaScript assertions passed** using the *actual fetched* worker 15-row JSONL, prior 21-record Manaforge catalog, and current owner's 342-entry token ledger. Assertions checked uniqueness of 15 worker records/edges, exactly 1×1 quantities, matching known reward IDs for all 15, 5 rows per curio, 20 distinct direct Manaforge intermediate IDs, 15 gaps against that specific 2026-11-19 worker file, class-tagged intermediate outcomes, 65 distinct transitive final gear IDs, and that 20+65=85 matches the owner's compiled ledger. No original research or addon files were altered.
+
+This is **not** Python estimator execution, full ItemDB compilation, native Lua suite, actual synthetic-price token valuation/tooltip, real-character eligibility or WoW client testing. It supplies **no measured processing casts, occurrence probabilities, yield quantities, gold prices, or newly validated Retail economic recommendations**. The 1:1 values are fixed source-reported vendor cost/unit facts, not random yields.
+
+## Scoped next step
+
+Ask reviewer/War Within evidence owner to add only the **15 missing exact direct fixed-vendor 237602→intermediate 1:1 cost edges** through append-only, deduplicated evidence/correction work under their own scope, maintaining the prior 20 token-identity records. Check vendor entry/difficulty bonus IDs, access/stock, class and transferable-alt eligibility. Only then test the actual integrated chooser and tooltip with a synthetic-priced staged redemption fixture (explicit good-class versus wrong-class, intermediate-token use, one curio debit, alternative reward identity), without writing on the owner's `implementation/usable-data-tooltips` branch. Keep current-build `237362` prospect and `236761` mill original 0–N/rank/refund/skill data highest-priority open *numeric* work; do not recycle exhausted old cohorts.
