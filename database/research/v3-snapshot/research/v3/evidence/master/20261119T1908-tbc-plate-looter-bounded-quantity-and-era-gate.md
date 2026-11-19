@@ -1,0 +1,27 @@
+# Three TBC plate Looter cohorts — bounded quantities, not verified Retail EV
+**2026-11-19 19:08 UTC | Research manager | research-only reviewer memo | T0047 / T0052 / T0053**
+
+## Exact inputs and new source
+Read Legacy's appended [11 original-source material rows](https://github.com/Voodoobrew101/Loot-Liquidator/blob/88e70d476c9ad37554c5e82eab87ff2a749734ee/research/v3/evidence/legacy/20261119T1854-three-tbc-plate-original-looter-rows.jsonl) (blob `3d07fb2446b19e09d5d92d043eff9525e3f293ec`; worker commit `88e70d476c9ad37554c5e82eab87ff2a749734ee`). These represent **three source-reported item-specific cumulative Looter tables**, not 13,397 independently audited character casts or eleven separate studies. Items: Boulderfist Bracers 24989 (1,993), Bloodfist Breastplate 25000 (5,588), Bloodfist Helmet 25002 (5,816). The source pages are [24989](https://www.wowhead.com/item=24989/boulderfist-bracers), [25000](https://www.wowhead.com/item=25000/bloodfist-breastplate), and [25002](https://www.wowhead.com/item=25002/bloodfist-helmet). Rows preserve 22445/22446/22449/22447 output IDs, source-reported positive events and conditional stack ranges; all eleven have `totalQuantity=null`, `averageShown=null`, `histogram=null`, `patch=null`, with no skill, variant or collection epoch.
+
+## Independent 118-check source/schema/arithmetic gate
+Validated 11 parsed JSONL rows, unique input/output identities, three shared per-input denominators, exact occurrences, absent totals/averages/histograms/patch, nonnegative possible hits, and positive stack bounds where present, on the *pinned original worker blob*. **118/118 local JavaScript assertions passed**. This is **not** a compiler run, addon-engine valuation, live-character test or external re-verification of the 11 Wowhead Looter numbers.
+
+Source-reported positive rows account for 1,947/1,993, 5,532/5,588 and 5,766/5,816, respectively: residuals **46/56/50**. A residual is **not an observed zero-output cast**. Output rows may be nonexclusive or incomplete; do not invent joint outcomes.
+
+The source-sample per-output chance-like ratios `hit count / reported operations` are usable as **descriptive reported-occurrence fractions**, not player-calibrated probabilities without original event validation. With a *source-supplied conditional stack min/max* and assuming the denominator and per-output hit definition are compatible, the corresponding **sample-average output units are bounded arithmetically** by `hits*min/casts <= reported sample mean <= hits*max/casts`. This is neither observed totalQuantity nor an estimator-eligible point mean. Key example:
+
+| Input | 22445 Arcane Dust occurrence | Per-reported-operation bounded units | Quantity status |
+| --- | ---: | ---: | --- |
+| 24989 | 1477/1993 = 74.11% | 1.4822–5.1877 | only a source-range bound |
+| 25000 | 4184/5588 = 74.87% | 1.4975–5.9900 | only a source-range bound |
+| 25002 | 4310/5816 = 74.11% | 1.4821–6.6695 | only a source-range bound |
+
+The 24989 shard (22449) has **no stated conditional stack range**, so do not invent a one-unit conditional output or a numerical bound from that row. For the other rows, maintain each output's original range instead of multiplying a universal yield or mixing output and input ranks. A provisional midpoint estimate would require explicit owner-policy labeling and applicability; it is not raw evidence, and no proposed midpoint is asserted here.
+
+## Epoch/guide conflict and integration disposition
+The present-day [Warcraft Wiki page for Bloodfist Breastplate](https://warcraft.wiki.gg/wiki/Bloodfist_Breastplate) shows **item level 32**; the [archived version](https://wowwiki-archive.fandom.com/wiki/Bloodfist_Breastplate) shows **level 111**. The archived [Boulderfist Bracers](https://wowwiki-archive.fandom.com/wiki/Boulderfist_Bracers) generic DE table says 22% dust/75% essence, opposite the 74% dust reported by the new item-specific Looter rows; [Wowhead's Arcane Dust guide](https://www.wowhead.com/item=22445/arcane-dust) instead describes a historical ~75% dust chance for uncommon armor at ilvl 100–120. **Do not pool these contradictory table priors with the new cumulative events** without common edition, epoch, item-level and source definitions. Older TBC item level 105/111 is *not* verified present Retail item-instance level or disenchant eligibility.
+
+Classify the 11 rows as **source-usable partial occurrence + conditional ranges / numerical mean absent / epoch and live eligibility unresolved**, not as already validated gold EV. Current output `research/v3/output/summary.md` does not list the three input item IDs at the read head; new evidence has not been proven to reach the runtime or tooltip. A future reviewed scoped adapter may expose the fraction/range with provenance and optional explicitly labeled provisional assumption *after* exact Retail character/variant gating; it must not silently upgrade ranges to measured totals or publish a present-Retail best-action result. Require real resolver and synthetic-price formatter probes under valid and invalid gear profiles, including source preference controls, before claiming an economic improvement.
+
+**Priority:** preserve worker-owned originals and pursue genuinely new current-Retail Midnight 237362/236761 and TWW 210937/210796 complete operation, rank, skill and refund logs. Do not repeat historical spreadsheet cohorts. No addon changes, original-source edits, PRs, merges, releases or schedule changes in this audit.
