@@ -1,89 +1,110 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-19T14:48:47.312Z",
-  "status": "Added two independent source-reported historical WoD disenchant cohorts, one explicitly reference-only average, and an official November 25, 2014 hotfix context. Five rare ilvl-630 item disenchants each yielded 8–12 Draenic Dust (109693), five material-positive operations. A separate 40-ring Blackrock Band source reports six Luminous Shard (111245) units, not verified six hit casts. Earlier 10.5 Draenic Dust per ring is an unweighted source-reported prior with unknown sample size. Priority Warmaul 24995/Cobalt 36909/Fel Iron 23424 event-level ledgers remain blocked; no probabilities, refunds, or prices invented.",
+  "updated_at": "2026-11-19T15:54:04.524Z",
+  "status": "Added eleven NEW source-attributed historical BfA Tidespray bracer disenchant material rows from four independent first-person cohorts. Original poster reports 1,000 completed casts with 7,777 Gloom Dust 152875, 304 Umbra Shard 152876, 42 Veiled Crystal 152877. A different commenter and an April 600-bracer source give distinct material totals but no verified completed cast denominator. Wowhead edwallols explicitly reports 3,384 Alliance rare 161984 disenchants with Iwen's Enchanting Rod and raw output-unit percentages (not P(hit)). Priority Warmaul/Cobalt/Fel Iron still lack new cast-by-cast histograms. No fabricated hit counts/zeros, gold values or current-Retail transfer.",
   "task_ids": [
     "T0047",
     "T0022",
     "T0044",
     "T0042",
+    "T0021",
     "T0050",
-    "T0053",
-    "T0021"
+    "T0053"
   ],
   "exact_gaps_targeted": [
-    "T0047 24995 Warmaul: original completed cast-by-material 0-N and historical-versus-modern eligibility not resolved",
-    "T0022 36909 Cobalt: per-material completed cast hits and zeros still unknown",
-    "T0044 23424 Fel Iron: distinct original real-cast per-gem ledger remains unknown",
-    "T0042 standing historical disenchant baseline: fresh WoD 109693 rare vs shard data and official 2014 hotfix",
-    "T0050 13866 Runecloth Headband modern/historic dust identity not advanced",
-    "T0053 45661 seven-class original token rewards already recorded; no duplicate"
+    "Warmaul Legplates 24995 historical-versus-Retail eligibility, output hit/0-N stack ledger, build",
+    "Cobalt Ore 36909 original per-gem completed casts/hits/zeros",
+    "Fel Iron Ore 23424 original per-gem completed casts/hits/zeros",
+    "Legacy BfA 154692/161984 Tidespray Linen Bracers: distinct player-reported material totals, physical DE versus crafted inventory and gear-rarity context"
   ],
   "newly_verified_fields_cohorts": {
-    "newDistinctFirsthandCohorts": 2,
-    "numberOfNewEvidenceRows": 4,
-    "sourceAuthors": [
-      "lordlight",
-      "Scii"
-    ],
-    "inputItemIDs": [],
+    "newDistinctFirsthandCohorts": 4,
+    "newEvidenceRows": 11,
+    "method": "Disenchant",
     "outputItemIDs": [
-      109693,
-      111245
+      152875,
+      152876,
+      152877
     ],
-    "lordlight": {
-      "reportedCompletedDisenchantCasts": 5,
-      "inputQuality": "rare (blue)",
-      "inputItemLevel": 630,
-      "outputItemID": 109693,
-      "outputPositiveCasts": 5,
-      "perPositiveOutputMin": 8,
-      "perPositiveOutputMax": 12,
-      "totalQuantity": null
-    },
-    "sciiFollowup": {
-      "reportedCompletedDisenchantCasts": 40,
-      "inputItemName": "Blackrock Band rings, 3 variants",
-      "inputHistoricalItemLevel": 585,
-      "outputItemID": 111245,
-      "shardOutputUnits": 6,
-      "shardPositiveCasts": null,
-      "zeroOutcomes": null
-    },
-    "sciiEarlierReference": {
-      "inputItemName": "Blackrock Band rings",
-      "outputItemID": 109693,
-      "sourceReportedAverageDustPerRing": 10.5,
-      "sampleSize": null,
-      "overlapWithFollowup": "unknown",
-      "sourceKind": "reference"
-    },
-    "hotfix": {
-      "date": "2014-11-25",
-      "change": "WoD rare-blue disenchant dust-versus-shard rate and enchanter dust quantity; no numeric rate"
-    },
-    "newConfirmedPriorityItemCompletedCasts": 0,
-    "newVerifiedZeroHistograms": 0,
+    "inputItemIDsVerified": [
+      161984
+    ],
+    "factionAmbiguousInputIDs": [
+      154692,
+      161984
+    ],
+    "cohorts": [
+      {
+        "studyKey": "reddit-gdmjtv-original-1000-mixed-bracer-de",
+        "completedCasts": 1000,
+        "totals": {
+          "152875": 7777,
+          "152876": 304,
+          "152877": 42
+        },
+        "hits": null,
+        "zeroBins": null
+      },
+      {
+        "studyKey": "reddit-gdmjtv-independent-reply-1000-bracers",
+        "craftedBracers": 1000,
+        "completedCasts": null,
+        "totals": {
+          "152875": 7687,
+          "152876": 335,
+          "152877": 36
+        },
+        "hits": null,
+        "zeroBins": null
+      },
+      {
+        "studyKey": "reddit-g8xuhl-600-bracer-shuffle",
+        "craftedBracers": 600,
+        "completedCasts": null,
+        "totals": {
+          "152875": 2982,
+          "152876": 134
+        },
+        "hits": null,
+        "zeroBins": null
+      },
+      {
+        "studyKey": "wowhead-161984-edwallols-3384-alliance-rare-DE",
+        "completedCasts": 3384,
+        "rareItemLevelHistorical": 233,
+        "IwensRod": true,
+        "percentSourceUnitsPer100Inputs": {
+          "152875": 149.0839243,
+          "152876": 215.0118203,
+          "152877": 24.793144
+        },
+        "hits": null,
+        "totalQuantity": null,
+        "zeroBins": null
+      }
+    ],
+    "newVerifiedPriorityItemCompletedCasts": 0,
+    "newVerifiedHistograms": 0,
     "newGoldEVValues": 0
   },
-  "numeric_summary": "Historical WoD: author lordlight 5 reported rare-quality ilvl630 item disenchants, all yielded 109693 in 8–12 units per item; exact total unknown. Independent author Scii reported 40 crafted Blackrock Band item disenchants and six 111245 material units; per-material hit casts unknown. Scii's earlier 10.5 109693/ring is a reference-only average with unknown denominator, not a second independent counted sample. Official Blizzard November 25 2014 rate-change context, with no rates stated. 24995,36909,23424 newly completed-cast rows: zero.",
-  "evidence_file": "research/v3/evidence/legacy/20261119T1448Z-wod-draenic-dust-originals-and-hotfix.jsonl",
+  "numeric_summary": "Four distinct original historical BfA cohorts, 11 material-specific evidence rows; exact output IDs 152875, 152876, 152877. Original Reddit poster physical casts 1000, total units 7777/304/42. Two separate craft-based sources 1000 (7687/335/36) and 600 (2982/134) with completed casts unknown. Alliance rare item 161984 explicit 3384 disenchants; source-reported 149.0839243%/215.0118203%/24.793144% represent MATERIAL UNITS per 100 DE, not positive-cast chance. Zero/hit histograms, input quality mixes, patch and current eligibility unknown.",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-19T1554-bfa-tidespray-three-original-de-cohorts.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/item=109693/draenic-dust",
-    "https://worldofwarcraft.blizzard.com/en-gb/news/16561638",
-    "https://warcraft.wiki.gg/wiki/Hotfixes/2014_Archive"
+    "https://www.reddit.com/r/woweconomy/comments/gdmjtv",
+    "https://www.reddit.com/r/woweconomy/comments/g8xuhl",
+    "https://www.wowhead.com/item=161984/tidespray-linen-bracers"
   ],
-  "verified_base_commit_sha": "ee378604fa9e561defea53745741aed1c27949b8",
+  "verified_base_commit_sha": "4842abc5848fee8df8250d8173767858733a4b15",
   "verified_commit_sha": "ee378604fa9e561defea53745741aed1c27949b8",
-  "commit_note": "This atomic one-commit status includes the checked parent SHA, because its own yet-to-be-created commit SHA cannot be embedded self-referentially. Verify new SHA and exact evidence/status contents by fetching the resulting commit and files after moving ref.",
+  "commit_note": "Single atomic commit for new evidence and own status file. Parent SHA is verified at construction; the new commit SHA cannot be embedded self-referentially in this same commit. Read back new SHA and both blob contents after GitHub ref update. No other repository paths changed.",
   "blockers": [
-    "No independent first-person current-Retail 24995 completed disenchants and linked outcome stack/hit/zero histograms; original 2068-operation Looter cumulative snapshot is already indexed and historical item-level versions disagree.",
-    "Cobalt 36909 prior 180-ore/Russian 24-stack data have no new independent per-output hit/zero export; no repeat.",
-    "Fel Iron 23424 prior original 100-/565-ore and Thottbot five-stack sources already indexed; no repeat.",
-    "Five WoD rare 630 items remain unidentified; 8–12 per positive item is an observed range, not an exhaustive stack histogram or numeric average.",
-    "Scii 40 Blackrock Band rings mix three possible input item IDs; 6 shard units do not establish 6 hits, individual stack sizes, 0-bin histogram or dust totals; earlier 10.5 dust/ring baseline may overlap.",
-    "Historical November 2014 rate-change and ring reports cannot be applied uncritically to current Retail item versions."
+    "24995 Warmaul: no new independently sourced current Retail physical DE operation ledger or skill/item-bonus/patch; cumulative 2068 Looter cohort already indexed and may conflict with scaled no-DE.",
+    "36909 Cobalt: previously recorded 180-ore and 24-stack sources lack per-gem hit/0-N results.",
+    "23424 Fel Iron: historical 100-/565-ore sources previously indexed; no new per-gem event ledger.",
+    "Tidespray source versions 154692 Horde vs 161984 Alliance; mixed Reddit cohorts give faction-unresolved bracer identity/quality; leave inputItemID null.",
+    "Only 1,000 original Reddit main-poster and 3,384 Wowhead edwallols DE denominators are explicit; second Reddit commenter and 600-bracer author do not verify their completed DE operation count.",
+    "Source 3384 percentage values are units per 100, NOT P(hit). No numeric material totals/histograms/hits from that comment; Iwen's Rod affects output scope."
   ],
   "exhausted_sources": [
     {
@@ -564,13 +585,26 @@
         "https://worldofwarcraft.blizzard.com/en-gb/news/16561638: official November 25, 2014 historic Enchanting hotfix; no numeric rate supplied.",
         "Other candidates Elementium original 382, Fel Iron five-stacks, Saronite 1100, Adamantite 48315, and Spiritmend 40 already authored, skipped."
       ]
+    },
+    {
+      "date": "2026-11-19",
+      "lookingFor": "Fresh 24995/36909/23424 player-cast export and additional historic BfA nonduplicate firsthand records",
+      "whereLooked": [
+        "Warmaul, Cobalt, Fel Iron named primary-search leads from prior queue already exhausted; no repeated cohorts imported",
+        "Github code search Deckven 3200 Felslate and Kyparite 555434/965740: already converted and deduped, excluded",
+        "Github search gdmjtv, g8xuhl and author edwallols plus distinctive raw source numerators: no previous matching cohorts indexed",
+        "https://www.reddit.com/r/woweconomy/comments/gdmjtv — two distinct commenters 1000 Tidespray bracers, tracked separately",
+        "https://www.reddit.com/r/woweconomy/comments/g8xuhl — 600 crafted bracers, 2 output totals",
+        "https://www.wowhead.com/item=161984/tidespray-linen-bracers — original edwallols 3384 rare disenchant source, Iwen's Rod; 3 output units-per-input percentages",
+        "Excluded previously indexed large Shrouded 50k and Shadowlace Cuffs cohorts"
+      ]
     }
   ],
-  "next_concrete_step": "Find a new original, independently version-verified 24995 completed Retail disenchant export with per-output stack counts. Then seek 36909 and 23424 per-cast gem results; for WoD seek the three Blackrock Band exact ring IDs, Scii's unedited raw 40-ring ledger and whether 111245 stacks were >1, avoiding source epoch mixing.",
+  "next_concrete_step": "Seek novel original Warmaul Legplates 24995 version-verified Retail physical DE export (0-N outputs, skill/bonus/build); then Cobalt 36909/Fel Iron 23424 prospecting per-output hits/zero histograms. For BfA retrieve actual rarity split, item ID 154692 versus 161984, explicit rod status and exact stack histograms for three Reddit Tidespray cohorts.",
   "exact_gaps": [
-    "24995 Warmaul: no new physical or current-build DE event log and skill/ilvl",
-    "36909 Cobalt: no first-person per-gem hits/zeros",
-    "23424 Fel Iron: no first-person independent per-gem hits/zeros",
-    "WoD 2014 109693 and 111245: no exact rare blue input IDs, ring variants, 40-cast histogram or player skill"
+    "24995 Warmaul current-build physical DE and eligibility unverified",
+    "36909 Cobalt independent per-output completed casts/positive hits/zeros unknown",
+    "23424 Fel Iron independent per-output completed casts/positive hits/zeros unknown",
+    "Tidespray 154692/161984 player report mixed rarity/faction and positive-stack histograms unknown"
   ]
 }
