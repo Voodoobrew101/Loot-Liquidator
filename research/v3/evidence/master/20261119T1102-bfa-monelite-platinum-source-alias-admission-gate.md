@@ -1,0 +1,26 @@
+# 2026-11-19 11:02 UTC — BfA Monelite/Platinum mass-prospect source-alias admission gate
+
+**Scope:** Research-only provenance/units/duplicate audit. No new independent cohort; no addon or estimator edits, no current-Retail or in-client gold proof.
+
+## New-versus-existing source identity
+
+The legacy worker's freshly archived `research/v3/evidence/legacy/2026-11-19T1045-bfa-original-mass-prospect-cohorts.jsonl` (blob `c07a30c86ff61c86a0fcb6ea7286740553ddb25b`) contains **26 material total-quantity rows from two historically distinct January 2019 BfA studies**, but **ALL 26 were previously transcribed as the same source results** in `research/v3/evidence/legacy/2026-11-16T1413-bfa-mass-prospect-2019-and-original-de.jsonl` (blob `8242b3063a15f2c8b9ab8942db190f843d4b24cb`).
+
+- Monelite Ore **152512**, 64,620 reported input ore, 13 exact material IDs and totals (24,924 output units across all 13); new rows `legacy-20261119-110001..110013` correspond **one-to-one** to previous `legacy-20261116-1812001..1812013`. Both attribute the **same 2019 Wowhead table**, with exactly the same 13 material IDs and counts. New rows improve provenance by linking the **deleted** original /u/jamphat Reddit post `aeoy1e`, and by identifying historical Mass Prospect Monelite spell 256611, 20-ore recipe size. This is not a second experiment.
+- Platinum Ore **152513**, 4,000 reported input ore, 13 exact material IDs and totals (2,112 units); new rows `legacy-20261119-110014..110026` correspond **one-to-one** to previous `legacy-20261116-1812014..1812026`. The original /u/SpellNinja Reddit post `aebyge` is still visible and lists the same 13 materials and quantities that appear in the Wowhead summary. New rows improve attribution and add historical Mass Prospect Platinum spell 256622, 20-ore recipe size. This is not a second experiment.
+
+**Source links:** [2019 Wowhead table](https://www.wowhead.com/news/wow-economy-weekly-wrap-up-8-1-5-ptr-data-mining-managing-transmog-plus-valuing-289700); [original Platinum post](https://www.reddit.com/r/woweconomy/comments/aebyge/mass_prospecting_4000_platinum_ore/); [deleted Monelite original](https://www.reddit.com/r/woweconomy/comments/aeoy1e/mass_prospecting_64620_monelite_ore/).
+
+## Tested facts and rules
+
+A bounded connected-GitHub JSONL comparison of the two exact file blobs paired rows by `method/inputItemID/outputItemID`. **340/340 assertions passed**: 26 unique old/new pairs; every `totalQuantity`, `casts`, `castsWithDrop`, `percentShown`, `averageShown`, `minSeen`, and `maxSeen` matched; the new file adds 20-input batch metadata where the older file had none; neither file provides actual completed-operation casts, hit denominators or histograms. Existing rows leave `sourceKind` unset (still a study for the research estimator); the later rows explicitly label `study`. No Python rebuild, real valuation/tooltip renderer, GitHub workflow execution or live WoW client was run by this audit.
+
+The estimator `research/v3/tools/build_estimates.py` blob `0b09b553fef4214af8aaa93f1c85061956643711`, static `source_key()`/ `study_identity()` inspection, normalizes `originalSource` ahead of `source.url`. Earlier Monelite/Platinum study keys resolve to the Wowhead article; new Monelite resolves to the original Reddit URL and new Platinum uses a different Reddit URL. **The present source-key rule does not automatically identify these as the same studies across provenance forms.** `row_use()` needs casts/processed-input count for `totalQuantity` to become an unconditional per-operation average, so **these exact JSONL rows currently provide no new measured valuation simply from totals**; this is a static inference from the read estimator, not an executed compiler result.
+
+The 64,620/20 = 3,231 and 4,000/20 = 200 divisions are **nominal 20-ore recipe equivalents**, **not observed completed casts**. Separate per-ore output-unit ratios are historically source-derived from each single cohort's original total and input quantity and could be evaluated *as labeled historical provisional means* under the owner's useful-means policy **only after** exact input-unit/refund context and unique-cohort selection are enforced. They are not occurrence probabilities, 0-inclusive histograms, material quality, or current-patch measured rates. Do not assign a chance/confidence from them.
+
+## Disposition
+
+**Hold both 13-row repeated study vectors from independent numeric contribution; retain all original rows and the improved original-source links.** Request a disjoint reviewed importer/normalization change or append-only correction mapping that canonicalizes each Reddit original and its Wowhead transcription to one cohort (`aeoy1e` Monelite, `aebyge` Platinum), and handles per-input mean units separately from observed casts. Never delete or overwrite worker originals. A source URL difference or new `studyKey` does not make a second measured study. Keep main, three-pass integration branch, PR Director permissions, current schedules and worker ownership untouched.
+
+**Next priority:** preserve this dedupe gate while focusing new original *current-build* item/rank, completed event and material quantity evidence for Midnight Umbral Tin 237362 / Tranquility Bloom 236761 and TWW ore/herb output and refund logs, rather than collecting another published copy of the 2019 table.
