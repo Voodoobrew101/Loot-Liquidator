@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T00:46:35.979Z",
-  "status": "Added 22 source-original Classic uncommon disenchant material hit/quantity rows in eight previously unrecorded gordon_bender item-level/armor-weapon groups (41,42,43,46,47,51); read-back verified. This is positive-hit evidence with unknown completed-cast denominators and zero outcomes, not updated chances. Warmaul 24995, Cobalt 36909 and Fel Iron 23424 event-level source gaps remain open.",
+  "updated_at": "2026-11-20T01:47:08.999Z",
+  "status": "Added 32 independent contributor original Classic disenchant output records from kron.lua across 13 historical rarity/level/armor-weapon groups; evidence committed and read-back verified. Observed 651 material-positive hits and 1402 material units, NOT completed disenchants or calibrated rates. Priority Warmaul 24995, Cobalt 36909 and Fel Iron 23424 per-event logs still unavailable.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -11,227 +11,69 @@
     "T0021"
   ],
   "exact_gaps_targeted": [
-    "24995 Warmaul Legplates: unresolved modern/current Retail disenchant eligibility, 2068 historical Looter dataset's exact quantities/0-N per-output histograms, skill, build, item-instance metadata; no new 24995 event-level cohort this run",
-    "36909 Cobalt Ore: no new independent complete 5-ore prospect cast ledgers with per-output hit and zero counts; 180-ore report and 24 stacks are already recorded",
-    "23424 Fel Iron Ore: no new independent full completed-cast and output-hit/zero ledger beyond existing Thottbot cohorts",
-    "New original Classic uncommon armor and weapon groups at historic item levels 41, 42, 43, 46, 47, 51: material hit counters and total material units, separated per original source group; never infer completed-cast total from positive hits"
+    "Warmaul Legplates 24995: source 2068 cumulative historical Looter denominators and 22445/22446/22447/22449 hits, missing independently inspectable full per-cast histograms, stack quantities, source build and actual Retail eligibility",
+    "Cobalt Ore 36909: missing independent firsthand completed prospect denominator with exact output ID hits, zeros and quantity distribution; 24 source-reported stacks are not verified 96 completed casts",
+    "Fel Iron Ore 23424: no new independent completed 5-ore prospect logs with per-gem hits and 0-N stack bins beyond existing original studies",
+    "Distinct Classic original contributor kron EnchantedItemTypes grouped source: recover output IDs, source-positive observation counts and total material quantities by historical item level/rarity/armor vs weapon, without double counting same contributor's individual items or derived detable.csv"
   ],
   "newly_verified_fields_cohorts": {
-    "newEvidenceRows": 22,
-    "newDropRows": 22,
-    "newDistinctSourceCohorts": 8,
-    "originalContributor": "gordon_bender.lua",
-    "originalSourceSha": "64c0d47875b4f1e04deedb69e1fb1627dceb1828",
-    "sourceProvenance": "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/gordon_bender.lua",
-    "sourceFields": [
-      "gearGroup historical uncommon item level and armor/weapon",
-      "outputItemID",
-      "castsWithDrop (positive material hit counter)",
-      "totalQuantity (material units)"
+    "source": "kron.lua original Enchantrix grouped counter lines, contribution independent of prior gordon_bender/dmitry_popov/lavasalesmans_log files",
+    "sourceCommit": "5918ca3e44f6e4bba9071731ab28be3189498001",
+    "sourceBlobSHA": "3c7e80eab71ec836410ce5afa34fdcbaea8bfdc5",
+    "recordCount": 32,
+    "distinctStudyKeys": 13,
+    "groupKeys": [
+      "enchantrix-kron-57-2-4",
+      "enchantrix-kron-47-2-4",
+      "enchantrix-kron-46-2-2",
+      "enchantrix-kron-48-2-2",
+      "enchantrix-kron-55-2-4",
+      "enchantrix-kron-51-2-4",
+      "enchantrix-kron-43-2-4",
+      "enchantrix-kron-56-2-4",
+      "enchantrix-kron-57-3-4",
+      "enchantrix-kron-41-2-4",
+      "enchantrix-kron-58-3-4",
+      "enchantrix-kron-46-2-4",
+      "enchantrix-kron-61-2-2"
     ],
-    "inputItemIDs": [],
-    "outputItemIDs": [
-      11174,
-      11137,
-      11177,
-      11175,
-      11176,
-      11178,
-      14343,
-      16202
+    "sourcePositiveMaterialHitObservations": 651,
+    "sourceTotalMaterialUnits": 1402,
+    "fieldAdvance": [
+      "gearGroup exact historical item level (13 groups)",
+      "quality: uncommon or rare (source numeric quality 2/3)",
+      "kind: armor/weapon (source numeric type 4/2)",
+      "outputItemID and outputName (11 exact Classic material IDs)",
+      "castsWithDrop as source positive material observations",
+      "totalQuantity (exact recorded material totals)"
     ],
-    "perGroup": [
-      {
-        "group": "41:2:4",
-        "kind": "armor",
-        "itemLevel": 41,
-        "outputs": [
-          {
-            "outputItemID": 11174,
-            "castsWithDrop": 30,
-            "totalQuantity": 43
-          },
-          {
-            "outputItemID": 11137,
-            "castsWithDrop": 115,
-            "totalQuantity": 394
-          },
-          {
-            "outputItemID": 11177,
-            "castsWithDrop": 10,
-            "totalQuantity": 10
-          }
-        ]
-      },
-      {
-        "group": "42:2:4",
-        "kind": "armor",
-        "itemLevel": 42,
-        "outputs": [
-          {
-            "outputItemID": 11174,
-            "castsWithDrop": 10,
-            "totalQuantity": 12
-          },
-          {
-            "outputItemID": 11137,
-            "castsWithDrop": 7,
-            "totalQuantity": 24
-          },
-          {
-            "outputItemID": 11177,
-            "castsWithDrop": 1,
-            "totalQuantity": 1
-          }
-        ]
-      },
-      {
-        "group": "43:2:4",
-        "kind": "armor",
-        "itemLevel": 43,
-        "outputs": [
-          {
-            "outputItemID": 11177,
-            "castsWithDrop": 17,
-            "totalQuantity": 17
-          },
-          {
-            "outputItemID": 11137,
-            "castsWithDrop": 201,
-            "totalQuantity": 702
-          },
-          {
-            "outputItemID": 11174,
-            "castsWithDrop": 63,
-            "totalQuantity": 106
-          }
-        ]
-      },
-      {
-        "group": "46:2:2",
-        "kind": "weapon",
-        "itemLevel": 46,
-        "outputs": [
-          {
-            "outputItemID": 11175,
-            "castsWithDrop": 13,
-            "totalQuantity": 18
-          },
-          {
-            "outputItemID": 11176,
-            "castsWithDrop": 2,
-            "totalQuantity": 2
-          }
-        ]
-      },
-      {
-        "group": "46:2:4",
-        "kind": "armor",
-        "itemLevel": 46,
-        "outputs": [
-          {
-            "outputItemID": 11175,
-            "castsWithDrop": 32,
-            "totalQuantity": 40
-          },
-          {
-            "outputItemID": 11176,
-            "castsWithDrop": 135,
-            "totalQuantity": 206
-          },
-          {
-            "outputItemID": 11178,
-            "castsWithDrop": 9,
-            "totalQuantity": 9
-          }
-        ]
-      },
-      {
-        "group": "47:2:2",
-        "kind": "weapon",
-        "itemLevel": 47,
-        "outputs": [
-          {
-            "outputItemID": 11175,
-            "castsWithDrop": 5,
-            "totalQuantity": 8
-          },
-          {
-            "outputItemID": 11176,
-            "castsWithDrop": 1,
-            "totalQuantity": 2
-          }
-        ]
-      },
-      {
-        "group": "47:2:4",
-        "kind": "armor",
-        "itemLevel": 47,
-        "outputs": [
-          {
-            "outputItemID": 11175,
-            "castsWithDrop": 7,
-            "totalQuantity": 11
-          },
-          {
-            "outputItemID": 11176,
-            "castsWithDrop": 20,
-            "totalQuantity": 29
-          },
-          {
-            "outputItemID": 11178,
-            "castsWithDrop": 3,
-            "totalQuantity": 3
-          }
-        ]
-      },
-      {
-        "group": "51:2:4",
-        "kind": "armor",
-        "itemLevel": 51,
-        "outputs": [
-          {
-            "outputItemID": 14343,
-            "castsWithDrop": 11,
-            "totalQuantity": 11
-          },
-          {
-            "outputItemID": 16202,
-            "castsWithDrop": 59,
-            "totalQuantity": 90
-          },
-          {
-            "outputItemID": 11176,
-            "castsWithDrop": 211,
-            "totalQuantity": 737
-          }
-        ]
-      }
-    ],
-    "unknownFields": [
-      "completed casts",
-      "zero-outcome casts",
-      "per-output 0-N stack histograms",
-      "item instance/build/skill/specialization",
-      "refunds",
-      "current Retail eligibility"
+    "untouchedUnknowns": [
+      "completed disenchant casts",
+      "any zero outcomes",
+      "per-output zero-inclusive histograms",
+      "per-cast joint yields",
+      "per-cast conditional min/max",
+      "skill and specialization",
+      "actual source build and hotfix",
+      "Retail item-instance eligibility and bonuses",
+      "refunds"
     ]
   },
-  "numeric_summary": "41:2:4 armor: 11174 hits=30 units=43, 11137 hits=115 units=394, 11177 hits=10 units=10; 42:2:4 armor: 11174 hits=10 units=12, 11137 hits=7 units=24, 11177 hits=1 units=1; 43:2:4 armor: 11177 hits=17 units=17, 11137 hits=201 units=702, 11174 hits=63 units=106; 46:2:2 weapon: 11175 hits=13 units=18, 11176 hits=2 units=2; 46:2:4 armor: 11175 hits=32 units=40, 11176 hits=135 units=206, 11178 hits=9 units=9; 47:2:2 weapon: 11175 hits=5 units=8, 11176 hits=1 units=2; 47:2:4 armor: 11175 hits=7 units=11, 11176 hits=20 units=29, 11178 hits=3 units=3; 51:2:4 armor: 14343 hits=11 units=11, 16202 hits=59 units=90, 11176 hits=211 units=737. casts=null; zero-outcome casts=null; histograms=null; chance/confidence/EV not inferred.",
-  "evidence_file": "research/v3/evidence/legacy/2026-11-20T0045-gordon-bender-new-classic-bands.jsonl",
+  "numeric_summary": "32 rows across 13 original source groups; total source-positive material hits=651, material units=1402, neither is a denominator. 43:2:4 armor: 11174 hits=23 units=34; 11137 hits=97 units=323; 11177 hits=8 units=8; 51:2:4 armor: 14343 hits=8 units=8; 16202 hits=24 units=35; 11176 hits=84 units=299; 46:2:4 armor: 11175 hits=29 units=46; 11176 hits=66 units=104; 11178 hits=8 units=8; 56:2:4 armor: 16203 hits=5 units=6; 16204 hits=36 units=55; 14344 hits=1 units=1; 57:3:4 rare armor: 14344 hits=55 units=55; 58:3:4 rare armor: 14344 hits=74 units=74; 61:2:2 weapon: 16203 hits=2 units=5; 16204 hits=1 units=4. All casts, zero outcomes, per-cast histogram, chance, confidence and prices are null/not inferred.",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-20T0145-kron-independent-classic-bands.jsonl",
   "source_urls": [
-    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/gordon_bender.lua",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/e5ac6cf604c9886cac8100735d456b7f9037bcf9/research/v3/evidence/legacy/2026-11-20T0045-gordon-bender-new-classic-bands.jsonl"
+    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/kron.lua",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/6ed7d63d18a02d40bc57e6f3335c4fc8800ae9c4/research/v3/evidence/legacy/2026-11-20T0145-kron-independent-classic-bands.jsonl"
   ],
-  "verified_base_commit_sha": "284e455c6b0bbc7c2ebc6898acf9eee2a381b800",
-  "verified_commit_sha": "e5ac6cf604c9886cac8100735d456b7f9037bcf9",
-  "commit_note": "Evidence committed at verified SHA e5ac6cf604c9886cac8100735d456b7f9037bcf9; read-back showed 22 valid rows and eight unique study keys. Status is updated in a separate sequential GitHub Contents API commit due absence of an available atomic multi-file branch commit endpoint; no other worker files touched. Future tooling should support a single commit containing evidence plus this status.",
+  "verified_base_commit_sha": "88c4e0a5efbbb7c3e64f94403dc0c8f8bed74b9b",
+  "verified_commit_sha": "6ed7d63d18a02d40bc57e6f3335c4fc8800ae9c4",
+  "commit_note": "Evidence commit 6ed7d63d18a02d40bc57e6f3335c4fc8800ae9c4 read-back verified at exact commit SHA (32 parseable JSONL rows, 13 studyKeys); only one new legacy evidence file. The GitHub connected-app write surface cannot atomically update two files because it does not expose parent tree hashes, so this quiet-status update necessarily uses a separate sequential metadata commit, while preserving all concurrent branch changes; no merges/releases or other worker files.",
   "blockers": [
-    "Warmaul 24995 historical 2068-output Looter statistics are not a live Retail eligibility test; original source lacks exact material totals/stack histograms and patch/build metadata.",
-    "Cobalt 36909 and Fel Iron 23424 have no newly found independent completed-cast logs with per-output zeros and 0-N histograms; earlier reports must not be re-counted.",
-    "Original gordon_bender.lua EnchantedItemTypes positive-hit counters and units do not prove complete disenchant denominator, per-output zero counts, source game client version or contemporary Retail applicability.",
-    "Potential overlap of this contributor's EnchantedLocal and derived detable.csv: don't count those as new cohorts.",
-    "Master/tooling: current GitHub connector exposed only one-file Contents API write and no read-tree operation; status update therefore required a second commit instead of requested atomic single commit."
+    "Warmaul Legplates 24995: archived 2068-output Looter cohort lacks item-instance/build/skill and measured units/stack histograms; modern WoWDB lists cannot be disenchanted. Do not transfer Classic/TBC samples to live Retail unverified.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: no fresh independent per-event completed-cast results with exact gem IDs, zeros/histograms and patch/skill; existing nominal ore/stack reports not treated as true cast counts.",
+    "The original kron.lua EnchantedItemTypes values only show positive output hit/quantity counters; even though 32 rows were recovered, no complete disenchant denominator or per-output zeros exist. A trailing :0 field is NOT an observed zero outcome.",
+    "Original contributor kron EnchantedLocal and derived detable.csv may overlap these grouped counters, so never count as separate independent samples.",
+    "Connector permits one-file GitHub Contents API writes; evidence and status updates consume distinct sequential commits, not requested atomic one-commit update."
   ],
   "exhausted_sources": [
     {
@@ -792,8 +634,15 @@
         "2020-06-15 original gnarm.lua account EnchantedItemTypes directly fetched and parsed: 23 new numeric output rows from 14 unique uncommon item-level gear groups",
         "Original gnarm.lua EnchantedLocal coexists with grouped table; excluded due potentially shared events"
       ]
+    },
+    {
+      "lookingFor": "Previously unused original kron Enchantrix logs addressing priority Warmaul 24995 and prospecting Cobalt 36909/Fel Iron 23424",
+      "whereLooked": [
+        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/kron.lua original EnchantedItemTypes source: 13 untouched historical Classic disenchant rarity/level/kind groups with 32 material positive hits/total quantity records; not current Retail evidence",
+        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/kron.lua checked raw file for 24995, 36909 and 23424 exact IDs: no item-specific Warmaul entry or independently recorded ore prospecting events; ProspectedLocal and MillingLocal are empty"
+      ]
     }
   ],
-  "next_concrete_step": "Prioritize wholly new Warmaul 24995 in-game Retail test or archived complete 2068-histogram raw log, and fresh Cobalt/Fel Iron real per-event prospecting exports. If those remain unavailable, continue untouched independent Enchantrix contributor/group sources without re-counting this gordon_bender contributor or derived table.",
-  "previous_verified_commit_sha": "cc5756fa42aeae9a41594eb56fe13b922ba54315"
+  "next_concrete_step": "Seek a genuinely new, dated Retail Warmaul Legplates 24995 in-game eligibility/cast export or original 2068-event Looter raw table; then original Cobalt 36909/Fel Iron 23424 completed prospect per-output logs. If unavailable, select a distinct as-yet-unrecorded individual Enchantrix contributor (e.g., gnarm or kybele), verify no cohort/source duplication and extract source-positive counts without claiming a cast denominator.",
+  "previous_verified_commit_sha": "e5ac6cf604c9886cac8100735d456b7f9037bcf9"
 }
