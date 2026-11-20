@@ -2,32 +2,112 @@
   "role": "dragonflight",
   "agent": "dragonflight",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T09:33:36.071Z",
-  "status": "Reviewed open Dragonflight T0020/T0018/T0015/T0041/T0046 and original held Bugy/JC source material; discovered an additional legacy source-only confidence-placeholder hazard requiring Master importer guard. No new independently measured ore/herb completed-cast cohort, exact output-hit count or 0..N histogram; no new evidence JSONL.",
+  "updated_at": "2026-11-20T10:42:10.768Z",
+  "status": "Recovered five previously unindexed original Xenastro Serevite Q3 dated prospecting batches (45 source-reported quality-bucket/Illimited Diamond unit totals, four measured ore-refund quantity fields). Source outcomes verified; actual completed casts, per-material hit events, zero-cast bins and post-2023 Retail applicability remain unknown. No build, production or PR changes.",
   "task_ids": [
+    "T0046",
+    "T0041",
+    "T0019",
     "T0020",
     "T0018",
     "T0015",
-    "T0041",
-    "T0046",
     "standing-held-original-source-audit"
   ],
   "exact_gaps_targeted": [
-    "T0020 Draconium R1 189143 prospect event-level logs absent; held Bugy nominal-2,000-ore batches give no completed operations, refunds, actual quality/rank output IDs or hits. Family anchors Neltharite/Ysemerald are swapped in immutable held JSON and cannot become item-level observations.",
-    "T0018 Bubble Poppy R1 191467 / R2 191468 / R3 191469 -> Serene Pigment 198412/198413/198414: source-original completed mills, rank-specific total units, zero/result histograms not found; old beta reference not measurement.",
-    "T0015/T0017 Saxifrage 191464/191465/191466 -> Blazing Pigment 198418/198419/198420: old Aary 100-herb R2/R3 posts and ~1700-input original already indexed; no verified completed mills/hit counts.",
-    "T0041/T0046 Prismatic Ore 194545 -> Eternity Amber rank-three candidate 192851: existing superbondez 4 units/80 completed prospects already indexed; original exact output link and castsWithDrop/histograms still unknown.",
-    "Prospect Draconium, Serevite, Khaz'gorite original 2023 sample posts: nominal input quantities vs completed cast denominator still unresolved; avoid inferring operations from five-ore equivalents or mining/recycling outcomes."
+    "Original Xenastro Prospecting Log new Serevite R3 190394 January 15, 16, 19, 20 and 26 2023 separate dated batches; rank-bucket totals were not previously entered, and completed casts remain unknown.",
+    "Original XLSX Ore Refund input quantity not completed operation count, zero-cast count, hit count or reusable-input assumption; Jan 20 refund cell blank not a measured zero.",
+    "Open rank-1 Draconium 189143, Bubble Poppy 191467 and Saxifrage 191464 original completed operations, exact output identities and 0..N per-output histograms remain missing.",
+    "Prismatic 194545 original R3 Eternity Amber 4 units/80 prospects is already recorded; do not duplicate or invent hit probability."
   ],
   "newly_verified_fields": [
-    "Current Master-reviewed source identity gate exists at research/v3/evidence/master/20261120T0807-bugy-draconium-family-anchor-admission-gate.md and specifically holds four swapped Neltharite/Ysemerald family-anchor references (R1 family anchors 192862 and 192859, respectively). Master checked direct source/worker rows; no archive edit or run of the build-time reviewer has yet established any impact on generated ItemDB.",
-    "Rechecked original Bugy 2×2,000 nominal-ore source: its published per-ore averages and skill 122/Enterprising 15/Prospecting 25 do not give actual completed casts, rank-specific output item IDs, occurrence counts, refunds or histogram.",
-    "Additional dated first-person sources checked: Feb 5 2023 >100k R2 Draconium observation lacks numeric gem outcome ledger; Dec 27 2023 100k R2 Serevite post discusses gem crushing and a price model, not a per-prospect yield table. Neither supplies admissible random-prospect measurements.",
-    "Fresh original-archive-only QA: both Bugy Draconium 2,000-nominal-ore cohorts contain 14 named outputs each (28 total), ALL with identical fieldConfidence {probability:0,yieldMin:0,yieldMax:0,expectedQuantity:45}, despite hitOperations=null, actualOutputItemID=null and outputQualityRank=null. These are historical source-only confidence placeholders, NOT source-measured zero probabilities, yield bounds or justified numeric confidence, and must be ignored/held by any future legacy adapter. Archive normalization itself says probabilityMeasured=false/positiveYieldMinMaxMeasured=false/currentRetailMatch=false. No current importer/runtime impact demonstrated."
+    "Original Xenastro Prospecting Log XLSX directly read: CSV rows 44,45,48,49,55 (Excel rows 46,47,50,51,57), all Serevite Q3 190394 and dated 2023-01-15/16/19/20/26; 45 source original rank-bucket totals exactly matched their own per-category subtotals.",
+    "Source nominal ore quantities 13000,15000,14000,14000,16000; original Ore Refund saved-ore quantities 1631,2162,1944,null,2091 (blank remains unknown); original skill 277,277,279,280,283; Inspiration 0.198, Resourcefulness 0.306 for all five historical batches.",
+    "Original gemstone group totals and three individually rank-mapped Illimited Diamond units transcribed without identifying pooled green/blue gem species or deriving casts, rates, zero-result counts, net inputs or histograms.",
+    "Input ID 190394 Q3 independently supported by https://goldcap.gg/retail/kr/items/190394; diamond rank IDs 192869/192870/192871 supported by existing original-source repo mappings and https://goldcap.gg/retail/kr/items/192871."
   ],
-  "newly_verified_cohorts": [],
-  "new_numerical_measurements": "No new independent original measured cohort or new source-reported processing totals; 28 legacy confidence placeholders audited and withheld.",
-  "numerical_fields_improved": [],
+  "newly_verified_cohorts": [
+    {
+      "csvRow": 44,
+      "excelRow": 46,
+      "date": "2023-01-15",
+      "inputItemID": 190394,
+      "inputRank": 3,
+      "nominalOre": 13000,
+      "reportedOreRefund": 1631,
+      "skill": 277,
+      "totalOutputUnits": 4686,
+      "greenUnits": 3307,
+      "blueUnits": 1360,
+      "diamondUnits": 19,
+      "studyKey": "xenastro-original-prospecting-log-serevite-r3-csvrow-44-2023-01-15"
+    },
+    {
+      "csvRow": 45,
+      "excelRow": 47,
+      "date": "2023-01-16",
+      "inputItemID": 190394,
+      "inputRank": 3,
+      "nominalOre": 15000,
+      "reportedOreRefund": 2162,
+      "skill": 277,
+      "totalOutputUnits": 5465,
+      "greenUnits": 3864,
+      "blueUnits": 1580,
+      "diamondUnits": 21,
+      "studyKey": "xenastro-original-prospecting-log-serevite-r3-csvrow-45-2023-01-16"
+    },
+    {
+      "csvRow": 48,
+      "excelRow": 50,
+      "date": "2023-01-19",
+      "inputItemID": 190394,
+      "inputRank": 3,
+      "nominalOre": 14000,
+      "reportedOreRefund": 1944,
+      "skill": 279,
+      "totalOutputUnits": 5080,
+      "greenUnits": 3553,
+      "blueUnits": 1504,
+      "diamondUnits": 23,
+      "studyKey": "xenastro-original-prospecting-log-serevite-r3-csvrow-48-2023-01-19"
+    },
+    {
+      "csvRow": 49,
+      "excelRow": 51,
+      "date": "2023-01-20",
+      "inputItemID": 190394,
+      "inputRank": 3,
+      "nominalOre": 14000,
+      "reportedOreRefund": null,
+      "skill": 280,
+      "totalOutputUnits": 5150,
+      "greenUnits": 3708,
+      "blueUnits": 1430,
+      "diamondUnits": 12,
+      "studyKey": "xenastro-original-prospecting-log-serevite-r3-csvrow-49-2023-01-20"
+    },
+    {
+      "csvRow": 55,
+      "excelRow": 57,
+      "date": "2023-01-26",
+      "inputItemID": 190394,
+      "inputRank": 3,
+      "nominalOre": 16000,
+      "reportedOreRefund": 2091,
+      "skill": 283,
+      "totalOutputUnits": 5771,
+      "greenUnits": 4050,
+      "blueUnits": 1697,
+      "diamondUnits": 24,
+      "studyKey": "xenastro-original-prospecting-log-serevite-r3-csvrow-55-2023-01-26"
+    }
+  ],
+  "new_numerical_measurements": "45 original author source-reported output-unit totals for five previously unindexed, distinct dated R3 Serevite batches, including explicit rank-specific zero-unit totals. Four original ore-refund saved-input quantities (1631,2162,1944,2091), plus one blank null. All casts/hits/histograms remain unknown; no new measured probabilities or unit-per-cast rates.",
+  "numerical_fields_improved": [
+    "45 rank-stratified source-reported totalQuantity values (30 pooled green/blue categories with outputItemID=null; 15 exact Illimited Diamond quality ID rows 192869/192870/192871)",
+    "Four source-reported Ore Refund input quantity fields in row notes/stats; fifth source blank preserved null",
+    "Five nominal ore input counts and source skill/stat profiles, not cast denominators"
+  ],
   "evidence_files": [
     "research/v3/evidence/dragonflight/2026-11-19T0334-prismatic-selected-batch-and-rank-gap.jsonl",
     "research/v3/evidence/dragonflight/2026-11-19T0435-five-new-epic-gear-looter-hits.jsonl",
@@ -55,10 +135,11 @@
     "research/v3/evidence/dragonflight/2026-11-20T0236-walking-mountain-five-gear-hit-cohorts.jsonl",
     "research/v3/evidence/dragonflight/2026-11-20T0347-resonant-crystal-ten-unindexed-gear-items.jsonl",
     "research/v3/evidence/dragonflight/2026-11-20T0433-new-original-event-ledger-gaps.jsonl",
-    "research/v3/evidence/dragonflight/2026-11-20T0537-khazgorite-video-and-original-processing-ledger-audit.jsonl"
+    "research/v3/evidence/dragonflight/2026-11-20T0537-khazgorite-video-and-original-processing-ledger-audit.jsonl",
+    "research/v3/evidence/dragonflight/2026-11-20T1040-xenastro-five-original-serevite-r3-batches.jsonl"
   ],
-  "current_run_evidence_file": null,
-  "evidence_file": "research/v3/evidence/dragonflight/2026-11-20T0537-khazgorite-video-and-original-processing-ledger-audit.jsonl",
+  "current_run_evidence_file": "research/v3/evidence/dragonflight/2026-11-20T1040-xenastro-five-original-serevite-r3-batches.jsonl",
+  "evidence_file": "research/v3/evidence/dragonflight/2026-11-20T1040-xenastro-five-original-serevite-r3-batches.jsonl",
   "source_links": [
     "https://www.reddit.com/r/woweconomy/comments/zkay8v",
     "https://www.reddit.com/r/woweconomy/comments/108782r",
@@ -77,11 +158,16 @@
     "https://www.reddit.com/r/woweconomy/comments/18sd8ly",
     "https://www.wowhead.com/item=192869/illimited-diamond",
     "https://www.wowhead.com/it/item=192869/illimited-diamond",
-    "https://www.wowhead.com/fr/item=194545/prismatic-ore"
+    "https://www.wowhead.com/fr/item=194545/prismatic-ore",
+    "https://drive.google.com/file/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/view",
+    "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/",
+    "https://goldcap.gg/retail/kr/items/190394",
+    "https://goldcap.gg/retail/kr/items/192871",
+    "https://goldcap.gg/retail/tw/items/192870"
   ],
-  "verified_parent_sha": "e7bdc69d3b80607096b27dd9d22e9b28595b57ee",
+  "verified_parent_sha": "a9f68fe23d7e2bfee7be30d641353fe964fe2e2f",
   "verified_commit_sha": "e9c4c31fd05d3dfa4f4e1adf5dd3d62e530ae1de",
-  "commit_sha_scope": "verified_parent_sha is repository branch head immediately before this role-only update; verified_commit_sha retains prior successfully verified commit and cannot self-reference the new commit in one atomic write.",
+  "commit_sha_scope": "verified_parent_sha records branch head prior to this one atomic commit. verified_commit_sha is the last previously verified commit; the new commit SHA is verified externally by read-back to avoid impossible self-referential hash.",
   "blockers": [
     "Master documented Bugy held archive's four Neltharite/Ysemerald swapped outputFamilyAnchorID values and held affected rows. The builder/importer remediation decision and an exact-SHA build-review fixture are still outstanding. Do not modify the source archive or infer production valuation impact.",
     "No independent exact-input R1 Draconium 189143 numeric per-cast study; Bugy's nominal ore total and 5-ore equivalent cannot be used as observed cast denominator.",
@@ -823,41 +909,44 @@
       ]
     }
   ],
-  "next_concrete_step": "Master: at build-review exact SHA, assert legacy Bugy 28 fieldConfidence placeholders cannot map to measured probability/yield confidence while retaining source averages and 4 held swapped family anchors. Worker: pursue independent R1 Draconium 189143 or Bubble Poppy 191467 actual-operation/refund ledger with output-ID ranks and per-output 0..N histograms; do not repeat existing Bugy/Xenastro/Aary/superbondez datasets.",
+  "next_concrete_step": "Seek independent completed-prospect/Resourcefulness event logs and item-specific 0..N histograms for rank-1 Draconium 189143 and Bubble Poppy milling 191467; for these five 2023 Xenastro Serevite rows, obtain the workbook author's Quantity/refund/reprocessing definitions and actual completed operation ledger. Master handles build-time admission: pooled species and missing casts must not become specific modern measured rates.",
   "validation": {
-    "new_jsonl_created": false,
-    "source_record_rows": 0,
-    "new_independent_cohorts": 0,
-    "original_files_examined": 3,
-    "master_review_file": "research/v3/evidence/master/20261120T0807-bugy-draconium-family-anchor-admission-gate.md",
-    "master_gate_reviewed": true,
-    "external_sources_checked": [
-      "https://www.wowhead.com/item=192869/illimited-diamond",
-      "https://www.reddit.com/r/woweconomy/comments/10u5ao8",
-      "https://www.reddit.com/r/woweconomy/comments/18sd8ly",
-      "https://www.wowhead.com/item=197649/nokhud-reaver-legplates"
+    "original_source": "Google Drive original Xenastro Prospecting Calculator V1.xlsx Prospecting Log worksheet",
+    "source_url": "https://drive.google.com/file/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/view",
+    "source_csv_rows": [
+      44,
+      45,
+      48,
+      49,
+      55
     ],
-    "rank_output_candidate": "Eternity Amber R3 192851 is secondary candidate only; no cast-hit measurement",
-    "source_identity_crosscheck": "Bugy held source JSON independently compared with newer Master review; prior 77 assertions reported by Master, not rerun here",
+    "source_excel_rows": [
+      46,
+      47,
+      50,
+      51,
+      57
+    ],
+    "source_record_rows": 45,
+    "new_jsonl_created": true,
+    "new_distinct_dated_cohorts": 5,
+    "each_group_subtotals_equal_original": true,
+    "all_unknown_casts_null": true,
+    "all_unknown_hit_histograms_null": true,
+    "output_rank_id_corroboration": "Secondary GoldCap for Q3 Serevite 190394; existing reviewed rank mappings for Illimited Diamond 192869/192870/192871",
+    "duplicate_source_check": "Existing Dragonflight Xenastro 2026-11-08/15/16/20 original-indexed files and name/date searches checked; these five original CSV row numbers not indexed in prior worker evidence.",
+    "zero_output_counts_note": "Explicit source zero totalQuantity is preserved; zero operation histogram remains null.",
     "changed_paths": [
+      "research/v3/evidence/dragonflight/2026-11-20T1040-xenastro-five-original-serevite-r3-batches.jsonl",
       "research/coordination/quiet-status/dragonflight.json"
     ],
-    "status_readback": "post-write verification required; final run logs will verify",
-    "one_atomic_commit": true,
     "production_or_schema_changed": false,
-    "source_archive_path": "research/evidence/observations/2026-10-28-draconium-bugy-2x2000ore-unassigned-quality.json",
-    "archived_buckets_inspected": 2,
-    "archived_named_output_rows": 28,
-    "identical_legacy_fieldConfidence_placeholders": 28,
-    "unknown_source_hit_operations": 28,
-    "unknown_actual_output_ids": 28,
-    "unknown_output_ranks": 28,
-    "legacy_not_v3_measured": true
+    "one_atomic_commit": true
   },
   "production_changed": false,
   "merge_performed": false,
   "release_performed": false,
-  "new_source_reported_numeric_rows": 0,
+  "new_source_reported_numeric_rows": 45,
   "identity_corrections": [
     {
       "family": "Draconium Ore",
@@ -1065,6 +1154,38 @@
         ],
         "classification": "secondary independent crosscheck; hold measured row's exact output ID null pending source/first-party verification"
       }
+    },
+    {
+      "classification": "source-verified-reviewable-held-for-cast-denominator",
+      "study": "Xenastro Jan15/16/19/20/26 2023 Serevite Q3 original Prospecting Log five separate dated batches",
+      "source": "https://drive.google.com/file/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/view",
+      "inputItemID": 190394,
+      "sourceRows": [
+        44,
+        45,
+        48,
+        49,
+        55
+      ],
+      "outputRows": 45,
+      "nominalInputs": [
+        13000,
+        15000,
+        14000,
+        14000,
+        16000
+      ],
+      "refundedOreUnits": [
+        1631,
+        2162,
+        1944,
+        null,
+        2091
+      ],
+      "completedCasts": null,
+      "histogram": null,
+      "evidence": "research/v3/evidence/dragonflight/2026-11-20T1040-xenastro-five-original-serevite-r3-batches.jsonl",
+      "reason": "Original rank-specific gem totals and saved-ore quantities preserved. Exact per-cast denominator, ore refund reprocessing, green/blue material species IDs, item-level hits, zero-cast bins, exact patch/build and present Retail compatibility unknown. Reviewable historical source evidence, NOT admitted as measured current Retail P(hit) or E[units/cast]."
     }
   ]
 }
