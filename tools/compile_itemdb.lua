@@ -10,7 +10,16 @@ local db={schemaVersion=1,version='1.2.0',processing={},mechanicRules={},
     provenance='Pinned research plus versioned Retail reference fallbacks; see researchV3Manifest and referenceManifest',
     compat={Conversions=references.compatConversions,DisenchantTables=LL.DisenchantTables,
         ResearchTokenCandidates=LL.ResearchTokenCandidates,ResearchProcessingInputs=LL.ResearchProcessingInputs}}
-local methods={Mill='Inscription',Prospect='Jewelcrafting',Disenchant='Enchanting',Smelt='Mining'}
+local methods={Mill='Inscription',Prospect='Jewelcrafting',Disenchant='Enchanting',Smelt='Mining',
+    Recycle='Engineering',Unravel='Tailoring',Crush='Jewelcrafting',Thaumaturgy='Alchemy',
+    Craft=true,Research=true,Refine=true}
+local professions={Alchemy=true,Blacksmithing=true,Enchanting=true,Engineering=true,Herbalism=true,
+    Inscription=true,Jewelcrafting=true,Leatherworking=true,Mining=true,Skinning=true,Tailoring=true,Cooking=true,Fishing=true}
+local function researchProfession(record)
+    local expected=methods[record.method]
+    if expected==true then return professions[record.profession] and record.profession or nil end
+    if expected and (record.profession==nil or record.profession==expected) then return expected end
+end
 local function clone(t) local n={} for k,v in pairs(t or {}) do n[k]=v end return n end
 local function deepCopy(value)
     if type(value)~='table' then return value end
@@ -248,8 +257,15 @@ for _,r in ipairs(research.processing) do
         db.buildReport.tsmDuplicates=db.buildReport.tsmDuplicates+1
     elseif not methods[r.method] then
         db.buildReport.rejected[#db.buildReport.rejected+1]={recordID=r.recordID,reason='Unsupported method'}
-    elseif r.reagents and #r.reagents>1 then
+    elseif r.reagents and #r.reagents>1 and (r.method=='Mill' or r.method=='Prospect' or r.method=='Disenchant' or r.method=='Smelt') then
         db.buildReport.rejected[#db.buildReport.rejected+1]={recordID=r.recordID,reason='Multi-reagent costing not supported'}
+    elseif not researchProfession(r) then
+        db.buildReport.rejected[#db.buildReport.rejected+1]={recordID=r.recordID,reason='Explicit compatible profession identity required'}
+    elseif (r.method=='Craft' or r.method=='Research' or r.method=='Refine' or r.method=='Unravel'
+        or r.method=='Crush' or r.method=='Thaumaturgy' or r.method=='Recycle')
+        and (type(r.recipeSpellID)~='number' or r.recipeSpellID<1 or r.recipeSpellID%1~=0
+            or type(r.expansionID)~='number' or r.expansionID<0 or r.expansionID>11 or r.expansionID%1~=0) then
+        db.buildReport.rejected[#db.buildReport.rejected+1]={recordID=r.recordID,reason='Exact recipe and expansion scope required'}
     else
         local c=r.conditions or {}
         local patch=c.patchWindow
@@ -258,12 +274,13 @@ for _,r in ipairs(research.processing) do
             inputCount=r.inputCountPerOperation,inputQualityRank=r.inputQualityRank,
             recipeID=r.recipeSpellID,expansionID=r.expansionID,conditions=c})
         local n={recordID='research:'..r.recordID,sourceKey='itemdb',studyID=r.recordID,
-            method=r.method,profession=methods[r.method],inputItemID=r.inputItemID,inputCount=r.inputCountPerOperation,
+            method=r.method,profession=researchProfession(r),inputItemID=r.inputItemID,inputCount=r.inputCountPerOperation,
             inputQualityRank=r.inputQualityRank,recipeID=r.recipeSpellID,expansionID=r.expansionID,
             minimumRecipeSkill=c.minimumRecipeSkill,
             source=table.concat(r.sources or {},'; '),samples=r.expectedQuantity.sampleOperations,
             referenceContextID=contextID,referenceConditions=conditions,researchConditions=c,
             unresolvedResearchConditions=unresolved,researchRecord=r,provisional=true,
+            requiredInputs=deepCopy(r.reagents),requiresAllReagents=r.reagents and #r.reagents>1 or nil,
             referenceApplicability=next(conditions) and 'condition-matched' or 'unverified-reference',
             baselineStatus=c.baselineStatus,materials={{id=r.outputItemID,quality=r.outputQualityRank,
                 expectedQuantity=adaptField(r.expectedQuantity),dropChance=adaptField(r.dropChance),
@@ -400,6 +417,8 @@ db.specializationRules=specialization.specializationRules
 -- Known effects without a numerical yield model remain visible as explicitly
 -- unquantified simulation context, never as executable multipliers.
 db.specializationDescriptions=specialization.describedEffects or {}
+-- Historical published endpoints are explanatory notes, never yield transforms.
+db.specializationPublishedReferences=specialization.publishedReferences or {}
 db.specializationRevision=specialization.revision..':'..specialization.sourceSHA256
 db.specializationSources=specialization.sourceClaims
 db.specializationHeld=specialization.held
@@ -565,9 +584,21 @@ end
 local v3=assert(loadfile(arg[3] or 'database/research-v3-baselines.lua'))()
 assert(v3.schemaVersion==1 and type(v3.processing)=='table','Unsupported research v3 baseline schema')
 db.researchV3Manifest={revision=v3.sourceRevision,branch=v3.sourceBranch}
+local studyReview=assert(loadfile('database/research/build-study-review.lua'))()
+assert(studyReview.schemaVersion==1 and studyReview.reviewType=='AUTOMATIC_BUILD_REVIEW',
+    'A generated study-review manifest is required')
+if not arg[2] and not arg[3] then
+    assert(studyReview.sourceRevision==v3.sourceRevision,'Study review does not match this research snapshot')
+end
+db.buildStudyReview=studyReview
 local researchFields={'dropChance','expectedQuantity','minQuantity','maxQuantity'}
 local function researchOutputKey(record,material)
-    return table.concat({record.method,record.inputItemID or record.gearKey,record.inputCount,material.id},':')
+    local key=table.concat({record.method,record.inputItemID or record.gearKey,record.inputCount,material.id},':')
+    if record.method~='Mill' and record.method~='Prospect' and record.method~='Disenchant' and record.method~='Smelt' then
+        key=key..':'..contextIdentity({profession=record.profession,recipeID=record.recipeID,expansionID=record.expansionID,
+            referenceConditions=record.referenceConditions,baselineProfile=record.baselineProfile,sourceOperationScope=record.sourceOperationScope})
+    end
+    return key
 end
 local function hasResearchValue(field)
     return field.value~=nil and field.status~='unknown' and field.status~='contradictory'
@@ -679,6 +710,19 @@ local function encode(v)
 end
 LL.ItemDB=db
 assert(loadfile('LootLiquidator/ProfessionModels.lua'))('LootLiquidator',LL)
+db.professionProfiles=assert(loadfile('database/profession-profile-rules.lua'))()
+assert(db.professionProfiles.schemaVersion==1,'Unsupported profession profile schema')
+db.gatheringStudyBaselines=assert(loadfile('database/gathering-study-baselines.lua'))()
+assert(db.gatheringStudyBaselines.schemaVersion==1 and type(db.gatheringStudyBaselines.gatheringTargets)=='table',
+    'Unsupported native gathering study schema')
+assert(loadfile('LootLiquidator/ProfessionCalculations.lua'))('LootLiquidator',LL)
+local buildProfessionBaselines=assert(loadfile('tools/profession_baselines.lua'))()
+db.modeledProfessionBaselines=buildProfessionBaselines(db,LL)
+-- Derived minimum-profile models are kept apart from source observations and
+-- their counts. The same curve handles inverse conversion and runtime skill.
+local buildDisenchantBaselines=assert(loadfile('tools/disenchant_simulation_baselines.lua'))()
+db.modeledDisenchantBaselines=buildDisenchantBaselines(db.processing,specialization.modeledDisenchantRules or {},LL)
+db.buildReport.modeledDisenchantBaselines=#db.modeledDisenchantBaselines
 for _,rule in ipairs(db.mechanicRules) do
     assert(LL:IsUsableProfessionRule(rule),'Mechanic failed shared evidence gate (source, confidence): '..tostring(rule.ruleID))
 end

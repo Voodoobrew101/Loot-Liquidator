@@ -21,6 +21,13 @@ python3 tests/test_build_info.py
 python3 tests/test_capture_observations.py
 python3 tests/test_skill82_cohort_audit.py
 python3 tools/research_v3_to_baselines.py --check  # D1c: research v3 baselines are current
+python3 tools/research_build_review.py --check
+python3 tools/profession_effect_inventory.py --check
+python3 tools/profession_profile_rules.py --check
+python3 tools/gathering_study_baselines.py --check
+python3 tests/test_profession_effect_inventory.py
+python3 tests/test_profession_profile_rules.py
+python3 tests/test_gathering_study_baselines.py
 python3 tools/reference_calculators.py --check
 python3 tools/skill_quality_to_rules.py --check
 python3 tools/import_profession_catalog.py --check
@@ -35,6 +42,11 @@ python3 tests/test_skill_quality_pipeline.py
 python3 tests/test_midnight_enchanting_import.py
 python3 tests/test_disenchant_categories.py
 python3 tests/test_specialization_effects_pipeline.py
+python3 tests/test_crystal_collector_extras_metadata.py
+python3 tests/test_build_research_pipeline.py
+python3 tests/test_curseforge_release.py
+python3 tests/test_profession_study_admission.py
+python3 tests/test_shatter_quality_models.py
 compiled_dir=$(mktemp -d)
 compiled="$compiled_dir/ItemDBRuntime.lua"
 trap 'rm -rf "$compiled_dir"' EXIT
@@ -132,6 +144,16 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_profession_simulation.lua
 "$lua_bin" tests/test_specialization_effects.lua
 "$lua_bin" tests/test_disenchant_skill_formulas.lua
+"$lua_bin" tests/test_disenchant_context_inputs.lua
+"$lua_bin" tests/test_disenchant_baseline_pipeline.lua
+"$lua_bin" tests/test_disenchant_baseline_runtime.lua
+"$lua_bin" tests/test_crystal_collector_extras.lua
+"$lua_bin" tests/test_profession_calculations.lua
+"$lua_bin" tests/test_gem_replacement_milestones.lua
+"$lua_bin" tests/test_profession_baseline_pipeline.lua
+"$lua_bin" tests/test_shatter_profession_runtime.lua
+"$lua_bin" tests/test_profession_all_contexts.lua
+"$lua_bin" tests/test_profession_study_operations.lua
 "$lua_bin" tests/test_profession_control_support.lua
 "$lua_bin" tests/test_profession_build_compatibility.lua
 "$lua_bin" tests/test_reference_fallback.lua

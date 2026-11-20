@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "revision": "2026-11-19-shatter-quality-v1",
+  "sourcePolicy": "Existing published actual-cast cohorts only. Immutable source evidence is separate from the declared baseline and confidence-zero skill interpolation. No new in-game collection.",
+  "recipeQualityModels": {
+    "470726": {
+      "ruleID": "recipe-quality:470726:gleaming-shatter:70961",
+      "recipeID": 470726,
+      "profession": "Enchanting",
+      "expansionID": 10,
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "confidence": 0,
+      "skillMaximum": 278,
+      "outputCount": 3,
+      "rankItemIDs": [
+        219946,
+        219947,
+        219948
+      ],
+      "baselineRankMeans": [
+        3,
+        0,
+        0
+      ],
+      "inputRankItemIDs": [
+        219949,
+        219950,
+        219951
+      ],
+      "targetRankMeansByInputRank": {
+        "1": [
+          3,
+          0,
+          0
+        ],
+        "2": [
+          2.0272556390977443,
+          0.9727443609022557,
+          0
+        ],
+        "3": [
+          1.2326454033771106,
+          1.1960600375234522,
+          0.5712945590994372
+        ]
+      },
+      "sourceRecordIDs": [
+        "war-within-20261031-172406",
+        "war-within-20261031-172407",
+        "war-within-20261031-172408",
+        "war-within-20261031-172409",
+        "war-within-20261031-172410"
+      ],
+      "sourceConditions": {
+        "reportedSkill": "105+28 Enchanting skill",
+        "reportedSpecialization": "Maxed disenchanting tree",
+        "reportedResourcefulness": "18%",
+        "sourcePublishedOn": "2024-09-11",
+        "historicalBuild": null,
+        "preSpecializationSkillAssumed": 133,
+        "matchingSpecializationSkillAssumed": 145,
+        "normalizedSourceSkillAssumed": 278
+      },
+      "assumptions": [
+        "The reported 105+28 skill is treated as native skill before the matching specialization bonuses. The source did not give a normalized operation-info field.",
+        "Current pinned skill allocations interpret historical maxed tree as matching root30 and child30; historical trait amounts/build applicability are unverified.",
+        "Linear skill-to-quality interpolation is a working model, not a measured intermediate skill curve.",
+        "Input rank1 remains three rank1 dust because the input-rank quality cap precludes higher ranks.",
+        "The native label route for Skill does not by itself justify transferring gear-disenchant quantity procs to this fixed-three-output recipe.",
+        "The supported endpoint inverse is underidentified at saturated skill. It may return the declared zero-skill three-rank-one prior only when the source vector equals its matching input-rank endpoint; other saturated observations need an explicit independent baseline.",
+        "A current client recipe label match grants matching native Skill even though the prose describes Uncommon equipment and the consumed shard is Rare. Label-based Skill routing does not transfer the prose-only gear-disenchant bonus-quantity handlers."
+      ],
+      "applyPolicy": "EXECUTE",
+      "evidenceStatus": "MODELED",
+      "nativeSkillNodes": [
+        {
+          "nodeID": 99890,
+          "labelID": 3404,
+          "maximumSkill": 65
+        },
+        {
+          "nodeID": 99889,
+          "labelID": 3436,
+          "maximumSkill": 80
+        }
+      ]
+    }
+  },
+  "cohorts": [
+    {
+      "studyKey": "reddit-1fdqzep-sep11-r2-1064-crafts",
+      "inputItemID": 219950,
+      "inputRank": 2,
+      "actualCasts": 1064,
+      "outputTotals": [
+        {
+          "itemID": 219946,
+          "rank": 1,
+          "units": 2157,
+          "unitMean": 2.0272556390977443
+        },
+        {
+          "itemID": 219947,
+          "rank": 2,
+          "units": 1035,
+          "unitMean": 0.9727443609022557
+        }
+      ],
+      "sourceRecordIDs": [
+        "war-within-20261031-172406",
+        "war-within-20261031-172407"
+      ]
+    },
+    {
+      "studyKey": "reddit-1fdqzep-sep11-r3-1066-crafts",
+      "inputItemID": 219951,
+      "inputRank": 3,
+      "actualCasts": 1066,
+      "outputTotals": [
+        {
+          "itemID": 219946,
+          "rank": 1,
+          "units": 1314,
+          "unitMean": 1.2326454033771106
+        },
+        {
+          "itemID": 219947,
+          "rank": 2,
+          "units": 1275,
+          "unitMean": 1.1960600375234522
+        },
+        {
+          "itemID": 219948,
+          "rank": 3,
+          "units": 609,
+          "unitMean": 0.5712945590994372
+        }
+      ],
+      "sourceRecordIDs": [
+        "war-within-20261031-172408",
+        "war-within-20261031-172409",
+        "war-within-20261031-172410"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.reddit.com/r/woweconomy/comments/1fdqzep",
+      "publishedOn": "2024-09-11",
+      "historicalBuild": null,
+      "reportedSkill": "105+28 Enchanting skill",
+      "reportedSpecialization": "Maxed disenchanting tree",
+      "reportedResourcefulness": "18%"
+    },
+    {
+      "path": "database/research/profession-effect-catalog-70961.json",
+      "sha256": "d45d7ed611c5dd87e85b99f08c3ec755e38336154a2927ca44318f59e889db46"
+    },
+    {
+      "path": "research/v3/evidence/war-within/2026-10-31T1724-gleaming-shatter-cohorts.jsonl",
+      "sha256": "43faef22d8e15bfb30c49d7b5d719cb705ddd3599d4f47b5c64b8795d7b1170d"
+    }
+  ],
+  "sourceNormalizationPolicy": {
+    "exactSourceRecordIDs": [
+      "war-within-20261031-172406",
+      "war-within-20261031-172407",
+      "war-within-20261031-172408",
+      "war-within-20261031-172409",
+      "war-within-20261031-172410"
+    ],
+    "requiredSourceSkillText": "105+28 Enchanting skill",
+    "requiredSourceSpecializationText": "Maxed disenchanting tree",
+    "baselineProfileAssumed": true,
+    "confidence0to100": 0,
+    "profile": {
+      "profession": "Enchanting",
+      "expansionID": 10,
+      "skill": 133,
+      "preSpecializationSkill": 133,
+      "specializationPoints": {
+        "99890": 30,
+        "99889": 30
+      },
+      "learnedSpecializations": {
+        "99890": true,
+        "99889": true
+      },
+      "specializationKnown": true,
+      "operationStatsIncludeSpecialization": false,
+      "stats": {}
+    }
+  },
+  "constraints": [
+    "Do not derive per-output hit probability, output stack histogram, or extra source casts from these unit totals.",
+    "Do not interpret initial 1000-shard inventory as the completed-cast denominator.",
+    "Do not combine unknown-cast858/2820-inventory anecdotes with these controlled denominators.",
+    "Every cohort and every convex interpolation totals exactly three Dust per completed cast. Resourcefulness changes expected shard consumption; it must not multiply Dust per cast."
+  ]
+}

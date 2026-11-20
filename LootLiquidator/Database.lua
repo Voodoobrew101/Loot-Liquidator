@@ -12,7 +12,8 @@ local UNKNOWN_CONFIDENCE=10     -- a value whose source gave no confidence figur
 LL.SourceDefaults=defaults
 local order={'itemdb','personal','imported','legacy','reference'}
 local sourcePriority={itemdb=1,personal=2,imported=3,legacy=4,reference=5}
-local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true,Recycle=true}
+local methods={Mill=true,Prospect=true,Disenchant=true,Smelt=true,Recycle=true,
+    Craft=true,Research=true,Unravel=true,Crush=true,Thaumaturgy=true,Refine=true}
 local statuses={unknown=true,contradictory=true,verified=true,measured=true,observed=true,provisional=true,historical=true,modeled=true}
 LL.SourceOrder=order
 local function finite(n) return type(n)=='number' and n==n and n>=0 and n<math.huge end
@@ -415,8 +416,9 @@ function LL:InitializeItemDB()
         local key=r.method..':'..tostring(r.inputItemID or r.gearKey)
         local list=self._evidenceIndex[key] or {};self._evidenceIndex[key]=list
         list[#list+1]=r
-        if r.sourceKey=='itemdb' and r.inputItemID and r.recipeID
-            and (r.method=='Mill' or r.method=='Prospect' or r.method=='Smelt') then
+        if r.sourceKey=='itemdb' and r.inputItemID and r.recipeID and methods[r.method] and r.method~='Disenchant'
+            and ((type(r.profession)=='string' and r.profession~='')
+                or r.method=='Mill' or r.method=='Prospect' or r.method=='Smelt') then
             local recipes=self._researchRecipeOperations[r.recipeID] or {}
             recipes[#recipes+1]=r;self._researchRecipeOperations[r.recipeID]=recipes
         end
@@ -441,15 +443,49 @@ end
 -- a recorded mass-processing recipe with a generic five-input spell.
 function LL:ResearchProcessingOperations(f)
     local operations,seen={},{}
-    for _,method in ipairs({'Mill','Prospect','Smelt'}) do
+    for _,method in ipairs({'Mill','Prospect','Smelt','Recycle','Craft','Research','Unravel','Crush','Thaumaturgy','Refine'}) do
         for _,r in ipairs(self._evidenceIndex and self._evidenceIndex[method..':'..tostring(f.id)] or {}) do
+            local profession=r.profession or ({Mill='Inscription',Prospect='Jewelcrafting',Smelt='Mining'})[method]
             if r.sourceKey=='itemdb' and r.recipeID and (not r.expansionID or r.expansionID==f.expansionID)
+                and type(profession)=='string' and profession~=''
                 and (not r.inputQualityRank or r.inputQualityRank==f.reagentQuality) then
-                local key=method..':'..r.recipeID..':'..r.inputCount
+                local key=table.concat({method,profession,r.recipeID,r.expansionID or '',r.inputCount},':')
                 if not seen[key] then
                     seen[key]=true
+                    local totals,required,extras={},{},{}
+                    local contract=r.requiredInputs or r.reagents
+                    local complete=type(contract)=='table' and #contract>0 and r.requiredInputsResolved~=false
+                    for _,input in ipairs(type(contract)=='table' and contract or {}) do
+                        local id=type(input)=='table' and (input.id or input.itemID or input[1])
+                        local amount=type(input)=='table' and (input.amount or input.quantity or input.quantityRequired or input[2])
+                        if finite(id) and id>0 and id%1==0 and finite(amount) and amount>0 and amount%1==0 then
+                            totals[id]=(totals[id] or 0)+amount
+                        else complete=false end
+                    end
+                    if complete and totals[f.id]~=r.inputCount then complete=false end
+                    for id,amount in pairs(totals) do
+                        required[#required+1]={id=id,amount=amount}
+                        if id~=f.id then extras[#extras+1]={id=id,amount=amount} end
+                    end
+                    table.sort(required,function(a,b) return a.id<b.id end)
+                    table.sort(extras,function(a,b) return a.id<b.id end)
+                    -- Milling/prospecting consume only the stated target batch.
+                    -- Other crafts need a complete reagent contract, or the
+                    -- exact reviewed single-target Shatter recipe definition.
+                    if method=='Mill' or method=='Prospect' then complete=true end
+                    local data=self.ItemDB and self.ItemDB.professionProfiles
+                    local native=data and data.recipes and data.recipes[r.recipeID]
+                    local curve=data and data.recipeQualityModels and data.recipeQualityModels[r.recipeID]
+                    if r.recipeID==470726 and method=='Craft' and r.profession=='Enchanting' and r.expansionID==10
+                        and r.inputCount==1 and native and native.salvage==true and native.inputCount==1
+                        and curve and curve.profession=='Enchanting' and curve.expansionID==10
+                        and curve.inputRankItemIDs and curve.inputRankItemIDs[f.reagentQuality]==f.id then
+                        complete=true;required={{id=f.id,amount=1}};extras={}
+                    end
                     operations[#operations+1]={method=method,recipeID=r.recipeID,requiredSpell=r.recipeID,
-                        inputCount=r.inputCount,profession=r.profession,source=r.source}
+                        inputCount=r.inputCount,profession=profession,expansionID=r.expansionID,
+                        requiredInputs=required,extraReagents=extras,allocationCostUnknown=not complete,
+                        source=r.source}
                 end
             end
         end
@@ -555,8 +591,10 @@ local function userWeight(self,key,mode)
     if w==nil then w=d[2] end
     return finite(w) and math.min(100,w)/100 or 0
 end
+-- Informational source references obey the same observation policy as yields.
+function LL:EvidenceSourceWeight(key,mode) return userWeight(self,key,mode) end
 local function sourceModel(self,f,option,r)
-    local model={inputCount=r.inputCount,patchBuild=r.patchBuild,referenceContextID=r.referenceContextID,
+    local model={recordID=r.recordID,inputCount=r.inputCount,patchBuild=r.patchBuild,referenceContextID=r.referenceContextID,
         sourceKey=r.sourceKey,baselineProfile=r.baselineProfile,baselineStatus=r.baselineStatus,
         duration=r.duration,expectedInputCount=r.expectedInputCount,materials={},source=r.source,
         referenceApplicability=r.referenceApplicability,
@@ -592,6 +630,9 @@ local function sourceModel(self,f,option,r)
             end
         end
         model.materials[#model.materials+1]=material
+    end
+    if self.ApplyGeneralProfessionModel and r.sourceKey~='personal' and r.sourceKey~='imported' then
+        model=self:ApplyGeneralProfessionModel(f,option,model)
     end
     if r.sourceKey~='itemdb' then return model end
     if self.ApplyProfessionModel then model=self:ApplyProfessionModel(f,option,model) end
@@ -759,7 +800,8 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             provisional=personal.professionProjected or (personal.effectiveSamples or 0)<(self.ProcessingMinimum and self:ProcessingMinimum() or 30)}
         for _,m in ipairs(personal.materials or {}) do
             r.materials[#r.materials+1]={id=m.id,quality=m.quality,rarity=m.rarity,
-                expectedQuantity={value=m.expectedQuantity,confidence=85,status='observed'},
+                expectedQuantity={value=m.expectedQuantity,confidence=math.min(85,m.confidence or 85,personal.ruleConfidence or 100),
+                    status=personal.professionProjected and 'modeled' or 'observed'},
                 dropChance={value=m.chance,confidence=85,status='observed'},
                 minQuantity={value=m.minQuantity,confidence=85,status='observed'},
                 maxQuantity={value=m.maxQuantity,confidence=85,status='observed'},
@@ -772,7 +814,9 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             end
             if personal.professionProjected then
                 transformed[r]={inputCount=r.inputCount,materials=personal.materials,sourceKey='personal',
-                    mechanicsApplied=true,adjustment=personal.adjustment,projectionRules=personal.projectionRules}
+                    mechanicsApplied=true,adjustment=personal.adjustment,projectionRules=personal.projectionRules,
+                    generalProfessionApplied=personal.generalProfessionApplied,projectedContext=personal.projectedContext,
+                    professionParameters=personal.professionParameters,ruleConfidence=personal.ruleConfidence}
             end
         end
     end
@@ -889,6 +933,16 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
         else
             -- Build a model, then apply the preserved PR #4 adapter exactly once.
             local model=transformed[r] or sourceModel(self,f,option,r)
+            if model.generalProfessionApplied then
+                result.generalProfessionApplied=true;result.professionProjected=true
+                result.projectedContext=model.projectedContext
+                result.context=model.projectedContext
+                result.generalProfessionParameters=model.professionParameters
+                result.generalProjectionInputCount=model.inputCount
+                result.generalProjectedSources=result.generalProjectedSources or {}
+                result.generalProjectedSources[r.sourceKey]=true
+                result.ruleConfidence=math.min(result.ruleConfidence or 100,model.ruleConfidence or 100)
+            end
             if r==anchor and model.adjustment then result.adjustment=model.adjustment end
             if model.referenceApplicability=='unverified-reference' then result.unverifiedReference=true end
             if r==anchor then
@@ -940,17 +994,22 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                 b.fieldSpecificEvidence=b.fieldSpecificEvidence or r.fieldSpecificEvidence
                 b.chanceInferenceBlocked=b.chanceInferenceBlocked or original.dropChance.inferenceBlocked
                 b.quantityInferenceBlocked=b.quantityInferenceBlocked or original.expectedQuantity.inferenceBlocked
-                if original.samplingVariation and r.inputCount==batch then b.samplingEvidence=original end
+                if original.samplingVariation and r.inputCount==batch and not m.expectationTransformed then b.samplingEvidence=original end
                 if m.conditionalExpectedQuantity~=nil then
                     b.conditionalExpectedQuantity=m.conditionalExpectedQuantity*batch/r.inputCount
                     b.conditionalRequirement=m.conditionalRequirement
                     result.hasConditionalReferences=true
                 end
+                local previousSource=b.sourceEstimates[r.sourceKey]
+                local sourceRecords=previousSource and previousSource.records or {}
+                sourceRecords[#sourceRecords+1]={recordID=r.recordID,studyID=r.studyID,inputCount=r.inputCount,
+                    expectedQuantity=m.expectedQuantity,originalExpectedQuantity=original.expectedQuantity.value,
+                    dropChance=m.chance,minQuantity=m.minQuantity,maxQuantity=m.maxQuantity}
                 b.sourceEstimates[r.sourceKey]={expectedQuantity=m.expectedQuantity,dropChance=m.chance,
                     minQuantity=m.minQuantity,maxQuantity=m.maxQuantity,sourceConflict=original.sourceConflict,
                     heldDropChance=original.heldDropChance,heldExpectedQuantity=original.heldExpectedQuantity,
                     inputCount=r.inputCount,originalTSM=original.originalTSM,
-                    recordID=r.recordID,studyID=r.studyID,
+                    recordID=r.recordID,studyID=r.studyID,records=sourceRecords,
                     appliedRule=m.appliedProfessionRule or m.appliedExpectationRule}
                 for field,modelField in pairs({expectedQuantity='expectedQuantity',dropChance='chance'}) do
                     local key=r.studyID..':'..id..':'..field
@@ -980,6 +1039,10 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                         local c=(score or 0)>0 and score or UNKNOWN_CONFIDENCE
                         acc.confidence=(acc.confidence or 0)+c*weight
                         if field=='expectedQuantity' then
+                            b.sourceMeanAccumulators=b.sourceMeanAccumulators or {}
+                            local sourceMean=b.sourceMeanAccumulators[r.sourceKey] or {sum=0,weight=0}
+                            b.sourceMeanAccumulators[r.sourceKey]=sourceMean
+                            sourceMean.sum=sourceMean.sum+v*weight;sourceMean.weight=sourceMean.weight+weight
                             b.independentQuantityConfidence=b.independentQuantityConfidence or metadata.independentConfidence
                             if hasEligibleSalvage then acceptedMeanWeight=math.max(acceptedMeanWeight,weight) end
                             if model.operationUnverified then result.operationUnverified=true end
@@ -1018,7 +1081,7 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
                         end
                     end
                 end
-                if original.personalHistogram then
+                if original.personalHistogram and not m.expectationTransformed then
                     b.personalHistogram=original.personalHistogram;b.personalSamples=original.personalSamples
                 end
                 -- Conditional bounds belong to one named source, never an average.
@@ -1117,6 +1180,16 @@ function LL:ComputeEvidenceModel(f,option,personal,mode,ctx,noBorrow,importedRec
             confidenceTotal=confidenceTotal+b.confidence
         end
         b.sourceContributions={}
+        for source,accumulator in pairs(b.sourceMeanAccumulators or {}) do
+            local estimate=b.sourceEstimates[source]
+            estimate.expectedQuantity=accumulator.sum/accumulator.weight
+            estimate.inputCount=batch
+            if #(estimate.records or {})>1 then
+                estimate.recordID=nil;estimate.studyID=nil;estimate.aggregate=true
+                estimate.dropChance=nil -- Individual occurrence evidence stays in records.
+            end
+        end
+        b.sourceMeanAccumulators=nil
         local total=0 for _,v in pairs(b.contributions) do total=total+v end
         for source,w in pairs(b.contributions) do
             b.sourceContributions[source]=w/total
@@ -1187,8 +1260,14 @@ function LL:ResolveEvidenceModel(f,option,personal,mode)
     if cached then return cached.model,cached.reason end
     if self._processingModelCache.count>=512 then self._processingModelCache={count=0} end
     local model,reason,retry=self:ComputeEvidenceModel(f,option,personal,mode,ctx,nil,importedRecords)
-    if model and self.ApplySkillQualityModel then model=self:ApplySkillQualityModel(f,option,model,ctx) end
-    if model and self.ApplySpecializationEffects then model=self:ApplySpecializationEffects(f,option,model,ctx) end
+    if self.ApplyDisenchantBaseline then model=self:ApplyDisenchantBaseline(f,option,model,ctx,mode) end
+    if model and self.ApplyGeneralProfessionAdditions then model=self:ApplyGeneralProfessionAdditions(f,option,model,ctx) end
+    if model and self.ApplyGeneralProfessionQuality then model=self:ApplyGeneralProfessionQuality(f,option,model,ctx) end
+    if model and not model.disenchantBaselineApplied then
+        if model.generalProfessionApplied and model.projectedContext then ctx=model.projectedContext end
+        if self.ApplySkillQualityModel then model=self:ApplySkillQualityModel(f,option,model,ctx) end
+        if self.ApplySpecializationEffects then model=self:ApplySpecializationEffects(f,option,model,ctx) end
+    end
     if model and self.ApplySyntheticBenchmark then model=self:ApplySyntheticBenchmark(f,option,model,ctx) end
     if retry then return model,reason end -- C2: an item name is loading; try again later
     self._processingModelCache[key]={model=model,reason=reason}

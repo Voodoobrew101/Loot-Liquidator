@@ -197,6 +197,10 @@ end
 -- Explicit patch edges also represent reviewed "no change" (factor=1).
 function LL:ProjectPersonalEstimate(f,option,raw,target,targetBuild)
     if not raw or not raw.observationContext then return nil,'Missing recorded profile' end
+    if self.ProjectGeneralPersonalEstimate then
+        local general=self:ProjectGeneralPersonalEstimate(f,option,raw,target,targetBuild)
+        if general then return general end
+    end
     raw=raw.rawEstimate or raw
     if not raw.patchBuild or type(target)~='table' then return nil,'Missing sample build or target profile' end
     targetBuild=tostring(targetBuild or (GetBuildInfo and select(2,GetBuildInfo())))
@@ -416,16 +420,25 @@ function LL:ApplySyntheticBenchmark(f,option,model,context)
             end
         end
     end
+    for _,outcome in ipairs(result.namedOutputs or {}) do
+        if finite(outcome.expectedQuantity) then outcome.expectedQuantity=outcome.expectedQuantity*factor;outcome.confidence=0 end
+    end
     local requested=benchmark.resourcefulnessChance>0 or benchmark.resourcefulnessSaved>0
     if requested then
         local method=option and option.name
-        if (method=='Mill' or method=='Prospect') and f and finite(f.expansionID) and f.expansionID>=9
+        local params=model.professionParameters or model.generalProfessionParameters
+        local craft=params and params.method~='Disenchant' and params.method~='Gather'
+            and params.method~='Skin' and params.method~='Fish' and params.recipe
+            and params.recipe.supportsResourcefulness~=false
+        local expansion=params and params.expansionID or f and f.expansionID
+        if (method=='Mill' or method=='Prospect' or craft) and finite(expansion) and expansion>=9
             and finite(result.inputCount) and result.inputCount>0 then
             result.baselineExpectedInputCount=model.expectedInputCount
             result.expectedInputCount=result.inputCount*(1-benchmark.resourcefulnessChance/100*benchmark.resourcefulnessSaved/100)
+            result.supplyCostFactor=1-benchmark.resourcefulnessChance/100*benchmark.resourcefulnessSaved/100
             result.syntheticResourcefulnessNote='Assumed Resourcefulness replaces any baseline input savings; output quantities remain per completed operation'
         else
-            result.syntheticResourcefulnessNote='Assumed Resourcefulness skipped: only Dragonflight and later milling/prospecting are supported'
+            result.syntheticResourcefulnessNote='Resourcefulness scenario skipped for this operation'
         end
         result.warning=result.warning and (result.warning..'; '..result.syntheticResourcefulnessNote) or result.syntheticResourcefulnessNote
     end
@@ -494,8 +507,50 @@ local function describedEffectValid(self,effect)
     end
     return true
 end
--- Report known effects even when their distribution is not quantified. These
--- notes never modify a probability, quantity, price or confidence score.
+-- These historical endpoint reports are display-only. Maximal selected points
+-- choose which report is relevant; they do not establish matching source skill,
+-- equipment, inputs or patch. Never inject them into the selected distribution.
+function LL:ProfessionSimulationPublishedReferences(f,option,model)
+    local context=model and model.context
+    local notes={}
+    -- Ordinary Disenchant tooltip options omit recipeID; that method denotes
+    -- spell 13262. An explicitly different operation must still be rejected.
+    if not manualSpecializationContext(context) or type(f)~='table' or type(option)~='table'
+        or option.name~='Disenchant' or (option.recipeID~=nil and option.recipeID~=13262) or context.profession~='Enchanting'
+        or f.expansionID~=11 or (f.classID~=2 and f.classID~=4) then return notes end
+    local mode=(self.ProcessingDataMode and self:ProcessingDataMode(option.name)) or 1
+    if not self.EvidenceSourceWeight or self:EvidenceSourceWeight('reference',mode)<=0 then return notes end
+    local points=specializationPoints(self,context)
+    if type(points)~='table' then return notes end
+    local seen={}
+    for _,reference in ipairs(self.ItemDB and self.ItemDB.specializationPublishedReferences or {}) do
+        if type(reference)=='table' and type(reference.referenceID)=='string' and not seen[reference.referenceID]
+            and reference.applyPolicy=='DISPLAY_ONLY' and reference.displayPolicy=='MAX_INVESTMENT_SCENARIO_ONLY'
+            and reference.method==option.name and reference.profession==context.profession
+            and reference.expansionID==f.expansionID and reference.inputRarity==f.quality
+            and self:ProfessionRuleMatchesBuild(reference) and type(reference.displayText)=='string'
+            and type(reference.sourceClaimIDs)=='table' and #reference.sourceClaimIDs>0
+            and type(reference.requiredNodes)=='table' and type(reference.notes)=='table' then
+            local complete,count=true,0
+            for id,required in pairs(reference.requiredNodes) do
+                count=count+1
+                local node=tonumber(id)
+                if not finite(node) or node<=0 or node%1~=0 or not finite(required) or required<=0 or required%1~=0
+                    or selectedRank({nodeID=node,maxRank=required},points)~=required then complete=false end
+            end
+            local text=reference.displayText
+            for _,note in ipairs(reference.notes) do
+                if type(note)~='string' then complete=false else text=text..' '..note end
+            end
+            if complete and count>0 then
+                notes[#notes+1]=text;seen[reference.referenceID]=true
+            end
+        end
+    end
+    return notes
+end
+-- Confidence is the uncertainty signal. Profession details contain only the
+-- selected inputs, not research caveats or a second estimate label.
 function LL:ProfessionSimulationEffectNotes(f,option,model)
     local context=model and model.context
     local notes,unquantified={},false
@@ -513,19 +568,13 @@ function LL:ProfessionSimulationEffectNotes(f,option,model)
             and (effect.recipeID==nil or effect.recipeID==option.recipeID) then
             local rank=selectedRank(effect,points)
             if rank and rank>0 then
-                notes[#notes+1]=effect.nodeName..': '..rank..' / '..effect.maxRank..' points. '..effect.description
-                    ..' Effect at this allocation is unquantified.'
-                unquantified=true
+                notes[#notes+1]=effect.nodeName..': '..rank..' / '..effect.maxRank..' points.'
             end
         end
     end
     if (knownSkill or model.skillQualityApplied) and finite(context.effectiveSkill) then
-        table.insert(notes,1,('Simulated skill: %g (researched specialization bonus: +%g).')
+        table.insert(notes,1,('Simulated skill: %g (specialization bonus: +%g).')
             :format(context.effectiveSkill,context.specializationSkillBonus or 0))
-        if not model.skillQualityApplied and not model.professionProjected and not model.specializationEffectsApplied then
-            notes[#notes+1]='Skill and specialization yield changes are not quantified; displayed amounts use the selected reference.'
-            unquantified=true
-        end
     end
     return notes,unquantified
 end
@@ -668,8 +717,15 @@ function LL:ApplySpecializationEffects(f,option,model,context)
             if key and familyIdentity(rule.targetFamily) then
                 groups[key]=groups[key] or {family=rule.sourceFamily,rules={},sum=0}
                 local group=groups[key]
-                group.rules[#group.rules+1]={rule=rule,chance=rank*rule.perPoint}
-                group.sum=group.sum+rank*rule.perPoint
+                local chance=rank*rule.perPoint
+                local currentBuild=GetBuildInfo and tonumber((select(2,GetBuildInfo())))
+                if currentBuild and currentBuild>=(rule.replacementMilestoneBuild or math.huge) then
+                    for _,milestone in ipairs(rule.replacementMilestones or {}) do
+                        if rank>=milestone.rank then chance=chance+milestone.fraction end
+                    end
+                end
+                group.rules[#group.rules+1]={rule=rule,chance=chance}
+                group.sum=group.sum+chance
             end
         elseif rule.kind=='quantity-multiplier' and rank and rank>0 then
             local factor=multiplierAt(rule,rank)
@@ -818,6 +874,230 @@ function LL:ApplySpecializationEffects(f,option,model,context)
         result.warning=result.warning and (result.warning..'; '..result.specializationReferenceAssumption) or result.specializationReferenceAssumption
     end
     result.value=nil;result.partialValue=nil;result.valueConfidence=nil
+    return result
+end
+
+-- Shared build/runtime curve. Observations stay in db.processing; the compiler
+-- supplies an independent baseline and endpoint, with explicit model confidence.
+local function deAmounts(materials)
+    local result={}
+    for _,material in ipairs(materials or {}) do
+        if type(material)~='table' or not finite(material.id) or material.id<=0 or material.id%1~=0
+            or result[material.id]~=nil or not finite(material.expectedQuantity) then return nil end
+        result[material.id]=material.expectedQuantity
+    end
+    return result
+end
+local function deCurveState(baseline,profile)
+    local rule=type(baseline)=='table' and baseline.rule
+    if type(rule)~='table' or type(profile)~='table' or not finite(profile.effectiveSkill)
+        or not finite(profile.childPoints) or profile.childPoints%1~=0 or profile.childPoints>30
+        or not finite(rule.skillMaximum) or rule.skillMaximum<=0 or type(rule.primaryRankIDs)~='table'
+        or #rule.primaryRankIDs~=2 or rule.primaryRankIDs[1]==rule.primaryRankIDs[2] then return nil end
+    local base,target=deAmounts(baseline.materials),deAmounts(baseline.endpointMaterials)
+    if not base or not target then return nil end
+    local low,high=rule.primaryRankIDs[1],rule.primaryRankIDs[2]
+    if not finite(base[low]) or not finite(base[high]) or not finite(target[low]) or not finite(target[high]) then return nil end
+    local q0,q1=base[low]+base[high],target[low]+target[high]
+    if q0<=0 or q1<=0 then return nil end
+    local tq,previous=0,0
+    if type(rule.quantityMilestones)~='table' then return nil end
+    for _,milestone in ipairs(rule.quantityMilestones) do
+        if type(milestone)~='table' or not finite(milestone.rank) or milestone.rank%1~=0
+            or milestone.rank<=previous or milestone.rank>30 or not finite(milestone.progress) then return nil end
+        previous=milestone.rank
+        if profile.childPoints>=milestone.rank then tq=tq+milestone.progress end
+    end
+    if tq>1 then return nil end
+    local extraIDs,extraConfidence,extraProgress={},{},0
+    if rule.additionalOutputs then
+        if rule.additionalOutputBaselinePolicy~='ZERO_BEFORE_UNLOCK' or type(rule.additionalOutputMilestones)~='table' then return nil end
+        local previousRank=0
+        for _,milestone in ipairs(rule.additionalOutputMilestones) do
+            if not finite(milestone.rank) or milestone.rank%1~=0 or milestone.rank<=previousRank or milestone.rank>30
+                or not finite(milestone.progress) then return nil end
+            previousRank=milestone.rank
+            if profile.childPoints>=milestone.rank then extraProgress=extraProgress+milestone.progress end
+        end
+        if extraProgress>1 then return nil end
+        for _,extra in ipairs(rule.additionalOutputs) do
+            if type(extra)~='table' or not finite(extra.id) or extra.id<=0 or extra.id%1~=0 or extraIDs[extra.id]
+                or extra.id==low or extra.id==high or not finite(extra.expectedQuantity)
+                or not finite(extra.confidence0to100) or extra.confidence0to100>100
+                or not finite(base[extra.id]) or not finite(target[extra.id]) then return nil end
+            extraIDs[extra.id]=true;extraConfidence[extra.id]=extra.confidence0to100
+        end
+    end
+    return {base=base,target=target,low=low,high=high,q0=q0,q1=q1,r0=base[high]/q0,r1=target[high]/q1,
+        skill=math.min(1,profile.effectiveSkill/rule.skillMaximum),quantity=tq,rule=rule,
+        extraIDs=extraIDs,extraConfidence=extraConfidence,extraProgress=extraProgress}
+end
+function LL:DisenchantCurveQuantities(baseline,profile)
+    local state=deCurveState(baseline,profile)
+    if not state then return nil end
+    local q=state.rule.preservePrimaryTotal and state.q0 or state.q0+(state.q1-state.q0)*state.quantity
+    local share=state.r0+(state.r1-state.r0)*state.skill
+    local means=copy(state.base)
+    if state.rule.endpointRecordID then
+        for id in pairs(state.target) do if means[id]==nil then means[id]=0 end end
+        for id,value in pairs(means) do
+            if id~=state.low and id~=state.high then means[id]=value+((state.target[id] or 0)-value)*state.quantity end
+        end
+    end
+    for id in pairs(state.extraIDs) do means[id]=state.base[id]+(state.target[id]-state.base[id])*state.extraProgress end
+    means[state.low]=q*(1-share);means[state.high]=q*share
+    local result={}
+    for id,value in pairs(means) do
+        if not finite(value) then return nil end
+        result[#result+1]={id=id,expectedQuantity=value,
+            confidence=math.min(baseline.confidence or state.rule.confidence0to100,state.extraConfidence[id] or 100),
+            additionalOutput=state.extraIDs[id] or nil}
+    end
+    table.sort(result,function(a,b) return a.id<b.id end)
+    return result,{skill=state.skill,quantity=state.quantity,additional=state.extraProgress}
+end
+-- Invert the same affine pool/share model, never a separate guessed multiplier.
+-- At a saturated endpoint the prior baseline is not identifiable from that
+-- observation; retain its declared prior only when the endpoint agrees.
+function LL:NormalizeDisenchantQuantities(baseline,observed,sourceProfile)
+    local state=deCurveState(baseline,sourceProfile)
+    local actual=deAmounts(observed)
+    if not state or not actual or not finite(actual[state.low]) or not finite(actual[state.high]) then return nil end
+    local q=actual[state.low]+actual[state.high]
+    if q<=0 then return nil end
+    local share=actual[state.high]/q
+    local function inverse(value,target,progress,prior)
+        if progress==1 then return math.abs(value-target)<1e-8 and prior or nil end
+        local result=(value-target*progress)/(1-progress)
+        return result>=-1e-10 and math.max(0,result) or nil
+    end
+    local q0=state.rule.preservePrimaryTotal and q or inverse(q,state.q1,state.quantity,state.q0)
+    local r0=inverse(share,state.r1,state.skill,state.r0)
+    if not finite(q0) or not finite(r0) or r0>1+1e-10 then return nil end
+    r0=math.min(1,r0)
+    local means=copy(actual)
+    if state.rule.endpointRecordID then
+        for id in pairs(state.base) do if means[id]==nil then return nil end end
+        for id,value in pairs(means) do
+            if id~=state.low and id~=state.high and not state.extraIDs[id] then
+                means[id]=inverse(value,state.target[id] or 0,state.quantity,state.base[id] or 0)
+                if not finite(means[id]) then return nil end
+            end
+        end
+    end
+    for id in pairs(state.extraIDs) do
+        if not finite(actual[id]) then return nil end
+        -- Additive unlock term: this inverse can reject negative baselines,
+        -- rather than attempting to divide a zero expectation by a factor.
+        local value=actual[id]-(state.target[id]-state.base[id])*state.extraProgress
+        if value < -1e-10 then return nil end
+        means[id]=math.max(0,value)
+    end
+    means[state.low]=q0*(1-r0);means[state.high]=q0*r0
+    local result={}
+    for id,value in pairs(means) do result[#result+1]={id=id,expectedQuantity=value,
+        confidence=math.min(baseline.confidence or state.rule.confidence0to100,state.extraConfidence[id] or 100),
+        additionalOutput=state.extraIDs[id] or nil} end
+    table.sort(result,function(a,b) return a.id<b.id end)
+    return result
+end
+
+function LL:DisenchantForwardProfile(f,option,context,rule)
+    if type(context)~='table' or context.stale or type(rule)~='table' then return nil end
+    local manual=manualSpecializationContext(context)
+    local points=manual and specializationPoints(self,context) or context.disenchantSpecializationPoints
+    local learned=manual and context.learnedSpecializations or context.disenchantLearnedSpecializations
+    local pre=manual and (context.preSpecializationSkill or context.simulatedBaseSkill or context.skill)
+        or context.preSpecializationSkill
+    if not finite(pre) or type(points)~='table' or (not manual and context.disenchantSpecializationKnown~=true) then return nil end
+    local skillContext={learnedSpecializations=learned}
+    local bonus,child,seen=0,nil,{}
+    for _,skillRule in ipairs(specializationRules(self,f,option,context)) do
+        if skillRule.kind=='skill-per-point' and (skillRule.nodeID==rule.rootNodeID or skillRule.nodeID==rule.childNodeID) then
+            if seen[skillRule.nodeID] then return nil end
+            seen[skillRule.nodeID]=true
+            local rank=selectedRank(skillRule,points)
+            local value=rank and specializationSkillContribution(skillRule,rank,skillContext)
+            if not finite(value) then return nil end
+            bonus=bonus+value
+            if skillRule.nodeID==rule.childNodeID then child=rank end
+        end
+    end
+    if not seen[rule.rootNodeID] or not seen[rule.childNodeID] or not finite(pre+bonus) then return nil end
+    return {effectiveSkill=pre+bonus,preSpecializationSkill=pre,specializationSkillBonus=bonus,childPoints=child}
+end
+-- Consume only the compiler's model baseline, not an arbitrary selected source
+-- mean. Source observations/counts remain immutable and are never projected twice.
+function LL:ApplyDisenchantBaseline(f,option,model,context,mode)
+    if type(f)~='table' or type(option)~='table' or option.name~='Disenchant'
+        or (option.recipeID~=nil and option.recipeID~=13262) or type(context)~='table'
+        or context.profession~='Enchanting' or mode==2 or model and model.disenchantBaselineApplied then return model end
+    if not self.EvidenceSourceWeight or self:EvidenceSourceWeight('itemdb',mode)<=0 then return model end
+    if model and model.sources and ((model.sources.personal or 0)>0 or (model.sources.imported or 0)>0) then return model end
+    local selected
+    for _,baseline in ipairs(self.ItemDB and self.ItemDB.modeledDisenchantBaselines or {}) do
+        local rule=baseline.rule
+        if usable(rule) and rule.applyPolicy=='EXECUTE' and rule.method==option.name
+            and rule.profession==context.profession and rule.expansionID==f.expansionID
+            and rule.inputRarity==f.quality and baseline.inputClassID==f.classID
+            and self:ProfessionRuleMatchesBuild(rule) and self:EvidenceSourceWeight(rule.sourceKey,mode)>0 then
+            if selected then return model end
+            selected=baseline
+        end
+    end
+    if not selected then return model end
+    local profile=self:DisenchantForwardProfile(f,option,context,selected.rule)
+    local materials,progress
+    if profile then materials,progress=self:DisenchantCurveQuantities(selected,profile) end
+    if not materials then return model end
+    local projectedContext=copy(context)
+    projectedContext.effectiveSkill=profile.effectiveSkill
+    projectedContext.preSpecializationSkill=profile.preSpecializationSkill
+    projectedContext.specializationSkillBonus=profile.specializationSkillBonus
+    local confidence=selected.confidence or selected.rule.confidence0to100
+    -- Keep the evidence pipeline's per-material source weights. Replace only
+    -- the ItemDB term when compatible legacy/reference means also contributed.
+    local mixed=false
+    for key,weight in pairs(model and model.sources or {}) do if key~='itemdb' and weight>0 then mixed=true end end
+    if mixed then
+        local byID={}
+        for _,material in ipairs(materials) do byID[material.id]=material end
+        for _,original in ipairs(model.materials or {}) do
+            if type(original.rankIDs)=='table' then
+                for _,id in ipairs(original.rankIDs) do if byID[id] then return model end end
+            end
+            local projected=byID[original.id]
+            if projected then
+                local weight=original.sourceContributions and original.sourceContributions.itemdb or 0
+                local source=original.sourceEstimates and original.sourceEstimates.itemdb
+                if finite(original.expectedQuantity) and finite(weight) and weight>0 and weight<=1
+                    and source and finite(source.expectedQuantity) and finite(source.inputCount) and source.inputCount>0 then
+                    projected.expectedQuantity=original.expectedQuantity+weight*(projected.expectedQuantity-source.expectedQuantity/source.inputCount)
+                    if projected.expectedQuantity<0 and projected.expectedQuantity>-1e-9 then projected.expectedQuantity=0 end
+                    if not finite(projected.expectedQuantity) then return model end
+                    projected.confidence=math.min(projected.confidence or confidence,original.confidence or confidence)
+                else
+                    byID[original.id]=copy(original)
+                end
+            else byID[original.id]=copy(original) end
+        end
+        materials={}
+        for _,material in pairs(byID) do materials[#materials+1]=material end
+        table.sort(materials,function(a,b) return a.id<b.id end)
+        confidence=math.min(confidence,model.confidence or confidence)
+    end
+    local result={kind='profession-baseline',inputCount=1,materials=materials,context=projectedContext,
+        source='ItemDB',sources={itemdb=1},confidence=confidence,ruleConfidence=confidence,
+        provisional=true,simulated=context.simulated,professionProjected=true,specializationEffectsApplied=true,
+        disenchantBaselineApplied=true,disenchantBaselineID=selected.recordID,
+        baselineProfile=copy(selected.baselineProfile),projectedContext=copy(profile),
+        disenchantProgress=progress,specializationSkillBonus=profile.specializationSkillBonus,
+        specializationAppliedRules={selected.rule.ruleID},specializationSources=copy(selected.rule.sourceClaimIDs),
+        adjustment='Profession profile',unknownOutputs=selected.unknownOutputs or false}
+    if mixed then
+        result.sources=copy(model.sources);result.source=model.source
+        result.unknownOutputs=result.unknownOutputs or model.unknownOutputs
+    end
     return result
 end
 
@@ -1102,6 +1382,20 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
             support.nodeDescriptions[id][#support.nodeDescriptions[id]+1]=effect.description
         end
     end
+    for _,baseline in ipairs(db.modeledDisenchantBaselines or {}) do
+        local rule=baseline.rule
+        if ruleScope(rule,true) and type(baseline.materials)=='table' and type(baseline.endpointMaterials)=='table' then
+            support.skill=true
+            for _,nodeID in ipairs({rule.rootNodeID,rule.childNodeID}) do
+                local node=catalog[nodeID]
+                if node then
+                    showNode(nodeID,rule.ruleID)
+                    support.unquantifiedNodes[tostring(nodeID)]=nil
+                    support.nodeDescriptions[tostring(nodeID)]={'Adjusts disenchant material quality and applicable quantity milestones.'}
+                end
+            end
+        end
+    end
     -- Existing context-specific mechanic rules can consume typed stat/buff
     -- values. Mere captured stats or a fixed profession reference profile do
     -- not establish an effect and never reveal a control by themselves.
@@ -1228,6 +1522,27 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
                     support.skill=true
                 end
             end
+        end
+    end
+    local generic=db.professionProfiles
+    local genericProfile=generic and generic.profiles and generic.profiles[profession..':'..tostring(expansion)]
+    if genericProfile and self:ProfessionRuleMatchesBuild(generic) then
+        support.skill=true
+        for id in pairs(genericProfile.nodes or {}) do
+            support.nodes[tostring(id)]=true
+            support.unquantifiedNodes[tostring(id)]=nil
+        end
+        for _,key in ipairs(genericProfile.statKeys or {}) do
+            if key~='skill' then support.stats[key]={rating=true,percent=true} end
+        end
+        local function includeBuffs(effects)
+            for _,effect in ipairs(effects or {}) do
+                for _,id in ipairs(effect.condition and effect.condition.spellIDs or {}) do support.buffs[tostring(id)]=true end
+            end
+        end
+        for _,node in pairs(genericProfile.nodes or {}) do
+            includeBuffs(node.pointEffects);includeBuffs(node.learningEffects)
+            for _,milestone in ipairs(node.milestones or {}) do includeBuffs(milestone.effects) end
         end
     end
     return support

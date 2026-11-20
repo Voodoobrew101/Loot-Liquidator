@@ -5,6 +5,9 @@ on:
       - '.github/workflows/distribution.yml'
       - 'tools/research_v3_evidence.py'
       - 'tools/research_v3_to_baselines.py'
+      - 'tools/research_build_review.py'
+      - 'tools/prepare_build_research.py'
+      - 'tests/test_build_research_pipeline.py'
       - 'tests/test_research_v3_dedupe.py'
   workflow_dispatch:
     inputs:
@@ -12,6 +15,10 @@ on:
         description: Publish a downloadable GitHub prerelease
         type: boolean
         default: false
+      research_ref:
+        description: Durable research branch or commit to review for this build
+        type: string
+        default: implementation/five-agent-completion
 permissions:
   contents: read
 jobs:
@@ -29,16 +36,19 @@ jobs:
           python-version: '3.12'
       - name: Install Lua 5.1
         run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
-      - name: Compile ItemDB from committed research snapshot
+      - name: Review studies and compile ItemDB for this build
+        env:
+          BUILD_RESEARCH_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.research_ref || '' }}
         run: |
-          # Build from the versioned v3 snapshot shipped in this checkout.
-          # Do not fetch or refresh research during distribution builds.
-          python3 tools/research_v3_to_baselines.py
-          python3 tools/evidence_to_baselines.py
-          python3 tools/capture_observations.py
-          python3 tools/att_token_references.py
-          python3 tools/recycling_capture_baselines.py --check
-          lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua
+          # PR validation reproduces its committed pin. Normal requested builds
+          # resolve the durable research source once, then review/build locally.
+          if [ -n "$BUILD_RESEARCH_REF" ]; then
+            git fetch --no-tags origin "$BUILD_RESEARCH_REF"
+            research_commit=$(git rev-parse FETCH_HEAD)
+            python3 tools/prepare_build_research.py --research-ref "$research_commit"
+          else
+            python3 tools/prepare_build_research.py
+          fi
       - name: Stamp build and PR information
         run: python3 tools/stamp_build_info.py
       - name: Run all addon validation
@@ -48,6 +58,8 @@ jobs:
           python3 tools/package_addon.py dist/LootLiquidator.zip
           python3 tools/verify_distribution.py dist/LootLiquidator.zip
           cp database/research/v3-snapshot/SNAPSHOT.json dist/research-snapshot.json
+          cp database/research/build-research-manifest.json dist/
+          cp database/research/build-study-review.json dist/
           git rev-parse HEAD > dist/addon-commit.txt
           sha256sum dist/LootLiquidator.zip > dist/SHA256SUMS.txt
       - name: Prepare single-layer download
@@ -65,4 +77,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           tag="build-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          gh release create "$tag" dist/LootLiquidator.zip dist/SHA256SUMS.txt dist/research-snapshot.json dist/addon-commit.txt --target "$GITHUB_SHA" --prerelease --title "Loot Liquidator build $GITHUB_RUN_NUMBER" --notes "Validated build from $GITHUB_SHA with research pinned in the attached manifest. Yield estimates remain provisional where evidence is incomplete."
+          gh release create "$tag" dist/LootLiquidator.zip dist/SHA256SUMS.txt dist/research-snapshot.json dist/build-research-manifest.json dist/build-study-review.json dist/addon-commit.txt --target "$GITHUB_SHA" --prerelease --title "Loot Liquidator build $GITHUB_RUN_NUMBER" --notes "Validated build from $GITHUB_SHA. The attached manifest pins the research source and automatic study review used to generate ItemDB."

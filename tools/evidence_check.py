@@ -22,10 +22,11 @@ import math
 import re
 import sys
 from pathlib import Path
+from research_methods import METHOD_PROFESSIONS, processing_reasons
 
 DEFAULT_FOLDER = Path('research/evidence/v3')
 
-METHODS = {'Disenchant', 'Mill', 'Prospect', 'Smelt', 'Craft', 'Exchange', 'Open'}
+METHODS = set(METHOD_PROFESSIONS) | {'Exchange', 'Open'}
 METRICS = {'skill', 'resourcefulness', 'multicraft', 'specPoints', 'gear', 'other'}
 STAT_KEYS = {'resourcefulness', 'multicraft', 'specPoints', 'gearBonusSkill'}
 CHECK_RESULTS = {'confirmed', 'mismatch'}
@@ -33,7 +34,7 @@ CHECK_RESULTS = {'confirmed', 'mismatch'}
 EVIDENCE_REQUIRED = {'method', 'input', 'inputPerCast', 'casts', 'outputs', 'source', 'lineage',
                      'observedDate', 'patch', 'stale'}
 IDENTITY_FIELDS = {'recipeID', 'expansionID', 'inputQualityRank', 'inputRarity', 'inputClassID'}
-SCOPE_FIELDS = IDENTITY_FIELDS | {'referenceContextID', 'referenceConditions'}
+SCOPE_FIELDS = IDENTITY_FIELDS | {'referenceContextID', 'referenceConditions', 'profession', 'baselineProfile'}
 REFERENCE_CONDITION_FIELDS = {'skill', 'baseSkill', 'effectiveSkill', 'bonusSkill',
                               'resourcefulness', 'multicraft', 'specPoints', 'gearBonusSkill'}
 EVIDENCE_OPTIONAL = {'skill', 'minimumSkill', 'stats', 'notes'} | SCOPE_FIELDS
@@ -161,6 +162,7 @@ def check_evidence(record):
     method = record.get('method')
     if method not in METHODS:
         reasons.append(f'method must be one of: {", ".join(sorted(METHODS))}')
+    reasons.extend(processing_reasons(record, local=True))
     item = record.get('input')
     if isinstance(item, str):
         if not GEAR_KEY.match(item):

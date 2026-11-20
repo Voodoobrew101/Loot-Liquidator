@@ -1,7 +1,7 @@
 -- Loot Liquidator: rank ONLY conversions the current character or a verified alt can perform.
 -- Prices are quoted in copper per original input. No automatic crafting or selling.
 local _, LL = ...
-local processingMethodLetters={Disenchant="D",Mill="M",Prospect="P",Smelt="S"}
+local processingMethodLetters={Disenchant="D",Mill="M",Prospect="P",Smelt="S",Craft="C",Recycle="R",Research="R"}
 local conversionMethodLetters={Disenchant="D",Mill="M",Prospect="P",Smelt="S",
     Recycle="R",Research="R",Combine="X",Split="X",Exchange="X",Craft="C"}
 
@@ -12,6 +12,26 @@ local conversionMethodLetters={Disenchant="D",Mill="M",Prospect="P",Smelt="S",
 
 local function validNumber(n)
     return type(n)=="number" and n==n and n>=0 and n<math.huge
+end
+local function copyDisenchantAllocation(points,learned)
+    if type(points)~="table" or next(points)==nil or type(learned)~="table" then return nil end
+    local copiedPoints,copiedLearned={},{}
+    for id,rank in pairs(points) do
+        local node=tonumber(id)
+        if not validNumber(node) or node==0 or node%1~=0 or not validNumber(rank) or rank%1~=0 then return nil end
+        local key=tostring(node)
+        if copiedPoints[key]~=nil then return nil end
+        copiedPoints[key]=rank
+    end
+    for id,value in pairs(learned) do
+        local node=tonumber(id)
+        if not validNumber(node) or node==0 or node%1~=0 or value~=true then return nil end
+        local key=tostring(node)
+        if copiedPoints[key]==nil then return nil end
+        copiedLearned[key]=true
+    end
+    for id,rank in pairs(copiedPoints) do if rank>0 and not copiedLearned[id] then return nil end end
+    return copiedPoints,copiedLearned
 end
 local function sameCondition(a,b)
     if type(a)~=type(b) then return false end
@@ -89,10 +109,11 @@ function LL:TooltipConversionOptions(f,options)
     return out
 end
 
-function LL:ProcessingPlayerConditions(f,method,recipeID,character)
-    local profession=self.ProfessionForMethod and self:ProfessionForMethod(method)
+function LL:ProcessingPlayerConditions(f,method,recipeID,character,professionHint)
     local current=self.CharacterKey and self:CharacterKey()
     local key,whatIf=self:RateProfileTarget(character)
+    local profession=professionHint or (self.ProfessionForRecipe and self:ProfessionForRecipe(recipeID,key))
+        or (self.ProfessionForMethod and self:ProfessionForMethod(method))
     local record=self.db and self.db.characters and self.db.characters[key]
     local modeKey=processingMethodLetters[method]
     local modeValue=modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)
@@ -139,6 +160,7 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
         local exactTarget=(method=="Mill" or method=="Prospect") and f or nil
         local info=self:GetCachedOperationInfo(recipeID,exactTarget)
         if info then
+            if self.CopyProfessionOperationContext then self:CopyProfessionOperationContext(ctx,info,recipeID) end
             ctx.baseSkill=info.baseSkill;ctx.bonusSkill=info.bonusSkill
             if validNumber(info.baseSkill) and validNumber(info.bonusSkill) then
                 ctx.effectiveSkill=info.baseSkill+info.bonusSkill
@@ -148,11 +170,18 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
             ctx.qualityFromBlizzard=type(info.craftingQuality)=="number"
         end
     end
+    if self.ProfessionRecipeDuration and key==current then self:ProfessionRecipeDuration(ctx,recipeID) end
     local manual=modeKey and self.ProcessingMethodMode and self:ProcessingMethodMode(modeKey)==4
         and self.AltMethodEnabled and self:AltMethodEnabled(key,modeKey)
         and record and record.altMethods and record.altMethods[modeKey]==true
     if not validNumber(ctx.effectiveSkill) and validNumber(skill) then ctx.effectiveSkill=skill end
     local saved=record and record.researchProfiles and record.researchProfiles[tostring(profession)..":"..tostring(f and f.expansionID)]
+    local savedOperation=recipeID and record and record.professionRecipeOperations and record.professionRecipeOperations[recipeID]
+    if savedOperation and not ctx.qualityFromBlizzard and self.CopyProfessionOperationContext then
+        self:CopyProfessionOperationContext(ctx,savedOperation,recipeID)
+        ctx.operationObserved=savedOperation.observed;ctx.operationBuild=savedOperation.operationBuild
+        ctx.operationQualityFromSnapshot=true
+    end
     ctx.equipment=key==current and record and record.professionEquipment or (saved and saved.equipment)
     if saved and validNumber(saved.bonusSkill) and not ctx.qualityFromBlizzard then
         ctx.baseSkill=skill;ctx.bonusSkill=saved.bonusSkill
@@ -163,11 +192,57 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
     local snapshotNow=time and time()
     ctx.stale=ctx.profileKind=="offline-snapshot" and (not ctx.observed or (snapshotNow and snapshotNow-ctx.observed>7*86400)) or false
     ctx.incomplete=not validNumber(ctx.effectiveSkill) or not ctx.specialization
+    if key==current and self.ProfessionAuraState then
+        ctx.buffs,ctx.buffStacks,ctx.buffsKnown=self:ProfessionAuraState()
+    elseif saved and saved.buffsKnown==true then
+        ctx.buffs={};ctx.buffStacks={};ctx.buffsKnown=true
+        for id,value in pairs(saved.buffs or {}) do if value==true then ctx.buffs[tostring(id)]=true end end
+        for id,count in pairs(saved.buffStacks or {}) do if validNumber(count) then ctx.buffStacks[tostring(id)]=count end end
+    end
+    if saved and not ctx.stale then
+        if validNumber(saved.skill) and validNumber(saved.bonusSkill) then ctx.preSpecializationSkill=saved.skill+saved.bonusSkill end
+        if saved.specializationVerified==true and saved.specializationKnown==true and saved.specialization==spec
+            and saved.specializationSignatureEncoding=='trait-node-current-rank'
+            and saved.specializationEncoding=='invested-points' then
+            local points,learned=copyDisenchantAllocation(saved.specializationPoints,saved.learnedSpecializations)
+            if points then
+                ctx.specializationPoints=points;ctx.learnedSpecializations=learned
+                ctx.specializationKnown=true;ctx.specializationEncoding='invested-points'
+            end
+        end
+    end
+    if method=="Disenchant" then
+        -- A generic operation read can already contain recipe-specific bonuses.
+        -- The DE model instead consumes the expansion snapshot's profession
+        -- Skill plus skillModifier, then applies its own specialization once.
+        ctx.disenchantSpecializationKnown=false
+        ctx.specializationSignatureEncoding=saved and saved.specializationSignatureEncoding
+        if saved and not ctx.stale then
+            if validNumber(saved.skill) and validNumber(saved.bonusSkill)
+                and validNumber(saved.skill+saved.bonusSkill) then
+                ctx.preSpecializationSkill=saved.skill+saved.bonusSkill
+            end
+            if saved.specializationVerified==true and saved.disenchantSpecializationKnown==true
+                and saved.specialization==spec
+                and saved.specializationSignatureEncoding=="trait-node-current-rank"
+                and saved.disenchantSpecializationEncoding=="invested-points" then
+                local points,learned=copyDisenchantAllocation(saved.disenchantSpecializationPoints,
+                    saved.disenchantLearnedSpecializations)
+                if points then
+                    ctx.disenchantSpecializationPoints=points
+                    ctx.disenchantLearnedSpecializations=learned
+                    ctx.disenchantSpecializationEncoding="invested-points"
+                    ctx.disenchantSpecializationKnown=true
+                end
+            end
+        end
+    end
     local simulated=(manual or whatIf) and self.GetManualProfessionProfile and
         self:GetManualProfessionProfile(key,profession,f and f.expansionID)
     if simulated and simulated.enabled then
         ctx.skill=simulated.skill;ctx.effectiveSkill=simulated.skill
         ctx.buffs=simulated.buffs
+        ctx.buffStacks=nil;ctx.buffsKnown=true
         ctx.specialization=simulated.specialization
         ctx.learnedSpecializations=nil
         if type(simulated.learnedSpecializations)=='table' then
@@ -177,12 +252,27 @@ function LL:ProcessingPlayerConditions(f,method,recipeID,character)
         ctx.specializationPoints=self.ProfessionSpecializationPoints and self:ProfessionSpecializationPoints(simulated.specialization) or nil
         ctx.stats={}
         for stat,values in pairs(simulated.stats or {}) do ctx.stats[stat]={rating=values.rating,percent=values.percent} end
+        ctx.statAnchors={}
+        for stat,values in pairs(simulated.statAnchors or {}) do ctx.statAnchors[stat]={rating=values.rating,percent=values.percent} end
+        ctx.effectStates={}
+        for id,state in pairs(simulated.effectStates or {}) do ctx.effectStates[tostring(id)]={active=state.active,stacks=state.stacks} end
         ctx.baseSkill=nil;ctx.bonusSkill=nil
         ctx.operationStats=self.SimulatedProfessionOperationStats and self:SimulatedProfessionOperationStats(simulated) or nil
+        ctx.operationStatsIncludeSpecialization=false
         ctx.craftingQuality=nil;ctx.equipment=nil
         ctx.qualityFromBlizzard=false;ctx.simulated=true;ctx.stale=false;ctx.profileKind="manual-simulation"
+        ctx.preSpecializationSkill=simulated.skill
+        ctx.specializationKnown=type(ctx.specializationPoints)=='table';ctx.specializationEncoding='invested-points'
+        ctx.concentrationApplied=nil
         ctx.benchmark=self.NormalizeSyntheticBenchmark and self:NormalizeSyntheticBenchmark(simulated.benchmark) or nil
         ctx.incomplete=not validNumber(ctx.skill) or not ctx.specialization
+        if method=="Disenchant" then
+            ctx.preSpecializationSkill=simulated.skill
+            ctx.specializationSignatureEncoding="invested-points"
+            ctx.disenchantSpecializationPoints=nil;ctx.disenchantLearnedSpecializations=nil
+            ctx.disenchantSpecializationEncoding=nil
+            ctx.disenchantSpecializationKnown=ctx.specializationPoints~=nil
+        end
     end
     if self.GetSkillQualityOperation and (method=="Mill" or method=="Prospect") then
         ctx.skillQualityOperation=self:GetSkillQualityOperation(f,recipeID,key,simulated and simulated.enabled)
@@ -406,7 +496,11 @@ function LL:ValueProcessingModel(model,suppliesCost,suppliesKnown,f)
         if quote then savings=(model.inputCount-model.expectedInputCount)*quote else missing=missing+1 end
     end
     model.partialPrice=(missing>0 or model.unknownOutputs or model.insufficientSamples) and true or false
-    model.partialValue=(total+savings-(suppliesCost or 0))/model.inputCount
+    local effectiveSupplies=suppliesCost or 0
+    if validNumber(model.supplyCostFactor) and model.supplyCostFactor<=1 then
+        effectiveSupplies=effectiveSupplies*model.supplyCostFactor
+    end
+    model.partialValue=(total+savings-effectiveSupplies)/model.inputCount
     -- A2 (owner decision 1): when some outputs are unknown, the known outputs
     -- still give a value (a lower bound), marked partial, with confidence scaled
     -- by the share of outputs that could be valued. "Insufficient Data" only
@@ -488,27 +582,42 @@ end
 -- D1c2: a material whose quality rank the research did not state lists every rank's
 -- item ID in rankIDs; it is priced at the cheapest rank that has a price.
 function LL:GetMaterialPrice(m)
+    if m.economicPolicy=='nontradable' then return 0,'Bound output' end
     if type(m.rankIDs)=='table' and #m.rankIDs>1 then
         local best,bestSource
         for _,id in ipairs(m.rankIDs) do
-            local price,source=self:GetOutputPrice(id)
+            local price,source=self:GetOutputPrice(id,m.rankItemLinks and m.rankItemLinks[id])
             if validNumber(price) and (not best or price<best) then best,bestSource=price,source end
         end
         if best then return best,bestSource end
     end
-    return self:GetOutputPrice(m.id)
+    return self:GetOutputPrice(m.id,m.itemLink)
 end
-function LL:GetOutputPrice(itemID)
-    local key=self:TSMString(nil,itemID)
-    local ask=self:Price("dbminbuyout",key) or self:Price("dbmarket",key)
-        or self:Price("dbregionmarketavg",key)
+function LL:GetOutputPrice(itemID,itemLink)
+    local items=self.ItemDB and self.ItemDB.professionProfiles and self.ItemDB.professionProfiles.items
+    local item=items and (items[itemID] or items[tostring(itemID)])
+    local binding=item and (item.bindType or item.itemBinding)
+    local bound=binding==1 or binding==4
+    local key=self:TSMString(itemLink,itemID)
+    local function quote(item)
+        return self:Price("dbminbuyout",item) or self:Price("dbmarket",item) or self:Price("dbregionmarketavg",item)
+    end
+    local ask=not bound and quote(key)
+    if not bound and not ask and itemLink then
+        local base=self:TSMString(nil,itemID)
+        if base~=key then ask=quote(base) end
+    end
     if ask then return ask*(1-self:AHFeeRate()),
         self:AHFeeRate()>0 and "TSM auction estimate (net)" or "TSM auction estimate (gross)" end
     local fn=C_Item and C_Item.GetItemInfo or GetItemInfo
     if fn then
         local ok,_,_,_,_,_,_,_,_,_,_,vendor=pcall(fn,itemID)
-        if ok then return number(vendor),"Vendor output" end
+        if ok then
+            if bound and validNumber(vendor) then return vendor,'Vendor output' end
+            return number(vendor),"Vendor output"
+        end
     end
+    if bound then return 0,'Bound output' end
 end
 function LL:ConversionOptions(f)
     local out,knownOperations={},{}
@@ -549,10 +658,10 @@ function LL:ConversionOptions(f)
         local research=(self.GetLearnedProcessingEstimate and
             self:GetLearnedProcessingEstimate(f,c.method,inputCount,processingRecipe)) or nil
         if c.outputID and c.outputCount and c.inputCount then
-            price,source=self:GetOutputPrice(c.outputID)
+            price,source=self:GetOutputPrice(c.outputID,c.outputItemLink)
         end
         local suppliesCost=0
-        local suppliesKnown=true
+        local suppliesKnown=c.allocationCostUnknown~=true
         local missingExtra=false
         for _,extra in ipairs(c.extraReagents or {}) do
             local extraValue=self:GetOutputPrice(extra.id)
@@ -582,19 +691,34 @@ function LL:ConversionOptions(f)
         local yieldModel,modelIssue
         local salvage=c.salvage and self.SalvageRecipeDefinition and self:SalvageRecipeDefinition(processingRecipe)
         local verifiedSalvage=salvage and salvage.method==c.method and salvage.inputCount==inputCount
-        if c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or c.method=="Recycle"
+        local fixedProfession=c.outputID and c.outputCount and c.inputCount
+            and c.method~='Exchange' and c.method~='Combine' and c.method~='Split' and self.ProfessionCraftModel
+        if fixedProfession then
+            yieldModel,modelIssue=self:ProfessionCraftModel(f,c,character)
+            if yieldModel then value,source=self:ValueProcessingModel(yieldModel,suppliesCost,suppliesKnown,f) end
+        elseif c.method=="Mill" or c.method=="Prospect" or c.method=="Smelt" or c.method=="Recycle" or c.method=="Craft"
             or verifiedSalvage or (research and dataMode~=3) then
             local displayOption={name=c.method,inputCount=inputCount,
-                recipeID=processingRecipe,character=character}
+                recipeID=processingRecipe,character=character,profession=c.profession,
+                outputID=c.outputID,outputCount=c.outputCount,outputQuality=c.outputQuality or c.outputQualityRank,
+                outputQualityItems=c.outputQualityItems,qualityOrderVerified=c.qualityOrderVerified,outputItemLink=c.outputItemLink,
+                outputQuantityMin=c.outputQuantityMin,outputQuantityMax=c.outputQuantityMax,
+                verifiedOutput=c.verifiedOutput,requiredInputs=c.requiredInputs,extraReagents=c.extraReagents}
             local current=self.CharacterKey and self:CharacterKey()
             if character and character~="Current character" and character~=current then research=nil end
             yieldModel,modelIssue=self:ResolveEvidenceModel(f,displayOption,research,dataMode)
-            value,source=self:ValueProcessingModel(yieldModel,suppliesCost,suppliesKnown,f)
+            if yieldModel or c.method~='Craft' then
+                value,source=self:ValueProcessingModel(yieldModel,suppliesCost,suppliesKnown,f)
+            end
         end
         if value and value<0 then value=nil end
         if missingExtra then
             available=false
             why="Additional recipe reagents required"
+        end
+        if c.allocationCostUnknown then
+            value=nil;source='Insufficient Data';modelIssue='Required reagent identity or price unavailable'
+            if yieldModel then yieldModel.partial=true;yieldModel.partialPrice=true end
         end
         local isFixed = c.outputID and c.outputCount and c.inputCount
             and (c.confidence=="documented" or c.confidence=="verified" or
@@ -606,7 +730,8 @@ function LL:ConversionOptions(f)
             why=why or modelIssue,character=character,profession=c.profession,
             value=value,source=source,inputShort=insufficientCount,
             confidence=yieldModel and (yieldModel.confidenceUnscored and "unknown" or (yieldModel.valueConfidence or yieldModel.confidence)) or c.confidence or "verified-recipe",
-            partial=yieldModel and yieldModel.partial or nil,
+            partial=c.allocationCostUnknown or yieldModel and yieldModel.partial or nil,
+            modelAllocation=c.modelAllocation,allocation=c.allocation,
             -- Only per-input observations, never shared expansion-wide candidates.
             estimate=yieldModel and yieldModel.personalStats and research or nil,
             samples=yieldModel and yieldModel.personalStats and yieldModel.personalStats.total or 0,
@@ -629,22 +754,15 @@ function LL:ConversionOptions(f)
     for _,c in ipairs(self.SalvageConversionOptions and self:SalvageConversionOptions(f) or {}) do
         add(c,"salvage-input")
     end
+    local derivedRecipes={}
+    for _,c in ipairs(self.LearnedRecipeConversionOptions and self:LearnedRecipeConversionOptions(f) or {}) do
+        derivedRecipes[c.recipeID]=true
+        add(c,'discovered')
+    end
     for _,c in pairs((self.db.recipeCandidates and self.db.recipeCandidates[f.id]) or {}) do
-        -- A discovered craft is eligible only if the produced reagent is consumed
-        -- by a DIFFERENT profession (not merely used by the producer).
-        local others=self.db.reagentConsumers and self.db.reagentConsumers[c.outputID]
-        local usedElsewhere=false
-        if others then for profession in pairs(others) do
-            if profession~=c.profession then usedElsewhere=true;break end
-        end end
-        if usedElsewhere then
-            local infoID
-            if C_Item and C_Item.GetItemInfoInstant then
-                local ok,_,_,_,_,_,cl=pcall(C_Item.GetItemInfoInstant,c.outputID)
-                if ok then infoID=cl end
-            end
-            if infoID==7 then add(c,"discovered") end
-        end
+        -- Learned recipe discovery supplies exact required inputs and native
+        -- outputs for every profession, including crafts used by its producer.
+        if not derivedRecipes[c.recipeID] then add(c,"discovered") end
     end
     local researchMethods={}
     for _,operation in ipairs(self.ResearchProcessingOperations and self:ResearchProcessingOperations(f) or {}) do
@@ -657,7 +775,8 @@ function LL:ConversionOptions(f)
          self.db.processingLearning.inputs[f.id])
     local dataRecord=self.ResearchProcessingOutputs and self.ResearchProcessingOutputs[f.id]
     if not destroy and dataRecord then destroy=dataRecord.method end
-    if destroy and destroy~='Disenchant' and not researchMethods[destroy] and Allowed(self.db,destroy) and not (self.IsIgnoredAction and self:IsIgnoredAction(f.id,destroy)) then add({method=destroy,profession=self:ProfessionForMethod(destroy),
+    local destroyProfession=destroy and self:ProfessionForMethod(destroy)
+    if destroy and destroyProfession and destroy~='Disenchant' and not researchMethods[destroy] and Allowed(self.db,destroy) and not (self.IsIgnoredAction and self:IsIgnoredAction(f.id,destroy)) then add({method=destroy,profession=destroyProfession,
         inputCount=(modern and modern.method==destroy and modern.batch)
             or (dataRecord and dataRecord.batch)
             or (destroy=="Mill" and (f.expansionID==10 or f.expansionID==11) and 10 or 5),
@@ -666,7 +785,7 @@ function LL:ConversionOptions(f)
         operationUnverified=modern and modern.operationUnverified,
         confidence=(dataRecord and dataRecord.evidence) or "source-candidate",source=modern and "Research input candidate (client metadata)"
             or "Blizzard processing flag (possible input; yields unknown)"},"destroy") end
-    if dataRecord and dataRecord.method~='Disenchant' and not researchMethods[dataRecord.method] and dataRecord.method~=destroy and Allowed(self.db,dataRecord.method)
+    if dataRecord and self:ProfessionForMethod(dataRecord.method) and dataRecord.method~='Disenchant' and not researchMethods[dataRecord.method] and dataRecord.method~=destroy and Allowed(self.db,dataRecord.method)
         and not (self.IsIgnoredAction and self:IsIgnoredAction(f.id,dataRecord.method)) then
         add({method=dataRecord.method,profession=self:ProfessionForMethod(dataRecord.method),
              inputCount=dataRecord.batch,confidence=dataRecord.evidence,

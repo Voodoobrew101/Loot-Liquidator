@@ -38,14 +38,15 @@ jobs:
         run: python3 tests/test_curseforge_release.py -v
       - name: Install Lua 5.1
         run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
-      - name: Compile pinned research (same gates as distribution.yml)
+      - name: Review studies and compile the build database
         run: |
-          python3 tools/research_v3_to_baselines.py
-          python3 tools/evidence_to_baselines.py
-          python3 tools/capture_observations.py
-          python3 tools/att_token_references.py
-          python3 tools/recycling_capture_baselines.py --check
-          lua5.1 tools/compile_itemdb.lua LootLiquidator/ItemDBRuntime.lua
+          if [ "${{ github.event_name }}" = 'pull_request' ]; then
+            python3 tools/prepare_build_research.py
+          else
+            git fetch --no-tags origin implementation/five-agent-completion
+            research_commit=$(git rev-parse FETCH_HEAD)
+            python3 tools/prepare_build_research.py --research-ref "$research_commit"
+          fi
       - name: Run all addon validation
         run: bash tests/run.sh
       - name: Prepare version and CurseForge metadata
@@ -56,6 +57,9 @@ jobs:
         run: |
           python3 tools/package_addon.py dist/LootLiquidator.zip
           python3 tools/verify_distribution.py dist/LootLiquidator.zip
+          cp database/research/build-research-manifest.json dist/
+          cp database/research/build-study-review.json dist/
+          cp database/research/v3-snapshot/SNAPSHOT.json dist/research-snapshot.json
           sha256sum dist/LootLiquidator.zip > dist/SHA256SUMS.txt
       - uses: actions/upload-artifact@v6
         with:

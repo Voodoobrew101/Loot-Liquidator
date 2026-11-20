@@ -204,9 +204,101 @@ class SpecializationEffectsPipelineTests(unittest.TestCase):
                          {98659: 212508, 98660: 212495, 98661: 212511, 98662: 212505})
         self.assertEqual({r['sourceFamily']['id'] for r in rules}, {212498})
         self.assertEqual({r['recipeID'] for r in rules}, {434018})
-        self.assertAlmostEqual(sum(r['maxRank'] * r['perPoint'] for r in rules), .8)
+        self.assertAlmostEqual(sum(r['maxRank'] * r['perPoint'] +
+                                   sum(m['fraction'] for m in r['replacementMilestones']) for r in rules), 1)
+        for rule in rules:
+            self.assertEqual(rule['replacementMilestoneBuild'], 70961)
+            self.assertEqual(rule['replacementMilestones'],
+                             [{'rank': 5, 'fraction': .02}, {'rank': 15, 'fraction': .03}])
         self.assertEqual({r['quantityPolicy'] for r in rules}, {'CONSERVE_TOTAL_GEM_UNITS'})
         self.assertEqual({r['reservoirPolicy'] for r in rules}, {'shared-original-source-quantity'})
+
+    def test_replacement_milestones_require_reviewed_fraction_boundaries_and_shared_budget(self):
+        for key, value in [('replacementMilestoneBuild', 999999), ('replacementMilestoneBuild', True),
+                           ('replacementMilestones', []),
+                           ('replacementMilestones', [{'rank': 0, 'fraction': .02}]),
+                           ('replacementMilestones', [{'rank': 21, 'fraction': .02}]),
+                           ('replacementMilestones', [{'rank': 5, 'fraction': True}]),
+                           ('replacementMilestones', [{'rank': 5, 'fraction': 0}]),
+                           ('replacementMilestones', [{'rank': 5, 'fraction': .3}]),
+                           ('replacementMilestones', [{'rank': 15, 'fraction': .03}, {'rank': 5, 'fraction': .02}]),
+                           ('replacementMilestones', [{'rank': 5, 'fraction': .02, 'samples': 100}])]:
+            with self.subTest(key=key, value=value):
+                data = copy.deepcopy(self.document)
+                next(r for r in data['rules'] if r['kind'] == 'replace-family')[key] = value
+                with self.assertRaises(ValueError):
+                    effects.build(data, self.catalog)
+        data = copy.deepcopy(self.document)
+        data['rules'][0]['replacementMilestones'] = [{'rank': 5, 'fraction': .02}]
+        data['rules'][0]['replacementMilestoneBuild'] = 70961
+        with self.assertRaisesRegex(ValueError, 'replacement milestone fields'):
+            effects.build(data, self.catalog)
+
+    def test_published_references_remain_separate_text_with_historical_sources(self):
+        before = copy.deepcopy(self.document)
+        compiled = effects.build(self.document, self.catalog)
+        self.assertEqual(self.document, before)
+        references = compiled['publishedReferences']
+        self.assertEqual(len(references), 2)
+        self.assertEqual([entry['referenceID'] for entry in references],
+                         sorted(entry['referenceID'] for entry in references))
+        by_rarity = {entry['inputRarity']: entry for entry in references}
+        self.assertIn('2.9 Eversinging Dust', by_rarity[2]['displayText'])
+        self.assertIn('66% chance', by_rarity[4]['displayText'])
+        self.assertEqual(by_rarity[2]['requiredNodes'], {'107649': 30, '107648': 30})
+        self.assertEqual(by_rarity[4]['requiredNodes'], {'107649': 30, '107646': 30})
+        for entry in references:
+            self.assertEqual((entry['build'], entry['clientVersion']), (70961, '12.1.5'))
+            self.assertEqual((entry['applyPolicy'], entry['displayPolicy']),
+                             ('DISPLAY_ONLY', 'MAX_INVESTMENT_SCENARIO_ONLY'))
+            for source_id in entry['sourceClaimIDs']:
+                source = next(s for s in compiled['sourceClaims'] if s['id'] == source_id)
+                self.assertIsNone(source['sourceBuild'])
+                self.assertEqual(source['currentBuildApplicability'], 'UNVERIFIED')
+                self.assertIn(source['sourcePublishedOn'], entry['displayText'])
+                self.assertEqual(source['sampleSizeStatus'], 'UNKNOWN')
+        self.assertEqual(len(compiled['specializationRules']), 25)
+        data = copy.deepcopy(self.document)
+        del data['publishedReferences']
+        self.assertEqual(effects.build(data, self.catalog)['publishedReferences'], [])
+
+    def test_published_references_reject_numeric_execution_and_invented_counts(self):
+        for key, value in [('samples', 20), ('casts', 100), ('effectiveSamples', 20),
+                           ('probability', .66), ('meanQuantity', .66),
+                           ('expectedQuantity', 1), ('rank1Probability', .34),
+                           ('quantityMultiplier', 1.2), ('confidence0to100', 80),
+                           ('rankComplement', .34), ('perPoint', .01)]:
+            with self.subTest(key=key):
+                data = copy.deepcopy(self.document)
+                data['publishedReferences'][1][key] = value
+                with self.assertRaisesRegex(ValueError, 'text-only'):
+                    effects.build(data, self.catalog)
+
+    def test_published_references_require_matching_caps_policy_and_source_review(self):
+        for key, value in [('applyPolicy', 'EXECUTE'), ('displayPolicy', 'ALWAYS'),
+                           ('requiredNodes', {'107649': 29, '107648': 30}),
+                           ('requiredNodes', {'107649': 31, '107648': 30}),
+                           ('requiredNodes', {'107649': True, '107648': 30}),
+                           ('requiredNodes', {'107649': 30, '107646': 30}),
+                           ('inputRarity', True), ('inputRarity', 3),
+                           ('sourceClaimIDs', ['missing']), ('sourceClaimIDs', [['bad']]),
+                           ('build', True), ('build', 70962),
+                           ('clientVersion', '12.1'), ('notes', []), ('displayText', '')]:
+            with self.subTest(key=key, value=value):
+                data = copy.deepcopy(self.document)
+                data['publishedReferences'][0][key] = value
+                with self.assertRaises(ValueError):
+                    effects.build(data, self.catalog)
+        data = copy.deepcopy(self.document)
+        source_id = data['publishedReferences'][0]['sourceClaimIDs'][0]
+        source = next(s for s in data['sourceClaims'] if s['id'] == source_id)
+        source['sourcePublishedOn'] = '2026-02-30'
+        with self.assertRaisesRegex(ValueError, 'source date required'):
+            effects.build(data, self.catalog)
+        data = copy.deepcopy(self.document)
+        data['publishedReferences'].append(copy.deepcopy(data['publishedReferences'][0]))
+        with self.assertRaisesRegex(ValueError, 'duplicate published reference identity'):
+            effects.build(data, self.catalog)
 
     def test_complete_specialization_selects_real_category_reference_without_interpolation(self):
         rule = next(r for r in effects.build(self.document, self.catalog)['specializationRules'] if r['kind'] == 'reference-context')
@@ -215,6 +307,91 @@ class SpecializationEffectsPipelineTests(unittest.TestCase):
         self.assertIn(rule['referenceContextID'], (ROOT / 'database/disenchant-category-baselines.lua').read_text())
         self.assertEqual(rule['quantityPolicy'], 'USE_REFERENCE_VECTOR_ONCE_NO_EXTRA_MULTIPLIER')
         self.assertNotIn('perPoint', rule)
+
+    def test_modeled_disenchant_rules_preserve_explicit_assumptions_without_observations(self):
+        before = copy.deepcopy(self.document)
+        compiled = effects.build(self.document, self.catalog)
+        self.assertEqual(self.document, before)
+        rules = compiled['modeledDisenchantRules']
+        self.assertEqual(len(rules), 3)
+        by_rarity = {rule['inputRarity']: rule for rule in rules}
+        self.assertEqual(set(by_rarity), {2, 3, 4})
+        for rarity, rule in by_rarity.items():
+            self.assertEqual((rule['method'], rule['profession'], rule['expansionID']),
+                             ('Disenchant', 'Enchanting', 11))
+            self.assertEqual((rule['build'], rule['clientVersion']), (70961, '12.1.5'))
+            self.assertEqual((rule['applyPolicy'], rule['evidenceStatus']), ('EXECUTE', 'MODELED'))
+            self.assertEqual(rule['inputClassIDs'], [2, 4])
+            self.assertEqual(rule['rootNodeID'], 107649)
+            self.assertEqual(rule['childNodeID'], {2: 107648, 3: 107647, 4: 107646}[rarity])
+            self.assertEqual(rule['skillMaximum'], 290)
+            self.assertEqual(rule['quantityMilestones'],
+                             [{'rank': 20, 'progress': .5}, {'rank': 30, 'progress': .5}])
+            self.assertIn('synthetic zero-total-skill reference', ' '.join(rule['assumptions']))
+            self.assertNotIn('samples', rule)
+            self.assertNotIn('casts', rule)
+        self.assertEqual((by_rarity[2]['confidence0to100'], by_rarity[2]['crossClassConfidence']), (10, 5))
+        self.assertEqual((by_rarity[3]['confidence0to100'], by_rarity[3]['crossClassConfidence']), (30, 15))
+        self.assertEqual((by_rarity[4]['confidence0to100'], by_rarity[4]['crossClassConfidence']), (20, 20))
+        self.assertEqual(by_rarity[2]['targetPooledMean'], 2.9)
+        self.assertEqual(by_rarity[2]['targetRank2Share'], .65)
+        self.assertEqual(by_rarity[2]['baselineFallbackClassID'], 4)
+        self.assertAlmostEqual(by_rarity[3]['targetRank2Share'], .660 / 1.289)
+        self.assertEqual(by_rarity[3]['targetPooledMean'], 1.289)
+        self.assertTrue(by_rarity[4]['preservePrimaryTotal'])
+        self.assertEqual(by_rarity[4]['targetRank2Share'], .66)
+        self.assertNotIn('targetPooledMean', by_rarity[4])
+        self.assertIn('not a measured Dust Deliverer endpoint', next(
+            s['support'] for s in compiled['sourceClaims']
+            if s['id'] == 'midnight-nearby-r2-share-estimate-20260301'))
+
+    def test_modeled_disenchant_rules_reject_counts_and_unreviewed_transforms(self):
+        for key, value in [('samples', 1000), ('casts', 20), ('effectiveSamples', 100),
+                           ('rank1Probability', .34), ('quantityMultiplier', 2),
+                           ('skillFactors', [{'skill': 10, 'factor': 2}]),
+                           ('inputItemID', 239671), ('kind', 'measured')]:
+            with self.subTest(key=key):
+                data = copy.deepcopy(self.document)
+                data['modeledDisenchantRules'][0][key] = value
+                with self.assertRaisesRegex(ValueError, 'missing or unknown fields'):
+                    effects.build(data, self.catalog)
+        data = copy.deepcopy(self.document)
+        data['modeledDisenchantRules'][2]['targetPooledMean'] = 1
+        with self.assertRaisesRegex(ValueError, 'missing or unknown fields'):
+            effects.build(data, self.catalog)
+
+    def test_modeled_disenchant_rules_validate_scope_caps_and_interpolation(self):
+        for key, value in [('inputRarity', 3), ('inputRarity', True), ('inputClassIDs', [4]),
+                           ('inputClassIDs', [2.0, 4]), ('primaryRankIDs', [243599.0, 243600]),
+                           ('rootNodeID', 107649.0), ('childNodeID', 107647),
+                           ('build', 70783), ('clientVersion', '12.1.7'),
+                           ('applyPolicy', 'DISPLAY_ONLY'), ('evidenceStatus', 'MEASURED'),
+                           ('sourceKey', 'itemdb'), ('confidence0to100', 11),
+                           ('crossClassConfidence', 6), ('crossClassConfidence', True),
+                           ('skillMaximum', 291), ('targetRank2Share', 1.01),
+                           ('targetRank2Share', float('nan')), ('targetPooledMean', 0),
+                           ('baselineFallbackClassID', 2), ('assumptions', []),
+                           ('sourceClaimIDs', ['missing']), ('sourceClaimIDs', [['bad']]),
+                           ('quantityMilestones', [{'rank': 20, 'progress': 1}]),
+                           ('quantityMilestones', [{'rank': 20, 'progress': .5},
+                                                   {'rank': 30, 'progress': .6}])]:
+            with self.subTest(key=key, value=value):
+                data = copy.deepcopy(self.document)
+                data['modeledDisenchantRules'][0][key] = value
+                with self.assertRaises(ValueError):
+                    effects.build(data, self.catalog)
+        data = copy.deepcopy(self.document)
+        data['modeledDisenchantRules'][1]['endpointRecordID'] = 'unknown-endpoint'
+        with self.assertRaisesRegex(ValueError, 'reviewed full-specialization endpoint'):
+            effects.build(data, self.catalog)
+        data = copy.deepcopy(self.document)
+        data['modeledDisenchantRules'][2]['preservePrimaryTotal'] = False
+        with self.assertRaisesRegex(ValueError, 'preserve the existing primary total'):
+            effects.build(data, self.catalog)
+        data = copy.deepcopy(self.document)
+        data['modeledDisenchantRules'].pop()
+        with self.assertRaisesRegex(ValueError, 'exactly three'):
+            effects.build(data, self.catalog)
 
     def test_unsupported_yield_curves_and_empirical_claims_are_rejected(self):
         for key, value in [('kind', 'quantity-multiplier'), ('samples', 100), ('casts', 100),

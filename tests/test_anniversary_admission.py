@@ -141,8 +141,10 @@ class AnniversaryAdmissionTests(unittest.TestCase):
 
     def test_valid_policy_variants_keep_exact_matching(self):
         policy = json.loads(Path('database/research/retail-admission.json').read_text())
+        anniversary = next(rule for rule in policy['exclusions']
+                           if 'war-within-20261108-2228-001' in rule['recordIDs'])
         for empty in ('recordIDs', 'studyKeys'):
-            rule = copy.deepcopy(policy['exclusions'][-1])
+            rule = copy.deepcopy(anniversary)
             rule[empty] = []
             with patch.object(Path, 'read_text', return_value=json.dumps(dict(policy, exclusions=[rule]))):
                 self.assertEqual(v3.retail_admission(rows())[0], [])

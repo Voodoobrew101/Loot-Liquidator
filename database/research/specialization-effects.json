@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "specialization-effects/2026-11-19-skill-milestones",
+  "revision": "specialization-effects/2026-11-19-gem-replacement-milestones",
   "reviewedOn": "2026-11-19",
   "build": 70783,
   "catalogSourceCommit": "efeeb8ca1188cd87b5bd3a1f8807eb270ad3df51",
@@ -407,6 +407,121 @@
       },
       "support": "Crystal uses the same amount-one profession effect 146 as Supplier, Dust and Delegate, whose base descriptions explicitly identify +1 skill per point. Its label 5052 is also used by its explicitly skill-valued epic-equipment milestones. Taken together these support a provisional +1 epic disenchanting skill per invested point inference at confidence 60.",
       "limits": "This is a DB2 join inference, not a number stated by the Crystal base prose tooltip or a measured live skill differential. It supplies no extra-output rate, bonus-stack amount or random quality-probability formula."
+    },
+    {
+      "id": "midnight-raziar-green-de-pooled-mean-20260304",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1rke21a/eversinging_dust_rank_2_is_almost_certainly_way/",
+      "sourceType": "PUBLISHED_PLAYER_REPORT",
+      "sourcePublishedOn": "2026-03-04",
+      "accessedOn": "2026-11-19",
+      "sourceBuild": null,
+      "displayReviewedBuild": 70961,
+      "support": "RaziarEdge reports full investment in green disenchanting and estimates about 2.9 dust on average, with up to 6 dust per disenchant. This is a pooled-rank quantity report; no completed-cast denominator, exact input, skill, equipment, or point allocation is stated.",
+      "numericClaim": {
+        "pooledMeanQuantity": 2.9,
+        "unit": "Eversinging Dust units per disenchant; ranks pooled"
+      },
+      "sampleSizeStatus": "UNKNOWN",
+      "currentBuildApplicability": "UNVERIFIED",
+      "usePolicy": "DISPLAY_ONLY; maximum-node display scenario is an application choice, not a reconstruction of the source setup."
+    },
+    {
+      "id": "midnight-mrnoobyy-epic-r2-probability-20260320",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1ryolii/swimming_in_dawn_crystals_an_experienced_goblin/",
+      "sourceType": "PUBLISHED_PLAYER_REPORT",
+      "sourcePublishedOn": "2026-03-20",
+      "accessedOn": "2026-11-19",
+      "sourceBuild": null,
+      "displayReviewedBuild": 70961,
+      "support": "MrNoobyy reports 100 Enchanting, all rare equipment, and a maxed tree, giving about a 66% chance to receive a rank 2 crystal. Exact input conditions, sample size, effective skill, point allocation and total crystal quantity per cast are not stated.",
+      "numericClaim": {
+        "rank": 2,
+        "probability": 0.66,
+        "unit": "reported chance of receiving rank 2 Dawn Crystal"
+      },
+      "sampleSizeStatus": "UNKNOWN",
+      "currentBuildApplicability": "UNVERIFIED",
+      "usePolicy": "DISPLAY_ONLY; probability is not a unit expectation, rank 1 complement, quality allocation, or bonus-material vector."
+    },
+    {
+      "id": "midnight-nearby-r2-share-estimate-20260301",
+      "url": "https://www.reddit.com/r/woweconomy/comments/1rhtrm6/worried_about_enchanting_concentration/",
+      "sourceType": "PRIMARY_PLAYER_APPROXIMATE_RATIO_WITHOUT_DATASET",
+      "sourcePublishedOn": "2026-03-01",
+      "accessedOn": "2026-11-06",
+      "sourceBuild": null,
+      "support": "Nearby-Operation5543 reports roughly 65% rank 2 with a proper setup. Material family, rarity, denominator, sample size, skill, gear and exact specialization points are unspecified. This is not a measured Dust Deliverer endpoint.",
+      "numericClaim": {
+        "rank2ShareReportedApprox": 0.65,
+        "shareDenominator": "UNKNOWN",
+        "materialFamily": "UNKNOWN",
+        "inputRarity": "UNKNOWN"
+      },
+      "sampleSizeStatus": "UNKNOWN",
+      "currentBuildApplicability": "UNVERIFIED",
+      "usePolicy": "Weak generic quality prior used by an explicitly modeled dust scenario; no empirical dust quality cohort is created."
+    },
+    {
+      "id": "midnight-synthetic-disenchant-reference-policy-20261119",
+      "url": "https://github.com/Voodoobrew101/Loot-Liquidator",
+      "sourceType": "INTERNAL_SYNTHETIC_BENCHMARK_POLICY",
+      "reviewedOn": "2026-11-19",
+      "modelReviewBuild": 70961,
+      "support": "Internal modeling policy, not an empirical source: compile immutable ordinary category means into a separate synthetic reference at zero total skill. Historical ordinary cohorts have unknown skill and specialization. Forward-adjust this modeled reference using scanned or simulated skill and specialization, with explicit confidence caps and class transfer assumptions.",
+      "modeledReference": {
+        "sourceObservationContext": "UNKNOWN_CHARACTER_NOT_NORMALIZED",
+        "modeledSkillAnchor": 0,
+        "nativeSkillUpperAnchor": 140,
+        "specializationSkillUpperAnchor": 150,
+        "effectiveSkillUpperAnchor": 290,
+        "qualityProgress": "clamp(effectiveSkill / 290, 0, 1)",
+        "quantityProgress": "0.5 at child rank 20 and another 0.5 at child rank 30",
+        "sourceObservations": "IMMUTABLE",
+        "samplePolicy": "DO_NOT_CREATE_OR_REINTERPRET_SAMPLE_COUNTS"
+      },
+      "limits": "The synthetic zero-skill anchor, interpolation and class transfers are modeling assumptions; none establish a measured causal skill curve or a normalized zero-point experiment."
+    },
+    {
+      "id": "blizzard-tww-gem-replacement-milestones-70961",
+      "url": "https://wago.tools/db2/TraitDefinition?build=12.1.5.70961",
+      "sourceType": "BLIZZARD_DB2_EXPLICIT_REPLACEMENT_PERCENTAGES",
+      "build": 70961,
+      "accessedOn": "2026-11-19",
+      "archive": "database/research/profession-effect-catalog-70961.json",
+      "support": "The four War Within Gem Finding color paths each grant an additional2%Amber-to-color replacement chance at5investedpoints and3%at15investedpoints. The source explicitly says instead of Ambivalent Amber, so these conserve the original Amber reservoir and do not add gem units.",
+      "numericClaim": {
+        "replacementMilestones": [
+          {
+            "rank": 5,
+            "fraction": 0.02
+          },
+          {
+            "rank": 15,
+            "fraction": 0.03
+          }
+        ],
+        "maximumFractionPerColor": 0.25,
+        "maximumFourColorFraction": 1.0
+      },
+      "entryIDs": {
+        "98659": [
+          121926,
+          121924
+        ],
+        "98660": [
+          121932,
+          121930
+        ],
+        "98661": [
+          121938,
+          121936
+        ],
+        "98662": [
+          121944,
+          121942
+        ]
+      },
+      "sourceSHA256": "521cf1fa72c3cf2b2d85e5a37e805f93ae3e0d5da12ef5ba3daf79a6092da440"
     }
   ],
   "rules": [
@@ -909,7 +1024,8 @@
       "applyPolicy": "EXECUTE",
       "sourceClaimIDs": [
         "wago-node-identity",
-        "live-gem-replacement:98659"
+        "live-gem-replacement:98659",
+        "blizzard-tww-gem-replacement-milestones-70961"
       ],
       "baselinePolicy": "selected-reference-scenario",
       "perPoint": 0.01,
@@ -923,7 +1039,18 @@
       },
       "recipeID": 434018,
       "reservoirPolicy": "shared-original-source-quantity",
-      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS"
+      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS",
+      "replacementMilestones": [
+        {
+          "rank": 5,
+          "fraction": 0.02
+        },
+        {
+          "rank": 15,
+          "fraction": 0.03
+        }
+      ],
+      "replacementMilestoneBuild": 70961
     },
     {
       "ruleID": "specialization:10:Prospect:98660:replace-family",
@@ -941,7 +1068,8 @@
       "applyPolicy": "EXECUTE",
       "sourceClaimIDs": [
         "wago-node-identity",
-        "live-gem-replacement:98660"
+        "live-gem-replacement:98660",
+        "blizzard-tww-gem-replacement-milestones-70961"
       ],
       "baselinePolicy": "selected-reference-scenario",
       "perPoint": 0.01,
@@ -955,7 +1083,18 @@
       },
       "recipeID": 434018,
       "reservoirPolicy": "shared-original-source-quantity",
-      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS"
+      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS",
+      "replacementMilestones": [
+        {
+          "rank": 5,
+          "fraction": 0.02
+        },
+        {
+          "rank": 15,
+          "fraction": 0.03
+        }
+      ],
+      "replacementMilestoneBuild": 70961
     },
     {
       "ruleID": "specialization:10:Prospect:98661:replace-family",
@@ -973,7 +1112,8 @@
       "applyPolicy": "EXECUTE",
       "sourceClaimIDs": [
         "wago-node-identity",
-        "live-gem-replacement:98661"
+        "live-gem-replacement:98661",
+        "blizzard-tww-gem-replacement-milestones-70961"
       ],
       "baselinePolicy": "selected-reference-scenario",
       "perPoint": 0.01,
@@ -987,7 +1127,18 @@
       },
       "recipeID": 434018,
       "reservoirPolicy": "shared-original-source-quantity",
-      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS"
+      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS",
+      "replacementMilestones": [
+        {
+          "rank": 5,
+          "fraction": 0.02
+        },
+        {
+          "rank": 15,
+          "fraction": 0.03
+        }
+      ],
+      "replacementMilestoneBuild": 70961
     },
     {
       "ruleID": "specialization:10:Prospect:98662:replace-family",
@@ -1005,7 +1156,8 @@
       "applyPolicy": "EXECUTE",
       "sourceClaimIDs": [
         "wago-node-identity",
-        "live-gem-replacement:98662"
+        "live-gem-replacement:98662",
+        "blizzard-tww-gem-replacement-milestones-70961"
       ],
       "baselinePolicy": "selected-reference-scenario",
       "perPoint": 0.01,
@@ -1019,7 +1171,18 @@
       },
       "recipeID": 434018,
       "reservoirPolicy": "shared-original-source-quantity",
-      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS"
+      "quantityPolicy": "CONSERVE_TOTAL_GEM_UNITS",
+      "replacementMilestones": [
+        {
+          "rank": 5,
+          "fraction": 0.02
+        },
+        {
+          "rank": 15,
+          "fraction": 0.03
+        }
+      ],
+      "replacementMilestoneBuild": 70961
     },
     {
       "ruleID": "specialization:11:Disenchant:max-shard-reference",
@@ -1111,7 +1274,7 @@
         107648,
         107647
       ],
-      "reason": "Midnight and War Within sources describe additional dust/shards/bonus-material perks but do not establish numerical proc rates or bonus stack amounts. Dragonflight Draconic Disenchantment does specify 1% additional-reagent chance per point, but does not supply the bonus-stack expectation needed to convert this into units per cast."
+      "reason": "Raw extra-output proc rates and bonus stack distributions remain unknown for Midnight and War Within. A separate low-confidence modeled layer now produces baseline-and-forward-adjusted means; it does not resolve these empirical proc parameters. Dragonflight 1% additional-reagent chance per point still lacks a bonus-stack expectation."
     },
     {
       "id": "milestone-rank-thresholds",
@@ -1141,7 +1304,8 @@
     "skill": "Add relevant sourced per-point contributions and build-scoped invested-point skill milestones once. Learning skill requires a positive invested allocation or an explicit learned-specialization flag; a missing or unlearned zero-point node never receives a free bonus. Real operation skill already includes live talents.",
     "replacement": "Allocate all selected color fractions from the same original Amber expectation, reducing Amber by their sum. No extra gems, measured hit probability or sample count is created.",
     "baseline": "Reference-scenario projection; mixed historical source specialties are not falsely labeled an experimentally normalized zero-point baseline.",
-    "reference": "Full matching specialization may select its separately measured category context; intermediate ranks are not interpolated."
+    "reference": "Measured full-specialization references remain separate immutable observations. A modeled disenchant layer compiles a synthetic baseline and forward-adjusts it; its progress curves, source transfers and confidence caps are explicit assumptions.",
+    "modeledDisenchanting": "The three Midnight category models are reviewed for 12.1.5 build 70961 and use the same synthetic baseline for real scanned and manual simulated profiles. They never invent observations or assign historical sample counts to modeled means."
   },
   "describedEffects": [
     {
@@ -1195,6 +1359,215 @@
       "sourceClaimIDs": [
         "wago-node-identity",
         "live-trait:107646"
+      ]
+    }
+  ],
+  "publishedReferences": [
+    {
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "displayPolicy": "MAX_INVESTMENT_SCENARIO_ONLY",
+      "applyPolicy": "DISPLAY_ONLY",
+      "referenceID": "published:midnight:dust-full-investment:2026-03-04",
+      "inputRarity": 2,
+      "requiredNodes": {
+        "107649": 30,
+        "107648": 30
+      },
+      "displayText": "Published report (2026-03-04): about 2.9 Eversinging Dust per disenchant, ranks combined.",
+      "notes": [
+        "Reported full green-disenchanting investment; sample size, exact points, skill, gear and input items are unknown.",
+        "March 2026 report; applicability to the current build is unverified.",
+        "Rank split is unknown; this report supplies no measured rank-specific quantity."
+      ],
+      "sourceClaimIDs": [
+        "midnight-raziar-green-de-pooled-mean-20260304"
+      ]
+    },
+    {
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "displayPolicy": "MAX_INVESTMENT_SCENARIO_ONLY",
+      "applyPolicy": "DISPLAY_ONLY",
+      "referenceID": "published:midnight:crystal-full-investment:2026-03-20",
+      "inputRarity": 4,
+      "requiredNodes": {
+        "107649": 30,
+        "107646": 30
+      },
+      "displayText": "Published report (2026-03-20): about a 66% chance to receive rank 2 Dawn Crystal.",
+      "notes": [
+        "Reported 100 Enchanting, all rare gear and a maxed tree; sample size, exact points and input items are unknown.",
+        "March 2026 report; applicability to the current build is unverified.",
+        "Chance only; average quantity and other-quality outcomes were not reported."
+      ],
+      "sourceClaimIDs": [
+        "midnight-mrnoobyy-epic-r2-probability-20260320"
+      ]
+    }
+  ],
+  "modeledDisenchantRules": [
+    {
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "inputClassIDs": [
+        2,
+        4
+      ],
+      "rootNodeID": 107649,
+      "applyPolicy": "EXECUTE",
+      "evidenceStatus": "MODELED",
+      "skillMaximum": 290,
+      "quantityMilestones": [
+        {
+          "rank": 20,
+          "progress": 0.5
+        },
+        {
+          "rank": 30,
+          "progress": 0.5
+        }
+      ],
+      "ruleID": "simulation:11:Disenchant:dust",
+      "inputRarity": 2,
+      "childNodeID": 107648,
+      "primaryRankIDs": [
+        243599,
+        243600
+      ],
+      "confidence0to100": 10,
+      "crossClassConfidence": 5,
+      "sourceKey": "reference",
+      "targetPooledMean": 2.9,
+      "targetRank2Share": 0.65,
+      "baselineFallbackClassID": 4,
+      "assumptions": [
+        "An independent compiled model treats ordinary unknown-character means as a synthetic zero-total-skill reference. The source observations are immutable and are not empirical zero-point measurements; scanned and simulated profiles forward-adjust the same modeled reference.",
+        "Quality progress is clamped effective skill / 290, assuming a native-skill range of 0 to 140 plus 150 from full Delegate and matching child. Exact node skill arithmetic supplies progress; the interpolation curve is assumed.",
+        "Quantity progress is assumed to receive one half at child rank 20 and the remaining half at rank 30; those allocations are a working model, not measured proc rates or bonus stack counts.",
+        "The reported 2.9 pooled dust mean is applied as a full-child quantity endpoint despite unknown sample size, input items, source skill, equipment and exact node points. March 2026 applicability to the current build is unverified.",
+        "The 0.65 maximum rank-2 unit share is a weak model prior transferred from an unscoped player ratio, not a measured dust-specific rank split. The original ratio denominator is unknown; combining it with the separate pooled mean is an explicit synthetic assumption.",
+        "The armor reference is transferred to weapons only when a weapon baseline is unavailable, with confidence capped at 5. Other material-family outputs remain unchanged."
+      ],
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "blizzard-live-midnight-skill-perks-70961",
+        "midnight-synthetic-disenchant-reference-policy-20261119",
+        "midnight-raziar-green-de-pooled-mean-20260304",
+        "midnight-nearby-r2-share-estimate-20260301"
+      ]
+    },
+    {
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "inputClassIDs": [
+        2,
+        4
+      ],
+      "rootNodeID": 107649,
+      "applyPolicy": "EXECUTE",
+      "evidenceStatus": "MODELED",
+      "skillMaximum": 290,
+      "quantityMilestones": [
+        {
+          "rank": 20,
+          "progress": 0.5
+        },
+        {
+          "rank": 30,
+          "progress": 0.5
+        }
+      ],
+      "ruleID": "simulation:11:Disenchant:shards",
+      "inputRarity": 3,
+      "childNodeID": 107647,
+      "primaryRankIDs": [
+        243602,
+        243603
+      ],
+      "confidence0to100": 30,
+      "crossClassConfidence": 15,
+      "sourceKey": "itemdb",
+      "targetPooledMean": 1.289,
+      "targetRank2Share": 0.5120248254460823,
+      "endpointRecordID": "de-category:gear:11:3:armor:max-specialization:a194c8a33fcf",
+      "assumptions": [
+        "An independent compiled model treats ordinary unknown-character means as a synthetic zero-total-skill reference. The source observations are immutable and are not empirical zero-point measurements; scanned and simulated profiles forward-adjust the same modeled reference.",
+        "Quality progress is clamped effective skill / 290, assuming a native-skill range of 0 to 140 plus 150 from full Delegate and matching child. Exact node skill arithmetic supplies progress; the interpolation curve is assumed.",
+        "Quantity progress is assumed to receive one half at child rank 20 and the remaining half at rank 30; those allocations are a working model, not measured proc rates or bonus stack counts.",
+        "The full Courtly Wrists endpoint contains 629 rank-1 and 660 rank-2 shard units from 1,000 operations. The pooled endpoint is 1.289 units; rank-2 unit share is 660/1289, not a hit probability.",
+        "The full endpoint and ordinary armor reference have different inputs and incompletely known skill, specialization and patch conditions. Their difference is used as a synthetic scenario transition, not an isolated causal experiment.",
+        "All other material means blend toward the existing full endpoint vector at child quantity milestones. An unlisted endpoint material is modeled as zero for this transition without asserting it was empirically proven absent.",
+        "The armor endpoint is transferred to weapons with confidence capped at 15. Raw study sample counts stay attached to their original observations and are never assigned to interpolated outputs."
+      ],
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "blizzard-live-midnight-skill-perks-70961",
+        "midnight-synthetic-disenchant-reference-policy-20261119",
+        "courtly-full-specialization-reference"
+      ]
+    },
+    {
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "inputClassIDs": [
+        2,
+        4
+      ],
+      "rootNodeID": 107649,
+      "applyPolicy": "EXECUTE",
+      "evidenceStatus": "MODELED",
+      "skillMaximum": 290,
+      "quantityMilestones": [
+        {
+          "rank": 20,
+          "progress": 0.5
+        },
+        {
+          "rank": 30,
+          "progress": 0.5
+        }
+      ],
+      "ruleID": "simulation:11:Disenchant:crystals",
+      "inputRarity": 4,
+      "childNodeID": 107646,
+      "primaryRankIDs": [
+        243605,
+        243606
+      ],
+      "confidence0to100": 20,
+      "crossClassConfidence": 20,
+      "sourceKey": "reference",
+      "targetRank2Share": 0.66,
+      "preservePrimaryTotal": true,
+      "assumptions": [
+        "An independent compiled model treats ordinary unknown-character means as a synthetic zero-total-skill reference. The source observations are immutable and are not empirical zero-point measurements; scanned and simulated profiles forward-adjust the same modeled reference.",
+        "Quality progress is clamped effective skill / 290, assuming a native-skill range of 0 to 140 plus 150 from full Delegate and matching child. Exact node skill arithmetic supplies progress; the interpolation curve is assumed.",
+        "The historical report describes 100 Enchanting, all rare gear and a maxed tree, but sample size, exact points, input conditions and total crystal units per cast are unknown. Current-build applicability is unverified.",
+        "The reported 0.66 chance is interpreted as a rank-2 unit share under a one-primary-crystal/conditional-quality-mix assumption. This modeled interpretation is not an observed unit mean and does not establish an observed rank-1 complement.",
+        "Preserve the existing pooled crystal expectation separately for armor and weapons, and move only the rank mix toward 0.66. Unreported baseline outcomes are not filled to force one crystal per cast. Other material families stay unchanged.",
+        "The two quantity milestone entries are retained as the shared child scenario schedule but do not change the preserved crystal total. No sample count is created for modeled quality allocations."
+      ],
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "blizzard-live-midnight-skill-perks-70961",
+        "midnight-synthetic-disenchant-reference-policy-20261119",
+        "midnight-mrnoobyy-epic-r2-probability-20260320"
       ]
     }
   ]

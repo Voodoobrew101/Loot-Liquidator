@@ -102,7 +102,8 @@ function tip:AddLine(text)self.lines[#self.lines+1]=text end
 function tip:AddDoubleLine(left,right)self.lines[#self.lines+1]=left..' | '..right end
 LL:AppendRecommendationTooltip(tip,{action='A',rawAuction=50,netAuction=50,facts=f,conversionOptions=actual})
 local text=table.concat(tip.lines,'\n')
-check(text:find('Simulated assumptions',1,true),'actual hypothetical tooltip identifies assumption status')
+check(not text:find('Simulated assumptions',1,true) and text:find('Confidence unscored',1,true),
+    'actual hypothetical tooltip uses confidence without a separate assumption label')
 check(not text:find('Confidence 0%',1,true),'scenario is not advertised as measured zero-percent confidence')
 -- Global what-if selection uses the same actual resolver and invalidates its
 -- caches when a saved setting changes.
