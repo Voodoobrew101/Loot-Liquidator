@@ -1,14 +1,13 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-19T23:32:05.191Z",
-  "status": "Completed 10 new 11.2.5 LIVE catalog noDisenchant template identities; 0 new measured processing yields; per-rank hit/zero baselines still unresolved.",
+  "updated_at": "2026-11-20T00:30:36.389Z",
+  "status": "New source-backed, source-reported effective milling skill quality bands extracted for all four Khaz Algar herb/pigment families; 12 condition identities, no new observed processing yield cohorts. Owner/Master quality-gate review required before estimator/runtime use.",
   "task_ids": [
-    "T0048",
-    "T0040",
-    "T0009",
-    "T0008",
     "T0010",
-    "T0011"
+    "T0011",
+    "T0012",
+    "T0040",
+    "T0032"
   ],
   "exact_gaps_targeted": [
     "T0048/standing no-disenchant catalog eligibility: 10 distinct, previously unindexed 11.2.5 item-template noDisenchant identities (LIVE WoWDB, not tested in Retail client)",
@@ -19,19 +18,34 @@
   "newly_verified_fields": {
     "new_processing_numeric_fields": 0,
     "new_independent_completed_cast_cohorts": 0,
-    "new_no_disenchant_item_ids": [
-      239227,
-      249748,
-      246183,
-      253376,
-      248373,
-      253283,
-      253285,
-      247615,
-      253340,
-      253345
-    ],
-    "new_eligibility_source_kind": "WoWDB LIVE item-template Quick Info — patch 11.2.5 catalog flag; no in-client item variant verification",
+    "new_condition_rows": 12,
+    "source_reported_effective_skill_bands": {
+      "rank1": "0–252",
+      "rank2": "253–504",
+      "rank3": "505+"
+    },
+    "pigment_quality_IDs": {
+      "Nacreous": [
+        222618,
+        222619,
+        222620
+      ],
+      "Luredrop": [
+        222612,
+        222613,
+        222614
+      ],
+      "Orbinid": [
+        224802,
+        224801,
+        224800
+      ],
+      "Blossom": [
+        224805,
+        224804,
+        224803
+      ]
+    },
     "new_gold_EV": false
   },
   "newly_verified_cohorts": [],
@@ -39,28 +53,31 @@
   "new_reference_only_numeric_records": 0,
   "new_token_identity_records": 0,
   "new_search_only_records": 0,
-  "evidence_file": "research/v3/evidence/war-within/2026-11-19T2332-live-catalog-no-disenchant-1125.jsonl",
+  "evidence_file": "research/v3/evidence/war-within/2026-11-20T0030-khaz-algar-pigment-quality-skill.jsonl",
   "evidence_files": [
-    "research/v3/evidence/war-within/2026-11-19T2332-live-catalog-no-disenchant-1125.jsonl"
+    "research/v3/evidence/war-within/2026-11-20T0030-khaz-algar-pigment-quality-skill.jsonl"
   ],
   "evidence_source_links": [
-    "https://www.wowdb.com/items/239227-spiritbringer-crest",
-    "https://www.wowdb.com/items/249748-drustvar-winter-tunic",
-    "https://www.wowdb.com/items/246183-heartblossom-deathmask",
-    "https://www.wowdb.com/items/253376-valorous-green-windrunner-quiver",
-    "https://www.wowdb.com/items/248373-voidstriders-chestplate",
-    "https://www.wowdb.com/items/253283-scythe-of-the-unmaker",
-    "https://www.wowdb.com/items/253285-felscorned-scythe-of-the-unmaker",
-    "https://www.wowdb.com/items/247615-bonemeal-crusted-armplates",
-    "https://www.wowdb.com/items/253340-sargerei-commanders-hellforged-shroud",
-    "https://www.wowdb.com/items/253345-kaldorei-queens-crown"
+    "https://www.wowhead.com/item=222618/nacreous-pigment",
+    "https://goldcap.gg/retail/us/items/222618",
+    "https://goldcap.gg/retail/us/items/222619",
+    "https://goldcap.gg/retail/us/items/222620",
+    "https://goldcap.gg/retail/us/items/222612",
+    "https://goldcap.gg/retail/us/items/222613",
+    "https://goldcap.gg/retail/us/items/222614",
+    "https://goldcap.gg/retail/us/items/224802",
+    "https://goldcap.gg/retail/us/items/224801",
+    "https://goldcap.gg/retail/us/items/224800",
+    "https://goldcap.gg/retail/us/items/224805",
+    "https://goldcap.gg/retail/us/items/224804",
+    "https://goldcap.gg/retail/us/items/224803"
   ],
   "verified_commit_sha": null,
-  "verification": "Prepared two worker-owned files in one tree/commit. Git commit cannot self-reference its SHA; verified SHA, branch head and both file read-backs are checked externally after push.",
+  "verification": "Prepared one new worker evidence JSONL plus own quiet-status file for single atomic Git commit. SHA is intentionally null in committed status because self-referential SHA is impossible; verify commit/branch/read-back from GitHub after push. No merge, release or dashboard edits.",
   "blockers": [
-    "No genuinely new independent original completed-cast/zero-inclusive per-material processing histograms, rank/unlock/skill/build qualification or Resourcefulness refund basis found for current TWW prospect/mill/disenchant priority gaps; older Reikah, PeaEsk, Raven11, LotzBoi and original Looter cohorts already indexed and not duplicated.",
-    "These 10 WoWDB LIVE item-template noDisenchant catalog flags are not in-game tests of individual bonus/quest variants, and several are non-Khaz-Algar appearance items introduced during patch 11.2.5. Do not use them to assert quantitative TWW disenchant baselines or zero output.",
-    "Firecrawl authenticated web extraction currently has zero credits; page facts were checked with independent public web result/page inspection; no raw player operation exports surfaced."
+    "Skill quality bands are one historic community guide and not live-client 12.1.5 verification; exact profession skill/spec, tool bonus, build and observed quality outcomes absent. Master must adjudicate mechanistic schema/eligibility before runtime use.",
+    "No original completed per-input milling/prospecting/disenchant observed castsWithDrop, total quantity, zero-inclusive histograms or refunds were found in new original-source and addon-export discovery (ProspectMate advertises local sample tracking but no published anonymized cohort).",
+    "Do not infer any yield chance or exclude other ranks from current gold EV solely on these unvalidated skill quality bands, and do not attach the 12 rows as 12 independent numeric samples."
   ],
   "exhausted_sources": [
     "2026-11-19T01:24:57.773Z: Current worker queue and old source inventory cross-checked. Targeted name-based research for Ironclaw Ore, Aqirite, Bismuth, Khaz Algar herbs and disenchant cast histograms returned no original independently new posthotfix operation/hit logs; PeaEsk on Algari Prospecting and DobberSH on Null Stone are already indexed. The original 1g9l8t8 cloth cuffs cohort is already indexed and only missing per-cast input count was completed; no repeated cast sample.",
@@ -85,61 +102,62 @@
     "2026-11-19T20:28:20.361Z: Refreshed README/evidence-format/mechanics/worker/queue; reconfirmed Ironclaw/Aqirite/Bismuth/Mycobloom and 824-green/20k TWW DE original sources already indexed. Searched recent numeric/original source avenues and historical Neryssa K'aresh vendor table; latter already in 2026-10-30T2022/2026-10-31T1216/2026-11-01T0116, NOT novel. Found two otherwise absent explicit Retail Wowhead no-DE identity facts 235575/235624.",
     "2026-11-19T21:25:11.677Z: Narrow current target by-name search across Reddit/WoWEconomy, profession sources and Wowhead recovered previously indexed Sept/Oct 2024 Ironclaw/Aqirite cohorts, 2025 600-rank1 Ironclaw economic-only report and no novel full TWW milling/DE histograms. Pivoted to distinct 11.2 cosmetic Manaforge Raider weapon item-template no-DE identities; these 11 IDs were absent from prior war-within noDE inventory. Do not resample the 11 IDs.",
     "2026-11-19T22:23:52.386Z: New distinct 2025-09-11 r/woweconomy 1neicjm milling discussion and March-2025 1jc2ya5 showed generic per-10 herb theoretical yields/skill anecdotes but no original Mycobloom/Luredrop rank/skill-qualified actual 0..N log; no numeric records. Original 2024 PeaEsk and LotzBoi source references already indexed, not reused. Switched to ten NEW exact WoWDB PvP/cosmetic noDisenchant template identities with directly linked original catalog pages; compared identities with indexed recent worker files and search-index snapshots to avoid duplicates.",
-    "2026-11-19T23:32:05.191Z: Prior original ore/herb/gear name-based quantitative sources rechecked against indexed cohorts rather than re-recorded. The distinct by-name LIVE item catalog search produced ten unused 11.2.5 noDisenchant identity pages, no measured data. Stop expanding this appearance-only catalog lane after this batch and seek original current-build operation exports instead."
+    "2026-11-19T23:32:05.191Z: Prior original ore/herb/gear name-based quantitative sources rechecked against indexed cohorts rather than re-recorded. The distinct by-name LIVE item catalog search produced ten unused 11.2.5 noDisenchant identity pages, no measured data. Stop expanding this appearance-only catalog lane after this batch and seek original current-build operation exports instead.",
+    "2026-11-20T00:30:36.389Z: Novel search lane targeted published addon source exports (ProspectMate records samples privately, no published cohort) and rank-specific pigment skill mechanics, avoiding prior Reikah/PeaEsk/Raven11/LotzBoi numeric studies. Original LotzBoi guide had previously indexed quantity-range reference records, but its 0–252/253–504/505+ rank eligibility bands were absent from v3 worker evidence/conditions. Four family mappings now documented as 12 application rows from ONE source; still no independently new completed-cast logs."
   ],
-  "next_concrete_step": "Pursue previously unindexed 2025/26 Bismuth/Ironclaw/Aqirite and Mycobloom addon exports with exact rank, specialization, completed casts, material-level 0..N histogram and refunds; then live-game verify item-template noDE flags and itemLink variants before addon runtime eligibility use. No more cosmetic catalog records without a distinct targeted queue gap.",
+  "next_concrete_step": "Have Master confirm source-only community quality band semantics and reverse Orbinid/Blossom rank identities in-game; obtain independent per-cast Mycobloom/Luredrop/Orbinid/Blessing Blossom quality+skill log with 0..N histogram and Resourcefulness refunds. Search public ProspectMate user SavedVariables exports only if original consented logs exist.",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
-  "parent_commit_sha": "5ecddc6f3df2f23717a766115de7457ae478151e",
-  "new_no_disenchant_records": 10,
-  "numeric_fields_advanced": [],
+  "parent_commit_sha": "90617b8f742aaef7d48217cbcd6ef6cd5bbfa3c0",
+  "new_no_disenchant_records": 0,
+  "numeric_fields_advanced": [
+    "Source-reported conditional quality gates: 253 effective skill for rank-2 and 505 for rank-3, with rank-1 upper boundary 252; 4 pigment families; reference-only, no measured yield data."
+  ],
   "evidence_record_ids": [
-    "war-within-20261119-2332-001",
-    "war-within-20261119-2332-002",
-    "war-within-20261119-2332-003",
-    "war-within-20261119-2332-004",
-    "war-within-20261119-2332-005",
-    "war-within-20261119-2332-006",
-    "war-within-20261119-2332-007",
-    "war-within-20261119-2332-008",
-    "war-within-20261119-2332-009",
-    "war-within-20261119-2332-010"
+    "war-within-20261120-0030-001",
+    "war-within-20261120-0030-002",
+    "war-within-20261120-0030-003",
+    "war-within-20261120-0030-004",
+    "war-within-20261120-0030-005",
+    "war-within-20261120-0030-006",
+    "war-within-20261120-0030-007",
+    "war-within-20261120-0030-008",
+    "war-within-20261120-0030-009",
+    "war-within-20261120-0030-010",
+    "war-within-20261120-0030-011",
+    "war-within-20261120-0030-012"
   ],
   "new_reference_only_qualitative_records": 0,
   "new_exchange_records": 0,
   "newly_verified_fields_or_cohorts": [
-    "249202 Manaforge Raider's Devouring Shard: catalog explicit no-disenchant, cosmetic dagger; not a processing sample",
-    "249161 Manaforge Raider's Gamma Blade: catalog explicit no-disenchant, cosmetic sword; not a processing sample",
-    "249148 Manaforge Raider's Gamma Lightshiv: catalog explicit no-disenchant, cosmetic dagger; not a processing sample",
-    "249200 Manaforge Raider's Cosmic Shard: catalog explicit no-disenchant, cosmetic dagger; not a processing sample",
-    "249154 Manaforge Raider's Gamma Greatsword: catalog explicit no-disenchant, cosmetic two-handed sword; not a processing sample",
-    "249157 Manaforge Raider's Gamma Shard: catalog explicit no-disenchant, cosmetic dagger; not a processing sample",
-    "249212 Manaforge Raider's Cosmic Blade: catalog explicit no-disenchant, cosmetic sword; not a processing sample",
-    "249214 Manaforge Raider's Devouring Blade: catalog explicit no-disenchant, cosmetic sword; not a processing sample",
-    "249173 Manaforge Raider's Cosmic Lightshiv: catalog explicit no-disenchant, cosmetic dagger; not a processing sample",
-    "249175 Manaforge Raider's Devouring Lightshiv: catalog explicit no-disenchant, cosmetic dagger; not a processing sample",
-    "249149 Manaforge Raider's Gamma Recurve: catalog explicit no-disenchant, cosmetic bow; not a processing sample"
+    "Single original LotzBoi community Quality Control rule: effective milling skill bands 0–252, 253–504, 505+ for R1/R2/R3 pigments; claims apply to all four Khaz Algar herb families, not 12 independent measurement sets.",
+    "GoldCap Blizzard-derived identity cross-check: reverse quality ID direction for Orbinid 224802/224801/224800 and Blossom 224805/224804/224803; older provisional sequential assumptions are not evidence."
   ],
   "exact_gaps": [
-    "Bismuth 210930-210932, Ironclaw 210936-210938, Aqirite 210933-210935: missing qualified current-regime per-cast output hits/zeros by quality and unlock",
-    "Khaz Algar herbs 210796-210798: missing rank-specific completed mills, yields and zero histograms",
-    "Disenchant armor/weapon rarity/skill baselines still have null output counts or linked identity/patch/spec ambiguities"
+    "Mycobloom 210796/210797/210798 and Luredrop/Orbinid/Blessing Blossom: community skill quality gates newly indexed; no in-client patch/skill validation and no completed per-rank mills or histograms",
+    "Bismuth 210930-210932, Ironclaw 210936-210938, Aqirite 210933-210935: post-Aug29 prospecting original per-cast hit/zero histograms, skill/unlock and refunds unresolved",
+    "T0048 gear disenchant null output stack counts/bonus ilvl and skill missing; existing Wowhead source tables overlap and no new independent cohorts found"
   ],
   "source_links": [
-    "https://www.wowdb.com/items/239227-spiritbringer-crest",
-    "https://www.wowdb.com/items/249748-drustvar-winter-tunic",
-    "https://www.wowdb.com/items/246183-heartblossom-deathmask",
-    "https://www.wowdb.com/items/253376-valorous-green-windrunner-quiver",
-    "https://www.wowdb.com/items/248373-voidstriders-chestplate",
-    "https://www.wowdb.com/items/253283-scythe-of-the-unmaker",
-    "https://www.wowdb.com/items/253285-felscorned-scythe-of-the-unmaker",
-    "https://www.wowdb.com/items/247615-bonemeal-crusted-armplates",
-    "https://www.wowdb.com/items/253340-sargerei-commanders-hellforged-shroud",
-    "https://www.wowdb.com/items/253345-kaldorei-queens-crown"
+    "https://www.wowhead.com/item=222618/nacreous-pigment",
+    "https://www.reddit.com/r/woweconomy/comments/1fdmzwy",
+    "https://goldcap.gg/retail/us/items/222618",
+    "https://goldcap.gg/retail/us/items/222619",
+    "https://goldcap.gg/retail/us/items/222620",
+    "https://goldcap.gg/retail/us/items/222612",
+    "https://goldcap.gg/retail/us/items/222613",
+    "https://goldcap.gg/retail/us/items/222614",
+    "https://goldcap.gg/retail/us/items/224802",
+    "https://goldcap.gg/retail/us/items/224801",
+    "https://goldcap.gg/retail/us/items/224800",
+    "https://goldcap.gg/retail/us/items/224805",
+    "https://goldcap.gg/retail/us/items/224804",
+    "https://goldcap.gg/retail/us/items/224803"
   ],
   "commit_sha": null,
-  "base_commit_sha": "5ecddc6f3df2f23717a766115de7457ae478151e",
+  "base_commit_sha": "90617b8f742aaef7d48217cbcd6ef6cd5bbfa3c0",
   "next": "Find post-2025-02-21 original Bismuth/Ironclaw/Aqirite rank-qualified prospect or Mycobloom milling per-cast output log, not economic anecdotes or existing PeaEsk/Reikah/1g350pq studies; ask Master about catalogue noDE versus actual variant eligibility when in-game tests conflict.",
-  "evidence_source_urls_verified": true
+  "evidence_source_urls_verified": true,
+  "new_condition_records": 12
 }
