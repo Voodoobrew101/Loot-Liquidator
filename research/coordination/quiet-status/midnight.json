@@ -1,22 +1,23 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T17:14:34.721Z",
-  "status": "Original July 3 Stormwarning rank-2 ore report deduplicated against two existing Midnight evidence files: 13/13 output rows duplicate the same firsthand source, with conflicting catalog-assigned diamond and glass quality IDs. No new independent casts, hit/zero histogram or admissible yield.",
+  "updated_at": "2026-11-20T18:18:16.696Z",
+  "status": "JD3K original rank-2 prospecting source triaged: exactly 17 distinct original output rows are repeated verbatim across three v3 Midnight evidence files (51 records, 34 duplicate repetitions); 10 casts per ore is nominal 50/5, not source-verified actual completed operations. No new independent cohort or yield measurement.",
   "task_ids": [
     "T0049",
     "T0026",
     "T0039",
     "T0005",
-    "T0003",
     "T0045",
+    "T0003",
     "T0001",
     "T0002",
     "T0004"
   ],
   "exact_gaps_targeted": [
-    "272246 Miststalker's Wristbands raw current-Retail disenchant eligibility and original Looter 140 operation attribution: exact at-cast ilvl/bonus/build/skill/spec, IDs 243606/243605/243602/243603/243599, zero-inclusive per-output outcomes",
-    "237362 Umbral Tin rank-specific actual prospect operation and Resourcefulness-reprospecting denominator, per-output hit/zero histograms and quality IDs 242606/242607/242610/242611/242786/242788; unlock-dependent 242608",
-    "236761/236770/236778/236776 Midnight milling original 10-herb completed casts, input/outputs ranks, output hits/histograms and refunds; 237359 Refulgent Copper and 237365 Brilliant Silver original cast studies"
+    "272246 Miststalker's Wristbands current-Retail DE eligibility, at-cast bonus/ilvl/skill/build and 140 Looter provenance; IDs 243599/243602/243603/243605/243606",
+    "237362 Umbral Tin completed prospect operations and refund ledger, true material 0..N histograms, 242608 conditional unlock and rank-accurate outputs",
+    "JD3K original 50 rank-2 each ore 237361/237363/237365: three copy locations and 10-cast nominal-versus-observed denominator; maintain per-output quality/rank unknown",
+    "236761/236770/236778/236776 original Midnight 10-herb milling cast/hits/ranks and skill/refund context"
   ],
   "triage": [
     {
@@ -812,12 +813,69 @@
       ],
       "disposition": "duplicate; retain both originals unchanged; request Master/build-review dedup by original source+input/output identity and source-linked correction of rank IDs before any admission or valuation",
       "hold_reason": "Same 2026-07-03 original author and output totals are repeated 13/13 with different studyKeys; gathered ore not proven consumed, actual casts/refunds, character assignment, output links, hits/zeros, histograms and build unknown."
+    },
+    {
+      "category": "duplicate_same_original_jd3k_2026_rank2_50ore_three_v3_files_and_uncertified_casts",
+      "original_source": "https://www.wowhead.com/spell=1231127/midnight-prospecting",
+      "original_author": "JD3K",
+      "inputs": [
+        {
+          "itemID": 237363,
+          "rank": 2,
+          "nominalOre": 50,
+          "originalOutputRows": 5
+        },
+        {
+          "itemID": 237365,
+          "rank": 2,
+          "nominalOre": 50,
+          "originalOutputRows": 6
+        },
+        {
+          "itemID": 237361,
+          "rank": 2,
+          "nominalOre": 50,
+          "originalOutputRows": 6
+        }
+      ],
+      "evidence_files": [
+        "research/v3/evidence/midnight/2026-10-30T1824-midnight-prospecting-studies.jsonl",
+        "research/v3/evidence/midnight/2026-10-31T1611-jd3k-q2-prospecting.jsonl",
+        "research/v3/evidence/midnight/2026-11-01T0310-jd3k-rank2-prospecting.jsonl"
+      ],
+      "counts": {
+        "distinct_original_material_output_rows": 17,
+        "found_rows_per_file": [
+          17,
+          17,
+          17
+        ],
+        "listed_rows_across_three_files": 51,
+        "duplicate_extra_rows": 34,
+        "original_ore_each": 50,
+        "nominal_five_ore_equivalents_each": 10,
+        "independently_recorded_completed_operations": null,
+        "castsWithDrop": null,
+        "zero_outcomes": null,
+        "per_cast_histograms": null
+      },
+      "first_record_ids": [
+        "midnight-20261030-017..033",
+        "midnight-20261031-001..017",
+        "midnight-20261101-001..017"
+      ],
+      "independent_originals": 1,
+      "prior_original_legacy_denominator_file": "research/evidence/observations/2026-10-28-midnight-batch002-denominator-and-thorium.jsonl",
+      "owner_context": "Original firsthand commenter states 'Tests with quality 2 ores' and 50 ore for each input; no specialization/profession tools; sample collection date/at-cast skill/client build/refunds/actual completed operations not stated. No source-linked output itemIDs/quality variants. The same 17 input+outputName+quantity observations appear exactly three times with different studyKey layouts.",
+      "disposition": "duplicate; hold 10 inferred nominal operations as not verified completed casts; keep every original unchanged; request Master/build-time originalSource and per-input/output dedup plus measured-denominator hold",
+      "hold_reason": "Each of the three v3 files assigns casts=10 from 50/5, but 50 is ore mentioned, not explicit completed operation count. Legacy later denominator-reconciliation file correctly stores completedOperations=null. No per-output hit/zero counts, refunds or event ledger. Do not count as three studies or 30 observed operations per ore."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Source-lineage audit identifies exact duplicate 13/13 Stormwarning original-output rows across two Midnight evidence files; no second independent cohort (source July 3, 2026).",
-    "Copper 237361 five output rows; Silver 237365 seven; Tin 237363 one. Reported gathered ore 67, 66, 8 respectively, with actual prospects and refund/leftover basis unknown.",
-    "Conflicting rank-2 Eversong Diamond catalog assignment: prior 242712 versus later duplicated 242608 (catalog rank1); R2 Crystalline Glass earlier catalog 242787 (rank1) versus later null, catalog R2 242786. Original source provides only names/rank, no material itemLinks."
+    "One JD3K original first-hand Wowhead comment supplies exactly 17 output-name/quantity rows across Copper 237361 (6), Tin 237363 (5), Silver 237365 (6), all input quality rank 2 and reported 50 ore per group.",
+    "Exact line-level triple match in v3 Midnight files October 30, October 31 and November 1: 17 unique original rows x 3 = 51 published records, 34 duplicate repeat rows; three different studyKey schemes cannot identify unique independent cohorts.",
+    "All three v3 versions assign casts=10 to each ore solely from 50 ore / 5-input recipe. Original source supplies 50 ore and outputs, but no actual completed prospect count, refunded ore chronology, per-output hits or zeros. Older denominator-corrected observation explicitly has completedOperations=null.",
+    "At-cast item-level, output rank-specific itemIDs, actual output histogram and dated client build are not substantiated by the original."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -827,23 +885,24 @@
     "new_midnight_zero_outcome_counts": 0,
     "new_midnight_histograms": 0,
     "new_measured_probabilities": 0,
-    "existing_study_duplicate_rows_matched": 13,
-    "existing_original_authors_for_matched_rows": 1,
+    "existing_original_jd3k_distinct_rows": 17,
+    "existing_original_jd3k_repeated_rows": 34,
+    "existing_original_jd3k_stored_rows": 51,
     "affected_input_ids": [
       237361,
-      237365,
-      237363
+      237363,
+      237365
     ],
     "new_live_eligible_yield_admissions": 0
   },
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://us.forums.blizzard.com/en/wow/t/sunglass-vial-1-hour-material-test/2323248",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-10-31T1911-stormwarning-r2-prospecting.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-03T0614-rank2-ore-prospecting-player-test.jsonl",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/2026-11-09T0400-midnight-crystalline-glass-prospect-rank-crosscheck.md",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261114T0810-existing-july-rank2-diamond-firsthand-source-reconciliation.md"
+    "https://www.wowhead.com/spell=1231127/midnight-prospecting",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-10-30T1824-midnight-prospecting-studies.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-10-31T1611-jd3k-q2-prospecting.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-01T0310-jd3k-rank2-prospecting.jsonl",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/evidence/observations/2026-10-28-midnight-batch002-denominator-and-thorium.jsonl"
   ],
   "blockers": [
     "272246 raw HTML original recovered (140 reported source Looter events; five output rank/count/fixed-stack lines), but missing actual at-cast itemLink/bonus/effective ilvl, skill/spec/build and true zero-inclusive per-cast event trace; current eligibility conflicts with WowDB base flag. Reference only.",
@@ -851,7 +910,8 @@
     "237362 Umbral Tin source specifies 4000 nominal ore, 39.6% Resourcefulness and seven output totals, not actual completed casts; refund/reprospecting event chronology and per-output hits/histograms remain absent.",
     "236761/236770/236778/236776 Midnight herb 10-input mill original current-build events/quality ranks/refunds remain unverified; earlier 20-herb Shadowlands casts may not be used to fill.",
     "Firsthand March 12 Resourcefulness-hidden-UI report confirms a capture caveat but has no numerical cast/refund denominator; do not infer effective Resourcefulness=0 from a blank craft-details field.",
-    "One firsthand July 3 Stormwarning source duplicated into 13+13 evidence rows with mismatched studyKeys and rank/ID discrepancies; Master/build-time importer must dedupe/correct originals without overwriting source."
+    "One firsthand July 3 Stormwarning source duplicated into 13+13 evidence rows with mismatched studyKeys and rank/ID discrepancies; Master/build-time importer must dedupe/correct originals without overwriting source.",
+    "JD3K three-file duplication: 51 v3 records preserve only 17 distinct original output observations (34 repeats); all cast=10 values are unsupported 50/5 nominal equivalents and need Master/build-review source-level dedup and denominator hold, not worker rewriting."
   ],
   "exhausted_sources": [
     "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
@@ -871,11 +931,12 @@
     "2026-11-20 OldWolf2 March 12 r/woweconomy original thread verified: qualitative saved ore despite Resourcefulness hidden on Crafting Details, no Midnight prospect operation denominator/refund ledger. Do not repeat unless follow-up includes raw events.",
     "2026-11-20 direct original 272246 HTML Looter _totalCount 140 and embedded material qualityTier/stack bound recovered; source still lacks event-level bonus/skill/build; no re-search until first-party event export or materially changed page.",
     "2026-11-20 original Stormwarning July 3 firsthand R2 ore source fully matched 13/13 to October 31 and November 3 records; no independent second cohort or completed-cast ledger; do not re-search unless original event/itemLinks emerge.",
-    "2026-11-20 Midnight milling field-review CSV 8 rows inspected: 4.5 expected, 3-6 range are explicitly modeled proxies with zero measured casts; cannot promote to empirical baseline."
+    "2026-11-20 Midnight milling field-review CSV 8 rows inspected: 4.5 expected, 3-6 range are explicitly modeled proxies with zero measured casts; cannot promote to empirical baseline.",
+    "2026-11-20 JD3K spell original 50-ore rank2 tests and two historical v3 repeats reconciled with legacy denominator-corrected observation; source lacks raw 0-inclusive event/refund ledger, no repeat search unless independent export appears."
   ],
-  "next_concrete_step": "Master should deduplicate Stormwarning July 3 original author records across mismatched studyKeys and reconcile 242608/242712 Diamond and 242787/242786 Glass rank crosswalk using an actual output itemLink. Then prioritize unrecorded raw 272246 current-client disenchant eligibility/variant and 237362 Tin prospect 0..N event export/refund ledger, followed by 236761/236770/236778/236776 cast-level milling originals.",
-  "verified_base_commit_sha": "5b2d1f0a1ca106a26d94aa930108613708b3119b",
+  "next_concrete_step": "Request Master/build-time reviewer to unify the three JD3K source copies by original Wowhead author+inputID+output name+quantity, hold source-unverified casts=10 and require actual operation/refund history before rate admission; resume priority-first 272246 live disenchant per-event eligibility and 237362 current prospecting raw cast ledger, then Midnight milling.",
+  "verified_base_commit_sha": "f623e8c565533f9ad218bb286edbcb6f2128702c",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Status-only commit: 13 same-original rows already recorded, so Nov 19 policy forbids duplicate JSONL or empty evidence. Git commit SHA cannot be included in same commit's content; verify new commit and status by read-back."
+  "commit_note": "Status-only commit (Nov 19 owner policy): one JD3K original, no novel independent evidence, so no duplicate/empty JSONL. Commit ID cannot appear in its own content; verify by post-write read-back."
 }
