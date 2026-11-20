@@ -1,8 +1,8 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T10:42:28.586Z",
-  "status": "Independently inspected original ereduns_log.lua Enchantrix SavedVariables contributor: 613 named exact item/material native rows, 538 input gear IDs, 595 variants, 23 material IDs, 813 positive output sightings and 1,729 output material units. Recorded as historical, positive-only data (no full cast denominator or negative-event histogram); current Retail rate/eligibility remains held.",
+  "updated_at": "2026-11-20T12:46:56.540Z",
+  "status": "Reconciled the 04:00 Pacific integration-hold expiration and previously staged 24995 variant review onto current durable branch. Independently reviewed existing source-linked Warmaul positive-stack histograms and exact quantity arithmetic. No new independently grounded cast cohort was found; no duplicate or empty evidence file created.",
   "task_ids": [
     "T0047",
     "T0042",
@@ -15,10 +15,11 @@
     "standing-original-source-rescue"
   ],
   "exact_gaps_targeted": [
-    "Warmaul Legplates 24995 original historical 2068 DE denominator and four positive outputs 22445=1559,22446=417,22447=7,22449=48, but not full stack/zero histogram, actual total units, version/ilvl/skill, current Retail eligibility; 37 unassigned events cannot be assigned zero.",
-    "Cobalt Ore 36909 and Fel Iron Ore 23424 still lack independently grounded current Retail completed prospect count, 0..N per-output histograms, refunds, build, skill and variant identity.",
-    "New original ereduns_log.lua gear/material item-level positives have true output IDs, sighting counters and material units, but NOT full operations, zero observations, gear level/quality, skill/spec, build/era equivalence or output stack histogram.",
-    "Token 45661 already mapped to seven exact class rewards 45400/45339/45344/45369/45352/45359/45349; no new nonduplicative reward identity gap."
+    "24995 Warmaul Legplates: historical cumulative 2068 reported disenchant operations, positive output hits 22445=1559, 22446=417, 22447=7, 22449=48. ALREADY RECORDED source-percent-reconstructed positive-stack histograms give output total units 22445=5638, 22446=695, 22447=19, 22449=48; no directly logged per-event raw records, zero/full joint histogram, build/skill/variant or current Retail live eligibility. 37 row-count difference must NOT be assigned as zero output.",
+    "24995 Retail conflict: Wowhead current page shows item level 14 and alternative level 74; WoWDB shows level 31 and Cannot be disenchanted; historical WotLK/Cataclysm Classic has level 108 disenchantable. Require actual item-link bonus/patch and game API check.",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424 independent Retail completed-cast, hit/zero, refund, input-quality, skill/spec, build provenance still absent. Original historical Enchantrix RIKU6 Cobalt 29 and OZZIEEM Cobalt 40 callback counts already recorded; do not reimport.",
+    "Original Enchantrix ereduns_log.lua historical positive event tuples remain useful exact item/material IDs and positive sighting quantities, NOT all completed casts/zeros or Retail rates.",
+    "Token 45661 seven class reward IDs already recorded; only verify modern redemption/variant rather than duplicating tokens."
   ],
   "newly_verified_fields_cohorts": {
     "cohort": "ereduns-original-EnchantedLocal",
@@ -730,51 +731,63 @@
   "verified_commit_sha": "62ebcfff1ed64c5f557fce8855dd88e593364e0d",
   "commit_note": "Atomic commit includes this status and exactly one new evidence JSONL; verified_commit_sha here points to the verified parent because a Git commit cannot embed its own SHA in its committed content. Result SHA verified by readback after branch update.",
   "blockers": [
-    "24995 source Looter counts remain version/eligibility ambiguous and lack original stack totals and complete negative distribution; WoWDB current 24995 says Cannot be disenchanted.",
-    "No independent current Retail Cobalt 36909 or Fel Iron 23424 completed prospect ledger with per-output hits/zeros and refunds.",
-    "Enchantrix contributors preserve native material positive events, but not full cast/zero denominators, exact item quality/level, skill, specializations, build or patch. This is historical source-only admission, not live recommendation probability.",
-    "Build-time ItemDB review/admission is owner-controlled implementation, not a legacy worker runtime modification."
+    "24995 build/bonus/skill/eligibility and joint 0..N outcomes unknown; source-reconstructed positive histograms should not be labelled directly measured event logs.",
+    "Cumulative 24995 Looter source represented as both Nov 7 replacement studies and Nov 15 reference copies; possible duplicated historical record IDs make safe substitution/unique study weighting a Master-owned admission review.",
+    "No independent current Retail Cobalt 36909/Fel Iron 23424 completed prospect event ledger with refunds, hit counts/zeros, patch and skill.",
+    "Warmaul current Retail no-DE provider conflict (level 31 WoWDB versus Wowhead level 14/74), and Classic level 108 version; require live item-link plus CanDisenchant check.",
+    "Enchantrix positive event records have no complete original completed-cast/negative-event histories or verified Retail transfer.",
+    "Only Master/implementation handles schema, build-review/admission, runtime gate and any code change."
   ],
   "exhausted_sources": [
     {
-      "source": "https://www.wowhead.com/mop-classic/item=23424/fel-iron-ore",
-      "reason": "565-ore Thottbot archived positive-output report already occurs under three mirrored source keys; do not add as independent cohort."
+      "source": "https://www.wowhead.com/item=24995#disenchanting",
+      "reason": "Same pooled historical 2068 sample; Nov 7/Nov 15 already transcribe its positive stack histogram, not a new cohort. No dated source build, full joint zeros or live 2026 eligibility."
     },
     {
-      "source": "https://www.wowhead.com/item=24995",
-      "reason": "Existing historical cumulative Looter source does not expose independent exact-item stack totals, full zeros or verified modern item version through accessible source."
+      "source": "https://www.wowhead.com/mop-classic/item=23424/fel-iron-ore",
+      "reason": "Historical Thottbot 565-ore study copied across language mirrors; do not repeat as an independent cohort."
+    },
+    {
+      "source": "https://www.wowhead.com/mop-classic/item=36909/cobalt-ore",
+      "reason": "Strikk3r historical 9 stacks / 180 ore total and output identities already in research; no actual casting ledger or zero histograms."
     }
   ],
   "backlog_triage": [
     {
-      "status": "admitted",
-      "scope": "ereduns_log.lua original positive-only item/material identities and native counters",
-      "reason": "613 previously unrecorded original contributor rows, 813 positive sightings, 1729 material units; raw historical-only source with null complete casts."
+      "task": "T0047",
+      "source": "24995 cumulative Looter positive-stack study",
+      "disposition": "reviewable",
+      "reason": "Historical positive bins source reconstructed; current live DE eligibility and version unknown; avoid double-weighted snapshots"
     },
     {
-      "status": "reviewable",
-      "scope": "Ereduns item variants, exact event denominator and Retail era eligibility",
-      "reason": "No full casts/zeros/build/ilvl/skill; exclude from current Retail probability calculations until version and denominator confirmed."
+      "task": "T0047",
+      "source": "24995 current database item variants",
+      "disposition": "held",
+      "reason": "Item levels and disenchantability conflict across historical/current and variants, no current in-game eligibility check"
     },
     {
-      "status": "held",
-      "scope": "Warmaul 24995, Cobalt 36909, Fel Iron 23424 current Retail random yields",
-      "reason": "No verified recent current Retail completed-cast/zero-bearing ledger or exact version/eligibility."
+      "task": "T0022",
+      "source": "RIKU6 original Cobalt ProspectedLocal",
+      "disposition": "admitted-historical-only",
+      "reason": "Original 29 recorded callbacks and exact output unit totals already in repo; no 2026 Retail evidence, no per-output hit histogram"
     },
     {
-      "status": "duplicate",
-      "scope": "Derived aggregated EnchantedItemTypes and README pooled table from ereduns contributor",
-      "reason": "Same contributor's original observations; derived aggregates are not independent."
+      "task": "T0022",
+      "source": "OZZIEEM original Cobalt ProspectedLocal",
+      "disposition": "admitted-historical-only",
+      "reason": "Independent 40 recorded callbacks and totals already in repo; no Retail version equivalence"
     },
     {
-      "status": "duplicate",
-      "scope": "Three Fel Iron 565-ore mirrored Thottbot reports",
-      "reason": "Original same 565-ore batch; nominal equivalents, not multiple observed cast cohorts."
+      "task": "T0044",
+      "source": "Thottbot Fel Iron 565-ore report",
+      "disposition": "duplicate",
+      "reason": "One historical author mirrored on different sites; do not treat copied postings as separate cohorts"
     },
     {
-      "status": "admitted",
-      "scope": "Token 45661 seven class rewards",
-      "reason": "Existing prior identity mapping; no duplicate new evidence."
+      "task": "standing",
+      "source": "ereduns_log.lua original EnchantedLocal",
+      "disposition": "held-for-rates",
+      "reason": "Exact source positive sightings and units, lacks complete all-cast denominator/zeros/patch/skill"
     }
   ],
   "prior_cohort_pointer": {
@@ -783,6 +796,74 @@
     "previous_evidence": "research/v3/evidence/legacy/2026-11-20T0948-andrew-tiller-native-material-events.jsonl",
     "previous_cohort": "andrew-tiller-original-EnchantedLocal"
   },
-  "next_concrete_step": "Seek 24995 item-specific actual disenchants with each output's stack histogram/zero outcomes and patch/bonus/skill. Then seek firsthand current Retail 36909/23424 prospect logs with refund/cast linkage. Audit a previously unrecorded independent original Enchantrix contributor only for unique positive counters; never reimport pooled or derivative views. Master handles any schema/version-validation requirement.",
-  "previous_verified_evidence_sha": "6f423e4ceb5ca7f6e5f2e5a1df749d7ed7ae5e47"
+  "next_concrete_step": "Find independent current Retail exact 24995 item-link bonus/build and Disenchant eligibility or complete timestamped original Looter event CSV; ask Master to review ID-ambiguous Nov 7 replacement/Nov 15 reference lineage. Seek separate actual Retail Cobalt 36909/Fel Iron 23424 event ledgers with per-output 0..N bins. Do not add duplicate historic reference priors.",
+  "previous_verified_evidence_sha": "6f423e4ceb5ca7f6e5f2e5a1df749d7ed7ae5e47",
+  "reconciled_existing_evidence": {
+    "status": "reviewable-historical-source, held-for-current-Retail-admission; no-new-cohort",
+    "source_records": [
+      "research/v3/evidence/legacy/2026-11-07T1722-warmaul-tbc-positive-stack-histograms.jsonl",
+      "research/v3/evidence/legacy/2026-11-15T0145-warmaul-conditional-stack-arithmetic-reference.jsonl",
+      "research/v3/evidence/legacy/2026-11-16T0148-riku6-original-cobalt-feliron-adamantite-tbc.jsonl",
+      "research/v3/evidence/legacy/2026-11-15T2055-original-prospect-event-logs.jsonl"
+    ],
+    "original_louter_url": "https://www.wowhead.com/item=24995#disenchanting",
+    "wotlk_context_url": "https://www.wowhead.com/wotlk/item=24995/warmaul-legplates",
+    "retail_context_url": "https://www.wowhead.com/item=24995/warmaul-legplates",
+    "conflicting_no_de_url": "https://www.wowdb.com/items/24995-warmaul-legplates",
+    "casts_reported": 2068,
+    "histogram_type": "source-percent reconstructed POSITIVE STACKS ONLY, no 0 bins; not newly measured",
+    "outputs": [
+      {
+        "itemID": 22445,
+        "name": "Arcane Dust",
+        "positive_hits": 1559,
+        "total_units": 5638,
+        "positive_stack_bins": {
+          "2": 341,
+          "3": 369,
+          "4": 406,
+          "5": 433,
+          "6": 10
+        }
+      },
+      {
+        "itemID": 22446,
+        "name": "Greater Planar Essence",
+        "positive_hits": 417,
+        "total_units": 695,
+        "positive_stack_bins": {
+          "1": 150,
+          "2": 256,
+          "3": 11
+        }
+      },
+      {
+        "itemID": 22447,
+        "name": "Lesser Planar Essence",
+        "positive_hits": 7,
+        "total_units": 19,
+        "positive_stack_bins": {
+          "2": 2,
+          "3": 5
+        }
+      },
+      {
+        "itemID": 22449,
+        "name": "Large Prismatic Shard",
+        "positive_hits": 48,
+        "total_units": 48,
+        "positive_stack_bins": {
+          "1": 48
+        }
+      }
+    ],
+    "unpublished_joint_event_denominator": null,
+    "unassigned_result_rows": 37,
+    "source_caveat": "Same cumulative Looter data appears in multiple evidence files. Nov 7 records use replaces for historical IDs; Nov 15 reference rows specifically document duplicate-ID ambiguity. Master/importer lineage review needed; do not count as separate cohorts or unqualified current Retail evidence.",
+    "staged_worker_branch": "research/legacy-20261120-variant-triage",
+    "staged_worker_commit": "1c836c993f1ce3c5c5c932b698ccc42c8cd9c744",
+    "reconciled_at_utc": "2026-11-20T12:46:56.540Z"
+  },
+  "last_verified_research_head_before_write": "c348c4ef6851e3cf3f39f431a3c2b50971546dd8",
+  "no_new_evidence_file_reason": "Every numeric 24995 positive histogram and source quantity advanced here already exists in worker evidence, and fresh source searching yielded no independently new operation cohort; duplicate append prohibited by owner 2026-11-19 policy."
 }
