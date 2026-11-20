@@ -1,115 +1,98 @@
 {
   "role": "legacy",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T04:53:22.222Z",
-  "status": "Added 22 independent original WotLK Titanium Ore prospect material rows from 3 contributors: 127 source-reported identified material units, 18 exact output IDs, no event-level cast or zero histograms. Warmaul 24995, Cobalt 36909 and Fel Iron 23424 source-specific cast gaps remain open.",
+  "updated_at": "2026-11-20T05:40:56.015Z",
+  "status": "New original Classic contributor dblink: 148 source-counted material rows in 89 exact rarity/level/armor-or-weapon groups. This advances positive material hits and quantities, not complete cast counts. Warmaul 24995, Cobalt 36909 and Fel Iron 23424 event-level gaps still open.",
   "task_ids": [
-    "T0021",
     "T0047",
     "T0042",
     "T0022",
     "T0044",
+    "T0021",
     "T0053"
   ],
   "exact_gaps_targeted": [
-    "Titanium Ore 36910: new original 582232, 412775, dragunknight92 WotLK 3.3.3/post-3.3/unanchored cohorts; source-reported ore totals, output material totals, four color-mapped epic IDs, no actual completed casts, per-output hits or zero-inclusive histogram",
-    "Warmaul Legplates 24995: no new independently verified live Retail disenchant operation log, zero-inclusive stack histogram, build-specific eligibility or skill/specialization",
-    "Cobalt Ore 36909: no new original completed-cast/hit/zero/refund ledger beyond existing 180-ore, stack and reference cohorts",
-    "Fel Iron Ore 23424: no new independent exact per-operation prospecting / positive/zero histogram beyond 100-/565-ore sources",
-    "Spaulders of the Wayward Vanquisher 45661: previous seven class reward identity records already authored; avoid duplicate"
+    "Warmaul Legplates 24995 historic 2068 Looter output hits: still missing actual output quantities/histograms, item version, skill, build and current Retail disenchant eligibility",
+    "Burning Crusade uncommon armor/weapon rarity+ilvl groups need truly versioned original per-event disenchant ledgers; historical models cannot be promoted as Retail measured",
+    "Cobalt Ore 36909 and Fel Iron Ore 23424: previous nominal ore/stack equivalent sources still lack independently reported per-gem hits, zero-inclusive distributions and refund audits",
+    "Additional Classic grouped evidence: dblink.lua original positive output material sightings and item quantities; no audited total operations",
+    "Spaulders of the Wayward Vanquisher 45661 seven class rewards previously documented; no duplicate reward IDs generated"
   ],
   "newly_verified_fields_cohorts": {
-    "source": "Original independent comments by 582232, 412775 and dragunknight92 on Titanium Ore WotLK item page, which also supplies corresponding gem-color IDs",
-    "exactInputIDs": [
-      36910
-    ],
+    "source": "Original Enchantrix.lua dbfiles/dblink.lua at fixed repository commit; parser confirms outputID:times_seen:items_yielded:0 field meanings",
+    "exactInputIDs": [],
     "exactOutputIDs": [
-      36917,
-      36918,
-      36919,
-      36920,
-      36921,
-      36922,
-      36923,
-      36924,
-      36925,
-      36926,
-      36927,
-      36928,
-      36929,
-      36930,
-      36931,
-      36932,
-      36933,
-      46849
+      10938,
+      10939,
+      10940,
+      10978,
+      10998,
+      11083,
+      11134,
+      11135,
+      11137,
+      11138,
+      11139,
+      11174,
+      11175,
+      11176,
+      11177,
+      11178,
+      14343,
+      14344,
+      16202,
+      16203,
+      16204
     ],
-    "recordCount": 22,
-    "distinctStudyKeys": 3,
-    "sourceReportedMaterialUnits": 127,
-    "cohorts": [
-      {
-        "author": "582232",
-        "sourceReportedOre": 200,
-        "sourceReportedDistinctOutputs": 17,
-        "sourceReportedMaterialUnits": 110,
-        "patch": "3.3.3",
-        "completedCasts": null,
-        "nominalFiveOreEquivalents": 40
-      },
-      {
-        "author": "412775",
-        "sourceReportedOre": 120,
-        "sourceReportedDistinctEpicColors": 4,
-        "sourceReportedEpicUnits": 7,
-        "patch": null,
-        "completedCasts": null,
-        "nominalFiveOreEquivalents": 24,
-        "identityCaveat": "Color-to-epic item mapping from same-era gem list, not author-named IDs"
-      },
-      {
-        "author": "dragunknight92",
-        "sourceReportedOreStacks": 6,
-        "sourceReportedTitaniumPowder": 10,
-        "unspecifiedEpicGemUnits": 4,
-        "patch": "after 3.3 launched",
-        "completedCasts": null,
-        "nominalFiveOreEquivalents": null
-      }
+    "recordCount": 148,
+    "distinctStudyKeys": 89,
+    "sourceObservedPositiveMaterialSightings": 1425,
+    "sourceObservedMaterialUnits": 3239,
+    "gearGroupItemLevelMin": 10,
+    "gearGroupItemLevelMax": 64,
+    "gearGroupQuality": [
+      "uncommon",
+      "rare",
+      "epic"
+    ],
+    "gearGroupKind": [
+      "armor",
+      "weapon"
     ],
     "advancedFields": [
-      "inputItemID=36910",
-      "outputItemID exact WotLK gem IDs and powder",
-      "totalQuantity per material",
-      "historical patch 3.3.3 / post-3.3 where original states it",
-      "source author and separated primary cohort lineage"
+      "gearGroup exact historical item level, quality and armor/weapon",
+      "outputItemID and outputName (exact lookup)",
+      "castsWithDrop: output-specific source positive sightings, not all-cast denominators",
+      "totalQuantity: raw source material units",
+      "isolated contributor studyKey to avoid combined-file duplication"
     ],
-    "untouchedUnknowns": [
-      "actual completed operation counts",
-      "castsWithDrop per output",
-      "zero outcomes",
-      "0-N histograms",
-      "minSeen/maxSeen per successful cast",
-      "skill/specialization",
-      "refunds",
-      "source calendar date",
-      "modern Retail relevance",
+    "unknownFields": [
+      "complete disenchant casts",
+      "zero operations",
+      "per-cast positive 1..N histogram",
+      "conditional yield min/max",
+      "item-specific Warmaul linkage",
+      "modern version and eligibility",
+      "skill, specialization, game patch, dataDate",
+      "refund and per-input operation counts",
       "gold EV"
     ]
   },
-  "numeric_summary": "New Titanium Ore 36910 original cohorts: 582232 patch 3.3.3 200 ore, 17 mapped material totals summing 110; 412775 120 ore, 7 epic units across 4 color-mapped IDs; dragunknight92 after 3.3 six stacks, 10 Titanium Powder (46849) plus 4 unspecified epic gems excluded from ID-specific evidence. 22 new ID-specific rows, 127 units, 18 unique output IDs; no measured cast denominator, per-output positive cast frequency, zero event or 0-N histogram.",
-  "evidence_file": "research/v3/evidence/legacy/20261120T0453-wotlk-titanium-original-triple-cohort.jsonl",
+  "numeric_summary": "Contributor dblink EnchantedItemTypes: 89 quality×slot×level original groups; 148 positive-output rows, summed material-specific positive sightings 1425 and raw material units 3239. These sums are NOT unique casts, a hit-rate denominator, or an independent player census. 21 exact material IDs, source ilvls 10–64. No zero events, chance or mean inferred.",
+  "evidence_file": "research/v3/evidence/legacy/2026-11-20T0540-dblink-original-classic-enchantrix-groups.jsonl",
   "source_urls": [
-    "https://www.wowhead.com/wotlk/item=36910/titanium-ore",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/legacy/20261120T0453-wotlk-titanium-original-triple-cohort.jsonl"
+    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/dblink.lua",
+    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/table_parse.py",
+    "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/item_names.csv"
   ],
-  "verified_base_commit_sha": "1bda7777db336a4d1253d1e6cf28e77bd6f48622",
+  "verified_base_commit_sha": "993ca27e9dabe349db0198759f2170f9420456ff",
   "verified_commit_sha": null,
-  "commit_note": "Evidence and own quiet status written in one atomic commit; a commit SHA cannot appear inside that same commit's own status JSON due to hash self-reference. Verify published commit via GitHub read-back and run history.",
+  "commit_note": "Evidence plus own quiet status share one atomic branch commit. The resulting commit SHA cannot be embedded in the status that forms its own content hash; branch commit is read-back verified separately.",
   "blockers": [
-    "No live Retail gear instance recording or exact build/skill for Warmaul Legplates 24995; historical 2068 Looter group not re-recorded",
-    "Cobalt 36909 and Fel Iron 23424 still lack independent full operation/zero/hit/refund ledgers",
-    "Three Titanium source commenters give input totals or stacks and output quantities, not exact completed prospect casts or per-output hits; 412775 names only epic colors, mapped to unique WotLK IDs by same source page",
-    "Source comments show patch 3.3/post-3.3 for two cohorts, not date/skill/refunds/hotfix; phase and game flavor are not current Retail"
+    "Warmaul 24995's original 2068-item Looter source lacks exact material unit totals and historical-vs-current eligibility; the Retail scaled variant may be non-disenchantable.",
+    "Cobalt 36909 and Fel Iron 23424 previously logged sources have nominal input quantities, not audited event-level casts, output hits or zero histograms.",
+    "dblink Enchantrix grouped counts report material-positive sightings and units without verified full disenchant-operation denominators or exact item IDs; EnchantedLocal and combined detable.csv are possibly overlapping and excluded.",
+    "Source patch, data collection date, skill, specialization and refunds are absent. No model prior was turned into measured chance or gold EV."
   ],
   "exhausted_sources": [
     {
@@ -702,8 +685,18 @@
         "Titanium Ore Wowhead WotLK original comment authors 582232, 412775 and dragunknight92: separate personal original samples, checked author IDs against GitHub indexed authored evidence; 22 identified outputs recorded with no cast imputation",
         "Spaulders of the Wayward Vanquisher 45661: previously recorded class reward mappings, no duplication"
       ]
+    },
+    {
+      "date": "2026-11-20",
+      "lookingFor": "Original Warmaul Legplates 24995, Cobalt Ore 36909 and Fel Iron Ore 23424 event-level samples in previously untouched Enchantrix dblink account versus new grouped Classic numeric evidence",
+      "whereLooked": [
+        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/dblink.lua original EnchantedItemTypes contains 89 new Classic gear groups; exact item-specific Warmaul 24995 not present",
+        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/dblink.lua ProspectedLocal and MillingLocal are empty; ore item IDs in cached item text are not recorded casts",
+        "https://github.com/alex-berliner/wow_classic_de_table/blob/5918ca3e44f6e4bba9071731ab28be3189498001/dbfiles/dblink.lua EnchantedLocal same contributor overlaps with grouped counts and is excluded",
+        "Original item-name searches and previously exhausted primary Warmaul 2068, Cobalt ore/stack and Fel Iron cohorts yielded no newly separable event logs; kept existing evidence unchanged"
+      ]
     }
   ],
-  "next_concrete_step": "Seek original raw Enchantrix ProspectedLocal/DE event exports or WotLK 3.3 Titanium separate per-output positive/zero bins; prioritize Warmaul 24995 modern Retail direct disenchants, followed by Cobalt 36909 and Fel Iron 23424 original per-cast operations. Request any format or scoring change through Master; do not infer missing denominators.",
+  "next_concrete_step": "Seek exact 24995 historical/current per-event disenchants and 0..N stack distributions; for 36909/23424 find original pre-pooled ProspectedLocal logs or add-on exports reporting real click counts and per-output zeros. Do not infer casts or patch from dblink grouped positive sightings.",
   "previous_verified_commit_sha": "32eebbf6d5c5d5af646e60355b228aa2ff0370bc"
 }
