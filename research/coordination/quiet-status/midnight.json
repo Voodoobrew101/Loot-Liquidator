@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T08:16:54.912Z",
-  "status": "Source-original spreadsheet and current addon reference triage completed; no independently new Retail Midnight measured disenchant/prospect/mill cohort or denominator obtained. Kept missing casts/hits/zeros and 272246 eligibility/bonus unresolved; no new JSONL justified.",
+  "updated_at": "2026-11-20T09:12:15.196Z",
+  "status": "Current branch queue/instructions and held Midnight evidence inspected. One independent profession-mechanics guide corroborates M13 (profession stats do not affect disenchanting; skill and specialization do). No new independently measured Retail Midnight processing operations, hit counts, totals, zero events, or histograms; only source/triage status changed.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -9,7 +9,8 @@
     "T0039",
     "T0045",
     "T0003",
-    "T0002"
+    "T0002",
+    "T0034"
   ],
   "exact_gaps_targeted": [
     "T0026: numeric disenchant baselines by rarity (uncommon/rare/epic), item level, armor/weapon, patch/build and skill/specialization; distinguish full coverage from positive-only receipts",
@@ -374,13 +375,27 @@
       },
       "disposition": "reference identity corroboration only, not a new per-item sample",
       "hold_reason": "Publisher's release description maps uncommon to 243599/243600, rare to 243602/243603, epic to 243605/243606, but reports no actual completed disenchant operations, item level/bonus, skill/spec, output counts, or zero outcomes."
+    },
+    {
+      "category": "reviewable_independent_guide_mechanics_M13_no_player_denominator",
+      "source": "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations",
+      "source_original": {
+        "author": "Penguinr2gt",
+        "guide_last_updated": "2026-02-21",
+        "disenchant_operation_count": null,
+        "gear_input_ids": null,
+        "material_output_ids": null
+      },
+      "disposition": "secondary independently published guide corroborates pre-existing M13 claim; request Master mechanics.md source/status review, not a numeric cohort",
+      "finding": "Wowhead Midnight Enchanting Specialization Guide explicitly says disenchanting is not affected by profession stats but is affected by overall Skill; Dust Deliverer, Shard Supplier, Crystal Collector are differentiated by uncommon/rare/epic inputs. Does not independently verify live 12.1.5 behavior or quantify gains.",
+      "hold_reason": "No original client controlled test, per-cast skill comparison, output material sample, version, or sample denominator. Do not treat as observed probabilities."
     }
   ],
   "newly_verified_fields_or_cohorts": [
-    "Repository tree inspected: 78 CSV audit/ledger-like files and zero XLS/XLSX/ODS/TSV originals under tracked paths; none of the checked Midnight CSV rows supplies a source-original zero-inclusive processing ledger.",
-    "Legacy Midnight milling row 236761→245807 explicitly categorizes 4.5 expected units and 3–6 conditional span as modeled/proxy, sample_operations blank; remain held rather than re-admitted.",
-    "Third-party DisenchantValue 2026-03-02 release corroborates already-known dust/shard/crystal quality item IDs but is not an original observation cohort.",
-    "Wowhead live 272246 base ilvl 206 and selected ilvl 305 bonus URL confirm distinct tooltip contexts, not an at-cast disenchant; live source HTML served without raw Looter counts."
+    "Independent guide crosscheck: Wowhead Midnight Enchanting Specialization Guide (Penguinr2gt, updated 2026-02-21) says profession stats do not affect disenchanting while overall skill does; uncommon Dust Deliverer, rare Shard Supplier and epic Crystal Collector modify yields. Existing M13 marked likely; Master should review promotion and note absence of live test.",
+    "Rechecked source boundary: Miststalker's Wristbands 272246 live base ilvl 206, selected bonus example ilvl 305, WoWDB says Cannot be disenchanted; neither tooltip supplies at-cast variant/eligibility or original Wowhead Looter ledger.",
+    "Rechecked original Cardinalai 237362 report: 4,000 nominal Umbral Tin Ore and 39.6% Resourcefulness with seven named output totals, but no completed prospecting count, no refund event ledger, no per-output cast hit counts/zeros/histograms.",
+    "Inspected original repo Midnight milling CSV 236761→245807: its 4.5 and 3–6 numbers are explicitly modeled/proxy with sample_operations blank; no source-original measured 10-herb milling histogram. Previously indexed David111 generic 10-pigments-for-10-herbs anecdote is a duplicate, not new measured evidence."
   ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
@@ -395,31 +410,29 @@
   "evidence_files_added_this_run": [],
   "original_study_ids_added": [],
   "source_links": [
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/ledger/midnight-milling-field-review-2026-10-28.csv",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/coordination/submissions/loot-liquidator-midnight/2026-10-28-1105-midnight-batch011-35profile-audit.csv",
-    "https://www.curseforge.com/wow/addons/disenchantvalue/files/7701600/dependencies",
-    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
+    "https://www.wowhead.com/guide/midnight/professions/enchanting-specializations",
+    "https://www.wow-professions.com/midnight/enchanting-specialization-guide-and-builds",
     "https://www.wowhead.com/item=272246/miststalkers-wristbands?bonus=6652%3A13696%3A12841%3A13662%26ilvl=305",
-    "https://www.wowhead.com/ptr-2/spell=1231127/midnight-prospecting",
-    "https://www.reddit.com/r/woweconomy/comments/1smgllg/prospecting_calculator/"
+    "https://www.wowdb.com/items/272246-miststalkers-wristbands",
+    "https://www.wowhead.com/item=237362/umbral-tin-ore",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/ledger/midnight-milling-field-review-2026-10-28.csv",
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/midnight/2026-11-15T1719-midnight-milling-anecdote-12p15-search.jsonl"
   ],
   "blockers": [
-    "272246 raw at-cast item instance bonuses/ilvl, game build, current-client DE eligibility and original 140-operation Looter receipt remain unavailable; do not infer eligibility from tooltip previews.",
-    "237362 Cardinalai four-thousand nominal ore is not a verified count of 800 actual prospects; per-output hits/zeros/histograms, rank-specific event ledger, full Resourcefulness refunds and build/skill/unlock lack source proof.",
-    "236761→245807 legacy CSV 4.5 expected and conditional 3-6 are modeled and the row has no measured operations/histogram; no original workbook source rows recovered.",
-    "No source-original current-patch sample linked to individual uncommon/rare/epic armor versus weapon, at-cast bonus, skill and specialization, or rank-specific DE material histograms.",
-    "Build-time automation tooling is separate validation work; this research worker has neither changed nor attested its deployment."
+    "Original 272246 at-disenchant itemLink (bonuses, actual item level, game build), current-client eligibility and 140-operation Looter event ledger remain unavailable; 206 and selected 305 are tooltip snapshots only.",
+    "Original 237362 completed-prospect operation count, exact ore consumed versus refunded/reused, output ranks 242606/242607/242610/242611/242786/242788 and diamond 242608 per-output hits, zeros and distributions remain missing.",
+    "Source-original 236761→245807 milling operation and output histograms by 10-herb cast, skill/spec, rank and refunds remain missing; repo 3–6 and 4.5 values are modeled, not samples.",
+    "Wowhead's M13 skill/stat statement is a secondary guide rather than controlled live-client test; independent corroboration warrants Master review, not numerical coefficients."
   ],
   "exhausted_sources": [
-    "Repository tracked CSV audit/ledger inventory reviewed; not an original Midnight processing-event workbook.",
-    "DisenchantValue Mar 2 publisher release notes: material ID mapping, no measured sample.",
-    "Wowhead current 272246 item and selected 305 bonus previews: page does not expose the original 140-operation source-event ledger.",
-    "JD3K PTR 50-ore named-output comment, older approximate prospecting Reddit percentages and existing Cardinalai studies all already in evidence; no duplicated records.",
-    "Earlier MikiMM, Insomnist, Aspalar, Honeybone and per-item Looter studies remain previously classified and were not recopied."
+    "Current Wowhead 272246 item/bonus preview and WoWDB eligibility: no raw Looter events or verified at-cast bonus.",
+    "Existing Cardinalai Umbral Tin 237362 page: material totals but no actual operation/refund ledger.",
+    "Previously saved 2026-11-15 David111 general milling anecdote and repository legacy proxy CSV: cannot fill sample denominators.",
+    "Public 2026 disenchant/prospect/milling guide and forum searches yielded old indexed cohorts, generic assertions, or modeled yield tables; no distinct original event source to import."
   ],
-  "next_concrete_step": "Obtain an original source export that pairs a complete Retail current-build gear itemLink (bonuses, actual ilvl, quality, slot), skill/spec and recorded completed DE operation to each ranked output/zero event, especially item 272246. Failing that, seek actual independently captured 237362 completed prospect/refund event ledger with 242608 diamond unlock and quality rank; source-original 10-herb milling histogram for 236761→245807. Do not read audit CSV estimates as new trials.",
-  "verified_base_commit_sha": "3f8dfa02a0e25bdab82cd1e43f0ceb93fe3b3b69",
+  "next_concrete_step": "Request Master to review second independent Wowhead guide for M13, without modifying mechanics.md as worker. Seek consenting player original Retail 12.1.5+ disenchant ledger pairing item 272246 full at-cast bonus/ilvl and eligibility with output events/skill/spec; otherwise source-original 237362 cast/refund/hit ledger or 236761 10-herb milling per-cast export. Do not promote proxies or duplicate previous cohorts.",
+  "verified_base_commit_sha": "9f97b08575188b563da0713607760cd2476ab4f0",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "Quiet-status-only refresh, no new evidence JSONL because no original independently measured cohort was found. The commit SHA cannot be self-referenced in the same committed blob; verify GitHub commit and file externally."
+  "commit_note": "Single quiet-status-only commit; no independent measured cohort and no new evidence JSONL. Git commit is read-back verified outside this self-referential JSON document."
 }
