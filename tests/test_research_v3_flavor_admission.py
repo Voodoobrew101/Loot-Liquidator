@@ -51,6 +51,19 @@ class ClassicRetailAdmissionTests(unittest.TestCase):
         # A TBC historical observation still needs its own context review;
         # this patch does not automatically promote it to Retail.
 
+    def test_exclusions_are_exact_and_file_scoped_not_a_classic_wide_rule(self):
+        with (ROOT / 'research/v3/corrections.jsonl').open(encoding='utf-8') as stream:
+            corrections = [json.loads(line) for line in stream if line.strip()]
+        scoped = [row for row in corrections if row.get('recordID') in HELD
+                  and row.get('field') == 'exclude' and row.get('value') is True]
+        self.assertEqual(len(scoped), 9)
+        self.assertEqual({row['recordID'] for row in scoped}, HELD)
+        self.assertTrue(all(row.get('file') == SOURCE for row in scoped))
+        mirrors = [dict(row, _file='research/v3/evidence/legacy/different-original.jsonl')
+                   for row in self.original]
+        self.assertEqual({row['id'] for row in estimator.apply_corrections(mirrors)},
+                         HELD | {OTHER_HISTORIC})
+
 
     def test_actual_compiler_change_is_scoped_to_six_classic_inputs(self):
         # Synthetic pre-correction comparison: re-admit ONLY the nine original
