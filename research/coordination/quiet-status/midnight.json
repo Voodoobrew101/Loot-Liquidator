@@ -1,7 +1,7 @@
 {
   "role": "midnight",
-  "updated_at": "2026-11-20T06:16:54.449Z",
-  "status": "Existing original-source and held-study triage completed. No genuinely new independent completed-cast, zero-inclusive or current-build Midnight yield cohort found or added this run; no evidence JSONL created.",
+  "updated_at": "2026-11-20T07:10:15.164Z",
+  "status": "Original-study and item-variant source triage updated: independently checked existing Courtly Wrists 1,000-DE original, an existing 5,294-DE knowledge study, live 272246 version/eligibility conflict, and held Aspalar unpublished spreadsheet. No new independent current-build normal material-yield cohort or zero-inclusive data; no new evidence JSONL justified.",
   "task_ids": [
     "T0026",
     "T0049",
@@ -235,9 +235,114 @@
       "evidence": "research/v3/evidence/midnight/2026-11-20T0518-five-new-item-looter-reference-holds.jsonl",
       "disposition": "prior run reference-only 16 output rows across five mutable item-side aggregates",
       "hold_reason": "Original per-event ledgers, at-cast variant and output-rank source links lacking; no new independent cohorts this run."
+    },
+    {
+      "category": "reviewable_existing_original_study_overlap_unresolved",
+      "input_id": 239671,
+      "source": "https://www.wowhead.com/item=239671/courtly-wrists",
+      "evidence": "research/v3/evidence/midnight/2026-11-18T2015-courtly-wrists-1000-original-de.jsonl",
+      "original_rows": "midnight-20261118-2015-001..007",
+      "original_source": {
+        "author": "MikiMM",
+        "completed_disenchants": 1000,
+        "input_item_id": 239671,
+        "equipment_kind": "cloth armor wrists",
+        "specialization": "Disenchanting Delegate / Shard Supplier maxed",
+        "outputs": [
+          {
+            "itemID": 243602,
+            "rank": 1,
+            "units": 629
+          },
+          {
+            "itemID": 243603,
+            "rank": 2,
+            "units": 660
+          },
+          {
+            "itemID": 236963,
+            "rank": 1,
+            "units": 71
+          },
+          {
+            "itemID": 236761,
+            "rank": 1,
+            "units": 60
+          },
+          {
+            "itemID": 237359,
+            "rank": 1,
+            "units": 43
+          },
+          {
+            "itemID": 238513,
+            "rank": 1,
+            "units": 72
+          },
+          {
+            "itemID": 238511,
+            "rank": 1,
+            "units": 43
+          }
+        ],
+        "per_material_hits": null,
+        "zero_outcomes": null,
+        "histograms": null,
+        "at_cast_ilvl": null,
+        "profession_skill": null,
+        "build": null
+      },
+      "disposition": "existing firsthand source with observed units and denominator, but cannot assume disjointness from Wowhead Looter cumulative item-side observations; do not duplicate it",
+      "hold_reason": "Looter cohort overlap and at-cast variant unresolved; observed units of each rank cannot be treated as occurrence counts, and bonus reagent totals are not mutually exclusive outputs"
+    },
+    {
+      "category": "reviewable_limited_live_variant_identity_not_disenchant_proof",
+      "input_id": 272246,
+      "source": "https://www.wowhead.com/item=272246/miststalkers-wristbands",
+      "secondary_source": "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
+      "source_original": {
+        "base_item_level": 206,
+        "wowhead_displayed_upgrade_variant_item_level": 321,
+        "separate_selected_tooltip_ilvl": 305,
+        "third_party_reported_blizzard_api_gear_census_wearing_item": 43,
+        "third_party_census_total_with_gear": 11153,
+        "census_window": "2026-10-27/2026-11-01",
+        "actual_at_disenchant_ilvl": null,
+        "confirmed_current_client_disenchant_eligibility": null,
+        "raw_player_item_links": null
+      },
+      "disposition": "identity-only corroboration: an item of this ID appears in live equipped-player census and multiple tooltip versions; neither establishes at-cast bonus or disenchant eligibility",
+      "hold_reason": "WoWDB Retail and PTR list Cannot be disenchanted; Wowhead Looter table remains an unresolved table semantics/version conflict. Third-party character census is not a disenchant event study."
+    },
+    {
+      "category": "duplicate_existing_knowledge_only_study",
+      "input_id": null,
+      "output_ids": [
+        267653,
+        267654,
+        267655
+      ],
+      "source": "https://www.reddit.com/r/woweconomy/comments/1s7nfcw/kp_from_disenchanting_rares_data_n5294/",
+      "evidence": "research/v3/evidence/midnight/2026-11-01T1812-de-kp-and-historical-anomalies.jsonl",
+      "original_rows": "midnight-20261101-18001..005",
+      "source_original": {
+        "reported_total_disenchants": 5294,
+        "reported_total_knowledge_items": 1607,
+        "glimmering_powder_disenchants": 3925,
+        "glimmering_powder_units": 1193,
+        "gear_rarity": "rare",
+        "disenchanting_specialization": "none"
+      },
+      "disposition": "duplicate of previously captured Insomnist March 30 source; no new admission, no ordinary material expected-gold baseline",
+      "hold_reason": "Character-bound catch-up knowledge outputs and cohort partitions, not 243599/243600/243602/243603/243605/243606 normal disenchant yields; avoid double counting"
     }
   ],
-  "newly_verified_fields_or_cohorts": [],
+  "newly_verified_fields_or_cohorts": [
+    "272246 source-variant distinction checked: base ilvl 206; Wowhead separately displays upgrade variant ilvl 321, alongside selected ilvl 305. Neither is at-cast ilvl.",
+    "272246 third-party Blizzard-API-equipment census reports 43 wearers among 11,153 sampled gear records (October 27–November 1, 2026), not disenchant operations.",
+    "239671 MikiMM original 1,000-DE seven-output unit table independently re-read; already preserved and not copied into new evidence.",
+    "Insomnist 5,294 rare disenchant study checked as duplicate conditional knowledge-only, already captured in five source rows."
+  ],
   "newly_verified_cohorts": [],
   "numeric_fields_advanced": {
     "new_measured_casts": 0,
@@ -257,7 +362,11 @@
     "https://www.wowdb.com/items/272246-miststalkers-wristbands",
     "https://www.reddit.com/r/woweconomy/comments/1rteoqr/no_money_gain_possible_with_inscription_mats/",
     "https://www.reddit.com/r/woweconomy/comments/1rpwov0/disenchantingshard_help/",
-    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/mechanics/2026-11-19-observation-formulas.md"
+    "https://github.com/Voodoobrew101/Loot-Liquidator/blob/main/research/mechanics/2026-11-19-observation-formulas.md",
+    "https://www.wowhead.com/item=239671/courtly-wrists",
+    "https://www.wowhead.com/item=272246/miststalkers-wristbands",
+    "https://gamgem.com/world-of-warcraft/items/miststalkers-wristbands",
+    "https://www.reddit.com/r/woweconomy/comments/1s7nfcw/kp_from_disenchanting_rares_data_n5294/"
   ],
   "blockers": [
     "Owner/manager queue T0005/T0039 incorrectly labels 237362 Cardinalai 4000 ore as 800 actual completed prospects; queue is Master-owned and unchanged.",
@@ -265,17 +374,22 @@
     "272246 actual itemLink bonus, at-cast ilvl and live eligibility remain unconfirmed despite Looter occurrence rows.",
     "No new per-item per-setup original current-build DE cohorts for uncommon, epic, or weapons with complete output and zero coverage.",
     "No public original Aspalar spreadsheet; old 1473-pigment Reddit and modeled workbook claims do not establish per-cast zero-inclusive milling yields.",
-    "Current intended build-time auto-review/tools are implementation/validation work; not executed or claimed deployed by this worker."
+    "Current intended build-time auto-review/tools are implementation/validation work; not executed or claimed deployed by this worker.",
+    "Courtly Wrists 239671 1,000 original DE events require source cohort-overlap review against cumulative Looter and at-cast variant/skill before conditional baseline use.",
+    "Third-party 272246 equipped-item census does not override WoWDB no-disenchant flag or establish current-client eligibility."
   ],
   "exhausted_sources": [
     "Existing Cardinalai Tin/Silver original comments and manager Nov17 source-link audits already preserve these cohorts; neither was duplicated.",
     "Existing SeniorEmployment932 Reddit post and Aspalar original forum/research records: no new original spreadsheet or event-level casts found.",
     "Previously indexed five mutable Looter item-side aggregate tables from prior run not refiled as independent studies.",
-    "Owner Nov19 default-branch saved-history audit and measured-capture reviews were examined for identity and denominator classification; existing hash-bound cohorts not re-admitted."
+    "Owner Nov19 default-branch saved-history audit and measured-capture reviews were examined for identity and denominator classification; existing hash-bound cohorts not re-admitted.",
+    "Rechecked Aspalar original March 2026 Reddit discussion: spreadsheet mentioned but no publicly accessible workbook URL or raw rows, existing hold remains.",
+    "Rechecked MikiMM Courtly Wrists original Wowhead comment; exact seven output totals already transcribed in Nov18 evidence; no new per-output hit/zero events.",
+    "Rechecked Insomnist March 30 original 5,294 rare disenchant study and existing Nov1 records: already admitted as conditional knowledge drops, not normal material yields."
   ],
-  "next_concrete_step": "Ask Master to correct T0005/T0039 237362 stale denominator and review existing seven source hyperlink IDs in a controlled normalization layer. Prioritize a genuinely original existing raw-event/cast/zero-inclusive export with matching input variant, patch and provenance for 272246 or rank-specific 237362; otherwise inspect another independently stored Midnight DE or milling study rather than recycling Looter or Reddit snapshots.",
-  "verified_base_commit_sha": "c0e4be31bd3b56bfa8997f94708c787dd3dcdfff",
+  "next_concrete_step": "Prioritize a raw Retail item-instance link (bonus IDs, at-cast ilvl, patch) and actual live client disenchant eligibility result for Miststalker's Wristbands 272246; obtain complete per-operation event records from a single source-matched uncommon/rare/epic armor/weapon study before assigning any rates. Separately seek actual Umbral Tin Ore 237362 cast/refund ledger; Master should correct stale 800-completed-cast queue wording based on 4,000 nominal ore. Do not re-admit MikiMM, Insomnist or Cardinalai without a distinct original ledger.",
+  "verified_base_commit_sha": "6772b2303372ca679050cd20c6c54ee9a653a3b4",
   "commit_sha": null,
   "verified_commit_sha": null,
-  "commit_note": "This update writes only the role-owned quiet status file. An exact Git commit SHA cannot self-reference in its own committed contents; verify resulting commit and file content externally. No new evidence file or PR is justified under Nov19 owner policy."
+  "commit_note": "Only role-owned quiet status file updated; no independent new evidence JSONL was scientifically justified. Self-referential commit SHA cannot be stored inside its own blob; commit SHA and read-back verified externally."
 }
