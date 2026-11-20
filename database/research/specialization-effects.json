@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "specialization-effects/2026-11-06",
-  "reviewedOn": "2026-11-06",
+  "revision": "specialization-effects/2026-11-19-skill-milestones",
+  "reviewedOn": "2026-11-19",
   "build": 70783,
   "catalogSourceCommit": "efeeb8ca1188cd87b5bd3a1f8807eb270ad3df51",
   "catalogSourceSHA256": "14543de0026c37b267d8e3a3ff7ed8b18871c3a60e6edaa8105c52a34c8f4c2c",
@@ -330,6 +330,83 @@
         "maximumInvestedPoints": 40
       },
       "limits": "A proc chance is not an unconditional output multiplier. The bonus quantity distribution and compatible source-baseline proc frequency are unreported."
+    },
+    {
+      "id": "output-trait:107648",
+      "url": "https://www.wowhead.com/profession-trait/dust-deliverer-107648",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-19",
+      "support": "Dust Deliverer increases Eversinging Dust received from Uncommon equipment; this descriptive claim establishes no proc chance, stack amount or allocation curve.",
+      "numericClaimPolicy": "DESCRIPTIVE_ONLY_NO_NUMERIC_TRANSFORM"
+    },
+    {
+      "id": "output-trait:107647",
+      "url": "https://www.wowhead.com/profession-trait/shard-supplier-107647",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-19",
+      "support": "Shard Supplier increases Radiant Shards and additional materials received from Rare equipment; this descriptive claim establishes no proc chance, stack amount or allocation curve.",
+      "numericClaimPolicy": "DESCRIPTIVE_ONLY_NO_NUMERIC_TRANSFORM"
+    },
+    {
+      "id": "live-trait:107646",
+      "url": "https://www.wowhead.com/profession-trait/crystal-collector-107646",
+      "sourceType": "BLIZZARD_TRAIT_DESCRIPTION",
+      "accessedOn": "2026-11-19",
+      "support": "Crystal Collector improves Dawn Crystal quality and additional materials from Epic equipment. The description does not establish a numeric per-point skill amount, quality threshold, proc chance or stack amount.",
+      "numericClaimPolicy": "DESCRIPTIVE_ONLY_NO_NUMERIC_TRANSFORM"
+    },
+    {
+      "id": "blizzard-live-midnight-skill-perks-70961",
+      "url": "https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_APIDocumentationGenerated/ProfessionSpecUIDocumentation.lua",
+      "sourceType": "CAPTURED_BLIZZARD_API_RESOLVED_PERK_TEXT",
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "accessedOn": "2026-11-19",
+      "sourceFileSHA256": "fc3395c67c267d819d92497216132b2c31bc98c004b4ca4f85fb966f006746d6",
+      "observedUTC": "2026-11-19T17:54:44+00:00",
+      "researchPath": "research/mechanics/2026-11-19-observation-formulas.json",
+      "support": "Preserved C_ProfSpecs.GetUnlockRankForPerk and GetDescriptionForPerk values establish invested-point skill milestones and rank-zero learning skill for the four Midnight disenchanting paths. They do not establish a Crystal per-point coefficient, extra-output chance, bonus quantity or quality-probability curve."
+    },
+    {
+      "id": "wowhead-midnight-perk-boundaries-20261119",
+      "url": "https://www.wowhead.com/profession-tree-calc/enchanting",
+      "sourceType": "CURRENT_BLIZZARD_DERIVED_TREE_PAYLOAD",
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "accessedOn": "2026-11-19",
+      "support": "Current tree payload independently identifies the four paths, 30 invested-point bounds and perk unlock boundaries; numerical skill amounts are supplied by the separately captured Blizzard API descriptions."
+    },
+    {
+      "id": "db2-midnight-crystal-skill-per-point-70961",
+      "url": "https://wago.tools/db2/TraitXEffect/csv?build=12.1.5.70961",
+      "sourceType": "PINNED_BLIZZARD_DB2_JOIN_INFERENCE",
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "accessedOn": "2026-11-19",
+      "inference": true,
+      "researchPath": "research/mechanics/2026-11-19-game-data-formulas.json",
+      "sourceSHA256": {
+        "ProfessionEffect": "46fb47166aaa114c3d1d9d0f3b9b3f2b98bdc56c286aadd819c441a6f355d737",
+        "ProfessionTrait": "7703a1d7359e1d77f248dd73ab84af49cbf31a4c4038772703b2bc2e4ff7b0c0",
+        "TraitXEffect": "55df3c5bc373e1c7a26f2cf9546a75696606b31c4601c2ba28b7b92ea26cc984",
+        "TraitXLabel": "a2887d3a6c06260ba30770ddc30a9dce7f26246a93b986a195272e27bc7b7c20"
+      },
+      "join": {
+        "spendEntryID": 132938,
+        "definitionID": 137724,
+        "professionTraitID": 18867,
+        "traitXEffectID": 15692,
+        "professionEffectID": 146,
+        "professionEffectType": 25,
+        "amount": 1,
+        "traitLabel": 5052
+      },
+      "numericClaim": {
+        "nodeID": 107646,
+        "skillPerInvestedPoint": 1
+      },
+      "support": "Crystal uses the same amount-one profession effect 146 as Supplier, Dust and Delegate, whose base descriptions explicitly identify +1 skill per point. Its label 5052 is also used by its explicitly skill-valued epic-equipment milestones. Taken together these support a provisional +1 epic disenchanting skill per invested point inference at confidence 60.",
+      "limits": "This is a DB2 join inference, not a number stated by the Crystal base prose tooltip or a measured live skill differential. It supplies no extra-output rate, bonus-stack amount or random quality-probability formula."
     }
   ],
   "rules": [
@@ -343,15 +420,34 @@
       "nodeName": "Disenchanting Delegate",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
       "sourceClaimIDs": [
         "wago-node-identity",
-        "live-trait:107649"
+        "live-trait:107649",
+        "blizzard-live-midnight-skill-perks-70961",
+        "wowhead-midnight-perk-boundaries-20261119"
       ],
       "baselinePolicy": "selected-reference-scenario",
-      "perPoint": 1
+      "perPoint": 1,
+      "learningSkill": 5,
+      "skillMilestoneBuild": 70961,
+      "skillMilestones": [
+        {
+          "rank": 10,
+          "skill": 5
+        },
+        {
+          "rank": 20,
+          "skill": 10
+        },
+        {
+          "rank": 30,
+          "skill": 20
+        }
+      ]
     },
     {
       "ruleID": "specialization:11:Disenchant:107648:skill-per-point",
@@ -363,16 +459,43 @@
       "nodeName": "Dust Deliverer",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
       "sourceClaimIDs": [
         "wago-node-identity",
-        "live-trait:107648"
+        "live-trait:107648",
+        "blizzard-live-midnight-skill-perks-70961",
+        "wowhead-midnight-perk-boundaries-20261119"
       ],
       "baselinePolicy": "selected-reference-scenario",
       "perPoint": 1,
-      "inputRarity": 2
+      "inputRarity": 2,
+      "learningSkill": 5,
+      "skillMilestoneBuild": 70961,
+      "skillMilestones": [
+        {
+          "rank": 5,
+          "skill": 5
+        },
+        {
+          "rank": 10,
+          "skill": 5
+        },
+        {
+          "rank": 15,
+          "skill": 5
+        },
+        {
+          "rank": 25,
+          "skill": 10
+        },
+        {
+          "rank": 30,
+          "skill": 20
+        }
+      ]
     },
     {
       "ruleID": "specialization:11:Disenchant:107647:skill-per-point",
@@ -384,16 +507,43 @@
       "nodeName": "Shard Supplier",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
       "sourceClaimIDs": [
         "wago-node-identity",
-        "live-trait:107647"
+        "live-trait:107647",
+        "blizzard-live-midnight-skill-perks-70961",
+        "wowhead-midnight-perk-boundaries-20261119"
       ],
       "baselinePolicy": "selected-reference-scenario",
       "perPoint": 1,
-      "inputRarity": 3
+      "inputRarity": 3,
+      "learningSkill": 5,
+      "skillMilestoneBuild": 70961,
+      "skillMilestones": [
+        {
+          "rank": 5,
+          "skill": 5
+        },
+        {
+          "rank": 10,
+          "skill": 5
+        },
+        {
+          "rank": 15,
+          "skill": 5
+        },
+        {
+          "rank": 25,
+          "skill": 10
+        },
+        {
+          "rank": 30,
+          "skill": 20
+        }
+      ]
     },
     {
       "ruleID": "specialization:10:Disenchant:99890:skill-per-point",
@@ -405,6 +555,7 @@
       "nodeName": "Designated Disenchanter",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -425,6 +576,7 @@
       "nodeName": "Uncommon Utilitarian",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -446,6 +598,7 @@
       "nodeName": "Rare Resourcing",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -467,6 +620,7 @@
       "nodeName": "Epic Escalations",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -488,6 +642,7 @@
       "nodeName": "Perfect Milling",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -508,6 +663,7 @@
       "nodeName": "Processing",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -528,6 +684,7 @@
       "nodeName": "Perfected Products",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -548,6 +705,7 @@
       "nodeName": "Understanding Flora",
       "maxRank": 20,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -569,6 +727,7 @@
       "nodeName": "Rune Mastery",
       "maxRank": 40,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -590,6 +749,7 @@
       "nodeName": "Prospecting",
       "maxRank": 25,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -611,6 +771,7 @@
       "nodeName": "Enterprising",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -632,6 +793,7 @@
       "nodeName": "Jeweler's Toolset Mastery",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -653,6 +815,7 @@
       "nodeName": "Improved Milling",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -674,6 +837,7 @@
       "nodeName": "Pursuit of Perfection",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -695,6 +859,7 @@
       "nodeName": "Prospecting Pro",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -716,6 +881,7 @@
       "nodeName": "Proficient Processor",
       "maxRank": 30,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -737,6 +903,7 @@
       "nodeName": "Sapphire",
       "maxRank": 20,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -768,6 +935,7 @@
       "nodeName": "Ruby",
       "maxRank": 20,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -799,6 +967,7 @@
       "nodeName": "Onyx",
       "maxRank": 20,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -830,6 +999,7 @@
       "nodeName": "Emerald",
       "maxRank": 20,
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 70,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -865,6 +1035,7 @@
       },
       "referenceContextID": "de-category:gear:11:3:armor:max-specialization:a194c8a33fcf",
       "build": 70783,
+      "clientVersion": "12.1.5",
       "confidence0to100": 60,
       "evidenceStatus": "SOURCED_PROVISIONAL",
       "applyPolicy": "EXECUTE",
@@ -874,13 +1045,63 @@
       ],
       "baselinePolicy": "select-observed-matching-full-specialization-reference",
       "quantityPolicy": "USE_REFERENCE_VECTOR_ONCE_NO_EXTRA_MULTIPLIER"
+    },
+    {
+      "ruleID": "specialization:11:Disenchant:107646:skill-per-point",
+      "kind": "skill-per-point",
+      "method": "Disenchant",
+      "profession": "Enchanting",
+      "expansionID": 11,
+      "nodeID": 107646,
+      "nodeName": "Crystal Collector",
+      "maxRank": 30,
+      "build": 70961,
+      "clientVersion": "12.1.5",
+      "confidence0to100": 60,
+      "evidenceStatus": "SOURCED_PROVISIONAL",
+      "applyPolicy": "EXECUTE",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:107646",
+        "blizzard-live-midnight-skill-perks-70961",
+        "wowhead-midnight-perk-boundaries-20261119",
+        "db2-midnight-crystal-skill-per-point-70961"
+      ],
+      "baselinePolicy": "selected-reference-scenario",
+      "learningSkill": 5,
+      "skillMilestoneBuild": 70961,
+      "skillMilestones": [
+        {
+          "rank": 5,
+          "skill": 5
+        },
+        {
+          "rank": 10,
+          "skill": 5
+        },
+        {
+          "rank": 15,
+          "skill": 5
+        },
+        {
+          "rank": 25,
+          "skill": 10
+        },
+        {
+          "rank": 30,
+          "skill": 20
+        }
+      ],
+      "inputRarity": 4,
+      "perPoint": 1
     }
   ],
   "held": [
     {
       "id": "midnight-crystal-per-point",
       "nodeID": 107646,
-      "reason": "Current main tooltip describes epic material quality but does not state a numeric skill-per-point amount."
+      "reason": "The base prose tooltip does not state a numerical per-point amount. A +1 skill-per-point rule is now a sourced provisional DB2 effect/label inference at confidence 60; a direct in-game differential confirmation remains pending.",
+      "heldAspect": "DIRECT_LIVE_DIFFERENTIAL_VALIDATION"
     },
     {
       "id": "disenchant-quantity-procs",
@@ -894,7 +1115,14 @@
     },
     {
       "id": "milestone-rank-thresholds",
-      "reason": "Pinned CraftSim data lists auxiliary perk skill/stat amounts but does not establish which invested-point boundary activates every perk. Unknown thresholds are not synthesized."
+      "reason": "The four Midnight disenchanting node skill milestones are now resolved from captured Blizzard API descriptions and current tree boundaries. Other profession or expansion milestone arithmetic remains held when its exact invested-point boundary or amount is unverified.",
+      "resolvedNodeIDs": [
+        107646,
+        107647,
+        107648,
+        107649
+      ],
+      "resolvedOn": "2026-11-19"
     },
     {
       "id": "draconic-extra-reagent-quantity",
@@ -910,9 +1138,64 @@
   ],
   "calculationPolicy": {
     "pointConvention": "Invested knowledge points from spend entries; never add a free unlock rank.",
-    "skill": "Add relevant sourced per-point contributions to the simulated pre-specialization recipe skill once; real operation skill already includes live talents.",
+    "skill": "Add relevant sourced per-point contributions and build-scoped invested-point skill milestones once. Learning skill requires a positive invested allocation or an explicit learned-specialization flag; a missing or unlearned zero-point node never receives a free bonus. Real operation skill already includes live talents.",
     "replacement": "Allocate all selected color fractions from the same original Amber expectation, reducing Amber by their sum. No extra gems, measured hit probability or sample count is created.",
     "baseline": "Reference-scenario projection; mixed historical source specialties are not falsely labeled an experimentally normalized zero-point baseline.",
     "reference": "Full matching specialization may select its separately measured category context; intermediate ranks are not interpolated."
-  }
+  },
+  "describedEffects": [
+    {
+      "effectID": "specialization:11:Disenchant:107648:described-output",
+      "profession": "Enchanting",
+      "method": "Disenchant",
+      "expansionID": 11,
+      "build": 70783,
+      "clientVersion": "12.1.5",
+      "nodeID": 107648,
+      "nodeName": "Dust Deliverer",
+      "maxRank": 30,
+      "inputRarity": 2,
+      "description": "Increases Eversinging Dust received; the quantity effect is not quantified.",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:107648",
+        "output-trait:107648"
+      ]
+    },
+    {
+      "effectID": "specialization:11:Disenchant:107647:described-output",
+      "profession": "Enchanting",
+      "method": "Disenchant",
+      "expansionID": 11,
+      "build": 70783,
+      "clientVersion": "12.1.5",
+      "nodeID": 107647,
+      "nodeName": "Shard Supplier",
+      "maxRank": 30,
+      "inputRarity": 3,
+      "description": "Increases Radiant Shards and additional materials received; the quantity effects are not quantified.",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:107647",
+        "output-trait:107647"
+      ]
+    },
+    {
+      "effectID": "specialization:11:Disenchant:107646:described-output",
+      "profession": "Enchanting",
+      "method": "Disenchant",
+      "expansionID": 11,
+      "build": 70783,
+      "clientVersion": "12.1.5",
+      "nodeID": 107646,
+      "nodeName": "Crystal Collector",
+      "maxRank": 30,
+      "inputRarity": 4,
+      "description": "Improves Dawn Crystal quality and additional materials received; the quality and quantity effects are not quantified.",
+      "sourceClaimIDs": [
+        "wago-node-identity",
+        "live-trait:107646"
+      ]
+    }
+  ]
 }

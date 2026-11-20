@@ -397,6 +397,9 @@ local specialization=assert(loadfile('database/specialization-effects.lua'))()
 assert(specialization.schemaVersion==1 and type(specialization.specializationRules)=='table',
     'Unsupported generated specialization-effect schema')
 db.specializationRules=specialization.specializationRules
+-- Known effects without a numerical yield model remain visible as explicitly
+-- unquantified simulation context, never as executable multipliers.
+db.specializationDescriptions=specialization.describedEffects or {}
 db.specializationRevision=specialization.revision..':'..specialization.sourceSHA256
 db.specializationSources=specialization.sourceClaims
 db.specializationHeld=specialization.held

@@ -131,7 +131,9 @@ python3 tests/test_legacy_cohort_admission.py
 "$lua_bin" tests/test_midnight_pigment_runtime.lua
 "$lua_bin" tests/test_profession_simulation.lua
 "$lua_bin" tests/test_specialization_effects.lua
+"$lua_bin" tests/test_disenchant_skill_formulas.lua
 "$lua_bin" tests/test_profession_control_support.lua
+"$lua_bin" tests/test_profession_build_compatibility.lua
 "$lua_bin" tests/test_reference_fallback.lua
 "$lua_bin" tests/test_usable_field_flow.lua
 python3 tests/test_research_v3_no_disenchant.py

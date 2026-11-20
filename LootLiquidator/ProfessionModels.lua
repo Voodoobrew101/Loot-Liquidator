@@ -27,6 +27,24 @@ local function approved(r)
     return true
 end
 function LL:IsApprovedNumericRule(rule) return approved(rule) end
+-- A research build identifies the evidence, not necessarily an expiry at the
+-- next client hotfix. Static rules may explicitly cover one client version.
+-- Keep exact-build behavior for rules without that scope, and keep operation
+-- snapshots/patch bridges exact: those describe an actual captured state.
+function LL:ProfessionRuleMatchesBuild(rule)
+    if type(rule)~='table' then return false end
+    local version,build
+    if GetBuildInfo then version,build=GetBuildInfo() end
+    if rule.clientVersion~=nil then
+        local sourceBuild,currentBuild=tonumber(rule.build),tonumber(build)
+        return type(rule.clientVersion)=='string'
+            and rule.clientVersion:match('^%d+%.%d+%.%d+$')~=nil
+            and version==rule.clientVersion
+            and finite(sourceBuild) and sourceBuild>0 and sourceBuild%1==0
+            and finite(currentBuild) and currentBuild%1==0 and currentBuild>=sourceBuild
+    end
+    return rule.build==nil or build~=nil and tostring(rule.build)==tostring(build)
+end
 -- C7 (owner decisions 1, 15, 16): a research scaling rule runs at any stated
 -- confidence as long as it names at least one source; the numbers it scales
 -- carry that confidence as a cap (transformConfidence). Only a rule with no
@@ -287,6 +305,7 @@ function LL:ApplySkillQualityModel(f,option,model,context)
     local rule
     for _,candidate in ipairs(self.ItemDB and self.ItemDB.skillQualityRules or {}) do
         if usable(candidate) and candidate.applyPolicy=='EXECUTE'
+            and self:ProfessionRuleMatchesBuild(candidate)
             and candidate.formulaID=='EXACT_INPUT_QUALITY_THRESHOLD' and candidate.maxQuality==2
             and candidate.requireExactOperationContext==true
             and candidate.quantityPolicy=='PRESERVE_SELECTED_FAMILY_EXPECTATION'
@@ -429,8 +448,7 @@ local function specializationScope(rule,f,option,context)
         or (rule.recipeID and rule.recipeID~=option.recipeID)
         or (rule.inputRarity and rule.inputRarity~=f.quality)
         or (rule.inputClassID and rule.inputClassID~=f.classID) then return false end
-    local build=GetBuildInfo and select(2,GetBuildInfo())
-    if rule.build and tostring(rule.build)~=tostring(build) then return false end
+    if not LL:ProfessionRuleMatchesBuild(rule) then return false end
     if rule.inputItemIDs then
         local matched=false
         for _,id in ipairs(rule.inputItemIDs) do if id==f.id then matched=true end end
@@ -463,6 +481,80 @@ end
 local function manualSpecializationContext(context)
     return type(context)=='table' and context.simulated==true and context.profileKind=='manual-simulation' and not context.stale
 end
+local function describedEffectValid(self,effect)
+    if type(effect)~='table' or type(effect.effectID)~='string' or effect.effectID==''
+        or type(effect.description)~='string' or effect.description==''
+        or type(effect.nodeName)~='string' or effect.nodeName==''
+        or not finite(effect.nodeID) or effect.nodeID<=0 or effect.nodeID%1~=0
+        or not finite(effect.maxRank) or effect.maxRank<=0 or effect.maxRank%1~=0
+        or type(effect.sourceClaimIDs)~='table' or #effect.sourceClaimIDs==0
+        or not self:ProfessionRuleMatchesBuild(effect) then return false end
+    for _,id in ipairs(effect.sourceClaimIDs) do
+        if type(id)~='string' or id=='' then return false end
+    end
+    return true
+end
+-- Report known effects even when their distribution is not quantified. These
+-- notes never modify a probability, quantity, price or confidence score.
+function LL:ProfessionSimulationEffectNotes(f,option,model)
+    local context=model and model.context
+    local notes,unquantified={},false
+    if not manualSpecializationContext(context) or type(f)~='table' or type(option)~='table' then return notes,false end
+    local points=specializationPoints(self,context)
+    local knownSkill=false
+    for _,rule in ipairs(self.ItemDB and self.ItemDB.specializationRules or {}) do
+        if rule.kind=='skill-per-point' and specializationScope(rule,f,option,context) then knownSkill=true end
+    end
+    for _,effect in ipairs(self.ItemDB and self.ItemDB.specializationDescriptions or {}) do
+        if describedEffectValid(self,effect) and effect.method==option.name and effect.expansionID==f.expansionID
+            and effect.profession==context.profession
+            and (effect.inputRarity==nil or effect.inputRarity==f.quality)
+            and (effect.inputClassID==nil or effect.inputClassID==f.classID)
+            and (effect.recipeID==nil or effect.recipeID==option.recipeID) then
+            local rank=selectedRank(effect,points)
+            if rank and rank>0 then
+                notes[#notes+1]=effect.nodeName..': '..rank..' / '..effect.maxRank..' points. '..effect.description
+                    ..' Effect at this allocation is unquantified.'
+                unquantified=true
+            end
+        end
+    end
+    if (knownSkill or model.skillQualityApplied) and finite(context.effectiveSkill) then
+        table.insert(notes,1,('Simulated skill: %g (researched specialization bonus: +%g).')
+            :format(context.effectiveSkill,context.specializationSkillBonus or 0))
+        if not model.skillQualityApplied and not model.professionProjected and not model.specializationEffectsApplied then
+            notes[#notes+1]='Skill and specialization yield changes are not quantified; displayed amounts use the selected reference.'
+            unquantified=true
+        end
+    end
+    return notes,unquantified
+end
+local function specializationSkillContribution(rule,rank,context)
+    local contribution=rank*(rule.perPoint or 0)
+    if not finite(contribution) then return nil end
+    -- New milestone evidence does not retroactively change older builds.
+    local build=GetBuildInfo and tonumber((select(2,GetBuildInfo())))
+    if rule.skillMilestoneBuild~=nil then
+        if not finite(rule.skillMilestoneBuild) or rule.skillMilestoneBuild<=0 or rule.skillMilestoneBuild%1~=0 then return nil end
+        if not finite(build) or build<rule.skillMilestoneBuild then return contribution end
+    end
+    local learned=rank>0 or type(context.learnedSpecializations)=='table'
+        and (context.learnedSpecializations[tostring(rule.nodeID)]==true or context.learnedSpecializations[rule.nodeID]==true)
+    if not learned then return contribution end
+    if rule.learningSkill~=nil then
+        if not finite(rule.learningSkill) then return nil end
+        contribution=contribution+rule.learningSkill
+    end
+    if rule.skillMilestones~=nil and type(rule.skillMilestones)~='table' then return nil end
+    local previous=0
+    for _,milestone in ipairs(rule.skillMilestones or {}) do
+        if type(milestone)~='table' or not finite(milestone.rank) or milestone.rank%1~=0
+            or milestone.rank<=previous or milestone.rank>rule.maxRank or not finite(milestone.skill) then return nil end
+        previous=milestone.rank
+        if rank>=milestone.rank then contribution=contribution+milestone.skill end
+    end
+    return finite(contribution) and contribution or nil
+end
 function LL:ApplySpecializationSkill(f,option,context)
     if not manualSpecializationContext(context) or type(f)~='table' or type(option)~='table' then return context end
     local points=specializationPoints(self,context)
@@ -470,10 +562,11 @@ function LL:ApplySpecializationSkill(f,option,context)
     local bonus,confidence,rules,sources=0,100,{},{}
     local reference,referenceRule,ambiguous
     for _,rule in ipairs(specializationRules(self,f,option,context)) do
-        if rule.kind=='skill-per-point' and finite(rule.perPoint) then
+        if (rule.kind=='skill-per-point' and finite(rule.perPoint)) or rule.kind=='skill-milestones' then
             local rank=selectedRank(rule,points)
-            if rank and rank>0 then
-                bonus=bonus+rank*rule.perPoint
+            local contribution=rank and specializationSkillContribution(rule,rank,context)
+            if contribution and contribution>0 then
+                bonus=bonus+contribution
                 confidence=math.min(confidence,rule.confidence0to100)
                 rules[#rules+1]=rule.ruleID
                 for _,id in ipairs(rule.sourceClaimIDs) do sources[id]=true end
@@ -732,7 +825,8 @@ end
 -- complete catalog and saved profile remain intact; this is presentation
 -- capability, independent of the selected points or source preferences.
 function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
-    local support={skill=false,nodes={},stats={},buffs={},dependencyNodes={},skillDependency=false,nodeEffects={}}
+    local support={skill=false,nodes={},stats={},buffs={},dependencyNodes={},skillDependency=false,nodeEffects={},
+        unquantifiedNodes={},nodeDescriptions={}}
     local db=self.ItemDB
     local build=GetBuildInfo and select(2,GetBuildInfo())
     if type(db)~='table' or build==nil then return support end
@@ -752,7 +846,7 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
             and (not strict or rule.applyPolicy=='EXECUTE')
             and (rule.profession or methodProfessions[rule.method])==profession
             and rule.expansionID==expansion
-            and (rule.build==nil or tostring(rule.build)==tostring(build))
+            and self:ProfessionRuleMatchesBuild(rule)
             and (rule.inputItemIDs==nil or type(rule.inputItemIDs)=='table')
             and (rule.inputQualityRanks==nil or type(rule.inputQualityRanks)=='table')
     end
@@ -941,6 +1035,7 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
                 end)
                 if record then for id in pairs(rule.requiredNodes) do showNode(id,rule.ruleID) end end
             elseif validNode and rule.kind=='skill-per-point' and positive(rule.perPoint) then
+                local calculated=false
                 for _,model in ipairs(skillModels) do
                     local acceptsPoints=model.rule.formulaID=='EXACT_INPUT_QUALITY_THRESHOLD'
                     -- ProfessionFactor requires an explicit specialization
@@ -959,7 +1054,13 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
                     end
                     if acceptsPoints and model.rule.method==rule.method and overlaps(rule,model.rule) and overlaps(rule,model.record) then
                         showNode(rule.nodeID,rule.ruleID)
+                        calculated=true
                     end
+                end
+                if not calculated and baselineFor(rule,function(record) return anyMean(record) end) then
+                    showNode(rule.nodeID,rule.ruleID)
+                    support.unquantifiedNodes[tostring(rule.nodeID)]=true
+                    support.skill=true
                 end
             elseif validNode and rule.kind=='replace-family' and positive(rule.perPoint)
                 and rule.perPoint*rule.maxRank<=1 and type(rule.targetFamily)=='table'
@@ -987,6 +1088,18 @@ function LL:GetProfessionSimulationControlSupport(profession,expansion,nodes)
                     showNode(rule.nodeID,rule.ruleID)
                 end
             end
+        end
+    end
+    for _,effect in ipairs(db.specializationDescriptions or {}) do
+        local node=catalog[effect.nodeID]
+        if describedEffectValid(self,effect) and effect.profession==profession and effect.expansionID==expansion
+            and node and node.maxRank==effect.maxRank
+            and baselineFor(effect,function(record) return anyMean(record) end) then
+            showNode(effect.nodeID)
+            local id=tostring(effect.nodeID)
+            support.unquantifiedNodes[id]=true
+            support.nodeDescriptions[id]=support.nodeDescriptions[id] or {}
+            support.nodeDescriptions[id][#support.nodeDescriptions[id]+1]=effect.description
         end
     end
     -- Existing context-specific mechanic rules can consume typed stat/buff

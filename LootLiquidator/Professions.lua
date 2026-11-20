@@ -692,7 +692,17 @@ function LL:SetManualProfessionProfile(character,profession,expansion,values)
             end
         end
     end
+    local learned
+    if values.learnedSpecializations~=nil then
+        if type(values.learnedSpecializations)~='table' then return false end
+        learned={}
+        for id,value in pairs(values.learnedSpecializations) do
+            if not PositiveInt(tonumber(id)) or value~=true then return false end
+            learned[tostring(id)]=true
+        end
+    end
     local profile={enabled=values.enabled==true,skill=values.skill,specialization=values.specialization,stats=stats,
+        learnedSpecializations=learned,
         buffs=buffs,benchmark=benchmark,
         character=character,profession=profession,expansionID=expansion,simulated=true}
     chars[character][profession..':'..expansion]=profile

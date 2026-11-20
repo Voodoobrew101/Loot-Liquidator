@@ -6,7 +6,7 @@ local function copy(value)
     if type(value)~='table' then return value end
     local result={} for k,v in pairs(value) do result[k]=copy(v) end return result
 end
-GetBuildInfo=function() return 'test','70783' end
+GetBuildInfo=function() return '12.1.5','70783' end
 GetTime=function() return 100 end
 time=function() return 100 end
 CreateFrame=function() return {RegisterEvent=function()end,SetScript=function()end} end

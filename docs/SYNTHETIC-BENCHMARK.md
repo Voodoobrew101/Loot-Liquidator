@@ -81,44 +81,61 @@ disenchanting.
 
 ## Named specialization point calculations
 
-Open **Professions (Simulated) → a profession → Advanced**. Only controls linked
-to executable researched output calculations are shown. Editing a control selects the
+Open **Professions (Simulated) → a profession → Advanced**. Controls with sourced
+skill contributions, described output effects or executable output calculations
+are shown. Editing a control selects the
 Simulated profile; selecting that profile again preserves the saved allocation.
 Only **Reset to minimum** clears it. Scanned character data and profession access
 remain independent of the editor.
 
-Visibility follows the compiled calculation rules for the selected profession,
-expansion and game build. Merely storing a stat or adding skill to a context is
-insufficient: the value must reach a quantity, probability, quality or valuation
-calculation. Unsupported controls are hidden without deleting their catalog or
-saved values, and return when compatible research supplies that calculation.
-Needed tree headings remain labels. Structured prerequisites that unlock a
-working modifier remain editable. Missing a live operation capture does not
-remove a supported quality control; the capture can be supplied in game.
+Visibility follows the compiled numerical rules and descriptive-effect entries
+for the selected profession, expansion and game build. A sourced skill or output
+effect stays editable even when its exact yield curve has not been established.
+The tooltip distinguishes researched context from a calculated change in
+quantity, probability, quality or valuation. Catalog membership or an arbitrary
+captured stat alone still does not establish an effect. Unsupported controls
+remain hidden without deleting their saved values. Needed tree headings remain
+labels, and structured prerequisites remain editable. Missing a live operation
+capture does not remove a supported quality control; the capture can be supplied
+in game. Explicit client-version scope preserves the reviewed static rules
+across compatible `12.1.5` hotfix builds; exact-operation captures remain build
+specific. See [the visibility contract](PROFESSION-CONTROL-VISIBILITY.md).
 
-With the current research, Midnight Enchanting exposes Disenchanting Delegate
-and Shard Supplier for the measured full-investment reference. Dust Deliverer,
-Crystal Collector and the Enchanting skill slider remain hidden because they
-do not currently change the calculated output. Midnight milling/prospecting keep
-their supported skill and quality-related point controls. TWW Gem Finding keeps
-its four gem-replacement controls. Current context-only crafting/gathering stats
-and buffs are hidden. See [the visibility contract](PROFESSION-CONTROL-VISIBILITY.md).
+Midnight Enchanting exposes base skill plus Disenchanting Delegate, Dust Deliverer,
+Shard Supplier and Crystal Collector. The measured full-investment reference
+still belongs only to Delegate + Supplier on the matching rare-armor category.
+The child branches also carry descriptive output effects: more dust, more
+shards/additional materials, or better crystal quality/additional materials for
+their corresponding rarities. These effects remain visible and reflected in
+tooltip notes/status even where their numerical yield effect is unquantified.
+They do not imply a new proc chance, quantity multiplier or milestone activation.
+Midnight milling/prospecting keep their supported skill and quality-related point
+controls. TWW Gem Finding keeps its four gem-replacement controls. Crafting and
+gathering stats/buffs with no sourced executable effect remain hidden.
 
 The existing skill control is **Skill before specialization**. For an operation
 with a sourced per-point bonus, effective recipe skill is that input plus the
 bonuses from matching nodes. Expansion, method and rarity restrictions apply:
 Disenchanting Delegate applies to Midnight gear, while Dust Deliverer adds skill
-only for uncommon gear and Shard Supplier only for rare gear. A skill bonus can
+only for uncommon gear and Shard Supplier only for rare gear. Their documented
+per-point amounts are +1. Current primary DB2 links additionally support a
+provisional +1 Epic-skill coefficient for Crystal Collector; its main prose
+omits that number. Build 70961 also supplies resolved learning and milestone
+skill bonuses for all four paths. These are applied once, with learned-at-zero
+state kept separate from a legacy zero-point signature. See the
+[formula research and remaining output limits](DISENCHANT-FORMULA-RESEARCH-2026-11-19.md).
+A skill bonus can
 cross an exact-input quality threshold captured from Blizzard; it does not imply
 an arbitrary percentage increase in quantity. The raw source totals stay intact.
 
-The generated data currently contains 19 scoped skill-per-point rules, four
-The War Within gem-replacement rules and one observed Midnight specialization
-reference. The [reviewed effect definitions](../database/research/specialization-effects.json)
+The generated data contains 20 scoped skill-per-point rules, four The War Within
+gem-replacement rules and one observed Midnight specialization reference. Three
+separate descriptive-only entries represent the Midnight disenchanting child
+branches; they cannot carry numerical transform fields. The [reviewed effect definitions](../database/research/specialization-effects.json)
 contain source quotes, pinned code/catalog identities, point bounds, confidence
 and held claims. The deterministic path is:
 
-`specialization-effects.json → tools/specialization_effects.py → specialization-effects.lua → ItemDB.specializationRules → profession context/resolver → valuation/tooltip`.
+`specialization-effects.json → tools/specialization_effects.py → specialization-effects.lua → ItemDB.specializationRules / specializationDescriptions → profession context/resolver → valuation/tooltip`.
 
 ### Gem Finding: multiply the existing material baseline
 
@@ -154,9 +171,12 @@ personal-only mode. Resetting the points restores the ordinary category model.
 
 A trait that says it grants a chance at extra material without stating the
 chance and stack size cannot honestly become a numerical total-yield multiplier.
-Such claims remain in the effect export's held list. The independent rating and
-percentage controls feed their typed context; an unsupported stat does not gain
-an invented recipe effect. Resourcefulness never increases disenchanting output.
+Their numerical transforms remain held, while the sourced output descriptions
+can be shown with selected points and an explicit unquantified-effect status.
+This preserves the difference between a known in-game effect and an established
+yield formula. The independent rating and percentage fields remain stored in
+typed context; no stat slider is advertised without a sourced formula that
+consumes it. Resourcefulness never increases disenchanting output.
 
 Older aggregate `benchmark` values remain readable by the compatibility backend;
 the main branch's named point editor does not expose or require those generic
