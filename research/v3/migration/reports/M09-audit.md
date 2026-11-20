@@ -124,8 +124,8 @@ Top five reasons:
 
 | Reason | Records | Meaning |
 | --- | --- | --- |
-| `totalWithoutCasts` | 5,111 | states a total with no cast count or input count, so no rate follows (S16) |
-| `duplicateStudy` | 2,547 | a copy of a study already counted in the group |
+| `totalWithoutCasts` | 5,110 | states a total with no cast count or input count, so no rate follows (S16) |
+| `duplicateStudy` | 2,548 | a copy of a study already counted in the group |
 | `reference:noUsableValue` | 1,828 | a reference row with neither a chance nor an average |
 | `type:noDisenchant` | 1,100 | says an item cannot be disenchanted; not a drop |
 | `type:exchange` | 597 | a fixed exchange, not a drop; the estimator builds drop estimates only |
@@ -134,8 +134,8 @@ All reasons:
 
 | Reason | Records |
 | --- | --- |
-| `totalWithoutCasts` | 5,111 |
-| `duplicateStudy` | 2,547 |
+| `totalWithoutCasts` | 5,110 |
+| `duplicateStudy` | 2,548 |
 | `reference:noUsableValue` | 1,828 |
 | `type:noDisenchant` | 1,100 |
 | `type:exchange` | 597 |
@@ -200,7 +200,7 @@ All reasons:
 | M08-estimator/findings#2 | statistics | 1 | Ranges are collected before dedupe. | Decide whether unused rows may widen an observed range. | none | M08-estimator/master#5 |
 | M08-estimator/master#1 | policy | 1 | Output policy and SciPy (section 7): choose one confidence method (require SciPy, or drop the fallback), then decide whether the reviewer commits `output/` i... | Choose one confidence method, then decide the output/ policy. | handle |  |
 | M08-estimator/master#2 | schema | 1 | `unlockState` rollout (section 1): do not add it to `evidence-format.md` with the "write unknowns as null" rule. | Choose the unlockState rule for evidence-format.md. | **blocks** |  |
-| M08-estimator/master#3 | backfill | 5,111 | Totals without casts: 320 rows are the largest unused block (S16 backfill lists in `M06-units-data.json`); the 6 Jallfo studies are 132 of the `duplicateRowI... | Same decision as the M06 backfills. | none | M06-units/master#2 |
+| M08-estimator/master#3 | backfill | 5,110 | Totals without casts: 320 rows are the largest unused block (S16 backfill lists in `M06-units-data.json`); the 6 Jallfo studies are 132 of the `duplicateRowI... | Same decision as the M06 backfills. | none | M06-units/master#2 |
 | M08-estimator/master#4 | statistics | 1 | Family groups and ranks (section 6.1): when ranked rows lack item IDs they share a family group and only the first counts; decide whether per-rank totals sho... | Decide whether per-rank totals are summed in a family group. | none |  |
 | M08-estimator/master#5 | statistics | 1 | Ranges before dedupe (section 6.2): confirm that duplicates and no-number rows should not widen an observed range. | Confirm that duplicates and no-number rows should not widen an observed range. | none |  |
 | M08-estimator/master#6 | data-cleanup | 11 | 2 `condition:incomplete` records and the 5 validator errors (M07) are the remaining schema cleanups; neither moves an estimate. | Fix the two incomplete condition records; the validator errors are covered elsewhere. | none | exceptions:validator-error |
@@ -209,7 +209,7 @@ All reasons:
 | M10-merge/master#3 | tool | 10 | Identity report on family groups. | Compare identity groups per input rank, so a re-recorded study reads as identical. | none | M08-estimator/master#4 |
 | M10-merge/master#4 | agent-rule | 1 | S18, reused record IDs. | Answered by the S18 decision. | none | strategy:S18 |
 | M10-merge/master#5 | source-check | 1 | S19, Serevite rank IDs. | Wait for the reviewer's rank-ID table before touching any Serevite row. | none | strategy:S19 |
-| M10-merge/master#6 | agent-rule | 2,547 | S17 is still open. | Apply the roles/worker.md line, or decline it. | none | M05-identity/master#2 |
+| M10-merge/master#6 | agent-rule | 2,548 | S17 is still open. | Apply the roles/worker.md line, or decline it. | none | M05-identity/master#2 |
 | strategy:S18 | agent-rule | 1,255 | S18: Workers reuse record IDs, so one ID can mean two different records — open | Say whether record IDs should start with the file's time (the reviewer's proposed line for evidence-format.md). | none |  |
 | strategy:S19 | source-check | 1 | S19: Dragonflight ore rank IDs may be swapped across the whole database — open | Confirm which item ID is rank 1, 2 and 3 for Serevite and the other ores; no record was changed. | none |  |
 
@@ -258,8 +258,8 @@ All reasons:
 | --- | --- |
 | Rebuild twice (copy of the working tree) | byte-identical |
 | `estimates.json` | `00d8a2b1…` |
-| `summary.md` | `bd5bb443…` |
-| `unused.json` | `9567d2cb…` |
+| `summary.md` | `fd052b36…` |
+| `unused.json` | `4df248a3…` |
 | `dispositions.py --check` | exit 0: identical to the committed files |
 | `validate.py` counts | 21,458 records in 1521 files (20,309 after corrections), 5 errors, 1322 warnings; equal to `manifest/validation.json` |
 | Migration tests | 434 tests, all pass |

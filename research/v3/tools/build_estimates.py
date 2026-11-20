@@ -646,17 +646,24 @@ def same_output(r, o, ids):
     return True
 
 
-def misplaced_copies(rows, names, vectors, pooled):
-    """id() of rows to leave out of every group: pooled studies, and rows of a copy that lost item IDs
+def casefold_family_key(key):
+    """Compare missing-ID family aliases case-insensitively without rewriting displayed labels."""
+    return tuple(part.casefold() if isinstance(part, str) and part.startswith("family:") else part
+                 for part in key)
+
+
+def _misplaced_copy_reasons(rows, names, vectors, pooled):
+    """Row identity -> closed usage reason for copies to leave out of every group.
+    Includes pooled studies and rows of a copy that lost item IDs
     so they land in a vaguer estimate group than the original, where the per-group dedupe never sees
     both (S17). A row stating an unlock its original does not state stays, as in the unlock skip."""
     ids = item_names(rows)
     twins = defaultdict(list)
-    out = set()
+    out = {}
     for r in rows:
         k = key_of(r, names) if is_study_row(r) else None
         if k and study_ref(r) in pooled:
-            out.add(id(r))
+            out[id(r)] = "copy:pooledStudy"
         elif k:
             twins[(study_identity(r, vectors), item_token(r, "inputItemID", "inputName", ids))].append((r, k))
     for pairs in twins.values():
@@ -664,8 +671,25 @@ def misplaced_copies(rows, names, vectors, pooled):
             if any(group_specificity(ok) > group_specificity(k) and study_ref(o) != study_ref(r)
                    and numbers_agree(row_numbers(r), row_numbers(o)) and same_output(r, o, ids)
                    and (unlock_state(o) is True or unlock_state(r) is not True) for o, ok in pairs):
-                out.add(id(r))
+                out[id(r)] = "copy:vaguerGroup"
+            elif any(study_ref(o) < study_ref(r) and k != ok
+                     and casefold_family_key(k) == casefold_family_key(ok)
+                     and source_key(r) == source_key(o)
+                     and r.get("inputRank") == o.get("inputRank")
+                     and r.get("outputRank") == o.get("outputRank")
+                     and (row_unit(r) is None or row_unit(o) is None or row_unit(r) == row_unit(o))
+                     and numbers_agree(row_numbers(r), row_numbers(o)) and same_output(r, o, ids)
+                     and (unlock_state(o) is True or unlock_state(r) is not True)
+                     for o, ok in pairs):
+                # S7/S17: case-only unknown-ID family labels are one original,
+                # not two estimates. Respect explicit rank, batch and source identities.
+                out[id(r)] = "duplicateStudy"
     return out
+
+
+def misplaced_copies(rows, names, vectors, pooled):
+    """Keep the established public set-of-row-identities API for source adapters."""
+    return set(_misplaced_copy_reasons(rows, names, vectors, pooled))
 
 
 # M08: why a record adds nothing to any estimate. One code per record; `detail` names the group or the
@@ -725,7 +749,7 @@ def analyze(rows):
     Every row has an entry: used (roles chance, average, prior, range, condition) or a reason code."""
     names = name_maps(rows)
     vectors, _, pooled = study_vectors(rows)
-    copies = misplaced_copies(rows, names, vectors, pooled)
+    copies = _misplaced_copy_reasons(rows, names, vectors, pooled)
     conds = load_conditions(rows)
     changes = load_rate_changes()
     families = defaultdict(set)   # input name -> item IDs, for family-level unlock checks
@@ -745,7 +769,7 @@ def analyze(rows):
             usage[id(r)] = {"used": False, "reason": unplaced_code(r, names)}
             continue
         if id(r) in copies:
-            usage[id(r)] = {"used": False, "reason": "copy:pooledStudy" if study_ref(r) in pooled else "copy:vaguerGroup"}
+            usage[id(r)] = {"used": False, "reason": copies[id(r)]}
             continue
         g = groups[k]
         lo, hi = num(r.get("minSeen")), num(r.get("maxSeen"))
