@@ -1,8 +1,8 @@
 {
   "role": "research-manager",
   "branch": "implementation/five-agent-completion",
-  "updated_at": "2026-11-20T11:05:35.529Z",
-  "status": "Independently retrieved the original Xenastro 70,052-byte XLSX and verified five newly transcribed historical Q3 Serevite workbook batches (45 quality-bucket source output rows) against source cells. Source quantities and four actual returned-ore totals reconciled; fifth refund remains blank. No completed-prospect denominators, per-material hits or species IDs from the workbook, no new supported current-Retail gold decisions. Compact original-source review persisted.",
+  "updated_at": "2026-11-20T12:04:08.006Z",
+  "status": "Independently verified Xenastro's original published two-stage method (ore first with Resourcefulness tool, then prismatic/crumbled stone with Inspiration tool) against the primary author post; existing five Q3 Serevite workbook-row transcriptions remain cell-verified but are not established as direct-ore-only output attribution. Persisted a source-method admission gate and sharpened T0046; no new observed casts, per-step yields, supported gold decisions, or live client validation.",
   "task_ids": [
     "T0046",
     "T0041",
@@ -10,6 +10,7 @@
     "T0039"
   ],
   "exact_gaps_targeted": [
+    "Xenastro Q3 Serevite rows 46/47/50/51/57: original author used sequential direct-ore and secondary Prismatic/Crumbled Stone processing with different tools; workbook output row attribution to each step is unverified. Separate input recipes and output pools before any direct-ore EV or gold pricing.",
     "Five distinct Xenastro Serevite 190394 Q3 original Prospecting Log rows 46/47/50/51/57 (CSV 44/45/48/49/55), one author; verify all nine output-bucket totals and source Quantity/Skill/Ore Refund without inventing casts",
     "Source Quantity=72,000 nominal ore summed over five author batches; only 4 refund quantities (1,631/2,162/1,944/2,091), row 51 refund blank; no actual completed casts, net consumed basis, refund reuse, source 0..N histograms or per-output hits",
     "Six green/blue quality-bucket fields pool material species; the original spreadsheet gives no per-species output item IDs; Illimited Diamond three quality rank IDs are external corroboration rather than original workbook item links",
@@ -54,20 +55,26 @@
     "original_completed_casts": null,
     "per_output_hit_counts": null,
     "source_per_material_item_ids_for_pooled_green_blue": null,
-    "new_supported_retail_gold_decisions": 0
+    "new_supported_retail_gold_decisions": 0,
+    "original_author_workflow_context_confirmed": true,
+    "secondary_processing_stage_confirmed_by_original_post": true,
+    "direct_ore_only_outcome_attribution_verified": false,
+    "new_original_measured_cohorts_this_run": 0
   },
   "evidence_files": [
+    "research/v3/evidence/master/20261120T1200-xenastro-two-stage-prospect-source-attribution-gate.md",
     "research/v3/evidence/master/20261120T1102-xenastro-five-q3-serevite-original-workbook-admission-review.md",
     "research/v3/evidence/dragonflight/2026-11-20T1040-xenastro-five-original-serevite-r3-batches.jsonl",
     "research/v3/evidence/master/20261120T1000-bugy-28-output-confidence-and-zen-name-alias-gate.md"
   ],
   "source_links": [
+    "https://www.reddit.com/r/woweconomy/comments/10vz6jh/prospecting_calculator_not_for_squids/",
     "https://drive.google.com/file/d/1jW-vz25Mha9GzeCe6qX9viuLyFsgDf2m/view",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/dragonflight/2026-11-20T1040-xenastro-five-original-serevite-r3-batches.jsonl",
     "https://github.com/Voodoobrew101/Loot-Liquidator/blob/implementation/five-agent-completion/research/v3/evidence/master/20261120T1102-xenastro-five-q3-serevite-original-workbook-admission-review.md"
   ],
-  "verified_review_commit_sha": "89b3ef501481cf00f513ecc561715988f1008435",
-  "verified_commit_sha": "89b3ef501481cf00f513ecc561715988f1008435",
+  "verified_review_commit_sha": "1dc8074667fb5c20ba910075ae24f3392404a064",
+  "verified_commit_sha": "46f018b252f645d7173a303f0ec2db5288e3ca4f",
   "validation": {
     "original_xlsx_direct_read": true,
     "original_sha256_verified": true,
@@ -90,7 +97,8 @@
     "dashboard_readback_verified": true
   },
   "worker_reports_verified": [
-    "Dragonflight 2026-11-20T10:42:10.768Z: new 45 source rows/five original dated Serevite Q3 batches verified against XLSX; source profile remains historical."
+    "Dragonflight 2026-11-20T10:42:10.768Z: new 45 source rows/five original dated Serevite Q3 batches verified against XLSX; source profile remains historical.",
+    "Dragonflight 2026-11-20T11:36:24.832Z: verified the author's sequential ore + secondary-stone method statement against primary Reddit; did not independently reopen workbook formulas or validate per-step numeric attribution."
   ],
   "worker_reports_awaiting_new_verification": [
     "Midnight 2026-11-20T10:15:27.528Z reported older Looter histogram origin and at-cast ilvl flags; no independent new source verification this manager run.",
@@ -98,6 +106,11 @@
     "Legacy 2026-11-20T10:42:28.586Z reported ereduns original positive-only counters; manager has not independently compared source rows this run."
   ],
   "backlog_triage": [
+    {
+      "status": "held_process_input_attribution",
+      "scope": "Xenastro five Q3 Serevite source rows, direct ore versus sequential Prismatic/Crumbled Stone processing",
+      "reason": "Original Reddit author explicitly used two tools and a two-stage method; cell-valid workbook totals are not yet proven ore-only, so direct ore expected quantity and synthetic-price recommendation cannot use ambiguous combined totals"
+    },
     {
       "status": "source_verified",
       "scope": "Xenastro Serevite rank3 2023-01-15/16/19/20/26 five original batch rows",
@@ -125,6 +138,7 @@
     }
   ],
   "blockers": [
+    "Author's original two-stage method makes direct ore-only attribution of historical Xenastro gem quantities unresolved until original Prospecting Log formula/row grouping and secondary-stone accounting are examined; do not invent per-step units or cast denominators.",
     "No player event/craft log from original workbook establishing actual completed operation count, 0..N distributions, Resourcefulness refund handling or current Retail applicability.",
     "Pooled green/blue gem categories cannot be assigned exact output-item IDs; source lacks species links.",
     "Main's committed research snapshot c0e4be31 does not include new worker rows and no exact new-research-SHA build fixture was executed."
@@ -132,18 +146,18 @@
   "exhausted_sources": [
     "For these five exact historical Xenastro batch rows, the full original workbook was inspected; it has category/rank total quantities and source returned-ore units, but no per-operation event ledger or species IDs. Do not request duplicate transcripts of these five rows."
   ],
-  "next_concrete_step": "Seek source-original (not another copy of aggregate) operation-level Serevite prospecting and ore-refund/reprocessing log for these five Xenastro batch IDs; seek linked species-specific item IDs and rank/skill definitions. Run an isolated build of tools/prepare_build_research.py against one exact current research commit and inspect automated review holds and actual generated ItemDB/output fields. Do not change runtime, main, schedules, or open routine PRs.",
+  "next_concrete_step": "Inspect original Xenastro Prospecting Log formulas and row grouping for Q3 Serevite rows 46/47/50/51/57 versus Prismatic/Crumbled Stone secondary processing. Record explicit step-level attribution or hold combined workflow outcomes; then run current build-review against one exact research SHA and inspect ItemDB/tooltip fields. Preserve original batch data, histories, worker ownership, and existing schedules.",
   "pipeline_status": {
-    "main_head": "96df9772b9fc93cca9621d5788dcf0954b9c2c13",
-    "research_head_before_manager_review": "9b85e169414effff650e092a1db4452b1b0ce01a",
+    "main_head": "4190fe93cadfeda361445829750bb46d4fccc9f3",
+    "research_head_before_manager_review": "46f018b252f645d7173a303f0ec2db5288e3ca4f",
     "owner_three_pass_branch_head": "3d667d053db587c91401cfed7ecc56862b8340c9",
     "main_pinned_snapshot_sha": "c0e4be31bd3b56bfa8997f94708c787dd3dcdfff",
     "main_build_review_present": true,
     "scheduled_five_roles_unchanged": true,
-    "exact_head_ci_this_run": "not checked after new manager write"
+    "exact_head_ci_this_run": "PR74 and PR75 exact heads each had three passing check runs; PR77 exact head five passing checks. PR74/75 merged to durable research branch; PR77 merged to main. No actual exact-new-research-SHA build-time ItemDB/tooltip validation performed this run."
   },
-  "previous_checkpoint_blob_sha": "7e7f1590f83dd15ce96491a249c64382a3f61203",
-  "previous_checkpoint_updated_at": "2026-11-20T10:04:16.316Z",
+  "previous_checkpoint_blob_sha": "d4a2c53c080ff80880ec89fc697e7a2400518d45",
+  "previous_checkpoint_updated_at": "2026-11-20T11:05:35.529Z",
   "owner_policy": {
     "routine_research_prs": false,
     "generated_db_commits_to_main": false,
@@ -158,5 +172,16 @@
   "new_schedules": false,
   "dashboard_update_commit_sha": "fd8eecdfe8e4634480eae9964cc52f23db6e1195",
   "dashboard_blob_sha": "427d26ea524c4d13ff6cfd07a8c26bd5b506f14a",
-  "validated_manager_memo_blob_sha": "81cdc5eb4214a5bc271fab3c9cabf082a9d7d08d"
+  "validated_manager_memo_blob_sha": "7247e455a8813722be4682634ad13a5405a46fda",
+  "validation_this_run": {
+    "primary_original_author_reddit_method_statement_read": true,
+    "workbook_cell_extraction_rerun": false,
+    "original_workbook_step_attribution_verified": false,
+    "numeric_studies_added": 0,
+    "source_method_memo_readback_verified": true,
+    "task_T0046_queue_readback_verified": true,
+    "actual_generated_itemdb_build_executed": false,
+    "actual_economic_engine_or_tooltip_test_executed": false,
+    "addon_or_live_wow_verification": false
+  }
 }
