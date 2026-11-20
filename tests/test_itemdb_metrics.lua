@@ -28,6 +28,14 @@ local function render(f,option)
 end
 -- Actual shipped BFA research uses mass-milling recipes, despite the old
 -- compatibility hints saying five herbs. Match the complete operation.
+local shipped=LL.ItemDB.processing
+local withoutPerInput,perInputMeans={},{}
+for _,r in ipairs(shipped)do
+    if r.reviewedPublishedPrior and r.reviewedPublishedPrior.kind=='ARCHIVED_PER_INPUT_TOTALS'then
+        for _,m in ipairs(r.materials)do if m.id==153635 then perInputMeans[r.inputItemID]=m.expectedQuantity.value end end
+    else withoutPerInput[#withoutPerInput+1]=r end
+end
+LL.ItemDB.processing=withoutPerInput;assert(LL:InitializeItemDB())
 for _,case in ipairs({{152506,256218,15.48},{152507,256223,16.39},{152508,256221,15.89}}) do
     local f={id=case[1],classID=7,expansionID=7,count=20}
     local options=LL:ConversionOptions(f)
@@ -51,6 +59,27 @@ for _,case in ipairs({{152506,256218,15.48},{152507,256223,16.39},{152508,256221
     options=LL:ConversionOptions(f)
     assert(not options[1].available and options[1].inputShort and options[1].inputCount==20)
     assert(options[1].yieldModel.inputCount==20,'a short bag stack must not change operation units')
+    -- Restoring the separately reviewed per-input source can blend a compatible
+    -- mean, while retaining the actual twenty-input recipe and original rows.
+    LL.ItemDB.processing=shipped;assert(LL:InitializeItemDB());LL._processingModelCache=nil
+    f.count=20
+    local current=LL:ConversionOptions(f)
+    assert(#current==1 and current[1].recipeID==case[2] and current[1].inputCount==20)
+    local prior=assert(perInputMeans[f.id])*20
+    for _,m in ipairs(current[1].yieldModel.materials)do if m.id==153635 then
+        assert(m.expectedQuantity>=math.min(case[3],prior) and m.expectedQuantity<=math.max(case[3],prior),
+            'accepted compatible means remain within source endpoints')
+        local seen,priorCount,jiyaoCount={},0,0
+        for _,source in ipairs(m.sourceEstimates.itemdb.records)do
+            assert(not seen[source.studyID],'an original study may contribute only once')
+            seen[source.studyID]=true
+            if source.studyID=='published:wowhead-kidneph-'..f.id..'-1000herbs'then priorCount=priorCount+1 end
+            if source.studyID=='historical:bfa:mass-mill:'..f.id..':153635:'..case[2]..':jiyao'then jiyaoCount=jiyaoCount+1 end
+        end
+        assert(#m.sourceEstimates.itemdb.records==2 and priorCount==1 and jiyaoCount==1,
+            'one independent Kidneph vector blends with one original Jiyao cohort, without its aggregate aliases')
+    end end
+    LL.ItemDB.processing=withoutPerInput;assert(LL:InitializeItemDB());LL._processingModelCache=nil
 end
 -- Synthetic full four-field record: P is occurrence per operation, min/max
 -- are conditional positive counts, E includes zeros. Price uses E once.

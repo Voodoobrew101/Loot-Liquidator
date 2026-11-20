@@ -513,7 +513,7 @@ def build(snapshot):
         else:
             row['inputItemID'] = int(key)
         records.append(row)
-    preserve_published_priors(rows, records, notes)
+    preserve_published_priors(rows, records, notes, snapshot=snapshot)
     return records, notes, total, len(counted), unplaced
 
 

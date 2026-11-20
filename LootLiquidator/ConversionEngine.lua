@@ -726,6 +726,11 @@ function LL:ConversionOptions(f)
         if not yieldModel and dataMode==2 and not isFixed then
             value=nil;source="Personal results only"
         end
+        local reviewedInputReference=yieldModel and yieldModel.reviewedPublishedPriorOnly and yieldModel.operationUnverified
+        if reviewedInputReference then
+            -- Generic input hints do not verify this historical operation.
+            available=false;why='Reference value per input; processing recipe and batch not verified'
+        end
         local v={name=c.method,letter=MethodLetter(c.method),available=available,
             why=why or modelIssue,character=character,profession=c.profession,
             value=value,source=source,inputShort=insufficientCount,
@@ -739,8 +744,10 @@ function LL:ConversionOptions(f)
             note=modelIssue or (dataMode==2 and (research and research.note or
                 "Personal results only: no matching observations yet")) or c.requirement,
             outputID=c.outputID,outputCount=c.outputCount,inputCount=inputCount,
-            recipeID=processingRecipe,expansion=c.expansion,
-            eligibleInput=c.eligibleInput,
+            recipeID=not reviewedInputReference and processingRecipe or nil,expansion=c.expansion,
+            -- A reviewed per-input reference can explain its value in a
+            -- tooltip while its unverified operation remains unavailable.
+            eligibleInput=c.eligibleInput or reviewedInputReference or nil,
             dataSource=c.source,category=kind,
             vendorSupplyCost=suppliesKnown and suppliesCost or nil,
             yieldModel=yieldModel}
