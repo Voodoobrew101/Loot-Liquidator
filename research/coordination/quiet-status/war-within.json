@@ -1,7 +1,7 @@
 {
   "role": "war-within",
-  "updated_at": "2026-11-20T21:17:26.003Z",
-  "status": "research-active; one newly identified scaled-gear source-identity risk held; no independently verifiable TWW numeric yields",
+  "updated_at": "2026-11-20T22:25:44.758Z",
+  "status": "research-active; new 224759 Anniversary mixed-era disenchant Looter cohort held pending output/version identity; no independent estimator-eligible numeric yields",
   "task_ids": [
     "T0048",
     "T0040",
@@ -18,7 +18,7 @@
     "T0010/T0011/T0012 210796/210797/210798: first-person 10-herb mill casts by herb rank, 222618/222619 pigment quality outputs, skill/spec and 0..N distribution",
     "Historical shatter 219950/219951 into 219946/219947/219948: verify independent ~10k-shard original cohort versus comments, denominator/refund basis and distinct method schema"
   ],
-  "source_branch_head_reviewed": "72bd2a9585428e35a393dd3f3baea4b45dd4bd54",
+  "source_branch_head_reviewed": "97a1f83fbfd14dfc10990244cdaad93e5a845027",
   "source_policy": "2026-11-19 owner policy: admit genuine original cohorts only; protect null denominators/hit probabilities; no routine research PRs, empty evidence JSONL, snapshots or runtime edits",
   "study_backlog_triage": [
     {
@@ -244,12 +244,21 @@
       "exact_inputs": "Unknown scaled equipment IDs; unknown bonus, rarity, armor/weapon, item level",
       "outputs": null,
       "reason": "First-person August 2, 2026 report: player bought gear scaled to TWW character levels but obtained non-TWW disenchanting materials; respondent attributes material family to item expansion of origin. No actual item IDs, source loot-table keys, final disenchant output IDs/counts, rarity, build, skill or operation log are provided. This is a new source-identity risk lead only: character-level scaling, item level, and displayed expansion are not direct proof of source item's DE loot family. Obtain exact scaled itemID/bonus and observed drops before creating noDisenchant or numerical estimates; do not treat respondent's rule as independently confirmed for all items."
+    },
+    {
+      "status": "held",
+      "original_cohort": "Wowhead Looter aggregate for 20th Anniversary Pirate's Bracers item 224759 (indexed November 20, 2026)",
+      "source": "https://www.wowhead.com/item=224759/pirates-bracers",
+      "existing_ids": null,
+      "exact_inputs": "224759 Pirate's Bracers, wrist leather, added in 11.0.5; 23 source-reported disenchants; exact equipped/scaled item version, bonus and disenchant-time build unknown",
+      "outputs": "Large Brilliant Shard x1-3 on 10/23 source-reported outcomes; Storm Dust (unresolved quality-ID rows, each 1-3 units) on 7/23 and 6/23; Greater Eternal Essence x3 on 2/23. Wowhead rows describe per-output occurrences, NOT proven mutually-exclusive craft outcomes. Exact ranked Storm Dust item hyperlinks unverified.",
+      "reason": "Novel exact named 11.0.5-era input ID with pooled Looter cross-era material families, but no per-operation histogram or matched item-version/bonus, character skill, build, output rank IDs or source collection dates. The 10+7+6+2 occurrence counts exceed 23, so do not infer zeros, unique outcome fractions or TWW-only loot table. Admitting this as a TWW armor DE baseline would conflate legacy versus Storm Dust output families. Source is held until original Looter rows/hyperlinks and individual item/bonus context can be independently resolved; no new numerical estimate."
     }
   ],
   "triage_counts": {
     "admitted": 5,
     "reviewable": 5,
-    "held": 11,
+    "held": 12,
     "duplicate": 3
   },
   "newly_verified_fields": [],
@@ -263,8 +272,8 @@
   "evidence_files": [],
   "evidence_source_links": [],
   "latest_preexisting_evidence_file": "research/v3/evidence/war-within/2026-11-20T0521-algari-pvp-item-metadata.jsonl",
-  "verified_commit_sha": "72bd2a9585428e35a393dd3f3baea4b45dd4bd54",
-  "verification": "Refreshed implementation/five-agent-completion; read README, evidence-format, mechanics, worker role, queue and own status. Searched original Ironclaw/Aqirite/Bismuth rank and Mycobloom milling studies and TWW gear disenchants; checked existing corpus for Elfshinobi1, 1fvhzy0, 1g8kbaq, Canadiatv, fish milling and 1942494 before avoiding duplicate evidence. New 2026-08-02 scaling-gear report has no exact item/output identifiers or valid operation denominator and remains held. No new JSONL or numeric claim. Source head shown is pre-status-write commit (cannot self-store own commit hash).",
+  "verified_commit_sha": "97a1f83fbfd14dfc10990244cdaad93e5a845027",
+  "verification": "Refreshed implementation/five-agent-completion and read research/v3/README.md, evidence-format.md, mechanics.md, roles/worker.md, queue.json and own quiet status. Compared newly retrieved source cohorts and source IDs against existing indexed war-within research. New 224759 Anniversary-era Pirate's Bracers Looter item-side 23 disenchant table is source-linked and distinct from indexed prior cohorts, but mixes legacy and TWW material families, unresolved rank/bonus, and non-mutually-exclusive material occurrence rows; held, not admitted. Existing original 7230 Smite's Mighty Hammer likewise indexes mixed material families; not a new TWW cohort. Source head SHA is pre-status-commit, because a commit cannot include its own SHA. No evidence JSONL, PR, generated addon build, merge or release.",
   "blockers": [
     "Research repository snapshot still has audit CSVs rather than original study XLS/XLSX/ODS logs. One external Liqourice5 authored XLSM was obtained and audited; it contains formula-based numeric assumptions, not first-person per-cast raw records. Tomasz and unpublished study workbooks remain missing.",
     "On this research branch tools/research_build_review.py and tools/prepare_build_research.py returned GitHub 404; build-time admission/generation remains implementation review work, not deployed or worker-owned.",
@@ -280,7 +289,8 @@
     "Original CraftSim PRs #892/#894 (merged 2025-10-10): pre-20.3.0 advanced craft-log denominators could miscount completed operations; crushing-gem API returns can omit saved gems in Bismuth refund events. Historic CraftSim exports require explicit addon version, independently checked completed-operation counts, reagent/refund ledger and method identity; no invented TWW baseline rates. Master/reviewer owns schema and admission changes.",
     "Original Liqourice5 6.0 MB macro-enabled source workbook is now accessible externally but raw supporting prospecting trial sheets and exact cast denominators are absent. Audit performed on OOXML cell values/formulas without executing VBA; '10K prospects' is general coverage claim, NOT a per-item measured cohort count. Master/reviewer must separately assess reference-only rows if desired.",
     "2025-03-21 original Ironclaw player reports Prospect All ending after two attempts despite 1,000 ore owned; UI nominal craft count may differ from successful operations even without a logged Resourcefulness proc. Any sample based on ore/5 without independent completed-operation confirmation remains held.",
-    "2026-08-02 scaling-gear wrong-expansion-mats report lacks original item IDs/bonus, loot-family and observed output IDs/counts. Obtain firsthand exact IDs and link current retail patch before any TWW disenchant estimate."
+    "2026-08-02 scaling-gear wrong-expansion-mats report lacks original item IDs/bonus, loot-family and observed output IDs/counts. Obtain firsthand exact IDs and link current retail patch before any TWW disenchant estimate.",
+    "2026-11-20: Source https://www.wowhead.com/item=224759/pirates-bracers (patch 11.0.5) reports 23 item-side Looter disenchants, including both Large Brilliant Shard and rank-unknown Storm Dust, without item bonus/run context or linked material rank IDs in indexed output; output occurrence rows sum above denominator. Hold any numerical admission and request individual item-version/quality/output hyperlinks. Companion legacy item 7230 similarly mixes eras in Looter tables (https://www.wowhead.com/item=7230/smites-mighty-hammer)."
   ],
   "exhausted_sources": [
     "Previously indexed 1f83cnd, 1g350pq, PeaEsk/434018, 1fdmzwy and 1f3qf96 already provide historical studies; source duplicates not re-imported.",
@@ -291,16 +301,16 @@
     "2026-11-20 11:22Z follow-up: April-2025 gem production economics, September-2024 Mycobloom Create-All bug, November-2025 housing dyes and previously indexed LotzBoi/Aqirite studies offer no new eligible post-hotfix 0..N material-yield cohorts. Revisit only on original per-operation logs.",
     "2026-11-20 follow-up: 1g9s48p repeats the already indexed 400 R1 Bismuth source; 1k78h4v and 1l91chl are 2025 financial/value comparisons without source output ledgers; 1nmnuc2 describes workflows only. Do not revisit these unless author publishes actual completed-operation exports."
   ],
-  "next_concrete_step": "For T0048, obtain an original scaled gear itemID/bonus paired with source-reported TWW-vs-legacy disenchant output IDs before classifying any gear-group baseline; independently verify raw Looter pctstack/quality links for 232446 and 229150. For T0040 seek post-2024-10-25 input-rank-separated completed 5-ore prospects; for T0010–T0012 require completed 10-herb mills, pigment quality IDs and zero-inclusive outcomes. No shared code/queue edits.",
-  "previous_status_updated_at": "2026-11-20T20:17:19.983Z",
+  "next_concrete_step": "For T0048 recover 224759 source-linked ranked Storm Dust output IDs and actual bonus/timewalking item version, and validate original 229150/232446 pctstack IDs before any cross-item rare/uncommon DE baseline; keep cross-era anniversary loot held. For T0040 seek post-2024-10-25 input-rank-separated, completed 5-ore prospects; for T0010–T0012 require completed 10-herb mills, pigment quality IDs and zero-inclusive outcomes. Do not add held material occurrence tallies to estimator.",
+  "previous_status_updated_at": "2026-11-20T21:17:26.003Z",
   "production_merge": false,
   "release": false,
   "validation_bypass": false,
   "pr_created": false,
   "notification_requested": false,
   "last_source_scan": {
-    "scan_at_utc": "2026-11-20T21:17:26.003Z",
-    "source_repo_head": "72bd2a9585428e35a393dd3f3baea4b45dd4bd54",
+    "scan_at_utc": "2026-11-20T22:25:44.758Z",
+    "source_repo_head": "97a1f83fbfd14dfc10990244cdaad93e5a845027",
     "task_ids": [
       "T0048",
       "T0040",
@@ -313,25 +323,20 @@
     ],
     "results": [
       {
-        "source": "https://us.forums.blizzard.com/en/wow/t/how-do-i-figure-out-disenchants-with-scaling-gear/2332185",
-        "status": "held-new-original-identity-lead",
-        "finding": "First-person August 2, 2026 report: player bought gear scaled to TWW character levels but obtained non-TWW disenchanting materials; respondent attributes material family to item expansion of origin. No actual item IDs, source loot-table keys, final disenchant output IDs/counts, rarity, build, skill or operation log are provided. This is a new source-identity risk lead only: character-level scaling, item level, and displayed expansion are not direct proof of source item's DE loot family. Obtain exact scaled itemID/bonus and observed drops before creating noDisenchant or numerical estimates; do not treat respondent's rule as independently confirmed for all items."
+        "source": "https://www.wowhead.com/item=224759/pirates-bracers",
+        "status": "held-new-original-mixed-era-source",
+        "finding": "224759 Pirate's Bracers: 23 item-side Looter disenchants; old Large Brilliant Shard x1-3 on 10, Storm Dust unresolved rank x1-3 on 7 and 6, Greater Eternal Essence x3 on 2, with per-material occurrence rows not exclusive; exact output quality links, bonus context, game version, skill and cast log unresolved. Do not admit as TWW quality baseline."
       },
       {
-        "source": "https://www.wowhead.com/item=212495/radiant-ruby",
-        "status": "already-recorded-duplicate-original-commenter",
-        "finding": "Elfshinobi1's 450 Ironclaw ore/10 Ruby original is already in war-within-20261031T1324; no second independent study or new numeric cast denominator."
-      },
-      {
-        "source": "https://www.reddit.com/r/woweconomy/comments/1fvhzy0",
-        "status": "already-indexed-held-pooled-milling-approximation",
-        "finding": "Historical pooled pigment multipliers already held by v3 rows 20261101-2110/2111; no per-herb completed casts or quality identities."
+        "source": "https://www.wowhead.com/item=7230/smites-mighty-hammer",
+        "status": "contextual-cross-era-comparison-not-tww-cohort",
+        "finding": "Original Classic item 7230 has 58 Looter disenchants indexing both Large Brilliant Shard and Storm Dust; illustrates why item ID and era require item/version provenance. Not collected as war-within numeric evidence."
       }
     ],
     "new_independent_cohorts": 0,
     "new_output_fields": 0,
     "evidence_created": false,
-    "original_spreadsheet_check": "Previously inspected author workbooks/reference sheets have no new independently grounded 0..N logs; 2025 CanadiaTV prospective all-rank spreadsheet remains paywall-only and already classified as held; no redundant new evidence."
+    "original_spreadsheet_check": "Previously audited source XLSM holds formula-based priors, no new operation-level original rows; no redundant workbook admission."
   },
   "source_integrity_findings": [
     {
@@ -387,6 +392,12 @@
       "date": "2026-08-02",
       "status": "held-new-original-identity-lead",
       "detail": "First-person August 2, 2026 report: player bought gear scaled to TWW character levels but obtained non-TWW disenchanting materials; respondent attributes material family to item expansion of origin. No actual item IDs, source loot-table keys, final disenchant output IDs/counts, rarity, build, skill or operation log are provided. This is a new source-identity risk lead only: character-level scaling, item level, and displayed expansion are not direct proof of source item's DE loot family. Obtain exact scaled itemID/bonus and observed drops before creating noDisenchant or numerical estimates; do not treat respondent's rule as independently confirmed for all items."
+    },
+    {
+      "source": "https://www.wowhead.com/item=224759/pirates-bracers",
+      "date": "2026-11-20",
+      "status": "held-new-firsthand-aggregated-cross-era-de-source",
+      "detail": "Live-indexed Wowhead Looter shows 23 disenchants of 11.0.5 Pirate's Bracers 224759, with Large Brilliant Shard on 10/23, rank-unlinked Storm Dust on 7/23 and 6/23, and Greater Eternal Essence on 2/23. These entries cannot be treated as distinct successful operations or TWW-only ranks; bonus, skill, sampling epoch and cast histograms absent. Cross-era contamination risk corroborated by older 7230 Smite's Mighty Hammer, also in live Looter with Storm Dust and legacy disenchant materials."
     }
   ]
 }
